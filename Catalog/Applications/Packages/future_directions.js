@@ -4,6 +4,1151 @@
 window.FUTURE_DIRECTIONS = [
   {
     "consumed_by_exp_id": "",
+    "description": "Prove or disprove that P = NP. Formalize known barriers: relativization, natural proofs, algebrization. Explore circuit complexity lower bounds, proof complexity, and connections to cryptographic hardness assumptions.",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "seed_005",
+    "priority_score": 0.96,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:56.858305+00:00",
+    "title": "P vs NP Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that every even integer greater than 2 is the sum of two primes. Formalize partial results such as Vinogradov's theorem for sufficiently large odd integers, or Chen's theorem that every sufficiently large even number is the sum of a prime and a semiprime. Explore connections to sieve methods and the circle method.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_001",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:55.985938+00:00",
+    "title": "Goldbach Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that all non-trivial zeros of the Riemann zeta function lie on Re(s)=1/2. Formalize equivalent statements: the prime counting function error bound, the Mertens conjecture connection, or the spectral interpretation via random matrix theory. Explore connections to quantum chaos and the Hilbert-Polya conjecture.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_002",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:56.183350+00:00",
+    "title": "Riemann Hypothesis"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The 3D Poincar\u00e9 conjecture is proven, but the smooth 4D version remains open: does every smooth 4-manifold homotopy equivalent to S\u2074 necessarily diffeomorphic to S\u2074? Formalize Donaldson's invariants, Seiberg-Witten theory, and explore exotic smooth structures on 4-manifolds.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "seed_202",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:07.882559+00:00",
+    "title": "Poincar\u00e9 Conjecture Revisited: 4D Smooth"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that every Hodge class on a non-singular projective algebraic variety is a rational linear combination of classes of algebraic cycles. Formalize the Hodge decomposition and explore the conjecture for specific varieties like abelian varieties and K3 surfaces.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "seed_014",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:58.943631+00:00",
+    "title": "Hodge Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_017",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:59.227937+00:00",
+    "title": "Birch and Swinnerton-Dyer Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "seed_231",
+    "priority_score": 0.94,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:16.980012+00:00",
+    "title": "Natural Proofs Barrier: Formalization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that there are infinitely many pairs of primes differing by 2. Formalize Zhang's bounded gaps result and Maynard-Tao improvements. Explore connections to the Hardy-Littlewood conjecture and sieve theory.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_004",
+    "priority_score": 0.93,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:56.613461+00:00",
+    "title": "Twin Prime Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that a positive proportion of zeros of the Riemann zeta function lie on the critical line. Formalize Selberg's result (positive proportion on), Conrey's 2/5 result, and explore connections to random matrix theory and the moment problem.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_203",
+    "priority_score": 0.93,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:08.078431+00:00",
+    "title": "Riemann Hypothesis: Zero-Free Regions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the rank of an elliptic curve over Q is computable. Formalize the Mordell-Weil theorem, height pairings, and descent algorithms. Connect to the conjecture that ranks are bounded and explore the parity conjecture.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_204",
+    "priority_score": 0.92,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:08.281573+00:00",
+    "title": "BSD Conjecture: Rank Computability"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove or disprove: for every \u03b5 > 0, there exists k such that distinguishing value \u2265 1-\u03b5 from value \u2264 \u03b5 for unique 2-prover games with k labels is NP-hard. Connect to MAX-CUT and SDP gaps.",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "seed_232",
+    "priority_score": 0.92,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:17.201558+00:00",
+    "title": "Unique Games Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "seed_056",
+    "priority_score": 0.91,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:04.360894+00:00",
+    "title": "Self-Modifying Research via Reflective Type Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The key insight is that every directed graph G has a zeta function zeta_G(s) = prod(1 - lambda^{-s})^{-1} where the product is over eigenvalues of the graph's adjacency matrix, and the Riemann Hypothesis for this function is equivalent to a purely combinatorial condition on G. Conjecture: For a directed graph G with n vertices, zeta_G(s) satisfies the Riemann Hypothesis (all non-trivial zeros lie on Re(s) = 1/2) if and only if G is a Ramanujan digraph: every eigenvalue lambda of the adjacency matrix satisfies |lambda| <= 2 sqrt(d-1) where d is the maximum out-degree. This is the directed graph analog of the Ramanujan graph theorem of Lubotzky-Phillips-Sarnak. Why now: the undirected case is settled (Ramanujan graphs exist and have optimal spectral gap), but the directed case is wide open. Recent work by Lubetzky and Peres (2016) on cutoff on directed Ramanujan graphs suggests the spectral gap characterization extends. Test: prove the conjecture for directed Cayley graphs of finite groups, then verify computationally for random directed d-regular graphs with n=20, 50, 100 vertices. Impact: a combinatorial Riemann Hypothesis \u2014 if true, it means the deepest mystery of number theory has a purely graph-theoretic characterization.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_104",
+    "priority_score": 0.91,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:07.527822+00:00",
+    "title": "Zeta Functions of Directed Graphs and the Graph Riemann Hypothesis"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove Grothendieck's standard conjectures: numerical and homological equivalence coincide, K\u00fcnneth projectors are algebraic, and independence of l. Connect to the Hodge conjecture and motives.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "seed_221",
+    "priority_score": 0.91,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:11.683325+00:00",
+    "title": "Standard Conjectures on Algebraic Cycles"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the Whitehead problem (every Whitehead group is free) is independent of ZFC. Formalize Shelah's undecidability proof: consistent both ways.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "seed_233",
+    "priority_score": 0.91,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:17.429886+00:00",
+    "title": "Whitehead Problem: Independence from ZFC"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the ABC conjecture and its implications in Lean 4. Prove consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, Mordell conjecture. Explore Mochizuki's claimed proof structure.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_029",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:01.580148+00:00",
+    "title": "ABC Conjecture Formalization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that every loopless graph requiring k+1 colors for a proper coloring contains K_{k+1} as a minor. Formalize known cases (k \u2264 5), the Wagner equivalence, and the connection to the Four Color Theorem.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "seed_211",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:09.676882+00:00",
+    "title": "Hadwiger's Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove the Baum-Connes conjecture relating K-theory of reduced C*-algebras to equivariant K-homology. Formalize known cases and the connection to Novikov.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "seed_224",
+    "priority_score": 0.9,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:12.343420+00:00",
+    "title": "Baum-Connes Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that any integer a \u2260 -1,\u25a1 that is not a perfect square is a primitive root modulo infinitely many primes. Formalize the Hooley conditional proof under GRH and explore unconditional density results.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_210",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:09.481636+00:00",
+    "title": "Artin's Conjecture on Primitive Roots"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove Hironaka's resolution of singularities theorem for varieties in characteristic p > 0. Formalize known results for dimensions \u2264 3.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "seed_222",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:11.907572+00:00",
+    "title": "Resolution of Singularities in Positive Characteristic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the consistency strength hierarchy: inaccessible < Mahlo < measurable < strong < supercompact < huge. Prove strictness results.",
+    "domains": [
+      "Logic",
+      "Novelty"
+    ],
+    "id": "seed_234",
+    "priority_score": 0.89,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:17.622192+00:00",
+    "title": "Large Cardinal Hierarchy: Consistency Strength"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that a Hadamard matrix exists for every positive multiple of 4. Formalize known constructions (Sylvester, Paley, tensor products) and establish bounds on the smallest open order. Connect to combinatorial designs, error-correcting codes, and signal processing.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_003",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:56.393667+00:00",
+    "title": "Hadamard Matrix Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_013",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:58.688448+00:00",
+    "title": "Odd Perfect Numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that proof-theoretic ordinal analysis provides a rigorous depth metric for mathematical research. Construct a formalization that computes the proof-theoretic ordinal of research output.",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "seed_055",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:04.165427+00:00",
+    "title": "Research Depth via Proof-Theoretic Ordinal Analysis"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Construct a number system on the Mobius band where the integers wrap with a twist: n and -n are identified with opposite orientations. Define the Mobius integers Z_tilde as Z x {+1, -1} modulo the identification (n, +1) ~ (-n, -1). Develop arithmetic on Z_tilde where addition wraps through the identification. Conjecture: The ring Z_tilde of Mobius integers has class number 1, and its prime spectrum forms a double cover of the ordinary primes (each ordinary prime p splits into two oriented primes p_plus and p_minus). The Mobius zeta function zeta_tilde(s) has zeros off the critical line, which is expected since Z_tilde is a non-Ore ring. Test: factor 6 in Z_tilde as 2_plus times 3_plus and 2_minus times 3_minus and verify these are distinct factorizations. Prove unique factorization for Z_tilde up to orientation. Impact: a new algebraic number system with intrinsic orientation, connecting number theory to topology via the double cover Z to Z_tilde.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "seed_080",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:05.665381+00:00",
+    "title": "Mobius Arithmetic: Number Theory on the Mobius Band"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Sheaf theory studies how local data glues to form global objects. The stereographic projection gives S^n a two-chart atlas with Mobius transition maps. Define a new class of sheaves called stereographic sheaves where the gluing data is constrained by the conformal structure of the stereographic atlas. A stereographic sheaf on S^n is a sheaf F such that for each chart U_i of the stereographic cover, the restriction F|U_i is a sheaf on R^n, and the transition function F(U_0 cap U_1) is a sheaf morphism that commutes with the Mobius transition. Conjecture: The category of stereographic sheaves on S^n is a proper subcategory of all sheaves on S^n, characterized by the condition that Cech cohomology with respect to the stereographic cover satisfies a Mobius compatibility. This subcategory has better computational properties: H^k(S^n, F) can be computed from the transition function alone for stereographic sheaves, reducing the computation of sheaf cohomology on S^n to a single gluing datum. Test: prove the equivalence with locally constant sheaves on RP^n for n=2,3. Compute H^1(S^2, Z) = Z/2Z for the constant sheaf Z. Impact: a new computational tool for sheaf cohomology that exploits conformal structure, with applications to topological data analysis and differential equations on spheres.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "seed_089",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:06.369698+00:00",
+    "title": "Stereographic Sheaf Theory: Gluing Data on Spheres"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Mihailescu proved that 8 and 9 are the only consecutive perfect powers. Generalize: find all solutions to x^a - y^b = k for fixed small k. Formalize the theory of exponential Diophantine equations and Pillai's conjecture.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_205",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:08.480584+00:00",
+    "title": "Catalan's Conjecture Generalizations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Yau-Tian-Donaldson conjecture: a Fano manifold admits a K\u00e4hler-Einstein metric iff it is K-stable. Prove stability criteria for specific Fano varieties.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "seed_239",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:18.648941+00:00",
+    "title": "K\u00e4hler-Einstein Metrics and K-Stability"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove the stability theorem for persistent homology: the bottleneck distance between persistence diagrams is bounded by the Gromov-Hausdorff distance between the underlying spaces. Formalize the persistent homology pipeline and verify on concrete point cloud data.",
+    "domains": [
+      "Computation",
+      "Geometry"
+    ],
+    "id": "seed_322",
+    "priority_score": 0.88,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:20.401327+00:00",
+    "title": "Topological Data Analysis: Persistent Homology Stability"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that for every positive integer n, there exists a prime between n\u00b2 and (n+1)\u00b2. Formalize known partial results on prime gaps and connect to the Cram\u00e9r model of primes.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_024",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:00.735432+00:00",
+    "title": "Legendre's Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that higher signatures are homotopy invariants for all finitely presented groups. Formalize the assembly map in topological K-theory and connections to Baum-Connes.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "seed_223",
+    "priority_score": 0.87,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:12.120491+00:00",
+    "title": "Novikov Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that there are infinitely many primes of the form n\u00b2+1. Formalize Iwaniec's result on semi-primes of this form and connect to Friedlander-Iwaniec theorem on primes of form a\u00b2+b\u2074.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_025",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:00.953818+00:00",
+    "title": "Primes of the Form n\u00b2+1"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize core HoTT results in Lean 4: the univalence axiom, higher inductive types, and the fundamental theorem of identity types. Prove that HoTT provides a constructive foundation for mathematics.",
+    "domains": [
+      "Logic",
+      "Geometry"
+    ],
+    "id": "seed_040",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:03.446924+00:00",
+    "title": "Homotopy Type Theory Foundations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The Hausdorff dimension is normally a metric property, not a topological one. Investigate whether it can be made topological through the lens of fractal topology. Define the fractal topological dimension d_f(X) of a metric space X as the infimum of d such that X embeds in R^d with Hausdorff dimension preserved. Conjecture: For compact metric spaces, the Hausdorff dimension is a topological invariant modulo homeomorphisms that are bi-Lipschitz on a dense open set. More precisely, if X and Y are homeomorphic compact subsets of R^n, and the homeomorphism is bi-Lipschitz on a set of full Hausdorff dimension in X, then dim_H(X) = dim_H(Y). This would mean that fractal dimension is not just a metric accident but a topological invariant up to rough isometries. Test: compute d_f for the Sierpinski gasket (expected: 1 since connected, Hausdorff dimension log3/log2) and the Cantor set (expected: 0 since totally disconnected). Prove that the Koch curve and any bi-Lipschitz-equivalent curve have equal Hausdorff dimensions. Impact: elevates fractal dimension from a metric curiosity to a topological invariant, with applications to shape classification and topological data analysis.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "seed_082",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:05.913849+00:00",
+    "title": "Fractal Topology: Hausdorff Dimension as a Topological Invariant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that 78557 is the smallest Sierpi\u0144ski number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "seed_208",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:09.067494+00:00",
+    "title": "Sierpi\u0144ski Numbers: Covering Systems"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove the Yamabe problem on non-compact Riemannian manifolds: find a conformal metric of constant scalar curvature. Formalize the compact case and explore non-compact obstructions.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "seed_237",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:18.225965+00:00",
+    "title": "Yamabe Problem: Non-Compact Case"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Pearl's do-calculus as a formal logical system with three inference rules. Prove that do-calculus is complete for identifying causal effects in non-parametric structural equation models. Construct a decision procedure for causal effect identifiability.",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "seed_325",
+    "priority_score": 0.86,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:20.830849+00:00",
+    "title": "Causal Inference: Do-Calculus as Formal Logic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the 3n+1 iteration eventually reaches 1 for all positive integers. Formalize partial results on density of convergent integers, stopping times, and connections to ergodic theory and p-adic dynamics.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "seed_006",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:57.058856+00:00",
+    "title": "Collatz Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Extend the Kronecker-Weber theorem to arbitrary algebraic fields by constructing Hilbert class fields. Formalize explicit class field theory and connect to the Langlands program.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_020",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:59.906325+00:00",
+    "title": "Hilbert 12: Kronecker-Weber Generalization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove Schanuel's conjecture: if z\u2081,...,z\u2099 are Q-linearly independent complex numbers, then the transcendence degree of {z\u2081,...,z\u2099,e^z\u2081,...,e^z\u2099} over Q is at least n. Formalize implications for the Lindemann-Weierstrass theorem.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_033",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:02.371575+00:00",
+    "title": "Schanuel's Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Persistent homology computes topological features of data at multiple scales. On spheres, the natural metric is the geodesic (spherical) distance, but existing algorithms assume Euclidean data. Use stereographic projection to transform spherical persistence to weighted Euclidean persistence. Define the stereographic persistence module for a point cloud X on S^n: for each filtration parameter epsilon, compute the Cech complex C_epsilon(X) on S^n using the spherical metric, then apply inverse stereographic projection to get a filtered complex on R^n with a conformal weight. Conjecture: The persistence diagram of a point cloud on S^n computed with the geodesic metric is equal to the persistence diagram of the projected point cloud on R^n computed with a conformally weighted distance d_w(x,y) = 2*d(x,y)/(1+d(x,y)^2/4). This equality holds because stereographic projection is a conformal isometry up to the conformal factor, and persistence diagrams are invariant under conformal transformations. This gives an O(N log N) algorithm for spherical persistence (vs O(N^2) for direct computation). Test: implement both methods and verify isometry of persistence diagrams for random spherical point clouds with N=50, 100, 200 points. Impact: fast, provably correct topological data analysis for spherical data, with applications to astrophysics (cosmic microwave background) and protein structure analysis.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "seed_092",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:06.670695+00:00",
+    "title": "Inverse Stereographic Persistence: Topological Data Analysis on Spheres"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Resolve Kaplansky's conjectures on group rings: no zero divisors, no idempotents other than 0/1, and no nontrivial units in K[G] for torsion-free G.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "seed_218",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:11.027519+00:00",
+    "title": "Kaplansky's Conjectures"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove edge universality for random matrix ensembles beyond Gaussian cases. Formalize Tracy-Widom distribution convergence and the Airy kernel.",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "seed_227",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:16.651864+00:00",
+    "title": "Random Matrices: Edge Universality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Classify RT\u00b2\u2082 in the reverse mathematics hierarchy: prove it's strictly between ACA\u2080 and WKL\u2080 over RCA\u2080. Formalize Seetapun's theorem.",
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "seed_236",
+    "priority_score": 0.85,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:18.020118+00:00",
+    "title": "Reverse Mathematics: Ramsey's Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove or disprove that every bounded linear operator on a separable Hilbert space has a non-trivial closed invariant subspace. Formalize known results for compact operators and normal operators.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_030",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:01.788604+00:00",
+    "title": "Invariant Subspace Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove the Kakeya conjecture: a Besicovitch set in R\u207f has Hausdorff dimension n. Formalize the connection to restriction estimates and additive combinatorics.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "seed_035",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:02.777464+00:00",
+    "title": "Kakeya Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Sphere packing on S^n (how many non-overlapping caps of radius r fit?) is a fundamental geometric problem with applications to error-correcting codes and signal processing. Use stereographic projection to transform spherical packing to a weighted packing problem on R^n. Define the stereographic packing number N(n,r) as the maximum number of non-overlapping spherical caps of geodesic radius r that fit on S^n. Conjecture: N(n,r) satisfies N(n,r) = (1+O(r^2)) * V_n/V_n(r) where V_n is the volume of S^n and V_n(r) is the volume of a cap, and the O(r^2) correction is explicitly computable from the conformal factor (1+|x|^2)^2/4 of the stereographic projection. More precisely, N(n,r) <= (2/cos(r))^n * V_n/V_n(r). The factor (2/cos(r))^n comes from the maximum conformal distortion of the stereographic projection: a cap of geodesic radius r is mapped to a Euclidean disk whose area differs from the cap area by at most this factor. Test: prove this bound for n=2 and verify it against the known optimal packings (icosahedral: N(2,pi/6) = 12, cuboctahedral: N(2,pi/4) = 6, tetrahedral: N(2,pi/3) = 4). Impact: explicit, computable sphere packing bounds on spheres via classical packing theory on R^n, with applications to spherical codes and molecular geometry.",
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "seed_093",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:06.888323+00:00",
+    "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that Wall-Sun-Sun primes exist (primes p where p\u00b2 divides F_{p-(p|5)}). Formalize the connection to Fermat's Last Theorem and establish search bounds for the first such prime.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_207",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:08.870932+00:00",
+    "title": "Wall-Sun-Sun Primes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that for n bases of an n-dimensional vector space, there is a way to arrange all n\u00b2 elements into an n\u00d7n grid so that each row and column is a basis.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_216",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:10.717652+00:00",
+    "title": "Rota's Basis Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the connective constant for the self-avoiding walk on Z\u00b2 equals (2+\u221a2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "seed_225",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:12.561612+00:00",
+    "title": "Self-Avoiding Walk: Connective Constant"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that a Markov basis for a log-linear model on contingency tables connects all fibers of the model. Formalize the Fundamental Theorem of Markov Bases and compute explicit Markov bases for the no-three-way interaction model.",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "seed_323",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:20.604088+00:00",
+    "title": "Algebraic Statistics: Markov Bases for Contingency Tables"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Determine which integers can be represented as a sum of three cubes. Formalize known computational results and the density conjecture. Connect to the geometry of cubic surfaces and the Hasse principle.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_012",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:58.445057+00:00",
+    "title": "Sums of Three Cubes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Study the topology of real algebraic curves and surfaces. Formalize the Harnack bound, classify real algebraic curves by arrangement of ovals, and connect to the second part on limit cycles of planar polynomial ODEs.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "seed_023",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:00.529451+00:00",
+    "title": "Hilbert 16: Topology of Algebraic Curves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that if a polynomial map F: C\u207f \u2192 C\u207f has constant non-zero Jacobian determinant, then F is invertible. Formalize the reduction to degree 3 and connect to the Dixmier conjecture.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "seed_034",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:02.571310+00:00",
+    "title": "Jacobian Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the gap between consecutive primes p_n satisfies p_{n+1} - p_n = O((log p_n)\u00b2). Formalize probabilistic models of primes and known unconditional bounds.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_037",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:03.180355+00:00",
+    "title": "Cram\u00e9r's Conjecture on Prime Gaps"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the union of k k-uniform intersecting hypergraphs has chromatic number at most k. Formalize the linear hypergraph version and recent probabilistic approaches.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_212",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:09.877085+00:00",
+    "title": "Erd\u0151s-Faber-Lov\u00e1sz Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that every convex body K in R\u207f of volume 1 has a hyperplane section of (n-1)-dimensional volume at least c for some universal c > 0.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "seed_219",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:11.258186+00:00",
+    "title": "Bourgain's Slicing Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that for any countable first-order theory, the number of countable models is either countable or 2^\u2135\u2080. Formalize Morley's theorem and the topological version.",
+    "domains": [
+      "Logic"
+    ],
+    "id": "seed_235",
+    "priority_score": 0.83,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:17.826618+00:00",
+    "title": "Vaught's Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Solve the happy end problem for arbitrary n: determine the minimum number of points in general position in the plane that guarantee a convex n-gon. Formalize the Erd\u0151s\u2013Szekeres theorem and improve known bounds.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "seed_010",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:57.972073+00:00",
+    "title": "Happy End Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the Euler-Mascheroni constant \u03b3 \u2248 0.5772 is irrational (or transcendental). Formalize continued fraction expansions and connect to the theory of special values of L-functions.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_027",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:01.338705+00:00",
+    "title": "Euler-Mascheroni Constant Irrationality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that if A^x + B^y = C^z where A,B,C,x,y,z are positive integers with x,y,z > 2, then A,B,C share a common prime factor. Formalize the connection to Fermat-Catalan and ABC conjecture.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_036",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:02.987606+00:00",
+    "title": "Beal's Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A proof is a sequence of steps. Map each step to a point on S^n via stereographic projection. The proof distance between theorems is the spherical distance between their proof endpoints. Conjecture: Two theorems whose proofs are close in spherical distance share a common subproof of length at least n minus spherical_distance. Test: compute proof distances for a set of 20 basic theorems in Lean 4 and verify the subproof bound. Impact: geometric proof mining and automated lemma discovery.",
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "seed_077",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:05.338007+00:00",
+    "title": "Stereographic Proof Compression: Proofs on Spheres"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Determine all integer solutions to n! + 1 = m\u00b2. Only three solutions are known (n=4,5,7). Formalize the connection to the ABC conjecture and explore bounds on the spacing between Brown numbers.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_206",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:08.676107+00:00",
+    "title": "Brocard's Problem: n! + 1 = m\u00b2"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that every graph on at least 3 vertices is determined up to isomorphism by its deck of vertex-deleted subgraphs. Formalize Kelly's lemma and prove for specific graph classes.",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "seed_215",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:10.494305+00:00",
+    "title": "Reconstruction Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove sharp lower bounds for the Willmore energy of surfaces by genus. Extend the Marques-Neves proof for tori to higher-genus surfaces.",
+    "domains": [
+      "Geometry"
+    ],
+    "id": "seed_238",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:18.441912+00:00",
+    "title": "Willmore Conjecture Generalizations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove Chouldechova's impossibility theorem: when base rates differ across groups, equalized odds and equal calibration cannot both hold. Formalize the tension between individual fairness (similar individuals treated similarly) and group fairness (equal outcomes across groups).",
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "seed_326",
+    "priority_score": 0.82,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:21.031233+00:00",
+    "title": "Algorithmic Fairness: Individual vs Group Fairness Impossibility"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Huang proved the sensitivity conjecture. Extend: prove tighter bounds on degree-sensitivity relationship of Boolean functions. Formalize the spectral approach via signed adjacency matrices.",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "seed_213",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:10.070200+00:00",
+    "title": "Sensitivity Conjecture Extensions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that \u03c0, e, \u221a2, or any fundamental constant is normal. Formalize the connection to equidistribution and algebraic independence.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "seed_226",
+    "priority_score": 0.81,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:16.410337+00:00",
+    "title": "Normality of Mathematical Constants"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "seed_011",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:58.210984+00:00",
+    "title": "Perfect Cuboid (Euler Brick)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Extend results on quadratic forms to arbitrary algebraic number fields. Formalize the Hasse-Minkowski theorem and explore the classification of quadratic forms over number fields via class field theory.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_019",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:59.481690+00:00",
+    "title": "Hilbert 11: Quadratic Forms over Algebraic Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Provide rigorous foundations for Schubert's enumerative geometry. Formalize intersection theory on Grassmannians and flag varieties, proving Schubert calculus results via modern algebraic geometry.",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "seed_022",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:00.322310+00:00",
+    "title": "Hilbert 15: Schubert Calculus Rigorization"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that for every finite union-closed family of sets (not all empty), some element belongs to at least half the sets. Formalize the lattice-theoretic reformulation and known partial results.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_031",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:01.987080+00:00",
+    "title": "Frankl's Union-Closed Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Characterize numbers representable as a sum of three squares of primes. Formalize the circle method approach to ternary Goldbach-type problems for squares.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_209",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:09.281210+00:00",
+    "title": "Legendre's Three-Square Theorem Extension"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that for every polynomial with all roots in the closed unit disk, every root has a critical point within distance 1 of it. Formalize known partial results and the connection to Gauss-Lucas.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_220",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:11.463002+00:00",
+    "title": "Sendov's Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_026",
+    "priority_score": 0.79,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:01.145793+00:00",
+    "title": "Lehmer's Mahler Measure Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that every tree admits a graceful labeling. Formalize known results for paths, caterpillars, and olive trees. Explore connections to decompositions of complete graphs.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_214",
+    "priority_score": 0.79,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:10.274474+00:00",
+    "title": "Graceful Tree Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Find a formula for the probability that two elements chosen uniformly at random generate the symmetric group S_n. Formalize known asymptotic results and connect to the theory of random permutations.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_009",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:57.744824+00:00",
+    "title": "Symmetric Group Generation Probability"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Resolve whether the general 7th-degree equation can be solved using functions of only 2 variables. Formalize Kolmogorov's superposition theorem and explore its implications for approximation theory.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_021",
+    "priority_score": 0.78,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:00.118535+00:00",
+    "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_032",
+    "priority_score": 0.77,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:25:02.177753+00:00",
+    "title": "Erd\u0151s\u2013Straus Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "# Future Research Directions: Verifiable Computation and Zero-Knowledge Proofs\n\n## Synthesis\n\nThis research cycle established the complete algebraic pipeline underlying zk-SNARKs: from R1CS constraint satisfaction through QAP polynomial encoding to Schwartz-Zippel-based verification soundness. The `VerifiableComputation` structure we introduced captures this pipeline as a single mathematical object, with composition theorems enabling recursive proof systems.\n\nThe most promising cross-domain connection emerged between our polynomial commitment soundness theorem and the existing `circuit_zero_poly_vanishes` result in the Algebra catalog: both express the principle that algebraic constraints encode as polynomial root conditions, but our work operates at the cryptographic protocol level while the catalog result operates at the algebraic geometry level. Bridging these \u2014 showing that the Nullstellensatz-based approach and the SNARK-based approach are instances of a common algebraic framework \u2014 could yield a unified theory of verifiable algebra.\n\nThe highest breakthrough potential lies in Direction 1 (Knowledge Soundness via Algebraic Extraction): formalizing not just soundness (no false proofs) but *knowledge soundness* (the prover must \"know\" a witness) would complete the most important theoretical gap in our formalization and has never been done in a theorem prover. This requires formalizing the concept of an algebraic extractor, which connects our R1CS framework to the Algebraic Group Model.\n\n---\n\n### Direction 1: Knowledge Soundness via Algebraic Extraction\n\n**Conjecture**: For any R1CS-based SNARK where the prover operates as an algebraic algorithm (its outputs are F-linear combinations of its inputs and group elements), there exists a polynomial-time extractor that recovers a valid witness from any accepting prover. Formally: if P is an algebraic prover for R1CS $r$ and the verifier accepts with probability $\\geq \\epsilon$, then the extractor recovers $w$ with $r.\\text{IsSatisfied}(w)$ in expected time $\\text{poly}(n) / \\epsilon$.\n\n**Test**: Define `AlgebraicProver` as a structure whose outputs are formal linear combinations of inputs. Formalize the extractor for Groth16's specific verification equation $e(A, B) = e(\\alpha, \\beta) \\cdot e(C, \\delta) \\cdot e(\\text{pub}, \\gamma)$. Attempt to prove extraction by showing the algebraic constraint forces the prover's internal state to encode a valid witness. A concrete test: verify extraction works for an R1CS with 3 constraints over $\\mathbb{F}_p$ for a small prime $p$.\n\n**Impact**: If proved, this would be the first machine-verified proof of knowledge soundness for any SNARK construction. If it fails, it would identify precisely where the algebraic group model assumption is needed, potentially revealing new attack vectors.\n\n**Catalog References**: `Cryptography/ZeroKnowledge/SNARK.lean` (R1CS, composition), `Cryptography/Foundation.lean` (`soundness_error_bound`)\n\n**Proof Strategy**: (1) Define `AlgebraicProver` structure with linearity constraint. (2) Show Groth16 verification equation forces a linear system on the prover's coefficients. (3) Prove the linear system has a unique solution encoding a valid R1CS witness. Key lemma: the coefficient matrix of the linear system is full-rank iff the CRS is well-formed.\n\n**Domain Bridges**: Cryptography (SNARK soundness) \u2194 Algebra (linear algebra over finite fields) \u2194 Computation (extraction algorithms)\n\n**Lineage**: Builds on `r1cs_compose_sound`, `schwartz_zippel_root_bound`, `poly_commit_soundness` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Folding Schemes and Recursive SNARKs (Nova-style)\n\n**Conjecture**: There exists a \"folding operator\" $\\text{Fold} : \\text{R1CS}(F, m, n) \\times \\text{R1CS}(F, m, n) \\to \\text{R1CS}(F, m, n)$ such that $w$ satisfies $\\text{Fold}(r_1, r_2)$ iff there exist $w_1, w_2$ satisfying $r_1, r_2$ respectively and $w = w_1 + r \\cdot w_2$ for a random challenge $r$. Furthermore, the folding operation preserves the degree structure needed for Schwartz-Zippel soundness.\n\n**Test**: Define the relaxed R1CS (with error term $e$ and scalar $u$: $(Aw) \\circ (Bw) = u \\cdot Cw + e$). Formalize the Nova folding operation: given two relaxed instances $(u_1, e_1)$ and $(u_2, e_2)$, produce $(u_1 + r \\cdot u_2, e_1 + r \\cdot T + r^2 \\cdot e_2)$ where $T$ is the cross term. Prove that if both input instances are satisfiable, the folded instance is satisfiable.\n\n**Impact**: Would formalize the algebraic foundation of recursive proof composition, enabling proofs of proofs of proofs... This is the mathematical basis of blockchain scaling (zkRollups accumulating transactions).\n\n**Catalog References**: `Cryptography/ZeroKnowledge/SNARK.lean` (`R1CS.compose`, `r1cs_compose_sound`), `Algebra/NullstellensatzPIT.lean` (`circuit_zero_poly_vanishes`)\n\n**Proof Strategy**: (1) Define `RelaxedR1CS` extending R1CS with error vector and scalar. (2) Define the cross-term polynomial $T$. (3) Prove folding completeness: two valid instances fold to a valid instance. (4) Prove folding soundness via Schwartz-Zippel on the cross-term.\n\n**Domain Bridges**: Cryptography (recursive proofs) \u2194 Algebra (polynomial identity testing) \u2194 Computation (incremental verification)\n\n**Lineage**: Directly extends `R1CS.compose` and `r1cs_compose_sound`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Plonkish Arithmetization and Permutation Arguments\n\n**Conjecture**: The Plonk permutation argument can be formalized as a polynomial identity: given a permutation $\\sigma$ on $[n]$ and vectors $f, g$ with $g = f \\circ \\sigma$, the \"grand product\" polynomial $Z(x) = \\prod_{i=1}^{k} \\frac{f(\\omega^i) + \\beta \\omega^i + \\gamma}{g(\\omega^i) + \\beta \\sigma(\\omega^i) + \\gamma}$ satisfies $Z(\\omega^n) = 1$ iff $g$ is indeed a permutation of $f$. This can be proved purely algebraically over any field of size $> n$.\n\n**Test**: Define the grand product polynomial over $\\text{ZMod}(p)$ for a small prime $p$. Verify computationally for $n = 4$ that $Z(\\omega^4) = 1$ when $g = f \\circ \\sigma$ and $Z(\\omega^4) \\neq 1$ (with high probability over $\\beta, \\gamma$) when $g$ is not a permutation of $f$.\n\n**Impact**: Would formalize the core algebraic technique behind Plonk, the most widely deployed SNARK system. The permutation argument is the key innovation that distinguishes Plonk from R1CS-based systems.\n\n**Catalog References**: `Cryptography/ZeroKnowledge/SNARK.lean` (vanishing polynomial, Schwartz-Zippel), `Algebra/NullstellensatzPIT.lean`\n\n**Proof Strategy**: (1) Define evaluation domain as roots of unity (requires $n | p-1$). (2) Define the grand product polynomial via `Finset.prod`. (3) Prove the telescoping property: $Z(\\omega^{k+1}) / Z(\\omega^k) = \\frac{f(\\omega^k) + \\beta \\omega^k + \\gamma}{g(\\omega^k) + \\beta \\sigma(\\omega^k) + \\gamma}$. (4) Show $Z(\\omega^n) = 1$ iff the accumulated product is 1 iff $g$ is a permutation of $f$.\n\n**Domain Bridges**: Cryptography (Plonk) \u2194 Algebra (permutation groups, roots of unity) \u2194 Combinatorics (permutation counting)\n\n**Lineage**: Extends vanishing polynomial and Schwartz-Zippel foundations from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Tropical SNARK Soundness \u2014 SNARKs over Non-Standard Algebras\n\n**Conjecture**: The R1CS framework can be extended to semirings (not just fields) by replacing multiplication gates with semiring operations. Over the tropical semiring $(\\mathbb{R} \\cup \\{\\infty\\}, \\min, +)$, an R1CS-like constraint system captures shortest-path computations, and a \"tropical Schwartz-Zippel\" bound exists: a nonzero tropical polynomial of degree $d$ has at most $d$ \"tropical roots\" (points where the minimum is achieved by two or more terms) in any set of size $> d$.\n\n**Test**: Define `TropicalR1CS` with min-plus operations. Formulate the tropical analogue of the Schwartz-Zippel lemma. Test computationally: generate random tropical polynomials of degree 5 over $\\{0, 1, \\ldots, 100\\}$ and count tropical roots. If the count consistently exceeds 5, the conjecture is false.\n\n**Impact**: If true, this would establish that verifiable computation extends beyond fields to optimization problems (shortest paths, scheduling). This connects cryptography to tropical geometry, a rapidly developing area of mathematics.\n\n**Catalog References**: `Cryptography/TropicalMinPlusCrypto.lean` (`tropical_zero_knowledge_shift`), `Tropical/` (tropical optimization results), `Cryptography/ZeroKnowledge/SNARK.lean`\n\n**Proof Strategy**: (1) Define `TropicalR1CS` using the min-plus semiring. (2) Define \"tropical roots\" as non-differentiability points of the piecewise linear function. (3) Relate tropical root count to the number of linear pieces minus 1. (4) Prove the bound by induction on degree.\n\n**Domain Bridges**: Cryptography (verifiable computation) \u2194 Tropical geometry (tropical polynomials) \u2194 Optimization (shortest paths)\n\n**Lineage**: Bridges `tropical_zero_knowledge_shift` with the R1CS framework from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Information-Theoretic Limits of SNARK Proof Size\n\n**Conjecture**: For any R1CS with $m$ constraints over $n$ variables, any sound SNARK proof (with soundness error $\\leq 2^{-\\lambda}$) must have proof size $\\geq \\lambda$ bits in the random oracle model. This is a lower bound on SNARK succinctness. Furthermore, for $m > n^2$, the proof size must be $\\geq \\lambda + \\log(m/n^2)$, reflecting the \"compression cost\" of reducing many constraints to a succinct proof.\n\n**Test**: Define a formal model of SNARK proof size as the bit-length of the verifier's input (excluding the statement). Formulate the information-theoretic lower bound. Attempt proof by reduction: if a shorter proof existed, it could be used to compress random strings, contradicting Shannon's source coding theorem. Test the bound computationally by generating random R1CS instances and measuring actual proof sizes in a simplified SNARK.\n\n**Impact**: Would establish the first formal lower bound on SNARK proof size, answering a long-standing open question in the field. Current SNARKs achieve O(1) group elements (Groth16) or O(log n) field elements (FRI-based), but no formal proof exists that these are optimal.\n\n**Catalog References**: `Cryptography/ZeroKnowledge/SNARK.lean`, `Cryptography/Foundation.lean` (`soundness_error_bound`), `Computation/InfoEfficientAlgorithms.lean`\n\n**Proof Strategy**: (1) Model SNARK proofs as bit strings. (2) Use a counting argument: the number of accepting proof strings must be small (soundness), so the proof must carry enough information to distinguish valid statements. (3) Apply Shannon's theorem to get the lower bound. (4) For the $m > n^2$ case, argue that the constraint space is larger than what $n^2$ coefficients can represent.\n\n**Domain Bridges**: Cryptography (proof complexity) \u2194 Information theory (Shannon bounds) \u2194 Computation (circuit complexity)\n\n**Lineage**: Extends soundness bounds from this cycle; connects to `InfoEfficientAlgorithm` in the Computation catalog.\n\n**Ambition**: grand_challenge\n",
     "domains": [
       "Algebra",
@@ -783,7 +1928,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Quantum EML Gate Algebra** \u2014 a framework f"
   },
   {
-    "consumed_by_exp_id": "df98311e",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n## Synthesis\n\nThis research cycle established the BabelCode as a novel mathematical structure connecting Borges' Library of Babel to error-correcting code theory, proving 11 theorems including the Singleton bound, Hamming bound, finite Cantor diagonal, Babel-Lawvere fixed point impossibility, and the expansion theorem for the Library's Hamming graph. The most promising cross-domain connection is between the **Babel-Lawvere theorem** and the existing `lawvere_proof_coding_theorem` in the Catalog \u2014 both are concrete instances of Lawvere's categorical fixed-point theorem, but our formulation provides a combinatorially explicit diagonal construction that could serve as a template for similar impossibility results in other finite combinatorial settings.\n\nThe cycle's results connect to the broader Catalog in several ways: the self-reference impossibility theorems extend the themes of `Algebra/CollatzUndecidable.lean` (undecidability barriers), the Hamming graph structure relates to the graph-theoretic work in `Computation/SpectralRenormalization.lean` (proof length lower bounds via graph connectivity), and the coding-theoretic bounds provide quantitative versions of the catalog impossibility theorems already formalized in `Cryptography/LibraryOfBabel.lean`.\n\nThe highest breakthrough potential lies in Direction 1 (Harper's Inequality), which would establish optimal isoperimetric inequalities for the Hamming graph \u2014 a deep combinatorial result with applications to concentration of measure, computational complexity, and the theory of Boolean functions. If achieved, it would represent genuine new formalized mathematics, as this result is not currently in Mathlib.\n\n---\n\n### Direction 1: Harper's Vertex Isoperimetric Inequality for the Hamming Graph\n\n**Conjecture**: For the binary Hamming cube {0,1}^n, among all subsets S of size k = \u03a3_{i=0}^{r} C(n,i), the initial segment in the simplicial order (all vectors with at most r ones) minimizes the boundary |\u2202S|. Specifically, for any S \u2286 {0,1}^n with |S| = k, the boundary satisfies |\u2202S| \u2265 |\u2202I_k| where I_k is the initial segment of size k in the simplicial (squashed) order.\n\n**Test**: Verify computationally for n = 4, 5, 6 by exhaustive enumeration of all subsets of each size and checking that the simplicial initial segment minimizes boundary. For n = 4, k = 5 (= C(4,0) + C(4,1)), the initial segment {0000, 0001, 0010, 0100, 1000} should have minimal boundary among all 5-element subsets.\n\n**Impact**: If formalized, this would be the first machine-verified proof of Harper's theorem, a cornerstone of discrete isoperimetric theory. It has applications to: (a) concentration of measure on the discrete hypercube, (b) lower bounds in computational complexity (circuit lower bounds via Razborov's method), (c) optimal error-correcting code design, and (d) social choice theory (influences of variables in Boolean functions).\n\n**Catalog References**: `Applications/BabelCombinatorics.lean` (babel_expansion theorem provides the connectivity foundation), `Computation/SpectralRenormalization.lean` (proof_length_lower_bound uses graph-theoretic arguments)\n\n**Proof Strategy**: (1) Define the simplicial/squashed order on binary strings. (2) Prove the \"compression\" lemma: for any subset S not equal to an initial segment, there exists a compression operator that reduces the boundary without changing the size. (3) Show compressions converge to the initial segment. (4) Conclude optimality. Key helper lemmas: monotonicity of binomial coefficients, Kruskal-Katona theorem as a prerequisite.\n\n**Domain Bridges**: Combinatorics \u2194 Coding Theory \u2194 Computational Complexity\n\n**Lineage**: Builds on babel_expansion (this cycle) and the Hamming distance infrastructure developed in BabelCombinatorics.lean.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Spectral Gap of the Library's Hamming Graph\n\n**Conjecture**: The adjacency matrix of the Hamming graph H(L, A) has eigenvalues \u03bb_k = L(A-1) - kA for k = 0, 1, ..., L, with multiplicity C(L,k)(A-1)^k. The spectral gap is \u03bb_0 - \u03bb_1 = A, independent of L.\n\n**Test**: For small cases (A=2, L=3 and A=3, L=2), compute the eigenvalues explicitly by constructing the adjacency matrix and verifying the formula. The adjacency matrix of H(3,2) is 8\u00d78; its eigenvalues should be {6, 2, 2, 2, -2, -2, -2, -6} with the formula giving \u03bb_0=3, \u03bb_1=1, \u03bb_2=-1, \u03bb_3=-3 (wait \u2014 need to double-check: H(L,A) eigenvalues are L(A-1) - kA, so for L=3, A=2: \u03bb_0=3, \u03bb_1=1, \u03bb_2=-1, \u03bb_3=-3, with multiplicities 1,3,3,1).\n\n**Impact**: The spectral gap controls mixing time of random walks on the Library, expansion properties, and the concentration of measure. A formal proof would connect the Library's combinatorial structure to spectral graph theory and provide tools for analyzing the efficiency of search algorithms in the Library.\n\n**Catalog References**: `Applications/BabelCombinatorics.lean` (Hamming distance and degree), `Computation/SpectralRenormalization.lean` (spectral methods in proof complexity)\n\n**Proof Strategy**: (1) Define the Hamming graph's adjacency operator as a linear map on functions Volume A L \u2192 \u211d. (2) Identify the eigenfunctions as products of Krawtchouk polynomials. (3) Compute eigenvalues using the character theory of (\u2124/A\u2124)^L. (4) Derive the spectral gap. This requires linear algebra over \u211d and character theory of finite abelian groups, both partially available in Mathlib.\n\n**Domain Bridges**: Coding Theory \u2194 Spectral Graph Theory \u2194 Probability (random walks)\n\n**Lineage**: Builds on babel_degree (this cycle) and the Cayley graph structure of the Hamming graph.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Plotkin Bound and the Densest BabelCodes\n\n**Conjecture**: For a BabelCode with minimum distance d > L(A-1)/A, the number of codewords satisfies |C| \u2264 d\u00b7A / (d\u00b7A - L\u00b7(A-1)). This is the Plotkin bound, a fundamental result in coding theory that is currently not formalized in Mathlib.\n\n**Test**: For A=2, L=6, d=4: Plotkin gives |C| \u2264 8/(8-6) = 4. Verify by exhaustive search that no code of length 6, min distance 4, has more than 4 binary codewords. For A=3, L=4, d=3: Plotkin gives |C| \u2264 9/(9-8) = 9. The ternary Hamming code achieves this.\n\n**Impact**: Would complete the \"classical trilogy\" of coding bounds (Singleton, Hamming, Plotkin) in a formalized setting. The Plotkin bound is particularly important because it governs the regime where codes are sparse \u2014 exactly the regime relevant to the Library of Babel, where \"meaningful\" volumes are exponentially rare.\n\n**Catalog References**: `Applications/BabelCombinatorics.lean` (singleton_bound, hamming_bound), `Cryptography/LibraryOfBabel.lean` (catalog impossibility)\n\n**Proof Strategy**: (1) For any code C with min distance d, compute the sum of all pairwise Hamming distances: \u03a3_{v\u2260w} d_H(v,w) \u2265 |C|(|C|-1)d. (2) Independently bound this sum above using the \"column counting\" argument: each position contributes at most |C|\u00b2(A-1)/A to the total distance. (3) Combining: |C|(|C|-1)d \u2264 L\u00b7|C|\u00b2(A-1)/A, giving |C| \u2264 dA/(dA - L(A-1)) when d > L(A-1)/A. Key lemma: the average column contribution, which requires careful counting with Fin arithmetic.\n\n**Domain Bridges**: Coding Theory \u2194 Combinatorial Optimization\n\n**Lineage**: Builds on singleton_bound and hamming_bound from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Kolmogorov Complexity and the Meaningful Fraction of the Library\n\n**Conjecture**: Define the \"meaningful fraction\" \u03bc(K) as the fraction of Library volumes whose Kolmogorov complexity is at most K. Then \u03bc(K) \u2264 2^K / A^L for any K, and for K = L\u00b7log\u2082(A) - c, we have \u03bc(K) \u2264 2^{-c}. The vast majority of the Library is algorithmically random.\n\n**Test**: For a mini-Library (A=2, L=8), enumerate all 256 binary strings and classify by Kolmogorov complexity upper bounds (using shortest Python programs). Verify that the fraction with complexity \u2264 k decreases as approximately 2^k/256.\n\n**Impact**: Would formalize the precise sense in which \"most of the Library is gibberish\" \u2014 a quantitative version of Borges' qualitative observation. This connects the Library to algorithmic information theory and would provide the first formalized bounds on the density of structured strings in a universal library.\n\n**Catalog References**: `Applications/BabelCombinatorics.lean` (pattern_density as a simpler density result), `Bridges/LawvereCodingTheorem.lean` (connections to proof coding)\n\n**Proof Strategy**: (1) Define a simplified \"Babel complexity\" as the length of the shortest description in a fixed universal description language. (2) Prove the counting lemma: at most 2^K descriptions of length \u2264 K exist. (3) Since each description maps to at most one volume (by injectivity of decompression), at most 2^K volumes have complexity \u2264 K. (4) The fraction is 2^K / A^L. Note: full Kolmogorov complexity is not computable, but upper bounds are. We can formalize the *bound* without formalizing computability theory.\n\n**Domain Bridges**: Information Theory \u2194 Computability Theory \u2194 Library Science\n\n**Lineage**: Builds on pattern_density and redundancy_fraction from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: BabelCodes as Lattice Codes: Connection to Algebraic Geometry\n\n**Conjecture**: The set of all BabelCodes over Volume(A, L) forms a lattice under the operations: C\u2081 \u2227 C\u2082 = (C\u2081.codewords \u2229 C\u2082.codewords, max(d\u2081, d\u2082)) and C\u2081 \u2228 C\u2082 = (C\u2081.codewords \u222a C\u2082.codewords, actual min distance of union). This lattice has a unique maximum element (the entire Library with d=1) and unique minimum elements (singletons with d=\u221e).\n\n**Test**: For A=2, L=3, enumerate all BabelCodes and verify the lattice structure. Check that the meet and join operations are well-defined and satisfy the lattice axioms. The Library should have exactly \u03a3_{d=1}^{3} (number of codes with min distance exactly d) BabelCodes.\n\n**Impact**: If the BabelCode lattice has interesting algebraic properties (e.g., it is modular, distributive, or graded), this would connect the Library of Babel to lattice theory and potentially to matroid theory (since many combinatorial structures have matroid-like lattices of \"independent sets\").\n\n**Catalog References**: `Applications/BabelCombinatorics.lean` (BabelCode structure), `Algebra/Advanced.lean` (algebraic structures)\n\n**Proof Strategy**: (1) Define the BabelCode partial order: C\u2081 \u2264 C\u2082 iff C\u2081.codewords \u2286 C\u2082.codewords. (2) Verify the meet operation: intersection preserves the distance property (with the maximum distance). (3) The join requires computing the actual minimum distance of the union, which may decrease. (4) Prove the lattice axioms. Key challenge: the distance of the union is not simply min(d\u2081, d\u2082) but may involve cross-distances between C\u2081 and C\u2082.\n\n**Domain Bridges**: Coding Theory \u2194 Lattice Theory \u2194 Combinatorial Optimization\n\n**Lineage**: Builds on the BabelCode structure from this cycle.\n\n**Ambition**: extension\n",
     "domains": [
       "Algebra",
@@ -793,9 +1938,23 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "eb127022",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T05:30:32.033573+00:00",
     "title": "BabelCode as a novel mathematical structure"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_007",
+    "priority_score": 0.72,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:57.290512+00:00",
+    "title": "196-Algorithm Non-Termination"
   },
   {
     "consumed_by_exp_id": "",
@@ -1021,6 +2180,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:03:53.866607+00:00",
     "title": "Spectral Universality of LLM Reasoning Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that 10 is a solitary number \u2014 no other integer shares its abundancy index \u03c3(n)/n. Formalize the theory of friendly numbers and abundancy, connecting to the distribution of divisor sums.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_008",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-08T19:24:57.516415+00:00",
+    "title": "10 is a Solitary Number"
   },
   {
     "consumed_by_exp_id": "",
@@ -2554,21 +3727,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions: Holographic Primes Research Program\n\n## Synthesis\n\nThis research cycle established the mathematical foundations of a holographic correspondence for prime numbers, proving 19 theorems that validate structural parallels between the AdS/CFT dictionary and the algebraic properties of primes. The central discovery is that the $p$-adic valuation provides a \"depth coordinate\" with properties (additivity, boundedness, boundary characterization) that precisely mirror radial coordinates in anti-de Sitter space. The short exact sequence $0 \\to p\\mathbb{Z} \\to \\mathbb{Z} \\to \\mathbb{Z}/p\\mathbb{Z} \\to 0$ serves as the algebraic skeleton of the holographic projection, and the Euler product factorization gives the boundary CFT partition function.\n\nThe most promising cross-domain connection is between the **total holographic weight** function $\\Omega_H(n)$ and the **Bekenstein bound** from black hole physics. Our proven inequality $\\pi(n) \\leq \\tilde{\\theta}(n)$ is a discrete Bekenstein bound: prime count (bulk entropy) is bounded by logarithmic weight (boundary area). Extending this to sharper bounds could connect to the Riemann Hypothesis through fluctuation analysis. The existing Catalog results on holographic certificates (`Computation/HolographicCertificate.lean`, `bulk_boundary_duality`) provide a parallel framework for computational holography that could be bridged to the number-theoretic setting.\n\nThe direction with highest breakthrough potential is **Direction 1** (Spectral Holography), because it connects the zeros of $\\zeta(s)$ \u2014 the most information-rich objects in analytic number theory \u2014 to the spectral theory of operators on the Bruhat-Tits tree, which is the natural $p$-adic analogue of AdS space. If this connection can be made rigorous, it would provide a new framework for understanding the Riemann Hypothesis.\n\n---\n\n### Direction 1: Spectral Holography on the Bruhat-Tits Tree\n\n**Conjecture**: The Laplacian on the Bruhat-Tits tree $T_p$ (the $(p+1)$-regular tree serving as the $p$-adic analogue of hyperbolic space) has a spectral gap that is determined by the local Euler factor $(1 - p^{-s})^{-1}$. Specifically, the eigenfunctions of the tree Laplacian at eigenvalue $\\lambda_s = p^{s-1/2} + p^{1/2-s}$ correspond to the local zeta factor at $p$, and the product over all primes recovers the Riemann zeta function as a spectral zeta function.\n\n**Test**: Formalize the Bruhat-Tits tree $T_p$ as a graph in Lean 4 (vertices = $\\text{PGL}(2, \\mathbb{Q}_p) / \\text{PGL}(2, \\mathbb{Z}_p)$, edges from adjacency). Compute the spectrum of the graph Laplacian on finite subtrees of depth $d$ and verify that as $d \\to \\infty$, the spectral density converges to the predicted form $\\rho(\\lambda) \\propto \\sqrt{4(p+1) - \\lambda^2}$ (the Kesten-McKay distribution). Check numerically whether the spectral zeta function $\\zeta_{T_p}(s) = \\sum_n \\lambda_n^{-s}$ recovers the Euler factor.\n\n**Impact**: If true, this would provide a rigorous *spectral* interpretation of the Euler product, connecting the analytical properties of $\\zeta(s)$ (pole at $s=1$, functional equation, critical strip) to the spectral theory of a natural geometric object. This would make the holographic dictionary a theorem rather than an analogy. If false, the failure mode (which eigenvalue relation breaks) would reveal exactly where the $p$-adic/Archimedean comparison fails.\n\n**Catalog References**: `Computation/HolographicCertificate.lean` (holographic duality framework), `Pythagorean/HolographicPrimes.lean` (depth additivity, Euler factor structure)\n\n**Proof Strategy**: \n1. Define the Bruhat-Tits tree as an inductive type (rooted $(p+1)$-regular tree of depth $d$).\n2. Define the graph Laplacian as a matrix on vertices.\n3. Prove the adjacency spectrum of the depth-$d$ truncation using the known formula for regular tree spectra.\n4. Define the spectral zeta function and prove its relation to the Ihara zeta function of the tree quotient.\n5. Connect the Ihara zeta function to the Euler factor via the known Ihara formula $\\zeta_\\Gamma(u) = (1-u^2)^{r-1} \\det(I - Au + pu^2 I)^{-1}$.\n\n**Domain Bridges**: Number Theory (Euler product) \u2194 Spectral Graph Theory (Laplacian spectrum) \u2194 $p$-adic Geometry (Bruhat-Tits tree) \u2194 Physics (AdS/CFT bulk modes)\n\n**Lineage**: Builds on `depth_prime_pow`, `euler_factor_den_pos`, `depth_additive` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: The Holographic Entropy of Arithmetic Functions\n\n**Conjecture**: Define the *holographic entropy* of a multiplicative arithmetic function $f : \\mathbb{N} \\to \\mathbb{C}$ as $H(f, x) = -\\sum_{p \\leq x} |f(p)|^2 \\log|f(p)|^2 / \\sum_{p \\leq x} |f(p)|^2$. For $f = \\mathbf{1}$ (the constant function), $H(\\mathbf{1}, x) = \\log \\pi(x)$ (maximal entropy \u2014 uniform distribution). For $f = \\mu$ (M\u00f6bius function), the entropy $H(\\mu, x) \\to \\log \\pi(x)$ as $x \\to \\infty$ (the M\u00f6bius function has maximal entropy on primes, where $\\mu(p) = -1$ always). **Conjecture**: The Liouville function $\\lambda(n) = (-1)^{\\Omega(n)}$ has the same holographic entropy as the M\u00f6bius function on primes, but *strictly lower* entropy on prime powers: $H_2(\\lambda, x) < H_2(\\mu, x)$ where $H_2$ extends the entropy to include prime power contributions.\n\n**Test**: Compute $H(\\mu, x)$ and $H(\\lambda, x)$ for $x = 10^3, 10^4, 10^5, 10^6$ and verify the entropy gap at prime powers. Formalize the definition of holographic entropy and prove $H(\\mathbf{1}, x) = \\log \\pi(x)$.\n\n**Impact**: This would provide an information-theoretic characterization of multiplicative functions, distinguishing them by their \"disorder\" in the holographic dictionary. If the entropy gap between $\\lambda$ and $\\mu$ is provable, it would give a new structural distinction between these closely related functions that could shed light on the Chowla conjecture.\n\n**Catalog References**: `Pythagorean/HolographicPrimes.lean` (total holographic weight, depth definitions), `EML/EMLv17Core.lean` (entropy and complexity measures)\n\n**Proof Strategy**: Define the entropy functional on sequences, prove it equals $\\log \\pi(x)$ for constant sequences, use properties of $\\mu$ on primes to show maximal entropy, then analyze prime power contributions separately.\n\n**Domain Bridges**: Number Theory (multiplicative functions) \u2194 Information Theory (entropy) \u2194 Holographic Primes (weight distribution)\n\n**Lineage**: Builds on `weight_of_prime`, `weight_of_prime_sq`, `primeCount_le_chebyshev` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Holographic Renormalization Group Flow for Primes\n\n**Conjecture**: Define a \"renormalization group flow\" on the set of primes by coarse-graining: at \"scale $k$\", merge all primes $p$ with $2^k \\leq p < 2^{k+1}$ into a single \"effective prime\" with weight $\\theta_k = \\sum_{2^k \\leq p < 2^{k+1}} \\log p$. The Prime Number Theorem implies $\\theta_k \\sim 2^k \\log 2$ for large $k$. **Conjecture**: The fluctuations $\\delta_k = \\theta_k - 2^k \\log 2$ satisfy a *discrete Ornstein-Uhlenbeck process* with mean reversion rate $1/2$ and volatility proportional to $2^{k/2}$, if and only if the Riemann Hypothesis holds.\n\n**Test**: Compute $\\delta_k$ for $k = 1, \\ldots, 25$ (primes up to $2^{26} \\approx 67$ million). Fit the mean reversion rate and volatility. If RH holds, the fit should be excellent with reversion rate $\\approx 0.5$. If RH fails, the volatility should grow faster than $2^{k/2}$.\n\n**Impact**: This would provide a *statistical physics* characterization of the Riemann Hypothesis \u2014 RH as a statement about the universality class of prime fluctuations. The connection to Ornstein-Uhlenbeck would link prime distribution to the GUE random matrix ensemble, as both have the same fluctuation universality class.\n\n**Catalog References**: `Pythagorean/HolographicPrimes.lean` (Chebyshev monotonicity, prime counting), `Pythagorean/BerggrenLorentzComplexity.lean` (depth bounds and logarithmic growth)\n\n**Proof Strategy**: \n1. Define the coarse-grained Chebyshev function $\\theta_k$.\n2. Prove $\\theta_k \\sim 2^k \\log 2$ from PNT.\n3. Formalize the fluctuation bound $|\\delta_k| \\leq C \\cdot 2^{k(1/2+\\epsilon)}$ and show it is equivalent to RH.\n4. Define the Ornstein-Uhlenbeck process and prove the correspondence.\n\n**Domain Bridges**: Number Theory (prime gaps) \u2194 Statistical Physics (renormalization group) \u2194 Probability (Ornstein-Uhlenbeck) \u2194 Random Matrix Theory (GUE)\n\n**Lineage**: Builds on `chebyshevThetaApprox_mono`, `primeCount_le_chebyshev` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Multi-Prime Holographic Codes\n\n**Conjecture**: For distinct primes $p_1, \\ldots, p_k$, the Chinese Remainder isomorphism $\\mathbb{Z}/(p_1 \\cdots p_k)\\mathbb{Z} \\cong \\prod_{i=1}^k \\mathbb{Z}/p_i\\mathbb{Z}$ defines a *holographic error-correcting code* where the \"bulk state\" (an element of $\\mathbb{Z}/(p_1 \\cdots p_k)\\mathbb{Z}$) can be reconstructed from any $\\lceil k/2 \\rceil + 1$ of the $k$ \"boundary sectors\" $\\mathbb{Z}/p_i\\mathbb{Z}$. **Conjecture**: The optimal reconstruction threshold $t^* = \\min\\{t : \\text{recovery possible from } t \\text{ sectors}\\}$ satisfies $t^* = \\lceil k/2 \\rceil + 1$ when $p_1 < p_2 < \\cdots < p_k$ and $p_k < p_1 \\cdots p_{\\lceil k/2 \\rceil}$.\n\n**Test**: For $k = 5$ with primes $(2, 3, 5, 7, 11)$, verify computationally that 3 sectors suffice for reconstruction (since $11 < 2 \\times 3 \\times 5 = 30$) but 2 sectors do not. Formalize the reconstruction algorithm and prove the threshold bound.\n\n**Impact**: This connects the holographic prime framework to quantum error correction, where holographic codes (Pastawski et al., 2015) use the same bulk-boundary structure. The CRT-based code is a classical analogue of a holographic quantum error-correcting code, and proving optimal threshold bounds would establish a rigorous connection.\n\n**Catalog References**: `Pythagorean/HolographicPrimes.lean` (holographic_independence, cross-prime holography), `Computation/HolographicCertificate.lean` (bulk_boundary_duality)\n\n**Proof Strategy**: Use the CRT isomorphism (already available in Mathlib) to define the code. Prove the reconstruction threshold using the pigeonhole principle on residue classes. Show that below threshold, distinct bulk states can have identical boundary projections on the chosen sectors.\n\n**Domain Bridges**: Number Theory (CRT) \u2194 Coding Theory (error correction) \u2194 Quantum Information (holographic codes) \u2194 Computation (certificate verification)\n\n**Lineage**: Builds on `holographic_independence`, `int_to_zmod_surjective`, `kernel_mod_p` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Multiplicative Depth and Arithmetic Circuit Complexity\n\n**Conjecture**: The holographic depth function $v_p$ defines a natural notion of *multiplicative circuit depth*: an arithmetic circuit computing $n$ from $\\{1, +, \\times\\}$ has depth at least $\\max_p v_p(n)$. More precisely, define the *holographic complexity* of $n$ as $C_H(n) = \\sum_p v_p(n) \\cdot \\lceil \\log_2 p \\rceil$ (the total depth weighted by bit-length of each prime). **Conjecture**: $C_H(n) \\leq O(\\log^2 n)$ for all $n$, and this bound is tight for numbers of the form $n = \\text{lcm}(1, 2, \\ldots, k)$.\n\n**Test**: Compute $C_H(n)$ for $n = \\text{lcm}(1, \\ldots, k)$ for $k = 1, \\ldots, 100$ and verify the $O(\\log^2 k)$ growth. Compare with the actual arithmetic circuit depth.\n\n**Impact**: This would provide a number-theoretic lower bound on arithmetic circuit complexity, connecting the holographic framework to computational complexity theory. The lcm function is a natural \"hardest case\" because it maximizes the spread of prime factors.\n\n**Catalog References**: `Pythagorean/HolographicPrimes.lean` (depth additivity, depth bounds), `Computation/PadicValuationDepth.lean` (valuation depth measures), `Pythagorean/BerggrenLorentzComplexity.lean` (depth_log_upper_bound)\n\n**Proof Strategy**: Use the bound $v_p(n) \\leq \\log_p n$ and the prime number theorem to estimate $C_H(n)$. For lcm$(1, \\ldots, k)$, use the exact formula $v_p(\\text{lcm}(1,\\ldots,k)) = \\lfloor \\log_p k \\rfloor$ and sum over primes.\n\n**Domain Bridges**: Number Theory (factorization) \u2194 Complexity Theory (circuit depth) \u2194 Holographic Primes (valuation depth) \u2194 Algebra (lcm structure)\n\n**Lineage**: Builds on `depth_le_log`, `depth_additive`, `depth_prime_pow` from this cycle.\n\n**Ambition**: extension\n",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_0584",
-    "priority_score": 0.24999999999999992,
-    "research_mode": "team",
-    "source_exp_id": "27b649f9",
-    "status": "available",
-    "timestamp": "2026-06-04T01:02:42.539900+00:00",
-    "title": "Mathematical foundations of a holographic co"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future Directions: Self-Referential Type Theory\n\n## Synthesis\n\nThis research cycle established a rigorous mathematical framework for self-referential types, proving that self-reference requires infinity (the Consciousness Equation), that self-observation stabilizes immediately (strange loop idempotency), and that self-referential depth forms a strict hierarchy (diagonal incompleteness). The most promising cross-domain connection is between the fixed-point lattice of idempotent operators and the existing Catalog's eigenpair theorem (`eigenpair_of_normalized_fixed_point`): matrix eigenvectors are fixed points of normalized linear maps, and our lattice structure gives a principled way to study how multiple eigenpair constraints interact.\n\nThe cycle's results connect Lawvere's categorical framework to concrete algebraic structures (the fixed-point algebra), computability-theoretic hierarchies (the diagonal operator on graded predicates), and cardinality constraints (the consciousness equation). The strict hierarchy theorem is particularly significant: it provides a formal obstruction result showing that no finite depth of self-reference captures all self-referential predicates, directly paralleling the arithmetical hierarchy but in a more general setting.\n\nThe highest breakthrough potential lies in Direction 1 (transfinite extension), which could connect to the Church-Kleene ordinal \u03c9\u2081^CK and hyperarithmetical theory, providing a bridge between type-theoretic self-reference and ordinal analysis.\n\n---\n\n### Direction 1: Transfinite Reflective Hierarchies and \u03c9\u2081^CK\n\n**Conjecture**: The predicate hierarchy indexed by natural numbers can be extended to all countable ordinals, and the supremum of expressible levels is exactly \u03c9\u2081^CK (the Church-Kleene ordinal). Formally: define Pred(\u03b1) for ordinals \u03b1 by taking limits at limit ordinals (Pred(\u03bb) = \u22c3_{\u03b2<\u03bb} Pred(\u03b2)) and successor steps via the diagonal operator. Then the hierarchy stabilizes at exactly \u03c9\u2081^CK: Pred(\u03c9\u2081^CK) = Pred(\u03c9\u2081^CK + 1), but Pred(\u03b1) \u228a Pred(\u03b1 + 1) for all \u03b1 < \u03c9\u2081^CK.\n\n**Test**: Formalize ordinal-indexed graded predicate systems in Lean 4. Prove that the limit construction preserves the strict hierarchy property up to any given ordinal. Attempt to show stabilization at \u03c9\u2081^CK by constructing an isomorphism between the transfinite hierarchy and the hyperarithmetical hierarchy.\n\n**Impact**: If true, this establishes a deep connection between type-theoretic self-reference and ordinal analysis, linking the \"depth of consciousness\" to the Church-Kleene ordinal. If false, the failure point reveals whether self-referential depth is \"wider\" or \"narrower\" than the hyperarithmetical hierarchy.\n\n**Catalog References**: `Logic/ConsciousnessFixedPoint/Hierarchy.lean` (diagonal incompleteness, strict hierarchy), `Logic/ConsciousnessFixedPoint/Defs.lean` (DiagonalOperator, GradedPredicateSystem)\n\n**Proof Strategy**: (1) Define ordinal-indexed predicate systems using Mathlib's `Ordinal` type. (2) Prove the limit step preserves cumulativity. (3) Show the diagonal construction extends to successor ordinals. (4) Connect to `Mathlib.Computability.Halting` and the arithmetical hierarchy. (5) Use Kleene's theorem on the hyperarithmetical hierarchy as the bridge to \u03c9\u2081^CK.\n\n**Domain Bridges**: Logic (predicate hierarchy) \u2194 Computation (hyperarithmetical sets) \u2194 Set Theory (ordinal analysis)\n\n**Lineage**: Builds on diagonal_incompleteness, hierarchy_proper_subset, graded_strict_hierarchy from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Fixed-Point Lattice Distributivity and Scott Domain Structure\n\n**Conjecture**: The lattice of fixed-point sets of all idempotent endomorphisms on a Scott domain (continuous lattice) is a distributive lattice. Furthermore, this lattice is isomorphic to the lattice of retracts of the Scott domain.\n\n**Test**: (1) Construct the fixed-point lattice for the Scott domain of partial functions \u2115 \u21c0 \u2115. (2) Verify distributivity computationally for all triples of idempotents up to a finite approximation. (3) Attempt to prove the isomorphism with the retract lattice using Mathlib's order theory.\n\n**Impact**: If true, this connects our abstract fixed-point algebra to concrete domain theory, providing a model for \"what kinds of self-referential systems exist.\" If false, the non-distributive counterexample reveals structural limitations of self-referential composition.\n\n**Catalog References**: `Logic/ConsciousnessFixedPoint/Hierarchy.lean` (fp_lattice_inf_closed, fp_compose_idem), `Logic/ConsciousnessFixedPoint/Defs.lean` (FixedPointAlgebra)\n\n**Proof Strategy**: (1) Define Scott domains using Mathlib's `OmegaCompletePartialOrder`. (2) Show that continuous idempotents on Scott domains have Scott-open fixed-point sets. (3) Use the Hoffmann-Lawson theorem (retracts of continuous lattices are continuous lattices) as the key lemma. (4) Prove distributivity from the lattice structure of retracts.\n\n**Domain Bridges**: Logic (fixed-point theory) \u2194 Computation (domain theory) \u2194 Algebra (lattice theory)\n\n**Lineage**: Builds on fp_lattice_inf_closed, fp_compose_idem, fp_iff_in_range_of_idem from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Categorical Self-Reference via Traced Monoidal Categories\n\n**Conjecture**: Strange loop operators correspond precisely to traces in a traced symmetric monoidal category. Specifically: if (C, \u2297, I, Tr) is a traced symmetric monoidal category with enough points, then the strange loop data (op, shift, tangle, absorb) on an object X is equivalent to a trace Tr_{X,X}(f) for some f : X \u2297 X \u2192 X \u2297 X.\n\n**Test**: (1) Formalize traced monoidal categories in Lean 4 (extending Mathlib's monoidal category definitions). (2) Construct the correspondence explicitly for the category of sets with Cartesian product. (3) Verify that the idempotency theorem for strange loops corresponds to the vanishing axiom of traces.\n\n**Impact**: If true, this embeds our entire strange loop theory into the well-studied framework of traced monoidal categories, importing a wealth of results from categorical algebra. This would also connect to quantum computing (where traces model feedback loops in quantum circuits).\n\n**Catalog References**: `Logic/ConsciousnessFixedPoint/Theorems.lean` (strange_loop_idempotent, SelfModelRetract.toStrangeLoop), Mathlib's `Mathlib.CategoryTheory.Monoidal`\n\n**Proof Strategy**: (1) Define traces following Joyal-Street-Verity's axiomatization. (2) Show that (op, shift) with tangle+absorb determines a unique trace. (3) Conversely, show that every trace gives a strange loop. (4) Prove functoriality of the correspondence.\n\n**Domain Bridges**: Logic (strange loops) \u2194 Category Theory (traces) \u2194 Physics (quantum feedback)\n\n**Lineage**: Builds on strange_loop_idempotent, strange_loop_fp_eq_range from this cycle. Connects to `self_loop_sq_one` from `Physics/YangMillsMassGap.lean`.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Computational Complexity of Fixed-Point Finding in Reflective Systems\n\n**Conjecture**: In a computably-presented reflective system (where repr is computable and its surjectivity witness is computable), the problem of finding a fixed point of a given computable endomorphism f is complete for the class FP^NP (polynomial time with an NP oracle). Specifically: (1) fixed-point finding is in FP^NP, and (2) there exists a reflective system where fixed-point finding is FP^NP-hard.\n\n**Test**: (1) Implement the Lawvere construction as an algorithm and analyze its complexity. (2) Reduce a known FP^NP-complete problem (e.g., finding a lexicographically largest satisfying assignment) to fixed-point finding in a suitable reflective system. (3) Verify the reduction in Lean 4 using Mathlib's computability framework.\n\n**Impact**: If true, this places self-referential fixed points precisely in the computational complexity landscape, connecting abstract type theory to practical computation. If false, the failure reveals whether fixed-point finding is easier (in P?) or harder (undecidable?) than expected.\n\n**Catalog References**: `Computation/InfoEfficientAlgorithms.lean` (InfoEfficientAlgorithm), `Logic/ConsciousnessFixedPoint/Theorems.lean` (lawvere_fixed_point, reflective_fp_exists)\n\n**Proof Strategy**: (1) Define computable reflective systems using partial recursive functions. (2) Show the Lawvere construction is polynomial given an oracle for surjectivity witnesses. (3) For hardness, encode SAT instances as fixed-point problems via a standard reduction.\n\n**Domain Bridges**: Logic (self-reference) \u2194 Computation (complexity theory) \u2194 Cryptography (hard instances)\n\n**Lineage**: Builds on lawvere_fixed_point, consciousness_equation_infinite from this cycle. Connects to `search_complexity_hierarchy` from `Physics/ProofSearchInformation.lean`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Non-Commutative Fixed-Point Algebras and Quantum Self-Reference\n\n**Conjecture**: When idempotent operators do NOT commute, their fixed-point sets still carry algebraic structure\u2014specifically, the structure of an orthomodular lattice (the lattice of closed subspaces of a Hilbert space). This would mean non-commutative self-reference naturally gives rise to quantum-like structure.\n\n**Test**: (1) Construct a finite-dimensional example where non-commuting projections on a Hilbert space give an orthomodular but non-distributive fixed-point lattice. (2) Prove that the fixed-point sets of all orthogonal projections on a Hilbert space form an orthomodular lattice. (3) Show that distributivity fails (i.e., this is genuinely quantum, not classical).\n\n**Impact**: If true, this provides a mathematical explanation for why quantum mechanics uses Hilbert spaces: they are the natural habitat of non-commutative self-reference. This would bridge type theory to quantum foundations. If false, it constrains what kinds of algebraic structures can arise from non-commutative fixed points.\n\n**Catalog References**: `Logic/ConsciousnessFixedPoint/Hierarchy.lean` (fp_lattice_inf_closed \u2014 which REQUIRES commutativity), `Physics/StabilizerBounds.lean` (symplectic_self_zero)\n\n**Proof Strategy**: (1) Use Mathlib's `InnerProductSpace` and projection operators. (2) Show that the set of projections on a Hilbert space, ordered by range inclusion, forms an orthomodular lattice (this is a standard result). (3) Construct a specific 3-dimensional counterexample to distributivity. (4) Prove the orthomodular law: P \u2264 Q implies Q = P \u2228 (P\u22a5 \u2227 Q).\n\n**Domain Bridges**: Logic (fixed-point lattices) \u2194 Physics (quantum mechanics) \u2194 Algebra (orthomodular lattices)\n\n**Lineage**: Builds on fp_lattice_inf_closed, fp_compose_idem from this cycle. Extends the commutative theory to the non-commutative case.\n\n**Ambition**: grand_challenge\n",
     "domains": [
       "Logic",
@@ -2764,21 +3922,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Anyon braiding in topological quantum computing gives unitary matrices from the braid group B_n. The Jones representation rho_k: B_n -> U((k-1)(n-1)+1) at root of unity e^{2*pi*i/k} is conjectured to be universal for quantum computation when k >= 3 and n >= 4. Conjecture: the set of all braids in B_4 under the Jones representation at k=5 generates a dense subgroup of SU(3). More precisely, the image rho_5(B_4) is an infinite subgroup of SU(3) that is not contained in any proper closed subgroup. This means that topological quantum computing with Fibonacci anyons (k=5) is universal: any unitary in SU(3) can be approximated to arbitrary precision by braiding 4 anyons. The key: the Jones representation at k=5 gives 3x3 matrices, and the braid generators sigma_1, sigma_2, sigma_3 generate a dense subgroup of SU(3). Test: compute the Jones representation at k=5 for B_4, verify that sigma_1 * sigma_2 * sigma_3 has infinite order, and check that the group generated by sigma_1, sigma_2, sigma_3 is dense in SU(3) by the Solovay-Kitaev theorem. Impact: braiding anyons is universal for quantum computation. The braid group B_4 at k=5 is a quantum gate set.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0063",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.643460+00:00",
-    "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "A periodic rhythm in music is a function f: Z -> {0, 1} that is periodic: f(n + p) = f(n) for some period p. The symmetry group of a rhythm with period p is a subgroup of Z/pZ. But music also has 2D patterns: a drum pattern is a function g: Z x Z -> {0, 1} (onset grid in time x pitch). The symmetry group of a drum pattern is a subgroup of Z x Z, which is a wallpaper group in 1D. In 2D, the wallpaper groups classify all possible symmetries of periodic patterns. There are exactly 17 wallpaper groups in 2D. Conjecture: the 17 wallpaper groups correspond to 17 fundamentally different types of rhythmic structure in music. Specifically: (1) p1: no symmetry (free rhythm), (2) p2: 2-fold rotational symmetry (call-and-response), (3) pm: mirror symmetry (palindrome), (4) pg: glide reflection (canon), (5) cm: mirror + glide (round), (6) pmm: double mirror (bilateral palindrome), (7) pmg: mirror + glide (inverted canon), (8) pgg: double glide (double canon), (9) cmm: double mirror + glide (round + palindrome), (10) p4: 4-fold rotation (4-bar cycle), (11) p4m: 4-fold + mirrors (variations on a theme), (12) p4g: 4-fold + glides (inverted variations), (13) p3: 3-fold rotation (3-bar blues), (14) p3m1: 3-fold + mirrors, (15) p31m: 3-fold + glides, (16) p6: 6-fold rotation (whole-tone scale symmetry), (17) p6m: 6-fold + mirrors (maximal symmetry, the 'perfect' rhythm). Test: classify 1000 drum patterns by their wallpaper group and verify the distribution matches musical practice. Impact: there are exactly 17 types of rhythm in music, classified by the wallpaper groups.",
     "domains": [
       "Novelty",
@@ -2853,7 +3996,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "057f23ce",
     "description": "The Poincare conjecture (proved by Perelman) states that every simply connected closed 3-manifold is homeomorphic to the 3-sphere. For data: a point cloud X = {x_1, ..., x_n} in R^d may or may not lie on a manifold. Conjecture: the Poincare conjecture for data states that if the persistent homology of X satisfies H_0(X) = Z, H_1(X) = 0, H_2(X) = 0, ..., H_{d-1}(X) = 0, then X lies on (or near) a d-sphere. More precisely, if the Vietoris-Rips complex of X at scale epsilon has the homology of S^d (trivial homology except H_0 = Z and H_d = Z), then X is epsilon-close to a subset of S^d. Conjecture: the smallest epsilon such that VR_epsilon(X) has the homology of S^d is the 'Poincare threshold' of X, and it satisfies epsilon_star = C * d^{1/2} * n^{-1/d} for some constant C, where n is the number of points. This is the manifold detection threshold: below epsilon_star, X looks like a d-sphere; above epsilon_star, X looks like something else. Test: generate point clouds on S^d for d = 1, 2, 3 and compute the Poincare threshold. Impact: the Poincare conjecture for data says that manifold detection is a topological problem, and the detection threshold scales as n^{-1/d}.",
     "domains": [
       "Novelty",
@@ -2863,7 +4006,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.834465+00:00",
     "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
   },
@@ -2881,21 +4024,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-01T12:30:30.870934+00:00",
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect to the virus paradox and AI alignment.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0110",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.919138+00:00",
-    "title": "Self-Modifying Code That Cannot Be Stopped"
   },
   {
     "consumed_by_exp_id": "",
