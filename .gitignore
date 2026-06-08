@@ -57,4 +57,5 @@ __pycache__/
 .DS_Store
 *.swp
 *.swo
-*~
+*~.hf_cache/
+Aether/.aether_workspace/logs/
