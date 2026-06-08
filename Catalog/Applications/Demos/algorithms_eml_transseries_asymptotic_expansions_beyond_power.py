@@ -1,224 +1,222 @@
-#!/usr/bin/env python3
 """
-Transseries Algorithms: Core computational tools for asymptotic analysis.
+Algorithms for Transseries Computation
 
-Implements:
-1. Monomial evaluation and comparison
-2. Simple transseries arithmetic
-3. Asymptotic dominance testing
-4. EML chain growth analysis
+Type-hinted implementations of the core algorithms used in transseries theory.
 """
 
-from dataclasses import dataclass, field
-from typing import List, Tuple, Optional
+from dataclasses import dataclass
+from typing import List, Tuple, Callable, Optional
 import math
 
 
-@dataclass(frozen=True)
-class TransseriesMonomial:
-    """A first-level transseries monomial: x^α · exp(β·x) · log(x)^γ.
+@dataclass
+class TransMonomial:
+    """A transmonomial: a formal growth rate with a level and exponent.
 
-    The dominance ordering is lexicographic on (β, α, γ):
-    - Higher β (exponential rate) dominates
-    - At equal β, higher α (polynomial degree) dominates
-    - At equal β and α, higher γ (log power) dominates
+    Level 0, exponent α: x^α (polynomial growth)
+    Level 1, exponent α: exp(α·x) (exponential growth)
+    Level -1, exponent α: log(x)^α (logarithmic growth)
+    Level k > 0: exp^(k)(x)^α (k-fold iterated exponential)
+    Level k < 0: log^(|k|)(x)^α (|k|-fold iterated logarithm)
     """
-    poly_exp: float = 0.0   # α: power of x
-    exp_coeff: float = 0.0  # β: coefficient in exp(β·x)
-    log_exp: float = 0.0    # γ: power of log(x)
+    level: int
+    exponent: float
+
+    def __lt__(self, other: 'TransMonomial') -> bool:
+        """Dominance ordering: lexicographic on (level, exponent)."""
+        if self.level != other.level:
+            return self.level < other.level
+        return self.exponent < other.exponent
 
     def evaluate(self, x: float) -> float:
-        """Evaluate the monomial at x > 1."""
-        if x <= 0:
-            raise ValueError("Monomial evaluation requires x > 0")
-        result = 1.0
-        if self.poly_exp != 0:
-            result *= x ** self.poly_exp
-        if self.exp_coeff != 0:
-            result *= math.exp(self.exp_coeff * x)
-        if self.log_exp != 0:
-            result *= math.log(x) ** self.log_exp
-        return result
+        """Evaluate the transmonomial at x > 1."""
+        if x <= 1:
+            raise ValueError("x must be > 1")
+        base = x
+        if self.level == 0:
+            return x ** self.exponent
+        elif self.level > 0:
+            for _ in range(self.level):
+                base = math.exp(min(base, 500))
+            return base ** self.exponent
+        else:
+            for _ in range(-self.level):
+                if base <= 0:
+                    return 0.0
+                base = math.log(base)
+            return base ** self.exponent if base > 0 else 0.0
 
-    def dominates(self, other: 'TransseriesMonomial') -> bool:
-        """Returns True if self grows strictly faster than other."""
-        if self.exp_coeff > other.exp_coeff:
-            return True
-        if self.exp_coeff == other.exp_coeff and self.poly_exp > other.poly_exp:
-            return True
-        if (self.exp_coeff == other.exp_coeff and
-            self.poly_exp == other.poly_exp and
-            self.log_exp > other.log_exp):
-            return True
-        return False
+    def apply_exp(self) -> 'TransMonomial':
+        """Apply exp shift: raise growth level by 1."""
+        return TransMonomial(self.level + 1, self.exponent)
 
-    def equivalent(self, other: 'TransseriesMonomial') -> bool:
-        """Returns True if self and other have the same growth rate."""
-        return (self.exp_coeff == other.exp_coeff and
-                self.poly_exp == other.poly_exp and
-                self.log_exp == other.log_exp)
-
-    def valuation(self) -> Tuple[float, float, float]:
-        """The tropical valuation: (β, α, γ)."""
-        return (self.exp_coeff, self.poly_exp, self.log_exp)
-
-    def __repr__(self) -> str:
-        parts = []
-        if self.poly_exp != 0:
-            if self.poly_exp == 1:
-                parts.append("x")
-            else:
-                parts.append(f"x^{self.poly_exp}")
-        if self.exp_coeff != 0:
-            if self.exp_coeff == 1:
-                parts.append("exp(x)")
-            else:
-                parts.append(f"exp({self.exp_coeff}·x)")
-        if self.log_exp != 0:
-            if self.log_exp == 1:
-                parts.append("log(x)")
-            else:
-                parts.append(f"log(x)^{self.log_exp}")
-        return "·".join(parts) if parts else "1"
+    def apply_log(self) -> 'TransMonomial':
+        """Apply log shift: lower growth level by 1."""
+        return TransMonomial(self.level - 1, self.exponent)
 
 
 @dataclass
-class SimpleTrans:
-    """A simple transseries: a finite sum of coefficient × monomial pairs.
-
-    Represents f(x) = Σ cᵢ · mᵢ(x) where mᵢ are transseries monomials.
-    """
-    terms: List[Tuple[float, TransseriesMonomial]] = field(default_factory=list)
+class TransseriesTerm:
+    """A single term in a transseries: coefficient * transmonomial."""
+    coefficient: float
+    monomial: TransMonomial
 
     def evaluate(self, x: float) -> float:
-        """Evaluate the transseries at x."""
-        return sum(c * m.evaluate(x) for c, m in self.terms)
+        return self.coefficient * self.monomial.evaluate(x)
 
-    def leading_term(self) -> Optional[Tuple[float, TransseriesMonomial]]:
-        """Return the asymptotically dominant term."""
+
+class FiniteTransseries:
+    """A finite transseries: sum of terms sorted by dominance."""
+
+    def __init__(self, terms: Optional[List[TransseriesTerm]] = None):
+        self.terms = sorted(terms or [], key=lambda t: t.monomial, reverse=True)
+        # Remove zero coefficients
+        self.terms = [t for t in self.terms if abs(t.coefficient) > 1e-15]
+
+    def evaluate(self, x: float) -> float:
+        """Evaluate the transseries at x > 1."""
+        return sum(t.evaluate(x) for t in self.terms)
+
+    def leading_term(self) -> Optional[TransseriesTerm]:
+        """Return the leading (dominant) term."""
+        return self.terms[0] if self.terms else None
+
+    def growth_rate(self) -> Optional[int]:
+        """Return the growth level of the leading term."""
+        lt = self.leading_term()
+        return lt.monomial.level if lt else None
+
+    def __repr__(self) -> str:
         if not self.terms:
-            return None
-        return max(self.terms, key=lambda t: t[1].valuation())
-
-    def add(self, other: 'SimpleTrans') -> 'SimpleTrans':
-        """Add two transseries (term-by-term, no simplification)."""
-        return SimpleTrans(self.terms + other.terms)
-
-    def scale(self, c: float) -> 'SimpleTrans':
-        """Scale all coefficients by c."""
-        return SimpleTrans([(c * coeff, m) for coeff, m in self.terms])
-
-    def simplify(self) -> 'SimpleTrans':
-        """Combine terms with equivalent monomials."""
-        combined: dict = {}
-        for coeff, mono in self.terms:
-            key = mono.valuation()
-            combined[key] = combined.get(key, 0) + coeff
-        result = []
-        for (beta, alpha, gamma), coeff in combined.items():
-            if abs(coeff) > 1e-15:
-                result.append((coeff, TransseriesMonomial(alpha, beta, gamma)))
-        return SimpleTrans(sorted(result, key=lambda t: t[1].valuation(), reverse=True))
+            return "0"
+        parts = []
+        for t in self.terms:
+            sign = "+" if t.coefficient > 0 else "-"
+            coeff = abs(t.coefficient)
+            level = t.monomial.level
+            exp = t.monomial.exponent
+            if level == 0:
+                parts.append(f"{sign} {coeff:.2f}·x^{exp:.1f}")
+            elif level > 0:
+                parts.append(f"{sign} {coeff:.2f}·exp^({level})(x)^{exp:.1f}")
+            else:
+                parts.append(f"{sign} {coeff:.2f}·log^({-level})(x)^{exp:.1f}")
+        return " ".join(parts).lstrip("+ ")
 
 
-def compare_monomials(m1: TransseriesMonomial,
-                      m2: TransseriesMonomial) -> str:
-    """Compare two monomials: returns '≻', '≡', or '≺'."""
-    if m1.dominates(m2):
-        return '≻'
-    elif m2.dominates(m1):
-        return '≺'
-    else:
-        return '≡'
+def exponential_growth_rate_estimate(
+    f: Callable[[float], float],
+    x_max: float = 1000.0,
+    n_points: int = 100
+) -> float:
+    """Estimate the exponential growth rate of f.
+
+    Returns lim_{x→∞} log(f(x))/x, estimated numerically.
+    """
+    x_values = [x_max * (i + 1) / n_points for i in range(n_points)]
+    rates = []
+    for x in x_values[-20:]:  # Use the largest x values
+        fx = f(x)
+        if fx > 0:
+            rates.append(math.log(fx) / x)
+    return sum(rates) / len(rates) if rates else 0.0
 
 
-def asymptotic_ratio(f, g, x_values: List[float]) -> List[float]:
-    """Compute f(x)/g(x) for a sequence of x values to test asymptotic equivalence."""
-    return [f(x) / g(x) if g(x) != 0 else float('inf') for x in x_values]
+def compare_exponential_sums(
+    b: List[float],
+    c1: List[float],
+    c2: List[float],
+    x_test: List[float]
+) -> Tuple[bool, float]:
+    """Test the comparison theorem: do two exponential sums agree?
+
+    Returns (are_equal, max_difference).
+    """
+    max_diff = 0.0
+    for x in x_test:
+        sum1 = sum(c * math.exp(bi * x) for c, bi in zip(c1, b))
+        sum2 = sum(c * math.exp(bi * x) for c, bi in zip(c2, b))
+        max_diff = max(max_diff, abs(sum1 - sum2))
+    return max_diff < 1e-10, max_diff
 
 
-def iter_exp(n: int, x: float) -> float:
-    """n-fold iterated exponential."""
-    result = x
-    for _ in range(n):
-        if result > 700:
-            return float('inf')
-        result = math.exp(result)
-    return result
+def dominance_filtration_level(
+    f: Callable[[float], float],
+    x_test: float = 100.0
+) -> int:
+    """Estimate the dominance filtration level of a function.
+
+    Level 0: polynomial growth (log(f(x))/x → 0)
+    Level 1: exponential growth (log(f(x))/x → c > 0)
+    Level 2: doubly-exponential (log(log(f(x)))/x → c > 0)
+    Level -1: logarithmic (f(x)/x^ε → 0 for all ε > 0)
+    """
+    fx = f(x_test)
+    if fx <= 0:
+        return -2  # below logarithmic
+
+    # Check if super-exponential
+    log_fx = math.log(fx)
+    if log_fx > x_test:
+        log_log = math.log(log_fx)
+        rate = log_log / x_test
+        if rate > 0.1:
+            return 2
+        return 1
+
+    # Check exponential vs polynomial
+    rate = log_fx / x_test
+    if rate > 0.01:
+        return 1
+    elif rate > -0.01:
+        # Polynomial level - check if sub-polynomial
+        if log_fx < math.log(x_test) * 0.5:
+            return -1
+        return 0
+    return -1
 
 
-def iter_log(n: int, x: float) -> float:
-    """n-fold iterated logarithm."""
-    result = x
-    for _ in range(n):
-        if result <= 0:
-            return float('-inf')
-        result = math.log(result)
-    return result
+def eml_transseries_expansion(y: float) -> FiniteTransseries:
+    """Compute the two-level transseries expansion of eml(x, y) = exp(x) - log(y).
 
-
-def eml_diag(z: float) -> float:
-    """EML diagonal: exp(z) - log(z)."""
-    if z <= 0:
-        raise ValueError("eml_diag requires z > 0")
-    return math.exp(z) - math.log(z)
-
-
-def eml_diag_iter(n: int, z: float) -> float:
-    """Iterated EML diagonal."""
-    result = z
-    for _ in range(n):
-        if result > 700:
-            return float('inf')
-        result = eml_diag(result)
-    return result
-
-
-def growth_classification(f, x_test: float = 100.0) -> str:
-    """Classify the growth rate of f by comparing against standard scales."""
-    try:
-        val = f(x_test)
-    except (OverflowError, ValueError):
-        return "super-exponential"
-
-    if val == float('inf'):
-        return "super-exponential"
-
-    scales = [
-        ("constant", 1.0),
-        ("logarithmic", math.log(x_test)),
-        ("polynomial(1)", x_test),
-        ("polynomial(2)", x_test**2),
-        ("polynomial(5)", x_test**5),
-        ("exponential", math.exp(x_test) if x_test < 700 else float('inf')),
-    ]
-
-    for name, scale in scales:
-        if scale == float('inf'):
-            continue
-        ratio = abs(val) / scale if scale > 0 else float('inf')
-        if 0.01 < ratio < 100:
-            return name
-    return "super-polynomial"
+    Returns the transseries: 1·exp(x) + (-log(y))·1
+    """
+    exp_term = TransseriesTerm(1.0, TransMonomial(level=1, exponent=1.0))
+    const_term = TransseriesTerm(-math.log(y), TransMonomial(level=0, exponent=0.0))
+    return FiniteTransseries([exp_term, const_term])
 
 
 if __name__ == "__main__":
-    # Example usage
-    m1 = TransseriesMonomial(poly_exp=2, exp_coeff=1)  # x^2·exp(x)
-    m2 = TransseriesMonomial(poly_exp=5)                 # x^5
-    m3 = TransseriesMonomial(exp_coeff=2)                # exp(2x)
+    # Test the algorithms
+    print("Testing TransMonomial evaluation:")
+    m1 = TransMonomial(level=0, exponent=2.0)  # x^2
+    m2 = TransMonomial(level=1, exponent=1.0)  # exp(x)
+    m3 = TransMonomial(level=-1, exponent=1.0)  # log(x)
 
-    print("Monomial comparisons:")
-    print(f"  {m1} vs {m2}: {compare_monomials(m1, m2)}")
-    print(f"  {m1} vs {m3}: {compare_monomials(m1, m3)}")
-    print(f"  {m2} vs {m3}: {compare_monomials(m2, m3)}")
+    x = 10.0
+    print(f"  x^2 at x={x}: {m1.evaluate(x)}")
+    print(f"  exp(x) at x={x}: {m2.evaluate(x):.2f}")
+    print(f"  log(x) at x={x}: {m3.evaluate(x):.4f}")
 
-    # Build a simple transseries
-    t = SimpleTrans([
-        (1.0, TransseriesMonomial(exp_coeff=1)),
-        (-1.0, TransseriesMonomial(log_exp=1)),
-    ])
-    print(f"\nTransseries f(x) = exp(x) - log(x)")
-    print(f"  Leading term: {t.leading_term()}")
-    for x in [1, 5, 10, 50]:
-        print(f"  f({x}) = {t.evaluate(x):.6f}")
+    print(f"\nDominance: {m3} < {m1} < {m2}: {m3 < m1 < m2}")
+
+    print("\nEML transseries expansion:")
+    ts = eml_transseries_expansion(2.0)
+    print(f"  eml(x, 2) ≈ {ts}")
+    print(f"  At x=5: transseries = {ts.evaluate(5.0):.4f}, "
+          f"exact = {math.exp(5) - math.log(2):.4f}")
+
+    print("\nGrowth rate estimation:")
+    print(f"  v(exp(2x)) ≈ {exponential_growth_rate_estimate(lambda x: math.exp(2*x)):.4f}")
+    print(f"  v(x^5) ≈ {exponential_growth_rate_estimate(lambda x: x**5):.4f}")
+
+    print("\nComparison theorem test:")
+    b = [1.0, 2.0, 3.0]
+    c1 = [0.5, -1.0, 2.0]
+    c2 = [0.5, -1.0, 2.0]
+    c3 = [0.5, -1.0, 2.1]
+    x_test = [0.1 * i for i in range(1, 20)]
+    eq1, diff1 = compare_exponential_sums(b, c1, c2, x_test)
+    eq2, diff2 = compare_exponential_sums(b, c1, c3, x_test)
+    print(f"  c1 == c2: {eq1} (diff = {diff1:.2e})")
+    print(f"  c1 == c3: {eq2} (diff = {diff2:.2e})")
