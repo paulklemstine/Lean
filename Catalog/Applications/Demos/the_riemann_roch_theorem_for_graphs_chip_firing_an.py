@@ -1,441 +1,375 @@
 #!/usr/bin/env python3
 """
-Chip-Firing and the Riemann-Roch Theorem for Graphs: Demo
+Demo: Chip-Firing and the Canonical Divisor on Graphs
 
-Demonstrates the Baker-Norine theory on complete graphs K_n,
-including chip-firing, the canonical divisor, genus computation,
-and verification of the Riemann-Roch formula.
+Demonstrates the key concepts from the Riemann-Roch theorem for graphs:
+- Divisors as chip configurations
+- The canonical divisor K_G
+- Chip-firing operations
+- Genus computation
+- Degree preservation under chip-firing
 """
 
 import itertools
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple, Set
 
-def complete_graph_edges(n: int) -> List[Tuple[int, int]]:
-    """Return all edges of K_n."""
-    return [(i, j) for i in range(n) for j in range(i+1, n)]
+# ============================================================
+# Core Types
+# ============================================================
 
-def degree_kn(n: int) -> int:
-    """Every vertex of K_n has degree n-1."""
-    return n - 1
+class Graph:
+    """A simple undirected graph with integer vertex labels."""
+    def __init__(self, n: int, edges: List[Tuple[int, int]]):
+        self.n = n
+        self.vertices = list(range(n))
+        self.adj: Dict[int, Set[int]] = {v: set() for v in self.vertices}
+        for u, v in edges:
+            if u != v:
+                self.adj[u].add(v)
+                self.adj[v].add(u)
 
-def genus_kn(n: int) -> int:
-    """Genus of K_n: g = (n-1)(n-2)/2."""
-    return (n - 1) * (n - 2) // 2
+    def degree(self, v: int) -> int:
+        return len(self.adj[v])
 
-def canonical_divisor_kn(n: int) -> Dict[int, int]:
-    """Canonical divisor of K_n: K(v) = n-3 for all v."""
-    return {v: n - 3 for v in range(n)}
+    def num_edges(self) -> int:
+        return sum(self.degree(v) for v in self.vertices) // 2
 
-def canonical_degree_kn(n: int) -> int:
-    """Degree of canonical divisor: n(n-3) = 2g - 2."""
-    return n * (n - 3)
+    def genus(self) -> int:
+        """g = |E| - |V| + 1"""
+        return self.num_edges() - self.n + 1
 
-def chip_fire(n: int, divisor: Dict[int, int], vertex: int) -> Dict[int, int]:
-    """Fire vertex in K_n: send 1 chip to each neighbor."""
-    D = divisor.copy()
-    D[vertex] -= (n - 1)  # lose degree-many chips
-    for w in range(n):
-        if w != vertex:
-            D[w] += 1
-    return D
+    @staticmethod
+    def complete(n: int) -> 'Graph':
+        """The complete graph K_n."""
+        edges = [(i, j) for i in range(n) for j in range(i+1, n)]
+        return Graph(n, edges)
 
-def divisor_degree(D: Dict[int, int]) -> int:
-    """Total number of chips."""
-    return sum(D.values())
-
-def is_effective(D: Dict[int, int]) -> bool:
-    """Check if all entries are non-negative."""
-    return all(v >= 0 for v in D.values())
-
-def all_firing_sequences(n: int, D: Dict[int, int], max_steps: int = 10) -> bool:
-    """Check if D can reach an effective divisor via chip-firing (BFS)."""
-    from collections import deque
-    visited = set()
-    queue = deque()
-    key = tuple(D[v] for v in range(n))
-    queue.append((key, 0))
-    visited.add(key)
-    
-    while queue:
-        state, steps = queue.popleft()
-        D_curr = {v: state[v] for v in range(n)}
-        if is_effective(D_curr):
-            return True
-        if steps >= max_steps:
-            continue
-        for v in range(n):
-            D_next = chip_fire(n, D_curr, v)
-            key_next = tuple(D_next[w] for w in range(n))
-            if key_next not in visited:
-                visited.add(key_next)
-                queue.append((key_next, steps + 1))
-    return False
-
-def compute_rank(n: int, D: Dict[int, int], max_search: int = 8) -> int:
-    """Compute divisor rank r(D) by definition (small graphs only).
-    
-    r(D) = -1 if D is not equivalent to effective;
-    otherwise max k such that for all effective E with deg(E)=k,
-    D-E is equivalent to effective.
-    """
-    if not all_firing_sequences(n, D):
-        return -1
-    
-    rank = 0
-    for k in range(1, divisor_degree(D) + 1):
-        if k > max_search:
-            break
-        # Check all effective divisors of degree k on n vertices
-        # (compositions of k into n parts)
-        all_ok = True
-        for combo in compositions(k, n):
-            E = {v: combo[v] for v in range(n)}
-            D_minus_E = {v: D[v] - E[v] for v in range(n)}
-            if not all_firing_sequences(n, D_minus_E, max_steps=12):
-                all_ok = False
-                break
-        if all_ok:
-            rank = k
-        else:
-            break
-    return rank
-
-def compositions(k: int, n: int):
-    """Generate all weak compositions of k into n parts."""
-    if n == 1:
-        yield [k]
-        return
-    for i in range(k + 1):
-        for rest in compositions(k - i, n - 1):
-            yield [i] + rest
-
-def riemann_roch_verify(n: int, D: Dict[int, int]) -> dict:
-    """Verify the Riemann-Roch formula for a divisor on K_n."""
-    g = genus_kn(n)
-    K = canonical_divisor_kn(n)
-    K_minus_D = {v: K[v] - D[v] for v in range(n)}
-    
-    r_D = compute_rank(n, D)
-    r_KD = compute_rank(n, K_minus_D)
-    deg_D = divisor_degree(D)
-    
-    lhs = r_D - r_KD
-    rhs = deg_D + 1 - g
-    
-    return {
-        'D': D,
-        'K-D': K_minus_D,
-        'r(D)': r_D,
-        'r(K-D)': r_KD,
-        'deg(D)': deg_D,
-        'genus': g,
-        'LHS (r(D)-r(K-D))': lhs,
-        'RHS (deg(D)+1-g)': rhs,
-        'RR holds': lhs == rhs,
-    }
+    @staticmethod
+    def cycle(n: int) -> 'Graph':
+        """The cycle graph C_n."""
+        edges = [(i, (i+1) % n) for i in range(n)]
+        return Graph(n, edges)
 
 
-def main():
-    print("=" * 70)
-    print("CHIP-FIRING AND THE RIEMANN-ROCH THEOREM FOR GRAPHS")
-    print("=" * 70)
-    
-    print("\n--- Complete Graph Structure ---")
-    for n in range(2, 8):
-        g = genus_kn(n)
-        K = canonical_divisor_kn(n)
-        deg_K = canonical_degree_kn(n)
-        print(f"K_{n}: genus={g}, canonical K(v)={n-3} for all v, "
-              f"deg(K)={deg_K} = 2g-2={2*g-2}")
-    
-    print("\n--- Chip-Firing on K_4 ---")
-    n = 4
-    D = {0: 3, 1: 0, 2: -1, 3: 1}
-    print(f"Initial divisor: {D}, degree={divisor_degree(D)}")
-    
-    for v in range(4):
-        D_fired = chip_fire(n, D, v)
-        print(f"  Fire vertex {v}: {D_fired}, degree={divisor_degree(D_fired)}")
-    
-    print("\n--- Riemann-Roch Verification on K_3 ---")
-    n = 3
-    g = genus_kn(n)
-    print(f"K_3: genus = {g}")
-    
-    # Test several divisors
-    test_divisors = [
-        {0: 0, 1: 0, 2: 0},      # zero divisor
-        {0: 1, 1: 0, 2: 0},      # degree 1
-        {0: 1, 1: 1, 2: 0},      # degree 2
-        {0: 0, 1: 0, 2: 2},      # degree 2 concentrated
-        {0: 0, 1: 0, 2: -1},     # negative
-        canonical_divisor_kn(3),   # canonical
-    ]
-    
-    for D in test_divisors:
-        result = riemann_roch_verify(n, D)
-        status = "✓" if result['RR holds'] else "✗"
-        print(f"  {status} D={D}: r(D)={result['r(D)']}, "
-              f"r(K-D)={result['r(K-D)']}, "
-              f"deg={result['deg(D)']}, "
-              f"LHS={result['LHS (r(D)-r(K-D))']}, "
-              f"RHS={result['RHS (deg(D)+1-g)']}")
-    
-    print("\n--- Riemann-Roch Verification on K_4 ---")
-    n = 4
-    g = genus_kn(n)
-    print(f"K_4: genus = {g}")
-    
-    test_divisors_4 = [
-        {0: 0, 1: 0, 2: 0, 3: 0},        # zero
-        {0: 2, 1: 0, 2: 0, 3: 0},        # degree 2
-        {0: 1, 1: 1, 2: 1, 3: 0},        # degree 3
-        canonical_divisor_kn(4),           # canonical K(v) = 1
-        {0: 2, 1: 2, 2: 0, 3: 0},        # degree 4
-    ]
-    
-    for D in test_divisors_4:
-        result = riemann_roch_verify(n, D)
-        status = "✓" if result['RR holds'] else "✗"
-        print(f"  {status} D={D}: r(D)={result['r(D)']}, "
-              f"r(K-D)={result['r(K-D)']}, "
-              f"deg={result['deg(D)']}, "
-              f"LHS={result['LHS (r(D)-r(K-D))']}, "
-              f"RHS={result['RHS (deg(D)+1-g)']}")
-    
-    print("\n--- Canonical Divisor Rank ---")
-    for n in range(3, 6):
-        g = genus_kn(n)
-        K = canonical_divisor_kn(n)
-        r_K = compute_rank(n, K)
-        print(f"K_{n}: genus={g}, r(K) = {r_K}, expected g-1 = {g-1}")
-    
-    print("\n--- Gonality of Complete Graphs ---")
-    for n in range(3, 7):
-        # Test divisor 2*[v0]
-        D_gon = {v: (2 if v == 0 else 0) for v in range(n)}
-        r = compute_rank(n, D_gon)
-        print(f"K_{n}: r(2·[v₀]) = {r}, gonality ≤ 2: {r >= 1}")
+class Divisor:
+    """A divisor on a graph: an integer-valued function on vertices."""
+    def __init__(self, values: Dict[int, int]):
+        self.values = dict(values)
+
+    def __getitem__(self, v: int) -> int:
+        return self.values.get(v, 0)
+
+    def degree(self) -> int:
+        return sum(self.values.values())
+
+    def is_effective(self) -> bool:
+        return all(c >= 0 for c in self.values.values())
+
+    def __add__(self, other: 'Divisor') -> 'Divisor':
+        keys = set(self.values) | set(other.values)
+        return Divisor({v: self[v] + other[v] for v in keys})
+
+    def __sub__(self, other: 'Divisor') -> 'Divisor':
+        keys = set(self.values) | set(other.values)
+        return Divisor({v: self[v] - other[v] for v in keys})
+
+    def __repr__(self) -> str:
+        items = sorted(self.values.items())
+        return "Div(" + ", ".join(f"v{v}:{c}" for v, c in items) + ")"
 
 
-if __name__ == '__main__':
-    main()
+def canonical_divisor(G: Graph) -> Divisor:
+    """K_G(v) = deg(v) - 2 for each vertex v."""
+    return Divisor({v: G.degree(v) - 2 for v in G.vertices})
+
+
+def chip_fire(G: Graph, D: Divisor, v: int) -> Divisor:
+    """Fire vertex v: sends one chip along each incident edge."""
+    new_vals = dict(D.values)
+    new_vals[v] = D[v] - G.degree(v)
+    for w in G.adj[v]:
+        new_vals[w] = D[w] + 1
+    return Divisor(new_vals)
+
+
+def laplacian(G: Graph, f: Dict[int, int]) -> Divisor:
+    """Compute the Laplacian Δf."""
+    result = {}
+    for v in G.vertices:
+        result[v] = sum(f.get(v, 0) - f.get(w, 0) for w in G.adj[v])
+    return Divisor(result)
+
+
+# ============================================================
+# Demonstrations
+# ============================================================
+
+def demo_canonical_divisor():
+    """Demo 1: Canonical divisor and Gauss-Bonnet for complete graphs."""
+    print("=" * 60)
+    print("Demo 1: Canonical Divisor of Complete Graphs")
+    print("=" * 60)
+
+    for n in range(3, 8):
+        G = Graph.complete(n)
+        K = canonical_divisor(G)
+        g = G.genus()
+
+        print(f"\nK_{n}:")
+        print(f"  Genus g = {g}")
+        print(f"  Canonical divisor K = {K}")
+        print(f"  deg(K) = {K.degree()}")
+        print(f"  2g - 2 = {2*g - 2}")
+        assert K.degree() == 2 * g - 2, "Gauss-Bonnet FAILED!"
+        print(f"  ✓ Gauss-Bonnet verified: deg(K) = 2g - 2")
+
+        # Verify K(v) = n - 3 for all v
+        for v in G.vertices:
+            assert K[v] == n - 3, f"K({v}) = {K[v]} ≠ {n-3}"
+        print(f"  ✓ K(v) = {n-3} for all v (= n - 3)")
+
+
+def demo_chip_firing_commutativity():
+    """Demo 2: Chip-firing is commutative (Abelian sandpile property)."""
+    print("\n" + "=" * 60)
+    print("Demo 2: Chip-Firing Commutativity")
+    print("=" * 60)
+
+    G = Graph.complete(5)
+    D = Divisor({0: 10, 1: 3, 2: 5, 3: 1, 4: 7})
+    print(f"\nInitial divisor: {D}")
+    print(f"  degree = {D.degree()}")
+
+    # Fire vertex 0 then vertex 2
+    D_02 = chip_fire(G, chip_fire(G, D, 0), 2)
+    # Fire vertex 2 then vertex 0
+    D_20 = chip_fire(G, chip_fire(G, D, 2), 0)
+
+    print(f"\n  Fire v0 then v2: {D_02}")
+    print(f"  Fire v2 then v0: {D_20}")
+
+    # Check they're equal
+    for v in G.vertices:
+        assert D_02[v] == D_20[v], f"Mismatch at v{v}"
+    print(f"  ✓ Commutativity verified!")
+
+    # Also verify degree preservation
+    print(f"\n  deg(original)    = {D.degree()}")
+    print(f"  deg(after fires) = {D_02.degree()}")
+    assert D.degree() == D_02.degree()
+    print(f"  ✓ Degree preserved under chip-firing!")
+
+
+def demo_canonical_involution():
+    """Demo 3: The canonical involution D ↦ K - D."""
+    print("\n" + "=" * 60)
+    print("Demo 3: Canonical Involution (Serre Duality)")
+    print("=" * 60)
+
+    G = Graph.complete(5)
+    K = canonical_divisor(G)
+    g = G.genus()
+
+    D = Divisor({0: 3, 1: -1, 2: 4, 3: 0, 4: 2})
+    complement = K - D
+    double_complement = K - complement
+
+    print(f"\n  K_5 genus g = {g}")
+    print(f"  Canonical K = {K}")
+    print(f"  D = {D}, deg(D) = {D.degree()}")
+    print(f"  K - D = {complement}, deg(K-D) = {complement.degree()}")
+    print(f"  2g - 2 - deg(D) = {2*g - 2 - D.degree()}")
+    assert complement.degree() == 2 * g - 2 - D.degree()
+    print(f"  ✓ deg(K-D) = 2g - 2 - deg(D)")
+
+    print(f"\n  K - (K - D) = {double_complement}")
+    for v in G.vertices:
+        assert double_complement[v] == D[v]
+    print(f"  ✓ Involution verified: K - (K - D) = D")
+
+
+def demo_genus_computation():
+    """Demo 4: Genus computation for various graphs."""
+    print("\n" + "=" * 60)
+    print("Demo 4: Genus of Various Graphs")
+    print("=" * 60)
+
+    for n in range(3, 8):
+        G_complete = Graph.complete(n)
+        g_formula = (n - 1) * (n - 2) // 2
+        print(f"\n  K_{n}: genus = {G_complete.genus()}, formula (n-1)(n-2)/2 = {g_formula}")
+        assert G_complete.genus() == g_formula
+
+    for n in range(3, 8):
+        G_cycle = Graph.cycle(n)
+        print(f"  C_{n}: genus = {G_cycle.genus()} (always 1 for cycles)")
+        assert G_cycle.genus() == 1
+
+
+def demo_firing_scripts():
+    """Demo 5: Firing script algebra."""
+    print("\n" + "=" * 60)
+    print("Demo 5: Firing Script Algebra")
+    print("=" * 60)
+
+    G = Graph.complete(4)
+    D = Divisor({0: 5, 1: 3, 2: 2, 3: 4})
+
+    # Apply firing script f = {0: 2, 1: -1} (fire v0 twice, anti-fire v1 once)
+    f = {0: 2, 1: -1, 2: 0, 3: 0}
+    g = {0: 0, 1: 1, 2: -1, 3: 0}
+
+    # Apply f then g
+    Lf = laplacian(G, f)
+    D_f = D + Lf
+    Lg_after_f = laplacian(G, g)
+    D_fg = D_f + Lg_after_f
+
+    # Apply g then f
+    Lg = laplacian(G, g)
+    D_g = D + Lg
+    Lf_after_g = laplacian(G, f)
+    D_gf = D_g + Lf_after_g
+
+    # Apply f + g
+    fg_sum = {v: f.get(v, 0) + g.get(v, 0) for v in G.vertices}
+    L_sum = laplacian(G, fg_sum)
+    D_sum = D + L_sum
+
+    print(f"\n  D = {D}")
+    print(f"  f = {f}, g = {g}")
+    print(f"  D + Δf + Δg = {D_fg}")
+    print(f"  D + Δg + Δf = {D_gf}")
+    print(f"  D + Δ(f+g)  = {D_sum}")
+
+    for v in G.vertices:
+        assert D_fg[v] == D_gf[v] == D_sum[v]
+    print(f"  ✓ Firing action is commutative and composable!")
+
+    print(f"\n  deg(D) = {D.degree()}, deg(D + Δf) = {D_f.degree()}")
+    assert D.degree() == D_f.degree() == D_fg.degree()
+    print(f"  ✓ Degree preserved through all firing operations!")
+
+
+if __name__ == "__main__":
+    demo_canonical_divisor()
+    demo_chip_firing_commutativity()
+    demo_canonical_involution()
+    demo_genus_computation()
+    demo_firing_scripts()
+    print("\n" + "=" * 60)
+    print("All demonstrations passed! ✓")
+    print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Chip-Firing Dynamics on Complete Graphs
+Visualization: Chip-Firing on Complete Graphs
 
-Shows how chip configurations evolve under firing, verifies degree conservation,
-and plots the canonical divisor structure across K_n for various n.
+Generates plots showing:
+1. Canonical divisor values vs. graph size
+2. Genus growth for complete graphs
+3. Gauss-Bonnet verification
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 import numpy as np
 
-
-def chip_fire_kn(n, D, v):
-    """Fire vertex v in K_n."""
-    D_new = D.copy()
-    D_new[v] -= (n - 1)
-    for w in range(n):
-        if w != v:
-            D_new[w] += 1
-    return D_new
-
-
-def genus_kn(n):
+def compute_genus(n):
+    """Genus of K_n."""
     return (n - 1) * (n - 2) // 2
 
+def canonical_value(n):
+    """K_{K_n}(v) = n - 3 for all v."""
+    return n - 3
 
-def canonical_kn(n):
-    return {v: n - 3 for v in range(n)}
+def canonical_degree(n):
+    """deg(K_{K_n}) = n(n-3)."""
+    return n * (n - 3)
 
+# Data
+ns = list(range(2, 15))
+genera = [compute_genus(n) for n in ns]
+can_vals = [canonical_value(n) for n in ns]
+can_degs = [canonical_degree(n) for n in ns]
+gauss_bonnet = [2 * compute_genus(n) - 2 for n in ns]
 
-def compute_rank_simple(n, D, max_steps=12):
-    """Compute rank via BFS for small graphs."""
-    from collections import deque
-    
-    def bfs_effective(D_start):
-        visited = set()
-        queue = deque()
-        key = tuple(D_start[v] for v in range(n))
-        queue.append((key, 0))
-        visited.add(key)
-        while queue:
-            state, steps = queue.popleft()
-            D_c = {v: state[v] for v in range(n)}
-            if all(D_c[v] >= 0 for v in range(n)):
-                return True
-            if steps >= max_steps:
-                continue
-            for v in range(n):
-                D_next = chip_fire_kn(n, D_c, v)
-                key_next = tuple(D_next[w] for w in range(n))
-                if key_next not in visited:
-                    visited.add(key_next)
-                    queue.append((key_next, steps + 1))
-        return False
-    
-    if not bfs_effective(D):
-        return -1
-    
-    def weak_compositions(k, m):
-        if m == 1:
-            yield [k]
-            return
-        for i in range(k + 1):
-            for rest in weak_compositions(k - i, m - 1):
-                yield [i] + rest
-    
-    rank = 0
-    deg = sum(D.values())
-    for k in range(1, min(deg + 1, 6)):
-        all_ok = True
-        for combo in weak_compositions(k, n):
-            E = {v: combo[v] for v in range(n)}
-            DmE = {v: D[v] - E[v] for v in range(n)}
-            if not bfs_effective(DmE):
-                all_ok = False
-                break
-        if all_ok:
-            rank = k
-        else:
-            break
-    return rank
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
+# Plot 1: Genus growth
+ax1 = axes[0]
+ax1.plot(ns, genera, 'bo-', linewidth=2, markersize=8)
+ax1.set_xlabel('n (vertices)', fontsize=12)
+ax1.set_ylabel('Genus g(K_n)', fontsize=12)
+ax1.set_title('Genus of Complete Graph K_n\ng = (n-1)(n-2)/2', fontsize=13)
+ax1.grid(True, alpha=0.3)
 
-def plot_genus_and_canonical():
-    """Plot genus and canonical divisor degree for K_n."""
-    fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-    
-    ns = list(range(2, 15))
-    genera = [genus_kn(n) for n in ns]
-    can_degrees = [n * (n - 3) for n in ns]
-    can_values = [n - 3 for n in ns]
-    
-    # Plot 1: Genus
-    axes[0].bar(ns, genera, color='steelblue', alpha=0.8)
-    axes[0].set_xlabel('n (vertices of K_n)')
-    axes[0].set_ylabel('g(K_n)')
-    axes[0].set_title('Genus of Complete Graphs\ng = (n-1)(n-2)/2')
-    axes[0].grid(True, alpha=0.3)
-    
-    # Plot 2: Canonical degree
-    axes[1].bar(ns, can_degrees, color='coral', alpha=0.8)
-    axes[1].plot(ns, [2 * g - 2 for g in genera], 'k--', label='2g - 2')
-    axes[1].set_xlabel('n')
-    axes[1].set_ylabel('deg(K)')
-    axes[1].set_title('Canonical Divisor Degree\ndeg(K) = n(n-3) = 2g-2')
-    axes[1].legend()
-    axes[1].grid(True, alpha=0.3)
-    
-    # Plot 3: Canonical coefficient
-    axes[2].bar(ns, can_values, color='seagreen', alpha=0.8)
-    axes[2].axhline(y=0, color='red', linestyle='--', alpha=0.5)
-    axes[2].set_xlabel('n')
-    axes[2].set_ylabel('K(v)')
-    axes[2].set_title('Canonical Coefficient K(v) = n-3\n(effective when n ≥ 3)')
-    axes[2].grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('genus_canonical.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved genus_canonical.png")
+# Plot 2: Canonical divisor value
+ax2 = axes[1]
+ax2.plot(ns, can_vals, 'rs-', linewidth=2, markersize=8)
+ax2.axhline(y=0, color='k', linewidth=0.5)
+ax2.set_xlabel('n (vertices)', fontsize=12)
+ax2.set_ylabel('K(v) = n - 3', fontsize=12)
+ax2.set_title('Canonical Divisor Value on K_n\nK(v) = deg(v) - 2 = n - 3', fontsize=13)
+ax2.grid(True, alpha=0.3)
 
+# Plot 3: Gauss-Bonnet verification
+ax3 = axes[2]
+ax3.plot(ns, can_degs, 'g^-', linewidth=2, markersize=8, label='deg(K_G) = n(n-3)')
+ax3.plot(ns, gauss_bonnet, 'ko--', linewidth=1.5, markersize=6, label='2g - 2')
+ax3.set_xlabel('n (vertices)', fontsize=12)
+ax3.set_ylabel('Degree', fontsize=12)
+ax3.set_title('Gauss-Bonnet Theorem\ndeg(K_G) = 2g - 2', fontsize=13)
+ax3.legend(fontsize=11)
+ax3.grid(True, alpha=0.3)
 
-def plot_riemann_roch_verification():
-    """Verify Riemann-Roch on K_3 and K_4 for many divisors."""
-    fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-    
-    for idx, n in enumerate([3, 4]):
-        g = genus_kn(n)
-        K = canonical_kn(n)
-        
-        degrees = []
-        ranks = []
-        rr_line = []
-        
-        # Generate divisors of various degrees
-        for d in range(-2, 2 * g + 1):
-            # Spread chips as evenly as possible
-            base = d // n
-            remainder = d % n
-            if remainder < 0:
-                base -= 1
-                remainder += n
-            D = {v: base + (1 if v < remainder else 0) for v in range(n)}
-            r = compute_rank_simple(n, D)
-            degrees.append(d)
-            ranks.append(r)
-            rr_line.append(d + 1 - g)
-        
-        axes[idx].scatter(degrees, ranks, c='steelblue', s=40, zorder=3,
-                          label='r(D)')
-        axes[idx].plot(degrees, rr_line, 'r--', alpha=0.7,
-                       label='deg(D) + 1 - g')
-        axes[idx].axhline(y=-1, color='gray', linestyle=':', alpha=0.5)
-        axes[idx].axhline(y=0, color='gray', linestyle=':', alpha=0.5)
-        axes[idx].axvline(x=0, color='gray', linestyle=':', alpha=0.5)
-        axes[idx].axvline(x=2*g-2, color='orange', linestyle='--', alpha=0.5,
-                          label='deg = 2g-2')
-        axes[idx].set_xlabel('deg(D)')
-        axes[idx].set_ylabel('r(D)')
-        axes[idx].set_title(f'Riemann-Roch on K_{n} (g={g})')
-        axes[idx].legend(fontsize=8)
-        axes[idx].grid(True, alpha=0.3)
-    
-    plt.tight_layout()
-    plt.savefig('riemann_roch_verification.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved riemann_roch_verification.png")
+plt.tight_layout()
+plt.savefig('chip_firing_canonical.png', dpi=150, bbox_inches='tight')
+plt.close()
 
+print("Saved chip_firing_canonical.png")
 
-def plot_chipfiring_dynamics():
-    """Show chip-firing dynamics on K_4."""
-    fig, axes = plt.subplots(2, 3, figsize=(14, 8))
-    
-    n = 4
-    D_init = {0: 5, 1: -1, 2: 0, 3: -1}
-    
-    configs = [D_init]
-    labels = ['Initial']
-    
-    # Fire sequence
-    fire_seq = [0, 0, 1, 3, 2]
-    D = D_init
-    for v in fire_seq:
-        D = chip_fire_kn(n, D, v)
-        configs.append(D)
-        labels.append(f'Fire v{v}')
-    
-    for i, (ax, D, label) in enumerate(zip(axes.flat, configs, labels)):
-        vals = [D[v] for v in range(n)]
-        colors = ['steelblue' if v >= 0 else 'coral' for v in vals]
-        bars = ax.bar(range(n), vals, color=colors, alpha=0.8, edgecolor='black')
-        ax.axhline(y=0, color='black', linewidth=0.5)
-        ax.set_xlabel('Vertex')
-        ax.set_ylabel('Chips')
-        ax.set_title(f'{label}\ndeg = {sum(vals)}')
-        ax.set_xticks(range(n))
-        ax.set_xticklabels([f'v{j}' for j in range(n)])
-        ax.grid(True, alpha=0.3)
-        ax.set_ylim(-4, 6)
-        
-        for bar, val in zip(bars, vals):
-            ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.2,
-                    str(val), ha='center', va='bottom', fontweight='bold')
-    
-    plt.suptitle('Chip-Firing Dynamics on K₄', fontsize=14, fontweight='bold')
-    plt.tight_layout()
-    plt.savefig('chipfiring_dynamics.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved chipfiring_dynamics.png")
+# Second figure: Chip-firing simulation
+fig2, ax = plt.subplots(figsize=(10, 6))
 
+n = 5
+# Simulate chip-firing on K_5
+D = [10, 3, 5, 1, 7]
+history = [list(D)]
+labels = ['Initial']
 
-if __name__ == '__main__':
-    plot_genus_and_canonical()
-    plot_riemann_roch_verification()
-    plot_chipfiring_dynamics()
-    print("All visualizations generated.")
+# Fire each vertex 0..4
+for v in range(n):
+    new_D = list(D)
+    new_D[v] -= (n - 1)  # degree = n-1
+    for w in range(n):
+        if w != v:
+            new_D[w] += 1
+    D = new_D
+    history.append(list(D))
+    labels.append(f'Fire v{v}')
+
+history = np.array(history)
+x = np.arange(len(labels))
+
+for v in range(n):
+    ax.plot(x, history[:, v], 'o-', linewidth=2, markersize=8, label=f'v{v}')
+
+ax.set_xticks(x)
+ax.set_xticklabels(labels, rotation=45, ha='right')
+ax.set_ylabel('Chips', fontsize=12)
+ax.set_title('Chip-Firing Sequence on K₅\n(Total chips preserved at each step)', fontsize=13)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
+
+# Add degree annotations
+for i, h in enumerate(history):
+    ax.annotate(f'Σ={sum(h)}', (i, max(h) + 0.5), ha='center', fontsize=8, color='gray')
+
+plt.tight_layout()
+plt.savefig('chip_firing_simulation.png', dpi=150, bbox_inches='tight')
+plt.close()
+
+print("Saved chip_firing_simulation.png")

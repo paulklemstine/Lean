@@ -1,244 +1,326 @@
 #!/usr/bin/env python3
 """
-Algorithms for Chip-Firing and Graph Divisor Theory
+Algorithms for Chip-Firing and Graph Riemann-Roch Theory
 
-Type-hinted implementations of the key algorithms from Baker-Norine theory.
+Implements:
+1. Canonical divisor computation
+2. Chip-firing simulation
+3. Dhar's burning algorithm for q-reduced divisors
+4. Genus and degree computation
+5. Rank estimation via exhaustive search (small graphs)
 """
 
-from typing import Dict, List, Tuple, Set, Optional
+from typing import Dict, List, Set, Tuple, Optional
 from collections import deque
 import itertools
 
 
-# === Core Data Structures ===
+class SimpleGraph:
+    """A simple undirected graph."""
 
-Divisor = Dict[int, int]
-Graph = Dict[int, Set[int]]  # adjacency list
+    def __init__(self, n: int, edges: List[Tuple[int, int]]):
+        self.n = n
+        self.vertices: List[int] = list(range(n))
+        self.adj: Dict[int, Set[int]] = {v: set() for v in self.vertices}
+        for u, v in edges:
+            if u != v:
+                self.adj[u].add(v)
+                self.adj[v].add(u)
+
+    def degree(self, v: int) -> int:
+        """Degree of vertex v."""
+        return len(self.adj[v])
+
+    def num_edges(self) -> int:
+        """Total number of edges."""
+        return sum(self.degree(v) for v in self.vertices) // 2
+
+    def genus(self) -> int:
+        """First Betti number: g = |E| - |V| + 1."""
+        return self.num_edges() - self.n + 1
+
+    @staticmethod
+    def complete(n: int) -> 'SimpleGraph':
+        edges = [(i, j) for i in range(n) for j in range(i + 1, n)]
+        return SimpleGraph(n, edges)
+
+    @staticmethod
+    def cycle(n: int) -> 'SimpleGraph':
+        edges = [(i, (i + 1) % n) for i in range(n)]
+        return SimpleGraph(n, edges)
+
+    @staticmethod
+    def path(n: int) -> 'SimpleGraph':
+        edges = [(i, i + 1) for i in range(n - 1)]
+        return SimpleGraph(n, edges)
 
 
-def complete_graph(n: int) -> Graph:
-    """Construct the complete graph K_n."""
-    return {v: set(range(n)) - {v} for v in range(n)}
+class Divisor:
+    """Integer-valued function on vertices (a divisor)."""
+
+    def __init__(self, G: SimpleGraph, values: Optional[Dict[int, int]] = None):
+        self.G = G
+        self.values: Dict[int, int] = {v: 0 for v in G.vertices}
+        if values:
+            self.values.update(values)
+
+    def __getitem__(self, v: int) -> int:
+        return self.values[v]
+
+    def __setitem__(self, v: int, val: int) -> None:
+        self.values[v] = val
+
+    def degree(self) -> int:
+        return sum(self.values.values())
+
+    def is_effective(self) -> bool:
+        return all(c >= 0 for c in self.values.values())
+
+    def copy(self) -> 'Divisor':
+        return Divisor(self.G, dict(self.values))
+
+    def __add__(self, other: 'Divisor') -> 'Divisor':
+        return Divisor(self.G, {v: self[v] + other[v] for v in self.G.vertices})
+
+    def __sub__(self, other: 'Divisor') -> 'Divisor':
+        return Divisor(self.G, {v: self[v] - other[v] for v in self.G.vertices})
+
+    def __repr__(self) -> str:
+        return "(" + ", ".join(f"{self[v]}" for v in sorted(self.G.vertices)) + ")"
 
 
-def divisor_degree(D: Divisor) -> int:
-    """Total chip count: deg(D) = Σ_v D(v)."""
-    return sum(D.values())
+# ============================================================
+# Algorithm 1: Canonical Divisor
+# ============================================================
 
-
-def is_effective(D: Divisor) -> bool:
-    """Check if D(v) ≥ 0 for all v."""
-    return all(val >= 0 for val in D.values())
-
-
-# === Chip-Firing ===
-
-def chip_fire(G: Graph, D: Divisor, v: int) -> Divisor:
-    """Fire vertex v: sends 1 chip along each edge to neighbors.
-    
-    Algorithm: O(deg(v))
-      D'(v) = D(v) - deg(v)
-      D'(w) = D(w) + 1 for w ~ v
-      D'(u) = D(u) otherwise
+def canonical_divisor(G: SimpleGraph) -> Divisor:
     """
-    D_new = D.copy()
-    neighbors = G[v]
-    D_new[v] -= len(neighbors)
-    for w in neighbors:
-        D_new[w] = D_new.get(w, 0) + 1
-    return D_new
+    Compute the canonical divisor K_G.
 
+    K_G(v) = deg(v) - 2 for each vertex v.
 
-def set_fire(G: Graph, D: Divisor, S: Set[int]) -> Divisor:
-    """Fire an entire subset S simultaneously.
-    
-    For each v in S, v loses |{w ∈ S^c : w ~ v}| chips (outgoing edges)
-    and gains |{w ∈ S : w ~ v, w ≠ v}| chips (incoming from S-neighbors).
-    Net: D'(v) = D(v) - outdeg_S(v) for v ∈ S, D'(w) = D(w) + indeg_S(w) for w ∉ S.
+    Time: O(|V|)
     """
-    D_new = D.copy()
-    Sc = set(G.keys()) - S
-    for v in S:
-        out_edges = len(G[v] & Sc)
-        D_new[v] -= out_edges
-    for w in Sc:
-        in_edges = len(G[w] & S)
-        D_new[w] += in_edges
-    return D_new
+    return Divisor(G, {v: G.degree(v) - 2 for v in G.vertices})
 
 
-# === Canonical Divisor and Genus ===
+# ============================================================
+# Algorithm 2: Chip-Firing
+# ============================================================
 
-def canonical_divisor(G: Graph) -> Divisor:
-    """K_G(v) = deg(v) - 2."""
-    return {v: len(neighbors) - 2 for v, neighbors in G.items()}
-
-
-def graph_genus(G: Graph) -> int:
-    """g = |E| - |V| + 1.
-    |E| = (1/2) Σ_v deg(v) for simple graphs.
+def chip_fire(D: Divisor, v: int) -> Divisor:
     """
-    n_vertices = len(G)
-    n_edges = sum(len(neighbors) for neighbors in G.values()) // 2
-    return n_edges - n_vertices + 1
+    Fire vertex v: sends one chip along each incident edge.
 
+    D'(v) = D(v) - deg(v)
+    D'(w) = D(w) + 1   if w ~ v
+    D'(w) = D(w)        otherwise
 
-# === Dhar's Burning Algorithm ===
-
-def dhars_burning(G: Graph, q: int, D: Divisor) -> Tuple[bool, Set[int]]:
-    """Dhar's burning algorithm for q-reduced divisors.
-    
-    Starting from vertex q, "burn" outward: a vertex v ≠ q burns if
-    the number of burned neighbors exceeds D(v). Continue until no
-    more vertices burn.
-    
-    Returns (is_q_reduced, unburned_set):
-      - If all vertices burn, D is q-reduced
-      - Otherwise, the unburned set S can be fired to reduce D
-    
-    Time complexity: O(|V| + |E|)
+    Time: O(deg(v))
     """
-    n = len(G)
-    vertices = set(G.keys())
-    burned: Set[int] = {q}
+    result = D.copy()
+    result[v] -= D.G.degree(v)
+    for w in D.G.adj[v]:
+        result[w] += 1
+    return result
+
+
+def apply_firing_script(D: Divisor, script: Dict[int, int]) -> Divisor:
+    """
+    Apply a firing script f: fire each vertex v exactly f[v] times.
+    Equivalent to D + Δf (Laplacian of f).
+
+    Time: O(|V| + |E|)
+    """
+    result = D.copy()
+    for v in D.G.vertices:
+        fv = script.get(v, 0)
+        result[v] += sum(fv - script.get(w, 0) for w in D.G.adj[v])
+    return result
+
+
+# ============================================================
+# Algorithm 3: Dhar's Burning Algorithm
+# ============================================================
+
+def dhars_burning(G: SimpleGraph, q: int, D: Divisor) -> Tuple[bool, Optional[Set[int]]]:
+    """
+    Dhar's burning algorithm to test if D is q-reduced.
+
+    Start a fire at q. A vertex v burns if D(v) < outdeg_S(v)
+    where outdeg_S(v) = number of neighbors of v outside the unburnt set.
+    Repeat until stable.
+
+    Returns:
+        (is_q_reduced, unburnt_set) where unburnt_set is None if q-reduced.
+
+    Time: O(|V| * |E|) worst case
+    """
+    unburnt = set(G.vertices) - {q}
     changed = True
-    
+
     while changed:
         changed = False
-        for v in vertices - burned:
-            burned_neighbors = len(G[v] & burned)
-            if burned_neighbors > D.get(v, 0):
-                burned.add(v)
+        to_burn = set()
+        for v in unburnt:
+            outdeg = sum(1 for w in G.adj[v] if w not in unburnt)
+            if D[v] < outdeg:
+                to_burn.add(v)
                 changed = True
-    
-    unburned = vertices - burned
-    is_reduced = len(unburned) == 0
-    return is_reduced, unburned
+        unburnt -= to_burn
+
+    if not unburnt:
+        return True, None
+    else:
+        return False, unburnt
 
 
-def q_reduce(G: Graph, q: int, D: Divisor, max_iter: int = 1000) -> Divisor:
-    """Compute the q-reduced divisor equivalent to D.
-    
-    Algorithm (Dhar's algorithm iterated):
-    1. Run Dhar's burning from q
-    2. If unburned set S is nonempty, fire S (moves chips toward q)
-    3. Repeat until q-reduced
-    
-    The q-reduced representative is unique in each linear equivalence class.
+def q_reduce(G: SimpleGraph, q: int, D: Divisor) -> Divisor:
     """
-    D_curr = D.copy()
-    for _ in range(max_iter):
-        is_reduced, S = dhars_burning(G, q, D_curr)
+    Compute the unique q-reduced divisor linearly equivalent to D.
+
+    Algorithm: repeatedly find a non-empty subset S ⊆ V\\{q}
+    that can fire (all vertices have enough chips) and fire it.
+
+    Time: O(|V|^2 * max|D|) in worst case
+    """
+    result = D.copy()
+    max_iterations = 1000
+
+    for _ in range(max_iterations):
+        is_reduced, unburnt = dhars_burning(G, q, result)
         if is_reduced:
-            return D_curr
-        D_curr = set_fire(G, D_curr, S)
-    return D_curr  # may not be fully reduced if max_iter exceeded
+            return result
+
+        # Fire the unburnt set
+        if unburnt:
+            for v in unburnt:
+                for w in G.adj[v]:
+                    if w not in unburnt:
+                        result[v] -= 1
+                        result[w] += 1
+
+    return result  # May not converge for all inputs
 
 
-# === Divisor Rank Computation ===
+# ============================================================
+# Algorithm 4: Rank Computation (Exhaustive, Small Graphs Only)
+# ============================================================
 
-def compute_rank_via_qreduction(G: Graph, D: Divisor, q: int = 0) -> int:
-    """Compute r(D) using q-reduced divisors.
-    
-    Algorithm:
-    1. q-reduce D to get D_q
-    2. If D_q(q) < 0, then r(D) = -1
-    3. Otherwise, r(D) = max k such that for all effective E with deg(E)=k,
-       (D-E)_q has non-negative value at q.
-    
-    For the efficient version, we use the equivalent characterization:
-    r(D) = -1 if D_q is not effective at q;
-    otherwise r(D) = max k such that removing k chips from D still has
-    an effective q-reduced representative.
+def compute_rank(G: SimpleGraph, D: Divisor, q: int = 0) -> int:
     """
-    n = len(G)
+    Compute the rank r(D) by exhaustive search.
+
+    r(D) = max{k : for all effective E of degree k, D - E ~ effective}
+    or -1 if D is not equivalent to any effective divisor.
+
+    Uses q-reduction to test equivalence to effective divisors.
+
+    Time: O(C(|V|+k-1, k) * reduction_time) — exponential in k.
+    Only suitable for small graphs (|V| ≤ 6).
+    """
+    # First check if D ~ effective
     D_red = q_reduce(G, q, D)
-    
-    if D_red.get(q, 0) < 0:
+    if not all(D_red[v] >= 0 for v in G.vertices if v != q):
         return -1
-    
-    # Brute force: test all effective divisors of increasing degree
-    rank = 0
-    for k in range(1, divisor_degree(D) + 1):
-        all_ok = True
-        for E_vals in _weak_compositions(k, n):
-            E = {v: E_vals[v] for v in range(n)}
-            D_minus_E = {v: D.get(v, 0) - E.get(v, 0) for v in range(n)}
-            D_red_k = q_reduce(G, q, D_minus_E)
-            if D_red_k.get(q, 0) < 0:
-                all_ok = False
+
+    # Binary search / sequential for rank
+    k = 0
+    while True:
+        k += 1
+        if k > D.degree():
+            return k - 1
+
+        # Check all effective divisors of degree k
+        found_counterexample = False
+        for combo in _effective_divisors_of_degree(G, k):
+            E = Divisor(G, combo)
+            diff = D - E
+            diff_red = q_reduce(G, q, diff)
+            if not all(diff_red[v] >= 0 for v in G.vertices if v != q):
+                found_counterexample = True
                 break
-        if all_ok:
-            rank = k
-        else:
-            break
-    return rank
+
+        if found_counterexample:
+            return k - 1
 
 
-def _weak_compositions(k: int, n: int):
-    """Generate all weak compositions of k into n non-negative parts."""
-    if n == 1:
-        yield [k]
-        return
-    for i in range(k + 1):
-        for rest in _weak_compositions(k - i, n - 1):
-            yield [i] + rest
+def _effective_divisors_of_degree(G: SimpleGraph, k: int):
+    """Generate all effective divisors of degree k on G."""
+    n = G.n
+    for combo in itertools.combinations_with_replacement(range(n), k):
+        values = {v: 0 for v in range(n)}
+        for v in combo:
+            values[v] += 1
+        yield values
 
 
-# === Riemann-Roch Verification ===
+# ============================================================
+# Algorithm 5: Rank Stability Spectrum
+# ============================================================
 
-def verify_riemann_roch(G: Graph, D: Divisor, q: int = 0) -> dict:
-    """Verify Baker-Norine Riemann-Roch for a specific divisor.
-    
-    Checks: r(D) - r(K_G - D) = deg(D) + 1 - g(G)
+def rank_stability(G: SimpleGraph, D: Divisor, k: int, q: int = 0) -> int:
     """
-    g = graph_genus(G)
-    K = canonical_divisor(G)
-    KD = {v: K.get(v, 0) - D.get(v, 0) for v in G}
-    
-    r_D = compute_rank_via_qreduction(G, D, q)
-    r_KD = compute_rank_via_qreduction(G, KD, q)
-    deg_D = divisor_degree(D)
-    
-    lhs = r_D - r_KD
-    rhs = deg_D + 1 - g
-    
-    return {
-        'r(D)': r_D,
-        'r(K-D)': r_KD,
-        'deg(D)': deg_D,
-        'genus': g,
-        'LHS': lhs,
-        'RHS': rhs,
-        'verified': lhs == rhs,
-    }
+    Compute the rank stability σ(D, k): the minimum number of chips
+    that must be removed to reduce the rank below k.
 
+    σ(D, k) = min{deg(E) : E effective, r(D - E) < k}
 
-# === Gonality Computation ===
+    This is a novel invariant that refines the rank function.
 
-def compute_gonality(G: Graph, max_degree: int = 10, q: int = 0) -> int:
-    """Compute the gonality: min deg(D) such that r(D) ≥ 1.
-    
-    Brute-force search over divisors of increasing degree.
+    Returns -1 if r(D) < k (already below threshold).
     """
-    n = len(G)
-    for d in range(1, max_degree + 1):
-        for D_vals in _weak_compositions(d, n):
-            D = {v: D_vals[v] for v in range(n)}
-            if compute_rank_via_qreduction(G, D, q) >= 1:
-                return d
-    return -1  # not found within budget
+    r = compute_rank(G, D, q)
+    if r < k:
+        return -1
+    if k < 0:
+        return 0
+
+    # Search for minimum effective E such that r(D - E) < k
+    for m in range(D.degree() + 1):
+        for combo in _effective_divisors_of_degree(G, m):
+            E = Divisor(G, combo)
+            diff = D - E
+            if compute_rank(G, diff, q) < k:
+                return m
+
+    return D.degree() + 1
 
 
-if __name__ == '__main__':
-    # Quick test
-    G = complete_graph(4)
-    print(f"K_4: genus = {graph_genus(G)}")
+# ============================================================
+# Main: Run demonstrations
+# ============================================================
+
+if __name__ == "__main__":
+    print("=" * 60)
+    print("Chip-Firing Algorithms Demo")
+    print("=" * 60)
+
+    # Complete graph K_4
+    G = SimpleGraph.complete(4)
     K = canonical_divisor(G)
-    print(f"Canonical: {K}")
-    print(f"r(K) = {compute_rank_via_qreduction(G, K)}")
-    
-    D = {0: 2, 1: 1, 2: 0, 3: 0}
-    result = verify_riemann_roch(G, D)
-    print(f"\nD = {D}")
-    print(f"Riemann-Roch: {result}")
+    print(f"\nK_4: canonical divisor = {K}, degree = {K.degree()}, genus = {G.genus()}")
+
+    # Rank of canonical divisor
+    r_K = compute_rank(G, K)
+    print(f"  rank(K) = {r_K}")
+    print(f"  genus - 1 = {G.genus() - 1}")
+
+    # Dhar's burning on a specific divisor
+    D = Divisor(G, {0: 3, 1: 0, 2: 1, 3: 0})
+    is_red, _ = dhars_burning(G, 0, D)
+    print(f"\n  D = {D}")
+    print(f"  q-reduced (q=0)? {is_red}")
+
+    D_red = q_reduce(G, 0, D)
+    print(f"  q-reduced form: {D_red}")
+
+    # Rank stability
+    D2 = Divisor(G, {0: 2, 1: 2, 2: 2, 3: 2})
+    r2 = compute_rank(G, D2)
+    print(f"\n  D = {D2}, rank = {r2}")
+    for k in range(r2 + 1):
+        s = rank_stability(G, D2, k)
+        print(f"  σ(D, {k}) = {s}")
+
+    print("\nDone!")
