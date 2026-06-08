@@ -3341,6 +3341,46 @@ Research mode: {concept.research_mode}
                             break
                     except Exception:
                         pass
+            # Fallback: extract FUTURE DIRECTIONS comment blocks from Phase A's Lean output.
+            # Phase A produces these as trailing comment blocks in .lean files
+            # (e.g., "-- FUTURE DIRECTIONS ..." or "/-! FUTURE DIRECTIONS ... -/")
+            if not fd_text and job.result_lean:
+                fd_blocks = []
+                # Match line-style FUTURE DIRECTIONS blocks: "-- FUTURE DIRECTIONS" and subsequent "--" lines
+                import re as _re
+                # Block-style: /-! FUTURE DIRECTIONS ... -/
+                for m in _re.finditer(
+                    r'/-!?[\s]*FUTURE\s+DIRECTIONS.*?-/',
+                    job.result_lean, _re.DOTALL | _re.IGNORECASE
+                ):
+                    block = m.group(0)
+                    # Strip comment delimiters
+                    content = _re.sub(r'^/-!?[\s]*FUTURE\s+DIRECTIONS[\s]*\n?', '', block)
+                    content = _re.sub(r'-/\s*$', '', content)
+                    if len(content.strip()) > 30:
+                        fd_blocks.append(content.strip())
+                # Line-style: "-- FUTURE DIRECTIONS" and collect subsequent "--" lines
+                lines = job.result_lean.split('\n')
+                in_fd_block = False
+                current_block = []
+                for line in lines:
+                    stripped = line.strip()
+                    if _re.match(r'^--\s*FUTURE\s+DIRECTIONS', stripped, _re.IGNORECASE):
+                        in_fd_block = True
+                        # Skip the header line itself
+                        continue
+                    if in_fd_block:
+                        if stripped.startswith('--'):
+                            current_block.append(stripped.lstrip('-').strip())
+                        else:
+                            if current_block:
+                                fd_blocks.append('\n'.join(current_block))
+                            current_block = []
+                            in_fd_block = False
+                if current_block:
+                    fd_blocks.append('\n'.join(current_block))
+                if fd_blocks:
+                    fd_text = '\n\n'.join(fd_blocks)
             if fd_text:
                 # Use the entire future_directions text as one single entry
                 title_line = ""
