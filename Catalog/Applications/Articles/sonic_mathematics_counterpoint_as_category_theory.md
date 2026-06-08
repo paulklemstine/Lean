@@ -1,124 +1,88 @@
-# The Hidden Geometry of Harmony: How Counterpoint Reveals a Secret Mathematical Architecture
+# The Hidden Geometry of Harmony: Why Parallel Fifths Are Forbidden
 
-*When Bach wrote a fugue, he was navigating a graph. When Palestrina resolved a dissonance, he was obeying a poset. The rules of counterpoint — those ancient, seemingly arbitrary constraints that governed Western music for centuries — turn out to encode a precise and beautiful mathematical structure.*
+## A Mathematical Map of Musical Motion
 
----
+For five centuries, composition students have learned a seemingly arbitrary commandment: *thou shalt not write parallel fifths*. Two voices singing a perfect fifth apart, moving in lockstep to another perfect fifth — this is the cardinal sin of Western counterpoint, drilled into every student since Johann Joseph Fux published his legendary textbook *Gradus ad Parnassum* in 1725. Generations of composers have obeyed this rule. Few have understood *why* it exists, beyond vague appeals to "independence of voices" or "it just sounds bad."
 
-## The Mystery of Forbidden Parallels
+What if the rule isn't arbitrary at all? What if it's the audible surface of a deep mathematical structure — one that connects music theory to abstract algebra, graph theory, and the mathematics of symmetry?
 
-Every student of music composition learns the prohibitions early. *No parallel fifths. No parallel octaves.* Move two voices in the same direction by the same amount, and if they land on a perfect fifth or a unison, you have committed a sin against counterpoint. Palestrina didn't do it. Bach (mostly) didn't do it. And for five centuries, students have been told: **don't**.
+A recent mathematical investigation has uncovered precisely this. By mapping every legal move in first-species counterpoint onto a directed graph, researchers have revealed a hidden architecture beneath the rules of harmony. The results are striking: the prohibition on parallel fifths isn't merely aesthetic — it's a *topological bottleneck* in the space of musical possibilities.
 
-But *why*? The traditional explanations range from the acoustic ("parallel fifths fuse the voices, destroying independence") to the aesthetic ("it just sounds bad") to the purely authoritarian ("Fux said so"). None of these is entirely satisfying. Parallel thirds sound fine, even beautiful — so what makes fifths and octaves special? Why does the prohibition apply only when voices move *in the same direction by the same amount*, and not when they arrive at a fifth by contrary motion?
+## Consonance as Geography
 
-A new mathematical framework answers these questions with unexpected precision. By modeling the consonant intervals of music as *vertices* in a directed graph and the permitted voice leadings as *edges*, the rules of first-species counterpoint reveal themselves as constraints on a discrete combinatorial structure — one with measurable asymmetries, provable connectivity properties, and a rigorous sense in which perfect consonances are "bottlenecks" in the space of musical possibilities.
+To understand the discovery, think of musical intervals as cities on a map. In the chromatic world of twelve semitones, six intervals are considered consonant — pleasant-sounding enough to serve as the building blocks of counterpoint:
 
----
+- **Unison** (0 semitones) — two voices on the same note
+- **Minor third** (3 semitones) — the sound of melancholy
+- **Major third** (4 semitones) — the sound of brightness
+- **Perfect fifth** (7 semitones) — the ringing, open sound of power chords
+- **Minor sixth** (8 semitones) — the inverted major third
+- **Major sixth** (9 semitones) — the inverted minor third
 
-## A Universe of Six Vertices
+These six intervals are the *only* places a piece of first-species counterpoint is allowed to rest. Every beat must land on one of them. The question is: how can you travel between them?
 
-In the equal-tempered tuning system that dominates Western music, there are twelve distinct pitch-class intervals: the number of semitones between two notes, counted modulo the octave. Of these twelve, classical counterpoint theory recognizes exactly six as *consonant*:
+## The Voice-Leading Quiver
 
-| Interval | Semitones | Type |
-|---|---|---|
-| Unison / Octave | 0 | Perfect |
-| Minor third | 3 | Imperfect |
-| Major third | 4 | Imperfect |
-| Perfect fifth | 7 | Perfect |
-| Minor sixth | 8 | Imperfect |
-| Major sixth | 9 | Imperfect |
+A *voice leading* is a pair of motions: how much the bass voice moves and how much the soprano voice moves. If the bass goes up two semitones while the soprano goes up five, that's one voice leading. If neither moves, that's the identity — staying put.
 
-The remaining six intervals — seconds, the tritone, sevenths, and (controversially) the perfect fourth — are classified as dissonant and forbidden in first-species counterpoint.
+The researchers enumerated every possible voice leading between every pair of consonant intervals, checking which ones obey the rules of first-species counterpoint. The result is a directed graph — what mathematicians call a *quiver* — with the six consonant intervals as nodes and the permitted voice leadings as arrows.
 
-Notice the partition: two intervals are *perfect* consonances, four are *imperfect*. This two-versus-four split, which seems like an accident of tuning, turns out to be the origin of the deepest structural asymmetry in the entire system.
+The first theorem is reassuring: **the graph is strongly connected**. From any consonant interval, you can reach any other consonant interval in a single legal move. There are no dead ends in counterpoint. A composer always has options.
 
----
+But beneath this surface of total connectivity lurks a profound asymmetry.
 
-## The Counterpoint Quiver
+## The Bottleneck: 61 versus 72
 
-Imagine each of these six consonant intervals as a point in space. Now draw an arrow from interval *i* to interval *j* for every way two voices can move — one bass motion, one soprano motion — that (a) transforms the interval from *i* to *j*, and (b) doesn't violate any counterpoint rules.
+Among the six consonant intervals, two are classified as *perfect*: the unison and the perfect fifth. The other four — the thirds and sixths — are *imperfect*. This distinction is ancient, rooted in the acoustics of simple frequency ratios, but its mathematical consequences had never been precisely quantified.
 
-What you get is not a simple graph but a rich directed multigraph, what mathematicians call a *quiver*. Multiple arrows can connect the same pair of vertices, because there are typically many different voice leadings that achieve the same intervallic transition. The bass might leap up a fourth while the soprano steps down; or the bass might stay put while the soprano jumps. Different motions, same result — different arrows, same endpoints.
+The researchers computed the exact number of incoming voice leadings to each type of interval, counted across all six consonant sources. The result: **imperfect consonances admit 72 incoming voice leadings each, while perfect consonances admit only 61**. That's a 15% reduction — a measurable constriction in the musical highway system.
 
-This quiver is the **Counterpoint Quiver**, and its structure encodes the entire logic of first-species counterpoint.
+Perfect consonances are harder to reach. They have fewer on-ramps. This is the mathematical fingerprint of the parallel-motion prohibition.
 
----
+## One Self-Loop versus Twelve
 
-## Strong Connectivity: You Can Always Get There from Here
+The asymmetry becomes even more dramatic when you look at *self-loops* — voice leadings that start and end on the same interval. A self-loop on the perfect fifth means: two voices are a fifth apart, they both move, and they end up a fifth apart again.
 
-The first striking property is that this quiver is *strongly connected*. From any consonant interval to any other, there exists at least one permitted voice leading. You are never trapped. No matter what interval two voices currently occupy, there is always a legal move to any desired target.
+For imperfect consonances, there are **twelve** self-loops. Twelve different ways both voices can move while preserving a minor third, or a major sixth, or any of the four imperfect intervals. Voices can move in parallel, in contrary motion, in oblique motion — almost anything goes.
 
-The proof is constructive: for any source interval *i* and target *j*, the *canonical voice leading* — where the bass stays put and the soprano moves by exactly *j − i* semitones — is always legal. Why? Because when only one voice moves, the motion cannot be parallel (both voices moving identically), so the parallel-motion prohibition is never triggered. This simple observation guarantees universal connectivity.
+For perfect consonances, there is **exactly one** self-loop: the identity, where nobody moves at all. The only way to stay on a perfect fifth is to *not move*. The moment both voices shift, if they're heading to a perfect consonance, they must arrive from somewhere else.
 
-This has a profound musical implication: **the rules of counterpoint never paint you into a corner.** Every consonant sonority is reachable from every other, ensuring that compositional freedom is never fully extinguished by the constraints.
+This is the "bottleneck theorem," and it captures the essence of why parallel fifths sound wrong to a trained ear. A perfect fifth that arises from parallel motion is acoustically trapped — it has no room to breathe, no variety in how it was approached. The mathematical structure predicts the aesthetic judgment.
 
----
+## The Failure of Composition
 
-## The Bottleneck: 1 Self-Loop vs. 12
+Perhaps the most surprising result concerns what happens when you chain two legal moves together. In mathematics, a *category* is a structure where you can always compose two compatible arrows to get a third valid arrow. The researchers asked: do permitted voice leadings form a category?
 
-But connectivity is not the whole story. *How many* arrows connect each pair of vertices varies enormously, and the variation follows a stark pattern.
+The answer is **no**. Two individually legal voice leadings can combine into an illegal one. Move legally from a major third to a perfect fifth, then legally from a perfect fifth to another interval — the composite motion, viewed as a single step, might violate the parallel-motion rule.
 
-Consider self-loops: voice leadings that start and end at the same interval. How many ways can two voices move while preserving their intervallic relationship?
+This "non-composability" result is mathematically significant because it means the counterpoint quiver is genuinely a quiver, not a category. The rules of counterpoint are *local* constraints — they govern each individual step, not the trajectory as a whole. This is familiar to any composer: the art lies in navigating one beat at a time, and there is no shortcut that lets you plan arbitrarily far ahead using simple algebraic rules.
 
-For an **imperfect consonance** — say, a major third — the answer is **12**. The bass can move by any of the 12 possible amounts (0 through 11 semitones), and the soprano simply moves by the same amount to maintain the interval. Since the major third is imperfect, parallel motion into it is perfectly legal. All 12 self-loops are permitted.
+## The Broken Mirror: Why Bass Matters
 
-For a **perfect consonance** — unison or the fifth — only **1** self-loop survives: the identity, where neither voice moves at all. Every other self-loop would require parallel motion (both voices moving by the same nonzero amount) into a perfect consonance, which is precisely what the rules forbid.
+There is one more theorem, and it strikes at the heart of a question that has puzzled music theorists for centuries: why does the bass voice play such a special role in harmony?
 
-This 12-to-1 ratio is the mathematical manifestation of a phenomenon every composer knows intuitively: **perfect consonances are sticky.** Once you're at a unison or a fifth, you cannot stay there through motion — you must either hold still or leave. Imperfect consonances, by contrast, can glide freely, the voices sliding together in comfortable parallel thirds or sixths.
+The researchers examined what happens when you *swap* the two voices — when the soprano becomes the bass and vice versa. Mathematically, this is the involution that sends an interval *i* to its negation modulo 12, which is the same as its complement (the interval you get when you flip the voices).
 
----
+Under this swap, the perfect fifth (7 semitones) maps to the perfect fourth (5 semitones). But the perfect fourth is **not** in the set of consonant intervals in first-species counterpoint — it's treated as a dissonance when it appears above the bass. This means **voice-swapping breaks consonance**. The mathematical structure of counterpoint is not symmetric between bass and soprano.
 
-## The Numbers: 61 vs. 72
+This is deeply connected to the physics of sound: the bass voice generates the overtone series that defines the harmonic context, and a fourth above the bass creates an acoustic ambiguity that undermines the sense of root. But here, this physical fact emerges as a theorem about the algebraic structure of the interval system. The asymmetry isn't imposed by convention — it's forced by the mathematics.
 
-The bottleneck extends beyond self-loops. Across *all* voice leadings from *all* consonant sources, a perfect consonance admits exactly **61** incoming arrows, while an imperfect consonance admits **72**. That's a 15% reduction — a quantitative measure of how much harder it is to arrive at a perfect consonance legally.
+## Beyond Twelve Tones
 
-Eleven lost arrows might not sound like much. But in the tight combinatorial world of first-species counterpoint, where every note must be consonant and every transition legal, that 15% deficit compounds. It means perfect consonances are structurally rarer destinations, which is why experienced contrapuntists use them sparingly and strategically — typically at beginnings and endings of phrases, where their gravitational weight anchors the music.
+One of the most elegant aspects of this work is its generality. The researchers didn't just study the 12-note chromatic scale. They defined a general mathematical structure — a *Counterpoint System* — that can be instantiated for any equal temperament. The same framework applies to 19-tone, 24-tone, or 31-tone equal temperament, each with its own set of consonant intervals and voice-leading constraints.
 
----
+The key structural theorems — connectivity, the bottleneck effect, non-composability — can be stated and investigated in any of these systems. This opens a door to a computational exploration of counterpoint in microtonal music, where composers have been working largely by intuition. The mathematics offers a map.
 
-## Composition Breaks: Why the Quiver Isn't a Category
+## The Shape of Musical Law
 
-Perhaps the most surprising result concerns *composability*. In mathematics, a **category** is a structure where arrows can always be composed: if there's an arrow from *A* to *B* and another from *B* to *C*, there must be an arrow from *A* to *C* representing the combined journey. Categories are everywhere — in algebra, topology, logic, computer science.
+What does it mean to discover that the rules of counterpoint have this hidden geometric structure? It means that Fux's rules, refined over centuries of practice, aren't just pedagogical conventions — they're descriptions of genuine mathematical constraints on how consonant sounds can be connected through voice motion.
 
-The Counterpoint Quiver is *not* a category.
+The prohibition on parallel fifths isn't an aesthetic whim. It's a bottleneck — a narrowing in the graph of possibilities that forces composers toward variety. The special role of the bass voice isn't cultural bias — it's algebraic asymmetry. The impossibility of reducing counterpoint to simple composition rules isn't a failure of theory — it's a theorem.
 
-Two individually legal voice leadings can compose into an *illegal* one. The first move might take the voices from a third to a sixth via oblique motion — perfectly fine. The second might continue from the sixth to a fifth via parallel motion — also fine on its own. But the *composite* — the total motion from the starting position — might constitute parallel motion into a perfect consonance, violating the rules.
+Music, it turns out, has been doing mathematics all along. The fifteenth-century composers who first noticed that parallel fifths sounded "wrong" were detecting, with their ears, a topological feature of a directed graph on six vertices in the cyclic group of order twelve. They didn't have the language for it. Now we do.
 
-This is proven rigorously: specific counterexamples are constructed showing that the composition of two permitted voice leadings can be forbidden. The voice-leading graph has *arrows* but not a *category* structure. In the language of category theory, the permitted voice leadings form a quiver but not a subcategory of the category of all voice leadings.
-
-This has a deep musical interpretation: **counterpoint is inherently local.** Each step must be judged in the immediate context of its predecessor and successor. You cannot reduce a long passage to a single composite motion and check legality — the path matters, not just the endpoints.
+And the beauty is: you can hear it.
 
 ---
 
-## The Voice-Swap Asymmetry
-
-One final result illuminates a question that has puzzled theorists for centuries: *why is the bass voice special?*
-
-The mathematical operation of *voice swapping* — exchanging the bass and soprano — corresponds to negating the interval: if the soprano is 7 semitones above the bass (a fifth), swapping makes the bass 7 semitones above the soprano, which is 12 − 7 = 5 semitones — a perfect fourth.
-
-And the perfect fourth, famously, is *dissonant* in standard counterpoint (at least when it sits above the bass). The negation map on the twelve pitch classes does not preserve the set of consonant intervals. The fifth maps to the fourth; consonance maps to dissonance.
-
-This is not a cultural convention. It is a mathematical fact about the specific set of consonant intervals in 12-tone equal temperament: the set {0, 3, 4, 7, 8, 9} is not closed under negation modulo 12. And this single asymmetry — this failure of the consonant set to be self-complementary — is what forces the bass voice into its privileged position. The bass is special because the interval *above* matters differently from the interval *below*.
-
----
-
-## The Cost Metric: Measuring Smoothness
-
-Beyond the graph structure, voice leading has a natural *metric*: the total displacement of all voices, measured in semitones. When the bass moves up 2 semitones and the soprano moves down 1, the cost is 3. This L¹ norm — the sum of absolute movements — captures the musical ideal of *smooth* voice leading: less total motion means more elegant, more singable, more economical writing.
-
-This cost function obeys the triangle inequality: composing two voice leadings costs at most the sum of their individual costs. It responds beautifully to lattice operations on voice motions (componentwise minimum and maximum), satisfying the remarkable identity that the cost of the meet plus the cost of the join equals the sum of the individual costs. And ascending motions — where every voice moves upward — form a sublattice, a closed algebraic structure where the meet always minimizes cost.
-
-These are not mere curiosities. They establish that voice-leading space has the structure of a *seminormed lattice*, connecting centuries-old compositional practice to modern functional analysis.
-
----
-
-## What It Means
-
-The mathematics of counterpoint is not new. David Lewin, Dmitri Tymoczko, and others have explored the geometry of voice leading for decades. But the categorical perspective — modeling the rules as a quiver, proving non-composability, quantifying the bottleneck at perfect consonances — reveals structural features that geometric approaches can miss.
-
-The 12-to-1 self-loop ratio is not merely a fact about five-line staves and clefs. It is a theorem about constraint propagation in finite directed graphs, provable from first principles and generalizable to *any* equal temperament. A 19-tone system with its own consonance set would have its own quiver, its own bottleneck ratios, its own composability failures. The framework is parameterized: plug in different consonance definitions, and the structural theorems follow automatically.
-
-Bach didn't know he was navigating a quiver. But the quiver knew it was being navigated. And the fact that its arrows do not compose — that each voice-leading step must be judged fresh, in its immediate context, without the luxury of global reduction — may be the deepest mathematical reason why counterpoint remains, after five centuries, an art.
-
----
-
-*The mathematical framework described in this article formalizes the rules of first-species counterpoint as constraints on a parameterized directed multigraph, proving strong connectivity, non-composability of permitted voice leadings, and quantitative asymmetries between perfect and imperfect consonances. The results generalize beyond 12-tone equal temperament to arbitrary equal temperaments.*
+*The mathematical results described in this article formalize first-species counterpoint over the twelve-tone chromatic scale as a directed quiver on six consonant intervals, proving strong connectivity, non-composability of permitted voice leadings, the self-loop bottleneck (1 versus 12) for perfect versus imperfect consonances, the voice-swap asymmetry, and the precise hom-set counts (61 versus 72 incoming voice leadings). The work generalizes to arbitrary equal temperaments via the abstract notion of a Counterpoint System.*
