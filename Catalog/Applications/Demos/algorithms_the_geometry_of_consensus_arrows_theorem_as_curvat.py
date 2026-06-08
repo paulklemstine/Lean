@@ -1,263 +1,302 @@
+#!/usr/bin/env python3
 """
-Algorithms for the Arrow-Curvature Theory
-==========================================
-Type-hinted implementations of the core mathematical algorithms.
+Algorithms for the Geometry of Consensus.
+
+Type-hinted implementations of the core algorithms:
+1. Condorcet curvature computation
+2. Fisher embedding and Bhattacharyya coefficient
+3. Polarization index
+4. Holonomy defect algebra operations
+5. Decisive family (ultrafilter) detection
 """
 
-from typing import Callable, Optional
+from __future__ import annotations
 import numpy as np
-from dataclasses import dataclass
+from typing import Optional
 
 
-# ============================================================
+# ============================================================================
 # Core Data Structures
-# ============================================================
+# ============================================================================
 
-@dataclass
-class ProbDist:
-    """A probability distribution on m alternatives."""
-    val: np.ndarray  # shape (m,), non-negative, sums to 1
+class TournamentSign:
+    """Tournament sign function on n alternatives.
     
-    def __post_init__(self):
-        assert np.all(self.val >= -1e-15), "Distribution must be non-negative"
-        assert abs(self.val.sum() - 1.0) < 1e-10, f"Distribution must sum to 1, got {self.val.sum()}"
+    Encodes a complete tournament via an antisymmetric sign matrix
+    σ: {0,...,n-1}² → {-1, 0, 1}.
+    """
+    
+    def __init__(self, sign_matrix: np.ndarray) -> None:
+        n = sign_matrix.shape[0]
+        assert sign_matrix.shape == (n, n), "Sign matrix must be square"
+        assert np.all(np.diag(sign_matrix) == 0), "Diagonal must be zero"
+        assert np.allclose(sign_matrix + sign_matrix.T, 0), "Must be antisymmetric"
+        self.n = n
+        self.sign = sign_matrix
+    
+    @classmethod
+    def from_preferences(cls, profiles: list[list[int]], n_alts: int) -> TournamentSign:
+        """Construct tournament from voter preference profiles."""
+        k = len(profiles)
+        sign = np.zeros((n_alts, n_alts), dtype=int)
+        for a in range(n_alts):
+            for b in range(n_alts):
+                if a == b:
+                    continue
+                count = sum(1 for p in profiles if p.index(a) < p.index(b))
+                sign[a, b] = 1 if 2 * count > k else -1
+        return cls(sign)
+    
+    def triple_defect(self, a: int, b: int, c: int) -> int:
+        """Holonomy defect δ(a,b,c) = σ(a,b)·σ(b,c)·σ(c,a)."""
+        return int(self.sign[a, b] * self.sign[b, c] * self.sign[c, a])
+    
+    def condorcet_curvature(self) -> int:
+        """Count directed 3-cycles (Condorcet curvature)."""
+        count = 0
+        for a in range(self.n):
+            for b in range(a + 1, self.n):
+                for c in range(b + 1, self.n):
+                    if self.triple_defect(a, b, c) == 1:
+                        count += 1
+        return count
+    
+    def total_holonomy(self) -> int:
+        """Sum of triple defects over ordered triples."""
+        total = 0
+        for a in range(self.n):
+            for b in range(a + 1, self.n):
+                for c in range(b + 1, self.n):
+                    total += self.triple_defect(a, b, c)
+        return total
+    
+    def score_sequence(self) -> np.ndarray:
+        """Score sequence s(a) = Σ_b σ(a,b)."""
+        return self.sign.sum(axis=1)
+    
+    def is_transitive(self) -> bool:
+        """Check transitivity (zero curvature)."""
+        return self.condorcet_curvature() == 0
+
+
+class HolonomyDefectAlgebra(TournamentSign):
+    """The Holonomy Defect Algebra — extends TournamentSign with score operations."""
+    
+    def __init__(self, sign_matrix: np.ndarray) -> None:
+        super().__init__(sign_matrix)
+        self._scores = self.score_sequence()
     
     @property
-    def m(self) -> int:
-        return len(self.val)
-
-
-@dataclass
-class DecisiveFamily:
-    """A decisive family on n voters (Arrow's algebraic structure).
+    def scores(self) -> np.ndarray:
+        return self._scores
     
-    Represented as a predicate on frozensets of voter indices.
-    """
-    n: int  # number of voters
-    is_decisive: Callable[[frozenset[int]], bool]
+    def score_variance(self) -> int:
+        """Sum of squared scores Σ s(a)²."""
+        return int(np.sum(self._scores ** 2))
     
-    def find_dictator(self) -> Optional[int]:
-        """Find the dictator (if the family is principal).
+    def moon_cycle_count(self) -> int:
+        """Compute 3-cycle count via Moon's formula.
         
-        By Arrow's theorem, every decisive family on a finite set
-        is principal: there exists a dictator i such that
-        S is decisive ⟺ i ∈ S.
+        c₃ = C(n,3) - Σᵢ C(wᵢ, 2) where wᵢ = (n-1+sᵢ)/2.
         """
-        for i in range(self.n):
-            if self.is_decisive(frozenset({i})):
-                # Verify this is the dictator
-                is_principal = True
-                for mask in range(1 << self.n):
-                    S = frozenset(j for j in range(self.n) if mask & (1 << j))
-                    if self.is_decisive(S) != (i in S):
-                        is_principal = False
-                        break
-                if is_principal:
-                    return i
-        return None
+        n = self.n
+        c_n_3 = n * (n - 1) * (n - 2) // 6
+        w = (n - 1 + self._scores) // 2  # win counts
+        return c_n_3 - sum(int(wi * (wi - 1)) // 2 for wi in w)
+    
+    def verify_gauss_bonnet(self) -> bool:
+        """Verify the discrete Gauss-Bonnet identity:
+        totalHolonomy = transitiveTriples - cycleCount."""
+        c3 = self.condorcet_curvature()
+        c_n_3 = self.n * (self.n - 1) * (self.n - 2) // 6
+        return self.total_holonomy() == (c_n_3 - c3) - c3
 
 
-# ============================================================
-# Fisher Geometry Algorithms
-# ============================================================
+# ============================================================================
+# Fisher Geometry
+# ============================================================================
 
 def fisher_embedding(p: np.ndarray) -> np.ndarray:
-    """Embed distribution p into the unit sphere via p ↦ √p.
-    
-    Properties:
-    - ||φ(p)||² = 1 (image lies on unit sphere)
-    - ||φ(p) - φ(q)||² = 2·H²(p,q) (isometry up to scale)
+    """Fisher embedding: p ↦ √p. Maps simplex Δ^{m-1} to sphere S^{m-1}.
     
     Args:
         p: Probability distribution (non-negative, sums to 1)
     
     Returns:
-        Point on the unit sphere in R^m
+        Point on the unit sphere
     """
     return np.sqrt(np.maximum(p, 0))
 
 
 def bhattacharyya_coefficient(p: np.ndarray, q: np.ndarray) -> float:
-    """Bhattacharyya coefficient BC(p,q) = Σ √(pᵢ·qᵢ).
+    """Bhattacharyya coefficient: BC(p,q) = Σᵢ √(pᵢqᵢ).
     
-    Satisfies:
-    - 0 ≤ BC(p,q) ≤ 1
-    - BC(p,q) = 1 ⟺ p = q (for strictly positive distributions)
-    - BC(p,q) = 0 ⟺ p ⊥ q (disjoint supports)
-    
-    The Fisher-Rao geodesic distance is d_FR = 2·arccos(BC).
+    Equals the inner product of Fisher embeddings: BC = ⟨φ(p), φ(q)⟩.
+    Satisfies 0 ≤ BC ≤ 1, with BC = 1 iff p = q.
     """
     return float(np.sum(np.sqrt(np.maximum(p * q, 0))))
 
 
 def hellinger_distance_sq(p: np.ndarray, q: np.ndarray) -> float:
-    """Squared Hellinger distance H²(p,q) = 1 - BC(p,q).
+    """Squared Hellinger distance: H²(p,q) = Σ(√pᵢ - √qᵢ)².
     
-    Captures the Fisher geometry of the probability simplex.
+    Equals 2(1 - BC(p,q)) by the Hellinger-Bhattacharyya identity.
     """
-    return 1.0 - bhattacharyya_coefficient(p, q)
+    fp, fq = fisher_embedding(p), fisher_embedding(q)
+    return float(np.sum((fp - fq) ** 2))
+
+
+def polarization_index(distributions: list[np.ndarray]) -> float:
+    """Polarization index of a voter profile.
+    
+    Pol = (1/k²) Σᵢⱼ (1 - BC(pᵢ, pⱼ))
+    
+    Measures average pairwise disagreement on the Fisher manifold.
+    Zero when all voters agree; maximized when voters are antipodal.
+    """
+    k = len(distributions)
+    if k == 0:
+        return 0.0
+    total = sum(
+        1 - bhattacharyya_coefficient(distributions[i], distributions[j])
+        for i in range(k) for j in range(k)
+    )
+    return total / k ** 2
 
 
 def fisher_rao_distance(p: np.ndarray, q: np.ndarray) -> float:
-    """Fisher-Rao geodesic distance d_FR(p,q) = 2·arccos(BC(p,q)).
+    """Fisher-Rao geodesic distance on the probability simplex.
     
-    This is the geodesic distance on the sphere (via the Fisher embedding).
+    d_FR(p,q) = 2·arccos(BC(p,q)).
+    This is the arc length on the sphere S^{m-1} between φ(p) and φ(q).
     """
     bc = bhattacharyya_coefficient(p, q)
-    bc = np.clip(bc, -1, 1)
-    return 2.0 * np.arccos(bc)
+    bc = np.clip(bc, -1, 1)  # numerical safety
+    return 2 * np.arccos(bc)
 
 
-def polarization_index(profile: list[np.ndarray]) -> float:
-    """Polarization index: average pairwise Hellinger distance.
+# ============================================================================
+# Decisive Family Detection
+# ============================================================================
+
+def find_dictator(
+    f: "callable",  # f: tuple[bool,...] -> bool
+    k: int
+) -> Optional[int]:
+    """Find a dictator for a Boolean function f: {0,1}^k → {0,1}.
     
-    Measures how spread out voters' preferences are in the Fisher geometry.
-    
-    Properties:
-    - PI = 0 ⟺ all voters agree (consensus)
-    - PI > 0 ⟺ there is disagreement
-    - Higher PI → stronger curvature effects → Arrow obstruction
-    
-    Args:
-        profile: List of probability distributions (one per voter)
-    
-    Returns:
-        Non-negative polarization index
+    A dictator is a coordinate d such that f(v) = v[d] for all v.
+    Returns the dictator index, or None if no dictator exists.
     """
-    n = len(profile)
-    if n == 0:
-        return 0.0
-    total = sum(
-        hellinger_distance_sq(profile[i], profile[j])
-        for i in range(n)
-        for j in range(n)
-    )
-    return total / (n ** 2)
+    for d in range(k):
+        is_dictator = True
+        for bits in range(2 ** k):
+            v = tuple((bits >> i) & 1 for i in range(k))
+            if f(v) != v[d]:
+                is_dictator = False
+                break
+        if is_dictator:
+            return d
+    return None
 
 
-# ============================================================
-# Curvature Computation
-# ============================================================
-
-def sectional_curvature_fisher(m: int) -> float:
-    """Sectional curvature of the Fisher information metric on Δ^{m-1}.
+def find_pivotal_voter(
+    f: "callable",  # f: tuple[bool,...] -> bool
+    k: int
+) -> Optional[tuple[int, tuple]]:
+    """Find a pivotal voter for a Boolean function.
     
-    The Fisher embedding φ: Δ → S^{m-1} is an isometry (up to scale).
-    The unit sphere S^{m-1} has constant sectional curvature K = 1.
-    Therefore the Fisher simplex has K = 1.
-    
-    This positive curvature is the geometric source of Arrow's impossibility.
+    Returns (d, v) where flipping coordinate d in v changes f's output,
+    or None if no pivotal voter exists (impossible for unanimity-preserving f).
     """
-    return 1.0  # Constant positive curvature
+    for bits in range(2 ** k):
+        v = list((bits >> i) & 1 for i in range(k))
+        fv = f(tuple(v))
+        for d in range(k):
+            w = v.copy()
+            w[d] = 1 - w[d]
+            if f(tuple(w)) != fv:
+                return (d, tuple(v))
+    return None
 
 
-def verify_sphere_isometry(p: np.ndarray, q: np.ndarray) -> dict[str, float]:
-    """Verify the Fisher embedding is an isometry to the sphere.
+# ============================================================================
+# Condorcet Domain Detection
+# ============================================================================
+
+def is_condorcet_domain(orderings: list[list[int]], n_alts: int) -> bool:
+    """Check if a set of linear orderings forms a Condorcet domain.
     
-    Checks:
-    1. ||φ(p)||² = 1 (on unit sphere)
-    2. ||φ(q)||² = 1 (on unit sphere)  
-    3. ||φ(p) - φ(q)||² = 2·H²(p,q) (isometry)
+    A Condorcet domain is a set of orderings such that majority rule over
+    any odd number of voters with preferences in this set always produces
+    a transitive majority relation.
     """
-    phi_p = fisher_embedding(p)
-    phi_q = fisher_embedding(q)
+    from itertools import combinations_with_replacement
     
-    norm_p = float(np.sum(phi_p ** 2))
-    norm_q = float(np.sum(phi_q ** 2))
-    chord_sq = float(np.sum((phi_p - phi_q) ** 2))
-    hellinger_sq = hellinger_distance_sq(p, q)
-    
-    return {
-        "norm_phi_p_sq": norm_p,
-        "norm_phi_q_sq": norm_q,
-        "chord_sq": chord_sq,
-        "2_times_hellinger_sq": 2 * hellinger_sq,
-        "isometry_error": abs(chord_sq - 2 * hellinger_sq),
-        "sphere_error_p": abs(norm_p - 1.0),
-        "sphere_error_q": abs(norm_q - 1.0),
-    }
+    # Test with all possible odd-sized profiles from the domain
+    # (sufficient to test size 3 by a theorem of Fishburn)
+    for combo in combinations_with_replacement(range(len(orderings)), 3):
+        profiles = [orderings[i] for i in combo]
+        T = TournamentSign.from_preferences(profiles, n_alts)
+        if not T.is_transitive():
+            return False
+    return True
 
 
-# ============================================================
-# Arrow's Theorem Verification
-# ============================================================
-
-def construct_decisive_family_from_swf(
-    n: int,
-    m: int,
-    swf: Callable[[list[list[int]]], list[int]]
-) -> DecisiveFamily:
-    """Construct the decisive family from a social welfare function.
+def max_condorcet_domain_size(n_alts: int) -> int:
+    """Compute the maximum Condorcet domain size for n alternatives.
     
-    Given a SWF F mapping preference profiles to social preferences,
-    a coalition S is decisive if: whenever all voters in S prefer a to b
-    (and all others prefer b to a), society prefers a to b.
-    
-    Under IIA, the decisive family is independent of which pair (a,b) is chosen.
-    
-    Args:
-        n: Number of voters
-        m: Number of alternatives (must be ≥ 3 for Arrow's theorem)
-        swf: Social welfare function mapping profiles to social ordering
-             Each ordering is a permutation (list of alternatives, best first)
-    
-    Returns:
-        DecisiveFamily capturing which coalitions are decisive
+    For n ≤ 4, this is computed exactly. Conjecture: 2^{n-1} for all n.
     """
-    def is_decisive(S: frozenset[int]) -> bool:
-        # Test with alternatives 0 and 1
-        # Voters in S: prefer 0 to 1
-        # Voters not in S: prefer 1 to 0
-        profile = []
-        for i in range(n):
-            if i in S:
-                profile.append(list(range(m)))  # 0 > 1 > 2 > ...
-            else:
-                ordering = [1, 0] + list(range(2, m))  # 1 > 0 > 2 > ...
-                profile.append(ordering)
-        
-        social = swf(profile)
-        # Check if 0 is ranked before 1 in social ordering
-        return social.index(0) < social.index(1)
+    from itertools import permutations
     
-    return DecisiveFamily(n=n, is_decisive=is_decisive)
-
-
-def verify_arrow_theorem(n: int, m: int) -> None:
-    """Verify Arrow's theorem for small instances.
+    all_orderings = [list(p) for p in permutations(range(n_alts))]
     
-    Tests that for any SWF satisfying Pareto + IIA on m ≥ 3 alternatives
-    and n voters, there must be a dictator.
-    """
-    print(f"Arrow's theorem verification: {n} voters, {m} alternatives")
+    # Greedy search for large Condorcet domains
+    best_size = 0
     
-    # The only SWFs satisfying Pareto + IIA are dictatorships
-    for dictator in range(n):
-        def swf(profile, d=dictator):
-            return profile[d]
-        
-        df = construct_decisive_family_from_swf(n, m, swf)
-        found_dictator = df.find_dictator()
-        print(f"  Dictator {dictator}: found_dictator = {found_dictator}, correct = {found_dictator == dictator}")
+    # Try starting from each ordering
+    for start in range(len(all_orderings)):
+        domain = [all_orderings[start]]
+        for i in range(len(all_orderings)):
+            if i == start:
+                continue
+            candidate = domain + [all_orderings[i]]
+            if is_condorcet_domain(candidate, n_alts):
+                domain = candidate
+        best_size = max(best_size, len(domain))
+    
+    return best_size
 
 
 if __name__ == "__main__":
-    print("=" * 60)
-    print("Arrow-Curvature Algorithm Demonstrations")
-    print("=" * 60)
+    # Quick test
+    print("Testing HolonomyDefectAlgebra...")
     
-    # Test Fisher embedding
-    p = np.array([0.4, 0.3, 0.2, 0.1])
-    q = np.array([0.25, 0.25, 0.25, 0.25])
+    # Condorcet cycle
+    sign = np.array([[0, 1, -1], [-1, 0, 1], [1, -1, 0]])
+    H = HolonomyDefectAlgebra(sign)
+    print(f"Condorcet cycle: curvature={H.condorcet_curvature()}, "
+          f"holonomy={H.total_holonomy()}, transitive={H.is_transitive()}")
+    print(f"Gauss-Bonnet verified: {H.verify_gauss_bonnet()}")
     
-    print("\nFisher embedding verification:")
-    result = verify_sphere_isometry(p, q)
-    for k, v in result.items():
-        print(f"  {k}: {v:.10f}")
+    # Transitive tournament
+    sign_t = np.array([[0, 1, 1], [-1, 0, 1], [-1, -1, 0]])
+    H_t = HolonomyDefectAlgebra(sign_t)
+    print(f"Transitive: curvature={H_t.condorcet_curvature()}, "
+          f"holonomy={H_t.total_holonomy()}, transitive={H_t.is_transitive()}")
     
-    print(f"\nSectional curvature of Fisher simplex: K = {sectional_curvature_fisher(4)}")
+    # Fisher geometry
+    p = np.array([0.5, 0.3, 0.2])
+    q = np.array([0.2, 0.5, 0.3])
+    print(f"\nFisher-Rao distance: {fisher_rao_distance(p, q):.4f}")
+    print(f"Hellinger² = {hellinger_distance_sq(p, q):.4f}")
+    print(f"2(1-BC) = {2*(1 - bhattacharyya_coefficient(p, q)):.4f}")
     
-    # Arrow's theorem
-    print()
-    verify_arrow_theorem(3, 3)
-    verify_arrow_theorem(5, 4)
+    # Pivotal voter
+    majority = lambda v: int(sum(v) > len(v) / 2)
+    result = find_pivotal_voter(majority, 3)
+    print(f"\nMajority rule pivotal: voter {result[0]} at profile {result[1]}")
+    
+    # Condorcet domain
+    print(f"\nMax Condorcet domain size for 3 alternatives: {max_condorcet_domain_size(3)}")
