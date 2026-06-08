@@ -993,7 +993,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Post-Quantum Cryptography: Lattice-Based Key Exchange"
   },
   {
-    "consumed_by_exp_id": "f5e99459",
+    "consumed_by_exp_id": "",
     "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
     "domains": [
       "Cryptography",
@@ -1003,7 +1003,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.964548+00:00",
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
@@ -2703,7 +2703,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Inverse Stereographic Renormalization Group"
   },
   {
-    "consumed_by_exp_id": "b91a0b5c",
+    "consumed_by_exp_id": "",
     "description": "Prove that univalent foundations (HoTT) provide a consistent alternative to ZFC. Formalize the univalence axiom, compute homotopy groups of spheres, and establish constructive interpretability.",
     "domains": [
       "Bridges",
@@ -2713,12 +2713,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.050227+00:00",
     "title": "Homotopy Type Theory as Foundations"
   },
   {
-    "consumed_by_exp_id": "316d991f",
+    "consumed_by_exp_id": "",
     "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
     "domains": [
       "Bridges",
@@ -2728,7 +2728,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.504025+00:00",
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },
@@ -3093,7 +3093,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
   },
   {
-    "consumed_by_exp_id": "7fe08e4c",
+    "consumed_by_exp_id": "",
     "description": "Arrow's impossibility theorem states that no ranked voting system with 3+ alternatives can be Pareto efficient, non-dictatorial, and independent of irrelevant alternatives (IIA). Conjecture: Arrow's theorem is a curvature statement. The space of preference profiles is a Riemannian manifold M with the Fisher information metric. The social welfare function F: M -> M is a mapping from profiles to social preferences. Arrow's conditions translate to geometric conditions: (1) Pareto efficiency means F preserves the direction of unanimous preference (F is 'forward-looking'). (2) IIA means F is a local mapping (the social preference at x depends only on local information near x). (3) Non-dictatorial means F is not a projection onto a single voter's preference. Conjecture: the only smooth, local, forward-looking maps on a positively curved manifold are projections (dictatorships). This is because a positively curved manifold has the property that parallel transport around a small loop rotates vectors (Holonomy), and a local, forward-looking map must preserve this holonomy, which forces it to be a projection. Conjecture: the curvature of the preference space is related to the 'polarization' of the electorate: when preferences are polarized (bimodal), the curvature is positive (sphere-like), and Arrow's theorem applies. When preferences are unimodal (consensus), the curvature is zero (flat), and majority rule works. Test: compute the curvature of the preference space for synthetic election data and verify the connection to Arrow's theorem. Impact: Arrow's impossibility is a theorem of differential geometry. Voting is curved.",
     "domains": [
       "Novelty",
@@ -3103,7 +3103,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.814374+00:00",
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
@@ -3138,7 +3138,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
   },
   {
-    "consumed_by_exp_id": "c6a23ae2",
+    "consumed_by_exp_id": "",
     "description": "Formalize chess played on an infinite board. Prove that the king can always escape on an infinite board and determine which finite-piece configurations are forced mates. Develop a theory of infinite combinatorial game value and prove its relationship to ordinal game values.",
     "domains": [
       "Novelty",
@@ -3148,7 +3148,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.877377+00:00",
     "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
   },

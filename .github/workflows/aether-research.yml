@@ -21,6 +21,8 @@ concurrency:
 env:
   AETHER_MAX_INFLIGHT: ${{ github.event.inputs.maxinflight || '9' }}
   PYTHONUNBUFFERED: '1'
+  # Force HuggingFace to download to the workspace so we can track its size, if you use it.
+  HF_HOME: ${{ github.workspace }}/.hf_cache 
 
 jobs:
   research:
@@ -33,14 +35,34 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
           cache: 'pip'
 
+      - name: [DEBUG] Check space before pip
+        run: df -h
+
       - name: Install dependencies
         run: pip install -r Aether/requirements.txt
+
+      - name: [DEBUG] Check space after pip
+        run: |
+          df -h
+          echo "Checking pip cache size:"
+          du -sh ~/.cache/pip || true
 
       - name: Create workspace directories
         run: mkdir -p Aether/.aether_workspace/projects Aether/.aether_workspace/logs
@@ -55,10 +77,23 @@ jobs:
           OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
         run: cd Aether && python3 aether_tick.py --max-inflight ${{ env.AETHER_MAX_INFLIGHT }} --ollama-cloud
 
+      - name: [DEBUG] Check space after Aether tick
+        # This will tell us if aether_tick.py downloaded massive files
+        run: |
+          df -h
+          echo "Finding largest directories in workspace:"
+          du -ah --max-depth=2 | sort -rh | head -n 15
+
       - name: Commit and push all changes
         run: |
           git config user.name "Aether Bot"
           git config user.email "aether-bot[bot]@users.noreply.github.com"
+          
+          # SAFETY MEASURE: Ensure we aren't staging hidden cache folders or massive models
+          # If your script downloaded a 10GB file, git add -A will crash the runner here.
+          echo ".hf_cache/" >> .gitignore
+          echo "Aether/.aether_workspace/logs/" >> .gitignore # Reconsider if you want 4x daily logs in git history
+          
           git add -A
           git diff --cached --quiet || git commit -m "Aether CI: tick $(date -u +%Y-%m-%dT%H:%MZ)"
           git pull --rebase -X ours origin master || git rebase --abort
