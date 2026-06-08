@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "94343d31",
     "filename": "the_geometry_of_consensus_arrows_theorem_as_curvat.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4536,
     "title": "The Holonomy Defect Algebra: Arrow's Theorem as Curvature of Preference Space"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "the_geometry_of_consensus_arrows_theorem_as_curvat",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4536,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Holonomy Defect Algebra: Arrow's Theorem as Curvature of Preference Space"
     }
