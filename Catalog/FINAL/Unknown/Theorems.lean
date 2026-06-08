@@ -1,1 +1,0 @@
-../../Catalog/Bridges/Pythagorean/ApproxTowerRigidity/Theorems.lean

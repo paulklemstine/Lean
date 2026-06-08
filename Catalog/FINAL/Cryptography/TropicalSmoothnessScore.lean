@@ -1,0 +1,1 @@
+../../Cryptography/TropicalSmoothnessScore.lean

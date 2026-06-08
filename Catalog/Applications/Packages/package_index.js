@@ -39,8 +39,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "057f23ce",
     "filename": "the_poincare_conjecture_for_data_manifold_detectio.json",
     "pkg_num": 4,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.16743922555663115,
     "title": "Algebraic Circuit Complexity: Degree-Depth Tradeoffs, Evaluation Soundness, and PIT Foundations"
   },
   {
@@ -143,8 +143,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.16743922555663115,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Algebraic Circuit Complexity: Degree-Depth Tradeoffs, Evaluation Soundness, and PIT Foundations"
     },

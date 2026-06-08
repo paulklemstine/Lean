@@ -1,0 +1,1 @@
+../../Pythagorean/TypedCongruenceClosure.lean

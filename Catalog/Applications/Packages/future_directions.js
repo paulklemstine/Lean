@@ -413,7 +413,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Resolution of Singularities in Positive Characteristic"
   },
   {
-    "consumed_by_exp_id": "8307008b",
+    "consumed_by_exp_id": "",
     "description": "Formalize the consistency strength hierarchy: inaccessible < Mahlo < measurable < strong < supercompact < huge. Prove strictness results.",
     "domains": [
       "Logic",
@@ -423,7 +423,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:17.622192+00:00",
     "title": "Large Cardinal Hierarchy: Consistency Strength"
   },
@@ -486,7 +486,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Mobius Arithmetic: Number Theory on the Mobius Band"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3e08a09f",
     "description": "Sheaf theory studies how local data glues to form global objects. The stereographic projection gives S^n a two-chart atlas with Mobius transition maps. Define a new class of sheaves called stereographic sheaves where the gluing data is constrained by the conformal structure of the stereographic atlas. A stereographic sheaf on S^n is a sheaf F such that for each chart U_i of the stereographic cover, the restriction F|U_i is a sheaf on R^n, and the transition function F(U_0 cap U_1) is a sheaf morphism that commutes with the Mobius transition. Conjecture: The category of stereographic sheaves on S^n is a proper subcategory of all sheaves on S^n, characterized by the condition that Cech cohomology with respect to the stereographic cover satisfies a Mobius compatibility. This subcategory has better computational properties: H^k(S^n, F) can be computed from the transition function alone for stereographic sheaves, reducing the computation of sheaf cohomology on S^n to a single gluing datum. Test: prove the equivalence with locally constant sheaves on RP^n for n=2,3. Compute H^1(S^2, Z) = Z/2Z for the constant sheaf Z. Impact: a new computational tool for sheaf cohomology that exploits conformal structure, with applications to topological data analysis and differential equations on spheres.",
     "domains": [
       "Geometry",
@@ -496,7 +496,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:06.369698+00:00",
     "title": "Stereographic Sheaf Theory: Gluing Data on Spheres"
   },
@@ -545,7 +545,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Topological Data Analysis: Persistent Homology Stability"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "08293a01",
     "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
     "domains": [
       "Novelty",
@@ -555,7 +555,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.944657+00:00",
     "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
   },
@@ -647,7 +647,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Primes of the Form n\u00b2+1"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "efa69ffd",
     "description": "Formalize core HoTT results in Lean 4: the univalence axiom, higher inductive types, and the fundamental theorem of identity types. Prove that HoTT provides a constructive foundation for mathematics.",
     "domains": [
       "Logic",
@@ -657,7 +657,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:03.446924+00:00",
     "title": "Homotopy Type Theory Foundations"
   },
@@ -869,7 +869,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Random Matrices: Edge Universality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0afbba2f",
     "description": "Classify RT\u00b2\u2082 in the reverse mathematics hierarchy: prove it's strictly between ACA\u2080 and WKL\u2080 over RCA\u2080. Formalize Seetapun's theorem.",
     "domains": [
       "Logic",
@@ -879,7 +879,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -1092,21 +1092,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The Riemann zeta function zeta(s) has non-trivial zeros at s = 1/2 + i*gamma_n on the critical line (assuming RH). These zeros encode deep arithmetic information. Conjecture: the zeros gamma_n are the spectrum of a self-adjoint operator on a Hilbert space, and this operator is the Casimir element of a quantum group G_q. Specifically, define the 'zeta quantum group' G_q as the q-deformation of SU(2) where q = e^{2*pi*i*gamma_1} (using the first zero gamma_1 ~ 14.13). The Casimir element C_q of G_q has eigenvalues that are quadratic functions of the representation labels, and the spectrum of C_q is {n(n+1) : n in N}. Conjecture: the Riemann zeros gamma_n are related to the spectrum of C_q by gamma_n = f(spectrum(C_q)) for some function f. If f is linear, this would mean the zeros are evenly spaced, which is false (the zeros have Poisson-like spacings). If f is logarithmic, gamma_n ~ pi*n/log(n) which matches the average spacing. Conjecture: the spectral statistics of C_q match the GUE random matrix statistics of the Riemann zeros (Montgomery's pair correlation conjecture). Test: compute the spectrum of C_q for G_q with q = e^{2*pi*i*gamma_1} and compare the spectral statistics with the Riemann zeros. Impact: the Riemann hypothesis is a representation-theoretic statement about quantum groups.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0076",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.711975+00:00",
-    "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Determine which integers can be represented as a sum of three cubes. Formalize known computational results and the density conjecture. Connect to the geometry of cubic surfaces and the Hasse principle.",
     "domains": [
       "Algebra"
@@ -1120,7 +1105,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sums of Three Cubes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "899432dd",
     "description": "Study the topology of real algebraic curves and surfaces. Formalize the Harnack bound, classify real algebraic curves by arrangement of ovals, and connect to the second part on limit cycles of planar polynomial ODEs.",
     "domains": [
       "Geometry"
@@ -1129,7 +1114,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:00.529451+00:00",
     "title": "Hilbert 16: Topology of Algebraic Curves"
   },
@@ -1367,7 +1352,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Algorithmic Fairness: Individual vs Group Fairness Impossibility"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a2ba6239",
     "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
     "domains": [
       "Novelty",
@@ -1377,7 +1362,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.494775+00:00",
     "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
@@ -1612,21 +1597,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:00.118535+00:00",
     "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0024",
-    "priority_score": 0.77,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.512076+00:00",
-    "title": "The Mathematics of Memes: Viral Information Topology"
   },
   {
     "consumed_by_exp_id": "",
@@ -1958,7 +1928,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Gravitational Derivation Systems** (GDS), a nov"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f2eb6cb3",
     "description": "# Future Directions: EML Fixed-Point Theory\n\n## Synthesis\n\nThis cycle established the foundational contraction theory for the EML operator f(x) = e^a \u00b7 log(x + c), proving derivative bounds, Lipschitz estimates via MVT, uniqueness of fixed points, geometric convergence at rate \u03c1 = e^a/(L+c), and a composition theorem for cascaded EML layers. The most promising cross-domain connection discovered is the **bridge between EML contraction theory and the General C\u00b9 Contraction Principle**: any smooth map with bounded derivative is automatically Lipschitz, and the EML case is the canonical example with an explicitly computable, monotonically decaying derivative.\n\nThe composition theorem (Theorem 3.8) opens a direct path to neural network convergence certification: a deep feedforward network of EML layers has contraction ratio equal to the product of layer ratios. This multiplicative structure mirrors the spectral radius theory of linear operators, suggesting a deeper algebraic connection between EML dynamics and operator semigroup theory (linking to `contraction_convergence_rate` in `Algebra/SpectralArithmetic/Core.lean`).\n\nThe most high-impact direction is **Direction 1** (Invariant Interval Existence), which would close the main gap in the current theory \u2014 the assumption that iterates stay in the contraction domain. This would yield a fully self-contained convergence theorem requiring only parameter conditions, with no auxiliary hypotheses on trajectories.\n\n---\n\n### Direction 1: EML Invariant Interval Existence and Banach Complete Convergence\n\n**Conjecture**: For all a \u2208 (0, log(1 + c)) with c > 0, there exists an interval [L, U] \u2282 (\u2212c, \u221e) such that the EML operator f(x) = e^a \u00b7 log(x + c) maps [L, U] into itself, and e^a < L + c (contraction condition). Specifically, L and U can be chosen as the two solutions of e^a \u00b7 log(x + c) = x when they exist, with the fixed point x* lying between them.\n\n**Test**: For a = 0.5, c = 1.0, verify computationally that the equation e^0.5 \u00b7 log(x + 1) = x has solutions bounding the fixed point x* \u2248 1.143. Then prove in Lean 4 that f([L, U]) \u2286 [L, U] using monotonicity of f and the intermediate value theorem.\n\n**Impact**: Removes the `hiter` hypothesis from `eml_iteration_convergence`, yielding a clean theorem: \"For a \u2208 (0, log(1+c)), the EML iteration converges to a unique fixed point from any starting point in the invariant interval.\" This would be a complete, practical convergence certificate.\n\n**Catalog References**: `EML/FixedPoint.lean` (this cycle), `contraction_fixed_point_unique` in `EML/SocialCreditDynamics.lean`\n\n**Proof Strategy**: (1) Show f is concave on (\u2212c, \u221e) by computing f''(x) = \u2212e^a/(x+c)\u00b2 < 0. (2) Use concavity + continuity to prove that the graph of f crosses y = x at most twice. (3) If f(L\u2080) > L\u2080 and f(U\u2080) < U\u2080 for suitable L\u2080, U\u2080, then by IVT and monotonicity, f maps [L\u2080, U\u2080] into itself. (4) Apply the existing `eml_fixed_point_unique` and `eml_iteration_convergence`.\n\n**Domain Bridges**: EML Contraction Theory \u2194 Dynamical Systems (invariant sets, attracting basins)\n\n**Lineage**: Builds on `eml_iteration_convergence` and `emlFun_lipschitz_on_Ici` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 2: Tropical Limit of EML Fixed Points as a \u2192 \u221e\n\n**Conjecture**: As a \u2192 \u221e with c fixed, the rescaled fixed point x*(a)/e^a converges to a limit that satisfies the tropical (min-plus) fixed-point equation. Specifically, if we define z(a) = x*(a)/e^a, then lim_{a\u2192\u221e} z(a) = log(c) (the tropical logarithm of c). The contraction ratio \u03c1(a) \u2192 1 as a \u2192 \u221e, and the convergence transitions from geometric to algebraic.\n\n**Test**: Compute x*(a)/e^a numerically for a = 1, 2, 5, 10, 20 with c = 1. Check whether the sequence approaches log(1) = 0. If not, find the correct scaling and limit.\n\n**Impact**: Establishes a rigorous bridge between EML contraction dynamics and tropical algebra, the \"dequantization\" of classical mathematics. This would connect the catalog's EML results to the tropical computing strand (`MachineLearning/TropicalCTC.lean`, `Tropical/` family).\n\n**Catalog References**: `contraction_unique_fixed_point` in `MachineLearning/TropicalCTC.lean`, `EML/FixedPoint.lean`\n\n**Proof Strategy**: (1) From the exponential form exp(x*/e^a) = x* + c, substitute z = x*/e^a to get exp(z) = z\u00b7e^a + c. (2) For large a, the z\u00b7e^a term dominates, so z \u2248 c\u00b7e^{-a} \u2192 0. But x* \u2248 e^a \u00b7 log(c + e^a \u00b7 z) \u2248 e^a \u00b7 a for large a. Careful asymptotic expansion needed. (3) Formalize the limit using Lean 4's `Filter.Tendsto` framework.\n\n**Domain Bridges**: EML Fixed-Point Theory \u2194 Tropical Algebra (min-plus semirings, dequantization)\n\n**Lineage**: Builds on `eml_fixed_point_exp_form` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: EML Operator Semigroup and Spectral Theory\n\n**Conjecture**: The set of EML operators {T_{a,c} : a > 0, c > 0} forms a semigroup under composition (with appropriate parameter transformations), and the \"spectral radius\" of this semigroup \u2014 defined as the infimum of n-th root contraction ratios \u2014 equals the contraction ratio at the fixed point, \u03c1 = |f'(x*)|. Moreover, this spectral radius satisfies a variational formula analogous to the Gelfand formula for linear operators.\n\n**Test**: (1) Verify computationally that composing T_{a\u2081,c\u2081} with T_{a\u2082,c\u2082} gives a function of the form e^{a\u2083} \u00b7 log(g(x)) where g is not linear \u2014 so the semigroup is NOT closed in the EML family. (2) Check whether the contraction ratio of T^n (n-fold self-composition) satisfies \u03c1(T^n) = \u03c1(T)^n exactly. (3) If not, investigate whether lim \u03c1(T^n)^{1/n} = |f'(x*)|.\n\n**Impact**: Would establish EML operators as a nonlinear analogue of bounded linear operators on Banach spaces, with a coherent spectral theory. The Gelfand formula for nonlinear contractions would be a novel result in nonlinear functional analysis.\n\n**Catalog References**: `contraction_convergence_rate` in `Algebra/SpectralArithmetic/Core.lean`, `eml_composition_contraction_ratio` from this cycle\n\n**Proof Strategy**: (1) Compute T^n explicitly by induction. (2) Show that T^n has contraction ratio at most \u03c1^n (already proved). (3) For the lower bound, exhibit sequences where |T^n(x) - T^n(y)| / |x - y| \u2192 \u03c1^n. (4) Take n-th roots and send n \u2192 \u221e.\n\n**Domain Bridges**: EML Dynamics \u2194 Operator Algebra (semigroup theory, spectral radius)\n\n**Lineage**: Builds on `eml_composition_contraction_ratio` and `general_C1_contraction_on_Icc` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Parametric Sensitivity and Implicit Function Theorem for EML Fixed Points\n\n**Conjecture**: The fixed point x*(a, c) of the EML operator is a smooth function of the parameters (a, c) in the contraction region {(a,c) : a < log(x* + c)}. Specifically, \u2202x*/\u2202a = x* \u00b7 (x* + c) / (x* + c \u2212 e^a) and \u2202x*/\u2202c = e^a / (x* + c \u2212 e^a), obtained by implicit differentiation of x* = e^a \u00b7 log(x* + c).\n\n**Test**: Verify numerically that the finite-difference approximation of \u2202x*/\u2202a matches the formula above for a = 0.5, c = 1.0. Then prove the formula in Lean 4 using HasDerivAt for implicit functions.\n\n**Impact**: Enables gradient-based optimization of EML network parameters with certified derivatives. This is the key ingredient for backpropagation through EML layers with convergence guarantees.\n\n**Catalog References**: `EML/FixedPoint.lean`, `eml_gradient_log_bounded` in `EML/EMLNeuralNetworks.lean`\n\n**Proof Strategy**: (1) Define F(a, c, x) = e^a \u00b7 log(x + c) \u2212 x. (2) At the fixed point, F = 0 and \u2202F/\u2202x = e^a/(x+c) \u2212 1 = \u03c1 \u2212 1 \u2260 0 (since \u03c1 < 1). (3) Apply the Implicit Function Theorem to get smoothness of x*(a,c). (4) Compute partial derivatives by implicit differentiation.\n\n**Domain Bridges**: EML Fixed-Point Theory \u2194 Optimization (gradient computation, sensitivity analysis)\n\n**Lineage**: Builds on `eml_fixed_point_exp_form` and `emlFun_hasDerivAt` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Complex EML Dynamics and Julia Sets\n\n**Conjecture**: For the complex EML operator f(z) = e^a \u00b7 Log(z + c) where Log is the principal branch, the Julia set (boundary of the basin of attraction of the fixed point) is connected when a < log(|z* + c|) and totally disconnected when a exceeds a critical value a_crit(c). This parallels the Mandelbrot-Julia correspondence for z\u00b2 + c.\n\n**Test**: Plot the basin of attraction numerically for c = 1 and several values of a \u2208 (0, 3). Look for the connectivity transition. Estimate a_crit empirically.\n\n**Impact**: Would establish the first rigorous connection between EML dynamics and holomorphic dynamics / fractal geometry. The EML family would join z\u00b2 + c as one of the few families with completely understood bifurcation structure.\n\n**Catalog References**: `EML/FixedPoint.lean`, `emlContractionRatio_lt_one`\n\n**Proof Strategy**: (1) Extend the contraction analysis to \u2102 using the complex derivative |f'(z)| = e^a / |z + c|. (2) The contraction region in \u2102 is {z : |z + c| > e^a}, a disk complement. (3) Use Montel's theorem and the classification of Fatou components to analyze the Julia set. (4) The connectivity transition should occur at the parameter value where the critical point z = \u2212c escapes to infinity.\n\n**Domain Bridges**: EML Dynamics \u2194 Complex Dynamics (Julia sets, Mandelbrot set, holomorphic iteration)\n\n**Lineage**: Builds on the real contraction analysis from this cycle, extending to the complex plane.\n\n**Ambition**: grand_challenge\n",
     "domains": [
       "Algebra",
@@ -1968,7 +1938,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "e8c0d633",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-06T15:56:33.124130+00:00",
     "title": "Foundational contraction theory for the EML operator"
   },
@@ -2436,6 +2406,51 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T21:09:08.963525+00:00",
     "title": "This cycle formalized the mathematical dictionary between holographic gravity an"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Metric Filtrations and the Poincar\u00e9 Threshold\n\n## 1. Connectivity Threshold Scaling Law\n\nThe **connectivity threshold** \u03b5*(X) of a finite point cloud X \u2282 \u211d\u1d48 is the infimum of \u03b5 such that the Rips graph at scale \u03b5 is connected (i.e., has exactly one connected component). For n points sampled uniformly on the unit d-sphere S\u1d48, we conjecture:\n\n> **Conjecture**: \u03b5*(X) ~ C \u00b7 d^{1/2} \u00b7 n^{-1/d} as n \u2192 \u221e, where C depends only on d.\n\nThe key insight is that the connectivity threshold is controlled by the maximum nearest-neighbor distance, which for uniform samples on S\u1d48 scales as n^{-1/d} by volumetric arguments \u2014 the surface area of a geodesic cap of radius \u03b5 on S\u1d48 scales as \u03b5\u1d48.\n\n**Why now?** Our `MetricFiltration` structure and `ripsGraph_mono` theorem provide the algebraic foundation. The `coveringNumber_antitone` result shows the covering number's monotonicity, which is the dual of the connectivity threshold. The next step is to formalize the probabilistic bound using measure-theoretic arguments about uniform distributions on S\u1d48, which Mathlib's measure theory library now supports.\n\n**Computational test**: Sample n = 100, 1000, 10000 points on S\u00b9, S\u00b2, S\u00b3 and compute \u03b5* by binary search on the Rips graph connectivity. Plot log(\u03b5*) vs log(n) \u2014 the slope should be -1/d.\n\n## 2. Persistent Betti Numbers via Chain Complexes\n\nOur current formalization captures the \u03c0\u2080 (connected components) level of the Vietoris-Rips filtration via SimpleGraph. The full persistent homology requires chain complexes over the Rips simplicial complex.\n\n> **Conjecture**: For X uniformly sampled from S\u1d48 with n sufficiently large, the Rips complex VR_\u03b5(X) has \u03b2\u2080 = 1, \u03b2\u2081 = \u03b2\u2082 = ... = \u03b2_{d-1} = 0, \u03b2_d = 1 for \u03b5 in an interval [\u03b5_low, \u03b5_high] whose width grows as n^{1/(d+1)}.\n\nThe key insight is that the \"persistence\" (length of the interval where the homology matches S\u1d48) is a quantitative measure of how well the point cloud approximates the sphere, and its scaling law encodes the dimension.\n\n**Why now?** Mathlib has basic homological algebra (chain complexes, homology functors). Our `AbstractSimplicialComplex` in `SimplicialComplex.lean` provides the combinatorial input. The gap is formalizing the boundary operator and proving that the Rips complex of a dense enough sample has the same homology as the underlying manifold (the Nerve Lemma / Niyogi-Smale-Weinberger theorem).\n\n**Computational test**: Compute the full persistent homology barcode of 1000 points on S\u00b2 using standard TDA software. The longest bar in H\u2082 should appear at scale \u2248 C \u00b7 n^{-1/2}.\n\n## 3. Packing-Covering Duality and Metric Entropy\n\nOur `maximal_packing_is_cover` theorem establishes the fundamental duality between packings and coverings. This should extend to a full metric entropy theory.\n\n> **Conjecture**: For a compact Riemannian manifold M of dimension d and volume V, the covering number satisfies N(M, \u03b5) = V \u00b7 \u03c9d\u207b\u00b9 \u00b7 \u03b5\u207b\u1d48 \u00b7 (1 + O(\u03b5 \u00b7 \u03ba)) where \u03c9d is the volume of the d-ball and \u03ba is related to the Ricci curvature.\n\nThe key insight is that the O(\u03b5 \u00b7 \u03ba) correction term encodes curvature information \u2014 the covering number is not just a volumetric invariant but a geometric one. Formally, the packing number P(M, \u03b5) satisfies P(M, 2\u03b5) \u2264 N(M, \u03b5) \u2264 P(M, \u03b5), and both are asymptotic to V/\u03c9d \u00b7 \u03b5\u207b\u1d48.\n\n**Why now?** Our `IsEpsilonPacking`, `IsEpsilonCover`, and `coveringNumber` definitions provide the discrete framework. The next step is connecting to Mathlib's `MeasureTheory.Measure.lebesgue` for volumetric arguments and proving the packing-covering sandwich inequality (which our duality theorem is the first step toward).\n\n**Computational test**: Compute N(S\u00b2, \u03b5) for \u03b5 = 0.1, 0.01, 0.001 by greedy covering. Compare to the predicted 4\u03c0/\u03c0\u03b5\u00b2 = 4/\u03b5\u00b2. The ratio should converge to 1.\n\n## 4. Stability of the Poincar\u00e9 Threshold Under Noise\n\nOur `sphere_perturbation_stability` theorem shows that LiesOnSphere is robust to perturbation. This should extend to stability of the Poincar\u00e9 threshold itself.\n\n> **Conjecture**: If X lies on S\u1d48 and Y is a \u03b4-perturbation of X (each Y_i within \u03b4 of X_i), then |\u03b5*(Y) - \u03b5*(X)| \u2264 2\u03b4, where \u03b5* is the connectivity threshold.\n\nThe key insight is that a \u03b4-perturbation can change any pairwise distance by at most 2\u03b4 (by triangle inequality), so edges in the Rips graph at scale \u03b5 for X correspond to edges at scale \u03b5 + 2\u03b4 for Y and vice versa. This gives a Lipschitz bound on the connectivity threshold.\n\n**Why now?** Our `ripsGraph_mono` and `sphere_perturbation_stability` provide the ingredients. The proof would use: if VR_\u03b5(X) is connected, then VR_{\u03b5+2\u03b4}(Y) is connected (since every edge at scale \u03b5 in X gives an edge at scale \u03b5 + 2\u03b4 in Y), yielding \u03b5*(Y) \u2264 \u03b5*(X) + 2\u03b4 and symmetrically.\n\n**Computational test**: Take 1000 points on S\u00b2, add Gaussian noise with \u03c3 = 0.01, 0.1, 0.5. Measure \u03b5*(noisy) - \u03b5*(clean). The difference should be \u2264 2 \u00b7 max perturbation.\n\n## 5. The Filtration as a Functor\n\nOur `MetricFiltration` and `GeneralizedFiltration` structures beg for a categorical treatment.\n\n> **Conjecture**: The assignment X \u21a6 MetricFiltration.rips(X) extends to a functor from the category of finite pseudometric spaces (with short maps) to the category of filtrations (with filtration-preserving graph morphisms), and this functor preserves finite limits.\n\nThe key insight is that a short map f : X \u2192 Y (with dist(f(x), f(y)) \u2264 dist(x,y)) sends edges of VR_\u03b5(X) to edges of VR_\u03b5(Y), giving a natural transformation between the filtrations. Functoriality would make the Poincar\u00e9 threshold a metric invariant in a precise categorical sense.\n\n**Why now?** Mathlib's category theory library is mature enough to formalize this. Our `GeneralizedFiltration` provides the target category's objects. The key missing piece is defining morphisms of filtrations (natural transformations between the monotone families) and showing the Rips construction respects composition of short maps.\n\n**Computational test**: Not directly computational, but one could verify that isometric embeddings of S\u00b9 \u2192 S\u00b2 induce filtration morphisms that preserve the connectivity threshold, by computing \u03b5* for both the embedded and ambient point clouds.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1026",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "057f23ce",
+    "status": "available",
+    "timestamp": "2026-06-08T21:10:21.404836+00:00",
+    "title": "The **connectivity threshold** \u03b5*(X) of a finite point cloud X \u2282 \u211d\u1d48 is the infim"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Quantum Integers and Casimir Spectra\n\n## 1. q-Binomial Coefficients and Gaussian Polynomials\n\nThe q-integer `[n]_q` naturally gives rise to **q-factorials** `[n]_q! = [1]_q \u00b7 [2]_q \u00b7 \u22ef \u00b7 [n]_q` and **q-binomial coefficients** (Gaussian binomial coefficients) `\u230an choose k\u230b_q = [n]_q! / ([k]_q! \u00b7 [n-k]_q!)`. A classical theorem states that these q-binomials are polynomials in `q` with **non-negative integer coefficients** \u2014 they count the number of `k`-dimensional subspaces of an `n`-dimensional vector space over `F_q`.\n\nThe key insight is that our `qInt_mul` formula `[mn]_q = [m]_q \u00b7 [n]_{q^m}` should extend to a **q-Vandermonde identity** for q-binomials: `\u230am+n choose k\u230b_q = \u03a3_j q^{j(m-k+j)} \u230am choose k-j\u230b_q \u00b7 \u230an choose j\u230b_q`, which would be a non-trivial combinatorial identity connecting our algebraic framework to finite geometry.\n\nWhy now? We have the foundational `qInt_add` and `qInt_mul` identities formalized. The q-factorial and q-binomial are direct constructions from `qInt`, and the integrality theorem would be a genuinely novel formalization \u2014 it does not exist in Mathlib.\n\n## 2. Spectral Gap Growth Rate for Casimir Eigenvalues\n\nOur `casimirEig_diff_pos` shows the spectral gap is positive, but the quantitative growth rate is unexplored. Conjecture: for `q > 1`, the spectral gap `casimirEig q (n+1) - casimirEig q n` grows as `\u0398(q^{2n})` \u2014 specifically, `casimirEig q (n+1) - casimirEig q n ~ (q+1) \u00b7 q^{2n}` as `n \u2192 \u221e`. For `0 < q < 1`, the gap should shrink as `\u0398(q^n)`.\n\nThe key insight is that the three-term expansion `q^{n+2} \u00b7 [n]_q + q^n \u00b7 [n+2]_q + q^{2n+2}` is dominated by the `q^{2n+2}` term when `q > 1`, giving exponential gap growth \u2014 which means high-dimensional representations are exponentially well-separated in the quantum case, unlike the classical (`q = 1`) polynomial gap `4n + 4`.\n\nWhy now? The strict monotonicity proof already establishes positivity. Formalizing the asymptotic growth would connect our algebraic results to analytic number theory (via the connection between q-integer asymptotics and the distribution of Riemann zeros).\n\n## 3. Symmetric q-Integers and the Unit Circle\n\nOur `qInt` uses the polynomial convention `[n]_q = (q^n - 1)/(q - 1)`. In quantum group theory, the **symmetric q-integer** `[n]_q^{sym} = (q^n - q^{-n})/(q - q^{-1})` is more natural because it makes the Casimir eigenvalue manifestly real when `q` lies on the unit circle (i.e., `q = e^{i\u03b8}`). Conjecture: define `qIntSym q n = (q^n - q^{-n})/(q - q^{-1})` for `q` in a field, and prove that `qIntSym (e^{i\u03b8}) n = sin(n\u03b8)/sin(\u03b8)` \u2014 the **Chebyshev U-polynomial** `U_{n-1}(cos \u03b8)`.\n\nThe key insight is that the symmetric Casimir eigenvalue `[n]_q^{sym} \u00b7 [n+2]_q^{sym} = U_{n-1}(cos \u03b8) \u00b7 U_{n+1}(cos \u03b8)` connects quantum group spectra directly to Chebyshev polynomial theory. The injectivity question for the symmetric Casimir becomes: are the products `U_{n-1}(x) \u00b7 U_{n+1}(x)` distinct for distinct `n`? This fails at `x = cos(\u03c0/k)` for integer `k` (roots of unity), providing a clean **boundary** for the spectral distinguishability theorem.\n\nWhy now? Our formalization of the polynomial q-integer and its strict monotonicity provides the template. The symmetric version requires working with `\u2102` and trigonometric functions, but the algebraic structure is parallel.\n\n## 4. Tensor Product Decomposition via q-Integer Arithmetic\n\nThe multiplication formula `[mn]_q = [m]_q \u00b7 [n]_{q^m}` encodes the fact that the `mn`-dimensional representation decomposes according to the tensor product structure. Conjecture: formalize the **Clebsch-Gordan decomposition** for quantum SU_q(2) as: `casimirEig q` applied to tensor product labels satisfies `casimirEig q (a + b) = casimirEig q a + casimirEig q b + correction(q, a, b)` where the correction term involves `qInt q a \u00b7 qInt q b` and vanishes at `q = 1`.\n\nThe key insight is that the correction term `casimirEig q (a+b) - casimirEig q a - casimirEig q b` measures the **non-additivity of quantum energy levels** \u2014 the quantum group deformation creates interaction terms between representations that have no classical analog. Formalizing this would give a precise algebraic characterization of quantum entanglement at the representation-theoretic level.\n\nWhy now? We have `casimirEig`, `qInt_add`, and the Casimir difference formula. The correction term can be computed explicitly using these tools.\n\n## 5. Connection to Riemann Zeros via Spectral Statistics\n\nThe deepest conjecture: the normalized spacings of Casimir eigenvalues `{casimirEig q n}` for `q = e^{2\u03c0i\u03b3_1}` (where `\u03b3_1 \u2248 14.13` is the first Riemann zero) match the **GUE pair correlation** statistics observed in the Riemann zeros (Montgomery's conjecture). More precisely: define the nearest-neighbor spacing distribution of the Casimir spectrum and compare it to the Wigner surmise `p(s) = (\u03c0s/2) \u00b7 e^{-\u03c0s\u00b2/4}`.\n\nThe key insight is that the Casimir eigenvalue `[n]_q \u00b7 [n+2]_q` with `q` on the unit circle (and irrational angle) produces a **quasi-random** spectrum whose statistics depend on the Diophantine properties of the angle. The Riemann zeros, if they arise as angles in a quantum group spectrum, would need to have specific Diophantine properties \u2014 and this is testable: compute the pair correlation function of `{[n]_q \u00b7 [n+2]_q mod 1}` for `q = e^{2\u03c0i\u03b3_1}` and compare to GUE.\n\nWhy now? Our strict monotonicity result provides the foundational guarantee that the spectrum is well-ordered. The computational test (comparing spectral statistics) could be implemented alongside the formalization, providing empirical evidence for or against the quantum group interpretation of the Riemann hypothesis.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1027",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "802031cc",
+    "status": "available",
+    "timestamp": "2026-06-08T21:11:13.413042+00:00",
+    "title": "The q-integer `[n]_q` naturally gives rise to **q-factorials** `[n]_q! = [1]_q \u00b7"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Cellular Sheaf Cohomology on Graphs\n\n## 1. First Cohomology H\u00b9 and the Coboundary Map\n\nDefine the coboundary map \u03b4 : C\u2070(G, R) \u2192 C\u00b9(G, R) as a linear map from vertex functions to dart functions (\u03b4(f)(d) = f(d.head) - f(d.tail)), and define H\u00b9(G, R) = C\u00b9/im(\u03b4). Then prove the Euler characteristic formula: dim(H\u2070) - dim(H\u00b9) = |V| - |E| for finite graphs over a field. The key insight is that this is the rank-nullity theorem applied to \u03b4, connecting the graph's Euler characteristic to sheaf cohomology. Why now? We already have H\u2070 fully characterized and its dimension computed; defining \u03b4 and H\u00b9 is the natural next step that completes the two-term cochain complex.\n\n## 2. Non-constant Sheaves and the Mayer-Vietoris Sequence\n\nExtend the theory to non-constant graph sheaves where each vertex has a distinct stalk module and restriction maps are non-trivial linear maps. Prove that H\u2070 of a general sheaf decomposes over connected components. Conjecture: for a \"locally constant\" sheaf (where comparison maps along edges within a component are isomorphisms), dim(H\u2070) equals the sum of dimensions of the monodromy-invariant subspaces over each component. The key insight is that the monodromy representation of \u03c0\u2081 of each component governs the global sections, exactly as in the classical theory of locally constant sheaves on topological spaces. Why now? The `GraphSheaf` structure is already defined; proving H\u2070 decomposition for general sheaves would establish the graph-theoretic analogue of the Mayer-Vietoris sequence.\n\n## 3. Spectral Sheaves and the Graph Laplacian\n\nFor the constant sheaf on a finite graph, the coboundary map \u03b4 gives rise to the combinatorial Laplacian L = \u03b4\u1d40 \u2218 \u03b4. Prove that ker(L) = ker(\u03b4) = H\u2070, establishing that harmonic functions on the graph are exactly the global sections of the constant sheaf. Conjecture: the multiplicity of eigenvalue 0 of L equals Fintype.card G.ConnectedComponent, and the smallest positive eigenvalue (the Fiedler value / algebraic connectivity) bounds the \"sheaf diffusion rate.\" The key insight is that the Fiedler value provides a quantitative measure of how quickly a non-constant section can be \"corrected\" to a global section \u2014 it measures the cost of crossing between communities. Why now? The dimension theorem `finrank_H0_eq_card_connectedComponent` already counts the zero eigenspace; connecting this to the spectral theory of L is a natural bridge between sheaf cohomology and spectral graph theory.\n\n## 4. Persistent Sheaf Cohomology\n\nDefine a filtration of graphs G\u2080 \u2286 G\u2081 \u2286 ... \u2286 G\u2099 (e.g., by edge weight threshold) and study how H\u2070(G\u1d62, R) changes as edges are added. By the antitone theorem `H0_antitone`, we have H\u2070(G\u2099) \u2264 ... \u2264 H\u2070(G\u2080). Conjecture: the \"birth-death\" pairs in this filtration form a persistence diagram whose bottleneck distance is Lipschitz with respect to the Hausdorff distance on edge sets. The key insight is that H\u2070 antitonicity gives a natural persistence module structure, and the algebraic stability theorem from persistent homology should transfer to this setting. Why now? We proved `H0_antitone` which gives the inclusion maps between H\u2070 groups; formalizing the persistence module structure on top of this would connect cellular sheaves to topological data analysis.\n\n## 5. Sheaf Cohomology on Hypergraphs\n\nGeneralize the `GraphSheaf` structure from simple graphs (2-uniform hypergraphs) to general hypergraphs, where hyperedges can connect k > 2 vertices simultaneously. Define the higher cochain groups C\u2070, C\u00b9, ..., C\u1d4f and the corresponding coboundary maps, obtaining a full cochain complex. Conjecture: for the constant sheaf on a k-uniform hypergraph, the Betti numbers \u03b2\u2080, ..., \u03b2\u2096\u208b\u2081 satisfy an Euler-Poincar\u00e9 formula \u03a3(-1)\u2071 \u03b2\u1d62 = \u03a3(-1)\u2071 |cells of dimension i|. The key insight is that hypergraphs are the combinatorial analogue of simplicial complexes, and cellular sheaves on them should recover simplicial cohomology in the constant case. Why now? The graph case (k=2) is complete; the hypergraph generalization is the minimal extension that captures higher-order interactions (e.g., group conversations in social networks, multi-party protocols in cryptography).\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1028",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "fe48c4d8",
+    "status": "available",
+    "timestamp": "2026-06-08T22:04:35.998305+00:00",
+    "title": "Define the coboundary map \u03b4 : C\u2070(G, R) \u2192 C\u00b9(G, R) as a linear map from vertex fu"
   },
   {
     "consumed_by_exp_id": "",
@@ -2931,7 +2946,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bb330d6c",
     "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
     "domains": [
       "Tropical",
@@ -2941,7 +2956,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:31.219688+00:00",
     "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },
@@ -3336,7 +3351,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Convexity: Helly, Caratheodory, and Radon"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "549f2939",
     "description": "# Future Directions: Tangled Hierarchies and Self-Referential Proof Systems\n\n## Synthesis\n\nThis cycle established a rigorous Lean 4 formalization of provability logic (GL) via Kripke semantics, proving 12 theorems including L\u00f6b's theorem, the semantic second incompleteness theorem, a sharp tangling dichotomy, and a novel bridge between GL frames and well-founded strict partial orders. The most promising cross-domain connection is the **order-theoretic bridge** (Theorem `gl_frame_is_strict_order`): GL frames are exactly well-founded strict partial orders, meaning the entire apparatus of well-quasi-order theory, ordinal analysis, and lattice-theoretic fixed points becomes available to study provability hierarchies.\n\nThe key structural insight from this cycle is the **tangling dichotomy** (`tangling_dichotomy_ext`): every sound world either is terminal (vacuously omniscient) or has blind spots about its own soundness. This dichotomy is exhaustive and propagates through the entire consistency hierarchy. Combined with the disjoint union closure result, this shows that tangling is compositional \u2014 combining independent systems does not resolve any individual system's tangling.\n\nThe highest breakthrough potential lies in **Direction 1** (Polymodal GL and ordinal analysis), which would connect our GL frame theory to Japaridze's GLP logic and proof-theoretic ordinals, bridging modal logic, set theory, and proof theory in a formally verified framework. This would be a significant first in the formalization of proof theory.\n\n---\n\n### Direction 1: Polymodal Provability Logic (GLP) and Ordinal Assignment\n\n**Conjecture**: GLP frames \u2014 frames with a sequence of accessibility relations R\u2080 \u2287 R\u2081 \u2287 R\u2082 \u2287 \u00b7\u00b7\u00b7 where each R\u2099 is transitive and converse well-founded \u2014 can be formally constructed in Lean 4 with a well-defined ordinal assignment function that maps each world to its proof-theoretic ordinal. Specifically, the ordinal assignment should satisfy: if R\u2099(w,v) then ord(v) < ord(w), and the ordinal of the \"standard world\" under R\u2080 should correspond to \u03b5\u2080 (the proof-theoretic ordinal of PA).\n\n**Test**: Define a `GLPFrame` structure in Lean 4 with a family of accessibility relations indexed by \u2115, prove that each level gives a valid GL frame, and construct a concrete GLP frame whose ordinal assignment reproduces the standard ordinal analysis of PA (ordinal \u03b5\u2080 at the base level, \u03c9^\u03c9^\u00b7\u00b7\u00b7  at higher levels).\n\n**Impact**: If successful, this would be the first machine-verified formalization of the connection between polymodal provability logic and proof-theoretic ordinals, bridging modal logic and ordinal analysis. If the ordinal assignment fails to give \u03b5\u2080, it would reveal that the standard GLP-ordinal connection requires additional structure beyond the frame semantics (perhaps specific arithmetical interpretations).\n\n**Catalog References**: `Logic/TangledHierarchyDefs.lean` (GLFrame), `Logic/TangledHierarchyTheorems.lean` (loeb_semantic, gl_frame_is_strict_order)\n\n**Proof Strategy**:\n1. Define `GLPFrame` as a dependent structure with `R : \u2115 \u2192 W \u2192 W \u2192 Prop` and monotonicity/transitivity/well-foundedness conditions.\n2. Prove each `R n` gives a GL frame (reuse existing infrastructure).\n3. Define ordinal assignment via well-founded recursion on R\u2080.\n4. Prove the assignment is strictly decreasing and bounds the depth.\n5. Construct a concrete GLP frame on an ordinal type.\n\n**Domain Bridges**: Logic (provability logic) \u2194 Set Theory (ordinal analysis) \u2194 Proof Theory (consistency strength)\n\n**Lineage**: Extends `gl_frame_is_strict_order` and `tangling_dichotomy_ext` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: De Jongh-Sambin Fixed-Point Theorem for GL\n\n**Conjecture**: For any modal formula \u03c6(p) where the propositional variable p occurs only within the scope of \u25a1, there exists a formula \u03c8 (not containing p) such that GL \u22a2 \u03c8 \u2194 \u03c6(\u03c8). Moreover, this fixed point is unique up to GL-provable equivalence. This can be formalized semantically: for every GL frame M and valuation V, the formula \u03c8 constructed by the fixed-point procedure satisfies w \u22a9 \u03c8 \u2194 w \u22a9 \u03c6(\u03c8) at every world w.\n\n**Test**: Define a substitution operation on modal formulas, formalize the \"occurs only under box\" condition, and prove the fixed-point existence theorem for GL frames. Test on concrete cases: the G\u00f6del sentence (\u03c6(p) = \u00ac\u25a1p gives \u03c8 \u2261 \u00ac\u25a1\u22a5 \u2261 Con) and the Henkin sentence (\u03c6(p) = \u25a1p gives \u03c8 \u2261 \u22a4).\n\n**Impact**: This would formalize one of the deepest results in provability logic, connecting self-reference (fixed points) to the modal-logical framework. It directly extends the Catalog's `fixed_point_construction_bound` to the logical domain. Failure would indicate that the semantic approach is insufficient and a syntactic (Hilbert system) formalization is needed.\n\n**Catalog References**: `Bridges/EMLClosureCore.lean` (fixed_point_construction_bound), `Logic/TangledHierarchyDefs.lean` (MFormula, forces)\n\n**Proof Strategy**:\n1. Define formula substitution `MFormula.subst : MFormula \u03b1 \u2192 (\u03b1 \u2192 MFormula \u03b1) \u2192 MFormula \u03b1`.\n2. Define the \"modalized in p\" predicate: p occurs only under \u25a1.\n3. Construct the fixed-point formula by iterating the substitution (this is well-defined because each step reduces the \"modal depth\" of occurrences of p).\n4. Prove the fixed point satisfies the equivalence using L\u00f6b's theorem and well-founded induction.\n5. Prove uniqueness using the characterization of GL-provable equivalence via frame validity.\n\n**Domain Bridges**: Logic (fixed-point theorem) \u2194 Algebra (fixed-point constructions, Knaster-Tarski) \u2194 Computation (self-referential programs, quines)\n\n**Lineage**: Extends `loeb_semantic` and `fixed_point_construction_bound` from the Catalog.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Tropical Provability: Min-Plus Semantics for GL\n\n**Conjecture**: GL frames admit a \"tropical\" semantics where the forcing relation is replaced by a real-valued \"proof cost\" function cost(w, \u03c6) \u2208 [0, \u221e], with \u25a1\u03c6 costing the supremum of costs over accessible worlds plus a \"reflection overhead\" constant. In this tropical semantics, L\u00f6b's theorem corresponds to the statement that the cost of self-referential proofs grows without bound \u2014 tangling has a quantitative measure.\n\n**Test**: Define `tropicalForces : GLFrame \u2192 (\u03b1 \u2192 M.W \u2192 \u211d\u22650\u221e) \u2192 M.W \u2192 MFormula \u03b1 \u2192 \u211d\u22650\u221e` where:\n- cost(w, var p) = V(p)(w)\n- cost(w, \u22a5) = \u221e\n- cost(w, \u03c6 \u2192 \u03c8) = max(0, cost(w,\u03c8) - cost(w,\u03c6))\n- cost(w, \u25a1\u03c6) = sup{cost(v,\u03c6) + 1 : R(w,v)}\n\nProve that if cost(w, \u25a1(\u25a1\u03c6\u2192\u03c6)) < \u221e then cost(w, \u25a1\u03c6) < \u221e (tropical L\u00f6b), and that the reflection overhead creates a strictly increasing cost along the consistency hierarchy.\n\n**Impact**: This bridges provability logic to tropical geometry and optimization, creating a quantitative theory of proof complexity within the GL framework. It would connect to the Catalog's tropical algebra results and create a novel \"tropical incompleteness theorem.\"\n\n**Catalog References**: `Tropical/TropicalOrbitShadowing.lean` (iterate_dist_fixed_point_bound), `Cryptography/BerggrenDiophantineLattice.lean` (tropical structures)\n\n**Proof Strategy**:\n1. Define the tropical forcing function using well-founded recursion (similar to `forces`).\n2. Prove tropical L\u00f6b by adapting the well-founded induction argument.\n3. Show that each consistency level adds constant overhead, giving a linear lower bound on cost(w, Con\u207f).\n4. Connect to the metric structure via `iterate_dist_fixed_point_bound`.\n\n**Domain Bridges**: Logic (GL frames, L\u00f6b's theorem) \u2194 Tropical Algebra (min-plus semirings) \u2194 Optimization (proof search costs)\n\n**Lineage**: Extends `loeb_semantic` and bridges to `iterate_dist_fixed_point_bound`.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Tangling in PAC-Bayesian Learning Theory\n\n**Conjecture**: The tangling dichotomy has a precise analog in PAC-Bayesian learning theory: a learning algorithm that is \"sound\" (its generalization bound holds for all distributions) either has trivial capacity (it can only learn constant functions) or there exist distributions for which its self-estimated generalization bound is strictly looser than the true bound \u2014 it cannot accurately predict its own generalization error.\n\n**Test**: Formalize the analogy by defining a \"PAC-Bayesian frame\" where worlds are distributions, the accessibility relation is \"distribution D\u2081 can be estimated from D\u2082\", and soundness means the generalization bound holds. Prove that the tangling dichotomy applies to this frame, producing a \"PAC-Bayesian incompleteness theorem.\"\n\n**Impact**: This would establish a rigorous connection between G\u00f6delian incompleteness and statistical learning theory, showing that the tangling phenomenon is not merely logical but statistical. It extends the Catalog's `second_incompleteness_analog` and `unprovable_true_generalization` results.\n\n**Catalog References**: `MachineLearning/LoebGeneralization.lean` (lob_generalization_criterion), `MachineLearning/CertificationBarrier.lean` (barriers_from_diagonalization)\n\n**Proof Strategy**:\n1. Define a PAC-Bayesian GL frame where worlds are (prior, posterior, sample_size) triples.\n2. Define R as the \"can estimate from\" relation, prove it's transitive and converse well-founded (bounded by sample size).\n3. Instantiate the tangling dichotomy to get the PAC-Bayesian incompleteness theorem.\n4. Prove concrete bounds: the gap between self-estimated and true generalization error is at least O(1/\u221an).\n\n**Domain Bridges**: Logic (tangling dichotomy) \u2194 Machine Learning (PAC-Bayes, generalization bounds) \u2194 Statistics (self-referential estimation)\n\n**Lineage**: Extends `tangling_dichotomy_ext` and connects to `lob_generalization_criterion`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Compositional Tangling and Category of GL Frames\n\n**Conjecture**: GL frames form a category where morphisms are \"p-morphisms\" (bounded morphisms preserving the frame structure). This category has finite products (given by a \"synchronized product\" where R holds componentwise) and the tangling dichotomy is preserved by all categorical operations \u2014 tangling is a \"categorical property\" in a precise sense.\n\n**Test**: Define the category of GL frames and p-morphisms in Lean 4. Prove that finite products exist and are GL frames. Prove that if M\u2081 and M\u2082 each have sound worlds with successors (hence tangled), then their product is also tangled. Show the disjoint union is the coproduct in this category.\n\n**Impact**: This would establish that tangling is not just a property of individual frames but a structural property preserved by the natural categorical operations. It would connect provability logic to categorical logic and topos theory.\n\n**Catalog References**: `Logic/TangledHierarchyTheorems.lean` (GLFrame.disjointUnion, tangling_dichotomy_ext)\n\n**Proof Strategy**:\n1. Define `GLFrameMorphism` as structure-preserving maps with back-and-forth conditions.\n2. Show composition and identity give a category.\n3. Define product frames and prove they satisfy GL conditions.\n4. Prove tangling preservation via the tangling dichotomy applied to projected worlds.\n5. Prove disjoint union is the coproduct by constructing universal morphisms.\n\n**Domain Bridges**: Logic (GL frames) \u2194 Category Theory (products, coproducts, preservation) \u2194 Algebra (categorical constructions)\n\n**Lineage**: Extends `GLFrame.disjointUnion` and `tangling_dichotomy_ext`.\n\n**Ambition**: extension\n",
     "domains": [
       "Logic",
@@ -3346,7 +3361,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.29999999999999993,
     "research_mode": "team",
     "source_exp_id": "e406e7e8",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-07T21:30:04.487788+00:00",
     "title": "Rigorous Lean 4 formalization of provability logic (GL)"
   },

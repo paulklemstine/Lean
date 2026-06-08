@@ -1,0 +1,1 @@
+../../Pythagorean/GrowthRegimeTrichotomy.lean
