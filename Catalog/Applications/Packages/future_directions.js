@@ -2554,6 +2554,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Transseries and Asymptotic Hierarchies\n\n## Synthesis\n\nThis research cycle established a rigorous foundation for transseries theory, centered on three key results: the Dominance Chain Theorem (iterated exponentials form a strict hierarchy), the Comparison Theorem (exponential sums are uniquely determined by their coefficients), and the Dominance Filtration (a novel algebraic structure organizing growth rates into levels). The most significant cross-domain connection is between the EML framework (from `EML/EMLv17Core.lean`) and transseries: the EML operation naturally creates multi-level transseries, suggesting that the exp-minus-log structure has deeper algebraic significance than previously recognized.\n\nThe exponential growth rate valuation connects to tropical geometry (where valuations are fundamental), while the dominance filtration connects to the theory of convex subgroups in ordered abelian groups (a key tool in model theory and valued fields). The comparison theorem \u2014 that exponential sums are uniquely determined by their coefficients \u2014 is the entry point to the deeper Hardy field uniqueness theorems. The most promising direction for breakthrough is Direction 1 (differential transseries), because it would unlock the full connection between our algebraic framework and the theory of differential equations, which is the original motivation for \u00c9calle's work.\n\n---\n\n### Direction 1: Differential Transseries and the Newton-Puiseux Method\n\n**Conjecture**: The field of finite transseries (formal sums of terms c\u00b7exp^(k)(x)^\u03b1 \u00b7 x^\u03b2 for integers k and reals \u03b1, \u03b2) admits a well-defined derivation D satisfying D(exp(f)) = f' \u00b7 exp(f) and D(log(f)) = f'/f, and this derivation is compatible with the dominance ordering: if f \u226a g asymptotically, then f' \u226a g' eventually.\n\n**Test**: Formalize the derivation operator on the polynomial-exponential fragment (terms c \u00b7 x^\u03b1 \u00b7 exp(b\u00b7x)) and verify: (1) the product rule holds, (2) D maps the fragment to itself, (3) dominance is preserved (exp(2x)' = 2exp(2x) \u226b exp(x)' = exp(x)).\n\n**Impact**: A formalized differential structure on transseries would enable formal computation of asymptotic solutions to ODEs. This connects to \u00c9calle's theory of resurgent functions and the acceleration operators used in WKB approximations in quantum mechanics. The Newton-Puiseux method for transseries would give algorithmic solutions to classes of differential equations that resist standard power series methods.\n\n**Catalog References**: `Applications/Transseries/Defs.lean` (iterExp, exp_sum_comparison), `EML/EMLv17Core.lean` (eml, eml_hasDerivAt_fst)\n\n**Proof Strategy**: Define D on monomials c\u00b7x^\u03b1\u00b7exp(b\u00b7x) by the product rule: D(c\u00b7x^\u03b1\u00b7exp(b\u00b7x)) = c(\u03b1\u00b7x^(\u03b1-1) + b\u00b7x^\u03b1)\u00b7exp(b\u00b7x). Extend linearly. Show the derivation preserves the dominance filtration by proving that the leading term of f' is determined by the leading term of f. The key lemma: D(exp^(n)(x)) = exp^(n)(x) \u00b7 \u220f_{k=0}^{n-1} exp^(k)(x), showing that differentiation preserves growth level.\n\n**Domain Bridges**: Analysis \u2194 Algebra (differential algebra on ordered fields), Computation \u2194 Analysis (algorithmic ODE solving)\n\n**Lineage**: Builds on `iterExp_strictly_dominates`, `exp_sum_comparison`, and `eml_asymptotic_exp` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Tropical Transseries \u2014 Valuations Meet Min-Plus Algebra\n\n**Conjecture**: The exponential growth rate valuation v(f) = lim sup log(f(x))/x, formalized in this cycle, extends to a surjective valuation from the field of transseries to the ordered group \u2124 \u00d7 \u211d (ordered lexicographically), where the first component is the growth level and the second is the exponential rate. The residue field of this valuation is isomorphic to the field of formal Laurent series in x.\n\n**Test**: Verify that v(exp(a\u00b7x) \u00b7 exp(b\u00b7x)) = v(exp(a\u00b7x)) + v(exp(b\u00b7x)) = (1, a+b) (already proved as `expGrowthRate_exp_mul`). Then verify that v(x^n \u00b7 exp(c\u00b7x)) = (1, c) for all n (the polynomial factor doesn't affect the exponential growth rate). Finally, check that the \"residue\" obtained by dividing out the leading exponential term yields a formal power series.\n\n**Impact**: This would connect transseries theory to tropical geometry, where valuations play a central role. The tropical semiring (\u211d \u222a {\u221e}, min, +) appears naturally as the value group of the transseries valuation. This bridge could import tools from tropical algebraic geometry (Newton polygons, tropical curves) into asymptotic analysis.\n\n**Catalog References**: `Applications/Transseries/Defs.lean` (exponentialGrowthRate, expGrowthRate_of_cexp), `Tropical/` directory (tropical semiring constructions), `Cryptography/BerggrenDiophantineLattice.lean` (valuation theory)\n\n**Proof Strategy**: Define the two-component valuation v(\u2211 c\u1d62 m\u1d62) = (max growth level, leading exponent at that level). Show it satisfies the ultrametric inequality v(f + g) \u2265 min(v(f), v(g)) and multiplicativity v(f \u00b7 g) = v(f) + v(g). The key difficulty is well-definedness: showing that the leading term is preserved under addition (this follows from the dominance ordering being total).\n\n**Domain Bridges**: Tropical \u2194 Applications (valuation theory), Algebra \u2194 Applications (valued fields)\n\n**Lineage**: Builds on `expGrowthRate_of_cexp`, `expGrowthRate_polynomial`, `expGrowthRate_exp_mul`, and the `DominanceFiltration` structure from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Real Closure of the Transseries Field\n\n**Conjecture**: The ordered field of logarithmic-exponential transseries (with the natural ordering where exp(x) > x^n for all n) is real closed: every polynomial of odd degree over this field has a root in the field.\n\n**Test**: Start with the simplest non-trivial case: show that the polynomial T\u00b2 - exp(x) has a solution in the transseries field (namely, exp(x/2)). Then try T\u00b3 - exp(x) (solution: exp(x/3)). The first genuinely hard case: T\u00b2 - (exp(x) + x) requires a transseries expansion T = exp(x/2) \u00b7 (1 + x\u00b7exp(-x)/2 + ...).\n\n**Impact**: Real closure of the transseries field is one of the central results in the area (proved by Schmeling and independently by van den Dries-Macintyre-Marker). A formalization would be a major achievement, connecting to model theory (the theory of real closed fields is decidable by Tarski) and to the model-completeness of the real exponential field.\n\n**Catalog References**: `Applications/Transseries/Defs.lean` (exp_sum_comparison, DominanceFiltration), `Algebra/Basic.lean` (algebraic foundations)\n\n**Proof Strategy**: The key idea is a transfinite Newton's method: given a polynomial P(T) over the transseries field, find the leading term of a root by solving a polynomial equation over \u211d, then subtract off the leading term and iterate. The dominance filtration ensures that each iteration reduces the \"order\" of the remaining terms, and well-orderedness of the support ensures termination. Start with the polynomial-exponential fragment and prove real closure there first.\n\n**Domain Bridges**: Algebra \u2194 Applications (real closed fields), Logic \u2194 Applications (model theory of ordered fields)\n\n**Lineage**: Builds on `exp_sum_comparison`, `DominanceFiltration.exists_exact_level`, and the iterExp hierarchy from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Resurgent Analysis \u2014 Borel Summation of Divergent Transseries\n\n**Conjecture**: For the class of \"simple resurgent\" transseries (those whose Borel transforms have only simple singularities), the Borel summation operator is injective: two distinct resurgent transseries cannot have the same Borel sum. This formalizes the principle that divergent asymptotic series, when properly resummed, carry more information than their coefficients alone suggest.\n\n**Test**: Consider the Euler series \u2211 (-1)^n n! x^(-n-1), which diverges everywhere but is the formal asymptotic expansion of the integral \u222b\u2080^\u221e e^(-t)/(1+xt) dt. Verify numerically that Borel summation recovers the integral to high precision. Then test with a two-level example involving both polynomial and exponential terms.\n\n**Impact**: Borel summation provides the bridge between formal transseries and actual analytic functions. A formalization would connect to quantum field theory (where renormalized perturbation series are typically divergent but Borel-summable) and to the theory of Stokes phenomena in differential equations.\n\n**Catalog References**: `Applications/Transseries/DominanceAlgebra.lean` (exp_decays_neg_freq, exp_coeff_unique_pos), `Applications/Transseries/Defs.lean` (AsympEquivOrder hierarchy)\n\n**Proof Strategy**: Define the Borel transform B(\u2211 a\u2099 x^(-n-1)) = \u2211 a\u2099/n! \u00b7 t^n. Show B converges in a half-plane. Define the Laplace transform as the inverse. Prove injectivity of the composition. The key challenge is handling the analytic continuation past singularities (alien derivatives in \u00c9calle's framework).\n\n**Domain Bridges**: Physics \u2194 Applications (quantum field theory renormalization), Computation \u2194 Applications (numerical Borel summation)\n\n**Lineage**: Builds on the asymptotic equivalence hierarchy (AsympEquivOrder and its refinement property) and the comparison theorem from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Surreal Transseries \u2014 Embedding into Conway's Number Field\n\n**Conjecture**: The map sending a transseries \u2211 c\u1d62 exp^(k\u1d62)(x)^(\u03b1\u1d62) to the corresponding surreal number (where exp is the surreal exponential of Gonshor) is an ordered field embedding that preserves the dominance filtration structure.\n\n**Test**: Verify for simple cases: the surreal number \u03c9 corresponds to x, \u03b5 = 1/\u03c9 corresponds to 1/x, exp(\u03c9) corresponds to exp(x). Check that the dominance ordering is preserved: exp(\u03c9) > \u03c9^n for all n \u2208 \u2115 in the surreal numbers, matching exp(x) > x^n asymptotically.\n\n**Impact**: This would establish a precise dictionary between transseries (an analytic/algebraic object) and surreal numbers (a combinatorial/set-theoretic object). The surreal numbers are universal: every ordered field embeds into them. If the transseries field embeds in a structure-preserving way, this gives surreal numbers a concrete analytic interpretation.\n\n**Catalog References**: `EML/` directory (EML operations on surreal-like structures), `Applications/Transseries/Defs.lean` (DominanceFiltration, iterExp)\n\n**Proof Strategy**: Define the embedding inductively on growth level: level 0 (polynomials) maps to Conway normal forms of surreal numbers. Level 1 (exponentials) maps via the surreal exponential. Use the Dominance Chain Theorem to verify that the embedding preserves the ordering at each level. The main technical difficulty is handling the well-orderedness of transseries support vs. the Birthday structure of surreal numbers.\n\n**Domain Bridges**: EML \u2194 Applications (surreal arithmetic and exp-log), Logic \u2194 Applications (surreal number theory)\n\n**Lineage**: Builds on `DominanceFiltration.exists_exact_level`, `iterExp_strictly_dominates`, and the EML connection from this cycle.\n\n**Ambition**: grand_challenge\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1002",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "dd7de4c9",
+    "status": "available",
+    "timestamp": "2026-06-08T01:33:41.602311+00:00",
+    "title": "Rigorous foundation for transseries theory, ce"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
     "domains": [
       "Geometry",
@@ -3123,7 +3138,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },
   {
-    "consumed_by_exp_id": "5ac55560",
+    "consumed_by_exp_id": "",
     "description": "The EML single operator f(x) = e^a * log(b*x + c) is a contraction mapping for suitable parameter ranges. Conjecture: For all a, b, c in R with a > 0 and b, c chosen so that the function maps a closed interval to itself, the iteration x_{n+1} = e^a * log(b*x_n + c) converges to a unique fixed point x* at a rate O(rho^n) where rho = |f'(x*)|. Moreover, the fixed point x* satisfies x* = e^a * log(b*x* + c) and can be expressed as a power series in a. The fixed point is unique because f is a contraction on the invariant interval: the derivative f'(x) = e^a * b / (b*x + c) is bounded by |f'| < 1 when the parameters are in the right range. This makes EML functions well-behaved iterative schemes, unlike arbitrary neural network activations. Test: prove convergence for the specific case a in (0,1), b=1, c in (0,1) and compute the fixed point explicitly as a series. Impact: establishes EML as having well-defined dynamical behavior, enabling EML-based iterative algorithms with certified convergence.",
     "domains": [
       "EML",
@@ -3133,7 +3148,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.843772+00:00",
     "title": "EML Fixed-Point Theorem: exp-log Iteration Convergence"
   },
@@ -3693,7 +3708,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 6: Axiomatization of Physics"
   },
   {
-    "consumed_by_exp_id": "ce23db7e",
+    "consumed_by_exp_id": "",
     "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
     "domains": [
       "Algebra",
@@ -3703,7 +3718,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.181414+00:00",
     "title": "Non-Archimedean Probability via Surreal Numbers"
   },
@@ -3753,7 +3768,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hawking Radiation: Information Paradox Formalized"
   },
   {
-    "consumed_by_exp_id": "5f9b37fe",
+    "consumed_by_exp_id": "",
     "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
     "domains": [
       "Speculative",
@@ -3763,7 +3778,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.101987+00:00",
     "title": "Consciousness as Integrated Information"
   },
@@ -4053,7 +4068,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b02ed1a2",
     "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
     "domains": [
       "Novelty",
@@ -4063,7 +4078,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.495596+00:00",
     "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
   },
@@ -4128,7 +4143,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Unreasonable Effectiveness of the Number 163"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3d7b70d5",
     "description": "Einstein showed that gravity is the curvature of spacetime. But WHY does spacetime curve? Conjecture: Spacetime IS a quantum error-correcting code, and gravity IS the syndrome of that code. The code is a [[n,k,d]] stabilizer code where n = number of Planck areas on a spatial slice, k = number of logical qubits (which equals the Bekenstein-Hawking entropy S = A/4G in natural units), and d = code distance (which equals the minimal geodesic length through the bulk). The key identity: S(A) = Area(gamma_A) / (4G) is EXACTLY the quantum Singleton bound n - k <= 2(d-1) rearranged as k = n - 2d + 2 = A/(4G) when n = A/l_P^2 and d = L/(2l_P). This means the Bekenstein-Hawking entropy formula is a quantum coding theorem, and the holographic principle is a coding constraint. Test: for AdS_3 with boundary CFT_2, the code is a [[n, k, d]] = [[L/l_P, S, L/(2l_P)]] code. Verify that the Singleton bound n - k <= 2(d-1) becomes L/l_P - S <= L/l_P - 1, which simplifies to S >= 1 (trivially true). The NON-TRIVIAL content is that the Ryu-Takayanagi formula S = A/(4G) is the exact quantum information identity. Impact: spacetime is not curved by matter \u2014 spacetime IS a code, and matter IS a syndrome. Gravity is not a force; it's error correction.",
     "domains": [
       "Novelty",
@@ -4138,7 +4153,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.510412+00:00",
     "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
   },
@@ -4968,7 +4983,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Infinite Games Against Death: Immortality Strategies"
   },
   {
-    "consumed_by_exp_id": "5559529e",
+    "consumed_by_exp_id": "",
     "description": "Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms a higher category.",
     "domains": [
       "Novelty",
@@ -4978,7 +4993,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:31.092242+00:00",
     "title": "Causal Loops in Category Theory: When Composition Loops Back"
   },
@@ -5162,7 +5177,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
   },
   {
-    "consumed_by_exp_id": "a5e029a8",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) \u2192 (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant \u03b1 satisfies \u03b1 = 1/(137.036...) because it's the simplest fixed point.",
     "domains": [
       "Novelty",
@@ -5172,7 +5187,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T23:40:36.486848+00:00",
     "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },

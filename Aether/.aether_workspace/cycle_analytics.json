@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-08T00:58:26.439066+00:00",
+  "last_updated": "2026-06-08T01:34:15.736016+00:00",
   "records": [
     {
       "adversarial_delta": 0.0,
@@ -16426,6 +16426,76 @@
       "theorem_count": 5,
       "timestamp": "2026-06-08T00:58:26.379388+00:00",
       "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6569,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 393,
+      "domain": "Applications",
+      "duration_seconds": 10331.83830499649,
+      "end_time": 1780882390.4395747,
+      "files_integrated": 5,
+      "job_id": "dd7de4c9",
+      "outcome_quality": 0.0,
+      "prompt_version": "v3",
+      "quality_breakdown": {
+        "actionability": 0.56,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7799,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.7254,
+        "novelty": 0.9455,
+        "proof_depth": 0.6311,
+        "usefulness": 0.8156
+      },
+      "quality_score": 0.20704,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780872058.6012697,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-08T01:34:15.622875+00:00",
+      "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5122,
+      "barrier_count": 370,
+      "bridge_count": 13,
+      "cycle_n": 400,
+      "domain": "Novelty",
+      "duration_seconds": 4209.320263385773,
+      "end_time": 1780882391.3102438,
+      "files_integrated": 5,
+      "job_id": "2c28c236",
+      "outcome_quality": 0.0,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 1.0,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8152,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.705,
+        "novelty": 0.95,
+        "proof_depth": 0.6,
+        "usefulness": 0.8
+      },
+      "quality_score": 0.4424,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780878181.9899805,
+      "strategy_count": 187,
+      "theorem_count": 5,
+      "timestamp": "2026-06-08T01:34:15.680433+00:00",
+      "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
     }
   ]
 }
