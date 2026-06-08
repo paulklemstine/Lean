@@ -25,9 +25,37 @@
       "percent_complete": 0,
       "status": "FINAL:IDLE",
       "timestamp": "2026-06-08T03:42:36"
+    },
+    {
+      "elapsed_seconds": 5442.7,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T04:16:45"
+    },
+    {
+      "elapsed_seconds": 5442.7,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T04:16:45"
+    },
+    {
+      "elapsed_seconds": 5445.6,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T04:16:48"
+    },
+    {
+      "elapsed_seconds": 5445.6,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T04:16:48"
     }
   ],
-  "completed_at": "2026-06-08T03:42:36",
+  "completed_at": "2026-06-08T04:16:48",
   "domain": "Novelty",
   "error": "",
   "final_percent": 0,
@@ -49,6 +77,26 @@
     },
     {
       "at_elapsed_seconds": 3393.3,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 5442.7,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 5442.7,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 5445.6,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 5445.6,
       "from": "IDLE",
       "to": "FINAL:IDLE"
     }
