@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "163ba986",
     "filename": "mind_vs_gdel_can_minds_outperform_algorithms.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.35663999999999996,
     "title": "Epistemic Fixed-Point Algebras and the Lucas-Penrose Barrier"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "mind_vs_gdel_can_minds_outperform_algorithms",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.35663999999999996,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Epistemic Fixed-Point Algebras and the Lucas-Penrose Barrier"
     }
