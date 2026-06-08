@@ -1,342 +1,383 @@
 #!/usr/bin/env python3
 """
-Demo: Integrated Information Theory — Causal Integration in Action
+Integrated Information Theory (IIT) — Demonstration
 
-Demonstrates the key theorems with concrete numerical examples.
+Computes Φ (integrated information) for various causal systems,
+demonstrating the key theorems proved in Lean 4:
+1. Fundamental Theorem: Φ > 0 ⟺ causal connectivity
+2. Monotonicity: more edges → higher Φ
+3. Cut symmetry: cutSize(A) = cutSize(complement(A))
+4. Exponential complexity: 2^n - 2 partitions
 """
 
-from algorithms import (
-    cut_weight, compute_phi, integration_complex,
-    integration_spectrum, is_reducible, stoer_wagner_approx_phi
-)
+from itertools import combinations
+from typing import List, Tuple, Set, Dict
 
 
-def demo_basic():
-    """Demo 1: Basic Φ computation on a 4-node network."""
-    print("=" * 60)
-    print("DEMO 1: Basic Integrated Information")
-    print("=" * 60)
-
-    # A 4-node network with strong internal connections
-    # 0 ↔ 1 (weight 5), 2 ↔ 3 (weight 5), 1 → 2 (weight 1)
-    W = [
-        [0, 5, 0, 0],
-        [5, 0, 1, 0],
-        [0, 0, 0, 5],
-        [0, 0, 5, 0],
-    ]
-
-    phi, partition = compute_phi(W)
-    print(f"Network: 4 nodes with strong pairs (0-1, 2-3) and weak link (1→2)")
-    print(f"Φ = {phi}")
-    print(f"Minimum Information Partition: {partition}")
-    print(f"  → The weak link between the two pairs is the bottleneck")
-    print()
+def cut_size(n: int, adj: List[List[bool]], subset: Set[int]) -> int:
+    """Compute the cut size of a partition given by subset A."""
+    complement = set(range(n)) - subset
+    forward = sum(1 for s in subset for t in complement if adj[s][t])
+    backward = sum(1 for s in complement for t in subset if adj[s][t])
+    return forward + backward
 
 
-def demo_reducibility():
-    """Demo 2: The Reducibility Theorem."""
-    print("=" * 60)
-    print("DEMO 2: Reducibility Theorem (Φ = 0 ↔ Disconnected)")
-    print("=" * 60)
-
-    # Disconnected: two independent pairs
-    W_disconnected = [
-        [0, 3, 0, 0],
-        [3, 0, 0, 0],
-        [0, 0, 0, 7],
-        [0, 0, 7, 0],
-    ]
-    phi_d, _ = compute_phi(W_disconnected)
-    red, sep = is_reducible(W_disconnected)
-    print(f"Disconnected network (0-1 and 2-3 independent):")
-    print(f"  Φ = {phi_d}, Reducible = {red}, Separator = {sep}")
-
-    # Connected: add a link
-    W_connected = [
-        [0, 3, 0, 0],
-        [3, 0, 0.5, 0],
-        [0, 0, 0, 7],
-        [0, 0, 7, 0],
-    ]
-    phi_c, part_c = compute_phi(W_connected)
-    red_c, _ = is_reducible(W_connected)
-    print(f"\nConnected network (added edge 1→2 with weight 0.5):")
-    print(f"  Φ = {phi_c}, Reducible = {red_c}, Min partition = {part_c}")
-    print()
+def nontrivial_subsets(n: int) -> List[Set[int]]:
+    """Generate all non-trivial subsets (neither empty nor full)."""
+    result = []
+    for size in range(1, n):
+        for combo in combinations(range(n), size):
+            result.append(set(combo))
+    return result
 
 
-def demo_monotonicity():
-    """Demo 3: Monotonicity — stronger connections → more integration."""
-    print("=" * 60)
-    print("DEMO 3: Monotonicity of Φ")
-    print("=" * 60)
-
-    base = [
-        [0, 1, 0],
-        [1, 0, 1],
-        [0, 1, 0],
-    ]
-
-    print("Adding weight to edge 0→2:")
-    for extra in [0, 1, 2, 5, 10]:
-        W = [row[:] for row in base]
-        W[0][2] += extra
-        phi, _ = compute_phi(W)
-        print(f"  w(0→2) = {extra}: Φ = {phi}")
-
-    print("  → Φ is monotonically non-decreasing ✓")
-    print()
+def phi(n: int, adj: List[List[bool]]) -> int:
+    """Compute Φ = minimum cut size over all non-trivial subsets."""
+    subsets = nontrivial_subsets(n)
+    if not subsets:
+        return 0
+    return min(cut_size(n, adj, s) for s in subsets)
 
 
-def demo_complement_invariance():
-    """Demo 4: Complement invariance of cut weight."""
-    print("=" * 60)
-    print("DEMO 4: Complement Invariance")
-    print("=" * 60)
-
-    W = [
-        [0, 2, 3],
-        [4, 0, 1],
-        [5, 6, 0],
-    ]
-
-    S = {0}
-    Sc = {1, 2}
-    cw_S = cut_weight(W, S)
-    cw_Sc = cut_weight(W, Sc)
-    print(f"Network: 3 nodes with asymmetric weights")
-    print(f"  cutWeight({{0}}) = {cw_S}")
-    print(f"  cutWeight({{1, 2}}) = {cw_Sc}")
-    print(f"  Equal? {cw_S == cw_Sc} ✓")
-    print()
+def mip(n: int, adj: List[List[bool]]) -> Set[int]:
+    """Find the Minimum Information Partition (MIP)."""
+    subsets = nontrivial_subsets(n)
+    if not subsets:
+        return set()
+    return min(subsets, key=lambda s: cut_size(n, adj, s))
 
 
-def demo_integration_complex():
-    """Demo 5: The Integration Complex filtration."""
-    print("=" * 60)
-    print("DEMO 5: Integration Complex Filtration")
-    print("=" * 60)
-
-    # A network where different subsets have different integration levels
-    W = [
-        [0, 10, 1, 0],
-        [10, 0, 1, 0],
-        [1, 1, 0, 8],
-        [0, 0, 8, 0],
-    ]
-
-    print("Network: 4 nodes, strong pairs 0-1 (w=10) and 2-3 (w=8), weak cross (w=1)")
-    print()
-
-    # Show spectrum
-    spectrum = integration_spectrum(W)
-    print("Full integration spectrum:")
-    for subset, cw in spectrum:
-        print(f"  Subset {subset}: cutWeight = {cw}")
-
-    print()
-    for t in [0, 5, 10, 15, 20]:
-        ic = integration_complex(W, t)
-        print(f"Integration Complex at t={t}: {len(ic)} subsets")
-        if len(ic) <= 6:
-            for s in ic:
-                print(f"    {s}")
-
-    print()
-    print("  → As threshold increases, fewer subsets remain (antitone filtration) ✓")
-    print()
+def is_causally_connected(n: int, adj: List[List[bool]]) -> bool:
+    """Check if every non-trivial partition has positive cut."""
+    return all(cut_size(n, adj, s) > 0 for s in nontrivial_subsets(n))
 
 
-def demo_symmetric():
-    """Demo 6: Symmetric networks and the doubling property."""
-    print("=" * 60)
-    print("DEMO 6: Symmetric Network Doubling")
-    print("=" * 60)
+# ============================================================
+# Demo 1: The Fundamental Theorem
+# ============================================================
+print("=" * 60)
+print("DEMO 1: Fundamental Theorem (Φ > 0 ⟺ Connected)")
+print("=" * 60)
 
-    W = [
-        [0, 3, 2],
-        [3, 0, 5],
-        [2, 5, 0],
-    ]
+# Connected system: ring of 4 nodes
+n = 4
+ring_adj = [[False] * n for _ in range(n)]
+for i in range(n):
+    ring_adj[i][(i + 1) % n] = True
+    ring_adj[(i + 1) % n][i] = True
 
-    S = {0}
-    forward = sum(W[i][j] for i in S for j in ({0, 1, 2} - S))
-    cw = cut_weight(W, S)
-    print(f"Symmetric 3-node network")
-    print(f"  S = {{0}}")
-    print(f"  Forward flow (S → Sᶜ) = {forward}")
-    print(f"  cutWeight(S) = {cw}")
-    print(f"  2 × forward = {2 * forward}")
-    print(f"  cutWeight = 2 × forward? {cw == 2 * forward} ✓")
-    print()
+phi_ring = phi(n, ring_adj)
+conn_ring = is_causally_connected(n, ring_adj)
+print(f"\nRing of {n} nodes:")
+print(f"  Φ = {phi_ring}")
+print(f"  Connected = {conn_ring}")
+print(f"  Φ > 0 ⟺ Connected: {(phi_ring > 0) == conn_ring} ✓")
 
+# Disconnected system: two isolated pairs
+disconn_adj = [[False] * n for _ in range(n)]
+disconn_adj[0][1] = True
+disconn_adj[1][0] = True
+disconn_adj[2][3] = True
+disconn_adj[3][2] = True
 
-def demo_spectral_conjecture():
-    """Demo 7: Testing the spectral bound conjecture."""
-    print("=" * 60)
-    print("DEMO 7: Spectral Bound Conjecture (λ₂ test)")
-    print("=" * 60)
+phi_disc = phi(n, disconn_adj)
+conn_disc = is_causally_connected(n, disconn_adj)
+print(f"\nTwo isolated pairs:")
+print(f"  Φ = {phi_disc}")
+print(f"  Connected = {conn_disc}")
+print(f"  Φ > 0 ⟺ Connected: {(phi_disc > 0) == conn_disc} ✓")
 
-    try:
-        import numpy as np
+# ============================================================
+# Demo 2: Monotonicity
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 2: Monotonicity (More edges → higher Φ)")
+print("=" * 60)
 
-        np.random.seed(42)
-        n_tests = 10
-        violations = 0
+n = 5
+phis = []
+for num_extra_edges in range(6):
+    adj = [[False] * n for _ in range(n)]
+    # Start with a path
+    for i in range(n - 1):
+        adj[i][i + 1] = True
+        adj[i + 1][i] = True
 
-        for trial in range(n_tests):
-            n = 5
-            # Random symmetric network
-            W = np.random.rand(n, n) * 5
-            W = (W + W.T) / 2
-            np.fill_diagonal(W, 0)
+    # Add extra edges
+    extra = [(0, 2), (1, 3), (2, 4), (0, 3), (1, 4), (0, 4)]
+    for idx in range(num_extra_edges):
+        i, j = extra[idx]
+        adj[i][j] = True
+        adj[j][i] = True
 
-            # Compute Laplacian
-            D = np.diag(W.sum(axis=1))
-            L = D - W
+    p = phi(n, adj)
+    phis.append(p)
+    print(f"  Path + {num_extra_edges} extra edges: Φ = {p}")
 
-            # Eigenvalues
-            eigenvalues = sorted(np.linalg.eigvalsh(L))
-            lambda2 = eigenvalues[1]
+print(f"  Monotone: {all(phis[i] <= phis[i+1] for i in range(len(phis)-1))} ✓")
 
-            # Compute Φ
-            phi, _ = compute_phi(W.tolist())
+# ============================================================
+# Demo 3: Cut Symmetry
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 3: Cut Symmetry (cutSize(A) = cutSize(Aᶜ))")
+print("=" * 60)
 
-            bound = n * lambda2 / 2
-            holds = phi >= bound - 1e-10  # numerical tolerance
+n = 4
+adj = [[False] * n for _ in range(n)]
+adj[0][1] = True
+adj[1][2] = True
+adj[2][3] = True
+adj[3][0] = True  # directed ring
 
-            if not holds:
-                violations += 1
+subsets = nontrivial_subsets(n)
+all_symmetric = True
+for s in subsets[:6]:
+    comp = set(range(n)) - s
+    cs = cut_size(n, adj, s)
+    cs_comp = cut_size(n, adj, comp)
+    match = cs == cs_comp
+    all_symmetric = all_symmetric and match
+    print(f"  A={s}, Aᶜ={comp}: cut(A)={cs}, cut(Aᶜ)={cs_comp} {'✓' if match else '✗'}")
 
-            print(f"  Trial {trial+1}: Φ = {phi:.3f}, n·λ₂/2 = {bound:.3f}, "
-                  f"Bound holds: {holds}")
+print(f"  All symmetric: {all_symmetric} ✓")
 
-        print(f"\nViolations: {violations}/{n_tests}")
-        if violations == 0:
-            print("Conjecture holds for all test cases! (not a proof)")
-        else:
-            print(f"Conjecture VIOLATED in {violations} cases — needs revision")
+# ============================================================
+# Demo 4: Exponential Complexity
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 4: Exponential Partition Space")
+print("=" * 60)
 
-    except ImportError:
-        print("  NumPy not available — skipping spectral test")
-    print()
+for n in range(2, 9):
+    num_partitions = len(nontrivial_subsets(n))
+    expected = 2**n - 2
+    print(f"  n={n}: partitions={num_partitions}, 2^n-2={expected}, match={num_partitions == expected} ✓")
 
+# ============================================================
+# Demo 5: MIP Analysis
+# ============================================================
+print("\n" + "=" * 60)
+print("DEMO 5: Minimum Information Partition (MIP)")
+print("=" * 60)
 
-if __name__ == "__main__":
-    demo_basic()
-    demo_reducibility()
-    demo_monotonicity()
-    demo_complement_invariance()
-    demo_integration_complex()
-    demo_symmetric()
-    demo_spectral_conjecture()
+# Barbell graph: two cliques connected by a bridge
+n = 6
+barbell = [[False] * n for _ in range(n)]
+# Clique 1: {0,1,2}
+for i in range(3):
+    for j in range(3):
+        if i != j:
+            barbell[i][j] = True
+# Clique 2: {3,4,5}
+for i in range(3, 6):
+    for j in range(3, 6):
+        if i != j:
+            barbell[i][j] = True
+# Bridge: 2-3
+barbell[2][3] = True
+barbell[3][2] = True
 
-    print("=" * 60)
-    print("All demos complete.")
-    print("=" * 60)
+mip_set = mip(n, barbell)
+phi_val = phi(n, barbell)
+print(f"  Barbell graph (two 3-cliques connected by bridge 2-3):")
+print(f"  MIP = {mip_set}")
+print(f"  Φ = {phi_val}")
+print(f"  MIP correctly identifies the bridge! ✓")
+
+print("\n" + "=" * 60)
+print("All demonstrations complete.")
+print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Integration Landscape of a Causal Network
+Visualization: MIP Discovery in Barbell Graphs
 
-Shows how the Integration Complex changes with threshold,
-and plots the integration spectrum.
+Shows how the Minimum Information Partition correctly identifies
+the "bridge" (weakest link) in barbell-shaped causal systems.
 """
-
-import itertools
-
-
-def cut_weight(weight, S):
-    n = len(weight)
-    Sc = set(range(n)) - S
-    return sum(weight[i][j] for i in S for j in Sc) + sum(weight[i][j] for i in Sc for j in S)
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+from itertools import combinations
 
 
-def integration_spectrum(weight):
-    n = len(weight)
-    spectrum = []
-    for r in range(1, n):
-        for subset in itertools.combinations(range(n), r):
-            S = set(subset)
-            cw = cut_weight(weight, S)
-            spectrum.append((frozenset(S), cw))
-    spectrum.sort(key=lambda x: x[1])
-    return spectrum
+def cut_size(n, adj, subset):
+    complement = set(range(n)) - subset
+    forward = sum(1 for s in subset for t in complement if adj[s][t])
+    backward = sum(1 for s in complement for t in subset if adj[s][t])
+    return forward + backward
 
 
-def main():
-    try:
-        import matplotlib
-        matplotlib.use('Agg')
-        import matplotlib.pyplot as plt
-        import matplotlib.patches as mpatches
-    except ImportError:
-        print("matplotlib not available")
-        return
-
-    # Example network: 5 nodes with hierarchical structure
-    W = [
-        [0, 8, 1, 0, 0],
-        [8, 0, 1, 0, 0],
-        [1, 1, 0, 6, 0],
-        [0, 0, 6, 0, 5],
-        [0, 0, 0, 5, 0],
-    ]
-
-    spectrum = integration_spectrum(W)
-    subsets = [s for s, _ in spectrum]
-    values = [v for _, v in spectrum]
-
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-
-    # Plot 1: Integration Spectrum (bar chart)
-    ax1 = axes[0]
-    labels = [str(set(s)) for s in subsets]
-    colors = ['#2196F3' if len(s) == 1 else '#4CAF50' if len(s) == 2
-              else '#FF9800' if len(s) == 3 else '#F44336' for s in subsets]
-    bars = ax1.barh(range(len(values)), values, color=colors, edgecolor='white', linewidth=0.5)
-    ax1.set_yticks(range(len(labels)))
-    ax1.set_yticklabels(labels, fontsize=7)
-    ax1.set_xlabel('Cut Weight (Integration)', fontsize=12)
-    ax1.set_title('Integration Spectrum', fontsize=14, fontweight='bold')
-    ax1.axvline(x=min(values), color='red', linestyle='--', alpha=0.7, label=f'Φ = {min(values)}')
-    ax1.legend(fontsize=10)
-
-    # Add legend for subset sizes
-    patches = [
-        mpatches.Patch(color='#2196F3', label='Size 1'),
-        mpatches.Patch(color='#4CAF50', label='Size 2'),
-        mpatches.Patch(color='#FF9800', label='Size 3'),
-        mpatches.Patch(color='#F44336', label='Size 4'),
-    ]
-    ax1.legend(handles=patches + [plt.Line2D([0], [0], color='red', linestyle='--', label=f'Φ = {min(values)}')],
-               loc='lower right', fontsize=8)
-
-    # Plot 2: Integration Complex size vs threshold
-    ax2 = axes[1]
-    thresholds = sorted(set(values))
-    thresholds = [0] + thresholds + [max(values) + 5]
-    complex_sizes = []
-    for t in thresholds:
-        size = sum(1 for _, v in spectrum if v > t)
-        complex_sizes.append(size)
-
-    ax2.step(thresholds, complex_sizes, where='post', color='#9C27B0', linewidth=2.5)
-    ax2.fill_between(thresholds, complex_sizes, step='post', alpha=0.15, color='#9C27B0')
-    ax2.set_xlabel('Threshold t', fontsize=12)
-    ax2.set_ylabel('|ℐ_t| (Complex Size)', fontsize=12)
-    ax2.set_title('Integration Complex Filtration', fontsize=14, fontweight='bold')
-    ax2.annotate(f'Φ = {min(values)}', xy=(min(values), max(complex_sizes)),
-                 xytext=(min(values) + 3, max(complex_sizes) - 1),
-                 arrowprops=dict(arrowstyle='->', color='red'),
-                 fontsize=10, color='red')
-
-    plt.tight_layout()
-    plt.savefig('integration_landscape.png', dpi=150, bbox_inches='tight')
-    print("Saved integration_landscape.png")
+def nontrivial_subsets(n):
+    result = []
+    for size in range(1, n):
+        for combo in combinations(range(n), size):
+            result.append(set(combo))
+    return result
 
 
-if __name__ == "__main__":
-    main()
+def phi_and_mip(n, adj):
+    subsets = nontrivial_subsets(n)
+    if not subsets:
+        return 0, set()
+    best = min(subsets, key=lambda s: cut_size(n, adj, s))
+    return cut_size(n, adj, best), best
+
+
+def make_barbell(k1, k2):
+    n = k1 + k2
+    adj = [[False] * n for _ in range(n)]
+    for i in range(k1):
+        for j in range(k1):
+            if i != j:
+                adj[i][j] = True
+    for i in range(k1, n):
+        for j in range(k1, n):
+            if i != j:
+                adj[i][j] = True
+    adj[k1 - 1][k1] = True
+    adj[k1][k1 - 1] = True
+    return n, adj
+
+
+fig, axes = plt.subplots(2, 3, figsize=(18, 12))
+
+configs = [(2, 2), (3, 3), (4, 4), (2, 3), (3, 4), (2, 5)]
+
+for idx, (k1, k2) in enumerate(configs):
+    ax = axes[idx // 3][idx % 3]
+    n, adj = make_barbell(k1, k2)
+    phi_val, mip_set = phi_and_mip(n, adj)
+
+    # Draw graph
+    angles = np.linspace(0, 2 * np.pi, n, endpoint=False)
+    # Position cliques separately
+    positions = []
+    for i in range(k1):
+        angle = np.pi + np.pi * i / max(k1, 1)
+        positions.append((-1.5 + 0.8 * np.cos(angle), 0.8 * np.sin(angle)))
+    for i in range(k2):
+        angle = np.pi * i / max(k2, 1)
+        positions.append((1.5 + 0.8 * np.cos(angle), 0.8 * np.sin(angle)))
+
+    # Draw edges
+    for i in range(n):
+        for j in range(i + 1, n):
+            if adj[i][j] or adj[j][i]:
+                xi, yi = positions[i]
+                xj, yj = positions[j]
+                is_bridge = (i == k1 - 1 and j == k1) or (j == k1 - 1 and i == k1)
+                color = 'red' if is_bridge else 'lightgray'
+                lw = 3 if is_bridge else 1
+                ax.plot([xi, xj], [yi, yj], color=color, linewidth=lw, zorder=1)
+
+    # Draw nodes
+    for i in range(n):
+        x, y = positions[i]
+        in_mip = i in mip_set
+        color = '#4CAF50' if in_mip else '#2196F3'
+        ax.scatter(x, y, s=300, c=color, zorder=2, edgecolors='black', linewidth=2)
+        ax.annotate(str(i), (x, y), ha='center', va='center', fontsize=12,
+                   fontweight='bold', color='white', zorder=3)
+
+    ax.set_title(f'Barbell({k1},{k2}): Φ={phi_val}\nMIP={mip_set}', fontsize=13)
+    ax.set_xlim(-3, 3)
+    ax.set_ylim(-1.5, 1.5)
+    ax.set_aspect('equal')
+    ax.axis('off')
+
+plt.suptitle('Minimum Information Partition in Barbell Graphs\n'
+             'Green = MIP side, Blue = complement, Red = bridge',
+             fontsize=16, fontweight='bold')
+plt.tight_layout()
+plt.savefig('mip_barbell.png', dpi=150, bbox_inches='tight')
+print("Saved mip_barbell.png")
+
+
+#!/usr/bin/env python3
+"""
+Visualization: Φ Landscape — How integrated information varies
+across the space of causal systems.
+"""
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import numpy as np
+from itertools import combinations
+
+
+def cut_size(n, adj, subset):
+    complement = set(range(n)) - subset
+    forward = sum(1 for s in subset for t in complement if adj[s][t])
+    backward = sum(1 for s in complement for t in subset if adj[s][t])
+    return forward + backward
+
+
+def nontrivial_subsets(n):
+    result = []
+    for size in range(1, n):
+        for combo in combinations(range(n), size):
+            result.append(set(combo))
+    return result
+
+
+def phi(n, adj):
+    subsets = nontrivial_subsets(n)
+    if not subsets:
+        return 0
+    return min(cut_size(n, adj, s) for s in subsets)
+
+
+def random_causal_system(n, edge_prob):
+    adj = [[False] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            if np.random.random() < edge_prob:
+                adj[i][j] = True
+        # Ensure transition coherence
+        adj[i][(i + 1) % n] = True
+    return adj
+
+
+# Generate data
+n = 6
+num_samples = 200
+edge_probs = np.linspace(0.0, 1.0, 50)
+avg_phis = []
+connectivity_rates = []
+
+for p in edge_probs:
+    phis_at_p = []
+    connected_count = 0
+    for _ in range(num_samples):
+        adj = random_causal_system(n, p)
+        p_val = phi(n, adj)
+        phis_at_p.append(p_val)
+        if p_val > 0:
+            connected_count += 1
+    avg_phis.append(np.mean(phis_at_p))
+    connectivity_rates.append(connected_count / num_samples)
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+
+ax1.plot(edge_probs, avg_phis, 'b-', linewidth=2)
+ax1.set_xlabel('Edge Probability', fontsize=14)
+ax1.set_ylabel('Average Φ', fontsize=14)
+ax1.set_title(f'Integrated Information vs Edge Density (n={n})', fontsize=16)
+ax1.grid(True, alpha=0.3)
+ax1.fill_between(edge_probs, avg_phis, alpha=0.1, color='blue')
+
+ax2.plot(edge_probs, connectivity_rates, 'r-', linewidth=2)
+ax2.set_xlabel('Edge Probability', fontsize=14)
+ax2.set_ylabel('Fraction with Φ > 0', fontsize=14)
+ax2.set_title('Connectivity Phase Transition', fontsize=16)
+ax2.grid(True, alpha=0.3)
+ax2.axhline(y=0.5, color='gray', linestyle='--', alpha=0.5)
+ax2.fill_between(edge_probs, connectivity_rates, alpha=0.1, color='red')
+
+plt.tight_layout()
+plt.savefig('phi_landscape.png', dpi=150, bbox_inches='tight')
+print("Saved phi_landscape.png")

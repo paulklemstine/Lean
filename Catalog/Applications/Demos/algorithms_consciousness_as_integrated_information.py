@@ -1,197 +1,182 @@
+#!/usr/bin/env python3
 """
-Algorithms for Causal Integration Theory
+Integrated Information Theory (IIT) — Algorithms
 
-Type-hinted implementations of the core algorithms for computing
-integrated information (Φ) and the Integration Complex.
+Type-hinted implementations of:
+1. Brute-force Φ computation
+2. MIP (Minimum Information Partition) search
+3. Causal system construction utilities
+4. Monotonicity verification
+5. Spectral bound estimation (Cheeger-based)
 """
 
 from typing import List, Set, Tuple, Optional
-import itertools
+from itertools import combinations
+import math
 
 
-def cut_weight(weight: List[List[float]], S: Set[int]) -> float:
-    """Compute the bidirectional cut weight of subset S.
+class CausalSystem:
+    """A causal system with finite state space and Boolean adjacency."""
 
-    Args:
-        weight: n×n weight matrix (weight[i][j] = causal influence from i to j)
-        S: subset of node indices
+    def __init__(self, n: int, adj: List[List[bool]], transition: List[int]):
+        """
+        Args:
+            n: Number of states
+            adj: Adjacency matrix (adj[i][j] = True iff i causes j)
+            transition: Transition function (transition[i] = next state of i)
+        """
+        self.n = n
+        self.adj = adj
+        self.transition = transition
+        # Verify coherence
+        for s in range(n):
+            assert adj[s][transition[s]], f"Transition {s}->{transition[s]} not in adjacency"
 
-    Returns:
-        Total weight of edges crossing the partition (S, Sᶜ)
-    """
-    n = len(weight)
-    Sc = set(range(n)) - S
-    forward = sum(weight[i][j] for i in S for j in Sc)
-    backward = sum(weight[i][j] for i in Sc for j in S)
-    return forward + backward
+    def cut_size(self, subset: Set[int]) -> int:
+        """Compute the cut size of a partition given by subset A."""
+        complement: Set[int] = set(range(self.n)) - subset
+        forward: int = sum(1 for s in subset for t in complement if self.adj[s][t])
+        backward: int = sum(1 for s in complement for t in subset if self.adj[s][t])
+        return forward + backward
 
+    def nontrivial_subsets(self) -> List[Set[int]]:
+        """Generate all non-trivial subsets."""
+        result: List[Set[int]] = []
+        for size in range(1, self.n):
+            for combo in combinations(range(self.n), size):
+                result.append(set(combo))
+        return result
 
-def compute_phi(weight: List[List[float]]) -> Tuple[float, Optional[Set[int]]]:
-    """Compute integrated information Φ and the minimum information partition.
+    def phi(self) -> int:
+        """Compute Φ = minimum cut over all non-trivial subsets."""
+        subsets: List[Set[int]] = self.nontrivial_subsets()
+        if not subsets:
+            return 0
+        return min(self.cut_size(s) for s in subsets)
 
-    Args:
-        weight: n×n nonnegative weight matrix
+    def mip(self) -> Optional[Set[int]]:
+        """Find the Minimum Information Partition."""
+        subsets: List[Set[int]] = self.nontrivial_subsets()
+        if not subsets:
+            return None
+        return min(subsets, key=lambda s: self.cut_size(s))
 
-    Returns:
-        (phi_value, minimizing_subset) or (0, None) if n < 2
-    """
-    n = len(weight)
-    if n < 2:
-        return 0.0, None
+    def is_causally_connected(self) -> bool:
+        """Check causal connectivity."""
+        return all(self.cut_size(s) > 0 for s in self.nontrivial_subsets())
 
-    min_cut = float('inf')
-    min_partition: Optional[Set[int]] = None
-
-    # Enumerate all nontrivial subsets (nonempty, not full)
-    for r in range(1, n):
-        for subset in itertools.combinations(range(n), r):
-            S = set(subset)
-            cw = cut_weight(weight, S)
-            if cw < min_cut:
-                min_cut = cw
-                min_partition = S
-
-    return min_cut, min_partition
-
-
-def integration_complex(weight: List[List[float]], threshold: float) -> List[Set[int]]:
-    """Compute the Integration Complex at a given threshold.
-
-    Returns all nontrivial subsets with cut weight strictly above the threshold.
-
-    Args:
-        weight: n×n nonnegative weight matrix
-        threshold: integration threshold t
-
-    Returns:
-        List of subsets in the Integration Complex ℐ_t
-    """
-    n = len(weight)
-    complex_sets: List[Set[int]] = []
-
-    for r in range(1, n):
-        for subset in itertools.combinations(range(n), r):
-            S = set(subset)
-            cw = cut_weight(weight, S)
-            if cw > threshold:
-                complex_sets.append(S)
-
-    return complex_sets
+    def is_extension_of(self, other: 'CausalSystem') -> bool:
+        """Check if self extends other (has all edges of other)."""
+        assert self.n == other.n
+        return all(
+            not other.adj[i][j] or self.adj[i][j]
+            for i in range(self.n) for j in range(self.n)
+        )
 
 
-def integration_spectrum(weight: List[List[float]]) -> List[Tuple[Set[int], float]]:
-    """Compute the full integration spectrum: all (subset, cutWeight) pairs.
-
-    Args:
-        weight: n×n nonnegative weight matrix
-
-    Returns:
-        Sorted list of (subset, cut_weight) pairs, ascending by cut weight
-    """
-    n = len(weight)
-    spectrum: List[Tuple[Set[int], float]] = []
-
-    for r in range(1, n):
-        for subset in itertools.combinations(range(n), r):
-            S = set(subset)
-            cw = cut_weight(weight, S)
-            spectrum.append((S, cw))
-
-    spectrum.sort(key=lambda x: x[1])
-    return spectrum
+def verify_monotonicity(cs1: CausalSystem, cs2: CausalSystem) -> bool:
+    """Verify that if cs2 extends cs1, then phi(cs1) <= phi(cs2)."""
+    if not cs2.is_extension_of(cs1):
+        return True  # vacuously true
+    return cs1.phi() <= cs2.phi()
 
 
-def is_reducible(weight: List[List[float]]) -> Tuple[bool, Optional[Set[int]]]:
-    """Check if a network is reducible (has a nontrivial zero-cut partition).
-
-    Args:
-        weight: n×n nonnegative weight matrix
-
-    Returns:
-        (is_reducible, separating_subset)
-    """
-    n = len(weight)
-    for r in range(1, n):
-        for subset in itertools.combinations(range(n), r):
-            S = set(subset)
-            if cut_weight(weight, S) == 0.0:
-                return True, S
-    return False, None
+def verify_cut_symmetry(cs: CausalSystem) -> bool:
+    """Verify cut symmetry: cutSize(A) = cutSize(complement(A)) for all A."""
+    for s in cs.nontrivial_subsets():
+        comp: Set[int] = set(range(cs.n)) - s
+        if cs.cut_size(s) != cs.cut_size(comp):
+            return False
+    return True
 
 
-def stoer_wagner_approx_phi(weight: List[List[float]]) -> float:
-    """Approximate Φ using minimum s-t cut enumeration.
+def verify_fundamental_theorem(cs: CausalSystem) -> bool:
+    """Verify Φ > 0 ⟺ causally connected."""
+    return (cs.phi() > 0) == cs.is_causally_connected()
 
-    For symmetric networks, this gives the exact minimum cut.
-    For asymmetric networks, provides an upper bound.
 
-    Args:
-        weight: n×n nonnegative weight matrix
-
-    Returns:
-        Approximate Φ value
-    """
-    n = len(weight)
-    if n < 2:
+def estimate_cheeger_constant(cs: CausalSystem) -> float:
+    """Estimate the Cheeger constant h(G) = min cutSize(A) / min(|A|, |S\A|)."""
+    subsets: List[Set[int]] = cs.nontrivial_subsets()
+    if not subsets:
         return 0.0
+    return min(
+        cs.cut_size(s) / min(len(s), cs.n - len(s))
+        for s in subsets
+    )
 
-    # Symmetrize for min-cut
-    sym = [[weight[i][j] + weight[j][i] for j in range(n)] for i in range(n)]
 
-    # Simple implementation: merge vertices iteratively
-    # (Stoer-Wagner algorithm)
-    vertices = list(range(n))
-    merged: dict = {i: {i} for i in range(n)}
-    min_cut = float('inf')
+def build_ring(n: int) -> CausalSystem:
+    """Build a ring causal system."""
+    adj: List[List[bool]] = [[False] * n for _ in range(n)]
+    transition: List[int] = [(i + 1) % n for i in range(n)]
+    for i in range(n):
+        adj[i][(i + 1) % n] = True
+        adj[(i + 1) % n][i] = True
+    return CausalSystem(n, adj, transition)
 
-    adj = {i: {j: sym[i][j] for j in range(n) if j != i} for i in range(n)}
 
-    while len(vertices) > 1:
-        # MinimumCutPhase
-        A = {vertices[0]}
-        candidates = set(vertices[1:])
-        last_added = vertices[0]
-        second_last = vertices[0]
+def build_complete(n: int) -> CausalSystem:
+    """Build a complete causal system."""
+    adj: List[List[bool]] = [[True] * n for _ in range(n)]
+    transition: List[int] = [(i + 1) % n for i in range(n)]
+    return CausalSystem(n, adj, transition)
 
-        while candidates:
-            # Find most tightly connected vertex
-            best_v = None
-            best_w = -1.0
-            for v in candidates:
-                w_sum = sum(adj.get(v, {}).get(u, 0.0) for u in A)
-                if w_sum > best_w:
-                    best_w = w_sum
-                    best_v = v
-            second_last = last_added
-            last_added = best_v
-            A.add(best_v)
-            candidates.remove(best_v)
 
-        # Cut of the phase = weight of last added
-        cut_of_phase = sum(adj.get(last_added, {}).get(u, 0.0) for u in vertices if u != last_added)
-        min_cut = min(min_cut, cut_of_phase)
+def build_path(n: int) -> CausalSystem:
+    """Build a path causal system (not causally connected for n >= 3)."""
+    adj: List[List[bool]] = [[False] * n for _ in range(n)]
+    transition: List[int] = [min(i + 1, n - 1) for i in range(n)]
+    for i in range(n - 1):
+        adj[i][i + 1] = True
+        adj[i + 1][i] = True
+    # Self-loop for last node
+    adj[n - 1][n - 1] = True
+    return CausalSystem(n, adj, transition)
 
-        # Merge last_added into second_last
-        for v in vertices:
-            if v != last_added and v != second_last:
-                w1 = adj.get(second_last, {}).get(v, 0.0)
-                w2 = adj.get(last_added, {}).get(v, 0.0)
-                if second_last in adj and v in adj[second_last]:
-                    adj[second_last][v] = w1 + w2
-                elif second_last in adj:
-                    adj[second_last][v] = w2
-                if v in adj and second_last in adj[v]:
-                    adj[v][second_last] = w1 + w2
-                elif v in adj:
-                    adj[v][second_last] = w2
 
-        # Remove last_added
-        if last_added in adj:
-            del adj[last_added]
-        for v in adj:
-            if last_added in adj[v]:
-                del adj[v][last_added]
-        merged[second_last] = merged[second_last] | merged[last_added]
-        vertices.remove(last_added)
+def build_barbell(k: int) -> CausalSystem:
+    """Build a barbell: two k-cliques connected by a single bridge."""
+    n: int = 2 * k
+    adj: List[List[bool]] = [[False] * n for _ in range(n)]
+    transition: List[int] = [(i + 1) % n for i in range(n)]
 
-    return min_cut
+    # Clique 1
+    for i in range(k):
+        for j in range(k):
+            adj[i][j] = True
+
+    # Clique 2
+    for i in range(k, n):
+        for j in range(k, n):
+            adj[i][j] = True
+
+    # Bridge
+    adj[k - 1][k] = True
+    adj[k][k - 1] = True
+
+    return CausalSystem(n, adj, transition)
+
+
+if __name__ == "__main__":
+    print("=== Algorithm Verification ===\n")
+
+    for n in [3, 4, 5, 6]:
+        ring = build_ring(n)
+        complete = build_complete(n)
+        barbell = build_barbell(n // 2) if n >= 4 and n % 2 == 0 else None
+
+        print(f"Ring({n}): Φ={ring.phi()}, connected={ring.is_causally_connected()}, "
+              f"fundamental_thm={verify_fundamental_theorem(ring)}, "
+              f"cut_sym={verify_cut_symmetry(ring)}")
+
+        print(f"Complete({n}): Φ={complete.phi()}, connected={complete.is_causally_connected()}, "
+              f"Cheeger={estimate_cheeger_constant(complete):.2f}")
+
+        if barbell:
+            print(f"Barbell({n}): Φ={barbell.phi()}, MIP={barbell.mip()}, "
+                  f"Cheeger={estimate_cheeger_constant(barbell):.2f}")
+
+        # Verify monotonicity: ring ⊆ complete
+        print(f"Monotonicity (ring ⊆ complete): {verify_monotonicity(ring, complete)}")
+        print()
