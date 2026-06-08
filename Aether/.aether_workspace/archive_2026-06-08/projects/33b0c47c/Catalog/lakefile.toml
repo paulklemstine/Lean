@@ -1,0 +1,59 @@
+name = "CatalogBuild"
+defaultTargets = ["Algebra", "Bridges", "Computation", "Cryptography", "EML", "Geometry", "Logic", "MachineLearning", "Physics", "Pythagorean", "Shared", "Speculative", "Tropical"]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "v4.28.0"
+
+[[lean_lib]]
+name = "Algebra"
+globs = ["Algebra.+"]
+
+[[lean_lib]]
+name = "Bridges"
+globs = ["Bridges.+"]
+
+[[lean_lib]]
+name = "Computation"
+globs = ["Computation.+"]
+
+[[lean_lib]]
+name = "Cryptography"
+globs = ["Cryptography.+"]
+
+[[lean_lib]]
+name = "EML"
+globs = ["EML.+"]
+
+[[lean_lib]]
+name = "Geometry"
+globs = ["Geometry.+"]
+
+[[lean_lib]]
+name = "Logic"
+globs = ["Logic.+"]
+
+[[lean_lib]]
+name = "MachineLearning"
+globs = ["MachineLearning.+"]
+
+[[lean_lib]]
+name = "Physics"
+globs = ["Physics.+"]
+
+[[lean_lib]]
+name = "Pythagorean"
+globs = ["Pythagorean.+"]
+
+[[lean_lib]]
+name = "Shared"
+globs = ["Shared.+"]
+
+[[lean_lib]]
+name = "Speculative"
+globs = ["Speculative.+"]
+
+[[lean_lib]]
+name = "Tropical"
+globs = ["Tropical.+"]
