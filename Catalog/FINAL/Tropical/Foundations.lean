@@ -1,1 +1,1 @@
-../../Tropical/Foundations.lean
+../../Tropical/CurryHoward/Foundations.lean

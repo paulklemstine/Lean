@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/LorentzianInfoTheory.lean
+../../Bridges/LorentzianInfoTheory.lean

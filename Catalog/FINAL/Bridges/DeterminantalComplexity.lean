@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/DeterminantalComplexity.lean
+../../Bridges/DeterminantalComplexity.lean

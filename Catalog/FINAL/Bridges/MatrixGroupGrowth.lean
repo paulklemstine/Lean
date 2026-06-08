@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/MatrixGroupGrowth.lean
+../../Bridges/MatrixGroupGrowth.lean

@@ -1,1 +1,1 @@
-../../Bridges/BerggrenIsogeny/Basic.lean
+../../Bridges/Basic.lean

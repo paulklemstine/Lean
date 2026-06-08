@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/EntropyMonotonicity.lean
+../../Bridges/EntropyMonotonicity.lean

@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/PseudofiniteDimension.lean
+../../Bridges/PseudofiniteDimension.lean

@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/HigherOrderCompletion.lean
+../../Bridges/HigherOrderCompletion.lean

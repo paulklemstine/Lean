@@ -1,1 +1,1 @@
-../../Tropical/TropicalSatakeGL3.lean
+../../Tropical/Symmetric/TropicalSatakeGL3.lean

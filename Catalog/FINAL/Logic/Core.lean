@@ -1,1 +1,1 @@
-../../Logic/Core.lean
+../../Logic/CategoryGenome/Core.lean

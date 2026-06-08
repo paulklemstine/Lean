@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/Tropical/TropicalSatakeSurjectivity.lean
+../../Bridges/TropicalSatakeSurjectivity.lean

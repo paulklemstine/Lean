@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/PartitionMatroidStability.lean
+../../Bridges/PartitionMatroidStability.lean

@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/SpectralLorentzianStability.lean
+../../Bridges/SpectralLorentzianStability.lean

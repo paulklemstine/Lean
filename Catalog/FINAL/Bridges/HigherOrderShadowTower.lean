@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/HigherOrderShadowTower.lean
+../../Bridges/HigherOrderShadowTower.lean

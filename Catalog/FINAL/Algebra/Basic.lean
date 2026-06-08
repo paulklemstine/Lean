@@ -1,1 +1,1 @@
-../../Algebra/Freivalds/Basic.lean
+../../Algebra/Basic.lean

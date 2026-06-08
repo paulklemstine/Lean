@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalBridge/OverlapClassInvariants.lean
+../../Bridges/OverlapClassInvariants.lean

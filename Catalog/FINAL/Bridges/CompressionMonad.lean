@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Computation/CompressionMonad.lean
+../../Bridges/CompressionMonad.lean

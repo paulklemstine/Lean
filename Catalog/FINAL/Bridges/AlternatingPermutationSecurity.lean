@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/Crypto/AlternatingPermutationSecurity.lean
+../../Bridges/AlternatingPermutationSecurity.lean

@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/ExceptionalExpanderLadder.lean
+../../Bridges/ExceptionalExpanderLadder.lean

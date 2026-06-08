@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/HyperbolicNumberTheory.lean
+../../Bridges/HyperbolicNumberTheory.lean

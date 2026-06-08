@@ -1,1 +1,1 @@
-../../MachineLearning/ProofCompression/Transfer.lean
+../../MachineLearning/ErdosStraus/Transfer.lean

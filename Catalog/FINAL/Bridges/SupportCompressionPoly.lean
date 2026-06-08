@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/SupportCompressionPoly.lean
+../../Bridges/SupportCompressionPoly.lean

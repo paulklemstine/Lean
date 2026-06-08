@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/EMLComputation/ClosureTemporalRealization.lean
+../../Bridges/ClosureTemporalRealization.lean

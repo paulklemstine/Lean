@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalBridge/CanonicalKernelTheorems.lean
+../../Bridges/CanonicalKernelTheorems.lean

@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/SpectralFingerprints.lean
+../../Bridges/SpectralFingerprints.lean

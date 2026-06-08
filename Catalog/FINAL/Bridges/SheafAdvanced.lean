@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalBridge/SheafAdvanced.lean
+../../Bridges/SheafAdvanced.lean

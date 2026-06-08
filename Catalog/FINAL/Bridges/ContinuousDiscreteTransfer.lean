@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/ContinuousDiscreteTransfer.lean
+../../Bridges/ContinuousDiscreteTransfer.lean

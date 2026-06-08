@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/OverlapSpectrumTheory.lean
+../../Bridges/OverlapSpectrumTheory.lean

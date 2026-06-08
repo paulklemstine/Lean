@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/SubgroupUniversality.lean
+../../Bridges/SubgroupUniversality.lean

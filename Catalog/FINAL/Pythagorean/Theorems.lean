@@ -1,1 +1,1 @@
-../../Pythagorean/Theorems.lean
+../../Pythagorean/ArithmeticMonsterTheory/Theorems.lean

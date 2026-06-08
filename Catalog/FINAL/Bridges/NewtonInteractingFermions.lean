@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/NewtonInteractingFermions.lean
+../../Bridges/NewtonInteractingFermions.lean

@@ -1,1 +1,1 @@
-../../Algebra/TightDepthHierarchy/Theorems.lean
+../../Algebra/CodingTheory/Theorems.lean

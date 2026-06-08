@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/LorentzianHardnessLowerBounds.lean
+../../Bridges/LorentzianHardnessLowerBounds.lean

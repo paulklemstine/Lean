@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/SupportTutteUniversality.lean
+../../Bridges/SupportTutteUniversality.lean

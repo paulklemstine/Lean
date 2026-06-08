@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/CertificateCompressionExchange.lean
+../../Bridges/CertificateCompressionExchange.lean

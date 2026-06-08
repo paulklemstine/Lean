@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/FiniteSizeSusceptibility.lean
+../../Bridges/FiniteSizeSusceptibility.lean

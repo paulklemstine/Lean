@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalSpectralConcentration.lean
+../../Bridges/TropicalSpectralConcentration.lean

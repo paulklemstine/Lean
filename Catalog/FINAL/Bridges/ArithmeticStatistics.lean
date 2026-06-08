@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/GraphJacobians/ArithmeticStatistics.lean
+../../Bridges/ArithmeticStatistics.lean

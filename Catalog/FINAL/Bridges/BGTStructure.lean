@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/BGTStructure.lean
+../../Bridges/BGTStructure.lean

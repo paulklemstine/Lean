@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalMixingDirect.lean
+../../Bridges/TropicalMixingDirect.lean

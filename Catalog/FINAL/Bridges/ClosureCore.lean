@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/ClosureMorita/ClosureCore.lean
+../../Bridges/ClosureCore.lean

@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Computation/OrdinalPRS.lean
+../../Bridges/OrdinalPRS.lean

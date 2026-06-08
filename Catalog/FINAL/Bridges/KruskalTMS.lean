@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalMorse/KruskalTMS.lean
+../../Bridges/KruskalTMS.lean

@@ -1,1 +1,1 @@
-../../Algebra/Obstruction.lean
+../../Algebra/Hadamard/Obstruction.lean

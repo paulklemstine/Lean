@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/AlgorithmicSpectralCertification.lean
+../../Bridges/AlgorithmicSpectralCertification.lean

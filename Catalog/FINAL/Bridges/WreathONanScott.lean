@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/WreathONanScott.lean
+../../Bridges/WreathONanScott.lean

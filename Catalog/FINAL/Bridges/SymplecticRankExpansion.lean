@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/SymplecticRankExpansion.lean
+../../Bridges/SymplecticRankExpansion.lean

@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/MarkovComparison/NonGroupComparison.lean
+../../Bridges/NonGroupComparison.lean

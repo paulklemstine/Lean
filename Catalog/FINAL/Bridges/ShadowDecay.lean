@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/CircuitLowerBounds/ShadowDecay.lean
+../../Bridges/ShadowDecay.lean

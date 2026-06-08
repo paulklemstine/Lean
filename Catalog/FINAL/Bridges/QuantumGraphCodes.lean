@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalMorse/QuantumGraphCodes.lean
+../../Bridges/QuantumGraphCodes.lean

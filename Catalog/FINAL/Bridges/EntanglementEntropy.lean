@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/EntanglementEntropy.lean
+../../Bridges/EntanglementEntropy.lean

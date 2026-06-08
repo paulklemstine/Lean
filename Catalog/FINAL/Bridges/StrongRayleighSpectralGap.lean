@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/StrongRayleighSpectralGap.lean
+../../Bridges/StrongRayleighSpectralGap.lean

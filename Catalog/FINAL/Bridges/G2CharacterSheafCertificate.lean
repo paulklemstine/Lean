@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/G2CharacterSheafCertificate.lean
+../../Bridges/G2CharacterSheafCertificate.lean

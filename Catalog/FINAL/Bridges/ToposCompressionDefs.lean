@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/ProbeComplexity/ToposCompressionDefs.lean
+../../Bridges/ToposCompressionDefs.lean

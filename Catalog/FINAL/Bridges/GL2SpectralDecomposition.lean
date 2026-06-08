@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/GL2SpectralDecomposition.lean
+../../Bridges/GL2SpectralDecomposition.lean

@@ -1,1 +1,1 @@
-../../Algebra/OpenQuestions.lean
+../../Algebra/Core/OpenQuestions.lean

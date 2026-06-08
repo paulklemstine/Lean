@@ -1,1 +1,1 @@
-../../Pythagorean/Defs.lean
+../../Pythagorean/BooleanTopos/Defs.lean

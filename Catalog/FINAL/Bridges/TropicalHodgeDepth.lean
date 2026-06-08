@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalHodgeDepth.lean
+../../Bridges/TropicalHodgeDepth.lean

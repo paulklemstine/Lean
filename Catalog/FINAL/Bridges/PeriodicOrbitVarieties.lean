@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/PeriodicOrbitVarieties.lean
+../../Bridges/PeriodicOrbitVarieties.lean

@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/Catalog/Pythagorean/TropicalMorse/HigherQuantumLDPC.lean
+../../Bridges/HigherQuantumLDPC.lean

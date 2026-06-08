@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TorsionChannelCodes.lean
+../../Bridges/TorsionChannelCodes.lean

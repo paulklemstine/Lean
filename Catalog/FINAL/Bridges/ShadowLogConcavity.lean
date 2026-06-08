@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/ShadowLogConcavity.lean
+../../Bridges/ShadowLogConcavity.lean

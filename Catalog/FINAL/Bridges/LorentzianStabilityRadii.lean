@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/LorentzianStabilityRadii.lean
+../../Bridges/LorentzianStabilityRadii.lean

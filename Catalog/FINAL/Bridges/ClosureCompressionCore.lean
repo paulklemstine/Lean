@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Computation/ClosureCompressionCore.lean
+../../Bridges/ClosureCompressionCore.lean

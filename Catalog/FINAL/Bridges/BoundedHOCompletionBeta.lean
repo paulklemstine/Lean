@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/BoundedHOCompletionBeta.lean
+../../Bridges/BoundedHOCompletionBeta.lean

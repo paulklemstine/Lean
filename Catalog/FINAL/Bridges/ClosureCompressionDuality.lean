@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Computation/ClosureCompressionDuality.lean
+../../Bridges/ClosureCompressionDuality.lean

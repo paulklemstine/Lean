@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/SymplecticCertificateAlgebra.lean
+../../Bridges/SymplecticCertificateAlgebra.lean

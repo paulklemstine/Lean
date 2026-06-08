@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/TropicalFiniteOptimization.lean
+../../Bridges/TropicalFiniteOptimization.lean

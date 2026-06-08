@@ -1,1 +1,1 @@
-../../Bridges/HomologicalTransferLearning/Advanced.lean
+../../Bridges/Advanced.lean

@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Logic/GuardedFixedPointIndex.lean
+../../Bridges/GuardedFixedPointIndex.lean

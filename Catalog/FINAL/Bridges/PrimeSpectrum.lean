@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/ClosureMorita/PrimeSpectrum.lean
+../../Bridges/PrimeSpectrum.lean

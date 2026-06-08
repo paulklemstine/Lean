@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/ProbeComplexity/RepresentableDimension.lean
+../../Bridges/RepresentableDimension.lean

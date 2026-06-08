@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/RecursiveCriticalPairSaturation.lean
+../../Bridges/RecursiveCriticalPairSaturation.lean

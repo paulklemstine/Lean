@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/Sp4SpectralGap.lean
+../../Bridges/Sp4SpectralGap.lean

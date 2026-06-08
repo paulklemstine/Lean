@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalBridge/WeightedTropicalHodge.lean
+../../Bridges/WeightedTropicalHodge.lean

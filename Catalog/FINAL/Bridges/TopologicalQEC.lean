@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Cryptography/TopologicalQEC.lean
+../../Bridges/TopologicalQEC.lean

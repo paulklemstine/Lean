@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/MatroidQuantumCertificates.lean
+../../Bridges/MatroidQuantumCertificates.lean

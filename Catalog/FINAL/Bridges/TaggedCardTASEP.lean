@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/CayleyExpander/TaggedCardTASEP.lean
+../../Bridges/TaggedCardTASEP.lean

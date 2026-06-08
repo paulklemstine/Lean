@@ -8,7 +8,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "84d24cbc",
     "filename": "transreal_arithmetic_computing_beyond_plus_minus_i.json",
-    "pkg_num": 3,
+    "pkg_num": 4,
     "quality": "partial",
     "quality_score": 0.62584,
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
@@ -18,7 +18,7 @@ window.PACKAGE_INDEX = [
     "domain": "Logic",
     "exp_id": "18efbb83",
     "filename": "bridge_logic_of_provability_and_fixed_points_in_ar.json",
-    "pkg_num": 1,
+    "pkg_num": 2,
     "quality": "partial",
     "quality_score": 0.3352,
     "title": "Provability Logic GL: Fixed Points, G\u00f6del Elements, and Incompleteness in Lattice Algebra"
@@ -28,10 +28,20 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "07ee0316",
     "filename": "rigorous_algebraic_foundations_for_probability_t.json",
-    "pkg_num": 2,
+    "pkg_num": 3,
     "quality": "partial",
     "quality_score": 0.66968,
     "title": "Rigorous Algebraic Foundations for Probability Theory in Non-Archimedean Ordered Fields"
+  },
+  {
+    "date": "2025-01-01",
+    "domain": "Bridges",
+    "exp_id": "4c2eabf0",
+    "filename": "self_modifying_code_that_cannot_be_stopped.json",
+    "pkg_num": 1,
+    "quality": "partial",
+    "quality_score": 0.6462399999999999,
+    "title": "Self-Modifying Code That Cannot Be Stopped: Undecidability, Simulation, and Alignment Barriers"
   }
 ];
 
@@ -52,6 +62,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Rigorous Algebraic Foundations for Probability Theory in Non-Archimedean Ordered Fields"
   },
+  "self_modifying_code_that_cannot_be_stopped.json": {
+    "domain": "Bridges",
+    "exp_id": "4c2eabf0",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Self-Modifying Code That Cannot Be Stopped: Undecidability, Simulation, and Alignment Barriers"
+  },
   "transreal_arithmetic_computing_beyond_plus_minus_i.json": {
     "domain": "Applications",
     "exp_id": "84d24cbc",
@@ -69,9 +87,20 @@ window.PACKAGE_GRAPH = {
   "edges": [],
   "nodes": [
     {
+      "date": "2025-01-01",
+      "domain": "Bridges",
+      "hue": 292,
+      "id": "self_modifying_code_that_cannot_be_stopped",
+      "primary_domain": "Bridges",
+      "priority_score": 0.6462399999999999,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "Self-Modifying Code That Cannot Be Stopped: Undecidability, Simulation, and Alignment Barriers"
+    },
+    {
       "date": "2026-06-08",
       "domain": "Logic",
-      "hue": 272,
+      "hue": 95,
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
       "primary_domain": "Logic",
       "priority_score": 0.3352,

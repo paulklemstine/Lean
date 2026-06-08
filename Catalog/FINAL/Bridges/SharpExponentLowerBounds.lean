@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/SharpExponentLowerBounds.lean
+../../Bridges/SharpExponentLowerBounds.lean

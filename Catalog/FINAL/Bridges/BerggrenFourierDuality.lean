@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/QuantumPythagoras/BerggrenFourierDuality.lean
+../../Bridges/BerggrenFourierDuality.lean

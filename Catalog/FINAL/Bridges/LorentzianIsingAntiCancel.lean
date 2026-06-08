@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/LorentzianIsingAntiCancel.lean
+../../Bridges/LorentzianIsingAntiCancel.lean

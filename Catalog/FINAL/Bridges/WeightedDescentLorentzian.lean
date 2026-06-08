@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/WeightedDescentLorentzian.lean
+../../Bridges/WeightedDescentLorentzian.lean

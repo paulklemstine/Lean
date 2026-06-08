@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/SpectralPhaseTransitions.lean
+../../Bridges/SpectralPhaseTransitions.lean

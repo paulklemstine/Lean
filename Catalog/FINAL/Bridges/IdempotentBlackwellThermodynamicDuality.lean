@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/IdempotentBlackwellThermodynamicDuality.lean
+../../Bridges/IdempotentBlackwellThermodynamicDuality.lean

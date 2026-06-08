@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalMorse/CycleBirthConcentration.lean
+../../Bridges/CycleBirthConcentration.lean

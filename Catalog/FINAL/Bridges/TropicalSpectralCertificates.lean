@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalSpectralCertificates.lean
+../../Bridges/TropicalSpectralCertificates.lean

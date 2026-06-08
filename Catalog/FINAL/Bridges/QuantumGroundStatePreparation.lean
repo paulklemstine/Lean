@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/QuantumGroundStatePreparation.lean
+../../Bridges/QuantumGroundStatePreparation.lean

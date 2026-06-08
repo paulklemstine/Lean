@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/LorentzianSmoothedAnalysis.lean
+../../Bridges/LorentzianSmoothedAnalysis.lean

@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/TropicalSpectrumDuality.lean
+../../Bridges/TropicalSpectrumDuality.lean

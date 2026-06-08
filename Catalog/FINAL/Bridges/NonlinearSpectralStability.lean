@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/NonlinearSpectralStability.lean
+../../Bridges/NonlinearSpectralStability.lean

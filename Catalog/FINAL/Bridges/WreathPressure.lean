@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/WreathPressure.lean
+../../Bridges/WreathPressure.lean

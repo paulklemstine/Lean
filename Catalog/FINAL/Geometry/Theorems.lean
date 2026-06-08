@@ -1,1 +1,1 @@
-../../Geometry/StereographicPersistence/Theorems.lean
+../../Geometry/BabelLibrary/Theorems.lean

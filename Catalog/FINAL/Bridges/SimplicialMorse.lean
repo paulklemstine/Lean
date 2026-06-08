@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalMorse/SimplicialMorse.lean
+../../Bridges/SimplicialMorse.lean

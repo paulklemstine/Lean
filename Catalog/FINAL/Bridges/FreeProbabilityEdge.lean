@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/FreeProbabilityEdge.lean
+../../Bridges/FreeProbabilityEdge.lean

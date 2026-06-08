@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Computation/Dijkstra.lean
+../../Bridges/Dijkstra.lean

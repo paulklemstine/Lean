@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalBridge/GaussianFreeField.lean
+../../Bridges/GaussianFreeField.lean

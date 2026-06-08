@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Cryptography/CramerPrimeGaps.lean
+../../Bridges/CramerPrimeGaps.lean

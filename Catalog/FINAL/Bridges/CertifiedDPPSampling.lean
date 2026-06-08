@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/CertifiedDPPSampling.lean
+../../Bridges/CertifiedDPPSampling.lean

@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Cryptography/HyperbolicTraceArithmetic.lean
+../../Bridges/HyperbolicTraceArithmetic.lean

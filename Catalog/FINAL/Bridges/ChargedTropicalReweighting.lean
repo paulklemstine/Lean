@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/Tropical/ChargedTropicalReweighting.lean
+../../Bridges/ChargedTropicalReweighting.lean

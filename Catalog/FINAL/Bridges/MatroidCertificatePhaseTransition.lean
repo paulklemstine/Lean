@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/MatroidCertificatePhaseTransition.lean
+../../Bridges/MatroidCertificatePhaseTransition.lean

@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/Tropical/PluckerFourPoint.lean
+../../Bridges/PluckerFourPoint.lean

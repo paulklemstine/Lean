@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/PrimeClosureLocale.lean
+../../Bridges/PrimeClosureLocale.lean

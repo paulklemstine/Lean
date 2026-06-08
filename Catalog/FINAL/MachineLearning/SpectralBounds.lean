@@ -1,1 +1,1 @@
-../../MachineLearning/SpectralBounds.lean
+../../MachineLearning/Generalization/SpectralBounds.lean

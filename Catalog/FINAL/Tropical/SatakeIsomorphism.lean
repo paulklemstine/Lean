@@ -1,1 +1,1 @@
-../../Tropical/SatakeIsomorphism.lean
+../../Tropical/Langlands/SatakeIsomorphism.lean

@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/AlmostSimplePressure.lean
+../../Bridges/AlmostSimplePressure.lean

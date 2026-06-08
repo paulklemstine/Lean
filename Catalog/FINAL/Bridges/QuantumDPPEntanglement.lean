@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/QuantumDPPEntanglement.lean
+../../Bridges/QuantumDPPEntanglement.lean

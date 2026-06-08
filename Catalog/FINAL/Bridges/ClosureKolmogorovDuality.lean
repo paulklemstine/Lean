@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Computation/ClosureKolmogorovDuality.lean
+../../Bridges/ClosureKolmogorovDuality.lean

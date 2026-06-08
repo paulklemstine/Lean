@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/MConvexCompression.lean
+../../Bridges/MConvexCompression.lean

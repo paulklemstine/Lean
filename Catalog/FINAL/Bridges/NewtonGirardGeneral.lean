@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/NewtonGirardGeneral.lean
+../../Bridges/NewtonGirardGeneral.lean

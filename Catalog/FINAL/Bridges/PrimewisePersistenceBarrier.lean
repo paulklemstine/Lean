@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Cryptography/PrimewisePersistenceBarrier.lean
+../../Bridges/PrimewisePersistenceBarrier.lean

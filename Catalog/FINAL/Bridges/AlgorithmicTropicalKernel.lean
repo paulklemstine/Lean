@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalBridge/AlgorithmicTropicalKernel.lean
+../../Bridges/AlgorithmicTropicalKernel.lean

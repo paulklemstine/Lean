@@ -1,1 +1,1 @@
-../../MachineLearning/Core.lean
+../../MachineLearning/AdelicSync/Core.lean

@@ -1,1 +1,0 @@
-../../Catalog/Cryptography/LWE/HardnessReduction.lean

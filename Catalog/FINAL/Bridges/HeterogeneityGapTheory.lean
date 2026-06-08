@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/HeterogeneityGapTheory.lean
+../../Bridges/HeterogeneityGapTheory.lean

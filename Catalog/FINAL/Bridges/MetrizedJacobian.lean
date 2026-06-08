@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalBridge/MetrizedJacobian.lean
+../../Bridges/MetrizedJacobian.lean

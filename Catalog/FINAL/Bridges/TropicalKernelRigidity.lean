@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalBridge/TropicalKernelRigidity.lean
+../../Bridges/TropicalKernelRigidity.lean

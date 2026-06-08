@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/LorentzianConditionNumber.lean
+../../Bridges/LorentzianConditionNumber.lean

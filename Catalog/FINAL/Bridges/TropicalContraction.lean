@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Tropical/TropicalContraction.lean
+../../Bridges/TropicalContraction.lean

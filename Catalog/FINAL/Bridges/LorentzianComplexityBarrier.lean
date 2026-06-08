@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/LorentzianComplexityBarrier.lean
+../../Bridges/LorentzianComplexityBarrier.lean

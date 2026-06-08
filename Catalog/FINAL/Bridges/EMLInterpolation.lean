@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/EMLInterpolation.lean
+../../Bridges/EMLInterpolation.lean

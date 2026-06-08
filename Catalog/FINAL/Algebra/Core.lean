@@ -1,1 +1,1 @@
-../../Algebra/Core.lean
+../../Algebra/BerggrenLorentz/Core.lean

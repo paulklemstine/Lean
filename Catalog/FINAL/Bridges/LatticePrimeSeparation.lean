@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/LatticePrimeSeparation.lean
+../../Bridges/LatticePrimeSeparation.lean

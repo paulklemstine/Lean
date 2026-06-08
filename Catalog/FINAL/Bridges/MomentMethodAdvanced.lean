@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/CayleyExpander/MomentMethodAdvanced.lean
+../../Bridges/MomentMethodAdvanced.lean

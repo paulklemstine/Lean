@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalShadowEntropy.lean
+../../Bridges/TropicalShadowEntropy.lean

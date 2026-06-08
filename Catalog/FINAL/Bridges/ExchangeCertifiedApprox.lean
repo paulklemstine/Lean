@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/ExchangeCertifiedApprox.lean
+../../Bridges/ExchangeCertifiedApprox.lean

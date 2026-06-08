@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/MatroidHodgeDPP.lean
+../../Bridges/MatroidHodgeDPP.lean

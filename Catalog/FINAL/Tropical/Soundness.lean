@@ -1,1 +1,1 @@
-../../Tropical/Soundness.lean
+../../Tropical/KnuthBendix/Soundness.lean

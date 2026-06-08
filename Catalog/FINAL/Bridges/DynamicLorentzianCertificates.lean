@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/DynamicLorentzianCertificates.lean
+../../Bridges/DynamicLorentzianCertificates.lean

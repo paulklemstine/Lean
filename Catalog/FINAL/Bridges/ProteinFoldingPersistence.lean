@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/ProteinFoldingPersistence.lean
+../../Bridges/ProteinFoldingPersistence.lean

@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/SubmodularCurvature.lean
+../../Bridges/SubmodularCurvature.lean

@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/KeplerDefs.lean
+../../Bridges/KeplerDefs.lean

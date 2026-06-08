@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalPersistentHomology.lean
+../../Bridges/TropicalPersistentHomology.lean

@@ -1,1 +1,1 @@
-../../Bridges/Duality.lean
+../../Bridges/BerggrenIsogeny/Duality.lean

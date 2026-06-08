@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/AlgebraEMLPhysics/FilteredClosureReconstruction.lean
+../../Bridges/FilteredClosureReconstruction.lean

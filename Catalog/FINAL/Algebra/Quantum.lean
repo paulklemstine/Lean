@@ -1,1 +1,1 @@
-../../Algebra/Quantum.lean
+../../Algebra/Factoring/Quantum.lean

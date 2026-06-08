@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/LorentzianGroundState.lean
+../../Bridges/LorentzianGroundState.lean

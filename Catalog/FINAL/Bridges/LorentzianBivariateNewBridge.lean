@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/LorentzianBivariateNewBridge.lean
+../../Bridges/LorentzianBivariateNewBridge.lean

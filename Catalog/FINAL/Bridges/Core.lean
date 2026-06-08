@@ -1,1 +1,1 @@
-../../Bridges/Core.lean
+../../Bridges/ArithmeticLearningTheory/Core.lean

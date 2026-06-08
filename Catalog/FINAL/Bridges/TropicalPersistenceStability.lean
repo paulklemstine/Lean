@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalBridge/TropicalPersistenceStability.lean
+../../Bridges/TropicalPersistenceStability.lean

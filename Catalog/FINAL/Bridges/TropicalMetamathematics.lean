@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Logic/TropicalMetamathematics.lean
+../../Bridges/TropicalMetamathematics.lean

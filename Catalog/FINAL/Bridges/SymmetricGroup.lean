@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/CayleyExpander/SymmetricGroup.lean
+../../Bridges/SymmetricGroup.lean

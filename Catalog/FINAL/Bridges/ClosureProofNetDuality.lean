@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/EMLLogic/ClosureProofNetDuality.lean
+../../Bridges/ClosureProofNetDuality.lean

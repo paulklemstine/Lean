@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/LorentzianDistanceCertificate.lean
+../../Bridges/LorentzianDistanceCertificate.lean

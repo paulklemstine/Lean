@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/SubdIntegralityGap.lean
+../../Bridges/SubdIntegralityGap.lean

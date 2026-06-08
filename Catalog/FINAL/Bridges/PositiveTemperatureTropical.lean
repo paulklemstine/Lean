@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/PositiveTemperatureTropical.lean
+../../Bridges/PositiveTemperatureTropical.lean

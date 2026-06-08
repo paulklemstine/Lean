@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalBridge/OverlapClassRigidity.lean
+../../Bridges/OverlapClassRigidity.lean

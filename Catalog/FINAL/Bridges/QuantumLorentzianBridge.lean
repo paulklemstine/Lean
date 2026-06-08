@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/QuantumLorentzianBridge.lean
+../../Bridges/QuantumLorentzianBridge.lean

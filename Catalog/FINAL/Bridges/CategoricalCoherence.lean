@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/CategoricalCoherence.lean
+../../Bridges/CategoricalCoherence.lean

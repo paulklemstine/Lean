@@ -1,1 +1,1 @@
-../../Physics/Theorems.lean
+../../Physics/CategoricalPhysics/Theorems.lean

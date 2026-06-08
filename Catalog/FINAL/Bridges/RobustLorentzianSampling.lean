@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/RobustLorentzianSampling.lean
+../../Bridges/RobustLorentzianSampling.lean

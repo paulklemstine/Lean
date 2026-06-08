@@ -1,1 +1,1 @@
-../../Tropical/IdempotentSemiring/Defs.lean
+../../Tropical/ArithmeticUniversality/Defs.lean

@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/ValuatedMConvexDifferentiation.lean
+../../Bridges/ValuatedMConvexDifferentiation.lean

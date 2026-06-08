@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Tropical/Security/FactorRecoveryReduction.lean
+../../Bridges/FactorRecoveryReduction.lean

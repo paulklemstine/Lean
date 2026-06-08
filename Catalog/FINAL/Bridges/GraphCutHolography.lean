@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/GraphCutHolography.lean
+../../Bridges/GraphCutHolography.lean

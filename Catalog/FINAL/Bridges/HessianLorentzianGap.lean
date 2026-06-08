@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/HessianLorentzianGap.lean
+../../Bridges/HessianLorentzianGap.lean

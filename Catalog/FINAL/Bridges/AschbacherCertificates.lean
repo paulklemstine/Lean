@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/AschbacherCertificates.lean
+../../Bridges/AschbacherCertificates.lean

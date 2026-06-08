@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/RandomTransversalThermodynamics.lean
+../../Bridges/RandomTransversalThermodynamics.lean

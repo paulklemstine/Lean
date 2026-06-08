@@ -1,13 +1,22 @@
 {
   "nodes": [
     {
+      "id": "self_modifying_code_that_cannot_be_stopped",
+      "title": "Self-Modifying Code That Cannot Be Stopped: Undecidability, Simulation, and Alignment Barriers",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2025-01-01",
+      "hue": 292
+    },
+    {
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
       "title": "Provability Logic GL: Fixed Points, Gödel Elements, and Incompleteness in Lattice Algebra",
       "domain": "Logic",
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-08",
-      "hue": 272
+      "hue": 95
     },
     {
       "id": "rigorous_algebraic_foundations_for_probability_t",

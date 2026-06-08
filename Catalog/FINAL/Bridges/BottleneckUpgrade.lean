@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/BottleneckUpgrade.lean
+../../Bridges/BottleneckUpgrade.lean

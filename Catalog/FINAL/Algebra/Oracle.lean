@@ -1,1 +1,1 @@
-../../Algebra/Oracle.lean
+../../Algebra/Factoring/Oracle.lean

@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/LeeYangZeroStability.lean
+../../Bridges/LeeYangZeroStability.lean

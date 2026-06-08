@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Pythagorean/TropicalMorse/KWLSeparation.lean
+../../Bridges/KWLSeparation.lean

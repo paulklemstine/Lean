@@ -1,1 +1,1 @@
-../../Bridges/RateDistortion.lean
+../../Bridges/FiniteInfoTheory/RateDistortion.lean

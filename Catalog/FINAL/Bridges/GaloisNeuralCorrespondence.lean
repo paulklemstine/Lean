@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/GaloisNeuralCorrespondence.lean
+../../Bridges/GaloisNeuralCorrespondence.lean

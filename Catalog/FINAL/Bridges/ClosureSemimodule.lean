@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/ClosureMorita/ClosureSemimodule.lean
+../../Bridges/ClosureSemimodule.lean

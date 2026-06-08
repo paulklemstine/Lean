@@ -1,1 +1,1 @@
-../../Pythagorean/Core.lean
+../../Pythagorean/ArithmeticPRG/Core.lean

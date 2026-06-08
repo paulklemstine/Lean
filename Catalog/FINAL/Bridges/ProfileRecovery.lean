@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Logic/ProfileRecovery.lean
+../../Bridges/ProfileRecovery.lean

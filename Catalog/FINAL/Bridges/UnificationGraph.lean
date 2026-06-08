@@ -1,1 +1,1 @@
-../../Bridges/Catalog/Bridges/ArchitectureOfReality/UnificationGraph.lean
+../../Bridges/UnificationGraph.lean
