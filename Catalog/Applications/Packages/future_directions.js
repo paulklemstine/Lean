@@ -213,7 +213,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "That Fux's first-species counterpoint rules, when formali"
   },
   {
-    "consumed_by_exp_id": "07ee0316",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Non-Archimedean Probability Theory\n\n## Synthesis\n\nThis research cycle established rigorous algebraic foundations for probability theory in non-Archimedean ordered fields. The central discovery is the **exact characterization**: a linearly ordered field admits infinitesimal probabilities (positive \u03b5 with n\u00b7\u03b5 < 1 for all n \u2208 \u2115) if and only if it is non-Archimedean (Theorem `non_archimedean_iff_infinitesimal_exists`). This transforms the question of infinitesimal probability from a philosophical curiosity into a precise algebraic condition.\n\nThe most promising cross-domain connection emerged between the **measure positivity bridge** (Theorem `probability_positivity_from_same_sign`) and the **Lorentzian anti-cancellation principle** from the catalog (`sum_ne_zero_of_same_sign_and_exists_ne_zero`). Both express the same deep fact \u2014 sums of same-sign terms cannot cancel \u2014 but in different mathematical contexts. The probability interpretation reveals that this algebraic principle is exactly what guarantees that positive-weight measures are faithful: nonempty sets always have positive measure.\n\nThe highest breakthrough potential lies in **Direction 1** (Hyperfinite Measure Completion), which would bridge finite additivity to a genuine probability measure integrating to 1 over a \"hyperfinite\" space. This requires developing surreal or hyperreal integration theory, connecting to Loeb's measure construction from nonstandard analysis. Success here would provide a complete foundation for infinitesimal probability that resolves the dart-throwing paradox and has implications for Bayesian epistemology and quantum foundations.\n\n---\n\n### Direction 1: Hyperfinite Measure Completion \u2014 From Sub-Probability to Full Probability\n\n**Conjecture**: In a non-Archimedean ordered field F, for any positive infinitesimal \u03b5 and any hyperfinite cardinal \u03ba (a non-standard natural number greater than all standard naturals), the product \u03ba \u00b7 \u03b5 can equal exactly 1 if \u03b5 = \u03ba\u207b\u00b9. Formally: for any non-Archimedean F containing an element \u03c9 > n for all n \u2208 \u2115, the uniform measure assigning weight \u03c9\u207b\u00b9 to each of \u03c9 elements sums to exactly 1. This would complete the sub-probability of our Theorem 6.1 to a full probability measure.\n\n**Test**: Formalize \"hyperfinite type\" as a type whose cardinality is a non-standard natural number in F. Prove that \u03c9 \u00b7 (\u03c9\u207b\u00b9) = 1 in F (this is trivially true algebraically but requires careful formalization of what \"\u03c9 elements\" means type-theoretically). The key challenge is defining a Finset-like object of cardinality \u03c9 in Lean.\n\n**Impact**: If true, this provides a complete, rigorous construction of a non-Archimedean probability measure where every point has equal positive (infinitesimal) probability and the total is exactly 1 \u2014 resolving the original conjecture. If the formalization obstacles prove insurmountable, the failure would reveal fundamental limitations of type-theoretic foundations for non-standard objects.\n\n**Catalog References**: `Novelty/SurrealProbability.lean` (theorems `infinitesimal_sub_probability`, `non_archimedean_iff_infinitesimal_exists`), `FINAL/Pythagorean/LorentzianAggregateAntiCancel.lean` (`sum_ne_zero_of_same_sign_and_exists_ne_zero`)\n\n**Proof Strategy**: (1) Define a \"hyperfinite Finset\" abstraction parameterized by a non-standard natural in F. (2) Prove the algebraic identity \u03c9 \u00b7 \u03c9\u207b\u00b9 = 1 in any field. (3) Bridge the type-theoretic gap by encoding the hyperfinite set as Fin n for an abstract n : \u2115 satisfying the right properties, then use `uniform_finmeasure_total`. (4) The main challenge is that n is not a *specific* natural but an element of F cast from \u2115 \u2014 handle via universally quantified statements.\n\n**Domain Bridges**: Non-Archimedean algebra \u2194 Measure theory \u2194 Nonstandard analysis (Loeb measures)\n\n**Lineage**: Direct extension of `infinitesimal_sub_probability` and `non_archimedean_exceeds_any_finite_cover` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Non-Archimedean Conditional Probability and Bayesian Inference\n\n**Conjecture**: In a non-Archimedean probability space where individual points have infinitesimal probability \u03b5, conditional probability P(A|{x}) = P(A \u2229 {x})/P({x}) is well-defined and equals the indicator function 1_A(x). This resolves the Borel-Kolmogorov paradox for point conditioning.\n\n**Test**: Define conditional probability as the ratio \u03bc(A \u2229 B)/\u03bc(B) in a non-Archimedean field (where \u03bc(B) = \u03b5 \u2260 0, so division is valid). Prove that P(A|{x}) = 1 if x \u2208 A and P(A|{x}) = 0 if x \u2209 A. This requires the field to have well-defined division by infinitesimals.\n\n**Impact**: If true, this provides the first rigorous framework for conditional probability on individual points \u2014 something impossible in standard measure theory (where P({x}) = 0 makes P(A|{x}) undefined). This has direct applications in Bayesian epistemology where one wants to condition on specific observations.\n\n**Catalog References**: `Novelty/SurrealProbability.lean` (theorems `finmeasure_disjoint_additive`, `FinProbMeasure`)\n\n**Proof Strategy**: (1) Define conditional measure \u03bc(A|B) = \u03bc(A \u2229 B)/\u03bc(B) for \u03bc(B) \u2260 0 in a field F. (2) For uniform measure with weight \u03b5, \u03bc({x}) = \u03b5 \u2260 0. (3) \u03bc(A \u2229 {x}) = \u03b5 if x \u2208 A, 0 otherwise. (4) Therefore P(A|{x}) = \u03b5/\u03b5 = 1 or 0/\u03b5 = 0. (5) Prove this is itself a probability measure (normalized, additive).\n\n**Domain Bridges**: Non-Archimedean algebra \u2194 Bayesian inference \u2194 Philosophy of probability\n\n**Lineage**: Builds on `finmeasure_disjoint_additive` and `FinProbMeasure` structure from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: Tropical Probability \u2014 The Min-Plus Limit of Non-Archimedean Measures\n\n**Conjecture**: As the infinitesimal parameter \u03b5 \u2192 0 in a family of non-Archimedean probability measures, the logarithmic transformation -log(\u03bc_\u03b5) converges to a tropical (min-plus) probability structure where \"probability\" is replaced by \"cost\" and addition is replaced by minimum. Specifically: for uniform measures with weight \u03b5^{v(x)} where v : \u03b1 \u2192 \u2115 is a \"valuation,\" the tropical limit assigns cost v(x) to point x and the \"total probability\" becomes min_{x \u2208 \u03b1} v(x).\n\n**Test**: Define a family of measures \u03bc_\u03b5 parameterized by \u03b5 \u2208 (0,1) \u2282 \u211d, with \u03bc_\u03b5({x}) = \u03b5^{v(x)} for a fixed valuation v. Compute the limit of -log(\u03bc_\u03b5(S))/log(\u03b5) as \u03b5 \u2192 0 for subsets S, and verify it equals min_{x \u2208 S} v(x). This connects non-Archimedean probability to tropical geometry.\n\n**Impact**: If true, this establishes a formal bridge between non-Archimedean probability and tropical mathematics. The \"tropicalization\" of probability would give a new interpretation of tropical semirings as degenerate probability spaces, connecting to the existing tropical optimization work in the catalog.\n\n**Catalog References**: `FINAL/Tropical/TropicalAdditiveCombinatorics.lean` (`no_finite_bound_if_counterexample_exists`), `FINAL/Tropical/GL3FiniteTestFamily.lean` (`finite_test_family_zero_GL3`), `Novelty/SurrealProbability.lean`\n\n**Proof Strategy**: (1) Define the parametric family of measures. (2) Use the fact that for 0 < \u03b5 < 1, \u03b5^n is decreasing in n. (3) Compute the sum \u03a3_x \u03b5^{v(x)} and show that as \u03b5 \u2192 0, the dominant term is the one with smallest v(x). (4) Take the logarithmic limit. (5) Verify the resulting structure satisfies tropical semiring axioms (min for addition, + for multiplication).\n\n**Domain Bridges**: Non-Archimedean probability \u2194 Tropical geometry \u2194 Optimization theory\n\n**Lineage**: Bridges this cycle's non-Archimedean probability with the catalog's tropical mathematics threads.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 4: Strict Monotonicity as a Faithfulness Criterion for Abstract Measures\n\n**Conjecture**: The strict monotonicity property (Theorem `probability_strict_mono_of_positive_weights`: S \u2282 T implies \u03bc(S) < \u03bc(T) for positive weights) characterizes \"faithful\" measures among finitely additive measures on finite types. Specifically: a finitely additive measure \u03bc on a finite type satisfies strict monotonicity for proper subsets if and only if \u03bc({x}) > 0 for all x. The backward direction is our Theorem 5.3; the forward direction would show faithfulness is necessary.\n\n**Test**: Prove the converse: if \u03bc satisfies strict monotonicity (S \u2282 T \u27f9 \u03bc(S) < \u03bc(T)) for all pairs, then \u03bc(x) > 0 for all x \u2208 \u03b1. This should follow by considering S = T \\ {x} \u2282 T and deducing \u03bc(T) - \u03bc(T \\ {x}) = \u03bc({x}) > 0.\n\n**Impact**: If true, this gives an elegant characterization of faithful measures purely in terms of a monotonicity property, without reference to individual weights. This connects measure theory to order theory and lattice theory, where monotonicity is a fundamental concept.\n\n**Catalog References**: `Novelty/SurrealProbability.lean` (theorems `probability_strict_mono_of_positive_weights`, `probability_positivity_from_same_sign`), `FINAL/Pythagorean/LorentzianAggregateAntiCancel.lean`\n\n**Proof Strategy**: (1) Assume strict monotonicity for all S \u2282 T. (2) For any x \u2208 \u03b1, consider T = {x} and S = \u2205. (3) By strict monotonicity, \u03bc(\u2205) < \u03bc({x}), so 0 < \u03bc({x}). (4) Formalize this simple argument. (5) State the full iff characterization.\n\n**Domain Bridges**: Measure theory \u2194 Order theory \u2194 Lattice theory\n\n**Lineage**: Direct extension of `probability_strict_mono_of_positive_weights` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Non-Archimedean Expected Value and the St. Petersburg Paradox\n\n**Conjecture**: The St. Petersburg paradox (a game with infinite expected value in \u211d) has a well-defined, finite surreal expected value when computed with non-Archimedean probabilities. Specifically: if the game pays 2^n with probability 2^{-n} for each n, and we use a non-Archimedean probability space where these probabilities are genuine (not limits), the expected value E = \u03a3 2^n \u00b7 2^{-n} = \u03a3 1 diverges in \u211d but can be assigned a specific hyperfinite surreal value \u03c9 in a non-Archimedean field.\n\n**Test**: Define the truncated St. Petersburg game for n rounds with non-Archimedean probabilities. Show that the expected value at round N is N (a natural number), and in the hyperfinite limit (N = \u03c9), the expected value is \u03c9 \u2014 a well-defined surreal number. Verify that this expected value, while infinite, is *specific* (not \"infinity\" but a particular surreal number), enabling meaningful comparisons between different gambles.\n\n**Impact**: If true, this resolves one of the oldest paradoxes in probability theory using non-Archimedean methods. The resolution is novel: the expected value is not finite, but it is *specific* \u2014 a definite surreal number \u03c9, not just \"\u221e.\" This enables comparing the St. Petersburg game to other infinite-expectation gambles.\n\n**Catalog References**: `Novelty/SurrealProbability.lean` (theorems `uniform_finmeasure_total`, `non_archimedean_iff_infinitesimal_exists`), `Catalog/Novelty/CollatzSpectral/Theorems.lean`\n\n**Proof Strategy**: (1) Define the truncated St. Petersburg payoff function p(n) = 2^n for n \u2208 Fin(N). (2) Define probabilities w(n) = 2^{-n} / (1 - 2^{-N}) (normalized). (3) Compute E_N = \u03a3 p(n) \u00b7 w(n). (4) Show that as N \u2192 \u03c9 (hyperfinite), E_N \u2192 \u03c9. (5) This requires defining geometric sums in a non-Archimedean field.\n\n**Domain Bridges**: Non-Archimedean probability \u2194 Decision theory \u2194 Game theory\n\n**Lineage**: Builds on `uniform_finmeasure_total` and the non-Archimedean framework from this cycle.\n\n**Ambition**: extension\n",
     "domains": [
       "Algebra",
@@ -223,7 +223,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "22827c52",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-06T07:09:04.039795+00:00",
     "title": "Rigorous algebraic foundations for probability t"
   },
@@ -843,7 +843,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "One-Way Functions: Existence and Hierarchy"
   },
   {
-    "consumed_by_exp_id": "2ea1a6d3",
+    "consumed_by_exp_id": "",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domains": [
       "Cryptography",
@@ -853,7 +853,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
   },
@@ -1458,7 +1458,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Reflective Operator Algebras (ROA)**, a lattice"
   },
   {
-    "consumed_by_exp_id": "ed948339",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Category Theory as the DNA of Mathematics\n\n## Synthesis\n\nThis research cycle established a formal framework for understanding mathematical theories as organisms with genetic codes, using monads as genomes and their Eilenberg-Moore algebras as phenotypes. The key structural insight is that the *composition* of adjunctions (theory mutations) produces a nested interleaving of monads rather than a simple product, as captured by the Composed Monad Factorization theorem. This suggests that the space of mathematical theories has a richer evolutionary structure than a simple lattice of inclusions.\n\nThe most promising cross-domain connection from this cycle is the bridge between our genome framework and the existing Catalog results on Lawvere thermodynamic Galois connections (`derivability_closed_iff_theory_of_observable`). That result shows that derivability in a theory forms a Galois connection with observability\u2014which in our framework corresponds to an adjunction between the \"genotype space\" (derivable consequences) and the \"phenotype space\" (observable models). Pursuing this connection could unify theory rewriting (Knuth-Bendix), model theory (Morita equivalence), and information-theoretic bounds (derivability) under a single categorical framework.\n\nThe highest breakthrough potential lies in Direction 1 (Higher Genome Theory), because extending from 1-monads to 2-monads would capture \"epigenetic\" modifications\u2014changes to theory expression without changing the underlying axioms\u2014which is a phenomenon observed in mathematical practice but not yet formalized.\n\n---\n\n### Direction 1: Higher Genome Theory \u2014 2-Monads as Epigenetic Codes\n\n**Conjecture**: For every 2-monad T on a 2-category C, the 2-category of T-algebras admits a canonical \"epigenetic\" stratification: strict algebras form a reflective sub-2-category of pseudo-algebras, which in turn form a reflective sub-2-category of lax algebras. Furthermore, the inclusion strict \u21aa pseudo preserves and reflects Morita equivalence, while the inclusion pseudo \u21aa lax does not.\n\n**Test**: Formalize 2-monads in Lean 4 using Mathlib's bicategory infrastructure. Define the three levels of algebras (strict, pseudo, lax) for a specific 2-monad (e.g., the monad for monoidal categories on Cat). Prove or disprove that the inclusion of strict algebras into pseudo-algebras reflects Morita equivalence. A counterexample for the lax case would be equally informative.\n\n**Impact**: If true, this would formalize the informal observation that \"relaxing coherence conditions changes the theory\" as a precise failure of Morita invariance. It would provide the first formal framework for \"epigenetic\" theory modification\u2014changing how axioms are enforced without changing the axioms themselves.\n\n**Catalog References**: `Novelty/CategoryGenome/Core.lean` (TheoryGenome.MoritaEquiv, TheoryGenome.genome_determines_models), `Bridges/KnuthBendixCompletion.lean` (sequence_preserves_theory)\n\n**Proof Strategy**: (1) Formalize the 2-category of 2-monads using Mathlib's `CategoryTheory.Bicategory`. (2) Define `StrictAlgebra`, `PseudoAlgebra`, and `LaxAlgebra` for a 2-monad. (3) Construct the inclusion 2-functors. (4) For the positive direction (strict \u21aa pseudo reflects Morita equiv), use the coherence theorem for pseudo-algebras. (5) For the negative direction (pseudo \u21aa lax doesn't), construct a specific counterexample using the 2-monad for monoidal categories.\n\n**Domain Bridges**: Category Theory \u2194 Algebraic Topology (coherence corresponds to higher homotopy data); Category Theory \u2194 Type Theory (strictness levels correspond to definitional vs propositional equality)\n\n**Lineage**: Builds on this cycle's Morita equivalence framework and genome mutation pullback functor.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Genomic Complexity \u2014 Minimal Monad Representatives\n\n**Conjecture**: Within each Morita equivalence class of finitely presented monads on Set, there exists a unique (up to isomorphism) \"minimal genome\"\u2014a monad with the fewest generating operations. Furthermore, the number of generating operations of the minimal genome is a Morita invariant that equals the number of indecomposable projective objects in the algebra category.\n\n**Test**: Compute minimal representatives for the Morita classes of: (a) the free monoid monad (expected: 1 generator, the binary operation); (b) the free group monad (expected: 2 generators); (c) Mat\u2082(\u2124)-modules vs \u2124-modules (known Morita equivalent, check generator counts). Formalize the claim that the generator count equals the number of indecomposable projectives.\n\n**Impact**: If true, this gives a computable Morita invariant and a canonical \"simplest presentation\" for any algebraic theory. If false, the failure mode would reveal which Morita invariants are actually computable.\n\n**Catalog References**: `Novelty/CategoryGenome/Core.lean` (MoritaEquiv, genome_determines_models), `Algebra/KnuthSemifieldNuclei.lean` (isField_iff_all_ranks_one)\n\n**Proof Strategy**: (1) Define \"finitely presented monad\" as a monad presented by a finite signature and finite set of equations. (2) Define the \"genomic complexity\" as the minimal number of generating operations. (3) Relate this to the representation-theoretic invariant (indecomposable projectives) using the Morita theorem for rings. (4) Generalize from rings to arbitrary monads using Day convolution.\n\n**Domain Bridges**: Category Theory \u2194 Representation Theory (projective modules \u2194 generating operations); Category Theory \u2194 Computational Complexity (minimal presentations \u2194 circuit complexity)\n\n**Lineage**: Builds on this cycle's Morita equivalence framework and the Catalog's `isField_iff_all_ranks_one` result.\n\n**Ambition**: extension\n\n---\n\n### Direction 3: The Thermodynamic Galois Connection as a Genome Mutation\n\n**Conjecture**: The Lawvere thermodynamic Galois connection (formalized in `Bridges/LawvereThermodynamicGalois.lean` as `derivability_closed_iff_theory_of_observable`) is a special case of our genome mutation framework. Specifically, the derivability closure operator is a genome mutation from the \"free theory\" monad to the \"closed theory\" monad, and the Galois connection arises from the induced adjunction between their algebra categories.\n\n**Test**: (1) Extract the monad structure from the derivability closure operator defined in the Catalog. (2) Show it satisfies the GenomeMutation axioms (unit_comm and mul_comm). (3) Apply the genomeMutationPullback functor to obtain the induced functor on algebras. (4) Verify that this recovers the Galois connection from `derivability_closed_iff_theory_of_observable`.\n\n**Impact**: If true, this unifies two apparently separate Catalog results (Lawvere Galois connections and theory genome framework) under a single framework, demonstrating that the genome metaphor has genuine predictive power. It would also show that thermodynamic reasoning about theories (entropy, free energy) can be formalized as properties of genome mutations.\n\n**Catalog References**: `Bridges/LawvereThermodynamicGalois.lean` (derivability_closed_iff_theory_of_observable), `Novelty/CategoryGenome/Core.lean` (GenomeMutation, genomeMutationPullback)\n\n**Proof Strategy**: (1) Import both files into a bridge module. (2) Define the \"derivability monad\" from the closure operator. (3) Verify monad laws using the closure operator axioms (idempotent, monotone, extensive). (4) Construct the GenomeMutation and apply pullback. (5) Show the resulting adjunction coincides with the Galois connection.\n\n**Domain Bridges**: Category Theory \u2194 Thermodynamics (entropy \u2194 Morita complexity); Category Theory \u2194 Logic (derivability \u2194 genome expression)\n\n**Lineage**: Builds on this cycle's genome mutation framework and the existing `derivability_closed_iff_theory_of_observable` result.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Genome Rigidity \u2014 When Does the Phenotype Determine the Genotype?\n\n**Conjecture**: A monad T on a locally finitely presentable category C is uniquely determined (up to isomorphism) by its algebra category T.Algebra together with the forgetful functor T.forget if and only if T is a *finitary* monad (i.e., T preserves filtered colimits). Non-finitary monads can have non-isomorphic presentations with equivalent algebra categories.\n\n**Test**: (1) Formalize finitary monads in Lean 4. (2) For the forward direction, use the fact that finitary monads on LFP categories are determined by their Lawvere theories, and Lawvere theories are recoverable from the algebra category. (3) For the reverse direction, construct a non-finitary monad whose algebra category has a different non-finitary presentation. The ultrafilter monad on Set is a natural candidate for the non-finitary case.\n\n**Impact**: This would give a precise boundary for when \"genome sequencing\" is possible\u2014when we can uniquely recover the theory from its models. The finitary/non-finitary boundary is fundamental in theoretical computer science (finitary = computable).\n\n**Catalog References**: `Novelty/CategoryGenome/Core.lean` (genome_roundtrip_functor_iso, genome_determines_models)\n\n**Proof Strategy**: (1) Define `IsFinitary` for monads using preservation of filtered colimits (Mathlib has `PreservesFilteredColimits`). (2) Show that finitary monads on Set correspond to Lawvere theories. (3) Use the equivalence of Lawvere theories to show uniqueness. (4) For the counterexample, use the ultrafilter monad or a similarly exotic non-finitary construction.\n\n**Domain Bridges**: Category Theory \u2194 Computability Theory (finitary \u2194 computable); Category Theory \u2194 Model Theory (categoricity \u2194 genome rigidity)\n\n**Lineage**: Builds on this cycle's Genome Roundtrip Theorem.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Mutation Dynamics \u2014 Fixed Points and Attractors in Theory Space\n\n**Conjecture**: For a self-adjunction F \u22a3 F (where a functor is both left and right adjoint to itself), the induced monad T = F \u22d9 F satisfies T\u00b2 \u2245 T as monads (the genome is \"idempotent\" under self-mutation). Furthermore, the fixed points of the induced comonad are exactly the \"evolutionary stable\" objects\u2014objects unchanged by the theory mutation.\n\n**Test**: (1) Formalize self-adjunctions (also called Frobenius adjunctions when F \u22a3 F). (2) Compute the induced monad and verify T\u00b2 \u2245 T. (3) Characterize the fixed points. (4) Check this against known examples: the powerset functor P : Set^op \u2192 Set is self-adjoint, giving the monad P\u00b2 on Set^op.\n\n**Impact**: If true, this would identify a class of \"genomically stable\" theories\u2014theories that are invariant under their own mutation operators. These would be the mathematical analogs of evolutionary stable strategies (ESS) in biology.\n\n**Catalog References**: `Novelty/CategoryGenome/Core.lean` (composed_monad_wraps_inner, genomeMutationId), `Algebra/IntegerEnergy/Main.lean` (isNPotent_two_iff_idempotent)\n\n**Proof Strategy**: (1) Use the triangle identities of self-adjunctions to show the monad multiplication is a retract. (2) Show that T\u00b2 \u2192 T \u2192 T\u00b2 composes to the identity, giving T\u00b2 \u2245 T. (3) Characterize fixed points using the idempotent splitting lemma. (4) Connect to `isNPotent_two_iff_idempotent` from the Catalog for the bridge to concrete algebra.\n\n**Domain Bridges**: Category Theory \u2194 Dynamical Systems (fixed points \u2194 attractors); Category Theory \u2194 Game Theory (evolutionary stability \u2194 idempotent monads)\n\n**Lineage**: Builds on this cycle's composed monad factorization and the Catalog's idempotent characterization.\n\n**Ambition**: extension\n",
     "domains": [
       "Algebra",
@@ -1468,7 +1468,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.6,
     "research_mode": "team",
     "source_exp_id": "60d4a2f7",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-06T07:43:49.729874+00:00",
     "title": "Formal framework for understanding mathematica"
   },
@@ -2418,7 +2418,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
   },
   {
-    "consumed_by_exp_id": "2c68c8c4",
+    "consumed_by_exp_id": "",
     "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
     "domains": [
       "Cryptography",
@@ -2428,7 +2428,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.834642+00:00",
     "title": "Zero-Knowledge Proof Systems: Formal Verification of Privacy"
   },
@@ -2448,7 +2448,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
   },
   {
-    "consumed_by_exp_id": "bfb64557",
+    "consumed_by_exp_id": "",
     "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
     "domains": [
       "Physics",
@@ -2458,7 +2458,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.568365+00:00",
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
@@ -2658,7 +2658,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
   },
   {
-    "consumed_by_exp_id": "0e25433a",
+    "consumed_by_exp_id": "",
     "description": "Prove tropical versions of classical convexity theorems: tropical Helly (if every n+1 sets in a tropical Helly family intersect, then all intersect), tropical Caratheodory (every point in the tropical convex hull of S is in the tropical convex hull of at most n+1 points from S), and tropical Radon (every set of n+2 points can be partitioned into two sets with intersecting tropical convex hulls).",
     "domains": [
       "Tropical",
@@ -2668,7 +2668,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.34999999999999987,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.462910+00:00",
     "title": "Tropical Convexity: Helly, Caratheodory, and Radon"
   },
@@ -2808,7 +2808,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rigorous formal framework for holographic proo"
   },
   {
-    "consumed_by_exp_id": "0b56e846",
+    "consumed_by_exp_id": "",
     "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
     "domains": [
       "Physics",
@@ -2818,7 +2818,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.003856+00:00",
     "title": "Hilbert 6: Axiomatization of Physics"
   },
@@ -3123,7 +3123,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
   },
   {
-    "consumed_by_exp_id": "84d24cbc",
+    "consumed_by_exp_id": "",
     "description": "Formalize transreal arithmetic (Anderson's system: R \u222a {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive transreal extension and which collapse.",
     "domains": [
       "Novelty",
@@ -3133,7 +3133,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.870934+00:00",
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
   },
@@ -3198,7 +3198,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
   {
-    "consumed_by_exp_id": "84afe602",
+    "consumed_by_exp_id": "",
     "description": "Formalize retrocausal mathematical structures where implications can flow backward in time. Prove that in a retrocausal Heyting algebra, the law of excluded middle fails but a temporal excluded middle holds. Connect to the CPT theorem in QFT and prove that any retrocausal logic must be intuitionistic.",
     "domains": [
       "Novelty",
@@ -3208,7 +3208,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.994131+00:00",
     "title": "Retrocausal Mathematics: Where Effects Precede Causes"
   },
