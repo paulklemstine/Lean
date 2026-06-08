@@ -368,13 +368,21 @@ class FutureDirectionsManager:
             elif isinstance(data, dict):
                 self._directions = [FutureDirection.from_dict(d) for d in data.get("directions", [])]
                 self._pruned = [FutureDirection.from_dict(d) for d in data.get("pruned", [])]
-                self._cycle_syntheses = data.get("cycle_syntheses", {})
-                self._recent_domain_counts = data.get("recent_domain_counts", {})
-                self._recent_theme_keywords = data.get("recent_theme_keywords", {})
+                
+                raw_syntheses = data.get("cycle_syntheses", {})
+                self._cycle_syntheses = raw_syntheses if isinstance(raw_syntheses, dict) else {}
+                
+                raw_domain_counts = data.get("recent_domain_counts", {})
+                self._recent_domain_counts = raw_domain_counts if isinstance(raw_domain_counts, dict) else {}
+                
+                raw_keywords = data.get("recent_theme_keywords", {})
+                self._recent_theme_keywords = raw_keywords if isinstance(raw_keywords, dict) else {}
         except Exception:
             self._directions = []
             self._pruned = []
             self._cycle_syntheses = {}
+            self._recent_domain_counts = {}
+            self._recent_theme_keywords = {}
         self._dedup_ids()
 
         # Recover stale in_progress directions whose jobs no longer exist
