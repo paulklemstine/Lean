@@ -1,201 +1,296 @@
-# EML Differential Operators: Wronskian Theory and Solution Constraints for ODEs with Exponential-Logarithmic Coefficients
+# EML Differential Equations: Formal Obstructions to Elementary Solutions of Second-Order Linear ODEs
 
 ## Abstract
 
-We introduce the **EML Differential Operator** (`EMLDiffOperator`), a novel mathematical structure for studying second-order linear ODEs of the form y″ + p(x)y′ + q(x)y = 0 where the coefficients p and q belong to the EML (Exponential-Minus-Logarithm) function class. We develop a complete Wronskian theory for this class, proving Abel's identity, Wronskian non-vanishing, and a new doubly-exponential decay theorem specific to EML coefficients. We prove the Sturm separation theorem for interlacing zeros of linearly independent solutions, establish that the Airy and exponential operators have constant Wronskians (a consequence of p = 0), and show that the EML diagonal function grows faster than any polynomial. All results are machine-verified in Lean 4 with Mathlib.
-
-**Keywords:** Differential equations, Wronskian theory, Abel's identity, Sturm separation, EML functions, differential Galois theory, Lean 4
+We formalize the theory connecting second-order linear ordinary differential equations with EML (exponential-monomial-logarithmic) coefficient functions to the solvability of associated Riccati equations. Our main results, formalized in Lean 4 with Mathlib, are: (1) **Abel's Wronskian Identity** — for solutions y₁, y₂ of y'' + p·y' + q·y = 0, the Wronskian satisfies W' = -p·W; (2) **Riccati Reduction** — the quotient derivative y'/y satisfies a first-order Riccati equation; (3) **Airy Polynomial Obstruction** — no polynomial satisfies the Riccati equation w' + w² = x associated to the Airy equation y'' = xy; (4) **Kovacic Case 1 Obstruction** — X is not a perfect square in ℝ[X], ruling out the first case of Kovacic's algorithm; and (5) **EML Differential Closure** — the class of EML functions is closed under differentiation, with explicit structure theorems for logarithmic derivatives and exponential-polynomial products. These results formalize the algebraic core of the classical proof that Airy's equation has no Liouvillian solutions.
 
 ## 1. Introduction
 
-The Exponential-Minus-Logarithm (EML) function eml(x, y) = eˣ − ln(y) arises naturally at the intersection of exponential growth and logarithmic decay. While classical ODE theory focuses on polynomial coefficients (Fuchs theory) or rational coefficients (differential Galois theory), the EML class occupies a distinctive middle ground: the coefficients exhibit mixed exponential-logarithmic growth, leading to solution behavior that is qualitatively different from both the polynomial and rational cases.
+### 1.1 Background
 
-This paper introduces the `EMLDiffOperator` structure and develops its Wronskian theory from first principles. Our key contributions are:
+The question of when a differential equation admits solutions expressible in terms of "elementary" functions has been a central problem in mathematics since Liouville's pioneering work in the 1830s. The EML functions — finite compositions of exponentials, monomials, and logarithms over a base field — form a natural class capturing what mathematicians call "closed-form" solutions.
 
-1. **Abel's Identity** (Theorem 3.1): A complete formalization showing W′(x) = −p(x)W(x) for solutions of any second-order linear ODE.
+For second-order linear ODEs of the form y'' + p(x)·y' + q(x)·y = 0, the differential Galois theory of Kolchin, Singer, and others provides a complete characterization: the equation has a Liouvillian solution if and only if the identity component of its differential Galois group is solvable. Kovacic (1986) made this constructive for rational coefficients.
 
-2. **Wronskian Non-Vanishing** (Theorem 3.2): If the Wronskian is nonzero at any point, it is nonzero everywhere on the connected domain.
+### 1.2 Contributions
 
-3. **EML Wronskian Decay** (Theorem 4.3): When p(x) = eml(x, c), the Wronskian exhibits doubly-exponential decay — a phenomenon unique to the EML class.
+This work formalizes the foundational layer of this theory in Lean 4:
 
-4. **Sturm Separation** (Theorem 5.1): Linearly independent solutions of y″ + q(x)y = 0 have interlacing zeros.
+1. **Abel's Identity** (Theorem 3.1): The Wronskian of two solutions satisfies a first-order linear ODE determined solely by the coefficient p.
 
-5. **Discriminant Phase Transition** (Theorem 6.2): The Airy discriminant Δ(x) = 4x changes sign at x = 0, marking the transition from oscillatory to exponential solution behavior.
+2. **Riccati Reduction** (Theorem 3.2): Solutions of y'' = r·y correspond to solutions of the Riccati equation w' + w² = r.
+
+3. **Airy Riccati Obstruction** (Theorem 4.1): No polynomial in ℝ[X] satisfies w' + w² = X, proved by degree analysis.
+
+4. **EML Differential Closure** (Theorems 5.1-5.4): The logarithmic derivative of products decomposes additively, exponential compositions have explicit derivative structure, and exponential-polynomial products are closed under differentiation.
+
+5. **Growth and Square Obstructions** (Theorems 4.2-4.3): X is not a perfect square in ℝ[X], and √x is not a polynomial function, providing complementary obstructions.
+
+### 1.3 Relation to Prior Work
+
+Our formalization builds upon:
+- The EML function theory from `EML/EMLv17Core.lean` (definitions of eml, emlDiag, sigmaEml)
+- The Schwartz-Zippel and Freivalds results in `Algebra/FreivaldsSchwartzZippel.lean`
+- The Galois theory connections in `Bridges/GaloisNeuralCorrespondence.lean`
+
+We extend the existing `eml_beats_poly_for_towers` result (from `EML/UniversalApproxComplexity.lean`) by showing that the EML advantage has differential-equation-theoretic consequences: EML functions generate ODEs whose solution structure constrains what other EML functions can appear as solutions.
 
 ## 2. Definitions
 
-### 2.1 The EML Function
+### 2.1 EML Functions
 
-**Definition 2.1.** The EML function is defined as:
-$$\text{eml}(x, y) = e^x - \ln(y)$$
-for x ∈ ℝ and y > 0. The diagonal EML is d(z) = eml(z, z) = eᶻ − ln(z).
+**Definition** (EML function). The function eml : ℝ → ℝ → ℝ is defined by
+```
+eml(x, y) = exp(x) - log(y)
+```
+This combines the two fundamental transcendental operations and serves as the basic building block for the EML function class.
 
-The EML function has the following derivative properties:
-- ∂eml/∂x = eˣ (exponential growth in first variable)
-- ∂eml/∂y = −1/y (logarithmic sensitivity in second variable)
+### 2.2 Linear ODEs
 
-### 2.2 The EML Differential Operator
+**Definition** (Second-order linear ODE). A function f satisfies the ODE y'' + p·y' + q·y = 0 at x if
+```
+HasDerivAt (deriv f) (-(p(x) · deriv f x + q(x) · f(x))) x
+```
 
-**Definition 2.2.** An EML Differential Operator consists of:
-- Two continuous functions p, q : ℝ → ℝ (the coefficients)
-- The associated ODE: y″ + p(x)y′ + q(x)y = 0
+**Definition** (Reduced form). A function f satisfies y'' = r·y at x if
+```
+HasDerivAt (deriv f) (r(x) · f(x)) x
+```
 
-A function y is a *solution* on a set S if y and y′ are differentiable on S and the ODE is satisfied pointwise.
+### 2.3 Wronskian and Riccati Substitution
 
-### 2.3 The Wronskian
+**Definition** (Wronskian).
+```
+W(f₁, f₂)(x) = f₁(x) · f₂'(x) - f₂(x) · f₁'(x)
+```
 
-**Definition 2.3.** The Wronskian of two functions y₁, y₂ is:
-$$W(y_1, y_2)(x) = y_1(x) \cdot y_2'(x) - y_2(x) \cdot y_1'(x)$$
+**Definition** (Riccati substitution).
+```
+w(x) = f'(x) / f(x)
+```
 
-### 2.4 The Discriminant
+## 3. Core Results: Abel's Identity and Riccati Reduction
 
-**Definition 2.4.** The discriminant of an operator L is:
-$$\Delta(x) = p(x)^2 - 4q(x)$$
+### 3.1 Abel's Wronskian Identity
 
-### 2.5 The Gauge Transform
+**Theorem 3.1** (Abel's Identity). *Let f₁, f₂ be differentiable functions both satisfying y'' + p·y' + q·y = 0 at x. Then the Wronskian satisfies*
+```
+HasDerivAt W (-p(x) · W(x)) x
+```
 
-**Definition 2.5.** The gauge-transformed potential is:
-$$Q(x) = q(x) - \frac{p'(x)}{2} - \frac{p(x)^2}{4}$$
-This transforms the general ODE into self-adjoint form u″ + Q(x)u = 0 via u = y · exp(½∫p).
+*Proof sketch.* Differentiate W = f₁·f₂' - f₂·f₁' using the product rule:
+```
+W' = f₁'·f₂' + f₁·f₂'' - f₂'·f₁' - f₂·f₁''
+   = f₁·f₂'' - f₂·f₁''
+```
+Substituting f₁'' = -p·f₁' - q·f₁ and f₂'' = -p·f₂' - q·f₂:
+```
+W' = f₁·(-p·f₂' - q·f₂) - f₂·(-p·f₁' - q·f₁)
+   = -p·(f₁·f₂' - f₂·f₁') = -p·W
+```
 
-## 3. Wronskian Theory
+The formal proof in Lean uses `HasDerivAt.mul` for the product rule and `ring` for the algebraic simplification. □
 
-### 3.1 Abel's Identity
+**Remark.** A subtle point: the formal proof does not use the hypotheses that deriv f₁ and deriv f₂ are differentiable at x, because the proof extracts second-derivative information directly from the ODE hypothesis `SatisfiesLinearODE₂`, which provides `HasDerivAt (deriv f)` directly. This is a case where the formalization reveals that the classical statement includes unnecessary hypotheses.
 
-**Theorem 3.1** (Abel's Identity). Let y₁, y₂ be solutions of y″ + p(x)y′ + q(x)y = 0 on an open set S. Then for all x ∈ S:
-$$\frac{d}{dx} W(y_1, y_2)(x) = -p(x) \cdot W(y_1, y_2)(x)$$
+### 3.2 Riccati Reduction
 
-*Proof sketch.* Differentiate W = y₁y₂′ − y₂y₁′:
-$$W' = y_1'y_2' + y_1 y_2'' - y_2'y_1' - y_2 y_1''$$
-The y₁′y₂′ terms cancel. Substituting the ODE relations y₁″ = −py₁′ − qy₁ and y₂″ = −py₂′ − qy₂:
-$$W' = y_1(-py_2' - qy_2) - y_2(-py_1' - qy_1) = -p(y_1 y_2' - y_2 y_1') = -pW \quad \square$$
+**Theorem 3.2** (Riccati Reduction). *Let f satisfy y'' = r(x)·y at x with f(x) ≠ 0. Then w = f'/f satisfies*
+```
+HasDerivAt w (r(x) - w(x)²) x
+```
 
-### 3.2 Wronskian Non-Vanishing
+*Proof sketch.* Apply the quotient rule to w = f'/f:
+```
+w' = (f''·f - (f')²) / f² = (r·f² - (f')²) / f² = r - (f'/f)² = r - w²
+```
 
-**Theorem 3.2.** If S is open and connected, and W(y₁, y₂)(x₀) ≠ 0 for some x₀ ∈ S, then W(y₁, y₂)(x) ≠ 0 for all x ∈ S.
+The formal proof uses `HasDerivAt.div` and algebraic simplification. □
 
-*Proof sketch.* By Abel's identity, W satisfies the linear ODE w′ = −pw. Define φ(x) = exp(∫_{x₀}^x p(t)dt) · W(x). Then φ′ = 0, so φ is constant. Since exp is never zero, W(x) ≠ 0 iff W(x₀) ≠ 0. □
+### 3.3 Structural Properties
 
-### 3.3 Wronskian Algebra
+**Theorem 3.3** (Wronskian antisymmetry). W(f₁, f₂) = -W(f₂, f₁).
 
-The Wronskian satisfies several algebraic identities:
-- **Antisymmetry:** W(y₁, y₂) = −W(y₂, y₁)
-- **Self-vanishing:** W(y, y) = 0
-- **Scaling:** W(cy₁, y₂) = c · W(y₁, y₂)
-- **Linearity:** W(ay₁ + by₂, y₃) = a · W(y₁, y₃) + b · W(y₂, y₃)
+**Theorem 3.4** (Wronskian self-vanishing). W(f, f) = 0.
 
-## 4. EML-Specific Results
+These are proved by direct algebraic manipulation (`ring`).
 
-### 4.1 Constant Wronskian (p = 0)
+## 4. Airy Equation Obstructions
 
-**Theorem 4.1** (Airy Wronskian). For the Airy operator (p = 0, q = −x), the Wronskian of any two solutions is constant.
+### 4.1 No Polynomial Riccati Solutions
 
-**Theorem 4.2** (Exponential Operator Wronskian). For the exponential operator (p = 0, q = −eˣ), the Wronskian is constant.
+**Theorem 4.1** (Main Airy Obstruction). *There exists no polynomial w ∈ ℝ[X] such that w' + w² = X.*
 
-Both follow immediately from Abel's identity with p = 0.
+*Proof.* By case analysis on deg(w):
 
-### 4.3 EML Wronskian Decay
+**Case deg(w) ≤ 1:** Write w = aX + b by `Polynomial.eq_X_add_C_of_natDegree_le_one`. Evaluate at x = -1, 0, 1 to obtain the system:
+- a + a² + b² - 2ab = -1
+- a + b² = 0  
+- a + a² + b² + 2ab = 1
 
-**Theorem 4.3** (EML Wronskian Decay). For the operator with p(x) = eml(x, c) = eˣ − ln(c) and q = 0, the Wronskian of any two solutions tends to 0 as x → ∞.
+These are inconsistent (the first and third give 4ab = 2, the second gives a = -b², and substitution yields a contradiction).
 
-*Proof.* By Abel's identity, W(x) = W(0) · exp(−∫₀ˣ (eᵗ − ln c) dt). The integral ∫₀ˣ eᵗ dt = eˣ − 1 → ∞, so the exponential factor → 0. This produces doubly-exponential decay: W(x) ~ exp(−eˣ), which is faster than any polynomial or single-exponential decay. □
+**Case deg(w) ≥ 2:** The leading coefficient of w² is (leading_coeff w)² ≠ 0 (since ℝ has no zero divisors). Therefore deg(w²) = 2·deg(w) ≥ 4. Since deg(w') ≤ deg(w) - 1 < 2·deg(w), we have deg(w' + w²) = 2·deg(w) ≥ 4 ≠ 1 = deg(X). □
 
-This theorem reveals a distinctive feature of EML coefficients: the doubly-exponential decay of the Wronskian means that linearly independent solutions become "asymptotically dependent" at a rate controlled by the EML function — much faster than any polynomial-coefficient ODE.
+**PEGB Analysis:**
+- **P**roof: Complete Lean 4 proof by degree analysis and evaluation
+- **E**xample: For w = X², we get w' + w² = 2X + X⁴, which has degree 4 ≠ 1
+- **G**eneralization: The same argument shows no polynomial satisfies w' + w² = p(X) for any polynomial p of odd degree
+- **B**oundary: The argument fails for w' + w² = X² (degree 2), which *could* have a degree-1 solution w = aX + b. Indeed w = X - 1/(2X) nearly works.
 
-### 4.4 EML Superpolynomial Growth
+### 4.2 X Is Not a Perfect Square
 
-**Theorem 4.4.** For every n ∈ ℕ, d(z)/zⁿ → ∞ as z → ∞.
+**Theorem 4.2.** *There is no polynomial p ∈ ℝ[X] such that p² = X.*
 
-This follows from the dominance of eˣ over any polynomial, which overcomes the logarithmic subtraction.
+*Proof.* If p² = X, then 2·deg(p) = deg(X) = 1, which is impossible since 2·deg(p) is even. □
 
-### 4.5 Double-Exponential Growth of Solutions
+This obstructs the first case of Kovacic's algorithm, which requires √r(x) to be rational.
 
-**Theorem 4.5.** If y satisfies y″ = eˣy with y(0) > 0 and y′(0) > 0, then y(x) > 0 for all x > 0.
+### 4.3 √x Is Not Polynomial
 
-*Proof.* The second derivative y″ = eˣy is positive whenever y is positive. Starting from positive initial conditions, the solution accelerates away from zero. Any hypothetical first zero would require y′ to become negative, but the ODE forces y′ to be non-decreasing on the positive region, yielding a contradiction. □
+**Theorem 4.3.** *There is no polynomial p ∈ ℝ[X] such that p(x) = √x for all x ≥ 0.*
 
-## 5. Sturm Separation Theory
+*Proof.* If such p exists, then p(x)² = x for all x ≥ 0. Since ℝ[X] elements agreeing on an infinite set are equal, p² = X as polynomials. But deg(p²) is even while deg(X) = 1 is odd. □
 
-### 5.1 Sturm Separation Theorem
+**PEGB Analysis:**
+- **P**roof: Uses the fact that polynomials agreeing on an infinite set are equal, then the degree parity argument
+- **E**xample: √4 = 2, √9 = 3 — these values can't come from a polynomial since a degree-n polynomial is determined by n+1 points
+- **G**eneralization: More generally, x^(p/q) for p/q not a natural number cannot be polynomial. The growth order p/q is a rational non-integer, incompatible with polynomial integer growth
+- **B**oundary: x^(1/2) on [0,∞) *can* be uniformly approximated by polynomials (Weierstrass), but not exactly represented
 
-**Theorem 5.1** (Sturm Separation). Let y₁, y₂ be linearly independent solutions of y″ + q(x)y = 0 on [a, b]. If y₁(a) = y₁(b) = 0 and y₁ > 0 on (a, b), and the Wronskian W(y₁, y₂)(a) ≠ 0, then y₂ has a zero in (a, b).
+## 5. EML Differential Algebra
 
-*Proof sketch.* Since y₁(a) = 0 and y₁ > 0 on (a, b), we have y₁′(a) > 0 and y₁′(b) < 0. The Wronskian W = y₁y₂′ − y₂y₁′ is constant (since p = 0). At x = a: W = −y₂(a)y₁′(a). At x = b: W = −y₂(b)y₁′(b). Since W is constant and y₁′(a) > 0, y₁′(b) < 0, we need y₂(a)y₁′(a) = y₂(b)y₁′(b). This forces y₂(a) and y₂(b) to have opposite signs (or one is zero), and by the intermediate value theorem, y₂ vanishes in (a, b). □
+### 5.1 Logarithmic Derivative Additivity
 
-## 6. Discriminant Analysis
+**Theorem 5.1.** *For differentiable f, g with f(x) ≠ 0, g(x) ≠ 0:*
+```
+(log(f·g))' = f'/f + g'/g
+```
 
-### 6.1 Airy Phase Transition
+This is the infinitesimal version of log(ab) = log(a) + log(b) and underlies the multiplicative-to-additive correspondence in differential Galois theory.
 
-**Theorem 6.1.** For the Airy operator, Δ(x) = 4x. This changes sign at x = 0:
-- For x < 0: Δ < 0 (oscillatory regime — Airy functions oscillate)
-- For x > 0: Δ > 0 (exponential regime — one solution grows, one decays)
+### 5.2 Logarithmic Derivative of Exponential
 
-### 6.2 Exponential Operator Discriminant
+**Theorem 5.2.** *For differentiable f:*
+```
+(exp(f))' / exp(f) = f'
+```
 
-**Theorem 6.2.** For the exponential operator, Δ(x) = 4eˣ > 0 for all x. Solutions never oscillate — the exponential coefficient is too strong.
+This shows that exp maps the additive group of derivatives to the multiplicative group — the basic Galois correspondence in the differential setting.
 
-### 6.3 Gauge Transform
+### 5.3 Exponential-Polynomial Closure
 
-**Theorem 6.3.** For constant-coefficient p:
-$$Q(x) = q(x) - \frac{p_0^2}{4}$$
+**Theorem 5.3.** *For any a ∈ ℝ and differentiable p:*
+```
+(p·exp(a·x))' = (p' + a·p)·exp(a·x)
+```
 
-For the Airy operator (p = 0): Q(x) = −x (already self-adjoint).
+This closure theorem shows that exponential-polynomial products form a stable class under differentiation — the fundamental reason why EML functions appear as solutions to linear ODEs with polynomial coefficients.
 
-## 7. Connection to Differential Galois Theory
+### 5.4 Double Exponential ODE
 
-The EML Wronskian decay theorem (Theorem 4.3) has implications for differential Galois theory. The Wronskian encodes the linear independence structure of the solution space. The doubly-exponential decay W ~ exp(−eˣ) means that:
+**Theorem 5.4.** *The function exp(-exp(x)) satisfies f' = -exp(x)·f.*
 
-1. **The differential Galois group is constrained**: The rapid decay forces the monodromy representation to contract, limiting possible Galois groups.
+This arises from Abel's identity when p(x) = exp(x), demonstrating that EML coefficients produce EML-structured solutions of the Wronskian equation.
 
-2. **Liouvillian solutions are rare**: The growth mismatch between the EML coefficient (which grows as eˣ) and EML solutions (which must satisfy the Wronskian constraint) creates a tension that prevents most Liouvillian extensions.
+**PEGB Analysis:**
+- **P**roof: Chain rule composition of exp(-·) with -exp(·)
+- **E**xample: At x = 0, exp(-e⁰) = exp(-1) ≈ 0.368, and the derivative is -1·0.368 = -0.368
+- **G**eneralization: exp(-∫p) satisfies f' = -p·f for any continuous p; when p is EML of tower height n, this produces EML of height n+1
+- **B**oundary: Infinite EML towers (exp(exp(exp(...)))) are not EML — the class requires finite height
 
-3. **The Airy equation is special**: Its constant Wronskian (Theorem 4.1) is the hallmark of SL(2) symmetry, consistent with the known result that its differential Galois group is SL(2, ℂ).
+## 6. Connections to Differential Galois Theory
 
-## 8. PEGB Analysis
+### 6.1 The Galois Group of the Airy Equation
 
-### Theorem: Abel's Identity (Top-1)
+The differential Galois group of y'' = xy over ℂ(x) is known to be SL(2,ℂ). This group is:
+- **Connected**: SL(2,ℂ) = SL(2,ℂ)⁰
+- **Simple**: It has no proper normal algebraic subgroups
+- **Non-solvable**: Its derived series does not terminate
 
-- **P (Proof):** Complete Lean 4 proof using `HasDerivAt` calculus.
-- **E (Example):** Airy equation (p = 0): W′ = 0, so W is constant. Verified numerically: W varies by < 10⁻¹⁰ over [−10, 10].
-- **G (Generalization):** Extends to any second-order linear ODE, not just EML. The EML specialization gives the decay theorem.
-- **B (Boundary):** When p is not continuous, Abel's identity can fail. The continuity hypothesis is essential.
+By Kolchin's theorem, a linear ODE has Liouvillian solutions iff the identity component G⁰ of its differential Galois group is solvable. Since SL(2,ℂ)⁰ = SL(2,ℂ) is non-solvable, the Airy equation has no Liouvillian solutions.
 
-### Theorem: EML Wronskian Decay (Top-2)
+### 6.2 Kovacic's Algorithm
 
-- **P (Proof):** Lean 4 proof using integral calculus and Filter.Tendsto.
-- **E (Example):** p(x) = eml(x, 2). W(0) = 0.5 → W(5) ≈ 10⁻⁶⁵.
-- **G (Generalization):** Holds for any p with ∫₀^∞ p(t)dt = ∞.
-- **B (Boundary):** If p → 0 (e.g., p(x) = 1/x), the decay is only polynomial, not exponential.
+Our polynomial obstruction theorem (Theorem 4.1) corresponds to **Case 1** of Kovacic's algorithm:
 
-### Theorem: Sturm Separation (Top-3)
+- **Case 1** requires a rational solution of the Riccati equation. Our theorem shows no polynomial solution exists; the full Case 1 check (for rational solutions P/Q) requires showing that pole analysis also fails.
+- **Case 2** requires an algebraic solution of degree 2.
+- **Case 3** requires an algebraic solution of degree 4, 6, or 12.
 
-- **P (Proof):** Lean 4 proof via Wronskian constancy and IVT.
-- **E (Example):** sin(x) and cos(x) solving y″ + y = 0: zeros interlace at nπ and (n+½)π.
-- **G (Generalization):** Extends to Sturm-Liouville operators with weight functions.
-- **B (Boundary):** Fails for linearly dependent solutions (W = 0).
+For the Airy equation, all three cases fail because SL(2,ℂ) has no proper algebraic subgroups of the required types.
 
-### Theorem: Airy Discriminant Sign Change (Top-4)
+### 6.3 Bridge to Classical Galois Theory
 
-- **P (Proof):** Direct computation Δ(x) = 4x.
-- **E (Example):** At x = −1: Δ = −4 (oscillatory Airy Ai). At x = 1: Δ = 4 (exponential Ai).
-- **G (Generalization):** Any operator with q(x) = −f(x) where f changes sign exhibits a phase transition.
-- **B (Boundary):** At x = 0: Δ = 0, the critical point. Solutions transition from oscillatory to exponential behavior.
+The structural parallel is precise: Abel's theorem on the Wronskian is the differential analog of the discriminant in classical Galois theory. Just as the discriminant of a polynomial determines whether its Galois group is contained in the alternating group, the Wronskian determines whether the differential Galois group preserves a particular bilinear form.
 
-## 9. Falsifiable Conjecture
+This bridge connects our results to `Bridges/GaloisNeuralCorrespondence.lean`, which formalizes `prime_degree_divides_galois_order` for classical field extensions. The differential analog would be: the "degree" of a Picard-Vessiot extension divides the order of the differential Galois group.
 
-**Conjecture (EML Liouvillian Obstruction):** For the ODE y″ + eml(x, c)·y = 0, no solution is expressible in terms of elementary functions (exponentials, logarithms, algebraic functions, and their compositions) for any c > 0.
+## 7. Algorithms
 
-**Computational Test:** Kovacic's algorithm can be applied to determine if a second-order linear ODE has Liouvillian solutions. For p = 0, q = eml(x, c) = eˣ − ln(c), compute the three cases of Kovacic's algorithm. If all three cases fail, the conjecture is confirmed for that c.
+### 7.1 Kovacic Algorithm (Case 1)
 
-## 10. Conclusion
+```
+Input: r(x) ∈ ℚ(x), the coefficient in y'' = r(x)·y
+Output: An EML solution or "no elementary solution exists"
 
-The EML Differential Operator framework provides a natural setting for studying ODEs with mixed exponential-logarithmic coefficients. The key insight is that the doubly-exponential Wronskian decay (Theorem 4.3) is a signature phenomenon of the EML class, distinguishing it from both polynomial-coefficient and rational-coefficient ODEs. This decay has profound implications for the structure of the solution space and the constraints on differential Galois groups.
+Step 1: Find the poles of r(x) and their orders
+Step 2: For each pole, compute local exponents
+Step 3: Check if w = ∑(local terms) satisfies w' + w² = r(x)
+Step 4: If yes, return y = exp(∫w). If no, proceed to Case 2.
+```
 
-All 15+ theorems in this paper are machine-verified in Lean 4, providing the highest level of mathematical certainty.
+### 7.2 EML Tower Height Computation
+
+```
+Input: An EML expression e
+Output: The tower height h(e)
+
+h(polynomial) = 0
+h(exp(e)) = h(e) + 1
+h(log(e)) = h(e) + 1
+h(e₁ + e₂) = max(h(e₁), h(e₂))
+h(e₁ · e₂) = max(h(e₁), h(e₂))
+```
+
+## 8. Discussion
+
+### 8.1 What the Formalization Reveals
+
+The formal proofs reveal several insights not obvious from the classical presentation:
+
+1. **Abel's Identity needs fewer hypotheses than expected.** The formal proof of Theorem 3.1 does not use the separate differentiability hypotheses for deriv f₁ and deriv f₂, because the ODE hypothesis already provides HasDerivAt for the second derivative.
+
+2. **The polynomial obstruction is surprisingly robust.** The degree argument works uniformly for all degrees — there is no "exceptional" degree that requires special treatment.
+
+3. **The square root obstruction connects algebra and analysis.** Theorem 4.3 uses the fact that polynomials agreeing on an infinite set are equal (an algebraic result) to bridge to the conclusion about growth orders (an analytic result).
+
+### 8.2 Limitations
+
+Our formalization does not cover:
+- The full rational-function case of Kovacic Case 1 (pole analysis)
+- Cases 2 and 3 of the Kovacic algorithm
+- The complete proof that the Airy equation's Galois group is SL(2,ℂ)
+- The general Kolchin theorem connecting Galois groups to Liouvillian solvability
+
+These would require substantially more Mathlib infrastructure for algebraic groups and differential algebra.
+
+## 9. Future Work
+
+1. **Formalize the Stokes phenomenon**: The Airy function exhibits Stokes lines where its asymptotic expansion changes form. Formalizing this would connect our differential Galois theory to asymptotic analysis.
+
+2. **Extend to Painlevé equations**: The Painlevé equations are the "next level" beyond linear ODEs. Their differential Galois theory involves nonlinear algebraic groups.
+
+3. **Constructive Kovacic**: Implement a verified Kovacic algorithm in Lean that both decides solvability and constructs solutions when they exist.
 
 ## References
 
-1. M. Singer, "Liouvillian solutions of n-th order homogeneous linear differential equations," Amer. J. Math. 103 (1981), 661–682.
-2. J. Kovacic, "An algorithm for solving second order linear homogeneous differential equations," J. Symbolic Comput. 2 (1986), 3–43.
-3. M. van der Put and M. Singer, "Galois Theory of Linear Differential Equations," Grundlehren der mathematischen Wissenschaften 328, Springer, 2003.
-4. W. Wasow, "Asymptotic Expansions for Ordinary Differential Equations," Dover, 1965.
+1. Kovacic, J.J. "An algorithm for solving second order linear homogeneous differential equations." *J. Symbolic Computation* 2 (1986), 3-43.
+
+2. Singer, M. "Liouvillian solutions of n-th order homogeneous linear differential equations." *Amer. J. Math.* 103 (1981), 661-682.
+
+3. van der Put, M.; Singer, M. *Galois Theory of Linear Differential Equations.* Springer, 2003.
+
+4. Kolchin, E.R. *Differential Algebra and Algebraic Groups.* Academic Press, 1973.
+
+5. Catalog results: `EML/EMLv17Core.lean` (eml definitions), `Bridges/GaloisNeuralCorrespondence.lean` (Galois order theorem), `EML/UniversalApproxComplexity.lean` (EML tower complexity).
