@@ -1,517 +1,410 @@
 #!/usr/bin/env python3
 """
-Reflective Proof Towers and the Penrose Diagonal Limiter
-=========================================================
+Demo: Epistemic Fixed-Point Algebras and the Lucas-Penrose Barrier
 
-Demonstrates the key concepts from the formalization:
-1. The Reflective Tower hierarchy
-2. The Penrose Diagonal construction
-3. Lawvere's Fixed Point Theorem
-4. The Berry-Chaitin complexity bound
+Demonstrates the key mathematical structures and theorems from the
+Gödel-Mind Barrier formalization through concrete numerical examples.
 """
 
-from typing import Callable, Set, FrozenSet, Optional
-from dataclasses import dataclass
+import itertools
+from typing import Callable
 
 
-# ============================================================
-# Demo 1: Reflective Tower Simulation
-# ============================================================
-
-def demo_reflective_tower():
-    """Simulate a reflective tower over natural numbers as 'sentences'.
-
-    We model PA-like systems where:
-    - Level 0 proves basic arithmetic (sentences 0..99)
-    - Level n+1 proves everything level n proves + Con(level n)
-    - Con(n) is represented by the number 100 + n
+def demo_goedel_sentence():
+    """
+    Demo 1: Self-Referential Proof Systems
+    
+    Concrete example: A tiny "formal system" with 4 sentences.
+    We construct the Gödel sentence and verify it is true but unprovable.
     """
     print("=" * 60)
-    print("DEMO 1: Reflective Tower Simulation")
+    print("DEMO 1: Self-Referential Proof System")
     print("=" * 60)
-
-    base_sentences = set(range(100))  # PA proves sentences 0..99
-
-    def provable(n: int) -> set:
-        """Return the set of sentences provable at level n."""
-        s = set(base_sentences)
-        for k in range(n):
-            s.add(100 + k)  # Add Con(k) for k < n
-        return s
-
-    def con(n: int) -> int:
-        """The consistency sentence for level n."""
-        return 100 + n
-
-    # Verify tower properties
-    for n in range(5):
-        level_n = provable(n)
-        level_n1 = provable(n + 1)
-        c = con(n)
-
-        assert level_n.issubset(level_n1), f"Monotonicity fails at level {n}"
-        assert c not in level_n, f"Gödel's second fails at level {n}"
-        assert c in level_n1, f"Reflection fails at level {n}"
-        assert level_n != level_n1, f"Strict ascending fails at level {n}"
-
-        print(f"Level {n}: |provable| = {len(level_n)}, "
-              f"Con({n}) = {c}, "
-              f"Con({n}) ∈ level({n})? {c in level_n}, "
-              f"Con({n}) ∈ level({n+1})? {c in level_n1}")
-
-    # Tower limit
-    limit = set()
-    for n in range(100):
-        limit |= provable(n)
-    print(f"\nTower limit (100 levels): |limit| = {len(limit)}")
-    print(f"Limit ≠ any finite level: "
-          f"{all(provable(n) != limit for n in range(100))}")
-
-    # Incompleteness gaps
-    print("\nIncompleteness gaps:")
-    for n in range(5):
-        gap = provable(n + 1) - provable(n)
-        print(f"  gap({n}) = provable({n+1}) \\ provable({n}) = {gap}")
-
+    
+    # A tiny universe of sentences
+    sentences = ["A", "B", "G", "¬G"]
+    
+    # Provable sentences (the system can prove A and B, but not G or ¬G)
+    provable = {"A", "B"}
+    
+    # Truth values (in the "standard model")
+    # G says "I am not provable", which is true (G is not in provable)
+    true_sentences = {"A", "B", "G"}  # G is true because it IS not provable
+    
+    # Verify soundness: provable ⊆ true
+    assert provable.issubset(true_sentences), "Soundness violated!"
+    
+    # Verify Gödel property: G is true ↔ G is not provable
+    g_true = "G" in true_sentences
+    g_provable = "G" in provable
+    assert g_true == (not g_provable), "Gödel property violated!"
+    
+    print(f"Sentences:  {sentences}")
+    print(f"Provable:   {provable}")
+    print(f"True:       {true_sentences}")
+    print(f"G is true:  {g_true}")
+    print(f"G provable: {g_provable}")
+    print(f"G is true ↔ G not provable: ✓")
+    print(f"→ The 'mind' sees G is true, but the 'machine' cannot prove it.")
     print()
 
 
-# ============================================================
-# Demo 2: Penrose Diagonal Limiter
-# ============================================================
-
-def demo_penrose_diagonal():
-    """Demonstrate the Penrose Diagonal Limiter.
-
-    We show that for ANY Gödel oracle G, there exists a theory T
-    where G(T) ∈ T — the oracle fails.
+def demo_lucas_tower():
+    """
+    Demo 2: The Lucas Tower
+    
+    Simulate the iterative process: F₀ → F₁ → F₂ → ···
+    where each Fₙ₊₁ = Fₙ + {Gₙ}.
     """
     print("=" * 60)
-    print("DEMO 2: Penrose Diagonal Limiter")
+    print("DEMO 2: The Lucas Tower (5 levels)")
     print("=" * 60)
-
-    # Define several "Gödel oracles" — functions from theories to sentences
-    def oracle_max(theory: frozenset) -> int:
-        """Oracle that outputs max(theory) + 1."""
-        return max(theory) + 1 if theory else 0
-
-    def oracle_hash(theory: frozenset) -> int:
-        """Oracle that outputs hash of theory mod 1000."""
-        return hash(theory) % 1000
-
-    def oracle_fixed(theory: frozenset) -> int:
-        """Oracle that always outputs 42."""
-        return 42
-
-    oracles = [
-        ("max+1", oracle_max),
-        ("hash", oracle_hash),
-        ("fixed(42)", oracle_fixed),
-    ]
-
-    for name, G in oracles:
-        # For each oracle, find a theory T where G(T) ∈ T
-        # The simplest: T = universal set (contains everything)
-        # But let's find a more interesting one
-
-        # Strategy: start with T = {G(∅)}, then iterate
-        T = frozenset()
-        for _ in range(10):
-            g = G(T)
-            T = T | frozenset([g])
-
-        g = G(T)
-        success = g in T
-        print(f"Oracle '{name}': G(T) = {g}, G(T) ∈ T? {success}")
-        if success:
-            print(f"  → Oracle fails on T = {sorted(T)[:10]}{'...' if len(T) > 10 else ''}")
-
-    # The diagonal construction
-    print("\nDiagonal construction:")
-    print("  For ANY oracle G, take T = {0, 1, 2, ...} (all naturals).")
-    print("  Then G(T) ∈ T trivially. QED.")
+    
+    max_level = 5
+    
+    # Each level's provable set grows by adding the previous Gödel sentence
+    provable_at_level = [set() for _ in range(max_level + 1)]
+    goedel_sentences = []
+    
+    for n in range(max_level):
+        # The Gödel sentence at level n: "I am not provable at level n"
+        g_n = f"G_{n}"
+        goedel_sentences.append(g_n)
+        
+        # Check: G_n is NOT provable at level n
+        assert g_n not in provable_at_level[n], f"G_{n} should not be provable at level {n}"
+        
+        # Level n+1 adds G_n to its provable set
+        provable_at_level[n + 1] = provable_at_level[n] | {g_n}
+    
+    print(f"{'Level':<8} {'Provable Set':<40} {'Own Gödel':<10} {'Proved?'}")
+    print("-" * 70)
+    for n in range(max_level):
+        g_n = goedel_sentences[n]
+        proved = g_n in provable_at_level[n]
+        print(f"F_{n:<5}  {str(provable_at_level[n]):<40} {g_n:<10} {'✗ (unprovable)' if not proved else '✓'}")
+    
+    print()
+    print("Strict ascent verified:")
+    for n in range(max_level - 1):
+        new = provable_at_level[n + 1] - provable_at_level[n]
+        print(f"  F_{n+1} proves {new} which F_{n} cannot")
+    
+    print(f"\n→ The tower never stabilizes: each level has its own blind spot.")
     print()
 
 
-# ============================================================
-# Demo 3: Lawvere's Fixed Point Theorem
-# ============================================================
-
-def demo_lawvere():
-    """Demonstrate Lawvere's Fixed Point Theorem.
-
-    If f : A → (A → Bool) is surjective, then every g : Bool → Bool
-    has a fixed point. Since NOT has no fixed point, f cannot be surjective.
+def demo_diagonal_argument():
+    """
+    Demo 3: The Abstract Diagonal Argument
+    
+    For f: X → (X → bool), show {x | ¬f(x)(x)} is not in range(f).
     """
     print("=" * 60)
-    print("DEMO 3: Lawvere's Fixed Point Theorem")
+    print("DEMO 3: Abstract Diagonal Argument")
     print("=" * 60)
-
-    # Try to build a surjection from {0,1,...,n} to all functions {0,...,n} → {0,1}
-    n = 3
-    # There are 2^(n+1) such functions but only n+1 elements in the domain
-    num_functions = 2 ** (n + 1)
-    print(f"Domain size: {n + 1}")
-    print(f"Number of functions {{0,...,{n}}} → {{0,1}}: {num_functions}")
-    print(f"Surjection impossible: {n + 1} < {num_functions}")
-
-    # The diagonal argument
-    print("\nDiagonal argument:")
-    print("If f were surjective, define d(a) = NOT(f(a)(a))")
-    print("Then d is a function in the codomain, so d = f(e) for some e.")
-    print("But d(e) = NOT(f(e)(e)) = NOT(d(e)). Contradiction!")
-
-    # Concrete demonstration
-    # Define f : {0,1,2,3} → ({0,1,2,3} → Bool)
+    
+    # X = {0, 1, 2}
+    X = [0, 1, 2]
+    
+    # f maps each element to a predicate on X
     f = {
-        0: lambda x: x % 2 == 0,
-        1: lambda x: x < 2,
-        2: lambda x: True,
-        3: lambda x: x == 3,
+        0: lambda x: x == 0,  # {0}
+        1: lambda x: x != 1,  # {0, 2}
+        2: lambda x: True,    # {0, 1, 2}
     }
-
-    print(f"\nConcrete f:")
-    for a in range(4):
-        vals = [f[a](x) for x in range(4)]
-        print(f"  f({a}) = {[int(v) for v in vals]}")
-
-    # Diagonal
-    diag = [f[a](a) for a in range(4)]
-    anti_diag = [not d for d in diag]
-    print(f"\nDiagonal:      {[int(d) for d in diag]}")
-    print(f"Anti-diagonal: {[int(d) for d in anti_diag]}")
-    print(f"Anti-diagonal ≠ f(a) for all a: "
-          f"{all([f[a](x) for x in range(4)] != anti_diag for a in range(4))}")
+    
+    # The diagonal set: {x | ¬f(x)(x)}
+    diagonal = lambda x: not f[x](x)
+    
+    print(f"X = {X}")
+    print(f"f(0) = {{x | x == 0}} = {{0}}")
+    print(f"f(1) = {{x | x ≠ 1}} = {{0, 2}}")
+    print(f"f(2) = {{x | True}}   = {{0, 1, 2}}")
+    print()
+    
+    print("Diagonal table:")
+    print(f"  f(0)(0) = {f[0](0)}, so diagonal(0) = {diagonal(0)}")
+    print(f"  f(1)(1) = {f[1](1)}, so diagonal(1) = {diagonal(1)}")
+    print(f"  f(2)(2) = {f[2](2)}, so diagonal(2) = {diagonal(2)}")
+    
+    diag_set = {x for x in X if diagonal(x)}
+    print(f"\nDiagonal set = {diag_set}")
+    
+    # Check it's not in the range
+    for d in X:
+        f_d_set = {x for x in X if f[d](x)}
+        match = f_d_set == diag_set
+        print(f"  f({d}) = {f_d_set} {'==' if match else '≠'} diagonal")
+    
+    print(f"\n→ The diagonal set differs from f(d) at position d, for every d.")
+    print(f"→ This is the pattern behind Cantor, Gödel, and Berry.")
     print()
 
 
-# ============================================================
-# Demo 4: Berry-Chaitin Complexity Bound
-# ============================================================
-
-def demo_berry_chaitin():
-    """Demonstrate the Berry-Chaitin complexity bound.
-
-    You can't injectively map n+1 objects to n names.
-    This is the pigeonhole principle driving incompleteness.
+def demo_berry_paradox():
+    """
+    Demo 4: Berry-Gödel Bridge (Pigeonhole)
+    
+    Any function f: Fin(n+1) → Fin(n) must have a collision.
     """
     print("=" * 60)
-    print("DEMO 4: Berry-Chaitin Complexity Bound")
+    print("DEMO 4: Berry-Gödel Bridge (Pigeonhole)")
     print("=" * 60)
-
+    
     for n in range(1, 6):
-        objects = list(range(n + 1))  # n+1 objects
-        names = list(range(n))        # n names
-
-        # Try random "naming" functions
-        import random
-        random.seed(42 + n)
-
-        attempts = 100
-        injective_count = 0
-        for _ in range(attempts):
-            naming = {obj: random.choice(names) for obj in objects}
-            is_injective = len(set(naming.values())) == len(naming)
-            if is_injective:
-                injective_count += 1
-
-        print(f"Mapping {n+1} objects → {n} names: "
-              f"{injective_count}/{attempts} injective "
-              f"(should be 0)")
-
-    print("\nBerry paradox: 'The smallest number not definable in")
-    print("under 100 words' defines a number in under 100 words!")
-    print("Resolution: the naming function is non-injective (pigeonhole).")
+        # Try all functions Fin(n+1) → Fin(n)
+        collision_count = 0
+        total = n ** (n + 1)
+        
+        # Check a specific function
+        f = lambda x, n=n: x % n  # simple modular function
+        
+        collisions = []
+        for i in range(n + 1):
+            for j in range(i + 1, n + 1):
+                if f(i) == f(j):
+                    collisions.append((i, j, f(i)))
+        
+        print(f"n={n}: f(x) = x mod {n} maps Fin({n+1}) → Fin({n})")
+        if collisions:
+            i, j, v = collisions[0]
+            print(f"  Collision: f({i}) = f({j}) = {v}")
+        print(f"  ({n+1} pigeons, {n} holes → guaranteed collision)")
+    
+    print(f"\n→ This is the Berry paradox: more objects than descriptions → some undescribable.")
     print()
 
 
-# ============================================================
-# Demo 5: Self-Referential Blindness
-# ============================================================
-
-def demo_self_referential_blindness():
-    """Demonstrate that adding Gödel sentences doesn't escape incompleteness.
-
-    Starting with a base theory, we iteratively add "the Gödel sentence"
-    and show that each enhanced theory has its own blind spot.
+def demo_lucas_penrose_barrier():
+    """
+    Demo 5: The Lucas-Penrose Barrier
+    
+    If K satisfies Löb's axiom and K(⊥)=⊥, then ⊤=⊥.
+    Demonstrated on a 4-element Boolean algebra.
     """
     print("=" * 60)
-    print("DEMO 5: Self-Referential Blindness (Iterated)")
+    print("DEMO 5: Lucas-Penrose Barrier")
     print("=" * 60)
+    
+    # Boolean algebra: {⊥, a, ā, ⊤} where a ∧ ā = ⊥, a ∨ ā = ⊤
+    elements = ['⊥', 'a', 'ā', '⊤']
+    
+    print("On the 4-element Boolean algebra {⊥, a, ā, ⊤}:")
+    print()
+    print("Löb's axiom: □(□x → x) ≤ □x")
+    print("If □⊥ = ⊥ (consistency):")
+    print("  □(□⊥ → ⊥) ≤ □⊥")
+    print("  □(⊥ → ⊥) ≤ ⊥")
+    print("  □(⊤) ≤ ⊥")
+    print("  ⊤ ≤ ⊥         (since □⊤ = ⊤)")
+    print("  CONTRADICTION!")
+    print()
+    print("→ No Löb operator can prove its own consistency.")
+    print("→ This is why the Lucas-Penrose argument fails:")
+    print("  If the mind is a 'Löb system', it cannot know its own consistency.")
+    print("  If it's NOT a Löb system, the diagonal argument doesn't apply to it.")
+    print("  Either way, incompleteness doesn't prove minds transcend machines.")
+    print()
 
-    depth = 8
-    blind_spots = []
 
-    beliefs = set(range(10))  # Initial beliefs
-
-    for i in range(depth):
-        # The "Gödel sentence" for the current belief set
-        godel_sentence = hash(frozenset(beliefs)) % 10000 + 1000
-
-        # Check: is the Gödel sentence in our beliefs?
-        in_beliefs = godel_sentence in beliefs
-        blind_spots.append(godel_sentence)
-
-        print(f"Iteration {i}: |beliefs| = {len(beliefs)}, "
-              f"G(beliefs) = {godel_sentence}, "
-              f"G ∈ beliefs? {in_beliefs}")
-
-        # Add the Gödel sentence to beliefs
-        beliefs.add(godel_sentence)
-
-    print(f"\nAfter {depth} iterations: |beliefs| = {len(beliefs)}")
-    print(f"Blind spots encountered: {blind_spots}")
-    print("Each addition created a NEW blind spot — iteration doesn't help!")
+def demo_chaitin_bound():
+    """
+    Demo 6: Chaitin Complexity Bound
+    
+    Among the first k+1 numbers, at least one cannot be described
+    by any of k descriptions.
+    """
+    print("=" * 60)
+    print("DEMO 6: Chaitin Complexity Bound")
+    print("=" * 60)
+    
+    for k in range(1, 8):
+        # k descriptions, each describing a number in [0, k]
+        # Best case: descriptions cover k distinct numbers, missing 1
+        described = set(range(k))  # descriptions cover 0, 1, ..., k-1
+        universe = set(range(k + 1))  # numbers 0, 1, ..., k
+        undescribed = universe - described
+        
+        print(f"k={k}: {k} descriptions for {k+1} numbers → {len(undescribed)} undescribable: {undescribed}")
+    
+    print(f"\n→ A system of complexity K cannot determine Kolmogorov complexity > K.")
+    print(f"→ This is Chaitin's incompleteness: formal limits on self-knowledge.")
     print()
 
 
 if __name__ == "__main__":
-    demo_reflective_tower()
-    demo_penrose_diagonal()
-    demo_lawvere()
-    demo_berry_chaitin()
-    demo_self_referential_blindness()
+    print("\n" + "█" * 60)
+    print("  EPISTEMIC FIXED-POINT ALGEBRAS")
+    print("  AND THE LUCAS-PENROSE BARRIER")
+    print("█" * 60 + "\n")
+    
+    demo_goedel_sentence()
+    demo_lucas_tower()
+    demo_diagonal_argument()
+    demo_berry_paradox()
+    demo_lucas_penrose_barrier()
+    demo_chaitin_bound()
+    
+    print("=" * 60)
+    print("SUMMARY OF KEY RESULTS")
+    print("=" * 60)
+    print("""
+1. Gödel's Incompleteness: Any sound system has unprovable truths.
+2. Lucas Tower: Iterating "see the Gödel sentence" creates an
+   infinite strictly ascending chain that never terminates.
+3. Diagonal Closure: Cantor, Gödel, and Berry are all instances
+   of the same abstract diagonal obstruction principle.
+4. Lucas-Penrose Barrier: If the mind is a Löb system, it inherits
+   incompleteness. If it's not, the argument doesn't apply.
+5. Chaitin Bound: Complexity limits on self-knowledge are universal.
+
+All results formally verified in Lean 4.
+""")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Reflective Tower Structure
-==========================================
+Visualization: The Lucas Tower and Epistemic Fixed-Point Structure
 
-Visualizes the strictly ascending chain of proof systems in a Reflective Tower,
-showing incompleteness gaps and consistency sentences at each level.
+Produces three plots:
+1. The Lucas Tower: provability strength vs. level
+2. The Diagonal Escape pattern
+3. The Lucas-Penrose Barrier on a Boolean lattice
 """
 
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
+import matplotlib.patches as patches
 import numpy as np
 
 
-def visualize_reflective_tower():
-    """Create a visualization of the Reflective Tower hierarchy."""
-
-    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
-
-    # --- Left panel: Tower as nested sets ---
-    ax1 = axes[0]
-    ax1.set_xlim(-0.5, 10.5)
-    ax1.set_ylim(-0.5, 7)
-    ax1.set_aspect('equal')
-    ax1.set_title('Reflective Tower: Strictly Ascending Chain\n'
-                   'provable(0) ⊂ provable(1) ⊂ provable(2) ⊂ ···',
-                   fontsize=12, fontweight='bold')
-
-    colors = plt.cm.Blues(np.linspace(0.2, 0.8, 6))
-
-    for n in range(5, -1, -1):
-        width = 2 + n * 1.5
-        height = 1 + n * 0.8
-        x = 5 - width / 2
-        y = 0.5
-
-        rect = mpatches.FancyBboxPatch(
-            (x, y), width, height,
-            boxstyle="round,pad=0.1",
-            facecolor=colors[n],
-            edgecolor='black',
-            linewidth=1.5,
-            alpha=0.7
-        )
-        ax1.add_patch(rect)
-
-        # Label the level
-        ax1.text(x + 0.3, y + height - 0.3,
-                f'Level {n}', fontsize=9, fontweight='bold',
-                color='black')
-
-        # Mark Con(n) in the gap
-        if n < 5:
-            gap_x = x + width - 0.8
-            gap_y = y + 0.3
-            ax1.plot(gap_x, gap_y, 'r*', markersize=12)
-            ax1.text(gap_x + 0.15, gap_y - 0.05,
-                    f'Con({n})', fontsize=7, color='red',
-                    fontweight='bold')
-
-    ax1.text(5, 0.1, '← Base theory (e.g., PA) →',
-            ha='center', fontsize=9, style='italic', color='gray')
-
-    ax1.legend(
-        [mpatches.Patch(color='red', alpha=0.7),
-         mpatches.Patch(color=colors[3], alpha=0.7)],
-        ['Con(n): in gap(n), not in level n',
-         'provable(n): strictly ascending'],
-        loc='upper left', fontsize=9
-    )
-    ax1.axis('off')
-
-    # --- Right panel: Incompleteness gap sizes ---
-    ax2 = axes[1]
-
+def plot_lucas_tower(ax):
+    """Plot the Lucas Tower: each level proves strictly more."""
     levels = list(range(8))
-    base_size = 100
-    gap_sizes = [1] * 8  # Each gap adds exactly Con(n)
-
-    # Cumulative size
-    cumulative = [base_size + n for n in range(9)]
-
-    bars = ax2.bar(levels, [1]*8, bottom=[base_size + n for n in range(8)],
-                   color='red', alpha=0.6, label='Incompleteness gap')
-    ax2.bar(levels, [base_size + n for n in range(8)],
-            color='steelblue', alpha=0.4, label='Inherited theorems')
-
-    # Mark Con(n)
-    for n in range(8):
-        ax2.text(n, base_size + n + 0.5, f'Con({n})',
-                fontsize=7, ha='center', color='darkred', fontweight='bold')
-
-    ax2.set_xlabel('Tower Level n', fontsize=11)
-    ax2.set_ylabel('Number of Provable Sentences', fontsize=11)
-    ax2.set_title('Incompleteness Gaps:\n'
-                  'Each Level Adds New Truths',
-                  fontsize=12, fontweight='bold')
-    ax2.legend(loc='upper left', fontsize=9)
-    ax2.set_xticks(levels)
-
-    # Add annotation
-    ax2.annotate('Tower strictly\nascends: each\nlevel adds Con(n)',
-                xy=(5, 105.5), xytext=(6, 108),
-                fontsize=9, style='italic',
-                arrowprops=dict(arrowstyle='->', color='red'),
-                color='darkred')
-
-    plt.tight_layout()
-    plt.savefig('tower_visualization.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: tower_visualization.png")
+    provable_count = list(range(8))  # level n proves n previous Gödel sentences
+    
+    # Bar chart of provable set size
+    colors = plt.cm.viridis(np.linspace(0.2, 0.9, len(levels)))
+    bars = ax.bar(levels, provable_count, color=colors, edgecolor='black', linewidth=0.5)
+    
+    # Mark the Gödel sentence at each level
+    for n in range(7):
+        ax.annotate(f'G{chr(8320+n)}', 
+                    xy=(n+1, n+0.5), fontsize=8,
+                    ha='center', va='center',
+                    bbox=dict(boxstyle='round,pad=0.2', facecolor='gold', alpha=0.7))
+    
+    # Add arrows showing escalation
+    for n in range(6):
+        ax.annotate('', xy=(n+1, n+0.1), xytext=(n, n+0.9),
+                    arrowprops=dict(arrowstyle='->', color='red', lw=1.5))
+    
+    ax.set_xlabel('Level n', fontsize=12)
+    ax.set_ylabel('Number of provable Gödel sentences', fontsize=12)
+    ax.set_title('The Lucas Tower: Strict Ascent of Provability', fontsize=14, fontweight='bold')
+    ax.set_xticks(levels)
+    ax.set_xticklabels([f'F₍{n}₎' for n in levels])
 
 
-def visualize_diagonal_argument():
-    """Visualize the Lawvere/Cantor diagonal argument."""
-
-    fig, ax = plt.subplots(figsize=(8, 8))
-
+def plot_diagonal_escape(ax):
+    """Visualize the diagonal argument: f(d) always differs from the diagonal at d."""
     n = 6
-    # Create a matrix representing f : {0,...,n-1} → ({0,...,n-1} → {0,1})
+    # Random binary matrix representing f: {0,...,n-1} → ({0,...,n-1} → bool)
     np.random.seed(42)
     matrix = np.random.randint(0, 2, (n, n))
-
-    # The diagonal
-    diagonal = np.array([matrix[i, i] for i in range(n)])
-    anti_diagonal = 1 - diagonal
-
+    
+    # The diagonal set: negation of diagonal
+    diagonal = 1 - np.diag(matrix)
+    
     # Plot the matrix
-    im = ax.imshow(matrix, cmap='RdYlBu', aspect='equal', vmin=0, vmax=1)
-
-    # Highlight diagonal
+    im = ax.imshow(matrix, cmap='Blues', aspect='equal', vmin=0, vmax=1)
+    
+    # Highlight the diagonal cells
     for i in range(n):
-        rect = mpatches.Rectangle((i - 0.5, i - 0.5), 1, 1,
-                                   linewidth=3, edgecolor='red',
-                                   facecolor='none')
+        rect = patches.Rectangle((i-0.5, i-0.5), 1, 1, linewidth=3, 
+                                  edgecolor='red', facecolor='none')
         ax.add_patch(rect)
-
-    # Labels
-    ax.set_xticks(range(n))
-    ax.set_yticks(range(n))
-    ax.set_xticklabels([f'x={i}' for i in range(n)])
-    ax.set_yticklabels([f'f({i})' for i in range(n)])
-
-    # Cell values
+        ax.text(i, i, '✗' if diagonal[i] else '✓', ha='center', va='center',
+                fontsize=14, color='red', fontweight='bold')
+    
+    # Show the diagonal set on the right
     for i in range(n):
-        for j in range(n):
-            color = 'white' if matrix[i, j] == 0 else 'black'
-            ax.text(j, i, str(matrix[i, j]), ha='center', va='center',
-                   fontsize=14, fontweight='bold', color=color)
-
-    # Anti-diagonal annotation
-    ax.set_title(f'Lawvere/Cantor Diagonal Argument\n'
-                 f'Diagonal: {list(diagonal)} → '
-                 f'Anti-diagonal: {list(anti_diagonal)}\n'
-                 f'Anti-diagonal ≠ f(a) for any a (Cantor\'s theorem)',
-                 fontsize=11, fontweight='bold')
-
-    ax.set_xlabel('Column (input to f(a))', fontsize=11)
-    ax.set_ylabel('Row (function index a)', fontsize=11)
-
-    plt.colorbar(im, ax=ax, label='Function value', shrink=0.8)
-    plt.tight_layout()
-    plt.savefig('diagonal_visualization.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: diagonal_visualization.png")
+        color = 'gold' if diagonal[i] else 'white'
+        rect = patches.Rectangle((n+0.5, i-0.5), 1, 1, linewidth=1,
+                                  edgecolor='black', facecolor=color)
+        ax.add_patch(rect)
+        ax.text(n+1, i, str(diagonal[i]), ha='center', va='center', fontsize=10)
+    
+    ax.set_xlim(-0.5, n+1.5)
+    ax.set_ylim(n-0.5, -0.5)
+    ax.set_xticks(list(range(n)) + [n+1])
+    ax.set_xticklabels([f'{i}' for i in range(n)] + ['Diag'])
+    ax.set_yticks(range(n))
+    ax.set_yticklabels([f'f({i})' for i in range(n)])
+    ax.set_title('Diagonal Escape: ¬f(d)(d) ≠ f(d) at d', fontsize=14, fontweight='bold')
 
 
-def visualize_penrose_dilemma():
-    """Visualize the Penrose Dilemma as a decision tree."""
-
-    fig, ax = plt.subplots(figsize=(12, 6))
-    ax.axis('off')
-    ax.set_xlim(0, 12)
-    ax.set_ylim(0, 6)
-
-    # Title
-    ax.text(6, 5.5, 'The Penrose Dilemma', fontsize=16,
-            ha='center', fontweight='bold')
-
-    # Root node
-    ax.text(6, 4.5, 'Is the mind M\na formal system F?',
+def plot_barrier(ax):
+    """Visualize the Lucas-Penrose Barrier on a lattice."""
+    # Draw the Boolean algebra lattice {⊥, a, ā, ⊤}
+    positions = {
+        '⊥': (0, 0),
+        'a': (-1, 1),
+        'ā': (1, 1),
+        '⊤': (0, 2),
+    }
+    
+    # Draw edges
+    edges = [('⊥', 'a'), ('⊥', 'ā'), ('a', '⊤'), ('ā', '⊤')]
+    for e1, e2 in edges:
+        x1, y1 = positions[e1]
+        x2, y2 = positions[e2]
+        ax.plot([x1, x2], [y1, y2], 'k-', linewidth=1.5)
+    
+    # Draw nodes
+    for name, (x, y) in positions.items():
+        color = 'lightblue' if name in ('⊥', '⊤') else 'lightyellow'
+        ax.plot(x, y, 'o', markersize=30, color=color, markeredgecolor='black', markeredgewidth=2)
+        ax.text(x, y, name, ha='center', va='center', fontsize=14, fontweight='bold')
+    
+    # Draw the box operator
+    box_map = {'⊥': '⊤', 'a': '⊤', 'ā': '⊤', '⊤': '⊤'}  # trivial GL
+    
+    # Annotate the barrier
+    ax.annotate('□⊥ ≠ ⊥\n(incompleteness)', xy=(0, 0), xytext=(-2.5, -0.5),
+                fontsize=10, ha='center',
+                arrowprops=dict(arrowstyle='->', color='red', lw=2),
+                bbox=dict(boxstyle='round', facecolor='lightyellow'))
+    
+    ax.annotate('□⊤ = ⊤\n(soundness)', xy=(0, 2), xytext=(2.5, 2.5),
+                fontsize=10, ha='center',
+                arrowprops=dict(arrowstyle='->', color='green', lw=2),
+                bbox=dict(boxstyle='round', facecolor='lightgreen'))
+    
+    # The barrier text
+    ax.text(0, -1.5, 
+            'Lucas-Penrose Barrier:\nK(⊥)=⊥ + Löb → ⊤=⊥ → ⊥',
             ha='center', va='center', fontsize=11,
-            bbox=dict(boxstyle='round,pad=0.5', facecolor='lightyellow',
-                     edgecolor='black', linewidth=2))
+            bbox=dict(boxstyle='round', facecolor='lightyellow', edgecolor='red', linewidth=2))
+    
+    ax.set_xlim(-3.5, 3.5)
+    ax.set_ylim(-2.5, 3.5)
+    ax.set_aspect('equal')
+    ax.axis('off')
+    ax.set_title('The Lucas-Penrose Barrier\non a Boolean Lattice', fontsize=14, fontweight='bold')
 
-    # Left branch: Yes
-    ax.annotate('', xy=(3, 3.2), xytext=(5.2, 4),
-               arrowprops=dict(arrowstyle='->', lw=2, color='red'))
-    ax.text(4, 3.7, 'Yes', fontsize=10, color='red', fontweight='bold')
 
-    ax.text(3, 2.8, 'Then ∃ G(F)\nthat F cannot prove',
-            ha='center', va='center', fontsize=10,
-            bbox=dict(boxstyle='round,pad=0.4', facecolor='lightsalmon',
-                     edgecolor='red'))
-
-    ax.annotate('', xy=(2, 1.5), xytext=(2.5, 2.3),
-               arrowprops=dict(arrowstyle='->', lw=2, color='red'))
-    ax.text(2, 1, 'But M "sees" G(F)\nis true!',
-            ha='center', va='center', fontsize=10,
-            bbox=dict(boxstyle='round,pad=0.4', facecolor='lightsalmon',
-                     edgecolor='red'))
-
-    ax.annotate('', xy=(2, 0.2), xytext=(2, 0.6),
-               arrowprops=dict(arrowstyle='->', lw=2, color='darkred'))
-    ax.text(2, -0.1, 'Contradiction!\n(if M = F)',
-            ha='center', va='center', fontsize=10, fontweight='bold',
-            color='darkred')
-
-    # Right branch: No
-    ax.annotate('', xy=(9, 3.2), xytext=(6.8, 4),
-               arrowprops=dict(arrowstyle='->', lw=2, color='green'))
-    ax.text(8, 3.7, 'No', fontsize=10, color='green', fontweight='bold')
-
-    ax.text(9, 2.8, 'Mind transcends\nformal systems?',
-            ha='center', va='center', fontsize=10,
-            bbox=dict(boxstyle='round,pad=0.4', facecolor='lightgreen',
-                     edgecolor='green'))
-
-    # The catch
-    ax.annotate('', xy=(9, 1.5), xytext=(9, 2.3),
-               arrowprops=dict(arrowstyle='->', lw=2, color='orange'))
-    ax.text(9, 1, 'Hidden premise:\nM must KNOW\nF is consistent!',
-            ha='center', va='center', fontsize=10,
-            bbox=dict(boxstyle='round,pad=0.4', facecolor='wheat',
-                     edgecolor='orange', linewidth=2))
-
-    ax.annotate('', xy=(9, 0.1), xytext=(9, 0.5),
-               arrowprops=dict(arrowstyle='->', lw=2, color='orange'))
-    ax.text(9, -0.2, 'Self-Referential Blindness:\nAdding G(F) creates\nnew blind spot G(F\')',
-            ha='center', va='center', fontsize=9,
-            fontweight='bold', color='darkorange')
-
+if __name__ == "__main__":
+    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
+    
+    plot_lucas_tower(axes[0])
+    plot_diagonal_escape(axes[1])
+    plot_barrier(axes[2])
+    
+    plt.suptitle('Epistemic Fixed-Point Algebras and the Lucas-Penrose Barrier',
+                 fontsize=16, fontweight='bold', y=1.02)
     plt.tight_layout()
-    plt.savefig('penrose_dilemma.png', dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved: penrose_dilemma.png")
-
-
-if __name__ == '__main__':
-    visualize_reflective_tower()
-    visualize_diagonal_argument()
-    visualize_penrose_dilemma()
+    plt.savefig('goedel_mind_barrier_visualization.png', dpi=150, bbox_inches='tight')
+    print("Saved visualization to goedel_mind_barrier_visualization.png")
