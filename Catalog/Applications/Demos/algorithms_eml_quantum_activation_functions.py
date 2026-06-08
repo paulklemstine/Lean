@@ -2,241 +2,188 @@
 """
 Quantum EML Activation Functions — Algorithms
 
-Type-hinted implementations of the core Quantum EML algorithms
-for neural network activation functions and quantum computing bridges.
+Type-hinted implementations of the core quantum EML operations.
 """
 
-from typing import Tuple, List, Optional, Callable
+from typing import List, Tuple
 import numpy as np
+from scipy.linalg import expm, logm
 
 
-# ═══════════════════════════════════════════════════════════════
-# Algorithm 1: Quantum EML Activation Evaluation
-# ═══════════════════════════════════════════════════════════════
+# ─── Core Data Types ─────────────────────────────────────────────────
 
-def qeml_activate(z: complex, w: complex) -> complex:
-    """
-    Evaluate the Quantum EML activation function.
+class QuantumEMLGate:
+    """A quantum EML gate parametrized by two matrices (exp and log params)."""
 
-    The QEML activation is the complexification of the classical EML:
-        qeml(z, w) = exp(z) - log(w)
+    def __init__(self, exp_param: np.ndarray, log_param: np.ndarray):
+        assert exp_param.shape == log_param.shape
+        self.exp_param = exp_param.astype(complex)
+        self.log_param = log_param.astype(complex)
+        self.dim = exp_param.shape[0]
 
-    This function is:
-    - Holomorphic in z for fixed w
-    - Surjective onto ℂ (Theorem qeml_surjective)
-    - Reduces to classical EML on real inputs (Theorem qeml_classical_embedding)
+    def eval(self) -> np.ndarray:
+        """Gate value: exp(h1) * exp(h2)."""
+        return expm(self.exp_param) @ expm(self.log_param)
 
-    Parameters:
-        z: Complex input (exponential channel)
-        w: Complex input (logarithmic channel), must be nonzero
+    def inverse(self) -> "QuantumEMLGate":
+        """Inverse gate: (-h2, -h1)."""
+        return QuantumEMLGate(-self.log_param, -self.exp_param)
 
-    Returns:
-        Complex activation value
-    """
-    return np.exp(z) - np.log(w)
+    def param_norm(self) -> float:
+        """Total parameter norm."""
+        return float(np.linalg.norm(self.exp_param) + np.linalg.norm(self.log_param))
 
-
-# ═══════════════════════════════════════════════════════════════
-# Algorithm 2: Quantum EML Neuron (Phase-Amplitude Architecture)
-# ═══════════════════════════════════════════════════════════════
 
 class QuantumEMLNeuron:
+    """Full quantum EML neuron with rotation + bias."""
+
+    def __init__(self, rotation: np.ndarray, bias: float):
+        self.rotation = rotation.astype(complex)
+        self.bias = bias
+        self.dim = rotation.shape[0]
+
+    def forward(self, rho: np.ndarray) -> np.ndarray:
+        """Apply neuron: exp(h)*rho*exp(-h) + t*I."""
+        E = expm(self.rotation)
+        Em = expm(-self.rotation)
+        return E @ rho @ Em + self.bias * np.eye(self.dim, dtype=complex)
+
+
+class QuantumEMLCircuit:
+    """A circuit of quantum EML gates."""
+
+    def __init__(self, gates: List[QuantumEMLGate]):
+        self.gates = gates
+
+    @property
+    def depth(self) -> int:
+        return len(self.gates)
+
+    def total_param_norm(self) -> float:
+        return sum(g.param_norm() for g in self.gates)
+
+    def eval(self) -> np.ndarray:
+        """Evaluate circuit as product of gate values."""
+        n = self.gates[0].dim if self.gates else 2
+        result = np.eye(n, dtype=complex)
+        for gate in self.gates:
+            result = result @ gate.eval()
+        return result
+
+
+# ─── BCH Defect Computation ──────────────────────────────────────────
+
+def bch_defect(h1: np.ndarray, h2: np.ndarray) -> np.ndarray:
+    """BCH defect: exp(h1)*exp(h2) - exp(h1+h2).
+
+    This is zero when [h1, h2] = 0 and measures the
+    noncommutative correction to the classical (commutative) case.
     """
-    A quantum EML neuron with phase-amplitude separation.
+    return expm(h1) @ expm(h2) - expm(h1 + h2)
 
-    The neuron computes: output = exp(i·α) · log(1 + i·β)
 
-    Key properties (all formally verified):
-    - The amplitude |output| depends only on β (Theorem qemlNeuron_norm_independent_of_phase)
-    - The phase of output is controlled by α (Theorem qemlNeuron_phase_action)
-    - Phase composition is additive (Theorem qemlPhase_add)
+def bch_defect_norm(h1: np.ndarray, h2: np.ndarray) -> float:
+    """Frobenius norm of BCH defect."""
+    return float(np.linalg.norm(bch_defect(h1, h2)))
+
+
+def commutator_norm(h1: np.ndarray, h2: np.ndarray) -> float:
+    """Norm of matrix commutator [h1, h2]."""
+    return float(np.linalg.norm(h1 @ h2 - h2 @ h1))
+
+
+# ─── Quantum EML Channel ─────────────────────────────────────────────
+
+def qeml_channel(h: np.ndarray, rho: np.ndarray) -> np.ndarray:
+    """Quantum EML channel: rho -> exp(h) * rho * exp(-h)."""
+    E = expm(h)
+    Em = expm(-h)
+    return E @ rho @ Em
+
+
+def qeml_channel_batch(h: np.ndarray, rhos: List[np.ndarray]) -> List[np.ndarray]:
+    """Apply quantum EML channel to a batch of states."""
+    E = expm(h)
+    Em = expm(-h)
+    return [E @ rho @ Em for rho in rhos]
+
+
+# ─── Diagonal Spectral Bridge ────────────────────────────────────────
+
+def diagonal_spectral_bridge(
+    eigenvalues_1: List[complex],
+    eigenvalues_2: List[complex],
+) -> List[complex]:
+    """Apply quantum EML to diagonal matrices via scalar operations.
+
+    For diagonal matrices D1=diag(λ), D2=diag(μ):
+      exp(D1)*exp(D2) = diag(exp(λ_i)*exp(μ_i))
+
+    This is the bridge between quantum (matrix) and classical (scalar) EML.
     """
-
-    def __init__(self, alpha: float = 0.0, beta: float = 1.0):
-        self.alpha = alpha  # Phase parameter (lives on S¹)
-        self.beta = beta    # Amplitude parameter (lives on ℝ)
-
-    def forward(self, x: complex) -> complex:
-        """Evaluate the neuron: exp(i·α) · log(1 + i·β·x)"""
-        phase = np.exp(1j * self.alpha)
-        log_act = np.log(1 + 1j * self.beta * x)
-        return phase * log_act
-
-    def amplitude(self) -> float:
-        """The amplitude of the neuron's output (independent of phase)."""
-        return abs(np.log(1 + 1j * self.beta))
-
-    def get_phase(self) -> complex:
-        """The phase rotation applied by this neuron."""
-        return np.exp(1j * self.alpha)
-
-    def compose_phase(self, other: 'QuantumEMLNeuron') -> 'QuantumEMLNeuron':
-        """Compose phase rotations: result has phase α₁ + α₂."""
-        return QuantumEMLNeuron(self.alpha + other.alpha, self.beta)
+    assert len(eigenvalues_1) == len(eigenvalues_2)
+    return [np.exp(a) * np.exp(b) for a, b in zip(eigenvalues_1, eigenvalues_2)]
 
 
-# ═══════════════════════════════════════════════════════════════
-# Algorithm 3: QEML Surjectivity Witness Construction
-# ═══════════════════════════════════════════════════════════════
+# ─── Gate Distance and Metric ────────────────────────────────────────
 
-def find_qeml_preimage(target: complex) -> Tuple[complex, complex]:
+def qeml_distance(g1: QuantumEMLGate, g2: QuantumEMLGate) -> float:
+    """Distance between two QEML gates (Frobenius norm of difference)."""
+    return float(np.linalg.norm(g1.eval() - g2.eval()))
+
+
+# ─── Optimization: Find QEML gate closest to target unitary ─────────
+
+def find_qeml_gate(
+    target: np.ndarray,
+    n_iter: int = 1000,
+    lr: float = 0.01,
+    dim: int = 2,
+) -> Tuple[QuantumEMLGate, float]:
+    """Find QEML gate parameters that approximate a target matrix.
+
+    Uses gradient-free random search (since matrix exponential
+    gradient is complex).
+
+    Returns (best_gate, best_distance).
     """
-    Constructive surjectivity: find (z, w) such that qeml(z, w) = target.
+    best_gate = QuantumEMLGate(np.zeros((dim, dim)), np.zeros((dim, dim)))
+    best_dist = np.linalg.norm(best_gate.eval() - target)
 
-    This implements the constructive proof of Theorem qeml_surjective.
+    for _ in range(n_iter):
+        # Random perturbation
+        h1 = np.random.randn(dim, dim) * lr + (best_gate.exp_param.real if best_dist < float('inf') else 0)
+        h2 = np.random.randn(dim, dim) * lr + (best_gate.log_param.real if best_dist < float('inf') else 0)
 
-    Strategy:
-    - For target ≠ -1: z = log(target + 1), w = e
-      Then qeml(z, w) = exp(log(target+1)) - log(e) = (target+1) - 1 = target
-    - For target = -1: z = iπ, w = 1
-      Then qeml(z, w) = exp(iπ) - log(1) = -1 - 0 = -1
+        gate = QuantumEMLGate(h1, h2)
+        dist = float(np.linalg.norm(gate.eval() - target))
 
-    Parameters:
-        target: Any complex number
+        if dist < best_dist:
+            best_gate = gate
+            best_dist = dist
 
-    Returns:
-        (z, w) such that qeml(z, w) = target
-    """
-    if np.isclose(target, -1.0):
-        return (1j * np.pi, complex(1.0))
-    else:
-        z = np.log(target + 1)
-        w = complex(np.e)
-        return (z, w)
+    return best_gate, best_dist
 
-
-# ═══════════════════════════════════════════════════════════════
-# Algorithm 4: Quantum EML Chain Evaluation
-# ═══════════════════════════════════════════════════════════════
-
-class QEMLChainOp:
-    """An operation in a quantum EML chain."""
-
-    def __init__(self, op_type: str, params: Optional[Tuple] = None):
-        """
-        op_type: 'cexp', 'clog', 'affine', 'phase_rotate'
-        params: For 'affine': (a, b) complex; for 'phase_rotate': (theta,) real
-        """
-        self.op_type = op_type
-        self.params = params or ()
-
-    def eval(self, z: complex) -> complex:
-        if self.op_type == 'cexp':
-            return np.exp(z)
-        elif self.op_type == 'clog':
-            return np.log(z) if z != 0 else complex(float('-inf'))
-        elif self.op_type == 'affine':
-            a, b = self.params
-            return a * z + b
-        elif self.op_type == 'phase_rotate':
-            theta = self.params[0]
-            return np.exp(1j * theta) * z
-        else:
-            raise ValueError(f"Unknown op: {self.op_type}")
-
-    def depth_contribution(self) -> int:
-        """Non-trivial operations (exp, log) contribute depth 1; affine/phase are free."""
-        if self.op_type in ('cexp', 'clog'):
-            return 1
-        return 0
-
-
-def eval_qchain(chain: List[QEMLChainOp], z: complex) -> complex:
-    """
-    Evaluate a quantum EML chain (left-to-right composition).
-
-    Satisfies: eval_qchain(c1 ++ c2, z) = eval_qchain(c1, eval_qchain(c2, z))
-    (Theorem qeml_chain_comp_eval)
-    """
-    result = z
-    for op in reversed(chain):
-        result = op.eval(result)
-    return result
-
-
-def qchain_depth(chain: List[QEMLChainOp]) -> int:
-    """
-    Compute the depth (number of exp/log operations) of a chain.
-
-    Satisfies: depth(c1 ++ c2) ≤ depth(c1) + depth(c2)
-    (Theorem qeml_chain_depth_subadditive)
-
-    Phase rotations are free (Theorem qeml_phase_depth_free).
-    """
-    return sum(op.depth_contribution() for op in chain)
-
-
-# ═══════════════════════════════════════════════════════════════
-# Algorithm 5: Quantum EML Layer (Neural Network Integration)
-# ═══════════════════════════════════════════════════════════════
-
-class QuantumEMLLayer:
-    """
-    A layer of quantum EML neurons for quantum-classical neural networks.
-
-    Each neuron has independent phase (α) and amplitude (β) parameters,
-    enabling gradient-based optimization with clean separation of concerns.
-    """
-
-    def __init__(self, input_dim: int, output_dim: int, seed: int = 42):
-        rng = np.random.RandomState(seed)
-        self.alphas = rng.uniform(0, 2 * np.pi, (output_dim, input_dim))
-        self.betas = rng.uniform(-1, 1, (output_dim, input_dim))
-        self.weights = rng.randn(output_dim, input_dim) * 0.1
-
-    def forward(self, x: np.ndarray) -> np.ndarray:
-        """
-        Forward pass through the quantum EML layer.
-
-        For each output neuron j:
-            output_j = Σ_i w_ji · exp(i·α_ji) · log(1 + i·β_ji · x_i)
-
-        Parameters:
-            x: Input array of shape (input_dim,), real or complex
-
-        Returns:
-            Output array of shape (output_dim,), complex
-        """
-        output = np.zeros(self.alphas.shape[0], dtype=complex)
-        for j in range(len(output)):
-            for i in range(len(x)):
-                phase = np.exp(1j * self.alphas[j, i])
-                log_act = np.log(1 + 1j * self.betas[j, i] * x[i])
-                output[j] += self.weights[j, i] * phase * log_act
-        return output
-
-
-# ═══════════════════════════════════════════════════════════════
-# Demonstration
-# ═══════════════════════════════════════════════════════════════
 
 if __name__ == "__main__":
-    print("Quantum EML Algorithms — Demonstration\n")
+    # Quick test
+    sigma_x = np.array([[0, 1], [1, 0]], dtype=complex)
+    sigma_z = np.array([[1, 0], [0, -1]], dtype=complex)
 
-    # Test surjectivity
-    print("Surjectivity witness construction:")
-    for target in [0, 1, -1, 1+1j, -3.14+2.72j]:
-        z, w = find_qeml_preimage(complex(target))
-        result = qeml_activate(z, w)
-        print(f"  target = {target:>12}, preimage qeml({z:.4f}, {w:.4f}) = {result:.6f}")
+    g = QuantumEMLGate(0.5 * sigma_x, 0.3 * sigma_z)
+    print(f"Gate eval:\n{g.eval()}")
+    print(f"Gate param norm: {g.param_norm():.4f}")
+    print(f"BCH defect norm: {bch_defect_norm(0.5 * sigma_x, 0.3 * sigma_z):.6f}")
 
-    # Test chain evaluation
-    print("\nChain evaluation:")
-    chain = [
-        QEMLChainOp('phase_rotate', (np.pi/4,)),
-        QEMLChainOp('cexp'),
-        QEMLChainOp('affine', (2+0j, 1+0j)),
-    ]
-    z = 1.0 + 0.5j
-    result = eval_qchain(chain, z)
-    depth = qchain_depth(chain)
-    print(f"  Chain of {len(chain)} ops, depth {depth}, input {z} → output {result:.4f}")
+    # Test circuit
+    circuit = QuantumEMLCircuit([
+        QuantumEMLGate(0.3 * sigma_x, 0.2 * sigma_z),
+        QuantumEMLGate(0.1 * sigma_x, -0.4 * sigma_z),
+    ])
+    print(f"\nCircuit depth: {circuit.depth}")
+    print(f"Circuit total norm: {circuit.total_param_norm():.4f}")
+    print(f"Circuit eval:\n{circuit.eval()}")
 
-    # Test layer
-    print("\nQuantum EML Layer (3 → 2):")
-    layer = QuantumEMLLayer(3, 2)
-    x = np.array([1.0, 0.5, -0.3])
-    output = layer.forward(x)
-    print(f"  Input:  {x}")
-    print(f"  Output: {output}")
-    print(f"  |Output|: {np.abs(output)}")
+    # Test spectral bridge
+    bridge = diagonal_spectral_bridge([1.0, 2.0], [0.5, -0.3])
+    print(f"\nSpectral bridge: {bridge}")
