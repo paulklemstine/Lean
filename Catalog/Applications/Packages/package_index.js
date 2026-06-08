@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "3d7b70d5",
     "filename": "gravity_from_information_spacetime_as_a_quantum_er.json",
     "pkg_num": 403,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.44296,
     "title": "Holographic Polymatroids: Gravity from Submodular Information"
   },
   {
@@ -12838,8 +12838,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "gravity_from_information_spacetime_as_a_quantum_er",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.44296,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Holographic Polymatroids: Gravity from Submodular Information"
     }
