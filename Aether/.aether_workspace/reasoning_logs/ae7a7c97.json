@@ -417,9 +417,373 @@
       "percent_complete": 0,
       "status": "FINAL:IDLE",
       "timestamp": "2026-06-08T06:09:14"
+    },
+    {
+      "elapsed_seconds": 14838.0,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:20"
+    },
+    {
+      "elapsed_seconds": 14838.0,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:20"
+    },
+    {
+      "elapsed_seconds": 14838.7,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:21"
+    },
+    {
+      "elapsed_seconds": 14838.7,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:21"
+    },
+    {
+      "elapsed_seconds": 14839.2,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:22"
+    },
+    {
+      "elapsed_seconds": 14839.2,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:22"
+    },
+    {
+      "elapsed_seconds": 14839.9,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:22"
+    },
+    {
+      "elapsed_seconds": 14839.9,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:22"
+    },
+    {
+      "elapsed_seconds": 14840.6,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:23"
+    },
+    {
+      "elapsed_seconds": 14840.6,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:23"
+    },
+    {
+      "elapsed_seconds": 14841.3,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:24"
+    },
+    {
+      "elapsed_seconds": 14841.3,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:24"
+    },
+    {
+      "elapsed_seconds": 14841.7,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:24"
+    },
+    {
+      "elapsed_seconds": 14841.7,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:24"
+    },
+    {
+      "elapsed_seconds": 14842.1,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:25"
+    },
+    {
+      "elapsed_seconds": 14842.1,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:25"
+    },
+    {
+      "elapsed_seconds": 14842.4,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:25"
+    },
+    {
+      "elapsed_seconds": 14842.4,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:25"
+    },
+    {
+      "elapsed_seconds": 14842.7,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:25"
+    },
+    {
+      "elapsed_seconds": 14842.7,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:25"
+    },
+    {
+      "elapsed_seconds": 14843.0,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:26"
+    },
+    {
+      "elapsed_seconds": 14843.0,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:26"
+    },
+    {
+      "elapsed_seconds": 14843.3,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:26"
+    },
+    {
+      "elapsed_seconds": 14843.3,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:26"
+    },
+    {
+      "elapsed_seconds": 14843.6,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:26"
+    },
+    {
+      "elapsed_seconds": 14843.6,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:26"
+    },
+    {
+      "elapsed_seconds": 14844.0,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:26"
+    },
+    {
+      "elapsed_seconds": 14844.0,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:26"
+    },
+    {
+      "elapsed_seconds": 14844.2,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:27"
+    },
+    {
+      "elapsed_seconds": 14844.2,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:27"
+    },
+    {
+      "elapsed_seconds": 14844.5,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:27"
+    },
+    {
+      "elapsed_seconds": 14844.5,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:27"
+    },
+    {
+      "elapsed_seconds": 14844.7,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:27"
+    },
+    {
+      "elapsed_seconds": 14844.7,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:27"
+    },
+    {
+      "elapsed_seconds": 14844.9,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:27"
+    },
+    {
+      "elapsed_seconds": 14844.9,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:27"
+    },
+    {
+      "elapsed_seconds": 14845.2,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:28"
+    },
+    {
+      "elapsed_seconds": 14845.2,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:28"
+    },
+    {
+      "elapsed_seconds": 14845.4,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:28"
+    },
+    {
+      "elapsed_seconds": 14845.4,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:28"
+    },
+    {
+      "elapsed_seconds": 14845.6,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:28"
+    },
+    {
+      "elapsed_seconds": 14845.6,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:28"
+    },
+    {
+      "elapsed_seconds": 14845.8,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:28"
+    },
+    {
+      "elapsed_seconds": 14845.8,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:28"
+    },
+    {
+      "elapsed_seconds": 14846.1,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:29"
+    },
+    {
+      "elapsed_seconds": 14846.1,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:29"
+    },
+    {
+      "elapsed_seconds": 14846.3,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:29"
+    },
+    {
+      "elapsed_seconds": 14846.3,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:29"
+    },
+    {
+      "elapsed_seconds": 14846.5,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:29"
+    },
+    {
+      "elapsed_seconds": 14846.5,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:29"
+    },
+    {
+      "elapsed_seconds": 14846.8,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T06:53:29"
+    },
+    {
+      "elapsed_seconds": 14846.8,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T06:53:29"
     }
   ],
-  "completed_at": "2026-06-08T06:09:14",
+  "completed_at": "2026-06-08T06:53:29",
   "domain": "Novelty",
   "error": "",
   "final_percent": 0,
@@ -721,6 +1085,266 @@
     },
     {
       "at_elapsed_seconds": 12191.8,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14838.0,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14838.0,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14838.7,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14838.7,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14839.2,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14839.2,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14839.9,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14839.9,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14840.6,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14840.6,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14841.3,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14841.3,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14841.7,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14841.7,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14842.1,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14842.1,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14842.4,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14842.4,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14842.7,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14842.7,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14843.0,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14843.0,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14843.3,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14843.3,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14843.6,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14843.6,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14844.0,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14844.0,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14844.2,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14844.2,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14844.5,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14844.5,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14844.7,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14844.7,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14844.9,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14844.9,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14845.2,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14845.2,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14845.4,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14845.4,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14845.6,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14845.6,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14845.8,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14845.8,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14846.1,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14846.1,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14846.3,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14846.3,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14846.5,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14846.5,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14846.8,
+      "from": "FINAL:IDLE",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 14846.8,
       "from": "IDLE",
       "to": "FINAL:IDLE"
     }
