@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "07ee0316",
     "filename": "rigorous_algebraic_foundations_for_probability_t.json",
     "pkg_num": 1,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.66968,
     "title": "Rigorous Algebraic Foundations for Probability Theory in Non-Archimedean Ordered Fields"
   }
 ];
@@ -38,8 +38,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "rigorous_algebraic_foundations_for_probability_t",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.66968,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Rigorous Algebraic Foundations for Probability Theory in Non-Archimedean Ordered Fields"
     }

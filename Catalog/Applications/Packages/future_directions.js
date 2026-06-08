@@ -529,21 +529,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions: Computational Complexity as Physical Law\n\n## Synthesis\n\nThis research cycle established the **Entropy-Bounded Computation (EBC)** framework, which formalizes the connection between computational complexity and thermodynamics through Landauer's principle. The central result is the **entropy gap theorem**: the thermodynamic cost gap between polynomial and exponential search grows without bound, providing a physical interpretation of the P \u2260 NP conjecture. The framework consists of five interconnected structures (EntropyBudgetSystem, MaxwellDemon, ReversibleComputation, IrreversibleStep, ComplexityEntropyDuality) with 13 formally verified theorems.\n\nThe most promising cross-domain connection is between the **Maxwell's demon bound** (from the Shared/CryptoEntropyBridges catalog) and **computational search complexity**. Our demon composition theorem shows that thermodynamic irreversibility composes additively across computational agents, which connects to both cryptographic security (breaking keys requires entropy proportional to key length) and the polynomial hierarchy (each level requires strictly more entropy). The entropy gap theorem provides the mathematical foundation for a physically-grounded complexity theory.\n\nThe highest breakthrough potential lies in **Direction 1 (Quantum Entropy Budget)**: quantum computation is fundamentally reversible except for measurement, suggesting that the EBC framework should yield tighter bounds for quantum complexity classes. If the quantum extension shows that BQP has a different entropy profile than P, it would provide a new approach to the BQP vs. P question \u2014 one grounded in physics rather than pure combinatorics.\n\n---\n\n### Direction 1: Quantum Entropy Budget and the Measurement Bottleneck\n\n**Conjecture**: In a quantum extension of the EBC framework, the entropy cost of a quantum computation is determined entirely by the number of measurements, not the number of unitary gates. Formally: for a quantum circuit with U unitary gates and M measurements, the total Landauer cost is exactly M \u00b7 kT \u00b7 ln(2), independent of U. This implies that BQP computations with polynomially many measurements have polynomial entropy cost, while QMA-hard problems require exponentially many measurements under standard complexity assumptions.\n\n**Test**: \n1. Formalize a `QuantumEntropyBudgetSystem` where steps are either unitary (cost 0) or measurement (cost kT\u00b7ln(2)).\n2. Prove that the total cost equals the measurement count times the Landauer unit.\n3. Implement Grover's algorithm and Shor's algorithm in the framework and compute their entropy costs.\n4. Compare: Grover uses O(\u221aN) measurements, Shor uses O(n\u00b2) measurements. Check whether these match empirical predictions.\n\n**Impact**: If true, this gives a clean physical characterization of quantum advantage: quantum computers are powerful not because they compute differently, but because they defer entropy production until measurement. This would connect BQP to a physical resource (measurement budget) rather than an abstract computational model. If false, it reveals that quantum coherence has hidden entropy costs, challenging the deferred measurement principle.\n\n**Catalog References**: `Shared/CryptoEntropyBridges.lean` (maxwell_demon_bound), `Speculative/ComplexityPhysics/Theorems.lean` (step_count_bounded_by_budget, reversible_comp_is_id)\n\n**Proof Strategy**: \n1. Define `QuantumStep` as either `Unitary (cost = 0)` or `Measurement (cost = kT\u00b7ln(2))`.\n2. Prove cost additivity via the existing demon_composition_cost pattern.\n3. For the measurement bottleneck theorem, show that any quantum circuit can be rearranged (by the deferred measurement principle) to have all measurements at the end, concentrating all entropy cost.\n4. Connect to BQP by bounding the measurement count for polynomial-time quantum algorithms.\n\n**Domain Bridges**: Computation (entropy budget) \u2194 Physics (quantum measurement) \u2194 Cryptography (post-quantum security)\n\n**Lineage**: Builds on entropy_gap_unbounded, step_count_bounded_by_budget, reversible_comp_is_id from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Entropy Complexity Classes and the Thermodynamic Polynomial Hierarchy\n\n**Conjecture**: Define ENTROPY(f(n)) as the class of problems solvable with total Landauer cost at most f(n) \u00b7 kT \u00b7 ln(2). Then:\n1. P \u2286 ENTROPY(n^c) for some constant c depending on the problem.\n2. NP \u2286 ENTROPY(2^n) but NP \u2284 ENTROPY(n^c) for any c (assuming P \u2260 NP).\n3. The entropy hierarchy ENTROPY(n) \u228a ENTROPY(n\u00b2) \u228a ENTROPY(n\u00b3) \u228a ... is strict.\n4. ENTROPY(log n) = L (logarithmic space).\n\nPart (3) is the most surprising claim: it asserts that entropy complexity has no \"speed-up\" theorem \u2014 you cannot simulate n\u00b2 entropy with n entropy, even approximately.\n\n**Test**:\n1. Formalize ENTROPY(f) as a complexity class within the EBC framework.\n2. Prove the containments P \u2286 ENTROPY(n^c) by analyzing standard algorithms.\n3. For part (3), attempt to prove a hierarchy theorem using diagonalization.\n4. Test computationally: implement sorting algorithms (merge sort vs. bubble sort) and measure their actual Landauer costs. Merge sort should use O(n log n) entropy; bubble sort O(n\u00b2).\n\n**Impact**: If the entropy hierarchy is strict, it provides a new complexity hierarchy that is *physically meaningful* \u2014 each level corresponds to a different thermodynamic regime. This would be the first complexity hierarchy with a direct physical interpretation. If not strict, it means entropy can be \"recycled\" in unexpected ways.\n\n**Catalog References**: `Speculative/ComplexityPhysics/Theorems.lean` (entropy_budget_monotone, entropy_gap_unbounded), `Computation/InfoEfficientAlgorithms.lean` (InfoEfficientAlgorithm)\n\n**Proof Strategy**: \n1. Define ENTROPY(f) formally as `{L | \u2203 EBS with budget = f(n) that decides L}`.\n2. For P \u2286 ENTROPY(n^c): any P algorithm makes poly(n) steps, each costing at most 1 bit.\n3. For hierarchy strictness: adapt the time hierarchy theorem proof, using the entropy gap theorem to show that more entropy budget allows solving strictly more problems.\n4. The diagonalization argument: construct a language L_k that can be decided with n^(k+1) entropy but not n^k entropy.\n\n**Domain Bridges**: Computation (complexity classes) \u2194 Physics (entropy budget) \u2194 Logic (hierarchy theorems)\n\n**Lineage**: Directly extends entropy_budget_monotone and entropy_gap_unbounded.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Landauer Cost of Specific Algorithms\n\n**Conjecture**: The Landauer cost of comparison-based sorting of n elements is exactly \u2308log\u2082(n!)\u2309 \u00b7 kT \u00b7 ln(2), matching the information-theoretic lower bound. Any sorting algorithm that uses fewer comparisons than \u2308log\u2082(n!)\u2309 must use non-comparison operations that cost additional entropy. In other words, the Landauer cost provides an independent proof of the \u03a9(n log n) comparison-based sorting lower bound.\n\n**Test**:\n1. Formalize comparison-based sorting in the EBC framework, where each comparison is an IrreversibleStep that halves the search space.\n2. Prove that \u2308log\u2082(n!)\u2309 comparisons are necessary via the entropy budget.\n3. Implement merge sort and quicksort in the framework and verify their entropy costs match the theoretical predictions.\n4. Check boundary case: for n = 1, cost should be 0; for n = 2, cost should be kT\u00b7ln(2).\n\n**Impact**: This would be the first formally verified proof that the sorting lower bound is a *physical law*, not just an information-theoretic bound. It demonstrates that the EBC framework can recover known complexity bounds from thermodynamic principles.\n\n**Catalog References**: `Speculative/ComplexityPhysics/Foundations.lean` (IrreversibleStep, landauerCost), `Speculative/ComplexityPhysics/Theorems.lean` (one_bit_erasure_cost, step_count_bounded_by_budget)\n\n**Proof Strategy**:\n1. Model a comparison as an IrreversibleStep from Fin(n!) (permutation space) to two halves.\n2. After k comparisons, the remaining search space has size at most n!/2^k.\n3. The search terminates when the space has size 1, requiring k \u2265 log\u2082(n!).\n4. Each comparison costs kT\u00b7ln(2) by one_bit_erasure_cost, giving total cost \u2265 \u2308log\u2082(n!)\u2309 \u00b7 kT\u00b7ln(2).\n\n**Domain Bridges**: Computation (sorting algorithms) \u2194 Physics (Landauer cost) \u2194 EML (information theory)\n\n**Lineage**: Builds on IrreversibleStep, one_bit_erasure_cost, step_count_bounded_by_budget.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Reversible Computing and Bennett's Pebble Game\n\n**Conjecture**: In the EBC framework, any irreversible computation of T steps on S space can be made reversible using O(T \u00b7 S) time and O(S \u00b7 log T) space (Bennett's result). Formalizing this in the EBC framework gives: the entropy cost of simulating an irreversible computation reversibly is exactly 0, but the time overhead is multiplicative. This creates a time-entropy tradeoff: you can eliminate entropy cost entirely at the price of a polynomial time increase.\n\n**Test**:\n1. Formalize Bennett's pebble game in Lean as a ReversibleComputation.\n2. Prove that the reversible simulation has zero Landauer cost (using reversible_comp_is_id).\n3. Prove the time overhead bound: the reversible simulation takes O(T \u00b7 S) steps.\n4. Test: implement a reversible AND gate using Toffoli gates and verify zero entropy cost.\n\n**Impact**: This direction explores the *escape hatch* from the entropy budget: reversible computing avoids Landauer costs but pays in time. The time-entropy tradeoff is fundamental to understanding whether thermodynamics truly constrains complexity or merely introduces overhead.\n\n**Catalog References**: `Speculative/ComplexityPhysics/Foundations.lean` (ReversibleComputation), `Speculative/ComplexityPhysics/Theorems.lean` (reversible_comp_is_id, reversible_involution)\n\n**Proof Strategy**:\n1. Define a `PebbleGame` structure modeling Bennett's construction.\n2. Show the pebble game produces a ReversibleComputation.\n3. Count the number of pebbling steps to get the time bound.\n4. Use reversible_comp_is_id to show zero entropy cost.\n\n**Domain Bridges**: Computation (reversible circuits) \u2194 Physics (entropy-free computation) \u2194 Cryptography (side-channel resistance)\n\n**Lineage**: Extends reversible_comp_is_id and ReversibleComputation.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Entropy Production Rate and Computational Speed Limits\n\n**Conjecture**: There exists a fundamental speed limit on computation analogous to the Margolus-Levitin bound: no physical system can perform more than 2E/(\u03c0\u210f) irreversible operations per second, where E is the system's energy above ground state. Combined with the Landauer cost per operation, this gives a maximum computational throughput of 2E/(\u03c0\u210f \u00b7 kT \u00b7 ln 2) irreversible bits per second. For a 1-watt computer at room temperature, this is approximately 4.4 \u00d7 10\u00b3\u00b9 bit operations per second.\n\n**Test**:\n1. Formalize the Margolus-Levitin bound as an axiom in the EBC framework.\n2. Derive the maximum bit rate from the bound and Landauer's principle.\n3. Compute the maximum bit rate for realistic parameters (1W, 300K, 1 kg).\n4. Compare with actual computer performance (modern CPUs achieve ~10\u00b9\u2070 ops/sec, far below the limit).\n\n**Impact**: This connects the EBC framework to quantum mechanics (Margolus-Levitin) and gives absolute physical limits on computation. The gap between current computers and the physical limit (~10\u00b2\u00b9 factor) suggests enormous room for improvement in computational efficiency.\n\n**Catalog References**: `Speculative/ComplexityPhysics/Theorems.lean` (step_count_bounded_by_budget), `Shared/CryptoEntropyBridges.lean` (maxwell_demon_bound)\n\n**Proof Strategy**:\n1. Introduce the Margolus-Levitin bound as a parameter in EntropyBudgetSystem.\n2. Derive budget = (2E \u00b7 \u03c4) / (\u03c0\u210f \u00b7 kT \u00b7 ln 2) from the bound.\n3. Apply step_count_bounded_by_budget with c = kT\u00b7ln(2).\n4. Compute explicit values for standard physical parameters.\n\n**Domain Bridges**: Physics (quantum speed limits) \u2194 Computation (throughput bounds) \u2194 EML (information rates)\n\n**Lineage**: Builds on step_count_bounded_by_budget and the full EBC framework.\n\n**Ambition**: extension\n",
-    "domains": [
-      "Computation",
-      "Physics"
-    ],
-    "id": "fd_0917",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "2d7514a5",
-    "status": "available",
-    "timestamp": "2026-06-07T07:20:19.455139+00:00",
-    "title": "**Entropy-Bounded Computation (EBC)** framew"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future Directions: Quantum EML Activation Functions\n\n## Synthesis\n\nThis research cycle introduced the **EML Spectral Pair** \u2014 a mathematical structure that decomposes the EML activation function eml(x,y) = exp(x) \u2212 log(y) into a quantum phase channel (generating unitaries via exp(i\u03b8)) and a classical information channel (measuring entropy via \u2212log). The central discovery is the **Spectral Gap Theorem**: exp(x) \u2212 log(x) > 2 for all x > 0, establishing a universal lower bound on quantum-classical information exchange. This gap arises from the complementary convexity of exp and concavity of log \u2014 a duality that persists in matrix-valued generalizations.\n\nThe most promising cross-domain connection is between the EML Spectral Pair's composition law (V(p+q) = A(p)\u00b7A(q) + I(p) + I(q)) and the tropical semiring's max-plus algebra. In the tropical limit, multiplication becomes addition and addition becomes maximum. The EML composition law interpolates between these extremes: the quantum channel is multiplicative while the classical channel is additive. This suggests the EML Spectral Pair is the \"correct\" bridge between standard and tropical algebra, with the spectral gap governing the transition.\n\nThe strict convexity of the EML diagonal, combined with its metric structure, opens the door to optimization theory on the space of spectral pairs. The unique minimum (at the Lambert W point) could serve as a natural \"ground state\" for quantum EML neural networks, analogous to the vacuum state in quantum field theory.\n\n---\n\n### Direction 1: Lambert W Spectral Minimum and Transcendence\n\n**Conjecture**: The minimum of exp(x) \u2212 log(x) on (0, \u221e) equals exp(W(1)) + W(1) where W is the Lambert W function, and this minimum value is transcendental over \u211a.\n\n**Test**: Formalize the Lambert W function in Lean 4 as the inverse of x\u00b7exp(x), prove it satisfies W(1)\u00b7exp(W(1)) = 1, and use this to compute the exact minimum of the EML diagonal. Then attempt to prove transcendence of the minimum value using Lindemann-Weierstrass or related results.\n\n**Impact**: A Lean formalization of the Lambert W function would be independently valuable (it appears throughout combinatorics, physics, and analysis). Proving transcendence of the spectral gap minimum would establish that the quantum-classical information bound is fundamentally non-algebraic \u2014 it cannot be expressed as a root of any polynomial with rational coefficients.\n\n**Catalog References**: `EML/EMLv17Core.lean` (eml_diag definition), `Applications/QuantumEMLActivation/SpectralGap.lean` (gap theorem and strict convexity)\n\n**Proof Strategy**: \n1. Define LambertW : \u211d \u2192 \u211d as the unique function satisfying W(x)\u00b7exp(W(x)) = x for x \u2265 \u22121/e\n2. Prove existence and uniqueness via the intermediate value theorem and strict monotonicity of x\u00b7exp(x)\n3. Show the EML diagonal's derivative exp(x) \u2212 1/x vanishes iff x\u00b7exp(x) = 1, i.e., x = W(1)\n4. For transcendence: use Lindemann-Weierstrass (exp of algebraic \u2260 algebraic unless argument is 0)\n\n**Domain Bridges**: Analysis \u2194 Number Theory (transcendence), EML \u2194 Combinatorics (Lambert W in tree enumeration)\n\n**Lineage**: Builds on eml_spectral_gap and eml_diag_strictConvexOn from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Matrix EML Spectral Pairs and SU(2) Coverage\n\n**Conjecture**: For 2\u00d72 Hermitian matrices H\u2081, H\u2082 \u2208 su(2), the map (H\u2081, H\u2082) \u21a6 exp(iH\u2081) \u00b7 log(I + iH\u2082) is surjective onto a dense subset of GL(2, \u2102). When restricted to traceless Hermitian matrices, the unitary part exp(iH\u2081) alone covers all of SU(2).\n\n**Test**: Parameterize H\u2081 = \u03b8(n\u2081\u03c3\u2081 + n\u2082\u03c3\u2082 + n\u2083\u03c3\u2083) where \u03c3\u1d62 are Pauli matrices and (n\u2081, n\u2082, n\u2083) is a unit vector. Verify computationally that for any target U \u2208 SU(2), there exist \u03b8, n\u0302 such that exp(iH\u2081) = U. Then study what log(I + iH\u2082) contributes.\n\n**Impact**: Would establish that quantum EML neurons can implement arbitrary single-qubit gates, the first step toward quantum universality. Combined with entangling gates, this would show quantum EML circuits are computationally universal.\n\n**Catalog References**: `Applications/QuantumEMLActivation/QuantumPhase.lean` (phase map properties), `Algebra/AlgebraicSpacetime.lean` (Pauli matrix algebra)\n\n**Proof Strategy**:\n1. Formalize 2\u00d72 Hermitian matrices using Matrix.IsHermitian\n2. Use the NormedSpace.exp for matrix exponential\n3. Prove that exp(iH) for traceless Hermitian H generates SU(2) using the Lie group exponential map surjectivity\n4. Study the image of (H\u2081, H\u2082) \u21a6 exp(iH\u2081) \u00b7 log(I + iH\u2082) using implicit function theorem arguments\n\n**Domain Bridges**: EML \u2194 Quantum Computing (gate universality), Linear Algebra \u2194 Lie Theory\n\n**Lineage**: Builds on quantumPhaseMap properties (U(1) case) from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: EML Spectral Pairs as a Tropical Deformation\n\n**Conjecture**: The EML composition law V(p+q) = A(p)\u00b7A(q) + I(p) + I(q) is the unique smooth deformation of the tropical max-plus algebra (\u211d \u222a {\u2212\u221e}, max, +) that preserves both unitarity of the quantum channel and additivity of the classical channel.\n\n**Test**: Define a one-parameter family of composition laws V_t(p+q) interpolating between EML (t=1) and tropical (t\u2192\u221e). Check whether V_t preserves the spectral gap for all t > 0. Prove or disprove uniqueness of the deformation.\n\n**Impact**: Would establish the EML function as the canonical \"quantization\" of tropical arithmetic \u2014 connecting quantum computing, neural networks, and tropical geometry through a single algebraic structure.\n\n**Catalog References**: `EML/EMLTropicalSemiring.lean` (quantum_classical_bound), `Tropical/TropicalOptimization.lean`\n\n**Proof Strategy**:\n1. Define the Maslov dequantization parameter t and the family V_t(x) = t \u00b7 log(exp(x/t))\n2. Show lim_{t\u2192\u221e} V_t recovers max (tropical addition)  \n3. Study which algebraic properties of EML spectral pairs survive under deformation\n4. Use the spectral gap theorem to control the deformation at finite t\n\n**Domain Bridges**: EML \u2194 Tropical Geometry, Quantum Computing \u2194 Optimization\n\n**Lineage**: Builds on eml_composition_bound and the tropical semiring catalog entries.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: EML Lyapunov Stability for Neural ODE Systems\n\n**Conjecture**: The EML diagonal function L(x) = exp(x) \u2212 log(x) serves as a Lyapunov function for the gradient flow ODE \u1e8b = \u2212\u2207f(x) when f has the form f(x) = \u2211\u1d62 eml(a\u1d62, x) for positive parameters a\u1d62. Specifically, d/dt L(x(t)) < 0 along non-equilibrium trajectories.\n\n**Test**: For f(x) = eml(1, x) = exp(1) \u2212 log(x), the gradient flow is \u1e8b = 1/x. Check that L(x(t)) = exp(x(t)) \u2212 log(x(t)) is decreasing along trajectories with x(0) > W(1) (the EML minimum).\n\n**Impact**: Would provide a rigorous stability guarantee for neural networks using EML activations, showing that gradient descent on EML-activated networks converges to a unique equilibrium.\n\n**Catalog References**: `Applications/QuantumEMLActivation/SpectralGap.lean` (convexity, continuity), `EML/EMLv17Core.lean`\n\n**Proof Strategy**:\n1. Compute d/dt L(x(t)) = (exp(x) \u2212 1/x) \u00b7 \u1e8b along the gradient flow\n2. Show this is negative when x \u2260 x* (the equilibrium) using the strict convexity of L\n3. Apply LaSalle's invariance principle to conclude convergence\n4. Generalize to multi-dimensional systems using the product structure of spectral pairs\n\n**Domain Bridges**: EML \u2194 Dynamical Systems, Neural Networks \u2194 Control Theory\n\n**Lineage**: Builds on eml_diag_strictConvexOn and eml_diag_continuousOn from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Spectral Gap Sharpening via Pad\u00e9 Approximants\n\n**Conjecture**: The EML diagonal satisfies exp(x) \u2212 log(x) \u2265 2 + (x \u2212 W(1))\u00b2 \u00b7 C for some explicit constant C > 0, providing a quadratic refinement of the spectral gap around the minimum.\n\n**Test**: Compute the second derivative at the minimum: eml_diag''(W(1)) = exp(W(1)) + 1/W(1)\u00b2 = 1/W(1) + 1/W(1)\u00b2 = (W(1) + 1)/W(1)\u00b2. Numerically, this is approximately (0.5671 + 1)/(0.5671)\u00b2 \u2248 4.87. The conjectured C = eml_diag''(W(1))/2 \u2248 2.44.\n\n**Impact**: A quadratic refinement would give tight error bounds for quantum-classical information approximation, improving the utility of the spectral gap in applications.\n\n**Catalog References**: `Applications/QuantumEMLActivation/SpectralGap.lean`\n\n**Proof Strategy**:\n1. Use Taylor's theorem with explicit remainder for exp and log\n2. Center the expansion at x\u2080 = W(1)\n3. Bound the remainder using the strict convexity and known bounds on higher derivatives\n4. The key step is showing exp(x\u2080) = 1/x\u2080 (definition of Lambert W)\n\n**Domain Bridges**: Analysis \u2194 Approximation Theory, EML \u2194 Numerical Analysis\n\n**Lineage**: Builds on eml_spectral_gap and eml_diag_strictConvexOn.\n\n**Ambition**: extension\n",
     "domains": [
       "Algebra",
@@ -798,7 +783,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Quantum EML Gate Algebra** \u2014 a framework f"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "df98311e",
     "description": "# Future Directions\n\n## Synthesis\n\nThis research cycle established the BabelCode as a novel mathematical structure connecting Borges' Library of Babel to error-correcting code theory, proving 11 theorems including the Singleton bound, Hamming bound, finite Cantor diagonal, Babel-Lawvere fixed point impossibility, and the expansion theorem for the Library's Hamming graph. The most promising cross-domain connection is between the **Babel-Lawvere theorem** and the existing `lawvere_proof_coding_theorem` in the Catalog \u2014 both are concrete instances of Lawvere's categorical fixed-point theorem, but our formulation provides a combinatorially explicit diagonal construction that could serve as a template for similar impossibility results in other finite combinatorial settings.\n\nThe cycle's results connect to the broader Catalog in several ways: the self-reference impossibility theorems extend the themes of `Algebra/CollatzUndecidable.lean` (undecidability barriers), the Hamming graph structure relates to the graph-theoretic work in `Computation/SpectralRenormalization.lean` (proof length lower bounds via graph connectivity), and the coding-theoretic bounds provide quantitative versions of the catalog impossibility theorems already formalized in `Cryptography/LibraryOfBabel.lean`.\n\nThe highest breakthrough potential lies in Direction 1 (Harper's Inequality), which would establish optimal isoperimetric inequalities for the Hamming graph \u2014 a deep combinatorial result with applications to concentration of measure, computational complexity, and the theory of Boolean functions. If achieved, it would represent genuine new formalized mathematics, as this result is not currently in Mathlib.\n\n---\n\n### Direction 1: Harper's Vertex Isoperimetric Inequality for the Hamming Graph\n\n**Conjecture**: For the binary Hamming cube {0,1}^n, among all subsets S of size k = \u03a3_{i=0}^{r} C(n,i), the initial segment in the simplicial order (all vectors with at most r ones) minimizes the boundary |\u2202S|. Specifically, for any S \u2286 {0,1}^n with |S| = k, the boundary satisfies |\u2202S| \u2265 |\u2202I_k| where I_k is the initial segment of size k in the simplicial (squashed) order.\n\n**Test**: Verify computationally for n = 4, 5, 6 by exhaustive enumeration of all subsets of each size and checking that the simplicial initial segment minimizes boundary. For n = 4, k = 5 (= C(4,0) + C(4,1)), the initial segment {0000, 0001, 0010, 0100, 1000} should have minimal boundary among all 5-element subsets.\n\n**Impact**: If formalized, this would be the first machine-verified proof of Harper's theorem, a cornerstone of discrete isoperimetric theory. It has applications to: (a) concentration of measure on the discrete hypercube, (b) lower bounds in computational complexity (circuit lower bounds via Razborov's method), (c) optimal error-correcting code design, and (d) social choice theory (influences of variables in Boolean functions).\n\n**Catalog References**: `Applications/BabelCombinatorics.lean` (babel_expansion theorem provides the connectivity foundation), `Computation/SpectralRenormalization.lean` (proof_length_lower_bound uses graph-theoretic arguments)\n\n**Proof Strategy**: (1) Define the simplicial/squashed order on binary strings. (2) Prove the \"compression\" lemma: for any subset S not equal to an initial segment, there exists a compression operator that reduces the boundary without changing the size. (3) Show compressions converge to the initial segment. (4) Conclude optimality. Key helper lemmas: monotonicity of binomial coefficients, Kruskal-Katona theorem as a prerequisite.\n\n**Domain Bridges**: Combinatorics \u2194 Coding Theory \u2194 Computational Complexity\n\n**Lineage**: Builds on babel_expansion (this cycle) and the Hamming distance infrastructure developed in BabelCombinatorics.lean.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Spectral Gap of the Library's Hamming Graph\n\n**Conjecture**: The adjacency matrix of the Hamming graph H(L, A) has eigenvalues \u03bb_k = L(A-1) - kA for k = 0, 1, ..., L, with multiplicity C(L,k)(A-1)^k. The spectral gap is \u03bb_0 - \u03bb_1 = A, independent of L.\n\n**Test**: For small cases (A=2, L=3 and A=3, L=2), compute the eigenvalues explicitly by constructing the adjacency matrix and verifying the formula. The adjacency matrix of H(3,2) is 8\u00d78; its eigenvalues should be {6, 2, 2, 2, -2, -2, -2, -6} with the formula giving \u03bb_0=3, \u03bb_1=1, \u03bb_2=-1, \u03bb_3=-3 (wait \u2014 need to double-check: H(L,A) eigenvalues are L(A-1) - kA, so for L=3, A=2: \u03bb_0=3, \u03bb_1=1, \u03bb_2=-1, \u03bb_3=-3, with multiplicities 1,3,3,1).\n\n**Impact**: The spectral gap controls mixing time of random walks on the Library, expansion properties, and the concentration of measure. A formal proof would connect the Library's combinatorial structure to spectral graph theory and provide tools for analyzing the efficiency of search algorithms in the Library.\n\n**Catalog References**: `Applications/BabelCombinatorics.lean` (Hamming distance and degree), `Computation/SpectralRenormalization.lean` (spectral methods in proof complexity)\n\n**Proof Strategy**: (1) Define the Hamming graph's adjacency operator as a linear map on functions Volume A L \u2192 \u211d. (2) Identify the eigenfunctions as products of Krawtchouk polynomials. (3) Compute eigenvalues using the character theory of (\u2124/A\u2124)^L. (4) Derive the spectral gap. This requires linear algebra over \u211d and character theory of finite abelian groups, both partially available in Mathlib.\n\n**Domain Bridges**: Coding Theory \u2194 Spectral Graph Theory \u2194 Probability (random walks)\n\n**Lineage**: Builds on babel_degree (this cycle) and the Cayley graph structure of the Hamming graph.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Plotkin Bound and the Densest BabelCodes\n\n**Conjecture**: For a BabelCode with minimum distance d > L(A-1)/A, the number of codewords satisfies |C| \u2264 d\u00b7A / (d\u00b7A - L\u00b7(A-1)). This is the Plotkin bound, a fundamental result in coding theory that is currently not formalized in Mathlib.\n\n**Test**: For A=2, L=6, d=4: Plotkin gives |C| \u2264 8/(8-6) = 4. Verify by exhaustive search that no code of length 6, min distance 4, has more than 4 binary codewords. For A=3, L=4, d=3: Plotkin gives |C| \u2264 9/(9-8) = 9. The ternary Hamming code achieves this.\n\n**Impact**: Would complete the \"classical trilogy\" of coding bounds (Singleton, Hamming, Plotkin) in a formalized setting. The Plotkin bound is particularly important because it governs the regime where codes are sparse \u2014 exactly the regime relevant to the Library of Babel, where \"meaningful\" volumes are exponentially rare.\n\n**Catalog References**: `Applications/BabelCombinatorics.lean` (singleton_bound, hamming_bound), `Cryptography/LibraryOfBabel.lean` (catalog impossibility)\n\n**Proof Strategy**: (1) For any code C with min distance d, compute the sum of all pairwise Hamming distances: \u03a3_{v\u2260w} d_H(v,w) \u2265 |C|(|C|-1)d. (2) Independently bound this sum above using the \"column counting\" argument: each position contributes at most |C|\u00b2(A-1)/A to the total distance. (3) Combining: |C|(|C|-1)d \u2264 L\u00b7|C|\u00b2(A-1)/A, giving |C| \u2264 dA/(dA - L(A-1)) when d > L(A-1)/A. Key lemma: the average column contribution, which requires careful counting with Fin arithmetic.\n\n**Domain Bridges**: Coding Theory \u2194 Combinatorial Optimization\n\n**Lineage**: Builds on singleton_bound and hamming_bound from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Kolmogorov Complexity and the Meaningful Fraction of the Library\n\n**Conjecture**: Define the \"meaningful fraction\" \u03bc(K) as the fraction of Library volumes whose Kolmogorov complexity is at most K. Then \u03bc(K) \u2264 2^K / A^L for any K, and for K = L\u00b7log\u2082(A) - c, we have \u03bc(K) \u2264 2^{-c}. The vast majority of the Library is algorithmically random.\n\n**Test**: For a mini-Library (A=2, L=8), enumerate all 256 binary strings and classify by Kolmogorov complexity upper bounds (using shortest Python programs). Verify that the fraction with complexity \u2264 k decreases as approximately 2^k/256.\n\n**Impact**: Would formalize the precise sense in which \"most of the Library is gibberish\" \u2014 a quantitative version of Borges' qualitative observation. This connects the Library to algorithmic information theory and would provide the first formalized bounds on the density of structured strings in a universal library.\n\n**Catalog References**: `Applications/BabelCombinatorics.lean` (pattern_density as a simpler density result), `Bridges/LawvereCodingTheorem.lean` (connections to proof coding)\n\n**Proof Strategy**: (1) Define a simplified \"Babel complexity\" as the length of the shortest description in a fixed universal description language. (2) Prove the counting lemma: at most 2^K descriptions of length \u2264 K exist. (3) Since each description maps to at most one volume (by injectivity of decompression), at most 2^K volumes have complexity \u2264 K. (4) The fraction is 2^K / A^L. Note: full Kolmogorov complexity is not computable, but upper bounds are. We can formalize the *bound* without formalizing computability theory.\n\n**Domain Bridges**: Information Theory \u2194 Computability Theory \u2194 Library Science\n\n**Lineage**: Builds on pattern_density and redundancy_fraction from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: BabelCodes as Lattice Codes: Connection to Algebraic Geometry\n\n**Conjecture**: The set of all BabelCodes over Volume(A, L) forms a lattice under the operations: C\u2081 \u2227 C\u2082 = (C\u2081.codewords \u2229 C\u2082.codewords, max(d\u2081, d\u2082)) and C\u2081 \u2228 C\u2082 = (C\u2081.codewords \u222a C\u2082.codewords, actual min distance of union). This lattice has a unique maximum element (the entire Library with d=1) and unique minimum elements (singletons with d=\u221e).\n\n**Test**: For A=2, L=3, enumerate all BabelCodes and verify the lattice structure. Check that the meet and join operations are well-defined and satisfy the lattice axioms. The Library should have exactly \u03a3_{d=1}^{3} (number of codes with min distance exactly d) BabelCodes.\n\n**Impact**: If the BabelCode lattice has interesting algebraic properties (e.g., it is modular, distributive, or graded), this would connect the Library of Babel to lattice theory and potentially to matroid theory (since many combinatorial structures have matroid-like lattices of \"independent sets\").\n\n**Catalog References**: `Applications/BabelCombinatorics.lean` (BabelCode structure), `Algebra/Advanced.lean` (algebraic structures)\n\n**Proof Strategy**: (1) Define the BabelCode partial order: C\u2081 \u2264 C\u2082 iff C\u2081.codewords \u2286 C\u2082.codewords. (2) Verify the meet operation: intersection preserves the distance property (with the maximum distance). (3) The join requires computing the actual minimum distance of the union, which may decrease. (4) Prove the lattice axioms. Key challenge: the distance of the union is not simply min(d\u2081, d\u2082) but may involve cross-distances between C\u2081 and C\u2082.\n\n**Domain Bridges**: Coding Theory \u2194 Lattice Theory \u2194 Combinatorial Optimization\n\n**Lineage**: Builds on the BabelCode structure from this cycle.\n\n**Ambition**: extension\n",
     "domains": [
       "Algebra",
@@ -808,24 +793,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "eb127022",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T05:30:32.033573+00:00",
     "title": "BabelCode as a novel mathematical structure"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The key insight is that neural network training is a renormalization group (RG) flow in function space. Each training step integrates out high-frequency modes (gradient descent on fast-varying parameters), just as each RG step integrates out short-distance modes. Conjecture: The fixed points of SGD on neural networks are precisely the critical points of a renormalization group flow defined by the coarse-graining operator that averages over parameter subsets. Why now: recent work on neural network Gaussian processes shows that infinite-width networks have exact RG fixed points, and the beta function of SGD training has been computed for linear networks. Test: prove that for a 2-layer ReLU network trained on isotropic data, the SGD fixed point corresponds to the Wilson-Fisher fixed point in d=2 dimensions, and compute the critical exponents. Impact: neural network training would be governed by universality classes, meaning the same network trained on different data converges to the same fixed point if the data distribution is in the same universality class.",
-    "domains": [
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "fd_0427",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:27.476683+00:00",
-    "title": "Neural Network Training as Renormalization Group Flow"
   },
   {
     "consumed_by_exp_id": "",
@@ -856,36 +826,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize grokking: prove a delayed generalization theorem for two-layer networks and characterize the phase transition as a saddle-node bifurcation.",
-    "domains": [
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "fd_0440",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:28.560336+00:00",
-    "title": "Grokking: Phase Transitions in Learning"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove neural network scaling laws from first principles. Derive power-law relationships between loss, model size, dataset size, and compute from the GP kernel spectrum.",
-    "domains": [
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "fd_0441",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:28.640557+00:00",
-    "title": "Scaling Laws from Statistical Mechanics"
   },
   {
     "consumed_by_exp_id": "",
@@ -949,21 +889,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
-    "domains": [
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "fd_0502",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T21:01:46.684855+00:00",
-    "title": "Diffusion Models as Stochastic Differential Equations"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that policy gradient methods converge to a local optimum of the expected return. Formalize the policy gradient theorem and prove that REINFORCE is an unbiased estimator. Show that natural policy gradient converges faster by following the Fisher information geometry.",
     "domains": [
       "MachineLearning",
@@ -1006,21 +931,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:06.964548+00:00",
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
-    "domains": [
-      "Cryptography",
-      "Physics"
-    ],
-    "id": "fd_0543",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T22:10:07.214033+00:00",
-    "title": "Quantum Key Distribution: BB84 Security Proof"
   },
   {
     "consumed_by_exp_id": "",
@@ -1654,6 +1564,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Computational Complexity as Physical Law\n\n## Synthesis\n\nThis research cycle established the **Entropy-Bounded Computation (EBC)** framework, which formalizes the connection between computational complexity and thermodynamics through Landauer's principle. The central result is the **entropy gap theorem**: the thermodynamic cost gap between polynomial and exponential search grows without bound, providing a physical interpretation of the P \u2260 NP conjecture. The framework consists of five interconnected structures (EntropyBudgetSystem, MaxwellDemon, ReversibleComputation, IrreversibleStep, ComplexityEntropyDuality) with 13 formally verified theorems.\n\nThe most promising cross-domain connection is between the **Maxwell's demon bound** (from the Shared/CryptoEntropyBridges catalog) and **computational search complexity**. Our demon composition theorem shows that thermodynamic irreversibility composes additively across computational agents, which connects to both cryptographic security (breaking keys requires entropy proportional to key length) and the polynomial hierarchy (each level requires strictly more entropy). The entropy gap theorem provides the mathematical foundation for a physically-grounded complexity theory.\n\nThe highest breakthrough potential lies in **Direction 1 (Quantum Entropy Budget)**: quantum computation is fundamentally reversible except for measurement, suggesting that the EBC framework should yield tighter bounds for quantum complexity classes. If the quantum extension shows that BQP has a different entropy profile than P, it would provide a new approach to the BQP vs. P question \u2014 one grounded in physics rather than pure combinatorics.\n\n---\n\n### Direction 1: Quantum Entropy Budget and the Measurement Bottleneck\n\n**Conjecture**: In a quantum extension of the EBC framework, the entropy cost of a quantum computation is determined entirely by the number of measurements, not the number of unitary gates. Formally: for a quantum circuit with U unitary gates and M measurements, the total Landauer cost is exactly M \u00b7 kT \u00b7 ln(2), independent of U. This implies that BQP computations with polynomially many measurements have polynomial entropy cost, while QMA-hard problems require exponentially many measurements under standard complexity assumptions.\n\n**Test**: \n1. Formalize a `QuantumEntropyBudgetSystem` where steps are either unitary (cost 0) or measurement (cost kT\u00b7ln(2)).\n2. Prove that the total cost equals the measurement count times the Landauer unit.\n3. Implement Grover's algorithm and Shor's algorithm in the framework and compute their entropy costs.\n4. Compare: Grover uses O(\u221aN) measurements, Shor uses O(n\u00b2) measurements. Check whether these match empirical predictions.\n\n**Impact**: If true, this gives a clean physical characterization of quantum advantage: quantum computers are powerful not because they compute differently, but because they defer entropy production until measurement. This would connect BQP to a physical resource (measurement budget) rather than an abstract computational model. If false, it reveals that quantum coherence has hidden entropy costs, challenging the deferred measurement principle.\n\n**Catalog References**: `Shared/CryptoEntropyBridges.lean` (maxwell_demon_bound), `Speculative/ComplexityPhysics/Theorems.lean` (step_count_bounded_by_budget, reversible_comp_is_id)\n\n**Proof Strategy**: \n1. Define `QuantumStep` as either `Unitary (cost = 0)` or `Measurement (cost = kT\u00b7ln(2))`.\n2. Prove cost additivity via the existing demon_composition_cost pattern.\n3. For the measurement bottleneck theorem, show that any quantum circuit can be rearranged (by the deferred measurement principle) to have all measurements at the end, concentrating all entropy cost.\n4. Connect to BQP by bounding the measurement count for polynomial-time quantum algorithms.\n\n**Domain Bridges**: Computation (entropy budget) \u2194 Physics (quantum measurement) \u2194 Cryptography (post-quantum security)\n\n**Lineage**: Builds on entropy_gap_unbounded, step_count_bounded_by_budget, reversible_comp_is_id from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Entropy Complexity Classes and the Thermodynamic Polynomial Hierarchy\n\n**Conjecture**: Define ENTROPY(f(n)) as the class of problems solvable with total Landauer cost at most f(n) \u00b7 kT \u00b7 ln(2). Then:\n1. P \u2286 ENTROPY(n^c) for some constant c depending on the problem.\n2. NP \u2286 ENTROPY(2^n) but NP \u2284 ENTROPY(n^c) for any c (assuming P \u2260 NP).\n3. The entropy hierarchy ENTROPY(n) \u228a ENTROPY(n\u00b2) \u228a ENTROPY(n\u00b3) \u228a ... is strict.\n4. ENTROPY(log n) = L (logarithmic space).\n\nPart (3) is the most surprising claim: it asserts that entropy complexity has no \"speed-up\" theorem \u2014 you cannot simulate n\u00b2 entropy with n entropy, even approximately.\n\n**Test**:\n1. Formalize ENTROPY(f) as a complexity class within the EBC framework.\n2. Prove the containments P \u2286 ENTROPY(n^c) by analyzing standard algorithms.\n3. For part (3), attempt to prove a hierarchy theorem using diagonalization.\n4. Test computationally: implement sorting algorithms (merge sort vs. bubble sort) and measure their actual Landauer costs. Merge sort should use O(n log n) entropy; bubble sort O(n\u00b2).\n\n**Impact**: If the entropy hierarchy is strict, it provides a new complexity hierarchy that is *physically meaningful* \u2014 each level corresponds to a different thermodynamic regime. This would be the first complexity hierarchy with a direct physical interpretation. If not strict, it means entropy can be \"recycled\" in unexpected ways.\n\n**Catalog References**: `Speculative/ComplexityPhysics/Theorems.lean` (entropy_budget_monotone, entropy_gap_unbounded), `Computation/InfoEfficientAlgorithms.lean` (InfoEfficientAlgorithm)\n\n**Proof Strategy**: \n1. Define ENTROPY(f) formally as `{L | \u2203 EBS with budget = f(n) that decides L}`.\n2. For P \u2286 ENTROPY(n^c): any P algorithm makes poly(n) steps, each costing at most 1 bit.\n3. For hierarchy strictness: adapt the time hierarchy theorem proof, using the entropy gap theorem to show that more entropy budget allows solving strictly more problems.\n4. The diagonalization argument: construct a language L_k that can be decided with n^(k+1) entropy but not n^k entropy.\n\n**Domain Bridges**: Computation (complexity classes) \u2194 Physics (entropy budget) \u2194 Logic (hierarchy theorems)\n\n**Lineage**: Directly extends entropy_budget_monotone and entropy_gap_unbounded.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Landauer Cost of Specific Algorithms\n\n**Conjecture**: The Landauer cost of comparison-based sorting of n elements is exactly \u2308log\u2082(n!)\u2309 \u00b7 kT \u00b7 ln(2), matching the information-theoretic lower bound. Any sorting algorithm that uses fewer comparisons than \u2308log\u2082(n!)\u2309 must use non-comparison operations that cost additional entropy. In other words, the Landauer cost provides an independent proof of the \u03a9(n log n) comparison-based sorting lower bound.\n\n**Test**:\n1. Formalize comparison-based sorting in the EBC framework, where each comparison is an IrreversibleStep that halves the search space.\n2. Prove that \u2308log\u2082(n!)\u2309 comparisons are necessary via the entropy budget.\n3. Implement merge sort and quicksort in the framework and verify their entropy costs match the theoretical predictions.\n4. Check boundary case: for n = 1, cost should be 0; for n = 2, cost should be kT\u00b7ln(2).\n\n**Impact**: This would be the first formally verified proof that the sorting lower bound is a *physical law*, not just an information-theoretic bound. It demonstrates that the EBC framework can recover known complexity bounds from thermodynamic principles.\n\n**Catalog References**: `Speculative/ComplexityPhysics/Foundations.lean` (IrreversibleStep, landauerCost), `Speculative/ComplexityPhysics/Theorems.lean` (one_bit_erasure_cost, step_count_bounded_by_budget)\n\n**Proof Strategy**:\n1. Model a comparison as an IrreversibleStep from Fin(n!) (permutation space) to two halves.\n2. After k comparisons, the remaining search space has size at most n!/2^k.\n3. The search terminates when the space has size 1, requiring k \u2265 log\u2082(n!).\n4. Each comparison costs kT\u00b7ln(2) by one_bit_erasure_cost, giving total cost \u2265 \u2308log\u2082(n!)\u2309 \u00b7 kT\u00b7ln(2).\n\n**Domain Bridges**: Computation (sorting algorithms) \u2194 Physics (Landauer cost) \u2194 EML (information theory)\n\n**Lineage**: Builds on IrreversibleStep, one_bit_erasure_cost, step_count_bounded_by_budget.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Reversible Computing and Bennett's Pebble Game\n\n**Conjecture**: In the EBC framework, any irreversible computation of T steps on S space can be made reversible using O(T \u00b7 S) time and O(S \u00b7 log T) space (Bennett's result). Formalizing this in the EBC framework gives: the entropy cost of simulating an irreversible computation reversibly is exactly 0, but the time overhead is multiplicative. This creates a time-entropy tradeoff: you can eliminate entropy cost entirely at the price of a polynomial time increase.\n\n**Test**:\n1. Formalize Bennett's pebble game in Lean as a ReversibleComputation.\n2. Prove that the reversible simulation has zero Landauer cost (using reversible_comp_is_id).\n3. Prove the time overhead bound: the reversible simulation takes O(T \u00b7 S) steps.\n4. Test: implement a reversible AND gate using Toffoli gates and verify zero entropy cost.\n\n**Impact**: This direction explores the *escape hatch* from the entropy budget: reversible computing avoids Landauer costs but pays in time. The time-entropy tradeoff is fundamental to understanding whether thermodynamics truly constrains complexity or merely introduces overhead.\n\n**Catalog References**: `Speculative/ComplexityPhysics/Foundations.lean` (ReversibleComputation), `Speculative/ComplexityPhysics/Theorems.lean` (reversible_comp_is_id, reversible_involution)\n\n**Proof Strategy**:\n1. Define a `PebbleGame` structure modeling Bennett's construction.\n2. Show the pebble game produces a ReversibleComputation.\n3. Count the number of pebbling steps to get the time bound.\n4. Use reversible_comp_is_id to show zero entropy cost.\n\n**Domain Bridges**: Computation (reversible circuits) \u2194 Physics (entropy-free computation) \u2194 Cryptography (side-channel resistance)\n\n**Lineage**: Extends reversible_comp_is_id and ReversibleComputation.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Entropy Production Rate and Computational Speed Limits\n\n**Conjecture**: There exists a fundamental speed limit on computation analogous to the Margolus-Levitin bound: no physical system can perform more than 2E/(\u03c0\u210f) irreversible operations per second, where E is the system's energy above ground state. Combined with the Landauer cost per operation, this gives a maximum computational throughput of 2E/(\u03c0\u210f \u00b7 kT \u00b7 ln 2) irreversible bits per second. For a 1-watt computer at room temperature, this is approximately 4.4 \u00d7 10\u00b3\u00b9 bit operations per second.\n\n**Test**:\n1. Formalize the Margolus-Levitin bound as an axiom in the EBC framework.\n2. Derive the maximum bit rate from the bound and Landauer's principle.\n3. Compute the maximum bit rate for realistic parameters (1W, 300K, 1 kg).\n4. Compare with actual computer performance (modern CPUs achieve ~10\u00b9\u2070 ops/sec, far below the limit).\n\n**Impact**: This connects the EBC framework to quantum mechanics (Margolus-Levitin) and gives absolute physical limits on computation. The gap between current computers and the physical limit (~10\u00b2\u00b9 factor) suggests enormous room for improvement in computational efficiency.\n\n**Catalog References**: `Speculative/ComplexityPhysics/Theorems.lean` (step_count_bounded_by_budget), `Shared/CryptoEntropyBridges.lean` (maxwell_demon_bound)\n\n**Proof Strategy**:\n1. Introduce the Margolus-Levitin bound as a parameter in EntropyBudgetSystem.\n2. Derive budget = (2E \u00b7 \u03c4) / (\u03c0\u210f \u00b7 kT \u00b7 ln 2) from the bound.\n3. Apply step_count_bounded_by_budget with c = kT\u00b7ln(2).\n4. Compute explicit values for standard physical parameters.\n\n**Domain Bridges**: Physics (quantum speed limits) \u2194 Computation (throughput bounds) \u2194 EML (information rates)\n\n**Lineage**: Builds on step_count_bounded_by_budget and the full EBC framework.\n\n**Ambition**: extension\n",
+    "domains": [
+      "Computation",
+      "Physics"
+    ],
+    "id": "fd_0917",
+    "priority_score": 0.6,
+    "research_mode": "team",
+    "source_exp_id": "2d7514a5",
+    "status": "available",
+    "timestamp": "2026-06-07T07:20:19.455139+00:00",
+    "title": "**Entropy-Bounded Computation (EBC)** framew"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Non-Well-Founded Proofs\n\n## Synthesis\n\nThis research cycle established a rigorous framework for self-referential proofs by introducing the **Proof Convergence Domain** \u2014 a complete lattice equipped with a contractive deduction operator and consistency metric. The key discovery is that the boundary between valid and invalid self-reference is quantified precisely by the consistency metric: valid proofs have CM < 1, the liar paradox sits at CM = 1, and well-founded proofs have CM = 0. This provides a complete topological characterization of proof validity.\n\nThe most surprising result is **unbounded compression**: self-referential proofs can be arbitrarily deeper than their well-founded kernels, establishing that self-reference is not merely a convenience but provides genuine structural economy. Combined with the tropical semiring structure on proof heights, this opens a direct connection to optimization theory \u2014 proof search becomes a tropical linear programming problem.\n\nThe highest-breakthrough-potential direction is **Direction 1 (Coinductive Proof Towers)**, which would extend our finite inductive framework to genuinely infinite proof trees, capturing the full power of non-well-founded reasoning. This requires coinductive types and would connect to domain theory and denotational semantics. The **tropical proof variety** direction (Direction 3) has the most immediate practical impact for automated theorem proving.\n\n---\n\n### Direction 1: Coinductive Proof Towers and Scott Domain Structure\n\n**Conjecture**: The type of non-well-founded proof trees, defined coinductively as `codata CoNWFTree = ax(p) | mp(CoNWFTree, CoNWFTree, p, q) | selfRef(p, CoNWFTree) | bot`, admits a Scott domain structure where directed sets of finite approximations converge to unique infinite proof trees. The consistency metric extends to a continuous function on this Scott domain, and the set {t : CoNWFTree | CM(t) < 1} is Scott-open.\n\n**Test**: Define CoNWFTree as a greatest fixed point in Lean 4 (using coinductive types or quotient types). Construct an infinite proof tree as the limit of the sequence nestedSR(p, n) as n \u2192 \u221e. Compute its consistency metric. If the limit exists and has CM = 1 (as a supremum of (2^n - 1)/2^n), this proves that infinite self-reference is precisely on the boundary of validity \u2014 neither valid nor invalid, but a limit point of valid proofs.\n\n**Impact**: If the Scott domain structure exists, it provides a denotational semantics for self-referential proofs, analogous to Scott's semantics for recursive programs. This would establish proof theory as a branch of domain theory, opening up 50 years of domain-theoretic machinery for proof search and verification.\n\n**Catalog References**: `ProofConvergenceDomain` (Applications/NWFP/Core.lean), `fixed_point_unique_under_theory_separation` (Bridges/ProofStoneCechDynamics.lean)\n\n**Proof Strategy**: \n1. Define CoNWFTree as a quotient of countable sequences of NWFTree under a prefix equivalence\n2. Define the information ordering: t \u2291 s iff t is an approximation of s (structurally)\n3. Prove the ordering forms a dcpo (directed-complete partial order)\n4. Extend CM to the coinductive type using the metric completion\n5. Prove {CM < 1} is Scott-open using the fact that CM is continuous\n\n**Domain Bridges**: Proof theory \u2194 Domain theory (via Scott domains), Self-reference \u2194 Recursion theory (via fixed points of continuous operators)\n\n**Lineage**: Builds on the ProofConvergenceDomain structure and the consistency metric from this cycle's Core.lean\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Semantic Soundness and Self-Reference Necessity\n\n**Conjecture**: There exists a proof system S (a set of axioms and inference rules formalized as a ProofSystem in our framework) and a proposition p such that p has a valid 1-convergent NWF proof in S but has no valid 0-convergent proof in S. In other words, self-reference is sometimes *necessary* \u2014 there exist truths that can only be proved circularly.\n\n**Test**: Construct S as a system where the only axiom schema involves self-reference: axiom(p) requires a prior proof of p \u2192 p (which needs selfRef). Try to prove that the identity proof selfRef(p, ax(p)) cannot be replaced by any tree of depth 0. Computationally: enumerate all depth-k well-founded proofs for increasing k and check whether any proves p in the system.\n\n**Impact**: If true, this establishes a new kind of incompleteness: not G\u00f6delian (some truths are unprovable) but *structural* (some truths require self-reference). This would have implications for automated theorem proving \u2014 proof search algorithms would need to explore circular reasoning paths, not just well-founded ones.\n\n**Catalog References**: `classical_not_self_sound_with_paradox` (Logic/ParadoxSelfSoundness.lean), `identity_valid` (Applications/NWFP/Core.lean), `zero_convergent_iff_wf` (Applications/NWFP/Core.lean)\n\n**Proof Strategy**:\n1. Define a minimal proof system where all axioms are of the form selfRef(p, inner)\n2. Prove that wfKernel of these axioms produces ax(p), which is not in the axiom set\n3. Show that no finite well-founded proof tree can close the gap\n4. Formalize this as a separation result between k-convergent classes\n\n**Domain Bridges**: Proof theory \u2194 Computability theory (via proof search decidability), Logic \u2194 Complexity theory (via proof length bounds)\n\n**Lineage**: Builds on kConvergent, zero_convergent_iff_wf, and identity_one_convergent from this cycle\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Tropical Proof Varieties and Optimal Proof Search\n\n**Conjecture**: For a proof system with n propositions, the set of achievable proof height vectors h = (h\u2081, ..., h\u2099) \u2208 (WithTop \u2115)\u207f (where h\u1d62 is the minimum proof height for proposition i) forms a tropical variety \u2014 the tropical zero set of a system of tropical polynomials determined by the proof system's inference rules.\n\n**Test**: For a small proof system (3-5 propositions, 2-3 inference rules), compute the achievable height vectors explicitly and check whether they are the tropical zero set of the polynomials induced by the inference rules. Specifically, for each rule \"from p with height h\u2081 and q with height h\u2082, derive r with height max(h\u2081, h\u2082) + 1\", the corresponding tropical polynomial is min(h\u2081 + h\u2082) \u2295 h\u1d63.\n\n**Impact**: If true, this transforms proof search from a combinatorial problem to an algebraic geometry problem. Tropical Gr\u00f6bner basis algorithms could then be applied to find optimal proofs \u2014 the shortest proof of any proposition \u2014 in polynomial time for systems with bounded tropical degree.\n\n**Catalog References**: `TPH.tmul_tadd_distrib` (Applications/NWFP/Core.lean), `self_reasoning_fixed_point` (Tropical/TropicalSelfReasoning.lean)\n\n**Proof Strategy**:\n1. Formalize the proof system as a set of tropical polynomial equations\n2. Show that the set of achievable height vectors satisfies these equations\n3. Show that any solution to the equations is achievable (completeness)\n4. Connect to tropical Gr\u00f6bner basis theory for algorithmic implications\n\n**Domain Bridges**: Proof theory \u2194 Tropical geometry (via semiring structure), Optimization \u2194 Logic (via shortest proof = tropical LP)\n\n**Lineage**: Builds on the TPH tropical semiring from this cycle and tropical results in Tropical/TropicalSelfReasoning.lean\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Consistency Metric as a Sheaf Cohomology Invariant\n\n**Conjecture**: The consistency metric CM : NWFTree \u2192 [0, 1] extends to a sheaf on the Grothendieck topology of proof tree covers, and the non-trivial cohomology classes H\u00b9(CM) classify distinct types of self-reference. Specifically, H\u00b9 = 0 characterizes well-founded proof systems, and H\u00b9 \u2260 0 detects essential self-reference.\n\n**Test**: Define a category of proof trees with morphisms given by \"proof refinement\" (replacing sub-trees with more detailed proofs). Define a presheaf sending each proof tree to its consistency metric interval [0, CM(t)]. Check whether the sheaf condition holds and compute H\u00b9 for simple examples (identity proof, nested self-reference, mutual self-reference).\n\n**Impact**: This would connect proof theory to algebraic topology in a deep way, potentially allowing topological invariants to detect structural properties of proof systems. The cohomological perspective could reveal hidden symmetries in proof systems that are invisible at the tree level.\n\n**Catalog References**: `consistencyMetric_valid_lt_one` (Applications/NWFP/Core.lean), `fixed_point_unique_under_theory_separation` (Bridges/ProofStoneCechDynamics.lean)\n\n**Proof Strategy**:\n1. Define the category of proof trees and the Grothendieck topology\n2. Construct the CM presheaf and verify the sheaf condition\n3. Compute H\u2070 and H\u00b9 for specific proof systems\n4. Relate H\u00b9 \u2260 0 to the existence of essential self-reference (proofs that cannot be well-foundedly decomposed)\n\n**Domain Bridges**: Proof theory \u2194 Algebraic topology (via sheaf cohomology), Logic \u2194 Geometry (via Grothendieck topologies on proof categories)\n\n**Lineage**: Builds on the consistency metric and stratification theorem from this cycle\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Mutual Self-Reference and Proof Graphs\n\n**Conjecture**: Extending NWFTree to allow mutual self-reference (multiple propositions referencing each other simultaneously) yields a strictly more expressive proof system. Formally: there exists a system of propositions (p\u2081, ..., p\u2099) with a valid mutually self-referential proof that cannot be decomposed into a sequence of individually self-referential proofs.\n\n**Test**: Define a proof graph type where nodes can reference any other node (not just their parent). Construct a mutual proof where p\u2081 assumes p\u2082 and p\u2082 assumes p\u2081, with both being axioms of each other. Check whether this can be factored into two independent selfRef proofs.\n\n**Impact**: If mutual self-reference is strictly more powerful, it establishes a hierarchy of self-referential proof systems: well-founded \u2282 individually self-referential \u2282 mutually self-referential \u2282 ... This hierarchy could parallel the arithmetic hierarchy in computability theory, providing a new classification of logical systems.\n\n**Catalog References**: `nestedSR_valid` (Applications/NWFP/Core.lean), `compose_valid` (Applications/NWFP/Core.lean)\n\n**Proof Strategy**:\n1. Define a ProofGraph type with labeled edges allowing mutual reference\n2. Define validity and consistency metric for proof graphs\n3. Prove that every NWFTree embeds into a ProofGraph\n4. Construct a mutually self-referential proof and show it cannot be linearized\n5. Establish a strict hierarchy of self-reference levels\n\n**Domain Bridges**: Proof theory \u2194 Graph theory (via proof graphs), Logic \u2194 Fixed-point theory (via simultaneous fixed points)\n\n**Lineage**: Builds on the NWFTree framework and kConvergent stratification from this cycle\n\n**Ambition**: extension\n",
     "domains": [
       "Algebra",
@@ -2014,6 +1939,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The key insight is that neural network training is a renormalization group (RG) flow in function space. Each training step integrates out high-frequency modes (gradient descent on fast-varying parameters), just as each RG step integrates out short-distance modes. Conjecture: The fixed points of SGD on neural networks are precisely the critical points of a renormalization group flow defined by the coarse-graining operator that averages over parameter subsets. Why now: recent work on neural network Gaussian processes shows that infinite-width networks have exact RG fixed points, and the beta function of SGD training has been computed for linear networks. Test: prove that for a 2-layer ReLU network trained on isotropic data, the SGD fixed point corresponds to the Wilson-Fisher fixed point in d=2 dimensions, and compute the critical exponents. Impact: neural network training would be governed by universality classes, meaning the same network trained on different data converges to the same fixed point if the data distribution is in the same universality class.",
+    "domains": [
+      "MachineLearning",
+      "Physics"
+    ],
+    "id": "fd_0427",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:27.476683+00:00",
+    "title": "Neural Network Training as Renormalization Group Flow"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem \u2014 given (a, f(a,n)), find n \u2014 requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
     "domains": [
       "Cryptography",
@@ -2041,6 +1981,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:28.479969+00:00",
     "title": "Idempotent Probability: Large Deviations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize grokking: prove a delayed generalization theorem for two-layer networks and characterize the phase transition as a saddle-node bifurcation.",
+    "domains": [
+      "MachineLearning",
+      "Physics"
+    ],
+    "id": "fd_0440",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:28.560336+00:00",
+    "title": "Grokking: Phase Transitions in Learning"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove neural network scaling laws from first principles. Derive power-law relationships between loss, model size, dataset size, and compute from the GP kernel spectrum.",
+    "domains": [
+      "MachineLearning",
+      "Physics"
+    ],
+    "id": "fd_0441",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:28.640557+00:00",
+    "title": "Scaling Laws from Statistical Mechanics"
   },
   {
     "consumed_by_exp_id": "",
@@ -2104,6 +2074,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
+    "domains": [
+      "MachineLearning",
+      "Physics"
+    ],
+    "id": "fd_0502",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:46.684855+00:00",
+    "title": "Diffusion Models as Stochastic Differential Equations"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the Fourier transform as a natural transformation between the category of locally compact abelian groups and the category of their dual groups. Prove Pontryagin duality as an equivalence of categories. Show that the uncertainty principle is a categorical statement: the functor Hom(-,R/Z) is contravariant.",
     "domains": [
       "Bridges",
@@ -2146,6 +2131,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:07.126580+00:00",
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
+    "domains": [
+      "Cryptography",
+      "Physics"
+    ],
+    "id": "fd_0543",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.214033+00:00",
+    "title": "Quantum Key Distribution: BB84 Security Proof"
   },
   {
     "consumed_by_exp_id": "",
@@ -2194,51 +2194,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Derive an analytic form for the square site percolation threshold. Formalize bond vs site percolation, prove known exact thresholds for triangular lattices, and connect to conformal invariance.",
-    "domains": [
-      "Computation",
-      "Physics"
-    ],
-    "id": "fd_0397",
-    "priority_score": 0.3999999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:25.080296+00:00",
-    "title": "Percolation Threshold"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove tight bounds on quantum error-correcting codes. Formalize the quantum Singleton bound, quantum Hamming bound, and construct optimal stabilizer codes. Connect to topological quantum computing.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0399",
-    "priority_score": 0.3999999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:25.231496+00:00",
-    "title": "Quantum Error Correction Bounds"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that reversible circuits achieve Landauer's bound for erasure. Formalize the connection between computational complexity and thermodynamic entropy. Construct provably optimal reversible implementations of common algorithms.",
-    "domains": [
-      "Computation",
-      "Physics"
-    ],
-    "id": "fd_0402",
-    "priority_score": 0.3999999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:25.464794+00:00",
-    "title": "Reversible Computing and Thermodynamic Efficiency"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that a general tropical curve of genus g has a divisor of degree d and rank r iff the Brill-Noether number \u03c1 = g - (r+1)(g-d+r) \u2265 0. Formalize the connection to classical algebraic geometry.",
     "domains": [
       "Tropical",
@@ -2251,36 +2206,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:25.629129+00:00",
     "title": "Tropical Brill-Noether Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize Tononi's Integrated Information Theory (IIT) using tensor network states. Conjecture: The integrated information Phi of a tensor network state equals the minimal quantum mutual information across any bipartition. Test: compute Phi for MPS (matrix product states) with bond dimension 2 and verify it matches the Schmidt rank. Impact: connects consciousness theory to quantum information and tensor categories.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0414",
-    "priority_score": 0.3999999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:26.423474+00:00",
-    "title": "Integrated Information via Tensor Networks"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Landauer's principle states that erasing one bit of information dissipates at least kT*ln(2) of heat. Apply this to proof theory: erasing a proof of theorem T to recover a shorter proof is an information-theoretic process with a thermodynamic cost. Conjecture: The minimum energy required to compress a proof of n steps into a proof of m steps (m < n) is at least kT*(n-m)*ln(2), and this bound is tight for proofs in propositional logic. A proof of length n contains n bits of information (each step is a binary choice in the search tree). Compressing it to m steps requires erasing n-m bits, each costing kT*ln(2) by Landauer. This gives a physical lower bound on proof compression that is independent of the proof system. Test: formalize proof compression as an irreversible computation and derive the Landauer bound. Compute the erasure cost for compressing a 1000-step proof of the fundamental theorem of algebra into a 100-step proof. Impact: connects information thermodynamics to proof complexity, providing a physical lower bound on proof compression.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0423",
-    "priority_score": 0.3999999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:27.146225+00:00",
-    "title": "Thermodynamic Proof Erasure: Landauer's Principle for Mathematics"
   },
   {
     "consumed_by_exp_id": "",
@@ -2344,51 +2269,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove the Coffman-Kundu-Wootters monogamy inequality for qubit entanglement: the sum of squared concurrences is bounded by the squared concurrence with the ancilla. Formalize concurrence as an entanglement measure and extend to n-qubit systems.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0462",
-    "priority_score": 0.3999999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:30.319643+00:00",
-    "title": "Quantum Entanglement Monogamy: CKW Inequality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0465",
-    "priority_score": 0.3999999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:30.568365+00:00",
-    "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0467",
-    "priority_score": 0.3999999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:30.732241+00:00",
-    "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the tropical amoeba of a Laurent polynomial is the negative logarithm of its zero set. Show that the Ronkin function is convex and piecewise-linear on the amoeba complement. Connect tropical amoebas to tropical geometry via the Maslov dequantization.",
     "domains": [
       "Tropical",
@@ -2419,21 +2299,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that the k-Local Hamiltonian Problem is QMA-complete for k >= 2. Formalize the Kitaev reduction from quantum circuit satisfiability to the local Hamiltonian problem. Analyze the promise gap and its effect on complexity.",
-    "domains": [
-      "Computation",
-      "Physics"
-    ],
-    "id": "fd_0475",
-    "priority_score": 0.3999999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:31.381522+00:00",
-    "title": "Quantum Hamiltonian Complexity: QMA-Completeness of the Local Hamiltonian Problem"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the Rademacher complexity of a hypothesis class provides tight generalization bounds for supervised learning. Formalize the margin bound for linear classifiers and extend to kernel methods. Show that VC dimension bounds are looser than Rademacher bounds for structured hypothesis classes.",
     "domains": [
       "MachineLearning",
@@ -2446,21 +2311,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:46.538330+00:00",
     "title": "Generalization Bounds via Rademacher Complexity"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the geometry of spacetime can be reconstructed from the entanglement structure of a quantum state. Formalize the ER=EPR conjecture: show that entangled qubit pairs satisfy the properties of microscopic Einstein-Rosen bridges in a toy AdS/CFT model.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0507",
-    "priority_score": 0.3999999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T21:01:47.045810+00:00",
-    "title": "Emergent Spacetime from Quantum Entanglement"
   },
   {
     "consumed_by_exp_id": "",
@@ -2599,18 +2449,78 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the derivative of the stereographic projection map at the critical coupling g*. Test: compute the stereographic map for the 1D Ising model and verify beta(g) matches. Impact: connects renormalization to conformal geometry.",
+    "description": "Derive an analytic form for the square site percolation threshold. Formalize bond vs site percolation, prove known exact thresholds for triangular lattices, and connect to conformal invariance.",
     "domains": [
-      "Geometry",
+      "Computation",
       "Physics"
     ],
-    "id": "fd_0421",
+    "id": "fd_0397",
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:26.988240+00:00",
-    "title": "Inverse Stereographic Renormalization Group"
+    "timestamp": "2026-06-03T19:55:25.080296+00:00",
+    "title": "Percolation Threshold"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove tight bounds on quantum error-correcting codes. Formalize the quantum Singleton bound, quantum Hamming bound, and construct optimal stabilizer codes. Connect to topological quantum computing.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0399",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:25.231496+00:00",
+    "title": "Quantum Error Correction Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that reversible circuits achieve Landauer's bound for erasure. Formalize the connection between computational complexity and thermodynamic entropy. Construct provably optimal reversible implementations of common algorithms.",
+    "domains": [
+      "Computation",
+      "Physics"
+    ],
+    "id": "fd_0402",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:25.464794+00:00",
+    "title": "Reversible Computing and Thermodynamic Efficiency"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize Tononi's Integrated Information Theory (IIT) using tensor network states. Conjecture: The integrated information Phi of a tensor network state equals the minimal quantum mutual information across any bipartition. Test: compute Phi for MPS (matrix product states) with bond dimension 2 and verify it matches the Schmidt rank. Impact: connects consciousness theory to quantum information and tensor categories.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0414",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:26.423474+00:00",
+    "title": "Integrated Information via Tensor Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Landauer's principle states that erasing one bit of information dissipates at least kT*ln(2) of heat. Apply this to proof theory: erasing a proof of theorem T to recover a shorter proof is an information-theoretic process with a thermodynamic cost. Conjecture: The minimum energy required to compress a proof of n steps into a proof of m steps (m < n) is at least kT*(n-m)*ln(2), and this bound is tight for proofs in propositional logic. A proof of length n contains n bits of information (each step is a binary choice in the search tree). Compressing it to m steps requires erasing n-m bits, each costing kT*ln(2) by Landauer. This gives a physical lower bound on proof compression that is independent of the proof system. Test: formalize proof compression as an irreversible computation and derive the Landauer bound. Compute the erasure cost for compressing a 1000-step proof of the fundamental theorem of algebra into a 100-step proof. Impact: connects information thermodynamics to proof complexity, providing a physical lower bound on proof compression.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0423",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:27.146225+00:00",
+    "title": "Thermodynamic Proof Erasure: Landauer's Principle for Mathematics"
   },
   {
     "consumed_by_exp_id": "",
@@ -2644,18 +2554,78 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
+    "description": "Prove the Coffman-Kundu-Wootters monogamy inequality for qubit entanglement: the sum of squared concurrences is bounded by the squared concurrence with the ancilla. Formalize concurrence as an entanglement measure and extend to n-qubit systems.",
     "domains": [
       "Physics",
-      "Geometry"
+      "Computation"
     ],
-    "id": "fd_0466",
+    "id": "fd_0462",
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:30.651923+00:00",
-    "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
+    "timestamp": "2026-06-03T19:55:30.319643+00:00",
+    "title": "Quantum Entanglement Monogamy: CKW Inequality"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0465",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.568365+00:00",
+    "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0467",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.732241+00:00",
+    "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the k-Local Hamiltonian Problem is QMA-complete for k >= 2. Formalize the Kitaev reduction from quantum circuit satisfiability to the local Hamiltonian problem. Analyze the promise gap and its effect on complexity.",
+    "domains": [
+      "Computation",
+      "Physics"
+    ],
+    "id": "fd_0475",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:31.381522+00:00",
+    "title": "Quantum Hamiltonian Complexity: QMA-Completeness of the Local Hamiltonian Problem"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the geometry of spacetime can be reconstructed from the entanglement structure of a quantum state. Formalize the ER=EPR conjecture: show that entangled qubit pairs satisfy the properties of microscopic Einstein-Rosen bridges in a toy AdS/CFT model.",
+    "domains": [
+      "Physics",
+      "Computation"
+    ],
+    "id": "fd_0507",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:47.045810+00:00",
+    "title": "Emergent Spacetime from Quantum Entanglement"
   },
   {
     "consumed_by_exp_id": "",
@@ -2704,33 +2674,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions: Holographic Verification of Proofs\n\n## Synthesis\n\nThis research cycle established a rigorous formal framework for holographic proof verification, proving that tree-structured proofs of size n admit deterministic verification certificates of length O(log n) via Merkle authentication paths. The key results \u2014 verification correctness, certificate separation under collision resistance, and a tight information-theoretic lower bound \u2014 form a complete theory for tree-structured proof systems. The most promising cross-domain connection is between proof complexity and information theory: the certificate length equals the tree depth, which equals the minimum number of bits needed to distinguish all possible proofs. This depth-information duality parallels the Bekenstein-Hawking entropy bound in black hole physics, where the information content scales with the boundary area rather than the bulk volume.\n\nThe most important open frontier is extending these results from trees to directed acyclic graphs (DAGs), which model proof sharing \u2014 the mechanism by which real mathematical proofs reuse lemmas. DAG certificates are substantially harder because a single node may lie on multiple authentication paths. The resolution of this question connects to deep problems in proof complexity (circuit-to-proof correspondences), cryptography (succinct arguments of knowledge), and combinatorics (graph entropy). The direction with highest breakthrough potential is Direction 1 (DAG holographic certificates), because a positive result would provide deterministic short certificates for all polynomial-size Frege proofs, a result strictly stronger than the PCP theorem in the deterministic setting.\n\nThe cycle's results integrate naturally with the Catalog's existing infrastructure. The `Computation/HolographicCertificate.lean` and `Logic/HolographicSearch.lean` entries provide foundational definitions (Merkle trees, bulk-boundary proof structures, entanglement wedges) that our new results extend with concrete algorithms and correctness proofs. The spectral proof space framework in `Logic/SpectralProofSpace.lean` provides graph-theoretic tools (derivation graphs, forward balls, expansion bounds) that will be essential for Direction 2.\n\n---\n\n### Direction 1: DAG Holographic Certificates via Layered Hashing\n\n**Conjecture**: For any DAG-structured proof with n nodes and depth d, there exists a deterministic \"layered Merkle\" certificate of length O(d \u00b7 log(fan-in)) verifiable in O(d \u00b7 log(fan-in)) hash evaluations. For polynomial-size Frege proofs of depth O(log n), this gives certificates of length O(log\u00b2n).\n\n**Test**: Implement a layered Merkle construction for DAG proofs. Take the DAG for a Frege proof of the pigeonhole principle PHP(n \u2192 n-1). Construct the layered certificate and measure: (a) certificate length as a function of n, (b) verification time. The conjecture predicts certificate length \u221d log\u00b2(n). If certificate length grows faster than log\u00b2(n), the conjecture is refuted for this proof family.\n\n**Impact**: If true, this would provide the first deterministic sublinear certificates for general Frege proofs. It would also establish a formal connection between proof DAG depth and verification complexity, linking proof complexity to circuit complexity. If false, the failure would identify specific structural features of proof DAGs that resist holographic compression \u2014 likely related to the fan-in distribution or the presence of \"bottleneck\" nodes through which many authentication paths must pass.\n\n**Catalog References**: `Computation/HolographicCertificate.lean`, `Logic/HolographicSearch.lean`, `Logic/SpectralProofSpace.lean`\n\n**Proof Strategy**: \n1. Define a layered DAG structure where nodes are stratified by distance from the axiom leaves.\n2. Construct a per-layer Merkle tree: within each layer, nodes are hashed into a Merkle tree, and the root of each layer depends on the roots of the previous layer.\n3. An authentication path for a node at layer k consists of: (a) O(log(layer_size)) sibling hashes within each of the k layers, giving O(k \u00b7 log(max_layer_size)) total.\n4. Prove correctness: the layered authentication path uniquely determines the node's hash relative to the global root.\n5. Key lemma: if the DAG has depth d and maximum layer size w, then certificate length is O(d \u00b7 log w).\n\n**Domain Bridges**: Proof Complexity \u2194 Circuit Complexity (DAG proofs as Boolean circuits), Cryptography \u2194 Logic (collision resistance as a logical axiom)\n\n**Lineage**: Builds on `holographic_cert_bound` and `merkleVerify_correct` from this cycle's `Logic/HolographicVerification.lean`. Extends the tree-structured theory to the DAG setting.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Spectral Certificate Complexity\n\n**Conjecture**: The certificate complexity of a proof DAG G (minimum authentication path length over all leaves) is bounded below by the spectral gap \u03bb\u2082(L(G)) of the normalized graph Laplacian of G's underlying undirected graph. Specifically: cert_complexity(G) \u2265 \u03a9(1/\u03bb\u2082).\n\n**Test**: Compute the spectral gap of the derivation graph for Frege proofs of simple tautologies (e.g., excluded middle for n variables). Plot certificate complexity against 1/\u03bb\u2082. The conjecture predicts a linear relationship. If certificate complexity grows faster or slower than 1/\u03bb\u2082, the conjecture fails.\n\n**Impact**: If true, this would provide a spectral characterization of verification efficiency, connecting proof complexity to spectral graph theory. It would mean that proofs with high spectral gap (strong connectivity) have short certificates, paralleling how expander graphs enable efficient coding. If false, it would show that certificate complexity is not captured by second-order spectral information, suggesting higher-order graph invariants are needed.\n\n**Catalog References**: `Logic/SpectralProofSpace.lean` (derivation graphs, expansion bounds), `Logic/HolographicSearch.lean` (entanglement wedges)\n\n**Proof Strategy**:\n1. Define the normalized Laplacian of a proof DAG's undirected skeleton.\n2. Use the Cheeger inequality to relate spectral gap to edge expansion.\n3. Show that high edge expansion implies short authentication paths (because expanders have small diameter).\n4. Formalize the lower bound: low spectral gap implies the existence of a \"bottleneck\" cut, which forces long authentication paths through the bottleneck.\n5. Key lemma: `expansion_proof_length_bound` from `SpectralProofSpace.lean` provides the connection between graph expansion and proof length.\n\n**Domain Bridges**: Spectral Graph Theory \u2194 Proof Complexity (Cheeger inequality as proof complexity bound), Physics \u2194 Logic (spectral gap as mass gap analogue)\n\n**Lineage**: Builds on `expansion_proof_length_bound` from `Logic/SpectralProofSpace.lean` and `authPath_length_le_depth` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Certificate Complexity of Proof Composition\n\n**Conjecture**: For any sequence of k proofs \u03c0\u2081, ..., \u03c0\u2096 composed sequentially (each using the conclusion of the previous as a premise), the holographic certificate for the composed proof has length at most log\u2082(|\u03c0\u2081|) + log\u2082(|\u03c0\u2082|) + ... + log\u2082(|\u03c0\u2096|) + k. That is, certificate length is subadditive up to a linear term in the number of compositions.\n\n**Test**: Construct a chain of k balanced proof trees, each with n leaves, composed sequentially. Measure the total certificate length. The conjecture predicts length \u2264 k \u00b7 (log\u2082(n) + 1). If the actual length exceeds this bound for any k and n, the conjecture is refuted.\n\n**Impact**: If true, this would show that proof composition preserves the holographic property with controlled overhead, enabling modular verification of large mathematical developments. If false, it would identify composition as a source of certificate blowup, suggesting that monolithic proofs are more efficiently verifiable than modular ones \u2014 a surprising result with implications for the design of proof assistants.\n\n**Catalog References**: `Logic/HolographicVerification.lean` (`compose_cert_length`, `cert_subadditive`), `Computation/HolographicCertificate.lean` (`composed_cert_bound`)\n\n**Proof Strategy**:\n1. Define k-ary sequential composition as a right-leaning binary tree.\n2. Show that the depth of the composed tree is \u03a3\u1d62 depth(\u03c0\u1d62) + k - 1.\n3. Apply the auth path \u2264 depth bound to get the certificate bound.\n4. For the tight bound, construct an explicit authentication path and show it achieves the predicted length.\n5. Key challenge: handling unbalanced compositions where some \u03c0\u1d62 are much deeper than others.\n\n**Domain Bridges**: Category Theory \u2194 Proof Theory (composition as categorical composition), Software Engineering \u2194 Logic (modular verification as modular programming)\n\n**Lineage**: Directly extends `compose_cert_length` and `cert_subadditive` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Holographic Certificates for Arithmetic Proofs\n\n**Conjecture**: Proofs in bounded arithmetic (S\u2082\u00b9, the theory corresponding to polynomial-time reasoning) of \u03a3\u2081\u1d47 sentences have holographic certificates of length O(log n) where n is the proof length. Furthermore, these certificates can be constructed in polynomial time from the proof.\n\n**Test**: Formalize simple proofs in bounded arithmetic (e.g., commutativity of addition, totality of multiplication) as proof trees. Construct their Merkle certificates and verify: (a) certificate length is O(log n), (b) construction time is polynomial. The conjecture predicts both hold. Test with proofs of increasing length to verify the scaling.\n\n**Impact**: If true, this would establish that polynomial-time reasoning has efficient holographic certificates, connecting proof complexity to computational complexity through the lens of bounded arithmetic. This would give a proof-theoretic characterization of the P vs NP question: NP = P iff every bounded arithmetic proof has a polynomial-time constructible holographic certificate. If false, it would reveal a gap between proof complexity and computational complexity.\n\n**Catalog References**: `Logic/HolographicVerification.lean` (Merkle verification), `Physics/ProofSearchInformation.lean` (`proof_length_log_lower_bound`)\n\n**Proof Strategy**:\n1. Define bounded arithmetic proofs as a specific instantiation of `ProofTree` with a bounded axiom set.\n2. Show that the tree-structured fragment of S\u2082\u00b9 proofs satisfies the balance condition (depth \u2264 log(numLeaves) + 1).\n3. Apply `holographic_cert_bound` to obtain the O(log n) bound.\n4. For the construction time bound, show that Merkle root computation is polynomial in the tree size.\n5. Key challenge: handling the cut rule in bounded arithmetic, which introduces DAG-like sharing.\n\n**Domain Bridges**: Bounded Arithmetic \u2194 Computational Complexity (S\u2082\u00b9 as P-time reasoning), Cryptography \u2194 Proof Theory (hash functions as proof compression)\n\n**Lineage**: Extends the tree-structured results to a specific proof system of independent interest. Builds on `proof_length_log_lower_bound` from `Physics/ProofSearchInformation.lean`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Quantum Holographic Certificates\n\n**Conjecture**: Using quantum certificates (density matrices of O(log n) qubits), proof verification can be performed with O(log log n) measurements, exponentially improving on classical holographic certificates.\n\n**Test**: For a family of balanced proof trees with 2^k leaves (k = 1, ..., 20), construct quantum certificates using quantum fingerprinting (encoding the Merkle root as a quantum state). Simulate the verification protocol and measure: (a) number of qubits, (b) number of measurements needed for 1-2^{-k} confidence. The conjecture predicts O(log k) = O(log log n) measurements.\n\n**Impact**: If true, this would establish an exponential quantum advantage for proof verification, the first such advantage in the foundations of mathematics. It would connect quantum information theory to proof complexity in a novel way. If false, it would show a classical-quantum parity for holographic verification, suggesting that the information content of proofs is fundamentally classical.\n\n**Catalog References**: `Logic/HolographicVerification.lean` (classical certificate framework), `Computation/HolographicCertificate.lean` (entropy bounds)\n\n**Proof Strategy**:\n1. Encode the Merkle root hash as a quantum state using quantum fingerprinting [BCWdW01].\n2. Use the SWAP test to compare the claimed root with the reconstructed root from the authentication path.\n3. Show that O(log(1/\u03b5)) SWAP tests achieve error probability \u03b5.\n4. For \u03b5 = 2^{-k}, this gives O(k) = O(log n) measurements \u2014 matching classical. The improvement to O(log log n) requires a recursive quantum fingerprinting scheme.\n5. Key insight: the recursive structure of Merkle trees enables recursive quantum fingerprinting, where each level of the tree is verified with a single quantum measurement.\n\n**Domain Bridges**: Quantum Information \u2194 Proof Theory (quantum fingerprints as proof certificates), Physics \u2194 Logic (quantum holographic principle)\n\n**Lineage**: A speculative extension of the classical holographic verification framework to the quantum setting. No direct prior results, but motivated by the quantum fingerprinting literature.\n\n**Ambition**: grand_challenge\n",
+    "description": "The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the derivative of the stereographic projection map at the critical coupling g*. Test: compute the stereographic map for the 1D Ising model and verify beta(g) matches. Impact: connects renormalization to conformal geometry.",
     "domains": [
-      "Computation",
+      "Geometry",
       "Physics"
     ],
-    "id": "fd_0586",
-    "priority_score": 0.14999999999999994,
-    "research_mode": "team",
-    "source_exp_id": "7512203a",
-    "status": "available",
-    "timestamp": "2026-06-04T01:03:57.743170+00:00",
-    "title": "Rigorous formal framework for holographic proo"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
-    "domains": [
-      "Physics",
-      "Logic"
-    ],
-    "id": "fd_0396",
+    "id": "fd_0421",
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:25.003856+00:00",
-    "title": "Hilbert 6: Axiomatization of Physics"
+    "timestamp": "2026-06-03T19:55:26.988240+00:00",
+    "title": "Inverse Stereographic Renormalization Group"
   },
   {
     "consumed_by_exp_id": "",
@@ -2749,18 +2704,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize the information paradox as a theorem about unitary evolution: prove that if black hole evaporation is unitary, information is preserved; if not, quantum mechanics is violated. Construct a toy model where a 2-qubit black hole evaporates unitarily and recover the initial state from radiation.",
+    "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
     "domains": [
       "Physics",
-      "Logic"
+      "Geometry"
     ],
-    "id": "fd_0463",
+    "id": "fd_0466",
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
     "status": "available",
-    "timestamp": "2026-06-03T19:55:30.401337+00:00",
-    "title": "Hawking Radiation: Information Paradox Formalized"
+    "timestamp": "2026-06-03T19:55:30.651923+00:00",
+    "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
     "consumed_by_exp_id": "",
@@ -2821,21 +2776,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:58:15.194222+00:00",
     "title": "Rigorous formal foundations for the Collatz conj"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the Fisher information metric defines a Riemannian metric on the statistical manifold of probability distributions. Show that the Kullback-Leibler divergence is the geodesic distance in this metric for exponential families. Bridge: the Chentsov theorem characterizes the Fisher metric uniquely by its invariance under sufficient statistics.",
-    "domains": [
-      "Bridges",
-      "Physics"
-    ],
-    "id": "fd_0530",
-    "priority_score": 0.09999999999999992,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T22:10:06.130772+00:00",
-    "title": "Bridge: Information Geometry Connecting Statistics and Differential Geometry"
   },
   {
     "consumed_by_exp_id": "",
@@ -3154,6 +3094,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
+    "domains": [
+      "Physics",
+      "Logic"
+    ],
+    "id": "fd_0396",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:25.003856+00:00",
+    "title": "Hilbert 6: Axiomatization of Physics"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
     "domains": [
       "Logic",
@@ -3259,6 +3214,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the information paradox as a theorem about unitary evolution: prove that if black hole evaporation is unitary, information is preserved; if not, quantum mechanics is violated. Construct a toy model where a 2-qubit black hole evaporates unitarily and recover the initial state from radiation.",
+    "domains": [
+      "Physics",
+      "Logic"
+    ],
+    "id": "fd_0463",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T19:55:30.401337+00:00",
+    "title": "Hawking Radiation: Information Paradox Formalized"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the ground state degeneracy of a topologically ordered system on a genus-g surface is d^g for some integer d (the quantum dimension). Formalize the connection between ground state degeneracy, anyon braiding statistics, and topological quantum field theory.",
     "domains": [
       "Physics",
@@ -3301,6 +3271,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:46.905756+00:00",
     "title": "Quantum Gravity as Topological Quantum Field Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Prove that the Fisher information metric defines a Riemannian metric on the statistical manifold of probability distributions. Show that the Kullback-Leibler divergence is the geodesic distance in this metric for exponential families. Bridge: the Chentsov theorem characterizes the Fisher metric uniquely by its invariance under sufficient statistics.",
+    "domains": [
+      "Bridges",
+      "Physics"
+    ],
+    "id": "fd_0530",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:06.130772+00:00",
+    "title": "Bridge: Information Geometry Connecting Statistics and Differential Geometry"
   },
   {
     "consumed_by_exp_id": "",
@@ -3376,6 +3361,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T23:40:36.748677+00:00",
     "title": "Speculative: Topological Data Analysis of Theorem Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Holographic Verification of Proofs\n\n## Synthesis\n\nThis research cycle established a rigorous formal framework for holographic proof verification, proving that tree-structured proofs of size n admit deterministic verification certificates of length O(log n) via Merkle authentication paths. The key results \u2014 verification correctness, certificate separation under collision resistance, and a tight information-theoretic lower bound \u2014 form a complete theory for tree-structured proof systems. The most promising cross-domain connection is between proof complexity and information theory: the certificate length equals the tree depth, which equals the minimum number of bits needed to distinguish all possible proofs. This depth-information duality parallels the Bekenstein-Hawking entropy bound in black hole physics, where the information content scales with the boundary area rather than the bulk volume.\n\nThe most important open frontier is extending these results from trees to directed acyclic graphs (DAGs), which model proof sharing \u2014 the mechanism by which real mathematical proofs reuse lemmas. DAG certificates are substantially harder because a single node may lie on multiple authentication paths. The resolution of this question connects to deep problems in proof complexity (circuit-to-proof correspondences), cryptography (succinct arguments of knowledge), and combinatorics (graph entropy). The direction with highest breakthrough potential is Direction 1 (DAG holographic certificates), because a positive result would provide deterministic short certificates for all polynomial-size Frege proofs, a result strictly stronger than the PCP theorem in the deterministic setting.\n\nThe cycle's results integrate naturally with the Catalog's existing infrastructure. The `Computation/HolographicCertificate.lean` and `Logic/HolographicSearch.lean` entries provide foundational definitions (Merkle trees, bulk-boundary proof structures, entanglement wedges) that our new results extend with concrete algorithms and correctness proofs. The spectral proof space framework in `Logic/SpectralProofSpace.lean` provides graph-theoretic tools (derivation graphs, forward balls, expansion bounds) that will be essential for Direction 2.\n\n---\n\n### Direction 1: DAG Holographic Certificates via Layered Hashing\n\n**Conjecture**: For any DAG-structured proof with n nodes and depth d, there exists a deterministic \"layered Merkle\" certificate of length O(d \u00b7 log(fan-in)) verifiable in O(d \u00b7 log(fan-in)) hash evaluations. For polynomial-size Frege proofs of depth O(log n), this gives certificates of length O(log\u00b2n).\n\n**Test**: Implement a layered Merkle construction for DAG proofs. Take the DAG for a Frege proof of the pigeonhole principle PHP(n \u2192 n-1). Construct the layered certificate and measure: (a) certificate length as a function of n, (b) verification time. The conjecture predicts certificate length \u221d log\u00b2(n). If certificate length grows faster than log\u00b2(n), the conjecture is refuted for this proof family.\n\n**Impact**: If true, this would provide the first deterministic sublinear certificates for general Frege proofs. It would also establish a formal connection between proof DAG depth and verification complexity, linking proof complexity to circuit complexity. If false, the failure would identify specific structural features of proof DAGs that resist holographic compression \u2014 likely related to the fan-in distribution or the presence of \"bottleneck\" nodes through which many authentication paths must pass.\n\n**Catalog References**: `Computation/HolographicCertificate.lean`, `Logic/HolographicSearch.lean`, `Logic/SpectralProofSpace.lean`\n\n**Proof Strategy**: \n1. Define a layered DAG structure where nodes are stratified by distance from the axiom leaves.\n2. Construct a per-layer Merkle tree: within each layer, nodes are hashed into a Merkle tree, and the root of each layer depends on the roots of the previous layer.\n3. An authentication path for a node at layer k consists of: (a) O(log(layer_size)) sibling hashes within each of the k layers, giving O(k \u00b7 log(max_layer_size)) total.\n4. Prove correctness: the layered authentication path uniquely determines the node's hash relative to the global root.\n5. Key lemma: if the DAG has depth d and maximum layer size w, then certificate length is O(d \u00b7 log w).\n\n**Domain Bridges**: Proof Complexity \u2194 Circuit Complexity (DAG proofs as Boolean circuits), Cryptography \u2194 Logic (collision resistance as a logical axiom)\n\n**Lineage**: Builds on `holographic_cert_bound` and `merkleVerify_correct` from this cycle's `Logic/HolographicVerification.lean`. Extends the tree-structured theory to the DAG setting.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Spectral Certificate Complexity\n\n**Conjecture**: The certificate complexity of a proof DAG G (minimum authentication path length over all leaves) is bounded below by the spectral gap \u03bb\u2082(L(G)) of the normalized graph Laplacian of G's underlying undirected graph. Specifically: cert_complexity(G) \u2265 \u03a9(1/\u03bb\u2082).\n\n**Test**: Compute the spectral gap of the derivation graph for Frege proofs of simple tautologies (e.g., excluded middle for n variables). Plot certificate complexity against 1/\u03bb\u2082. The conjecture predicts a linear relationship. If certificate complexity grows faster or slower than 1/\u03bb\u2082, the conjecture fails.\n\n**Impact**: If true, this would provide a spectral characterization of verification efficiency, connecting proof complexity to spectral graph theory. It would mean that proofs with high spectral gap (strong connectivity) have short certificates, paralleling how expander graphs enable efficient coding. If false, it would show that certificate complexity is not captured by second-order spectral information, suggesting higher-order graph invariants are needed.\n\n**Catalog References**: `Logic/SpectralProofSpace.lean` (derivation graphs, expansion bounds), `Logic/HolographicSearch.lean` (entanglement wedges)\n\n**Proof Strategy**:\n1. Define the normalized Laplacian of a proof DAG's undirected skeleton.\n2. Use the Cheeger inequality to relate spectral gap to edge expansion.\n3. Show that high edge expansion implies short authentication paths (because expanders have small diameter).\n4. Formalize the lower bound: low spectral gap implies the existence of a \"bottleneck\" cut, which forces long authentication paths through the bottleneck.\n5. Key lemma: `expansion_proof_length_bound` from `SpectralProofSpace.lean` provides the connection between graph expansion and proof length.\n\n**Domain Bridges**: Spectral Graph Theory \u2194 Proof Complexity (Cheeger inequality as proof complexity bound), Physics \u2194 Logic (spectral gap as mass gap analogue)\n\n**Lineage**: Builds on `expansion_proof_length_bound` from `Logic/SpectralProofSpace.lean` and `authPath_length_le_depth` from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Certificate Complexity of Proof Composition\n\n**Conjecture**: For any sequence of k proofs \u03c0\u2081, ..., \u03c0\u2096 composed sequentially (each using the conclusion of the previous as a premise), the holographic certificate for the composed proof has length at most log\u2082(|\u03c0\u2081|) + log\u2082(|\u03c0\u2082|) + ... + log\u2082(|\u03c0\u2096|) + k. That is, certificate length is subadditive up to a linear term in the number of compositions.\n\n**Test**: Construct a chain of k balanced proof trees, each with n leaves, composed sequentially. Measure the total certificate length. The conjecture predicts length \u2264 k \u00b7 (log\u2082(n) + 1). If the actual length exceeds this bound for any k and n, the conjecture is refuted.\n\n**Impact**: If true, this would show that proof composition preserves the holographic property with controlled overhead, enabling modular verification of large mathematical developments. If false, it would identify composition as a source of certificate blowup, suggesting that monolithic proofs are more efficiently verifiable than modular ones \u2014 a surprising result with implications for the design of proof assistants.\n\n**Catalog References**: `Logic/HolographicVerification.lean` (`compose_cert_length`, `cert_subadditive`), `Computation/HolographicCertificate.lean` (`composed_cert_bound`)\n\n**Proof Strategy**:\n1. Define k-ary sequential composition as a right-leaning binary tree.\n2. Show that the depth of the composed tree is \u03a3\u1d62 depth(\u03c0\u1d62) + k - 1.\n3. Apply the auth path \u2264 depth bound to get the certificate bound.\n4. For the tight bound, construct an explicit authentication path and show it achieves the predicted length.\n5. Key challenge: handling unbalanced compositions where some \u03c0\u1d62 are much deeper than others.\n\n**Domain Bridges**: Category Theory \u2194 Proof Theory (composition as categorical composition), Software Engineering \u2194 Logic (modular verification as modular programming)\n\n**Lineage**: Directly extends `compose_cert_length` and `cert_subadditive` from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Holographic Certificates for Arithmetic Proofs\n\n**Conjecture**: Proofs in bounded arithmetic (S\u2082\u00b9, the theory corresponding to polynomial-time reasoning) of \u03a3\u2081\u1d47 sentences have holographic certificates of length O(log n) where n is the proof length. Furthermore, these certificates can be constructed in polynomial time from the proof.\n\n**Test**: Formalize simple proofs in bounded arithmetic (e.g., commutativity of addition, totality of multiplication) as proof trees. Construct their Merkle certificates and verify: (a) certificate length is O(log n), (b) construction time is polynomial. The conjecture predicts both hold. Test with proofs of increasing length to verify the scaling.\n\n**Impact**: If true, this would establish that polynomial-time reasoning has efficient holographic certificates, connecting proof complexity to computational complexity through the lens of bounded arithmetic. This would give a proof-theoretic characterization of the P vs NP question: NP = P iff every bounded arithmetic proof has a polynomial-time constructible holographic certificate. If false, it would reveal a gap between proof complexity and computational complexity.\n\n**Catalog References**: `Logic/HolographicVerification.lean` (Merkle verification), `Physics/ProofSearchInformation.lean` (`proof_length_log_lower_bound`)\n\n**Proof Strategy**:\n1. Define bounded arithmetic proofs as a specific instantiation of `ProofTree` with a bounded axiom set.\n2. Show that the tree-structured fragment of S\u2082\u00b9 proofs satisfies the balance condition (depth \u2264 log(numLeaves) + 1).\n3. Apply `holographic_cert_bound` to obtain the O(log n) bound.\n4. For the construction time bound, show that Merkle root computation is polynomial in the tree size.\n5. Key challenge: handling the cut rule in bounded arithmetic, which introduces DAG-like sharing.\n\n**Domain Bridges**: Bounded Arithmetic \u2194 Computational Complexity (S\u2082\u00b9 as P-time reasoning), Cryptography \u2194 Proof Theory (hash functions as proof compression)\n\n**Lineage**: Extends the tree-structured results to a specific proof system of independent interest. Builds on `proof_length_log_lower_bound` from `Physics/ProofSearchInformation.lean`.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Quantum Holographic Certificates\n\n**Conjecture**: Using quantum certificates (density matrices of O(log n) qubits), proof verification can be performed with O(log log n) measurements, exponentially improving on classical holographic certificates.\n\n**Test**: For a family of balanced proof trees with 2^k leaves (k = 1, ..., 20), construct quantum certificates using quantum fingerprinting (encoding the Merkle root as a quantum state). Simulate the verification protocol and measure: (a) number of qubits, (b) number of measurements needed for 1-2^{-k} confidence. The conjecture predicts O(log k) = O(log log n) measurements.\n\n**Impact**: If true, this would establish an exponential quantum advantage for proof verification, the first such advantage in the foundations of mathematics. It would connect quantum information theory to proof complexity in a novel way. If false, it would show a classical-quantum parity for holographic verification, suggesting that the information content of proofs is fundamentally classical.\n\n**Catalog References**: `Logic/HolographicVerification.lean` (classical certificate framework), `Computation/HolographicCertificate.lean` (entropy bounds)\n\n**Proof Strategy**:\n1. Encode the Merkle root hash as a quantum state using quantum fingerprinting [BCWdW01].\n2. Use the SWAP test to compare the claimed root with the reconstructed root from the authentication path.\n3. Show that O(log(1/\u03b5)) SWAP tests achieve error probability \u03b5.\n4. For \u03b5 = 2^{-k}, this gives O(k) = O(log n) measurements \u2014 matching classical. The improvement to O(log log n) requires a recursive quantum fingerprinting scheme.\n5. Key insight: the recursive structure of Merkle trees enables recursive quantum fingerprinting, where each level of the tree is verified with a single quantum measurement.\n\n**Domain Bridges**: Quantum Information \u2194 Proof Theory (quantum fingerprints as proof certificates), Physics \u2194 Logic (quantum holographic principle)\n\n**Lineage**: A speculative extension of the classical holographic verification framework to the quantum setting. No direct prior results, but motivated by the quantum fingerprinting literature.\n\n**Ambition**: grand_challenge\n",
+    "domains": [
+      "Computation",
+      "Physics"
+    ],
+    "id": "fd_0586",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "7512203a",
+    "status": "available",
+    "timestamp": "2026-06-04T01:03:57.743170+00:00",
+    "title": "Rigorous formal framework for holographic proo"
   },
   {
     "consumed_by_exp_id": "",
