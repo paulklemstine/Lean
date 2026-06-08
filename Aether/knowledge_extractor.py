@@ -1525,7 +1525,9 @@ Research mode: {concept.research_mode}
         # SALVAGE MODE: For mid-quality cycles (0.15-0.7) with multiple theorems,
         # don't integrate everything — ask the LLM to identify the best individual
         # theorems and only integrate those. A weak package may still contain gems.
-        if 0.15 <= job.quality_score < 0.7 and job.theorem_count >= 5:
+        # SKIP salvage for Phase B completions — Phase B is packaging, not math.
+        is_phase_b = getattr(job, 'phase', '') in ('B', 'B_dispatched', 'complete') and hasattr(job, 'phase_b_prompt_version')
+        if not is_phase_b and 0.15 <= job.quality_score < 0.7 and job.theorem_count >= 5:
             print(f"[Salvage] Q={job.quality_score:.3f} in salvage range — extracting best theorems")
             salvaged_lean = self._salvage_best_theorems(job)
             if salvaged_lean:
