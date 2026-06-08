@@ -7,7 +7,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-08",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "rigorous_algebraic_foundations_for_probability_t",
@@ -16,7 +16,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
@@ -25,7 +25,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08T19:03:25Z",
-      "hue": 270
+      "hue": 275
     }
   ],
   "edges": [],

@@ -19,8 +19,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "18efbb83",
     "filename": "bridge_logic_of_provability_and_fixed_points_in_ar.json",
     "pkg_num": 1,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.3352,
     "title": "Provability Logic GL: Fixed Points, G\u00f6del Elements, and Incompleteness in Lattice Algebra"
   },
   {
@@ -71,18 +71,18 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Logic",
-      "hue": 90,
+      "hue": 272,
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.3352,
+      "quality": "partial",
       "shape": "star_of_david",
       "title": "Provability Logic GL: Fixed Points, G\u00f6del Elements, and Incompleteness in Lattice Algebra"
     },
     {
       "date": "2026-06-08",
       "domain": "Novelty",
-      "hue": 272,
+      "hue": 271,
       "id": "rigorous_algebraic_foundations_for_probability_t",
       "primary_domain": "Bridges",
       "priority_score": 0.66968,
@@ -93,7 +93,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08T19:03:25Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 275,
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
       "primary_domain": "Bridges",
       "priority_score": 0.62584,
