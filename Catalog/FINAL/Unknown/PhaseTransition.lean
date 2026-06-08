@@ -1,1 +1,0 @@
-../../Catalog/Bridges/Pythagorean/CayleyExpander/PhaseTransition.lean
