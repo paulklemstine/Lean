@@ -11,14 +11,28 @@
       "percent_complete": 0,
       "status": "RUNNING",
       "timestamp": "2026-06-08T09:44:44"
+    },
+    {
+      "elapsed_seconds": 4725.9,
+      "percent_complete": 0,
+      "status": "IDLE",
+      "timestamp": "2026-06-08T10:54:44"
+    },
+    {
+      "elapsed_seconds": 4725.9,
+      "error": "",
+      "has_files": true,
+      "percent_complete": 0,
+      "status": "FINAL:IDLE",
+      "timestamp": "2026-06-08T10:54:44"
     }
   ],
-  "completed_at": "",
+  "completed_at": "2026-06-08T10:54:44",
   "domain": "Algebra",
   "error": "",
-  "final_percent": 0.0,
-  "final_status": "",
-  "has_files": false,
+  "final_percent": 0,
+  "final_status": "IDLE",
+  "has_files": true,
   "job_id": "0cab7a5b",
   "project_id": "bcb37ac1-db23-4e04-9064-43da20472f85",
   "prompt_length": 25678,
@@ -27,6 +41,16 @@
       "at_elapsed_seconds": 526.0,
       "from": "SUBMITTED",
       "to": "RUNNING"
+    },
+    {
+      "at_elapsed_seconds": 4725.9,
+      "from": "RUNNING",
+      "to": "IDLE"
+    },
+    {
+      "at_elapsed_seconds": 4725.9,
+      "from": "IDLE",
+      "to": "FINAL:IDLE"
     }
   ],
   "submitted_at": "2026-06-08T09:35:59",
