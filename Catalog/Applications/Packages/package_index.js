@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-08T19:03:25Z",
+    "domain": "Applications",
+    "exp_id": "84d24cbc",
+    "filename": "transreal_arithmetic_computing_beyond_plus_minus_i.json",
+    "pkg_num": 2,
+    "quality": "partial",
+    "quality_score": 0.62584,
+    "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
+  },
+  {
     "date": "2026-06-08",
     "domain": "Novelty",
     "exp_id": "07ee0316",
@@ -23,6 +33,14 @@ window.PACKAGE_DB_INDEX = {
       "22827c52"
     ],
     "title": "Rigorous Algebraic Foundations for Probability Theory in Non-Archimedean Ordered Fields"
+  },
+  "transreal_arithmetic_computing_beyond_plus_minus_i.json": {
+    "domain": "Applications",
+    "exp_id": "84d24cbc",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
   }
 };
 
@@ -35,13 +53,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 270,
       "id": "rigorous_algebraic_foundations_for_probability_t",
       "primary_domain": "Bridges",
       "priority_score": 0.66968,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Rigorous Algebraic Foundations for Probability Theory in Non-Archimedean Ordered Fields"
+    },
+    {
+      "date": "2026-06-08T19:03:25Z",
+      "domain": "Applications",
+      "hue": 95,
+      "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
+      "primary_domain": "Bridges",
+      "priority_score": 0.62584,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
     }
   ]
 };

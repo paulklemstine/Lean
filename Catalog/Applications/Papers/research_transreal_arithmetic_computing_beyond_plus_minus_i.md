@@ -214,30 +214,43 @@ This means (ℝ, +, ×) is isomorphic to the sub-structure (ofReal(ℝ), +, ×) 
 
 ## 7. Applications and Related Work
 
-### 7.1 Floating-Point Arithmetic
+### 7.1 Floating-Point Arithmetic and IEEE 754
 
-IEEE 754 floating-point arithmetic includes NaN (Not a Number), +Inf, and −Inf with propagation rules remarkably similar to the transreal conventions. In particular:
+IEEE 754 floating-point arithmetic (IEEE, 2019) includes NaN (Not a Number), +Inf, and −Inf with propagation rules remarkably similar to the transreal conventions. In particular:
 - NaN propagates through operations (cf. Φ absorption)
 - 0 × Inf = NaN (cf. 0 × ∞ = Φ)
 - Inf + (−Inf) = NaN (cf. ∞ + (−∞) = Φ)
+- NaN is "unordered" with respect to all values (cf. Φ being incomparable in any natural order)
 
-Transreal arithmetic provides a rigorous mathematical foundation for these engineering conventions.
+Transreal arithmetic provides a rigorous mathematical foundation for these engineering conventions, which were originally designed for pragmatic computational reasons rather than algebraic coherence. The formal verification of transreal properties thus serves a dual purpose: it validates the mathematical structure of the transreals themselves, and it provides theoretical backing for the NaN semantics that billions of floating-point processors implement daily.
 
-### 7.2 Interval Arithmetic
+One notable divergence is that IEEE 754 specifies NaN ≠ NaN (i.e., NaN is not equal to itself), while in the transreals, Φ = Φ by the reflexivity of equality. This distinction has significant implications for conditional branching in programs and for the formalization of equality predicates in proof assistants.
 
-In verified numerical computing, interval arithmetic represents uncertain values as intervals [a, b]. The empty interval ∅, which arises from operations like [1, 2] ∩ [3, 4], plays a role analogous to Φ: it represents "no valid value" and propagates through subsequent computations.
+### 7.2 Interval Arithmetic and Verified Computing
+
+In verified numerical computing, interval arithmetic represents uncertain values as intervals [a, b]. The empty interval ∅, which arises from operations like [1, 2] ∩ [3, 4], plays a role analogous to Φ: it represents "no valid value" and propagates through subsequent computations. The Kaucher interval arithmetic framework, which allows "improper" intervals [a, b] where a > b, provides yet another approach to handling indeterminate or contradictory information in numerical computation.
+
+The transreal approach differs from interval arithmetic in that it produces *point* values rather than sets, but shares the fundamental design principle of totality: every operation must return a result, and indeterminate results must be explicitly tracked rather than silently discarded.
 
 ### 7.3 Database Null Semantics
 
-SQL's three-valued logic (TRUE, FALSE, NULL) uses NULL as a propagating indeterminate value. The transreal Φ generalizes this to full arithmetic: Φ is to transreal arithmetic what NULL is to SQL logic.
+SQL's three-valued logic (TRUE, FALSE, NULL) uses NULL as a propagating indeterminate value. The transreal Φ generalizes this to full arithmetic: Φ is to transreal arithmetic what NULL is to SQL logic. The parallel extends to the distinction between "unknown" (a value exists but is not available) and "inapplicable" (no value makes sense)—a distinction that SQL's NULL conflates, and that some database theorists have argued should be separated.
 
-### 7.4 Geometric Computing
+In the transreal framework, Φ unambiguously represents "the result of an indeterminate computation," providing a cleaner semantic model than SQL's overloaded NULL.
 
-Anderson's original motivation was geometric computing: when computing with projective coordinates, operations like 0/0 arise naturally at singular configurations (e.g., the intersection of parallel lines). Rather than trapping these as errors, the transreals allow computation to continue with Φ-flagged results.
+### 7.4 Geometric Computing and Projective Geometry
 
-### 7.5 Comparison with EReal
+Anderson's original motivation was geometric computing: when computing with projective coordinates, operations like 0/0 arise naturally at singular configurations (e.g., the intersection of parallel lines, the projection of a point at infinity, or degenerate conic sections). Rather than trapping these as errors, the transreals allow computation to continue with Φ-flagged results.
 
-Mathlib's `EReal` type extends ℝ with ±∞ but deliberately leaves ∞ + (−∞) problematic (defined as 0 by convention). The transreal approach of assigning Φ is mathematically cleaner in that it avoids arbitrary choices while maintaining totality, at the cost of losing the group/ring structure.
+In computational geometry, algorithms frequently encounter degenerate configurations where standard arithmetic produces undefined expressions. The transreal approach offers a systematic alternative to the common practice of perturbing inputs (symbolic perturbation, simulation of simplicity) to avoid degeneracies: instead of preventing degenerate cases, the transreals allow them to occur naturally and propagate their indeterminate status through the computation.
+
+### 7.5 Comparison with EReal and Other Extensions
+
+Mathlib's `EReal` type extends ℝ with ±∞ but deliberately leaves ∞ + (−∞) problematic (defined as 0 by convention in some formalizations). The transreal approach of assigning Φ is mathematically cleaner in that it avoids arbitrary choices while maintaining totality, at the cost of losing the group/ring structure.
+
+The **surreal numbers** of Conway (1976) provide a vastly richer extension of ℝ that includes infinitesimals and transfinite ordinals, but they do not address the 0/0 problem—division by zero remains undefined in the surreals. The **hyperreal numbers** of nonstandard analysis similarly extend ℝ with infinitesimals but leave 0/0 undefined.
+
+The transreals occupy a unique niche: they are the minimal extension of ℝ that makes all four basic arithmetic operations total while preserving commutativity and associativity of addition.
 
 ---
 
