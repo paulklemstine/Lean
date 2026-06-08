@@ -3,6 +3,7 @@
     --bg-base: #0a0c16;
     --bg-panel: #111525;
     --bg-elevated: #1a1f35;
+    --bg-secondary: #1a1f35;
     --bg-glass: rgba(17, 21, 37, 0.7);
     --text-main: #e8edf5;
     --text-muted: #8892a8;
@@ -33,6 +34,7 @@ body.light-theme {
     --bg-base: #f8fafc;
     --bg-panel: #ffffff;
     --bg-elevated: #f1f5f9;
+    --bg-secondary: #f1f5f9;
     --bg-glass: rgba(255, 255, 255, 0.8);
     --text-main: #0f172a;
     --text-muted: #64748b;
@@ -1132,16 +1134,25 @@ body.light-theme .code-editor:focus {
 }
 
 .code-output {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: var(--bg-elevated);
     margin: 0 !important;
     border-top: 1px solid var(--border-color);
-    color: #a7f3d0 !important;
+    color: var(--text-main);
     white-space: pre-wrap;
     min-height: 60px;
 }
 
 .code-output.error {
     color: #fca5a5 !important;
+}
+
+body.light-theme .code-output {
+    background-color: var(--bg-elevated);
+    color: var(--text-main);
+}
+
+body.light-theme .code-output.error {
+    color: #dc2626 !important;
 }
 
 /* Visualization containers */
@@ -1558,8 +1569,8 @@ body.light-theme .code-editor:focus {
 
 .directions-view {
     padding: 24px;
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 100%;
+    margin: 0;
     animation: fadeIn 0.3s ease;
 }
 
@@ -2175,6 +2186,22 @@ body.light-theme .gallery-card::after {
 body.light-theme .gallery-card:hover {
     box-shadow: 0 0 30px rgba(124, 58, 237, 0.1), var(--shadow-lg);
     border-color: rgba(124, 58, 237, 0.3);
+}
+
+body.light-theme .tooltip-domain {
+    color: var(--accent-secondary);
+}
+
+body.light-theme .tooltip-score {
+    color: #d97706;
+}
+
+body.light-theme .tooltip-date {
+    color: var(--text-muted);
+}
+
+body.light-theme .sidebar-overlay {
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 /* ─── Toast Notification ─── */

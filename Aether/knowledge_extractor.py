@@ -340,11 +340,14 @@ class KnowledgeExtractor:
         phase_a_lean = job.result_lean or ""
         # Pass Phase A's Lean file paths so Phase B can @reference them
         phase_a_lean_file_paths = job.phase_a_result.get("lean_files", []) if job.phase_a_result else []
+        # Pass Phase A's future directions so Phase B includes them in PACKAGE.json
+        phase_a_future_dirs = getattr(job, 'result_future_directions', None) or ""
         job.prompt = self.pi_agent.write_aristotle_prompt(
             concept=job.concept,
             phase="B_package_only",
             phase_a_lean_content=phase_a_lean,
             phase_a_lean_files=phase_a_lean_file_paths,
+            phase_a_future_directions=phase_a_future_dirs,
         )
         # Phase B does NOT need a fresh project_dir — reuse Phase A's
         # (the Lean files are already there as inputs)
@@ -2028,12 +2031,26 @@ Research mode: {concept.research_mode}
             # Wrap salvaged theorems in a -- NEW_FILE: header so integrate_async
             # can route them to the correct Catalog directory. Without the header,
             # integrate splits by NEW_FILE/DIFF markers and finds 0 parts.
-            domain = getattr(job.concept, 'domain', 'Speculative') if job.concept else 'Speculative'
-            from output_organizer import normalize_domain
-            domain = normalize_domain(domain)
-            # Derive a safe package name from the concept title
-            pkg_name = re.sub(r'[^a-zA-Z0-9]', '', (job.concept.title or 'salvaged').replace(' ', ''))[:40] or 'SalvagedBest'
-            header = f"-- NEW_FILE: Catalog/{domain}/{pkg_name}/SalvagedBest.lean"
+            # Prefer the original Phase A file path if available, so the Lean
+            # Proofs tab shows the real file name instead of "SalvagedBest.lean".
+            original_lean_files = []
+            if hasattr(job, 'phase_a_result') and job.phase_a_result:
+                original_lean_files = job.phase_a_result.get("lean_files", [])
+            if original_lean_files:
+                # Use the first original Lean file path from Phase A
+                orig = original_lean_files[0]
+                # Make it relative to Catalog if it has an absolute or project-dir prefix
+                if "Catalog/" in orig:
+                    header = f"-- NEW_FILE: {orig[orig.index('Catalog/'):]}".rstrip('/')
+                else:
+                    header = f"-- NEW_FILE: Catalog/{orig}"
+            else:
+                # Fall back to deriving a path from the concept title
+                domain = getattr(job.concept, 'domain', 'Speculative') if job.concept else 'Speculative'
+                from output_organizer import normalize_domain
+                domain = normalize_domain(domain)
+                pkg_name = re.sub(r'[^a-zA-Z0-9]', '', (job.concept.title or 'salvaged').replace(' ', ''))[:40] or 'SalvagedBest'
+                header = f"-- NEW_FILE: Catalog/{domain}/{pkg_name}/SalvagedBest.lean"
             return f"{header}\n" + '\n\n'.join(selected) + '\n'
 
         except Exception as e:

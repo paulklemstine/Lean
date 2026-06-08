@@ -1846,6 +1846,7 @@ class PiAgentClient:
         phase: str = "A_lean_only",
         phase_a_lean_content: Optional[str] = None,
         phase_a_lean_files: Optional[List[str]] = None,
+        phase_a_future_directions: Optional[str] = None,
     ) -> str:
         """Write an Aristotle prompt, routing by phase.
 
@@ -1861,6 +1862,7 @@ class PiAgentClient:
                 concept=concept,
                 phase_a_lean_content=phase_a_lean_content or "",
                 phase_a_lean_files=phase_a_lean_files,
+                phase_a_future_directions=phase_a_future_directions,
             )
         if phase == "A_lean_only":
             return self._build_phase_a_lean_prompt(
@@ -2004,6 +2006,7 @@ is the deliverable. Be precise, be deep, be world-class.
         concept: ResearchConcept,
         phase_a_lean_content: str,
         phase_a_lean_files: Optional[List[str]] = None,
+        phase_a_future_directions: Optional[str] = None,
     ) -> str:
         """Phase B: packaging only. Reads Phase A's Lean as input.
 
@@ -2012,7 +2015,8 @@ is the deliverable. Be precise, be deep, be world-class.
         Lean code should be produced.
         """
         # Strip FUTURE_DIRECTIONS blocks from Phase A Lean content —
-        # Phase B packages the math, not the conjectures
+        # Phase B packages the math, not the conjectures (those are
+        # passed separately via phase_a_future_directions)
         lean_content = self._strip_future_directions(phase_a_lean_content)
         lean_excerpt = lean_content[:8000] if lean_content else "(no Lean content provided)"
         domain_brief = f"Research domain: {concept.domain}\nResearch mode: {concept.research_mode}\n"
@@ -2056,12 +2060,29 @@ is the deliverable. Be precise, be deep, be world-class.
             - NO new `.lean` files
             - NO new theorem proofs
             - NO changes to the existing Lean 4 source
-            - NO `FUTURE_DIRECTIONS.md` (Phase A already produced future directions)
+            - NO `FUTURE_DIRECTIONS.md` as a separate file (Phase A already produced
+              future directions — they are provided below for inclusion in PACKAGE.json)
 
             The math is already proved. Treat the Lean files below as the
             ground truth — your prose should explain and contextualize them.
             Use the @file references above to point readers to specific theorems.
             """)
+
+        # Build future directions section if Phase A produced them
+        future_directions_section = ""
+        if phase_a_future_directions and len(phase_a_future_directions.strip()) > 50:
+            fd_excerpt = phase_a_future_directions.strip()[:3000]
+            future_directions_section = f"""
+## Phase A Future Directions (include in PACKAGE.json)
+
+Phase A produced these future research directions. Include them verbatim
+(or lightly edited for clarity) in the `future_directions` field of
+PACKAGE.json so they appear in the "Future Directions" tab on the website.
+
+```
+{fd_excerpt}
+```
+"""
 
         prompt = f"""{phase_b_header}
 
@@ -2077,7 +2098,7 @@ is the deliverable. Be precise, be deep, be world-class.
 ```
 {lean_excerpt}
 ```
-
+{future_directions_section}
 ## Your task
 
 Produce the deliverables listed above. Reference the specific theorems and
@@ -2089,7 +2110,8 @@ RESEARCH_PAPER.md: write the formal paper with abstract, definitions, results.
 demo.py: write numerical examples that demonstrate the results.
 HTML widgets: build 1-3 interactive visualizations that let users explore
 the mathematical objects defined in the Lean code.
-PACKAGE.json: bundle all of the above into a single JSON file.
+PACKAGE.json: bundle all of the above into a single JSON file. Include the
+future directions from Phase A in the `future_directions` field.
 
 Be vivid, be precise, be world-class. The math has already been done — now
 make it beautiful to read.
