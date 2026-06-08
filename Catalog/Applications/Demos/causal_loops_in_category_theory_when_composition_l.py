@@ -1,315 +1,292 @@
 #!/usr/bin/env python3
 """
-Associativity Defect Algebras: Demonstration
+Causal Loops in Category Theory: Numerical Demonstrations
 
-This script demonstrates the key concepts from the paper:
-1. Constructing cocycles from 2-cochains (coboundary operator)
-2. Verifying the cocycle condition
-3. Computing defect indices
-4. Showing the group structure on cocycles
+Demonstrates the cocycle-pentagon bridge, defect accumulation, and
+non-strictifiability via concrete computations.
 """
 
-import numpy as np
-from typing import Callable, Tuple
+import itertools
+from typing import Callable
 
+# --- Part 1: The ℤ/2ℤ Cocycle ---
 
-def coboundary(f: Callable[[int, int], int], a: int, b: int, c: int, n: int) -> int:
-    """Compute the coboundary of a 2-cochain f modulo n.
-    
-    δ(a,b,c) = f(b,c) - f((a+b)%n, c) + f(a, (b+c)%n) - f(a, b)  mod n
-    """
-    return (f(b, c) - f((a + b) % n, c) + f(a, (b + c) % n) - f(a, b)) % n
+def zmod2_cocycle(a: int, b: int, c: int) -> int:
+    """The generator of H³(ℤ/2ℤ, ℤ/2ℤ): α(a,b,c) = a·b·c mod 2."""
+    return (a * b * c) % 2
 
-
-def verify_cocycle(delta: Callable[[int, int, int], int], n: int) -> bool:
-    """Verify the 3-cocycle condition for δ on ℤ/nℤ.
-    
-    For all a, b, c, d:
-        δ(b,c,d) + δ(a,b+c,d) + δ(a,b,c) ≡ δ(a+b,c,d) + δ(a,b,c+d)  (mod n)
-    """
-    for a in range(n):
-        for b in range(n):
-            for c in range(n):
-                for d in range(n):
-                    lhs = (delta(b, c, d) + delta(a, (b + c) % n, d) + delta(a, b, c)) % n
-                    rhs = (delta((a + b) % n, c, d) + delta(a, b, (c + d) % n)) % n
-                    if lhs != rhs:
-                        return False
+def check_cocycle_condition(alpha: Callable, n: int) -> bool:
+    """Check the 3-cocycle condition over ℤ/nℤ."""
+    for g1, g2, g3, g4 in itertools.product(range(n), repeat=4):
+        val = (alpha(g2, g3, g4)
+               - alpha((g1 + g2) % n, g3, g4)
+               + alpha(g1, (g2 + g3) % n, g4)
+               - alpha(g1, g2, (g3 + g4) % n)
+               + alpha(g1, g2, g3)) % n
+        if val != 0:
+            return False
     return True
 
+def check_pentagon(alpha: Callable, n: int) -> bool:
+    """Check the pentagon identity over ℤ/nℤ."""
+    for f, g, h, k in itertools.product(range(n), repeat=4):
+        lhs = (alpha((f + g) % n, h, k) + alpha(f, g, (h + k) % n)) % n
+        rhs = (alpha(g, h, k) + alpha(f, (g + h) % n, k) + alpha(f, g, h)) % n
+        if lhs != rhs:
+            return False
+    return True
 
-def defect_index(delta: Callable[[int, int, int], int], n: int) -> int:
-    """Count triples (a,b,c) where δ(a,b,c) ≠ 0."""
-    count = 0
-    for a in range(n):
-        for b in range(n):
-            for c in range(n):
-                if delta(a, b, c) % n != 0:
-                    count += 1
-    return count
+def check_coboundary(alpha: Callable, n: int) -> bool:
+    """Check if alpha is a coboundary by exhaustive search over all 2-cochains."""
+    # There are n^(n^2) possible 2-cochains β: (ℤ/nℤ)² → ℤ/nℤ
+    for beta_vals in itertools.product(range(n), repeat=n*n):
+        beta = lambda g1, g2, bv=beta_vals: bv[g1 * n + g2]
+        is_match = True
+        for g1, g2, g3 in itertools.product(range(n), repeat=3):
+            coboundary_val = (beta(g2, g3)
+                             - beta((g1 + g2) % n, g3)
+                             + beta(g1, (g2 + g3) % n)
+                             - beta(g1, g2)) % n
+            if coboundary_val != alpha(g1, g2, g3):
+                is_match = False
+                break
+        if is_match:
+            return True
+    return False
 
+print("=" * 60)
+print("CAUSAL LOOPS: Cocycle-Pentagon Bridge Demonstrations")
+print("=" * 60)
 
-def count_cocycles_and_coboundaries(n: int) -> Tuple[int, int]:
-    """Count distinct cocycles and coboundaries over ℤ/nℤ.
+print("\n--- Part 1: ℤ/2ℤ Cocycle Verification ---")
+print(f"α(1,1,1) = {zmod2_cocycle(1,1,1)}")
+print(f"α(1,1,0) = {zmod2_cocycle(1,1,0)}")
+print(f"α(0,1,1) = {zmod2_cocycle(0,1,1)}")
+print(f"Is 3-cocycle: {check_cocycle_condition(zmod2_cocycle, 2)}")
+print(f"Satisfies pentagon: {check_pentagon(zmod2_cocycle, 2)}")
+print(f"Is coboundary: {check_coboundary(zmod2_cocycle, 2)}")
+
+# Zero cocycle
+zero = lambda a, b, c: 0
+print(f"\nZero cocycle is cocycle: {check_cocycle_condition(zero, 2)}")
+print(f"Zero cocycle is coboundary: {check_coboundary(zero, 2)}")
+
+# --- Part 2: Associator Defect ---
+
+print("\n--- Part 2: Associator Defect for Subtraction ---")
+def assoc_defect_sub(a: int, b: int, c: int) -> int:
+    """Associator defect of subtraction: (a-b)-c vs a-(b-c)."""
+    return (a - b) - c - (a - (b - c))
+
+for a, b, c in [(10, 3, 5), (7, 2, 4), (0, 0, 1), (100, 50, 25)]:
+    defect = assoc_defect_sub(a, b, c)
+    print(f"  Defect({a},{b},{c}) = {defect} = -2·{c} = {-2*c}  ✓" if defect == -2*c else f"  ERROR")
+
+# --- Part 3: Pentagon Defect ---
+
+print("\n--- Part 3: Pentagon Defect for Subtraction ---")
+def pentagon_defect_sub(a: int, b: int, c: int, d: int) -> int:
+    """Pentagon defect for subtraction."""
+    D = assoc_defect_sub
+    lhs = D(a, b, c) + D(a, b - c, d) + D(b, c, d)
+    rhs = D(a - b, c, d) + D(a, b, c - d)
+    return lhs - rhs
+
+for a, b, c, d in [(0, 0, 0, 1), (1, 2, 3, 4), (5, 3, 7, 2)]:
+    defect = pentagon_defect_sub(a, b, c, d)
+    expected = -4 * d
+    print(f"  PentDefect({a},{b},{c},{d}) = {defect} = -4·{d} = {expected}  {'✓' if defect == expected else '✗'}")
+
+# --- Part 4: H³ computation for small cyclic groups ---
+
+print("\n--- Part 4: H³(ℤ/n, ℤ/n) for small n ---")
+for n in [2]:
+    # Count cocycles and coboundaries
+    cocycle_count = 0
+    coboundary_count = 0
     
-    Warning: O(n^(n²)) for cocycles — only feasible for n ≤ 3.
-    For coboundaries, we enumerate 2-cochains: O(n^(n²)) as well.
-    """
-    # For small n, enumerate all 2-cochains and their coboundaries
-    coboundary_cocycles = set()
-    total_cochains = 0
-    
+    # Count cocycles (checking all n^(n^3) cochains is expensive, but n is small)
     if n <= 3:
-        # Enumerate a sample of 2-cochains
-        # For n=2, there are 2^4 = 16 cochains
-        for f_vals in np.ndindex(*([n] * (n * n))):
-            f_arr = np.array(f_vals).reshape(n, n)
-            f = lambda a, b, arr=f_arr: int(arr[a % n, b % n])
-            
-            # Compute the coboundary
-            delta_vals = tuple(
-                coboundary(f, a, b, c, n)
-                for a in range(n) for b in range(n) for c in range(n)
+        for alpha_vals in itertools.product(range(n), repeat=n**3):
+            alpha = lambda g1, g2, g3, av=alpha_vals, nn=n: av[g1 * nn**2 + g2 * nn + g3]
+            if check_cocycle_condition(alpha, n):
+                cocycle_count += 1
+
+        # Count coboundaries
+        coboundary_set = set()
+        for beta_vals in itertools.product(range(n), repeat=n**2):
+            beta = lambda g1, g2, bv=beta_vals, nn=n: bv[g1 * nn + g2]
+            cb_key = tuple(
+                (beta(g2, g3) - beta((g1+g2) % n, g3) + beta(g1, (g2+g3) % n) - beta(g1, g2)) % n
+                for g1, g2, g3 in itertools.product(range(n), repeat=3)
             )
-            coboundary_cocycles.add(delta_vals)
-            total_cochains += 1
-    
-    return total_cochains, len(coboundary_cocycles)
+            coboundary_set.add(cb_key)
+        coboundary_count = len(coboundary_set)
+        
+        h3_order = cocycle_count // coboundary_count if coboundary_count > 0 else 0
+        print(f"  n={n}: |Z³| = {cocycle_count}, |B³| = {coboundary_count}, |H³| = {h3_order}")
+    else:
+        # For n >= 4, just check the product cocycle
+        prod_cocycle = lambda a, b, c, nn=n: (a * b * c) % nn
+        is_coc = check_cocycle_condition(prod_cocycle, n)
+        is_cob = check_coboundary(prod_cocycle, n) if n <= 5 else "skipped"
+        print(f"  n={n}: product cocycle is cocycle={is_coc}, is coboundary={is_cob}")
 
+# --- Part 5: Defect accumulation ---
 
-def main():
-    print("=" * 60)
-    print("ASSOCIATIVITY DEFECT ALGEBRAS: DEMONSTRATION")
-    print("=" * 60)
-    
-    # Example 1: The non-trivial cocycle δ(a,b,c) = 2abc over ℤ
-    print("\n--- Example 1: Non-trivial cocycle δ(a,b,c) = 2abc ---")
-    delta_2abc = lambda a, b, c: 2 * a * b * c
-    print(f"δ(1,1,1) = {delta_2abc(1, 1, 1)}")
-    print(f"δ(1,2,3) = {delta_2abc(1, 2, 3)}")
-    print(f"δ(0,b,c) = 0 for all b,c (verified for b,c in [1..5])")
-    
-    # Verify cocycle condition for small values
-    print("\nVerifying cocycle condition for a,b,c,d ∈ {-2,...,2}:")
-    violations = 0
-    for a in range(-2, 3):
-        for b in range(-2, 3):
-            for c in range(-2, 3):
-                for d in range(-2, 3):
-                    lhs = delta_2abc(b, c, d) + delta_2abc(a, b + c, d) + delta_2abc(a, b, c)
-                    rhs = delta_2abc(a + b, c, d) + delta_2abc(a, b, c + d)
-                    if lhs != rhs:
-                        violations += 1
-    print(f"Violations: {violations} (expected 0)")
-    
-    # Example 2: Coboundary construction
-    print("\n--- Example 2: Coboundary of f(a,b) = ab² ---")
-    f_ab2 = lambda a, b: a * b**2
-    print("f(a,b) = ab²")
-    print(f"Coboundary δ(1,2,3) = f(2,3) - f(3,3) + f(1,5) - f(1,2)")
-    print(f"  = {f_ab2(2,3)} - {f_ab2(3,3)} + {f_ab2(1,5)} - {f_ab2(1,2)}")
-    cb = f_ab2(2, 3) - f_ab2(3, 3) + f_ab2(1, 5) - f_ab2(1, 2)
-    print(f"  = {cb}")
-    print(f"Compare: 2·1·2·3 = {2*1*2*3}")
-    
-    # Example 3: Group structure
-    print("\n--- Example 3: Group structure on cocycles ---")
-    delta1 = lambda a, b, c: 2 * a * b * c
-    delta2 = lambda a, b, c: 4 * a * b * c
-    delta_product = lambda a, b, c: delta1(a, b, c) + delta2(a, b, c)
-    delta_inverse = lambda a, b, c: -delta1(a, b, c)
-    
-    print(f"δ₁(1,1,1) = {delta1(1,1,1)}")
-    print(f"δ₂(1,1,1) = {delta2(1,1,1)}")
-    print(f"(δ₁·δ₂)(1,1,1) = {delta_product(1,1,1)}")
-    print(f"δ₁⁻¹(1,1,1) = {delta_inverse(1,1,1)}")
-    print(f"(δ₁·δ₁⁻¹)(1,1,1) = {delta1(1,1,1) + delta_inverse(1,1,1)} (should be 0)")
-    
-    # Example 4: Defect index over finite groups
-    print("\n--- Example 4: Defect index over ℤ/nℤ ---")
-    for n in [2, 3, 5, 7]:
-        # Cocycle δ(a,b,c) = 2abc mod n
-        delta_mod = lambda a, b, c, n=n: (2 * a * b * c) % n
-        idx = defect_index(delta_mod, n)
-        is_cocycle = verify_cocycle(delta_mod, n)
-        print(f"  ℤ/{n}ℤ: defect_index = {idx}/{n**3}, is_cocycle = {is_cocycle}")
-    
-    # Example 5: Coboundary counting for small groups
-    print("\n--- Example 5: Coboundary counting ---")
-    for n in [2, 3]:
-        total, distinct_cb = count_cocycles_and_coboundaries(n)
-        print(f"  ℤ/{n}ℤ: {total} 2-cochains → {distinct_cb} distinct coboundaries")
-    
-    # Example 6: Rigidity demonstration
-    print("\n--- Example 6: Rigidity (associative + cancellative → trivial defect) ---")
-    print("Consider (ℤ, +, 0): associative and cancellative.")
-    print("Any defect magma structure must have defect = 0.")
-    print("Proof: From defect_spec, a+(b+c) = (a+(b+c)) + δ(a,b,c)")
-    print("       By cancellation, δ(a,b,c) = 0.")
-    print()
-    print("Counter-example without cancellation:")
-    print("Consider ({0,1}, comp(a,b)=0): associative but NOT cancellative.")
-    print("comp(comp(a,b),c) = comp(0,c) = 0")
-    print("comp(comp(a,comp(b,c)),d) = comp(comp(a,0),d) = comp(0,d) = 0")
-    print("So defect can be anything! (No constraint)")
-    
-    # Example 7: Pentagon identity check
-    print("\n--- Example 7: Pentagon identity for standard 3-cocycle ---")
-    # For the additive defect algebra, pentagon = cocycle condition
-    # The cocycle δ(a,b,c) = 2abc satisfies pentagon iff cocycle condition holds
-    delta = lambda a, b, c: 2 * a * b * c
-    print("Checking pentagon (= cocycle condition) for δ(a,b,c) = 2abc:")
-    pentagon_ok = True
-    for a in range(-3, 4):
-        for b in range(-3, 4):
-            for c in range(-3, 4):
-                for d in range(-3, 4):
-                    lhs = delta(b, c, d) + delta(a, b+c, d) + delta(a, b, c)
-                    rhs = delta(a+b, c, d) + delta(a, b, c+d)
-                    if lhs != rhs:
-                        pentagon_ok = False
-                        break
-    print(f"Pentagon identity holds: {pentagon_ok}")
-    
-    print("\n" + "=" * 60)
-    print("ALL DEMONSTRATIONS COMPLETE")
-    print("=" * 60)
+print("\n--- Part 5: Defect Accumulation ---")
+def foldl_sub(lst):
+    """Left-associated subtraction."""
+    if not lst: return 0
+    result = lst[0]
+    for x in lst[1:]:
+        result -= x
+    return result
 
+def foldr_sub(lst):
+    """Right-associated subtraction."""
+    if not lst: return 0
+    result = lst[-1]
+    for x in reversed(lst[:-1]):
+        result = x - result
+    return result
 
-if __name__ == "__main__":
-    main()
+for n in range(2, 10):
+    lst = [5] * n
+    left = foldl_sub(lst)
+    right = foldr_sub(lst)
+    diff = abs(left - right)
+    print(f"  n={n}: foldl={left:6d}, foldr={right:6d}, |diff|={diff}")
+
+print("\n" + "=" * 60)
+print("All demonstrations complete.")
 
 
 #!/usr/bin/env python3
 """
-Visualization: Defect Landscape of Associativity Failure
+Visualization: The Pentagon Identity and Associahedron
 
-Generates plots showing:
-1. Heatmap of the cocycle δ(a,b,c) = 2abc over ℤ
-2. Defect index as a function of group order
-3. Pentagon identity satisfaction across perturbation strength
+Generates a visualization of:
+1. The pentagon (K4 associahedron) showing the 5 parenthesizations
+2. The cocycle defect heatmap for ℤ/nℤ
+3. Defect accumulation growth
 """
 
-import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.colors import TwoSlopeNorm
+import matplotlib.patches as mpatches
+import numpy as np
+import itertools
 
+# --- Figure 1: The Associahedron (Pentagon) ---
 
-def plot_cocycle_heatmaps():
-    """Plot heatmaps of the cocycle δ(a,b,c) = 2abc for fixed c values."""
-    fig, axes = plt.subplots(1, 4, figsize=(16, 4))
-    fig.suptitle("Cocycle δ(a,b,c) = 2abc for Fixed c", fontsize=14)
-    
-    r = 10
-    a_vals = np.arange(-r, r + 1)
-    b_vals = np.arange(-r, r + 1)
-    A, B = np.meshgrid(a_vals, b_vals, indexing='ij')
-    
-    for idx, c_val in enumerate([1, 2, 3, 5]):
-        delta = 2 * A * B * c_val
-        norm = TwoSlopeNorm(vmin=delta.min(), vcenter=0, vmax=delta.max())
-        im = axes[idx].pcolormesh(a_vals, b_vals, delta, cmap='RdBu_r', norm=norm)
-        axes[idx].set_title(f"c = {c_val}")
-        axes[idx].set_xlabel("a")
-        axes[idx].set_ylabel("b")
-        axes[idx].set_aspect('equal')
-        fig.colorbar(im, ax=axes[idx], shrink=0.8)
-    
-    plt.tight_layout()
-    plt.savefig("cocycle_heatmaps.png", dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved cocycle_heatmaps.png")
+fig, axes = plt.subplots(1, 3, figsize=(18, 6))
 
+ax = axes[0]
+ax.set_title("The Associahedron K₄\n(Pentagon Identity)", fontsize=14, fontweight='bold')
 
-def plot_defect_index_vs_group_order():
-    """Plot defect index of δ(a,b,c) = 2abc mod n as a function of n."""
-    ns = list(range(2, 30))
-    indices = []
-    fractions = []
-    
-    for n in ns:
-        count = 0
-        for a in range(n):
-            for b in range(n):
-                for c in range(n):
-                    if (2 * a * b * c) % n != 0:
-                        count += 1
-        indices.append(count)
-        fractions.append(count / n**3)
-    
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
-    
-    # Absolute defect index
-    ax1.bar(ns, indices, color='steelblue', alpha=0.8)
-    ax1.set_xlabel("Group order n")
-    ax1.set_ylabel("Defect index |{(a,b,c) : δ ≠ 0}|")
-    ax1.set_title("Defect Index of δ = 2abc mod n")
-    
-    # Highlight primes
-    primes = [p for p in ns if all(p % d != 0 for d in range(2, p))]
-    for p in primes:
-        idx = ns.index(p)
-        ax1.bar(p, indices[idx], color='coral', alpha=0.8)
-    
-    # Fraction
-    ax2.plot(ns, fractions, 'o-', color='darkgreen', markersize=4)
-    ax2.set_xlabel("Group order n")
-    ax2.set_ylabel("Fraction of triples with non-zero defect")
-    ax2.set_title("Defect Density")
-    ax2.axhline(y=1.0, color='gray', linestyle='--', alpha=0.5)
-    
-    # Mark primes
-    prime_frac = [fractions[ns.index(p)] for p in primes]
-    ax2.plot(primes, prime_frac, 'o', color='coral', markersize=6, label='Primes')
-    ax2.legend()
-    
-    plt.tight_layout()
-    plt.savefig("defect_index_analysis.png", dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved defect_index_analysis.png")
+# Pentagon vertices
+angles = [np.pi/2 + 2*np.pi*i/5 for i in range(5)]
+R = 1.0
+vx = [R * np.cos(a) for a in angles]
+vy = [R * np.sin(a) for a in angles]
 
+labels = [
+    "((ab)c)d",
+    "(a(bc))d", 
+    "a((bc)d)",
+    "a(b(cd))",
+    "(ab)(cd)"
+]
 
-def plot_coboundary_landscape():
-    """Visualize the coboundary operator on random 2-cochains over ℤ/nℤ."""
-    n = 7
-    num_samples = 200
-    
-    defect_indices = []
-    
-    for _ in range(num_samples):
-        # Random 2-cochain
-        f = np.random.randint(0, n, size=(n, n))
-        
-        # Compute coboundary
-        delta = np.zeros((n, n, n), dtype=int)
-        for a in range(n):
-            for b in range(n):
-                for c in range(n):
-                    delta[a, b, c] = (
-                        f[b, c] - f[(a+b) % n, c] + f[a, (b+c) % n] - f[a, b]
-                    ) % n
-        
-        defect_indices.append(np.count_nonzero(delta))
-    
-    fig, ax = plt.subplots(figsize=(8, 5))
-    ax.hist(defect_indices, bins=range(0, n**3 + 2), color='mediumpurple', 
-            alpha=0.8, edgecolor='white')
-    ax.set_xlabel("Defect Index")
-    ax.set_ylabel("Frequency")
-    ax.set_title(f"Distribution of Coboundary Defect Indices over ℤ/{n}ℤ\n"
-                 f"({num_samples} random 2-cochains)")
-    ax.axvline(x=np.mean(defect_indices), color='red', linestyle='--', 
-               label=f'Mean = {np.mean(defect_indices):.1f}')
-    ax.legend()
-    
-    plt.tight_layout()
-    plt.savefig("coboundary_landscape.png", dpi=150, bbox_inches='tight')
-    plt.close()
-    print("Saved coboundary_landscape.png")
+# Draw edges
+for i in range(5):
+    j = (i + 1) % 5
+    ax.plot([vx[i], vx[j]], [vy[i], vy[j]], 'b-', linewidth=2)
 
+# Draw vertices and labels
+for i in range(5):
+    ax.plot(vx[i], vy[i], 'ko', markersize=10, zorder=5)
+    offset = 0.25
+    lx = vx[i] * (1 + offset/R)
+    ly = vy[i] * (1 + offset/R)
+    ax.text(lx, ly, labels[i], ha='center', va='center', fontsize=9,
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow', edgecolor='gray'))
 
-if __name__ == "__main__":
-    plot_cocycle_heatmaps()
-    plot_defect_index_vs_group_order()
-    plot_coboundary_landscape()
-    print("\nAll visualizations complete!")
+# Arrows for the two paths
+ax.annotate('', xy=(vx[3], vy[3]-0.05), xytext=(vx[0], vy[0]-0.05),
+            arrowprops=dict(arrowstyle='->', color='red', lw=2, connectionstyle='arc3,rad=0.3'))
+ax.annotate('', xy=(vx[3]+0.05, vy[3]), xytext=(vx[0]+0.05, vy[0]),
+            arrowprops=dict(arrowstyle='->', color='green', lw=2, connectionstyle='arc3,rad=-0.3'))
+
+ax.text(0, -1.7, "Red path = Green path\n(Pentagon Identity)", 
+        ha='center', fontsize=10, style='italic', color='purple')
+
+ax.set_xlim(-1.8, 1.8)
+ax.set_ylim(-2.0, 1.8)
+ax.set_aspect('equal')
+ax.axis('off')
+
+# --- Figure 2: Cocycle Values Heatmap ---
+
+ax = axes[1]
+ax.set_title("3-Cocycle α(a,b,c) = abc\non ℤ/2ℤ", fontsize=14, fontweight='bold')
+
+n = 2
+data = np.zeros((n**2, n))
+for idx, (a, b) in enumerate(itertools.product(range(n), repeat=2)):
+    for c in range(n):
+        data[idx, c] = (a * b * c) % n
+
+im = ax.imshow(data, cmap='YlOrRd', aspect='auto', interpolation='nearest')
+ax.set_xlabel('c', fontsize=12)
+ax.set_ylabel('(a, b)', fontsize=12)
+ax.set_xticks(range(n))
+ax.set_yticks(range(n**2))
+ax.set_yticklabels([f"({a},{b})" for a, b in itertools.product(range(n), repeat=2)])
+plt.colorbar(im, ax=ax, label='α(a,b,c)')
+
+# Annotate cells
+for idx in range(n**2):
+    for c in range(n):
+        val = int(data[idx, c])
+        ax.text(c, idx, str(val), ha='center', va='center', fontsize=14, fontweight='bold')
+
+# --- Figure 3: Defect Accumulation ---
+
+ax = axes[2]
+ax.set_title("Defect Accumulation\nLeft vs Right Association", fontsize=14, fontweight='bold')
+
+ns = list(range(2, 20))
+v = 5
+left_vals = []
+right_vals = []
+diffs = []
+
+for nn in ns:
+    lst = [v] * nn
+    # Left fold
+    left = lst[0]
+    for x in lst[1:]:
+        left -= x
+    # Right fold
+    right = lst[-1]
+    for x in reversed(lst[:-1]):
+        right = x - right
+    left_vals.append(left)
+    right_vals.append(right)
+    diffs.append(abs(left - right))
+
+ax.plot(ns, left_vals, 'b-o', label='Left-assoc', markersize=5)
+ax.plot(ns, right_vals, 'r-s', label='Right-assoc', markersize=5)
+ax.plot(ns, diffs, 'g--^', label='|Difference|', markersize=5)
+ax.axhline(y=0, color='gray', linestyle=':', alpha=0.5)
+ax.set_xlabel('Number of elements', fontsize=12)
+ax.set_ylabel('Value', fontsize=12)
+ax.legend(fontsize=10)
+ax.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('pentagon_visualization.png', dpi=150, bbox_inches='tight')
+print("Saved pentagon_visualization.png")

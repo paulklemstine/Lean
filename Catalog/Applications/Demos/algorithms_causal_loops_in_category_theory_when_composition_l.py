@@ -1,199 +1,192 @@
 #!/usr/bin/env python3
 """
-Algorithms for Associativity Defect Algebras
+Algorithms for Causal Loops in Category Theory
 
-Type-hinted implementations of the core algorithms from the paper.
+Type-hinted implementations of:
+1. Cocycle verification
+2. Pentagon identity checking
+3. Coboundary decomposition
+4. H³ computation for finite abelian groups
+5. Associator defect analysis
 """
 
-from typing import Callable, Dict, List, Tuple, Set
-from dataclasses import dataclass
-import numpy as np
+from typing import Callable, Optional, Tuple, List, Set, Dict
+import itertools
 
 
-@dataclass
-class AdditiveDefectAlgebra:
-    """An additive defect algebra over ℤ/nℤ.
-    
-    Stores the cocycle as a 3D array indexed by (a, b, c).
+# --- Core Types ---
+
+CochainFn = Callable[[int, int, int], int]
+Cochain2Fn = Callable[[int, int], int]
+
+
+# --- Algorithm 1: Cocycle Verification ---
+
+def verify_cocycle(alpha: CochainFn, n: int) -> Tuple[bool, Optional[Tuple[int, int, int, int]]]:
     """
-    n: int
-    cocycle: np.ndarray  # shape (n, n, n)
+    Verify the 3-cocycle condition over ℤ/nℤ.
     
-    def verify_cocycle_condition(self) -> bool:
-        """Verify δ(b,c,d) + δ(a,b+c,d) + δ(a,b,c) = δ(a+b,c,d) + δ(a,b,c+d) mod n."""
-        n = self.n
-        for a in range(n):
-            for b in range(n):
-                for c in range(n):
-                    for d in range(n):
-                        lhs = (self.cocycle[b, c, d] + 
-                               self.cocycle[a, (b+c) % n, d] + 
-                               self.cocycle[a, b, c]) % n
-                        rhs = (self.cocycle[(a+b) % n, c, d] + 
-                               self.cocycle[a, b, (c+d) % n]) % n
-                        if lhs != rhs:
-                            return False
-        return True
+    Returns (True, None) if α is a cocycle, or (False, counterexample) otherwise.
     
-    def defect_index(self) -> int:
-        """Count non-zero entries in the cocycle."""
-        return int(np.count_nonzero(self.cocycle))
+    The 3-cocycle condition is:
+    α(g₂,g₃,g₄) - α(g₁+g₂,g₃,g₄) + α(g₁,g₂+g₃,g₄) - α(g₁,g₂,g₃+g₄) + α(g₁,g₂,g₃) ≡ 0 (mod n)
     
-    def __add__(self, other: 'AdditiveDefectAlgebra') -> 'AdditiveDefectAlgebra':
-        """Pointwise addition of cocycles (defect product)."""
-        assert self.n == other.n
-        return AdditiveDefectAlgebra(
-            n=self.n,
-            cocycle=(self.cocycle + other.cocycle) % self.n
+    Time: O(n⁴), Space: O(1)
+    """
+    for g1, g2, g3, g4 in itertools.product(range(n), repeat=4):
+        val = (alpha(g2, g3, g4)
+               - alpha((g1 + g2) % n, g3, g4)
+               + alpha(g1, (g2 + g3) % n, g4)
+               - alpha(g1, g2, (g3 + g4) % n)
+               + alpha(g1, g2, g3)) % n
+        if val != 0:
+            return False, (g1, g2, g3, g4)
+    return True, None
+
+
+# --- Algorithm 2: Pentagon Identity Check ---
+
+def verify_pentagon(alpha: CochainFn, n: int) -> Tuple[bool, Optional[Tuple[int, int, int, int]]]:
+    """
+    Verify the pentagon identity over ℤ/nℤ.
+    
+    α(f+g, h, k) + α(f, g, h+k) = α(g, h, k) + α(f, g+h, k) + α(f, g, h)  (mod n)
+    
+    By our bridge theorem, this is equivalent to the cocycle condition.
+    
+    Time: O(n⁴), Space: O(1)
+    """
+    for f, g, h, k in itertools.product(range(n), repeat=4):
+        lhs = (alpha((f + g) % n, h, k) + alpha(f, g, (h + k) % n)) % n
+        rhs = (alpha(g, h, k) + alpha(f, (g + h) % n, k) + alpha(f, g, h)) % n
+        if lhs != rhs:
+            return False, (f, g, h, k)
+    return True, None
+
+
+# --- Algorithm 3: Coboundary Decomposition ---
+
+def find_coboundary_decomposition(
+    alpha: CochainFn, n: int
+) -> Optional[List[List[int]]]:
+    """
+    Find a 2-cochain β such that α = δβ, or return None if α is not a coboundary.
+    
+    Searches exhaustively over all n^(n²) possible 2-cochains.
+    
+    Time: O(n^(n²+3)), Space: O(n²)
+    """
+    for beta_vals in itertools.product(range(n), repeat=n * n):
+        beta = lambda g1, g2, bv=beta_vals: bv[g1 * n + g2]
+        is_match = True
+        for g1, g2, g3 in itertools.product(range(n), repeat=3):
+            coboundary = (beta(g2, g3)
+                         - beta((g1 + g2) % n, g3)
+                         + beta(g1, (g2 + g3) % n)
+                         - beta(g1, g2)) % n
+            if coboundary != alpha(g1, g2, g3):
+                is_match = False
+                break
+        if is_match:
+            return [[beta_vals[i * n + j] for j in range(n)] for i in range(n)]
+    return None
+
+
+# --- Algorithm 4: H³ Computation ---
+
+def compute_h3_order(n: int) -> Dict[str, int]:
+    """
+    Compute |H³(ℤ/nℤ, ℤ/nℤ)| by counting cocycles and coboundaries.
+    
+    WARNING: Exponential in n. Only practical for n ≤ 3.
+    
+    Returns dict with cocycle_count, coboundary_count, h3_order.
+    """
+    # Count cocycles
+    cocycle_count = 0
+    for alpha_vals in itertools.product(range(n), repeat=n**3):
+        alpha = lambda g1, g2, g3, av=alpha_vals: av[g1 * n**2 + g2 * n + g3]
+        ok, _ = verify_cocycle(alpha, n)
+        if ok:
+            cocycle_count += 1
+    
+    # Count distinct coboundaries
+    coboundary_set: Set[Tuple[int, ...]] = set()
+    for beta_vals in itertools.product(range(n), repeat=n**2):
+        beta = lambda g1, g2, bv=beta_vals: bv[g1 * n + g2]
+        cb_key = tuple(
+            (beta(g2, g3) - beta((g1 + g2) % n, g3) + beta(g1, (g2 + g3) % n) - beta(g1, g2)) % n
+            for g1, g2, g3 in itertools.product(range(n), repeat=3)
         )
+        coboundary_set.add(cb_key)
     
-    def __neg__(self) -> 'AdditiveDefectAlgebra':
-        """Negation of cocycle (defect inverse)."""
-        return AdditiveDefectAlgebra(
-            n=self.n,
-            cocycle=(-self.cocycle) % self.n
-        )
-
-
-def coboundary_operator(f: np.ndarray, n: int) -> np.ndarray:
-    """Compute the coboundary of a 2-cochain f : ℤ/nℤ × ℤ/nℤ → ℤ/nℤ.
-    
-    Args:
-        f: 2D array of shape (n, n) representing the 2-cochain
-        n: modulus
-    
-    Returns:
-        3D array of shape (n, n, n) representing the 3-cocycle ∂²f
-    
-    Formula: (∂²f)(a,b,c) = f(b,c) - f((a+b)%n, c) + f(a, (b+c)%n) - f(a, b)
-    """
-    delta = np.zeros((n, n, n), dtype=int)
-    for a in range(n):
-        for b in range(n):
-            for c in range(n):
-                delta[a, b, c] = (
-                    f[b, c] - f[(a + b) % n, c] + f[a, (b + c) % n] - f[a, b]
-                ) % n
-    return delta
-
-
-def construct_trivial_cocycle(n: int) -> AdditiveDefectAlgebra:
-    """Construct the trivial (zero) cocycle over ℤ/nℤ."""
-    return AdditiveDefectAlgebra(n=n, cocycle=np.zeros((n, n, n), dtype=int))
-
-
-def construct_coboundary(f: np.ndarray, n: int) -> AdditiveDefectAlgebra:
-    """Construct a coboundary cocycle from a 2-cochain."""
-    return AdditiveDefectAlgebra(n=n, cocycle=coboundary_operator(f, n))
-
-
-def enumerate_coboundaries(n: int) -> Set[Tuple[int, ...]]:
-    """Enumerate all distinct coboundaries over ℤ/nℤ.
-    
-    Returns the set of distinct cocycle values (as tuples).
-    Warning: O(n^(n²)) complexity — only feasible for small n.
-    """
-    coboundaries: Set[Tuple[int, ...]] = set()
-    
-    for f_vals in np.ndindex(*([n] * (n * n))):
-        f = np.array(f_vals, dtype=int).reshape(n, n)
-        delta = coboundary_operator(f, n)
-        coboundaries.add(tuple(delta.flatten()))
-    
-    return coboundaries
-
-
-def classify_h3(n: int) -> Dict[str, int]:
-    """Classify H³(ℤ/nℤ, ℤ/nℤ) for small n.
-    
-    Returns:
-        Dictionary with counts of cocycles, coboundaries, and |H³|.
-    """
-    # For very small n, we can enumerate all cocycles
-    coboundaries = enumerate_coboundaries(n)
-    
-    # Count all cocycles by brute force (only feasible for n ≤ 2)
-    cocycles: Set[Tuple[int, ...]] = set()
-    if n <= 2:
-        for delta_vals in np.ndindex(*([n] * (n * n * n))):
-            delta = np.array(delta_vals, dtype=int).reshape(n, n, n)
-            ada = AdditiveDefectAlgebra(n=n, cocycle=delta)
-            if ada.verify_cocycle_condition():
-                cocycles.add(tuple(delta.flatten()))
+    coboundary_count = len(coboundary_set)
+    h3_order = cocycle_count // coboundary_count if coboundary_count > 0 else 0
     
     return {
-        "n": n,
-        "num_coboundaries": len(coboundaries),
-        "num_cocycles": len(cocycles) if n <= 2 else -1,
-        "H3_order": len(cocycles) // len(coboundaries) if (n <= 2 and len(coboundaries) > 0) else -1,
+        "cocycle_count": cocycle_count,
+        "coboundary_count": coboundary_count,
+        "h3_order": h3_order
     }
 
 
-def defect_magma_from_perturbation(
-    n: int, 
-    base_op: Callable[[int, int], int],
-    perturbation: np.ndarray
-) -> Tuple[Callable[[int, int], int], np.ndarray]:
-    """Construct a DefectMagma by perturbing an associative operation.
-    
-    Args:
-        n: modulus
-        base_op: the associative base operation
-        perturbation: n×n array modifying the operation
-    
-    Returns:
-        (new_op, defect_array) where defect measures associativity failure
+# --- Algorithm 5: Associator Defect Analysis ---
+
+def associator_defect(
+    op: Callable[[float, float], float], 
+    a: float, b: float, c: float
+) -> float:
     """
-    def new_op(a: int, b: int) -> int:
-        return (base_op(a, b) + perturbation[a % n, b % n]) % n
-    
-    # Compute the defect
-    defect = np.zeros((n, n, n), dtype=int)
-    for a in range(n):
-        for b in range(n):
-            for c in range(n):
-                left = new_op(new_op(a, b), c)
-                right = new_op(a, new_op(b, c))
-                defect[a, b, c] = (left - right) % n
-    
-    return new_op, defect
-
-
-def pentagon_violation(delta: np.ndarray, comp: Callable[[int, int], int], n: int) -> float:
-    """Measure how much the pentagon identity is violated.
-    
-    Returns the fraction of 4-tuples (a,b,c,d) that violate pentagon.
+    Compute the associator defect: op(op(a,b), c) - op(a, op(b,c)).
     """
-    violations = 0
-    total = n ** 4
-    
-    for a in range(n):
-        for b in range(n):
-            for c in range(n):
-                for d in range(n):
-                    cd = comp(c, d)
-                    ab = comp(a, b)
-                    bc = comp(b, c)
-                    
-                    lhs = comp(delta[a, b, cd], delta[ab, c, d])
-                    rhs_inner = comp(delta[b, c, d], delta[a, bc, d])
-                    rhs = comp(rhs_inner, delta[a, b, c])
-                    
-                    if lhs % n != rhs % n:
-                        violations += 1
-    
-    return violations / total
+    return op(op(a, b), c) - op(a, op(b, c))
 
+
+def defect_accumulation(
+    values: List[float], 
+    op: Callable[[float, float], float]
+) -> Tuple[float, float, float]:
+    """
+    Compute left-fold, right-fold, and their difference for a binary operation.
+    
+    Returns (left_result, right_result, difference).
+    """
+    if not values:
+        return (0.0, 0.0, 0.0)
+    
+    # Left fold
+    left = values[0]
+    for v in values[1:]:
+        left = op(left, v)
+    
+    # Right fold
+    right = values[-1]
+    for v in reversed(values[:-1]):
+        right = op(v, right)
+    
+    return (left, right, left - right)
+
+
+# --- Main ---
 
 if __name__ == "__main__":
-    # Quick test
-    print("Testing coboundary construction over ℤ/5ℤ:")
-    n = 5
-    f = np.array([[i * j**2 % n for j in range(n)] for i in range(n)])
-    ada = construct_coboundary(f, n)
-    print(f"  Cocycle condition satisfied: {ada.verify_cocycle_condition()}")
-    print(f"  Defect index: {ada.defect_index()}/{n**3}")
+    print("Algorithm demonstrations:")
     
-    print("\nClassifying H³(ℤ/2ℤ, ℤ/2ℤ):")
-    result = classify_h3(2)
-    print(f"  {result}")
+    # Product cocycle on ℤ/2ℤ
+    alpha = lambda a, b, c: (a * b * c) % 2
+    
+    print(f"\n1. Cocycle verification: {verify_cocycle(alpha, 2)}")
+    print(f"2. Pentagon verification: {verify_pentagon(alpha, 2)}")
+    print(f"3. Coboundary decomposition: {find_coboundary_decomposition(alpha, 2)}")
+    
+    print(f"\n4. H³(ℤ/2ℤ, ℤ/2ℤ):")
+    h3 = compute_h3_order(2)
+    for k, v in h3.items():
+        print(f"   {k}: {v}")
+    
+    print(f"\n5. Defect accumulation for subtraction:")
+    sub = lambda a, b: a - b
+    for n in range(3, 8):
+        vals = [5.0] * n
+        left, right, diff = defect_accumulation(vals, sub)
+        print(f"   n={n}: left={left:.0f}, right={right:.0f}, diff={diff:.0f}")
