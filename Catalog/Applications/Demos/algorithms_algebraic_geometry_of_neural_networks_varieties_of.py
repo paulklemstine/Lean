@@ -1,478 +1,344 @@
 #!/usr/bin/env python3
 """
-Tropical Decision Boundary Theory: Core Algorithms
+Algorithms for Tropical Decision Boundary Analysis
 
-Type-hinted implementations of the key algorithms connecting
-ReLU neural network architecture to tropical geometry.
+Type-hinted implementations of algorithms from the research paper:
+1. Activation pattern enumeration
+2. Decision boundary extraction
+3. Tropical degree computation
+4. LogSumExp dequantization
+5. Zaslavsky region counting
 """
 
-from dataclasses import dataclass, field
-from typing import List, Tuple, Set, Optional
 import numpy as np
+from typing import List, Tuple, Optional, Set, FrozenSet
+from dataclasses import dataclass
 
-
-# ============================================================
-# Data Structures
-# ============================================================
 
 @dataclass
-class TropicalMonomial1D:
-    """A tropical monomial: affine function x ↦ slope * x + intercept."""
+class AffineFunction:
+    """An affine function f(x) = slope * x + intercept."""
     slope: float
     intercept: float
     
-    def eval(self, x: float) -> float:
+    def __call__(self, x: float) -> float:
         return self.slope * x + self.intercept
 
 
 @dataclass
-class TropicalPoly1D:
-    """A tropical polynomial: max of finitely many affine functions."""
-    terms: List[TropicalMonomial1D]
+class PiecewiseLinear:
+    """A piecewise linear function as max of affine functions (tropical polynomial)."""
+    pieces: List[AffineFunction]
     
-    def eval(self, x: float) -> float:
-        return max(t.eval(x) for t in self.terms)
+    def __call__(self, x: float) -> float:
+        return max(piece(x) for piece in self.pieces)
     
-    def eval_array(self, x: np.ndarray) -> np.ndarray:
-        values = np.array([[t.eval(xi) for xi in x] for t in self.terms])
-        return np.max(values, axis=0)
+    @property
+    def tropical_degree(self) -> int:
+        """Number of distinct slopes (tropical degree + 1)."""
+        return len(set(p.slope for p in self.pieces))
+    
+    def bend_points(self) -> List[float]:
+        """Find all bend points (where adjacent pieces meet)."""
+        bends = []
+        for i, p1 in enumerate(self.pieces):
+            for p2 in self.pieces[i+1:]:
+                if abs(p1.slope - p2.slope) > 1e-10:
+                    x_bend = (p2.intercept - p1.intercept) / (p1.slope - p2.slope)
+                    # Check if this is actually a bend (both pieces achieve max here)
+                    val = self(x_bend)
+                    if abs(p1(x_bend) - val) < 1e-10 and abs(p2(x_bend) - val) < 1e-10:
+                        bends.append(x_bend)
+        return sorted(set(round(b, 10) for b in bends))
+    
+    def decision_boundary(self, x_min: float = -10, x_max: float = 10, 
+                          n_points: int = 10000) -> List[float]:
+        """Find approximate zeros of the piecewise linear function."""
+        xs = np.linspace(x_min, x_max, n_points)
+        ys = [self(x) for x in xs]
+        zeros = []
+        for i in range(len(ys) - 1):
+            if ys[i] * ys[i+1] < 0:
+                # Linear interpolation to find zero
+                x0 = xs[i] - ys[i] * (xs[i+1] - xs[i]) / (ys[i+1] - ys[i])
+                zeros.append(x0)
+            elif abs(ys[i]) < 1e-12:
+                zeros.append(xs[i])
+        return zeros
 
 
 @dataclass 
-class TropicalRational1D:
-    """A tropical rational function: difference of two tropical polynomials."""
-    numerator: TropicalPoly1D
-    denominator: TropicalPoly1D
-    
-    def eval(self, x: float) -> float:
-        return self.numerator.eval(x) - self.denominator.eval(x)
-    
-    def eval_array(self, x: np.ndarray) -> np.ndarray:
-        return self.numerator.eval_array(x) - self.denominator.eval_array(x)
-
-
-@dataclass
-class TropicalComplexity:
-    """Tropical complexity of a piecewise linear function.
-    
-    Captures four interrelated complexity measures:
-    - numPieces: number of maximal linear regions
-    - depth: minimum circuit depth
-    - tropicalDegree: total max/min operations
-    - bendPoints: points of non-differentiability
-    
-    Invariants:
-    - bendPoints + 1 = numPieces
-    - 2^depth >= numPieces
-    - tropicalDegree >= bendPoints
-    """
-    numPieces: int
-    depth: int
-    tropicalDegree: int
-    bendPoints: int
-    
-    def __post_init__(self) -> None:
-        assert self.bendPoints + 1 == self.numPieces
-        assert 2 ** self.depth >= self.numPieces
-        assert self.tropicalDegree >= self.bendPoints
-    
-    @classmethod
-    def from_pieces(cls, k: int) -> 'TropicalComplexity':
-        """Create minimal complexity for k linear pieces."""
-        import math
-        depth = max(0, math.ceil(math.log2(k))) if k > 1 else 0
-        return cls(
-            numPieces=k,
-            depth=depth,
-            tropicalDegree=k - 1,
-            bendPoints=k - 1
-        )
-
-
-@dataclass
-class ActivationPattern:
-    """Binary activation pattern for a neural network layer."""
-    pattern: Tuple[bool, ...]
+class ReluLayer:
+    """A ReLU layer: x -> max(Wx + b, 0)."""
+    weights: np.ndarray  # shape (m, n)
+    biases: np.ndarray   # shape (m,)
     
     @property
-    def width(self) -> int:
-        return len(self.pattern)
-    
-    def hamming_distance(self, other: 'ActivationPattern') -> int:
-        """Hamming distance = number of differing bits."""
-        assert self.width == other.width
-        return sum(a != b for a, b in zip(self.pattern, other.pattern))
-    
-    def is_adjacent(self, other: 'ActivationPattern') -> bool:
-        """Two patterns are adjacent iff they differ in exactly one bit."""
-        return self.hamming_distance(other) == 1
-
-
-@dataclass
-class ActivationComplex:
-    """The activation complex of a ReLU network.
-    
-    Records the set of geometrically realizable activation patterns
-    and their adjacency structure.
-    """
-    totalWidth: int
-    patterns: Set[Tuple[bool, ...]]
+    def input_dim(self) -> int:
+        return self.weights.shape[1]
     
     @property
-    def realizablePatterns(self) -> int:
-        return len(self.patterns)
+    def output_dim(self) -> int:
+        return self.weights.shape[0]
     
-    @property 
-    def adjacencies(self) -> int:
-        """Count pairs of adjacent patterns."""
-        count = 0
-        pattern_list = [ActivationPattern(p) for p in self.patterns]
-        for i, p in enumerate(pattern_list):
-            for q in pattern_list[i+1:]:
-                if p.is_adjacent(q):
-                    count += 1
-        return count
+    def apply(self, x: np.ndarray) -> np.ndarray:
+        """Apply the ReLU layer."""
+        return np.maximum(self.weights @ x + self.biases, 0)
     
-    def euler_characteristic(self) -> int:
-        """Euler characteristic: V - E where V = patterns, E = adjacencies."""
-        return self.realizablePatterns - self.adjacencies
+    def activation_pattern(self, x: np.ndarray) -> Tuple[bool, ...]:
+        """Get the activation pattern (which neurons fire)."""
+        pre_activation = self.weights @ x + self.biases
+        return tuple(bool(v > 0) for v in pre_activation)
 
 
 @dataclass
-class ReLUArchitecture:
-    """Architecture of a feedforward ReLU network."""
-    hidden_widths: List[int]
+class ReluNetwork:
+    """A multi-layer ReLU network."""
+    layers: List[ReluLayer]
     
-    def __post_init__(self) -> None:
-        assert all(w > 0 for w in self.hidden_widths)
+    def apply(self, x: np.ndarray) -> np.ndarray:
+        """Forward pass through the network."""
+        for layer in self.layers:
+            x = layer.apply(x)
+        return x
+    
+    def full_activation_pattern(self, x: np.ndarray) -> List[Tuple[bool, ...]]:
+        """Get activation patterns for all layers."""
+        patterns = []
+        current = x
+        for layer in self.layers:
+            patterns.append(layer.activation_pattern(current))
+            current = layer.apply(current)
+        return patterns
+    
+    @property
+    def widths(self) -> List[int]:
+        """Layer widths."""
+        return [layer.output_dim for layer in self.layers]
     
     @property
     def depth(self) -> int:
-        return len(self.hidden_widths)
+        """Number of layers."""
+        return len(self.layers)
     
-    @property
-    def total_width(self) -> int:
-        return sum(self.hidden_widths)
+    def max_activation_patterns(self) -> int:
+        """Upper bound on activation patterns: prod(2^w_i)."""
+        result = 1
+        for w in self.widths:
+            result *= 2**w
+        return result
     
-    @property
-    def max_width(self) -> int:
-        return max(self.hidden_widths) if self.hidden_widths else 0
+    def max_bend_points(self) -> int:
+        """Upper bound on bend points: prod(2^w_i - 1)."""
+        result = 1
+        for w in self.widths:
+            result *= (2**w - 1)
+        return result
 
 
-# ============================================================
-# Algorithm 1: Linear Region Counting
-# ============================================================
-
-def max_linear_regions_1d(widths: List[int]) -> int:
-    """Maximum linear regions for 1D input ReLU network.
-    
-    Theorem (region_bound_heterogeneous):
-        maxLinearRegions1D(ws) = ∏(wᵢ + 1)
-    
-    Args:
-        widths: List of hidden layer widths [w₁, ..., w_L]
-    
-    Returns:
-        Maximum number of linear regions
+def activation_pattern_count(widths: List[int]) -> int:
     """
-    result = 1
-    for w in widths:
-        result *= (w + 1)
-    return result
-
-
-def max_linear_regions_nd(n: int, widths: List[int]) -> int:
-    """Maximum linear regions for n-dimensional input (Montúfar bound).
+    Compute the upper bound on activation patterns for a network with given widths.
     
-    For n-dim input, the bound per layer is ∑_{j=0}^{min(n,w)} C(w,j)
-    rather than w + 1.
+    Theorem: prod(2^w_i) = 2^(sum(w_i))
     
     Args:
-        n: Input dimension
-        widths: List of hidden layer widths
+        widths: List of layer widths [w_1, w_2, ..., w_L]
     
     Returns:
-        Upper bound on linear regions
+        2^(sum of widths) = product of 2^w_i
+    """
+    return 2 ** sum(widths)
+
+
+def depth_width_gap(L: int, w: int) -> Tuple[int, int, float]:
+    """
+    Compute the depth-width exponential gap.
+    
+    Theorem: L * 2^w <= 2^(L*w) for L >= 2, w >= 2
+    
+    Args:
+        L: Number of layers (depth)
+        w: Width per layer
+    
+    Returns:
+        (sum_bound, product_bound, ratio) where
+        sum_bound = L * 2^w (additive contribution)
+        product_bound = 2^(L*w) (multiplicative composition)
+        ratio = product_bound / sum_bound
+    """
+    sum_bound = L * (2**w)
+    product_bound = 2**(L*w)
+    ratio = product_bound / sum_bound
+    return sum_bound, product_bound, ratio
+
+
+def logsumexp_bounds(x: np.ndarray, beta: float) -> Tuple[float, float, float]:
+    """
+    Compute LogSumExp and its tropical approximation bounds.
+    
+    Theorem: max(x_i) <= (1/beta)*log(sum(exp(beta*x_i))) <= max(x_i) + log(n)/beta
+    
+    Args:
+        x: Array of values
+        beta: Inverse temperature (positive)
+    
+    Returns:
+        (lower_bound, lse_value, upper_bound)
+    """
+    n = len(x)
+    M = np.max(x)
+    
+    # Numerically stable LSE
+    shifted = beta * (x - M)
+    lse = M + (1/beta) * np.log(np.sum(np.exp(shifted)))
+    
+    lower = M
+    upper = M + np.log(n) / beta
+    
+    return lower, lse, upper
+
+
+def zaslavsky_bound(n: int, k: int) -> Tuple[int, int]:
+    """
+    Compute Zaslavsky's bound on hyperplane arrangement regions.
+    
+    Theorem: sum_{j=0}^{min(n,k)} C(k,j) <= (k+1)^n
+    
+    Args:
+        n: Dimension of space
+        k: Number of hyperplanes
+    
+    Returns:
+        (zaslavsky_count, polynomial_bound)
     """
     from math import comb
-    result = 1
-    for w in widths:
-        layer_bound = sum(comb(w, j) for j in range(min(n, w) + 1))
-        result *= layer_bound
-    return result
-
-
-# ============================================================
-# Algorithm 2: Tropical Polynomial Construction
-# ============================================================
-
-def relu_as_tropical() -> TropicalPoly1D:
-    """Construct ReLU as a tropical polynomial.
     
-    relu(x) = max(1·x + 0, 0·x + 0)
+    zaslavsky = sum(comb(k, j) for j in range(min(n, k) + 1))
+    poly_bound = (k + 1) ** n
     
-    Theorem (relu_tropical_eval):
-        reluAsTropicalPoly.eval(x) = relu(x)
+    return zaslavsky, poly_bound
+
+
+def tropical_polynomial_eval(coeffs: List[float], x: float) -> float:
     """
-    return TropicalPoly1D([
-        TropicalMonomial1D(slope=1.0, intercept=0.0),
-        TropicalMonomial1D(slope=0.0, intercept=0.0),
-    ])
-
-
-def single_layer_to_tropical(
-    weights: np.ndarray, 
-    biases: np.ndarray,
-    output_weights: np.ndarray,
-    output_bias: float
-) -> TropicalRational1D:
-    """Convert a single-layer 1D ReLU network to tropical rational form.
+    Evaluate a tropical polynomial: max_i(c_i + i*x).
     
-    Network: f(x) = Σᵢ cᵢ · max(wᵢx + bᵢ, 0) + d
-    
-    Split into positive and negative output weights:
-    f(x) = [Σ_{cᵢ>0} cᵢ · max(wᵢx + bᵢ, 0)] 
-          - [Σ_{cᵢ<0} |cᵢ| · max(wᵢx + bᵢ, 0)] + d
-    
-    Each sum of max functions can be bounded by a max of sums
-    (tropical polynomial).
+    In tropical algebra, a polynomial is the max of monomials,
+    where each monomial c_i * x^i becomes c_i + i*x.
     
     Args:
-        weights: Hidden layer weights (w,)
-        biases: Hidden layer biases (w,)
-        output_weights: Output weights (w,)
-        output_bias: Output bias scalar
+        coeffs: Tropical coefficients [c_0, c_1, ..., c_n]
+        x: Input value
     
     Returns:
-        TropicalRational1D representation
+        max_i(c_i + i*x)
     """
-    w = len(weights)
-    
-    # For a simple representation, enumerate all 2^w activation patterns
-    pos_terms = []
-    neg_terms = []
-    
-    for mask in range(2 ** w):
-        slope = 0.0
-        intercept = output_bias
-        for i in range(w):
-            if mask & (1 << i):
-                slope += output_weights[i] * weights[i]
-                intercept += output_weights[i] * biases[i]
-        
-        pos_terms.append(TropicalMonomial1D(slope, intercept))
-        neg_terms.append(TropicalMonomial1D(-slope, -intercept))
-    
-    # Crude construction: numerator and denominator together give f
-    # The actual tropical rational representation is more subtle
-    numerator = TropicalPoly1D(pos_terms)
-    denominator = TropicalPoly1D([TropicalMonomial1D(0, 0)])
-    
-    return TropicalRational1D(numerator, denominator)
+    return max(c + i * x for i, c in enumerate(coeffs))
 
 
-# ============================================================
-# Algorithm 3: Decision Boundary Extraction
-# ============================================================
-
-def find_decision_boundary_1d(
-    f: callable, 
-    x_min: float, 
-    x_max: float, 
-    n_samples: int = 10000,
-    tol: float = 1e-10
-) -> List[float]:
-    """Find zero crossings of a function (decision boundary in 1D).
+def tropical_polynomial_roots(coeffs: List[float]) -> List[float]:
+    """
+    Find the roots (bend points) of a tropical polynomial.
     
-    Uses sign changes and bisection for precise location.
+    The bend points occur where two consecutive monomials are equal:
+    c_i + i*x = c_{i+1} + (i+1)*x  =>  x = c_i - c_{i+1}
     
     Args:
-        f: Function ℝ → ℝ
-        x_min, x_max: Search interval
-        n_samples: Initial grid density
-        tol: Bisection tolerance
+        coeffs: Tropical coefficients [c_0, c_1, ..., c_n]
     
     Returns:
-        List of x-coordinates where f(x) ≈ 0
+        List of bend points (tropical roots)
     """
-    x = np.linspace(x_min, x_max, n_samples)
-    y = np.array([f(xi) for xi in x])
-    
-    boundaries = []
-    for i in range(len(y) - 1):
-        if y[i] * y[i+1] < 0:  # Sign change
-            # Bisection
-            lo, hi = x[i], x[i+1]
-            while hi - lo > tol:
-                mid = (lo + hi) / 2
-                if f(lo) * f(mid) <= 0:
-                    hi = mid
-                else:
-                    lo = mid
-            boundaries.append((lo + hi) / 2)
-    
-    return boundaries
+    roots = []
+    for i in range(len(coeffs) - 1):
+        # c_i + i*x = c_{i+1} + (i+1)*x
+        # x = c_i - c_{i+1}
+        root = coeffs[i] - coeffs[i+1]
+        roots.append(root)
+    return sorted(roots)
 
 
-def count_bend_points_1d(
-    f: callable,
-    x_min: float,
-    x_max: float,
-    n_samples: int = 10000,
-    threshold: float = 1e-6
-) -> Tuple[int, List[float]]:
-    """Count points of non-differentiability (bend locus) of a PWL function.
-    
-    Uses second-difference detection.
+def enumerate_activation_patterns(network: ReluNetwork, 
+                                   x_samples: np.ndarray) -> Set[Tuple[Tuple[bool, ...], ...]]:
+    """
+    Enumerate observed activation patterns from a sample of inputs.
     
     Args:
-        f: Piecewise linear function
-        x_min, x_max: Domain
-        n_samples: Grid density
-        threshold: Curvature threshold for bend detection
+        network: The ReLU network
+        x_samples: Array of input samples, shape (num_samples, input_dim)
     
     Returns:
-        (count, locations) of bend points
+        Set of observed activation patterns
     """
-    x = np.linspace(x_min, x_max, n_samples)
-    y = np.array([f(xi) for xi in x])
-    dx = x[1] - x[0]
-    
-    # Second difference ≈ second derivative * dx²
-    d2y = np.diff(y, n=2)
-    
-    # Normalize
-    if np.max(np.abs(d2y)) > 0:
-        d2y_norm = np.abs(d2y) / np.max(np.abs(d2y))
-    else:
-        return 0, []
-    
-    # Find peaks in curvature
-    bend_indices = []
-    for i in range(1, len(d2y_norm) - 1):
-        if (d2y_norm[i] > threshold and 
-            d2y_norm[i] >= d2y_norm[i-1] and 
-            d2y_norm[i] >= d2y_norm[i+1]):
-            bend_indices.append(i + 1)  # +1 for diff offset
-    
-    bend_locations = [x[i] for i in bend_indices]
-    return len(bend_locations), bend_locations
-
-
-# ============================================================
-# Algorithm 4: Activation Complex Construction
-# ============================================================
-
-def build_activation_complex(
-    weights: List[np.ndarray],
-    biases: List[np.ndarray],
-    x_samples: np.ndarray
-) -> ActivationComplex:
-    """Build the activation complex by sampling.
-    
-    For each input sample, compute the activation pattern (which neurons fire)
-    and record the set of realized patterns.
-    
-    Args:
-        weights: List of weight matrices per layer
-        biases: List of bias vectors per layer
-        x_samples: Input samples (n,) for 1D
-    
-    Returns:
-        ActivationComplex with realized patterns
-    """
-    total_width = sum(W.shape[0] for W in weights[:-1])
-    patterns: Set[Tuple[bool, ...]] = set()
-    
+    patterns = set()
     for x in x_samples:
-        h = np.array([x]).reshape(1, -1)
-        pattern = []
-        
-        for W, b in zip(weights[:-1], biases[:-1]):
-            pre_activation = h @ W.T + b
-            active = tuple(bool(v > 0) for v in pre_activation.flatten())
-            pattern.extend(active)
-            h = np.maximum(pre_activation, 0)
-        
-        patterns.add(tuple(pattern))
+        pattern = tuple(tuple(p) for p in network.full_activation_pattern(x))
+        patterns.add(pattern)
+    return patterns
+
+
+def decision_boundary_1d(network: ReluNetwork, 
+                          x_min: float = -5.0, 
+                          x_max: float = 5.0,
+                          n_points: int = 10000) -> List[float]:
+    """
+    Find the decision boundary of a 1D ReLU network.
     
-    return ActivationComplex(
-        totalWidth=total_width,
-        patterns=patterns
-    )
-
-
-# ============================================================
-# Algorithm 5: Tropical Complexity Analysis
-# ============================================================
-
-def analyze_tropical_complexity(
-    f: callable,
-    x_min: float = -10.0,
-    x_max: float = 10.0,
-    n_samples: int = 100000
-) -> TropicalComplexity:
-    """Analyze the tropical complexity of a piecewise linear function.
-    
-    Counts linear pieces and bend points, then constructs the
-    TropicalComplexity record.
+    The decision boundary is the set {x : f(x) = 0}.
+    For a piecewise linear function, this consists of isolated points
+    and (rarely) intervals.
     
     Args:
-        f: Piecewise linear function ℝ → ℝ
-        x_min, x_max: Analysis domain
-        n_samples: Grid density
+        network: The ReLU network (input_dim=1, output_dim=1)
+        x_min, x_max: Search interval
+        n_points: Number of sample points
     
     Returns:
-        TropicalComplexity record
+        List of approximate boundary points
     """
-    bend_count, _ = count_bend_points_1d(f, x_min, x_max, n_samples)
-    num_pieces = bend_count + 1
-    return TropicalComplexity.from_pieces(num_pieces)
+    xs = np.linspace(x_min, x_max, n_points)
+    ys = [float(network.apply(np.array([x]))[0]) for x in xs]
+    
+    zeros = []
+    for i in range(len(ys) - 1):
+        if ys[i] * ys[i+1] < 0:
+            # Linear interpolation
+            x0 = xs[i] - ys[i] * (xs[i+1] - xs[i]) / (ys[i+1] - ys[i])
+            zeros.append(x0)
+        elif abs(ys[i]) < 1e-12:
+            zeros.append(float(xs[i]))
+    
+    return zeros
 
-
-# ============================================================
-# Main: Run all algorithms
-# ============================================================
 
 if __name__ == "__main__":
-    print("Tropical Decision Boundary Algorithms")
-    print("=" * 50)
+    # Quick test
+    print("Testing algorithms...")
     
-    # 1. Region counting
-    print("\n1. Linear Region Bounds:")
-    for arch in [[4], [4, 4], [4, 4, 4], [8, 8], [2, 2, 2, 2, 2]]:
-        r1d = max_linear_regions_1d(arch)
-        r2d = max_linear_regions_nd(2, arch)
-        print(f"   Arch {str(arch):>20}: 1D={r1d:>8}, 2D={r2d:>8}")
+    # Test activation pattern count
+    assert activation_pattern_count([3, 4, 2]) == 2**9 == 512
+    print("✓ activation_pattern_count")
     
-    # 2. Tropical polynomial
-    print("\n2. ReLU as Tropical Polynomial:")
-    relu_trop = relu_as_tropical()
-    for x in [-2, -1, 0, 0.5, 1, 3]:
-        print(f"   relu({x:>5}) = {relu_trop.eval(x):.1f}")
+    # Test depth-width gap
+    s, p, r = depth_width_gap(3, 4)
+    assert s == 48 and p == 4096
+    print("✓ depth_width_gap")
     
-    # 3. Complexity analysis
-    print("\n3. Tropical Complexity of Random Networks:")
-    np.random.seed(42)
-    for depth in [1, 2, 3]:
-        width = 4
-        ws = [np.random.randn(width, 1 if i == 0 else width) 
-              for i in range(depth)]
-        ws.append(np.random.randn(1, width))
-        bs = [np.random.randn(w.shape[0]) for w in ws]
-        
-        def make_f(weights=ws, biases=bs):
-            def f(x):
-                h = np.array([[x]])
-                for W, b in zip(weights[:-1], biases[:-1]):
-                    h = np.maximum(h @ W.T + b, 0)
-                return float((h @ weights[-1].T + biases[-1]).squeeze())
-            return f
-        
-        f = make_f()
-        tc = analyze_tropical_complexity(f)
-        theoretical = max_linear_regions_1d([width] * depth)
-        print(f"   Depth {depth}: {tc.numPieces:>4} pieces "
-              f"(max {theoretical}), depth={tc.depth}, degree={tc.tropicalDegree}")
+    # Test LSE bounds
+    x = np.array([1.0, 3.0, 2.0])
+    lower, lse, upper = logsumexp_bounds(x, beta=10.0)
+    assert lower <= lse <= upper + 1e-10
+    print("✓ logsumexp_bounds")
     
-    print("\nAll algorithms executed successfully.")
+    # Test Zaslavsky
+    z, p = zaslavsky_bound(2, 5)
+    assert z <= p
+    print("✓ zaslavsky_bound")
+    
+    # Test tropical polynomial
+    val = tropical_polynomial_eval([0, 1, -1], 2.0)
+    assert val == max(0, 1+2, -1+4) == 3.0
+    print("✓ tropical_polynomial_eval")
+    
+    print("\nAll tests passed!")

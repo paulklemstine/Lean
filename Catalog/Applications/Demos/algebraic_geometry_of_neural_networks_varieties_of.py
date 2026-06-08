@@ -1,551 +1,363 @@
 #!/usr/bin/env python3
 """
-Tropical Decision Boundary Theory: Interactive Demo
+Tropical Decision Boundaries: Numerical Demonstrations
 
-Demonstrates the key results connecting ReLU neural networks to tropical geometry:
-1. ReLU as a tropical polynomial
-2. Depth amplification of linear regions
-3. Activation pattern enumeration
-4. Decision boundary visualization
+Demonstrates the key results from our formal proofs:
+1. Activation pattern counting for multi-layer networks
+2. Depth-width exponential gap
+3. LogSumExp tropical approximation convergence
+4. Zaslavsky bound verification
+5. Decision boundary visualization for 1D and 2D networks
 """
 
 import numpy as np
 from typing import List, Tuple
 
-
 def relu(x: np.ndarray) -> np.ndarray:
     """ReLU activation: max(x, 0)"""
     return np.maximum(x, 0)
 
-
-def max_linear_regions_1d(widths: List[int]) -> int:
-    """Maximum number of linear regions for a 1D ReLU network.
-    
-    For architecture [w₁, ..., w_L], the bound is ∏(wᵢ + 1).
-    This is Theorem region_bound_heterogeneous.
-    """
-    result = 1
-    for w in widths:
-        result *= (w + 1)
-    return result
-
-
-def relu_network_1d(x: np.ndarray, weights: List[np.ndarray], 
-                     biases: List[np.ndarray]) -> np.ndarray:
-    """Evaluate a 1D-input ReLU network.
-    
-    Args:
-        x: Input array of shape (n,)
-        weights: List of weight matrices [W₁, W₂, ..., W_L, W_out]
-        biases: List of bias vectors [b₁, b₂, ..., b_L, b_out]
-    
-    Returns:
-        Output array of shape (n,)
-    """
-    h = x.reshape(-1, 1)  # (n, 1)
-    for W, b in zip(weights[:-1], biases[:-1]):
-        h = relu(h @ W.T + b)
-    h = h @ weights[-1].T + biases[-1]
-    return h.squeeze()
-
-
-def count_linear_regions_1d(f_values: np.ndarray) -> int:
-    """Count the number of (approximate) linear regions of a 1D function.
-    
-    Uses second-difference to detect breakpoints.
-    """
-    # Compute second differences
-    d2 = np.diff(f_values, n=2)
-    # Breakpoints where curvature changes significantly
-    threshold = np.max(np.abs(d2)) * 0.01
-    breakpoints = np.sum(np.abs(d2) > threshold)
-    return breakpoints + 1  # regions = breakpoints + 1
-
-
-def tropical_poly_eval(slopes: np.ndarray, intercepts: np.ndarray, 
-                        x: np.ndarray) -> np.ndarray:
-    """Evaluate a tropical polynomial: max_i(a_i * x + b_i).
-    
-    This is Definition TropicalPoly1D.eval.
-    """
-    terms = slopes[:, None] * x[None, :] + intercepts[:, None]
-    return np.max(terms, axis=0)
-
+def logsumexp(x: np.ndarray, beta: float = 1.0) -> float:
+    """LogSumExp: (1/beta) * log(sum(exp(beta * x_i)))"""
+    shifted = beta * x - np.max(beta * x)  # numerical stability
+    return np.max(x) + (1/beta) * np.log(np.sum(np.exp(shifted)))
 
 # ============================================================
-# Demo 1: ReLU Algebraic Properties
+# Demo 1: Activation Pattern Counting
 # ============================================================
 print("=" * 60)
-print("Demo 1: ReLU Algebraic Properties")
+print("Demo 1: Activation Pattern Counting")
 print("=" * 60)
+print()
+print("Theorem: For an L-layer network with widths w_1,...,w_L:")
+print("  prod(2^w_i) = 2^(sum(w_i))")
+print()
 
-# relu_abs_identity: relu(x) = (x + |x|) / 2
-x_test = np.array([-3, -1, 0, 1, 3, 5])
-relu_direct = relu(x_test)
-relu_abs = (x_test + np.abs(x_test)) / 2
-print(f"\nrelu_abs_identity: relu(x) = (x + |x|) / 2")
-print(f"  x     = {x_test}")
-print(f"  relu  = {relu_direct}")
-print(f"  (x+|x|)/2 = {relu_abs}")
-print(f"  Match: {np.allclose(relu_direct, relu_abs)}")
-
-# relu_idempotent: relu(relu(x)) = relu(x)
-print(f"\nrelu_idempotent: relu(relu(x)) = relu(x)")
-print(f"  relu(relu(x)) = {relu(relu(x_test))}")
-print(f"  relu(x)       = {relu_direct}")
-print(f"  Match: {np.allclose(relu(relu(x_test)), relu_direct)}")
-
-# relu_not_additive: counterexample at x=1, y=-1
-x, y = 1.0, -1.0
-lhs = relu(np.array([x + y]))[0]
-rhs = relu(np.array([x]))[0] + relu(np.array([y]))[0]
-print(f"\nrelu_not_additive: relu(1 + (-1)) = {lhs} ≠ {rhs} = relu(1) + relu(-1)")
-
-# relu_lipschitz: |relu(x) - relu(y)| ≤ |x - y|
-x_vals = np.random.randn(1000)
-y_vals = np.random.randn(1000)
-lip_ratio = np.abs(relu(x_vals) - relu(y_vals)) / (np.abs(x_vals - y_vals) + 1e-10)
-print(f"\nrelu_lipschitz: max |relu(x)-relu(y)|/|x-y| = {lip_ratio.max():.6f} ≤ 1.0")
+for widths in [[3, 4, 2], [5, 5, 5], [2, 2, 2, 2, 2], [10, 1]]:
+    prod_bound = np.prod([2**w for w in widths])
+    sum_bound = 2**sum(widths)
+    print(f"  widths = {widths}")
+    print(f"    Product: prod(2^w_i) = {prod_bound}")
+    print(f"    Sum:     2^(sum w_i) = {sum_bound}")
+    print(f"    Equal: {prod_bound == sum_bound}")
+    print()
 
 # ============================================================
-# Demo 2: Depth Amplification
+# Demo 2: Depth-Width Exponential Gap
 # ============================================================
-print("\n" + "=" * 60)
-print("Demo 2: Depth Amplification of Linear Regions")
 print("=" * 60)
+print("Demo 2: Depth-Width Exponential Gap")
+print("=" * 60)
+print()
+print("Theorem: For L >= 2, w >= 2: L * 2^w <= 2^(L*w)")
+print()
 
-print("\nTheorem: maxLinearRegions1D(replicate(L, w)) = (w+1)^L")
-print(f"\n{'Depth L':>8} {'Width w':>8} {'Regions':>12} {'Formula':>12} {'Match':>6}")
-print("-" * 50)
+print(f"{'L':>4} {'w':>4} {'L*2^w':>12} {'2^(L*w)':>12} {'Ratio':>10}")
+print("-" * 46)
+for L in [2, 3, 4, 5]:
+    for w in [2, 3, 4, 5]:
+        sum_bound = L * (2**w)
+        prod_bound = 2**(L*w)
+        ratio = prod_bound / sum_bound
+        print(f"{L:>4} {w:>4} {sum_bound:>12} {prod_bound:>12} {ratio:>10.1f}")
+print()
+
+# ============================================================
+# Demo 3: LogSumExp Tropical Approximation
+# ============================================================
+print("=" * 60)
+print("Demo 3: LogSumExp Tropical Approximation")
+print("=" * 60)
+print()
+print("Theorem: max(x_i) <= LSE_beta(x) <= max(x_i) + log(n)/beta")
+print()
+
+x = np.array([1.0, 3.5, 2.1, 0.7, 4.2])
+n = len(x)
+true_max = np.max(x)
+print(f"  x = {x}")
+print(f"  max(x) = {true_max}")
+print(f"  n = {n}")
+print()
+
+print(f"{'beta':>8} {'LSE':>10} {'Lower':>10} {'Upper':>10} {'Gap':>10}")
+print("-" * 52)
+for beta in [0.1, 0.5, 1.0, 2.0, 5.0, 10.0, 50.0, 100.0]:
+    lse = logsumexp(x, beta)
+    lower = true_max
+    upper = true_max + np.log(n) / beta
+    gap = lse - true_max
+    print(f"{beta:>8.1f} {lse:>10.6f} {lower:>10.6f} {upper:>10.6f} {gap:>10.6f}")
+print()
+
+# ============================================================
+# Demo 4: Zaslavsky Bound Verification
+# ============================================================
+print("=" * 60)
+print("Demo 4: Zaslavsky Bound Verification")
+print("=" * 60)
+print()
+print("Theorem: sum_{j=0}^{min(n,k)} C(k,j) <= (k+1)^n")
+print()
+
+from math import comb
+
+print(f"{'n':>4} {'k':>4} {'Zaslavsky':>12} {'(k+1)^n':>12} {'Ratio':>8}")
+print("-" * 44)
+for n_dim in [1, 2, 3, 4, 5]:
+    for k_hyp in [1, 3, 5, 10]:
+        zaslavsky = sum(comb(k_hyp, j) for j in range(min(n_dim, k_hyp) + 1))
+        poly_bound = (k_hyp + 1) ** n_dim
+        ratio = poly_bound / zaslavsky if zaslavsky > 0 else float('inf')
+        print(f"{n_dim:>4} {k_hyp:>4} {zaslavsky:>12} {poly_bound:>12} {ratio:>8.2f}")
+print()
+
+# ============================================================
+# Demo 5: 1D ReLU Network Decision Boundary
+# ============================================================
+print("=" * 60)
+print("Demo 5: 1D ReLU Network Decision Boundary")
+print("=" * 60)
+print()
+
+def relu_network_1d(x: float, layers: List[Tuple[np.ndarray, np.ndarray]]) -> float:
+    """Evaluate a 1D ReLU network at point x."""
+    val = np.array([x])
+    for W, b in layers:
+        val = relu(W @ val + b)
+    return float(val[0]) if len(val) == 1 else float(val.sum())
+
+# Simple 2-layer network
+W1 = np.array([[1.0], [-1.0]])
+b1 = np.array([0.0, 1.0])
+W2 = np.array([[1.0, -2.0]])
+b2 = np.array([-0.5])
+
+layers = [(W1, b1), (W2, b2)]
+
+print("Network: 2 layers, widths [2, 1]")
+print("Expected max linear regions: 2^2 = 4")
+print()
+
+# Find decision boundary (zeros of the output)
+xs = np.linspace(-3, 3, 1000)
+ys = [relu_network_1d(x, layers) for x in xs]
+
+# Find sign changes (approximate zeros)
+zeros = []
+for i in range(len(ys) - 1):
+    if ys[i] * ys[i+1] < 0 or ys[i] == 0:
+        zeros.append(xs[i])
+
+# Count linear regions (changes in slope)
+slopes = np.diff(ys) / np.diff(xs)
+region_changes = sum(1 for i in range(len(slopes)-1) 
+                     if abs(slopes[i+1] - slopes[i]) > 0.01)
+
+print(f"  Decision boundary points (approximate zeros): {len(zeros)}")
+print(f"  Number of slope changes: {region_changes}")
+print(f"  Bend bound (2^w - 1)^L = (2^2 - 1)^2 = 9")
+print()
+
+# ============================================================
+# Demo 6: Depth Separation
+# ============================================================
+print("=" * 60)
+print("Demo 6: Depth Separation - max of 2^L values")
+print("=" * 60)
+print()
+
 for L in range(1, 7):
-    for w in [2, 4, 8]:
-        regions = max_linear_regions_1d([w] * L)
-        formula = (w + 1) ** L
-        print(f"{L:>8} {w:>8} {regions:>12} {formula:>12} {regions == formula:>6}")
+    n_leaves = 2**L
+    deep_width = 2
+    shallow_width = (n_leaves + 1) // 2
+    print(f"  L={L}: max of {n_leaves} values")
+    print(f"    Deep:    depth={L}, width={deep_width}, total={L*deep_width} neurons")
+    print(f"    Shallow: depth=2, width={shallow_width}, total={2*shallow_width} neurons")
+    print(f"    Savings: {2*shallow_width - L*deep_width} neurons ({2*shallow_width/(L*deep_width):.1f}x)")
+    print()
 
-print("\nKey insight: exponential growth in DEPTH, polynomial in WIDTH")
-print(f"  Width 10, Depth 1:  {max_linear_regions_1d([10]):>12} regions")
-print(f"  Width 10, Depth 5:  {max_linear_regions_1d([10]*5):>12} regions")
-print(f"  Width 10, Depth 10: {max_linear_regions_1d([10]*10):>12} regions")
-print(f"  Width 50, Depth 1:  {max_linear_regions_1d([50]):>12} regions")
-print(f"  Same total width (50), depth 5, w=10: {max_linear_regions_1d([10]*5):>12} regions")
-
-# ============================================================
-# Demo 3: Tropical Polynomial Representation
-# ============================================================
-print("\n" + "=" * 60)
-print("Demo 3: ReLU as Tropical Polynomial")
 print("=" * 60)
-
-x = np.linspace(-3, 3, 1000)
-
-# relu(x) = max(1*x + 0, 0*x + 0)
-slopes = np.array([1.0, 0.0])
-intercepts = np.array([0.0, 0.0])
-trop_relu = tropical_poly_eval(slopes, intercepts, x)
-direct_relu = relu(x)
-print(f"\nrelu_tropical_eval: max(x, 0) matches relu(x)")
-print(f"  Max error: {np.max(np.abs(trop_relu - direct_relu)):.2e}")
-
-# A single hidden layer network as tropical rational
-np.random.seed(42)
-w_hidden = 5
-W1 = np.random.randn(w_hidden, 1) * 2
-b1 = np.random.randn(w_hidden)
-W2 = np.random.randn(1, w_hidden)
-b2 = np.random.randn(1)
-
-output = relu_network_1d(x, [W1, W2], [b1, b2])
-regions = count_linear_regions_1d(output)
-max_regions = max_linear_regions_1d([w_hidden])
-
-print(f"\nSingle-layer network (width={w_hidden}):")
-print(f"  Observed linear regions: {regions}")
-print(f"  Maximum possible: {max_regions}")
-print(f"  Bound satisfied: {regions <= max_regions}")
-
-# ============================================================
-# Demo 4: Activation Patterns
-# ============================================================
-print("\n" + "=" * 60)
-print("Demo 4: Activation Pattern Statistics")
-print("=" * 60)
-
-def count_activation_patterns(x: np.ndarray, W: np.ndarray, b: np.ndarray) -> int:
-    """Count distinct activation patterns for a single layer."""
-    pre_activation = x.reshape(-1, 1) @ W.T + b
-    patterns = (pre_activation > 0).astype(int)
-    unique_patterns = set(map(tuple, patterns))
-    return len(unique_patterns)
-
-for w in [3, 5, 8, 10]:
-    W1 = np.random.randn(w, 1) * 2
-    b1 = np.random.randn(w)
-    x_fine = np.linspace(-10, 10, 100000)
-    n_patterns = count_activation_patterns(x_fine, W1, b1)
-    max_patterns = 2 ** w
-    print(f"\n  Width {w:>2}: {n_patterns:>5} realizable / {max_patterns:>5} total patterns "
-          f"({100*n_patterns/max_patterns:.1f}%)")
-
-# ============================================================
-# Demo 5: Depth Amplification in Practice
-# ============================================================
-print("\n" + "=" * 60)
-print("Demo 5: Depth Amplification — Actual vs Theoretical Bound")
-print("=" * 60)
-
-for depth in [1, 2, 3, 4]:
-    width = 4
-    weights = []
-    biases_list = []
-    
-    # Input layer
-    W = np.random.randn(width, 1) * 2
-    b = np.random.randn(width)
-    weights.append(W)
-    biases_list.append(b)
-    
-    # Hidden layers
-    for _ in range(depth - 1):
-        W = np.random.randn(width, width) * (2.0 / np.sqrt(width))
-        b = np.random.randn(width)
-        weights.append(W)
-        biases_list.append(b)
-    
-    # Output layer
-    W = np.random.randn(1, width)
-    b = np.random.randn(1)
-    weights.append(W)
-    biases_list.append(b)
-    
-    x_fine = np.linspace(-5, 5, 100000)
-    output = relu_network_1d(x_fine, weights, biases_list)
-    observed = count_linear_regions_1d(output)
-    theoretical = max_linear_regions_1d([width] * depth)
-    exp_bound = 2 ** (width * depth)
-    
-    print(f"\n  Depth {depth}, Width {width}:")
-    print(f"    Observed regions:    {observed:>8}")
-    print(f"    Product bound:       {theoretical:>8}  = (w+1)^L = {width+1}^{depth}")
-    print(f"    Exponential bound:   {exp_bound:>8}  = 2^(W*L) = 2^{width*depth}")
-
-# ============================================================
-# Demo 6: Max-Min Duality
-# ============================================================
-print("\n" + "=" * 60)
-print("Demo 6: Max-Min Duality: max(a,b) + min(a,b) = a + b")
-print("=" * 60)
-
-a_vals = np.random.randn(5)
-b_vals = np.random.randn(5)
-for a, b in zip(a_vals, b_vals):
-    lhs = max(a, b) + min(a, b)
-    rhs = a + b
-    print(f"  max({a:.2f}, {b:.2f}) + min({a:.2f}, {b:.2f}) = "
-          f"{max(a,b):.2f} + {min(a,b):.2f} = {lhs:.2f} = {rhs:.2f} ✓")
-
-print("\n" + "=" * 60)
-print("All demos complete.")
+print("All demonstrations complete.")
 print("=" * 60)
 
 
 #!/usr/bin/env python3
 """
-Visualization: Linear Region Growth with Depth
+Visualization: Tropical Decision Boundaries of ReLU Networks
 
-Shows the exponential amplification of linear regions as network depth increases,
-demonstrating the Depth Amplification Theorem: regions = (w+1)^L.
+Generates plots showing:
+1. 1D piecewise linear function and its decision boundary
+2. Depth-width exponential gap
+3. LogSumExp convergence to tropical max
 """
 
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib.gridspec import GridSpec
 
 
 def relu(x):
     return np.maximum(x, 0)
 
 
-def make_network_1d(depth, width, seed=42):
-    """Create a random 1D ReLU network."""
-    np.random.seed(seed)
-    weights = []
-    biases = []
-    
-    # First layer: 1 -> width
-    weights.append(np.random.randn(width, 1) * 2)
-    biases.append(np.random.randn(width))
-    
-    # Hidden layers: width -> width
-    for _ in range(depth - 1):
-        weights.append(np.random.randn(width, width) * (2.0 / np.sqrt(width)))
-        biases.append(np.random.randn(width))
-    
-    # Output layer: width -> 1
-    weights.append(np.random.randn(1, width))
-    biases.append(np.random.randn(1))
-    
-    return weights, biases
+def logsumexp_smooth(x_vals, beta):
+    """Smooth max approximation via LogSumExp."""
+    shifted = beta * x_vals - np.max(beta * x_vals, axis=0, keepdims=True)
+    return np.max(x_vals, axis=0) + (1/beta) * np.log(np.sum(np.exp(shifted), axis=0))
 
 
-def eval_network(x, weights, biases):
-    """Evaluate network on array of inputs."""
-    h = x.reshape(-1, 1)
-    for W, b in zip(weights[:-1], biases[:-1]):
-        h = relu(h @ W.T + b)
-    return (h @ weights[-1].T + biases[-1]).squeeze()
+def make_relu_network_1d(x, W1, b1, W2, b2):
+    """Two-layer ReLU network in 1D."""
+    h = relu(W1[:, np.newaxis] * x[np.newaxis, :] + b1[:, np.newaxis])
+    return (W2 @ h + b2).flatten()
 
 
-def count_regions(y):
-    """Count linear regions by detecting slope changes."""
-    dy = np.diff(y)
-    d2y = np.diff(dy)
-    threshold = np.max(np.abs(d2y)) * 0.01 if np.max(np.abs(d2y)) > 0 else 1
-    return np.sum(np.abs(d2y) > threshold) + 1
+fig = plt.figure(figsize=(18, 12))
+gs = GridSpec(2, 3, figure=fig, hspace=0.35, wspace=0.3)
 
+# ---- Plot 1: 1D Piecewise Linear Function ----
+ax1 = fig.add_subplot(gs[0, 0])
+x = np.linspace(-3, 3, 1000)
 
-# Create figure
-fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-fig.suptitle('Depth Amplification: Linear Regions of ReLU Networks\n'
-             'Theorem: maxRegions = (w+1)^L', fontsize=14, fontweight='bold')
+# Affine pieces
+pieces = [
+    (1.5, -1.0),   # 1.5x - 1
+    (-0.5, 2.0),   # -0.5x + 2
+    (0.3, -0.5),   # 0.3x - 0.5
+    (-1.0, 1.5),   # -x + 1.5
+]
 
-x = np.linspace(-3, 3, 10000)
-width = 4
+y_pieces = np.array([a * x + b for a, b in pieces])
+y_max = np.max(y_pieces, axis=0)
 
-for idx, depth in enumerate([1, 2, 3, 4, 5, 6]):
-    ax = axes[idx // 3, idx % 3]
-    
-    ws, bs = make_network_1d(depth, width, seed=42 + idx)
-    y = eval_network(x, ws, bs)
-    
-    regions = count_regions(y)
-    max_regions = (width + 1) ** depth
-    
-    ax.plot(x, y, 'b-', linewidth=1.5)
-    ax.axhline(y=0, color='r', linestyle='--', alpha=0.5, label='Decision boundary')
-    ax.set_title(f'Depth {depth}: {regions} regions (max {max_regions})')
-    ax.set_xlabel('x')
-    ax.set_ylabel('f(x)')
-    ax.grid(True, alpha=0.3)
-    ax.legend(fontsize=8)
+for i, (a, b) in enumerate(pieces):
+    ax1.plot(x, a * x + b, '--', alpha=0.4, linewidth=1)
+ax1.plot(x, y_max, 'b-', linewidth=2.5, label='max (tropical poly)')
 
-plt.tight_layout()
-plt.savefig('depth_amplification.png', dpi=150, bbox_inches='tight')
-print("Saved depth_amplification.png")
+# Mark bend points
+for i in range(len(x) - 1):
+    if abs(np.diff(y_max)[i]) > 0.01:
+        argmax_i = np.argmax(y_pieces[:, i])
+        argmax_next = np.argmax(y_pieces[:, i+1])
+        if argmax_i != argmax_next:
+            ax1.plot(x[i], y_max[i], 'ro', markersize=8, zorder=5)
 
-# Second figure: Growth curves
-fig2, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
-
-# Region count vs depth
-depths = range(1, 8)
-for w in [2, 3, 4, 6]:
-    max_vals = [(w + 1) ** d for d in depths]
-    ax1.semilogy(list(depths), max_vals, 'o-', label=f'width={w}', markersize=5)
-
-ax1.set_xlabel('Depth L', fontsize=12)
-ax1.set_ylabel('Max Linear Regions (log scale)', fontsize=12)
-ax1.set_title('Exponential Growth: (w+1)^L', fontsize=13)
-ax1.legend()
+ax1.set_xlabel('x', fontsize=12)
+ax1.set_ylabel('f(x)', fontsize=12)
+ax1.set_title('Tropical Polynomial\n(max of affine functions)', fontsize=13)
+ax1.legend(fontsize=10)
 ax1.grid(True, alpha=0.3)
 
-# Product bound vs exponential bound
-widths_list = [[4]*d for d in range(1, 8)]
-product_bounds = [(4+1)**d for d in range(1, 8)]
-exp_bounds = [2**(4*d) for d in range(1, 8)]
+# ---- Plot 2: ReLU Network Decision Boundary ----
+ax2 = fig.add_subplot(gs[0, 1])
 
-ax2.semilogy(list(range(1, 8)), product_bounds, 'bo-', label='Product bound: (w+1)^L', markersize=6)
-ax2.semilogy(list(range(1, 8)), exp_bounds, 'r^--', label='Exp bound: 2^(wL)', markersize=6)
-ax2.set_xlabel('Depth L (width=4)', fontsize=12)
-ax2.set_ylabel('Bound (log scale)', fontsize=12)
-ax2.set_title('Product vs Exponential Bound', fontsize=13)
-ax2.legend()
+W1 = np.array([2.0, -1.5, 1.0, -0.5])
+b1 = np.array([-1.0, 2.0, -0.5, 1.0])
+W2 = np.array([1.0, -2.0, 0.5, -1.0])
+b2 = np.array([-0.3])
+
+x = np.linspace(-3, 3, 1000)
+y = make_relu_network_1d(x, W1, b1, W2, b2)
+
+ax2.plot(x, y, 'b-', linewidth=2.5, label='Network output')
+ax2.axhline(y=0, color='r', linestyle='--', linewidth=1, alpha=0.7, label='Decision boundary')
+ax2.fill_between(x, y, 0, where=(y > 0), alpha=0.15, color='green', label='Class +1')
+ax2.fill_between(x, y, 0, where=(y < 0), alpha=0.15, color='red', label='Class -1')
+
+# Mark zeros
+for i in range(len(y) - 1):
+    if y[i] * y[i+1] < 0:
+        x0 = x[i] - y[i] * (x[i+1] - x[i]) / (y[i+1] - y[i])
+        ax2.plot(x0, 0, 'ko', markersize=10, zorder=5)
+
+ax2.set_xlabel('x', fontsize=12)
+ax2.set_ylabel('f(x)', fontsize=12)
+ax2.set_title('ReLU Network Decision Boundary\n(zeros of tropical rational)', fontsize=13)
+ax2.legend(fontsize=9, loc='upper right')
 ax2.grid(True, alpha=0.3)
 
-plt.tight_layout()
-plt.savefig('region_bounds.png', dpi=150, bbox_inches='tight')
-print("Saved region_bounds.png")
+# ---- Plot 3: Depth-Width Gap ----
+ax3 = fig.add_subplot(gs[0, 2])
 
+widths = range(2, 9)
+for L in [2, 3, 4, 5]:
+    deep = [2**(L*w) for w in widths]
+    ax3.semilogy(list(widths), deep, 'o-', linewidth=2, markersize=5, label=f'2^(L·w), L={L}')
 
-#!/usr/bin/env python3
-"""
-Visualization: Tropical Polynomial Representation of ReLU Networks
+for L in [2, 3, 4, 5]:
+    shallow = [L * 2**w for w in widths]
+    ax3.semilogy(list(widths), shallow, 's--', linewidth=1, markersize=4, alpha=0.5, label=f'L·2^w, L={L}')
 
-Shows how ReLU networks compute tropical rational functions:
-pointwise maxima of affine functions.
-"""
+ax3.set_xlabel('Width w', fontsize=12)
+ax3.set_ylabel('Number of regions', fontsize=12)
+ax3.set_title('Depth-Width Exponential Gap\nDeep (solid) vs Shallow (dashed)', fontsize=13)
+ax3.legend(fontsize=8, ncol=2)
+ax3.grid(True, alpha=0.3)
 
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
+# ---- Plot 4: LogSumExp Convergence ----
+ax4 = fig.add_subplot(gs[1, 0])
 
+values = np.array([1.0, 3.0, 2.5, 0.5, 4.0])
+n = len(values)
+true_max = np.max(values)
 
-def relu(x):
-    return np.maximum(x, 0)
+betas = np.logspace(-1, 2, 100)
+lse_values = []
+for beta in betas:
+    shifted = beta * values - np.max(beta * values)
+    lse = true_max + (1/beta) * np.log(np.sum(np.exp(shifted)))
+    lse_values.append(lse)
 
+ax4.semilogx(betas, lse_values, 'b-', linewidth=2.5, label='LSE(β)')
+ax4.semilogx(betas, [true_max]*len(betas), 'g--', linewidth=1.5, label='max (tropical)')
+ax4.semilogx(betas, [true_max + np.log(n)/b for b in betas], 'r--', linewidth=1.5, label='max + log(n)/β')
+ax4.fill_between(betas, true_max, [true_max + np.log(n)/b for b in betas], alpha=0.1, color='orange')
 
-# Figure 1: ReLU as tropical polynomial
-fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+ax4.set_xlabel('Inverse temperature β', fontsize=12)
+ax4.set_ylabel('Value', fontsize=12)
+ax4.set_title('LogSumExp → Tropical Max\n(Dequantization)', fontsize=13)
+ax4.legend(fontsize=10)
+ax4.grid(True, alpha=0.3)
 
-x = np.linspace(-3, 3, 1000)
+# ---- Plot 5: Zaslavsky Bound ----
+ax5 = fig.add_subplot(gs[1, 1])
 
-# Panel 1: ReLU = max(x, 0)
-ax = axes[0]
-ax.plot(x, x, 'b--', alpha=0.5, label='f₁(x) = x')
-ax.plot(x, np.zeros_like(x), 'g--', alpha=0.5, label='f₂(x) = 0')
-ax.plot(x, relu(x), 'r-', linewidth=2.5, label='max(f₁, f₂) = ReLU(x)')
-ax.axvline(x=0, color='orange', linestyle=':', alpha=0.7, label='Bend point')
-ax.set_title('ReLU as Tropical Polynomial\nmax(x, 0)', fontsize=12)
-ax.set_xlabel('x')
-ax.set_ylabel('y')
-ax.legend(fontsize=9)
-ax.grid(True, alpha=0.3)
-ax.set_ylim(-1, 3.5)
+from math import comb
 
-# Panel 2: Single hidden layer as sum of tropical monomials
-ax = axes[1]
-np.random.seed(42)
-w = 4
-slopes = np.random.randn(w) * 2
-intercepts = np.random.randn(w)
-output_weights = np.random.randn(w)
+for n_dim in [1, 2, 3, 4]:
+    ks = range(1, 16)
+    zas = [sum(comb(k, j) for j in range(min(n_dim, k) + 1)) for k in ks]
+    poly = [(k+1)**n_dim for k in ks]
+    ax5.plot(list(ks), zas, 'o-', linewidth=2, markersize=4, label=f'Zaslavsky, n={n_dim}')
+    ax5.plot(list(ks), poly, 's--', linewidth=1, markersize=3, alpha=0.5, label=f'(k+1)^{n_dim}')
 
-# Plot individual neurons
-for i in range(w):
-    neuron = output_weights[i] * relu(slopes[i] * x + intercepts[i])
-    ax.plot(x, neuron, '--', alpha=0.4, label=f'c_{i}·ReLU(a_{i}x+b_{i})')
+ax5.set_xlabel('Number of hyperplanes k', fontsize=12)
+ax5.set_ylabel('Number of regions', fontsize=12)
+ax5.set_title('Zaslavsky Bound vs (k+1)^n', fontsize=13)
+ax5.legend(fontsize=8, ncol=2)
+ax5.set_yscale('log')
+ax5.grid(True, alpha=0.3)
 
-# Plot sum
-network_output = sum(output_weights[i] * relu(slopes[i] * x + intercepts[i]) for i in range(w))
-ax.plot(x, network_output, 'k-', linewidth=2.5, label='Network output')
+# ---- Plot 6: Bend Count vs Region Count ----
+ax6 = fig.add_subplot(gs[1, 2])
 
-# Mark breakpoints
-for i in range(w):
-    if abs(slopes[i]) > 0.01:
-        bp = -intercepts[i] / slopes[i]
-        if -3 < bp < 3:
-            ax.axvline(x=bp, color='orange', linestyle=':', alpha=0.3)
+ws = range(1, 8)
+for L in [1, 2, 3, 4]:
+    regions = [(2**w)**L for w in ws]
+    bends = [(2**w - 1)**L for w in ws]
+    ax6.semilogy(list(ws), regions, 'o-', linewidth=2, markersize=5, label=f'Regions, L={L}')
+    ax6.semilogy(list(ws), bends, 's--', linewidth=1.5, markersize=4, alpha=0.6, label=f'Bends, L={L}')
 
-ax.set_title(f'Single Layer (width={w})\nSum of ReLU neurons', fontsize=12)
-ax.set_xlabel('x')
-ax.set_ylabel('f(x)')
-ax.legend(fontsize=7, loc='upper left')
-ax.grid(True, alpha=0.3)
+ax6.set_xlabel('Width w', fontsize=12)
+ax6.set_ylabel('Count', fontsize=12)
+ax6.set_title('Regions vs Bends\n(2^w)^L vs (2^w-1)^L', fontsize=13)
+ax6.legend(fontsize=8, ncol=2)
+ax6.grid(True, alpha=0.3)
 
-# Panel 3: Max-of-affine (tropical polynomial)
-ax = axes[2]
-n_terms = 5
-slopes_t = np.array([-2, -1, 0, 1, 2.5])
-intercepts_t = np.array([3, 1, -0.5, 0.5, -2])
-
-for i in range(n_terms):
-    line = slopes_t[i] * x + intercepts_t[i]
-    ax.plot(x, line, '--', alpha=0.4, label=f'{slopes_t[i]:.1f}x + {intercepts_t[i]:.1f}')
-
-# Max envelope
-envelope = np.max([slopes_t[i] * x + intercepts_t[i] for i in range(n_terms)], axis=0)
-ax.plot(x, envelope, 'r-', linewidth=2.5, label='max (tropical poly)')
-
-# Find and mark bend points
-for i in range(len(x) - 2):
-    d2 = envelope[i+2] - 2*envelope[i+1] + envelope[i]
-    if abs(d2) > 0.01:
-        ax.plot(x[i+1], envelope[i+1], 'ko', markersize=4)
-
-ax.set_title(f'Tropical Polynomial\nmax of {n_terms} affine functions', fontsize=12)
-ax.set_xlabel('x')
-ax.set_ylabel('f(x)')
-ax.legend(fontsize=7)
-ax.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('tropical_representation.png', dpi=150, bbox_inches='tight')
-print("Saved tropical_representation.png")
-
-# Figure 2: Activation patterns and the activation complex
-fig2, axes2 = plt.subplots(1, 2, figsize=(12, 5))
-
-# Panel 1: Activation patterns of a 2-neuron layer
-ax = axes2[0]
-x = np.linspace(-3, 3, 1000)
-w1, b1 = 1.5, -0.5
-w2, b2 = -1.0, 1.0
-
-# Color regions by activation pattern
-h1 = w1 * x + b1
-h2 = w2 * x + b2
-
-colors = []
-for i in range(len(x)):
-    p = (h1[i] > 0, h2[i] > 0)
-    if p == (False, False): colors.append('lightblue')
-    elif p == (True, False): colors.append('lightgreen')
-    elif p == (False, True): colors.append('lightyellow')
-    else: colors.append('lightcoral')
-
-# Plot as colored bands
-for i in range(len(x) - 1):
-    ax.axvspan(x[i], x[i+1], color=colors[i], alpha=0.6)
-
-# Plot neuron hyperplanes
-bp1 = -b1 / w1 if abs(w1) > 0.01 else None
-bp2 = -b2 / w2 if abs(w2) > 0.01 else None
-if bp1 is not None:
-    ax.axvline(x=bp1, color='blue', linewidth=2, label=f'Neuron 1: x={bp1:.2f}')
-if bp2 is not None:
-    ax.axvline(x=bp2, color='red', linewidth=2, label=f'Neuron 2: x={bp2:.2f}')
-
-ax.set_title('Activation Patterns (2 neurons)\nRegions colored by pattern', fontsize=12)
-ax.set_xlabel('x')
-ax.legend(fontsize=9)
-ax.set_yticks([])
-
-# Panel 2: Activation complex as graph
-ax = axes2[1]
-# For 2 neurons: 4 possible patterns, show which are realized
-patterns = set()
-for xi in x:
-    p = (h1[np.argmin(np.abs(x - xi))] > 0, h2[np.argmin(np.abs(x - xi))] > 0)
-    patterns.add(p)
-
-# Draw Boolean cube
-positions = {
-    (False, False): (0, 0),
-    (True, False): (1, 0),
-    (False, True): (0, 1),
-    (True, True): (1, 1),
-}
-
-for p, (px, py) in positions.items():
-    color = 'green' if p in patterns else 'lightgray'
-    size = 300 if p in patterns else 100
-    ax.scatter(px, py, s=size, c=color, zorder=5, edgecolors='black', linewidths=2)
-    label = f"({int(p[0])},{int(p[1])})"
-    ax.annotate(label, (px, py), textcoords="offset points", xytext=(10, 10), fontsize=11)
-
-# Draw adjacency edges
-edges = [
-    ((False, False), (True, False)),
-    ((False, False), (False, True)),
-    ((True, False), (True, True)),
-    ((False, True), (True, True)),
-]
-for p1, p2 in edges:
-    x1, y1 = positions[p1]
-    x2, y2 = positions[p2]
-    color = 'green' if (p1 in patterns and p2 in patterns) else 'lightgray'
-    lw = 2 if (p1 in patterns and p2 in patterns) else 0.5
-    ax.plot([x1, x2], [y1, y2], '-', color=color, linewidth=lw, zorder=1)
-
-ax.set_title('Activation Complex\n(green = realizable patterns)', fontsize=12)
-ax.set_xlim(-0.3, 1.5)
-ax.set_ylim(-0.3, 1.5)
-ax.set_xlabel('Neuron 1')
-ax.set_ylabel('Neuron 2')
-ax.set_aspect('equal')
-ax.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('activation_complex.png', dpi=150, bbox_inches='tight')
-print("Saved activation_complex.png")
+plt.suptitle('Tropical Geometry of Neural Network Decision Boundaries', 
+             fontsize=16, fontweight='bold', y=0.98)
+plt.savefig('tropical_decision_boundaries.png', dpi=150, bbox_inches='tight')
+print("Saved: tropical_decision_boundaries.png")
