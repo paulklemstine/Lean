@@ -628,9 +628,10 @@ body {
 
 /* Package View */
 .package-view {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 60px 40px;
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 60px 48px;
     animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -1938,23 +1939,35 @@ body.light-theme .code-editor:focus {
 }
 
 /* ── Light theme overrides for gradient elements ── */
+/* In light mode, gradient text (transparent fill + background-clip) often becomes
+   invisible because the dark-theme gradient colors don't contrast on white backgrounds.
+   Fix: reset -webkit-text-fill-color to unset so text uses normal CSS color,
+   and provide light-appropriate gradient backgrounds where we want to keep them. */
 body.light-theme .nav-item:hover .nav-item-title,
 body.light-theme .nav-item.active .nav-item-title {
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: unset;
+    background: none;
+    color: var(--accent-secondary);
 }
 
 body.light-theme .markdown-body h1,
 body.light-theme .markdown-body h2,
 body.light-theme .markdown-body h3 {
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: unset;
+    background: none;
+    color: var(--text-main);
 }
 
 body.light-theme .markdown-body a {
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: unset;
+    background: none;
+    color: var(--accent-primary);
 }
 
 body.light-theme .direction-card:hover .direction-card-title {
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: unset;
+    background: none;
+    color: var(--accent-secondary);
 }
 
 body.light-theme .tabs-container {
@@ -1972,7 +1985,9 @@ body.light-theme .tab-btn:hover {
 }
 
 body.light-theme .tab-btn.active {
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: unset;
+    background: none;
+    color: var(--accent-secondary);
     border-bottom-color: #7c3aed;
 }
 
@@ -1981,29 +1996,47 @@ body.light-theme .tab-content-container {
 }
 
 body.light-theme #pkg-title {
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: unset;
+    background: none;
+    color: var(--text-main);
 }
 
 body.light-theme .welcome-title,
 body.light-theme .welcome-subtitle,
 body.light-theme .welcome-tagline {
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: unset;
+    background: none;
+    color: var(--text-main);
 }
 
 body.light-theme .sidebar-header h2 {
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: unset;
+    background: none;
+    color: var(--text-main);
+}
+
+body.light-theme .sidebar-header h2 a {
+    -webkit-text-fill-color: unset;
+    background: none;
+    color: var(--accent-secondary);
 }
 
 body.light-theme .directions-header h1 {
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: unset;
+    background: none;
+    color: var(--text-main);
 }
 
 body.light-theme .code-title {
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: unset;
+    background: none;
+    color: var(--accent-secondary);
 }
 
 body.light-theme .gallery-title {
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: unset;
+    background: none;
+    color: var(--accent-secondary);
 }
 
 body.light-theme .direction-priority-badge {
