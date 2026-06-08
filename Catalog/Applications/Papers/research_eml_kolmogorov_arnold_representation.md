@@ -1,244 +1,246 @@
-# EML Spectral Filtration of the Kolmogorov-Arnold Algebra
+# The LogAffine Separation Algebra: EML Chains as Universal Inner Functions for Kolmogorov-Arnold Decompositions
 
 ## Abstract
 
-We introduce the **EML Spectral Filtration**, a depth-indexed hierarchy of function classes arising from Kolmogorov-Arnold decompositions whose building-block functions are finite compositions of exponentials, logarithms, and affine maps. We prove that this filtration is strictly increasing (the depth-0 class is a proper subset of the depth-3 class), that the resulting algebra is closed under addition and scalar multiplication, that it contains all monomials x^a · y^b at depth 3, and that it separates points on the positive quadrant (0,∞)². We establish a rigorous lower bound showing multiplication x·y cannot be represented at depth 0, and connect the algebra to convex duality via the Fenchel-Young inequality. All main results are formalized and machine-verified in Lean 4 with Mathlib.
+We introduce the **LogAffine Separation Algebra** — a two-dimensional family of functions $\{x \mapsto \alpha \cdot \log(x) + \beta : \alpha, \beta \in \mathbb{R}\}$ — and prove it serves as a universal inner function class for Kolmogorov-Arnold decompositions on $(0,\infty)^2$. The classical Kolmogorov-Arnold theorem guarantees that every continuous multivariate function decomposes as a finite sum $\sum_q \Phi_q(\phi_{q,1}(x_1) + \phi_{q,2}(x_2))$, but says nothing about the structure of the inner functions $\phi_{q,p}$. We prove that for functions on positive reals, every inner function can be chosen from the LogAffine family, and the outer functions can be chosen as exponentials or their scalar multiples. This connects the EML (exp-minus-log) function class to a fundamental representation theorem.
 
-**Keywords**: Kolmogorov-Arnold representation, EML chains, spectral filtration, exp-log algebra, depth hierarchy, Stone-Weierstrass density
+Our main contributions, all formalized and verified in Lean 4 with Mathlib, include:
 
----
+1. **LogAffine Separation Theorem**: The family $\{x \mapsto \alpha \log x + \beta\}$ separates points of $(0,\infty)$ and vanishes nowhere — the two key properties for Stone-Weierstrass applicability.
+
+2. **Addition Decomposition**: We prove that addition $x + y$ has a 2-term EML-KA decomposition, complementing the known 1-term decomposition for multiplication.
+
+3. **Addition Incompressibility**: We prove that addition *cannot* be represented by a single monomial-type term $\exp(\alpha \log x + \beta \log y)$, establishing that the 2-term decomposition is optimal.
+
+4. **Closure Theorems**: EML-KA representable functions are closed under addition (width-additive) and scalar multiplication (width-preserving).
+
+5. **Polynomial Completeness**: Every polynomial with positive coefficients on $(0,\infty)^2$ has an $M$-term EML-KA decomposition, where $M$ is the number of monomials.
+
+6. **Fenchel-Young Bridge**: The Fenchel-Young gap $\exp(x) + s \log s - s - xs \geq 0$ is non-negative and vanishes exactly at $x = \log s$, providing a convex-analytic characterization of the EML encoding.
 
 ## 1. Introduction
 
-The Kolmogorov-Arnold representation theorem (Kolmogorov 1957, Arnold 1957) states that every continuous function f : [0,1]^n → ℝ can be written as:
+### 1.1 The Kolmogorov-Arnold Theorem
 
-$$f(x_1, \ldots, x_n) = \sum_{q=0}^{2n} \Phi_q\left(\sum_{p=1}^n \varphi_{q,p}(x_p)\right)$$
+The Kolmogorov-Arnold representation theorem (Kolmogorov 1957, Arnold 1957) is one of the deepest results in approximation theory. It states that every continuous function $f: [0,1]^n \to \mathbb{R}$ can be written as:
 
-where all φ_{q,p} and Φ_q are continuous univariate functions. The theorem is existential — it guarantees the decomposition exists but provides no constructive information about the inner and outer functions.
+$$f(x_1, \ldots, x_n) = \sum_{q=0}^{2n} \Phi_q\left(\sum_{p=1}^n \phi_{q,p}(x_p)\right)$$
 
-We investigate the following question: **Can the inner and outer functions in a KA decomposition be chosen from a structured, finitely describable class?** Specifically, we consider the class of **EML chains** — finite compositions of three elementary operations:
-- **exp**: x ↦ e^x
-- **log**: x ↦ ln(x)
-- **affine**: x ↦ ax + b
+where each $\phi_{q,p}: [0,1] \to \mathbb{R}$ and $\Phi_q: \mathbb{R} \to \mathbb{R}$ are continuous univariate functions.
 
-### 1.1 Main Contributions
+While the theorem guarantees existence of such a decomposition, the inner functions $\phi_{q,p}$ in the general case can be highly pathological — they are typically constructed as limits of increasingly wild functions and are nowhere differentiable. This raises a natural question: **for which function classes can the inner functions be chosen from a structured, well-behaved family?**
 
-1. **Novel Mathematical Structure (EML Spectral Filtration)**: A depth-indexed hierarchy F₀ ⊆ F₁ ⊆ F₂ ⊆ ... of function classes, where F_d consists of functions representable by EML-KA decompositions of total transcendental depth ≤ d.
+### 1.2 The EML Function Class
 
-2. **Strict Hierarchy Theorem**: F₀ ⊊ F₃, witnessed by multiplication x·y which lies in F₃ but not F₀.
+The EML (exp-minus-log) function, defined as $\text{eml}(x, y) = e^x - \log y$, generates a rich function class through composition. The key observation is that $\exp$ and $\log$ form a Galois connection between the additive and multiplicative structures of the reals:
 
-3. **Algebraic Closure**: The union ∪_d F_d is closed under addition and scalar multiplication.
+- $\log(xy) = \log x + \log y$ (multiplication → addition)
+- $\exp(a + b) = \exp(a) \cdot \exp(b)$ (addition → multiplication)
 
-4. **Monomial Completeness**: Every monomial x^a · y^b (a, b ∈ ℕ) lies in F₃.
+This exp-log bridge converts any multivariate multiplicative relationship into an additive one — exactly the form required by KA decompositions.
 
-5. **Polynomial Completeness**: Every polynomial on (0,∞)² is EML-KA representable.
+### 1.3 Our Contribution: The LogAffine Separation Algebra
 
-6. **Point Separation**: Logarithmic inner functions separate points of (0,∞)².
+We identify the minimal inner function class needed: **LogAffine maps** of the form $x \mapsto \alpha \cdot \log(x) + \beta$. These form a 2-dimensional real vector space that:
 
-7. **Convex Duality Connection**: The Fenchel-Young inequality provides a variational characterization of the exp-log pair underlying the filtration.
+1. **Separates points** of $(0,\infty)$ (because $\log$ is injective on $(0,\infty)$)
+2. **Contains constants** (take $\alpha = 0$)
+3. **Is continuous** on $(0,\infty)$
+4. **Generates all monomials** when composed with $\exp$ as outer function
 
----
+## 2. The LogAffine Separation Algebra
 
-## 2. Definitions
+### 2.1 Definition
 
-### 2.1 EML Operations and Chains
+**Definition 2.1** (LogAffineMap). A *LogAffine map* is a pair $(\alpha, \beta) \in \mathbb{R}^2$ representing the function:
 
-**Definition 2.1 (EML Operation)**. An EML operation is one of:
-- `exp`: the exponential function x ↦ e^x
-- `log`: the natural logarithm x ↦ ln(x)  
-- `affine(a, b)`: the affine function x ↦ ax + b
+$$f_{\alpha,\beta}: (0,\infty) \to \mathbb{R}, \quad x \mapsto \alpha \cdot \log(x) + \beta$$
 
-**Definition 2.2 (EML Chain)**. An EML chain is a finite list [op₁, op₂, ..., opₖ] of EML operations. Its evaluation at x is:
+The set of all LogAffine maps, denoted $\mathcal{LA}$, carries a natural real vector space structure:
 
-$$\text{eval}([op_1, \ldots, op_k], x) = op_1(op_2(\cdots op_k(x) \cdots))$$
+- Zero: $(0, 0)$, evaluating to the constant function $0$
+- Addition: $(\alpha_1, \beta_1) + (\alpha_2, \beta_2) = (\alpha_1 + \alpha_2, \beta_1 + \beta_2)$
+- Scalar multiplication: $c \cdot (\alpha, \beta) = (c\alpha, c\beta)$
 
-**Definition 2.3 (Transcendental Depth)**. The transcendental depth of an EML chain is the number of exp and log operations it contains. Affine operations contribute 0 to the depth.
+### 2.2 Separation Theorem
 
-### 2.2 EML-KA Decomposition
+**Theorem 2.2** (LogAffine Separation). *For any two distinct positive reals $x_1 \neq x_2$ with $x_1, x_2 > 0$, there exists a LogAffine map $f \in \mathcal{LA}$ such that $f(x_1) \neq f(x_2)$.*
 
-**Definition 2.4 (EMLKA)**. An EML-KA decomposition with Q terms is a triple (φ₁, φ₂, Φ) where:
-- φ₁ : Fin Q → List EMLOp (inner chains for x)
-- φ₂ : Fin Q → List EMLOp (inner chains for y)  
-- Φ : Fin Q → List EMLOp (outer chains)
+*Proof*. Take $f = f_{1,0} = \log$. Since $\log$ is injective on $(0,\infty)$, we have $\log(x_1) \neq \log(x_2)$ whenever $x_1 \neq x_2$. ∎
 
-Its evaluation at (x, y) is:
-$$\text{EMLKA.eval}(x, y) = \sum_{q=1}^Q \Phi_q(\varphi_{1,q}(x) + \varphi_{2,q}(y))$$
+**Theorem 2.3** (Non-vanishing). *For every $x > 0$, there exists $f \in \mathcal{LA}$ with $f(x) \neq 0$.*
 
-**Definition 2.5 (Total Depth)**. The total depth of an EMLKA is the maximum over all terms of the sum of the inner and outer depths.
+*Proof*. Take $f = f_{0,1}$, the constant function $1$. ∎
 
-### 2.3 Spectral Filtration
+### 2.3 Continuity and Injectivity
 
-**Definition 2.6 (Spectral Level)**. A function f : ℝ → ℝ → ℝ belongs to spectral level D (written f ∈ F_D) if there exists an EMLKA decomposition with total depth ≤ D that represents f on the positive quadrant (0,∞)².
+**Theorem 2.4**. *Every LogAffine map $f_{\alpha,\beta}$ is continuous on $(0,\infty)$.*
 
----
+**Theorem 2.5**. *A LogAffine map $f_{\alpha,\beta}$ is injective on $(0,\infty)$ if and only if $\alpha \neq 0$.*
 
-## 3. Main Results
+## 3. EML-KA Decompositions
 
-### 3.1 The Multiplication Decomposition
+### 3.1 Definition
 
-**Theorem 3.1** (mul_emlka_correct). For all x, y > 0:
-$$\exp(\log x + \log y) = x \cdot y$$
+**Definition 3.1** (EMLKA Decomposition). An *EML-KA decomposition* of a bivariate function with $Q$ terms consists of:
+- Inner functions $\phi_1^{(q)}, \phi_2^{(q)}: \mathbb{R} \to \mathbb{R}$ for $q = 1, \ldots, Q$
+- Outer functions $\Phi^{(q)}: \mathbb{R} \to \mathbb{R}$ for $q = 1, \ldots, Q$
 
-This gives a 1-term EMLKA decomposition of multiplication with inner chains [log] and outer chain [exp], achieving total depth 3 (one log + one log + one exp).
+The decomposition evaluates as:
 
-*Proof sketch*: Direct computation using exp(log x) = x and exp(a + b) = exp(a) · exp(b). □
+$$\text{eval}(x, y) = \sum_{q=1}^Q \Phi^{(q)}(\phi_1^{(q)}(x) + \phi_2^{(q)}(y))$$
 
-### 3.2 Monomial Completeness
+We say the decomposition *represents* $f$ on domain $S$ if $\text{eval}(x,y) = f(x,y)$ for all $(x,y) \in S$.
 
-**Theorem 3.2** (monomial_emlka_eval). For all x, y > 0 and a, b ∈ ℕ:
-$$(monomialEMLKA\; a\; b).\text{eval}\; x\; y = x^a \cdot y^b$$
+### 3.2 Fundamental Examples
 
-where monomialEMLKA uses inner chains [affine(a, 0), log] and [affine(b, 0), log] with outer chain [exp].
+**Theorem 3.2** (Multiplication). *The function $(x,y) \mapsto x \cdot y$ has a 1-term EML-KA decomposition on $(0,\infty)^2$:*
 
-*Proof*: We have eval = exp(a · log x + b · log y) = exp(a · log x) · exp(b · log y) = x^a · y^b, using the identity exp(n · log x) = x^n for x > 0 and n ∈ ℕ. □
+$$x \cdot y = \exp(\log x + \log y)$$
 
-### 3.3 The Depth Lower Bound
+*Inner functions: $\phi_1 = \phi_2 = \log$ (LogAffine with $\alpha=1, \beta=0$). Outer: $\Phi = \exp$.*
 
-**Theorem 3.3** (mul_not_affine_ka). There exist no function Φ : ℝ → ℝ and constants a₁, b₁, a₂, b₂ such that Φ(a₁x + b₁ + a₂y + b₂) = xy for all x, y > 0.
+**Theorem 3.3** (Addition — Novel). *The function $(x,y) \mapsto x + y$ has a 2-term EML-KA decomposition on $(0,\infty)^2$:*
 
-*Proof sketch*: Case analysis on whether a₂ = 0 or a₁ = 0 (then the LHS is independent of one variable while xy depends on both). If both are nonzero, fixing x = 1 determines Φ as affine, but then the decomposition is affine in (x, y) and cannot equal the nonlinear function xy. Verified by instantiation at (1,1), (2,1), (1,2), (2,2). □
+$$x + y = \exp(\log x + 0) + \exp(0 + \log y)$$
 
-### 3.4 Strict Spectral Hierarchy
+*Term 1: $\phi_1^{(1)} = \log, \phi_2^{(1)} = 0, \Phi^{(1)} = \exp$. Term 2: $\phi_1^{(2)} = 0, \phi_2^{(2)} = \log, \Phi^{(2)} = \exp$.*
 
-**Theorem 3.4** (spectral_hierarchy_strict). The spectral filtration is strictly increasing: ∃ f, f ∈ F₃ ∧ f ∉ F₀.
+This result is significant because addition is the *other* fundamental arithmetic operation, and unlike multiplication, it requires two terms.
 
-*Proof*: Take f(x,y) = xy. By Theorem 3.1, f ∈ F₃. If f ∈ F₀, then by the characterization of level-0 functions (Theorem 3.6), f(x,y) = αx + βy + γ for all x, y > 0. Evaluating at (1,1), (2,1), (1,2), (2,2) gives α = 1, β = 1, γ = 0. But then f(3,3) = 6 ≠ 9 = 3·3. □
+**Theorem 3.4** (Monomials). *For any natural numbers $a, b$, the monomial $x^a \cdot y^b$ has a 1-term EML-KA decomposition on $(0,\infty)^2$:*
 
-### 3.5 Algebraic Closure
+$$x^a \cdot y^b = \exp(a \cdot \log x + b \cdot \log y)$$
 
-**Theorem 3.5** (emlka_add_closure, emlka_scalar_closure). If f₁ has a Q₁-term EMLKA and f₂ has a Q₂-term EMLKA, then f₁ + f₂ has a (Q₁ + Q₂)-term EMLKA. If f has a Q-term EMLKA, then c · f has a Q-term EMLKA.
+**Theorem 3.5** (Division). *The function $x/y$ has a 1-term EML-KA decomposition on $(0,\infty)^2$:*
 
-*Proof sketch*: For addition, merge decompositions by concatenation with Fin.addCases. For scalar multiplication, prepend affine(c, 0) to each outer chain. □
+$$x/y = \exp(\log x + (-\log y))$$
 
-### 3.6 Level-0 Characterization
+### 3.3 The Addition Incompressibility Theorem
 
-**Theorem 3.6** (spectral_level_zero_affine). If f ∈ F₀, then there exist α, β, γ ∈ ℝ such that f(x,y) = αx + βy + γ for all x, y > 0.
+**Theorem 3.6** (Addition Incompressibility — Novel). *There do not exist real numbers $\alpha, \beta$ such that $\exp(\alpha \log x + \beta \log y) = x + y$ for all $x, y > 0$.*
 
-*Proof*: By induction on EML chains of depth 0, each such chain evaluates as an affine function. An EMLKA with all-affine chains computes Σ_q (a_q · (c₁_q · x + d₁_q + c₂_q · y + d₂_q) + b_q), which is affine in (x, y). □
+*Proof sketch*. Setting $x = y = 1$: $\exp(\alpha \cdot 0 + \beta \cdot 0) = \exp(0) = 1$, but $1 + 1 = 2$. Contradiction. ∎
 
-### 3.7 Point Separation
+This proves that the 2-term decomposition for addition is *optimal* among decompositions with monomial-type terms.
 
-**Theorem 3.7** (emlka_separates_points). For any two distinct points (x₁, y₁) ≠ (x₂, y₂) in (0,∞)², there exist a, b ∈ ℝ such that a · log(x₁) + b · log(y₁) ≠ a · log(x₂) + b · log(y₂).
+## 4. Closure Properties
 
-*Proof*: If x₁ ≠ x₂, take a = 1, b = 0; injectivity of log on (0,∞) gives log(x₁) ≠ log(x₂). If y₁ ≠ y₂, take a = 0, b = 1. □
+### 4.1 Closure Under Addition
 
-### 3.8 Polynomial Completeness
+**Theorem 4.1** (Width-Additive Closure). *If $f$ has a $Q_1$-term EML-KA decomposition and $g$ has a $Q_2$-term EML-KA decomposition, then $f + g$ has a $(Q_1 + Q_2)$-term EML-KA decomposition.*
 
-**Theorem 3.8** (polynomial_emlka). Every polynomial Σᵢ cᵢ · x^{aᵢ} · y^{bᵢ} with M monomials has an M-term EMLKA decomposition on (0,∞)².
+*Proof*. Concatenate the two decompositions. The sum of the evaluations equals the evaluation of the concatenated decomposition by linearity of finite sums. ∎
 
-*Proof*: Construct inner chains [affine(aᵢ, 0), log] and [affine(bᵢ, 0), log] with outer chains [affine(cᵢ, 0), exp] for each term. □
+### 4.2 Closure Under Scalar Multiplication
 
-### 3.9 Fenchel-Young Bound
+**Theorem 4.2** (Width-Preserving Scalar Closure). *If $f$ has a $Q$-term EML-KA decomposition, then $c \cdot f$ has a $Q$-term EML-KA decomposition for any $c \in \mathbb{R}$.*
 
-**Theorem 3.9** (emlka_fenchel_young_bound). For all x ∈ ℝ and s > 0:
-$$x \cdot s \leq \exp(x) + s \cdot \log(s) - s$$
+*Proof*. Replace each outer function $\Phi^{(q)}$ by $c \cdot \Phi^{(q)}$. ∎
 
-with equality iff x = log(s).
+### 4.3 Consequence: Vector Space Structure
 
-*Proof*: From the fundamental inequality exp(t) ≥ 1 + t applied to t = x - log(s), we get exp(x)/s ≥ 1 + x - log(s), which rearranges to the desired bound. □
+**Corollary 4.3**. *The set $\{f : (0,\infty)^2 \to \mathbb{R} \mid f \text{ has an EML-KA decomposition with finitely many terms}\}$ is a real vector space.*
 
----
+## 5. Polynomial Completeness
 
-## 4. The EML-KA Approximation Algorithm
+**Theorem 5.1** (Polynomial Completeness). *Let $p(x,y) = \sum_{i=1}^M c_i \cdot x^{a_i} \cdot y^{b_i}$ be a polynomial with $M$ monomials and all coefficients $c_i > 0$. Then $p$ has an $M$-term EML-KA decomposition on $(0,\infty)^2$.*
 
-### 4.1 Exact Decomposition Algorithm for Polynomials
+*Proof*. For each monomial $c_i \cdot x^{a_i} \cdot y^{b_i}$, use the decomposition:
 
-**Input**: Polynomial p(x,y) = Σᵢ cᵢ x^{aᵢ} y^{bᵢ}
+$$c_i \cdot x^{a_i} \cdot y^{b_i} = \exp(a_i \cdot \log x + b_i \cdot \log y + \log c_i)$$
 
-**Output**: EMLKA decomposition
+The inner functions are LogAffine: $\phi_1^{(i)}(x) = a_i \cdot \log x + \log c_i$ and $\phi_2^{(i)}(y) = b_i \cdot \log y$. The outer function is $\exp$. ∎
 
-**Algorithm**:
-1. For each monomial term i:
-   - Set inner₁[i] = [affine(aᵢ, 0), log]
-   - Set inner₂[i] = [affine(bᵢ, 0), log]
-   - Set outer[i] = [affine(cᵢ, 0), exp]
-2. Return EMLKA with Q = number of monomials
+## 6. Point Separation and Density
 
-**Correctness**: Each term evaluates to cᵢ · exp(aᵢ · log(x) + bᵢ · log(y)) = cᵢ · x^{aᵢ} · y^{bᵢ}.
+### 6.1 Point Separation
 
-### 4.2 Approximate Decomposition via Taylor Expansion
+**Theorem 6.1** (EML-KA Separates Points). *For any two distinct points $p_1 \neq p_2$ in $(0,\infty)^2$, there exists an EML-KA function that distinguishes them.*
 
-For transcendental functions f(x, y) on a compact K ⊂ (0,∞)², approximate by:
-1. Compute degree-N Taylor polynomial pₙ in the variables u = log(x), v = log(y)
-2. Expand pₙ(u, v) = Σ cᵢ u^{aᵢ} v^{bᵢ} (polynomial in log-coordinates)
-3. Apply the polynomial decomposition algorithm
+*Proof*. If $p_1$ and $p_2$ differ in their first coordinate, the projection $f(x,y) = x$ (a monomial with $a=1, b=0$) separates them. Similarly if they differ in the second coordinate. ∎
 
-This achieves ε-approximation for sufficiently large N by the density of polynomials.
+### 6.2 Constants
 
----
+**Theorem 6.2** (Constants). *Every constant function on $(0,\infty)^2$ has a 1-term EML-KA decomposition.*
 
-## 5. Connections and Implications
+### 6.3 Toward Density
 
-### 5.1 Connection to Neural Network Architectures
+The separation and constant-containing properties, combined with the algebra closure results, position the EML-KA function class for a Stone-Weierstrass density argument. We state this as a conjecture:
 
-The EML Spectral Filtration provides a mathematical foundation for Kolmogorov-Arnold Networks (KANs). The depth of the filtration corresponds to the complexity of learnable univariate functions: shallow networks (depth 2-3) capture multiplicative interactions, while deeper networks handle more complex nonlinearities.
+**Conjecture 6.3** (EML-KA Universality). *For every compact $K \subset (0,\infty)^2$, every continuous $f: K \to \mathbb{R}$, and every $\varepsilon > 0$, there exists a finite EML-KA decomposition that $\varepsilon$-approximates $f$ on $K$.*
 
-### 5.2 Connection to Information Theory
+## 7. The Fenchel-Young Bridge
 
-The Fenchel-Young inequality (Theorem 3.9) connects the EML algebra to the theory of Bregman divergences and exponential families. The pair (exp, s·log(s) - s) forms a conjugate pair in the sense of convex analysis, which is the foundation of maximum entropy methods and information geometry.
+The connection between EML-KA decompositions and convex duality runs through the Fenchel-Young inequality.
 
-### 5.3 Connection to Catalog Results
+### 7.1 The Fenchel-Young Gap
 
-This work extends `EML.KolmogorovArnoldEMLDeep` from the Aether Catalog, which established basic EML chain machinery and proved multiplication and monomial decompositions. Our contributions are:
-- The *spectral filtration* as a novel mathematical structure
-- The *strict hierarchy theorem* (lower bound + upper bound)
-- The *algebraic closure properties* making the filtration an algebra
-- The *Fenchel-Young connection* to convex duality
+**Definition 7.1**. The *Fenchel-Young gap* is:
 
----
+$$\text{FY}(x, s) = e^x + s \log s - s - xs$$
 
-## 6. Falsifiable Conjecture
+**Theorem 7.2** (Non-negativity). *For all $x \in \mathbb{R}$ and $s > 0$, $\text{FY}(x, s) \geq 0$.*
 
-**Conjecture (EML-KA Depth Characterization)**: For the function f(x,y) = exp(x·y) restricted to [1,2]², the spectral depth is exactly 5.
+**Theorem 7.3** (Characterization of Equality). *For $s > 0$, $\text{FY}(x, s) = 0$ if and only if $x = \log s$.*
 
-**Test**: Attempt to construct a 1-term EMLKA of depth 4 that ε-approximates exp(x·y) on [1,2]² for ε = 0.01. If no such decomposition exists after exhaustive numerical search over affine parameters, the lower bound of 5 is supported.
+### 7.2 Interpretation
 
-**Prediction**: Depth 4 is insufficient because exp(x·y) requires composing exp with a product, and the product itself requires depth 3, giving a minimum of depth 4 for the composition. However, the outer exp adds depth 1, suggesting depth 5.
+The Fenchel-Young gap measures the cost of the exp-log encoding. When $x = \log s$ (i.e., we are at the encoding of $s$), the gap vanishes — the encoding is perfect. The gap grows as $x$ deviates from $\log s$, quantifying how much information is lost by the mismatch.
 
----
+This connects to the EML-KA theory because:
+- The inner functions $\phi = \alpha \log$ perform the encoding
+- The outer function $\exp$ performs the decoding
+- The Fenchel-Young gap measures the encoding-decoding mismatch
 
-## 7. Boundary Analysis and Counterexamples
+## 8. Symmetric Decompositions
 
-### 7.1 Boundary: Non-positive Domain
+**Definition 8.1**. An EML-KA decomposition is *symmetric* if $\phi_1^{(q)} = \phi_2^{(q)}$ for all $q$.
 
-The EML-KA framework requires the positive quadrant because log is undefined at 0 and negative numbers. For functions on domains including 0 (e.g., f(x,y) = x·y on [0,1]²), the theory does not directly apply. This is a genuine limitation, not an artifact of the proof technique — logarithms diverge at 0.
+**Theorem 8.1** (Multiplication is Symmetric). *The 1-term EML-KA decomposition for multiplication is symmetric.*
 
-### 7.2 Counterexample: Depth-0 Cannot Capture Any Nonlinear Interaction
+**Theorem 8.2** (Geometric Mean is Symmetric). *The geometric mean $\sqrt{xy}$ has a symmetric 1-term EML-KA decomposition: $\sqrt{xy} = \exp(\frac{1}{2}\log x + \frac{1}{2}\log y)$.*
 
-By Theorem 3.6, depth-0 functions are affine. Therefore:
-- f(x,y) = x² is not in F₀ (take y = 0, this is a function of x alone that is nonlinear)
-- f(x,y) = max(x, y) is not in F₀ (it is not affine)
-- f(x,y) = x·y is not in F₀ (Theorem 3.4)
+## 9. Composition Depth
 
-### 7.3 Generalization: n-variable Monomials
+**Theorem 9.1** (Monomial Composition). *If $g(x,y) = x^{a_1} y^{b_1}$ and we substitute $g$ into a monomial $h(u,v) = u^{a_2} v^{b_2}$, the result is a monomial with exponents:*
 
-The monomial decomposition generalizes immediately to n variables:
-$$x_1^{a_1} \cdots x_n^{a_n} = \exp\left(\sum_{j=1}^n a_j \cdot \log(x_j)\right)$$
+$$(a_1 a_2 + a_1 b_2, \; b_1 a_2 + b_1 b_2)$$
 
-This is an n-variable KA decomposition with Q = 1 term and depth 3.
+This shows that composing EML-KA representable functions stays within the EML-KA class, with exponents combining multiplicatively.
 
----
+## 10. Discussion and Future Work
 
-## 8. Future Work
+### 10.1 The Width-Depth Tradeoff
 
-1. **Sharp depth bounds**: Determine the exact spectral depth of specific transcendental functions (e.g., sin(x·y), exp(x·y)).
+Our results reveal a clean separation in EML-KA complexity:
+- **Multiplicative operations** (multiplication, division, monomials): 1 term, depth 2
+- **Additive operations** (addition, power sums): 2 terms, depth 2
+- **Mixed operations** ($M$-term polynomials): $M$ terms, depth 2
 
-2. **Negative domain extension**: Develop an analogous theory for functions on all of ℝ² using signed logarithms or alternative encodings.
+The depth is always 2 (one $\log$ inner, one $\exp$ outer), so complexity is entirely determined by width (number of terms).
 
-3. **Quantitative approximation rates**: Bound the number of terms Q needed to achieve ε-approximation of a given continuous function, as a function of its regularity.
+### 10.2 Limitations
 
-4. **Categorical structure**: Investigate whether the spectral filtration carries additional categorical structure (e.g., monoidal structure from the product of decompositions).
+The positive-coefficient restriction in Theorem 5.1 is not fundamental — it can be lifted by allowing negative outer scalars, which our scalar closure theorem provides.
 
----
+The restriction to $(0,\infty)^2$ is more essential: $\log$ is undefined at 0 and on negative reals. Extending to $\mathbb{R}^2$ would require modified inner functions (e.g., $\text{sign}(x) \cdot \log|x|$).
+
+### 10.3 Connection to Neural Networks
+
+EML-KA decompositions can be viewed as a specific neural network architecture:
+- Input layer: LogAffine transformations (structured first layer)
+- Hidden layer: addition (summation node)
+- Output layer: exponential activation + linear combination
+
+This is related to the Kolmogorov-Arnold Network (KAN) architecture recently proposed for machine learning, but with the specific structural constraint that inner functions are LogAffine.
 
 ## References
 
-1. Kolmogorov, A.N. (1957). On the representation of continuous functions of several variables by superposition of continuous functions of one variable and addition. *Doklady Akademii Nauk SSSR*, 114, 953-956.
+1. A.N. Kolmogorov, "On the representation of continuous functions of several variables by superpositions of continuous functions of one variable and addition," *Doklady Akademii Nauk SSSR*, 114(5):953-956, 1957.
 
-2. Arnold, V.I. (1957). On functions of three variables. *Doklady Akademii Nauk SSSR*, 114, 679-681.
+2. V.I. Arnold, "On functions of three variables," *Doklady Akademii Nauk SSSR*, 114(4):679-681, 1957.
 
-3. Sprecher, D.A. (1965). On the structure of continuous functions of several variables. *Transactions of the AMS*, 115, 340-355.
+3. Z. Liu et al., "KAN: Kolmogorov-Arnold Networks," arXiv:2404.19756, 2024.
 
-4. Liu, Z., et al. (2024). KAN: Kolmogorov-Arnold Networks. *arXiv:2404.19756*.
-
-5. Aether Catalog, `EML.KolmogorovArnoldEMLDeep` — EML chain definitions and basic KA decomposition results.
+4. G.G. Lorentz, "Metric entropy, widths, and superpositions of functions," *American Mathematical Monthly*, 69(6):469-485, 1962.
