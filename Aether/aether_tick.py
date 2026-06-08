@@ -313,43 +313,53 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
         # Phase A was just evaluated. If the math is good enough, dispatch
         # Phase B to package it. Otherwise mark as A_only and integrate
         # the Lean files directly (no article/paper/widgets).
-        phase_b_threshold = extractor._adaptive_phase_b_threshold()
-        phase_a_q = job.quality_score
-        if phase_a_q >= phase_b_threshold and job.result_lean:
-            # Phase B will be dispatched right now (within this same tick loop)
-            # Then we wait for Phase B's results in a future tick
-            print(f"[Tick] Phase A Q={phase_a_q:.3f} >= {phase_b_threshold:.3f} threshold — "
-                  f"dispatching Phase B for {job.job_id[:8]}")
-            # Save Phase A quality score
-            job.phase_a_quality_score = phase_a_q
-            # Snapshot Phase A result before dispatching B
-            job.phase_a_result = {
-                "lean_files": [str(p) for p in (job.integrated_paths or []) if str(p).endswith('.lean')],
-                "theorem_count": job.theorem_count,
-                "sorry_count": job.sorry_count,
-                "quality_score": phase_a_q,
-            }
-            # Dispatch Phase B
-            job = await extractor.dispatch_phase_b_async(job)
-            if job.status == "failed":
-                # Phase B dispatch failed — fall back to A_only integration
-                print(f"[Tick] Phase B dispatch failed, falling back to A_only: {job.error_message}")
-                job.phase = "A_only"
-                job.phase_b_skipped_reason = "phase_b_dispatch_failed"
-            else:
-                # Phase B dispatched successfully — wait for it next tick
-                # Do NOT integrate yet
-                continue
+        #
+        # CRITICAL: If this is a Phase B completion, skip Phase B dispatch entirely.
+        # Phase B already ran — we just need to integrate both Phase A (Lean) and
+        # Phase B (article/paper/demo/package) into the Catalog. The old code
+        # mistakenly re-dispatched Phase B because job.quality_score (now Phase B's
+        # score) was >= threshold and job.result_lean (restored from Phase A) was
+        # non-empty, creating an infinite Phase B loop.
+        if is_phase_b_completion:
+            job.phase = "complete"
         else:
-            # Phase B skipped — integrate the Lean files only
-            if phase_a_q < phase_b_threshold:
-                job.phase = "A_only"
-                job.phase_b_skipped_reason = "low_quality"
-            elif not job.result_lean:
-                job.phase = "A_only"
-                job.phase_b_skipped_reason = "phase_a_failed"
-            print(f"[Tick] Phase A Q={phase_a_q:.3f} < {phase_b_threshold:.3f} — "
-                  f"skipping Phase B, integrating Lean only ({job.job_id[:8]})")
+            phase_b_threshold = extractor._adaptive_phase_b_threshold()
+            phase_a_q = job.quality_score
+            if phase_a_q >= phase_b_threshold and job.result_lean:
+                # Phase B will be dispatched right now (within this same tick loop)
+                # Then we wait for Phase B's results in a future tick
+                print(f"[Tick] Phase A Q={phase_a_q:.3f} >= {phase_b_threshold:.3f} threshold — "
+                      f"dispatching Phase B for {job.job_id[:8]}")
+                # Save Phase A quality score
+                job.phase_a_quality_score = phase_a_q
+                # Snapshot Phase A result before dispatching B
+                job.phase_a_result = {
+                    "lean_files": [str(p) for p in (job.integrated_paths or []) if str(p).endswith('.lean')],
+                    "theorem_count": job.theorem_count,
+                    "sorry_count": job.sorry_count,
+                    "quality_score": phase_a_q,
+                }
+                # Dispatch Phase B
+                job = await extractor.dispatch_phase_b_async(job)
+                if job.status == "failed":
+                    # Phase B dispatch failed — fall back to A_only integration
+                    print(f"[Tick] Phase B dispatch failed, falling back to A_only: {job.error_message}")
+                    job.phase = "A_only"
+                    job.phase_b_skipped_reason = "phase_b_dispatch_failed"
+                else:
+                    # Phase B dispatched successfully — wait for it next tick
+                    # Do NOT integrate yet
+                    continue
+            else:
+                # Phase B skipped — integrate the Lean files only
+                if phase_a_q < phase_b_threshold:
+                    job.phase = "A_only"
+                    job.phase_b_skipped_reason = "low_quality"
+                elif not job.result_lean:
+                    job.phase = "A_only"
+                    job.phase_b_skipped_reason = "phase_a_failed"
+                print(f"[Tick] Phase A Q={phase_a_q:.3f} < {phase_b_threshold:.3f} — "
+                      f"skipping Phase B, integrating Lean only ({job.job_id[:8]})")
 
         job = await extractor.integrate_async(job)
         extractor._save_inflight()
