@@ -189,6 +189,7 @@ class QualityEvaluator:
         existing_titles: Optional[set] = None,
         catalog_references: Optional[list] = None,
         result_fields: Optional[Dict[str, str]] = None,
+        phase: str = "A",
     ) -> QualityScore:
         """Evaluate Aristotle's output across all 9 dimensions.
 
@@ -198,6 +199,12 @@ class QualityEvaluator:
         result_fields: dict mapping artifact names to their content strings,
             e.g. {"result_paper": "...", "result_demo": "...", ...}.
             Used for artifact richness when result_dir doesn't contain the files.
+
+        phase: "A" for Phase A (Lean-only), "B" for Phase B (packaging).
+            Phase A intentionally omits articles, demos, and papers — those
+            are Phase B's responsibility. So for Phase A, artifact_richness
+            and actionability are set to neutral (0.5) to avoid penalizing
+            the math-only output for missing deliverables it shouldn't produce.
         """
         score = QualityScore()
 
@@ -225,6 +232,14 @@ class QualityEvaluator:
         score.cross_domain = self._eval_cross_domain(lean_source)
         score.artifact_richness = self._eval_artifacts(result_dir, result_fields)
         score.actionability = self._eval_actionability(result_dir, result_fields)
+
+        # Phase A (Lean-only) intentionally produces no articles, papers, or demos.
+        # Penalizing artifact_richness and actionability for missing Phase B deliverables
+        # creates a catch-22: Phase A can't score high enough to trigger Phase B.
+        # Set both to neutral (0.5) so they don't drag the composite down.
+        if phase == "A":
+            score.artifact_richness = 0.5
+            score.actionability = 0.5
         score.catalog_anchoring = self._eval_catalog_anchoring(
             concept_title, catalog_references or [], existing_titles
         )

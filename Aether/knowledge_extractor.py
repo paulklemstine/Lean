@@ -485,10 +485,11 @@ class KnowledgeExtractor:
             pass  # cycle_analytics not available, use memory-only quality
 
         # Try domain-filtered selection first, fall back to any available
+        # Skip directions whose title matches an already-inflight concept to prevent duplicate dispatch
         effective_filter = domain_filter or loop_result['domain']
-        best_dir = fd_manager.select_direction_weighted(domain_filter=effective_filter, recent_domain_quality=recent_domain_quality, catalog_analyzer=self.catalog_analyzer, exclude_domains=exclude_domains)
+        best_dir = fd_manager.select_direction_weighted(domain_filter=effective_filter, recent_domain_quality=recent_domain_quality, catalog_analyzer=self.catalog_analyzer, exclude_domains=exclude_domains, exclude_titles=inflight_concepts)
         if not best_dir:
-            best_dir = fd_manager.select_direction_weighted(recent_domain_quality=recent_domain_quality, catalog_analyzer=self.catalog_analyzer, exclude_domains=exclude_domains)
+            best_dir = fd_manager.select_direction_weighted(recent_domain_quality=recent_domain_quality, catalog_analyzer=self.catalog_analyzer, exclude_domains=exclude_domains, exclude_titles=inflight_concepts)
 
         if best_dir:
             fd_manager.mark_direction_consumed(best_dir.id, job_id)
@@ -514,7 +515,7 @@ class KnowledgeExtractor:
                 lean_guess=best_dir.proof_strategy or "",
                 catalog_references=best_dir.catalog_references or [],
                 research_mode=best_dir.research_mode or "prove",
-                novelty_estimate=min(1.0, best_dir.priority_score),
+                novelty_estimate=min(1.0, max(best_dir.priority_score, fd_manager._compute_quality_score(best_dir))),
                 breakthrough_potential=adjusted_breakthrough,
                 key_references=[],
             )
@@ -1412,6 +1413,7 @@ Research mode: {concept.research_mode}
                     "result_discussion": job.result_discussion or "",
                     "result_future_directions": job.result_future_directions or "",
                 },
+                phase=getattr(job, 'phase', 'A'),
             )
             job.quality_detail = qscore
             # Blend heuristic and structural scores using direction-driven weights

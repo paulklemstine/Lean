@@ -354,7 +354,12 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
                 # Phase B skipped — integrate the Lean files only
                 if phase_a_q < phase_b_threshold:
                     job.phase = "A_only"
-                    job.phase_b_skipped_reason = "low_quality"
+                    # For near-miss cycles (0.3-0.5), mark for potential retry with v6 prompt
+                    # The v6 prompt is more forgiving and may produce better results
+                    if phase_a_q >= 0.3:
+                        job.phase_b_skipped_reason = "low_quality_near_miss"
+                    else:
+                        job.phase_b_skipped_reason = "low_quality"
                 elif not job.result_lean:
                     job.phase = "A_only"
                     job.phase_b_skipped_reason = "phase_a_failed"

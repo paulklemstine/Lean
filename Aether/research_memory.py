@@ -259,6 +259,7 @@ class FutureDirection:
     arc_position: int = 0                                         # 1=foundation, 2=main theorem, 3=applications
     # --- Quality feedback ---
     outcome_quality: float = 0.0                                  # 0-1 score from cycle result (0=untested, 1=excellent)
+    domain_quality_penalty: float = 0.0                            # accumulated feedback penalty/bonus (-1.0 to +1.0)
     # --- Retry tracking ---
     attempt_count: int = 0                                         # number of times this direction was dispatched
     last_attempt_time: str = ""                                    # ISO timestamp of last dispatch attempt
@@ -286,6 +287,7 @@ class FutureDirection:
             "arc_id": self.arc_id,
             "arc_position": self.arc_position,
             "outcome_quality": self.outcome_quality,
+            "domain_quality_penalty": self.domain_quality_penalty,
             "prune_reason": self.prune_reason,
             "pruned_at": self.pruned_at,
             "attempt_count": self.attempt_count,
@@ -884,6 +886,7 @@ class FutureDirectionsManager:
         recent_domain_quality: Optional[Dict[str, float]] = None,
         catalog_analyzer=None,
         exclude_domains: Optional[list] = None,
+        exclude_titles: Optional[list] = None,
     ) -> Optional[FutureDirection]:
         """Select a direction weighted by computed quality score (not just priority).
 
@@ -894,6 +897,7 @@ class FutureDirectionsManager:
 
         domain_filter: only select directions containing this domain
         exclude_domains: exclude directions containing any of these domains
+        exclude_titles: exclude directions whose title matches any in this list (prevents duplicate dispatch)
         """
         # Lazy cleanup of expired quarantines
         self.cleanup_expired_quarantines()
@@ -905,6 +909,9 @@ class FutureDirectionsManager:
             available = [d for d in available if domain_filter in d.domains or not d.domains]
         if exclude_domains:
             available = [d for d in available if not any(ex in d.domains for ex in exclude_domains)]
+        if exclude_titles:
+            inflight_titles_lower = {t.lower().strip() for t in exclude_titles}
+            available = [d for d in available if d.title.lower().strip() not in inflight_titles_lower]
         if not available:
             return None
 
@@ -1112,11 +1119,13 @@ class FutureDirectionsManager:
     def adjust_direction_quality_feedback(
         self, domain: str, quality_score: float, proof_quality: str
     ) -> None:
-        """Adjust priority of future directions based on quality feedback.
+        """Adjust domain quality penalty of future directions based on quality feedback.
 
-        Domains with poor results get their directions deprioritized;
-        domains with good results get a boost. This creates a feedback loop
-        from evaluation back to direction selection.
+        Domains with poor results get their directions penalized via domain_quality_penalty;
+        domains with good results get a boost. The original priority_score is preserved
+        so that seed directions (Goldbach=0.95, Riemann=0.95) maintain their importance.
+        The domain_quality_penalty is applied during quality score computation in
+        _compute_quality_score(), not by overwriting priority_score.
         """
         domain_lower = domain.lower()
         adjusted = 0
@@ -1128,15 +1137,15 @@ class FutureDirectionsManager:
             if domain_lower not in dir_domains_lower and domain_lower not in d.title.lower():
                 continue
             if quality_score < 0.3:
-                d.priority_score = max(0.05, d.priority_score - 0.15)
+                d.domain_quality_penalty = max(-1.0, d.domain_quality_penalty - 0.15)
                 adjusted += 1
             elif quality_score > 0.7:
-                d.priority_score = min(1.0, d.priority_score + 0.10)
+                d.domain_quality_penalty = min(1.0, d.domain_quality_penalty + 0.10)
                 adjusted += 1
         if adjusted:
             self._save()
             print(f"[FD-Manager] Quality feedback: {domain} q={quality_score:.2f} "
-                  f"adjusted {adjusted} directions")
+                  f"adjusted {adjusted} directions (domain_quality_penalty)")
 
     def get_recent_domain_quality(self, n: int = 10, memory: 'ResearchMemory' = None) -> Dict[str, float]:
         """Return average quality per domain from the last n experiments.
@@ -1562,6 +1571,12 @@ class FutureDirectionsManager:
         if direction.outcome_quality > 0:
             quality_feedback = (direction.outcome_quality - 0.5) * 0.1  # small +/-0.05 nudge
 
+        # domain_quality_penalty: accumulated feedback from adjust_direction_quality_feedback()
+        # This is separate from priority_score so that seed directions (Goldbach=0.95, Riemann=0.95)
+        # maintain their importance even after domains have had poor cycles.
+        # The penalty ranges from -1.0 (very bad domain) to +1.0 (very good domain).
+        domain_penalty = direction.domain_quality_penalty * 0.15  # scale to +/-0.15 max
+
         score = (
             0.18 * novelty
             + 0.12 * outcome_bonus
@@ -1579,6 +1594,7 @@ class FutureDirectionsManager:
             + first_time_bonus
             + repetition_penalty
             + quality_feedback
+            + domain_penalty
         ) * domain_decay
         # Cap at 0.85 so priorities spread across 0.4-0.85 instead of clustering at 1.0
         return min(0.85, score)

@@ -1644,6 +1644,67 @@ class PiAgentClient:
                isolated exercise.
         """)
 
+    def _build_v6_depth_requirements(self) -> str:
+        """v6: correctness-first, simplified PEGB, focus on working proofs.
+
+        Key differences from v5:
+        - PEGB is recommended but not mandatory for every theorem
+        - Focus on CORRECT proofs that compile (sorry = 0)
+        - 2-4 theorems with solid proofs beats 5+ with incomplete PEGB
+        - Simpler anti-pattern list (just the real blockers)
+        - Plan is brief (strategy + theorem list, no essay)
+        - Removed "mathematics of X" ban (if formalized rigorously)
+        """
+        return textwrap.dedent("""\
+            ## v6 Depth Requirements — Correct Proofs First
+
+            You are working on the frontier of mathematics. Your goal is to produce
+            Lean 4 code that COMPILES and PROVES non-trivial results. A correct proof
+            of one good theorem is worth more than 5 theorems with `sorry`.
+
+            ### STEP 1: BRIEF PLAN (2-3 lines)
+
+            Before writing Lean code, state:
+            - **Strategy**: New structure (Grothendieck) OR extend existing result (Cauchy)
+            - **Theorems**: List the 2-4 theorems you will prove (one sentence each)
+            - **Why non-trivial**: One sentence explaining the key insight
+
+            ### STEP 2: PROVE THEOREMS (correctness > completeness)
+
+            Write Lean 4 proofs that COMPILE. Every theorem should have:
+            - A complete proof (no `sorry` for the main result)
+            - A brief proof sketch as a comment (1-2 sentences)
+            - An `example` block showing the theorem in action (if practical)
+
+            For your BEST theorem, also provide:
+            - A generalization or strengthening (can use `sorry` if proving it would take too long)
+            - A boundary case or counterexample showing where the result fails
+
+            You do NOT need full PEGB on every theorem. Deep PEGB on your best theorem
+            and solid proofs on the rest is the target.
+
+            ### STEP 3: Anti-patterns (avoid these)
+
+            These tactics indicate trivial proofs that add no value:
+            - `native_decide` / `decide` / `norm_num` / `rfl` — unless genuinely proving a numeric fact
+            - `simp only []` with no simp set specified
+            - `sorry` on the main theorem statement
+
+            `omega`, `linarith`, and `Aesop` are fine for supporting lemmas.
+            `sorry` is fine for generalizations and boundary cases.
+
+            ### STEP 4: Novelty
+
+            Your theorems should be genuinely new. If a statement appears in a textbook,
+            generalize it. If you cannot formalize a concept rigorously, pick a different topic.
+
+            ### Output format
+
+            Your output must include `.lean` files AND a `FUTURE_DIRECTIONS.md` file.
+            The .lean files contain the proofs. The FUTURE_DIRECTIONS.md contains 3-5
+            research conjectures that extend the work. Both are required.
+        """)
+
     def _build_v5_depth_requirements(self) -> str:
         """v5 depth requirements: plan-first, PEGB-strict, either path.
 
@@ -1909,13 +1970,15 @@ class PiAgentClient:
         world-class, a separate Phase B prompt will be dispatched to package it.
         """
         if prompt_version is None:
-            prompt_version = "v5"
+            prompt_version = "v6"
         if prompt_version == "v1":
             raise ValueError(
-                "v1 prompt is no longer supported — use v3 (novel structures), v4 (deepen catalog), "
-                "or v5 (plan-first, PEGB-strict, either path). v5 is the default."
+                "v1 prompt is no longer supported — use v3, v4, v5, or v6. "
+                "v6 (correctness-first) is the default."
             )
-        if prompt_version == "v5":
+        if prompt_version == "v6":
+            depth_requirements = self._build_v6_depth_requirements()
+        elif prompt_version == "v5":
             depth_requirements = self._build_v5_depth_requirements()
         elif prompt_version == "v4":
             depth_requirements = self._build_v4_depth_requirements()
@@ -1941,10 +2004,10 @@ class PiAgentClient:
         domain_brief = f"Research domain: {concept.domain}\nResearch mode: {concept.research_mode}\n"
 
         # Phase A header — explicit DO NOT list.
-        # v5 has flexible file/theorem counts; v3/v4 keep 1-3 files / 3-5 theorems.
-        if prompt_version == "v5":
+        # v6/v5 have flexible file/theorem counts; v3/v4 keep 1-3 files / 3-5 theorems.
+        if prompt_version in ("v5", "v6"):
             deliverable_files = "lean files (count chosen by the Plan)"
-            deliverable_theorems = "the theorems required by the concept (no fixed count)"
+            deliverable_theorems = "2-4 theorems with correct proofs (sorry = 0 on main results)"
         else:
             deliverable_files = "1-3 .lean files in `Catalog/{concept.domain}/<package_name>/`"
             deliverable_theorems = "3-5 non-trivial theorems with `sorry = 0` (PROVED, not admitted)"
@@ -2296,18 +2359,20 @@ make it beautiful to read.
         mode_line = mode_brief.get(concept.research_mode, mode_brief["prove"])
 
         # Depth Requirements: reject trivial mathematics
-        # PIVOT: Focus on defining novel mathematical structures, not solving open problems.
-        # New math > solving existing puzzles. Each theorem requires PEGB scaffolding.
-        # v3: novel structures (Grothendieck path) — kept for A/B analysis
-        # v4: deepen existing catalog results (Cauchy path) — DEFAULT, winner of A/B test
+        # v6: correctness-first, simplified PEGB, focus on working proofs (CURRENT DEFAULT)
+        # v5: plan-first, PEGB-strict, either path (still available)
+        # v4: deepen existing catalog results (Cauchy path)
+        # v3: novel structures (Grothendieck path)
         if prompt_version is None:
-            prompt_version = "v5"
+            prompt_version = "v6"
         if prompt_version == "v1":
             raise ValueError(
-                "v1 prompt is no longer supported — use v3 (novel structures), v4 (deepen catalog), "
-                "or v5 (plan-first, PEGB-strict, either path). v5 is the default."
+                "v1 prompt is no longer supported — use v3, v4, v5, or v6. "
+                "v6 (correctness-first) is the default."
             )
-        if prompt_version == "v5":
+        if prompt_version == "v6":
+            depth_requirements = self._build_v6_depth_requirements()
+        elif prompt_version == "v5":
             depth_requirements = self._build_v5_depth_requirements()
         elif prompt_version == "v4":
             depth_requirements = self._build_v4_depth_requirements()
