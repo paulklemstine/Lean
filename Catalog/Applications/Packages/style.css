@@ -1960,35 +1960,33 @@ body.light-theme .code-output.error {
 }
 
 /* ── Light theme overrides for gradient elements ── */
-/* In light mode, gradient text (transparent fill + background-clip) often becomes
-   invisible because the dark-theme gradient colors don't contrast on white backgrounds.
-   Fix: reset -webkit-text-fill-color to unset so text uses normal CSS color,
-   and provide light-appropriate gradient backgrounds where we want to keep them. */
+/* In light mode, use vibrant gradients that contrast well on white backgrounds. */
 body.light-theme .nav-item:hover .nav-item-title,
 body.light-theme .nav-item.active .nav-item-title {
-    -webkit-text-fill-color: unset;
-    background: none;
-    color: var(--accent-secondary);
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(90deg, #7c3aed, #2563eb);
+    background-clip: text;
 }
 
 body.light-theme .markdown-body h1,
 body.light-theme .markdown-body h2,
 body.light-theme .markdown-body h3 {
-    -webkit-text-fill-color: unset;
-    background: none;
-    color: var(--text-main);
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(90deg, #1e293b, #7c3aed, #1e293b);
+    background-size: 200% 100%;
+    background-clip: text;
 }
 
 body.light-theme .markdown-body a {
-    -webkit-text-fill-color: unset;
-    background: none;
-    color: var(--accent-primary);
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(90deg, #2563eb, #7c3aed);
+    background-clip: text;
 }
 
 body.light-theme .direction-card:hover .direction-card-title {
-    -webkit-text-fill-color: unset;
-    background: none;
-    color: var(--accent-secondary);
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(90deg, #7c3aed, #0284c7);
+    background-clip: text;
 }
 
 body.light-theme .tabs-container {
@@ -2006,9 +2004,9 @@ body.light-theme .tab-btn:hover {
 }
 
 body.light-theme .tab-btn.active {
-    -webkit-text-fill-color: unset;
-    background: none;
-    color: var(--accent-secondary);
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(90deg, #7c3aed, #2563eb);
+    background-clip: text;
     border-bottom-color: #7c3aed;
 }
 
@@ -2017,47 +2015,55 @@ body.light-theme .tab-content-container {
 }
 
 body.light-theme #pkg-title {
-    -webkit-text-fill-color: unset;
-    background: none;
-    color: var(--text-main);
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(90deg, #7c3aed, #dc2626, #0284c7);
+    background-size: 200% 100%;
+    animation: gradientCycle 6s ease-in-out infinite;
+    background-clip: text;
 }
 
 body.light-theme .welcome-title,
 body.light-theme .welcome-subtitle,
 body.light-theme .welcome-tagline {
-    -webkit-text-fill-color: unset;
-    background: none;
-    color: var(--text-main);
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(90deg, #7c3aed, #dc2626, #0284c7);
+    background-size: 200% 100%;
+    animation: gradientCycle 6s ease-in-out infinite;
+    background-clip: text;
 }
 
 body.light-theme .sidebar-header h2 {
-    -webkit-text-fill-color: unset;
-    background: none;
-    color: var(--text-main);
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(135deg, #7c3aed, #0284c7);
+    background-clip: text;
 }
 
 body.light-theme .sidebar-header h2 a {
-    -webkit-text-fill-color: unset;
-    background: none;
-    color: var(--accent-secondary);
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(135deg, #7c3aed, #0284c7);
+    background-clip: text;
 }
 
 body.light-theme .directions-header h1 {
-    -webkit-text-fill-color: unset;
-    background: none;
-    color: var(--text-main);
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(90deg, #7c3aed, #0284c7, #7c3aed);
+    background-size: 200% 100%;
+    animation: gradientCycle 6s ease-in-out infinite;
+    background-clip: text;
 }
 
 body.light-theme .code-title {
-    -webkit-text-fill-color: unset;
-    background: none;
-    color: var(--accent-secondary);
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(90deg, #0284c7, #7c3aed);
+    background-clip: text;
 }
 
 body.light-theme .gallery-title {
-    -webkit-text-fill-color: unset;
-    background: none;
-    color: var(--accent-secondary);
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(90deg, #1e293b, #7c3aed, #1e293b);
+    background-size: 200% 100%;
+    animation: gradientCycle 6s ease-in-out infinite;
+    background-clip: text;
 }
 
 body.light-theme .direction-priority-badge {
@@ -2094,15 +2100,16 @@ body.light-theme .lean-download-btn {
 
 body.light-theme .welcome-desc a,
 body.light-theme .welcome-footer a {
-    -webkit-text-fill-color: unset;
-    background: none;
-    color: var(--accent-primary);
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(90deg, #2563eb, #7c3aed, #dc2626);
+    background-size: 300% 100%;
+    animation: gradientCycle 6s ease-in-out infinite;
+    background-clip: text;
 }
 
 body.light-theme .welcome-desc a:hover,
 body.light-theme .welcome-footer a:hover {
-    filter: none;
-    color: var(--accent-secondary);
+    filter: brightness(1.2);
 }
 
 body.light-theme .author-popover-link:hover {
@@ -2112,27 +2119,31 @@ body.light-theme .author-popover-link:hover {
 }
 
 body.light-theme .author-popover-info h3 {
-    -webkit-text-fill-color: unset;
-    background: none;
-    color: var(--text-main);
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(90deg, #dc2626, #eab308, #0284c7, #7c3aed);
+    background-size: 300% 100%;
+    animation: gradientCycle 6s ease-in-out infinite;
+    background-clip: text;
 }
 
 body.light-theme #aether-toast .toast-title {
-    -webkit-text-fill-color: unset;
-    background: none;
-    color: var(--accent-secondary);
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(90deg, #0284c7, #7c3aed, #dc2626);
+    background-clip: text;
 }
 
 body.light-theme .lightbox-caption {
-    -webkit-text-fill-color: unset;
-    background: none;
-    color: var(--text-main);
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(90deg, #7c3aed, #0284c7);
+    background-clip: text;
 }
 
 body.light-theme .directions-subtitle {
-    -webkit-text-fill-color: unset;
-    background: none;
-    color: var(--text-muted);
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(90deg, #64748b, #7c3aed, #64748b);
+    background-size: 200% 100%;
+    animation: gradientCycle 5s ease-in-out infinite;
+    background-clip: text;
 }
 
 body.light-theme .welcome-overlay {
