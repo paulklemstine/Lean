@@ -1,47 +1,26 @@
-# The Counterpoint Quiver: Voice-Leading Constraints as Directed Graph Structure
+# Sonic Mathematics: First-Species Counterpoint as Categorical and Lattice-Theoretic Structure
 
-**A Formal Study of First-Species Counterpoint over Equal Temperaments**
+**Abstract.** We formalize the voice-leading rules of first-species counterpoint — the foundational framework of Western polyphonic composition codified by Fux (1725) — as precise mathematical structures amenable to rigorous analysis. Two complementary formalizations are developed. First, we construct the *Counterpoint Quiver*, a directed multigraph whose vertices are the six consonant interval classes modulo 12 and whose edges are permitted voice leadings. We prove that this quiver is strongly connected, that its edge set is not closed under composition (hence does not form a category), that perfect consonances admit exactly 1 self-loop versus 12 for imperfect consonances, and that the involution i ↦ −i on ℤ/12ℤ does not preserve consonance. Second, we develop a *voice-leading cost theory* in which the L¹ norm on voice motions serves as a seminorm satisfying a lattice identity: the cost of the meet plus the cost of the join equals the sum of the individual costs. All results are formalized and machine-verified, ensuring complete mathematical certainty. The framework generalizes to arbitrary equal temperaments via a parameterized *CounterpointSystem* structure.
 
----
-
-## Abstract
-
-We formalize the rules of first-species counterpoint (after Fux, 1725) as a directed multigraph—the **Counterpoint Quiver**—whose vertices are consonant interval classes modulo *n* semitones and whose edges are voice leadings satisfying the prohibition on parallel motion into perfect consonances. Working over the cyclic group ℤ/nℤ, we introduce a parameterized algebraic structure, `CounterpointSystem n`, that captures counterpoint-like constraints for arbitrary equal temperaments.
-
-For the standard 12-tone system, we establish five principal results: (1) strong connectivity of the quiver; (2) failure of edge composability, proving that permitted voice leadings do not form a subcategory; (3) a 12:1 self-loop asymmetry between imperfect and perfect consonances; (4) non-preservation of the consonance set under interval inversion; and (5) explicit hom-set cardinalities (61 incoming edges for perfect consonances vs. 72 for imperfect). Complementing the quiver-theoretic analysis, we develop a metric theory of voice-leading cost as an L¹ seminorm on the voice motion lattice, proving a lattice identity relating meet/join costs to component costs.
-
-All results have been machine-verified.
-
-**Keywords:** counterpoint, voice leading, directed graph, category theory, equal temperament, lattice theory, seminorm
+**Keywords:** musical counterpoint, category theory, quiver, lattice theory, seminorm, voice leading, modular arithmetic, formal verification
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Motivation
+The rules of first-species counterpoint, as codified by Johann Joseph Fux in *Gradus ad Parnassum* (1725), constitute one of the oldest and most precisely stated constraint systems in the arts. Despite their antiquity, these rules have resisted rigorous mathematical formalization until recently. Prior mathematical treatments of music theory — notably the work of Guerino Mazzola (2002) on topos-theoretic music theory and Dmitri Tymoczko (2011) on the geometry of voice-leading spaces — have provided geometric and topological perspectives. However, the *combinatorial constraint structure* of the counterpoint rules themselves — particularly the prohibition against parallel motion into perfect consonances — has not been analyzed at the level of directed graph theory and category theory.
 
-The theory of musical counterpoint, formalized by Fux in *Gradus ad Parnassum* (1725), prescribes rules governing the simultaneous motion of independent melodic lines. Central among these is the prohibition on *parallel motion into perfect consonances*: two voices sounding a perfect fifth (or octave) may not both move by the same nonzero interval to arrive at another perfect fifth (or octave).
+This paper fills that gap with two complementary approaches:
 
-Despite extensive musicological study (Jeppesen 1939, Salzer & Schachter 1969, Tymoczko 2011), the algebraic structure implied by these constraints has not been fully characterized. Tymoczko's geometric approach models voice leadings as points in an orbifold, while Mazzola's *Topos of Music* (2002) applies categorical methods at a high level of abstraction. Our approach is more elementary and combinatorially explicit: we model permitted voice leadings as edges in a finite directed graph and study the graph-theoretic consequences of Fux's rules.
+1. **The Counterpoint Quiver** (§3): We construct a directed multigraph whose vertices are consonant interval classes and whose edges are voice leadings permitted by the counterpoint rules. We prove structural theorems about connectivity, composability, self-loop counts, and symmetry-breaking.
 
-### 1.2 Contributions
+2. **Voice-Leading Cost Theory** (§4): We equip the space of voice motions with the L¹ norm and prove it forms a seminorm with a remarkable lattice identity, connecting music theory to the theory of valuations on distributive lattices.
 
-1. **A parameterized algebraic structure** (`CounterpointSystem n`) that captures counterpoint constraints over ℤ/nℤ for any positive integer *n*, enabling systematic comparison across equal temperaments.
+Both formalizations are parameterized — the quiver construction works over ℤ/nℤ for any n, enabling comparative study across tuning systems.
 
-2. **The Counterpoint Quiver**: a finite directed multigraph whose vertices are consonant intervals and whose edges are permitted voice leadings, with explicit edge counts.
+### 1.1 Notation
 
-3. **Five structural theorems** about the 12-TET quiver (connectivity, non-composability, self-loop asymmetry, inversion asymmetry, hom-set cardinalities).
-
-4. **A lattice-theoretic cost framework**: voice-leading cost as an L¹ seminorm on the ℤ-module of voice motions, with a lattice identity connecting meet/join costs to component costs.
-
-5. **Machine-verified proofs** of all claims, providing certainty beyond peer review.
-
-### 1.3 Related Work
-
-- **Tymoczko (2006, 2011)**: Models voice leading geometrically as paths in orbifolds. Our approach is combinatorial rather than continuous.
-- **Mazzola (2002)**: Applies topos theory to music. Our categorical observations are elementary (quiver-theoretic, not topos-theoretic).
-- **Agmon (1997)**: Studies diatonic voice leading with linear-algebraic methods. We work chromatically over ℤ/12ℤ.
-- **Hook (2007)**: Uniform triadic transformations as a group. Our morphisms are not group elements but constrained graph edges.
+Throughout, we work in ℤ/12ℤ (the integers modulo 12) for the standard chromatic system, and ℤ/nℤ for the general parameterized setting. We write interval classes as elements of these groups. A *voice leading* is a pair (b, s) ∈ (ℤ/nℤ)² representing the motion of bass and soprano voices respectively.
 
 ---
 
@@ -49,166 +28,179 @@ Despite extensive musicological study (Jeppesen 1939, Salzer & Schachter 1969, T
 
 ### 2.1 The CounterpointSystem Structure
 
-**Definition 2.1** (*CounterpointSystem*). A **counterpoint system of order *n*** (where *n* ≥ 1) is a tuple (C, P) where:
-- C ⊆ ℤ/nℤ is a nonempty finite set of **consonant intervals**,
-- P ⊆ C is a nonempty subset of **perfect consonances**,
-- There exists at least one element of C \ P (an **imperfect consonance**).
+**Definition 2.1** (CounterpointSystem). A *counterpoint system of order n* (where n ≥ 1) is a tuple (C, P, ⊆, ∃) where:
+- C ⊆ ℤ/nℤ is a nonempty finite set of *consonant intervals*,
+- P ⊆ C is a nonempty set of *perfect consonances*,
+- There exists at least one *imperfect consonance*: some i ∈ C \ P.
 
-The requirement that imperfect consonances exist is essential: a system with only perfect consonances would be trivially constrained (all non-identity voice leadings would be restricted).
+The key constraint is: *parallel motion into perfect consonances is forbidden*.
 
-**Definition 2.2** (*Voice Leading*). A **voice leading** over ℤ/nℤ is a pair (b, s) ∈ (ℤ/nℤ)², where *b* is the bass motion and *s* is the soprano motion (both in semitones mod *n*).
+**Definition 2.2** (Voice Leading). A *voice leading* over ℤ/nℤ is a pair vl = (b, s) where b, s ∈ ℤ/nℤ represent the bass and soprano motions respectively.
 
-**Definition 2.3** (*Target Interval*). Given a source interval *i* ∈ ℤ/nℤ and a voice leading (b, s), the **target interval** is:
+**Definition 2.3** (Target Interval). Given source interval i ∈ ℤ/nℤ and voice leading (b, s), the *target interval* is:
 
-$$j = i + s - b$$
+$$\tau(i, b, s) = i + s - b$$
 
-This follows from the definition: if the initial interval is *i* = soprano pitch − bass pitch, and bass moves by *b* while soprano moves by *s*, the new interval is *(soprano + s) − (bass + b) = i + s − b*.
+**Definition 2.4** (Parallel Motion). A voice leading (b, s) is *parallel* if b = s and b ≠ 0.
 
-**Definition 2.4** (*Parallel Motion*). A voice leading (b, s) exhibits **parallel motion** if b = s ≠ 0. Both voices move by the same nonzero amount.
-
-**Definition 2.5** (*Permitted Voice Leading*). A voice leading (b, s) from interval *i* to interval *j* is **permitted** in a counterpoint system (C, P) if:
+**Definition 2.5** (Permitted Voice Leading). A voice leading from source i to target j is *permitted* if:
 1. i ∈ C and j ∈ C (both intervals are consonant),
-2. j = i + s − b (the voice leading maps *i* to *j*),
-3. ¬(j ∈ P ∧ b = s ≠ 0) (parallel motion into a perfect consonance is forbidden).
+2. τ(i, b, s) = j (the voice leading maps i to j),
+3. ¬(j ∈ P ∧ (b, s) is parallel) (no parallel motion into perfect consonances).
 
 ### 2.2 The Standard 12-TET System
 
-**Definition 2.6**. The **standard 12-TET counterpoint system** is:
-- C = {0, 3, 4, 7, 8, 9} ⊂ ℤ/12ℤ (unison, minor third, major third, perfect fifth, minor sixth, major sixth)
-- P = {0, 7} ⊂ C (unison/octave and perfect fifth)
+**Definition 2.6**. The *standard 12-TET counterpoint system* is:
+- C = {0, 3, 4, 7, 8, 9} (unison, minor third, major third, perfect fifth, minor sixth, major sixth),
+- P = {0, 7} (unison/octave and perfect fifth).
 
-This matches the traditional classification in first-species counterpoint. Note that the perfect fourth (5 semitones) is treated as dissonant above the bass, which is standard in Fux's framework.
+### 2.3 Voice Motion Space
 
-### 2.3 The Canonical Voice Leading
+**Definition 2.7** (Voice Motion). For n voices, a *voice motion* is a function m : Fin(n) → ℤ, where m(i) is the number of semitones voice i moves.
 
-**Definition 2.7**. The **canonical voice leading** from *i* to *j* is (0, j − i): the bass remains stationary while the soprano moves by exactly *j* − *i* semitones.
+**Definition 2.8** (Voice Leading Cost). The *cost* of a voice motion m is:
 
-This construction is central to the connectivity proof.
+$$\text{cost}(m) = \sum_{i=0}^{n-1} |m(i)|$$
 
-### 2.4 Voice-Leading Cost
+This is the L¹ norm on ℤⁿ — the standard measure of voice-leading efficiency in music theory.
 
-**Definition 2.8**. For *n* voices with motion vector m ∈ ℤⁿ, the **voice-leading cost** is the L¹ norm:
+**Definition 2.9** (Consonance Score). We assign a consonance score to each interval class in ℤ/12ℤ:
 
-$$\text{cost}(m) = \sum_{k=1}^{n} |m_k|$$
+| Interval | Score | Classification |
+|----------|-------|----------------|
+| 0 (unison) | 8 | Perfect consonance |
+| 7 (fifth) | 7 | Perfect consonance |
+| 5 (fourth) | 6 | Perfect consonance* |
+| 4 (major third) | 5 | Imperfect consonance |
+| 3 (minor third) | 5 | Imperfect consonance |
+| 9 (major sixth) | 4 | Imperfect consonance |
+| 8 (minor sixth) | 4 | Imperfect consonance |
+| 2 (major second) | 2 | Dissonance |
+| 10 (minor seventh) | 1 | Dissonance |
+| 1 (minor second) | 1 | Dissonance |
+| 11 (major seventh) | 1 | Dissonance |
+| 6 (tritone) | 0 | Dissonance |
 
-This is the standard measure of voice-leading efficiency in music theory: smaller total displacement means smoother voice leading.
+*Note: The perfect fourth (5) receives a high consonance score but is treated as dissonant in two-voice first-species counterpoint when measured above the bass — a subtlety our voice-swap asymmetry theorem captures precisely.
 
 ---
 
-## 3. Main Results: Quiver Structure
+## 3. The Counterpoint Quiver: Main Results
 
 ### 3.1 Strong Connectivity
 
-**Theorem 3.1** (*exists_permitted_voice_leading*). For any consonant intervals *i, j* ∈ C in the standard 12-TET system, there exists a permitted voice leading from *i* to *j*.
+**Theorem 3.1** (Strong Connectivity). *For any two consonant intervals i, j ∈ C in the standard 12-TET system, there exists a permitted voice leading from i to j.*
 
-*Proof sketch.* Case split on whether *i* = *j*:
-- If *i* ≠ *j*: The canonical voice leading (0, j − i) maps *i* to *j* by construction (`targetInterval_canonical`). It has bass motion 0, so it is never parallel (`canonical_not_parallel`), and Fux's rule cannot trigger.
-- If *i* = *j*: The identity voice leading (0, 0) is permitted. It maps *i* to itself, and it is not parallel (since the bass motion is 0). This holds for all six consonant intervals, verified by case analysis. ∎
+*Proof sketch.* We distinguish two cases:
+- If i = j: the identity voice leading (0, 0) is always permitted, since it is not parallel (both components are zero, which means b = 0, violating the condition b ≠ 0 for parallelism).
+- If i ≠ j: the canonical voice leading (0, j − i) maps i to j and is not parallel since b = 0 while s = j − i ≠ 0 (as i ≠ j in ℤ/12ℤ), so b ≠ s. ∎
 
-**Corollary.** The Counterpoint Quiver on the standard 12-TET system is strongly connected as a directed graph.
+This is formalized as `exists_permitted_voice_leading` and `canonical_not_parallel` in the codebase.
 
 ### 3.2 Non-Composability
 
-**Theorem 3.2** (*non_composability*). There exist consonant intervals *i, j, k* and voice leadings *vl₁, vl₂* such that *vl₁* is permitted from *i* to *j*, *vl₂* is permitted from *j* to *k*, but the composed voice leading (vl₁.bass + vl₂.bass, vl₁.soprano + vl₂.soprano) is NOT permitted from *i* to *k*.
+**Theorem 3.2** (Non-Composability). *The set of permitted one-step voice leadings is not closed under composition. That is, there exist consonant intervals i, j, k and voice leadings vl₁, vl₂ such that vl₁ is permitted from i to j and vl₂ is permitted from j to k, but the composite voice leading (vl₁.b + vl₂.b, vl₁.s + vl₂.s) is not permitted from i to k.*
 
-*Proof sketch.* Explicit construction: Choose *i, j, k* among the six consonant intervals and voice leadings such that each individual step uses oblique or contrary motion (legal), but the composite is parallel motion arriving at a perfect consonance (illegal). The composition of bass motions equals the composition of soprano motions and is nonzero, while the target is in P. ∎
+*Proof sketch.* Consider the composition of two voice leadings that individually avoid parallel motion into a perfect consonance, but whose composite has equal nonzero bass and soprano components, targeting a perfect consonance. The individual steps each have b ≠ s (or target an imperfect consonance), but the sums b₁ + b₂ = s₁ + s₂ ≠ 0, violating the parallel-motion prohibition at the final target. ∎
 
-**Remark.** This is the central structural theorem. It means that the edge set of the Counterpoint Quiver does NOT form a subcategory of the free category on its vertices. The permitted voice leadings are a **quiver** in the strict sense—a directed graph without guaranteed composition—rather than a category.
+**Corollary 3.3.** *The permitted voice leadings of first-species counterpoint do not form a subcategory of the free category on the complete quiver over C.*
 
-### 3.3 Self-Loop Asymmetry
+### 3.3 The Perfect Consonance Bottleneck
 
-**Theorem 3.3** (*perfect_self_loop_unique*). For any perfect consonance *p* ∈ P in the standard 12-TET system, there is exactly **1** permitted voice leading from *p* to itself: the identity (0, 0).
+**Theorem 3.4** (Perfect Self-Loop Uniqueness). *A perfect consonance p ∈ P admits exactly 1 self-loop: the identity voice leading (0, 0).*
 
-*Proof sketch.* A voice leading (b, s) from *p* to *p* requires *p + s − b = p*, hence *s = b*. If *b* ≠ 0, the motion is parallel into a perfect consonance—forbidden. So *b* = *s* = 0. ∎
+*Proof sketch.* A self-loop at p requires τ(p, b, s) = p, i.e., s = b. If b = s = 0, this is the identity. If b = s ≠ 0, the voice leading is parallel motion into a perfect consonance, which is forbidden. ∎
 
-**Theorem 3.4** (*imperfect_self_loops_all*). For any imperfect consonance *q* ∈ C \ P, there are exactly **12** permitted voice leadings from *q* to itself.
+**Theorem 3.5** (Imperfect Self-Loops). *An imperfect consonance q ∈ C \ P admits exactly 12 self-loops (over ℤ/12ℤ): one for each value of b = s.*
 
-*Proof sketch.* The constraint *s = b* must hold (same arithmetic as above). Since *q* ∉ P, parallel motion is unrestricted. Each of the 12 values of *b* ∈ ℤ/12ℤ gives a valid self-loop (b, b). ∎
+*Proof sketch.* A self-loop at q requires s = b. Since q is imperfect, parallel motion into q is permitted. Thus every pair (b, b) for b ∈ ℤ/12ℤ gives a valid self-loop. ∎
 
-**Corollary.** The ratio of self-loops at imperfect to perfect consonances is 12:1. This is the categorical manifestation of the "rigidity" of perfect consonances.
+The ratio 1:12 quantifies the categorical "bottleneck" at perfect consonances.
 
-### 3.4 Voice-Swap Asymmetry
+### 3.4 Hom-Set Cardinalities
 
-**Theorem 3.5** (*voice_swap_breaks_consonance*). The involution σ: ℤ/12ℤ → ℤ/12ℤ, σ(i) = −i, does **not** preserve the consonance set C = {0, 3, 4, 7, 8, 9}.
+**Theorem 3.6** (Hom-Set Computation). *In the standard 12-TET system:*
+- *Each perfect consonance admits exactly 61 incoming permitted voice leadings from all consonant sources combined.*
+- *Each imperfect consonance admits exactly 72 incoming permitted voice leadings from all consonant sources combined.*
 
-*Proof sketch.* σ(7) = −7 = 5 mod 12. But 5 ∉ C (the perfect fourth is not consonant in first-species counterpoint). ∎
+The difference (72 − 61 = 11 = 12 − 1) is precisely the number of non-identity parallel motions forbidden at perfect targets.
 
-**Remark.** This theorem formalizes the asymmetric role of the bass voice. In counterpoint, the interval is measured *upward* from the bass; swapping voices measures downward, which is equivalent to negation mod 12. The fact that σ does not preserve C means the voice-leading constraints are not symmetric under voice exchange.
+### 3.5 Voice-Swap Asymmetry
 
-### 3.5 Hom-Set Cardinalities
+**Theorem 3.7** (Voice-Swap Breaks Consonance). *The involution neg : ℤ/12ℤ → ℤ/12ℤ defined by i ↦ −i does not preserve the set of consonant intervals C = {0, 3, 4, 7, 8, 9}.*
 
-**Theorem 3.6** (*total_permitted_to_perfect*). The total number of permitted voice leadings arriving at any fixed perfect consonance *p* ∈ P, summed over all consonant sources, is **61**.
+*Proof sketch.* We have neg(7) = −7 ≡ 5 (mod 12), and 5 ∉ C. The perfect fifth maps to the perfect fourth, which is classified as dissonant in two-voice counterpoint above the bass. ∎
 
-**Theorem 3.7** (*total_permitted_to_imperfect*). The total number of permitted voice leadings arriving at any fixed imperfect consonance *q* ∈ C \ P, summed over all consonant sources, is **72**.
-
-*Proof.* Direct enumeration over the 6 × 144 = 864 candidate voice leadings, filtering by the permissibility predicate. Both results are verified by decidable computation. ∎
-
-**Corollary.** Perfect consonances receive approximately 15.3% fewer incoming voice leadings than imperfect consonances (61/72 ≈ 0.847), quantifying the compositional constraint imposed by Fux's rule.
+This formalizes the *bass voice privilege*: the classification of an interval as consonant or dissonant depends on which voice is lower. Swapping the voices can change a consonance into a dissonance.
 
 ---
 
-## 4. Main Results: Metric and Lattice Structure
+## 4. Voice-Leading Cost Theory: Main Results
 
-### 4.1 The Cost Seminorm
+### 4.1 Seminorm Properties
 
-**Theorem 4.1** (*cost_seminorm_properties*). The voice-leading cost function cost: ℤⁿ → ℤ satisfies:
-1. **Nonnegativity**: cost(m) ≥ 0 for all m.
-2. **Subadditivity** (Triangle Inequality): cost(m₁ + m₂) ≤ cost(m₁) + cost(m₂).
-3. **Absolute Homogeneity**: cost(c · m) = |c| · cost(m) for all c ∈ ℤ.
+**Theorem 4.1** (Cost Seminorm). *The voice-leading cost function satisfies:*
+1. *Nonnegativity:* cost(m) ≥ 0 for all voice motions m.
+2. *Triangle inequality:* cost(m₁ + m₂) ≤ cost(m₁) + cost(m₂).
+3. *Absolute homogeneity:* cost(c · m) = |c| · cost(m) for c ∈ ℤ.
+4. *Definiteness:* cost(m) = 0 if and only if m = 0.
 
-*Proof sketch.* Property (1) follows from nonnegativity of absolute values. Property (2) is the triangle inequality for absolute values, summed componentwise. Property (3) uses |c · mₖ| = |c| · |mₖ| and linearity of summation. ∎
+*Hence cost is actually a norm on the free ℤ-module ℤⁿ.*
 
-**Corollary.** cost is a seminorm on the ℤ-module ℤⁿ. It is in fact a norm (cost(m) = 0 ⟹ m = 0 by `cost_eq_zero_iff`).
+These are formalized as `cost_nonneg`, `cost_triangle`, `cost_abs_homogeneous`, `cost_eq_zero_iff`, and bundled as `cost_seminorm_properties`.
 
-### 4.2 The Lattice Identity
+### 4.2 The L¹-Lattice Identity
 
-The voice motion space ℤⁿ carries a distributive lattice structure under componentwise min (⊓) and max (⊔).
+The space of voice motions ℤⁿ = (Fin n → ℤ) carries a distributive lattice structure under componentwise min (⊓) and max (⊔).
 
-**Theorem 4.2** (*cost_meet_join_eq*). For all voice motions m₁, m₂ ∈ ℤⁿ:
+**Theorem 4.2** (L¹-Lattice Identity). *For any voice motions m₁, m₂:*
 
-$$\text{cost}(m_1 \wedge m_2) + \text{cost}(m_1 \vee m_2) = \text{cost}(m_1) + \text{cost}(m_2)$$
+$$\text{cost}(m_1 \sqcap m_2) + \text{cost}(m_1 \sqcup m_2) = \text{cost}(m_1) + \text{cost}(m_2)$$
 
-*Proof sketch.* Reduces to the pointwise identity |min(a,b)| + |max(a,b)| = |a| + |b| for integers, which holds by case analysis on the sign and ordering of *a* and *b*. ∎
+*Proof sketch.* Reduce to the componentwise identity |min(a,b)| + |max(a,b)| = |a| + |b| for integers a, b, which holds by case analysis on their signs and relative order. ∎
 
-**Remark.** This identity is the L¹ analogue of the modular law for valuations on a lattice. It implies that the meet and join operations redistribute cost without creating or destroying it—a conservation law for voice-leading effort.
+This is formalized as `cost_meet_join_eq`. It states that the cost function is a *lattice valuation* — it distributes additively over the lattice operations. This connects music-theoretic voice leading to the classical theory of valuations on distributive lattices.
 
-### 4.3 Ascending Motion Sublattice
+**Corollary 4.3.** cost(m₁ ⊓ m₂) ≤ cost(m₁) + cost(m₂) and cost(m₁ ⊔ m₂) ≤ cost(m₁) + cost(m₂).
 
-**Definition.** A voice motion m ∈ ℤⁿ is **ascending** if mₖ ≥ 0 for all k.
+### 4.3 The Ascending Motion Sublattice
 
-**Theorem 4.3** (*ascending_meet*, *ascending_join*). The ascending motions form a sublattice of (ℤⁿ, ⊓, ⊔).
+**Definition 4.4.** A voice motion m is *ascending* if m(i) ≥ 0 for all voices i.
 
-**Theorem 4.4** (*ascending_cost_eq_sum*). For ascending m: cost(m) = Σₖ mₖ.
+**Theorem 4.5** (Ascending Sublattice). *The set of ascending voice motions is closed under ⊓ and ⊔ — it forms a sublattice of (ℤⁿ, ⊓, ⊔).*
 
-**Theorem 4.5** (*ascending_meet_cost_le*). For ascending m₁, m₂: cost(m₁ ⊓ m₂) ≤ cost(m₁).
+Formalized as `ascending_meet` and `ascending_join`.
 
-*Interpretation.* Taking the componentwise minimum of two ascending motions never increases cost. This means that "smoothing" two upward voice leadings by taking their meet always produces a motion at least as efficient.
+**Theorem 4.6** (Ascending Cost Simplification). *For ascending motions, cost(m) = Σᵢ m(i). Moreover, cost(m₁ ⊓ m₂) ≤ cost(m₁) for ascending m₁, m₂.*
+
+Formalized as `ascending_cost_eq_sum` and `ascending_meet_cost_le`.
 
 ### 4.4 Interval Preservation
 
-**Theorem 4.6** (*parallel_preserves_interval*). If two voices move in parallel (by the same amount), the interval between them is preserved.
+**Theorem 4.7** (Parallel Preserves Intervals). *If two voices move by the same amount (parallel motion), the interval between them is preserved.*
 
-**Theorem 4.7** (*nonparallel_changes_interval*). If two voices move non-parallel, the interval between them necessarily changes.
+**Theorem 4.8** (Non-Parallel Changes Intervals). *If two voices move by different amounts, the interval between them necessarily changes.*
 
-These are the formal counterparts of elementary counterpoint principles. Together with the non-composability theorem, they explain *why* parallel motion into perfect consonances is problematic: it's the only type of motion that preserves the interval, and perfect consonances are "too rigid" to tolerate being held via non-trivial motion.
+These are formalized as `parallel_preserves_interval` and `nonparallel_changes_interval`. Together they provide a complete characterization: parallel motion is *exactly* the condition for interval preservation, establishing a bijection between the algebraic notion (equal components) and the musical notion (maintained harmony).
+
+### 4.5 Optimal Voice Leading Existence
+
+**Theorem 4.9.** *Given any nonempty finite set S of voice motions, there exists m* ∈ S minimizing cost over S.*
+
+Formalized as `optimal_exists_of_finset`. Combined with the stepwise motion bound (cost ≤ n · bound for motions bounded by `bound`), this guarantees the existence of optimal voice leadings under standard counterpoint constraints.
 
 ---
 
-## 5. Computational Aspects
+## 5. The Parameterized Framework
 
-### 5.1 Decidability
+A key feature of this work is the parameterization over an arbitrary modulus n. The `CounterpointSystem n` structure captures:
 
-All predicates in the framework—consonance, parallel motion, permissibility—are decidable over ℤ/nℤ, enabling computational verification. The hom-set cardinalities (Theorems 3.6–3.7) are proved by `decide` tactics that exhaustively enumerate the finite state space.
+- **12-TET** (n = 12): Standard Western counterpoint.
+- **19-TET** (n = 19): A meantone temperament where thirds are purer.
+- **31-TET** (n = 31): A system approximating quarter-comma meantone.
+- **24-TET** (n = 24): Quarter-tone music used in some 20th-century and Middle Eastern traditions.
 
-### 5.2 Complexity
-
-For a system of order *n* with |C| consonant intervals, the Counterpoint Quiver has at most |C|² · n² edges (each source-target pair admits up to n² voice leadings). For the 12-TET system: 6² × 144 = 5184 candidate edges, of which the permitted subset can be enumerated in O(n²|C|²) time.
-
-### 5.3 Optimal Voice Leading
-
-**Theorem 5.1** (*optimal_exists_of_finset*). Given a nonempty finite set of voice motions, there exists one of minimum cost.
-
-Combined with the decidability of the permissibility predicate, this guarantees that the optimal permitted voice leading between any two consonant intervals can be found by finite enumeration.
+For each n, one specifies the consonant set C ⊆ ℤ/nℤ and the perfect subset P ⊆ C, then the structural theorems (connectivity, bottleneck asymmetry) can be investigated. The strong connectivity proof, for instance, works for *any* counterpoint system — the canonical voice leading construction is independent of n.
 
 ---
 
@@ -216,81 +208,122 @@ Combined with the decidability of the permissibility predicate, this guarantees 
 
 ### 6.1 Why Not a Category?
 
-The non-composability theorem (Theorem 3.2) is the most structurally significant result. In abstract algebra, it is natural to ask whether a collection of morphisms forms a category. The voice-leading edges of the Counterpoint Quiver fail this test: composition is not guaranteed to stay within the permitted set.
+The non-composability theorem (Theorem 3.2) is perhaps the most philosophically significant result. Category theory is often proposed as the natural language for musical transformation — and indeed, Neo-Riemannian operations (P, L, R) *do* form a group acting on triads. But the counterpoint rules, which are *constraints* rather than *transformations*, resist categorical formulation precisely because they are contextual: the legality of a transition depends on properties of the *target*, not just the *morphism*.
 
-This failure has a musical interpretation. Good counterpoint requires *global* planning—one cannot simply chain together locally valid moves. The non-composability means that a composer who thinks only one step ahead may paint themselves into a corner where the *next* move requires an illegal parallel motion into a perfect consonance.
+This suggests that the natural mathematical home for counterpoint is not category theory per se, but rather the theory of *constraint satisfaction problems* (CSPs) — or equivalently, the theory of *quivers with forbidden patterns*. The Counterpoint Quiver is a CSP instance where the constraint is: "no parallel edges targeting perfect vertices."
 
-Pedagogically, this is exactly the experience of students learning counterpoint: individual rules seem simple, but satisfying all of them simultaneously requires looking ahead.
+### 6.2 The Lattice-Cost Duality
 
-### 6.2 The 12:1 Ratio as Design Principle
+The L¹-lattice identity (Theorem 4.2) reveals that voice-leading cost is a *modular function* on the distributive lattice of voice motions. Modular functions on lattices have been studied extensively in combinatorics (they underlie matroid theory and submodular optimization). The music-theoretic significance is that lattice operations (componentwise min/max) provide a principled way to interpolate between voice leadings while conserving total displacement.
 
-The self-loop asymmetry (Theorems 3.3–3.4) suggests that the distinction between perfect and imperfect consonances is not merely a classification but a *design constraint* of the system. Perfect consonances are "attractors" in the sense that the system wants to reach them, but "bottlenecks" in the sense that sustaining them (via self-loops) is heavily restricted.
+### 6.3 Relationship to Prior Work
 
-This creates a natural tension—exactly the kind of tension that makes counterpoint musically interesting. A perfect fifth is a satisfying goal but a dangerous resting place.
+Our quiver-theoretic approach complements Tymoczko's (2011) geometric model of voice-leading spaces as orbifolds. Where Tymoczko works in continuous space (ℝⁿ/Sₙ), we work in the discrete chromatic universe (ℤ/12ℤ). The two approaches capture different aspects: geometry captures *distance*, while quiver theory captures *permitted transitions*.
 
-### 6.3 Generalization to Other Temperaments
-
-The parameterization by *n* enables systematic study of counterpoint in non-standard temperaments:
-
-| Temperament | n | Notes |
-|-------------|---|-------|
-| 12-TET | 12 | Standard Western tuning |
-| 19-TET | 19 | Better minor thirds; used by Costeley (1570) |
-| 31-TET | 31 | Excellent septimal intervals; Huygens (1691) |
-| 53-TET | 53 | Close to Pythagorean/just; Mercator/Bosanquet |
-
-For each *n*, one must specify the consonant and perfect interval sets. The structural theorems can then be instantiated, and new quantitative invariants (self-loop ratios, hom-set sizes) computed.
-
-### 6.4 Connection to Pythagorean Theory
-
-The consonant intervals {0, 3, 4, 7, 8, 9} have a Pythagorean pedigree. The companion formalization establishes that primitive Pythagorean triples generate the frequency ratios 4/3 (perfect fourth), 5/4 (major third), and 5/3 (major sixth) via leg and hypotenuse ratios—exactly the intervals (or their complements) in our consonance set.
-
-The Counterpoint Quiver thus studies the *dynamics* of consonance: not what makes intervals consonant (that's the Pythagorean question), but how consonant intervals connect through permitted voice leadings.
+The consonance score function (Definition 2.9) is related to Helmholtz's (1863) roughness theory and Plomp and Levelt's (1965) psychoacoustic consonance curves, but our treatment is purely algebraic — we take the classification as given and derive its structural consequences.
 
 ---
 
-## 7. Future Work
+## 7. Computational Results
 
-1. **Higher species**: Extend to second- through fifth-species counterpoint, where rhythmic and melodic constraints introduce additional graph structure.
+To complement the formal proofs, we performed exhaustive enumeration of the Counterpoint Quiver for the standard 12-TET system. The results are summarized below.
 
-2. **Three-voice counterpoint**: Generalize from two voices to three, where the state space is (ℤ/nℤ)² (two intervals) and the constraint structure is richer.
+### 7.1 Edge Count Matrix
 
-3. **Categorical enrichment**: While the edge set is not a category, one can ask whether it generates a free category with interesting properties (e.g., word length = number of voice-leading steps).
+The adjacency matrix of the Counterpoint Quiver (entries = number of permitted voice leadings from row to column):
 
-4. **Topological analysis**: Study the simplicial complex whose simplices are cliques of mutually compatible voice leadings—this could reveal higher-dimensional structure in the constraint space.
+|            | 0  | 3  | 4  | 7  | 8  | 9  |
+|------------|----|----|----|----|----|----|----|
+| **0**      | 1  | 12 | 12 | 12 | 12 | 12 |
+| **3**      | 12 | 12 | 12 | 12 | 12 | 12 |
+| **4**      | 12 | 12 | 12 | 12 | 12 | 12 |
+| **7**      | 12 | 12 | 12 | 1  | 12 | 12 |
+| **8**      | 12 | 12 | 12 | 12 | 12 | 12 |
+| **9**      | 12 | 12 | 12 | 12 | 12 | 12 |
 
-5. **Computational enumeration**: For each *n* in {12, 19, 24, 31, 53}, compute the full Counterpoint Quiver and its graph-theoretic invariants (chromatic number, clique number, diameter).
+The total number of permitted voice leadings is 410 (out of a maximum 6 × 6 × 12 = 432). The deficit of 22 = 2 × 11 accounts for exactly the 11 non-identity parallel motions forbidden at each of the 2 perfect consonance targets.
 
-6. **Connection to orbifold geometry**: Relate the Counterpoint Quiver to Tymoczko's continuous voice-leading spaces, potentially as a combinatorial shadow of the orbifold structure.
+### 7.2 In-Degree and Out-Degree
+
+| Interval | Type | In-degree | Out-degree |
+|----------|------|-----------|------------|
+| 0 (Unison) | Perfect | 61 | 61 |
+| 3 (Minor 3rd) | Imperfect | 72 | 72 |
+| 4 (Major 3rd) | Imperfect | 72 | 72 |
+| 7 (Perfect 5th) | Perfect | 61 | 61 |
+| 8 (Minor 6th) | Imperfect | 72 | 72 |
+| 9 (Major 6th) | Imperfect | 72 | 72 |
+
+The symmetry between in-degree and out-degree follows from the fact that the forbidden motions are determined by the target interval class, not the source. The 11-edge deficit at perfect targets (72 − 61 = 11) is invariant: it equals |ℤ/12ℤ| − 1, the number of non-identity elements.
+
+### 7.3 Non-Composability Witness
+
+A concrete counterexample to composability:
+- **Step 1**: From Perfect 5th (7) to Unison (0) via voice leading (bass=0, soprano=5). The soprano moves up a perfect fourth while the bass stays — oblique motion, always permitted.
+- **Step 2**: From Unison (0) to Perfect 5th (7) via voice leading (bass=1, soprano=8). The bass moves up a semitone, soprano up a minor sixth — contrary motion, permitted.
+- **Composite**: From Perfect 5th (7) to Perfect 5th (7) via (bass=1, soprano=1). Both voices move up by 1 semitone — parallel motion into a perfect consonance, FORBIDDEN.
+
+This witness demonstrates that the constraint is genuinely non-local: the legality of a composite motion cannot be determined from the legality of its components.
+
+### 7.4 Voice-Swap Analysis
+
+The negation map on ℤ/12ℤ acts on the 12 interval classes as follows:
+
+| i | −i mod 12 | i consonant? | −i consonant? | Preserved? |
+|---|-----------|-------------|--------------|------------|
+| 0 | 0 | Yes | Yes | ✓ |
+| 1 | 11 | No | No | ✓ |
+| 2 | 10 | No | No | ✓ |
+| 3 | 9 | Yes | Yes | ✓ |
+| 4 | 8 | Yes | Yes | ✓ |
+| 5 | 7 | No | Yes | ✗ |
+| 6 | 6 | No | No | ✓ |
+| 7 | 5 | Yes | No | ✗ |
+| 8 | 4 | Yes | Yes | ✓ |
+| 9 | 3 | Yes | Yes | ✓ |
+| 10 | 2 | No | No | ✓ |
+| 11 | 1 | No | No | ✓ |
+
+The map fails to preserve consonance at exactly two points: 5 ↦ 7 (dissonant to consonant) and 7 ↦ 5 (consonant to dissonant). These are the perfect fourth/fifth pair, the interval pair whose asymmetric treatment is the most distinctive feature of two-voice counterpoint.
+
+## 8. Future Work
+
+1. **Higher species.** Second-species counterpoint (two notes against one) introduces passing tones and changes the constraint structure. The quiver gains additional edge types, and composability properties may differ.
+
+2. **Multi-voice generalization.** Extending from two voices to n voices replaces ℤ/12ℤ-valued intervals with (ℤ/12ℤ)^(n choose 2)-valued interval vectors, dramatically expanding the quiver.
+
+3. **Lattice width bounds.** We conjecture that for a counterpoint system with stepwise bound b and n voices, the optimal voice-leading cost is bounded by the lattice width of the feasible region, which is at most n · b.
+
+4. **Microtonal counterpoint.** Systematically instantiating the parameterized `CounterpointSystem n` for n = 19, 24, 31, 53 and characterizing the resulting quivers' connectivity and bottleneck structure.
+
+5. **Computational enumeration.** Using the decidability instances in the formalization to exhaustively enumerate all permitted voice leadings for small systems and study their statistical properties.
 
 ---
 
-## 8. Summary of Formal Results
+## 9. Appendix: The Counterpoint System as a CSP
 
-| Result | Statement | Proof Method |
-|--------|-----------|-------------|
-| Theorem 3.1 | Strong connectivity | Canonical voice leading construction |
-| Theorem 3.2 | Non-composability | Explicit counterexample |
-| Theorem 3.3 | Perfect self-loops = 1 | Algebraic + Fux constraint |
-| Theorem 3.4 | Imperfect self-loops = 12 | Enumeration (no constraint) |
-| Theorem 3.5 | Voice swap ≠ consonance-preserving | σ(7) = 5 ∉ C |
-| Theorem 3.6 | Incoming to perfect = 61 | Decidable computation |
-| Theorem 3.7 | Incoming to imperfect = 72 | Decidable computation |
-| Theorem 4.1 | Cost is a seminorm | Abs. value properties |
-| Theorem 4.2 | Cost lattice identity | Pointwise case analysis |
-| Theorem 4.3 | Ascending sublattice | Min/max preserve ≥ 0 |
-| Theorem 4.6 | Parallel preserves interval | Direct calculation |
-| Theorem 4.7 | Non-parallel changes interval | Contrapositive |
+The framework developed in this paper naturally embeds into the theory of constraint satisfaction problems (CSPs). A first-species counterpoint exercise over a cantus firmus of length L is a CSP instance where:
 
----
+- **Variables**: L interval classes, one per beat.
+- **Domains**: Each variable ranges over the consonant set C = {0, 3, 4, 7, 8, 9}.
+- **Constraints**: For each pair of adjacent beats (t, t+1), the voice leading from interval(t) to interval(t+1) must be among the permitted voice leadings — that is, the pair must be an edge in the Counterpoint Quiver.
 
-## References
+Our strong connectivity theorem (Theorem 3.1) implies that this CSP is always satisfiable for any starting interval, since from any vertex, every other vertex is reachable in one step. However, the non-composability theorem (Theorem 3.2) implies that the constraint graph is not closed under path composition, which has implications for arc consistency algorithms: standard constraint propagation may not eliminate as many values as one might expect from a strongly connected constraint graph.
+
+The CSP perspective also connects to the optimization framework of §4: among all solutions to the CSP (all valid counterpoint exercises), one seeks the one minimizing the total voice-leading cost. This is an integer programming problem whose feasible region is a subset of (ℤ/12ℤ)^L satisfying binary constraints, with an L¹ objective function over the motion variables.
+
+The lattice structure of §4.2–4.3 suggests that lattice-based relaxation methods may be effective for approximate optimization: replacing the integer constraint with a lattice-valued relaxation and using the L¹-lattice identity to bound the gap.
+
+## 10. References
 
 1. Fux, J.J. (1725). *Gradus ad Parnassum*. Vienna.
-2. Jeppesen, K. (1939). *Counterpoint: The Polyphonic Vocal Style of the Sixteenth Century*. Prentice-Hall.
-3. Tymoczko, D. (2006). "The Geometry of Musical Chords." *Science*, 313(5783), 72–74.
-4. Tymoczko, D. (2011). *A Geometry of Music*. Oxford University Press.
-5. Mazzola, G. (2002). *The Topos of Music*. Birkhäuser.
-6. Agmon, E. (1997). "Musical Durations as Mathematical Intervals." *Music Theory Online*, 3(6).
-7. Hook, J. (2007). "Uniform Triadic Transformations." *Journal of Music Theory*, 46(1/2), 57–126.
-8. Salzer, F. & Schachter, C. (1969). *Counterpoint in Composition*. McGraw-Hill.
+2. Helmholtz, H. von (1863). *Die Lehre von den Tonempfindungen*. Braunschweig: Vieweg.
+3. Mazzola, G. (2002). *The Topos of Music*. Basel: Birkhäuser.
+4. Plomp, R. & Levelt, W.J.M. (1965). Tonal consonance and critical bandwidth. *J. Acoust. Soc. Am.*, 38(4), 548–560.
+5. Tymoczko, D. (2011). *A Geometry of Music*. Oxford University Press.
+6. Mac Lane, S. (1998). *Categories for the Working Mathematician*. 2nd ed. Springer.
+7. Birkhoff, G. (1967). *Lattice Theory*. 3rd ed. AMS Colloquium Publications.
+
+---
+
+*All theorems in this paper have been machine-verified, providing the highest standard of mathematical certainty for the results claimed.*
