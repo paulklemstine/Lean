@@ -7,7 +7,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08",
-      "hue": 271
+      "hue": 270
+    },
+    {
+      "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
+      "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity",
+      "domain": "Applications",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-08T19:03:25Z",
+      "hue": 95
     }
   ],
   "edges": [],
