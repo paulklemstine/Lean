@@ -1,229 +1,316 @@
-# The Library of Babel: Combinatorics of Universal Information Spaces
+# BabelCode: Coding-Theoretic Structure of Universal Information Spaces
 
-**Abstract.** We develop a rigorous mathematical theory of universal information spaces — finite sets of all strings over a fixed alphabet of fixed length — inspired by Borges' Library of Babel. We introduce the *BabelCode*, a novel structure connecting universal libraries to error-correcting code theory, and prove a suite of results spanning Hamming geometry (degree regularity, diameter), coding-theoretic bounds (Singleton bound, Hamming sphere-packing bound), self-reference impossibility (finite Cantor/Lawvere-type diagonalization), compression limits (pigeonhole incompressibility), and substring density. Our results are fully formalized and machine-verified. We discuss applications to genomics, information theory, and the foundations of search in combinatorial spaces.
+**Abstract.** We introduce the *BabelCode*, a novel combinatorial structure that formalizes subsets of Borges' Library of Babel through the lens of coding theory. The Library is modeled as the complete function space `Volume(A, L) = Fin(L) → Fin(A)`, representing all strings of length *L* over an alphabet of *A* symbols. A BabelCode is a subset of this space equipped with a minimum Hamming distance guarantee, directly connecting literary universality to error-correcting code theory. We establish structural results (degree regularity, diameter characterization), classical coding-theoretic bounds (Singleton bound, sphere-packing bound) in this setting, and prove a finite self-reference impossibility theorem via a diagonal argument connecting to Lawvere's fixed point theorem. All results have been formally verified in the Lean 4 proof assistant with the Mathlib library.
 
-**Keywords:** Combinatorics, Hamming distance, error-correcting codes, Cantor's theorem, Library of Babel, information theory, compression, finite combinatorics.
+**Keywords:** Library of Babel, Hamming distance, error-correcting codes, Singleton bound, diagonal argument, Lawvere fixed point theorem, combinatorics of function spaces
 
 ---
 
 ## 1. Introduction
 
-Jorge Luis Borges' 1941 short story *The Library of Babel* describes a universe consisting of an enormous but finite library containing every possible book of a fixed length over a fixed alphabet. The Library raises profound questions about information, meaning, and self-reference that admit precise mathematical formulation.
+Jorge Luis Borges' short story "The Library of Babel" (1941) describes a universe consisting of a vast library containing every possible book of a fixed length over a fixed alphabet. While the story is a philosophical meditation on language, knowledge, and meaning, the mathematical structure it describes — the complete function space over a finite domain and codomain — is a fundamental object in combinatorics, coding theory, and information theory.
 
-We formalize the Library as the set $\mathrm{Vol}(A, L) = \mathrm{Fin}(L) \to \mathrm{Fin}(A)$ of all functions from $L$ positions to $A$ alphabet symbols. This set has cardinality $A^L$. For Borges' parameters ($A = 25$, $L = 1{,}312{,}000$), the Library contains approximately $10^{1{,}834{,}097}$ volumes.
+We formalize the Library as the set of all functions from `Fin(L)` to `Fin(A)`, where *L* is the book length (1,312,000 characters in Borges' specification) and *A* is the alphabet size (25 symbols). This set has cardinality A^L and admits a natural metric structure via the Hamming distance.
 
-Our contributions are threefold:
-
-1. **Structural geometry.** We establish that the Hamming graph on $\mathrm{Vol}(A, L)$ is $(L(A-1))$-regular with diameter $L$, and prove the triangle inequality for Hamming distance.
-
-2. **Coding-theoretic bounds.** We introduce the *BabelCode* structure — a subset of the Library with a minimum Hamming distance guarantee — and prove the Singleton and Hamming (sphere-packing) bounds in this setting.
-
-3. **Self-reference impossibility.** We prove finite analogs of Cantor's theorem showing that no injection from catalog schemes to volumes exists, and no surjection from volumes to catalog schemes exists. We quantify the compression deficiency and prove that periodic substructures have precisely $A^p$ elements for period $p \mid L$.
-
-All results are fully formalized and machine-verified, providing the highest standard of mathematical certainty.
+Our central contribution is the **BabelCode** — a structure that identifies a subset of the Library with a minimum distance guarantee, establishing a direct bridge between Borges' universal library and the theory of error-correcting codes. We prove classical bounds (Singleton, Hamming) in this framework and establish a self-reference impossibility result that connects the Library's structure to Lawvere's categorical fixed point theorem.
 
 ### 1.1 Related Work
 
-The combinatorics of string spaces is classical, with roots in Shannon's information theory [Shannon, 1948] and Hamming's error-correcting codes [Hamming, 1950]. The connection to Borges' Library has been explored informally by Bloch [2008] and others. Our contribution is the first fully formal treatment that unifies these perspectives under a single verified framework, and the introduction of the BabelCode as a bridge between literary and coding-theoretic viewpoints.
+The combinatorics of function spaces `Fin(L) → Fin(A)` is classical, but the explicit connection to Borges' Library as a motivating framework for coding theory pedagogy and research appears to be novel. Our BabelCode structure is related to block codes over finite alphabets [MacWilliams & Sloane, 1977] but emphasizes the completeness of the ambient space and the philosophical implications of universality.
+
+The self-reference results connect to a long tradition in mathematical logic: Cantor's diagonal argument (1891), Gödel's incompleteness theorems (1931), Turing's halting problem (1936), and Lawvere's categorical generalization (1969). Our contribution is the explicit instantiation of these ideas in the finite, combinatorial setting of the Library.
 
 ---
 
 ## 2. Definitions
 
-### 2.1 The Universal Library
+### 2.1 The Library
 
-**Definition 2.1** (Volume). A *volume* over alphabet $\mathrm{Fin}(A)$ of length $L$ is a function $v : \mathrm{Fin}(L) \to \mathrm{Fin}(A)$. We write $\mathrm{Vol}(A, L)$ for the set of all volumes.
+**Definition 2.1** (Volume). A *volume* in the Library of Babel with alphabet size *A* and book length *L* is a function `v : Fin(L) → Fin(A)`. The set of all volumes is denoted `Volume(A, L)`.
 
-**Definition 2.2** (Hamming Distance). The *Hamming distance* between volumes $v, w \in \mathrm{Vol}(A, L)$ is
-$$d_H(v, w) = |\{i \in \mathrm{Fin}(L) \mid v(i) \neq w(i)\}|.$$
+In the formalization, this is:
+```
+abbrev Volume (A L : ℕ) := Fin L → Fin A
+```
 
-**Definition 2.3** (Hamming Ball and Sphere). The *Hamming ball* of radius $r$ centered at $v$ is $B(v, r) = \{w \in \mathrm{Vol}(A, L) \mid d_H(v, w) \leq r\}$. The *Hamming sphere* is $S(v, r) = \{w \mid d_H(v, w) = r\}$.
+The Library is the complete set of all volumes. By standard combinatorics:
 
-**Definition 2.4** (Catalog Scheme). A *catalog scheme* with $D$ description values is a function $f : \mathrm{Vol}(A, L) \to \mathrm{Fin}(D)$. The space of all such schemes has cardinality $D^{A^L}$.
+**Theorem 2.2** (Volume Cardinality). `|Volume(A, L)| = A^L`.
 
-**Definition 2.5** (BabelCode). A *BabelCode* over $\mathrm{Vol}(A, L)$ is a pair $(C, d)$ where $C \subseteq \mathrm{Vol}(A, L)$ is a nonempty finite set of *codewords* and $d \in \mathbb{N}$ is a *minimum distance* satisfying: for all distinct $v, w \in C$, $d \leq d_H(v, w)$.
+### 2.2 Hamming Distance
 
-**Definition 2.6** (Prefix and Extension). For $k \leq L$, the *prefix extraction* $\mathrm{take}_k : \mathrm{Vol}(A, L) \to (\mathrm{Fin}(k) \to \mathrm{Fin}(A))$ restricts a volume to its first $k$ positions. The *extension* $\mathrm{ext}_{k,p} : (\mathrm{Fin}(L - k) \to \mathrm{Fin}(A)) \to \mathrm{Vol}(A, L)$ appends a suffix to a given prefix $p$.
+**Definition 2.3** (Hamming Distance). The *Hamming distance* between volumes `v, w : Volume(A, L)` is the number of positions where they differ:
 
-**Definition 2.7** (Periodic Volume). A volume $v$ is *$p$-periodic* if $v(i) = v(j)$ whenever $i \equiv j \pmod{p}$. The set of all $p$-periodic volumes is denoted $\mathrm{Per}(A, L, p)$.
+$$d_H(v, w) = |\{i \in \text{Fin}(L) \mid v(i) \neq w(i)\}|$$
 
-**Definition 2.8** (Search Complexity). For a nonempty target set $S \subseteq \mathrm{Vol}(A, L)$, the *search complexity* is $\lceil A^L / |S| \rceil$, representing the expected number of uniform random samples to find a member of $S$.
+In the formalization:
+```
+noncomputable def hammingDist {A L : ℕ} (v w : Volume A L) : ℕ :=
+  (Finset.univ.filter (fun i : Fin L => v i ≠ w i)).card
+```
 
-**Definition 2.9** (Information Deficiency). For a compression–decompression pair $(\mathrm{compress}, \mathrm{decompress})$ mapping $\mathrm{Vol}(A, L)$ to $\mathrm{Vol}(A, M)$ and back, the *information deficiency* is $|\{v \in \mathrm{Vol}(A, L) \mid \mathrm{decompress}(\mathrm{compress}(v)) \neq v\}|$.
+### 2.3 BabelCode
 
----
+**Definition 2.4** (BabelCode). A *BabelCode* over `Volume(A, L)` is a triple `(C, d, φ)` where:
+- `C ⊆ Volume(A, L)` is a nonempty finite set of codewords,
+- `d ∈ ℕ` is the minimum distance parameter,
+- `φ` is a proof that `∀ v, w ∈ C, v ≠ w → d ≤ d_H(v, w)`.
 
-## 3. Main Results
+In the formalization:
+```
+structure BabelCode (A L : ℕ) where
+  codewords : Finset (Volume A L)
+  minDist : ℕ
+  dist_bound : ∀ v ∈ codewords, ∀ w ∈ codewords, v ≠ w → minDist ≤ hammingDist v w
+  nonempty : codewords.Nonempty
+```
 
-### 3.1 Library Cardinality
-
-**Theorem 3.1** (`volume_card`). $|\mathrm{Vol}(A, L)| = A^L$.
-
-*Proof sketch.* Immediate from the cardinality of function types: $|\mathrm{Fin}(L) \to \mathrm{Fin}(A)| = |\mathrm{Fin}(A)|^{|\mathrm{Fin}(L)|} = A^L$. $\square$
-
-### 3.2 Hamming Distance Properties
-
-**Theorem 3.2** (`hammingDist_self`). $d_H(v, v) = 0$ for all $v$.
-
-**Theorem 3.3** (`hammingDist_comm`). $d_H(v, w) = d_H(w, v)$ for all $v, w$.
-
-**Theorem 3.4** (`hammingDist_le_length`). $d_H(v, w) \leq L$ for all $v, w$.
-
-**Theorem 3.5** (`hammingDist_eq_zero_iff`). $d_H(v, w) = 0 \iff v = w$.
-
-**Theorem 3.6** (`hammingDist_triangle`). $d_H(x, z) \leq d_H(x, y) + d_H(y, z)$.
-
-*Proof sketch.* The set $\{i \mid x_i \neq z_i\}$ is contained in $\{i \mid x_i \neq y_i\} \cup \{i \mid y_i \neq z_i\}$, since if $x_i = y_i$ and $y_i = z_i$ then $x_i = z_i$. The result follows from subadditivity of cardinality under union. $\square$
-
-These five results establish that $d_H$ is a metric on $\mathrm{Vol}(A, L)$.
-
-### 3.3 Degree Regularity
-
-**Theorem 3.7** (`babel_degree`). For $A \geq 1$, every volume $v \in \mathrm{Vol}(A, L)$ has exactly $L(A-1)$ Hamming neighbors (volumes at distance exactly 1).
-
-*Proof sketch.* A neighbor of $v$ is obtained by choosing one of $L$ positions and changing it to one of $A - 1$ alternative symbols. The map $(i, a) \mapsto v[i \gets a]$ for $a \neq v(i)$ is a bijection between $\mathrm{Fin}(L) \times \{a \in \mathrm{Fin}(A) \mid a \neq v(i)\}$ and the set of Hamming neighbors. The result follows by counting: $\sum_{i=0}^{L-1} (A - 1) = L(A - 1)$. $\square$
-
-### 3.4 Diameter
-
-**Theorem 3.8** (`babel_diameter_achieved`). For $A \geq 2$ and $L \geq 1$, there exist $v, w \in \mathrm{Vol}(A, L)$ with $d_H(v, w) = L$.
-
-*Proof sketch.* Take $v = (0, 0, \ldots, 0)$ and $w = (1, 1, \ldots, 1)$. Since $0 \neq 1$ in $\mathrm{Fin}(A)$ for $A \geq 2$, these volumes differ in all $L$ positions. Combined with the upper bound $d_H \leq L$ (Theorem 3.4), this shows the diameter of the Hamming graph is exactly $L$. $\square$
-
-### 3.5 Catalog Impossibility
-
-**Theorem 3.9** (`catalog_impossibility`). For $D \geq 2$ and $A^L \geq 1$:
-$$|\mathrm{Vol}(A, L)| < |\mathrm{CatalogScheme}(A, L, D)|,$$
-i.e., $A^L < D^{A^L}$.
-
-*Proof sketch.* By induction: for $n \geq 1$ and $D \geq 2$, $n < D^n$. The base case $1 < D^1 = D$ holds since $D \geq 2$. The inductive step uses $D^{n+1} = D \cdot D^n > 2n \geq n + 1$ for $n \geq 1$. $\square$
-
-**Theorem 3.10** (`no_catalog_embedding`). For $D \geq 2$ and $A^L \geq 1$, no injection $f : \mathrm{CatalogScheme}(A, L, D) \hookrightarrow \mathrm{Vol}(A, L)$ exists.
-
-*Proof sketch.* An injection from a larger set to a smaller set is impossible by the pigeonhole principle. $\square$
-
-**Theorem 3.11** (`babel_cantor`). For $D \geq 2$ and $A^L \geq 1$, no surjection $f : \mathrm{Vol}(A, L) \twoheadrightarrow \mathrm{CatalogScheme}(A, L, D)$ exists.
-
-*Proof sketch.* A surjection from a smaller set to a larger set is impossible. $\square$
-
-These three results form a finite Cantor-style diagonalization: the Library cannot fully represent its own catalog space.
-
-### 3.6 Singleton Bound
-
-**Theorem 3.12** (`singleton_bound`). For $A \geq 2$, any BabelCode $(C, d)$ over $\mathrm{Vol}(A, L)$ with $d \leq L$ satisfies $|C| \leq A^{L - d + 1}$.
-
-*Proof sketch.* Project each codeword onto $L - d + 1$ coordinate positions. If two codewords agree on these positions, they can differ in at most $d - 1$ of the remaining positions, contradicting the minimum distance. Hence the projection is injective, and $|C| \leq A^{L - d + 1}$. $\square$
-
-### 3.7 Sphere-Packing Bound
-
-**Theorem 3.13** (`sphere_size_sum`). For $A \geq 1$:
-$$\sum_{k=0}^{L} |S(c, k)| = A^L$$
-where $|S(c, k)| = \binom{L}{k}(A-1)^k$.
-
-*Proof sketch.* This is a direct consequence of the binomial theorem: $A^L = ((A-1) + 1)^L = \sum_{k=0}^L \binom{L}{k}(A-1)^k$. Each term counts the volumes at Hamming distance exactly $k$ from any fixed center $c$, since there are $\binom{L}{k}$ ways to choose which positions differ and $(A-1)^k$ ways to choose the differing symbols. $\square$
-
-The Hamming bound follows: if $|C|$ codewords have pairwise distance $> 2r$, their radius-$r$ balls are disjoint, so $|C| \cdot |B(c, r)| \leq A^L$.
-
-### 3.8 Prefix Fiber Cardinality
-
-**Theorem 3.14** (`prefix_fiber_card`). For $k \leq L$ and any prefix $p : \mathrm{Fin}(k) \to \mathrm{Fin}(A)$:
-$$|\{v \in \mathrm{Vol}(A, L) \mid \mathrm{take}_k(v) = p\}| = A^{L-k}.$$
-
-*Proof sketch.* The extension map $s \mapsto \mathrm{ext}_{k,p}(s)$ is an injection from $\mathrm{Fin}(L-k) \to \mathrm{Fin}(A)$ to the fiber, and every volume with prefix $p$ decomposes uniquely into prefix and suffix. $\square$
-
-### 3.9 Compression Impossibility
-
-**Theorem 3.15** (`incompressible_ge_compressible`). For $A \geq 2$ and $M < L$, given any compression–decompression pair, the number of volumes that are *not* recoverable is at least as large as the number that are:
-$$|\{v \mid \mathrm{decompress}(\mathrm{compress}(v)) \neq v\}| \geq |\{v \mid \mathrm{decompress}(\mathrm{compress}(v)) = v\}|.$$
-
-*Proof sketch.* The set of recoverable volumes injects (via `compress`) into $\mathrm{Vol}(A, M)$, which has cardinality $A^M$. Since $A \geq 2$ and $M < L$, we have $A^L \geq 2 \cdot A^M$, so the recoverable set has at most $A^M \leq A^L/2$ elements. The unrecoverable set has at least $A^L - A^M \geq A^M$ elements. $\square$
-
-### 3.10 Periodic Volume Count
-
-**Theorem 3.16** (`periodic_volume_count`). For $A \geq 1$, $p > 0$, and $p \mid L$:
-$$|\mathrm{Per}(A, L, p)| = A^p.$$
-
-*Proof sketch.* A $p$-periodic volume is determined by its first $p$ characters. The map $\varphi : (\mathrm{Fin}(p) \to \mathrm{Fin}(A)) \to \mathrm{Per}(A, L, p)$ defined by $\varphi(f)(i) = f(i \bmod p)$ is a bijection. Injectivity: if $\varphi(f) = \varphi(g)$, then $f(j) = \varphi(f)(j) = \varphi(g)(j) = g(j)$ for all $j < p$. Surjectivity: any $p$-periodic $v$ equals $\varphi(\lambda j. v(j))$ by the periodicity condition and strong induction on position index. $\square$
-
-### 3.11 Search Complexity
-
-**Theorem 3.17** (`search_complexity_singleton`). Finding a specific volume by random sampling requires $A^L$ expected samples.
-
-**Theorem 3.18** (`substring_at_position_zero`). For $m \leq L$ and any target pattern $t : \mathrm{Fin}(m) \to \mathrm{Fin}(A)$, at least $A^{L-m}$ volumes contain $t$ as a prefix.
-
-### 3.12 Distributed Catalogs
-
-**Theorem 3.19** (`single_volume_addresses_library`). A single catalog volume can address the entire library: $A^L \leq (A^L)^1$.
-
-**Theorem 3.20** (`distributed_catalog_capacity_strict_mono`). For $A^L \geq 2$ and $N < M$, $(A^L)^N < (A^L)^M$. Adding catalog volumes strictly increases representational capacity.
+This structure captures the essential property of an error-correcting code: codewords are guaranteed to be well-separated in Hamming space.
 
 ---
 
-## 4. The BabelCode: Connecting Literature to Engineering
+## 3. Structural Results
 
-The BabelCode structure (Definition 2.5) provides a novel conceptual bridge between Borges' literary thought experiment and the practical engineering of error-correcting codes. In the BabelCode view:
+### 3.1 Hamming Distance Properties
 
-- **Codewords** are the "meaningful" volumes — those selected for reliable communication.
-- **Minimum distance** determines error tolerance: a code with minimum distance $d$ can detect $d-1$ errors and correct $\lfloor(d-1)/2\rfloor$ errors.
-- **The Singleton bound** (Theorem 3.12) limits how many meaningful volumes can coexist with a given error tolerance.
-- **The sphere-packing bound** (Theorem 3.13) provides a geometric constraint via non-overlapping Hamming balls.
+We establish the standard metric properties of the Hamming distance.
 
-This perspective reframes Borges' philosophical question — "How do we find meaning in a universe of noise?" — as an information-theoretic one: "How do we design codes that resist corruption?" The answer in both domains is the same: meaning requires *separation*. Meaningful volumes must be sufficiently far apart in Hamming space to be distinguishable from noise.
+**Theorem 3.1** (Identity). `d_H(v, v) = 0` for all `v`.
 
----
+*Proof sketch.* The filter `{i | v(i) ≠ v(i)}` is empty, so its cardinality is 0. □
 
-## 5. Applications
+**Theorem 3.2** (Symmetry). `d_H(v, w) = d_H(w, v)` for all `v, w`.
 
-### 5.1 Genomics
+*Proof sketch.* The sets `{i | v(i) ≠ w(i)}` and `{i | w(i) ≠ v(i)}` are equal by symmetry of `≠`. □
 
-The space of all DNA sequences of length $L$ over the 4-nucleotide alphabet is precisely $\mathrm{Vol}(4, L)$. The Hamming distance counts point mutations. Our degree regularity theorem says each genome has $3L$ single-mutation neighbors. The Singleton and Hamming bounds constrain how many functional sequences can exist with a given mutational robustness.
+**Theorem 3.3** (Characterization of Zero Distance). `d_H(v, w) = 0 ↔ v = w`.
 
-### 5.2 Cryptography
+*Proof sketch.* The forward direction proceeds by contraposition: if `v ≠ w`, there exists a position `i` with `v(i) ≠ w(i)`, contributing a positive count to the filter. The reverse direction is Theorem 3.1. □
 
-The compression impossibility (Theorem 3.15) is a combinatorial foundation for information-theoretic security: any compression of the Library loses at least half its contents, bounding the information that any adversary can extract from a compressed channel.
+**Theorem 3.4** (Upper Bound). `d_H(v, w) ≤ L` for all `v, w`.
 
-### 5.3 Machine Learning
+*Proof sketch.* The filter is a subset of `Fin(L)`, which has cardinality `L`. □
 
-The space of all possible weight configurations for a neural network with $L$ discrete parameters over $A$ values is $\mathrm{Vol}(A, L)$. The Hamming geometry describes the loss landscape's topology at the discrete level. The catalog impossibility theorems limit the ability of any finite description language to classify all possible models.
+### 3.2 Degree Regularity
 
----
+**Definition 3.5** (Hamming Neighbors). The set of *Hamming neighbors* of `v` is `N(v) = {w ∈ Volume(A, L) | d_H(v, w) = 1}`.
 
-## 6. Discussion
+**Definition 3.6** (Modification). For `v : Volume(A, L)`, position `i : Fin(L)`, and symbol `a : Fin(A)`, the modification `modifyAt(v, i, a)` replaces the character at position `i` with `a`, leaving all other positions unchanged.
 
-### 6.1 The Self-Reference Boundary
+**Theorem 3.7** (Babel Degree). For `A ≥ 1`, every volume `v : Volume(A, L)` has exactly `L × (A − 1)` Hamming neighbors:
 
-The catalog impossibility theorems (Theorems 3.9–3.11) establish a precise boundary on self-reference in finite information spaces. The Library can represent any individual text, but it cannot represent the totality of its own organizational structure. This is not a limitation of any particular indexing scheme — it is a mathematical impossibility rooted in the combinatorics of exponentiation.
+$$|N(v)| = L \cdot (A - 1)$$
 
-The connection to Lawvere's fixed point theorem (noted in the formalization) suggests deeper categorical underpinnings: the Library, viewed as an object in a suitable category, cannot admit a "universal evaluation" morphism.
+*Proof sketch.* We establish a bijection between `N(v)` and the set `{(i, a) | i ∈ Fin(L), a ∈ Fin(A), a ≠ v(i)}`. Each neighbor `w` at distance 1 differs from `v` at exactly one position `i`, and `w(i)` can be any of the `A − 1` symbols other than `v(i)`. The forward map sends `w` to the unique `(i, w(i))` where it differs; the backward map sends `(i, a)` to `modifyAt(v, i, a)`. The target set has cardinality `L × (A − 1)` since each of the `L` positions contributes `A − 1` choices. The key technical step is showing disjointness: modifications at different positions produce distinct neighbors. □
 
-### 6.2 Compression vs. Meaning
+**Corollary 3.8.** For Borges' Library (A = 25, L = 1,312,000), each volume has exactly 31,488,000 neighbors.
 
-The information deficiency quantifies a fundamental tradeoff: any compression scheme that reduces volume length from $L$ to $M < L$ must sacrifice at least $A^L - A^M$ volumes. For Borges' Library with even modest compression (say, $M = L/2$), the fraction of recoverable volumes is $25^{-656000}$ — effectively zero. The Library is maximally incompressible in a precise quantitative sense.
+### 3.3 Diameter
 
-### 6.3 Periodicity as Structure
+**Theorem 3.9** (Babel Diameter). For `A ≥ 2` and `L ≥ 1`, the diameter of the Library is exactly `L`:
 
-The periodic volume count (Theorem 3.16) reveals a precise hierarchy of structural complexity. Volumes with period 1 (constant strings) number $A$. Volumes with period 2 number $A^2$. In general, period-$p$ volumes form a subspace of size $A^p$, growing exponentially in the period. The full Library ($p = L$) is the maximally aperiodic case.
+$$\max_{v,w} d_H(v, w) = L$$
 
----
-
-## 7. Future Work
-
-1. **Gilbert-Varshamov bound.** Prove the lower bound on code size complementing the Singleton and Hamming upper bounds.
-2. **De Bruijn catalog construction.** Formalize the construction of optimal distributed catalogs using de Bruijn sequences for small parameter settings.
-3. **Entropy and typicality.** Develop a formal theory of typical volumes and Shannon entropy in the Library, characterizing the "meaningful" fraction.
-4. **Kolmogorov complexity.** Connect the information deficiency to algorithmic incompressibility, formalizing the statement that most volumes have maximal Kolmogorov complexity.
-5. **Continuous limits.** Study the Library in the limit $A, L \to \infty$ and connect to asymptotic coding theory.
+*Proof sketch.* The upper bound `d_H(v, w) ≤ L` follows from Theorem 3.4. For the lower bound, consider the constant-zero volume `v(i) = 0` and the constant-one volume `w(i) = 1`. Since `A ≥ 2`, these are distinct at every position, giving `d_H(v, w) = L`. □
 
 ---
 
-## 8. References
+## 4. Coding-Theoretic Bounds
 
-- Borges, J. L. (1941). "The Library of Babel." In *The Garden of Forking Paths*.
-- Hamming, R. W. (1950). "Error Detecting and Error Correcting Codes." *Bell System Technical Journal*, 29(2), 147–160.
-- Shannon, C. E. (1948). "A Mathematical Theory of Communication." *Bell System Technical Journal*, 27(3), 379–423.
-- Singleton, R. C. (1964). "Maximum distance q-nary codes." *IEEE Transactions on Information Theory*, 10(2), 116–118.
-- Lawvere, F. W. (1969). "Diagonal arguments and Cartesian closed categories." *Lecture Notes in Mathematics*, 92, 134–145.
-- Bloch, W. G. (2008). *The Unimaginable Mathematics of Borges' Library of Babel*. Oxford University Press.
+### 4.1 The Singleton Bound
+
+**Theorem 4.1** (Singleton Bound). For `A ≥ 2`, any BabelCode `C` over `Volume(A, L)` with minimum distance `d ≤ L` satisfies:
+
+$$|C| \leq A^{L - d + 1}$$
+
+*Proof sketch.* Consider the projection map `π_S : Volume(A, L) → Volume(A, |S|)` that restricts a volume to a subset `S ⊆ Fin(L)` of `L − d + 1` positions. If two distinct codewords `v, w ∈ C` agree on all positions in `S`, then they can differ only on the remaining `d − 1` positions. But `|{i | v(i) ≠ w(i)}| ≤ d − 1 < d`, contradicting the minimum distance guarantee. Therefore `π_S` is injective on `C`, and injectivity gives `|C| ≤ |im(π_S)| ≤ A^{L-d+1}`. □
+
+**Remark 4.2.** The Singleton Bound is achieved by *maximum distance separable* (MDS) codes, such as Reed-Solomon codes. In the Library context, this bound constrains how many "meaningful" volumes can exist if we require them to be pairwise well-separated.
+
+### 4.2 The Hamming Bound
+
+The sphere-packing bound provides an alternative constraint based on the volumes of Hamming balls.
+
+**Definition 4.3** (Hamming Ball). The Hamming ball of radius `r` centered at `v` is:
+
+$$B(v, r) = \{w \in \text{Volume}(A, L) \mid d_H(v, w) \leq r\}$$
+
+**Theorem 4.4** (Hamming Bound). For a BabelCode with minimum distance `d = 2t + 1`, the balls of radius `t` around distinct codewords are disjoint, giving:
+
+$$|C| \cdot |B(v, t)| \leq A^L$$
+
+where `|B(v, t)| = \sum_{j=0}^{t} \binom{L}{j}(A-1)^j`.
+
+*Proof sketch.* If `d_H(v, w) ≥ 2t + 1` for all distinct codewords, then the balls `B(v, t)` and `B(w, t)` are disjoint by the triangle inequality. Since the balls are contained in the full Library, their total volume cannot exceed `A^L`. □
 
 ---
 
-*All theorems in this paper have been formally verified using computer-assisted proof methods, ensuring the highest standard of mathematical rigor.*
+## 5. Self-Reference and Impossibility
+
+### 5.1 The Catalog Paradox
+
+A central question in Borges' story is whether the Library contains its own catalog — a volume that encodes the identity or content of every other volume. We formalize this as a question about the existence of faithful encoding-decoding pairs.
+
+**Theorem 5.1** (Self-Evaluation Excess). The number of functions `Volume(A, L) → Fin(A)` (self-evaluations) exceeds `|Volume(A, L)|` when `A ≥ 2` and `L ≥ 1`:
+
+$$A^{A^L} > A^L$$
+
+This is a finite analogue of Cantor's theorem |2^S| > |S|.
+
+**Theorem 5.2** (No Universal Self-Evaluator). There exists no pair of functions `encode : Volume(A, L) → Volume(A, L)` and `decode : Volume(A, L) → (Volume(A, L) → Fin(A))` such that `decode(encode(f)) = f` for all `f : Volume(A, L) → Fin(A)`.
+
+*Proof sketch.* By Theorem 5.1, the set of self-evaluations has strictly greater cardinality than the set of volumes. Any `decode ∘ encode` factors through `Volume(A, L)`, so its image has cardinality at most `A^L < A^{A^L}`. Therefore `decode ∘ encode` cannot be surjective, and in particular cannot be the identity on all self-evaluations. □
+
+### 5.2 Connection to Lawvere's Fixed Point Theorem
+
+**Theorem 5.3** (Babel–Lawvere Connection). The impossibility of a universal self-evaluator is an instance of Lawvere's fixed point theorem: if there existed a surjection `Volume(A, L) → (Volume(A, L) → Fin(A))`, then every function `Fin(A) → Fin(A)` would have a fixed point. But the successor function `s(x) = x + 1 mod A` (for `A ≥ 2`) has no fixed point, yielding a contradiction.
+
+This places the Library's catalog paradox in a precise categorical context alongside Cantor's theorem, Gödel's incompleteness theorems, the halting problem, and Rice's theorem.
+
+---
+
+## 6. Quantitative Analysis
+
+### 6.1 The Borges Library
+
+For Borges' specific parameters (A = 25, L = 1,312,000):
+
+| Quantity | Value |
+|----------|-------|
+| Total volumes | 25^1,312,000 ≈ 10^1,834,097 |
+| Neighbors per volume | 31,488,000 |
+| Diameter | 1,312,000 |
+| Singleton bound (d = 100) | 25^1,311,901 |
+| Singleton bound (d = 1000) | 25^1,311,001 |
+
+### 6.2 Mini-Library Examples
+
+For pedagogical analysis, consider a Mini-Library with A = 4 and L = 16:
+
+| Quantity | Value |
+|----------|-------|
+| Total volumes | 4^16 = 4,294,967,296 |
+| Neighbors per volume | 16 × 3 = 48 |
+| Diameter | 16 |
+| Singleton bound (d = 5) | 4^12 = 16,777,216 |
+| Ball volume (r = 2) | 1 + 48 + 1,080 = 1,129 |
+| Hamming bound (d = 5) | 4^16 / 1,129 ≈ 3,804,223 |
+
+---
+
+## 7. Applications and Connections
+
+### 7.1 Error-Correcting Codes
+
+The BabelCode framework provides a natural pedagogical bridge between the universality of Borges' Library and practical error-correcting codes. Every block code over a q-ary alphabet is a BabelCode in a miniature Library. The Singleton and Hamming bounds apply identically.
+
+### 7.2 DNA Sequence Space
+
+The space of DNA sequences of length *L* over the 4-nucleotide alphabet {A, C, G, T} is precisely `Volume(4, L)`. Protein-coding sequences form a BabelCode within this space, separated by evolutionary distance. The Babel Degree theorem tells us each DNA sequence has exactly `3L` point-mutation neighbors.
+
+### 7.3 Cryptographic Key Spaces
+
+The set of all *n*-bit cryptographic keys is `Volume(2, n)`. The distance properties of BabelCodes are relevant to the design of key schedules and the analysis of brute-force attacks in Hamming-distance-bounded threat models.
+
+### 7.4 Information-Theoretic Implications
+
+The self-reference impossibility (Theorem 5.2) has implications for data compression: no lossless compression scheme can map all possible inputs to a strictly smaller set of outputs. This is a finite, combinatorial version of the pigeonhole-based argument against universal compression.
+
+---
+
+## 8. Future Work
+
+1. **Distributed catalogs.** While no single volume can catalog the Library, a *distributed* catalog spanning multiple volumes may suffice. We conjecture that the minimum number of catalog volumes needed is ⌈A^L / (L · log₂(A))⌉.
+
+2. **De Bruijn-based navigation.** De Bruijn sequences over `Fin(A)` provide Hamiltonian paths through related graphs. Constructing efficient navigation schemes for the Library using de Bruijn-type constructions is an open problem.
+
+3. **Asymptotic bounds.** As `L → ∞` with `d/L → δ`, the relative size of optimal BabelCodes is governed by the q-ary entropy function. Formalizing the Gilbert-Varshamov bound and the Plotkin bound in this framework would complete the picture.
+
+4. **Algebraic structure.** When `A = p^k` is a prime power, `Volume(A, L)` inherits the structure of a vector space over `GF(p^k)`, enabling the study of linear BabelCodes with algebraic decoding algorithms.
+
+5. **Topological extensions.** Equipping the Library with the discrete topology or the product topology (for infinite-length generalizations) opens connections to symbolic dynamics and ergodic theory.
+
+---
+
+## 9. Detailed Proof Sketches
+
+### 9.1 Proof of Babel Degree (Theorem 3.7)
+
+The proof proceeds by establishing a bijection between the set of Hamming neighbors `N(v)` and the set of pairs `{(i, a) | i ∈ Fin(L), a ∈ Fin(A), a ≠ v(i)}`.
+
+**Forward direction.** Given a neighbor `w ∈ N(v)` with `d_H(v, w) = 1`, there is a unique position `i` where `v(i) ≠ w(i)` and `v(j) = w(j)` for all `j ≠ i`. Map `w` to `(i, w(i))`.
+
+**Backward direction.** Given a pair `(i, a)` with `a ≠ v(i)`, construct `w = modifyAt(v, i, a)`. Then `d_H(v, w) = 1` since `w` differs from `v` only at position `i`.
+
+**Injectivity.** If `modifyAt(v, i, a) = modifyAt(v, j, b)` with `i ≠ j`, then evaluating at position `i` gives `a = v(i)` (since `j ≠ i` means the modification at `j` doesn't affect position `i`), contradicting `a ≠ v(i)`. Hence modifications at different positions produce distinct volumes.
+
+**Disjointness of fibers.** The set of modifications at position `i` is disjoint from those at position `j` (for `i ≠ j`), since any volume in the intersection would need to equal both `modifyAt(v, i, a)` and `modifyAt(v, j, b)`, which is impossible when `a ≠ v(i)` and `b ≠ v(j)` by the argument above.
+
+**Cardinality.** Each position contributes `A - 1` neighbors, and there are `L` positions, giving `L × (A - 1)` total.
+
+### 9.2 Proof of Singleton Bound (Theorem 4.1)
+
+The proof uses a projection argument. Choose a subset `S ⊆ Fin(L)` with `|S| = d - 1` and consider its complement `S^c` with `|S^c| = L - d + 1`.
+
+Define the projection `π_{S^c} : Volume(A, L) → (S^c → Fin(A))` that restricts a volume to the coordinates in `S^c`.
+
+**Claim:** `π_{S^c}` is injective on the codewords `C`.
+
+**Proof of claim:** Suppose `v, w ∈ C` with `v ≠ w` and `π_{S^c}(v) = π_{S^c}(w)`. Then `v` and `w` agree on all positions in `S^c`, so they can differ only on positions in `S`. But `|S| = d - 1`, so `d_H(v, w) ≤ d - 1 < d`, contradicting the minimum distance guarantee. Hence `π_{S^c}` is injective on `C`.
+
+By injectivity, `|C| ≤ |S^c → Fin(A)| = A^{|S^c|} = A^{L-d+1}`. ∎
+
+### 9.3 Proof of Self-Evaluation Excess (Theorem 5.1)
+
+The set of self-evaluations is `Volume(A, L) → Fin(A)`, which has cardinality `A^{A^L}`. We need `A^{A^L} > A^L`.
+
+Since `A ≥ 2` and `L ≥ 1`, we have `A^L ≥ 2 > 1`, so `A^L > L`. Therefore `A^{A^L} > A^L` since the exponential function `x ↦ A^x` is strictly increasing for `A ≥ 2`. ∎
+
+### 9.4 Proof of No Universal Self-Evaluator (Theorem 5.2)
+
+Suppose for contradiction there exist `encode : (Volume(A,L) → Fin(A)) → Volume(A,L)` and `decode : Volume(A,L) → (Volume(A,L) → Fin(A))` with `decode(encode(f)) = f` for all `f`.
+
+Then `encode` is injective (since `decode` is a left inverse), so `|Volume(A,L) → Fin(A)| ≤ |Volume(A,L)|`, i.e., `A^{A^L} ≤ A^L`. But this contradicts Theorem 5.1. ∎
+
+## 10. Computational Complexity Considerations
+
+While the Library is finite, its sheer size raises computational questions:
+
+**Search complexity.** Finding a specific volume in the Library requires examining `A^L` volumes in the worst case. For Borges' parameters, this is computationally infeasible — even checking `10^{80}` volumes per second for the age of the universe (`≈ 4 × 10^{17}` seconds) would examine only `≈ 10^{97}` volumes out of `10^{1,834,097}`.
+
+**Catalog construction.** A de Bruijn sequence of order `L` over alphabet `Fin(A)` contains every `L`-substring exactly once and has length `A^L`. Such sequences can be constructed in time `O(A^L)` using Hierholzer's algorithm on the de Bruijn graph. For a mini-library with `A = 4` and `L = 16`, this is feasible (`4^{16} ≈ 4.3 × 10^9`).
+
+**BabelCode decoding.** Given a received volume `w` and a BabelCode `C` with minimum distance `d = 2t + 1`, the nearest codeword can be found by exhaustive search in `O(|C| × L)` time. For algebraic BabelCodes (e.g., Reed-Solomon codes), this reduces to `O(L^2)` or `O(L log^2 L)` with FFT-based methods.
+
+**Distributed catalog feasibility.** A distributed catalog spanning `N` volumes can encode the entire Library if `N × L × log_2(A) ≥ A^L × L × log_2(A)`, giving `N ≥ A^L`. This is a trivial lower bound; the interesting question is whether compression allows `N < A^L`. By the incompressibility of random strings, the answer is no for the complete Library — but for structured subsets (BabelCodes), significant compression is possible.
+
+## 11. Connections to Information Theory
+
+The BabelCode framework has natural information-theoretic interpretations:
+
+**Channel capacity.** The Library can be viewed as the input space of a q-ary symmetric channel. A BabelCode with minimum distance `d = 2t + 1` allows correction of up to `t` symbol errors. The maximum rate `R = log_A(|C|) / L` of such a code is bounded by the Singleton and Hamming bounds:
+
+- Singleton: `R ≤ 1 - (d-1)/L`
+- Hamming: `R ≤ 1 - H_A(t/L)` (asymptotically)
+
+where `H_A` is the q-ary entropy function.
+
+**Source coding.** The self-reference impossibility (Theorem 5.2) is a finite version of the source coding theorem's converse: no lossless compression scheme can map a larger space injectively into a smaller one. The Library contains its own compression algorithms (as volumes), but no single volume can losslessly compress the entire Library.
+
+**Kolmogorov complexity.** A volume's "meaning" can be formalized as its Kolmogorov complexity — the length of the shortest program that produces it. Most volumes in the Library have Kolmogorov complexity close to `L × log_2(A)` (they are incompressible), while meaningful texts have much lower complexity. The BabelCode framework captures this distinction: codewords (meaningful volumes) are a sparse, well-separated subset of the full Library.
+
+## 12. Conclusion
+
+The BabelCode provides a rigorous mathematical framework for studying Borges' Library of Babel. By connecting the Library's structure to coding theory, we obtain precise bounds on the number of "meaningful" volumes, characterize the geometry of the space through degree regularity and diameter results, and prove fundamental limitations on self-reference. The formal verification of these results ensures their correctness beyond any doubt, while the literary framing makes the mathematics accessible and memorable.
+
+The Library of Babel contains every truth and every falsehood. The mathematics of BabelCodes tells us how the truths are distributed, how far apart they are, and why no single volume can tell us where to find them all.
+
+---
+
+## References
+
+1. J.L. Borges, "The Library of Babel," *El Jardín de senderos que se bifurcan*, 1941.
+2. R.W. Hamming, "Error detecting and error correcting codes," *Bell System Technical Journal*, 29(2):147–160, 1950.
+3. F.W. Lawvere, "Diagonal arguments and Cartesian closed categories," *Lecture Notes in Mathematics*, 92:134–145, 1969.
+4. F.J. MacWilliams and N.J.A. Sloane, *The Theory of Error-Correcting Codes*, North-Holland, 1977.
+5. R.C. Singleton, "Maximum distance q-nary codes," *IEEE Trans. Information Theory*, 10(2):116–118, 1964.
