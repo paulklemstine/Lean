@@ -642,11 +642,19 @@ class KnowledgeExtractor:
             md5_hash = int(hashlib.md5(job.job_id.encode()).hexdigest(), 16)
         else:
             md5_hash = job.cycle_n
-        # 70% v4, 30% v3 — uniform draw over 1000 to get weighted ratio
+        # 3-way split: 60% v5, 25% v4, 15% v3
+        # v5 is the new default (plan-first, PEGB-strict, either path).
+        # v4 + v3 kept for backwards compat and A/B analysis.
         bucket = md5_hash % 1000
-        job.prompt_version = "v4" if bucket < 700 else "v3"
+        if bucket < 600:
+            phase_a_version = "v5"
+        elif bucket < 850:
+            phase_a_version = "v4"
+        else:
+            phase_a_version = "v3"
+        job.prompt_version = phase_a_version  # legacy field
         job.phase = "A"  # Two-phase: this is Phase A (math)
-        job.phase_a_prompt_version = "v4" if bucket < 700 else "v3"
+        job.phase_a_prompt_version = phase_a_version
         # Default to Phase A lean-only prompt; full A_full is legacy
         phase_arg = "A_lean_only"
         # Build the prompt with the chosen version

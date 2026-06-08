@@ -1644,6 +1644,117 @@ class PiAgentClient:
                isolated exercise.
         """)
 
+    def _build_v5_depth_requirements(self) -> str:
+        """v5 depth requirements: plan-first, PEGB-strict, either path.
+
+        Key differences from v4:
+        - REQUIRED Plan section before any code (forces deliberation)
+        - PEGB is mandatory on EVERY theorem, not just the "top" ones
+        - Either path (Grothendieck structure-first OR Cauchy extension) — Aristotle's choice
+        - No fixed theorem count or file count — let the concept decide
+        - Stricter anti-pattern list (tactic blacklists, reject 'math of X' without formalization)
+        """
+        return textwrap.dedent("""\
+            ## v5 Depth Requirements (MANDATORY — WORLD-CLASS STANDARD)
+
+            You are working on the frontier of mathematics. The Catalog has 100+ research
+            packages already. Each new cycle must contribute something genuinely new —
+            not a rephrasing, not a textbook exercise, not a "mathematics of X" parlor trick.
+
+            ### STEP 1: PLAN (REQUIRED — before any Lean code)
+
+            Before writing any `.lean` file, you MUST output a `## Plan` section that
+            states, in plain prose:
+
+            - **Strategy**: Grothendieck path (define a new structure, prove its properties)
+              OR Cauchy path (extend an existing catalog result). Choose the one that fits
+              the concept. Do BOTH only if the concept genuinely demands it.
+            - **Files**: What `.lean` files you will create and what each contains.
+              Use sensible names. No fixed count.
+            - **Theorems**: A list of the theorems you will prove, with one-sentence statements.
+            - **Why this is non-trivial**: A paragraph explaining the structural insight
+              that makes this work world-class. If you cannot write this paragraph, the
+              work is not world-class. Pick a different concept.
+
+            The Plan is not optional. Cycles that skip the Plan are rejected.
+
+            ### STEP 2: PEGB for EVERY theorem (strict)
+
+            For EACH theorem you prove, you MUST provide all four of:
+
+            - **P**roof: A complete, non-trivial Lean 4 proof.
+            - **E**xample: A concrete worked example (an `example` block or a specific instance).
+            - **G**eneralization: A one-level-up generalization (a stronger statement, a
+              broader class, a higher categorical level). State it as a `theorem` or `lemma`
+              with `sorry` if proving it would take the cycle too far — but STATE it.
+            - **B**oundary: A counterexample or limit-case analysis. When does the result
+              fail? What assumptions are essential?
+
+            "Top 3-5 theorems" is no longer accepted. EVERY theorem you produce must have
+            full PEGB. If you produce 2 theorems with full PEGB, that's better than 5 theorems
+            with PEGB on only 2.
+
+            ### STEP 3: Anti-patterns (REJECTED outright)
+
+            The following tactics are BLACKLISTED for the primary proof of any non-trivial theorem:
+
+            - `native_decide`, `decide`, `norm_num`, `rfl` — unless the statement is genuinely
+              a numeric/equality fact and the tactic is doing real work (not papering over
+              a structural insight).
+            - `Aesop` — unless the goal is provably trivial (≤ 3 hypotheses, no arithmetic).
+            - `omega`, `linarith` on quantified goals — these are not "proofs" of structural
+              statements.
+            - `simp only []` with no explicit simp set — this is "let the lemma solver figure it out."
+
+            If your only proof of a non-trivial theorem uses one of these, the theorem is not
+            worth proving. Find a structural proof, or drop the theorem.
+
+            ### STEP 4: Novelty check
+
+            A theorem is "novel" only if a working mathematician in the area would say
+            "I haven't seen that before." Test yourself:
+
+            - Is the statement in a textbook? If yes, find a non-trivial generalization.
+            - Is the statement a rephrasing of a known result? If yes, the cycle is not novel.
+            - Is the proof essentially the same as a known proof? If yes, the contribution
+              is the statement, not the proof — make sure the statement is genuinely new.
+
+            "Mathematics of X" where X is a real-world phenomenon (memes, dreams, consciousness,
+            art, music, social networks) is NOT a mathematical contribution unless you formalize
+            X as a precise mathematical object first. If you cannot formalize X rigorously, pick
+            a different topic.
+
+            ### STEP 5: Either path (Aristotle's choice)
+
+            You are NOT required to follow a specific path. Choose the one that fits the concept:
+
+            **Grothendieck path** (define a new structure):
+            - Invent a new operator, category, algebraic variety, or combinatorial object.
+            - State its defining properties as axioms or definitions.
+            - Prove 2-4 non-obvious theorems about it.
+            - Best for: novel concepts, unexplored territory, "what if we defined X this way?".
+
+            **Cauchy path** (extend an existing result):
+            - Pick a specific catalog theorem (cite it by name).
+            - Generalize, strengthen, or bridge it.
+            - Prove the new version is strictly stronger or more general.
+            - Best for: deepening the catalog, building on existing strength.
+
+            You may do BOTH if the concept requires it. But the Plan must justify why both paths
+            are needed in a single cycle.
+
+            ### STEP 6: Theorem count
+
+            No fixed count. Some concepts deserve 2 deep theorems. Some deserve 6. The Plan
+            must justify the count. The quality bar is "every theorem has full PEGB" — not
+            "produce a specific number".
+
+            ### STEP 7: Cite your sources
+
+            Your `## Plan` and any prose must reference specific catalog results by name or path
+            when you build on them. The catalog is the substrate; you are growing new math on it.
+        """)
+
     def _build_assignment(self, concept: ResearchConcept) -> str:
         """Build a directive assignment section for Aristotle.
 
@@ -1794,13 +1905,15 @@ class PiAgentClient:
         world-class, a separate Phase B prompt will be dispatched to package it.
         """
         if prompt_version is None:
-            prompt_version = "v4"
+            prompt_version = "v5"
         if prompt_version == "v1":
             raise ValueError(
-                "v1 prompt is no longer supported — use v3 (novel structures) or v4 (deepen catalog). "
-                "v4 is the default and won the A/B test (avg_Q 0.354 vs 0.332)."
+                "v1 prompt is no longer supported — use v3 (novel structures), v4 (deepen catalog), "
+                "or v5 (plan-first, PEGB-strict, either path). v5 is the default."
             )
-        if prompt_version == "v4":
+        if prompt_version == "v5":
+            depth_requirements = self._build_v5_depth_requirements()
+        elif prompt_version == "v4":
             depth_requirements = self._build_v4_depth_requirements()
         else:
             depth_requirements = self._build_v3_depth_requirements()
@@ -1823,7 +1936,14 @@ class PiAgentClient:
         # Domain context
         domain_brief = f"Research domain: {concept.domain}\nResearch mode: {concept.research_mode}\n"
 
-        # Phase A header — explicit DO NOT list
+        # Phase A header — explicit DO NOT list.
+        # v5 has flexible file/theorem counts; v3/v4 keep 1-3 files / 3-5 theorems.
+        if prompt_version == "v5":
+            deliverable_files = "lean files (count chosen by the Plan)"
+            deliverable_theorems = "the theorems required by the concept (no fixed count)"
+        else:
+            deliverable_files = "1-3 .lean files in `Catalog/{concept.domain}/<package_name>/`"
+            deliverable_theorems = "3-5 non-trivial theorems with `sorry = 0` (PROVED, not admitted)"
         phase_a_header = textwrap.dedent(f"""
             ## PHASE A: LEAN 4 ONLY — DOING THE MATH
 
@@ -1831,8 +1951,8 @@ class PiAgentClient:
             to produce **new Lean 4 code that extends the frontier of mathematics**.
 
             ### DELIVERABLES (strict — only this):
-            1. **1-3 .lean files** in `Catalog/{concept.domain}/<package_name>/`
-            2. **3-5 non-trivial theorems** with `sorry = 0` (PROVED, not admitted)
+            1. **{deliverable_files}**
+            2. **{deliverable_theorems}**
             3. **Brief proof sketches** as `-- !-- comment -- !--` blocks (1-2 sentences each)
             4. **A trailing comment block** titled `FUTURE DIRECTIONS` listing
                3-5 testable, falsifiable conjectures
@@ -2070,13 +2190,15 @@ make it beautiful to read.
         # v3: novel structures (Grothendieck path) — kept for A/B analysis
         # v4: deepen existing catalog results (Cauchy path) — DEFAULT, winner of A/B test
         if prompt_version is None:
-            prompt_version = "v4"
+            prompt_version = "v5"
         if prompt_version == "v1":
             raise ValueError(
-                "v1 prompt is no longer supported — use v3 (novel structures) or v4 (deepen catalog). "
-                "v4 is the default and won the A/B test (avg_Q 0.354 vs 0.332)."
+                "v1 prompt is no longer supported — use v3 (novel structures), v4 (deepen catalog), "
+                "or v5 (plan-first, PEGB-strict, either path). v5 is the default."
             )
-        if prompt_version == "v4":
+        if prompt_version == "v5":
+            depth_requirements = self._build_v5_depth_requirements()
+        elif prompt_version == "v4":
             depth_requirements = self._build_v4_depth_requirements()
         else:
             depth_requirements = self._build_v3_depth_requirements()

@@ -61,7 +61,7 @@ def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
             v = r.get("prompt_version", "unknown")
             by_ver.setdefault(v, []).append(r)
         lines = ["[A/B] Prompt version stats (v4 is the default, winner):"]
-        for v in ("v1", "v3", "v4"):
+        for v in ("v1", "v3", "v4", "v5"):
             rs = by_ver.get(v, [])
             if not rs:
                 continue
@@ -72,12 +72,15 @@ def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
             avg_dur = sum(durs) / len(durs) if durs else 0
             lines.append(f"  {v}: n={n:3d} avg_Q={avg_q:.3f} wc={wc}/{n} ({100*wc/n:.0f}%) avg_dur={avg_dur:.0f}min")
         # Last 20 only, to keep it fresh
-        recent = [r for r in records[-20:] if r.get("prompt_version") in ("v3", "v4")]
+        recent = [r for r in records[-20:] if r.get("prompt_version") in ("v3", "v4", "v5")]
         if recent:
+            v5q = sum(r.get("quality_score", 0) for r in recent if r.get("prompt_version") == "v5") / max(1, sum(1 for r in recent if r.get("prompt_version") == "v5"))
             v4q = sum(r.get("quality_score", 0) for r in recent if r.get("prompt_version") == "v4") / max(1, sum(1 for r in recent if r.get("prompt_version") == "v4"))
             v3q = sum(r.get("quality_score", 0) for r in recent if r.get("prompt_version") == "v3") / max(1, sum(1 for r in recent if r.get("prompt_version") == "v3"))
-            leader = "v4" if v4q > v3q else "v3"
-            lines.append(f"  Last 20: v4={v4q:.3f} v3={v3q:.3f} -> {leader} leading")
+            # Determine leader among all present
+            scores = {"v5": v5q, "v4": v4q, "v3": v3q}
+            leader = max(scores, key=scores.get)
+            lines.append(f"  Last 20: v5={v5q:.3f} v4={v4q:.3f} v3={v3q:.3f} -> {leader} leading")
 
         # Phase A/B split stats
         try:

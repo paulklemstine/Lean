@@ -114,14 +114,23 @@ def test_phase_b_prompt_includes_phase_a_lean(research_concept):
 
 
 def test_phase_a_prompt_size_reduced(research_concept):
-    """Phase A prompt should be smaller than the legacy full prompt."""
+    """Phase A prompt should be smaller than the legacy full prompt.
+
+    The default is v5 (Plan + PEGB + anti-patterns) at ~6K chars. v4 was ~3.7K.
+    Both are still smaller than the 10K A_full legacy prompt.
+    """
     from pi_agent_client import PiAgentClient
     client = PiAgentClient.__new__(PiAgentClient)
-    phase_a = client._build_phase_a_lean_prompt(concept=research_concept)
-    # Phase A is lean-only — should be < 6K chars (was 10-12K)
-    assert len(phase_a) < 6000, f"Phase A prompt too large: {len(phase_a)} chars"
-    # Should be a substantial chunk smaller than full
-    assert len(phase_a) > 1000, f"Phase A prompt too small: {len(phase_a)} chars"
+    phase_a_v5 = client._build_phase_a_lean_prompt(concept=research_concept)  # default = v5
+    phase_a_v4 = client._build_phase_a_lean_prompt(concept=research_concept, prompt_version="v4")
+    # Both versions should be substantially smaller than the 10K full prompt
+    assert len(phase_a_v5) < 10000, f"v5 Phase A prompt too large: {len(phase_a_v5)} chars"
+    assert len(phase_a_v4) < 10000, f"v4 Phase A prompt too large: {len(phase_a_v4)} chars"
+    # v4 should be smaller than v5 (v5 has Plan + strict PEGB)
+    assert len(phase_a_v4) < len(phase_a_v5), \
+        f"v4 ({len(phase_a_v4)}) should be smaller than v5 ({len(phase_a_v5)})"
+    # Both should be substantial
+    assert len(phase_a_v5) > 1000
 
 
 def test_phase_a_routing(research_concept):
