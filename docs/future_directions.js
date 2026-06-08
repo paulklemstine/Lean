@@ -1713,7 +1713,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Nucleus Spectrum** \u2014 the triple `(|N\u2097|, |N\u2098|, |N\u1d63|)`"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f35ec520",
     "description": "# Future Directions: Mandelbrot Arithmetic\n\n## Synthesis\n\nThis cycle established the **Orbit Polynomial Tower** \u2014 the sequence of polynomials $M_0 = 0, M_{n+1} = M_n^2 + X$ \u2014 as a formally verified mathematical structure, proving six non-trivial theorems about its algebraic properties: the Orbit Shift Lemma, Period Divisibility Theorem, period characterization for periods 1 and 2, the Dynamical Divisor Principle, the Orbit Congruence Theorem, and finite-field periodicity. The key discovery is that the quadratic iteration $z \\mapsto z^2 + c$, when studied algebraically over commutative rings rather than analytically over $\\mathbb{C}$, admits a clean divisibility theory analogous to cyclotomic polynomial theory.\n\nThe most promising cross-domain connection is between the **Orbit Polynomial Tower** and the **logistic map dynamics** already formalized in `Cryptography/LogisticChaos/Dynamics.lean`. The logistic map $f(x) = 4x(1-x)$ is semiconjugate to $z \\mapsto z^2 - 2$, and our theorem `qiter_neg_two_fixed` (showing the orbit stabilizes at $z = 2$ for $c = -2$) is the algebraic dual of the logistic map's fixed point at $x = 3/4$ (`rational_angle_period_3` in the Catalog). A formal bridge theorem connecting these two formalizations would unify the cryptographic and number-theoretic perspectives.\n\nThe direction with highest breakthrough potential is **Direction 1 (Dynatomic Irreducibility)**: proving that dynatomic polynomials are irreducible over $\\mathbb{Q}$ would be a major result in arithmetic dynamics, connecting to the unsettled conjecture of Morton and Silverman. Even partial results (irreducibility for specific small $n$, or over specific finite fields) would be highly publishable.\n\n---\n\n### Direction 1: Dynatomic Polynomial Irreducibility\n\n**Conjecture**: The $n$-th dynatomic polynomial $\\Phi_n^{\\text{dyn}}(c) = \\prod_{d|n} M_d(c)^{\\mu(n/d)}$ is irreducible over $\\mathbb{Q}$ for all $n \\geq 1$.\n\n**Test**: Compute $\\Phi_n^{\\text{dyn}}$ for $n = 1, \\ldots, 8$ and verify irreducibility using rational root theorem, Eisenstein criterion, or reduction modulo small primes. For $n = 3$: $\\Phi_3^{\\text{dyn}} = c^3 + 2c^2 + c + 1$ \u2014 check irreducibility mod 2 (becomes $c^3 + 1 = (c+1)(c^2+c+1)$, reducible) and mod 3 (becomes $c^3 + 2c^2 + c + 1$, check for roots: $f(0) = 1, f(1) = 5 \\equiv 2, f(2) = 8+8+2+1 = 19 \\equiv 1$, no roots, so irreducible mod 3 iff degree $\\leq 3$ and no roots \u2014 need to check if it has a quadratic factor). The discriminant approach or Newton polygon methods may be needed.\n\n**Impact**: Irreducibility of $\\Phi_n^{\\text{dyn}}$ over $\\mathbb{Q}$ would imply that the Galois group acts transitively on the period-$n$ parameters, meaning all period-$n$ hyperbolic components of the Mandelbrot set are \"algebraically equivalent\" \u2014 a deep structural result. If false, the factorization pattern would reveal hidden symmetries in the Mandelbrot set's period structure.\n\n**Catalog References**: `Applications/MandelbrotArithmetic/Defs.lean` (mandelbrotPoly), `Applications/MandelbrotArithmetic/Theorems.lean` (exists_exact_period_dividing, exactPeriodSet_two)\n\n**Proof Strategy**: (1) Define dynatomic polynomials as formal quotients in $\\mathbb{Z}[X]$. (2) Prove $\\Phi_n^{\\text{dyn}}$ has integer coefficients (non-trivial: requires showing $M_d | M_n$ as polynomials when $d | n$, strengthening our pointwise result). (3) Use Eisenstein at $p = 2$ or reduction mod $p$ to test irreducibility. (4) For a general proof, connect to the Galois theory of iterated extensions $\\mathbb{Q} \\subset \\mathbb{Q}[c]/(M_1) \\subset \\mathbb{Q}[c]/(M_2) \\subset \\cdots$.\n\n**Domain Bridges**: Mandelbrot arithmetic <-> algebraic number theory (cyclotomic field analogy), Mandelbrot arithmetic <-> Galois theory (wreath product structure of iterated Galois groups)\n\n**Lineage**: Builds on `mandelbrotPoly`, `mandelbrotPoly_eval`, and the dynatomic degree formula established in this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Arithmetic Mandelbrot Density over Finite Fields\n\n**Conjecture**: As $p \\to \\infty$ over primes, the density $|\\mathcal{M}_{\\mathbb{F}_p}|/p$ converges to $1/2$.\n\n**Test**: Compute $|\\mathcal{M}_{\\mathbb{F}_p}|/p$ for all primes $p \\leq 10000$ and plot the distribution. Check whether the convergence rate is $O(1/\\sqrt{p})$ (consistent with a Weil-type bound) or $O(1/\\log p)$ (suggesting a sieve-theoretic origin).\n\n**Impact**: If the density is $1/2$, it would mean that \"half of all residues are Mandelbrot parameters\" \u2014 a quantitative version of the heuristic that \"the Mandelbrot set has area $\\pi/2$ out of $\\pi \\cdot 2^2$.\" A proof would require understanding the distribution of roots of the Mandelbrot polynomials modulo primes, connecting to the Chebotarev density theorem applied to dynatomic polynomials. If the density is not $1/2$, the actual value would be a new dynamical constant.\n\n**Catalog References**: `Applications/MandelbrotArithmetic/Theorems.lean` (orbit_eventually_periodic, arithmeticMandelbrot)\n\n**Proof Strategy**: (1) Express $|\\mathcal{M}_{\\mathbb{F}_p}|$ as a sum of counts of roots of $M_n \\pmod{p}$ for $n = 1, \\ldots, p^2$. (2) For large $p$, the dominant contribution comes from $M_n$ with $n \\leq p$. (3) Use the Weil bound on the number of $\\mathbb{F}_p$-rational points of the curves $M_n(c) = 0$ (these are curves of degree $2^{n-1}$, but only $n \\leq \\log_2 p$ contribute at leading order). (4) The density should follow from understanding which \"layers\" $n$ contribute how many roots on average.\n\n**Domain Bridges**: Mandelbrot arithmetic <-> analytic number theory (Chebotarev density), Mandelbrot arithmetic <-> algebraic geometry (Weil conjectures for dynatomic curves)\n\n**Lineage**: Builds on `arithmeticMandelbrot`, `orbit_eventually_periodic`, and the computational period spectra from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Orbit Polynomial Tower for Higher-Degree Maps\n\n**Conjecture**: The Orbit Polynomial Tower for $z \\mapsto z^d + c$ (degree $d \\geq 2$) satisfies the Orbit Shift Lemma and Period Divisibility Theorem with the same proofs, but the dynatomic degree formula becomes $\\deg(\\Phi_n^{(d)}) = \\sum_{k|n} \\mu(n/k) \\cdot d^{k-1}$.\n\n**Test**: Implement the degree-$d$ Orbit Polynomial Tower in Lean for $d = 3, 4, 5$. Verify the Orbit Shift Lemma generalizes (the proof should be identical since it doesn't use the quadratic structure). Compute dynatomic degrees and verify the formula. Check period-1 and period-2 characterizations for the cubic case ($z \\mapsto z^3 + c$): period 1 requires $c = 0$; period 2 requires $c^3 + c = 0$, i.e., $c(c^2 + 1) = 0$.\n\n**Impact**: A uniform theory for all polynomial iteration towers would show that the number-theoretic structure of the Mandelbrot set is not special to quadratics \u2014 it's a general phenomenon of polynomial dynamics. The degree formula would connect to the M\u00f6bius function in a new way: $\\sum_{k|n} \\mu(n/k) d^{k-1}$ is a \"twisted von Mangoldt function\" that interpolates between Euler's totient ($d = 1$, giving $\\varphi(n)$) and the Mandelbrot dynatomic degrees ($d = 2$).\n\n**Catalog References**: `Applications/MandelbrotArithmetic/Defs.lean` (qiter, OrbitPolynomialTower), `Applications/MandelbrotArithmetic/Theorems.lean` (orbit_shift, qiter_period_mul)\n\n**Proof Strategy**: (1) Parameterize `qiter` by the degree $d$: `qiter_d R d n c = (qiter_d R d n c)^d + c`. (2) Verify that the Orbit Shift Lemma proof goes through unchanged (it uses only the recurrence structure, not the specific exponent). (3) Compute $\\deg(M_n^{(d)}) = d^{n-1}$ for the degree-$d$ Mandelbrot polynomial. (4) Derive the dynatomic degree formula by M\u00f6bius inversion.\n\n**Domain Bridges**: Mandelbrot arithmetic <-> tropical geometry (the tropical analogue of $z^d + c$ is the min-plus iteration), Mandelbrot arithmetic <-> algebraic dynamics (B\u00f6ttcher coordinates for degree-$d$ maps)\n\n**Lineage**: Direct generalization of the Orbit Polynomial Tower and all six main theorems from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Formal Bridge to Logistic Map Dynamics\n\n**Conjecture**: There exists a formal ring isomorphism connecting the Mandelbrot orbit at $c = -2$ to the logistic map dynamics at $r = 4$, such that the orbit-shift lemma for the Mandelbrot iteration implies the periodicity results for the logistic map, and vice versa.\n\n**Test**: Formalize the semiconjugacy $h(x) = 2 - 4x$ satisfying $h \\circ f_{\\text{logistic}} = g_{-2} \\circ h$ where $g_c(z) = z^2 + c$. Verify that `qiter_neg_two_fixed` (qiter n (-2) = 2 for n \u2265 2) translates to the logistic map statement that the orbit of $1/2$ reaches the fixed point $0$ after two steps (via `logistic_at_half` and `logistic_fixed_zero` in the Catalog).\n\n**Impact**: A formal bridge would unify two independently developed formalizations (Mandelbrot arithmetic and logistic chaos) into a single framework, demonstrating that the cryptographic security results for the logistic map are consequences of general orbit-theoretic principles. This would be the first formal proof connecting two dynamical systems via semiconjugacy in this proof library.\n\n**Catalog References**: `Cryptography/LogisticChaos/Dynamics.lean` (logistic, logisticN, rational_angle_period_3, logistic_fixed_zero), `Applications/MandelbrotArithmetic/Theorems.lean` (qiter_neg_two_fixed, qiter_neg_two_eventual)\n\n**Proof Strategy**: (1) Define the semiconjugacy map $h(x) = 2 - 4x$ in Lean. (2) Prove $h(f(x)) = g_{-2}(h(x))$ by direct computation (`ring`). (3) Use this to transfer orbit results: `logisticN n x = h\u207b\u00b9(qiter n (-2))` when $x = h\u207b\u00b9(0) = 1/2$. (4) Derive `logistic_at_half` and `logistic_fixed_zero` as corollaries of `qiter_neg_two_fixed`.\n\n**Domain Bridges**: Mandelbrot arithmetic <-> cryptographic dynamics (logistic map security), number theory <-> chaos theory (semiconjugacy as algebraic bridge)\n\n**Lineage**: Builds on `qiter_neg_two_fixed`, `qiter_neg_two_eventual`, and `rational_angle_period_3` from the Catalog.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Mandelbrot Orbits and Quadratic Residues\n\n**Conjecture**: For a prime $p \\equiv 1 \\pmod{4}$, the exact period of $c$ in $\\mathcal{M}_{\\mathbb{F}_p}$ is related to the order of $c$ as a quadratic residue: specifically, $c \\in \\Phi_{\\mathbb{F}_p}(n)$ implies $n | (p-1)$ or $n | (p+1)$, and the distribution between these two cases is governed by whether $c$ is a quadratic residue mod $p$.\n\n**Test**: For primes $p = 5, 13, 17, 29, 37$, compute the exact period of each $c \\in \\mathcal{M}_{\\mathbb{F}_p}$ and check whether the period divides $p-1$ or $p+1$. Correlate with the Legendre symbol $(c/p)$. Check whether QR elements tend to have periods dividing $p-1$ and QNR elements tend to have periods dividing $p+1$.\n\n**Impact**: A connection between Mandelbrot periods and quadratic residues would provide a dynamical characterization of the Legendre symbol \u2014 one of the most fundamental objects in number theory. It would suggest that iterating $z \\mapsto z^2 + c$ modulo $p$ is a \"dynamical quadratic reciprocity\" machine, computing residuacity through orbit structure.\n\n**Catalog References**: `Applications/MandelbrotArithmetic/Theorems.lean` (find_exact_period, exists_exact_period_dividing)\n\n**Proof Strategy**: (1) For $c = 0$ (QR), period is 1, which divides both $p-1$ and $p+1$. (2) For $c = -1$: period is 2, which divides $p-1$ when $p \\equiv 1 \\pmod{4}$ (and $p+1$ when $p \\equiv 3 \\pmod{4}$). This is consistent with $-1$ being QR iff $p \\equiv 1 \\pmod 4$. (3) For general $c$, the key tool would be the theory of quadratic maps over $\\mathbb{F}_p$: the orbit of $f_c$ decomposes into cycles whose lengths divide $\\text{lcm}(p-1, p+1)$ by the structure theory of $\\text{PGL}_2(\\mathbb{F}_p)$ acting on the projective line.\n\n**Domain Bridges**: Mandelbrot arithmetic <-> algebraic number theory (quadratic reciprocity), dynamical systems <-> multiplicative number theory (order of elements)\n\n**Lineage**: Builds on `arithmeticMandelbrot`, `exactPeriodSet_one`, `exactPeriodSet_two`, and the computational period spectra.\n\n**Ambition**: extension\n",
     "domains": [
       "Algebra",
@@ -1723,7 +1723,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "d8d294fb",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-07T17:44:16.586951+00:00",
     "title": "**Orbit Polynomial Tower** \u2014 the sequence of polynomi"
   },
@@ -2313,7 +2313,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Scaling Laws from Statistical Mechanics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "07f67251",
     "description": "Prove that the Learning With Errors (LWE) problem is as hard as worst-case lattice problems. Formalize the Regev reduction from GapSVP to LWE and prove that the resulting encryption scheme is IND-CPA secure under the LWE assumption.",
     "domains": [
       "Cryptography",
@@ -2323,7 +2323,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.755100+00:00",
     "title": "Post-Quantum Lattice Cryptography: Formal Security Proofs"
   },
@@ -2598,7 +2598,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "59da5723",
     "description": "Prove a tropical analog of the Hodge decomposition. Formalize tropical (p,q)-forms, the tropical Laplacian, and harmonic theory on balanced weighted polyhedral complexes.",
     "domains": [
       "Tropical",
@@ -2608,7 +2608,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.398315+00:00",
     "title": "Tropical Hodge Theory"
   },
@@ -2943,7 +2943,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Attention Mechanism: Formal Properties of Transformers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "dccd1b96",
     "description": "Prove that the tropical moduli space of genus-g curves M_g^trop is a metric graph with vertices corresponding to combinatorial types. Show that M_g^trop is the Berkovich skeleton of the classical M_g. Prove that the tropical Torelli map factors through the tropical Jacobian and that its fibers are finite.",
     "domains": [
       "Tropical",
@@ -2953,7 +2953,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5099999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.620386+00:00",
     "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
   },
@@ -3183,7 +3183,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2721db2d",
     "description": "Prove that the k-Local Hamiltonian Problem is QMA-complete for k >= 2. Formalize the Kitaev reduction from quantum circuit satisfiability to the local Hamiltonian problem. Analyze the promise gap and its effect on complexity.",
     "domains": [
       "Computation",
@@ -3193,7 +3193,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:31.381522+00:00",
     "title": "Quantum Hamiltonian Complexity: QMA-Completeness of the Local Hamiltonian Problem"
   },
@@ -3453,7 +3453,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Complexity Collapse: P=NP via Proof Checking"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "291835cc",
     "description": "Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
     "domains": [
       "Computation",
@@ -3463,7 +3463,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:46.975605+00:00",
     "title": "Consciousness as Integrated Information: Mathematical Foundations"
   },
@@ -4158,7 +4158,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b6b7d5a3",
     "description": "An automatic sequence is one generated by a deterministic finite automaton (DFA). The Thue-Morse sequence 01101001... is 2-automatic. The Rudin-Shapiro sequence is 2-automatic. The paperfolding sequence is 2-automatic. Conjecture: a sequence (a_n) is k-automatic iff its generating function G(x) = sum a_n x^n is algebraic over Q(x) of degree at most k. This is known (Christol's theorem): a formal power series over F_k is algebraic iff its coefficient sequence is k-automatic. But Christol's theorem only works over finite fields. For sequences over Z (or Q), the conjecture is: a sequence (a_n) over Z is k-automatic iff it satisfies a linear recurrence with polynomial coefficients of degree at most k-1 in n. Conjecture: the halting problem for k-automatic sequences is decidable: given a DFA that generates (a_n), it is decidable whether there exists n such that a_n = 0 (the 'zero in sequence' problem). This is TRUE for k-automatic sequences (by the pumping lemma: if the DFA accepts any string, it accepts an infinite number, so a_n = 0 infinitely often). But for morphic sequences (generalizations of automatic sequences), the problem is open. Conjecture: the zero-in-sequence problem for morphic sequences is decidable. Test: implement the decidability algorithm for k-automatic sequences and verify on 100 test sequences. Impact: automatic sequences have decidable halting problems. The boundary between decidability and undecidability in sequence theory is the boundary between automatic and morphic.",
     "domains": [
       "Novelty",
@@ -4168,7 +4168,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.733493+00:00",
     "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
   },
@@ -4743,7 +4743,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "af365a51",
     "description": "Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time can be simulated by a polynomial-time Turing machine (Extended Church-Turing thesis). Show that if P = NP, then the second law of thermodynamics would be violated because Maxwell's demon could be implemented efficiently.",
     "domains": [
       "Novelty",
@@ -4753,7 +4753,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.713166+00:00",
     "title": "Speculative: Computational Complexity as Physical Law"
   },
@@ -4877,7 +4877,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "73772d17",
     "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
     "domains": [
       "Novelty",
@@ -4887,7 +4887,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T23:40:36.923091+00:00",
     "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
   },
