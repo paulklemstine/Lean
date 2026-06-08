@@ -8,6 +8,7 @@ Usage:
     python3 aether_tick.py
     python3 aether_tick.py --max-inflight 9
     python3 aether_tick.py --loop --interval 21600   # continuous loop, every 6h
+    python3 aether_tick.py --log aether.log           # tee all output to a log file
 """
 
 import argparse
@@ -1025,6 +1026,34 @@ def start_docs_server(port: int = 8000) -> None:
     print(f"[Serve] Aether docs serving at http://localhost:{port}")
 
 
+class Tee:
+    """Tee stdout and stderr to a log file while keeping console output."""
+
+    def __init__(self, log_path: Path):
+        self.log_path = log_path
+        self.log_path.parent.mkdir(parents=True, exist_ok=True)
+        self._file = open(log_path, "a", encoding="utf-8", buffering=1)  # line-buffered
+        self._original_stdout = sys.stdout
+        self._original_stderr = sys.stderr
+        sys.stdout = self
+        sys.stderr = self
+
+    def write(self, data):
+        self._file.write(data)
+        self._file.flush()
+        self._original_stdout.write(data)
+        self._original_stdout.flush()
+
+    def flush(self):
+        self._file.flush()
+        self._original_stdout.flush()
+
+    def close(self):
+        self._file.close()
+        sys.stdout = self._original_stdout
+        sys.stderr = self._original_stderr
+
+
 def main():
     parser = argparse.ArgumentParser(description="Aether Tick: one-shot CI pipeline step")
     parser.add_argument("--max-inflight", type=int, default=9)
@@ -1040,7 +1069,17 @@ def main():
                         help="Start a local HTTP server for the docs site")
     parser.add_argument("--serve-port", type=int, default=8000,
                         help="Port for the docs HTTP server (default: 8000)")
+    parser.add_argument("--log", type=str, default=None,
+                        help="Tee all output to this log file (in addition to console)")
     args = parser.parse_args()
+
+    # Set up log file tee if requested
+    if args.log:
+        log_path = Path(args.log)
+        if not log_path.is_absolute():
+            log_path = Path(__file__).parent / log_path
+        tee = Tee(log_path)
+        print(f"[Tick] Logging all output to {log_path}")
 
     # Build config
     if args.ollama_cloud:
