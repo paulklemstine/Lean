@@ -52,13 +52,13 @@ jobs:
           python-version: '3.12'
           cache: 'pip'
 
-      - name: [DEBUG] Check space before pip
+      - name: "Check space before pip"
         run: df -h
 
       - name: Install dependencies
         run: pip install -r Aether/requirements.txt
 
-      - name: [DEBUG] Check space after pip
+      - name: "Check space after pip"
         run: |
           df -h
           echo "Checking pip cache size:"
@@ -77,7 +77,7 @@ jobs:
           OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
         run: cd Aether && python3 aether_tick.py --max-inflight ${{ env.AETHER_MAX_INFLIGHT }} --ollama-cloud
 
-      - name: [DEBUG] Check space after Aether tick
+      - name: "Check space after Aether tick"
         # This will tell us if aether_tick.py downloaded massive files
         run: |
           df -h
