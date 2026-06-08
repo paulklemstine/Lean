@@ -1,13 +1,22 @@
 {
   "nodes": [
     {
+      "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
+      "title": "Provability Logic GL: Fixed Points, Gödel Elements, and Incompleteness in Lattice Algebra",
+      "domain": "Logic",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-06-08",
+      "hue": 90
+    },
+    {
       "id": "rigorous_algebraic_foundations_for_probability_t",
       "title": "Rigorous Algebraic Foundations for Probability Theory in Non-Archimedean Ordered Fields",
       "domain": "Novelty",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08",
-      "hue": 270
+      "hue": 272
     },
     {
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
@@ -16,7 +25,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08T19:03:25Z",
-      "hue": 95
+      "hue": 270
     }
   ],
   "edges": [],
