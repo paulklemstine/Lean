@@ -1,93 +1,83 @@
-# The Hidden Geometry of Harmony: When Counterpoint Becomes Mathematics
+# The Hidden Geometry of Harmony: How Counterpoint Became a Mathematical Map
 
-*How a 300-year-old set of music composition rules reveals deep connections to abstract algebra, graph theory, and the structure of constraint itself.*
+## A 300-Year-Old Mystery Gets a Modern Answer
 
----
+In 1725, Johann Joseph Fux published *Gradus ad Parnassum* — "Steps to Parnassus" — a counterpoint textbook so influential that Mozart studied it as a child and Beethoven kept a copy by his desk until his death. For three centuries, composers have learned its rules by rote: two voices may move in parallel thirds but never parallel fifths; imperfect consonances are free, perfect consonances are precious and restricted. Generations of music students have memorized these constraints without ever asking a question that, in hindsight, seems obvious:
 
-## A Composer's Forbidden Moves
+*What shape do all these rules make?*
 
-In 1725, the Austrian composer and theorist Johann Joseph Fux published *Gradus ad Parnassum* — "Steps to Parnassus" — a treatise on musical counterpoint that would become the definitive textbook for centuries. Bach studied it. Mozart copied it by hand. Beethoven worked through its exercises. Even today, every conservatory student learns Fux's rules as the foundation of Western harmony.
-
-The rules are deceptively simple. When two voices sing together, only certain intervals between them are considered *consonant*: the unison, the minor third, the major third, the perfect fifth, the minor sixth, and the major sixth. These are the six stable resting points of two-voice harmony. Everything else — seconds, sevenths, the tritone, even the perfect fourth — is dissonant, unstable, to be avoided or at least carefully controlled.
-
-But Fux's deepest rule isn't about which intervals are allowed. It's about how you *move* between them. When two voices arrive at a perfect consonance — a unison or a perfect fifth — they must not both move in the same direction by the same amount. No parallel fifths. No parallel octaves. This single prohibition has shaped Western music for half a millennium.
-
-What Fux couldn't have known is that his rules describe a mathematical object of remarkable elegance — one that connects music theory to the frontiers of modern algebra.
+New mathematical research has found the answer — and it turns out the rules of counterpoint trace out an intricate directed graph with a surprising internal geometry. Perfect fifths and octaves sit at bottleneck points in the network, imperfect consonances form richly connected clusters, and the whole structure is unified by a single, elegant constraint: you cannot approach perfection in parallel.
 
 ---
 
-## Six Points on a Circle
+## Consonance as Geography
 
-To see the mathematics, we first need to think about intervals differently. In the equal-tempered system used in virtually all Western music since the 18th century, there are twelve equally spaced semitones in an octave. An interval between two notes is just a number from 0 to 11, wrapping around like a clock. This is the world of *modular arithmetic* — arithmetic on a twelve-hour clock face.
+To understand the discovery, start with what a counterpoint student already knows. In Western music's twelve-tone equal temperament, six intervals between two voices are considered consonant: the unison (0 semitones), minor third (3), major third (4), perfect fifth (7), minor sixth (8), and major sixth (9). Every other interval — the tritone, the seconds, the seventh — is dissonant, to be avoided or at least handled with care.
 
-On this clock, Fux's six consonant intervals sit at positions 0, 3, 4, 7, 8, and 9. They are scattered unevenly around the dial, clustering in two groups: the *perfect* consonances (0 and 7) and the *imperfect* consonances (3, 4, 8, and 9). This asymmetry — two special points, four ordinary ones — turns out to be the seed of profound structural consequences.
+Think of these six consonant intervals as six cities on a map. The question counterpoint asks is: *which roads connect them?*
 
-Now imagine these six consonant intervals as cities on a map. A *voice leading* is a route between two cities — a way of moving both voices simultaneously so that they start at one consonant interval and arrive at another. Each voice leading is described by two numbers: how far the bass voice moves and how far the soprano voice moves (both mod 12).
+A "road" here is a *voice leading* — a specific instruction for how two singers should move. If one voice (say, the bass) shifts up by three semitones while the other (the soprano) shifts up by five, that's a voice leading. Every voice leading takes you from one consonant interval to another — or, sometimes, into dissonance, at which point the road is closed.
 
-Fux's prohibition on parallel motion to perfect consonances means that certain routes are blocked. You can't reach the cities at 0 or 7 by moving both voices in lockstep. But you *can* reach them by contrary motion (voices moving in opposite directions), oblique motion (one voice staying put), or similar motion with different step sizes.
+The research formalizes this intuition with mathematical precision. A voice leading is a pair of motions in modular arithmetic — arithmetic that wraps around after 12, just as the chromatic scale wraps from B back to C. The target interval reached by applying a voice leading to a source interval is computed by a simple formula: add the soprano's motion, subtract the bass's motion. If the result is consonant *and* the motion obeys Fux's rules, the road is open.
 
-The question that launches us into pure mathematics: *What does the complete map of all permitted routes look like?*
-
----
-
-## The Counterpoint Quiver
-
-The answer is a mathematical object called a *directed graph* — or in the language of category theory, a *quiver*. Its vertices are the six consonant intervals, and its edges are the permitted voice leadings between them. This is the **Counterpoint Quiver**, and it has properties that would have astonished Fux.
-
-**The quiver is strongly connected.** Between any two consonant intervals, there exists at least one permitted voice leading. No consonant interval is a dead end; no consonant interval is unreachable. The space of counterpoint is a single connected world. The proof is constructive: for any two distinct consonant intervals, we can always find a *canonical voice leading* where the bass stays put and only the soprano moves. Since only one voice moves, this is oblique motion — never parallel — so Fux's prohibition never triggers. The compositional insight is immediate: a composer is never trapped. From any consonant sonority, every other consonant sonority is reachable in a single step.
-
-**But composition of voice leadings fails.** Here is the deepest surprise. Take two individually permitted voice leadings and chain them together — first apply one, then the other. The result may be *forbidden*. Two perfectly legal moves can combine into an illegal one. This is the mathematical statement that counterpoint is fundamentally *non-compositional*: you cannot plan a long journey by simply stringing together short legal steps without checking each intermediate result.
-
-In the language of category theory, this means the permitted voice leadings do *not* form a subcategory. They are the arrows of a quiver, but they fail the composition axiom. Counterpoint is a graph, not a category — and this failure is not a deficiency but a feature. It is precisely the failure of composability that gives counterpoint its tension and drama.
+There is exactly one rule that closes roads: **parallel motion into a perfect consonance is forbidden.** If two voices are already a perfect fifth apart and both move up by the same amount, they arrive at another perfect fifth — but that move is illegal. This is the famous prohibition against "parallel fifths" and "parallel octaves" that has bedeviled composition students since the Baroque era.
 
 ---
 
-## The Bottleneck of Perfection
+## The Shape of the Map
 
-The most striking structural result concerns the difference between perfect and imperfect consonances. Consider *self-loops*: voice leadings that start and end at the same consonant interval. How many ways can two voices move and end up at the same interval they started from?
+When you enumerate every legal road between every pair of consonant-interval cities, a striking pattern emerges.
 
-For an imperfect consonance — say, the major third at position 4 — there are exactly **12 self-loops**. The voices can move in twelve different ways (one for each possible bass motion) while maintaining the same interval. Among these twelve, eleven involve actual motion (the voices move but maintain their distance) and one is the identity (nobody moves at all).
+**The map is strongly connected.** No matter which consonant interval you start from and which you want to reach, there is always at least one legal voice leading to get you there. This is not obvious — the parallel-motion restriction could, in principle, strand certain intervals, making some transitions impossible. But it doesn't. The network of counterpoint is a single connected continent with no islands.
 
-For a perfect consonance — the unison at 0 or the perfect fifth at 7 — there is exactly **1 self-loop**: the identity. The only way to start at a perfect fifth and end at a perfect fifth is to not move at all.
+The proof is elegantly constructive: for any two distinct consonant intervals, the "canonical" voice leading — hold the bass still, move the soprano by the exact difference — is always legal, because it is never parallel. (Parallel motion requires *both* voices to move by the same amount, and holding one voice still means the motion is zero in one voice and nonzero in the other.) For the case where source and target are the same interval, a permitted self-loop can be found in every case, though the construction differs between perfect and imperfect consonances.
 
-This asymmetry — 12 versus 1 — is the categorical manifestation of Fux's parallel motion rule. Perfect consonances are *bottlenecks* in the voice-leading graph. They are hard to reach and hard to leave from in the specific sense that they admit far fewer connections. The numbers bear this out globally: perfect consonances admit exactly 61 incoming voice leadings from all consonant sources, while imperfect consonances admit 72 — an approximately 15% reduction. The compositional constraint of avoiding parallel fifths is not just a stylistic preference; it is a measurable topological constriction.
+**But the map has no shortcuts.** Here lies the deepest structural result: voice leadings do not compose. Take two individually legal one-step moves and execute them in sequence, and the composite two-step move may be illegal. Specifically, two voice leadings that separately avoid parallel motion into perfect consonances can, when concatenated, produce exactly the kind of parallel motion that Fux forbids.
 
----
-
-## The Broken Mirror
-
-There is one more result that illuminates a centuries-old puzzle in music theory: *why is the bass voice special?*
-
-In counterpoint, the same interval sounds different depending on which voice is lower. A perfect fifth — seven semitones up from the bass — is consonant. But invert it — put the upper note in the bass — and you get a perfect fourth (five semitones), which Fux treats as *dissonant*. This asymmetry between a note and its inversion has been debated by music theorists for centuries.
-
-The mathematical formalization reveals the source of this asymmetry with crystalline clarity. Consider the operation of *voice exchange*: swapping which voice is on top. Mathematically, this is the map that sends each interval *i* to its complement *−i* (mod 12). If this map preserved consonance — if it mapped every consonant interval to another consonant interval — then the bass and soprano would be interchangeable, and counterpoint would be symmetric.
-
-But it doesn't. The perfect fifth at position 7 maps to position 5 (since −7 ≡ 5 mod 12), and 5 is *not* in the set of consonant intervals. The mirror is broken. Voice exchange sends a consonance to a dissonance, and this single failure proves that the bass voice plays a fundamentally asymmetric role. The "bass voice privilege" that every counterpoint student learns is not a cultural convention — it is a mathematical necessity arising from the structure of the consonant intervals themselves.
+In the language of abstract algebra, this means the legal voice leadings do *not* form a category — or, more precisely, they do not form a subcategory of the free category on the voice-leading graph. The composition operation breaks the rules. Counterpoint is a system where local legality does not guarantee global legality, where each step must be evaluated fresh against the constraints. This is what makes counterpoint *hard*: you cannot automate it by composing safe building blocks.
 
 ---
 
-## The Voice-Leading Cost Landscape
+## The Bottleneck at Perfection
 
-Beyond the combinatorial structure of permitted moves, there is a deeper layer: the *geometry* of how much effort each move costs. Voice-leading theorists from David Lewin to Dmitri Tymoczko have argued that the "distance" a voice leading traverses — the total number of semitones all voices must travel — is the key measure of its musical smoothness.
+The most musically illuminating result concerns what happens at perfect consonances versus imperfect ones.
 
-This voice-leading cost turns out to be a *seminorm* on the space of voice motions. It satisfies three fundamental properties: it is always non-negative (moving costs effort), it obeys the triangle inequality (a detour never saves effort), and it scales linearly (moving twice as far costs twice as much). These aren't just nice properties — they mean the space of voice motions has genuine *geometric* structure, with a well-defined notion of distance.
+A "self-loop" is a voice leading that starts and ends at the same interval — both voices move, but the intervallic relationship between them stays the same. For an **imperfect consonance** like a minor third, there are exactly **12 self-loops**: one for each possible amount of parallel motion (including no motion at all). Since parallel motion into an imperfect consonance is perfectly legal, all twelve motions that preserve the interval are available.
 
-Even more remarkably, this cost function interacts beautifully with the *lattice* structure of voice motions. Voice motions can be combined using componentwise minimum (meet) and maximum (join), forming a mathematical lattice. The cost function satisfies a striking conservation law: the cost of the meet plus the cost of the join always equals the sum of the individual costs. Energy is neither created nor destroyed when you decompose a voice leading into its lattice components. This identity — the L¹-lattice identity — connects music theory to the deep structure of distributive lattices in a way that appears to be entirely new.
+For a **perfect consonance** like a perfect fifth, there is exactly **1 self-loop**: the identity, where neither voice moves at all. Every other self-loop would require parallel motion — which is precisely what Fux forbids.
+
+This 12-to-1 ratio is the mathematical distillation of centuries of compositional wisdom. Perfect consonances are *rigid*: once you arrive at a unison or a fifth, your options for staying there are frozen. You must move on. Imperfect consonances are *fluid*: you can linger, you can transpose, you can shift both voices freely while maintaining the relationship. This rigidity-versus-fluidity is what gives Renaissance polyphony its characteristic push-and-pull — the gravitational tug of perfect intervals drawing voices toward resolution, the spacious freedom of imperfect intervals allowing melodic exploration.
+
+The hom-set computation makes this even more precise. Across all six consonant source intervals, a perfect consonance admits exactly **61** incoming voice leadings, while an imperfect consonance admits **72**. That's a 15% reduction — not catastrophic, but persistent and asymmetric. Perfect consonances are harder to reach, and once reached, harder to leave interestingly. They are the narrow passes in the mountain range of harmony.
+
+---
+
+## The Bass Knows Something the Soprano Doesn't
+
+One final result illuminates a puzzle that has occupied music theorists for centuries: why does the bass voice have a special role in counterpoint?
+
+Consider the simplest possible symmetry operation on intervals: swapping the two voices. If the soprano is seven semitones above the bass (a perfect fifth), then swapping makes the bass seven semitones above the soprano — which, in mod-12 arithmetic, means the interval becomes 12 − 7 = 5 semitones, a perfect fourth.
+
+But here's the catch: the perfect fourth (5 semitones) is **not consonant** in first-species counterpoint. It's classified as dissonant — a fact that troubled medieval theorists and continues to puzzle students today. The mathematical framework reveals this as a deep structural asymmetry: the involution *i* ↦ −*i* on ℤ/12ℤ does not preserve the set of consonant intervals. The perfect fifth maps to the perfect fourth; consonance maps to dissonance.
+
+This means the counterpoint system is fundamentally non-symmetric with respect to voice exchange. The bass voice is not interchangeable with the soprano. This asymmetry, which in traditional music theory is simply asserted as a rule, here emerges as a theorem — a necessary consequence of the arithmetic structure of the consonance set and the geometry of the twelve-tone system.
 
 ---
 
 ## Beyond Twelve Tones
 
-Perhaps the most provocative aspect of this mathematical framework is its generality. The entire theory is parameterized not by 12 but by an arbitrary number *n* of equal divisions of the octave. Replace 12 with 19, and you get the counterpoint theory of 19-tone equal temperament — a tuning system explored by composers from Guillaume Costeley in the 16th century to contemporary microtonalists. Replace it with 31, and you get the ultra-chromatic world of 31-TET, beloved of Dutch theorists.
+Perhaps the most forward-looking aspect of this research is its generality. The mathematical framework — what the researchers call a *Counterpoint System* — is parameterized not by the number 12 but by an arbitrary positive integer *n*. A Counterpoint System over ℤ/*n*ℤ consists of a set of consonant intervals, a subset of "perfect" consonances, and the single rule that parallel motion into perfect consonances is forbidden.
 
-The abstract *Counterpoint System* structure captures the essence of what makes counterpoint work: a set of consonant intervals, a distinguished subset of "perfect" consonances subject to stricter voice-leading rules, and the fundamental prohibition on parallel motion to perfection. The key structural theorems — strong connectivity, non-composability, the bottleneck effect — can be stated and investigated at this level of generality. Do they hold for all temperaments? For which choices of consonant and perfect intervals does the bottleneck effect appear? These are open questions that the mathematical framework makes precise and answerable.
+This means the structural theorems apply not just to the familiar twelve-tone chromatic scale but to any equal temperament. In 19-tone equal temperament (used by some Renaissance theorists and modern microtonalists), the consonance set would be different, the perfect intervals would shift, but the framework still applies. The questions remain well-posed: Is the voice-leading graph connected? Do voice leadings compose? What is the bottleneck ratio between perfect and imperfect consonances?
+
+Music theorists and composers working in microtonal systems now have a tool for understanding the *constraint geometry* of any tuning — not just which intervals sound good, but how the rules for connecting those intervals shape the space of possible compositions.
 
 ---
 
-## The Cathedral of Constraint
+## The Sound of Structure
 
-What Fux described in prose, and what generations of composers internalized through years of practice, turns out to have an exact mathematical skeleton. Counterpoint is not merely a set of aesthetic preferences — it is a directed graph with specific connectivity properties, a constraint system whose permitted motions fail to compose, a geometry where perfect consonances create measurable bottlenecks, and a broken symmetry that privileges the bass voice.
+There is something poetic about discovering that a 300-year-old pedagogical tradition — "don't write parallel fifths" — encodes a precise mathematical structure with provable properties. Counterpoint is not just a set of arbitrary rules handed down by tradition. It is, at its core, a navigation problem through a directed graph with bottlenecks at the perfect consonances, rich connectivity at the imperfect consonances, and a fundamental asymmetry that privileges the bass voice.
 
-None of this diminishes the artistry. A cathedral is not less beautiful because we understand the mathematics of its arches. But understanding the hidden structure beneath the rules of counterpoint reveals something that Fux himself might have appreciated: that the same abstract patterns — connectivity, composability, symmetry-breaking, conservation laws — appear throughout mathematics, from order theory to category theory to functional analysis. Music was there first.
+The next time you hear a Bach fugue and marvel at how the voices weave together — always consonant, always moving, never quite settling — you're hearing a composer navigate this exact graph. Each voice leading is a step along a permitted edge. Each cadence to a perfect fifth is an arrival at a bottleneck. Each escape into parallel thirds is a burst of freedom.
 
-The next time you hear two voices weaving together in a Bach invention or a Palestrina motet, listen for the mathematics beneath the melody. The voices are navigating a graph. The perfect fifths are bottlenecks. The bass voice breaks a symmetry. And every smooth voice leading is tracing a geodesic through a lattice-structured space whose geometry was waiting three centuries to be discovered.
+The map was always there, hidden in the music. Now, for the first time, we can see its shape.
