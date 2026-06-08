@@ -2056,9 +2056,43 @@ Be precise, be deep, be world-class.
                references to catalog results. Use @file references for theorems.
             3. **demo.py** — Numerical examples demonstrating the key results.
                Self-contained Python, type hints, all functions inlined.
-            4. **HTML widgets** in PACKAGE.json interactive_demos field
-               (1-3 self-contained HTML+CSS+JS snippets that visualize the results).
-            5. **PACKAGE.json** — Single JSON bundling all of the above.
+            4. **PACKAGE.json** — Single JSON bundling all of the above, with this schema:
+
+            ```json
+            {
+              "title": "Human-Readable Package Title",
+              "domain": "Algebra|Applications|Bridges|Computation|Cryptography|EML|Geometry|Logic|MachineLearning|Novelty|Physics|Pythagorean|Shared|Tropical",
+              "description": "1-2 sentence description of the package",
+              "authors": ["Author Name"],
+              "date": "YYYY-MM-DD",
+              "key_results": ["Key result 1", "Key result 2"],
+              "keywords": ["keyword1", "keyword2"],
+              "article": "ARTICLE.md",
+              "research_paper": "RESEARCH_PAPER.md",
+              "demo": "demo.py",
+              "demos": [
+                {"name": "descriptive_name", "description": "What this demo shows", "code": "# full Python source..."}
+              ],
+              "algorithms": [
+                {"name": "descriptive_name", "pseudocode": "Brief description", "code": "# full Python source..."}
+              ],
+              "visualizations": [
+                {"name": "descriptive_name", "description": "What this visualizes", "code": "# standalone Python script that generates a visualization..."}
+              ],
+              "interactive_demos": [
+                {"title": "Interactive Widget Title", "description": "What users can explore", "html": "<!DOCTYPE html><html>...</html>"}
+              ],
+              "lean_proofs": "LEAN_FILE_CONTENT_OR_PLACEHOLDER",
+              "future_directions": "FUTURE_DIRECTIONS_CONTENT",
+              "modules": {"demo": "# full demo.py source..."},
+              "lean_files": ["Catalog/Domain/Package/File.lean"]
+            }
+            ```
+
+            **CRITICAL**: The `demos`, `algorithms`, `visualizations`, and
+            `interactive_demos` fields MUST be arrays of objects with the
+            exact structure shown above. Do NOT use placeholder strings like
+            "MISSING" — either include real content or omit the field entirely.
 
             ### DO NOT OUTPUT:
             - NO new `.lean` files
@@ -2112,10 +2146,10 @@ the source of truth — your prose must accurately explain it.
 ARTICLE.md: write a popular-science narrative that makes the key idea accessible.
 RESEARCH_PAPER.md: write the formal paper with abstract, definitions, results.
 demo.py: write numerical examples that demonstrate the results.
-HTML widgets: build 1-3 interactive visualizations that let users explore
-the mathematical objects defined in the Lean code.
-PACKAGE.json: bundle all of the above into a single JSON file. Include the
-future directions from Phase A in the `future_directions` field.
+PACKAGE.json: bundle everything into a single JSON with ALL fields populated.
+Make sure demos, algorithms, visualizations, and interactive_demos are arrays
+of objects (not placeholder strings). Include future directions from Phase A
+in the future_directions field.
 
 Be vivid, be precise, be world-class. The math has already been done — now
 make it beautiful to read.
