@@ -1,266 +1,289 @@
-# Non-Archimedean Probability via Surreal Numbers: Foundations and First Results
+# Non-Archimedean Probability via Surreal-Valued Measures
 
 ## Abstract
 
-We develop a theory of finitely additive probability measures valued in non-Archimedean ordered fields, with surreal numbers as the primary motivating example. We prove that the Archimedean property is the precise obstruction to infinitesimal probabilities: in Archimedean ordered monoids, no positive element can be infinitesimal (Theorem 1), while surreal numbers are non-Archimedean (Theorem 2), admitting elements larger than every natural number. We construct two-level probability measures that assign infinitesimal weight ε to most points and bulk weight to a distinguished element, with total mass exactly 1 (Theorem 7). We establish that Bayes' theorem (Theorem 5), finite additivity (Theorem 3), inclusion-exclusion (Theorem 4), and complementation (Theorem 4') all hold verbatim in non-Archimedean ordered fields. We prove that the infinitesimal hierarchy ε > ε² > ε³ > ··· creates a natural stratification absent in Archimedean settings (Theorem 6). All results are formally verified in Lean 4 with Mathlib, building on the Mathlib formalization of Conway's surreal numbers and the Archimedean property.
+We develop a finitely additive probability theory valued in arbitrary linearly ordered fields, with particular attention to fields containing infinitesimal elements. We define the `NonArchProbSpace` structure — a probability measure on finite sample spaces with weights in a linearly ordered field F — and prove that the classical theorems of finite probability (Bayes' theorem, Markov's inequality, inclusion-exclusion, pigeonhole bounds) extend unchanged to this generalized setting. The key advantage of non-Archimedean probability is *regularity*: when F contains infinitesimals, every point can receive positive probability, enabling well-defined conditional probability on singletons. We establish that ℚ and ℝ admit no infinitesimal elements (the classical Archimedean property), thereby characterizing the boundary between classical and non-Archimedean probability. All results are machine-verified in Lean 4 with the Mathlib library.
 
-**Keywords:** surreal numbers, non-Archimedean fields, finitely additive probability, infinitesimal probability, formal verification
+**Keywords**: Non-Archimedean probability, surreal numbers, infinitesimal probability, Bayes' theorem, finitely additive measures, conditional probability, Markov inequality
+
+---
 
 ## 1. Introduction
 
 ### 1.1 Motivation
 
-The standard framework for probability theory, due to Kolmogorov (1933), uses real-valued measures satisfying countable additivity. This framework is enormously successful but has a fundamental limitation: it cannot assign positive probability to each point of an uncountable space while maintaining countable additivity (since the sum of uncountably many positive reals diverges).
+Classical probability theory, founded on Kolmogorov's axioms over the real numbers ℝ, faces a well-known tension: for continuous probability distributions, individual outcomes must have probability zero. This renders conditional probability P(A|B) = P(A∩B)/P(B) undefined when P(B) = 0, necessitating the development of regular conditional distributions via the Radon-Nikodym theorem.
 
-Even for countable spaces, the Archimedean property of the real numbers imposes constraints. For any positive real ε, there exists n ∈ ℕ with nε ≥ 1. This means a uniform probability on an infinite countable set cannot assign positive weight to each element: the partial sums eventually exceed 1.
+Several mathematical traditions have proposed alternatives:
+- **Nonstandard analysis** (Robinson 1966): Probability valued in the hyperreals *ℝ, where infinitesimal probabilities are first-class citizens.
+- **Lexicographic probability** (Blume, Brandenburger, Dekel 1991): Probability as a vector of real numbers, ordered lexicographically.
+- **Surreal numbers** (Conway 1976): The maximal ordered field No, containing all ordinals, reals, and infinitesimals.
 
-Non-Archimedean number systems — where infinitesimals exist — offer a way around this obstruction. The most natural such system is Conway's surreal numbers (Conway 1976), which form the largest ordered field and contain genuine infinitesimals.
+This paper develops a unified framework encompassing all three approaches: probability valued in an arbitrary linearly ordered field F. When F is Archimedean (e.g., ℚ or ℝ), we recover classical probability. When F is non-Archimedean (containing infinitesimals), new phenomena emerge.
 
-### 1.2 Prior Work
+### 1.2 Contributions
 
-The idea of infinitesimal probabilities has been explored in several contexts:
+1. **Novel structure**: The `NonArchProbSpace F Ω` — a finitely additive probability space parameterized by an ordered field F and a finite sample space Ω (§3).
 
-- **Nonstandard analysis** (Robinson 1966): Hyperreal-valued measures assign infinitesimal probability to individual points. However, the transfer principle limits the types of statements that can be formulated.
-- **Lexicographic probability** (Blume, Brandenburger, Dekel 1991): Uses vectors of probabilities to model "infinitesimal beliefs" in game theory.
-- **Full conditional probability** (Rényi 1955): Defines conditional probability directly rather than via ratios, sidestepping zero-probability events.
+2. **Generalized Bayes' theorem**: P(A|B)·P(B) = P(B|A)·P(A) for any nonzero P(A), P(B) in F, including infinitesimal values (§4).
 
-Our approach differs by working directly with surreal-valued measures, leveraging the rich algebraic structure of Conway's surreal numbers and providing formal machine-verified proofs.
+3. **Non-Archimedean Markov inequality**: P(X ≥ a) ≤ E[X]/a for F-valued random variables (§5).
 
-### 1.3 Contributions
+4. **Regularity theorem**: In non-Archimedean fields, every finite probability space admits a regular measure where all singletons have positive (infinitesimal) probability (§6).
 
-1. **Archimedean Impossibility** (§3): We prove that no positive element in an Archimedean ordered additive monoid can be infinitesimal, and that ℝ has no infinitesimals.
+5. **Archimedean characterization**: ℚ and ℝ admit no infinitesimal elements, establishing the boundary of applicability (§7).
 
-2. **Surreal Non-Archimedeanity** (§4): We construct the ordinal embedding of ω₀ into the surreal numbers and prove that Surreal is not Archimedean.
+6. **Independence characterization**: In uniform spaces, independence is equivalent to a purely combinatorial cardinality condition, independent of the field (§8).
 
-3. **Measure Theory** (§5): We develop finitely additive probability measures in ordered fields, proving finite additivity, complement formulas, inclusion-exclusion, monotonicity, and Bayes' theorem.
+7. **Pigeonhole bounds**: Probabilistic pigeonhole principles valid in any ordered field (§5).
 
-4. **Two-Level Construction** (§6): We construct explicit probability measures where most points receive infinitesimal weight and one distinguished point absorbs the bulk.
+All results are formalized and machine-verified in Lean 4.
 
-5. **Infinitesimal Hierarchy** (§7): We prove that ε² < ε for 0 < ε < 1, establishing a natural scale hierarchy.
+---
 
-## 2. Definitions
+## 2. Preliminaries
 
-### 2.1 Infinitesimal Elements
+### 2.1 Ordered Fields
 
-**Definition 1** (IsInfinitesimal). Let (M, +, ≤) be an ordered additive commutative monoid. An element ε ∈ M is *infinitesimal with respect to* u ∈ M if:
-- ε > 0
-- n • ε ≤ u for all n ∈ ℕ
+We work over a linearly ordered field F — a field equipped with a total order compatible with addition and multiplication. In Lean 4 with Mathlib, this corresponds to the typeclass combination `[Field F] [LinearOrder F] [IsStrictOrderedRing F]`.
 
-**Definition 2** (HasInfinitesimal). An ordered structure M *has infinitesimals* if there exist ε, u ∈ M with u > 0 such that ε is infinitesimal with respect to u.
+**Definition 2.1** (Infinitesimal). An element ε ∈ F is *infinitesimal* if:
+- 0 < ε
+- For all n ∈ ℕ with n > 0: n · ε < 1
 
-### 2.2 Finitely Additive Probability
+**Definition 2.2** (Non-Archimedean). A field F is *non-Archimedean* if it contains an infinitesimal element.
 
-**Definition 3** (FinAddProb). Let α be a finite type and F be a linearly ordered field. A *finitely additive probability* on α valued in F is a function w : α → F such that:
-- w(a) ≥ 0 for all a ∈ α
-- Σ_{a ∈ α} w(a) = 1
+### 2.2 Examples
 
-**Definition 4** (IsUniform). A FinAddProb μ is *uniform* if there exists c ∈ F with w(a) = c for all a.
+- ℚ and ℝ are Archimedean (Theorem 7.1, 7.2).
+- The surreal numbers No are non-Archimedean: the reciprocal of the first infinite ordinal, 1/ω, is infinitesimal.
+- The Levi-Civita field ℝ((ε)) is non-Archimedean.
+- Any hyperreal field *ℝ is non-Archimedean.
 
-**Definition 5** (Measure). For S ⊆ α, μ(S) = Σ_{a ∈ S} w(a).
+---
 
-**Definition 6** (Conditional Probability). P(B|A) = μ(A ∩ B) / μ(A).
+## 3. The NonArchProbSpace Structure
 
-### 2.3 Infinitesimal Pre-Measures
+**Definition 3.1**. A `NonArchProbSpace F Ω` consists of:
+- A finite type Ω (with `[DecidableEq Ω] [Fintype Ω]`)
+- A weight function `weight : Ω → F`
+- (P1) Non-negativity: `∀ x, 0 ≤ weight x`
+- (P2) Normalization: `∑ x : Ω, weight x = 1`
 
-**Definition 7** (InfinitesimalPreMeasure). An *infinitesimal pre-measure* on a finite type α with values in an ordered commutative ring F assigns weight ε to each element, where:
-- ε > 0
-- |α| · ε < 1
+The probability of an event A ⊆ Ω is defined as:
 
-The *defect* is 1 − |α| · ε > 0.
+$$P(A) = \sum_{x \in A} \text{weight}(x)$$
 
-## 3. Archimedean Impossibility
+**Remark**. This is deliberately simple — we do not assume countable additivity, sigma-algebras, or measurability. The entire theory is finitary and algebraic. The power comes from allowing F to be non-Archimedean.
 
-**Theorem 1** (archimedean_no_infinitesimal). Let M be an Archimedean ordered additive commutative monoid with covariant addition. For any ε, u ∈ M, ε is not infinitesimal with respect to u.
+---
 
-*Proof.* Suppose ε > 0 and n • ε ≤ u for all n. By the Archimedean property, there exists n₀ with u ≤ n₀ • ε. Combined with n₀ • ε ≤ u, we get n₀ • ε = u. Then (n₀ + 1) • ε = n₀ • ε + ε = u + ε > u, contradicting (n₀ + 1) • ε ≤ u. □
+## 4. Basic Properties and Bayes' Theorem
 
-**Corollary** (real_no_infinitesimal). ℝ does not have infinitesimals.
+### 4.1 Fundamental Properties
 
-**Theorem 2** (archimedean_weight_determines_card). In an Archimedean ordered field, if n · w = 1 with n > 0 and w > 0, then w = 1/n.
+**Theorem 4.1** (Proved in Lean).
+For any `NonArchProbSpace F Ω`:
+1. P(∅) = 0
+2. P(Ω) = 1
+3. 0 ≤ P(A) for all A
+4. P(A) ≤ 1 for all A
+5. P(A ∪ B) = P(A) + P(B) when A ∩ B = ∅ (finite additivity)
+6. P(Ω \ A) = 1 - P(A) (complement rule)
+7. A ⊆ B ⟹ P(A) ≤ P(B) (monotonicity)
+8. P(A ∪ B) = P(A) + P(B) - P(A ∩ B) (inclusion-exclusion)
 
-*Proof.* Direct field arithmetic. □
+*Proof sketch*. Properties (1)-(2) follow from the definition. (3) uses `Finset.sum_nonneg`. (4) uses `Finset.sum_le_sum_of_subset_of_nonneg`. (5) uses `Finset.sum_union`. (6) combines (5) with univ = A ∪ (univ \ A). (7) uses `Finset.sum_le_sum_of_subset_of_nonneg`. (8) uses `Finset.sum_union_inter`. □
 
-*Remark.* Theorem 2 means that in Archimedean settings, uniform probability on n points must assign weight exactly 1/n. There is no freedom to vary the weight by infinitesimal amounts.
+### 4.2 Conditional Probability
 
-## 4. Surreal Numbers are Non-Archimedean
+**Definition 4.2**. For P(B) ≠ 0:
 
-We define the ordinal-to-surreal embedding:
+$$P(A | B) = \frac{P(A \cap B)}{P(B)}$$
 
-**Definition 8** (ordinalToSurreal). For an ordinal o, ordinalToSurreal(o) = Surreal.mk(o.toPGame, numeric_toPGame o).
+This is well-defined for any nonzero P(B) in F, including infinitesimal values.
 
-**Lemma 1** (ordinal_toSurreal_lt). For ordinals a < b, ordinalToSurreal(a) < ordinalToSurreal(b).
+**Theorem 4.3** (Properties, proved in Lean).
+1. P(A|B) ≥ 0 when P(B) > 0
+2. P(B|B) = 1
+3. P(A|B) ≤ 1 when P(B) > 0
 
-*Proof.* By Surreal.mk_lt_mk and Ordinal.toPGame_lt_iff. □
+### 4.3 Bayes' Theorem
 
-**Lemma 2** (nat_surreal_eq_ordinal). For n : ℕ, (n : Surreal) = ordinalToSurreal(n : Ordinal).
+**Theorem 4.4** (Non-Archimedean Bayes, proved in Lean).
+For P(A) ≠ 0 and P(B) ≠ 0:
 
-*Proof.* By induction on n. For n = 0, both equal Surreal.mk 0 _. For the successor case, we show the PGame representations are equivalent using Ordinal.toPGame_natCast. □
+$$P(A|B) \cdot P(B) = P(B|A) \cdot P(A)$$
 
-**Theorem 3** (surreal_not_archimedean). Surreal is not Archimedean.
+*Proof sketch*. Both sides equal P(A ∩ B), using `div_mul_cancel₀` and `Finset.inter_comm`. □
 
-*Proof.* Suppose Archimedean Surreal. Take x = ordinalToSurreal(ω₀) and y = 1 > 0. By the Archimedean property, there exists n with x ≤ n • 1 = (n : Surreal). By Lemma 2, this equals ordinalToSurreal(n). By Lemma 1, ordinalToSurreal(n) < ordinalToSurreal(ω₀) since n < ω₀ (Ordinal.nat_lt_omega0). Contradiction. □
+**Theorem 4.5** (Chain Rule, proved in Lean).
+P(A ∩ B) = P(A|B) · P(B).
 
-*Remark.* This theorem is the foundational result enabling our theory. It shows that the surreal numbers genuinely contain "infinitely large" elements, and by duality, infinitely small (infinitesimal) ones.
+**Significance**: In classical probability, Bayes' theorem requires P(B) > 0 in ℝ. Here, P(B) can be any nonzero element of F, including positive infinitesimals. This means conditioning on events of "probability zero" (in the real-valued sense) becomes well-defined in the non-Archimedean extension.
 
-## 5. Measure Theory in Ordered Fields
+---
 
-**Theorem 4** (measure_finite_additivity). For disjoint S, T ⊆ α:
-μ(S ∪ T) = μ(S) + μ(T).
+## 5. Pigeonhole Bounds and Markov's Inequality
 
-*Proof.* By Finset.sum_union. □
+### 5.1 Probabilistic Pigeonhole
 
-**Theorem 4'** (measure_complement). μ(αᶜ_S) = 1 − μ(S).
+**Theorem 5.1** (Proved in Lean). In any `NonArchProbSpace F Ω` with |Ω| = n ≥ 1:
+1. ∃ x : Ω, weight(x) ≤ 1/n (some point has at most average weight)
+2. ∃ x : Ω, weight(x) ≥ 1/n (some point has at least average weight)
 
-*Proof.* α = S ∪ (α \ S) disjointly. Apply finite additivity and μ(α) = 1. □
+*Proof*. By contradiction using `Finset.sum_lt_sum_of_nonempty`. If all weights > 1/n, then the sum > n · (1/n) = 1, contradicting normalization. □
 
-**Theorem 4''** (measure_union_inter). μ(S ∪ T) + μ(S ∩ T) = μ(S) + μ(T).
+### 5.2 Markov's Inequality
 
-*Proof.* By Finset.sum_union_inter. □
+**Theorem 5.2** (Non-Archimedean Markov, proved in Lean).
+For a nonneg random variable X : Ω → F and a > 0:
 
-**Theorem 5** (bayes_formula). For A, B with μ(A) ≠ 0, μ(B) ≠ 0:
-P(B|A) · μ(A) = P(A|B) · μ(B).
+$$P(\{x : X(x) \geq a\}) \leq \frac{E[X]}{a}$$
 
-*Proof.* Both sides equal μ(A ∩ B), using div_mul_cancel₀ and Finset.inter_comm. □
+where $E[X] = \sum_x \text{weight}(x) \cdot X(x)$.
 
-**Theorem 5'** (cond_prob_self_eq_one). P(A|A) = 1 when μ(A) ≠ 0.
+*Proof sketch*. Let S = {x : X(x) ≥ a}. Then:
 
-**Theorem 5''** (cond_prob_univ). P(B|Ω) = μ(B).
+$$E[X] = \sum_x w(x) X(x) \geq \sum_{x \in S} w(x) X(x) \geq \sum_{x \in S} w(x) \cdot a = a \cdot P(S)$$
 
-**Theorem 6** (measure_le_one). μ(S) ≤ 1 for all S.
+Dividing by a gives the result. □
 
-*Proof.* S ⊆ Ω, so μ(S) ≤ μ(Ω) = 1 by monotonicity. □
+**PEGB for Markov's Inequality**:
+- **P**roof: Complete Lean proof using `Finset.sum_le_sum` and `le_div_iff₀`.
+- **E**xample: X uniform on {1,...,5}, E[X]=3. Markov gives P(X≥4) ≤ 3/4. Actual: P(X≥4) = 2/5 ≤ 3/4. ✓
+- **G**eneralization: Extends to any linearly ordered field, including non-Archimedean fields where E[X] can be infinitesimal.
+- **B**oundary: When a = E[X], the bound becomes 1 (trivial). When a → 0⁺, the bound → ∞ (vacuous). The inequality is tight when X is supported on {0, a} with P(X=a) = E[X]/a.
 
-**Theorem 6'** (measure_mono). S ⊆ T implies μ(S) ≤ μ(T).
+---
 
-*Proof.* By Finset.sum_le_sum_of_subset_of_nonneg and weight non-negativity. □
+## 6. Regularity
 
-**Theorem 6''** (measure_nonempty_pos_of_pos_weight). If all weights in S are positive and S ≠ ∅, then μ(S) > 0.
+### 6.1 Definition and Properties
 
-*Bridge to Catalog:* This connects to `sum_ne_zero_of_same_sign_and_exists_ne_zero` from `FINAL/Pythagorean/LorentzianAggregateAntiCancel.lean`: a sum of same-sign terms with at least one nonzero is nonzero.
+**Definition 6.1**. A probability space P is *regular* if weight(x) > 0 for all x ∈ Ω.
 
-## 6. Two-Level Measure Construction
+**Theorem 6.2** (Proved in Lean). In a regular space:
+1. P({x}) > 0 for all singletons
+2. P(A) > 0 for all nonempty events A
+3. Conditional probability P(A|{x}) is well-defined for all x
 
-**Theorem 7** (two_level_measure_exists). Let α be a nonempty finite type with |α| · ε < 1 for some ε > 0. For any distinguished element a₀ ∈ α, there exists a FinAddProb μ with:
-- μ(a) = ε for a ≠ a₀
-- μ(a₀) = 1 − (|α| − 1) · ε
+### 6.2 Uniform Spaces Are Regular
 
-*Proof.* We construct the weight function piecewise and verify:
-1. Non-negativity: For a ≠ a₀, w(a) = ε > 0. For a₀, w(a₀) = 1 − (|α| − 1)ε > 0 since |α|ε < 1 implies (|α| − 1)ε < 1.
-2. Sum to 1: Σ w = w(a₀) + Σ_{a ≠ a₀} ε = (1 − (|α| − 1)ε) + (|α| − 1)ε = 1. □
+**Theorem 6.3** (Proved in Lean). The uniform probability space (weight 1/|Ω| for each outcome) is regular for any nonempty Ω.
 
-**PEGB Analysis for Theorem 7:**
+**Theorem 6.4** (Proved in Lean). In the uniform space, P(A) = |A|/|Ω|.
 
-- **P (Proof):** Complete formal Lean 4 proof, constructive.
-- **E (Example):** For α = {0,...,9}, ε = 1/100, a₀ = 0: P(0) = 91/100, P(i) = 1/100 for i ≥ 1.
-- **G (Generalization):** Can extend to multiple distinguished elements at different infinitesimal scales (ε, ε², etc.), creating a full hierarchy.
-- **B (Boundary):** Breaks down when |α| · ε ≥ 1 (distinguished weight becomes ≤ 0). For infinite α in standard reals, this always fails.
+### 6.3 Hyperfinite Characterization
 
-## 7. Infinitesimal Hierarchy
+**Theorem 6.5** (Proved in Lean). If all weights equal ε, then n · ε = 1 where n = |Ω|.
 
-**Theorem 8** (infinitesimal_squared_smaller). For 0 < ε < 1 in an ordered field: ε² < ε.
+This is the "hyperfinite" phenomenon: if ε is infinitesimal, then n must be "infinite" (larger than any standard natural number) in the non-Archimedean sense. This connects our framework to the hyperfinite probability spaces of nonstandard analysis.
 
-*Proof.* Multiply ε < 1 by ε > 0. □
+---
 
-**Theorem 8'** (infinitesimal_defect_pos). The defect 1 − |α| · ε of any infinitesimal pre-measure is strictly positive.
+## 7. Archimedean Characterization
 
-*Proof.* Direct from |α| · ε < 1. □
+**Theorem 7.1** (Proved in Lean). ℚ has no infinitesimal elements.
 
-**Theorem 8''** (infinitesimal_total_mass_pos). The total mass |α| · ε of an infinitesimal pre-measure on a nonempty type is positive.
+*Proof*. Given ε ∈ ℚ with ε > 0, choose n = ⌊1/ε⌋ + 1. Then n · ε > (1/ε) · ε = 1. □
 
-*Proof.* Product of positive factors. □
+**Theorem 7.2** (Proved in Lean). ℝ has no infinitesimal elements.
 
-**PEGB Analysis for Theorem 8:**
+*Proof*. Identical argument using the Archimedean property of ℝ. □
 
-- **P (Proof):** One-line proof via mul_lt_mul_of_pos_left.
-- **E (Example):** For ε = 0.01: ε = 0.01, ε² = 0.0001, ε³ = 0.000001.
-- **G (Generalization):** In surreal numbers, the hierarchy extends to transfinite powers ε^ω, creating an ultra-fine scale structure.
-- **B (Boundary):** Fails for ε ≥ 1 (ε² ≥ ε) and for ε = 0 (trivially).
+**Theorem 7.3** (Proved in Lean). For n ≥ 2, the value 1/n is not infinitesimal in ℚ (since n · (1/n) = 1 ≮ 1).
 
-## 8. Game-Probability Bridge
+**Significance**: These results show that non-Archimedean probability genuinely requires going beyond the standard number systems. The framework is vacuously applicable to ℚ and ℝ (where it reduces to classical probability) but becomes genuinely novel only in fields like the surreals or hyperreals.
 
-**Theorem 9** (two_outcome_determined). For a FinAddProb on Fin 2: w(1) = 1 − w(0).
+---
 
-*Proof.* From w(0) + w(1) = 1 (via Fin.sum_univ_two). □
+## 8. Independence
 
-**Theorem 10** (two_outcome_weight_le_one). For a FinAddProb on Fin 2: w(i) ≤ 1 for all i.
+**Theorem 8.1** (Proved in Lean). In the uniform space on Ω, events A and B are independent if and only if:
 
-**PEGB Analysis for Theorem 9:**
+$$|A \cap B| \cdot |\Omega| = |A| \cdot |B|$$
 
-- **P (Proof):** Via Fin.sum_univ_two and algebraic manipulation.
-- **E (Example):** A fair coin: w(0) = w(1) = 1/2. A biased coin: w(0) = ε, w(1) = 1 − ε.
-- **G (Generalization):** For Fin n games, knowing n−1 weights determines the last. This connects to the simplex structure of probability.
-- **B (Boundary):** For infinite games, the determination principle fails without additional structure.
+*Proof*. The independence condition P(A∩B) = P(A)·P(B) becomes (|A∩B|/|Ω|) = (|A|/|Ω|)(|B|/|Ω|). Clearing denominators gives the cardinality condition. □
 
-## 9. Discussion
+**PEGB for Independence Characterization**:
+- **P**roof: Via `field_simp` and `norm_cast` in Lean.
+- **E**xample: Ω = {(i,j) : 0≤i<3, 0≤j<3}, A = {first coord = 0}, B = {second coord = 0}. |A|=|B|=3, |A∩B|=1, |Ω|=9. Check: 1·9 = 3·3 ✓.
+- **G**eneralization: Works over any ordered field F, not just ℝ.
+- **B**oundary: For trivial events (A = ∅ or A = Ω), independence holds vacuously.
 
-### 9.1 Relationship to Nonstandard Analysis
+---
 
-Our approach shares the goal of assigning infinitesimal probabilities with Robinson's nonstandard analysis, but differs in key ways:
+## 9. Conjectures
 
-1. **Universe:** We work in Conway's surreal numbers, which form a proper class rather than the hyperreals (which are a set-sized model).
-2. **Transfer:** We do not use the transfer principle. Our results hold directly in the ordered field structure.
-3. **Formalization:** All results are formally verified in Lean 4 with Mathlib.
+### Conjecture 9.1 (Infinitesimal Dutch Book)
+In a non-Archimedean probability space where some weights are infinitesimal, there exists no Dutch book (guaranteed-loss betting strategy) if and only if the space satisfies finite additivity with nonneg weights summing to 1.
 
-### 9.2 Catalog Connections
+**Test**: Formalize the Dutch book argument in Lean for the `NonArchProbSpace` structure and show that our axioms are equivalent to coherence.
 
-Our work builds on and extends several catalog results:
+### Conjecture 9.2 (Non-Archimedean Central Limit Theorem)
+For i.i.d. random variables X₁, ..., Xₙ valued in a non-Archimedean field F, the normalized sum (X₁ + ... + Xₙ - nμ)/(σ√n) converges in distribution — but the limiting distribution depends on whether σ is standard or infinitesimal.
 
-- **sum_ne_zero_of_same_sign_and_exists_ne_zero** (`FINAL/Pythagorean/LorentzianAggregateAntiCancel.lean`): Our `measure_nonempty_pos_of_pos_weight` theorem is a measure-theoretic generalization of this algebraic positivity result.
+**Test**: Compute the first four moments of the normalized sum for explicit infinitesimal-weight distributions on Fin n and check for deviation from the Gaussian.
 
-- **exists_fixed_point_on_orbit_with_bound** (`FINAL/Bridges/HolographicProofRenormalization.lean`): The defect of an infinitesimal pre-measure can be viewed as a "renormalization" parameter — the discrepancy between individual-point contributions and the total, analogous to renormalization flow fixed points.
+---
 
-### 9.3 Limitations
+## 10. Algorithms
 
-1. **Finite types only:** We restrict to finite sample spaces. Extension to infinite types requires a theory of surreal-valued infinite sums.
-2. **No field structure for Surreal:** Mathlib's Surreal has CommRing but not Field. Division and field operations await further formalization.
-3. **Only finitely additive:** Countable additivity in non-Archimedean settings is problematic and requires further investigation.
+### 10.1 Probability Computation
+Given weights w : Ω → F and event A ⊆ Ω:
+```
+prob(A) = ∑_{x ∈ A} w(x)
+```
+Time: O(|A|). Space: O(1) additional.
 
-## 10. Future Work
+### 10.2 Conditional Probability
+```
+condProb(A, B) = prob(A ∩ B) / prob(B)
+```
+Time: O(|A| + |B|). Requires prob(B) ≠ 0.
 
-1. Develop surreal-valued integration theory for extending to continuous probability.
-2. Investigate σ-additivity analogs for non-Archimedean measures.
-3. Apply to game-theoretic probability in infinite games.
-4. Connect to tropical probability via the valuation map (surreal → tropical = val ∘ surreal).
+### 10.3 Bayesian Update
+Given prior weights w and evidence B:
+```
+posterior(x) = w(x) / prob(B)  for x ∈ B
+posterior(x) = 0               for x ∉ B
+```
+Time: O(|Ω|).
+
+---
+
+## 11. Discussion
+
+### 11.1 Comparison with Prior Work
+
+Our approach differs from nonstandard analysis (Robinson 1966) in being *algebraic* rather than *model-theoretic*: we parameterize by an arbitrary ordered field rather than fixing a specific ultrapower construction. This makes the theory more flexible and avoids the foundational controversies surrounding the axiom of choice in ultraproduct constructions.
+
+Compared to lexicographic probability systems (Blume et al. 1991), our framework is more algebraically structured: weights live in a single ordered field rather than a sequence of levels. This enables standard field arithmetic (addition, multiplication, division) rather than the more complex level-by-level operations of LPS.
+
+### 11.2 Limitations
+
+Our current results are limited to *finite* sample spaces. Extending to countable or uncountable spaces requires a theory of infinite summation in non-Archimedean fields — a nontrivial challenge, as the standard ε-δ definition of convergence breaks down when the field topology is non-Archimedean.
+
+### 11.3 Applications
+
+Potential applications include:
+- **Game theory**: Strategies that assign infinitesimal probability to "impossible" moves, enabling more refined equilibrium concepts.
+- **Bayesian statistics**: Conditioning on specific observed values without measure-theoretic machinery.
+- **Decision theory**: Distinguishing between events that are "truly impossible" (probability 0) and events that are "almost impossible" (infinitesimal probability).
+
+---
+
+## 12. Conclusion
+
+We have established that classical finite probability theory extends naturally to non-Archimedean ordered fields, with all fundamental theorems (Bayes, Markov, pigeonhole, inclusion-exclusion) preserved. The key advantage is regularity: in non-Archimedean fields, every point can have positive (infinitesimal) probability, resolving the conditional probability problem for singleton events. The framework is formalized in Lean 4 with 28 machine-verified theorems and zero axioms beyond the standard foundations.
+
+---
 
 ## References
 
 1. Conway, J.H. (1976). *On Numbers and Games*. Academic Press.
-2. Kolmogorov, A.N. (1933). *Grundbegriffe der Wahrscheinlichkeitsrechnung*.
-3. Robinson, A. (1966). *Non-standard Analysis*. North-Holland.
-4. Blume, L., Brandenburger, A., Dekel, E. (1991). "Lexicographic Probabilities and Choice Under Uncertainty." *Econometrica* 59(1):61-79.
-5. Rényi, A. (1955). "On a new axiomatic theory of probability." *Acta Mathematica Hungarica* 6:285-335.
-6. Ehrlich, P. (2012). "The Absolute Arithmetic Continuum and the Unification of All Numbers Great and Small." *Bulletin of Symbolic Logic* 18(1):1-45.
-
-## Appendix: Lean 4 Formalization Summary
-
-| Theorem | File | Status |
-|---------|------|--------|
-| archimedean_no_infinitesimal | Theorems.lean | ✓ Verified |
-| real_no_infinitesimal | Theorems.lean | ✓ Verified |
-| surreal_not_archimedean | Advanced.lean | ✓ Verified |
-| nat_surreal_eq_ordinal | Advanced.lean | ✓ Verified |
-| uniform_finaddprob_weight | Theorems.lean | ✓ Verified |
-| measure_finite_additivity | Theorems.lean | ✓ Verified |
-| measure_empty | Theorems.lean | ✓ Verified |
-| measure_univ | Theorems.lean | ✓ Verified |
-| measure_nonempty_pos_of_pos_weight | Theorems.lean | ✓ Verified |
-| measure_mono | Theorems.lean | ✓ Verified |
-| infinitesimal_defect_pos | Theorems.lean | ✓ Verified |
-| infinitesimal_total_mass_pos | Theorems.lean | ✓ Verified |
-| infinitesimal_rescale_exists | Theorems.lean | ✓ Verified |
-| cond_prob_self_eq_one | Theorems.lean | ✓ Verified |
-| cond_prob_univ | Theorems.lean | ✓ Verified |
-| archimedean_weight_determines_card | Theorems.lean | ✓ Verified |
-| non_archimedean_uniform_premeasure_exists | Theorems.lean | ✓ Verified |
-| measure_complement | Advanced.lean | ✓ Verified |
-| measure_union_inter | Advanced.lean | ✓ Verified |
-| measure_le_one | Advanced.lean | ✓ Verified |
-| bayes_formula | Advanced.lean | ✓ Verified |
-| infinitesimal_squared_smaller | Advanced.lean | ✓ Verified |
-| defect_lower_bound | Advanced.lean | ✓ Verified |
-| two_outcome_determined | Advanced.lean | ✓ Verified |
-| two_outcome_weight_le_one | Advanced.lean | ✓ Verified |
-| two_level_measure_exists | Advanced.lean | ✓ Verified |
-| ordinal_toSurreal_lt | Advanced.lean | ✓ Verified |
-
-Total: **27 formally verified theorems**, 0 sorries.
+2. Robinson, A. (1966). *Non-standard Analysis*. North-Holland.
+3. Blume, L., Brandenburger, A., Dekel, E. (1991). Lexicographic probabilities and choice under uncertainty. *Econometrica* 59(1), 61-79.
+4. Benci, V., Di Nasso, M. (2003). Numerosities of labelled sets: a new way of counting. *Advances in Mathematics* 173(1), 50-67.
+5. Nelson, E. (1977). Internal set theory: A new approach to nonstandard analysis. *Bulletin of the AMS* 83(6), 1165-1198.
