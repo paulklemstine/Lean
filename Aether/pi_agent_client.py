@@ -1735,17 +1735,19 @@ class PiAgentClient:
         phase: str = "A_lean_only",
         phase_a_lean_content: Optional[str] = None,
     ) -> str:
-        """Write a streamlined Aristotle prompt.
+        """Write an Aristotle prompt, routing by phase.
 
         Phase A ("A_lean_only", default): Lean 4 only, no packaging.
         Phase B ("B_package_only"): Packaging only, reads Phase A's Lean as input.
         Legacy ("A_full"): Both phases in one prompt (backward compat).
+
+        The two-phase split is the new default. Phase A focuses on doing math;
+        Phase B (dispatched only on high-quality Phase A) packages it for humans.
         """
         if phase == "B_package_only":
             return self._build_phase_b_package_prompt(
                 concept=concept,
                 phase_a_lean_content=phase_a_lean_content or "",
-                prompt_version=prompt_version or "v1",
             )
         if phase == "A_lean_only":
             return self._build_phase_a_lean_prompt(
@@ -1791,10 +1793,6 @@ class PiAgentClient:
         new Lean 4 code that extends the frontier. If the math is genuinely
         world-class, a separate Phase B prompt will be dispatched to package it.
         """
-        # PIVOT: Focus on defining novel mathematical structures, not solving open problems.
-        # New math > solving existing puzzles. Each theorem requires PEGB scaffolding.
-        # v3: novel structures (Grothendieck path)
-        # v4: deepen existing catalog results (Cauchy path) — DEFAULT
         if prompt_version is None:
             prompt_version = "v4"
         if prompt_version == "v1":
@@ -1807,20 +1805,17 @@ class PiAgentClient:
         else:
             depth_requirements = self._build_v3_depth_requirements()
 
-        # The assignment — same shape as v3/v4 but with explicit Phase A framing
-        assignment = self._build_assignment(concept)
-
         # Lean-specific section
         lean_section = ""
         if concept.lean_guess:
             lean_section = f"\n### Lean 4 Sketch\n{concept.lean_guess[:500]}\n"
 
-        # Catalog context (catalog refs the prompt should build on)
+        # Catalog context
         catalog_section = ""
         if catalog_context:
             catalog_section = f"\n### Catalog Context\n{catalog_context}\n"
 
-        # Recently proved theorems (helps Aristotle see what's already done)
+        # Recent discoveries
         theorem_section = ""
         if theorem_context:
             theorem_section = f"\n### Recent Discoveries in Catalog\n{theorem_context}\n"
@@ -1875,8 +1870,6 @@ class PiAgentClient:
 
 {depth_requirements}
 
-{assignment}
-
 ## Output format reminder
 
 The ONLY files in your output should be 1-3 `.lean` files. The Lean code itself
@@ -1888,7 +1881,6 @@ is the deliverable. Be precise, be deep, be world-class.
         self,
         concept: ResearchConcept,
         phase_a_lean_content: str,
-        prompt_version: str = "v1",
     ) -> str:
         """Phase B: packaging only. Reads Phase A's Lean as input.
 
@@ -1896,9 +1888,7 @@ is the deliverable. Be precise, be deep, be world-class.
         to humans — article, paper, demo, widgets, PACKAGE.json. NO new
         Lean code should be produced.
         """
-        # Lean content is the input — extract theorem statements if present
         lean_excerpt = phase_a_lean_content[:8000] if phase_a_lean_content else "(no Lean content provided)"
-
         domain_brief = f"Research domain: {concept.domain}\nResearch mode: {concept.research_mode}\n"
 
         phase_b_header = textwrap.dedent("""
@@ -1982,93 +1972,6 @@ make it beautiful to read.
         Kept for backward compatibility (phase="A_full"). The two-phase split
         is now the default; this path is only used if explicitly requested.
         """
-        # PIVOT: Focus on defining novel mathematical structures, not solving open problems.
-        # New math > solving existing puzzles. Each theorem requires PEGB scaffolding.
-        # v3: novel structures (Grothendieck path) — kept for A/B analysis
-        # v4: deepen existing catalog results (Cauchy path) — DEFAULT, winner of A/B test
-        if prompt_version is None:
-            prompt_version = "v4"
-        if prompt_version == "v1":
-            raise ValueError(
-                "v1 prompt is no longer supported — use v3 (novel structures) or v4 (deepen catalog). "
-                "v4 is the default and won the A/B test (avg_Q 0.354 vs 0.332)."
-            )
-        if prompt_version == "v4":
-            depth_requirements = self._build_v4_depth_requirements()
-        else:
-            depth_requirements = self._build_v3_depth_requirements()
-
-        # Build the streamlined prompt
-        lean_section = ""
-        if concept.lean_guess:
-            lean_section = f"\n### Lean 4 Sketch\n{concept.lean_guess[:500]}\n"
-
-        # Previously proved theorems (if any)
-        theorem_section = ""
-        if theorem_context:
-            theorem_section = f"\n### Recent Discoveries in Catalog\n{theorem_context}\n"
-
-        refs = catalog_references or concept.catalog_references or []
-        refs_section = ""
-        if refs:
-            refs_section = f"\n### Catalog References to Build On\n" + "\n".join(f"- {r}" for r in refs[:10]) + "\n"
-
-        catalog_context_section = ""
-        if catalog_context:
-            catalog_context_section = f"\n### Catalog Context\n{catalog_context}\n"
-
-        # Recent successes from cache (helps Aristotle avoid repeating work)
-        recent_section = ""
-        if recent_successes:
-            recent_section = "\n### Recent Aether Successes\n"
-            for r in recent_successes[:3]:
-                title = r.get('concept_title', '?')
-                dom = r.get('domain', '?')
-                q = r.get('quality', 0.0)
-                recent_section += f"- {title} [{dom}, Q={q:.2f}]\n"
-
-        # Build the assignment
-        assignment = self._build_assignment(concept)
-
-        # Domain context
-        mode_brief = {
-            "prove": "Prove new, non-trivial theorems. Build on catalog theorems. Minimize sorry.",
-            "formalize": "Formalize informal mathematics in Lean 4. Define precisely, prove what you can.",
-            "counterexample": "Find a counterexample to the conjecture, or prove it true if it holds.",
-            "sorry_fill": "Fill ALL sorry placeholders. Do NOT change theorem statements.",
-            "discover": "Survey the territory. Propose testable hypotheses — conjectures that can be confirmed or refuted. Prove what you can, disprove what you can't. FUTURE_DIRECTIONS.md must contain falsifiable hypotheses, not vague explorations.",
-            "team": "Lead a research team to maximize scientific output per cycle. ORGANIZE as: (1) Hypothesis Team — brainstorm 5-7 bold, falsifiable conjectures (at least 2 should be surprising or counterintuitive); (2) Experiment Team — prove or disprove each hypothesis in Lean 4, prioritizing the most surprising ones; (3) Analysis Team — examine what survived, what failed, and WHY failures failed — failures teach as much as successes; (4) Writing Team — produce all deliverables (article, paper, demos, HTML widgets) from the team's findings. SCIENCE IS A LOOP: explore → identify patterns → hypothesize → validate → upgrade knowledge → repeat. Each subagent contributes its expertise; the Writing Team synthesizes everything into polished output. More minds = more compute = deeper results. The goal is not to formalize known results — it's to discover new ones.",
-        }
-
-        mode_line = mode_brief.get(concept.research_mode, mode_brief["prove"])
-
-        prompt = f"""You are a world-class mathematician and Lean 4 expert.
-
-## Task
-
-**Title**: {concept.title}
-**Domain**: {concept.domain}
-**Mode**: {mode_line}
-**Mathematical framing**: {concept.mathematical_framing}
-**Concept description**: {concept.concept_description}
-**Novelty estimate**: {concept.novelty_estimate}
-**Breakthrough potential**: {concept.breakthrough_potential}
-{lean_section}
-{refs_section}
-{catalog_context_section}
-{theorem_section}
-{recent_section}
-
-{depth_requirements}
-
-{assignment}
-
-## Legacy phase: full prompt
-
-This is the legacy A_full phase. Both math and packaging are requested in one
-call. For new cycles, prefer the two-phase split (Phase A: math, Phase B: packaging).
-"""
-        return prompt
         refs = catalog_references or concept.catalog_references or []
 
         # Truncate large text fields to keep prompt within budget

@@ -45,6 +45,7 @@ def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
 
     Shows avg quality, world_class rate, duration, and the winner per version.
     Updated after the A/B test that showed v4 wins (+6.6% quality, +12% faster).
+    Also shows Phase A/B split stats.
     """
     try:
         import json as _json
@@ -77,6 +78,24 @@ def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
             v3q = sum(r.get("quality_score", 0) for r in recent if r.get("prompt_version") == "v3") / max(1, sum(1 for r in recent if r.get("prompt_version") == "v3"))
             leader = "v4" if v4q > v3q else "v3"
             lines.append(f"  Last 20: v4={v4q:.3f} v3={v3q:.3f} -> {leader} leading")
+
+        # Phase A/B split stats
+        try:
+            from cycle_analytics import CycleAnalytics
+            ca = CycleAnalytics(extractor.workspace)
+            ps = ca.get_phase_split_stats()
+            threshold = extractor._adaptive_phase_b_threshold()
+            lines.append("")
+            lines.append(f"[Phase] Two-phase split (threshold={threshold:.3f}):")
+            lines.append(f"  Total cycles: {ps['n_total']} (packaged={ps['n_complete']}, A_only={ps['n_a_only']}, "
+                         f"packaged_pct={ps['pct_packaged']}%)")
+            lines.append(f"  Avg Q: packaged={ps['avg_q_packaged']}  A_only={ps['avg_q_a_only']}")
+            if ps['skip_reasons']:
+                lines.append(f"  Skip reasons: {ps['skip_reasons']}")
+            lines.append(f"  p70 quality (recent): {ps['p70_quality_recent']}")
+        except Exception as e:
+            lines.append(f"  [Phase] stats error (non-fatal): {e}")
+
         print("\n".join(lines))
     except Exception as e:
         # Non-critical — don't break the tick
@@ -203,9 +222,33 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
             print(f"[Tick] Skipping {job.job_id[:8]} (status={job.status})")
             continue
 
-        print(f"[Tick] Integrating {job.job_id[:8]}: {job.concept.title[:60]}")
+        # If this is a Phase B completion, preserve Phase A's Lean files
+        # so integrate_async doesn't think we have no math.
+        is_phase_b_completion = (job.phase == "B" or job.phase == "B_dispatched")
+        if is_phase_b_completion:
+            print(f"[Tick] Phase B completed for {job.job_id[:8]}: {job.concept.title[:60]}")
+            # Snapshot Phase A's Lean content before extract_async overwrites it
+            phase_a_lean_backup = job.result_lean
+            phase_a_paths_backup = list(job.integrated_paths or [])
+            # Mark phase so extract can handle the merge
+            job.phase = "complete"  # Will become "complete" after integrate
+        else:
+            print(f"[Tick] Integrating {job.job_id[:8]}: {job.concept.title[:60]}")
+            phase_a_lean_backup = None
+            phase_a_paths_backup = None
+
         job = await extractor.extract_async(job)
         extractor._save_inflight()
+
+        # If Phase B overwrote result_lean, restore Phase A's
+        if is_phase_b_completion and phase_a_lean_backup:
+            job.result_lean = phase_a_lean_backup
+            # Merge integrated_paths: Phase A's Lean + Phase B's articles/demos
+            if phase_a_paths_backup:
+                existing = set(job.integrated_paths or [])
+                for p in phase_a_paths_backup:
+                    if p not in existing:
+                        job.integrated_paths = (job.integrated_paths or []) + [p]
 
         if job.error_message:
             print(f"[Tick] Extract failed: {job.error_message}")
@@ -223,6 +266,48 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
 
         job = extractor.evaluate(job)
         extractor._save_inflight()
+
+        # ── Two-phase dispatch: gate Phase B on Phase A quality ──
+        # Phase A was just evaluated. If the math is good enough, dispatch
+        # Phase B to package it. Otherwise mark as A_only and integrate
+        # the Lean files directly (no article/paper/widgets).
+        phase_b_threshold = extractor._adaptive_phase_b_threshold()
+        phase_a_q = job.quality_score
+        if phase_a_q >= phase_b_threshold and job.result_lean:
+            # Phase B will be dispatched right now (within this same tick loop)
+            # Then we wait for Phase B's results in a future tick
+            print(f"[Tick] Phase A Q={phase_a_q:.3f} >= {phase_b_threshold:.3f} threshold — "
+                  f"dispatching Phase B for {job.job_id[:8]}")
+            # Save Phase A quality score
+            job.phase_a_quality_score = phase_a_q
+            # Snapshot Phase A result before dispatching B
+            job.phase_a_result = {
+                "lean_files": [str(p) for p in (job.integrated_paths or []) if str(p).endswith('.lean')],
+                "theorem_count": job.theorem_count,
+                "sorry_count": job.sorry_count,
+                "quality_score": phase_a_q,
+            }
+            # Dispatch Phase B
+            job = await extractor.dispatch_phase_b_async(job)
+            if job.status == "failed":
+                # Phase B dispatch failed — fall back to A_only integration
+                print(f"[Tick] Phase B dispatch failed, falling back to A_only: {job.error_message}")
+                job.phase = "A_only"
+                job.phase_b_skipped_reason = "phase_b_dispatch_failed"
+            else:
+                # Phase B dispatched successfully — wait for it next tick
+                # Do NOT integrate yet
+                continue
+        else:
+            # Phase B skipped — integrate the Lean files only
+            if phase_a_q < phase_b_threshold:
+                job.phase = "A_only"
+                job.phase_b_skipped_reason = "low_quality"
+            elif not job.result_lean:
+                job.phase = "A_only"
+                job.phase_b_skipped_reason = "phase_a_failed"
+            print(f"[Tick] Phase A Q={phase_a_q:.3f} < {phase_b_threshold:.3f} — "
+                  f"skipping Phase B, integrating Lean only ({job.job_id[:8]})")
 
         job = await extractor.integrate_async(job)
         extractor._save_inflight()

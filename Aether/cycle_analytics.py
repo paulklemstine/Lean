@@ -288,6 +288,46 @@ class CycleAnalytics:
             }
         return result
 
+    def get_phase_split_stats(self) -> Dict[str, Any]:
+        """Get statistics for the two-phase (A: math, B: packaging) split.
+
+        Returns:
+        - n_complete: cycles that ran both Phase A and Phase B
+        - n_a_only: cycles where Phase B was skipped (low quality or failure)
+        - pct_packaged: fraction of cycles that got packaged
+        - skip_reasons: dict mapping reason -> count
+        - avg_q_packaged: avg quality of cycles that ran both phases
+        - avg_q_a_only: avg quality of cycles that were A-only
+        - p70_quality: 70th percentile of quality_score (used as Phase B threshold)
+        """
+        from collections import Counter
+
+        complete = [r for r in self.successful_records if r.phase == "complete"]
+        a_only = [r for r in self.successful_records if r.phase_b_skipped]
+        skip_reasons = Counter(r.phase_b_skip_reason for r in a_only if r.phase_b_skip_reason)
+
+        n_total = len(complete) + len(a_only)
+        n_recent = max(50, n_total // 4)
+        recent_scores = sorted(
+            r.quality_score for r in self.successful_records[-n_recent:] if r.quality_score
+        )
+        p70 = recent_scores[int(0.7 * (len(recent_scores) - 1))] if recent_scores else 0.5
+
+        return {
+            "n_complete": len(complete),
+            "n_a_only": len(a_only),
+            "n_total": n_total,
+            "pct_packaged": round(len(complete) / n_total * 100, 1) if n_total else 0.0,
+            "skip_reasons": dict(skip_reasons),
+            "avg_q_packaged": round(
+                sum(r.quality_score for r in complete) / len(complete), 3
+            ) if complete else 0.0,
+            "avg_q_a_only": round(
+                sum(r.quality_score for r in a_only) / len(a_only), 3
+            ) if a_only else 0.0,
+            "p70_quality_recent": round(p70, 3),
+        }
+
     def get_domain_stats(self) -> Dict[str, Dict[str, float]]:
         """Get per-domain statistics."""
         from collections import defaultdict

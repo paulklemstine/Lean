@@ -246,6 +246,143 @@ class KnowledgeExtractor:
             print(f"[Aether] Warning: could not load inflight jobs: {e}")
 
     # ==================================================================
+    # Two-phase dispatch: Phase A (math) + Phase B (packaging)
+    # ==================================================================
+
+    def _adaptive_phase_b_threshold(self) -> float:
+        """Compute the adaptive threshold for Phase B dispatch.
+
+        Cold start (fewer than 50 cycles): use 0.5 as a fixed default.
+        Warm: use the 70th percentile of recent quality_score values,
+        clamped to [0.4, 0.6]. This gates roughly the top 30% of math
+        for packaging.
+
+        The threshold is cached and only re-evaluated when the cycle
+        count crosses a multiple of 50, so it doesn't recompute every tick.
+        """
+        cache_path = self.workspace / "phase_b_threshold_cache.json"
+        # Read cycle count
+        analytics_path = self.workspace / "cycle_analytics.json"
+        if not analytics_path.exists():
+            return 0.5
+        try:
+            import json as _json
+            data = _json.loads(analytics_path.read_text())
+            records = data.get("records", [])
+        except Exception:
+            return 0.5
+
+        n = len(records)
+        if n < 50:
+            return 0.5  # cold start
+
+        # Check cache
+        cache_bucket = n // 50
+        try:
+            if cache_path.exists():
+                cache = _json.loads(cache_path.read_text())
+                if cache.get("bucket") == cache_bucket and "threshold" in cache:
+                    return float(cache["threshold"])
+        except Exception:
+            pass
+
+        # Compute p70 of recent quality_score values
+        recent = records[-50:]
+        scores = sorted(r.get("quality_score", 0.0) for r in recent)
+        if not scores:
+            return 0.5
+        p70_idx = int(0.7 * (len(scores) - 1))
+        threshold = scores[p70_idx]
+        # Clamp to [0.4, 0.6] — never gate too aggressively or too leniently
+        threshold = max(0.4, min(0.6, threshold))
+
+        # Cache
+        try:
+            cache_path.write_text(_json.dumps({
+                "bucket": cache_bucket,
+                "threshold": threshold,
+                "n_records": n,
+                "computed_at": time.time(),
+            }))
+        except Exception:
+            pass
+
+        return threshold
+
+    def _dispatch_phase_b(self, job: "ResearchJob") -> "ResearchJob":
+        """Build a Phase B prompt on a job, in-place. Does NOT submit to Aristotle.
+
+        The caller (tick loop) is responsible for invoking the Aristotle
+        submission after this method returns. We rebuild the prompt with
+        Phase A's Lean content as input and update the job's phase metadata.
+
+        This split lets the tick loop reuse the standard dispatch path
+        (which calls _dispatch_to_aristotle) without bypassing project
+        directory setup.
+        """
+        # Save the Phase A quality score so we can re-evaluate after Phase B
+        if not hasattr(job, 'phase_a_quality_score') or job.phase_a_quality_score is None:
+            job.phase_a_quality_score = job.quality_score
+
+        # Snapshot the Phase A result
+        job.phase_a_result = {
+            "lean_files": [str(p) for p in (job.integrated_paths or []) if str(p).endswith('.lean')],
+            "theorem_count": job.theorem_count,
+            "sorry_count": job.sorry_count,
+            "self_grade": "world_class" if (job.quality_assessment or {}).get("quality") == "world_class" else "substantial",
+            "quality_score": job.quality_score,
+        }
+
+        # Build Phase B prompt with Phase A's Lean content as input
+        job.phase = "B"
+        job.phase_b_prompt_version = "v1"
+
+        phase_a_lean = job.result_lean or ""
+        job.prompt = self.pi_agent.write_aristotle_prompt(
+            concept=job.concept,
+            phase="B_package_only",
+            phase_a_lean_content=phase_a_lean,
+        )
+        # Phase B does NOT need a fresh project_dir — reuse Phase A's
+        # (the Lean files are already there as inputs)
+        return job
+
+    async def dispatch_phase_b_async(self, job: "ResearchJob") -> "ResearchJob":
+        """Dispatch Phase B to Aristotle using the Phase B prompt.
+
+        Builds a new Aristotle project with the Phase B prompt and submits
+        it. The new project_id replaces job.project_id so the next tick
+        can poll for Phase B's results.
+        """
+        # Build the Phase B prompt
+        self._dispatch_phase_b(job)
+
+        # Build a fresh project dir for Phase B (since it's a new Aristotle call)
+        # But keep the old project_dir as the source of the Phase A Lean
+        phase_a_project_dir = job.project_dir
+        job.project_dir = self._build_project_dir(job)
+        if not job.project_dir:
+            job.status = "failed"
+            job.error_message = "Could not build Phase B project directory"
+            return job
+
+        try:
+            project_id = await self._dispatch_to_aristotle(job)
+            # Note: we replace the project_id, but also remember Phase A's
+            # (Phase A's lean files should be in the same project_dir as before)
+            job.project_id = project_id
+            job.status = "B_dispatched"
+            job.dispatch_time = time.time()
+            self.inflight[project_id] = job
+            self._save_inflight()
+            print(f"[Dispatch-B] Aristotle project: {project_id} (Phase B for {phase_a_project_dir.name if phase_a_project_dir else '?'})")
+        except Exception as e:
+            job.status = "failed"
+            job.error_message = f"Phase B dispatch failed: {e}"
+            print(f"[Dispatch-B] FAILED: {e}")
+        return job
+
+    # ==================================================================
     # Phase 1: DISCOVER — Pi decides what to research
     # ==================================================================
 
@@ -508,6 +645,10 @@ class KnowledgeExtractor:
         # 70% v4, 30% v3 — uniform draw over 1000 to get weighted ratio
         bucket = md5_hash % 1000
         job.prompt_version = "v4" if bucket < 700 else "v3"
+        job.phase = "A"  # Two-phase: this is Phase A (math)
+        job.phase_a_prompt_version = "v4" if bucket < 700 else "v3"
+        # Default to Phase A lean-only prompt; full A_full is legacy
+        phase_arg = "A_lean_only"
         # Build the prompt with the chosen version
         base_prompt = self.pi_agent.write_aristotle_prompt(
             concept=job.concept,
@@ -517,12 +658,17 @@ class KnowledgeExtractor:
             theorem_context=theorem_context,
             insight_extractor=self.insight_extractor,
             research_journal=self.research_journal if hasattr(self, 'research_journal') else None,
-            prompt_version=job.prompt_version,
+            prompt_version=job.phase_a_prompt_version,
+            phase=phase_arg,
         )
         # AUGMENT the prompt to explicitly request ALL deliverables
-        # Pi has defined the math; now we make sure Aristotle knows to produce
-        # the complete artifact set: Lean + demo + paper
-        job.prompt = self._augment_prompt_with_deliverables(base_prompt, job.concept)
+        # For Phase A (lean_only), the prompt already excludes packaging —
+        # the augmentation is skipped because the prompt is intentionally narrow.
+        # For A_full (legacy), the augmentation adds the full deliverable list.
+        if phase_arg == "A_lean_only":
+            job.prompt = base_prompt
+        else:
+            job.prompt = self._augment_prompt_with_deliverables(base_prompt, job.concept)
 
         print(f"[Dispatch] prompt length: {len(job.prompt)} chars ({job.prompt_version})")
 
@@ -531,7 +677,8 @@ class KnowledgeExtractor:
             print(f"  Concept: {job.concept.title}")
             print(f"  Domain: {job.concept.domain}")
             print(f"  Mode: {job.concept.research_mode}")
-            print(f"  Prompt preview: {augmented_prompt[:300]}...")
+            print(f"  Phase: {phase_arg}")
+            print(f"  Prompt preview: {job.prompt[:300]}...")
             job.status = "dry_run"
             return job
 
