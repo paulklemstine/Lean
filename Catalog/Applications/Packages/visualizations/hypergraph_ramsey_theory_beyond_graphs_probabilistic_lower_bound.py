@@ -1,13 +1,7 @@
-def probabilistic_lower_bound(k: int, r: int) -> int:
+def prob_lower_bound(r, k):
     from math import comb
-    if k < r: return k
-    ckr = comb(k, r)
-    threshold = 2 ** ckr
-    lo, hi = k, min(threshold, 10**18)
-    while lo < hi:
-        mid = (lo + hi + 1) // 2
-        if 2 * comb(mid, k) < threshold:
-            lo = mid
-        else:
-            hi = mid - 1
-    return lo
+    target = 2 ** comb(k, r)
+    n = k
+    while 2 * comb(n, k) < target:
+        n += 1
+    return n - 1
