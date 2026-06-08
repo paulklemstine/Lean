@@ -758,8 +758,7 @@ body {
 .markdown-body {
     font-size: 1.15rem;
     color: var(--text-main);
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: 100%;
 }
 
 .markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4 {
@@ -2073,13 +2072,65 @@ body.light-theme .lean-download-btn {
 
 body.light-theme .welcome-desc a,
 body.light-theme .welcome-footer a {
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: unset;
+    background: none;
+    color: var(--accent-primary);
+}
+
+body.light-theme .welcome-desc a:hover,
+body.light-theme .welcome-footer a:hover {
+    filter: none;
+    color: var(--accent-secondary);
 }
 
 body.light-theme .author-popover-link:hover {
     background: linear-gradient(135deg, #7c3aed, #0284c7);
     color: #fff;
     -webkit-text-fill-color: #fff;
+}
+
+body.light-theme .author-popover-info h3 {
+    -webkit-text-fill-color: unset;
+    background: none;
+    color: var(--text-main);
+}
+
+body.light-theme #aether-toast .toast-title {
+    -webkit-text-fill-color: unset;
+    background: none;
+    color: var(--accent-secondary);
+}
+
+body.light-theme .lightbox-caption {
+    -webkit-text-fill-color: unset;
+    background: none;
+    color: var(--text-main);
+}
+
+body.light-theme .directions-subtitle {
+    -webkit-text-fill-color: unset;
+    background: none;
+    color: var(--text-muted);
+}
+
+body.light-theme .welcome-overlay {
+    background: radial-gradient(ellipse at center, rgba(248, 250, 252, 0.2) 0%, rgba(241, 245, 249, 0.5) 100%);
+}
+
+body.light-theme .nav-item.graph-highlight {
+    background-color: rgba(124, 58, 237, 0.08);
+    border-left: 3px solid rgba(124, 58, 237, 0.6);
+    box-shadow: none;
+}
+
+body.light-theme .nav-item.graph-highlight .nav-item-title {
+    color: var(--accent-secondary);
+}
+
+body.light-theme .graph-tooltip {
+    background: rgba(255, 255, 255, 0.95);
+    color: #0f172a;
+    border: 1px solid var(--border-color);
 }
 
 body.light-theme .app-container::before {
