@@ -155,6 +155,45 @@ def _snapshot_core_hashes() -> Dict[str, str]:
     return hashes
 
 
+def _snapshot_core_mtimes() -> Dict[str, float]:
+    """Take a snapshot of mtime for all core Aether files.
+
+    Used by the mtime watchdog to detect user-committed code changes that
+    bypassed git pull. SHA256 is too slow to run every tick; mtime is fast.
+    """
+    mtimes = {}
+    for rel in CORE_FILES:
+        fp = REPO_ROOT / rel
+        if fp.exists():
+            try:
+                mtimes[rel] = fp.stat().st_mtime
+            except Exception:
+                mtimes[rel] = 0.0
+    return mtimes
+
+
+def _check_mtime_drift(snapshot: Dict[str, float]) -> bool:
+    """Check if any core file's mtime has changed since snapshot was taken.
+
+    Returns True if any file was modified. Used to detect when the user
+    has committed code changes directly to local files (bypassing git pull)
+    that the running process hasn't picked up.
+    """
+    changed = []
+    for rel, mtime in snapshot.items():
+        fp = REPO_ROOT / rel
+        if fp.exists():
+            try:
+                if fp.stat().st_mtime != mtime:
+                    changed.append(rel)
+            except Exception:
+                pass
+    if changed:
+        print(f"[Watchdog] Core files modified (mtime drift): {changed}")
+        return True
+    return False
+
+
 def _check_core_file_changes(pre_pull_hashes: Dict[str, str]) -> bool:
     """Check if any core Aether files changed after a git pull.
 
@@ -323,6 +362,14 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
         extractor.commit(job)
         print(f"[Tick] Integrated {job.job_id[:8]}: score={job.quality_score:.3f}, "
               f"files={job.files_integrated}, theorems={job.theorem_count}")
+
+        # Immediately remove from inflight — don't wait for the end-of-tick prune.
+        # The Sonic cycle bug was caused by integrated jobs accumulating in
+        # inflight_jobs.json, leading the stale-recovery to think directions
+        # were abandoned and re-dispatch them.
+        if job.project_id and job.project_id in extractor.inflight:
+            del extractor.inflight[job.project_id]
+            extractor._save_inflight()
 
         # Signal live dashboard update
         _signal_dashboard_update(job.job_id[:8], "cycle_integrated")
@@ -994,6 +1041,11 @@ def main():
         start_docs_server(args.serve_port)
 
     if args.loop:
+        # Mtime watchdog: snapshot file mtimes at startup. If any core file's
+        # mtime advances, the user has committed code changes directly (bypassing
+        # git pull), and we need to restart to load them. The SHA256 watchdog
+        # only fires on git pull, which doesn't catch this case (Sonic cycle bug).
+        _startup_mtimes = _snapshot_core_mtimes()
         global _core_files_changed
         print(f"[Tick] Loop mode — interval={args.interval}s, max_inflight={args.max_inflight}")
         while True:
@@ -1008,9 +1060,15 @@ def main():
                 traceback.print_exc()
             rebuild_commit_push()
 
-            # Watchdog: if core Python files changed after git pull, restart the process
+            # Watchdog 1: if core Python files changed after git pull, restart
             if _core_files_changed:
-                print("[Watchdog] Restarting Aether process due to core file changes...")
+                print("[Watchdog] Restarting Aether process due to core file changes (post-pull)...")
+                os.execv(sys.executable, [sys.executable] + sys.argv)
+
+            # Watchdog 2: mtime drift — catches direct file edits / commits
+            # that bypass git pull (e.g. user committing locally with `git commit`)
+            if _check_mtime_drift(_startup_mtimes):
+                print("[Watchdog] Restarting Aether process due to mtime drift...")
                 os.execv(sys.executable, [sys.executable] + sys.argv)
 
             print(f"[Tick] Sleeping {args.interval}s until next tick...")

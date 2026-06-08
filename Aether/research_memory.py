@@ -380,15 +380,22 @@ class FutureDirectionsManager:
 
     def _recover_stale_directions(self) -> None:
         """Release in_progress directions whose consumed_by_exp_id references a job
-        that no longer exists in inflight_jobs.json."""
+        that no longer exists in inflight_jobs.json.
+
+        Three states for a consumed direction's job:
+          1. Job is currently in inflight_jobs.json (still running) — KEEP in_progress
+          2. Job was completed (analytics has the record) — mark COMPLETED.
+             This was the Sonic cycle bug where completed directions were reset
+             to available and re-dispatched.
+          3. Job was abandoned (no analytics record, no inflight) — truly stale,
+             reset to available.
+        """
         inflight_path = self.workspace / "inflight_jobs.json"
         if not inflight_path.exists():
-            # No active jobs file — all in_progress directions are stale
             active_job_ids = set()
         else:
             try:
                 inflight_data = json.loads(inflight_path.read_text(encoding="utf-8"))
-                # Handle both dict format {uuid: {job_id: ...}} and list format
                 if isinstance(inflight_data, dict):
                     active_job_ids = {
                         v.get("job_id", "") for v in inflight_data.values()
@@ -404,16 +411,43 @@ class FutureDirectionsManager:
             except Exception:
                 active_job_ids = set()
 
+        # Analytics is the source of truth for "completed" jobs.
+        completed_job_ids = set()
+        analytics_path = self.workspace / "cycle_analytics.json"
+        if analytics_path.exists():
+            try:
+                analytics = json.loads(analytics_path.read_text(encoding="utf-8"))
+                completed_job_ids = {
+                    r.get("job_id", "") for r in analytics.get("records", [])
+                    if r.get("job_id")
+                }
+            except Exception:
+                pass
+
         recovered = 0
+        completed_via_recovery = 0
         for d in self._directions:
             if d.status == "in_progress" and d.consumed_by_exp_id:
-                if d.consumed_by_exp_id not in active_job_ids:
+                if d.consumed_by_exp_id in active_job_ids:
+                    continue  # Job is still running
+                if d.consumed_by_exp_id in completed_job_ids:
+                    # Job was completed but never marked completed on this direction
+                    d.status = "completed"
+                    recovered += 1
+                    completed_via_recovery += 1
+                else:
+                    # Truly stale — no record anywhere
                     d.status = "available"
                     d.consumed_by_exp_id = ""
                     recovered += 1
         if recovered:
             self._save()
-            print(f"Recovered {recovered} stale direction(s) back to available")
+            if completed_via_recovery:
+                print(f"[FutureDirections] Recovered {recovered} direction(s): "
+                      f"{completed_via_recovery} marked completed, "
+                      f"{recovered - completed_via_recovery} reset to available")
+            else:
+                print(f"Recovered {recovered} stale direction(s) back to available")
 
     def _save(self) -> None:
         self.workspace.mkdir(parents=True, exist_ok=True)
@@ -871,6 +905,31 @@ class FutureDirectionsManager:
             available = [d for d in available if domain_filter in d.domains or not d.domains]
         if exclude_domains:
             available = [d for d in available if not any(ex in d.domains for ex in exclude_domains)]
+        if not available:
+            return None
+
+        # Duplicate-dispatch prevention: any direction with attempt_count >= 3 has
+        # already been tried at least 3 times. The dispatch feedback loop in the
+        # Sonic cycle bug meant the same direction kept coming back. Prune
+        # direction-tracking at the dispatch level so a runaway direction can never
+        # be re-dispatched more than 3 times in its lifetime.
+        # After 3 attempts, mark the direction as pruned — this is permanent
+        # removal, not just quarantine.
+        max_attempts = 3
+        pruned_high_attempt = 0
+        kept = []
+        for d in available:
+            if d.attempt_count >= max_attempts:
+                # Prune permanently — don't keep re-trying forever
+                d.status = "pruned"
+                pruned_high_attempt += 1
+            else:
+                kept.append(d)
+        if pruned_high_attempt:
+            self._save()
+            print(f"[FutureDirections] Pruned {pruned_high_attempt} direction(s) with "
+                  f"attempt_count >= {max_attempts} (preventing infinite re-dispatch loop)")
+        available = kept
         if not available:
             return None
         import random

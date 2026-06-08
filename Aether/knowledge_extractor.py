@@ -878,6 +878,24 @@ Research mode: {concept.research_mode}
         """
         from reasoning_log import ReasoningLog
 
+        # Defense-in-depth cycle timeout: if a job has been running for more
+        # than 6 hours since dispatch, fail it regardless of checkpoint state.
+        # The reasoning-log based check below also catches this, but a
+        # dispatch_time-based check works even if reasoning logs are missing.
+        max_cycle_seconds = 6 * 3600
+        now = time.time()
+        for pid, job in list(self.inflight.items()):
+            if job.status in ("completed", "failed", "integrated", "rejected"):
+                continue
+            if job.dispatch_time and (now - job.dispatch_time) > max_cycle_seconds:
+                age_h = (now - job.dispatch_time) / 3600
+                print(f"[Poll] {pid[:8]} TIMEOUT: dispatch_time says {age_h:.1f}h elapsed, "
+                      f"failing cycle (6h cap)")
+                job.status = "failed"
+                job.error_message = f"6h dispatch timeout ({age_h:.1f}h elapsed)"
+                self.failed_count += 1
+                self._quarantine_direction_for_job(job, days=7)
+
         completed = []
         for pid, job in list(self.inflight.items()):
             if job.status in ("completed", "failed", "integrated", "rejected"):
@@ -945,11 +963,13 @@ Research mode: {concept.research_mode}
                             elapsed = last["elapsed_seconds"] - first["elapsed_seconds"]
                             if elapsed > 5400:  # 90 minutes RUNNING is a stall
                                 print(f"[Poll] {pid[:8]} STALL WARNING: RUNNING for {elapsed/60:.0f}min")
-                            # Hard cap at 3 hours: force-fail the project
-                            if elapsed > 10800:  # 3 hours
+                            # Hard cap at 6 hours: force-fail the project
+                            # (was 3h but Tangled Hierarchies ran 24h, suggesting the
+                            # previous cap wasn't firing or wasn't strict enough)
+                            if elapsed > 21600:  # 6 hours
                                 print(f"[Poll] {pid[:8]} HARD CAP: cancelling after {elapsed/60:.0f}min")
                                 job.status = "failed"
-                                job.error_message = f"Cancelled after {elapsed/60:.0f}min (3h cap)"
+                                job.error_message = f"Cancelled after {elapsed/60:.0f}min (6h cap)"
                                 self.failed_count += 1
                                 # Quarantine the direction
                                 self._quarantine_direction_for_job(job, days=7)
@@ -1270,10 +1290,19 @@ Research mode: {concept.research_mode}
         # Summary
         job.result_summary = summary
 
-        # Count sorries and theorems across all Lean output
+        # Count sorries and theorems across all Lean output.
+        # Use regex on top-level `theorem`/`lemma` declarations only.
+        # Naive `.count("theorem ")` inflated counts by 5-10x because it caught
+        # doc-comments, string literals, and nested lemmas inside def bodies.
+        import re
         if job.result_lean:
-            job.sorry_count = job.result_lean.count("sorry")
-            job.theorem_count = job.result_lean.count("theorem ") + job.result_lean.count("lemma ")
+            job.sorry_count = len(re.findall(r'\bsorry\b', job.result_lean))
+            # Match `theorem name`, `lemma name`, `example :` at start of line
+            # (zero indentation, allowing tabs/spaces at the file's top level).
+            # Excludes nested declarations inside def/class bodies.
+            theorem_pattern = re.compile(r'^(?:theorem|lemma|nonrec theorem|protected theorem|private theorem|example)\s+\w', re.MULTILINE)
+            matches = theorem_pattern.findall(job.result_lean)
+            job.theorem_count = len(matches)
 
         print(f"[Extract] Lean: {len(lean_files)} files, Python: {len(python_files)} files, "
               f"Papers: {len(paper_files)} files, "
@@ -3305,16 +3334,40 @@ Research mode: {concept.research_mode}
                 print(f"[Cycle] Added 1 future direction from cycle {job.job_id}")
             else:
                 print(f"[Cycle] No future directions found for cycle {job.job_id}")
-            # Mark the consumed direction as completed
+            # Mark the consumed direction as completed. Use a robust lookup that
+            # handles the case where stale-recovery already cleared the direction's
+            # consumed_by_exp_id or changed its status.
+            marked = False
             for d in fd_manager._directions:
                 if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
-                    # Quality feedback: record how well this direction performed BEFORE saving
                     if job.quality_score > 0:
                         d.outcome_quality = job.quality_score
                         print(f"[Cycle] Direction {d.id} outcome_quality={job.quality_score:.2f}")
                     fd_manager.mark_direction_completed(d.id)
                     print(f"[Cycle] Marked direction {d.id} as completed (quality={d.outcome_quality:.2f})")
+                    marked = True
                     break
+            if not marked:
+                # Fallback: look for any in_progress direction this job might have consumed
+                # (in case the stale-recovery already touched it). Check attempt_count
+                # to ensure we don't re-dispatch immediately.
+                for d in fd_manager._directions:
+                    if d.status == "in_progress" and d.last_attempt_time:
+                        # The direction was probably ours if its last_attempt_time is recent
+                        import datetime
+                        try:
+                            last_attempt = datetime.datetime.fromisoformat(d.last_attempt_time)
+                            now = datetime.datetime.now(datetime.timezone.utc)
+                            if (now - last_attempt).total_seconds() < 3600:  # within last hour
+                                if job.quality_score > 0:
+                                    d.outcome_quality = job.quality_score
+                                fd_manager.mark_direction_completed(d.id)
+                                print(f"[Cycle] Recovered: marked direction {d.id} as completed "
+                                      f"(consumed_by_exp_id was reset, matched by recency)")
+                                marked = True
+                                break
+                        except (ValueError, TypeError):
+                            pass
         except Exception as e:
             print(f"[Cycle] Warning: Failed to extract future directions: {e}")
 
