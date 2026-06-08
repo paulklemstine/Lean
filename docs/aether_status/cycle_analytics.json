@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-08T17:59:43.622647+00:00",
+  "last_updated": "2026-06-08T18:28:57.345111+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -351,6 +351,45 @@
       "theorem_count": 3,
       "timestamp": "2026-06-08T17:59:43.517133+00:00",
       "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.2776,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 9,
+      "domain": "Applications",
+      "duration_seconds": -39.10372447967529,
+      "end_time": 1780943297.889714,
+      "files_integrated": 0,
+      "job_id": "84d24cbc",
+      "outcome_quality": 0.0,
+      "phase": "B",
+      "phase_a_prompt_version": "v4",
+      "phase_b_prompt_version": "v1",
+      "phase_b_skipped": false,
+      "prompt_version": "v4",
+      "quality_breakdown": {
+        "actionability": 0.1,
+        "applications": 0.61,
+        "artifact_richness": 0.1,
+        "catalog_anchoring": 0.5,
+        "composite": 0.6681,
+        "cross_domain": 0.95,
+        "grade": "substantial",
+        "importance": 0.8322,
+        "novelty": 0.886,
+        "proof_depth": 0.8092,
+        "usefulness": 0.8796
+      },
+      "quality_score": 0.59984,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1780943336.9934385,
+      "strategy_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-08T18:28:57.237185+00:00",
+      "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
     }
   ]
 }
