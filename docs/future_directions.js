@@ -1262,7 +1262,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The crystallographic restriction theorem we proved constrains the trace of non-s"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9fe7196f",
     "description": "# Future Directions: Clique Complex Theory in Lean 4\n\n## 1. Homology of Clique Complexes via Chain Complexes\n\nThe clique complex \u0394(G) admits a natural chain complex over \u2124: the k-th chain group is the free abelian group on k-faces, and the boundary maps are the standard simplicial boundary operators. Computing the homology groups H_k(\u0394(G); \u2124) would unlock Betti numbers \u03b2_k and the full power of persistent homology.\n\nThe key insight is that Mathlib already has `HomologicalComplex` and `homology` functors \u2014 the missing piece is constructing the simplicial boundary map \u2202_k : C_k \u2192 C_{k-1} from our `ASC` type, which requires formalizing signed face maps (alternating sums of face deletions). This would connect our combinatorial definitions directly to Mathlib's homological algebra.\n\nWhy now? The `ASC` structure and face-counting machinery are in place. The boundary map is the single construction needed to bridge combinatorial topology and homological algebra in Lean 4. No existing Lean formalization has done this.\n\n## 2. Vietoris-Rips Filtrations and Persistent Homology\n\nGiven a finite metric space (X, d) and a scale parameter \u03b5, the Vietoris-Rips complex VR(X, \u03b5) is the clique complex of the graph where vertices within distance \u03b5 are adjacent. As \u03b5 grows from 0 to \u221e, this yields a filtration of simplicial complexes \u2205 \u2286 VR(X, \u03b5\u2081) \u2286 VR(X, \u03b5\u2082) \u2286 \u22ef \u2286 \u0394(K_n).\n\nThe key insight is that our monotonicity theorem (`cliqueComplex_mono`) already proves that subgraph inclusion induces subcomplex inclusion. Formalizing the threshold graph G_\u03b5 (where `G.Adj u v \u2194 d u v \u2264 \u03b5`) and proving that \u03b5\u2081 \u2264 \u03b5\u2082 implies G_{\u03b5\u2081} \u2264 G_{\u03b5\u2082} would give the first verified persistent homology pipeline.\n\nWhy now? The monotonicity infrastructure is complete. The remaining step is a clean formalization of threshold graphs from metric spaces, which is combinatorially straightforward.\n\n## 3. Tur\u00e1n-Type Bounds on Face Numbers\n\nOur `cliqueComplex_fVector_le_choose` shows f_k(\u0394(G)) \u2264 C(n, k+1), but this bound is tight only for complete graphs. For graphs with bounded clique number \u03c9(G) \u2264 r, the Kruskal-Katona theorem gives much sharper bounds on face numbers. In particular, f_k = 0 for all k \u2265 r.\n\nThe key insight is that Tur\u00e1n's theorem (the extremal graph with no (r+1)-clique is the complete r-partite graph) should translate directly into sharp bounds on the f-vector of clique complexes: the Tur\u00e1n graph T(n,r) maximizes f_k among all graphs with \u03c9(G) \u2264 r, and its face counts are computable.\n\nWhy now? Tur\u00e1n's theorem has been partially formalized in Lean/Mathlib. Connecting it to our clique complex f-vector would create a novel bridge between extremal graph theory and combinatorial topology.\n\n## 4. Garland's Method: Spectral Gaps Force Vanishing Homology\n\nGarland's 1973 theorem states: if every link of a vertex in a simplicial complex has spectral gap \u03bb\u2081 > 1/(k+1), then H_k(K; \u211d) = 0. This gives a purely graph-theoretic criterion (eigenvalues of adjacency matrices of links) for vanishing of homology groups.\n\nThe key insight is that this would be the first formalized connection between spectral graph theory and simplicial homology. The link of a vertex v in our clique complex is itself a clique complex (of the neighborhood graph of v), so the definition infrastructure is already in place.\n\nWhy now? Mathlib has spectral theory for matrices (`Matrix.IsHermitian`, eigenvalue bounds). Our ASC definition naturally supports extracting vertex links. The gap is formalizing the Garland inequality itself, which requires the Laplacian of the chain complex.\n\n## 5. Random Clique Complexes: Phase Transitions in Betti Numbers\n\nFor the Erd\u0151s-R\u00e9nyi random graph G(n, p), the expected number of k-faces in \u0394(G(n,p)) is C(n, k+1) \u00b7 p^{C(k+1,2)}. Kahle (2009) proved sharp thresholds: \u03b2_k peaks near p \u2248 n^{-1/(k+1)} and the transition width shrinks as n \u2192 \u221e. The original conjecture that \u03b2_k \u2248 n^{k+1} corresponds to this peak regime.\n\nThe key insight is that the face-counting formula is deterministic and verifiable now \u2014 our `cliqueComplex_complete_fVector` gives the upper bound, and the expected value computation is a direct product formula. Formalizing the expected f-vector of random clique complexes would be the first step toward verified probabilistic topology.\n\nWhy now? The f-vector machinery is complete. Computing E[f_k] = C(n,k+1) \u00b7 p^{C(k+1,2)} requires only our existing face count combined with independence of edge events, which is accessible in probability theory.\n",
     "domains": [
       "Algebra",
@@ -1272,7 +1272,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "c2963b34",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T01:42:46.216437+00:00",
     "title": "The clique complex \u0394(G) admits a natural chain complex over \u2124: the k-th chain gr"
   },
@@ -1532,7 +1532,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "We proved the scaling law for the special case \u03b1 = 2 (eigenvalues \u03bb_k = 1/k\u00b2),"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ee23b747",
     "description": "# Future Directions: BB84 QKD Security Formalization\n\n## 1. Continuous Monotonicity and Exact QBER Threshold Computation\n\nThe current formalization proves existence of a QBER threshold Q* via the intermediate value theorem but does not pin down its exact value. A natural next step is to prove that binEntropy\u2082 is strictly increasing on [0, 1/2] and strictly decreasing on [1/2, 1], which would give uniqueness of Q*. Combined with numerical bounds on log, one could prove 0.110 < Q* < 0.111, formalizing the well-known \u224811% threshold.\n\nThe key insight is that strict monotonicity of h\u2082 on [0, 1/2] follows from the strict concavity of binEntropy, which in turn follows from the strict convexity of x \u21a6 x log x (whose second derivative is 1/x > 0).\n\nWhy now? Mathlib already has `Real.binEntropy_nonneg` and `Real.binEntropy_le_log_two`. The concavity/convexity infrastructure for `Real.log` is well-developed (`Real.strictConvexOn_mul_log`), so the strict monotonicity proof is within reach.\n\n## 2. Finite-Key Security Bounds\n\nThe current key rate theorem is asymptotic: r = 1 - 2h\u2082(Q) applies in the limit n \u2192 \u221e. Real implementations use finite key lengths, where the key rate must account for statistical fluctuations in parameter estimation. The finite-key formula involves tail bounds (Serfling's inequality or Azuma-Hoeffding) and produces a key rate r_n \u2248 1 - 2h\u2082(Q + \u03b4(n)) - O(1/\u221an) where \u03b4(n) is the statistical confidence interval.\n\nThe key insight is that formalizing the finite-key correction separates into three independent components: (1) a concentration inequality for hypergeometric sampling, (2) the smooth min-entropy chain rule, and (3) the finite-size privacy amplification bound. Each is a self-contained mathematical result.\n\nWhy now? Mathlib has strong measure-theoretic probability foundations and many concentration inequalities. The modular structure means each component can be formalized independently and composed.\n\n## 3. Entanglement-Based QKD and the CSS Code Reduction\n\nThe Shor-Preskill proof reduces BB84 security to the security of an entanglement-based protocol via CSS (Calderbank-Shor-Steane) error-correcting codes. Formalizing this reduction would connect our information-theoretic results to the quantum-mechanical security guarantee. The reduction shows that if a CSS code can correct t errors, then BB84 with QBER \u2264 t/n is secure.\n\nThe key insight is that the CSS code reduction is primarily algebraic (over GF(2)) rather than quantum-mechanical. The quantum part reduces to the statement that measuring in conjugate bases commutes with CSS encoding \u2014 which can be stated as a linear-algebraic fact over F\u2082.\n\nWhy now? Mathlib has extensive support for linear algebra over finite fields (`ZMod 2`), making the algebraic core of the CSS reduction formalizable without quantum mechanics infrastructure.\n\n## 4. Composable Security and the Universal Composability Framework\n\nOur current security definition is stand-alone: it bounds Eve's information about a single key. Modern QKD security proofs use the universal composability (UC) framework, where security means the real protocol is indistinguishable from an ideal key-generation functionality. The composable security bound involves trace distance between quantum states, generalizing our classical statistical distance.\n\nThe key insight is that composable security follows from the stand-alone bound plus a \"lifting lemma\" showing that statistical distance in the classical post-processing is preserved under composition. This lifting lemma is a purely classical result about statistical distance and can be formalized using our `statDistance_triangle`.\n\nWhy now? The `statDistance` metric space structure we formalized provides the foundation. The lifting lemma is a direct consequence of the triangle inequality and data processing inequality for statistical distance.\n\n## 5. Privacy Amplification Against Quantum Adversaries\n\nOur privacy amplification result treats the security parameter classically. Against quantum adversaries, the leftover hash lemma requires quantum min-entropy (conditional on Eve's quantum side information). The quantum leftover hash lemma states: if \u03c1_AE has conditional min-entropy H_min(A|E) \u2265 k, then hashing A to l bits leaves Eve with trace distance \u2264 2^{-(k-l)/2} from uniform.\n\nThe key insight is that the quantum leftover hash lemma's proof reduces to a bound on the operator norm of \u03c1_AE, which can be stated as: Tr(\u03c1_AE\u00b2) \u2264 2^{-k}. This \"collision entropy\" characterization is a finite-dimensional matrix inequality that could be formalized using Mathlib's matrix analysis.\n\nWhy now? Mathlib's `Matrix` library includes trace, operator norms, and positive semidefiniteness. The key inequality is a consequence of the Cauchy-Schwarz inequality for the Hilbert-Schmidt inner product, which is available in Mathlib.\n",
     "domains": [
       "Algebra",
@@ -1542,7 +1542,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "c8728b9d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T07:04:31.875011+00:00",
     "title": "The current formalization proves existence of a QBER threshold Q* via the interm"
   },
@@ -1967,7 +1967,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The EBC framework now spans three files with 0 sorry's:"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0a3c1ef8",
     "description": "# Future Directions: Tropical Brill-Noether Theory\n\n## 1. Baker-Norine Riemann-Roch for Graphs\n\nThe Baker-Norine theorem states that for a divisor D on a graph G of genus g,\nrank(D) - rank(K_G - D) = deg(D) - g + 1, where K_G is the canonical divisor.\nOur chip-firing infrastructure (Laplacian sum-zero, degree invariance, linear\nequivalence as equivalence relation) provides exactly the foundation needed.\n\nThe key insight is that the Laplacian kernel characterizes chip-firing equivalence\nclasses, and the degree invariance theorem we proved ensures the rank function\nis well-defined on equivalence classes. Why now? We have all the algebraic\ninfrastructure for graph divisors formalized \u2014 what remains is the combinatorial\nargument using q-reduced divisors (Dhar's burning algorithm) to establish the\nexistence and uniqueness of reduced representatives.\n\n## 2. Full CDPR Theorem with Metric Structure\n\nThe Cools-Draisma-Payne-Robeva theorem in Core.lean currently proves the\ncombinatorial equivalence between CDPR allocations and \u03c1 \u2265 0. The full\ntheorem requires showing that on a *generic* metric chain of loops, the\nrank of the constructed divisor equals exactly r.\n\nThe key insight is that the genericity condition (distinct edge-length ratios,\nformalized in Defs.lean as `MetricChainOfLoops.IsGeneric`) prevents accidental\nrank jumps, ensuring the allocation-based construction achieves rank exactly r\nand no more. Why now? The metric chain of loops structure and genericity\ncondition are already formalized in Defs.lean; what's needed is the tropical\nlinear series computation on metric graphs using the break divisor theory.\n\n## 3. Specialization Inequality and Lifting\n\nBaker's specialization lemma (abstracted in Defs.lean as `SpecializationDatum`)\nstates that rank does not decrease under tropicalization. The converse \u2014 the\nlifting problem \u2014 asks when tropical divisors lift to algebraic ones with the\nsame rank. This would close the loop between tropical and classical\nBrill-Noether theory.\n\nThe key insight is that the Serre duality we proved (\u03c1(g,r,d) = \u03c1(g,g-1-d+r,2g-2-d))\nconstrains which tropical divisors can possibly lift, since the duality must be\npreserved by any faithful specialization. Why now? The abstract specialization\ninterface provides a clean framework for stating lifting conditions, and the\nduality theorem gives computable necessary conditions for liftability.\n\n## 4. Tropical Moduli Space Dimension\n\nThe Brill-Noether number \u03c1 should equal the dimension of the tropical moduli\nspace W^r_d(\u0393) for a general tropical curve \u0393. Our strict monotonicity result\nand boundary behavior (\u03c1 < 0 for large genus) constrain when this space is\nempty.\n\nThe key insight is that the monotonicity theorem (\u03c1 is strictly increasing in d)\nmeans the transition from empty to nonempty W^r_d happens at a single critical\ndegree, making the dimension theory particularly clean in the tropical setting.\nWhy now? The algebraic properties proven in Duality.lean give complete control\nover the sign of \u03c1, which is the key input for tropical intersection theory\ncomputations on the moduli space.\n\n## 5. Chip-Firing Groups and Jacobians\n\nThe graph Laplacian we formalized defines a group homomorphism from\n(V \u2192 \u2124) to GraphDivisor V. The cokernel of this map restricted to\ndegree-zero divisors is the Jacobian (or sandpile group) of the graph,\nwhose order equals the number of spanning trees by the matrix-tree theorem.\n\nThe key insight is that our Laplacian additivity theorem (graphLaplacian_add)\nand the linear equivalence transitivity directly give the group structure\non divisor classes, and the Laplacian sum-zero property ensures the degree-zero\ncondition is well-defined on classes. Why now? The equivalence relation\n(reflexivity, symmetry, transitivity all proved) means we can immediately\nquotient to get the Jacobian as a type, and the matrix-tree theorem connection\nwould give a concrete computation of its cardinality.\n",
     "domains": [
       "Algebra",
@@ -1977,7 +1977,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "49409cbc",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T12:09:31.251525+00:00",
     "title": "The Baker-Norine theorem states that for a divisor D on a graph G of genus g,"
   },
@@ -2538,6 +2538,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE_DIRECTIONS.md \u2014 Cryptographic Hash Functions: Collision Resistance\n\n## Synthesis\n\nThis cycle established the foundational formalization of Merkle-Damg\u00e5rd collision resistance in Lean 4. We proved five theorems capturing the core security reduction: that collisions in the iterated hash imply collisions in the compression function. The key structural insight is that the Merkle-Damg\u00e5rd construction's security reduces to a pure algebraic property \u2014 joint injectivity of `List.foldl` \u2014 which admits a clean inductive proof without any probabilistic reasoning.\n\nTwo independent proof techniques emerged. The contrapositive approach (via `foldl_joint_injective`) handles the general case but uses classical logic. The constructive convergence lemma (`foldl_convergence`) extracts explicit collision witnesses but only handles the \"same message, different IV\" case. The gap between these \u2014 constructive collision extraction for the full \"different message, same IV\" case \u2014 is a natural next target.\n\nWe also identified the boundary of our results: they apply only to equal-length messages. The `md_strengthen_injective` theorem shows how injective padding extends the result to variable-length messages, but real-world padding schemes (like SHA-256's) require formalizing bitwise operations and length encoding, which is infrastructure work for a future cycle.\n\n## Results Summary\n\n- `foldl_joint_injective`: proved \u2014 If compression is injective as \u03b1 \u00d7 \u03b2 \u2192 \u03b1, then foldl is jointly injective in (accumulator, list) for same-length lists\n- `compress_injective_md_injective`: proved \u2014 Injective compression implies Merkle-Damg\u00e5rd is injective on same-length messages\n- `md_collision_implies_compress_collision`: proved \u2014 Any collision in MD on same-length messages implies a collision in the compression function (the main security reduction)\n- `foldl_convergence`: proved \u2014 Different initial states converging under the same message sequence yield a constructive compression collision\n- `md_strengthen_injective`: proved \u2014 With injective, length-preserving padding, MD is injective on all messages\n- `length_extension_property`: proved (trivial) \u2014 Documents the length extension vulnerability as a structural property\n- `merkleDamgard_append`: proved \u2014 Domain extension / structural decomposition of MD\n\n## Research Directions\n\n### Direction 1: Constructive Full Collision Extraction\n**Hypothesis**: For any two distinct same-length messages with the same MD hash, one can constructively (without classical choice) extract the specific index and inputs where the compression function collides.\n**Test**: Prove a version of `md_collision_implies_compress_collision` that returns a `Fin n` index and explicit collision witnesses, using only constructive logic (no `Classical.choice`).\n**Why now**: The `foldl_convergence` lemma already gives constructive extraction for the convergence sub-case. The missing piece is handling the \"different blocks at the same position\" case constructively, which should be doable by combining `foldl_convergence` with decidable equality on \u03b2.\n**If true**: Opens the door to verified collision-finding algorithms and computational security reductions.\n**If false**: Reveals that the collision location genuinely requires classical reasoning, which would be an interesting metamathematical fact about cryptographic reductions. The key insight is that the constructive content of the convergence lemma may not extend to the full case analysis needed when both blocks and states differ simultaneously.\n\n### Direction 2: Probabilistic Collision Resistance and the Birthday Bound\n**Hypothesis**: For a random compression function f : Fin N \u00d7 Fin M \u2192 Fin N, the probability that k random messages yield a collision in the Merkle-Damg\u00e5rd hash is at most k\u00b2/(2N), matching the birthday bound.\n**Test**: Formalize a probability space over compression functions (using `MeasureTheory.MeasureSpace` on `Fin N \u00d7 Fin M \u2192 Fin N`) and prove the birthday bound for the iterated construction.\n**Why now**: Our deterministic collision reduction is complete; the natural next step is quantitative security. Mathlib's measure theory should provide the infrastructure, though finite probability spaces over function types may need custom development. The key insight is that the deterministic reduction theorem converts the birthday bound on compression functions directly to a birthday bound on the full hash.\n**If true**: Gives the first formalized quantitative security bound for iterated hash constructions.\n**If false**: Indicates that the birthday bound requires tighter coupling between the compression function distribution and the iteration structure.\n\n### Direction 3: Sponge Construction and Beyond Merkle-Damg\u00e5rd\n**Hypothesis**: The sponge construction (used in SHA-3/Keccak) satisfies a collision resistance reduction analogous to our Merkle-Damg\u00e5rd theorem, where collision resistance of the sponge reduces to properties of the underlying permutation.\n**Test**: Define the sponge construction as `sponge (\u03c0 : Fin n \u2192 Fin n) (r c : \u2115) (msg : List (Fin (2^r)))` and prove that collisions in the sponge output imply either (a) a collision in \u03c0 or (b) a capacity collision (two states agreeing on the capacity bits).\n**Why now**: Our `foldl_joint_injective` technique generalizes \u2014 the sponge is also an iterated construction, but with a twist: the permutation is bijective, so collisions arise from information loss in the rate/capacity split rather than from compression. The key insight is that the sponge security argument is structurally dual to Merkle-Damg\u00e5rd: instead of proving compression injectivity implies hash injectivity, we prove permutation bijectivity plus capacity separation implies hash collision resistance.\n**If true**: Unifies the security foundations of both major hash construction paradigms in a single formal framework.\n**If false**: The capacity-based argument may require fundamentally different proof techniques that our foldl framework cannot capture.\n\n### Direction 4: HMAC Security from Merkle-Damg\u00e5rd Properties\n**Hypothesis**: HMAC (keyed-hash message authentication) constructed from a Merkle-Damg\u00e5rd hash is a secure PRF if the compression function is a PRF, and this reduction can be formalized building on our collision resistance framework.\n**Test**: Define HMAC as `hmac f k msg = merkleDamgard f (f iv (k \u2295 opad)) [merkleDamgard f (f iv (k \u2295 ipad)) msg]` and prove that any distinguisher for HMAC yields either a compression-function distinguisher or a collision.\n**Why now**: Our `merkleDamgard_append` decomposition theorem is exactly the structural property needed to decompose HMAC into its inner and outer hash applications. The key insight is that HMAC security decomposes into two applications of our collision resistance theorem (for the inner and outer hashes) plus a PRF assumption on the compression function.\n**If true**: Provides the first end-to-end formal security proof for the most widely deployed MAC construction.\n**If false**: The PRF-to-collision-resistance gap may require formalizing computational indistinguishability, which is a major infrastructure investment.\n\n### Direction 5: Tree Hashing and Parallelizable Collision Resistance\n**Hypothesis**: A binary tree hash (where leaves are message blocks and internal nodes apply the compression function) preserves collision resistance with a tighter reduction than Merkle-Damg\u00e5rd: a collision in the tree hash of depth d implies a collision in the compression function with no loss (vs. the sequential chain where the reduction quality depends on message length).\n**Test**: Define `treeHash f : BinaryTree \u03b2 \u2192 \u03b1` recursively and prove `treeHash_collision_implies_compress_collision` with a reduction that does not depend on tree depth.\n**Why now**: Our proof technique for `foldl_joint_injective` \u2014 peeling off one layer at a time \u2014 adapts directly to tree structures via structural induction on `BinaryTree`. The key insight is that tree hashing's collision resistance reduction is actually simpler than Merkle-Damg\u00e5rd's because each path from root to leaf is independent, eliminating the need for the convergence argument.\n**If true**: Establishes tree hashing as formally superior to sequential hashing for collision resistance, with implications for parallel hash function design.\n**If false**: The independence assumption between paths may break down, revealing subtle dependencies in tree-structured compression.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1161",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0c7bdbdf",
+    "status": "available",
+    "timestamp": "2026-06-09T19:49:34.558301+00:00",
+    "title": "Foundational formalization of Merkle-Damg\u00e5rd collisio"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: LWE Hardness Reductions\n\n## 1. Formal Verification of the Full Regev Quantum Reduction\n\nThe current formalization captures the algebraic and analytic *ingredients* of the LWE search-to-decision reduction \u2014 affine bijections over Z_p, noise accumulation bounds, rounding correctness, and the pigeonhole advantage decomposition. The natural next step is to close the loop by formalizing the **quantum reduction from GapSVP to LWE** itself, which requires modeling the quantum step where a BDD oracle is used to sample from a discrete Gaussian.\n\nThe key insight is that the quantum step can be decomposed into a classical \"iterative rounding\" procedure plus a single quantum Fourier sampling step. The iterative rounding is purely algebraic and amenable to formalization; the quantum sampling can be abstracted as an oracle satisfying a distributional specification (certified approximate discrete Gaussian). This decomposition avoids formalizing quantum circuits entirely.\n\nWhy now? The `ApproxDiscreteGaussian` structure in `RegevReduction/Theorems.lean` already provides the right abstraction for the quantum oracle, and the `ModuleReductionStep` framework can compose the classical reduction steps. The missing piece is the distributional analysis connecting the BDD oracle to Gaussian sampling \u2014 specifically, proving that the smoothing parameter \u03b7_\u03b5(\u039b) controls the quality of the resulting samples.\n\n## 2. Ring-LWE and Module-LWE Search-to-Decision Reductions\n\nThe coordinate-by-coordinate search-to-decision strategy formalized here works for standard LWE but fails for structured variants. For **Ring-LWE** (Lyubashevsky-Peikert-Regev 2010), the reduction requires the algebraic structure of number fields \u2014 specifically, the Chinese Remainder Theorem for splitting R_q = Z_q[X]/(f(X)) when f splits modulo q.\n\nThe key insight is that the affine bijection `ZMod.affine_bijective` generalizes from Z_p to Z_p[X]/(f) when f is irreducible mod p, but the search-to-decision reduction uses the *splitting* structure rather than irreducibility. Formalizing this requires Mathlib's `Polynomial.Splits` and the CRT for polynomial quotients, both of which exist in Mathlib.\n\nWhy now? The `ZMod.sum_affine_eq` theorem (showing sums are invariant under affine rerandomization) is the template for the Ring-LWE analogue, where the sum runs over elements of R_q instead of Z_q. The module-level abstractions in `SearchDecision.lean` (e.g., `abstract_hybrid_telescope`) already handle the case of arbitrary finite indexing sets, so the hybrid argument infrastructure is ready.\n\n## 3. Tightness of the Factor-n Loss in Search-to-Decision\n\nThe `search_to_decision_advantage_bound` theorem shows that the coordinate-by-coordinate reduction loses a factor of n in advantage. A natural question is whether this loss is **tight** \u2014 i.e., whether there exists an LWE instance where the best coordinate-by-coordinate strategy indeed loses exactly a factor of n.\n\nThe key insight is that tightness should follow from a **probabilistic construction**: for a uniformly random secret s, with high probability, all coordinates of s contribute roughly equally to the decision advantage. A formal proof would show that for the discrete Gaussian error distribution, the per-coordinate advantages concentrate around \u03b4/n with deviation O(\u03b4/n^{3/2}).\n\nWhy now? The pigeonhole argument in `search_to_decision_advantage_bound` is tight as a combinatorial statement (it just says \"some coordinate has advantage \u2265 \u03b4/n\"). The concentration argument would use the existing Gaussian tail bounds from `HardnessReduction.lean` combined with the Azuma-Hoeffding inequality, which exists in Mathlib as `measure_norm_le_of_martingale`.\n\n## 4. Noise Flooding with Explicit R\u00e9nyi Divergence Bounds\n\nThe current `NoiseFloodingLemma` (in `HardnessReduction.lean`) asserts that large Gaussian noise \"floods\" a bounded signal, making the sum statistically close to a pure Gaussian. A more precise and practically useful statement would give the bound in terms of **R\u00e9nyi divergence** rather than statistical distance.\n\nThe key insight is that R\u00e9nyi divergence of order \u03b1 between D_{Z,s}(x + \u00b7) and D_{Z,s} can be bounded as R_\u03b1 \u2264 exp(\u03c0 \u03b1 B\u00b2/s\u00b2) for |x| \u2264 B. This multiplicative bound composes perfectly under independent sampling (R_\u03b1 of products = product of R_\u03b1's), giving much tighter bounds for the multi-sample setting used in LWE encryption.\n\nWhy now? The `LeftoverHash.lean` module already formalizes collision probability (which is exp(R_2)), and the Cauchy-Schwarz bridge (`l1_le_sqrt_card_mul_l2`) connects \u2113\u00b2 bounds to statistical distance. Extending this to R\u00e9nyi divergence of general order requires only the H\u00f6lder inequality (available in Mathlib) and the explicit Gaussian moment computation.\n\n## 5. Verified Parameter Selection for NIST Standards (Kyber/ML-KEM)\n\nThe theorems in this module can be instantiated with **concrete parameters** to verify the security claims of NIST post-quantum standards. For ML-KEM (formerly CRYSTALS-Kyber), the parameters are n=256, q=3329, k\u2208{2,3,4}, with centered binomial error distribution of parameter \u03b7\u2208{2,3}.\n\nThe key insight is that the `decryption_correct_after_switching` theorem, combined with the `noise_accumulation_subset_bound`, can produce a **verified bound on the decryption failure probability** for specific ML-KEM parameter sets. This requires: (1) computing the exact noise bound B for the centered binomial distribution (B = \u03b7), (2) computing the subset sum bound for k\u00b7n error terms, and (3) verifying B + n\u03b4 < q/4.\n\nWhy now? All the analytic machinery is in place: the rounding correctness (`regev_rounding_bit1`), noise accumulation (`noise_accumulation_bound`), and modulus switching (`combined_noise_after_switching`) theorems compose directly. The concrete computation can be done with `#eval` in Lean and verified with `native_decide` for the specific parameter choices. This would produce the first machine-verified security proof for a NIST post-quantum standard.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1162",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ee624f37",
+    "status": "available",
+    "timestamp": "2026-06-09T19:51:19.254226+00:00",
+    "title": "The current formalization captures the algebraic and analytic *ingredients* of t"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Diffusion Models as SDEs\n\n## Synthesis\n\nThis cycle established the foundational analytic infrastructure for formalizing score-based diffusion models in Lean 4. We formalized the Ornstein-Uhlenbeck process through its deterministic signatures \u2014 mean decay, variance convergence, and information-theoretic properties \u2014 rather than attempting to axiomatize It\u00f4 calculus (which Mathlib lacks). The key structural insight is that the convergence theory of diffusion models can be cleanly decomposed into: (1) exponential decay of moments, (2) universality of the stationary distribution, and (3) information-theoretic monotonicity via KL divergence.\n\nAll five theorems were proved without sorry, using only standard axioms. The KL divergence nonnegativity proof (Gibbs' inequality for Gaussians) was the most technically interesting \u2014 it reduced to the fundamental inequality log(x) \u2264 x \u2212 1 via careful rewriting of log ratios. The variance positivity result ensures the Gaussian marginals remain well-defined throughout the process, which is a prerequisite for the KL divergence to be meaningful.\n\nThe main limitation of this cycle is that we work entirely at the level of moment equations rather than stochastic processes. The connection between the moment evolution and the actual SDE is assumed, not proved. Bridging this gap requires either formalizing It\u00f4 calculus or adopting an abstract categorical/measure-theoretic approach to Markov processes.\n\n## Results Summary\n\n- `ou_mean_tendsto_zero`: proved \u2014 OU mean decays exponentially to 0, formalizing the \"forgetting\" property of diffusion models\n- `ou_variance_tendsto_stationary`: proved \u2014 OU variance converges to \u03c3\u00b2/(2\u03b8) universally, independent of initial variance\n- `kl_div_gaussian_self_eq_zero`: proved \u2014 KL divergence is zero for identical distributions (identity of indiscernibles)\n- `kl_div_gaussian_nonneg`: proved \u2014 Gibbs' inequality specialized to Gaussians, foundation for convergence guarantees\n- `ou_variance_pos`: proved \u2014 OU variance remains positive, ensuring well-definedness of Gaussian marginals\n\n## Research Directions\n\n### Direction 1: Monotone KL Divergence Along the OU Flow\n**Hypothesis**: For the OU process with \u03b8 > 0, the KL divergence from the time-t marginal to the stationary distribution, expressed as `klDivGaussian (ouMean m\u2080 \u03b8 t) (ouVariance v\u2080 \u03c3sq \u03b8 t) 0 (ouStationaryVariance \u03c3sq \u03b8)`, is monotonically decreasing in t for t \u2265 0.\n**Test**: Define the composed KL-along-flow function and prove it is antitone, or equivalently that its derivative (which should factor as a negative-definite quadratic form in the moment deviations) is \u2264 0.\n**Why now**: We have all the ingredient lemmas \u2014 KL nonnegativity, variance positivity, and the explicit moment formulas. The key insight is that the composed function should simplify to a sum of exponentially decaying terms, each with negative exponent.\n**If true**: This gives a formal Lyapunov function for the OU dynamics, which is the mathematical backbone of convergence guarantees for DDPM/score-matching models.\n**If false**: Would indicate a subtlety in the interaction between mean and variance decay rates \u2014 possibly requiring \u03c3sq > 0 or specific relationships between parameters.\n\n### Direction 2: Multivariate OU Process and Matrix Exponentials\n**Hypothesis**: The convergence results generalize to \u211d\u207f: for the multivariate OU process dX = -AX dt + B dW with A positive definite, the covariance matrix \u03a3(t) converges to the Lyapunov solution A\u03a3\u221e + \u03a3\u221eA\u1d40 = BB\u1d40, and the matrix KL divergence is nonneg.\n**Test**: Define `ouCovarianceMatrix` using matrix exponentials and prove `Tendsto` to the Lyapunov solution. The KL formula becomes \u00bd[tr(\u03a3\u2082\u207b\u00b9\u03a3\u2081) + (\u03bc\u2081-\u03bc\u2082)\u1d40\u03a3\u2082\u207b\u00b9(\u03bc\u2081-\u03bc\u2082) - n + log(det \u03a3\u2082/det \u03a3\u2081)].\n**Why now**: Mathlib has `Matrix.exp` and spectral theory for symmetric matrices. The key insight is that positive definiteness of A ensures all eigenvalues of the matrix exponential decay, reducing the problem to n independent scalar OU processes in the eigenbasis.\n**If true**: Opens formalization of practical diffusion models which operate in high-dimensional spaces.\n**If false**: The matrix exponential API may be insufficient \u2014 would identify specific Mathlib gaps to fill.\n\n### Direction 3: Score Function and Reverse-Time SDE\n**Hypothesis**: The score function \u2207 log p_t(x) of the OU marginal N(m(t), v(t)) equals -(x - m(t))/v(t), and the reverse-time drift coefficient 2\u03c3\u00b2\u00b7\u2207 log p_t - f(x,t) (where f is the forward drift) can be expressed purely in terms of the moment functions ouMean and ouVariance.\n**Test**: Define the Gaussian score function, verify it equals the negative of the natural sufficient statistic, and show the reverse drift formula produces an OU process with time-reversed parameters.\n**Why now**: We have the moment evolution formulas and variance positivity (needed for the score to be well-defined). The key insight is that for Gaussians, the score is linear in x, so the reverse-time SDE is also an OU process \u2014 this is the mathematical reason diffusion models work.\n**If true**: Completes the theoretical loop: forward OU \u2192 score \u2192 reverse OU \u2192 data recovery. This is the central theorem of score-based generative modeling.\n**If false**: The formalization of \"reverse-time SDE\" may require more infrastructure than moment equations alone can provide.\n\n### Direction 4: Fokker-Planck Verification for Gaussian Densities\n**Hypothesis**: The Gaussian density p(x,t) = (2\u03c0 v(t))^{-1/2} exp(-(x-m(t))\u00b2/(2v(t))), with m(t) = ouMean and v(t) = ouVariance, satisfies the Fokker-Planck equation \u2202p/\u2202t = \u03b8\u00b7\u2202(xp)/\u2202x + (\u03c3\u00b2/2)\u00b7\u2202\u00b2p/\u2202x\u00b2 pointwise for all x \u2208 \u211d, t > 0.\n**Test**: Define the Gaussian density, compute its partial derivatives using HasDerivAt, and verify the PDE identity. This is a verification problem, not an existence problem.\n**Why now**: Mathlib has `HasDerivAt` for exp and basic compositions. The key insight is that the PDE verification reduces to algebraic identities between the moment evolution ODEs and the Gaussian density's derivatives \u2014 no PDE theory needed, just calculus.\n**If true**: Provides a formal bridge between the moment-level description (our current results) and the distributional description (what the physics literature uses).\n**If false**: The derivative computation for the composed Gaussian density may be too complex for current Mathlib automation, identifying a need for better `HasDerivAt` composition lemmas.\n\n### Direction 5: Exponential Convergence Rate via Pinsker's Inequality\n**Hypothesis**: The total variation distance between the OU marginal at time t and the stationary distribution decays at rate O(exp(-\u03b8t)), provable via Pinsker's inequality TV(p,q)\u00b2 \u2264 \u00bd KL(p||q) composed with the exponential decay of the Gaussian KL divergence.\n**Test**: Formalize Pinsker's inequality for 1D Gaussians (or use the explicit TV formula for Gaussians), compose with the KL decay from Direction 1, and extract the exponential rate.\n**Why now**: We have KL nonnegativity and the moment convergence rates. The key insight is that for Gaussians, both KL and TV have closed forms, so the convergence rate can be extracted without abstract functional analysis \u2014 just calculus on explicit formulas.\n**If true**: Gives quantitative sampling guarantees: after t = O(1/\u03b8 \u00b7 log(1/\u03b5)) steps, the diffusion model is \u03b5-close to the target. This is the type of result that bridges theory and practice.\n**If false**: The constant in Pinsker's inequality may not be tight enough, or the TV formula for Gaussians may require integration theory not yet in Mathlib.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1163",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "30f8d3db",
+    "status": "available",
+    "timestamp": "2026-06-09T19:53:29.356152+00:00",
+    "title": "Foundational analytic infrastructure for formalizing"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
     "domains": [
       "Cryptography",
@@ -2550,21 +2595,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:28.080762+00:00",
     "title": "One-Way Functions: Existence and Hierarchy"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
-    "domains": [
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "fd_0435",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T19:55:28.156517+00:00",
-    "title": "Learning with Errors: Hardness Reductions"
   },
   {
     "consumed_by_exp_id": "",
@@ -2655,21 +2685,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:06.801510+00:00",
     "title": "Post-Quantum Cryptography: Lattice-Based Key Exchange"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
-    "domains": [
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "fd_0540",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T22:10:06.964548+00:00",
-    "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
   {
     "consumed_by_exp_id": "",
@@ -3078,6 +3093,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 30f8d3db (Q=0.477) proved 795 theorems in Physics but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the ",
+    "domains": [
+      "Physics"
+    ],
+    "id": "sorry_fill_30f8d3db_f699ee36",
+    "priority_score": 0.5274560993835233,
+    "research_mode": "team",
+    "source_exp_id": "30f8d3db",
+    "status": "available",
+    "timestamp": "2026-06-09T19:54:34.967848+00:00",
+    "title": "Close Proofs: Diffusion Models as Stochastic Differential Equations"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 40370763 (Q=0.470) proved 805 theorems in Computation but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converg",
     "domains": [
       "Computation"
@@ -3091,7 +3120,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Impossible Geometries: Where Parallel Lines Converge AND Diverge"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b5f4fcb3",
     "description": "Cycle 00126c0b (Q=0.466) proved 1236 theorems in Bridges but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: EML Differential Equations\n\n## Synthesis\n\nThis cycle established a formal obstruction theory for EML-solvability of linear ODEs, centered on Airy's equation y\u2033 = xy as the prototy",
     "domains": [
       "Bridges"
@@ -3100,7 +3129,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5164737281553398,
     "research_mode": "team",
     "source_exp_id": "00126c0b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T16:57:57.490266+00:00",
     "title": "Close Proofs: Formal obstruction theory for EML-solvability of linear"
   },
@@ -3117,6 +3146,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T05:53:36.849626+00:00",
     "title": "Close Proofs: Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 0c7bdbdf (Q=0.459) proved 717 theorems in Cryptography but left 9 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compres",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "sorry_fill_0c7bdbdf_9289b22e",
+    "priority_score": 0.5088581248398941,
+    "research_mode": "team",
+    "source_exp_id": "0c7bdbdf",
+    "status": "available",
+    "timestamp": "2026-06-09T19:50:42.989642+00:00",
+    "title": "Close Proofs: Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
   {
     "consumed_by_exp_id": "",
@@ -3175,6 +3218,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-04T01:03:57.743170+00:00",
     "title": "Rigorous formal framework for holographic proo"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle ee624f37 (Q=0.448) proved 696 theorems in Cryptography but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "sorry_fill_ee624f37_d7ae0b7e",
+    "priority_score": 0.4984951340996169,
+    "research_mode": "team",
+    "source_exp_id": "ee624f37",
+    "status": "available",
+    "timestamp": "2026-06-09T19:52:56.581031+00:00",
+    "title": "Close Proofs: Learning with Errors: Hardness Reductions"
   },
   {
     "consumed_by_exp_id": "",
@@ -3359,7 +3416,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Tropical Convexity: Helly, Caratheodory, and Radon"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ebb9eedc",
     "description": "Cycle 085a52a3 (Q=0.423) proved 1635 theorems in Logic but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle f2700283 (Q=0.426) proved 1066 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions",
     "domains": [
       "Logic"
@@ -3368,7 +3425,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.47268532616338266,
     "research_mode": "team",
     "source_exp_id": "085a52a3",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T11:44:22.689166+00:00",
     "title": "Close Proofs: Close Proofs: Formalized framework connecting Collatz dynami"
   },
