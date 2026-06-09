@@ -2317,6 +2317,23 @@ class PiAgentClient:
             about trivial results. Focus 100% of your compute on the math.
             If your work is genuinely world-class, the packaging step is dispatched
             automatically and cheaply.
+
+            ### CATALOG SYNTHESIS (required — read the catalog context below):
+            The Catalog Context and Recent Discoveries sections list existing theorems
+            already proven in this project. You MUST analyze these and combine concepts
+            from the catalog with the research direction above. Specifically:
+
+            1. **Identify relevant catalog theorems** — Which existing results connect
+               to your research direction? Cite them by name in your proof sketches.
+            2. **Build on catalog foundations** — Your theorems should EXTEND or
+               GENERALIZE catalog results, not reprove them from scratch. Use `import`
+               and reference existing definitions and lemmas where possible.
+            3. **Combine concepts across domains** — The most valuable theorems connect
+               ideas from different catalog domains (e.g., applying algebraic structures
+               to topological problems, or using combinatorial arguments in number theory).
+               Look for cross-domain connections in the catalog context.
+            4. **Avoid duplication** — Check the catalog context before proving. If a
+               similar result already exists, extend it rather than reproving it.
             """)
 
         prompt = f"""{phase_a_header}
