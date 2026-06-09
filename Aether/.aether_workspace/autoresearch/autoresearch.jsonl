@@ -126,6 +126,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 {"timestamp": 1781005027.1516926, "experiment_id": "f9c3366c", "concept_title": "Close Proofs: This document describes five research conjectures extending the", "concept_domain": "Applications", "research_mode": "team", "quality": "partial", "quality_score": 0.38632137600826466, "catalog_references": [], "prompt_length": 4860, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781005090.7884336, "experiment_id": "743db091", "concept_title": "**Conjecture:** If `{f_t}_{t ∈ [0,1]}` is a continuous family of contracting cau", "concept_domain": "Geometry", "research_mode": "team", "quality": "partial", "quality_score": 0.4240429527390678, "catalog_references": [], "prompt_length": 14206, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781005152.0211859, "experiment_id": "cb6d03de", "concept_title": "Tropical Amoebas and Ronkin Functions", "concept_domain": "Applications", "research_mode": "team", "quality": "partial", "quality_score": 0.4228838627888345, "catalog_references": [], "prompt_length": 4581, "files_placed": 0, "status": "discard"}
@@ -182,3 +183,5 @@
 {"timestamp": 1781017404.5930102, "experiment_id": "ca042a62", "concept_title": "The geodesic equations for the split metric ds² = sech²(y) dx² + cosh²(x) dy² yi", "concept_domain": "Geometry", "research_mode": "team", "quality": "partial", "quality_score": 0.36487075405214936, "catalog_references": [], "prompt_length": 19831, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781017433.7920196, "experiment_id": "e0ad2634", "concept_title": "Proof Complexity Collapse: P=NP via Proof Checking", "concept_domain": "Logic", "research_mode": "team", "quality": "partial", "quality_score": 0.3659193317335953, "catalog_references": [], "prompt_length": 16671, "files_placed": 2, "status": "discard"}
 {"timestamp": 1781017470.444435, "experiment_id": "3d5b4b8d", "concept_title": "Certified Novelty Detection for Theorem Provers", "concept_domain": "Geometry", "research_mode": "team", "quality": "partial", "quality_score": 0.42148108142209806, "catalog_references": [], "prompt_length": 4713, "files_placed": 0, "status": "discard"}
+=======
+>>>>>>> Stashed changes
