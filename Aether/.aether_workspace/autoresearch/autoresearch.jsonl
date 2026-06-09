@@ -113,6 +113,7 @@
 {"timestamp": 1781001947.6218383, "experiment_id": "d264e828", "concept_title": "Certified Novelty Detection for Theorem Provers", "concept_domain": "Applications", "research_mode": "team", "quality": "partial", "quality_score": 0.33277683912990047, "catalog_references": [], "prompt_length": 4445, "files_placed": 0, "status": "discard"}
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 {"timestamp": 1781005027.1516926, "experiment_id": "f9c3366c", "concept_title": "Close Proofs: This document describes five research conjectures extending the", "concept_domain": "Applications", "research_mode": "team", "quality": "partial", "quality_score": 0.38632137600826466, "catalog_references": [], "prompt_length": 4860, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781005090.7884336, "experiment_id": "743db091", "concept_title": "**Conjecture:** If `{f_t}_{t ∈ [0,1]}` is a continuous family of contracting cau", "concept_domain": "Geometry", "research_mode": "team", "quality": "partial", "quality_score": 0.4240429527390678, "catalog_references": [], "prompt_length": 14206, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781005152.0211859, "experiment_id": "cb6d03de", "concept_title": "Tropical Amoebas and Ronkin Functions", "concept_domain": "Applications", "research_mode": "team", "quality": "partial", "quality_score": 0.4228838627888345, "catalog_references": [], "prompt_length": 4581, "files_placed": 0, "status": "discard"}
@@ -126,3 +127,5 @@
 {"timestamp": 1781006951.8937159, "experiment_id": "c74c695b", "concept_title": "Tropical Convexity: Helly, Caratheodory, and Radon", "concept_domain": "Tropical", "research_mode": "team", "quality": "partial", "quality_score": 0.4226903139327355, "catalog_references": [], "prompt_length": 4862, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781007015.3854864, "experiment_id": "49409cbc", "concept_title": "Tropical Brill-Noether Theory", "concept_domain": "Tropical", "research_mode": "team", "quality": "partial", "quality_score": 0.42269246691378237, "catalog_references": [], "prompt_length": 4435, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781007023.1987298, "experiment_id": "c74c695b", "concept_title": "Tropical Convexity: Helly, Caratheodory, and Radon", "concept_domain": "Tropical", "research_mode": "team", "quality": "partial", "quality_score": 0.4226921796391852, "catalog_references": [], "prompt_length": 4862, "files_placed": 0, "status": "discard"}
+=======
+>>>>>>> Stashed changes
