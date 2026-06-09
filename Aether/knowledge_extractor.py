@@ -1984,13 +1984,18 @@ Research mode: {concept.research_mode}
                     print(f"[Integrate] v7 lint: rejecting {target_path} — theorem density too low "
                           f"({theorem_count} theorems in {lines} lines)")
                     return "REJECT"
-            # v8 informational note: check for research team protocol markers
+            # v8 lint gate: check for research team protocol markers
             if getattr(job, 'phase_a_prompt_version', '') == 'v8':
                 has_lab_notebook = "Lab Notebook" in content or "lab notebook" in content.lower()
                 has_hypothesis = "hypothesis" in content.lower()
+                critic_count = content.lower().count("critic") + content.lower().count("critique")
                 if not has_lab_notebook and not has_hypothesis:
-                    print(f"[Integrate] v8 note: {target_path} has no Lab Notebook or "
+                    print(f"[Integrate] v8 lint: {target_path} has no Lab Notebook or "
                           f"hypothesis markers (expected from v8 research team protocol)")
+                if critic_count == 0:
+                    print(f"[Integrate] v8 lint: {target_path} has zero critic/critique references — "
+                          f"the Critic step (Step 3) is MANDATORY in v8. This suggests the LLM "
+                          f"skipped the critique step.")
             if has_sorry:
                 # Incomplete proofs go to Speculative/AutoResearch, preserving any
                 # subdirectory structure Pi suggested (e.g. EML/ReflectionCapacity/).

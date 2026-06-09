@@ -148,7 +148,58 @@ def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
         print(f"[A/B] Stats error (non-fatal): {e}")
 
 
-def _signal_dashboard_update(job_id: str = "", action: str = "update") -> None:
+def _print_quality_metrics(extractor: "KnowledgeExtractor") -> None:
+    """Print rolling quality metrics: sorry%, theorem density, proof depth by version.
+
+    Tracks whether output quality is improving, flat, or regressing.
+    """
+    try:
+        import json as _json
+        analytics_path = extractor.workspace / "cycle_analytics.json"
+        if not analytics_path.exists():
+            return
+        data = _json.loads(analytics_path.read_text())
+        records = data.get("records", [])
+        if not records:
+            return
+
+        # Last 30 records for rolling metrics
+        recent = records[-30:]
+        by_ver = {}
+        for r in recent:
+            v = r.get("prompt_version", "unknown")
+            by_ver.setdefault(v, []).append(r)
+
+        lines = ["[Quality] Rolling metrics (last 30 cycles):"]
+        for v in ("v6", "v7", "v8"):
+            rs = by_ver.get(v, [])
+            if not rs:
+                continue
+            n = len(rs)
+            # Sorry rate: fraction of cycles with any sorry
+            sorry_cycles = sum(1 for r in rs if r.get("sorry_count", 0) > 0)
+            sorry_rate = sorry_cycles / n * 100 if n else 0
+            # Avg sorry count per cycle
+            avg_sorry = sum(r.get("sorry_count", 0) for r in rs) / n
+            # Avg theorem count per cycle
+            avg_theorems = sum(r.get("theorem_count", 0) for r in rs) / n
+            # Avg quality score
+            avg_q = sum(r.get("quality_score", 0) for r in rs) / n
+            lines.append(f"  {v}: n={n} avg_Q={avg_q:.3f} sorry_rate={sorry_rate:.0f}% "
+                         f"avg_sorry={avg_sorry:.1f} avg_theorems={avg_theorems:.0f}")
+
+        # Trend: compare last 15 vs first 15 of recent
+        if len(recent) >= 20:
+            first_half = recent[:len(recent)//2]
+            second_half = recent[len(recent)//2:]
+            q1 = sum(r.get("quality_score", 0) for r in first_half) / len(first_half)
+            q2 = sum(r.get("quality_score", 0) for r in second_half) / len(second_half)
+            trend = "improving" if q2 > q1 + 0.01 else "declining" if q2 < q1 - 0.01 else "flat"
+            lines.append(f"  Trend: {trend} (Q: {q1:.3f} → {q2:.3f})")
+
+        print("\n".join(lines))
+    except Exception as e:
+        print(f"[Quality] Metrics error (non-fatal): {e}")
     """Write a lightweight last_update.json so the live dashboard polls refresh."""
     try:
         import json as _json
@@ -817,6 +868,7 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
                     if j.status not in ("completed", "failed", "integrated", "rejected")])
     print(f"[Tick] Done — {len(completed_jobs)} integrated, {remaining} still inflight")
     _print_prompt_version_stats(extractor)
+    _print_quality_metrics(extractor)
 
 
 def rebuild_commit_push() -> bool:
