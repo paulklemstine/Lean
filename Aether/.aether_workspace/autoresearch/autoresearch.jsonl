@@ -141,3 +141,7 @@
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+{"timestamp": 1781009552.3608594, "experiment_id": "7d85fa5d", "concept_title": "Close Proofs: One-Way Functions: Existence and Hierarchy", "concept_domain": "Tropical", "research_mode": "team", "quality": "partial", "quality_score": 0.421351122090187, "catalog_references": [], "prompt_length": 4774, "files_placed": 0, "status": "discard"}
+{"timestamp": 1781009735.1958108, "experiment_id": "66574b97", "concept_title": "Hodge Conjecture", "concept_domain": "Algebra", "research_mode": "team", "quality": "partial", "quality_score": 0.39165216880612425, "catalog_references": [], "prompt_length": 4528, "files_placed": 0, "status": "discard"}
+{"timestamp": 1781009975.9142337, "experiment_id": "605ab808", "concept_title": "The current formalization handles 0-dimensional persistence on discrete state sp", "concept_domain": "Physics", "research_mode": "team", "quality": "partial", "quality_score": 0.4241263696049941, "catalog_references": [], "prompt_length": 13046, "files_placed": 0, "status": "discard"}
+{"timestamp": 1781010074.1976924, "experiment_id": "71663589", "concept_title": "Algorithmic Fairness: Individual vs Group Fairness Impossibility", "concept_domain": "Logic", "research_mode": "team", "quality": "partial", "quality_score": 0.3910579591836735, "catalog_references": [], "prompt_length": 5094, "files_placed": 0, "status": "discard"}

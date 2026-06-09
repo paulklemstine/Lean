@@ -1,31 +1,15 @@
 /- Aether FINAL Catalog
-<<<<<<< Updated upstream
-A curated collection of 2381 of the highest-quality
+A curated collection of 2360 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2381
-=======
-A curated collection of 2487 of the highest-quality
-formally verified mathematical results from the Aether engine.
-Sorry-free. No placeholders. Auto-maintained.
-Total files: 2487
->>>>>>> Stashed changes
+Total files: 2360
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AntipodeUniqueness
 import FINAL.Algebra.BerggrenLorentz_Core
-import FINAL.Algebra.CausalCertification
-import FINAL.Algebra.CellularAutomataReversibility
 import FINAL.Algebra.CharpolyRecognition
 import FINAL.Algebra.CircuitDepthLayerProfile
 import FINAL.Algebra.ClassicalGroupExpanders
-import FINAL.Algebra.ClosedFormAncestor
-import FINAL.Algebra.CodingTheory_Defs
-import FINAL.Algebra.CodingTheory_Theorems
-import FINAL.Algebra.CollatzUndecidability
-import FINAL.Algebra.CollatzUndecidable
-import FINAL.Algebra.CompactOperators
-import FINAL.Algebra.Companion
 import FINAL.Algebra.ConnesKreimerCoproduct
 import FINAL.Algebra.CoordinateRingDepth
 import FINAL.Algebra.Core
@@ -1145,7 +1129,6 @@ import FINAL.EML.EMLv18Core
 import FINAL.EML.EMLv19Advanced
 import FINAL.EML.EMLv19Core
 import FINAL.EML.EMLv8Advanced
-import FINAL.EML.EMLv8Core
 import FINAL.EML.ExtendedTheory
 import FINAL.EML.FenchelYoungBridge
 import FINAL.EML.FermatNearMiss
@@ -1164,10 +1147,8 @@ import FINAL.EML.LatticeTreeCorrespondence
 import FINAL.EML.LogAffineNormal
 import FINAL.EML.MagicSquare
 import FINAL.EML.MaxPlusStoneWeierstrass
-import FINAL.EML.MetaPrediction
 import FINAL.EML.ModularForms
 import FINAL.EML.MultiModalTheory
-import FINAL.EML.MultivariateVanishing
 import FINAL.EML.NeuralArchitectureTheory
 import FINAL.EML.NewTheorems
 import FINAL.EML.Normalize
@@ -1204,7 +1185,6 @@ import FINAL.EML.TransferLearningBounds
 import FINAL.EML.TransrealArithmetic
 import FINAL.EML.TropicalTruthGeometry
 import FINAL.EML.UltrametricCertifiedRobustness
-import FINAL.EML.UnifiedCompression
 import FINAL.EML.V5Theorems
 import FINAL.EML.V6Theorems
 import FINAL.EML.VecEML
@@ -1220,11 +1200,9 @@ import FINAL.Geometry.CellularAutomataGalois
 import FINAL.Geometry.CofinalitySpectrum_Defs
 import FINAL.Geometry.CofinalitySpectrum_Theorems
 import FINAL.Geometry.Convergence
-import FINAL.Geometry.DigitMelody
 import FINAL.Geometry.DimensionalGravity
 import FINAL.Geometry.DiscreteGaussBonnet
 import FINAL.Geometry.DiscreteMorseInequalities
-import FINAL.Geometry.Distortion
 import FINAL.Geometry.EMLStoneWeierstrass
 import FINAL.Geometry.Endomorphisms
 import FINAL.Geometry.ErdosSzekeres_CupCapBound
@@ -1233,7 +1211,6 @@ import FINAL.Geometry.ErdosSzekeres_HappyEnd
 import FINAL.Geometry.ErdosSzekeres_MonotoneConvex
 import FINAL.Geometry.EulerTopology
 import FINAL.Geometry.GenusFormula
-import FINAL.Geometry.GravitationalWaves
 import FINAL.Geometry.HadwigerConjecture
 import FINAL.Geometry.HamiltonianBridge
 import FINAL.Geometry.HappyEnd
@@ -1283,7 +1260,6 @@ import FINAL.Geometry.StandardConjectures
 import FINAL.Geometry.StereographicCapacity
 import FINAL.Geometry.StereographicNeuralField
 import FINAL.Geometry.StereographicNeuralField_Theorems
-import FINAL.Geometry.StereographicPersistence_Defs
 import FINAL.Geometry.StereographicPersistence_Theorems
 import FINAL.Geometry.StereographicRG
 import FINAL.Geometry.StereographicSheaf
@@ -1304,7 +1280,6 @@ import FINAL.Logic.Bisection
 import FINAL.Logic.Bohm
 import FINAL.Logic.BooleanFunctions
 import FINAL.Logic.Bridge
-import FINAL.Logic.CategoryGenome_Core
 import FINAL.Logic.CertifiedNumberTheoryDecide
 import FINAL.Logic.CertifiedTropicalSimp
 import FINAL.Logic.ChainInvariants
@@ -1314,12 +1289,9 @@ import FINAL.Logic.CoherenceStratified
 import FINAL.Logic.Completeness
 import FINAL.Logic.Confluence
 import FINAL.Logic.ConsciousnessFixedPoint_Theorems
-import FINAL.Logic.Core
-import FINAL.Logic.CubicalSemantics_Basic
 import FINAL.Logic.DarkMathematics
 import FINAL.Logic.DependencyExtraction
 import FINAL.Logic.DimensionalProjection
-import FINAL.Logic.DreamLogic
 import FINAL.Logic.DreamLogic_DreamSpace
 import FINAL.Logic.DynamicalProofComplexity
 import FINAL.Logic.EMLSyntax
@@ -1534,10 +1506,6 @@ import FINAL.MachineLearning.InvariantSubspace_Defs
 import FINAL.MachineLearning.InverseStereographicNeuralField
 import FINAL.MachineLearning.IterExp
 import FINAL.MachineLearning.KWWitness_Defs
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.KnotPolynomialSpectra
->>>>>>> Stashed changes
 import FINAL.MachineLearning.Knot_Jones
 import FINAL.MachineLearning.KnottedLight_Core
 import FINAL.MachineLearning.LFunctionOracle_Core
@@ -1549,10 +1517,6 @@ import FINAL.MachineLearning.LibraryOfBabel_Defs
 import FINAL.MachineLearning.LocalGlobalGeometry
 import FINAL.MachineLearning.LoebGeneralization
 import FINAL.MachineLearning.LogisticChaos
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.MPSMinCut_Defs
->>>>>>> Stashed changes
 import FINAL.MachineLearning.MahlerMeasure_Defs
 import FINAL.MachineLearning.Maximals
 import FINAL.MachineLearning.MemoryAlgebra
@@ -1655,10 +1619,6 @@ import FINAL.MachineLearning.StoneDuality_Core
 import FINAL.MachineLearning.StrangeLoops_StrangeLoops
 import FINAL.MachineLearning.StructuralCases
 import FINAL.MachineLearning.SudokuPhaseTransition_Theorems
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.SumThreeCubes_Counting
->>>>>>> Stashed changes
 import FINAL.MachineLearning.SurrealTopology_OrderGap
 import FINAL.MachineLearning.SurvivorSieve
 import FINAL.MachineLearning.SymmEulerTransfer

@@ -1,1 +1,0 @@
-../../Algebra/CellularAutomataReversibility.lean
