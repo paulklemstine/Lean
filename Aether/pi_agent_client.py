@@ -292,24 +292,24 @@ class PiAgentClient:
             self.catalog_analyzer = CatalogAnalyzer(self.catalog_root)
 
     def _call_ollama(self, system: str, user: str, timeout: Optional[int] = None) -> str:
-        """Dispatch LLM call through 3-tier fallback chain.
+        """Dispatch LLM call through 2-tier fallback chain with pollen-reset retry.
 
-        Tier 1: Pollinations (cloud, free, pollen-limited)
+        Tier 1: Pollinations (cloud, free, pollen-limited, resets hourly)
         Tier 2: Ollama Cloud (paid, requires OLLAMA_API_KEY)
-        Tier 3: Local Ollama (self-hosted, always available if running)
 
-        When use_ollama=True, skip directly to Tier 3.
-        When ollama_cloud is enabled, Pollinations 402/429 triggers immediate
-        fallback instead of sleeping until reset.
+        If both tiers fail (Pollinations out of pollen, Ollama out of credits),
+        waits for Pollinations pollen reset (top of hour) and retries Tier 1.
+
+        When use_ollama=True, skip directly to local Ollama (for dev/testing).
         """
-        # If user explicitly wants local Ollama, go straight there
+        # If user explicitly wants local Ollama (dev/testing), go straight there
         if self.use_ollama:
             return self._call_ollama_local(system, user, timeout=timeout)
 
-        # Tier 1: Pollinations
-        skip_wait = self.ollama_cloud_enabled
+        # Tier 1: Pollinations — skip wait on depletion so we can try
+        # Ollama Cloud first; we'll wait for pollen reset if Ollama also fails
         result = self._call_pollinations(system, user, timeout=timeout,
-                                         skip_wait_on_depletion=skip_wait)
+                                         skip_wait_on_depletion=True)
 
         # If Pollinations succeeded, return immediately
         if not result.startswith(("[API_ERROR", "[API_TIMEOUT")):
@@ -323,14 +323,37 @@ class PiAgentClient:
                 return cloud_result
             print(f"[Pi-Agent] Ollama Cloud also failed ({cloud_result[:80]})")
         elif self.ollama_cloud_enabled and not self.ollama_cloud_api_key:
-            print("[Pi-Agent] Ollama Cloud enabled but no API key set — skipping to local Ollama")
-        elif not self.ollama_cloud_enabled:
-            print("[Pi-Agent] Ollama Cloud not enabled — falling back to local Ollama")
+            print("[Pi-Agent] Ollama Cloud enabled but no API key set")
+        else:
+            print("[Pi-Agent] Ollama Cloud not enabled")
 
+        # Both tiers failed — wait for Pollinations pollen reset and retry
+        print("[Pi-Agent] All API tiers failed. Waiting for Pollinations pollen reset...")
 
-        # Tier 3: Local Ollama
-        print("[Pi-Agent] Falling back to local Ollama")
-        return self._call_ollama_local(system, user, timeout=timeout)
+        wait_until = self.pollen_gate._next_hour_reset(time.time())
+        reset_at = time.strftime("%H:%M:%S", time.localtime(wait_until))
+        wait_minutes = (wait_until - time.time()) / 60
+        print(f"[Pi-Agent] Pollen reset at ~{reset_at} ({wait_minutes:.1f}min from now), polling every 5min")
+
+        while time.time() < wait_until:
+            sleep_until = min(wait_until, time.time() + 300)
+            time.sleep(max(60, sleep_until - time.time()))
+            # Try a quick check — if pollen is back, break early
+            try:
+                check = self.client.get("https://pollinations.ai/api/v1/pollen_status",
+                                       headers={"Authorization": f"Bearer {self.pollen_gate.api_key}"},
+                                       timeout=10)
+                if check.status_code == 200:
+                    print("[Pi-Agent] Pollen restored early!")
+                    break
+            except Exception:
+                pass
+
+        # Retry Pollinations after waiting for reset
+        print("[Pi-Agent] Retrying Pollinations after pollen reset...")
+        result = self._call_pollinations(system, user, timeout=timeout,
+                                         skip_wait_on_depletion=False)
+        return result
 
     def _call_pollinations(self, system: str, user: str, timeout: Optional[int] = None, skip_wait_on_depletion: bool = False) -> str:
         """Call the Pollinations cloud API.

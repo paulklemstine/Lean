@@ -17,6 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentSort = 'date-desc';
     let filteredPackages = [];
 
+    function scrollSidebarToTop() {
+        const listContainer = packageList.closest('.package-list-container');
+        if (listContainer) {
+            listContainer.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+
     function openSidebar() {
         sidebar.classList.add('open');
         if (mobileMenuBtn) mobileMenuBtn.classList.add('active');
@@ -115,6 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentPage !== 1) {
                 currentPage = 1;
                 window.renderSidebar(filteredPackages);
+                scrollSidebarToTop();
             }
         });
     }
@@ -123,6 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentPage > 1) {
                 currentPage--;
                 window.renderSidebar(filteredPackages);
+                scrollSidebarToTop();
             }
         });
     }
@@ -132,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (currentPage < totalPages) {
                 currentPage++;
                 window.renderSidebar(filteredPackages);
+                scrollSidebarToTop();
             }
         });
     }
@@ -201,6 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // it directly to handle the case where the hash doesn't change
                 // (clicking the same package twice, or after replaceState).
                 if (window.loadPackage) window.loadPackage(pkg.filename);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
                 if (window.innerWidth <= 768) window.closeSidebar();
             });
 

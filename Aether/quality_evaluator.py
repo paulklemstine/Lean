@@ -704,12 +704,8 @@ class QualityEvaluator:
 
         try:
             raw = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=60)
-            # Parse JSON — try nested braces first for complete objects
-            json_match = re.search(r'\{.*\}', raw, re.DOTALL)
-            if not json_match:
-                json_match = re.search(r'\{[^{}]*\}', raw, re.DOTALL)
-            if json_match:
-                data = json.loads(json_match.group())
+            data = self.pi_agent._parse_json_response(raw)
+            if data:
                 imp = float(data.get("importance", 0.5))
                 use = float(data.get("usefulness", 0.5))
                 app = float(data.get("applications", 0.5))
@@ -919,9 +915,8 @@ class QualityEvaluator:
 
         try:
             raw = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=60)
-            json_match = re.search(r'\{[^{}]*\}', raw, re.DOTALL)
-            if json_match:
-                data = json.loads(json_match.group())
+            data = self.pi_agent._parse_json_response(raw)
+            if data:
                 # Build a QualityScore from the critic's assessment
                 qs = QualityScore(
                     proof_depth=max(0, min(1, float(data.get("proof_depth", 0.5)))),
@@ -969,9 +964,8 @@ class QualityEvaluator:
 
         try:
             raw = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=60)
-            json_match = re.search(r'\{[^{}]*\}', raw, re.DOTALL)
-            if json_match:
-                data = json.loads(json_match.group())
+            data = self.pi_agent._parse_json_response(raw)
+            if data:
                 qs = QualityScore(
                     proof_depth=max(0, min(1, float(data.get("proof_depth", 0.5)))),
                     novelty=max(0, min(1, float(data.get("novelty", 0.5)))),

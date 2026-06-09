@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-09T17:02:41.347418+00:00",
+  "last_updated": "2026-06-09T17:44:09.892347+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -7957,6 +7957,45 @@
       "theorem_count": 960,
       "timestamp": "2026-06-09T17:02:41.201845+00:00",
       "title": "Formal obstruction theory for EML-solvability of linear"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.7631,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Physics",
+      "duration_seconds": 1621.6421995162964,
+      "end_time": 1781026226.8725617,
+      "files_integrated": 0,
+      "job_id": "0f735599",
+      "outcome_quality": 0.422173544973545,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v6",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v6",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.8,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8156,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9184,
+        "novelty": 0.9406,
+        "proof_depth": 0.9089,
+        "usefulness": 0.9545
+      },
+      "quality_score": 0.36621510701629356,
+      "sorry_count": 1,
+      "sorry_density": 0.0013351134846461949,
+      "start_time": 1781024605.2303622,
+      "strategy_count": 0,
+      "theorem_count": 749,
+      "timestamp": "2026-06-09T17:44:09.734779+00:00",
+      "title": "Causal Inference: Do-Calculus as Formal Logic"
     }
   ]
 }

@@ -445,6 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Scroll to top
         document.getElementById('main-content').scrollTop = 0;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function renderVisualizations(containerId, items) {
