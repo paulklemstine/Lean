@@ -1,8 +1,15 @@
 /- Aether FINAL Catalog
+<<<<<<< Updated upstream
 A curated collection of 2448 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
 Total files: 2448
+=======
+A curated collection of 2487 of the highest-quality
+formally verified mathematical results from the Aether engine.
+Sorry-free. No placeholders. Auto-maintained.
+Total files: 2487
+>>>>>>> Stashed changes
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -1586,6 +1593,10 @@ import FINAL.MachineLearning.InvariantSubspace_Defs
 import FINAL.MachineLearning.InverseStereographicNeuralField
 import FINAL.MachineLearning.IterExp
 import FINAL.MachineLearning.KWWitness_Defs
+<<<<<<< Updated upstream
+=======
+import FINAL.MachineLearning.KnotPolynomialSpectra
+>>>>>>> Stashed changes
 import FINAL.MachineLearning.Knot_Jones
 import FINAL.MachineLearning.KnottedLight_Core
 import FINAL.MachineLearning.LFunctionOracle_Core
