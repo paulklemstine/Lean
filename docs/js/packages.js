@@ -710,13 +710,19 @@ document.addEventListener('DOMContentLoaded', () => {
             // measuring scrollHeight from outside) and posts it to the parent.
             const autoSizer = `<script>
 (function(){
+  var last=0,debounce=null;
   function report(){
     var h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight,60);
-    parent.postMessage({aetherIframeHeight:${idx},height:h+20},'*');
+    if(Math.abs(h-last)<5)return;
+    last=h;
+    parent.postMessage({aetherIframeHeight:${idx},height:h},'*');
   }
   report();
   setTimeout(report,100);setTimeout(report,500);setTimeout(report,2000);
-  new MutationObserver(report).observe(document.body,{childList:true,subtree:true,attributes:true});
+  new MutationObserver(function(){
+    clearTimeout(debounce);
+    debounce=setTimeout(report,50);
+  }).observe(document.body,{childList:true,subtree:true,attributes:true});
   window.addEventListener('resize',report);
 })();
 <\/script>`;
