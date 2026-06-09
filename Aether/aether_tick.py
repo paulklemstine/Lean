@@ -816,6 +816,20 @@ def rebuild_commit_push() -> bool:
         )
         if result.returncode != 0:
             print(f"[Tick] rsync warning: {result.stderr[:200]}")
+        # Update cache-busting version strings in deployed HTML so browsers
+        # don't serve stale JS/CSS after a code change.
+        try:
+            idx_html = docs_dir / "index.html"
+            if idx_html.exists():
+                html = idx_html.read_text()
+                m = re.search(r'v0\.0\.(\d+)', html)
+                if m:
+                    vnum = m.group(1)
+                    html = re.sub(r'style\.css(\?v=[^"]*)?', f'style.css?v={vnum}', html)
+                    html = re.sub(r'packages\.js(\?v=[^"]*)?', f'packages.js?v={vnum}', html)
+                    idx_html.write_text(html)
+        except Exception:
+            pass
         print("[Tick] docs/ synced")
     except Exception as e:
         print(f"[Tick] docs sync error: {e}")

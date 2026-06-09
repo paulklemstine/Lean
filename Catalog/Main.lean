@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2900 of the highest-quality
+A curated collection of 2889 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2900
+Total files: 2889
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -444,11 +444,9 @@ import FINAL.Bridges.CollatzUndecidability
 import FINAL.Bridges.Completeness
 import FINAL.Bridges.CompositionalMusicSpec
 import FINAL.Bridges.CompressionMonad
-import FINAL.Bridges.CondensationSemantics
 import FINAL.Bridges.Connectivity
 import FINAL.Bridges.ContinuousDiscreteTransfer
 import FINAL.Bridges.Core
-import FINAL.Bridges.CounterfactualPrimes
 import FINAL.Bridges.CramerPrimeGaps
 import FINAL.Bridges.CulinaryComplexity
 import FINAL.Bridges.CupProductCryptography
@@ -577,7 +575,6 @@ import FINAL.Bridges.JigsawNPComplete
 import FINAL.Bridges.KTheoryNeuralAdvanced
 import FINAL.Bridges.KTheoryNeuralCore
 import FINAL.Bridges.KWLSeparation
-import FINAL.Bridges.KantorovichLawvereDuality
 import FINAL.Bridges.KeplerDefs
 import FINAL.Bridges.KeplerEccentricity
 import FINAL.Bridges.KeplerLaws
@@ -593,7 +590,6 @@ import FINAL.Bridges.LawvereDuality_Theorems
 import FINAL.Bridges.LawvereEMLMetricSemantics
 import FINAL.Bridges.LawvereRateDistortionDuality
 import FINAL.Bridges.LawvereThermodynamicGalois
-import FINAL.Bridges.LeeYangZeroStability
 import FINAL.Bridges.LieEquivariantLearning
 import FINAL.Bridges.LipschitzMarginCell
 import FINAL.Bridges.LocalCyclePressure
@@ -747,7 +743,6 @@ import FINAL.Bridges.ReversibleFixedPointDuality
 import FINAL.Bridges.RigidFoldability
 import FINAL.Bridges.Rigidity
 import FINAL.Bridges.RingTheoreticLearning
-import FINAL.Bridges.RobustLorentzianSampling
 import FINAL.Bridges.RuelleTransferSemantics
 import FINAL.Bridges.SatakeEMLBridge
 import FINAL.Bridges.Search
@@ -895,7 +890,6 @@ import FINAL.Bridges.TropicalKernelMeanDuality
 import FINAL.Bridges.TropicalKernelRigidity
 import FINAL.Bridges.TropicalLensBerggrenDuality
 import FINAL.Bridges.TropicalLensRigidityDuality
-import FINAL.Bridges.TropicalMellin_Defs
 import FINAL.Bridges.TropicalMellin_Theorems
 import FINAL.Bridges.TropicalMetamathematics
 import FINAL.Bridges.TropicalMixingDirect
@@ -1173,7 +1167,6 @@ import FINAL.Cryptography.Commitments
 import FINAL.Cryptography.CongruenceLatticeFactoring
 import FINAL.Cryptography.Consciousness_ReflectiveAlgebra
 import FINAL.Cryptography.Core
-import FINAL.Cryptography.CounterfactualPrimes
 import FINAL.Cryptography.CryptographicClosureHulls
 import FINAL.Cryptography.CutCryptography
 import FINAL.Cryptography.DiophantineCryptoCore
@@ -1278,7 +1271,6 @@ import FINAL.EML.CWApprox
 import FINAL.EML.CategoryTheorems
 import FINAL.EML.CausalInferenceTheory
 import FINAL.EML.CausalRepresentationTheory
-import FINAL.EML.ClosureOperator
 import FINAL.EML.CompactRetractApprox
 import FINAL.EML.Compile
 import FINAL.EML.Complexity
@@ -1682,8 +1674,6 @@ import FINAL.MachineLearning.Consequences
 import FINAL.MachineLearning.Convergence
 import FINAL.MachineLearning.ConvergenceTheory
 import FINAL.MachineLearning.Core
-import FINAL.MachineLearning.CounterfactualHierarchy_Basic
-import FINAL.MachineLearning.CounterfactualPrimes
 import FINAL.MachineLearning.CrystallizationTheory
 import FINAL.MachineLearning.CrystallographicRhythm
 import FINAL.MachineLearning.CulinaryHomotopy_Basic
@@ -2872,7 +2862,6 @@ import FINAL.Tropical.TropicalSelfReasoning
 import FINAL.Tropical.TropicalSemiring
 import FINAL.Tropical.TropicalSieveTheory
 import FINAL.Tropical.TropicalStructure
-import FINAL.Tropical.TropicalSurprise
 import FINAL.Tropical.TropicalTrapdoor
 import FINAL.Tropical.TropicalTrapdoorResearch
 import FINAL.Tropical.TropicalTrapdoorReversal
