@@ -558,12 +558,25 @@ class CatalogPruner:
 
         total_removed = auto_removed + curator_removed + dedup_removed + individual_removed
 
-        # 6. Immortalize kept sorry-free files with theorems
+        # 6. Immortalize kept sorry-free files with theorems (skip if already in FINAL/)
         if not dry_run:
+            immortalized_count = 0
             for c in candidates:
                 if c["path"] not in total_removed:
                     if not c["sorries"] and c["theorems"] > 0:
-                        self.immortalize_file(c)
+                        before = immortalized_count
+                        # immortalize_file increments count and logs
+                        dest_dir = self.catalog_root / "FINAL" / c["domain"]
+                        parent_name = Path(c["abs_path"]).parent.name
+                        if len(parent_name) > 30:
+                            parent_name = parent_name[:27] + "___"
+                        dest_name = f"{parent_name}_{Path(c['abs_path']).name}" if parent_name not in ("Catalog", c["domain"]) else Path(c["abs_path"]).name
+                        dest = dest_dir / dest_name
+                        if not dest.exists():
+                            self.immortalize_file(c)
+                            immortalized_count += 1
+            if immortalized_count > 0:
+                print(f"[Prune] Immortalized {immortalized_count} new files")
 
         # 7. Post-prune cleaning
         symlinks_removed = 0
