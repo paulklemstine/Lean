@@ -2613,6 +2613,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Tropical Amoebas and Canonical Forms\n\n## 1. Complete the CPL-to-Tropical-Rational Representation Theorem\n\nThe theorem `cpl_is_tropical_rational` remains unproved: every continuous piecewise-linear function on \u211d can be expressed as a difference of two tropical polynomials (i.e., a tropical rational function). The key insight is that any CPL function f can be decomposed as f = g - h where g and h are convex piecewise-linear functions (each expressible as max of finitely many affine functions). The standard construction uses f = (f + L)/2 + C and similarly for the negative part, where L is a sufficiently steep affine function. Why now? We have proved `locally_affine_imp_globally` and `tropPoly_eval_convex`, which provide the analytic infrastructure. The remaining gap is a constructive argument producing the affine pieces of the convex envelope, which could build on Finset-based enumeration of breakpoints already present in the codebase.\n\n## 2. Multivariate Tropical Convexity and Newton Polytope Duality\n\nOur `tropPoly_eval_convex` theorem establishes convexity in one variable. In the multivariate setting, the tropical polynomial p(x\u2081,...,x\u2099) = max_\u03b1(c\u03b1 + \u03b1\u00b7x) is a convex function \u211d\u207f \u2192 \u211d, and its Legendre-Fenchel conjugate encodes the Newton polytope of the corresponding classical polynomial. The key insight is that tropical Legendre duality maps the \"coefficient space\" to the \"exponent space\" (Newton polytope), and the dual of a tropical polynomial is an indicator function of a polytope \u2014 this is precisely the connection to amoeba theory via the Ronkin function. Why now? The `legendreFenchel` definition is already in the codebase, and Mathlib's convex analysis library (`Mathlib.Analysis.Convex`) provides the necessary Fenchel conjugate machinery. Extending `tropPoly_eval_convex` to \u211d\u207f using `EuclideanSpace` or `Fin\u2099 \u2192 \u211d` should be tractable.\n\n## 3. Maslov Dequantization for Tropical Products\n\nWe proved `maslov_dequantization_limit` for pairwise sums (tropical addition). The natural next step is to prove the full dequantization theorem for tropical products: that `h \u00b7 log(\u03a3 exp(a\u1d62/h))` converges to `max a\u1d62` as h \u2192 0\u207a, and that the tropical polynomial ring structure emerges as a limit of classical polynomial evaluation under log-exp scaling. The key insight is that the convergence is uniform on compact sets when the number of terms is fixed, giving a functor from classical polynomial rings to tropical semirings. Why now? The two-term case is proved; the general case requires only an induction on the number of terms plus a dominated convergence argument, both of which the subagent handled efficiently in the two-term case.\n\n## 4. Tropical B\u00e9zout Theorem via Breakpoint Counting\n\nFor univariate tropical polynomials, \"intersection\" corresponds to shared breakpoints. Our `consecutive_monomials_cross` theorem shows that two monomials with distinct slopes cross at exactly one point. A tropical B\u00e9zout theorem would state: two generic tropical polynomials of degrees d\u2081 and d\u2082 have exactly d\u2081 \u00b7 d\u2082 tropical intersection points (counted with multiplicity). The key insight is that the \"degree\" of a tropical polynomial with n terms is n-1 (the number of slope changes), and intersection multiplicity at a breakpoint equals the absolute change in \"which monomial dominates.\" Why now? The breakpoint machinery and the `canonical_tropical_poly_unique` uniqueness theorem provide the foundation for a clean combinatorial proof.\n\n## 5. ReLU Network Equivalence Decision Procedure\n\nThe theorems `univReluNet_is_cpl` and `relu_network_equiv_iff_canonical` together reduce ReLU network equivalence to tropical canonical form comparison. Once `relu_network_has_canonical_tropical_rational` is proved (which requires `cpl_is_tropical_rational`), this gives a **certified decision procedure**: two univariate ReLU networks compute the same function if and only if their canonical tropical rational forms are identical. The key insight is that the canonical form can be computed in polynomial time (sort breakpoints, compute slopes, remove redundant pieces), making this a practical algorithm with a machine-checked correctness proof. Why now? The canonicalization pipeline is 80% complete; only the representation theorem (Direction 1) is missing. Completing it would yield the first Lean-verified ReLU network equivalence checker.\n",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_1170",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e86a6105",
+    "status": "available",
+    "timestamp": "2026-06-09T21:34:13.371932+00:00",
+    "title": "The theorem `cpl_is_tropical_rational` remains unproved: every continuous piecew"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
     "domains": [
       "Cryptography",
@@ -3431,20 +3446,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T11:38:11.055627+00:00",
     "title": "Close Proofs: **Conjecture:** If `{f_t}_{t \u2208 [0,1]}` is a continuous family of contr"
-  },
-  {
-    "consumed_by_exp_id": "e86a6105",
-    "description": "Cycle cb6d03de (Q=0.423) proved 1193 theorems in Applications but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that the tropical amoeba of a Laurent polynomial is the negative logarithm of its zero set. Show that the Ronkin function is convex and piecewise-linear on the amoeba complement. Connect tropica",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_cb6d03de_34867524",
-    "priority_score": 0.4728838627888345,
-    "research_mode": "team",
-    "source_exp_id": "cb6d03de",
-    "status": "in_progress",
-    "timestamp": "2026-06-09T11:39:12.450863+00:00",
-    "title": "Close Proofs: Tropical Amoebas and Ronkin Functions"
   },
   {
     "consumed_by_exp_id": "",
