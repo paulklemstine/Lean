@@ -394,6 +394,51 @@ document.addEventListener('DOMContentLoaded', () => {
                 processedCode = moduleCode + '\n' + filtered.join('\n');
             }
 
+            // Fix common matplotlib pattern: plt.subplots() doesn't accept
+            // height_ratios/width_ratios as direct kwargs — they must go
+            // inside gridspec_kw. Aristotle-generated code often does:
+            //   plt.subplots(2, 1, height_ratios=[7, 1], gridspec_kw={...})
+            // which raises AttributeError on newer matplotlib.
+            processedCode = processedCode.replace(
+                /plt\.subplots\(([^)]*)\)/g,
+                (match, args) => {
+                    // Extract height_ratios and width_ratios from args
+                    const hrMatch = args.match(/height_ratios\s*=\s*(\[[\d,\s]+\])/);
+                    const wrMatch = args.match(/width_ratios\s*=\s*(\[[\d,\s]+\])/);
+                    if (!hrMatch && !wrMatch) return match; // nothing to fix
+
+                    // Remove them from args
+                    let cleanedArgs = args
+                        .replace(/,\s*height_ratios\s*=\s*\[[\d,\s]+\]/g, '')
+                        .replace(/,\s*width_ratios\s*=\s*\[[\d,\s]+\]/g, '')
+                        .replace(/height_ratios\s*=\s*\[[\d,\s]+\]\s*,\s*/g, '')
+                        .replace(/width_ratios\s*=\s*\[[\d,\s]+\]\s*,\s*/g, '');
+
+                    // Build gridspec_kw entries
+                    const gsEntries = [];
+                    if (hrMatch) gsEntries.push(`'height_ratios': ${hrMatch[1]}`);
+                    if (wrMatch) gsEntries.push(`'width_ratios': ${wrMatch[1]}`);
+
+                    // Check if gridspec_kw already exists
+                    const gsMatch = cleanedArgs.match(/gridspec_kw\s*=\s*\{([^}]*)\}/);
+                    if (gsMatch) {
+                        // Merge into existing gridspec_kw
+                        const existing = gsMatch[1].trim();
+                        const merged = existing ? `${existing}, ${gsEntries.join(', ')}` : gsEntries.join(', ');
+                        cleanedArgs = cleanedArgs.replace(
+                            /gridspec_kw\s*=\s*\{[^}]*\}/,
+                            `gridspec_kw={${merged}}`
+                        );
+                    } else {
+                        // Add new gridspec_kw
+                        cleanedArgs = cleanedArgs.trimEnd();
+                        if (cleanedArgs && !cleanedArgs.endsWith(',')) cleanedArgs += ',';
+                        cleanedArgs += ` gridspec_kw={${gsEntries.join(', ')}}`;
+                    }
+                    return `plt.subplots(${cleanedArgs})`;
+                }
+            );
+
             // Auto-detect and load all packages from the code imports
             // Build the full wrapped code first so loadPackagesFromImports can scan it
             let fullCode;
