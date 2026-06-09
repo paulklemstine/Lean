@@ -7,7 +7,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-08",
-      "hue": 91
+      "hue": 275
     },
     {
       "id": "rigorous_algebraic_foundations_for_probability_t",
@@ -16,7 +16,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
@@ -25,7 +25,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08",
-      "hue": 270
+      "hue": 101
     },
     {
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08T19:03:25Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "arithmetic_mirror_symmetry_for_calabi_yau",
@@ -52,7 +52,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "causal_integration_algebra__a_rigorous_lattice_t",
@@ -61,7 +61,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "dream_logic_non_monotone_reasoning_where_contradic",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 100
+      "hue": 92
     },
     {
       "id": "entropy_bounded_computation_ebc_framew",
@@ -79,7 +79,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "impossible_geometries_where_parallel_lines_converg",
@@ -88,7 +88,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-09",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "p_vs_np_problem",
@@ -106,7 +106,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "the_current_framework_models_theories_by_their_set",
@@ -115,7 +115,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "the_current_zaslavsky_type_bound_proves__kd_cnk__n",
@@ -124,7 +124,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-09",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "this_document_describes_five_research_conjectures_",
@@ -133,7 +133,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-06-09",
-      "hue": 95
+      "hue": 270
     },
     {
       "id": "self_modifying_code_that_cannot_be_stopped",
@@ -142,7 +142,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09T10:06:05Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "proof_complexity_collapse_pnp_via_proof_checking",
@@ -151,7 +151,16 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-09T15:03:34Z",
-      "hue": 90
+      "hue": 95
+    },
+    {
+      "id": "tropical_compactification_of_moduli_spaces",
+      "title": "Tropical Compactification of Moduli Spaces",
+      "domain": "Novelty",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-09T15:36:50Z",
+      "hue": 91
     }
   ],
   "edges": [
