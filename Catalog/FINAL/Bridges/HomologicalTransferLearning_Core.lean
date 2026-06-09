@@ -1,1 +1,0 @@
-../../Bridges/HomologicalTransferLearning/Core.lean

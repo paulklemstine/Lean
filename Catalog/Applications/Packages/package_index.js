@@ -29,8 +29,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "40370763",
     "filename": "impossible_geometries_where_parallel_lines_converg.json",
     "pkg_num": 8,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.47002089837753586,
     "title": "Closure-Circuit Duality: Certified Monotone Circuit Reconstruction from Canonical Residual Bases"
   },
   {
@@ -259,8 +259,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "impossible_geometries_where_parallel_lines_converg",
       "primary_domain": "Computation",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.47002089837753586,
+      "quality": "partial",
       "shape": "cube",
       "title": "Closure-Circuit Duality: Certified Monotone Circuit Reconstruction from Canonical Residual Bases"
     },

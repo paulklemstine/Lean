@@ -14,6 +14,36 @@ window.PACKAGE_INDEX = [
     "title": "Bridge: Model Theory and Algebra \u2014 Ax-Kochen and Morley's Theorem"
   },
   {
+    "date": "2026-06-09",
+    "domain": "Bridges",
+    "exp_id": "17e8812c",
+    "filename": "entropy_bounded_computation_ebc_framew.json",
+    "pkg_num": 7,
+    "quality": "partial",
+    "quality_score": 0.4813003957285953,
+    "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
+  },
+  {
+    "date": "2026-06-09",
+    "domain": "Computation",
+    "exp_id": "40370763",
+    "filename": "impossible_geometries_where_parallel_lines_converg.json",
+    "pkg_num": 8,
+    "quality": "partial",
+    "quality_score": 0.47002089837753586,
+    "title": "Closure-Circuit Duality: Certified Monotone Circuit Reconstruction from Canonical Residual Bases"
+  },
+  {
+    "date": "2026-06-09",
+    "domain": "Bridges",
+    "exp_id": "c71e53b1",
+    "filename": "symplectic_mirror_descent_gromov_witten_invariants.json",
+    "pkg_num": 9,
+    "quality": "partial",
+    "quality_score": 0.4695990099009901,
+    "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
+  },
+  {
     "date": "2026-06-08T19:03:25Z",
     "domain": "Applications",
     "exp_id": "84d24cbc",
@@ -82,6 +112,22 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Bridge: Model Theory and Algebra \u2014 Ax-Kochen and Morley's Theorem"
   },
+  "entropy_bounded_computation_ebc_framew.json": {
+    "domain": "Bridges",
+    "exp_id": "17e8812c",
+    "source_exp_ids": [
+      "2d7514a5"
+    ],
+    "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
+  },
+  "impossible_geometries_where_parallel_lines_converg.json": {
+    "domain": "Computation",
+    "exp_id": "40370763",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Closure-Circuit Duality: Certified Monotone Circuit Reconstruction from Canonical Residual Bases"
+  },
   "rigorous_algebraic_foundations_for_probability_t.json": {
     "domain": "Novelty",
     "exp_id": "07ee0316",
@@ -97,6 +143,14 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Self-Modifying Code That Cannot Be Stopped: Undecidability, Simulation, and Alignment Barriers"
+  },
+  "symplectic_mirror_descent_gromov_witten_invariants.json": {
+    "domain": "Bridges",
+    "exp_id": "c71e53b1",
+    "source_exp_ids": [
+      "pi_brainstorm"
+    ],
+    "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
   },
   "the_poincare_conjecture_for_data_manifold_detectio.json": {
     "domain": "Applications",
@@ -125,7 +179,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2025-01-01",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 292,
       "id": "self_modifying_code_that_cannot_be_stopped",
       "primary_domain": "Bridges",
       "priority_score": 0.6462399999999999,
@@ -136,7 +190,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Logic",
-      "hue": 271,
+      "hue": 95,
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
       "primary_domain": "Logic",
       "priority_score": 0.3352,
@@ -147,7 +201,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 95,
       "id": "rigorous_algebraic_foundations_for_probability_t",
       "primary_domain": "Bridges",
       "priority_score": 0.66968,
@@ -158,7 +212,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Applications",
-      "hue": 91,
+      "hue": 90,
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
       "primary_domain": "Bridges",
       "priority_score": 0.16743922555663115,
@@ -180,13 +234,46 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 89,
       "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
       "primary_domain": "Bridges",
       "priority_score": null,
       "quality": "unrated",
       "shape": "icosahedron",
       "title": "Bridge: Model Theory and Algebra \u2014 Ax-Kochen and Morley's Theorem"
+    },
+    {
+      "date": "2026-06-09",
+      "domain": "Bridges",
+      "hue": 275,
+      "id": "entropy_bounded_computation_ebc_framew",
+      "primary_domain": "Bridges",
+      "priority_score": 0.4813003957285953,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
+    },
+    {
+      "date": "2026-06-09",
+      "domain": "Computation",
+      "hue": 90,
+      "id": "impossible_geometries_where_parallel_lines_converg",
+      "primary_domain": "Computation",
+      "priority_score": 0.47002089837753586,
+      "quality": "partial",
+      "shape": "cube",
+      "title": "Closure-Circuit Duality: Certified Monotone Circuit Reconstruction from Canonical Residual Bases"
+    },
+    {
+      "date": "2026-06-09",
+      "domain": "Bridges",
+      "hue": 271,
+      "id": "symplectic_mirror_descent_gromov_witten_invariants",
+      "primary_domain": "Bridges",
+      "priority_score": 0.4695990099009901,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
     }
   ]
 };
