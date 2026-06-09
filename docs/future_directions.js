@@ -119,7 +119,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Natural Proofs Barrier: Formalization"
   },
   {
-    "consumed_by_exp_id": "0cd8d761",
+    "consumed_by_exp_id": "",
     "description": "The key insight is that Boltzmann entropy S = k log W is a topological invariant of the energy landscape. If the energy function E: X -> R on a state space X defines a filtration by sublevel sets X_t = {x : E(x) <= t}, then the persistent homology barcode of this filtration encodes the entropy as the sum of bar lengths: S(E) = k * sum_i (d_i - b_i) where b_i and d_i are birth and death times of persistent homology bars. Conjecture: The Boltzmann entropy of a physical system equals the total persistence (sum of bar lengths) of the energy landscape filtration, up to an additive constant. Why now: persistent homology has matured as a computational tool, and the stability theorem guarantees that small perturbations in the energy function produce small changes in the barcode \u2014 exactly the thermodynamic stability we expect. Test: compute the persistent homology barcode for the Ising model energy landscape on a 4x4 lattice and verify that sum of bar lengths equals k log(2^{16}) = 16k log 2. Impact: entropy becomes a computable topological quantity, bridging thermodynamics and algebraic topology. Phase transitions correspond to births of new bars in the barcode.",
     "domains": [
       "Physics",
@@ -129,7 +129,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:27.738839+00:00",
     "title": "Entropy as a Topological Invariant: The Boltzmann Bridge"
   },
@@ -398,7 +398,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Resolution of Singularities in Positive Characteristic"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2c51cdc5",
     "description": "Formalize the consistency strength hierarchy: inaccessible < Mahlo < measurable < strong < supercompact < huge. Prove strictness results.",
     "domains": [
       "Logic",
@@ -408,7 +408,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:17.622192+00:00",
     "title": "Large Cardinal Hierarchy: Consistency Strength"
   },
@@ -629,21 +629,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:09.067494+00:00",
     "title": "Sierpi\u0144ski Numbers: Covering Systems"
-  },
-  {
-    "consumed_by_exp_id": "7a5bfcae",
-    "description": "Prove the Yamabe problem on non-compact Riemannian manifolds: find a conformal metric of constant scalar curvature. Formalize the compact case and explore non-compact obstructions.",
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "seed_237",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:25:18.225965+00:00",
-    "title": "Yamabe Problem: Non-Compact Case"
   },
   {
     "consumed_by_exp_id": "",
@@ -899,7 +884,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Temporal Logic of Proofs: When You Prove Something Matters"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "aecfaf36",
     "description": "Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time can be simulated by a polynomial-time Turing machine (Extended Church-Turing thesis). Show that if P = NP, then the second law of thermodynamics would be violated because Maxwell's demon could be implemented efficiently.",
     "domains": [
       "Novelty",
@@ -909,7 +894,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.713166+00:00",
     "title": "Speculative: Computational Complexity as Physical Law"
   },
@@ -2410,6 +2395,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Phantom Topologies\n\n## 1. Phantom Number Characterization for Finite Topologies\n\nEvery finite topological space has a finite lattice of open sets. The phantom\nnumber of a topology \u03c4 (minimum number of strictly finer topologies whose\nintersection is \u03c4) should be computable from the lattice structure. \n\n**Conjecture:** For a finite topological space (X, \u03c4), the phantom number equals\nthe minimum number of atoms in the lattice of topologies on X that cover \u03c4 (i.e.,\ntopologies obtained by adding exactly one new open set to \u03c4).\n\nThe key insight is that the lattice of topologies on a finite set is itself finite\nand well-understood (it's anti-isomorphic to the lattice of preorders on X), so\nthe phantom number becomes a combinatorial invariant of the preorder lattice.\n\n**Why now?** Our formalization of `consensus_eq_iSup` establishes the exact connection\nbetween phantom consensus and lattice suprema, making it feasible to compute phantom\nnumbers via lattice-theoretic arguments in Lean.\n\n## 2. Phantom Representations of Metric Topologies\n\nThe standard topology on \u211d is the intersection of the lower-limit (Sorgenfrey)\ntopology and the upper-limit topology. This should extend to any metrizable space.\n\n**Conjecture:** Every metrizable space admits a non-trivial 2-observer phantom\nrepresentation. Specifically, for a metric space (X, d), define T\u2081 as the topology\nof \"right-open balls\" and T\u2082 as the topology of \"left-open balls\" (formalized via\ndirectional limits). Their consensus should recover the metric topology.\n\nThe key insight is that metric balls can be decomposed into half-open analogues whose\nintersection recovers the full ball, generalizing the \u211d case of [a,b) \u2229 (a,b] = (a,b).\n\n**Why now?** The formalization of `phantomPair_consensus_isOpen` provides the exact\nframework for 2-observer consensus, and Mathlib's extensive metric space library\nprovides the necessary infrastructure for the Sorgenfrey construction.\n\n## 3. Phantom Systems as Sheaves\n\nA phantom system on X indexed by O assigns a topology to each observer. If O itself\ncarries a topology, we can ask whether the assignment o \u21a6 T(o) is \"continuous\" in a\nsuitable sense.\n\n**Conjecture:** If the observer space O is a topological space and the map\no \u21a6 T(o) is \"continuous\" (in the sense that the set of observers for whom a fixed\nset U is open is itself open in O), then the consensus topology carries additional\nstructure \u2014 specifically, it is determined by a sheaf on O.\n\nThe key insight is that the consensus construction `\u2200 o, IsOpen_o(U)` is the\n\"global sections\" functor applied to the presheaf o \u21a6 {open sets of T(o)}, and\nthe sheaf condition corresponds to a locality property of phantom systems.\n\n**Why now?** Our `consensus_pullback_surjective` theorem shows that phantom\nconsensus is functorial with respect to surjective maps of observer spaces,\nwhich is the first step toward establishing a sheaf-theoretic framework.\n\n## 4. Quantum Phantom Topologies\n\nIn quantum mechanics, observables don't commute. A quantum phantom topology\ncould assign to each observer not a topology but a *quantum topology* \u2014 a\nnon-commutative lattice of \"open propositions.\"\n\n**Conjecture:** Define a quantum phantom system as a map from observers to\northomodular lattices (generalizing Boolean algebras of open sets). The consensus\nshould be the intersection of the orthomodular lattices, which is again an\northomodular lattice. The phantom number in the quantum setting should be\nstrictly larger than in the classical setting for any non-Boolean quantum logic.\n\nThe key insight is that non-commutativity of quantum observables forces\ndisagreement between observers, requiring more observers to determine the\n\"objective\" quantum topology.\n\n**Why now?** The `no_nontrivial_phantom_discrete` theorem shows that the finest\nclassical topology is rigid (phantom number 0). In the quantum setting, the\nanalogous \"finest\" structure (the full orthomodular lattice) should also be rigid,\nbut intermediate structures should have higher phantom numbers due to\nnon-commutativity constraints.\n\n## 5. Phantom Dimension of Topological Spaces\n\nFor a topological space (X, \u03c4), define the phantom dimension as the supremum\nof phantom numbers over all topologies on X that are coarser than \u03c4.\n\n**Conjecture:** For a compact Hausdorff space X, the phantom dimension equals\nthe covering dimension dim(X) + 1. In particular, for \u211d\u207f with the standard\ntopology, the phantom dimension is n + 1.\n\nThe key insight is that covering dimension counts the minimum number of \"layers\"\nneeded to cover X, while phantom dimension counts the minimum number of \"observer\nperspectives\" needed to reconstruct a coarsened topology \u2014 and these should coincide\nbecause both measure a form of \"topological complexity.\"\n\n**Why now?** Our formalization provides the first rigorous framework for computing\nphantom numbers, and the `consensus_add_coarser_observer` theorem shows that the\nphantom system is monotone with respect to topology refinement, which is the key\nstructural property needed to relate phantom dimension to classical dimension theory.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1072",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b24021ad",
+    "status": "available",
+    "timestamp": "2026-06-09T06:31:47.041769+00:00",
+    "title": "Every finite topological space has a finite lattice of open sets. The phantom"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Scaling Laws from Spectral Decay\n\n## 1. General Power-Law Exponent \u03b1 > 1\n\nWe proved the scaling law for the special case \u03b1 = 2 (eigenvalues \u03bb_k = 1/k\u00b2),\nobtaining the exponent -1/2. The natural generalization: for eigenvalues decaying\nas k^{-\u03b1} with \u03b1 > 1, the tail sum \u2211_{k>M} k^{-\u03b1} should be bounded by\nC \u00b7 M^{1-\u03b1}/(\u03b1-1), giving a scaling exponent -(\u03b1-1)/\u03b1.\n\nThe key insight is that the telescoping argument generalizes via the integral\ncomparison test: 1/k^\u03b1 \u2264 \u222b_{k-1}^{k} x^{-\u03b1} dx, and the integral telescopes\nto give the M^{1-\u03b1} bound. This requires formalizing improper integrals over\n[M, \u221e) in Lean.\n\nWhy now? Mathlib's measure theory and integration libraries have matured enough\nto support interval integrals of power functions, making the integral comparison\ntest formalizable.\n\n## 2. Double Descent and Interpolation Threshold\n\nOur bias-variance framework assumes the classical regime M < N. When M \u2248 N\n(interpolation threshold), the variance diverges, producing the \"double descent\"\nphenomenon. Formalizing this requires showing that the minimum of 1/M + M/(N-M)\nover 1 \u2264 M < N has qualitatively different behavior from 1/M + M/N.\n\nThe key insight is that replacing the variance term M/N with M/(N-M) introduces\na pole at M = N, and the optimization landscape changes from a single minimum\nto a problem requiring separate analysis on each side of the interpolation\nthreshold.\n\nWhy now? The double descent phenomenon has been empirically validated across many\narchitectures, but no rigorous mathematical proof from spectral assumptions exists.\nThe bias-variance framework we formalized is the right starting point.\n\n## 3. Multivariate Scaling Laws: Compute-Optimal Allocation\n\nReal scaling laws involve three resources: model size M, dataset size N, and\ncompute budget C \u2248 M\u00b7N. Given C, one must jointly optimize M and N subject to\nM\u00b7N \u2264 C. Formalizing this as a constrained optimization problem:\nminimize 1/M + M/N subject to M\u00b7N = C, yielding M* ~ C^{1/3}, N* ~ C^{2/3}\n(for \u03b1 = 2).\n\nThe key insight is that the Lagrange multiplier method reduces to a\nsingle-variable optimization after substituting the constraint, and the resulting\nscaling M* ~ C^{\u03b1/(2\u03b1+1)} captures the Chinchilla-type compute-optimal laws.\n\nWhy now? The one-variable AM-GM result we proved is the core tool; extending it\nto constrained optimization requires only elementary calculus (which is increasingly\nwell-supported in Mathlib via `HasDerivAt` and `IsLocalMin`).\n\n## 4. Kernel Eigenvalue Decay from Architecture\n\nWe assumed power-law eigenvalue decay as given. A deeper result would derive\nthis decay from the architecture: for a single hidden-layer neural network with\nrandom weights (the NNGP/NTK regime), the kernel eigenvalues on the sphere S^{d-1}\ndecay as k^{-(d+1)/d} in the Mercer expansion.\n\nThe key insight is that the NNGP kernel is a dot-product kernel on the sphere,\nwhose Mercer expansion in spherical harmonics has coefficients determined by the\nactivation function's Gegenbauer expansion. The decay rate is dictated by the\nsmoothness of the activation.\n\nWhy now? Mathlib has spherical harmonics foundations and Gegenbauer polynomial\nsupport is growing. Formalizing this connection would close the gap between\narchitecture and scaling exponent.\n\n## 5. Information-Theoretic Lower Bounds\n\nOur results give upper bounds on optimal error. A matching lower bound would show\nthat no estimator (not just kernel truncation) can achieve better than N^{-(\u03b1-1)/\u03b1}\nscaling when the target lies in the RKHS with spectral decay \u03b1. This is a minimax\nlower bound via Fano's inequality or Assouad's lemma.\n\nThe key insight is that the lower bound follows from packing the RKHS unit ball\nwith functions that are mutually distinguishable only with N^{(\u03b1-1)/\u03b1} samples,\nusing the eigenvalue decay to control the packing number.\n\nWhy now? Fano's inequality and basic information-theoretic tools are formalizable\nin Lean's probability library. Combined with our spectral framework, this would\nyield a complete characterization of optimal rates.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1073",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c3a9d1ce",
+    "status": "available",
+    "timestamp": "2026-06-09T06:32:21.191187+00:00",
+    "title": "We proved the scaling law for the special case \u03b1 = 2 (eigenvalues \u03bb_k = 1/k\u00b2),"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Boltzmann Bridge\n\n## 1. Higher-Dimensional Persistent Homology on Simplicial Complexes\n\nThe current formalization handles 0-dimensional persistence on discrete state spaces, where each point is an independent component. The natural next step is to formalize simplicial complexes (Vietoris-Rips or \u010cech) built from an energy function's sublevel sets and prove that the total persistence in all homological dimensions is stable under perturbation. The key insight is that the interleaving theorem we proved for rank functions should generalize to an algebraic interleaving of persistence modules, yielding a bottleneck stability theorem for barcodes. Why now? Mathlib's developing simplicial complex infrastructure (via `SimplicialComplex` and `AbstractSimplicialComplex`) provides the combinatorial foundation, and our rank function stability serves as the base case of an inductive argument over skeleta.\n\n## 2. Logarithmic Entropy from Total Persistence via Normalization\n\nThe total persistence `\u2211(M - f(x))` captures the \"spread\" of an energy landscape, but the Boltzmann entropy `S = k log W` is logarithmic. A testable conjecture: for energy functions on `Fin n` taking values in `{0, 1, ..., K}`, define the *persistence entropy* as `log(totalPersistence f K / K)`. Then for the uniform distribution (constant energy), persistence entropy equals `log n - log K`, while for a delta function (one ground state), it equals `log((n-1)K/K) = log(n-1)`. The key insight is that the ratio `totalPersistence / range` acts as an \"effective number of states,\" and its logarithm should approximate Boltzmann entropy up to a correction term involving the energy variance. Why now? Our `totalPersistence_eq` identity provides the algebraic foundation, and `totalPersistence_eq_zero_iff` characterizes the degenerate case, giving boundary conditions for any entropy approximation.\n\n## 3. Phase Transitions as Discontinuities in the Rank Function\n\nFor parametric families of energy functions `E_\u03b2(x) = \u03b2 \u00b7 E(x)` (inverse temperature scaling), the rank function `t \u21a6 |{x : E_\u03b2(x) \u2264 t}|` undergoes qualitative changes at critical values of \u03b2. Conjecture: a thermodynamic phase transition at inverse temperature \u03b2_c corresponds to a discontinuity in the derivative of the integrated rank function `\u222b rankFunction(E_\u03b2, t) dt` with respect to \u03b2. The key insight is that this integral equals the total persistence (by our identity `totalPersistence_eq`), so phase transitions manifest as non-analyticities of total persistence as a function of the coupling constant. Why now? The interleaving theorem shows that small changes in \u03b2 produce controlled changes in the rank function, so discontinuities in the derivative require genuinely singular behavior \u2014 exactly what characterizes phase transitions.\n\n## 4. Wasserstein Stability for Energy Filtrations\n\nOur rank function stability shows that \u03b5-close energy functions produce \u03b5-interleaved rank functions. A stronger conjecture: the Wasserstein-1 distance between the \"persistence measures\" (empirical measures on bar endpoints) of two \u03b5-close energy functions is bounded by `n \u00b7 \u03b5`, where n is the cardinality of the state space. The key insight is that each element contributes one bar whose endpoints shift by at most \u03b5 under an \u03b5-perturbation, and the Wasserstein distance decomposes as a sum over individual bar displacements. Why now? This would give quantitative thermodynamic stability: small perturbations to a Hamiltonian produce proportionally small changes in the entropy, with the proportionality constant being the number of microstates.\n\n## 5. Categorical Persistence via Functorial Filtrations\n\nThe sublevel set construction `t \u21a6 sublevelFinset f t` is a functor from `(\u211d, \u2264)` to `(Finset \u03b1, \u2286)`. Our monotonicity theorem is precisely the functoriality condition. Conjecture: this functor lifts to a persistence module over a field k (via free vector space construction), and the total persistence equals the trace of the \"birth-to-death\" operator on this module. The key insight is that the rank function is the dimension function of the persistence module, and our stability theorem becomes the algebraic stability theorem for persistence modules. Why now? Formalizing this categorical perspective would connect the concrete Finset-based approach to the abstract algebraic theory, enabling transfer of deep results (decomposition theorems, structure theorems for persistence modules) to the thermodynamic setting.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_1074",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0cd8d761",
+    "status": "available",
+    "timestamp": "2026-06-09T06:32:52.519644+00:00",
+    "title": "The current formalization handles 0-dimensional persistence on discrete state sp"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2648,35 +2678,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral Universality of LLM Reasoning Graphs"
   },
   {
-    "consumed_by_exp_id": "48fca5d7",
-    "description": "Conjecture: For a neural network loss landscape equipped with the Fisher information metric, the genus-zero Gromov-Witten invariants of the resulting symplectic manifold exactly count the number of distinct gradient-flow basins accessible by random initialization, and these invariants can be computed via mirror symmetry from a Landau-Ginzburg model dual to the dataset distribution. Test: Construct a family of small-scale fully connected networks (\u2264100 parameters) with controlled symmetries; compute the quantum cohomology and extract genus-zero GW invariants using symbolic methods (e.g., Givental's mirror theorem). Independently, perform >10,000 random-initialization gradient descents and cluster convergent points to count basins. A statistically significant match between the algebraic count and the empirical basin count confirms the conjecture; a systematic mismatch falsifies it. Impact: Transforms non-convex optimization into a problem in enumerative symplectic geometry; allows pre-training prediction of the number and nature of global minima from dataset topology alone; opens a bridge between mirror symmetry and machine learning theory.",
-    "domains": [
-      "Novelty",
-      "MachineLearning"
-    ],
-    "id": "fd_1021",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:49:02.811963+00:00",
-    "title": "Symplectic Mirror Descent: Gromov-Witten Invariants as a Count of Learnable Mini"
-  },
-  {
-    "consumed_by_exp_id": "2e12503d",
-    "description": "Conjecture: For any sufficiently expressive formal system F and natural random ensemble E_n of true statements of size n, there exists a critical resource density parameter rho_c (measuring available axioms, lemmas, or search-budget per symbol) such that the probability an automated prover finds a proof within bounded time undergoes a sharp threshold at rho_c, analogous to SAT phase transitions; moreover, near rho_c the proof-search graph exhibits universal scaling exponents independent of the prover architecture. Test: Construct benchmark ensembles of parametrized true statements across domains (e.g. random bounded-depth combinatorial identities, finite-group facts, graph properties with certificates), vary rho = resources/n, and measure solve probability, runtime susceptibility, proof-graph component statistics, and finite-size scaling across distinct provers; confirmation requires reproducible sharp thresholds and shared critical exponents, while broad smooth behavior or prover-specific non-universal scaling refutes the conjecture. Impact: Establishes a statistical-mechanics theory of theorem proving, predicts when additional lemmas or compute produce dramatic gains, guides curriculum and benchmark design for theorem-proving AI, and could reveal new complexity invariants of mathematical theories based on their critical proof structure.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_1050",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-09T02:09:12.483373+00:00",
-    "title": "Proof Phase Transitions: Sharp Thresholds in Automated Theorem Discovery"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture: There exists an explicit hyperbolic dynamical system with a transfer operator whose Pollicott\u2013Ruelle resonance spectrum determines the two-point correlation function of the von Mangoldt function, in the sense that after a fixed analytic transform, the leading resonances reproduce the Hardy\u2013Littlewood prime-pair constants and asymptotic error term. Test: Construct a candidate system and operator, compute its resonance spectrum numerically and symbolically, and compare the induced correlation predictions against prime-pair counts up to large bounds; confirmation requires statistically significant agreement on both main-term constants and secondary fluctuations, while systematic mismatch refutes the conjecture. Impact: This would create a concrete bridge between number theory, chaotic dynamics, and holographic-style spectral reconstruction, potentially yielding new tools for prime statistics, trace formulas, and arithmetic analogues of bulk-boundary duality.",
     "domains": [
@@ -2826,7 +2827,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Grokking: Phase Transitions in Learning"
   },
   {
-    "consumed_by_exp_id": "c3a9d1ce",
+    "consumed_by_exp_id": "",
     "description": "Prove neural network scaling laws from first principles. Derive power-law relationships between loss, model size, dataset size, and compute from the GP kernel spectrum.",
     "domains": [
       "MachineLearning",
@@ -2836,7 +2837,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.640557+00:00",
     "title": "Scaling Laws from Statistical Mechanics"
   },
@@ -2961,7 +2962,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
   {
-    "consumed_by_exp_id": "c8728b9d",
+    "consumed_by_exp_id": "",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domains": [
       "Cryptography",
@@ -2971,12 +2972,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "39a00894",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domains": [
       "Tropical",
@@ -2986,7 +2987,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.541008+00:00",
     "title": "Tropical Differential Equations: Power Series Solutions"
   },
@@ -3268,7 +3269,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Amoebas and Ronkin Functions"
   },
   {
-    "consumed_by_exp_id": "e8726f6c",
+    "consumed_by_exp_id": "",
     "description": "Prove that the tropical compactification of the moduli space of curves M_g is a toric variety whose boundary divisors correspond to tropical curves. Formalize the connection between the Deligne-Mumford compactification and the tropical moduli space.",
     "domains": [
       "Tropical",
@@ -3278,7 +3279,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.975644+00:00",
     "title": "Tropical Compactification of Moduli Spaces"
   },
@@ -3598,7 +3599,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
   {
-    "consumed_by_exp_id": "8c360873",
+    "consumed_by_exp_id": "",
     "description": "The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the derivative of the stereographic projection map at the critical coupling g*. Test: compute the stereographic map for the 1D Ising model and verify beta(g) matches. Impact: connects renormalization to conformal geometry.",
     "domains": [
       "Geometry",
@@ -3608,7 +3609,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.988240+00:00",
     "title": "Inverse Stereographic Renormalization Group"
   },

@@ -1,1 +1,0 @@
-../../Tropical/F1TropicalDuality.lean
