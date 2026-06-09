@@ -19,6 +19,16 @@ window.PACKAGE_INDEX = [
     "exp_id": "17e8812c",
     "filename": "entropy_bounded_computation_ebc_framew.json",
     "pkg_num": 7,
+    "quality": "partial",
+    "quality_score": 0.4813003957285953,
+    "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
+  },
+  {
+    "date": "2026-06-09",
+    "domain": "Bridges",
+    "exp_id": "c71e53b1",
+    "filename": "symplectic_mirror_descent_gromov_witten_invariants.json",
+    "pkg_num": 8,
     "quality": "unrated",
     "quality_score": null,
     "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
@@ -116,6 +126,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Self-Modifying Code That Cannot Be Stopped: Undecidability, Simulation, and Alignment Barriers"
   },
+  "symplectic_mirror_descent_gromov_witten_invariants.json": {
+    "domain": "Bridges",
+    "exp_id": "c71e53b1",
+    "source_exp_ids": [
+      "pi_brainstorm"
+    ],
+    "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
+  },
   "the_poincare_conjecture_for_data_manifold_detectio.json": {
     "domain": "Applications",
     "exp_id": "057f23ce",
@@ -143,7 +161,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2025-01-01",
       "domain": "Bridges",
-      "hue": 281,
+      "hue": 90,
       "id": "self_modifying_code_that_cannot_be_stopped",
       "primary_domain": "Bridges",
       "priority_score": 0.6462399999999999,
@@ -154,7 +172,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Logic",
-      "hue": 90,
+      "hue": 275,
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
       "primary_domain": "Logic",
       "priority_score": 0.3352,
@@ -165,7 +183,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 271,
       "id": "rigorous_algebraic_foundations_for_probability_t",
       "primary_domain": "Bridges",
       "priority_score": 0.66968,
@@ -176,7 +194,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 101,
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
       "primary_domain": "Bridges",
       "priority_score": 0.16743922555663115,
@@ -187,7 +205,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08T19:03:25Z",
       "domain": "Applications",
-      "hue": 272,
+      "hue": 91,
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
       "primary_domain": "Bridges",
       "priority_score": 0.62584,
@@ -211,6 +229,17 @@ window.PACKAGE_GRAPH = {
       "domain": "Bridges",
       "hue": 90,
       "id": "entropy_bounded_computation_ebc_framew",
+      "primary_domain": "Bridges",
+      "priority_score": 0.4813003957285953,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
+    },
+    {
+      "date": "2026-06-09",
+      "domain": "Bridges",
+      "hue": 272,
+      "id": "symplectic_mirror_descent_gromov_witten_invariants",
       "primary_domain": "Bridges",
       "priority_score": null,
       "quality": "unrated",
