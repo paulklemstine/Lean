@@ -7,7 +7,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2025-01-01",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
@@ -25,7 +25,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
@@ -43,7 +43,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08T19:03:25Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "arithmetic_mirror_symmetry_for_calabi_yau",
@@ -52,7 +52,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
@@ -61,7 +61,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "causal_integration_algebra__a_rigorous_lattice_t",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 90
+      "hue": 292
     },
     {
       "id": "dream_logic_non_monotone_reasoning_where_contradic",
@@ -79,7 +79,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "entropy_bounded_computation_ebc_framew",
@@ -88,7 +88,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "impossible_geometries_where_parallel_lines_converg",
@@ -106,7 +106,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 95
+      "hue": 112
     },
     {
       "id": "symplectic_mirror_descent_gromov_witten_invariants",
@@ -124,7 +124,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 92
+      "hue": 95
     },
     {
       "id": "the_current_zaslavsky_type_bound_proves__kd_cnk__n",
@@ -142,7 +142,7 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-06-09",
-      "hue": 90
+      "hue": 91
     }
   ],
   "edges": [
