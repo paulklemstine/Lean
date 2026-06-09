@@ -1893,6 +1893,76 @@ class PiAgentClient:
 
         return assignment
 
+    def _build_v7_depth_requirements(self) -> str:
+        """v7: v6 base + structured output + proof completeness gates.
+
+        Key differences from v6:
+        - Requires explicit theorem declarations BEFORE proofs (structured output)
+        - Proof completeness gate: every theorem must have a compiling proof or
+          be explicitly marked as a conjecture
+        - No orphan sorry: if a theorem uses sorry, it must state which lemma it
+          replaces and why the full proof is deferred
+        - Explicitly asks for a counterexample or boundary case for the main result
+        """
+        return textwrap.dedent("""\
+            ## v7 Depth Requirements — Structured Proofs with Completeness Gates
+
+            You are producing Lean 4 code on the mathematical frontier. Your output must
+            be COMPILABLE and your proofs must be COMPLETE. A single correct proof of a
+            non-trivial result is worth more than 5 theorems with `sorry`.
+
+            ### STEP 1: THEOREM DECLARATIONS (required — before any code)
+
+            List every theorem you intend to prove. For each, state:
+            - **Name**: The Lean declaration name
+            - **Statement**: One-sentence informal statement
+            - **Status**: `proved` | `conjecture` | `proved_with_lemma_sorry`
+            - **Why non-trivial**: One sentence on the key mathematical insight
+
+            Example:
+            1. `cantorPairing_surjective`: Cantor pairing is surjective — proved — constructive inverse
+            2. `cantorPairing_injective`: Cantor pairing is injective — proved — diagonal argument
+            3. `cantorPairing_bijection`: Cantor pairing is a bijection — proved_with_lemma_sorry — follows from 1+2
+
+            ### STEP 2: PROVE THEOREMS (completeness gate)
+
+            Every theorem declared as `proved` MUST have a complete, compiling Lean proof.
+            No `sorry` on the main result. If you cannot complete a proof, change its status
+            to `conjecture` or `proved_with_lemma_sorry` and explain why.
+
+            For `proved_with_lemma_sorry`:
+            - The theorem statement must be complete (no sorry in the statement)
+            - `sorry` is allowed ONLY in supporting lemmas, never the main proof
+            - A comment must explain what the sorry replaces and why it's deferred
+
+            For your BEST theorem, also provide:
+            - A generalization or strengthening (can use sorry if proving would take too long)
+            - A boundary case or counterexample showing where the result fails
+
+            ### STEP 3: Anti-patterns (reject these)
+
+            These tactics indicate trivial proofs:
+            - `native_decide` / `decide` / `norm_num` / `rfl` — unless genuinely proving a numeric fact
+            - `simp only []` with no simp set specified
+            - `sorry` on any theorem declared as `proved`
+
+            `omega`, `linarith`, and `Aesop` are fine for supporting lemmas.
+            `sorry` is fine for conjectures and generalizations.
+
+            ### STEP 4: Novelty
+
+            Your theorems must be genuinely new. If a statement appears in a textbook,
+            generalize it. If you cannot formalize a concept rigorously, pick a different topic.
+
+            ### Output format
+
+            Your output must include:
+            1. `.lean` files with the proofs (structured as declared in Step 1)
+            2. `FUTURE_DIRECTIONS.md` with 3-5 research conjectures extending the work
+
+            Both are required. Missing FUTURE_DIRECTIONS.md = automatic quality penalty.
+        """)
+
     def write_aristotle_prompt(
         self,
         concept: ResearchConcept,
@@ -1973,10 +2043,12 @@ class PiAgentClient:
             prompt_version = "v6"
         if prompt_version == "v1":
             raise ValueError(
-                "v1 prompt is no longer supported — use v3, v4, v5, or v6. "
+                "v1 prompt is no longer supported — use v3, v4, v5, v6, or v7. "
                 "v6 (correctness-first) is the default."
             )
-        if prompt_version == "v6":
+        if prompt_version == "v7":
+            depth_requirements = self._build_v7_depth_requirements()
+        elif prompt_version == "v6":
             depth_requirements = self._build_v6_depth_requirements()
         elif prompt_version == "v5":
             depth_requirements = self._build_v5_depth_requirements()
@@ -2005,7 +2077,7 @@ class PiAgentClient:
 
         # Phase A header — explicit DO NOT list.
         # v6/v5 have flexible file/theorem counts; v3/v4 keep 1-3 files / 3-5 theorems.
-        if prompt_version in ("v5", "v6"):
+        if prompt_version in ("v5", "v6", "v7"):
             deliverable_files = "lean files (count chosen by the Plan)"
             deliverable_theorems = "2-4 theorems with correct proofs (sorry = 0 on main results)"
         else:
@@ -2367,10 +2439,12 @@ make it beautiful to read.
             prompt_version = "v6"
         if prompt_version == "v1":
             raise ValueError(
-                "v1 prompt is no longer supported — use v3, v4, v5, or v6. "
+                "v1 prompt is no longer supported — use v3, v4, v5, v6, or v7. "
                 "v6 (correctness-first) is the default."
             )
-        if prompt_version == "v6":
+        if prompt_version == "v7":
+            depth_requirements = self._build_v7_depth_requirements()
+        elif prompt_version == "v6":
             depth_requirements = self._build_v6_depth_requirements()
         elif prompt_version == "v5":
             depth_requirements = self._build_v5_depth_requirements()

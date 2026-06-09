@@ -83,10 +83,9 @@ PACKAGES_DIR = REPO_ROOT / "Catalog" / "Applications" / "Packages"
 
 
 def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
-    """Print v3 vs v4 prompt A/B test summary from cycle_analytics.json.
+    """Print prompt version A/B test summary from cycle_analytics.json.
 
     Shows avg quality, world_class rate, duration, and the winner per version.
-    Updated after the A/B test that showed v4 wins (+6.6% quality, +12% faster).
     Also shows Phase A/B split stats.
     """
     try:
@@ -102,8 +101,8 @@ def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
         for r in records:
             v = r.get("prompt_version", "unknown")
             by_ver.setdefault(v, []).append(r)
-        lines = ["[A/B] Prompt version stats (v4 is the default, winner):"]
-        for v in ("v1", "v3", "v4", "v5"):
+        lines = ["[A/B] Prompt version stats:"]
+        for v in ("v3", "v4", "v5", "v6", "v7"):
             rs = by_ver.get(v, [])
             if not rs:
                 continue
@@ -114,15 +113,17 @@ def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
             avg_dur = sum(durs) / len(durs) if durs else 0
             lines.append(f"  {v}: n={n:3d} avg_Q={avg_q:.3f} wc={wc}/{n} ({100*wc/n:.0f}%) avg_dur={avg_dur:.0f}min")
         # Last 20 only, to keep it fresh
-        recent = [r for r in records[-20:] if r.get("prompt_version") in ("v3", "v4", "v5")]
+        recent = [r for r in records[-20:] if r.get("prompt_version") in ("v4", "v5", "v6", "v7")]
         if recent:
-            v5q = sum(r.get("quality_score", 0) for r in recent if r.get("prompt_version") == "v5") / max(1, sum(1 for r in recent if r.get("prompt_version") == "v5"))
-            v4q = sum(r.get("quality_score", 0) for r in recent if r.get("prompt_version") == "v4") / max(1, sum(1 for r in recent if r.get("prompt_version") == "v4"))
-            v3q = sum(r.get("quality_score", 0) for r in recent if r.get("prompt_version") == "v3") / max(1, sum(1 for r in recent if r.get("prompt_version") == "v3"))
-            # Determine leader among all present
-            scores = {"v5": v5q, "v4": v4q, "v3": v3q}
-            leader = max(scores, key=scores.get)
-            lines.append(f"  Last 20: v5={v5q:.3f} v4={v4q:.3f} v3={v3q:.3f} -> {leader} leading")
+            scores = {}
+            for v in ("v4", "v5", "v6", "v7"):
+                vrs = [r for r in recent if r.get("prompt_version") == v]
+                if vrs:
+                    scores[v] = sum(r.get("quality_score", 0) for r in vrs) / len(vrs)
+            if scores:
+                leader = max(scores, key=scores.get)
+                score_str = " ".join(f"{v}={q:.3f}" for v, q in scores.items())
+                lines.append(f"  Last 20: {score_str} -> {leader} leading")
 
         # Phase A/B split stats
         try:

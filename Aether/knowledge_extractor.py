@@ -288,17 +288,19 @@ class KnowledgeExtractor:
         except Exception:
             pass
 
-        # Compute p70 of recent quality_score values
+        # Compute p60 of recent quality_score values
         recent = records[-50:]
         scores = sorted(r.get("quality_score", 0.0) for r in recent)
         if not scores:
             return 0.5
-        p70_idx = int(0.7 * (len(scores) - 1))
-        threshold = scores[p70_idx]
-        # Clamp to [0.35, 0.6] — never gate too aggressively or too leniently.
-        # Lowered floor from 0.4 to 0.35: with avg Q=0.30 and median=0.24,
-        # a 0.4 floor only lets ~21% through to Phase B, starving the pipeline.
-        threshold = max(0.35, min(0.6, threshold))
+        p60_idx = int(0.6 * (len(scores) - 1))
+        threshold = scores[p60_idx]
+        # Clamp to [0.30, 0.6] — never gate too aggressively or too leniently.
+        # Lowered floor from 0.35 to 0.30: v6's 87% packaging rate means most
+        # Phase A results are high quality, so a lower threshold lets more
+        # through without sacrificing quality. Shifted from p70 to p60 for
+        # same reason — let the top 40% through instead of top 30%.
+        threshold = max(0.30, min(0.6, threshold))
 
         # Cache
         try:
@@ -653,16 +655,16 @@ class KnowledgeExtractor:
             md5_hash = int(hashlib.md5(job.job_id.encode()).hexdigest(), 16)
         else:
             md5_hash = job.cycle_n
-        # A/B split: 80% v6, 15% v5, 5% v4
-        # v6 (correctness-first) dominates to accelerate A/B data collection.
-        # v5/v4 kept at reduced rates for comparison baseline.
+        # A/B split: 90% v6, 10% v7
+        # v6 (correctness-first) is the dominant production prompt.
+        # v7 (structured output + proof completeness gates) is being tested
+        # to evaluate whether explicit theorem declarations and completeness
+        # gates improve proof quality and reduce sorry rates.
         bucket = md5_hash % 1000
-        if bucket < 800:
+        if bucket < 900:
             phase_a_version = "v6"
-        elif bucket < 950:
-            phase_a_version = "v5"
         else:
-            phase_a_version = "v4"
+            phase_a_version = "v7"
         job.prompt_version = phase_a_version  # legacy field
         job.phase = "A"  # Two-phase: this is Phase A (math)
         job.phase_a_prompt_version = phase_a_version
@@ -2854,9 +2856,11 @@ Research mode: {concept.research_mode}
         if modules:
             pkg["modules"] = modules
 
-        # Inject date from cycle completion time
-        if not pkg.get("date"):
-            pkg["date"] = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+        # Always set date to when this package was created for the website,
+        # not whatever Aristotle may have put in the JSON. This ensures the
+        # displayed date reflects when the research was packaged, not some
+        # arbitrary timestamp from the LLM output.
+        pkg["date"] = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
 
         # Inject provenance: which experiment produced this package
         if hasattr(job, 'job_id') and job.job_id:
