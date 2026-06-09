@@ -524,21 +524,6 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
             del extractor.inflight[pid]
         print(f"[Tick] Pruned {len(stale_keys)} completed jobs from inflight")
 
-    # Hard cap: if inflight exceeds max_inflight (e.g. stalled jobs), force-fail
-    # the oldest running jobs to free slots.  This prevents the 13/9 scenario
-    # where stalled-at-0% jobs consume inflight slots indefinitely.
-    active_jobs = {pid: j for pid, j in extractor.inflight.items()
-                   if j.status not in ("completed", "failed", "integrated", "rejected")}
-    if len(active_jobs) > max_inflight:
-        overflow = len(active_jobs) - max_inflight
-        # Sort by dispatch time — oldest first
-        by_age = sorted(active_jobs.items(), key=lambda x: getattr(x[1], 'dispatch_time', '') or '')
-        for pid, job in by_age[:overflow]:
-            job.status = "failed"
-            job.error_message = "Force-killed: inflight overflow"
-            del extractor.inflight[pid]
-            extractor._quarantine_direction_for_job(job, days=7)
-        print(f"[Tick] Force-killed {overflow} overflow jobs to enforce max_inflight={max_inflight}")
 
     # ── Self-healing: auto-prune low-quality directions ──
     try:
@@ -732,7 +717,7 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
     # 3. Dispatch new jobs up to max_inflight (with novelty track)
     current_inflight = len([j for j in extractor.inflight.values()
                            if j.status not in ("completed", "failed", "integrated", "rejected")])
-    slots_available = max_inflight - current_inflight
+    slots_available = max(0, max_inflight - current_inflight)  # never go negative
 
     # Domain saturation: exclude domains with ≥3 inflight jobs from new dispatches
     from collections import Counter
