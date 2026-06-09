@@ -7,7 +7,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2025-01-01",
-      "hue": 270
+      "hue": 95
     },
     {
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
@@ -25,7 +25,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08",
-      "hue": 271
+      "hue": 112
     },
     {
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
@@ -43,7 +43,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08T19:03:25Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "arithmetic_mirror_symmetry_for_calabi_yau",
@@ -52,7 +52,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 292
+      "hue": 91
     },
     {
       "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
@@ -61,7 +61,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 112
+      "hue": 134
     },
     {
       "id": "causal_integration_algebra__a_rigorous_lattice_t",
@@ -70,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "entropy_bounded_computation_ebc_framew",
@@ -79,7 +79,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 270
+      "hue": 275
     },
     {
       "id": "impossible_geometries_where_parallel_lines_converg",
@@ -88,7 +88,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-09",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "p_vs_np_problem",
@@ -115,9 +115,26 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 314
+      "hue": 90
+    },
+    {
+      "id": "this_document_describes_five_research_conjectures_",
+      "title": "Certified Robustness for Sequential-Elimination Classifiers via Gap Certificates",
+      "domain": "Pythagorean",
+      "primary_domain": "Pythagorean",
+      "shape": "triangular_prism",
+      "date": "2026-06-09",
+      "hue": 90
     }
   ],
-  "edges": [],
+  "edges": [
+    {
+      "source": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
+      "target": "this_document_describes_five_research_conjectures_",
+      "strength": 1.0,
+      "label": "inspired by",
+      "type": "provenance"
+    }
+  ],
   "domain_bridges": []
 }
