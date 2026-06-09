@@ -301,6 +301,13 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
         completed_jobs = await extractor.poll_all()
         print(f"[Tick] {len(completed_jobs)} jobs completed since last tick")
 
+    # Recover already-completed jobs that weren't integrated (e.g., after restart)
+    recovered = [j for j in extractor.inflight.values()
+                if j.status == "completed" and j not in completed_jobs]
+    if recovered:
+        print(f"[Tick] Recovered {len(recovered)} previously-completed jobs for integration")
+        completed_jobs.extend(recovered)
+
     # 2. Integrate completed jobs
     for job in completed_jobs:
         if job.status != "completed":
