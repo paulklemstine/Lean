@@ -1,1 +1,0 @@
-../../Bridges/TropicalStoneDuality/Reconstruction.lean
