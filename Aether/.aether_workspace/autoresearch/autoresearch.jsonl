@@ -129,6 +129,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 {"timestamp": 1781005027.1516926, "experiment_id": "f9c3366c", "concept_title": "Close Proofs: This document describes five research conjectures extending the", "concept_domain": "Applications", "research_mode": "team", "quality": "partial", "quality_score": 0.38632137600826466, "catalog_references": [], "prompt_length": 4860, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781005090.7884336, "experiment_id": "743db091", "concept_title": "**Conjecture:** If `{f_t}_{t ∈ [0,1]}` is a continuous family of contracting cau", "concept_domain": "Geometry", "research_mode": "team", "quality": "partial", "quality_score": 0.4240429527390678, "catalog_references": [], "prompt_length": 14206, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781005152.0211859, "experiment_id": "cb6d03de", "concept_title": "Tropical Amoebas and Ronkin Functions", "concept_domain": "Applications", "research_mode": "team", "quality": "partial", "quality_score": 0.4228838627888345, "catalog_references": [], "prompt_length": 4581, "files_placed": 0, "status": "discard"}
@@ -206,3 +207,5 @@
 {"timestamp": 1781024277.2015986, "experiment_id": "00126c0b", "concept_title": "Formal obstruction theory for EML-solvability of linear", "concept_domain": "Bridges", "research_mode": "team", "quality": "partial", "quality_score": 0.4664737281553398, "catalog_references": [], "prompt_length": 25567, "files_placed": 43, "status": "discard"}
 {"timestamp": 1781024504.6993957, "experiment_id": "1f2f8815", "concept_title": "Diffusion Models as Stochastic Differential Equations", "concept_domain": "MachineLearning", "research_mode": "team", "quality": "partial", "quality_score": 0.41977631987577635, "catalog_references": [], "prompt_length": 4971, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781024548.9449112, "experiment_id": "00126c0b", "concept_title": "Formal obstruction theory for EML-solvability of linear", "concept_domain": "Bridges", "research_mode": "team", "quality": "partial", "quality_score": 0.38646674999999997, "catalog_references": [], "prompt_length": 25567, "files_placed": 8, "status": "discard"}
+=======
+>>>>>>> Stashed changes
