@@ -1,1 +1,0 @@
-../../Computation/StillLife.lean

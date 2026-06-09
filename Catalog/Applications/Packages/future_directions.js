@@ -222,21 +222,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
-    "domains": [
-      "Logic",
-      "Algebra"
-    ],
-    "id": "seed_056",
-    "priority_score": 0.91,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-08T19:25:04.360894+00:00",
-    "title": "Self-Modifying Research via Reflective Type Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "The key insight is that every directed graph G has a zeta function zeta_G(s) = prod(1 - lambda^{-s})^{-1} where the product is over eigenvalues of the graph's adjacency matrix, and the Riemann Hypothesis for this function is equivalent to a purely combinatorial condition on G. Conjecture: For a directed graph G with n vertices, zeta_G(s) satisfies the Riemann Hypothesis (all non-trivial zeros lie on Re(s) = 1/2) if and only if G is a Ramanujan digraph: every eigenvalue lambda of the adjacency matrix satisfies |lambda| <= 2 sqrt(d-1) where d is the maximum out-degree. This is the directed graph analog of the Ramanujan graph theorem of Lubotzky-Phillips-Sarnak. Why now: the undirected case is settled (Ramanujan graphs exist and have optimal spectral gap), but the directed case is wide open. Recent work by Lubetzky and Peres (2016) on cutoff on directed Ramanujan graphs suggests the spectral gap characterization extends. Test: prove the conjecture for directed Cayley graphs of finite groups, then verify computationally for random directed d-regular graphs with n=20, 50, 100 vertices. Impact: a combinatorial Riemann Hypothesis \u2014 if true, it means the deepest mystery of number theory has a purely graph-theoretic characterization.",
     "domains": [
       "Algebra"
@@ -263,21 +248,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:11.683325+00:00",
     "title": "Standard Conjectures on Algebraic Cycles"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the Whitehead problem (every Whitehead group is free) is independent of ZFC. Formalize Shelah's undecidability proof: consistent both ways.",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "seed_233",
-    "priority_score": 0.91,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-08T19:25:17.429886+00:00",
-    "title": "Whitehead Problem: Independence from ZFC"
   },
   {
     "consumed_by_exp_id": "",
@@ -398,21 +368,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Resolution of Singularities in Positive Characteristic"
   },
   {
-    "consumed_by_exp_id": "2c51cdc5",
-    "description": "Formalize the consistency strength hierarchy: inaccessible < Mahlo < measurable < strong < supercompact < huge. Prove strictness results.",
-    "domains": [
-      "Logic",
-      "Novelty"
-    ],
-    "id": "seed_234",
-    "priority_score": 0.89,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:25:17.622192+00:00",
-    "title": "Large Cardinal Hierarchy: Consistency Strength"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that a Hadamard matrix exists for every positive multiple of 4. Formalize known constructions (Sylvester, Paley, tensor products) and establish bounds on the smallest open order. Connect to combinatorial designs, error-correcting codes, and signal processing.",
     "domains": [
@@ -498,20 +453,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:20.401327+00:00",
     "title": "Topological Data Analysis: Persistent Homology Stability"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that for every positive integer n, there exists a prime between n\u00b2 and (n+1)\u00b2. Formalize known partial results on prime gaps and connect to the Cram\u00e9r model of primes.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_024",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-08T19:25:00.735432+00:00",
-    "title": "Legendre's Conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -602,7 +543,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory Foundations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9ff1d7e2",
     "description": "The Hausdorff dimension is normally a metric property, not a topological one. Investigate whether it can be made topological through the lens of fractal topology. Define the fractal topological dimension d_f(X) of a metric space X as the infimum of d such that X embeds in R^d with Hausdorff dimension preserved. Conjecture: For compact metric spaces, the Hausdorff dimension is a topological invariant modulo homeomorphisms that are bi-Lipschitz on a dense open set. More precisely, if X and Y are homeomorphic compact subsets of R^n, and the homeomorphism is bi-Lipschitz on a set of full Hausdorff dimension in X, then dim_H(X) = dim_H(Y). This would mean that fractal dimension is not just a metric accident but a topological invariant up to rough isometries. Test: compute d_f for the Sierpinski gasket (expected: 1 since connected, Hausdorff dimension log3/log2) and the Cantor set (expected: 0 since totally disconnected). Prove that the Koch curve and any bi-Lipschitz-equivalent curve have equal Hausdorff dimensions. Impact: elevates fractal dimension from a metric curiosity to a topological invariant, with applications to shape classification and topological data analysis.",
     "domains": [
       "Geometry"
@@ -611,7 +552,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:05.913849+00:00",
     "title": "Fractal Topology: Hausdorff Dimension as a Topological Invariant"
   },
@@ -824,7 +765,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4af997a7",
     "description": "Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciousness can have a zombie twin that is functionally identical but experientially void. Show this gap is isomorphic to G\u00f6del's incompleteness gap.",
     "domains": [
       "Novelty",
@@ -834,7 +775,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:31.042804+00:00",
     "title": "Zombies and Qualia: Mathematics of Subjective Experience"
   },
@@ -884,7 +825,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Temporal Logic of Proofs: When You Prove Something Matters"
   },
   {
-    "consumed_by_exp_id": "aecfaf36",
+    "consumed_by_exp_id": "",
     "description": "Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time can be simulated by a polynomial-time Turing machine (Extended Church-Turing thesis). Show that if P = NP, then the second law of thermodynamics would be violated because Maxwell's demon could be implemented efficiently.",
     "domains": [
       "Novelty",
@@ -894,7 +835,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:08.713166+00:00",
     "title": "Speculative: Computational Complexity as Physical Law"
   },
@@ -944,20 +885,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that Wall-Sun-Sun primes exist (primes p where p\u00b2 divides F_{p-(p|5)}). Formalize the connection to Fermat's Last Theorem and establish search bounds for the first such prime.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_207",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-08T19:25:08.870932+00:00",
-    "title": "Wall-Sun-Sun Primes"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the connective constant for the self-avoiding walk on Z\u00b2 equals (2+\u221a2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
     "domains": [
       "Computation",
@@ -987,7 +914,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Algebraic Statistics: Markov Bases for Contingency Tables"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1c021f3c",
     "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set \u2014 they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line \u2014 they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line \u2014 they are a fractal curve.",
     "domains": [
       "Novelty",
@@ -997,7 +924,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.589354+00:00",
     "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
@@ -1043,34 +970,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:02.571310+00:00",
     "title": "Jacobian Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the gap between consecutive primes p_n satisfies p_{n+1} - p_n = O((log p_n)\u00b2). Formalize probabilistic models of primes and known unconditional bounds.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_037",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-08T19:25:03.180355+00:00",
-    "title": "Cram\u00e9r's Conjecture on Prime Gaps"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the union of k k-uniform intersecting hypergraphs has chromatic number at most k. Formalize the linear hypergraph version and recent probabilistic approaches.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_212",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-08T19:25:09.877085+00:00",
-    "title": "Erd\u0151s-Faber-Lov\u00e1sz Conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -1133,34 +1032,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that the Euler-Mascheroni constant \u03b3 \u2248 0.5772 is irrational (or transcendental). Formalize continued fraction expansions and connect to the theory of special values of L-functions.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_027",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-08T19:25:01.338705+00:00",
-    "title": "Euler-Mascheroni Constant Irrationality"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that if A^x + B^y = C^z where A,B,C,x,y,z are positive integers with x,y,z > 2, then A,B,C share a common prime factor. Formalize the connection to Fermat-Catalan and ABC conjecture.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_036",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-08T19:25:02.987606+00:00",
-    "title": "Beal's Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "A proof is a sequence of steps. Map each step to a point on S^n via stereographic projection. The proof distance between theorems is the spherical distance between their proof endpoints. Conjecture: Two theorems whose proofs are close in spherical distance share a common subproof of length at least n minus spherical_distance. Test: compute proof distances for a set of 20 basic theorems in Lean 4 and verify the subproof bound. Impact: geometric proof mining and automated lemma discovery.",
     "domains": [
       "Geometry",
@@ -1187,21 +1058,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:08.676107+00:00",
     "title": "Brocard's Problem: n! + 1 = m\u00b2"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that every graph on at least 3 vertices is determined up to isomorphism by its deck of vertex-deleted subgraphs. Formalize Kelly's lemma and prove for specific graph classes.",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "seed_215",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-08T19:25:10.494305+00:00",
-    "title": "Reconstruction Conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -1323,48 +1179,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that for every finite union-closed family of sets (not all empty), some element belongs to at least half the sets. Formalize the lattice-theoretic reformulation and known partial results.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_031",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-08T19:25:01.987080+00:00",
-    "title": "Frankl's Union-Closed Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Characterize numbers representable as a sum of three squares of primes. Formalize the circle method approach to ternary Goldbach-type problems for squares.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_209",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-08T19:25:09.281210+00:00",
-    "title": "Legendre's Three-Square Theorem Extension"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that for every polynomial with all roots in the closed unit disk, every root has a critical point within distance 1 of it. Formalize known partial results and the connection to Gauss-Lucas.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_220",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-08T19:25:11.463002+00:00",
-    "title": "Sendov's Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Determine whether Lehmer's polynomial has the smallest Mahler measure among non-cyclotomic polynomials. Formalize the Mahler measure and its connections to heights, entropy, and algebraic dynamics.",
     "domains": [
       "Algebra"
@@ -1376,62 +1190,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:01.145793+00:00",
     "title": "Lehmer's Mahler Measure Problem"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that every tree admits a graceful labeling. Formalize known results for paths, caterpillars, and olive trees. Explore connections to decompositions of complete graphs.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_214",
-    "priority_score": 0.79,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-08T19:25:10.274474+00:00",
-    "title": "Graceful Tree Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Find a formula for the probability that two elements chosen uniformly at random generate the symmetric group S_n. Formalize known asymptotic results and connect to the theory of random permutations.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_009",
-    "priority_score": 0.78,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-08T19:24:57.744824+00:00",
-    "title": "Symmetric Group Generation Probability"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Resolve whether the general 7th-degree equation can be solved using functions of only 2 variables. Formalize Kolmogorov's superposition theorem and explore its implications for approximation theory.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_021",
-    "priority_score": 0.78,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-08T19:25:00.118535+00:00",
-    "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_032",
-    "priority_score": 0.77,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-08T19:25:02.177753+00:00",
-    "title": "Erd\u0151s\u2013Straus Conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -1870,36 +1628,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions: Polymodal Provability Logic and GL Frame Theory\n\n## What We Built\n\nThis cycle formalized **polymodal provability logic (GLP)** and the **categorical structure of GL frames** in Lean 4, extending the existing single-modal GL framework in the catalog. The key contributions are:\n\n1. **GLP Frame Hierarchy** (`GLPFrame`, `glp_loeb_at_level`, `glp_no_cross_cycle`): GLP frames with \u2115-indexed nested accessibility relations, where each level is a valid GL frame and no cycles can span different levels.\n\n2. **P-Morphism Truth Lemma** (`pmorphism_truth_lemma`): Bounded morphisms preserve and reflect forcing under pullback valuation \u2014 the semantic backbone of GL model theory, proved axiom-free.\n\n3. **Products and Coproducts** (`GLFrame.prod`, `GLFrame.sum`, `GLFrame.iProduct`): GL frames are closed under synchronized products, indexed products, and disjoint unions, with the second incompleteness theorem propagating through products.\n\n4. **Order-Theoretic Bridge** (`GLFrame.toWFSPO`, `WFSPO.toGLFrame`): GL frames are exactly well-founded strict partial orders, with round-trip theorems confirming the equivalence.\n\n---\n\n## Direction 1: Solovay Completeness for Finite GL Frames\n\n**Conjecture**: Every formula valid in all *finite* transitive irreflexive frames is provable in GL, and conversely. This completeness theorem would close the loop between our Kripke semantics and the Hilbert-style axiom system for GL.\n\nThe key insight is that GL has the finite model property: any formula not provable in GL can be refuted in a finite GL frame. This means our existing frame-theoretic infrastructure (products, p-morphisms, etc.) is sufficient to study the full logic \u2014 we don't need infinite frames for completeness.\n\nWhy now? We have p-morphisms and the truth lemma, which are the essential tools for filtration arguments. The filtration construction takes an infinite GL frame and a finite formula, and produces a finite frame refuting the same formula. With the truth lemma already proved, the remaining work is: (a) define a Hilbert-style proof system for GL, (b) prove soundness (easy given `loeb_valid`), (c) prove completeness via canonical model + filtration.\n\n---\n\n## Direction 2: GLP and Proof-Theoretic Ordinal Assignment\n\n**Conjecture**: GLP frames admit a well-defined ordinal assignment function `ord : W \u2192 Ordinal` satisfying: if R_n(w,v) then ord(v) < ord(w), and the ordinal of a \"standard world\" under R\u2080 corresponds to the proof-theoretic ordinal of the theory (e.g., \u03b5\u2080 for PA).\n\nThe key insight is that the nesting R\u2080 \u2287 R\u2081 \u2287 \u00b7\u00b7\u00b7 creates a refined ordinal structure: the R_n-depth of a world gives its \"n-th ordinal coordinate.\" Japaridze showed that GLP can compute proof-theoretic ordinals via the worm sequence, and our `glp_nesting_le` theorem provides the algebraic foundation for this.\n\nWhy now? The `GLPFrame.level` extraction and `glp_nesting_le` give us the tools to define depth functions at each level. The next step is to define the ordinal assignment via well-founded recursion on R\u2080 (using `R_wf 0`), prove it's strictly decreasing, and construct a concrete GLP frame on `Ordinal` that models PA's provability hierarchy.\n\n---\n\n## Direction 3: De Jongh\u2013Sambin Fixed-Point Theorem via P-Morphisms\n\n**Conjecture**: For any modal formula \u03c6(p) where p occurs only within the scope of \u25a1, there exists a formula \u03c8 (not containing p) such that the L\u00f6b-formula equivalence \u03c8 \u2194 \u03c6(\u03c8) is valid in all GL frames. Moreover, the fixed point \u03c8 is unique up to frame validity.\n\nThe key insight is that the \"modalized\" condition (p only under \u25a1) ensures the substitution \u03c6(p) \u21a6 \u03c6(\u03c8) is well-behaved with respect to forcing: the box modality absorbs the substitution's complexity. The p-morphism truth lemma (`pmorphism_truth_lemma`) provides the technical machinery to transfer fixed-point constructions between frames.\n\nWhy now? The truth lemma and the explicit formula language (`MFormula`) give us a solid foundation for defining substitution and the \"modalized\" predicate. The proof would use well-founded induction on the modal depth of p's occurrences and L\u00f6b's theorem (`loeb_valid`) at each step.\n\n---\n\n## Direction 4: Tangling Propagation in the Category of GL Frames\n\n**Conjecture**: The category of GL frames with p-morphisms has finite limits and colimits, and the \"tangling\" property (that a sound world cannot prove its own consistency) is preserved by all categorical constructions. In particular, the pullback of two GL frames along p-morphisms is a GL frame, and tangling in the pullback implies tangling in at least one factor.\n\nThe key insight is that p-morphisms already form a category (composition is `PMorphism.comp`, identity is `PMorphism.id`), and the truth lemma ensures that validity \u2014 and hence tangling \u2014 transfers correctly. Pullbacks would give \"synchronized products along a common quotient,\" which is the natural construction for combining proof systems that share a common sub-theory.\n\nWhy now? We have `PMorphism.comp`, `PMorphism.id`, `GLFrame.prod`, `GLFrame.sum`, and `PMorphism.inl`/`PMorphism.inr`. The missing piece is the pullback construction and the universal property proofs. The truth lemma makes the tangling-preservation argument straightforward once the pullback is constructed.\n\n---\n\n## Direction 5: Computational Depth Functions and Decidability\n\n**Conjecture**: For any fixed formula \u03c6 of modal depth d, GL-validity of \u03c6 is decidable by checking validity in all GL frames of size \u2264 2^(2^d). This gives an explicit upper bound on the complexity of GL-satisfiability and connects our semantic framework to algorithmic logic.\n\nThe key insight is that the finite model property + our product construction gives a concrete bound: the filtration of the canonical model through a formula of depth d produces a frame of bounded size. The `GLFrame.iProduct` construction shows that the search space is finite when restricted to finite frames of bounded size.\n\nWhy now? The product and coproduct constructions provide the algebraic tools to build and decompose finite frames systematically. The order-theoretic bridge (`GLFrame.toWFSPO`) connects to Mathlib's extensive library on finite partial orders, which includes enumeration and cardinality results that could automate the decidability bound computation.\n",
-    "domains": [
-      "Logic",
-      "Algebra"
-    ],
-    "id": "fd_1031",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "549f2939",
-    "status": "available",
-    "timestamp": "2026-06-08T23:16:50.552188+00:00",
-    "title": "This cycle formalized **polymodal provability logic (GLP)** and the **categorica"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Braid Group Invariants and Strand Topology\n\n## 1. The Burau Representation and its Faithfulness Boundary\n\nThe BraidSignature (writhe \u00d7 permutation) we formalized is a coarse invariant \u2014 it captures the abelianization and the symmetric group image but loses the rich non-abelian structure of the braid group. The next natural step is formalizing the *Burau representation*, which maps B_n into GL_{n-1}(\u2124[t, t\u207b\u00b9]) via matrices encoding how each strand crosses over or under its neighbors.\n\nThe key insight is that the Burau representation is known to be *unfaithful* for n \u2265 5 (Bigelow 1999), but the question remains open for n = 4. A Lean formalization could provide a constructive proof of unfaithfulness for n = 5 by exhibiting an explicit kernel element, and potentially settle the n = 4 case computationally.\n\nWhy now? Our formalization already has the generator-and-relation framework for B_n, and Mathlib's polynomial ring and matrix algebra provide the necessary algebraic infrastructure. The Burau matrices are concrete 2\u00d72 or 3\u00d73 matrices over \u2124[t], making verification tractable.\n\n**Testable prediction**: For n = 5, there exists an explicit braid word of length \u2264 20 in the kernel of the Burau representation. Search computationally by evaluating Burau matrices for all words up to length 20 and checking which give the identity matrix.\n\n## 2. Braid Group Orderability and the Dehornoy Order\n\nThe braid group B_n admits a left-invariant total order (the Dehornoy order), which is a remarkable property not shared by most non-abelian groups. This order has deep connections to set theory (arising from the self-distributive algebra of elementary embeddings) and to dynamics (via the action on the real line).\n\nThe key insight is that the Dehornoy order can be characterized purely combinatorially: a braid \u03b2 is Dehornoy-positive if every representative word can be rewritten so that the highest-index generator \u03c3_{n-1} appears only positively. This is a decidable condition, and the proof that it defines a total order uses the key lemma that every non-trivial braid is either \u03c3-positive or \u03c3-negative.\n\nWhy now? Our BraidWord type and BraidRelStep relation provide the right substrate for formalizing word-rewriting arguments. The decidability of the Dehornoy order would give a formally verified comparison function on braids \u2014 a tool with applications in knot theory and cryptography.\n\n**Testable prediction**: For every braid word w of length \u2264 10 in B_3, either w is equivalent to the identity, or exactly one of w and w\u207b\u00b9 can be rewritten using only \u03c3\u2082-positive occurrences of \u03c3\u2082. Verify computationally.\n\n## 3. Lawrence-Krammer Representation and Braid Linearity\n\nWhile the Burau representation fails to be faithful for large n, the Lawrence-Krammer representation (into GL_{n(n-1)/2}(\u2124[q\u00b11, t\u00b11])) is faithful for all n (Bigelow 2001, Krammer 2002). This solved the 70-year-old problem of whether braid groups are linear.\n\nThe key insight is that faithfulness can be reduced to a finite computation for each n: one needs to show that the representation sends non-trivial braids to non-trivial matrices, which for a given n reduces to checking that certain polynomial entries are non-zero. A formalization would provide the first machine-verified proof that B_n embeds into a matrix group.\n\nWhy now? The Lawrence-Krammer representation requires matrices over a bivariate Laurent polynomial ring, which is significantly more complex than the univariate Burau case. However, Mathlib's recent improvements to polynomial ring infrastructure (MvPolynomial, LaurentPolynomial) make this increasingly tractable. Starting with n = 3 (where the representation is 3\u00d73) would be a natural first step.\n\n**Testable prediction**: For B_3, the Lawrence-Krammer representation is injective on all braid words of length \u2264 12. Verify by computing LK matrices for all such words and checking distinctness.\n\n## 4. Garside Normal Form and the Conjugacy Problem\n\nEvery braid has a unique *Garside normal form* \u2014 a canonical representative of its equivalence class that can be computed in polynomial time. This normal form is the key to the algorithmic theory of braid groups, solving the word problem (are two braids equal?) and providing tools for the conjugacy problem (are two braids conjugate?).\n\nThe key insight is that the Garside normal form decomposes a braid into a power of the \"Garside element\" \u0394 (the half-twist) times a product of \"simple\" braids (permutation braids). The uniqueness proof relies on the lattice structure of the positive braid monoid B_n^+, where every pair of elements has a unique gcd and lcm.\n\nWhy now? Our BraidRelStep relation generates braid equivalence, but equivalence is not decidable from the presentation alone \u2014 one needs a normal form. Formalizing Garside's algorithm would give a verified decision procedure for braid equality, bridging our abstract invariant theory with computational algebra. The positive braid monoid B_n^+ can be defined as a sub-monoid of our BraidWord type restricted to positive generators.\n\n**Testable prediction**: In B_4, every positive braid word of length \u2264 10 has a unique Garside normal form of length \u2264 10. Compute normal forms for all such words and verify uniqueness.\n\n## 5. Topological Quantum Computing: Jones Polynomial via Braid Traces\n\nThe deepest connection between braid groups and physics is the Jones polynomial, which arises as a trace of the braid group representation into the Temperley-Lieb algebra. For a braid \u03b2 \u2208 B_n, the Jones polynomial of its closure (the link obtained by connecting the top and bottom endpoints) is V_\u03b2(t) = (\u22121)^{n-1} \u00b7 t^{(n\u22121\u2212w)/2} \u00b7 Tr(\u03c1(\u03b2)), where \u03c1 is the Temperley-Lieb representation and w is the writhe.\n\nThe key insight is that the writhe correction factor \u2014 which we have already formalized \u2014 is essential: without it, the trace is only a Markov trace (invariant under conjugation and stabilization), not a link invariant. Our writhe_braidEquiv theorem provides half of the Jones polynomial's invariance proof; the other half requires formalizing the Temperley-Lieb algebra and its trace.\n\nWhy now? The existing Catalog file BraidingUniversality.lean already contains a formalization of the Temperley-Lieb algebra. Connecting our BraidSignature framework to that existing work would create a cross-domain bridge theorem: the Jones polynomial as a composition of the braid-to-TL representation with the Markov trace, corrected by the writhe. This would be the first formally verified construction of a quantum knot invariant.\n\n**Testable prediction**: For the trefoil braid \u03c3\u2081\u00b3 \u2208 B_3, the Jones polynomial of its closure equals \u2212t\u207b\u2074 + t\u207b\u00b3 + t\u207b\u00b9. Compute via the Temperley-Lieb trace and verify against the known value.\n",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_1032",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "a2ba6239",
-    "status": "available",
-    "timestamp": "2026-06-08T23:17:28.751887+00:00",
-    "title": "The BraidSignature (writhe \u00d7 permutation) we formalized is a coarse invariant \u2014 "
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future Directions: Time Travel Consistency\n\n## 1. Multi-Loop Causal Networks\n\nThe current formalization handles single closed timelike curves and their pairwise composition. A natural extension is to formalize *networks* of interacting causal loops \u2014 where the output of one CTC feeds into the input of another, possibly with feedback cycles. This corresponds to a directed graph where each edge carries a contraction mapping, and consistency requires a simultaneous fixed point of the entire network.\n\nThe key insight is that a network of n interacting causal loops with individual contraction constants K\u2081, ..., K\u2099 can be modeled as a single contraction on the product space X\u2081 \u00d7 ... \u00d7 X\u2099, but the effective contraction constant depends on the spectral radius of the network's adjacency matrix weighted by the K\u1d62. When this spectral radius is < 1, the whole network has a unique consistent history.\n\nWhy now? The composition theorem (`causal_composition_contracting`) and stability result (`consistent_history_stability`) provide the building blocks. The next step is formalizing the graph structure and proving the spectral radius criterion.\n\n## 2. Non-Contractive Consistency via Topological Fixed-Point Theorems\n\nOur formalization of Edelstein's theorem (`novikov_edelstein`) handles strict contractions on compact spaces. The natural next frontier is proving Novikov-type consistency for merely *continuous* causal evolutions on compact convex subsets of Banach spaces, via the Schauder fixed-point theorem. This would formalize the physical expectation that causal consistency holds even when the evolution operator is not contracting \u2014 it merely needs to map a compact convex \"state space\" into itself.\n\nThe key insight is that Schauder's theorem (the infinite-dimensional Brouwer theorem) guarantees existence but not uniqueness, corresponding to the physical possibility of multiple self-consistent histories. Formalizing this would require building or connecting to Mathlib's theory of compact operators and the Schauder theorem.\n\nWhy now? Edelstein's theorem is proved in the current work, establishing the pattern. Mathlib's coverage of Schauder/Brouwer fixed-point theorems is growing, making this increasingly tractable.\n\n## 3. Quantitative Paradox Resolution: Information-Theoretic Bounds\n\nThe grandfather paradox resolution shows that passing from {0,1} to [0,1] creates a fixed point at 1/2. But *how much* information about the initial discrete state is preserved in the continuous resolution? We conjecture that for an affine causal map x \u21a6 a + bx with |b| < 1, the entropy of the fixed-point distribution (when the initial state has a prior distribution) decreases by exactly log(1-|b|) bits.\n\nThe key insight is that the contraction constant K directly controls the information loss: the unique fixed point a/(1-b) is independent of the initial state, so all initial information is lost (entropy \u2192 0). But for *nearly* non-contracting maps (K close to 1), the convergence to the fixed point is slow, and intermediate iterates retain partial information. This connects Novikov's principle to channel capacity in information theory.\n\nWhy now? The affine contraction theorem (`affine_contracting`) and convergence rate (`novikov_convergence_rate`) provide the quantitative foundation. Formalizing the information-theoretic connection would bridge our work to coding theory.\n\n## 4. Causal Evolution Semigroups and Temporal Algebra\n\nDefine a *causal semigroup*: the set of all contracting self-maps on a fixed metric space, equipped with composition. Our `causal_composition_contracting` shows this is closed under composition. We conjecture that the map sending each causal evolution to its consistent history (fixed point) is a *continuous semigroup homomorphism* from the causal semigroup (with the sup-metric on maps) to the state space.\n\nThe key insight is that `consistent_history_stability` already shows Lipschitz dependence of the fixed point on the map. The homomorphism property would say: the consistent history of the composed evolution T\u2081 \u2218 T\u2082 equals the result of first applying T\u2082's resolution and then T\u2081's \u2014 but this is false in general! The failure of this homomorphism property is precisely what makes time travel nontrivial: the consistent history of a composition is *not* the composition of consistent histories.\n\nWhy now? The stability theorem gives the continuity half. Characterizing exactly when the homomorphism property holds (and proving it fails in general) would yield structural theorems about when time travel \"commutes.\"\n\n## 5. Stochastic Causal Evolutions and Quantum Consistency\n\nExtend the framework from deterministic contractions to *random* causal maps \u2014 where the evolution is a random operator T_\u03c9 and consistency requires E[T_\u03c9(x)] = x or T_\u03c9(x) = x almost surely. This models quantum-mechanical time travel, where the evolution through a CTC involves measurement uncertainty.\n\nThe key insight is that the Banach fixed-point theorem extends to random contractions: if E[K_\u03c9] < 1 (the expected contraction constant is less than 1), then there exists a unique consistent history *in expectation*, even if individual realizations T_\u03c9 have K_\u03c9 \u2265 1. This is a probabilistic Novikov principle: consistency holds on average even when individual histories may be paradoxical.\n\nWhy now? The deterministic theory is now complete with full PEGB. The probabilistic extension would connect to Mathlib's measure theory and probability, and to the physics literature on quantum mechanics in the presence of CTCs (Deutsch's model).\n",
     "domains": [
       "Algebra",
@@ -2004,7 +1732,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The connectivity transfer theorem (`net_connectivity_transfer`) establishes that"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "55bdd69f",
     "description": "# Future Directions: PL Hodge Theory for Neural Networks\n\n## 1. Tight Zaslavsky Bounds via Arrangement Matroid Theory\n\nThe current `zaslavsky_type_bound` proves \u2211_{k\u2264d} C(n,k) \u2264 (n+1)^d, but the\nclassical Zaslavsky theorem gives the *exact* count of regions as the characteristic\npolynomial of the arrangement's matroid evaluated at 1. For a ReLU network with\ngeneric weights, the arrangement matroid is the uniform matroid U_{d,n}, and the\nregion count equals \u2211_{k\u2264d} C(n,k) exactly.\n\n**Conjecture**: For a ReLU network with algebraically independent weights, the\nnumber of linear regions equals \u2211_{k\u2264d} C(N,k) where d is the input dimension\nand N the total neuron count.\n\nThe key insight is that \"generic\" weights correspond to the uniform matroid, and\nthe Zaslavsky formula specializes to the binomial sum. A non-generic arrangement\n(degenerate weights) has strictly fewer regions, bounded by the Tutte polynomial.\n\n**Why now?** Mathlib has matroids (`Matroid.Basic`) and characteristic polynomials.\nConnecting these to the arrangement region count via the Zaslavsky formula would\nbe a genuine formalization achievement \u2014 the classical proof uses deletion-contraction\non the matroid, which aligns perfectly with Mathlib's matroid API.\n\n## 2. Higher-Dimensional PL Hodge Numbers via Persistent Homology\n\nThe current formalization works with 2-term chain complexes (\u03b2\u2080 and \u03b2\u2081). Extending\nto full n-term chain complexes would give Betti numbers \u03b2_k for all k, with the\nbound \u03b2_k \u2264 f_k \u2264 C(N,k). The deeper question: for a fixed network architecture,\nwhich Betti number vectors (\u03b2\u2080, \u03b2\u2081, ..., \u03b2_d) are *achievable*?\n\n**Conjecture**: For a ReLU network with depth L and uniform width w in \u211d^d, the\nachievable Betti vectors form a polytope P(L,w,d) \u2282 \u211d^{d+1} with vertices at\nthe \"extremal\" configurations (maximum \u03b2_k for a single k, zero for others).\n\nThe key insight is that the face vector (f\u2080, f\u2081, ..., f_d) satisfies the\nDehn-Sommerville relations for the polyhedral complex, and these linear constraints\non face vectors translate to constraints on Betti vectors via the universal\ncoefficient theorem.\n\n**Why now?** The `betti_rank_nullity` theorem provides the exact formula \u03b2\u2081 = f\u2081 - rank(\u2202).\nExtending this to a full chain complex and computing the rank of each boundary map\nwould give all Betti numbers. Mathlib's `HomologicalComplex` provides the categorical\nframework; what's needed is the connection to finite polyhedral combinatorics.\n\n## 3. Tropical Hodge Theory: Weight Filtrations on Decision Boundaries\n\nClassical Hodge theory decomposes cohomology via the (p,q)-decomposition. For\ntropical varieties (which ReLU network decision boundaries are), there is an\nanalogous \"tropical Hodge theory\" due to Itenberg-Katzarkov-Mikhalkin-Zharkov\nwhere the Hodge filtration comes from a weight filtration on the tropical homology.\n\n**Conjecture**: For a ReLU network with L layers, the weight filtration on the\ntropical homology of the decision boundary has at most L non-trivial graded pieces.\nEach graded piece W_k/W_{k-1} has rank \u2264 \u220f_{i=1}^{L} C(w_i, k).\n\nThe key insight is that each layer of the network contributes one step of the\nweight filtration. The tropical Hodge-to-de Rham spectral sequence degenerates\nat E\u2081 for PL varieties, making the weight filtration computable from the\ncombinatorial data of the polyhedral complex.\n\n**Why now?** The `PLComplex` structure defined here, combined with the existing\ntropical algebra from `NeuralDecisionBoundary.Core`, provides the foundation.\nThe weight filtration can be defined as a sequence of submodules of the chain\ngroups, one per network layer.\n\n## 4. VC Dimension Bounds from Tropical Degree\n\nThe `product_face_bound` gives an upper bound on regions in terms of total\nneuron count. The VC dimension of a ReLU network is known to be \u0398(WL) where\nW is the total number of parameters and L is the depth. But the connection\nbetween VC dimension and the tropical degree (the degree of the tropical\npolynomial representing the network output) is not formalized.\n\n**Conjecture**: For a ReLU network f, the VC dimension of the classifier\nsign(f) equals the tropical degree of f, which equals the number of linear\npieces of f minus 1.\n\nThe key insight is that each linear piece of f corresponds to a distinct\nlabeling of training points, and the VC dimension counts the maximum number\nof points that can be shattered \u2014 which is exactly the number of distinct\nsign patterns achievable by the linear pieces.\n\n**Why now?** The `zaslavsky_type_bound` and `product_face_bound` theorems\nprovide the combinatorial bounds. Formalizing the VC dimension (which Mathlib\nlacks) and connecting it to the tropical degree would bridge learning theory\nand algebraic geometry in a machine-verified way.\n\n## 5. Effective PL Hodge Decomposition via Smith Normal Form\n\nThe `betti_rank_nullity` theorem shows \u03b2\u2081 = f\u2081 - rank(\u2202), but computing rank(\u2202)\nfor a specific network requires computing the Smith normal form of the boundary\nmatrix (over \u2124). For \u211a-coefficients, this reduces to Gaussian elimination.\n\n**Conjecture**: There exists a polynomial-time algorithm that, given a ReLU\nnetwork with rational weights, computes all Betti numbers of its decision\nboundary. The running time is O(N^\u03c9) where N is the total neuron count and\n\u03c9 is the matrix multiplication exponent.\n\nThe key insight is that the boundary matrices of the polyhedral complex are\nsparse (each cell has at most d+1 faces), so the Smith normal form computation\ncan exploit sparsity. For \u211a-coefficients, the Betti numbers equal the nullities\nof the boundary matrices, computable by Gaussian elimination.\n\n**Why now?** Mathlib has `Matrix.rank` and Gaussian elimination over fields.\nThe missing piece is connecting the abstract chain complex to concrete matrices\nwhose entries are determined by the network weights, and proving that the\nresulting computation is correct.\n",
     "domains": [
       "Algebra",
@@ -2014,7 +1742,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "fbe0932d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T01:40:52.302489+00:00",
     "title": "The current `zaslavsky_type_bound` proves \u2211_{k\u2264d} C(n,k) \u2264 (n+1)^d, but the"
   },
@@ -2440,17 +2168,63 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
+    "description": "# Future Directions: BB84 QKD Security Formalization\n\n## 1. Continuous Monotonicity and Exact QBER Threshold Computation\n\nThe current formalization proves existence of a QBER threshold Q* via the intermediate value theorem but does not pin down its exact value. A natural next step is to prove that binEntropy\u2082 is strictly increasing on [0, 1/2] and strictly decreasing on [1/2, 1], which would give uniqueness of Q*. Combined with numerical bounds on log, one could prove 0.110 < Q* < 0.111, formalizing the well-known \u224811% threshold.\n\nThe key insight is that strict monotonicity of h\u2082 on [0, 1/2] follows from the strict concavity of binEntropy, which in turn follows from the strict convexity of x \u21a6 x log x (whose second derivative is 1/x > 0).\n\nWhy now? Mathlib already has `Real.binEntropy_nonneg` and `Real.binEntropy_le_log_two`. The concavity/convexity infrastructure for `Real.log` is well-developed (`Real.strictConvexOn_mul_log`), so the strict monotonicity proof is within reach.\n\n## 2. Finite-Key Security Bounds\n\nThe current key rate theorem is asymptotic: r = 1 - 2h\u2082(Q) applies in the limit n \u2192 \u221e. Real implementations use finite key lengths, where the key rate must account for statistical fluctuations in parameter estimation. The finite-key formula involves tail bounds (Serfling's inequality or Azuma-Hoeffding) and produces a key rate r_n \u2248 1 - 2h\u2082(Q + \u03b4(n)) - O(1/\u221an) where \u03b4(n) is the statistical confidence interval.\n\nThe key insight is that formalizing the finite-key correction separates into three independent components: (1) a concentration inequality for hypergeometric sampling, (2) the smooth min-entropy chain rule, and (3) the finite-size privacy amplification bound. Each is a self-contained mathematical result.\n\nWhy now? Mathlib has strong measure-theoretic probability foundations and many concentration inequalities. The modular structure means each component can be formalized independently and composed.\n\n## 3. Entanglement-Based QKD and the CSS Code Reduction\n\nThe Shor-Preskill proof reduces BB84 security to the security of an entanglement-based protocol via CSS (Calderbank-Shor-Steane) error-correcting codes. Formalizing this reduction would connect our information-theoretic results to the quantum-mechanical security guarantee. The reduction shows that if a CSS code can correct t errors, then BB84 with QBER \u2264 t/n is secure.\n\nThe key insight is that the CSS code reduction is primarily algebraic (over GF(2)) rather than quantum-mechanical. The quantum part reduces to the statement that measuring in conjugate bases commutes with CSS encoding \u2014 which can be stated as a linear-algebraic fact over F\u2082.\n\nWhy now? Mathlib has extensive support for linear algebra over finite fields (`ZMod 2`), making the algebraic core of the CSS reduction formalizable without quantum mechanics infrastructure.\n\n## 4. Composable Security and the Universal Composability Framework\n\nOur current security definition is stand-alone: it bounds Eve's information about a single key. Modern QKD security proofs use the universal composability (UC) framework, where security means the real protocol is indistinguishable from an ideal key-generation functionality. The composable security bound involves trace distance between quantum states, generalizing our classical statistical distance.\n\nThe key insight is that composable security follows from the stand-alone bound plus a \"lifting lemma\" showing that statistical distance in the classical post-processing is preserved under composition. This lifting lemma is a purely classical result about statistical distance and can be formalized using our `statDistance_triangle`.\n\nWhy now? The `statDistance` metric space structure we formalized provides the foundation. The lifting lemma is a direct consequence of the triangle inequality and data processing inequality for statistical distance.\n\n## 5. Privacy Amplification Against Quantum Adversaries\n\nOur privacy amplification result treats the security parameter classically. Against quantum adversaries, the leftover hash lemma requires quantum min-entropy (conditional on Eve's quantum side information). The quantum leftover hash lemma states: if \u03c1_AE has conditional min-entropy H_min(A|E) \u2265 k, then hashing A to l bits leaves Eve with trace distance \u2264 2^{-(k-l)/2} from uniform.\n\nThe key insight is that the quantum leftover hash lemma's proof reduces to a bound on the operator norm of \u03c1_AE, which can be stated as: Tr(\u03c1_AE\u00b2) \u2264 2^{-k}. This \"collision entropy\" characterization is a finite-dimensional matrix inequality that could be formalized using Mathlib's matrix analysis.\n\nWhy now? Mathlib's `Matrix` library includes trace, operator norms, and positive semidefiniteness. The key inequality is a consequence of the Cauchy-Schwarz inequality for the Hilbert-Schmidt inner product, which is available in Mathlib.\n",
     "domains": [
-      "Algebra"
+      "Algebra",
+      "Geometry"
     ],
-    "id": "seed_007",
-    "priority_score": 0.72,
+    "id": "fd_1075",
+    "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "seed",
+    "source_exp_id": "c8728b9d",
     "status": "available",
-    "timestamp": "2026-06-08T19:24:57.290512+00:00",
-    "title": "196-Algorithm Non-Termination"
+    "timestamp": "2026-06-09T07:04:31.875011+00:00",
+    "title": "The current formalization proves existence of a QBER threshold Q* via the interm"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Tropical Moduli Curves\n\n## 1. Tropical Marked Curves and the Full Dimension Formula\n\nThe edge bound |E| \u2264 3g \u2212 3 we proved here is for *unmarked* stable tropical curves (no\nmarked points / leaves).  The natural generalization is the marked case: a stable tropical\ncurve of genus g with n marked points (modeled as half-edges or degree-1 vertices exempt\nfrom the valence-3 stability condition) should satisfy |E| \u2264 3g \u2212 3 + n, and this bound\nis again achieved by trivalent graphs.\n\nThe key insight is that each marked point contributes exactly one additional degree of\nfreedom (its position on the edge it subdivides), and the stability condition becomes\n2g(v) \u2212 2 + val(v) > 0 at each vertex, where g(v) is the vertex genus.\n\n**Why now?**  Our `CombType` abstraction already captures degree sequences with the\nhandshaking constraint.  Extending it with a partition of vertices into \"internal\" (degree \u2265 3)\nand \"marked\" (degree 1) would require only a mild generalization of the same arithmetic\narguments, using the marked vertex count n in place of the stability lower bound.\n\n## 2. Euler Characteristic and Connected Components\n\nWe defined genus as g = |E| \u2212 |V| + 1, which is correct only for connected graphs.\nFor disconnected graphs, the first Betti number is \u03b2\u2081 = |E| \u2212 |V| + c, where c is\nthe number of connected components.  Formalizing the connected-component count c and\nproving \u03b2\u2081 \u2265 0 for arbitrary (possibly disconnected) graphs would require either\nformalizing spanning forests or an inductive argument on edge deletion.\n\nThe key insight is that \u03b2\u2081 = 0 characterizes *forests* (acyclic graphs), generalizing\nour genus-0-iff-tree result.  This connects directly to Mathlib's `SimpleGraph.IsAcyclic`\nand would provide a bridge between our abstract `CombType` formulation and Mathlib's\ngraph theory library.\n\n**Why now?**  Mathlib has `SimpleGraph.IsTree.card_edgeFinset` proving |E| + 1 = |V| for\ntrees, and `SimpleGraph.IsAcyclic` / `SimpleGraph.Connected`.  A formal proof that\nconnected + |E| = |V| \u2212 1 implies tree (the converse of `card_edgeFinset`) would close\nan important gap in the library and serve as the foundation for cycle rank computations.\n\n## 3. Tropical Balancing Condition in \u2124^n\n\nA tropical curve embedded in \u211d^n carries integer slope vectors on each edge.  The\n*balancing condition* at each vertex states that the sum of outgoing primitive integer\ndirection vectors (weighted by edge multiplicities) equals zero in \u2124^n.  Formalizing\nthis requires defining:\n- An embedding: edges \u2192 \u2124^n (primitive direction vectors)\n- Edge multiplicities: edges \u2192 \u2115\n- The balancing condition: at each vertex, \u2211 w_e \u00b7 d_e = 0 over incident edges\n\nThe key insight is that the balancing condition is what makes a metric graph into a\n*tropical subvariety* of \u211d^n, analogous to the Cauchy\u2013Riemann equations making a\nsmooth map into a holomorphic one.  This is the bridge between combinatorial tropical\ncurves and tropical algebraic geometry.\n\n**Why now?**  The `CombType` structure already tracks vertex-edge incidence via degrees.\nAdding direction vectors and multiplicities is a natural extension, and the balancing\ncondition is a finite linear algebra statement over \u2124 that Lean can verify directly.\n\n## 4. Contraction Morphisms and the Poset of Combinatorial Types\n\nThe combinatorial types of stable tropical curves of genus g form a partially ordered\nset under *edge contraction*: contracting an edge e of a graph \u0393 yields a graph \u0393/e\nwith one fewer edge and (unless e is a loop) one fewer vertex.  The genus is preserved\nunder contraction.\n\nThe key insight is that this poset structure directly mirrors the face poset of the\ncone complex M_g^trop: contracting an edge corresponds to taking a codimension-1 face\nof a cone.  Proving that contraction preserves genus and stability, and that the poset\nis graded by the number of edges (= cone dimension), would formalize the combinatorial\nstructure of the tropical moduli space.\n\n**Why now?**  Our `CombType` abstraction needs to be extended with an explicit edge\ncontraction operation.  The key lemma \u2014 genus is preserved under contraction \u2014 is a\nsimple Euler characteristic argument: contracting a non-loop edge decreases both |E|\nand |V| by 1, so g = |E| \u2212 |V| + 1 is unchanged.\n\n## 5. Tropical Torelli Map and the Metric Graph Laplacian\n\nThe tropical Torelli map sends a tropical curve to its *tropical Jacobian*, defined\nvia the Laplacian of the metric graph.  For a graph \u0393 with edge lengths, the\nLaplacian L is a |V| \u00d7 |V| matrix with L_{ij} = \u22121/\u2113(ij) for adjacent vertices\nand L_{ii} = \u03a3_j 1/\u2113(ij).  The tropical Jacobian is the torus \u211d^g / Im(L^\u2020),\nwhere L^\u2020 is a generalized inverse.\n\nThe key insight is that the tropical Torelli map is *not* injective for g \u2265 3\n(unlike the classical Torelli theorem), and the failure of injectivity is\ncontrolled by the combinatorial type of the graph.  Formalizing the Laplacian\nand the rank of the period matrix would make this failure precise.\n\n**Why now?**  The `TropicalCurve` structure already carries edge lengths.  Defining\nthe graph Laplacian requires Mathlib's matrix API (`Matrix.of`), and computing its\nrank is a finite-dimensional linear algebra problem.  The key obstruction is that\nMathlib's matrix theory over \u211d is well-developed, making this tractable.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1076",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e8726f6c",
+    "status": "available",
+    "timestamp": "2026-06-09T07:05:04.634782+00:00",
+    "title": "The edge bound |E| \u2264 3g \u2212 3 we proved here is for *unmarked* stable tropical cur"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Tropical Matrix Algebra\n\n## 1. Tropical Eigenvalue Theory and the Critical Graph\n\nThe tropical eigenvalue of a matrix A is defined as \u03bb* = min_\u03c3 (1/n) \u2211\u1d62 A(i, \u03c3(i)) where the minimum is taken over cyclic permutations. Equivalently, it is the minimum mean cycle weight in the associated weighted digraph. The critical graph \u2014 the subgraph of edges participating in minimum-mean cycles \u2014 determines the structure of tropical eigenvectors.\n\n**Conjecture**: For a generic n\u00d7n tropical matrix (entries drawn independently from a continuous distribution), the critical graph is almost surely a union of disjoint cycles covering exactly \u230an/2\u230b + 1 vertices, and the dimension of the tropical eigenspace equals the number of connected components of the critical graph.\n\nThe key insight is that the critical graph's structure is governed by the same combinatorial optimization as `tropDet`, and our submultiplicativity theorem `tropDet_submul` should extend to a spectral radius inequality: the tropical spectral radius of A\u2297B is bounded by the sum of the individual spectral radii.\n\n**Why now?** Our formalization of `tropDet` and `permSum` provides the exact infrastructure needed \u2014 extending from permutations to cyclic permutations and normalizing by cycle length is a natural next step. The `permSum_tropMatMul_le` lemma's proof technique (reindexing over permutation composition) directly generalizes to cycle decompositions.\n\n## 2. Tropical Rank and the Barvinok Conjecture\n\nThe tropical rank of a matrix A is the smallest r such that A can be written as a tropical sum (pointwise min) of r tropical rank-1 matrices, where a tropical rank-1 matrix has the form (i,j) \u21a6 u\u1d62 + v\u2c7c. This is fundamentally different from the Kapranov rank (defined via tropicalization of classical rank).\n\n**Conjecture**: For n\u00d7n matrices over WithTop \u2115, the tropical rank r satisfies tropDet(A) \u2265 \u2211\u1d62 min_j A(i,j) with equality if and only if r = 1. More precisely, the gap tropDet(A) - \u2211\u1d62 min_j A(i,j) (our Hadamard gap) is a monotone function of the tropical rank: it is zero for rank 1 and strictly increases with rank up to a computable bound depending on n.\n\nThe key insight is that our `tropDet_hadamard` theorem characterizes exactly when the LP relaxation of the assignment problem is tight, and this tightness condition is equivalent to the tropical matrix having rank 1 \u2014 connecting our optimization-theoretic results to algebraic structure.\n\n**Why now?** The Hadamard bound formalized in `tropDet_hadamard` is the starting point. Characterizing when equality holds requires analyzing the structure of optimal permutations, which our `permSum` infrastructure supports directly.\n\n## 3. Tropical Permanent vs. Tropical Determinant: The Sign Problem\n\nIn classical linear algebra, det and perm differ by signs. In tropical algebra, there is no subtraction, so the tropical determinant equals the tropical permanent. However, one can define a \"signed tropical determinant\" using the theory of hyperfields or supertropical algebra, where elements carry a \"ghost\" sign.\n\n**Conjecture**: Over the supertropical semiring (where each element carries a \"ghost\" layer recording sign cancellations), the signed tropical determinant satisfies a strict multiplicativity: sdet(A\u2297B) = sdet(A) + sdet(B), upgrading our inequality `tropDet_submul` to an equality. This would be the tropical analogue of det(AB) = det(A)\u00b7det(B).\n\nThe key insight is that the inequality in `tropDet_submul` becomes an equality precisely when the optimal permutations for A and B \"compose cleanly\" \u2014 the supertropical ghost layer tracks exactly when this composition fails, and its vanishing is equivalent to the inequality being strict.\n\n**Why now?** Our proof of `tropDet_submul` explicitly constructs the witness permutations (via `permSum_tropMatMul_le`), making the gap between the two sides computable. Formalizing the supertropical semiring and tracking when equality holds is a direct extension.\n\n## 4. Tropical Convexity and the Assignment Polytope\n\nThe classical Birkhoff polytope \u2014 the set of doubly stochastic matrices \u2014 is intimately connected to the assignment problem. Its tropical analogue, the tropical Birkhoff polytope, should be the set of matrices A with tropDet(A) = 0 and all entries \u2265 0.\n\n**Conjecture**: The tropical Birkhoff polytope (matrices A with entries in WithTop \u2115, tropDet(A) = 0, and A(i,j) \u2265 0) is tropically convex and has exactly n! tropical vertices, one for each permutation matrix. Moreover, the `tropDet_row_col_perm` invariance extends to a full tropical S\u2099 \u00d7 S\u2099 symmetry group acting on this polytope.\n\nThe key insight is that `tropDet_zero_diag_eq_zero` already shows that matrices with zero diagonal are in this polytope, and `tropDet_row_col_perm` gives the symmetry group action. The tropical convexity (closure under tropical linear combinations) should follow from submultiplicativity.\n\n**Why now?** All the ingredients are formalized: `tropDet`, `tropIdentity`, `tropDet_identity`, and `tropDet_row_col_perm`. Defining tropical convex combinations and proving closure is the natural next step.\n\n## 5. Correspondence Theorem: Tropical Curves and Classical Enumerative Geometry\n\nMikhalkin's correspondence theorem states that the count of tropical curves through generic points in \u211d\u00b2 (with appropriate multiplicities) equals the count of classical algebraic curves through corresponding points in \u2102\u00b2. The multiplicities are computed from the Newton polygon subdivision \u2014 dual to the tropical curve's combinatorial type.\n\n**Conjecture**: The tropical determinant `tropDet` of the \"evaluation matrix\" E(i,j) = (tropical distance from the i-th marked point to the j-th edge of the tropical curve) computes the Mikhalkin multiplicity of the tropical curve. More precisely, for a tropical curve \u0393 of genus 0 with n marked points, the Mikhalkin multiplicity equals a product of local `tropDet` contributions from each vertex of \u0393.\n\nThe key insight is that `tropDet` is the optimal assignment value, and Mikhalkin's multiplicity involves a product of absolute values of 2\u00d72 determinants at each vertex \u2014 these are exactly `tropDet` applied to the local edge direction matrix at each trivalent vertex.\n\n**Why now?** This directly connects our tropical matrix algebra to the broader tropical enumerative geometry program. With `tropDet` formalized and its properties established, formalizing Mikhalkin's formula becomes tractable \u2014 start with the genus-0, degree-d case in \u211d\u00b2 where the tropical curves are trees and the combinatorics is cleanest.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1077",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "48fca5d7",
+    "status": "available",
+    "timestamp": "2026-06-09T07:05:38.285558+00:00",
+    "title": "The tropical eigenvalue of a matrix A is defined as \u03bb* = min_\u03c3 (1/n) \u2211\u1d62 A(i, \u03c3(i"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Tropical Phase Transition Thresholds\n\n## 1. Tropical Spectral Theory and Eigenvalue Phase Transitions\n\nThe tropical analogue of eigenvalues \u2014 values \u03bb such that A \u2297 x = \u03bb \u2297 x in the tropical semiring \u2014 exhibits a remarkable phase transition structure. For tropical matrices with entries drawn from random distributions, the critical cycle mean (the tropical eigenvalue) undergoes a sharp transition as the matrix density crosses a threshold, analogous to the giant component transition in random graphs.\n\nThe key insight is that tropical eigenvalues are determined by the maximum cycle mean in the associated directed graph, which connects graph connectivity thresholds to algebraic spectral transitions. Why now? Our formalization of `tropical_sum_eq_trop_inf'` and `tropical_threshold_dichotomy` provides the algebraic foundation for characterizing when cycle means achieve their critical values. The next step is formalizing tropical matrix powers A^k and proving that the sequence trop_trace(A^k)/k converges to the tropical spectral radius, with a sharp transition in the number of cycles achieving the maximum.\n\n## 2. Tropical Convexity and Hyperplane Arrangement Complexity\n\nThe sub-level closure theorem (`tropical_sublevel_closed`) opens the door to a full theory of tropical convexity. A tropical polytope \u2014 the tropical convex hull of finitely many points \u2014 has a combinatorial type determined by which \"phase\" each face is in (i.e., which term achieves the minimum). The conjecture is that the number of distinct combinatorial types of tropical polytopes with n vertices in dimension d exhibits a phase transition at d \u2248 log n, below which all polytopes are \"simple\" (each vertex has a unique minimizer) and above which exponentially many combinatorial types appear.\n\nThe key insight is that tropical convexity is equivalent to min-plus convexity, and the combinatorial explosion of face types is governed by the same threshold phenomena we formalized in `tropical_threshold_dichotomy`. Why now? The algebraic infrastructure for tropical sums as infima and the witness theorem provides the correct language for counting face types. Formalizing the tropical Carath\u00e9odory theorem (every point in the tropical convex hull of S lies in the tropical convex hull of at most d+1 points from S) would be the next concrete target.\n\n## 3. Tropical Bellman-Ford Convergence and Shortest-Path Phase Transitions\n\nThe idempotent iteration theorem (`tropical_idempotent_nsmul`) generalizes to tropical matrix powers: for an n\u00d7n tropical matrix A, the sequence A, A^2, A^3, ... stabilizes at A^(n-1) (if no negative cycles exist). This is exactly the Bellman-Ford algorithm. The conjecture is that for random tropical matrices with entry distribution parameterized by density \u03c1, the stabilization time undergoes a sharp threshold: for \u03c1 < \u03c1_c the matrix power stabilizes in O(1) steps, while for \u03c1 > \u03c1_c it requires \u0398(n) steps, with the transition governed by the emergence of long shortest paths.\n\nThe key insight is that stabilization time equals the longest shortest path (the diameter of the implicit weighted graph), which has a known phase transition in random graph theory. Why now? Our formalization of tropical idempotent iteration provides the algebraic framework for reasoning about stabilization, and the parameterized phase transition theorems give the tools for formalizing the sharp threshold. The next step is defining tropical matrix multiplication and proving A^n = A^(n-1) for matrices without negative cycles.\n\n## 4. Tropical Proof Complexity and Resource Thresholds\n\nThe original motivation for this work: can tropical algebra formalize phase transitions in proof search? The conjecture is that for a natural ensemble of tropical optimization problems of size n (e.g., random tropical linear programs), the probability of finding a feasible solution undergoes a sharp threshold at a critical constraint density \u03c1_c = 1, and moreover, the \"proof\" of feasibility (a witness point) has size that diverges as \u03c1 \u2192 \u03c1_c from below, analogous to resolution proof complexity near the SAT threshold.\n\nThe key insight is that `tropical_sum_witness` gives a constructive witness for every tropical sum, but the number of potential witnesses grows combinatorially, and near the threshold, the witnesses become highly constrained. Why now? Our framework provides the first formalized connection between tropical algebraic operations and combinatorial witness structures. The next step is defining tropical linear feasibility (does x exist such that A \u2297 x \u2264 b in the tropical sense?) and characterizing the feasibility boundary.\n\n## 5. Tropical Entropy and Information-Theoretic Phase Transitions\n\nDefine the \"tropical entropy\" of a finite tropical sum \u2211\u1d62 trop(a\u1d62) as the logarithm of the number of indices i that are \"near-optimal\" (within \u03b5 of the minimum). As \u03b5 \u2192 0, this quantity drops to log(k) where k is the number of exact minimizers. The conjecture is that for random i.i.d. entries a\u1d62, the expected tropical entropy exhibits a phase transition at \u03b5_c = \u0398(1/n) from logarithmic growth (many near-minimizers) to constant (unique minimizer).\n\nThe key insight is that `tropical_threshold_dichotomy` shows the transition between \"a wins\" and \"b wins\" is sharp \u2014 but with noise, multiple terms can be near the minimum simultaneously, creating an entropy landscape. Why now? Our formalization of the witness theorem and the parameterized threshold gives the exact framework for counting near-minimizers. The next step is defining the \u03b5-witness set {i \u2208 s : f(i) \u2264 inf'(f) + \u03b5} and proving it shrinks to a singleton as \u03b5 \u2192 0, with a rate depending on the gap structure.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1078",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2e12503d",
+    "status": "available",
+    "timestamp": "2026-06-09T07:06:11.190017+00:00",
+    "title": "The tropical analogue of eigenvalues \u2014 values \u03bb such that A \u2297 x = \u03bb \u2297 x in the t"
   },
   {
     "consumed_by_exp_id": "",
@@ -2691,20 +2465,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T04:05:33.612583+00:00",
     "title": "Arithmetic Holography: Prime Correlations from Hyperbolic Boundary Dynamics"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that 10 is a solitary number \u2014 no other integer shares its abundancy index \u03c3(n)/n. Formalize the theory of friendly numbers and abundancy, connecting to the distribution of divisor sums.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_008",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-08T19:24:57.516415+00:00",
-    "title": "10 is a Solitary Number"
   },
   {
     "consumed_by_exp_id": "",
@@ -2977,7 +2737,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
   {
-    "consumed_by_exp_id": "39a00894",
+    "consumed_by_exp_id": "",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domains": [
       "Tropical",
@@ -2987,7 +2747,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.541008+00:00",
     "title": "Tropical Differential Equations: Power Series Solutions"
   },
@@ -3147,6 +2907,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T04:08:52.761148+00:00",
     "title": "Close Proofs: Proof Phase Transitions: Sharp Thresholds in Random Formal Theories"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 48fca5d7 (Q=0.426) proved 1215 theorems in Tropical but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture: For a neural network loss landscape equipped with the Fisher information metric, the genus-zero Gromov-Witten invariants of the resulting symplectic manifold exactly count the number of di",
+    "domains": [
+      "Tropical"
+    ],
+    "id": "sorry_fill_48fca5d7_07d67879",
+    "priority_score": 0.47585185185185186,
+    "research_mode": "team",
+    "source_exp_id": "48fca5d7",
+    "status": "available",
+    "timestamp": "2026-06-09T07:05:51.359869+00:00",
+    "title": "Close Proofs: Symplectic Mirror Descent: Gromov-Witten Invariants as a Count of Lear"
   },
   {
     "consumed_by_exp_id": "",
