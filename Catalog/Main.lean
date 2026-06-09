@@ -1,30 +1,12 @@
 /- Aether FINAL Catalog
-<<<<<<< Updated upstream
-A curated collection of 2388 of the highest-quality
+A curated collection of 2365 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2388
-=======
-A curated collection of 2487 of the highest-quality
-formally verified mathematical results from the Aether engine.
-Sorry-free. No placeholders. Auto-maintained.
-Total files: 2487
->>>>>>> Stashed changes
+Total files: 2365
 -/
 import FINAL.Algebra.Advanced
-import FINAL.Algebra.AffineWords
-import FINAL.Algebra.AntipodeUniqueness
 import FINAL.Algebra.BerggrenLorentz_Core
 import FINAL.Algebra.CellularAutomataReversibility
-import FINAL.Algebra.CharpolyRecognition
-import FINAL.Algebra.CircuitDepthLayerProfile
-import FINAL.Algebra.ClassicalGroupExpanders
-import FINAL.Algebra.CodingTheory_Defs
-import FINAL.Algebra.CodingTheory_Theorems
-import FINAL.Algebra.CollatzUndecidability
-import FINAL.Algebra.CollatzUndecidable
-import FINAL.Algebra.CompactOperators
-import FINAL.Algebra.Companion
 import FINAL.Algebra.ComplexRandomGraph
 import FINAL.Algebra.ComputationalSoundness
 import FINAL.Algebra.Conditional
@@ -252,7 +234,6 @@ import FINAL.Algebra.StandardConjectures_Defs
 import FINAL.Algebra.StandardConjectures_Theorems
 import FINAL.Algebra.StandardRep
 import FINAL.Algebra.StochasticGalois
-import FINAL.Algebra.StrangeLight
 import FINAL.Algebra.StrictUpperTriangular
 import FINAL.Algebra.SumThreeCubes_BrauerManin
 import FINAL.Algebra.SumThreeCubes_Defs
@@ -260,7 +241,6 @@ import FINAL.Algebra.SumThreeCubes_Factorization
 import FINAL.Algebra.SumThreeCubes_LocalObstruction
 import FINAL.Algebra.SumThreeCubes_ParametricFamilies
 import FINAL.Algebra.SumThreeCubes_Symmetry
-import FINAL.Algebra.Surface
 import FINAL.Algebra.SurveillanceRateDistortion
 import FINAL.Algebra.Sylvester
 import FINAL.Algebra.SymmCube
@@ -280,15 +260,11 @@ import FINAL.Algebra.Triangular
 import FINAL.Algebra.TropicalAnalyticDuality
 import FINAL.Algebra.Tropical_p_adic_Valuation_Bounds_and_Lifting_the_Exponent_for_Fibonacci_Primitive_Divisors
 import FINAL.Algebra.UltrametricCondNeg
-import FINAL.Algebra.UniswapV4Hooks
-import FINAL.Algebra.UnityIsomorphism
 import FINAL.Algebra.UniversalParentInverse
 import FINAL.Algebra.WeightedRotaBaxter
 import FINAL.Algebra.YamabeNonCompact
-import FINAL.Algebra.ZKQuantumVuln
 import FINAL.Algebra.ZetaZeroFree_Transfer
 import FINAL.Bridges.Advanced
-import FINAL.Bridges.AetherStressTesting
 import FINAL.Bridges.AlgebraEMLClosureComputation
 import FINAL.Bridges.AlgebraEMLComputation_Defs
 import FINAL.Bridges.AlgebraEMLMachineLearning_ClosureCapacityAttentionDuality
@@ -312,7 +288,6 @@ import FINAL.Bridges.ArithmeticVCDimension
 import FINAL.Bridges.ArrowDepthComplexity
 import FINAL.Bridges.AschbacherCertificates
 import FINAL.Bridges.BGTStructure
-import FINAL.Bridges.Basic
 import FINAL.Bridges.BeatpathRobustness
 import FINAL.Bridges.BerggrenAutomatonRealization
 import FINAL.Bridges.BerggrenChronometricAutomata
@@ -339,7 +314,6 @@ import FINAL.Bridges.BisimMinimization
 import FINAL.Bridges.BooleanThermodynamicEliminationDuality
 import FINAL.Bridges.BordaRobustness
 import FINAL.Bridges.BorsukUlamArrow_Defs
-import FINAL.Bridges.BottleneckUpgrade
 import FINAL.Bridges.BoundedHOCompletionBeta
 import FINAL.Bridges.BranchComplexity
 import FINAL.Bridges.BreakthroughDirections
@@ -347,7 +321,6 @@ import FINAL.Bridges.Bridge
 import FINAL.Bridges.ByzantineCertificate
 import FINAL.Bridges.CanonicalKernelTheorems
 import FINAL.Bridges.CanonicalPathBisimulation
-import FINAL.Bridges.Capacity
 import FINAL.Bridges.Caratheodory
 import FINAL.Bridges.CartesianFootprintBound
 import FINAL.Bridges.CategoricalBridges
@@ -472,7 +445,6 @@ import FINAL.Bridges.FiniteSizeSusceptibility
 import FINAL.Bridges.FiniteTransferCore
 import FINAL.Bridges.FiveFrontiers
 import FINAL.Bridges.FootprintHelpers
-import FINAL.Bridges.Foundation
 import FINAL.Bridges.Foundations
 import FINAL.Bridges.FractalProofSearch_Defs
 import FINAL.Bridges.FractalProofSearch_Theorems
@@ -519,7 +491,6 @@ import FINAL.Bridges.HomologicalTransferLearning_Advanced
 import FINAL.Bridges.HomologicalTransferLearning_Core
 import FINAL.Bridges.HopfCausalCore
 import FINAL.Bridges.HopfCircuitRenormalization
-import FINAL.Bridges.HurwitzQuaternions
 import FINAL.Bridges.HyperbolicArithmetic
 import FINAL.Bridges.HyperbolicNumberTheory
 import FINAL.Bridges.HyperbolicTraceArithmetic
@@ -604,7 +575,6 @@ import FINAL.Bridges.MultiClassCertificationBridge
 import FINAL.Bridges.MultiModeLorentzianWitnesses
 import FINAL.Bridges.Network
 import FINAL.Bridges.NeuralBirkhoffDecomposition
-import FINAL.Bridges.NewHypotheses
 import FINAL.Bridges.NewResults
 import FINAL.Bridges.NewtonGirardGeneral
 import FINAL.Bridges.NewtonHodgePolygon
@@ -1550,10 +1520,6 @@ import FINAL.MachineLearning.InvariantSubspace_Defs
 import FINAL.MachineLearning.InverseStereographicNeuralField
 import FINAL.MachineLearning.IterExp
 import FINAL.MachineLearning.KWWitness_Defs
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.KnotPolynomialSpectra
->>>>>>> Stashed changes
 import FINAL.MachineLearning.Knot_Jones
 import FINAL.MachineLearning.KnottedLight_Core
 import FINAL.MachineLearning.LFunctionOracle_Core
@@ -1565,10 +1531,6 @@ import FINAL.MachineLearning.LibraryOfBabel_Defs
 import FINAL.MachineLearning.LocalGlobalGeometry
 import FINAL.MachineLearning.LoebGeneralization
 import FINAL.MachineLearning.LogisticChaos
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.MPSMinCut_Defs
->>>>>>> Stashed changes
 import FINAL.MachineLearning.MahlerMeasure_Defs
 import FINAL.MachineLearning.Maximals
 import FINAL.MachineLearning.MemoryAlgebra
@@ -1667,10 +1629,6 @@ import FINAL.MachineLearning.StoneDuality_Core
 import FINAL.MachineLearning.StrangeLoops_StrangeLoops
 import FINAL.MachineLearning.StructuralCases
 import FINAL.MachineLearning.SudokuPhaseTransition_Theorems
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.SumThreeCubes_Counting
->>>>>>> Stashed changes
 import FINAL.MachineLearning.SurrealTopology_OrderGap
 import FINAL.MachineLearning.SurvivorSieve
 import FINAL.MachineLearning.SymmEulerTransfer
