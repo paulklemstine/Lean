@@ -14394,7 +14394,7 @@
       "attempt_count": 2,
       "catalog_references": [],
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "6cf575d0",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
       "domain_bridges": [],
@@ -14416,7 +14416,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "in_progress",
+      "status": "available",
       "timestamp": "2026-06-03T19:55:28.156517+00:00",
       "title": "Learning with Errors: Hardness Reductions"
     },

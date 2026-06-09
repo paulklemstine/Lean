@@ -2342,7 +2342,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "One-Way Functions: Existence and Hierarchy"
   },
   {
-    "consumed_by_exp_id": "6cf575d0",
+    "consumed_by_exp_id": "",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domains": [
       "Cryptography",
@@ -2352,7 +2352,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
   },
