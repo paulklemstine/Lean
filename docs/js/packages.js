@@ -690,29 +690,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             content.innerHTML = demoHtml;
 
-            // Execute inline <script> tags (innerHTML doesn't run them).
-            // Use a per-demo namespace so const/let declarations don't conflict,
-            // but expose handler functions referenced by inline oninput/onclick/etc.
-            // attributes so those attributes can find their functions.
-            const handlerFns = new Set();
-            content.querySelectorAll('[oninput],[onclick],[onchange],[onkeyup],[onkeydown]').forEach(el => {
-                for (const attr of ['oninput','onclick','onchange','onkeyup','onkeydown']) {
-                    const val = el.getAttribute(attr);
-                    if (val) {
-                        const m = val.match(/^([a-zA-Z_]\w*)\s*\(/);
-                        if (m) handlerFns.add(m[1]);
-                    }
-                }
-            });
-            const fnExposes = [...handlerFns].map(fn =>
-                `window.${fn} = ${fn};`
-            ).join('\n');
-
+            // Execute inline <script> tags using eval() instead of DOM script
+            // insertion.  Aristotle-generated demos may contain destructuring
+            // assignments like `[a, b] = [1, 2]` which are valid inside parens
+            // or eval but throw SyntaxError when inserted as a <script> element
+            // (the parser treats `[` at statement-start as array literal, not
+            // destructuring).  Indirect eval runs in global scope so function
+            // declarations become window properties (onclick handlers work).
+            // Wrapped in try-catch so a bad demo doesn't crash the entire page.
             content.querySelectorAll('script').forEach(oldScript => {
                 if (oldScript.src) return;
-                const newScript = document.createElement('script');
-                newScript.textContent = `(function() {\n${oldScript.textContent}\n${fnExposes}\n})();`;
-                oldScript.parentNode.replaceChild(newScript, oldScript);
+                const code = oldScript.textContent;
+                if (oldScript.parentNode) oldScript.parentNode.removeChild(oldScript);
+                try {
+                    (0, eval)(code);  // indirect eval → global scope
+                } catch (e) {
+                    console.warn('[Demo] Script eval failed:', e.message);
+                }
             });
 
             card.appendChild(header);
