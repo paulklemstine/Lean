@@ -1,1 +1,0 @@
-../../Tropical/Grassmannian/Defs.lean

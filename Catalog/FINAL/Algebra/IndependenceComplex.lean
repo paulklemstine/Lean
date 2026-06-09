@@ -1,1 +1,0 @@
-../../Algebra/IndependenceComplex.lean

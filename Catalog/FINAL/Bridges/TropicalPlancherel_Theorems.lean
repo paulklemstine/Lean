@@ -1,1 +1,0 @@
-../../Bridges/TropicalPlancherel/Theorems.lean

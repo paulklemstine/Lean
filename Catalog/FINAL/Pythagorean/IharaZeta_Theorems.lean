@@ -1,1 +1,0 @@
-../../Pythagorean/IharaZeta/Theorems.lean

@@ -1,1 +1,0 @@
-../../Bridges/TemporalPrimeCongruence/Core.lean

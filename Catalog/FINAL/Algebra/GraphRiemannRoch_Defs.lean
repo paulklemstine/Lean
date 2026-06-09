@@ -1,1 +1,0 @@
-../../Algebra/GraphRiemannRoch/Defs.lean

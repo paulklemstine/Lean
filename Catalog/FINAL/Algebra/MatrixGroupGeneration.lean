@@ -1,1 +1,0 @@
-../../Algebra/MatrixGroupGeneration.lean

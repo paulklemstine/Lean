@@ -1,1 +1,0 @@
-../../EML/GraphNeuralNetworkTheory.lean

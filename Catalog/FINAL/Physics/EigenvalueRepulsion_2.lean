@@ -1,1 +1,0 @@
-../../Physics/EigenvalueRepulsion_2.lean

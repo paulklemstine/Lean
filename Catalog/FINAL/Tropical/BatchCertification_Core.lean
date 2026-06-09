@@ -1,1 +1,0 @@
-../../Tropical/BatchCertification/Core.lean

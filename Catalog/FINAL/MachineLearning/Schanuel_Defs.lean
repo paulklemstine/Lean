@@ -1,1 +1,0 @@
-../../MachineLearning/Schanuel/Defs.lean

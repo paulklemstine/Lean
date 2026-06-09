@@ -1,1 +1,0 @@
-../../Tropical/SpectralCausality.lean

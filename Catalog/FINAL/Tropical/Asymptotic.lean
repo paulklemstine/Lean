@@ -1,1 +1,0 @@
-../../Tropical/Asymptotic.lean

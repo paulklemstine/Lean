@@ -1,1 +1,0 @@
-../../Geometry/HyperbolicArithmetic/Defs.lean

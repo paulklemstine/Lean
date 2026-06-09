@@ -1,1 +1,0 @@
-../../Catalog/Bridges/Speculative/ChipFiringUniversality/Theorems.lean

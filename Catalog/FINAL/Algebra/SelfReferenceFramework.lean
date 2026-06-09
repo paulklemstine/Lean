@@ -1,1 +1,0 @@
-../../Algebra/SelfReferenceFramework.lean

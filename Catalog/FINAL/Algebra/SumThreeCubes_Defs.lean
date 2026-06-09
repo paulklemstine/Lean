@@ -1,1 +1,0 @@
-../../Algebra/SumThreeCubes/Defs.lean

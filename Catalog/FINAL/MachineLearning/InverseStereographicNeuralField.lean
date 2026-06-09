@@ -1,1 +1,0 @@
-../../MachineLearning/InverseStereographicNeuralField.lean

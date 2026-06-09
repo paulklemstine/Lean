@@ -1,1 +1,0 @@
-../../Bridges/TropicalTopKRobustnessGL3.lean

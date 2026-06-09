@@ -1,1 +1,0 @@
-../../Physics/ShadowingLemma.lean

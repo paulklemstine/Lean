@@ -1,1 +1,0 @@
-../../Pythagorean/BerggrenQuadraticShellSpectral.lean

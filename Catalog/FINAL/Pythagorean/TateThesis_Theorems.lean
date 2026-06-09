@@ -1,1 +1,0 @@
-../../Pythagorean/TateThesis/Theorems.lean

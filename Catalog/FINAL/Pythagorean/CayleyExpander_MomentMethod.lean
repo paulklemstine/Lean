@@ -1,1 +1,0 @@
-../../Pythagorean/CayleyExpander/MomentMethod.lean

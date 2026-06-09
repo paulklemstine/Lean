@@ -1,1 +1,0 @@
-../../Pythagorean/OrdinalClassification/Theorems.lean

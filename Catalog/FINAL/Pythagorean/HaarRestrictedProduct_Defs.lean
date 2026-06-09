@@ -1,1 +1,0 @@
-../../Pythagorean/HaarRestrictedProduct/Defs.lean

@@ -1,1 +1,0 @@
-../../Bridges/TropicalHeckeRealizationDuality.lean

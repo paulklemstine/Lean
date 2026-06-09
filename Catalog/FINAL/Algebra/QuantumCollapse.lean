@@ -1,1 +1,0 @@
-../../Algebra/QuantumCollapse.lean

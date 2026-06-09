@@ -1,1 +1,0 @@
-../../Tropical/Union.lean

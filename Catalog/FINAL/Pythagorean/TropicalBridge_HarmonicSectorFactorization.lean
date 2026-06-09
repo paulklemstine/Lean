@@ -1,1 +1,0 @@
-../../Pythagorean/TropicalBridge/HarmonicSectorFactorization.lean

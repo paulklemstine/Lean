@@ -1,1 +1,0 @@
-../../Catalog/Bridges/Speculative/CollatzTopological/Theorems.lean

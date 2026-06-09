@@ -1,1 +1,0 @@
-../../Pythagorean/ControlledInverseHierarchy/Defs.lean
