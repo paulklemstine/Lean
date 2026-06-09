@@ -529,6 +529,25 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
             del extractor.inflight[pid]
         print(f"[Tick] Pruned {len(stale_keys)} completed jobs from inflight")
 
+    # Auto-cleanup: remove dispatched jobs stuck for >2 hours with no progress
+    import time as _time
+    now = _time.time()
+    stuck_keys = []
+    for pid, job in list(extractor.inflight.items()):
+        if job.status == "dispatched":
+            dispatch_ts = getattr(job, 'dispatch_time', None) or job.get('dispatch_time')
+            if dispatch_ts and (now - float(dispatch_ts)) > 7200:
+                stuck_keys.append(pid)
+            elif not dispatch_ts:
+                # No timestamp — assume stale from a previous run
+                stuck_keys.append(pid)
+    if stuck_keys:
+        for pid in stuck_keys:
+            job = extractor.inflight[pid]
+            extractor._release_direction(job)
+            del extractor.inflight[pid]
+        print(f"[Tick] Cleaned up {len(stuck_keys)} stuck dispatched jobs (>2h, no progress)")
+
 
     # ── Self-healing: auto-prune low-quality directions ──
     try:

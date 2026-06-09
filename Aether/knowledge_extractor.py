@@ -655,13 +655,12 @@ class KnowledgeExtractor:
             md5_hash = int(hashlib.md5(job.job_id.encode()).hexdigest(), 16)
         else:
             md5_hash = job.cycle_n
-        # A/B split: 90% v6, 10% v7
-        # v6 (correctness-first) is the dominant production prompt.
+        # A/B split: 70% v6, 30% v7
+        # v6 (correctness-first) is the production prompt.
         # v7 (structured output + proof completeness gates) is being tested
-        # to evaluate whether explicit theorem declarations and completeness
-        # gates improve proof quality and reduce sorry rates.
+        # at 30% to accumulate A/B data faster for comparison.
         bucket = md5_hash % 1000
-        if bucket < 900:
+        if bucket < 700:
             phase_a_version = "v6"
         else:
             phase_a_version = "v7"
@@ -1929,6 +1928,30 @@ Research mode: {concept.research_mode}
                 if sorry_density > 0.5 and theorem_count < 3:
                     print(f"[Integrate] Rejecting sorry-dense trivial file: {target_path} "
                           f"(sorry_density={sorry_density:.2f}, theorems={theorem_count})")
+                    return "REJECT"
+
+            # v7 linting gate: reject Lean files from v7 prompts with basic syntax issues
+            # v7 uses structured theorem declarations — verify they're well-formed
+            if getattr(job, 'phase_a_prompt_version', '') == 'v7':
+                # Check 1: unclosed block comments (/- ... -/)
+                open_blocks = content.count("/-") - content.count("/-!")
+                close_blocks = content.count("-/")
+                if open_blocks > close_blocks:
+                    print(f"[Integrate] v7 lint: rejecting {target_path} — unclosed block comments "
+                          f"(open={open_blocks}, close={close_blocks})")
+                    return "REJECT"
+                # Check 2: bare 'sorry' in theorem statements (not in proof bodies)
+                # Pattern: "theorem foo ... := sorry" or "| sorry" at definition level
+                for line_no, line in enumerate(content.split("\n"), 1):
+                    stripped = line.strip()
+                    if stripped.startswith("theorem ") and stripped.endswith(":= sorry"):
+                        print(f"[Integrate] v7 lint: rejecting {target_path} — "
+                              f"trivial sorry-define on line {line_no}")
+                        return "REJECT"
+                # Check 3: minimum theorem density for v7 (≥1 theorem per 100 lines)
+                if lines > 50 and theorem_count / max(1, lines) < 0.01:
+                    print(f"[Integrate] v7 lint: rejecting {target_path} — theorem density too low "
+                          f"({theorem_count} theorems in {lines} lines)")
                     return "REJECT"
             if has_sorry:
                 # Incomplete proofs go to Speculative/AutoResearch, preserving any
