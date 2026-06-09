@@ -1,28 +1,17 @@
 /- Aether FINAL Catalog
-<<<<<<< Updated upstream
-A curated collection of 2407 of the highest-quality
+A curated collection of 2388 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2407
-=======
-A curated collection of 2487 of the highest-quality
-formally verified mathematical results from the Aether engine.
-Sorry-free. No placeholders. Auto-maintained.
-Total files: 2487
->>>>>>> Stashed changes
+Total files: 2388
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
 import FINAL.Algebra.AntipodeUniqueness
 import FINAL.Algebra.BerggrenLorentz_Core
-import FINAL.Algebra.BoundedDegreePolynomials_Basic
-import FINAL.Algebra.CanonicalTree
-import FINAL.Algebra.CayleyDicksonHierarchy
 import FINAL.Algebra.CellularAutomataReversibility
 import FINAL.Algebra.CharpolyRecognition
 import FINAL.Algebra.CircuitDepthLayerProfile
 import FINAL.Algebra.ClassicalGroupExpanders
-import FINAL.Algebra.Code
 import FINAL.Algebra.CodingTheory_Defs
 import FINAL.Algebra.CodingTheory_Theorems
 import FINAL.Algebra.CollatzUndecidability
@@ -38,7 +27,6 @@ import FINAL.Algebra.ContinuedFractions_Convergents
 import FINAL.Algebra.CoordinateRingDepth
 import FINAL.Algebra.Core
 import FINAL.Algebra.Core_OpenQuestions
-import FINAL.Algebra.CosmicBootstrap
 import FINAL.Algebra.Counting
 import FINAL.Algebra.Cover
 import FINAL.Algebra.Covering
@@ -72,24 +60,18 @@ import FINAL.Algebra.EulerMascheroni_PeriodicSums
 import FINAL.Algebra.EulerMascheroni_Series
 import FINAL.Algebra.EvalKernel
 import FINAL.Algebra.Exact
-import FINAL.Algebra.Examples
 import FINAL.Algebra.ExpanderWalk_Amplification
 import FINAL.Algebra.ExpanderWalk_Core
 import FINAL.Algebra.ExponentBounds
 import FINAL.Algebra.ExtTorBasic
 import FINAL.Algebra.Extensions
 import FINAL.Algebra.ExtremalGraph_Theorems
-import FINAL.Algebra.FHEOracles
-import FINAL.Algebra.Factoring_Core
 import FINAL.Algebra.Factoring_OpenQuestions
 import FINAL.Algebra.Factoring_Quantum
 import FINAL.Algebra.Families
-import FINAL.Algebra.FermatFactor
 import FINAL.Algebra.FiberGraph_Core
-import FINAL.Algebra.FiniteDimensional
 import FINAL.Algebra.FourierAnalysis_Defs
 import FINAL.Algebra.FourierAnalysis_Theorems
-import FINAL.Algebra.Framework
 import FINAL.Algebra.Frankl_Defs
 import FINAL.Algebra.Freivalds
 import FINAL.Algebra.FreivaldsBridge
@@ -126,10 +108,8 @@ import FINAL.Algebra.IdempotentLensing
 import FINAL.Algebra.ImpossibleFigures_Theorems
 import FINAL.Algebra.IndependenceComplex
 import FINAL.Algebra.InsideOutResearch
-import FINAL.Algebra.IntegerDiffraction
 import FINAL.Algebra.IntegerEnergy_Applications
 import FINAL.Algebra.IntegerEnergy_ConvergenceTheory
-import FINAL.Algebra.IntegerEnergy_Main
 import FINAL.Algebra.InvariantSubspaceDeep
 import FINAL.Algebra.InvariantSubspaceProblem
 import FINAL.Algebra.InversePythagoreanTree
@@ -144,7 +124,6 @@ import FINAL.Algebra.Kronecker
 import FINAL.Algebra.LGVFoundation
 import FINAL.Algebra.Langlands
 import FINAL.Algebra.LanglandsGL1
-import FINAL.Algebra.LanglandsSymmSquare_Basic
 import FINAL.Algebra.LanglandsToddlers
 import FINAL.Algebra.Lattice
 import FINAL.Algebra.LatticeTreeDuality
@@ -158,7 +137,6 @@ import FINAL.Algebra.MandelbrotNumberTheory
 import FINAL.Algebra.MarkovTraceDynamics_ChebTrace
 import FINAL.Algebra.MarkovTraceDynamics_MarkovSurface
 import FINAL.Algebra.MarkovTraceDynamics_MatrixTrace
-import FINAL.Algebra.MartingalePrediction
 import FINAL.Algebra.MassEnergyDuality
 import FINAL.Algebra.MatrixGroupGeneration
 import FINAL.Algebra.MatroidMinors_Theorems
@@ -166,8 +144,6 @@ import FINAL.Algebra.MemoryAlgebra
 import FINAL.Algebra.MetaOracleCore
 import FINAL.Algebra.MetaOraclePythagoreanDeep
 import FINAL.Algebra.MirrorQuantum
-import FINAL.Algebra.MobiusTransport
-import FINAL.Algebra.Modular
 import FINAL.Algebra.MoebiusBandArithmetic
 import FINAL.Algebra.MonomialObstruction
 import FINAL.Algebra.MoonshotExplorations
@@ -204,7 +180,6 @@ import FINAL.Algebra.Periodic
 import FINAL.Algebra.PeriodicTable_Advanced
 import FINAL.Algebra.PersistentHomologyPrimes
 import FINAL.Algebra.PhaseGauge_Theorems
-import FINAL.Algebra.PhysicalPhenomena
 import FINAL.Algebra.PillaiDiophantine
 import FINAL.Algebra.PolyMethod
 import FINAL.Algebra.PolynomialTransforms
@@ -219,7 +194,6 @@ import FINAL.Algebra.PseudofiniteTransfer
 import FINAL.Algebra.PythagoreanPhotonics
 import FINAL.Algebra.PythagoreanQuadruples
 import FINAL.Algebra.QDF_ArithGeomQuantum
-import FINAL.Algebra.QDF_HE_Frontiers
 import FINAL.Algebra.QuadraticReciprocity_Core
 import FINAL.Algebra.Quantum
 import FINAL.Algebra.QuantumCollapse
@@ -1569,10 +1543,6 @@ import FINAL.MachineLearning.InvariantSubspace_Defs
 import FINAL.MachineLearning.InverseStereographicNeuralField
 import FINAL.MachineLearning.IterExp
 import FINAL.MachineLearning.KWWitness_Defs
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.KnotPolynomialSpectra
->>>>>>> Stashed changes
 import FINAL.MachineLearning.Knot_Jones
 import FINAL.MachineLearning.KnottedLight_Core
 import FINAL.MachineLearning.LFunctionOracle_Core
@@ -1584,10 +1554,6 @@ import FINAL.MachineLearning.LibraryOfBabel_Defs
 import FINAL.MachineLearning.LocalGlobalGeometry
 import FINAL.MachineLearning.LoebGeneralization
 import FINAL.MachineLearning.LogisticChaos
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.MPSMinCut_Defs
->>>>>>> Stashed changes
 import FINAL.MachineLearning.MahlerMeasure_Defs
 import FINAL.MachineLearning.Maximals
 import FINAL.MachineLearning.MemoryAlgebra
@@ -1686,10 +1652,6 @@ import FINAL.MachineLearning.StoneDuality_Core
 import FINAL.MachineLearning.StrangeLoops_StrangeLoops
 import FINAL.MachineLearning.StructuralCases
 import FINAL.MachineLearning.SudokuPhaseTransition_Theorems
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.SumThreeCubes_Counting
->>>>>>> Stashed changes
 import FINAL.MachineLearning.SurrealTopology_OrderGap
 import FINAL.MachineLearning.SurvivorSieve
 import FINAL.MachineLearning.SymmEulerTransfer
