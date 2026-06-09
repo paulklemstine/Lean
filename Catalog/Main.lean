@@ -1,26 +1,14 @@
 /- Aether FINAL Catalog
-<<<<<<< Updated upstream
-A curated collection of 2460 of the highest-quality
+A curated collection of 2448 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2460
-=======
-A curated collection of 2487 of the highest-quality
-formally verified mathematical results from the Aether engine.
-Sorry-free. No placeholders. Auto-maintained.
-Total files: 2487
->>>>>>> Stashed changes
+Total files: 2448
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
-import FINAL.Algebra.Agent
 import FINAL.Algebra.AntipodeUniqueness
-import FINAL.Algebra.Apollonian_SpectralTransfer
 import FINAL.Algebra.ArrowCurvatureBridge_Arrow
 import FINAL.Algebra.ArrowCurvatureBridge_Geometry
-import FINAL.Algebra.ArtinConjecture
-import FINAL.Algebra.ArtinDeepStructure
-import FINAL.Algebra.ArtinPrimitiveRoot
 import FINAL.Algebra.AttackComposition
 import FINAL.Algebra.AutomaticSequences
 import FINAL.Algebra.AverageCriterion
@@ -905,14 +893,12 @@ import FINAL.Bridges.TropicalSymplecticGeometry
 import FINAL.Bridges.TropicalTensorProductUniversality
 import FINAL.Bridges.TropicalUltrametricDuality
 import FINAL.Bridges.TropicalUltrametricQuantumUncertainty
-import FINAL.Bridges.TropicalUnivalence
 import FINAL.Bridges.TropicalValuationDistillation
 import FINAL.Bridges.TropicalValuationSecretSharingDuality
 import FINAL.Bridges.TropicalVoronoiDecoderDuality
 import FINAL.Bridges.UltrametricBarronCompressionDuality
 import FINAL.Bridges.UltrametricChannel
 import FINAL.Bridges.UltrametricHolographicRenormalization
-import FINAL.Bridges.UltrametricMyhillNerode_Theorems
 import FINAL.Bridges.UltrametricNeuralRealizationDuality
 import FINAL.Bridges.UltrametricObserverConceptDuality
 import FINAL.Bridges.UltrametricObserverDuality
@@ -1040,7 +1026,6 @@ import FINAL.Computation.SurveillancePrivacy
 import FINAL.Computation.Theorems
 import FINAL.Computation.ThermodynamicSorting
 import FINAL.Computation.TimeSpaceTradeoff
-import FINAL.Computation.TracedCircuitSemantics
 import FINAL.Computation.TransfiniteCA
 import FINAL.Computation.TransfiniteCADepth
 import FINAL.Computation.TransfiniteGameTheory
@@ -1050,7 +1035,6 @@ import FINAL.Computation.TropicalAmortized
 import FINAL.Computation.TropicalAmortizedExamples
 import FINAL.Computation.TropicalCompression
 import FINAL.Computation.TropicalCompressionDuality
-import FINAL.Computation.TropicalLife_Basic
 import FINAL.Computation.TropicalSudoku_Monotonicity
 import FINAL.Computation.TropicalThermodynamicComplexity
 import FINAL.Computation.TurboQuantAnalysis
@@ -1085,7 +1069,6 @@ import FINAL.Cryptography.Core
 import FINAL.Cryptography.CryptographicClosureHulls
 import FINAL.Cryptography.CutCryptography
 import FINAL.Cryptography.EllipticCurve_Basic
-import FINAL.Cryptography.Extraction
 import FINAL.Cryptography.FHE_Defs
 import FINAL.Cryptography.FHE_Theorems
 import FINAL.Cryptography.FactorQuadruples
@@ -1181,7 +1164,6 @@ import FINAL.EML.ClosureOperator
 import FINAL.EML.CompactRetractApprox
 import FINAL.EML.Compile
 import FINAL.EML.Complexity
-import FINAL.EML.ConvergenceGuarantees
 import FINAL.EML.ConvexRetraction
 import FINAL.EML.Core
 import FINAL.EML.DNARamsey_Theorems
@@ -1218,7 +1200,6 @@ import FINAL.EML.FreivaldsAmplification
 import FINAL.EML.FutureResearch
 import FINAL.EML.FutureTheorems
 import FINAL.EML.GaloisDuality
-import FINAL.EML.GaloisInsertionClosure
 import FINAL.EML.InverseLimitApprox
 import FINAL.EML.JigsawAlgebra
 import FINAL.EML.KolmogorovArnoldEML
@@ -1605,10 +1586,6 @@ import FINAL.MachineLearning.InvariantSubspace_Defs
 import FINAL.MachineLearning.InverseStereographicNeuralField
 import FINAL.MachineLearning.IterExp
 import FINAL.MachineLearning.KWWitness_Defs
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.KnotPolynomialSpectra
->>>>>>> Stashed changes
 import FINAL.MachineLearning.Knot_Jones
 import FINAL.MachineLearning.KnottedLight_Core
 import FINAL.MachineLearning.LFunctionOracle_Core
