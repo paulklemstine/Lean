@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-09T13:05:14.773113+00:00",
+  "last_updated": "2026-06-09T13:08:27.502625+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -6823,6 +6823,45 @@
       "strategy_count": 0,
       "theorem_count": 376,
       "timestamp": "2026-06-09T13:05:14.627333+00:00",
+      "title": "Grokking: Phase Transitions in Learning"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.7146,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 4,
+      "domain": "Tropical",
+      "duration_seconds": 132.85320377349854,
+      "end_time": 1781010433.5248952,
+      "files_integrated": 11,
+      "job_id": "fd4292ca",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v6",
+      "phase_b_prompt_version": "v1",
+      "phase_b_skipped": false,
+      "prompt_version": "v6",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.7,
+        "artifact_richness": 0.25,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7756,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9057,
+        "novelty": 0.9479,
+        "proof_depth": 0.8876,
+        "usefulness": 0.9438
+      },
+      "quality_score": 0.4102239448333218,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1781010300.6716914,
+      "strategy_count": 0,
+      "theorem_count": 377,
+      "timestamp": "2026-06-09T13:08:27.356146+00:00",
       "title": "Grokking: Phase Transitions in Learning"
     }
   ]

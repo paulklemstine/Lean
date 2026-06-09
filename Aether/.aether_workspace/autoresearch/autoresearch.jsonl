@@ -153,3 +153,4 @@
 {"timestamp": 1781010268.1826563, "experiment_id": "e71824de", "concept_title": "**Causal Integration Algebra** — a rigorous Lean 4 fo", "concept_domain": "Computation", "research_mode": "team", "quality": "partial", "quality_score": 0.4207490825688074, "catalog_references": [], "prompt_length": 17791, "files_placed": 0, "status": "discard"}
 =======
 >>>>>>> Stashed changes
+{"timestamp": 1781010497.0559475, "experiment_id": "fd4292ca", "concept_title": "Grokking: Phase Transitions in Learning", "concept_domain": "Tropical", "research_mode": "team", "quality": "partial", "quality_score": 0.4102239448333218, "catalog_references": [], "prompt_length": 15539, "files_placed": 11, "status": "discard"}
