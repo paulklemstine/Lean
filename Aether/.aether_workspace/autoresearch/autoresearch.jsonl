@@ -127,6 +127,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 {"timestamp": 1781005027.1516926, "experiment_id": "f9c3366c", "concept_title": "Close Proofs: This document describes five research conjectures extending the", "concept_domain": "Applications", "research_mode": "team", "quality": "partial", "quality_score": 0.38632137600826466, "catalog_references": [], "prompt_length": 4860, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781005090.7884336, "experiment_id": "743db091", "concept_title": "**Conjecture:** If `{f_t}_{t ∈ [0,1]}` is a continuous family of contracting cau", "concept_domain": "Geometry", "research_mode": "team", "quality": "partial", "quality_score": 0.4240429527390678, "catalog_references": [], "prompt_length": 14206, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781005152.0211859, "experiment_id": "cb6d03de", "concept_title": "Tropical Amoebas and Ronkin Functions", "concept_domain": "Applications", "research_mode": "team", "quality": "partial", "quality_score": 0.4228838627888345, "catalog_references": [], "prompt_length": 4581, "files_placed": 0, "status": "discard"}
@@ -192,3 +193,5 @@
 {"timestamp": 1781020022.756617, "experiment_id": "ad2be92e", "concept_title": "Tropical Compactification of Moduli Spaces", "concept_domain": "Novelty", "research_mode": "team", "quality": "partial", "quality_score": 0.3627455631900639, "catalog_references": [], "prompt_length": 15640, "files_placed": 12, "status": "discard"}
 {"timestamp": 1781020151.4684055, "experiment_id": "a3f50a78", "concept_title": "Logic-Physics Bridge: Consistency of Physical Theories", "concept_domain": "Novelty", "research_mode": "team", "quality": "partial", "quality_score": 0.3852481001709541, "catalog_references": [], "prompt_length": 15650, "files_placed": 11, "status": "discard"}
 {"timestamp": 1781020265.760695, "experiment_id": "09bd4da6", "concept_title": "Rigorous formal foundations for the Collatz conj", "concept_domain": "Computation", "research_mode": "team", "quality": "partial", "quality_score": 0.37138729946524063, "catalog_references": [], "prompt_length": 26018, "files_placed": 12, "status": "discard"}
+=======
+>>>>>>> Stashed changes
