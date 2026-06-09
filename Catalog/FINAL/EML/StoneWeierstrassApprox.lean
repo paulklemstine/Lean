@@ -1,1 +1,0 @@
-../../EML/StoneWeierstrassApprox.lean
