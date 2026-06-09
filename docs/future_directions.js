@@ -368,7 +368,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Resolution of Singularities in Positive Characteristic"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "abf65010",
     "description": "Prove that a Hadamard matrix exists for every positive multiple of 4. Formalize known constructions (Sylvester, Paley, tensor products) and establish bounds on the smallest open order. Connect to combinatorial designs, error-correcting codes, and signal processing.",
     "domains": [
       "Algebra"
@@ -377,7 +377,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:56.393667+00:00",
     "title": "Hadamard Matrix Conjecture"
   },
@@ -587,7 +587,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in Applications"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "41fd7380",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
@@ -597,7 +597,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.491025+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
@@ -1448,7 +1448,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rigorous mathematical foundation for the EML"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "28a68a13",
     "description": "# Future Directions: Causal Integration Algebra\n\n## Synthesis\n\nThis cycle established the **Causal Integration Algebra** \u2014 a rigorous lattice-theoretic formalization of Integrated Information Theory that identifies \u03a6 with the minimum cut of a weighted causal graph. We proved 18 theorems covering nonnegativity, decomposition characterization, composition/exclusion, scaling, monotonicity, and a novel symmetrization invariance result. The framework connects IIT to classical graph theory and opens several deep avenues.\n\nThe most promising cross-domain connection is between **integration theory and spectral graph theory**. The Fiedler value (algebraic connectivity) provides a lower bound on the minimum cut, and our scaling and monotonicity theorems suggest that the entire spectral structure of the graph Laplacian encodes integration properties. This connects consciousness science to one of the richest areas of combinatorial mathematics.\n\nThe highest breakthrough potential lies in **Direction 1**: formalizing the relationship between \u03a6 and algebraic connectivity. If this connection can be made precise, it would import the entire machinery of spectral graph theory into consciousness science \u2014 eigenvalue bounds, Cheeger inequalities, expander graphs, and random matrix theory would all become tools for understanding integration.\n\n---\n\n### Direction 1: Spectral Integration \u2014 \u03a6 and the Fiedler Value\n\n**Conjecture**: For any symmetric causal system C on n vertices, the Fiedler value \u03bb\u2082(L) of the graph Laplacian satisfies: \u03bb\u2082(L) \u2264 \u03a6(C) \u2264 n \u00b7 \u03bb\u2082(L) / 4, where L is the Laplacian matrix of the symmetrized causal graph with edge weights w(i,j) + w(j,i).\n\n**Test**: Compute both \u03a6 (by brute-force minimum cut) and \u03bb\u2082(L) (by eigenvalue computation) for all connected weighted graphs on 4-6 vertices with integer weights 1-3. Check whether the conjectured inequality holds.\n\n**Impact**: If true, this establishes a computable lower bound on \u03a6 via eigenvalue computation (O(n\u00b2) vs O(2\u207f) for brute-force \u03a6), and imports Cheeger-type inequalities into consciousness theory. If false, the failure case would reveal systems where spectral methods fundamentally mischaracterize integration.\n\n**Catalog References**: `Novelty/IntegratedInformation/Core.lean` (CausalSystem, phi, symmetrize_phi), `Novelty/IntegratedInformation/Spectrum.lean` (phi_eq_min_cut, phi_mono_of_weight_le)\n\n**Proof Strategy**: \n1. Define the graph Laplacian L of a CausalSystem in Lean\n2. Prove the Courant-Fischer characterization of \u03bb\u2082\n3. Show that \u03a6 = min_A cross(A) \u2265 \u03bb\u2082 via the Rayleigh quotient bound\n4. Prove the upper bound using the Cheeger inequality\n\n**Domain Bridges**: Spectral Graph Theory \u2194 Integrated Information Theory \u2194 Algebraic Connectivity\n\n**Lineage**: Builds on phi_eq_min_cut, symmetrize_phi, crossInfo_le_totalWeight from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Dynamic Integration \u2014 Phase Transitions in Evolving Causal Systems\n\n**Conjecture**: For a one-parameter family of causal systems C(t) where w(i,j;t) = (1-t)\u00b7w_disconnected + t\u00b7w_connected (linear interpolation between a disconnected and fully connected system), there exists a critical threshold t* \u2208 (0,1) such that \u03a6(C(t)) = 0 for t < t* and \u03a6(C(t)) > 0 for t > t*. Moreover, t* = 1/n for the uniform complete graph target.\n\n**Test**: Compute \u03a6(C(t)) for n = 4,5,6 with the disconnected system being two equal halves and the connected system being the complete graph with unit weights. Plot \u03a6 vs t and verify the phase transition.\n\n**Impact**: If true, this identifies a sharp phase transition in integration, analogous to percolation thresholds in random graphs. This would connect IIT to critical phenomena and phase transitions \u2014 one of the deepest frameworks in statistical physics. If false, integration may emerge gradually rather than sharply, which would itself be informative.\n\n**Catalog References**: `Novelty/IntegratedInformation/Core.lean` (phi, IsDisconnected, phi_zero_of_disconnected), `Novelty/IntegratedInformation/Spectrum.lean` (phi_mono_of_weight_le, phi_scale)\n\n**Proof Strategy**:\n1. Define CausalSystem.interpolate as a linear combination\n2. Show \u03a6 is continuous in the interpolation parameter (follows from min of continuous functions)\n3. Show \u03a6 = 0 at t = 0 (disconnected) and \u03a6 > 0 at t = 1 (strongly positive)\n4. Prove existence of t* by intermediate value theorem\n5. For the specific uniform case, compute t* exactly\n\n**Domain Bridges**: Statistical Physics (Phase Transitions) \u2194 Integrated Information \u2194 Percolation Theory\n\n**Lineage**: Builds on phi_zero_of_disconnected, phi_pos_of_strongly_positive, phi_mono_of_weight_le from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Categorical Integration \u2014 Causal Systems as Enriched Categories\n\n**Conjecture**: The category of causal systems (with morphisms being weight-reducing maps) admits a monoidal structure under direct sum, and \u03a6 extends to a lax monoidal functor to (\u211d\u22650, min, +). Specifically, \u03a6(C\u2081 \u2295 C\u2082) = min(\u03a6(C\u2081), \u03a6(C\u2082), cross(C\u2081,C\u2082)) where cross(C\u2081,C\u2082) is the minimum cross-flow between the two components.\n\n**Test**: Verify the functor properties for all pairs of causal systems on 2-3 vertices. Check that the monoidal structure axioms (associativity, unit) hold.\n\n**Impact**: If true, this provides a categorical foundation for IIT, enabling composition of conscious systems via universal constructions (limits, colimits). This would connect IIT to topos theory and provide a principled answer to the \"combination problem\" in philosophy of mind.\n\n**Catalog References**: `Novelty/IntegratedInformation/Core.lean` (directSum, phi_directSum_eq_zero), `Bridges/ArrowDepthComplexity.lean` (category-theoretic methods)\n\n**Proof Strategy**:\n1. Define the category CausalSys with objects = CausalSystem n and morphisms = weight-reducing maps\n2. Verify well-definedness of composition\n3. Define the direct sum monoidal product\n4. Show \u03a6 is functorial (monotonicity implies functoriality)\n5. Verify the lax monoidal property\n\n**Domain Bridges**: Category Theory (Enriched Categories) \u2194 IIT \u2194 Monoidal Functors\n\n**Lineage**: Builds on directSum, phi_directSum_eq_zero, phi_mono_of_weight_le from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Integration Spectrum and Chromatic Number\n\n**Conjecture**: For a causal system C, define the \"zero graph\" G\u2080 as the graph with edges where w(i,j) = 0. Then the integration dimension (largest k where \u03a6_k > 0) equals the chromatic number \u03c7(G\u2080\u1d9c) of the complement of G\u2080 minus 1. In particular, for a strongly positive system, dim(C) = n - 1.\n\n**Test**: Enumerate all graphs on 4-5 vertices, assign random positive weights to edges and zero to non-edges. Compute integration dimension by brute-force k-partition enumeration. Compare with chromatic number of complement.\n\n**Impact**: If true, this provides a graph-coloring characterization of integration depth, connecting IIT to one of the central problems in combinatorics. If false, the failure cases would reveal interesting structures where integration dimension diverges from chromatic expectations.\n\n**Catalog References**: `Novelty/IntegratedInformation/Core.lean` (KPartition, interPartFlow, interPartFlow_nonneg), `Novelty/IntegratedInformation/Spectrum.lean` (phi_pos_of_strongly_positive)\n\n**Proof Strategy**:\n1. Formalize integration dimension as a definition\n2. Show that \u03a6_k > 0 iff every k-partition has positive inter-part flow\n3. Relate this to the existence of edges between every pair of parts\n4. Connect to graph coloring: a proper coloring of G\u2080\u1d9c corresponds to a zero-flow partition\n\n**Domain Bridges**: Graph Coloring \u2194 Integration Spectrum \u2194 Complexity Theory (chromatic number is NP-hard)\n\n**Lineage**: Builds on KPartition, interPartFlow_nonneg from this cycle; connects to `critical_density_bounds` in Novelty/SegmentAlgebra.lean.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Information-Geometric Integration \u2014 \u03a6 on Statistical Manifolds\n\n**Conjecture**: When causal weights represent Fisher information between stochastic processes at each node, \u03a6 becomes a Riemannian distance on the statistical manifold of joint distributions. Specifically, \u03a6(C) \u2265 d_FI(p_joint, p_product) where d_FI is the Fisher-Rao distance between the joint distribution and the product of marginals.\n\n**Test**: For binary causal systems (each node has state 0 or 1) with n = 3-4, compute \u03a6 (minimum cut) and d_FI (Fisher-Rao distance between joint and product distributions) numerically. Check whether the inequality holds.\n\n**Impact**: If true, this embeds IIT in information geometry \u2014 one of the most elegant frameworks in mathematical statistics. \u03a6 would acquire a geometric interpretation as a \"distance from independence\" on a curved statistical manifold. This would also provide natural connections to machine learning (natural gradient descent) and quantum information (quantum Fisher information).\n\n**Catalog References**: `Novelty/IntegratedInformation/Spectrum.lean` (phi_le_totalWeight, phi_scale), `Bridges/PadicQuantumInformation.lean` (information-theoretic methods)\n\n**Proof Strategy**:\n1. Define Fisher information matrix for a causal system\n2. Define the Fisher-Rao metric on the simplex of joint distributions\n3. Show that the minimum cut provides an upper bound on the geodesic distance\n4. Prove the lower bound using the data processing inequality\n\n**Domain Bridges**: Information Geometry \u2194 IIT \u2194 Statistical Manifolds \u2194 Quantum Information\n\n**Lineage**: Builds on phi_le_totalWeight, crossInfo_le_totalWeight from this cycle; connects to `ultrametric_entropy_composition_bound` in Bridges/PadicQuantumInformation.lean.\n\n**Ambition**: grand_challenge\n",
     "domains": [
       "Algebra",
@@ -1458,7 +1458,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "f18d283e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-07T06:46:00.326851+00:00",
     "title": "**Causal Integration Algebra** \u2014 a rigorous lattice-t"
   },
@@ -2274,18 +2274,108 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Arrow's impossibility theorem states that no ranked voting system with 3+ alternatives can be Pareto efficient, non-dictatorial, and independent of irrelevant alternatives (IIA). Conjecture: Arrow's theorem is a curvature statement. The space of preference profiles is a Riemannian manifold M with the Fisher information metric. The social welfare function F: M -> M is a mapping from profiles to social preferences. Arrow's conditions translate to geometric conditions: (1) Pareto efficiency means F preserves the direction of unanimous preference (F is 'forward-looking'). (2) IIA means F is a local mapping (the social preference at x depends only on local information near x). (3) Non-dictatorial means F is not a projection onto a single voter's preference. Conjecture: the only smooth, local, forward-looking maps on a positively curved manifold are projections (dictatorships). This is because a positively curved manifold has the property that parallel transport around a small loop rotates vectors (Holonomy), and a local, forward-looking map must preserve this holonomy, which forces it to be a projection. Conjecture: the curvature of the preference space is related to the 'polarization' of the electorate: when preferences are polarized (bimodal), the curvature is positive (sphere-like), and Arrow's theorem applies. When preferences are unimodal (consensus), the curvature is zero (flat), and majority rule works. Test: compute the curvature of the preference space for synthetic election data and verify the connection to Arrow's theorem. Impact: Arrow's impossibility is a theorem of differential geometry. Voting is curved.",
+    "description": "# Future Directions: PL Hodge Theory for Neural Networks\n\n## 1. Tight Asymptotic Characterization of the Zaslavsky Function\n\nThe current formalization proves Z(m,n) \u2264 (m+1)^n (polynomial upper bound) and Z(m,n) \u2265 C(m,n) (lower bound via a single binomial coefficient). The missing piece is the tight asymptotic: Z(m,n) = \u0398(m^n/n!) for fixed n as m \u2192 \u221e. Specifically, the conjecture is:\n\n**Conjecture**: For all m \u2265 n \u2265 1, we have n! \u00b7 Z(m,n) \u2265 m^n, and this bound is tight in the sense that Z(m,n) \u2264 2\u00b7m^n/n! for m \u2265 2n.\n\nThe key insight is that the dominant term in Z(m,n) = \u2211_{k\u2264n} C(m,k) is C(m,n) \u2248 m^n/n!, and the remaining terms C(m,k) for k < n are lower-order. This can be proved by showing C(m,n) \u2265 m^n/(n!)\u00b7(1-n/m)^n via the falling factorial bound, and that the partial sums contribute at most a factor of 2.\n\n**Why now?** The `choose_le_Z` theorem provides the lower bound framework. What's needed is a formalization of the falling factorial inequality C(m,n) \u2265 (m-n+1)^n/n!, which requires careful handling of natural number subtraction and casting to \u211a or \u211d. Mathlib's `Nat.choose_le_pow_of_lt_half_left` and related lemmas provide the starting point.\n\n## 2. Full Chain Complex Euler-Poincar\u00e9 and Betti Number Computation\n\nThe current `TwoTermComplex` captures \u03b2\u2080 and \u03b2\u2081 with the Euler-Poincar\u00e9 formula \u03c7 = \u03b2\u2080 - \u03b2\u2081. The natural extension is an n-term chain complex C_d \u2192 C_{d-1} \u2192 \u22ef \u2192 C_0 with the boundary-squared-is-zero condition \u2202\u00b2 = 0, yielding Betti numbers \u03b2_k = dim(ker \u2202_k / im \u2202_{k+1}) for all k.\n\n**Conjecture**: For a polyhedral complex K arising from a ReLU network with architecture (w\u2081, ..., w_L) in \u211d^d, the Betti numbers satisfy \u03b2_k \u2264 \u220f_{i=1}^{L} C(w_i, k) for all 0 \u2264 k \u2264 d. The generalized Euler-Poincar\u00e9 formula \u2211_k (-1)^k \u03b2_k = \u2211_k (-1)^k f_k holds.\n\nThe key insight is that the boundary-squared-is-zero condition \u2202_k \u2218 \u2202_{k+1} = 0 implies im(\u2202_{k+1}) \u2286 ker(\u2202_k), and the quotient dim(ker/im) can be computed via the dimension formula: \u03b2_k = dim(ker \u2202_k) - dim(im \u2202_{k+1}). Telescoping the alternating sum gives the Euler-Poincar\u00e9 identity.\n\n**Why now?** The `beta\u2081_add_rank` theorem demonstrates the rank-nullity approach works. Extending to a sequence of boundary maps indexed by `Fin (d+1)` with the compatibility condition is straightforward using Mathlib's `HomologicalComplex` or a direct inductive definition. The algebraic framework is ready; what's needed is the combinatorial connection to polyhedral face counts.\n\n## 3. VC Dimension Formalization via the Sauer-Shelah Lemma\n\nThe `shatterFn_eq_Z` theorem shows that the recursive shatter function equals the Zaslavsky function Z(m,n). The next step is to formalize the *semantic* Sauer-Shelah lemma: if a family F \u2286 Finset.powerset [n] has no shattered subset of size > d, then |F| \u2264 Z(n, d).\n\n**Conjecture**: For any family F of subsets of Fin n, if the VC dimension of F (the maximum size of a shattered subset) is at most d, then F.card \u2264 Z n d = \u2211_{k\u2264d} C(n,k). Furthermore, this bound is tight: there exists a family achieving equality.\n\nThe key insight is that the proof proceeds by double induction on n and d, using the projection/restriction decomposition: for any element x, partition F into F\u2080 (sets not containing x) and F\u2081 (sets containing x), then apply the inductive hypothesis to F\u2080 (on n-1 elements, VC-dim \u2264 d) and F\u2081 \u2229 F\u2080 (on n-1 elements, VC-dim \u2264 d-1). This gives |F| = |F\u2080| + |F\u2081| \u2264 Z(n-1,d) + Z(n-1,d-1) = Z(n,d).\n\n**Why now?** The `shatterFn_eq_Z` theorem validates the recursive structure. Formalizing VC dimension requires defining \"F shatters S\" as \u2200 T \u2286 S, \u2203 A \u2208 F, A \u2229 S = T, which is expressible using Mathlib's `Finset` API. The inductive proof mirrors the recurrence already captured by `shatterFn_succ_succ`.\n\n## 4. Matroid-Theoretic Zaslavsky Formula\n\nThe Zaslavsky function Z(m,n) counts regions of a *generic* hyperplane arrangement. For non-generic arrangements, the exact count is given by the characteristic polynomial of the arrangement's intersection lattice (equivalently, its matroid). For a generic arrangement, this matroid is the uniform matroid U_{n,m}, and the characteristic polynomial evaluates to Z(m,n) at t=1.\n\n**Conjecture**: For any matroid M on ground set E with rank function r, the characteristic polynomial \u03c7_M(t) = \u2211_{A\u2286E} (-1)^|A| t^{r(E)-r(A)} satisfies |\u03c7_M(1)| \u2264 Z(|E|, r(E)). Equality holds if and only if M is the uniform matroid.\n\nThe key insight is that the M\u00f6bius function of the lattice of flats controls the coefficients of \u03c7_M, and the uniform matroid maximizes |\u03c7_M(1)| among all matroids of given rank and size. This is because the uniform matroid has the most flats at each rank level.\n\n**Why now?** Mathlib has `Matroid.Basic` with rank functions, circuits, and independent sets. The characteristic polynomial can be defined as a sum over subsets using `Finset.powerset`. The connection to hyperplane arrangements requires showing that the arrangement matroid (defined by linear independence of normal vectors) has its characteristic polynomial equal to the region count \u2014 this is Zaslavsky's theorem itself.\n\n## 5. Quantitative Depth-Width Tradeoffs with Explicit Constants\n\nThe `depth_efficiency` theorem shows that deep networks achieve 2^N regions versus \u2264 (N+1)^d for shallow networks. But this comparison is only meaningful when 2^N > (N+1)^d, i.e., when N > d\u00b7log\u2082(N+1). A sharper analysis would give the exact crossover point and show that for any \u03b5 > 0, a network of depth L = \u2308d/\u03b5\u2309 and width w = \u2308\u03b5\u00b7N/d\u2309 achieves at least (N/d)^d regions \u2014 matching the information-theoretic lower bound.\n\n**Conjecture**: For a ReLU network with N total neurons in dimension d, the maximum number of linear regions R satisfies (N/d)^d \u2264 R \u2264 2^N, with the lower bound achieved by depth L = d and uniform width w = N/d, and the upper bound achieved by depth L = N (single neuron per layer).\n\nThe key insight is that the optimal depth-width allocation for maximizing regions is L = d layers of width N/d each, giving Z(N/d, d)^d \u2248 (N/d)^d \u00b7 (1/d!)^d regions. This matches the \"covering number\" lower bound from statistical learning theory.\n\n**Why now?** The `deep_bound_exponential` and `shallow_bound_polynomial` theorems provide the two extremes. The intermediate case (L layers of width N/L for 1 < L < N) requires analyzing Z(N/L, d)^L as a function of L, which involves optimizing a product of binomial sums. The key lemma is that Z(w, d) \u2265 (w/d)^d for w \u2265 d, which combined with the tight asymptotic from Direction 1 would complete the picture.\n",
     "domains": [
-      "Novelty",
-      "Algebra"
+      "Algebra",
+      "MachineLearning"
     ],
-    "id": "fd_0093",
-    "priority_score": 0.7,
+    "id": "fd_1088",
+    "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "seed",
+    "source_exp_id": "55bdd69f",
     "status": "available",
-    "timestamp": "2026-06-01T12:30:30.814374+00:00",
-    "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
+    "timestamp": "2026-06-09T08:48:22.141051+00:00",
+    "title": "The current formalization proves Z(m,n) \u2264 (m+1)^n (polynomial upper bound) and Z"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Collatz Dynamics and Proof-Theoretic Barriers\n\n## What We Proved\n\nThis cycle formalized a complete framework connecting Collatz dynamics to 2-adic structure,\nwith **zero sorry** across two files and **12 fully verified theorems**. The crown jewel is\nthe **parity determinism theorem**: `n mod 2^k` determines the first `k` parities of the\nCollatz orbit, which is equivalent to 2-adic continuity of the Collatz map. Supporting this\nare the power-of-two halvings theorem, one-step congruence preservation, multi-step congruence\npropagation, and concrete contraction certificates for residue classes mod 4, 8, and 16.\n\n---\n\n## Direction 1: 2-Adic Continuity to Density Bounds\n\nOur `parity_determined_by_residue` theorem is essentially a discrete version of 2-adic\ncontinuity. The key insight is that extending this to the full 2-adic integers \u2124\u2082 and\nproving Lipschitz continuity of the Collatz map would enable analytic methods (Mahler\nseries, p-adic measures) to attack density bounds.\n\n**Conjecture**: The Collatz map T extends to a 1-Lipschitz function T: \u2124\u2082 \u2192 \u2124\u2082 in the\n2-adic metric, and for any n \u2208 \u2115, the odd density lim sup_{k\u2192\u221e} oddCount(n,k)/k < 0.45.\n\n**Test**: Formalize `Collatz.step` as a map on `ZMod (2^k)` for each k, prove compatibility\nwith the projective limit structure, then construct the \u2124\u2082 extension. Compute empirical\nodd densities for n \u2264 10^6 to verify the 0.45 bound computationally.\n\n**Why now?** Our `iter_congruence` theorem already provides the key compatibility condition:\ncongruence mod 2^(k+1) is preserved (with controlled loss) through iteration. This is precisely\nthe data needed to define the projective limit. Mathlib has `PadicInt` and projective limit\ninfrastructure that could be leveraged directly.\n\n---\n\n## Direction 2: Universality Threshold for Generalized Collatz Systems\n\nOur GCS framework (`GCS` structure with divisibility conditions) is ready for studying\ncomputational power as a function of modulus. The key insight is that Conway proved\nundecidability for *some* GCS, but the threshold modulus is unknown \u2014 determining it\nwould tell us exactly how \"far\" standard Collatz (modulus 2) is from Turing completeness.\n\n**Conjecture**: GCS with modulus \u2264 5 have decidable orbit behavior. Modulus 6 suffices\nfor Turing-completeness via simulation of 2-counter machines.\n\n**Test**: For modulus 2 (standard Collatz), prove that `standardCollatz.step` has bounded\ngrowth ratio (our `odd_even_pair_bound` gives factor \u2264 2 per odd-even pair). For modulus 6,\nexplicitly construct a GCS simulating a universal 2-counter machine and formalize the\nreduction.\n\n**Why now?** The GCS framework and `standardCollatz` definition are in place. The growth\nbound `odd_even_pair_bound` already constrains modulus-2 systems. Extending to modulus 3-5\nrequires similar growth analysis with more residue classes \u2014 tedious but tractable.\n\n---\n\n## Direction 3: Effective Contraction Certificates via Deeper Residue Analysis\n\nOur mod-4, mod-8, and mod-16 contraction theorems show that deeper residue analysis yields\nstronger contraction guarantees. The key insight is that for n \u2261 0 (mod 2^k), we get k\nguaranteed halving steps, giving contraction by factor 2^k \u2014 but the question is what\nhappens *after* those halvings.\n\n**Conjecture**: For every \u03b5 > 0, there exists K such that for n \u2261 0 (mod 2^K), the orbit\nreaches a value < n^\u03b5 within O(K) steps. More precisely, step^[2K](n) < n^(1/2) for\nn \u2261 0 (mod 2^K) with K = \u23082 log\u2082 n\u2309.\n\n**Test**: Prove the bound for K = 4 (mod 16) using `mod16_four_step_value` and verify\nstep^[8](n) < \u221an for n \u2261 0 mod 16 with n large enough. Extend to K = 5, 6 by computing\nthe orbit segments explicitly.\n\n**Why now?** We have `power_of_two_halvings` giving the first K halvings exactly, and\n`odd_even_pair_bound` bounding the growth of subsequent odd steps. The missing piece is\na careful accounting of how many odd steps can occur in the \"rebound\" after the initial\nhalvings \u2014 our `odd_followed_by_even` theorem constrains this to at most half the steps.\n\n---\n\n## Direction 4: Collatz Independence via Encoding Goodstein Sequences\n\nThe bounded-universal gap (each \u2203k, step^[k](n)=1 is decidable, but \u2200n is not known to be)\nmirrors the structure of PA-independent statements. The key insight is that Goodstein sequences\n\u2014 which are PA-independent but provably terminating in second-order arithmetic \u2014 have a\nsimilar \"local descent, global opacity\" structure to Collatz orbits.\n\n**Conjecture**: There exists a GCS with modulus \u2264 10 whose halting problem on input 1 is\nindependent of PA, constructed by encoding a Goodstein-like base-change operation as\naffine residue-class maps.\n\n**Test**: Formalize the Goodstein sequence G(n) for small n in our GCS framework. The\nbase-change operation b \u2192 b+1 in hereditary base representation can be approximated by\na finite set of affine maps on residue classes. Verify that the encoding preserves the\nordinal descent property (\u03b5\u2080-induction) that makes Goodstein PA-independent.\n\n**Why now?** Our GCS divisibility conditions (`div_cond`) ensure that affine maps produce\nnatural numbers, which is exactly the constraint needed for a valid encoding. The formal\nframework handles the \"well-definedness\" boilerplate automatically.\n\n---\n\n## Direction 5: Tropical Collatz Drift and Stopping Time Distribution\n\nTaking logarithms of Collatz iterates converts multiplicative dynamics to additive, revealing\na random-walk-like structure. The key insight is that our `odd_even_pair_bound` (factor \u2264 2\nper odd-even pair) and `mod4_contraction` (factor 1/4 per even-even pair) translate to\nbounded step sizes in log space, making the orbit amenable to drift analysis.\n\n**Conjecture**: The log\u2082-orbit (log\u2082(step^[k](n)))_k behaves as a random walk with negative\ndrift d = p\u00b7log\u2082(3) + (1-p)\u00b7log\u2082(1/2) where p \u2248 log(2)/log(3) \u00b7 (1/2). For \"generic\" n,\nthe stopping time (first k with step^[k](n) = 1) is \u0398(log(n)\u00b2).\n\n**Test**: Define `tropicalOrbit (n k : \u2115) : \u211d := Real.log (step^[k] n) / Real.log 2` and\nprove that the one-step increment is bounded: for odd steps, the increment is\nlog\u2082(3) + O(1/n) \u2248 1.585; for even steps, exactly -1. Use `odd_followed_by_even` to show\nthe drift per two-step pair is at most log\u2082(3) - 1 \u2248 0.585, and per three steps (when\npreceded by an even step) is at most log\u2082(3) - 2 \u2248 -0.415.\n\n**Why now?** The `oddCount` and `evenCount` functions are formalized and satisfy\n`odd_even_partition`. The tropical drift is directly computable from these counts.\nReal.log is available in Mathlib, making the formalization straightforward.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1089",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f2700283",
+    "status": "available",
+    "timestamp": "2026-06-09T08:48:56.482383+00:00",
+    "title": "This cycle formalized a complete framework connecting Collatz dynamics to 2-adic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Code-Based Cryptography Formalization\n\n## 1. Goppa Code Construction from Algebraic Geometry\n\nThe current formalization treats linear codes abstractly as submodules of F^n. A natural next step is to construct binary Goppa codes explicitly from a Goppa polynomial g(x) \u2208 GF(2^m)[x] and a support set L \u2286 GF(2^m), then prove that the resulting code has minimum distance \u2265 2\u00b7deg(g) + 1 (the \"square root\" improvement over general alternant codes).\n\nThe key insight is that the parity check matrix of a Goppa code has a Vandermonde-like structure that forces every codeword to satisfy syndrome equations modulo g(x), and the binary case doubles the designed distance because the square root of the syndrome polynomial exists over GF(2^m).\n\nWhy now? Mathlib's finite field infrastructure (GaloisField, polynomial rings over finite fields, Frobenius endomorphism) is now mature enough to formalize the algebraic construction. The Hamming weight/distance framework established here provides the metric foundation.\n\n## 2. Patterson's Decoding Algorithm Correctness\n\nThe McEliece cryptosystem's private key operation depends on efficient decoding of Goppa codes. Patterson's algorithm (1975) decodes binary Goppa codes up to t errors in O(n\u00b2) operations by computing the error locator polynomial via a square root and extended GCD computation in GF(2^m)[x]/g(x).\n\nThe key insight is that Patterson reduces decoding to finding a polynomial \u03c3(x) of degree \u2264 t such that \u03c3\u00b2(x) \u2261 x (mod g(x)) and \u03c3(x) divides the syndrome, which can be solved by the extended Euclidean algorithm with early termination.\n\nWhy now? The unique decoding guarantee (Theorem 3) ensures that Patterson's algorithm, if it terminates successfully, produces the unique closest codeword. Formalizing the algorithm would close the loop on McEliece correctness from abstract specification to concrete implementation.\n\n## 3. ISD Complexity Lower Bounds and Security Reduction\n\nInformation-Set Decoding (ISD) is the best known generic attack against code-based cryptosystems. Formalizing the combinatorial lower bound \u2014 that any algorithm solving the syndrome decoding problem must examine at least C(n,t)/C(k,0) \u2248 C(n,t) information sets in expectation \u2014 would provide the first machine-verified security argument for McEliece parameters.\n\nThe key insight is that the number of information sets (k-subsets of [n] that form a basis for the code) is approximately C(n,k), and only a C(n-t, k)/C(n,k) fraction of them avoid all t error positions, giving a birthday-type lower bound.\n\nWhy now? The parameter verification theorems (mceliece6960119_params, mceliece8192128_params) establish the arithmetic foundation. Connecting these to a formal complexity argument would produce the first end-to-end verified post-quantum security claim.\n\n## 4. Distinguisher Reduction: Goppa vs. Random\n\nA central open problem in code-based cryptography is whether Goppa code generator matrices are computationally indistinguishable from random matrices. Formalizing even partial results \u2014 such as the Faug\u00e8re\u2013Otmani\u2013Perret\u2013Tillich distinguisher for high-rate Goppa codes, or the proof that square-free Goppa codes resist algebraic distinguishers up to certain parameters \u2014 would advance both the formalization and the cryptographic understanding.\n\nThe key insight is that the distinguishing advantage is bounded by the number of low-weight codewords in the dual code, which for properly chosen Goppa codes is exponentially small.\n\nWhy now? The permutation invariance theorem (Theorem 4) shows that code equivalence under permutation preserves all metric properties, which is a prerequisite for any distinguisher reduction. The linear code framework supports defining the dual code as the orthogonal complement.\n\n## 5. Quantum Security of McEliece via Grover Bounds\n\nWhile McEliece is considered post-quantum secure, the formal argument requires showing that Grover's algorithm provides at most a quadratic speedup over classical ISD. This means a [n, k, d] binary Goppa code with classical work factor W has quantum work factor \u2265 W^{1/2}, so 256-bit quantum security requires parameters achieving classical work factor \u2265 2^{512}.\n\nThe key insight is that Grover's algorithm applies to the ISD search as an unstructured search over information sets, and the lack of exploitable algebraic structure in the search space prevents better-than-quadratic quantum speedups (assuming no quantum algebraic attacks exist).\n\nWhy now? The parameter verification infrastructure can be extended to verify that the mceliece8192128 parameter set achieves \u2265 2^{512} classical work factor (and thus \u2265 2^{256} quantum). This would produce the first formally verified post-quantum security parameter claim.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1090",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "67d7e25f",
+    "status": "available",
+    "timestamp": "2026-06-09T08:49:31.949223+00:00",
+    "title": "The current formalization treats linear codes abstractly as submodules of F^n. A"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Tropical Hodge Theory\n\n## 1. Full Hodge Decomposition for Multi-Degree Complexes\n\nThe current work proves the key ingredients \u2014 adjunction, harmonic characterization, and orthogonality \u2014 for a single-degree weighted coboundary map d : \u211d^m \u2192 \u211d^n. The natural next step is to formalize the full three-way orthogonal decomposition for a multi-degree cochain complex:\n\n  C^p = im(d_{p-1}) \u2295 im(\u03b4_p) \u2295 ker(\u0394_p)\n\nwhere \u0394_p = \u03b4_p d_p + d_{p-1} \u03b4_{p-1} is the full Hodge Laplacian. This requires formalizing the chain complex condition d\u00b2 = 0, which enables the exact-coexact orthogonality (currently stated but not proved in full generality). The key insight is that the finite-dimensional case avoids the functional-analytic subtleties of the infinite-dimensional Hodge theorem \u2014 the decomposition follows purely from linear algebra over \u211d with positive-definite inner products.\n\nWhy now? Mathlib's `Submodule.orthogonal` and finite-dimensional inner product space theory have matured enough to support this construction. The adjunction theorem we proved is the critical ingredient that was missing.\n\n## 2. Tropical Kirchhoff's Matrix Tree Theorem\n\nThe graph Laplacian's determinantal structure encodes the number of spanning trees via Kirchhoff's theorem: for a connected graph G with Laplacian L, the number of spanning trees equals any cofactor of L. The tropical analog replaces the determinant with the tropical permanent (minimum weight perfect matching), giving:\n\n  trop-det(L) = min over spanning trees T of (sum of edge weights in T)\n\nThe key insight is that the tropical determinant of the Laplacian computes the minimum spanning tree weight, connecting our Laplacian formalization to tropical optimization. This would bridge spectral graph theory (our `laplacian_kernel_eq_incidence_kernel`) to tropical combinatorial optimization in a single theorem.\n\nWhy now? The quadratic form identity and kernel characterization we proved provide the spectral foundation. Formalizing the tropical determinant requires only Mathlib's `Equiv.Perm` and `Finset.sum` machinery.\n\n## 3. Spectral Gap and Tropical Cheeger Inequality\n\nOur `rayleigh_quotient_pos` theorem shows that non-constant functions have positive Laplacian energy. The quantitative version is the Cheeger inequality:\n\n  \u03bb\u2081 \u2265 h\u00b2 / (2 \u00b7 max_degree)\n\nwhere \u03bb\u2081 is the smallest nonzero eigenvalue and h is the Cheeger constant (edge expansion). The tropical analog replaces the Cheeger constant with a tropical bottleneck quantity: the minimum over all cuts of the maximum edge weight in the cut.\n\nThe key insight is that the tropical Cheeger constant \u2014 defined via the min-max structure of the tropical semiring \u2014 gives tighter bounds than the classical version for graphs arising from tropical varieties, because the tropical metric (sup-norm) is compatible with the Laplacian energy bound we proved in `laplacian_energy_le_sup_norm`.\n\nWhy now? The energy bound theorem provides the upper-bound direction. The lower bound (Cheeger) requires formalizing graph cuts, which are well within Mathlib's combinatorial reach.\n\n## 4. Tropical Hodge Numbers from Matroids\n\nThe Adiprasito-Huh-Katz theorem (2018) proves that the Betti numbers of matroid Chow rings form a log-concave sequence: b_k\u00b2 \u2265 b_{k-1} \u00b7 b_{k+1}. This is equivalent to the Hard Lefschetz property for a tropical fan associated to the matroid. Our `SatisfiesHLP` predicate (from the existing HodgeDecomposition/Defs.lean) captures this property.\n\nThe key insight is that the Laplacian kernel dimension equals the Betti number \u03b2_0 (number of connected components), and this can be extended to higher Betti numbers via the multi-degree Hodge Laplacian from Direction 1. Proving log-concavity of the kernel dimensions would formalize a central case of the Adiprasito-Huh-Katz theorem.\n\nWhy now? The kernel characterization `laplacian_kernel_eq_incidence_kernel` gives \u03b2_0 = dim(ker L) = dim(ker B). Extending to higher degrees via the multi-degree complex from Direction 1 would give all Betti numbers, and log-concavity could then be attacked via the Lefschetz operator formalization.\n\n## 5. Tropical-to-Classical Transfer via Berkovich Analytification\n\nThe deepest direction: formalize the comparison map between tropical cohomology and classical \u00e9tale or singular cohomology via Berkovich analytification. For a smooth projective variety X over a non-archimedean valued field, the tropicalization map trop: X^{an} \u2192 \u03a3 induces a map on cohomology:\n\n  H^p(\u03a3, \u2124) \u2192 H^p(X^{an}, \u2124)\n\nThe key insight is that our weighted cochain complex with positive weights is exactly the combinatorial model for the tropical cohomology of the tropicalization \u03a3, and the adjunction/Hodge theory we developed gives the spectral sequence connecting tropical and algebraic cohomology. The transfer principle would say: if a cycle class is representable tropically (which our `cycleClass` formalization captures), then it is algebraic classically.\n\nWhy now? This is the most ambitious direction, but the foundations are in place: the weighted inner product, adjunction, and Hodge decomposition provide the tropical side. Mathlib's algebraic geometry is approaching the point where Berkovich spaces could be formalized, and our work provides the target for the comparison map.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1091",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5c7661a0",
+    "status": "available",
+    "timestamp": "2026-06-09T08:50:08.451640+00:00",
+    "title": "The current work proves the key ingredients \u2014 adjunction, harmonic characterizat"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Geometry of Consensus\n\n## 1. Full Arrow's Impossibility via Decisive Ultrafilters\n\nThe current formalization establishes the structural machinery (definitions of SWF, Pareto, IIA, decisive coalitions, and the ultrafilter-on-finite-types theorem) but does not yet close the full loop: proving that decisive coalitions under Pareto + IIA form an ultrafilter. The key insight is that the \"field expansion lemma\" \u2014 showing decisiveness for one pair implies decisiveness for all pairs \u2014 requires constructing specific preference profiles that witness the transfer, and this construction is the technically hardest part.\n\n**Testable conjecture**: The decisive coalitions of any SWF satisfying Pareto + IIA on \u22653 alternatives form a filter that is also an ultrafilter (i.e., for every coalition S, either S or S\u1d9c is in the family). This can be tested by attempting to formalize the field expansion lemma for the 3-alternative case first, where only 6 preference orderings exist per voter.\n\n**Why now?** Our definitions compile cleanly and the ultrafilter-is-principal theorem is already in Mathlib. The only missing piece is the algebraic characterization of decisive families, which requires careful but finite case analysis on triples of alternatives.\n\n## 2. Quantitative Arrow: Curvature Bounds on Near-Dictatorships\n\nOur Hellinger distance and Bhattacharyya coefficient results give a metric structure on the space of probability distributions. A natural quantitative extension of Arrow's theorem would bound how \"close to dictatorial\" a SWF must be, measured in terms of the curvature of the underlying preference space.\n\n**Testable conjecture**: For any \u03b5-approximately IIA social welfare function F (meaning |BC(F(P), F(Q))| \u2264 \u03b5 whenever P and Q agree on a pair), there exists a voter v such that the Hellinger distance between F(P) and the dictatorial output P\u1d65 is at most C\u00b7\u03b5 for some universal constant C depending only on the number of alternatives. The key insight is that our `bhattacharyya_cauchy_schwarz` and `hellinger_pos_of_ne` results already give the rigidity needed \u2014 strict positivity of Hellinger distance means approximate IIA forces approximate projection.\n\n**Why now?** The Friedgut-Kalai-Naor quantitative Arrow theorem (2002) proves exactly this in the Boolean case. Our Fisher-Rao framework should give a cleaner proof via spherical geometry, and the necessary inequalities are already formalized.\n\n## 3. Single-Peaked Preferences and Zero Curvature\n\nOur `polarization_consensus` theorem shows that when all voters agree, the polarization index (average Hellinger distance) is zero. The geometric conjecture is stronger: when preferences are \"single-peaked\" (unimodal on a common axis), the effective curvature of the restricted preference space drops to zero, and majority rule satisfies all Arrow conditions on this restricted domain.\n\n**Testable conjecture**: Define single-peakedness as the condition that all voter utility vectors lie in a geodesic arc (1-dimensional submanifold) of the probability simplex. On such a submanifold, the induced curvature is zero, and the Bhattacharyya coefficient satisfies BC(midpoint(p,q), r) = (BC(p,r) + BC(q,r))/2 exactly (no contraction). The key insight is that geodesics on the sphere are great circles, and a great circle has zero intrinsic curvature, so the contraction inequality becomes an equality.\n\n**Why now?** Black's single-peakedness theorem (1948) is the classical positive result complementing Arrow's impossibility. Our framework gives a geometric explanation: single-peaked preferences live on a flat submanifold where the curvature obstruction vanishes.\n\n## 4. Gibbard-Satterthwaite via Spherical Fixed Points\n\nThe Gibbard-Satterthwaite theorem states that any strategy-proof voting rule on \u22653 alternatives is dictatorial. The standard proof uses Arrow's theorem as a lemma. Our geometric framework suggests a more direct route: strategy-proofness corresponds to the aggregation map being a retraction (continuous map with F\u2218F = F), and the Brouwer fixed-point theorem on the sphere constrains such retractions.\n\n**Testable conjecture**: Any continuous retraction F: (S^{n-1})^m \u2192 S^{n-1} satisfying unanimity (F(x,...,x) = x) and locality (F depends on each coordinate only through its angular position) is a projection onto one coordinate. The key insight is that retractions of the sphere onto itself must be the identity or a constant on each connected component, and locality plus unanimity forces projection.\n\n**Why now?** The Borsuk-Ulam theorem and spherical topology are well-developed in Mathlib. Connecting them to social choice would be a genuine cross-domain bridge theorem.\n\n## 5. Information-Geometric Characterization of Voting Rules\n\nBeyond Arrow's impossibility, different voting rules (Borda count, Condorcet, approval voting, etc.) correspond to different maps on the Fisher-Rao manifold with different geometric properties. The polarization index gives a scalar summary of voter disagreement; different voting rules optimize different functions of this index.\n\n**Testable conjecture**: The Borda count corresponds to the center of mass (Fr\u00e9chet mean) on the probability simplex, while Condorcet methods correspond to the metric median. The Fr\u00e9chet mean minimizes \u03a3 H\u00b2(F, p\u1d62) (total Hellinger distance) while the median minimizes \u03a3 H(F, p\u1d62) (total Hellinger distance without squaring). The key insight is that our `hellinger_eq_half_sq_dist` result shows H\u00b2 = \u00bd\u2016\u221ap - \u221aq\u2016\u00b2, so minimizing total H\u00b2 is equivalent to finding the Euclidean mean of the sqrt-embedded distributions, projected back to the sphere.\n\n**Why now?** The Fr\u00e9chet mean on Riemannian manifolds is computable and well-studied. Our sqrt-embedding reduces it to a standard linear algebra problem, making the characterization of voting rules as optimization problems on the sphere both precise and computable.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1092",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7e292267",
+    "status": "available",
+    "timestamp": "2026-06-09T08:50:42.656122+00:00",
+    "title": "The current formalization establishes the structural machinery (definitions of S"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Fractal Topology via Lattice-Theoretic Dimension\n\n## 1. Krull Dimension vs. Lebesgue Covering Dimension\n\nFor metrizable separable spaces, the small inductive dimension, large inductive dimension, and Lebesgue covering dimension all coincide. The topological Krull dimension of the open set lattice (as formalized here) captures the nesting depth of open sets. A natural question is whether this agrees with the Lebesgue covering dimension for compact metrizable spaces.\n\n**Conjecture**: For compact metrizable spaces, `topKrullDim X` equals the Lebesgue covering dimension (suitably formalized as the minimum order of finite open refinements minus one).\n\nThe key insight is that both dimensions measure \"how many open sets must overlap\" \u2014 Krull dimension via chain length, covering dimension via point multiplicity. The formal bridge would require formalizing refinement of covers and connecting chain length in Opens(X) to the minimum covering order.\n\n**Why now?** The `opensOrderIso` infrastructure and the covering multiplicity invariance (`pointMultiplicity_eq_of_homeo`) provide the exact tools needed to formalize both sides of this equivalence.\n\n## 2. Dimension of Fractal-Like Quotient Spaces\n\nThe Cantor set, Sierpi\u0144ski triangle, and similar fractals can be constructed as quotient spaces of metric spaces under iterated function systems. The topological Krull dimension of these quotients should reflect their fractal complexity, but in a purely topological way (unlike Hausdorff dimension which depends on the metric).\n\n**Conjecture**: For a self-similar fractal F with open set condition and similarity ratio r with N pieces, the topological Krull dimension `topKrullDim F` is finite and satisfies `topKrullDim F \u2264 \u2308log(N)/log(1/r)\u2309`.\n\nThe key insight is that the iterated function system structure gives a recursive decomposition of the open set lattice, bounding chain lengths by the recursion depth times the branching factor.\n\n**Why now?** The product dimension bounds (`topKrullDim_le_prod_left/right`) show that our framework handles dimensional products correctly. Extending to quotients would require formalizing IFS quotient constructions and their open set lattices.\n\n## 3. Spectral Dimension of the Open Set Frame\n\nThe lattice of open sets of a topological space is a frame (complete Heyting algebra). The spectrum of a frame is a sober space. The dimension of the spectrum of Opens(X) should recover information about X.\n\n**Conjecture**: For a sober space X, the topological Krull dimension of X equals the Krull dimension of the spectrum of the frame Opens(X) (i.e., `topKrullDim X = topKrullDim (Spec(Opens(X)))`).\n\nThe key insight is that for sober spaces, the unit of the adjunction between Top and Frames is an isomorphism, so X \u2245 Spec(Opens(X)) and the result follows from `topKrullDim_eq_of_homeo`. For non-sober spaces, the soberification could introduce new open sets that increase chain length.\n\n**Why now?** Mathlib has developing locale/frame theory. The opensEquivSet result for discrete spaces suggests that frame-theoretic properties of Opens(X) are tractable in Lean. Formalizing the Spec construction for frames would unlock a rich connection to algebraic geometry (where Krull dimension of rings connects to dimension of schemes via Spec).\n\n## 4. Dimension and Continuous Maps Between Non-Homeomorphic Spaces\n\nOur `topKrullDim_le_of_openEmbedding` shows that open embeddings give dimension inequalities. For general continuous surjections, the relationship is more subtle \u2014 the dimension can go up or down.\n\n**Conjecture**: If f : X \u2192 Y is a continuous closed surjection with fibers of topological Krull dimension \u2264 k, then `topKrullDim X \u2264 topKrullDim Y + k + 1` (a \"fiber dimension formula\" analogous to the one for algebraic varieties).\n\nThe key insight is that a chain of open sets in X can be projected to Y, but the fibers contribute at most k additional levels of nesting. This would generalize the product bound (where projection has constant fibers).\n\n**Why now?** The open embedding monotonicity and product bounds provide the base cases. The fiber dimension formula would bridge to algebraic geometry's dimension theory of morphisms, connecting our topological Krull dimension to the scheme-theoretic Krull dimension via the Zariski topology.\n\n## 5. Computability of Topological Krull Dimension for Finite Spaces\n\nFor finite topological spaces (equivalently, finite preorders), the topological Krull dimension is computable \u2014 it equals the length of the longest chain in the specialization preorder. This connects to combinatorial topology and finite topological data analysis.\n\n**Conjecture**: For a finite T\u2080 space X with n points, `topKrullDim X` equals the height of the specialization order (longest chain minus 1), and this can be computed in O(n\u00b2) time. Moreover, the dimension determines the homotopy type of the associated simplicial complex up to the (dim+1)-skeleton.\n\nThe key insight is that for finite spaces, Opens(X) is isomorphic to the lattice of downsets of the specialization preorder, and the Krull dimension of a finite distributive lattice equals the height of its poset of join-irreducibles (by Birkhoff's representation theorem).\n\n**Why now?** The `topKrullDim_discrete` result shows that for discrete (= antichain) finite spaces, the dimension matches the power set lattice dimension. Extending to general finite topologies would connect to the active area of computational topology using finite models, and the decidability would allow `#eval`-based verification of examples.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1093",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "51f15183",
+    "status": "available",
+    "timestamp": "2026-06-09T08:52:14.354473+00:00",
+    "title": "For metrizable separable spaces, the small inductive dimension, large inductive "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Zombies and Qualia\n\n## 1. Categorical Qualia Bundles and Functorial Descent\n\nThe current QualiaBundle is a single surjection \u03c0 : E \u2192 B. A natural generalization is to organize qualia bundles into a category where morphisms are commutative squares, and study when the forgetful functor to the category of behavioral systems creates or reflects limits. The key insight is that if this functor fails to reflect equalizers, then \"zombie morphisms\" (distinct experiential maps with the same behavioral effect) exist at the morphism level, not just at the object level \u2014 capturing the idea that two systems can behave identically while processing experience differently. Why now? The existing `consciousness_descent` theorem already proves functorial behavior for fixed points; extending this to a full categorical framework would unify the descent and non-ascent results and connect to the existing `ConsciousnessFixedPoint` infrastructure in the catalog.\n\n## 2. Information-Theoretic Qualia Measure via Fiber Entropy\n\nThe fibers of \u03c0 carry a natural measure of \"experiential richness\": the cardinality (or, in the continuous case, the entropy) of the fiber over each behavioral state. Conjecture: for any qualia bundle with finite fibers, the total experiential information (sum of log |fiber(b)| over all b) is bounded below by the number of zombie pairs. The key insight is that Shannon entropy of the conditional distribution of E given B = b exactly quantifies \"how much experience is invisible to behavior\" \u2014 making the hard problem measurable. Why now? The `zombie_existence_from_cardinality` theorem already links cardinality gaps to zombie existence; upgrading from cardinality to entropy would give a finer invariant that distinguishes between bundles with the same total size but different fiber distributions.\n\n## 3. Topological Qualia Bundles and the Obstruction to Sections\n\nWhen E and B carry topologies and \u03c0 is a continuous surjection, the question of whether a continuous section exists becomes a topological obstruction problem. Conjecture: the explanatory gap theorem generalizes \u2014 if E has a topological Lawvere-type property (every continuous endomorphism has a fixed point, as in Brouwer's theorem for compact convex sets), then B inherits this property through any continuous section, constraining which spaces can serve as behavioral bases. The key insight is that the explanatory gap becomes a genuine topological obstruction class (analogous to a characteristic class of a fiber bundle), not just a set-theoretic impossibility. Why now? The `explanatory_gap` theorem proves the set-theoretic version; the topological upgrade would connect to Brouwer's fixed point theorem and potentially to the existing `ConsciousnessTower` stabilization results.\n\n## 4. Qualia Inversions as a Group and the Symmetry of Experience\n\nThe qualia inversions (behavior-preserving automorphisms of E) form a group under composition. Conjecture: for a finite qualia bundle, this group is isomorphic to the direct product of the symmetric groups of the fibers, i.e., Aut_\u03c0(E) \u2245 \u220f_b S_{|fiber(b)|}. The key insight is that the structure group of the qualia bundle exactly measures the \"degrees of freedom\" in assigning qualia to behavior \u2014 a finite group whose order counts the number of experientially distinct but behaviorally identical configurations. Why now? The `qualia_inversion_exists` theorem constructs individual inversions; organizing them into a group would yield a complete algebraic invariant of the qualia bundle, and the group's representation theory could classify \"types\" of qualia rearrangement.\n\n## 5. Zombie-Free Quotients and Minimal Experiential Extensions\n\nGiven a qualia bundle \u03c0 : E \u2192 B, define the \"zombie-free quotient\" as the quotient of E by the equivalence relation of being in the same fiber (i.e., E / ~\u03c0 \u2245 B). Conjecture: for any behavioral space B and any group G, there exists a unique (up to isomorphism) \"minimal G-experiential extension\" \u2014 a qualia bundle with structure group G that is universal among all bundles with that structure group. The key insight is that this universal property characterizes exactly how much extra structure is needed beyond behavior to specify experience, making the hard problem a question about the classifying space of the structure group. Why now? The existing results show that non-trivial bundles exist and have inversions; the classification question is the natural next step and would connect to the theory of principal bundles and classifying spaces.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1094",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a26dcdd2",
+    "status": "available",
+    "timestamp": "2026-06-09T08:54:55.656333+00:00",
+    "title": "The current QualiaBundle is a single surjection \u03c0 : E \u2192 B. A natural generalizat"
   },
   {
     "consumed_by_exp_id": "",
@@ -2783,7 +2873,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bfed4ff5",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domains": [
       "Tropical",
@@ -2793,7 +2883,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.541008+00:00",
     "title": "Tropical Differential Equations: Power Series Solutions"
   },
@@ -2827,7 +2917,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Impossible Geometries: Where Parallel Lines Converge AND Diverge"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "72ac5da9",
     "description": "Cycle debd806e (Q=0.468) proved 1706 theorems in Pythagorean but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Proof-Theoretic Ordinal Analysis\n\n## 1. Ordinal Collapsing Functions and the Bachmann-Howard Ordinal\n\nThe current framework models theories by their set of provably well-ordered o",
     "domains": [
       "Pythagorean"
@@ -2836,7 +2926,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5183285105981593,
     "research_mode": "team",
     "source_exp_id": "debd806e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T05:16:22.978035+00:00",
     "title": "Close Proofs: The current framework models theories by their set of provably well-or"
   },
@@ -2913,7 +3003,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: P vs NP Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f9c3366c",
     "description": "Cycle 820c5814 (Q=0.446) proved 1155 theorems in Pythagorean but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Model Theory\u2013Algebra Bridge\n\nThis document describes five research conjectures extending the\nAx-Kochen\u2013Morley bridge formalized in `Bridges/AxKochenMorleyBridge.lean`.\n\n---\n\n## 1.",
     "domains": [
       "Pythagorean"
@@ -2922,9 +3012,23 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.49628161412759486,
     "research_mode": "team",
     "source_exp_id": "820c5814",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T05:53:06.076503+00:00",
     "title": "Close Proofs: This document describes five research conjectures extending the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 55bdd69f (Q=0.444) proved 1798 theorems in Algebra but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: PL Hodge Theory for Neural Networks\n\n## 1. Tight Zaslavsky Bounds via Arrangement Matroid Theory\n\nThe current `zaslavsky_type_bound` proves \u2211_{k\u2264d} C(n,k) \u2264 (n+1)^d, but the\nclass",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "sorry_fill_55bdd69f_bab4a9c6",
+    "priority_score": 0.494347299255925,
+    "research_mode": "team",
+    "source_exp_id": "55bdd69f",
+    "status": "available",
+    "timestamp": "2026-06-09T08:48:38.727293+00:00",
+    "title": "Close Proofs: The current `zaslavsky_type_bound` proves \u2211_{k\u2264d} C(n,k) \u2264 (n+1)^d, bu"
   },
   {
     "consumed_by_exp_id": "",
@@ -2969,6 +3073,48 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Yamabe Problem: Non-Compact Case"
   },
   {
+    "consumed_by_exp_id": "71ed406c",
+    "description": "Cycle a26dcdd2 (Q=0.428) proved 1681 theorems in Novelty but left 9 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle 4af997a7 (Q=0.426) proved 852 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the hard proble",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_a26dcdd2_04729fab",
+    "priority_score": 0.47758341076659366,
+    "research_mode": "team",
+    "source_exp_id": "a26dcdd2",
+    "status": "in_progress",
+    "timestamp": "2026-06-09T08:55:41.599777+00:00",
+    "title": "Close Proofs: Close Proofs: Zombies and Qualia: Mathematics of Subjective Experience"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 51f15183 (Q=0.427) proved 1477 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle 9ff1d7e2 (Q=0.426) proved 690 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Hausdorff dimension i",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_51f15183_4021818d",
+    "priority_score": 0.4772544815928248,
+    "research_mode": "team",
+    "source_exp_id": "51f15183",
+    "status": "available",
+    "timestamp": "2026-06-09T08:53:32.555216+00:00",
+    "title": "Close Proofs: Close Proofs: Fractal Topology: Hausdorff Dimension as a Topological I"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 5c7661a0 (Q=0.427) proved 1443 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove a tropical analog of the Hodge decomposition. Formalize tropical (p,q)-forms, the tropical Laplacian, and harmonic theory on balanced weighted polyhedral complexes.",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_5c7661a0_36710355",
+    "priority_score": 0.47662833278622757,
+    "research_mode": "team",
+    "source_exp_id": "5c7661a0",
+    "status": "available",
+    "timestamp": "2026-06-09T08:50:21.279350+00:00",
+    "title": "Close Proofs: Tropical Hodge Theory"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Cycle aecfaf36 (Q=0.426) proved 1572 theorems in Cryptography but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time c",
     "domains": [
@@ -2981,34 +3127,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T07:40:11.256031+00:00",
     "title": "Close Proofs: Speculative: Computational Complexity as Physical Law"
-  },
-  {
-    "consumed_by_exp_id": "a26dcdd2",
-    "description": "Cycle 4af997a7 (Q=0.426) proved 852 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciou",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_4af997a7_c1605657",
-    "priority_score": 0.47613257964432615,
-    "research_mode": "team",
-    "source_exp_id": "4af997a7",
-    "status": "in_progress",
-    "timestamp": "2026-06-09T07:41:41.777741+00:00",
-    "title": "Close Proofs: Zombies and Qualia: Mathematics of Subjective Experience"
-  },
-  {
-    "consumed_by_exp_id": "51f15183",
-    "description": "Cycle 9ff1d7e2 (Q=0.426) proved 690 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Hausdorff dimension is normally a metric property, not a topological one. Investigate whether it can be made topological through the lens of fractal topology. Define the fractal topological dimens",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_9ff1d7e2_b3665df8",
-    "priority_score": 0.47612431265106225,
-    "research_mode": "team",
-    "source_exp_id": "9ff1d7e2",
-    "status": "in_progress",
-    "timestamp": "2026-06-09T07:40:42.820634+00:00",
-    "title": "Close Proofs: Fractal Topology: Hausdorff Dimension as a Topological Invariant"
   },
   {
     "consumed_by_exp_id": "",
@@ -3037,6 +3155,48 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T07:39:39.714184+00:00",
     "title": "Close Proofs: Tropical Differential Equations: Power Series Solutions"
+  },
+  {
+    "consumed_by_exp_id": "561a5f44",
+    "description": "Cycle 67d7e25f (Q=0.426) proved 1266 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from ",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_67d7e25f_f0891d41",
+    "priority_score": 0.4758081468929546,
+    "research_mode": "team",
+    "source_exp_id": "67d7e25f",
+    "status": "in_progress",
+    "timestamp": "2026-06-09T08:49:47.668786+00:00",
+    "title": "Close Proofs: Code-Based Cryptography: McEliece from Goppa Codes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle f2700283 (Q=0.426) proved 1066 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n## Synthesis\n\nThis research cycle established a formalized framework connecting Collatz dynamics to proof-theoretic barriers. The central insight is that three structural gaps \u2014 t",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_f2700283_b46c63d1",
+    "priority_score": 0.47556429438567177,
+    "research_mode": "team",
+    "source_exp_id": "f2700283",
+    "status": "available",
+    "timestamp": "2026-06-09T08:49:10.204771+00:00",
+    "title": "Close Proofs: Formalized framework connecting Collatz dynami"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 7e292267 (Q=0.425) proved 1612 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Arrow's impossibility theorem states that no ranked voting system with 3+ alternatives can be Pareto efficient, non-dictatorial, and independent of irrelevant alternatives (IIA). Conjecture: Arrow's t",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_7e292267_5c5b3be6",
+    "priority_score": 0.47486085725877214,
+    "research_mode": "team",
+    "source_exp_id": "7e292267",
+    "status": "available",
+    "timestamp": "2026-06-09T08:50:54.742239+00:00",
+    "title": "Close Proofs: The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
   {
     "consumed_by_exp_id": "",

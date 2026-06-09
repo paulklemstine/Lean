@@ -1,1 +1,0 @@
-../../Tropical/BerggrenShellMesh.lean

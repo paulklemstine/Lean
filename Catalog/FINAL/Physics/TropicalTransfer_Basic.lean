@@ -1,1 +1,0 @@
-../../Physics/TropicalTransfer/Basic.lean
