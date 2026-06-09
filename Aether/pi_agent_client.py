@@ -2389,11 +2389,18 @@ Be precise, be deep, be world-class.
             1. **ARTICLE.md** — Standalone popular-science article (1500-3000 words).
                Write about IDEAS, not formal verification. No mentions of Lean or
                proof assistants. Vivid prose, narrative arc, real-world connections.
-               Reference the specific theorems proved in Phase A using @file references.
+               **Must be fully self-contained and publishable without any external
+               references.** State every theorem, result, and definition inline —
+               do NOT use @file references or point to other files. A reader with
+               only this article must understand every result without looking elsewhere.
             2. **RESEARCH_PAPER.md** — In-depth research paper (3000-8000 words).
                Abstract, definitions, main results (with proof sketches — NOT
-               full Lean), algorithms, applications, discussion, future work,
-               references to catalog results. Use @file references for theorems.
+               full Lean), algorithms, applications, discussion, future work.
+               **Must be fully self-contained and publishable quality without any
+               external references.** State every theorem, lemma, and definition
+               inline with its full mathematical statement and proof sketch. Do NOT
+               use @file references or reference other files. A reader with only this
+               paper must be able to follow every result from start to finish.
             3. **demo.py** — Numerical examples demonstrating the key results.
                Self-contained Python, type hints, all functions inlined.
             4. **PACKAGE.json** — Single JSON bundling all of the above, with this schema:
@@ -2443,7 +2450,8 @@ Be precise, be deep, be world-class.
 
             The math is already proved. Treat the Lean files below as the
             ground truth — your prose should explain and contextualize them.
-            Use the @file references above to point readers to specific theorems.
+            State theorems inline in your article and paper — they must be
+            self-contained and publishable without external references.
             """)
 
         # Build future directions section if Phase A produced them
@@ -2479,9 +2487,11 @@ PACKAGE.json so they appear in the "Future Directions" tab on the website.
 {future_directions_section}
 ## Your task
 
-Produce the deliverables listed above. Reference the specific theorems and
-results in the Lean code by their @file path and statement. The Lean file is
-the source of truth — your prose must accurately explain it.
+Produce the deliverables listed above. The Lean file is the source of truth —
+your prose must accurately explain it. Both ARTICLE.md and RESEARCH_PAPER.md
+MUST be self-contained and publishable without referencing any external files.
+State every theorem, definition, and result inline so a reader can follow the
+entire argument from the document alone.
 
 ARTICLE.md: write a popular-science narrative that makes the key idea accessible.
 RESEARCH_PAPER.md: write the formal paper with abstract, definitions, results.

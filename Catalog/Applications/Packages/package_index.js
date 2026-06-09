@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "5a904574",
     "filename": "belnaps_four_is_the_smallest_non_trivial_paraconsi.json",
     "pkg_num": 23,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4429310119047619,
     "title": "The Berggren Tree: Verified Invariant Preservation for Primitive Pythagorean Triples"
   },
   {
@@ -684,8 +684,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "belnaps_four_is_the_smallest_non_trivial_paraconsi",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4429310119047619,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "The Berggren Tree: Verified Invariant Preservation for Primitive Pythagorean Triples"
     }
