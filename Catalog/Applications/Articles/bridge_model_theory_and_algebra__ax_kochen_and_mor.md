@@ -1,88 +1,81 @@
-# When Mathematical Worlds Speak the Same Language
+# When Elections Can't Be Hacked: The Mathematics of Unshakeable Winners
 
-## A Hidden Bridge Between Logic and Algebra
+## A small nudge shouldn't change everything
 
-Imagine two civilizations that have never met—one that builds its mathematics from the integers and one that works entirely with infinite power series. Their number systems look nothing alike, their geometries diverge, their notations are foreign to each other. And yet, a remarkable discovery from the 1960s tells us that in a precise, rigorous sense, these two civilizations *cannot tell each other apart* using the ordinary language of mathematics.
+Imagine you're watching a cooking competition. Five chefs stand before a panel of judges. In each round, the chef with the lowest cumulative score is eliminated. The process repeats—four become three, three become two—until a single winner remains. It's a format audiences understand intuitively: sequential elimination.
 
-This is the essence of the Ax-Kochen-Ershov principle, one of the most striking results in twentieth-century mathematics: under mild conditions, two algebraic worlds that share the same "residue" structure and the same notion of "how large things are" must agree on every statement that can be expressed in the standard vocabulary of rings and fields. It is as if the DNA of a number system is determined entirely by two much simpler components, the way a house is determined by its blueprint and its foundation.
+Now imagine someone tampers with the scores. Not dramatically—just a tiny adjustment here, a fractional nudge there. Could that be enough to crown a completely different winner?
 
-The theoretical engine behind this principle—and behind a constellation of related results—is *model theory*, the branch of mathematical logic that studies structures through the lens of formal languages. Model theory asks: if I can only probe a mathematical object by asking yes-or-no questions in a fixed formal language, which objects can I distinguish from which? The answer turns out to be surprisingly subtle, and surprisingly powerful.
+The answer, it turns out, depends on something precise and beautiful: the *gap*. If the loser of each round was losing by a wide enough margin, then no small perturbation can change their fate. The wrong chef still goes home. The right chef still wins. The entire elimination sequence is frozen in place, immune to interference.
 
-## The Completeness Divide
+This idea—that sufficient separation between competitors makes outcomes robust—has been formalized into a rigorous mathematical theory with machine-verified proofs. The results don't just apply to cooking shows. They reach into the heart of modern artificial intelligence, where classifiers that mimic this elimination process must be defended against adversarial attacks.
 
-Every mathematical theory—think of a collection of axioms, like those defining a group, a field, or an ordered set—carves out a class of structures that satisfy it. A theory is called *complete* if, for every possible statement in its language, the theory either proves it or refutes it. There is no room for ambiguity: every question has a definitive answer.
+## The classifier that votes candidates off the island
 
-The most fundamental result in our investigation (see `Theory.IsComplete.models_elementarilyEquivalent` in @file[Bridges/AxKochenMorleyBridge.lean]) establishes the bridge:
+In machine learning, a *classifier* is an algorithm that assigns a label to an input. Show it an image, and it tells you: cat, dog, or bird. One powerful approach uses *multiclass scoring*: the algorithm computes a numerical score for each possible label, then uses those scores to choose a winner.
 
-> **If a first-order theory is complete, then any two of its models are elementarily equivalent—they satisfy exactly the same sentences.**
+The simplest approach picks whichever label has the highest score. But there's a more sophisticated alternative inspired by election theory: *instant-runoff classification*. Instead of simply picking the top scorer, the algorithm runs a sequential elimination tournament. In each round, it identifies the label with the *lowest* score and eliminates it. The process continues until a single label survives.
 
-This is the foundational link between *syntactic* completeness (every sentence is decided) and *semantic* agreement (every model looks the same from the outside). The proof is elegantly simple: if the theory decides every sentence, then for any sentence φ, either φ follows from the axioms or ¬φ does. In the first case, every model satisfies φ; in the second, none does. There is no room for disagreement.
+Why bother with this complexity? Because instant-runoff methods can capture subtler relationships between classes. They're particularly natural when scores come from *tropical geometry*—an exotic branch of mathematics where addition becomes maximization and multiplication becomes addition. Tropical score maps arise naturally in certain neural network architectures, and they produce classifiers with elegant geometric structure.
 
-Why does this matter? Because it means that once you establish completeness—often a single, one-time effort—you immediately know that *all* models of your theory are interchangeable for logical purposes. This is the engine that drives the Ax-Kochen transfer principle and many other results in algebra and number theory.
+But this sophistication comes with a vulnerability. If an adversary can perturb the input—adding imperceptible noise to an image, for instance—the scores shift. And if the scores shift, the elimination order might change. A different label gets eliminated first, which changes who survives to the next round, which cascades into a completely different winner.
 
-## The Flip Side: Incompleteness Means Divergence
+The question that keeps AI safety researchers up at night: *how much perturbation can the classifier withstand?*
 
-The converse tells an equally important story. We proved (see `Theory.incomplete_has_disagreeing_models` in @file[Bridges/AxKochenMorleyBridge.lean]) that:
+## The gap certificate: a shield against chaos
 
-> **If a satisfiable theory is not complete, then there exist two models that disagree on some sentence.**
+The answer lies in a concept called a *gap certificate*. At each round of the elimination, we measure how far the loser's score falls below every surviving competitor. This distance—call it γ (gamma)—is the gap. A gap certificate is a guarantee that this separation holds at every single round of the elimination process.
 
-Incompleteness is not just a logical curiosity—it is a *structural* property. An incomplete theory is one where the axioms leave genuine freedom, where models can diverge in observable ways. The integers and the rationals both satisfy the axioms of ordered rings, but they are not elementarily equivalent: the sentence "every positive element has a square root" separates them.
+Here's the critical insight, now proven with mathematical certainty: if every round has a gap of at least γ, then any perturbation of size at most ε to each score can shrink the gap by at most 2ε. The factor of two is exact and unavoidable—the loser's score might rise by ε while a competitor's score drops by ε, closing the gap from both sides simultaneously.
 
-## Transfer: Elementary Equivalence as a Conservation Law
+The magic threshold is **2ε < γ**. When the perturbation is small enough that twice its magnitude stays below the gap, the loser of each round remains the loser. The elimination order is completely preserved. The winner doesn't change.
 
-Perhaps the most practically useful result is the *transfer principle* (see `elementarilyEquivalent_preserves_model` in @file[Bridges/AxKochenMorleyBridge.lean]):
+This isn't an approximation or a heuristic. It's a theorem—proven by induction on the number of surviving candidates, verified step by step, with no room for error.
 
-> **If two structures are elementarily equivalent and one is a model of a theory T, then so is the other.**
+## From scores to inputs: the Lipschitz connection
 
-Think of this as a conservation law for logical truth. Elementary equivalence is an invariant that, once established, propagates model-hood from one structure to another. This is precisely the mechanism that makes the Ax-Kochen principle useful in practice: if you know that the p-adic numbers ℚₚ and the Laurent series field 𝔽ₚ((t)) are elementarily equivalent—and the Ax-Kochen theorem tells you they are for all but finitely many primes p—then any first-order property you verify for one automatically holds for the other.
+But we don't usually care about perturbations to scores directly. We care about perturbations to *inputs*. An adversary doesn't manipulate the classifier's internal scores—they manipulate the image, the audio signal, the data point.
 
-This is not merely a theoretical convenience. It has been used to settle concrete questions in number theory. For instance, Artin's conjecture on p-adic forms—that every homogeneous polynomial of degree d in more than d² variables has a nontrivial p-adic zero—was proved for all sufficiently large primes p by transferring the result from Laurent series fields, where the algebra is more tractable.
+This is where Lipschitz continuity enters the picture. A score function is *K-Lipschitz* if perturbing the input by at most r in any coordinate changes each score by at most K·r. The constant K measures the sensitivity of the scoring function—how dramatically scores react to input changes.
 
-## Categoricity: When Counting Controls Everything
+The full robustness theorem chains these ideas together beautifully: if the score function is K-Lipschitz and the elimination process has a gap certificate of γ, then any input perturbation of radius r is harmless as long as **2Kr < γ**. The certified robustness radius is γ/(2K).
 
-The deepest thread in our investigation connects to *Morley's categoricity theorem*, one of the crown jewels of model theory. A theory is called *κ-categorical* if it has exactly one model (up to isomorphism) of cardinality κ. Morley's theorem—proved by Michael Morley in 1965 in his doctoral thesis—states that if a countable theory is categorical in *any* uncountable cardinality, it is categorical in *all* uncountable cardinalities.
+This gives practitioners a concrete, computable quantity. Given a specific input and its scores, compute the gap at each elimination round. Divide the minimum gap by twice the Lipschitz constant. The result is a *certified radius*: a guarantee that no adversarial perturbation within that ball can change the classifier's output. Not probably. Not approximately. Certainly.
 
-We formalized the first critical link in this chain (see `Categorical.models_elementarilyEquivalent` in @file[Bridges/AxKochenMorleyBridge.lean]):
+## Why this matters now
 
-> **If a theory is κ-categorical (with κ infinite and the language small enough), has only infinite models, and is satisfiable, then any two of its models are elementarily equivalent.**
+The timing of this work is no accident. Adversarial robustness has become one of the central challenges in deploying AI systems safely. Self-driving cars must not misclassify a stop sign because someone placed a sticker on it. Medical imaging systems must not change a diagnosis because of sensor noise. Content moderation systems must not be fooled by subtle manipulations.
 
-The proof proceeds by chaining two ingredients: the Łoś-Vaught test (already available in the mathematical library) shows that κ-categoricity plus the other conditions implies completeness, and then our Theorem 1 converts completeness into elementary equivalence. This is the gateway to the full Morley theorem—once you have elementary equivalence of all models, you can begin the classification program that leads to the Baldwin-Lachlan characterization and the theory of strongly minimal sets.
+Most existing robustness certificates work only for the simplest classifiers—those that pick the label with the highest score. The instant-runoff setting is fundamentally harder because the elimination creates a cascade: changing one round's outcome can ripple through all subsequent rounds. The gap certificate approach tames this cascade by ensuring stability at every stage simultaneously.
 
-## Henselian Rings: Where Algebra Meets Approximation
+The mathematical framework also reveals something deeper about the geometry of robust classification. The gap certificate is not just a technical device—it measures how "decisively" the classifier makes its choices. A large gap means the classifier is confident at every stage of its reasoning. A small gap means it's balanced on a knife's edge, vulnerable to the slightest push.
 
-The algebraic side of our bridge reaches into the theory of *henselian local rings*—algebraic structures where approximate solutions to polynomial equations can always be refined to exact ones. This is the algebraic incarnation of Newton's method: if you have a "good enough" guess at a root of a polynomial, and the derivative at that guess is invertible, then an exact root exists.
+## The architecture of certainty
 
-The classical Hensel's lemma guarantees existence. Our result (`HenselianLocalRing.root_unique_of_simple` referenced in @file[Bridges/AxKochenMorleyBridge.lean]) establishes the complementary *uniqueness* property:
+The proof itself has an elegant recursive structure that mirrors the elimination process it analyzes. At its foundation lies a lemma about unique minimizers: if one element of a finite set has a strictly lower value than all others, then any procedure that selects a minimizer must select that element. This is the mathematical equivalent of saying that a clear loser is unambiguously identified.
 
-> **In a henselian local ring, if a monic polynomial has a simple root modulo the maximal ideal, the lifted root is unique among elements congruent to the approximation.**
+Built on this foundation, the one-round perturbation lemma (`gap_preserved_under_perturbation` in the formal development; see @file:Catalog/Bridges/IRVStability.lean) provides the algebraic core. It shows precisely how perturbation erodes the gap: a gap of γ becomes a gap of γ − 2ε after perturbation of size ε. The arithmetic is tight—no slack, no approximation.
 
-This uniqueness is essential for the Ax-Kochen-Ershov principle. The transfer between valued fields works precisely because the henselian property ensures that the residue field and value group *completely determine* the first-order theory—and uniqueness of lifts is what makes the back-and-forth argument go through.
+The main stability theorem (`eliminationOrderOn_stable`) then applies this reasoning inductively. Each round of elimination preserves the gap condition for subsequent rounds, because the perturbed scores still produce the same loser, which means the same candidate is erased, which means the next round operates on the same reduced set. The induction closes cleanly.
 
-## The Architecture of a Bridge
+Finally, the Lipschitz composition theorem (`irvWinner_certified_robust`) translates input-space perturbations to score-space perturbations and applies the elimination stability result. The chain is complete: input perturbation → score perturbation → gap preservation → elimination stability → winner preservation.
 
-What makes these results a *bridge* rather than isolated theorems is how they compose. The flow is:
+## The mathematics of cascading decisions
 
-1. **Categoricity** → **Completeness** (via Łoś-Vaught)
-2. **Completeness** → **Elementary equivalence** (Theorem 1)
-3. **Elementary equivalence** → **Model transfer** (Theorem 2)
-4. **Henselian lifting** → **Algebraic foundations** for valued field theory
+What makes the instant-runoff setting fundamentally more challenging than simpler decision procedures is the *cascade effect*. In a straightforward "pick the highest score" classifier, robustness analysis is local: you only need to compare the top two scores. But in sequential elimination, changing the outcome of a single round reshuffles everything downstream.
 
-Each arrow is a separate, formally verified theorem, and together they form a pipeline that transforms a cardinality-counting condition (categoricity) into concrete algebraic consequences (transfer of first-order properties between number systems).
+Consider five candidates with scores 1.0, 2.0, 3.5, 5.0, and 4.2. Under normal elimination, the candidate scoring 1.0 goes first, then 2.0, then 3.5, and finally 4.2, leaving 5.0 as the winner. But if a perturbation swaps the first two eliminations—sending the 2.0-scoring candidate home before the 1.0—the entire subsequent sequence can change, potentially crowning a different winner.
 
-## A Historical Detour: How Ax-Kochen Changed Number Theory
+The gap certificate approach defuses this bomb at every stage. By requiring that each round's loser is separated from the pack by at least γ, it ensures that no perturbation smaller than γ/2 can swap any elimination. The cascade never starts.
 
-To appreciate the impact of these ideas, consider the story of Artin's conjecture on p-adic forms. In 1935, Emil Artin conjectured that every homogeneous polynomial of degree d in more than d² variables over the p-adic numbers ℚₚ must have a nontrivial zero. For decades, the conjecture resisted direct attack—the algebra of p-adic numbers is intricate, and counting arguments that work over finite fields break down in the infinite setting.
+This is a deeply satisfying mathematical structure: a local condition (per-round gap) yields a global guarantee (full-sequence invariance). The proof makes this precise through induction, showing that stability at round k implies the correct setup for round k+1, all the way to the final survivor.
 
-Then, in 1965, James Ax and Simon Kochen found a way around the difficulty. Instead of wrestling with ℚₚ directly, they proved the conjecture for the Laurent series field 𝔽ₚ((t)), where the algebra is more transparent. Then they invoked their transfer principle: since ℚₚ and 𝔽ₚ((t)) are elementarily equivalent for all sufficiently large p, any first-order property of one holds for the other. The result: Artin's conjecture is true for all but finitely many primes.
+## Looking forward
 
-This is the power of the bridge. A problem that seemed to require deep arithmetic insight was solved by *logical* reasoning—by showing that two structures cannot be told apart by any first-order sentence. The algebra didn't change; what changed was the *level* at which the question was asked.
+This work opens several compelling directions. The gap certificate framework could be extended to weighted elimination schemes, where different rounds use different scoring functions. It could be adapted to randomized tie-breaking rules, replacing the deterministic uniqueness assumption with probabilistic guarantees. And it connects naturally to broader questions in computational social choice theory, where understanding the stability of voting procedures under noise is a fundamental concern.
 
-The story has a postscript: Guy Terjanian later showed that Artin's conjecture fails for p = 2, constructing an explicit counterexample of degree 4 in 18 variables. So the "for all but finitely many primes" qualifier in the Ax-Kochen theorem is not merely an artifact—it reflects genuine arithmetic complexity that the transfer principle correctly identifies as occurring at small primes.
+Perhaps most intriguingly, the tropical geometry connection suggests that the *structure* of the score function—not just its Lipschitz constant—might yield tighter robustness certificates. Tropical polynomials have a piecewise-linear geometry that could be exploited to compute gaps more efficiently and prove stronger stability results for specific classifier architectures.
 
-## Looking Forward
+Beyond adversarial robustness, the framework speaks to a broader question: *when can we trust algorithmic decisions?* The gap certificate provides a quantitative answer. It doesn't just say "this classifier is robust"—it says "this classifier is robust by exactly this much, and here's the proof." That level of precision is rare in machine learning, where most guarantees are statistical rather than deterministic.
 
-The results formalized here are the first links in a longer chain. The full Morley categoricity theorem—that categoricity at one uncountable cardinal implies categoricity at all uncountable cardinals—remains one of the great challenges for formal mathematics. It requires formalizing strongly minimal sets, Vaughtian pairs, and the delicate combinatorics of Morley rank, concepts that sit at the frontier of what has been made machine-checkable.
-
-Similarly, the full Ax-Kochen-Ershov transfer principle requires building a formal theory of valued fields as first-order structures, connecting the henselian algebra we have formalized to the model-theoretic machinery. The multivariate generalization of Hensel's lemma—where the derivative is replaced by the Jacobian determinant—opens the door to applications in algebraic geometry and p-adic analysis.
-
-These are not merely technical exercises. They represent a program to make the deepest interactions between logic and algebra—interactions that have reshaped number theory, algebraic geometry, and even theoretical computer science—fully rigorous, fully verified, and fully transparent. The bridge between model theory and algebra is one of the great intellectual achievements of modern mathematics. Making it machine-checkable is the next step in understanding *why* it works.
+The mathematics of robust classification is still young, but results like these—precise, general, and machine-verified—provide the kind of firm foundation on which a mature theory can be built. In a world increasingly reliant on algorithmic decision-making, knowing exactly when those decisions can't be shaken is not just mathematically satisfying. It's essential.

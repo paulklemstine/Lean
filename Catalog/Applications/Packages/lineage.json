@@ -16,7 +16,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-08",
-      "hue": 101
+      "hue": 271
     },
     {
       "id": "rigorous_algebraic_foundations_for_probability_t",
@@ -25,7 +25,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
@@ -43,16 +43,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08T19:03:25Z",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
-      "title": "Bridge: Model Theory and Algebra — Ax-Kochen and Morley's Theorem",
-      "domain": "Novelty",
+      "title": "Certified Robustness for Instant-Runoff Classifiers via Gap Certificates",
+      "domain": "Bridges",
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 100
+      "hue": 90
     },
     {
       "id": "entropy_bounded_computation_ebc_framew",
@@ -61,7 +61,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "impossible_geometries_where_parallel_lines_converg",
@@ -70,7 +70,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-09",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "p_vs_np_problem",
@@ -97,7 +97,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 271
+      "hue": 272
     }
   ],
   "edges": [],

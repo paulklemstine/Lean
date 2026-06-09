@@ -1,275 +1,306 @@
-# Bridge: Model Theory and Algebra — Ax-Kochen and Morley's Theorem
+# Certified Robustness for Instant-Runoff Classifiers via Gap Certificates
 
 ## Abstract
 
-We present a formal development bridging the model-theoretic and algebraic infrastructure in Lean 4's Mathlib library. Our main contributions are: (1) a proof that complete first-order theories force elementary equivalence of all models, filling a gap between Mathlib's existing `Theory.IsComplete` and `ElementarilyEquivalent` APIs; (2) a proof that elementary equivalence preserves the model relation, establishing the fundamental transfer principle; (3) a proof that κ-categorical theories (under standard conditions) yield elementarily equivalent models, linking categoricity to semantic agreement via the Łoś-Vaught test; and (4) complementary results including the boundary theorem that incomplete satisfiable theories admit models disagreeing on some sentence, and uniqueness of henselian root lifts. These results form the formal backbone required for a machine-checked treatment of the Ax-Kochen-Ershov transfer principle and Morley's categoricity theorem.
+We present a formal theory of certified adversarial robustness for classifiers based on instant-runoff (sequential elimination) voting over multiclass score functions. The central contribution is the *gap certificate*—a recursive condition requiring that at every round of the elimination process, the current loser's score lies at least γ below all surviving competitors. We prove that when input perturbations of L∞-radius r are processed by a K-Lipschitz score function, the elimination order and final winner are invariant provided 2Kr < γ. All results are formalized and machine-verified. We provide precise definitions, proof sketches, computational demonstrations, and connections to tropical geometry and adversarial machine learning.
 
-**Keywords:** model theory, elementary equivalence, completeness, categoricity, henselian local rings, Ax-Kochen, Morley, formal verification
+**Keywords**: certified robustness, instant-runoff voting, adversarial perturbation, gap certificate, Lipschitz continuity, sequential elimination, tropical geometry
 
 ---
 
 ## 1. Introduction
 
-Model theory and algebra have enjoyed one of the most productive cross-pollinations in twentieth-century mathematics. The Ax-Kochen-Ershov theorem [1, 2, 14] demonstrated that the first-order theory of a henselian valued field is determined by the theories of its residue field and value group—a result that resolved long-standing questions about p-adic fields. Morley's categoricity theorem [12] showed that a countable theory categorical in one uncountable cardinal is categorical in all uncountable cardinals, inaugurating the classification theory of models that Shelah would later develop into a vast edifice [15].
+Adversarial robustness—the stability of a classifier's output under bounded perturbations to its input—has emerged as a central concern in trustworthy AI [Goodfellow et al. 2015, Madry et al. 2018]. Most certified robustness results apply to *argmax classifiers*, which select the class with the highest score. However, more complex decision procedures, including sequential elimination (instant-runoff) methods, appear naturally in tropical neural architectures and ensemble methods.
 
-Despite the maturity of both model theory and formal mathematics libraries, the precise formal connections between completeness, elementary equivalence, categoricity, and henselian algebra had not been established in Lean 4's Mathlib. This paper describes a formalization that bridges these concepts, producing machine-checked proofs of the core linking theorems.
+The instant-runoff decision rule operates as follows: given m candidate classes with scores v(1), ..., v(m), the class with the minimum score is eliminated. Scores are recomputed on the reduced candidate set, and the process repeats until one class remains. This procedure generalizes simple argmax classification and arises in architectures where tropical (max-plus) scoring functions produce structured piecewise-linear decision boundaries.
+
+The challenge for robustness certification is the *cascading effect*: a small perturbation that changes the loser in one round reshuffles the entire subsequent elimination sequence. Our approach handles this cascade through a *recursive gap certificate* that ensures stability at every round simultaneously.
 
 ### 1.1 Contributions
 
-Our formalization (see @file[Bridges/AxKochenMorleyBridge.lean]) establishes four main results:
+1. **Gap certificate framework** (Definition 4): A recursive predicate `EliminationGapCertified` that captures the margin condition at every elimination round.
 
-1. **Completeness implies elementary equivalence** (Theorem 3.1): Any two nonempty models of a complete theory are elementarily equivalent.
+2. **One-round perturbation lemma** (Theorem 1): If a candidate has gap γ and scores are perturbed by at most ε, the residual gap is at least γ − 2ε.
 
-2. **Elementary equivalence preserves models** (Theorem 3.2): If M ≡_L N and M ⊨ T, then N ⊨ T.
+3. **Elimination-order stability** (Theorem 2): Under a gap certificate with parameter γ and perturbation bound ε satisfying 2ε < γ, the complete elimination sequence is preserved.
 
-3. **Categoricity implies elementary equivalence** (Theorem 3.3): Under standard conditions (κ infinite, |L| ≤ κ, only infinite models), κ-categorical theories have pairwise elementarily equivalent models.
+4. **Winner stability** (Theorem 3): The IRV winner is invariant under the same conditions.
 
-4. **Boundary result for incomplete theories** (Theorem 3.4): A satisfiable incomplete theory admits models that disagree on some sentence.
+5. **Lipschitz robustness certificate** (Theorem 4): For a K-Lipschitz score function, any input within L∞-radius γ/(2K) yields the same IRV winner.
 
-Additionally, we establish uniqueness of henselian root lifts for simple roots, complementing the existence direction of Hensel's lemma.
-
-### 1.2 Related Work
-
-The model-theoretic results we formalize are classical; see Marker [11] or Hodges [7] for textbook treatments. The Ax-Kochen-Ershov theorem was proved independently by Ax-Kochen [1, 2] and Ershov [14]. Morley's theorem [12] was later re-proved and extended by Baldwin-Lachlan [3] and Shelah [15].
-
-In the formalization landscape, Mathlib contains extensive first-order model theory infrastructure due to work by Gavin, Schlösser, and others, including `Theory.IsComplete`, `ElementarilyEquivalent`, `Cardinal.Categorical`, the Łoś-Vaught test (`Categorical.isComplete`), and `completeTheory`. Our contribution is the formal *glue* connecting these components.
-
-Henselian local rings are formalized in Mathlib following the treatment of Wedhorn [16], with the key property `HenselianLocalRing` ensuring existence of root lifts. Our uniqueness result fills the complementary gap.
+All results are formalized in @file:Catalog/Bridges/IRVStability.lean.
 
 ---
 
 ## 2. Preliminaries
 
-### 2.1 First-Order Logic in Mathlib
+### 2.1 Notation
 
-We work within Mathlib's `FirstOrder.Language` framework. A first-order language `L : Language.{u, v}` specifies function and relation symbols. An `L.Theory` is a set of `L.Sentence`s. A structure `M` models a theory `T`, written `M ⊨ T`, when every sentence in `T` is satisfied by `M`.
+Let m ≥ 1 denote the number of candidate classes, indexed by Fin(m) = {0, 1, ..., m−1}. A *score vector* is a function v : Fin(m) → ℝ. For a subset S ⊆ Fin(m), we write v|_S for the restriction of v to S.
 
-**Definition 2.1** (Elementary Equivalence). Two L-structures M and N are *elementarily equivalent*, written `L.ElementarilyEquivalent M N`, if they satisfy exactly the same L-sentences:
+The L∞ norm on score perturbations is ‖v' − v‖_∞ = max_i |v'(i) − v(i)|. We say v' is ε-close to v if |v'(i) − v(i)| ≤ ε for all i.
 
-$$M \equiv_L N \iff \forall \varphi \in \mathrm{Sent}(L),\; M \models \varphi \Leftrightarrow N \models \varphi$$
+### 2.2 Pairwise Distinctness
 
-In Mathlib, this is defined as equality of complete theories: `L.ElementarilyEquivalent M N ↔ L.completeTheory M = L.completeTheory N`, which is shown equivalent to the sentence-level characterization via `elementarilyEquivalent_iff`.
-
-**Definition 2.2** (Completeness). A theory `T` is *complete* if it is satisfiable and for every sentence φ, either `T ⊨ᵇ φ` or `T ⊨ᵇ ¬φ`. In Mathlib: `T.IsComplete`.
-
-**Definition 2.3** (Categoricity). A theory `T` is *κ-categorical* if all models of `T` of cardinality κ are isomorphic. In Mathlib: `κ.Categorical T`.
-
-### 2.2 Henselian Local Rings
-
-A local ring R with maximal ideal 𝔪 is *henselian* if every monic polynomial f ∈ R[X] that has a simple root modulo 𝔪 has a root in R lifting that approximate root. In Mathlib, this is captured by the class `HenselianLocalRing R`, which provides:
+**Definition 1** (PairwiseDistinctOn). Scores v are *pairwise distinct on S* if for all i, j ∈ S with i ≠ j, we have v(i) ≠ v(j). This is a tie-freeness condition that ensures the elimination procedure is deterministic.
 
 ```
-∀ (f : R[X]), f.Monic → ∀ (a₀ : R), f.eval a₀ ∈ maximalIdeal R →
-  IsUnit (f.derivative.eval a₀) → ∃ a : R, f.IsRoot a ∧ (a - a₀) ∈ maximalIdeal R
+def PairwiseDistinctOn (S : Finset (Fin m)) (v : Fin m → ℝ) : Prop :=
+  ∀ i ∈ S, ∀ j ∈ S, i ≠ j → v i ≠ v j
 ```
 
-### 2.3 Universe Considerations
+### 2.3 Gap Certificate (One Round)
 
-Mathlib's `Theory.ModelsBoundedFormula` quantifies over models at a specific universe level. Our results are stated at universe `Type` (universe 0) to match the universe at which `Theory.IsComplete` is defined, avoiding universe polymorphism complications.
-
----
-
-## 3. Main Results
-
-### 3.1 Theorem 1: Complete Theories Yield Elementarily Equivalent Models
-
-**Theorem 3.1** (`Theory.IsComplete.models_elementarilyEquivalent` in @file[Bridges/AxKochenMorleyBridge.lean]).
-*Let L be a first-order language and T an L-theory. If T is complete, then any two nonempty models M, N of T are elementarily equivalent: M ≡_L N.*
-
-*Proof sketch.* Let φ be an arbitrary L-sentence. Since T is complete, either T ⊨ᵇ φ or T ⊨ᵇ ¬φ.
-
-**Case 1:** T ⊨ᵇ φ. By the semantic consequence relation, every model of T satisfies φ. In particular, both M ⊨ φ and N ⊨ φ. Hence (M ⊨ φ) ↔ (N ⊨ φ).
-
-**Case 2:** T ⊨ᵇ ¬φ. By the same reasoning, neither M nor N satisfies φ. Again (M ⊨ φ) ↔ (N ⊨ φ).
-
-Since φ was arbitrary, M and N agree on all sentences, so M ≡_L N. □
-
-Two helper lemmas (`ModelsBoundedFormula.realize_of_model` and `ModelsBoundedFormula.not_realize_of_model_not`) mediate between Mathlib's bounded semantic consequence `T ⊨ᵇ φ` and the concrete realization `M ⊨ φ`.
-
-**Corollary 3.1.1** (`models_agree_on_sentences`). Under the same hypotheses, for every sentence φ: (M ⊨ φ) ↔ (N ⊨ φ).
-
-**Example 3.1.2.** The complete theory of any nonempty structure is complete (`completeTheory.isComplete`), confirming that the hypothesis is non-vacuous.
-
-### 3.2 Theorem 2: Elementary Equivalence Preserves Models
-
-**Theorem 3.2** (`elementarilyEquivalent_preserves_model` in @file[Bridges/AxKochenMorleyBridge.lean]).
-*Let M and N be L-structures with M ≡_L N. If M ⊨ T, then N ⊨ T.*
-
-*Proof sketch.* By `Theory.model_iff`, M ⊨ T means every φ ∈ T is realized by M. By `elementarilyEquivalent_iff`, M and N agree on all sentences. For each φ ∈ T, since M ⊨ φ, we have N ⊨ φ by elementary equivalence. Hence N ⊨ T. □
-
-This result is the formal statement of the *transfer principle*: elementary equivalence is a sufficient condition for propagating all first-order properties.
-
-**Corollary 3.2.1.** If N ≡ M, then N is a model of the complete theory Th(M).
-
-**Corollary 3.2.2** (`elementarilyEquivalent_preserves_model_subset`). Elementary equivalence preserves model-hood for any subtheory of Th(M).
-
-**Proposition 3.2.3** (`elementarilyEquivalent_symm`). Elementary equivalence is symmetric: M ≡_L N implies N ≡_L M. (In Mathlib's formulation, this is simply symmetry of equality on complete theories.)
-
-### 3.3 Theorem 3: Categoricity Implies Elementary Equivalence
-
-**Theorem 3.3** (`Categorical.models_elementarilyEquivalent` in @file[Bridges/AxKochenMorleyBridge.lean]).
-*Let T be an L-theory and κ an infinite cardinal with |L| ≤ κ. Suppose T is κ-categorical, satisfiable, and has only infinite models. Then any two nonempty models of T are elementarily equivalent.*
-
-*Proof sketch.* The proof chains two results:
-
-1. **Łoś-Vaught test** (`Cardinal.Categorical.isComplete`): Under the given hypotheses, T is complete.
-2. **Theorem 3.1**: Complete theories have elementarily equivalent models.
-
-The Łoś-Vaught test is the classical result that a satisfiable theory with no finite models that is κ-categorical for some infinite κ ≥ |L| must be complete. The key idea is that if T were incomplete, there would exist a sentence φ with T ∪ {φ} and T ∪ {¬φ} both satisfiable. By Löwenheim-Skolem, both would have models of cardinality κ, contradicting κ-categoricity. □
-
-This theorem is the formal entry point to Morley's program: it shows that categorical theories are semantically rigid.
-
-### 3.4 Theorem 4: Incomplete Theories Have Disagreeing Models
-
-**Theorem 3.4** (`Theory.incomplete_has_disagreeing_models` in @file[Bridges/AxKochenMorleyBridge.lean]).
-*If T is satisfiable but not complete, then there exists a sentence φ and models M, N of T such that M ⊨ φ and ¬(N ⊨ φ).*
-
-*Proof sketch.* Since T is not complete but is satisfiable, there exists a sentence φ such that neither T ⊨ᵇ φ nor T ⊨ᵇ ¬φ. The failure of T ⊨ᵇ φ means there exists a model M₀ of T with ¬(M₀ ⊨ φ), and the failure of T ⊨ᵇ ¬φ means there exists a model M₁ of T with M₁ ⊨ φ. These are the desired disagreeing models. □
-
-This is the contrapositive of Theorem 3.1: completeness is not merely sufficient but *necessary* for elementary equivalence of all models.
-
-### 3.5 Henselian Root Uniqueness
-
-**Theorem 3.5** (`HenselianLocalRing.root_unique_of_simple`, referenced in @file[Bridges/AxKochenMorleyBridge.lean]).
-*Let R be a henselian local ring with maximal ideal 𝔪, f ∈ R[X] monic, and a₀ ∈ R an approximate root (f(a₀) ∈ 𝔪) with f'(a₀) a unit. If a and b are both roots of f with a ≡ a₀ (mod 𝔪) and b ≡ a₀ (mod 𝔪), then a = b.*
-
-This uniqueness result complements the existence guarantee of `HenselianLocalRing`. Together, they establish that simple roots lift *uniquely*, which is essential for the back-and-forth arguments in the Ax-Kochen-Ershov theory.
-
----
-
-## 4. The Composition: From Categoricity to Transfer
-
-The four main theorems compose into a pipeline that connects counting-theoretic conditions to algebraic consequences:
+**Definition 2** (HasGapAtLeast). Candidate i has *gap at least γ in S under v* if i ∈ S and v(i) + γ ≤ v(j) for every j ∈ S with j ≠ i. Equivalently, i is the unique minimizer of v on S with margin γ.
 
 ```
-κ-Categoricity ──[Łoś-Vaught]──▶ Completeness ──[Thm 3.1]──▶ Elem. Equiv.
-                                                                    │
-                                                              [Thm 3.2]
-                                                                    │
-                                                                    ▼
-                                                            Model Transfer
+def HasGapAtLeast (S : Finset (Fin m)) (v : Fin m → ℝ) (i : Fin m) (γ : ℝ) : Prop :=
+  i ∈ S ∧ ∀ j ∈ S, j ≠ i → v i + γ ≤ v j
 ```
 
-**Application to Ax-Kochen-Ershov.** The theory of henselian valued fields of equicharacteristic zero with fixed residue field theory and value group theory is complete (this is the content of the Ax-Kochen-Ershov theorem). By Theorem 3.1, any two such valued fields are elementarily equivalent. By Theorem 3.2, first-order properties transfer between them.
+---
 
-**Concrete instance.** For all but finitely many primes p, the p-adic field ℚₚ and the Laurent series field 𝔽ₚ((t)) are henselian valued fields with the same residue field (𝔽ₚ) and value group (ℤ). The Ax-Kochen theorem asserts that they are elementarily equivalent, so any first-order property of one holds for the other.
+## 3. The Instant-Runoff Elimination Procedure
 
-**Application to Morley's theorem.** Theorem 3.3 shows that κ-categoricity implies all models are elementarily equivalent—the first step in Morley's proof. The full Morley theorem proceeds by showing that uncountable categoricity forces the absence of Vaughtian pairs, which forces every model to be prime over a strongly minimal set, which forces categoricity at all uncountable cardinals.
+### 3.1 Round Loser
+
+**Definition 3** (roundLoser). For a nonempty finite set S and score function v, the *round loser* is an element of S minimizing v, selected via the existence of a minimizer on a nonempty finite set.
+
+The key property is that when the gap condition holds, the round loser is unique:
+
+**Lemma 1** (roundLoser_eq_of_strict_min). If i ∈ S and v(i) < v(j) for all j ∈ S with j ≠ i, then roundLoser(S, v) = i.
+
+*Proof sketch.* The round loser ℓ = roundLoser(S, v) satisfies v(ℓ) ≤ v(j) for all j ∈ S. If ℓ ≠ i, then v(i) < v(ℓ) by hypothesis, contradicting v(ℓ) ≤ v(i). □
+
+### 3.2 Recursive Elimination
+
+**Definition** (eliminationOrderOn). The elimination order on a nonempty set S is defined recursively:
+- If |S| ≤ 1, return the singleton element.
+- Otherwise, let i = roundLoser(S, v), and return i followed by eliminationOrderOn(S \ {i}, v).
+
+**Definition** (irvWinnerOn). The IRV winner on S is the last element of the elimination order—equivalently, defined by the same recursion but returning only the final survivor.
+
+**Definition** (irvWinner). The IRV winner on all candidates: irvWinnerOn(Fin(m), v).
+
+### 3.3 Recursive Gap Certificate
+
+**Definition 4** (EliminationGapCertified). The elimination of v on S is *gap-certified with parameter γ* if:
+- When |S| ≤ 1: the condition holds trivially.
+- When |S| > 1: the round loser i has HasGapAtLeast(S, v, i, γ), AND the elimination on S \ {i} is also gap-certified with parameter γ.
+
+This recursive structure mirrors the elimination process itself and ensures that the margin condition holds at every round.
 
 ---
 
-## 5. Discussion
+## 4. Main Results
 
-### 5.1 What Is New
+### 4.1 One-Round Perturbation Lemma
 
-While all four main theorems are well-known classically, none had been formalized in Lean 4's Mathlib prior to this work. The key novelty is the *bridge character* of the results: they connect existing but disjoint Mathlib APIs (`IsComplete`, `ElementarilyEquivalent`, `Categorical`, `HenselianLocalRing`) into a coherent pipeline.
+**Theorem 1** (gap_preserved_under_perturbation). Let S ⊆ Fin(m), v and v' score functions, i ∈ S with HasGapAtLeast(S, v, i, γ), and |v'(k) − v(k)| ≤ ε for all k. Then for all j ∈ S with j ≠ i:
 
-Specifically:
+$$v'(i) + (\gamma - 2\varepsilon) \leq v'(j)$$
 
-- **Theorem 3.1** fills a surprising gap: Mathlib had both `Theory.IsComplete` and `ElementarilyEquivalent` but no theorem connecting them. This is arguably the most fundamental result in model theory, and its absence meant that the completeness API was essentially disconnected from the semantic equivalence API.
+*Proof sketch.* From |v'(k) − v(k)| ≤ ε, we have v'(i) ≤ v(i) + ε and v(j) ≤ v'(j) + ε. The gap condition gives v(i) + γ ≤ v(j). Combining:
 
-- **Theorem 3.2** formalizes the transfer principle that underpins virtually all applications of model theory to algebra. While conceptually simple, its formal statement requires careful handling of the `Theory.model_iff` and `elementarilyEquivalent_iff` interfaces.
+$$v'(i) + (\gamma - 2\varepsilon) \leq v(i) + \varepsilon + \gamma - 2\varepsilon = v(i) + \gamma - \varepsilon \leq v(j) - \varepsilon \leq v'(j)$$
 
-- **Theorem 3.3** chains the Łoś-Vaught test (already in Mathlib as `Cardinal.Categorical.isComplete`) with Theorem 3.1, demonstrating that the composition of existing results with new bridge theorems yields powerful consequences.
+The bound is tight: it is achieved when v'(i) = v(i) + ε and v'(j) = v(j) − ε. □
 
-- **Theorem 3.4** provides the essential converse direction, showing that completeness is *necessary* for universal elementary equivalence, not merely sufficient.
+**Remark.** The factor of 2 in the gap erosion is fundamental: the perturbation can simultaneously raise the loser's score and lower a competitor's score, attacking the gap from both sides.
 
-### 5.2 Universe Issues
+### 4.2 Strict Minimizer from Positive Gap
 
-A significant technical challenge in the formalization is Mathlib's universe polymorphism. `Theory.IsComplete` is defined using `ModelsBoundedFormula` at a specific universe level, requiring careful universe management. Our helper lemmas (`realize_of_model`, `not_realize_of_model_not`) serve as universe-aware adaptors.
+**Lemma 2** (strict_min_of_gap). If i ∈ S, δ > 0, and v(i) + δ ≤ v(j) for all j ∈ S \ {i}, then v(i) < v(j) for all j ∈ S \ {i}.
 
-The universe constraint means our main theorems are stated for `Type`-valued models (universe 0). This is a deliberate design choice: the alternative—universe-polymorphic statements—would require additional assumptions about universe lifting that would complicate the statements without adding mathematical content. The key mathematical arguments are universe-independent; only the formal interface requires universe specificity.
+This converts a non-strict gap inequality into strict separation, which is needed to apply the uniqueness lemma for round losers.
 
-### 5.3 Relationship to the Ax-Kochen-Ershov Program
+### 4.3 Elimination-Order Stability
 
-The theorems formalized here constitute the *model-theoretic infrastructure* needed for the Ax-Kochen-Ershov theorem, but not the theorem itself. The full AKE theorem requires:
+**Theorem 2** (eliminationOrderOn_stable). Let v and v' be score functions with |v'(i) − v(i)| ≤ ε for all i. If the elimination of v on S is gap-certified with parameter γ and 2ε < γ, then:
 
-1. **A first-order language for valued fields**: extending the ring language with a valuation symbol or a divisibility predicate. This is a definitional task that builds on Mathlib's `FirstOrder.Language`.
+$$\text{eliminationOrderOn}(S, v') = \text{eliminationOrderOn}(S, v)$$
 
-2. **Completeness of the theory of henselian valued fields of equicharacteristic zero**: this is the core content of AKE, and uses the model-completeness of algebraically closed valued fields (a deep result requiring significant infrastructure).
+*Proof sketch.* By strong induction on |S|.
 
-3. **Application of our Theorem 3.1**: once completeness is established, elementary equivalence of models follows immediately from our bridge theorem.
+**Base case.** |S| ≤ 1: both sides return the singleton element.
 
-Our henselian root uniqueness result (Theorem 3.5) addresses step 2 at the algebraic level, providing the key property that makes the back-and-forth argument work.
+**Inductive step.** |S| > 1. Let i = roundLoser(S, v). The gap certificate gives HasGapAtLeast(S, v, i, γ). By Theorem 1, for all j ∈ S \ {i}, v'(i) + (γ − 2ε) ≤ v'(j). Since γ − 2ε > 0 (from 2ε < γ), Lemma 2 gives v'(i) < v'(j) for all j ∈ S \ {i}. By Lemma 1, roundLoser(S, v') = i.
 
-### 5.4 Relationship to Morley's Theorem
+Therefore the first element of both elimination orders is i, and the remaining elements are eliminationOrderOn(S \ {i}, v') and eliminationOrderOn(S \ {i}, v) respectively. The gap certificate's recursive component gives that S \ {i} is also gap-certified, so the induction hypothesis applies. □
 
-Similarly, our Theorem 3.3 is the *entry point* to Morley's categoricity theorem, not the full result. The full Morley theorem requires:
+### 4.4 Winner Stability
 
-1. **Strongly minimal sets**: definable sets with no proper infinite/co-infinite definable subsets. These control the geometry of models of uncountably categorical theories.
+**Theorem 3** (irvWinnerOn_stable). Under the same hypotheses as Theorem 2:
 
-2. **Vaughtian pairs**: pairs of models (M, N) with M ≺ N (elementary extension) and some definable set D with D(M) = D(N) but M ≠ N. The absence of Vaughtian pairs is the key structural property forced by uncountable categoricity.
+$$\text{irvWinnerOn}(S, v') = \text{irvWinnerOn}(S, v)$$
 
-3. **Baldwin-Lachlan characterization**: a countable complete theory is uncountably categorical iff it has no Vaughtian pairs and every model is prime over a strongly minimal set.
+*Proof sketch.* The same inductive argument shows that the recursion unfolds identically for v and v', since the same candidate is eliminated at each step. The winner is determined by the last surviving candidate, which is the same in both cases. □
 
-Our Theorem 3.3 establishes the first step: categoricity implies all models are elementarily equivalent (via completeness). The remaining steps require substantial new formalization.
+**Corollary** (irvWinner_stable). For the full candidate set, irvWinner(v') = irvWinner(v) under the same conditions.
 
-### 5.5 Limitations
+### 4.5 Lipschitz Robustness Certificate
 
-Our formalization establishes the formal scaffolding but does not yet include:
+**Theorem 4** (irvWinner_certified_robust). Let s : ℝ^d → ℝ^m be a score function that is K-Lipschitz in the sense that for all z, z' ∈ ℝ^d with |z'(k) − z(k)| ≤ r for all k, we have |s(z')(i) − s(z)(i)| ≤ Kr for all i. Let x ∈ ℝ^d be an input whose elimination is gap-certified with parameter γ. Then for any x' with |x'(k) − x(k)| ≤ r for all k:
 
-- The full Ax-Kochen-Ershov theorem (which requires defining valued fields as first-order structures).
-- The full Morley categoricity theorem (which requires strongly minimal sets and Morley rank).
-- The multivariate Hensel's lemma (which requires Jacobian determinants over local rings).
+$$2Kr < \gamma \implies \text{irvWinner}(s(x')) = \text{irvWinner}(s(x))$$
 
-These are identified as concrete future directions.
+Equivalently, the *certified robustness radius* is γ/(2K).
 
----
-
-## 6. Algorithms and Computation
-
-While the core results are purely logical, they suggest algorithmic perspectives and computational implementations.
-
-### 6.1 Theory Completeness Test
-
-Given a finitely axiomatizable theory T and a decision procedure for T ⊨ᵇ φ, test completeness by checking the decision for a generating set of sentences. If T is complete, Theorem 3.1 guarantees all models are elementarily equivalent, enabling model-theoretic transfer.
-
-In practice, completeness is often established via quantifier elimination: if every formula in the language L is equivalent modulo T to a quantifier-free formula, and T is complete for quantifier-free sentences (which can be checked by enumeration in many cases), then T is complete. Examples include the theory of dense linear orders without endpoints (DLO), the theory of algebraically closed fields of fixed characteristic (ACF_p), and the theory of real closed fields (RCF).
-
-### 6.2 Henselian Root Refinement (Newton-Hensel Lifting)
-
-Given a monic polynomial f over a henselian local ring R, an approximate root a₀ with f(a₀) ∈ 𝔪 and f'(a₀) a unit, iteratively compute a_{n+1} = aₙ − f(aₙ)/f'(aₙ). The sequence converges 𝔪-adically to the unique exact root guaranteed by Theorem 3.5.
-
-The convergence rate is quadratic in the 𝔪-adic valuation: if v(f(aₙ)) ≥ 2ⁿ, then v(f(a_{n+1})) ≥ 2^{n+1}. This is the p-adic analogue of Newton's method, and the quadratic convergence means that the number of correct p-adic digits doubles at each step. In the integers modulo p^k, this translates to: starting from a root modulo p, after k steps we have a root modulo p^{2^k}.
-
-### 6.3 Computational Complexity of Transfer
-
-The transfer principle (Theorem 3.2) does not, in general, provide an effective procedure for transferring *proofs* between models—only the *truth* of sentences is preserved. However, in specific cases where quantifier elimination is effective (as in ACF, RCF, or p-adically closed fields), the transfer can be made computationally explicit, yielding decision procedures for one structure based on those for another.
-
-This has practical applications in computer algebra systems, where questions about p-adic fields can sometimes be answered more efficiently by transferring to Laurent series fields and using the simpler arithmetic of formal power series.
+*Proof sketch.* The Lipschitz condition ensures |s(x')(i) − s(x)(i)| ≤ Kr for all i. Apply Theorem 3 with ε = Kr. The condition 2ε < γ becomes 2Kr < γ. □
 
 ---
 
-## 7. Future Work
+## 5. Proof Architecture and Formal Verification Details
 
-1. **Full Morley categoricity theorem:** Formalize strongly minimal sets, Vaughtian pairs, and the Baldwin-Lachlan characterization to complete the proof that categoricity at one uncountable cardinal implies categoricity at all.
+The formal development in @file:Catalog/Bridges/IRVStability.lean follows a carefully layered architecture designed for both mathematical clarity and proof-engineering efficiency.
 
-2. **Ax-Kochen transfer for p-adic fields:** Define valued fields as first-order structures and formally prove that ℚₚ ≡ 𝔽ₚ((t)) for almost all p.
+### 5.1 Foundational Layer
 
-3. **Multivariate Hensel's lemma:** Extend the univariate uniqueness result to systems of equations using Jacobian determinants.
+The development begins with three core definitions: `PairwiseDistinctOn` (tie-freeness), `HasGapAtLeast` (single-round gap certificate), and `roundLoser` (minimum-score selector). The `roundLoser` is defined via `Classical.choose` applied to the Mathlib lemma `Finset.exists_min_image`, which guarantees the existence of a minimizer on any nonempty finite set with a linear order.
 
-4. **Morley rank and degree:** Formalize the ordinal-valued rank on definable sets that controls the structure of models of uncountably categorical theories.
+Two key properties of `roundLoser` are established as standalone lemmas:
+- `roundLoser_mem`: the loser belongs to the active set
+- `roundLoser_le`: the loser's score is at most that of any other active candidate
 
-5. **Connections to stability theory:** Bridge from categoricity to Shelah's stability classification, formalizing the unstable formula hierarchy.
+These are direct consequences of the `choose_spec` for the minimizer existence.
+
+### 5.2 Uniqueness Layer
+
+The lemma `roundLoser_eq_of_strict_min` bridges the gap between the existence-based definition of `roundLoser` and the uniqueness guaranteed by strict separation. The proof proceeds by contradiction: if the round loser were not the strict minimizer i, then i would have strictly lower score, contradicting the minimality of the round loser. This uses `Classical.not_not` and the contrapositive of the minimizer inequality.
+
+### 5.3 Recursive Layer
+
+The recursive definitions (`eliminationOrderOn`, `irvWinnerOn`, `EliminationGapCertified`) all terminate by `S.card`, with the key structural lemmas `erase_nonempty_of_card_gt_one` and `erase_card_lt` ensuring well-foundedness. These auxiliary lemmas handle the bookkeeping of showing that erasing an element from a set with more than one element yields a nonempty set of strictly smaller cardinality.
+
+### 5.4 Perturbation Layer
+
+The perturbation lemma `gap_preserved_under_perturbation` is a pure algebraic calculation resolved by `linarith` from the absolute value decomposition `abs_le.mp`. The proof extracts both directions of the absolute value inequality for coordinates i and j, then combines them with the original gap inequality in a single linear arithmetic step.
+
+### 5.5 Induction Layer
+
+The main stability theorems use strong induction on `S.card`. For `eliminationOrderOn_stable`, the induction is structured through `Nat.strong_induction_on`, with the key insight that the gap certificate's recursive structure provides exactly the induction hypothesis needed: after establishing that the same loser is eliminated in round k, the recursive component of the gap certificate certifies the remaining rounds.
+
+The `irvWinnerOn_stable` proof follows a similar pattern but focuses only on the final output rather than the full elimination sequence. It uses `convert` to align the induction hypothesis with the recursive call structure.
+
+## 6. Computational Aspects
+
+### 6.1 Computing the Gap Certificate
+
+Given a score vector v ∈ ℝ^m, the gap at each elimination round can be computed in O(m) time per round, for O(m²) total across all rounds. At each round with active set S:
+
+1. Find i* = argmin_{i ∈ S} v(i).
+2. Find the second minimum: v₂ = min_{j ∈ S, j ≠ i*} v(j).
+3. The gap at this round is γ_round = v₂ − v(i*).
+4. The overall gap is γ = min over all rounds of γ_round.
+
+### 6.2 Certified Radius Computation
+
+Given a K-Lipschitz score function and an input x:
+1. Compute s(x).
+2. Run the elimination procedure, recording the gap at each round.
+3. Set γ = min-round gap.
+4. The certified radius is r* = γ/(2K).
+
+This computation is *exact*—not an approximation or a bound that might be tightened. The factor of 2 in the denominator is tight.
+
+### 6.3 Comparison with Argmax Robustness
+
+For standard argmax classifiers, the certified radius under L∞ perturbation with K-Lipschitz scores is:
+
+$$r^*_{\text{argmax}} = \frac{v(\text{winner}) - v(\text{runner-up})}{2K}$$
+
+For IRV classifiers, the certified radius is:
+
+$$r^*_{\text{IRV}} = \frac{\min_{\text{round}} \gamma_{\text{round}}}{2K}$$
+
+The IRV radius is always at most the argmax radius (since the first-round gap is at most the argmax margin), but it provides robustness for a more expressive classifier.
 
 ---
+
+## 7. Connections to Tropical Geometry
+
+The IRV elimination procedure has a natural interpretation in tropical geometry. A *tropical polynomial* in d variables is a function of the form:
+
+$$p(x) = \max_{j \in J} (a_j + \langle w_j, x \rangle)$$
+
+where J is a finite index set, a_j ∈ ℝ are coefficients, and w_j ∈ ℝ^d are weight vectors. When the score function s(x) = (p_1(x), ..., p_m(x)) is a vector of tropical polynomials, the IRV classifier partitions ℝ^d into regions where the elimination order is constant—the *tropical IRV complex*.
+
+The gap certificate γ(x) varies continuously over each region and provides an intrinsic measure of distance to a decision boundary. The Lipschitz constant K of a tropical score function is determined by the weight vectors: K = max_{i,j} ‖w_{i,j}‖₁ in the L∞ → L∞ sense.
+
+This connection suggests that for tropical architectures, the certified robustness radius can be computed in closed form from the network weights and the input's position relative to the tropical hypersurface.
+
+---
+
+## 8. Discussion
+
+### 8.1 Tightness
+
+The factor of 2 in the perturbation bound is tight. Consider m = 2 candidates with scores v(0) = 0, v(1) = γ. The gap is γ. A perturbation that sets v'(0) = ε, v'(1) = γ − ε gives gap γ − 2ε. When ε = γ/2, the gap vanishes and a tie occurs. Any larger perturbation can reverse the elimination order.
+
+### 8.2 Tie-Freeness
+
+The current framework assumes tie-free eliminations (guaranteed by PairwiseDistinctOn or, more practically, by the positive gap condition). This is not restrictive in the certified robustness setting: a positive gap certificate implies ties cannot occur, so the assumption is self-reinforcing.
+
+### 8.3 Deterministic vs. Stochastic Scores
+
+The theory handles deterministic score functions. Extension to stochastic settings (e.g., dropout at inference time, Bayesian neural networks) would require replacing pointwise perturbation bounds with probabilistic ones, likely yielding probabilistic robustness certificates.
+
+### 8.4 Relation to Voting Theory
+
+The IRV elimination procedure studied here is closely related to instant-runoff voting (IRV) in social choice theory, also known as the alternative vote or ranked-choice voting. In that setting, voters rank candidates and the candidate with the fewest first-choice votes is eliminated in each round, with their votes redistributed. Our framework studies a simplified version where scores are fixed (not redistributed), but the structural insight—that gap certificates provide cascading stability—applies equally to the redistributive setting when gaps are measured appropriately.
+
+The connection to voting theory is more than an analogy. The stability of voting rules under perturbation is a classical topic in computational social choice, where it is studied under the rubric of *manipulation resistance* and *noise stability*. Our gap certificate framework provides a new quantitative tool for this analysis, with the advantage of yielding exact (not asymptotic) stability thresholds.
+
+---
+
+## 9. Future Work
+
+Several directions merit investigation:
+
+1. **Weighted elimination schemes.** Different rounds could use different scoring functions or weighting schemes, generalizing the uniform-gap framework.
+
+2. **Adaptive gap certificates.** Rather than requiring a uniform gap γ at every round, allow round-dependent gaps γ_1, ..., γ_{m-1} with round-specific perturbation analysis.
+
+3. **Tighter bounds for structured score functions.** For tropical polynomials and ReLU networks, the piecewise-linear structure could yield local Lipschitz constants much smaller than the global K, improving certified radii.
+
+4. **Connection to computational social choice.** The stability of IRV under noise connects to the extensive literature on the robustness of voting rules [Xia 2020]. Our gap certificate framework could formalize notions of "manipulation resistance" in voting theory.
+
+5. **Model-theoretic bridges.** The algebraic structure underlying our gap certificates connects to broader questions about the definability of robust classifiers in first-order theories of ordered fields, bridging to model theory and the Ax-Kochen framework.
+
+---
+
+## 10. Formal Verification
+
+All definitions and theorems in this paper have been formalized and verified in Lean 4 with the Mathlib library. The complete formalization is available in @file:Catalog/Bridges/IRVStability.lean. The formalization consists of approximately 200 lines of definitions and proofs organized into seven parts:
+
+| Component | Lines | Description |
+|-----------|-------|-------------|
+| Core definitions | §1 | PairwiseDistinctOn, HasGapAtLeast, roundLoser |
+| Minimizer properties | §2 | roundLoser_mem, roundLoser_le, roundLoser_eq_of_strict_min |
+| Recursive elimination | §3 | eliminationOrderOn, irvWinnerOn, irvWinner, EliminationGapCertified |
+| Perturbation lemma | §4 | gap_preserved_under_perturbation, strict_min_of_gap |
+| Order stability | §5 | eliminationOrderOn_stable |
+| Winner stability | §6 | irvWinnerOn_stable, irvWinner_stable |
+| Lipschitz robustness | §7 | irvWinner_certified_robust |
+
+---
+
+## 11. Conclusion
+
+We have presented a complete, formally verified theory of certified adversarial robustness for instant-runoff classifiers. The gap certificate framework provides a clean recursive structure that mirrors the elimination process itself, and the resulting robustness certificates are tight—the factor of 2 in the gap erosion bound is optimal.
+
+The key mathematical contributions are:
+1. The identification of the gap certificate as the right recursive invariant for IRV stability.
+2. The tight 2ε gap erosion bound, which is achieved by worst-case perturbations.
+3. The clean composition with Lipschitz score functions, yielding practical certified radii.
+4. The full formal verification of all results, providing the highest level of mathematical certainty.
+
+The framework is general enough to apply to any sequential elimination procedure based on score minimization, and the tropical geometry connection opens natural avenues for architecture-specific optimizations.
 
 ## References
 
-[1] J. Ax and S. Kochen, "Diophantine problems over local fields I," *Amer. J. Math.*, vol. 87, pp. 605–630, 1965.
-
-[2] J. Ax and S. Kochen, "Diophantine problems over local fields III," *Ann. of Math.*, vol. 83, pp. 437–456, 1966.
-
-[3] J.T. Baldwin and A.H. Lachlan, "On strongly minimal sets," *J. Symbolic Logic*, vol. 36, pp. 79–96, 1971.
-
-[7] W. Hodges, *A Shorter Model Theory*, Cambridge University Press, 1997.
-
-[11] D. Marker, *Model Theory: An Introduction*, Springer, 2002.
-
-[12] M. Morley, "Categoricity in power," *Trans. Amer. Math. Soc.*, vol. 114, pp. 514–538, 1965.
-
-[14] Yu.L. Ershov, "On the elementary theory of maximal normed fields," *Dokl. Akad. Nauk SSSR*, vol. 165, pp. 21–23, 1965.
-
-[15] S. Shelah, *Classification Theory and the Number of Non-Isomorphic Models*, 2nd ed., North-Holland, 1990.
-
-[16] T. Wedhorn, *Adic Spaces*, lecture notes, 2012.
+- Goodfellow, I.J., Shlens, J., and Szegedy, C. (2015). Explaining and harnessing adversarial examples. *ICLR*.
+- Madry, A., Makelov, A., Schmidt, L., Tsipras, D., and Vladu, A. (2018). Towards deep learning models resistant to adversarial attacks. *ICLR*.
+- Cohen, J., Rosenfeld, E., and Kolter, Z. (2019). Certified adversarial robustness via randomized smoothing. *ICML*.
+- Xia, L. (2020). The smoothed possibility of social choice. *NeurIPS*.
+- Zhang, H., Weng, T.-W., Chen, P.-Y., Hsieh, C.-J., and Daniel, L. (2018). Efficient neural network robustness certification with general activation functions. *NeurIPS*.
