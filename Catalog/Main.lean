@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2910 of the highest-quality
+A curated collection of 2904 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2910
+Total files: 2904
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -503,9 +503,7 @@ import FINAL.Bridges.FermatNearMiss
 import FINAL.Bridges.FiberRestriction
 import FINAL.Bridges.FilteredClosureReconstruction
 import FINAL.Bridges.FiniteInfoTheory_Basic
-import FINAL.Bridges.FiniteInfoTheory_RateDistortion
 import FINAL.Bridges.FiniteRateDistortion_Core
-import FINAL.Bridges.FiniteRiesz
 import FINAL.Bridges.FiniteSizeSusceptibility
 import FINAL.Bridges.FiveFrontiers
 import FINAL.Bridges.FootprintHelpers
@@ -598,7 +596,6 @@ import FINAL.Bridges.LargeDeviationPrinciple
 import FINAL.Bridges.LawvereCodingTheorem
 import FINAL.Bridges.LawvereDuality_Theorems
 import FINAL.Bridges.LawvereEMLMetricSemantics
-import FINAL.Bridges.LawvereRateDistortionDuality
 import FINAL.Bridges.LawvereThermodynamicGalois
 import FINAL.Bridges.LieEquivariantLearning
 import FINAL.Bridges.LocalCyclePressure
@@ -929,7 +926,6 @@ import FINAL.Bridges.TropicalProofValuationDuality
 import FINAL.Bridges.TropicalQuantumBridge
 import FINAL.Bridges.TropicalRadonDuality
 import FINAL.Bridges.TropicalRadonGraphDuality
-import FINAL.Bridges.TropicalRateDistortion
 import FINAL.Bridges.TropicalRateDistortionExact
 import FINAL.Bridges.TropicalRateDistortion_Bridge
 import FINAL.Bridges.TropicalRateDistortion_Core
@@ -1666,6 +1662,8 @@ import FINAL.MachineLearning.CayleyTransform
 import FINAL.MachineLearning.CechComplex
 import FINAL.MachineLearning.CechDecisionBoundaryObstructions
 import FINAL.MachineLearning.CechRobustnessCertification
+import FINAL.MachineLearning.CellularAutomataAlgebraicGe____Defs
+import FINAL.MachineLearning.CellularAutomataAlgebraicGe____Theorems
 import FINAL.MachineLearning.CellularAutomataAlgebraicGeometry_Defs
 import FINAL.MachineLearning.CellularAutomataAlgebraicGeometry_Theorems
 import FINAL.MachineLearning.CertificationBarrier
@@ -1997,7 +1995,6 @@ import FINAL.MachineLearning.TropicalRobustness
 import FINAL.MachineLearning.TropicalRouting
 import FINAL.MachineLearning.TropicalScalingLaws
 import FINAL.MachineLearning.TropicalScaling_Basic
-import FINAL.MachineLearning.TropicalTimeTravel
 import FINAL.MachineLearning.TropicalTop2Robustness
 import FINAL.MachineLearning.TropicalUniversality_Basic
 import FINAL.MachineLearning.TropicalVCDuality
@@ -2254,7 +2251,6 @@ import FINAL.Pythagorean.ExchangeFamilyTheorems
 import FINAL.Pythagorean.ExplicitMorseTheory
 import FINAL.Pythagorean.FermionicPlucker
 import FINAL.Pythagorean.FiltrationObstruction
-import FINAL.Pythagorean.FiveDirections
 import FINAL.Pythagorean.ForbiddenMinor_Defs
 import FINAL.Pythagorean.ForbiddenMinor_Theorems
 import FINAL.Pythagorean.Foundations
@@ -2431,9 +2427,7 @@ import FINAL.Pythagorean.SpacetimeLattice
 import FINAL.Pythagorean.SparseLeafCompression
 import FINAL.Pythagorean.SpectralBounds
 import FINAL.Pythagorean.SpectralCompression
-import FINAL.Pythagorean.SpectralDiracTheory
 import FINAL.Pythagorean.SpectralMoonshine_Atomicity
-import FINAL.Pythagorean.SpectralPseudorandomness
 import FINAL.Pythagorean.SpectralSparsity
 import FINAL.Pythagorean.StabilizerDescent
 import FINAL.Pythagorean.StrongNormBisimulation
