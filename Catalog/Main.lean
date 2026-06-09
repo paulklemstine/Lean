@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2606 of the highest-quality
+A curated collection of 2586 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2606
+Total files: 2586
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -37,7 +37,6 @@ import FINAL.Algebra.Certificates
 import FINAL.Algebra.Channel5Sedenions
 import FINAL.Algebra.Channel6Research
 import FINAL.Algebra.CharpolyRecognition
-import FINAL.Algebra.ChebTrace
 import FINAL.Algebra.CircuitDepthLayerProfile
 import FINAL.Algebra.ClassicalGroupExpanders
 import FINAL.Algebra.ClosedFormAncestor
@@ -148,11 +147,9 @@ import FINAL.Algebra.LogarithmicPrimeMetric
 import FINAL.Algebra.Los
 import FINAL.Algebra.MDSUncertainty
 import FINAL.Algebra.MandelbrotNumberTheory
-import FINAL.Algebra.MarkovSurface
 import FINAL.Algebra.MartingalePrediction
 import FINAL.Algebra.MassEnergyDuality
 import FINAL.Algebra.MatrixEncoding
-import FINAL.Algebra.MatrixGroupGeneration
 import FINAL.Algebra.MatrixTrace
 import FINAL.Algebra.MemoryAlgebra
 import FINAL.Algebra.MetaOracleCore
@@ -163,8 +160,6 @@ import FINAL.Algebra.Modular
 import FINAL.Algebra.MoebiusBandArithmetic
 import FINAL.Algebra.MonomialObstruction
 import FINAL.Algebra.MoonshotExplorations
-import FINAL.Algebra.MusicalCounterpoint
-import FINAL.Algebra.NegDimTopology
 import FINAL.Algebra.NeuralSurfaceTopology
 import FINAL.Algebra.NewExplorations
 import FINAL.Algebra.NewTheorems
@@ -245,12 +240,9 @@ import FINAL.Algebra.Series
 import FINAL.Algebra.SieveAndLattice
 import FINAL.Algebra.SingleTree
 import FINAL.Algebra.SmallGround
-import FINAL.Algebra.SpectralArithmetic
 import FINAL.Algebra.SpectralContractionAlgebra
-import FINAL.Algebra.SpectralCorollaries
 import FINAL.Algebra.SpectralEvaluationElimination
 import FINAL.Algebra.SpectralGraphTheory
-import FINAL.Algebra.SpectralMixing
 import FINAL.Algebra.SpectralTransfer
 import FINAL.Algebra.StableReduction
 import FINAL.Algebra.StandardRep
@@ -1395,7 +1387,6 @@ import FINAL.Geometry.MonotoneSubseq
 import FINAL.Geometry.MortalEternityGame
 import FINAL.Geometry.MultiHeadStereographic
 import FINAL.Geometry.Nearfield
-import FINAL.Geometry.NegDimTopologyAdvanced
 import FINAL.Geometry.NonAbelianGauge
 import FINAL.Geometry.NonDesarguesianPlanes
 import FINAL.Geometry.Orient
@@ -1406,7 +1397,6 @@ import FINAL.Geometry.PrimewisePersistence
 import FINAL.Geometry.QuantumGravityErrorCorrection
 import FINAL.Geometry.QuotientSpaces
 import FINAL.Geometry.RamanujanFrontiers
-import FINAL.Geometry.Representable
 import FINAL.Geometry.SplitGeometry
 import FINAL.Geometry.StandardConjectures
 import FINAL.Geometry.StereographicNeuralField
@@ -1669,7 +1659,6 @@ import FINAL.MachineLearning.MinMax
 import FINAL.MachineLearning.MobiusRing
 import FINAL.MachineLearning.ModPSpectralFingerprint
 import FINAL.MachineLearning.ModelShrinkage
-import FINAL.MachineLearning.MoebiusInversion
 import FINAL.MachineLearning.Monotonicity
 import FINAL.MachineLearning.MotivicPersistence
 import FINAL.MachineLearning.MultiHead
@@ -1800,7 +1789,6 @@ import FINAL.MachineLearning.Wasserstein
 import FINAL.MachineLearning.WeakChen
 import FINAL.Novelty.AntiGravityDefs
 import FINAL.Novelty.BabelFoundations
-import FINAL.Novelty.Basic
 import FINAL.Novelty.FVector
 import FINAL.Novelty.InformationBridge
 import FINAL.Novelty.JigsawSATReduction
@@ -1813,7 +1801,6 @@ import FINAL.Novelty.UltrapowerNat
 import FINAL.Physics.Advanced
 import FINAL.Physics.Angular
 import FINAL.Physics.AngularMomentum
-import FINAL.Physics.Basic
 import FINAL.Physics.BerggrenLorentzRigidity
 import FINAL.Physics.BerggrenLorentzSim
 import FINAL.Physics.BraidInvariant
@@ -1949,9 +1936,6 @@ import FINAL.Pythagorean.CategoricalDimension
 import FINAL.Pythagorean.CausalLoops
 import FINAL.Pythagorean.CertificateComplexity
 import FINAL.Pythagorean.CertificateCompression
-import FINAL.Pythagorean.CertificateExpanders
-import FINAL.Pythagorean.CertificatePhaseTransition
-import FINAL.Pythagorean.CertificatePosetWQO
 import FINAL.Pythagorean.CertificateProductGrowth
 import FINAL.Pythagorean.CertificateSampling
 import FINAL.Pythagorean.CertifiedFermionSampling
@@ -2016,7 +2000,6 @@ import FINAL.Pythagorean.EulerFactor
 import FINAL.Pythagorean.ExactWeightedTropicalDimension
 import FINAL.Pythagorean.Exchange
 import FINAL.Pythagorean.ExchangeDescent
-import FINAL.Pythagorean.ExchangeFamilyDescentComplexity
 import FINAL.Pythagorean.ExchangeFamilyTheorems
 import FINAL.Pythagorean.ExplicitMorseTheory
 import FINAL.Pythagorean.Extraction
@@ -2548,7 +2531,6 @@ import FINAL.Tropical.TropicalFrontiers
 import FINAL.Tropical.TropicalFutureDirections
 import FINAL.Tropical.TropicalGameEquilibria
 import FINAL.Tropical.TropicalGeneralNetworks
-import FINAL.Tropical.TropicalHypergraphCounterpoint
 import FINAL.Tropical.TropicalInformationRichness
 import FINAL.Tropical.TropicalLLMConversion
 import FINAL.Tropical.TropicalLanglandsGL1
@@ -2561,7 +2543,6 @@ import FINAL.Tropical.TropicalNBPLowerBound
 import FINAL.Tropical.TropicalNNFrontier
 import FINAL.Tropical.TropicalNetworkTheory
 import FINAL.Tropical.TropicalOracle
-import FINAL.Tropical.TropicalOracleResearch
 import FINAL.Tropical.TropicalOrbitShadowing
 import FINAL.Tropical.TropicalPathAlgebra
 import FINAL.Tropical.TropicalPruning
@@ -2602,7 +2583,6 @@ import FINAL.Tropical.WeightedTreeClosure
 import FINAL.Tropical.WidthBoundedDP
 import FINAL.Tropical.WidthCollapse
 import FINAL.Unknown.BraidingUniversality
-import FINAL.Unknown.Core
 import FINAL.Unknown.Defs
 import FINAL.Unknown.EntropyPowerInequality
 import FINAL.Unknown.ParentDescent

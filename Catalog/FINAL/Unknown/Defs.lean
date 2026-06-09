@@ -1,1 +1,1 @@
-../../Catalog/Bridges/Speculative/JigsawNP/Defs.lean
+../../Catalog/Bridges/Speculative/PersistentRenormalization/Defs.lean

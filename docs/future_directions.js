@@ -515,7 +515,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Topological Data Analysis: Persistent Homology Stability"
   },
   {
-    "consumed_by_exp_id": "5c9fb54c",
+    "consumed_by_exp_id": "",
     "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
     "domains": [
       "Novelty",
@@ -525,7 +525,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.944657+00:00",
     "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
   },
@@ -1002,20 +1002,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Wall-Sun-Sun Primes"
   },
   {
-    "consumed_by_exp_id": "faea6ea6",
-    "description": "Prove that for n bases of an n-dimensional vector space, there is a way to arrange all n\u00b2 elements into an n\u00d7n grid so that each row and column is a basis.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_216",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:25:10.717652+00:00",
-    "title": "Rota's Basis Conjecture"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that the connective constant for the self-avoiding walk on Z\u00b2 equals (2+\u221a2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
     "domains": [
@@ -1046,7 +1032,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Algebraic Statistics: Markov Bases for Contingency Tables"
   },
   {
-    "consumed_by_exp_id": "eecdaba4",
+    "consumed_by_exp_id": "",
     "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set \u2014 they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line \u2014 they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line \u2014 they are a fractal curve.",
     "domains": [
       "Novelty",
@@ -1056,7 +1042,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.589354+00:00",
     "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
@@ -2244,6 +2230,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Spectral Universality of Proof Graphs\n\n## 1. Cheeger Inequality for Finite Simple Graphs\n\nFormalize the discrete Cheeger inequality relating the vertex expansion constant h(G)\nto the spectral gap \u03bb\u2082 of the normalized Laplacian: \u03bb\u2082/2 \u2264 h(G) \u2264 \u221a(2\u03bb\u2082). This\nwould require formalizing the normalized Laplacian matrix of a finite graph and its\neigenvalues in Lean/Mathlib, then proving the classical Alon-Milman / Dodziuk\ninequality.\n\nThe key insight is that the vertex boundary machinery developed here (vertexBoundary,\nmonotonicity, connectivity characterization) provides exactly the combinatorial side\nof the Cheeger inequality \u2014 what remains is connecting it to the algebraic\n(eigenvalue) side.\n\nWhy now? Mathlib's linear algebra and matrix theory has matured enough that eigenvalue\ncomputations for symmetric matrices over \u211d are becoming feasible. The combinatorial\ninfrastructure in Cheeger.lean eliminates half the work.\n\n## 2. Spectral Gap Scaling Laws for Random Graph Families\n\nFormalize the Erd\u0151s-R\u00e9nyi phase transition: for G(n, p) with p = c/n, prove that\nthe expected vertex expansion transitions from 0 (c < 1, disconnected w.h.p.) to\npositive (c > 1, giant component has expansion). This would formalize the connection\nbetween edge density thresholds and expansion phase transitions.\n\nThe key insight is that `connected_iff_vertexBoundary_nonempty` converts the\nconnectivity phase transition of G(n,p) directly into an expansion phase transition,\nand the monotonicity theorem `vertexBoundary_mono` ensures that adding edges can only\nimprove expansion.\n\nWhy now? The monotonicity and connectivity-expansion equivalence are now proven, so\nthe combinatorial framework is ready. The probabilistic component (concentration\ninequalities for random graphs) is the main remaining challenge.\n\n## 3. Vertex Expansion under Graph Products\n\nFormalize how vertex expansion behaves under standard graph products (Cartesian,\ntensor, lexicographic). For the Cartesian product G \u25a1 H, the vertex expansion\nsatisfies h(G \u25a1 H) \u2265 min(h(G), h(H)). This would model how composing proof\nlibraries (which corresponds to graph products on dependency structures) preserves\nor degrades expansion.\n\nThe key insight is that the monotonicity theorem `vertexBoundary_mono` already\ncaptures one direction (adding edges helps), but graph products introduce new\nvertices, requiring a fundamentally different analysis. The product expansion\ninequality is non-trivial and connects to the tensor product conjecture in\nspectral graph theory.\n\nWhy now? The vertex boundary definition is product-friendly (defined via neighbor\nsets), and Mathlib has good support for product types and Finset operations on\nproducts. The infrastructure gap is small.\n\n## 4. Proof-Theoretic Strength Stratification\n\nFormalize the conjecture that dependency graphs of proof libraries naturally\nstratify by proof-theoretic strength. Specifically: define a \"strength homomorphism\"\nfrom a proof graph to ordinals, where the strength function is monotone with respect\nto the dependency order. Prove that the existence of such a homomorphism constrains\nthe Cheeger constant \u2014 graphs admitting strength homomorphisms to small ordinals\nhave bounded expansion.\n\nThe key insight is that a monotone strength function partitions the vertex set into\nlevel sets, and the vertex boundary between consecutive levels is constrained by the\nordinal structure. This creates a formal bridge between proof-theoretic ordinals and\ngraph expansion.\n\nWhy now? The `ProofGraph` structure with its strength function is already defined.\nThe next step is formalizing the monotonicity constraint and deriving expansion\nbounds from the level-set structure.\n\n## 5. Algorithmic Expansion Testing via Boundary Computation\n\nFormalize decidability and complexity of computing the Cheeger constant for finite\ngraphs. The Cheeger constant is NP-hard to compute exactly (by reduction from\nbisection width), but can be approximated via spectral methods. Formalize the\n2-approximation: prove that the sweep-cut algorithm on the Fiedler vector produces\na set S with h(S) \u2264 \u221a(2\u03bb\u2082), where \u03bb\u2082 is the spectral gap.\n\nThe key insight is that `vertexBoundary` is already computable (defined via\nFinset.filter), so the Cheeger constant is computable by enumeration. The\napproximation algorithm would connect the spectral and combinatorial definitions\nin a constructive way.\n\nWhy now? All definitions in Cheeger.lean are computable (they use DecidableRel and\nFinset), so the exact computation is already possible. The approximation algorithm\nrequires only the Cheeger inequality from Direction 1.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1041",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "45ebbcc6",
+    "status": "available",
+    "timestamp": "2026-06-09T01:20:48.932721+00:00",
+    "title": "Formalize the discrete Cheeger inequality relating the vertex expansion constant"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2497,7 +2498,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Symplectic Mirror Descent: Gromov-Witten Invariants as a Count of Learnable Mini"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8eba50e4",
     "description": "Conjecture: There exists a concrete family of finite, physically realizable wave or quantum graphs whose measured resonance spectrum has nearest-neighbor spacing statistics that converge, under graph-size scaling, to a distribution that differs provably and experimentally from standard random-matrix universality classes if and only if the graph edge-length encoding contains arithmetic correlations equivalent to nontrivial prime-gap structure. Test: Build or simulate graph families with edge lengths determined by primes, randomized pseudo-primes, and correlation-destroyed controls; compute or measure spectral spacing distributions, spectral form factors, and trace-formula signatures. The conjecture is supported if prime-encoded families exhibit a reproducible, statistically significant spectral anomaly absent in controls and stable under perturbations; it is refuted if all such anomalies wash out into known universality classes or can be reproduced without arithmetic structure. Impact: This would create a new experimental bridge between analytic number theory and spectral physics, enabling laboratory probes of arithmetic correlations, new diagnostics for hidden number-theoretic structure in physical systems, and potentially new analog methods for exploring conjectures about primes.",
     "domains": [
       "Algebra",
@@ -2507,7 +2508,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T20:04:56.522455+00:00",
     "title": "Prime Resonance Spectroscopy: Detecting Arithmetic Structure Through Physical Sp"
   },
