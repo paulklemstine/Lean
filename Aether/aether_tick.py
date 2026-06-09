@@ -102,7 +102,7 @@ def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
             v = r.get("prompt_version", "unknown")
             by_ver.setdefault(v, []).append(r)
         lines = ["[A/B] Prompt version stats:"]
-        for v in ("v3", "v4", "v5", "v6", "v7"):
+        for v in ("v3", "v4", "v5", "v6", "v7", "v8"):
             rs = by_ver.get(v, [])
             if not rs:
                 continue
@@ -113,10 +113,10 @@ def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
             avg_dur = sum(durs) / len(durs) if durs else 0
             lines.append(f"  {v}: n={n:3d} avg_Q={avg_q:.3f} wc={wc}/{n} ({100*wc/n:.0f}%) avg_dur={avg_dur:.0f}min")
         # Last 20 only, to keep it fresh
-        recent = [r for r in records[-20:] if r.get("prompt_version") in ("v4", "v5", "v6", "v7")]
+        recent = [r for r in records[-20:] if r.get("prompt_version") in ("v5", "v6", "v7", "v8")]
         if recent:
             scores = {}
-            for v in ("v4", "v5", "v6", "v7"):
+            for v in ("v5", "v6", "v7", "v8"):
                 vrs = [r for r in recent if r.get("prompt_version") == v]
                 if vrs:
                     scores[v] = sum(r.get("quality_score", 0) for r in vrs) / len(vrs)

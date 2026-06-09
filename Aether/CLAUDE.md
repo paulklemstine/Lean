@@ -105,10 +105,22 @@ python research_memory.py stats    # Show counts by status
 
 ## Aristotle Prompt
 
-The research prompt is ~12K characters and contains:
-- **Depth Requirements**: No trivial proofs, at least 3 deep-proof theorems, novel definitions, falsifiable conjecture
+The research prompt has multiple versions, dispatched via A/B/C split:
+- **v6 (40%)**: Correctness-first — brief plan, prove theorems, anti-patterns, novelty check
+- **v7 (30%)**: Structured output — theorem declarations before code, completeness gate (proved/conjecture/proved_with_lemma_sorry)
+- **v8 (30%)**: Research team framing — 5 roles (Hypothesizer, Experimenter, Analyst, Critic, Synthesist), scientific method loop, Lab Notebook blocks, structured FUTURE_DIRECTIONS.md, disproofs count as results
+
+### v8 Research Team Protocol (key innovations)
+- **5 roles**: Hypothesizer (bold conjectures), Experimenter (prove/disprove), Analyst (what survived/failed), Critic (find weaknesses, counterexamples), Synthesist (knowledge base upgrade)
+- **Scientific method loop**: Hypothesize → Experiment → Analyze → Critique → Generalize → Iterate
+- **Theorem declarations**: Name, Statement, Status (hypothesis/conjecture/proved/proved_with_lemma_sorry/disproved), Why it matters
+- **Lab Notebook**: Required `-- !-- Lab Notebook -- !--` blocks in each .lean file with Hypothesis, Result, Insight, Failure analysis
+- **Structured FUTURE_DIRECTIONS.md**: Synthesis, Results Summary, Research Directions with Hypothesis/Test/Why now/If true/If false
+- **Critic step**: Mandatory — find weakest assumption, boundary case, conjecture for generalization
+- **Disproofs count**: Finding a counterexample is as valuable as a proof
+
+All versions share:
 - **Anti-Triviality Rules**: Rejects commutativity proofs, wrapper theorems, simp-only proofs, definitions without insight
-- **Deliverables**: Lean 4 proofs, ARTICLE.md, RESEARCH_PAPER.md, Python code, FUTURE_DIRECTIONS.md, PACKAGE.json
 - **No cross-domain mandate**: Removed — the LLM naturally connects domains when relevant
 - **No Speculative in classification**: Classification uses 14 real domains including Novelty
 - **No FILE RICHNESS MANDATE**: Removed line-count incentives that caused bloat

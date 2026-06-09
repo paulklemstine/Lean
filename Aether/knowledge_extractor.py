@@ -655,15 +655,18 @@ class KnowledgeExtractor:
             md5_hash = int(hashlib.md5(job.job_id.encode()).hexdigest(), 16)
         else:
             md5_hash = job.cycle_n
-        # A/B split: 70% v6, 30% v7
-        # v6 (correctness-first) is the production prompt.
-        # v7 (structured output + proof completeness gates) is being tested
-        # at 30% to accumulate A/B data faster for comparison.
+        # A/B/C split: 40% v6, 30% v7, 30% v8
+        # v6 (correctness-first) is the production baseline.
+        # v7 (structured output + proof completeness gates) is in wide testing.
+        # v8 (research team framing + scientific method loop + lab notebooks) is the
+        # new variant being tested at 30% to accumulate data for comparison.
         bucket = md5_hash % 1000
-        if bucket < 700:
+        if bucket < 400:
             phase_a_version = "v6"
-        else:
+        elif bucket < 700:
             phase_a_version = "v7"
+        else:
+            phase_a_version = "v8"
         job.prompt_version = phase_a_version  # legacy field
         job.phase = "A"  # Two-phase: this is Phase A (math)
         job.phase_a_prompt_version = phase_a_version
@@ -1932,7 +1935,7 @@ Research mode: {concept.research_mode}
 
             # v7 linting gate: reject Lean files from v7 prompts with basic syntax issues
             # v7 uses structured theorem declarations — verify they're well-formed
-            if getattr(job, 'phase_a_prompt_version', '') == 'v7':
+            if getattr(job, 'phase_a_prompt_version', '') in ('v7', 'v8'):
                 # Check 1: unclosed block comments (/- ... -/)
                 open_blocks = content.count("/-") - content.count("/-!")
                 close_blocks = content.count("-/")
@@ -1953,6 +1956,13 @@ Research mode: {concept.research_mode}
                     print(f"[Integrate] v7 lint: rejecting {target_path} — theorem density too low "
                           f"({theorem_count} theorems in {lines} lines)")
                     return "REJECT"
+            # v8 informational note: check for research team protocol markers
+            if getattr(job, 'phase_a_prompt_version', '') == 'v8':
+                has_lab_notebook = "Lab Notebook" in content or "lab notebook" in content.lower()
+                has_hypothesis = "hypothesis" in content.lower()
+                if not has_lab_notebook and not has_hypothesis:
+                    print(f"[Integrate] v8 note: {target_path} has no Lab Notebook or "
+                          f"hypothesis markers (expected from v8 research team protocol)")
             if has_sorry:
                 # Incomplete proofs go to Speculative/AutoResearch, preserving any
                 # subdirectory structure Pi suggested (e.g. EML/ReflectionCapacity/).
