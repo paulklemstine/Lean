@@ -132,6 +132,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 {"timestamp": 1781005027.1516926, "experiment_id": "f9c3366c", "concept_title": "Close Proofs: This document describes five research conjectures extending the", "concept_domain": "Applications", "research_mode": "team", "quality": "partial", "quality_score": 0.38632137600826466, "catalog_references": [], "prompt_length": 4860, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781005090.7884336, "experiment_id": "743db091", "concept_title": "**Conjecture:** If `{f_t}_{t ∈ [0,1]}` is a continuous family of contracting cau", "concept_domain": "Geometry", "research_mode": "team", "quality": "partial", "quality_score": 0.4240429527390678, "catalog_references": [], "prompt_length": 14206, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781005152.0211859, "experiment_id": "cb6d03de", "concept_title": "Tropical Amoebas and Ronkin Functions", "concept_domain": "Applications", "research_mode": "team", "quality": "partial", "quality_score": 0.4228838627888345, "catalog_references": [], "prompt_length": 4581, "files_placed": 0, "status": "discard"}
@@ -227,3 +228,5 @@
 {"timestamp": 1781030072.897451, "experiment_id": "6baa451c", "concept_title": "The current formalization proves that the tropical segment equals the tropical c", "concept_domain": "Algebra", "research_mode": "team", "quality": "partial", "quality_score": 0.3939594106346972, "catalog_references": [], "prompt_length": 12128, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781030271.168848, "experiment_id": "15e5810c", "concept_title": "Formalized bridge between ReLU neural network decision", "concept_domain": "MachineLearning", "research_mode": "team", "quality": "partial", "quality_score": 0.45138134445121236, "catalog_references": [], "prompt_length": 25921, "files_placed": 18, "status": "discard"}
 {"timestamp": 1781030401.0309389, "experiment_id": "5a904574", "concept_title": "Belnap's FOUR₂ is the smallest non-trivial paraconsistent bilattice. A natural g", "concept_domain": "Geometry", "research_mode": "team", "quality": "partial", "quality_score": 0.4429310119047619, "catalog_references": [], "prompt_length": 20633, "files_placed": 7, "status": "discard"}
+=======
+>>>>>>> Stashed changes
