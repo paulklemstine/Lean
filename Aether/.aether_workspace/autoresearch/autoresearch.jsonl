@@ -130,6 +130,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 {"timestamp": 1781005027.1516926, "experiment_id": "f9c3366c", "concept_title": "Close Proofs: This document describes five research conjectures extending the", "concept_domain": "Applications", "research_mode": "team", "quality": "partial", "quality_score": 0.38632137600826466, "catalog_references": [], "prompt_length": 4860, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781005090.7884336, "experiment_id": "743db091", "concept_title": "**Conjecture:** If `{f_t}_{t ∈ [0,1]}` is a continuous family of contracting cau", "concept_domain": "Geometry", "research_mode": "team", "quality": "partial", "quality_score": 0.4240429527390678, "catalog_references": [], "prompt_length": 14206, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781005152.0211859, "experiment_id": "cb6d03de", "concept_title": "Tropical Amoebas and Ronkin Functions", "concept_domain": "Applications", "research_mode": "team", "quality": "partial", "quality_score": 0.4228838627888345, "catalog_references": [], "prompt_length": 4581, "files_placed": 0, "status": "discard"}
@@ -214,3 +215,5 @@
 {"timestamp": 1781026568.12334, "experiment_id": "ad363765", "concept_title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks", "concept_domain": "MachineLearning", "research_mode": "team", "quality": "partial", "quality_score": 0.42067745979894616, "catalog_references": [], "prompt_length": 5012, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781026694.1876934, "experiment_id": "3ceb0fcb", "concept_title": "ML Universal Approximation: Width vs Depth Trade-offs", "concept_domain": "Algebra", "research_mode": "team", "quality": "partial", "quality_score": 0.42121556242331565, "catalog_references": [], "prompt_length": 9821, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781027016.2866013, "experiment_id": "0f735599", "concept_title": "Causal Inference: Do-Calculus as Formal Logic", "concept_domain": "Physics", "research_mode": "team", "quality": "partial", "quality_score": 0.36621510701629356, "catalog_references": [], "prompt_length": 4829, "files_placed": 0, "status": "discard"}
+=======
+>>>>>>> Stashed changes
