@@ -115,9 +115,10 @@ The research prompt has multiple versions, dispatched via A/B/C split:
 - **Scientific method loop**: Hypothesize → Experiment → Analyze → Critique → Generalize → Iterate
 - **Theorem declarations**: Name, Statement, Status (hypothesis/conjecture/proved/proved_with_lemma_sorry/disproved), Why it matters
 - **Lab Notebook**: Required `-- !-- Lab Notebook -- !--` blocks in each .lean file with Hypothesis, Result, Insight, Failure analysis
-- **Structured FUTURE_DIRECTIONS.md**: Synthesis, Results Summary, Research Directions with Hypothesis/Test/Why now/If true/If false
+- **Structured FUTURE_DIRECTIONS.md** (MANDATORY): ## Synthesis (2-3 paragraphs), ## Results Summary (bullet list: name, status, significance), Research Directions with Hypothesis/Test/Why now/**If true**/**If false**. Missing sections = incomplete output.
 - **Critic step**: Mandatory — find weakest assumption, boundary case, conjecture for generalization
 - **Disproofs count**: Finding a counterexample is as valuable as a proof
+- **v8 Metrics tracking**: Lab_Notebooks, hypotheses, disproved_theorems (regex), disproved_keywords (loose), Synthesis/Results_Summary/If_true compliance, Critic_refs, LN_Insights, LN_Failures
 
 All versions share:
 - **Anti-Triviality Rules**: Rejects commutativity proofs, wrapper theorems, simp-only proofs, definitions without insight
