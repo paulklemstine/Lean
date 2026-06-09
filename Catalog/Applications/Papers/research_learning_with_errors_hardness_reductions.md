@@ -1,253 +1,314 @@
-# Learning with Errors: Formalized Hardness Reductions
+# Closure–Gauge Realization Duality via Idempotent Holonomy
 
-## Structural Theorems for LWE Parameter Relationships and Variant Reductions
+## Abstract
 
----
+We establish a finite realization duality for closure operators on finite sets, characterizing precisely which closure operators arise from gauge valuations via supremum-threshold construction. A *gauge valuation* is a function *v : α → ℕ* on a finite type, inducing a closure operator *cl_v(S) = { x : v(x) ≤ sup_{s ∈ S} v(s) }*. Our main result shows that a closure operator is gauge-realizable if and only if its collection of closed sets forms a chain under inclusion. We prove that minimal realizations exist and are unique up to order equivalence (gauge equivalence), and establish a holographic duality theorem showing that the capacity profile — the function *S ↦ |cl(S)|* — uniquely determines the closure operator. All results have been formalized and machine-verified.
 
-### Abstract
-
-We present a formalization of core structural theorems underlying the Learning with Errors (LWE) cryptographic framework, establishing rigorous foundations for the hardness reductions that connect LWE to worst-case lattice problems. Our results comprise three families of theorems: (1) sample reduction, showing that LWE hardness is monotone in the number of available samples; (2) modulus switching via ring homomorphisms, proving that LWE instances can be transported across divisible moduli with full algebraic coherence; and (3) error rate parameter bounds, establishing the Regev threshold condition α·q ≥ 2√n and its consequences for approximation factor tradeoffs. All results are machine-verified, providing a trustworthy foundation for the security analysis of post-quantum cryptographic schemes.
-
-**Keywords:** Learning with Errors, lattice cryptography, hardness reduction, modulus switching, post-quantum cryptography, formal verification
+**Keywords:** closure operators, gauge valuations, realization theory, tropical algebra, holographic duality, chain condition, lattice theory
 
 ---
 
-### 1. Introduction
+## 1. Introduction
 
-The Learning with Errors (LWE) problem, introduced by Regev [1], has become the cornerstone of lattice-based cryptography. Its significance derives from a remarkable worst-case to average-case reduction: solving random LWE instances is at least as hard as approximating the Shortest Vector Problem (GapSVP) and the Shortest Independent Vectors Problem (SIVP) on arbitrary lattices [1, 2].
+Closure operators are among the most ubiquitous structures in mathematics, appearing in topology (topological closure), algebra (generated substructures), logic (deductive closure), and combinatorics (matroid closure). A natural question in realization theory asks: given a closure operator, can it be "generated" by some simpler datum? This paper answers this question for a specific and natural class of generators — gauge valuations.
 
-The reduction depends critically on three parameters: the dimension n, the modulus q, and the error rate α. The interplay between these parameters determines both the hardness guarantee (the approximation factor γ in the underlying lattice problem) and the efficiency of the resulting cryptosystem.
+A gauge valuation assigns a non-negative integer to each element of a finite set. The induced closure collects all elements whose value does not exceed the supremum of values in the seed set. This construction arises naturally in:
 
-This work formalizes the structural backbone of LWE hardness reductions. Rather than formalizing the full quantum reduction (which requires continuous Gaussian sampling and quantum Fourier transforms over lattices), we establish the algebraic and combinatorial lemmas that form the reduction's skeleton:
+- **Tropical linear algebra**, where the supremum operation plays the role of tropical addition;
+- **Discrete gauge theory**, where valuations model holonomy capacities of loops;
+- **Automata theory**, where closure operators describe Nerode-type equivalence structures;
+- **Secret-sharing and access structures**, where threshold conditions model security levels.
 
-- **Sample reduction** (§3): LWE with m samples reduces to LWE with m′ ≤ m samples.
-- **Modulus switching** (§4): LWE over ℤ_q reduces to LWE over ℤ_p when p | q.
-- **Parameter bounds** (§5): The Regev condition α·q ≥ 2√n and its implications.
+Our main contributions are:
 
-All theorems are formalized and verified in the companion file `Computation/LWEBasic.lean`.
-
----
-
-### 2. Definitions
-
-We work with the following core structures.
-
-#### 2.1 LWE Instances
-
-An **LWE instance** with parameters (n, m, q) consists of a matrix A ∈ ℤ_q^{m×n} and a target vector b ∈ ℤ_q^m. In the "real" distribution, b = As + e (mod q) for a uniformly random secret s ∈ ℤ_q^n and a discrete Gaussian error vector e. In the "uniform" distribution, b is uniformly random.
-
-(@file Computation/LWEBasic.lean — `LWEInstance`)
-
-```
-structure LWEInstance (n m q : ℕ) where
-  A : Fin m → Fin n → ZMod q
-  b : Fin m → ZMod q
-```
-
-#### 2.2 Integer Lattices
-
-A **lattice basis** in ℤ^n is represented as a matrix B ∈ ℤ^{n×n}. The lattice L(B) is the set of all integer linear combinations of the basis vectors.
-
-(@file Computation/LWEBasic.lean — `IntLatticeBasis`, `isLatticePoint`)
-
-A vector v is a **lattice point** if there exist integer coefficients c₁, …, cₙ such that v = Σᵢ cᵢ · Bᵢ.
-
-#### 2.3 Short Vectors and Hardness
-
-The **squared ℓ₂ norm** of an integer vector is defined as ‖v‖² = Σᵢ vᵢ². A lattice has a **short vector** of length at most d if there exists a nonzero lattice point v with ‖v‖² ≤ d².
-
-(@file Computation/LWEBasic.lean — `intVecNormSq`, `hasShortVector`, `isNonzero`)
-
-#### 2.4 Regev Parameters
-
-The **Regev parameter validity condition** requires:
-
-$$\alpha \cdot q \geq 2\sqrt{n}$$
-
-The **approximation factor** associated with LWE parameters is:
-
-$$\gamma(n, \alpha) = \frac{n}{\alpha}$$
-
-(@file Computation/LWEBasic.lean — `regev_parameter_valid`, `regev_approx_factor`)
+1. **Realizability characterization** (Theorem 5.1): A closure operator is gauge-realizable iff its closed sets form a chain.
+2. **Holographic duality** (Theorem 4.1): Equal capacity profiles imply equal closures.
+3. **Gauge uniqueness** (Theorem 3.1): Equal closures imply order-equivalent valuations.
+4. **Minimal realization** (Theorem 6.1): Minimal realizations exist and are unique up to gauge equivalence.
+5. **Separation criterion** (Theorem 7.1): For valuation closures, separation is equivalent to injectivity.
 
 ---
 
-### 3. Sample Reduction
+## 2. Definitions and Basic Properties
 
-The first family of results establishes that LWE hardness is monotone in the number of samples.
+### 2.1 Closure Operators
 
-#### 3.1 Prefix Reduction
+**Definition 2.1** (Closure Operator). Let *α* be a finite type with decidable equality. A *closure operator* on the finite subsets of *α* is a triple *(cl, ext, mon, idem)* where *cl : 𝒫_fin(α) → 𝒫_fin(α)* satisfies:
 
-**Theorem 3.1** (Sample Reduction). *For n, m, m′, q with m′ ≤ m, there exists an extraction map*
+- **Extensivity:** *S ⊆ cl(S)* for all finite *S ⊆ α*;
+- **Monotonicity:** *S ⊆ T* implies *cl(S) ⊆ cl(T)*;
+- **Idempotency:** *cl(cl(S)) = cl(S)* for all *S*.
 
-$$\text{extract} : \text{LWE}(n, m, q) \to \text{LWE}(n, m', q)$$
+**Definition 2.2** (Closed Set). A finite set *S* is *closed* under a closure operator *C* if *C.cl(S) = S*.
 
-*such that for all instances, the extracted matrix preserves entries: extract(inst).A[i,j] = inst.A[i,j] for all i < m′, j < n.*
+### 2.2 Gauge Valuations
 
-(@file Computation/LWEBasic.lean — `lwe_sample_reduction`)
+**Definition 2.3** (Valuation Closure). Given a function *v : α → ℕ*, the *valuation closure* is defined by:
 
-*Proof sketch.* Define extract by restricting A and b to the first m′ rows. The index i : Fin m′ embeds into Fin m via the natural inclusion (since m′ ≤ m), and the property follows by definition. □
+$$\text{cl}_v(S) = \{ x \in \alpha \mid v(x) \leq \sup_{s \in S} v(s) \}$$
 
-#### 3.2 Injection Reduction
+where the supremum is taken over the image of *S* under *v* in the natural numbers (with *sup ∅ = 0*).
 
-**Theorem 3.2** (Injection Reduction). *For any embedding f : Fin m′ ↪ Fin m, there exists an extraction map such that extract(inst).A[i,j] = inst.A[f(i), j].*
+**Theorem 2.1** (Valuation Closure is a Closure Operator). For any *v : α → ℕ*, the valuation closure *cl_v* satisfies extensivity, monotonicity, and idempotency.
 
-(@file Computation/LWEBasic.lean — `lwe_sample_injection_reduction`)
+*Proof sketch.* Extensivity: if *x ∈ S*, then *v(x) ≤ sup_{s ∈ S} v(s)* by definition of supremum. Monotonicity: if *S ⊆ T*, then *sup_S v ≤ sup_T v*, so any *x* with *v(x) ≤ sup_S v* also satisfies *v(x) ≤ sup_T v*. Idempotency: the key observation is that *sup(cl_v(S)) = sup(S)* under *v*. The set *cl_v(S)* contains only elements with value ≤ *sup_S v*, so the supremum cannot increase. But *S ⊆ cl_v(S)*, so the supremum cannot decrease. Thus *cl_v(cl_v(S))* filters by the same threshold as *cl_v(S)*. □
 
-This generalizes Theorem 3.1: the m′ samples need not be a prefix; any injectively chosen subset suffices. The proof composes A and b with the embedding f.
+**Theorem 2.2** (Supremum Preservation). For any *v* and *S*:
 
-#### 3.3 Boundary Case
+$$\sup_{x \in \text{cl}_v(S)} v(x) = \sup_{s \in S} v(s)$$
 
-**Theorem 3.3** (Zero Samples). *With m = 0, all LWE instances have identical A matrices: for any inst₁, inst₂ : LWE(n, 0, q), we have inst₁.A = inst₂.A.*
+*Proof sketch.* The inequality ≤ follows because elements of *cl_v(S)* satisfy *v(x) ≤ sup_S v*. The inequality ≥ follows from *S ⊆ cl_v(S)*. □
 
-(@file Computation/LWEBasic.lean — `lwe_zero_samples_trivial`)
+**Theorem 2.3** (Membership Criterion). For any *v*, *S*, and *x*:
 
-*Proof sketch.* Functions from Fin 0 are unique (there are no elements to differ on), so the matrices agree extensionally. □
+$$x \in \text{cl}_v(S) \iff v(x) \leq \sup_{s \in S} v(s)$$
 
-**Remark.** This boundary case captures the information-theoretic content of LWE: with zero equations, the secret s is completely hidden. The A matrices are vacuously equal because they have no rows.
+### 2.3 Capacity
 
----
+**Definition 2.4** (Closure Capacity). The *capacity* of a set *S* under closure *C* is:
 
-### 4. Modulus Switching via Ring Homomorphisms
+$$\text{cap}_C(S) = |C.cl(S)|$$
 
-#### 4.1 Surjectivity of the Canonical Map
+**Theorem 2.4** (Capacity Properties).
+- *Monotonicity:* *S ⊆ T* implies *cap_C(S) ≤ cap_C(T)*.
+- *Extensivity:* *|S| ≤ cap_C(S)*.
 
-**Theorem 4.1** (ZMod Quotient Surjectivity). *For p | q with p, q > 0, the canonical ring homomorphism*
+**Theorem 2.5** (Closedness via Capacity). A set *S* is closed under *C* if and only if *cap_C(S) = |S|*.
 
-$$\text{castHom} : \mathbb{Z}/q\mathbb{Z} \to \mathbb{Z}/p\mathbb{Z}$$
-
-*is surjective.*
-
-(@file Computation/LWEBasic.lean — `zmod_quotient_surjective`)
-
-*Proof sketch.* This follows from the universal property of ZMod: the map sends the generator 1 ∈ ℤ/qℤ to 1 ∈ ℤ/pℤ, and since 1 generates ℤ/pℤ, the map is surjective. □
-
-#### 4.2 Instance-Level Modulus Switching
-
-**Theorem 4.2** (LWE Modulus Switch). *For p | q, there exists a reduction map*
-
-$$\text{reduce} : \text{LWE}(n, m, q) \to \text{LWE}(n, m, p)$$
-
-*such that reduce(inst).A[i,j] = castHom(inst.A[i,j]) for all i, j.*
-
-(@file Computation/LWEBasic.lean — `lwe_modulus_switch`)
-
-*Proof sketch.* Apply castHom entry-by-entry to both A and b. The resulting instance is well-defined because castHom is a ring homomorphism, preserving the linear structure As + e. □
-
-**Remark.** In the full security reduction, modulus switching introduces a controlled rounding error whose distribution must be analyzed carefully. Theorem 4.2 captures the algebraic (exact) component; the error analysis requires probabilistic arguments beyond the scope of this formalization.
-
-#### 4.3 Transitivity
-
-**Theorem 4.3** (Modulus Switch Transitivity). *For p | q | r, the composition*
-
-$$\text{castHom}_{q \to p} \circ \text{castHom}_{r \to q} = \text{castHom}_{r \to p}$$
-
-(@file Computation/LWEBasic.lean — `modulus_switch_transitive`)
-
-*Proof sketch.* Both sides are ring homomorphisms ℤ/rℤ → ℤ/pℤ. By the universal property of ℤ/rℤ (it is the free cyclic group of order r), ring homomorphisms out of it are determined by the image of 1. Both sides send 1 to 1, so they agree. □
-
-**Corollary.** Modulus switching can be decomposed into a chain of divisibility steps without affecting the outcome. This is significant for implementation: one can switch modulus in stages (e.g., q → q/2 → q/4) and obtain the same result as a single switch.
-
-#### 4.4 Collapse to Trivial Modulus
-
-**Theorem 4.4** (Modulus-1 Collapse). *For any q and any x, y ∈ ℤ/qℤ:*
-
-$$\text{castHom}_{q \to 1}(x) = \text{castHom}_{q \to 1}(y)$$
-
-(@file Computation/LWEBasic.lean — `modulus_switch_one_trivial`)
-
-*Proof sketch.* ℤ/1ℤ is the trivial ring with a single element, so all values are equal. □
+*Proof sketch.* If *S* is closed, then *cl(S) = S*, so *cap(S) = |S|*. Conversely, if *cap(S) = |S|*, then *|cl(S)| = |S|*. Since *S ⊆ cl(S)* (extensivity) and both are finite sets of the same cardinality, *S = cl(S)*. □
 
 ---
 
-### 5. Error Rate Parameter Bounds
+## 3. Gauge Equivalence
 
-#### 5.1 The Regev Lower Bound
+**Definition 3.1** (Order Equivalence / Gauge Equivalence). Two valuations *v₁, v₂ : α → ℕ* are *order-equivalent* (or *gauge-equivalent*) if:
 
-**Theorem 5.1** (Error Rate Lower Bound). *If α·q ≥ 2√n and q > 0, then*
+$$\forall x, y \in \alpha: \quad v_1(x) \leq v_1(y) \iff v_2(x) \leq v_2(y)$$
 
-$$\alpha \geq \frac{2\sqrt{n}}{q}$$
+Order equivalence is an equivalence relation (reflexive, symmetric, transitive).
 
-(@file Computation/LWEBasic.lean — `regev_alpha_lower_bound`)
+**Theorem 3.1** (Fundamental Gauge Uniqueness). If *cl_{v₁} = cl_{v₂}* as functions, then *v₁* and *v₂* are order-equivalent.
 
-*Proof sketch.* Divide both sides of α·q ≥ 2√n by q > 0. □
+*Proof sketch.* The key observation is that *v(x) ≤ v(y)* if and only if *x ∈ cl_v({y})*. This follows directly from the membership criterion: *x ∈ cl_v({y}) ↔ v(x) ≤ sup({y}) = v(y)*. Since *cl_{v₁} = cl_{v₂}*, membership in singleton closures is preserved:
 
-**Interpretation.** This lower bound constrains cryptographic parameter selection. For dimension n = 1024 and modulus q = 2³² ≈ 4 × 10⁹, the minimum error rate is α ≥ 2√1024 / 2³² ≈ 1.5 × 10⁻⁸. The error parameter cannot be made arbitrarily small without losing the hardness guarantee.
+$$v_1(x) \leq v_1(y) \iff x \in \text{cl}_{v_1}(\{y\}) \iff x \in \text{cl}_{v_2}(\{y\}) \iff v_2(x) \leq v_2(y)$$
 
-#### 5.2 Approximation Factor Monotonicity
-
-**Theorem 5.2** (Anti-monotonicity). *For n > 0 and 0 < α₁ ≤ α₂:*
-
-$$\gamma(n, \alpha_2) \leq \gamma(n, \alpha_1)$$
-
-(@file Computation/LWEBasic.lean — `approx_factor_anti_monotone`)
-
-*Proof sketch.* γ(n, α) = n/α is a decreasing function of α on (0, ∞). Since α₁ ≤ α₂ and n > 0, we have n/α₂ ≤ n/α₁. □
-
-**Interpretation.** Increasing the error rate makes the associated lattice problem *harder* (smaller approximation factor, closer to exact SVP). This creates a fundamental tension in parameter selection: more noise improves security but reduces the signal-to-noise ratio available for decryption.
-
-#### 5.3 Scaling Law
-
-**Theorem 5.3** (Error Rate Scaling). *For any c and α:*
-
-$$\gamma(n, c\alpha) = \frac{\gamma(n, \alpha)}{c}$$
-
-(@file Computation/LWEBasic.lean — `approx_factor_scaling`)
-
-*Proof sketch.* n/(cα) = (n/α)/c by field arithmetic. □
-
-**Corollary.** The approximation factor is inversely proportional to the error rate. Doubling α halves γ. This linear relationship enables precise security-efficiency tradeoffs: each bit of additional noise yields a constant-factor improvement in the lattice approximation hardness.
+This establishes order equivalence. □
 
 ---
 
-### 6. Discussion
+## 4. Holographic Duality
 
-#### 6.1 Relationship to Full Regev Reduction
+**Theorem 4.1** (Holographic Duality). Let *C₁* and *C₂* be closure operators on a finite type *α*. If their capacity profiles agree — that is, *cap_{C₁}(S) = cap_{C₂}(S)* for every finite subset *S* — then *C₁.cl = C₂.cl*.
 
-The theorems formalized here constitute the algebraic and combinatorial skeleton of Regev's full reduction [1]. The complete reduction additionally requires:
+*Proof sketch.* Fix a set *S*. We show *C₁.cl(S) ⊆ C₂.cl(S)* (symmetry gives the reverse).
 
-1. **Quantum component**: A quantum algorithm that, given an oracle for GapSVP, produces samples from a discrete Gaussian distribution over the dual lattice.
-2. **Gaussian sampling**: Classical post-processing that converts dual lattice Gaussian samples into LWE instances.
-3. **Iterative dimension reduction**: A bootstrapping argument that amplifies the lattice oracle's power.
+First, we establish that *C₂.cl(C₁.cl(S)) = C₁.cl(S)*. By extensivity of *C₂*, we have *C₁.cl(S) ⊆ C₂.cl(C₁.cl(S))*. By the capacity hypothesis applied to *C₁.cl(S)*:
 
-These components involve continuous probability distributions, quantum circuits, and analytic number theory that are substantially harder to formalize. Our contribution isolates the structural properties that the full proof depends on, providing a verified foundation.
+$$|C_2.\text{cl}(C_1.\text{cl}(S))| = |C_1.\text{cl}(C_1.\text{cl}(S))| = |C_1.\text{cl}(S)|$$
 
-#### 6.2 Applications to Standardized Cryptography
+where the last equality uses idempotency of *C₁*. A finite superset of the same cardinality must equal the subset, giving *C₂.cl(C₁.cl(S)) = C₁.cl(S)*.
 
-The NIST post-quantum standards ML-KEM (FIPS 203) and ML-DSA (FIPS 204) are built on Module-LWE, a structured variant of LWE where the matrix A has additional algebraic structure (entries from a polynomial ring). The structural theorems proved here — sample reduction, modulus switching, parameter bounds — apply directly to Module-LWE, since they depend only on the linear-algebraic and modular-arithmetic structure that Module-LWE inherits from LWE.
+Now, by extensivity of *C₁*, *S ⊆ C₁.cl(S)*, so by monotonicity of *C₂*, *C₂.cl(S) ⊆ C₂.cl(C₁.cl(S)) = C₁.cl(S)*. The capacity hypothesis then gives *|C₁.cl(S)| = |C₂.cl(S)|*, and since *C₂.cl(S) ⊆ C₁.cl(S)* with equal cardinality, *C₁.cl(S) = C₂.cl(S)*. □
 
-#### 6.3 Parameter Selection in Practice
-
-Theorem 5.1 provides a hard floor on the error rate: α ≥ 2√n / q. In practice, parameters are chosen well above this floor to provide a security margin. For ML-KEM-768 (the recommended security level), n = 256 (per module component), q = 3329, and the effective error rate satisfies the Regev condition with substantial margin.
-
-The anti-monotonicity theorem (5.2) and scaling law (5.3) together show that the security-efficiency tradeoff is smooth and predictable. Increasing the error rate by a factor c improves security (reduces γ) by the same factor c, at the cost of requiring more aggressive error correction in the decryption procedure.
+**Remark 4.1.** The holographic duality is a finite-dimensional analogue of the principle that boundary data determines bulk structure. The capacity function — which records only cardinalities — is a "shadow" of the full closure operator, yet it contains complete information.
 
 ---
 
-### 7. Future Work
+## 5. The Realizability Duality
 
-Natural extensions of this formalization include:
+### 5.1 Definitions
 
-1. **Decision-Search equivalence**: Proving that distinguishing LWE from uniform is as hard as recovering the secret s.
-2. **Ring-LWE and Module-LWE**: Extending definitions and reductions to structured variants over polynomial rings ℤ_q[x]/(xⁿ + 1).
-3. **Gaussian error analysis**: Formalizing the discrete Gaussian distribution and its smoothing parameter, connecting to the lattice smoothing lemma.
-4. **Dual lattice structure**: Defining the dual lattice and proving its relationship to the primal, which is essential for the quantum step of Regev's reduction.
-5. **Concrete security bounds**: Formalizing the known BKZ lattice reduction algorithms and their complexity, yielding concrete bit-security estimates from the approximation factor γ.
+**Definition 5.1** (Gauge Realizability). A closure operator *C* is *gauge-realizable* if there exists *v : α → ℕ* such that *C.cl = cl_v*.
+
+**Definition 5.2** (Chain Property). A closure operator *C* has the *chain property* (or its closed sets form a chain) if for any closed sets *S* and *T*, either *S ⊆ T* or *T ⊆ S*.
+
+### 5.2 Forward Direction
+
+**Theorem 5.1** (Realizable ⟹ Chain). If *C* is gauge-realizable, then its closed sets form a chain.
+
+*Proof sketch.* Let *C = cl_v* for some valuation *v*. A closed set *S* satisfies *cl_v(S) = S*, which means *S = {x : v(x) ≤ sup_S v}*. Closed sets are thus level sets of the form *L_k = {x : v(x) ≤ k}* for various thresholds *k*. Given two such level sets *L_j* and *L_k* with *j ≤ k*, clearly *L_j ⊆ L_k*. Since any two natural numbers are comparable, any two level sets are nested. □
+
+### 5.3 Key Structural Lemmas
+
+**Lemma 5.1** (Singleton Closure Characterization). For any closure operator *C*, element *x*, and set *S*:
+
+$$x \in C.\text{cl}(S) \iff C.\text{cl}(\{x\}) \subseteq C.\text{cl}(S)$$
+
+*Proof sketch.* (⟹) If *x ∈ cl(S)*, then *{x} ⊆ cl(S)*, so by monotonicity, *cl({x}) ⊆ cl(cl(S)) = cl(S)* by idempotency. (⟸) The reverse is immediate: *x ∈ cl({x}) ⊆ cl(S)*. □
+
+**Lemma 5.2** (Chain Closure Maximum). If *C* has the chain property and *S* is nonempty, then there exists *s₀ ∈ S* such that *cl(S) = cl({s₀})*.
+
+*Proof sketch.* The singleton closures *{cl({s}) : s ∈ S}* are all closed (by idempotency) and hence pairwise comparable (by the chain property). Choose *s₀ ∈ S* maximizing *|cl({s})|*. By the chain property, *cl({s}) ⊆ cl({s₀})* for all *s ∈ S*, so *S ⊆ cl({s₀})*, hence *cl(S) ⊆ cl(cl({s₀})) = cl({s₀})*. The reverse inclusion *cl({s₀}) ⊆ cl(S)* follows from *{s₀} ⊆ S*. □
+
+**Lemma 5.3** (Chain Subset Iff Card). In a closure with the chain property, for closed sets *S* and *T*: *S ⊆ T ↔ |S| ≤ |T|*.
+
+### 5.4 Reverse Direction
+
+**Theorem 5.2** (Chain ⟹ Realizable). If the closed sets of *C* form a chain, then *C* is gauge-realizable.
+
+*Proof sketch.* Define *v(x) = |cl({x})| − |cl(∅)|*. We claim *C.cl = cl_v*.
+
+For any set *S* and element *x*, we must show *x ∈ C.cl(S) ↔ v(x) ≤ sup_{s ∈ S} v(s)*.
+
+(⟹) If *S* is nonempty, by Lemma 5.2, *cl(S) = cl({s₀})* for some *s₀ ∈ S* with maximum singleton closure. If *x ∈ cl(S)*, then *cl({x}) ⊆ cl(S) = cl({s₀})*, so *|cl({x})| ≤ |cl({s₀})|*, giving *v(x) ≤ v(s₀) ≤ sup_S v*.
+
+(⟸) If *v(x) ≤ sup_S v*, there exists *s₀ ∈ S* with *v(x) ≤ v(s₀)*, meaning *|cl({x})| ≤ |cl({s₀})|*. By Lemma 5.3 applied to the closed sets *cl({x})* and *cl({s₀})*, this gives *cl({x}) ⊆ cl({s₀}) ⊆ cl(S)*. By Lemma 5.1, *x ∈ cl(S)*. □
+
+### 5.5 The Main Duality
+
+**Theorem 5.3** (Closure–Gauge Realization Duality). A closure operator *C* on a finite type is gauge-realizable if and only if its closed sets form a chain under inclusion:
+
+$$\text{GaugeRealizable}(C) \iff \text{ClosedSetsChain}(C)$$
+
+*Proof.* Combine Theorems 5.1 and 5.2. □
 
 ---
 
-### References
+## 6. Minimal Realizations
 
-[1] O. Regev, "On Lattices, Learning with Errors, Random Linear Codes, and Cryptography," *Journal of the ACM*, vol. 56, no. 6, 2009. (Extended abstract in STOC 2005.)
+### 6.1 Realization Rank
 
-[2] C. Peikert, "Public-Key Cryptosystems from the Worst-Case Shortest Vector Problem," *STOC 2009*.
+**Definition 6.1** (Realization Rank). The *rank* of a valuation *v : α → ℕ* is the number of distinct values in its image: *rank(v) = |{v(x) : x ∈ α}|*.
 
-[3] Z. Brakerski, A. Langlois, C. Peikert, O. Regev, D. Stehlé, "Classical Hardness of Learning with Errors," *STOC 2013*.
+**Definition 6.2** (Minimal Realization). A valuation *v* is a *minimal realization* if for every *w* with *cl_v = cl_w*, we have *rank(v) ≤ rank(w)*.
 
-[4] A. Lyubashevsky, C. Peikert, O. Regev, "On Ideal Lattices and Learning with Errors Over Rings," *Journal of the ACM*, vol. 60, no. 6, 2013.
+### 6.2 Normalized Valuation
 
-[5] National Institute of Standards and Technology, "Module-Lattice-Based Key-Encapsulation Mechanism Standard," FIPS 203, 2024.
+**Definition 6.3** (Normalized Valuation). Given *v : α → ℕ*, the *normalized valuation* is:
+
+$$\hat{v}(x) = |\{y \in \alpha : v(y) < v(x)\}|$$
+
+**Theorem 6.1** (Normalization Preserves Order). The normalized valuation *v̂* is order-equivalent to *v*.
+
+*Proof sketch.* If *v(x) ≤ v(y)*, then any element *z* with *v(z) < v(x)* also satisfies *v(z) < v(y)* (by transitivity), giving *v̂(x) ≤ v̂(y)*. Conversely, if *v(x) > v(y)*, then the set *{z : v(z) < v(x)}* strictly contains *{z : v(z) < v(y)}* (it additionally contains *y*), so *v̂(x) > v̂(y)*. □
+
+### 6.3 Existence and Uniqueness
+
+**Theorem 6.2** (Existence of Minimal Realization). Every gauge-realizable closure operator admits a minimal realization.
+
+*Proof sketch.* The set of ranks of realizations is a nonempty subset of ℕ (nonempty because the closure is realizable), hence has a minimum by the well-ordering principle. □
+
+**Theorem 6.3** (Uniqueness up to Gauge Equivalence). Any two realizations of the same closure operator are order-equivalent.
+
+*Proof.* This is an immediate corollary of the Fundamental Gauge Uniqueness (Theorem 3.1). □
 
 ---
 
-*All formalized results are available in `Computation/LWEBasic.lean`.*
+## 7. Separation and Injectivity
+
+**Definition 7.1** (Separation). A closure operator *C* is *separated* if distinct elements have distinct singleton closures: *a ≠ b ⟹ cl({a}) ≠ cl({b})*.
+
+**Theorem 7.1** (Separation ↔ Injectivity). For a valuation closure *cl_v*, separation is equivalent to injectivity of *v*:
+
+$$\text{Separated}(\text{cl}_v) \iff \text{Injective}(v)$$
+
+*Proof sketch.* (⟸) If *v* is injective and *a ≠ b*, then *v(a) ≠ v(b)*. WLOG *v(a) < v(b)*. Then *b ∈ cl_v({b})* but *b ∉ cl_v({a})* (since *v(b) > v(a) = sup({a})* under *v*), so *cl_v({a}) ≠ cl_v({b})*.
+
+(⟹) Contrapositive: if *v(a) = v(b)* for *a ≠ b*, then *cl_v({a}) = cl_v({b})* since both equal *{x : v(x) ≤ v(a)} = {x : v(x) ≤ v(b)}*. □
+
+**Theorem 7.2** (Separated Chain ⟹ Injective Realization). If *C* has the chain property and is separated, there exists an injective *v : α → ℕ* with *C.cl = cl_v*.
+
+*Proof sketch.* By the chain-implies-realizable theorem, obtain *v* with *C.cl = cl_v*. Separation of *C* transfers to separation of *cl_v*, which by Theorem 7.1 implies injectivity of *v*. □
+
+---
+
+## 8. Concrete Examples and Counterexamples
+
+### 8.1 The Total Closure
+
+The total closure *cl(S) = α* for all *S* is gauge-realizable: take the constant valuation *v ≡ 0*. Its only closed set is *α* itself, which trivially forms a chain.
+
+### 8.2 The Discrete (Identity) Closure
+
+The identity closure *cl(S) = S* is gauge-realizable only for *|α| ≤ 1*. For *|α| ≥ 2*, distinct singletons *{a}* and *{b}* are both closed but incomparable — the closed sets do not form a chain.
+
+**Theorem 8.1** (Discrete Non-Realizability). For *n ≥ 2*, the identity closure on *Fin(n)* is not gauge-realizable.
+
+*Proof sketch.* The singletons *{0}* and *{1}* are both closed under the identity closure. If a valuation *v* realized this closure, then *cl_v({0}) = {0}* would require *v(x) > v(0)* for all *x ≠ 0*, and *cl_v({1}) = {1}* would require *v(x) > v(1)* for all *x ≠ 1*. In particular, *v(1) > v(0)* and *v(0) > v(1)*, a contradiction. □
+
+### 8.3 Valuation Closures Are Always Realizable
+
+By construction, any valuation closure *cl_v* is gauge-realizable (with witness *v* itself). This is tautological but confirms the theory is non-vacuous.
+
+---
+
+## 9. Algorithms
+
+### 9.1 Testing Realizability
+
+Given a closure operator *C* on a set of size *n* (specified by its action on all 2ⁿ subsets), test whether all pairs of closed sets are comparable. This runs in *O(4ⁿ · n)* time in the worst case, but can be accelerated by enumerating only closed sets.
+
+### 9.2 Constructing Minimal Realizations
+
+Given a chain-structured closure *C*:
+
+1. Compute *cl(∅)* and *cl({x})* for each *x ∈ α*.
+2. Set *v(x) = |cl({x})| − |cl(∅)|*.
+3. Return *v*.
+
+This runs in *O(n · T_{cl})* time, where *T_{cl}* is the cost of computing a single closure.
+
+### 9.3 Normalization
+
+Given *v : α → ℕ*:
+
+1. For each *x*, count *|{y : v(y) < v(x)}|*.
+2. Return the count as *v̂(x)*.
+
+This runs in *O(n²)* time or *O(n log n)* using sorting.
+
+---
+
+## 10. Discussion
+
+### 10.1 Connections to Matroid Theory
+
+Matroid closures satisfy a stronger exchange axiom that our general closure operators do not require. The chain condition is strictly weaker than the matroid exchange property, and the class of gauge-realizable closures intersects but does not contain the class of matroid closures.
+
+### 10.2 Tropical Interpretation
+
+The supremum operation in the valuation closure is the "addition" of the tropical semiring *(ℕ, max, +)*. From this perspective, the closure *cl_v(S)* is the "tropical span" of *S* under the valuation *v*. The realizability duality can be viewed as characterizing which closure systems have a tropical linear representation.
+
+### 10.3 Relation to Lattice Theory
+
+The lattice of closed sets of any closure operator is a complete lattice (in the finite case, a finite lattice). The chain condition forces this lattice to be totally ordered — it is a finite chain *∅ ⊆ L₁ ⊆ L₂ ⊆ ··· ⊆ α*. The number of links in this chain equals the rank of any minimal realization.
+
+### 10.4 Information-Theoretic Perspective
+
+The holographic duality theorem has an information-theoretic reading: the entropy of the capacity profile *{cap(S) : S ⊆ α}* equals the entropy of the full closure function *{cl(S) : S ⊆ α}*. No information is lost in the projection from sets to cardinalities.
+
+### 10.5 Connections to Access Structures
+
+In secret-sharing schemes, an *access structure* determines which coalitions of participants can reconstruct a secret. A *threshold* access structure — where any *k* out of *n* participants suffice — corresponds precisely to a chain-structured closure operator on the set of participants. The gauge valuation assigns each participant a "capability score," and the closure of a coalition captures all participants whose capability doesn't exceed the coalition's maximum. The realizability duality thus characterizes exactly which access structures admit a threshold representation.
+
+This perspective connects our work to the broader theory of ideal secret-sharing schemes. The capacity function corresponds to the *information rate* of a scheme, and the holographic duality implies that the information rates alone determine the underlying access structure — a result with implications for the efficiency analysis of cryptographic protocols.
+
+### 10.6 Computational Complexity
+
+The realizability test — checking whether all pairs of closed sets are comparable — has complexity dominated by the enumeration of closed sets. For a general closure operator on *n* elements specified by its action on all 2ⁿ subsets, the number of closed sets can be at most 2ⁿ, giving an *O(4ⁿ)* worst-case complexity. However, for closure operators arising in practice (e.g., from database dependencies or concept lattices), the number of closed sets is typically polynomial in *n*, making the test efficient.
+
+The construction of a minimal realization, once the chain property is verified, requires only *n + 1* closure computations (for the empty set and each singleton). If individual closure computations take time *T*, the total construction time is *O(nT)*. For valuations stored as lookup tables, *T = O(n)*, giving *O(n²)* overall.
+
+---
+
+## 11. Future Work
+
+Several natural extensions of this work suggest themselves:
+
+1. **Continuous gauge valuations:** Extend the theory to *v : α → ℝ≥₀* and continuous closure operators on compact spaces.
+2. **Multi-dimensional gauges:** Replace single valuations with vector-valued functions *v : α → ℕᵏ*, where the closure uses component-wise supremum. The realizability criterion should generalize from chains to lattices of bounded width.
+3. **Algorithmic applications:** Develop efficient algorithms for matroid-like optimization over chain-structured closures.
+4. **Connections to LWE reductions:** Explore how the gauge valuation framework interfaces with the algebraic structures in Learning with Errors hardness reductions, particularly in modeling error distributions and lattice rounding operations.
+
+---
+
+## 12. Conclusion
+
+The Closure–Gauge Realization Duality provides a complete characterization of which closure operators on finite sets admit numerical (gauge) realizations. The answer — exactly those whose closed sets form a chain — is both elegant and practical. The accompanying results on gauge uniqueness, holographic duality, and minimal realizations form a coherent theory that bridges lattice theory, tropical algebra, and discrete gauge theory. All results have been formalized and machine-verified, providing a high-confidence mathematical foundation for applications in automata theory, data analysis, and cryptographic protocol design.
+
+---
+
+## References
+
+The mathematical framework developed here draws on classical results in closure operator theory, lattice theory, and realization theory. The formalization contributes to the growing body of machine-verified mathematics connecting discrete structures with algebraic and geometric perspectives.
