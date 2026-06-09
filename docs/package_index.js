@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-09T17:01:57Z",
+    "domain": "Bridges",
+    "exp_id": "00126c0b",
+    "filename": "formal_obstruction_theory_for_eml_solvability_of_l.json",
+    "pkg_num": 21,
+    "quality": "partial",
+    "quality_score": 0.4664737281553398,
+    "title": "CSS Codes as Cohomology: Quantum Error Correction from Homological Algebra"
+  },
+  {
     "date": "2026-06-09T15:49:32Z",
     "domain": "Computation",
     "exp_id": "09bd4da6",
@@ -254,6 +264,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
   },
+  "formal_obstruction_theory_for_eml_solvability_of_l.json": {
+    "domain": "Bridges",
+    "exp_id": "00126c0b",
+    "source_exp_ids": [
+      "0a026f10"
+    ],
+    "title": "CSS Codes as Cohomology: Quantum Error Correction from Homological Algebra"
+  },
   "impossible_geometries_where_parallel_lines_converg.json": {
     "domain": "Computation",
     "exp_id": "40370763",
@@ -385,7 +403,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Logic",
-      "hue": 272,
+      "hue": 270,
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
       "primary_domain": "Logic",
       "priority_score": 0.3352,
@@ -396,7 +414,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Novelty",
-      "hue": 91,
+      "hue": 272,
       "id": "rigorous_algebraic_foundations_for_probability_t",
       "primary_domain": "Bridges",
       "priority_score": 0.66968,
@@ -407,7 +425,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 91,
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
       "primary_domain": "Bridges",
       "priority_score": 0.16743922555663115,
@@ -451,7 +469,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Shared",
-      "hue": 90,
+      "hue": 272,
       "id": "causal_integration_algebra__a_rigorous_lattice_t",
       "primary_domain": "Bridges",
       "priority_score": 0.47410152685152684,
@@ -462,7 +480,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 92,
       "id": "dream_logic_non_monotone_reasoning_where_contradic",
       "primary_domain": "Bridges",
       "priority_score": 0.4601177861683639,
@@ -484,7 +502,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Computation",
-      "hue": 271,
+      "hue": 90,
       "id": "impossible_geometries_where_parallel_lines_converg",
       "primary_domain": "Computation",
       "priority_score": 0.47002089837753586,
@@ -495,7 +513,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 272,
+      "hue": 271,
       "id": "p_vs_np_problem",
       "primary_domain": "Bridges",
       "priority_score": 0.4486386254706822,
@@ -506,7 +524,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 92,
       "id": "symplectic_mirror_descent_gromov_witten_invariants",
       "primary_domain": "Bridges",
       "priority_score": 0.4695990099009901,
@@ -517,7 +535,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 91,
       "id": "the_current_framework_models_theories_by_their_set",
       "primary_domain": "Bridges",
       "priority_score": 0.4683285105981593,
@@ -528,7 +546,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Algebra",
-      "hue": 91,
+      "hue": 280,
       "id": "the_current_zaslavsky_type_bound_proves__kd_cnk__n",
       "primary_domain": "Algebra",
       "priority_score": 0.44434729925592503,
@@ -539,7 +557,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Pythagorean",
-      "hue": 90,
+      "hue": 281,
       "id": "this_document_describes_five_research_conjectures_",
       "primary_domain": "Pythagorean",
       "priority_score": 0.4462816141275949,
@@ -550,7 +568,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T10:06:05Z",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 271,
       "id": "self_modifying_code_that_cannot_be_stopped",
       "primary_domain": "Bridges",
       "priority_score": 0.6462399999999999,
@@ -561,7 +579,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T15:03:34Z",
       "domain": "Logic",
-      "hue": 92,
+      "hue": 270,
       "id": "proof_complexity_collapse_pnp_via_proof_checking",
       "primary_domain": "Logic",
       "priority_score": 0.4474957648546144,
@@ -583,7 +601,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T15:47:22Z",
       "domain": "Novelty",
-      "hue": 100,
+      "hue": 271,
       "id": "logic_physics_bridge_consistency_of_physical_theor",
       "primary_domain": "Bridges",
       "priority_score": 0.4642314579129325,
@@ -594,13 +612,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T15:49:32Z",
       "domain": "Computation",
-      "hue": 90,
+      "hue": 271,
       "id": "rigorous_formal_foundations_for_the_collatz_conj",
       "primary_domain": "Computation",
       "priority_score": 0.450736943120171,
       "quality": "partial",
       "shape": "cube",
       "title": "Tropical Contraction Theory for Collatz Dynamics"
+    },
+    {
+      "date": "2026-06-09T17:01:57Z",
+      "domain": "Bridges",
+      "hue": 271,
+      "id": "formal_obstruction_theory_for_eml_solvability_of_l",
+      "primary_domain": "Bridges",
+      "priority_score": 0.4664737281553398,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "CSS Codes as Cohomology: Quantum Error Correction from Homological Algebra"
     }
   ]
 };

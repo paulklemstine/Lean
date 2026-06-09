@@ -440,7 +440,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sierpi\u0144ski Numbers: Covering Systems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0f735599",
     "description": "Formalize Pearl's do-calculus as a formal logical system with three inference rules. Prove that do-calculus is complete for identifying causal effects in non-parametric structural equation models. Construct a decision procedure for causal effect identifiability.",
     "domains": [
       "Logic",
@@ -450,7 +450,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:20.830849+00:00",
     "title": "Causal Inference: Do-Calculus as Formal Logic"
   },
@@ -1592,7 +1592,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The tropical eigenvalue of a matrix A is defined as \u03bb* = min_\u03c3 (1/n) \u2211\u1d62 A(i, \u03c3(i"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2a7892ae",
     "description": "# Future Directions: Tropical Phase Transition Thresholds\n\n## 1. Tropical Spectral Theory and Eigenvalue Phase Transitions\n\nThe tropical analogue of eigenvalues \u2014 values \u03bb such that A \u2297 x = \u03bb \u2297 x in the tropical semiring \u2014 exhibits a remarkable phase transition structure. For tropical matrices with entries drawn from random distributions, the critical cycle mean (the tropical eigenvalue) undergoes a sharp transition as the matrix density crosses a threshold, analogous to the giant component transition in random graphs.\n\nThe key insight is that tropical eigenvalues are determined by the maximum cycle mean in the associated directed graph, which connects graph connectivity thresholds to algebraic spectral transitions. Why now? Our formalization of `tropical_sum_eq_trop_inf'` and `tropical_threshold_dichotomy` provides the algebraic foundation for characterizing when cycle means achieve their critical values. The next step is formalizing tropical matrix powers A^k and proving that the sequence trop_trace(A^k)/k converges to the tropical spectral radius, with a sharp transition in the number of cycles achieving the maximum.\n\n## 2. Tropical Convexity and Hyperplane Arrangement Complexity\n\nThe sub-level closure theorem (`tropical_sublevel_closed`) opens the door to a full theory of tropical convexity. A tropical polytope \u2014 the tropical convex hull of finitely many points \u2014 has a combinatorial type determined by which \"phase\" each face is in (i.e., which term achieves the minimum). The conjecture is that the number of distinct combinatorial types of tropical polytopes with n vertices in dimension d exhibits a phase transition at d \u2248 log n, below which all polytopes are \"simple\" (each vertex has a unique minimizer) and above which exponentially many combinatorial types appear.\n\nThe key insight is that tropical convexity is equivalent to min-plus convexity, and the combinatorial explosion of face types is governed by the same threshold phenomena we formalized in `tropical_threshold_dichotomy`. Why now? The algebraic infrastructure for tropical sums as infima and the witness theorem provides the correct language for counting face types. Formalizing the tropical Carath\u00e9odory theorem (every point in the tropical convex hull of S lies in the tropical convex hull of at most d+1 points from S) would be the next concrete target.\n\n## 3. Tropical Bellman-Ford Convergence and Shortest-Path Phase Transitions\n\nThe idempotent iteration theorem (`tropical_idempotent_nsmul`) generalizes to tropical matrix powers: for an n\u00d7n tropical matrix A, the sequence A, A^2, A^3, ... stabilizes at A^(n-1) (if no negative cycles exist). This is exactly the Bellman-Ford algorithm. The conjecture is that for random tropical matrices with entry distribution parameterized by density \u03c1, the stabilization time undergoes a sharp threshold: for \u03c1 < \u03c1_c the matrix power stabilizes in O(1) steps, while for \u03c1 > \u03c1_c it requires \u0398(n) steps, with the transition governed by the emergence of long shortest paths.\n\nThe key insight is that stabilization time equals the longest shortest path (the diameter of the implicit weighted graph), which has a known phase transition in random graph theory. Why now? Our formalization of tropical idempotent iteration provides the algebraic framework for reasoning about stabilization, and the parameterized phase transition theorems give the tools for formalizing the sharp threshold. The next step is defining tropical matrix multiplication and proving A^n = A^(n-1) for matrices without negative cycles.\n\n## 4. Tropical Proof Complexity and Resource Thresholds\n\nThe original motivation for this work: can tropical algebra formalize phase transitions in proof search? The conjecture is that for a natural ensemble of tropical optimization problems of size n (e.g., random tropical linear programs), the probability of finding a feasible solution undergoes a sharp threshold at a critical constraint density \u03c1_c = 1, and moreover, the \"proof\" of feasibility (a witness point) has size that diverges as \u03c1 \u2192 \u03c1_c from below, analogous to resolution proof complexity near the SAT threshold.\n\nThe key insight is that `tropical_sum_witness` gives a constructive witness for every tropical sum, but the number of potential witnesses grows combinatorially, and near the threshold, the witnesses become highly constrained. Why now? Our framework provides the first formalized connection between tropical algebraic operations and combinatorial witness structures. The next step is defining tropical linear feasibility (does x exist such that A \u2297 x \u2264 b in the tropical sense?) and characterizing the feasibility boundary.\n\n## 5. Tropical Entropy and Information-Theoretic Phase Transitions\n\nDefine the \"tropical entropy\" of a finite tropical sum \u2211\u1d62 trop(a\u1d62) as the logarithm of the number of indices i that are \"near-optimal\" (within \u03b5 of the minimum). As \u03b5 \u2192 0, this quantity drops to log(k) where k is the number of exact minimizers. The conjecture is that for random i.i.d. entries a\u1d62, the expected tropical entropy exhibits a phase transition at \u03b5_c = \u0398(1/n) from logarithmic growth (many near-minimizers) to constant (unique minimizer).\n\nThe key insight is that `tropical_threshold_dichotomy` shows the transition between \"a wins\" and \"b wins\" is sharp \u2014 but with noise, multiple terms can be near the minimum simultaneously, creating an entropy landscape. Why now? Our formalization of the witness theorem and the parameterized threshold gives the exact framework for counting near-minimizers. The next step is defining the \u03b5-witness set {i \u2208 s : f(i) \u2264 inf'(f) + \u03b5} and proving it shrinks to a singleton as \u03b5 \u2192 0, with a rate depending on the gap structure.\n",
     "domains": [
       "Algebra",
@@ -1602,7 +1602,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "2e12503d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T07:06:11.190017+00:00",
     "title": "The tropical analogue of eigenvalues \u2014 values \u03bb such that A \u2297 x = \u03bb \u2297 x in the t"
   },
@@ -2373,6 +2373,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Polynomial Obstruction Theory for ODE Solvability\n\n## What We Proved\n\nThis cycle established six formally verified results in `EML/EMLDiffObstruction.lean`:\n\n1. **Degree mismatch lemma** (`degree_second_deriv_lt_degree_X_mul`): For any nonzero polynomial p \u2208 \u211d[X], deg(p'') < deg(X\u00b7p). This is the atomic building block of all polynomial obstruction arguments.\n\n2. **Airy polynomial obstruction** (`no_poly_solves_airy`): No nonzero polynomial satisfies y'' = X\u00b7y.\n\n3. **General degree obstruction** (`no_poly_solves_second_order_pos_deg`): For *any* polynomial coefficient q with deg(q) \u2265 1, the equation y'' = q\u00b7y has no nonzero polynomial solution. This is a strictly stronger result than the Airy case.\n\n4. **Wronskian constancy** (`poly_wronskian_derivative_zero`): If f'' = q\u00b7f and g'' = q\u00b7g in \u211d[X], then W(f,g)' = 0, the polynomial-ring version of Abel's identity.\n\n5. **Riccati obstruction** (`no_poly_solves_riccati_airy`): No polynomial satisfies v' + v\u00b2 = X, connecting to the Kovacic algorithm's Case 1 analysis.\n\n6. **Generalized Airy family** (`no_poly_solves_gen_airy`): For all n \u2265 1, no nonzero polynomial satisfies y'' = X\u207f\u00b7y.\n\n---\n\n## Direction 1: Rational Function Solutions and the Full Kovacic Case 1\n\nThe natural next step beyond polynomial obstruction is to show that no *rational function* r(x) = p(x)/q(x) satisfies the Riccati equation v' + v\u00b2 = x either. The key insight is that poles of a rational solution of the Riccati equation must be simple (from the v\u00b2 term dominating v' near a pole), and the residue at each pole must be exactly 1. But near x = \u221e, the behavior of v \u223c \u00b1\u221ax is irrational, creating a global obstruction. This is precisely Kovacic's Case 1 obstruction applied to the Airy equation.\n\n**Why now?** Our Riccati polynomial obstruction already handles the pole-free case. The pole analysis requires only rational function degree arithmetic and local Laurent expansion theory, both of which can be formalized using Mathlib's `RatFunc` and `LaurentSeries` types. The general degree obstruction theorem provides the structural template.\n\n**Falsifiable test**: Formalize `RatFunc \u211d` solutions, prove no rational function satisfies v' + v\u00b2 = X, and verify the result against Kovacic's algorithm output for the Airy equation.\n\n---\n\n## Direction 2: Polynomial Obstruction for Painlev\u00e9 I\n\nThe first Painlev\u00e9 transcendent y'' = 6y\u00b2 + x has no polynomial solution by an analogous degree argument: if p has degree d, then deg(p'') = d - 2 but deg(6p\u00b2 + X) = max(2d, 1). Setting d - 2 = 2d gives d = -2, impossible. The key insight is that the *same* degree-mismatch technique works for nonlinear ODEs, not just linear ones \u2014 the nonlinear term y\u00b2 creates an even more severe degree gap than the linear term q\u00b7y.\n\n**Why now?** Our formalization infrastructure (degree comparison, derivative bounds) transfers directly. The only new ingredient is handling the `max` in degree(f + g) for the nonlinear case. Mathlib's `Polynomial.degree_add_le` provides this. The result would be the first formally verified obstruction for Painlev\u00e9 transcendents.\n\n**Falsifiable test**: State and prove `no_poly_solves_painleve_I : \u2200 p : \u211d[X], derivative (derivative p) = 6 * p * p + X \u2192 False` (note: no `p \u2260 0` hypothesis needed since p = 0 gives 0 = X).\n\n---\n\n## Direction 3: Exponential-Polynomial Solutions and Growth Hierarchies\n\nOur results show polynomials cannot solve y'' = q\u00b7y for deg(q) \u2265 1. The next class to eliminate is *exponential-polynomial* functions f(x) = p(x)\u00b7exp(r(x)) where p, r \u2208 \u211d[X]. The key insight is that substituting this ansatz into y'' = q\u00b7y and comparing leading terms creates a *nonlinear* polynomial identity (r')\u00b2 + (terms of lower growth) = q, which forces r' = \u00b1\u221aq. For non-square q (like X), this means r' is irrational, blocking the exponential-polynomial ansatz.\n\n**Why now?** We can formalize this in the polynomial ring by considering the equation p'' + 2p'r' + p(r'' + (r')\u00b2) = q\u00b7p and extracting the leading-order identity (r')\u00b2 = q. For q = X, this means (r')\u00b2 = X in \u211d[X], which is impossible since X is not a perfect square. Mathlib's `Polynomial.IsSquare` and irreducibility results can be leveraged.\n\n**Falsifiable test**: Prove that X is not a perfect square in \u211d[X] (this is `Irreducible X` + degree argument), then show no exponential-polynomial satisfies the Airy equation by reducing to this algebraic fact.\n\n---\n\n## Direction 4: Wronskian as a Differential Galois Invariant\n\nOur Wronskian constancy theorem shows W' = 0 for polynomial solutions. In the analytic setting, this generalizes to: the Wronskian of any two solutions of y'' = q(x)y satisfies W' = 0, making W a constant. The key insight is that this constant Wronskian defines an SL\u2082-invariant: if \u03c3 is any differential automorphism of the solution space, then W(\u03c3f, \u03c3g) = det(\u03c3)\u00b7W(f,g), and det(\u03c3) = 1 forces the differential Galois group into SL\u2082. Our polynomial-ring proof captures the algebraic core of this argument without analytic machinery.\n\n**Why now?** The polynomial Wronskian theorem we proved is the exact algebraic skeleton of the differential Galois invariance proof. Lifting it to formal power series (`PowerSeries \u211d`) would give the analytic version. Mathlib has `PowerSeries` with multiplication and a derivative-like operation (`PowerSeries.mk` and coefficient manipulation). The SL\u2082 connection could be formalized using `Matrix.SpecialLinearGroup`.\n\n**Falsifiable test**: Define the Wronskian for `PowerSeries \u211d`, prove W' = 0 for power series solutions of y'' = q\u00b7y (where q is a power series), and show the monodromy matrix lies in SL\u2082(\u211d).\n\n---\n\n## Direction 5: Automated Decision Procedure for Polynomial Solvability\n\nOur general degree obstruction provides a *decision procedure*: for any polynomial ODE y'' = q\u00b7y, polynomial solvability is equivalent to natDegree(q) = 0 (constant coefficient case). When natDegree(q) = 0, polynomial solutions exist iff q = 0 (giving y = ax + b) or q = c\u00b2 for some c (giving y = exp(cx), which is not polynomial). The key insight is that our theorem `no_poly_solves_second_order_pos_deg` reduces the decision problem to a single degree check, and the constant coefficient case can be completely classified.\n\n**Why now?** We have the hard direction (natDegree(q) \u2265 1 \u2192 no polynomial solution). The easy direction (natDegree(q) = 0 case analysis) requires only checking finitely many polynomial forms. Combining both gives a complete `Decidable` instance. This would yield a verified polynomial-solvability oracle that could be extracted to executable code via Lean's code generation.\n\n**Falsifiable test**: Prove `polynomial_solvable_iff_const_coeff : (\u2203 p : \u211d[X], p \u2260 0 \u2227 derivative (derivative p) = q * p) \u2194 (q = 0)` \u2014 the forward direction uses our obstruction theorem, and the backward direction constructs the explicit solution y = X.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1143",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "00126c0b",
+    "status": "available",
+    "timestamp": "2026-06-09T16:53:37.657676+00:00",
+    "title": "Six formally verified results in `EML/EMLDiffObstruction."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Diffusion Models as SDEs\n\n## 1. Convergence Rate of KL Divergence Along the Forward Process\n\nThe exponential decay bound `diffusionAlphaBar_exp_bound` shows that the signal retention vanishes as the sum of noise levels diverges, but does not quantify how fast the KL divergence between the forward process marginal and the stationary (standard Gaussian) distribution decreases. A natural next step is to prove that for the discrete Ornstein-Uhlenbeck forward process with schedule \u03b2_t, the KL divergence KL(p_t \u2016 N(0,1)) satisfies KL(p_t \u2016 N(0,1)) \u2264 C \u00b7 \u1fb1_t for some constant C depending on the initial distribution.\n\nThe key insight is that this bound should follow from the data processing inequality applied to the Gaussian channel: each step of the forward process is a contraction in KL divergence by a factor of (1-\u03b2_t), and the cumulative effect is exactly the product \u1fb1_t. Why now? We already have `gaussianKL_nonneg` and the noise schedule machinery; the main missing piece is formalizing the data processing inequality for Gaussian channels in Lean, which requires measure-theoretic KL divergence rather than just the closed-form Gaussian version.\n\n## 2. Optimal Noise Schedule Minimizing ELBO\n\nGiven that the signal-to-noise ratio is strictly decreasing (`diffusionSNR_strictAnti_on`), one can ask: what noise schedule \u03b2_t minimizes the evidence lower bound (ELBO) for a given number of diffusion steps T? The ELBO decomposes into a sum of KL divergences between consecutive posterior distributions, each of which depends on the local noise schedule through the ratio \u03b2_t / (1-\u1fb1_t). The conjecture is that the optimal schedule satisfies a discrete Euler-Lagrange equation making the per-step KL contributions approximately equal.\n\nThe key insight is that the ELBO is a sum of `gaussianKL` terms evaluated at specific parameters determined by \u1fb1_t and \u03b2_t, so optimality conditions become algebraic identities involving the noise schedule. Why now? Our `gaussianKL_self` (showing KL=0 when parameters match) and `gaussianKL_nonneg` provide the foundational bounds, and the noise schedule algebra (`diffusionAlphaBar_succ`, `\u03b1_bar_recursion`) gives the recursive structure needed to state and verify the Euler-Lagrange condition.\n\n## 3. Score Matching Equivalence: L\u00b2 Error Bounds\n\nThe score function \u2207_x log p_t(x) of the forward process marginal is the key object that must be learned for reverse-time sampling. For the Gaussian forward process x_t = \u221a\u1fb1_t \u00b7 x_0 + \u221a(1-\u1fb1_t) \u00b7 \u03b5, the conditional score is \u2207_x log p(x_t | x_0) = -(x_t - \u221a\u1fb1_t \u00b7 x_0) / (1-\u1fb1_t). The conjecture is that if the learned score s_\u03b8(x,t) satisfies E[\u2016s_\u03b8 - \u2207 log p_t\u2016\u00b2] \u2264 \u03b5 uniformly over t, then the distribution generated by the reverse process has total variation distance at most C\u00b7\u221a(\u03b5\u00b7T) from the data distribution.\n\nThe key insight is that this error propagation bound follows from Girsanov's theorem (or its discrete analog), connecting L\u00b2 score estimation error to distributional divergence. Why now? The variance-preserving identity `diffusion_variance_preserving` and the SNR analysis provide the coefficient structure needed to track error accumulation through the reverse process steps. Formalizing Girsanov for discrete Gaussian channels is tractable with the existing Mathlib measure theory.\n\n## 4. Continuous-Time Limit: Ornstein-Uhlenbeck Semigroup\n\nAs the number of steps T \u2192 \u221e with \u03b2_t = \u03b2/T, the discrete forward process converges to the continuous Ornstein-Uhlenbeck process dX_t = -\u00bd\u03b2 X_t dt + \u221a\u03b2 dW_t. The cumulative signal retention converges: \u220f_{i<T} (1-\u03b2/T) \u2192 exp(-\u03b2t). This is already suggested by `diffusionAlphaBar_exp_bound`, which gives the upper bound \u1fb1_t \u2264 exp(-\u2211\u03b2_i). The conjecture is that one can formalize the OU semigroup P_t f(x) = E[f(X_t | X_0=x)] as a strongly continuous contraction semigroup on L\u00b2 and prove its generator is the Ornstein-Uhlenbeck operator Lf = \u00bd\u03b2(f'' - xf').\n\nThe key insight is that the discrete-to-continuous transition is controlled by the exponential decay bound, and the semigroup property follows from the Markov property of Gaussian transitions. Why now? Mathlib's `ContractingSemigroup` and spectral theory infrastructure, combined with our noise schedule formalization, provide a natural bridge to the continuous-time theory.\n\n## 5. Reverse Process Exactness for Gaussian Data\n\nWhen the data distribution is itself Gaussian, x_0 ~ N(\u03bc\u2080, \u03c3\u2080\u00b2), the entire forward process has Gaussian marginals and the reverse process can be computed in closed form. The conjecture is that the reverse process with the exact score function recovers the data distribution exactly in finite steps: if p_0 = N(\u03bc\u2080,\u03c3\u2080\u00b2), then the reverse process starting from p_T converges back to p_0 with zero error (not just asymptotically). Specifically, using the exact score \u2207 log p_t, each reverse step maps N(\u03bc_t, \u03a3_t) \u2192 N(\u03bc_{t-1}, \u03a3_{t-1}) exactly.\n\nThe key insight is that for Gaussian data, `gaussianKL_self` implies zero discretization error at each step, and the total error vanishes by telescoping. Why now? Our `gaussianKL_self` and `gaussianKL_nonneg` already capture the key analytic ingredients, and the Gaussian case is fully algebraic \u2014 no measure-theoretic subtleties needed beyond what we've already formalized for the noise schedule.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1144",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1f2f8815",
+    "status": "available",
+    "timestamp": "2026-06-09T16:58:59.034204+00:00",
+    "title": "The exponential decay bound `diffusionAlphaBar_exp_bound` shows that the signal "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
     "domains": [
       "Cryptography",
@@ -2522,7 +2552,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "3ceb0fcb",
+    "consumed_by_exp_id": "",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domains": [
       "MachineLearning",
@@ -2532,7 +2562,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
@@ -2595,6 +2625,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T13:07:57.143541+00:00",
     "title": "Proof-Complexity Holography: Geometric Duals of Formal Derivations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For transformer models trained on algorithmic or modular arithmetic tasks that exhibit grokking, the input-output Jacobian and layerwise attention map Hessians undergo a sharp spectral transition at the generalization onset, converging after appropriate normalization to a task-independent random-matrix universality class characterized by Tracy-Widom edge statistics and a fixed stable rank window. Test: Train families of transformers across widths, depths, and datasets known to grok; compute empirical spectra of Jacobians/Hessians before, during, and after grokking; confirm if the rescaled top eigenvalue distribution matches the same universality law across architectures and tasks, and refute if no such collapse or transition appears. Impact: This would provide a measurable order parameter for grokking, connect deep learning phase transitions to random matrix theory, and enable principled early-warning diagnostics and architecture design for sudden generalization.",
+    "domains": [
+      "MachineLearning",
+      "Algebra"
+    ],
+    "id": "fd_1145",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-09T17:02:19.963111+00:00",
+    "title": "Spectral Universality of Attention Jacobians at the Grokking Transition"
   },
   {
     "consumed_by_exp_id": "",
@@ -2912,6 +2957,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 00126c0b (Q=0.466) proved 1236 theorems in Bridges but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: EML Differential Equations\n\n## Synthesis\n\nThis cycle established a formal obstruction theory for EML-solvability of linear ODEs, centered on Airy's equation y\u2033 = xy as the prototy",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "sorry_fill_00126c0b_8f7dd5b4",
+    "priority_score": 0.5164737281553398,
+    "research_mode": "team",
+    "source_exp_id": "00126c0b",
+    "status": "available",
+    "timestamp": "2026-06-09T16:57:57.490266+00:00",
+    "title": "Close Proofs: Formal obstruction theory for EML-solvability of linear"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 362ed1b3 (Q=0.460) proved 1404 theorems in Bridges but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such log",
     "domains": [
       "Bridges"
@@ -2937,20 +2996,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T05:52:35.318771+00:00",
     "title": "Close Proofs: Arithmetic Mirror Symmetry for Calabi-Yau"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 09bd4da6 (Q=0.451) proved 553 theorems in Computation but left 25 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n## Synthesis\n\nThis research cycle established rigorous formal foundations for the Collatz conjecture's proof-theoretic analysis. The key results \u2014 parity exclusion, density contra",
-    "domains": [
-      "Computation"
-    ],
-    "id": "sorry_fill_09bd4da6_a25436e5",
-    "priority_score": 0.500736943120171,
-    "research_mode": "team",
-    "source_exp_id": "09bd4da6",
-    "status": "available",
-    "timestamp": "2026-06-09T15:42:49.191465+00:00",
-    "title": "Close Proofs: Rigorous formal foundations for the Collatz conj"
   },
   {
     "consumed_by_exp_id": "",
@@ -3053,20 +3098,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Tropical Hodge Theory"
   },
   {
-    "consumed_by_exp_id": "87d8b0f1",
-    "description": "Cycle aecfaf36 (Q=0.426) proved 1572 theorems in Cryptography but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time c",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "sorry_fill_aecfaf36_9254cec3",
-    "priority_score": 0.4764367989976565,
-    "research_mode": "team",
-    "source_exp_id": "aecfaf36",
-    "status": "in_progress",
-    "timestamp": "2026-06-09T07:40:11.256031+00:00",
-    "title": "Close Proofs: Speculative: Computational Complexity as Physical Law"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle 48fca5d7 (Q=0.426) proved 1215 theorems in Tropical but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture: For a neural network loss landscape equipped with the Fisher information metric, the genus-zero Gromov-Witten invariants of the resulting symplectic manifold exactly count the number of di",
     "domains": [
@@ -3121,20 +3152,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T08:50:54.742239+00:00",
     "title": "Close Proofs: The Geometry of Consensus: Arrow's Theorem as Curvature"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 2bc7ced0 (Q=0.425) proved 781 theorems in Pythagorean but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a 3D topological quantum field theory that captures key features of quantum gravity: prove that the partition function on a closed 3-manifold equals the Turaev-Viro invariant. Show that the ",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "sorry_fill_2bc7ced0_21abaf2b",
-    "priority_score": 0.4746406842683649,
-    "research_mode": "team",
-    "source_exp_id": "2bc7ced0",
-    "status": "available",
-    "timestamp": "2026-06-09T12:12:12.616289+00:00",
-    "title": "Close Proofs: Quantum Gravity as Topological Quantum Field Theory"
   },
   {
     "consumed_by_exp_id": "",
@@ -3207,7 +3224,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Close Proofs: Formalized framework connecting Collatz dynami"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3ca82af7",
     "description": "Cycle 33ad3e94 (Q=0.423) proved 1459 theorems in Cryptography but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle aecfaf36 (Q=0.426) proved 1572 theorems in Cryptography but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture that P !",
     "domains": [
       "Cryptography"
@@ -3216,23 +3233,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.47267425913871447,
     "research_mode": "team",
     "source_exp_id": "33ad3e94",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T11:40:02.533660+00:00",
     "title": "Close Proofs: Close Proofs: Speculative: Computational Complexity as Physical Law"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle 3d5b4b8d (Q=0.421) proved 335 theorems in Geometry but left 36 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelt",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "sorry_fill_3d5b4b8d_3e274dac",
-    "priority_score": 0.47148108142209805,
-    "research_mode": "team",
-    "source_exp_id": "3d5b4b8d",
-    "status": "available",
-    "timestamp": "2026-06-09T15:04:30.931439+00:00",
-    "title": "Close Proofs: Certified Novelty Detection for Theorem Provers"
   },
   {
     "consumed_by_exp_id": "",
@@ -3250,20 +3253,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Cycle c808c311 (Q=0.421) proved 934 theorems in Pythagorean but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Fractal Number Theory via the Log-Reciprocal Metric\n\n## What we proved\n\nWe formalized the log-reciprocal metric on primes: d(p,q) = |1/log(p) - 1/log(q)|, and established that:\n- ",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "sorry_fill_c808c311_da173138",
-    "priority_score": 0.47061894714924585,
-    "research_mode": "team",
-    "source_exp_id": "c808c311",
-    "status": "available",
-    "timestamp": "2026-06-09T16:30:47.200055+00:00",
-    "title": "Close Proofs: We formalized the log-reciprocal metric on primes: d(p,q) = |1/log(p) "
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Cycle 270a35e6 (Q=0.417) proved 1068 theorems in Algebra but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that every even integer greater than 2 is the sum of two primes. Formalize partial results such as Vinogradov's theorem for sufficiently large odd integers, or Chen's theorem that every sufficie",
     "domains": [
       "Algebra"
@@ -3275,20 +3264,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T12:16:10.388536+00:00",
     "title": "Close Proofs: Goldbach Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "8fed00f0",
-    "description": "Cycle 8c5634d8 (Q=0.411) proved 881 theorems in MachineLearning but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that in the infinite-width limit, neural network training under gradient descent converges to kernel regression with the Neural Tangent Kernel (NTK). Formalize the NTK as the Gram matrix of Jaco",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "sorry_fill_8c5634d8_b484c0c1",
-    "priority_score": 0.4614152881559993,
-    "research_mode": "team",
-    "source_exp_id": "8c5634d8",
-    "status": "in_progress",
-    "timestamp": "2026-06-09T12:19:51.311370+00:00",
-    "title": "Close Proofs: Neural Tangent Kernel: Convergence of Gradient Descent"
   },
   {
     "consumed_by_exp_id": "",
@@ -3725,7 +3700,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Emergent Spacetime from Quantum Entanglement"
   },
   {
-    "consumed_by_exp_id": "ad363765",
+    "consumed_by_exp_id": "",
     "description": "Formalize Rademacher complexity for hypothesis classes. Prove that the Rademacher complexity of a neural network with L layers and spectral norm bound C is O(C * sqrt(L) / sqrt(n)). Derive PAC-Bayes generalization bounds. Show that weight normalization reduces the Rademacher complexity and thus improves generalization.",
     "domains": [
       "MachineLearning",
@@ -3735,7 +3710,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:08.298113+00:00",
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
