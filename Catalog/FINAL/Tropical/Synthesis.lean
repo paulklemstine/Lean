@@ -1,1 +1,0 @@
-../../Tropical/Synthesis.lean

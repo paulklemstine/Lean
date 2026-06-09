@@ -1,44 +1,20 @@
 /- Aether FINAL Catalog
-<<<<<<< Updated upstream
-A curated collection of 2448 of the highest-quality
+A curated collection of 2407 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2448
-=======
-A curated collection of 2487 of the highest-quality
-formally verified mathematical results from the Aether engine.
-Sorry-free. No placeholders. Auto-maintained.
-Total files: 2487
->>>>>>> Stashed changes
+Total files: 2407
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
 import FINAL.Algebra.AntipodeUniqueness
-import FINAL.Algebra.ArrowCurvatureBridge_Arrow
-import FINAL.Algebra.ArrowCurvatureBridge_Geometry
-import FINAL.Algebra.AttackComposition
-import FINAL.Algebra.AutomaticSequences
-import FINAL.Algebra.AverageCriterion
-import FINAL.Algebra.Barrier
-import FINAL.Algebra.Basic
-import FINAL.Algebra.BayesOptimal
-import FINAL.Algebra.Berggren
 import FINAL.Algebra.BerggrenLorentz_Core
-import FINAL.Algebra.BinocularGodOracle
-import FINAL.Algebra.BootstrapDynamics
 import FINAL.Algebra.BoundedDegreePolynomials_Basic
-import FINAL.Algebra.Bridge10_Research
-import FINAL.Algebra.Bridges
 import FINAL.Algebra.CanonicalTree
-import FINAL.Algebra.CausalCertification
 import FINAL.Algebra.CayleyDicksonHierarchy
 import FINAL.Algebra.CellularAutomataReversibility
-import FINAL.Algebra.Channel5Sedenions
-import FINAL.Algebra.Channel6Research
 import FINAL.Algebra.CharpolyRecognition
 import FINAL.Algebra.CircuitDepthLayerProfile
 import FINAL.Algebra.ClassicalGroupExpanders
-import FINAL.Algebra.ClosedFormAncestor
 import FINAL.Algebra.Code
 import FINAL.Algebra.CodingTheory_Defs
 import FINAL.Algebra.CodingTheory_Theorems
@@ -1459,7 +1435,6 @@ import FINAL.MachineLearning.AlienAlgebra_Core
 import FINAL.MachineLearning.AperiodicMonotile_Core
 import FINAL.MachineLearning.Applications
 import FINAL.MachineLearning.ArithmeticMonodromy
-import FINAL.MachineLearning.ArithmeticMonsters_Algorithm
 import FINAL.MachineLearning.ArithmeticPhaseLocking
 import FINAL.MachineLearning.ArithmeticResonance_Basic
 import FINAL.MachineLearning.ArithmeticSpectralFingerprint_FingerprintDeterminacy
@@ -1473,7 +1448,6 @@ import FINAL.MachineLearning.Beal_Defs
 import FINAL.MachineLearning.Beal_Monotonicity
 import FINAL.MachineLearning.Beal_PrimitiveReduction
 import FINAL.MachineLearning.Benford
-import FINAL.MachineLearning.BenfordCriterion
 import FINAL.MachineLearning.BenfordQuadratic_Defs
 import FINAL.MachineLearning.BenfordRenormalization_Defs
 import FINAL.MachineLearning.BerggrenDynamics_SecondExtremal
@@ -1508,7 +1482,6 @@ import FINAL.MachineLearning.CognitiveBraid_Core
 import FINAL.MachineLearning.CollatzSpectral_Defs
 import FINAL.MachineLearning.Collatz_Core
 import FINAL.MachineLearning.Compositionality
-import FINAL.MachineLearning.ConceptualDependencyCriticalPath
 import FINAL.MachineLearning.Consequences
 import FINAL.MachineLearning.Core
 import FINAL.MachineLearning.CrystallizationTheory
@@ -1520,7 +1493,6 @@ import FINAL.MachineLearning.Defs
 import FINAL.MachineLearning.DejaVu_CognitiveDynamics
 import FINAL.MachineLearning.DejaVu_Core
 import FINAL.MachineLearning.DependencyHypergraph
-import FINAL.MachineLearning.DepthBound
 import FINAL.MachineLearning.DepthGap_Core
 import FINAL.MachineLearning.DepthHierarchy_Basic
 import FINAL.MachineLearning.DepthHierarchy_Separation
@@ -1571,12 +1543,10 @@ import FINAL.MachineLearning.GroupTheory
 import FINAL.MachineLearning.GrowthEstimate
 import FINAL.MachineLearning.Heegner163_Core
 import FINAL.MachineLearning.HexGeometry
-import FINAL.MachineLearning.HilbertHotelPrimes
 import FINAL.MachineLearning.HilbertHotelPrimes_Core
 import FINAL.MachineLearning.HolographicCode
 import FINAL.MachineLearning.HyperNat_Applications
 import FINAL.MachineLearning.HyperNat_Transfer
-import FINAL.MachineLearning.HyperbolicNumberTheory_Advanced
 import FINAL.MachineLearning.HyperbolicNumberTheory_Basic
 import FINAL.MachineLearning.HyperbolicNumberTheory_Core
 import FINAL.MachineLearning.HyperbolicNumberTheory_Defs
@@ -1587,16 +1557,11 @@ import FINAL.MachineLearning.HyperbolicNumberTheory_Theorems
 import FINAL.MachineLearning.Hypercomputation
 import FINAL.MachineLearning.Hypercomputation_Defs
 import FINAL.MachineLearning.IharaZetaDefs
-import FINAL.MachineLearning.InferenceArithmetic
 import FINAL.MachineLearning.InfiniteGames
 import FINAL.MachineLearning.InvariantSubspace_Defs
 import FINAL.MachineLearning.InverseStereographicNeuralField
 import FINAL.MachineLearning.IterExp
 import FINAL.MachineLearning.KWWitness_Defs
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.KnotPolynomialSpectra
->>>>>>> Stashed changes
 import FINAL.MachineLearning.Knot_Jones
 import FINAL.MachineLearning.KnottedLight_Core
 import FINAL.MachineLearning.LFunctionOracle_Core
@@ -1604,12 +1569,10 @@ import FINAL.MachineLearning.LFunctionUniverse_Defs
 import FINAL.MachineLearning.LFunctionUniverse_Theorems
 import FINAL.MachineLearning.LLMSingleMatMul
 import FINAL.MachineLearning.LanglandsShapeColor
-import FINAL.MachineLearning.LegendreGapReduction
 import FINAL.MachineLearning.LibraryOfBabel_Defs
 import FINAL.MachineLearning.LocalGlobalGeometry
 import FINAL.MachineLearning.LoebGeneralization
 import FINAL.MachineLearning.LogisticChaos
-import FINAL.MachineLearning.MPSMinCut_Defs
 import FINAL.MachineLearning.MahlerMeasure_Defs
 import FINAL.MachineLearning.Maximals
 import FINAL.MachineLearning.MemoryAlgebra
@@ -1645,7 +1608,6 @@ import FINAL.MachineLearning.OptimalTransport_Theorems
 import FINAL.MachineLearning.OptimalTransport_Wasserstein
 import FINAL.MachineLearning.OrdinalCA_Theorems
 import FINAL.MachineLearning.OrdinalCollapse_Basic
-import FINAL.MachineLearning.PACBayes_Asymptotic
 import FINAL.MachineLearning.PACBayes_Bounds
 import FINAL.MachineLearning.PadicCramerRao
 import FINAL.MachineLearning.PadicThresholdTransfer
@@ -1684,7 +1646,6 @@ import FINAL.MachineLearning.ReflTTDepthAlgebra
 import FINAL.MachineLearning.ReflectiveConvergence
 import FINAL.MachineLearning.ResNetLipschitz
 import FINAL.MachineLearning.ReverseAndAdd_Defs
-import FINAL.MachineLearning.ReverseAndAdd_Theorems
 import FINAL.MachineLearning.RiemannianGradientFlow_Defs
 import FINAL.MachineLearning.ScalingLaws_Defs
 import FINAL.MachineLearning.Schanuel_Defs
@@ -1695,10 +1656,8 @@ import FINAL.MachineLearning.SemanticEntropy_Theorems
 import FINAL.MachineLearning.SemiringRelativeReality
 import FINAL.MachineLearning.Shadowing_Conjugacy
 import FINAL.MachineLearning.Shadowing_OrbitShadowingDeep
-import FINAL.MachineLearning.Shadowing_Shadowing
 import FINAL.MachineLearning.SheafCertifiedRobustness
 import FINAL.MachineLearning.SheafCohomologyDepth
-import FINAL.MachineLearning.SinkTheorem
 import FINAL.MachineLearning.SmallCases
 import FINAL.MachineLearning.SpectralApprox
 import FINAL.MachineLearning.SpectralBounds
@@ -1712,7 +1671,6 @@ import FINAL.MachineLearning.StoneDuality_Core
 import FINAL.MachineLearning.StrangeLoops_StrangeLoops
 import FINAL.MachineLearning.StructuralCases
 import FINAL.MachineLearning.SudokuPhaseTransition_Theorems
-import FINAL.MachineLearning.SumThreeCubes_Counting
 import FINAL.MachineLearning.SurrealTopology_OrderGap
 import FINAL.MachineLearning.SurvivorSieve
 import FINAL.MachineLearning.SymmEulerTransfer
@@ -1996,7 +1954,6 @@ import FINAL.Pythagorean.LorentzianBerggren_Core
 import FINAL.Pythagorean.LorentzianComplexityTransition
 import FINAL.Pythagorean.LorentzianEdgeClosure
 import FINAL.Pythagorean.LorentzianPermutohedra_Defs
-import FINAL.Pythagorean.LorentzianPermutohedra_EhrhartIDP
 import FINAL.Pythagorean.LorentzianPermutohedra_EhrhartSeries
 import FINAL.Pythagorean.LorentzianRecognitionComplete
 import FINAL.Pythagorean.MConvexBridge
@@ -2038,7 +1995,6 @@ import FINAL.Pythagorean.PolynomialWidth
 import FINAL.Pythagorean.PrimeBarcodeTheorems
 import FINAL.Pythagorean.PrimeFractalCore
 import FINAL.Pythagorean.PrimeSpectralFramework
-import FINAL.Pythagorean.PrimewiseBirthSpectra
 import FINAL.Pythagorean.PrimewiseBirthSpectraDistinguish
 import FINAL.Pythagorean.PrimewisePersistence_Entropy
 import FINAL.Pythagorean.PrimewiseTorsionStability
@@ -2059,7 +2015,6 @@ import FINAL.Pythagorean.QuantumSurrealCore
 import FINAL.Pythagorean.QuantumTensorConfluence
 import FINAL.Pythagorean.QuantumTensorRewriting
 import FINAL.Pythagorean.QuotientClosure
-import FINAL.Pythagorean.QuotientSections
 import FINAL.Pythagorean.RankBoundedEML
 import FINAL.Pythagorean.RecursiveMajorityDepthRigidity
 import FINAL.Pythagorean.ReflectionPositivity
@@ -2067,7 +2022,6 @@ import FINAL.Pythagorean.RepulsiveInfoGeometry
 import FINAL.Pythagorean.ResistanceDefect_Theorems
 import FINAL.Pythagorean.RobustCertificateCompilation
 import FINAL.Pythagorean.SNFObstruction_Basic
-import FINAL.Pythagorean.SSHNewtonOrder
 import FINAL.Pythagorean.STLCDefs
 import FINAL.Pythagorean.SemidirectUniversality
 import FINAL.Pythagorean.ShadowCircuitComplexity
@@ -2160,7 +2114,6 @@ import FINAL.Pythagorean.WitnessSynthesis
 import FINAL.Pythagorean.WreathPerturbation
 import FINAL.Pythagorean.WreathPhaseTransition
 import FINAL.Pythagorean.YonedaBisimulation_Properties
-import FINAL.Shared.AntiFibonacci
 import FINAL.Shared.CausalIntegration_Composition
 import FINAL.Shared.CausalIntegration_Core
 import FINAL.Shared.CellularAlgebraicGeometry
@@ -2286,7 +2239,6 @@ import FINAL.Tropical.FormulaDefinability
 import FINAL.Tropical.Foundations
 import FINAL.Tropical.FourierAnalysis_Core
 import FINAL.Tropical.FreeEnergyPrinciple
-import FINAL.Tropical.GL3FiniteTestFamily
 import FINAL.Tropical.GL3SatakeFiniteGen
 import FINAL.Tropical.GL3TropicalSatake
 import FINAL.Tropical.GL3_ReconstructionFromRank2LeviProfiles
@@ -2338,7 +2290,6 @@ import FINAL.Tropical.MixingTheory
 import FINAL.Tropical.MultiInvariant_Core
 import FINAL.Tropical.MutualInformation
 import FINAL.Tropical.MyhillNerode
-import FINAL.Tropical.NNCompilationExtended
 import FINAL.Tropical.NegligibleClosure
 import FINAL.Tropical.NewResearch
 import FINAL.Tropical.NonArchimedeanProbability
@@ -2364,9 +2315,7 @@ import FINAL.Tropical.PrimePowerAmplification
 import FINAL.Tropical.ProbabilisticBridge_Theorems
 import FINAL.Tropical.ProbabilisticMethod_ErdosMeetsLean
 import FINAL.Tropical.Product
-import FINAL.Tropical.ProductAutomaton
 import FINAL.Tropical.QarySourceCoding
-import FINAL.Tropical.QuantumLLMCompilation
 import FINAL.Tropical.QuantumTropical
 import FINAL.Tropical.QuantumTropicalComputation
 import FINAL.Tropical.QuantumTropicalFunctor
@@ -2401,7 +2350,6 @@ import FINAL.Tropical.SpectralTropicalBridge
 import FINAL.Tropical.StatisticalMechanics_Basic
 import FINAL.Tropical.Surgery
 import FINAL.Tropical.SymbolicDynamics_Core
-import FINAL.Tropical.Synthesis
 import FINAL.Tropical.Threshold
 import FINAL.Tropical.Throughput
 import FINAL.Tropical.TreeAutomata_Basic
