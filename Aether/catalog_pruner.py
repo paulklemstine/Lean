@@ -339,7 +339,7 @@ class CatalogPruner:
             )
             file_summaries.append(summary)
 
-        prompt = (
+        system_prompt = (
             "You are a mathematical quality curator. Evaluate each Lean 4 file below.\n"
             "For each file, decide: KEEP (genuinely novel or deep), REMOVE (trivial, duplicate, "
             "textbook-level, or sorry-dense with no complete proofs), or MAYBE (borderline).\n\n"
@@ -350,12 +350,12 @@ class CatalogPruner:
             "- It's primarily sorry-based with no complete proofs\n"
             "- The file name is 'SalvagedBest.lean' (this is a legacy artifact)\n\n"
             "Respond in JSON format:\n"
-            '{"decisions": [{"path": "...", "verdict": "keep|remove|maybe", "reason": "..."}]}\n\n'
-            + "\n---\n".join(file_summaries)
+            '{"decisions": [{"path": "...", "verdict": "keep|remove|maybe", "reason": "..."}]}'
         )
+        user_prompt = "\n---\n".join(file_summaries)
 
         try:
-            result = self.pi_agent.call(prompt, max_tokens=2000)
+            result = self.pi_agent._call_ollama(system_prompt, user_prompt, timeout=120)
             if not result:
                 return []
             # Parse JSON response
