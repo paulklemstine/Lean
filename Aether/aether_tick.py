@@ -443,7 +443,8 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
         if job.quality_score >= 0.75 and job.theorem_count >= 5:
             print(f"[Push] Q={job.quality_score:.3f} — generating follow-up to push toward breakthrough")
             try:
-                from research_memory import FutureDirectionsManager
+                from research_memory import FutureDirectionsManager, FutureDirection
+                import uuid
                 fd_mgr = FutureDirectionsManager(Path(__file__).parent / ".aether_workspace")
                 follow_up_title = f"Deepening: {job.concept.title[:80]}"
                 follow_up_desc = (
@@ -453,7 +454,8 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
                     f"or extend the core result to a more general setting. "
                     f"Original direction: {job.concept.concept_description[:300]}"
                 )
-                fd_mgr.add_direction(fd_mgr.Direction(
+                fd_mgr.add_direction(FutureDirection(
+                    id=f"push_{job.job_id[:8]}_{uuid.uuid4().hex[:8]}",
                     title=follow_up_title,
                     description=follow_up_desc,
                     domains=[job.concept.domain] if job.concept.domain else [],
@@ -469,7 +471,8 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
         if job.sorry_count > 0 and job.quality_score >= 0.4:
             print(f"[SorryFill] {job.sorry_count} sorries in {job.job_id[:8]} — generating fill direction")
             try:
-                from research_memory import FutureDirectionsManager
+                from research_memory import FutureDirectionsManager, FutureDirection
+                import uuid
                 fd_mgr = FutureDirectionsManager(Path(__file__).parent / ".aether_workspace")
                 fill_title = f"Close Proofs: {job.concept.title[:70]}"
                 fill_desc = (
@@ -479,7 +482,8 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
                     f"Focus on the most important theorems first. "
                     f"Original: {job.concept.concept_description[:200]}"
                 )
-                fd_mgr.add_direction(fd_mgr.Direction(
+                fd_mgr.add_direction(FutureDirection(
+                    id=f"sorry_fill_{job.job_id[:8]}_{uuid.uuid4().hex[:8]}",
                     title=fill_title,
                     description=fill_desc,
                     domains=[job.concept.domain] if job.concept.domain else [],
