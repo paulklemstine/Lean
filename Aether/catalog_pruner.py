@@ -315,7 +315,7 @@ class CatalogPruner:
             # Create a relative symlink from FINAL back to the canonical file
             rel_src = os.path.relpath(str(src), str(dest_dir))
             dest.symlink_to(rel_src)
-            print(f"[Prune] Immortalized {candidate['path']} -> FINAL/{domain}/{dest_name}")
+            # Per-file logging suppressed — summary logged by caller
         except Exception as e:
             print(f"[Prune] Failed to immortalize {candidate['path']}: {e}")
 
