@@ -1,8 +1,15 @@
 /- Aether FINAL Catalog
+<<<<<<< Updated upstream
 A curated collection of 2388 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
 Total files: 2388
+=======
+A curated collection of 2487 of the highest-quality
+formally verified mathematical results from the Aether engine.
+Sorry-free. No placeholders. Auto-maintained.
+Total files: 2487
+>>>>>>> Stashed changes
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AntipodeUniqueness
@@ -1534,6 +1541,10 @@ import FINAL.MachineLearning.InvariantSubspace_Defs
 import FINAL.MachineLearning.InverseStereographicNeuralField
 import FINAL.MachineLearning.IterExp
 import FINAL.MachineLearning.KWWitness_Defs
+<<<<<<< Updated upstream
+=======
+import FINAL.MachineLearning.KnotPolynomialSpectra
+>>>>>>> Stashed changes
 import FINAL.MachineLearning.Knot_Jones
 import FINAL.MachineLearning.KnottedLight_Core
 import FINAL.MachineLearning.LFunctionOracle_Core
@@ -1545,6 +1556,10 @@ import FINAL.MachineLearning.LibraryOfBabel_Defs
 import FINAL.MachineLearning.LocalGlobalGeometry
 import FINAL.MachineLearning.LoebGeneralization
 import FINAL.MachineLearning.LogisticChaos
+<<<<<<< Updated upstream
+=======
+import FINAL.MachineLearning.MPSMinCut_Defs
+>>>>>>> Stashed changes
 import FINAL.MachineLearning.MahlerMeasure_Defs
 import FINAL.MachineLearning.Maximals
 import FINAL.MachineLearning.MemoryAlgebra
@@ -1647,6 +1662,10 @@ import FINAL.MachineLearning.StoneDuality_Core
 import FINAL.MachineLearning.StrangeLoops_StrangeLoops
 import FINAL.MachineLearning.StructuralCases
 import FINAL.MachineLearning.SudokuPhaseTransition_Theorems
+<<<<<<< Updated upstream
+=======
+import FINAL.MachineLearning.SumThreeCubes_Counting
+>>>>>>> Stashed changes
 import FINAL.MachineLearning.SurrealTopology_OrderGap
 import FINAL.MachineLearning.SurvivorSieve
 import FINAL.MachineLearning.SymmEulerTransfer
