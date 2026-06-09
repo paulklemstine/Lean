@@ -9,16 +9,26 @@ window.PACKAGE_INDEX = [
     "exp_id": "812a22a6",
     "filename": "bridge_model_theory_and_algebra__ax_kochen_and_mor.json",
     "pkg_num": 6,
+    "quality": "partial",
+    "quality_score": 0.4623335621795429,
+    "title": "Certified Robustness for Instant-Runoff Classifiers via Gap Certificates"
+  },
+  {
+    "date": "2026-06-09",
+    "domain": "Shared",
+    "exp_id": "475cd2f0",
+    "filename": "causal_integration_algebra__a_rigorous_lattice_t.json",
+    "pkg_num": 7,
     "quality": "unrated",
     "quality_score": null,
-    "title": "Certified Robustness for Instant-Runoff Classifiers via Gap Certificates"
+    "title": "Certified Robustness for Instant-Runoff Voting Classifiers via Gap Certificates"
   },
   {
     "date": "2026-06-09",
     "domain": "Bridges",
     "exp_id": "17e8812c",
     "filename": "entropy_bounded_computation_ebc_framew.json",
-    "pkg_num": 7,
+    "pkg_num": 8,
     "quality": "partial",
     "quality_score": 0.4813003957285953,
     "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
@@ -28,7 +38,7 @@ window.PACKAGE_INDEX = [
     "domain": "Computation",
     "exp_id": "40370763",
     "filename": "impossible_geometries_where_parallel_lines_converg.json",
-    "pkg_num": 8,
+    "pkg_num": 9,
     "quality": "partial",
     "quality_score": 0.47002089837753586,
     "title": "Closure-Circuit Duality: Certified Monotone Circuit Reconstruction from Canonical Residual Bases"
@@ -38,7 +48,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "c60fd603",
     "filename": "p_vs_np_problem.json",
-    "pkg_num": 9,
+    "pkg_num": 10,
     "quality": "partial",
     "quality_score": 0.4486386254706822,
     "title": "Certified Robustness for Sequential-Elimination Classifiers via Tropical Gap Certificates"
@@ -48,7 +58,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "c71e53b1",
     "filename": "symplectic_mirror_descent_gromov_witten_invariants.json",
-    "pkg_num": 10,
+    "pkg_num": 11,
     "quality": "partial",
     "quality_score": 0.4695990099009901,
     "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
@@ -58,7 +68,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "debd806e",
     "filename": "the_current_framework_models_theories_by_their_set.json",
-    "pkg_num": 11,
+    "pkg_num": 12,
     "quality": "partial",
     "quality_score": 0.4683285105981593,
     "title": "Closure Dynamical Systems, Symbolic Zeta Semantics, and the Artin\u2013Mazur Rationality Theorem"
@@ -131,6 +141,14 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Certified Robustness for Instant-Runoff Classifiers via Gap Certificates"
+  },
+  "causal_integration_algebra__a_rigorous_lattice_t.json": {
+    "domain": "Shared",
+    "exp_id": "475cd2f0",
+    "source_exp_ids": [
+      "f18d283e"
+    ],
+    "title": "Certified Robustness for Instant-Runoff Voting Classifiers via Gap Certificates"
   },
   "entropy_bounded_computation_ebc_framew.json": {
     "domain": "Bridges",
@@ -215,7 +233,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2025-01-01",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 91,
       "id": "self_modifying_code_that_cannot_be_stopped",
       "primary_domain": "Bridges",
       "priority_score": 0.6462399999999999,
@@ -226,7 +244,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Logic",
-      "hue": 271,
+      "hue": 91,
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
       "primary_domain": "Logic",
       "priority_score": 0.3352,
@@ -237,7 +255,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 271,
       "id": "rigorous_algebraic_foundations_for_probability_t",
       "primary_domain": "Bridges",
       "priority_score": 0.66968,
@@ -248,7 +266,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 272,
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
       "primary_domain": "Bridges",
       "priority_score": 0.16743922555663115,
@@ -259,7 +277,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08T19:03:25Z",
       "domain": "Applications",
-      "hue": 92,
+      "hue": 90,
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
       "primary_domain": "Bridges",
       "priority_score": 0.62584,
@@ -270,18 +288,29 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 134,
       "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4623335621795429,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Certified Robustness for Instant-Runoff Classifiers via Gap Certificates"
     },
     {
       "date": "2026-06-09",
+      "domain": "Shared",
+      "hue": 101,
+      "id": "causal_integration_algebra__a_rigorous_lattice_t",
+      "primary_domain": "Bridges",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "icosahedron",
+      "title": "Certified Robustness for Instant-Runoff Voting Classifiers via Gap Certificates"
+    },
+    {
+      "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 90,
       "id": "entropy_bounded_computation_ebc_framew",
       "primary_domain": "Bridges",
       "priority_score": 0.4813003957285953,
@@ -292,7 +321,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Computation",
-      "hue": 91,
+      "hue": 90,
       "id": "impossible_geometries_where_parallel_lines_converg",
       "primary_domain": "Computation",
       "priority_score": 0.47002089837753586,
@@ -303,7 +332,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 271,
+      "hue": 91,
       "id": "p_vs_np_problem",
       "primary_domain": "Bridges",
       "priority_score": 0.4486386254706822,
@@ -314,7 +343,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 91,
       "id": "symplectic_mirror_descent_gromov_witten_invariants",
       "primary_domain": "Bridges",
       "priority_score": 0.4695990099009901,
@@ -325,7 +354,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 272,
+      "hue": 270,
       "id": "the_current_framework_models_theories_by_their_set",
       "primary_domain": "Bridges",
       "priority_score": 0.4683285105981593,
