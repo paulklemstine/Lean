@@ -1,1 +1,0 @@
-../../Computation/TropicalSudoku/Monotonicity.lean

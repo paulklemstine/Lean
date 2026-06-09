@@ -2297,6 +2297,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Goldbach Representation Theory\n\n## 1. Computational Verification of Goldbach up to Large Bounds\n\nExtend the `goldbachCount` framework to computationally verify Goldbach's conjecture for all even integers up to 10^6 or beyond, using efficient sieve-based methods formalized in Lean. The key insight is that `native_decide` combined with a computable `goldbachCount` function allows us to bootstrap verified computation: we can prove `\u2200 n, Even n \u2192 4 \u2264 n \u2192 n \u2264 N \u2192 HasGoldbachRep n` for concrete N by showing `goldbachCount n > 0` for each such n. Why now? Lean 4's compiler and `native_decide` are now fast enough that verification up to substantial bounds is feasible, and the computable `goldbachCount` we defined provides the necessary infrastructure. The challenge is scaling \u2014 a direct `native_decide` over all even numbers up to N requires careful batching to avoid timeout.\n\n## 2. Goldbach Counting Function Asymptotics\n\nFormalize the Hardy\u2013Littlewood conjecture on the asymptotic density of Goldbach representations: that the number of representations of 2n as a sum of two primes is asymptotically `C\u2082 \u00b7 2n / (log 2n)\u00b2 \u00b7 \u220f_{p|n, p odd} (p-1)/(p-2)`, where C\u2082 is the twin prime constant. The key insight is that the Goldbach counting function `goldbachCount` already provides the left-hand side; formalizing the singular series and proving even partial results (e.g., that `goldbachCount(2n) \u2192 \u221e`) would connect our combinatorial framework to analytic number theory. Why now? Recent Mathlib additions around the prime number theorem and Dirichlet series bring the analytic prerequisites closer to what's needed, though significant infrastructure building remains.\n\n## 3. Chen's Theorem: Every Large Even Number is P\u2081 + P\u2082\n\nFormalize Chen's 1973 result that every sufficiently large even integer can be written as the sum of a prime and a number with at most two prime factors (a P\u2082 number). Our `HasChenRep` and `IsSemiprime` definitions provide the statement framework. The key insight is that the weighted sieve of Rosser\u2013Iwaniec, when formalized, provides a lower bound on the number of Chen representations that exceeds the upper bound on the error term for sufficiently large n. Why now? The structural groundwork \u2014 semiprime characterization, the Goldbach-implies-Chen hierarchy, and the separation theorem `semiprime_not_prime` \u2014 is now in place, making the sieve theory the remaining bottleneck rather than the combinatorial framework.\n\n## 4. Parity Barrier and Selberg Sieve Formalization\n\nFormalize the \"parity problem\" in sieve theory: prove that no sieve of dimension 1 (in the Selberg\u2013Iwaniec sense) can distinguish between numbers with an even vs. odd number of prime factors. The key insight is that this impossibility result explains precisely why Goldbach's conjecture cannot be resolved by sieve methods alone, and formalizing it would be the first machine-verified proof of a fundamental limitation theorem in analytic number theory. Why now? The parity constraint theorem `goldbach_rep_odd_primes` already captures one structural aspect of how parity controls Goldbach representations; the sieve-theoretic parity barrier is the deeper analytic analogue.\n\n## 5. Goldbach Representation Graphs and Extremal Combinatorics\n\nDefine the \"Goldbach graph\" G(N) whose vertices are primes up to N and edges connect primes p, q when p + q is even and \u2264 N (i.e., when they witness a Goldbach representation). Prove that Goldbach's conjecture for [4, N] is equivalent to this graph having a specific covering property. The key insight is that translating Goldbach's conjecture into graph-theoretic language opens it to tools from extremal graph theory and Ramsey theory \u2014 for instance, the density of edges in G(N) can be bounded using the prime number theorem, and the covering property can be related to minimum degree conditions. Why now? The `goldbachCount` function and canonical representation theory provide the combinatorial foundation, and Mathlib's growing graph theory library makes formalization of graph-theoretic properties increasingly tractable.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1119",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "270a35e6",
+    "status": "available",
+    "timestamp": "2026-06-09T12:13:03.120646+00:00",
+    "title": "Extend the `goldbachCount` framework to computationally verify Goldbach's conjec"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Neural Tangent Kernel Formalization\n\n## 1. Spectral Convergence Rate with Explicit Eigenvalue Bounds\n\nThe geometric convergence theorem (`gdResidual_geometric_decay`) assumes a contractivity constant `c < 1` as a black box. The natural next step is to relate `c` to the spectrum of the kernel matrix K: specifically, if K has eigenvalues \u03bb\u2081 \u2265 ... \u2265 \u03bb\u2099 \u2265 0 and we choose \u03b7 < 2/\u03bb\u2081, then c = max(|1 - \u03b7\u03bb\u2081|, |1 - \u03b7\u03bb\u2099|) and the optimal learning rate is \u03b7* = 2/(\u03bb\u2081 + \u03bb\u2099). The key insight is that Mathlib's spectral theory for self-adjoint operators on finite-dimensional inner product spaces (`Matrix.IsHermitian.eigenvalues`) provides the eigenvalue decomposition needed to make this explicit. Why now? The PSD proof (`ntkGramMatrix_posSemidef`) and symmetry preservation (`gdUpdateOp_isSymm`) in this file give us the structural prerequisites; what remains is connecting to Mathlib's eigenvalue API and proving the operator norm bound \u2016I - \u03b7K\u2016 = max_i |1 - \u03b7\u03bb_i|.\n\n## 2. Quantitative Kernel Perturbation and Width-Dependent Stability\n\nThe linearized model kernel constancy theorem (`linearized_residual_dynamics`) shows that the NTK is *exactly* constant for the linearized model. For the actual (nonlinear) neural network, the NTK drifts during training, but this drift vanishes as width \u2192 \u221e. Formalizing this requires bounding \u2016K(\u03b8_t) - K(\u03b8_0)\u2016 \u2264 C/\u221am where m is the width. The key insight is that this reduces to a Lipschitz estimate on the Jacobian: if \u2016J(\u03b8) - J(\u03b8\u2080)\u2016 \u2264 L\u2016\u03b8 - \u03b8\u2080\u2016 and the parameter displacement stays small (O(1/\u221am)), then the kernel perturbation is O(1/\u221am). Why now? The single-step perturbation bound infrastructure exists in the companion Catalog file; what's needed is a clean formalization of Jacobian Lipschitz continuity for ReLU networks and the resulting inductive bound on parameter displacement.\n\n## 3. Loss Landscape Convexity Under Overparameterization\n\nWhen K is strictly positive definite (\u03bb_min > 0), the squared loss L(\u03b8) = \u00bd\u2016f(\u03b8) - y\u2016\u00b2 is locally strongly convex in the linearized regime. This gives not just convergence but a convergence *rate*: L(\u03b8_t) \u2264 (1 - \u03b7\u03bb_min)^{2t} L(\u03b8_0). The key insight is that positive definiteness of the Gram matrix is equivalent to the feature vectors {\u2207_\u03b8 f(\u03b8\u2080, x_i)} being linearly independent, which holds almost surely for random initializations when p \u2265 n. Why now? The PSD result is proved; upgrading to PD requires formalizing the rank condition on the Jacobian matrix, which connects to Mathlib's `Matrix.rank` and linear independence theory.\n\n## 4. Multi-Output NTK and Block Matrix Structure\n\nReal neural networks have vector-valued outputs (e.g., classification with k classes). The NTK becomes a block matrix K \u2208 \u211d^{nk \u00d7 nk} with K_{(i,a),(j,b)} = \u03a3_l (\u2202f_a/\u2202\u03b8_l)(x_i) \u00b7 (\u2202f_b/\u2202\u03b8_l)(x_j). The key insight is that this block NTK is still a Gram matrix (hence PSD), and the convergence theory generalizes by replacing Fin n with Fin n \u00d7 Fin k throughout. Why now? The current formalization is parameterized by the index type `Fin n` and the proofs are largely index-agnostic; extending to product index types `Fin n \u00d7 Fin k` should be a relatively mechanical generalization that tests the robustness of the proof architecture.\n\n## 5. Connection to Reproducing Kernel Hilbert Spaces (RKHS)\n\nThe NTK defines a reproducing kernel Hilbert space H_K, and the infinite-width limit theorem states that gradient descent converges to the minimum-RKHS-norm interpolant. Formalizing this requires: (a) constructing the RKHS from a positive definite kernel function (not just a matrix), (b) proving the representer theorem (the optimal function lies in span{K(x_i, \u00b7)}), and (c) showing that the gradient descent solution converges to this optimum. The key insight is that step (b) is a finite-dimensional projection theorem in disguise \u2014 the representer theorem follows from orthogonal projection in the RKHS, which Mathlib's inner product space theory supports. Why now? Mathlib has `InnerProductSpace` and orthogonal projection (`orthogonalProjection`); what's missing is the construction of the RKHS itself as a completion of the span of kernel sections, which would be a valuable standalone contribution to the Mathlib ecosystem.\n",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_1120",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8c5634d8",
+    "status": "available",
+    "timestamp": "2026-06-09T12:17:33.806245+00:00",
+    "title": "The geometric convergence theorem (`gdResidual_geometric_decay`) assumes a contr"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
     "domains": [
       "Cryptography",
@@ -3157,6 +3187,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T11:40:02.533660+00:00",
     "title": "Close Proofs: Close Proofs: Speculative: Computational Complexity as Physical Law"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 270a35e6 (Q=0.417) proved 1068 theorems in Algebra but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that every even integer greater than 2 is the sum of two primes. Formalize partial results such as Vinogradov's theorem for sufficiently large odd integers, or Chen's theorem that every sufficie",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "sorry_fill_270a35e6_a8bf8d8a",
+    "priority_score": 0.4671988204113629,
+    "research_mode": "team",
+    "source_exp_id": "270a35e6",
+    "status": "available",
+    "timestamp": "2026-06-09T12:16:10.388536+00:00",
+    "title": "Close Proofs: Goldbach Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 8c5634d8 (Q=0.411) proved 881 theorems in MachineLearning but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that in the infinite-width limit, neural network training under gradient descent converges to kernel regression with the Neural Tangent Kernel (NTK). Formalize the NTK as the Gram matrix of Jaco",
+    "domains": [
+      "MachineLearning"
+    ],
+    "id": "sorry_fill_8c5634d8_b484c0c1",
+    "priority_score": 0.4614152881559993,
+    "research_mode": "team",
+    "source_exp_id": "8c5634d8",
+    "status": "available",
+    "timestamp": "2026-06-09T12:19:51.311370+00:00",
+    "title": "Close Proofs: Neural Tangent Kernel: Convergence of Gradient Descent"
   },
   {
     "consumed_by_exp_id": "",
