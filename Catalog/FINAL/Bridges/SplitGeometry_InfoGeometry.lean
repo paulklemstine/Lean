@@ -1,0 +1,1 @@
+../../Bridges/SplitGeometry/InfoGeometry.lean

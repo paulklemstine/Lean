@@ -1,0 +1,1 @@
+../../Bridges/Pythagorean/CoalgebraicTemporalAdjunction/Theorems.lean
