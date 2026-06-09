@@ -368,20 +368,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Resolution of Singularities in Positive Characteristic"
   },
   {
-    "consumed_by_exp_id": "abf65010",
-    "description": "Prove that a Hadamard matrix exists for every positive multiple of 4. Formalize known constructions (Sylvester, Paley, tensor products) and establish bounds on the smallest open order. Connect to combinatorial designs, error-correcting codes, and signal processing.",
-    "domains": [
-      "Algebra"
-    ],
-    "id": "seed_003",
-    "priority_score": 0.88,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:24:56.393667+00:00",
-    "title": "Hadamard Matrix Conjecture"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
     "domains": [
@@ -587,7 +573,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "[Reset] Fresh approach in Applications"
   },
   {
-    "consumed_by_exp_id": "41fd7380",
+    "consumed_by_exp_id": "",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
@@ -597,7 +583,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.491025+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
@@ -795,7 +781,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Invariant Subspace Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0f684a27",
     "description": "Prove the Kakeya conjecture: a Besicovitch set in R\u207f has Hausdorff dimension n. Formalize the connection to restriction estimates and additive combinatorics.",
     "domains": [
       "Geometry",
@@ -805,7 +791,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:02.777464+00:00",
     "title": "Kakeya Conjecture"
   },
@@ -1448,7 +1434,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rigorous mathematical foundation for the EML"
   },
   {
-    "consumed_by_exp_id": "28a68a13",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Causal Integration Algebra\n\n## Synthesis\n\nThis cycle established the **Causal Integration Algebra** \u2014 a rigorous lattice-theoretic formalization of Integrated Information Theory that identifies \u03a6 with the minimum cut of a weighted causal graph. We proved 18 theorems covering nonnegativity, decomposition characterization, composition/exclusion, scaling, monotonicity, and a novel symmetrization invariance result. The framework connects IIT to classical graph theory and opens several deep avenues.\n\nThe most promising cross-domain connection is between **integration theory and spectral graph theory**. The Fiedler value (algebraic connectivity) provides a lower bound on the minimum cut, and our scaling and monotonicity theorems suggest that the entire spectral structure of the graph Laplacian encodes integration properties. This connects consciousness science to one of the richest areas of combinatorial mathematics.\n\nThe highest breakthrough potential lies in **Direction 1**: formalizing the relationship between \u03a6 and algebraic connectivity. If this connection can be made precise, it would import the entire machinery of spectral graph theory into consciousness science \u2014 eigenvalue bounds, Cheeger inequalities, expander graphs, and random matrix theory would all become tools for understanding integration.\n\n---\n\n### Direction 1: Spectral Integration \u2014 \u03a6 and the Fiedler Value\n\n**Conjecture**: For any symmetric causal system C on n vertices, the Fiedler value \u03bb\u2082(L) of the graph Laplacian satisfies: \u03bb\u2082(L) \u2264 \u03a6(C) \u2264 n \u00b7 \u03bb\u2082(L) / 4, where L is the Laplacian matrix of the symmetrized causal graph with edge weights w(i,j) + w(j,i).\n\n**Test**: Compute both \u03a6 (by brute-force minimum cut) and \u03bb\u2082(L) (by eigenvalue computation) for all connected weighted graphs on 4-6 vertices with integer weights 1-3. Check whether the conjectured inequality holds.\n\n**Impact**: If true, this establishes a computable lower bound on \u03a6 via eigenvalue computation (O(n\u00b2) vs O(2\u207f) for brute-force \u03a6), and imports Cheeger-type inequalities into consciousness theory. If false, the failure case would reveal systems where spectral methods fundamentally mischaracterize integration.\n\n**Catalog References**: `Novelty/IntegratedInformation/Core.lean` (CausalSystem, phi, symmetrize_phi), `Novelty/IntegratedInformation/Spectrum.lean` (phi_eq_min_cut, phi_mono_of_weight_le)\n\n**Proof Strategy**: \n1. Define the graph Laplacian L of a CausalSystem in Lean\n2. Prove the Courant-Fischer characterization of \u03bb\u2082\n3. Show that \u03a6 = min_A cross(A) \u2265 \u03bb\u2082 via the Rayleigh quotient bound\n4. Prove the upper bound using the Cheeger inequality\n\n**Domain Bridges**: Spectral Graph Theory \u2194 Integrated Information Theory \u2194 Algebraic Connectivity\n\n**Lineage**: Builds on phi_eq_min_cut, symmetrize_phi, crossInfo_le_totalWeight from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Dynamic Integration \u2014 Phase Transitions in Evolving Causal Systems\n\n**Conjecture**: For a one-parameter family of causal systems C(t) where w(i,j;t) = (1-t)\u00b7w_disconnected + t\u00b7w_connected (linear interpolation between a disconnected and fully connected system), there exists a critical threshold t* \u2208 (0,1) such that \u03a6(C(t)) = 0 for t < t* and \u03a6(C(t)) > 0 for t > t*. Moreover, t* = 1/n for the uniform complete graph target.\n\n**Test**: Compute \u03a6(C(t)) for n = 4,5,6 with the disconnected system being two equal halves and the connected system being the complete graph with unit weights. Plot \u03a6 vs t and verify the phase transition.\n\n**Impact**: If true, this identifies a sharp phase transition in integration, analogous to percolation thresholds in random graphs. This would connect IIT to critical phenomena and phase transitions \u2014 one of the deepest frameworks in statistical physics. If false, integration may emerge gradually rather than sharply, which would itself be informative.\n\n**Catalog References**: `Novelty/IntegratedInformation/Core.lean` (phi, IsDisconnected, phi_zero_of_disconnected), `Novelty/IntegratedInformation/Spectrum.lean` (phi_mono_of_weight_le, phi_scale)\n\n**Proof Strategy**:\n1. Define CausalSystem.interpolate as a linear combination\n2. Show \u03a6 is continuous in the interpolation parameter (follows from min of continuous functions)\n3. Show \u03a6 = 0 at t = 0 (disconnected) and \u03a6 > 0 at t = 1 (strongly positive)\n4. Prove existence of t* by intermediate value theorem\n5. For the specific uniform case, compute t* exactly\n\n**Domain Bridges**: Statistical Physics (Phase Transitions) \u2194 Integrated Information \u2194 Percolation Theory\n\n**Lineage**: Builds on phi_zero_of_disconnected, phi_pos_of_strongly_positive, phi_mono_of_weight_le from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Categorical Integration \u2014 Causal Systems as Enriched Categories\n\n**Conjecture**: The category of causal systems (with morphisms being weight-reducing maps) admits a monoidal structure under direct sum, and \u03a6 extends to a lax monoidal functor to (\u211d\u22650, min, +). Specifically, \u03a6(C\u2081 \u2295 C\u2082) = min(\u03a6(C\u2081), \u03a6(C\u2082), cross(C\u2081,C\u2082)) where cross(C\u2081,C\u2082) is the minimum cross-flow between the two components.\n\n**Test**: Verify the functor properties for all pairs of causal systems on 2-3 vertices. Check that the monoidal structure axioms (associativity, unit) hold.\n\n**Impact**: If true, this provides a categorical foundation for IIT, enabling composition of conscious systems via universal constructions (limits, colimits). This would connect IIT to topos theory and provide a principled answer to the \"combination problem\" in philosophy of mind.\n\n**Catalog References**: `Novelty/IntegratedInformation/Core.lean` (directSum, phi_directSum_eq_zero), `Bridges/ArrowDepthComplexity.lean` (category-theoretic methods)\n\n**Proof Strategy**:\n1. Define the category CausalSys with objects = CausalSystem n and morphisms = weight-reducing maps\n2. Verify well-definedness of composition\n3. Define the direct sum monoidal product\n4. Show \u03a6 is functorial (monotonicity implies functoriality)\n5. Verify the lax monoidal property\n\n**Domain Bridges**: Category Theory (Enriched Categories) \u2194 IIT \u2194 Monoidal Functors\n\n**Lineage**: Builds on directSum, phi_directSum_eq_zero, phi_mono_of_weight_le from this cycle.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Integration Spectrum and Chromatic Number\n\n**Conjecture**: For a causal system C, define the \"zero graph\" G\u2080 as the graph with edges where w(i,j) = 0. Then the integration dimension (largest k where \u03a6_k > 0) equals the chromatic number \u03c7(G\u2080\u1d9c) of the complement of G\u2080 minus 1. In particular, for a strongly positive system, dim(C) = n - 1.\n\n**Test**: Enumerate all graphs on 4-5 vertices, assign random positive weights to edges and zero to non-edges. Compute integration dimension by brute-force k-partition enumeration. Compare with chromatic number of complement.\n\n**Impact**: If true, this provides a graph-coloring characterization of integration depth, connecting IIT to one of the central problems in combinatorics. If false, the failure cases would reveal interesting structures where integration dimension diverges from chromatic expectations.\n\n**Catalog References**: `Novelty/IntegratedInformation/Core.lean` (KPartition, interPartFlow, interPartFlow_nonneg), `Novelty/IntegratedInformation/Spectrum.lean` (phi_pos_of_strongly_positive)\n\n**Proof Strategy**:\n1. Formalize integration dimension as a definition\n2. Show that \u03a6_k > 0 iff every k-partition has positive inter-part flow\n3. Relate this to the existence of edges between every pair of parts\n4. Connect to graph coloring: a proper coloring of G\u2080\u1d9c corresponds to a zero-flow partition\n\n**Domain Bridges**: Graph Coloring \u2194 Integration Spectrum \u2194 Complexity Theory (chromatic number is NP-hard)\n\n**Lineage**: Builds on KPartition, interPartFlow_nonneg from this cycle; connects to `critical_density_bounds` in Novelty/SegmentAlgebra.lean.\n\n**Ambition**: extension\n\n---\n\n### Direction 5: Information-Geometric Integration \u2014 \u03a6 on Statistical Manifolds\n\n**Conjecture**: When causal weights represent Fisher information between stochastic processes at each node, \u03a6 becomes a Riemannian distance on the statistical manifold of joint distributions. Specifically, \u03a6(C) \u2265 d_FI(p_joint, p_product) where d_FI is the Fisher-Rao distance between the joint distribution and the product of marginals.\n\n**Test**: For binary causal systems (each node has state 0 or 1) with n = 3-4, compute \u03a6 (minimum cut) and d_FI (Fisher-Rao distance between joint and product distributions) numerically. Check whether the inequality holds.\n\n**Impact**: If true, this embeds IIT in information geometry \u2014 one of the most elegant frameworks in mathematical statistics. \u03a6 would acquire a geometric interpretation as a \"distance from independence\" on a curved statistical manifold. This would also provide natural connections to machine learning (natural gradient descent) and quantum information (quantum Fisher information).\n\n**Catalog References**: `Novelty/IntegratedInformation/Spectrum.lean` (phi_le_totalWeight, phi_scale), `Bridges/PadicQuantumInformation.lean` (information-theoretic methods)\n\n**Proof Strategy**:\n1. Define Fisher information matrix for a causal system\n2. Define the Fisher-Rao metric on the simplex of joint distributions\n3. Show that the minimum cut provides an upper bound on the geodesic distance\n4. Prove the lower bound using the data processing inequality\n\n**Domain Bridges**: Information Geometry \u2194 IIT \u2194 Statistical Manifolds \u2194 Quantum Information\n\n**Lineage**: Builds on phi_le_totalWeight, crossInfo_le_totalWeight from this cycle; connects to `ultrametric_entropy_composition_bound` in Bridges/PadicQuantumInformation.lean.\n\n**Ambition**: grand_challenge\n",
     "domains": [
       "Algebra",
@@ -1458,7 +1444,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "f18d283e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-07T06:46:00.326851+00:00",
     "title": "**Causal Integration Algebra** \u2014 a rigorous lattice-t"
   },
@@ -2379,6 +2365,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Large Cardinal Hierarchy Formalization\n\n## 1. Measurable Cardinals via Ultrafilters\n\nThe next step in the large cardinal hierarchy after Mahlo is the measurable cardinal. A cardinal \u03ba is measurable if there exists a \u03ba-complete non-principal ultrafilter on \u03ba. This can be formalized using Mathlib's existing filter and ultrafilter infrastructure. The key theorem to prove would be: every measurable cardinal is Mahlo, establishing the next link in the consistency strength chain.\n\nThe key insight is that the existence of a \u03ba-complete ultrafilter on \u03ba implies that the set of regular cardinals below \u03ba is not just stationary but in fact belongs to the ultrafilter \u2014 a much stronger property. This can be proved by showing that the set of singular cardinals below \u03ba is not in the ultrafilter (using the Ulam matrix argument).\n\nWhy now? Mathlib already has `Filter`, `Ultrafilter`, and `Filter.CountableInter` (the countable completeness analogue). Extending to \u03ba-completeness is a natural generalization, and the Ulam matrix argument has a clean combinatorial structure well-suited to formal verification.\n\n## 2. Club Filter as a Normal Filter\n\nOur formalization defines club and stationary sets with an \u03c9-closure condition. The full theory requires closure under arbitrary sequences of length less than \u03ba (not just countable sequences). Formalizing the club filter as a normal \u03ba-complete filter on \u03ba would unify several results and enable the Fodor pressing-down lemma (Fodor's theorem), which states that every regressive function on a stationary set is constant on a stationary subset.\n\nThe key insight is that the club filter is not just closed under finite intersection but under < \u03ba-sized intersection (for regular uncountable \u03ba), making it a normal ideal. This connects set theory to the theory of Boolean algebras and forcing.\n\nWhy now? The \u03c9-closed version is formalized. Generalizing to arbitrary cofinality requires Ordinal.bsup infrastructure, which Mathlib now provides. Fodor's theorem has a short inductive proof once the definitions are right.\n\n## 3. Indescribable Cardinals and Reflection Principles\n\nA cardinal \u03ba is \u03a0\u00b9_n-indescribable if for every \u03a0\u00b9_n sentence \u03c6 that holds in V_\u03ba, there exists \u03b1 < \u03ba such that \u03c6 holds in V_\u03b1. The hierarchy of indescribable cardinals sits between Mahlo and measurable in consistency strength. Formalizing this requires a theory of the cumulative hierarchy V_\u03b1, which could be built using well-founded recursion on ordinals.\n\nThe key insight is that inaccessibility is equivalent to \u03a0\u2070\u2081-indescribability, and the Mahlo property is equivalent to \u03a0\u00b9\u2080-indescribability (a classical result of Hanf and Scott). This provides an alternative characterization of the large cardinals we formalized.\n\nWhy now? The key infrastructure \u2014 ordinal recursion, cardinal arithmetic, and the aleph fixed point theorem \u2014 is now in place from our formalization. The cumulative hierarchy can be built as a family of types indexed by ordinals using well-founded recursion.\n\n## 4. Consistency Strength Separation via Inner Models\n\nThe ultimate goal is to prove strict separation: Con(ZFC + \u2203 Mahlo) \u2192 Con(ZFC + \u2203 inaccessible), but not vice versa. This requires constructing inner models \u2014 for example, showing that if \u03ba is Mahlo, then V_\u03ba is a model of ZFC + \"there exists an inaccessible cardinal.\" This is inherently metamathematical and requires formalizing satisfaction relations for set-theoretic formulas.\n\nThe key insight is that the aleph fixed point theorem (proved in our formalization) and the exists_inaccessible_below theorem together show that V_\u03ba for Mahlo \u03ba sees inaccessible cardinals \u2014 this is the semantic content of consistency strength separation. Formalizing the satisfaction relation is the missing piece.\n\nWhy now? Recent work on formalizing G\u00f6del's incompleteness theorems in Lean (e.g., the FLean project) provides patterns for encoding syntax and satisfaction. Our cardinal arithmetic results (pow_lt, aleph fixed points) provide the mathematical content that the inner model argument needs.\n\n## 5. Cardinal Arithmetic Independence: Easton's Theorem\n\nEaston's theorem states that the function \u03ba \u21a6 2^\u03ba on regular cardinals can be essentially arbitrary (subject to K\u00f6nig's theorem constraints). Formalizing even a weak version \u2014 showing that GCH is independent of ZFC \u2014 would connect our cardinal arithmetic results to forcing theory. Our `IsInaccessible.pow_lt` theorem shows that inaccessible cardinals provide natural upper bounds for cardinal exponentiation; Easton's theorem shows these bounds are essentially optimal.\n\nThe key insight is that our iterPow construction (used to build strong limits) is a special case of the beth function, and the gap between beth and aleph fixed points is precisely where GCH independence lives.\n\nWhy now? The iterPow infrastructure and strong limit theorems from our formalization provide the \"ground model\" side of the forcing argument. Formalizing Boolean-valued models (the algebraic approach to forcing) could leverage Mathlib's complete Boolean algebra library.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1095",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2c51cdc5",
+    "status": "available",
+    "timestamp": "2026-06-09T09:29:27.155248+00:00",
+    "title": "The next step in the large cardinal hierarchy after Mahlo is the measurable card"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Causal Integration Algebra\n\n## What We Built\n\nThis cycle established the **Causal Integration Algebra** \u2014 a rigorous Lean 4 formalization of Integrated Information Theory (IIT) that identifies \u03a6 with the minimum cut of a weighted directed graph. We proved 8 theorems sorry-free:\n\n- **Nonnegativity** (`phi_nonneg`): \u03a6 \u2265 0 always\n- **Symmetrization invariance** (`crossInfo_symmetrize`, `phi_symmetrize`): directed and symmetrized systems have identical \u03a6\n- **Monotonicity** (`phi_mono_of_weight_le`): increasing edge weights cannot decrease \u03a6\n- **Scaling** (`phi_scale`): \u03a6(cC) = c\u03a6(C) for c \u2265 0\n- **Disconnection** (`phi_zero_of_disconnected`): systems with a zero-cut bipartition have \u03a6 = 0\n- **Upper bound** (`phi_le_totalWeight`): \u03a6 never exceeds total edge weight\n\nThe framework connects IIT to classical graph theory via a clean algebraic interface.\n\n---\n\n### Direction 1: Spectral Lower Bound via Fiedler Value\n\nFor symmetric causal systems, the algebraic connectivity \u03bb\u2082(L) of the graph Laplacian should provide a polynomial-time computable lower bound on \u03a6. The key insight is that the Rayleigh quotient characterization of \u03bb\u2082 directly relates to the minimum bisection problem \u2014 any indicator vector for a bipartition gives a Rayleigh quotient that upper-bounds \u03bb\u2082, and the minimum over all such vectors is precisely \u03a6 (up to normalization). This would import Cheeger-type inequalities into integration theory.\n\n**Conjecture**: \u03bb\u2082(L) \u2264 \u03a6(C) \u2264 n \u00b7 \u03bb\u2082(L) / 4 for symmetric systems on n vertices.\n\n**Why now?** Our `phi_symmetrize` theorem shows that every directed system can be reduced to a symmetric one without changing \u03a6. This means spectral methods (which require symmetric matrices) apply to the full generality of directed causal systems. The Laplacian formalization in Lean would build on our `CausalSystem` structure by extracting the degree matrix and adjacency matrix.\n\n**Test**: Compute both \u03a6 (brute-force) and \u03bb\u2082 (eigenvalue) for all connected weighted graphs on 4\u20135 vertices with integer weights 1\u20133.\n\n---\n\n### Direction 2: Supermodularity of Cross-Information\n\nThe cross-information function may exhibit supermodularity properties on the lattice of bipartitions, which would give tight bounds on \u03a6 via the Lov\u00e1sz extension and submodular optimization.\n\nThe key insight is that cross-information, viewed as a set function on the power set of vertices, should satisfy crossInfo(A\u222aB) + crossInfo(A\u2229B) \u2265 crossInfo(A) + crossInfo(B) for nested pairs \u2014 this is because edges counted in both A and B cuts are counted at least as much in the union/intersection cuts. If true, submodular minimization algorithms (polynomial time) would compute \u03a6 exactly.\n\n**Conjecture**: The function S \u21a6 crossInfo(C, S) is submodular on the lattice of subsets of Fin n.\n\n**Why now?** Our `crossInfo_mono` and `crossInfo_scale` theorems establish that crossInfo behaves well under the two simplest lattice operations (ordering and scaling). Submodularity is the natural next structural property. Lean's `Finset` API has strong support for set operations needed for the proof.\n\n**Test**: Verify the submodularity inequality for all pairs of subsets on graphs with 4\u20135 vertices.\n\n---\n\n### Direction 3: K-Partition Refinement and Integration Spectrum\n\nGeneralizing from bipartitions to k-partitions creates an \"integration spectrum\" \u03a6_k that captures multi-way decomposition. The minimum k-way cut gives richer structural information than the minimum bisection.\n\nThe key insight is that \u03a6\u2082 = \u03a6 (our current definition) is just the first level of a hierarchy. Defining \u03a6_k as the minimum total inter-part flow over all k-partitions, we should have \u03a6\u2082 \u2264 \u03a6\u2083 \u2264 ... \u2264 \u03a6_n, with equality \u03a6_k = \u03a6_n exactly when the system cannot be decomposed into fewer than n parts without losing information. The rate of growth of this spectrum encodes the \"complexity\" of the system's causal structure.\n\n**Conjecture**: For a strongly connected system on n vertices, \u03a6_k is strictly increasing for k = 2, ..., n, and \u03a6_n = totalWeight(C).\n\n**Why now?** Our `phi_le_totalWeight` theorem provides the natural upper bound. The k-partition generalization reuses our `crossInfo` infrastructure with minimal new definitions. This connects to the multiway cut problem in combinatorial optimization.\n\n**Test**: Compute the full spectrum {\u03a6\u2082, ..., \u03a6_n} for random strongly connected systems on n = 4, 5.\n\n---\n\n### Direction 4: Duality Between Integration and Exclusion\n\nThere should be a duality between the minimum cut (integration) and the maximum flow (exclusion) in causal systems, analogous to the max-flow min-cut theorem.\n\nThe key insight is that IIT's \"exclusion postulate\" \u2014 which says only the partition achieving the minimum information partition (MIP) matters \u2014 can be formalized as a dual optimization problem. The max-flow min-cut theorem would then say that the maximum \"coherent information flow\" through the system equals \u03a6. This would give \u03a6 a constructive interpretation: it measures the bottleneck capacity of the system's information processing.\n\n**Conjecture**: For symmetric causal systems, \u03a6(C) equals the maximum concurrent flow value, where each vertex pair (i,j) demands flow equal to w(i,j).\n\n**Why now?** Our framework already identifies \u03a6 with the minimum cut. The max-flow min-cut duality for undirected graphs is well-established in combinatorics, and `phi_symmetrize` lets us reduce to the symmetric case. Formalizing this would import network flow theory into IIT.\n\n**Test**: For small graphs (n = 3, 4), verify that the LP relaxation of the concurrent flow problem has optimal value equal to \u03a6.\n\n---\n\n### Direction 5: Compositional Integration via Direct Sums\n\nWhen two causal systems are composed (direct sum with inter-system edges), how does \u03a6 of the composite relate to \u03a6 of the components? A precise composition formula would solve the \"combination problem\" \u2014 how consciousness of parts relates to consciousness of wholes.\n\nThe key insight is that for the direct sum C\u2081 \u2295 C\u2082 (block-diagonal weight matrix), our `phi_zero_of_disconnected` already shows \u03a6 = 0. But when inter-system edges are added, \u03a6 should grow monotonically (by `phi_mono_of_weight_le`) and satisfy \u03a6(C\u2081 \u2295 C\u2082 + E) \u2265 min(\u03a6(C\u2081), \u03a6(C\u2082), cross(E)) where cross(E) is the minimum cut of the inter-system edges alone.\n\n**Conjecture**: \u03a6(C\u2081 \u2295 C\u2082 + E) = min(\u03a6(C\u2081) + cross\u2081(E), \u03a6(C\u2082) + cross\u2082(E), cross(E)) where cross\u1d62(E) is the contribution of inter-system edges to cuts within component i.\n\n**Why now?** Our monotonicity and disconnection theorems provide the boundary conditions. The formula would follow from analyzing how the minimum cut of the composite system must either (a) separate within C\u2081, (b) separate within C\u2082, or (c) separate between C\u2081 and C\u2082.\n\n**Test**: Construct pairs of small systems (n\u2081 = n\u2082 = 2, 3) with varying inter-system edge weights and verify the formula.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1096",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "28a68a13",
+    "status": "available",
+    "timestamp": "2026-06-09T09:30:01.983492+00:00",
+    "title": "**Causal Integration Algebra** \u2014 a rigorous Lean 4 fo"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Hadamard Matrix Theory\n\n## 1. Paley Construction and Quadratic Residues\n\nThe Sylvester construction covers orders $2^k$, but the Paley construction yields Hadamard matrices of order $p+1$ for primes $p \\equiv 3 \\pmod{4}$, using the Jacobi symbol (quadratic residue character) as matrix entries. Formalizing this would connect Hadamard theory to algebraic number theory in Mathlib.\n\n**The key insight is** that the quadratic residue character $\\chi: \\mathbb{F}_p \\to \\{0, \\pm 1\\}$ naturally produces a conference matrix $C$ satisfying $C C^\\top = (p-1)I + J$, and the block construction $\\begin{pmatrix} 1 & \\mathbf{1}^\\top \\\\ \\mathbf{1} & C+I \\end{pmatrix}$ is Hadamard.\n\n**Why now?** Mathlib already has `legendreSym`, `ZMod.quadraticChar`, and `Finset.sum_char_sq` \u2014 the Jacobi sum infrastructure is largely in place. The gap is connecting these to the conference matrix identity, which is a concrete and bounded formalization task.\n\n## 2. Hadamard Bound on Determinants\n\nAny $n \\times n$ matrix with entries bounded by $|a_{ij}| \\leq 1$ satisfies $|\\det A| \\leq n^{n/2}$, with equality if and only if $A$ is a (real, normalized) Hadamard matrix. This is Hadamard's original inequality (1893). Formalizing this would establish the optimality of Hadamard matrices for combinatorial design and coding theory.\n\n**The key insight is** that the AM-GM inequality applied to the Gram matrix eigenvalues gives $\\det(A A^\\top) \\leq (\\operatorname{tr}(A A^\\top)/n)^n = n^n$, with equality forcing $A A^\\top = nI$.\n\n**Why now?** Mathlib has `Matrix.det_mul_det`, `Matrix.PosDef`, and spectral theory for Hermitian matrices. The AM-GM bound on eigenvalues via trace/determinant inequalities is the main gap, but this is a standard inequality that decomposes into provable pieces.\n\n## 3. Equivalence Classes and the Automorphism Group\n\nTwo Hadamard matrices are *equivalent* if one can be obtained from the other by row/column permutations and sign changes. The number of equivalence classes grows rapidly: there is 1 class for $n=1,2,4$, but 5 for $n=12$, 60 for $n=16$, and the exact count for $n=32$ is unknown. Formalizing the equivalence relation and proving the uniqueness for small orders would connect to computational group theory.\n\n**The key insight is** that the equivalence group acts as $(P_1, P_2, D_1, D_2) \\cdot H = D_1 P_1 H P_2^\\top D_2$ where $P_i$ are permutation matrices and $D_i$ are diagonal $\\pm 1$ matrices. For $n \\leq 4$, uniqueness follows from the constraints being so tight that the sign-permutation group acts transitively.\n\n**Why now?** Mathlib has `Equiv.Perm`, `Matrix.Perm.toMatrix`, and `MonoidHom` infrastructure. The group action formalization is straightforward; the uniqueness proof for $n=4$ is finite and could potentially be verified by `decide` on a suitable quotient.\n\n## 4. Connection to Error-Correcting Codes (First-Order Reed-Muller)\n\nThe rows of a $2^k \\times 2^k$ Sylvester\u2013Hadamard matrix (together with their negations) form the codewords of the first-order Reed-Muller code $\\mathrm{RM}(1,k)$, which achieves the Plotkin bound with minimum distance $2^{k-1}$. Formalizing this connection would bridge combinatorics and coding theory.\n\n**The key insight is** that the Walsh\u2013Hadamard matrix entry $H(i,j) = (-1)^{\\langle i,j \\rangle}$ (where $\\langle \\cdot, \\cdot \\rangle$ is the $\\mathbb{F}_2$-inner product of binary representations) directly encodes affine functions on $\\mathbb{F}_2^k$, which are exactly the RM(1,k) codewords.\n\n**Why now?** This direction requires formalizing $\\mathbb{F}_2^k$ as a vector space (available via `ZMod 2` and `Fin k \u2192 ZMod 2`), the bitwise inner product, and the Walsh\u2013Hadamard transform. The Sylvester construction we already have provides the matrix; the gap is proving the distance and linearity properties.\n\n## 5. Williamson's Construction and the Hadamard Conjecture for $n \\leq 668$\n\nWilliamson (1944) showed that if four symmetric $\\{0, \\pm 1\\}$-matrices $A, B, C, D$ of order $m$ satisfy $A^2 + B^2 + C^2 + D^2 = 4mI$, then a Hadamard matrix of order $4m$ exists via a block construction. All known Hadamard matrices for orders not covered by Sylvester or Paley ultimately rely on Williamson-type or generalized constructions. The smallest order for which no Hadamard matrix is known is $n = 668$.\n\n**The key insight is** that Williamson's construction reduces the Hadamard existence problem to finding four commuting $\\pm 1$ matrices satisfying a sum-of-squares identity \u2014 a problem in the group ring $\\mathbb{Z}[\\mathbb{Z}/m\\mathbb{Z}]$ that can be attacked computationally for specific $m$.\n\n**Why now?** Formalizing the Williamson block construction is purely algebraic (matrix multiplication verification) and would immediately give a framework for certifying Hadamard matrices at specific orders. Combined with a verified computation for $m \\leq 166$, this could formally establish the Hadamard conjecture for all $n \\leq 664$, pushing the formal frontier to within 4 of the smallest open case.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1097",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "abf65010",
+    "status": "available",
+    "timestamp": "2026-06-09T09:30:37.138222+00:00",
+    "title": "The Sylvester construction covers orders $2^k$, but the Paley construction yield"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
     "domains": [
       "Cryptography",
@@ -2873,7 +2904,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
   {
-    "consumed_by_exp_id": "bfed4ff5",
+    "consumed_by_exp_id": "",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domains": [
       "Tropical",
@@ -2883,7 +2914,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.541008+00:00",
     "title": "Tropical Differential Equations: Power Series Solutions"
   },
@@ -3001,20 +3032,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T05:51:02.756653+00:00",
     "title": "Close Proofs: P vs NP Problem"
-  },
-  {
-    "consumed_by_exp_id": "f9c3366c",
-    "description": "Cycle 820c5814 (Q=0.446) proved 1155 theorems in Pythagorean but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Model Theory\u2013Algebra Bridge\n\nThis document describes five research conjectures extending the\nAx-Kochen\u2013Morley bridge formalized in `Bridges/AxKochenMorleyBridge.lean`.\n\n---\n\n## 1.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "sorry_fill_820c5814_a339f8f4",
-    "priority_score": 0.49628161412759486,
-    "research_mode": "team",
-    "source_exp_id": "820c5814",
-    "status": "in_progress",
-    "timestamp": "2026-06-09T05:53:06.076503+00:00",
-    "title": "Close Proofs: This document describes five research conjectures extending the"
   },
   {
     "consumed_by_exp_id": "",
@@ -3157,20 +3174,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Tropical Differential Equations: Power Series Solutions"
   },
   {
-    "consumed_by_exp_id": "561a5f44",
-    "description": "Cycle 67d7e25f (Q=0.426) proved 1266 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from ",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_67d7e25f_f0891d41",
-    "priority_score": 0.4758081468929546,
-    "research_mode": "team",
-    "source_exp_id": "67d7e25f",
-    "status": "in_progress",
-    "timestamp": "2026-06-09T08:49:47.668786+00:00",
-    "title": "Close Proofs: Code-Based Cryptography: McEliece from Goppa Codes"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle f2700283 (Q=0.426) proved 1066 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n## Synthesis\n\nThis research cycle established a formalized framework connecting Collatz dynamics to proof-theoretic barriers. The central insight is that three structural gaps \u2014 t",
     "domains": [
@@ -3197,6 +3200,48 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T08:50:54.742239+00:00",
     "title": "Close Proofs: The Geometry of Consensus: Arrow's Theorem as Curvature"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 2c51cdc5 (Q=0.424) proved 4056 theorems in Algebra but left 22 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the consistency strength hierarchy: inaccessible < Mahlo < measurable < strong < supercompact < huge. Prove strictness results.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "sorry_fill_2c51cdc5_9c825091",
+    "priority_score": 0.4744243849268141,
+    "research_mode": "team",
+    "source_exp_id": "2c51cdc5",
+    "status": "available",
+    "timestamp": "2026-06-09T09:29:40.378560+00:00",
+    "title": "Close Proofs: Large Cardinal Hierarchy: Consistency Strength"
+  },
+  {
+    "consumed_by_exp_id": "5bffe06d",
+    "description": "Cycle abf65010 (Q=0.422) proved 311 theorems in Novelty but left 8 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that a Hadamard matrix exists for every positive multiple of 4. Formalize known constructions (Sylvester, Paley, tensor products) and establish bounds on the smallest open order. Connect to comb",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_abf65010_913abd08",
+    "priority_score": 0.4715790026142813,
+    "research_mode": "team",
+    "source_exp_id": "abf65010",
+    "status": "in_progress",
+    "timestamp": "2026-06-09T09:30:52.265403+00:00",
+    "title": "Close Proofs: Hadamard Matrix Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "dddb23fb",
+    "description": "Cycle 28a68a13 (Q=0.418) proved 159 theorems in Novelty but left 8 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Causal Integration Algebra\n\n## Synthesis\n\nThis cycle established the **Causal Integration Algebra** \u2014 a rigorous lattice-theoretic formalization of Integrated Information Theory t",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_28a68a13_08ea3bc8",
+    "priority_score": 0.4679381992755582,
+    "research_mode": "team",
+    "source_exp_id": "28a68a13",
+    "status": "in_progress",
+    "timestamp": "2026-06-09T09:30:15.019498+00:00",
+    "title": "Close Proofs: **Causal Integration Algebra** \u2014 a rigorous lattice-t"
   },
   {
     "consumed_by_exp_id": "",

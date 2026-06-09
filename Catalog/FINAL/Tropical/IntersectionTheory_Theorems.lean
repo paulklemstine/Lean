@@ -1,1 +1,0 @@
-../../Tropical/IntersectionTheory/Theorems.lean
