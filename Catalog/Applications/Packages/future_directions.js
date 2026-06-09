@@ -736,21 +736,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "a7f5b47e",
-    "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0116",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.958310+00:00",
-    "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize computation via topological phase transitions: each computation step is a braid group operation on anyonic worldlines. Conjecture: The braid group B_n is universal for computation when augmented with the F-matrix and R-matrix of SU(2)_k anyons for k>=3. Test: implement the Fibonacci anyon model in Lean 4 and prove that braiding generates a dense subset of SU(2). Impact: connects topological quantum computation to algebraic knot theory.",
     "domains": [
@@ -868,21 +853,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:20.604088+00:00",
     "title": "Algebraic Statistics: Markov Bases for Contingency Tables"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set \u2014 they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line \u2014 they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line \u2014 they are a fractal curve.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0050",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.589354+00:00",
-    "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
   {
     "consumed_by_exp_id": "",
@@ -2258,7 +2228,52 @@ window.FUTURE_DIRECTIONS = [
     "title": "The `IncompletenessGap` structure suggests a deeper categorical framework: defin"
   },
   {
-    "consumed_by_exp_id": "7e292267",
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Fractal Number Theory via the Log-Reciprocal Metric\n\n## What we proved\n\nWe formalized the log-reciprocal metric on primes: d(p,q) = |1/log(p) - 1/log(q)|, and established that:\n- The embedding p \u21a6 1/log(p) is strictly decreasing and injective on \u2115\u22652\n- d satisfies all metric axioms (symmetry, triangle inequality, positive-definiteness on \u2115\u22652)\n- The image {1/log(p)} has infimum 0 (primes accumulate at the origin under this metric)\n- For any \u03b5 > 0, there exist distinct primes with d-distance < \u03b5 (no isolated points at infinity)\n- The gap bound: d(p,q) \u2264 log(q/p)/(log p \u00b7 log q), linking multiplicative gaps to metric distance\n\n## Direction 1: Hausdorff dimension of the prime image set\n\n**Conjecture**: The Hausdorff dimension of the set S = {1/log(p) : p prime} \u2282 \u211d (with the standard metric on \u211d) is exactly 0.\n\nThe key insight is that although S accumulates at 0, the gaps between consecutive elements 1/log(p\u2099) shrink fast enough that S is a \"thin\" set. Since p\u2099 ~ n log n, we have 1/log(p\u2099) ~ 1/(log n + log log n), and the gaps are ~ 1/(n (log n)\u00b2). For any s > 0, the s-dimensional Hausdorff measure H^s(S \u2229 [0, 1/log 2]) \u2264 \u03a3 (1/(n(log n)\u00b2))^s, which converges for all s > 0. Hence dim_H(S) = 0.\n\nWhy now? Our formalization of the metric infrastructure and gap bound theorem provides the exact quantitative control needed. The key lemma `logRecipDist_le_of_ratio` translates prime gaps into metric distances, and formalizing Hausdorff dimension for countable subsets of \u211d is within reach of current Mathlib (which has `MeasureTheory.Measure.hausdorffMeasure`).\n\n## Direction 2: The log-reciprocal metric as an ultrametric approximation\n\n**Conjecture**: Define d_k(p,q) = |1/log_k(p) - 1/log_k(q)| where log_k is the k-fold iterated logarithm. Then for each k, the metric space (Primes, d_k) is bi-Lipschitz equivalent to a subset of an ultrametric space with distortion \u2192 1 as k \u2192 \u221e.\n\nThe key insight is that iterated logarithms progressively \"flatten\" the multiplicative structure of primes, and in the limit the metric becomes determined by the first digit of p in a rapidly growing base \u2014 which is inherently ultrametric (tree-like). This connects prime distribution to the theory of tree-like metric spaces studied in geometric group theory.\n\nWhy now? Our framework already handles the k=1 case. Extending to iterated logarithms is straightforward definitionally, and the bi-Lipschitz theory for embeddings into trees is well-developed in Mathlib's metric geometry library.\n\n## Direction 3: Prime gaps and metric clustering coefficients\n\n**Conjecture**: Define the clustering coefficient at scale \u03b4 as C(\u03b4) = #{(p,q,r) distinct primes : d(p,q), d(q,r), d(p,r) < \u03b4} / #{(p,q) distinct primes : d(p,q) < \u03b4}. Then C(\u03b4) \u2192 1 as \u03b4 \u2192 0.\n\nThe key insight is that at small scales \u03b4, the only primes that are \u03b4-close in the log-reciprocal metric are very large primes (near 1/log(p) \u2248 0), and in a neighborhood of size \u03b4 around any such prime, ALL primes in that neighborhood are mutually close \u2014 the metric is locally \"clique-like.\" This is a measurable consequence of the smoothness of x \u21a6 1/log(x) at large x, and would formalize the intuition that primes look increasingly \"one-dimensional\" at small metric scales.\n\nWhy now? Our theorem `logRecipDist_primes_arbitrarily_small` guarantees the existence of arbitrarily close prime pairs. The next step is counting \u2014 showing that triplets concentrate, not just pairs.\n\n## Direction 4: Connection to Mertens' theorems via metric total variation\n\n**Conjecture**: The total variation of the function f(x) = 1/log(x) restricted to the primes up to N equals \u03a3_{p\u2264N consecutive} |1/log(p_{n+1}) - 1/log(p\u2099)| = 1/log(2) - 1/log(p_max) \u2192 1/log(2), and the rate of convergence is governed by Mertens' third theorem.\n\nThe key insight is that since 1/log is monotone decreasing, the total variation is telescoping: it equals 1/log(2) - 1/log(p_max(N)). The rate 1/log(p_max(N)) \u2248 1/log(N) connects directly to the error term in Mertens' theorem \u03a3_{p\u2264N} 1/p = log log N + M + O(1/log N). This would give a metric-geometric interpretation of Mertens' constant.\n\nWhy now? The telescoping argument is elementary given our monotonicity theorem `logRecip_strictAnti`. Formalizing Mertens' theorem itself would be a significant addition to Mathlib's number theory library, and the metric perspective provides natural motivation.\n\n## Direction 5: Metric entropy and the prime number theorem\n\n**Conjecture**: The \u03b5-covering number N(\u03b5) of the set {1/log(p) : p prime, p \u2264 x} in \u211d satisfies N(\u03b5) ~ 1/(\u03b5 \u00b7 log(1/\u03b5)) as \u03b5 \u2192 0, and this is equivalent to the prime number theorem.\n\nThe key insight is that covering {1/log(p) : p \u2264 x} by intervals of length \u03b5 requires ~ (1/log(2) - 1/log(x))/\u03b5 intervals by monotonicity, but the number of primes per interval of length \u03b5 near the point 1/log(y) is ~ \u03b5\u00b7y\u00b7log(y) by PNT. The total count N(\u03b5) thus encodes PNT. Conversely, knowing N(\u03b5) asymptotically recovers the prime counting function. This gives a metric-geometric reformulation of PNT: the primes are exactly as \"spread out\" in the log-reciprocal metric as a set of density x/log(x) should be.\n\nWhy now? Our gap bound `logRecipDist_le_of_ratio` provides the quantitative link between prime gaps and metric covering. While PNT is not yet in Mathlib, the equivalence itself could be stated and partially formalized, providing a novel characterization of PNT.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1085",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1c021f3c",
+    "status": "available",
+    "timestamp": "2026-06-09T08:15:44.938576+00:00",
+    "title": "We formalized the log-reciprocal metric on primes: d(p,q) = |1/log(p) - 1/log(q)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Reversible Computing and Thermodynamic Efficiency\n\n## 1. Tight Ancilla Bound for General (Non-Surjective) Functions\n\nOur `exists_revSim_of_surjective` proves that surjective endofunctions on `Fin n` can be made reversible with 1 ancilla bit (since surjective = bijective on finite types). The genuinely hard case is non-surjective functions where the max fiber size exceeds 1.\n\n**Conjecture**: For any `f : Fin n \u2192 Fin n` with maximum fiber size `k`, there exists a reversible simulation using exactly `Fin k` ancilla, and this is tight \u2014 no simulation with `Fin (k-1)` ancilla exists.\n\nThe key insight is that the lower bound follows from a pigeonhole argument: if the ancilla space has fewer than `k` elements, then two inputs in the same fiber with the same ancilla must collide, violating injectivity of the simulation bijection.\n\n**Why now?** We have the fiber infrastructure (`fiber`, `maxFiberSize`, `injective_iff_maxFiber_le_one`) and the `RevSim` structure already in place. The upper bound construction requires enumerating fibers and constructing an explicit bijection using `Finset.equivFin`, which is available in Mathlib.\n\n## 2. Circuit Complexity of Reversible Simulation\n\nThe Toffoli gate is universal for reversible Boolean computation (any bijection on `Bool^n` can be decomposed into Toffoli gates). We formalized the Toffoli gate and showed it simulates AND.\n\n**Conjecture**: Any function `f : (Fin 2)^n \u2192 (Fin 2)^n` can be expressed as a composition of at most `O(n \u00b7 2^n)` Toffoli gates applied to `(Fin 2)^(n + O(n))` (i.e., with O(n) ancilla bits). Furthermore, there exist functions requiring `\u03a9(2^n / n)` Toffoli gates (a counting/Shannon-style lower bound).\n\nThe key insight is that the upper bound follows from the standard construction: decompose f into a sequence of controlled-NOT operations using the truth table, and each row requires at most n Toffoli gates. The lower bound is a counting argument comparing the number of possible circuits of given size to the number of bijections.\n\n**Why now?** The Toffoli and Fredkin gate formalizations provide the atomic building blocks. Formalizing circuit composition as lists of gate applications on `(Fin 2)^n` would connect to the existing `rev_compose` theorem and the group structure of `Equiv.Perm`.\n\n## 3. Shannon Entropy Preservation Under Bijections\n\nWe proved that bijections preserve cardinality (`bijection_preserves_fiber_card`) and information content of uniform distributions (`bijection_preserves_info`). The natural next step is full Shannon entropy.\n\n**Conjecture**: For any probability distribution `p : \u03b1 \u2192 \u211d\u22650\u221e` on a finite type and any bijection `\u03c3 : \u03b1 \u2243 \u03b1`, the Shannon entropy `H(p) = -\u2211_x p(x) log p(x)` equals `H(p \u2218 \u03c3\u207b\u00b9)`. Moreover, for any non-injective function `f : \u03b1 \u2192 \u03b1`, there exists a distribution `p` such that `H(f_* p) < H(p)` (entropy strictly decreases under irreversible maps for some distributions).\n\nThe key insight is that Shannon entropy is a symmetric function of the probability vector, and bijections merely permute the vector. The strict decrease for non-injective maps follows because collapsing fibers forces probability mass to merge, which strictly decreases entropy by the strict concavity of `-x log x`.\n\n**Why now?** Mathlib has `MeasureTheory.entropy` and related infrastructure. The challenge is connecting our finite combinatorial setup to the measure-theoretic entropy definition, but `Finset.sum` over explicit distributions avoids most measure theory overhead.\n\n## 4. Reversible Computation and Kolmogorov Complexity\n\n**Conjecture**: For any computable bijection `f : \u2115 \u2192 \u2115`, the Kolmogorov complexity satisfies `K(f(n)) \u2264 K(n) + O(1)` and `K(n) \u2264 K(f(n)) + O(1)`. That is, reversible computation preserves Kolmogorov complexity up to an additive constant. For non-injective computable `f`, there exist infinitely many `n` with `K(f(n)) < K(n) - log(|f\u207b\u00b9(f(n))|) + O(1)`.\n\nThe key insight is that reversibility in the Kolmogorov setting means the description of the inverse is bounded (since it's computable), so the overhead is O(1). The loss for non-injective functions comes from the coding theorem: you lose the information needed to distinguish elements within a fiber.\n\n**Why now?** While Kolmogorov complexity is not directly computable, the inequalities can be stated as relations between program sizes in a fixed universal Turing machine model. Our fiber-size infrastructure provides the combinatorial backbone, and Lean's computability library provides the TM model.\n\n## 5. Thermodynamic Cost of Sorting\n\n**Conjecture**: Any comparison-based sorting algorithm on `n` elements, when implemented reversibly, requires at least `\u2308log\u2082(n!)\u2309` ancilla bits, and merge sort achieves this bound (up to lower-order terms). The thermodynamic cost (in units of `kT ln 2`) of irreversible sorting is exactly `log\u2082(n!)`.\n\nThe key insight is that sorting maps `n!` permutations to a single sorted output, so the fiber of the \"sort\" function has size `n!`. By our `maxFiberSize` framework, this requires `n!` ancilla states, which is `\u2308log\u2082(n!)\u2309` bits. This connects algorithmic complexity (comparison lower bounds) to thermodynamic cost via Landauer's principle.\n\n**Why now?** We have the fiber framework and the Landauer bound infrastructure. Formalizing sorting as a function `Equiv.Perm (Fin n) \u2192 Fin 1` (collapsing all permutations to one output) makes the fiber size exactly `n!`, directly applying our theory. Mathlib's `Nat.factorial` and Stirling's approximation provide the asymptotic analysis.\n",
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_1086",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e2c302ef",
+    "status": "available",
+    "timestamp": "2026-06-09T08:16:19.237318+00:00",
+    "title": "Our `exists_revSim_of_surjective` proves that surjective endofunctions on `Fin n"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Dream Logic and Paraconsistent Reasoning\n\n## 1. N-valued Paraconsistent Lattices and Their Topological Duals\n\nBelnap's FOUR\u2082 is the smallest non-trivial paraconsistent bilattice. A natural generalization is the family of 2^n-valued bilattices arising from n independent \"information sources,\" each contributing a classical truth value. The key insight is that these n-source bilattices are isomorphic to products of 2-element lattices, and their consistent fragments should correspond to (n-1)-dimensional simplicial complexes rather than pretopological spaces. Why now? The formalization of FOUR\u2082 as a `DistribLattice` in this work provides the template for a `Fintype`-parametric construction, and Mathlib's existing simplicial complex API could immediately support the topological side.\n\nConjecture: For n \u2265 3, the consistent fragment of the 2^n-valued bilattice has a pretopological closure whose iterated application stabilizes in exactly \u2308log\u2082 n\u2309 steps (the \"dream depth\" of the logic).\n\n## 2. Paraconsistent Fixed Points and Non-Monotone Induction\n\nClassical fixed-point theorems (Knaster-Tarski, Kleene) rely on monotonicity of the operator. Our `nonmonotonicity` theorem shows that consistent credulous consequence is non-monotone, but it still has fixed points \u2014 they are just not unique or lattice-theoretic. The key insight is that the set of \"stable extensions\" of a paraconsistent knowledge base (analogous to Reiter's stable extensions in default logic) can be characterized as the fixed points of a non-monotone operator on the powerset of Belnap valuations, and these form an antichain in the subset ordering. Why now? Mathlib has extensive fixed-point infrastructure (`OrderHom.lfp`, `OrderHom.gfp`) that could be adapted to characterize the structure of these non-monotone fixed points via Zorn's lemma applied to consistent chains.\n\nConjecture: For any finite knowledge base over Belnap valuations, the number of maximal consistent extensions is either 0 or at least 2 (there is no unique consistent extension when contradictions are present).\n\n## 3. Categorical Semantics: Paraconsistent Topoi\n\nA topos is a category whose internal logic is intuitionistic. Our work shows that paraconsistent logics break explosion, which is valid in any topos. The key insight is that replacing the subobject classifier \u03a9 (a Heyting algebra) with a \"paraconsistent classifier\" (a De Morgan algebra that is NOT a Heyting algebra) should yield a category where the internal logic is paraconsistent \u2014 a \"paraconsistent topos.\" The existence of such categories would give a categorical foundation for dream-like reasoning. Why now? Mathlib has extensive topos infrastructure, and our `Belnap` type with its `DistribLattice` and `neg` involution provides a concrete candidate for the non-Heyting classifier.\n\nConjecture: There exists a finitely complete category with a Belnap-valued subobject classifier that satisfies all topos axioms except the requirement that \u03a9 be a Heyting algebra, and whose internal logic validates `p \u2227 \u00acp \u2260 \u22a5` for some internal proposition p.\n\n## 4. Metric Dream Spaces and Convergence of Belief Revision\n\nOur pretopology `graphPretopology` is non-idempotent, meaning iterated closure discovers new elements. This suggests a natural metric: the \"dream distance\" d(x, S) = min{n | x \u2208 cl^n(S)} measures how many reasoning steps are needed to reach conclusion x from premises S. The key insight is that this dream distance satisfies a weakened triangle inequality (d(x, S) \u2264 d(x, cl(S)) + 1 rather than d(x, S) \u2264 d(x, T) + d(T, S)) and defines a quasi-metric space whose Cauchy sequences correspond to convergent belief revision processes. Why now? The formalized `graphPretopology` and `graph_not_topology` provide a concrete playground, and Mathlib's `PseudoMetricSpace` infrastructure could be leveraged to study convergence properties.\n\nConjecture: For any extensive monotone closure operator cl on a countable set, the dream distance defines a quasi-metric whose completion is a compact topological space (the \"dream compactification\"), and cl is idempotent if and only if the dream distance takes values in {0, 1, \u221e}.\n\n## 5. Computational Complexity of Paraconsistent Reasoning\n\nThe `consistentlyTrue` predicate asks whether a consistent valuation exists satisfying given constraints \u2014 this is a constraint satisfaction problem. The key insight is that the four-valued structure of Belnap makes this problem intermediate between 2-SAT (polynomial) and 3-SAT (NP-complete): checking whether a knowledge base has ANY satisfying Belnap valuation is polynomial (just take the join of all constraints), but checking whether it has a CONSISTENT satisfying valuation is NP-complete (it reduces to NAE-SAT). Why now? The formalization of `satisfiesKB` and `consistentlyTrue` provides the definitional infrastructure, and Lean 4's computational reduction capabilities could enable verified complexity-theoretic reductions.\n\nConjecture: The problem \"given a finite knowledge base kb and variable x, is consistentlyTrue kb x?\" is NP-complete, and remains NP-complete even when restricted to knowledge bases where each variable appears in at most 3 constraints.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1087",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a7f5b47e",
+    "status": "available",
+    "timestamp": "2026-06-09T08:16:50.731622+00:00",
+    "title": "Belnap's FOUR\u2082 is the smallest non-trivial paraconsistent bilattice. A natural g"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Arrow's impossibility theorem states that no ranked voting system with 3+ alternatives can be Pareto efficient, non-dictatorial, and independent of irrelevant alternatives (IIA). Conjecture: Arrow's theorem is a curvature statement. The space of preference profiles is a Riemannian manifold M with the Fisher information metric. The social welfare function F: M -> M is a mapping from profiles to social preferences. Arrow's conditions translate to geometric conditions: (1) Pareto efficiency means F preserves the direction of unanimous preference (F is 'forward-looking'). (2) IIA means F is a local mapping (the social preference at x depends only on local information near x). (3) Non-dictatorial means F is not a projection onto a single voter's preference. Conjecture: the only smooth, local, forward-looking maps on a positively curved manifold are projections (dictatorships). This is because a positively curved manifold has the property that parallel transport around a small loop rotates vectors (Holonomy), and a local, forward-looking map must preserve this holonomy, which forces it to be a projection. Conjecture: the curvature of the preference space is related to the 'polarization' of the electorate: when preferences are polarized (bimodal), the curvature is positive (sphere-like), and Arrow's theorem applies. When preferences are unimodal (consensus), the curvature is zero (flat), and majority rule works. Test: compute the curvature of the preference space for synthetic election data and verify the connection to Arrow's theorem. Impact: Arrow's impossibility is a theorem of differential geometry. Voting is curved.",
     "domains": [
       "Novelty",
@@ -2268,7 +2283,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.814374+00:00",
     "title": "The Geometry of Consensus: Arrow's Theorem as Curvature"
   },
@@ -2408,7 +2423,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems"
   },
   {
-    "consumed_by_exp_id": "67d7e25f",
+    "consumed_by_exp_id": "",
     "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
     "domains": [
       "Cryptography",
@@ -2418,7 +2433,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.295536+00:00",
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
@@ -2968,7 +2983,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Speculative: Computational Complexity as Physical Law"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a26dcdd2",
     "description": "Cycle 4af997a7 (Q=0.426) proved 852 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciou",
     "domains": [
       "Novelty"
@@ -2977,12 +2992,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.47613257964432615,
     "research_mode": "team",
     "source_exp_id": "4af997a7",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T07:41:41.777741+00:00",
     "title": "Close Proofs: Zombies and Qualia: Mathematics of Subjective Experience"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "51f15183",
     "description": "Cycle 9ff1d7e2 (Q=0.426) proved 690 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Hausdorff dimension is normally a metric property, not a topological one. Investigate whether it can be made topological through the lens of fractal topology. Define the fractal topological dimens",
     "domains": [
       "Novelty"
@@ -2991,7 +3006,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.47612431265106225,
     "research_mode": "team",
     "source_exp_id": "9ff1d7e2",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T07:40:42.820634+00:00",
     "title": "Close Proofs: Fractal Topology: Hausdorff Dimension as a Topological Invariant"
   },
@@ -3039,7 +3054,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "**Thermodynamic Proof System** (TPS) framewo"
   },
   {
-    "consumed_by_exp_id": "f2700283",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n## Synthesis\n\nThis research cycle established a formalized framework connecting Collatz dynamics to proof-theoretic barriers. The central insight is that three structural gaps \u2014 the density gap (1/3 vs 1/2), the deterministic window gap (local predictability vs global opacity), and the bounded-universal gap (decidable instances vs \u03a0\u2082 conjunction) \u2014 collectively explain why the Collatz conjecture resists proof. The most promising cross-domain connection is between **residue class acceleration** and **2-adic analysis**: our parity sequence determinism theorem (that n mod 2^k determines the first k parities of the orbit) is essentially a statement about 2-adic continuity of the Collatz map, bridging dynamics and p-adic number theory.\n\nThe density contraction theorem provides a quantitative criterion for orbit descent, and the gap between the parity exclusion bound (1/2) and the contraction threshold (1/3) is where all the difficulty lives. Future work should focus on either (a) narrowing this gap for specific families of inputs, or (b) proving that no uniform density bound below 1/2 exists \u2014 which would be strong evidence for independence. The GCS framework opens the door to studying computational universality thresholds: at what modulus does a GCS become Turing-complete?\n\nThe most impactful direction is **Direction 1** (p-adic Collatz dynamics), which connects our parity determinism result to Mahler's work on p-adic interpolation and could yield new density bounds via analytic methods. **Direction 2** (universality threshold) could settle a long-standing question about the computational power of simple GCS.\n\n---\n\n### Direction 1: p-Adic Collatz Dynamics and Density Bounds\n\n**Conjecture**: The Collatz map extends to a continuous function T: \u2124\u2082 \u2192 \u2124\u2082 on the 2-adic integers, and the odd-step density of T^n(x) for generic x \u2208 \u2124\u2082 converges to log(2)/log(3) \u2248 0.631. Moreover, for every rational starting value n \u2208 \u2115, the empirical odd density is bounded away from 1/2 \u2014 specifically, lim sup_{k\u2192\u221e} (oddCount(n,k)/k) < 0.4 for all n \u2208 \u2115.\n\n**Test**: (a) Formalize the 2-adic extension of the Collatz map and prove continuity. (b) Compute empirical odd densities for n up to 10^6 and test whether any exceed 0.45. (c) Attempt to prove the density bound 0.4 for specific residue classes (e.g., n \u2261 1 mod 2^k for large k).\n\n**Impact**: If the density is bounded away from 1/2, it would imply (via our contraction theorem) that orbits contract \"on average,\" giving the strongest known evidence for the conjecture short of a proof. If the bound fails for some explicit family, it would identify precisely the orbits that resist contraction \u2014 potential counterexample candidates.\n\n**Catalog References**: `Collatz.parity_determined_by_residue` (Novelty/CollatzResidueAcceleration.lean), `Collatz.density_contraction` (Novelty/CollatzContractionBarrier.lean), `Collatz.power_of_two_halvings` (Novelty/CollatzResidueAcceleration.lean)\n\n**Proof Strategy**: Use the parity determinism theorem as the base case. Extend to \u2124\u2082 using Mahler's theorem on p-adic interpolation. The continuity of the Collatz map on \u2124\u2082 follows from the fact that step preserves the 2-adic metric structure (our theorem shows the parity is preserved mod 2^k). For density bounds, use ergodic theory on the 2-adic shift space.\n\n**Domain Bridges**: 2-adic analysis \u2194 Collatz dynamics \u2194 ergodic theory\n\n**Lineage**: Builds on parity_determined_by_residue and density_contraction from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 2: Universality Threshold for Generalized Collatz Systems\n\n**Conjecture**: There exists a sharp threshold m\u2080 such that for modulus m < m\u2080, the halting problem for GCS(m) is decidable, but for m \u2265 m\u2080, it is undecidable. Specifically, m\u2080 = 6 \u2014 GCS with modulus \u2264 5 have decidable halting, while modulus 6 suffices for Turing completeness.\n\n**Test**: (a) For m = 2,3,4,5, attempt to prove that all GCS with modulus m have decidable orbits. (b) For m = 6, construct a specific GCS that simulates a 2-counter machine (which is Turing-complete). (c) Formalize the reduction in Lean 4 using our GCS framework.\n\n**Impact**: This would give a precise characterization of the \"computational power boundary\" for Collatz-type systems. The standard Collatz map (m=2) would be proven to lie strictly below the universality threshold, constraining what kinds of undecidability arguments apply to it.\n\n**Catalog References**: `Collatz.GCS.System` (Novelty/CollatzGCSUndecidability.lean), `Collatz.GCS.standardCollatz_eq_step` (Novelty/CollatzGCSUndecidability.lean), `OracleHierarchy` (Computation/)\n\n**Proof Strategy**: For decidability at small moduli, use the fact that GCS with few rules have limited growth rates. For m=2, the growth per odd step is 3n+1, and the contraction is n/2, giving a net ratio of ~3/2 per odd-even pair. For universality at m=6, follow Conway's construction but optimize the modulus. The 2-counter machine simulation requires at least 6 residue classes to encode two counters with increment/decrement operations.\n\n**Domain Bridges**: Computability theory \u2194 Collatz dynamics \u2194 number theory\n\n**Lineage**: Builds on GCS framework from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 3: Tropical Geometry of Collatz Orbits\n\n**Conjecture**: The Collatz orbit of n, viewed in logarithmic coordinates (log\u2082 of each iterate), is well-approximated by a piecewise-linear function in the tropical semiring (\u211d, max, +). Specifically, the \"tropical Collatz curve\" of n converges (in a suitable metric) to a random walk with drift log\u2082(3/4) \u2248 -0.415, and the variance of this walk determines the stopping time distribution.\n\n**Test**: (a) For n up to 10^5, compute the tropical orbit (log\u2082 of each iterate) and fit against a random walk model. (b) Measure the drift and variance and compare to theoretical predictions (drift = p\u00b7log\u2082(3) + (1-p)\u00b7log\u2082(1/2) where p is the odd density). (c) Formalize the tropical orbit as a sequence in \u211d and prove that the drift is negative when odd density < log\u2082(2)/log\u2082(3).\n\n**Impact**: Tropical geometry provides a natural framework for studying Collatz orbits, as the logarithm converts the multiplicative dynamics to additive (piecewise-linear) dynamics. The random walk model explains the observed log-normal distribution of stopping times and could yield the first rigorous stopping time bounds.\n\n**Catalog References**: `Collatz.odd_density_bound` (Novelty/CollatzContractionBarrier.lean), `Collatz.net_growth_odd_even` (Novelty/CollatzContractionBarrier.lean), `Computation/CollatzTropical.lean`, `Tropical/CollatzWielandt.lean`\n\n**Proof Strategy**: Define the tropical Collatz function as log\u2082 \u2218 step \u2218 2^(\u00b7). Show this is piecewise-linear with slopes determined by the parity of the input. Use the density contraction theorem to bound the drift. Connect to existing tropical geometry in the catalog.\n\n**Domain Bridges**: Tropical geometry \u2194 Collatz dynamics \u2194 probability theory (random walks)\n\n**Lineage**: Builds on density contraction from this cycle and CollatzTropical from catalog.\n\n**Ambition**: extension\n\n---\n\n### Direction 4: Collatz-Style Problems as Natural Examples of G\u00f6del Incompleteness\n\n**Conjecture**: There exists a Collatz-like system (modulus m \u2264 10, with explicitly specified affine rules) whose halting problem on input 1 is independent of PA. That is, PA can neither prove that the orbit of 1 reaches a fixed point nor prove that it doesn't.\n\n**Test**: (a) Survey the landscape of small GCS (m \u2264 10) and identify candidates with undecidable-looking behavior. (b) For the best candidates, attempt to reduce from Goodstein's theorem or the Paris-Harrington theorem (known PA-independent statements) to the halting problem of the GCS. (c) Formalize the reduction in Lean 4.\n\n**Impact**: This would give the first *explicit, concrete* PA-independent statement arising from Collatz-type dynamics, rather than the abstract independence conjectures currently in the literature. It would bridge the gap between \"generalized Collatz is undecidable\" (Conway) and \"standard Collatz might be independent\" (folklore conjecture).\n\n**Catalog References**: `Collatz.GCS.CollatzIndependenceThesis` (Novelty/CollatzGCSUndecidability.lean), `Collatz.GCS.sound_cannot_refute_collatz` (Novelty/CollatzGCSUndecidability.lean)\n\n**Proof Strategy**: Use Goodstein sequences (known to be PA-independent) as the target. Goodstein sequences involve iterated base-change operations that are structurally similar to Collatz iterations. Construct a GCS whose orbit on input 1 encodes a Goodstein sequence. The PA-independence of the Goodstein theorem then transfers to the GCS halting problem.\n\n**Domain Bridges**: Mathematical logic (G\u00f6del incompleteness) \u2194 Collatz dynamics \u2194 ordinal arithmetic\n\n**Lineage**: Builds on proof system framework and GCS definitions from this cycle.\n\n**Ambition**: grand_challenge\n\n---\n\n### Direction 5: Effective Contraction Bounds for Specific Residue Classes\n\n**Conjecture**: For n \u2261 0 (mod 2^k), the orbit reaches a value < n within at most 2k steps, and this bound is tight. More precisely, iter(n, 2k) < n for all n \u2261 0 (mod 2^k) with n \u2265 2^k.\n\n**Test**: (a) Prove the bound for k = 1, 2, 3, 4 using the mod-4 and mod-8 acceleration theorems. (b) Attempt the general case by induction on k. (c) Verify tightness by finding, for each k, a value n \u2261 0 (mod 2^k) where iter(n, 2k-1) \u2265 n.\n\n**Impact**: This would give explicit, computable contraction certificates for a positive-density subset of \u2115. Combined with density arguments, it could show that \"most\" numbers have contracting orbits, extending Tao's result in a more constructive direction.\n\n**Catalog References**: `Collatz.two_step_contraction_mod4` (Novelty/CollatzResidueAcceleration.lean), `Collatz.three_step_contraction_mod8` (Novelty/CollatzResidueAcceleration.lean), `Collatz.power_of_two_halvings` (Novelty/CollatzResidueAcceleration.lean)\n\n**Proof Strategy**: Use power_of_two_halvings as the base case: iter(2^k\u00b7m, k) = m < 2^k\u00b7m. The key is to show that the \"expansion\" steps after reaching m don't push the value back above n within k more steps. This requires bounding the Syracuse function iterated k times.\n\n**Domain Bridges**: Analytic number theory \u2194 Collatz dynamics\n\n**Lineage**: Direct extension of mod-4 and mod-8 contraction results from this cycle.\n\n**Ambition**: extension\n",
     "domains": [
       "Logic",
@@ -3049,7 +3064,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.44999999999999996,
     "research_mode": "team",
     "source_exp_id": "e1a7a938",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-05T15:34:32.605717+00:00",
     "title": "Formalized framework connecting Collatz dynami"
   },
@@ -3084,7 +3099,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Brill-Noether Theory"
   },
   {
-    "consumed_by_exp_id": "5c7661a0",
+    "consumed_by_exp_id": "",
     "description": "Prove a tropical analog of the Hodge decomposition. Formalize tropical (p,q)-forms, the tropical Laplacian, and harmonic theory on balanced weighted polyhedral complexes.",
     "domains": [
       "Tropical",
@@ -3094,7 +3109,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.398315+00:00",
     "title": "Tropical Hodge Theory"
   },
@@ -3309,7 +3324,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Error Correction Bounds"
   },
   {
-    "consumed_by_exp_id": "e2c302ef",
+    "consumed_by_exp_id": "",
     "description": "Prove that reversible circuits achieve Landauer's bound for erasure. Formalize the connection between computational complexity and thermodynamic entropy. Construct provably optimal reversible implementations of common algorithms.",
     "domains": [
       "Computation",
@@ -3319,7 +3334,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.464794+00:00",
     "title": "Reversible Computing and Thermodynamic Efficiency"
   },
