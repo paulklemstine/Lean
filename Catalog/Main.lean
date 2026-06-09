@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2904 of the highest-quality
+A curated collection of 2895 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2904
+Total files: 2895
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -561,7 +561,6 @@ import FINAL.Bridges.HyperbolicArithmetic
 import FINAL.Bridges.HyperbolicNumberTheory
 import FINAL.Bridges.HyperbolicTraceArithmetic
 import FINAL.Bridges.HypothesisTopos
-import FINAL.Bridges.IRVStability
 import FINAL.Bridges.IdempotentBlackwellThermodynamicDuality
 import FINAL.Bridges.IdempotentGaugeCurvatureDuality
 import FINAL.Bridges.IdempotentHolographicClosureDuality
@@ -594,7 +593,6 @@ import FINAL.Bridges.LandauerProofThermodynamics
 import FINAL.Bridges.LanglandsGL2
 import FINAL.Bridges.LargeDeviationPrinciple
 import FINAL.Bridges.LawvereCodingTheorem
-import FINAL.Bridges.LawvereDuality_Theorems
 import FINAL.Bridges.LawvereEMLMetricSemantics
 import FINAL.Bridges.LawvereThermodynamicGalois
 import FINAL.Bridges.LieEquivariantLearning
@@ -608,7 +606,6 @@ import FINAL.Bridges.LongestCommonValuedPrefix
 import FINAL.Bridges.Lorentz
 import FINAL.Bridges.LorentzianBivariateNewBridge
 import FINAL.Bridges.LorentzianComplexityBarrier
-import FINAL.Bridges.LorentzianConditionNumber
 import FINAL.Bridges.LorentzianDistanceCertificate
 import FINAL.Bridges.LorentzianGroundState
 import FINAL.Bridges.LorentzianHardness
@@ -658,7 +655,6 @@ import FINAL.Bridges.NonArchProbability_Defs
 import FINAL.Bridges.NonArchimedeanComputation
 import FINAL.Bridges.NonCancellationCertificate
 import FINAL.Bridges.NonGroupComparison
-import FINAL.Bridges.NonlinearSpectralStability
 import FINAL.Bridges.NucleusSheafReconstruction
 import FINAL.Bridges.Numerology
 import FINAL.Bridges.ObserverRateDistortion
@@ -782,7 +778,6 @@ import FINAL.Bridges.SpectralApplications
 import FINAL.Bridges.SpectralCrypto
 import FINAL.Bridges.SpectralEmbeddingLorentzian
 import FINAL.Bridges.SpectralFingerprints
-import FINAL.Bridges.SpectralGap
 import FINAL.Bridges.SpectralLorentzianStability
 import FINAL.Bridges.SpectralProofComplexity
 import FINAL.Bridges.SpectralProofSpace
@@ -884,7 +879,6 @@ import FINAL.Bridges.TropicalGravitationalFactorization
 import FINAL.Bridges.TropicalHeckeCrystalDuality
 import FINAL.Bridges.TropicalHeckeRealizationDuality
 import FINAL.Bridges.TropicalHeckeTrapdoor_Defs
-import FINAL.Bridges.TropicalHeckeTrapdoor_Theorems
 import FINAL.Bridges.TropicalHecke_Correspondence
 import FINAL.Bridges.TropicalHecke_Defs
 import FINAL.Bridges.TropicalHeightRigidity
@@ -917,7 +911,6 @@ import FINAL.Bridges.TropicalPersistentHomology
 import FINAL.Bridges.TropicalPerturbationAmplification
 import FINAL.Bridges.TropicalPhylogenetics
 import FINAL.Bridges.TropicalPlancherel_Defs
-import FINAL.Bridges.TropicalPlancherel_Theorems
 import FINAL.Bridges.TropicalPrimeStoneDuality
 import FINAL.Bridges.TropicalProofCertificates_Basic
 import FINAL.Bridges.TropicalProofCertificates_Representation
@@ -2233,7 +2226,6 @@ import FINAL.Pythagorean.DirectionalLogConcavity
 import FINAL.Pythagorean.DoubleScalingLimit
 import FINAL.Pythagorean.DoubleScalingWhenDoesmMatter
 import FINAL.Pythagorean.Duality
-import FINAL.Pythagorean.DynamicLorentzianCertificates
 import FINAL.Pythagorean.DynamicSpectralGap
 import FINAL.Pythagorean.DynamicalSquaring
 import FINAL.Pythagorean.EGraph_Defs
@@ -2420,7 +2412,6 @@ import FINAL.Pythagorean.SharpPerturbationScale
 import FINAL.Pythagorean.SharpThresholdConcentration
 import FINAL.Pythagorean.SingerLike
 import FINAL.Pythagorean.SizeDepthTradeoff_Defs
-import FINAL.Pythagorean.Soundness
 import FINAL.Pythagorean.Sp2nExpansion
 import FINAL.Pythagorean.Sp2nHigherRankExpanders
 import FINAL.Pythagorean.SpacetimeLattice
