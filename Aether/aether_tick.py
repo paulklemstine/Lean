@@ -551,6 +551,17 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
     except Exception as e:
         print(f"[Rebalance] Domain rebalance failed: {e}")
 
+    # ── Aggressive Catalog curation: remove ~10 low-quality files per tick ──
+    try:
+        from catalog_pruner import CatalogPruner
+        pruner = CatalogPruner(catalog_root=REPO_ROOT / "Catalog", pi_agent=extractor.pi_agent, workspace=extractor.workspace)
+        prune_result = pruner.prune(target_remove_count=10)
+        removed = prune_result.get("removed", [])
+        kept = prune_result.get("kept", [])
+        print(f"[Prune] Removed {len(removed)} low-quality files, kept {len(kept)}")
+    except Exception as e:
+        print(f"[Prune] Catalog curation failed: {e}")
+
     # ── Cycle analytics: record per-cycle metrics ──
     try:
         from cycle_analytics import CycleAnalytics

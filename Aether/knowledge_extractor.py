@@ -1524,6 +1524,19 @@ Research mode: {concept.research_mode}
             job.status = "rejected"
             return job
 
+        # A_only jobs (Phase B skipped for low quality) don't produce deliverables
+        # for human consumption. Skip Catalog integration for their Lean files —
+        # only high-quality results (Phase B packaged) deserve a spot in the Catalog.
+        is_a_only = getattr(job, 'phase', '') == 'A_only' or getattr(job, 'phase_b_skipped_reason', None)
+        if is_a_only and job.quality_score < self._adaptive_phase_b_threshold():
+            print(f"[Integrate] A_only Q={job.quality_score:.3f} below threshold — skipping Catalog integration")
+            # Still quarantine low-quality directions to avoid wasting compute
+            if job.quality_score < 0.3:
+                self._quarantine_direction_for_job(job, days=30)
+            job.status = "integrated"
+            self.completed_count += 1
+            return job
+
         # Quarantine: Q<0.3 means the direction itself is producing near-junk
         # Don't waste compute retrying the same direction for 30 days
         if job.quality_score < 0.3:
@@ -1852,8 +1865,25 @@ Research mode: {concept.research_mode}
         if not target_path or target_path.upper().startswith("REJECT"):
             return "REJECT"
 
+        # Reject SalvagedBest.lean — this convention is dead. Low-quality output
+        # is no longer salvaged; it's skipped entirely at the integration gate.
+        if Path(target_path).name == "SalvagedBest.lean":
+            print(f"[Integrate] Rejecting SalvagedBest.lean: {target_path}")
+            return "REJECT"
+
         if suffix == ".lean" and part.get("type") == "new":
             has_sorry = self._lean_contains_sorry(part.get("content", ""))
+            # Reject sorry-dense trivial files (>50% sorry, <3 theorems)
+            content = part.get("content", "")
+            theorem_count = content.count("theorem ") + content.count("lemma ")
+            sorry_count = content.count("sorry")
+            if has_sorry and sorry_count > 0:
+                lines = content.count("\n") + 1
+                sorry_density = sorry_count / max(1, lines)
+                if sorry_density > 0.5 and theorem_count < 3:
+                    print(f"[Integrate] Rejecting sorry-dense trivial file: {target_path} "
+                          f"(sorry_density={sorry_density:.2f}, theorems={theorem_count})")
+                    return "REJECT"
             if has_sorry:
                 # Incomplete proofs go to Speculative/AutoResearch, preserving any
                 # subdirectory structure Pi suggested (e.g. EML/ReflectionCapacity/).
@@ -2632,6 +2662,12 @@ Research mode: {concept.research_mode}
                     fname = _splits[i].strip()
                     # Clean _aristotle project dir prefixes
                     fname = "/".join(p for p in fname.split("/") if not re.match(r'^[0-9a-f]+_aristotle$', p))
+                    # Replace SalvagedBest.lean with a meaningful name derived from the concept title
+                    if Path(fname).name == "SalvagedBest.lean" and hasattr(job, 'concept') and job.concept:
+                        slug = re.sub(r'[^a-zA-Z0-9]+', '', job.concept.title[:40])
+                        if not slug:
+                            slug = "Proofs"
+                        fname = str(Path(fname).parent / f"{slug}.lean") if Path(fname).parent.name else f"{slug}.lean"
                     code = _splits[i + 1].strip() if i + 1 < len(_splits) else ""
                     basename = fname.split("/")[-1].replace(".lean", "")
                     if basename not in existing_files and code:

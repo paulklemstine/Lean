@@ -308,21 +308,149 @@ class CatalogPruner:
             except Exception as e:
                 print(f"[Prune] Failed to immortalize {candidate['path']}: {e}")
 
+    def curate_individual(self, candidates: List[Dict[str, Any]], target_count: int = 10, dry_run: bool = False) -> List[str]:
+        """Evaluate individual files with Pi-Agent for aggressive curation.
+
+        For files not in similarity groups, ask Pi-Agent to rate each on a
+        keep/remove/maybe scale. 'Remove' and low-quality 'maybe' files are culled.
+        """
+        if not candidates:
+            return []
+
+        # Build a concise summary for Pi-Agent
+        file_summaries = []
+        for c in candidates:
+            summary = (
+                f"File: {c['path']}\n"
+                f"  Lines: {c['lines']}, Theorems: {c['theorems']}, Sorries: {c['sorries']}\n"
+                f"  Trivial: {c['trivial_only']}, Domain: {c['domain']}\n"
+                f"  First 200 chars: {c.get('content_preview', '')[:200]}"
+            )
+            file_summaries.append(summary)
+
+        prompt = (
+            "You are a mathematical quality curator. Evaluate each Lean 4 file below.\n"
+            "For each file, decide: KEEP (genuinely novel or deep), REMOVE (trivial, duplicate, "
+            "textbook-level, or sorry-dense with no complete proofs), or MAYBE (borderline).\n\n"
+            "REMOVE if:\n"
+            "- The result is trivial (e.g., commutativity, wrapper theorems, simp-only proofs)\n"
+            "- It duplicates something already in the Catalog\n"
+            "- It's a textbook result with no new insight\n"
+            "- It's primarily sorry-based with no complete proofs\n"
+            "- The file name is 'SalvagedBest.lean' (this is a legacy artifact)\n\n"
+            "Respond in JSON format:\n"
+            '{"decisions": [{"path": "...", "verdict": "keep|remove|maybe", "reason": "..."}]}\n\n'
+            + "\n---\n".join(file_summaries)
+        )
+
+        try:
+            result = self.pi_agent.call(prompt, max_tokens=2000)
+            if not result:
+                return []
+            # Parse JSON response
+            import json
+            # Try to extract JSON from the response
+            json_match = re.search(r'\{[\s\S]*\}', result)
+            if not json_match:
+                return []
+            data = json.loads(json_match.group())
+            decisions = {d["path"]: d for d in data.get("decisions", [])}
+        except Exception as e:
+            print(f"[Prune] Individual curation failed: {e}")
+            return []
+
+        removed = []
+        for c in candidates:
+            path = c["path"]
+            decision = decisions.get(path, {})
+            verdict = decision.get("verdict", "keep").lower()
+            reason = decision.get("reason", "")
+
+            if verdict == "remove" or (verdict == "maybe" and c["theorems"] < 3):
+                if not dry_run:
+                    try:
+                        c["abs_path"].unlink(missing_ok=True)
+                        removed.append(path)
+                        print(f"[Prune] Removed {path}: {reason}")
+                    except Exception as e:
+                        print(f"[Prune] Failed to remove {path}: {e}")
+                else:
+                    removed.append(path)
+            # else: keep the file
+
+        return removed
+
+    def deduplicate_catalog(self, candidates: List[Dict[str, Any]], dry_run: bool = False) -> List[str]:
+        """Find and remove near-duplicate files (>80% content overlap).
+
+        When two files have >80% content overlap, keep the one with more theorems
+        and fewer sorries, and remove the other.
+        """
+        if len(candidates) < 2:
+            return []
+
+        removed = []
+        seen_content_hashes = {}  # hash -> (path, theorems, sorries)
+
+        for c in candidates:
+            # Quick hash of content for dedup
+            content_preview = c.get("content_preview", "")
+            if not content_preview:
+                continue
+            # Use first 500 chars as a quick fingerprint
+            fingerprint = content_preview[:500]
+
+            for existing_hash, (existing_path, existing_theorems, existing_sorries) in seen_content_hashes.items():
+                # Simple overlap check: if first 200 chars match, likely duplicate
+                if fingerprint[:200] == existing_hash[:200]:
+                    # Keep the better file (more theorems, fewer sorries)
+                    existing_score = existing_theorems / (1 + existing_sorries)
+                    current_score = c["theorems"] / (1 + c["sorries"])
+                    if current_score >= existing_score:
+                        # Remove the existing one
+                        loser_path = existing_path
+                    else:
+                        # Remove current one
+                        loser_path = c["path"]
+
+                    if not dry_run:
+                        try:
+                            loser = next((x for x in candidates if x["path"] == loser_path), None)
+                            if loser:
+                                loser["abs_path"].unlink(missing_ok=True)
+                                removed.append(loser_path)
+                                print(f"[Prune] Dedup: removed {loser_path}")
+                        except Exception as e:
+                            print(f"[Prune] Failed to dedup-remove {loser_path}: {e}")
+                    else:
+                        removed.append(loser_path)
+                    break  # Only match once per candidate
+            else:
+                seen_content_hashes[fingerprint] = (c["path"], c["theorems"], c["sorries"])
+
+        return removed
+
     def prune(self, target_remove_count: int = 10, dry_run: bool = False) -> Dict[str, Any]:
         """Run the pruning workflow."""
         candidates = self.get_prune_candidates()
         print(f"[Prune] Scanned {len(candidates)} total candidate .lean files")
-        
+
         # 1. Clear obvious junk immediately to save LLM budget
-        # We define stubs: < 15 lines AND 0 theorems
-        # Or stubs: < 10 lines AND trivial-only
+        # Aggressive: < 20 lines AND < 2 theorems = stub
+        # Or: < 10 lines AND trivial-only = trivial stub
+        # Or: > 50% sorry density AND < 3 theorems = sorry-dense junk
+        # Or: named SalvagedBest.lean = legacy artifact
         auto_removed = []
         retained_candidates = []
         for c in candidates:
-            is_empty_stub = c["lines"] < 15 and c["theorems"] == 0
+            is_empty_stub = c["lines"] < 20 and c["theorems"] < 2
             is_tiny_trivial = c["lines"] < 10 and c["trivial_only"]
-            
-            if is_empty_stub or is_tiny_trivial:
+            is_sorry_junk = (c["sorries"] > 0 and c["lines"] > 0
+                           and c["sorries"] / c["lines"] > 0.5
+                           and c["theorems"] < 3)
+            is_salvaged = Path(c["path"]).name == "SalvagedBest.lean"
+
+            if is_empty_stub or is_tiny_trivial or is_sorry_junk or is_salvaged:
                 if not dry_run:
                     try:
                         c["abs_path"].unlink(missing_ok=True)
@@ -393,8 +521,31 @@ class CatalogPruner:
         # 5. Save state
         if not dry_run:
             self.save_prune_state(next_group_idx)
-            
-        total_removed = auto_removed + curator_removed
+
+        # 6. Deduplicate: remove near-duplicate files
+        dedup_removed = []
+        remaining_after_groups = [c for c in retained_candidates if c["path"] not in set(curator_removed)]
+        if remaining_after_groups:
+            dedup_removed = self.deduplicate_catalog(remaining_after_groups, dry_run=dry_run)
+            if dedup_removed:
+                print(f"[Prune] Dedup removed {len(dedup_removed)} duplicate files")
+
+        # 7. Individual curation: if we haven't reached the target, curate remaining files
+        individual_removed = []
+        total_removed_so_far = auto_removed + curator_removed + dedup_removed
+        if len(total_removed_so_far) < target_remove_count and retained_candidates:
+            # Select files not yet reviewed for individual curation
+            unreviewed = [c for c in retained_candidates
+                         if c["path"] not in set(total_removed_so_far)
+                         and c["path"] not in set(curator_kept)]
+            # Pick up to 10 files for individual review
+            to_review = unreviewed[:10]
+            if to_review:
+                individual_removed = self.curate_individual(to_review, target_count=target_remove_count - len(total_removed_so_far), dry_run=dry_run)
+                if individual_removed:
+                    print(f"[Prune] Individual curation removed {len(individual_removed)} files")
+
+        total_removed = auto_removed + curator_removed + dedup_removed + individual_removed
 
         # 6. Immortalize kept sorry-free files with theorems
         if not dry_run:
