@@ -1,8 +1,15 @@
 /- Aether FINAL Catalog
+<<<<<<< Updated upstream
 A curated collection of 2468 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
 Total files: 2468
+=======
+A curated collection of 2487 of the highest-quality
+formally verified mathematical results from the Aether engine.
+Sorry-free. No placeholders. Auto-maintained.
+Total files: 2487
+>>>>>>> Stashed changes
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
