@@ -162,7 +162,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Riemann Hypothesis: Zero-Free Regions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d264e828",
     "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
     "domains": [
       "Logic",
@@ -172,7 +172,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.92,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:25.938639+00:00",
     "title": "Certified Novelty Detection for Theorem Provers"
   },
@@ -574,21 +574,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0005",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-01T12:30:30.491025+00:00",
-    "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize a 3D topological quantum field theory that captures key features of quantum gravity: prove that the partition function on a closed 3-manifold equals the Turaev-Viro invariant. Show that the Hilbert space on a surface is finite-dimensional and that the mapping class group acts unitarily.",
     "domains": [
       "Physics",
@@ -737,7 +722,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Topological Phase Computation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "431596bc",
     "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
     "domains": [
       "Bridges",
@@ -747,7 +732,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.664610+00:00",
     "title": "Logic-Physics Bridge: Consistency of Physical Theories"
   },
@@ -779,21 +764,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:01.788604+00:00",
     "title": "Invariant Subspace Problem"
-  },
-  {
-    "consumed_by_exp_id": "0f684a27",
-    "description": "Prove the Kakeya conjecture: a Besicovitch set in R\u207f has Hausdorff dimension n. Formalize the connection to restriction estimates and additive combinatorics.",
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "seed_035",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:25:02.777464+00:00",
-    "title": "Kakeya Conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -2410,6 +2380,66 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Fibonacci Entry Point Theory and Primitive Divisors\n\n## 1. Full Carmichael Primitive Divisor Theorem\n\nThe entry point machinery developed here (fibEntryPoint, its divisibility property,\nand the primitive divisor characterization) provides exactly the framework needed\nto prove Carmichael's theorem: for all n \u2265 13, F(n) has a primitive prime divisor.\n\nThe key insight is that the entry point characterization reduces Carmichael's theorem\nto showing that for each n \u2265 13, there exists a prime p with fibEntryPoint p = n,\nwhich can be established by analyzing the \"coprime part\" of F(n) \u2014 the quotient after\nremoving all prime factors that appear in F(d) for proper divisors d | n.\n\nWhy now? The `isPrimitivePrimeDivisor_iff` theorem gives an exact algebraic criterion\nfor primitive divisors in terms of entry points. Combined with computational verification\nfor small cases (which Lean's `native_decide` can handle for n \u2264 10000) and analytic\ngrowth bounds for large n, a complete proof is within reach.\n\n## 2. Pisano Period Exact Formula\n\nThe `fib_periodic_mod` theorem establishes existence of periodicity mod m, but does not\ncharacterize the minimal period \u03c0(m) (the Pisano period). A natural conjecture is:\n\n**Conjecture**: For prime p \u2260 5, \u03c0(p) divides p\u00b2 \u2212 1. More precisely, \u03c0(p) divides\np \u2212 1 if p \u2261 \u00b11 (mod 5), and \u03c0(p) divides 2(p + 1) if p \u2261 \u00b12 (mod 5).\n\nThe key insight is that the Fibonacci sequence mod p is governed by the splitting behavior\nof x\u00b2 \u2212 x \u2212 1 in F_p, which depends on whether 5 is a quadratic residue mod p. This\nconnects Pisano periods to the Legendre symbol (5/p) and quadratic reciprocity.\n\nWhy now? The periodicity infrastructure is in place. The connection to quadratic residues\ncan leverage Mathlib's existing `ZMod.legendreSym` and `QuadraticReciprocity` machinery.\n\n## 3. Fibonacci Representations and Zeckendorf's Theorem\n\nEvery positive integer has a unique representation as a sum of non-consecutive Fibonacci\nnumbers (Zeckendorf's theorem). This is a constructive result that connects to the\ngreedy algorithm for Fibonacci representations.\n\n**Conjecture**: The Zeckendorf representation can be computed by the greedy algorithm,\nand the number of terms in the representation of n is O(log n / log \u03c6) where \u03c6 is the\ngolden ratio.\n\nThe key insight is that the proof of existence uses the entry point theory indirectly:\nthe gap condition (no consecutive Fibonacci numbers) is forced by the identity\nF(k) + F(k+1) = F(k+2), which collapses adjacent terms. Uniqueness follows from\na counting argument using the Cassini identity proved here.\n\nWhy now? The `fib_cassini` identity and the strong induction pattern used in\n`fib_periodic_mod` provide the exact proof technology needed. Mathlib's `Finset`\nAPI handles the representation as a finite set of indices.\n\n## 4. Entry Point and the ABC Conjecture for Fibonacci\n\nA deep open question is whether the entry point function \u03b1(p) satisfies\n\u03b1(p) > p^\u03b5 for some \u03b5 > 0 and all sufficiently large primes p. This is\nrelated to the ABC conjecture applied to Fibonacci numbers.\n\n**Conjecture**: For every \u03b5 > 0, there exist only finitely many primes p with\n\u03b1(p) < p^\u03b5 (the \"Wall-Sun-Sun prime\" generalization).\n\nThe key insight is that if \u03b1(p) is very small relative to p, then F(\u03b1(p)) has\nan unusually large prime factor relative to its size, creating tension with\nthe ABC conjecture. The entry point divisibility theorem proved here\n(`fibEntryPoint_dvd`) is the foundational tool for any progress on this question.\n\nWhy now? While a full resolution likely requires ABC, partial results bounding\n\u03b1(p) \u2265 c\u00b7log(p) for an explicit constant c are accessible using the Pisano\nperiod bounds and our periodicity theorem. Even formalizing the precise\nrelationship between entry points and ABC would be novel.\n\n## 5. Generalized Entry Points for Lucas Sequences\n\nThe Fibonacci sequence is a special case of a Lucas sequence U_n(P, Q) with P = Q = 1.\nThe entry point theory generalizes: for any Lucas sequence, if p | U_n then \u03b1(p) | n.\n\n**Conjecture**: For Lucas sequences U_n(P, Q) with \u0394 = P\u00b2 \u2212 4Q \u2260 0, the entry point\n\u03b1(p) of a prime p \u2224 2Q\u0394 satisfies: \u03b1(p) | p \u2212 (\u0394/p), where (\u0394/p) is the Legendre symbol.\n\nThe key insight is that the proof of `fibEntryPoint_dvd` used only the GCD property\n(fib_dvd_of_dvd_gcd), which generalizes to all Lucas sequences via the analogous\nidentity gcd(U_m, U_n) = U_{gcd(m,n)}. The Cassini identity also generalizes:\nU_{n+1}\u00b2 \u2212 P\u00b7U_{n+1}\u00b7U_n + Q\u00b7U_n\u00b2 = Q^n.\n\nWhy now? The proof architecture (entry point \u2192 divisibility \u2192 periodicity \u2192 primitive divisors)\nis modular and transfers directly. Mathlib has partial infrastructure for general linear\nrecurrences that could serve as a foundation.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1098",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "72ac5da9",
+    "status": "available",
+    "timestamp": "2026-06-09T10:02:21.189696+00:00",
+    "title": "The entry point machinery developed here (fibEntryPoint, its divisibility proper"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Code-Based Cryptography from Goppa Codes\n\n## 1. Goppa Code Minimum Distance Bound: deg(g) + 1\n\nThe classical result states that a binary Goppa code with Goppa polynomial g(x) of degree t has minimum distance at least 2t + 1. More generally, over F_q, the minimum distance is at least deg(g) + 1. This is provable from the syndrome formulation: if a codeword c has weight \u2264 deg(g), then the error locator polynomial has degree < deg(g), and the key equation \u03c3(x) \u00b7 S(x) \u2261 \u03c9(x) mod g(x) forces \u03c3 to be zero, contradicting c \u2260 0.\n\nThe key insight is that the syndrome-based argument reduces to a degree comparison in F_q[x]/g(x), which is already formalized via Mathlib's polynomial algebra. Why now? Our `GoppaCode` definition and `isGoppaCodeword` predicate give us the syndrome condition directly; what remains is connecting the polynomial degree argument to the Hamming weight bound.\n\n## 2. Indistinguishability of Goppa Code Generator Matrices\n\nA central security assumption of the McEliece cryptosystem is that the public key (a scrambled generator matrix of a Goppa code) is computationally indistinguishable from a random matrix. Formalizing this requires defining a notion of computational indistinguishability for matrix distributions and showing that any efficient distinguisher has negligible advantage.\n\nThe key insight is that this can be modeled as a game-based security definition: the adversary receives either a scrambled Goppa matrix or a uniformly random matrix and must guess which. The reduction to NP-hardness of random linear code decoding (Berlekamp-McEliece-Tilborg) provides the theoretical foundation. Why now? Our linear code infrastructure (submodules, projections, dimension bounds) gives us the algebraic side; what's needed is the complexity-theoretic framing, which can be axiomatized as an oracle assumption.\n\n## 3. Patterson's Decoding Algorithm Correctness\n\nPatterson's algorithm efficiently decodes binary Goppa codes by computing the error locator polynomial from the syndrome. Formalizing its correctness would complete the McEliece decryption pipeline: given a received word y = c + e with wt(e) \u2264 t, Patterson's algorithm recovers e (and hence c) in polynomial time.\n\nThe key insight is that the algorithm reduces to finding square roots in F_{2^m}[x]/(g(x)) and then factoring the resulting polynomial, both of which are constructive operations in finite fields. Why now? Our `unique_nearest_codeword` theorem guarantees uniqueness of the decoded codeword; formalizing Patterson's algorithm would give us constructive decoding to match the existential uniqueness result.\n\n## 4. MacWilliams Identity for Weight Enumerators\n\nThe MacWilliams identity relates the weight enumerator of a linear code to that of its dual code: W_{C\u22a5}(x,y) = |C|^{-1} \u00b7 W_C(y-x, y+x) (for binary codes). This is a deep structural result connecting a code to its dual.\n\nThe key insight is that the proof uses character sums over finite fields, specifically the fact that \u2211_{c \u2208 C} \u03c7(c \u00b7 v) = |C| if v \u2208 C\u22a5 and 0 otherwise. This character-sum machinery connects to Mathlib's existing Fourier analysis on finite abelian groups. Why now? Our weight enumerator definition and the `weightEnumerator_zero_eq_one` result provide the starting point; the dual code C\u22a5 is naturally defined as the orthogonal complement submodule, which Mathlib already supports.\n\n## 5. Singleton Bound Tightness: MDS Codes\n\nA code meeting the Singleton bound d = n - k + 1 with equality is called Maximum Distance Separable (MDS). Reed-Solomon codes are the canonical examples. Formalizing MDS codes and proving that Reed-Solomon codes are MDS would connect our Singleton bound to the most important family of optimal codes.\n\nThe key insight is that a code is MDS if and only if every k columns of any parity-check matrix are linearly independent, which can be shown via the Vandermonde determinant for Reed-Solomon codes. Why now? Our `singleton_bound` and `coordProj_injOn_code` already formalize the projection-based argument; proving tightness requires constructing explicit codes (Reed-Solomon) and showing their evaluation matrices have full rank, which reduces to the nonvanishing of Vandermonde determinants \u2014 a result close to what Mathlib already has for polynomial interpolation.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1099",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "561a5f44",
+    "status": "available",
+    "timestamp": "2026-06-09T10:02:55.150528+00:00",
+    "title": "The classical result states that a binary Goppa code with Goppa polynomial g(x) "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Tropical Differential Algebra\n\n## 1. Tropical Newton Polygon Characterization of ODE Solutions\n\nThe Newton polygon of a differential polynomial P(y, y', ..., y^(k)) encodes which terms can dominate at various growth rates. For a first-order ODE y' = P(x, y) where P is a polynomial, the slopes of the tropical Newton polygon should correspond exactly to the possible leading exponents of formal power series solutions.\n\n**Conjecture**: If f is a formal power series solution to y' = P(x, y) in a valued field, then the tropical order of trop(f) equals one of the slopes of the Newton polygon of the tropicalization of P.\n\nThe key insight is that the tropical Leibniz rule (proved as `tropical_leibniz`) guarantees that differentiation interacts with the Newton polygon in a controlled way \u2014 the derivative shifts the polygon by exactly one unit, which constrains which slopes can arise.\n\n**Why now?** The `tropical_leibniz` equality (not just inequality) is now formalized, which is the essential ingredient for showing that tropical solutions faithfully reflect classical ones. The `torder_tmul_le` theorem provides the order-additivity needed for Newton polygon slope arithmetic.\n\n## 2. Tropical Differential Galois Theory\n\nClassical differential Galois theory studies the symmetries of differential equations via the differential Galois group. In the tropical setting, automorphisms of the tropical differential field correspond to piecewise-linear maps that preserve the tropical derivative.\n\n**Conjecture**: The tropical differential Galois group of a tropical linear ODE of order n is a polyhedral subgroup of GL(n, \u2124), and its combinatorial structure determines the possible factorization patterns of the original ODE over the valued field.\n\nThe key insight is that the `tropical_ode_superposition` theorem shows the solution space has a lattice structure (closed under min), and tropical automorphisms must preserve this lattice, forcing them to be piecewise-linear and hence polyhedral.\n\n**Why now?** The superposition principle (`tropical_ode_superposition`) and the weighted derivative formalism (`tderiv_weighted_iterate`) provide the infrastructure to define tropical differential field extensions and their automorphism groups.\n\n## 3. Effective Bounds from Tropical Differential Equations\n\nThe tropical order exactness theorem (`tderiv_order_exact`) shows that differentiation decreases tropical order by exactly 1. This should yield effective lower bounds on the growth rate of solutions to classical differential equations.\n\n**Conjecture**: For a polynomial ODE of degree d and order k, if all tropical solutions have tropical order \u2265 m, then every classical solution f in the valued field satisfies val(f) \u2265 m, i.e., |f(x)| \u2264 C\u00b7|x|^(-m) for some constant C near the origin.\n\nThe key insight is that the functor \"tropicalization\" is order-preserving (by `torder_tmul_le`), so bounds proved in the simpler tropical world automatically transfer to the classical world.\n\n**Why now?** The formalized order theory (`tderiv_order_exact`, `torder_tmul_le`) provides the rigorous foundation for transferring tropical bounds to classical settings. The higher-order Leibniz rule (`tropical_leibniz_higher`) extends this to higher-order ODEs.\n\n## 4. Tropical Differential Algebra over Non-Archimedean Fields\n\nThe current formalization uses trivial valuation on coefficient indices (so the tropical derivative is the shift operator). Extending to p-adic valuations via `tderiv_weighted` introduces arithmetic dependencies on the characteristic.\n\n**Conjecture**: Over a p-adic field with valuation v_p, the tropical differential equation D_{v_p}(y) \u2295 (a \u2299 y) = b has a solution if and only if for every n, the \"tropical discriminant\" min(b(n), a(0) + b(n-1) + v_p(n)) is achieved by the b(n) term for all but finitely many n.\n\nThe key insight is that the weighted iterate formula (`tderiv_weighted_iterate`) shows the cumulative p-adic valuation \u2211 v_p(k+i+1) grows like k\u00b7log(m)/log(p), creating a threshold effect: beyond a critical index, the derivative term always dominates.\n\n**Why now?** The `tderiv_weighted_iterate` theorem provides the explicit formula for iterated weighted derivatives, making the threshold computation feasible. The p-adic case is particularly tractable because v_p has well-understood growth.\n\n## 5. Tropical Differential Resultant and Elimination Theory\n\nIn algebraic geometry, the resultant eliminates a variable from a system of polynomial equations. The tropical resultant should similarly eliminate a \"variable\" (series component) from a system of tropical differential equations.\n\n**Conjecture**: Given two tropical differential polynomials P(y, Dy) and Q(y, Dy) of tropical degrees d\u2081 and d\u2082, their tropical differential resultant R(Dy) has tropical degree \u2264 d\u2081\u00b7d\u2082, and R(Dy) = 0 (tropically) if and only if P and Q have a common tropical solution.\n\nThe key insight is that the tropical Leibniz rule being an equality (not inequality) means the tropical resultant computation is exact \u2014 there are no cancellation artifacts that could introduce spurious solutions or miss genuine ones.\n\n**Why now?** The commutativity (`tmul_comm`) and Leibniz equality (`tropical_leibniz`) together give the tropical polynomial ring a clean enough algebraic structure to define resultants. The order theory provides degree bounds.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1100",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "bfed4ff5",
+    "status": "available",
+    "timestamp": "2026-06-09T10:03:42.905342+00:00",
+    "title": "The Newton polygon of a differential polynomial P(y, y', ..., y^(k)) encodes whi"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Phantom Topologies\n\n## 1. Exact Phantom Numbers of Classical Spaces\n\nThe phantom number framework raises a natural classification question: what is the exact phantom number of classical topological spaces? For the standard topology on \u211d, we conjecture that the phantom number is exactly 1 (trivially represented by itself), but the more interesting question is whether specific *non-standard* topologies on \u211d have phantom number exactly 2. In particular, the Sorgenfrey line (lower limit topology) should have phantom number 1 since it is itself a topology, but the question of whether the standard topology on \u211d can be non-trivially decomposed as a sup of two strictly finer topologies is open.\n\nThe key insight is that the phantom number of \u03c4 equals 1 if and only if \u03c4 cannot be written as a non-trivial supremum of strictly finer topologies \u2014 this connects phantom numbers to the *sup-irreducibility* of elements in the complete lattice of topological spaces.\n\nWhy now? The lattice-theoretic infrastructure for TopologicalSpace in Mathlib is now mature enough to support these questions, and our `isOpen_consensus_iff` characterization provides the essential bridge between the phantom number concept and concrete open set calculations.\n\n## 2. Phantom Numbers and Separation Axioms\n\nWe conjecture that separation axioms constrain phantom numbers in a precise way: if \u03c4 is T\u2081 and has phantom number \u2264 n, then each observer topology in any optimal phantom representation must also be T\u2081. More ambitiously, we conjecture that for Hausdorff spaces, phantom number \u2264 2 always holds (every Hausdorff topology is the supremum of two finer topologies). This would connect the observer-dependent framework to the classical separation hierarchy.\n\nThe key insight is that separation axioms are defined by the relationship between points and open sets, and the consensus characterization (`isOpen_consensus_iff`) translates separation conditions on the consensus into constraints on the individual observer topologies.\n\nWhy now? The `consensus_coarser_of_more_observers` theorem shows that adding observers makes the consensus coarser, which means separation properties (which require \"enough\" open sets) should impose lower bounds on observer counts. The T\u2081/Hausdorff API in Mathlib is complete enough to formalize these constraints.\n\n## 3. Phantom Topologies on Products and the Phantom Number Product Formula\n\nOur `prod_consensus_le` direction (which we stated but ultimately removed from the final version) suggests a deeper question: is there a product formula for phantom numbers? Specifically, if spaces X and Y have phantom numbers m and n respectively, what is the phantom number of X \u00d7 Y with the product topology? We conjecture that phantom_number(X \u00d7 Y) \u2264 phantom_number(X) \u00b7 phantom_number(Y), with equality holding for \"independent\" topologies.\n\nThe key insight is that a phantom representation of X \u00d7 Y can be constructed from representations of X and Y by taking all pairwise products of observer topologies, giving the multiplicative bound. The question of when equality holds connects to the algebraic structure of the topology lattice.\n\nWhy now? The product topology infrastructure in Mathlib is solid, and our framework's clean interface through `PhantomTopology.consensus` and `HasPhantomNumberLE` makes product constructions feasible.\n\n## 4. Categorical Phantom Topologies: Sheaf-Theoretic Interpretation\n\nThe observer map O \u2192 Top(X) is a functor from a discrete category of observers to the category of topological spaces (with identity morphisms on X). A natural generalization replaces the discrete category with a site (category with Grothendieck topology), making the phantom topology into a presheaf of topologies. The consensus would then correspond to the sheafification. We conjecture that every phantom topology on X extends to a sheaf of topologies on a site, and that the phantom number equals the minimum number of objects needed in a covering sieve that determines the sheaf.\n\nThe key insight is that the consensus operation (\u2a06 over observers) is formally analogous to the gluing condition in sheaf theory \u2014 a set is \"globally open\" (in the consensus) precisely when it is \"locally open\" (in each observer's view).\n\nWhy now? Mathlib's Grothendieck topology and sheaf infrastructure has recently matured. The phantom topology framework provides a concrete, low-dimensional test case for these abstract constructions, potentially yielding new insights about both sheaves and topological decomposition.\n\n## 5. Computational Phantom Numbers via Finite Topologies\n\nFor finite sets X with |X| = n, the lattice of topologies on X is finite and computable. We conjecture that the maximum phantom number over all topologies on an n-element set grows as \u0398(log n). This would be testable by exhaustive computation for small n (say n \u2264 6, where the number of topologies is known). The phantom number of each topology in the finite lattice can be computed by checking all possible supremum decompositions.\n\nThe key insight is that on finite sets, \"sup-irreducible\" topologies (those that cannot be written as a non-trivial sup) have phantom number exactly 1, while \"sup-reducible\" topologies have phantom number > 1. The distribution of sup-irreducible elements in the lattice of finite topologies is an unstudied combinatorial question.\n\nWhy now? Lean 4's computational capabilities (via `#eval` and `Decidable` instances) combined with Mathlib's `Fintype` infrastructure make it feasible to compute phantom numbers for small finite spaces, providing empirical grounding for conjectures about the asymptotic behavior.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1101",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "41fd7380",
+    "status": "available",
+    "timestamp": "2026-06-09T10:04:21.264201+00:00",
+    "title": "The phantom number framework raises a natural classification question: what is t"
+  },
+  {
+    "consumed_by_exp_id": "ac6121a8",
     "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
     "domains": [
       "Cryptography",
@@ -2419,7 +2449,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.080762+00:00",
     "title": "One-Way Functions: Existence and Hierarchy"
   },
@@ -2948,20 +2978,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Impossible Geometries: Where Parallel Lines Converge AND Diverge"
   },
   {
-    "consumed_by_exp_id": "72ac5da9",
-    "description": "Cycle debd806e (Q=0.468) proved 1706 theorems in Pythagorean but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Proof-Theoretic Ordinal Analysis\n\n## 1. Ordinal Collapsing Functions and the Bachmann-Howard Ordinal\n\nThe current framework models theories by their set of provably well-ordered o",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "sorry_fill_debd806e_48596788",
-    "priority_score": 0.5183285105981593,
-    "research_mode": "team",
-    "source_exp_id": "debd806e",
-    "status": "in_progress",
-    "timestamp": "2026-06-09T05:16:22.978035+00:00",
-    "title": "Close Proofs: The current framework models theories by their set of provably well-or"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle 362ed1b3 (Q=0.460) proved 1404 theorems in Bridges but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such log",
     "domains": [
@@ -3216,32 +3232,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Large Cardinal Hierarchy: Consistency Strength"
   },
   {
-    "consumed_by_exp_id": "5bffe06d",
-    "description": "Cycle abf65010 (Q=0.422) proved 311 theorems in Novelty but left 8 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that a Hadamard matrix exists for every positive multiple of 4. Formalize known constructions (Sylvester, Paley, tensor products) and establish bounds on the smallest open order. Connect to comb",
+    "consumed_by_exp_id": "",
+    "description": "Cycle 41fd7380 (Q=0.424) proved 1210 theorems in Applications but left 10 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o",
     "domains": [
-      "Novelty"
+      "Applications"
     ],
-    "id": "sorry_fill_abf65010_913abd08",
-    "priority_score": 0.4715790026142813,
+    "id": "sorry_fill_41fd7380_c14aca9e",
+    "priority_score": 0.47387027209576893,
     "research_mode": "team",
-    "source_exp_id": "abf65010",
-    "status": "in_progress",
-    "timestamp": "2026-06-09T09:30:52.265403+00:00",
-    "title": "Close Proofs: Hadamard Matrix Conjecture"
-  },
-  {
-    "consumed_by_exp_id": "dddb23fb",
-    "description": "Cycle 28a68a13 (Q=0.418) proved 159 theorems in Novelty but left 8 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Causal Integration Algebra\n\n## Synthesis\n\nThis cycle established the **Causal Integration Algebra** \u2014 a rigorous lattice-theoretic formalization of Integrated Information Theory t",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_28a68a13_08ea3bc8",
-    "priority_score": 0.4679381992755582,
-    "research_mode": "team",
-    "source_exp_id": "28a68a13",
-    "status": "in_progress",
-    "timestamp": "2026-06-09T09:30:15.019498+00:00",
-    "title": "Close Proofs: **Causal Integration Algebra** \u2014 a rigorous lattice-t"
+    "source_exp_id": "41fd7380",
+    "status": "available",
+    "timestamp": "2026-06-09T10:04:33.895339+00:00",
+    "title": "Close Proofs: Phantom Topologies: Spaces That Change When You Look at Them"
   },
   {
     "consumed_by_exp_id": "",
@@ -3649,7 +3651,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Hamiltonian Complexity: QMA-Completeness of the Local Hamiltonian Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "de162ecf",
     "description": "Prove that the Rademacher complexity of a hypothesis class provides tight generalization bounds for supervised learning. Formalize the margin bound for linear classifiers and extend to kernel methods. Show that VC dimension bounds are looser than Rademacher bounds for structured hypothesis classes.",
     "domains": [
       "MachineLearning",
@@ -3659,7 +3661,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:46.538330+00:00",
     "title": "Generalization Bounds via Rademacher Complexity"
   },
