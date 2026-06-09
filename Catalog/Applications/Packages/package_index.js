@@ -25,12 +25,22 @@ window.PACKAGE_INDEX = [
   },
   {
     "date": "2026-06-09",
-    "domain": "Bridges",
-    "exp_id": "c71e53b1",
-    "filename": "symplectic_mirror_descent_gromov_witten_invariants.json",
+    "domain": "Computation",
+    "exp_id": "40370763",
+    "filename": "impossible_geometries_where_parallel_lines_converg.json",
     "pkg_num": 8,
     "quality": "unrated",
     "quality_score": null,
+    "title": "Closure-Circuit Duality: Certified Monotone Circuit Reconstruction from Canonical Residual Bases"
+  },
+  {
+    "date": "2026-06-09",
+    "domain": "Bridges",
+    "exp_id": "c71e53b1",
+    "filename": "symplectic_mirror_descent_gromov_witten_invariants.json",
+    "pkg_num": 9,
+    "quality": "partial",
+    "quality_score": 0.4695990099009901,
     "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
   },
   {
@@ -110,6 +120,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
   },
+  "impossible_geometries_where_parallel_lines_converg.json": {
+    "domain": "Computation",
+    "exp_id": "40370763",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Closure-Circuit Duality: Certified Monotone Circuit Reconstruction from Canonical Residual Bases"
+  },
   "rigorous_algebraic_foundations_for_probability_t.json": {
     "domain": "Novelty",
     "exp_id": "07ee0316",
@@ -161,7 +179,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2025-01-01",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 292,
       "id": "self_modifying_code_that_cannot_be_stopped",
       "primary_domain": "Bridges",
       "priority_score": 0.6462399999999999,
@@ -172,7 +190,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Logic",
-      "hue": 275,
+      "hue": 95,
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
       "primary_domain": "Logic",
       "priority_score": 0.3352,
@@ -183,7 +201,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 95,
       "id": "rigorous_algebraic_foundations_for_probability_t",
       "primary_domain": "Bridges",
       "priority_score": 0.66968,
@@ -194,7 +212,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Applications",
-      "hue": 101,
+      "hue": 90,
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
       "primary_domain": "Bridges",
       "priority_score": 0.16743922555663115,
@@ -205,7 +223,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08T19:03:25Z",
       "domain": "Applications",
-      "hue": 91,
+      "hue": 90,
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
       "primary_domain": "Bridges",
       "priority_score": 0.62584,
@@ -216,7 +234,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 89,
       "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
       "primary_domain": "Bridges",
       "priority_score": null,
@@ -227,7 +245,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 275,
       "id": "entropy_bounded_computation_ebc_framew",
       "primary_domain": "Bridges",
       "priority_score": 0.4813003957285953,
@@ -237,12 +255,23 @@ window.PACKAGE_GRAPH = {
     },
     {
       "date": "2026-06-09",
-      "domain": "Bridges",
-      "hue": 272,
-      "id": "symplectic_mirror_descent_gromov_witten_invariants",
-      "primary_domain": "Bridges",
+      "domain": "Computation",
+      "hue": 90,
+      "id": "impossible_geometries_where_parallel_lines_converg",
+      "primary_domain": "Computation",
       "priority_score": null,
       "quality": "unrated",
+      "shape": "cube",
+      "title": "Closure-Circuit Duality: Certified Monotone Circuit Reconstruction from Canonical Residual Bases"
+    },
+    {
+      "date": "2026-06-09",
+      "domain": "Bridges",
+      "hue": 271,
+      "id": "symplectic_mirror_descent_gromov_witten_invariants",
+      "primary_domain": "Bridges",
+      "priority_score": 0.4695990099009901,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
     }
