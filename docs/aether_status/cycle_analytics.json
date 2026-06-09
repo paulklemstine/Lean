@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-09T03:21:08.485860+00:00",
+  "last_updated": "2026-06-09T03:21:36.511454+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -3127,6 +3127,44 @@
       "strategy_count": 0,
       "theorem_count": 2925,
       "timestamp": "2026-06-09T03:21:08.121566+00:00",
+      "title": "Zombies and Qualia: Mathematics of Subjective Experience"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6267,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Algebra",
+      "duration_seconds": 423.22091460227966,
+      "end_time": 1780975156.3920345,
+      "files_integrated": 115,
+      "job_id": "4b4f0c24",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v6",
+      "phase_b_prompt_version": "v1",
+      "phase_b_skipped": false,
+      "prompt_version": "v6",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "cross_domain": 1.0,
+        "importance": 0.9216596194503172,
+        "novelty": 0.9500000000000001,
+        "pegb_compliance": 1.0,
+        "proof_depth": 0.9095137420718816,
+        "usefulness": 0.9547568710359409
+      },
+      "quality_score": 0.32443692307692307,
+      "sorry_count": 12,
+      "sorry_density": 0.0041025641025641026,
+      "start_time": 1780974733.17112,
+      "strategy_count": 0,
+      "theorem_count": 2925,
+      "timestamp": "2026-06-09T03:21:36.305874+00:00",
       "title": "Zombies and Qualia: Mathematics of Subjective Experience"
     }
   ]

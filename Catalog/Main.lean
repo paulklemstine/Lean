@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2968 of the highest-quality
+A curated collection of 2956 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2968
+Total files: 2956
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -452,10 +452,7 @@ import FINAL.Bridges.ClosureProofNetDuality
 import FINAL.Bridges.ClosureProofSemiring
 import FINAL.Bridges.ClosureRateDistortionDuality
 import FINAL.Bridges.ClosureRenormalizationDuality
-import FINAL.Bridges.ClosureScaleDuality
 import FINAL.Bridges.ClosureSemimodule
-import FINAL.Bridges.ClosureSheafCodeDuality
-import FINAL.Bridges.ClosureSheafLearningDuality
 import FINAL.Bridges.ClosureStoneSpectrumDuality
 import FINAL.Bridges.ClosureTemporalRealization
 import FINAL.Bridges.ClosureThermodynamicComputationDuality
@@ -465,7 +462,6 @@ import FINAL.Bridges.CoalgebraicNeuralMyhillNerode
 import FINAL.Bridges.CoeffExtraction
 import FINAL.Bridges.CollatzUndecidability
 import FINAL.Bridges.Completeness
-import FINAL.Bridges.ComposableTransfer
 import FINAL.Bridges.CompositionalMusicSpec
 import FINAL.Bridges.Connectivity
 import FINAL.Bridges.ContinuousDiscreteTransfer
@@ -486,7 +482,6 @@ import FINAL.Bridges.DependentUltraproduct
 import FINAL.Bridges.DetCompressionGap
 import FINAL.Bridges.DeterminantalComplexity
 import FINAL.Bridges.DiffSpectrumTheory
-import FINAL.Bridges.DifferentialAlgebraicLearning
 import FINAL.Bridges.Dijkstra
 import FINAL.Bridges.Duality
 import FINAL.Bridges.DynamicProgramming
@@ -523,7 +518,6 @@ import FINAL.Bridges.FiniteInfoTheory_RateDistortion
 import FINAL.Bridges.FiniteRateDistortion_Core
 import FINAL.Bridges.FiniteRiesz
 import FINAL.Bridges.FiniteSizeSusceptibility
-import FINAL.Bridges.FiniteTransferCore
 import FINAL.Bridges.FiveFrontiers
 import FINAL.Bridges.FootprintHelpers
 import FINAL.Bridges.ForcingPatterns
@@ -601,9 +595,7 @@ import FINAL.Bridges.InformationGeometryOptimization
 import FINAL.Bridges.Instances
 import FINAL.Bridges.InvariantProduct
 import FINAL.Bridges.InvertedTreeAdvanced
-import FINAL.Bridges.IrreducibleTransfer
 import FINAL.Bridges.IteratedShadowGeometry
-import FINAL.Bridges.JigsawNPComplete
 import FINAL.Bridges.KTheoryNeuralAdvanced
 import FINAL.Bridges.KTheoryNeuralCore
 import FINAL.Bridges.KWLSeparation
@@ -758,7 +750,6 @@ import FINAL.Bridges.QuantumBerggrenWalks
 import FINAL.Bridges.QuantumCasimirSpectral
 import FINAL.Bridges.QuantumClassicalBridge
 import FINAL.Bridges.QuantumDPPEntanglement
-import FINAL.Bridges.QuantumDagger
 import FINAL.Bridges.QuantumDeFinetti
 import FINAL.Bridges.QuantumEntanglementLinkingNumber
 import FINAL.Bridges.QuantumGraphCodes
@@ -879,7 +870,6 @@ import FINAL.Bridges.ToposCompressionDefs
 import FINAL.Bridges.ToposCompressionInvariant
 import FINAL.Bridges.TorsionChannelCodes
 import FINAL.Bridges.TraceArithmetic
-import FINAL.Bridges.TransferLearning
 import FINAL.Bridges.TransferMatrix
 import FINAL.Bridges.TropKME
 import FINAL.Bridges.TropSatakeGL3_Reconstruction
@@ -2061,7 +2051,6 @@ import FINAL.Novelty.BabelFoundations
 import FINAL.Novelty.Basic
 import FINAL.Novelty.FVector
 import FINAL.Novelty.InformationBridge
-import FINAL.Novelty.JigsawSATReduction
 import FINAL.Novelty.Overspill
 import FINAL.Novelty.SegmentAlgebra
 import FINAL.Novelty.Structural
@@ -2357,7 +2346,6 @@ import FINAL.Pythagorean.IntrinsicBetaEta_BetaEta
 import FINAL.Pythagorean.IntrinsicBetaEta_Core
 import FINAL.Pythagorean.InvertedTreeCore
 import FINAL.Pythagorean.IteratedShadowGeometry
-import FINAL.Pythagorean.JigsawNPComplete
 import FINAL.Pythagorean.KTupleMoebiusInversion
 import FINAL.Pythagorean.KnuthBendixCompletion
 import FINAL.Pythagorean.KruskalKatonaMI
