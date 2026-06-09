@@ -95,10 +95,20 @@ window.PACKAGE_INDEX = [
   },
   {
     "date": "2026-06-09",
+    "domain": "Algebra",
+    "exp_id": "55bdd69f",
+    "filename": "the_current_zaslavsky_type_bound_proves__kd_cnk__n.json",
+    "pkg_num": 15,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "PL Hodge Theory for Neural Networks: Combinatorial and Topological Bounds on Decision Surface Complexity"
+  },
+  {
+    "date": "2026-06-09",
     "domain": "Pythagorean",
     "exp_id": "820c5814",
     "filename": "this_document_describes_five_research_conjectures_.json",
-    "pkg_num": 15,
+    "pkg_num": 16,
     "quality": "partial",
     "quality_score": 0.4462816141275949,
     "title": "Certified Robustness for Sequential-Elimination Classifiers via Gap Certificates"
@@ -252,6 +262,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Closure Dynamical Systems, Symbolic Zeta Semantics, and the Artin\u2013Mazur Rationality Theorem"
   },
+  "the_current_zaslavsky_type_bound_proves__kd_cnk__n.json": {
+    "domain": "Algebra",
+    "exp_id": "55bdd69f",
+    "source_exp_ids": [
+      "fbe0932d"
+    ],
+    "title": "PL Hodge Theory for Neural Networks: Combinatorial and Topological Bounds on Decision Surface Complexity"
+  },
   "the_poincare_conjecture_for_data_manifold_detectio.json": {
     "domain": "Applications",
     "exp_id": "057f23ce",
@@ -295,7 +313,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2025-01-01",
       "domain": "Bridges",
-      "hue": 280,
+      "hue": 270,
       "id": "self_modifying_code_that_cannot_be_stopped",
       "primary_domain": "Bridges",
       "priority_score": 0.6462399999999999,
@@ -306,7 +324,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Logic",
-      "hue": 270,
+      "hue": 91,
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
       "primary_domain": "Logic",
       "priority_score": 0.3352,
@@ -328,7 +346,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Applications",
-      "hue": 91,
+      "hue": 90,
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
       "primary_domain": "Bridges",
       "priority_score": 0.16743922555663115,
@@ -339,7 +357,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08T19:03:25Z",
       "domain": "Applications",
-      "hue": 271,
+      "hue": 90,
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
       "primary_domain": "Bridges",
       "priority_score": 0.62584,
@@ -350,7 +368,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Applications",
-      "hue": 272,
+      "hue": 92,
       "id": "arithmetic_mirror_symmetry_for_calabi_yau",
       "primary_domain": "Bridges",
       "priority_score": 0.4507441932737335,
@@ -361,7 +379,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 271,
+      "hue": 90,
       "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
       "primary_domain": "Bridges",
       "priority_score": 0.4623335621795429,
@@ -372,7 +390,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Shared",
-      "hue": 270,
+      "hue": 90,
       "id": "causal_integration_algebra__a_rigorous_lattice_t",
       "primary_domain": "Bridges",
       "priority_score": 0.47410152685152684,
@@ -383,7 +401,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 89,
+      "hue": 271,
       "id": "dream_logic_non_monotone_reasoning_where_contradic",
       "primary_domain": "Bridges",
       "priority_score": 0.4601177861683639,
@@ -416,7 +434,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 95,
       "id": "p_vs_np_problem",
       "primary_domain": "Bridges",
       "priority_score": 0.4486386254706822,
@@ -438,7 +456,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 272,
+      "hue": 92,
       "id": "the_current_framework_models_theories_by_their_set",
       "primary_domain": "Bridges",
       "priority_score": 0.4683285105981593,
@@ -448,8 +466,19 @@ window.PACKAGE_GRAPH = {
     },
     {
       "date": "2026-06-09",
+      "domain": "Algebra",
+      "hue": 90,
+      "id": "the_current_zaslavsky_type_bound_proves__kd_cnk__n",
+      "primary_domain": "Algebra",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "tetrahedron",
+      "title": "PL Hodge Theory for Neural Networks: Combinatorial and Topological Bounds on Decision Surface Complexity"
+    },
+    {
+      "date": "2026-06-09",
       "domain": "Pythagorean",
-      "hue": 270,
+      "hue": 90,
       "id": "this_document_describes_five_research_conjectures_",
       "primary_domain": "Pythagorean",
       "priority_score": 0.4462816141275949,
