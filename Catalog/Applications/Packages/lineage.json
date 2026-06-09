@@ -1,22 +1,13 @@
 {
   "nodes": [
     {
-      "id": "self_modifying_code_that_cannot_be_stopped",
-      "title": "Self-Modifying Code That Cannot Be Stopped: Undecidability, Simulation, and Alignment Barriers",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2025-01-01",
-      "hue": 90
-    },
-    {
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
       "title": "Provability Logic GL: Fixed Points, Gödel Elements, and Incompleteness in Lattice Algebra",
       "domain": "Logic",
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-08",
-      "hue": 91
+      "hue": 272
     },
     {
       "id": "rigorous_algebraic_foundations_for_probability_t",
@@ -34,7 +25,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
@@ -43,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08T19:03:25Z",
-      "hue": 92
+      "hue": 90
     },
     {
       "id": "arithmetic_mirror_symmetry_for_calabi_yau",
@@ -52,7 +43,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
@@ -70,7 +61,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 292
+      "hue": 101
     },
     {
       "id": "dream_logic_non_monotone_reasoning_where_contradic",
@@ -79,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "entropy_bounded_computation_ebc_framew",
@@ -88,7 +79,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "impossible_geometries_where_parallel_lines_converg",
@@ -106,7 +97,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 112
+      "hue": 314
     },
     {
       "id": "symplectic_mirror_descent_gromov_witten_invariants",
@@ -115,7 +106,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "the_current_framework_models_theories_by_their_set",
@@ -124,7 +115,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 95
+      "hue": 90
     },
     {
       "id": "the_current_zaslavsky_type_bound_proves__kd_cnk__n",
@@ -133,7 +124,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-09",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "this_document_describes_five_research_conjectures_",
@@ -142,7 +133,25 @@
       "primary_domain": "Pythagorean",
       "shape": "triangular_prism",
       "date": "2026-06-09",
-      "hue": 91
+      "hue": 92
+    },
+    {
+      "id": "self_modifying_code_that_cannot_be_stopped",
+      "title": "Self-Modifying Code That Cannot Be Stopped: Undecidability, Simulation, and Alignment Barriers",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-09T10:06:05Z",
+      "hue": 272
+    },
+    {
+      "id": "proof_complexity_collapse_pnp_via_proof_checking",
+      "title": "Variational Principles and Bounded Reduction Semantics for Proof Complexity",
+      "domain": "Logic",
+      "primary_domain": "Logic",
+      "shape": "star_of_david",
+      "date": "2026-06-09T15:01:08Z",
+      "hue": 270
     }
   ],
   "edges": [
