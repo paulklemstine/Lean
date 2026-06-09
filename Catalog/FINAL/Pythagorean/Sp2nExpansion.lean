@@ -1,1 +1,0 @@
-../../Pythagorean/Sp2nExpansion.lean

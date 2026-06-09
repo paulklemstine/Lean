@@ -1,1 +1,0 @@
-../../Logic/Bridge.lean

@@ -1,1 +1,0 @@
-../../Bridges/TropicalGaloisSolvability.lean

@@ -298,15 +298,22 @@ class CatalogPruner:
         domain = candidate["domain"]
         dest_dir = self.catalog_root / "FINAL" / domain
         dest_dir.mkdir(parents=True, exist_ok=True)
-        dest = dest_dir / src.name
-        if not dest.exists():
-            try:
-                # Create a relative symlink from FINAL back to the canonical file
-                rel_src = os.path.relpath(str(src), str(dest_dir))
-                dest.symlink_to(rel_src)
-                print(f"[Prune] Immortalized {candidate['path']} -> FINAL/{domain}/{src.name}")
-            except Exception as e:
-                print(f"[Prune] Failed to immortalize {candidate['path']}: {e}")
+        # Use parent dir as prefix to avoid collisions (e.g. Theorems.lean from
+        # multiple subdirs).  "Bridges/Speculative/CollatzTopological/Theorems.lean"
+        # becomes "CollatzTopological_Theorems.lean".
+        parent_name = src.parent.name
+        dest_name = f"{parent_name}_{src.name}" if parent_name not in ("Catalog", domain) else src.name
+        dest = dest_dir / dest_name
+        if dest.exists():
+            # Already immortalized (possibly from a previous cycle)
+            return
+        try:
+            # Create a relative symlink from FINAL back to the canonical file
+            rel_src = os.path.relpath(str(src), str(dest_dir))
+            dest.symlink_to(rel_src)
+            print(f"[Prune] Immortalized {candidate['path']} -> FINAL/{domain}/{dest_name}")
+        except Exception as e:
+            print(f"[Prune] Failed to immortalize {candidate['path']}: {e}")
 
     def curate_individual(self, candidates: List[Dict[str, Any]], target_count: int = 10, dry_run: bool = False) -> List[str]:
         """Evaluate individual files with Pi-Agent for aggressive curation.

@@ -1,1 +1,0 @@
-../../Algebra/Periodic.lean

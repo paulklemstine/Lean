@@ -1,1 +1,0 @@
-../../Pythagorean/SupportTutteUniversal.lean

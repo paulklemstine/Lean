@@ -1,1 +1,0 @@
-../../Bridges/AlgebraEMLMachineLearning/LawvereStoneAttentionDuality.lean

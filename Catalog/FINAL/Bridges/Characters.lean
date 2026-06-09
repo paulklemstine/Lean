@@ -1,1 +1,0 @@
-../../Bridges/ThermodynamicGalois/Characters.lean

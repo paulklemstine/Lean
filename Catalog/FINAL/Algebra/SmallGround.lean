@@ -1,1 +1,0 @@
-../../Algebra/SmallGround.lean

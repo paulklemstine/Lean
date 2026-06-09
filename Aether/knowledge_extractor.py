@@ -649,16 +649,15 @@ class KnowledgeExtractor:
             md5_hash = int(hashlib.md5(job.job_id.encode()).hexdigest(), 16)
         else:
             md5_hash = job.cycle_n
-        # 3-way split: 60% v5, 25% v4, 15% v3
-        # v5 is the new default (plan-first, PEGB-strict, either path).
-        # v4 + v3 kept for backwards compat and A/B analysis.
+        # A/B split: 60% v6, 25% v5, 15% v4
+        # v6 (correctness-first) is the current default; v5 and v4 kept for A/B comparison.
         bucket = md5_hash % 1000
         if bucket < 600:
-            phase_a_version = "v5"
+            phase_a_version = "v6"
         elif bucket < 850:
-            phase_a_version = "v4"
+            phase_a_version = "v5"
         else:
-            phase_a_version = "v3"
+            phase_a_version = "v4"
         job.prompt_version = phase_a_version  # legacy field
         job.phase = "A"  # Two-phase: this is Phase A (math)
         job.phase_a_prompt_version = phase_a_version

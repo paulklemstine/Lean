@@ -1,1 +1,0 @@
-../../Algebra/IdempotentHilbertBasis.lean

@@ -1,1 +1,0 @@
-../../Pythagorean/PseudofiniteTransfer/Transfer.lean

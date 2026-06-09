@@ -1,1 +1,0 @@
-../../Algebra/TropicalAnalyticDuality.lean

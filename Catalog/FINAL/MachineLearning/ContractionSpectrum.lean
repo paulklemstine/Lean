@@ -1,1 +1,0 @@
-../../MachineLearning/CollatzSpectral/ContractionSpectrum.lean

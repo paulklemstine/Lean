@@ -1,1 +1,0 @@
-../../Computation/FractalTruthTheorems.lean

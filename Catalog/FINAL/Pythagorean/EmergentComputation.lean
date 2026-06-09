@@ -1,1 +1,0 @@
-../../Pythagorean/EmergentComputation.lean

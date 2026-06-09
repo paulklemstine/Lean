@@ -1,1 +1,0 @@
-../../Pythagorean/HigherDimQuadruples.lean

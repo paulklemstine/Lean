@@ -1,1 +1,0 @@
-../../MachineLearning/LocalGlobalGeometry.lean

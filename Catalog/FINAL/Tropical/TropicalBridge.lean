@@ -1,1 +1,0 @@
-../../Tropical/SAW/TropicalBridge.lean
