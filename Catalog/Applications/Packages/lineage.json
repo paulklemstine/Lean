@@ -7,7 +7,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-08",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "rigorous_algebraic_foundations_for_probability_t",
@@ -16,7 +16,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08",
-      "hue": 271
+      "hue": 100
     },
     {
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08T19:03:25Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "arithmetic_mirror_symmetry_for_calabi_yau",
@@ -43,7 +43,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 90
+      "hue": 92
     },
     {
       "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
@@ -52,7 +52,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "causal_integration_algebra__a_rigorous_lattice_t",
@@ -61,7 +61,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 271
+      "hue": 280
     },
     {
       "id": "dream_logic_non_monotone_reasoning_where_contradic",
@@ -88,7 +88,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-09",
-      "hue": 95
+      "hue": 100
     },
     {
       "id": "p_vs_np_problem",
@@ -97,7 +97,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "symplectic_mirror_descent_gromov_witten_invariants",
@@ -106,7 +106,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 272
+      "hue": 90
     },
     {
       "id": "the_current_framework_models_theories_by_their_set",
@@ -142,7 +142,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09T10:06:05Z",
-      "hue": 271
+      "hue": 92
     },
     {
       "id": "proof_complexity_collapse_pnp_via_proof_checking",
@@ -160,7 +160,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09T15:45:33Z",
-      "hue": 275
+      "hue": 272
     },
     {
       "id": "logic_physics_bridge_consistency_of_physical_theor",
@@ -169,7 +169,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09T15:47:22Z",
-      "hue": 91
+      "hue": 92
     },
     {
       "id": "rigorous_formal_foundations_for_the_collatz_conj",
@@ -178,7 +178,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-09T15:49:32Z",
-      "hue": 270
+      "hue": 92
     },
     {
       "id": "formal_obstruction_theory_for_eml_solvability_of_l",
@@ -187,7 +187,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09T17:01:57Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "formalized_bridge_between_relu_neural_network_deci",
@@ -205,15 +205,6 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-09T18:38:15Z",
-      "hue": 271
-    },
-    {
-      "id": "cryptographic_hash_functions_collision_resistance_",
-      "title": "Closure-Gauge Realization Duality: When Compression Admits a Difficulty Ranking",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-09T19:49:20Z",
       "hue": 270
     },
     {
@@ -223,7 +214,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09T19:51:03Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "diffusion_models_as_stochastic_differential_equati",
@@ -232,7 +223,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09T19:53:14Z",
-      "hue": 91
+      "hue": 90
+    },
+    {
+      "id": "cryptographic_hash_functions_collision_resistance_",
+      "title": "Closure-Gauge Realization Duality: When Compression Admits a Difficulty Ranking",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-09T19:54:52Z",
+      "hue": 90
     }
   ],
   "edges": [
