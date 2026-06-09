@@ -7,7 +7,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2025-01-01",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
@@ -43,7 +43,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08T19:03:25Z",
-      "hue": 90
+      "hue": 270
+    },
+    {
+      "id": "arithmetic_mirror_symmetry_for_calabi_yau",
+      "title": "Certified Robustness for Instant-Runoff Classifiers via Tropical Gap Certificates",
+      "domain": "Applications",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-09",
+      "hue": 292
     },
     {
       "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
@@ -52,7 +61,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 134
+      "hue": 112
     },
     {
       "id": "causal_integration_algebra__a_rigorous_lattice_t",
@@ -61,7 +70,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 101
+      "hue": 270
     },
     {
       "id": "entropy_bounded_computation_ebc_framew",
@@ -70,7 +79,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "impossible_geometries_where_parallel_lines_converg",
@@ -79,7 +88,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-09",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "p_vs_np_problem",
@@ -97,7 +106,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "the_current_framework_models_theories_by_their_set",
@@ -106,7 +115,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 270
+      "hue": 314
     }
   ],
   "edges": [],

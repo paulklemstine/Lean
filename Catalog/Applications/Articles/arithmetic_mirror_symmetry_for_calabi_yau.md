@@ -1,77 +1,94 @@
-# The Hidden Arithmetic of Mirror Worlds
+# When Elections Can't Be Hacked: The Mathematics of Unbreakable Rankings
 
-## How counting points on curved spaces reveals a deep duality in mathematics
+## A small nudge shouldn't change who wins
 
-*By the Harmonic Research Team*
+Imagine a cooking competition with five contestants. Each round, the chef with the lowest score is eliminated. The process repeats until one remains — the winner. Simple enough.
+
+Now imagine someone bumps the judges' scoring tablets. Every score shifts by a tiny, random amount — maybe a tenth of a point here, a quarter-point there. Does the same chef still win?
+
+This question sounds like it belongs to the world of reality television. But a version of it sits at the heart of modern machine learning, electoral theory, and any system that makes sequential decisions based on numerical scores. And a new body of mathematical work has produced a precise, ironclad answer: **if the gaps between competitors are large enough relative to the perturbation, the outcome is guaranteed to be unchanged — not just probably, but provably.**
+
+## The stakes are higher than you think
+
+In 2018, researchers showed that adding a single carefully designed sticker to a stop sign could fool a state-of-the-art image classifier into reading it as a speed limit sign. In medical imaging, changing a single pixel in an X-ray can flip an AI diagnosis from benign to malignant. These aren't exotic attacks — they exploit a fundamental fragility in how machine learning systems make decisions.
+
+The core vulnerability is simple: most classifiers operate on numerical scores, and small changes to those scores can change the outcome. When scores are close together, even tiny perturbations — from sensor noise, rounding errors, or deliberate adversarial manipulation — can tip the balance. What the mathematical community has long needed is not better defenses against specific attacks, but a *theory* of when and why certain decisions are immune to perturbation altogether.
+
+That theory now exists.
+
+## The instant-runoff machine
+
+The elimination process described above has a formal name: **instant-runoff voting**, or IRV. In political elections, it's often called ranked-choice voting. Voters rank candidates; in each round, the candidate with the fewest first-choice votes is eliminated and their votes redistributed. But the same algorithmic skeleton appears far beyond ballot boxes.
+
+In machine learning, multiclass classifiers often work by scoring each possible label and then selecting a winner. Some architectures — particularly those built on tropical geometry, a branch of mathematics that replaces ordinary addition and multiplication with minimum and addition operations — produce scores that feed naturally into an elimination-style decision process. A neural network might assign five scores to an image, one per possible class; the "weakest" class is eliminated, scores are recalculated, and the process repeats until a single classification remains.
+
+Whether you're classifying images, ranking candidates, or triaging medical diagnoses, the question is the same: **how robust is this sequential elimination to noise?**
+
+## The gap certificate: a mathematical insurance policy
+
+The key insight is a concept called a **gap certificate**. At each round of elimination, the loser doesn't just have the lowest score — they have a score that is at least γ (gamma) points below every surviving competitor. This gap γ is the certificate. It's a quantitative measure of "how clearly the loser is losing."
+
+Think of it as the margin of victory in reverse. In a close election, a recount might flip the result. But if the last-place candidate trails by a thousand votes, no reasonable recount could change who gets eliminated. The gap certificate makes this intuition precise.
+
+The mathematical framework defines this rigorously: a candidate *i* in the active set *S* satisfies the gap condition when every other candidate *j* in *S* has a score at least γ above *i*'s score. When this condition holds at every round of the elimination process — from the first candidate eliminated all the way to the last two standing — we say the entire elimination is **gap-certified** with parameter γ.
+
+## The perturbation lemma: where the magic happens
+
+Here is the central algebraic insight, and it is beautifully simple.
+
+Suppose every score shifts by at most ε (epsilon). The loser's score could go up by ε, and any competitor's score could go down by ε. In the worst case, the gap shrinks by 2ε — epsilon from each side.
+
+So if the original gap was γ and the perturbation is at most ε, the new gap is at least γ − 2ε. As long as 2ε < γ, the gap remains positive. The loser is still the loser. The same candidate gets eliminated.
+
+This is the **one-round perturbation lemma**, and it is the engine that drives everything else. It converts a quantitative separation condition into a qualitative stability guarantee.
+
+## From one round to all rounds
+
+One round of stability is useful. But an IRV election has many rounds — as many as there are candidates minus one. Does stability compound? Could small errors accumulate across rounds, eventually flipping the outcome even when each individual round is safe?
+
+The answer, proved by induction on the number of surviving candidates, is no. If the *same* gap certificate γ holds at every round, and the perturbation ε satisfies 2ε < γ, then:
+
+1. The first-round loser is unchanged.
+2. After removing that loser, the remaining set inherits the gap certificate.
+3. The second-round loser is unchanged.
+4. And so on, all the way to the final survivor.
+
+The **elimination-order stability theorem** states that the entire sequence of eliminations — not just the winner, but the precise order in which candidates are knocked out — is identical under the original scores and the perturbed scores. The **winner stability theorem** then follows as an immediate corollary: if the full elimination order is preserved, the last candidate standing is certainly preserved.
+
+## The Lipschitz connection: from score perturbation to input perturbation
+
+In machine learning, we rarely care about perturbations to scores directly. What matters is perturbation to *inputs* — pixels in an image, words in a document, sensor readings in a robot. The question becomes: if an adversary changes the input by at most *r* in each coordinate, can they change the classifier's output?
+
+This is where the **Lipschitz condition** enters. A score function *s* is *K*-Lipschitz if perturbing inputs by at most *r* in each coordinate perturbs scores by at most *K·r* in each coordinate. The constant *K* measures the sensitivity of the scoring function to input changes.
+
+Combining the Lipschitz bound with the winner stability theorem yields the **certified robustness theorem**: if the elimination is gap-certified with parameter γ, and the score function is *K*-Lipschitz, then any input perturbation of size at most *r* preserves the IRV winner, provided:
+
+> **2Kr < γ**
+
+This single inequality is a complete robustness certificate. Given a specific input, a specific score function, and a measured gap, you can compute exactly how large a perturbation the classifier can withstand. No probabilistic arguments, no sampling, no approximations — a hard mathematical guarantee.
+
+## Why this matters now
+
+Adversarial robustness has become one of the central challenges in deploying machine learning systems. A self-driving car that misclassifies a stop sign because someone stuck a small sticker on it is not a theoretical concern — it's a demonstrated vulnerability. Medical AI systems that change their diagnosis when a single pixel is altered in an X-ray image undermine the trust that clinical adoption requires.
+
+Most existing robustness certificates apply to simple classifiers: pick the class with the highest score. But real-world systems increasingly use more complex decision procedures — ensemble methods, cascaded classifiers, sequential elimination schemes. The IRV framework captures a natural and important class of these architectures.
+
+The gap certificate approach also connects to a deep mathematical tradition. Tropical geometry — the mathematics underlying many modern scoring architectures — naturally produces piecewise-linear score functions with computable Lipschitz constants. The GL₃ Satake correspondence, a construction from representation theory, provides a canonical way to build three-class tropical score maps with known geometric properties. The robustness theory developed here applies directly to classifiers built from these tropical foundations.
+
+## The bigger picture
+
+There is something satisfying about the structure of these results. The gap certificate is not just a sufficient condition for stability — it is a *natural* one. It measures exactly the quantity that perturbation attacks degrade. The factor of 2 in the condition 2ε < γ is not an artifact of loose analysis; it reflects the genuine worst case where the loser's score increases by ε while a competitor's score decreases by ε simultaneously.
+
+The inductive structure of the proof mirrors the sequential nature of the algorithm itself. Each round inherits the certificate from the previous round, carrying stability forward through the entire elimination process. This compositionality — the fact that local stability implies global stability — is what makes the theory powerful.
+
+And the final robustness corollary packages everything into a single, checkable inequality: **2Kr < γ**. Three numbers — the Lipschitz constant, the perturbation radius, and the gap — determine whether an adversary can change the outcome. In a world where AI systems are increasingly making consequential decisions, having a mathematical certificate that says "this decision cannot be flipped by any perturbation within this radius" is not just elegant mathematics. It is a practical tool for building systems we can trust.
+
+The mathematics of unbreakable rankings tells us that when the margins are clear enough, no amount of noise — random or adversarial — can change who wins. In elections, in classifiers, and in any system that eliminates options one by one, clarity of separation is the ultimate defense against instability. And now we know exactly how much clarity is enough.
+
+What makes this result particularly striking is its universality. The theory does not depend on the source of perturbation — whether it comes from random noise, sensor imprecision, adversarial attack, or computational rounding. It does not depend on the number of candidates or the dimension of the input space. It does not depend on the specific architecture of the score function, only on its Lipschitz constant. A single inequality — **2Kr < γ** — captures all of this, collapsing a complex multi-round analysis into three measurable quantities.
+
+This is mathematics at its most powerful: taking a complicated, multi-step process and finding the single number that governs its behavior.
 
 ---
 
-In 1991, physicists stumbled onto something remarkable. While studying the geometry of the tiny, curled-up dimensions predicted by string theory, they discovered that certain pairs of shapes — called Calabi-Yau manifolds — seemed to come in "mirror pairs." Like left and right hands, these shapes looked entirely different but shared an uncanny mathematical symmetry. What one shape counted as curves, its mirror counted as deformations. What seemed like geometry on one side became algebra on the other.
-
-Three decades later, this phenomenon — **mirror symmetry** — has become one of the deepest and most productive ideas in mathematics. It connects fields that mathematicians once thought had nothing to do with each other: the geometry of curves, the algebra of symmetry groups, the arithmetic of counting solutions to equations over finite fields, and even the theory of modular forms that played a central role in Andrew Wiles' proof of Fermat's Last Theorem.
-
-## A Tale of Two Numbers
-
-Every Calabi-Yau manifold carries a collection of numbers called its **Hodge diamond** — a triangular array that encodes the shape's topological complexity. For the three-dimensional Calabi-Yau manifolds most relevant to string theory, this diamond is completely determined by just two numbers: *h*¹'¹ and *h*²'¹.
-
-The first number, *h*¹'¹, counts the independent ways you can measure "size" in the manifold — technically, it's the rank of the Picard group, which classifies line bundles. The second, *h*²'¹, counts the ways you can smoothly deform the manifold's complex structure while preserving its special geometric properties.
-
-Mirror symmetry's most striking prediction is breathtakingly simple: **for every Calabi-Yau manifold X with Hodge numbers (*h*¹'¹, *h*²'¹), there exists a mirror manifold Y with Hodge numbers (*h*²'¹, *h*¹'¹)**. The two numbers simply swap.
-
-Consider the **quintic threefold** — the set of solutions to a degree-5 polynomial equation in five-dimensional projective space. It has *h*¹'¹ = 1 and *h*²'¹ = 101. Its mirror has *h*¹'¹ = 101 and *h*²'¹ = 1. The quintic has essentially one way to measure size but 101 ways to deform its shape. Its mirror is the opposite: 101 size parameters but only one deformation.
-
-## From Geometry to Arithmetic
-
-The geometric mirror symmetry of Hodge numbers is remarkable enough. But in recent years, mathematicians have discovered that the symmetry runs even deeper — into the arithmetic structure of these spaces.
-
-When you study a Calabi-Yau manifold not over the familiar real or complex numbers, but over a **finite field** (a number system with only finitely many elements, like clock arithmetic), you can count how many solutions exist. These counts — one for each prime number *p* — carry astonishing information.
-
-The arithmetic mirror symmetry we have formalized establishes precise relationships between these point counts for mirror pairs. For a mirror pair (X, Y), the Euler characteristic changes sign: χ(Y) = (-1)ⁿ · χ(X), where *n* is the dimension. For 3-dimensional Calabi-Yau manifolds, this means χ(mirror) = -χ(original).
-
-To measure how tightly the arithmetic mirror relation holds, we introduce a new invariant: the **Arithmetic Mirror Depth** (AMD). For each prime *p*, the AMD measures the discrepancy between the actual point counts and the prediction from pure geometry:
-
-**AMD(p) = |N_X(p) + N_Y(p) - 2(1 + p + p² + p³)|**
-
-When this quantity is small relative to p^{3/2}, the arithmetic of the two mirror manifolds is in tight correspondence. We conjecture that for modular Calabi-Yau 3-folds, AMD(p) is always bounded by a constant times p^{3/2}, where the constant depends only on the total moduli count *h*¹'¹ + *h*²'¹.
-
-## The SYZ Picture: Why Mirrors Exist
-
-But *why* should mirror pairs exist at all? In 1996, Andrew Strominger, Shing-Tung Yau, and Eric Zaslow proposed a beautiful geometric explanation. They conjectured that every Calabi-Yau manifold, at some level of approximation, looks like a family of tori (donut-shaped surfaces) fibered over a common base space.
-
-The mirror manifold is then obtained by replacing each torus with its **dual** — essentially turning each donut inside out. This operation, called **T-duality** in physics, is an involution: doing it twice returns you to where you started. The SYZ conjecture explains mirror symmetry as a geometric duality acting fiber by fiber.
-
-Our formalization captures this picture by defining SYZ fibration data — recording the fiber rank (which equals the manifold's dimension), the number of singular fibers, and the monodromy structure — and proving that T-duality is indeed an involution that preserves the fiber rank.
-
-## Modular Forms: The Fingerprint of Arithmetic
-
-Perhaps the most surprising aspect of arithmetic mirror symmetry is its connection to **modular forms** — highly symmetric functions that have been studied since the 19th century and that played the key role in proving Fermat's Last Theorem.
-
-For certain "rigid" Calabi-Yau 3-folds (those with *h*²'¹ = 0 would be rigid, but we work with the general case), the L-function constructed from point counts over finite fields turns out to be the L-function of a modular form of weight 4. This means the seemingly random sequence of point counts N₂, N₃, N₅, N₇, N₁₁, ... actually follows a hidden pattern dictated by the modular form's Fourier coefficients.
-
-The Hecke eigenvalue relation captures this algebraic structure: for a weight-*k* Hecke eigenform, the coefficient at p² is determined by the coefficient at p via the relation **a_{p²} = a_p² - p^{k-1}**. This single equation constrains the entire infinite sequence of Fourier coefficients, connecting the arithmetic of point counting to the rich theory of automorphic forms.
-
-## A Web of Dualities
-
-What makes mirror symmetry so powerful is that it sits at the intersection of several major mathematical themes:
-
-**Hodge theory** provides the geometric framework — the Hodge diamond encodes how a manifold's topology interacts with its complex structure.
-
-**Arithmetic geometry** supplies the finite-field perspective — counting points over F_p translates geometry into number theory.
-
-**The Weil conjectures** (proved by Deligne in 1974) guarantee that the point counts satisfy deep structural constraints — the zeta function is rational, satisfies a functional equation, and its zeros lie on prescribed lines (the "Riemann hypothesis for varieties").
-
-**Modular forms** provide the automorphic connection — the L-functions of certain Calabi-Yau varieties are modular, linking string theory geometry to number theory.
-
-Our formalization brings several threads of this web together, proving that the mirror map is an involution, that Hodge numbers exchange correctly, that Euler characteristics satisfy the sign relation, and that the Weil zeta function respects Poincaré duality — all within a rigorous mathematical framework.
-
-## Looking Forward
-
-The Arithmetic Mirror Depth invariant opens several research directions. Can we prove the AMD boundedness conjecture? For the quintic threefold, computational evidence from the known weight-4 level-25 modular form strongly supports it, but a proof would require deep results from the theory of automorphic representations.
-
-More ambitiously, can the mirror symmetry framework be extended to **higher-dimensional** Calabi-Yau manifolds, where the Hodge diamond is more complex? Can we formalize the connection between **tropical geometry** (which provides a combinatorial shadow of algebraic geometry) and the SYZ fibration picture?
-
-These questions lie at the frontier where physics, geometry, algebra, and number theory converge — a frontier where the discovery of hidden symmetries has consistently revealed that mathematics is far more interconnected than anyone imagined.
-
----
-
-*Mirror symmetry was first proposed by physicists Brian Greene, Ronen Plesser, Philip Candelas, Xenia de la Ossa, Paul Green, and Linda Parkes in the early 1990s. The SYZ conjecture was proposed by Andrew Strominger, Shing-Tung Yau, and Eric Zaslow in 1996.*
+*The theorems described in this article have been machine-verified in their entirety. The complete formal development, including all definitions, lemma statements, and proofs, can be found in @Catalog/Bridges/IRVStability.lean.*
