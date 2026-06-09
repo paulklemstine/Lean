@@ -2,197 +2,288 @@
 
 ## Abstract
 
-We formalize and prove fundamental properties of paraconsistent reasoning frameworks where the principle of explosion fails and beliefs can be retracted. Our contributions are threefold: (1) a complete formalization of Belnap's four-valued logic FOUR as a De Morgan algebra, including proofs that explosion fails, excluded middle fails, and the algebra is distributive but not Boolean; (2) a theory of "dream frames" — Kripke-like structures with reflexive but non-transitive accessibility — that model non-monotone belief revision, with a proof that extending accessibility provably retracts beliefs; (3) a bridge theorem connecting paraconsistent logic to quasi-topological spaces, showing that "coherently consistent" sets in dream frames form a quasi-topology where unions can fail to be open, with the union defect precisely measuring the degree of paraconsistency. All results are machine-verified in Lean 4 with Mathlib.
+We present a machine-verified formalization of paraconsistent reasoning through Belnap's four-valued logic (FOUR) and its connection to non-topological pre-topological spaces we call *dream spaces*. We establish that FOUR forms a bounded distributive lattice under the truth ordering (Theorem 1), prove that explosion — the classical principle that a contradiction entails every statement — fails in FOUR (Theorem 2), characterize paraconsistency as equivalent to the existence of designated gluts (Theorem 3), and construct a concrete non-topological dream space on the natural numbers (Theorem 4). The Belnap negation is shown to be a De Morgan involution, yielding a full De Morgan algebra. These results formalize the precise algebraic conditions under which contradiction-tolerant reasoning is possible and connect them to topological deficiencies that model incomplete or dream-like spatial reasoning. All results are verified by exhaustive case analysis over finitely many truth values.
 
-**Keywords**: paraconsistent logic, Belnap's FOUR, non-monotone reasoning, quasi-topology, dream frames, belief revision
+---
 
 ## 1. Introduction
 
-Classical logic rests on the principle of explosion (*ex falso quodlibet*): from a contradiction, anything follows. While this is a powerful tool for mathematical reasoning, it is inadequate for modeling reasoning under inconsistency — whether in databases with conflicting entries, legal reasoning with contradictory precedents, or the dream-like states where impossible objects coexist.
+Classical propositional logic rests on two pillars: *bivalence* (every proposition is true or false) and *explosion* (from a contradiction, everything follows). While these principles produce a mathematically elegant system, they are ill-suited to domains where information is incomplete, contradictory, or both — including database systems with conflicting records, multi-sensor fusion in autonomous agents, and the cognitive phenomenon of dreaming.
 
-Paraconsistent logics [Priest 2006, da Costa 1974] weaken the explosion principle, allowing contradictions to be "contained" without trivializing the entire logical system. The most well-known paraconsistent logic is Belnap's four-valued logic FOUR [Belnap 1977], which adds truth values "Both" (true and false) and "Neither" (neither true nor false) to the classical pair.
+Belnap (1977) proposed a four-valued logic, sometimes called FOUR or FDE (First-Degree Entailment), that relaxes bivalence by introducing two additional truth values: **B** (both true and false) and **N** (neither true nor false). The resulting system preserves most algebraic properties of classical logic — distributivity, De Morgan duality, involutive negation — while allowing contradictions to be localized rather than explosive.
 
-Our work extends the existing catalog result `finiteQuasiTopo_not_topological` (from Computation/DreamLogic.lean), which established that quasi-topological spaces are distinct from topological spaces. We deepen this by:
+In parallel, the notion of a topological space provides the standard mathematical framework for reasoning about "nearness" and continuity. A topology on a set X is a collection of subsets (called open) satisfying: (i) ∅ and X are open, (ii) arbitrary unions of open sets are open, and (iii) finite intersections of open sets are open. Weakening axiom (ii) to closure under finite unions only produces what we call a *dream space* — a pre-topological structure that can model reasoning systems with local but not global coherence.
 
-1. **Generalizing** from abstract quasi-topologies to concrete paraconsistent models, showing the precise correspondence
-2. **Strengthening** the non-topological result by quantifying the union defect and linking it to contradiction degree
-3. **Bridging** paraconsistent logic to Kripke semantics via dream frames
+This paper presents formal proofs of four main results connecting these ideas:
 
-### 1.1 Related Work
+1. **Theorem 1** (`instDistribLattice`): Belnap's FOUR is a bounded distributive lattice under the truth ordering.
+2. **Theorem 2** (`explosion_fails`): Explosion fails in FOUR — there exist p, q such that p ∧ ¬p is designated but q is not.
+3. **Theorem 3** (`paraconsistency_iff_glut`): Explosion failure is equivalent to the existence of a designated glut.
+4. **Theorem 4** (`nat_finite_is_nonTopological`): The finite-or-universal dream space on ℕ is not a topology.
 
-- Belnap [1977] introduced the four-valued logic for "useful" reasoning about information
-- Priest [2006] developed the dialetheist philosophy underlying LP (Logic of Paradox)
-- Arieli & Avron [1996] studied the bilattice structure of FOUR
-- The catalog theorem `impossible_figure_not_realizable` (Bridges/ImpossibleObjects.lean) establishes that impossible geometric objects cannot be realized in standard Euclidean space — our paraconsistent frameworks provide the logical setting where such objects can "exist"
+All proofs are verified by exhaustive computation over the four truth values, with the dream space result following from an explicit counterexample (the even numbers).
 
-## 2. Belnap's Four-Valued Logic
+---
 
-### 2.1 Definitions
+## 2. Definitions
 
-**Definition 2.1 (BVal).** The type `BVal` consists of four values: `Neither` (⊥), `F` (false), `T` (true), and `Both` (⊤), ordered by the information lattice where Neither ≤ F, T ≤ Both.
+### 2.1 Belnap's Four-Valued Logic
 
-**Definition 2.2 (Operations).** Negation `bneg` swaps T ↔ F and fixes Both and Neither. Conjunction `band` and disjunction `bor` are defined as the meet and join of the truth ordering.
+**Definition 2.1** (Truth Values). The set FOUR = {F, N, B, T} consists of four truth values:
+- **F** (false only): the proposition is rejected and not supported.
+- **N** (neither): no information is available.
+- **B** (both): the proposition is both supported and rejected.
+- **T** (true only): the proposition is supported and not rejected.
 
-**Definition 2.3 (Designation).** A value is *designated* if it is T or Both — i.e., "at least true."
-
-### 2.2 Main Results
-
-**Theorem 2.1 (Explosion Fails).** There exists v : BVal such that v and bneg(v) are both designated, yet there exists w : BVal that is not designated.
-
-*Proof sketch.* Take v = Both. Then bneg(Both) = Both (fixed point), so both are designated. Take w = F, which is not designated. □
-
-**Theorem 2.2 (De Morgan Laws).** For all a, b : BVal:
-- bneg(band a b) = bor(bneg a)(bneg b)
-- bneg(bor a b) = band(bneg a)(bneg b)
-
-*Proof.* By exhaustive case analysis on a and b (16 cases each). □
-
-**Theorem 2.3 (Non-Boolean Structure).** FOUR is not a Boolean algebra: there exists v with band(v)(bneg v) ≠ F, and there exists v with bor(v)(bneg v) ≠ T.
-
-*Proof.* Both ∧ ¬Both = Both ∧ Both = Both ≠ F. Neither ∨ ¬Neither = Neither ∨ Neither = Neither ≠ T. □
-
-**Theorem 2.4 (Self-Contradicting Designation).** The only designated value whose negation is also designated is Both. This means Both is the unique dialetheia.
-
-**Theorem 2.5 (Distributivity).** FOUR satisfies band(a)(bor b c) = bor(band a b)(band a c) for all a, b, c. It is a distributive De Morgan lattice, just not Boolean.
-
-**Theorem 2.6 (Modus Ponens Fails).** There exist P, Q and a valuation where P is designated, P → Q (material conditional) is designated, but Q is not. Take P = Both, Q = F: then ¬P ∨ Q = Both ∨ F = Both (designated), but F is not designated.
-
-### 2.3 PEGB Analysis
-
-- **Proof**: Complete machine-verified proofs for all theorems
-- **Example**: The valuation v(P) = Both, v(Q) = F witnesses both explosion failure and modus ponens failure
-- **Generalization**: FOUR embeds into any complete bilattice; the results generalize to bilattice-valued logics
-- **Boundary**: FOUR is the *smallest* non-trivial paraconsistent De Morgan algebra. Weakening to three values (Kleene's K₃) recovers a logic where modus ponens is valid
-
-## 3. Dream Frames and Non-Monotone Reasoning
-
-### 3.1 Dream States
-
-**Definition 3.1 (Dream State).** A dream state over propositions P is a pair (pos, neg) of sets, where pos ∩ neg gives the contradictions (dialetheia) and (pos ∪ neg)ᶜ gives the gaps.
-
-**Definition 3.2 (Consistency).** A dream state is consistent if pos ∩ neg = ∅, and classical if also pos ∪ neg = P.
-
-### 3.2 Dream Frames
-
-**Definition 3.3 (Dream Frame).** A dream frame is a triple (access, val, refl) where access is a reflexive (but not necessarily transitive) relation on worlds W, and val assigns each world a dream state.
-
-The key semantic insight: the *belief set* at world w consists of propositions true at ALL accessible worlds. This gives:
-
-**Theorem 3.1 (Non-Monotone Retraction).** There exist dream frames df₁ ⊆ df₂ (in the sense that df₂ extends df₁'s accessibility) and a world w and proposition p such that p ∈ beliefs(df₁, w) but p ∉ beliefs(df₂, w).
-
-*Proof sketch.* Let df₁ have world 0 accessing only itself, with pos = {0} at world 0. In df₁, 0 believes prop 0. Let df₂ add accessibility from 0 to world 1, where pos = ∅. Now world 0 no longer believes prop 0 because world 1 doesn't support it. □
-
-### 3.3 Information-Contradiction Duality
-
-**Theorem 3.2 (Information Creates Contradiction).** There exist dream states s ≤ t (in information ordering) where s is consistent but t is not.
-
-**Theorem 3.3 (Contradiction Monotonicity).** If s ≤ t in information ordering, then the number of contradictions in s is ≤ the number in t.
-
-These two results together establish the **information paradox**: gaining information can never reduce contradictions but can always create new ones.
-
-### 3.4 PEGB Analysis
-
-- **Proof**: All constructions are explicit (Fin 2 worlds, Fin 2 propositions) and machine-verified
-- **Example**: The two-world frame with opposite contradictions at each world
-- **Generalization**: Dream frames naturally extend to infinitely many worlds and propositions; the non-monotonicity result holds for any cardinality
-- **Boundary**: If the accessibility relation is required to be an equivalence relation, the resulting logic is no longer non-monotone — S5-like frames give monotone consequence
-
-## 4. The Quasi-Topological Bridge
-
-### 4.1 Quasi-Topological Spaces
-
-**Definition 4.1 (Quasi-Topology).** A quasi-topology on α is a collection of sets (called "open") that is closed under pairwise intersection, contains ∅ and the whole space, but is NOT required to be closed under union.
-
-**Theorem 4.1 (Non-Topological Quasi-Topology).** There exists a quasi-topology on a three-element set that is not a topology. (Extends `finiteQuasiTopo_not_topological` from the catalog.)
-
-*Proof.* Take {∅, {a}, {b}, {a,b,c}} on Three = {a, b, c}. This is closed under intersection (all pairwise intersections yield members of the family) but {a} ∪ {b} = {a,b} is not in the family. □
-
-### 4.2 Coherent Consistency
-
-**Definition 4.2 (Coherent Openness).** A set S of propositions is *coherently open* in a dream frame at world w₀ if there exists a SINGLE accessible world where ALL elements of S are consistently true (in pos but not neg).
-
-**Theorem 4.2 (Union Failure for Coherent Openness).** There exists a dream frame where {p} and {q} are each coherently open, but {p, q} is not coherently open.
-
-*Proof sketch.* Two worlds, each with all propositions in pos but each contradicting (putting in neg) a different element. World 0 has neg = {0}, world 1 has neg = {1}. Then {0} is coherently open via world 1, {1} via world 0, but {0,1} cannot be supported by any single world because each world contradicts one element. □
-
-This is the **central bridge theorem**: coherent consistency gives a quasi-topology, and the union defect measures exactly how paraconsistent the frame is.
-
-### 4.3 PEGB Analysis
-
-- **Proof**: Explicit construction with 2 worlds and 2 propositions
-- **Example**: The "complementary contradiction" frame where each world contradicts what the other accepts
-- **Generalization**: For n propositions and m worlds, the maximum union defect grows as 2^n - m, suggesting a rich combinatorial structure
-- **Boundary**: If every world is consistent (no contradictions), coherent openness becomes universal truth, which IS closed under union — recovering a genuine topology
-
-## 5. Paraconsistent Models and Contradiction Counting
-
-### 5.1 ParaModel
-
-**Definition 5.1 (ParaModel).** A paraconsistent model assigns each proposition a value in Fin 4 (neither, false, true, both).
-
-**Theorem 5.1 (Classical Models Have Zero Contradictions).** If every proposition is valued 1 (false) or 2 (true), the contradiction count is zero.
-
-**Theorem 5.2 (Maximum Contradictions).** The all-Both model achieves Fintype.card V contradictions.
-
-**Theorem 5.3 (Contradiction-Consistency Duality).** The consistently-true set and the contradictory set are always disjoint.
-
-## 6. Algorithms
-
-### 6.1 Belnap Evaluation Algorithm
+**Definition 2.2** (Truth Ordering). The truth ordering ≤_t on FOUR is defined by the Hasse diagram:
 
 ```
-Input: Formula φ, Valuation v : Var → {N, F, T, B}
-Output: BVal
-
-EVAL(φ, v):
-  match φ with
-  | Var(x) → v(x)
-  | Neg(ψ) → BNEG(EVAL(ψ, v))
-  | And(ψ₁, ψ₂) → BAND(EVAL(ψ₁, v), EVAL(ψ₂, v))
-  | Or(ψ₁, ψ₂) → BOR(EVAL(ψ₁, v), EVAL(ψ₂, v))
+        T
+       / \
+      N   B
+       \ /
+        F
 ```
 
-### 6.2 Coherent Openness Check
+where F ≤_t N, F ≤_t B, N ≤_t T, B ≤_t T, and N, B are incomparable. Formally, a ≤_t b if and only if tmeet(a, b) = a, where tmeet is the lattice meet operation.
 
-```
-Input: Dream frame (W, access, val), world w₀, set S
-Output: Boolean
+**Definition 2.3** (Lattice Operations). The meet (conjunction) and join (disjunction) under the truth ordering are:
 
-IS_COHERENTLY_OPEN(W, access, val, w₀, S):
-  for w in W:
-    if access(w₀, w):
-      if S ⊆ val(w).pos \ val(w).neg:
-        return True
-  return False
-```
+| tmeet | F | N | B | T |      | tjoin | F | N | B | T |
+|-------|---|---|---|---|      |-------|---|---|---|---|
+| **F** | F | F | F | F |      | **F** | F | N | B | T |
+| **N** | F | N | F | N |      | **N** | N | N | T | T |
+| **B** | F | F | B | B |      | **B** | B | T | B | T |
+| **T** | F | N | B | T |      | **T** | T | T | T | T |
+
+**Definition 2.4** (Negation). Belnap negation bneg : FOUR → FOUR is defined by:
+- bneg(T) = F, bneg(F) = T, bneg(B) = B, bneg(N) = N.
+
+**Definition 2.5** (Designation). A truth value a ∈ FOUR is *designated* if a = T or a = B. The set of designated values D = {T, B} represents the values accepted as "at least partially true."
+
+**Definition 2.6** (Glut and Gap). A value a is a *glut* if both a and bneg(a) are designated. A value a is a *gap* if neither a nor bneg(a) is designated.
+
+### 2.2 Dream Spaces
+
+**Definition 2.7** (Dream Space). A *dream space* on a set X is a collection τ ⊆ 𝒫(X) satisfying:
+1. ∅ ∈ τ and X ∈ τ.
+2. If U, V ∈ τ then U ∩ V ∈ τ (closure under finite intersection).
+3. If U, V ∈ τ then U ∪ V ∈ τ (closure under *finite* union).
+
+A dream space is a topology if and only if it is additionally closed under *arbitrary* unions.
+
+**Definition 2.8** (Finite-or-Universal Dream Space). On the set ℕ, define:
+- dreamOpen(S) iff S is finite or S = ℕ.
+
+---
+
+## 3. Main Results
+
+### 3.1 Theorem 1: FOUR Is a Bounded Distributive Lattice
+
+**Theorem 3.1** (`Belnap.instDistribLattice`, `BoundedOrder Belnap`).
+*Under the truth ordering, FOUR is a bounded distributive lattice with bottom element F and top element T.*
+
+*Proof sketch.* Each lattice axiom — reflexivity, transitivity, and antisymmetry of ≤_t; the meet and join properties; and the distributive law — is verified by exhaustive case analysis over all 4 (or 4² or 4³) combinations of truth values. For example, distributivity requires checking that for all a, b, c ∈ FOUR:
+
+a ∨ (b ∧ c) = (a ∨ b) ∧ (a ∨ c)
+
+This amounts to 64 cases, each verified by direct computation. The bounds F ≤_t a ≤_t T hold for all a ∈ FOUR by four direct checks each. ∎
+
+*Significance.* This establishes that Belnap's logic has the same core algebraic structure as classical propositional logic (which is also a bounded distributive lattice over {F, T}). The additional values N and B enrich the lattice without compromising its algebraic properties.
+
+### 3.2 De Morgan Algebra Structure
+
+**Theorem 3.2** (`bneg_bneg`, `bneg_tmeet`, `bneg_tjoin`, `bneg_antitone`).
+*Belnap negation is a De Morgan involution: it is involutive (bneg ∘ bneg = id), satisfies both De Morgan laws, and reverses the truth ordering.*
+
+*Proof sketch.* Each property is verified by exhaustive case analysis:
+- Involution: bneg(bneg(a)) = a for all a ∈ FOUR (4 cases).
+- De Morgan I: bneg(tmeet(a,b)) = tjoin(bneg(a), bneg(b)) for all a, b (16 cases).
+- De Morgan II: bneg(tjoin(a,b)) = tmeet(bneg(a), bneg(b)) for all a, b (16 cases).
+- Antitone: if a ≤_t b then bneg(b) ≤_t bneg(a) (16 cases with hypothesis filtering). ∎
+
+*Significance.* Together with Theorem 3.1, this shows that (FOUR, tmeet, tjoin, bneg) is a De Morgan algebra — the canonical algebraic structure underlying relevance logic and related paraconsistent systems.
+
+### 3.3 Theorem 2: Explosion Fails
+
+**Theorem 3.3** (`Belnap.explosion_fails`).
+*There exist p, q ∈ FOUR such that designated(tmeet(p, bneg(p))) holds but designated(q) does not.*
+
+*Proof sketch.* Take p = B and q = F. Then:
+- bneg(B) = B, so tmeet(B, bneg(B)) = tmeet(B, B) = B.
+- B is designated (B ∈ {T, B}), so designated(tmeet(p, bneg(p))) holds.
+- F is not designated (F ∉ {T, B}), so ¬designated(q) holds. ∎
+
+**Theorem 3.4** (`Belnap.classical_no_contradiction`).
+*In the classical fragment {T, F}, contradictions are never designated: for p ∈ {T, F}, ¬designated(tmeet(p, bneg(p))).*
+
+*Proof sketch.* If p = T then tmeet(T, F) = F, which is not designated. If p = F then tmeet(F, T) = F, which is not designated. ∎
+
+*Significance.* Theorem 3.3 demonstrates that FOUR is *paraconsistent*: it tolerates contradiction without explosion. Theorem 3.4 shows that this tolerance arises specifically from the non-classical values — the classical fragment remains explosion-proof because contradictions are impossible in it.
+
+### 3.4 Designation Closure Properties
+
+**Theorem 3.5** (`designated_closed_tmeet`, `designated_closed_tjoin`).
+*The designated set D = {T, B} is closed under both tmeet and tjoin.*
+
+*Proof sketch.* By case analysis on the four combinations (T,T), (T,B), (B,T), (B,B):
+- tmeet: T∧T=T, T∧B=B, B∧T=B, B∧B=B — all in D.
+- tjoin: T∨T=T, T∨B=T, B∨T=T, B∨B=B — all in D. ∎
+
+*Significance.* D forms a sub-semilattice under both operations. This means that designated reasoning is compositionally closed: combining designated premises through conjunction or disjunction always yields a designated conclusion. The logical system does not "leak" non-designated values through valid inferences from designated premises.
+
+### 3.5 Glut and Gap Characterization
+
+**Theorem 3.6** (`glut_iff_B`, `gap_iff_N`).
+*B is the unique glut in FOUR and N is the unique gap.*
+
+*Proof sketch.* A value a is a glut iff a ∈ D and bneg(a) ∈ D. Checking all four values: only B satisfies bneg(B) = B ∈ D. Similarly, a is a gap iff a ∉ D and bneg(a) ∉ D; only N satisfies bneg(N) = N ∉ D. ∎
+
+### 3.6 Theorem 3: Paraconsistency Characterization
+
+**Theorem 3.7** (`Belnap.paraconsistency_iff_glut`).
+*Explosion failure in FOUR is equivalent to the existence of a designated glut:*
+
+(∃ p q, designated(p ∧ ¬p) ∧ ¬designated(q)) ↔ (∃ a, isGlut(a))
+
+*Proof sketch.*
+(⇒) If designated(tmeet(p, bneg(p))) holds, then by case analysis on p, we must have p = B (since for T and F the meet with the negation yields F, which is not designated). Then both p = B and bneg(p) = B are designated, so p is a glut.
+
+(⇐) If a is a glut, then designated(a) and designated(bneg(a)) both hold. Since tmeet(a, bneg(a)) can be computed by cases and a glut must be B (by Theorem 3.6), we get tmeet(B, B) = B which is designated. Taking q = F gives ¬designated(F), completing the witness. ∎
+
+*Significance.* This is the central characterization theorem. It reduces the metalogical property of paraconsistency — a statement about what *cannot be derived* in the logic — to a purely algebraic condition about the existence of a specific kind of element in the truth-value algebra. This provides a clean criterion for designing paraconsistent logics: introduce a designated glut, and explosion fails; remove all designated gluts, and classical behavior is restored.
+
+### 3.7 Theorem 4: A Non-Topological Dream Space
+
+**Theorem 3.8** (`DreamSpace.nat_finite_is_nonTopological`).
+*The finite-or-universal dream space on ℕ is not a topology.*
+
+*Proof sketch.* The collection {S ⊆ ℕ : S is finite or S = ℕ} satisfies the dream space axioms:
+- ∅ is finite, hence open. ℕ = ℕ, hence open.
+- If S, T are open: if either is ℕ then S ∩ T equals the other (open); if both are finite, S ∩ T is finite (open). Similarly for S ∪ T.
+
+However, consider the family of singletons {{2n} : n ∈ ℕ}. Each {2n} is finite, hence open. But their union is the set of even numbers, which is infinite and not equal to ℕ, hence not open. The collection is not closed under arbitrary unions and therefore is not a topology. ∎
+
+*Significance.* This provides a concrete mathematical model for "dream-like" spatial reasoning: a system that correctly processes finite collections of observations but cannot assemble them into certain global conclusions. The even numbers are "locally visible" (each even number is in an open set) but "globally invisible" (the set of all even numbers is not open).
+
+---
+
+## 4. The Bridge: Algebraic Paraconsistency and Topological Deficiency
+
+The two main constructions — Belnap's FOUR and dream spaces — share a common structural pattern. Both are obtained by weakening a single axiom of a classical system:
+
+| Classical System | Weakened Axiom | Result |
+|---|---|---|
+| Boolean algebra (classical logic) | Bivalence (a ∨ ¬a = ⊤) | De Morgan algebra (Belnap logic) |
+| Topological space | Closure under arbitrary unions | Dream space |
+
+In both cases, the weakening introduces the possibility of *local coherence without global coherence*:
+
+- In FOUR, each individual inference step respects the lattice structure, but the global reasoning system tolerates states (gluts) that classical logic would reject.
+- In a dream space, each finite collection of open sets behaves topologically, but the global structure permits configurations (infinite unions that are not open) that topology would forbid.
+
+This parallel suggests a deeper categorical connection: functors from the category of De Morgan algebras to the category of dream spaces that preserve the relevant "defect" structures. We leave the formal development of this bridge to future work.
+
+---
+
+## 5. Applications
+
+### 5.1 Inconsistency-Tolerant Databases
+
+In database systems, merging records from multiple sources frequently produces contradictions. A patient may be listed as both "alive" and "deceased" in different subsystems. Under classical logic, any query on such a database would return every possible answer. Under Belnap valuations, the patient's status is assigned the value B, queries about *other* patients proceed normally, and the contradiction is quarantined.
+
+### 5.2 Multi-Agent Belief Fusion
+
+When autonomous agents with different sensors report conflicting observations — one camera detects an obstacle, another does not — a paraconsistent reasoning engine can assign B to the obstacle proposition and continue planning, rather than entering an inconsistent state that blocks all inference.
+
+### 5.3 Dream Cognition Modeling
+
+The dream space construction provides a formal model for the spatial reasoning characteristic of dreams: locally coherent (individual scenes make sense) but globally incoherent (the overall geography is impossible). This connects to theories of dream cognition that emphasize the role of weakened prefrontal control in allowing contradictory spatial representations to coexist.
+
+---
+
+## 6. Related Work
+
+Belnap's original formulation appears in *A Useful Four-Valued Logic* (1977), where the logic is motivated by "computer told" reasoning — how a computer should handle contradictory inputs from different sources. The algebraic treatment as a bilattice was developed by Ginsberg (1988) and Fitting (1991), who showed that FOUR carries two lattice orderings (truth and knowledge) and that the interaction between them governs non-monotonic reasoning.
+
+The connection between paraconsistent logics and topology has been explored by several authors. Mortensen (1995) studied topological models of paraconsistent mathematics. More recently, the framework of neighborhood semantics (Pacuit, 2017) provides a general topological perspective on non-normal modal logics that overlaps with our dream space construction.
+
+The specific construction of pre-topological spaces that fail closure under arbitrary unions appears in the general topology literature (Čech, 1966) under the name "closure spaces" or "pretopological spaces." Our dream space terminology emphasizes the cognitive interpretation.
+
+---
 
 ## 7. Discussion
 
-### 7.1 Connection to Existing Catalog
+### 7.1 Why "Dream" Logic?
 
-Our work builds directly on:
-- `finiteQuasiTopo_not_topological` (Computation/DreamLogic.lean): We extend this by identifying the precise mechanism (coherent consistency) that generates quasi-topologies from paraconsistent models
-- `impossible_figure_not_realizable` (Bridges/ImpossibleObjects.lean): Our paraconsistent frameworks provide the logical setting where "impossible" objects can formally exist — they inhabit worlds where contradictions are tolerated
+The term is not merely metaphorical. The formal properties of our constructions align with empirical observations about dream cognition:
 
-### 7.2 Philosophical Implications
+1. **Local consistency**: Individual dream scenes are internally coherent, just as finite subcollections of a dream space behave topologically.
+2. **Global inconsistency**: The overall dream narrative violates physical and logical constraints, just as infinite unions in a dream space may fail to be open.
+3. **Contradiction tolerance**: Dreamers accept impossible objects without distress, just as Belnap logic designates contradictory values without explosion.
+4. **Non-monotonicity**: Dream beliefs can be retracted (a character changes identity mid-scene), paralleling the non-monotone consequence relation of paraconsistent logics.
 
-The information-contradiction duality (Theorem 3.3) formalizes a fundamental philosophical insight: knowledge and contradiction are co-monotone. As databases grow, as scientific theories incorporate more data, as AI systems process more information, the potential for contradiction grows monotonically. Paraconsistent logic provides the mathematical framework for managing this inevitable reality.
+### 7.2 The Diamond vs. the Chain
+
+A notable structural feature of FOUR is that it is a *non-chain* lattice: the elements N and B are incomparable under ≤_t. This incomparability is essential. Any bounded distributive lattice on four elements where all elements are comparable (i.e., a total order) would be the chain F < N < B < T (or some relabeling), in which negation could not simultaneously be involutive, order-reversing, and identity on both middle elements. The diamond shape — with its two incomparable middle elements — is the *minimal* lattice structure that supports both gluts and gaps.
+
+This observation connects to the broader theory of De Morgan algebras. Every De Morgan algebra has a "center" consisting of elements fixed by negation; in FOUR, this center is {B, N}. The paraconsistency of FOUR depends on the center intersecting the designated set, while the "gappy" behavior depends on the center intersecting the non-designated set.
+
+### 7.3 Relationship to Other Paraconsistent Systems
+
+Belnap's FOUR is not the only paraconsistent logic. Priest's LP (Logic of Paradox) uses three values {T, B, F} with designated set {T, B} — it has a glut but no gap. Kleene's K3 uses three values {T, N, F} with designated set {T} — it has a gap but no glut, and is therefore *not* paraconsistent (it is paracomplete instead). Our Theorem 3.7 (`paraconsistency_iff_glut`) makes this taxonomy precise: LP is paraconsistent because B is a designated glut; K3 is not paraconsistent because it has no designated glut.
+
+The general pattern suggests a classification theorem: a finite De Morgan algebra is paraconsistent if and only if its center intersects the designated filter. This is a natural generalization of our result that merits further investigation.
+
+### 7.4 Computational Aspects
+
+All proofs in our formalization proceed by exhaustive case analysis over finitely many truth values. While this proof strategy is complete for the specific four-element algebra, it does not scale to parameterized families of many-valued logics. A more algebraic proof strategy — using universal properties of De Morgan algebras and filter theory — would be more informative and would generalize to infinite-valued settings.
+
+The decision procedure implicit in our approach has complexity O(4^k) for checking a property quantified over k variables, which is feasible for the small number of variables in our theorems (at most 3). For verification of logical consequence in FOUR with n propositional variables, the complexity is O(4^n), which is exponential but still finite — a marked contrast with the undecidability of first-order paraconsistent logics.
+
+### 7.5 Dream Spaces and Convergence
+
+The dream space construction raises interesting questions about convergence. In a topology, a sequence converges to a point x if every open neighborhood of x contains a tail of the sequence. In a dream space, the same definition applies, but the weaker open-set structure can produce different convergence behavior. In the finite-or-universal dream space on ℕ, the sequence 0, 2, 4, 6, ... has no convergent subsequence (since the set of even numbers is not open), yet each term is contained in an open set. This "phantom convergence" — where individual terms are locally visible but the limit is globally invisible — provides a precise mathematical model for the dream experience of following a narrative that never quite arrives at its destination.
+
+### 7.6 Limitations
+
+Our formalization treats FOUR as a propositional logic. Extension to first-order or modal paraconsistent logics would require significantly more infrastructure, including careful treatment of quantifier rules in the presence of truth-value gaps and gluts. The dream space construction is similarly limited to a single concrete example; a general theory of dream spaces (including morphisms, products, and compactness analogues) remains to be developed.
+
+The bridge between paraconsistent logic and dream spaces in this paper is primarily conceptual. A more formal categorical correspondence — perhaps through Stone-type duality theorems adapted to De Morgan algebras and dream spaces — would strengthen the connection from analogy to theorem.
+
+---
 
 ## 8. Future Work
 
-1. Extend to infinitary logics where propositions are indexed by ordinals
-2. Develop a categorical semantics for dream frames (functors between posets of dream states)
-3. Connect to formal epistemology: belief revision operators (AGM theory) as morphisms of dream frames
-4. Quantify the computational complexity of coherent-openness checking for various classes of frames
+Several natural extensions present themselves:
 
-## References
+1. **Bilattice homomorphisms**: Formalizing the knowledge ordering on FOUR and characterizing which bilattice morphisms preserve paraconsistency.
+2. **Dream space completion**: Computing the topological completion of dream spaces and measuring the "topological defect" — the cardinality gap between a dream space and its completion.
+3. **Paraconsistent valuations as dream points**: Establishing a formal correspondence where Belnap valuations on a propositional language form a dream space, with non-topological points corresponding to valuations assigning B to infinitely many variables.
+4. **Graded paraconsistency**: Defining quantitative measures of how paraconsistent a logic is, based on the proportion or structure of its designated gluts.
 
-- Belnap, N.D. (1977). "A useful four-valued logic." In *Modern Uses of Multiple-Valued Logic*, pp. 5-37.
-- Priest, G. (2006). *In Contradiction: A Study of the Transconsistent*. Oxford University Press.
-- da Costa, N.C.A. (1974). "On the theory of inconsistent formal systems." *Notre Dame Journal of Formal Logic* 15, pp. 497-510.
-- Arieli, O. & Avron, A. (1996). "Reasoning with logical bilattices." *Journal of Logic, Language and Information* 5, pp. 25-63.
+---
 
-### Catalog References
-- `Computation/DreamLogic.lean`: `finiteQuasiTopo_not_topological`
-- `Bridges/ImpossibleObjects.lean`: `impossible_figure_not_realizable`
-- `Bridges/IdempotentHolographicClosureDuality.lean`: `same_capacity_same_closed_sets`
+## 9. References
+
+1. Belnap, N.D. (1977). A useful four-valued logic. In *Modern Uses of Multiple-Valued Logic* (pp. 5–37). Reidel.
+2. Fitting, M. (1991). Bilattices and the semantics of logic programming. *Journal of Logic Programming*, 11(2), 91–116.
+3. Ginsberg, M.L. (1988). Multivalued logics: A uniform approach to reasoning in artificial intelligence. *Computational Intelligence*, 4(3), 265–316.
+4. Mortensen, C. (1995). *Inconsistent Mathematics*. Kluwer Academic Publishers.
+5. Pacuit, E. (2017). *Neighborhood Semantics for Modal Logic*. Springer.
+6. Čech, E. (1966). *Topological Spaces*. Wiley.
+
+---
+
+## Appendix: File References
+
+All formal proofs are contained in `Bridges/DreamLogic.lean`. Key declarations:
+
+- **Theorem 1**: `Belnap.instDistribLattice` — bounded distributive lattice structure
+- **Theorem 2**: `Belnap.explosion_fails` — paraconsistency witness
+- **Theorem 3**: `Belnap.paraconsistency_iff_glut` — characterization of explosion failure
+- **Theorem 4**: `DreamSpace.nat_finite_is_nonTopological` — non-topological dream space
+- **De Morgan laws**: `Belnap.bneg_tmeet`, `Belnap.bneg_tjoin`
+- **Glut/gap characterization**: `Belnap.glut_iff_B`, `Belnap.gap_iff_N`
+- **Designation closure**: `Belnap.designated_closed_tmeet`, `Belnap.designated_closed_tjoin`
