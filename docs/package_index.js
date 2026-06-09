@@ -44,6 +44,16 @@ window.PACKAGE_INDEX = [
     "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
   },
   {
+    "date": "2026-06-09",
+    "domain": "Bridges",
+    "exp_id": "debd806e",
+    "filename": "the_current_framework_models_theories_by_their_set.json",
+    "pkg_num": 10,
+    "quality": "partial",
+    "quality_score": 0.4683285105981593,
+    "title": "Closure Dynamical Systems, Symbolic Zeta Semantics, and the Artin\u2013Mazur Rationality Theorem"
+  },
+  {
     "date": "2026-06-08T19:03:25Z",
     "domain": "Applications",
     "exp_id": "84d24cbc",
@@ -152,6 +162,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
   },
+  "the_current_framework_models_theories_by_their_set.json": {
+    "domain": "Bridges",
+    "exp_id": "debd806e",
+    "source_exp_ids": [
+      "832ede28"
+    ],
+    "title": "Closure Dynamical Systems, Symbolic Zeta Semantics, and the Artin\u2013Mazur Rationality Theorem"
+  },
   "the_poincare_conjecture_for_data_manifold_detectio.json": {
     "domain": "Applications",
     "exp_id": "057f23ce",
@@ -179,7 +197,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2025-01-01",
       "domain": "Bridges",
-      "hue": 292,
+      "hue": 92,
       "id": "self_modifying_code_that_cannot_be_stopped",
       "primary_domain": "Bridges",
       "priority_score": 0.6462399999999999,
@@ -190,7 +208,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Logic",
-      "hue": 95,
+      "hue": 90,
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
       "primary_domain": "Logic",
       "priority_score": 0.3352,
@@ -201,7 +219,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Novelty",
-      "hue": 95,
+      "hue": 90,
       "id": "rigorous_algebraic_foundations_for_probability_t",
       "primary_domain": "Bridges",
       "priority_score": 0.66968,
@@ -212,7 +230,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 271,
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
       "primary_domain": "Bridges",
       "priority_score": 0.16743922555663115,
@@ -223,7 +241,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08T19:03:25Z",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 134,
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
       "primary_domain": "Bridges",
       "priority_score": 0.62584,
@@ -234,7 +252,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Novelty",
-      "hue": 89,
+      "hue": 280,
       "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
       "primary_domain": "Bridges",
       "priority_score": null,
@@ -245,7 +263,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 275,
+      "hue": 271,
       "id": "entropy_bounded_computation_ebc_framew",
       "primary_domain": "Bridges",
       "priority_score": 0.4813003957285953,
@@ -256,7 +274,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Computation",
-      "hue": 90,
+      "hue": 91,
       "id": "impossible_geometries_where_parallel_lines_converg",
       "primary_domain": "Computation",
       "priority_score": 0.47002089837753586,
@@ -267,13 +285,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 271,
+      "hue": 90,
       "id": "symplectic_mirror_descent_gromov_witten_invariants",
       "primary_domain": "Bridges",
       "priority_score": 0.4695990099009901,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
+    },
+    {
+      "date": "2026-06-09",
+      "domain": "Bridges",
+      "hue": 270,
+      "id": "the_current_framework_models_theories_by_their_set",
+      "primary_domain": "Bridges",
+      "priority_score": 0.4683285105981593,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "Closure Dynamical Systems, Symbolic Zeta Semantics, and the Artin\u2013Mazur Rationality Theorem"
     }
   ]
 };

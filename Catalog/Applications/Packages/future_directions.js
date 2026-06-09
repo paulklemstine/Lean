@@ -2320,6 +2320,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Proof-Theoretic Ordinal Analysis\n\n## 1. Ordinal Notation Systems and the \u03b5\u2080 Barrier\n\nThe current `OrdinalTheory` framework works with abstract `Ordinal` values from Mathlib's set-theoretic ordinals. The next step is to connect this to *computable* ordinal notation systems \u2014 specifically Mathlib's `ONote` (ordinal notations below \u03b5\u2080) and `NONote` (natural ordinal notations). The key insight is that the `pto_ofOrdinal_limit` theorem establishes that limit ordinals faithfully represent theories, but only for abstract ordinals; linking this to `ONote` would give a *decidable* theory comparison for theories with PTO below \u03b5\u2080. Why now? The `Iio_sSup_subset_initSeg` half-saturation theorem shows that every ordinal below the PTO is provable, which is exactly the structural lemma needed to map between notation-system provability and set-theoretic provability.\n\n**Testable conjecture**: For every `ONote` value `n`, `OrdinalTheory.ofOrdinal n.repr` has PTO exactly `n.repr`, and the inclusion ordering on such theories is decidable via the ordering on `ONote`.\n\n## 2. The Quasi-Metric Geometry of Theory Space\n\nWe established that `depthDist` is a symmetric, positive-definite function on theory space (via `depthDist_comm`, `depthDist_self_eq_zero`, and `depthDist_eq_zero_iff`). The triangle inequality fails in general due to non-commutativity of ordinal addition, but the `pto_sandwich` theorem suggests a weaker \"directed\" triangle inequality may hold. The key insight is that ordinal subtraction satisfies `(a - b) + (b - c) \u2265 a - c` when `a \u2265 b \u2265 c`, which is exactly the directed triangle inequality for the ordering induced by theory inclusion. Why now? The `pto_monotone` theorem guarantees that theory inclusion respects the PTO ordering, giving a directed structure to the space that should make the directed triangle inequality provable.\n\n**Testable conjecture**: For theories T\u2081 \u2264 T\u2082 \u2264 T\u2083, `depthDist T\u2081 T\u2083 \u2264 depthDist T\u2081 T\u2082 + depthDist T\u2082 T\u2083`, and this fails without the ordering assumption.\n\n## 3. Lattice Structure of OrdinalTheories\n\nThe `join_pto_eq_max` theorem shows that the join operation is well-behaved with respect to PTOs. A natural next step is to formalize the *meet* (intersection) of theories and show that `OrdinalTheory` forms a complete lattice under inclusion, with PTO providing a lattice homomorphism to the ordinals. The key insight is that intersections of downward-closed sets are downward-closed, and the PTO of the meet should be the infimum of the PTOs \u2014 but this requires care because `sSup (S\u2081 \u2229 S\u2082)` is not always `min (sSup S\u2081) (sSup S\u2082)` for general sets. Why now? Our discovery that strict inclusion does NOT imply strict PTO increase (the `{\u03b2 | \u03b2 < \u03c9}` vs `{\u03b2 | \u03b2 \u2264 \u03c9}` counterexample) reveals that the PTO map is not an order embedding \u2014 characterizing its fibers (the equivalence classes of theories with the same PTO) is the right structural question.\n\n**Testable conjecture**: The fibers of the PTO map are intervals in the inclusion lattice: if T\u2081 \u2264 T\u2082 and pto(T\u2081) = pto(T\u2082) = \u03b1, then for any T with T\u2081 \u2264 T \u2264 T\u2082, pto(T) = \u03b1.\n\n## 4. Connecting to Concrete Theories via Fast-Growing Hierarchies\n\nThe abstract framework should be connected to Mathlib's `ONote.fastGrowing` function hierarchy. The key insight is that a theory T \"knows about\" ordinal \u03b1 if \u03b1 \u2208 T.provablyWO, and the fast-growing function f_\u03b1 provides a *computational witness* of this knowledge: T should be able to prove totality of f_\u03b1 for exactly those \u03b1 in its provablyWO set. Why now? The `pto_le_of_not_mem` theorem gives the exact characterization needed: if T cannot prove \u03b1 is well-ordered (\u03b1 \u2209 provablyWO), then \u03b1 \u2265 pto(T), which is precisely the \"boundary\" where the fast-growing hierarchy becomes unprovably total.\n\n**Testable conjecture**: There exists a computable function from `ONote` to `OrdinalTheory` such that the PTO of the resulting theory equals the ordinal represented by the notation, and the theory's provablyWO set coincides with the set of notations whose fast-growing functions are provably total.\n\n## 5. Well-Quasi-Order Structure Under Bounded PTO\n\nThe `pto_monotone` theorem shows that infinite ascending chains of theories produce infinite ascending sequences of ordinals. Since ordinals below any fixed bound are well-ordered, the set of theories with PTO below a fixed bound \u03b1 admits no infinite strictly ascending chain *of PTOs*. The key insight is that while this does not immediately give a well-quasi-order (because PTO is not an order embedding, as we discovered), it does give a weaker \"well-directed\" structure: every infinite sequence of theories with bounded PTO has an infinite weakly increasing subsequence in the PTO ordering. Why now? The failure of strict monotonicity that we discovered (and documented in the file) actually makes this question more interesting \u2014 the PTO fibers add complexity that standard WQO theory for ordinals alone cannot capture.\n\n**Testable conjecture**: The quotient of `{T : OrdinalTheory | T.pto < \u03b5\u2080}` by PTO-equivalence (T\u2081 ~ T\u2082 iff pto(T\u2081) = pto(T\u2082)) is a well-order isomorphic to \u03b5\u2080, and each equivalence class is a complete lattice under theory inclusion.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_1065",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "debd806e",
+    "status": "available",
+    "timestamp": "2026-06-09T05:16:07.671211+00:00",
+    "title": "The current `OrdinalTheory` framework works with abstract `Ordinal` values from "
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2928,6 +2943,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T04:09:52.577093+00:00",
     "title": "Close Proofs: Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle debd806e (Q=0.468) proved 1706 theorems in Pythagorean but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Proof-Theoretic Ordinal Analysis\n\n## 1. Ordinal Collapsing Functions and the Bachmann-Howard Ordinal\n\nThe current framework models theories by their set of provably well-ordered o",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "sorry_fill_debd806e_48596788",
+    "priority_score": 0.5183285105981593,
+    "research_mode": "team",
+    "source_exp_id": "debd806e",
+    "status": "available",
+    "timestamp": "2026-06-09T05:16:22.978035+00:00",
+    "title": "Close Proofs: The current framework models theories by their set of provably well-or"
   },
   {
     "consumed_by_exp_id": "",
