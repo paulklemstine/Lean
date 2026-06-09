@@ -276,8 +276,10 @@ class KnowledgeExtractor:
         if n < 50:
             return 0.5  # cold start
 
-        # Check cache
-        cache_bucket = n // 50
+        # Check cache — recompute every 10 records so the threshold tracks
+        # quality trends.  Old cache used n//50 buckets which stayed stale for
+        # 50 cycles, hiding score degradation.
+        cache_bucket = n // 10
         try:
             if cache_path.exists():
                 cache = _json.loads(cache_path.read_text())
@@ -293,8 +295,10 @@ class KnowledgeExtractor:
             return 0.5
         p70_idx = int(0.7 * (len(scores) - 1))
         threshold = scores[p70_idx]
-        # Clamp to [0.4, 0.6] — never gate too aggressively or too leniently
-        threshold = max(0.4, min(0.6, threshold))
+        # Clamp to [0.35, 0.6] — never gate too aggressively or too leniently.
+        # Lowered floor from 0.4 to 0.35: with avg Q=0.30 and median=0.24,
+        # a 0.4 floor only lets ~21% through to Phase B, starving the pipeline.
+        threshold = max(0.35, min(0.6, threshold))
 
         # Cache
         try:
