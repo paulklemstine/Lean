@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2945 of the highest-quality
+A curated collection of 2934 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2945
+Total files: 2934
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -478,9 +478,7 @@ import FINAL.Bridges.Decoder
 import FINAL.Bridges.DefectTheory
 import FINAL.Bridges.Defs
 import FINAL.Bridges.DependentUltraproduct
-import FINAL.Bridges.DetCompressionGap
 import FINAL.Bridges.DiffSpectrumTheory
-import FINAL.Bridges.Dijkstra
 import FINAL.Bridges.Duality
 import FINAL.Bridges.DynamicProgramming
 import FINAL.Bridges.DynamicalRamanujan
@@ -636,7 +634,6 @@ import FINAL.Bridges.LorentzianSmoothedAnalysis
 import FINAL.Bridges.LorentzianStabilityRadii
 import FINAL.Bridges.LowDegreeTesting
 import FINAL.Bridges.LowerEnvelope
-import FINAL.Bridges.MConvexCompression
 import FINAL.Bridges.MaslovDequantizationRobustness
 import FINAL.Bridges.MatrixGroupGrowth
 import FINAL.Bridges.MatroidCertificatePhaseTransition
@@ -711,14 +708,12 @@ import FINAL.Bridges.PositiveTemperatureTropical
 import FINAL.Bridges.PottsLorentzianStability
 import FINAL.Bridges.PredicateTransport
 import FINAL.Bridges.PriestleyDuality_Basic
-import FINAL.Bridges.PriestleyDuality_Spectrum
 import FINAL.Bridges.PrimeClosureLocale
 import FINAL.Bridges.PrimeCongruenceGeneralizationDuality
 import FINAL.Bridges.PrimeCongruencePACBayes
 import FINAL.Bridges.PrimeGapAutomaton
 import FINAL.Bridges.PrimeGapCrosswordDeep
 import FINAL.Bridges.PrimeSpectralSchrodingerBridge
-import FINAL.Bridges.PrimeSpectrum
 import FINAL.Bridges.PrimeSpectrumCodingTheorem
 import FINAL.Bridges.PrimeTorsionEchoes
 import FINAL.Bridges.PrimewisePersistenceBarrier
@@ -1044,7 +1039,6 @@ import FINAL.Computation.AutomaticDecidability
 import FINAL.Computation.BarrierFramework
 import FINAL.Computation.Basic
 import FINAL.Computation.Bifurcation
-import FINAL.Computation.BinarySearch
 import FINAL.Computation.CA_Universality
 import FINAL.Computation.CSPPhaseTransition
 import FINAL.Computation.CellularAlgebraicGeometry
@@ -1099,7 +1093,6 @@ import FINAL.Computation.MetaOracleHypotheses
 import FINAL.Computation.MetaOracles
 import FINAL.Computation.MonotoneCircuit
 import FINAL.Computation.MortalEternityGame
-import FINAL.Computation.NTT
 import FINAL.Computation.NumberLineEncoding
 import FINAL.Computation.OAMFoundations
 import FINAL.Computation.OmniscientOracle
@@ -1728,7 +1721,6 @@ import FINAL.MachineLearning.DejaVu_Core
 import FINAL.MachineLearning.DependencyHypergraph
 import FINAL.MachineLearning.DepthBound
 import FINAL.MachineLearning.DepthGap_Core
-import FINAL.MachineLearning.DepthHierarchy_Basic
 import FINAL.MachineLearning.DepthHierarchy_Separation
 import FINAL.MachineLearning.DepthSeparation_Basic
 import FINAL.MachineLearning.DepthSeparation_Separation
@@ -1812,7 +1804,6 @@ import FINAL.MachineLearning.InfiniteGames
 import FINAL.MachineLearning.InvariantSubspace_Defs
 import FINAL.MachineLearning.InverseStereographicNeuralField
 import FINAL.MachineLearning.IrrationalityCriteria
-import FINAL.MachineLearning.IterExp
 import FINAL.MachineLearning.IterateBound
 import FINAL.MachineLearning.KWWitness_Defs
 import FINAL.MachineLearning.Kardashev
@@ -2358,7 +2349,6 @@ import FINAL.Pythagorean.LorentzianSpectralGap
 import FINAL.Pythagorean.MConvexBridge
 import FINAL.Pythagorean.MConvexOptimization
 import FINAL.Pythagorean.MConvexShadowCascade
-import FINAL.Pythagorean.MConvexShadowCompression
 import FINAL.Pythagorean.ManySortedConvergentRewriteOptimizer
 import FINAL.Pythagorean.MatroidBasisLeafCompression
 import FINAL.Pythagorean.MaxEnvelopeStability
@@ -2473,7 +2463,6 @@ import FINAL.Pythagorean.SubgroupMoebiusAsymp
 import FINAL.Pythagorean.SubgroupPressureConcentration
 import FINAL.Pythagorean.SubgroupRenormalization
 import FINAL.Pythagorean.SubstAlgebra
-import FINAL.Pythagorean.SupportCompression
 import FINAL.Pythagorean.SupportMinorTheory
 import FINAL.Pythagorean.SupportRigidityCircuitBounds
 import FINAL.Pythagorean.SupportTuttePolynomial
