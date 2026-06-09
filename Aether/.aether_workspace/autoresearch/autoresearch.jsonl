@@ -133,6 +133,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 {"timestamp": 1781005027.1516926, "experiment_id": "f9c3366c", "concept_title": "Close Proofs: This document describes five research conjectures extending the", "concept_domain": "Applications", "research_mode": "team", "quality": "partial", "quality_score": 0.38632137600826466, "catalog_references": [], "prompt_length": 4860, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781005090.7884336, "experiment_id": "743db091", "concept_title": "**Conjecture:** If `{f_t}_{t ∈ [0,1]}` is a continuous family of contracting cau", "concept_domain": "Geometry", "research_mode": "team", "quality": "partial", "quality_score": 0.4240429527390678, "catalog_references": [], "prompt_length": 14206, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781005152.0211859, "experiment_id": "cb6d03de", "concept_title": "Tropical Amoebas and Ronkin Functions", "concept_domain": "Applications", "research_mode": "team", "quality": "partial", "quality_score": 0.4228838627888345, "catalog_references": [], "prompt_length": 4581, "files_placed": 0, "status": "discard"}
@@ -232,3 +233,5 @@
 >>>>>>> Stashed changes
 {"timestamp": 1781032468.2048147, "experiment_id": "7447269b", "concept_title": "Rigorous Lean 4 formalization of provability logic (GL)", "concept_domain": "Tropical", "research_mode": "team", "quality": "partial", "quality_score": 0.39339772243974636, "catalog_references": [], "prompt_length": 27141, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781032549.0542545, "experiment_id": "4a83fa98", "concept_title": "Close Proofs: Close Proofs: Neural Tangent Kernel: Convergence of Gradient Descent", "concept_domain": "Pythagorean", "research_mode": "team", "quality": "partial", "quality_score": 0.38766439024390253, "catalog_references": [], "prompt_length": 10254, "files_placed": 0, "status": "discard"}
+=======
+>>>>>>> Stashed changes
