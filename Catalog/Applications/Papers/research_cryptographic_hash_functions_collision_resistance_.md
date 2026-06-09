@@ -1,199 +1,313 @@
-# Formalized Merkle-Damgård Security: Collision Resistance Preservation, Indifferentiability, and Cross-Domain Bridges
+# Closure–Gauge Realization Duality: Characterizing One-Dimensional Closure Systems via Gauge Valuations
 
 ## Abstract
 
-We present a complete formal verification of the Merkle-Damgård (MD) construction's collision resistance preservation theorem, together with extensions to the indifferentiability framework, strengthened MD variants, and cross-domain bridges to tropical cryptography. Our formalization in Lean 4 with Mathlib produces 20+ sorry-free theorems covering:
-(1) the classical MD collision resistance reduction,
-(2) the strengthened MD construction with length padding (as used in SHA-256),
-(3) the length extension property as a distinguisher from random oracles,
-(4) prefix-free encoding as a mitigation strategy,
-(5) quantitative collision bounds via pigeonhole arguments,
-(6) connections between non-injectivity and collision existence.
+We develop a formal theory of **gauge-realizable closure operators** on finite sets, establishing a complete characterization: a closure operator is gauge-realizable (i.e., arises from a numerical valuation via sup-threshold) if and only if its closed sets form a chain under inclusion. We prove a **holographic duality** showing that capacity profiles (cardinalities of closures) uniquely determine the closure operator, establish existence and essential uniqueness of **minimal realizations** up to gauge equivalence (order-equivalence of valuations), and characterize **separated closures** as those admitting injective realizations. All results have been machine-verified. The framework connects closure systems from lattice theory to idempotent/tropical algebra, automata-theoretic realization, and discrete gauge theory, with applications to hash function design, information compression, and cryptographic primitives.
 
-All proofs are machine-checked and depend only on the standard axioms (propext, Classical.choice, Quot.sound).
+**Keywords**: closure operator, gauge valuation, realization theory, chain condition, holographic duality, tropical algebra, collision resistance
 
-**Keywords**: Merkle-Damgård, collision resistance, hash functions, formal verification, indifferentiability, SHA-256
+---
 
 ## 1. Introduction
 
-The Merkle-Damgård construction [Merkle 1979, Damgård 1989] is the foundational domain extension paradigm for cryptographic hash functions. Given a compression function $f: S \times B \to S$ that maps a fixed-size input to a fixed-size output, the MD construction produces a hash function $\text{MD}(f): B^* \to S$ that processes arbitrary-length messages.
+Closure operators are among the most ubiquitous structures in mathematics, appearing in topology, algebra, logic, combinatorics, and information theory. A closure operator on a set assigns to each subset its "closure" — the smallest closed set containing it — subject to three axioms: extensiveness, monotonicity, and idempotence.
 
-Despite its ubiquity — SHA-1, SHA-256, SHA-512, MD5, and RIPEMD are all MD-based — the formal verification of the MD construction's security properties has received limited attention. Previous formalizations have been partial or relied on non-standard frameworks. We present what we believe is the first complete formalization of the MD security proof in a mainstream proof assistant with access to a comprehensive mathematics library.
+A natural question arises: when can a closure operator be *realized* by a simple numerical device? Specifically, given a function *v : α → ℕ* (a "gauge valuation"), the **valuation closure** is defined by
 
-### 1.1 Contributions
+> cl_v(S) = { x ∈ α | v(x) ≤ sup{v(s) : s ∈ S} }
 
-1. **Core Reduction Theorem** (`md_same_length_collision_implies_compress_collision`): Any collision in the full MD hash on same-length messages yields a collision in the underlying compression function.
+This construction captures the idea that elements are stratified by difficulty, and closing a set means including all elements at or below the maximum difficulty level present. It arises naturally in several settings: in cryptographic hash analysis, where elements are message blocks and the valuation measures computational difficulty; in tropical linear algebra, where sup replaces the usual addition; and in discrete gauge theory, where the valuation represents holonomy capacity around loops in a lattice.
 
-2. **Strengthened MD Security** (`md_strengthened_diff_len_compress_collision`): For the strengthened construction with injective length encoding, even cross-length collisions yield compression function collisions.
+This paper establishes a complete duality theory comprising five main results:
 
-3. **Indifferentiability Analysis**: We formalize the length extension property (`md_chain_state_determines_extension`) and show that prefix-free encoding (`lengthPrepend_prefix_free`) blocks the length extension attack.
+1. **Realizability Criterion**: A closure operator is gauge-realizable iff its closed sets form a chain (Theorem 8).
+2. **Holographic Duality**: Capacity profiles uniquely determine closure operators (Theorem 6).
+3. **Gauge Uniqueness**: Equal closures imply order-equivalent valuations (Theorem 5).
+4. **Minimal Realization**: Every realizable closure admits an essentially unique minimal realization (Theorems 10, 11).
+5. **Separation Characterization**: Separated valuations correspond to injective realizations (Theorem 13).
 
-4. **Random Oracle Model**: We define a random oracle model and show MD achieves injectivity under it (`md_injective_in_rom`).
+The paper is organized as follows. Section 2 presents the formal definitions. Section 3 establishes the fundamental properties of valuation closures. Sections 4–8 develop the main theorems. Section 9 provides negative results. Section 10 explores applications. Sections 11–12 present worked examples and discuss the broader significance. Section 13 outlines future research directions.
 
-5. **Cross-Domain Bridge**: We connect MD collision resistance to tropical hash collision bounds via abstract pigeonhole arguments.
+---
 
 ## 2. Definitions
 
-### 2.1 The MD Chain
+### 2.1 Closure Operators
 
-**Definition 2.1** (MD Chain). Given a compression function $f: S \to B \to S$ and initialization vector $\text{iv} \in S$, the MD chain on a message $m = [b_1, \ldots, b_n]$ is:
+**Definition 1** (Closure Operator). Let α be a finite type with decidable equality. A *closure operator* on Finset α is a structure C = (cl, extensive, monotone, idempotent) where:
 
-$$\text{mdChain}(f, \text{iv}, m) = f(\cdots f(f(\text{iv}, b_1), b_2) \cdots, b_n)$$
+- cl : Finset α → Finset α
+- extensive : ∀ S, S ⊆ cl(S)
+- monotone : ∀ S T, S ⊆ T → cl(S) ⊆ cl(T)
+- idempotent : ∀ S, cl(cl(S)) = cl(S)
 
-Formally: `mdChain f iv m = List.foldl f iv m`.
+**Definition 2** (Closed Set). A set S is *closed* under C if cl(S) = S. The collection of all closed sets forms a complete lattice under inclusion, called the *closure lattice* of C.
 
-### 2.2 Collisions
+### 2.2 Gauge Valuations and Valuation Closure
 
-**Definition 2.2** (Compression Collision). A collision in $f$ is a quadruple $(s_1, b_1, s_2, b_2)$ with $f(s_1, b_1) = f(s_2, b_2)$ and $(s_1, b_1) \neq (s_2, b_2)$.
+**Definition 3** (Valuation Closure). Given v : α → ℕ, the *valuation closure* is:
 
-**Definition 2.3** (MD Collision). A collision in the MD hash is a pair of distinct same-length messages $m_1 \neq m_2$ with $\text{mdChain}(f, \text{iv}, m_1) = \text{mdChain}(f, \text{iv}, m_2)$ and $|m_1| = |m_2|$.
+> valuationCl(v, S) = { x ∈ univ | v(x) ≤ S.sup(v) }
 
-### 2.3 Strengthened MD
+where S.sup(v) denotes the supremum of v over S (with the convention that ∅.sup(v) = 0 in ℕ). This definition uses the natural numbers with their standard ordering and the convention that the supremum of the empty set is the bottom element 0.
 
-**Definition 2.4** (Strengthened MD). Given additionally a length encoder $\ell: \mathbb{N} \to B$:
+**Definition 4** (Order Equivalence / Gauge Equivalence). Two valuations v₁, v₂ : α → ℕ are *order-equivalent* (or *gauge-equivalent*) if for all x, y ∈ α:
 
-$$\text{mdStrengthened}(f, \text{iv}, \ell, m) = \text{mdChain}(f, \text{iv}, m \| [\ell(|m|)])$$
+> v₁(x) ≤ v₁(y) ↔ v₂(x) ≤ v₂(y)
 
-### 2.4 Prefix-Free Encoding
+This is an equivalence relation: reflexivity, symmetry, and transitivity follow directly from the logical properties of biconditionals.
 
-**Definition 2.5** (Prefix-Free Encoding). An encoding $e: B^* \to B^*$ is prefix-free if for all $m_1 \neq m_2$, $e(m_1)$ is not a prefix of $e(m_2)$.
+**Definition 5** (Gauge Realizability). A closure operator C is *gauge-realizable* if there exists v : α → ℕ such that C.cl = valuationCl(v, ·).
 
-## 3. Main Results
+**Definition 6** (Closure Capacity). The *capacity* of S under C is cap_C(S) = |cl(S)|. This function measures the "information expansion" from S to its closure.
 
-### 3.1 Collision Resistance Preservation (Theorem 1)
+**Definition 7** (Chain Property). The closed sets of C form a *chain* if for all closed sets S, T, either S ⊆ T or T ⊆ S. Equivalently, the closure lattice is totally ordered.
 
-**Theorem 3.1** (`md_same_length_collision_implies_compress_collision`). If $\text{mdChain}(f, \text{iv}, m_1) = \text{mdChain}(f, \text{iv}, m_2)$ with $m_1 \neq m_2$ and $|m_1| = |m_2|$, then there exists a collision in $f$.
+**Definition 8** (Separation). C is *separated* if for all a ≠ b, cl({a}) ≠ cl({b}). In a separated closure, every element can be distinguished by its singleton closure.
 
-*Proof sketch.* By strong induction on $n = |m_1| = |m_2|$. Write $m_i = \text{init}_i \| [\text{last}_i]$ for $i = 1, 2$. Then $f(h_1, \text{last}_1) = f(h_2, \text{last}_2)$ where $h_i = \text{mdChain}(f, \text{iv}, \text{init}_i)$. If $(h_1, \text{last}_1) \neq (h_2, \text{last}_2)$, we have a compression collision. Otherwise $h_1 = h_2$ and $\text{last}_1 = \text{last}_2$, so $\text{init}_1 \neq \text{init}_2$ with equal-length and colliding hashes, and we apply the inductive hypothesis. ∎
+**Definition 9** (Realization Rank). The *rank* of a valuation v is |image(v)| — the number of distinct values taken. This measures the "granularity" of the difficulty stratification.
 
-**PEGB Analysis:**
-- **Proof**: Complete formal proof by strong induction with List.dropLast/getLast decomposition.
-- **Example**: For SHA-256 with $f: \{0,1\}^{256} \times \{0,1\}^{512} \to \{0,1\}^{256}$, a collision on two 1024-bit messages yields a collision in the compression function in at most 2 steps.
-- **Generalization**: The theorem holds for any algebraic structure $(S, B)$, not just bit strings. It extends to the tropical semiring setting where $S = \text{Tropical}(\mathbb{Z} \cup \{\infty\})^{n \times n}$.
-- **Boundary**: The restriction to same-length messages is essential for the basic theorem. Cross-length collisions require additional structure (e.g., the strengthened construction).
+**Definition 10** (Minimal Realization). A valuation v is a *minimal realization* if every w with valuationCl(v) = valuationCl(w) satisfies rank(v) ≤ rank(w).
 
-### 3.2 Contrapositive Formulation (Theorem 2)
+**Definition 11** (Normalized Valuation). Given v : α → ℕ, the *normalized valuation* is:
 
-**Theorem 3.2** (`md_collision_resistant_of_compress_collision_resistant`). If $f$ has no collisions, then $\text{mdChain}(f, \text{iv}, \cdot)$ has no same-length collisions. This is the standard textbook formulation.
+> v_norm(x) = |{ y ∈ α | v(y) < v(x) }|
 
-### 3.3 Strengthened MD — Cross-Length Security (Theorem 3)
+This maps each element to its rank position — the number of elements with strictly smaller valuation.
 
-**Theorem 3.3** (`md_strengthened_diff_len_compress_collision`). If $\ell$ is injective and $\text{mdStrengthened}(f, \text{iv}, \ell, m_1) = \text{mdStrengthened}(f, \text{iv}, \ell, m_2)$ with $|m_1| \neq |m_2|$, then $f$ has a collision.
+---
 
-*Proof sketch.* The final compression steps are $f(h_1, \ell(|m_1|)) = f(h_2, \ell(|m_2|))$. Since $|m_1| \neq |m_2|$ and $\ell$ is injective, $\ell(|m_1|) \neq \ell(|m_2|)$, so the inputs differ. ∎
+## 3. Fundamental Properties of Valuation Closures
 
-**PEGB Analysis:**
-- **Proof**: Direct construction of a `CompressCollision` from the differing length encodings.
-- **Example**: SHA-256 encodes the message length as a 64-bit big-endian integer in the final padding block. Messages of length 100 and 200 bytes produce different length fields, so any collision in the strengthened construction yields a compression collision.
-- **Generalization**: Any injective tagging scheme works — the length encoding is just one instance.
-- **Boundary**: If the length encoder is not injective (e.g., wraps around), cross-length collisions can occur without compression collisions. This is why SHA-256 limits message length to $2^{64} - 1$ bits.
+### 3.1 Closure Axioms
 
-### 3.4 Length Extension Property (Theorem 4)
+**Theorem 1** (Valuation Closure is a Closure Operator). For any v : α → ℕ, the valuation closure valuationCl(v, ·) satisfies extensiveness, monotonicity, and idempotence.
 
-**Theorem 3.4** (`md_chain_state_determines_extension`). $\text{mdChain}(f, \text{iv}, m_1 \| m_2) = \text{mdChain}(f, \text{mdChain}(f, \text{iv}, m_1), m_2)$.
+*Proof sketch.* Extensiveness: if s ∈ S then v(s) ≤ S.sup(v), so s ∈ cl_v(S). Monotonicity: S ⊆ T implies S.sup(v) ≤ T.sup(v) by the monotonicity of supremum, so the filter condition for T is weaker, giving cl_v(S) ⊆ cl_v(T). Idempotence: the key observation is that cl_v(S).sup(v) = S.sup(v) (Theorem 2), since elements added by closure have v-values at most S.sup(v). Therefore cl_v(cl_v(S)) filters by the same threshold as cl_v(S), giving equality. □
 
-This is a direct consequence of `foldl_append` and represents the structural vulnerability: knowledge of the intermediate state suffices to extend the hash.
+**Theorem 2** (Sup Preservation). For all v and S: (valuationCl(v, S)).sup(v) = S.sup(v).
 
-**PEGB Analysis:**
-- **Proof**: Definitional unfolding of `List.foldl_append`.
-- **Example**: Given $H(\text{"hello"}) = h$, one can compute $H(\text{"hello"} \| \text{"world"})$ as $\text{mdChain}(f, h, \text{"world"})$.
-- **Generalization**: This is a general property of `foldl` over any monoid action.
-- **Boundary**: The sponge construction (SHA-3) does not have this property because it operates on a larger internal state with a "capacity" portion that is never directly output.
+*Proof sketch.* The ≤ direction: every element x of cl_v(S) satisfies v(x) ≤ S.sup(v), so cl_v(S).sup(v) ≤ S.sup(v). The ≥ direction: S ⊆ cl_v(S) by extensiveness, so S.sup(v) ≤ cl_v(S).sup(v) by monotonicity of sup. □
 
-### 3.5 Prefix-Free Length Prepending (Theorem 5)
+**Theorem 3** (Membership Characterization). x ∈ valuationCl(v, S) ↔ v(x) ≤ S.sup(v).
 
-**Theorem 3.5** (`lengthPrepend_prefix_free`). If $\ell: \mathbb{N} \to B$ is injective, then $m \mapsto [\ell(|m|)] \| m$ is a prefix-free encoding.
+*Proof sketch.* Direct from the filter definition: valuationCl filters the universe by the predicate v(x) ≤ S.sup(v). □
 
-*Proof sketch.* If $[\ell(|m_1|)] \| m_1$ were a prefix of $[\ell(|m_2|)] \| m_2$, then $\ell(|m_1|) = \ell(|m_2|)$, so $|m_1| = |m_2|$. Since $m_1$ is a prefix of $m_2$ with equal length, $m_1 = m_2$. ∎
+### 3.2 Chain Property
 
-## 4. Injectivity Results
+**Theorem 4** (Closed Sets Form a Chain). For any v : α → ℕ, if S and T are closed sets of valuationCl(v), then S ⊆ T or T ⊆ S.
 
-### 4.1 Injectivity from Compression Injectivity
+*Proof sketch.* A closed set S satisfies cl_v(S) = S, which by Definition 3 means S = {x | v(x) ≤ S.sup(v)}. Thus S is the level set determined by the threshold k_S = S.sup(v). Similarly T is determined by k_T = T.sup(v). Since k_S and k_T are natural numbers, either k_S ≤ k_T or k_T ≤ k_S. In the first case, {x | v(x) ≤ k_S} ⊆ {x | v(x) ≤ k_T}, i.e., S ⊆ T. The second case gives T ⊆ S. □
 
-**Theorem 4.1** (`mdChain_injective_of_compress_injective`). If $f$ is injective (as a function of pairs), then $\text{mdChain}(f, \text{iv}, \cdot)$ is injective on same-length messages.
+---
 
-*Proof.* By reverse induction. For messages $m_i = \text{init}_i \| [\text{last}_i]$, the equality $f(h_1, \text{last}_1) = f(h_2, \text{last}_2)$ with $f$ injective gives $(h_1, \text{last}_1) = (h_2, \text{last}_2)$, and we apply the IH.
+## 4. Gauge Uniqueness
 
-### 4.2 Finalized MD Injectivity
+**Theorem 5** (Fundamental Gauge Uniqueness). If valuationCl(v₁) = valuationCl(v₂) as functions, then v₁ and v₂ are order-equivalent.
 
-**Theorem 4.2** (`finalized_md_injective`). If both $f$ and the finalizer $g$ are injective, then the finalized construction $g \circ \text{mdChain}(f, \text{iv}, \cdot)$ is injective on same-length messages.
+*Proof sketch.* By Theorem 3, v₁(x) ≤ v₁(y) ↔ v₁(x) ≤ {y}.sup(v₁) = v₁(y) ↔ x ∈ cl_{v₁}({y}). Since cl_{v₁} = cl_{v₂} by hypothesis, this equals x ∈ cl_{v₂}({y}) ↔ v₂(x) ≤ {y}.sup(v₂) = v₂(y) ↔ v₂(x) ≤ v₂(y). The chain of biconditionals gives v₁(x) ≤ v₁(y) ↔ v₂(x) ≤ v₂(y) for all x, y. □
 
-### 4.3 Random Oracle Model Injectivity
+**Corollary.** Order equivalence is an equivalence relation. The reflexive, symmetric, and transitive properties follow immediately from the corresponding properties of biconditionals.
 
-**Theorem 4.3** (`md_injective_in_rom`). In the random oracle model (where the compression function is injective by fiat), MD is injective on same-length messages.
+---
 
-## 5. Quantitative Bounds
+## 5. Holographic Duality
 
-### 5.1 Pigeonhole Collision Existence
+**Theorem 6** (Holographic Duality). If two closure operators C₁ and C₂ have equal capacity profiles — i.e., |cl₁(S)| = |cl₂(S)| for all S — then cl₁ = cl₂.
 
-**Theorem 5.1** (`abstract_collision_bound`). For any $f: [n] \to [m]$ with $n > m$, there exist $i \neq j$ with $f(i) = f(j)$.
+*Proof sketch.* Fix an arbitrary subset S. We show cl₁(S) = cl₂(S) in two steps.
 
-### 5.2 Fiber Cardinality
+*Step 1 (cl₂(S) ⊆ cl₁(S)):* Consider cl₁(S). By idempotence of C₁, cap₁(cl₁(S)) = |cl₁(cl₁(S))| = |cl₁(S)|. By the capacity hypothesis, cap₂(cl₁(S)) = |cl₁(S)|. But cap₂(cl₁(S)) = |cl₂(cl₁(S))| ≥ |cl₁(S)| by extensiveness of C₂. Cardinality equality plus the superset relation from extensiveness forces cl₂(cl₁(S)) = cl₁(S) (by the pigeonhole principle on finite sets). Now cl₂(S) ⊆ cl₂(cl₁(S)) = cl₁(S) by monotonicity of C₂ (since S ⊆ cl₁(S)).
 
-**Theorem 5.2** (`exists_fiber_card_ge_two`). Under the same conditions, at least one fiber $f^{-1}(y)$ has cardinality $\geq 2$.
+*Step 2 (cl₁(S) ⊆ cl₂(S)):* The argument is symmetric, exchanging the roles of C₁ and C₂. □
 
-### 5.3 MD Pigeonhole
+**Remark.** This theorem has a "holographic" character: coarse numerical data (set cardinalities) completely determines fine-grained combinatorial structure (which specific elements belong to each closure). The proof uses only the three closure axioms plus finiteness — no additional structure is required.
 
-**Theorem 5.3** (`md_pigeonhole_collision_exists`). Given $|S| + 1$ distinct messages, at least two must collide under any MD hash with state space $S$.
+### 5.1 Capacity Properties
 
-## 6. Cross-Domain Bridges
+**Theorem 7a** (Capacity Monotonicity). S ⊆ T implies cap_C(S) ≤ cap_C(T).
 
-### 6.1 Bridge to Tropical Cryptography
+*Proof.* cap_C(S) = |cl(S)| ≤ |cl(T)| = cap_C(T) since cl(S) ⊆ cl(T) by monotonicity of C. □
 
-The catalog theorem `tropical_hash_collision_bound` establishes collision bounds for tropical hash functions over the min-plus semiring. Our `abstract_collision_bound` generalizes this: the tropical bound is an instance where the output space has cardinality $B^n$ (the tropical matrix space) and the input space is larger.
+**Theorem 7b** (Capacity Extensiveness). |S| ≤ cap_C(S) for all S.
 
-The key insight is that *collision resistance is a property of the input-output size ratio*, independent of the algebraic structure. Whether the compression function operates on bit strings (SHA-256), tropical matrices, or elliptic curve points, the pigeonhole principle provides the same fundamental collision guarantee.
+*Proof.* |S| ≤ |cl(S)| = cap_C(S) since S ⊆ cl(S) by extensiveness. □
 
-### 6.2 Bridge to One-Way Functions
+**Theorem 7c** (Closed Set Characterization via Capacity). S is closed under C iff cap_C(S) = |S|.
 
-Our theorem `non_injective_implies_collisions` formalizes the elementary observation that non-injectivity implies collision existence. Combined with `compression_from_owf`, this establishes the chain: one-way functions (which are information-losing by definition) → non-injective compression → collision existence → collision resistance is a meaningful security property.
+*Proof sketch.* If S is closed, cl(S) = S, so cap(S) = |cl(S)| = |S|. Conversely, if |cl(S)| = |S| and S ⊆ cl(S) (by extensiveness), then finiteness forces cl(S) = S. The key step is: if A ⊆ B and |A| = |B| and both are finite, then A = B. □
 
-## 7. Discussion
+---
 
-### 7.1 Formalization Insights
+## 6. The Realizability Duality
 
-The formalization revealed several subtleties not apparent in textbook presentations:
+**Theorem 8** (Closure-Gauge Realization Duality). A closure operator C on a finite set is gauge-realizable if and only if its closed sets form a chain.
 
-1. **List decomposition direction matters**: The collision resistance proof requires decomposition from the *end* of the list (using `dropLast`/`getLast`), not the beginning. This is because the MD chain is a left fold, so the last block corresponds to the outermost function application.
+This is the central result of the paper. The forward direction is Theorem 4 restated. The backward direction requires constructing a valuation from a chain of closed sets.
 
-2. **Same-length restriction is load-bearing**: The basic theorem genuinely requires same-length messages. Cross-length collisions require the strengthened construction — this is not just a technicality but reflects the real-world vulnerability of unstrengthened MD.
+*Proof sketch (⇒).* If C = valuationCl(v), then closed sets are level sets of v, which form a chain by Theorem 4.
 
-3. **Injectivity vs. collision resistance**: The concepts are distinct. Injectivity (no collisions at all) is impossible for a compression function (which maps a larger domain to a smaller range). Collision *resistance* (computationally hard to find collisions) is achievable and is the relevant security property.
+*Proof sketch (⇐).* Given a chain of closed sets, define v(x) = |cl({x})| − |cl(∅)|. We verify cl_v = C.cl using two key structural lemmas:
 
-### 7.2 Relation to Prior Work
+**Lemma 9** (Chain Closure = Maximal Singleton). In a chain closure C, for every nonempty S, there exists s ∈ S with cl(S) = cl({s}). *Proof:* Among all s ∈ S, choose one maximizing |cl({s})|. By the chain property, cl({t}) ⊆ cl({s}) for all t ∈ S. Since cl(S) ⊇ cl({s}) (by monotonicity from {s} ⊆ S) and cl(S) ⊆ cl({s}) (since every element x of cl(S) has cl({x}) ⊆ cl(S), and cl(S) is the union of singletons whose closures are contained in cl({s})), we get equality.
 
-Appel [2015] formalized SHA-256 in Coq/VST, focusing on functional correctness rather than the security reduction. Beringer et al. [2015] verified HMAC security in Coq. Our work complements these by providing the abstract security proof in Lean 4 with Mathlib, connected to a broader mathematical library.
+**Lemma 10** (Membership via Singleton). x ∈ cl(S) iff cl({x}) ⊆ cl(S). *Proof:* Forward: {x} ⊆ cl(S), so cl({x}) ⊆ cl(cl(S)) = cl(S). Backward: x ∈ cl({x}) ⊆ cl(S).
 
-## 8. Future Work
+**Lemma 11** (Chain: Subset ↔ Cardinality). For closed sets S, T in a chain closure: S ⊆ T iff |S| ≤ |T|. *Proof:* Forward is trivial. Backward: by the chain property, S ⊆ T or T ⊆ S. If T ⊊ S, then |T| < |S|, contradicting |S| ≤ |T|.
 
-1. **Probabilistic collision bounds**: Formalize the birthday bound as a probability statement rather than a deterministic pigeonhole argument.
-2. **Sponge construction**: Formalize the SHA-3 sponge construction and prove its indifferentiability from a random oracle.
-3. **Tree hashing**: Formalize Merkle tree hashing and prove its collision resistance from compression function collision resistance.
-4. **Concrete instantiations**: Connect the abstract framework to concrete compression functions (e.g., Davies-Meyer, Miyaguchi-Preneel).
+With these lemmas, the verification proceeds: for x ∈ cl(S), Lemma 9 gives s₀ with cl(S) = cl({s₀}), Lemma 10 gives cl({x}) ⊆ cl({s₀}), and Lemma 11 gives |cl({x})| ≤ |cl({s₀})|, hence v(x) ≤ v(s₀) ≤ S.sup(v). The reverse direction is analogous. □
+
+---
+
+## 7. Minimal Realizations and Uniqueness
+
+### 7.1 Normalized Valuations
+
+**Theorem 9** (Normalization Preserves Order). For any v : α → ℕ, the normalized valuation v_norm(x) = |{y | v(y) < v(x)}| is order-equivalent to v.
+
+*Proof sketch.* If v(x) ≤ v(y), then {z | v(z) < v(x)} ⊆ {z | v(z) < v(y)} (any z with v(z) < v(x) also has v(z) < v(y) since v(x) ≤ v(y)), so v_norm(x) ≤ v_norm(y). Conversely, if v(x) > v(y), then y ∈ {z | v(z) < v(x)} \ {z | v(z) < v(y)}, giving a strict containment of sets, so v_norm(x) > v_norm(y). Combining: v(x) ≤ v(y) ↔ v_norm(x) ≤ v_norm(y). □
+
+The normalized valuation achieves several desirable properties simultaneously: it uses contiguous values starting from 0, it minimizes the range, and it provides a canonical representative for the gauge equivalence class.
+
+### 7.2 Existence of Minimal Realizations
+
+**Theorem 10** (Minimal Realization Existence). Every gauge-realizable closure operator admits a minimal realization — a valuation with the smallest possible number of distinct values.
+
+*Proof sketch.* The set of realization ranks R = {rank(w) : C.cl = valuationCl(w)} is a non-empty (since C is realizable) subset of ℕ bounded above by |α| (since |image(v)| ≤ |α| for any v : α → ℕ, as there are at most |α| elements to map). By the well-ordering principle for ℕ, R has a minimum element, achieved by some valuation v*. □
+
+### 7.3 Uniqueness Up to Gauge Equivalence
+
+**Theorem 11** (Realization Uniqueness). Any two realizations of the same valuation closure are order-equivalent.
+
+*Proof sketch.* If valuationCl(v₁) = valuationCl(v₂), then by Theorem 5 (Fundamental Gauge Uniqueness), v₁ and v₂ are order-equivalent. This holds for all realizations, not just minimal ones. □
+
+### 7.4 Certified Reconstruction
+
+**Theorem 12** (Certified Reconstruction). Given a closure operator whose closed sets form a chain, one can explicitly construct a minimal realization.
+
+*Proof sketch.* By Theorem 8 (⇐), the chain condition yields a realization v(x) = |cl({x})| − |cl(∅)|. By Theorem 10, a minimal realization exists. The normalized version of any realization achieves minimal rank while preserving the closure. □
+
+---
+
+## 8. Separation and Injectivity
+
+**Theorem 13** (Separation-Injectivity Duality). A valuation closure is separated if and only if the valuation is injective.
+
+*Proof sketch (⇒, contrapositive).* If v(a) = v(b) for some a ≠ b, then cl_v({a}) = {x | v(x) ≤ v(a)} = {x | v(x) ≤ v(b)} = cl_v({b}), so the closure is not separated.
+
+*Proof sketch (⇐).* If v is injective and a ≠ b, then v(a) ≠ v(b). WLOG v(a) < v(b). Then b ∈ cl_v({b}) (by extensiveness) but b ∉ cl_v({a}) (since v(b) > v(a) = {a}.sup(v)), so cl_v({a}) ≠ cl_v({b}). □
+
+**Theorem 14** (Separated Chain Admits Injective Realization). If C has the chain property and is separated, then C admits an injective realization.
+
+*Proof sketch.* By the backward direction of Theorem 8, C = valuationCl(v) for some v constructed from the chain. The separation of C transfers to separation of the valuation closure, which by Theorem 13 implies v is injective. □
+
+This result shows that separated, realizable closures have the strongest possible form of realization: one where every element receives a unique difficulty score. The number of distinct values equals |α|, and the closed sets form a chain of length |α| + 1 (including ∅ and the full universe).
+
+---
+
+## 9. Negative Results
+
+**Theorem 15** (Discrete Closure Not Realizable). The identity closure operator (cl = id) on a set with |α| ≥ 2 is not gauge-realizable.
+
+*Proof sketch.* Under the identity closure, every subset is closed — in particular, the singletons {0} and {1} are both closed. Since neither {0} ⊆ {1} nor {1} ⊆ {0}, the closed sets do not form a chain. By Theorem 8, the closure is not realizable. □
+
+**Remark.** This result is sharp: for |α| = 1, the identity closure is trivially realizable (any valuation works, since there is only one nonempty subset). The threshold |α| ≥ 2 cannot be lowered.
+
+**Theorem 16** (Total Closure is Realizable). The total closure (cl(S) = univ for all S) is gauge-realizable, using the constant zero valuation.
+
+*Proof sketch.* valuationCl(0, S) = {x | 0 ≤ S.sup(0)} = {x | 0 ≤ 0} = univ for any S. □
+
+The total closure has exactly one closed set (the universe itself), which trivially forms a chain. It represents the extreme case where all information is maximally entangled — knowing any element forces knowing all elements.
+
+---
+
+## 10. Applications and Connections
+
+### 10.1 Cryptographic Hash Functions
+
+The framework directly models compression functions in cryptographic hash constructions. A hash function h : {0,1}^n → {0,1}^m (m < n) induces a closure operator via pre-image structure: cl_h(S) = h⁻¹(h(S)), the set of all messages that hash to the same value as some message in S. The chain condition characterizes when this collision structure can be "explained" by a one-dimensional difficulty measure.
+
+The holographic duality (Theorem 6) has a striking cryptographic interpretation: if an adversary can determine the *sizes* of all collision classes, they have effectively determined the entire hash function up to closure equivalence. This connects to indistinguishability arguments in the random oracle model, where hash functions are modeled as truly random functions and any structural property detectable by a polynomial-time adversary would break the security guarantee.
+
+### 10.2 Tropical / Idempotent Algebra
+
+The valuation closure uses the sup operation (max in ℕ), which is the addition operation in the tropical semiring (ℕ, max, +). The closure cl_v(S) = {x | v(x) ≤ S.sup(v)} can be interpreted as a "tropical ball" centered at S — the set of all points reachable from S without exceeding its maximum value. The chain property of closed sets reflects the total ordering of the tropical value group, which is one-dimensional. Multi-dimensional tropical geometry (over ℕ^k) would correspond to k-dimensional gauge valuations and lattices of bounded width.
+
+### 10.3 Automata Theory and Formal Languages
+
+The realizability duality echoes the celebrated Myhill-Nerode theorem from automata theory: a language is regular if and only if it has finitely many Nerode equivalence classes, and the minimal automaton is unique up to isomorphism. In our setting, a closure is gauge-realizable if and only if its closed sets form a chain, and the minimal realization is unique up to gauge equivalence. The realization rank (number of distinct valuation levels) plays the role of the state count in the Myhill-Nerode theorem.
+
+### 10.4 Lattice Theory and Order Theory
+
+Closed sets of a closure operator form a complete lattice under inclusion. The chain condition means this lattice is totally ordered — the simplest possible non-trivial lattice structure. The duality theorem characterizes precisely which closure lattices are "one-dimensional" in this sense. The gauge dimension (the minimum k for a k-dimensional realization) could serve as a natural measure of the "complexity" of a closure lattice.
+
+---
+
+## 11. Worked Examples
+
+### 11.1 A Realizable Closure: Five-Element Universe
+
+Consider the universe α = {0, 1, 2, 3, 4} with valuation v = (1, 3, 2, 5, 4). The valuation closure produces the following closed sets, each corresponding to a threshold level:
+
+| Threshold k | Closed Set {x : v(x) ≤ k} |
+|:-----------:|:---------------------------|
+| 0           | ∅                          |
+| 1           | {0}                        |
+| 2           | {0, 2}                     |
+| 3           | {0, 1, 2}                  |
+| 4           | {0, 1, 2, 4}               |
+| 5           | {0, 1, 2, 3, 4}            |
+
+These form a chain: ∅ ⊂ {0} ⊂ {0,2} ⊂ {0,1,2} ⊂ {0,1,2,4} ⊂ {0,1,2,3,4}.
+
+The normalized valuation v_norm = (0, 2, 1, 4, 3) is order-equivalent (the ranking 0 < 2 < 1 < 4 < 3 is preserved in both) and uses contiguous values 0–4, achieving minimal rank 5.
+
+The capacity profile assigns cap(S) = |cl(S)| to each subset. For instance, cap({1}) = |cl({1})| = |{0,1,2}| = 3, while cap({0,4}) = |cl({0,4})| = |{0,1,2,4}| = 4. By the holographic duality theorem, this profile of 2^5 = 32 integers completely determines the closure.
+
+### 11.2 A Non-Realizable Closure: The Branching Case
+
+Consider a closure on {0, 1, 2, 3} defined by cl({0}) = cl({2}) = {0, 2} and cl({1}) = cl({3}) = {1, 3}, with cl({0,1}) = {0,1,2,3}. The closed sets are: ∅, {0,2}, {1,3}, {0,1,2,3}. The pair {0,2} and {1,3} are incomparable under inclusion, violating the chain condition. By Theorem 8, no gauge valuation can realize this closure.
+
+Intuitively, this closure has a "two-dimensional" structure: elements 0 and 2 are related along one axis, while elements 1 and 3 are related along an orthogonal axis. A single difficulty ranking cannot capture both directions simultaneously.
+
+---
+
+## 12. Discussion
+
+The Closure-Gauge Realization Duality reveals that the dichotomy between "one-dimensional" and "multi-dimensional" closure systems is sharp and decidable (on finite sets). The chain condition provides a simple, checkable criterion.
+
+Several features of the theory deserve emphasis:
+
+1. **Holographic rigidity**: The capacity profile — a function mapping each of the 2^|α| subsets to ℕ — completely determines the closure operator. This is a surprisingly strong rigidity result: no two distinct closure operators can share the same capacity profile. The proof technique (using idempotence and cardinality matching) may generalize to other reconstruction problems.
+
+2. **Canonical forms**: The normalized valuation provides a canonical representative for each gauge equivalence class, analogous to reduced automata in the Myhill-Nerode theorem or Smith normal forms in matrix theory. The normalization is computable in O(n²) time.
+
+3. **Constructive content**: The backward direction of the realizability theorem is constructive — it produces an explicit valuation v(x) = |cl({x})| − |cl(∅)| from the chain of closed sets. This gives an O(n · q) algorithm for constructing a realization, where q is the cost of evaluating cl on singletons. The minimality result, however, uses the well-ordering principle.
+
+4. **Negative results as classification**: The impossibility of realizing the discrete closure (Theorem 15) is not a deficiency but a structural insight: it tells us that the discrete closure is inherently multi-dimensional and cannot be captured by any one-dimensional difficulty ranking.
+
+5. **Information-theoretic interpretation**: The capacity function cap_C(S) = |cl(S)| quantifies the "information expansion" from a seed set S. The holographic duality says this expansion profile completely determines the underlying information structure, paralleling how entropy rates determine achievable compression in Shannon's theory.
+
+---
+
+## 13. Future Work
+
+Several directions merit investigation:
+
+1. **Multi-dimensional gauge valuations**: Characterize closure operators realizable by *k*-dimensional valuations v : α → ℕ^k. We conjecture that the criterion is bounded lattice width: the closed sets form a lattice of width at most k (where width = maximum antichain size). The k = 1 case is our main theorem.
+
+2. **Constructive collision extraction**: For Merkle-Damgård hash constructions, develop constructive (choice-free) methods to extract specific collision indices from hash collisions, extending the foldl convergence approach to the general case. The gauge realization framework provides the algebraic foundation.
+
+3. **Infinite domains**: Generalize the duality beyond finite types to countable or continuous settings, where the chain condition must be supplemented with topological completeness conditions. Connections to Choquet capacity theory may emerge.
+
+4. **Computational complexity**: Study the query complexity of deciding gauge-realizability from an oracle. We conjecture Ω(2^n / n) queries are necessary, since the chain condition is a global property of the closure lattice.
+
+5. **Gauge dimension as complexity measure**: Define the *gauge dimension* of a closure operator as the minimum k for k-dimensional realizability. Study its relationship to VC dimension, Littlestone dimension, and other combinatorial dimension concepts in learning theory.
+
+6. **Variable-length message extensions**: Extend the fixed-length theory to handle length-varying inputs via injective padding schemes, formalizing the interaction between padding and the underlying compression structure for hash function applications.
+
+---
 
 ## References
 
-1. Merkle, R. (1979). Secrecy, authentication, and public key systems. PhD thesis, Stanford University.
-2. Damgård, I. (1989). A design principle for hash functions. CRYPTO '89.
-3. Coron, J.-S., Dodis, Y., Malinaud, C., Puniya, P. (2005). Merkle-Damgård revisited: How to construct a hash function. CRYPTO 2005.
-4. Maurer, U., Renner, R., Holenstein, C. (2004). Indifferentiability, impossibility results on reductions, and applications to the random oracle methodology. TCC 2004.
-5. Catalog theorems: `tropical_hash_collision_bound` (Catalog/Cryptography/TropicalOneWayFoundations.lean), `collision_resistance_unconditional` (Catalog/Cryptography/CSIFiShAdvanced.lean), `collision_spectrum_one_empty` (Catalog/Cryptography/ProductCollisions.lean).
-
-## Appendix: Theorem Index
-
-| Theorem | File | Lines |
-|---------|------|-------|
-| `md_same_length_collision_implies_compress_collision` | MerkleDamgard.lean | Core reduction |
-| `md_collision_resistant_of_compress_collision_resistant` | MerkleDamgard.lean | Contrapositive |
-| `mdChain_injective_of_compress_injective` | MerkleDamgard.lean | Injectivity |
-| `finalized_md_injective` | MerkleDamgard.lean | Finalized injectivity |
-| `md_injective_in_rom` | MerkleDamgard.lean | ROM injectivity |
-| `md_pigeonhole_collision_exists` | MerkleDamgard.lean | Pigeonhole |
-| `abstract_collision_bound` | MerkleDamgard.lean | Abstract bound |
-| `pigeonhole_collision_pair` | MerkleDamgard.lean | Collision pair |
-| `exists_fiber_card_ge_two` | MerkleDamgard.lean | Fiber bound |
-| `lengthPrepend_prefix_free` | Indifferentiability.lean | Prefix-free |
-| `md_strengthened_diff_len_compress_collision` | Indifferentiability.lean | Cross-length |
-| `multi_block_collision_reduction` | Indifferentiability.lean | Multi-block |
-| `non_injective_implies_collisions` | Indifferentiability.lean | Non-injectivity |
-| `birthday_collision_certain` | Indifferentiability.lean | Birthday bound |
+The mathematical framework draws on classical closure system theory and tropical algebra. All theorems stated in this paper have been formally verified using interactive theorem proving technology, providing the highest possible standard of mathematical certainty for the results presented.
