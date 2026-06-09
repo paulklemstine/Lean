@@ -1,22 +1,14 @@
 /- Aether FINAL Catalog
-<<<<<<< Updated upstream
-A curated collection of 2468 of the highest-quality
+A curated collection of 2460 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2468
-=======
-A curated collection of 2487 of the highest-quality
-formally verified mathematical results from the Aether engine.
-Sorry-free. No placeholders. Auto-maintained.
-Total files: 2487
->>>>>>> Stashed changes
+Total files: 2460
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
 import FINAL.Algebra.Agent
 import FINAL.Algebra.AntipodeUniqueness
 import FINAL.Algebra.Apollonian_SpectralTransfer
-import FINAL.Algebra.ArbitrageProfit
 import FINAL.Algebra.ArrowCurvatureBridge_Arrow
 import FINAL.Algebra.ArrowCurvatureBridge_Geometry
 import FINAL.Algebra.ArtinConjecture
@@ -319,14 +311,12 @@ import FINAL.Algebra.TransfiniteProofDynamics_Theorems
 import FINAL.Algebra.TransrealArithmetic
 import FINAL.Algebra.TransrealTheorems
 import FINAL.Algebra.Triangular
-import FINAL.Algebra.TriangularChain
 import FINAL.Algebra.TropicalAnalyticDuality
 import FINAL.Algebra.Tropical_p_adic_Valuation_Bounds_and_Lifting_the_Exponent_for_Fibonacci_Primitive_Divisors
 import FINAL.Algebra.UltrametricCondNeg
 import FINAL.Algebra.UniswapV4Hooks
 import FINAL.Algebra.UnityIsomorphism
 import FINAL.Algebra.UniversalParentInverse
-import FINAL.Algebra.UniversalTranslator
 import FINAL.Algebra.WeightedRotaBaxter
 import FINAL.Algebra.YamabeNonCompact
 import FINAL.Algebra.ZKQuantumVuln
@@ -380,7 +370,6 @@ import FINAL.Bridges.BetaClassCanonicity
 import FINAL.Bridges.BirthdayValuationBridge
 import FINAL.Bridges.BisimCohomology
 import FINAL.Bridges.BisimMinimization
-import FINAL.Bridges.BisimulationMetric
 import FINAL.Bridges.BooleanThermodynamicEliminationDuality
 import FINAL.Bridges.BordaRobustness
 import FINAL.Bridges.BorsukUlamArrow_Defs
@@ -466,7 +455,6 @@ import FINAL.Bridges.ContinuousDiscreteTransfer
 import FINAL.Bridges.ContractionDynamics
 import FINAL.Bridges.ContractionTropicalCryptoBridge
 import FINAL.Bridges.Core
-import FINAL.Bridges.CounterfactualPrimes
 import FINAL.Bridges.CulinaryComplexity
 import FINAL.Bridges.CupProductCryptography
 import FINAL.Bridges.CycleBirthConcentration
@@ -765,7 +753,6 @@ import FINAL.Bridges.Skeleton
 import FINAL.Bridges.SocialChoiceTopology_Defs
 import FINAL.Bridges.SourceCoding
 import FINAL.Bridges.Sp2nExpansionDeep
-import FINAL.Bridges.SparseMatrixStructure
 import FINAL.Bridges.Spectral
 import FINAL.Bridges.SpectralCrypto
 import FINAL.Bridges.SpectralFingerprints
@@ -873,7 +860,6 @@ import FINAL.Bridges.TropicalNeuralSheafSampling
 import FINAL.Bridges.TropicalNormalization
 import FINAL.Bridges.TropicalObserverCodingDuality
 import FINAL.Bridges.TropicalOneWayKernelDuality
-import FINAL.Bridges.TropicalOperadicRealization_Defs
 import FINAL.Bridges.TropicalOperadicRealization_Theorems
 import FINAL.Bridges.TropicalPersistenceStability
 import FINAL.Bridges.TropicalPerturbationAmplification
@@ -1612,7 +1598,6 @@ import FINAL.MachineLearning.InvariantSubspace_Defs
 import FINAL.MachineLearning.InverseStereographicNeuralField
 import FINAL.MachineLearning.IterExp
 import FINAL.MachineLearning.KWWitness_Defs
-import FINAL.MachineLearning.KnotPolynomialSpectra
 import FINAL.MachineLearning.Knot_Jones
 import FINAL.MachineLearning.KnottedLight_Core
 import FINAL.MachineLearning.LFunctionOracle_Core

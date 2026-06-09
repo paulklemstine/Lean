@@ -3120,7 +3120,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Rigorous bridge between proof search complexity (the `p"
   },
   {
-    "consumed_by_exp_id": "49409cbc",
+    "consumed_by_exp_id": "",
     "description": "Prove that a general tropical curve of genus g has a divisor of degree d and rank r iff the Brill-Noether number \u03c1 = g - (r+1)(g-d+r) \u2265 0. Formalize the connection to classical algebraic geometry.",
     "domains": [
       "Tropical",
@@ -3130,7 +3130,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.629129+00:00",
     "title": "Tropical Brill-Noether Theory"
   },
@@ -3180,7 +3180,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
   },
   {
-    "consumed_by_exp_id": "cb6d03de",
+    "consumed_by_exp_id": "",
     "description": "Prove that the tropical amoeba of a Laurent polynomial is the negative logarithm of its zero set. Show that the Ronkin function is convex and piecewise-linear on the amoeba complement. Connect tropical amoebas to tropical geometry via the Maslov dequantization.",
     "domains": [
       "Tropical",
@@ -3190,7 +3190,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.890305+00:00",
     "title": "Tropical Amoebas and Ronkin Functions"
   },
@@ -3300,7 +3300,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
   },
   {
-    "consumed_by_exp_id": "c74c695b",
+    "consumed_by_exp_id": "",
     "description": "Prove tropical versions of classical convexity theorems: tropical Helly (if every n+1 sets in a tropical Helly family intersect, then all intersect), tropical Caratheodory (every point in the tropical convex hull of S is in the tropical convex hull of at most n+1 points from S), and tropical Radon (every set of n+2 points can be partitioned into two sets with intersecting tropical convex hulls).",
     "domains": [
       "Tropical",
@@ -3310,7 +3310,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.34999999999999987,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.462910+00:00",
     "title": "Tropical Convexity: Helly, Caratheodory, and Radon"
   },
