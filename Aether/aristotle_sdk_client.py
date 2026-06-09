@@ -139,6 +139,8 @@ class AristotleSDKClient:
                     return None
                 dest = project_dir / "result.tar.gz"
                 await project.get_files(destination=str(dest))
+                if not dest.exists():
+                    print(f"[Aristotle] Download succeeded but file missing: {dest}")
                 return dest if dest.exists() else None
             except (ssl.SSLError, Exception) as e:
                 error_str = str(e)

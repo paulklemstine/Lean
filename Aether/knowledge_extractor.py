@@ -908,8 +908,10 @@ Research mode: {concept.research_mode}
 
         completed = []
         for pid, job in list(self.inflight.items()):
+            # Skip jobs already in terminal status — they were returned in a
+            # previous poll and either processed or about to be pruned.
+            # Including them again causes duplicate integration.
             if job.status in ("completed", "failed", "integrated", "rejected"):
-                completed.append(job)
                 continue
 
             try:
@@ -1024,7 +1026,17 @@ Research mode: {concept.research_mode}
                     job.status = "failed"
                     return job
                 if not tar_path or not tar_path.exists():
-                    job.error_message = "Result download failed"
+                    # Retry once: Aristotle sometimes reports has_files=True
+                    # but the download fails on first try
+                    print(f"[Extract] First download attempt failed for {job.project_id[:8]}, retrying...")
+                    await asyncio.sleep(5)
+                    tar_path = await self.aristotle.download_result(job.project_id, Path(tmpdir))
+                if not tar_path or not tar_path.exists():
+                    if tar_path and tar_path.name == "__AUTH_ERROR__":
+                        job.error_message = "Result download failed: authentication error (403/401)"
+                        job.status = "failed"
+                    else:
+                        job.error_message = "Result download failed (2 attempts)"
                     return job
 
                 # Extract
@@ -1055,7 +1067,17 @@ Research mode: {concept.research_mode}
                     job.status = "failed"
                     return job
                 if not tar_path or not tar_path.exists():
-                    job.error_message = "Result download failed"
+                    # Retry once: Aristotle sometimes reports has_files=True
+                    # but the download fails on first try
+                    print(f"[Extract] First download attempt failed for {job.project_id[:8]}, retrying...")
+                    await asyncio.sleep(5)
+                    tar_path = await self.aristotle.download_result(job.project_id, Path(tmpdir))
+                if not tar_path or not tar_path.exists():
+                    if tar_path and tar_path.name == "__AUTH_ERROR__":
+                        job.error_message = "Result download failed: authentication error (403/401)"
+                        job.status = "failed"
+                    else:
+                        job.error_message = "Result download failed (2 attempts)"
                     return job
 
                 # Extract
