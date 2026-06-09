@@ -825,8 +825,8 @@ def rebuild_commit_push() -> bool:
                 m = re.search(r'v0\.0\.(\d+)', html)
                 if m:
                     vnum = m.group(1)
-                    html = re.sub(r'style\.css(\?v=[^"]*)?', f'style.css?v={vnum}', html)
-                    html = re.sub(r'packages\.js(\?v=[^"]*)?', f'packages.js?v={vnum}', html)
+                    html = re.sub(r'style\.css(\?v=[^"]*)?', f'style.css?v=0.0.{vnum}', html)
+                    html = re.sub(r'packages\.js(\?v=[^"]*)?', f'packages.js?v=0.0.{vnum}', html)
                     idx_html.write_text(html)
         except Exception:
             pass
