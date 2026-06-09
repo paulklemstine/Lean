@@ -524,6 +524,22 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
             del extractor.inflight[pid]
         print(f"[Tick] Pruned {len(stale_keys)} completed jobs from inflight")
 
+    # Hard cap: if inflight exceeds max_inflight (e.g. stalled jobs), force-fail
+    # the oldest running jobs to free slots.  This prevents the 13/9 scenario
+    # where stalled-at-0% jobs consume inflight slots indefinitely.
+    active_jobs = {pid: j for pid, j in extractor.inflight.items()
+                   if j.status not in ("completed", "failed", "integrated", "rejected")}
+    if len(active_jobs) > max_inflight:
+        overflow = len(active_jobs) - max_inflight
+        # Sort by dispatch time — oldest first
+        by_age = sorted(active_jobs.items(), key=lambda x: getattr(x[1], 'dispatch_time', '') or '')
+        for pid, job in by_age[:overflow]:
+            job.status = "failed"
+            job.error_message = "Force-killed: inflight overflow"
+            del extractor.inflight[pid]
+            extractor._quarantine_direction_for_job(job, days=7)
+        print(f"[Tick] Force-killed {overflow} overflow jobs to enforce max_inflight={max_inflight}")
+
     # ── Self-healing: auto-prune low-quality directions ──
     try:
         from research_memory import FutureDirectionsManager
@@ -607,7 +623,7 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
             if d['delta'] < -0.15 and d['count'] >= 6:
                 print(f"[🔄 Reset] Injecting fresh seed for declining domain: {d['domain']}")
                 try:
-                    from research_memory import FutureDirectionsManager
+                    from research_memory import FutureDirectionsManager, FutureDirection
                     fd_mgr = FutureDirectionsManager(extractor.workspace)
                     reset_title = f"[Reset] Fresh approach in {d['domain']}"
                     reset_desc = (
@@ -617,7 +633,7 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
                         f"new definitions, or a different subfield within this domain. "
                         f"Avoid repeating approaches that have been producing diminishing returns."
                     )
-                    fd_mgr.add_direction(fd_mgr.Direction(
+                    fd_mgr.add_direction(FutureDirection(
                         title=reset_title,
                         description=reset_desc,
                         domains=[d['domain']],
