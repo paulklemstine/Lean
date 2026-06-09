@@ -809,6 +809,9 @@ Research mode: {concept.research_mode}
                 continue
             if "FINAL" in src_file.parts:
                 continue
+            # Skip broken symlinks (target no longer exists)
+            if src_file.is_symlink() and not src_file.resolve().exists():
+                continue
             # Resolve symlinks — copy the real file content
             real_src = src_file.resolve() if src_file.is_symlink() else src_file
             rel = src_file.relative_to(self.catalog_root)
