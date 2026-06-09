@@ -4,11 +4,21 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-09T15:49:32Z",
+    "domain": "Computation",
+    "exp_id": "09bd4da6",
+    "filename": "rigorous_formal_foundations_for_the_collatz_conj.json",
+    "pkg_num": 20,
+    "quality": "partial",
+    "quality_score": 0.450736943120171,
+    "title": "Tropical Contraction Theory for Collatz Dynamics"
+  },
+  {
     "date": "2026-06-09T15:47:22Z",
     "domain": "Novelty",
     "exp_id": "a3f50a78",
     "filename": "logic_physics_bridge_consistency_of_physical_theor.json",
-    "pkg_num": 20,
+    "pkg_num": 19,
     "quality": "partial",
     "quality_score": 0.4642314579129325,
     "title": "Logic-Physics Bridge: Consistency of Physical Theories"
@@ -18,20 +28,10 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "ad2be92e",
     "filename": "tropical_compactification_of_moduli_spaces.json",
-    "pkg_num": 19,
+    "pkg_num": 18,
     "quality": "partial",
     "quality_score": 0.44213183437650455,
     "title": "Tropical Compactification of Moduli Spaces"
-  },
-  {
-    "date": "2026-06-09T15:41:20Z",
-    "domain": "Computation",
-    "exp_id": "09bd4da6",
-    "filename": "rigorous_formal_foundations_for_the_collatz_conj.json",
-    "pkg_num": 18,
-    "quality": "partial",
-    "quality_score": 0.450736943120171,
-    "title": "Tropical Contraction Theory for Collatz Dynamics"
   },
   {
     "date": "2026-06-09T15:03:34Z",
@@ -385,7 +385,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Logic",
-      "hue": 270,
+      "hue": 272,
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
       "primary_domain": "Logic",
       "priority_score": 0.3352,
@@ -396,7 +396,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Novelty",
-      "hue": 112,
+      "hue": 91,
       "id": "rigorous_algebraic_foundations_for_probability_t",
       "primary_domain": "Bridges",
       "priority_score": 0.66968,
@@ -407,7 +407,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Applications",
-      "hue": 91,
+      "hue": 270,
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
       "primary_domain": "Bridges",
       "priority_score": 0.16743922555663115,
@@ -418,7 +418,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08T19:03:25Z",
       "domain": "Applications",
-      "hue": 275,
+      "hue": 90,
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
       "primary_domain": "Bridges",
       "priority_score": 0.62584,
@@ -429,7 +429,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Applications",
-      "hue": 95,
+      "hue": 270,
       "id": "arithmetic_mirror_symmetry_for_calabi_yau",
       "primary_domain": "Bridges",
       "priority_score": 0.4507441932737335,
@@ -440,7 +440,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 89,
       "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
       "primary_domain": "Bridges",
       "priority_score": 0.4623335621795429,
@@ -451,7 +451,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Shared",
-      "hue": 270,
+      "hue": 90,
       "id": "causal_integration_algebra__a_rigorous_lattice_t",
       "primary_domain": "Bridges",
       "priority_score": 0.47410152685152684,
@@ -462,7 +462,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 280,
+      "hue": 270,
       "id": "dream_logic_non_monotone_reasoning_where_contradic",
       "primary_domain": "Bridges",
       "priority_score": 0.4601177861683639,
@@ -473,7 +473,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 91,
+      "hue": 90,
       "id": "entropy_bounded_computation_ebc_framew",
       "primary_domain": "Bridges",
       "priority_score": 0.4813003957285953,
@@ -484,7 +484,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Computation",
-      "hue": 95,
+      "hue": 271,
       "id": "impossible_geometries_where_parallel_lines_converg",
       "primary_domain": "Computation",
       "priority_score": 0.47002089837753586,
@@ -495,7 +495,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 272,
       "id": "p_vs_np_problem",
       "primary_domain": "Bridges",
       "priority_score": 0.4486386254706822,
@@ -506,7 +506,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 90,
       "id": "symplectic_mirror_descent_gromov_witten_invariants",
       "primary_domain": "Bridges",
       "priority_score": 0.4695990099009901,
@@ -517,7 +517,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 271,
+      "hue": 90,
       "id": "the_current_framework_models_theories_by_their_set",
       "primary_domain": "Bridges",
       "priority_score": 0.4683285105981593,
@@ -528,7 +528,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 91,
       "id": "the_current_zaslavsky_type_bound_proves__kd_cnk__n",
       "primary_domain": "Algebra",
       "priority_score": 0.44434729925592503,
@@ -539,7 +539,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Pythagorean",
-      "hue": 91,
+      "hue": 90,
       "id": "this_document_describes_five_research_conjectures_",
       "primary_domain": "Pythagorean",
       "priority_score": 0.4462816141275949,
@@ -550,7 +550,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T10:06:05Z",
       "domain": "Bridges",
-      "hue": 91,
+      "hue": 90,
       "id": "self_modifying_code_that_cannot_be_stopped",
       "primary_domain": "Bridges",
       "priority_score": 0.6462399999999999,
@@ -561,7 +561,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T15:03:34Z",
       "domain": "Logic",
-      "hue": 272,
+      "hue": 92,
       "id": "proof_complexity_collapse_pnp_via_proof_checking",
       "primary_domain": "Logic",
       "priority_score": 0.4474957648546144,
@@ -570,20 +570,9 @@ window.PACKAGE_GRAPH = {
       "title": "Variational Principles and Bounded Reduction Semantics for Proof Complexity"
     },
     {
-      "date": "2026-06-09T15:41:20Z",
-      "domain": "Computation",
-      "hue": 270,
-      "id": "rigorous_formal_foundations_for_the_collatz_conj",
-      "primary_domain": "Computation",
-      "priority_score": 0.450736943120171,
-      "quality": "partial",
-      "shape": "cube",
-      "title": "Tropical Contraction Theory for Collatz Dynamics"
-    },
-    {
       "date": "2026-06-09T15:45:33Z",
       "domain": "Novelty",
-      "hue": 272,
+      "hue": 270,
       "id": "tropical_compactification_of_moduli_spaces",
       "primary_domain": "Bridges",
       "priority_score": 0.44213183437650455,
@@ -594,13 +583,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T15:47:22Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 100,
       "id": "logic_physics_bridge_consistency_of_physical_theor",
       "primary_domain": "Bridges",
       "priority_score": 0.4642314579129325,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Logic-Physics Bridge: Consistency of Physical Theories"
+    },
+    {
+      "date": "2026-06-09T15:49:32Z",
+      "domain": "Computation",
+      "hue": 90,
+      "id": "rigorous_formal_foundations_for_the_collatz_conj",
+      "primary_domain": "Computation",
+      "priority_score": 0.450736943120171,
+      "quality": "partial",
+      "shape": "cube",
+      "title": "Tropical Contraction Theory for Collatz Dynamics"
     }
   ]
 };

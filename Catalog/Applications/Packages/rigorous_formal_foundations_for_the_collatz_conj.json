@@ -5,7 +5,7 @@
   "authors": [
     "Harmonic Research"
   ],
-  "date": "2026-06-09T15:41:20Z",
+  "date": "2026-06-09T15:49:32Z",
   "key_results": [
     "Collatz branches are isometries in log-coordinates (branchEven/branchOdd preserve distances exactly)",
     "Discounted Collatz Bellman operator is a contraction mapping on ℓ∞(ℕ) with unique fixed point",
