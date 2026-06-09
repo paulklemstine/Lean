@@ -1,0 +1,1 @@
+../../Bridges/NewtonGirardGeneral.lean

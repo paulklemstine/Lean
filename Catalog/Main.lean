@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2951 of the highest-quality
+A curated collection of 2924 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2951
+Total files: 2924
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -398,15 +398,12 @@ import FINAL.Bridges.Caratheodory
 import FINAL.Bridges.CartesianFootprintBound
 import FINAL.Bridges.CategoricalBridges
 import FINAL.Bridges.CategoricalCoherence
-import FINAL.Bridges.CategoricalInfoTheory_Core
 import FINAL.Bridges.CategoricalTropicalUltrametric
 import FINAL.Bridges.CategorifiedShannonTheory
-import FINAL.Bridges.CausalClosure
 import FINAL.Bridges.CertificateCompressionExchange
 import FINAL.Bridges.CertifiedDPPSampling
 import FINAL.Bridges.CertifiedRadiusResiduated
 import FINAL.Bridges.ChainRule
-import FINAL.Bridges.ChargedTropicalReweighting
 import FINAL.Bridges.ChromaticDarkness
 import FINAL.Bridges.ChronometricCore
 import FINAL.Bridges.ChronometricTrace
@@ -416,20 +413,15 @@ import FINAL.Bridges.ClosureCapacitySecretSharingDuality
 import FINAL.Bridges.ClosureCircuitDuality
 import FINAL.Bridges.ClosureCompressionCore
 import FINAL.Bridges.ClosureCompressionDuality
-import FINAL.Bridges.ClosureCore
 import FINAL.Bridges.ClosureCosmologyDuality
 import FINAL.Bridges.ClosureDependency
-import FINAL.Bridges.ClosureEntropicGravityDuality
 import FINAL.Bridges.ClosureExtractorDuality
 import FINAL.Bridges.ClosureFixedPointCircuitDuality
-import FINAL.Bridges.ClosureGaugeRealizationDuality
-import FINAL.Bridges.ClosureHolographyDuality
 import FINAL.Bridges.ClosureKolmogorovDuality
 import FINAL.Bridges.ClosureKolmogorovRealization
 import FINAL.Bridges.ClosureKramersWannierDuality
 import FINAL.Bridges.ClosureLefschetzTrace
 import FINAL.Bridges.ClosureMatroidSecretSharing
-import FINAL.Bridges.ClosureMoritaMain
 import FINAL.Bridges.ClosureNucleusDuality
 import FINAL.Bridges.ClosureOperadDuality
 import FINAL.Bridges.ClosureOperatorBridge
@@ -443,9 +435,7 @@ import FINAL.Bridges.ClosureSecretSharingDuality
 import FINAL.Bridges.ClosureSemimodule
 import FINAL.Bridges.ClosureSheafCodeDuality
 import FINAL.Bridges.ClosureSheafLearningDuality
-import FINAL.Bridges.ClosureStoneRealizationDuality
 import FINAL.Bridges.ClosureStoneSpectrumDuality
-import FINAL.Bridges.ClosureSyndromeDecodingDuality
 import FINAL.Bridges.ClosureTemporalRealization
 import FINAL.Bridges.ClosureThermodynamicComputationDuality
 import FINAL.Bridges.ClosureVoronoiDuality
@@ -576,7 +566,6 @@ import FINAL.Bridges.IdempotentHolographicRenormalization
 import FINAL.Bridges.IdempotentKMESupport
 import FINAL.Bridges.IdempotentMeasure_Core
 import FINAL.Bridges.IdempotentNoether
-import FINAL.Bridges.IdempotentRenormalizationDuality
 import FINAL.Bridges.IdempotentStone_Basic
 import FINAL.Bridges.IdempotentStone_Examples
 import FINAL.Bridges.IdempotentThermodynamicRealization
@@ -729,7 +718,6 @@ import FINAL.Bridges.ProofSemiringDiagonalization
 import FINAL.Bridges.ProofSemiringStoneDuality
 import FINAL.Bridges.ProofSpectrumDuality
 import FINAL.Bridges.ProofStoneCechDynamics
-import FINAL.Bridges.ProofTheoreticCrypto_Core
 import FINAL.Bridges.ProofThermodynamicsCore
 import FINAL.Bridges.ProofThermodynamicsEntropy
 import FINAL.Bridges.ProteinFoldingPersistence
@@ -739,7 +727,6 @@ import FINAL.Bridges.Pythagorean_Sp4HeckeComparison
 import FINAL.Bridges.QuantumBerggrenWalks
 import FINAL.Bridges.QuantumCasimirSpectral
 import FINAL.Bridges.QuantumClassicalBridge
-import FINAL.Bridges.QuantumDPPEntanglement
 import FINAL.Bridges.QuantumDagger
 import FINAL.Bridges.QuantumDeFinetti
 import FINAL.Bridges.QuantumEntanglementLinkingNumber
@@ -870,11 +857,9 @@ import FINAL.Bridges.TropicalACCanonical
 import FINAL.Bridges.TropicalAmplification
 import FINAL.Bridges.TropicalAmplificationBridge
 import FINAL.Bridges.TropicalAmplificationEnhanced
-import FINAL.Bridges.TropicalArithmeticCoding
 import FINAL.Bridges.TropicalArithmeticLens
 import FINAL.Bridges.TropicalAttentionRealizationDuality
 import FINAL.Bridges.TropicalAutomataMyhillNerode
-import FINAL.Bridges.TropicalAutomatonSpectralRealizationDuality
 import FINAL.Bridges.TropicalBarronChoquetDuality
 import FINAL.Bridges.TropicalBarronDuality
 import FINAL.Bridges.TropicalCausality
@@ -949,7 +934,6 @@ import FINAL.Bridges.TropicalRadonDuality
 import FINAL.Bridges.TropicalRadonGraphDuality
 import FINAL.Bridges.TropicalRateDistortion
 import FINAL.Bridges.TropicalRateDistortionExact
-import FINAL.Bridges.TropicalRateDistortion_Bridge
 import FINAL.Bridges.TropicalRateDistortion_Core
 import FINAL.Bridges.TropicalReLUDepthSeparation
 import FINAL.Bridges.TropicalRepresenter_Representer
@@ -1014,7 +998,6 @@ import FINAL.Bridges.UnificationGraph
 import FINAL.Bridges.UnifiedFramework
 import FINAL.Bridges.UniversalApproxComplexity
 import FINAL.Bridges.UniversalApproximation
-import FINAL.Bridges.UniversalComplexityBarriers
 import FINAL.Bridges.UniversalComplexity_Core
 import FINAL.Bridges.UniversalDefect
 import FINAL.Bridges.VCCompactness
@@ -1527,13 +1510,11 @@ import FINAL.Logic.ChainInvariants
 import FINAL.Logic.Chronos
 import FINAL.Logic.CircuitComplexityBarriers
 import FINAL.Logic.CoherenceStratification
-import FINAL.Logic.CoherenceStratified
 import FINAL.Logic.Completeness
 import FINAL.Logic.Confluence
 import FINAL.Logic.ConsciousnessFixedPoint_Theorems
 import FINAL.Logic.Core
 import FINAL.Logic.CubicalSemantics_Basic
-import FINAL.Logic.DarkMathematics
 import FINAL.Logic.DependencyExtraction
 import FINAL.Logic.DimensionalProjection
 import FINAL.Logic.DreamLogic
@@ -1544,7 +1525,6 @@ import FINAL.Logic.EntanglementDifficulty
 import FINAL.Logic.EntanglementNetwork
 import FINAL.Logic.EscherStaircase
 import FINAL.Logic.FormalTime
-import FINAL.Logic.Foundations
 import FINAL.Logic.Framework
 import FINAL.Logic.Freivalds
 import FINAL.Logic.FundamentalTheorem
@@ -1554,7 +1534,6 @@ import FINAL.Logic.GuardedFixpoint
 import FINAL.Logic.GuardedTrace
 import FINAL.Logic.HigherBootstrap
 import FINAL.Logic.HoTT_Basic
-import FINAL.Logic.HoTT_Foundations
 import FINAL.Logic.HolographicSearch
 import FINAL.Logic.HomotopyTypeTheory
 import FINAL.Logic.HyperAgentTheory
@@ -2329,7 +2308,6 @@ import FINAL.Pythagorean.HyperbolicNumberTheory
 import FINAL.Pythagorean.HypergraphTransversal
 import FINAL.Pythagorean.Hypergraph_SunflowerPruning
 import FINAL.Pythagorean.IharaZeta_Theorems
-import FINAL.Pythagorean.IncongruityMetric
 import FINAL.Pythagorean.InfoTheoreticMonotonicity
 import FINAL.Pythagorean.IntrinsicBetaEta
 import FINAL.Pythagorean.IntrinsicBetaEta_BetaEta
@@ -2380,7 +2358,6 @@ import FINAL.Pythagorean.NewtonErosion
 import FINAL.Pythagorean.NoiseStabilityTheorems
 import FINAL.Pythagorean.NonAbelianPhaseClassification
 import FINAL.Pythagorean.NonCancellationCertificate
-import FINAL.Pythagorean.NormalizationBisimDistance
 import FINAL.Pythagorean.O31_Generators
 import FINAL.Pythagorean.OpenQuestions
 import FINAL.Pythagorean.OrbitClassification
@@ -2408,8 +2385,6 @@ import FINAL.Pythagorean.PrimewisePersistence_Entropy
 import FINAL.Pythagorean.PrimewisePersistence_Stability
 import FINAL.Pythagorean.PrimewiseTorsionStability
 import FINAL.Pythagorean.ProbeComplexity_CategoricalDimension
-import FINAL.Pythagorean.ProbeComplexity_CompressionFiltration
-import FINAL.Pythagorean.ProbeComplexity_CoproductSubadditivity
 import FINAL.Pythagorean.ProbeComplexity_Defs
 import FINAL.Pythagorean.ProbeComplexity_MonoidCategory
 import FINAL.Pythagorean.ProbeComplexity_Theorems
@@ -2593,7 +2568,6 @@ import FINAL.Shared.ReverseMath_Implications
 import FINAL.Shared.SelbergClassCensus
 import FINAL.Shared.SymbolicDynamics
 import FINAL.Shared.Theorems
-import FINAL.Shared.TropicalEntropy_Defs
 import FINAL.Speculative.AdvancedOpenQuestions
 import FINAL.Speculative.AutoResearch_CarmichaelComposite
 import FINAL.Speculative.AutoResearch_FibPrimitive
@@ -2615,7 +2589,6 @@ import FINAL.Speculative.Other_CategoricalBridges
 import FINAL.Speculative.Other_CrossDomainSynthesis
 import FINAL.Speculative.Other_DickianMath
 import FINAL.Speculative.Other_EnergyDescentResearch
-import FINAL.Speculative.Other_FiveFrontiers
 import FINAL.Speculative.Other_GazingPoolOpenQuestions
 import FINAL.Speculative.Other_LKTExperiments
 import FINAL.Speculative.Other_MathExplorations

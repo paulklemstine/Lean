@@ -1,0 +1,1 @@
+../../Bridges/ProofSemiringStoneDuality.lean
