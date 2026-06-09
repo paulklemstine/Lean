@@ -626,6 +626,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderInteractiveHTMLDemos(containerId, items) {
+        // Register global message listener once to receive height reports
+        // from demo iframes (they postMessage their content height from inside)
+        if (!window._aetherIframeResizeListener) {
+            window._aetherDemoIframes = {};
+            window._aetherIframeResizeListener = function(evt) {
+                if (evt.data && evt.data.aetherIframeHeight !== undefined) {
+                    const iframe = window._aetherDemoIframes[evt.data.aetherIframeHeight];
+                    if (iframe) {
+                        iframe.style.height = evt.data.height + 'px';
+                    }
+                }
+            };
+            window.addEventListener('message', window._aetherIframeResizeListener);
+        }
+
         const container = document.getElementById(containerId);
         container.innerHTML = '';
 
@@ -687,37 +702,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let demoHtml = item.html || '<p>No content</p>';
 
-            // If it's already a full HTML document, use it as-is for srcdoc.
+            // If it's already a full HTML document, inject auto-sizer into it.
             // If it's just a snippet, wrap it in a minimal document.
             const isFullDoc = /<!DOCTYPE|<html[\s>]/i.test(demoHtml);
-            const srcdoc = isFullDoc
-                ? demoHtml
-                : `<!DOCTYPE html><html><head><style>body{margin:0;padding:16px;font-family:system-ui,sans-serif;color:#222}</style></head><body>${demoHtml}</body></html>`;
+            // Height-reporting script injected into every iframe so it measures
+            // its own content height from inside (much more reliable than
+            // measuring scrollHeight from outside) and posts it to the parent.
+            const autoSizer = `<script>
+(function(){
+  function report(){
+    var h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight,60);
+    parent.postMessage({aetherIframeHeight:${idx},height:h+20},'*');
+  }
+  report();
+  setTimeout(report,100);setTimeout(report,500);setTimeout(report,2000);
+  new MutationObserver(report).observe(document.body,{childList:true,subtree:true,attributes:true});
+  window.addEventListener('resize',report);
+})();
+<\/script>`;
+            let srcdoc;
+            if (isFullDoc) {
+                // Inject auto-sizer before </body> (or </html> if no </body>)
+                if (demoHtml.includes('</body>')) {
+                    srcdoc = demoHtml.replace('</body>', autoSizer + '</body>');
+                } else {
+                    srcdoc = demoHtml.replace('</html>', autoSizer + '</html>');
+                }
+            } else {
+                srcdoc = `<!DOCTYPE html><html><head><style>body{margin:0;padding:16px;font-family:system-ui,sans-serif;color:#222}</style></head><body>${demoHtml}${autoSizer}</body></html>`;
+            }
 
             const iframe = document.createElement('iframe');
             iframe.srcdoc = srcdoc;
             iframe.style.cssText = 'width:100%;border:none;border-radius:0 0 12px 12px;min-height:60px;display:block;background:#fff;';
             iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
-            // Auto-resize iframe to fit its content (initial load + dynamic changes)
-            const resizeIframe = () => {
-                try {
-                    const doc = iframe.contentDocument || iframe.contentWindow.document;
-                    const h = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight, 60);
-                    iframe.style.height = h + 'px';
-                } catch (_) {
-                    // Cross-origin or not loaded yet — use a reasonable default
-                    iframe.style.height = '300px';
-                }
-            };
-            iframe.addEventListener('load', resizeIframe);
-            // Also observe content changes (canvas drawing, expanding sections, etc.)
-            const observer = new MutationObserver(resizeIframe);
-            iframe.addEventListener('load', () => {
-                try {
-                    const doc = iframe.contentDocument || iframe.contentWindow.document;
-                    observer.observe(doc.body, { childList: true, subtree: true, attributes: true });
-                } catch (_) { /* cross-origin — skip observer */ }
-            });
+
+            // Register this iframe so the message listener can resize it
+            window._aetherDemoIframes[idx] = iframe;
 
             content.appendChild(iframe);
             card.appendChild(header);
