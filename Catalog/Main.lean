@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 3211 of the highest-quality
+A curated collection of 3199 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 3211
+Total files: 3199
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -369,10 +369,7 @@ import FINAL.Bridges.AlgebraTropicalGeometry_Defs
 import FINAL.Bridges.AlgebraTropicalGeometry_TropicalPersistenceRealizationDuality
 import FINAL.Bridges.AlgebraicEMLThermodynamicFormalism
 import FINAL.Bridges.AlgebraicSpacetime
-import FINAL.Bridges.AlgorithmicSpectralCertification
-import FINAL.Bridges.AlgorithmicTropicalKernel
 import FINAL.Bridges.AlmostSimplePressure
-import FINAL.Bridges.AlternatingPermutationSecurity
 import FINAL.Bridges.AntiCancellationLorentzian
 import FINAL.Bridges.ArithmeticLearningTheory_Core
 import FINAL.Bridges.ArithmeticMirrorSymmetry
@@ -1102,12 +1099,10 @@ import FINAL.Bridges.VoiceLeadingRateDistortion
 import FINAL.Bridges.VoiceLeadingSorted
 import FINAL.Bridges.VoiceLeadingTransport
 import FINAL.Bridges.VoiceLeading_RateDistortion
-import FINAL.Bridges.VolcanoPersistence
 import FINAL.Bridges.WeightAlgebra
 import FINAL.Bridges.WeightedConsequence_Defs
 import FINAL.Bridges.WeightedConsequence_Theorems
 import FINAL.Bridges.WeightedDescentLorentzian
-import FINAL.Bridges.WeightedTropicalHodge
 import FINAL.Bridges.WeightedVariance
 import FINAL.Bridges.WreathONanScott
 import FINAL.Bridges.WreathPressure
@@ -2030,7 +2025,6 @@ import FINAL.MachineLearning.PrimeTorsionFormality_Core
 import FINAL.MachineLearning.PrimeWindowComplex_Theorems
 import FINAL.MachineLearning.PrimewisePersistence_CycleRankFiltration
 import FINAL.MachineLearning.PrimewisePersistence_Theorems
-import FINAL.MachineLearning.PrimewisePersistence_VolcanoDepth
 import FINAL.MachineLearning.PrimitiveReduction
 import FINAL.MachineLearning.ProbabilisticMethod_Advanced
 import FINAL.MachineLearning.ProdBounds
@@ -2050,7 +2044,6 @@ import FINAL.MachineLearning.ProofTheoreticTopology_Theorems
 import FINAL.MachineLearning.Properties
 import FINAL.MachineLearning.ProvabilityPACBayesian
 import FINAL.MachineLearning.QuantizedResidualMDL
-import FINAL.MachineLearning.QuantumCayleyWalk_Defs
 import FINAL.MachineLearning.QuantumCayleyWalk_Theorems
 import FINAL.MachineLearning.QuantumNeuralArchitecture
 import FINAL.MachineLearning.QuantumObservables
@@ -2172,7 +2165,6 @@ import FINAL.MachineLearning.UniversalArchitecture
 import FINAL.MachineLearning.Valuation
 import FINAL.MachineLearning.Verified
 import FINAL.MachineLearning.ViralInformationTopology
-import FINAL.MachineLearning.VolcanoDepth
 import FINAL.MachineLearning.Wasserstein
 import FINAL.MachineLearning.WeakChen
 import FINAL.Novelty.AntiGravityDefs
@@ -2275,7 +2267,6 @@ import FINAL.Pythagorean.AdelicCollisionDynamics
 import FINAL.Pythagorean.AdelicPersistentHomology
 import FINAL.Pythagorean.AdvancedFactoringResearch
 import FINAL.Pythagorean.AlgorithmicLatticeDiophantine
-import FINAL.Pythagorean.AlgorithmicSpectralCertification
 import FINAL.Pythagorean.ApproxGaussianEntropy
 import FINAL.Pythagorean.ApproxSubgroupTheorems
 import FINAL.Pythagorean.ArithmeticMonsterTheory_Theorems
@@ -2307,7 +2298,6 @@ import FINAL.Pythagorean.BerggrenHarmonicTropical
 import FINAL.Pythagorean.BerggrenHolographicDuality
 import FINAL.Pythagorean.BerggrenLorentz
 import FINAL.Pythagorean.BerggrenLorentzComplexity
-import FINAL.Pythagorean.BerggrenNWGenerator
 import FINAL.Pythagorean.BerggrenPGL2
 import FINAL.Pythagorean.BerggrenProductGrowth
 import FINAL.Pythagorean.BerggrenQuadraticShellSpectral
@@ -2500,7 +2490,6 @@ import FINAL.Pythagorean.IntrinsicBetaEta_Core
 import FINAL.Pythagorean.InvertedTreeCore
 import FINAL.Pythagorean.IteratedShadowGeometry
 import FINAL.Pythagorean.JigsawNPComplete
-import FINAL.Pythagorean.KFoldValuatedDepth
 import FINAL.Pythagorean.KTupleMoebiusInversion
 import FINAL.Pythagorean.KnuthBendixCompletion
 import FINAL.Pythagorean.KruskalKatonaMI
@@ -2648,7 +2637,6 @@ import FINAL.Pythagorean.SpacetimeLattice
 import FINAL.Pythagorean.SparseLeafCompression
 import FINAL.Pythagorean.SpectralBounds
 import FINAL.Pythagorean.SpectralCompression
-import FINAL.Pythagorean.SpectralGap
 import FINAL.Pythagorean.SpectralMoonshine_Atomicity
 import FINAL.Pythagorean.SpectralPseudorandomness
 import FINAL.Pythagorean.SpectralSparsity
