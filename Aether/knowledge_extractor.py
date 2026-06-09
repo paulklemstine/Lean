@@ -2236,10 +2236,21 @@ Research mode: {concept.research_mode}
             return
 
         # Only review the bottom 30% by quality — top directions are protected
-        scored = [(d, fd_manager._compute_quality_score(d)) for d in available]
+        # Skip directions that were reviewed and kept in the last 2 cleanup cycles
+        # (they survived Pi-Agent review already — no point re-evaluating unchanged directions)
+        reviewed_cutoff_cycles = 2  # skip if reviewed in last 2 cleanup cycles (every ~40 normal cycles)
+        reviewed_ids = set()
+        for d in available:
+            if d.cleanup_review_count >= reviewed_cutoff_cycles:
+                reviewed_ids.add(d.id)
+
+        scored = [(d, fd_manager._compute_quality_score(d)) for d in available if d.id not in reviewed_ids]
         scored.sort(key=lambda x: x[1])  # ascending — worst first
         cutoff_idx = max(5, len(scored) // 3)  # review bottom third, at least 5
         candidates = scored[:cutoff_idx]
+
+        if reviewed_ids:
+            print(f"[Cleanup] Skipping {len(reviewed_ids)} directions already reviewed and kept")
 
         if not candidates:
             print("[Cleanup] No low-quality candidates to review.")
@@ -2302,6 +2313,18 @@ Research mode: {concept.research_mode}
                     all_removed.append((item.get("id", ""), item.get("reason", "no reason")))
                 elif isinstance(item, str):
                     all_removed.append((item, "no reason provided"))
+
+            # Mark kept directions as reviewed — they survived Pi-Agent review
+            kept_ids = result.get("kept", [])
+            now_iso = datetime.now(timezone.utc).isoformat()
+            kept_count = 0
+            for d in fd_manager._directions:
+                if d.id in kept_ids and d.status == "available":
+                    d.last_reviewed_at = now_iso
+                    d.cleanup_review_count = getattr(d, 'cleanup_review_count', 0) + 1
+                    kept_count += 1
+            if kept_count > 0:
+                print(f"[Cleanup] Marked {kept_count} directions as reviewed and kept")
 
         # Apply removals with protection guardrails
         removed = 0

@@ -264,6 +264,9 @@ class FutureDirection:
     attempt_count: int = 0                                         # number of times this direction was dispatched
     last_attempt_time: str = ""                                    # ISO timestamp of last dispatch attempt
     quarantined_until: str = ""                                    # ISO timestamp; if set, exclude from dispatch until then
+    # --- Cleanup tracking ---
+    last_reviewed_at: str = ""                                     # ISO timestamp of last Pi-Agent cleanup review
+    cleanup_review_count: int = 0                                  # number of times reviewed by Pi-Agent (kept each time)
 
     def to_dict(self) -> dict:
         return {
@@ -293,6 +296,8 @@ class FutureDirection:
             "attempt_count": self.attempt_count,
             "last_attempt_time": self.last_attempt_time,
             "quarantined_until": self.quarantined_until,
+            "last_reviewed_at": self.last_reviewed_at,
+            "cleanup_review_count": self.cleanup_review_count,
         }
 
     @classmethod
