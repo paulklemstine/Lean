@@ -134,6 +134,7 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 {"timestamp": 1781005027.1516926, "experiment_id": "f9c3366c", "concept_title": "Close Proofs: This document describes five research conjectures extending the", "concept_domain": "Applications", "research_mode": "team", "quality": "partial", "quality_score": 0.38632137600826466, "catalog_references": [], "prompt_length": 4860, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781005090.7884336, "experiment_id": "743db091", "concept_title": "**Conjecture:** If `{f_t}_{t ∈ [0,1]}` is a continuous family of contracting cau", "concept_domain": "Geometry", "research_mode": "team", "quality": "partial", "quality_score": 0.4240429527390678, "catalog_references": [], "prompt_length": 14206, "files_placed": 0, "status": "discard"}
 {"timestamp": 1781005152.0211859, "experiment_id": "cb6d03de", "concept_title": "Tropical Amoebas and Ronkin Functions", "concept_domain": "Applications", "research_mode": "team", "quality": "partial", "quality_score": 0.4228838627888345, "catalog_references": [], "prompt_length": 4581, "files_placed": 0, "status": "discard"}
@@ -241,3 +242,5 @@
 {"timestamp": 1781034956.495856, "experiment_id": "0c7bdbdf", "concept_title": "Cryptographic Hash Functions: Collision Resistance from Hard Problems", "concept_domain": "Cryptography", "research_mode": "team", "quality": "partial", "quality_score": 0.3790869106263195, "catalog_references": [], "prompt_length": 16403, "files_placed": 1, "status": "discard"}
 {"timestamp": 1781035037.0707967, "experiment_id": "ee624f37", "concept_title": "Learning with Errors: Hardness Reductions", "concept_domain": "Cryptography", "research_mode": "team", "quality": "partial", "quality_score": 0.36850115677321155, "catalog_references": [], "prompt_length": 16229, "files_placed": 1, "status": "discard"}
 {"timestamp": 1781035143.0132117, "experiment_id": "30f8d3db", "concept_title": "Diffusion Models as Stochastic Differential Equations", "concept_domain": "Physics", "research_mode": "team", "quality": "partial", "quality_score": 0.397392211299052, "catalog_references": [], "prompt_length": 16396, "files_placed": 1, "status": "discard"}
+=======
+>>>>>>> Stashed changes
