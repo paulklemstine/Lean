@@ -1,1 +1,0 @@
-../../Tropical/TropicalSatakeGL3.lean

@@ -1,1 +1,0 @@
-../../Pythagorean/DagDepthHierarchy/Theorems.lean

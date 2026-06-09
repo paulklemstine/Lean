@@ -973,13 +973,14 @@ Research mode: {concept.research_mode}
                             elapsed = last["elapsed_seconds"] - first["elapsed_seconds"]
                             if elapsed > 5400:  # 90 minutes RUNNING is a stall
                                 print(f"[Poll] {pid[:8]} STALL WARNING: RUNNING for {elapsed/60:.0f}min")
-                            # Hard cap at 6 hours: force-fail the project
-                            # (was 3h but Tangled Hierarchies ran 24h, suggesting the
-                            # previous cap wasn't firing or wasn't strict enough)
-                            if elapsed > 21600:  # 6 hours
-                                print(f"[Poll] {pid[:8]} HARD CAP: cancelling after {elapsed/60:.0f}min")
+                            # Hard cap: 3h for zero-progress jobs, 6h otherwise.
+                            # Zero-progress after 2+ hours means the LLM is stuck.
+                            cap = 10800 if percent == 0 else 21600
+                            if elapsed > cap:
+                                label = "0%" if percent == 0 else "6h"
+                                print(f"[Poll] {pid[:8]} HARD CAP ({label}): cancelling after {elapsed/60:.0f}min")
                                 job.status = "failed"
-                                job.error_message = f"Cancelled after {elapsed/60:.0f}min (6h cap)"
+                                job.error_message = f"Cancelled after {elapsed/60:.0f}min ({label} cap)"
                                 self.failed_count += 1
                                 # Quarantine the direction
                                 self._quarantine_direction_for_job(job, days=7)

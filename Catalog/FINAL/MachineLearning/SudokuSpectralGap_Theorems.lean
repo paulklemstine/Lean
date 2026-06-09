@@ -1,1 +1,0 @@
-../../MachineLearning/SudokuSpectralGap/Theorems.lean

@@ -1,1 +1,0 @@
-../../Shared/NeuralHodge/Defs.lean

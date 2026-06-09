@@ -1,1 +1,0 @@
-../../Tropical/Langlands/MaxPlusHeckeAlgebra.lean

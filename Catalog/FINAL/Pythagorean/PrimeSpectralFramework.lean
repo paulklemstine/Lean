@@ -1,1 +1,0 @@
-../../Pythagorean/PrimeSpectralFramework.lean

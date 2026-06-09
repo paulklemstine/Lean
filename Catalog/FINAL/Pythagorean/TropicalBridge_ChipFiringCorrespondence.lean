@@ -1,1 +1,0 @@
-../../Pythagorean/TropicalBridge/ChipFiringCorrespondence.lean

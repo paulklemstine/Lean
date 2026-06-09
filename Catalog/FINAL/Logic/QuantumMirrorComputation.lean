@@ -1,1 +1,0 @@
-../../Logic/QuantumMirrorComputation.lean

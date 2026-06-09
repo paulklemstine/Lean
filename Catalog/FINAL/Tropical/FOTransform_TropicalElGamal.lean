@@ -1,1 +1,0 @@
-../../Tropical/FOTransform/TropicalElGamal.lean

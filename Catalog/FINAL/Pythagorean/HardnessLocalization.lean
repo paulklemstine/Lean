@@ -1,1 +1,0 @@
-../../Pythagorean/HardnessLocalization.lean

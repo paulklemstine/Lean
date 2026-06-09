@@ -1,1 +1,0 @@
-../../Tropical/FourierAnalysis/Core.lean

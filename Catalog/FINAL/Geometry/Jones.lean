@@ -1,1 +1,0 @@
-../../Geometry/KnotTheory/Jones.lean

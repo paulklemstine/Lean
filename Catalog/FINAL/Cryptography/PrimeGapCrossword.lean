@@ -1,1 +1,0 @@
-../../Cryptography/PrimeGapCrossword.lean

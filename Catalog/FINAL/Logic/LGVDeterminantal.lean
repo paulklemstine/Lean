@@ -1,1 +1,0 @@
-../../Logic/LGVDeterminantal.lean

@@ -1,1 +1,0 @@
-../../Logic/ConsciousnessFixedPoint/Theorems.lean

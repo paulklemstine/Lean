@@ -1,1 +1,0 @@
-../../Pythagorean/LorentzianHardnessBarrier.lean

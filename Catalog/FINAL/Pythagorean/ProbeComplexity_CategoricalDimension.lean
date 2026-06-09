@@ -1,1 +1,0 @@
-../../Pythagorean/ProbeComplexity/CategoricalDimension.lean

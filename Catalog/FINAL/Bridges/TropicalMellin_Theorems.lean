@@ -1,1 +1,0 @@
-../../Bridges/TropicalMellin/Theorems.lean

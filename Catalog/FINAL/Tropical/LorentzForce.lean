@@ -1,1 +1,0 @@
-../../Tropical/LorentzForce.lean

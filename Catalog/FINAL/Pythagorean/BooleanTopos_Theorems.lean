@@ -1,1 +1,0 @@
-../../Pythagorean/BooleanTopos/Theorems.lean

@@ -1,1 +1,0 @@
-../../Tropical/Tropical_Feynman_Calculus_via_Maslov_Dequantization_of_the_SPB_Classical_Action.lean

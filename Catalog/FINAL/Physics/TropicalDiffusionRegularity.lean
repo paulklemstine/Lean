@@ -1,1 +1,0 @@
-../../Physics/TropicalDiffusionRegularity.lean

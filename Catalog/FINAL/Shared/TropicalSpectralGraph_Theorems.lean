@@ -1,1 +1,0 @@
-../../Shared/TropicalSpectralGraph/Theorems.lean

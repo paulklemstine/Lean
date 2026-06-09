@@ -1,1 +1,0 @@
-../../Cryptography/ReedMuller/SchwartzZippel.lean

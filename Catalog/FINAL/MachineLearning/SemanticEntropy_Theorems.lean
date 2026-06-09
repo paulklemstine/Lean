@@ -1,1 +1,0 @@
-../../MachineLearning/SemanticEntropy/Theorems.lean

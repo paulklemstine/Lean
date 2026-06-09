@@ -1,1 +1,0 @@
-../../Logic/StrangeLoops/Core.lean

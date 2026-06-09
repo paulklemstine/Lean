@@ -7,7 +7,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2025-01-01",
-      "hue": 91
+      "hue": 270
     },
     {
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
@@ -16,7 +16,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-08",
-      "hue": 89
+      "hue": 271
     },
     {
       "id": "rigorous_algebraic_foundations_for_probability_t",
@@ -25,7 +25,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
@@ -43,7 +43,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08T19:03:25Z",
-      "hue": 270
+      "hue": 90
+    },
+    {
+      "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
+      "title": "Bridge: Model Theory and Algebra — Ax-Kochen and Morley's Theorem",
+      "domain": "Novelty",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-09",
+      "hue": 271
     }
   ],
   "edges": [],

@@ -1,1 +1,0 @@
-../../Cryptography/BerggrenSubsemigroupRigidity.lean

@@ -1,1 +1,0 @@
-../../Bridges/PadicLanglands/NewtonHodge.lean

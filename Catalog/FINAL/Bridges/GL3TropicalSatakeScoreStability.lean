@@ -1,1 +1,0 @@
-../../Bridges/GL3TropicalSatakeScoreStability.lean

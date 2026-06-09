@@ -1,1 +1,0 @@
-../../Pythagorean/CategoricalShannon/Defs.lean

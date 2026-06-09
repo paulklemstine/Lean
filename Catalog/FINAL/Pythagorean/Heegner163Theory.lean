@@ -1,1 +1,0 @@
-../../Pythagorean/Heegner163Theory.lean

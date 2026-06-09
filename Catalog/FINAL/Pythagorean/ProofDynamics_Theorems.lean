@@ -1,1 +1,0 @@
-../../Pythagorean/ProofDynamics/Theorems.lean

@@ -1,1 +1,0 @@
-../../Pythagorean/ClauseInteractionPathwidth/Defs.lean

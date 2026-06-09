@@ -1,1 +1,0 @@
-../../Cryptography/ScalarMul.lean
