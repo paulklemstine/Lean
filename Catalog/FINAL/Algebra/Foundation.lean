@@ -1,1 +1,1 @@
-../../Algebra/Foundation.lean
+../../Algebra/GCT/Foundation.lean

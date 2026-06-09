@@ -1,1 +1,1 @@
-../../Catalog/Bridges/Speculative/InfiniteChess/Defs.lean
+../../Catalog/Bridges/Speculative/JigsawNP/Defs.lean

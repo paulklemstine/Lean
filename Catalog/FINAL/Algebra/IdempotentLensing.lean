@@ -1,1 +1,0 @@
-../../Algebra/IdempotentLensing.lean

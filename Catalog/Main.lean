@@ -1,12 +1,11 @@
 /- Aether FINAL Catalog
-A curated collection of 2678 of the highest-quality
+A curated collection of 2606 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2678
+Total files: 2606
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
-import FINAL.Algebra.Agent
 import FINAL.Algebra.AlgebraicCircuitComplexity
 import FINAL.Algebra.AlgebraicSpacetime
 import FINAL.Algebra.AlgebraicTheoryOfAlgebra
@@ -24,7 +23,6 @@ import FINAL.Algebra.AverageCriterion
 import FINAL.Algebra.Barrier
 import FINAL.Algebra.Basic
 import FINAL.Algebra.BayesOptimal
-import FINAL.Algebra.Berggren
 import FINAL.Algebra.BinocularGodOracle
 import FINAL.Algebra.BootstrapDynamics
 import FINAL.Algebra.BrauerManin
@@ -70,7 +68,6 @@ import FINAL.Algebra.CubeSubgroup
 import FINAL.Algebra.CyclicGroupSubgroups
 import FINAL.Algebra.CyclotomicGaloisGroup
 import FINAL.Algebra.DeepConnections
-import FINAL.Algebra.DeepOpenProblems
 import FINAL.Algebra.Defs
 import FINAL.Algebra.Density
 import FINAL.Algebra.Depth
@@ -88,7 +85,6 @@ import FINAL.Algebra.DruzkowskiTheory
 import FINAL.Algebra.ECDLP
 import FINAL.Algebra.EMLCongruenceHilbert
 import FINAL.Algebra.EdgeUniversality
-import FINAL.Algebra.EigenvalueRepulsion
 import FINAL.Algebra.Elimination
 import FINAL.Algebra.EnergyLandscapeMetastability
 import FINAL.Algebra.Equivalences
@@ -115,7 +111,6 @@ import FINAL.Algebra.FutureExploration
 import FINAL.Algebra.GaloisObstruction
 import FINAL.Algebra.GeometricNavigation
 import FINAL.Algebra.Geometry
-import FINAL.Algebra.Ghost
 import FINAL.Algebra.GravityAITeam
 import FINAL.Algebra.GroebnerDerandomization
 import FINAL.Algebra.GroupSolvability
@@ -126,19 +121,13 @@ import FINAL.Algebra.HalesJewett
 import FINAL.Algebra.HeckeRecursion
 import FINAL.Algebra.HilbertClassFieldBasic
 import FINAL.Algebra.HomingMissile
-import FINAL.Algebra.HurwitzQuaternions
-import FINAL.Algebra.Hyperbolic
-import FINAL.Algebra.HyperbolicNumberTheory
 import FINAL.Algebra.IOFExplorations
 import FINAL.Algebra.IdealClassGroupBridge
 import FINAL.Algebra.IdempotentCongruenceBasis
 import FINAL.Algebra.IdempotentHilbertBasis
-import FINAL.Algebra.IdempotentLensing
-import FINAL.Algebra.IharaZeta
 import FINAL.Algebra.IndependenceComplex
 import FINAL.Algebra.InsideOutResearch
 import FINAL.Algebra.IntegerDiffraction
-import FINAL.Algebra.Invariance
 import FINAL.Algebra.InvariantSubspaceDeep
 import FINAL.Algebra.InvariantSubspaceProblem
 import FINAL.Algebra.InversePythagoreanTree
@@ -146,19 +135,16 @@ import FINAL.Algebra.InvertedTreeV3Research
 import FINAL.Algebra.KaroubiIdempotent
 import FINAL.Algebra.KernelCardinality
 import FINAL.Algebra.KernelDensity
-import FINAL.Algebra.KnuthSemifieldNuclei
 import FINAL.Algebra.Kronecker
 import FINAL.Algebra.Langlands
 import FINAL.Algebra.LanglandsGL1
 import FINAL.Algebra.LanglandsToddlers
-import FINAL.Algebra.Lattice
 import FINAL.Algebra.LatticeTreeDuality
 import FINAL.Algebra.Lehmer
 import FINAL.Algebra.LightDarkPrimes
 import FINAL.Algebra.LocalGlobal
 import FINAL.Algebra.LocalObstruction
 import FINAL.Algebra.LogarithmicPrimeMetric
-import FINAL.Algebra.Lorentz
 import FINAL.Algebra.Los
 import FINAL.Algebra.MDSUncertainty
 import FINAL.Algebra.MandelbrotNumberTheory
@@ -181,8 +167,6 @@ import FINAL.Algebra.MusicalCounterpoint
 import FINAL.Algebra.NegDimTopology
 import FINAL.Algebra.NeuralSurfaceTopology
 import FINAL.Algebra.NewExplorations
-import FINAL.Algebra.NewHypotheses
-import FINAL.Algebra.NewResults
 import FINAL.Algebra.NewTheorems
 import FINAL.Algebra.NewtonIdempotent
 import FINAL.Algebra.NewtonPersistence
@@ -201,7 +185,6 @@ import FINAL.Algebra.OpenDirections
 import FINAL.Algebra.OpenQuestions
 import FINAL.Algebra.OpenQuestions_2
 import FINAL.Algebra.OptimalComputer
-import FINAL.Algebra.Oracle
 import FINAL.Algebra.Orders
 import FINAL.Algebra.OverlapSpectralTheory
 import FINAL.Algebra.ParallelPaths
@@ -211,7 +194,6 @@ import FINAL.Algebra.Percolation
 import FINAL.Algebra.Periodic
 import FINAL.Algebra.PeriodicSums
 import FINAL.Algebra.PersistentHomologyPrimes
-import FINAL.Algebra.Photon
 import FINAL.Algebra.PhysicalPhenomena
 import FINAL.Algebra.PillaiDiophantine
 import FINAL.Algebra.PolynomialTransforms
@@ -242,7 +224,6 @@ import FINAL.Algebra.Radical
 import FINAL.Algebra.RamanujanFrontiers3
 import FINAL.Algebra.RamanujanOpenProblems
 import FINAL.Algebra.RankOne
-import FINAL.Algebra.Recurrence
 import FINAL.Algebra.Recursion
 import FINAL.Algebra.Reduction
 import FINAL.Algebra.RegisterAllocation
@@ -273,10 +254,8 @@ import FINAL.Algebra.SpectralMixing
 import FINAL.Algebra.SpectralTransfer
 import FINAL.Algebra.StableReduction
 import FINAL.Algebra.StandardRep
-import FINAL.Algebra.StereographicBridge
 import FINAL.Algebra.StochasticGalois
 import FINAL.Algebra.StrangeLight
-import FINAL.Algebra.StrangeLoops
 import FINAL.Algebra.StrictUpperTriangular
 import FINAL.Algebra.Surface
 import FINAL.Algebra.SurveillanceRateDistortion
@@ -317,8 +296,6 @@ import FINAL.Algebra.YamabeNonCompact
 import FINAL.Algebra.ZKQuantumVuln
 import FINAL.Bridges.ActivationNerveMarginCosheaf
 import FINAL.Bridges.Advanced
-import FINAL.Bridges.AdvancedTheorems
-import FINAL.Bridges.AdvancedTheory
 import FINAL.Bridges.AetherStressTesting
 import FINAL.Bridges.Agent
 import FINAL.Bridges.AlgebraEMLClosureComputation
@@ -335,7 +312,6 @@ import FINAL.Bridges.ArithmeticMirrorSymmetry
 import FINAL.Bridges.ArithmeticOperadicStability
 import FINAL.Bridges.ArithmeticPersistence
 import FINAL.Bridges.ArithmeticProfileAnalysis
-import FINAL.Bridges.ArithmeticStatistics
 import FINAL.Bridges.ArithmeticVCDimension
 import FINAL.Bridges.ArrowDepthComplexity
 import FINAL.Bridges.AschbacherCertificates
@@ -362,7 +338,6 @@ import FINAL.Bridges.BerggrenVoronoiDuality
 import FINAL.Bridges.BetaClassCanonicity
 import FINAL.Bridges.BirthdayValuationBridge
 import FINAL.Bridges.BisimCohomology
-import FINAL.Bridges.BisimMinimization
 import FINAL.Bridges.BisimulationMetric
 import FINAL.Bridges.BooleanThermodynamicEliminationDuality
 import FINAL.Bridges.BordaRobustness
@@ -441,11 +416,9 @@ import FINAL.Bridges.CoeffExtraction
 import FINAL.Bridges.CollatzUndecidability
 import FINAL.Bridges.CommitmentProtocol
 import FINAL.Bridges.Completeness
-import FINAL.Bridges.Complexity
 import FINAL.Bridges.ComposableTransfer
 import FINAL.Bridges.CompositionalMusicSpec
 import FINAL.Bridges.CompressionMonad
-import FINAL.Bridges.CompressionStability
 import FINAL.Bridges.CondensationSemantics
 import FINAL.Bridges.Connectivity
 import FINAL.Bridges.ContinuousDiscreteTransfer
@@ -471,7 +444,6 @@ import FINAL.Bridges.DiffSpectrumTheory
 import FINAL.Bridges.DifferentialAlgebraicLearning
 import FINAL.Bridges.Dijkstra
 import FINAL.Bridges.Duality
-import FINAL.Bridges.DynamicLorentzianCertificates
 import FINAL.Bridges.DynamicProgramming
 import FINAL.Bridges.DynamicalRamanujan
 import FINAL.Bridges.ECOCDefs
@@ -481,7 +453,6 @@ import FINAL.Bridges.EMLClosureCore
 import FINAL.Bridges.EMLDensityBridge
 import FINAL.Bridges.EMLInterpolation
 import FINAL.Bridges.EMLSpectralSemantics
-import FINAL.Bridges.EMLTropicalSemiring
 import FINAL.Bridges.EMLZetaSemantics
 import FINAL.Bridges.EigenvalueRepulsion
 import FINAL.Bridges.EntanglementEntropy
@@ -498,7 +469,6 @@ import FINAL.Bridges.Extremal
 import FINAL.Bridges.ExtremalPoly
 import FINAL.Bridges.FactorRecoveryReduction
 import FINAL.Bridges.FermatNearMiss
-import FINAL.Bridges.Fib_gcd_identity
 import FINAL.Bridges.FiberRestriction
 import FINAL.Bridges.FilteredClosureReconstruction
 import FINAL.Bridges.FiniteDescriptionComplexity
@@ -513,7 +483,6 @@ import FINAL.Bridges.Foundations
 import FINAL.Bridges.FreeProbabilityEdge
 import FINAL.Bridges.FullEMLDiffClosure
 import FINAL.Bridges.FunctorialDecoding
-import FINAL.Bridges.G2CharacterSheafCertificate
 import FINAL.Bridges.GL2SpectralDecomposition
 import FINAL.Bridges.GL3KemenyRobustness
 import FINAL.Bridges.GL3SatakeAbstainRobustness
@@ -546,7 +515,6 @@ import FINAL.Bridges.HigherOrderCompletion
 import FINAL.Bridges.HigherOrderEqSat
 import FINAL.Bridges.HigherOrderShadowTower
 import FINAL.Bridges.HigherQuantumLDPC
-import FINAL.Bridges.HigherSimplicial
 import FINAL.Bridges.HilbertPolyaOperator
 import FINAL.Bridges.HilbertVCCorrespondence
 import FINAL.Bridges.HoTTFoundations
@@ -614,7 +582,6 @@ import FINAL.Bridges.LogSumExpVariational
 import FINAL.Bridges.Logic
 import FINAL.Bridges.LongestCommonValuedPrefix
 import FINAL.Bridges.Lorentz
-import FINAL.Bridges.LorentzianBivariateBridge
 import FINAL.Bridges.LorentzianBivariateNewBridge
 import FINAL.Bridges.LorentzianComplexityBarrier
 import FINAL.Bridges.LorentzianConditionNumber
@@ -623,7 +590,6 @@ import FINAL.Bridges.LorentzianGroundState
 import FINAL.Bridges.LorentzianHardness
 import FINAL.Bridges.LorentzianHardnessLowerBounds
 import FINAL.Bridges.LorentzianInfoTheory
-import FINAL.Bridges.LorentzianInformation
 import FINAL.Bridges.LorentzianIsingAntiCancel
 import FINAL.Bridges.LorentzianNewton
 import FINAL.Bridges.LorentzianProofComplexity
@@ -661,7 +627,6 @@ import FINAL.Bridges.NeuralPDEUniversality
 import FINAL.Bridges.NeuralProofMining
 import FINAL.Bridges.NewHypotheses
 import FINAL.Bridges.NewResults
-import FINAL.Bridges.NewTheorems
 import FINAL.Bridges.NewtonGirardGeneral
 import FINAL.Bridges.NewtonHodge
 import FINAL.Bridges.NewtonHodgePolygon
@@ -675,7 +640,6 @@ import FINAL.Bridges.NonlinearSpectralStability
 import FINAL.Bridges.NucleusSheafReconstruction
 import FINAL.Bridges.Numerology
 import FINAL.Bridges.ObserverRateDistortion
-import FINAL.Bridges.OpenQuestions
 import FINAL.Bridges.OperadAlgebraCode
 import FINAL.Bridges.OperadicNeuralProofSemiring
 import FINAL.Bridges.OperadicRealizationDuality
@@ -706,7 +670,6 @@ import FINAL.Bridges.Photon
 import FINAL.Bridges.PluckerFourPoint
 import FINAL.Bridges.PluralityRobust
 import FINAL.Bridges.PoincareData
-import FINAL.Bridges.PoincareDisk
 import FINAL.Bridges.PolynomialInterpolationEquiv
 import FINAL.Bridges.PositiveTemperatureTropical
 import FINAL.Bridges.PottsLorentzianStability
@@ -718,7 +681,6 @@ import FINAL.Bridges.PrimeGapAutomaton
 import FINAL.Bridges.PrimeGapCrosswordDeep
 import FINAL.Bridges.PrimeSpectralRateDistortion
 import FINAL.Bridges.PrimeSpectralSchrodingerBridge
-import FINAL.Bridges.PrimeSpectrum
 import FINAL.Bridges.PrimeSpectrumCodingTheorem
 import FINAL.Bridges.PrimeTorsionEchoes
 import FINAL.Bridges.PrimewisePersistenceBarrier
@@ -740,7 +702,6 @@ import FINAL.Bridges.ProofThermodynamicsEntropy
 import FINAL.Bridges.ProteinFoldingPersistence
 import FINAL.Bridges.ProvabilitySpectralTheory
 import FINAL.Bridges.PseudofiniteDimension
-import FINAL.Bridges.PvsNP
 import FINAL.Bridges.Quantum
 import FINAL.Bridges.QuantumBerggrenFourier
 import FINAL.Bridges.QuantumBerggrenWalks
@@ -767,7 +728,6 @@ import FINAL.Bridges.Reconstruction
 import FINAL.Bridges.RecursiveCriticalPairSaturation
 import FINAL.Bridges.ReflectiveTypeTheory
 import FINAL.Bridges.RenormalizationUniversality
-import FINAL.Bridges.RepresentableDimension
 import FINAL.Bridges.Representation
 import FINAL.Bridges.Representer
 import FINAL.Bridges.ResNetTropicalCertified
@@ -813,7 +773,6 @@ import FINAL.Bridges.SpectralProofComplexity
 import FINAL.Bridges.SpectralProofSpace
 import FINAL.Bridges.SpectralRealization
 import FINAL.Bridges.SpectralReciprocity
-import FINAL.Bridges.Spectrum
 import FINAL.Bridges.SpernerNashEquilibria
 import FINAL.Bridges.StabilizerGaloisConcatenation
 import FINAL.Bridges.StereographicBridge
@@ -830,7 +789,6 @@ import FINAL.Bridges.SumcheckSoundness
 import FINAL.Bridges.SunflowerPruning
 import FINAL.Bridges.Support
 import FINAL.Bridges.SupportCertificateCompression
-import FINAL.Bridges.SupportCompression
 import FINAL.Bridges.SupportCompressionPoly
 import FINAL.Bridges.SupportTutteUniversality
 import FINAL.Bridges.SurrealArithmetic
@@ -841,13 +799,11 @@ import FINAL.Bridges.SurveillanceNetwork
 import FINAL.Bridges.SymmetricGroup
 import FINAL.Bridges.SymplecticCertificateAlgebra
 import FINAL.Bridges.SymplecticCryptography
-import FINAL.Bridges.SymplecticRankExpansion
 import FINAL.Bridges.TaggedCardTASEP
 import FINAL.Bridges.TangledHierarchySoundness
 import FINAL.Bridges.TannakaClosureReconstruction
 import FINAL.Bridges.TannakianNeuralArchitecture
 import FINAL.Bridges.TemporalFixedPointSemantics
-import FINAL.Bridges.TemporalStoneBirkhoffDuality
 import FINAL.Bridges.TheoremSpaceRenormalization
 import FINAL.Bridges.Theorems
 import FINAL.Bridges.TheoryMorphisms
@@ -897,7 +853,6 @@ import FINAL.Bridges.TropicalDeepLearningTheory
 import FINAL.Bridges.TropicalDuality
 import FINAL.Bridges.TropicalEcosystemDynamics
 import FINAL.Bridges.TropicalFactorCoupling
-import FINAL.Bridges.TropicalFactoring
 import FINAL.Bridges.TropicalFaithfulDifferentiation
 import FINAL.Bridges.TropicalFeedback
 import FINAL.Bridges.TropicalFiniteOptimization
@@ -919,7 +874,6 @@ import FINAL.Bridges.TropicalIsogenyRigidity
 import FINAL.Bridges.TropicalKAMRenormalization
 import FINAL.Bridges.TropicalKernelMeanDuality
 import FINAL.Bridges.TropicalKernelRigidity
-import FINAL.Bridges.TropicalLanglands
 import FINAL.Bridges.TropicalLensBerggrenDuality
 import FINAL.Bridges.TropicalLensRigidityDuality
 import FINAL.Bridges.TropicalMetamathematics
@@ -960,7 +914,6 @@ import FINAL.Bridges.TropicalSatakeRobustness
 import FINAL.Bridges.TropicalSatakeSurjectivity
 import FINAL.Bridges.TropicalSatakeTop2Margin
 import FINAL.Bridges.TropicalScatteringRecognitionDuality
-import FINAL.Bridges.TropicalSemiring
 import FINAL.Bridges.TropicalSeparationClassifier
 import FINAL.Bridges.TropicalShadowEntropy
 import FINAL.Bridges.TropicalShannonCode
@@ -1004,7 +957,6 @@ import FINAL.Bridges.UltrametricTemporalCompression
 import FINAL.Bridges.UltrametricVectorCertification
 import FINAL.Bridges.UnificationGraph
 import FINAL.Bridges.UnifiedFramework
-import FINAL.Bridges.UnivariateVanishing
 import FINAL.Bridges.UniversalApproxComplexity
 import FINAL.Bridges.UniversalApproximation
 import FINAL.Bridges.UniversalComplexityBarriers
@@ -1098,7 +1050,6 @@ import FINAL.Computation.OmniscientOracle
 import FINAL.Computation.OpenQuestionsResearch
 import FINAL.Computation.OptimalPlanning
 import FINAL.Computation.OracleAboutOracle
-import FINAL.Computation.OracleApplicationsFrontier
 import FINAL.Computation.OracleBootstrapGPT2
 import FINAL.Computation.OracleBurden
 import FINAL.Computation.OracleHierarchy
@@ -1118,7 +1069,6 @@ import FINAL.Computation.Resolution
 import FINAL.Computation.ReversibleSortingBennett
 import FINAL.Computation.ReversibleTropicalMachine
 import FINAL.Computation.ReversibleTropicalThermodynamics
-import FINAL.Computation.SalvagedBest
 import FINAL.Computation.SearchInfoIsomorphism
 import FINAL.Computation.SearchTheory
 import FINAL.Computation.SelfModifyingHalt
@@ -1241,7 +1191,6 @@ import FINAL.Cryptography.ReductionHierarchy
 import FINAL.Cryptography.ReflectiveAlgebra
 import FINAL.Cryptography.SIDHFoundations
 import FINAL.Cryptography.SPBQuantumCrypto
-import FINAL.Cryptography.SalvagedBest
 import FINAL.Cryptography.ScalarMul
 import FINAL.Cryptography.SchnorrProtocol
 import FINAL.Cryptography.SchwartzZippel
@@ -1453,7 +1402,6 @@ import FINAL.Geometry.Orient
 import FINAL.Geometry.OvalArrangement
 import FINAL.Geometry.PackingBound
 import FINAL.Geometry.PadicMobius
-import FINAL.Geometry.PhotonEventGraph
 import FINAL.Geometry.PrimewisePersistence
 import FINAL.Geometry.QuantumGravityErrorCorrection
 import FINAL.Geometry.QuotientSpaces
@@ -1507,7 +1455,6 @@ import FINAL.Logic.EMLSyntax
 import FINAL.Logic.EntanglementDifficulty
 import FINAL.Logic.EntanglementNetwork
 import FINAL.Logic.EscherStaircase
-import FINAL.Logic.FormalTime
 import FINAL.Logic.Foundations
 import FINAL.Logic.Framework
 import FINAL.Logic.Freivalds
@@ -1555,7 +1502,6 @@ import FINAL.Logic.ReflectiveOracleHierarchy
 import FINAL.Logic.ReflectiveTypeTheory
 import FINAL.Logic.ResearchOrdinalDepth
 import FINAL.Logic.ResourceBoundedNonlocality
-import FINAL.Logic.SalvagedBest
 import FINAL.Logic.SelfReferentialTheories
 import FINAL.Logic.SpectralMixing
 import FINAL.Logic.SpectralProofSpace
@@ -1564,7 +1510,6 @@ import FINAL.Logic.Suspension
 import FINAL.Logic.Syntax
 import FINAL.Logic.TangledHierarchies
 import FINAL.Logic.TemporalFixpointSemantics
-import FINAL.Logic.TemporalStoneBridge
 import FINAL.Logic.TemporalStoneDuality
 import FINAL.Logic.TemporalStoneSemiringBridge
 import FINAL.Logic.Theorems
@@ -1629,7 +1574,6 @@ import FINAL.MachineLearning.CechDecisionBoundaryObstructions
 import FINAL.MachineLearning.CechRobustnessCertification
 import FINAL.MachineLearning.CertificationBarrier
 import FINAL.MachineLearning.CharCorrelation
-import FINAL.MachineLearning.Closure
 import FINAL.MachineLearning.ClosureNetworkBreakthrough
 import FINAL.MachineLearning.ClosureNetworkUAP
 import FINAL.MachineLearning.ClosureNetworks
@@ -1783,7 +1727,6 @@ import FINAL.MachineLearning.ReflectiveConvergence
 import FINAL.MachineLearning.ReflectiveConvergenceArchitecture
 import FINAL.MachineLearning.ResNetLipschitz
 import FINAL.MachineLearning.Robustness
-import FINAL.MachineLearning.SalvagedBest
 import FINAL.MachineLearning.Scaling
 import FINAL.MachineLearning.SchemeInvariance
 import FINAL.MachineLearning.Search
@@ -1957,7 +1900,6 @@ import FINAL.Pythagorean.AlgorithmicSpectralCertification
 import FINAL.Pythagorean.ApproxGaussianEntropy
 import FINAL.Pythagorean.ApproxSubgroupTheorems
 import FINAL.Pythagorean.ArithmeticPhaseClassification
-import FINAL.Pythagorean.ArithmeticStatistics
 import FINAL.Pythagorean.ArithmeticTDAPipeline
 import FINAL.Pythagorean.AssignmentGapExtension
 import FINAL.Pythagorean.AsymptoticCompactness
@@ -2003,7 +1945,6 @@ import FINAL.Pythagorean.CRTBottleneck
 import FINAL.Pythagorean.CancellationShadow
 import FINAL.Pythagorean.CanonicalKernelCalculus
 import FINAL.Pythagorean.CanonicalPaths
-import FINAL.Pythagorean.CatalogBridge
 import FINAL.Pythagorean.CategoricalDimension
 import FINAL.Pythagorean.CausalLoops
 import FINAL.Pythagorean.CertificateComplexity
@@ -2021,9 +1962,6 @@ import FINAL.Pythagorean.CircleMethodDensity
 import FINAL.Pythagorean.ClauseSpaceTheorems
 import FINAL.Pythagorean.CompressionFiltration
 import FINAL.Pythagorean.CompressionObstruction
-import FINAL.Pythagorean.CompressionProduct
-import FINAL.Pythagorean.CompressionSpectrumStructure
-import FINAL.Pythagorean.CompressionStability
 import FINAL.Pythagorean.Compute
 import FINAL.Pythagorean.ConcreteTermAlgebra
 import FINAL.Pythagorean.ConfigGraphPathwidth
@@ -2106,7 +2044,6 @@ import FINAL.Pythagorean.HennessyMilner
 import FINAL.Pythagorean.HessianDescent
 import FINAL.Pythagorean.HessianDescentEquivalence
 import FINAL.Pythagorean.HessianLorentzianGap
-import FINAL.Pythagorean.HeterogeneityGapConjecture
 import FINAL.Pythagorean.HeterogeneityGapTheory
 import FINAL.Pythagorean.HigherDefectTheory
 import FINAL.Pythagorean.HigherDimGhost
@@ -2116,7 +2053,6 @@ import FINAL.Pythagorean.HigherOrderCompletion
 import FINAL.Pythagorean.HigherOrderLogConcavity
 import FINAL.Pythagorean.HigherOrderMinorPerturbation
 import FINAL.Pythagorean.HigherOrderShadowCertificates
-import FINAL.Pythagorean.HigherQuantumLDPC
 import FINAL.Pythagorean.HolographicPrimes
 import FINAL.Pythagorean.HybridWalk
 import FINAL.Pythagorean.HyperbolicNumberTheory
@@ -2141,7 +2077,6 @@ import FINAL.Pythagorean.LorentzianBivariateSpecialization
 import FINAL.Pythagorean.LorentzianComplexityTransition
 import FINAL.Pythagorean.LorentzianEdgeClosure
 import FINAL.Pythagorean.LorentzianExchangeCertificates
-import FINAL.Pythagorean.LorentzianHardness
 import FINAL.Pythagorean.LorentzianHardnessBarrier
 import FINAL.Pythagorean.LorentzianLogConcavityBridge
 import FINAL.Pythagorean.LorentzianRecognitionComplete
@@ -2201,7 +2136,6 @@ import FINAL.Pythagorean.PrimewiseBirthSpectra
 import FINAL.Pythagorean.PrimewiseBirthSpectraDistinguish
 import FINAL.Pythagorean.PrimewiseCompleteness
 import FINAL.Pythagorean.PrimewiseTorsionStability
-import FINAL.Pythagorean.ProductFormula
 import FINAL.Pythagorean.Properties
 import FINAL.Pythagorean.PythagoreanFactoring
 import FINAL.Pythagorean.PythagoreanPairing
@@ -2245,7 +2179,6 @@ import FINAL.Pythagorean.Sp2nExpansion
 import FINAL.Pythagorean.Sp2nHigherRankExpanders
 import FINAL.Pythagorean.SpacetimeLattice
 import FINAL.Pythagorean.SparseLeafCompression
-import FINAL.Pythagorean.SparseLorentzianCertificates
 import FINAL.Pythagorean.SpectralBounds
 import FINAL.Pythagorean.SpectralCompression
 import FINAL.Pythagorean.SpectralGap
@@ -2338,7 +2271,6 @@ import FINAL.Shared.Defs
 import FINAL.Shared.EntropyAlgebra
 import FINAL.Shared.EntropyAlgebraCrypto
 import FINAL.Shared.EntropyLatticeCrypto
-import FINAL.Shared.Fib_gcd_identity
 import FINAL.Shared.FibonacciLTE
 import FINAL.Shared.Filter
 import FINAL.Shared.Foundations
@@ -2351,7 +2283,6 @@ import FINAL.Shared.NewtonTropicalBridge
 import FINAL.Shared.PrimeGapCrossword
 import FINAL.Shared.PrimeGapTransitions
 import FINAL.Shared.RegisterGraphColoring
-import FINAL.Shared.SalvagedBest
 import FINAL.Shared.SelbergClassCensus
 import FINAL.Shared.SymbolicDynamics
 import FINAL.Shared.Theorems
@@ -2523,7 +2454,6 @@ import FINAL.Tropical.NewResearch
 import FINAL.Tropical.Nienhuis
 import FINAL.Tropical.NonArchimedeanProbability
 import FINAL.Tropical.NormalForm
-import FINAL.Tropical.OmegaMetaOracle
 import FINAL.Tropical.OracleApplicationsFrontier
 import FINAL.Tropical.OrbitComplexity
 import FINAL.Tropical.OrbitPRG
@@ -2611,7 +2541,6 @@ import FINAL.Tropical.TropicalElGamal
 import FINAL.Tropical.TropicalEntropyCompact
 import FINAL.Tropical.TropicalF1Skeleton
 import FINAL.Tropical.TropicalFFN
-import FINAL.Tropical.TropicalFactoring
 import FINAL.Tropical.TropicalFano
 import FINAL.Tropical.TropicalFormula
 import FINAL.Tropical.TropicalFrontierResearch
@@ -2650,7 +2579,6 @@ import FINAL.Tropical.TropicalSurprise
 import FINAL.Tropical.TropicalTrapdoor
 import FINAL.Tropical.TropicalTrapdoorResearch
 import FINAL.Tropical.TropicalTrapdoorReversal
-import FINAL.Tropical.TropicalTypeTheory
 import FINAL.Tropical.TropicalUniversality
 import FINAL.Tropical.TropicalUpperHalfPlane
 import FINAL.Tropical.TropicalVerticalComposition
