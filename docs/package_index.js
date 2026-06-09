@@ -4,11 +4,21 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-09T10:06:05Z",
+    "domain": "Bridges",
+    "exp_id": "4c2eabf0",
+    "filename": "self_modifying_code_that_cannot_be_stopped.json",
+    "pkg_num": 16,
+    "quality": "partial",
+    "quality_score": 0.6462399999999999,
+    "title": "Self-Modifying Code That Cannot Be Stopped: Undecidability, Simulation, and Alignment Barriers"
+  },
+  {
     "date": "2026-06-09",
     "domain": "Applications",
     "exp_id": "f8049429",
     "filename": "arithmetic_mirror_symmetry_for_calabi_yau.json",
-    "pkg_num": 6,
+    "pkg_num": 5,
     "quality": "partial",
     "quality_score": 0.4507441932737335,
     "title": "Certified Robustness for Instant-Runoff Classifiers via Tropical Gap Certificates"
@@ -18,7 +28,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "812a22a6",
     "filename": "bridge_model_theory_and_algebra__ax_kochen_and_mor.json",
-    "pkg_num": 7,
+    "pkg_num": 6,
     "quality": "partial",
     "quality_score": 0.4623335621795429,
     "title": "Certified Robustness for Instant-Runoff Classifiers via Gap Certificates"
@@ -28,7 +38,7 @@ window.PACKAGE_INDEX = [
     "domain": "Shared",
     "exp_id": "475cd2f0",
     "filename": "causal_integration_algebra__a_rigorous_lattice_t.json",
-    "pkg_num": 8,
+    "pkg_num": 7,
     "quality": "partial",
     "quality_score": 0.47410152685152684,
     "title": "Certified Robustness for Instant-Runoff Voting Classifiers via Gap Certificates"
@@ -38,7 +48,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "362ed1b3",
     "filename": "dream_logic_non_monotone_reasoning_where_contradic.json",
-    "pkg_num": 9,
+    "pkg_num": 8,
     "quality": "partial",
     "quality_score": 0.4601177861683639,
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
@@ -48,7 +58,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "17e8812c",
     "filename": "entropy_bounded_computation_ebc_framew.json",
-    "pkg_num": 10,
+    "pkg_num": 9,
     "quality": "partial",
     "quality_score": 0.4813003957285953,
     "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
@@ -58,7 +68,7 @@ window.PACKAGE_INDEX = [
     "domain": "Computation",
     "exp_id": "40370763",
     "filename": "impossible_geometries_where_parallel_lines_converg.json",
-    "pkg_num": 11,
+    "pkg_num": 10,
     "quality": "partial",
     "quality_score": 0.47002089837753586,
     "title": "Closure-Circuit Duality: Certified Monotone Circuit Reconstruction from Canonical Residual Bases"
@@ -68,7 +78,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "c60fd603",
     "filename": "p_vs_np_problem.json",
-    "pkg_num": 12,
+    "pkg_num": 11,
     "quality": "partial",
     "quality_score": 0.4486386254706822,
     "title": "Certified Robustness for Sequential-Elimination Classifiers via Tropical Gap Certificates"
@@ -78,7 +88,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "c71e53b1",
     "filename": "symplectic_mirror_descent_gromov_witten_invariants.json",
-    "pkg_num": 13,
+    "pkg_num": 12,
     "quality": "partial",
     "quality_score": 0.4695990099009901,
     "title": "Closure-Circuit Duality: Canonical Residual Bases and Monotone Circuit Reconstruction"
@@ -88,7 +98,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "debd806e",
     "filename": "the_current_framework_models_theories_by_their_set.json",
-    "pkg_num": 14,
+    "pkg_num": 13,
     "quality": "partial",
     "quality_score": 0.4683285105981593,
     "title": "Closure Dynamical Systems, Symbolic Zeta Semantics, and the Artin\u2013Mazur Rationality Theorem"
@@ -98,7 +108,7 @@ window.PACKAGE_INDEX = [
     "domain": "Algebra",
     "exp_id": "55bdd69f",
     "filename": "the_current_zaslavsky_type_bound_proves__kd_cnk__n.json",
-    "pkg_num": 15,
+    "pkg_num": 14,
     "quality": "partial",
     "quality_score": 0.44434729925592503,
     "title": "PL Hodge Theory for Neural Networks: Combinatorial and Topological Bounds on Decision Surface Complexity"
@@ -108,7 +118,7 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean",
     "exp_id": "820c5814",
     "filename": "this_document_describes_five_research_conjectures_.json",
-    "pkg_num": 16,
+    "pkg_num": 15,
     "quality": "partial",
     "quality_score": 0.4462816141275949,
     "title": "Certified Robustness for Sequential-Elimination Classifiers via Gap Certificates"
@@ -118,7 +128,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "84d24cbc",
     "filename": "transreal_arithmetic_computing_beyond_plus_minus_i.json",
-    "pkg_num": 5,
+    "pkg_num": 4,
     "quality": "partial",
     "quality_score": 0.62584,
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
@@ -128,7 +138,7 @@ window.PACKAGE_INDEX = [
     "domain": "Logic",
     "exp_id": "18efbb83",
     "filename": "bridge_logic_of_provability_and_fixed_points_in_ar.json",
-    "pkg_num": 2,
+    "pkg_num": 1,
     "quality": "partial",
     "quality_score": 0.3352,
     "title": "Provability Logic GL: Fixed Points, G\u00f6del Elements, and Incompleteness in Lattice Algebra"
@@ -138,7 +148,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "07ee0316",
     "filename": "rigorous_algebraic_foundations_for_probability_t.json",
-    "pkg_num": 3,
+    "pkg_num": 2,
     "quality": "partial",
     "quality_score": 0.66968,
     "title": "Rigorous Algebraic Foundations for Probability Theory in Non-Archimedean Ordered Fields"
@@ -148,20 +158,10 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "057f23ce",
     "filename": "the_poincare_conjecture_for_data_manifold_detectio.json",
-    "pkg_num": 4,
+    "pkg_num": 3,
     "quality": "partial",
     "quality_score": 0.16743922555663115,
     "title": "Algebraic Circuit Complexity: Degree-Depth Tradeoffs, Evaluation Soundness, and PIT Foundations"
-  },
-  {
-    "date": "2025-01-01",
-    "domain": "Bridges",
-    "exp_id": "4c2eabf0",
-    "filename": "self_modifying_code_that_cannot_be_stopped.json",
-    "pkg_num": 1,
-    "quality": "partial",
-    "quality_score": 0.6462399999999999,
-    "title": "Self-Modifying Code That Cannot Be Stopped: Undecidability, Simulation, and Alignment Barriers"
   }
 ];
 

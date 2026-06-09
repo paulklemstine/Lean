@@ -1,14 +1,12 @@
 /- Aether FINAL Catalog
-A curated collection of 2487 of the highest-quality
+A curated collection of 2468 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2487
+Total files: 2468
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
 import FINAL.Algebra.Agent
-import FINAL.Algebra.AlgebraicCircuitComplexity
-import FINAL.Algebra.AlgebraicTheoryOfAlgebra
 import FINAL.Algebra.AntipodeUniqueness
 import FINAL.Algebra.Apollonian_SpectralTransfer
 import FINAL.Algebra.ArbitrageProfit
@@ -38,7 +36,6 @@ import FINAL.Algebra.Channel5Sedenions
 import FINAL.Algebra.Channel6Research
 import FINAL.Algebra.CharpolyRecognition
 import FINAL.Algebra.CircuitDepthLayerProfile
-import FINAL.Algebra.CircuitUniversality_Basic
 import FINAL.Algebra.ClassicalGroupExpanders
 import FINAL.Algebra.ClosedFormAncestor
 import FINAL.Algebra.Code
@@ -71,7 +68,6 @@ import FINAL.Algebra.DependentUltraproduct_Los
 import FINAL.Algebra.Depth
 import FINAL.Algebra.Deriv
 import FINAL.Algebra.Derivability
-import FINAL.Algebra.Derivative
 import FINAL.Algebra.DescartesInvariance
 import FINAL.Algebra.DescentAlgebra
 import FINAL.Algebra.DifferenceSetSymmetry
@@ -122,16 +118,13 @@ import FINAL.Algebra.GaloisObstruction
 import FINAL.Algebra.GeometricNavigation
 import FINAL.Algebra.Goldbach_Theorems
 import FINAL.Algebra.GraphRiemannRoch_Defs
-import FINAL.Algebra.GravityAITeam
 import FINAL.Algebra.GroebnerDerandomization
 import FINAL.Algebra.GroverAttacks
 import FINAL.Algebra.HDWalletCascade
 import FINAL.Algebra.Hadamard_Basic
 import FINAL.Algebra.Hadamard_Coding
 import FINAL.Algebra.Hadamard_Constructions
-import FINAL.Algebra.Hadamard_Defs
 import FINAL.Algebra.Hadamard_Design
-import FINAL.Algebra.Hadamard_Examples
 import FINAL.Algebra.Hadamard_Obstruction
 import FINAL.Algebra.HalesJewett
 import FINAL.Algebra.HeckeRecursion
@@ -183,7 +176,6 @@ import FINAL.Algebra.MarkovTraceDynamics_MarkovSurface
 import FINAL.Algebra.MarkovTraceDynamics_MatrixTrace
 import FINAL.Algebra.MartingalePrediction
 import FINAL.Algebra.MassEnergyDuality
-import FINAL.Algebra.MatrixEncoding
 import FINAL.Algebra.MatrixGroupGeneration
 import FINAL.Algebra.MatroidMinors_Theorems
 import FINAL.Algebra.MemoryAlgebra
@@ -245,7 +237,6 @@ import FINAL.Algebra.PythagoreanQuadruples
 import FINAL.Algebra.QDF_ArithGeomQuantum
 import FINAL.Algebra.QDF_HE_Frontiers
 import FINAL.Algebra.QuadraticReciprocity_Core
-import FINAL.Algebra.QuadrupleGhostStructure
 import FINAL.Algebra.Quantum
 import FINAL.Algebra.QuantumCollapse
 import FINAL.Algebra.QuantumGroupSpectrum
@@ -323,7 +314,6 @@ import FINAL.Algebra.TransrealTheorems
 import FINAL.Algebra.Triangular
 import FINAL.Algebra.TriangularChain
 import FINAL.Algebra.TropicalAnalyticDuality
-import FINAL.Algebra.TropicalRecipeComplexity
 import FINAL.Algebra.Tropical_p_adic_Valuation_Bounds_and_Lifting_the_Exponent_for_Fibonacci_Primitive_Divisors
 import FINAL.Algebra.UltrametricCondNeg
 import FINAL.Algebra.UniswapV4Hooks
@@ -365,7 +355,6 @@ import FINAL.Bridges.BerggrenAutomatonRealization
 import FINAL.Bridges.BerggrenChronometricAutomata
 import FINAL.Bridges.BerggrenChronometricEntropy
 import FINAL.Bridges.BerggrenEntropyExtractor
-import FINAL.Bridges.BerggrenExpanderHash
 import FINAL.Bridges.BerggrenFactoring
 import FINAL.Bridges.BerggrenFourierDuality
 import FINAL.Bridges.BerggrenHeckeSpectral
@@ -440,7 +429,6 @@ import FINAL.Bridges.ClosureNucleusDuality
 import FINAL.Bridges.ClosureOperadDuality
 import FINAL.Bridges.ClosureOperatorBridge
 import FINAL.Bridges.ClosurePressure
-import FINAL.Bridges.ClosureProofNetDuality
 import FINAL.Bridges.ClosureProofSemiring
 import FINAL.Bridges.ClosureRateDistortionDuality
 import FINAL.Bridges.ClosureRenormalizationDuality
@@ -858,7 +846,6 @@ import FINAL.Bridges.TropicalGodelKripkeReconstruction
 import FINAL.Bridges.TropicalGravitationalFactoringDuality
 import FINAL.Bridges.TropicalHankelRealizationDuality
 import FINAL.Bridges.TropicalHeckeCrystalDuality
-import FINAL.Bridges.TropicalHeckeRealizationDuality
 import FINAL.Bridges.TropicalHeckeTrapdoor_Defs
 import FINAL.Bridges.TropicalHeckeTrapdoor_Theorems
 import FINAL.Bridges.TropicalHecke_Correspondence
@@ -881,7 +868,6 @@ import FINAL.Bridges.TropicalObserverCodingDuality
 import FINAL.Bridges.TropicalOneWayKernelDuality
 import FINAL.Bridges.TropicalOperadicRealization_Defs
 import FINAL.Bridges.TropicalOperadicRealization_Theorems
-import FINAL.Bridges.TropicalPersistenceRealizationDuality
 import FINAL.Bridges.TropicalPersistenceStability
 import FINAL.Bridges.TropicalPerturbationAmplification
 import FINAL.Bridges.TropicalPlancherel_Theorems
@@ -1386,7 +1372,6 @@ import FINAL.Logic.CategoryGenome_Core
 import FINAL.Logic.CertifiedNumberTheoryDecide
 import FINAL.Logic.CertifiedTropicalSimp
 import FINAL.Logic.ChainInvariants
-import FINAL.Logic.Chronos
 import FINAL.Logic.CircuitComplexityBarriers
 import FINAL.Logic.CoherenceStratification
 import FINAL.Logic.CoherenceStratified
@@ -1618,7 +1603,6 @@ import FINAL.MachineLearning.InferenceArithmetic
 import FINAL.MachineLearning.InfiniteGames
 import FINAL.MachineLearning.InvariantSubspace_Defs
 import FINAL.MachineLearning.InverseStereographicNeuralField
-import FINAL.MachineLearning.IrrationalityCriteria
 import FINAL.MachineLearning.IterExp
 import FINAL.MachineLearning.KWWitness_Defs
 import FINAL.MachineLearning.KnotPolynomialSpectra
@@ -1793,7 +1777,6 @@ import FINAL.Physics.Advanced
 import FINAL.Physics.AngularMomentum
 import FINAL.Physics.Basic
 import FINAL.Physics.BerggrenLorentzRigidity
-import FINAL.Physics.BerggrenLorentzSim
 import FINAL.Physics.Bridge
 import FINAL.Physics.CategoricalPhysics_Theorems
 import FINAL.Physics.CechContextualityCore
@@ -1977,7 +1960,6 @@ import FINAL.Pythagorean.FunctorialLocalization
 import FINAL.Pythagorean.G2CharacterSheafCertificate
 import FINAL.Pythagorean.GL2SpectralGap
 import FINAL.Pythagorean.GeodesicComputation
-import FINAL.Pythagorean.GeodesicInvariants
 import FINAL.Pythagorean.GraphJacobians_ArithmeticStatistics
 import FINAL.Pythagorean.GrowthRankCompleteness_Theorems
 import FINAL.Pythagorean.GrowthRegimeTrichotomy
@@ -2274,7 +2256,6 @@ import FINAL.Tropical.CertifiedNormalForm
 import FINAL.Tropical.ChipFiring_Defs
 import FINAL.Tropical.ChoraleRigidity
 import FINAL.Tropical.ChronologicalOrder
-import FINAL.Tropical.Circuits_Defs
 import FINAL.Tropical.Closure
 import FINAL.Tropical.CollatzWielandt
 import FINAL.Tropical.CompleteGraph

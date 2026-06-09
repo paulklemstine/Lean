@@ -5,7 +5,7 @@
   "authors": [
     "Harmonic"
   ],
-  "date": "2025-01-01",
+  "date": "2026-06-09T10:06:05Z",
   "key_results": [
     "Self-modifying machines are behaviorally equivalent to standard machines (simulation theorem)",
     "No algorithm can decide halting for self-modifying programs (diagonal argument)",
