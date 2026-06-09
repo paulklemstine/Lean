@@ -1,1 +1,0 @@
-../../Cryptography/FiniteStoneClosure.lean

@@ -177,7 +177,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Riemann Hypothesis: Zero-Free Regions"
   },
   {
-    "consumed_by_exp_id": "7ab762ac",
+    "consumed_by_exp_id": "",
     "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
     "domains": [
       "Logic",
@@ -187,7 +187,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.92,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.938639+00:00",
     "title": "Certified Novelty Detection for Theorem Provers"
   },
@@ -854,7 +854,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
   {
-    "consumed_by_exp_id": "4b4f0c24",
+    "consumed_by_exp_id": "",
     "description": "Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciousness can have a zombie twin that is functionally identical but experientially void. Show this gap is isomorphic to G\u00f6del's incompleteness gap.",
     "domains": [
       "Novelty",
@@ -864,7 +864,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:31.042804+00:00",
     "title": "Zombies and Qualia: Mathematics of Subjective Experience"
   },

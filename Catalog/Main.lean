@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 3031 of the highest-quality
+A curated collection of 3020 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 3031
+Total files: 3020
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -349,8 +349,6 @@ import FINAL.Algebra.ZetaZeroFree_Transfer
 import FINAL.Bridges.Advanced
 import FINAL.Bridges.AetherStressTesting
 import FINAL.Bridges.AlgebraEMLClosureComputation
-import FINAL.Bridges.AlgebraEMLComputation_Defs
-import FINAL.Bridges.AlgebraEMLMachineLearning_ClosureCapacityAttentionDuality
 import FINAL.Bridges.AlgebraEMLMachineLearning_LawvereStoneAttentionDuality
 import FINAL.Bridges.AlgebraEMLReconstruction
 import FINAL.Bridges.AlgebraEMLTropicalPressure
@@ -467,7 +465,6 @@ import FINAL.Bridges.ClosureStoneSpectrumDuality
 import FINAL.Bridges.ClosureSyndromeDecodingDuality
 import FINAL.Bridges.ClosureTemporalRealization
 import FINAL.Bridges.ClosureThermodynamicComputationDuality
-import FINAL.Bridges.ClosureVCDuality
 import FINAL.Bridges.ClosureVoronoiDuality
 import FINAL.Bridges.CoalgebraicNeuralMyhillNerode
 import FINAL.Bridges.CodingTheoryBridge
@@ -598,7 +595,6 @@ import FINAL.Bridges.IRVStability
 import FINAL.Bridges.IdempotentBlackwellThermodynamicDuality
 import FINAL.Bridges.IdempotentGaugeCurvatureDuality
 import FINAL.Bridges.IdempotentHolographicClosureDuality
-import FINAL.Bridges.IdempotentHolographicRealization
 import FINAL.Bridges.IdempotentHolographicRenormalization
 import FINAL.Bridges.IdempotentKMESupport
 import FINAL.Bridges.IdempotentMeasure_Core
@@ -698,7 +694,6 @@ import FINAL.Bridges.NewtonInteractingFermions
 import FINAL.Bridges.NewtonTropicalBridge
 import FINAL.Bridges.NoetherianFeatureConvergence
 import FINAL.Bridges.NonArchProbability_Defs
-import FINAL.Bridges.NonArchimedeanComputation
 import FINAL.Bridges.NonCancellationCertificate
 import FINAL.Bridges.NonGroupComparison
 import FINAL.Bridges.NonlinearSpectralStability
@@ -757,7 +752,6 @@ import FINAL.Bridges.PrivacySurveillanceConservation
 import FINAL.Bridges.ProductApproximation
 import FINAL.Bridges.ProfileRecovery
 import FINAL.Bridges.ProofAlgGeomBridge
-import FINAL.Bridges.ProofAutomatonDuality
 import FINAL.Bridges.ProofCongruenceAutomata
 import FINAL.Bridges.ProofSearchComplexity
 import FINAL.Bridges.ProofSemiringDiagonalization
@@ -946,7 +940,6 @@ import FINAL.Bridges.TropicalGodelKripkeReconstruction
 import FINAL.Bridges.TropicalGravitationalFactoringDuality
 import FINAL.Bridges.TropicalGravitationalFactorization
 import FINAL.Bridges.TropicalHankelRealizationDuality
-import FINAL.Bridges.TropicalHeckeCrystalDuality
 import FINAL.Bridges.TropicalHeckeRealizationDuality
 import FINAL.Bridges.TropicalHeckeTrapdoor_Defs
 import FINAL.Bridges.TropicalHeckeTrapdoor_Theorems
@@ -1224,7 +1217,6 @@ import FINAL.Cryptography.BerggrenAntiRigidity
 import FINAL.Cryptography.BerggrenBallRigidity
 import FINAL.Cryptography.BerggrenDiophantineLattice
 import FINAL.Cryptography.BerggrenDirichletSeries
-import FINAL.Cryptography.BerggrenFingerprintRigidity
 import FINAL.Cryptography.BerggrenFreeMonoid
 import FINAL.Cryptography.BerggrenGreenIncomparability
 import FINAL.Cryptography.BerggrenGroupoidOrbit
@@ -1237,7 +1229,6 @@ import FINAL.Cryptography.BerggrenPythagoreanLattices
 import FINAL.Cryptography.BerggrenQuotient
 import FINAL.Cryptography.BerggrenResidualFiniteness
 import FINAL.Cryptography.BerggrenRightCancellation
-import FINAL.Cryptography.BerggrenSpectralHash
 import FINAL.Cryptography.BerggrenSubsemigroupRigidity
 import FINAL.Cryptography.BerggrenSymplecticCodes
 import FINAL.Cryptography.BiOrderSeparation
@@ -1266,7 +1257,6 @@ import FINAL.Cryptography.FHE_Theorems
 import FINAL.Cryptography.FOTransform
 import FINAL.Cryptography.FactorQuadruples
 import FINAL.Cryptography.FermiPigeonhole
-import FINAL.Cryptography.FiniteStoneClosure
 import FINAL.Cryptography.Foundation
 import FINAL.Cryptography.Freeness
 import FINAL.Cryptography.GL1LanglandsBilinear
@@ -2087,7 +2077,6 @@ import FINAL.MachineLearning.TropicalScaling_Basic
 import FINAL.MachineLearning.TropicalTimeTravel
 import FINAL.MachineLearning.TropicalTop2Robustness
 import FINAL.MachineLearning.TropicalUniversality_Basic
-import FINAL.MachineLearning.TropicalVCDuality
 import FINAL.MachineLearning.TropicalWormholeSurgery
 import FINAL.MachineLearning.UltrametricFoundations
 import FINAL.MachineLearning.UltrametricKLDivergence
