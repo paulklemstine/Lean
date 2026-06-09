@@ -7,7 +7,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-08",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "rigorous_algebraic_foundations_for_probability_t",
@@ -16,7 +16,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08",
-      "hue": 100
+      "hue": 92
     },
     {
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-08T19:03:25Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "arithmetic_mirror_symmetry_for_calabi_yau",
@@ -43,7 +43,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
@@ -52,7 +52,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "causal_integration_algebra__a_rigorous_lattice_t",
@@ -61,7 +61,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 280
+      "hue": 90
     },
     {
       "id": "dream_logic_non_monotone_reasoning_where_contradic",
@@ -79,7 +79,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 270
+      "hue": 271
     },
     {
       "id": "impossible_geometries_where_parallel_lines_converg",
@@ -88,7 +88,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-09",
-      "hue": 100
+      "hue": 270
     },
     {
       "id": "p_vs_np_problem",
@@ -97,7 +97,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "symplectic_mirror_descent_gromov_witten_invariants",
@@ -106,7 +106,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "the_current_framework_models_theories_by_their_set",
@@ -115,7 +115,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "the_current_zaslavsky_type_bound_proves__kd_cnk__n",
@@ -124,7 +124,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-09",
-      "hue": 275
+      "hue": 271
     },
     {
       "id": "this_document_describes_five_research_conjectures_",
@@ -142,7 +142,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09T10:06:05Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "proof_complexity_collapse_pnp_via_proof_checking",
@@ -151,7 +151,7 @@
       "primary_domain": "Logic",
       "shape": "star_of_david",
       "date": "2026-06-09T15:03:34Z",
-      "hue": 90
+      "hue": 179
     },
     {
       "id": "tropical_compactification_of_moduli_spaces",
@@ -160,7 +160,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09T15:45:33Z",
-      "hue": 272
+      "hue": 91
     },
     {
       "id": "logic_physics_bridge_consistency_of_physical_theor",
@@ -169,7 +169,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09T15:47:22Z",
-      "hue": 92
+      "hue": 91
     },
     {
       "id": "rigorous_formal_foundations_for_the_collatz_conj",
@@ -178,7 +178,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-09T15:49:32Z",
-      "hue": 92
+      "hue": 272
     },
     {
       "id": "formal_obstruction_theory_for_eml_solvability_of_l",
@@ -205,16 +205,7 @@
       "primary_domain": "Geometry",
       "shape": "hexagonal_prism",
       "date": "2026-06-09T18:38:15Z",
-      "hue": 270
-    },
-    {
-      "id": "learning_with_errors_hardness_reductions",
-      "title": "Closure-Gauge Realization Duality via Idempotent Holonomy",
-      "domain": "Bridges",
-      "primary_domain": "Bridges",
-      "shape": "icosahedron",
-      "date": "2026-06-09T19:51:03Z",
-      "hue": 272
+      "hue": 271
     },
     {
       "id": "diffusion_models_as_stochastic_differential_equati",
@@ -223,7 +214,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09T19:53:14Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "cryptographic_hash_functions_collision_resistance_",
@@ -232,7 +223,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-09T19:54:52Z",
-      "hue": 90
+      "hue": 91
+    },
+    {
+      "id": "learning_with_errors_hardness_reductions",
+      "title": "Closure-Gauge Realization Duality via Idempotent Holonomy",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-09T19:56:17Z",
+      "hue": 270
     }
   ],
   "edges": [
