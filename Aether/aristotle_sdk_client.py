@@ -136,11 +136,26 @@ class AristotleSDKClient:
             try:
                 project = await Project.from_id(project_id)
                 if not project.has_files:
+                    print(f"[Aristotle] download_result: project {project_id} has_files={project.has_files}, skipping")
                     return None
                 dest = project_dir / "result.tar.gz"
+                print(f"[Aristotle] download_result: fetching files for {project_id} -> {dest}")
                 await project.get_files(destination=str(dest))
                 if not dest.exists():
                     print(f"[Aristotle] Download succeeded but file missing: {dest}")
+                    # Check if get_files wrote to a different location
+                    import glob
+                    candidates = list(Path(project_dir).glob("**/*.tar.gz")) + list(Path(project_dir).glob("**/*.zip"))
+                    if candidates:
+                        print(f"[Aristotle] Found alternative archive: {candidates}")
+                        return candidates[0]
+                if dest.exists():
+                    size = dest.stat().st_size
+                    if size < 100:
+                        print(f"[Aristotle] Downloaded file suspiciously small: {size} bytes for {project_id}")
+                        dest.unlink()
+                        return None
+                    print(f"[Aristotle] download_result: success, {size} bytes for {project_id}")
                 return dest if dest.exists() else None
             except (ssl.SSLError, Exception) as e:
                 error_str = str(e)
@@ -150,9 +165,13 @@ class AristotleSDKClient:
                     await asyncio.sleep(SSL_RETRY_DELAY)
                     continue
                 print(f"[Aristotle] Download error for {project_id}: {e}")
-                # Return a special marker for auth errors so callers can distinguish
+                # Return special markers so callers can handle different failure modes
                 if "403" in error_str or "Forbidden" in error_str or "401" in error_str or "Unauthorized" in error_str:
                     return Path("__AUTH_ERROR__")
+                if "500" in error_str or "Internal Server Error" in error_str:
+                    return Path("__SERVER_ERROR__")
+                if "404" in error_str or "Not Found" in error_str:
+                    return Path("__NOT_FOUND__")
                 return None
 
     async def submit_lean_project(

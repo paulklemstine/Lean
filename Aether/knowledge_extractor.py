@@ -1020,9 +1020,12 @@ Research mode: {concept.research_mode}
                 tar_path = asyncio.get_event_loop().run_until_complete(
                     self.aristotle.download_result(job.project_id, Path(tmpdir))
                 )
-                # Check for auth error marker from download_result
-                if tar_path and tar_path.name == "__AUTH_ERROR__":
-                    job.error_message = "Result download failed: authentication error (403/401)"
+                # Check for error markers from download_result
+                if tar_path and tar_path.name in ("__AUTH_ERROR__", "__SERVER_ERROR__", "__NOT_FOUND__"):
+                    reasons = {"__AUTH_ERROR__": "authentication error (403/401)",
+                               "__SERVER_ERROR__": "server error (500) — project may have been garbage-collected",
+                               "__NOT_FOUND__": "project not found (404)"}
+                    job.error_message = f"Result download failed: {reasons[tar_path.name]}"
                     job.status = "failed"
                     return job
                 if not tar_path or not tar_path.exists():
@@ -1031,12 +1034,15 @@ Research mode: {concept.research_mode}
                     print(f"[Extract] First download attempt failed for {job.project_id[:8]}, retrying...")
                     await asyncio.sleep(5)
                     tar_path = await self.aristotle.download_result(job.project_id, Path(tmpdir))
+                if tar_path and tar_path.name in ("__AUTH_ERROR__", "__SERVER_ERROR__", "__NOT_FOUND__"):
+                    reasons = {"__AUTH_ERROR__": "authentication error (403/401)",
+                               "__SERVER_ERROR__": "server error (500) — project may have been garbage-collected",
+                               "__NOT_FOUND__": "project not found (404)"}
+                    job.error_message = f"Result download failed: {reasons[tar_path.name]}"
+                    job.status = "failed"
+                    return job
                 if not tar_path or not tar_path.exists():
-                    if tar_path and tar_path.name == "__AUTH_ERROR__":
-                        job.error_message = "Result download failed: authentication error (403/401)"
-                        job.status = "failed"
-                    else:
-                        job.error_message = "Result download failed (2 attempts)"
+                    job.error_message = "Result download failed (2 attempts)"
                     return job
 
                 # Extract
@@ -1061,9 +1067,12 @@ Research mode: {concept.research_mode}
         try:
             with tempfile.TemporaryDirectory() as tmpdir:
                 tar_path = await self.aristotle.download_result(job.project_id, Path(tmpdir))
-                # Check for auth error marker from download_result
-                if tar_path and tar_path.name == "__AUTH_ERROR__":
-                    job.error_message = "Result download failed: authentication error (403/401)"
+                # Check for error markers from download_result
+                if tar_path and tar_path.name in ("__AUTH_ERROR__", "__SERVER_ERROR__", "__NOT_FOUND__"):
+                    reasons = {"__AUTH_ERROR__": "authentication error (403/401)",
+                               "__SERVER_ERROR__": "server error (500) — project may have been garbage-collected",
+                               "__NOT_FOUND__": "project not found (404)"}
+                    job.error_message = f"Result download failed: {reasons[tar_path.name]}"
                     job.status = "failed"
                     return job
                 if not tar_path or not tar_path.exists():
@@ -1072,12 +1081,15 @@ Research mode: {concept.research_mode}
                     print(f"[Extract] First download attempt failed for {job.project_id[:8]}, retrying...")
                     await asyncio.sleep(5)
                     tar_path = await self.aristotle.download_result(job.project_id, Path(tmpdir))
+                if tar_path and tar_path.name in ("__AUTH_ERROR__", "__SERVER_ERROR__", "__NOT_FOUND__"):
+                    reasons = {"__AUTH_ERROR__": "authentication error (403/401)",
+                               "__SERVER_ERROR__": "server error (500) — project may have been garbage-collected",
+                               "__NOT_FOUND__": "project not found (404)"}
+                    job.error_message = f"Result download failed: {reasons[tar_path.name]}"
+                    job.status = "failed"
+                    return job
                 if not tar_path or not tar_path.exists():
-                    if tar_path and tar_path.name == "__AUTH_ERROR__":
-                        job.error_message = "Result download failed: authentication error (403/401)"
-                        job.status = "failed"
-                    else:
-                        job.error_message = "Result download failed (2 attempts)"
+                    job.error_message = "Result download failed (2 attempts)"
                     return job
 
                 # Extract
