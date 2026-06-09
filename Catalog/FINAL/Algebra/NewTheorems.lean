@@ -1,1 +1,1 @@
-../../Algebra/IntegerEnergy/NewTheorems.lean
+../../Algebra/Other/NewTheorems.lean

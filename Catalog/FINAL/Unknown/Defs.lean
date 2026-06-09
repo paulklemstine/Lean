@@ -1,0 +1,1 @@
+../../Catalog/Bridges/Speculative/InfiniteChess/Defs.lean

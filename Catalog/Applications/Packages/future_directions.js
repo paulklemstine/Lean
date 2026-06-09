@@ -588,7 +588,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Information Geometry Connecting Statistics and Differential Geometry"
   },
   {
-    "consumed_by_exp_id": "cd0b5177",
+    "consumed_by_exp_id": "",
     "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP \u2286 PCP(poly, 1)).",
     "domains": [
       "Cryptography",
@@ -598,7 +598,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.880463+00:00",
     "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
   },
@@ -1002,7 +1002,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Wall-Sun-Sun Primes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "faea6ea6",
     "description": "Prove that for n bases of an n-dimensional vector space, there is a way to arrange all n\u00b2 elements into an n\u00d7n grid so that each row and column is a basis.",
     "domains": [
       "Algebra"
@@ -1011,7 +1011,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:10.717652+00:00",
     "title": "Rota's Basis Conjecture"
   },
@@ -1191,7 +1191,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 6: Axiomatization of Physics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c2963b34",
     "description": "Construct a simplicial complex from the citation graph of mathematical theorems: vertices are theorems, edges connect co-cited theorems, triangles connect tri-cited theorems, etc. Compute the persistent homology of this complex. Conjecture: H_1 reveals 'schools of mathematics' (connected research communities) and H_2 reveals 'paradigm shifts' (structural changes in the network). Prove: the Betti numbers grow as \u03b2_k \u2248 n^(k+1) where n is the number of theorems.",
     "domains": [
       "Novelty",
@@ -1201,7 +1201,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T23:40:36.748677+00:00",
     "title": "Speculative: Topological Data Analysis of Theorem Networks"
   },
@@ -1568,7 +1568,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Erd\u0151s\u2013Straus Conjecture"
   },
   {
-    "consumed_by_exp_id": "fbe0932d",
+    "consumed_by_exp_id": "",
     "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds \u2014 every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
     "domains": [
       "Novelty",
@@ -1578,7 +1578,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.76,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.728070+00:00",
     "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
@@ -2199,6 +2199,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Non-Archimedean Probability Theory\n\n## What We Built\n\nThis cycle established `FinProbSpace F n` and `RegularFinProbSpace F n` \u2014 finite\nprobability spaces over arbitrary linearly ordered fields \u2014 with 7 machine-verified\ntheorems (zero sorries) covering inclusion-exclusion, Bayes, Markov, the Dutch Book\ntheorem (both directions), regular conditional probability, and a tropical bridge.\n\nThe central insight: **all classical finite probability is purely algebraic**. Nothing\nin the proofs of Bayes' theorem, Markov's inequality, or the Dutch Book argument\nuses completeness, the Archimedean property, or any analytic structure. The only\nrequirements are the ordered field axioms.\n\n---\n\n## Direction 1: Countable Non-Archimedean Probability via Formal Power Series\n\nThe key insight is that the Levi-Civita field \u211d((\u03b5)) admits a natural \"formal summation\"\nfor countable sums of infinitesimals: \u2211_{n\u22650} \u03b5 is not convergent in the order topology\nbut is a well-defined element in an extension that tracks infinite sums as formal objects.\nThis suggests defining countable probability not via limits but via algebraic extension.\n\n**Falsifiable prediction**: Define `CountableProbSpace` over the Levi-Civita field with\nweight function w(n) = c\u00b7\u03b5^{f(n)} where f : \u2115 \u2192 \u2115 is strictly increasing and c is a\nnormalization constant. Conjecture: the resulting structure satisfies countable additivity\nif and only if f grows at least linearly, since \u2211 \u03b5^n converges iff it's a formal geometric\nseries.\n\n**Why now?** Our `FinProbSpace` framework is parametric in the field \u2014 the same typeclass\nconstraints (`Field`, `LinearOrder`, `IsStrictOrderedRing`) apply to the Levi-Civita field.\nThe finite theory lifts directly via truncation arguments.\n\n---\n\n## Direction 2: Full Dutch Book Characterization (Both Directions, Negative Weights)\n\nThe key insight is that our `dutch_book_of_sum_ne_one` handles mispriced totals, but the\nfull Dutch Book theorem should also cover negative prices. The complete characterization\nis: `\u00ac Nonempty (DutchBook F n p) \u2194 (\u2200 i, 0 \u2264 p i) \u2227 \u2211 p = 1`. The backward direction\nis already `no_dutch_book`; the forward direction needs: if some p(i) < 0, construct an\nexplicit Dutch book by buying that single bet.\n\n**Falsifiable prediction**: The explicit construction for negative prices is: stake s(i) = 1,\ns(j) = 0 for j \u2260 i, when p(i) < 0. Then profit at \u03c9 = i is 1 - p(i) > 0 (since p(i) < 0),\nand profit at \u03c9 \u2260 i is 0 - p(i) = -p(i) > 0. This should be formally verifiable in < 20\nlines.\n\n**Why now?** We have both `no_dutch_book` and `dutch_book_of_sum_ne_one`. The missing piece\nis a single additional lemma handling negative weights, completing the iff.\n\n---\n\n## Direction 3: Tropical-Probability Functor via Valuation Maps\n\nThe key insight is that our `prob_weight_power_bound` theorem is already a *shadow* of the\ntropical correspondence: when weights are \u03b5^{k(i)}, probability is controlled by min(k(i)),\nwhich is exactly the tropical sum. A formal functor F : NonArchProb \u2192 TropProb would send\nweight \u03b5^k \u21a6 k and probability (sum of \u03b5^{k(i)}) \u21a6 min(k(i)).\n\n**Falsifiable prediction**: Under the valuation map v(\u2211 a_k \u03b5^k) = min{k : a_k \u2260 0},\nthe Bayes identity v(P(A|B)) + v(P(B)) = v(P(B|A)) + v(P(A)) holds exactly (not just\napproximately) when all intersection probabilities are dominated by a single term.\nConstruct a 4-element counterexample where it fails due to cancellation in the leading term.\n\n**Why now?** The `prob_weight_power_bound` provides the key estimate. Formalizing the\nvaluation map and connecting to existing tropical algebra structures in the Catalog\n(`Tropical/` directory) would create a genuine cross-domain bridge.\n\n---\n\n## Direction 4: Non-Archimedean Game Values and Trembling-Hand Equilibria\n\nThe key insight is that the simplex method for linear programming is purely algebraic \u2014\nit works over any ordered field. This means minimax values of finite games exist over\nnon-Archimedean fields, yielding game values that are formal power series in \u03b5 encoding\nboth the standard value and sensitivity to dominated-strategy trembles.\n\n**Falsifiable prediction**: For the 2\u00d72 game with payoff matrix [[1,0],[0,1]] (matching\npennies), the minimax value over F = \u211d((\u03b5)) with minimum probability \u03b5 is exactly\n1/2 + O(\u03b5). Compute the exact coefficient of \u03b5 and verify it equals 0 (by symmetry).\nFor the asymmetric game [[2,0],[0,1]], predict the coefficient is nonzero and compute it.\n\n**Why now?** Our `FinProbSpace` already models mixed strategies over ordered fields.\nThe game-theoretic application requires only defining payoff matrices and the minimax\noptimization problem, both of which are algebraic.\n\n---\n\n## Direction 5: Non-Archimedean Entropy via Khinchin Axioms\n\nThe key insight is that Shannon entropy can be characterized axiomatically (Khinchin 1957)\nwithout reference to logarithms: it is the unique function H satisfying continuity,\nmaximality at uniform, additivity, and the grouping axiom. Over non-Archimedean fields,\n\"continuity\" must be replaced by an algebraic condition, but the other three axioms\ntransfer directly.\n\n**Falsifiable prediction**: Define H algebraically for `FinProbSpace F n` via the grouping\naxiom: H(p\u2081,...,p\u2099) = H(p\u2081+p\u2082, p\u2083,...,p\u2099) + (p\u2081+p\u2082)\u00b7H(p\u2081/(p\u2081+p\u2082), p\u2082/(p\u2081+p\u2082)).\nConjecture: this recursion, together with H(1/n,...,1/n) = log(n) (for a formal log),\nuniquely determines H. Test: verify H(1/2,1/3,1/6) = log(6) - (1/2)log(2) - (1/3)log(3)\nmatches the classical formula.\n\n**Why now?** The `expectation` function in our framework already computes weighted sums.\nEntropy is just `expectation` applied to the function i \u21a6 -log(w(i)), so the algebraic\nscaffolding exists. The challenge is defining a formal logarithm compatible with the\nordered field structure.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1036",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "9ff4961b",
+    "status": "available",
+    "timestamp": "2026-06-09T00:33:35.900496+00:00",
+    "title": "`FinProbSpace F n` and `RegularFinProbSpace F n` \u2014 finite"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Non-Archimedean Probability Theory\n\n## What We Proved\n\nThis cycle formalized the algebraic foundations of probability theory in non-Archimedean ordered fields. The core results are:\n\n1. **Non-Archimedean \u27fa Infinitesimal Existence** (`non_archimedean_iff_infinitesimal_exists`): A linearly ordered field admits positive elements \u03b5 with n\u2022\u03b5 < 1 for all n \u2208 \u2115 if and only if it is non-Archimedean. This transforms the philosophical question \"can probabilities be infinitesimal?\" into a precise algebraic condition.\n\n2. **Faithfulness \u27fa Strict Monotonicity** (`strict_mono_iff_faithful`): A finitely additive measure on a finite type is faithful (all atoms positive) if and only if it is strictly monotone (S \u2282 T \u27f9 \u03bc(S) < \u03bc(T)). This characterizes faithful measures purely via an order-theoretic property.\n\n3. **Conditional Probability on Singletons** (`conditional_point_mem`, `conditional_point_not_mem`): In any field-valued measure with positive weights, P(A | {x}) = 1_A(x). This resolves the Borel-Kolmogorov paradox: conditioning on points is well-defined because P({x}) > 0.\n\n4. **Sub-Probability Completion** (`sub_probability_completion`): Any sub-probability measure (total < 1) on n elements can be extended to a genuine probability measure on n+1 elements by adding a single corrective weight \u03b4 = 1 - n\u2022\u03b5.\n\n---\n\n## Direction 1: Hyperfinite Measure Completion\n\nThe key insight is that while `sub_probability_completion` adds a single correction element, a truly uniform non-Archimedean probability requires the *number of elements itself* to be non-standard. In a non-Archimedean field F containing \u03c9 > n for all n \u2208 \u2115, the uniform measure assigning weight \u03c9\u207b\u00b9 to each of \"\u03c9 many\" elements would sum to exactly 1 \u2014 but formalizing \"\u03c9 many elements\" requires either a hyperfinite type abstraction or an ultraproduct construction.\n\n**Conjecture**: There exists a formalization of \"hyperfinite Finset\" parameterized by a non-standard element \u03c9 \u2208 F such that the uniform measure with weight \u03c9\u207b\u00b9 sums to 1 over this set, using the algebraic identity \u03c9 \u00b7 \u03c9\u207b\u00b9 = 1.\n\n**Why now?** Our `uniform_finmeasure_total` proves that for standard Fin n, the total is n \u2022 \u03b5. The gap is purely type-theoretic: bridging from \"n is a natural number\" to \"\u03c9 is a field element that exceeds all naturals.\" The algebraic content (\u03c9 \u00b7 \u03c9\u207b\u00b9 = 1) is trivial; the challenge is the foundational framework.\n\n## Direction 2: Conditional Probability as a Probability Measure\n\nThe key insight is that our `conditional_point_mem`/`conditional_point_not_mem` show P(\u00b7 | {x}) acts like an indicator, but we have not yet proved that P(\u00b7 | B) is itself a probability measure (normalized and additive) for general B.\n\n**Conjecture**: For faithful weights w and nonempty B, the function A \u21a6 condProb w A B satisfies: (1) condProb w B B = 1 [proved as `condProb_self`], (2) condProb w \u2205 B = 0, and (3) condProb w (A\u2081 \u222a A\u2082) B = condProb w A\u2081 B + condProb w A\u2082 B when A\u2081 \u2229 A\u2082 \u2229 B = \u2205.\n\n**Why now?** We already have `condProb_self` and `finmeasure_disjoint_additive`. The remaining step is to verify that intersection distributes correctly through the conditional probability formula \u2014 a straightforward but formally non-trivial algebraic manipulation.\n\n## Direction 3: Tropical Degeneration of Non-Archimedean Measures\n\nThe key insight is that for a family of measures \u03bc_\u03b5({x}) = \u03b5^{v(x)} parameterized by \u03b5 \u2208 (0,1), the logarithmic rescaling -log(\u03bc_\u03b5(S))/log(\u03b5) converges as \u03b5 \u2192 0 to min_{x \u2208 S} v(x), recovering the tropical (min-plus) semiring structure.\n\n**Conjecture**: For a valuation v : \u03b1 \u2192 \u2115 on a finite type and \u03b5 \u2208 (0,1) \u2282 \u211d, define \u03bc_\u03b5(S) = \u2211_{x \u2208 S} \u03b5^{v(x)}. Then lim_{\u03b5\u21920} (-log(\u03bc_\u03b5(S))/log(\u03b5)) = min_{x \u2208 S} v(x). The resulting \"tropical probability\" satisfies: (1) tropical union = min of costs, (2) tropical total = min of all valuations.\n\n**Why now?** This bridges the non-Archimedean probability framework with the catalog's tropical mathematics threads. The proof strategy uses dominated convergence for finite sums: as \u03b5 \u2192 0, the term with smallest exponent dominates.\n\n## Direction 4: Faithfulness Characterization for Signed Measures\n\nThe key insight is that `strict_mono_iff_faithful` currently assumes the field is linearly ordered, but the forward direction (strict monotonicity \u27f9 faithful) holds for *any* ordered field, while the backward direction requires cancellative addition. The characterization may extend to partially ordered rings.\n\n**Conjecture**: Over a partially ordered cancellative commutative monoid M, a weight function w : \u03b1 \u2192 M satisfies strict monotonicity for all S \u2282 T if and only if w(x) > 0 for all x. The proof of the forward direction (our `strict_mono_implies_faithful`) already works in this generality; the backward direction (`faithful_measure_strict_mono`) requires `IsOrderedCancelAddMonoid`.\n\n**Why now?** Our current proof uses `Finset.sum_lt_sum_of_subset`, which requires ordered cancellative addition. Identifying the minimal algebraic hypotheses would clarify exactly which algebraic structures support faithful measures.\n\n## Direction 5: Non-Archimedean Bayesian Updating\n\nThe key insight is that sequential Bayesian updating P(H | D\u2081, D\u2082, ...) can be formalized as iterated conditional probability, and in non-Archimedean probability this is always well-defined because P(D\u1d62) > 0 for all data points \u2014 unlike in standard probability where continuous observations have zero probability.\n\n**Conjecture**: For faithful weights on a finite type, define the posterior after observing a sequence of data points D\u2081, ..., D\u2096 as iterated conditioning. Then: (1) the posterior is independent of the order of observations (commutativity of updating), (2) the posterior is itself a faithful measure (positivity is preserved), and (3) the posterior converges (in a suitable sense) to a point mass as the number of observations grows.\n\n**Why now?** Our `conditional_point_mem` shows that conditioning on a single point gives an indicator. Iterated conditioning is the natural next step, and the finite-type setting avoids measure-theoretic complications.\n",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_1037",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "53f842c3",
+    "status": "available",
+    "timestamp": "2026-06-09T00:34:12.985598+00:00",
+    "title": "This cycle formalized the algebraic foundations of probability theory in non-Arc"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Spectral Scaling Laws\n\n## 1. Quantitative Spectral Truncation Bounds via Integral Comparison\n\nThe current `tail_sum_antitone` theorem establishes monotonicity of the approximation error but does not give quantitative rates. For a spectral profile with eigenvalue decay \u03bb_k ~ C\u00b7k^(-\u03b1), the tail sum should satisfy\n\n  \u03a3_{k\u2265P} \u03bb_k \u2264 C'\u00b7P^(-(\u03b1-1))\n\nfor \u03b1 > 1, via comparison with the integral \u222b_P^\u221e t^(-\u03b1) dt = P^(-(\u03b1-1))/(\u03b1-1). The key insight is that this integral comparison (Euler-Maclaurin at zeroth order) converts the discrete spectral decay rate \u03b1 into the continuous approximation error rate \u03b1-1, which is exactly the bias exponent observed empirically in neural scaling laws. Why now? Mathlib's `Antitone.sum_le_integral` and related integral-sum comparison lemmas are now mature enough to make this formalization tractable. This would close the gap between our abstract spectral framework and the concrete power-law exponents measured in practice.\n\n**Testable prediction**: For the Mat\u00e9rn-\u03bd kernel on [0,1]^d with \u03bd > d/2, the eigenvalues decay as k^(-2\u03bd/d - 1) (Weyl's law), predicting a bias exponent of 2\u03bd/d. This is computationally verifiable by diagonalizing the kernel matrix for moderate d and \u03bd.\n\n## 2. Multi-Resource Scaling with n-way Compute Allocation\n\nOur theorems handle two-resource allocation (parameters P and data D). Real training involves at least three resources: parameters, data, and training steps (epochs). The generalized problem minimizes\n\n  L = \u03a3\u1d62 A\u1d62 \u00b7 x\u1d62^(-\u03b1\u1d62)  subject to  \u03a0 x\u1d62 = C\n\nThe key insight is that the n-resource harmonic exponent \u03b3 = (\u03a3 1/\u03b1\u1d62)\u207b\u00b9 follows from the same Lagrange multiplier analysis, and the optimal allocation exponents e\u1d62 = (1/\u03b1\u1d62)/(\u03a3 1/\u03b1\u2c7c) form a probability distribution over resources. This \"resource attention\" distribution is the mathematical dual of the attention mechanism in transformers \u2014 both allocate capacity according to importance weights. Why now? Our `optimal_exponents_sum_to_one` theorem already proves the partition-of-unity property for n=2; the generalization to n resources requires only Finset-indexed versions of the same algebraic identities.\n\n**Testable prediction**: For 3-resource scaling (P, D, epochs E) with measured exponents \u03b1_P \u2248 0.076, \u03b1_D \u2248 0.095, \u03b1_E \u2248 0.050 (from Hoffmann et al.), the theory predicts \u03b3\u2083 = (1/0.076 + 1/0.095 + 1/0.050)\u207b\u00b9 \u2248 0.024. This can be validated against compute-optimal training runs.\n\n## 3. Phase Transitions in the Bias-Variance Landscape\n\nOur `bias_strict_decrease` theorem shows bias is strictly monotone, but real neural networks exhibit phase transitions \u2014 sudden capability jumps at specific scales. The key insight is that phase transitions arise when the spectral gap (ratio \u03bb_{P}/\u03bb_{P+1}) is anomalously large, creating a \"spectral cliff\" where adding one eigenmode captures disproportionate variance. Formally, if the spectral profile has a gap g_P = \u03bb_P/\u03bb_{P+1} \u226b 1 at index P*, then the loss landscape has a local \"plateau-then-drop\" structure around P*, observable as an emergent capability. Why now? Our SpectralProfile structure already encodes the eigenvalue ordering; adding a `spectralGap` function and proving that large gaps create loss function inflection points would connect our continuous scaling theory to the discrete phenomenon of emergence.\n\n**Testable prediction (falsifiable)**: If a language model exhibits an emergent capability at scale P*, then the NTK eigenspectrum at scale P*-1 should show a spectral gap ratio \u03bb_{P*}/\u03bb_{P*+1} > 10. This is testable by computing NTK spectra of small transformer models across scales.\n\n## 4. Information-Theoretic Lower Bounds on Scaling Exponents\n\nOur `harmonic_exponent_bounds` theorem shows \u03b3 < min(\u03b1, \u03b2), but does not establish whether the bound is tight. The key insight is that the harmonic exponent \u03b3 = \u03b1\u03b2/(\u03b1+\u03b2) is actually achievable \u2014 it is not just an upper bound but the exact rate \u2014 and this can be proved by constructing an explicit kernel whose spectral profile achieves the bound with equality. The Mat\u00e9rn family provides such a construction: for Mat\u00e9rn-\u03bd on [0,1]^d, the bias exponent \u03b1 = 2\u03bd/d and the variance exponent \u03b2 = 1, giving \u03b3 = 2\u03bd/(d+2\u03bd), which matches the minimax rate for nonparametric regression in Sobolev spaces of order \u03bd. This connects neural scaling laws to classical statistical learning theory. Why now? Mathlib now has solid foundations for Sobolev spaces and kernel reproducing Hilbert spaces that would support formalizing the minimax connection.\n\n**Testable prediction**: No kernel method can achieve a scaling exponent \u03b3 > \u03b1\u03b2/(\u03b1+\u03b2) under the spectral decay assumption \u03bb_k ~ k^(-\u03b1). This lower bound should hold for any learning algorithm, not just kernel methods, when the target function lives in the RKHS. Computationally testable by comparing scaling curves of different architectures on synthetic data from known RKHS functions.\n\n## 5. Cross-Domain Bridge: Scaling Laws and Thermodynamic Free Energy\n\nThe loss function L(P, D) = A\u00b7P^(-\u03b1) + B\u00b7D^(-\u03b2) has the mathematical structure of a free energy F = E - TS in statistical mechanics, where the bias term plays the role of internal energy (model capacity) and the variance term plays the role of entropic cost (data complexity). The key insight is that the critical point condition \u03b1\u00b7(bias) = \u03b2\u00b7(variance) \u2014 our `marginal_balance_identity` \u2014 is precisely the thermodynamic equilibrium condition \u2202F/\u2202T = 0, and the harmonic exponent \u03b3 is the critical exponent of the associated phase transition. This suggests that neural scaling laws are instances of universality in the renormalization group sense. Why now? The Catalog already contains formalized results on thermodynamic quantities (in Physics/) and spectral theory (in Algebra/); bridging them through the scaling law framework would create a genuinely novel cross-domain connection. The marginal balance identity we proved is the formal bridge \u2014 it states that at optimum, the system is at a \"thermal equilibrium\" between approximation and estimation.\n\n**Testable prediction**: If we define a \"scaling susceptibility\" \u03c7 = -\u2202\u00b2L*/\u2202(log C)\u00b2 at the optimal allocation, then \u03c7 should diverge at the critical exponent ratio \u03b1/\u03b2 = 1 (the symmetric point), analogous to a second-order phase transition. This is numerically testable.\n",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_1038",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f8b9d9f4",
+    "status": "available",
+    "timestamp": "2026-06-09T00:34:50.005925+00:00",
+    "title": "The current `tail_sum_antitone` theorem establishes monotonicity of the approxim"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2422,7 +2467,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Reinforcement Learning: Convergence of Policy Gradient Methods"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "45ebbcc6",
     "description": "Conjecture: For sufficiently large corpora of formalized proofs within a fixed foundational system, the normalized Laplacian spectra of theorem-dependency graphs converge to a small number of universality classes determined by proof-theoretic strength rather than by mathematical subject area; in particular, corpora formalizing theories above a critical ordinal-theoretic strength exhibit a measurable spectral phase transition (e.g. emergence of a stable spectral gap scaling law and distinct eigenvector localization profile) absent in weaker theories. Test: Construct dependency graphs from large proof libraries across systems and strengths (e.g. fragments of arithmetic, set theory, type theory, proof assistants such as Lean, Coq, Isabelle), compute normalized spectral invariants under size-controlled sampling, and test whether clustering by spectral statistics tracks proof-theoretic strength better than domain labels; confirmation requires robust cross-corpus universality and detection of a reproducible transition threshold, while refutation occurs if spectra are primarily explained by subject matter, library engineering conventions, or show no stable transition. Impact: This would create a quantitative bridge between proof theory, spectral graph theory, and automated theorem proving, enabling complexity-aware library design, strength estimation from empirical proof structure, and new scaling laws for machine-assisted mathematics.",
     "domains": [
       "Novelty",
@@ -2432,7 +2477,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T10:56:11.964379+00:00",
     "title": "Spectral Universality of Proof Graphs: A Phase Transition in Formal Mathematics"
   },
@@ -2496,7 +2541,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "2a933571",
+    "consumed_by_exp_id": "",
     "description": "A periodic rhythm in music is a function f: Z -> {0, 1} that is periodic: f(n + p) = f(n) for some period p. The symmetry group of a rhythm with period p is a subgroup of Z/pZ. But music also has 2D patterns: a drum pattern is a function g: Z x Z -> {0, 1} (onset grid in time x pitch). The symmetry group of a drum pattern is a subgroup of Z x Z, which is a wallpaper group in 1D. In 2D, the wallpaper groups classify all possible symmetries of periodic patterns. There are exactly 17 wallpaper groups in 2D. Conjecture: the 17 wallpaper groups correspond to 17 fundamentally different types of rhythmic structure in music. Specifically: (1) p1: no symmetry (free rhythm), (2) p2: 2-fold rotational symmetry (call-and-response), (3) pm: mirror symmetry (palindrome), (4) pg: glide reflection (canon), (5) cm: mirror + glide (round), (6) pmm: double mirror (bilateral palindrome), (7) pmg: mirror + glide (inverted canon), (8) pgg: double glide (double canon), (9) cmm: double mirror + glide (round + palindrome), (10) p4: 4-fold rotation (4-bar cycle), (11) p4m: 4-fold + mirrors (variations on a theme), (12) p4g: 4-fold + glides (inverted variations), (13) p3: 3-fold rotation (3-bar blues), (14) p3m1: 3-fold + mirrors, (15) p31m: 3-fold + glides, (16) p6: 6-fold rotation (whole-tone scale symmetry), (17) p6m: 6-fold + mirrors (maximal symmetry, the 'perfect' rhythm). Test: classify 1000 drum patterns by their wallpaper group and verify the distribution matches musical practice. Impact: there are exactly 17 types of rhythm in music, classified by the wallpaper groups.",
     "domains": [
       "Novelty",
@@ -2506,7 +2551,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.68,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.681497+00:00",
     "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
   },
