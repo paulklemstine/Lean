@@ -1,1 +1,0 @@
-../../Bridges/GL2SpectralDecomposition.lean

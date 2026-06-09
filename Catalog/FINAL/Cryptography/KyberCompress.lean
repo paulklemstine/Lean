@@ -1,1 +1,0 @@
-../../Cryptography/KyberCompress.lean

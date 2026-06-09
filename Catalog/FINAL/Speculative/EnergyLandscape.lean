@@ -1,1 +1,0 @@
-../../Speculative/EnergyLandscape.lean

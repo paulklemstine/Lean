@@ -1,1 +1,0 @@
-../../Bridges/SpectralProofSpace.lean

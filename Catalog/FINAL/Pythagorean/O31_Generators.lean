@@ -1,1 +1,0 @@
-../../Pythagorean/O31_Generators.lean

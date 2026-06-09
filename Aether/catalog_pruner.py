@@ -442,16 +442,29 @@ class CatalogPruner:
         # Phase 2: topic-level dedup — find files on the same topic with different names
         # e.g., "Algebra/CollatzBasic.lean" and "Algebra/CollatzCore.lean" cover the same ground
         if not dry_run and len(candidates) > 10:
+            import re
+            _STOP_WORDS = {"basic", "core", "defs", "main", "theorems", "lemmas",
+                           "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v8",
+                           "advanced", "intro", "part", "section", "version",
+                           "extended", "complete", "full", "simple", "minimal"}
+
+            def _split_camel(s: str) -> list:
+                """Split CamelCase and snake_case into individual words."""
+                s = s.replace("_", " ")
+                s = re.sub(r"([a-z])([A-Z])", r"\1 \2", s)
+                return s.lower().split()
+
             topic_groups = {}
             for c in candidates:
                 if c["path"] in set(removed):
                     continue
                 # Extract keywords from filename and parent directory
-                path_parts = Path(c["path"]).stem.replace("_", " ").lower().split()
+                # Must split CamelCase so "CollatzBasic" -> ["collatz", "basic"]
+                path_parts = _split_camel(Path(c["path"]).stem)
                 parent = Path(c["path"]).parent.name.replace("_", " ").lower()
                 domain = Path(c["path"]).parts[0] if Path(c["path"]).parts else ""
-                # Build a topic key from domain + significant words
-                keywords = set(path_parts + parent.split()) - {"basic", "core", "defs", "main", "theorems", "lemmas"}
+                # Build a topic key from domain + significant words (stop words removed)
+                keywords = set(path_parts + parent.split()) - _STOP_WORDS
                 if len(keywords) < 2:
                     continue
                 # Group by domain + sorted keywords (fuzzy match)

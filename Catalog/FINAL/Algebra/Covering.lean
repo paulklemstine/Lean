@@ -1,1 +1,0 @@
-../../Algebra/Covering.lean

@@ -1,1 +1,0 @@
-../../Tropical/TropicalLLMConversion.lean

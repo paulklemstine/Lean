@@ -1,1 +1,0 @@
-../../Bridges/CanonicalPathBisimulation.lean

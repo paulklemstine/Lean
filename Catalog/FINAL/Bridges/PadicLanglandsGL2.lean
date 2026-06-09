@@ -1,1 +1,0 @@
-../../Bridges/PadicLanglandsGL2.lean

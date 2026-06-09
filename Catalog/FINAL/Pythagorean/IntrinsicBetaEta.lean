@@ -1,1 +1,0 @@
-../../Pythagorean/IntrinsicBetaEta.lean

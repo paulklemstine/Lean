@@ -1,1 +1,0 @@
-../../Bridges/HeterogeneityGapTheory.lean

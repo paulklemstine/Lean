@@ -1,1 +1,0 @@
-../../Bridges/IRVStability.lean
