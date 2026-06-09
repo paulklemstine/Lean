@@ -1,1 +1,0 @@
-../../Geometry/JigsawSATReduction.lean

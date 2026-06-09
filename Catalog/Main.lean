@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2956 of the highest-quality
+A curated collection of 2938 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2956
+Total files: 2938
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -589,7 +589,6 @@ import FINAL.Bridges.IdempotentKMESupport
 import FINAL.Bridges.IdempotentMeasure_Core
 import FINAL.Bridges.IdempotentNoether
 import FINAL.Bridges.IdempotentRenormalizationDuality
-import FINAL.Bridges.IdempotentStone_Basic
 import FINAL.Bridges.IdempotentStone_Examples
 import FINAL.Bridges.IdempotentThermodynamicRealization
 import FINAL.Bridges.IharaZeta
@@ -602,7 +601,6 @@ import FINAL.Bridges.InvariantProduct
 import FINAL.Bridges.InvertedTreeAdvanced
 import FINAL.Bridges.IrreducibleTransfer
 import FINAL.Bridges.IteratedShadowGeometry
-import FINAL.Bridges.JigsawNPComplete
 import FINAL.Bridges.KTheoryNeuralAdvanced
 import FINAL.Bridges.KTheoryNeuralCore
 import FINAL.Bridges.KWLSeparation
@@ -610,11 +608,7 @@ import FINAL.Bridges.KantorovichLawvereDuality
 import FINAL.Bridges.KeplerDefs
 import FINAL.Bridges.KeplerEccentricity
 import FINAL.Bridges.KeplerLaws
-import FINAL.Bridges.KnuthBendixCompletion
 import FINAL.Bridges.KruskalTMS
-import FINAL.Bridges.LandauerErasureComplexity
-import FINAL.Bridges.LandauerProofThermodynamics
-import FINAL.Bridges.LanglandsGL2
 import FINAL.Bridges.LargeDeviationPrinciple
 import FINAL.Bridges.LatticePrimeSeparation
 import FINAL.Bridges.LawvereCodingTheorem
@@ -749,7 +743,6 @@ import FINAL.Bridges.ProofSpectrumDuality
 import FINAL.Bridges.ProofStoneCechDynamics
 import FINAL.Bridges.ProofTheoreticCrypto_Core
 import FINAL.Bridges.ProofThermodynamicsCore
-import FINAL.Bridges.ProofThermodynamicsEntropy
 import FINAL.Bridges.ProteinFoldingPersistence
 import FINAL.Bridges.ProvabilitySpectralTheory
 import FINAL.Bridges.PseudofiniteDimension
@@ -797,7 +790,6 @@ import FINAL.Bridges.SemanticCompression
 import FINAL.Bridges.SemanticQuotientExtraction
 import FINAL.Bridges.SemiconjOrbitArithmetic_Core
 import FINAL.Bridges.Separation
-import FINAL.Bridges.ShadowDecay
 import FINAL.Bridges.ShadowLogConcavity
 import FINAL.Bridges.SharpExponentLowerBounds
 import FINAL.Bridges.SheafAdvanced
@@ -855,7 +847,6 @@ import FINAL.Bridges.TaggedCardTASEP
 import FINAL.Bridges.TangledHierarchySoundness
 import FINAL.Bridges.TannakaClosureReconstruction
 import FINAL.Bridges.TemporalFixedPointSemantics
-import FINAL.Bridges.TemporalPrimeCongruence_Core
 import FINAL.Bridges.TemporalStoneBirkhoffDuality
 import FINAL.Bridges.TheoremSpaceRenormalization
 import FINAL.Bridges.Theorems
@@ -940,7 +931,6 @@ import FINAL.Bridges.TropicalLensRigidityDuality
 import FINAL.Bridges.TropicalMellin_Defs
 import FINAL.Bridges.TropicalMellin_Theorems
 import FINAL.Bridges.TropicalMetamathematics
-import FINAL.Bridges.TropicalMixingDirect
 import FINAL.Bridges.TropicalNerode
 import FINAL.Bridges.TropicalNerode_Basic
 import FINAL.Bridges.TropicalNeuralBridge
@@ -1492,7 +1482,6 @@ import FINAL.Geometry.InverseStereoMobiusNext
 import FINAL.Geometry.InverseStereoResearch
 import FINAL.Geometry.InverseStereoSecp256k1
 import FINAL.Geometry.InverseStereoUniverse
-import FINAL.Geometry.JigsawSATReduction
 import FINAL.Geometry.KnotTheory_Examples
 import FINAL.Geometry.KnotTheory_Jones
 import FINAL.Geometry.KnotTheory_KauffmanBracket
@@ -2142,7 +2131,6 @@ import FINAL.Physics.TropicalDiffusionRegularity
 import FINAL.Physics.TropicalLanglands
 import FINAL.Physics.TropicalMirrorSymmetry
 import FINAL.Physics.TropicalProofComplexity
-import FINAL.Physics.TropicalProofThermodynamics
 import FINAL.Physics.TropicalQuantum_Advanced
 import FINAL.Physics.TropicalTDuality
 import FINAL.Physics.TropicalTransfer_Basic
@@ -2255,9 +2243,6 @@ import FINAL.Pythagorean.ContinuousKernel_Theorems
 import FINAL.Pythagorean.ContinuousRenormFlow
 import FINAL.Pythagorean.ControlledInverseHierarchy_Defs
 import FINAL.Pythagorean.ControlledInverseHierarchy_Theorems
-import FINAL.Pythagorean.ConvergentRewriteMaster
-import FINAL.Pythagorean.ConvergentRewriteOptimizer
-import FINAL.Pythagorean.ConvergentRewriteSystems
 import FINAL.Pythagorean.Core
 import FINAL.Pythagorean.CoreCollapseEntropy
 import FINAL.Pythagorean.CoreFormalization
@@ -2349,8 +2334,6 @@ import FINAL.Pythagorean.IharaZeta_Theorems
 import FINAL.Pythagorean.IncongruityMetric
 import FINAL.Pythagorean.InfoTheoreticMonotonicity
 import FINAL.Pythagorean.InvertedTreeCore
-import FINAL.Pythagorean.IteratedShadowGeometry
-import FINAL.Pythagorean.JigsawNPComplete
 import FINAL.Pythagorean.KTupleMoebiusInversion
 import FINAL.Pythagorean.KnuthBendixCompletion
 import FINAL.Pythagorean.KruskalKatonaMI
@@ -2461,7 +2444,6 @@ import FINAL.Pythagorean.ShadowEnergy_Theorems
 import FINAL.Pythagorean.ShadowEntropy
 import FINAL.Pythagorean.ShadowHodgeULC
 import FINAL.Pythagorean.ShadowIsoperimetry_Defs
-import FINAL.Pythagorean.ShadowIsoperimetry_Theorems
 import FINAL.Pythagorean.SharpGOEConstants
 import FINAL.Pythagorean.SharpKAMThreshold
 import FINAL.Pythagorean.SharpPerturbationScale
