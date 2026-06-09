@@ -1513,6 +1513,22 @@ Research mode: {concept.research_mode}
               f"sorries={job.sorry_count}, theorems={job.theorem_count}"
               + (f", depth={job.quality_detail.proof_depth:.2f}" if hasattr(job, 'quality_detail') and job.quality_detail else ""))
 
+        # v8 output quality metrics: track research team protocol compliance
+        if getattr(job, 'phase_a_prompt_version', '') == 'v8' and job.result_lean:
+            lean_content = job.result_lean
+            lab_notebook_count = lean_content.count("Lab Notebook")
+            hypothesis_count = lean_content.lower().count("hypothesis")
+            disproved_count = lean_content.lower().count("disproved")
+            has_synthesis = "## Synthesis" in lean_content or "Synthesis" in lean_content
+            has_results_summary = "Results Summary" in lean_content
+            has_if_true = "**If true**" in lean_content or "If true" in lean_content
+            critic_present = lean_content.lower().count("critic") + lean_content.lower().count("critique")
+            print(f"[v8 Metrics] Lab_Notebooks={lab_notebook_count} hypotheses={hypothesis_count} "
+                  f"disproved={disproved_count} Synthesis={'Y' if has_synthesis else 'N'} "
+                  f"Results_Summary={'Y' if has_results_summary else 'N'} "
+                  f"If_true={'Y' if has_if_true else 'N'} "
+                  f"Critic_refs={critic_present}")
+
         # Persist evaluation results to inflight_jobs
         if job.project_id and job.project_id in self.inflight:
             self.inflight[job.project_id] = job

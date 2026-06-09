@@ -439,6 +439,81 @@ class CatalogPruner:
             else:
                 seen_content_hashes[fingerprint] = (c["path"], c["theorems"], c["sorries"])
 
+        # Phase 2: topic-level dedup — find files on the same topic with different names
+        # e.g., "Algebra/CollatzBasic.lean" and "Algebra/CollatzCore.lean" cover the same ground
+        if not dry_run and len(candidates) > 10:
+            topic_groups = {}
+            for c in candidates:
+                if c["path"] in set(removed):
+                    continue
+                # Extract keywords from filename and parent directory
+                path_parts = Path(c["path"]).stem.replace("_", " ").lower().split()
+                parent = Path(c["path"]).parent.name.replace("_", " ").lower()
+                domain = Path(c["path"]).parts[0] if Path(c["path"]).parts else ""
+                # Build a topic key from domain + significant words
+                keywords = set(path_parts + parent.split()) - {"basic", "core", "defs", "main", "theorems", "lemmas"}
+                if len(keywords) < 2:
+                    continue
+                # Group by domain + sorted keywords (fuzzy match)
+                topic_key = (domain, " ".join(sorted(keywords)))
+                if topic_key not in topic_groups:
+                    topic_groups[topic_key] = []
+                topic_groups[topic_key].append(c)
+
+            # For groups with 2+ files on the same topic, merge into the best
+            for key, group in topic_groups.items():
+                if len(group) < 2:
+                    continue
+                # Sort by: theorems desc, sorries asc, lines desc
+                group.sort(key=lambda c: (c["theorems"], -c["sorries"], c.get("lines", 0)), reverse=True)
+                best = group[0]
+                best_path = best["abs_path"]
+
+                # Merge content from similar files into the best one
+                # Append unique theorems/definitions from losers under a section header
+                merged_content = []
+                try:
+                    merged_content.append(best_path.read_text(encoding="utf-8", errors="replace"))
+                except Exception:
+                    continue
+
+                for loser in group[1:]:
+                    try:
+                        loser_content = loser["abs_path"].read_text(encoding="utf-8", errors="replace")
+                        loser_name = Path(loser["path"]).stem
+                        # Add a section header for the merged content
+                        section_header = f"\n\n-- !-- Merged from {loser_name}.lean (auto-dedup) -- !--\n\n"
+                        # Only include content that doesn't duplicate existing definitions/theorems
+                        # Simple heuristic: skip lines that appear verbatim in the best file
+                        best_text = merged_content[0]
+                        unique_lines = []
+                        for line in loser_content.split("\n"):
+                            stripped = line.strip()
+                            if stripped and stripped not in best_text:
+                                unique_lines.append(line)
+                        if unique_lines:
+                            merged_content.append(section_header + "\n".join(unique_lines))
+                    except Exception as e:
+                        print(f"[Prune] Failed reading loser {loser['path']}: {e}")
+
+                    # Remove the loser file
+                    try:
+                        loser["abs_path"].unlink(missing_ok=True)
+                        removed.append(loser["path"])
+                    except Exception as e:
+                        print(f"[Prune] Failed topic-dedup {loser['path']}: {e}")
+
+                # Write the merged file
+                if len(merged_content) > 1:
+                    try:
+                        best_path.write_text("\n".join(merged_content), encoding="utf-8")
+                    except Exception as e:
+                        print(f"[Prune] Failed writing merged {best['path']}: {e}")
+
+                if len(group) > 1:
+                    print(f"[Prune] Topic-merge '{key[1]}' in {key[0]}: merged into {group[0]['path']}, "
+                          f"removed {len(group)-1} similar files")
+
         return removed
 
     def prune(self, target_remove_count: int = 10, dry_run: bool = False) -> Dict[str, Any]:
