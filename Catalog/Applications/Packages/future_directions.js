@@ -147,7 +147,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Riemann Hypothesis: Zero-Free Regions"
   },
   {
-    "consumed_by_exp_id": "3d5b4b8d",
+    "consumed_by_exp_id": "",
     "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
     "domains": [
       "Logic",
@@ -157,7 +157,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.92,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:25.938639+00:00",
     "title": "Certified Novelty Detection for Theorem Provers"
   },
@@ -3653,7 +3653,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory as Foundations"
   },
   {
-    "consumed_by_exp_id": "b0a2670f",
+    "consumed_by_exp_id": "",
     "description": "Construct an explicit order-preserving map from the proof-theoretic ordinals of PA to those of KP set theory. Prove that epsilon_0 < psi(Omega^omega) and formalize the ordinal collapsing function psi as a term rewriting system in Lean 4.",
     "domains": [
       "Bridges",
@@ -3663,7 +3663,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.504025+00:00",
     "title": "Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
   },
