@@ -1,1 +1,0 @@
-../../Pythagorean/TropicalBridge/MetricKernel/Theorems.lean

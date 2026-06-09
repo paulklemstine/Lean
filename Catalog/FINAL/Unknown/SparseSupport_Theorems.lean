@@ -1,0 +1,1 @@
+../../Catalog/Bridges/Pythagorean/SparseSupport/Theorems.lean

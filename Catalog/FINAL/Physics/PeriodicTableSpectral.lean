@@ -1,0 +1,1 @@
+../../Physics/PeriodicTableSpectral.lean

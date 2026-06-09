@@ -1,1 +1,0 @@
-../../Bridges/Speculative/NewtonPersistence/Basic.lean

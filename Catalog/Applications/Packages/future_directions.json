@@ -166,7 +166,7 @@
       "depth_estimate": 3,
       "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer — the mathematical formalization of 'reality depends on the observer'.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Novelty",
         "Geometry"
@@ -786,7 +786,7 @@
       "depth_estimate": 3,
       "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) — expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look — the mathematical realization of a universe that is simultaneously expanding and contracting.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Novelty",
         "Geometry"
@@ -1561,7 +1561,7 @@
       "depth_estimate": 3,
       "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set — they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line — they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line — they are a fractal curve.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.6,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Novelty",
         "Algebra"
@@ -2491,7 +2491,7 @@
       "depth_estimate": 3,
       "description": "An automatic sequence is one generated by a deterministic finite automaton (DFA). The Thue-Morse sequence 01101001... is 2-automatic. The Rudin-Shapiro sequence is 2-automatic. The paperfolding sequence is 2-automatic. Conjecture: a sequence (a_n) is k-automatic iff its generating function G(x) = sum a_n x^n is algebraic over Q(x) of degree at most k. This is known (Christol's theorem): a formal power series over F_k is algebraic iff its coefficient sequence is k-automatic. But Christol's theorem only works over finite fields. For sequences over Z (or Q), the conjecture is: a sequence (a_n) over Z is k-automatic iff it satisfies a linear recurrence with polynomial coefficients of degree at most k-1 in n. Conjecture: the halting problem for k-automatic sequences is decidable: given a DFA that generates (a_n), it is decidable whether there exists n such that a_n = 0 (the 'zero in sequence' problem). This is TRUE for k-automatic sequences (by the pumping lemma: if the DFA accepts any string, it accepts an infinite number, so a_n = 0 infinitely often). But for morphic sequences (generalizations of automatic sequences), the problem is open. Conjecture: the zero-in-sequence problem for morphic sequences is decidable. Test: implement the decidability algorithm for k-automatic sequences and verify on 100 test sequences. Impact: automatic sequences have decidable halting problems. The boundary between decidability and undecidability in sequence theory is the boundary between automatic and morphic.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Novelty",
         "Logic"
@@ -2894,7 +2894,7 @@
       "depth_estimate": 3,
       "description": "Arrow's impossibility theorem states that no ranked voting system with 3+ alternatives can be Pareto efficient, non-dictatorial, and independent of irrelevant alternatives (IIA). Conjecture: Arrow's theorem is a curvature statement. The space of preference profiles is a Riemannian manifold M with the Fisher information metric. The social welfare function F: M -> M is a mapping from profiles to social preferences. Arrow's conditions translate to geometric conditions: (1) Pareto efficiency means F preserves the direction of unanimous preference (F is 'forward-looking'). (2) IIA means F is a local mapping (the social preference at x depends only on local information near x). (3) Non-dictatorial means F is not a projection onto a single voter's preference. Conjecture: the only smooth, local, forward-looking maps on a positively curved manifold are projections (dictatorships). This is because a positively curved manifold has the property that parallel transport around a small loop rotates vectors (Holonomy), and a local, forward-looking map must preserve this holonomy, which forces it to be a projection. Conjecture: the curvature of the preference space is related to the 'polarization' of the electorate: when preferences are polarized (bimodal), the curvature is positive (sphere-like), and Arrow's theorem applies. When preferences are unimodal (consensus), the curvature is zero (flat), and majority rule works. Test: compute the curvature of the preference space for synthetic election data and verify the connection to Arrow's theorem. Impact: Arrow's impossibility is a theorem of differential geometry. Voting is curved.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -1.0,
       "domains": [
         "Novelty",
         "Algebra"
@@ -3607,7 +3607,7 @@
       "depth_estimate": 3,
       "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Novelty",
         "Logic"
@@ -3948,7 +3948,7 @@
       "depth_estimate": 3,
       "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.6,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Novelty",
         "Algebra"
@@ -4035,19 +4035,19 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 2,
       "catalog_references": [],
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "4b4f0c24",
       "depth_estimate": 3,
       "description": "Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciousness can have a zombie twin that is functionally identical but experientially void. Show this gap is isomorphic to Gödel's incompleteness gap.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Novelty",
         "Logic"
       ],
       "id": "fd_0130",
-      "last_attempt_time": "2026-06-05T06:51:27.762408+00:00",
+      "last_attempt_time": "2026-06-09T02:10:31.017178+00:00",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "priority_score": 0.84,
@@ -4058,7 +4058,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "timestamp": "2026-06-01T12:30:31.042804+00:00",
       "title": "Zombies and Qualia: Mathematics of Subjective Experience"
     },
@@ -12652,19 +12652,19 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "7ab762ac",
       "depth_estimate": 3,
       "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.6,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Logic",
         "Computation"
       ],
       "id": "fd_0408",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-09T02:09:49.248104+00:00",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "priority_score": 0.92,
@@ -12675,7 +12675,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "available",
+      "status": "in_progress",
       "timestamp": "2026-06-03T19:55:25.938639+00:00",
       "title": "Certified Novelty Detection for Theorem Provers"
     },
@@ -17399,7 +17399,7 @@
       "depth_estimate": 3,
       "description": "Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time can be simulated by a polynomial-time Turing machine (Extended Church-Turing thesis). Show that if P = NP, then the second law of thermodynamics would be violated because Maxwell's demon could be implemented efficiently.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Novelty",
         "Physics"
@@ -31596,7 +31596,7 @@
       "depth_estimate": 3,
       "description": "Conjecture: For natural families of randomly generated first-order axiom systems with bounded symbol complexity and a fixed theorem schema φ_n, there exists a nontrivial critical clause-density parameter c* such that the probability that φ_n has a proof of length polynomial in n exhibits a sharp threshold at c* as n → ∞. Test: Define an ensemble of random formal theories (for example, random Horn, equational, or bounded-quantifier axiom sets), fix theorem families φ_n, and empirically/theoretically measure whether short-provability transitions from asymptotically unlikely to asymptotically likely within a vanishing-width window around some c*. The conjecture is refuted if no sharp threshold appears across robust ensembles or if the transition width remains extensive. Impact: Establishes a statistical-mechanics theory of provability, giving predictive tools for theorem-prover difficulty, phase diagrams for automated reasoning, and new links between proof complexity, random structures, and computational hardness.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Logic",
         "Novelty"
@@ -31658,7 +31658,7 @@
       "depth_estimate": 3,
       "description": "Conjecture: For a neural network loss landscape equipped with the Fisher information metric, the genus-zero Gromov-Witten invariants of the resulting symplectic manifold exactly count the number of distinct gradient-flow basins accessible by random initialization, and these invariants can be computed via mirror symmetry from a Landau-Ginzburg model dual to the dataset distribution. Test: Construct a family of small-scale fully connected networks (≤100 parameters) with controlled symmetries; compute the quantum cohomology and extract genus-zero GW invariants using symbolic methods (e.g., Givental's mirror theorem). Independently, perform >10,000 random-initialization gradient descents and cluster convergent points to count basins. A statistically significant match between the algebraic count and the empirical basin count confirms the conjecture; a systematic mismatch falsifies it. Impact: Transforms non-convex optimization into a problem in enumerative symplectic geometry; allows pre-training prediction of the number and nature of global minima from dataset topology alone; opens a bridge between mirror symmetry and machine learning theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.6,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Novelty",
         "MachineLearning"
@@ -32241,19 +32241,19 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "cacadc35",
       "depth_estimate": 3,
       "description": "Conjecture: For sufficiently large formalized mathematics corpora, the normalized local eigenvalue spacing distribution of the directed proof-dependency graph Laplacian (or symmetrized adjacency operator) converges, after degree-corrected null-model normalization, to a universal random-matrix ensemble law (GOE/GUE-like) within mature theorem domains, while genuinely novel or foundationally incomplete domains exhibit statistically significant deviations from that law. Test: Build proof graphs from large theorem libraries (e.g. Lean, Coq, Isabelle), compute spectra of dependency operators on domain-specific subgraphs, compare unfolded spacing statistics and eigenvector localization against random-matrix and null-model predictions, and check whether newly developing areas systematically show out-of-universality deviations that later disappear as the area matures. The conjecture is refuted if no cross-library universality appears, or if deviations fail to correlate with independent measures of mathematical novelty or incompleteness. Impact: This would create a quantitative physics-style order parameter for the maturity, coherence, and frontier status of mathematical theories, enabling automated discovery of under-axiomatized regions, prediction of fruitful theorem-generation targets, and a new bridge between random matrix theory, knowledge representation, and automated reasoning.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.15,
+      "domain_quality_penalty": -0.3,
       "domains": [
         "Physics",
         "Novelty"
       ],
       "id": "fd_1040",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-09T02:10:13.320123+00:00",
       "lineage_refs": [],
       "outcome_quality": 0.0,
       "priority_score": 0.7,
@@ -32264,7 +32264,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "available",
+      "status": "in_progress",
       "timestamp": "2026-06-09T00:45:11.727663+00:00",
       "title": "Spectral Universality of Theorem Spaces: Random-Matrix Statistics in Formal Proo"
     },
@@ -32484,6 +32484,98 @@
       "status": "available",
       "timestamp": "2026-06-09T01:44:43.810186+00:00",
       "title": "**Conjecture:** If `{f_t}_{t ∈ [0,1]}` is a continuous family of contracting cau"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "# Future Directions: Model Theory–Algebra Bridge\n\nThis document describes five research conjectures extending the\nAx-Kochen–Morley bridge formalized in `Bridges/AxKochenMorleyBridge.lean`.\n\n---\n\n## 1. Full Morley Categoricity Theorem\n\n**Conjecture.** If `L` is a countable first-order language and `T` is a\ncomplete `L`-theory that is categorical in some uncountable cardinal\n`κ ≥ ℵ₁`, then `T` is categorical in every uncountable cardinal.\n\nThe key insight is that categoricity at one uncountable cardinal forces\nthe theory to have no Vaughtian pairs, which in turn forces every model\nto be \"geometrically controlled\" by a strongly minimal set. The proof\npasses through the Baldwin–Lachlan characterization: a countable complete\ntheory is uncountably categorical iff it has no Vaughtian pairs and every\nmodel is prime over a strongly minimal set.\n\n**Why now?** Mathlib already has `Cardinal.Categorical`, `IsComplete`,\nand `ElementarilyEquivalent`. Our bridge file proves that categoricity\nimplies elementary equivalence via completeness — the first link in the\nMorley chain. The next step is formalizing strongly minimal sets and\nVaughtian pairs. The statement is already present (with sorry) as\n`morley_categoricity_statement` in the bridge file.\n\n---\n\n## 2. Ax-Kochen Transfer Principle for p-adic Fields\n\n**Conjecture.** For all but finitely many primes `p`, the p-adic field\n`ℚ_p` is elementarily equivalent to the Laurent series field `𝔽_p((t))`.\nMore precisely, if `v₁ : ValuedField K₁` and `v₂ : ValuedField K₂` are\nhenselian valued fields of equicharacteristic zero with elementarily\nequivalent residue fields and value groups, then `K₁` and `K₂` are\nelementarily equivalent.\n\nThe key insight is that Ax-Kochen-Ershov reduces the model theory of\nhenselian valued fields to the model theory of their residue fields and\nvalue groups, which are much simpler objects. For equicharacteristic zero,\nthe transfer is unconditional; for mixed characteristic, it holds for\nall sufficiently large residue characteristics.\n\n**Why now?** Mathlib has `HenselianLocalRing`, `ValuationSubring`, and\nwe proved `root_unique_of_simple` establishing the uniqueness complement\nto Hensel's lemma. The valued field language needs to be defined as a\n`FirstOrder.Language` extending the ring language, which is a concrete\nnext step given Mathlib's `FirstOrder.Language.Theory.field`.\n\n---\n\n## 3. Henselian Lifting for Multivariate Systems\n\n**Conjecture.** Let `R` be a henselian local ring with maximal ideal `m`,\nand let `f₁, …, fₙ ∈ R[X₁, …, Xₙ]`. If `a₀ = (a₀₁, …, a₀ₙ) ∈ Rⁿ`\nsatisfies `fᵢ(a₀) ∈ m` for all `i` and `det(∂fᵢ/∂Xⱼ)(a₀)` is a unit\nin `R`, then there exists a unique `a ∈ Rⁿ` with `fᵢ(a) = 0` and\n`a - a₀ ∈ mⁿ`.\n\nThe key insight is that the univariate case (our `root_unique_of_simple`)\nextends to multivariate systems via the Newton–Raphson iteration in the\nm-adic topology. The Jacobian determinant condition replaces the\nderivative unit condition, and the contraction mapping principle in the\nm-adic complete case gives both existence and uniqueness.\n\n**Why now?** Our theorem `root_unique_of_simple` provides the univariate\nuniqueness foundation. Mathlib has `MvPolynomial` and `Matrix.det`.\nThe multivariate generalization connects to deformation theory and\nsmooth morphisms in algebraic geometry.\n\n---\n\n## 4. Completeness of ACF via Categoricity\n\n**Conjecture.** The theory ACF_p (algebraically closed fields of\ncharacteristic p, for p = 0 or p prime) is complete. This follows from\nthe Łoś–Vaught test: ACF_p is categorical in every uncountable cardinal\n(by the transcendence degree classification), has only infinite models,\nand the language is countable.\n\nThe key insight is that our `Categorical.models_elementarilyEquivalent`\ntheorem, combined with Mathlib's existing `FirstOrder.Language.Theory.ACF`,\nprovides a direct path to proving completeness of ACF. The categoricity\nof ACF in uncountable cardinals follows from the fact that algebraically\nclosed fields of the same characteristic and transcendence degree are\nisomorphic.\n\n**Why now?** Mathlib defines `Theory.ACF` and has extensive infrastructure\nfor algebraically closed fields (`IsAlgClosed`). Our bridge theorem\nreduces completeness to categoricity. The missing piece is formally\nestablishing uncountable categoricity of ACF, which requires connecting\n`IsAlgClosed` with the first-order `Theory.ACF` and proving the\ntranscendence degree classification.\n\n---\n\n## 5. Elementary Equivalence and Ultraproducts\n\n**Conjecture.** Two structures `M` and `N` are elementarily equivalent if\nand only if there exists an ultrafilter `U` on some index set `I` such\nthat the ultrapower `M^I/U` is isomorphic to `N^I/U`.\n\nThe key insight is that Keisler's theorem provides a semantic\ncharacterization of elementary equivalence via ultrapowers, giving a\n\"geometric\" proof technique for showing elementary equivalence without\nchecking every sentence. This is the model-theoretic analogue of the\nYoneda lemma: structures are determined by their relationship to\nultraproducts.\n\n**Why now?** Mathlib has `Filter.Ultrafilter` and product types.\nDefining ultraproducts as quotients of product structures by an\nultrafilter equivalence relation is a natural formalization target.\nCombined with our bridge theorems connecting elementary equivalence\nto completeness and categoricity, this would provide a complete\ntoolkit for model-theoretic transfer arguments.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_1048",
+      "last_attempt_time": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2ca83739",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/2ca83739",
+      "status": "available",
+      "timestamp": "2026-06-09T02:08:02.881883+00:00",
+      "title": "This document describes five research conjectures extending the"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "# Future Directions: Prime Resonance Spectroscopy\n\n## 1. Spectral Form Factor Convergence for Prime-Encoded Graphs\n\nThe spectral form factor K(τ) = |∑_p exp(2πiτp)|² / N², summed over primes p ≤ N, should exhibit a transition from Poisson statistics (K(τ) → 1) at short correlation scales to a structured non-universal regime at scales comparable to the average prime gap. The key insight is that the Hardy-Littlewood conjecture on prime pair correlations implies K(τ) has a specific non-random correction term involving the singular series, which can be formalized as a deviation from the GUE form factor. Why now? Our `resonance_decomposition` theorem provides the formal infrastructure to separate diagonal from off-diagonal contributions, and the `spectral_rigidity_eq_iff` characterization gives a precise criterion for when the form factor matches the equidistributed (arithmetic progression) baseline.\n\n**Testable conjecture**: For N primes, define K_N(τ) = (1/π(N)²) · resonanceSum(primesUpTo N, exp(2πiτ·)). Then K_N(1/log N) - 1 converges to the Hardy-Littlewood constant C₂ as N → ∞. This can be verified computationally for N up to 10⁸ and formalized using the existing resonanceSum framework.\n\n## 2. Gap Moment Hierarchy and Spectral Universality Breaking\n\nThe k-th spectral moment M_k(N) = ∑_{i<π(N)-1} (p_{i+1} - p_i)^k of prime gaps encodes increasingly fine-grained arithmetic structure. For random (Poisson) spectra, M_k grows as k! · (mean gap)^k, but for primes the growth rate should be strictly slower due to the Cramér-Granville conjecture bounding maximal gaps. The key insight is that our spectral rigidity bound n·M₂ ≥ M₁² is the k=2 case of a hierarchy of moment inequalities, and the *ratio* M_k / M₁^k for primes should converge to a value strictly between the Poisson prediction and the rigid (arithmetic progression) prediction, creating a \"spectral fingerprint\" unique to primes. Why now? The `spectral_rigidity_bound` and `spectral_rigidity_eq_iff` formalized in this cycle provide the base case; extending to k > 2 requires formalizing higher-order Cauchy-Schwarz inequalities (power mean inequalities) which are available in Mathlib.\n\n**Testable conjecture**: M₃(N) / M₁(N)³ → c₃ where c₃ is a computable constant strictly between 1/(π(N)-1)² (rigid bound) and 6 (Poisson prediction). Compute c₃ for N up to 10⁸.\n\n## 3. Resonance Symmetry and Twin Prime Detection\n\nDefine the \"twin resonance\" R₂(N) = offDiagResonance(primesUpTo N, δ₂) where δ₂(x) = 1 if |x| = 2, else 0. Then R₂(N) counts twin prime pairs up to N. The key insight is that the resonance decomposition theorem separates the twin prime counting problem into a spectral measurement problem: R₂(N) = resonanceSum - N·δ₂(0) - (non-twin off-diagonal), and the growth rate of R₂(N) relative to N/log²N is exactly the content of the Hardy-Littlewood twin prime conjecture. Why now? The `resonance_decomposition` and `resonance_decomposition_weighted` theorems provide the formal decomposition framework, and formalizing the conjecture as a precise asymptotic statement about `offDiagResonance` with a specific test function would create the first Lean formalization connecting spectral pair correlations to the twin prime conjecture.\n\n**Testable conjecture**: R₂(N) = 2C₂ · N/log²N · (1 + o(1)) where C₂ is the twin prime constant. This is equivalent to Hardy-Littlewood but stated in resonance-spectroscopic language.\n\n## 4. Spectral Rigidity Gap for Siegel Zeros\n\nIf Siegel zeros exist (i.e., L(s, χ) has a real zero very close to s = 1 for some Dirichlet character χ), then the prime distribution in arithmetic progressions mod q exhibits anomalous clustering. The key insight is that this clustering would manifest as a violation of the spectral rigidity bound *restricted to primes in a single residue class*: specifically, for primes p ≡ a (mod q), the ratio n·M₂/M₁² would approach 1 (perfect rigidity / arithmetic progression behavior) much faster than for the full prime sequence, because the Siegel zero forces primes into near-arithmetic-progression patterns within that residue class. Why now? The `spectral_rigidity_eq_iff` theorem provides the exact characterization of when rigidity equality holds (constant gaps = arithmetic progression), so detecting near-equality in residue-restricted prime spectra becomes a formalized diagnostic for Siegel zeros.\n\n**Testable conjecture**: For the primes p ≡ 1 (mod 4) up to N, compute the rigidity ratio R(N) = M₁²/(n·M₂). If R(N) → 1 faster than O(1/log N), this signals anomalous regularity consistent with a Siegel zero for χ₄.\n\n## 5. Quantum Graph Trace Formula and Prime Orbit Correspondence\n\nFor a quantum graph with edge lengths ℓ₁, ..., ℓ_E, the trace of the resolvent has poles (resonances) determined by a secular equation involving products exp(ikℓⱼ). When edge lengths are consecutive primes, the trace formula becomes a sum over periodic orbits whose lengths are integer combinations of primes. The key insight is that the gap telescoping identity `gap_telescope` applied to the prime sequence gives ∑(p_{i+1} - p_i) = p_n - 2, which means the *total* orbit-length contribution is controlled by boundary data (the largest prime), but the *distribution* of orbit lengths encodes the full prime gap structure — exactly the content of the off-diagonal resonance. Why now? Formalizing the secular equation det(I - S·D(k)) = 0 for quantum graphs (where S is the scattering matrix and D(k) = diag(exp(ikℓⱼ))) is feasible in Lean using Mathlib's matrix determinant theory, and connecting it to our resonanceSum via the trace formula would create the first formal bridge between quantum graph spectroscopy and prime arithmetic.\n\n**Testable conjecture**: For a star graph with n edges of prime lengths p₁, ..., pₙ, the resonance counting function N(R) = #{resonances with |k| < R} satisfies N(R) = (R/π)·∑pᵢ + O(R^{1-δ}) where δ > 0 depends on the prime gap variance M₂/M₁².\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_1049",
+      "last_attempt_time": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "8eba50e4",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/8eba50e4",
+      "status": "available",
+      "timestamp": "2026-06-09T02:08:50.992537+00:00",
+      "title": "The spectral form factor K(τ) = |∑_p exp(2πiτp)|² / N², summed over primes p ≤ N"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Conjecture: For any sufficiently expressive formal system F and natural random ensemble E_n of true statements of size n, there exists a critical resource density parameter rho_c (measuring available axioms, lemmas, or search-budget per symbol) such that the probability an automated prover finds a proof within bounded time undergoes a sharp threshold at rho_c, analogous to SAT phase transitions; moreover, near rho_c the proof-search graph exhibits universal scaling exponents independent of the prover architecture. Test: Construct benchmark ensembles of parametrized true statements across domains (e.g. random bounded-depth combinatorial identities, finite-group facts, graph properties with certificates), vary rho = resources/n, and measure solve probability, runtime susceptibility, proof-graph component statistics, and finite-size scaling across distinct provers; confirmation requires reproducible sharp thresholds and shared critical exponents, while broad smooth behavior or prover-specific non-universal scaling refutes the conjecture. Impact: Establishes a statistical-mechanics theory of theorem proving, predicts when additional lemmas or compute produce dramatic gains, guides curriculum and benchmark design for theorem-proving AI, and could reveal new complexity invariants of mathematical theories based on their critical proof structure.",
+      "domain_bridges": [],
+      "domain_quality_penalty": -0.15,
+      "domains": [
+        "Novelty"
+      ],
+      "id": "fd_1050",
+      "last_attempt_time": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.7,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "pi_brainstorm",
+      "source_path": "brainstorm",
+      "status": "available",
+      "timestamp": "2026-06-09T02:09:12.483373+00:00",
+      "title": "Proof Phase Transitions: Sharp Thresholds in Automated Theorem Discovery"
     },
     {
       "ambition_level": "extension",
@@ -34656,7 +34748,7 @@
       "depth_estimate": 3,
       "description": "Formalize the consistency strength hierarchy: inaccessible < Mahlo < measurable < strong < supercompact < huge. Prove strictness results.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Logic",
         "Novelty"

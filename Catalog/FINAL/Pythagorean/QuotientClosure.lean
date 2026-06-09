@@ -1,0 +1,1 @@
+../../Pythagorean/QuotientClosure.lean

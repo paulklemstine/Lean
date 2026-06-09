@@ -1,1 +1,0 @@
-../../Bridges/Speculative/NonWellFoundedProofs/Core.lean
