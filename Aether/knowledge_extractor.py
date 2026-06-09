@@ -1939,13 +1939,13 @@ Research mode: {concept.research_mode}
             return "REJECT"
 
         if suffix == ".lean" and part.get("type") == "new":
-            has_sorry = self._lean_contains_sorry(part.get("content", ""))
-            # Reject sorry-dense trivial files (>50% sorry, <3 theorems)
             content = part.get("content", "")
+            has_sorry = self._lean_contains_sorry(content)
+            # Reject sorry-dense trivial files (>50% sorry, <3 theorems)
             theorem_count = content.count("theorem ") + content.count("lemma ")
             sorry_count = content.count("sorry")
+            lines = content.count("\n") + 1
             if has_sorry and sorry_count > 0:
-                lines = content.count("\n") + 1
                 sorry_density = sorry_count / max(1, lines)
                 if sorry_density > 0.5 and theorem_count < 3:
                     print(f"[Integrate] Rejecting sorry-dense trivial file: {target_path} "
