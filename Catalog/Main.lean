@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2924 of the highest-quality
+A curated collection of 2900 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2924
+Total files: 2900
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -433,19 +433,15 @@ import FINAL.Bridges.ClosureRenormalizationDuality
 import FINAL.Bridges.ClosureScaleDuality
 import FINAL.Bridges.ClosureSecretSharingDuality
 import FINAL.Bridges.ClosureSemimodule
-import FINAL.Bridges.ClosureSheafCodeDuality
 import FINAL.Bridges.ClosureSheafLearningDuality
 import FINAL.Bridges.ClosureStoneSpectrumDuality
 import FINAL.Bridges.ClosureTemporalRealization
 import FINAL.Bridges.ClosureThermodynamicComputationDuality
 import FINAL.Bridges.ClosureVoronoiDuality
 import FINAL.Bridges.CoalgebraicNeuralMyhillNerode
-import FINAL.Bridges.CodingTheoryBridge
 import FINAL.Bridges.CoeffExtraction
 import FINAL.Bridges.CollatzUndecidability
-import FINAL.Bridges.CommitmentProtocol
 import FINAL.Bridges.Completeness
-import FINAL.Bridges.ComposableTransfer
 import FINAL.Bridges.CompositionalMusicSpec
 import FINAL.Bridges.CompressionMonad
 import FINAL.Bridges.CondensationSemantics
@@ -501,7 +497,6 @@ import FINAL.Bridges.FiniteInfoTheory_RateDistortion
 import FINAL.Bridges.FiniteRateDistortion_Core
 import FINAL.Bridges.FiniteRiesz
 import FINAL.Bridges.FiniteSizeSusceptibility
-import FINAL.Bridges.FiniteTransferCore
 import FINAL.Bridges.FiveFrontiers
 import FINAL.Bridges.FootprintHelpers
 import FINAL.Bridges.ForcingPatterns
@@ -577,7 +572,6 @@ import FINAL.Bridges.InformationGeometryOptimization
 import FINAL.Bridges.Instances
 import FINAL.Bridges.InvariantProduct
 import FINAL.Bridges.InvertedTreeAdvanced
-import FINAL.Bridges.IrreducibleTransfer
 import FINAL.Bridges.IteratedShadowGeometry
 import FINAL.Bridges.JigsawNPComplete
 import FINAL.Bridges.KTheoryNeuralAdvanced
@@ -663,7 +657,6 @@ import FINAL.Bridges.NonGroupComparison
 import FINAL.Bridges.NonlinearSpectralStability
 import FINAL.Bridges.Numerology
 import FINAL.Bridges.ObserverRateDistortion
-import FINAL.Bridges.OperadAlgebraCode
 import FINAL.Bridges.OperadicNeuralProofSemiring
 import FINAL.Bridges.OperadicRealizationDuality
 import FINAL.Bridges.OperadicSemiringSemantics
@@ -742,7 +735,6 @@ import FINAL.Bridges.QuantumTropicalUnification
 import FINAL.Bridges.QuotientOrbitCompression_Core
 import FINAL.Bridges.RGArchitectureDynamics
 import FINAL.Bridges.RandomTransversalThermodynamics
-import FINAL.Bridges.RateDistortion
 import FINAL.Bridges.RecursiveCriticalPairSaturation
 import FINAL.Bridges.ReedMuller_Defs
 import FINAL.Bridges.ReedSolomonKeyEquation_Basic
@@ -751,7 +743,6 @@ import FINAL.Bridges.RenormalizationUniversality
 import FINAL.Bridges.Representation
 import FINAL.Bridges.ResNetTropicalCertified
 import FINAL.Bridges.ResidualRobustness
-import FINAL.Bridges.RetrocausalLogic
 import FINAL.Bridges.ReversibleFixedPointDuality
 import FINAL.Bridges.RigidFoldability
 import FINAL.Bridges.Rigidity
@@ -1021,7 +1012,6 @@ import FINAL.Bridges.WeightedVariance
 import FINAL.Bridges.WreathONanScott
 import FINAL.Bridges.WreathPressure
 import FINAL.Bridges.ZeroKnowledgeProofs
-import FINAL.Bridges.algebra_physics_bridge_theorem
 import FINAL.Computation.AffineDistortionComplexity
 import FINAL.Computation.Algebra
 import FINAL.Computation.AlgorithmicCertificate
@@ -1032,7 +1022,6 @@ import FINAL.Computation.BarrierFramework
 import FINAL.Computation.Basic
 import FINAL.Computation.Bifurcation
 import FINAL.Computation.BinarySearch
-import FINAL.Computation.BranchingPrograms
 import FINAL.Computation.CA_Universality
 import FINAL.Computation.CSPPhaseTransition
 import FINAL.Computation.CellularAlgebraicGeometry
@@ -1113,8 +1102,6 @@ import FINAL.Computation.RectStillLife
 import FINAL.Computation.ResearchQuestions
 import FINAL.Computation.Resolution
 import FINAL.Computation.ReversibleSortingBennett
-import FINAL.Computation.ReversibleTropicalMachine
-import FINAL.Computation.ReversibleTropicalThermodynamics
 import FINAL.Computation.SearchInfoIsomorphism
 import FINAL.Computation.SearchTheory
 import FINAL.Computation.SelfModifyingHalt
@@ -1205,7 +1192,6 @@ import FINAL.Cryptography.GeometricCryptanalysis
 import FINAL.Cryptography.GodelCasinoEpistemic
 import FINAL.Cryptography.GroupLaw
 import FINAL.Cryptography.HTLCLightning
-import FINAL.Cryptography.HammingSubstitutionAlgebra
 import FINAL.Cryptography.HardnessHierarchy
 import FINAL.Cryptography.HybridTelescope
 import FINAL.Cryptography.HyperbolicArithmetic_Core
@@ -2618,7 +2604,6 @@ import FINAL.Tropical.ArithmeticUniversality_Defs
 import FINAL.Tropical.ArithmeticUniversality_TropicalMorse
 import FINAL.Tropical.Asymptotic
 import FINAL.Tropical.AutomorphicBuildings
-import FINAL.Tropical.BPCircuitSimulation
 import FINAL.Tropical.BalancedConsciousness
 import FINAL.Tropical.Basic
 import FINAL.Tropical.BatchCertification_Core
@@ -2634,7 +2619,6 @@ import FINAL.Tropical.Bridges
 import FINAL.Tropical.BrillNoether_Core
 import FINAL.Tropical.BrillNoether_Defs
 import FINAL.Tropical.CA_Defs
-import FINAL.Tropical.CPASecurity
 import FINAL.Tropical.CategoricalSurprise
 import FINAL.Tropical.CertifiedCanonicalization
 import FINAL.Tropical.CertifiedNormalForm
@@ -2651,7 +2635,6 @@ import FINAL.Tropical.CompositionalBound
 import FINAL.Tropical.ComputationalHybrid
 import FINAL.Tropical.ContinuousComparison
 import FINAL.Tropical.Convexity
-import FINAL.Tropical.Convexity_Basic
 import FINAL.Tropical.Core
 import FINAL.Tropical.Corollaries
 import FINAL.Tropical.CriticalCurves
@@ -2663,7 +2646,6 @@ import FINAL.Tropical.Derandomization
 import FINAL.Tropical.DescriptiveComplexity_Basic
 import FINAL.Tropical.DiffConstraints
 import FINAL.Tropical.DivisorTheory
-import FINAL.Tropical.DragonTropical
 import FINAL.Tropical.DualTropicalCertificate_Basic
 import FINAL.Tropical.Duality
 import FINAL.Tropical.E8LatticeSurgery
@@ -2711,7 +2693,6 @@ import FINAL.Tropical.HodgeCorrespondence
 import FINAL.Tropical.HodgeDecomposition_Defs
 import FINAL.Tropical.HodgeTheory_Foundations
 import FINAL.Tropical.HorizonStability
-import FINAL.Tropical.HybridArgument
 import FINAL.Tropical.Hyperbolicity
 import FINAL.Tropical.HyperplaneDistance
 import FINAL.Tropical.IdempotentSemiring_Defs
@@ -2767,7 +2748,6 @@ import FINAL.Tropical.OmegaMetaOracle
 import FINAL.Tropical.OneWayFunctions_Theorems
 import FINAL.Tropical.OneWayness_Core
 import FINAL.Tropical.OrbitComplexity
-import FINAL.Tropical.OrbitPRG
 import FINAL.Tropical.OrbitPrefixFiber
 import FINAL.Tropical.PAdicTropical
 import FINAL.Tropical.PRGSecurity
@@ -2789,7 +2769,6 @@ import FINAL.Tropical.ProbabilisticBridge_Theorems
 import FINAL.Tropical.ProbabilisticMethod_ErdosMeetsLean
 import FINAL.Tropical.Product
 import FINAL.Tropical.ProductAutomaton
-import FINAL.Tropical.QaryDataProcessing
 import FINAL.Tropical.QarySourceCoding
 import FINAL.Tropical.QuantumLLMCompilation
 import FINAL.Tropical.QuantumTropical
@@ -2869,7 +2848,6 @@ import FINAL.Tropical.TropicalFutureDirections
 import FINAL.Tropical.TropicalGameEquilibria
 import FINAL.Tropical.TropicalHypergraphCounterpoint
 import FINAL.Tropical.TropicalInformationRichness
-import FINAL.Tropical.TropicalLLMConversion
 import FINAL.Tropical.TropicalLanglandsGL1
 import FINAL.Tropical.TropicalMatrixCertificate
 import FINAL.Tropical.TropicalMatrixIteration
@@ -2904,7 +2882,6 @@ import FINAL.Tropical.TropicalVerticalComposition
 import FINAL.Tropical.Tropical_Certified_Robustness_for_Multi_Class_ReLU_Networks
 import FINAL.Tropical.Tropical_Certified_Robustness_for_Residual_Neural_Networks_with_Skip_Connections
 import FINAL.Tropical.Tropical_Feynman_Calculus_via_Maslov_Dequantization_of_the_SPB_Classical_Action
-import FINAL.Tropical.Tropical_Hecke_Trace_Formula_for_GL₂
 import FINAL.Tropical.TuringMorphogenesis
 import FINAL.Tropical.Undecidability_Defs
 import FINAL.Tropical.Union
@@ -2916,7 +2893,6 @@ import FINAL.Tropical.ValuationProfileUniversality
 import FINAL.Tropical.VoiceLeading
 import FINAL.Tropical.WallpaperRhythm
 import FINAL.Tropical.Wasserstein
-import FINAL.Tropical.WeightedBPSimulation
 import FINAL.Tropical.WeightedMSO_Algebra
 import FINAL.Tropical.WeightedTraceSemantics
 import FINAL.Tropical.WeightedTreeClosure
