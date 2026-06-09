@@ -200,6 +200,9 @@ def _print_quality_metrics(extractor: "KnowledgeExtractor") -> None:
         print("\n".join(lines))
     except Exception as e:
         print(f"[Quality] Metrics error (non-fatal): {e}")
+
+
+def _signal_dashboard_update(job_id: str = "", action: str = "update") -> None:
     """Write a lightweight last_update.json so the live dashboard polls refresh."""
     try:
         import json as _json
