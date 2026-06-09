@@ -1033,8 +1033,10 @@ Research mode: {concept.research_mode}
                     # Retry once: Aristotle sometimes reports has_files=True
                     # but the download fails on first try
                     print(f"[Extract] First download attempt failed for {job.project_id[:8]}, retrying...")
-                    await asyncio.sleep(5)
-                    tar_path = await self.aristotle.download_result(job.project_id, Path(tmpdir))
+                    time.sleep(5)
+                    tar_path = asyncio.get_event_loop().run_until_complete(
+                        self.aristotle.download_result(job.project_id, Path(tmpdir))
+                    )
                 if tar_path and tar_path.name in ("__AUTH_ERROR__", "__SERVER_ERROR__", "__NOT_FOUND__"):
                     reasons = {"__AUTH_ERROR__": "authentication error (403/401)",
                                "__SERVER_ERROR__": "server error (500) — project may have been garbage-collected",
