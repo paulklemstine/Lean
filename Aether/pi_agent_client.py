@@ -2065,17 +2065,22 @@ class PiAgentClient:
             -- !-- End Lab Notebook -- !--
             ```
 
-            **6b. FUTURE_DIRECTIONS.md** (structured, not freeform):
+            **6b. FUTURE_DIRECTIONS.md** (MANDATORY — your output WILL BE REJECTED if missing):
 
-            Required structure:
+            You MUST produce a FUTURE_DIRECTIONS.md file with this EXACT structure.
+            Copy the section headers below verbatim. Do NOT use freeform prose.
 
             ## Synthesis
+
             [2-3 paragraphs: what did this cycle discover? What failed and why? What
             structural insight emerged? Tie the directions together into a narrative.]
 
             ## Results Summary
-            [For each theorem: name, status (proved/conjecture/disproved), one-sentence
-            significance. This is the lab notebook summary -- be precise.]
+
+            [For EACH theorem: name, status (proved/conjecture/disproved), one-sentence
+            significance. Format as a bullet list:]
+
+            - `theoremName`: status — one-sentence significance
 
             ## Research Directions
 
@@ -2087,6 +2092,10 @@ class PiAgentClient:
             **If false**: What the failure teaches us.
 
             [Repeat for 3-5 directions]
+
+            IMPORTANT: The ## Synthesis and ## Results Summary sections are NOT optional.
+            If your FUTURE_DIRECTIONS.md is missing either section, it will be treated as
+            incomplete and the next research team will have no context to build on your work.
 
             ### STEP 7: Generalization loop
 

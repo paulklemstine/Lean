@@ -1518,19 +1518,28 @@ Research mode: {concept.research_mode}
 
         # v8 output quality metrics: track research team protocol compliance
         if getattr(job, 'phase_a_prompt_version', '') == 'v8' and job.result_lean:
+            import re as _re
             lean_content = job.result_lean
             lab_notebook_count = lean_content.count("Lab Notebook")
             hypothesis_count = lean_content.lower().count("hypothesis")
-            disproved_count = lean_content.lower().count("disproved")
-            has_synthesis = "## Synthesis" in lean_content or "Synthesis" in lean_content
-            has_results_summary = "Results Summary" in lean_content
-            has_if_true = "**If true**" in lean_content or "If true" in lean_content
+            # Track disproved theorems: count theorem declarations with status disproved
+            disproved_pattern = _re.compile(r'status.*disproved|disproved.*status', _re.IGNORECASE)
+            disproved_theorem_count = len(disproved_pattern.findall(lean_content))
+            disproved_keyword_count = lean_content.lower().count("disproved")
+            has_synthesis = "## Synthesis" in lean_content
+            has_results_summary = "Results Summary" in lean_content or "## Results Summary" in lean_content
+            has_if_true = "**If true**" in lean_content or "**If false**" in lean_content
             critic_present = lean_content.lower().count("critic") + lean_content.lower().count("critique")
+            # Count Lab Notebook detail fields
+            ln_insight = lean_content.count("Insight:")
+            ln_failure = lean_content.count("Failure analysis:")
             print(f"[v8 Metrics] Lab_Notebooks={lab_notebook_count} hypotheses={hypothesis_count} "
-                  f"disproved={disproved_count} Synthesis={'Y' if has_synthesis else 'N'} "
+                  f"disproved_theorems={disproved_theorem_count} disproved_keywords={disproved_keyword_count} "
+                  f"Synthesis={'Y' if has_synthesis else 'N'} "
                   f"Results_Summary={'Y' if has_results_summary else 'N'} "
                   f"If_true={'Y' if has_if_true else 'N'} "
-                  f"Critic_refs={critic_present}")
+                  f"Critic_refs={critic_present} "
+                  f"LN_Insights={ln_insight} LN_Failures={ln_failure}")
 
         # Persist evaluation results to inflight_jobs
         if job.project_id and job.project_id in self.inflight:
