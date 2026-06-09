@@ -5,7 +5,7 @@
   "authors": [
     "Harmonic"
   ],
-  "date": "2026-06-09T15:01:08Z",
+  "date": "2026-06-09T15:03:34Z",
   "key_results": [
     "The EML potential f(x) = exp(x) - ln(x) - 1 satisfies f(x) ≥ 1 for all x > 0 (universal lower bound)",
     "f is strictly convex on (0, ∞), with second derivative exp(x) + 1/x²",
