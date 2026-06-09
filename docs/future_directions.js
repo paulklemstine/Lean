@@ -781,7 +781,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Willmore Conjecture Generalizations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "71663589",
     "description": "Prove Chouldechova's impossibility theorem: when base rates differ across groups, equalized odds and equal calibration cannot both hold. Formalize the tension between individual fairness (similar individuals treated similarly) and group fairness (equal outcomes across groups).",
     "domains": [
       "Computation",
@@ -791,7 +791,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:21.031233+00:00",
     "title": "Algorithmic Fairness: Individual vs Group Fairness Impossibility"
   },
@@ -1996,7 +1996,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The next step in the large cardinal hierarchy after Mahlo is the measurable card"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e71824de",
     "description": "# Future Directions: Causal Integration Algebra\n\n## What We Built\n\nThis cycle established the **Causal Integration Algebra** \u2014 a rigorous Lean 4 formalization of Integrated Information Theory (IIT) that identifies \u03a6 with the minimum cut of a weighted directed graph. We proved 8 theorems sorry-free:\n\n- **Nonnegativity** (`phi_nonneg`): \u03a6 \u2265 0 always\n- **Symmetrization invariance** (`crossInfo_symmetrize`, `phi_symmetrize`): directed and symmetrized systems have identical \u03a6\n- **Monotonicity** (`phi_mono_of_weight_le`): increasing edge weights cannot decrease \u03a6\n- **Scaling** (`phi_scale`): \u03a6(cC) = c\u03a6(C) for c \u2265 0\n- **Disconnection** (`phi_zero_of_disconnected`): systems with a zero-cut bipartition have \u03a6 = 0\n- **Upper bound** (`phi_le_totalWeight`): \u03a6 never exceeds total edge weight\n\nThe framework connects IIT to classical graph theory via a clean algebraic interface.\n\n---\n\n### Direction 1: Spectral Lower Bound via Fiedler Value\n\nFor symmetric causal systems, the algebraic connectivity \u03bb\u2082(L) of the graph Laplacian should provide a polynomial-time computable lower bound on \u03a6. The key insight is that the Rayleigh quotient characterization of \u03bb\u2082 directly relates to the minimum bisection problem \u2014 any indicator vector for a bipartition gives a Rayleigh quotient that upper-bounds \u03bb\u2082, and the minimum over all such vectors is precisely \u03a6 (up to normalization). This would import Cheeger-type inequalities into integration theory.\n\n**Conjecture**: \u03bb\u2082(L) \u2264 \u03a6(C) \u2264 n \u00b7 \u03bb\u2082(L) / 4 for symmetric systems on n vertices.\n\n**Why now?** Our `phi_symmetrize` theorem shows that every directed system can be reduced to a symmetric one without changing \u03a6. This means spectral methods (which require symmetric matrices) apply to the full generality of directed causal systems. The Laplacian formalization in Lean would build on our `CausalSystem` structure by extracting the degree matrix and adjacency matrix.\n\n**Test**: Compute both \u03a6 (brute-force) and \u03bb\u2082 (eigenvalue) for all connected weighted graphs on 4\u20135 vertices with integer weights 1\u20133.\n\n---\n\n### Direction 2: Supermodularity of Cross-Information\n\nThe cross-information function may exhibit supermodularity properties on the lattice of bipartitions, which would give tight bounds on \u03a6 via the Lov\u00e1sz extension and submodular optimization.\n\nThe key insight is that cross-information, viewed as a set function on the power set of vertices, should satisfy crossInfo(A\u222aB) + crossInfo(A\u2229B) \u2265 crossInfo(A) + crossInfo(B) for nested pairs \u2014 this is because edges counted in both A and B cuts are counted at least as much in the union/intersection cuts. If true, submodular minimization algorithms (polynomial time) would compute \u03a6 exactly.\n\n**Conjecture**: The function S \u21a6 crossInfo(C, S) is submodular on the lattice of subsets of Fin n.\n\n**Why now?** Our `crossInfo_mono` and `crossInfo_scale` theorems establish that crossInfo behaves well under the two simplest lattice operations (ordering and scaling). Submodularity is the natural next structural property. Lean's `Finset` API has strong support for set operations needed for the proof.\n\n**Test**: Verify the submodularity inequality for all pairs of subsets on graphs with 4\u20135 vertices.\n\n---\n\n### Direction 3: K-Partition Refinement and Integration Spectrum\n\nGeneralizing from bipartitions to k-partitions creates an \"integration spectrum\" \u03a6_k that captures multi-way decomposition. The minimum k-way cut gives richer structural information than the minimum bisection.\n\nThe key insight is that \u03a6\u2082 = \u03a6 (our current definition) is just the first level of a hierarchy. Defining \u03a6_k as the minimum total inter-part flow over all k-partitions, we should have \u03a6\u2082 \u2264 \u03a6\u2083 \u2264 ... \u2264 \u03a6_n, with equality \u03a6_k = \u03a6_n exactly when the system cannot be decomposed into fewer than n parts without losing information. The rate of growth of this spectrum encodes the \"complexity\" of the system's causal structure.\n\n**Conjecture**: For a strongly connected system on n vertices, \u03a6_k is strictly increasing for k = 2, ..., n, and \u03a6_n = totalWeight(C).\n\n**Why now?** Our `phi_le_totalWeight` theorem provides the natural upper bound. The k-partition generalization reuses our `crossInfo` infrastructure with minimal new definitions. This connects to the multiway cut problem in combinatorial optimization.\n\n**Test**: Compute the full spectrum {\u03a6\u2082, ..., \u03a6_n} for random strongly connected systems on n = 4, 5.\n\n---\n\n### Direction 4: Duality Between Integration and Exclusion\n\nThere should be a duality between the minimum cut (integration) and the maximum flow (exclusion) in causal systems, analogous to the max-flow min-cut theorem.\n\nThe key insight is that IIT's \"exclusion postulate\" \u2014 which says only the partition achieving the minimum information partition (MIP) matters \u2014 can be formalized as a dual optimization problem. The max-flow min-cut theorem would then say that the maximum \"coherent information flow\" through the system equals \u03a6. This would give \u03a6 a constructive interpretation: it measures the bottleneck capacity of the system's information processing.\n\n**Conjecture**: For symmetric causal systems, \u03a6(C) equals the maximum concurrent flow value, where each vertex pair (i,j) demands flow equal to w(i,j).\n\n**Why now?** Our framework already identifies \u03a6 with the minimum cut. The max-flow min-cut duality for undirected graphs is well-established in combinatorics, and `phi_symmetrize` lets us reduce to the symmetric case. Formalizing this would import network flow theory into IIT.\n\n**Test**: For small graphs (n = 3, 4), verify that the LP relaxation of the concurrent flow problem has optimal value equal to \u03a6.\n\n---\n\n### Direction 5: Compositional Integration via Direct Sums\n\nWhen two causal systems are composed (direct sum with inter-system edges), how does \u03a6 of the composite relate to \u03a6 of the components? A precise composition formula would solve the \"combination problem\" \u2014 how consciousness of parts relates to consciousness of wholes.\n\nThe key insight is that for the direct sum C\u2081 \u2295 C\u2082 (block-diagonal weight matrix), our `phi_zero_of_disconnected` already shows \u03a6 = 0. But when inter-system edges are added, \u03a6 should grow monotonically (by `phi_mono_of_weight_le`) and satisfy \u03a6(C\u2081 \u2295 C\u2082 + E) \u2265 min(\u03a6(C\u2081), \u03a6(C\u2082), cross(E)) where cross(E) is the minimum cut of the inter-system edges alone.\n\n**Conjecture**: \u03a6(C\u2081 \u2295 C\u2082 + E) = min(\u03a6(C\u2081) + cross\u2081(E), \u03a6(C\u2082) + cross\u2082(E), cross(E)) where cross\u1d62(E) is the contribution of inter-system edges to cuts within component i.\n\n**Why now?** Our monotonicity and disconnection theorems provide the boundary conditions. The formula would follow from analyzing how the minimum cut of the composite system must either (a) separate within C\u2081, (b) separate within C\u2082, or (c) separate between C\u2081 and C\u2082.\n\n**Test**: Construct pairs of small systems (n\u2081 = n\u2082 = 2, 3) with varying inter-system edge weights and verify the formula.\n",
     "domains": [
       "Algebra",
@@ -2006,7 +2006,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "28a68a13",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T09:30:01.983492+00:00",
     "title": "**Causal Integration Algebra** \u2014 a rigorous Lean 4 fo"
   },
@@ -2656,7 +2656,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Idempotent Probability: Large Deviations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fd4292ca",
     "description": "Formalize grokking: prove a delayed generalization theorem for two-layer networks and characterize the phase transition as a saddle-node bifurcation.",
     "domains": [
       "MachineLearning",
@@ -2666,7 +2666,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.560336+00:00",
     "title": "Grokking: Phase Transitions in Learning"
   },
@@ -3133,7 +3133,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Tropical Amoebas and Ronkin Functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2443240b",
     "description": "Cycle 49409cbc (Q=0.423) proved 1773 theorems in Tropical but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that a general tropical curve of genus g has a divisor of degree d and rank r iff the Brill-Noether number \u03c1 = g - (r+1)(g-d+r) \u2265 0. Formalize the connection to classical algebraic geometry.",
     "domains": [
       "Tropical"
@@ -3142,7 +3142,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.47269246691378236,
     "research_mode": "team",
     "source_exp_id": "49409cbc",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T12:10:15.711670+00:00",
     "title": "Close Proofs: Tropical Brill-Noether Theory"
   },
