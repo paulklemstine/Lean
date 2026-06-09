@@ -1,15 +1,8 @@
 /- Aether FINAL Catalog
-<<<<<<< Updated upstream
-A curated collection of 2361 of the highest-quality
+A curated collection of 2354 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2361
-=======
-A curated collection of 2487 of the highest-quality
-formally verified mathematical results from the Aether engine.
-Sorry-free. No placeholders. Auto-maintained.
-Total files: 2487
->>>>>>> Stashed changes
+Total files: 2354
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AntipodeUniqueness
@@ -1513,10 +1506,6 @@ import FINAL.MachineLearning.InvariantSubspace_Defs
 import FINAL.MachineLearning.InverseStereographicNeuralField
 import FINAL.MachineLearning.IterExp
 import FINAL.MachineLearning.KWWitness_Defs
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.KnotPolynomialSpectra
->>>>>>> Stashed changes
 import FINAL.MachineLearning.Knot_Jones
 import FINAL.MachineLearning.KnottedLight_Core
 import FINAL.MachineLearning.LFunctionOracle_Core
@@ -1528,10 +1517,6 @@ import FINAL.MachineLearning.LibraryOfBabel_Defs
 import FINAL.MachineLearning.LocalGlobalGeometry
 import FINAL.MachineLearning.LoebGeneralization
 import FINAL.MachineLearning.LogisticChaos
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.MPSMinCut_Defs
->>>>>>> Stashed changes
 import FINAL.MachineLearning.MahlerMeasure_Defs
 import FINAL.MachineLearning.Maximals
 import FINAL.MachineLearning.MemoryAlgebra
@@ -1546,15 +1531,11 @@ import FINAL.MachineLearning.MonotoneEntropy_Defs
 import FINAL.MachineLearning.Moonshine_Theorems
 import FINAL.MachineLearning.MotivicPeriod_Theorems
 import FINAL.MachineLearning.MotivicPersistence
-import FINAL.MachineLearning.MultiHead
 import FINAL.MachineLearning.MulticlassMargin
-import FINAL.MachineLearning.MumfordTate_Defs
-import FINAL.MachineLearning.NAProbability_Defs
 import FINAL.MachineLearning.NAProbability_Theorems
 import FINAL.MachineLearning.NTKConvergence
 import FINAL.MachineLearning.NTKCore
 import FINAL.MachineLearning.NetherPortals
-import FINAL.MachineLearning.NetworkOptimality
 import FINAL.MachineLearning.NeuralDecisionBoundary_Core
 import FINAL.MachineLearning.NeuralRGFlow
 import FINAL.MachineLearning.NeuralSheafCohomology
@@ -1573,20 +1554,17 @@ import FINAL.MachineLearning.Other_UnityIsomorphism
 import FINAL.MachineLearning.PACBayes_Bounds
 import FINAL.MachineLearning.PadicCramerRao
 import FINAL.MachineLearning.PadicThresholdTransfer
-import FINAL.MachineLearning.PairwiseIntersection_Core
 import FINAL.MachineLearning.PathCut
 import FINAL.MachineLearning.PersistentHomologyMixing_Theorems
 import FINAL.MachineLearning.PersistentPrimeHomology_Defs
 import FINAL.MachineLearning.PersistentPrimeHomology_Theorems
 import FINAL.MachineLearning.PersistentStableHomotopy_Theorems
-import FINAL.MachineLearning.PhantomTopology_Basic
 import FINAL.MachineLearning.PhotonEpistemicBridge
 import FINAL.MachineLearning.PhotonNetworks
 import FINAL.MachineLearning.PigeonholeFamily
 import FINAL.MachineLearning.Prediction_MartingalePrediction
 import FINAL.MachineLearning.PresheafIdentifiability
 import FINAL.MachineLearning.PrimeGaps_Admissible
-import FINAL.MachineLearning.PrimeGaps_Density
 import FINAL.MachineLearning.PrimeModularMorse_Theorems
 import FINAL.MachineLearning.PrimeTorsionFormality_Core
 import FINAL.MachineLearning.PrimewisePersistence_CycleRankFiltration
@@ -1634,10 +1612,6 @@ import FINAL.MachineLearning.StoneDuality_Core
 import FINAL.MachineLearning.StrangeLoops_StrangeLoops
 import FINAL.MachineLearning.StructuralCases
 import FINAL.MachineLearning.SudokuPhaseTransition_Theorems
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.SumThreeCubes_Counting
->>>>>>> Stashed changes
 import FINAL.MachineLearning.SurrealTopology_OrderGap
 import FINAL.MachineLearning.SurvivorSieve
 import FINAL.MachineLearning.SymmEulerTransfer

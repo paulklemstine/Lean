@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-09T13:08:27.502625+00:00",
+  "last_updated": "2026-06-09T13:13:55.688797+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -6863,6 +6863,45 @@
       "theorem_count": 377,
       "timestamp": "2026-06-09T13:08:27.356146+00:00",
       "title": "Grokking: Phase Transitions in Learning"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.7396,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 3,
+      "domain": "Computation",
+      "duration_seconds": 2745.9853324890137,
+      "end_time": 1781010753.070518,
+      "files_integrated": 0,
+      "job_id": "2443240b",
+      "outcome_quality": 0.4241263696049941,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v6",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v6",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.8,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8076,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.899,
+        "novelty": 0.9479,
+        "proof_depth": 0.878,
+        "usefulness": 0.939
+      },
+      "quality_score": 0.42305126146788996,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1781008007.0851855,
+      "strategy_count": 0,
+      "theorem_count": 324,
+      "timestamp": "2026-06-09T13:13:55.527787+00:00",
+      "title": "Close Proofs: Tropical Brill-Noether Theory"
     }
   ]
 }
