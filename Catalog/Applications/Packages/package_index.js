@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-09T19:53:14Z",
+    "domain": "Bridges",
+    "exp_id": "30f8d3db",
+    "filename": "diffusion_models_as_stochastic_differential_equati.json",
+    "pkg_num": 26,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "Closure\u2013Gauge Realization Duality via Idempotent Holonomy"
+  },
+  {
     "date": "2026-06-09T19:51:03Z",
     "domain": "Bridges",
     "exp_id": "ee624f37",
     "filename": "learning_with_errors_hardness_reductions.json",
     "pkg_num": 25,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4484951340996169,
     "title": "Closure-Gauge Realization Duality via Idempotent Holonomy"
   },
   {
@@ -304,6 +314,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Closure-Gauge Realization Duality: When Compression Admits a Difficulty Ranking"
   },
+  "diffusion_models_as_stochastic_differential_equati.json": {
+    "domain": "Bridges",
+    "exp_id": "30f8d3db",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Closure\u2013Gauge Realization Duality via Idempotent Holonomy"
+  },
   "dream_logic_non_monotone_reasoning_where_contradic.json": {
     "domain": "Bridges",
     "exp_id": "362ed1b3",
@@ -475,7 +493,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Logic",
-      "hue": 90,
+      "hue": 271,
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
       "primary_domain": "Logic",
       "priority_score": 0.3352,
@@ -486,7 +504,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Novelty",
-      "hue": 92,
+      "hue": 271,
       "id": "rigorous_algebraic_foundations_for_probability_t",
       "primary_domain": "Bridges",
       "priority_score": 0.66968,
@@ -497,7 +515,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Applications",
-      "hue": 280,
+      "hue": 270,
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
       "primary_domain": "Bridges",
       "priority_score": 0.16743922555663115,
@@ -508,7 +526,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08T19:03:25Z",
       "domain": "Applications",
-      "hue": 91,
+      "hue": 271,
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
       "primary_domain": "Bridges",
       "priority_score": 0.62584,
@@ -519,7 +537,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Applications",
-      "hue": 271,
+      "hue": 90,
       "id": "arithmetic_mirror_symmetry_for_calabi_yau",
       "primary_domain": "Bridges",
       "priority_score": 0.4507441932737335,
@@ -530,7 +548,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 280,
+      "hue": 270,
       "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
       "primary_domain": "Bridges",
       "priority_score": 0.4623335621795429,
@@ -541,7 +559,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Shared",
-      "hue": 90,
+      "hue": 271,
       "id": "causal_integration_algebra__a_rigorous_lattice_t",
       "primary_domain": "Bridges",
       "priority_score": 0.47410152685152684,
@@ -563,7 +581,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 281,
+      "hue": 270,
       "id": "entropy_bounded_computation_ebc_framew",
       "primary_domain": "Bridges",
       "priority_score": 0.4813003957285953,
@@ -574,7 +592,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Computation",
-      "hue": 92,
+      "hue": 95,
       "id": "impossible_geometries_where_parallel_lines_converg",
       "primary_domain": "Computation",
       "priority_score": 0.47002089837753586,
@@ -585,7 +603,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 92,
+      "hue": 270,
       "id": "p_vs_np_problem",
       "primary_domain": "Bridges",
       "priority_score": 0.4486386254706822,
@@ -596,7 +614,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 272,
       "id": "symplectic_mirror_descent_gromov_witten_invariants",
       "primary_domain": "Bridges",
       "priority_score": 0.4695990099009901,
@@ -607,7 +625,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 271,
+      "hue": 270,
       "id": "the_current_framework_models_theories_by_their_set",
       "primary_domain": "Bridges",
       "priority_score": 0.4683285105981593,
@@ -618,7 +636,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 275,
       "id": "the_current_zaslavsky_type_bound_proves__kd_cnk__n",
       "primary_domain": "Algebra",
       "priority_score": 0.44434729925592503,
@@ -640,7 +658,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T10:06:05Z",
       "domain": "Bridges",
-      "hue": 95,
+      "hue": 271,
       "id": "self_modifying_code_that_cannot_be_stopped",
       "primary_domain": "Bridges",
       "priority_score": 0.6462399999999999,
@@ -651,7 +669,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T15:03:34Z",
       "domain": "Logic",
-      "hue": 272,
+      "hue": 90,
       "id": "proof_complexity_collapse_pnp_via_proof_checking",
       "primary_domain": "Logic",
       "priority_score": 0.4474957648546144,
@@ -662,7 +680,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T15:45:33Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 275,
       "id": "tropical_compactification_of_moduli_spaces",
       "primary_domain": "Bridges",
       "priority_score": 0.44213183437650455,
@@ -673,7 +691,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T15:47:22Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 91,
       "id": "logic_physics_bridge_consistency_of_physical_theor",
       "primary_domain": "Bridges",
       "priority_score": 0.4642314579129325,
@@ -684,7 +702,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T15:49:32Z",
       "domain": "Computation",
-      "hue": 275,
+      "hue": 270,
       "id": "rigorous_formal_foundations_for_the_collatz_conj",
       "primary_domain": "Computation",
       "priority_score": 0.450736943120171,
@@ -695,7 +713,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T17:01:57Z",
       "domain": "Bridges",
-      "hue": 100,
+      "hue": 271,
       "id": "formal_obstruction_theory_for_eml_solvability_of_l",
       "primary_domain": "Bridges",
       "priority_score": 0.4664737281553398,
@@ -706,7 +724,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T18:34:57Z",
       "domain": "MachineLearning",
-      "hue": 292,
+      "hue": 270,
       "id": "formalized_bridge_between_relu_neural_network_deci",
       "primary_domain": "MachineLearning",
       "priority_score": 0.45138134445121236,
@@ -717,7 +735,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T18:38:15Z",
       "domain": "Geometry",
-      "hue": 270,
+      "hue": 271,
       "id": "belnaps_four_is_the_smallest_non_trivial_paraconsi",
       "primary_domain": "Geometry",
       "priority_score": 0.4429310119047619,
@@ -728,7 +746,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T19:49:20Z",
       "domain": "Bridges",
-      "hue": 272,
+      "hue": 270,
       "id": "cryptographic_hash_functions_collision_resistance_",
       "primary_domain": "Bridges",
       "priority_score": 0.45885812483989413,
@@ -742,10 +760,21 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "learning_with_errors_hardness_reductions",
       "primary_domain": "Bridges",
+      "priority_score": 0.4484951340996169,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "Closure-Gauge Realization Duality via Idempotent Holonomy"
+    },
+    {
+      "date": "2026-06-09T19:53:14Z",
+      "domain": "Bridges",
+      "hue": 91,
+      "id": "diffusion_models_as_stochastic_differential_equati",
+      "primary_domain": "Bridges",
       "priority_score": null,
       "quality": "unrated",
       "shape": "icosahedron",
-      "title": "Closure-Gauge Realization Duality via Idempotent Holonomy"
+      "title": "Closure\u2013Gauge Realization Duality via Idempotent Holonomy"
     }
   ]
 };
