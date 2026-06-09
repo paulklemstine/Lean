@@ -279,21 +279,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "ABC Conjecture Formalization"
   },
   {
-    "consumed_by_exp_id": "3d25e0ee",
-    "description": "Prove that every loopless graph requiring k+1 colors for a proper coloring contains K_{k+1} as a minor. Formalize known cases (k \u2264 5), the Wagner equivalence, and the connection to the Four Color Theorem.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "seed_211",
-    "priority_score": 0.9,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:25:09.676882+00:00",
-    "title": "Hadwiger's Conjecture"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that any quantum circuit can be approximated by braiding anyons. Formalize the Jones polynomial as a universal topological quantum invariant and prove density in SU(2).",
     "domains": [
@@ -485,7 +470,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Causal Inference: Do-Calculus as Formal Logic"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "07c5e6ea",
     "description": "Domain Applications has declined by 0.336 over recent cycles (recent avg=0.284 vs prior=0.621). Take a completely fresh approach \u2014 different proof techniques, new definitions, or a different subfield within this domain. Avoid repeating approaches that have been producing diminishing returns.",
     "domains": [
       "Applications"
@@ -494,7 +479,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "auto_reset",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T03:33:08.670064+00:00",
     "title": "[Reset] Fresh approach in Applications"
   },
@@ -2357,6 +2342,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Spectral Chain Framework\n\n## What Was Established\n\nThis cycle produced a formally verified framework (`Computation/SpectralChain/`) connecting spectral gaps, conductance, mixing times, and phase transitions in finite reversible Markov chains. All 17 theorems compile without `sorry` and use only standard axioms. The framework spans four mathematical domains:\n\n- **Spectral graph theory**: Dirichlet forms, variance, spectral gaps (Poincar\u00e9 inequality)\n- **Probability**: Total variation distance, mixing time bounds, variance contraction\n- **Geometry**: Conductance (Cheeger constant), flow symmetry, weight complement identity\n- **Combinatorics**: Phase classification (fast/critical/frozen), monotonicity\n\nThe key structural result is the **mixing-divergence bridge** (`mixing_diverges_at_zero_gap`): as the spectral gap approaches zero, the mixing time can be made arbitrarily large. Combined with the mixing time monotonicity theorems and phase classification, this gives a rigorous foundation for studying phase transitions through spectral gaps.\n\n---\n\n## Direction 1: Cheeger's Inequality from First Principles\n\nThe discrete Cheeger inequality\u2014`h\u00b2/2 \u2264 \u03b3 \u2264 2h` where h is the conductance and \u03b3 the spectral gap\u2014is the most important missing result in the framework. The key insight is that the proof requires constructing a specific \"level set\" test function from the optimal Cheeger cut, then bounding its Rayleigh quotient. This is fundamentally different from the abstract certification approach used here. Why now? The framework already has `flowOut`, `weight`, `DirichletForm`, `Var`, and the Poincar\u00e9 inequality structure. The missing piece is the \"co-area formula\" for finite graphs that relates the Dirichlet form of a function to the flows across its level sets. Formalizing this inequality would complete the conductance \u2192 spectral gap link in the chain.\n\n## Direction 2: Geometric Convergence of Markov Chains\n\nThe variance contraction theorem\u2014`Var(P^t f) \u2264 (1-\u03b3)^{2t} \u00b7 Var(f)`\u2014quantifies how the spectral gap controls the rate of convergence. The key insight is that this follows from the spectral decomposition of the transition operator in L\u00b2(\u03c0): the Poincar\u00e9 inequality implies `\u2016Pf - E[f]\u2016\u00b2 \u2264 (1-\u03b3)\u00b2 \u2016f - E[f]\u2016\u00b2`, and iterating gives geometric decay. Why now? The current framework has `applyP`, `Var`, `DirichletForm`, and `poincare_weakening`. Formalizing the L\u00b2(\u03c0) inner product space structure for reversible chains would unlock the contraction theorem and, more broadly, the full spectral theory of self-adjoint operators on finite-dimensional Hilbert spaces.\n\n## Direction 3: Log-Sobolev Strengthening of Mixing Bounds\n\nThe log-Sobolev constant \u03b1 gives the improved bound `t_mix(\u03b5) \u2264 (1/2\u03b1) \u00b7 log log(1/\u03b5)` versus the spectral gap bound `t_mix(\u03b5) \u2264 (1/\u03b3) \u00b7 log(n/\u03b5)`. The key insight is that the relationship \u03b1 \u2264 \u03b3 \u2264 2\u03b1 (for product chains) means the log-Sobolev constant interpolates between spectral and entropic mixing. Why now? The `mixingBound` function and `mixing_bound_scaling` theorem provide the infrastructure for comparing mixing time formulas. A `LogSobolevBound` structure parallel to `SpectralGapCert` could encode the modified log-Sobolev inequality `Ent(f\u00b2 d\u03bc) \u2264 (2/\u03b1) E(f,f)`, and the analog of `mixing_diverges_at_zero_gap` for the log-Sobolev constant would quantify the improvement.\n\n## Direction 4: Spectral Gap of Explicit CSP Chains\n\nComputing the spectral gap of the swap Markov chain on small grid puzzles (3\u00d73 Latin squares, 4\u00d74 Shidoku) would provide the first concrete numerical values in the framework. The key insight is that for n \u2264 4, the state space is small enough (\u2264 288 solutions for Shidoku) that the transition matrix can be explicitly constructed and its eigenvalues computed via `native_decide` or rational arithmetic. Why now? The `ReversibleChain` and `SpectralGapCert` structures are ready to receive concrete instances. Formalizing even one explicit chain (e.g., the 2-state chain with known gap) would test the framework's usability and provide a template for larger computations.\n\n## Direction 5: Tropical Spectral Gap Bounds\n\nThe tropical (min-plus) spectral radius of a non-negative matrix provides combinatorial lower bounds on the classical spectral gap that bypass the worst-case nature of Cheeger's inequality. The key insight is that for structured matrices arising from CSP transition graphs, the tropical eigenvalue (= minimum cycle mean) can be computed in polynomial time via Howard's algorithm, while Cheeger's inequality requires optimizing over exponentially many cuts. Why now? The project already has tropical algebra infrastructure in `Tropical/`. Connecting the `ReversibleChain` type to tropical matrix representations would bridge two existing parts of the codebase and could yield tighter spectral gap lower bounds for specific CSP instances.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1125",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e9b0acff",
+    "status": "available",
+    "timestamp": "2026-06-09T13:03:08.940352+00:00",
+    "title": "Formally verified framework (`Computation/SpectralChain/`)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
     "domains": [
       "Cryptography",
@@ -2716,7 +2716,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Scaling Laws from Statistical Mechanics"
   },
   {
-    "consumed_by_exp_id": "ca1451c6",
+    "consumed_by_exp_id": "",
     "description": "Prove the sharp entropy power inequality for all dimensions with equality conditions. Connect to the Brunn-Minkowski inequality and prove stability versions.",
     "domains": [
       "Bridges",
@@ -2726,7 +2726,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.970178+00:00",
     "title": "Entropy Power Inequality: Sharp Version"
   },
@@ -3147,20 +3147,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T11:38:11.055627+00:00",
     "title": "Close Proofs: **Conjecture:** If `{f_t}_{t \u2208 [0,1]}` is a continuous family of contr"
-  },
-  {
-    "consumed_by_exp_id": "e74983d8",
-    "description": "Cycle 41fd7380 (Q=0.424) proved 1210 theorems in Applications but left 10 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_41fd7380_c14aca9e",
-    "priority_score": 0.47387027209576893,
-    "research_mode": "team",
-    "source_exp_id": "41fd7380",
-    "status": "in_progress",
-    "timestamp": "2026-06-09T10:04:33.895339+00:00",
-    "title": "Close Proofs: Phantom Topologies: Spaces That Change When You Look at Them"
   },
   {
     "consumed_by_exp_id": "",

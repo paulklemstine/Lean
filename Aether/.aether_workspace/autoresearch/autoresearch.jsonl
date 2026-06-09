@@ -148,3 +148,5 @@
 {"timestamp": 1781010074.1976924, "experiment_id": "71663589", "concept_title": "Algorithmic Fairness: Individual vs Group Fairness Impossibility", "concept_domain": "Logic", "research_mode": "team", "quality": "partial", "quality_score": 0.3910579591836735, "catalog_references": [], "prompt_length": 5094, "files_placed": 0, "status": "discard"}
 =======
 >>>>>>> Stashed changes
+{"timestamp": 1781010216.8102314, "experiment_id": "e9b0acff", "concept_title": "Formally verified framework connecting spectra", "concept_domain": "Computation", "research_mode": "team", "quality": "partial", "quality_score": 0.3910110334832533, "catalog_references": [], "prompt_length": 21954, "files_placed": 0, "status": "discard"}
+{"timestamp": 1781010268.1826563, "experiment_id": "e71824de", "concept_title": "**Causal Integration Algebra** — a rigorous Lean 4 fo", "concept_domain": "Computation", "research_mode": "team", "quality": "partial", "quality_score": 0.4207490825688074, "catalog_references": [], "prompt_length": 17791, "files_placed": 0, "status": "discard"}

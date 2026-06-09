@@ -1,15 +1,8 @@
 /- Aether FINAL Catalog
-<<<<<<< Updated upstream
-A curated collection of 2360 of the highest-quality
+A curated collection of 2354 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2360
-=======
-A curated collection of 2487 of the highest-quality
-formally verified mathematical results from the Aether engine.
-Sorry-free. No placeholders. Auto-maintained.
-Total files: 2487
->>>>>>> Stashed changes
+Total files: 2354
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AntipodeUniqueness
@@ -1333,7 +1326,6 @@ import FINAL.Logic.ParaconsistentParadox
 import FINAL.Logic.ParadoxAlgebra
 import FINAL.Logic.ParadoxInteraction
 import FINAL.Logic.ParadoxSelfSoundness
-import FINAL.Logic.ParameterizedStereographic
 import FINAL.Logic.PathCardinal
 import FINAL.Logic.PhotonChannels
 import FINAL.Logic.PostQuantumSignatures
@@ -1342,14 +1334,12 @@ import FINAL.Logic.ProvabilityLogic_Defs
 import FINAL.Logic.ProvabilityLogic_GLPFrames
 import FINAL.Logic.ProvabilityLogic_Theorems
 import FINAL.Logic.PushoutHIT
-import FINAL.Logic.PvsNP
 import FINAL.Logic.PvsNPFoundations
 import FINAL.Logic.QuantumCayleyWalk_SpectralMixing
 import FINAL.Logic.QuantumMirrorComputation
 import FINAL.Logic.ReflectiveConvergence
 import FINAL.Logic.ReflectiveOracleHierarchy
 import FINAL.Logic.ResourceBoundedNonlocality
-import FINAL.Logic.SelfReferentialTheories
 import FINAL.Logic.StrangeLoops_Core
 import FINAL.Logic.StratifiedSelfReference
 import FINAL.Logic.Suspension
@@ -1395,7 +1385,6 @@ import FINAL.MachineLearning.BIBD
 import FINAL.MachineLearning.Basic
 import FINAL.MachineLearning.BayesianWerewolf_Core
 import FINAL.MachineLearning.Beal_CRT
-import FINAL.MachineLearning.Beal_Defs
 import FINAL.MachineLearning.Beal_Monotonicity
 import FINAL.MachineLearning.Beal_PrimitiveReduction
 import FINAL.MachineLearning.Benford
@@ -1415,7 +1404,6 @@ import FINAL.MachineLearning.CNFRealizability
 import FINAL.MachineLearning.CRT
 import FINAL.MachineLearning.CategoricalPhysics_Core
 import FINAL.MachineLearning.Catoni
-import FINAL.MachineLearning.CayleyTransform
 import FINAL.MachineLearning.CechComplex
 import FINAL.MachineLearning.CechDecisionBoundaryObstructions
 import FINAL.MachineLearning.CechRobustnessCertification
@@ -1430,7 +1418,6 @@ import FINAL.MachineLearning.ClosureTheoreticML
 import FINAL.MachineLearning.Coboundary
 import FINAL.MachineLearning.CoeffRestriction
 import FINAL.MachineLearning.CognitiveBraid_Core
-import FINAL.MachineLearning.CollatzSpectral_Defs
 import FINAL.MachineLearning.Collatz_Core
 import FINAL.MachineLearning.Compositionality
 import FINAL.MachineLearning.Consequences
@@ -1513,10 +1500,6 @@ import FINAL.MachineLearning.InvariantSubspace_Defs
 import FINAL.MachineLearning.InverseStereographicNeuralField
 import FINAL.MachineLearning.IterExp
 import FINAL.MachineLearning.KWWitness_Defs
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.KnotPolynomialSpectra
->>>>>>> Stashed changes
 import FINAL.MachineLearning.Knot_Jones
 import FINAL.MachineLearning.KnottedLight_Core
 import FINAL.MachineLearning.LFunctionOracle_Core
@@ -1528,10 +1511,6 @@ import FINAL.MachineLearning.LibraryOfBabel_Defs
 import FINAL.MachineLearning.LocalGlobalGeometry
 import FINAL.MachineLearning.LoebGeneralization
 import FINAL.MachineLearning.LogisticChaos
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.MPSMinCut_Defs
->>>>>>> Stashed changes
 import FINAL.MachineLearning.MahlerMeasure_Defs
 import FINAL.MachineLearning.Maximals
 import FINAL.MachineLearning.MemoryAlgebra
@@ -1634,10 +1613,6 @@ import FINAL.MachineLearning.StoneDuality_Core
 import FINAL.MachineLearning.StrangeLoops_StrangeLoops
 import FINAL.MachineLearning.StructuralCases
 import FINAL.MachineLearning.SudokuPhaseTransition_Theorems
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.SumThreeCubes_Counting
->>>>>>> Stashed changes
 import FINAL.MachineLearning.SurrealTopology_OrderGap
 import FINAL.MachineLearning.SurvivorSieve
 import FINAL.MachineLearning.SymmEulerTransfer
