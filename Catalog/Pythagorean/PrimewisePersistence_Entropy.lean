@@ -1,1 +1,0 @@
-../../Pythagorean/PrimewisePersistence/Entropy.lean

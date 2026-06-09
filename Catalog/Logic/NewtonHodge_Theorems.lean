@@ -1,1 +1,0 @@
-../../Logic/NewtonHodge/Theorems.lean

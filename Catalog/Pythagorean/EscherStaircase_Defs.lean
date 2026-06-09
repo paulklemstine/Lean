@@ -1,1 +1,0 @@
-../../Pythagorean/EscherStaircase/Defs.lean

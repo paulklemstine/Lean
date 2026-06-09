@@ -1,1 +1,0 @@
-../../MachineLearning/StoneDuality/Core.lean

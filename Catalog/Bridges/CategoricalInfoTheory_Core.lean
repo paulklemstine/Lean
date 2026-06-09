@@ -1,1 +1,0 @@
-../../Bridges/CategoricalInfoTheory/Core.lean

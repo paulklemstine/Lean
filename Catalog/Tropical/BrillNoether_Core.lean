@@ -1,1 +1,0 @@
-../../Tropical/BrillNoether/Core.lean

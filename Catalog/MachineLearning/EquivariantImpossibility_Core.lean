@@ -1,1 +1,0 @@
-../../MachineLearning/EquivariantImpossibility/Core.lean

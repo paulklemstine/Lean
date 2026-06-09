@@ -1,1 +1,0 @@
-../../Pythagorean/TropicalAction/Spectrum.lean

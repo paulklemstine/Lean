@@ -1,1 +1,0 @@
-../../Algebra/IntegerEnergy/Applications.lean

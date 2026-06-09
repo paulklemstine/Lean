@@ -1,1 +1,0 @@
-../../Algebra/TightDepthHierarchy/Theorems.lean

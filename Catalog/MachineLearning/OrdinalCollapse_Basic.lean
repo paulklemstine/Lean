@@ -1,1 +1,0 @@
-../../MachineLearning/OrdinalCollapse/Basic.lean

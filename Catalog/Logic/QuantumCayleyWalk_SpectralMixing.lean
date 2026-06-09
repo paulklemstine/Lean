@@ -1,1 +1,0 @@
-../../Logic/QuantumCayleyWalk/SpectralMixing.lean

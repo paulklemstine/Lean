@@ -1,1 +1,0 @@
-../../Tropical/HardnessRandomness/Defs.lean

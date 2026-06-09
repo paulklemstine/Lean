@@ -1,1 +1,0 @@
-../../Algebra/NeuralHodge/ArrangementBounds.lean

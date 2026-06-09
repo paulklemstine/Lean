@@ -1,1 +1,0 @@
-../../MachineLearning/FunctorialEntropy/Composition.lean
