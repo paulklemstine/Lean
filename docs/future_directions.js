@@ -1502,7 +1502,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The natural next step is to formalize the actual probabilistic phase transition."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ca042a62",
     "description": "# Future Directions: Split Geometry\n\n## 1. Geodesic Equations and Phase Boundary Crossing\n\nThe geodesic equations for the split metric ds\u00b2 = sech\u00b2(y) dx\u00b2 + cosh\u00b2(x) dy\u00b2 yield a coupled ODE system via the Christoffel symbols. The key insight is that geodesics transitioning between the elliptic region (|x| < |y|, K > 0) and hyperbolic region (|x| > |y|, K < 0) must cross the phase boundary |x| = |y| where K = 0, and the curvature sign change constrains how many crossings are possible. A natural conjecture: geodesics in split geometry cross the phase boundary at most finitely many times, with the number of crossings bounded by a function of the initial energy. Why now? The curvature sign characterization (splitCurvature_pos_iff) provides the precise geometric partition needed to analyze geodesic behavior region-by-region, and Mathlib's ODE theory is now mature enough to formalize existence and uniqueness of geodesic flows.\n\n## 2. Gauss-Bonnet for Split Triangles\n\nFor a geodesic triangle with vertices in different curvature regions, the Gauss-Bonnet theorem gives angle excess = \u222b\u222b K dA where dA = \u221a(det g) dx dy = (cosh x / cosh y) dx dy. The key insight is that the integral of K = sech\u00b2(x) - sech\u00b2(y) over a region straddling the diagonal can be decomposed as a difference of two independent 1D integrals: \u222b\u222b K dA = \u222b\u222b sech\u00b2(x)\u00b7(cosh x/cosh y) dx dy - \u222b\u222b sech\u00b2(y)\u00b7(cosh x/cosh y) dx dy, each of which has a closed-form antiderivative involving tanh and sinh. This would yield explicit angle-excess formulas for split triangles \u2014 a concrete computational test of the geometry. Why now? The splitMetricDet_pos theorem guarantees the volume form is well-defined, and the bounded curvature (splitCurvature_bound) ensures convergence of area integrals over compact regions.\n\n## 3. Generalized Split Metrics: The (\u03b1, \u03b2)-Family\n\nReplace the split metric with ds\u00b2 = cosh^\u03b1(y) dx\u00b2 + cosh^\u03b2(x) dy\u00b2 for parameters \u03b1, \u03b2 \u2208 \u211d. The original split metric corresponds to (\u03b1, \u03b2) = (-2, 2). The key insight is that the curvature of the (\u03b1,\u03b2)-metric is K(x,y) = f_\u03b1(y) + g_\u03b2(x) for explicit functions f_\u03b1, g_\u03b2, so the zero-curvature locus is always a curve of the form g_\u03b2(x) = -f_\u03b1(y), which is a level set of a separable function \u2014 making the phase boundary geometry analytically tractable for all parameter values. The conjecture is that for \u03b1 < 0 < \u03b2, the phase boundary is always a pair of curves asymptotic to the diagonals, and for \u03b1\u03b2 > 0 the curvature has constant sign. Why now? The monotonicity machinery (cosh_sq_strictMonoOn, cosh_lt_cosh_iff_abs_lt) generalizes directly to cosh^n for integer n, and the antisymmetry theorem extends to the case \u03b1 = -\u03b2.\n\n## 4. Completeness and Incompleteness of Split Geometry\n\nA Riemannian manifold is geodesically complete if every geodesic extends to all time. The key insight is that the split metric has anisotropic completeness: the metric component sech\u00b2(y) \u2192 0 as |y| \u2192 \u221e (making horizontal distances shrink), while cosh\u00b2(x) \u2192 \u221e as |x| \u2192 \u221e (making vertical distances grow). This suggests that the split metric is complete in the y-direction but potentially incomplete in the x-direction, since a horizontal geodesic can \"reach infinity in finite time\" when the metric degenerates. A formal proof of incompleteness would establish split geometry as a natural example of a non-complete Riemannian surface with mixed-sign curvature. Why now? The metric positivity (splitG11_pos, splitG22_pos) and determinant bounds (splitMetricDet_ge_one_iff) provide the quantitative control needed to estimate geodesic lengths.\n\n## 5. Spectral Theory of the Split Laplacian\n\nThe Laplace-Beltrami operator for the split metric is \u0394f = cosh\u00b2(y) \u2202\u00b2f/\u2202x\u00b2 + (1/cosh\u00b2(x)) \u2202\u00b2f/\u2202y\u00b2 (up to lower-order terms from Christoffel symbols). The key insight is that this operator separates variables: \u0394(X(x)Y(y)) = cosh\u00b2(y)X''Y + Y''X/cosh\u00b2(x), and after dividing by XY one obtains two independent Sturm-Liouville problems with potentials involving cosh\u00b2. This means the spectrum of the split Laplacian on bounded domains decomposes into tensor products of 1D spectra \u2014 each factor governed by a P\u00f6schl-Teller-type potential with known exact solutions. Why now? The curvature bounds (-1 < K < 1) from splitCurvature_bound ensure the operator is uniformly elliptic on compact sets, and Mathlib's spectral theory for self-adjoint operators can handle the resulting eigenvalue problems.\n",
     "domains": [
       "Geometry",
@@ -1512,7 +1512,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "40370763",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T04:09:32.553879+00:00",
     "title": "The geodesic equations for the split metric ds\u00b2 = sech\u00b2(y) dx\u00b2 + cosh\u00b2(x) dy\u00b2 yi"
   },
@@ -2313,6 +2313,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Propositional Logic Metatheory\n\n## 1. Completeness of the Hilbert System\n\nThe natural next step after soundness is **completeness**: every tautology is provable. This requires constructing maximal consistent extensions of theories (Lindenbaum's lemma) and building canonical models. The key insight is that the syntactic deduction theorem we proved makes Lindenbaum's lemma tractable \u2014 it reduces the extension step to a single disjunction. Why now? Our `syntactic_deduction` and `weakening` theorems provide the exact structural infrastructure needed for the inductive extension argument, and the `consistency` theorem gives the base case.\n\n**Testable conjecture**: For any `\u03c6 : PropForm`, `IsTautology \u03c6 \u2192 Proves \u2205 \u03c6`. The proof should construct a maximal consistent set containing `neg \u03c6` and derive a contradiction from the model it induces.\n\n## 2. Compactness from Completeness\n\nOnce completeness is established, **propositional compactness** follows: if every finite subset of `\u0393` has a model, then `\u0393` has a model. The key insight is that compactness is equivalent to the statement \"if `\u0393 \u22a8 \u03c6` then some finite `\u0394 \u2286 \u0393` satisfies `\u0394 \u22a8 \u03c6`\", and this follows from completeness since syntactic proofs are finite objects. Why now? The `Models` and `Proves` definitions are already set up to state and prove this, and the finite nature of `Proves` derivations is built into our inductive type.\n\n**Testable conjecture**: `Models \u0393 \u03c6 \u2192 \u2203 \u0394 : Finset PropForm, \u2191\u0394 \u2286 \u0393 \u2227 Models \u2191\u0394 \u03c6`.\n\n## 3. Cut Elimination for Sequent Calculus\n\nDefine a Gentzen-style sequent calculus for propositional logic and prove **cut elimination**: any sequent derivation using the cut rule can be transformed into one without it. The key insight is that cut elimination is a syntactic normalization result \u2014 it corresponds to \u03b2-reduction in the Curry-Howard correspondence, and our Hilbert-style infrastructure can serve as a reference system for proving equivalence. Why now? The Hilbert system theorems provide a certified \"backend\" against which a sequent calculus can be verified, and the syntactic deduction theorem is the Hilbert-side analogue of the cut rule.\n\n**Testable conjecture**: Define `SeqProves : List PropForm \u2192 PropForm \u2192 Prop` with structural rules and cut. Then show `SeqProvesCutFree \u0393 \u03c6 \u2194 SeqProves \u0393 \u03c6` where the cut-free variant omits the cut rule.\n\n## 4. Interpolation Theorem\n\nCraig's interpolation theorem states: if `Proves \u2205 (imp \u03c6 \u03c8)`, then there exists a formula `\u03b8` whose variables appear in both `\u03c6` and `\u03c8` such that `Proves \u2205 (imp \u03c6 \u03b8)` and `Proves \u2205 (imp \u03b8 \u03c8)`. The key insight is that interpolation can be proved by induction on cut-free sequent calculus proofs (connecting to Direction 3), or by a direct semantic argument using our Boolean evaluation. Why now? Our `eval`-based semantics provides the natural framework to define \"variables of a formula\" and verify the variable-containment condition, and soundness ensures the interpolant is meaningful.\n\n**Testable conjecture**: `Proves \u2205 (imp \u03c6 \u03c8) \u2192 \u2203 \u03b8, (vars \u03b8 \u2286 vars \u03c6 \u2229 vars \u03c8) \u2227 Proves \u2205 (imp \u03c6 \u03b8) \u2227 Proves \u2205 (imp \u03b8 \u03c8)` where `vars` extracts the set of variable indices.\n\n## 5. Decision Procedure Certification\n\nFormalize a resolution-based decision procedure for propositional satisfiability and prove it **sound and complete** with respect to our `eval` semantics. The key insight is that resolution can be viewed as a restricted form of cut in a clause-based sequent calculus, making it a natural specialization of Direction 3. Why now? Our `IsTautology` and `Models` definitions provide the correctness specification, and the `soundness` theorem ensures that any proof produced by the decision procedure corresponds to a genuine semantic fact. This bridges our logical metatheory directly to verified automated reasoning.\n\n**Testable conjecture**: Define `resolve : List (List (\u2115 \u00d7 Bool)) \u2192 Bool` implementing unit propagation + resolution. Then prove `resolve clauses = true \u2192 \u2200 v, \u2203 c \u2208 clauses, \u2200 l \u2208 c, evalLit v l = false` (unsatisfiability certificate).\n",
+    "domains": [
+      "Bridges",
+      "Logic"
+    ],
+    "id": "fd_1129",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "07c5e6ea",
+    "status": "available",
+    "timestamp": "2026-06-09T13:52:28.031019+00:00",
+    "title": "The natural next step after soundness is **completeness**: every tautology is pr"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
     "domains": [
       "Cryptography",
@@ -2327,7 +2342,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "One-Way Functions: Existence and Hierarchy"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6cf575d0",
     "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
     "domains": [
       "Cryptography",
@@ -2337,7 +2352,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
   },
@@ -2505,21 +2520,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:08.546271+00:00",
     "title": "ML Reinforcement Learning: Convergence of Policy Gradient Methods"
-  },
-  {
-    "consumed_by_exp_id": "d6f21972",
-    "description": "Conjecture: For large language models, the directed token-to-token influence graph induced during multi-step reasoning exhibits a model-size-independent spectral signature at the onset of correct chain-of-thought formation: specifically, after normalization by graph size, the top-k eigenvalue ratios and local spectral gap converge to a universal band across architectures, while failed or hallucinated reasoning trajectories do not. Test: Construct influence graphs from attention, activation patching, or causal mediation during benchmark reasoning tasks across multiple model families and scales; compute normalized spectra for correct vs incorrect trajectories. The conjecture is supported if a stable spectral band appears only for correct reasoning across architectures and scales, and refuted if no such cross-model spectral universality separates correct from incorrect traces. Impact: This would provide a mathematically grounded diagnostic for emergent reasoning, enable architecture-agnostic monitoring of reliable inference, and suggest new training objectives based on spectral control of internal computation.",
-    "domains": [
-      "Physics",
-      "MachineLearning"
-    ],
-    "id": "fd_1020",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-08T19:03:53.866607+00:00",
-    "title": "Spectral Universality of LLM Reasoning Graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -3050,7 +3050,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Tropical Differential Equations: Power Series Solutions"
   },
   {
-    "consumed_by_exp_id": "8431524d",
+    "consumed_by_exp_id": "",
     "description": "Cycle f2700283 (Q=0.426) proved 1066 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n## Synthesis\n\nThis research cycle established a formalized framework connecting Collatz dynamics to proof-theoretic barriers. The central insight is that three structural gaps \u2014 t",
     "domains": [
       "Applications"
@@ -3059,7 +3059,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.47556429438567177,
     "research_mode": "team",
     "source_exp_id": "f2700283",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-09T08:49:10.204771+00:00",
     "title": "Close Proofs: Formalized framework connecting Collatz dynami"
   },
