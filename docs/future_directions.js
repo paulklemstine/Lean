@@ -2282,6 +2282,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Quantum Gravity as Topological Quantum Field Theory\n\n## 1. Turaev-Viro State Sum Invariance\n\nThe natural next step is to formalize the Turaev-Viro state sum construction itself. Given a fusion system `F` and a triangulation `T` of a closed 3-manifold, define the partition function `Z(T) = \u03a3 (colorings) \u03a0 (6j-symbols)` and prove it is independent of the triangulation (invariance under Pachner moves). The key insight is that the pentagon equation for the fusion system \u2014 which we have already axiomatized as the `associativity` field \u2014 is precisely the algebraic identity that ensures invariance under the 2-3 Pachner move. Why now? Our formalization of fusion systems provides the exact algebraic data needed; what remains is the combinatorial machinery of triangulations and Pachner moves, which is largely independent of TQFT-specific content.\n\n## 2. Modular S-Matrix and the Full Verlinde Formula\n\nOur current formalization proves that quantum dimensions form a simultaneous eigenvector of the fusion matrices. The full Verlinde formula goes further: it asserts the existence of a unitary matrix `S` that simultaneously diagonalizes all fusion matrices, with `N_{ij}^k = \u03a3_l S_{il} S_{jl} S*_{kl} / S_{0l}`. The key insight is that the fusion matrices form a commutative semisimple algebra over \u211d (commutativity is our Theorem 1), so simultaneous diagonalization is guaranteed by the spectral theorem for commuting normal matrices. Why now? Mathlib has the spectral theorem for normal operators on finite-dimensional inner product spaces, and our commutativity result provides the critical prerequisite.\n\n## 3. Mapping Class Group Representations and Unitarity\n\nFor a genus-g surface \u03a3_g, the TQFT assigns a finite-dimensional Hilbert space V(\u03a3_g) on which the mapping class group MCG(\u03a3_g) acts by unitary transformations. The conjecture is: formalize the MCG action via Dehn twist generators and prove unitarity using the inner product induced by the quantum trace. The key insight is that the MCG representation factors through the representation of the Temperley-Lieb or Hecke algebra, and unitarity follows from the positivity of quantum dimensions (which we have axiomatized as `qdim_positive`). Why now? The algebraic framework is in place; the main gap is formalizing the Dehn twist action in terms of fusion data, which requires only the 6j-symbols and braiding structure beyond what we have.\n\n## 4. Crane-Yetter Extension to 4D and State Sum Models\n\nThe Turaev-Viro theory lives in 3 dimensions. The Crane-Yetter state sum extends it to 4 dimensions using a modular tensor category. The conjecture to test: the Crane-Yetter partition function on a closed 4-manifold depends only on the signature and Euler characteristic, and equals `D^{3\u03c3+\u03c7}` where `D` is the global dimension. The key insight is that this formula reduces to checking invariance under the 4D Pachner moves (1-5, 2-4, 3-3), which in turn reduce to algebraic identities in the fusion system that generalize our associativity axiom. Why now? Our `globalDimSq_pos` theorem and the fusion system framework provide the foundation; the 4D extension is a natural and falsifiable generalization.\n\n## 5. Quantum Double Construction and Kitaev Models\n\nGiven a finite group G, the quantum double D(G) is a Hopf algebra whose representation category is a modular tensor category. The conjecture: formalize that D(G) yields a fusion system where the fusion coefficients equal the structure constants of the center of the group algebra Z(\u2102[G]), and the global dimension squared equals |G|\u00b2. The key insight is that this provides a concrete, computable instantiation of our abstract fusion system axioms, and connects to Kitaev's toric code model of topological quantum computation. Why now? Mathlib has extensive support for finite groups, group algebras, and representation theory \u2014 the ingredients needed to construct D(G) are largely available, making this a high-feasibility target for connecting our abstract framework to concrete examples.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1118",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2bc7ced0",
+    "status": "available",
+    "timestamp": "2026-06-09T12:11:49.425824+00:00",
+    "title": "The natural next step is to formalize the Turaev-Viro state sum construction its"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
     "domains": [
       "Cryptography",
@@ -2934,7 +2949,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Kakeya Conjecture"
   },
   {
-    "consumed_by_exp_id": "eb747636",
+    "consumed_by_exp_id": "",
     "description": "Cycle 51f15183 (Q=0.427) proved 1477 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle 9ff1d7e2 (Q=0.426) proved 690 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Hausdorff dimension i",
     "domains": [
       "Applications"
@@ -2943,7 +2958,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.4772544815928248,
     "research_mode": "team",
     "source_exp_id": "51f15183",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-09T08:53:32.555216+00:00",
     "title": "Close Proofs: Close Proofs: Fractal Topology: Hausdorff Dimension as a Topological I"
   },
@@ -3033,6 +3048,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 2bc7ced0 (Q=0.425) proved 781 theorems in Pythagorean but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a 3D topological quantum field theory that captures key features of quantum gravity: prove that the partition function on a closed 3-manifold equals the Turaev-Viro invariant. Show that the ",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "sorry_fill_2bc7ced0_21abaf2b",
+    "priority_score": 0.4746406842683649,
+    "research_mode": "team",
+    "source_exp_id": "2bc7ced0",
+    "status": "available",
+    "timestamp": "2026-06-09T12:12:12.616289+00:00",
+    "title": "Close Proofs: Quantum Gravity as Topological Quantum Field Theory"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 743db091 (Q=0.424) proved 433 theorems in Geometry but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Novikov Self-Consistency as Fixed-Point Theory\n\n## 1. Parametric Continuity of Self-Consistent Timelines\n\n**Conjecture:** If `{f_t}_{t \u2208 [0,1]}` is a continuous family of contract",
     "domains": [
       "Geometry"
@@ -3074,7 +3103,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Tropical Amoebas and Ronkin Functions"
   },
   {
-    "consumed_by_exp_id": "058b0700",
+    "consumed_by_exp_id": "",
     "description": "Cycle 49409cbc (Q=0.423) proved 1773 theorems in Tropical but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that a general tropical curve of genus g has a divisor of degree d and rank r iff the Brill-Noether number \u03c1 = g - (r+1)(g-d+r) \u2265 0. Formalize the connection to classical algebraic geometry.",
     "domains": [
       "Tropical"
@@ -3083,7 +3112,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.47269246691378236,
     "research_mode": "team",
     "source_exp_id": "49409cbc",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-09T12:10:15.711670+00:00",
     "title": "Close Proofs: Tropical Brill-Noether Theory"
   },
@@ -3128,20 +3157,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T11:40:02.533660+00:00",
     "title": "Close Proofs: Close Proofs: Speculative: Computational Complexity as Physical Law"
-  },
-  {
-    "consumed_by_exp_id": "e8b6fe2b",
-    "description": "Cycle 0e08543f (Q=0.422) proved 1569 theorems in Novelty but left 9 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Entropy-Bounded Computation\n\n## What We Built\n\nThe EBC framework formalizes the connection between computational complexity and thermodynamics through Landauer's principle in Lean",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_0e08543f_c2995bbb",
-    "priority_score": 0.4716348535162887,
-    "research_mode": "team",
-    "source_exp_id": "0e08543f",
-    "status": "in_progress",
-    "timestamp": "2026-06-09T11:42:06.195524+00:00",
-    "title": "Close Proofs: The EBC framework formalizes the connection between computational comp"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,30 +1,15 @@
 /- Aether FINAL Catalog
-<<<<<<< Updated upstream
-A curated collection of 2365 of the highest-quality
+A curated collection of 2354 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2365
-=======
-A curated collection of 2487 of the highest-quality
-formally verified mathematical results from the Aether engine.
-Sorry-free. No placeholders. Auto-maintained.
-Total files: 2487
->>>>>>> Stashed changes
+Total files: 2354
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.BerggrenLorentz_Core
 import FINAL.Algebra.CellularAutomataReversibility
-import FINAL.Algebra.ComplexRandomGraph
-import FINAL.Algebra.ComputationalSoundness
-import FINAL.Algebra.Conditional
-import FINAL.Algebra.Congruence
 import FINAL.Algebra.ConnesKreimerCoproduct
-import FINAL.Algebra.ContinuedFractions_Convergents
 import FINAL.Algebra.CoordinateRingDepth
 import FINAL.Algebra.Core
-import FINAL.Algebra.Core_OpenQuestions
-import FINAL.Algebra.Counting
-import FINAL.Algebra.Cover
 import FINAL.Algebra.Covering
 import FINAL.Algebra.CramerModel
 import FINAL.Algebra.CrystallizerFrontier
@@ -693,7 +678,6 @@ import FINAL.Bridges.SheafAdvanced
 import FINAL.Bridges.SheafObstruction
 import FINAL.Bridges.SheafPersistence
 import FINAL.Bridges.Skeleton
-import FINAL.Bridges.SocialChoiceTopology_Defs
 import FINAL.Bridges.SourceCoding
 import FINAL.Bridges.Sp2nExpansionDeep
 import FINAL.Bridges.Spectral
@@ -713,7 +697,6 @@ import FINAL.Bridges.StoneChuClosureDuality
 import FINAL.Bridges.StoneDualityMLAdvanced
 import FINAL.Bridges.StoneDualityMLCore
 import FINAL.Bridges.StoneWeierstrassTropicalPolytope
-import FINAL.Bridges.StrangeLoops
 import FINAL.Bridges.StrongRayleighSpectralGap
 import FINAL.Bridges.SubdIntegralityGap
 import FINAL.Bridges.SubmodularCurvature
@@ -888,7 +871,6 @@ import FINAL.Computation.Basic
 import FINAL.Computation.Bifurcation
 import FINAL.Computation.BinarySearch
 import FINAL.Computation.BranchingPrograms
-import FINAL.Computation.CA_Universality
 import FINAL.Computation.CSPPhaseTransition
 import FINAL.Computation.CellularAlgebraicGeometry
 import FINAL.Computation.CircuitBarriers
@@ -1527,10 +1509,6 @@ import FINAL.MachineLearning.InvariantSubspace_Defs
 import FINAL.MachineLearning.InverseStereographicNeuralField
 import FINAL.MachineLearning.IterExp
 import FINAL.MachineLearning.KWWitness_Defs
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.KnotPolynomialSpectra
->>>>>>> Stashed changes
 import FINAL.MachineLearning.Knot_Jones
 import FINAL.MachineLearning.KnottedLight_Core
 import FINAL.MachineLearning.LFunctionOracle_Core
@@ -1542,10 +1520,6 @@ import FINAL.MachineLearning.LibraryOfBabel_Defs
 import FINAL.MachineLearning.LocalGlobalGeometry
 import FINAL.MachineLearning.LoebGeneralization
 import FINAL.MachineLearning.LogisticChaos
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.MPSMinCut_Defs
->>>>>>> Stashed changes
 import FINAL.MachineLearning.MahlerMeasure_Defs
 import FINAL.MachineLearning.Maximals
 import FINAL.MachineLearning.MemoryAlgebra
@@ -1644,10 +1618,6 @@ import FINAL.MachineLearning.StoneDuality_Core
 import FINAL.MachineLearning.StrangeLoops_StrangeLoops
 import FINAL.MachineLearning.StructuralCases
 import FINAL.MachineLearning.SudokuPhaseTransition_Theorems
-<<<<<<< Updated upstream
-=======
-import FINAL.MachineLearning.SumThreeCubes_Counting
->>>>>>> Stashed changes
 import FINAL.MachineLearning.SurrealTopology_OrderGap
 import FINAL.MachineLearning.SurvivorSieve
 import FINAL.MachineLearning.SymmEulerTransfer
