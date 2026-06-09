@@ -653,12 +653,13 @@ class KnowledgeExtractor:
             md5_hash = int(hashlib.md5(job.job_id.encode()).hexdigest(), 16)
         else:
             md5_hash = job.cycle_n
-        # A/B split: 60% v6, 25% v5, 15% v4
-        # v6 (correctness-first) is the current default; v5 and v4 kept for A/B comparison.
+        # A/B split: 80% v6, 15% v5, 5% v4
+        # v6 (correctness-first) dominates to accelerate A/B data collection.
+        # v5/v4 kept at reduced rates for comparison baseline.
         bucket = md5_hash % 1000
-        if bucket < 600:
+        if bucket < 800:
             phase_a_version = "v6"
-        elif bucket < 850:
+        elif bucket < 950:
             phase_a_version = "v5"
         else:
             phase_a_version = "v4"
@@ -1477,7 +1478,13 @@ Research mode: {concept.research_mode}
                         # Judges agree — blend adjudicated score with heuristic
                         job.quality_score = 0.3 * heuristic_score + 0.7 * adj_score
                     elif agreement in ("tiebreak", "disagree"):
-                        # Disagreement resolved — weight the adjudicated score more
+                        # Disagreement resolved — but cap the adversarial override.
+                        # When the structural composite is 0.7+ but the adversarial
+                        # judge scores 0.1, a delta of 0.6 is too extreme.  Limit the
+                        # adjudicated score to no less than composite * 0.5 so the
+                        # final blend stays reasonable.
+                        floor = composite * 0.5
+                        adj_score = max(adj_score, floor)
                         job.quality_score = 0.2 * heuristic_score + 0.8 * adj_score
 
                     # Store adversarial metadata
