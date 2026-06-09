@@ -1,8 +1,8 @@
 /- Aether FINAL Catalog
-A curated collection of 2956 of the highest-quality
+A curated collection of 2945 of the highest-quality
 formally verified mathematical results from the Aether engine.
 Sorry-free. No placeholders. Auto-maintained.
-Total files: 2956
+Total files: 2945
 -/
 import FINAL.Algebra.Advanced
 import FINAL.Algebra.AffineWords
@@ -470,7 +470,6 @@ import FINAL.Bridges.ContractionTropicalCryptoBridge
 import FINAL.Bridges.Core
 import FINAL.Bridges.CramerPrimeGaps
 import FINAL.Bridges.CulinaryComplexity
-import FINAL.Bridges.CupProductCryptography
 import FINAL.Bridges.CycleBirthConcentration
 import FINAL.Bridges.CycleSystolicBound
 import FINAL.Bridges.CyclotomicKnotSpectra
@@ -480,7 +479,6 @@ import FINAL.Bridges.DefectTheory
 import FINAL.Bridges.Defs
 import FINAL.Bridges.DependentUltraproduct
 import FINAL.Bridges.DetCompressionGap
-import FINAL.Bridges.DeterminantalComplexity
 import FINAL.Bridges.DiffSpectrumTheory
 import FINAL.Bridges.Dijkstra
 import FINAL.Bridges.Duality
@@ -512,7 +510,6 @@ import FINAL.Bridges.FactorRecoveryReduction
 import FINAL.Bridges.FermatNearMiss
 import FINAL.Bridges.FiberRestriction
 import FINAL.Bridges.FilteredClosureReconstruction
-import FINAL.Bridges.FiniteDescriptionComplexity
 import FINAL.Bridges.FiniteInfoTheory_Basic
 import FINAL.Bridges.FiniteInfoTheory_RateDistortion
 import FINAL.Bridges.FiniteRateDistortion_Core
@@ -732,7 +729,6 @@ import FINAL.Bridges.ProfileRecovery
 import FINAL.Bridges.ProofAlgGeomBridge
 import FINAL.Bridges.ProofAutomatonDuality
 import FINAL.Bridges.ProofCongruenceAutomata
-import FINAL.Bridges.ProofSearchComplexity
 import FINAL.Bridges.ProofSemiringDiagonalization
 import FINAL.Bridges.ProofSemiringStone
 import FINAL.Bridges.ProofSemiringStoneDuality
@@ -752,7 +748,6 @@ import FINAL.Bridges.QuantumClassicalBridge
 import FINAL.Bridges.QuantumDPPEntanglement
 import FINAL.Bridges.QuantumDeFinetti
 import FINAL.Bridges.QuantumEntanglementLinkingNumber
-import FINAL.Bridges.QuantumGraphCodes
 import FINAL.Bridges.QuantumGroundStatePreparation
 import FINAL.Bridges.QuantumLorentzianBridge
 import FINAL.Bridges.QuantumNeuralCapacity
@@ -865,7 +860,6 @@ import FINAL.Bridges.ThreeNewFrontiers
 import FINAL.Bridges.ThresholdPhaseTransition
 import FINAL.Bridges.TopologicalProofPressure
 import FINAL.Bridges.TopologicalQEC
-import FINAL.Bridges.TopologicalZKProofs
 import FINAL.Bridges.ToposCompressionDefs
 import FINAL.Bridges.ToposCompressionInvariant
 import FINAL.Bridges.TorsionChannelCodes
@@ -948,7 +942,6 @@ import FINAL.Bridges.TropicalPlancherel_Theorems
 import FINAL.Bridges.TropicalPrimeStoneDuality
 import FINAL.Bridges.TropicalProofCertificates_Basic
 import FINAL.Bridges.TropicalProofCertificates_Representation
-import FINAL.Bridges.TropicalProofComplexity
 import FINAL.Bridges.TropicalProofNetRealizationDuality
 import FINAL.Bridges.TropicalProofValuationDuality
 import FINAL.Bridges.TropicalQuantumBridge
@@ -977,7 +970,6 @@ import FINAL.Bridges.TropicalSeparationClassifier
 import FINAL.Bridges.TropicalShadowEntropy
 import FINAL.Bridges.TropicalShannonCode
 import FINAL.Bridges.TropicalSpectralCertificates
-import FINAL.Bridges.TropicalSpectralConcentration
 import FINAL.Bridges.TropicalSpectralDuality
 import FINAL.Bridges.TropicalSpectralHardness
 import FINAL.Bridges.TropicalSpectrumDuality
@@ -1263,7 +1255,6 @@ import FINAL.Cryptography.ReductionHierarchy
 import FINAL.Cryptography.ReedMuller_SchwartzZippel
 import FINAL.Cryptography.RegevReduction_Defs
 import FINAL.Cryptography.RegevReduction_Theorems
-import FINAL.Cryptography.SIDHFoundations
 import FINAL.Cryptography.SPBQuantumCrypto
 import FINAL.Cryptography.ScalarMul
 import FINAL.Cryptography.SchnorrProtocol
@@ -2253,7 +2244,6 @@ import FINAL.Pythagorean.CoveringCalculus
 import FINAL.Pythagorean.CurvatureFlow_Defs
 import FINAL.Pythagorean.CurvatureFlow_SpectralGap
 import FINAL.Pythagorean.CurvatureVariance
-import FINAL.Pythagorean.CycleBirth_Concentration
 import FINAL.Pythagorean.CycleWindowUniversality
 import FINAL.Pythagorean.DagDepthHierarchy_Theorems
 import FINAL.Pythagorean.DeepOpenProblems
@@ -2614,7 +2604,6 @@ import FINAL.Speculative.Consciousness_InformationTheoreticDepth
 import FINAL.Speculative.EMLAlgebra
 import FINAL.Speculative.EnergyLandscape
 import FINAL.Speculative.Forbidden_BrokenMirror
-import FINAL.Speculative.HurwitzQuaternions
 import FINAL.Speculative.IdempotentCollapse_ComputationalCollapse
 import FINAL.Speculative.IdempotentCollapse_Core
 import FINAL.Speculative.IdempotentCollapse_FixedPointCollapse
