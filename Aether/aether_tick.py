@@ -618,7 +618,9 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
                         f"new definitions, or a different subfield within this domain. "
                         f"Avoid repeating approaches that have been producing diminishing returns."
                     )
+                    import uuid
                     fd_mgr.add_direction(FutureDirection(
+                        id=f"auto_reset_{d['domain']}_{uuid.uuid4().hex[:8]}",
                         title=reset_title,
                         description=reset_desc,
                         domains=[d['domain']],

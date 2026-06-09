@@ -302,6 +302,10 @@ class CatalogPruner:
         # multiple subdirs).  "Bridges/Speculative/CollatzTopological/Theorems.lean"
         # becomes "CollatzTopological_Theorems.lean".
         parent_name = src.parent.name
+        # Truncate parent prefix to 30 chars to avoid absurdly long filenames
+        # (e.g. Tropical_Feynman_Calculus_via_Maslov_Dequantization_...)
+        if len(parent_name) > 30:
+            parent_name = parent_name[:27] + "___"
         dest_name = f"{parent_name}_{src.name}" if parent_name not in ("Catalog", domain) else src.name
         dest = dest_dir / dest_name
         if dest.exists():
