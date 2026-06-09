@@ -230,3 +230,5 @@
 {"timestamp": 1781030401.0309389, "experiment_id": "5a904574", "concept_title": "Belnap's FOUR₂ is the smallest non-trivial paraconsistent bilattice. A natural g", "concept_domain": "Geometry", "research_mode": "team", "quality": "partial", "quality_score": 0.4429310119047619, "catalog_references": [], "prompt_length": 20633, "files_placed": 7, "status": "discard"}
 =======
 >>>>>>> Stashed changes
+{"timestamp": 1781032468.2048147, "experiment_id": "7447269b", "concept_title": "Rigorous Lean 4 formalization of provability logic (GL)", "concept_domain": "Tropical", "research_mode": "team", "quality": "partial", "quality_score": 0.39339772243974636, "catalog_references": [], "prompt_length": 27141, "files_placed": 0, "status": "discard"}
+{"timestamp": 1781032549.0542545, "experiment_id": "4a83fa98", "concept_title": "Close Proofs: Close Proofs: Neural Tangent Kernel: Convergence of Gradient Descent", "concept_domain": "Pythagorean", "research_mode": "team", "quality": "partial", "quality_score": 0.38766439024390253, "catalog_references": [], "prompt_length": 10254, "files_placed": 0, "status": "discard"}
