@@ -12999,7 +12999,7 @@
       "depth_estimate": 3,
       "description": "Use inverse stereographic projection S^n -> R^n as a cryptographic primitive. The forward map (point on sphere to plane) is easy, but recovering the original point from the plane projection requires the pole parameter. Conjecture: Finding the pole of stereographic projection from only (image set, projection point) is as hard as the shortest vector problem in a lattice. Test: formalize the reduction from SVP to pole-finding for n=2. Impact: a new geometric foundation for lattice-based cryptography.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.6,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Geometry",
         "Cryptography"
@@ -13278,7 +13278,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem — given (a, f(a,n)), find n — requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -13464,7 +13464,7 @@
       "depth_estimate": 3,
       "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions → pseudorandom generators → pseudorandom functions → secure encryption. Prove separation results.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Cryptography",
         "Computation"
@@ -13495,7 +13495,7 @@
       "depth_estimate": 3,
       "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Cryptography",
         "Computation"
@@ -14115,7 +14115,7 @@
       "depth_estimate": 3,
       "description": "Prove that the Learning With Errors (LWE) problem is as hard as worst-case lattice problems. Formalize the Regev reduction from GapSVP to LWE and prove that the resulting encryption scheme is IND-CPA secure under the LWE assumption.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Cryptography",
         "Computation"
@@ -14146,7 +14146,7 @@
       "depth_estimate": 3,
       "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -1.0,
       "domains": [
         "Cryptography",
         "Logic"
@@ -14270,7 +14270,7 @@
       "depth_estimate": 3,
       "description": "Prove that any polynomial-time function can be securely computed in the presence of an honest majority. Formalize the GMW compiler and prove its universal composition property. Show that malicious security adds only polynomial overhead.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Cryptography",
         "Computation"
@@ -16687,7 +16687,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Learning With Errors (LWE) problem and prove its reduction from worst-case lattice problems (GapSVP). Show that the Regev encryption scheme is IND-CPA secure under LWE. Prove that key exchange based on LWE achieves forward secrecy. Compute concrete security parameters for 128-bit security.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Cryptography",
         "Computation"
@@ -16749,7 +16749,7 @@
       "depth_estimate": 3,
       "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Cryptography",
         "Computation"
@@ -16780,7 +16780,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -16811,7 +16811,7 @@
       "depth_estimate": 3,
       "description": "Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial plus one.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -16842,7 +16842,7 @@
       "depth_estimate": 3,
       "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Cryptography",
         "Physics"
@@ -16873,7 +16873,7 @@
       "depth_estimate": 3,
       "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.6,
       "domains": [
         "Cryptography",
         "Computation"
@@ -32762,6 +32762,37 @@
       "status": "available",
       "timestamp": "2026-06-09T03:20:28.661527+00:00",
       "title": "The current framework considers *static* observation systems where all predicate"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "# Future Directions: Automatic Sequences, Decidability, and Beyond\n\n## 1. Cobham's Theorem: The Multiplicative Independence Barrier\n\nCobham's theorem (1972) states that if a sequence is both j-automatic and k-automatic\nwhere log j / log k is irrational (i.e., j and k are multiplicatively independent),\nthen the sequence is eventually periodic. This is one of the deepest results in\nautomatic sequence theory and remains challenging to formalize.\n\n**The key insight is** that multiplicative independence forces the set of positions where\na given value appears to be a \"sparse\" set that cannot simultaneously be recognized by\ntwo automata with incompatible bases — unless it is ultimately periodic (a trivial case\nrecognized by all bases). The proof uses a delicate pigeonhole argument on the\nrepresentations of large integers in two different bases.\n\n**Why now?** Our formalization of k-automatic sequences with Boolean closure and the\nNerode bridge provides the algebraic infrastructure needed for Cobham's theorem. The\nkey missing piece is the number-theoretic lemma about base representations, which could\nbe attacked using Mathlib's extensive `Nat.digits` API and the Skolem-Mahler-Lech theorem\nmachinery.\n\n**Falsifiable test:** Formalize the contrapositive: if a non-periodic sequence is\nk-automatic, construct an explicit word in the complement language that the j-automaton\nmust reject. Verify on Thue-Morse (2-automatic, not 3-automatic) by checking that\nno 3-state DFAO over base 3 generates it.\n\n---\n\n## 2. Büchi-Bruyère Theorem: First-Order Decidability for Automatic Sequences\n\nThe Büchi-Bruyère theorem states that a subset S ⊆ ℕ is definable in the first-order\ntheory ⟨ℕ, +, Vₖ⟩ (where Vₖ(n) is the largest power of k dividing n) if and only if S\nis k-recognizable (i.e., the characteristic function of S is k-automatic). This gives a\ndecision procedure for *any* first-order sentence about k-automatic sequences.\n\n**The key insight is** that the logical operations (∧, ∨, ¬, ∃) correspond exactly to\nthe automata operations we have already formalized (product, union, complement,\nprojection). The existential quantifier ∃n corresponds to projecting out a track from\na multi-track automaton, which preserves regularity by the standard subset construction.\n\n**Why now?** Our Boolean closure theorems (`kAutomatic_complement`, `kAutomatic_inter`,\n`kAutomatic_union`) handle the propositional fragment. The missing piece is the projection\n(existential quantification), which requires formalizing the subset construction for\nnondeterministic automata — a well-understood algorithm that Mathlib nearly supports\nvia `Finset.powerset`.\n\n**Falsifiable test:** Express \"the Thue-Morse sequence has infinitely many zeros\" as\na first-order sentence in ⟨ℕ, +, V₂⟩ and verify the decision procedure outputs TRUE.\nThis should reduce to checking that a specific automaton accepts at least one string,\nwhich we can do by `DFAO.value_appears_implies_in_output_image`.\n\n---\n\n## 3. Morphic Decidability: Beyond the Automatic Frontier\n\nThe decidability of the zero-in-sequence problem for morphic sequences (fixed points of\narbitrary — not necessarily uniform — morphisms) is a major open problem. Durand (2013)\nshowed decidability for primitive morphisms; the general case remains open.\n\n**The key insight is** that non-uniform morphisms can produce sequences whose \"growth\nrates\" vary across positions, creating a tension between the local regularity of the\nmorphism and the global structure of the sequence. For uniform morphisms, the growth\nis exactly kⁿ (our `AlphabetMorphism.iterate_length_uniform` in the existing catalog),\nwhich makes the connection to DFAOs direct. For non-uniform morphisms, the connection\ngoes through Pansiot's theorem on the growth rates of morphic sequences.\n\n**Why now?** Our formalization of the k-kernel closure theorem shows that uniform\nmorphisms stay within the automatic framework. The bridge to non-uniform morphisms\nrequires formalizing Pansiot's classification (polynomial, exponential, intermediate\ngrowth) and Durand's reduction to the uniform case for primitive morphisms.\n\n**Falsifiable test:** Construct a non-uniform morphism σ on {0,1,2} with σ(0) = 01,\nσ(1) = 2, σ(2) = 0 and verify that the fixed point starting from 0 contains all three\nletters. Then attempt to formalize the decidability proof for this specific morphism,\nchecking if BFS on the \"reachability graph of letter occurrences\" terminates.\n\n---\n\n## 4. Christol's Theorem: The Algebraic-Automatic Bridge\n\nChristol's theorem (1979) states that a formal power series f(x) = Σ aₙxⁿ over 𝔽_p is\nalgebraic over 𝔽_p(x) if and only if the coefficient sequence (aₙ) is p-automatic. This\nis the deepest known connection between automata theory and algebra.\n\n**The key insight is** that the p-kernel of a p-automatic sequence corresponds exactly to\nthe conjugates of the algebraic element under the Frobenius endomorphism x ↦ xᵖ. The\nfiniteness of the kernel (which we formalize via `kKernel`) translates to the algebraic\nelement having finite degree over 𝔽_p(x). Our kernel closure theorem (`kKernel_closed`)\nis a key ingredient — it shows the kernel is closed under the operation that corresponds\nto applying Frobenius.\n\n**Why now?** Mathlib has extensive support for formal power series (`PowerSeries`),\nfinite fields (`ZMod p`), and algebraic extensions. The kernel machinery in our\nformalization provides the automata-theoretic side. The missing bridge is the\nexplicit construction of the minimal polynomial from the kernel elements, which\nrequires combining `PowerSeries` with `Polynomial` over `ZMod p`.\n\n**Falsifiable test:** Verify Christol's theorem for the Thue-Morse sequence mod 2:\nthe generating function T(x) = Σ tₙxⁿ over 𝔽₂ satisfies T² + T + x/(1+x)² = 0\n(a degree-2 algebraic equation), consistent with Thue-Morse being 2-automatic.\nCompute the 2-kernel {T(x), T(x²)+x·T(x²)} and verify it has exactly 2 elements.\n\n---\n\n## 5. Automatic Sequences in Cryptographic Applications\n\nAutomatic sequences have natural applications in pseudorandom generation and\nstream ciphers. The Rudin-Shapiro sequence (2-automatic) has optimal correlation\nproperties, and the sub-word complexity of automatic sequences (Θ(n) for non-periodic\nones) provides a lower bound on unpredictability.\n\n**The key insight is** that our Boolean closure theorem implies that any Boolean\ncombination of automatic pseudorandom generators is still automatic — and therefore\nstill has decidable properties. This means that certain classes of stream cipher\nconstructions can be *verified* to satisfy security properties (like balance and\ncorrelation immunity) by reduction to finite automaton checks, rather than relying\non heuristic testing.\n\n**Why now?** Our `kAutomatic_boolean_algebra` theorem shows that Boolean combinations\npreserve automaticity. Combined with `DFAO.nerode_classes_bounded`, we can bound the\nstate complexity of combined generators. The connection to correlation immunity requires\nformalizing the Walsh-Hadamard transform of automatic sequences, which has been studied\nbut not formalized.\n\n**Falsifiable test:** Construct the Rudin-Shapiro DFAO (4 states) and verify that\nits auto-correlation function is bounded by O(√n), using our DFAO framework to compute\ncorrelations for all inputs up to length 20. Compare with the Thue-Morse sequence\n(which has worse correlation properties).\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Computation"
+      ],
+      "id": "fd_1057",
+      "last_attempt_time": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "eb24b008",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/eb24b008",
+      "status": "available",
+      "timestamp": "2026-06-09T03:30:25.926079+00:00",
+      "title": "Cobham's theorem (1972) states that if a sequence is both j-automatic and k-auto"
     },
     {
       "ambition_level": "extension",
