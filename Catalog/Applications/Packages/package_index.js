@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-10T12:52:58Z",
+    "domain": "Applications",
+    "exp_id": "13ee828e",
+    "filename": "close_proofs_stereographic_capacity_theory_packing.json",
+    "pkg_num": 40,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
+  },
+  {
     "date": "2026-06-10T12:52:32Z",
     "domain": "Bridges",
     "exp_id": "00b42e00",
     "filename": "bridge_tropical_geometry_as_a_limit_of_classical_a.json",
     "pkg_num": 39,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7349600000000001,
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
   {
@@ -468,6 +478,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Anti-Mathematics: Systematic Negation of ZFC Axioms"
   },
+  "close_proofs_stereographic_capacity_theory_packing.json": {
+    "domain": "Applications",
+    "exp_id": "13ee828e",
+    "source_exp_ids": [
+      "720cb173"
+    ],
+    "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
+  },
   "close_proofs_the_clique_complex_g_admits_a_natural.json": {
     "domain": "Shared",
     "exp_id": "a732c4a4",
@@ -745,7 +763,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 272,
       "id": "rigorous_algebraic_foundations_for_probability_t",
       "primary_domain": "Bridges",
       "priority_score": 0.66968,
@@ -756,7 +774,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 275,
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
       "primary_domain": "Bridges",
       "priority_score": 0.16743922555663115,
@@ -767,7 +785,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08T19:03:25Z",
       "domain": "Applications",
-      "hue": 95,
+      "hue": 90,
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
       "primary_domain": "Bridges",
       "priority_score": 0.62584,
@@ -778,7 +796,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 90,
       "id": "arithmetic_mirror_symmetry_for_calabi_yau",
       "primary_domain": "Bridges",
       "priority_score": 0.37070314951345035,
@@ -789,7 +807,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Shared",
-      "hue": 90,
+      "hue": 270,
       "id": "causal_integration_algebra__a_rigorous_lattice_t",
       "primary_domain": "Bridges",
       "priority_score": 0.3940269741676302,
@@ -800,7 +818,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 92,
+      "hue": 271,
       "id": "dream_logic_non_monotone_reasoning_where_contradic",
       "primary_domain": "Bridges",
       "priority_score": 0.3800936166615896,
@@ -811,7 +829,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 91,
+      "hue": 270,
       "id": "entropy_bounded_computation_ebc_framew",
       "primary_domain": "Bridges",
       "priority_score": 0.4813003957285953,
@@ -822,7 +840,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Computation",
-      "hue": 90,
+      "hue": 271,
       "id": "impossible_geometries_where_parallel_lines_converg",
       "primary_domain": "Computation",
       "priority_score": 0.47002089837753586,
@@ -833,7 +851,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 92,
+      "hue": 270,
       "id": "p_vs_np_problem",
       "primary_domain": "Bridges",
       "priority_score": 0.36869585004880756,
@@ -855,7 +873,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 92,
+      "hue": 271,
       "id": "the_current_framework_models_theories_by_their_set",
       "primary_domain": "Bridges",
       "priority_score": 0.38829994947581153,
@@ -866,7 +884,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Algebra",
-      "hue": 100,
+      "hue": 92,
       "id": "the_current_zaslavsky_type_bound_proves__kd_cnk__n",
       "primary_domain": "Algebra",
       "priority_score": 0.36429437889326377,
@@ -877,7 +895,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Pythagorean",
-      "hue": 275,
+      "hue": 292,
       "id": "this_document_describes_five_research_conjectures_",
       "primary_domain": "Pythagorean",
       "priority_score": 0.36626310656657907,
@@ -888,7 +906,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T10:06:05Z",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 270,
       "id": "self_modifying_code_that_cannot_be_stopped",
       "primary_domain": "Bridges",
       "priority_score": 0.5661575824175824,
@@ -921,7 +939,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T15:47:22Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 91,
       "id": "logic_physics_bridge_consistency_of_physical_theor",
       "primary_domain": "Bridges",
       "priority_score": 0.3852481001709541,
@@ -932,7 +950,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T15:49:32Z",
       "domain": "Computation",
-      "hue": 270,
+      "hue": 275,
       "id": "rigorous_formal_foundations_for_the_collatz_conj",
       "primary_domain": "Computation",
       "priority_score": 0.37138729946524063,
@@ -943,7 +961,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T17:01:57Z",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 275,
       "id": "formal_obstruction_theory_for_eml_solvability_of_l",
       "primary_domain": "Bridges",
       "priority_score": 0.38646674999999997,
@@ -954,7 +972,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T18:34:57Z",
       "domain": "MachineLearning",
-      "hue": 91,
+      "hue": 272,
       "id": "formalized_bridge_between_relu_neural_network_deci",
       "primary_domain": "MachineLearning",
       "priority_score": 0.45138134445121236,
@@ -965,7 +983,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T18:38:15Z",
       "domain": "Geometry",
-      "hue": 95,
+      "hue": 271,
       "id": "belnaps_four_is_the_smallest_non_trivial_paraconsi",
       "primary_domain": "Geometry",
       "priority_score": 0.4429310119047619,
@@ -976,7 +994,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T19:54:52Z",
       "domain": "Bridges",
-      "hue": 272,
+      "hue": 90,
       "id": "cryptographic_hash_functions_collision_resistance_",
       "primary_domain": "Bridges",
       "priority_score": 0.3790869106263195,
@@ -987,7 +1005,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T19:56:17Z",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 270,
       "id": "learning_with_errors_hardness_reductions",
       "primary_domain": "Bridges",
       "priority_score": 0.36850115677321155,
@@ -998,7 +1016,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T19:57:39Z",
       "domain": "Bridges",
-      "hue": 91,
+      "hue": 95,
       "id": "diffusion_models_as_stochastic_differential_equati",
       "primary_domain": "Bridges",
       "priority_score": 0.397392211299052,
@@ -1009,7 +1027,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T20:36:49Z",
       "domain": "Bridges",
-      "hue": 271,
+      "hue": 92,
       "id": "the_exponential_decay_bound_diffusionalphabar_exp_",
       "primary_domain": "Bridges",
       "priority_score": 0.3512538461538462,
@@ -1031,7 +1049,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T07:42:02Z",
       "domain": "Computation",
-      "hue": 92,
+      "hue": 272,
       "id": "integrated_information_via_tensor_networks",
       "primary_domain": "Computation",
       "priority_score": 0.52264,
@@ -1042,7 +1060,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T07:42:32Z",
       "domain": "Novelty",
-      "hue": 272,
+      "hue": 270,
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
       "primary_domain": "Bridges",
       "priority_score": 0.4771938461538462,
@@ -1053,7 +1071,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T07:42:51Z",
       "domain": "Physics",
-      "hue": 95,
+      "hue": 271,
       "id": "quantum_error_correction_threshold_the_eastin_knil",
       "primary_domain": "Physics",
       "priority_score": null,
@@ -1064,7 +1082,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T07:46:48Z",
       "domain": "Pythagorean",
-      "hue": 271,
+      "hue": 90,
       "id": "close_proofs_close_proofs_tropical_compactificatio",
       "primary_domain": "Pythagorean",
       "priority_score": 0.44479402985074634,
@@ -1075,7 +1093,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T09:30:42Z",
       "domain": "Algebra",
-      "hue": 92,
+      "hue": 91,
       "id": "algebraic_statistics_markov_bases_for_contingency_",
       "primary_domain": "Algebra",
       "priority_score": 0.5663674620390456,
@@ -1086,7 +1104,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T10:47:26Z",
       "domain": "Bridges",
-      "hue": 100,
+      "hue": 90,
       "id": "the_ebc_framework_now_spans_three_files_with_0_sor",
       "primary_domain": "Bridges",
       "priority_score": 0.4617939212432683,
@@ -1097,7 +1115,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T10:50:35Z",
       "domain": "Bridges",
-      "hue": 91,
+      "hue": 275,
       "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
       "primary_domain": "Bridges",
       "priority_score": 0.7368,
@@ -1108,7 +1126,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T10:51:54Z",
       "domain": "EML",
-      "hue": 92,
+      "hue": 90,
       "id": "close_proofs_dream_logic_non_monotone_reasoning_wh",
       "primary_domain": "EML",
       "priority_score": 0.4572079470198676,
@@ -1119,7 +1137,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T11:38:41Z",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 90,
       "id": "quasi_symmetric_maps_generalize_bi_lipschitz_maps_",
       "primary_domain": "Bridges",
       "priority_score": 0.75224,
@@ -1141,7 +1159,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T12:15:50Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 91,
       "id": "consciousness_as_integrated_information_mathematic",
       "primary_domain": "Bridges",
       "priority_score": 0.44479402985074634,
@@ -1155,10 +1173,21 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "bridge_tropical_geometry_as_a_limit_of_classical_a",
       "primary_domain": "Bridges",
+      "priority_score": 0.7349600000000001,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
+    },
+    {
+      "date": "2026-06-10T12:52:58Z",
+      "domain": "Applications",
+      "hue": 90,
+      "id": "close_proofs_stereographic_capacity_theory_packing",
+      "primary_domain": "Bridges",
       "priority_score": null,
       "quality": "unrated",
       "shape": "icosahedron",
-      "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
+      "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
     }
   ]
 };
