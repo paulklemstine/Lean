@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "3766d88d",
     "filename": "consciousness_as_integrated_information_mathematic.json",
     "pkg_num": 38,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.44479402985074634,
     "title": "Consciousness as Integrated Information: Mathematical Foundations"
   },
   {
@@ -1126,8 +1126,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "consciousness_as_integrated_information_mathematic",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.44479402985074634,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Consciousness as Integrated Information: Mathematical Foundations"
     }
