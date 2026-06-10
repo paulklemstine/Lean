@@ -605,7 +605,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Temporal Logic of Proofs: When You Prove Something Matters"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c5e28125",
     "description": "Sphere packing on S^n (how many non-overlapping caps of radius r fit?) is a fundamental geometric problem with applications to error-correcting codes and signal processing. Use stereographic projection to transform spherical packing to a weighted packing problem on R^n. Define the stereographic packing number N(n,r) as the maximum number of non-overlapping spherical caps of geodesic radius r that fit on S^n. Conjecture: N(n,r) satisfies N(n,r) = (1+O(r^2)) * V_n/V_n(r) where V_n is the volume of S^n and V_n(r) is the volume of a cap, and the O(r^2) correction is explicitly computable from the conformal factor (1+|x|^2)^2/4 of the stereographic projection. More precisely, N(n,r) <= (2/cos(r))^n * V_n/V_n(r). The factor (2/cos(r))^n comes from the maximum conformal distortion of the stereographic projection: a cap of geodesic radius r is mapped to a Euclidean disk whose area differs from the cap area by at most this factor. Test: prove this bound for n=2 and verify it against the known optimal packings (icosahedral: N(2,pi/6) = 12, cuboctahedral: N(2,pi/4) = 6, tetrahedral: N(2,pi/3) = 4). Impact: explicit, computable sphere packing bounds on spheres via classical packing theory on R^n, with applications to spherical codes and molecular geometry.",
     "domains": [
       "Geometry",
@@ -615,12 +615,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:06.888323+00:00",
     "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d3163cbb",
     "description": "Prove that the connective constant for the self-avoiding walk on Z\u00b2 equals (2+\u221a2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
     "domains": [
       "Computation",
@@ -630,7 +630,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:12.561612+00:00",
     "title": "Self-Avoiding Walk: Connective Constant"
   },
@@ -1577,7 +1577,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Our framework shows that soundness implies consistency but not vice versa, with "
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3ed3610d",
     "description": "# Future Directions: Generalization Bounds via Rademacher Complexity\n\n## 1. Sauer-Shelah Lemma (Full Formalization)\n\nThe natural next step is to formalize the Sauer-Shelah lemma: if a family F of subsets of [n] does not shatter any set of size d+1, then |F| \u2264 \u2211_{i=0}^d C(n,i). Combined with our `binomial_partial_sum_le_pow`, this would immediately yield the classical VC-dimension growth bound |F| \u2264 (n+1)^d.\n\nThe key insight is that the standard double-induction proof (on n and the family size) should decompose cleanly into Lean lemmas by splitting the family at a distinguished element \u2014 the \"shifting\" step creates two sub-families on n-1 elements whose union is controlled by induction.\n\nWhy now? We already have both the polynomial bound `binomial_partial_sum_le_pow` and the shattering lower bound `shattering_card_lower_bound`. The Sauer-Shelah lemma is the missing piece that connects VC-dimension (a semantic property about shattering) to growth function bounds (a counting property), completing the combinatorial chain.\n\n## 2. Massart's Finite Lemma and Empirical Rademacher Complexity\n\nFormalize the definition of empirical Rademacher complexity for finite hypothesis classes over finite samples, and prove Massart's lemma: for a finite set A \u2286 \u211d^n with |A| = m and max_{a \u2208 A} \u2016a\u2016\u2082 \u2264 c, the empirical Rademacher complexity satisfies R\u0302(A) \u2264 c\u221a(2 log m / n).\n\nThe key insight is that Massart's lemma follows from a clean application of Hoeffding's inequality to the moment generating function of the Rademacher average, then optimizing the exponential parameter. The proof requires only basic properties of expectations over the uniform distribution on {-1,+1}^n, which can be modeled as finite sums without full measure theory.\n\nWhy now? Mathlib's `MeasureTheory.ProbabilityMeasure` and its `Finset`-based expectations are now mature enough to support the discrete probability calculations. Our growth function bounds provide the combinatorial input (log |F| \u2264 d log(n+1)) that feeds into Massart's lemma to yield the VC-dimension \u2192 Rademacher complexity pipeline.\n\n## 3. Rademacher Contraction Principle\n\nFormalize the Ledoux-Talagrand contraction principle: if \u03c6 : \u211d \u2192 \u211d is L-Lipschitz with \u03c6(0) = 0, then the Rademacher complexity of {\u03c6 \u2218 f : f \u2208 F} is at most L \u00b7 R(F). This is the key tool for extending Rademacher bounds from linear to nonlinear hypothesis classes (e.g., neural networks with Lipschitz activations).\n\nThe key insight is that the contraction principle reduces to a symmetrization argument combined with the Lipschitz property. In the finite/discrete setting, this becomes a clean inequality about weighted sums of Rademacher random variables, avoiding the full machinery of sub-Gaussian processes.\n\nWhy now? The contraction principle would bridge our combinatorial bounds to modern deep learning theory, where the relevant hypothesis classes are compositions of Lipschitz maps. With the base Rademacher framework formalized, adding contraction is the most impactful single extension.\n\n## 4. Margin-Based Generalization Bound for Linear Classifiers\n\nFormalize the margin bound: for linear classifiers with \u2016w\u2016 \u2264 W acting on data with \u2016x\u2016 \u2264 B and margin \u03b3 > 0, the Rademacher complexity is O(WB/\u03b3\u221an), independent of the ambient dimension. This is strictly tighter than the VC-dimension bound (which scales with the dimension) for high-dimensional problems.\n\nThe key insight is that the margin constraint restricts the effective hypothesis class to a ball in function space, whose covering number is controlled by the ratio WB/\u03b3 rather than by the ambient dimension. The proof requires formalizing \u03b5-covers and Dudley's entropy integral in the finite-dimensional case.\n\nWhy now? Our `polynomial_beats_exponential_eventually` theorem demonstrates that structural constraints improve generalization bounds. The margin bound is the prototypical example where Rademacher complexity yields dimension-free bounds that VC-dimension cannot match, directly supporting the paper's thesis that Rademacher bounds dominate VC bounds for structured classes.\n\n## 5. Kernel Rademacher Complexity via Reproducing Kernel Hilbert Spaces\n\nExtend the margin bound to kernel methods by formalizing: for a kernel K with tr(K) \u2264 T acting on n data points, the Rademacher complexity of the induced hypothesis class satisfies R\u0302(F) \u2264 \u221a(T/n). This subsumes linear classifiers (K = identity) and captures nonlinear classifiers via the kernel trick.\n\nThe key insight is that the Rademacher complexity of the unit ball in a reproducing kernel Hilbert space can be computed exactly using the eigenvalues of the kernel matrix, yielding R\u0302 = \u221a(tr(K\u0303)/n) where K\u0303 is the centered kernel matrix. This converts an infinite-dimensional optimization problem into a finite linear algebra computation.\n\nWhy now? Mathlib's `InnerProductSpace` and spectral theory for self-adjoint operators on finite-dimensional spaces provide the foundation. Combined with our empirical Rademacher framework, this would give the first fully-formalized proof that kernel methods enjoy dimension-independent generalization guarantees \u2014 a foundational result in statistical learning theory that has never been machine-verified.\n",
     "domains": [
       "Algebra",
@@ -1587,7 +1587,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "de162ecf",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T10:48:17.337584+00:00",
     "title": "The natural next step is to formalize the Sauer-Shelah lemma: if a family F of s"
   },
@@ -2222,7 +2222,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Foundational analytic infrastructure for formalizing"
   },
   {
-    "consumed_by_exp_id": "3a71726a",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Diffusion Model Noise Schedule Algebra\n\nThis document outlines research directions extending the formalized noise schedule\ntheory in `Pythagorean/DiffusionSchedule.lean`, which establishes the exponential\ndecay bound, Gaussian KL properties, and SNR monotonicity for discrete diffusion\nprocesses.\n\n## 1. KL Divergence Convergence Rate Along the Forward Process\n\nThe exponential decay bound `diffusionAlphaBar_exp_bound` shows \u1fb1_t \u2264 exp(-\u2211\u03b2_i),\nbut does not directly quantify how fast the forward marginal converges to the\nstationary Gaussian in KL divergence. The conjecture: for a point-mass initial\ndistribution at x\u2080, the KL to standard Gaussian satisfies\nKL(p_t \u2016 N(0,1)) \u2264 C(x\u2080) \u00b7 \u1fb1_t where C(x\u2080) depends polynomially on |x\u2080|.\n\nThe key insight is that the data processing inequality for Gaussian channels gives\na per-step contraction factor of exactly (1-\u03b2_t) in KL, and telescoping yields\nthe \u1fb1_t bound. Why now? We have `univGaussianKL_nonneg` and the full noise schedule\nmachinery; the missing piece is the data processing inequality for scalar Gaussian\nchannels, which is a clean finite-dimensional statement not requiring abstract\nmeasure theory.\n\n**Falsifiable test**: Define `diffusionKLToTarget sched x\u2080 t` using `univGaussianKL`\nwith the forward marginal parameters (\u221a\u1fb1_t\u00b7x\u2080, \u221a(1-\u1fb1_t)) against N(0,1), and prove\nthe bound `diffusionKLToTarget sched x\u2080 t \u2264 (1 + x\u2080\u00b2) * diffusionAlphaBar \u03b2 t / 2`.\n\n## 2. Optimal Linear Noise Schedule\n\nFor a linear schedule \u03b2_t = \u03b2_min + t\u00b7(\u03b2_max - \u03b2_min)/(T-1), the cumulative noise\n\u2211\u03b2_i = T\u00b7(\u03b2_min + \u03b2_max)/2 grows linearly, so \u1fb1_T \u2264 exp(-T\u00b7(\u03b2_min+\u03b2_max)/2).\nThe conjecture: among all schedules with fixed endpoints \u03b2_0 = \u03b2_min, \u03b2_{T-1} = \u03b2_max,\nthe linear schedule minimizes max_t |SNR_t - SNR_{t-1}|, i.e., it produces the most\nuniform SNR spacing.\n\nThe key insight is that uniform SNR spacing corresponds to equal per-step information\nloss, and the linear schedule achieves this when \u03b2_t varies slowly relative to \u1fb1_t.\nWhy now? The `diffusionSNR_strictAnti` theorem provides the monotonicity framework,\nand the explicit SNR formula `\u1fb1_t/(1-\u1fb1_t)` makes the optimization problem purely\nalgebraic over finite products.\n\n**Falsifiable test**: For T=3 with \u03b2_0=0.1, \u03b2_2=0.3, compare SNR spacing for linear\nvs. geometric schedules using `#eval` on rational approximations.\n\n## 3. Reverse Process Step as KL Minimization\n\nEach reverse diffusion step approximates the posterior p(x_{t-1}|x_t), which for\nGaussian forward process is itself Gaussian with mean and variance determined by\n\u1fb1_t, \u1fb1_{t-1}, and \u03b2_t. The conjecture: the DDPM reverse step with predicted noise\n\u03b5_\u03b8 is the unique minimizer of `univGaussianKL` between the true posterior and a\nGaussian with the predicted mean, holding variance fixed at the DDPM schedule\n\u03c3_t\u00b2 = \u03b2_t.\n\nThe key insight is that `univGaussianKL_self` shows KL=0 when the predicted noise\nexactly matches the true noise, and `univGaussianKL_nonneg` provides the lower bound.\nWhy now? The `univGaussianKL` definition and its properties give us the variational\ncharacterization; the remaining work is expressing the DDPM posterior in terms of the\nnoise schedule parameters using `diffusionAlphaBar_succ`.\n\n**Falsifiable test**: Prove that for the posterior mean formula\n\u03bc_\u03b8 = (x_t - \u03b2_t/\u221a(1-\u1fb1_t)\u00b7\u03b5_\u03b8) / \u221a(1-\u03b2_t), setting \u03b5_\u03b8 = \u03b5 (the true noise)\nyields `univGaussianKL ... = 0`.\n\n## 4. Continuous-Time Limit of the Exponential Bound\n\nAs T \u2192 \u221e with \u03b2_t = \u03b2/T for constant \u03b2, the discrete \u1fb1_T = (1-\u03b2/T)^T converges to\nexp(-\u03b2). The exponential bound `diffusionAlphaBar_exp_bound` becomes tight in this\nlimit. The conjecture: |\u1fb1_T - exp(-\u03b2)| \u2264 \u03b2\u00b2/(2T) for the constant schedule \u03b2_t = \u03b2/T,\nproviding a quantitative convergence rate.\n\nThe key insight is that log(1-\u03b2/T) = -\u03b2/T - \u03b2\u00b2/(2T\u00b2) + O(T\u207b\u00b3), so\nlog \u1fb1_T = T\u00b7log(1-\u03b2/T) = -\u03b2 - \u03b2\u00b2/(2T) + O(T\u207b\u00b2), giving the rate.\nWhy now? The `one_sub_le_exp_neg` inequality already captures one direction; the\nother direction (lower bound on 1-x vs exp(-x)) is a symmetric argument using\nthe Taylor remainder of the exponential.\n\n**Falsifiable test**: Prove that for \u03b2_t = \u03b2/T with 0 < \u03b2 < T, we have\nexp(-\u03b2 - \u03b2\u00b2/T) \u2264 \u1fb1_T \u2264 exp(-\u03b2).\n\n## 5. Multi-Dimensional Extension: Anisotropic Noise Schedules\n\nThe current theory treats scalar noise. In practice, diffusion models operate in\n\u211d^d with potentially different noise schedules per coordinate (anisotropic noise).\nThe conjecture: for coordinate-wise schedules \u03b2_t^(j), the multivariate Gaussian KL\ndecomposes as a sum: KL(p_t \u2016 N(0,I)) = \u2211_j KL_j where KL_j depends only on\nthe j-th coordinate's schedule.\n\nThe key insight is that independent coordinate-wise noise preserves the product\nstructure of the marginal, so the KL additivity follows from the chain rule for\nKL divergence applied to independent coordinates. Why now? Our `univGaussianKL`\nis the building block; the extension to finite products requires only `Finset.sum`\nof the scalar KL terms, which connects naturally to the existing\n`diffusionAlphaBar_exp_bound` applied coordinate-wise.\n\n**Falsifiable test**: Define `multiGaussianKL (d : \u2115) (\u03bc\u2081 \u03c3\u2081 \u03bc\u2082 \u03c3\u2082 : Fin d \u2192 \u211d)`\nas `\u2211 j, univGaussianKL (\u03bc\u2081 j) (\u03c3\u2081 j) (\u03bc\u2082 j) (\u03c3\u2082 j)` and prove non-negativity\nfrom `univGaussianKL_nonneg` via `Finset.sum_nonneg`.\n",
     "domains": [
       "Algebra",
@@ -2232,7 +2232,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "ff75cf9e",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-09T20:33:51.636876+00:00",
     "title": "This document outlines research directions extending the formalized noise schedu"
   },
@@ -2252,7 +2252,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Foundational information-theoretic framework for BB84"
   },
   {
-    "consumed_by_exp_id": "28b32940",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Clique Complex Theory in Lean 4\n\n## 1. Simplicial Chain Complexes and Homology Groups\n\nThe natural next step is to construct the simplicial chain complex from our `ASC'` type. The k-th chain group C_k is the free abelian group on oriented k-simplices (ordered (k+1)-tuples of vertices spanning a face), and the boundary operator \u2202_k : C_k \u2192 C_{k-1} is defined by the alternating sum of face deletions: \u2202_k[v_0, ..., v_k] = \u03a3\u1d62 (-1)^i [v_0, ..., v\u0302\u1d62, ..., v_k].\n\nThe key insight is that Mathlib's `FreeAbelianGroup` and `HomologicalComplex` provide the algebraic scaffolding \u2014 what's missing is the combinatorial construction of \u2202 from our face data, and the proof that \u2202\u00b2 = 0 (which follows from the double-alternating-sign cancellation). Our `ASC'.link` and `ASC'.down_closed` already encode exactly the face-deletion structure needed.\n\nWhy now? The `cliqueComplex'` construction and `link` operator are formalized and compiled. The boundary map is a concrete linear map on free abelian groups, and \u2202\u00b2 = 0 is a finite combinatorial identity \u2014 no deep analysis is needed, only careful bookkeeping of signs and indices.\n\n## 2. Flag Complex Characterization (Converse Direction)\n\nWe proved that every clique complex satisfies the flag property (`cliqueComplex_isFlag`). The converse \u2014 that every flag complex IS the clique complex of its 1-skeleton \u2014 would complete the characterization theorem: K is a flag complex \u27fa K = \u0394(Skel\u2081(K)).\n\nThe key insight is that the forward direction (our theorem) shows \u0394(G) \u2286 K for any flag complex K with 1-skeleton G, while the converse direction K \u2286 \u0394(G) requires showing that if \u03c3 is a face of K, then all 2-element subsets of \u03c3 are faces (by downward closure), hence all pairs are 1-skeleton-adjacent, and by the flag property \u03c3 \u2208 \u0394(Skel\u2081(K)). The proof is a one-line appeal to downward closure.\n\nWhy now? Both `oneSkeletonGraph` and `isFlag` are defined and the forward direction compiles. The converse is a straightforward application of `down_closed` and the definitions.\n\n## 3. Persistent Homology via Vietoris-Rips Filtrations\n\nOur `vietorisRips_mono` theorem establishes that the Vietoris-Rips complex is monotone in the scale parameter \u03b5, giving a filtration VR(X, \u03b5\u2081) \u2286 VR(X, \u03b5\u2082) \u2286 \u22ef for \u03b5\u2081 \u2264 \u03b5\u2082. Combined with the chain complex construction from Direction 1, this would yield a filtered chain complex whose persistent homology captures topological features at multiple scales.\n\nThe key insight is that once \u2202 is defined and \u2202\u00b2 = 0 is proved, the persistent homology module is simply the diagram of homology groups H_k(VR(X, \u03b5\u1d62)) connected by the maps induced by inclusion. Mathlib's `CategoryTheory.Functor` framework can model this as a functor from (\u211d, \u2264) to abelian groups.\n\nWhy now? The filtration monotonicity is proven. The remaining gap is the chain complex construction (Direction 1), after which persistent homology follows by functoriality.\n\n## 4. Tur\u00e1n-Type Bounds on f-Vectors of Clique Complexes\n\nOur `ASC.fVector_le_choose` gives f_k \u2264 C(n, k+1), tight only for complete graphs. For graphs with bounded clique number \u03c9(G) \u2264 r, we have f_k = 0 for all k \u2265 r. The natural question is: what is the maximum f_k over all n-vertex graphs with \u03c9(G) \u2264 r? The answer should be given by the Tur\u00e1n graph T(n, r).\n\nThe key insight is that `cliqueComplex_face_card_le_of_cliqueFree` already gives the vanishing result (f_k = 0 for k \u2265 r when G is (r+1)-clique-free). The extremal question \u2014 showing that the Tur\u00e1n graph maximizes f_k subject to \u03c9 \u2264 r \u2014 requires connecting our clique complex f-vector to Tur\u00e1n's theorem, which has partial Mathlib support.\n\nWhy now? The face-card bound and clique-free dimension bound are proven. The Tur\u00e1n graph is a concrete, constructible object, and its face counts are computable binomial expressions.\n\n## 5. Nerve Lemma and Good Cover Theorem\n\nThe nerve of a finite open cover {U_i} is the simplicial complex whose faces are the subsets I with \u2229_{i \u2208 I} U_i \u2260 \u2205. The Nerve Lemma states that if the cover is \"good\" (all non-empty intersections are contractible), then the nerve is homotopy-equivalent to the union \u222a U_i.\n\nThe key insight is that the clique complex \u0394(G) is itself the nerve of the cover of the edge set by maximal cliques. Formalizing this perspective would connect our combinatorial ASC definitions to the topological homotopy type, establishing that clique complexes are not just combinatorial objects but carry genuine topological information via the nerve construction.\n\nWhy now? Our `ASC'` type with its `link` and `isFlag` infrastructure provides the combinatorial skeleton. The nerve construction is a concrete functor from covers to simplicial complexes, and its formalization would be the first verified nerve lemma in Lean 4.\n",
     "domains": [
       "Algebra",
@@ -2262,7 +2262,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "9fe7196f",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-09T20:42:12.920051+00:00",
     "title": "The natural next step is to construct the simplicial chain complex from our `ASC"
   },
@@ -2778,21 +2778,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
-    "domains": [
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "fd_0502",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T21:01:46.684855+00:00",
-    "title": "Diffusion Models as Stochastic Differential Equations"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize the Fourier transform as a natural transformation between the category of locally compact abelian groups and the category of their dual groups. Prove Pontryagin duality as an equivalence of categories. Show that the uncertainty principle is a categorical statement: the functor Hom(-,R/Z) is contravariant.",
     "domains": [
       "Bridges",
@@ -2807,7 +2792,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Fourier Analysis as a Functor"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cfdc7072",
     "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
     "domains": [
       "Cryptography",
@@ -2817,7 +2802,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.042519+00:00",
     "title": "Elliptic Curve Cryptography: Weil Pairing and BLS Signatures"
   },
@@ -3052,7 +3037,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Proof Phase Transitions: Sharp Thresholds in Random Formal Theories"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "841f6268",
     "description": "Cycle 0f684a27 (Q=0.428) proved 1063 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove the Kakeya conjecture: a Besicovitch set in R\u207f has Hausdorff dimension n. Formalize the connection to restriction estimates and additive combinatorics.",
     "domains": [
       "Applications"
@@ -3061,7 +3046,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.4775389540180618,
     "research_mode": "team",
     "source_exp_id": "0f684a27",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T10:38:39.862192+00:00",
     "title": "Close Proofs: Kakeya Conjecture"
   },
@@ -3164,7 +3149,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Tropical Convexity: Helly, Caratheodory, and Radon"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a732c4a4",
     "description": "Cycle 9fe7196f (Q=0.421) proved 371 theorems in Shared but left 11 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Clique Complex Theory in Lean 4\n\n## 1. Homology of Clique Complexes via Chain Complexes\n\nThe clique complex \u0394(G) admits a natural chain complex over \u2124: the k-th chain group is the",
     "domains": [
       "Shared"
@@ -3173,7 +3158,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.4714928814673591,
     "research_mode": "team",
     "source_exp_id": "9fe7196f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T20:43:35.588690+00:00",
     "title": "Close Proofs: The clique complex \u0394(G) admits a natural chain complex over \u2124: the k-t"
   },
@@ -3206,7 +3191,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9c6faf0b",
     "description": "Cycle 484dd4da (Q=0.419) proved 2147 theorems in Tropical but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle ad2be92e (Q=0.442) proved 750 theorems in Novelty but left 36 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that the tropical ",
     "domains": [
       "Tropical"
@@ -3215,7 +3200,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.4693960895051324,
     "research_mode": "team",
     "source_exp_id": "484dd4da",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T18:17:06.994335+00:00",
     "title": "Close Proofs: Close Proofs: Tropical Compactification of Moduli Spaces"
   },
@@ -3504,7 +3489,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reversible Computing and Thermodynamic Efficiency"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b74ebc0e",
     "description": "Formalize Tononi's Integrated Information Theory (IIT) using tensor network states. Conjecture: The integrated information Phi of a tensor network state equals the minimal quantum mutual information across any bipartition. Test: compute Phi for MPS (matrix product states) with bond dimension 2 and verify it matches the Schmidt rank. Impact: connects consciousness theory to quantum information and tensor categories.",
     "domains": [
       "Physics",
@@ -3514,7 +3499,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.423474+00:00",
     "title": "Integrated Information via Tensor Networks"
   },
@@ -3579,7 +3564,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Thermodynamics: Landauer's Principle at the Nanoscale"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "aa9279f3",
     "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
     "domains": [
       "Physics",
@@ -3589,7 +3574,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.732241+00:00",
     "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
   },
