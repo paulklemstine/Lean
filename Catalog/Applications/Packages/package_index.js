@@ -10,7 +10,7 @@ window.PACKAGE_INDEX = [
     "filename": "the_file_physicstopologicalordergenuslean_establis.json",
     "pkg_num": 59,
     "quality": "partial",
-    "quality_score": 0.55864,
+    "quality_score": 0.6609863414634147,
     "title": "Topological Order, Genus Degeneracy, and Modular Data for Abelian Anyons"
   },
   {
@@ -1756,7 +1756,7 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "the_file_physicstopologicalordergenuslean_establis",
       "primary_domain": "Bridges",
-      "priority_score": 0.55864,
+      "priority_score": 0.6609863414634147,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Topological Order, Genus Degeneracy, and Modular Data for Abelian Anyons"
