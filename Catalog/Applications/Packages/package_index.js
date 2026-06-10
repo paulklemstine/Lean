@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "007b54b3",
     "filename": "close_proofs_the_current_formalization_handles_0_d.json",
     "pkg_num": 51,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5184915068493151,
     "title": "Close Proofs in Extremal Graph Theory: Mantel, Turan, and Constructive Triangle Removal"
   },
   {
@@ -1524,8 +1524,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "close_proofs_the_current_formalization_handles_0_d",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5184915068493151,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "Close Proofs in Extremal Graph Theory: Mantel, Turan, and Constructive Triangle Removal"
     }

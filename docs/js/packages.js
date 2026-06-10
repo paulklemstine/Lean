@@ -291,13 +291,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     const header = document.createElement('div');
                     header.className = 'code-header';
+                    header.style.cssText = 'display: flex; justify-content: space-between; align-items: center;';
 
                     const nameSpan = document.createElement('span');
                     nameSpan.className = 'code-title';
                     nameSpan.textContent = file.name;
 
                     const headerRight = document.createElement('div');
-                    headerRight.className = 'code-header-buttons';
+                    headerRight.style.cssText = 'display: flex; gap: 12px; align-items: center;';
 
                     const meta = document.createElement('span');
                     meta.style.cssText = 'color: var(--text-muted); font-size: 0.85em;';
@@ -516,7 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
             title.textContent = item.name || `Visualization ${idx + 1}`;
 
             const btnGroup = document.createElement('div');
-            btnGroup.className = 'code-header-buttons';
+            btnGroup.style.cssText = 'display: flex; gap: 8px; align-items: center;';
 
             const toggleBtn = document.createElement('button');
             toggleBtn.className = 'source-toggle';
@@ -601,7 +602,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const outputContainer = document.createElement('div');
-            outputContainer.className = 'gallery-img-container viz-output-container';
+            outputContainer.className = 'gallery-img-container';
+            outputContainer.style.cssText = 'min-height: 100px; display: flex; align-items: center; justify-content: center; background: var(--bg-elevated); border-radius: 8px; margin-top: 8px;';
             outputContainer.innerHTML = '<div class="viz-placeholder">Click Generate to create visualization</div>';
 
             genBtn.addEventListener('click', () => {
@@ -734,7 +736,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     srcdoc = demoHtml.replace('</html>', autoSizer + '</html>');
                 }
             } else {
-                srcdoc = `<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>body{margin:0;padding:16px;font-family:system-ui,sans-serif;color:#222}</style></head><body>${demoHtml}${autoSizer}</body></html>`;
+                srcdoc = `<!DOCTYPE html><html><head><style>body{margin:0;padding:16px;font-family:system-ui,sans-serif;color:#222}</style></head><body>${demoHtml}${autoSizer}</body></html>`;
             }
 
             const iframe = document.createElement('iframe');
