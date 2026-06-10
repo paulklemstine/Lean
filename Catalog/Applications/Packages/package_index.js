@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "4ee497a4",
     "filename": "close_proofs_formalized_framework_connecting_colla.json",
     "pkg_num": 53,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4355796948696299,
     "title": "Certified Additive & Combinatorial Designs: Goldbach Decompositions and the Paley-Hadamard Correspondence"
   },
   {
@@ -1582,8 +1582,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "close_proofs_formalized_framework_connecting_colla",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4355796948696299,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Certified Additive & Combinatorial Designs: Goldbach Decompositions and the Paley-Hadamard Correspondence"
     }
