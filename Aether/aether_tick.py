@@ -319,7 +319,7 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
     novelty_slots: number of dispatch slots reserved for novelty/wild directions
     """
     # 1. Poll inflight jobs
-    extractor._load_inflight()
+
 
     # Recover stale in_progress directions (e.g., from crashed ticks)
     from research_memory import FutureDirectionsManager
@@ -1181,30 +1181,59 @@ def start_docs_server(port: int = 8000) -> None:
     print(f"[Serve] Aether docs serving at http://localhost:{port}")
 
 
+class TeeStream:
+    """A wrapper for a single stream (stdout or stderr) that tees to a log file,
+    preventing duplicate writes if the stream is already redirected to the same file.
+    """
+    def __init__(self, file_handle, original_stream, log_path: Path):
+        self._file = file_handle
+        self._original_stream = original_stream
+        self._is_duplicate = False
+        try:
+            import os
+            if hasattr(original_stream, "fileno") and hasattr(file_handle, "fileno"):
+                stat_stream = os.fstat(original_stream.fileno())
+                stat_log = os.fstat(file_handle.fileno())
+                if stat_stream.st_ino > 0 and stat_stream.st_ino == stat_log.st_ino and stat_stream.st_dev == stat_log.st_dev:
+                    self._is_duplicate = True
+        except Exception:
+            pass
+
+    def write(self, data):
+        import re as _re
+        clean_data = _re.sub(r'\033\[[0-9;]*m', '', data)
+        if not self._is_duplicate:
+            self._file.write(clean_data)
+            self._file.flush()
+        self._original_stream.write(data)
+        self._original_stream.flush()
+
+    def flush(self):
+        if not self._is_duplicate:
+            self._file.flush()
+        self._original_stream.flush()
+
+
 class Tee:
     """Tee stdout and stderr to a log file while keeping console output."""
 
     def __init__(self, log_path: Path):
         self.log_path = log_path
         self.log_path.parent.mkdir(parents=True, exist_ok=True)
+        # Ensure log file exists so we can stat it
+        self.log_path.touch(exist_ok=True)
         self._file = open(log_path, "a", encoding="utf-8", buffering=1)  # line-buffered
         self._original_stdout = sys.stdout
         self._original_stderr = sys.stderr
-        sys.stdout = self
-        sys.stderr = self
+        
+        sys.stdout = TeeStream(self._file, self._original_stdout, log_path)
+        sys.stderr = TeeStream(self._file, self._original_stderr, log_path)
 
     def write(self, data):
-        # Strip ANSI escape codes for the log file
-        import re as _re
-        clean_data = _re.sub(r'\033\[[0-9;]*m', '', data)
-        self._file.write(clean_data)
-        self._file.flush()
-        self._original_stdout.write(data)
-        self._original_stdout.flush()
+        sys.stdout.write(data)
 
     def flush(self):
-        self._file.flush()
-        self._original_stdout.flush()
+        sys.stdout.flush()
 
     def close(self):
         self._file.close()

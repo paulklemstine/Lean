@@ -1535,15 +1535,31 @@ async def main():
         def __init__(self, terminal, log):
             self.terminal = terminal
             self.log = log
+            self._is_duplicate = False
+            try:
+                import os
+                if hasattr(terminal, "fileno") and hasattr(log, "fileno"):
+                    stat_term = os.fstat(terminal.fileno())
+                    stat_log = os.fstat(log.fileno())
+                    if stat_term.st_ino > 0 and stat_term.st_ino == stat_log.st_ino and stat_term.st_dev == stat_log.st_dev:
+                        self._is_duplicate = True
+            except Exception:
+                pass
+
         def write(self, msg):
             self.terminal.write(msg)
-            self.log.write(msg)
-            self.log.flush()
+            if not self._is_duplicate:
+                self.log.write(msg)
+                self.log.flush()
+
         def flush(self):
             self.terminal.flush()
-            self.log.flush()
+            if not self._is_duplicate:
+                self.log.flush()
+
         def fileno(self):
             return self.terminal.fileno()
+
         def isatty(self):
             return self.terminal.isatty()
 

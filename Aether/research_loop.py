@@ -40,15 +40,27 @@ class TeeWriter:
     def __init__(self, terminal, log_file):
         self.terminal = terminal
         self.log_file = log_file
+        self._is_duplicate = False
+        try:
+            import os
+            if hasattr(terminal, "fileno") and hasattr(log_file, "fileno"):
+                stat_term = os.fstat(terminal.fileno())
+                stat_log = os.fstat(log_file.fileno())
+                if stat_term.st_ino > 0 and stat_term.st_ino == stat_log.st_ino and stat_term.st_dev == stat_log.st_dev:
+                    self._is_duplicate = True
+        except Exception:
+            pass
 
     def write(self, message):
         self.terminal.write(message)
-        self.log_file.write(message)
-        self.log_file.flush()
+        if not self._is_duplicate:
+            self.log_file.write(message)
+            self.log_file.flush()
 
     def flush(self):
         self.terminal.flush()
-        self.log_file.flush()
+        if not self._is_duplicate:
+            self.log_file.flush()
 
     def fileno(self):
         return self.terminal.fileno()
