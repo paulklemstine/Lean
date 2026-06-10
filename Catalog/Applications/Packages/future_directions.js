@@ -191,7 +191,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Zeta Functions of Directed Graphs and the Graph Riemann Hypothesis"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e8b7fb9",
     "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
     "domains": [
       "Physics",
@@ -201,7 +201,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.9,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:27.909349+00:00",
     "title": "Biological Topology: Protein Folding as Persistent Homology Optimization"
   },
@@ -324,7 +324,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Information Geometry Connecting Statistics and Differential Geometry"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a8094d32",
     "description": "Formalize core HoTT results in Lean 4: the univalence axiom, higher inductive types, and the fundamental theorem of identity types. Prove that HoTT provides a constructive foundation for mathematics.",
     "domains": [
       "Logic",
@@ -334,7 +334,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:03.446924+00:00",
     "title": "Homotopy Type Theory Foundations"
   },
@@ -1431,7 +1431,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Formalize Baker\u2013Norine's tropical Riemann-Roch theorem: for a divisor D on a met"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ea08ccd3",
     "description": "# Future Directions: Propositional Logic Metatheory\n\n## 1. Completeness of the Hilbert System\n\nThe natural next step after soundness is **completeness**: every tautology is provable. This requires constructing maximal consistent extensions of theories (Lindenbaum's lemma) and building canonical models. The key insight is that the syntactic deduction theorem we proved makes Lindenbaum's lemma tractable \u2014 it reduces the extension step to a single disjunction. Why now? Our `syntactic_deduction` and `weakening` theorems provide the exact structural infrastructure needed for the inductive extension argument, and the `consistency` theorem gives the base case.\n\n**Testable conjecture**: For any `\u03c6 : PropForm`, `IsTautology \u03c6 \u2192 Proves \u2205 \u03c6`. The proof should construct a maximal consistent set containing `neg \u03c6` and derive a contradiction from the model it induces.\n\n## 2. Compactness from Completeness\n\nOnce completeness is established, **propositional compactness** follows: if every finite subset of `\u0393` has a model, then `\u0393` has a model. The key insight is that compactness is equivalent to the statement \"if `\u0393 \u22a8 \u03c6` then some finite `\u0394 \u2286 \u0393` satisfies `\u0394 \u22a8 \u03c6`\", and this follows from completeness since syntactic proofs are finite objects. Why now? The `Models` and `Proves` definitions are already set up to state and prove this, and the finite nature of `Proves` derivations is built into our inductive type.\n\n**Testable conjecture**: `Models \u0393 \u03c6 \u2192 \u2203 \u0394 : Finset PropForm, \u2191\u0394 \u2286 \u0393 \u2227 Models \u2191\u0394 \u03c6`.\n\n## 3. Cut Elimination for Sequent Calculus\n\nDefine a Gentzen-style sequent calculus for propositional logic and prove **cut elimination**: any sequent derivation using the cut rule can be transformed into one without it. The key insight is that cut elimination is a syntactic normalization result \u2014 it corresponds to \u03b2-reduction in the Curry-Howard correspondence, and our Hilbert-style infrastructure can serve as a reference system for proving equivalence. Why now? The Hilbert system theorems provide a certified \"backend\" against which a sequent calculus can be verified, and the syntactic deduction theorem is the Hilbert-side analogue of the cut rule.\n\n**Testable conjecture**: Define `SeqProves : List PropForm \u2192 PropForm \u2192 Prop` with structural rules and cut. Then show `SeqProvesCutFree \u0393 \u03c6 \u2194 SeqProves \u0393 \u03c6` where the cut-free variant omits the cut rule.\n\n## 4. Interpolation Theorem\n\nCraig's interpolation theorem states: if `Proves \u2205 (imp \u03c6 \u03c8)`, then there exists a formula `\u03b8` whose variables appear in both `\u03c6` and `\u03c8` such that `Proves \u2205 (imp \u03c6 \u03b8)` and `Proves \u2205 (imp \u03b8 \u03c8)`. The key insight is that interpolation can be proved by induction on cut-free sequent calculus proofs (connecting to Direction 3), or by a direct semantic argument using our Boolean evaluation. Why now? Our `eval`-based semantics provides the natural framework to define \"variables of a formula\" and verify the variable-containment condition, and soundness ensures the interpolant is meaningful.\n\n**Testable conjecture**: `Proves \u2205 (imp \u03c6 \u03c8) \u2192 \u2203 \u03b8, (vars \u03b8 \u2286 vars \u03c6 \u2229 vars \u03c8) \u2227 Proves \u2205 (imp \u03c6 \u03b8) \u2227 Proves \u2205 (imp \u03b8 \u03c8)` where `vars` extracts the set of variable indices.\n\n## 5. Decision Procedure Certification\n\nFormalize a resolution-based decision procedure for propositional satisfiability and prove it **sound and complete** with respect to our `eval` semantics. The key insight is that resolution can be viewed as a restricted form of cut in a clause-based sequent calculus, making it a natural specialization of Direction 3. Why now? Our `IsTautology` and `Models` definitions provide the correctness specification, and the `soundness` theorem ensures that any proof produced by the decision procedure corresponds to a genuine semantic fact. This bridges our logical metatheory directly to verified automated reasoning.\n\n**Testable conjecture**: Define `resolve : List (List (\u2115 \u00d7 Bool)) \u2192 Bool` implementing unit propagation + resolution. Then prove `resolve clauses = true \u2192 \u2200 v, \u2203 c \u2208 clauses, \u2200 l \u2208 c, evalLit v l = false` (unsatisfiability certificate).\n",
     "domains": [
       "Bridges",
@@ -1441,7 +1441,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "07c5e6ea",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T13:52:28.031019+00:00",
     "title": "The natural next step after soundness is **completeness**: every tautology is pr"
   },
@@ -2452,6 +2452,80 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Valuation\u2013Tropicalization Bridge\n\nThe file `TropicalValuationLimitBridge.lean` formalizes the *easy half* of the Fundamental\nTheorem of Tropical Geometry: tropicalizing a point of a classical hypersurface always lands on\nthe corner locus (`kapranov_easy_direction`), powered by the ultrametric winner-takes-all lemma\n(`addValuation_sum_eq_of_unique_min`), and it isolates the min-plus multiplicativity\n(`TropPoly.eval_mul`) that makes tropical degrees add. Below are the next conjectures this work\nopens up. Each is stated so that it can be falsified by a single counterexample or settled by a\nsingle Lean proof.\n\n## Direction 1 \u2014 Kapranov's hard direction (surjectivity onto the corner locus)\n\nConjecture: if `K` is algebraically closed with a non-trivial valuation `v` whose value group is\ndivisible (so `v` is surjective onto `\u0393`), then for every weight vector `w` lying on the corner\nlocus of a tropical polynomial `trop(f)` there exists a point `p` with `f(p) = 0` and\n`v(p) = w`. This is the converse of `kapranov_easy_direction`, currently recorded as the open\ntarget `kapranov_hard_direction_sketch`.\n\nThe key insight is that the easy direction is *purely a consequence of the ultrametric\ninequality being an equality away from ties*, whereas the hard direction needs a genuine\n*lifting* step: a Newton-polygon / Hensel argument that promotes a \"leading-term cancellation\"\n(two monomials tied for the minimum) into an actual root. Formalizing the univariate case first\n(`Fin 1` many variables, where the Newton polygon is literally the lower convex hull of\n`{(i, v(c\u1d62))}`) reduces the whole theorem to Hensel's lemma plus convexity.\n\nWhy now? Mathlib already has `Polynomial.Monic`, Hensel's lemma for complete local rings, and\nthe `AddValuation` API used here; the missing glue is a Newton-polygon predicate, which is a\nfinite-combinatorial object identical in spirit to the `inf'_product_add` lemma already proven.\n\n## Direction 2 \u2014 The valuation-going-to-infinity limit is genuinely a limit\n\nConjecture: for the rescaled family `v_t := t \u2022 v` (`t : \u211d\u22650`, `t \u2192 \u221e`), the corner locus of\n`trop_{v_t}(f)` converges, in the Hausdorff metric on compact windows, to the corner locus of\n`trop_v(f)` *scaled by t*; equivalently the normalized amoeba `(1/t)\u00b7Log_t(V(f))` converges to\nthe tropical variety. This makes precise the slogan \"tropicalization is the `t \u2192 \u221e` limit\".\n\nThe key insight is that `t \u2022 v` is *again* an `AddValuation` (scaling preserves the two\nvaluation axioms), so the entire corner-locus characterization is invariant under `t`-rescaling\nup to a homothety \u2014 meaning the \"limit\" is not an analytic limit of moving sets but the fixed\nshape that all members of the family already share after normalization.\n\nWhy now? The corner-locus predicate `AttainedAtLeastTwice` is scale-equivariant on the nose\n(`AttainedAtLeastTwice (t \u2022 w) \u2194 AttainedAtLeastTwice w` for `t > 0`), a one-line lemma to add,\nturning a hard analytic statement into an algebraic invariance that Lean can check directly.\n\n## Direction 3 \u2014 Stable intersection and tropical B\u00e9zout from `eval_mul`\n\nConjecture: define the tropical hypersurface `V(P) := {x | AttainedAtLeastTwice (P.termVal x)}`.\nThen `V(P.mul Q) = V(P) \u222a V(Q)` exactly, and for plane curves (`n = 2`) the number of stable\nintersection points of `V(P)` and `V(Q)`, counted with lattice multiplicity, equals\n`deg P \u00b7 deg Q`.\n\nThe key insight is that `TropPoly.eval_mul` already proves `eval (P \u2299 Q) = eval P + eval Q`\n*as functions*; a corner of a sum of two convex-piecewise-linear functions occurs exactly where\nat least one summand has a corner, so the union law for hypersurfaces is the pointwise shadow of\nthe additivity of evaluations \u2014 no new geometry is needed, only a corner-of-a-sum lemma.\n\nWhy now? The catalog already contains `Tropical/Bezout.lean` proving `mixedLatticeIndex` of two\ndegree simplices equals `d\u2081\u00b7d\u2082`; combining that lattice count with the union law here would give\nthe *first end-to-end* tropical B\u00e9zout theorem in the catalog that connects the analytic\n(min-plus evaluation) and combinatorial (Newton polytope) descriptions.\n\n## Direction 4 \u2014 Balancing condition as a conservation law\n\nConjecture: at every corner point `x` of `V(P)`, the primitive edge directions of the tropical\ncurve, weighted by lattice length, sum to zero (the *balancing condition*). Moreover this is\nequivalent to `\u2211\u1d62 T\u1d62 = 0` lifting consistently, i.e. balancing is the tropical shadow of\n\"a regular function has no poles\".\n\nThe key insight is that balancing is exactly the statement that the set of monomials achieving\nthe minimum at `x` (the \"tie set\" produced by `kapranov_easy_direction`) forms the vertex set of\na polytope whose outward normal fan is complete \u2014 so the same tie set that proves membership in\nthe corner locus *also* carries the balancing data, for free.\n\nWhy now? `kapranov_easy_direction` already extracts the tie set (two indices realizing the min);\ngeneralizing its conclusion from \"\u2265 2 minimizers\" to \"the minimizer set spans a balanced fan\"\nis the natural strengthening, and Mathlib's `Finset` convex-geometry API is now rich enough to\nstate primitive lattice vectors.\n\n## Direction 5 \u2014 Tropical semiring morphism packaging of the valuation\n\nConjecture: the map `x \u21a6 v x` is a semiring homomorphism `K \u2192 Tropical (WithTop \u0393)\u1d52\u1d48` *up to the\nsingle defect on addition*, and the defect locus (where `v(x+y) \u2260 min(v x, v y)`) is precisely\nthe diagonal-tie set `{v x = v y}`. Packaging this as a bundled `TropicalHom` would let every\nclassical algebraic identity be transported to a tropical inequality automatically.\n\nThe key insight is that the only obstruction to `v` being an honest tropical-semiring morphism is\nthe failure of additivity *exactly when two valuations coincide* \u2014 which is the same tie\nphenomenon driving the corner locus. So \"morphism defect = corner locus\" unifies the additive\nand multiplicative stories into one statement.\n\nWhy now? Mathlib's `Tropical R` type and `Semiring (Tropical R)` instance (from\n`Mathlib.Algebra.Tropical.Basic`) are already imported transitively here; the bundling is a\ndefinitional wrapper, after which `AddValuation.map_add` becomes a tropical-additivity inequality\nand `map_mul` becomes tropical-multiplicativity on the nose.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1212",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "00b42e00",
+    "status": "available",
+    "timestamp": "2026-06-10T12:52:35.725812+00:00",
+    "title": "The file `TropicalValuationLimitBridge.lean` formalizes the *easy half* of the F"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Stereographic Capacity Theory\n\nThis cycle established the algebraic and geometric backbone of *stereographic\ncapacity theory* \u2014 the program of converting spherical cap-packing questions on\n`S\u207f` into weighted Euclidean separation problems on `\u211d\u207f` via stereographic\nprojection. The proven results (`Geometry/StereographicCapacity/Theorems.lean`)\nare:\n\n- the conformal factor `\u03bb(x) = 2/(1+\u2016x\u2016\u00b2)` is strictly positive, bounded by `2`,\n  and attains `2` exactly at the origin (`stereoFactor_pos`,\n  `stereoFactor_le_two`, `stereoFactor_eq_two_iff`);\n- the weighted exclusion radius has the closed form\n  `tan r \u00b7 (1+\u2016x\u2016\u00b2)/2` (`stereoExclusionRadius_eq`);\n- the `S\u00b2` distortion bound collapses to `8/(cos\u00b2r\u00b7(1\u2212cos r))`\n  (`stereoBoundS2_eq_closed`);\n- a sharp degenerate packing bound: for geodesic radius `r > 1` every\n  `2r`-separated subset of `S\u207f` is a singleton (`spherePacking_card_le_one`,\n  `sphericalPackingBound_one_of_one_lt`), together with monotonicity of the\n  bound predicate in its budget (`sphericalPackingBound_mono`).\n\nThese connect to the catalog's broader stereographic toolkit \u2014 in particular the\ninner-product transport formula of `StereographicPersistence` (`inner_stereoInvFun`,\n`stereoDist_eq`) and the bi-Lipschitz comparison `stereoDist_biLipschitz_on_bounded`,\nwhich is precisely the analytic bridge needed to make the conjectures below\nrigorous. The directions below are stated to be testable and falsifiable: each can\nbe refuted by a single explicit configuration or numerical counterexample.\n\n## Direction 1: The separation transport theorem\n\n**Conjecture.** There is a constant regime in which `StereoSeparated r s`\n(Euclidean weighted separation of the projected points) is *equivalent* to genuine\n`2r`-geodesic separation on `S\u207f` of their inverse stereographic images, with the\nequivalence becoming exact as `r \u2192 0`.\n\nThe key insight is that `stereoExclusionRadius_eq` writes the exclusion radius as\n`tan r \u00b7 (1+\u2016x\u2016\u00b2)/2 = tan r / \u03bb(x)`, i.e. the *Euclidean* radius is exactly the\nspherical radius rescaled by the local conformal factor \u2014 so a first-order\nmatching of `tan r` against geodesic chord length should turn the predicate\n`StereoSeparated` into a faithful proxy for cap disjointness.\n\nWhy now? The catalog already contains `stereoDist_eq` (geodesic distance as\n`arccos` of a closed-form inner product) and `stereoDist_biLipschitz_on_bounded`;\nchaining `stereoExclusionRadius_eq` with these two gives an explicit two-sided\nestimate, so the conjecture is reachable without building new transcendental\nmachinery.\n\n## Direction 2: A genuine quantitative cap-packing upper bound on S\u00b2\n\n**Conjecture.** For every `r` with `0 < r < \u03c0/2`, `SphericalPackingBound 2 r B`\nholds with `B = stereoBoundS2Closed r = 8/(cos\u00b2r\u00b7(1\u2212cos r))`; moreover this is the\nbest bound obtainable by the pure area/conformal-distortion method, off the true\npacking number by at most a bounded multiplicative constant.\n\nThe key insight is that the volume (area) argument \u2014 total sphere area divided by\nminimal cap area, inflated by the squared worst-case conformal distortion\n`(2/cos r)\u00b2` \u2014 is captured *exactly* by `stereoBoundS2_eq_closed`, so the only\nremaining step is to certify that distortion factor against a packed\nconfiguration rather than re-deriving the algebra.\n\nWhy now? `stereoBoundS2_eq_closed` already proves the closed form is correct, and\n`spherePacking_card_le_one` shows the predicate `SphericalPackingBound` is\nprovable in nontrivial regimes; the missing ingredient is a single\narea-monotonicity lemma for `sphericalCapArea`, which is elementary calculus.\n\n## Direction 3: Sharpness of the degenerate bound at r = 1\n\n**Conjecture.** The threshold `r > 1` in `spherePacking_card_le_one` is sharp:\nfor every `r \u2264 1` and every `n \u2265 1` there exists a two-point `2r`-separated subset\nof `S\u207f` (the antipodal pair `\u00b1e\u2080`), so `SphericalPackingBound n r 1` *fails* for\nall `r \u2264 1`.\n\nThe key insight is that the unit sphere has diameter exactly `2`, attained only by\nantipodal pairs; since `2r \u2264 2` precisely when `r \u2264 1`, the antipodal pair is\nadmissible exactly on the complement of the proven regime, pinning the threshold.\n\nWhy now? `spherePacking_card_le_one` already isolates `r = 1` as the critical\nvalue through the inequality `2r \u2264 \u2016x\u2016+\u2016y\u2016 = 2`; constructing the antipodal\nwitness only needs `EuclideanSpace.single 0 1` and its negation, both already in\nMathlib, making this a clean falsification target for the proven theorem's\nhypotheses.\n\n## Direction 4: Dimension scaling of the conformal distortion bound\n\n**Conjecture.** The `S\u00b2` bound generalizes to `S\u207f` as\n`stereoBoundSn n r = (2/cos r)\u207f \u00b7 (vol S\u207f / capVol n r)`, and the exponent `n` on\nthe distortion factor is *unavoidable*: the worst-case conformal stretch of\nstereographic projection grows like `\u03bb\u207b\u207f` in `n` dimensions, so any projection-based\nbound inherits an exponential-in-`n` distortion penalty.\n\nThe key insight is that the Jacobian of stereographic projection is `\u03bb(x)\u207f` in\ndimension `n`, so the single squared factor `(2/cos r)\u00b2` proven for `S\u00b2` is the\n`n = 2` instance of a uniform `(2/cos r)\u207f` law \u2014 the `S\u00b2` closed form is a\nshadow of a dimension-graded family.\n\nWhy now? With `stereoFactor` and `stereoExclusionRadius` already defined\ndimension-generically over `EuclideanSpace \u211d (Fin n)`, only the cap-volume term\n`capVol n r` needs formalizing; this isolates exactly where projection methods\nlose to lattice/LP methods and quantifies the gap as a function of `n`.\n\n## Direction 5: Bridge to error-correcting codes via spherical codes\n\n**Conjecture.** Every `2r`-separated configuration on `S\u207f` yields, through inverse\nstereographic projection composed with a fixed quantizer, a spherical code whose\nminimum angular distance is controlled below by `stereoExclusionRadius`, giving an\nexplicit, computable lower bound on achievable code rates from packing data.\n\nThe key insight is that `stereoExclusionRadius_eq` provides a *closed-form,\npointwise* lower bound on Euclidean separation in terms of the spherical radius `r`\nand the projected norm `\u2016x\u2016`, which is exactly the quantity a code's\ndistance-rate tradeoff is phrased in \u2014 so capacity theory exports directly into\ncoding bounds without an intermediate metric estimate.\n\nWhy now? The catalog's stereographic inner-product formula (`inner_stereoInvFun`)\nalready expresses spherical correlation in closed form; combined with\n`stereoExclusionRadius_eq` it turns a packing certificate into a code-distance\ncertificate mechanically, opening a concrete applications pathway from the\nabstract capacity bounds proven this cycle.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1213",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "13ee828e",
+    "status": "available",
+    "timestamp": "2026-06-10T12:53:01.333043+00:00",
+    "title": "Algebraic and geometric backbone of *stereographic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Tropical Amoebas, Ronkin Functions, and Maslov Dequantization\n\nThe file `Catalog/Tropical/AmoebaRonkin.lean` builds a computation-free core of amoeba\ntheory: the tropical polynomial (amoeba spine) `trop f (x) = max_i (log|c_i| + \u27e8m_i,x\u27e9)` is\nproved convex and piecewise-linear, its dominance (amoeba-complement) regions are proved\nconvex with constant integer slope (the order map), and the Maslov-deformed Ronkin function\n`R_t(x) = t\u00b7log \u03a3_i exp(A_i(x)/t)` is shown to converge to the spine as `t \u2192 0\u207a` with the\nexplicit rate `|R_t \u2212 trop f| \u2264 t\u00b7log N`. This realises the Maslov-dequantization theme of\n`TSM.zeroTemperature_limit` (`SemiclassicalLimit.lean`) in the geometric amoeba setting, and\nextends the log-sum-exp analysis of `LSEConvexity.lean`. Below are concrete, falsifiable\ncontinuations.\n\n## 1. Strict convexity of the deformed Ronkin function transverse to the recession cone\n\nThe theorem `ronkinDeform_convexOn` already proves `R_t` convex via the finite H\u00f6lder\ninequality `\u2211_i u_i^a v_i^b \u2264 (\u2211_i u_i)^a (\u2211_i v_i)^b`. The natural strengthening is\n*strictness*: `R_t` should be **strictly convex** in every direction `v` that is not\northogonal to all the differences `m_i \u2212 m_j`, with equality in H\u00f6lder forcing all the\nratios `exp(A_i(x)/t)/exp(A_i(y)/t)` to coincide. The key insight is that the H\u00f6lder\ninequality is an equality exactly when the two summed vectors are proportional, which pins\ndown the directions of non-strictness to the lineality space `\u22c2_{i,j} (m_i \u2212 m_j)^\u22a5` \u2014 the\nrecession directions of the amoeba spine. Why now? The convexity proof already isolates the\nH\u00f6lder step, so its equality case (`Finset.inner_le_weight_mul_Lp` equality conditions in\nMathlib) is the only missing ingredient, turning a qualitative result into a sharp\ncharacterisation of where the Ronkin function fails to curve \u2014 precisely the spine itself.\n\n## 2. The Legendre dual of the Ronkin function is the Newton polytope\n\nDefine the Legendre transform `R_t^*(p) = sup_x (\u27e8p,x\u27e9 \u2212 R_t(x))`. The conjecture is that as\n`t \u2192 0\u207a`, `R_t^*` converges to the (negated) support function of the Newton polytope\n`\u0394_f = conv{m_i}`, i.e. `dom(trop f ^*) = \u0394_f` and the order map of Theorem\n`tropPoly_slope_on_dominant` sends each amoeba-complement component to a distinct lattice\nvertex `m_k \u2208 \u0394_f`. The key insight is that the order map is exactly the subgradient of the\nconvex function `trop f`, so the amoeba complement is in bijection with the faces of `\u0394_f`\nhit by the Legendre dual. Why now? `LegendreDuality.lean` already provides the conjugation\ninfrastructure in this catalog, so the bijection \"complement components \u2194 Newton lattice\npoints\" can be stated and tested on explicit small supports (e.g. `1 + z + w`, the line, with\nthree complement components and three vertices).\n\n## 3. Quantitative spine separation and the tentacle count\n\nConjecture: the number of unbounded complement components (\"tentacles\") of the amoeba equals\nthe number of indices `k` whose dominance region `dominantRegion c m k` is nonempty and\nunbounded, and this count is sandwiched between the number of Newton-polytope vertices and\nthe total number of lattice points of `\u0394_f` (the classical bound of Forsberg\u2013Passare\u2013Tsikh).\nThe key insight is that nonemptiness of `dominantRegion c m k` is a *finite linear\nfeasibility* problem (a system `A_i \u2212 A_k \u2264 0`), hence decidably checkable, turning a\ntopological count into a Farkas-lemma certificate. Why now? The convexity already proved\nmakes each region a polyhedron, so Mathlib's linear-programming/`Convex` API can certify\n(non)emptiness, giving a fully formal, falsifiable lower/upper bound on tentacle count.\n\n## 4. Lipschitz and modulus-of-convexity control of the deformation\n\nConjecture: `R_t` is globally Lipschitz with constant `max_i \u2016m_i\u2016\u2081` uniformly in `t`, and\nthe family `{R_t}_{t>0}` is equi-Lipschitz, so the convergence `R_t \u2192 trop f` of\n`maslov_tendsto` is in fact **locally uniform**, not merely pointwise. The key insight is\nthat every `A_i` has gradient `m_i`, and a sup/log-sum-exp of functions with gradients in a\nfixed bounded set inherits that gradient bound; combined with the pointwise rate\n`t\u00b7log N`, equi-Lipschitzness upgrades pointwise to uniform-on-compacts convergence by\nArzel\u00e0\u2013Ascoli. Why now? The explicit rate `maslov_dequantization_rate` is already in hand;\nonly a gradient bound is missing, and that is a direct `Finset.sup'`/`abs_sum` estimate.\n\n## 5. Cross-domain bridge: amoeba spine = ground-state phase diagram\n\nConjecture: identifying the monomial index set with a configuration space `\u03a9` and `A_i(x)`\nwith `\u2212H_i(x)` (energy with external field `x`), the amoeba spine `trop f` is exactly the\nzero-temperature phase diagram of `SemiclassicalLimit.lean`, and each `dominantRegion c m k`\nis a single thermodynamic phase. The key insight is that `maslov_tendsto` here and\n`TSM.zeroTemperature_limit` there are the *same theorem* under the dictionary\n`t = 1/\u03b2`, `R_t = \u2212F(\u03b2)`, so amoeba complement components are in bijection with pure phases\nand the order map is the magnetization/order parameter. Why now? Both halves are already\nformalized in this catalog; a single bridging file could prove the dictionary as a chain of\n`rfl`/`simp` identifications and export every amoeba theorem as a statistical-mechanics\ntheorem and vice versa \u2014 a genuine cross-domain unification.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_1214",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0c7cf1ad",
+    "status": "available",
+    "timestamp": "2026-06-10T12:53:27.037438+00:00",
+    "title": "The file `Catalog/Tropical/AmoebaRonkin.lean` builds a computation-free core of "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Composition Theory for Set-Local Distortion of Hausdorff Dimension\n\n## Synthesis\n\nThis cycle deepened the set-local Hausdorff-dimension distortion theory begun in\n`Geometry.FractalDimension` (cycle 7007fa32). That earlier file proved how a\n*single* map that is Lipschitz / antilipschitz / H\u00f6lder *only on a subset* `s`\ndistorts Hausdorff dimension, culminating in a two-sided H\u00f6lder\n(\"quasi-symmetric flavoured\") estimate. The structural gap it left open was\n**closure under composition**: fractals, IFS attractors and quasi-symmetric\nconjugacies are all assembled by chaining good maps on nested pieces, so a\ndistortion calculus that does not compose is not yet usable. The key insight of\nthis cycle is that the set-local classes *do* compose, and that the distortion\n**exponents are multiplicative under composition** \u2014 the dimension shadow of the\nfact that snowflaking / H\u00f6lder conjugation composes.\n\nConcretely we proved that the set-local antilipschitz predicate\n`AntilipschitzOnWith` is closed under composition (constants multiply), under\nrestriction to subsets, and that global antilipschitz maps restrict to it. These\nclosure lemmas then upgrade the single-map invariance theorem to a *composite*\nbi-Lipschitz invariance theorem, and \u2014 the headline result \u2014 to a composite\ntwo-sided bi-H\u00f6lder distortion bound in which the four exponents combine as the\ntwo products `rg\u00b7rf` and `rf'\u00b7rg'`. Setting all exponents to `1` recovers exact\ncomposite invariance, confirming internal consistency.\n\nNothing was disproved this cycle; the main friction was bookkeeping\n(`Set.image_comp` to identify `(g\u2218f)''s` with `g''(f''s)`, and the `MapsTo`\nside-conditions for the two `HolderOnWith.comp` applications). The emergent\nstructural lesson is that the entire theory is *functorial in the set-local map*:\nonce the relevant class is shown closed under composition and restriction, the\ndimension estimates lift mechanically. This points toward formalizing the\ndistortion data as an actual category or groupoid, which is the unifying thread\nbehind the directions below.\n\n## Results Summary\n\n- `AntilipschitzOnWith.comp`: proved \u2014 the set-local antilipschitz class is closed under composition with multiplied constants (the dual of `LipschitzOnWith.comp`).\n- `AntilipschitzOnWith.mono`: proved \u2014 restriction of a set-local antilipschitz map to a subset stays antilipschitz with the same constant.\n- `antilipschitzOnWith_of_antilipschitzWith`: proved \u2014 a globally antilipschitz map is antilipschitz on every subset.\n- `dimH_image_comp_eq_of_lipschitzOn_antilipschitzOn`: proved \u2014 Hausdorff dimension is invariant under a composite of two set-local bi-Lipschitz maps.\n- `dimH_image_comp_bounds_of_biholderOn`: proved \u2014 composite quasi-symmetric distortion: chaining two bi-H\u00f6lder maps multiplies the exponents, giving `dimH((g\u2218f)''s) \u2264 dimH s/(rg\u00b7rf)` and `dimH s \u2264 dimH((g\u2218f)''s)/(rf'\u00b7rg')`.\n\n## Research Directions\n\n### Direction 1: A category/groupoid of set-local bi-H\u00f6lder maps\n**Hypothesis**: The set-local bi-H\u00f6lder maps form a category whose objects are\npairs `(X, s)` and whose morphisms carry the four-tuple of H\u00f6lder data\n`(Cf, rf, Cf', rf')`; composition multiplies exponents and identities are the\nexponent-`1`, constant-`1` maps. The Hausdorff-dimension distortion bound is a\n*functor* from this category to the ordered monoid of dimension-ratio intervals.\n**Test**: Formalize `Comp` and `id` instances, prove associativity of the\nexponent/constant bookkeeping (already implicitly used) and a functoriality lemma\n`distortion (g \u2218 f) = distortion g \u2218 distortion f`.\n**Why now**: This cycle proved exactly the composition and identity laws such a\ncategory requires; the remaining work is packaging, not new mathematics.\n**If true**: Distortion estimates for arbitrarily long conjugacy chains become a\nsingle `simp`-style computation in the morphism monoid.\n**If false**: A failure of associativity would reveal a hidden asymmetry between\nthe forward and inverse exponents, sharpening our understanding of orientation in\nquasi-symmetric distortion.\n\n### Direction 2: Self-similar attractors via iterated composition\n**Hypothesis**: If `f` is bi-Lipschitz on `s` with `f '' s \u2286 s`, then every iterate\n`f^[n]` is bi-Lipschitz on `s` and `dimH (f^[n] '' s) = dimH s` for all `n`,\ngiving dimension invariance of the whole forward orbit and (under completeness) of\nthe attractor `\u22c2\u2099 f^[n] '' s`.\n**Test**: Induct on `n` using `dimH_image_comp_eq_of_lipschitzOn_antilipschitzOn`\nfor the step, then pass to the intersection with a monotone-limit argument.\n**Why now**: The composite invariance theorem is precisely the induction step;\nonly the `f '' s \u2286 s` invariance hypothesis and the limit need adding.\n**If true**: Yields a clean dimension-invariance statement for IFS-type attractors\nbuilt from a single contraction-like map.\n**If false**: The break must occur at the intersection/limit, isolating where\nfinite invariance fails to pass to the infinite attractor.\n\n### Direction 3: Quantitative quasi-symmetry \u21d2 explicit H\u00f6lder exponents\n**Hypothesis**: A genuinely \u03b7-quasi-symmetric embedding `f` of a doubling space,\nwith power-type control `\u03b7(t) = C\u00b7max(t^\u03b1, t^{1/\u03b1})`, is bi-H\u00f6lder on each bounded\npiece with exponents expressible in `\u03b1` and the doubling constant, so that\n`dimH_image_comp_bounds_of_biholderOn` applies with *computed* exponents.\n**Test**: Define `QuasiSymmetricWith \u03b7 f` in Lean, prove the local bi-H\u00f6lder bound\nfrom power-type `\u03b7` plus doubling, and instantiate the composite distortion bound.\n**Why now**: The composite H\u00f6lder machinery is now in place and waiting for an\ninput; the only missing layer is the \u03b7-to-H\u00f6lder bridge on doubling spaces.\n**If true**: Closes the original conjecture that motivated this programme \u2014\nquantitative dimension distortion directly from the quasi-symmetry gauge `\u03b7`.\n**If false**: Pinpoints the metric hypothesis (likely doubling) that quasi-symmetry\nalone cannot supply, clarifying the boundary of the H\u00f6lder reduction.\n\n### Direction 4: Sharpness of the product-exponent bound\n**Hypothesis**: The bounds `dimH((g\u2218f)''s) \u2264 dimH s/(rg\u00b7rf)` are *attained*:\nthere exist snowflake metrics and maps for which equality holds, so the\nproduct-exponent constant cannot be improved.\n**Test**: Construct, on a self-similar Cantor set, explicit H\u00f6lder maps realizing\nprescribed exponents `rf, rg` and compute both sides; alternatively, the Critic\nshould attempt to *disprove* sharpness by finding a strictly better universal\nbound.\n**Why now**: We have the upper bound in hand and an exact-invariance corollary at\nexponent `1`; testing equality at exponent `\u2260 1` is the natural next probe.\n**If true**: Certifies the theorem as optimal, not merely valid.\n**If false**: A universal improvement would signal that H\u00f6lder exponents are not\nthe right invariant and that a finer (e.g. gauge-function) bound is available.\n\n### Direction 5: From `dimH` to Hausdorff/Minkowski measure distortion\n**Hypothesis**: The set-local H\u00f6lder maps not only bound dimension but also give\ntwo-sided bounds on the `d`-dimensional Hausdorff *measure* `\u03bcH^d (f '' s)` in\nterms of `\u03bcH^{d\u00b7rf}(s)`, with the same multiplicative behaviour under composition.\n**Test**: Replace `dimH_image_le` by the underlying Hausdorff-measure estimate\n(`HolderOnWith.hausdorffMeasure_image_le` or its set-local analogue) and re-run the\ncomposition argument.\n**Why now**: The dimension proofs already factor through Hausdorff-measure\ninequalities, so the measure-level statements are one abstraction layer below what\nwe proved.\n**If true**: Upgrades the whole theory from a dimension calculus to a measure\ncalculus, the natural setting for rectifiability and energy estimates.\n**If false**: The obstruction would reveal that dimension invariance is strictly\ncoarser than measure comparability under set-local H\u00f6lder maps \u2014 itself a\nstructural discovery.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_1215",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b676b19c",
+    "status": "available",
+    "timestamp": "2026-06-10T12:53:49.529227+00:00",
+    "title": "This cycle deepened the set-local Hausdorff-dimension distortion theory begun in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle b676b19c (Q=0.667) proved 399 theorems in Applications but left 19 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle 7007fa32 (Q=0.752), which proved 316 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_b676b19c_343d6229",
+    "priority_score": 0.7167314285714286,
+    "research_mode": "team",
+    "source_exp_id": "b676b19c",
+    "status": "available",
+    "timestamp": "2026-06-10T12:54:01.424671+00:00",
+    "title": "Close Proofs: Deepening: Quasi-symmetric maps generalize bi-Lipschitz maps by allowi"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
     "domains": [
       "Cryptography",
@@ -2571,7 +2645,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
-    "consumed_by_exp_id": "24c7b7e9",
+    "consumed_by_exp_id": "",
     "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
     "domains": [
       "MachineLearning",
@@ -2581,7 +2655,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:08.217813+00:00",
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
   },
@@ -2706,7 +2780,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Neural Network Training as Renormalization Group Flow"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1fb367df",
     "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem \u2014 given (a, f(a,n)), find n \u2014 requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
     "domains": [
       "Cryptography",
@@ -2716,7 +2790,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:27.563504+00:00",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },
@@ -2781,7 +2855,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "82a36638",
     "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
     "domains": [
       "Tropical",
@@ -2791,7 +2865,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:31.219688+00:00",
     "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },
@@ -2841,7 +2915,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "51a00311",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domains": [
       "Tropical",
@@ -2851,7 +2925,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.541008+00:00",
     "title": "Tropical Differential Equations: Power Series Solutions"
   },
@@ -3054,7 +3128,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Close Proofs: Fractal Topology: Hausdorff Dimension as a Topological I"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6e02950d",
     "description": "Cycle 5c7661a0 (Q=0.427) proved 1443 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove a tropical analog of the Hodge decomposition. Formalize tropical (p,q)-forms, the tropical Laplacian, and harmonic theory on balanced weighted polyhedral complexes.",
     "domains": [
       "Applications"
@@ -3063,7 +3137,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.47662833278622757,
     "research_mode": "team",
     "source_exp_id": "5c7661a0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T08:50:21.279350+00:00",
     "title": "Close Proofs: Tropical Hodge Theory"
   },
@@ -3570,7 +3644,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Inverse Stereographic Renormalization Group"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "977b4a27",
     "description": "Prove that univalent foundations (HoTT) provide a consistent alternative to ZFC. Formalize the univalence axiom, compute homotopy groups of spheres, and establish constructive interpretability.",
     "domains": [
       "Bridges",
@@ -3580,7 +3654,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.050227+00:00",
     "title": "Homotopy Type Theory as Foundations"
   },
