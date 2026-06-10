@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "890ec8d0",
     "filename": "formally_verified_framework_computationspectralcha.json",
     "pkg_num": 48,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7169511769059955,
     "title": "Closure-Extractor Duality: A Finite Bridge Between Dependency and Randomness"
   },
   {
@@ -1430,8 +1430,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "formally_verified_framework_computationspectralcha",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7169511769059955,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Closure-Extractor Duality: A Finite Bridge Between Dependency and Randomness"
     }
