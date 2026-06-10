@@ -3126,7 +3126,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Close Proofs: Vaught's Conjecture"
   },
   {
-    "consumed_by_exp_id": "4ee497a4",
+    "consumed_by_exp_id": "",
     "description": "Cycle f2700283 (Q=0.426) proved 1066 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\n## Synthesis\n\nThis research cycle established a formalized framework connecting Collatz dynamics to proof-theoretic barriers. The central insight is that three structural gaps \u2014 t",
     "domains": [
       "Applications"
@@ -3135,7 +3135,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.47556429438567177,
     "research_mode": "team",
     "source_exp_id": "f2700283",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-09T08:49:10.204771+00:00",
     "title": "Close Proofs: Formalized framework connecting Collatz dynami"
   },
