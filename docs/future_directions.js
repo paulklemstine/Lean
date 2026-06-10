@@ -307,7 +307,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Odd Perfect Numbers"
   },
   {
-    "consumed_by_exp_id": "1c00f06d",
+    "consumed_by_exp_id": "",
     "description": "Construct a number system on the Mobius band where the integers wrap with a twist: n and -n are identified with opposite orientations. Define the Mobius integers Z_tilde as Z x {+1, -1} modulo the identification (n, +1) ~ (-n, -1). Develop arithmetic on Z_tilde where addition wraps through the identification. Conjecture: The ring Z_tilde of Mobius integers has class number 1, and its prime spectrum forms a double cover of the ordinary primes (each ordinary prime p splits into two oriented primes p_plus and p_minus). The Mobius zeta function zeta_tilde(s) has zeros off the critical line, which is expected since Z_tilde is a non-Ore ring. Test: factor 6 in Z_tilde as 2_plus times 3_plus and 2_minus times 3_minus and verify these are distinct factorizations. Prove unique factorization for Z_tilde up to orientation. Impact: a new algebraic number system with intrinsic orientation, connecting number theory to topology via the double cover Z to Z_tilde.",
     "domains": [
       "Geometry",
@@ -317,7 +317,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:05.665381+00:00",
     "title": "Mobius Arithmetic: Number Theory on the Mobius Band"
   },
@@ -336,7 +336,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Catalan's Conjecture Generalizations"
   },
   {
-    "consumed_by_exp_id": "3c1eb401",
+    "consumed_by_exp_id": "",
     "description": "Prove the stability theorem for persistent homology: the bottleneck distance between persistence diagrams is bounded by the Gromov-Hausdorff distance between the underlying spaces. Formalize the persistent homology pipeline and verify on concrete point cloud data.",
     "domains": [
       "Computation",
@@ -346,7 +346,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:20.401327+00:00",
     "title": "Topological Data Analysis: Persistent Homology Stability"
   },
@@ -575,7 +575,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Topological Phase Computation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9b4d748e",
     "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
     "domains": [
       "Bridges",
@@ -585,7 +585,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.664610+00:00",
     "title": "Logic-Physics Bridge: Consistency of Physical Theories"
   },
@@ -635,7 +635,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "c2873aaf",
+    "consumed_by_exp_id": "",
     "description": "Prove that a Markov basis for a log-linear model on contingency tables connects all fibers of the model. Formalize the Fundamental Theorem of Markov Bases and compute explicit Markov bases for the no-three-way interaction model.",
     "domains": [
       "Computation",
@@ -645,7 +645,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:20.604088+00:00",
     "title": "Algebraic Statistics: Markov Bases for Contingency Tables"
   },
@@ -708,7 +708,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stereographic Proof Compression: Proofs on Spheres"
   },
   {
-    "consumed_by_exp_id": "30991756",
+    "consumed_by_exp_id": "",
     "description": "Prove sharp lower bounds for the Willmore energy of surfaces by genus. Extend the Marques-Neves proof for tori to higher-genus surfaces.",
     "domains": [
       "Geometry"
@@ -717,7 +717,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:18.441912+00:00",
     "title": "Willmore Conjecture Generalizations"
   },
@@ -1440,21 +1440,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T08:52:14.354473+00:00",
     "title": "For metrizable separable spaces, the small inductive dimension, large inductive "
-  },
-  {
-    "consumed_by_exp_id": "b07a6f73",
-    "description": "# Future Directions: Large Cardinal Hierarchy Formalization\n\n## 1. Measurable Cardinals via Ultrafilters\n\nThe next step in the large cardinal hierarchy after Mahlo is the measurable cardinal. A cardinal \u03ba is measurable if there exists a \u03ba-complete non-principal ultrafilter on \u03ba. This can be formalized using Mathlib's existing filter and ultrafilter infrastructure. The key theorem to prove would be: every measurable cardinal is Mahlo, establishing the next link in the consistency strength chain.\n\nThe key insight is that the existence of a \u03ba-complete ultrafilter on \u03ba implies that the set of regular cardinals below \u03ba is not just stationary but in fact belongs to the ultrafilter \u2014 a much stronger property. This can be proved by showing that the set of singular cardinals below \u03ba is not in the ultrafilter (using the Ulam matrix argument).\n\nWhy now? Mathlib already has `Filter`, `Ultrafilter`, and `Filter.CountableInter` (the countable completeness analogue). Extending to \u03ba-completeness is a natural generalization, and the Ulam matrix argument has a clean combinatorial structure well-suited to formal verification.\n\n## 2. Club Filter as a Normal Filter\n\nOur formalization defines club and stationary sets with an \u03c9-closure condition. The full theory requires closure under arbitrary sequences of length less than \u03ba (not just countable sequences). Formalizing the club filter as a normal \u03ba-complete filter on \u03ba would unify several results and enable the Fodor pressing-down lemma (Fodor's theorem), which states that every regressive function on a stationary set is constant on a stationary subset.\n\nThe key insight is that the club filter is not just closed under finite intersection but under < \u03ba-sized intersection (for regular uncountable \u03ba), making it a normal ideal. This connects set theory to the theory of Boolean algebras and forcing.\n\nWhy now? The \u03c9-closed version is formalized. Generalizing to arbitrary cofinality requires Ordinal.bsup infrastructure, which Mathlib now provides. Fodor's theorem has a short inductive proof once the definitions are right.\n\n## 3. Indescribable Cardinals and Reflection Principles\n\nA cardinal \u03ba is \u03a0\u00b9_n-indescribable if for every \u03a0\u00b9_n sentence \u03c6 that holds in V_\u03ba, there exists \u03b1 < \u03ba such that \u03c6 holds in V_\u03b1. The hierarchy of indescribable cardinals sits between Mahlo and measurable in consistency strength. Formalizing this requires a theory of the cumulative hierarchy V_\u03b1, which could be built using well-founded recursion on ordinals.\n\nThe key insight is that inaccessibility is equivalent to \u03a0\u2070\u2081-indescribability, and the Mahlo property is equivalent to \u03a0\u00b9\u2080-indescribability (a classical result of Hanf and Scott). This provides an alternative characterization of the large cardinals we formalized.\n\nWhy now? The key infrastructure \u2014 ordinal recursion, cardinal arithmetic, and the aleph fixed point theorem \u2014 is now in place from our formalization. The cumulative hierarchy can be built as a family of types indexed by ordinals using well-founded recursion.\n\n## 4. Consistency Strength Separation via Inner Models\n\nThe ultimate goal is to prove strict separation: Con(ZFC + \u2203 Mahlo) \u2192 Con(ZFC + \u2203 inaccessible), but not vice versa. This requires constructing inner models \u2014 for example, showing that if \u03ba is Mahlo, then V_\u03ba is a model of ZFC + \"there exists an inaccessible cardinal.\" This is inherently metamathematical and requires formalizing satisfaction relations for set-theoretic formulas.\n\nThe key insight is that the aleph fixed point theorem (proved in our formalization) and the exists_inaccessible_below theorem together show that V_\u03ba for Mahlo \u03ba sees inaccessible cardinals \u2014 this is the semantic content of consistency strength separation. Formalizing the satisfaction relation is the missing piece.\n\nWhy now? Recent work on formalizing G\u00f6del's incompleteness theorems in Lean (e.g., the FLean project) provides patterns for encoding syntax and satisfaction. Our cardinal arithmetic results (pow_lt, aleph fixed points) provide the mathematical content that the inner model argument needs.\n\n## 5. Cardinal Arithmetic Independence: Easton's Theorem\n\nEaston's theorem states that the function \u03ba \u21a6 2^\u03ba on regular cardinals can be essentially arbitrary (subject to K\u00f6nig's theorem constraints). Formalizing even a weak version \u2014 showing that GCH is independent of ZFC \u2014 would connect our cardinal arithmetic results to forcing theory. Our `IsInaccessible.pow_lt` theorem shows that inaccessible cardinals provide natural upper bounds for cardinal exponentiation; Easton's theorem shows these bounds are essentially optimal.\n\nThe key insight is that our iterPow construction (used to build strong limits) is a special case of the beth function, and the gap between beth and aleph fixed points is precisely where GCH independence lives.\n\nWhy now? The iterPow infrastructure and strong limit theorems from our formalization provide the \"ground model\" side of the forcing argument. Formalizing Boolean-valued models (the algebraic approach to forcing) could leverage Mathlib's complete Boolean algebra library.\n",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_1095",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "2c51cdc5",
-    "status": "in_progress",
-    "timestamp": "2026-06-09T09:29:27.155248+00:00",
-    "title": "The next step in the large cardinal hierarchy after Mahlo is the measurable card"
   },
   {
     "consumed_by_exp_id": "",
@@ -2237,21 +2222,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Foundational information-theoretic framework for BB84"
   },
   {
-    "consumed_by_exp_id": "1cfa3ae8",
-    "description": "# Future Directions: Clique Complex Theory in Lean 4\n\n## 1. Simplicial Chain Complexes and Homology Groups\n\nThe natural next step is to construct the simplicial chain complex from our `ASC'` type. The k-th chain group C_k is the free abelian group on oriented k-simplices (ordered (k+1)-tuples of vertices spanning a face), and the boundary operator \u2202_k : C_k \u2192 C_{k-1} is defined by the alternating sum of face deletions: \u2202_k[v_0, ..., v_k] = \u03a3\u1d62 (-1)^i [v_0, ..., v\u0302\u1d62, ..., v_k].\n\nThe key insight is that Mathlib's `FreeAbelianGroup` and `HomologicalComplex` provide the algebraic scaffolding \u2014 what's missing is the combinatorial construction of \u2202 from our face data, and the proof that \u2202\u00b2 = 0 (which follows from the double-alternating-sign cancellation). Our `ASC'.link` and `ASC'.down_closed` already encode exactly the face-deletion structure needed.\n\nWhy now? The `cliqueComplex'` construction and `link` operator are formalized and compiled. The boundary map is a concrete linear map on free abelian groups, and \u2202\u00b2 = 0 is a finite combinatorial identity \u2014 no deep analysis is needed, only careful bookkeeping of signs and indices.\n\n## 2. Flag Complex Characterization (Converse Direction)\n\nWe proved that every clique complex satisfies the flag property (`cliqueComplex_isFlag`). The converse \u2014 that every flag complex IS the clique complex of its 1-skeleton \u2014 would complete the characterization theorem: K is a flag complex \u27fa K = \u0394(Skel\u2081(K)).\n\nThe key insight is that the forward direction (our theorem) shows \u0394(G) \u2286 K for any flag complex K with 1-skeleton G, while the converse direction K \u2286 \u0394(G) requires showing that if \u03c3 is a face of K, then all 2-element subsets of \u03c3 are faces (by downward closure), hence all pairs are 1-skeleton-adjacent, and by the flag property \u03c3 \u2208 \u0394(Skel\u2081(K)). The proof is a one-line appeal to downward closure.\n\nWhy now? Both `oneSkeletonGraph` and `isFlag` are defined and the forward direction compiles. The converse is a straightforward application of `down_closed` and the definitions.\n\n## 3. Persistent Homology via Vietoris-Rips Filtrations\n\nOur `vietorisRips_mono` theorem establishes that the Vietoris-Rips complex is monotone in the scale parameter \u03b5, giving a filtration VR(X, \u03b5\u2081) \u2286 VR(X, \u03b5\u2082) \u2286 \u22ef for \u03b5\u2081 \u2264 \u03b5\u2082. Combined with the chain complex construction from Direction 1, this would yield a filtered chain complex whose persistent homology captures topological features at multiple scales.\n\nThe key insight is that once \u2202 is defined and \u2202\u00b2 = 0 is proved, the persistent homology module is simply the diagram of homology groups H_k(VR(X, \u03b5\u1d62)) connected by the maps induced by inclusion. Mathlib's `CategoryTheory.Functor` framework can model this as a functor from (\u211d, \u2264) to abelian groups.\n\nWhy now? The filtration monotonicity is proven. The remaining gap is the chain complex construction (Direction 1), after which persistent homology follows by functoriality.\n\n## 4. Tur\u00e1n-Type Bounds on f-Vectors of Clique Complexes\n\nOur `ASC.fVector_le_choose` gives f_k \u2264 C(n, k+1), tight only for complete graphs. For graphs with bounded clique number \u03c9(G) \u2264 r, we have f_k = 0 for all k \u2265 r. The natural question is: what is the maximum f_k over all n-vertex graphs with \u03c9(G) \u2264 r? The answer should be given by the Tur\u00e1n graph T(n, r).\n\nThe key insight is that `cliqueComplex_face_card_le_of_cliqueFree` already gives the vanishing result (f_k = 0 for k \u2265 r when G is (r+1)-clique-free). The extremal question \u2014 showing that the Tur\u00e1n graph maximizes f_k subject to \u03c9 \u2264 r \u2014 requires connecting our clique complex f-vector to Tur\u00e1n's theorem, which has partial Mathlib support.\n\nWhy now? The face-card bound and clique-free dimension bound are proven. The Tur\u00e1n graph is a concrete, constructible object, and its face counts are computable binomial expressions.\n\n## 5. Nerve Lemma and Good Cover Theorem\n\nThe nerve of a finite open cover {U_i} is the simplicial complex whose faces are the subsets I with \u2229_{i \u2208 I} U_i \u2260 \u2205. The Nerve Lemma states that if the cover is \"good\" (all non-empty intersections are contractible), then the nerve is homotopy-equivalent to the union \u222a U_i.\n\nThe key insight is that the clique complex \u0394(G) is itself the nerve of the cover of the edge set by maximal cliques. Formalizing this perspective would connect our combinatorial ASC definitions to the topological homotopy type, establishing that clique complexes are not just combinatorial objects but carry genuine topological information via the nerve construction.\n\nWhy now? Our `ASC'` type with its `link` and `isFlag` infrastructure provides the combinatorial skeleton. The nerve construction is a concrete functor from covers to simplicial complexes, and its formalization would be the first verified nerve lemma in Lean 4.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_1166",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "9fe7196f",
-    "status": "in_progress",
-    "timestamp": "2026-06-09T20:42:12.920051+00:00",
-    "title": "The natural next step is to construct the simplicial chain complex from our `ASC"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "# Future Directions\n\n## Synthesis\n\nThis cycle established a rigorous foundation for the modular-arithmetic structure of the Collatz dynamical system. We proved four main theorems: that powers of 2 deterministically descend to 1, that no positive fixed points or 2-cycles exist, and that the parity of the shortcut Collatz map is fully determined by residues modulo 4. The last result is particularly significant \u2014 it shows that the \"randomness\" of Collatz trajectories is entirely governed by the binary expansion of the input, with each additional bit determining the next branching decision.\n\nThe cycle revealed that omega (Lean's linear arithmetic decision procedure) is remarkably powerful for Collatz-style arguments involving modular arithmetic and natural number division. The no-fixed-point and no-2-cycle results, which require careful case analysis over parity, were discharged automatically. The pow2_reaches_one theorem required genuine induction and was the only result that needed structural reasoning beyond arithmetic.\n\nA key structural insight: the Collatz map's cycle structure at short periods is trivially excluded by linear constraints over \u2115, but longer cycles (period \u2265 3) resist this approach because the system of equations becomes nonlinear. The boundary between \"easily excludable\" and \"open\" lies precisely at the transition from linear to polynomial constraints on cycle lengths.\n\n## Results Summary\n\n- `pow2_reaches_one`: proved \u2014 Powers of 2 reach 1 in exactly k Collatz steps, confirming 2-adic descent\n- `collatz_no_positive_fixed_point`: proved \u2014 The Collatz map has no positive fixed point (C(n) \u2260 n for n > 0)\n- `collatz_no_positive_two_cycle`: proved \u2014 No positive 2-cycle exists (C(C(n)) \u2260 n for n > 0)\n- `shortcut_mod4_case1`: proved \u2014 For n \u2261 1 (mod 4), the shortcut map (3n+1)/2 is even\n- `shortcut_mod4_case3`: proved \u2014 For n \u2261 3 (mod 4), the shortcut map (3n+1)/2 is odd\n- `odd_mod4_cases`: proved \u2014 Every odd number is 1 or 3 mod 4 (completeness of branching)\n- `C_pow2`: proved \u2014 Helper: C(2^k) = 2^(k-1) for k > 0\n\n## Research Directions\n\n### Direction 1: Exclude Positive 3-Cycles via Modular Constraints\n**Hypothesis**: There is no n > 0 such that C(C(C(n))) = n, i.e., the Collatz map has no positive 3-cycle.\n**Test**: Attempt to prove `\u2200 n : \u2115, 0 < n \u2192 C (C (C n)) \u2260 n` by exhaustive case analysis on parities. The proof would require case-splitting on (n % 2, C(n) % 2, C(C(n)) % 2) \u2014 8 cases, each yielding a system of linear constraints over \u2115.\n**Why now**: This cycle showed that omega handles the 2-cycle case automatically. The 3-cycle case has 8 parity cases (vs. 4 for 2-cycles), but each individual case still reduces to linear arithmetic. The key insight is that period-k cycle exclusion stays tractable as long as 2^k cases each yield contradictions under omega.\n**If true**: Would establish that the minimal period of any positive Collatz cycle is \u2265 4, significantly constraining the dynamics.\n**If false**: Would identify a specific parity sequence where linear arithmetic is insufficient, revealing the exact boundary where Collatz becomes hard.\n\n### Direction 2: Mod-8 Branching Classification for Two-Step Prediction\n**Hypothesis**: For odd n, the value of n mod 8 completely determines the parities of both (3n+1)/2 and the next application of the shortcut map \u2014 giving a 2-step parity prediction.\n**Test**: State and prove 4 theorems (for n \u2261 1, 3, 5, 7 mod 8) characterizing the mod-2 behavior of the iterated shortcut map. The key insight is that each additional bit of binary precision extends the prediction horizon by one step.\n**Why now**: This cycle proved the mod-4 single-step prediction. Extending to mod-8 is the natural next step and should be equally tractable by omega.\n**If true**: Would establish a recursive structure: n mod 2^k predicts k-1 steps of the shortcut map, connecting Collatz dynamics to symbolic dynamics on {0,1}^\u2115.\n**If false**: Would indicate that the shortcut map introduces nonlinear dependencies between successive parities \u2014 unlikely given the linear structure of 3n+1.\n\n### Direction 3: Collatz Trajectory Length Bounds for 2^k \u00b7 m\n**Hypothesis**: For any m > 0 and k \u2265 0, the Collatz trajectory of 2^k \u00b7 m reaches m in exactly k steps: (C^[k]) (2^k * m) = m when m is odd.\n**Test**: Prove by induction on k, using the fact that 2^k \u00b7 m is even for k > 0 so C(2^k \u00b7 m) = 2^(k-1) \u00b7 m. The key insight is that the initial \"even phase\" of any Collatz trajectory is completely predictable \u2014 only odd numbers inject nondeterminism via the 3n+1 rule.\n**Why now**: The pow2_reaches_one theorem is the special case m = 1. Generalizing to arbitrary odd m should use the same inductive structure.\n**If true**: Would decompose any Collatz trajectory into alternating \"even descent\" (deterministic, length = v\u2082(n)) and \"odd jump\" (3n+1) phases, enabling modular analysis.\n**If false**: Would indicate a subtle issue with natural number division when m > 1 \u2014 unlikely but worth verifying.\n\n### Direction 4: Syracuse Function Orbit Equivalence\n**Hypothesis**: The Syracuse function S(n) = (3n+1)/2 for odd n, S(n) = n/2 for even n, has the same cycle structure as the standard Collatz map C \u2014 specifically, n reaches 1 under C iff n reaches 1 under S.\n**Test**: Prove that (C^[k]) n = 1 implies \u2203 j, (S^[j]) n = 1 and vice versa. The key insight is that S \"compresses\" C by combining the odd step (3n+1) with the guaranteed even step (\u00f72), but preserves reachability.\n**Why now**: We already defined the Syracuse function in this cycle. The equivalence should follow from the fact that C applied to an odd number always produces an even number (proved as a helper), so the even step after an odd step is always available to compress.\n**If true**: Would justify using the Syracuse function as the canonical form for Collatz analysis, reducing the number of steps to track.\n**If false**: Would reveal a subtle difference in cycle structure \u2014 e.g., trajectories that reach 1 under C but pass through 0 under S due to \u2115 truncation.\n\n### Direction 5: Formal Lower Bound on Collatz Cycle Length\n**Hypothesis**: Any positive Collatz cycle has length \u2265 17087915 (Eliahou's bound, 1993).\n**Test**: This is a deep result requiring the theory of continued fractions for log(3)/log(2). A tractable first step: prove that any positive cycle has length \u2265 5 by extending the case-analysis approach from Direction 1. The key insight is that each additional period length doubles the case analysis but remains within omega's reach up to modest periods.\n**Why now**: Periods 1 and 2 were excluded in this cycle. Periods 3 and 4 should be tractable. The boundary where case analysis becomes infeasible (likely around period 10-15) would reveal the computational limits of the approach and motivate switching to analytical methods.\n**If true**: Even proving length \u2265 5 would be a novel formalization. The full Eliahou bound would be a significant contribution.\n**If false**: Finding a cycle would disprove the Collatz conjecture \u2014 extremely unlikely but would be historic.\n",
     "domains": [
@@ -2385,6 +2355,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-10T07:46:51.890536+00:00",
     "title": "The file `Catalog/Tropical/TropicalModuliCompactification.lean` formalizes the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Willmore Energy Lower Bounds by Genus\n\nThe file `WillmoreEnergy.lean` establishes the elementary half of the Willmore\nstory in a clean measure-theoretic abstraction: the pointwise square identity\n`H\u00b2 - K = ((\u03ba\u2081-\u03ba\u2082)/2)\u00b2`, its integral consequence `\u222b K \u2264 W`, the Gauss\u2013Bonnet\nbound `2\u03c0\u00b7\u03c7 \u2264 W`, the sharp `4\u03c0` bound for genus `0`, the universal `4\u03c0` bound\nfrom a Gauss-map degree input, and a precise statement of *why* the elementary\nargument degenerates for higher genus. Below are five concrete, falsifiable\ndirections that build directly on these results and connect to the catalog files\n`DiscreteGaussBonnet.lean` (`total_curvature_eq_genus`,\n`eulerChar_eq_two_sub_two_mul_genus`) and `GenusFormula.lean`.\n\n## 1. A quantitative umbilic-defect lower bound\n\nThe identity `willmoreDensity_sub_gaussCurv` says `W - \u222bK = \u222b((\u03ba\u2081-\u03ba\u2082)/2)\u00b2`, the\ntotal *umbilic defect*. Conjecture: for any closed surface,\n`W \u2265 2\u03c0\u00b7\u03c7 + c \u00b7 diam(spec(II))\u00b2` for an explicit constant, where the second term\nmeasures how far the surface is from being totally umbilic in an averaged sense.\n**The key insight is** that the slack in `gauss_le_willmore` is *itself* a\ngeometrically meaningful energy (the traceless second fundamental form), so the\ninequality can be upgraded to an identity-with-remainder rather than a bare\nbound. **Why now?** The remainder is already available in Lean as\n`\u222b x, ((k1 x - k2 x)/2)^2 \u2202\u03bc`; one only needs `integral_eq_integral_add` style\nsplitting, which is fully supported in current Mathlib measure theory.\n\n## 2. Rigidity: characterizing equality `W = \u222bK`\n\n`willmoreDensity_eq_gaussCurv_iff` proves the pointwise rigidity `H\u00b2 = K \u2194 \u03ba\u2081=\u03ba\u2082`.\nThe integral upgrade \u2014 `W = \u222bK` (with both integrable and the defect `\u2265 0`) forces\n`\u03ba\u2081 = \u03ba\u2082` \u03bc-almost everywhere (total umbilicity) \u2014 should follow from\n`MeasureTheory.integral_eq_zero_iff_of_nonneg`. **The key insight is** that the\nnonnegative defect integrand vanishes in integral iff it vanishes a.e., turning a\npointwise iff into an a.e. rigidity theorem with no new geometry. **Why now?** The\nnonnegativity lemma `willmoreDensity_nonneg` plus the square identity are already\nproved, so the only missing ingredient is a single standard Mathlib lemma about\na.e.-vanishing of nonnegative integrands.\n\n## 3. Genus-monotonicity of the elementary obstruction\n\n`gaussBonnet_bound_vacuous_high_genus` shows `4\u03c0(1-g) \u2264 0` for `g \u2265 1`.\nStrengthen this to a *monotone family*: the elementary lower bound\n`b(g) = 4\u03c0(1-g)` is strictly decreasing in `g`, and the gap between `b(g)` and the\ntrue sharp bound `\u03b2(g)` (e.g. `\u03b2(1) = 2\u03c0\u00b2`) is strictly increasing. **The key\ninsight is** that the elementary Gauss\u2013Bonnet method loses exactly `2\u03c0` of\ndetectable energy per unit genus, which can be stated and proved as a clean real\ninequality `b(g+1) = b(g) - 4\u03c0`. **Why now?** This is a finite real-arithmetic\nstatement reachable by `linarith`/`nlinarith` on top of the existing genus\nmachinery in `DiscreteGaussBonnet.lean`, requiring no analysis at all.\n\n## 4. The Li\u2013Yau multiplicity bound via the set-integral method\n\n`willmore_ge_fourPi_of_setGauss` already isolates the degree mechanism: a region\ncontributing `\u2265 4\u03c0` of positive Gauss curvature forces `W \u2265 4\u03c0`. Generalize to\nthe Li\u2013Yau inequality: a surface with a point of multiplicity `k` satisfies\n`W \u2265 4\u03c0k`. **The key insight is** that `k` disjoint sheets each contribute an\nindependent `4\u03c0` of Gauss-map degree, so the single-set bound becomes a finite\nsum over `k` disjoint measurable regions via additivity of the set integral.\n**Why now?** `setIntegral_le_integral` and finite additivity of restricted\nintegrals are present in Mathlib, so the `k = 1` proof here extends to general\n`k` by induction with no new analytic input.\n\n## 5. The Marques\u2013Neves bound `2\u03c0\u00b2 \u2264 W` for tori (the open target)\n\n`willmore_torus_conjecture` records the genus-1 sharp bound as a `sorry`. A\ntractable intermediate target is the *conformal/min-max width* reformulation:\ndefine an abstract \"width\" functional on the abstract surface model and prove\nthat (i) the Willmore energy dominates the width and (ii) the width of any\ngenus-1 configuration is `\u2265 2\u03c0\u00b2`. **The key insight is** that the full\nAlmgren\u2013Pitts machinery can be *axiomatized* at the level of a width functional\nsatisfying a small list of monotonicity/normalization properties, reducing the\ndeep theorem to a finite combinatorial-analytic core that Lean can verify.\n**Why now?** The abstract measure-space surface model in this file is exactly the\nright setting to host such a width functional without committing to a smooth\nmanifold structure, so the reformulation can be prototyped immediately on top of\n`willmoreEnergy`.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1182",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "30991756",
+    "status": "available",
+    "timestamp": "2026-06-10T08:16:27.322871+00:00",
+    "title": "The file `WillmoreEnergy.lean` establishes the elementary half of the Willmore"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Mobius Arithmetic\n\n## Synthesis\n\nThis cycle set out to build the \"Mobius integers\" `Ztilde = \u2124 \u00d7 {+1,-1}` modulo the\ntwist `(n,+1) ~ (-n,-1)` and to test the bold conjectures attached to it: a class\nnumber 1, a *double cover* of the primes into oriented pairs `p\u208a`/`p\u208b`, distinct\nfactorizations of `6`, and a zeta function with zeros off the critical line because\nthe ring is \"non-Ore\". The decisive structural finding is a **collapse phenomenon**:\nthe orientation-respecting signed-value map `mval(n,s) = s\u00b7n` is a complete invariant\nof each Mobius class, so the quotient is in bijection with `\u2124`, and the transported\nring structure upgrades this to a genuine **ring isomorphism `ztildeRingEquivInt :\nZtilde \u2243+* \u2124`**. Everything else follows from this one fact.\n\nUnder the collapse, each conjecture resolves cleanly \u2014 and mostly negatively. The\ndouble cover *collapses*: the two oriented lifts satisfy `p\u208b = -p\u208a`\n(`ominus_eq_neg_oplus`), and since `-1` is a unit they are **associates**\n(`oriented_primes_associated`); the spectrum is the ordinary prime spectrum, a degree-1\ncover, not a degree-2 one. The \"two distinct factorizations of 6\" are the single\nfactorization `2\u00b73` taken up to the unit `\u00b11`, i.e. exactly `\u2124`'s unique factorization,\nso unique factorization *up to orientation* is just unique factorization up to units.\nThe orientation flip is literally negation (`flip_eq_neg`), confirming that all of the\nMobius nonorientability is carried by the unit `-1`. The proposed twisted addition is\nnot even an operation: it fails to descend to the quotient (`twisted_add_not_welldefined`),\nbecause its agree-branch hard-codes orientation `+1` and so depends on representatives,\nnot just signed values.\n\nThe reusable structural insight is methodological: a topologically-motivated\nidentification yields a *new* number system only when the gluing map admits no\nsingle complete numeric invariant. Here `mval` is such an invariant, which is why the\nconstruction degenerates. This is a sharp, transferable diagnostic for the sibling\nGeometry experiments (`PadicMobius`, `InverseStereoMobiusNext`, `HyperbolicNumberTheory`):\nto obtain genuine novelty one must break the existence of a complete `\u2124`-valued (or\nfield-valued) invariant \u2014 for instance by making the orientation *interact\nmultiplicatively in a non-central way*, forcing noncommutativity that no commutative\nvalue map can capture.\n\n## Results Summary\n\n- `ztildeRingEquivInt`: proved \u2014 the Mobius integers are ring-isomorphic to `\u2124`; the entire construction collapses to ordinary arithmetic.\n- `ztilde_isDomain`: proved \u2014 `Ztilde` is an integral domain (a corollary of the collapse), so \"class number 1 / UFD\" is just `\u2124`'s.\n- `mobius_identification`: proved \u2014 the defining Mobius twist `(n,+1) ~ (-n,-1)` holds in the quotient.\n- `twisted_add_not_welldefined`: disproved (counterexample) \u2014 the sketch's case-split addition does not descend to the quotient.\n- `oriented_primes_associated`: disproved-as-conjectured \u2014 `p\u208a` and `p\u208b` are associates, so the prime double cover collapses to degree 1.\n- `ominus_eq_neg_oplus`: proved \u2014 the two oriented lifts of `p` are negatives of each other.\n- `flip_eq_neg`: proved \u2014 orientation reversal equals ring negation.\n\n## Research Directions\n\n### Direction 1: Noncommutative Mobius integers via a twisted product\n**Hypothesis**: Equipping `\u2124 \u00d7 {\u00b11}` with the *twisted* multiplication\n`(a,s)\u00b7(b,t) = (a\u00b7b, s\u00b7t)` together with a value map that records orientation as a\ngenuine grading (a `\u2124/2`-graded ring, or a crossed product `\u2124 \u22ca \u2124/2`) produces a ring\nthat is **not** isomorphic to `\u2124` and whose unit group is strictly larger than `{\u00b11}`.\n**Test**: Build the `\u2124/2`-crossed-product `\u2124[\u2124/2]` (group ring) in Lean and prove it is\n*not* an integral domain (exhibit zero divisors `(1+g)(1-g)=0`), contrasting with\n`ztilde_isDomain`.\n**Why now**: This cycle proved the *commutative* collapse via the complete invariant\n`mval`; the obstruction is precisely the existence of that invariant, so deliberately\ndestroying it (grading instead of quotient) is the minimal next step.\n**If true**: A genuinely new orientation-aware ring whose number theory differs from `\u2124`,\nsalvaging the original concept's intent.\n**If false**: It further confirms that \"orientation = unit \u00b11\" is unavoidable for any\n`\u2124`-valued construction, sharpening the no-go.\n\n### Direction 2: A general collapse criterion for \"twisted\" quotient number systems\n**Hypothesis**: For any `f : A \u2192 B` with `B` a commutative ring and `f` surjective, the\nquotient `A / Setoid.ker f` carries a *unique* ring structure making `f` descend, and it\nis `\u2243+* B`; hence no quotient-by-a-complete-invariant construction is new.\n**Test**: State and prove the general lemma `Quotient (Setoid.ker f) \u2243+* B` from\n`Function.Surjective f` plus compatibility of `f` with given operations, then instantiate\nit to re-derive `ztildeRingEquivInt` as a one-liner.\n**Why now**: `ztildeRingEquivInt` is a special case; abstracting it gives the next team a\n*reusable theorem* that instantly screens out degenerate \"exotic ring\" proposals.\n**If true**: A catalog-level diagnostic lemma that saves future cycles from rebuilding\ncollapses by hand.\n**If false**: There is a subtle obstruction to uniqueness of the descended structure\nworth isolating (e.g. when `f` is not injective on units).\n\n### Direction 3: The Mobius zeta function is the ordinary zeta function\n**Hypothesis**: The proposed `zeta_tilde(s) = \u03a3 (1/n^s_+ + 1/n^s_-)` equals\n`(1 + 2^{-s}\u00b7\u2026)`-style rearrangement of `2\u00b7\u03b6(s)` (each value counted with both\norientations), so it inherits the standard functional equation and its zeros lie on the\ncritical line \u2014 contradicting the concept's \"zeros off the critical line\" claim.\n**Test**: Formalize the oriented Dirichlet sum over `Ztilde` using `ztildeRingEquivInt`\nto reindex by `\u2124`, and prove `zeta_tilde(s) = 2\u00b7\u03b6(s)` (or the appropriate constant\nmultiple) on `Re(s) > 1`; conclude the RH-status is identical to `\u2124`'s.\n**Why now**: With `Ztilde \u2243+* \u2124` established, the \"Mobius zeta\" is a relabelled\nclassical zeta, making the equality provable rather than speculative.\n**If true**: The \"non-Ore / zeros off the line\" claim is refuted; orientation cannot move\nzeros.\n**If false**: The orientation weighting is genuinely asymmetric (e.g. `p\u208a` and `p\u208b`\nweighted differently), which would itself be a surprising and publishable asymmetry.\n\n### Direction 4: Klein-bottle integers (double twist) and whether they too collapse\n**Hypothesis**: The two-sided identification `(m,n,+1) ~ (-m,-n,-1)` on `\u2124\u00b2 \u00d7 {\u00b11}`\n(a \"Klein-bottle\" analogue) again collapses, this time to `\u2124\u00b2`, via the complete\ninvariant `(m,n,s) \u21a6 (s\u00b7m, s\u00b7n)`.\n**Test**: Reuse the `Setoid.ker` pattern with `mval\u2082(m,n,s) = (s\u00b7m, s\u00b7n)` and prove\n`KleinZtilde \u2243+* \u2124\u00b2` (as additive groups / commutative rings with coordinatewise product).\n**Why now**: The exact mechanism from this cycle (`Setoid.ker` + surjectivity) transfers\nverbatim to higher rank, letting us test whether *dimension* changes the collapse.\n**If true**: Collapse is dimension-independent for sign-twist identifications, a clean\ngeneral statement.\n**If false**: Some higher-rank twist resists a complete invariant \u2014 exactly the regime\nwhere new number systems could live.\n\n### Direction 5: Where exactly does the twisted addition fail \u2014 measure the obstruction\n**Hypothesis**: The set of \"bad\" representative-pairs for `tadd` (where the agree-branch\nflips sign) is precisely the pairs of *opposite* orientation, and `tadd` *does* descend\nwhen restricted to the sub-setoid of fixed orientation; i.e. the obstruction is a single\n`\u2124/2`-cocycle.\n**Test**: Prove that `tadd` is well defined on `{(n,+1)}` (the orientation-`+1` section)\nand exhibit the cocycle measuring the failure on the full quotient; classify it in\n`H\u00b2(\u2124/2; \u2124)`.\n**Why now**: `twisted_add_not_welldefined` gives one explicit failure; localizing it to a\ncohomology class turns a counterexample into structure.\n**If true**: The \"twist\" is a genuine but cohomologically trivial obstruction, explaining\n*why* the only coherent arithmetic is `\u2124`'s.\n**If false**: The failure is non-cohomological (depends on values, not just orientations),\nindicating the proposed operation is simply incoherent rather than twisted.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1183",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1c00f06d",
+    "status": "available",
+    "timestamp": "2026-06-10T08:17:15.857698+00:00",
+    "title": "This cycle set out to build the \"Mobius integers\" `Ztilde = \u2124 \u00d7 {+1,-1}` modulo "
   },
   {
     "consumed_by_exp_id": "",
@@ -2717,7 +2717,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fa6907ec",
     "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
     "domains": [
       "Tropical",
@@ -2727,7 +2727,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.479969+00:00",
     "title": "Idempotent Probability: Large Deviations"
   },
@@ -2852,7 +2852,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
   {
-    "consumed_by_exp_id": "02022d1b",
+    "consumed_by_exp_id": "",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domains": [
       "Cryptography",
@@ -2862,7 +2862,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
