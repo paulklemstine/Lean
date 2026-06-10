@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle (Harmonic)"
   ],
-  "date": "2026-06-10T21:49:02Z",
+  "date": "2026-06-10T22:01:05Z",
   "key_results": [
     "Chain rule for iterates: (f^[n])'(x) = product over the orbit of f'(f^[i] x).",
     "Birkhoff-sum identity: log|(f^[n])'(x)| equals the additive cocycle sum of log|f'| along the orbit.",
