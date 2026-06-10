@@ -1,382 +1,467 @@
-# Anti-Mathematics: A Formal Study of the Systematic Negation of ZFC Axioms
+# Arrow-Depth Is Insufficient: A Width–Depth Theory of Semantic State Complexity for Simple Types
 
 ## Abstract
 
-We develop a rigorous theory of *anti-mathematics*: the controlled negation of
-core axioms of Zermelo–Fraenkel set theory with Choice (ZFC). Three axioms are
-analyzed in depth — Extensionality, Infinity, and Choice — and for each we
-characterize the counter-structures that arise when the axiom is denied. Our
-contributions are fourfold. (1) We introduce *membership structures*, axiom-free
-binary relations interpreted as set membership, and prove the **Phantom Quotient
-Theorem**: a finite membership structure satisfies extensionality if and only if
-its *phantom index* (the number of objects collapsed by the extensional quotient)
-is zero. (2) We give a fully verified analysis of the **Ackermann encoding** of
-hereditarily finite sets as natural numbers, proving that it models
-extensionality, empty set, singletons, union (bitwise OR), intersection (bitwise
-AND), and pairing, while satisfying anti-infinity (no universal set; every set is
-finite). (3) We prove **finite universe rigidity**: in any finite type, no
-injection from ℕ exists, every endofunction has an iterate collision, and every
-endofunction admits a positive idempotent iterate (an eventual retract). (4) We
-introduce the **Axiom Defect Spectrum**, a continuous [0,1]-valued generalization
-of the Boolean "holds/fails" dichotomy, and prove that the set of spectra
-compatible with a fixed spectrum is a convex polytope. We also show that
-anti-choice is inconsistent with the underlying constructive-classical
-foundation. All results have been formalized and machine-checked.
+We develop a structural complexity theory for the simple types of the simply
+typed lambda calculus, organized around a single semantic invariant: the
+**type state bound** `tsb(A)`, an upper bound on the number of observationally
+distinguishable semantic states (canonical bisimulation classes) attainable by a
+closed program of type `A`. Our central thesis is that **arrow depth is the wrong
+structural parameter** for controlling this complexity, and that **type size** is
+the right one.
 
-**Keywords:** set theory, foundations, extensionality, hereditarily finite sets,
-Ackermann encoding, axiom of choice, convex geometry, formal verification.
+Concretely, we establish five results. (1) The state bound coincides with an
+independently defined type-complexity measure: both satisfy `f(o) = 1` and
+`f(A → B) = (f(A)+1)(f(B)+1)`, hence are equal. (2) For *chain types* — right-spined
+pipelines `o → o → … → o` — the state bound is singly exponential in depth:
+`tsb(A) ≤ 3^{depth(A)+1}`. (3) For *bushy types* — balanced binary arrow trees —
+the state bound is doubly exponential in depth: `2^{2^n} ≤ tsb(bushy(n)) + 1`.
+(4) Consequently there is **no constant** `c` for which `tsb(A) ≤ c^{depth(A)+1}`
+holds uniformly: depth alone cannot exponentially bound the state complexity.
+(5) Nevertheless `tsb(A) + 1 ≤ 2^{size(A)}` holds for *every* type, giving a
+universally valid, polynomially-certifiable ceiling. Together these results show
+that depth and width *jointly* govern the growth regime, with size (equivalently,
+the complexity measure) serving as the correct controlling parameter. We discuss
+applications to model-checking state explosion, automata minimization, descriptive
+and parameterized complexity, and the cost of higher-order abstraction.
+
+**Keywords.** higher-order semantics, semantic state complexity, arrow depth,
+type size, bisimulation minimization, structural parameterization,
+fixed-parameter tractability, descriptive complexity, automata state explosion,
+width–depth tradeoff, type-theoretic complexity.
 
 ---
 
 ## 1. Introduction
 
-The axioms of ZFC are usually treated as load-bearing: remove one and the whole
-structure is presumed to fail. Yet the history of mathematics is rich with
-fruitful negations — non-Euclidean geometry from denying the parallel postulate,
-non-standard analysis from enriching the reals, paraconsistent logics from
-denying explosion. This paper applies that spirit systematically to the
-foundations themselves, asking what coherent mathematics survives when we negate
-the axioms of Extensionality, Infinity, and Choice.
+A pervasive heuristic in computing equates *nesting depth* with *complexity*.
+Deeply nested code is "complex"; higher-order functions — those that take and
+return other functions — are "complex" in proportion to how high their order
+climbs. In the formal setting of simple types, "order" and "arrow depth" are made
+precise, and it is tempting to treat depth as the master parameter governing how
+complicated the inhabitants of a type can be.
 
-Rather than work informally, we build each counter-world as an explicit
-mathematical object and prove its properties. The recurring theme is that
-axiom-violation is not chaos but *structure with a measurable defect*: phantoms
-can be counted, finitude forces dynamical rigidity, and the very degree of
-violation can be placed on a continuous scale that turns foundational questions
-into convex geometry.
+This paper refutes that heuristic in a precise and complete way. We study a
+semantic invariant `tsb(A)` of simple types — the **type state bound** — which
+ceilings the number of observationally distinct states a closed program of type
+`A` can occupy. We prove that depth is *insufficient*: no exponential function of
+depth can bound `tsb`. We isolate the mechanism: bushiness (width). And we
+identify the parameter that *does* work uniformly: size.
 
-### Organization
+Our contribution is fivefold and is summarized in Section 4. All results are
+formalized and machine-verified; the proofs sketched here track the formal
+development faithfully. Throughout, `o` denotes the base type and `A → B` the
+function type.
 
-Section 2 develops anti-extensionality and the Phantom Quotient Theorem.
-Section 3 treats the Ackermann model and anti-infinity. Section 4 proves finite
-universe rigidity. Section 5 handles anti-choice. Section 6 introduces the Axiom
-Defect Spectrum and proves its convexity. Section 7 discusses compatibility of
-anti-axioms; Section 8 concludes.
+### 1.1 Why a semantic — not merely syntactic — invariant
 
----
-
-## 2. Anti-Extensionality and Phantom Sets
-
-### 2.1 Definitions
-
-**Definition 2.1 (Membership structure).** A *membership structure* on a type
-`α` is a binary relation `rel : α → α → Prop`, with `rel x y` read "`x` is a
-member of `y`." No axioms are imposed.
-
-**Definition 2.2 (Extensional equivalence).** Two elements `a, b : α` are
-*extensionally equivalent*, written `a ≈ b`, when
-`∀ x, rel x a ↔ rel x b`.
-
-**Definition 2.3 (Anti-extensionality).** A membership structure `M` is
-*anti-extensional* if there exist `a ≠ b` with `a ≈ b`. Such a pair is a
-*phantom pair*.
-
-**Lemma 2.4.** Extensional equivalence is an equivalence relation: it is
-reflexive (`extEquiv_refl`), symmetric (`extEquiv_symm`), and transitive
-(`extEquiv_trans`).
-
-*Proof.* Each property is inherited pointwise from the corresponding property of
-the biconditional `↔`: reflexivity from `Iff.rfl`, symmetry from `Iff.symm`,
-transitivity from `Iff.trans`. ∎
-
-Consequently `≈` induces a **setoid** `extSetoid M` on `α`, and we may form the
-quotient `α / ≈`.
-
-### 2.2 The Phantom Universe
-
-**Definition 2.5.** The *Phantom Universe* is the membership structure
-`phantomMem` on `Bool` with `rel := fun _ _ => False` (the empty membership
-relation).
-
-**Proposition 2.6 (`phantom_anti_ext`).** `phantomMem` is anti-extensional.
-
-*Proof.* The witnesses are `true ≠ false`. Both have empty membership, so for
-every `x`, `rel x true ↔ rel x false` is `False ↔ False`, which holds. ∎
-
-### 2.3 The Phantom Index and the Quotient Theorem
-
-**Definition 2.7 (Phantom index).** For a finite membership structure `M` with
-decidable extensional equivalence,
-`phantomIndex M := card α − card (α / ≈)`,
-the number of objects lost when passing to the extensional quotient.
-
-**Proposition 2.8 (`phantom_index_eq_one`).** `phantomIndex phantomMem = 1`.
-
-*Proof.* `Bool` has two elements, both extensionally equivalent, so the quotient
-has a single class; `2 − 1 = 1`. Verified by kernel computation. ∎
-
-**Theorem 2.9 (Phantom Quotient Theorem, `ext_iff_phantom_zero`).** For a finite
-membership structure `M` with decidable `≈`,
-
-> `(∀ a b, a ≈ b → a = b)  ↔  phantomIndex M = 0`.
-
-*Proof sketch.* (⇒) If extensional equivalence implies equality, then the
-quotient map `α → α/≈` is injective, so `card α ≤ card (α/≈)`; combined with the
-always-true reverse inequality (the quotient map is surjective), the cardinalities
-are equal and the index is `card α − card(α/≈) = 0`. We obtain injectivity by
-`Fintype.card_le_of_injective` applied to `Quotient.mk`, using that
-`Quotient.exact` turns equal classes back into `≈`.
-
-(⇐) If the index is 0 then `card α = card (α/≈)` (the difference being 0 forces
-equality, since the quotient map is always surjective so `card(α/≈) ≤ card α`).
-A surjection between finite types of equal cardinality is bijective
-(`Fintype.bijective_iff_surjective_and_card`), hence the quotient map is
-injective; therefore `a ≈ b` (i.e. `Quotient.mk a = Quotient.mk b`) implies
-`a = b`. ∎
-
-The theorem certifies that the phantom index is a *faithful* numerical invariant:
-zero exactly characterizes extensionality, and positive values count the genuine
-deviation.
+Syntactic measures of a type (depth, size, width) are easy to compute but say
+nothing *a priori* about program behavior. The state bound is the bridge: it is
+defined so as to dominate the canonical quotient size — the number of
+bisimulation classes — of any well-typed closed term at that type. Establishing
+that a *syntactic* parameter does or does not control this *semantic* quantity is
+exactly the descriptive-complexity question. Our negative result (depth fails)
+and positive result (size succeeds) are therefore statements about the predictive
+power of syntax over semantics.
 
 ---
 
-## 3. The Ackermann Encoding and Anti-Infinity
+## 2. Preliminaries and Definitions
 
-### 3.1 Definition
+### 2.1 Simple types
 
-**Definition 3.1 (Ackermann membership).** For `m, n : ℕ`, define
-`ackMem m n := n.testBit m = true`, i.e. `m ∈ₐ n` iff the `m`-th binary digit of
-`n` is 1. Under this reading, the natural number `n = Σ 2^{a_i}` encodes the
-finite set `{a_1, …, a_k}`.
+**Definition 2.1 (Types).** The set of simple types is generated by
 
-### 3.2 Set-theoretic operations as bit operations
+```
+Ty ::= o | Ty → Ty,
+```
 
-The following are all proved, exhibiting ℕ-with-`ackMem` as a model of a
-substantial fragment of set theory.
+i.e. a type is either the base type `o` (constructor `base`) or a function type
+`A → B` (constructor `arrow A B`).
 
-**Proposition 3.2 (Empty set, `ack_empty`).** `¬ ackMem m 0` for all `m`:
-no bit of 0 is set.
+**Definition 2.2 (Depth).** The arrow-nesting depth is
 
-**Proposition 3.3 (Singletons, `ack_singleton`).**
-`ackMem k (2^m) ↔ k = m`.
+```
+depth(o)     = 0,
+depth(A → B) = 1 + max(depth(A), depth(B)).
+```
 
-**Proposition 3.4 (Union, `ack_union`).**
-`ackMem k (a ||| b) ↔ ackMem k a ∨ ackMem k b` (bitwise OR).
+**Definition 2.3 (Size).** The total constructor count is
 
-**Proposition 3.5 (Intersection, `ack_intersection`).**
-`ackMem k (a &&& b) ↔ ackMem k a ∧ ackMem k b` (bitwise AND).
+```
+size(o)     = 1,
+size(A → B) = 1 + size(A) + size(B).
+```
 
-**Theorem 3.6 (Pairing, `ack_pairing`).** For all `a, b : ℕ` there is `c` with
-`∀ k, ackMem k c ↔ (k = a ∨ k = b)`; take `c = 2^a ||| 2^b`.
+**Definition 2.4 (Complexity).** The multiplicative complexity measure is
 
-*Proof.* Combine `ack_union` and `ack_singleton`. ∎
+```
+complexity(o)     = 1,
+complexity(A → B) = (complexity(A) + 1) · (complexity(B) + 1).
+```
 
-### 3.3 Extensionality and anti-infinity
+It is immediate by induction that `0 < complexity(A)` for all `A`.
 
-**Theorem 3.7 (Extensionality, `ack_extensionality`).** If
-`∀ m, ackMem m a ↔ ackMem m b` then `a = b`.
+### 2.2 The semantic state bound
 
-*Proof.* The hypothesis says `a` and `b` agree on every bit; `Nat.eq_of_testBit_eq`
-gives `a = b`. ∎
+**Definition 2.5 (Type state bound).** The type state bound is
 
-**Theorem 3.8 (No universal set, `ack_no_universal_set`).** There is no `n` with
-`∀ m, ackMem m n`.
+```
+tsb(o)     = 1,
+tsb(A → B) = (tsb(A) + 1) · (tsb(B) + 1).
+```
 
-*Proof sketch.* Suppose some `n` contained every `m`. Choosing
-`m = log₂ n + 1` gives `n < 2^m`, whence `testBit m n = false` by
-`Nat.testBit_eq_false_of_lt` — contradiction. ∎
+Operationally, `tsb(A)` bounds the canonical quotient size `Set.ncard(boundedStateSet(d, t))`
+of every closed term `t : A` at every depth `d`; that is, it dominates the number
+of bisimulation-distinguishable states reachable from any program of type `A`.
+We take this domination as the defining motivation and work with the recurrence
+above as the object of study.
 
-**Theorem 3.9 (Finite members, `ack_finite_members`).** For every `n`,
-`{m | ackMem m n}` is finite.
+### 2.3 Structural families and auxiliary measures
 
-*Proof sketch.* The set is bounded above by `n`: if `m > n` then `n < 2^m`
-(since `2^m ≥ m + 1 > n`), so the `m`-th bit is 0. A bounded set of naturals is
-finite. ∎
+**Definition 2.6 (Arrow width).** The total number of arrow constructors:
 
-Together, Theorems 3.7–3.9 establish the headline fact: **the Ackermann model
-satisfies Extensionality while denying Infinity**. Every set is a finite bundle
-of bits, no all-encompassing set exists, yet the membership relation is perfectly
-extensional. This is a concrete, computable witness that these two conditions —
-one a ZFC axiom, one the negation of another — are jointly consistent.
+```
+arrowWidth(o)     = 0,
+arrowWidth(A → B) = 1 + arrowWidth(A) + arrowWidth(B).
+```
 
----
+**Definition 2.7 (Chain types).** A type is a *chain* iff every left argument is
+the base type and the structure is right-spined:
 
-## 4. Finite Universe Rigidity
+```
+ChainTy(o)     = True,
+ChainTy(A → B) = (A = o) ∧ ChainTy(B).
+```
 
-Anti-infinity, realized as the assumption that the universe is a *finite type*,
-forces strong structural constraints.
+Chains are the pipelines `o → o → … → o`, the minimally branching types at each
+depth.
 
-**Theorem 4.1 (No injection from ℕ, `no_injection_from_nat`).** For finite `α`
-and any `f : ℕ → α`, `f` is not injective.
+**Definition 2.8 (Bushy types).** The canonical maximally-branching family is
 
-*Proof.* Immediate from `not_injective_infinite_finite`: an injection from an
-infinite type into a finite type cannot exist. ∎
+```
+bushy(0)   = o,
+bushy(n+1) = bushy(n) → bushy(n).
+```
 
-**Theorem 4.2 (Iterate collision, `finite_iterate_collision`).** For finite `α`
-and any `f : α → α`, there exist `m < n` with `f^[m] = f^[n]` pointwise.
+`bushy(n)` is the balanced binary arrow tree of depth `n`.
 
-*Proof sketch.* The map `k ↦ f^[k]` cannot be injective into the finite type
-`α → α` (there are finitely many such functions); a non-injectivity witness
-gives `m ≠ n` with `f^[m] = f^[n]`, and we order them. ∎
+**Definition 2.9 (Depth profile).** The number of type nodes at residual depth
+`k`:
 
-**Theorem 4.3 (Eventual idempotence, `finite_eventual_idempotent`).** For finite
-`α` and any `f : α → α`, there is `n > 0` with `f^[n] ∘ f^[n] = f^[n]`
-(pointwise): a positive iterate is idempotent.
+```
+depthProfile(o, 0)       = 1,
+depthProfile(o, k+1)     = 0,
+depthProfile(A → B, 0)   = 1,
+depthProfile(A → B, k+1) = depthProfile(A, k) + depthProfile(B, k).
+```
 
-*Proof sketch.* From Theorem 4.2 obtain `m < n` with `f^[m] = f^[n]`; set the
-period `p = n − m`. Then `f^[k+p] = f^[k]` for all `k ≥ m` (induction on `k`),
-and by iterating, `f^[k + q·p] = f^[k]` for all `q`. Choose `N` a multiple of
-`p` with `N ≥ m` and `N > 0` (e.g. `N = p·(m+1)`). Then `f^[2N] = f^[N]` because
-`2N = N + (N/p)·p`, which gives `f^[N](f^[N] x) = f^[N] x` for all `x`. ∎
+**Definition 2.10 (Predicted bound).** The size-certified ceiling:
 
-Theorem 4.3 says the *eventual image* of any finite-state process is a retract:
-the dynamics settle onto a stable core. This is the abstract reason every
-deterministic finite-memory system is ultimately periodic.
-
----
-
-## 5. Anti-Choice and Foundational Inconsistency
-
-**Definition 5.1 (Choice-free family).** A *choice-free family* consists of an
-index type `I`, fibers `fiber : I → Type*`, proofs that each `fiber i` is
-nonempty, and a proof that the product `∀ i, fiber i` is *empty* (no global
-section / choice function).
-
-**Theorem 5.2 (`no_choicefree_in_lean`).** No choice-free family exists.
-
-*Proof.* Given such a family, the foundation's choice operator selects
-`fun i => choice (nonempty_fiber i) : ∀ i, fiber i`, contradicting the emptiness
-of the product. ∎
-
-**Theorem 5.3 (Choice, `lean_ac`).** For any `I` and family `S : I → Type*` with
-each `S i` nonempty, the product `∀ i, S i` is nonempty.
-
-**Theorem 5.4 (Well-ordering, `choice_gives_well_order`).** Every type `α` admits
-a relation `r` with `IsWellOrder α r`.
-
-These results record an asymmetry: whereas anti-extensionality and anti-infinity
-describe consistent alternative universes, **anti-choice is inconsistent with the
-constructive-classical foundation** in which the development lives, because Choice
-is a built-in principle there. Negation is not uniformly available.
+```
+predictedBound(A) = 2^{size(A)} − 1.
+```
 
 ---
 
-## 6. The Axiom Defect Spectrum
+## 3. Worked Intuition
 
-We now generalize the Boolean "holds/fails" dichotomy to a continuum.
+Before the theorems, two computations fix intuition.
 
-**Definition 6.1 (Axiom Defect Spectrum).** An *axiom defect spectrum* for `n`
-axioms is a function `defect : Fin n → ℝ` with `0 ≤ defect i ≤ 1` for all `i`.
-The value `0` means the axiom holds perfectly; `1` means maximal failure. A
-spectrum is a point in the unit cube `[0,1]^n`.
+*Chains.* Writing `c_d` for the state bound of the chain of depth `d`, the
+recurrence `tsb(o → B) = 2·(tsb(B)+1)` gives `c_0 = 1`, `c_1 = 4`, `c_2 = 10`,
+`c_3 = 22`, …, with closed form `c_d = 3·2^d − 2`. This is *singly* exponential
+in `d`.
 
-**Definition 6.2 (Total defect).** `totalDefect s := Σ_{i} defect i`.
-
-**Theorem 6.3 (Total defect bound, `totalDefect_le_card`).**
-`totalDefect s ≤ n`.
-
-*Proof.* Sum the bound `defect i ≤ 1` over the `n` coordinates. ∎
-
-**Definition 6.4 (Compatibility).** Spectra `s, t` are *compatible* if for every
-axiom `i`, `defect_s i + defect_t i ≤ 1` (no axiom is "over-violated" when the
-defects are superposed).
-
-**Proposition 6.5 (Symmetry, `compatible_comm`).** `s` compatible with `t` iff
-`t` compatible with `s`.
-
-**Definition 6.6 (ZFC spectrum).** `zfcSpectrum : AxiomDefectSpectrum 8` has all
-defects 0 (all axioms hold perfectly).
-
-**Proposition 6.7 (`zfc_universally_compatible`).** `zfcSpectrum` is compatible
-with every spectrum.
-
-*Proof.* For each `i`, `0 + defect_s i = defect_s i ≤ 1`. ∎
-
-**Theorem 6.8 (Convexity, `compatible_convex_combination`).** Fix `s`. If `s` is
-compatible with `t₁` and with `t₂`, then for every `c ∈ [0,1]` and every axiom
-`i`,
-`defect_s i + (c·defect_{t₁} i + (1−c)·defect_{t₂} i) ≤ 1`.
-
-*Proof sketch.* Write the left side as
-`c·(defect_s i + defect_{t₁} i) + (1−c)·(defect_s i + defect_{t₂} i)`, a convex
-combination of two quantities each `≤ 1` (by compatibility), with weights `c` and
-`1−c` summing to 1; hence the combination is `≤ 1`. A `nlinarith` certificate
-discharges it from the bounds. ∎
-
-**Corollary 6.9.** The set of spectra compatible with a fixed `s` is convex —
-indeed a convex polytope cut out by the `n` linear inequalities
-`defect_t i ≤ 1 − defect_s i` together with the cube constraints. Studying which
-axiom violations can coexist thus becomes a problem in convex/polyhedral
-geometry.
+*Bushes.* Writing `b_n = tsb(bushy(n))`, the recurrence `b_{n+1} = (b_n+1)^2`
+gives `b_0 = 1`, `b_1 = 4`, `b_2 = 25`, `b_3 = 676`, `b_4 = 458329`, …. Repeated
+squaring forces `b_n + 1 ≥ 2^{2^n}`: *doubly* exponential in depth `n`. Crucially,
+`bushy(n)` and the depth-`n` chain have *identical depth* but state bounds in
+entirely different growth classes.
 
 ---
 
-## 7. Compatibility of Anti-Axioms
+## 4. Main Results
 
-**Theorem 7.1 (`ack_ext_compatible_anti_inf`).** The Ackermann model
-simultaneously satisfies extensionality and anti-infinity:
-`(∀ a b, (∀ m, ackMem m a ↔ ackMem m b) → a = b) ∧ ¬∃ n, ∀ m, ackMem m n`.
+### Theorem 1 (State bound equals complexity).
 
-*Proof.* The two conjuncts are Theorems 3.7 and 3.8. ∎
+> For every type `A`, `tsb(A) = complexity(A)`.
 
-**Theorem 7.2 (`anti_ext_compatible_anti_inf`).** Anti-extensionality and
-anti-infinity are compatible: the Phantom Universe is anti-extensional and `Bool`
-is finite.
+**Proof sketch.** Structural induction on `A`. The base cases agree
+(`tsb(o) = 1 = complexity(o)`). For `A → B`, both sides unfold to
+`(f(A)+1)·(f(B)+1)`; substituting the induction hypotheses `tsb(A) = complexity(A)`
+and `tsb(B) = complexity(B)` closes the case. ∎
 
-**Theorem 7.3 (`anti_ext_contradicts_ext`).** A single membership structure
-cannot be both extensional (`∀ a b, a ≈ b → a = b`) and anti-extensional.
+This identifies `tsb` with a canonical, independently motivated measure and lets
+us use whichever presentation is convenient.
 
-*Proof.* Anti-extensionality supplies a phantom pair `a ≠ b` with `a ≈ b`;
-extensionality applied to it forces `a = b`, a contradiction. ∎
+### Theorem 2 (Depth is dominated by complexity).
 
-These results delineate the compatibility landscape: extensionality coexists with
-anti-infinity (Ackermann), anti-extensionality coexists with anti-infinity
-(Phantom Universe), but extensionality and its negation cannot both hold of one
-structure.
+> For every type `A`, `depth(A) ≤ complexity(A)`.
+
+**Proof sketch.** Induction on `A`. Base: `0 ≤ 1`. Arrow: by IH,
+`depth(A) ≤ complexity(A)` and `depth(B) ≤ complexity(B)`, while
+`depth(A → B) = 1 + max(depth A, depth B)` and
+`complexity(A → B) = (complexity A + 1)(complexity B + 1)`. Using
+`complexity A, complexity B ≥ 1` (positivity), the product dominates `1 + max(…)`
+by a short nonlinear arithmetic argument. ∎
+
+This says depth can never *overshoot* complexity; the failure of depth is one of
+*underestimation*, established next.
+
+### Theorem 3 (Chain depth bound — depth suffices for chains).
+
+> For every chain type `A`, `tsb(A) ≤ 3^{depth(A)+1}`.
+
+**Proof sketch.** Induction on the chain structure. Base: `tsb(o) = 1 ≤ 3`.
+Inductive step: a chain `o → B` with `B` a chain satisfies
+`tsb(o → B) = 2·(tsb(B)+1)`. By IH, `tsb(B) ≤ 3^{depth(B)+1}`, so
+`tsb(o → B) ≤ 2·(3^{depth(B)+1} + 1) ≤ 3^{depth(B)+2} = 3^{depth(o→B)+1}`,
+the last step using `depth(o → B) = depth(B) + 1` and a routine power inequality. ∎
+
+Chains certify that depth-based bounds are achievable for non-branching types.
+
+### Theorem 4 (Bushy depth).
+
+> For every `n`, `depth(bushy(n)) = n`.
+
+**Proof sketch.** Induction: `depth(bushy(0)) = 0`; and
+`depth(bushy(n+1)) = 1 + max(depth(bushy(n)), depth(bushy(n))) = 1 + n`. ∎
+
+### Theorem 5 (Bushy recurrence).
+
+> For every `n`, `tsb(bushy(n+1)) = (tsb(bushy(n)) + 1)^2`.
+
+**Proof sketch.** Unfold `tsb` on `bushy(n+1) = bushy(n) → bushy(n)`:
+`tsb(arrow X X) = (tsb(X)+1)(tsb(X)+1) = (tsb(X)+1)^2`. ∎
+
+The squaring recurrence is the structural engine of the doubly exponential
+explosion.
+
+### Theorem 6 (Doubly exponential lower bound for bushes).
+
+> For every `n`, `2^{2^n} ≤ tsb(bushy(n)) + 1`.
+
+**Proof sketch.** Induction on `n`. Base: `2^{2^0} = 2 ≤ tsb(bushy(0)) + 1 = 2`.
+Step: from the IH `2^{2^n} ≤ tsb(bushy(n)) + 1`, square both sides — monotonicity
+of squaring gives `(2^{2^n})^2 ≤ (tsb(bushy(n)) + 1)^2 = tsb(bushy(n+1))` (by
+Theorem 5), and `(2^{2^n})^2 = 2^{2^{n+1}}`. Hence
+`2^{2^{n+1}} ≤ tsb(bushy(n+1)) ≤ tsb(bushy(n+1)) + 1`. ∎
+
+### Theorem 7 (Impossibility of a uniform depth-only exponential bound).
+
+> There is **no** constant `c` such that `tsb(A) ≤ c^{depth(A)+1}` for all types `A`.
+
+**Proof sketch.** Suppose such a `c` existed. Specializing to `A = bushy(n)` and
+using `depth(bushy(n)) = n` (Theorem 4) gives `tsb(bushy(n)) ≤ c^{n+1}` for all
+`n`. Combined with the lower bound `2^{2^n} ≤ tsb(bushy(n)) + 1` (Theorem 6) we
+get `2^{2^n} ≤ c^{n+1} + 1` for all `n`. Now bound the right side: using
+`c ≤ 2^c` we have `c^{n+1} ≤ 2^{c(n+1)}`, so `c^{n+1} + 1 ≤ 2^{c(n+1)+1}`,
+whence `2^{2^n} ≤ 2^{c(n+1)+1}` and therefore `2^n ≤ c(n+1) + 1 < (c+1)(n+1)`
+for all `n`. But `2^n` is eventually larger than any fixed linear function of
+`n`; evaluating at `n = 2(c+1)` yields `2^{2(c+1)} ≤ (c+1)(2c+3)`, which is false
+(the left side is exponential in `c`, the right side quadratic). Contradiction. ∎
+
+This is the paper's central negative result: depth, even amplified by an arbitrary
+exponential base, *cannot* bound semantic state complexity.
+
+### Theorem 8 (Size-exponential upper bound — size always suffices).
+
+> For every type `A`, `tsb(A) + 1 ≤ 2^{size(A)}`.
+
+**Proof sketch.** Induction on `A`. Base: `tsb(o) + 1 = 2 = 2^{size(o)}`. Arrow:
+`tsb(A → B) + 1 = (tsb A + 1)(tsb B + 1)`. By IH, `tsb A + 1 ≤ 2^{size A}` and
+`tsb B + 1 ≤ 2^{size B}`, so the product is `≤ 2^{size A + size B} < 2^{size A + size B + 1} = 2^{size(A→B)}`,
+since `size(A → B) = 1 + size A + size B`. ∎
+
+**Corollary 8.1 (Certified bound).** `tsb(A) ≤ predictedBound(A) = 2^{size(A)} − 1`
+for every type `A` — a ceiling computable directly from the (linear-size) syntax.
 
 ---
 
-## 8. Discussion and Future Work
+## 5. Algorithms
 
-This work reframes the negation of foundational axioms as a constructive,
-quantitative enterprise. Three principles emerge: (i) axiom-violation is
-*measurable* (the phantom index; the defect spectrum); (ii) it is *structured*
-(finitude forces dynamical rigidity; the compatible region is a polytope); and
-(iii) it is *non-uniform* (some negations yield coherent worlds, others are
-inconsistent with the ambient foundation).
+The recurrences yield trivially terminating, structurally recursive algorithms.
 
-Promising directions include: extending the phantom index to infinite structures
-via cardinal invariants; broadening the Ackermann analysis to model further ZF
-axioms (foundation, power set in the hereditarily finite sense) and quantifying
-exactly which fail; classifying the facets and vertices of the compatibility
-polytope of Section 6 for the standard eight-axiom listing; and connecting the
-defect-spectrum viewpoint to independence results, with each independence
-phenomenon read as a point or region inside the cube. The companion
-*Future Directions* note records a parallel program in paraconsistent/dream-logic
-semantics that shares the catalog's logic library and the same "defect as a
-first-class citizen" philosophy.
+**Algorithm A (State bound).** `tsb(A)`: if `A = o` return `1`; else for
+`A = B → C` return `(tsb(B)+1)·(tsb(C)+1)`. Runs in time linear in `size(A)`
+(modulo bignum arithmetic, which is unavoidable since the output can be doubly
+exponentially large).
 
-All theorems above are formalized and machine-checked, using only the standard
-foundational axioms (`propext`, `Classical.choice`, `Quot.sound`).
+**Algorithm B (Certified ceiling).** `predictedBound(A) = 2^{size(A)} − 1`:
+compute `size(A)` by one linear pass, then a single exponentiation. By Corollary
+8.1 this is a guaranteed upper bound on `tsb(A)` obtained without computing `tsb`
+itself.
+
+**Algorithm C (Regime classifier).** Given `A`, compute `depth(A)` and `size(A)`.
+If `size(A) = 2·depth(A) − 1` (chain-like, linear size in depth) the type lies in
+the singly-exponential regime; if `size(A) = 2^{depth(A)+1} − 1` (bushy, maximal
+size at the depth) it lies in the doubly-exponential regime. The ratio
+`size(A) / depth(A)` is a practical "bushiness score" placing a type between these
+extremes.
 
 ---
 
-## Appendix: Index of Formal Results
+## 6. Applications
 
-| Result | Name | Statement (informal) |
-|---|---|---|
-| Lemma 2.4 | `extEquiv_refl/symm/trans` | `≈` is an equivalence relation |
-| Prop 2.6 | `phantom_anti_ext` | Phantom Universe is anti-extensional |
-| Prop 2.8 | `phantom_index_eq_one` | Phantom index of `Bool` universe is 1 |
-| Thm 2.9 | `ext_iff_phantom_zero` | Extensionality ⇔ phantom index 0 |
-| Prop 3.2 | `ack_empty` | 0 is the empty set |
-| Prop 3.3 | `ack_singleton` | `2^m` is the singleton `{m}` |
-| Prop 3.4 | `ack_union` | union = bitwise OR |
-| Prop 3.5 | `ack_intersection` | intersection = bitwise AND |
-| Thm 3.6 | `ack_pairing` | pairing exists |
-| Thm 3.7 | `ack_extensionality` | Ackermann model is extensional |
-| Thm 3.8 | `ack_no_universal_set` | no universal set (anti-infinity) |
-| Thm 3.9 | `ack_finite_members` | every set is finite |
-| Thm 4.1 | `no_injection_from_nat` | no injection ℕ ↪ finite type |
-| Thm 4.2 | `finite_iterate_collision` | iterates collide |
-| Thm 4.3 | `finite_eventual_idempotent` | positive idempotent iterate |
-| Thm 5.2 | `no_choicefree_in_lean` | no choice-free family exists |
-| Thm 5.3 | `lean_ac` | choice holds |
-| Thm 5.4 | `choice_gives_well_order` | every type is well-orderable |
-| Thm 6.3 | `totalDefect_le_card` | total defect ≤ n |
-| Prop 6.5 | `compatible_comm` | compatibility is symmetric |
-| Prop 6.7 | `zfc_universally_compatible` | ZFC spectrum compatible with all |
-| Thm 6.8 | `compatible_convex_combination` | compatible region is convex |
-| Thm 7.1 | `ack_ext_compatible_anti_inf` | extensionality + anti-infinity |
-| Thm 7.2 | `anti_ext_compatible_anti_inf` | anti-extensionality + anti-infinity |
-| Thm 7.3 | `anti_ext_contradicts_ext` | ext. and anti-ext. exclude each other |
+**6.1 Model-checking state explosion.** The state bound is precisely a ceiling on
+reachable distinguishable states. Theorem 7 is a formal caution against bounding
+state explosion by any shallow structural feature: a depth-bounded family
+(`bushy(n)`) can hide a doubly exponential state count. Sound abstraction budgets
+must be driven by size/width, per Theorem 8.
+
+**6.2 Automata minimization and bisimulation.** The bushy squaring recurrence
+`(x+1)^2` mirrors the repeated state-squaring of determinization/complementation
+pipelines. Our results give a clean type-theoretic locus for the well-known
+single- vs. double-exponential dichotomy and tie the explosion to structural
+branching rather than nesting.
+
+**6.3 Parameterized and descriptive complexity.** Theorems 7 and 8 are a textbook
+illustration of parameter selection: the tempting parameter (depth) is provably
+inadequate, while size is a valid (FPT-style) controlling parameter. The
+width–depth product, captured by `arrowWidth` and `depthProfile`, refines the
+classification.
+
+**6.4 Cost of higher-order abstraction.** For functional programmers, the chain
+vs. bush contrast quantifies the price of higher-order branching: flat pipelines
+are cheap (singly exponential), self-applied/branching higher-order types can be
+astronomically more complex at the *same* nesting depth.
+
+---
+
+## 7. Discussion
+
+The technical heart is the contrast between two recurrences operating at equal
+depth: the chain's additive-then-doubling `2(x+1)` (Theorem 3) and the bush's
+squaring `(x+1)^2` (Theorem 5). Doubling is closed under a single exponential of
+depth; squaring is not — iterated squaring is a tower, i.e. double exponential
+(Theorem 6). The impossibility theorem (Theorem 7) is exactly the statement that
+no single-exponential function can dominate a tower. The remedy (Theorem 8) works
+because `size` *sees* branching: a bush of depth `n` has size `2^{n+1} − 1`,
+exponentially larger than its depth, so a bound exponential in size is in fact a
+*double* exponential in the bush's depth — comfortably above the lower bound.
+
+Thus depth and width are *independent* axes, and the correct one-dimensional
+summary is size (equivalently complexity, by Theorem 1). The depth profile
+(Definition 2.9) refines this into a level-by-level account: the singly
+exponential regime corresponds to bounded profiles, the doubly exponential regime
+to profiles doubling per level.
+
+---
+
+## 8. Future Work
+
+- **Tight chain constants.** We prove `tsb(chain_d) = 3·2^d − 2`; characterizing
+  the exact maximal `tsb` over *all* types of a given depth-and-width budget
+  (rather than the two extremal families) would complete the width–depth surface.
+- **Profile-parameterized bounds.** Sharpen Theorem 8 to a bound in terms of the
+  full `depthProfile`, interpolating between the chain and bush regimes.
+- **Semantic tightness.** Exhibit, for each type, a closed term realizing (or
+  provably approaching) `tsb(A)` distinct bisimulation classes, upgrading the
+  domination bound to an exact state-complexity characterization.
+- **Beyond simple types.** Extend to polymorphic, dependent, and intersection
+  type systems, where new branching mechanisms may create still faster growth
+  regimes.
+- **Algorithmic exploitation.** Use the size-certified ceiling to budget
+  abstraction-refinement loops in practical verification tools.
+
+---
+
+## 8b. Worked Examples and Quantitative Tables
+
+To make the growth regimes concrete, we tabulate the two extremal families.
+
+**Chains.** Let `c_d = tsb(chain_d)`, where `chain_d = o → o → … → o` (depth `d`).
+The recurrence `tsb(o → B) = 2(tsb(B) + 1)` gives the closed form
+`c_d = 3·2^d − 2` and the size `size(chain_d) = 2d + 1`:
+
+| depth d | tsb (= 3·2^d − 2) | 3^(d+1) ceiling | size | 2^size − 1 |
+|--------:|------------------:|----------------:|-----:|-----------:|
+| 0 | 1 | 3 | 1 | 1 |
+| 1 | 4 | 9 | 3 | 7 |
+| 2 | 10 | 27 | 5 | 31 |
+| 3 | 22 | 81 | 7 | 127 |
+| 4 | 46 | 243 | 9 | 511 |
+| 5 | 94 | 729 | 11 | 2047 |
+| 6 | 190 | 2187 | 13 | 8191 |
+
+Both the depth ceiling `3^(d+1)` (Theorem 3) and the size ceiling `2^size − 1`
+(Corollary 8.1) hold, and `tsb` grows like a single exponential in `d`.
+
+**Bushes.** Let `b_n = tsb(bushy(n))`, with `b_{n+1} = (b_n + 1)^2`,
+`size(bushy(n)) = 2^{n+1} − 1`, and `arrowWidth(bushy(n)) = 2^n − 1`:
+
+| depth n | tsb (= b_n) | 2^(2^n) − 1 lower | size | 2^size − 1 ceiling |
+|--------:|------------:|------------------:|-----:|-------------------:|
+| 0 | 1 | 1 | 1 | 1 |
+| 1 | 4 | 3 | 3 | 7 |
+| 2 | 25 | 15 | 7 | 127 |
+| 3 | 676 | 255 | 15 | 32767 |
+| 4 | 458329 | 65535 | 31 | 2^31 − 1 |
+| 5 | 210066388900 | 4294967295 | 63 | 2^63 − 1 |
+| 6 | ≈ 4.41 × 10^22 | ≈ 1.84 × 10^19 | 127 | 2^127 − 1 |
+
+The lower bound `2^{2^n} ≤ b_n + 1` (Theorem 6) and the upper bound
+`b_n + 1 ≤ 2^{size}` (Theorem 8) sandwich the bush, and `b_n` grows like a
+*double* exponential in `n`. Comparing the two tables at a fixed depth `d = n`
+makes the impossibility theorem vivid: at depth 4 the chain has `tsb = 46`, the
+bush `tsb = 458329` — a factor of nearly ten thousand, and the gap widens without
+bound as depth grows.
+
+## 8c. Additional Structural Lemmas
+
+The formal development includes several supporting identities that locate where
+bushiness hides.
+
+**Lemma 8c.1 (Width–size identity).** `2·arrowWidth(A) + 1 = size(A)`. *Proof:*
+induction; base `0+1=1`, arrow `2(1+w_A+w_B)+1 = 1+size A+size B`. Consequently
+`arrowWidth(A) < size(A)` always.
+
+**Lemma 8c.2 (Chain depth = width).** For a chain `A`, `depth(A) = arrowWidth(A)`.
+A chain spends every arrow on increasing depth, so depth and width coincide;
+equivalently `size(chain_d) = 2d + 1`. This is the *opposite* extreme from a
+bush, where `arrowWidth(bushy(n)) = 2^n − 1` is exponentially larger than
+`depth(bushy(n)) = n`.
+
+**Lemma 8c.3 (Size is at most exponential in depth).**
+`size(A) ≤ 2^{depth(A)+1} − 1` for every type — the full-binary-tree bound,
+attained exactly by the bushes. Combined with Theorem 8 this yields the
+*combined* upper bound `tsb(A) + 1 ≤ 2^{2^{depth(A)+1} − 1}`: complexity is at
+most doubly exponential in depth, and the bushes show this is tight. Thus the
+genuine range of `tsb` at depth `d` runs from the chain's single exponential up
+to the bush's double exponential — exactly the spread that defeats any
+depth-only bound.
+
+**Lemma 8c.4 (Exponential dominates linear).** For every `k` there is an `n`
+with `k(n+1) < 2^n`; and `c ≤ 2^c` for every `c`. These elementary facts are the
+arithmetic core of the impossibility theorem (Theorem 7): they convert the
+doubly-exponential/singly-exponential clash into a contradiction at a finite,
+explicitly exhibited depth `n = 2(c+1)`.
+
+## 8d. Related Work and Context
+
+The phenomenon studied here sits at the confluence of several traditions. In the
+simply typed lambda calculus, the *order* of a type (closely tracked by arrow
+depth) is the classical complexity dial, and higher-order model checking is known
+to incur tower-of-exponentials blow-ups in the order. Our results refine that
+picture: at a *fixed* order/depth, complexity already spans an exponential-to-
+doubly-exponential range governed by width. In automata theory, the squaring
+recurrence `(x+1)^2` is the fingerprint of repeated determinization or
+complementation, and our bushy family realizes that recurrence type-theoretically.
+In parameterized complexity, the message — *choose the parameter the explosion
+actually obeys* — is methodological folklore here given a crisp, proved instance:
+depth is provably the wrong parameter, size the right one. Finally, the framing in
+terms of bisimulation-class counts connects to descriptive complexity and to the
+Myhill–Nerode style of state minimization.
+
+## 9. Conclusion
+
+We have given a complete, machine-verified account of where semantic state
+complexity comes from in the simply typed lambda calculus. Arrow depth, the
+intuitive measure, is provably insufficient: no exponential function of depth can
+bound the state complexity, because balanced bushy types grow doubly
+exponentially in depth while remaining depth-equal to harmless linear chains.
+Type size, by contrast, yields a universal and computable ceiling
+`tsb(A) + 1 ≤ 2^{size(A)}`. The honest measure of higher-order complexity is not
+how deep a type reaches, but how much of it there is — depth and width together,
+summarized by size.

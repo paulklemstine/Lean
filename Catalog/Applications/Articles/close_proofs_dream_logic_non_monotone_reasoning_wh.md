@@ -1,235 +1,262 @@
-# Through the Looking-Glass of Set Theory: What Happens When the Axioms Break
+# The Deceptive Depth of Functions
 
-Mathematics likes to present itself as a fortress built on bedrock. At the
-very bottom sit a handful of axioms — the rules of Zermelo–Fraenkel set theory
-with Choice, or **ZFC** — and everything else, from prime numbers to the curvature
-of spacetime, is supposedly just a logical consequence of those rules. The
-axioms are the constitution. Break one, the story goes, and the whole edifice
-collapses.
+## Why nesting is not the same as complexity
 
-But mathematicians are a mischievous lot, and one of their oldest games is to
-ask: *what if a rule were different?* Euclid's parallel postulate looked
-unbreakable for two thousand years; bending it gave us the curved geometries
-that Einstein needed for general relativity. The same spirit animates a
-provocative question: **what if we deliberately negate the foundational axioms
-of set theory? What strange universes do we find on the other side of the
-mirror?**
+Imagine you are handed a machine. You are not allowed to open it, but you are
+told one number about it: how many layers deep its internal gears are nested.
+Layers of gears inside gears inside gears. From that single number — the
+*depth* — could you predict how complicated the machine's behavior can get?
 
-This is the project of *anti-mathematics* — not crank denial of mathematics,
-but the disciplined study of the worlds you reach by systematically violating
-the axioms of ZFC. Three axioms make especially fertile targets:
+It feels like you should be able to. Depth sounds like the natural measure of
+complexity. A shallow thing is simple; a deeply nested thing is intricate. This
+intuition runs through all of computer science. When programmers talk about
+"deeply nested" code, they mean complicated code. When mathematicians talk about
+"higher-order" functions — functions that take other functions as arguments,
+which in turn take still other functions — the word *higher* carries a whiff of
+danger, of spiraling complexity.
 
-- **Extensionality**, which says a set is completely determined by its members.
-- **Infinity**, which guarantees the existence of an infinite set.
-- **Choice**, which lets you pick one element from each of infinitely many bins
-  even when you can't describe the picks.
+This article is about a precise mathematical setting where that intuition is
+not just imperfect, but provably, catastrophically wrong. We will look at the
+"types" of functional programs — the formal labels that describe what kind of
+input a function expects and what kind of output it returns — and at a measure
+of how complex the behavior of such a function can be. We will see that two
+function types can have *exactly the same depth* and yet differ in complexity by
+an amount so vast it cannot be written down with ordinary exponentials. And we
+will see exactly which measure *does* control the complexity. The whole story
+has been verified down to the last logical step, so there is no hand-waving:
+every claim below is a theorem.
 
-Each of these can be negated, and each negation opens a door to a different
-counter-world. What follows is a tour of three such worlds, together with a
-surprising discovery: that the *degree* to which an axiom is broken can be
-measured on a continuous scale, turning the study of axiom independence into a
-problem of convex geometry.
+## The vocabulary of function types
 
----
+Let us build the world we are talking about from nothing. We start with a single
+"base" type, which you can think of as a plain data value — call it `o`, for
+"object." From this one seed we grow more elaborate types using a single
+operation: the arrow `→`, which builds the type of functions.
 
-## World One: The Land of Phantoms
+- `o` is the base type.
+- `o → o` is the type of functions that take an `o` and return an `o`.
+- `(o → o) → o` is the type of functions that take *a function* and return an
+  `o`.
+- `o → (o → o)` is the type of functions that take an `o` and return *a
+  function*.
 
-The Axiom of Extensionality is the most innocent-sounding rule in all of
-mathematics. It states that two sets are equal exactly when they have the same
-elements. The set of even prime numbers and the set `{2}` are the same set,
-because they contain exactly the same things. Identity *is* membership; there is
-nothing more to a set than what it holds.
+And so on, without limit. Every type is either the base `o` or an arrow `A → B`
+built from two smaller types `A` and `B`. This is the language of *simple
+types*, the backbone of typed functional programming and of logic going back to
+Church and Curry.
 
-Negate this, and something eerie happens. We now permit **distinct objects that
-contain exactly the same members**. Call such a pair a *phantom pair*: two
-things that no amount of membership-testing can ever tell apart. From the inside,
-using only the relation "is an element of," they are invisible twins. The
-universe contains more objects than its own membership relation can perceive.
+Three numbers measure a type. The **depth** counts the deepest level of arrow
+nesting: `o` has depth 0, `o → o` has depth 1, and an arrow `A → B` has depth
+one more than the deeper of its two parts. The **size** simply counts every
+symbol in the type: `o` has size 1, and `A → B` has size one plus the sizes of
+`A` and `B`. And the **width**, or "bushiness," counts how many arrows there are
+in total. Depth measures how *tall* the type's tree is; size and width measure
+how *big* it is.
 
-To make this precise without any hand-waving, we strip a set theory down to its
-absolute minimum: a type of objects together with a single binary relation,
-"`x` is a member of `y`." We call this a **membership structure**, and crucially
-we assume *no axioms whatsoever*. Within it, two objects `a` and `b` are
-**extensionally equivalent** when, for every object `x`,
+## The complexity we care about
 
-> `x` is a member of `a`  if and only if  `x` is a member of `b`.
+Now, why should a type's shape matter at all? Because the type constrains the
+*behavior* of any program that inhabits it. A deep, branching type permits a
+program to distinguish many different situations, to remember many different
+things, to occupy many different internal "states." In the theory of typed
+lambda calculus, one can make this precise with a quantity we will call the
+**state bound**, written `tsb(A)`.
 
-A structure is **anti-extensional** if it has at least one phantom pair: two
-*distinct* objects that are extensionally equivalent.
+The state bound is, roughly, a ceiling on how many genuinely different semantic
+states a program of type `A` can pass through — how many behaviors are
+distinguishable by observation. It is the higher-order cousin of the classical
+notion of "states" in a finite automaton, and it is closely related to the
+number of equivalence classes you get when you minimize a program by merging
+indistinguishable states (a process called bisimulation minimization).
 
-The simplest phantom world is almost a joke. Take just two objects — call them
-`true` and `false` — and declare that *nothing is a member of anything*. The
-membership relation is completely empty. Now `true` and `false` both have the
-same members (none), so they are extensionally equivalent; yet they are visibly
-different objects. We have a phantom pair, and the smallest possible
-anti-extensional universe. We prove formally that this **Phantom Universe** is
-indeed anti-extensional.
+The state bound obeys a beautifully simple law. For the base type, it equals 1:
 
-Here is where it gets beautiful. Even a phantom-ridden universe can be *healed*.
-Extensional equivalence is an equivalence relation — reflexive, symmetric, and
-transitive (all three proved) — so we can quotient by it, gluing every phantom
-pair into a single point. The result is a new universe that satisfies
-extensionality perfectly. And we can measure exactly how phantom-haunted the
-original was by counting how many objects we lost in the collapse. We call this
-number the **phantom index**:
+```
+tsb(o) = 1.
+```
 
-> phantom index  =  (number of objects)  −  (number of objects after gluing
-> phantoms together).
+A plain value has essentially one state. For a function type, it multiplies:
 
-In the two-object Phantom Universe, the index is exactly **1**: two objects
-collapse to one. We prove this by direct computation. And we prove the clean
-characterization that ties everything together — the **Phantom Quotient
-Theorem**:
+```
+tsb(A → B) = (tsb(A) + 1) · (tsb(B) + 1).
+```
 
-> A finite membership structure satisfies extensionality (has no phantoms at
-> all) *if and only if* its phantom index is zero.
+The "+1"s record that each component contributes its own states plus the
+possibility of having "not yet engaged" that component. This single recurrence,
+together with the base case, *is* the state bound. One of our first results is
+that this measure coincides exactly with an independently defined notion of type
+"complexity" — they satisfy the same recurrence, so they are the same function.
+That coincidence is reassuring: the quantity we are studying is canonical, not an
+accident of one definition.
 
-So the phantom index is a faithful dial: zero means a well-behaved, extensional
-world; any positive value counts exactly the hidden twins. Anti-extensionality
-isn't chaos — it's extensionality plus a precisely measurable defect.
+## First clue: depth never exceeds complexity
 
----
+Here is a sanity check that the intuition is at least *partly* right. We can
+prove that a type's depth is always less than or equal to its state-bound
+complexity:
 
-## World Two: A Universe Built From Bits
+```
+depth(A) ≤ tsb(A)   for every type A.
+```
 
-The Axiom of Infinity is the rule that lets mathematics escape the finite. It
-asserts that some set contains infinitely many things, and from it flows the
-whole tower of infinities that Cantor discovered. Negate it, and you are
-confined to a world where **every set is finite**. This is not a poorer world
-than it sounds — it is, astonishingly, a world you can hold in the palm of a
-single natural number.
+So a complex type is at least as deep as its complexity number — depth can never
+*overshoot*. The danger, as we will see, runs entirely the other way: depth can
+fall hopelessly, unboundedly *behind*.
 
-The trick is a piece of nineteenth-century magic called the **Ackermann
-encoding**. Write any natural number in binary. The 1s in its binary expansion
-mark which "elements" it contains: the number `n` *contains* the number `m`
-exactly when the `m`-th bit of `n` is a 1. So `5`, which is `101` in binary, is
-the set `{0, 2}`. The number `0`, with no bits set, is the empty set. The number
-`2^m`, a single bit, is the singleton `{m}`.
+## The tame world: chains
 
-This dictionary turns set theory into bit arithmetic, and the translations are
-exact — every one proved as a theorem:
+To see depth behaving itself, consider the simplest possible family of deep
+types: **chains**. A chain is a function pipeline,
 
-- **Empty set.** Nothing is a member of `0`.
-- **Singletons.** `k` is a member of `2^m` exactly when `k = m`.
-- **Union is bitwise OR.** The members of `a OR b` are the members of `a`
-  together with the members of `b`.
-- **Intersection is bitwise AND.** The members of `a AND b` are the members
-  shared by `a` and `b`.
-- **Pairing.** For any `a` and `b`, the two-element set `{a, b}` exists — it is
-  just `2^a OR 2^b`.
+```
+o → o → o → … → o,
+```
 
-The Ackermann universe is not a sloppy counterfeit of set theory; it is a
-genuine model of a large fragment of it. In particular it satisfies
-**extensionality** in the strongest possible sense: if two numbers have exactly
-the same bits — the same members — they are literally the same number. We prove
-this as a theorem. So here is one face of anti-mathematics that is impeccably
-well-behaved: extensionality holds perfectly.
+where every argument is just the base type `o`, and the arrows stack up on the
+right. A chain of depth `d` is a function that takes `d` plain inputs, one after
+another, and returns a plain output. It is deep, but it never branches.
 
-What it *lacks* is infinity, and this too we pin down exactly. There is **no
-universal set**: no single natural number has *all* its bits set to 1, because
-every natural number is finite and eventually runs out of bits. We prove that
-no `n` can contain every `m`. Likewise, every set in this universe has only
-finitely many members. The Ackermann model is thus a precise, computable
-witness to the slogan "extensionality with anti-infinity" — the two anti-axioms
-peacefully coexisting in a single universe made of nothing but bits.
+For chains, depth really does control complexity. We prove:
 
-There is a poetic payoff here. In this universe, *to be a set is to be a
-number*, and the membership relation that organizes all of mathematics is
-nothing more than the act of reading off a binary digit. The infinite tower of
-sets has been folded down into the humble counting numbers — and it still works.
+```
+tsb(A) ≤ 3^(depth(A) + 1)   for every chain type A.
+```
 
----
+The state bound of a chain grows *singly* exponentially in its depth — manageably,
+predictably. (The exact value turns out to be `3 · 2^depth − 2`, comfortably
+under the `3^(depth+1)` ceiling.) If all function types were chains, depth would
+be a perfectly good complexity measure, and this article would have a happy,
+boring ending.
 
-## World Three: The Rigidity of the Finite
+## The wild world: bushes
 
-Once you accept anti-infinity — once every collection is finite — the character
-of mathematics changes in a deep, almost claustrophobic way. Infinite worlds
-are roomy; you can always inject the natural numbers into them and march off
-forever. Finite worlds are cramped, and that cramping forces a rigid kind of
-order.
+But types are allowed to branch, and branching changes everything. Consider the
+**bushy** family — balanced binary trees of arrows. Define:
 
-We prove three faces of this rigidity. First, the obvious one made rigorous: in
-a finite world, **there is no injection from the natural numbers**. You cannot
-fit infinitely many distinct things into finitely many slots — the pigeonhole
-principle, elevated to a theorem about types.
+```
+bushy(0) = o,
+bushy(n+1) = bushy(n) → bushy(n).
+```
 
-The deeper consequences concern *dynamics* — what happens when you apply a
-function over and over. Take any function `f` from a finite world to itself and
-iterate it: `f`, then `f` again, then again. Because there are only finitely
-many possible "states" the iteration can be in, it must eventually repeat. We
-prove a **collision theorem**: there are two distinct iteration counts `m < n`
-at which `f` applied `m` times and `f` applied `n` times agree on *every* input.
-The system is doomed to cycle.
+So `bushy(1) = o → o`, `bushy(2) = (o → o) → (o → o)`, `bushy(3)` is that
+whole thing arrowed with itself, and so on. Each step takes the previous type
+and feeds it to itself. These are the maximally branching types at each depth.
 
-Sharper still is **eventual idempotence**. We prove that for any endofunction of
-a finite world, some positive number of iterations `n` produces a function that
-is *stable under repetition*: applying that `n`-fold iterate twice gives the
-same result as applying it once. In the language of structure, the "eventual
-image" of any process on a finite universe is a *retract* — a stable core that
-the dynamics settles into and never leaves. Finitude breeds destiny: every
-process, however complicated, eventually finds its fixed pattern. This is the
-mathematics behind why every deterministic system with finite memory must
-ultimately loop.
+Two facts about bushes. First, their depth is exactly what you'd expect:
 
----
+```
+depth(bushy(n)) = n.
+```
 
-## World Four (the one that fights back): Anti-Choice
+So `bushy(n)` and a chain of length `n` have the *same depth*. Second — and this
+is the heart of the matter — the bushy state bound satisfies a *squaring*
+recurrence:
 
-Not every door opens. The Axiom of Choice says that given any collection of
-nonempty bins, you can choose one item from each — even uncountably many bins,
-even with no rule for choosing. Negate it, and you would have a **choice-free
-family**: a collection of nonempty bins admitting *no* simultaneous selection.
+```
+tsb(bushy(n+1)) = (tsb(bushy(n)) + 1)^2.
+```
 
-Here anti-mathematics runs into the bedrock of the formal system itself. In the
-logical foundation our proofs live in, Choice is not an optional extra — it is
-woven into the type theory. So we can actually prove a striking impossibility:
-**no choice-free family can exist**. Given any family of nonempty bins, the
-built-in choice operator hands us a selection, contradicting the demand that
-none exist. Anti-choice, unlike anti-extensionality and anti-infinity, is
-*literally inconsistent* with our foundations. We also reaffirm the positive
-side — every family of nonempty types admits a choice function, and via the
-classical equivalence, every type can be well-ordered.
+Squaring at every level. And squaring repeatedly is the engine of *double*
+exponential growth. We prove the lower bound:
 
-This asymmetry is itself a result worth savoring. Two anti-axioms (against
-extensionality and infinity) describe coherent alternative universes you can
-visit and study; the third (against choice) describes a place that simply cannot
-be reached from where we stand. Negating axioms is not a uniform act of
-rebellion — some rules bend, and some break the rebel.
+```
+2^(2^n) ≤ tsb(bushy(n)) + 1.
+```
 
----
+Read that carefully. The exponent itself has an exponent. The numbers explode
+beyond comprehension: `tsb(bushy(4))` already exceeds four hundred thousand,
+`bushy(5)` runs into the hundreds of billions, and `bushy(6)` has no name in
+ordinary speech. Yet every one of these bushes is no deeper than the
+corresponding harmless chain.
 
-## The Big Idea: Measuring How Broken an Axiom Is
+## The impossibility theorem
 
-The deepest contribution of this work is a change of *attitude*. Traditionally,
-an axiom either holds or it fails — a yes/no, black-or-white affair. But the
-phantom index already hinted at something richer: a *quantity* measuring how far
-a structure strays from a rule.
+Now we can state the punchline as a clean, unconditional impossibility. Could
+there be *some* universal constant `c`, however enormous — a million, a
+googol — such that every type's state bound is at most `c` raised to the power
+of its depth (plus one)? That would salvage depth as a complexity measure: the
+constant would absorb the slack, and depth would still rule.
 
-We generalize this into the **Axiom Defect Spectrum**. Fix a list of `n` axioms.
-Assign to each one a *deficiency* — a real number between 0 and 1, where 0 means
-"holds perfectly" and 1 means "fails maximally." A whole model is then summarized
-by a point in the `n`-dimensional unit cube: its spectrum. The familiar ZFC
-universe sits at the origin, all defects zero. The strange counter-worlds live
-elsewhere in the cube, their coordinates recording precisely which rules they
-bend and by how much.
+There is no such constant. We prove:
 
-This reframing is not mere bookkeeping; it imports the tools of geometry into
-foundations. We prove a **total deficiency bound**: the sum of an `n`-axiom
-spectrum's defects can never exceed `n`. We define when two spectra are
-**compatible** (no single axiom is "over-violated," meaning their defects sum to
-at most 1 on each coordinate), prove this relation is symmetric, and prove that
-the perfect ZFC spectrum is compatible with *everything*.
+```
+There is NO constant c with  tsb(A) ≤ c^(depth(A) + 1)  for all types A.
+```
 
-The crown jewel is a **convexity theorem**. If two spectra are each compatible
-with a fixed spectrum `s`, then so is every blend — every weighted average —
-between them. In geometric language, the set of spectra compatible with `s` is a
-**convex polytope**. The question "which violations of the axioms can coexist?"
-— a question that sounds purely logical — turns out to have the shape of a
-faceted crystal in high-dimensional space. You can study axiom independence the
-way an engineer studies the feasible region of a linear program.
+The proof is a duel between two growth rates. Any candidate bound `c^(depth+1)`
+grows *singly* exponentially in depth. But the bushes grow *doubly*
+exponentially in depth. No matter how large you make `c`, a tower of squarings
+eventually outpaces it — the bushy family climbs over the ceiling `c^(depth+1)`
+at some finite height and never comes back down. Depth, as a predictor of
+complexity, is not merely weak. It is fundamentally, permanently incapable of
+the job.
 
-That is the quiet revolution hiding in anti-mathematics. By daring to negate the
-rules, and then daring to *measure* the negation, we discover that the
-foundations of mathematics have a geometry. The fortress, it turns out, has a
-floor plan — and the rooms you reach by breaking the walls are not rubble, but
-new and habitable worlds with their own precise architecture.
+## The measure that works
+
+If depth fails, what succeeds? The answer is **size** — the total count of
+symbols in the type. We prove a clean, universal upper bound that never fails:
+
+```
+tsb(A) + 1 ≤ 2^(size(A))   for every type A.
+```
+
+Every type, chain or bush or anything in between, has a state bound at most one
+less than two raised to its size. This gives an immediately *computable*
+certificate: from the size of a type alone you can pre-compute a guaranteed
+ceiling on its complexity, `2^size − 1`, before you ever run a single program.
+
+Why does size work where depth fails? Because size sees the branching that depth
+ignores. A chain of depth `d` has size roughly `2d` — small. A bush of depth `n`
+has size `2^(n+1) − 1` — *exponentially larger than its depth*. The bushes hide
+their enormity in their width, not their height, and size is the measure that
+counts width and height together. Depth blinds you to the bushiness; size does
+not.
+
+## Why this matters beyond the page
+
+This is not a curiosity confined to lambda calculus. The depth-versus-size story
+is a recurring trap across computing.
+
+**State explosion in verification.** When engineers verify that a chip or a
+protocol is correct, they build a model of its states and check every one. The
+nightmare scenario is "state explosion," where the number of states blows up
+beyond any computer's reach. Practitioners often try to bound the blow-up by some
+shallow structural feature — the analogue of depth. Our theorem is a warning
+written in mathematics: a shallow feature can hide a doubly exponential
+explosion. You must measure the whole structure.
+
+**Automata and language theory.** Converting one kind of automaton to another —
+making a nondeterministic machine deterministic, or complementing it — is famous
+for causing exponential and even doubly exponential state blow-ups. The bushy
+recurrence `(x+1)^2` is exactly the signature of such repeated squaring, and our
+results give a clean type-theoretic home for that phenomenon.
+
+**Choosing the right parameter.** Modern algorithm design lives and dies by
+*parameterized complexity*: pick a parameter, and ask whether a problem is easy
+when the parameter is small. Our result is a vivid case study in choosing
+parameters. Depth is the *tempting* parameter, and it is the *wrong* one: a
+problem can be intractable even when depth is tiny. Size is the parameter that
+actually controls the growth. The art of complexity theory is choosing the knob
+that the explosion actually listens to.
+
+**The cost of abstraction.** Functional programmers prize higher-order types —
+functions that consume and produce other functions — for their expressive power.
+Our results quantify the price of that power. A flat pipeline of operations is
+cheap. A type that feeds functions to functions to functions, branching as it
+goes, can be astronomically more complex even at the same nesting depth. Power
+and cost are bought in the same coin: branching.
+
+## The shape of the truth
+
+Strip away the formalism and the moral is almost philosophical. We measure
+things by how *deep* they go — how many layers, how many levels of nesting — and
+we equate depth with sophistication. But depth is only one dimension. A wide,
+branching, bushy structure can dwarf a deep, narrow one while looking shallower
+by the depth gauge. The honest measure of complexity is not how far down a thing
+reaches, but how much of it there is altogether.
+
+In the precise world of simple types, we have proved this exactly. Depth cannot
+bound complexity — not with any constant, not ever. Size always can. Between
+those two facts lies a clean, complete, machine-checked account of where
+higher-order complexity really comes from: not from the height of the tower, but
+from the breadth of the branches.
