@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d8cbaf8d",
     "filename": "close_proofs_combinatorial_categorical_bridge_spec.json",
     "pkg_num": 52,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7351678504672897,
     "title": "Close Proofs: The Combinatorial\u2013Categorical Bridge \u2014 Species of Structures as Functors"
   },
   {
@@ -1553,8 +1553,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "close_proofs_combinatorial_categorical_bridge_spec",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7351678504672897,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Close Proofs: The Combinatorial\u2013Categorical Bridge \u2014 Species of Structures as Functors"
     }
