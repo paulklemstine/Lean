@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "51a00311",
     "filename": "tropical_differential_equations_power_series_solut.json",
     "pkg_num": 45,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6597028571428571,
     "title": "Tropical Differential Equations: Power Series Solutions"
   },
   {
@@ -1336,8 +1336,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "tropical_differential_equations_power_series_solut",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6597028571428571,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Tropical Differential Equations: Power Series Solutions"
     }

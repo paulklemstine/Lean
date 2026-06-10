@@ -61,7 +61,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Riemann Hypothesis"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e654db2b",
     "description": "The 3D Poincar\u00e9 conjecture is proven, but the smooth 4D version remains open: does every smooth 4-manifold homotopy equivalent to S\u2074 necessarily diffeomorphic to S\u2074? Formalize Donaldson's invariants, Seiberg-Witten theory, and explore exotic smooth structures on 4-manifolds.",
     "domains": [
       "Geometry"
@@ -70,7 +70,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:07.882559+00:00",
     "title": "Poincar\u00e9 Conjecture Revisited: 4D Smooth"
   },
@@ -326,7 +326,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Gravity as Topological Quantum Field Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "110d7684",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domains": [
       "Bridges",
@@ -336,7 +336,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:06.637226+00:00",
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
@@ -983,7 +983,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The current formalization establishes the structural machinery (definitions of S"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5d36b8f2",
     "description": "# Future Directions: Fractal Topology via Lattice-Theoretic Dimension\n\n## 1. Krull Dimension vs. Lebesgue Covering Dimension\n\nFor metrizable separable spaces, the small inductive dimension, large inductive dimension, and Lebesgue covering dimension all coincide. The topological Krull dimension of the open set lattice (as formalized here) captures the nesting depth of open sets. A natural question is whether this agrees with the Lebesgue covering dimension for compact metrizable spaces.\n\n**Conjecture**: For compact metrizable spaces, `topKrullDim X` equals the Lebesgue covering dimension (suitably formalized as the minimum order of finite open refinements minus one).\n\nThe key insight is that both dimensions measure \"how many open sets must overlap\" \u2014 Krull dimension via chain length, covering dimension via point multiplicity. The formal bridge would require formalizing refinement of covers and connecting chain length in Opens(X) to the minimum covering order.\n\n**Why now?** The `opensOrderIso` infrastructure and the covering multiplicity invariance (`pointMultiplicity_eq_of_homeo`) provide the exact tools needed to formalize both sides of this equivalence.\n\n## 2. Dimension of Fractal-Like Quotient Spaces\n\nThe Cantor set, Sierpi\u0144ski triangle, and similar fractals can be constructed as quotient spaces of metric spaces under iterated function systems. The topological Krull dimension of these quotients should reflect their fractal complexity, but in a purely topological way (unlike Hausdorff dimension which depends on the metric).\n\n**Conjecture**: For a self-similar fractal F with open set condition and similarity ratio r with N pieces, the topological Krull dimension `topKrullDim F` is finite and satisfies `topKrullDim F \u2264 \u2308log(N)/log(1/r)\u2309`.\n\nThe key insight is that the iterated function system structure gives a recursive decomposition of the open set lattice, bounding chain lengths by the recursion depth times the branching factor.\n\n**Why now?** The product dimension bounds (`topKrullDim_le_prod_left/right`) show that our framework handles dimensional products correctly. Extending to quotients would require formalizing IFS quotient constructions and their open set lattices.\n\n## 3. Spectral Dimension of the Open Set Frame\n\nThe lattice of open sets of a topological space is a frame (complete Heyting algebra). The spectrum of a frame is a sober space. The dimension of the spectrum of Opens(X) should recover information about X.\n\n**Conjecture**: For a sober space X, the topological Krull dimension of X equals the Krull dimension of the spectrum of the frame Opens(X) (i.e., `topKrullDim X = topKrullDim (Spec(Opens(X)))`).\n\nThe key insight is that for sober spaces, the unit of the adjunction between Top and Frames is an isomorphism, so X \u2245 Spec(Opens(X)) and the result follows from `topKrullDim_eq_of_homeo`. For non-sober spaces, the soberification could introduce new open sets that increase chain length.\n\n**Why now?** Mathlib has developing locale/frame theory. The opensEquivSet result for discrete spaces suggests that frame-theoretic properties of Opens(X) are tractable in Lean. Formalizing the Spec construction for frames would unlock a rich connection to algebraic geometry (where Krull dimension of rings connects to dimension of schemes via Spec).\n\n## 4. Dimension and Continuous Maps Between Non-Homeomorphic Spaces\n\nOur `topKrullDim_le_of_openEmbedding` shows that open embeddings give dimension inequalities. For general continuous surjections, the relationship is more subtle \u2014 the dimension can go up or down.\n\n**Conjecture**: If f : X \u2192 Y is a continuous closed surjection with fibers of topological Krull dimension \u2264 k, then `topKrullDim X \u2264 topKrullDim Y + k + 1` (a \"fiber dimension formula\" analogous to the one for algebraic varieties).\n\nThe key insight is that a chain of open sets in X can be projected to Y, but the fibers contribute at most k additional levels of nesting. This would generalize the product bound (where projection has constant fibers).\n\n**Why now?** The open embedding monotonicity and product bounds provide the base cases. The fiber dimension formula would bridge to algebraic geometry's dimension theory of morphisms, connecting our topological Krull dimension to the scheme-theoretic Krull dimension via the Zariski topology.\n\n## 5. Computability of Topological Krull Dimension for Finite Spaces\n\nFor finite topological spaces (equivalently, finite preorders), the topological Krull dimension is computable \u2014 it equals the length of the longest chain in the specialization preorder. This connects to combinatorial topology and finite topological data analysis.\n\n**Conjecture**: For a finite T\u2080 space X with n points, `topKrullDim X` equals the height of the specialization order (longest chain minus 1), and this can be computed in O(n\u00b2) time. Moreover, the dimension determines the homotopy type of the associated simplicial complex up to the (dim+1)-skeleton.\n\nThe key insight is that for finite spaces, Opens(X) is isomorphic to the lattice of downsets of the specialization preorder, and the Krull dimension of a finite distributive lattice equals the height of its poset of join-irreducibles (by Birkhoff's representation theorem).\n\n**Why now?** The `topKrullDim_discrete` result shows that for discrete (= antichain) finite spaces, the dimension matches the power set lattice dimension. Extending to general finite topologies would connect to the active area of computational topology using finite models, and the decidability would allow `#eval`-based verification of examples.\n",
     "domains": [
       "Algebra",
@@ -993,7 +993,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "51f15183",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T08:52:14.354473+00:00",
     "title": "For metrizable separable spaces, the small inductive dimension, large inductive "
   },
@@ -2259,6 +2259,81 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: ReLU Width\u2013Depth Trade-offs\n\nThe file `Basic.lean` establishes a fully formal, axiom-clean depth-separation\nresult for ReLU networks built from the tent map `tent x = 1 - |2x - 1|`. The\ndepth-`k` constant-width network `tent^[k]` rises from `0` to `1` over an\ninterval of width `2^{-k}` (`tent_iterate_zero`, `tent_iterate_peak`), is\n`2^k`-Lipschitz (`tent_iterate_lipschitz`), yet stays bounded in `[0,1]`. Any\n`K`-Lipschitz approximant with `K\u00b72^{-k} + 2\u03b5 < 1` provably fails\n(`relu_depth_separation`). The following directions extend this frontier; each\nis testable and falsifiable.\n\n## 1. From a single steep ramp to a counting (oscillation) lower bound\n\nThe current obstruction uses one ramp of width `2^{-k}`. The sharper\nTelgarsky-style statement counts oscillations: `tent^[k]` crosses the level\n`1/2` exactly `2^k` times, while a one-hidden-layer ReLU network of width `w`\nis piecewise-linear with at most `w+1` pieces and hence crosses any level at\nmost `w+1` times. This yields an *exact width lower bound* `w \u2265 2^k - 1`,\nindependent of the weight magnitudes \u2014 a strictly stronger separation than the\nLipschitz version.\n**The key insight is** that the crossing number of a continuous piecewise-linear\nfunction is bounded by its number of affine pieces, so an exponential crossing\ncount forces exponential width regardless of how large the weights are allowed\nto be. **Why now?** The tent and its iterate are already formalized with their\nascending-branch identity `tent_eq_two_mul`; the missing ingredient is a Lean\nlemma \"a function with `p` affine pieces has at most `p` solutions to `f = c`\",\nwhich is a finite combinatorial fact about `tent_iterate_peak`-style alternation\nand is within reach of the existing induction machinery.\n\n## 2. Matching shallow upper bound: quantitative 1-D universal approximation\n\nPair the lower bound with a constructive upper bound: every `K`-Lipschitz\n`f : [0,1] \u2192 \u211d` is approximated within `\u03b5` by the piecewise-linear interpolant\non `N = \u2308K/\u03b5\u2309` equal nodes, which is exactly a width-`N` one-hidden-layer ReLU\nnetwork. This pins the shallow cost at `\u0398(K/\u03b5)` and, with direction 1, closes\nthe `width \u2248 \u03b5^{-1}` (shallow) vs `depth \u2248 log(1/\u03b5)` (deep) gap quantitatively.\n**The key insight is** that Lipschitz control bounds the interpolation error by\n`K \u00b7 (mesh size)`, so a uniform mesh of `K/\u03b5` nodes suffices and each interior\nnode is one ReLU neuron. **Why now?** `relu_depth_separation` already isolates\nthe Lipschitz constant as the governing quantity; the dual upper bound reuses\nthe same `LipschitzWith` API plus Mathlib's `Real`-interval interpolation\nlemmas, making the two-sided `\u0398` characterization formalizable today.\n\n## 3. Higher-dimensional separation on `[-1,1]^n`\n\nLift the construction to `[-1,1]^n` via tensorized tents\n`F(x) = tent^[k](x\u2081) \u00b7 \u22ef \u00b7 tent^[k](x\u2099)` or a max-pooling variant, and show the\nshallow Lipschitz/width cost scales as `\u03b5^{-n}` while a depth-`O(n\u00b7log(1/\u03b5))`\nnetwork keeps polynomial size \u2014 the genuine curse-of-dimensionality separation\nnamed in the original concept.\n**The key insight is** that local steepness is multiplicative under tensor\nproducts, so the per-coordinate factor `2^k` compounds to `2^{nk}` worth of\noscillation that a single shallow layer must resolve along every axis\nsimultaneously. **Why now?** The 1-D engine (`tent_lipschitz`,\n`tent_iterate_lipschitz`) is multiplicative-composition-ready, and Mathlib's\n`LipschitzWith.prod`/`pi` lemmas give the product Lipschitz bounds needed to\ntransport the obstruction coordinatewise.\n\n## 4. Robustness / adversarial reading of the Lipschitz obstruction\n\nReinterpret `relu_depth_separation` as a *robustness lower bound*: because\n`tent^[k]` has local slope `2^k`, an input perturbation of size `2^{-k}` flips\nthe output across the full range `[0,1]`. Formalize that any classifier of\nLipschitz constant `K < 2^k` must misclassify some `2^{-k}`-adversarial pair,\ngiving a provable depth-induced fragility theorem.\n**The key insight is** that the *same* quantity (local slope `2^k`) that defeats\nshallow approximation also certifies adversarial sensitivity, unifying\nexpressivity and robustness through one Lipschitz budget. **Why now?** The\nendpoints `tent_iterate_zero = 0` and `tent_iterate_peak = 1` already exhibit an\nexplicit `2^{-k}`-separated pair with maximal output gap, so the adversarial\nstatement is a direct repackaging of the proven inequality.\n\n## 5. Cross-domain bridge: tent oscillation vs. the EML exponential tower\n\nThe catalog's `MachineLearning.DepthSeparation.Separation` proves a Lipschitz\nobstruction for the iterated *exponential* `iterExp k` (whose **range** explodes\nlike a tower), whereas this file's `tent^[k]` keeps a **bounded range** but\nexplodes in **local slope**. Formalize a single abstract obstruction\n\u2014\"`f` attains values `a < b` at points distance `\u03b4` apart \u27f9 no `K`-Lipschitz\n`\u03b5`-approximant exists once `K\u00b7\u03b4 + 2\u03b5 < b - a`\"\u2014 and derive *both* theorems as\ninstances.\n**The key insight is** that range-blowup and slope-blowup are two faces of one\ninequality `(b-a) \u2264 K\u00b7\u03b4 + 2\u03b5`, so a single lemma parameterized by the\nwitnessing pair `(\u03b4, b-a)` subsumes the exponential-tower and tent-map\nseparations. **Why now?** Both endpoint computations already exist in the\ncatalog (`iterExp_endpoint_gap`) and in this file (`tent_iterate_peak`), so the\nunifying lemma can be stated, proven once, and back-applied to retire two\nbespoke proofs \u2014 a concrete cross-domain consolidation.\n",
+    "domains": [
+      "MachineLearning",
+      "Logic"
+    ],
+    "id": "fd_1220",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "24c7b7e9",
+    "status": "available",
+    "timestamp": "2026-06-10T14:07:09.084647+00:00",
+    "title": "The file `Basic.lean` establishes a fully formal, axiom-clean depth-separation"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Biological Topology: Protein Folding as Persistent-Homology Optimization\n\nThe Lean development in `Catalog/Speculative/ProteinFolding.lean` establishes the rigorous\nbackbone of a topological theory of folding: barcodes, total persistence as a topological\n*energy*, functoriality of the Vietoris\u2013Rips contact filtration (`Rips_mono`), the elder-rule\nidentity on a chain (`H0_totalPersistence_eq_extent`), bottleneck stability\n(`H0_totalPersistence_stable`), and existence/uniqueness of the native fold as the argmin of\nthe energy (`exists_native_fold`, `native_fold_unique`). The conjectures below are the natural\nnext theorems, each formalizable in Lean and each empirically testable.\n\n## Direction 1 \u2014 The general minimum-spanning-tree law for `H\u2080` total persistence\n\nThe chain result `H0_totalPersistence_eq_extent` is the path-graph special case of a sweeping\nidentity: for *any* finite metric configuration of C\u03b1 atoms, the degree-`0` total persistence of\nthe Vietoris\u2013Rips filtration equals the total edge weight of a minimum spanning tree of the\ncomplete weighted graph on the atoms. **The key insight is** that single-linkage clustering and\n`H\u2080` persistence are the same process viewed two ways \u2014 components merge exactly along MST edges,\nso each bar's death is one MST edge weight and the births are all `0`. **Why now?** Mathlib now\nhas a mature `SimpleGraph` and weighted-graph API, and the elder-rule telescoping argument we\nalready proved is the `n = path` shadow of Kruskal's algorithm; lifting it to general trees is a\nfinite, falsifiable combinatorial statement (test: for 100 PDB structures, the GUDHI `H\u2080`\npersistence sum must equal the SciPy MST weight to floating-point tolerance).\n\n## Direction 2 \u2014 Compaction monotonicity beyond one dimension (the hydrophobic-collapse theorem)\n\n`compaction_lowers_persistence` shows, on a line, that shrinking the extent lowers the energy.\nThe multidimensional conjecture: if a configuration `Y` is a `1`-Lipschitz contraction of `X`\n(every pairwise distance weakly decreases), then `totalPersistence (H\u2080(Y)) \u2264 totalPersistence (H\u2080(X))`.\n**The key insight is** that a global contraction can only make components merge *earlier*, never\nlater, so every bar's death time can only decrease \u2014 monotonicity of the whole barcode under\ndistance contraction. **Why now?** This is the precise mathematical content of \"the hydrophobic\ncore pulls the chain inward,\" and it is directly testable: artificially contracting decoy\ncoordinates toward their centroid must never raise the measured `H\u2080` persistence.\n\n## Direction 3 \u2014 A Levinthal speed bound from the stability constant\n\n`H0_totalPersistence_stable` gives a Lipschitz constant `2` between coordinate perturbations and\nenergy change on a chain. Conjecture: the energy landscape `E = totalPersistence \u2218 H\u2080` is globally\nLipschitz in the configuration (in Gromov\u2013Hausdorff distance) with an explicit constant depending\nonly on `N`, and this constant bounds the number of gradient-descent steps to the native basin by a\n**polynomial** in `N`. **The key insight is** that a Lipschitz, single-well topological energy\ncannot hide its minimum behind exponentially many barriers, which is exactly what Levinthal's\nparadox needs explained. **Why now?** With stability proved in the chain case, the general\nLipschitz estimate is the missing quantitative ingredient; it is falsifiable by measuring the\nempirical step-count-to-convergence scaling of persistence-gradient descent across protein lengths.\n\n## Direction 4 \u2014 Higher barcodes detect the hydrophobic void (a degree-1/2 signature)\n\nTotal persistence in degree `0` measures connectivity; degrees `1` and `2` measure loops and\ncavities. Conjecture: native folds are characterized not by minimal *total* persistence but by a\nfixed **signature vector** `(TP\u2080, TP\u2081, TP\u2082)` in which `TP\u2080` is minimized while `TP\u2081, TP\u2082` carry a\nsharp, reproducible nonzero peak corresponding to the hydrophobic core cavity and the main-chain\nloop. **The key insight is** that a protein is not topologically trivial \u2014 collapse without a\npersistent `H\u2082` void would be a molten globule, not a fold, so the native state *minimizes* `TP\u2080`\n*subject to* a target `H\u2082` persistence rather than minimizing all degrees. **Why now?** Fast\nVietoris\u2013Rips engines (Ripser) make multi-degree barcodes computable for full proteins, so the\nsignature-vector hypothesis can be checked against native/decoy ensembles immediately.\n\n## Direction 5 \u2014 Energy-gap uniqueness as a foldability criterion\n\n`native_fold_unique` gives uniqueness when the energy is injective on the decoy set. Conjecture:\na sequence is *foldable* (has a well-defined native state) iff its topological energy landscape has\na strictly positive **spectral gap** \u2014 the second-smallest energy over a dense decoy ensemble\nexceeds the minimum by a margin bounded below independently of ensemble size. **The key insight is**\nthat foldability is not about the depth of the global minimum but about its *isolation*: a positive\nenergy gap is exactly the robust version of `Set.InjOn` at the minimizer. **Why now?** Intrinsically\ndisordered proteins (no unique fold) provide a natural negative control, so the gap criterion is\ndirectly falsifiable \u2014 ordered proteins should show a measurable persistence-energy gap and\ndisordered ones should not.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1221",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8e8b7fb9",
+    "status": "available",
+    "timestamp": "2026-06-10T14:07:36.105761+00:00",
+    "title": "The Lean development in `Catalog/Speculative/ProteinFolding.lean` establishes th"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Propositional Logic Metatheory\n\nThe new module `Catalog/Logic/PropCompleteness.lean` closes the loop opened by the\ncatalog's semantics-only treatment of propositional logic (`Logic.HigherBootstrap`'s\n`PropForm`, `PropForm.eval`, `PropForm.isTautology`, `PropForm.not_`,\n`dne_is_tautology`, `identity_is_tautology`). It introduces a Hilbert calculus\n`Proves` (axioms `ax1`, `ax2`, `ax3 = \u00ac\u00ac\u03c6\u2192\u03c6`, plus modus ponens), and proves the\nfull soundness/completeness pair:\n\n* `soundness : Proves \u0393 \u03c6 \u2192 \u0393 \u22a8 \u03c6`;\n* `deduction` / `deduction_rev` \u2014 the syntactic deduction theorem, both directions;\n* `weakening`, `imp_self`, `ex_falso`, `imp_of_cons`, `imp_of_neg_ante`,\n  `neg_imp_of`, `proof_by_cases` \u2014 the proof-theoretic toolkit;\n* `kalmar` \u2014 Kalm\u00e1r's lemma (signed literals derive the signed formula);\n* `elim` \u2014 variable elimination by `Finset` induction over `proof_by_cases`;\n* `completeness : IsTautology \u03c6 \u2192 Proves \u2205 \u03c6`;\n* `consistency : \u00ac Proves \u2205 \u22a5` and `completeness_iff` (adequacy).\n\nThe directions below build directly on these certified theorems.\n\n## 1. Strong completeness for finite theories\n\nThe current `completeness` discharges the *empty* theory. The natural strengthening\nis **strong completeness**: for `\u0393 : Finset PropForm`,\n`(\u2200 v, (\u2200 \u03c8 \u2208 \u0393, eval v \u03c8) \u2192 eval v \u03c6) \u2192 Proves \u2191\u0393 \u03c6`. The key insight is that the\nalready-proven `deduction`/`deduction_rev` let us trade a finite context for an\niterated implication `\u0393.foldr PropForm.imp \u03c6`: semantic consequence from `\u0393` is\nexactly tautologyhood of that single formula, which `completeness` already settles,\nand `deduction_rev` reinstalls the hypotheses one by one. Why now? Both halves of\nthe bridge \u2014 the deduction theorem and empty-theory completeness \u2014 are finished and\nsorry-free in this file, so the remaining work is a clean induction on `\u0393` rather\nthan new metatheory.\n\n**Testable conjecture.** `theorem strong_completeness (\u0393 : Finset PropForm) (\u03c6)\n  (h : \u2200 v, (\u2200 \u03c8 \u2208 \u0393, PropForm.eval v \u03c8 = true) \u2192 PropForm.eval v \u03c6 = true) :\n  Proves (\u2191\u0393) \u03c6`.\n\n## 2. Propositional compactness from finiteness of derivations\n\nOnce strong completeness is available, **compactness** becomes accessible: if every\nfinite subset of an arbitrary `\u0393 : Set PropForm` is satisfiable, then `\u0393` is\nsatisfiable. The key insight is the dual finiteness already baked into our `Proves`\ninductive \u2014 every derivation mentions only finitely many premises, so\n`Proves \u0393 \u03c6 \u2192 \u2203 \u0394 : Finset PropForm, \u2191\u0394 \u2286 \u0393 \u2227 Proves \u2191\u0394 \u03c6` is provable by induction\non the derivation, and compactness is its semantic shadow via soundness/completeness.\nWhy now? The `premise` constructor is the only place context is consumed, so the\nfinite-support lemma is a direct structural induction over the calculus we just built.\n\n**Testable conjecture.** `theorem finite_support {\u0393 \u03c6} (h : Proves \u0393 \u03c6) :\n  \u2203 \u0394 : Finset PropForm, \u2191\u0394 \u2286 \u0393 \u2227 Proves (\u2191\u0394) \u03c6`, followed by\n`Models \u0393 \u03c6 \u2192 \u2203 \u0394 : Finset PropForm, \u2191\u0394 \u2286 \u0393 \u2227 Models (\u2191\u0394) \u03c6`.\n\n## 3. Independence of the classical axiom `ax3`\n\nThe boundary note in the file claims that `ax3` (double-negation elimination) is\nessential. This should be made into a theorem: the **intuitionistic** subsystem\n`ProvesI` (axioms `ax1`, `ax2`, ex-falso, modus ponens, *without* `ax3`) is strictly\nweaker. The key insight is to interpret formulas in a three-element Heyting algebra\n(or a two-world Kripke frame) under which `ax1`, `ax2`, ex-falso are all valid but\n`\u00ac\u00ac(var 0) \u2192 var 0` is not, giving a non-derivability witness by a soundness argument\nagainst that algebraic semantics. Why now? Our `soundness` proof is a template:\nswapping the Boolean target for a finite Heyting algebra reuses the same induction,\nand the `examples` in the file already pinpoint DNE as the separating formula.\n\n**Testable conjecture.** With `ProvesI` the ax3-free calculus,\n`\u00ac ProvesI \u2205 (.imp (PropForm.not_ (PropForm.not_ (.var 0))) (.var 0))`, proved by a\nHeyting/Kripke soundness lemma for `ProvesI`.\n\n## 4. Craig interpolation via the variable-aware Kalm\u00e1r machinery\n\nCraig's theorem \u2014 `Proves \u2205 (imp \u03c6 \u03c8)` yields an interpolant `\u03b8` with\n`vars \u03b8 \u2286 vars \u03c6 \u2229 vars \u03c8`, `Proves \u2205 (imp \u03c6 \u03b8)`, `Proves \u2205 (imp \u03b8 \u03c8)` \u2014 fits our\ninfrastructure unusually well. The key insight is that our `vars` function and the\n`signed`/`ctxF` apparatus already track *exactly which variables* a derivation can\ndepend on; the interpolant can be built semantically as a disjunction of the shared-\nvariable diagrams under which `\u03c6` is true, and `completeness` certifies each required\nimplication. Why now? `vars`, `signed`, `ctxF`, and `completeness_iff` give a ready\nlanguage for stating and discharging the variable-containment side conditions that\nmake interpolation hard to even formalize from scratch.\n\n**Testable conjecture.** `theorem interpolation {\u03c6 \u03c8} (h : Proves \u2205 (.imp \u03c6 \u03c8)) :\n  \u2203 \u03b8, vars \u03b8 \u2286 vars \u03c6 \u2229 vars \u03c8 \u2227 Proves \u2205 (.imp \u03c6 \u03b8) \u2227 Proves \u2205 (.imp \u03b8 \u03c8)`.\n\n## 5. A certified resolution/DPLL decision procedure\n\nFinally, turn the metatheory into verified automation: implement a CNF-resolution\nchecker `resolve : List (List (\u2115 \u00d7 Bool)) \u2192 Bool` and prove it sound and complete\nagainst `eval`, with refutations exported as `Proves` derivations. The key insight is\nthat a resolution step is a constrained `mp`/cut, so each step can be elaborated into\nour Hilbert calculus, making `completeness_iff` the correctness specification \"for\nfree\": a `true` answer must correspond to an actual `Proves \u2205` certificate, and a\n`false` answer to a falsifying valuation. Why now? `completeness_iff` already equates\nthe operational target (provability) with the semantic spec (tautologyhood), so the\ndecision procedure only has to be shown to refine one side.\n\n**Testable conjecture.** `theorem resolve_sound (clauses) (h : resolve clauses = true) :\n  \u2200 v : PropValuation, \u2203 c \u2208 clauses, \u2200 l \u2208 c, evalLit v l = false`, plus a\ncompleteness companion producing a `Proves \u2205` certificate of the corresponding CNF\ntautology.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_1222",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ea08ccd3",
+    "status": "available",
+    "timestamp": "2026-06-10T14:08:06.396479+00:00",
+    "title": "The new module `Catalog/Logic/PropCompleteness.lean` closes the loop opened by t"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Tropical Differential Equations: Power Series Solutions\n\n## Synthesis\n\nThis cycle built the **valuation tropicalization** of formal power series `R\u27e6X\u27e7` and used it\nto turn differential constraints into min-plus arithmetic on orders.  The new file\n`Catalog/Tropical/DifferentialPowerSeries.lean` defines `tropOrder f = trop (order f)`, a map\ninto the min-plus tropical semiring `Tropical (WithTop \u2115)`, and proves it is a *lax semiring\nhomomorphism*: exactly multiplicative on products (`tropOrder_mul`) and super-additive on\nsums (`tropOrder_add_le`).  This is the static, algebraic half of tropicalization, and it\nslots directly beside the catalog's existing `Tropical.DiffConstraints` (tropical convexity of\ndifference-constraint polyhedra) and `Tropical.Convexity`: where those tropicalize a *polytope*,\nwe tropicalize a *ring with derivation*.\n\nThe cycle's substantive discovery is the **differential** half.  The formal derivative `d\u2044dX`\nacts on valuations as \"subtract at most one\": `order_deriv_succ_le` proves `ord f \u2264 ord f' + 1`\nover *any* commutative ring, and `order_iterate_deriv_le` propagates this to `ord f \u2264 ord f\u207d\u1d4f\u207e + k`.\nThis is the precise mechanism by which tropical data lower-bounds classical growth: every\ndifferential monomial of order `k` can pull the valuation down by at most `k`.  The inequality\nbecomes an *equality* exactly in characteristic zero (`order_deriv_eq_of_pos`), where the integer\nfactor `(i+1)` never vanishes \u2014 pinpointing characteristic as the boundary between the lax and\nexact tropical derivative.\n\nThe structural insight is that **the lax/exact dichotomy is governed by characteristic**, and\nthat exactness is strong enough to *pin* valuations.  The headline `linODE_order_zero` shows the\nlinear ODE `f' = c\u00b7f` (`c \u2260 0`) forces every nonzero solution to have order `0`: the tropicalized\nequation `ord f' = ord f` collides with the exact drop `ord f' = ord f - 1`, leaving only the\nbottom valuation.  This is the simplest nontrivial instance of the tropical-fundamental-theorem\nphenomenon \u2014 the tropicalization of the equation determines the tropicalization of its solution\nset \u2014 realized concretely rather than axiomatically.  What did *not* survive scrutiny: the same\npinning fails for `c = 0` (then `f' = 0` is solved by every nonzero constant and does not\nconstrain higher data), and the *equality* `order_deriv_eq_of_pos` genuinely needs char 0\n(in char `p`, `f = X\u1d56` has `f' = 0`, so the order jumps to `\u22a4`).\n\n## Results Summary\n\n- `tropOrder_mul`: proved \u2014 valuation tropicalization is multiplicative, `T(f\u00b7g) = T f \u00b7 T g`, the tropical product law over a domain.\n- `tropOrder_add_le`: proved \u2014 valuation tropicalization is super-additive, `T f + T g \u2264 T(f+g)`, the tropical (min) sum law.\n- `order_deriv_succ_le`: proved \u2014 the formal derivative lowers the order by at most one, `ord f \u2264 ord f' + 1`, over any commutative ring (the universal tropical derivative bound).\n- `order_iterate_deriv_le`: proved \u2014 the `k`-th derivative lowers the order by at most `k`, `ord f \u2264 ord f\u207d\u1d4f\u207e + k`, bounding every order-`k` differential monomial.\n- `order_deriv_eq_of_pos`: proved \u2014 in characteristic zero the derivative drop is exact for positive order, `0 < ord f \u2192 ord f' + 1 = ord f`.\n- `linODE_order_zero`: proved \u2014 over a char-0 field, every nonzero solution of `f' = c\u00b7f` (`c \u2260 0`) has order `0`: the tropicalized equation pins the valuation to the bottom.\n\n## Research Directions\n\n### Direction 1: Tropical balancing for general linear ODEs with polynomial coefficients\n**Hypothesis**: For `a\u00b7f' = b\u00b7f` with `a, b \u2208 R\u27e6X\u27e7` nonzero over a char-0 field, the tropical\nbalance condition `ord a + ord f - 1 = ord b + ord f` (when `ord f > 0`) determines\n`ord a - 1 = ord b`, so a solution of positive order exists only if `ord a = ord b + 1`;\notherwise `ord f = 0`.\n**Test**: State `linODE_poly_order` generalizing `linODE_order_zero` to power-series coefficients\nand prove it from `order_deriv_eq_of_pos`, `tropOrder_mul`, and a case split on `ord a` vs `ord b`.\n**Why now**: `order_deriv_eq_of_pos` already gives the exact derivative drop, and `tropOrder_mul`\nalready tropicalizes the coefficient products \u2014 the only new ingredient is the min-plus balance.\n**If true**: yields a tropical *Newton-polygon* criterion for the existence of positive-order\nsolutions, the first genuine \"tropical solution set = solution set of tropicalization\" theorem here.\n**If false**: the failure isolates which coefficient configurations break valuation determinacy,\ne.g. when leading terms cancel.\n\n### Direction 2: Tropicalization as a bona fide lax semiring homomorphism object\n**Hypothesis**: `tropOrder` extends to a structure-preserving map recorded as a Mathlib bundled\nmorphism that is a `MonoidHom` (for `*`) and satisfies the lax `+` law, with `tropOrder 1 = 1`\nand `tropOrder 0 = 0` (the tropical bottom `\u22a4`).\n**Test**: Build `tropOrderMonoidHom : R\u27e6X\u27e7 \u2192* Tropical (WithTop \u2115)` and prove `map_one`/`map_mul`\ndischarge from `tropOrder_mul` plus `order_one`; check the unit/zero edge cases.\n**Why now**: `tropOrder_mul` is exactly `map_mul`, so the bundling is immediate; this packages the\ncycle's static half into a reusable catalog object other files can `import`.\n**If true**: gives downstream files (e.g. tropical Bezout / divisor theory) a ready valuation hom\ninto the tropical semiring, enabling cross-domain reuse.\n**If false**: would reveal that `order` fails some homomorphism law (it cannot \u2014 but the *lax* `+`\nshows why a full `RingHom` is impossible, an instructive boundary).\n\n### Direction 3: Support-level fundamental theorem for monomial differential equations\n**Hypothesis**: For a single differential monomial equation `\u220f\u2c7c (f\u207d\u02b2\u207e)^{e\u2c7c} = 0` over an integral\ndomain, the support (set of nonzero-coefficient indices) of any solution is constrained by the\ntropical equation `\u2211\u2c7c e\u2c7c\u00b7(ord f - j) = \u22a4`, i.e. the tropicalized monomial forces `ord f = \u22a4`\n(so `f = 0`) whenever every factor is enforced.\n**Test**: Define `tropMonomial` evaluating `\u2211 e\u2c7c (v - j)` on `v = ord f` and prove the implication\n`(monomial = 0) \u2192 tropMonomial (ord f) = \u22a4` using `tropOrder_mul` and `order_iterate_deriv_le`.\n**Why now**: `order_iterate_deriv_le` already tropicalizes each derivative factor and `tropOrder_mul`\nmultiplies them; only the assembly into a monomial sum is missing.\n**If true**: this is the multiplicative core of the Aroca\u2013Garay\u2013Toghani fundamental theorem,\nformalized for the monomial case.\n**If false**: pinpoints which monomial shapes admit nonzero solutions despite vanishing\ntropicalization, a genuine counterexample to over-optimistic tropical determinacy.\n\n### Direction 4: Riccati and the boundary of valuation pinning\n**Hypothesis**: The nonlinear equation `f' = f\u00b2` over a char-0 field admits *no* power-series\nsolution of positive order, but unlike the linear case it also constrains the leading coefficient:\nmatching `ord f' = ord f - 1` with `ord f\u00b2 = 2\u00b7ord f` forces `ord f - 1 = 2\u00b7ord f`, i.e.\n`ord f = -1`, which is impossible in `\u2115\u221e`, so `f` must be a unit or zero.\n**Test**: Prove `riccati_no_positive_order` from `order_deriv_eq_of_pos` and `order_mul`; then probe\nthe boundary by allowing Laurent series (`ord f = -1` becomes realizable: `f = -1/X`).\n**Why now**: `order_deriv_eq_of_pos` plus `order_mul` give both sides of the balance directly;\nthis is the first nonlinear stress test of the pinning method.\n**If true**: shows the tropical method extends verbatim from linear to nonlinear equations and\npredicts the *Laurent* pole order, motivating a `LaurentSeries` port.\n**If false**: the obstruction reveals where nonlinearity defeats simple valuation balancing.\n\n### Direction 5: From valuation tropicalization to the Newton polygon of a power series\n**Hypothesis**: The lower convex hull of `{(n, v(a\u2099))}` (with a second valuation `v` on `R`)\nrefines `tropOrder`, and its first slope equals `ord f`; differentiation shifts the polygon left\nby one, recovering `order_deriv_succ_le` as the slope inequality.\n**Test**: Define `newtonSlopes f` for `R` a valued field and prove `firstSlope = order` and a\nshift lemma for `d\u2044dX`, recovering `order_deriv_succ_le` as a corollary.\n**Why now**: this cycle established the one-dimensional (order-only) tropicalization; the Newton\npolygon is the natural two-dimensional refinement, and the derivative-shift law is already proved\nin its degenerate form.\n**If true**: connects `DifferentialPowerSeries` to the catalog's amoeba/Ronkin tropical-geometry\nfiles (`Tropical.AmoebaRonkin`) via Newton polygons, a cross-domain bridge.\n**If false**: identifies where the order-valuation and coefficient-valuation tropicalizations\ndiverge, clarifying the limits of single-valuation tropical methods.\n",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_1223",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "51a00311",
+    "status": "available",
+    "timestamp": "2026-06-10T14:08:28.863415+00:00",
+    "title": "**valuation tropicalization** of formal power series `R\u27e6X\u27e7`"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Tropical Hodge Theory\n\nThe new file `Catalog/Tropical/HodgeDecomposition/Orthogonal.lean` completes the\nabstract backbone of tropical Hodge theory: starting from a two-step cochain\ncomplex `E\u2080 \u2192 E\u2081 \u2192 E\u2082` of finite-dimensional real inner-product spaces (the\ncochain spaces of a *balanced weighted polyhedral complex*, equipped with their\ncanonical weighted inner product), it proves the **Bochner identity**, the\n**harmonic characterization** `ker \u0394 = ker d\u2081 \u2229 ker \u03b4\u2080`, the **orthogonal Hodge\ndecomposition** `E\u2081 = (im d\u2080 \u2295 im \u03b4\u2081) \u2295 \u210b`, and the capstone **Hodge\nisomorphism** `unique_harmonic_representative`, which exhibits a unique harmonic\nrepresentative in every cohomology class. This extends the catalog file\n`HodgeDecomposition/Defs.lean` (which only had the single-Laplacian kernel\nidentity `ker_laplacianUp_eq_ker_d`) to the full middle-degree theory, and it\nconnects directly to the cycle-class story in `HodgeCorrespondence.lean`.\n\nBelow are five concrete, falsifiable directions that the next cycle should\nattempt, each phrased so that it can be stated as a Lean theorem and either\nproved or disproved.\n\n## 1. The long cochain complex and degreewise Hodge decomposition\n\nGeneralize from a single middle term to a finite graded complex\n`C\u2070 \u2192 C\u00b9 \u2192 \u22ef \u2192 C\u207f` with `d\u1d4f\u207a\u00b9 \u2218 d\u1d4f = 0`, and prove that *every* degree splits\northogonally as `C\u1d4f = im d\u1d4f\u207b\u00b9 \u2295 \u210b\u1d4f \u2295 im \u03b4\u1d4f\u207a\u00b9`, with `\u210b\u1d4f \u2245 H\u1d4f`. The conjecture\nis that the alternating sum of `dim \u210b\u1d4f` equals the Euler characteristic of the\ncomplex, recovering `Defs.rank_nullity` as the `n = 1` shadow.\n**The key insight is** that the middle-term result already proved is degree-local:\neach `C\u1d4f` sees only its two neighboring differentials, so the global statement is\nan indexed product of the theorem `hodge_decomposition` glued by `d\u1d4f\u207a\u00b9 \u2218 d\u1d4f = 0`.\n**Why now?** With `unique_harmonic_representative` in hand, the only missing\ningredient is bookkeeping over `Fin (n+1)`; no new analytic input is needed, so\nthis is a pure linear-algebra extension that Lean's `DirectSum.IsInternal` API\ncan carry.\n\n## 2. Poincar\u00e9 duality via the tropical Hodge star\n\nDefine a nondegenerate pairing `\u210b\u1d56 \u00d7 \u210b\u207f\u207b\u1d56 \u2192 \u211d` from the weighted Hodge star\n(`Defs.tropicalHodgeStar`) and prove it induces an isomorphism `\u210b\u1d56 \u2245 (\u210b\u207f\u207b\u1d56)*`,\nhence `dim H\u1d56 = dim H\u207f\u207b\u1d56`. **The key insight is** that the Hodge star intertwines\n`d` and `\u03b4` (`\u22c6 \u03b4 = \u00b1 d \u22c6`), so it carries harmonic forms to harmonic forms; the\npairing's nondegeneracy then follows from positive-definiteness of the weighted\ninner product, exactly the property `weightedIP_pos_def` already establishes in\n`Defs.lean`. **Why now?** The harmonic spaces are now identified with cohomology,\nso duality becomes a statement about a single finite-dimensional inner-product\nspace and its star operator \u2014 provable without ever leaving linear algebra.\n\n## 3. Hard Lefschetz as positivity of a commutator\n\nReplace the *combinatorial* `SatisfiesHLP` predicate of `Defs.lean` with the\n*operator* statement: for a Lefschetz element `L` (cup with an ample tropical\ndivisor class) the `sl\u2082`-triple `(L, \u039b, H)` acts on `\u2a01 \u210b\u1d4f`, and `L\u207f\u207b\u1d4f : \u210b\u1d4f \u2192 \u210b\u00b2\u207f\u207b\u1d4f`\nis an isomorphism. **The key insight is** that Hard Lefschetz for matroids is\nequivalent to a single positivity/commutator identity `[L, \u039b] = H`, which is a\nfinite linear-algebra check on the harmonic spaces rather than an algebro-geometric\ntheorem. **Why now?** Adiprasito\u2013Huh\u2013Katz proved Hodge theory for matroids; with\nharmonic spaces formalized we can finally state HL as a Lean proposition about\nexplicit matrices and test it on the rank-2 uniform matroid `U_{2,4}`, whose\npredicted Betti vector `(1,3,1)` is already recorded in `Defs.lean`.\n\n## 4. Stability of the spectrum under balanced refinement\n\nConjecture: subdividing a balanced weighted complex while preserving the balancing\ncondition leaves the nonzero spectrum of the Hodge Laplacian `\u0394` invariant up to\nthe multiplicities forced by the new cells, and in particular leaves `dim \u210b\u1d4f`\nunchanged. **The key insight is** that harmonicity was shown to be purely a\nkernel/orthogonality condition (`mem_harmonic_iff`), so subdivision acts by an\nisometric inclusion of cochain spaces under which the harmonic subspace is\npreserved \u2014 a combinatorial invariance, not a metric one. **Why now?** Because\n`harmonic_eq_orthogonal` reduces `dim \u210b\u1d4f` to a rank computation, invariance can be\nphrased as an equality of ranks of explicit incidence matrices and attacked with\nthe matrix Laplacian machinery (`WeightedCoboundary.laplacianUp`) already present.\n\n## 5. A heat-flow / spectral-gap certificate for tropical harmonic projection\n\nDefine the discrete heat semigroup `e^{-t\u0394}` on `E\u2081` and prove it converges as\n`t \u2192 \u221e` to the orthogonal projection onto `\u210b`, with exponential rate governed by\nthe smallest nonzero eigenvalue of `\u0394`. **The key insight is** that\n`hodgeLaplacian_isSelfAdjoint` plus the orthogonal decomposition gives an\neigenbasis in which `e^{-t\u0394}` is diagonal, so convergence to the harmonic\nprojector is termwise and the spectral gap is literally the second-smallest\neigenvalue. **Why now?** Mathlib's finite-dimensional spectral theorem for\nself-adjoint operators is available, and self-adjointness is already proved, so\nthis turns an analytic-looking statement into a finite eigenvalue estimate \u2014\nyielding a *quantitative* tropical Hodge theory with direct applications to the\ncertified-robustness and tropical-SVP bridges flagged in `HodgeTheory/Foundations.lean`.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1224",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6e02950d",
+    "status": "available",
+    "timestamp": "2026-06-10T14:08:59.299452+00:00",
+    "title": "The new file `Catalog/Tropical/HodgeDecomposition/Orthogonal.lean` completes the"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle b676b19c (Q=0.667) proved 399 theorems in Applications but left 19 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle 7007fa32 (Q=0.752), which proved 316 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting",
     "domains": [
       "Applications"
@@ -2393,21 +2468,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
-    "domains": [
-      "MachineLearning",
-      "Computation"
-    ],
-    "id": "fd_0555",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T22:10:08.217813+00:00",
-    "title": "ML Universal Approximation: Width vs Depth Trade-offs"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that for overparameterized neural networks, almost all critical points are saddle points, not local minima. Formalize the Hessian spectrum at critical points. Show that the loss landscape satisfies the strict saddle property: the Hessian has a negative eigenvalue at non-minimum critical points. Prove that SGD escapes strict saddles in polynomial time.",
     "domains": [
       "MachineLearning",
@@ -2450,6 +2510,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T13:07:57.143541+00:00",
     "title": "Proof-Complexity Holography: Geometric Duals of Formal Derivations"
+  },
+  {
+    "consumed_by_exp_id": "467fe1ce",
+    "description": "Cycle 8e8b7fb9 (Q=0.637) proved 1228 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes t",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_8e8b7fb9_a4f53537",
+    "priority_score": 0.6868867100977198,
+    "research_mode": "team",
+    "source_exp_id": "8e8b7fb9",
+    "status": "in_progress",
+    "timestamp": "2026-06-10T14:07:45.612714+00:00",
+    "title": "Close Proofs: Biological Topology: Protein Folding as Persistent Homology Optimizati"
   },
   {
     "consumed_by_exp_id": "",
@@ -2527,7 +2601,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Neural Network Training as Renormalization Group Flow"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1478bf77",
     "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem \u2014 given (a, f(a,n)), find n \u2014 requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
     "domains": [
       "Cryptography",
@@ -2537,7 +2611,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:27.563504+00:00",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },
@@ -2648,21 +2722,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "id": "fd_0547",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T22:10:07.541008+00:00",
-    "title": "Tropical Differential Equations: Power Series Solutions"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Cycle 40370763 (Q=0.470) proved 805 theorems in Computation but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converg",
     "domains": [
       "Computation"
@@ -2676,7 +2735,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Impossible Geometries: Where Parallel Lines Converge AND Diverge"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4301a51e",
     "description": "Cycle 362ed1b3 (Q=0.460) proved 1404 theorems in Bridges but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such log",
     "domains": [
       "Bridges"
@@ -2685,7 +2744,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5101177861683639,
     "research_mode": "team",
     "source_exp_id": "362ed1b3",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T05:53:36.849626+00:00",
     "title": "Close Proofs: Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
@@ -2818,7 +2877,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Belnap's FOUR\u2082 is the smallest non-trivial paraconsistent bilattice. A"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a78aff5b",
     "description": "Cycle 720cb173 (Q=0.438) proved 910 theorems in Geometry but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Sphere packing on S^n (how many non-overlapping caps of radius r fit?) is a fundamental geometric problem with applications to error-correcting codes and signal processing. Use stereographic projectio",
     "domains": [
       "Geometry"
@@ -2827,7 +2886,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.48760083148790373,
     "research_mode": "team",
     "source_exp_id": "720cb173",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T04:08:17.171974+00:00",
     "title": "Close Proofs: Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geo"
   },
@@ -2846,7 +2905,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Proof Phase Transitions: Sharp Thresholds in Random Formal Theories"
   },
   {
-    "consumed_by_exp_id": "47b6d2a8",
+    "consumed_by_exp_id": "",
     "description": "Cycle 51f15183 (Q=0.427) proved 1477 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle 9ff1d7e2 (Q=0.426) proved 690 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Hausdorff dimension i",
     "domains": [
       "Applications"
@@ -2855,7 +2914,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.4772544815928248,
     "research_mode": "team",
     "source_exp_id": "51f15183",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-09T08:53:32.555216+00:00",
     "title": "Close Proofs: Close Proofs: Fractal Topology: Hausdorff Dimension as a Topological I"
   },
@@ -3271,7 +3330,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ce98ef61",
     "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
     "domains": [
       "Physics",
@@ -3281,7 +3340,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.732241+00:00",
     "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
   },
