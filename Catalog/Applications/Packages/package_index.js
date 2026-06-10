@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "7007fa32",
     "filename": "quasi_symmetric_maps_generalize_bi_lipschitz_maps_.json",
     "pkg_num": 36,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.75224,
     "title": "Set-Local Distortion of Hausdorff Dimension"
   },
   {
@@ -1068,8 +1068,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "quasi_symmetric_maps_generalize_bi_lipschitz_maps_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.75224,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Set-Local Distortion of Hausdorff Dimension"
     }

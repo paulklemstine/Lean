@@ -324,21 +324,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Information Geometry Connecting Statistics and Differential Geometry"
   },
   {
-    "consumed_by_exp_id": "6bb23550",
-    "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP \u2286 PCP(poly, 1)).",
-    "domains": [
-      "Cryptography",
-      "Logic"
-    ],
-    "id": "fd_0539",
-    "priority_score": 0.86,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:06.880463+00:00",
-    "title": "Zero-Knowledge Proofs in Lean: Verifiable Computation"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize core HoTT results in Lean 4: the univalence axiom, higher inductive types, and the fundamental theorem of identity types. Prove that HoTT provides a constructive foundation for mathematics.",
     "domains": [
@@ -352,6 +337,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:03.446924+00:00",
     "title": "Homotopy Type Theory Foundations"
+  },
+  {
+    "consumed_by_exp_id": "b676b19c",
+    "description": "Building on cycle 7007fa32 (Q=0.752), which proved 316 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions: Fractal Topology and Hausdorff Dimension Invariance\n\n## 1. Quantitative Distortion Bounds for Quasi-Symmetric Maps\n\nQuasi-symmetric maps generalize bi-Lipschitz maps by allowing the distortion constant to depend on scale. A natural conjecture: if f : X \u2192 Y is \u03b7-quasi-symmetric (",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_7007fa32_35376e8d",
+    "priority_score": 0.85224,
+    "research_mode": "team",
+    "source_exp_id": "7007fa32",
+    "status": "in_progress",
+    "timestamp": "2026-06-10T11:38:56.176836+00:00",
+    "title": "Deepening: Quasi-symmetric maps generalize bi-Lipschitz maps by allowing the distortion con"
   },
   {
     "consumed_by_exp_id": "",
@@ -369,7 +368,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Gravity as Topological Quantum Field Theory"
   },
   {
-    "consumed_by_exp_id": "00b42e00",
+    "consumed_by_exp_id": "",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domains": [
       "Bridges",
@@ -379,7 +378,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.637226+00:00",
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
@@ -561,7 +560,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Willmore Conjecture Generalizations"
   },
   {
-    "consumed_by_exp_id": "3766d88d",
+    "consumed_by_exp_id": "",
     "description": "Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
     "domains": [
       "Computation",
@@ -571,7 +570,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:46.975605+00:00",
     "title": "Consciousness as Integrated Information: Mathematical Foundations"
   },
@@ -1206,7 +1205,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The statement `dvir_kakeya_bound` is currently sorry'd. The full proof requires"
   },
   {
-    "consumed_by_exp_id": "f5f2f195",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Hadamard Matrix Theory in Lean 4\n\n## 1. Paley Construction and Quadratic Residues\n\nFormalize the Paley construction: for any prime power q \u2261 3 (mod 4), there exists a Hadamard matrix of order q + 1. This requires formalizing Jacobi matrices from quadratic residue characters over finite fields and proving the resulting conference matrix satisfies the Hadamard orthogonality condition.\n\nThe key insight is that the quadratic residue character \u03c7 of GF(q) naturally produces a conference matrix C with C\u00b7C\u1d40 = (q-1)I + J, and the bordered matrix [1 j\u1d40; j C+I] is Hadamard of order q+1.\n\nWhy now? Mathlib already has substantial finite field theory (`ZMod`, `legendreSym`, `quadraticChar`) and the Hadamard infrastructure (definitions, tensor closure, obstruction) is fully formalized in this project. The Paley construction would be the first non-power-of-two infinite family of Hadamard orders, dramatically expanding the set of proven Hadamard orders beyond the Sylvester family.\n\n## 2. Hadamard Maximal Determinant Bound\n\nProve the full Hadamard bound: for any n\u00d7n matrix M with |M_{ij}| \u2264 1, we have |det M| \u2264 n^(n/2), with equality if and only if M is a (real) Hadamard matrix. We already proved det(H)\u00b2 = n^n for \u00b11 Hadamard matrices. The converse direction \u2014 that equality in the determinant bound forces the Hadamard orthogonality condition \u2014 would complete the characterization.\n\nThe key insight is that the AM-GM inequality applied to the Gram matrix eigenvalues gives det(MM\u1d40) \u2264 (tr(MM\u1d40)/n)^n = n^n, with equality iff all eigenvalues are equal (i.e., MM\u1d40 = nI).\n\nWhy now? The forward direction (det\u00b2 = n^n) is already proved in `Spectral.lean`. Formalizing the bound requires Mathlib's spectral theory for Hermitian matrices and eigenvalue inequalities, which are increasingly available.\n\n## 3. Equivalence Classification for Small Orders\n\nFormalize the classification of Hadamard equivalence classes for small orders. For n = 1, 2, 4, 8, there is exactly one equivalence class; for n = 12, there are exactly 1 class; for n = 16, there are exactly 5 inequivalent Hadamard matrices. Prove the uniqueness results for n \u2264 12 by exhaustive case analysis on normalized forms.\n\nThe key insight is that after normalization (first row and column all 1s), the remaining (n-1)\u00d7(n-1) submatrix has very constrained structure: its rows must be orthogonal \u00b11 vectors that are all orthogonal to the all-ones vector, and for small n this forces a unique solution up to equivalence.\n\nWhy now? The `HadamardEquivalent` relation and `IsNormalizedHadamard` are already defined. For n = 4, the proof is a finite computation; `native_decide` or `Decidable` instances could handle it. This would be the first verified classification result in Hadamard theory.\n\n## 4. Hadamard\u2013BIBD Bridge Theorem\n\nComplete the bridge between Hadamard matrices and symmetric balanced incomplete block designs. We have the counting lemmas (row-pair intersection counts). The missing piece is constructing the actual BIBD: from a normalized Hadamard matrix of order 4t, extract the incidence matrix of a symmetric 2-(4t-1, 2t-1, t-1) design and verify all BIBD axioms.\n\nThe key insight is that the \u00b11 \u2192 {0,1} conversion of the non-trivial rows/columns of a normalized Hadamard matrix directly yields the incidence matrix, and the Hadamard orthogonality conditions translate exactly into the BIBD pair-counting condition.\n\nWhy now? The `SymmetricBIBD` structure and the `normalized_row_pair_ones` theorem (showing the intersection count is n/4) are already formalized in `Design.lean`. The construction of the actual BIBD instance is the natural next step.\n\n## 5. Williamson Construction and Circulant Hadamard Matrices\n\nFormalize the Williamson construction: given four symmetric circulant \u00b11 matrices A, B, C, D of order n satisfying A\u1d40A + B\u1d40B + C\u1d40C + D\u1d40D = 4nI, construct a Hadamard matrix of order 4n. This construction covers many orders not reachable by Sylvester or Paley alone.\n\nThe key insight is that the block matrix [[A B C D]; [-B A -D C]; [-C D A -B]; [-D -C B A]] is Hadamard whenever the Williamson equation holds, because the block structure ensures row orthogonality via the four-square identity.\n\nWhy now? The tensor product infrastructure (Kronecker product, `hadamardOrder'_mul`) provides the algebraic foundation. Formalizing circulant matrices and the Williamson equation would open the door to verifying Hadamard existence for specific orders like 12, 20, 28, 36 \u2014 filling gaps in the construction landscape beyond powers of two.\n",
     "domains": [
       "Algebra",
@@ -1216,7 +1215,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "5bffe06d",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-09T10:41:21.928484+00:00",
     "title": "Formalize the Paley construction: for any prime power q \u2261 3 (mod 4), there exist"
   },
@@ -1866,7 +1865,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Foundational analytic infrastructure for formalizing"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8b7c5a90",
     "description": "# Future Directions: Diffusion Model Noise Schedule Algebra\n\nThis document outlines research directions extending the formalized noise schedule\ntheory in `Pythagorean/DiffusionSchedule.lean`, which establishes the exponential\ndecay bound, Gaussian KL properties, and SNR monotonicity for discrete diffusion\nprocesses.\n\n## 1. KL Divergence Convergence Rate Along the Forward Process\n\nThe exponential decay bound `diffusionAlphaBar_exp_bound` shows \u1fb1_t \u2264 exp(-\u2211\u03b2_i),\nbut does not directly quantify how fast the forward marginal converges to the\nstationary Gaussian in KL divergence. The conjecture: for a point-mass initial\ndistribution at x\u2080, the KL to standard Gaussian satisfies\nKL(p_t \u2016 N(0,1)) \u2264 C(x\u2080) \u00b7 \u1fb1_t where C(x\u2080) depends polynomially on |x\u2080|.\n\nThe key insight is that the data processing inequality for Gaussian channels gives\na per-step contraction factor of exactly (1-\u03b2_t) in KL, and telescoping yields\nthe \u1fb1_t bound. Why now? We have `univGaussianKL_nonneg` and the full noise schedule\nmachinery; the missing piece is the data processing inequality for scalar Gaussian\nchannels, which is a clean finite-dimensional statement not requiring abstract\nmeasure theory.\n\n**Falsifiable test**: Define `diffusionKLToTarget sched x\u2080 t` using `univGaussianKL`\nwith the forward marginal parameters (\u221a\u1fb1_t\u00b7x\u2080, \u221a(1-\u1fb1_t)) against N(0,1), and prove\nthe bound `diffusionKLToTarget sched x\u2080 t \u2264 (1 + x\u2080\u00b2) * diffusionAlphaBar \u03b2 t / 2`.\n\n## 2. Optimal Linear Noise Schedule\n\nFor a linear schedule \u03b2_t = \u03b2_min + t\u00b7(\u03b2_max - \u03b2_min)/(T-1), the cumulative noise\n\u2211\u03b2_i = T\u00b7(\u03b2_min + \u03b2_max)/2 grows linearly, so \u1fb1_T \u2264 exp(-T\u00b7(\u03b2_min+\u03b2_max)/2).\nThe conjecture: among all schedules with fixed endpoints \u03b2_0 = \u03b2_min, \u03b2_{T-1} = \u03b2_max,\nthe linear schedule minimizes max_t |SNR_t - SNR_{t-1}|, i.e., it produces the most\nuniform SNR spacing.\n\nThe key insight is that uniform SNR spacing corresponds to equal per-step information\nloss, and the linear schedule achieves this when \u03b2_t varies slowly relative to \u1fb1_t.\nWhy now? The `diffusionSNR_strictAnti` theorem provides the monotonicity framework,\nand the explicit SNR formula `\u1fb1_t/(1-\u1fb1_t)` makes the optimization problem purely\nalgebraic over finite products.\n\n**Falsifiable test**: For T=3 with \u03b2_0=0.1, \u03b2_2=0.3, compare SNR spacing for linear\nvs. geometric schedules using `#eval` on rational approximations.\n\n## 3. Reverse Process Step as KL Minimization\n\nEach reverse diffusion step approximates the posterior p(x_{t-1}|x_t), which for\nGaussian forward process is itself Gaussian with mean and variance determined by\n\u1fb1_t, \u1fb1_{t-1}, and \u03b2_t. The conjecture: the DDPM reverse step with predicted noise\n\u03b5_\u03b8 is the unique minimizer of `univGaussianKL` between the true posterior and a\nGaussian with the predicted mean, holding variance fixed at the DDPM schedule\n\u03c3_t\u00b2 = \u03b2_t.\n\nThe key insight is that `univGaussianKL_self` shows KL=0 when the predicted noise\nexactly matches the true noise, and `univGaussianKL_nonneg` provides the lower bound.\nWhy now? The `univGaussianKL` definition and its properties give us the variational\ncharacterization; the remaining work is expressing the DDPM posterior in terms of the\nnoise schedule parameters using `diffusionAlphaBar_succ`.\n\n**Falsifiable test**: Prove that for the posterior mean formula\n\u03bc_\u03b8 = (x_t - \u03b2_t/\u221a(1-\u1fb1_t)\u00b7\u03b5_\u03b8) / \u221a(1-\u03b2_t), setting \u03b5_\u03b8 = \u03b5 (the true noise)\nyields `univGaussianKL ... = 0`.\n\n## 4. Continuous-Time Limit of the Exponential Bound\n\nAs T \u2192 \u221e with \u03b2_t = \u03b2/T for constant \u03b2, the discrete \u1fb1_T = (1-\u03b2/T)^T converges to\nexp(-\u03b2). The exponential bound `diffusionAlphaBar_exp_bound` becomes tight in this\nlimit. The conjecture: |\u1fb1_T - exp(-\u03b2)| \u2264 \u03b2\u00b2/(2T) for the constant schedule \u03b2_t = \u03b2/T,\nproviding a quantitative convergence rate.\n\nThe key insight is that log(1-\u03b2/T) = -\u03b2/T - \u03b2\u00b2/(2T\u00b2) + O(T\u207b\u00b3), so\nlog \u1fb1_T = T\u00b7log(1-\u03b2/T) = -\u03b2 - \u03b2\u00b2/(2T) + O(T\u207b\u00b2), giving the rate.\nWhy now? The `one_sub_le_exp_neg` inequality already captures one direction; the\nother direction (lower bound on 1-x vs exp(-x)) is a symmetric argument using\nthe Taylor remainder of the exponential.\n\n**Falsifiable test**: Prove that for \u03b2_t = \u03b2/T with 0 < \u03b2 < T, we have\nexp(-\u03b2 - \u03b2\u00b2/T) \u2264 \u1fb1_T \u2264 exp(-\u03b2).\n\n## 5. Multi-Dimensional Extension: Anisotropic Noise Schedules\n\nThe current theory treats scalar noise. In practice, diffusion models operate in\n\u211d^d with potentially different noise schedules per coordinate (anisotropic noise).\nThe conjecture: for coordinate-wise schedules \u03b2_t^(j), the multivariate Gaussian KL\ndecomposes as a sum: KL(p_t \u2016 N(0,I)) = \u2211_j KL_j where KL_j depends only on\nthe j-th coordinate's schedule.\n\nThe key insight is that independent coordinate-wise noise preserves the product\nstructure of the marginal, so the KL additivity follows from the chain rule for\nKL divergence applied to independent coordinates. Why now? Our `univGaussianKL`\nis the building block; the extension to finite products requires only `Finset.sum`\nof the scalar KL terms, which connects naturally to the existing\n`diffusionAlphaBar_exp_bound` applied coordinate-wise.\n\n**Falsifiable test**: Define `multiGaussianKL (d : \u2115) (\u03bc\u2081 \u03c3\u2081 \u03bc\u2082 \u03c3\u2082 : Fin d \u2192 \u211d)`\nas `\u2211 j, univGaussianKL (\u03bc\u2081 j) (\u03c3\u2081 j) (\u03bc\u2082 j) (\u03c3\u2082 j)` and prove non-negativity\nfrom `univGaussianKL_nonneg` via `Finset.sum_nonneg`.\n",
     "domains": [
       "Algebra",
@@ -1876,7 +1875,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "ff75cf9e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T20:33:51.636876+00:00",
     "title": "This document outlines research directions extending the formalized noise schedu"
   },
@@ -2389,6 +2388,51 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-10T10:53:47.335569+00:00",
     "title": "Self-contained, sorry-free Lean 4 formalization of the"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Set-Local Distortion of Hausdorff Dimension\n\nThe file `Geometry/FractalDimension.lean` builds the **set-local** theory of Hausdorff\ndimension distortion: the `AntilipschitzOnWith` predicate, the lower bound\n`AntilipschitzOnWith.le_dimH_image`, the set-local bi-Lipschitz invariance\n`dimH_image_eq_of_lipschitzOn_antilipschitzOn`, and the two-sided H\u00f6lder squeeze\n`dimH_image_bounds_of_holderOn_holderOn_inverse`. Mathlib previously only had the\n*global* versions (`AntilipschitzWith.le_dimH_image`, `Isometry.dimH_image`). The\nfollowing directions extend this frontier.\n\n## 1. Quasi-symmetric distortion governed by the modulus \u03b7\n\nA natural next theorem replaces the single H\u00f6lder exponent by a scale-dependent\nmodulus \u03b7, asking how `dimH (f '' s)` depends on the asymptotics of \u03b7 near `0` and `\u221e`.\nNote carefully: the na\u00efve guess `dimH (f '' s) \u2264 dimH s` is **false** \u2014 quasi-symmetric\nmaps genuinely change dimension (this is exactly why conformal dimension is interesting).\nThe key insight is that an \u03b7-quasi-symmetric map is, *at each fixed scale*, bi-H\u00f6lder with\nexponents determined by `log \u03b7(t)/log t`, so our `dimH_image_bounds_of_holderOn_holderOn_inverse`\napplied on a countable scale decomposition should yield a bound of the form\n`dimH (f '' s) \u2264 (limsup_{t\u21920} log \u03b7(t)/log t) \u00b7 dimH s`. Why now? The two-sided H\u00f6lder\nsqueeze is already proved on arbitrary subsets, and `dimH_bUnion` lets us glue countable\nscale pieces, so the only missing ingredient is the per-scale bi-H\u00f6lder extraction from \u03b7.\n\n## 2. Conformal dimension as a quasi-symmetric invariant\n\nDefine `cdim(X) = inf { dimH Y : Y quasi-symmetrically equivalent to X }`. The first\ncheckable theorem is that `cdim` is invariant under quasi-symmetric homeomorphisms and\nthat `cdim(X) \u2264 dimH(X)` always. The key insight is that our\n`dimH_image_eq_of_lipschitzOn_antilipschitzOn` is precisely the bi-Lipschitz special case\n(modulus \u03b7 linear), so `cdim` is exactly what survives after quotienting the bi-Lipschitz\ninvariance by the larger quasi-symmetric equivalence relation. Why now? The set-local\ninvariance theorem already certifies bi-Lipschitz invariance on arbitrary subsets; building\nthe equivalence relation and taking the infimum is a direct formal step on top of it.\n\n## 3. IFS attractor dimension via the coding map's H\u00f6lder section\n\nFor an iterated function system of contractions with ratios `r\u2081,\u2026,r\u2099`, the coding map\n`\u03c0 : {1,\u2026,n}^\u2115 \u2192 K` onto the attractor is H\u00f6lder, and under the open set condition it admits\nan antilipschitz section on a large subset. Applying\n`dimH_image_bounds_of_holderOn_holderOn_inverse` to \u03c0 then squeezes `dimH K` between\nmultiples of the symbolic-space dimension, recovering `dimH K = s` where `\u03a3 r\u1d62\u02e2 = 1`. The\nkey insight is that the open set condition is exactly the hypothesis that upgrades \u03c0 from\nmerely H\u00f6lder to having a H\u00f6lder/antilipschitz inverse on a full-measure piece, which is the\ninput our two-sided bound consumes. Why now? The two-sided H\u00f6lder squeeze is set-local, so it\napplies directly to the \"good\" subset furnished by the open set condition without needing \u03c0 to\nbe globally invertible.\n\n## 4. Product sets: the lower inequality via Lipschitz projections\n\nThe classical bound `dimH (A \u00d7 B) \u2265 dimH A + dimH B` should follow from slicing: fix `b \u2208 B`,\nnote the inclusion `A \u21aa A \u00d7 B`, `a \u21a6 (a,b)` is an isometric (hence antilipschitz) embedding, and\ncombine with a fibered covering argument. The key insight is that\n`AntilipschitzOnWith.le_dimH_image` gives `dimH A \u2264 dimH (A \u00d7 {b})` for free on each slice, so\nthe remaining work is purely the additive covering estimate connecting slice dimensions to the\nproduct dimension. Why now? The set-local antilipschitz lower bound removes the need for a global\ninverse of the slice inclusion, which is the technical obstruction in the standard proof.\n\n## 5. Bi-Lipschitz embedding dimension lower bound `bldim(X) \u2265 \u2308dimH X\u2309`\n\nDefine `bldim(X)` as the least `n` such that `X` bi-Lipschitz embeds into `\u211d\u207f`. Because a\nbi-Lipschitz embedding restricted to `X` is simultaneously Lipschitz and antilipschitz on its\ndomain, our `dimH_image_eq_of_lipschitzOn_antilipschitzOn` shows such an embedding preserves\n`dimH` exactly, and since `dimH (\u211d\u207f) = n` this forces `dimH X \u2264 n`, i.e. `bldim(X) \u2265 \u2308dimH X\u2309`.\nThe key insight is that the lower bound needs only set-local bi-Lipschitz invariance \u2014 no global\ninverse on all of `\u211d\u207f` \u2014 which is exactly what we proved. Why now? The invariance theorem gives\nthe lower bound immediately; the matching upper bound (Assouad-type embedding for doubling spaces)\nbecomes the sole remaining target.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1206",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7007fa32",
+    "status": "available",
+    "timestamp": "2026-06-10T11:38:46.353338+00:00",
+    "title": "The file `Geometry/FractalDimension.lean` builds the **set-local** theory of Hau"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE_DIRECTIONS \u2014 Fractal Topology: Hausdorff Dimension as a Bi-Lipschitz Invariant\n\n## Synthesis\n\nThis cycle isolated the structural reason Hausdorff dimension behaves like a\n*topological/metric invariant*: Mathlib already records that `dimH` is preserved by\nisometries (`Isometry.dimH_image`) and by continuous linear equivalences\n(`ContinuousLinearEquiv.dimH_image`), but both are corollaries of a single, weaker\nhypothesis. A map that is simultaneously **Lipschitz** (upper bound, via\n`LipschitzWith.dimH_image_le`) and **antilipschitz** (lower bound, via\n`AntilipschitzWith.le_dimH_image`) preserves `dimH` exactly \u2014 no metric preservation,\nlinearity, or surjectivity required. We packaged this as\n`dimH_image_eq_of_biLipschitz`, the centerpiece, and then harvested its consequences:\nnonzero scaling, translation, and hence the **entire affine group** preserve Hausdorff\ndimension. This is precisely the invariance that makes the dimension of a self-similar\nattractor a pure scale-free ratio `log N / log(1/r)`.\n\nThe cross-domain payoff connects this geometry to the catalog's *fractal number theory*\n(`Physics/PrimeFractalDimension.lean`, where the logarithmic prime set `{1/log p}` is\nshown to have `dimH = 0`). We proved the more robust statement that **any** bi-Lipschitz\nreshaping of a countable set \u2014 in particular the logarithmic integer fractal\n`{1/log n}` that contains the prime fractal \u2014 keeps dimension `0`. So dimension `0` is an\n*intrinsic* feature of the prime fractal, not an artifact of the `1/log` embedding chosen\nin the catalog; it survives every bi-Lipschitz change of coordinates.\n\nThe Critic supplied the sharp boundary: the constant map (Lipschitz with `K = 0`, but\n**not** antilipschitz) collapses the real line \u2014 dimension `1` \u2014 to a point of dimension\n`0` (`dimH_const_image_lt`). This shows antilipschitzness is the irreducible half of the\nhypothesis; it is what controls the lower bound on dimension. The generalization loop\nthen relaxed Lipschitz to H\u00f6lder-`r`, recovering the graded bound\n`dimH (f '' s) \u2264 dimH s / r` (`dimH_holder_image_le`), of which the bi-Lipschitz invariant\nis the `r = 1` case. The two-sided bi-H\u00f6lder dimension *transform* remains the natural\nopen frontier.\n\n## Results Summary\n\n- `dimH_image_eq_of_biLipschitz`: proved \u2014 bi-Lipschitz maps preserve Hausdorff dimension, strictly generalizing `Isometry.dimH_image` (the centerpiece).\n- `antilipschitzWith_smul_nonzero`: proved \u2014 multiplication by a nonzero scalar is antilipschitz with the tight constant `\u2016c\u2016\u208a\u207b\u00b9`.\n- `dimH_smul_set_eq`: proved \u2014 `dimH (c \u2022 s) = dimH s` for `c \u2260 0`; the self-similarity (scale) invariance underlying fractal dimension.\n- `dimH_translate_set_eq`: proved \u2014 translation preserves Hausdorff dimension (isometry case).\n- `dimH_affine_set_eq`: proved \u2014 every invertible affine map `x \u21a6 c\u2022x + a` preserves Hausdorff dimension; `dimH` is an affine-group invariant.\n- `dimH_const_image_lt`: proved (Critic) \u2014 a constant map strictly drops dimension (`\u211d` \u2192 point), proving antilipschitzness is necessary in the centerpiece.\n- `dimH_biLipschitz_image_countable_eq_zero`: proved \u2014 bi-Lipschitz images of countable sets have dimension `0`.\n- `dimH_biLipschitz_image_logRange_eq_zero`: proved (cross-domain) \u2014 every bi-Lipschitz reshaping of the logarithmic integer fractal `{1/log n}` (\u2287 the prime fractal `{1/log p}`) keeps dimension `0`.\n- `dimH_smul_logRange_eq_zero`: proved \u2014 concrete instance: rescaling the logarithmic fractal by `5` leaves dimension `0`.\n- `dimH_holder_image_le`: proved (generalization) \u2014 a H\u00f6lder-`r` map inflates dimension by at most the factor `1/r`; `r = 1` recovers the centerpiece's upper bound.\n\n## Research Directions\n\n### Direction 1: Two-sided bi-H\u00f6lder dimension transform\n**Hypothesis**: If `f` is H\u00f6lder-`r` (`0 < r \u2264 1`) and its inverse `g = f\u207b\u00b9` is\nH\u00f6lder-`r'`, then `r' \u2022 dimH s \u2264 dimH (f '' s) \u2264 r\u207b\u00b9 \u2022 dimH s`; in particular a bi-H\u00f6lder\nhomeomorphism with matched exponents `r = r'` rescales dimension multiplicatively.\n**Test**: Formalize the lower bound by transporting `AntilipschitzWith.le_dimH_image`\nthrough `HolderWith` of the inverse (the `HolderOnWith`/`HolderWith` API in\n`Mathlib.Topology.MetricSpace.HausdorffDimension` already supplies the upper half via\n`dimH_holder_image_le`). Disprove the naive equality with `x \u21a6 x^2` on `[0,1]`.\n**Why now**: This cycle already proved the `r = 1` two-sided case\n(`dimH_image_eq_of_biLipschitz`) and the one-sided H\u00f6lder upper bound\n(`dimH_holder_image_le`); only the H\u00f6lder lower bound is missing to close the square.\n**If true**: A complete dictionary for how singular reparametrizations (e.g. devil's\nstaircase coordinates) deform Hausdorff dimension.\n**If false**: The counterexample localizes exactly which regularity assumption forces the\nlower bound, sharpening the boundary found by the Critic.\n\n### Direction 2: Self-similar attractors realize the similarity dimension\n**Hypothesis**: For a finite IFS of contracting similarities with ratios `r\u1d62` satisfying\nthe open set condition, the attractor `K` has `dimH K = d`, where `d` is the unique\nsolution of `\u2211 r\u1d62^d = 1` (the similarity dimension).\n**Test**: Build the attractor as a fixed point of the Hutchinson operator; use\n`dimH_smul_set_eq` and `dimH_bUnion` to get `dimH K = max_i dimH (s\u1d62 '' K)` and the\nscaling relation, then solve the Moran equation. Start with the middle-thirds Cantor set\n(`d = log 2 / log 3`) as the concrete first target.\n**Why now**: `dimH_smul_set_eq` (scale invariance) and `dimH_affine_set_eq` are exactly\nthe tools that turn the self-similarity equation into a dimension equation; this cycle\nsupplied them.\n**If true**: First formal proof in this catalog that a nontrivial fractal has its expected\nfractional dimension \u2014 a genuine fractal-geometry milestone.\n**If false** (e.g. without the open set condition): pinpoints how overlap inflates or\ndeflates measured dimension.\n\n### Direction 3: Box-counting equals Hausdorff dimension for self-similar sets\n**Hypothesis**: For the attractors of Direction 2 (open set condition), the upper\nbox-counting dimension `upperBoxDim` (defined in `Physics/PrimeFractalDimension.lean`)\nequals `dimH`.\n**Test**: Bound `upperBoxDim` above by the similarity dimension via the natural cover by\ncylinder sets, and below by `dimH` (using `dimH \u2264 upperBoxDim` in general). Contrast with\nthe catalog's prime fractal, where `dimH = 0 < 1 = ` conjectured box dimension \u2014 a\n*strict* gap.\n**Why now**: This cycle's bi-Lipschitz invariance makes both dimensions coordinate-free,\nso the equality/inequality is a statement about the set itself, not its embedding.\n**If true**: Explains *why* the prime fractal's dimension gap (`dimH = 0`, box `= 1`) is\nspecial \u2014 it is the failure of self-similarity, not of countability alone.\n**If false**: Reveals a self-similar set where the two dimensions diverge, a strong\nstructural surprise.\n\n### Direction 4: Dimension and Cartesian products (the Marstrand/Besicovitch direction)\n**Hypothesis**: `dimH (s \u00d7\u02e2 t) \u2265 dimH s + dimH t`, with equality when one factor is\n\"dimension-regular\" (e.g. Ahlfors regular).\n**Test**: The lower bound follows from the product Hausdorff measure; formalize it for\n`s, t \u2286 \u211d` and combine with `dimH_univ_pi` (already in Mathlib: `dimH (univ : Set (Fin n \u2192 \u211d)) = n`).\nUse bi-Lipschitz invariance to reduce to a canonical embedding of the product.\n**Why now**: `dimH_image_eq_of_biLipschitz` lets us identify `\u211d^m \u00d7 \u211d^n` with `\u211d^{m+n}`\nbi-Lipschitzly, converting the product statement into the additivity of `finrank` already\nin Mathlib for the full-dimensional case.\n**If true**: Opens the door to product fractals (e.g. Cantor dust `C \u00d7 C`, dimension\n`2 log 2 / log 3`).\n**If false**: The gap between `\u2265` and `=` is exactly the Marstrand phenomenon and\nidentifies which regularity hypothesis is doing the work.\n\n### Direction 5: Lipschitz (not bi-Lipschitz) maps and the dimension drop spectrum\n**Hypothesis**: For a `K`-Lipschitz `f : \u211d \u2192 \u211d`, the set of achievable values of\n`dimH s \u2212 dimH (f '' s)` over all `s` is the full interval `[0, dimH s]`; moreover\n`dimH (f '' s) = dimH s` for *every* `s` iff `f` is locally antilipschitz off a\ndimension-`0` set.\n**Test**: The Critic's `dimH_const_image_lt` already realizes the extreme drop `dimH s \u2212 0`.\nInterpolate with piecewise-affine `f` that are constant on a fat subset; compute\n`dimH (f '' s)` via `dimH_union` and `dimH_smul_set_eq`.\n**Why now**: This cycle produced both endpoints \u2014 exact preservation (bi-Lipschitz) and\ntotal collapse (constant) \u2014 so the intermediate regime is the natural next quantitative\nquestion.\n**If true**: A clean characterization of dimension-preserving Lipschitz maps, weaker than\nantilipschitz.\n**If false**: A forbidden gap in the drop spectrum would be a striking rigidity theorem.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1207",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ab70c7a2",
+    "status": "available",
+    "timestamp": "2026-06-10T11:39:12.212596+00:00",
+    "title": "This cycle isolated the structural reason Hausdorff dimension behaves like a"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Zero-Knowledge Proofs and Verifiable Computation in Lean\n\nThis cycle delivered two self-contained, fully proved Lean files (no `sorry` on any\nresult):\n\n* `ThreeColoring.lean` \u2014 the GMW zero-knowledge proof system for graph 3-colorability,\n  with perfect completeness (`permuted_isProper`), a 2-query PCP soundness gap\n  (`pcp_soundness`, `pcp_detection_prob`), and the honest-verifier zero-knowledge\n  simulator core (`hvzk_view_card_one`, `hvzk_view_witness_independent`,\n  `hvzk_view_monochromatic_impossible`).\n* `SnarkSoundness.lean` \u2014 the univariate Schwartz\u2013Zippel soundness of a simplified\n  zk-SNARK polynomial check (`agreement_card_le_degree`, `snark_soundness_prob`),\n  perfect completeness (`snark_perfect_completeness`), and soundness amplification over\n  `k` independent challenges (`snark_soundness_amplification`).\n\nThese extend the catalog's algebraic \u03a3-protocol layer (`ZeroKnowledge/Basic.lean`'s\nSchnorr/`SigmaProtocol`/`commitment_binding`) and the tropical HVZK\n(`TropicalZeroKnowledge.lean`) into the combinatorial and polynomial-IOP regimes. The\nfollowing directions each state a concrete, falsifiable Lean target.\n\n## 1. Exact uniformity of the GMW view as a measure-preserving bijection\n\nThe current `hvzk_view_witness_independent` shows the verifier's view has a\nwitness-independent *count* (every distinct color pair has exactly one preimage\npermutation). The natural strengthening is to package the map\n`\u03c3 \u21a6 (\u03c3 (c u), \u03c3 (c v))` as an honest-to-goodness `Equiv` between `Equiv.Perm (Fin 3)`\nand the subtype `{p : Fin 3 \u00d7 Fin 3 // p.1 \u2260 p.2}`, and prove the pushforward of the\nuniform `PMF` on permutations equals the uniform `PMF` on distinct pairs \u2014 a literal\nstatement of perfect HVZK in Mathlib's probability layer.\n\nThe key insight is that on `Fin 3` a permutation is *determined and freely chosen* by\nits action on any two distinct points, so the view map is a bijection onto distinct\npairs of *constant fiber size one* \u2014 exactly the condition for pushforward-uniformity.\nWhy now? Mathlib's `PMF`/`Pmf.map` and `uniformOfFintype` are mature enough to express\n\"the simulator's output distribution equals the real view distribution\" as a provable\nequality of `PMF`s, turning an informal cryptographic claim into a closed Lean theorem.\n\n## 2. Generalize the simulator to k-colorings and `(k-2)!`-fiber counting\n\n`hvzk_view_card_one` is special to `Fin 3` (fiber size exactly `1`). For a proper\n`k`-coloring the GMW edge-opening reveals an ordered distinct pair, and the number of\ncolor permutations realizing a fixed distinct view `(a,b)` is exactly `(k-2)!`. The\ntarget is `hvzk_view_card_factorial : x \u2260 y \u2192 a \u2260 b \u2192\n(univ.filter (fun \u03c3 : Equiv.Perm (Fin k) => \u03c3 x = a \u2227 \u03c3 y = b)).card = (k-2)!`.\n\nThe key insight is that fixing the images of two points reduces the symmetry group to\n`Sym(k-2)` acting on the complementary colors, so the fiber is a coset of that subgroup\nand the count is its order. Why now? The `Fin 3` brute-force `decide` proof does not\nscale, forcing the genuinely structural orbit-stabilizer argument; Mathlib's\n`Equiv.Perm` subgroup and `Fintype.card` of stabilizers make `(k-2)!` directly\nreachable, and the result immediately yields HVZK for *every* NP language via the GMW\nreduction rather than just the 3-color instance.\n\n## 3. From the per-edge gap to a full PCP soundness-amplification theorem\n\n`pcp_detection_prob` gives a single-edge rejection probability `\u2265 1/|E|` for any\nimproper coloring. The frontier target is the amplified statement: for a coloring that\nviolates a `\u03b4`-fraction of edges, querying `t` independent random edges rejects with\nprobability `\u2265 1 - (1-\u03b4)^t`, mirroring `snark_soundness_amplification` but on the\ncombinatorial side. Stated in Lean over the product `Fin t \u2192 (Fin n \u00d7 Fin n)`.\n\nThe key insight is that independent repetitions turn an additive soundness gap into a\nmultiplicative one, so constant per-query soundness plus `O(log(1/\u03b5))` queries yields\nconstant error \u2014 precisely the constant-query/constant-soundness profile of the PCP\ntheorem `NP \u2286 PCP(poly, O(1))`. Why now? The amplification lemma already proved on the\nSNARK side (`snark_soundness_amplification` via `Fintype.piFinset` cardinality) supplies\na reusable template; transplanting it from field-challenges to edge-challenges is a\ndirect, falsifiable next step that bridges `Cryptography` and the `Computation` domain.\n\n## 4. Multivariate Schwartz\u2013Zippel for true QAP/PLONK soundness\n\n`agreement_card_le_degree` is the univariate root bound. Real zk-SNARKs commit to\n*multivariate* low-degree polynomials, so the target is the `MvPolynomial`\nSchwartz\u2013Zippel bound: a nonzero `p : MvPolynomial (Fin m) F` of total degree `d`\nvanishes on at most a `d/|F|` fraction of `(Fin m \u2192 F)`, i.e.\n`(univ.filter (fun v => MvPolynomial.eval v p = 0)).card * |F| \u2264 d * |F|^m`.\n\nThe key insight is the standard induction on the number of variables: fixing all but\none variable yields a univariate polynomial whose leading coefficient is itself a\nlower-degree multivariate polynomial, so the univariate bound composes with the\ninductive hypothesis. Why now? Mathlib has `MvPolynomial.totalDegree` and the univariate\n`card_roots'` base case is exactly what this cycle proved; the only missing piece is the\ninductive `finSuccEquiv`/coefficient-extraction step, making this the highest-leverage\nextension toward formally sound succinct arguments.\n\n## 5. Fiat\u2013Shamir: from interactive HVZK to non-interactive zero-knowledge\n\nBoth proved systems are interactive (or public-coin). The Fiat\u2013Shamir transform replaces\nthe verifier's random challenge by a hash of the transcript, yielding a non-interactive\nproof. The target is a Lean model of a random-oracle `H : Transcript \u2192 Challenge` and a\ntheorem that soundness error transfers: if the interactive system has per-challenge\nsoundness `\u2264 \u03b5`, the Fiat\u2013Shamir-collapsed system has soundness `\u2264 Q\u00b7\u03b5` against a prover\nmaking `Q` oracle queries.\n\nThe key insight is that against a random oracle the hashed challenge is, conditioned on\nthe commitment, uniform and independent \u2014 so the single-round soundness bound applies to\neach of the prover's `Q` guesses and a union bound gives `Q\u00b7\u03b5`. Why now? With the\nsingle-round bounds `snark_soundness_prob` and `pcp_detection_prob` already formal, the\nrandom-oracle/union-bound layer is the cleanest remaining gap between this catalog's\ninteractive proofs and deployed non-interactive zk-SNARKs, and Mathlib's `PMF` plus\nfinite union-bound lemmas make the `Q\u00b7\u03b5` accounting fully formalizable.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1208",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6bb23550",
+    "status": "available",
+    "timestamp": "2026-06-10T11:40:08.962864+00:00",
+    "title": "This cycle delivered two self-contained, fully proved Lean files (no `sorry` on "
   },
   {
     "consumed_by_exp_id": "",
@@ -2952,7 +2996,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Belnap's FOUR\u2082 is the smallest non-trivial paraconsistent bilattice. A"
   },
   {
-    "consumed_by_exp_id": "13ee828e",
+    "consumed_by_exp_id": "",
     "description": "Cycle 720cb173 (Q=0.438) proved 910 theorems in Geometry but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Sphere packing on S^n (how many non-overlapping caps of radius r fit?) is a fundamental geometric problem with applications to error-correcting codes and signal processing. Use stereographic projectio",
     "domains": [
       "Geometry"
@@ -2961,7 +3005,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.48760083148790373,
     "research_mode": "team",
     "source_exp_id": "720cb173",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-09T04:08:17.171974+00:00",
     "title": "Close Proofs: Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geo"
   },
@@ -2980,7 +3024,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Proof Phase Transitions: Sharp Thresholds in Random Formal Theories"
   },
   {
-    "consumed_by_exp_id": "ab70c7a2",
+    "consumed_by_exp_id": "",
     "description": "Cycle 51f15183 (Q=0.427) proved 1477 theorems in Applications but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle 9ff1d7e2 (Q=0.426) proved 690 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The Hausdorff dimension i",
     "domains": [
       "Applications"
@@ -2989,7 +3033,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.4772544815928248,
     "research_mode": "team",
     "source_exp_id": "51f15183",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-09T08:53:32.555216+00:00",
     "title": "Close Proofs: Close Proofs: Fractal Topology: Hausdorff Dimension as a Topological I"
   },
@@ -3210,7 +3254,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0c7cf1ad",
     "description": "Prove that the tropical amoeba of a Laurent polynomial is the negative logarithm of its zero set. Show that the Ronkin function is convex and piecewise-linear on the amoeba complement. Connect tropical amoebas to tropical geometry via the Maslov dequantization.",
     "domains": [
       "Tropical",
@@ -3220,7 +3264,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.890305+00:00",
     "title": "Tropical Amoebas and Ronkin Functions"
   },
