@@ -248,7 +248,7 @@ sorry_count_9 = c9.count('sorry')
 print(f'  SatakeEMLBridge.lean: {len(c9)} bytes, sorry={sorry_count_9}')
 
 # 10. ResNetLipschitz.lean
-f10 = Path('../Catalog/MachineLearning/SelfImproving/ResNetLipschitz.lean')
+f10 = Path('../Catalog/MachineLearning/ResNetLipschitz.lean')
 assert f10.exists(), f'File should exist: {f10}'
 c10 = f10.read_text()
 key_thms10 = ['resnet_block_lipschitz', 'resnet_block_bounded', 'resnet_compose_two', 'bernoulli_resnet']
@@ -329,7 +329,7 @@ print(f'  TropicalSemiringHom.lean: {len(c17)} bytes, sorry={sorry_count_17}')
 print(f'  CarmichaelProof.lean has {sorry_count_7} sorry (deep open problem: composite n>10000)')
 
 # 18. LSEConvexity.lean (monotonicity and symmetry of LSE)
-f18 = Path('../Catalog/Tropical/NeuralNetworks/LSEConvexity.lean')
+f18 = Path('../Catalog/Tropical/LSEConvexity.lean')
 assert f18.exists(), f'File should exist: {f18}'
 c18 = f18.read_text()
 key_thms18 = ['logsumexp_mono_left', 'logsumexp_mono_right', 'logsumexp_symm', 'softMax_symm', 'logsumexp_gap_from_max', 'logsumexp_subadd', 'logsumexp_shift', 'tropical_max_superadd', 'weighted_logsumexp_upper', 'weighted_logsumexp_lower']
