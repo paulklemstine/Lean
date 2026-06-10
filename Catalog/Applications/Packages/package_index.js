@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "cb7c1dc0",
     "filename": "close_proofs_dream_logic_non_monotone_reasoning_wh.json",
     "pkg_num": 35,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4572079470198676,
     "title": "Anti-Mathematics: Systematic Negation of ZFC Axioms"
   },
   {
@@ -1039,8 +1039,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "close_proofs_dream_logic_non_monotone_reasoning_wh",
       "primary_domain": "EML",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4572079470198676,
+      "quality": "partial",
       "shape": "octahedron",
       "title": "Anti-Mathematics: Systematic Negation of ZFC Axioms"
     }
