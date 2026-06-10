@@ -5,7 +5,7 @@
   "authors": [
     "Stereographic Neural Attention Research Team"
   ],
-  "date": "2026-06-10T21:47:42Z",
+  "date": "2026-06-10T21:59:43Z",
   "key_results": [
     "The Cauchy attention kernel K(q,k)=1/(1+||q-k||^2) is strictly positive, at most 1, and equals 1 exactly on the diagonal q=k.",
     "The stereographic lift P(x)=(2/(1+||x||^2))x, H(x)=(||x||^2-1)/(||x||^2+1) lands exactly on the unit sphere: ||P(x)||^2+H(x)^2=1.",
