@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle (Harmonic)"
   ],
-  "date": "2026-06-10T21:52:57Z",
+  "date": "2026-06-10T22:01:47Z",
   "key_results": [
     "The categorical Fisher information form g_p(v,w) = sum_i v_i w_i / p_i is a genuine Riemannian metric: symmetric, bilinear, and positive-definite for strictly positive weights.",
     "The Pearson chi-squared divergence equals the Fisher quadratic form at the displacement: chi^2(p||q) = g_q(p-q, p-q).",
