@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle (Harmonic)"
   ],
-  "date": "2026-06-10T21:57:05Z",
+  "date": "2026-06-10T22:02:29Z",
   "key_results": [
     "Ground-state degeneracy law GSD(A,g)=d^g on a genus-g surface, with d=|A| anyon types.",
     "Structural laws: per-handle recursion GSD(g+1)=d*GSD(g), connected-sum multiplicativity GSD(g+h)=GSD(g)*GSD(h), torus value GSD(1)=d.",
