@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-10T19:16:42.627306+00:00",
+  "last_updated": "2026-06-10T19:28:31.895289+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -13804,6 +13804,45 @@
       "theorem_count": 410,
       "timestamp": "2026-06-10T19:16:42.471715+00:00",
       "title": "Close Proofs: Close Proofs: Dream Logic: Non-Monotone Reasoning Where Contradictions"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.4948,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 77,
+      "domain": "Novelty",
+      "duration_seconds": 2749.8043982982635,
+      "end_time": 1781119639.1638765,
+      "files_integrated": 0,
+      "job_id": "f2b46b34",
+      "outcome_quality": 0.4260742436595407,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v6",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v6",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.8,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7288,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.718,
+        "novelty": 0.9486,
+        "proof_depth": 0.6192,
+        "usefulness": 0.8096
+      },
+      "quality_score": 0.3912990401468267,
+      "sorry_count": 6,
+      "sorry_density": 0.007802340702210663,
+      "start_time": 1781116889.3594782,
+      "strategy_count": 0,
+      "theorem_count": 769,
+      "timestamp": "2026-06-10T19:28:31.660961+00:00",
+      "title": "Close Proofs: Close Proofs: This cycle built, from scratch, a small but complete for"
     }
   ]
 }
