@@ -193,7 +193,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hawking Radiation: Information Paradox Formalized"
   },
   {
-    "consumed_by_exp_id": "4471cf7c",
+    "consumed_by_exp_id": "",
     "description": "Prove that any quantum circuit can be approximated by braiding anyons. Formalize the Jones polynomial as a universal topological quantum invariant and prove density in SU(2).",
     "domains": [
       "Bridges",
@@ -203,7 +203,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.878854+00:00",
     "title": "Topological Quantum Computing: Braiding Universality"
   },
@@ -2959,7 +2959,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Inverse Stereographic Cryptography: Projection as One-Way Function"
   },
   {
-    "consumed_by_exp_id": "241100d4",
+    "consumed_by_exp_id": "",
     "description": "Replace softmax attention with stereographic attention: map query/key vectors to the Riemann sphere via stereographic projection, compute Cauchy kernel K(q,k) = 1/(1+|q-k|^2) on the sphere, and project back. Conjecture: Stereographic attention has O(sqrt(N)) sparsity (most Cauchy weights are near-zero) while maintaining the universal approximation properties of softmax attention. Test: prove the sparsity bound for random queries on the unit sphere. Impact: a new attention mechanism with built-in sparsity and geometric structure.",
     "domains": [
       "Geometry",
@@ -2969,7 +2969,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.906315+00:00",
     "title": "Stereographic Neural Attention: Attention via Riemann Sphere"
   },
@@ -3506,7 +3506,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
   },
   {
-    "consumed_by_exp_id": "ec9ae728",
+    "consumed_by_exp_id": "",
     "description": "Prove that the Fisher information metric on a statistical manifold satisfies the axioms of a Riemannian metric. Construct explicit connections between the Fisher metric and the Kullback-Leibler divergence. Bridge statistical inference to differential geometry.",
     "domains": [
       "Bridges",
@@ -3516,7 +3516,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:29.281925+00:00",
     "title": "Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
   },
@@ -3656,7 +3656,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reversible Computing and Thermodynamic Efficiency"
   },
   {
-    "consumed_by_exp_id": "2638f844",
+    "consumed_by_exp_id": "",
     "description": "Formalize Tononi's Integrated Information Theory (IIT) using tensor network states. Conjecture: The integrated information Phi of a tensor network state equals the minimal quantum mutual information across any bipartition. Test: compute Phi for MPS (matrix product states) with bond dimension 2 and verify it matches the Schmidt rank. Impact: connects consciousness theory to quantum information and tensor categories.",
     "domains": [
       "Physics",
@@ -3666,7 +3666,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.423474+00:00",
     "title": "Integrated Information via Tensor Networks"
   },
@@ -3716,7 +3716,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Entanglement Monogamy: CKW Inequality"
   },
   {
-    "consumed_by_exp_id": "5d66afc2",
+    "consumed_by_exp_id": "",
     "description": "Prove that the k-Local Hamiltonian Problem is QMA-complete for k >= 2. Formalize the Kitaev reduction from quantum circuit satisfiability to the local Hamiltonian problem. Analyze the promise gap and its effect on complexity.",
     "domains": [
       "Computation",
@@ -3726,7 +3726,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:31.381522+00:00",
     "title": "Quantum Hamiltonian Complexity: QMA-Completeness of the Local Hamiltonian Problem"
   },
@@ -3806,7 +3806,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory as Foundations"
   },
   {
-    "consumed_by_exp_id": "9738390e",
+    "consumed_by_exp_id": "",
     "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
     "domains": [
       "Physics",
@@ -3816,7 +3816,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.651923+00:00",
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
