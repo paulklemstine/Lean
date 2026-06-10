@@ -30,7 +30,7 @@ window.PACKAGE_INDEX = [
     "filename": "information_geometric_bridge_fisher_metric_on_stat.json",
     "pkg_num": 57,
     "quality": "partial",
-    "quality_score": 0.5968899999999999,
+    "quality_score": 0.4768899999999999,
     "title": "Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
   },
   {
@@ -40,7 +40,7 @@ window.PACKAGE_INDEX = [
     "filename": "quantum_hamiltonian_complexity_qma_completeness_of.json",
     "pkg_num": 56,
     "quality": "partial",
-    "quality_score": 0.46065083333333334,
+    "quality_score": 0.3896,
     "title": "Quantum Hamiltonian Complexity: The Energy Algebra Behind QMA-Completeness of the Local Hamiltonian Problem"
   },
   {
@@ -50,7 +50,7 @@ window.PACKAGE_INDEX = [
     "filename": "chaos_and_the_three_body_problem_lyapunov_exponent.json",
     "pkg_num": 55,
     "quality": "partial",
-    "quality_score": 0.37760835555555555,
+    "quality_score": 0.29760835555555554,
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
@@ -60,7 +60,7 @@ window.PACKAGE_INDEX = [
     "filename": "stereographic_neural_attention_attention_via_riema.json",
     "pkg_num": 54,
     "quality": "partial",
-    "quality_score": 0.4174156535885168,
+    "quality_score": 0.3374156535885168,
     "title": "Stereographic Neural Attention: Attention via the Riemann Sphere"
   },
   {
@@ -1701,7 +1701,7 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "stereographic_neural_attention_attention_via_riema",
       "primary_domain": "MachineLearning",
-      "priority_score": 0.4174156535885168,
+      "priority_score": 0.3374156535885168,
       "quality": "partial",
       "shape": "sphere_rings",
       "title": "Stereographic Neural Attention: Attention via the Riemann Sphere"
@@ -1712,7 +1712,7 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "chaos_and_the_three_body_problem_lyapunov_exponent",
       "primary_domain": "Physics",
-      "priority_score": 0.37760835555555555,
+      "priority_score": 0.29760835555555554,
       "quality": "partial",
       "shape": "diamond",
       "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
@@ -1723,7 +1723,7 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "quantum_hamiltonian_complexity_qma_completeness_of",
       "primary_domain": "Bridges",
-      "priority_score": 0.46065083333333334,
+      "priority_score": 0.3896,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Quantum Hamiltonian Complexity: The Energy Algebra Behind QMA-Completeness of the Local Hamiltonian Problem"
@@ -1734,7 +1734,7 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "information_geometric_bridge_fisher_metric_on_stat",
       "primary_domain": "Bridges",
-      "priority_score": 0.5968899999999999,
+      "priority_score": 0.4768899999999999,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
