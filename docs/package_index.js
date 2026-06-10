@@ -4,11 +4,41 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-10T16:03:00Z",
+    "domain": "Applications",
+    "exp_id": "0866bc70",
+    "filename": "close_proofs_poincar_conjecture_revisited_4d_smoot.json",
+    "pkg_num": 47,
+    "quality": "partial",
+    "quality_score": 0.6420416858237549,
+    "title": "Close Proofs: Poincar\u00e9 Conjecture Revisited \u2014 Intersection Forms and the Donaldson Obstruction (Smooth 4D)"
+  },
+  {
+    "date": "2026-06-10T16:02:06Z",
+    "domain": "Novelty",
+    "exp_id": "849e27bd",
+    "filename": "close_proofs_cryptographic_hash_functions_collisio.json",
+    "pkg_num": 46,
+    "quality": "partial",
+    "quality_score": 0.47216,
+    "title": "Close Proofs: Collision-Resistant Hashing from Merkle-Damgard"
+  },
+  {
+    "date": "2026-06-10T16:01:35Z",
+    "domain": "Bridges",
+    "exp_id": "4301a51e",
+    "filename": "close_proofs_dream_logic_non_monotone_reasoning_wh.json",
+    "pkg_num": 45,
+    "quality": "partial",
+    "quality_score": 0.6259713779527559,
+    "title": "Arrow Depth Is Insufficient: A Width-Depth Theory of Semantic State Complexity for Simple Types"
+  },
+  {
     "date": "2026-06-10T15:26:14Z",
     "domain": "Novelty",
     "exp_id": "110d7684",
     "filename": "bridge_tropical_geometry_as_a_limit_of_classical_a.json",
-    "pkg_num": 45,
+    "pkg_num": 44,
     "quality": "partial",
     "quality_score": 0.466330888618381,
     "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
@@ -18,7 +48,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "51a00311",
     "filename": "tropical_differential_equations_power_series_solut.json",
-    "pkg_num": 44,
+    "pkg_num": 43,
     "quality": "partial",
     "quality_score": 0.6597028571428571,
     "title": "Tropical Differential Equations: Power Series Solutions"
@@ -28,7 +58,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "8e8b7fb9",
     "filename": "biological_topology_protein_folding_as_persistent_.json",
-    "pkg_num": 43,
+    "pkg_num": 42,
     "quality": "partial",
     "quality_score": 0.6368867100977198,
     "title": "Biological Topology: Protein Folding as Persistent-Homology Optimization"
@@ -38,7 +68,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "24c7b7e9",
     "filename": "ml_universal_approximation_width_vs_depth_trade_of.json",
-    "pkg_num": 42,
+    "pkg_num": 41,
     "quality": "partial",
     "quality_score": 0.5460879746835443,
     "title": "ML Universal Approximation: Width vs Depth Trade-offs"
@@ -48,7 +78,7 @@ window.PACKAGE_INDEX = [
     "domain": "Geometry",
     "exp_id": "b676b19c",
     "filename": "deepening_quasi_symmetric_maps_generalize_bi_lipsc.json",
-    "pkg_num": 41,
+    "pkg_num": 40,
     "quality": "partial",
     "quality_score": 0.6667314285714285,
     "title": "Composition Calculus for Set-Local Distortion of Hausdorff Dimension"
@@ -58,7 +88,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "0c7cf1ad",
     "filename": "tropical_amoebas_and_ronkin_functions.json",
-    "pkg_num": 40,
+    "pkg_num": 39,
     "quality": "partial",
     "quality_score": 0.4454591482599714,
     "title": "Tropical Amoebas and Ronkin Functions"
@@ -68,7 +98,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "13ee828e",
     "filename": "close_proofs_stereographic_capacity_theory_packing.json",
-    "pkg_num": 39,
+    "pkg_num": 38,
     "quality": "partial",
     "quality_score": 0.4688,
     "title": "Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry"
@@ -78,7 +108,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "3766d88d",
     "filename": "consciousness_as_integrated_information_mathematic.json",
-    "pkg_num": 38,
+    "pkg_num": 37,
     "quality": "partial",
     "quality_score": 0.44479402985074634,
     "title": "Consciousness as Integrated Information: Mathematical Foundations"
@@ -88,7 +118,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "f5f2f195",
     "filename": "formalize_the_paley_construction_for_any_prime_pow.json",
-    "pkg_num": 37,
+    "pkg_num": 36,
     "quality": "partial",
     "quality_score": 0.5432,
     "title": "Skew Conference Matrices and the Order-Preserving Core of the Paley I Construction"
@@ -98,20 +128,10 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "7007fa32",
     "filename": "quasi_symmetric_maps_generalize_bi_lipschitz_maps_.json",
-    "pkg_num": 36,
+    "pkg_num": 35,
     "quality": "substantial",
     "quality_score": 0.75224,
     "title": "Set-Local Distortion of Hausdorff Dimension"
-  },
-  {
-    "date": "2026-06-10T10:51:54Z",
-    "domain": "EML",
-    "exp_id": "cb7c1dc0",
-    "filename": "close_proofs_dream_logic_non_monotone_reasoning_wh.json",
-    "pkg_num": 35,
-    "quality": "partial",
-    "quality_score": 0.4572079470198676,
-    "title": "Anti-Mathematics: Systematic Negation of ZFC Axioms"
   },
   {
     "date": "2026-06-10T10:50:35Z",
@@ -528,13 +548,29 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Diagonal Obstruction Calculus for Sums of Powers"
   },
+  "close_proofs_cryptographic_hash_functions_collisio.json": {
+    "domain": "Novelty",
+    "exp_id": "849e27bd",
+    "source_exp_ids": [
+      "0c7bdbdf"
+    ],
+    "title": "Close Proofs: Collision-Resistant Hashing from Merkle-Damgard"
+  },
   "close_proofs_dream_logic_non_monotone_reasoning_wh.json": {
-    "domain": "EML",
-    "exp_id": "cb7c1dc0",
+    "domain": "Bridges",
+    "exp_id": "4301a51e",
     "source_exp_ids": [
       "362ed1b3"
     ],
-    "title": "Anti-Mathematics: Systematic Negation of ZFC Axioms"
+    "title": "Arrow Depth Is Insufficient: A Width-Depth Theory of Semantic State Complexity for Simple Types"
+  },
+  "close_proofs_poincar_conjecture_revisited_4d_smoot.json": {
+    "domain": "Applications",
+    "exp_id": "0866bc70",
+    "source_exp_ids": [
+      "e654db2b"
+    ],
+    "title": "Close Proofs: Poincar\u00e9 Conjecture Revisited \u2014 Intersection Forms and the Donaldson Obstruction (Smooth 4D)"
   },
   "close_proofs_stereographic_capacity_theory_packing.json": {
     "domain": "Applications",
@@ -824,6 +860,13 @@ window.PACKAGE_GRAPH = {
   "domain_bridges": [],
   "edges": [
     {
+      "label": "Direction 1: Constructive Collision Extraction",
+      "source": "cryptographic_hash_functions_collision_resistance_",
+      "strength": 1.0,
+      "target": "close_proofs_cryptographic_hash_functions_collisio",
+      "type": "provenance"
+    },
+    {
       "label": "inspired by",
       "source": "dream_logic_non_monotone_reasoning_where_contradic",
       "strength": 1.0,
@@ -860,7 +903,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Novelty",
-      "hue": 134,
+      "hue": 271,
       "id": "rigorous_algebraic_foundations_for_probability_t",
       "primary_domain": "Bridges",
       "priority_score": 0.66968,
@@ -871,7 +914,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Applications",
-      "hue": 91,
+      "hue": 272,
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
       "primary_domain": "Bridges",
       "priority_score": 0.16743922555663115,
@@ -882,7 +925,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08T19:03:25Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 89,
       "id": "transreal_arithmetic_computing_beyond_plus_minus_i",
       "primary_domain": "Bridges",
       "priority_score": 0.62584,
@@ -893,7 +936,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 90,
       "id": "arithmetic_mirror_symmetry_for_calabi_yau",
       "primary_domain": "Bridges",
       "priority_score": 0.37070314951345035,
@@ -915,7 +958,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 272,
       "id": "dream_logic_non_monotone_reasoning_where_contradic",
       "primary_domain": "Bridges",
       "priority_score": 0.3800936166615896,
@@ -926,7 +969,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 270,
       "id": "entropy_bounded_computation_ebc_framew",
       "primary_domain": "Bridges",
       "priority_score": 0.4813003957285953,
@@ -937,7 +980,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Computation",
-      "hue": 90,
+      "hue": 270,
       "id": "impossible_geometries_where_parallel_lines_converg",
       "primary_domain": "Computation",
       "priority_score": 0.47002089837753586,
@@ -948,7 +991,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 272,
+      "hue": 270,
       "id": "p_vs_np_problem",
       "primary_domain": "Bridges",
       "priority_score": 0.36869585004880756,
@@ -970,7 +1013,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 292,
+      "hue": 270,
       "id": "the_current_framework_models_theories_by_their_set",
       "primary_domain": "Bridges",
       "priority_score": 0.38829994947581153,
@@ -981,7 +1024,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Algebra",
-      "hue": 275,
+      "hue": 92,
       "id": "the_current_zaslavsky_type_bound_proves__kd_cnk__n",
       "primary_domain": "Algebra",
       "priority_score": 0.36429437889326377,
@@ -992,7 +1035,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Pythagorean",
-      "hue": 90,
+      "hue": 270,
       "id": "this_document_describes_five_research_conjectures_",
       "primary_domain": "Pythagorean",
       "priority_score": 0.36626310656657907,
@@ -1014,7 +1057,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T15:03:34Z",
       "domain": "Logic",
-      "hue": 90,
+      "hue": 91,
       "id": "proof_complexity_collapse_pnp_via_proof_checking",
       "primary_domain": "Logic",
       "priority_score": 0.3659193317335953,
@@ -1025,7 +1068,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T15:45:33Z",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 90,
       "id": "tropical_compactification_of_moduli_spaces",
       "primary_domain": "Bridges",
       "priority_score": 0.3627455631900639,
@@ -1036,7 +1079,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T15:47:22Z",
       "domain": "Novelty",
-      "hue": 95,
+      "hue": 272,
       "id": "logic_physics_bridge_consistency_of_physical_theor",
       "primary_domain": "Bridges",
       "priority_score": 0.3852481001709541,
@@ -1047,7 +1090,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T15:49:32Z",
       "domain": "Computation",
-      "hue": 272,
+      "hue": 92,
       "id": "rigorous_formal_foundations_for_the_collatz_conj",
       "primary_domain": "Computation",
       "priority_score": 0.37138729946524063,
@@ -1058,7 +1101,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T17:01:57Z",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 270,
       "id": "formal_obstruction_theory_for_eml_solvability_of_l",
       "primary_domain": "Bridges",
       "priority_score": 0.38646674999999997,
@@ -1069,7 +1112,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T18:34:57Z",
       "domain": "MachineLearning",
-      "hue": 91,
+      "hue": 359,
       "id": "formalized_bridge_between_relu_neural_network_deci",
       "primary_domain": "MachineLearning",
       "priority_score": 0.45138134445121236,
@@ -1080,7 +1123,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T18:38:15Z",
       "domain": "Geometry",
-      "hue": 92,
+      "hue": 90,
       "id": "belnaps_four_is_the_smallest_non_trivial_paraconsi",
       "primary_domain": "Geometry",
       "priority_score": 0.4429310119047619,
@@ -1091,7 +1134,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T19:54:52Z",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 95,
       "id": "cryptographic_hash_functions_collision_resistance_",
       "primary_domain": "Bridges",
       "priority_score": 0.3790869106263195,
@@ -1102,7 +1145,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T19:56:17Z",
       "domain": "Bridges",
-      "hue": 91,
+      "hue": 92,
       "id": "learning_with_errors_hardness_reductions",
       "primary_domain": "Bridges",
       "priority_score": 0.36850115677321155,
@@ -1113,7 +1156,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T19:57:39Z",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 270,
       "id": "diffusion_models_as_stochastic_differential_equati",
       "primary_domain": "Bridges",
       "priority_score": 0.397392211299052,
@@ -1124,7 +1167,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T20:36:49Z",
       "domain": "Bridges",
-      "hue": 275,
+      "hue": 91,
       "id": "the_exponential_decay_bound_diffusionalphabar_exp_",
       "primary_domain": "Bridges",
       "priority_score": 0.3512538461538462,
@@ -1146,7 +1189,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T07:42:02Z",
       "domain": "Computation",
-      "hue": 90,
+      "hue": 270,
       "id": "integrated_information_via_tensor_networks",
       "primary_domain": "Computation",
       "priority_score": 0.52264,
@@ -1157,7 +1200,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T07:42:32Z",
       "domain": "Novelty",
-      "hue": 91,
+      "hue": 90,
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
       "primary_domain": "Bridges",
       "priority_score": 0.4771938461538462,
@@ -1179,7 +1222,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T07:46:48Z",
       "domain": "Pythagorean",
-      "hue": 270,
+      "hue": 90,
       "id": "close_proofs_close_proofs_tropical_compactificatio",
       "primary_domain": "Pythagorean",
       "priority_score": 0.44479402985074634,
@@ -1190,7 +1233,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T09:30:42Z",
       "domain": "Algebra",
-      "hue": 101,
+      "hue": 90,
       "id": "algebraic_statistics_markov_bases_for_contingency_",
       "primary_domain": "Algebra",
       "priority_score": 0.5663674620390456,
@@ -1201,7 +1244,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T10:47:26Z",
       "domain": "Bridges",
-      "hue": 272,
+      "hue": 270,
       "id": "the_ebc_framework_now_spans_three_files_with_0_sor",
       "primary_domain": "Bridges",
       "priority_score": 0.4617939212432683,
@@ -1212,24 +1255,13 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T10:50:35Z",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 91,
       "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
       "primary_domain": "Bridges",
       "priority_score": 0.7368,
       "quality": "substantial",
       "shape": "icosahedron",
       "title": "Bridge: Model Theory and Algebra \u2014 Ax-Kochen-Ershov Transfer and Morley Categoricity"
-    },
-    {
-      "date": "2026-06-10T10:51:54Z",
-      "domain": "EML",
-      "hue": 90,
-      "id": "close_proofs_dream_logic_non_monotone_reasoning_wh",
-      "primary_domain": "EML",
-      "priority_score": 0.4572079470198676,
-      "quality": "partial",
-      "shape": "octahedron",
-      "title": "Anti-Mathematics: Systematic Negation of ZFC Axioms"
     },
     {
       "date": "2026-06-10T11:38:41Z",
@@ -1245,7 +1277,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T12:15:22Z",
       "domain": "Novelty",
-      "hue": 275,
+      "hue": 100,
       "id": "formalize_the_paley_construction_for_any_prime_pow",
       "primary_domain": "Bridges",
       "priority_score": 0.5432,
@@ -1256,7 +1288,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T12:15:50Z",
       "domain": "Applications",
-      "hue": 92,
+      "hue": 292,
       "id": "consciousness_as_integrated_information_mathematic",
       "primary_domain": "Bridges",
       "priority_score": 0.44479402985074634,
@@ -1267,7 +1299,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T12:52:58Z",
       "domain": "Applications",
-      "hue": 95,
+      "hue": 90,
       "id": "close_proofs_stereographic_capacity_theory_packing",
       "primary_domain": "Bridges",
       "priority_score": 0.4688,
@@ -1278,7 +1310,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T12:53:23Z",
       "domain": "Novelty",
-      "hue": 91,
+      "hue": 280,
       "id": "tropical_amoebas_and_ronkin_functions",
       "primary_domain": "Bridges",
       "priority_score": 0.4454591482599714,
@@ -1289,7 +1321,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T12:53:46Z",
       "domain": "Geometry",
-      "hue": 91,
+      "hue": 359,
       "id": "deepening_quasi_symmetric_maps_generalize_bi_lipsc",
       "primary_domain": "Geometry",
       "priority_score": 0.6667314285714285,
@@ -1300,7 +1332,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T14:07:05Z",
       "domain": "Applications",
-      "hue": 92,
+      "hue": 90,
       "id": "ml_universal_approximation_width_vs_depth_trade_of",
       "primary_domain": "Bridges",
       "priority_score": 0.5460879746835443,
@@ -1311,7 +1343,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T14:07:33Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 271,
       "id": "biological_topology_protein_folding_as_persistent_",
       "primary_domain": "Bridges",
       "priority_score": 0.6368867100977198,
@@ -1322,7 +1354,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T14:08:26Z",
       "domain": "Novelty",
-      "hue": 95,
+      "hue": 92,
       "id": "tropical_differential_equations_power_series_solut",
       "primary_domain": "Bridges",
       "priority_score": 0.6597028571428571,
@@ -1333,13 +1365,46 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T15:26:14Z",
       "domain": "Novelty",
-      "hue": 281,
+      "hue": 271,
       "id": "bridge_tropical_geometry_as_a_limit_of_classical_a",
       "primary_domain": "Bridges",
       "priority_score": 0.466330888618381,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
+    },
+    {
+      "date": "2026-06-10T16:01:35Z",
+      "domain": "Bridges",
+      "hue": 270,
+      "id": "close_proofs_dream_logic_non_monotone_reasoning_wh",
+      "primary_domain": "Bridges",
+      "priority_score": 0.6259713779527559,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "Arrow Depth Is Insufficient: A Width-Depth Theory of Semantic State Complexity for Simple Types"
+    },
+    {
+      "date": "2026-06-10T16:02:06Z",
+      "domain": "Novelty",
+      "hue": 271,
+      "id": "close_proofs_cryptographic_hash_functions_collisio",
+      "primary_domain": "Bridges",
+      "priority_score": 0.47216,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "Close Proofs: Collision-Resistant Hashing from Merkle-Damgard"
+    },
+    {
+      "date": "2026-06-10T16:03:00Z",
+      "domain": "Applications",
+      "hue": 90,
+      "id": "close_proofs_poincar_conjecture_revisited_4d_smoot",
+      "primary_domain": "Bridges",
+      "priority_score": 0.6420416858237549,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "Close Proofs: Poincar\u00e9 Conjecture Revisited \u2014 Intersection Forms and the Donaldson Obstruction (Smooth 4D)"
     }
   ]
 };

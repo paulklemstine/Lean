@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0866bc70",
     "filename": "close_proofs_poincar_conjecture_revisited_4d_smoot.json",
     "pkg_num": 47,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6420416858237549,
     "title": "Close Proofs: Poincar\u00e9 Conjecture Revisited \u2014 Intersection Forms and the Donaldson Obstruction (Smooth 4D)"
   },
   {
@@ -1401,8 +1401,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "close_proofs_poincar_conjecture_revisited_4d_smoot",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6420416858237549,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Close Proofs: Poincar\u00e9 Conjecture Revisited \u2014 Intersection Forms and the Donaldson Obstruction (Smooth 4D)"
     }
