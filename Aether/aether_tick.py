@@ -874,6 +874,158 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
     _print_quality_metrics(extractor)
 
 
+def resolve_jsonl_conflict(file_path: Path) -> bool:
+    import json
+    import re
+    from datetime import datetime
+    try:
+        content = file_path.read_text(encoding="utf-8", errors="replace")
+        if "<<<<<<<" not in content:
+            return True
+        
+        ours_lines = []
+        theirs_lines = []
+        in_conflict = False
+        in_theirs = False
+        
+        for line in content.splitlines():
+            if line.startswith("<<<<<<<"):
+                in_conflict = True
+                in_theirs = False
+            elif line.startswith("======="):
+                in_theirs = True
+            elif line.startswith(">>>>>>>"):
+                in_conflict = False
+                in_theirs = False
+            else:
+                if in_conflict:
+                    if in_theirs:
+                        theirs_lines.append(line)
+                    else:
+                        ours_lines.append(line)
+                else:
+                    ours_lines.append(line)
+                    theirs_lines.append(line)
+        
+        def parse_lines(lines):
+            parsed = []
+            for l in lines:
+                l = l.strip()
+                if not l:
+                    continue
+                try:
+                    parsed.append(json.loads(l))
+                except Exception:
+                    pass
+            return parsed
+
+        ours_json = parse_lines(ours_lines)
+        theirs_json = parse_lines(theirs_lines)
+        
+        merged = {}
+        for item in ours_json + theirs_json:
+            key = item.get("experiment_id") or item.get("exp_id") or item.get("timestamp") or str(item)
+            merged[key] = item
+            
+        def get_timestamp(item):
+            t = item.get("timestamp")
+            if isinstance(t, (int, float)):
+                return t
+            if isinstance(t, str):
+                try:
+                    return datetime.fromisoformat(t.replace("Z", "+00:00")).timestamp()
+                except Exception:
+                    pass
+            return 0
+            
+        sorted_items = sorted(merged.values(), key=get_timestamp)
+        
+        file_path.write_text("\n".join(json.dumps(item) for item in sorted_items) + "\n", encoding="utf-8")
+        print(f"[GitResolve] Resolved JSONL conflict for {file_path.name}")
+        return True
+    except Exception as e:
+        print(f"[GitResolve] Failed to resolve JSONL conflict for {file_path}: {e}")
+        return False
+
+
+def resolve_lean_conflict(file_path: Path) -> bool:
+    import re
+    try:
+        content = file_path.read_text(encoding="utf-8", errors="replace")
+        if "<<<<<<<" not in content:
+            return True
+            
+        pattern = re.compile(r"<<<<<<<[^\n]*\n(.*?)\n=======\n(.*?)\n>>>>>>>[^\n]*", re.DOTALL)
+        
+        def replace_block(match):
+            ours = match.group(1)
+            theirs = match.group(2)
+            
+            ours_sorries = ours.count("sorry")
+            theirs_sorries = theirs.count("sorry")
+            
+            if theirs_sorries < ours_sorries:
+                return theirs
+            elif ours_sorries < theirs_sorries:
+                return ours
+            else:
+                return theirs if len(theirs) >= len(ours) else ours
+                
+        new_content = pattern.sub(replace_block, content)
+        file_path.write_text(new_content, encoding="utf-8")
+        print(f"[GitResolve] Resolved Lean conflict for {file_path.name} (sorry-minimization)")
+        return True
+    except Exception as e:
+        print(f"[GitResolve] Failed to resolve Lean conflict for {file_path}: {e}")
+        return False
+
+
+def resolve_all_conflicts() -> bool:
+    """Identify and programmatically resolve all conflicts in the workspace."""
+    # Find all conflicted files via git status
+    result = subprocess.run(
+        ["git", "status", "--porcelain"],
+        cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
+    )
+    if result.returncode != 0:
+        return False
+        
+    resolved_any = False
+    for line in result.stdout.splitlines():
+        if line.startswith("UU ") or line.startswith("AA ") or line.startswith("UD ") or line.startswith("DU ") or line.startswith("AU ") or line.startswith("UA "):
+            path_str = line[3:].strip().strip('"')
+            file_path = REPO_ROOT / path_str
+            if not file_path.exists():
+                continue
+                
+            success = False
+            if file_path.suffix == ".jsonl" or file_path.name == "future_directions.json":
+                success = resolve_jsonl_conflict(file_path)
+            elif file_path.suffix == ".lean" and file_path.name != "Main.lean":
+                success = resolve_lean_conflict(file_path)
+            elif file_path.name == "Main.lean":
+                try:
+                    file_path.write_text("/- Empty Catalog -/\n", encoding="utf-8")
+                    success = True
+                except Exception:
+                    pass
+            else:
+                r = subprocess.run(
+                    ["git", "checkout", "--ours", path_str],
+                    cwd=str(REPO_ROOT), capture_output=True, timeout=10
+                )
+                success = r.returncode == 0
+                
+            if success:
+                subprocess.run(
+                    ["git", "add", path_str],
+                    cwd=str(REPO_ROOT), capture_output=True, timeout=10
+                )
+                resolved_any = True
+                
+    return resolved_any
+
+
 def rebuild_commit_push() -> bool:
     """Rebuild website index, sync to docs/, commit all changes, and push to git.
     Returns True if anything was pushed.
@@ -1048,62 +1200,22 @@ def rebuild_commit_push() -> bool:
             cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
         )
         if stash_result.returncode != 0:
-            # Stash pop conflict — stage everything and commit
-            print("[Tick] Stash pop conflict — auto-resolving")
+            print("[Tick] Stash pop conflict — auto-resolving programmatically")
+            has_conflicts = _has_conflict_markers()
+            if has_conflicts:
+                resolve_all_conflicts()
+                _regenerate_index_if_needed()
             subprocess.run(["git", "add", "-A"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
-            # If there are real merge conflicts in tracked files, take ours
-            if _has_conflict_markers():
-                subprocess.run(["git", "checkout", "--ours", "."],
-                               cwd=str(REPO_ROOT), capture_output=True, timeout=30)
-                subprocess.run(["git", "add", "-A"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
             subprocess.run(
                 ["git", "-c", "core.editor=true", "commit", "--no-edit", "-m", "Auto-resolve stash conflict"],
                 cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
             )
         if pull.returncode != 0:
-            # Check if the conflict is on auto-generated files we can fix
+            print("[Tick] Pull conflict detected — running programmatic resolvers")
             if _has_conflict_markers():
-                # Regenerate auto-generated files to resolve conflicts
+                resolve_all_conflicts()
                 _regenerate_index_if_needed()
-                # Also resolve workspace future_directions.json if conflicted
-                ws_fd = REPO_ROOT / "Aether" / ".aether_workspace" / "future_directions.json"
-                if ws_fd.exists():
-                    content = ws_fd.read_text(errors="ignore")
-                    if "<<<<<<" in content or ">>>>>>" in content:
-                        # Take our version (local) for the workspace file
-                        subprocess.run(
-                            ["git", "checkout", "--ours", str(ws_fd)],
-                            cwd=str(REPO_ROOT), capture_output=True, timeout=10
-                        )
-                        subprocess.run(["git", "add", str(ws_fd)],
-                                       cwd=str(REPO_ROOT), capture_output=True, timeout=10)
-                # Stage all auto-generated resolved files
-                auto_gen_files = [
-                    "Catalog/Applications/Packages/package_index.js",
-                    "Catalog/Applications/Packages/future_directions.js",
-                    "Catalog/Applications/Packages/future_directions.json",
-                    "Catalog/Applications/Packages/future_directions_snapshot.json",
-                    "docs/package_index.js",
-                    "docs/future_directions.js",
-                    "docs/future_directions.json",
-                    "docs/future_directions_snapshot.json",
-                ]
-                # For any remaining conflicted auto-gen files, take ours
-                for f in auto_gen_files:
-                    fp = REPO_ROOT / f
-                    if fp.exists():
-                        content = fp.read_text(errors="ignore")
-                        if "<<<<<<" in content or ">>>>>>" in content:
-                            subprocess.run(
-                                ["git", "checkout", "--ours", f],
-                                cwd=str(REPO_ROOT), capture_output=True, timeout=10
-                            )
-                # Stage all changes and complete the merge
-                subprocess.run(
-                    ["git", "add"] + auto_gen_files + [str(ws_fd)],
-                    cwd=str(REPO_ROOT), capture_output=True, timeout=30
-                )
-                # Complete the merge commit
+                subprocess.run(["git", "add", "-A"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
                 merge_result = subprocess.run(
                     ["git", "-c", "core.editor=true", "commit", "--no-edit"],
                     cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
@@ -1112,7 +1224,7 @@ def rebuild_commit_push() -> bool:
                     print(f"[Tick] Merge commit failed: {merge_result.stderr}")
                     subprocess.run(["git", "merge", "--abort"], cwd=str(REPO_ROOT), capture_output=True)
                     return False
-                print("[Tick] Merge conflicts on auto-generated files resolved")
+                print("[Tick] Pull merge conflicts resolved successfully")
             else:
                 subprocess.run(["git", "merge", "--abort"], cwd=str(REPO_ROOT), capture_output=True)
                 print(f"[Tick] git pull failed (non-auto-resolvable): {pull.stderr}")

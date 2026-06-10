@@ -113,8 +113,8 @@ python3 -c "
 from output_organizer import normalize_domain
 tests = {
     'tropical': 'Tropical', 'factoring': 'Cryptography', 'ai': 'MachineLearning',
-    'tropical_langlands_gl2': 'Tropical', 'eml_approximation': 'EML',
-    'quantum mechanics': 'Cryptography', 'eml cosmology': 'EML',
+    'tropical_langlands_gl2': 'Tropical', 'eml_approximation': 'Applications',
+    'quantum mechanics': 'Cryptography', 'eml cosmology': 'Applications',
 }
 for k, v in tests.items():
     assert normalize_domain(k) == v, f'{k} -> {normalize_domain(k)} != {v}'

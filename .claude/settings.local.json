@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__serena__write_memory",
+      "Bash(ls -d /home/raver1975/lean/Catalog/*/)",
+      "mcp__plugin_context-mode_context-mode__execute_file",
+      "mcp__plugin_context-mode_context-mode__execute",
+      "mcp__plugin_context-mode_context-mode__batch_execute",
+      "Bash(find /home/raver1975/lean/Catalog -name \"*.lean\" -exec dirname {} \\\\;)",
+      "Bash(find /home/raver1975/lean/Catalog -name \"*.py\" -exec dirname {} \\\\;)",
+      "Bash(grep -v \":0$\")",
+      "Bash(awk -F: '{sum+=$2} END {print sum}')",
+      "Bash(awk -F: '{s+=$2} END {print s}')",
+      "Bash(find /home/raver1975/lean/Catalog -name \"*.lean\" -exec wc -l {} \\\\;)",
+      "Bash(awk '{sum+=$1; count++} END {print \"Total lines:\", sum, \"Files:\", count, \"Avg lines:\", sum/count}')",
+      "Bash(grep -rn \"by$\\\\|:= by\\\\|by$\\\\|by$\\\\|:= by$\" /home/raver1975/lean/Catalog/Algebra/Foundations/AlgebraicStructures.lean)",
+      "Bash(find /home/raver1975/lean/Catalog -name \"*.lean\" -path \"*/Bridges/*\" -exec basename {} \\\\;)",
+      "Bash(pip3 --version)",
+      "Bash(grep -rn '^/-- *)",
+      "Bash(python3 tools/extract_catalog.py --source /home/raver1975/lean/Catalog --output tools/output/catalog.json --verbose)",
+      "Bash(python3 -c ' *)",
+      "Bash(python3 tools/build_catalog.py --db tools/output/catalog.json --output /home/raver1975/lean/CatalogBuild --shared-threshold 5 --verbose)",
+      "Bash(python3 *)"
+    ]
+  }
+}

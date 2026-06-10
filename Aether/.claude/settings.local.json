@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__serena__check_onboarding_performed",
+      "mcp__serena__get_symbols_overview",
+      "mcp__plugin_context-mode_context-mode__execute_file",
+      "mcp__plugin_context-mode_context-mode__execute",
+      "mcp__serena__list_memories",
+      "mcp__serena__find_symbol",
+      "mcp__serena__initial_instructions",
+      "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); print\\(f'Total jobs: {len\\(data\\)}'\\); [print\\(f' {j.get\\(\\\\\"concept_title\\\\\",\\\\\"?\\\\\"\\)[:60]} [{j.get\\(\\\\\"status\\\\\",\\\\\"?\\\\\"\\)}]'\\) for j in data[-10:]]\")",
+      "Bash(python3 *)",
+      "mcp__serena__read_memory",
+      "Bash(python -c \"import ast; ast.parse\\(open\\('pi_agent_client.py'\\).read\\(\\)\\); print\\('pi_agent_client.py: OK'\\)\")",
+      "Bash(python -c \"import ast; ast.parse\\(open\\('daemon.py'\\).read\\(\\)\\); print\\('daemon.py: OK'\\)\")",
+      "Bash(python -c \"import ast; ast.parse\\(open\\('engine.py'\\).read\\(\\)\\); print\\('engine.py: OK'\\)\")",
+      "Bash(python -c \"import ast; ast.parse\\(open\\('pi_orchestrator.py'\\).read\\(\\)\\); print\\('pi_orchestrator.py: OK'\\)\")",
+      "Bash(python -c \"import ast; ast.parse\\(open\\('cycle_master.py'\\).read\\(\\)\\); print\\('cycle_master.py: OK'\\)\")",
+      "Bash(git -C /home/raver1975/lean/Aether status -- config.yaml pi_agent_client.py daemon.py engine.py pi_orchestrator.py cycle_master.py knowledge_extractor.py)",
+      "Bash(git *)"
+    ]
+  }
+}
