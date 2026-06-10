@@ -1,0 +1,108 @@
+--- DepthSensitiveExchangeDescent.lean
++++ DepthSensitiveExchangeDescent.lean
+@@ -464,4 +464,105 @@
+     (n : ℚ) ≤ C₀ * ↑D * ↑d ^ (d - k) / c := by
+   convert exchangeDescent_depth_bound_poly S f Φ c C₀ D hc hC₀ hd hk hdec hrange n chain using 1
+ 
++/-! ## Part 8: Strict Monotonicity and Acyclicity
++
++Descent chains have strictly decreasing objective values along every step.
++This implies acyclicity: no state can appear twice in a descent chain.
++-/
++
++/-
++**Strict f-decrease along descent chains.**
++For any two positions `i < j` in a descent chain, `f(x_j) < f(x_i)`.
++-/
++theorem descentChain_f_strictMono {d n : ℕ}
++    {S : Finset (Fin d → ℤ)} {f : (Fin d → ℤ) → ℤ}
++    (chain : DescentChain S f n)
++    {i j : Fin (n + 1)} (hij : i < j) :
++    f (chain.seq j) < f (chain.seq i) := by
++  induction' j using Fin.inductionOn with j ih;
++  · tauto;
++  · cases lt_or_eq_of_le ( show i ≤ Fin.castSucc j from Nat.le_of_lt_succ hij ) <;> simp_all +decide [ Fin.castSucc_lt_last ];
++    · exact lt_trans ( chain.step j |>.2.2.2 ) ih;
++    · exact chain.step j |>.2.2.2
++
++/-
++**Acyclicity of descent chains.**
++No point appears twice in a descent chain: if `chain.seq i = chain.seq j`
++and `i ≤ j`, then `i = j`.
++-/
++theorem descentChain_injective {d n : ℕ}
++    {S : Finset (Fin d → ℤ)} {f : (Fin d → ℤ) → ℤ}
++    (chain : DescentChain S f n) :
++    Function.Injective chain.seq := by
++  intro i j hij;
++  exact le_antisymm ( le_of_not_gt fun hi => by have := descentChain_f_strictMono chain hi; aesop ) ( le_of_not_gt fun hj => by have := descentChain_f_strictMono chain hj; aesop )
++
++/-
++**Descent chains are bounded by the cardinality of S.**
++Since descent chains are injective and map into `S`, the chain length
++cannot exceed `|S|`.
++-/
++theorem descentChain_length_le_card {d n : ℕ}
++    {S : Finset (Fin d → ℤ)} {f : (Fin d → ℤ) → ℤ}
++    (chain : DescentChain S f n) :
++    n + 1 ≤ S.card := by
++  convert Finset.card_le_card ( show Finset.image chain.seq Finset.univ ⊆ S from ?_ ) using 1;
++  · rw [ Finset.card_image_of_injective _ ( descentChain_injective chain ), Finset.card_fin ];
++  · exact Finset.image_subset_iff.mpr fun i _ => chain.mem i
++
++/-! ## Part 9: Depth Gap and Potential Interpolation
++
++The **depth gap** measures how much faster descent becomes at higher depth.
++This quantifies the interpolation between generic O(|S|) bounds and
++the tight O(D) bound at maximal depth.
++-/
++
++/-- **Depth gap ratio**: the factor by which a depth-k₂ bound improves over
++a depth-k₁ bound. Equal to `d^(k₂ - k₁)`. -/
++def depthGapRatio (d k₁ k₂ : ℕ) : ℚ :=
++  (d : ℚ) ^ (k₂ - k₁)
++
++/-
++The depth gap ratio is at least 1 when `k₁ ≤ k₂` and `d ≥ 1`.
++-/
++theorem depthGapRatio_ge_one {d k₁ k₂ : ℕ}
++    (hd : 1 ≤ d) (hk : k₁ ≤ k₂) :
++    1 ≤ depthGapRatio d k₁ k₂ := by
++  exact one_le_pow₀ ( mod_cast hd )
++
++/-
++**Quantitative improvement from deeper certificates.**
++The runtime bound at depth `k₂` is exactly `depthGapRatio d k₁ k₂` times
++better than at depth `k₁`.
++-/
++theorem depth_improvement_factor
++    {d k₁ k₂ : ℕ} {c C₀ : ℚ} {D : ℕ}
++    (hd : 1 ≤ d) (hk : k₁ ≤ k₂) (hk₂ : k₂ ≤ d) :
++    C₀ * ↑D * ↑d ^ (d - k₂) / c =
++    C₀ * ↑D * ↑d ^ (d - k₁) / c / depthGapRatio d k₁ k₂ := by
++  unfold depthGapRatio; ring;
++  rw [ show d - k₁ = ( d - k₂ ) + ( k₂ - k₁ ) by omega, pow_add ] ; ring;
++  simp +decide [ mul_comm, mul_left_comm, ne_of_gt ( zero_lt_one.trans_le hd ) ]
++
++/-! ## Part 10: Potential Strict Decrease Along Chains
++
++Strengthening of the telescoping decrease: the potential is strictly
++monotone along any descent chain, not just decreasing.
++-/
++
++/-
++**Strict potential decrease along chains.**
++For any valid descent chain with potential decrease `δ > 0`,
++the potential at step `j` is strictly less than at step `i` when `i < j`.
++-/
++theorem potential_strictMono_along_chain
++    (n : ℕ) (Φ : ℕ → ℚ) (δ : ℚ) (_hδ : 0 < δ)
++    (hdec : ∀ i, i < n → Φ (i + 1) + δ ≤ Φ i)
++    {i j : ℕ} (_hi : i ≤ n) (hj : j ≤ n) (hij : i < j) :
++    Φ j + (j - i : ℕ) * δ ≤ Φ i := by
++  induction hij <;> norm_num at *;
++  · exact hdec i hj;
++  · rename_i k hk₁ hk₂;
++    rw [ Nat.cast_sub ( by linarith ) ] at * ; push_cast at * ; nlinarith [ hdec k hj, hk₁ ( by linarith ) ]
++
+ 

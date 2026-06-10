@@ -38,6 +38,17 @@ class CatalogPruner:
         candidates = []
         skip_dirs = {"FINAL", ".lake", "ResearchOutput", "Applications"}
         
+        # Load protected files from checks script to avoid deleting validation/bridge files
+        protected_files = {"main.lean"}
+        checks_script = self.catalog_root.parent / "autoresearch.checks.sh"
+        if checks_script.exists():
+            try:
+                content = checks_script.read_text(encoding="utf-8")
+                for m in re.findall(r"([\w\-+/]+\.lean)", content):
+                    protected_files.add(Path(m).name.lower())
+            except Exception as e:
+                print(f"[Prune] Warning: could not parse protected files: {e}")
+        
         for s in summaries:
             # Check if any path component is skipped
             parts = Path(s.relative_path).parts
@@ -46,6 +57,9 @@ class CatalogPruner:
                 
             abs_path = self.catalog_root / s.relative_path
             if not abs_path.exists():
+                continue
+                
+            if abs_path.name.lower() in protected_files:
                 continue
                 
             # Read content to check tactics and triviality

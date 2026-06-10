@@ -1,0 +1,181 @@
+--- Resolution.lean
++++ Resolution.lean
+@@ -425,4 +425,178 @@
+     C ⊆ D → Clause.Satisfied τ C → Clause.Satisfied τ D :=
+   Clause.satisfied_mono
+ 
++/-! ## Novel Proof Information Invariants -/
++
++/-- **Novel concept**: The proof information content of a resolution proof tree.
++    Measures the total number of variable interactions captured by the proof,
++    counting each resolution step as one unit of information exchange
++    between the two resolved clauses. This connects to the information-theoretic
++    view of proof complexity: resolution must "communicate" counting information
++    across the clause space, and each resolution step is a single interaction. -/
++def ResTree.proofInformation {ν : Type} [DecidableEq ν]
++    {F : CNF ν} {C : Clause ν} : ResTree F C → ℕ
++  | .hyp C _ => C.card
++  | .weaken _ _ _ t => t.proofInformation
++  | .resolve _ _ _ t₁ t₂ => t₁.proofInformation + t₂.proofInformation + 1
++
++attribute [local instance] Classical.propDecidable in
++/-- **Novel concept**: The width-entropy profile of a CNF formula.
++    For each width bound w, counts how many distinct clauses of width ≤ w
++    can be derived from F by resolution. This profile characterizes the
++    "information landscape" of the formula—a sharp jump in the profile
++    indicates an information barrier that proofs must cross. -/
++noncomputable def WidthEntropyProfile {ν : Type} [DecidableEq ν] [Fintype (Lit ν)]
++    (F : CNF ν) (w : ℕ) : ℕ :=
++  ((Finset.univ : Finset (Finset (Lit ν))).filter (fun C : Clause ν =>
++    C.card ≤ w ∧ ResDerives F C)).card
++
++/-- **Key structural theorem**: Width-entropy profile is monotone. -/
++theorem widthEntropyProfile_mono {ν : Type} [DecidableEq ν] [Fintype (Lit ν)]
++    (F : CNF ν) : Monotone (WidthEntropyProfile F) := by
++  intro w₁ w₂ hw; unfold WidthEntropyProfile; gcongr
++
++/-- Proof information of a hypothesis equals clause width. -/
++theorem ResTree.proofInformation_hyp {ν : Type} [DecidableEq ν]
++    {F : CNF ν} {C : Clause ν} (h : C ∈ F) :
++    (ResTree.hyp C h).proofInformation = C.card := rfl
++
++/-- Proof information of a resolution step adds 1 to the sum of subtrees. -/
++theorem ResTree.proofInformation_resolve {ν : Type} [DecidableEq ν]
++    {F : CNF ν} {C D : Clause ν} {x : ν}
++    (t₁ : ResTree F (insert (Lit.pos x) C))
++    (t₂ : ResTree F (insert (Lit.neg x) D)) :
++    (ResTree.resolve x C D t₁ t₂).proofInformation =
++    t₁.proofInformation + t₂.proofInformation + 1 := rfl
++
++/-- Resolution step always adds at least 1 to proof information. -/
++theorem proofInformation_ge_one_of_resolve {ν : Type} [DecidableEq ν]
++    {F : CNF ν} {C D : Clause ν} {x : ν}
++    (t₁ : ResTree F (insert (Lit.pos x) C))
++    (t₂ : ResTree F (insert (Lit.neg x) D)) :
++    1 ≤ (ResTree.resolve x C D t₁ t₂).proofInformation := by
++  simp [ResTree.proofInformation]
++
++/-! ## PHP Width Barrier -/
++
++/-- **Information barrier theorem**: No resolution refutation of PHP(n+1,n)
++    can have maxWidth < n. -/
++theorem php_widthEntropy_barrier (n : ℕ) (hn : 0 < n) :
++    ¬(∃ t : ResTree (phpCNF (n + 1) n) ∅, t.maxWidth < n) := by
++  intro ⟨t, ht⟩; exact absurd (php_width_lower_bound n hn t) (not_le.mpr ht)
++
++/-
++The at-most-one clauses have width exactly 2.
++-/
++theorem phpAtMostOne_width (m n : ℕ) (C : Clause (PHPVar m n))
++    (hC : C ∈ phpAtMostOne m n) : C.card = 2 := by
++      grind +locals
++
++/-
++All clauses in the PHP CNF have width ≤ n (for n ≥ 2).
++-/
++theorem phpCNF_max_width (n : ℕ) (hn : 2 ≤ n) (C : Clause (PHPVar (n+1) n))
++    (hC : C ∈ phpCNF (n+1) n) : C.card ≤ n := by
++      unfold phpCNF at hC;
++      grind +suggestions
++
++/-! ## Explicit Cutting Planes Inequalities -/
++
++/-- The "pigeon i goes to at least one hole" inequality:
++    x_{i,0} + x_{i,1} + ... + x_{i,n-1} ≥ 1 -/
++def phpPigeonIneq (m n : ℕ) (i : Fin m) : LinIneq (PHPVar m n) :=
++  ⟨fun ⟨i', _⟩ => if i' = i then 1 else 0, 1⟩
++
++/-- The "hole j receives at most one pigeon" inequality:
++    -x_{0,j} - x_{1,j} - ... - x_{m-1,j} ≥ -(1) -/
++def phpHoleIneq (m n : ℕ) (j : Fin n) : LinIneq (PHPVar m n) :=
++  ⟨fun ⟨_, j'⟩ => if j' = j then -1 else 0, -(1 : ℤ)⟩
++
++/-! ## Enhanced Separation Theorem -/
++
++/-- **Formal proof system separation**: Cutting planes can refute PHP
++    while resolution requires clauses of width ≥ n.
++
++    This establishes that cutting planes is strictly more powerful than
++    resolution on the pigeonhole principle family. CP can reason about
++    counting globally (sum all pigeon constraints, sum all hole constraints,
++    derive 0 ≥ 1) while resolution must discover the counting contradiction
++    through local clause manipulations that necessarily produce wide clauses. -/
++theorem cutting_planes_separates_resolution_on_php (n : ℕ) (hn : 0 < n) :
++    (∃ constraints : List (LinIneq (PHPVar (n + 1) n)),
++      (∀ τ, CNF.Satisfied τ (phpCNF (n + 1) n) → ∀ L ∈ constraints, LinIneq.Valid τ L) ∧
++      CPDerives constraints (falseConstraint (PHPVar (n + 1) n))) ∧
++    (∀ t : ResTree (phpCNF (n + 1) n) ∅, n ≤ t.maxWidth) :=
++  ⟨php_has_cp_refutation n, php_width_lower_bound n hn⟩
++
++/-! ## Proof Information Lower Bound for PHP -/
++
++/-
++**Novel theorem**: For any resolution refutation of PHP(n+1,n),
++    the proof information content is at least n.
++    This follows because every refutation must use at least one
++    phpAtLeastOne clause, which has width n.
++-/
++theorem php_proofInformation_lower_bound (n : ℕ) (hn : 0 < n)
++    (t : ResTree (phpCNF (n + 1) n) ∅) :
++    n ≤ t.proofInformation := by
++      -- By induction on the proof tree t, we can show that the proof information of any used hypothesis H is less than or equal to the proof information of t.
++      have h_ind : ∀ (F : CNF (PHPVar (n + 1) n)) (C : Clause (PHPVar (n + 1) n)) (t : ResTree F C), ∀ H ∈ t.usedHyps, H.card ≤ t.proofInformation := by
++        intro F C t hH;
++        induction' t with C hC C D hC hD t₁ t₂ ih₁ ih₂ generalizing hH;
++        · -- Since hH is in the usedHyps of the hyp tree, which is just {C}, we have hH = C.
++          intro hH_in_usedHyps
++          have hH_eq_C : hH = C := by
++            exact Finset.mem_singleton.mp hH_in_usedHyps;
++          exact hH_eq_C.symm ▸ le_rfl;
++        · exact fun h => le_trans ( t₁ _ h ) ( by simp +decide [ ResTree.proofInformation ] );
++        · simp_all +decide [ ResTree.proofInformation, ResTree.usedHyps ];
++          grind;
++      obtain ⟨ H, hH₁, hH₂ ⟩ := php_refutation_uses_atLeastOne n t;
++      exact le_trans ( by rw [ phpAtLeastOne_card _ _ hn _ hH₂ ] ) ( h_ind _ _ _ _ hH₁ )
++
++/-! ## Collecting All Clauses -/
++
++/-- Collect all intermediate clauses in a proof tree. -/
++def ResTree.allClauses {ν : Type} [DecidableEq ν] {F : CNF ν} {C : Clause ν} :
++    ResTree F C → Finset (Clause ν)
++  | .hyp C _ => {C}
++  | .weaken _ D _ t => insert D t.allClauses
++  | .resolve _ C D t₁ t₂ => insert (C ∪ D) (t₁.allClauses ∪ t₂.allClauses)
++
++/-- Conclusion is in allClauses. -/
++theorem ResTree.mem_allClauses {ν : Type} [DecidableEq ν] {F : CNF ν} {C : Clause ν}
++    (t : ResTree F C) : C ∈ t.allClauses := by cases t <;> simp [allClauses]
++
++/-
++Size of a proof tree bounds the number of all clauses.
++-/
++theorem ResTree.card_allClauses_le_size {ν : Type} [DecidableEq ν]
++    {F : CNF ν} {C : Clause ν} (t : ResTree F C) :
++    t.allClauses.card ≤ t.size := by
++      induction' t with C hC C D h t ihC x C D t₁ t₂ ih₁ ih₂;
++      · exact Nat.le_of_ble_eq_true rfl;
++      · -- The cardinality of the allClauses of the weakened tree is the cardinality of t.allClauses plus 1.
++        have h_card_weaken : (insert D t.allClauses).card ≤ t.allClauses.card + 1 := by
++          exact Finset.card_insert_le _ _;
++        convert h_card_weaken.trans ( Nat.add_le_add_right ihC 1 ) using 1;
++        exact Nat.add_comm _ _;
++      · have h_card_union : Finset.card (insert (C ∪ D) (t₁.allClauses ∪ t₂.allClauses)) ≤ Finset.card (t₁.allClauses ∪ t₂.allClauses) + 1 := by
++          exact Finset.card_insert_le _ _;
++        have h_card_union_le : Finset.card (t₁.allClauses ∪ t₂.allClauses) ≤ t₁.size + t₂.size := by
++          exact le_trans ( Finset.card_union_le _ _ ) ( add_le_add ih₁ ih₂ );
++        convert h_card_union.trans ( Nat.add_le_add_right h_card_union_le 1 ) using 1;
++        exact show 1 + t₁.size + t₂.size = t₁.size + t₂.size + 1 from by ring;
++
++/-
++Every clause in allClauses has width ≤ maxWidth.
++-/
++theorem ResTree.width_le_maxWidth_allClauses {ν : Type} [DecidableEq ν]
++    {F : CNF ν} {C : Clause ν} (t : ResTree F C) :
++    ∀ D ∈ t.allClauses, D.card ≤ t.maxWidth := by
++      induction' t with C h D h ih;
++      · simp +decide [ ResTree.allClauses, ResTree.maxWidth ];
++      · simp_all +decide [ ResTree.allClauses, ResTree.maxWidth ];
++      · simp_all +decide [ ResTree.maxWidth, ResTree.allClauses ];
++        grind
++
+ 

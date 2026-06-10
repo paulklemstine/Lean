@@ -830,6 +830,10 @@ Research mode: {concept.research_mode}
                 catalog_dst.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(src_cfg, catalog_dst / cfg)
 
+        # Create empty .lake folders to silence the SDK dependency warnings
+        (dir_path / ".lake").mkdir(exist_ok=True)
+        (catalog_dst / ".lake").mkdir(exist_ok=True)
+
         print(f"[Project] Copied {lean_count} .lean files and project configs from Catalog")
 
         # Write the prompt as a README for context

@@ -56,6 +56,8 @@ def setup_project_dir(project_dir: Path):
 
 
 async def main():
+    import aristotlelib.api_request as api_mod
+    api_mod.DEFAULT_TIMEOUT_SECONDS = 300
     api_key = os.environ.get("ARISTOTLE_API_KEY", "")
     print(f"API key present: {bool(api_key)}")
     aristotlelib.set_api_key(api_key)
