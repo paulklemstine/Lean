@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle (Harmonic)"
   ],
-  "date": "2026-06-10T21:50:32Z",
+  "date": "2026-06-10T22:01:27Z",
   "key_results": [
     "The Rayleigh energy functional qform(H,x)=<x,Hx> is additive in the operator and vanishes for H=0.",
     "Hermitian operators have real expectation values: qform(H,x) is self-conjugate, so its imaginary part vanishes.",
