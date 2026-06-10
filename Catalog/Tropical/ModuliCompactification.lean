@@ -223,3 +223,82 @@ theorem tropical_matrix_cube_interpretation {n : ℕ} [NeZero n]
     rw [ @iInf_prod ]
 
 end TropicalModuli
+
+
+-- !-- Merged from TropicalModuliCompactification.lean (auto-dedup) -- !--
+
+# Tropical Compactification of Moduli Spaces: Ultrametrics, Tree Metrics
+# and the Four-Point Condition
+The tropical moduli space of genus-0 curves `M_{0,n}^trop` is canonically
+identified with the *space of phylogenetic trees* on `n` leaves, which in turn
+is the tropical Grassmannian `Gr(2,n)` (Speyer–Sturmfels).  The combinatorial
+heart of this identification is the theory of **tree metrics** and their special
+ultrametric (rooted/equidistant) locus, governed by the **four-point condition**
+— the tropical Plücker relation for `Gr(2,n)`.
+This file develops that combinatorial core from first principles over `ℝ`:
+* `ultrametric_two_largest_equal` — the isosceles structure of ultrametrics.
+* `ultrametric_isosceles`          — every triangle is isosceles (key invariant).
+* `ultrametric_triangle`           — ultrametrics are genuine metrics.
+* `ultrametric_four_point`         — ultrametrics satisfy the tropical Plücker /
+                                     four-point condition, i.e. they lie on the
+                                     tropical Grassmannian `Gr(2,n)`.
+* `ultrametric_four_point_attained_twice` — the genuine tropical Plücker
+                                     relation (maximum attained at least twice).
+* `tropical_homogeneity`           — max-plus scaling (the freshman's dream that
+                                     makes the cone structure of the moduli fan
+                                     well-defined).
+These are the structural facts underlying the compactified moduli fan.
+variable {ι : Type*} (d : ι → ι → ℝ)
+/-- A (pseudo-)ultrametric: symmetric, nonnegative, and satisfying the
+*strong triangle inequality*.  These are exactly the equidistant points of the
+tropical Grassmannian, i.e. the rooted phylogenetic trees. -/
+structure IsUltrametric : Prop where
+  symm : ∀ x y, d x y = d y x
+  nonneg : ∀ x y, 0 ≤ d x y
+  strong : ∀ x y z, d x z ≤ max (d x y) (d y z)
+variable {d}
+-- !-- The two largest pairwise distances in any triangle coincide: if `d x y` is
+-- the smallest, the strong triangle inequality squeezes `d x z = d y z`. -- !--
+theorem ultrametric_two_largest_equal (h : IsUltrametric d) {x y z : ι}
+    (hxy_xz : d x y ≤ d x z) (hxy_yz : d x y ≤ d y z) : d x z = d y z := by
+  grind +splitIndPred
+-- !-- Every triangle in an ultrametric space is isosceles: at least two of the
+-- three pairwise distances are equal (case on the smallest, then squeeze). -- !--
+theorem ultrametric_isosceles (h : IsUltrametric d) (x y z : ι) :
+    d x y = d x z ∨ d x y = d y z ∨ d x z = d y z := by
+  grind +splitIndPred
+-- !-- Ultrametrics are honest metrics: `d x z ≤ max ≤ sum` using nonnegativity. -- !--
+theorem ultrametric_triangle (h : IsUltrametric d) (x y z : ι) :
+    d x z ≤ d x y + d y z :=
+  le_trans (h.strong x y z)
+    (max_le (le_add_of_nonneg_right (h.nonneg _ _)) (le_add_of_nonneg_left (h.nonneg _ _)))
+-- !-- The four-point / tropical Plücker condition: any one quartet sum is bounded
+-- by the max of the other two (so the maximum is attained at least twice). This
+-- is the defining relation of the tropical Grassmannian `Gr(2,n) = M_{0,n}^trop`. -- !--
+theorem ultrametric_four_point (h : IsUltrametric d) (w x y z : ι) :
+    d w x + d y z ≤ max (d w y + d x z) (d w z + d x y) := by
+  cases le_total (d w y) (d w z) <;> cases le_total (d x y) (d x z) <;>
+    simp +decide [*] at * <;> grind +splitIndPred
+-- !-- Strengthening: the maximum of the three quartet sums is attained at least
+-- twice — the genuine tropical Plücker (Buneman) relation for tree metrics. -- !--
+theorem ultrametric_four_point_attained_twice (h : IsUltrametric d) (w x y z : ι) :
+    (d w x + d y z = d w y + d x z) ∨
+    (d w x + d y z = d w z + d x y) ∨
+    (d w y + d x z = d w z + d x y) := by
+  have := h.nonneg
+  have := h.strong
+  norm_num at *
+  grind +splitIndPred
+-- !-- Max-plus homogeneity ("tropical freshman's dream"): nonnegative scaling
+-- commutes with tropical addition `max`, making the moduli object a fan/cone. -- !--
+theorem tropical_homogeneity (c : ℝ) (hc : 0 ≤ c) (x y : ℝ) :
+    c * max x y = max (c * x) (c * y) := by
+  rw [← mul_max_of_nonneg _ _ hc]
+/-- **Boundary case / counterexample.** Ultrametricity is strictly stronger than
+being a metric: a generic tree metric (here three points at mutual distances
+`2, 3, 5`) need not be isosceles — the three values are pairwise distinct, so the
+conclusion of `ultrametric_isosceles` fails. The extra phylogenetic (equidistant)
+rigidity of ultrametrics is therefore genuinely necessary, not automatic. -/
+example : ¬ (2 = (3 : ℝ) ∨ 2 = 5 ∨ 3 = 5) := by
+  push_neg
+  norm_num

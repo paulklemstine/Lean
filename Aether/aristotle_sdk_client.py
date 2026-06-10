@@ -45,6 +45,7 @@ class AristotleSDKClient:
             var_name = raw_key[2:-1]
             raw_key = os.environ.get(var_name, raw_key)
         self.api_key = raw_key or os.environ.get("ARISTOTLE_API_KEY", "")
+        print(f"[Aristotle] Loaded API key: {self.api_key[:10]}... (len={len(self.api_key)})")
         self.timeout = config.get("timeout_seconds", 300)
         self.polling_interval = config.get("polling_interval_seconds", 30)
 

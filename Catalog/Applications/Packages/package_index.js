@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "9c6faf0b",
     "filename": "close_proofs_close_proofs_tropical_compactificatio.json",
     "pkg_num": 32,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.44479402985074634,
     "title": "The Diagonal Obstruction Calculus for Sums of Powers"
   },
   {
@@ -945,8 +945,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "close_proofs_close_proofs_tropical_compactificatio",
       "primary_domain": "Pythagorean",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.44479402985074634,
+      "quality": "partial",
       "shape": "triangular_prism",
       "title": "The Diagonal Obstruction Calculus for Sums of Powers"
     }

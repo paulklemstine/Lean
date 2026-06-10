@@ -307,7 +307,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Odd Perfect Numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1c00f06d",
     "description": "Construct a number system on the Mobius band where the integers wrap with a twist: n and -n are identified with opposite orientations. Define the Mobius integers Z_tilde as Z x {+1, -1} modulo the identification (n, +1) ~ (-n, -1). Develop arithmetic on Z_tilde where addition wraps through the identification. Conjecture: The ring Z_tilde of Mobius integers has class number 1, and its prime spectrum forms a double cover of the ordinary primes (each ordinary prime p splits into two oriented primes p_plus and p_minus). The Mobius zeta function zeta_tilde(s) has zeros off the critical line, which is expected since Z_tilde is a non-Ore ring. Test: factor 6 in Z_tilde as 2_plus times 3_plus and 2_minus times 3_minus and verify these are distinct factorizations. Prove unique factorization for Z_tilde up to orientation. Impact: a new algebraic number system with intrinsic orientation, connecting number theory to topology via the double cover Z to Z_tilde.",
     "domains": [
       "Geometry",
@@ -317,7 +317,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:05.665381+00:00",
     "title": "Mobius Arithmetic: Number Theory on the Mobius Band"
   },
@@ -336,7 +336,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Catalan's Conjecture Generalizations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3c1eb401",
     "description": "Prove the stability theorem for persistent homology: the bottleneck distance between persistence diagrams is bounded by the Gromov-Hausdorff distance between the underlying spaces. Formalize the persistent homology pipeline and verify on concrete point cloud data.",
     "domains": [
       "Computation",
@@ -346,7 +346,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.88,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:20.401327+00:00",
     "title": "Topological Data Analysis: Persistent Homology Stability"
   },
@@ -635,7 +635,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c2873aaf",
     "description": "Prove that a Markov basis for a log-linear model on contingency tables connects all fibers of the model. Formalize the Fundamental Theorem of Markov Bases and compute explicit Markov bases for the no-three-way interaction model.",
     "domains": [
       "Computation",
@@ -645,7 +645,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:20.604088+00:00",
     "title": "Algebraic Statistics: Markov Bases for Contingency Tables"
   },
@@ -708,7 +708,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Stereographic Proof Compression: Proofs on Spheres"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "30991756",
     "description": "Prove sharp lower bounds for the Willmore energy of surfaces by genus. Extend the Marques-Neves proof for tori to higher-genus surfaces.",
     "domains": [
       "Geometry"
@@ -717,7 +717,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:18.441912+00:00",
     "title": "Willmore Conjecture Generalizations"
   },
@@ -1442,7 +1442,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "For metrizable separable spaces, the small inductive dimension, large inductive "
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b07a6f73",
     "description": "# Future Directions: Large Cardinal Hierarchy Formalization\n\n## 1. Measurable Cardinals via Ultrafilters\n\nThe next step in the large cardinal hierarchy after Mahlo is the measurable cardinal. A cardinal \u03ba is measurable if there exists a \u03ba-complete non-principal ultrafilter on \u03ba. This can be formalized using Mathlib's existing filter and ultrafilter infrastructure. The key theorem to prove would be: every measurable cardinal is Mahlo, establishing the next link in the consistency strength chain.\n\nThe key insight is that the existence of a \u03ba-complete ultrafilter on \u03ba implies that the set of regular cardinals below \u03ba is not just stationary but in fact belongs to the ultrafilter \u2014 a much stronger property. This can be proved by showing that the set of singular cardinals below \u03ba is not in the ultrafilter (using the Ulam matrix argument).\n\nWhy now? Mathlib already has `Filter`, `Ultrafilter`, and `Filter.CountableInter` (the countable completeness analogue). Extending to \u03ba-completeness is a natural generalization, and the Ulam matrix argument has a clean combinatorial structure well-suited to formal verification.\n\n## 2. Club Filter as a Normal Filter\n\nOur formalization defines club and stationary sets with an \u03c9-closure condition. The full theory requires closure under arbitrary sequences of length less than \u03ba (not just countable sequences). Formalizing the club filter as a normal \u03ba-complete filter on \u03ba would unify several results and enable the Fodor pressing-down lemma (Fodor's theorem), which states that every regressive function on a stationary set is constant on a stationary subset.\n\nThe key insight is that the club filter is not just closed under finite intersection but under < \u03ba-sized intersection (for regular uncountable \u03ba), making it a normal ideal. This connects set theory to the theory of Boolean algebras and forcing.\n\nWhy now? The \u03c9-closed version is formalized. Generalizing to arbitrary cofinality requires Ordinal.bsup infrastructure, which Mathlib now provides. Fodor's theorem has a short inductive proof once the definitions are right.\n\n## 3. Indescribable Cardinals and Reflection Principles\n\nA cardinal \u03ba is \u03a0\u00b9_n-indescribable if for every \u03a0\u00b9_n sentence \u03c6 that holds in V_\u03ba, there exists \u03b1 < \u03ba such that \u03c6 holds in V_\u03b1. The hierarchy of indescribable cardinals sits between Mahlo and measurable in consistency strength. Formalizing this requires a theory of the cumulative hierarchy V_\u03b1, which could be built using well-founded recursion on ordinals.\n\nThe key insight is that inaccessibility is equivalent to \u03a0\u2070\u2081-indescribability, and the Mahlo property is equivalent to \u03a0\u00b9\u2080-indescribability (a classical result of Hanf and Scott). This provides an alternative characterization of the large cardinals we formalized.\n\nWhy now? The key infrastructure \u2014 ordinal recursion, cardinal arithmetic, and the aleph fixed point theorem \u2014 is now in place from our formalization. The cumulative hierarchy can be built as a family of types indexed by ordinals using well-founded recursion.\n\n## 4. Consistency Strength Separation via Inner Models\n\nThe ultimate goal is to prove strict separation: Con(ZFC + \u2203 Mahlo) \u2192 Con(ZFC + \u2203 inaccessible), but not vice versa. This requires constructing inner models \u2014 for example, showing that if \u03ba is Mahlo, then V_\u03ba is a model of ZFC + \"there exists an inaccessible cardinal.\" This is inherently metamathematical and requires formalizing satisfaction relations for set-theoretic formulas.\n\nThe key insight is that the aleph fixed point theorem (proved in our formalization) and the exists_inaccessible_below theorem together show that V_\u03ba for Mahlo \u03ba sees inaccessible cardinals \u2014 this is the semantic content of consistency strength separation. Formalizing the satisfaction relation is the missing piece.\n\nWhy now? Recent work on formalizing G\u00f6del's incompleteness theorems in Lean (e.g., the FLean project) provides patterns for encoding syntax and satisfaction. Our cardinal arithmetic results (pow_lt, aleph fixed points) provide the mathematical content that the inner model argument needs.\n\n## 5. Cardinal Arithmetic Independence: Easton's Theorem\n\nEaston's theorem states that the function \u03ba \u21a6 2^\u03ba on regular cardinals can be essentially arbitrary (subject to K\u00f6nig's theorem constraints). Formalizing even a weak version \u2014 showing that GCH is independent of ZFC \u2014 would connect our cardinal arithmetic results to forcing theory. Our `IsInaccessible.pow_lt` theorem shows that inaccessible cardinals provide natural upper bounds for cardinal exponentiation; Easton's theorem shows these bounds are essentially optimal.\n\nThe key insight is that our iterPow construction (used to build strong limits) is a special case of the beth function, and the gap between beth and aleph fixed points is precisely where GCH independence lives.\n\nWhy now? The iterPow infrastructure and strong limit theorems from our formalization provide the \"ground model\" side of the forcing argument. Formalizing Boolean-valued models (the algebraic approach to forcing) could leverage Mathlib's complete Boolean algebra library.\n",
     "domains": [
       "Algebra",
@@ -1452,7 +1452,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "2c51cdc5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T09:29:27.155248+00:00",
     "title": "The next step in the large cardinal hierarchy after Mahlo is the measurable card"
   },
@@ -2237,7 +2237,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Foundational information-theoretic framework for BB84"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1cfa3ae8",
     "description": "# Future Directions: Clique Complex Theory in Lean 4\n\n## 1. Simplicial Chain Complexes and Homology Groups\n\nThe natural next step is to construct the simplicial chain complex from our `ASC'` type. The k-th chain group C_k is the free abelian group on oriented k-simplices (ordered (k+1)-tuples of vertices spanning a face), and the boundary operator \u2202_k : C_k \u2192 C_{k-1} is defined by the alternating sum of face deletions: \u2202_k[v_0, ..., v_k] = \u03a3\u1d62 (-1)^i [v_0, ..., v\u0302\u1d62, ..., v_k].\n\nThe key insight is that Mathlib's `FreeAbelianGroup` and `HomologicalComplex` provide the algebraic scaffolding \u2014 what's missing is the combinatorial construction of \u2202 from our face data, and the proof that \u2202\u00b2 = 0 (which follows from the double-alternating-sign cancellation). Our `ASC'.link` and `ASC'.down_closed` already encode exactly the face-deletion structure needed.\n\nWhy now? The `cliqueComplex'` construction and `link` operator are formalized and compiled. The boundary map is a concrete linear map on free abelian groups, and \u2202\u00b2 = 0 is a finite combinatorial identity \u2014 no deep analysis is needed, only careful bookkeeping of signs and indices.\n\n## 2. Flag Complex Characterization (Converse Direction)\n\nWe proved that every clique complex satisfies the flag property (`cliqueComplex_isFlag`). The converse \u2014 that every flag complex IS the clique complex of its 1-skeleton \u2014 would complete the characterization theorem: K is a flag complex \u27fa K = \u0394(Skel\u2081(K)).\n\nThe key insight is that the forward direction (our theorem) shows \u0394(G) \u2286 K for any flag complex K with 1-skeleton G, while the converse direction K \u2286 \u0394(G) requires showing that if \u03c3 is a face of K, then all 2-element subsets of \u03c3 are faces (by downward closure), hence all pairs are 1-skeleton-adjacent, and by the flag property \u03c3 \u2208 \u0394(Skel\u2081(K)). The proof is a one-line appeal to downward closure.\n\nWhy now? Both `oneSkeletonGraph` and `isFlag` are defined and the forward direction compiles. The converse is a straightforward application of `down_closed` and the definitions.\n\n## 3. Persistent Homology via Vietoris-Rips Filtrations\n\nOur `vietorisRips_mono` theorem establishes that the Vietoris-Rips complex is monotone in the scale parameter \u03b5, giving a filtration VR(X, \u03b5\u2081) \u2286 VR(X, \u03b5\u2082) \u2286 \u22ef for \u03b5\u2081 \u2264 \u03b5\u2082. Combined with the chain complex construction from Direction 1, this would yield a filtered chain complex whose persistent homology captures topological features at multiple scales.\n\nThe key insight is that once \u2202 is defined and \u2202\u00b2 = 0 is proved, the persistent homology module is simply the diagram of homology groups H_k(VR(X, \u03b5\u1d62)) connected by the maps induced by inclusion. Mathlib's `CategoryTheory.Functor` framework can model this as a functor from (\u211d, \u2264) to abelian groups.\n\nWhy now? The filtration monotonicity is proven. The remaining gap is the chain complex construction (Direction 1), after which persistent homology follows by functoriality.\n\n## 4. Tur\u00e1n-Type Bounds on f-Vectors of Clique Complexes\n\nOur `ASC.fVector_le_choose` gives f_k \u2264 C(n, k+1), tight only for complete graphs. For graphs with bounded clique number \u03c9(G) \u2264 r, we have f_k = 0 for all k \u2265 r. The natural question is: what is the maximum f_k over all n-vertex graphs with \u03c9(G) \u2264 r? The answer should be given by the Tur\u00e1n graph T(n, r).\n\nThe key insight is that `cliqueComplex_face_card_le_of_cliqueFree` already gives the vanishing result (f_k = 0 for k \u2265 r when G is (r+1)-clique-free). The extremal question \u2014 showing that the Tur\u00e1n graph maximizes f_k subject to \u03c9 \u2264 r \u2014 requires connecting our clique complex f-vector to Tur\u00e1n's theorem, which has partial Mathlib support.\n\nWhy now? The face-card bound and clique-free dimension bound are proven. The Tur\u00e1n graph is a concrete, constructible object, and its face counts are computable binomial expressions.\n\n## 5. Nerve Lemma and Good Cover Theorem\n\nThe nerve of a finite open cover {U_i} is the simplicial complex whose faces are the subsets I with \u2229_{i \u2208 I} U_i \u2260 \u2205. The Nerve Lemma states that if the cover is \"good\" (all non-empty intersections are contractible), then the nerve is homotopy-equivalent to the union \u222a U_i.\n\nThe key insight is that the clique complex \u0394(G) is itself the nerve of the cover of the edge set by maximal cliques. Formalizing this perspective would connect our combinatorial ASC definitions to the topological homotopy type, establishing that clique complexes are not just combinatorial objects but carry genuine topological information via the nerve construction.\n\nWhy now? Our `ASC'` type with its `link` and `isFlag` infrastructure provides the combinatorial skeleton. The nerve construction is a concrete functor from covers to simplicial complexes, and its formalization would be the first verified nerve lemma in Lean 4.\n",
     "domains": [
       "Algebra",
@@ -2247,7 +2247,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "9fe7196f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T20:42:12.920051+00:00",
     "title": "The natural next step is to construct the simplicial chain complex from our `ASC"
   },
@@ -2370,6 +2370,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-10T07:32:54.772608+00:00",
     "title": "Algebraic backbone of *stereographic capacity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Tropical Compactification of Moduli Spaces\n\nThe file `Catalog/Tropical/TropicalModuliCompactification.lean` formalizes the\ncombinatorial core of the tropical moduli space of genus-0 curves\n`M_{0,n}^trop`, realized as the space of phylogenetic trees and, equivalently,\nthe tropical Grassmannian `Gr(2,n)`. We proved that ultrametrics (the\nequidistant / rooted locus) are isosceles, are genuine metrics, and satisfy the\nfour-point / tropical Pl\u00fccker condition (`ultrametric_four_point` and its\n\"attained-twice\" strengthening), together with max-plus homogeneity\n(`tropical_homogeneity`) that gives the moduli object its fan/cone structure.\n\nThese results connect to existing catalog material: the min-plus monotonicity of\n`Catalog/Tropical/TropicalFormula.lean` (`TropFormula`) is the order-theoretic\ncompanion of `tropical_homogeneity`, and the Pl\u00fccker-style certificates in\n`Catalog/Bridges/TropicalProofCertificates` and `AlgebraTropicalGeometry` are\ncandidate consumers of the four-point relation proved here. Below are concrete,\nfalsifiable next steps.\n\n## Direction 1 \u2014 A full Buneman recovery theorem (metric \u21d2 tree)\n\nConjecture: a symmetric nonnegative `d : \u03b9 \u2192 \u03b9 \u2192 \u211d` on a finite type satisfies\nthe four-point condition `ultrametric_four_point_attained_twice` for *every*\nquadruple **if and only if** there is a weighted tree (a finite graph metric)\nrealizing `d` exactly. The forward direction generalizes our `ultrametric_*`\nlemmas from the equidistant locus to all tree metrics; the converse is the\nconstructive heart of `M_{0,n}^trop`.\n\nThe key insight is that the four-point condition is not merely *necessary* for an\nultrametric \u2014 it is the exact tropical Pl\u00fccker locus, so the \"attained-twice\"\ndisjunction we proved is precisely the gluing data of the Buneman split system,\nand a tree can be reconstructed split-by-split from the equality cases.\n\nWhy now? We have already isolated the attained-twice relation as a clean,\nmachine-checked disjunction; the remaining work is a finite induction on the\nnumber of leaves, which is exactly the regime where Lean's `Finset` and\n`grind`-style case analysis are now strong enough to discharge the splits.\n\n## Direction 2 \u2014 The tropical Grassmannian `Gr(2,n)` as a balanced fan\n\nConjecture: the set of `d` satisfying `ultrametric_four_point` is closed under\nthe max-plus cone operations (tropical scaling by nonnegative `c` and tropical\naddition), i.e. it is a *tropical (max-plus) submodule*, and modulo the lineality\nspace of \"tree-additive\" functions it is a balanced polyhedral fan of pure\ndimension `n - 3`.\n\nThe key insight is that `tropical_homogeneity` already certifies closure under\nscaling, so the only missing ingredient is closure under coordinatewise `max`,\nwhich reduces to a *single* three-term inequality between quartet sums \u2014 the same\nshape of statement `grind +splitIndPred` dispatched for the four-point lemma.\n\nWhy now? The dimension `n-3` is the classical statement of Speyer\u2013Sturmfels;\nhaving the defining inequalities as Lean lemmas means the fan structure can be\nassembled from them mechanically rather than re-derived from scratch.\n\n## Direction 3 \u2014 Strong-triangle stability under tropical limits\n\nConjecture: if `d_k` is a sequence of ultrametrics converging pointwise to `d`,\nthen `d` is again an ultrametric; consequently the ultrametric locus is *closed*\ninside the space of all symmetric nonnegative functions, giving the\ncompactification a genuine closed-boundary structure.\n\nThe key insight is that each defining inequality (`symm`, `nonneg`, `strong`) is\na closed condition (a non-strict inequality), and pointwise limits preserve\nnon-strict inequalities \u2014 so closedness is a finite conjunction of limit-stable\nfacts rather than a delicate analytic argument.\n\nWhy now? Mathlib's order-limit API (`le_of_tendsto`, `isClosed_le`) is mature,\nand our `IsUltrametric` structure is phrased entirely with `\u2264` and `max`, which\nare continuous \u2014 the proof is essentially a transport of our existing fields\nthrough `Filter.Tendsto`.\n\n## Direction 4 \u2014 Quantitative isosceles defect and almost-ultrametrics\n\nConjecture: define the *isosceles defect* `\u03b4(x,y,z)` as the gap between the two\nlargest of `d x y, d y z, d x z`. Then `d` is within additive `\u03b5` of an\nultrametric (in the sup norm) **iff** `\u03b4 \u2264 C\u03b5` uniformly, with an explicit\nuniversal constant `C` independent of the number of points.\n\nThe key insight is that our exact lemma `ultrametric_two_largest_equal` is the\n`\u03b5 = 0` boundary case; perturbing the strong triangle inequality by `\u03b5` turns the\nsqueeze argument into a two-sided estimate, so the qualitative equality becomes a\nquantitative Lipschitz bound on the defect.\n\nWhy now? Robustness/`\u03b5`-stability statements are exactly where the catalog's\ntropical robustness files (e.g. `Tropical_Certified_Robustness_for_Multi_Class_ReLU_Networks`)\nalready invest effort; a clean defect bound would bridge the pure-moduli side\nwith those quantitative applications.\n\n## Direction 5 \u2014 Cross-domain bridge: ultrametrics \u21d2 p-adic and hierarchical clustering certificates\n\nConjecture: every ultrametric on a finite set arises (up to monotone\nreparametrization) from a hierarchical clustering / single-linkage dendrogram,\nand conversely; formalize the bijection and use it to give the\n`PAdicTropical`-style valuations of the catalog a verified ultrametric semantics.\n\nThe key insight is that `ultrametric_isosceles` is the dendrogram merge rule in\ndisguise \u2014 the two larger distances coinciding is exactly the statement that two\npoints enter the same cluster at the same height \u2014 so the clustering tree is a\n*canonical* witness for the four-point data we proved.\n\nWhy now? The catalog already contains `PAdicTropical` and tropical clustering-\nadjacent material; with the four-point and isosceles lemmas in hand, the\ndendrogram bijection becomes a finite recursion whose invariant is precisely\n`ultrametric_two_largest_equal`, ready for `grind`-assisted induction.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1181",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "9c6faf0b",
+    "status": "available",
+    "timestamp": "2026-06-10T07:46:51.890536+00:00",
+    "title": "The file `Catalog/Tropical/TropicalModuliCompactification.lean` formalizes the"
   },
   {
     "consumed_by_exp_id": "",
@@ -2597,7 +2612,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral Universality of Transformer Weight Dynamics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "861cf18b",
     "description": "Conjecture: For broad families of nonconvex loss functions naturally defined on arithmetic moduli spaces (e.g. losses built from period maps, modular forms, or heights on families of elliptic curves/Calabi-Yau varieties), the Hessian spectrum along generic gradient-descent trajectories converges after rescaling to a universal law determined only by the local monodromy type of the moduli boundary, independent of model architecture or parametrization. Test: Construct explicit optimization problems on several distinct arithmetic moduli spaces, numerically and analytically compute Hessian eigenvalue distributions along training trajectories, and check whether rescaled spectra collapse into universality classes indexed by monodromy data; a systematic dependence on architecture or failure of spectral collapse refutes the conjecture. Impact: This would reveal a new arithmetic universality principle for learning dynamics, linking optimization, geometry, and number-theoretic moduli, and could enable principled design of trainable architectures and algorithms using geometric invariants rather than ad hoc heuristics.",
     "domains": [
       "Algebra",
@@ -2607,7 +2622,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-10T07:33:04.598953+00:00",
     "title": "Spectral Universality of Gradient Descent on Arithmetic Moduli"
   },
@@ -2837,7 +2852,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Secret Sharing: Shamir's Scheme and Verifiable Variants"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "02022d1b",
     "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
     "domains": [
       "Cryptography",
@@ -2847,7 +2862,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
   },
