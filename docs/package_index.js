@@ -10,7 +10,7 @@ window.PACKAGE_INDEX = [
     "filename": "the_exponential_decay_bound_diffusionalphabar_exp_.json",
     "pkg_num": 27,
     "quality": "partial",
-    "quality_score": 0.45105615257888737,
+    "quality_score": 0.3512538461538462,
     "title": "Closure\u2013Gauge Realization Duality via Idempotent Holonomy"
   },
   {
@@ -20,7 +20,7 @@ window.PACKAGE_INDEX = [
     "filename": "diffusion_models_as_stochastic_differential_equati.json",
     "pkg_num": 26,
     "quality": "partial",
-    "quality_score": 0.4774560993835233,
+    "quality_score": 0.397392211299052,
     "title": "Closure\u2013Gauge Realization Duality via Idempotent Holonomy"
   },
   {
@@ -30,7 +30,7 @@ window.PACKAGE_INDEX = [
     "filename": "learning_with_errors_hardness_reductions.json",
     "pkg_num": 25,
     "quality": "partial",
-    "quality_score": 0.4484951340996169,
+    "quality_score": 0.36850115677321155,
     "title": "Closure-Gauge Realization Duality via Idempotent Holonomy"
   },
   {
@@ -40,7 +40,7 @@ window.PACKAGE_INDEX = [
     "filename": "cryptographic_hash_functions_collision_resistance_.json",
     "pkg_num": 24,
     "quality": "partial",
-    "quality_score": 0.45885812483989413,
+    "quality_score": 0.3790869106263195,
     "title": "Closure-Gauge Realization Duality: When Compression Admits a Difficulty Ranking"
   },
   {
@@ -70,7 +70,7 @@ window.PACKAGE_INDEX = [
     "filename": "formal_obstruction_theory_for_eml_solvability_of_l.json",
     "pkg_num": 21,
     "quality": "partial",
-    "quality_score": 0.4664737281553398,
+    "quality_score": 0.38646674999999997,
     "title": "CSS Codes as Cohomology: Quantum Error Correction from Homological Algebra"
   },
   {
@@ -80,7 +80,7 @@ window.PACKAGE_INDEX = [
     "filename": "rigorous_formal_foundations_for_the_collatz_conj.json",
     "pkg_num": 20,
     "quality": "partial",
-    "quality_score": 0.450736943120171,
+    "quality_score": 0.37138729946524063,
     "title": "Tropical Contraction Theory for Collatz Dynamics"
   },
   {
@@ -90,7 +90,7 @@ window.PACKAGE_INDEX = [
     "filename": "logic_physics_bridge_consistency_of_physical_theor.json",
     "pkg_num": 19,
     "quality": "partial",
-    "quality_score": 0.4642314579129325,
+    "quality_score": 0.3852481001709541,
     "title": "Logic-Physics Bridge: Consistency of Physical Theories"
   },
   {
@@ -100,7 +100,7 @@ window.PACKAGE_INDEX = [
     "filename": "tropical_compactification_of_moduli_spaces.json",
     "pkg_num": 18,
     "quality": "partial",
-    "quality_score": 0.44213183437650455,
+    "quality_score": 0.3627455631900639,
     "title": "Tropical Compactification of Moduli Spaces"
   },
   {
@@ -110,7 +110,7 @@ window.PACKAGE_INDEX = [
     "filename": "proof_complexity_collapse_pnp_via_proof_checking.json",
     "pkg_num": 17,
     "quality": "partial",
-    "quality_score": 0.4474957648546144,
+    "quality_score": 0.3659193317335953,
     "title": "Variational Principles and Bounded Reduction Semantics for Proof Complexity"
   },
   {
@@ -120,7 +120,7 @@ window.PACKAGE_INDEX = [
     "filename": "self_modifying_code_that_cannot_be_stopped.json",
     "pkg_num": 16,
     "quality": "partial",
-    "quality_score": 0.6462399999999999,
+    "quality_score": 0.5661575824175824,
     "title": "Self-Modifying Code That Cannot Be Stopped: Undecidability, Simulation, and Alignment Barriers"
   },
   {
@@ -130,7 +130,7 @@ window.PACKAGE_INDEX = [
     "filename": "arithmetic_mirror_symmetry_for_calabi_yau.json",
     "pkg_num": 5,
     "quality": "partial",
-    "quality_score": 0.4507441932737335,
+    "quality_score": 0.37070314951345035,
     "title": "Certified Robustness for Instant-Runoff Classifiers via Tropical Gap Certificates"
   },
   {
@@ -140,7 +140,7 @@ window.PACKAGE_INDEX = [
     "filename": "bridge_model_theory_and_algebra__ax_kochen_and_mor.json",
     "pkg_num": 6,
     "quality": "partial",
-    "quality_score": 0.4623335621795429,
+    "quality_score": 0.38226993545631915,
     "title": "Certified Robustness for Instant-Runoff Classifiers via Gap Certificates"
   },
   {
@@ -150,7 +150,7 @@ window.PACKAGE_INDEX = [
     "filename": "causal_integration_algebra__a_rigorous_lattice_t.json",
     "pkg_num": 7,
     "quality": "partial",
-    "quality_score": 0.47410152685152684,
+    "quality_score": 0.3940269741676302,
     "title": "Certified Robustness for Instant-Runoff Voting Classifiers via Gap Certificates"
   },
   {
@@ -160,7 +160,7 @@ window.PACKAGE_INDEX = [
     "filename": "dream_logic_non_monotone_reasoning_where_contradic.json",
     "pkg_num": 8,
     "quality": "partial",
-    "quality_score": 0.4601177861683639,
+    "quality_score": 0.3800936166615896,
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
   {
@@ -190,7 +190,7 @@ window.PACKAGE_INDEX = [
     "filename": "p_vs_np_problem.json",
     "pkg_num": 11,
     "quality": "partial",
-    "quality_score": 0.4486386254706822,
+    "quality_score": 0.36869585004880756,
     "title": "Certified Robustness for Sequential-Elimination Classifiers via Tropical Gap Certificates"
   },
   {
@@ -210,7 +210,7 @@ window.PACKAGE_INDEX = [
     "filename": "the_current_framework_models_theories_by_their_set.json",
     "pkg_num": 13,
     "quality": "partial",
-    "quality_score": 0.4683285105981593,
+    "quality_score": 0.38829994947581153,
     "title": "Closure Dynamical Systems, Symbolic Zeta Semantics, and the Artin\u2013Mazur Rationality Theorem"
   },
   {
@@ -220,7 +220,7 @@ window.PACKAGE_INDEX = [
     "filename": "the_current_zaslavsky_type_bound_proves__kd_cnk__n.json",
     "pkg_num": 14,
     "quality": "partial",
-    "quality_score": 0.44434729925592503,
+    "quality_score": 0.36429437889326377,
     "title": "PL Hodge Theory for Neural Networks: Combinatorial and Topological Bounds on Decision Surface Complexity"
   },
   {
@@ -230,7 +230,7 @@ window.PACKAGE_INDEX = [
     "filename": "this_document_describes_five_research_conjectures_.json",
     "pkg_num": 15,
     "quality": "partial",
-    "quality_score": 0.4462816141275949,
+    "quality_score": 0.36626310656657907,
     "title": "Certified Robustness for Sequential-Elimination Classifiers via Gap Certificates"
   },
   {
@@ -250,7 +250,7 @@ window.PACKAGE_INDEX = [
     "filename": "bridge_logic_of_provability_and_fixed_points_in_ar.json",
     "pkg_num": 1,
     "quality": "partial",
-    "quality_score": 0.3352,
+    "quality_score": 0.2552,
     "title": "Provability Logic GL: Fixed Points, G\u00f6del Elements, and Incompleteness in Lattice Algebra"
   },
   {
@@ -514,7 +514,7 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
       "primary_domain": "Logic",
-      "priority_score": 0.3352,
+      "priority_score": 0.2552,
       "quality": "partial",
       "shape": "star_of_david",
       "title": "Provability Logic GL: Fixed Points, G\u00f6del Elements, and Incompleteness in Lattice Algebra"
@@ -558,7 +558,7 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "arithmetic_mirror_symmetry_for_calabi_yau",
       "primary_domain": "Bridges",
-      "priority_score": 0.4507441932737335,
+      "priority_score": 0.37070314951345035,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Certified Robustness for Instant-Runoff Classifiers via Tropical Gap Certificates"
@@ -569,7 +569,7 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
       "primary_domain": "Bridges",
-      "priority_score": 0.4623335621795429,
+      "priority_score": 0.38226993545631915,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Certified Robustness for Instant-Runoff Classifiers via Gap Certificates"
@@ -580,7 +580,7 @@ window.PACKAGE_GRAPH = {
       "hue": 100,
       "id": "causal_integration_algebra__a_rigorous_lattice_t",
       "primary_domain": "Bridges",
-      "priority_score": 0.47410152685152684,
+      "priority_score": 0.3940269741676302,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Certified Robustness for Instant-Runoff Voting Classifiers via Gap Certificates"
@@ -591,7 +591,7 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "dream_logic_non_monotone_reasoning_where_contradic",
       "primary_domain": "Bridges",
-      "priority_score": 0.4601177861683639,
+      "priority_score": 0.3800936166615896,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
@@ -624,7 +624,7 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "p_vs_np_problem",
       "primary_domain": "Bridges",
-      "priority_score": 0.4486386254706822,
+      "priority_score": 0.36869585004880756,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Certified Robustness for Sequential-Elimination Classifiers via Tropical Gap Certificates"
@@ -646,7 +646,7 @@ window.PACKAGE_GRAPH = {
       "hue": 281,
       "id": "the_current_framework_models_theories_by_their_set",
       "primary_domain": "Bridges",
-      "priority_score": 0.4683285105981593,
+      "priority_score": 0.38829994947581153,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Closure Dynamical Systems, Symbolic Zeta Semantics, and the Artin\u2013Mazur Rationality Theorem"
@@ -657,7 +657,7 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "the_current_zaslavsky_type_bound_proves__kd_cnk__n",
       "primary_domain": "Algebra",
-      "priority_score": 0.44434729925592503,
+      "priority_score": 0.36429437889326377,
       "quality": "partial",
       "shape": "tetrahedron",
       "title": "PL Hodge Theory for Neural Networks: Combinatorial and Topological Bounds on Decision Surface Complexity"
@@ -668,7 +668,7 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "this_document_describes_five_research_conjectures_",
       "primary_domain": "Pythagorean",
-      "priority_score": 0.4462816141275949,
+      "priority_score": 0.36626310656657907,
       "quality": "partial",
       "shape": "triangular_prism",
       "title": "Certified Robustness for Sequential-Elimination Classifiers via Gap Certificates"
@@ -679,7 +679,7 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "self_modifying_code_that_cannot_be_stopped",
       "primary_domain": "Bridges",
-      "priority_score": 0.6462399999999999,
+      "priority_score": 0.5661575824175824,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Self-Modifying Code That Cannot Be Stopped: Undecidability, Simulation, and Alignment Barriers"
@@ -690,7 +690,7 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "proof_complexity_collapse_pnp_via_proof_checking",
       "primary_domain": "Logic",
-      "priority_score": 0.4474957648546144,
+      "priority_score": 0.3659193317335953,
       "quality": "partial",
       "shape": "star_of_david",
       "title": "Variational Principles and Bounded Reduction Semantics for Proof Complexity"
@@ -701,7 +701,7 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "tropical_compactification_of_moduli_spaces",
       "primary_domain": "Bridges",
-      "priority_score": 0.44213183437650455,
+      "priority_score": 0.3627455631900639,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Tropical Compactification of Moduli Spaces"
@@ -712,7 +712,7 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "logic_physics_bridge_consistency_of_physical_theor",
       "primary_domain": "Bridges",
-      "priority_score": 0.4642314579129325,
+      "priority_score": 0.3852481001709541,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Logic-Physics Bridge: Consistency of Physical Theories"
@@ -723,7 +723,7 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "rigorous_formal_foundations_for_the_collatz_conj",
       "primary_domain": "Computation",
-      "priority_score": 0.450736943120171,
+      "priority_score": 0.37138729946524063,
       "quality": "partial",
       "shape": "cube",
       "title": "Tropical Contraction Theory for Collatz Dynamics"
@@ -734,7 +734,7 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "formal_obstruction_theory_for_eml_solvability_of_l",
       "primary_domain": "Bridges",
-      "priority_score": 0.4664737281553398,
+      "priority_score": 0.38646674999999997,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "CSS Codes as Cohomology: Quantum Error Correction from Homological Algebra"
@@ -767,7 +767,7 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "cryptographic_hash_functions_collision_resistance_",
       "primary_domain": "Bridges",
-      "priority_score": 0.45885812483989413,
+      "priority_score": 0.3790869106263195,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Closure-Gauge Realization Duality: When Compression Admits a Difficulty Ranking"
@@ -778,7 +778,7 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "learning_with_errors_hardness_reductions",
       "primary_domain": "Bridges",
-      "priority_score": 0.4484951340996169,
+      "priority_score": 0.36850115677321155,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Closure-Gauge Realization Duality via Idempotent Holonomy"
@@ -789,7 +789,7 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "diffusion_models_as_stochastic_differential_equati",
       "primary_domain": "Bridges",
-      "priority_score": 0.4774560993835233,
+      "priority_score": 0.397392211299052,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Closure\u2013Gauge Realization Duality via Idempotent Holonomy"
@@ -800,7 +800,7 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "the_exponential_decay_bound_diffusionalphabar_exp_",
       "primary_domain": "Bridges",
-      "priority_score": 0.45105615257888737,
+      "priority_score": 0.3512538461538462,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Closure\u2013Gauge Realization Duality via Idempotent Holonomy"
