@@ -2438,7 +2438,12 @@ Be precise, be deep, be world-class.
                 {"name": "descriptive_name", "description": "What this demo shows", "code": "# full Python source..."}
               ],
               "algorithms": [
-                {"name": "descriptive_name", "pseudocode": "Brief description", "code": "# full Python source..."}
+                {
+                  "name": "descriptive_name",
+                  "description": "Detailed in-depth explanation of the algorithm, its mathematical foundation, computational complexity, and role in the pipeline.",
+                  "pseudocode": "Formal, structured step-by-step pseudocode detailing the logic.",
+                  "code": "# full Python source with type hints..."
+                }
               ],
               "visualizations": [
                 {"name": "descriptive_name", "description": "What this visualizes", "code": "# standalone Python script that generates a visualization..."}
@@ -2515,8 +2520,7 @@ RESEARCH_PAPER.md: write the formal paper with abstract, definitions, results.
 demo.py: write numerical examples that demonstrate the results.
 PACKAGE.json: bundle everything into a single JSON with ALL fields populated.
 Make sure demos, algorithms, visualizations, and interactive_demos are arrays
-of objects (not placeholder strings). Include future directions from Phase A
-in the future_directions field.
+of objects (not placeholder strings). For each algorithm in the algorithms array, provide a name, a detailed explanation of its logic and complexity in 'description', formal step-by-step pseudocode in 'pseudocode', and clean type-hinted Python code in 'code'. Include future directions from Phase A in the future_directions field.
 
 Be vivid, be precise, be world-class. The math has already been done — now
 make it beautiful to read.

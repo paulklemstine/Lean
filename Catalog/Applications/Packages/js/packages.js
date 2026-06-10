@@ -192,11 +192,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const visualizations = Array.isArray(data.visualizations) ? data.visualizations : [];
         renderVisualizations('content-visualizations', visualizations);
 
-        // Algorithms: use 'code' field (some older packages have 'pseudocode' too)
+        // Algorithms: render both pseudocode and Python source implementations
         const algorithms = Array.isArray(data.algorithms) ? data.algorithms : [];
-        const algoField = algorithms.some(a => a.pseudocode && a.pseudocode.trim())
-            ? 'pseudocode' : 'code';
-        renderCodeBlocks('content-algorithms', algorithms, algoField);
+        renderCodeBlocks('content-algorithms', algorithms);
         if (window.renderInteractiveDemos) {
             const demos = Array.isArray(data.demos) ? data.demos : [];
             window.renderInteractiveDemos('content-demos', demos);
@@ -291,14 +289,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     const header = document.createElement('div');
                     header.className = 'code-header';
-                    header.style.cssText = 'display: flex; justify-content: space-between; align-items: center;';
 
                     const nameSpan = document.createElement('span');
                     nameSpan.className = 'code-title';
                     nameSpan.textContent = file.name;
 
                     const headerRight = document.createElement('div');
-                    headerRight.style.cssText = 'display: flex; gap: 12px; align-items: center;';
+                    headerRight.className = 'code-header-buttons';
 
                     const meta = document.createElement('span');
                     meta.style.cssText = 'color: var(--text-muted); font-size: 0.85em;';
@@ -517,7 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
             title.textContent = item.name || `Visualization ${idx + 1}`;
 
             const btnGroup = document.createElement('div');
-            btnGroup.style.cssText = 'display: flex; gap: 8px; align-items: center;';
+            btnGroup.className = 'code-header-buttons';
 
             const toggleBtn = document.createElement('button');
             toggleBtn.className = 'source-toggle';
@@ -602,8 +599,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const outputContainer = document.createElement('div');
-            outputContainer.className = 'gallery-img-container';
-            outputContainer.style.cssText = 'min-height: 100px; display: flex; align-items: center; justify-content: center; background: var(--bg-elevated); border-radius: 8px; margin-top: 8px;';
+            outputContainer.className = 'gallery-img-container viz-output-container';
             outputContainer.innerHTML = '<div class="viz-placeholder">Click Generate to create visualization</div>';
 
             genBtn.addEventListener('click', () => {
@@ -736,7 +732,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     srcdoc = demoHtml.replace('</html>', autoSizer + '</html>');
                 }
             } else {
-                srcdoc = `<!DOCTYPE html><html><head><style>body{margin:0;padding:16px;font-family:system-ui,sans-serif;color:#222}</style></head><body>${demoHtml}${autoSizer}</body></html>`;
+                srcdoc = `<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>body{margin:0;padding:16px;font-family:system-ui,sans-serif;color:#222}</style></head><body>${demoHtml}${autoSizer}</body></html>`;
             }
 
             const iframe = document.createElement('iframe');
@@ -754,7 +750,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function renderCodeBlocks(containerId, items, codeField) {
+    function renderCodeBlocks(containerId, items) {
         const container = document.getElementById(containerId);
         container.innerHTML = '';
 
@@ -765,18 +761,96 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             return true;
         });
+
         if (validItems.length > 0) {
-            validItems.forEach(item => {
+            validItems.forEach((item, idx) => {
                 const card = document.createElement('div');
                 card.className = 'code-card';
+                card.style.cssText = 'margin-bottom: 24px; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; background: var(--bg-card); display: flex; flex-direction: column;';
+                
+                // Explanations/Description
+                let explanationHtml = '';
+                const desc = item.description || item.explanation || '';
+                if (desc.trim()) {
+                    explanationHtml = `<div class="algo-explanation" style="padding: 16px; border-bottom: 1px solid var(--border-color); color: var(--text-main); font-size: 0.95rem; line-height: 1.6; background: var(--bg-main);">${marked.parse(desc)}</div>`;
+                }
+
+                // Check what code fields we have
+                const pseudocode = item.pseudocode || '';
+                const code = item.code || '';
+
+                let tabsHtml = '';
+                let blocksHtml = '';
+
+                if (pseudocode && code) {
+                    // Show tabs to switch between Pseudocode and Python Code
+                    tabsHtml = `
+                        <div class="algo-tabs" style="display: flex; background: var(--bg-elevated); border-bottom: 1px solid var(--border-color); padding: 0 16px;">
+                            <button class="algo-tab-btn active" data-target="pseudocode-${idx}" style="background: none; border: none; padding: 12px 16px; color: var(--text-main); border-bottom: 2px solid var(--primary-color, #7c3aed); font-weight: 600; cursor: pointer; font-size: 0.85rem;">Pseudocode</button>
+                            <button class="algo-tab-btn" data-target="python-${idx}" style="background: none; border: none; padding: 12px 16px; color: var(--text-muted); cursor: pointer; font-size: 0.85rem;">Python Code</button>
+                        </div>
+                    `;
+                    blocksHtml = `
+                        <div class="algo-blocks">
+                            <div id="pseudocode-${idx}" class="algo-block-content">
+                                <pre style="margin:0; border-radius:0; border:none;"><code class="language-text">${window.escapeHtml(pseudocode)}</code></pre>
+                            </div>
+                            <div id="python-${idx}" class="algo-block-content" style="display: none;">
+                                <pre style="margin:0; border-radius:0; border:none;"><code class="language-python">${window.escapeHtml(code)}</code></pre>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    const content = pseudocode || code || '';
+                    const langClass = pseudocode ? 'language-text' : 'language-python';
+                    blocksHtml = `
+                        <div class="algo-blocks">
+                            <pre style="margin:0; border-radius:0; border:none;"><code class="${langClass}">${window.escapeHtml(content)}</code></pre>
+                        </div>
+                    `;
+                }
+
                 card.innerHTML = `
-                    <div class="code-header">
-                        <span class="code-title">${item.name || 'Untitled'}</span>
+                    <div class="code-header" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--bg-elevated); border-bottom: 1px solid var(--border-color);">
+                        <span class="code-title" style="font-weight: 600; color: var(--text-main); font-size: 1rem;">${item.name || 'Untitled Algorithm'}</span>
                     </div>
-                    <pre><code>${window.escapeHtml(item[codeField] || '')}</code></pre>
+                    ${explanationHtml}
+                    ${tabsHtml}
+                    ${blocksHtml}
                 `;
+
+                // Add tab event listeners if we have tabs
+                if (pseudocode && code) {
+                    const tabBtns = card.querySelectorAll('.algo-tab-btn');
+                    tabBtns.forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            // Deactivate all tabs in this card
+                            tabBtns.forEach(b => {
+                                b.classList.remove('active');
+                                b.style.color = 'var(--text-muted)';
+                                b.style.borderBottom = 'none';
+                            });
+                            // Activate clicked tab
+                            btn.classList.add('active');
+                            btn.style.color = 'var(--text-main)';
+                            btn.style.borderBottom = '2px solid var(--primary-color, #7c3aed)';
+
+                            // Toggle content block
+                            const targetId = btn.getAttribute('data-target');
+                            card.querySelectorAll('.algo-block-content').forEach(block => {
+                                block.style.display = block.id === targetId ? 'block' : 'none';
+                            });
+                        });
+                    });
+                }
+
                 container.appendChild(card);
             });
+
+            // Syntax highlight if Prism is available
+            if (window.Prism) {
+                container.querySelectorAll('code').forEach(el => Prism.highlightElement(el));
+            }
         } else {
             container.innerHTML = '<p style="color:var(--text-muted)">No data provided for this section.</p>';
         }

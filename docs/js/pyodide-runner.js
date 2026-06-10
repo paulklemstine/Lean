@@ -32,6 +32,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // Start loading Pyodide immediately
     initPyodide();
 
+    function extractFutureImports(code) {
+        const lines = code.split('\n');
+        const futureLines = [];
+        const cleanedLines = [];
+        for (const line of lines) {
+            if (/^\s*from\s+__future__\s+import\b/.test(line)) {
+                futureLines.push(line);
+            } else {
+                cleanedLines.push(line);
+            }
+        }
+        return {
+            futureImports: futureLines.join('\n'),
+            cleanedCode: cleanedLines.join('\n')
+        };
+    }
+
     function buildLocalModuleCode(code, pkgData) {
         const knownLocalModules = ['algorithms', 'demo'];
         const localModuleRe = /^from\s+(\w+)\s+import\s+/gm;
@@ -213,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 title.textContent = item.name || 'Interactive Python Demo';
 
                 const btnGroup = document.createElement('div');
-                btnGroup.style.cssText = 'display: flex; gap: 8px; align-items: center;';
+                btnGroup.className = 'code-header-buttons';
 
                 const toggleBtn = document.createElement('button');
                 toggleBtn.className = 'source-toggle';
@@ -306,6 +323,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             }
                             codeToRun = moduleCode + '\n' + filtered.join('\n');
                         }
+
+                        const { futureImports, cleanedCode } = extractFutureImports(codeToRun);
+                        codeToRun = futureImports ? futureImports + '\n' + cleanedCode : cleanedCode;
 
                         await window.Aether.pyodideInstance.loadPackagesFromImports(codeToRun);
 
@@ -491,6 +511,9 @@ plt.close('all')
 print("VIZIMG:" + img_data)
 `;
             }
+
+            const { futureImports, cleanedCode } = extractFutureImports(fullCode);
+            fullCode = futureImports ? futureImports + '\n' + cleanedCode : cleanedCode;
 
             // Load all packages detected from imports (numpy, scipy, pandas, etc.)
             await window.Aether.pyodideInstance.loadPackagesFromImports(fullCode);
