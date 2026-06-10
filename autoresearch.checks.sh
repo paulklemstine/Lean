@@ -637,8 +637,8 @@ with unittest.mock.patch.object(client, '_call_ollama', return_value='[OLLAMA_ER
     prompt = client.write_aristotle_prompt(concept)
     assert not prompt.strip().lower().startswith('write a research brief'), \
         f'Prompt should not start with meta-instruction, got: {prompt[:60]}'
-    assert '## Research Task: test_theorem' in prompt, \
-        f'Prompt should have Research Task header, got: {prompt[:60]}'
+    assert '**Title**: test_theorem' in prompt, \
+        f'Prompt should have Title header, got: {prompt[:120]}'
     print(f'  Fallback prompt starts with: {prompt.strip()[:60]}')
 
 # Test 2: Preamble stripping works
