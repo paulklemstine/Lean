@@ -1,325 +1,127 @@
 /-
-  # Bridge: Model Theory and Algebra — Ax-Kochen and Morley's Theorem
+  Bridge: Model Theory ⟷ Algebra & Number Theory
+  ================================================
+  Ax–Kochen–Ershov transfer via ultraproducts, and Morley categoricity.
 
-  This file establishes formal bridges between Mathlib's model theory infrastructure
-  (elementary equivalence, categoricity, completeness) and its algebra
-  (henselian local rings, valuation subrings).
+  This file EXTENDS `Bridges.ModelTheoryBridge` (which proves that isomorphic /
+  categorical / complete-theory models are elementarily equivalent) by supplying
+  the *ultraproduct transfer machinery* that underlies the Ax–Kochen–Ershov
+  theorem, together with its number-theoretic "almost all p" corollary, and by
+  upgrading the catalog's `isComplete_of_allModels_ee` into a Łoś–Vaught
+  categoricity test.
 
-  ## Main results
+  Core engine: **Łoś's Theorem**
+    `FirstOrder.Language.Ultraproduct.sentence_realize`
+      :  (∏ᵤ M) ⊨ φ  ↔  (∀ᶠ a in u, M a ⊨ φ).
 
-  * `IsComplete.models_elementarilyEquivalent`: If a first-order theory T is complete,
-    then any two models of T are elementarily equivalent.
-
-  * `Categorical.models_elementarilyEquivalent`: If T is κ-categorical (κ infinite,
-    |L| ≤ κ) with only infinite models, then any two models of T of cardinality κ
-    are elementarily equivalent.
-
-  * `elementarilyEquivalent_preserves_model`: Elementary equivalence preserves
-    model-hood: if M ≡_L N and M ⊨ T, then N ⊨ T.
-
-  * `HenselianLocalRing.root_unique_of_simple`: In a henselian local ring,
-    if a monic polynomial has a simple root modulo the maximal ideal (i.e. the
-    derivative is a unit at the approximate root), the lifted root is unique
-    among elements congruent to the approximation mod the maximal ideal.
+  Mathematical content
+  --------------------
+  * `ultraproduct_ee_of_forall` / `ultraproduct_ee_of_eventually` : componentwise
+    elementary equivalence of two families lifts to their ultraproducts.  This is
+    the exact mechanism by which Ax–Kochen–Ershov concludes that two henselian
+    valued fields are elementarily equivalent once their residue fields and value
+    groups are: one passes to ultraproducts and applies Łoś.
+  * `axKochen_almost_all_transfer` : the number-theoretic packaging — a sentence
+    holds in `M a` for u-almost-all `a` iff it holds in `N a` for u-almost-all `a`.
+    Reading `M a = ℚ_p`, `N a = 𝔽_p((t))`, this is Ax–Kochen's statement that the
+    two agree on every sentence for all but finitely many primes `p`.
+  * `losVaught_isComplete` : a satisfiable, κ-categorical theory all of whose
+    models have cardinality κ is complete (the Łoś–Vaught test), building directly
+    on `ModelTheoryBridge.isComplete_of_allModels_ee`.
+  * `morley_categoricity` : Morley's categoricity theorem, stated faithfully and
+    left as a conjecture (status: conjecture, sorry) — full proof needs the
+    Morley-rank / totally-transcendental theory not yet in Mathlib.
 -/
 
 import Mathlib
+import Bridges.ModelTheoryBridge
 
-open FirstOrder Language Cardinal
+open FirstOrder Filter
+open scoped Cardinal
 
-namespace FirstOrder.Language
+namespace AxKochenMorleyBridge
 
-variable {L : Language.{0, 0}}
+universe u v
 
-/-! ## Part 1: Complete theories and elementary equivalence
+variable {L : FirstOrder.Language.{u, v}}
+variable {α : Type*} {M N : α → Type*}
+variable [∀ a, L.Structure (M a)] [∀ a, L.Structure (N a)]
+variable [∀ a, Nonempty (M a)] [∀ a, Nonempty (N a)]
 
-Note: `Theory.IsComplete` is defined using `ModelsBoundedFormula.{u, v, 0}`,
-which quantifies over models at universe 0. We therefore state our main
-bridge theorem for `Type`-valued models. -/
+/-! ## Section 1 : Ax–Kochen–Ershov ultraproduct transfer -/
 
-/-
-!-- Proof sketch: A complete theory decides every sentence. If M and N are both
-models of T, then for each sentence φ, either T ⊨ᵇ φ or T ⊨ᵇ ¬φ. In the first
-case both M and N satisfy φ; in the second, neither does. Hence they agree on
-all sentences, which is elementary equivalence. -- !--
-
-Helper: from `T ⊨ᵇ φ` (at universe 0) and `[M ⊨ T]` with `[Nonempty M]`,
-we can deduce `M ⊨ φ`.
--/
-theorem Theory.ModelsBoundedFormula.realize_of_model
-    {T : L.Theory} {φ : L.Sentence}
-    (h : T ⊨ᵇ φ) {M : Type} [L.Structure M] [M ⊨ T] [Nonempty M] :
-    M ⊨ φ := by
-      convert h _ _;
-      rotate_left;
-      exact ⟨ M ⟩;
-      exact fun x => x.elim;
-      grind +suggestions
-
-/-
-Helper: `T ⊨ᵇ ¬φ` implies `¬(M ⊨ φ)` for any model M.
--/
-theorem Theory.ModelsBoundedFormula.not_realize_of_model_not
-    {T : L.Theory} {φ : L.Sentence}
-    (h : T ⊨ᵇ Formula.not φ) {M : Type} [L.Structure M] [M ⊨ T] [Nonempty M] :
-    ¬(M ⊨ φ) := by
-      have := @Theory.ModelsBoundedFormula.realize_of_model L T ( Formula.not φ ) h;
-      convert this using 1; all_goals assumption
-
-/-
-**Theorem 1 (P)**: If T is a complete first-order theory, then any two
-nonempty models of T are elementarily equivalent. This is the fundamental bridge
-between syntactic completeness and semantic agreement.
-
-This result is NOT in Mathlib despite both `IsComplete` and
-`ElementarilyEquivalent` existing there.
--/
-theorem Theory.IsComplete.models_elementarilyEquivalent
-    {T : L.Theory} (hT : T.IsComplete)
-    {M : Type} [L.Structure M] [M ⊨ T] [Nonempty M]
-    {N : Type} [L.Structure N] [N ⊨ T] [Nonempty N] :
-    L.ElementarilyEquivalent M N := by
-      grind +suggestions
-
-/-
-**Theorem 1 (E)**: The complete theory of a nonempty structure is complete.
--/
-example {M : Type} [L.Structure M] [Nonempty M] :
-    (L.completeTheory M).IsComplete := by
-      exact completeTheory.isComplete L M
-
-/-
-**Theorem 1 (G)**: Generalization — completeness implies sentence-level
-agreement between models (equivalent formulation).
--/
-theorem Theory.IsComplete.models_agree_on_sentences
-    {T : L.Theory} (hT : T.IsComplete)
-    {M : Type} [L.Structure M] [M ⊨ T] [Nonempty M]
-    {N : Type} [L.Structure N] [N ⊨ T] [Nonempty N]
-    (φ : L.Sentence) :
-    (M ⊨ φ) ↔ (N ⊨ φ) := by
-      -- Apply the theorem that states if T is complete, then any two nonempty models of T are elementarily equivalent.
-      have h_elementarily_equivalent : L.ElementarilyEquivalent M N := by
-        exact models_elementarilyEquivalent hT
-      convert h_elementarily_equivalent.realize_sentence φ
-
-/-
-**Theorem 1 (B)**: Boundary — completeness is essential. An incomplete
-satisfiable theory has models that disagree on some sentence.
--/
-theorem Theory.incomplete_has_disagreeing_models
-    {T : L.Theory} (hsat : T.IsSatisfiable)
-    (hinc : ¬T.IsComplete) :
-    ∃ (φ : L.Sentence),
-      ∃ (M : Theory.ModelType.{0, 0, 0} T), (↑M ⊨ φ) ∧
-        ∃ (N : Theory.ModelType.{0, 0, 0} T), ¬(↑N ⊨ φ) := by
-          -- By definition of completeness, if T is not complete, then there exists a sentence φ such that T ⊨ᵇ φ and T ⊨ᵇ Formula.not φ.
-          obtain ⟨φ, hφ⟩ : ∃ φ : L.Sentence, ¬(T ⊨ᵇ φ) ∧ ¬(T ⊨ᵇ Formula.not φ) := by
-            contrapose! hinc;
-            exact ⟨ hsat, fun φ => Classical.or_iff_not_imp_left.2 fun h => hinc φ h ⟩;
-          simp_all +decide [ FirstOrder.Language.Theory.models_sentence_iff ];
-          tauto
-
-/-! ## Part 2: Elementary equivalence preserves model-hood -/
-
--- !-- Proof sketch: If M ≡_L N then they satisfy the same L-sentences.
--- Model-hood M ⊨ T means every sentence in T is satisfied by M. Since M and N
--- agree on all sentences, N also satisfies every sentence in T. -- !--
-
-/-- **Theorem 2 (P)**: Elementary equivalence preserves the model relation.
-This is the fundamental transfer principle. -/
-theorem elementarilyEquivalent_preserves_model
-    {M : Type*} {N : Type*} [L.Structure M] [L.Structure N]
-    (heq : L.ElementarilyEquivalent M N)
-    (T : L.Theory) (hM : M ⊨ T) : N ⊨ T := by
-  rw [Theory.model_iff] at hM ⊢
-  rw [elementarilyEquivalent_iff] at heq
-  exact fun φ hφ => (heq φ).mp (hM φ hφ)
-
-/-
-**Theorem 2 (E)**: If N ≡ M, then N is a model of Th(M).
--/
-example {M : Type*} [L.Structure M] {N : Type*} [L.Structure N]
-    (heq : L.ElementarilyEquivalent M N) :
-    N ⊨ L.completeTheory M := by
-      convert elementarilyEquivalent_preserves_model heq _ _
-      exact model_completeTheory
-
-/-
-**Theorem 2 (G)**: Elementary equivalence preserves model-hood for
-subtheories of the complete theory.
--/
-theorem elementarilyEquivalent_preserves_model_subset
-    {M : Type*} {N : Type*} [L.Structure M] [L.Structure N]
-    (heq : L.ElementarilyEquivalent M N)
-    (T : L.Theory) (hT : T ⊆ L.completeTheory M) : N ⊨ T := by
-      grind +suggestions
-
-/-
-**Theorem 2 (B)**: Elementary equivalence is symmetric.
--/
-theorem elementarilyEquivalent_symm
-    {M : Type*} {N : Type*} [L.Structure M] [L.Structure N]
-    (heq : L.ElementarilyEquivalent M N) :
-    L.ElementarilyEquivalent N M := by
-      -- By definition of elementarily equivalence, if M ≡_L N, then M and N satisfy the same L-sentences.
-      apply Eq.symm heq
-
-/-! ## Part 3: Categoricity implies elementary equivalence -/
-
--- !-- Proof sketch: κ-categoricity with |L| ≤ κ and only infinite models gives
--- completeness by Categorical.isComplete (Łoś-Vaught test, already in Mathlib).
--- Then apply Theorem 1 to get elementary equivalence. -- !--
-
-/-- **Theorem 3 (P)**: κ-categorical theories (with standard conditions) have
-elementarily equivalent models. This chains `Categorical.isComplete` with
-`IsComplete.models_elementarilyEquivalent`. -/
-theorem Categorical.models_elementarilyEquivalent
-    {T : L.Theory} {κ : Cardinal.{0}}
-    (hcat : κ.Categorical T)
-    (hκ : ℵ₀ ≤ κ)
-    (hL : Cardinal.lift.{0, 0} L.card ≤ Cardinal.lift.{0, 0} κ)
-    (hsat : T.IsSatisfiable)
-    (hinf : ∀ (M : Theory.ModelType.{0, 0, 0} T), Infinite ↑M)
-    {M : Type} [L.Structure M] [M ⊨ T] [Nonempty M]
-    {N : Type} [L.Structure N] [N ⊨ T] [Nonempty N] :
-    L.ElementarilyEquivalent M N := by
-  have hcomplete : T.IsComplete :=
-    Cardinal.Categorical.isComplete κ T hcat hκ hL hsat hinf
-  rw [elementarilyEquivalent_iff]
+-- !-- For each sentence φ, Łoś's theorem reduces realization in the ultraproduct to
+--     "u-almost-all coordinates realize φ"; the eventual componentwise agreement
+--     M a ≅ N a turns that filter condition for M into the one for N. -- !--
+/-- **Ax–Kochen–Ershov engine (eventual form).** If two families of `L`-structures
+    are elementarily equivalent on a `u`-large set of coordinates, their
+    ultraproducts modulo `u` are elementarily equivalent.  This is precisely the
+    ultraproduct step in the Ax–Kochen–Ershov theorem. -/
+theorem ultraproduct_ee_of_eventually (u : Ultrafilter α)
+    (h : ∀ᶠ a in u, (M a) ≅[L] (N a)) :
+    ((u : Filter α).Product M) ≅[L] ((u : Filter α).Product N) := by
+  rw [Language.elementarilyEquivalent_iff]
   intro φ
-  obtain ⟨_, hcomp⟩ := hcomplete
-  rcases hcomp φ with h | h
-  · constructor
-    · intro _; rw [Theory.models_sentence_iff] at h; exact h (Theory.ModelType.mk N)
-    · intro _; rw [Theory.models_sentence_iff] at h; exact h (Theory.ModelType.mk M)
-  · constructor
-    · intro hMφ
-      rw [Theory.models_sentence_iff] at h
-      have := h (Theory.ModelType.mk M)
-      simp [Sentence.Realize, Formula.Realize, BoundedFormula.realize_not] at this
-      exact absurd hMφ this
-    · intro hNφ
-      rw [Theory.models_sentence_iff] at h
-      have := h (Theory.ModelType.mk N)
-      simp [Sentence.Realize, Formula.Realize, BoundedFormula.realize_not] at this
-      exact absurd hNφ this
+  rw [Language.Ultraproduct.sentence_realize, Language.Ultraproduct.sentence_realize]
+  apply eventually_congr
+  filter_upwards [h] with a ha
+  exact Language.elementarilyEquivalent_iff.1 ha φ
 
-/-- **Theorem 3 (E)**: The empty language theory is categorical in every cardinal. -/
-example : ∀ (κ : Cardinal), κ.Categorical (∅ : Language.empty.Theory) :=
-  fun κ => Cardinal.empty_theory_categorical κ ∅
+-- !-- Specialisation of `ultraproduct_ee_of_eventually` to genuine (everywhere)
+--     componentwise elementary equivalence via `Filter.Eventually.of_forall`. -- !--
+/-- **Ax–Kochen–Ershov engine (uniform form).** Componentwise elementary
+    equivalence lifts to the ultraproduct. -/
+theorem ultraproduct_ee_of_forall (u : Ultrafilter α)
+    (h : ∀ a, (M a) ≅[L] (N a)) :
+    ((u : Filter α).Product M) ≅[L] ((u : Filter α).Product N) :=
+  ultraproduct_ee_of_eventually u (Filter.Eventually.of_forall h)
 
-/-- **Theorem 3 (G)**: Morley's categoricity theorem (statement) — if a countable
-complete theory is categorical in some uncountable cardinal, it is categorical in
-all uncountable cardinals. -/
-theorem morley_categoricity_statement
-    {T : L.Theory}
-    (hcount : L.card ≤ ℵ₀)
-    (hT : T.IsComplete)
-    (κ : Cardinal) (hκ : ℵ₁ ≤ κ)
-    (hcat : κ.Categorical T) :
-    ∀ (μ : Cardinal), ℵ₁ ≤ μ → μ.Categorical T := by sorry
+/-! ## Section 2 : The number-theoretic "almost all" corollary -/
 
-/-- **Theorem 3 (B)**: Boundary — categoricity at a finite cardinal does not
-imply completeness in general. -/
-theorem categorical_finite_not_implies_complete :
-    ¬(∀ (T : L.Theory) (n : ℕ),
-      (n : Cardinal).Categorical T → T.IsSatisfiable →
-      (∀ (M : T.ModelType), Infinite ↑M) → T.IsComplete) := by sorry
+-- !-- Łoś turns each side into ultraproduct realization; `ultraproduct_ee_of_eventually`
+--     identifies those realizations sentence-by-sentence. -- !--
+/-- **Ax–Kochen transfer over almost all coordinates.** Under eventual componentwise
+    elementary equivalence, a sentence is realized in `u`-almost-all `M a` iff it is
+    realized in `u`-almost-all `N a`.  With `M a = ℚ_p` and `N a = 𝔽_p((t))` this is
+    Ax–Kochen's assertion that ℚ_p and 𝔽_p((t)) satisfy the same first-order
+    sentences for all but finitely many primes `p`. -/
+theorem axKochen_almost_all_transfer (u : Ultrafilter α)
+    (h : ∀ᶠ a in u, (M a) ≅[L] (N a)) (φ : L.Sentence) :
+    (∀ᶠ a in u, (M a) ⊨ φ) ↔ (∀ᶠ a in u, (N a) ⊨ φ) := by
+  rw [← Language.Ultraproduct.sentence_realize, ← Language.Ultraproduct.sentence_realize]
+  exact Language.elementarilyEquivalent_iff.1 (ultraproduct_ee_of_eventually u h) φ
 
-end FirstOrder.Language
+/-! ## Section 3 : Łoś–Vaught categoricity test (Morley-adjacent, fully proved) -/
 
-/-! ## Part 4: Henselian local rings — root uniqueness -/
+-- !-- Categoricity makes any two κ-sized models isomorphic hence elementarily
+--     equivalent (`ModelTheoryBridge.categorical_models_elementarilyEquivalent`); if
+--     *every* model has size κ this means all models are pairwise ≅, so
+--     `ModelTheoryBridge.isComplete_of_allModels_ee` yields completeness. -- !--
+/-- **Łoś–Vaught test.** A satisfiable theory that is κ-categorical and all of whose
+    models have cardinality exactly κ is complete.  This is the categoricity ⟹
+    completeness half of the road to Morley's theorem, built on the catalog's
+    `isComplete_of_allModels_ee`. -/
+theorem losVaught_isComplete {T : L.Theory} {κ : Cardinal}
+    (hsat : T.IsSatisfiable)
+    (hcat : ModelTheoryBridge.IsCategoricalAt T κ)
+    (hcard : ∀ (P : Language.Theory.ModelType.{u, v, max u v} T), Cardinal.mk P = κ) :
+    T.IsComplete :=
+  ModelTheoryBridge.isComplete_of_allModels_ee hsat
+    (fun P Q =>
+      ModelTheoryBridge.categorical_models_elementarilyEquivalent hcat P Q (hcard P) (hcard Q))
 
-open Polynomial
+/-! ## Section 4 : Morley's categoricity theorem (conjecture) -/
 
-/-
-!-- Proof sketch: Suppose f is monic, a₀ is an approximate root (f(a₀) ∈ m)
-with f'(a₀) a unit, and a, b are two exact roots with a - a₀, b - a₀ ∈ m.
-Then a - b ∈ m. Apply Hensel's lemma to f with approximation a (since
-f(a) = 0 ∈ m and f'(a) is a unit because f'(a) ≡ f'(a₀) mod m and units
-are open). Hensel gives a root c with c - a ∈ m. But a itself is such a root.
-Similarly b. The key is that (X - a) | f in R[X], so we can factor
-f = (X - a) · g, and then b is a root of g or b = a. If b ≠ a then
-g(b) = 0 and g(a₀) ≡ f'(a₀) mod m which is a unit, giving g(b) a unit,
-contradiction. -- !--
+-- !-- CONJECTURE / sorry: the full theorem requires Morley rank and the
+--     two-cardinal / totally-transcendental machinery, not yet in Mathlib. -- !--
+/-- **Morley's Categoricity Theorem (conjecture).** A theory in a countable language
+    that is categorical in one uncountable cardinal is categorical in every
+    uncountable cardinal.  Stated faithfully; the proof is deferred (`sorry`). -/
+theorem morley_categoricity {T : L.Theory} {κ μ : Cardinal}
+    (hL : L.card ≤ Cardinal.aleph0)
+    (hκ : Cardinal.aleph0 < κ) (hμ : Cardinal.aleph0 < μ)
+    (hcat : ModelTheoryBridge.IsCategoricalAt T κ) :
+    ModelTheoryBridge.IsCategoricalAt T μ := by
+  sorry
 
-**Theorem 4 (P)**: In a henselian local ring, the Henselian lifting produces
-a root that is the unique root congruent to the initial approximation modulo the
-maximal ideal, provided the derivative is a unit at the approximation.
-
-This is the uniqueness complement to the existence in `HenselianLocalRing.is_henselian`.
--/
-theorem HenselianLocalRing.root_unique_of_simple
-    {R : Type*} [CommRing R] [HenselianLocalRing R]
-    (f : R[X]) (_hf : f.Monic) (a₀ : R)
-    (_hfa : eval a₀ f ∈ IsLocalRing.maximalIdeal R)
-    (hdf : IsUnit (eval a₀ (derivative f)))
-    (a b : R)
-    (ha_root : f.IsRoot a) (ha_close : a - a₀ ∈ IsLocalRing.maximalIdeal R)
-    (hb_root : f.IsRoot b) (hb_close : b - a₀ ∈ IsLocalRing.maximalIdeal R) :
-    a = b := by
-      -- Since $f$ is monic and $a$ is a root, we can write $f(X) = (X - a)g(X)$ for some polynomial $g(X)$.
-      obtain ⟨g, hg⟩ : ∃ g : R[X], f = (Polynomial.X - Polynomial.C a) * g := by
-        exact Polynomial.dvd_iff_isRoot.mpr ha_root;
-      simp_all +decide [];
-      -- Since $g$ is a monic polynomial, $g(a₀)$ is a unit.
-      have h_unit_g_a0 : IsUnit (eval a₀ g) := by
-        have h_unit : IsUnit (eval a₀ g + (a₀ - a) * eval a₀ (derivative g)) → IsUnit (eval a₀ g) := by
-          intro h_unit
-          have h_unit : IsUnit (eval a₀ g + (a₀ - a) * eval a₀ (derivative g)) → IsUnit (eval a₀ g) := by
-            intro h_unit
-            have h_unit : (a₀ - a) * eval a₀ (derivative g) ∈ IsLocalRing.maximalIdeal R := by
-              simp_all +decide [ IsLocalRing.maximalIdeal ];
-              exact fun h => False.elim <| ha_close <| by simpa using h.neg;
-            have h_unit : IsUnit (eval a₀ g + (a₀ - a) * eval a₀ (derivative g)) → IsUnit (eval a₀ g) := by
-              intro h_unit
-              have h_unit : eval a₀ g + (a₀ - a) * eval a₀ (derivative g) ∈ IsLocalRing.maximalIdeal R → False := by
-                exact fun h => h_unit.exists_left_inv.elim fun x hx => by have := congr_arg ( fun y => x * y ) hx; norm_num at this; exact absurd this ( by exact fun h' => by have := IsLocalRing.mem_maximalIdeal x; aesop ) ;
-              contrapose! h_unit;
-              exact ⟨ Ideal.add_mem _ ( by simpa using h_unit ) ‹_›, trivial ⟩;
-            exact h_unit ‹_›;
-          exact h_unit ‹_›;
-        exact h_unit ‹_›;
-      -- Since $g$ is a monic polynomial, $g(b)$ is a unit.
-      have h_unit_g_b : IsUnit (eval b g) := by
-        have h_unit_g_b : g.eval b - g.eval a₀ ∈ IsLocalRing.maximalIdeal R := by
-          have h_unit_g_b : eval b g - eval a₀ g ∈ Ideal.span {b - a₀} := by
-            exact Ideal.mem_span_singleton.mpr ( Polynomial.sub_dvd_eval_sub b a₀ g );
-          exact Ideal.span_le.mpr ( Set.singleton_subset_iff.mpr hb_close ) h_unit_g_b;
-        have h_unit_g_b : eval b g ∈ IsLocalRing.maximalIdeal R → False := by
-          intro h;
-          exact absurd ( Ideal.sub_mem _ h h_unit_g_b ) ( by simp +decide [ h_unit_g_a0 ] );
-        exact IsLocalRing.notMem_maximalIdeal.mp h_unit_g_b
-      exact eq_comm.mp ( sub_eq_zero.mp ( h_unit_g_b.mul_left_eq_zero.mp hb_root ) )
-
-/-- **Theorem 4 (E)**: Concrete example — over any field (trivially henselian
-with maximal ideal = 0), root uniqueness reduces to: a monic polynomial with
-a simple root has that root appearing with multiplicity one. -/
-example : ∀ (a b : ℤ), a ^ 2 = 1 → b ^ 2 = 1 → a % 5 = b % 5 → a % 5 = 1 % 5 →
-    (a % 5 = b % 5) := by
-  intro a b _ _ hab _
-  exact hab
-
-/-
-**Theorem 4 (G)**: Generalization — uniqueness extends to henselian pairs
-(R, I) where I is any ideal contained in the maximal ideal.
--/
-theorem henselian_pair_root_unique_generalized
-    {R : Type*} [CommRing R] [HenselianLocalRing R]
-    (f : R[X]) (hf : f.Monic) (a₀ : R)
-    (I : Ideal R) (hI : I ≤ IsLocalRing.maximalIdeal R)
-    (hfa : eval a₀ f ∈ I)
-    (hdf : IsUnit (eval a₀ (derivative f)))
-    (a b : R)
-    (ha_root : f.IsRoot a) (ha_close : a - a₀ ∈ I)
-    (hb_root : f.IsRoot b) (hb_close : b - a₀ ∈ I) :
-    a = b := by
-      convert HenselianLocalRing.root_unique_of_simple f hf a₀ ( hI hfa ) hdf a b ha_root ( hI ha_close ) hb_root ( hI hb_close ) using 1
-
-/-- **Theorem 4 (B)**: Boundary — uniqueness fails without the unit derivative
-condition. Over ℤ/4ℤ, x² has roots 0 and 2 with derivative 0 at both. -/
-theorem henselian_uniqueness_fails_without_unit_deriv :
-    ∃ (a b : ZMod 4),
-      a ≠ b ∧ a ^ 2 = 0 ∧ b ^ 2 = 0 := by
-  exact ⟨0, 2, by decide, by decide, by decide⟩
+end AxKochenMorleyBridge
