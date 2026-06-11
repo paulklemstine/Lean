@@ -456,6 +456,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle 8e0cdf42 (Q=0.742) proved 775 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions \u2014 Proof Phase Transitions in Random k-SAT\n\nThe file `Catalog/Physics/ProofPhaseTransitions/RandomKSAT.lean` establishes, fully\nformally and `sorry`-free, the **first-moment (anneal",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_8e0cdf42_1c6ed98b",
+    "priority_score": 0.7918812903225807,
+    "research_mode": "team",
+    "source_exp_id": "8e0cdf42",
+    "status": "available",
+    "timestamp": "2026-06-11T17:36:16.059917+00:00",
+    "title": "Close Proofs: The file `Catalog/Physics/ProofPhaseTransitions/RandomKSAT.lean` estab"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 890ec8d0 (Q=0.717) proved 1351 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Spectral Chain Framework\n\n## What Was Established\n\nThis cycle produced a formally verified framework (`Computation/SpectralChain/`) connecting spectral gaps, conductance, mixing t",
     "domains": [
       "Applications"
