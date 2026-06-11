@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f6f7fad2",
     "filename": "the_file_constructivefoundationslean_establishes_a.json",
     "pkg_num": 81,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.59718,
     "title": "Constructive Foundations from Homotopy Type Theory"
   },
   {
@@ -2443,8 +2443,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "the_file_constructivefoundationslean_establishes_a",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.59718,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Constructive Foundations from Homotopy Type Theory"
     }
