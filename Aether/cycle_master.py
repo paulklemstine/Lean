@@ -319,10 +319,11 @@ class CycleMaster:
         self.catalog_scorer.load_scores()
 
         # v3: ArXiv mining for fresh mathematical ideas
+        from research_memory import FutureDirectionsManager
         self.arxiv_miner = ArxivMiner(
             pi_agent=self.pi_agent,
             catalog_analyzer=CatalogAnalyzer(self.catalog_root),
-            research_memory=self.memory,
+            research_memory=FutureDirectionsManager(self.workspace),
             config=config.get("arxiv", {}),
         )
 

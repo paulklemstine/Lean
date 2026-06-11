@@ -54,8 +54,8 @@ GENERAL_QUERY = GENERAL_QUERIES[0]
 
 # Default config values
 DEFAULT_RATE_LIMIT = 3  # seconds between downloads
-DEFAULT_MAX_PAPER_CHARS = 12000  # increased for structural extraction
-DEFAULT_BATCH_SIZE = 5
+DEFAULT_MAX_PAPER_CHARS = 40000  # increased for structural extraction
+DEFAULT_BATCH_SIZE = 20  # increased for relevance ranking
 
 
 @dataclass
@@ -246,8 +246,20 @@ class ArxivTexProvider:
         abstract_match = re.search(r'\\begin\{abstract\}(.*?)\\end\{abstract\}', tex, re.DOTALL)
         abstract_text = abstract_match.group(1).strip() if abstract_match else ""
 
-        # Find theorem-like environments: \begin{theorem}, \begin{lemma}, etc.
-        math_envs = r'(?:theorem|lemma|proposition|corollary|conjecture|definition|remark|claim)'
+        # Scan for custom theorem/definition environments
+        custom_envs = set()
+        for env_match in re.finditer(r'\\newtheorem\*?\{(\w+)\}', tex):
+            custom_envs.add(env_match.group(1))
+        for env_match in re.finditer(r'\\declaretheorem(?:\[[^\]]*\])?\{(\w+)\}', tex):
+            custom_envs.add(env_match.group(1))
+
+        # Standard environments + custom ones
+        std_envs = {"theorem", "lemma", "proposition", "corollary", "conjecture", "definition", "remark", "claim", "thm", "lem", "prop", "cor", "defn", "proof", "pf"}
+        all_envs = std_envs.union(custom_envs)
+
+        # Escape for regex
+        math_envs = r'(?:' + '|'.join(re.escape(e) for e in all_envs) + r')'
+
         # Extract sections that contain theorem-like environments
         sections = re.split(r'\\section\{', tex)
         theorem_sections = []
@@ -276,10 +288,52 @@ class ArxivTexProvider:
         result = re.sub(r'\n{3,}', '\n\n', result)
         return result
 
-    def get_next_paper(self) -> Optional[ArxivPaper]:
-        """Return the next unseen paper with LaTeX content.
+    def _score_paper_relevance(self, paper: ArxivPaper, keywords: Optional[List[str]] = None) -> float:
+        """Compute a relevance score for a paper based on its abstract, title, and categories.
 
-        Fetches metadata batches as needed, downloads source, and returns
+        Prioritizes papers with high mathematical content and keyword matches.
+        """
+        score = 0.0
+
+        # 1. Category check
+        cats = paper.categories.lower()
+        if "math.nt" in cats or "math.co" in cats or "math.ra" in cats or "math.ac" in cats or "math.ag" in cats:
+            score += 2.0
+        if "cs.lo" in cats:
+            score += 3.0
+        elif "cs.cr" in cats or "cs.lg" in cats or "cs.cc" in cats:
+            score += 1.0
+
+        # 2. Mathematical term density in abstract and title
+        math_terms = [
+            "theorem", "lemma", "corollary", "proposition", "definition", "conjecture",
+            "proof", "ring", "semiring", "group", "lattice", "poset", "category", "functor",
+            "homotopy", "cohomology", "sheaf", "manifold", "metric space", "topology",
+            "inequality", "bounds", "continuous", "differentiable", "isomorphism",
+            "morphism", "ideal", "module", "field", "variety", "algebra"
+        ]
+
+        text = (paper.title + " " + paper.abstract).lower()
+        for term in math_terms:
+            if term in text:
+                score += 0.5
+                score += 0.1 * text.count(term)
+
+        # 3. Custom/Dynamic keywords if provided
+        if keywords:
+            for kw in keywords:
+                kw_lower = kw.lower()
+                if kw_lower in text:
+                    score += 3.0
+                    score += 0.5 * text.count(kw_lower)
+
+        return score
+
+    def get_next_paper(self, keywords: Optional[List[str]] = None) -> Optional[ArxivPaper]:
+        """Return the next unseen paper with LaTeX content, ranked by relevance.
+
+        Fetches metadata batches as needed, ranks them by keyword and math density
+        relevance, downloads source for the highest-ranked paper first, and returns
         an ArxivPaper with content filled in. Returns None if no more
         papers are available.
         """
@@ -287,9 +341,19 @@ class ArxivTexProvider:
         while attempts < 10:
             if not self.paper_queue:
                 new_papers = self._fetch_next_batch()
-                self.paper_queue.extend(new_papers)
-                if not self.paper_queue:
+                if not new_papers:
                     return None
+
+                # Rank new papers by relevance
+                scored_papers = []
+                for p in new_papers:
+                    score = self._score_paper_relevance(p, keywords)
+                    scored_papers.append((score, p))
+
+                # Sort descending by score
+                scored_papers.sort(key=lambda x: x[0], reverse=True)
+
+                self.paper_queue.extend([p for _, p in scored_papers])
 
             paper = self.paper_queue.pop(0)
             tex = self._download_and_extract_tex(paper.paper_id)

@@ -70,8 +70,8 @@ class TestArxivTexProvider:
         """Provider initializes with correct defaults."""
         provider = ArxivTexProvider()
         assert provider.query == GENERAL_QUERY
-        assert provider.batch_size == 5
-        assert provider.max_paper_chars == 12000
+        assert provider.batch_size == 20
+        assert provider.max_paper_chars == 40000
 
     def test_set_domain_query(self):
         """set_domain_query changes the query for a known domain."""

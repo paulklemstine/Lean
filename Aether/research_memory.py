@@ -267,6 +267,8 @@ class FutureDirection:
     # --- Cleanup tracking ---
     last_reviewed_at: str = ""                                     # ISO timestamp of last Pi-Agent cleanup review
     cleanup_review_count: int = 0                                  # number of times reviewed by Pi-Agent (kept each time)
+    # --- Syntactic proof stubs ---
+    lean_theorem_stub: str = ""                                    # tentative Lean 4 theorem stub for early syntax validation
 
     def to_dict(self) -> dict:
         return {
@@ -298,6 +300,7 @@ class FutureDirection:
             "quarantined_until": self.quarantined_until,
             "last_reviewed_at": self.last_reviewed_at,
             "cleanup_review_count": self.cleanup_review_count,
+            "lean_theorem_stub": self.lean_theorem_stub,
         }
 
     @classmethod
@@ -619,6 +622,8 @@ class FutureDirectionsManager:
                 # Determine ambition level
                 ambition_level = "grand_challenge" if "grand" in ambition_raw.lower() else "extension"
 
+                lean_theorem_stub = self._extract_bold_field(body, "Lean Theorem Stub") or self._extract_bold_field(body, "Lean Stub")
+
                 fd = FutureDirection(
                     id=self._next_id(),
                     title=title,
@@ -633,6 +638,7 @@ class FutureDirectionsManager:
                     ambition_level=ambition_level,
                     lineage_refs=lineage_refs,
                     domain_bridges=domain_bridges,
+                    lean_theorem_stub=lean_theorem_stub,
                 )
                 # Cap auto-generated priority to computed quality score
                 quality = self._compute_quality_score(fd)

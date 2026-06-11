@@ -62,6 +62,7 @@ Propose ONE research direction that:
          min(a^t, b^t) + min(c^t, (a+b)^t) = min(a^t + b^t, c^t) for all t ≥ 1"
 4. Identifies which Catalog theorems to build on (cite file paths)
 5. Names the domain bridges this creates (e.g., "Algebra <-> Tropical")
+6. Writes a TENTATIVE, syntactically-plausible Lean 4 theorem stub (`lean_theorem_stub`) formulating the conjecture mathematically (using `by sorry` for the proof).
 
 Output JSON:
 {{
@@ -72,6 +73,7 @@ Output JSON:
   "domain_bridges": ["Algebra <-> Tropical"],
   "ambition_level": "grand_challenge" or "extension",
   "proof_strategy": "Key lemma: [statement]. Approach: [technique]. Steps: 1) [first step] 2) [second step] ...",
+  "lean_theorem_stub": "theorem my_conjecture (x y : R) : my_property x y := by sorry",
   "arxiv_id": "{arxiv_id}"
 }}"""
 
@@ -107,6 +109,44 @@ class ArxivMiner:
         # Track cycle parity for alternating queries
         self._cycle_count = 0
 
+    def _get_recent_keywords(self) -> List[str]:
+        """Extract key mathematical terms from the 5 most recent successful experiments."""
+        from research_memory import ResearchMemory
+        try:
+            workspace = getattr(self.research_memory, "workspace", None)
+            if not workspace:
+                return []
+            exp_mem = ResearchMemory(workspace)
+            successes = [r for r in exp_mem._cache if r.status == "success"][-5:]
+            if not successes:
+                return []
+
+            keywords = set()
+            stop_words = {
+                "the", "a", "an", "and", "or", "but", "if", "then", "of", "to", "in", "on",
+                "with", "for", "by", "about", "against", "between", "into", "through",
+                "during", "before", "after", "above", "below", "from", "up", "down",
+                "in", "out", "over", "under", "again", "further", "then", "once", "here",
+                "there", "when", "where", "why", "how", "all", "any", "both", "each",
+                "few", "more", "most", "other", "some", "such", "no", "nor", "not",
+                "only", "own", "same", "so", "than", "too", "very", "s", "t", "can",
+                "will", "just", "don", "should", "now", "proved", "theorem", "lemma",
+                "proof", "theory", "formal", "formalization", "lean", "mathlib", "using",
+                "class", "instance", "definition", "verify", "verification"
+            }
+
+            for r in successes:
+                text = r.concept_title + " " + " ".join(r.key_theorems)
+                words = re.findall(r'[a-zA-Z]{3,}', text.lower())
+                for w in words:
+                    if w not in stop_words:
+                        keywords.add(w)
+
+            return list(keywords)[:10]
+        except Exception as e:
+            print(f"[ArXiv] Error extracting keywords: {e}")
+            return []
+
     def mine_future_direction(
         self,
         domain: str = "",
@@ -129,21 +169,38 @@ class ArxivMiner:
             print("[ArXiv] No Pi-Agent available, skipping mining")
             return None
 
+        # Extract recent keywords to rank/filter papers
+        keywords = self._get_recent_keywords()
+
         # Set the appropriate query
+        base_query = ""
         if use_domain_query and domain in self.queries:
-            query = self.queries[domain]
-            print(f"[ArXiv] Using domain query for {domain}: {query[:60]}...")
+            base_query = self.queries[domain]
         else:
-            # Rotate through general queries for cross-pollination
-            query = GENERAL_QUERIES[self._cycle_count % len(GENERAL_QUERIES)]
-            print(f"[ArXiv] Using general cross-pollination query (cycle {self._cycle_count})")
+            base_query = GENERAL_QUERIES[self._cycle_count % len(GENERAL_QUERIES)]
+
+        # Try a targeted query with keywords if available
+        query = base_query
+        if keywords:
+            kw_terms = " OR ".join(f'all:"{kw}"' for kw in keywords[:3])  # top 3 keywords
+            query = f"({base_query}) AND ({kw_terms})"
+            print(f"[ArXiv] Trying targeted dynamic query: {query[:80]}...")
+            self.provider.set_query(query)
+
+            # Fetch a paper
+            paper = self.provider.get_next_paper(keywords=keywords)
+            if not paper:
+                print("[ArXiv] No papers found with targeted dynamic query, falling back to base query...")
+                query = base_query
+                self.provider.set_query(query)
+                paper = self.provider.get_next_paper(keywords=keywords)
+        else:
+            print(f"[ArXiv] Using query: {query[:60]}...")
+            self.provider.set_query(query)
+            paper = self.provider.get_next_paper(keywords=keywords)
 
         self._cycle_count += 1
 
-        self.provider.set_query(query)
-
-        # Fetch a paper
-        paper = self.provider.get_next_paper()
         if not paper or not paper.tex_content:
             print("[ArXiv] No paper content available, skipping mining")
             return None
@@ -204,17 +261,24 @@ class ArxivMiner:
     ) -> Optional[FutureDirection]:
         """Parse Pi-Agent's JSON response into a FutureDirection."""
         # Extract JSON from the response
-        json_match = re.search(r'\{[^{}]*\}', raw, re.DOTALL)
-        if not json_match:
-            # Try with nested braces (the response might have nested JSON)
-            json_match = re.search(r'\{.*\}', raw, re.DOTALL)
-            if not json_match:
-                print("[ArXiv] Could not find JSON in Pi-Agent response")
-                return None
+        data = None
+        if self.pi_agent:
+            try:
+                parsed = self.pi_agent._parse_json_response(raw)
+                if isinstance(parsed, dict):
+                    data = parsed
+            except Exception:
+                pass
 
-        try:
-            data = json.loads(json_match.group())
-        except json.JSONDecodeError:
+        if not data:
+            json_match = re.search(r'\{.*\}', raw, re.DOTALL)
+            if json_match:
+                try:
+                    data = json.loads(json_match.group())
+                except Exception:
+                    pass
+
+        if not data:
             print("[ArXiv] Could not parse JSON from Pi-Agent response")
             return None
 
@@ -274,6 +338,7 @@ class ArxivMiner:
             ambition = "extension"
 
         proof_strategy = data.get("proof_strategy", "").strip()
+        lean_theorem_stub = data.get("lean_theorem_stub", "").strip()
 
         # Novelty check: compare against existing directions
         existing_titles = [d.title.lower() for d in self.research_memory._directions
@@ -306,6 +371,7 @@ class ArxivMiner:
             catalog_references=catalog_refs,
             ambition_level=ambition,
             domain_bridges=domain_bridges,
+            lean_theorem_stub=lean_theorem_stub,
         )
 
         # Apply quality scoring so it competes fairly with other directions

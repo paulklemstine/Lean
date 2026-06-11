@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c98f24ec",
     "filename": "close_proofs_proof_phase_transitions_sharp_thresho.json",
     "pkg_num": 60,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.49017348115299336,
     "title": "Berggren-Lorentz Monoid: Discrete Lorentz Symmetry of Pythagorean Triples"
   },
   {
@@ -1785,8 +1785,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "close_proofs_proof_phase_transitions_sharp_thresho",
       "primary_domain": "Pythagorean",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.49017348115299336,
+      "quality": "partial",
       "shape": "triangular_prism",
       "title": "Berggren-Lorentz Monoid: Discrete Lorentz Symmetry of Pythagorean Triples"
     }
