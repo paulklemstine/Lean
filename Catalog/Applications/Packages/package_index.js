@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "23f1d6d2",
     "filename": "the_abstract_simulation_preorder_formalized_in_pro.json",
     "pkg_num": 89,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5274731707317073,
     "title": "Proof System Collapse: The Simulation Lattice of Cook\u2013Reckhow Proof Systems"
   },
   {
@@ -2703,8 +2703,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "the_abstract_simulation_preorder_formalized_in_pro",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5274731707317073,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Proof System Collapse: The Simulation Lattice of Cook\u2013Reckhow Proof Systems"
     }
