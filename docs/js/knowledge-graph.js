@@ -1327,12 +1327,14 @@
                 ctx.beginPath();
                 ctx.moveTo(sa.x, sa.y);
                 ctx.lineTo(sb.x, sb.y);
-                const edgeGrad = ctx.createLinearGradient(sa.x, sa.y, sb.x, sb.y);
-                edgeGrad.addColorStop(0, `hsla(${colA.h}, ${colA.s}%, ${Math.min(colA.l + 20, 90)}%, ${coreAlpha})`);
-                edgeGrad.addColorStop(1, `hsla(${colB.h}, ${colB.s}%, ${Math.min(colB.l + 20, 90)}%, ${coreAlpha})`);
-                ctx.strokeStyle = edgeGrad;
-                ctx.lineWidth = lineW;
-                ctx.stroke();
+                if (isFinite(sa.x) && isFinite(sa.y) && isFinite(sb.x) && isFinite(sb.y)) {
+                    const edgeGrad = ctx.createLinearGradient(sa.x, sa.y, sb.x, sb.y);
+                    edgeGrad.addColorStop(0, `hsla(${colA.h}, ${colA.s}%, ${Math.min(colA.l + 20, 90)}%, ${coreAlpha})`);
+                    edgeGrad.addColorStop(1, `hsla(${colB.h}, ${colB.s}%, ${Math.min(colB.l + 20, 90)}%, ${coreAlpha})`);
+                    ctx.strokeStyle = edgeGrad;
+                    ctx.lineWidth = lineW;
+                    ctx.stroke();
+                }
             }
             // Draw each edge on both sides of the Klein bottle
             graphEdges.forEach(e => {
@@ -1411,15 +1413,17 @@
                 const st1 = worldToScreen(tx1, ty1);
                 if (isInView(hx1, hy1, 50) || isInView(tx1, ty1, 50)) {
                     // Laser streak line
-                    const grad = ctx.createLinearGradient(st1.x, st1.y, sh1.x, sh1.y);
-                    grad.addColorStop(0, `hsla(${blendH}, 80%, 80%, 0)`);
-                    grad.addColorStop(1, `hsla(${blendH}, 100%, 90%, ${alpha})`);
-                    ctx.beginPath();
-                    ctx.moveTo(st1.x, st1.y);
-                    ctx.lineTo(sh1.x, sh1.y);
-                    ctx.strokeStyle = grad;
-                    ctx.lineWidth = pSize * camera.zoom * 1.5;
-                    ctx.stroke();
+                    if (isFinite(st1.x) && isFinite(st1.y) && isFinite(sh1.x) && isFinite(sh1.y)) {
+                        const grad = ctx.createLinearGradient(st1.x, st1.y, sh1.x, sh1.y);
+                        grad.addColorStop(0, `hsla(${blendH}, 80%, 80%, 0)`);
+                        grad.addColorStop(1, `hsla(${blendH}, 100%, 90%, ${alpha})`);
+                        ctx.beginPath();
+                        ctx.moveTo(st1.x, st1.y);
+                        ctx.lineTo(sh1.x, sh1.y);
+                        ctx.strokeStyle = grad;
+                        ctx.lineWidth = pSize * camera.zoom * 1.5;
+                        ctx.stroke();
+                    }
                     // Bright head dot
                     ctx.beginPath();
                     ctx.arc(sh1.x, sh1.y, pSize * camera.zoom, 0, Math.PI * 2);
@@ -1435,15 +1439,17 @@
                 const sh2 = worldToScreen(hx2, hy2);
                 const st2 = worldToScreen(tx2, ty2);
                 if (isInView(hx2, hy2, 50) || isInView(tx2, ty2, 50)) {
-                    const grad2 = ctx.createLinearGradient(st2.x, st2.y, sh2.x, sh2.y);
-                    grad2.addColorStop(0, `hsla(${blendH}, 80%, 80%, 0)`);
-                    grad2.addColorStop(1, `hsla(${blendH}, 100%, 90%, ${alpha * 0.5})`);
-                    ctx.beginPath();
-                    ctx.moveTo(st2.x, st2.y);
-                    ctx.lineTo(sh2.x, sh2.y);
-                    ctx.strokeStyle = grad2;
-                    ctx.lineWidth = pSize * camera.zoom;
-                    ctx.stroke();
+                    if (isFinite(st2.x) && isFinite(st2.y) && isFinite(sh2.x) && isFinite(sh2.y)) {
+                        const grad2 = ctx.createLinearGradient(st2.x, st2.y, sh2.x, sh2.y);
+                        grad2.addColorStop(0, `hsla(${blendH}, 80%, 80%, 0)`);
+                        grad2.addColorStop(1, `hsla(${blendH}, 100%, 90%, ${alpha * 0.5})`);
+                        ctx.beginPath();
+                        ctx.moveTo(st2.x, st2.y);
+                        ctx.lineTo(sh2.x, sh2.y);
+                        ctx.strokeStyle = grad2;
+                        ctx.lineWidth = pSize * camera.zoom;
+                        ctx.stroke();
+                    }
                     ctx.beginPath();
                     ctx.arc(sh2.x, sh2.y, pSize * camera.zoom * 0.7, 0, Math.PI * 2);
                     ctx.fillStyle = `hsla(${blendH}, 100%, 95%, ${alpha * 0.5})`;
@@ -1526,12 +1532,14 @@
                 ctx.lineTo(tipX, tipY);
                 ctx.lineTo(sp.x - perpX, sp.y - perpY);
                 ctx.closePath();
-                const flameGrad = ctx.createLinearGradient(sp.x, sp.y, tipX, tipY);
-                flameGrad.addColorStop(0, `hsla(40, 100%, 90%, ${0.7 * decay})`);
-                flameGrad.addColorStop(0.3, `hsla(25, 100%, 70%, ${0.5 * decay})`);
-                flameGrad.addColorStop(1, `hsla(0, 100%, 50%, 0)`);
-                ctx.fillStyle = flameGrad;
-                ctx.fill();
+                if (isFinite(sp.x) && isFinite(sp.y) && isFinite(tipX) && isFinite(tipY)) {
+                    const flameGrad = ctx.createLinearGradient(sp.x, sp.y, tipX, tipY);
+                    flameGrad.addColorStop(0, `hsla(40, 100%, 90%, ${0.7 * decay})`);
+                    flameGrad.addColorStop(0.3, `hsla(25, 100%, 70%, ${0.5 * decay})`);
+                    flameGrad.addColorStop(1, `hsla(0, 100%, 50%, 0)`);
+                    ctx.fillStyle = flameGrad;
+                    ctx.fill();
+                }
             });
 
             flameParticles.forEach(p => {
@@ -1578,13 +1586,15 @@
                 const alpha = (1 - flashAge / 0.2) * e.strength * 0.4;
                 const sp = worldToScreen(e.x, e.y);
                 const flashR = 80 * camera.zoom;
-                const flashGrad = ctx.createRadialGradient(sp.x, sp.y, 0, sp.x, sp.y, flashR);
-                flashGrad.addColorStop(0, `rgba(255, 255, 240, ${alpha})`);
-                flashGrad.addColorStop(1, `rgba(255, 200, 100, 0)`);
-                ctx.fillStyle = flashGrad;
-                ctx.beginPath();
-                ctx.arc(sp.x, sp.y, flashR, 0, Math.PI * 2);
-                ctx.fill();
+                if (isFinite(sp.x) && isFinite(sp.y) && isFinite(flashR) && flashR > 0) {
+                    const flashGrad = ctx.createRadialGradient(sp.x, sp.y, 0, sp.x, sp.y, flashR);
+                    flashGrad.addColorStop(0, `rgba(255, 255, 240, ${alpha})`);
+                    flashGrad.addColorStop(1, `rgba(255, 200, 100, 0)`);
+                    ctx.fillStyle = flashGrad;
+                    ctx.beginPath();
+                    ctx.arc(sp.x, sp.y, flashR, 0, Math.PI * 2);
+                    ctx.fill();
+                }
             });
 
             // ─── Fireworks ───
@@ -1632,14 +1642,16 @@
 
                 // Outer glow halo — brighter for massive nodes
                 const glowSize = r * (1.8 + massBright * 1.2);
-                const outerGlow = ctx.createRadialGradient(sp.x, sp.y, r * 0.5, sp.x, sp.y, glowSize);
-                outerGlow.addColorStop(0, `hsla(${col.h}, ${col.s}%, ${Math.min(col.l + 20, 90)}%, ${0.15 + massBright * 0.15})`);
-                outerGlow.addColorStop(0.5, `hsla(${col.h}, ${col.s}%, ${col.l}%, ${0.05 + massBright * 0.05})`);
-                outerGlow.addColorStop(1, `hsla(${col.h}, ${col.s}%, ${col.l}%, 0)`);
-                ctx.beginPath();
-                ctx.arc(sp.x, sp.y, glowSize, 0, Math.PI * 2);
-                ctx.fillStyle = outerGlow;
-                ctx.fill();
+                if (isFinite(sp.x) && isFinite(sp.y) && isFinite(r) && isFinite(glowSize) && r > 0 && glowSize > 0) {
+                    const outerGlow = ctx.createRadialGradient(sp.x, sp.y, r * 0.5, sp.x, sp.y, glowSize);
+                    outerGlow.addColorStop(0, `hsla(${col.h}, ${col.s}%, ${Math.min(col.l + 20, 90)}%, ${0.15 + massBright * 0.15})`);
+                    outerGlow.addColorStop(0.5, `hsla(${col.h}, ${col.s}%, ${col.l}%, ${0.05 + massBright * 0.05})`);
+                    outerGlow.addColorStop(1, `hsla(${col.h}, ${col.s}%, ${col.l}%, 0)`);
+                    ctx.beginPath();
+                    ctx.arc(sp.x, sp.y, glowSize, 0, Math.PI * 2);
+                    ctx.fillStyle = outerGlow;
+                    ctx.fill();
+                }
 
                 node.rotAngle += node.rotSpeed * 0.016;
 
@@ -1661,14 +1673,16 @@
                 if ((node.priority_score ?? 0) >= 0.65) {
                     const standoutPulse = 1 + 0.2 * Math.sin(time * 3 + node.phase);
                     const glowR = r * 2.2 * standoutPulse;
-                    const standoutGlow = ctx.createRadialGradient(sp.x, sp.y, r * 0.5, sp.x, sp.y, glowR);
-                    standoutGlow.addColorStop(0, `hsla(45, 100%, 75%, 0.2)`);
-                    standoutGlow.addColorStop(0.5, `hsla(45, 100%, 65%, 0.06)`);
-                    standoutGlow.addColorStop(1, `hsla(45, 100%, 55%, 0)`);
-                    ctx.beginPath();
-                    ctx.arc(sp.x, sp.y, glowR, 0, Math.PI * 2);
-                    ctx.fillStyle = standoutGlow;
-                    ctx.fill();
+                    if (isFinite(sp.x) && isFinite(sp.y) && isFinite(r) && isFinite(glowR) && r > 0 && glowR > 0) {
+                        const standoutGlow = ctx.createRadialGradient(sp.x, sp.y, r * 0.5, sp.x, sp.y, glowR);
+                        standoutGlow.addColorStop(0, `hsla(45, 100%, 75%, 0.2)`);
+                        standoutGlow.addColorStop(0.5, `hsla(45, 100%, 65%, 0.06)`);
+                        standoutGlow.addColorStop(1, `hsla(45, 100%, 55%, 0)`);
+                        ctx.beginPath();
+                        ctx.arc(sp.x, sp.y, glowR, 0, Math.PI * 2);
+                        ctx.fillStyle = standoutGlow;
+                        ctx.fill();
+                    }
                     ctx.beginPath();
                     ctx.arc(sp.x, sp.y, r + 4 * camera.zoom, 0, Math.PI * 2);
                     ctx.strokeStyle = `hsla(45, 100%, 65%, ${0.4 + 0.3 * Math.sin(time * 3 + node.phase)})`;
@@ -1696,14 +1710,16 @@
                     }
                     // Bright glow burst
                     const burstR = r * 3 + r * Math.sin(time * 4) * 0.5;
-                    const burstGlow = ctx.createRadialGradient(sp.x, sp.y, r * 0.5, sp.x, sp.y, burstR);
-                    burstGlow.addColorStop(0, `hsla(${col.h}, 100%, 90%, 0.3)`);
-                    burstGlow.addColorStop(0.5, `hsla(${col.h}, 100%, 70%, 0.1)`);
-                    burstGlow.addColorStop(1, `hsla(${col.h}, 100%, 50%, 0)`);
-                    ctx.beginPath();
-                    ctx.arc(sp.x, sp.y, burstR, 0, Math.PI * 2);
-                    ctx.fillStyle = burstGlow;
-                    ctx.fill();
+                    if (isFinite(sp.x) && isFinite(sp.y) && isFinite(r) && isFinite(burstR) && r > 0 && burstR > 0) {
+                        const burstGlow = ctx.createRadialGradient(sp.x, sp.y, r * 0.5, sp.x, sp.y, burstR);
+                        burstGlow.addColorStop(0, `hsla(${col.h}, 100%, 90%, 0.3)`);
+                        burstGlow.addColorStop(0.5, `hsla(${col.h}, 100%, 70%, 0.1)`);
+                        burstGlow.addColorStop(1, `hsla(${col.h}, 100%, 50%, 0)`);
+                        ctx.beginPath();
+                        ctx.arc(sp.x, sp.y, burstR, 0, Math.PI * 2);
+                        ctx.fillStyle = burstGlow;
+                        ctx.fill();
+                    }
                 }
             });
 
