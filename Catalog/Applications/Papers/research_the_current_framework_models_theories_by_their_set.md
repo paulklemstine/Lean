@@ -1,287 +1,379 @@
-# Closure Dynamical Systems, Symbolic Zeta Semantics, and the Artin–Mazur Rationality Theorem for Finite Closure-Compatible Maps
+# An Abstract Order Geometry of Proof-Theoretic Ordinals: Totality, Lattice Homomorphism, and a Directed Quasi-Metric
 
 ## Abstract
 
-We develop a rigorous theory of finite closure dynamical systems — deterministic dynamical systems on finite types equipped with closure operators satisfying a natural compatibility condition. We define periodic orbit counts, transition matrices, closure zeta functions (as formal power series), and dynamical conjugacy. We prove a trace formula connecting matrix powers to periodic orbit enumeration, establish that all dynamical invariants (periodic counts, zeta functions, thermodynamic weights) are preserved under conjugacy, and demonstrate that the periodic point count sequence is eventually periodic — yielding rationality of the closure zeta function. Quantitative bounds relate periodic orbit growth to topological capacity, and a certified radius function provides stability margins antitone in system complexity. All results are fully formalized and machine-verified (see @Catalog/Bridges/EMLZetaSemantics.lean).
+Proof-theoretic ordinal analysis assigns to each formal theory a transfinite
+ordinal — its *proof-theoretic ordinal* (PTO) — measuring the supremum of the
+ordinals it can prove well-ordered. We develop a purely order-theoretic
+abstraction of this assignment in which a theory is identified with its set of
+provably well-ordered ordinals: a bounded, downward-closed set of ordinals,
+which we call an **OrdinalTheory**. Its PTO is the supremum of that set. Working
+in this minimal setting we establish four structural results. First, the
+inclusion order on OrdinalTheories is **total**: downward-closed subsets of the
+ordinals are nested, so theory-space is a single chain. Second, OrdinalTheories
+form a **lattice** (join = union, meet = intersection) and the PTO map is a
+**lattice homomorphism** onto the ordinals: it sends join to max and meet to min.
+Third, the PTO map's fibers are **order-convex** (intervals of the chain), even
+though the map is not injective. Fourth, we analyze the natural symmetric
+ordinal-valued separation `depthDist(T₁,T₂) = (PTO T₁ − PTO T₂) + (PTO T₂ − PTO
+T₁)`: it is symmetric, vanishes exactly on equal PTO, and is **exactly additive
+along chains**, hence satisfies the *directed* triangle inequality with equality;
+but it **provably violates the general (symmetric) triangle inequality**, with an
+explicit counterexample at the PTO triple (ω+1, ω, 0) driven by the
+non-commutativity 1 + ω = ω. Thus `depthDist` is a directed quasi-metric, not a
+pseudometric. All results have been formalized and machine-checked. We close with
+research directions on the additive-principal boundary of the triangle inequality
+and a Hessenberg (natural-sum) metric repair.
 
-**Keywords**: closure operator, finite dynamical system, periodic orbit, Artin–Mazur zeta function, transition matrix, trace formula, conjugacy invariant, eventual periodicity, rationality.
+**Keywords:** proof-theoretic ordinal, ordinal analysis, well-ordering, initial
+segment, lattice homomorphism, quasi-metric, ordinal arithmetic, additive
+principal ordinal.
 
 ---
 
 ## 1. Introduction
 
-The enumeration of periodic orbits in dynamical systems is a classical problem with roots in celestial mechanics (Poincaré), number theory (Weil conjectures), and statistical mechanics (transfer matrices). The Artin–Mazur zeta function [1] packages periodic orbit counts into a generating function whose analytic properties — particularly rationality — encode deep structural information about the dynamics.
+### 1.1 Background
 
-For subshifts of finite type, rationality of the Artin–Mazur zeta function follows from the Perron–Frobenius theory of nonneg matrices: the zeta function is the reciprocal of the characteristic polynomial of the transition matrix [2]. For general smooth dynamical systems, rationality fails, and the zeta function may have natural boundaries [3].
+Ordinal analysis, inaugurated by Gentzen's 1936/38 consistency proof of Peano
+Arithmetic, attaches to a theory `T` an ordinal `|T|`, its proof-theoretic
+ordinal, characterized (in one of several equivalent ways) as the supremum of the
+order types of the primitive-recursive well-orderings that `T` proves to be
+well-founded. The canonical values — `|PA| = ε₀`, `|ATR₀| = Γ₀`, and the
+Bachmann–Howard ordinal for stronger systems — are central invariants of
+mathematical logic, encoding both consistency strength and the provably total
+recursive functions of a theory.
 
-In this paper, we identify a natural class of finite dynamical systems — those compatible with a closure operator — for which a complete theory can be developed from first principles. The closure compatibility condition (closed sets are forward-invariant under the dynamics) is satisfied by many systems of practical interest, including finite-state abstractions of control systems, database dependency propagation, and lattice models in statistical physics.
+The classical theory is inseparable from syntax: arithmetized provability,
+ordinal notation systems, cut elimination. This paper isolates the
+*order-theoretic skeleton* of the PTO assignment and asks what can be proved when
+syntax is discarded entirely.
 
-Our main contributions are:
+### 1.2 The abstraction
 
-1. **Definitions and basic theory** (§2–3): We formalize closure operators, closure dynamical systems, periodic point sets, transition matrices, and the closure zeta function.
+We model a theory by the **set of ordinals it certifies well-ordered**. This set
+is bounded above (a theory has finite consistency strength) and downward closed
+(certifying a well-ordering certifies all shorter ones). Stripped to these two
+properties, a theory becomes a bounded initial segment of the ordinals, and its
+PTO becomes a supremum. The payoff is that statements about *all* theories become
+statements about *all bounded initial segments of the ordinals*, provable with
+the order theory of `Ordinal`.
 
-2. **Trace formula** (§4): We prove that the trace of the *n*-th power of the transition matrix equals the *n*-periodic point count.
+### 1.3 Contributions
 
-3. **Conjugacy invariance** (§5): We show that conjugate systems have identical periodic point counts and zeta functions.
+1. **Totality (Theorem 4.1).** The inclusion order on OrdinalTheories is total.
+2. **Lattice homomorphism (Theorems 5.3, 5.4).** PTO sends join to max and meet
+   to min.
+3. **Order-convex fibers (Theorem 7.1).** PTO is constant on intervals with equal
+   endpoints; its fibers are intervals.
+4. **Directed quasi-metric (Theorems 6.2, 6.3, 6.5).** `depthDist` is exactly
+   additive along chains (hence directed-triangle with equality) but violates the
+   symmetric triangle inequality at (ω+1, ω, 0).
 
-4. **Rationality** (§6): We prove that the periodic point count sequence is eventually periodic, establishing rationality of the closure zeta function.
-
-5. **Capacity bounds** (§7): We prove that periodic orbit growth is bounded by the logarithmic capacity of the state space, and derive a certified radius that is antitone in capacity.
-
----
-
-## 2. Definitions
-
-### 2.1 Closure Operators
-
-**Definition 2.1** (Closure Operator). Let $\alpha$ be a type. A *closure operator* is a function $\mathrm{cl} : \mathcal{P}(\alpha) \to \mathcal{P}(\alpha)$ satisfying:
-- *Extensivity*: $S \subseteq \mathrm{cl}(S)$ for all $S$.
-- *Monotonicity*: $S \subseteq T \implies \mathrm{cl}(S) \subseteq \mathrm{cl}(T)$.
-- *Idempotence*: $\mathrm{cl}(\mathrm{cl}(S)) = \mathrm{cl}(S)$.
-
-This is formalized as the `IsClosureOp` class in @Catalog/Bridges/EMLZetaSemantics.lean.
-
-A set $S$ is *closed* if $\mathrm{cl}(S) = S$. The collection of closed sets forms a complete lattice under inclusion, and the closure operator is the associated closure map.
-
-**Definition 2.2** (Finite Closure System). A *finite closure system* is a closure operator on a finite type $\alpha$. Formalized as `FiniteClosureSystem` in the source.
-
-### 2.2 Closure Dynamical Systems
-
-**Definition 2.3** (Closure Dynamics). A *closure dynamical system* $(α, \mathrm{cl}, f)$ consists of a finite type $\alpha$, a closure operator $\mathrm{cl}$, and a step function $f : \alpha \to \alpha$ satisfying the *closure compatibility condition*:
-
-$$\mathrm{cl}(S) = S \implies \mathrm{cl}(f(S)) \subseteq S$$
-
-for all $S \subseteq \alpha$. In words: the closure of the image of any closed set is contained in that closed set. This ensures that closed sets are forward-invariant under the dynamics.
-
-This is formalized as the `ClosureDynamics` structure, with field `closed_orbit_image`.
-
-### 2.3 Periodic Points
-
-**Definition 2.4**. The set of *n-periodic points* of a closure dynamical system $(α, \mathrm{cl}, f)$ is
-
-$$\mathrm{Per}_n(f) = \{ x \in \alpha \mid f^n(x) = x \}.$$
-
-The *periodic point count* is $p_n(f) = |\mathrm{Per}_n(f)|$. These are formalized as `closurePeriodicPoints` and `closurePeriodicCount`.
-
-### 2.4 Transition Matrix
-
-**Definition 2.5**. The *transition matrix* $A \in \mathbb{N}^{\alpha \times \alpha}$ of a closure dynamical system is defined by
-
-$$A_{ij} = \begin{cases} 1 & \text{if } f(i) = j, \\ 0 & \text{otherwise.} \end{cases}$$
-
-Formalized as `closureTransitionMatrix`.
-
-### 2.5 Closure Zeta Function
-
-**Definition 2.6**. The *closure zeta function* is the formal power series
-
-$$\zeta_f(t) = \sum_{n=0}^{\infty} p_n(f) \, t^n \in \mathbb{Q}[\![t]\!].$$
-
-Formalized as `closureZeta`. Note: this is a variant of the Artin–Mazur zeta function, which traditionally uses the exponential generating function $\exp\left(\sum_{n=1}^{\infty} \frac{p_n}{n} t^n\right)$. Our variant is more natural for the algebraic setting.
-
-### 2.6 Conjugacy
-
-**Definition 2.7**. Two closure dynamical systems $(α, \mathrm{cl}_α, f)$ and $(β, \mathrm{cl}_β, g)$ are *conjugate* if there exists a bijection $\varphi : \alpha \to \beta$ such that $\varphi \circ f = g \circ \varphi$. Formalized as `ClosureConjugacy`.
-
-### 2.7 Capacity and Certified Radius
-
-**Definition 2.8**. The *capacity* of a closure dynamical system on a type with $|\alpha|$ states is $\mathrm{cap} = \log |\alpha|$. The *certified radius* is $r = 1/(1 + \mathrm{cap})$.
-
-Formalized as `closureCapacity` and `closureCertifiedRadius`.
+A handful of supporting results (half-saturation, monotonicity, sandwiching,
+canonical PTO values) round out the development.
 
 ---
 
-## 3. Basic Periodic Point Theory
+## 2. Preliminaries on ordinals
 
-**Theorem 3.1** (Membership characterization). $x \in \mathrm{Per}_n(f) \iff f^n(x) = x$.
+We work with the class `Ordinal` of ordinals, linearly ordered and well-founded
+under `<`. We use the following standard facts.
 
-*Proof sketch.* Direct unfolding of the filter definition. See `mem_closurePeriodicPoints_iff`.
-
-**Theorem 3.2** (Cardinality bound). $p_n(f) \leq |\alpha|$ for all $n$.
-
-*Proof sketch.* Periodic points form a subset of the full state space; apply `Finset.card_filter_le`. See `closurePeriodicCount_le_card`.
-
-**Theorem 3.3** (Zero iteration). $\mathrm{Per}_0(f) = \alpha$ and $p_0(f) = |\alpha|$.
-
-*Proof sketch.* $f^0 = \mathrm{id}$, so every state is 0-periodic. See `closurePeriodicPoints_zero` and `closurePeriodicCount_zero`.
-
-**Theorem 3.4** (Unit iteration). $\mathrm{Per}_1(f) = \mathrm{Fix}(f)$.
-
-*Proof sketch.* $f^1 = f$. See `closurePeriodicPoints_one`.
-
----
-
-## 4. Divisibility and the Iteration Lemma
-
-**Lemma 4.1** (Iterate multiplication). If $f^m(x) = x$ then $f^{km}(x) = x$ for all $k \in \mathbb{N}$.
-
-*Proof sketch.* Induction on $k$. Base case: $f^0(x) = x$. Inductive step: $f^{(k+1)m}(x) = f^{km}(f^m(x)) = f^{km}(x) = x$. See `iterate_mul_fixed`.
-
-**Theorem 4.2** (Divisibility monotonicity). If $m \mid n$ then $\mathrm{Per}_m(f) \subseteq \mathrm{Per}_n(f)$, and hence $p_m(f) \leq p_n(f)$ (when restricted to divisibility pairs with $m > 0$).
-
-*Proof sketch.* Write $n = km$ and apply Lemma 4.1. See `closurePeriodic_monotone_divisor`.
+- **Suprema.** For a set `S` of ordinals that is nonempty and bounded above,
+  `sSup S` exists; `csSup_le` and `le_csSup` are the universal/existential
+  characterizations, and `csSup_le_csSup` gives monotonicity.
+- **Ordinal subtraction.** For ordinals `a, b`, `a − b` denotes the unique
+  ordinal `c` with `b + c = a` when `b ≤ a`, and `a − b = 0` when `a ≤ b`
+  (`Ordinal.sub_eq_zero_iff_le`). Key identity:
+  `Ordinal.add_sub_cancel_of_le : b ≤ a → b + (a − b) = a`.
+- **Non-commutativity.** Ordinal addition is associative but **not** commutative.
+  The canonical witness is `1 + ω = ω` (`Ordinal.one_add_omega0`), while
+  `ω + 1 > ω`.
+- **Successor limits.** `Order.IsSuccLimit α` (α neither 0 nor a successor)
+  satisfies `α = sup{β : β < α}` (`IsSuccLimit.sSup_Iio`). Also
+  `sSup (Iio (α+1)) = sSup (Iic α) = α` and `Ordinal.isSuccLimit_omega0`.
 
 ---
 
-## 5. The Trace Formula
+## 3. The OrdinalTheory structure
 
-**Theorem 5.1** (Matrix power entry formula). For all $n, i, j$:
+**Definition 3.1 (OrdinalTheory).** An `OrdinalTheory` consists of:
 
-$$(A^n)_{ij} = \begin{cases} 1 & \text{if } f^n(i) = j, \\ 0 & \text{otherwise.} \end{cases}$$
+- `provablyWO : Set Ordinal` — the ordinals the theory proves well-ordered;
+- a proof that `provablyWO` is **bounded above** (`BddAbove`);
+- a proof that `provablyWO` is **downward closed** (an *initial segment*):
+  `α ∈ provablyWO → β < α → β ∈ provablyWO`.
 
-*Proof sketch.* Induction on $n$. The base case $n = 0$ gives the identity matrix. The inductive step uses the matrix multiplication formula and the deterministic nature of $f$: each row of $A$ has exactly one nonzero entry, so the sum collapses. See `closureTransitionMatrix_pow_entry`.
+**Definition 3.2 (PTO).** The proof-theoretic ordinal of `T` is
+`pto T := sSup (provablyWO T)`.
 
-**Theorem 5.2** (Trace formula). $\mathrm{tr}(A^n) = p_n(f)$.
+**Definition 3.3 (Order).** `T₁ ≤ T₂ :↔ provablyWO T₁ ⊆ provablyWO T₂` and
+`T₁ < T₂ :↔ provablyWO T₁ ⊊ provablyWO T₂`.
 
-*Proof sketch.* The trace sums the diagonal entries $(A^n)_{ii}$, which by Theorem 5.1 equal 1 if $f^n(i) = i$ and 0 otherwise. The sum counts exactly the $n$-periodic points. See `closureTrace_eq_periodicCount`.
+**Definition 3.4 (Canonical theory).** For an ordinal `α`,
+`ofOrdinal α` is the theory with `provablyWO = Iio α = {β : β < α}`.
+It is bounded by `α` and trivially downward closed.
 
-This trace formula is the finite-system analogue of the Lefschetz fixed-point theorem and the Selberg trace formula. It connects the spectral theory of the transition matrix (eigenvalues, characteristic polynomial) to the combinatorial dynamics (orbit counting).
+**Definition 3.5 (Lattice operations).**
+- `empty`: `provablyWO = ∅`.
+- `join T₁ T₂`: `provablyWO = provablyWO T₁ ∪ provablyWO T₂`.
+- `meet T₁ T₂`: `provablyWO = provablyWO T₁ ∩ provablyWO T₂`.
+Each inherits boundedness and downward closure from its components (the union by
+taking the max of the two bounds; the intersection by monotonicity of `BddAbove`).
 
----
-
-## 6. Conjugacy Invariance
-
-**Theorem 6.1** (Iteration commutes with conjugacy). If $\varphi$ is a conjugacy from $(α, f)$ to $(β, g)$, then $\varphi(f^n(x)) = g^n(\varphi(x))$ for all $n, x$.
-
-*Proof sketch.* Induction on $n$ using the conjugacy equation $\varphi \circ f = g \circ \varphi$. See `iterate_eq_on_conj`.
-
-**Theorem 6.2** (Periodic point set equivalence). Conjugate systems have isomorphic periodic point sets: $\varphi(\mathrm{Per}_n(f)) = \mathrm{Per}_n(g)$.
-
-*Proof sketch.* $x \in \mathrm{Per}_n(f) \iff f^n(x) = x \iff g^n(\varphi(x)) = \varphi(x) \iff \varphi(x) \in \mathrm{Per}_n(g)$. See `closurePeriodicPoints_equiv`.
-
-**Corollary 6.3** (Count invariance). $p_n(f) = p_n(g)$ for conjugate systems.
-
-See `closurePeriodicCount_conj_invariant`.
-
-**Corollary 6.4** (Zeta invariance). $\zeta_f = \zeta_g$ for conjugate systems.
-
-See `closureZeta_conj_invariant`.
+**Definition 3.6 (Depth distance).**
+`depthDist T₁ T₂ := (pto T₁ − pto T₂) + (pto T₂ − pto T₁)`, using ordinal
+subtraction.
 
 ---
 
-## 7. Eventual Periodicity and Rationality
+## 4. Half-saturation, monotonicity, and totality
 
-### 7.1 Eventual Periodicity of Orbits
+### 4.1 Half-saturation
 
-**Theorem 7.1** (Eventual periodicity of individual orbits). For every state $x$, there exist a preperiod $\mu \leq |\alpha|$ and a period $p$ with $0 < p \leq |\alpha|$ such that $f^{\mu + p}(x) = f^{\mu}(x)$.
+**Lemma 4.1 (No gaps below the supremum).** Let `S` be a nonempty, bounded,
+downward-closed set of ordinals. If `β < sSup S` then `β ∈ S`.
 
-*Proof sketch.* Among the $|\alpha| + 1$ iterates $x, f(x), \ldots, f^{|\alpha|}(x)$, two must coincide by the pigeonhole principle. If $f^i(x) = f^j(x)$ with $i < j$, take $\mu = i$ and $p = j - i$. See `closureDynamics_eventually_periodic`.
+*Proof sketch.* Contrapositive. If `β ∉ S`, then for every `α ∈ S` we cannot have
+`β < α` (else downward closure puts `β ∈ S`); hence `α ≤ β` for all `α ∈ S`, so
+`β` is an upper bound and `sSup S ≤ β` by `csSup_le`. ∎
 
-### 7.2 Eventual Periodicity of Periodic Point Counts
+**Corollary 4.2.** For nonempty `T`, `Iio (pto T) ⊆ provablyWO T`. The PTO is the
+exact threshold: everything strictly below it is certified.
 
-**Theorem 7.2** (Eventual periodicity of counts). There exist $N, p \in \mathbb{N}$ with $p > 0$ such that $p_n(f) = p_{n+p}(f)$ for all $n \geq N$.
+### 4.2 PTO of canonical theories
 
-*Proof sketch.* Since the set of functions $\alpha \to \alpha$ is finite (of cardinality $|\alpha|^{|\alpha|}$), the iterates $f, f^2, f^3, \ldots$ must eventually repeat by the pigeonhole principle: there exist $i < j$ such that $f^i = f^j$ as functions. Setting $p = j - i$, we have $f^n = f^{n+p}$ for all $n \geq i$, and therefore $p_n(f) = p_{n+p}(f)$. See `closurePeriodicCount_eventually_periodic`.
+**Lemma 4.3.**
+- (limit) If `Order.IsSuccLimit α` then `pto (ofOrdinal α) = α`.
+- (successor) `pto (ofOrdinal (α+1)) = α`, since `Iio(α+1) = Iic α` and
+  `sSup (Iic α) = α`.
+- (zero) `pto (ofOrdinal 0) = 0`.
+- (omega) `pto (ofOrdinal ω) = ω`.
 
-### 7.3 Rationality
+The successor case is essential and slightly counterintuitive: `ofOrdinal (α+1)`
+has PTO `α`, not `α+1`, because its certified set is `Iic α` whose supremum is
+`α`. This is the source of PTO non-injectivity.
 
-**Theorem 7.3** (Rationality of the zeta function). There exists $N > 0$ such that $p_{n+N}(f) = p_n(f)$ for all $n \geq N$.
+### 4.3 Monotonicity and sandwiching
 
-*Proof sketch.* By Theorem 7.2, there exist $N_0$ and $p > 0$ with eventual periodicity. Set $N = p \cdot (N_0 + 1)$. Then for $n \geq N$, we have $n \geq N_0$, and $p_{n+N}(f) = p_{n+p(N_0+1)}(f) = p_n(f)$ by iterating the eventual periodicity relation $N_0 + 1$ times. See `closureZeta_rational`.
+**Theorem 4.4 (Monotonicity).** `T₁ ≤ T₂ ⇒ pto T₁ ≤ pto T₂`.
 
-This implies that the generating function $\zeta_f(t) = \sum p_n t^n$ is rational: it equals a polynomial (the initial segment) plus a periodic tail that sums to a rational function via the geometric series formula.
+*Proof sketch.* If `T₁` is empty, `pto T₁ = sSup ∅ = 0 ≤ pto T₂`. Otherwise apply
+`csSup_le_csSup` with the bound from `T₂.bddAbove` and the inclusion `T₁ ⊆ T₂`. ∎
 
----
+**Lemma 4.5 (Non-membership bound).** For nonempty `T`, if `α ∉ provablyWO T`
+then `pto T ≤ α`. (Contrapositive of Lemma 4.1.)
 
-## 8. Capacity Bounds and Certified Radius
+**Lemma 4.6 (Sandwich).** If `T₁ ⊆ T₂`, `T₁` nonempty, and `α ∈ provablyWO T₂ \
+provablyWO T₁`, then `pto T₁ ≤ α ≤ pto T₂`. (Lemma 4.5 for the left bound,
+`le_csSup` for the right.)
 
-**Theorem 8.1** (Growth bound). If $p_n(f) > 0$, then $\log p_n(f) \leq \mathrm{cap}(f)$.
+**Remark 4.7 (PTO is not strictly monotone / not injective).** Strict inclusion
+need not raise the PTO. Counterexample: `T₁ = ofOrdinal ω` (certifies `{β : β <
+ω}`) and `T₂` certifying `{β : β ≤ ω}` satisfy `T₁ ⊊ T₂` yet both have PTO `ω`.
+Equivalently `ofOrdinal ω` and `ofOrdinal (ω+1)` have PTO `ω` and `ω`
+respectively — the latter via Lemma 4.3 — and `meet` of them again has PTO `ω`.
 
-*Proof sketch.* Since $p_n(f) \leq |\alpha|$ by Theorem 3.2, we have $\log p_n(f) \leq \log |\alpha| = \mathrm{cap}(f)$ by monotonicity of logarithm. See `closurePeriodic_growth_le_capacity`.
+### 4.4 Totality
 
-**Theorem 8.2** (Zeta coefficient bound). The $n$-th coefficient of $\zeta_f$ satisfies $[\zeta_f]_n \leq |\alpha|$.
+**Theorem 4.8 (Totality).** For any `T₁, T₂`, either `provablyWO T₁ ⊆ provablyWO
+T₂` or `provablyWO T₂ ⊆ provablyWO T₁`. Hence `≤` is total and OrdinalTheory is a
+chain.
 
-See `closureZeta_coeff_le_card`.
+*Proof sketch.* Suppose neither inclusion holds. Choose `s ∈ provablyWO T₁ \
+provablyWO T₂` and `t ∈ provablyWO T₂ \ provablyWO T₁`. By trichotomy on the
+ordinals `s, t`:
+- if `s < t`: downward closure of `T₂` from `t` gives `s ∈ provablyWO T₂`,
+  contradiction;
+- if `s = t`: then `s ∈ provablyWO T₂` directly, contradiction;
+- if `t < s`: downward closure of `T₁` from `s` gives `t ∈ provablyWO T₁`,
+  contradiction.
+All cases contradict the choice. ∎
 
-**Theorem 8.3** (Certified radius properties).
-- $r(f) > 0$ (`closureCertifiedRadius_pos`).
-- $r(f) \leq 1$ (`closureCertifiedRadius_le_one`).
-- $\mathrm{cap}(f) \leq \mathrm{cap}(g) \implies r(g) \leq r(f)$ (`closureCertifiedRadius_antitone_capacity`).
-
-**Theorem 8.4** (Capacity nonnegativity). If $|\alpha| > 0$, then $\mathrm{cap}(f) \geq 0$. See `closureCapacity_nonneg`.
-
----
-
-## 9. Additional Results
-
-**Theorem 9.1** (Orbit hash cardinality). The orbit hash — the periodic point set viewed as a cryptographic fingerprint — has cardinality equal to $p_n(f)$. See `closureOrbitHash_card_eq_periodicCount`.
-
-**Theorem 9.2** (Thermodynamic weight positivity). The uniform Gibbs weight is positive for all states. See `closureThermoWeight_pos`.
-
-**Theorem 9.3** (Thermodynamic weight conjugacy invariance). Conjugate systems have equal thermodynamic weights. See `closureThermoWeight_conj_invariant`.
-
----
-
-## 10. Discussion
-
-### 10.1 Relationship to Classical Results
-
-The trace formula (Theorem 5.2) is a finite, elementary version of results that in continuous dynamics require heavy analytical machinery (Lefschetz numbers, Ruelle–Perron–Frobenius theory). The rationality theorem (Theorem 7.3) parallels the Bowen–Lanford theorem for subshifts of finite type, but with a simpler proof that exploits the finiteness of the function space $\alpha^\alpha$ rather than the spectral theory of nonneg matrices.
-
-The classical Artin–Mazur zeta function for a smooth map $f : M \to M$ is defined as
-$$\zeta_f(t) = \exp\left(\sum_{n=1}^{\infty} \frac{|\mathrm{Fix}(f^n)|}{n} t^n\right).$$
-For subshifts of finite type with transition matrix $A$, Bowen and Lanford [2] proved $\zeta_f(t) = 1/\det(I - tA)$, establishing rationality via the characteristic polynomial. Our approach is different: we use the *ordinary* generating function $\sum p_n t^n$ rather than the exponential form, and prove rationality directly from the eventual periodicity of the sequence $(p_n)$, without appealing to spectral theory. This has the advantage of applying to arbitrary deterministic finite dynamics, not just subshifts.
-
-The divisibility monotonicity theorem (Theorem 4.2) is well-known in the ergodic theory folklore but rarely stated precisely for finite systems. Our formulation and proof via the iteration multiplication lemma provide a clean, self-contained treatment.
-
-### 10.2 The Role of the Closure Structure
-
-The closure compatibility condition (`closed_orbit_image`) ensures that closed sets are forward-invariant — a structural property that is essential for applications in model checking (where closed sets represent safety properties) and database theory (where closed sets represent attribute closures under functional dependencies). While the main theorems in this paper hold for arbitrary finite dynamical systems, the closure structure provides the correct framework for connecting dynamics to lattice-theoretic and logical semantics.
-
-Specifically, the closure compatibility axiom $\mathrm{cl}(S) = S \implies \mathrm{cl}(f(S)) \subseteq S$ captures the intuition that "observable properties are preserved under dynamics." In modal logic and epistemic model logic (EML), a closure operator models the deductive closure of a theory — the set of all statements entailed by a given set of axioms. The compatibility condition then says that the dynamic evolution of a system preserves logical entailment: if a set of propositions is deductively closed, then the propositions that hold after one time step are still within the deductive closure.
-
-This interpretation connects our framework to the semantics of dynamic epistemic logic, where updates to an agent's knowledge base must respect the closure properties of the underlying logic. The transition matrix of the closure dynamical system can be viewed as the semantic interpretation of a program or protocol, and the periodic orbit structure encodes the recurrent behaviors of the system.
-
-### 10.3 Applications
-
-**Cryptographic state auditing.** The orbit hash (`closureOrbitHash`) provides a fingerprint for detecting collisions in finite-state cryptographic primitives. Given a block cipher or hash function operating on a finite state space, the periodic orbit structure reveals the collision structure: two states that enter the same cycle will eventually produce identical outputs. The conjugacy invariance of periodic counts (Corollary 6.3) ensures that structurally equivalent cryptographic primitives — those related by a relabeling of the state space — produce identical orbit fingerprints. This is relevant for auditing the security of lightweight ciphers and post-quantum key encapsulation mechanisms that operate on small state spaces.
-
-**Certified ML robustness.** The certified radius $r = 1/(1 + \log|\alpha|)$ provides a stability margin for finite-state abstractions of neural network dynamics. In adversarial robustness, a certified radius guarantees that no perturbation within the ball of radius $r$ can change the classification output. Our antitonicity result (Theorem 8.3) formalizes the intuition that more complex state spaces — those with larger capacity — have narrower certified radii, quantifying the fundamental tension between model expressivity and robustness. The positivity result (Theorem 8.3, first part) ensures that every finite system has a nonzero certified radius, ruling out pathological instabilities.
-
-**Symbolic dynamics and coding theory.** The transition matrix and trace formula connect finite closure systems to the symbolic dynamics of sofic shifts and subshifts of finite type. For a communication channel modeled by a finite-state machine, the capacity (Definition 2.8) gives an upper bound on the information rate, and the periodic orbit counts determine the error-detection capability of cyclic codes associated with the channel. The rationality of the zeta function (Theorem 7.3) implies that the channel capacity is computable — it can be determined from a finite prefix of the periodic count sequence.
-
-**Formal verification and model checking.** The eventual periodicity theorem (Theorem 7.1) provides a certified termination bound for symbolic model checking of finite-state systems. Given a safety property expressed as a closed set, the closure compatibility condition guarantees forward invariance, and the eventual periodicity bound $\mu + p \leq 2|\alpha|$ gives an explicit, computable upper bound on the time needed to determine whether a state eventually violates the safety property. This is tighter than the naive $|\alpha|!$ bound obtained from the enumeration of all possible function orderings.
-
-**Database dependency propagation.** In relational database theory, functional dependencies form a closure system (Armstrong's axioms are exactly the axioms of a closure operator). A normalization step or schema evolution can be modeled as a step function on attribute sets, and the closure compatibility condition ensures that normalization preserves the functional dependency structure. The periodic orbit counts then measure the "normalization complexity" — the number of schema states that cycle back to themselves under repeated normalization.
-
-### 10.4 Computational Complexity
-
-The periodic point count $p_n(f)$ can be computed in $O(n \cdot |\alpha|)$ time by iterating $f$ starting from each state. Via the trace formula, it can alternatively be computed in $O(|\alpha|^\omega \log n)$ time using matrix exponentiation, where $\omega$ is the matrix multiplication exponent. For large $n$ and moderate $|\alpha|$, the matrix approach is faster.
-
-The eventual period can be detected in $O(|\alpha|^{|\alpha|})$ time in the worst case (by iterating until the function iterates repeat), but in practice converges much faster. The rationality theorem guarantees that the period divides $\mathrm{lcm}(1, 2, \ldots, |\alpha|)$, providing a tighter bound.
-
-### 10.5 Relation to Thermodynamic Formalism
-
-The trace formula $\mathrm{tr}(A^n) = p_n(f)$ is the finite-system analogue of the partition function in statistical mechanics. For a lattice system with transfer matrix $A$ at inverse temperature $\beta$, the partition function is $Z_n(\beta) = \mathrm{tr}(A(\beta)^n)$, where $A(\beta)$ is the Boltzmann-weighted transfer matrix. In the uniform (infinite temperature, $\beta = 0$) case, the Boltzmann weights are all 1, and the partition function reduces to the periodic point count. The capacity $\log|\alpha|$ is then the infinite-temperature entropy, and the certified radius $1/(1 + \log|\alpha|)$ can be interpreted as the smallest perturbation scale at which the thermodynamic identity of the system can change.
-
-Our `closureThermoWeight` function (Definition 2.8, uniformly equal to 1) represents this infinite-temperature case. A natural extension would introduce non-uniform weights $w(x) = e^{-\beta V(x)}$ for a potential function $V$, yielding a weighted zeta function and connecting to the full thermodynamic formalism of Ruelle and Sinai.
+This is the structural heart of the development: the abstraction makes the
+hierarchy of strength one-dimensional.
 
 ---
 
-## 11. Future Work
+## 5. The lattice and the PTO homomorphism
 
-Several natural extensions suggest themselves:
+**Lemma 5.1 (Join is the supremum).** `T₁ ≤ join T₁ T₂` and `T₂ ≤ join T₁ T₂`;
+and `join` is the least upper bound (any common upper bound contains the union).
 
-1. **Spectral analysis**: Connect the eigenvalues of the transition matrix to the periodic point counts via the characteristic polynomial, yielding a closed-form expression for the zeta function.
+**Lemma 5.2 (Meet is the infimum).** `meet T₁ T₂ ≤ T₁`, `meet T₁ T₂ ≤ T₂`, and
+`T ≤ T₁ ∧ T ≤ T₂ ⇒ T ≤ meet T₁ T₂`.
 
-2. **Entropy**: Define the topological entropy as $h = \lim_{n \to \infty} \frac{1}{n} \log p_n(f)$ and prove it equals the logarithm of the spectral radius of $A$.
+**Theorem 5.3 (Join PTO = max).** `pto (join T₁ T₂) = max (pto T₁) (pto T₂)`.
 
-3. **Non-deterministic extensions**: Replace the deterministic step function with a relation, yielding a multi-valued dynamics compatible with closure semantics.
+*Proof sketch.* On nonempty components, `provablyWO (join T₁ T₂)` is the union, and
+`csSup_union` gives `sSup (A ∪ B) = max (sSup A) (sSup B)`. Empty components are
+handled separately (the empty set contributes `sSup ∅ = 0`). ∎
 
-4. **Infinite-state generalizations**: Extend the theory to countable or compact state spaces using Mathlib's topological dynamics library.
+**Theorem 5.4 (Meet PTO = min).** `pto (meet T₁ T₂) = min (pto T₁) (pto T₂)`.
 
-5. **Ordinal notation connections**: Connect the complexity hierarchy of closure systems to proof-theoretic ordinal analysis, using the periodic orbit counts as a measure of dynamical complexity.
+*Proof sketch.* By Totality (Theorem 4.8) the two certified sets are nested. If
+`provablyWO T₁ ⊆ provablyWO T₂` then their intersection *is* `provablyWO T₁`, so
+`pto (meet T₁ T₂) = pto T₁ = min (pto T₁) (pto T₂)` using `pto T₁ ≤ pto T₂` from
+monotonicity; symmetrically in the other case. ∎
+
+**Corollary 5.5 (PTO is a lattice homomorphism).** `pto : OrdinalTheory →
+Ordinal` preserves both lattice operations: it sends `join ↦ max` and `meet ↦
+min`. It is a surjection onto an order-convex sublattice (Section 7) and is
+*not* injective (Remark 4.7).
 
 ---
 
-## References
+## 6. The directed quasi-metric `depthDist`
 
-[1] M. Artin and B. Mazur, "On periodic points," *Annals of Mathematics*, vol. 81, no. 1, pp. 82–99, 1965.
+**Lemma 6.1 (Basic metric-like properties).**
+- `depthDist T T = 0` (`Ordinal.sub_self`);
+- **Symmetry:** `depthDist T₁ T₂ = depthDist T₂ T₁` (one of the two subtractions
+  is always 0);
+- **Faithfulness:** `depthDist T₁ T₂ = 0 ↔ pto T₁ = pto T₂` (an ordinal sum is 0
+  iff both summands are 0, and `a − b = 0 ∧ b − a = 0 ↔ a = b`).
+- **Ordered form:** if `pto T₁ ≤ pto T₂` then `depthDist T₁ T₂ = pto T₂ − pto T₁`.
 
-[2] R. Bowen and O. Lanford, "Zeta functions of restrictions of the shift transformation," *Proceedings of Symposia in Pure Mathematics*, vol. 14, pp. 43–49, 1970.
+**Theorem 6.2 (Exact additivity along chains).** If `T₁ ≤ T₂ ≤ T₃` then
+`depthDist T₁ T₃ = depthDist T₁ T₂ + depthDist T₂ T₃`.
 
-[3] A. Katok and B. Hasselblatt, *Introduction to the Modern Theory of Dynamical Systems*, Cambridge University Press, 1995.
+*Proof sketch.* Let `a = pto T₁ ≤ b = pto T₂ ≤ c = pto T₃` (monotonicity). By the
+ordered form, the claim is `c − a = (b − a) + (c − b)`. Using
+`add_sub_cancel_of_le` twice,
+`a + ((b − a) + (c − b)) = (a + (b − a)) + (c − b) = b + (c − b) = c = a + (c −
+a)`. Left-cancelling `a` (`add_right_inj`) yields the identity. ∎
 
-[4] D. Lind and B. Marcus, *An Introduction to Symbolic Dynamics and Coding*, Cambridge University Press, 1995.
+Remarkably, despite the non-commutativity of ordinal addition, **no defect term
+appears** when the three points are linearly arranged.
 
-[5] B. A. Davey and H. A. Priestley, *Introduction to Lattices and Order*, Cambridge University Press, 2002.
+**Corollary 6.3 (Directed triangle inequality).** If `T₁ ≤ T₂ ≤ T₃` then
+`depthDist T₁ T₃ ≤ depthDist T₁ T₂ + depthDist T₂ T₃` (with equality).
+
+**Theorem 6.5 (Failure of the general triangle inequality).** There exist `T₁,
+T₂, T₃` with `depthDist T₁ T₃ > depthDist T₁ T₂ + depthDist T₂ T₃`.
+
+*Proof sketch.* Take `T₁ = ofOrdinal (ω+1+1)`, `T₂ = ofOrdinal ω`,
+`T₃ = ofOrdinal 0`, with PTOs `ω+1, ω, 0` by Lemma 4.3. Compute via the ordered
+form and `sub_eq_zero_iff_le`:
+- `depthDist T₁ T₃ = (ω+1) − 0 = ω+1`;
+- `depthDist T₁ T₂ = (ω+1) − ω = 1`;
+- `depthDist T₂ T₃ = ω − 0 = ω`.
+Then `depthDist T₁ T₂ + depthDist T₂ T₃ = 1 + ω = ω` (by `one_add_omega0`), and
+`ω < ω + 1`, so the triangle inequality fails. ∎
+
+**Interpretation.** The unit step from `ω+1` to `ω` is genuine, but placed in
+front of the larger jump `ω` it is **left-absorbed**: `1 + ω = ω`. The symmetric
+distance therefore underestimates the true separation. `depthDist` is a *directed
+quasi-metric*: faithful and additive in the direction of the chain, but not a
+pseudometric. The obstruction is precisely the negation of the *additive
+principal* property of ordinals.
+
+---
+
+## 7. Order-convexity of PTO fibers
+
+**Theorem 7.1 (Convex fibers / interval theorem).** If `T₁ ≤ T ≤ T₂` and
+`pto T₁ = pto T₂`, then `pto T = pto T₁`.
+
+*Proof sketch.* Monotonicity gives `pto T₁ ≤ pto T ≤ pto T₂ = pto T₁`; squeeze. ∎
+
+Thus each fiber `{T : pto T = α}` is order-convex — an interval of the chain.
+Combined with Corollary 5.5, the picture is complete: PTO is a surjective lattice
+homomorphism onto the ordinals whose level sets are intervals. The non-injectivity
+of Remark 4.7 is exactly the width of these intervals (e.g. `ofOrdinal ω ⊊
+ofOrdinal (ω+1)` both lie in the fiber over `ω`).
+
+---
+
+## 8. Algorithms
+
+The abstract framework induces concrete computations on ordinals in Cantor normal
+form (CNF), which the demonstration code realizes. We summarize the two central
+procedures.
+
+**Algorithm A (Ordinal left-subtraction in CNF).** Given ordinals `a ≥ b` in CNF,
+compute the unique `c` with `b + c = a`. Process terms from the leading
+(largest-exponent) end: where the leading exponent of `a` exceeds that of `b`,
+`b` is absorbed and `c = a`; where the leading exponents are equal, subtract
+coefficients (or, if equal, recurse on the tails). This realizes
+`Ordinal.sub` and is the kernel of every `depthDist` computation. Complexity is
+linear in the number of CNF terms.
+
+**Algorithm B (depthDist and the triangle test).** Given two theories presented
+by PTOs `p, q`, compute `depthDist = (p − q) ⊕ (q − p)` (one summand is 0 by
+comparison), where `−` is Algorithm A and `+` is CNF ordinal addition. The
+triangle test on a triple `(p, q, r)` compares `depthDist(p,r)` against
+`depthDist(p,q) + depthDist(q,r)`, exhibiting equality on monotone arrangements
+(Theorem 6.2) and strict failure on the absorbing arrangement `(ω+1, ω, 0)`
+(Theorem 6.5).
+
+---
+
+## 9. Applications and connections
+
+- **Calibration of theory strength.** The lattice-homomorphism property
+  (Corollary 5.5) gives a clean calculus: the strength of a union of theories is
+  the max of the strengths, of an intersection the min — a structural counterpart
+  to the empirical "the stronger theory wins" heuristic of ordinal analysis.
+- **One-dimensionality of consistency strength.** Totality (Theorem 4.8) is the
+  abstract shadow of the empirical observation that natural theories line up in a
+  near-linear hierarchy of consistency strength.
+- **Geometry of theory-space.** The directed quasi-metric (Section 6) formalizes
+  a meaningful asymmetry: the "cost" of bridging strength gaps is path- and
+  direction-dependent precisely when small gaps abut large limit jumps.
+- **Boundary diagnostics.** The triangle failure provides a sharp test for when a
+  *true* metric geometry of theories is available: only when the relevant ordinals
+  avoid left-absorption, i.e. lie below an additive principal ordinal.
+
+---
+
+## 10. Discussion and limitations
+
+The framework is deliberately syntax-free. It does not, on its own, compute the
+PTO of any concrete formal system; rather, it isolates and proves the structural
+laws any reasonable PTO assignment must obey. Two consequences deserve emphasis.
+First, PTO non-injectivity (Remark 4.7) means the abstraction cannot distinguish
+theories that share a supremum but differ at the supremum itself (open vs. closed
+initial segments); the convexity theorem (Theorem 7.1) quantifies exactly this
+loss. Second, the triangle failure (Theorem 6.5) shows that the most naive
+distance is not a metric; any metric theory of strength must either restrict the
+ordinal range or change the arithmetic.
+
+---
+
+## 11. Future directions
+
+*(Reproduced from the project's research notes; see the package's
+`future_directions` field for the full text.)*
+
+1. **The additive-principal boundary of the triangle inequality.** Theorem 6.2
+   gives additivity on chains and Theorem 6.5 gives one failure. The conjectured
+   frontier: `depthDist` restricted to theories whose PTOs all lie strictly below
+   a fixed additive principal ordinal `δ` (e.g. `δ = ω^ω`) satisfies the full
+   symmetric triangle inequality, and `δ` additive principal is necessary. The
+   single mechanism behind every failure is left-absorption of a small remainder
+   by a larger limit — the negation of additive-principality. The missing lemma is
+   an absorption fact about ordinal subtraction, nearly available via
+   `Ordinal.add_sub_cancel`.
+
+2. **A Hessenberg (natural-sum) metric repair.** Replace ordinary `+`/`−` by the
+   commutative, cancellative natural operations `⊕` (`Ordinal.nadd`), defining
+   `natDist T₁ T₂ := (pto T₁ ⊖ pto T₂) ⊕ (pto T₂ ⊖ pto T₁)`. Conjecture: `natDist`
+   is a genuine `Ordinal`-valued metric with `depthDist ≤ natDist` pointwise; the
+   metric axioms become algebraic identities because `nadd` has a full
+   commutative-monoid API, with Theorem 6.2 supplying the monotone-case
+   calibration.
+
+---
+
+## 12. Conclusion
+
+From the single assumption that a theory is a bounded initial segment of the
+ordinals, we derived a complete structural geometry: theory-space is a chain
+(Theorem 4.8); the proof-theoretic ordinal is a lattice homomorphism onto the
+ordinals (Corollary 5.5) with order-convex fibers (Theorem 7.1); and the natural
+ordinal-valued separation is a directed quasi-metric — exactly additive along
+chains (Theorem 6.2) yet provably non-metric in general (Theorem 6.5), with the
+obstruction pinned to the elementary non-commutativity `1 + ω = ω`. The results
+are elementary in their tools and structural in their reach, and they chart a
+precise path toward a genuine metric geometry of logical strength.
