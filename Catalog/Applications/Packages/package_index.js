@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "1b2bde48",
     "filename": "close_proofs_these_directions_extend_catalogmachin.json",
     "pkg_num": 71,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5916,
     "title": "Empirical Rademacher Complexity of Finite Hypothesis Classes"
   },
   {
@@ -2139,8 +2139,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "close_proofs_these_directions_extend_catalogmachin",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5916,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Empirical Rademacher Complexity of Finite Hypothesis Classes"
     }
