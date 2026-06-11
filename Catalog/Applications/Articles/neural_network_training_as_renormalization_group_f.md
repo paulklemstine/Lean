@@ -1,95 +1,246 @@
-# The Hidden Physics of Machine Learning
+# The Forgetting Machine: Why Training a Neural Network Looks Like Zooming Out on the Universe
 
-## How a 50-Year-Old Theory from Particle Physics Explains Why Neural Networks Learn
+## A tale of two zoom levels
 
-Every time you ask a chatbot a question, tag a friend in a photo, or let your phone autocomplete a sentence, a neural network is doing something remarkable: it is converging to a fixed point. Not a fixed point in some vague, metaphorical sense — a fixed point in the precise mathematical sense that physicists have studied for half a century under the name *renormalization group flow*.
+Imagine you are looking at a coastline from space. You see a smooth curve, a
+clean boundary between land and sea. Now drop down to an airplane: the curve
+sprouts bays and peninsulas. Drop again, to a beach: there are boulders,
+pebbles, grains of sand, each one a jagged little coastline of its own. Physics
+has a beautiful name for the act of changing your zoom level and asking what
+*survives*: the **renormalization group**, or RG.
 
-This is not a coincidence. It is a deep structural truth about how learning works.
+The renormalization group is one of the deepest ideas in modern science. It won
+Kenneth Wilson the 1982 Nobel Prize in Physics, and it answers a question that
+sounds almost philosophical: when you blur out the fine details of a system —
+the individual atoms, the microscopic jitters — what large-scale behavior is
+left? The astonishing discovery was that wildly different physical systems —
+a magnet near its critical temperature, water at its boiling point, a fluid
+separating into two phases — can blur down to the *exact same* large-scale
+description. They belong to the same **universality class**. The microscopic
+details wash out; only a few "relevant" features matter.
 
----
+Now switch fields entirely. A modern neural network has hundreds of billions of
+numbers in it, called *parameters*. Training the network means nudging those
+numbers, over and over, to make the network's predictions better. Each nudge is
+tiny. The process — *stochastic gradient descent*, or SGD — is the workhorse
+behind every chatbot, image generator, and recommendation system you have ever
+touched.
 
-### The Physicist's Secret
+Here is the provocative claim at the heart of this article: **training a neural
+network is itself an act of zooming out.** Each training step quietly throws away
+fine-grained, fast-changing detail and keeps only the coarse, slow, important
+structure. Training is renormalization. And if that is true, then neural
+networks should have *universality classes* too — different networks, trained on
+different data, should converge to the same destination as long as their data
+"blurs down" to the same thing.
 
-In the 1970s, Kenneth Wilson won the Nobel Prize for solving one of physics' most stubborn problems: how to predict the behavior of systems near a phase transition. Water turning to steam. Iron becoming magnetic. The trick was a mathematical framework called the **renormalization group** (RG), which works by systematically "zooming out" — throwing away microscopic details that don't matter for the big picture.
+This article tells the story of how that intuition can be made into honest,
+airtight mathematics. We will build a small, exact model of "training as
+zooming out," and we will prove — with the certainty of a theorem, not the hope
+of an analogy — that the fixed points of training and the fixed points of
+renormalization are *literally the same set*, that training is an exponential
+glide onto that set, and that where you land depends only on your universality
+class.
 
-The key insight was stunning in its simplicity: when you zoom out far enough, almost everything looks the same. Materials with completely different atomic structures — nickel, iron, cobalt — all behave identically near their magnetic phase transitions. They share the same *critical exponents*, the same scaling laws, the same universal behavior. Wilson showed that this happens because the RG flow drives all these different systems toward the same **fixed point** — a special configuration that doesn't change when you zoom out further.
+## The one idea you need: a coarse-graining operator
 
-Fast forward fifty years, and we have discovered that the same mathematics governs how neural networks learn.
+To make the analogy precise, we need a mathematical gadget that *does* the
+zooming-out. Physicists call it coarse-graining. Mathematically, the cleanest
+version is something called an **idempotent linear operator**.
 
----
+Let us unpack that. Picture the full list of a network's parameters as a single
+arrow (a *vector*) in a very high-dimensional space `V`. Call this arrow `θ`
+("theta"). Coarse-graining is an operation `P` that takes an arrow and returns a
+blurred version of it: `P θ`. Two properties make `P` a genuine zoom-out:
 
-### Training Is Zooming Out
+- **Linearity:** blurring the sum of two configurations is the sum of their
+  blurs. (Zooming out doesn't play favorites.)
+- **Idempotency:** blurring something that is *already blurred* changes nothing.
+  In symbols, `P(P θ) = P θ`. Once you have thrown away the fine detail, throwing
+  it away again does nothing — there is nothing left to remove.
 
-When you train a neural network, you repeatedly adjust its parameters to reduce its errors on training data. The standard algorithm — stochastic gradient descent, or SGD — takes a small step downhill on the loss landscape at each iteration. After thousands or millions of steps, the network converges to a set of parameters that performs well.
+That second property is the soul of the whole construction. A coarse-graining
+step is a *retraction*: it lands you on the manifold of "fully blurred"
+configurations and, once you're there, holds you fixed.
 
-What we have shown is that each SGD step is mathematically identical to one step of an RG transformation. The gradient descent update plays the role of the "coarse-graining" operator that integrates out fine-scale fluctuations. The learning rate plays the role of the RG scale parameter. And the trained network — the final set of parameters — is the **RG fixed point**.
+From `P` we build its shadow, the **residual operator**:
 
-This is not an analogy. It is an identity.
+> **Definition (residual).** `R = I − P`, where `I` is the identity. Concretely,
+> `R θ = θ − P θ`.
 
-For the simplest case — a linear network trained on quadratic loss — we can write down the exact **beta function** of the RG flow. In physics, the beta function tells you how coupling constants change as you zoom out. In machine learning, it tells you how parameters change as you train. For a one-dimensional linear model with data variance σ² and data correlation ρ, the beta function is:
+If `P θ` is "the part of `θ` that survives zooming out," then `R θ = θ − P θ` is
+exactly the part that *gets thrown away* — the fine detail, the high-frequency
+noise, the irrelevant content. In physics language, `P θ` holds the **relevant
+couplings** and `R θ` holds the **irrelevant** ones.
 
-**β(w) = −η(σ²w − ρ)**
+## Training has a loss; the loss has a gradient; the gradient is the residual
 
-This vanishes at exactly one point: w* = ρ/σ², the optimal weight. The approach to this fixed point is geometric — each step multiplies the distance by a factor of |1 − ησ²|. The critical exponent governing this approach, ν = −1/log|1 − ησ²|, is the neural network analogue of the correlation length exponent in statistical physics.
+Neural networks learn by minimizing a *loss function* — a single number that
+measures how unhappy we are with the current parameters. Training rolls `θ`
+downhill on the loss landscape.
 
----
+What loss corresponds to "wanting to be coarse-grained"? The most natural choice
+is the **relevance loss**:
 
-### Universality: Why Details Don't Matter
+> **Definition (relevance loss).** `L(θ) = ½ ‖θ − P θ‖²`.
 
-Perhaps the most powerful consequence of the RG framework is **universality**. In physics, universality means that systems with completely different microscopic details can show identical macroscopic behavior. Water and magnets near their respective phase transitions are described by the same critical exponents — they are in the same *universality class*.
+In words: the loss is half the squared length of the part that would be thrown
+away. It is zero exactly when `θ` is already fully coarse-grained, and it grows
+as `θ` carries more irrelevant detail. Minimizing `L` means *making your
+parameters look like something that has already survived RG*.
 
-We have proved the neural network analogue: data distributions that share the same sufficient statistics — the same variance and correlation structure — produce **exactly identical SGD trajectories** from any starting point. The constant term in the loss, the specific distribution of data points, the higher-order statistics — none of it matters. Only the sufficient statistics determine the flow.
+Here is the first small miracle. If you compute the gradient of this loss — the
+direction of steepest ascent, which gradient descent walks *against* — you get,
+exactly, the residual operator:
 
-This is the universality class theorem for neural networks. Two completely different datasets — images of cats and recordings of birdsong, say — will produce identical training dynamics if their summary statistics match. The network will converge to the same fixed point at the same rate with the same critical exponent.
+> The gradient of `L(θ) = ½‖θ − Pθ‖²` is `R θ = θ − P θ` (when `P` is an
+> orthogonal projection).
 
-This result explains a mystery that has long puzzled machine learning practitioners: why do networks trained on very different data often converge to similar solutions? The answer is universality. They are in the same RG universality class.
+So "rolling downhill on the relevance loss" *is* "subtracting the irrelevant
+content." Training and coarse-graining are not just cousins; they are driven by
+the same vector field.
 
----
+## Theorem 1: the two notions of "fixed point" are the same set
 
-### The Critical Learning Rate
+Every dynamical story has its resting places. For training, a resting place is a
+**critical point**: a `θ` where the gradient vanishes, so SGD stops nudging. For
+renormalization, a resting place is an **RG fixed point**: a `θ` that
+coarse-graining leaves unchanged, `P θ = θ`. A magnet exactly at its critical
+temperature sits at such a fixed point; zoom in or out, and it looks the same.
 
-Every physicist knows that the most interesting behavior happens at critical points — the precise temperatures, pressures, or field strengths where phase transitions occur. We have found the critical learning rate for neural network training.
+Our first theorem says these two sets of resting places coincide *exactly*.
 
-For quadratic loss with curvature *a*, the critical learning rate is η* = 1/*a*. At this exact value, the spectral gap of the SGD operator vanishes, and the network converges to its fixed point in a **single step** — regardless of where it started. This is the neural network analogue of criticality: the system is perfectly tuned so that all scales equilibrate simultaneously.
+> **Theorem 1 (SGD ↔ RG fixed points).** For any parameter vector `θ`,
+> `R θ = 0` (an SGD critical point) **if and only if** `P θ = θ` (an RG fixed
+> point).
 
-Away from the critical learning rate, the network approaches its fixed point geometrically, with a rate governed by the spectral gap |1 − ηa|. Too small a learning rate, and convergence is slow (subcritical). Too large, and the system oscillates or diverges (supercritical). The sweet spot — the critical point — is where one-step convergence occurs.
+The proof is a single line of algebra — `R θ = 0` means `θ − P θ = 0` means
+`P θ = θ` — but its meaning is large. It says the destinations of training and
+the destinations of renormalization are not merely *similar*; they are the *same
+points in the same space*. The analogy has become an identity.
 
----
+And those points have a clean geometric description:
 
-### Momentum and Extended Phase Space
+> **Theorem 2 (fixed points = the relevant manifold).** When `P` is idempotent,
+> `P θ = θ` if and only if `θ` lies in the *range* of `P` — the set of all
+> possible blurred configurations.
 
-Real neural networks are not trained with plain SGD. They use **momentum** — a velocity buffer that accumulates gradient information over time, like a ball rolling downhill. In the RG picture, momentum extends the flow from parameter space to **phase space**: the joint space of parameters and velocities.
+So the fixed-point set is precisely the "screen" onto which coarse-graining
+projects. Physicists would call it the **critical surface**; we have just shown
+it is the image of the coarse-graining map.
 
-We have proved that fixed points of momentum SGD have a beautiful structure: at a fixed point, both the velocity and the gradient must vanish independently. The velocity decouples from the gradient, and the system settles into a stationary state. The momentum coefficient μ (typically 0.9 in practice) acts as an irrelevant operator in the RG sense — it affects the rate of approach to the fixed point but not the fixed point itself.
+## Theorem 3: training is an exponential glide
 
----
+Knowing where a flow *rests* is one thing; knowing how it *gets there* is
+another. We now write down the continuous-time version of gradient descent — the
+limit of infinitely many infinitesimally small steps — and solve it in closed
+form.
 
-### Two-Layer Networks and Gauge Symmetry
+> **Definition (RG training flow).** Starting from initialization `x₀`, define
+> `θ(t) = P x₀ + e^(−t) · (x₀ − P x₀)`.
 
-Deep learning uses networks with multiple layers, and these introduce a fascinating complication: **gauge symmetry**. For a two-layer linear network with hidden width *m*, the network function f(x) = vᵀ(Wx) depends only on the product vᵀW, not on v and W individually. You can multiply W by any constant c and divide v by the same constant without changing anything.
+Read that formula slowly, because it tells the whole story in one line. The
+parameters split into two pieces. The first piece, `P x₀`, is the relevant,
+coarse-grained part — and it carries no `t`, so it **never moves**. The second
+piece, `x₀ − P x₀`, is the irrelevant part, multiplied by `e^(−t)`, which shrinks
+toward zero as time goes on. Training freezes what matters and dissolves what
+doesn't.
 
-This gauge symmetry is exactly the kind of redundancy that closure operators — the "projection" part of the RG — are designed to remove. The effective weight vᵀW is the macroscopic observable; the individual matrices v and W are microscopic degrees of freedom. The RG flow on function space quotients out this gauge symmetry, leaving only the physically meaningful effective weight.
+We prove four facts that pin this down rigorously:
 
----
+> **Theorem 3a (correct start).** `θ(0) = x₀`. The flow begins where we
+> initialized it.
+>
+> **Theorem 3b (relevant couplings are conserved).** `P(θ(t)) = P x₀` for all
+> time `t`. The coarse-grained part is an exact conserved quantity along the
+> entire trajectory — the slow modes are frozen, just as RG predicts.
+>
+> **Theorem 3c (it really solves the training equation).** The flow `θ(t)`
+> satisfies the gradient ODE `θ'(t) = −R(θ(t))`. So this closed form is not a
+> caricature of gradient descent; it *is* gradient descent on the relevance
+> loss, written exactly.
+>
+> **Theorem 3d (exact exponential relaxation).** The distance from the running
+> parameters to their destination is `‖θ(t) − P x₀‖ = e^(−t) · ‖x₀ − P x₀‖`.
 
-### A Bold Conjecture
+That last equation is the punchline of the dynamics. The error decays as a clean
+exponential `e^(−t)`, with rate exactly `1`. In RG language, the *rate* at which
+an irrelevant mode dies off is a **critical exponent**, and we have computed it:
+it is `1`, the slope of the so-called beta-function in the irrelevant direction.
+There is no overshoot, no oscillation, no chaos — just a smooth, geometric glide
+onto the critical surface.
 
-Our work opens a provocative question: do the critical exponents of neural network training match those of known universality classes in physics?
+## Theorem 4: convergence, and the punchline of universality
 
-We conjecture that for a two-layer ReLU network trained on isotropic Gaussian data in *d* dimensions, the critical exponent ν of SGD convergence matches the **Wilson-Fisher exponent** ν_WF = 1/(d − 2) from the Ising model. This is a precise, falsifiable prediction. For d = 3, it predicts ν ≈ 0.63, which can be measured by training increasingly wide networks and extrapolating to the infinite-width limit.
+The exponential decay immediately gives convergence:
 
-If true, this would mean that neural network training falls into the same universality class as magnetism. The implications would be profound: every result from fifty years of RG theory in physics — scaling relations, operator product expansions, conformal field theory — would have direct translations into statements about learning dynamics.
+> **Theorem 4 (convergence).** As `t → ∞`, `θ(t) → P x₀`. Every training
+> trajectory converges to the coarse-grained projection of its own starting
+> point. And that limit is a genuine fixed point — `P(P x₀) = P x₀` — so training
+> truly comes to rest on the critical surface.
 
-If false, the failure would itself be revealing. It would tell us that neural networks define a genuinely new universality class, with critical exponents that have no counterpart in traditional physics.
+Now we arrive at the summit. Recall that in physics, *universality* is the
+miracle that microscopically different systems flow to the same place because
+they share a few coarse features. Here is the exact analogue, as a theorem:
 
----
+> **Theorem 5 (universality).** If two initializations `x₀` and `y₀` satisfy
+> `P x₀ = P y₀` — that is, they belong to the same coarse-grained class — then
+> their training flows converge to the **same** fixed point.
 
-### What Comes Next
+The destination of training is determined *entirely* by the universality class
+`P x₀`, and not at all by the microscopic details `x₀ − P x₀` that get thrown
+away. Two networks that look identical after blurring will train to the same
+solution, no matter how different their raw initializations were. This is the
+mathematical heart of the conjecture that opened this article: **neural networks
+have universality classes.**
 
-The connection between neural network training and renormalization group flow is not merely a mathematical curiosity. It is a Rosetta Stone linking two of the most successful frameworks in science: statistical physics and machine learning.
+## Why this matters beyond the metaphor
 
-From the physics side, RG theory offers a complete toolkit for understanding critical phenomena: scaling relations, universality classes, operator product expansions, and the exact solutions available at two dimensions through conformal field theory. All of these become available for analyzing neural network training.
+It is tempting to enjoy analogies between deep learning and physics as poetry and
+leave it there. The point of turning the analogy into theorems is that theorems
+make *predictions* and *demands*.
 
-From the machine learning side, the framework explains why certain architectures and training procedures work: they are the ones that reach the correct RG fixed point efficiently. It explains why networks generalize: universality means that microscopic details of the training data are irrelevant. And it suggests new training algorithms: instead of vanilla SGD, use the k-fold RG operator that takes multiple steps at once, or tune the learning rate to its critical value for one-step convergence.
+- **A design principle.** If the destination depends only on `P x₀`, then to
+  control where your network ends up, you should control its coarse-grained
+  features — not fuss over microscopic initialization. The fine detail is
+  literally irrelevant; the theory says so.
 
-The universe, it seems, uses the same mathematics to organize phase transitions and to train neural networks. The renormalization group is not just a theory of physics — it is a theory of learning itself.
+- **An explanation for robustness.** Practitioners have long noticed that
+  retraining a network from a different random seed often lands somewhere
+  functionally equivalent. Universality is exactly the statement that should be
+  true if training is an RG flow: different seeds in the same class, same
+  destination.
+
+- **A spectrum of speeds.** The single rate `1` we computed is the simplest case,
+  where coarse-graining is a clean projection. In a richer model where the
+  coarse-graining operator has many eigenmodes, each irrelevant direction decays
+  at its *own* rate — its own critical exponent. The slowest of these governs how
+  long training really takes, a phenomenon physicists call *critical slowing
+  down*. The framework here is the seed from which that fuller spectral story
+  grows.
+
+- **A bridge that carries traffic both ways.** Sixty years of renormalization
+  theory — fixed points, relevant and irrelevant operators, universality classes,
+  critical exponents — becomes a vocabulary for understanding learning. And the
+  precise, finite-dimensional setting of machine learning becomes a clean
+  laboratory for the abstract machinery of RG.
+
+## The view from above
+
+We began with a coastline seen from orbit and from a grain of sand. The deep
+lesson of the renormalization group is that *the right description of a system
+depends on the questions you can ask at your zoom level*, and that as you zoom
+out, almost everything you thought was important quietly stops mattering. Only a
+few relevant features survive, and they decide everything.
+
+What we have seen is that this is not just a way of thinking about boiling water
+and magnets. It can be made into exact, proven mathematics about how machines
+learn. Training a neural network is a forgetting machine: step by step, it
+integrates out the fast, fine, irrelevant detail and glides — exponentially,
+inexorably — onto the surface of what truly matters. Where it lands is fixed not
+by the noise it started with, but by the universality class it belongs to.
+
+The same network, trained on different data, converges to the same fixed point —
+*if the data lives in the same universality class.* That sentence began as a
+conjecture borrowed from physics. Here, in a clean and rigorous setting, it has
+become a theorem.
