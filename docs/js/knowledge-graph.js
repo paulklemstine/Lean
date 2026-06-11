@@ -63,7 +63,8 @@
                     x: 0, y: 0, vx: 0, vy: 0, targetX: 0, targetY: 0, radius: 18,
                     phase: rng() / 4294967296 * Math.PI * 2,
                     rotSpeed: 0.3 + (rng() / 4294967296) * 0.5,
-                    rotAngle: rng() / 4294967296 * Math.PI * 2
+                    rotAngle: rng() / 4294967296 * Math.PI * 2,
+                    thrustTime: 0, thrustAngle: 0, thrustStrength: 0
                 });
             });
         }
@@ -1504,7 +1505,7 @@
 
             // ─── Rocket flame trails + flame particles ───
             graphNodes.forEach(node => {
-                if (node.thrustTime <= 0) return;
+                if (!node.thrustTime || node.thrustTime <= 0) return;
                 const thrustAge = time - node.thrustTime;
                 if (thrustAge >= THRUST_DURATION) return;
                 const decay = 1 - thrustAge / THRUST_DURATION;
@@ -2111,7 +2112,8 @@
                 radius: 18 + px * 12,
                 phase: Math.random() * Math.PI * 2,
                 rotSpeed: 0.3 + Math.random() * 0.5,
-                rotAngle: Math.random() * Math.PI * 2
+                rotAngle: Math.random() * Math.PI * 2,
+                thrustTime: 0, thrustAngle: 0, thrustStrength: 0
             };
             // Keplerian orbital velocity around galactic core
             const r = Math.sqrt(node.x * node.x + node.y * node.y) || 1;
