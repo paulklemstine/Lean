@@ -1173,75 +1173,102 @@ def rebuild_commit_push() -> bool:
             ["git", "diff", "--cached", "--quiet"],
             cwd=str(REPO_ROOT), capture_output=True, timeout=30
         )
-        if diff.returncode == 0:
-            print("[Tick] No changes to commit")
-            return False
+        has_local_changes = (diff.returncode != 0)
 
-        timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%MZ")
-        subprocess.run(
-            ["git", "commit", "-m", f"Aether local tick {timestamp}"],
-            cwd=str(REPO_ROOT), capture_output=True, timeout=30
+        if has_local_changes:
+            timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%MZ")
+            commit_res = subprocess.run(
+                ["git", "commit", "-m", f"Aether local tick {timestamp}"],
+                cwd=str(REPO_ROOT), capture_output=True, timeout=30
+            )
+            if commit_res.returncode != 0:
+                print(f"[Tick] git commit failed: {commit_res.stderr.decode('utf-8', errors='replace')}")
+
+        # Stash remaining dirty unstaged/untracked changes to keep working tree clean for merge
+        status_res = subprocess.run(
+            ["git", "status", "--porcelain"],
+            cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=10
         )
+        has_unstaged = bool(status_res.stdout.strip())
 
-        # Pull with merge (not rebase) — .gitattributes marks auto-generated
-        # files with merge=ours so they resolve automatically. Merge handles
-        # conflicts in one step instead of replaying every local commit.
-        # Pre-merge: stash any uncommitted changes to avoid conflicts
-        subprocess.run(["git", "stash", "--include-untracked"],
-                       cwd=str(REPO_ROOT), capture_output=True, timeout=30)
+        stashed = False
+        if has_unstaged:
+            stash_res = subprocess.run(
+                ["git", "stash", "push", "--include-untracked", "-m", "Aether tick temporary stash"],
+                cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
+            )
+            # Check if we actually saved a stash
+            stashed = ("No local changes to save" not in stash_res.stdout and "No local changes to save" not in stash_res.stderr)
 
-        pull = subprocess.run(
-            ["git", "pull", "--no-rebase", "origin", "master"],
+        # Fetch remote master
+        subprocess.run(["git", "fetch", "origin", "master"], cwd=str(REPO_ROOT), capture_output=True, timeout=60)
+
+        # Merge remote master
+        merge = subprocess.run(
+            ["git", "merge", "origin/master", "--no-edit"],
             cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=120
         )
 
-        # Post-merge: restore stashed changes, handling conflicts gracefully
-        stash_result = subprocess.run(
-            ["git", "stash", "pop"],
-            cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
-        )
-        if stash_result.returncode != 0:
-            print("[Tick] Stash pop conflict — auto-resolving programmatically")
-            has_conflicts = _has_conflict_markers()
-            if has_conflicts:
-                resolve_all_conflicts()
-                _regenerate_index_if_needed()
-            subprocess.run(["git", "add", "-A"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
-            subprocess.run(
-                ["git", "-c", "core.editor=true", "commit", "--no-edit", "-m", "Auto-resolve stash conflict"],
-                cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
-            )
-        if pull.returncode != 0:
-            print("[Tick] Pull conflict detected — running programmatic resolvers")
+        merge_success = (merge.returncode == 0)
+
+        if not merge_success:
+            print("[Tick] Merge conflict detected — running programmatic resolvers")
             if _has_conflict_markers():
                 resolve_all_conflicts()
                 _regenerate_index_if_needed()
-                subprocess.run(["git", "add", "-A"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
-                merge_result = subprocess.run(
-                    ["git", "-c", "core.editor=true", "commit", "--no-edit"],
-                    cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
-                )
-                if merge_result.returncode != 0:
-                    print(f"[Tick] Merge commit failed: {merge_result.stderr}")
+                
+                # Check if conflicts were successfully resolved
+                if not _has_conflict_markers():
+                    subprocess.run(["git", "add", "-A"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
+                    merge_commit = subprocess.run(
+                        ["git", "-c", "core.editor=true", "commit", "--no-edit"],
+                        cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
+                    )
+                    if merge_commit.returncode == 0:
+                        print("[Tick] Pull merge conflicts resolved and committed successfully")
+                        merge_success = True
+                    else:
+                        print(f"[Tick] Failed to commit merge: {merge_commit.stderr}")
+                        subprocess.run(["git", "merge", "--abort"], cwd=str(REPO_ROOT), capture_output=True)
+                else:
+                    print("[Tick] Failed to programmatically resolve all merge conflicts")
                     subprocess.run(["git", "merge", "--abort"], cwd=str(REPO_ROOT), capture_output=True)
-                    return False
-                print("[Tick] Pull merge conflicts resolved successfully")
             else:
+                # Pull failed but no conflict markers (e.g. fast-forward conflict or locking issue)
                 subprocess.run(["git", "merge", "--abort"], cwd=str(REPO_ROOT), capture_output=True)
-                print(f"[Tick] git pull failed (non-auto-resolvable): {pull.stderr}")
-                return False
+                print(f"[Tick] git merge failed (non-auto-resolvable): {merge.stderr}")
 
         # Final safety check: regenerate index if any conflict markers leaked through
         _regenerate_index_if_needed()
 
-        push = subprocess.run(
-            ["git", "push"], cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=120
-        )
-        if push.returncode != 0:
-            print(f"[Tick] git push failed: {push.stderr}")
-            return False
+        pushed = False
+        if merge_success:
+            push = subprocess.run(
+                ["git", "push", "origin", "master"], cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=120
+            )
+            if push.returncode == 0:
+                print("[Tick] Changes committed and pushed to origin/master")
+                pushed = True
+            else:
+                print(f"[Tick] git push failed: {push.stderr}")
+        else:
+            print("[Tick] Push skipped because merge was not successful")
 
-        print("[Tick] Changes committed and pushed")
+        # Pop stash if we stashed
+        if stashed:
+            pop_res = subprocess.run(
+                ["git", "stash", "pop"],
+                cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
+            )
+            if pop_res.returncode != 0:
+                print("[Tick] Stash pop conflict — auto-resolving stash programmatically")
+                resolve_all_conflicts()
+                _regenerate_index_if_needed()
+                subprocess.run(["git", "add", "-A"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
+                subprocess.run(
+                    ["git", "-c", "core.editor=true", "commit", "--no-edit", "-m", "Auto-resolve stash conflict"],
+                    cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
+                )
 
         # Watchdog: check if core files changed after git pull
         if _check_core_file_changes(pre_pull_hashes):
