@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c927a292",
     "filename": "this_cycle_isolated_the_structural_reason_hausdorf.json",
     "pkg_num": 90,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7295200000000001,
     "title": "Hausdorff Dimension as a Bi-Lipschitz and Affine-Group Invariant"
   },
   {
@@ -2732,8 +2732,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "this_cycle_isolated_the_structural_reason_hausdorf",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7295200000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Hausdorff Dimension as a Bi-Lipschitz and Affine-Group Invariant"
     }
