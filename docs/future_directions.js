@@ -120,6 +120,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle e1abb972 (Q=0.823), which proved 20 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Building on cycle 8d1c1869 (Q=0.758), which proved 135 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the Fisher information metric on a statistical manifold satisfies t",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_e1abb972_fb5512a7",
+    "priority_score": 0.92288,
+    "research_mode": "team",
+    "source_exp_id": "e1abb972",
+    "status": "available",
+    "timestamp": "2026-06-11T08:18:24.954597+00:00",
+    "title": "Deepening: Deepening: Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The key insight is that Godel's incompleteness arises because a formal system cannot prove statements about itself \u2014 but a TYPE SYSTEM can. Construct a dependent type theory where types can refer to their own terms, creating a system where proofs can modify the specifications they are proving. Conjecture: There exists a consistent type theory T in which the type Type : Type is stratified by a self-reference level, and T can prove its own consistency within each level. The stratification prevents the paradox: Type_n : Type_{n+1} allows self-reference at level n without contradiction at level n+1. Why now: homotopy type theory has shown that types can be spaces, and the univalence axiom provides a principled way to equate equivalent types. Self-referential types are the natural next step. Test: formalize a type theory where terms can modify type specifications, prove that it is consistent by constructing a model in the category of globular sets, and show that Godel's incompleteness theorem does not apply because the stratification prevents diagonalization. Impact: a new foundation for mathematics where proofs can evolve their own specifications, enabling self-improving formal systems.",
     "domains": [
       "Logic",
@@ -280,20 +294,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:06.130772+00:00",
     "title": "Bridge: Information Geometry Connecting Statistics and Differential Geometry"
-  },
-  {
-    "consumed_by_exp_id": "e1abb972",
-    "description": "Building on cycle 8d1c1869 (Q=0.758), which proved 135 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Prove that the Fisher information metric on a statistical manifold satisfies the axioms of a Riemannian metric. Construct explicit connections between the Fisher metric and the Kullback-Leibler divergence. Bridge statistical inference to differential geometry.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "push_8d1c1869_e5f0423d",
-    "priority_score": 0.8575200000000001,
-    "research_mode": "team",
-    "source_exp_id": "8d1c1869",
-    "status": "in_progress",
-    "timestamp": "2026-06-11T06:39:35.329358+00:00",
-    "title": "Deepening: Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
   },
   {
     "consumed_by_exp_id": "",
@@ -577,7 +577,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The sphere-packing bound gives an upper bound on code size, but the"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a3442408",
     "description": "# Future Directions: The Observation Gap\n\n## 1. Adaptive Observation Systems and Information-Theoretic Bounds\n\nThe current framework considers *static* observation systems where all predicates are fixed in advance. A natural extension is **adaptive observation**, where the choice of the (k+1)-th predicate depends on the outcomes of the first k predicates. The conjecture is that adaptive observation systems with n Boolean queries can distinguish at most 2^n elements \u2014 the same bound as static systems \u2014 but the proof requires a different argument (a game-theoretic or information-theoretic one rather than pure pigeonhole).\n\nThe key insight is that each Boolean observation provides at most 1 bit of information regardless of whether it's chosen adaptively, so the total information is still bounded by n bits. This connects to Shannon's source coding theorem.\n\nWhy now? The static framework is fully formalized, and Mathlib has growing coverage of information theory (`MeasureTheory.Measure.MutualInformation`) that could support an entropy-based proof.\n\n## 2. Continuous Observation Systems and Topological Separation\n\nReplace Boolean predicates with continuous real-valued observations on a topological space. The analogue of the pigeonhole theorem becomes: if \u03b1 is a compact Hausdorff space and we have n continuous functions f\u2081,...,f\u2099 : \u03b1 \u2192 \u211d, then the observation map F = (f\u2081,...,f\u2099) : \u03b1 \u2192 \u211d\u207f cannot be injective when dim(\u03b1) > n. This is essentially the Borsuk-Ulam theorem / invariance of domain.\n\nThe key insight is that the observation gap transitions from a combinatorial phenomenon (pigeonhole) to a topological one (dimension theory), but the algebraic structure \u2014 quotient by observational equivalence \u2014 is identical in both settings.\n\nWhy now? Mathlib has `TopologicalSpace`, compactness, and significant covering dimension theory. The Borsuk-Ulam theorem is not yet in Mathlib but partial formalizations exist, making this a tractable next target.\n\n## 3. Observation Algebras and Stone Duality\n\nThe collection of all observation systems on a fixed type \u03b1 forms a lattice under refinement (Theorem 3). Conjecture: this lattice is isomorphic to the lattice of equivalence relations on \u03b1 (which is well-studied as the partition lattice). Moreover, when \u03b1 is finite, this lattice is anti-isomorphic to a sublattice of the Boolean algebra of subsets of \u03b1 \u00d7 \u03b1 via the kernel map.\n\nThe key insight is that observation systems are dual to partitions via Stone-type duality, and this duality should extend to a categorical equivalence between \"observable properties\" and \"quotient structures.\"\n\nWhy now? The refinement surjection theorem provides the morphism direction. Mathlib's `Setoid.Lattice` and `Partition` infrastructure can support the lattice-theoretic formalization.\n\n## 4. Probabilistic Observation and Approximate Twins\n\nStrengthen the pigeonhole result: not only do twin pairs exist, but a random pair of elements is observationally indistinguishable with probability at least 1 - 2^n/|\u03b1|. More precisely, if we sample two elements uniformly at random, the expected number of distinguishing predicates is at most n \u00b7 (1 - 1/|\u03b1|). This gives quantitative bounds on how \"rare\" distinguishability is.\n\nThe key insight is that the pigeonhole bound is worst-case, but the average-case bound is much stronger \u2014 in a type with |\u03b1| >> 2^n elements, *most* pairs are twins, not just one.\n\nWhy now? Mathlib's probability theory (`MeasureTheory.Measure.ProbabilityMeasure`) and the Finset counting machinery make this quantitative extension tractable.\n\n## 5. Observation Complexity and Kolmogorov-style Lower Bounds\n\nDefine the *observation complexity* of a type \u03b1 as the minimum n such that some observation system with n Boolean predicates can distinguish all elements. By our sufficiency boundary theorem, this equals \u2308log\u2082 |\u03b1|\u2309 for finite types. Conjecture: for infinite computable types (e.g., \u2115), no finite observation system suffices, and the observation complexity is \u03c9. More interestingly, for *decidable* equivalence relations on \u2115, the observation complexity (minimum number of decidable predicates to separate all equivalence classes) is related to the Turing degree of the equivalence relation.\n\nThe key insight is that observation complexity bridges the finite combinatorial theory (pigeonhole) with computability theory, potentially connecting to G\u00f6del-style incompleteness: some \"states\" are indistinguishable by any *computable* observation system.\n\nWhy now? The finite theory is complete and the boundary theorem gives the exact value for finite types. Extending to computability requires Mathlib's `Computability` library, which has Turing machines and decidability.\n",
     "domains": [
       "Algebra",
@@ -587,7 +587,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "4b4f0c24",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T03:20:28.661527+00:00",
     "title": "The current framework considers *static* observation systems where all predicate"
   },
@@ -710,21 +710,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T06:32:21.191187+00:00",
     "title": "We proved the scaling law for the special case \u03b1 = 2 (eigenvalues \u03bb_k = 1/k\u00b2),"
-  },
-  {
-    "consumed_by_exp_id": "8e4237a1",
-    "description": "# Future Directions: Tropical Moduli Curves\n\n## 1. Tropical Marked Curves and the Full Dimension Formula\n\nThe edge bound |E| \u2264 3g \u2212 3 we proved here is for *unmarked* stable tropical curves (no\nmarked points / leaves).  The natural generalization is the marked case: a stable tropical\ncurve of genus g with n marked points (modeled as half-edges or degree-1 vertices exempt\nfrom the valence-3 stability condition) should satisfy |E| \u2264 3g \u2212 3 + n, and this bound\nis again achieved by trivalent graphs.\n\nThe key insight is that each marked point contributes exactly one additional degree of\nfreedom (its position on the edge it subdivides), and the stability condition becomes\n2g(v) \u2212 2 + val(v) > 0 at each vertex, where g(v) is the vertex genus.\n\n**Why now?**  Our `CombType` abstraction already captures degree sequences with the\nhandshaking constraint.  Extending it with a partition of vertices into \"internal\" (degree \u2265 3)\nand \"marked\" (degree 1) would require only a mild generalization of the same arithmetic\narguments, using the marked vertex count n in place of the stability lower bound.\n\n## 2. Euler Characteristic and Connected Components\n\nWe defined genus as g = |E| \u2212 |V| + 1, which is correct only for connected graphs.\nFor disconnected graphs, the first Betti number is \u03b2\u2081 = |E| \u2212 |V| + c, where c is\nthe number of connected components.  Formalizing the connected-component count c and\nproving \u03b2\u2081 \u2265 0 for arbitrary (possibly disconnected) graphs would require either\nformalizing spanning forests or an inductive argument on edge deletion.\n\nThe key insight is that \u03b2\u2081 = 0 characterizes *forests* (acyclic graphs), generalizing\nour genus-0-iff-tree result.  This connects directly to Mathlib's `SimpleGraph.IsAcyclic`\nand would provide a bridge between our abstract `CombType` formulation and Mathlib's\ngraph theory library.\n\n**Why now?**  Mathlib has `SimpleGraph.IsTree.card_edgeFinset` proving |E| + 1 = |V| for\ntrees, and `SimpleGraph.IsAcyclic` / `SimpleGraph.Connected`.  A formal proof that\nconnected + |E| = |V| \u2212 1 implies tree (the converse of `card_edgeFinset`) would close\nan important gap in the library and serve as the foundation for cycle rank computations.\n\n## 3. Tropical Balancing Condition in \u2124^n\n\nA tropical curve embedded in \u211d^n carries integer slope vectors on each edge.  The\n*balancing condition* at each vertex states that the sum of outgoing primitive integer\ndirection vectors (weighted by edge multiplicities) equals zero in \u2124^n.  Formalizing\nthis requires defining:\n- An embedding: edges \u2192 \u2124^n (primitive direction vectors)\n- Edge multiplicities: edges \u2192 \u2115\n- The balancing condition: at each vertex, \u2211 w_e \u00b7 d_e = 0 over incident edges\n\nThe key insight is that the balancing condition is what makes a metric graph into a\n*tropical subvariety* of \u211d^n, analogous to the Cauchy\u2013Riemann equations making a\nsmooth map into a holomorphic one.  This is the bridge between combinatorial tropical\ncurves and tropical algebraic geometry.\n\n**Why now?**  The `CombType` structure already tracks vertex-edge incidence via degrees.\nAdding direction vectors and multiplicities is a natural extension, and the balancing\ncondition is a finite linear algebra statement over \u2124 that Lean can verify directly.\n\n## 4. Contraction Morphisms and the Poset of Combinatorial Types\n\nThe combinatorial types of stable tropical curves of genus g form a partially ordered\nset under *edge contraction*: contracting an edge e of a graph \u0393 yields a graph \u0393/e\nwith one fewer edge and (unless e is a loop) one fewer vertex.  The genus is preserved\nunder contraction.\n\nThe key insight is that this poset structure directly mirrors the face poset of the\ncone complex M_g^trop: contracting an edge corresponds to taking a codimension-1 face\nof a cone.  Proving that contraction preserves genus and stability, and that the poset\nis graded by the number of edges (= cone dimension), would formalize the combinatorial\nstructure of the tropical moduli space.\n\n**Why now?**  Our `CombType` abstraction needs to be extended with an explicit edge\ncontraction operation.  The key lemma \u2014 genus is preserved under contraction \u2014 is a\nsimple Euler characteristic argument: contracting a non-loop edge decreases both |E|\nand |V| by 1, so g = |E| \u2212 |V| + 1 is unchanged.\n\n## 5. Tropical Torelli Map and the Metric Graph Laplacian\n\nThe tropical Torelli map sends a tropical curve to its *tropical Jacobian*, defined\nvia the Laplacian of the metric graph.  For a graph \u0393 with edge lengths, the\nLaplacian L is a |V| \u00d7 |V| matrix with L_{ij} = \u22121/\u2113(ij) for adjacent vertices\nand L_{ii} = \u03a3_j 1/\u2113(ij).  The tropical Jacobian is the torus \u211d^g / Im(L^\u2020),\nwhere L^\u2020 is a generalized inverse.\n\nThe key insight is that the tropical Torelli map is *not* injective for g \u2265 3\n(unlike the classical Torelli theorem), and the failure of injectivity is\ncontrolled by the combinatorial type of the graph.  Formalizing the Laplacian\nand the rank of the period matrix would make this failure precise.\n\n**Why now?**  The `TropicalCurve` structure already carries edge lengths.  Defining\nthe graph Laplacian requires Mathlib's matrix API (`Matrix.of`), and computing its\nrank is a finite-dimensional linear algebra problem.  The key obstruction is that\nMathlib's matrix theory over \u211d is well-developed, making this tractable.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_1076",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "e8726f6c",
-    "status": "in_progress",
-    "timestamp": "2026-06-09T07:05:04.634782+00:00",
-    "title": "The edge bound |E| \u2264 3g \u2212 3 we proved here is for *unmarked* stable tropical cur"
   },
   {
     "consumed_by_exp_id": "",
@@ -2633,6 +2618,81 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Information-Geometric Bridge (Fisher metric, deepened)\n\nThis cycle deepened the catalog's `Bridges.FisherInformationRiemannian` (Fisher\nmetric = Riemannian metric + KL bridge) and `FisherInformationMetric` (categorical\nFisher form + KL sandwich) into a full inference-geometry package in\n`Catalog/Bridges/FisherCramerRao.lean`:\n\n- generalized the statistical model from sample space `Fin n` to an arbitrary finite\n  type `S` (`GenStatModel`), re-deriving the metric axioms (`gfisher_symm`,\n  `gfisher_posSemidef`, `gfisher_posDef`);\n- proved **tensorization / additivity** of Fisher information over independent data\n  (`gfisher_prod_eq`, `gfisher_iid_two`);\n- proved the **Cram\u00e9r\u2013Rao lower bound** (`cramer_rao`, `cramer_rao_unbiased`) via a\n  weighted Cauchy\u2013Schwarz inequality (`expect_mul_sq_le`);\n- proved the **tensorial transformation law** `G' = J\u1d40 G J` (`gfisher_reparam`),\n  certifying `gfisher` is a genuine `(0,2)`-tensor;\n- proved the **attainment / efficiency** equality case (`cramer_rao_equality_iff`):\n  equality holds iff the centered statistic is proportional to the score.\n\nThe following conjectures extend this work. Each is stated so it can be written down\nas a Lean theorem and either proved or refuted.\n\n## 1. The multiparameter matrix Cram\u00e9r\u2013Rao bound\n\nFor a `GenStatModel S d` and a vector statistic `T : S \u2192 \u211d` with gradient-of-mean\n`b : Fin d \u2192 \u211d` satisfying the regularity identities `b i = E_\u03b8[T \u00b7 score_i]`, the\nscalar bound should upgrade to the **matrix inequality** `Var_\u03b8(T) \u2265 b\u1d40 G\u207b\u00b9 b`\nwhenever `G = gfisher M \u03b8` is positive definite, with equality characterized exactly\nas in `cramer_rao_equality_iff` but with the proportionality constant replaced by the\nvector `G\u207b\u00b9 b`.\n\nThe key insight is that the single-parameter proof is just the rank-1 shadow of the\npositive-semidefiniteness of the `(d+1)\u00d7(d+1)` Gram matrix of the family\n`{T \u2212 E[T], score_1, \u2026, score_d}` under the inner product `\u27e8f, g\u27e9 = E_\u03b8[f g]`; the\nmatrix bound is the Schur-complement nonnegativity of that Gram matrix, so the whole\nresult reduces to `gfisher_posSemidef` applied to an augmented model. Why now?\n`gfisher_posSemidef` and `expect_mul_sq_le` are already proved in full generality over\narbitrary finite `S`, and Mathlib's `Matrix.PosSemidef` plus Schur-complement API give\nexactly the linear-algebra layer needed to glue them together.\n\n## 2. Chain rule / monotonicity of Fisher information under coarse-graining\n\nLet `\u03ba : S \u2192 S'` be a deterministic statistic (data-processing map) and let `N` be\nthe pushforward model `N.p \u03b8 y = \u2211_{x : \u03ba x = y} M.p \u03b8 x`. Then the Fisher matrices\nshould satisfy the **monotonicity** `gfisher N \u03b8 \u2aaf gfisher M \u03b8` (Loewner order), with\nequality iff `\u03ba` is sufficient. This is the information-geometric form of the\ndata-processing inequality and the converse half of the Fisher\u2013Rao characterization\nof sufficiency.\n\nThe key insight is that the pushforward score is the conditional expectation of the\noriginal score, `score_N(\u03ba x) = E[score_M \u2223 \u03ba]`, so the gap `gfisher M \u2212 gfisher N` is\nexactly the expected Fisher quadratic form of the *within-fiber* fluctuation of the\nscore \u2014 a conditional variance, hence positive semidefinite. Why now? The additivity\ntheorem `gfisher_prod_eq` already exercises the \"sum over a product / factor the\nexpectation\" machinery this needs, and the conditional-variance decomposition is a\nfinite-sum identity squarely in reach of the same `Finset.sum_comm` / `sum_mul_sum`\ntoolkit used there.\n\n## 3. The KL Hessian equals the Fisher metric, made exact on a curve\n\nThe catalog records the *global* KL sandwich `0 \u2264 KL \u2264 \u03c7\u00b2 = Fisher quadratic form`.\nThe missing *infinitesimal* companion: along any smooth curve `t \u21a6 \u03b8(t)` with\n`\u03b8(0) = \u03b8\u2080`, the function `t \u21a6 KL(p_{\u03b8\u2080} \u2016 p_{\u03b8(t)})` has a vanishing first derivative\nand second derivative equal to `v\u1d40 G(\u03b8\u2080) v` where `v = \u03b8'(0)`, i.e. the Fisher metric\nis *literally* the Hessian of KL at the diagonal.\n\nThe key insight is that the file's `gfisher_eq_neg_expected_hessian`-style identity\n(`G = \u2212E[\u2202\u00b2 log p]`) is precisely the second-order Taylor coefficient of KL, so the\nstatement is a clean second-derivative computation once `p` is given `C\u00b2` regularity\nhypotheses on a one-parameter family. Why now? With `gfisher_reparam` we can already\nrestrict any model to a one-parameter curve and read off the induced `1\u00d71` Fisher\nvalue, so the only new ingredient is Mathlib's `deriv`/`iteratedDeriv` calculus glued\nto the existing finite-sum score identities.\n\n## 4. Exponential families are exactly the Cram\u00e9r\u2013Rao-efficient models\n\n`cramer_rao_equality_iff` shows equality at a single `\u03b8` forces `T \u2212 E_\u03b8[T] = c(\u03b8)\u00b7S`.\nConjecture: a statistic `T` attains the Cram\u00e9r\u2013Rao bound *for all `\u03b8` simultaneously*\niff the model is a **one-parameter exponential family** `p(x; \u03b8) = h(x) exp(\u03b7(\u03b8) T(x) \u2212\nA(\u03b8))` with `T` its natural sufficient statistic, and then the efficient estimator's\nvariance is exactly `1 / G(\u03b8)`.\n\nThe key insight is that the pointwise proportionality `score = c(\u03b8)(T \u2212 E_\u03b8[T])` is a\n*differential equation in `\u03b8`* for `log p`, whose integral is precisely the\nexponential-family form; the existing equality lemma supplies the pointwise condition,\nand integrating it is the only remaining step. Why now? The forward implication of\nthis characterization is already fully formalized (`cramer_rao_equality_iff`), so the\nconjecture is reduced to a clean integrability/uniqueness statement rather than an\nopen-ended search.\n\n## 5. Tensorization rate and the asymptotics of the i.i.d. Cram\u00e9r\u2013Rao bound\n\nCombining `gfisher_iid_two` (information doubles for two copies) with `cramer_rao`,\nthe variance bound for `n` i.i.d. observations is `1 / (n \u00b7 G(\u03b8))`. Conjecture: define\nthe `n`-fold product model `prodModel^{[n]}` and prove `gfisher (prodModel^{[n]} M) \u03b8 =\nn \u2022 gfisher M \u03b8`, hence the **`1/n` Cram\u00e9r\u2013Rao decay** `Var \u2265 1/(n G)`, the quantitative\nbackbone of asymptotic efficiency and the `\u221an`-consistency of the MLE.\n\nThe key insight is that `gfisher_prod_eq` is *associative and commutative* as a binary\noperation on Fisher matrices, so the `n`-fold statement is a one-line induction on the\nalready-proven two-fold additivity \u2014 no new analytic content, only the bookkeeping of\nan indexed product sample space. Why now? `gfisher_prod_eq` is proved over arbitrary\nfinite `S` (so the product `S^n` is itself a legal sample space), making the inductive\nstep immediate; this turns the static \"metric\" result into a genuine large-sample\nstatement.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1339",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e1abb972",
+    "status": "available",
+    "timestamp": "2026-06-11T08:18:14.911554+00:00",
+    "title": "This cycle deepened the catalog's `Bridges.FisherInformationRiemannian` (Fisher"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Combinatorial Types of Tropical Moduli Curves\n\nThe file `ModuliCurves.lean` formalizes the combinatorial backbone of the tropical\nmoduli space `M_{g,n}^trop`. We model a combinatorial type by its degree sequence\n`degs : Multiset \u2115` together with the bounded-edge count `E`, the leg count `n`, and\nthe genus `g`, constrained by the handshaking identity `\u2211 val(v) = 2E + n` and the\nconnected-graph Euler relation `E + 1 = |V| + g`. From this abstraction we proved the\nmarked dimension bound `edge_bound` (`|E| \u2264 3g \u2212 3 + n`), its unmarked corollary\n`unmarked_edge_bound`, the sharpness statement `trivalent_eq`, the maximal-cell\ncharacterization `eq_bound_iff_trivalent` (equality \u21d4 trivalent), and\n`genus_preserved_under_contraction`. The directions below extend this frontier.\n\n## 1. The full face poset of `M_{g,n}^trop` as a graded poset\n\nWe proved that contracting a single non-loop edge lowers `|E|` by one and preserves\n`g` and `n`. The natural next step is to assemble the set of all combinatorial types\nof fixed `(g, n)` into a partially ordered set under iterated contraction and prove it\nis **graded** by `|E|`, with the trivalent types (`eq_bound_iff_trivalent`) as the\ntop-dimensional cells and the single-vertex type as the unique minimum.\n\nThe key insight is that `genus_preserved_under_contraction` already supplies the\ncovering relation of the poset: each cover drops `|E|` by exactly one, so the rank\nfunction is literally `|E|` and the maximal rank is `3g \u2212 3 + n` by `edge_bound`.\n\n**Why now?** Mathlib has `Order.Grade` / `GradeOrder` and a developed order-theory\nlibrary; combining it with our contraction lemma turns a purely arithmetic fact into a\nstructural statement about the cone complex, with no new geometry required.\n\n## 2. Vertex-weighted stability and the genus decomposition `g = b\u2081 + \u2211 g(v)`\n\nOur `Stable` predicate is the `g(v) = 0` (pure) case of the true stability condition\n`2g(v) \u2212 2 + val(v) > 0`. Generalizing `degs` to a multiset of pairs `(g(v), val(v))`\nand replacing `Stable` with the weighted condition would let us prove the refined\nbound `|E| \u2264 3g \u2212 3 + n` where the *total* genus `g = b\u2081(\u0393) + \u2211_v g(v)` splits into a\ngraph (first Betti number) part and a vertex part.\n\nThe key insight is that a positive vertex weight `g(v) \u2265 1` relaxes the valence floor\nfrom `3` to `1`, so the same `three_card_le_sum` argument goes through with a\nweight-dependent lower bound, and the slack is exactly `\u2211_v (something)`.\n\n**Why now?** `edge_bound` is currently proved purely by `omega` from\n`three_card_le_sum`; the weighted version only changes the per-vertex constant, so the\nexisting proof skeleton generalizes with a modified termwise inequality lemma.\n\n## 3. Counting trivalent types: the Euler-relation Diophantine system\n\n`trivalent_eq` shows trivalent types saturate the bound, and for trivalent graphs\n`2E = 3V` and `E + 1 = V + g` force `V = 2g \u2212 2`, `E = 3g \u2212 3` (unmarked). The open\ncombinatorial question is to **enumerate** the connected trivalent multigraphs of\ngenus `g`, i.e. count the top cells of `M_g^trop` for small `g`.\n\nThe key insight is that for trivalent graphs the two linear constraints pin `(V, E)`\nexactly, reducing the count to enumerating connected 3-regular multigraphs on `2g \u2212 2`\nvertices \u2014 a finite, decidable problem for each `g`.\n\n**Why now?** Our structure already isolates the arithmetic constraints; pairing it with\nMathlib's `SimpleGraph`/`Multigraph` enumeration tooling makes the `g = 2` case\n(the well-known \"theta\" and \"dumbbell\" graphs giving exactly two top cells) a concrete,\nmachine-checkable theorem.\n\n## 4. Bridge to Mathlib graph theory: `b\u2081 = 0 \u21d4 forest`\n\nWe define genus via `E + 1 = |V| + g`, valid for connected graphs, and `g = 0`\nrecovers the tree relation `E + 1 = |V|`. The direction is to connect our abstract\ndegree-sequence model to an honest `SimpleGraph` and prove `b\u2081 = 0 \u21d4 IsAcyclic`,\ngeneralizing the genus-0-iff-tree fact to possibly disconnected graphs via the first\nBetti number `b\u2081 = |E| \u2212 |V| + c` with `c` connected components.\n\nThe key insight is that the converse of Mathlib's `SimpleGraph.IsTree.card_edgeFinset`\n\u2014 that connected `+` `|E| = |V| \u2212 1` implies tree \u2014 is the missing link, and it is\nexactly the `g = 0` specialization of an Euler-relation argument.\n\n**Why now?** Mathlib already provides `SimpleGraph.IsAcyclic`, `SimpleGraph.Connected`,\nand `SimpleGraph.IsTree.card_edgeFinset`; only the converse direction is absent, and our\nEuler bookkeeping supplies the arithmetic core.\n\n## 5. The balancing condition: from metric graphs to tropical subvarieties\n\nA tropical curve embedded in `\u211d^N` carries primitive integer direction vectors\n`d_e \u2208 \u2124^N` and multiplicities `w_e \u2208 \u2115` on its edges, subject to the **balancing\ncondition** `\u2211_{e \u220b v} w_e \u00b7 d_e = 0` at every vertex. Extending `StableGraph` with an\nincidence-respecting direction assignment and proving that balancing is preserved under\nedge contraction (the contracted directions add) would tie our combinatorial types to\ngenuine tropical algebraic geometry.\n\nThe key insight is that balancing is a finite `\u2124`-linear condition, the tropical analogue\nof the Cauchy\u2013Riemann equations, and it interacts with contraction additively: merging\ntwo balanced vertices yields a balanced vertex because the shared edge's contributions\ncancel.\n\n**Why now?** Mathlib's `\u2124`-module and `Finsupp`/`Fintype` linear-algebra API makes the\nbalancing equation directly expressible, and our `genus_preserved_under_contraction`\ngives the template for proving the corresponding direction-vector cancellation.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1340",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8e4237a1",
+    "status": "available",
+    "timestamp": "2026-06-11T08:18:41.859093+00:00",
+    "title": "The file `ModuliCurves.lean` formalizes the combinatorial backbone of the tropic"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Tropical Hodge Theory\n\nThe file `Catalog/Tropical/HodgeDecomposition/HarmonicTheory.lean` establishes the\nanalytic backbone of tropical Hodge theory on a finite weighted polyhedral\ncomplex modelled by a single weighted coboundary `d : \u211d^m \u2192 \u211d^n`: Green's\nidentity, positive semidefiniteness and self-adjointness of the up-Laplacian\n`\u0394 = \u03b4\u2218d`, the orthogonality of the harmonic space `ker d` to the image of the\ncodifferential `\u03b4`, and the energy characterization of harmonicity. These results\nextend the catalog foundations in `Tropical.HodgeDecomposition.Defs`\n(`adjunction`, `ker_laplacianUp_eq_ker_d`, `weightedIP_pos_def`,\n`weightedIP_eq_zero_iff`). Below are concrete, falsifiable directions that build on\nthis work.\n\n## 1. The full orthogonal Hodge decomposition `\u211d^m = ker \u0394 \u2295 im \u03b4`\n\nWe proved that the harmonic space `ker d = ker \u0394` is *orthogonal* to `im \u03b4`\n(`harmonic_orthogonal_image_delta`). The natural completion is the *direct sum*\nstatement: every cochain `v \u2208 \u211d^m` decomposes uniquely as `v = h + \u03b4w` with\n`h` harmonic, and the two summands are weighted-orthogonal. The key insight is\nthat orthogonality plus a dimension count `dim(ker d) + rank(\u03b4) = m` (a\nrank\u2013nullity bookkeeping already glimpsed in `rank_nullity`) forces the\northogonal complement of `im \u03b4` to coincide with `ker d`, so no extra analysis\nis needed beyond finite-dimensional linear algebra over `\u211d`. Why now? Both\ningredients \u2014 the orthogonality lemma and a rank\u2013nullity skeleton \u2014 already live\nin the catalog, so this is a short, self-contained capstone that turns the\npresent \"orthogonality\" results into a genuine decomposition theorem. A\nfalsifiable prediction: for the unit-weight path graph on 3 vertices the\nharmonic space is exactly the 1-dimensional constants and the complement is\n2-dimensional, matching `m - dim(ker d) = 3 - 1 = 2`.\n\n## 2. Hodge isomorphism: harmonic representatives of cohomology\n\nFor a genuine two-step complex `\u211d^\u2113 \u2192^{d\u2080} \u211d^m \u2192^{d\u2081} \u211d^n` with `d\u2081\u2218d\u2080 = 0`,\nthe middle cohomology `ker d\u2081 / im d\u2080` should be represented uniquely by harmonic\ncochains (`ker \u0394` for the combined Laplacian `\u0394 = \u03b4\u2080d\u2080 + \u03b4\u2081d\u2081`). The key insight\nis that the *combined* Laplacian's kernel splits as the intersection\n`ker d\u2081 \u2229 ker \u03b4\u2080`, and the orthogonality already proven (harmonic \u22a5 im \u03b4, and\ndually harmonic \u22a5 im d) makes the quotient map to harmonic forms an isomorphism.\nWhy now? Our single-coboundary self-adjointness and orthogonality results are\nexactly the per-degree pieces that assemble into the combined statement; the only\nnew content is encoding the cochain condition `d\u2081\u2218d\u2080 = 0` as a structure. A\ntestable case: the triangle (cycle graph `C\u2083`) should give a 1-dimensional\nharmonic `H\u00b9`, recovering `b\u2081 = 1`.\n\n## 3. Spectral gap and tropical heat-flow contraction\n\nThe PSD and self-adjointness theorems make `\u0394` a genuine symmetric PSD operator,\nhence diagonalizable with nonnegative real spectrum. The first nonzero eigenvalue\n`\u03bb\u2081` (the tropical spectral gap) should control the exponential decay rate of the\ndiscrete heat semigroup `e^{-t\u0394}` onto the harmonic space. The key insight is\nthat `greens_identity` already identifies `\u27e8\u0394v,v\u27e9` with the Dirichlet energy, so a\nPoincar\u00e9-type inequality `\u27e8\u0394v,v\u27e9 \u2265 \u03bb\u2081\u2016v\u2016\u00b2` on the complement of the harmonics is\nequivalent to a min-max characterization of `\u03bb\u2081` that is purely linear-algebraic.\nWhy now? With self-adjointness and PSD in hand, Mathlib's spectral theorem for\nsymmetric operators applies directly; the missing step is only the variational\n(Rayleigh-quotient) wrapper. Falsifiable prediction: for the complete graph `K\u2099`\nwith unit weights, `\u03bb\u2081 = n` with multiplicity `n-1`, so heat flow contracts at\nrate `e^{-nt}`.\n\n## 4. Weight-monotonicity of harmonic energy (a tropical comparison principle)\n\nBecause every summand of the weighted inner product is `w\u1d62\u00b7x\u1d62\u00b2`, the Dirichlet\nenergy `\u27e8dv, dv\u27e9_tgt` is *monotone* in the target weights. The conjecture: if\n`tgtWeight \u2264 tgtWeight'` pointwise then the harmonic projection energies satisfy a\nmatching inequality, giving a comparison principle for how reweighting cells\n(refining the tropical complex) can only increase Dirichlet energy. The key\ninsight is that monotonicity is visible term-by-term in `weightedIP`, so the\ncomparison follows from `Finset.sum_le_sum` without any spectral input. Why now?\nThe energy identity `greens_identity` reduces a statement about the Laplacian\noperator to a statement about a single weighted sum, where monotonicity is\nelementary. A falsifiable check: doubling all edge weights of a graph exactly\ndoubles every Dirichlet energy `\u27e8dv,dv\u27e9`, hence doubles `\u27e8\u0394v,v\u27e9`.\n\n## 5. Tropical Hard Lefschetz for matroidal fans via Laplacian positivity\n\nThe catalog records the Hard Lefschetz Property (`SatisfiesHLP`) as a Betti-number\nunimodality condition. The deeper conjecture is that for the Bergman fan of a\nrealizable matroid, the Lefschetz operator `L` composed with the harmonic\nprojection is *positive definite* in the weighted inner product, so HLP follows\nfrom the same PSD/self-adjointness machinery proven here applied to `L`-twisted\nLaplacians. The key insight is that Hodge\u2013Riemann positivity \u2014 the engine behind\nAdiprasito\u2013Huh\u2013Katz \u2014 is a statement about signature of a symmetric form, and our\n`weightedIP_pos_def` + self-adjointness give exactly the framework to state and\ntest it combinatorially. Why now? The single-coboundary harmonic theory is the\ndegree-one shadow of the full matroidal story; formalizing the `U_{2,4}` example\n(predicted Betti sequence `(1,3,1)`) is a concrete, falsifiable first milestone\nthat stress-tests whether the present definitions scale to graded complexes.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1341",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "145c21f1",
+    "status": "available",
+    "timestamp": "2026-06-11T08:19:07.267676+00:00",
+    "title": "The file `Catalog/Tropical/HodgeDecomposition/HarmonicTheory.lean` establishes t"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE_DIRECTIONS \u2014 Post-Quantum Cryptography: Lattice-Based Key Exchange\n\n## Synthesis\n\nThis cycle formalized the *correctness core* of Learning-With-Errors cryptography in\nLean 4 (`Cryptography.LWEKeyExchange`), establishing the exact algebraic backbone that\nboth Regev public-key encryption and an LWE Diffie\u2013Hellman-style key exchange depend on.\nThe central structural discovery is that **all of LWE correctness is an exact integer\nidentity plus one inequality**: when the protocol is run honestly, every modular\nreduction in the decryption pipeline cancels, so the decryptor recovers the *exact*\ninteger `\u27e8r,e\u27e9 + msg\u00b7(q/2)` (`regev_decryption_identity`). Decoding then succeeds iff a\nsingle sharp inequality `4\u00b7m\u00b7B < q` holds (`regev_correctness`). The same cancellation\nphenomenon reappears in key exchange: with a *symmetric* public matrix `A`, the two\nparties' raw session values differ by exactly the planted noise,\n`k_A \u2212 k_B = \u27e8s,e_B\u27e9 \u2212 \u27e8t,e_A\u27e9` (`lwe_keyexchange_identity`), bounded in `\u2113\u00b9` norm by\n`(\u2016s\u2016\u2081 + \u2016t\u2016\u2081)\u00b7B` (`lwe_keyexchange_agreement`). This is the LWE analogue of\nDiffie\u2013Hellman commutativity `g^{ab} = g^{ba}`: **symmetry of `A` plays the role of\ngroup commutativity, and the error term is the price the lattice charges for hardness.**\n\nWhat failed / what was deferred: the genuinely *computational* statements \u2014 the\nworst-case-to-average-case reduction `GapSVP \u2192 LWE`, IND-CPA security of Regev, and\nprobabilistic forward secrecy \u2014 cannot be stated faithfully without a model of\ncomputational indistinguishability and (for the reduction) a quantum algorithm. They are\nrecorded as `conjecture`-level abstract implications (`lwe_hard_of_gapSVP`, with `sorry`)\nrather than being faked with trivial predicates that would prove nothing. The honest\nmove here is to build the missing *infrastructure* (a negligible-function / advantage\ncalculus) before attempting the security theorems.\n\nThe structural insight that ties the directions below together: **correctness is exact\nalgebra over `\u2124`; security is an inequality over a probability/advantage semiring.** We\nhave nailed the first half rigorously and identified precisely which semiring-level\ninfrastructure the second half needs. This connects to the existing catalog lattice\nthread (`Cryptography.BerggrenLatticeCryptography`'s `svp_depth1_lower_bound` gives\n*geometric* shortest-vector bounds; LWE is the *average-case* problem those bounds are\nconjectured to protect).\n\n## Results Summary\n\n- `regev_decryption_identity`: proved \u2014 Regev decryption recovers `\u27e8r,e\u27e9 + msg\u00b7(q/2)` as an exact integer, exposing correctness as pure algebra.\n- `regev_correctness`: proved \u2014 decoding recovers the message bit under the sharp budget `4\u00b7m\u00b7B < q` with `q = 2\u00b7half`.\n- `lwe_keyexchange_identity`: proved \u2014 for symmetric `A`, the two session values differ by exactly `\u27e8s,e_B\u27e9 \u2212 \u27e8t,e_A\u27e9` (LWE analogue of DH commutativity).\n- `lwe_keyexchange_agreement`: proved \u2014 the session-value gap is `\u2113\u00b9`-bounded by `(\u2016s\u2016\u2081 + \u2016t\u2016\u2081)\u00b7B`, the quantitative agreement guarantee.\n- `abs_dot_le_sum`, `abs_dot_indicator_le`: proved \u2014 generic integer dot-product bounds (triangle inequality; 0/1-indicator bound) reusable for any LWE error analysis.\n- `params128_classical_secure_and_correct`: proved \u2014 a concrete set (n=512, q=16384, B=1, m=512) is simultaneously decryption-correct and \u2265128-bit hard under classical core-SVP.\n- `params128_quantum_secure`: proved \u2014 dimension n=484 already clears 128 bits under the conservative quantum core-SVP estimate `2^{0.265\u00b7n}`.\n- `lwe_hard_of_gapSVP`: conjecture (`sorry`) \u2014 the worst-case\u2192average-case reduction, awaiting a computational-hardness model.\n\n## Research Directions\n\n### Direction 1: Probabilistic decryption-failure bound\n**Hypothesis**: For discrete-Gaussian errors of width `\u03c3`, the Regev decryption-failure\nprobability is at most `2\u00b7m\u00b7exp(\u2212q\u00b2/(32\u00b7m\u00b7\u03c3\u00b2))`, i.e. the deterministic budget\n`4\u00b7m\u00b7B < q` can be replaced by a tail bound that fails only negligibly.\n**Test**: Replace the worst-case hypothesis `|e j| \u2264 B` in `regev_correctness` by a\nsub-Gaussian tail hypothesis and prove the failure event `{|\u27e8r,e\u27e9| \u2265 q/4}` has\nexponentially small measure using a Hoeffding/Chernoff bound on `\u2211 r\u2c7c e\u2c7c`.\n**Why now**: `regev_correctness` already isolates the *single* bad event `|\u27e8r,e\u27e9| \u2265 q/4`;\nthe key insight is that the whole proof now reduces to one concentration inequality on a\n0/1-weighted error sum, which Mathlib's `MeasureTheory`/`Probability` library can support.\n**If true**: Bridges the deterministic correctness core to real parameter selection,\nwhere decryption failure is tolerated at rate `2^{-128}`.\n**If false**: Reveals that the 0/1 randomness `r` correlates with `e` in a way that\ndefeats independence \u2014 a genuine structural warning about Regev's CRT-packed variants.\n\n### Direction 2: Reconciliation closes key-exchange agreement to exact equality\n**Hypothesis**: Adding a single-bit \"signal/hint\" function `\u03c3 : \u2124 \u2192 Bool` to the key\nexchange upgrades `lwe_keyexchange_agreement` (a bound `|k_A \u2212 k_B| \u2264 \u0394`) into *exact*\nshared-key equality `reconcile(k_A, hint) = reconcile(k_B, hint)` whenever `4\u00b7\u0394 < q`.\n**Test**: Define Peikert's rounding `\u230a\u00b7\u2309\u2082` with a cross-rounding hint and prove the\nreconciliation theorem by the same case-split-on-residue argument used in\n`regev_correctness`.\n**Why now**: The key insight is that `lwe_keyexchange_agreement` already supplies the gap\nbound `\u0394 = (\u2016s\u2016\u2081+\u2016t\u2016\u2081)\u00b7B`; only the boundary-disagreement at the decode threshold remains,\nexactly the gap we flagged in that theorem's failure-analysis note.\n**If true**: Yields the first fully verified end-to-end LWE key-exchange correctness\nchain (NewHope/Frodo-style) in this catalog.\n**If false**: Pinpoints that a 1-bit hint is information-theoretically insufficient for\nthe chosen `\u0394/q` ratio, forcing multi-bit reconciliation.\n\n### Direction 3: Symmetry of `A` is necessary, not just sufficient\n**Hypothesis**: If `A` is *not* symmetric, key agreement provably fails: there exist\n`A, s, t` with zero error such that `k_A \u2260 k_B`, so `lwe_keyexchange_identity` is sharp.\n**Test**: Construct an explicit `2\u00d72` non-symmetric `A` and integer secrets giving\n`\u27e8s, A t\u27e9 \u2260 \u27e8t, A s\u27e9`, and prove the inequality by `decide`/`norm_num`; mark it a\n`disproved` boundary for the symmetric hypothesis.\n**Why now**: The key insight is that our identity proof used `hA` in exactly one place\n(the `sum_comm` rename), so dropping it should break agreement at the smallest dimension;\nthis is a one-shot counterexample search.\n**If true**: Certifies that the public matrix *must* be symmetric (or that a transpose\nmust be transmitted), a concrete protocol-design constraint.\n**If false (agreement survives)**: Would mean a hidden cancellation independent of\nsymmetry \u2014 surprising, and worth tracing to a deeper invariant.\n\n### Direction 4: A negligible-advantage semiring for IND-CPA\n**Hypothesis**: IND-CPA security of Regev can be stated and reduced to decision-LWE\n*purely algebraically* by working in the semiring of \"advantage functions\"\n`\u03b5 : \u2115 \u2192 \u211d\u22650` ordered by eventual domination, where `negligible` is an ideal.\n**Test**: Define `Negligible (\u03b5)` (\u2200 c, eventually `\u03b5 n \u2264 n^{-c}`), prove it is closed\nunder addition and multiplication by polynomials, then state the hybrid argument\n`Adv_INDCPA \u2264 Adv_LWE + negl` as an inequality in this structure (reduction body `sorry`).\n**Why now**: The key insight is that our `lwe_hard_of_gapSVP` placeholder showed the\n*missing* ingredient is not the math of LWE but an advantage calculus; building that\ncalculus is a self-contained, Mathlib-friendly task (filters + `\u211d\u22650`).\n**If true**: Unlocks machine-checkable game-hopping proofs for the whole catalog's\ncryptography thread.\n**If false**: Shows that eventual-domination ordering is too coarse for tight reductions,\nmotivating a concrete (non-asymptotic) advantage bound instead.\n\n### Direction 5: Sharpness of the concrete-parameter frontier\n**Hypothesis**: The pair (correctness budget `4mB < q`, security `0.292\u00b7n \u2265 128`) admits\na *Pareto frontier*: for fixed failure target there is a minimal `q` (hence minimal\nciphertext size `n\u00b7log q`) and our `n=512, q=2^14` point is within a factor 2 of it.\n**Test**: Parameterize `coreSVPClassical` and the budget over `(n, log q, m)`, and\n`decide`/`omega`-search the lattice of integer parameter tuples to minimize `n\u00b7log q`\nsubject to both constraints; prove minimality of the found tuple.\n**Why now**: The key insight is that both constraints are already *decidable integer\ninequalities* in this file (`params128_classical_secure_and_correct`), so the optimization\nis a finite search Lean can certify, not a real-analysis estimate.\n**If true**: Produces a verified, optimal 128-bit Regev parameter set \u2014 directly useful.\n**If false (no clean frontier)**: Indicates the linear core-SVP model is too crude and a\nrefined BKZ cost model must enter the formalization.\n",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_1342",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0de6354a",
+    "status": "available",
+    "timestamp": "2026-06-11T08:19:32.957194+00:00",
+    "title": "This cycle formalized the *correctness core* of Learning-With-Errors cryptograph"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Code-Based Cryptography (McEliece / Goppa)\n\nThe file `Catalog/Cryptography/McElieceGoppa.lean` establishes the abstract\ncorrectness backbone of the McEliece cryptosystem: bounded-distance unique\ndecoding (`unique_decoding`), weight-invariance of coordinate permutations\n(`hammingNorm_comp_equiv`), end-to-end decryption correctness\n(`mceliece_correct`), the sphere-packing bound (`sphere_packing_bound`), and a\nconcrete NIST level-5 parameter set (`cm6960119_*`). These results deliberately\ntake the *minimum distance* of the code as a hypothesis. The natural next\nresearch cycle is to *derive* that hypothesis from the algebraic structure of\nGoppa codes, and to formalize the hardness assumptions that underwrite security.\nFive concrete, falsifiable directions follow.\n\n## 1. The Goppa designed-distance theorem\n\nRight now `cm6960119_corrects_119_errors` assumes the designed distance `2t+1`.\nThe honest statement to prove is that a *binary* Goppa code `\u0393(L, g)` with a\nsquarefree Goppa polynomial `g` of degree `t` over `GF(2^m)` has minimum\ndistance `\u2265 2t+1` (not merely `\u2265 t+1`). Formalize Goppa codes as the kernel of\nthe parity map `c \u21a6 \u03a3\u1d62 c\u1d62/(x \u2212 L\u1d62) mod g`, and prove the weight bound.\n\n**The key insight is** that over characteristic 2 the syndrome polynomial of a\ncodeword is the formal derivative of `\u220f\u1d62 (x \u2212 L\u1d62)^{c\u1d62}`, whose squarefree part\ndoubles the apparent degree \u2014 this is exactly what upgrades the BCH bound `t+1`\nto `2t+1` and is the single fact that distinguishes Goppa codes from generic\nalternant codes.\n\n**Why now?** The Schwartz\u2013Zippel / minimum-distance infrastructure already in\n`Cryptography/MinimumDistance.lean` and the abstract decoder in this file mean\nthe only missing piece is the algebraic identity; proving it would let\n`cm6960119_corrects_119_errors` drop its hypothesis entirely and become\nunconditional.\n\n## 2. Patterson decoding as a constructive `decode`\n\n`mceliece_correct` is parameterized by an *abstract* decoder satisfying the\n`hdec` correctness contract. Replace it with a concrete `decode` implementing\nPatterson's algorithm (solve the key equation `\u03c3(x)\u00b7S(x) \u2261 \u03c9(x) mod g` via the\nextended Euclidean algorithm) and prove it meets `hdec` for `wt(e) \u2264 t`.\n\n**The key insight is** that Patterson's split of the error locator into even and\nodd parts, `\u03c3 = a\u00b2 + x\u00b7b\u00b2`, linearizes the otherwise quadratic key equation in\ncharacteristic 2, reducing decoding to one gcd computation \u2014 a step that is\nfully formalizable with Mathlib's `EuclideanDomain` and polynomial API.\n\n**Why now?** With `mceliece_correct` already discharging the wrapper\n(scrambler + permutation), a verified Patterson decoder immediately yields a\n*fully verified* McEliece decryption with no abstract holes.\n\n## 3. Worst-case decoding hardness from the sphere-packing regime\n\nThe concept brief asks for NP-hardness of decoding random linear codes\n(Berlekamp\u2013McEliece\u2013van Tilborg). A tractable first milestone: formalize the\n*coset weights* / *syndrome decoding* decision problem and prove the\nsearch-to-decision and self-reduction lemmas, using `sphere_packing_bound` to\nshow that below the packing radius solutions are unique (so the decision problem\nis well-posed).\n\n**The key insight is** that uniqueness of the nearest codeword inside the\npacking radius (already proved as `unique_decoding`) is precisely what makes the\nNP witness *checkable in polynomial time*, so the combinatorial reduction from\n3-dimensional matching reduces to a counting argument the catalog's\n`Cryptography/HardnessHierarchy.lean` framework can host.\n\n**Why now?** `unique_decoding` and `sphere_packing_bound` give the two\nwell-posedness facts that every textbook NP-hardness proof silently assumes;\nformalizing them is usually the bottleneck, and that bottleneck is now cleared.\n\n## 4. The Gilbert\u2013Varshamov counterpart to sphere packing\n\n`sphere_packing_bound` is an upper bound on code size. Prove its lower\ncompanion: a greedy/probabilistic argument showing a code of length `n`,\ndistance `d`, and size `\u2265 q^n / V_q(n, d\u22121)` exists (Gilbert\u2013Varshamov). Pair\nthe two to bracket the achievable rate region.\n\n**The key insight is** that the *same* ball-volume function `V` appearing in\n`hammingBall_card_eq` controls both bounds \u2014 packing forbids overlap from above,\nwhile a maximal code with no addable word forces covering from below \u2014 so a\nsingle formalized volume lemma yields both inequalities.\n\n**Why now?** `hammingBall_card_eq` already proves translation-invariance of the\nball volume, the exact lemma a GV argument needs; the lower bound is then a short\nmaximality argument over `Finset`.\n\n## 5. Distinguishing-equals-decoding for Goppa generator matrices\n\nThe brief's deepest target: show that distinguishing a Goppa generator matrix\nfrom a uniformly random one is as hard as decoding. Formalize the indistinguish-\nability game and a reduction transforming a distinguishing advantage into a\ndecoding oracle, building on the catalog's `Cryptography/SearchDecision.lean`\nand `Cryptography/Security.lean` game frameworks.\n\n**The key insight is** that the scrambler-and-permutation wrapper proved\ntransparent by `mceliece_correct` (the public key is `S\u00b7G\u00b7P`) means a\ndistinguisher must exploit *intrinsic* code structure rather than the masking \u2014\nso its advantage can be replayed against the underlying random-code decoding\ninstance with the permutation folded away via `hammingNorm_comp_equiv`.\n\n**Why now?** `mceliece_correct` formally certifies that `S` and `P` do not\nchange the decoded message, which is exactly the algebraic invariance a\ndistinguishing-to-decoding reduction must invoke to discard the mask; with that\nin hand the reduction becomes a game-hopping argument the catalog already\nsupports.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1343",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d080735f",
+    "status": "available",
+    "timestamp": "2026-06-11T08:20:50.517636+00:00",
+    "title": "The file `Catalog/Cryptography/McElieceGoppa.lean` establishes the abstract"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
     "domains": [
       "Cryptography",
@@ -2722,7 +2782,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reinforcement Learning: Convergence of Policy Gradient Methods"
   },
   {
-    "consumed_by_exp_id": "0de6354a",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Learning With Errors (LWE) problem and prove its reduction from worst-case lattice problems (GapSVP). Show that the Regev encryption scheme is IND-CPA secure under LWE. Prove that key exchange based on LWE achieves forward secrecy. Compute concrete security parameters for 128-bit security.",
     "domains": [
       "Cryptography",
@@ -2732,24 +2792,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.801510+00:00",
     "title": "Post-Quantum Cryptography: Lattice-Based Key Exchange"
-  },
-  {
-    "consumed_by_exp_id": "d080735f",
-    "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
-    "domains": [
-      "Cryptography",
-      "Computation"
-    ],
-    "id": "fd_0544",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:07.295536+00:00",
-    "title": "Code-Based Cryptography: McEliece from Goppa Codes"
   },
   {
     "consumed_by_exp_id": "",
@@ -2885,7 +2930,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Inverse Stereographic Neural Field Theory"
   },
   {
-    "consumed_by_exp_id": "d4cfb6f8",
+    "consumed_by_exp_id": "",
     "description": "The key insight is that neural network training is a renormalization group (RG) flow in function space. Each training step integrates out high-frequency modes (gradient descent on fast-varying parameters), just as each RG step integrates out short-distance modes. Conjecture: The fixed points of SGD on neural networks are precisely the critical points of a renormalization group flow defined by the coarse-graining operator that averages over parameter subsets. Why now: recent work on neural network Gaussian processes shows that infinite-width networks have exact RG fixed points, and the beta function of SGD training has been computed for linear networks. Test: prove that for a 2-layer ReLU network trained on isotropic data, the SGD fixed point corresponds to the Wilson-Fisher fixed point in d=2 dimensions, and compute the critical exponents. Impact: neural network training would be governed by universality classes, meaning the same network trained on different data converges to the same fixed point if the data distribution is in the same universality class.",
     "domains": [
       "MachineLearning",
@@ -2895,7 +2940,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:27.476683+00:00",
     "title": "Neural Network Training as Renormalization Group Flow"
   },
@@ -3002,7 +3047,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: This cycle took the *single-modulus* law of apparition from the catalo"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fb6da1bf",
     "description": "Cycle 15e5810c (Q=0.451) proved 861 theorems in MachineLearning but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Tropical Geometry of Neural Networks\n\n## Synthesis\n\nThis cycle established a formalized bridge between ReLU neural network decision boundaries and tropical algebraic geometry. The",
     "domains": [
       "MachineLearning"
@@ -3011,7 +3056,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5013813444512124,
     "research_mode": "team",
     "source_exp_id": "15e5810c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T18:37:51.453138+00:00",
     "title": "Close Proofs: Formalized bridge between ReLU neural network decision"
   },
@@ -3088,7 +3133,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Learning with Errors: Hardness Reductions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53d838e0",
     "description": "Cycle 4583bab4 (Q=0.444) proved 314 theorems in Tropical but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture: For any sufficiently expressive formal system and any theorem-search process represented as a dynamically growing proof-dependency graph, there exists a graph-geometric curvature observabl",
     "domains": [
       "Tropical"
@@ -3097,7 +3142,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.49448714179738873,
     "research_mode": "team",
     "source_exp_id": "4583bab4",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-10T20:05:20.147269+00:00",
     "title": "Close Proofs: Proof-Net Curvature and Phase Transitions in Automated Theorem Search"
   },
@@ -3172,7 +3217,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: For metrizable separable spaces, the small inductive dimension, large "
   },
   {
-    "consumed_by_exp_id": "145c21f1",
+    "consumed_by_exp_id": "",
     "description": "Cycle 5c7661a0 (Q=0.427) proved 1443 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove a tropical analog of the Hodge decomposition. Formalize tropical (p,q)-forms, the tropical Laplacian, and harmonic theory on balanced weighted polyhedral complexes.",
     "domains": [
       "Applications"
@@ -3181,7 +3226,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.47662833278622757,
     "research_mode": "team",
     "source_exp_id": "5c7661a0",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-09T08:50:21.279350+00:00",
     "title": "Close Proofs: Tropical Hodge Theory"
   },
@@ -3352,6 +3397,34 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-10T20:04:02.478937+00:00",
     "title": "Close Proofs: Entropy-Bounded Computation framework from a cold start as"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 145c21f1 (Q=0.417) proved 277 theorems in Applications but left 20 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle 5c7661a0 (Q=0.427) proved 1443 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove a tropical an",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_145c21f1_c90a4fbc",
+    "priority_score": 0.4665579009547902,
+    "research_mode": "team",
+    "source_exp_id": "145c21f1",
+    "status": "available",
+    "timestamp": "2026-06-11T08:19:15.997572+00:00",
+    "title": "Close Proofs: Close Proofs: Tropical Hodge Theory"
+  },
+  {
+    "consumed_by_exp_id": "57f50527",
+    "description": "Cycle 0de6354a (Q=0.414) proved 281 theorems in Novelty but left 23 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the Learning With Errors (LWE) problem and prove its reduction from worst-case lattice problems (GapSVP). Show that the Regev encryption scheme is IND-CPA secure under LWE. Prove that key ex",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_0de6354a_32f6d1a6",
+    "priority_score": 0.4644544154291596,
+    "research_mode": "team",
+    "source_exp_id": "0de6354a",
+    "status": "in_progress",
+    "timestamp": "2026-06-11T08:19:41.420481+00:00",
+    "title": "Close Proofs: Post-Quantum Cryptography: Lattice-Based Key Exchange"
   },
   {
     "consumed_by_exp_id": "",
@@ -3577,7 +3650,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reversible Computing and Thermodynamic Efficiency"
   },
   {
-    "consumed_by_exp_id": "6ae717c3",
+    "consumed_by_exp_id": "",
     "description": "Formalize Tononi's Integrated Information Theory (IIT) using tensor network states. Conjecture: The integrated information Phi of a tensor network state equals the minimal quantum mutual information across any bipartition. Test: compute Phi for MPS (matrix product states) with bond dimension 2 and verify it matches the Schmidt rank. Impact: connects consciousness theory to quantum information and tensor categories.",
     "domains": [
       "Physics",
@@ -3587,7 +3660,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.423474+00:00",
     "title": "Integrated Information via Tensor Networks"
   },

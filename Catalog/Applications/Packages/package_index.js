@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "e1abb972",
     "filename": "deepening_information_geometric_bridge_fisher_metr.json",
     "pkg_num": 75,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.8228800000000001,
     "title": "The Information-Geometric Bridge: Fisher Metric, Tensorization, and the Cramer-Rao Bound"
   },
   {
@@ -2269,8 +2269,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "deepening_information_geometric_bridge_fisher_metr",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.8228800000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Information-Geometric Bridge: Fisher Metric, Tensorization, and the Cramer-Rao Bound"
     }
