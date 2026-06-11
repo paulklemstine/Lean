@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d2b4dcf3",
     "filename": "close_proofs_proof_theoretic_bridge_ordinal_analys.json",
     "pkg_num": 88,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.55984,
     "title": "Close Proofs: A Proof-Theoretic Bridge \u2014 Ordinal Analysis Across Systems"
   },
   {
@@ -2667,8 +2667,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "close_proofs_proof_theoretic_bridge_ordinal_analys",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.55984,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Close Proofs: A Proof-Theoretic Bridge \u2014 Ordinal Analysis Across Systems"
     }
