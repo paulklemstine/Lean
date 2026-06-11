@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-11T00:06:01.721610+00:00",
+  "last_updated": "2026-06-11T00:07:24.547067+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -15559,6 +15559,45 @@
       "theorem_count": 1353,
       "timestamp": "2026-06-11T00:06:01.533971+00:00",
       "title": "Close Proofs: Proof Phase Transitions: Sharp Thresholds in Random Formal Theories"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6754,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 7,
+      "domain": "Geometry",
+      "duration_seconds": 7362.431605577469,
+      "end_time": 1781136402.6024106,
+      "files_integrated": 0,
+      "job_id": "1320de4c",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v8",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v8",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.8,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7284,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.717,
+        "novelty": 0.949,
+        "proof_depth": 0.6176,
+        "usefulness": 0.8088
+      },
+      "quality_score": 0.3913445195644401,
+      "sorry_count": 1,
+      "sorry_density": 0.0010183299389002036,
+      "start_time": 1781129040.170805,
+      "strategy_count": 0,
+      "theorem_count": 982,
+      "timestamp": "2026-06-11T00:07:24.304950+00:00",
+      "title": "The Basin Fixed Point Theorem shows that basin count = fixed point count for des"
     }
   ]
 }
