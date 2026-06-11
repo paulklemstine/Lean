@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-11T17:41:27.556040+00:00",
+  "last_updated": "2026-06-11T18:03:19.348639+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -21526,6 +21526,45 @@
       "theorem_count": 2017,
       "timestamp": "2026-06-11T17:41:27.222007+00:00",
       "title": "Close Proofs: The current formalization handles 0-dimensional persistence on discret"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.686,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 111,
+      "domain": "Novelty",
+      "duration_seconds": 2862.736780166626,
+      "end_time": 1781200333.1758711,
+      "files_integrated": 0,
+      "job_id": "75439445",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v6",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v6",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.8,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "composite": 0.819,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9248,
+        "novelty": 0.95,
+        "proof_depth": 0.914,
+        "usefulness": 0.957
+      },
+      "quality_score": 0.4435260077984994,
+      "sorry_count": 4,
+      "sorry_density": 0.002758620689655172,
+      "start_time": 1781197470.439091,
+      "strategy_count": 0,
+      "theorem_count": 1450,
+      "timestamp": "2026-06-11T18:03:19.100219+00:00",
+      "title": "Close Proofs: Proof-Theoretic Bridge: Ordinal Analysis Across Systems"
     }
   ]
 }
