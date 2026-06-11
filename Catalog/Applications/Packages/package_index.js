@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "fe45d287",
     "filename": "close_proofs_quantum_topological_phase_computation.json",
     "pkg_num": 95,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.42048535895849587,
     "title": "Close Proofs: Quantum Topological Phase Computation"
   },
   {
@@ -2884,8 +2884,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "close_proofs_quantum_topological_phase_computation",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.42048535895849587,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Close Proofs: Quantum Topological Phase Computation"
     }
