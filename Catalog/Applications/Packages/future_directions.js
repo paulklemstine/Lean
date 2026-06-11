@@ -134,7 +134,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Referential Type Theory: Proofs That Modify Their Own Specifications"
   },
   {
-    "consumed_by_exp_id": "17cbb16f",
+    "consumed_by_exp_id": "",
     "description": "Prove or disprove: for every \u03b5 > 0, there exists k such that distinguishing value \u2265 1-\u03b5 from value \u2264 \u03b5 for unique 2-prover games with k labels is NP-hard. Connect to MAX-CUT and SDP gaps.",
     "domains": [
       "Computation",
@@ -144,7 +144,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.92,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:17.201558+00:00",
     "title": "Unique Games Conjecture"
   },
@@ -1012,7 +1012,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "For metrizable separable spaces, the small inductive dimension, large inductive "
   },
   {
-    "consumed_by_exp_id": "7648a3c9",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Fibonacci Entry Point Theory and Primitive Divisors\n\n## 1. Full Carmichael Primitive Divisor Theorem\n\nThe entry point machinery developed here (fibEntryPoint, its divisibility property,\nand the primitive divisor characterization) provides exactly the framework needed\nto prove Carmichael's theorem: for all n \u2265 13, F(n) has a primitive prime divisor.\n\nThe key insight is that the entry point characterization reduces Carmichael's theorem\nto showing that for each n \u2265 13, there exists a prime p with fibEntryPoint p = n,\nwhich can be established by analyzing the \"coprime part\" of F(n) \u2014 the quotient after\nremoving all prime factors that appear in F(d) for proper divisors d | n.\n\nWhy now? The `isPrimitivePrimeDivisor_iff` theorem gives an exact algebraic criterion\nfor primitive divisors in terms of entry points. Combined with computational verification\nfor small cases (which Lean's `native_decide` can handle for n \u2264 10000) and analytic\ngrowth bounds for large n, a complete proof is within reach.\n\n## 2. Pisano Period Exact Formula\n\nThe `fib_periodic_mod` theorem establishes existence of periodicity mod m, but does not\ncharacterize the minimal period \u03c0(m) (the Pisano period). A natural conjecture is:\n\n**Conjecture**: For prime p \u2260 5, \u03c0(p) divides p\u00b2 \u2212 1. More precisely, \u03c0(p) divides\np \u2212 1 if p \u2261 \u00b11 (mod 5), and \u03c0(p) divides 2(p + 1) if p \u2261 \u00b12 (mod 5).\n\nThe key insight is that the Fibonacci sequence mod p is governed by the splitting behavior\nof x\u00b2 \u2212 x \u2212 1 in F_p, which depends on whether 5 is a quadratic residue mod p. This\nconnects Pisano periods to the Legendre symbol (5/p) and quadratic reciprocity.\n\nWhy now? The periodicity infrastructure is in place. The connection to quadratic residues\ncan leverage Mathlib's existing `ZMod.legendreSym` and `QuadraticReciprocity` machinery.\n\n## 3. Fibonacci Representations and Zeckendorf's Theorem\n\nEvery positive integer has a unique representation as a sum of non-consecutive Fibonacci\nnumbers (Zeckendorf's theorem). This is a constructive result that connects to the\ngreedy algorithm for Fibonacci representations.\n\n**Conjecture**: The Zeckendorf representation can be computed by the greedy algorithm,\nand the number of terms in the representation of n is O(log n / log \u03c6) where \u03c6 is the\ngolden ratio.\n\nThe key insight is that the proof of existence uses the entry point theory indirectly:\nthe gap condition (no consecutive Fibonacci numbers) is forced by the identity\nF(k) + F(k+1) = F(k+2), which collapses adjacent terms. Uniqueness follows from\na counting argument using the Cassini identity proved here.\n\nWhy now? The `fib_cassini` identity and the strong induction pattern used in\n`fib_periodic_mod` provide the exact proof technology needed. Mathlib's `Finset`\nAPI handles the representation as a finite set of indices.\n\n## 4. Entry Point and the ABC Conjecture for Fibonacci\n\nA deep open question is whether the entry point function \u03b1(p) satisfies\n\u03b1(p) > p^\u03b5 for some \u03b5 > 0 and all sufficiently large primes p. This is\nrelated to the ABC conjecture applied to Fibonacci numbers.\n\n**Conjecture**: For every \u03b5 > 0, there exist only finitely many primes p with\n\u03b1(p) < p^\u03b5 (the \"Wall-Sun-Sun prime\" generalization).\n\nThe key insight is that if \u03b1(p) is very small relative to p, then F(\u03b1(p)) has\nan unusually large prime factor relative to its size, creating tension with\nthe ABC conjecture. The entry point divisibility theorem proved here\n(`fibEntryPoint_dvd`) is the foundational tool for any progress on this question.\n\nWhy now? While a full resolution likely requires ABC, partial results bounding\n\u03b1(p) \u2265 c\u00b7log(p) for an explicit constant c are accessible using the Pisano\nperiod bounds and our periodicity theorem. Even formalizing the precise\nrelationship between entry points and ABC would be novel.\n\n## 5. Generalized Entry Points for Lucas Sequences\n\nThe Fibonacci sequence is a special case of a Lucas sequence U_n(P, Q) with P = Q = 1.\nThe entry point theory generalizes: for any Lucas sequence, if p | U_n then \u03b1(p) | n.\n\n**Conjecture**: For Lucas sequences U_n(P, Q) with \u0394 = P\u00b2 \u2212 4Q \u2260 0, the entry point\n\u03b1(p) of a prime p \u2224 2Q\u0394 satisfies: \u03b1(p) | p \u2212 (\u0394/p), where (\u0394/p) is the Legendre symbol.\n\nThe key insight is that the proof of `fibEntryPoint_dvd` used only the GCD property\n(fib_dvd_of_dvd_gcd), which generalizes to all Lucas sequences via the analogous\nidentity gcd(U_m, U_n) = U_{gcd(m,n)}. The Cassini identity also generalizes:\nU_{n+1}\u00b2 \u2212 P\u00b7U_{n+1}\u00b7U_n + Q\u00b7U_n\u00b2 = Q^n.\n\nWhy now? The proof architecture (entry point \u2192 divisibility \u2192 periodicity \u2192 primitive divisors)\nis modular and transfers directly. Mathlib has partial infrastructure for general linear\nrecurrences that could serve as a foundation.\n",
     "domains": [
       "Algebra",
@@ -1022,7 +1022,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "72ac5da9",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-09T10:02:21.189696+00:00",
     "title": "The entry point machinery developed here (fibEntryPoint, its divisibility proper"
   },
@@ -2708,6 +2708,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Generalization Bounds for Learning\n\nThe file `Core.lean` isolates the *analytic skeleton* shared by Occam, sample\ncompression, and norm-based capacity bounds, and composes them into a single\nsample-complexity calculus (`union_bound_finite` \u2192 `occam_sample_complexity_correct`\n\u2192 `occam_pac_bound`; `compression_count_le` \u2192 `compression_sample_complexity`;\n`normCapacity_*` for overparameterization). The probabilistic content is cleanly\nfactored out as per-hypothesis tail hypotheses, leaving deterministic real\ninequalities that compose without measure theory. The following directions push\nthat skeleton toward genuinely new, falsifiable mathematics.\n\n## 1. A Hoeffding tail layer feeding `occam_pac_bound`\n\nRight now `occam_pac_bound` takes the per-hypothesis tail `q i \u2264 e^{-\u03b5 n}` as a\nhypothesis. The next cycle should *discharge* this hypothesis by formalizing\nHoeffding's inequality for `[0,1]`-bounded i.i.d. losses inside Mathlib's\n`MeasureTheory`/`ProbabilityTheory` framework and instantiating\n`q i = \u2119(|empRisk i \u2212 trueRisk i| > \u03b5)`. The key insight is that the only place\nprobability enters the entire finite-class story is a single scalar exponential\ntail per hypothesis \u2014 so a *single* concentration lemma, plugged into the already\nproven deterministic composition, yields the full finite-class PAC theorem with\nno further analysis. **Why now?** Mathlib now has martingale and conditional\nexpectation infrastructure (`MeasureTheory.Martingale`, Azuma/Hoeffding stubs)\nmature enough that the bounded-difference inequality is within reach, and the\ndeterministic scaffold in `Core.lean` makes the integration target precise.\n\n## 2. Quantitative gap between McAllester and Catoni at the optimal temperature\n\n`PACBayes/Bounds.lean` proves monotonicity of both bounds but not their *ordering*.\nConjecture: for `0 \u2264 kl` and `n` large, `catoniBound` evaluated at the optimal\n`\u03bb* = argmin` is strictly below `mcAllesterBound`, with an explicit\n`\u0398(kl / n)` versus `\u0398(\u221a(kl / n))` separation. The key insight is that the Catoni\ndenominator `1 \u2212 e^{\u2212\u03bb}` admits a tight two-sided bracket `\u03bb(1\u2212\u03bb/2) \u2264 1\u2212e^{\u2212\u03bb} \u2264 \u03bb`\non `(0,1]`, which converts the exponential bound into the second-order Bernstein\nform and exposes the quadratic-vs-square-root gap analytically. **Why now?** The\nmonotonicity lemmas already in the catalog supply the convexity facts needed; the\nmissing piece is one elementary `exp` bracketing lemma, exactly the kind of real\ninequality the present file shows is tractable.\n\n## 3. Compression bounds that beat parameter counting on a concrete family\n\n`compression_sample_complexity` shows sample complexity scales like `k log n`,\nindependent of ambient parameter count. The falsifiable next step: exhibit a\nconcrete hypothesis family (e.g. thresholded linear separators / 1-nearest-neighbor\nwith `k` support points) where the parameter count is `p` but the compression size\nis provably `k \u226a p`, and prove `compression_sample_complexity` gives a strictly\nsmaller `m` than the VC/parameter-count bound `\u2248 p`. The key insight is that\ncompression size is an *intrinsic* description-length of the learned predictor,\ndecoupled from the redundant coordinates of an overparameterized representation \u2014\nso the same predictor reached by a huge net is certified by its tiny support set.\n**Why now?** The counting lemma `compression_count_le` is proved, so only the\nside-by-side numerical comparison against a VC bound remains, and it is purely\narithmetic.\n\n## 4. Closing the loop: norm capacity \u21d2 effective hypothesis count \u21d2 Occam\n\n`normCapacity` and `occamSampleComplexity` currently live side by side. Conjecture:\na margin-`\u03b3` classifier with product-of-norms capacity `R = normCapacity layers`\nbehaves like a finite class of effective size `exp(C \u00b7 R\u00b2 / \u03b3\u00b2)`, so plugging\n`numHyp := exp(C R\u00b2/\u03b3\u00b2)` into `occam_sample_complexity_correct` yields a fully\nnorm-based generalization bound whose sample complexity is `\u0398(R\u00b2/(\u03b3\u00b2 \u03b5))` and is\n*invariant* under the norm-1 layer insertions proved in\n`normCapacity_insert_unit_layer`. The key insight is that a covering-number\nargument turns the continuous norm ball into a finite \u03b5-net whose log-cardinality\nis exactly `R\u00b2/\u03b3\u00b2`, the single bridge converting Section 4's capacity into\nSection 2's hypothesis count. **Why now?** Both endpoints are formalized in\n`Core.lean`; the only gap is a covering-number lemma, and Mathlib's metric\n`TotallyBounded`/`Metric.ball` API can express the net directly.\n\n## 5. Double descent as nonmonotonicity of a two-regime risk functional\n\nThe catalog already contains `TropicalDoubleDescent.lean`. Conjecture: define a\nrisk functional `R(p) = approx(p) + occam-penalty(p)` where `approx` decreases and\nthe penalty switches from count-based (`\u221d p`) below the interpolation threshold to\nnorm-based (`\u221d normCapacity`, hence eventually decreasing) above it; then `R` is\nprovably *nonmonotone* with a local maximum exactly at the interpolation threshold.\nThe key insight is that double descent is not mysterious once capacity control\n*changes basis* from parameter count to norm at interpolation \u2014 the second descent\nis literally `normCapacity_append_le_one` (adding controlled-norm capacity cannot\nhurt) overtaking the count term. **Why now?** With the norm-monotonicity lemma\nproved here and the tropical double-descent phase diagram already in the catalog,\nthe two regimes can be glued into one piecewise functional and its critical points\nanalyzed with `deriv`/`StrictMonoOn` tools already used elsewhere in the project.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1293",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7362a3dd",
+    "status": "available",
+    "timestamp": "2026-06-11T00:38:16.576274+00:00",
+    "title": "The file `Core.lean` isolates the *analytic skeleton* shared by Occam, sample"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 23e7b223 (Q=0.661) proved 492 theorems in Applications but left 14 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Topological Order, Genus Degeneracy, and Modular Data\n\nThe file `Physics/TopologicalOrderGenus.lean` establishes, for an *abelian* anyon theory\nwhose anyon types form a finite abe",
     "domains": [
       "Applications"
@@ -3248,7 +3263,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Close Proofs: Stereographic Capacity Theory: Packing Bounds on Spheres"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "aff165fb",
     "description": "Cycle 0320765b (Q=0.435) proved 643 theorems in Physics but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture: For natural families of randomly generated first-order axiom systems with bounded symbol complexity and a fixed theorem schema \u03c6_n, there exists a nontrivial critical clause-density parame",
     "domains": [
       "Physics"
@@ -3257,7 +3272,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.484768389530459,
     "research_mode": "team",
     "source_exp_id": "0320765b",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T04:08:52.761148+00:00",
     "title": "Close Proofs: Proof Phase Transitions: Sharp Thresholds in Random Formal Theories"
   },
@@ -3358,6 +3373,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-10T19:16:29.662148+00:00",
     "title": "Close Proofs: Close Proofs: Close Proofs: Dream Logic: Non-Monotone Reasoning Where "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 7362a3dd (Q=0.424) proved 1334 theorems in Cryptography but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove tighter generalization bounds for deep neural networks. Formalize PAC-Bayes bounds, compression-based bounds, and connect network architecture to sample complexity. Establish when overparameteri",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "sorry_fill_7362a3dd_13dd7618",
+    "priority_score": 0.4736063843078461,
+    "research_mode": "team",
+    "source_exp_id": "7362a3dd",
+    "status": "available",
+    "timestamp": "2026-06-11T00:38:28.469160+00:00",
+    "title": "Close Proofs: Machine Learning Generalization Bounds"
   },
   {
     "consumed_by_exp_id": "",

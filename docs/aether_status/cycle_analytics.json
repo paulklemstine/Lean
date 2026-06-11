@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-11T00:07:24.547067+00:00",
+  "last_updated": "2026-06-11T00:38:36.791610+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -15598,6 +15598,45 @@
       "theorem_count": 982,
       "timestamp": "2026-06-11T00:07:24.304950+00:00",
       "title": "The Basin Fixed Point Theorem shows that basin count = fixed point count for des"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.7252,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 11,
+      "domain": "Cryptography",
+      "duration_seconds": 6877.627591609955,
+      "end_time": 1781138275.028123,
+      "files_integrated": 0,
+      "job_id": "7362a3dd",
+      "outcome_quality": 0.0,
+      "phase": "A_only",
+      "phase_a_prompt_version": "v7",
+      "phase_b_skip_reason": "low_quality_near_miss",
+      "phase_b_skipped": true,
+      "prompt_version": "v7",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.8,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "composite": 0.8092,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9022,
+        "novelty": 0.95,
+        "proof_depth": 0.8818,
+        "usefulness": 0.9409
+      },
+      "quality_score": 0.4236063843078461,
+      "sorry_count": 3,
+      "sorry_density": 0.0022488755622188904,
+      "start_time": 1781131397.4005313,
+      "strategy_count": 0,
+      "theorem_count": 1334,
+      "timestamp": "2026-06-11T00:38:36.532291+00:00",
+      "title": "Machine Learning Generalization Bounds"
     }
   ]
 }

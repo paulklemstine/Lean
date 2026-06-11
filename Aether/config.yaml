@@ -312,7 +312,7 @@ arxiv:
     Novelty: 'all:"surprising" OR all:"unexpected" OR all:"counterexample" OR all:"paradox"'
     NumberTheory: 'cat:math.NT OR all:"Diophantine" OR all:"arithmetic" OR all:"zeta function"'
   rate_limit_seconds: 3
-  max_paper_chars: 12000
+  max_paper_chars: 40000
 
 git:
   auto_push: true

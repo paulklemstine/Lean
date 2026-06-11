@@ -95,7 +95,7 @@ class ArxivMiner:
         # Config
         self.enabled = self.config.get("enabled", True)
         self.rate_limit = self.config.get("rate_limit_seconds", 3)
-        self.max_paper_chars = self.config.get("max_paper_chars", 12000)
+        self.max_paper_chars = self.config.get("max_paper_chars", 40000)
         self.queries = self.config.get("queries", DOMAIN_QUERIES)
 
         # Provider instance (will be reconfigured per cycle)

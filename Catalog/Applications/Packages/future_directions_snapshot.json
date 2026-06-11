@@ -1,0 +1,29 @@
+[
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Tropical",
+      "Applications/PoincareData/MetricFiltration.lean"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let X be a finite connected 1-dimensional H-regular tropical subvariety of a tropical abelian variety whose underlying topological space is formalized as a finite connected graph G. Then (-1)^1 * chi(X) >= 0, equivalently chi(G) <= 0. In purely combinatorial form: if every vertex of G has degree at least 2, then Fintype.card G.V - Fintype.card G.E <= 0. This is a precise graph-theoretic shadow of the paper's signed Euler-characteristic theorem in dimension 1, using the local H-regularity idea that links force absence of valence-1 singularities. Test: formalize X by its finite graph skeleton, prove the handshake lemma, derive 2|E| = sum_v deg(v), and conclude from deg(v) >= 2 for all v that |E| >= |V|, hence chi <= 0. Impact: this gives a fully Lean-accessible first case of the paper's theorem, and creates a bridge from tropical local-link regularity to catalog graph/combinatorial invariants and Euler-characteristic computations.",
+    "domain_bridges": [
+      "Tropical <-> Applications",
+      "Tropical <-> Computation"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra",
+      "Novelty"
+    ],
+    "id": "arxiv-2606.10817v1",
+    "lineage_refs": [],
+    "priority_score": 0.65,
+    "proof_strategy": "Key lemma: for a finite graph G, if every vertex has degree at least 2 then Fintype.card G.edgeSetEmbeddings >= Fintype.card G.verts, equivalently chi(G) <= 0 after choosing a standard finite-edge model. Approach: translate the paper's 1-dimensional H-regular local condition into the combinatorial statement that each vertex link has at least two points, i.e. each vertex has degree >= 2. Then use the finite graph handshake identity. Steps: 1) Define the tropical 1-cycle skeleton as a finite connected graph. 2) Prove that H-regularity implies every vertex link is nonempty and has at least two rays, hence graph degree >= 2. 3) Sum degrees over vertices and apply the handshake lemma. 4) Rearrange to obtain chi <= 0, i.e. (-1)^1 chi >= 0.",
+    "research_mode": "prove",
+    "source_exp_id": "arxiv-2606.10817v1",
+    "status": "available",
+    "timestamp": "2026-06-11T00:15:22.518967+00:00",
+    "title": "Euler characteristic of tropical 1-cycles on the torus is nonnegative via graph genus"
+  }
+]
