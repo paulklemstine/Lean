@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6ae717c3",
     "filename": "integrated_information_via_tensor_networks.json",
     "pkg_num": 76,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.52376,
     "title": "Integrated Information via Tensor Networks"
   },
   {
@@ -2298,8 +2298,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "integrated_information_via_tensor_networks",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.52376,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Integrated Information via Tensor Networks"
     }
