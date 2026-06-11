@@ -236,7 +236,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Topological Order: Anyon Statistics from Ground State Degeneracy"
   },
   {
-    "consumed_by_exp_id": "f0d8d579",
+    "consumed_by_exp_id": "",
     "description": "Prove that the Fisher information metric defines a Riemannian metric on the statistical manifold of probability distributions. Show that the Kullback-Leibler divergence is the geodesic distance in this metric for exponential families. Bridge: the Chentsov theorem characterizes the Fisher metric uniquely by its invariance under sufficient statistics.",
     "domains": [
       "Bridges",
@@ -246,7 +246,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.130772+00:00",
     "title": "Bridge: Information Geometry Connecting Statistics and Differential Geometry"
   },
@@ -296,7 +296,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Topological Phase Computation"
   },
   {
-    "consumed_by_exp_id": "8e0a810d",
+    "consumed_by_exp_id": "",
     "description": "Standard proof theory treats proofs as timeless: once proved, always proved. But in practice, proofs are discovered in time, and their dependencies form a temporal order. Formalize a temporal logic of proofs where the modal operator Box means provably established by time t. Conjecture: The temporal provability logic TGL (Temporal Godel-Lob) is decidable and strictly extends GL with the axiom Box A implies Box Box Diamond A (if provable now, provably will be provable at any future time). The key insight is that provability in PA is Sigma_1-complete: if PA proves A, then PA proves that PA proves A. Adding temporality creates a system where proof discovery has a well-defined causal order, and future provability can be reasoned about. Test: prove the arithmetical completeness of TGL relative to Peano Arithmetic with a time-stamped provability predicate. Show that the temporal paradox this statement will be provable tomorrow but not today is refutable in TGL. Impact: a new logic for reasoning about proof discovery in time, with applications to proof mining and automated theorem proving where proof order matters.",
     "domains": [
       "Logic",
@@ -306,7 +306,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.766213+00:00",
     "title": "Temporal Logic of Proofs: When You Prove Something Matters"
   },
@@ -396,20 +396,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:18.441912+00:00",
     "title": "Willmore Conjecture Generalizations"
-  },
-  {
-    "consumed_by_exp_id": "d0fd806b",
-    "description": "Cycle a55608ec (Q=0.770) proved 830 theorems in Applications but left 7 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle a3442408 (Q=0.727) proved 2316 theorems in Applications but left 8 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_a55608ec_d64808a5",
-    "priority_score": 0.8195069879518073,
-    "research_mode": "team",
-    "source_exp_id": "a55608ec",
-    "status": "in_progress",
-    "timestamp": "2026-06-11T13:37:11.932232+00:00",
-    "title": "Close Proofs: Close Proofs: The current framework considers *static* observation sys"
   },
   {
     "consumed_by_exp_id": "",
@@ -605,7 +591,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Karchmer-Wigderson theorem establishes that the circuit depth of a Boolean f"
   },
   {
-    "consumed_by_exp_id": "6326c0d0",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Arithmetic Mirror Symmetry\n\n## 1. Modularity of CY Threefold Point Counts\n\nFor a Calabi-Yau threefold X defined over \u211a, the L-function L(X, s) = \u03a3 a\u2099 n\u207b\u02e2\nconjecturally satisfies a functional equation and admits analytic continuation.\nFor rigid CY threefolds (h\u00b2\u00b9 = 0), the Fourier coefficients a\u209a should coincide\nwith those of a weight-4 modular form.\n\nThe key insight is that the mirror Euler characteristic theorem (\u03c7\u0303 = (-1)\u207f\u03c7)\nconstrains the functional equation of L(X, s) via the parity of the motivic\nweight, and for rigid CY threefolds the mirror has h\u00b9\u00b9 = 0 which forces the\nL-function to be modular by Serre's conjecture (now proved).\n\nWhy now? The formalized Hodge diamond structure with Serre duality provides the\nexact framework to state and prove that the Galois representation on H\u00b3(X)\nhas the correct Hodge-Tate weights for modularity. The `betti_poincare_dual`\ntheorem already encodes Poincar\u00e9 duality, which is the geometric input to the\nfunctional equation.\n\n## 2. Arithmetic Mirror Map and Period Integrals\n\nThe mirror map \u03c4(z) = \u222b \u03a9_z / \u222b \u03a9\u2080 relates the complex structure parameter z\nof the mirror family to the K\u00e4hler parameter \u03c4 of X. For the quintic, this map\nhas q-expansion coefficients that are integers \u2014 a deep arithmetic fact.\n\nThe key insight is that integrality of the mirror map coefficients is equivalent\nto a congruence condition on the Picard-Fuchs differential equation modulo\nprimes, which can be formalized as a statement about p-adic valuations of\nhypergeometric series \u2084F\u2083 evaluated at rational points.\n\nWhy now? Our formalization of CY3Data with concrete quintic examples (h\u00b9\u00b9=1,\nh\u00b2\u00b9=101) provides the numerical framework. The next step is to formalize the\nPicard-Fuchs operator for the quintic family and prove that its solutions at\nthe MUM point have integer q-expansion, which is a finite verification for each\ncoefficient.\n\n## 3. SYZ Fibration and Tropical Mirror Symmetry\n\nThe SYZ conjecture says mirror symmetry is T-duality on special Lagrangian torus\nfibrations. Tropicalizing this picture yields a combinatorial version: the mirror\nof a toric CY hypersurface is computed by dualizing the Newton polytope.\n\nThe key insight is that for toric CY hypersurfaces, h^{1,1}(X) equals the number\nof lattice points interior to facets of the Newton polytope \u0394, while h^{n-1,1}(X)\nequals the number of interior lattice points of \u0394 itself, and the Batyrev mirror\nconstruction swaps \u0394 \u2194 \u0394\u00b0 (polar dual). This makes our mirror_euler_sign theorem\na shadow of a purely combinatorial duality.\n\nWhy now? Tropical geometry and polytope combinatorics are well within reach of\nLean formalization. The Hodge diamond framework we built can be instantiated with\nBatyrev's formula, and the Euler characteristic relation becomes a theorem about\nEhrhart polynomials of dual polytopes.\n\n## 4. Weil Conjectures for CY Varieties over Finite Fields\n\nFor a smooth CY n-fold X over \ud835\udd3d_q, the zeta function Z(X/\ud835\udd3d_q, T) is a rational\nfunction whose factors correspond to cohomology groups. Mirror symmetry predicts\nspecific relationships between the zeta functions of X and its mirror X\u030c.\n\nThe key insight is that our Hodge diamond structure directly controls the degrees\nof the numerator/denominator factors of the zeta function: the factor corresponding\nto H\u1d4f has degree b\u2096. The `betti_poincare_dual` theorem then implies the functional\nequation Z(X, 1/q^n T) = \u00b1q^{n\u03c7/2} T^\u03c7 Z(X, T), and `eulerChar_mirror` shows\nhow this functional equation transforms under the mirror involution.\n\nWhy now? The Weil conjectures for smooth projective varieties follow from \u00e9tale\ncohomology theory. While full \u00e9tale cohomology is not in Mathlib, the numerology\n(degree of zeta function factors = Betti numbers) can be stated as axioms and\nthe mirror symmetry consequences derived formally from our framework.\n\n## 5. Higher-Dimensional Hodge Diamond Classification\n\nFor CY n-folds with n \u2265 4, the Hodge diamond has more free parameters than\njust (h\u00b9\u00b9, h^{n-1,1}). The mirror involution h^{p,q} \u21a6 h^{n-p,q} imposes\nnon-trivial constraints on which Hodge diamonds can appear in mirror pairs.\n\nThe key insight is that the CYHodgeDiamond structure we formalized (with the\nvanishing conditions h^{k,0} = 0 for 0 < k < n) combined with Hodge symmetry\nand Serre duality dramatically reduces the number of free Hodge numbers. For\nCY 4-folds, the independent numbers are h\u00b9\u00b9, h\u00b2\u00b9, h\u00b3\u00b9, and h\u00b2\u00b2, subject to\nthe constraint 2(24 + h\u00b9\u00b9 + h\u00b3\u00b9 - h\u00b2\u00b9) = h\u00b2\u00b2 (from the top Chern class being\nthe Euler characteristic). Mirror symmetry then swaps h\u00b9\u00b9 \u2194 h\u00b3\u00b9 while\npreserving h\u00b2\u00b9 and h\u00b2\u00b2.\n\nWhy now? Our formalization already handles the general n case for CY Hodge\ndiamonds. Specializing to n = 4 and proving the Chern class constraint as a\nlinear relation on Hodge numbers would yield the first formal verification of\nCY 4-fold mirror symmetry constraints, which are actively studied in F-theory\ncompactifications.\n",
     "domains": [
       "Geometry",
@@ -615,7 +601,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "f8049429",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-09T05:52:21.770780+00:00",
     "title": "For a Calabi-Yau threefold X defined over \u211a, the L-function L(X, s) = \u03a3 a\u2099 n\u207b\u02e2"
   },
@@ -1745,7 +1731,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This cycle took the single load-bearing identity of the base file"
   },
   {
-    "consumed_by_exp_id": "e161e808",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Combinatorial Types of Tropical Moduli Curves\n\nThe file `Tropical/MarkedModuli.lean` formalizes the combinatorial type `MarkedCombType`\nof a stable tropical curve of genus `g` with `n` marked points, and proves the sharp\nedge/dimension bound `|E| \u2264 3g \u2212 3 + n` (with the unmarked case `|E| \u2264 3g \u2212 3`), the\ntree characterization `g = 0 \u2194 |E| = |V| \u2212 1`, genus-invariance under edge contraction,\nand a tight trivalent construction realizing `|E| = 3g \u2212 3` for every `g \u2265 2`. The\ndirections below extend that scaffold.\n\n## 1. The full face poset of M_{g,n}^trop is graded by edge count\n\nWe proved that contracting a non-loop edge preserves genus (`genus_contraction`). The\nnatural next step is to upgrade `MarkedCombType` from a bare arithmetic record into a\n*poset* under the contraction relation `G' \u2264 G \u21d4 G'` is obtained from `G` by a sequence\nof edge contractions, and to prove this poset is **graded** by `|E|`, with the top elements\nexactly the trivalent types of `exists_tight_trivalent`.\n\nThe key insight is that each contraction lowers `|E|` by exactly one while leaving `g`\n(and, in the marked refinement, `n`) fixed, so `|E|` is a rank function: every maximal\nchain from a type with `e` edges down to the one-vertex type has length `e`. This makes\nthe abstract bound `|E| \u2264 3g \u2212 3 + n` literally the *dimension* of the corresponding cone\nof `M_{g,n}^trop`.\n\n**Why now?** `genus_contraction` already isolates the only nontrivial arithmetic; what\nremains is order-theoretic bookkeeping on top of the existing structure, for which\nMathlib's `Order`/`Preorder` and `Nat`-graded API are directly applicable.\n\n## 2. Refine the leg structure to recover the stability inequality 2g(v) \u2212 2 + val(v) > 0\n\nOur `deg` field lumps edge-ends and legs together. Splitting it into `edgeDeg` and `legDeg`\nwith a per-vertex genus `g(v)` would let us state the *true* stability condition\n`2\u00b7g(v) \u2212 2 + edgeDeg(v) + legDeg(v) > 0` instead of the blanket `deg \u2265 3`, and recover the\nedge bound as a corollary by summing the local inequalities.\n\nThe key insight is that the global handshaking sum of the local stability quantities\ntelescopes: `\u2211_v (2g(v) \u2212 2 + val(v)) = 2\u00b7(total vertex genus) \u2212 2|V| + 2|E| + n`, so the\npositivity of each summand controls `|E|` exactly as the uniform `deg \u2265 3` hypothesis does,\nbut now allows higher-genus vertices (vertices of positive weight).\n\n**Why now?** The proof of `marked_edge_bound` is a single `Finset.sum_le_sum` plus\n`linarith`; replacing the constant lower bound `3` by the vertex-dependent stability\nquantity is a localized change that reuses the same summation lemma.\n\n## 3. A balancing condition turning MarkedCombType into a tropical subvariety of \u2124^d\n\nEquip each edge with a primitive integer direction vector `d_e \u2208 \u2124^d` and a weight\n`w_e \u2208 \u2115`, and impose the **balancing condition** `\u2211_{e \u220b v} w_e \u00b7 d_e = 0` at every\nvertex. The conjecture to formalize: a balanced weighted `MarkedCombType` of genus `g`\nspans an affine subspace of `\u211d^d` of dimension `\u2264 min(d, 3g \u2212 3 + n)`, tying the\ncombinatorial bound to the ambient embedding dimension.\n\nThe key insight is that balancing is the tropical analogue of the Cauchy\u2013Riemann\nequations: it is a finite system of linear equations over `\u2124` whose solution space is\nexactly the lattice of admissible slope data, so its rank is computable by Mathlib's\n`Matrix.rank` machinery and bounded by our edge count.\n\n**Why now?** `MarkedCombType` already records vertex\u2013edge incidence through `deg`; adding\n`dir : edges \u2192 \u2124^d` and `wt : edges \u2192 \u2115` plus a `balanced` field is a conservative\nextension, and the resulting statement is a finite `\u2124`-linear-algebra fact Lean checks\ndirectly.\n\n## 4. Euler characteristic for disconnected types: \u03b2\u2081 = |E| \u2212 |V| + c and the forest theorem\n\nOur `genus = |E| \u2212 |V| + 1` is correct only for connected graphs. Introducing the number\nof connected components `c` and defining `betti\u2081 := |E| \u2212 |V| + c` would let us prove\n`betti\u2081 \u2265 0` for arbitrary types and characterize **forests** by `betti\u2081 = 0`, generalizing\n`genus_zero_iff_tree`.\n\nThe key insight is that `c` and `|E| \u2212 |V|` move in lock-step under edge deletion: deleting\nan edge either drops `|E|` by one and raises `c` by one (a bridge) or just drops `|E|` by\none, so `betti\u2081` only ever decreases by `1` or stays fixed \u2014 an induction that yields both\nnonnegativity and the forest characterization in one stroke.\n\n**Why now?** Mathlib supplies `SimpleGraph.IsTree.card_edgeFinset` (`|E| + 1 = |V|` for\ntrees) and `SimpleGraph.IsAcyclic`; proving the converse direction \u2014 connected with\n`|E| = |V| \u2212 1` implies tree \u2014 would bridge our `MarkedCombType` arithmetic to Mathlib's\ngraph theory and close a genuine gap in the library.\n\n## 5. Failure of tropical Torelli at genus 3 via the metric-graph Laplacian\n\nAttach edge lengths (as in a full `TropicalCurve` over `MarkedCombType`) and define the\nweighted graph Laplacian `L` with `L_{ii} = \u2211_j 1/\u2113(ij)` and `L_{ij} = \u22121/\u2113(ij)`. The\ntropical Jacobian is `\u211d^g / im(L\u2020)`. The conjecture: the tropical Torelli map\n(combinatorial type \u21a6 Jacobian) is **non-injective starting at g = 3**, with the failure\ndetected by two distinct trivalent types sharing the same period matrix.\n\nThe key insight is that, unlike the classical Torelli theorem, the tropical period matrix\nforgets enough of the combinatorial type that genus-3 graphs can collide; exhibiting one\nexplicit colliding pair (e.g. the `K_4` graph versus a theta-with-a-loop) and verifying\nequal Laplacian periods makes the non-injectivity fully constructive.\n\n**Why now?** `exists_tight_trivalent` already produces trivalent witnesses to plug in, and\nMathlib's real matrix theory (`Matrix.of`, `Matrix.rank`, generalized inverses) is mature\nenough that the period-matrix equality reduces to a finite-dimensional linear-algebra\ncomputation Lean can carry out.\n",
     "domains": [
       "Algebra",
@@ -1755,7 +1741,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "bd82c9f7",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-10T15:27:25.229626+00:00",
     "title": "The file `Tropical/MarkedModuli.lean` formalizes the combinatorial type `MarkedC"
   },
@@ -2766,6 +2752,51 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Arithmetic Mirror Symmetry beyond Fourfolds\n\nThe file `Catalog/Bridges/ArithmeticMirrorSymmetryCY4.lean` extends the existing\n`ArithmeticMirrorSymmetry.lean` (CY 3-folds, `mirror_euler_sign`, Weil zeta\nnumerology) to **Calabi-Yau fourfolds** and the **L-function / modularity** side.\nThe mechanical engine of the new file is `CY4Data.eulerChar_formula`, which\ncollapses the 25-term alternating Hodge sum to `\u03c7 = 4 + 2h\u00b9\u00b9 - 4h\u00b2\u00b9 + 2h\u00b3\u00b9 + h\u00b2\u00b2`,\nand `CY4Data.eulerChar_eq`, which uses the Chern constraint to factor it as\n`\u03c7 = 6(8 + h\u00b9\u00b9 - h\u00b2\u00b9 + h\u00b3\u00b9)`. The directions below build on exactly these\nidentities and on `CY4Data.mirror_eulerChar` (the even-dimensional fixed point of\nthe mirror sign rule, contrasting `cy3_mirror_euler`).\n\n## 1. The full integral Hodge lattice of CY 4-folds, not just \u03c7\n\nRight now `CY4Data` carries the four Hodge numbers and the single scalar Chern\nconstraint `h\u00b2\u00b2 = 2(22 + 2h\u00b9\u00b9 + 2h\u00b3\u00b9 - h\u00b2\u00b9)`. The next step is to promote the\nexplicit diamond `cy4H` to a genuine `HodgeDiamond 4` instance (matching the\n`HodgeDiamond` structure of `ArithmeticMirrorSymmetry.lean`) and prove that its\n`eulerChar` agrees with `CY4Data.eulerChar`, unifying the two files.\n\nThe key insight is that `cy4H` already satisfies Hodge symmetry and Serre duality\nby construction, so the only nontrivial obligation is the CY vanishing\n`h^{k,0}=0` for `0<k<4`; once that is discharged, every CY-4 theorem becomes a\nspecialization of the general `mirror_euler_sign` rather than a parallel proof.\n\nWhy now? The general `HodgeDiamond`/`mirror_euler_sign` machinery is already\nformalized and `cy4H` is a finite explicit table, so the bridge is a finite\n`decide`-style verification plus one structural lemma \u2014 a self-contained,\nfalsifiable target with no missing Mathlib prerequisites.\n\n## 2. A classification theorem for CY-4 mirror orbits\n\nMirror symmetry acts on `CY4Data` by `h\u00b9\u00b9 \u2194 h\u00b3\u00b9` (proved an involution in\n`CY4Data.mirror_involutive`). The orbit space is therefore parametrized by the\nunordered pair `{h\u00b9\u00b9, h\u00b3\u00b9}` together with `h\u00b2\u00b9` (since `h\u00b2\u00b2` is determined and \u03c7\nis mirror-invariant by `CY4Data.mirror_eulerChar`). One should prove that two\nCY-4 data are mirror-equivalent **iff** they share `h\u00b2\u00b9` and `{h\u00b9\u00b9,h\u00b3\u00b9}`, and\nthat the fixed points of the involution are exactly the *self-mirror* fourfolds\n`h\u00b9\u00b9 = h\u00b3\u00b9`.\n\nThe key insight is that `\u03c7 = 6(8 + h\u00b9\u00b9 - h\u00b2\u00b9 + h\u00b3\u00b9)` is a complete invariant of\nthe orbit *only after* adjoining `h\u00b2\u00b9`, so the classification is a clean\ntwo-invariant statement: `(h\u00b2\u00b9, h\u00b9\u00b9+h\u00b3\u00b9)` is mirror-invariant while\n`h\u00b9\u00b9 - h\u00b3\u00b9` flips sign.\n\nWhy now? The involution, its fixed points, and the \u03c7-invariance are already\nproved; the classification is a finite combinatorial wrapper around them that\nthe theorem-prover can close, and it directly answers the F-theory question of\nwhich Hodge diamonds can be mirror partners.\n\n## 3. From \u03c7-divisibility to the Weil functional-equation exponent\n\n`CY4Data.six_dvd_eulerChar` and `CY4Data.even_eulerChar` give `6 \u2223 \u03c7` and\n`Even \u03c7`. The Weil functional equation `Z(X, 1/(q\u207fT)) = \u00b1 q^{n\u03c7/2} T^\u03c7 Z(X,T)`\nneeds `n\u03c7/2 \u2208 \u2124`; for `n = 4` this is `2\u03c7 \u2208 \u2124`, automatic, but the *sign* is\ngoverned by the middle Betti number `b\u2084` mod 2. One should formalize a\n`CY4ZetaData` (mirroring `WeilZetaData` from the sibling file) and prove the\nfunctional-equation sign equals `(-1)^{b\u2084}` with `b\u2084` read off from `cy4H`.\n\nThe key insight is that the degree of each zeta factor equals the Betti number\n`b\u2096`, and Poincar\u00e9 duality (`betti_poincare_dual` in the existing framework)\npairs `H\u1d4f` with `H^{8-k}`, so the only undetermined datum in the functional\nequation is the parity of the self-dual middle cohomology `H\u2074`.\n\nWhy now? The Betti numbers of a CY-4 are explicit linear combinations of the\nHodge numbers via `cy4H`, so `b\u2084` and its parity are a finite computation; the\nfunctional-equation sign then follows formally without invoking \u00e9tale\ncohomology, exactly as `weil_functional_equation_symmetry` did for the norms.\n\n## 4. Modularity numerology in higher weight: CY n-folds and weight n+1\n\nThe rigid-CY3 block (`RigidCY3.modular_weight_eq`: weight `= 3 + 1 = 4`) is the\n`n = 3` case of a uniform rule: a rigid CY n-fold with 2-dimensional `H\u207f`\nshould attach to a modular form of weight `n + 1`. Formalize a `RigidCYn n`\nstructure with `motivicWeight = n` and prove `modularWeight = n + 1`, recovering\nweight 4 (`n=3`), weight 5 (`n=4`), etc.\n\nThe key insight is that the Hodge\u2013Tate weights of `H\u207f` are `{0, n}` (gap `n`),\nand the Galois-representation-to-modular-form dictionary always adds one, so the\nweight is *forced* by the dimension alone \u2014 a numerological invariant\nindependent of the specific variety.\n\nWhy now? `RigidCY3.hodgeTate_gap` already isolates the `weight = gap + 1` rule;\ngeneralizing the constants to a parameter `n` is a direct abstraction that the\nprover can verify by `rfl`/`omega`, giving a single theorem covering every\ndimension at once.\n\n## 5. The Hecke recursion and a Weil-bound certificate for L(X,s)\n\n`hecke_weight4_square` records `a\u209a\u00b2 = a_{p\u00b2} + p\u00b3` in weight 4. The next layer is\nthe full Hecke recursion `a_{p^{m+1}} = a\u209a a_{p^m} - p^{k-1} a_{p^{m-1}}` and the\nRamanujan/Weil bound `|a\u209a| \u2264 2 p^{(k-1)/2}`. One should define the coefficient\nsequence by this recursion and prove, by strong induction, an explicit upper\nbound `|a_{p^m}| \u2264 (m+1) p^{m(k-1)/2}`, the input to convergence of\n`L(X,s) = \u03a3 a\u2099 n^{-s}` in a right half-plane.\n\nThe key insight is that the recursion is a second-order linear difference\nequation whose characteristic roots are the conjugate Frobenius eigenvalues of\nnorm `p^{(k-1)/2}`; bounding `a_{p^m}` by `(m+1)p^{m(k-1)/2}` is exactly the\nstatement that both roots lie on the critical circle, which is provable purely\nalgebraically from the recursion plus the base Weil bound.\n\nWhy now? The base case `hecke_weight4_square` and the weight numerology are in\nplace, and the inductive bound needs only `Nat` strong induction with `nlinarith`\non each step \u2014 no analytic number theory \u2014 making it a concrete, falsifiable\ntarget that turns the modularity numerology into a quantitative L-function\nstatement.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1441",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6326c0d0",
+    "status": "available",
+    "timestamp": "2026-06-11T23:29:23.446199+00:00",
+    "title": "The file `Catalog/Bridges/ArithmeticMirrorSymmetryCY4.lean` extends the existing"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Combinatorial Types of Marked Tropical Moduli Curves\n\nThe file `Tropical/MarkedModuli.lean` formalizes the combinatorial type\n`TropicalModuli.MarkedCombType` of a stable tropical curve of genus `g` with `n`\nmarked points (legs), and proves:\n\n* `marked_edge_bound` \u2014 the sharp dimension bound `|E| + 3 \u2264 3g + n` (i.e. `|E| \u2264 3g \u2212 3 + n`);\n* `unmarked_edge_bound` \u2014 the classical `|E| + 3 \u2264 3g` when `n = 0`;\n* `genus_zero_iff_tree` \u2014 the tree characterization `g = 0 \u2194 |E| + 1 = |V|`;\n* `contract` / `genus_invariance_counts` / `genus_contraction` \u2014 a total non-loop\n  edge-contraction construction and genus invariance under it;\n* `exists_tight_trivalent` \u2014 a trivalent realization with `|E| = 3g \u2212 3` for every `g \u2265 2`,\n  proving the bound is sharp.\n\nThe directions below extend this scaffold; each is testable and falsifiable.\n\n## 1. The face poset of `M_{g,n}^trop` is graded by edge count\n\nUpgrade `MarkedCombType` to a *poset* under the contraction order `G' \u2264 G` iff `G'` is\nobtained from `G` by a finite sequence of edge contractions, and prove this poset is\n**graded** with rank function `|E|`, the top elements being exactly the trivalent types\nproduced by `exists_tight_trivalent`.\n\nThe key insight is that `genus_contraction` together with `genus_invariance_counts` shows\neach contraction lowers `|E|` by exactly one while fixing `g` and `n`, so `|E|` is a\ngenuine rank: every maximal chain from an `e`-edge type to the one-vertex type has length\n`e`, making `marked_edge_bound` literally the dimension of the corresponding cone.\n\n**Why now?** The arithmetic core is already isolated in `genus_invariance_counts`; what\nremains is order-theoretic bookkeeping built directly on Mathlib's `Order`/`Preorder` and\n`Nat`-graded API, with `contract` supplying the covering relation.\n\n## 2. Per-vertex genus and the local stability inequality `2g(v) \u2212 2 + val(v) > 0`\n\nRefine the `deg` field into `edgeDeg` and `legDeg` and add a per-vertex genus `g(v)`, then\nreplace the blanket `stable : 3 \u2264 deg v` by the true stability condition\n`2\u00b7g(v) \u2212 2 + edgeDeg(v) + legDeg(v) > 0`, recovering `marked_edge_bound` by summing local\ninequalities and allowing positive-weight (higher-genus) vertices.\n\nThe key insight is that the handshaking sum of the local stability quantities telescopes:\n`\u2211_v (2g(v) \u2212 2 + val(v)) = 2\u00b7(total vertex genus) \u2212 2|V| + 2|E| + n`, so positivity of\neach summand controls `|E|` exactly as the uniform `deg \u2265 3` hypothesis does in the current\n`marked_edge_bound` proof.\n\n**Why now?** That proof is a single `Finset.sum_le_sum` plus `omega`; swapping the constant\nlower bound `3` for the vertex-dependent stability quantity reuses the very same summation\nlemma, so the change is localized and conservative.\n\n## 3. A balancing condition embedding `MarkedCombType` into `\u2124^d`\n\nEquip each edge with a primitive direction `d_e \u2208 \u2124^d` and weight `w_e \u2208 \u2115` and impose the\n**balancing condition** `\u2211_{e \u220b v} w_e \u00b7 d_e = 0` at every vertex. Conjecture: a balanced\nweighted type of genus `g` spans an affine subspace of dimension `\u2264 min(d, 3g \u2212 3 + n)`,\ntying `marked_edge_bound` to the ambient embedding dimension.\n\nThe key insight is that balancing is the tropical analogue of the Cauchy\u2013Riemann\nequations \u2014 a finite `\u2124`-linear system whose solution space is the lattice of admissible\nslope data, so its rank is computed by `Matrix.rank` and bounded by the edge count from\n`marked_edge_bound`.\n\n**Why now?** `MarkedCombType` already records incidence through `deg`; adding `dir`, `wt`,\nand a `balanced` field is a conservative extension, and the resulting statement is a finite\nlinear-algebra fact Lean checks directly.\n\n## 4. Betti number for disconnected types and the forest theorem\n\nThe current `genus_rel` encodes connectedness. Introduce the component count `c` and define\n`betti\u2081 := |E| \u2212 |V| + c`; prove `betti\u2081 \u2265 0` for arbitrary types and characterize\n**forests** by `betti\u2081 = 0`, generalizing `genus_zero_iff_tree`.\n\nThe key insight is that `c` and `|E| \u2212 |V|` move in lock-step under edge deletion: removing\nan edge either drops `|E|` by one and raises `c` by one (a bridge) or only drops `|E|`, so\n`betti\u2081` decreases by `1` or is unchanged \u2014 a single induction yielding both nonnegativity\nand the forest characterization.\n\n**Why now?** Mathlib supplies `SimpleGraph.IsTree.card_edgeFinset` and\n`SimpleGraph.IsAcyclic`; proving the converse (connected with `|E| = |V| \u2212 1` \u21d2 tree) would\nbridge the `MarkedCombType` arithmetic to Mathlib's graph theory and close a real gap.\n\n## 5. Failure of tropical Torelli at genus 3 via the metric-graph Laplacian\n\nAttach edge lengths and define the weighted graph Laplacian `L` (`L_{ii} = \u2211_j 1/\u2113(ij)`,\n`L_{ij} = \u22121/\u2113(ij)`), with tropical Jacobian `\u211d^g / im(L\u2020)`. Conjecture: the tropical\nTorelli map (type \u21a6 Jacobian) is **non-injective starting at `g = 3`**, witnessed by two\ndistinct trivalent types sharing a period matrix.\n\nThe key insight is that, unlike the classical Torelli theorem, the tropical period matrix\nforgets enough of the combinatorial type that genus-3 graphs collide; exhibiting one\nexplicit colliding pair (e.g. `K_4` versus theta-with-a-loop) and verifying equal Laplacian\nperiods makes non-injectivity fully constructive.\n\n**Why now?** `exists_tight_trivalent` already produces trivalent witnesses to feed in, and\nMathlib's real matrix theory (`Matrix.of`, `Matrix.rank`, generalized inverses) is mature\nenough that the period-matrix equality reduces to a finite-dimensional computation Lean can\ncarry out.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_1442",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "e161e808",
+    "status": "available",
+    "timestamp": "2026-06-11T23:30:10.415159+00:00",
+    "title": "The file `Tropical/MarkedModuli.lean` formalizes the combinatorial type"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 ER = EPR and Emergent Spacetime from Entanglement\n\nThe file `Catalog/Physics/EREPREmergentSpacetime.lean` proves the algebraic core\nof the ER = EPR correspondence for two-qubit pure states: the emergent\nEinstein\u2013Rosen bridge (measured by the concurrence `C = 2\u2016ad \u2212 bc\u2016`) is open\n*iff* the qubits are entangled (`erEpr_correspondence`), the geometry is bounded\n(`concurrence_le_one`), it is invariant under local unitaries\n(`concurrenceM_local_unitary_invariant`), and it collapses under a rank-deficient\nlocal measurement (`concurrenceM_collapse`). These results turn the SLOCC\ninvariant of `HopfEntanglement` into a genuine *emergent geometric* order\nparameter. Below are five concrete, falsifiable directions that extend it.\n\n## 1. The n-qubit rank criterion for an open bridge\n\nThe two-qubit theorem `erEpr_correspondence` should generalize to: for a pure\nstate on a bipartition `A \u2294 B`, the emergent bridge is open iff the reduced\ndensity operator `\u03c1_A` has rank `> 1`. The Lean stub\n`erEpr_correspondence_general` records exactly this as\n`1 < \u03c1A.rank \u2194 \u2203 i j, i \u2260 j \u2227 eigenvalues i \u2260 0 \u2227 eigenvalues j \u2260 0`.\n**The key insight is** that for a Hermitian (hence unitarily diagonalizable)\nreduced density matrix the rank equals the number of nonzero Schmidt\ncoefficients, so \"geometric connectivity = rank \u2265 2\" is a purely spectral\nstatement provable from `Matrix.IsHermitian.spectral_theorem` plus\n`Matrix.rank_eq_card_nonzero_eigenvalues`-style counting. **Why now?** Mathlib\n4.28 already carries the spectral theorem and eigenvalue API for Hermitian\nmatrices, so the only missing lemma is rank = #(nonzero eigenvalues); this is a\nself-contained, high-value piece of linear algebra worth contributing upstream.\n\n## 2. Concurrence as a metric: the triangle inequality on bridge length\n\nDefine a bridge *length* `\u2113 = \u2212log C \u2208 [0, \u221e]` (so `\u2113 = 0` for a Bell pair and\n`\u2113 = \u221e` for a product state) and ask whether `\u2113` behaves like a distance under\na natural composition of states (e.g. entanglement swapping). The conjecture is\nthat swapping satisfies `\u2113(A,C) \u2264 \u2113(A,B) + \u2113(B,C)`, a triangle inequality making\nentanglement an honest *metric* and matching the geodesic interpretation of ER\nbridges. **The key insight is** that entanglement swapping multiplies\nconcurrences submultiplicatively, `C(A,C) \u2265 C(A,B)\u00b7C(B,C)`, which on taking\n`\u2212log` becomes exactly the triangle inequality. **Why now?** The multiplicative\ncovariance `concurrenceM_local_covariant` is already proven, and submultiplica-\ntivity of `2\u2016det(MN)\u2016` under matrix products is one `Matrix.det_mul` + `norm_mul`\naway \u2014 the metric structure is within immediate reach.\n\n## 3. Monogamy of bridges (Coffman\u2013Kundu\u2013Wootters in Lean)\n\nFor three qubits the squared concurrences obey the monogamy bound\n`C\u00b2(A|B) + C\u00b2(A|C) \u2264 C\u00b2(A|BC)`: a qubit cannot build maximal bridges to two\npartners at once. **The key insight is** that monogamy is the geometric\nstatement that one boundary region can support only a bounded total wormhole\nthroat area, so it should follow from a Cauchy\u2013Schwarz/AM\u2013GM bound on the\n3-tangle hyperdeterminant rather than from any deep holography. **Why now?**\nThe two-qubit determinant invariant is formalized and `concurrence_le_one`\nalready shows the AM\u2013GM toolkit works for these norms; the 3-qubit hyperdetermi-\nnant (Cayley's) is an explicit cubic form that `ring`/`nlinarith` can attack\ndirectly, making a fully verified monogamy inequality realistic.\n\n## 4. Ryu\u2013Takayanagi positivity: entropy = minimal cut on tensor networks\n\nBridge the present file with `Catalog/Tropical/EntanglementWedge.lean` and\n`Catalog/Computation/IIT/TensorNetworkMultiCut.lean`: for a bipartite tensor\nnetwork state, the entanglement entropy of a boundary region equals the minimum\ncut separating it from its complement (the discrete Ryu\u2013Takayanagi formula), and\nthis min-cut \"area\" is subadditive. **The key insight is** that min-cut/max-flow\nduality on a finite weighted graph is the combinatorial shadow of RT, so RT\nsubadditivity reduces to the submodularity of the graph cut function \u2014 a finite,\nfully formalizable statement. **Why now?** The tropical (min-plus) machinery for\ncuts already exists in the catalog's `EntanglementWedge` and tensor-network\nfiles, so the entropy\u2194geometry dictionary can be assembled from parts that are\nalready present rather than built from scratch.\n\n## 5. Bridge stability: entanglement is robust to small local perturbations\n\nThe map `state \u21a6 C` is Lipschitz, so a wormhole that is open by margin `\u03b5`\nstays open under any perturbation of the amplitudes smaller than `\u03b5/2`; quantify\nthis and connect it to `wedge_membership_stable_under_uniform_perturbation` from\n`Catalog/Tropical/EntanglementWedge.lean`. **The key insight is** that\n`C = 2\u2016ad \u2212 bc\u2016` is a composition of multiplication and the (1-Lipschitz) complex\nnorm, so its modulus of continuity is explicit and an open bridge has a concrete\n\"protected\" radius in state space. **Why now?** Continuity of `\u2016\u00b7\u2016` and bilinear\nmaps is fully developed in Mathlib, so a quantitative robustness theorem\n(`|C(\u03c8) \u2212 C(\u03c8')| \u2264 K\u2016\u03c8 \u2212 \u03c8'\u2016`) is provable immediately and gives the first\nverified statement that emergent geometry is *stable*, not fine-tuned.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1443",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "20c085e6",
+    "status": "available",
+    "timestamp": "2026-06-11T23:30:33.496352+00:00",
+    "title": "The file `Catalog/Physics/EREPREmergentSpacetime.lean` proves the algebraic core"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle 6e405308 (Q=0.651) proved 455 theorems in Applications but left 7 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle 76f09ec8 (Q=0.447) proved 1631 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions \u2014 Ra",
     "domains": [
       "Applications"
@@ -3119,7 +3150,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Entropy Power Inequality: Sharp Version"
   },
   {
-    "consumed_by_exp_id": "12ad0dc1",
+    "consumed_by_exp_id": "",
     "description": "Develop a tropical scheme theory where ideals are replaced by tropical ideals (subsemimodules of the tropical polynomial semiring closed under tropical linear combinations). Prove a tropical Buchberger algorithm exists and characterize tropical Groebner bases.",
     "domains": [
       "Tropical",
@@ -3129,7 +3160,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:31.138945+00:00",
     "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
   },
@@ -3217,6 +3248,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-11T08:53:18.903640+00:00",
     "title": "Close Proofs: Neural Network Training as Renormalization Group Flow"
+  },
+  {
+    "consumed_by_exp_id": "82a52ca9",
+    "description": "Cycle 20c085e6 (Q=0.462) proved 48 theorems in Novelty but left 7 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle aea50e63 (Q=0.421) proved 253 theorems in Physics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that the geometry o",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_20c085e6_89d238bb",
+    "priority_score": 0.5116250000000001,
+    "research_mode": "team",
+    "source_exp_id": "20c085e6",
+    "status": "in_progress",
+    "timestamp": "2026-06-11T23:30:41.517157+00:00",
+    "title": "Close Proofs: Close Proofs: Emergent Spacetime from Quantum Entanglement"
   },
   {
     "consumed_by_exp_id": "",
@@ -3487,7 +3532,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: **Conjecture:** If `{f_t}_{t \u2208 [0,1]}` is a continuous family of contr"
   },
   {
-    "consumed_by_exp_id": "22f6ffd2",
+    "consumed_by_exp_id": "",
     "description": "Cycle 40aa69a1 (Q=0.424) proved 410 theorems in Applications but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle cb7c1dc0 (Q=0.457) proved 151 theorems in Tropical but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle 362ed1b3 (Q=0.460)",
     "domains": [
       "Applications"
@@ -3496,7 +3541,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.47371387323221975,
     "research_mode": "team",
     "source_exp_id": "40aa69a1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-10T19:16:29.662148+00:00",
     "title": "Close Proofs: Close Proofs: Close Proofs: Dream Logic: Non-Monotone Reasoning Where "
   },
@@ -3569,20 +3614,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T12:52:32.659237+00:00",
     "title": "Close Proofs: Close Proofs: One-Way Functions: Existence and Hierarchy"
-  },
-  {
-    "consumed_by_exp_id": "20c085e6",
-    "description": "Cycle aea50e63 (Q=0.421) proved 253 theorems in Physics but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove that the geometry of spacetime can be reconstructed from the entanglement structure of a quantum state. Formalize the ER=EPR conjecture: show that entangled qubit pairs satisfy the properties of",
-    "domains": [
-      "Physics"
-    ],
-    "id": "sorry_fill_aea50e63_22e895a5",
-    "priority_score": 0.4708383328909708,
-    "research_mode": "team",
-    "source_exp_id": "aea50e63",
-    "status": "in_progress",
-    "timestamp": "2026-06-11T19:12:17.428796+00:00",
-    "title": "Close Proofs: Emergent Spacetime from Quantum Entanglement"
   },
   {
     "consumed_by_exp_id": "",
@@ -3954,7 +3985,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Inverse Stereographic Renormalization Group"
   },
   {
-    "consumed_by_exp_id": "4f12ad45",
+    "consumed_by_exp_id": "",
     "description": "Formalize Stone duality: the category of Boolean algebras is dual to the category of Stone spaces. Prove that every Boolean algebra B is isomorphic to the clopen algebra of its Stone space. Bridge this to logic: a theory T in propositional logic corresponds to the Boolean algebra of sentences modulo T-provability, whose Stone space is the space of models.",
     "domains": [
       "Bridges",
@@ -3964,7 +3995,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T22:10:06.221142+00:00",
     "title": "Bridge: Stone Duality as a Bridge Between Logic and Topology"
   },
