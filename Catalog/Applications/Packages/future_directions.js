@@ -326,7 +326,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Inverse Stereographic Persistence: Topological Data Analysis on Spheres"
   },
   {
-    "consumed_by_exp_id": "c84ee866",
+    "consumed_by_exp_id": "",
     "description": "Classify RT\u00b2\u2082 in the reverse mathematics hierarchy: prove it's strictly between ACA\u2080 and WKL\u2080 over RCA\u2080. Formalize Seetapun's theorem.",
     "domains": [
       "Logic",
@@ -336,7 +336,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:18.020118+00:00",
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
@@ -1312,7 +1312,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The breakpoint count bound we proved (`TropPoly.breakpoint_count_le`) shows that"
   },
   {
-    "consumed_by_exp_id": "dd0a519b",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions: Neural Tangent Kernel Convergence Theory\n\n## 1. General Pinsker Inequality for Finite Distributions\n\nThe Bernoulli Pinsker inequality `(p - q)\u00b2 \u2264 KL(Ber(p) \u2016 Ber(q)) / 2` is now fully proved. The natural next step is the general Pinsker inequality: `TV(Q, P)\u00b2 \u2264 KL(Q \u2016 P) / 2` for arbitrary finite distributions Q, P over a type \u03b1.\n\nThe key insight is that the general Pinsker inequality reduces to the Bernoulli case via the data-processing inequality (or equivalently, by projecting onto binary events). For any set A \u2286 \u03b1, define Q_A = Q(A) and P_A = P(A). Then KL(Ber(Q_A) \u2016 Ber(P_A)) \u2264 KL(Q \u2016 P) by data processing, and TV(Q, P) = max_A |Q(A) - P(A)| \u2264 \u221a(KL(Q \u2016 P)/2) follows from the Bernoulli case.\n\nWhy now? The Bernoulli Pinsker proof uses a novel MVT-based approach (factoring the derivative as `(q-p) * (1/(q(1-q)) - 4)`) that avoids the usual convex duality arguments. Formalizing the data-processing inequality for finite distributions would complete the picture and unlock tighter PAC-Bayes bounds in the Catalog.\n\n## 2. Spectral Convergence Rate with Eigenvalue Decay\n\nWe proved that the spectral contraction constant for the update operator I - \u03b7K equals `(\u03ba-1)/(\u03ba+1)` at the optimal learning rate, where \u03ba = \u03bb_max/\u03bb_min is the condition number. For overparameterized neural networks, the NTK eigenvalues typically decay as a power law: \u03bb_k ~ k^{-\u03b1} for some \u03b1 > 1.\n\nThe key insight is that under power-law spectral decay, the effective condition number for the top-k eigenvalues grows as k^\u03b1, so convergence of the first k components takes O(k^\u03b1 \u00b7 log(1/\u03b5)) steps. A formal theorem would bound the residual `\u2016u_t - u*\u2016` by decomposing into spectral components and summing geometric decays with different rates.\n\nWhy now? The spectral contraction and optimal learning rate theorems provide the per-eigenvalue convergence rate. The missing piece is the summation argument over the spectrum, which requires formalizing the eigendecomposition of the NTK Gram matrix (available in Mathlib as `Matrix.IsHermitian.spectral_theorem`).\n\n## 3. Lazy Training Regime: Kernel Perturbation Bounds\n\nThe NTKCore file proves that the linearized model has constant kernel along the gradient flow trajectory. The next step is to formalize the perturbation theory: if the actual (nonlinear) kernel deviates from the initial kernel by at most \u03b4 at each step, how does the trajectory diverge from the kernel regression solution?\n\nThe key insight is a Gronwall-type stability estimate: if `\u2016K_t - K_0\u2016_op \u2264 \u03b4` for all t, then `\u2016u_t^{actual} - u_t^{linear}\u2016 \u2264 C \u00b7 \u03b4 \u00b7 t \u00b7 \u2016u_0\u2016 \u00b7 exp(\u03b7 \u00b7 \u2016K_0\u2016_op \u00b7 t)`. This exponential growth is tamed by the finite training time T ~ log(1/\u03b5) / (\u03b7 \u00b7 \u03bb_min), giving a polynomial-in-parameters bound.\n\nWhy now? The single-step perturbation bound `ntk_single_step_perturbation` in NTKConvergence.lean already formalizes the per-step error. The discrete Gronwall lemma in Mathlib (`Finset.prod_le_prod`) provides the induction machinery. Combining these would give the first formalized NTK width-convergence result.\n\n## 4. PAC-Bayes Generalization Bounds via Catoni's Method\n\nWith the Bernoulli Pinsker inequality and the Catoni bound infrastructure both formalized, we can now prove end-to-end generalization bounds for NTK-trained networks. The target theorem: for an NTK model with n training points and kernel condition number \u03ba, the generalization gap is O(\u221a(\u03ba \u00b7 log(n) / n)).\n\nThe key insight is that the PAC-Bayes framework with the Catoni bound (already in Bounds.lean) combined with the Bernoulli Pinsker inequality converts KL control of the posterior into risk bounds. The NTK spectral theory provides the KL bound through the effective dimension d_eff = \u03a3_k \u03bb_k/(\u03bb_k + \u03bb), connecting kernel spectrum to model complexity.\n\nWhy now? All three ingredients (Catoni bound, Pinsker inequality, NTK spectral theory) are now formalized. The main remaining work is the bridge theorem connecting NTK eigenvalues to PAC-Bayes posteriors, which requires the Gaussian measure formalization in Mathlib.\n\n## 5. Stochastic Gradient Descent Extension\n\nThe current theory covers full-batch gradient descent. Extending to stochastic gradient descent (SGD) requires formalizing the martingale structure of the gradient noise and proving that the NTK remains approximately constant under mini-batch updates.\n\nThe key insight is that under the lazy training regime, SGD on the linearized model is equivalent to kernel regression with noise-perturbed updates. The residual satisfies `u_{t+1} = (I - \u03b7_t K) u_t + \u03b7_t \u03be_t` where \u03be_t is a martingale difference sequence with `E[\u03be_t | F_t] = 0` and `E[\u2016\u03be_t\u2016\u00b2 | F_t] \u2264 \u03c3\u00b2`. The convergence rate becomes O(1/t) for appropriately decaying learning rates, matching the minimax optimal rate for kernel regression.\n\nWhy now? Mathlib's measure theory library now includes conditional expectation and martingale convergence theorems. The deterministic NTK convergence results in this file provide the \"signal\" component; what remains is layering the stochastic analysis on top.\n",
     "domains": [
       "Algebra",
@@ -1322,7 +1322,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "8fed00f0",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-09T18:17:27.053071+00:00",
     "title": "The Bernoulli Pinsker inequality `(p - q)\u00b2 \u2264 KL(Ber(p) \u2016 Ber(q)) / 2` is now ful"
   },
@@ -3679,7 +3679,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Homotopy Type Theory as Foundations"
   },
   {
-    "consumed_by_exp_id": "95dbf745",
+    "consumed_by_exp_id": "",
     "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
     "domains": [
       "Physics",
@@ -3689,7 +3689,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.651923+00:00",
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
