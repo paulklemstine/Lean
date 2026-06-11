@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "a5bf1c83",
     "filename": "the_current_ordinaltheory_framework_works_with_abs.json",
     "pkg_num": 61,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.454414139145638,
     "title": "The Tight Depth Hierarchy: Exact Exponential Nesting in the Inverse-Free EML Fragment"
   },
   {
@@ -1821,8 +1821,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "the_current_ordinaltheory_framework_works_with_abs",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.454414139145638,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Tight Depth Hierarchy: Exact Exponential Nesting in the Inverse-Free EML Fragment"
     }
