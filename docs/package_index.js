@@ -4,6 +4,36 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-11T02:49:17Z",
+    "domain": "Pythagorean",
+    "exp_id": "317cfc85",
+    "filename": "this_cycle_took_the_single_modulus_law_of_appariti.json",
+    "pkg_num": 65,
+    "quality": "partial",
+    "quality_score": 0.46447560918026837,
+    "title": "The Multiplicative Structure of the Fibonacci Rank of Apparition"
+  },
+  {
+    "date": "2026-06-11T02:48:51Z",
+    "domain": "Physics",
+    "exp_id": "eb8717f2",
+    "filename": "we_formalized_the_causal_integration_algebra_in_tw.json",
+    "pkg_num": 64,
+    "quality": "partial",
+    "quality_score": 0.46921741935483874,
+    "title": "The Causal Integration Algebra: Integrated Information as Minimum Cut"
+  },
+  {
+    "date": "2026-06-11T02:48:15Z",
+    "domain": "Novelty",
+    "exp_id": "b8886441",
+    "filename": "hilbert_6_axiomatization_of_physics.json",
+    "pkg_num": 63,
+    "quality": "partial",
+    "quality_score": 0.44834526528023205,
+    "title": "Hilbert 6: Axiomatization of Physics \u2014 Chronometric Semirings and the Reversible Trace Calculus"
+  },
+  {
     "date": "2026-06-11T02:15:47Z",
     "domain": "Novelty",
     "exp_id": "78c4e8f5",
@@ -882,6 +912,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Closure-Extractor Duality: A Finite Bridge Between Dependency and Randomness"
   },
+  "hilbert_6_axiomatization_of_physics.json": {
+    "domain": "Novelty",
+    "exp_id": "b8886441",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Hilbert 6: Axiomatization of Physics \u2014 Chronometric Semirings and the Reversible Trace Calculus"
+  },
   "impossible_geometries_where_parallel_lines_converg.json": {
     "domain": "Computation",
     "exp_id": "40370763",
@@ -1074,6 +1112,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Algebraic Circuit Complexity: Degree-Depth Tradeoffs, Evaluation Soundness, and PIT Foundations"
   },
+  "this_cycle_took_the_single_modulus_law_of_appariti.json": {
+    "domain": "Pythagorean",
+    "exp_id": "317cfc85",
+    "source_exp_ids": [
+      "7648a3c9"
+    ],
+    "title": "The Multiplicative Structure of the Fibonacci Rank of Apparition"
+  },
   "this_document_describes_five_research_conjectures_.json": {
     "domain": "Pythagorean",
     "exp_id": "820c5814",
@@ -1121,6 +1167,14 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Tropical Differential Equations: Power Series Solutions"
+  },
+  "we_formalized_the_causal_integration_algebra_in_tw.json": {
+    "domain": "Physics",
+    "exp_id": "eb8717f2",
+    "source_exp_ids": [
+      "475cd2f0"
+    ],
+    "title": "The Causal Integration Algebra: Integrated Information as Minimum Cut"
   }
 };
 
@@ -1177,13 +1231,20 @@ window.PACKAGE_GRAPH = {
       "strength": 1.0,
       "target": "this_document_describes_five_research_conjectures_",
       "type": "provenance"
+    },
+    {
+      "label": "inspired by",
+      "source": "causal_integration_algebra__a_rigorous_lattice_t",
+      "strength": 1.0,
+      "target": "we_formalized_the_causal_integration_algebra_in_tw",
+      "type": "provenance"
     }
   ],
   "nodes": [
     {
       "date": "2026-06-08",
       "domain": "Logic",
-      "hue": 281,
+      "hue": 270,
       "id": "bridge_logic_of_provability_and_fixed_points_in_ar",
       "primary_domain": "Logic",
       "priority_score": 0.2552,
@@ -1194,7 +1255,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 100,
       "id": "rigorous_algebraic_foundations_for_probability_t",
       "primary_domain": "Bridges",
       "priority_score": 0.66968,
@@ -1205,7 +1266,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-08",
       "domain": "Applications",
-      "hue": 271,
+      "hue": 270,
       "id": "the_poincare_conjecture_for_data_manifold_detectio",
       "primary_domain": "Bridges",
       "priority_score": 0.16743922555663115,
@@ -1227,7 +1288,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Applications",
-      "hue": 271,
+      "hue": 90,
       "id": "arithmetic_mirror_symmetry_for_calabi_yau",
       "primary_domain": "Bridges",
       "priority_score": 0.37070314951345035,
@@ -1238,7 +1299,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Shared",
-      "hue": 271,
+      "hue": 91,
       "id": "causal_integration_algebra__a_rigorous_lattice_t",
       "primary_domain": "Bridges",
       "priority_score": 0.3940269741676302,
@@ -1249,7 +1310,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 91,
+      "hue": 270,
       "id": "dream_logic_non_monotone_reasoning_where_contradic",
       "primary_domain": "Bridges",
       "priority_score": 0.3800936166615896,
@@ -1282,7 +1343,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 281,
+      "hue": 90,
       "id": "p_vs_np_problem",
       "primary_domain": "Bridges",
       "priority_score": 0.36869585004880756,
@@ -1293,7 +1354,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Bridges",
-      "hue": 92,
+      "hue": 271,
       "id": "symplectic_mirror_descent_gromov_witten_invariants",
       "primary_domain": "Bridges",
       "priority_score": 0.4695990099009901,
@@ -1304,7 +1365,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Algebra",
-      "hue": 90,
+      "hue": 270,
       "id": "the_current_zaslavsky_type_bound_proves__kd_cnk__n",
       "primary_domain": "Algebra",
       "priority_score": 0.36429437889326377,
@@ -1315,7 +1376,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09",
       "domain": "Pythagorean",
-      "hue": 91,
+      "hue": 270,
       "id": "this_document_describes_five_research_conjectures_",
       "primary_domain": "Pythagorean",
       "priority_score": 0.36626310656657907,
@@ -1326,7 +1387,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T10:06:05Z",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 90,
       "id": "self_modifying_code_that_cannot_be_stopped",
       "primary_domain": "Bridges",
       "priority_score": 0.5661575824175824,
@@ -1337,7 +1398,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T15:03:34Z",
       "domain": "Logic",
-      "hue": 92,
+      "hue": 270,
       "id": "proof_complexity_collapse_pnp_via_proof_checking",
       "primary_domain": "Logic",
       "priority_score": 0.3659193317335953,
@@ -1348,7 +1409,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T15:45:33Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 271,
       "id": "tropical_compactification_of_moduli_spaces",
       "primary_domain": "Bridges",
       "priority_score": 0.3627455631900639,
@@ -1359,7 +1420,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T15:47:22Z",
       "domain": "Novelty",
-      "hue": 272,
+      "hue": 91,
       "id": "logic_physics_bridge_consistency_of_physical_theor",
       "primary_domain": "Bridges",
       "priority_score": 0.3852481001709541,
@@ -1403,7 +1464,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T18:38:15Z",
       "domain": "Geometry",
-      "hue": 292,
+      "hue": 91,
       "id": "belnaps_four_is_the_smallest_non_trivial_paraconsi",
       "primary_domain": "Geometry",
       "priority_score": 0.4429310119047619,
@@ -1414,7 +1475,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T19:54:52Z",
       "domain": "Bridges",
-      "hue": 275,
+      "hue": 270,
       "id": "cryptographic_hash_functions_collision_resistance_",
       "primary_domain": "Bridges",
       "priority_score": 0.3790869106263195,
@@ -1425,7 +1486,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T19:56:17Z",
       "domain": "Bridges",
-      "hue": 91,
+      "hue": 270,
       "id": "learning_with_errors_hardness_reductions",
       "primary_domain": "Bridges",
       "priority_score": 0.36850115677321155,
@@ -1436,7 +1497,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T19:57:39Z",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 271,
       "id": "diffusion_models_as_stochastic_differential_equati",
       "primary_domain": "Bridges",
       "priority_score": 0.397392211299052,
@@ -1447,7 +1508,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-09T20:36:49Z",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 271,
       "id": "the_exponential_decay_bound_diffusionalphabar_exp_",
       "primary_domain": "Bridges",
       "priority_score": 0.3512538461538462,
@@ -1458,7 +1519,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T07:41:30Z",
       "domain": "Shared",
-      "hue": 91,
+      "hue": 272,
       "id": "close_proofs_the_clique_complex_g_admits_a_natural",
       "primary_domain": "Bridges",
       "priority_score": 0.6916,
@@ -1469,7 +1530,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T07:42:02Z",
       "domain": "Computation",
-      "hue": 271,
+      "hue": 91,
       "id": "integrated_information_via_tensor_networks",
       "primary_domain": "Computation",
       "priority_score": 0.52264,
@@ -1480,7 +1541,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T07:42:32Z",
       "domain": "Novelty",
-      "hue": 92,
+      "hue": 90,
       "id": "elliptic_curve_cryptography_weil_pairing_and_bls_s",
       "primary_domain": "Bridges",
       "priority_score": 0.4771938461538462,
@@ -1491,7 +1552,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T07:42:51Z",
       "domain": "Physics",
-      "hue": 90,
+      "hue": 270,
       "id": "quantum_error_correction_threshold_the_eastin_knil",
       "primary_domain": "Physics",
       "priority_score": null,
@@ -1513,7 +1574,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T09:30:42Z",
       "domain": "Algebra",
-      "hue": 91,
+      "hue": 270,
       "id": "algebraic_statistics_markov_bases_for_contingency_",
       "primary_domain": "Algebra",
       "priority_score": 0.5663674620390456,
@@ -1524,7 +1585,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T10:47:26Z",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 271,
       "id": "the_ebc_framework_now_spans_three_files_with_0_sor",
       "primary_domain": "Bridges",
       "priority_score": 0.4617939212432683,
@@ -1535,7 +1596,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T10:50:35Z",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 92,
       "id": "bridge_model_theory_and_algebra__ax_kochen_and_mor",
       "primary_domain": "Bridges",
       "priority_score": 0.7368,
@@ -1546,7 +1607,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T11:38:41Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 90,
       "id": "quasi_symmetric_maps_generalize_bi_lipschitz_maps_",
       "primary_domain": "Bridges",
       "priority_score": 0.75224,
@@ -1557,7 +1618,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T12:15:22Z",
       "domain": "Novelty",
-      "hue": 314,
+      "hue": 112,
       "id": "formalize_the_paley_construction_for_any_prime_pow",
       "primary_domain": "Bridges",
       "priority_score": 0.5432,
@@ -1568,7 +1629,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T12:15:50Z",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 271,
       "id": "consciousness_as_integrated_information_mathematic",
       "primary_domain": "Bridges",
       "priority_score": 0.44479402985074634,
@@ -1579,7 +1640,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T12:52:58Z",
       "domain": "Applications",
-      "hue": 272,
+      "hue": 95,
       "id": "close_proofs_stereographic_capacity_theory_packing",
       "primary_domain": "Bridges",
       "priority_score": 0.4688,
@@ -1590,7 +1651,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T12:53:23Z",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 270,
       "id": "tropical_amoebas_and_ronkin_functions",
       "primary_domain": "Bridges",
       "priority_score": 0.4454591482599714,
@@ -1601,7 +1662,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T12:53:46Z",
       "domain": "Geometry",
-      "hue": 92,
+      "hue": 90,
       "id": "deepening_quasi_symmetric_maps_generalize_bi_lipsc",
       "primary_domain": "Geometry",
       "priority_score": 0.6667314285714285,
@@ -1612,7 +1673,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T14:07:05Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 95,
       "id": "ml_universal_approximation_width_vs_depth_trade_of",
       "primary_domain": "Bridges",
       "priority_score": 0.5460879746835443,
@@ -1623,7 +1684,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T14:07:33Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 90,
       "id": "biological_topology_protein_folding_as_persistent_",
       "primary_domain": "Bridges",
       "priority_score": 0.6368867100977198,
@@ -1634,7 +1695,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T14:08:26Z",
       "domain": "Novelty",
-      "hue": 275,
+      "hue": 90,
       "id": "tropical_differential_equations_power_series_solut",
       "primary_domain": "Bridges",
       "priority_score": 0.6597028571428571,
@@ -1645,7 +1706,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T15:26:14Z",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 90,
       "id": "bridge_tropical_geometry_as_a_limit_of_classical_a",
       "primary_domain": "Bridges",
       "priority_score": 0.466330888618381,
@@ -1656,7 +1717,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T16:01:35Z",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 90,
       "id": "close_proofs_dream_logic_non_monotone_reasoning_wh",
       "primary_domain": "Bridges",
       "priority_score": 0.6259713779527559,
@@ -1667,7 +1728,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T16:02:06Z",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 359,
       "id": "close_proofs_cryptographic_hash_functions_collisio",
       "primary_domain": "Bridges",
       "priority_score": 0.47216,
@@ -1678,7 +1739,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T16:03:00Z",
       "domain": "Applications",
-      "hue": 100,
+      "hue": 92,
       "id": "close_proofs_poincar_conjecture_revisited_4d_smoot",
       "primary_domain": "Bridges",
       "priority_score": 0.6420416858237549,
@@ -1689,7 +1750,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T16:38:28Z",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 272,
       "id": "formally_verified_framework_computationspectralcha",
       "primary_domain": "Bridges",
       "priority_score": 0.7169511769059955,
@@ -1700,7 +1761,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T18:00:46Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 91,
       "id": "close_proofs_deepening_quasi_symmetric_maps_genera",
       "primary_domain": "Bridges",
       "priority_score": 0.5693259284497445,
@@ -1711,7 +1772,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T18:01:21Z",
       "domain": "Novelty",
-      "hue": 92,
+      "hue": 91,
       "id": "close_proofs_this_cycle_built_from_scratch_a_small",
       "primary_domain": "Bridges",
       "priority_score": 0.5133138461538462,
@@ -1722,7 +1783,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T18:01:58Z",
       "domain": "Algebra",
-      "hue": 91,
+      "hue": 271,
       "id": "close_proofs_the_current_formalization_handles_0_d",
       "primary_domain": "Algebra",
       "priority_score": 0.5184915068493151,
@@ -1733,7 +1794,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T18:38:30Z",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 270,
       "id": "close_proofs_combinatorial_categorical_bridge_spec",
       "primary_domain": "Bridges",
       "priority_score": 0.7351678504672897,
@@ -1744,7 +1805,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T20:40:22Z",
       "domain": "Novelty",
-      "hue": 91,
+      "hue": 272,
       "id": "close_proofs_formalized_framework_connecting_colla",
       "primary_domain": "Bridges",
       "priority_score": 0.4355796948696299,
@@ -1755,7 +1816,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T21:59:43Z",
       "domain": "MachineLearning",
-      "hue": 112,
+      "hue": 91,
       "id": "stereographic_neural_attention_attention_via_riema",
       "primary_domain": "MachineLearning",
       "priority_score": 0.3374156535885168,
@@ -1766,7 +1827,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T22:01:05Z",
       "domain": "Physics",
-      "hue": 90,
+      "hue": 270,
       "id": "chaos_and_the_three_body_problem_lyapunov_exponent",
       "primary_domain": "Physics",
       "priority_score": 0.29760835555555554,
@@ -1788,7 +1849,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T22:01:47Z",
       "domain": "Bridges",
-      "hue": 275,
+      "hue": 271,
       "id": "information_geometric_bridge_fisher_metric_on_stat",
       "primary_domain": "Bridges",
       "priority_score": 0.4768899999999999,
@@ -1799,7 +1860,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T22:02:07Z",
       "domain": "Bridges",
-      "hue": 91,
+      "hue": 100,
       "id": "topological_quantum_computing_braiding_universalit",
       "primary_domain": "Bridges",
       "priority_score": 0.5569047368421052,
@@ -1810,7 +1871,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T22:02:29Z",
       "domain": "Applications",
-      "hue": 101,
+      "hue": 272,
       "id": "the_file_physicstopologicalordergenuslean_establis",
       "primary_domain": "Bridges",
       "priority_score": 0.6609863414634147,
@@ -1821,7 +1882,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-10T23:48:23Z",
       "domain": "Pythagorean",
-      "hue": 270,
+      "hue": 275,
       "id": "close_proofs_proof_phase_transitions_sharp_thresho",
       "primary_domain": "Pythagorean",
       "priority_score": 0.49017348115299336,
@@ -1832,7 +1893,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-11T01:40:39Z",
       "domain": "Novelty",
-      "hue": 292,
+      "hue": 270,
       "id": "the_current_ordinaltheory_framework_works_with_abs",
       "primary_domain": "Bridges",
       "priority_score": 0.454414139145638,
@@ -1843,7 +1904,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-11T02:14:52Z",
       "domain": "Applications",
-      "hue": 95,
+      "hue": 90,
       "id": "the_current_framework_models_theories_by_their_set",
       "primary_domain": "Bridges",
       "priority_score": 0.46927067836885566,
@@ -1854,13 +1915,46 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-11T02:15:47Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 270,
       "id": "linear_merkledamgrd_collision_resistance_theory",
       "primary_domain": "Bridges",
       "priority_score": 0.4773509441849254,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Collision Resistance as Joint Injectivity: Merkle-Damgard Chains and Merkle Trees"
+    },
+    {
+      "date": "2026-06-11T02:48:15Z",
+      "domain": "Novelty",
+      "hue": 275,
+      "id": "hilbert_6_axiomatization_of_physics",
+      "primary_domain": "Bridges",
+      "priority_score": 0.44834526528023205,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "Hilbert 6: Axiomatization of Physics \u2014 Chronometric Semirings and the Reversible Trace Calculus"
+    },
+    {
+      "date": "2026-06-11T02:48:51Z",
+      "domain": "Physics",
+      "hue": 270,
+      "id": "we_formalized_the_causal_integration_algebra_in_tw",
+      "primary_domain": "Physics",
+      "priority_score": 0.46921741935483874,
+      "quality": "partial",
+      "shape": "diamond",
+      "title": "The Causal Integration Algebra: Integrated Information as Minimum Cut"
+    },
+    {
+      "date": "2026-06-11T02:49:17Z",
+      "domain": "Pythagorean",
+      "hue": 91,
+      "id": "this_cycle_took_the_single_modulus_law_of_appariti",
+      "primary_domain": "Pythagorean",
+      "priority_score": 0.46447560918026837,
+      "quality": "partial",
+      "shape": "triangular_prism",
+      "title": "The Multiplicative Structure of the Fibonacci Rank of Apparition"
     }
   ]
 };

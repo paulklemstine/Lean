@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "317cfc85",
     "filename": "this_cycle_took_the_single_modulus_law_of_appariti.json",
     "pkg_num": 65,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.46447560918026837,
     "title": "The Multiplicative Structure of the Fibonacci Rank of Apparition"
   },
   {
@@ -1951,8 +1951,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "this_cycle_took_the_single_modulus_law_of_appariti",
       "primary_domain": "Pythagorean",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.46447560918026837,
+      "quality": "partial",
       "shape": "triangular_prism",
       "title": "The Multiplicative Structure of the Fibonacci Rank of Apparition"
     }
