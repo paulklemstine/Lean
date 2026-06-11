@@ -1,4 +1,5 @@
 import Mathlib
+import Speculative.AutoResearch.PinskerInequality
 
 /-!
 # Information-Geometric Bridge: Fisher Metric on Statistical Manifolds
@@ -152,15 +153,17 @@ theorem klDiv_le_fisher (p q : ι → ℝ) (hp : ∀ i, 0 < p i) (hq : ∀ i, 0 
 -- !-- End Lab Notebook -- !--
 -/
 
--- !-- Conjecture (Pinsker): lower bound of the sandwich by the squared -- !--
--- !-- total-variation distance. Deferred with `sorry` as a next-cycle target. -- !--
-/-- **Conjecture (Pinsker).** Lower bound of the KL sandwich by the squared
-total-variation distance. Stated with `sorry` as a research direction for the
-next cycle. -/
+-- !-- Theorem (Pinsker): lower bound of the sandwich by the squared -- !--
+-- !-- total-variation distance. NOW PROVED via `PinskerInequality.general_pinsker` -- !--
+-- !-- (the general Pinsker inequality, derived from the Bernoulli case + log-sum). -- !--
+/-- **Pinsker's inequality.** Lower bound of the KL sandwich by the squared
+total-variation distance.  Previously a `sorry`-conjecture; now discharged by
+`PinskerInequality.general_pinsker`, which reduces the finite case to the Bernoulli
+Pinsker inequality via the log-sum (data-processing) inequality. -/
 theorem klDiv_ge_half_tv_sq (p q : ι → ℝ) (hp : ∀ i, 0 < p i) (hq : ∀ i, 0 < q i)
     (hps : ∑ i, p i = 1) (hqs : ∑ i, q i = 1) :
-    (1 / 2) * (∑ i, |p i - q i|) ^ 2 ≤ klDiv p q := by
-  sorry
+    (1 / 2) * (∑ i, |p i - q i|) ^ 2 ≤ klDiv p q :=
+  PinskerInequality.general_pinsker p q hp hq hps hqs
 
 end FisherInformationMetric
 
