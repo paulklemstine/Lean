@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "abd63a3a",
     "filename": "close_proofs_entropy_bounded_computation_ebc_frame.json",
     "pkg_num": 101,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4154796923076923,
     "title": "Entropy-Bounded Computation: The Price of Forgetting as a Law of Computation"
   },
   {
@@ -3072,8 +3072,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "close_proofs_entropy_bounded_computation_ebc_frame",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4154796923076923,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Entropy-Bounded Computation: The Price of Forgetting as a Law of Computation"
     }
