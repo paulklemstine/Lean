@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "2a456ae3",
     "filename": "close_proofs_close_proofs_tropical_hodge_theory.json",
     "pkg_num": 86,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.58056,
     "title": "Tropical Hodge Theory: The Hodge Decomposition Machinery"
   },
   {
@@ -2609,8 +2609,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "close_proofs_close_proofs_tropical_hodge_theory",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.58056,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Tropical Hodge Theory: The Hodge Decomposition Machinery"
     }
