@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "78c4e8f5",
     "filename": "linear_merkledamgrd_collision_resistance_theory.json",
     "pkg_num": 62,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4773509441849254,
     "title": "Collision Resistance as Joint Injectivity: Merkle-Damgard Chains and Merkle Trees"
   },
   {
@@ -1857,8 +1857,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "linear_merkledamgrd_collision_resistance_theory",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4773509441849254,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Collision Resistance as Joint Injectivity: Merkle-Damgard Chains and Merkle Trees"
     }
