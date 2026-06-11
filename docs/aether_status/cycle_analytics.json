@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-11T17:38:53.428436+00:00",
+  "last_updated": "2026-06-11T17:41:27.556040+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -21487,6 +21487,45 @@
       "theorem_count": 692,
       "timestamp": "2026-06-11T17:38:53.235047+00:00",
       "title": "The file `Tropical/MarkedModuli.lean` formalizes the combinatorial type `MarkedC"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.3614,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 109,
+      "domain": "Applications",
+      "duration_seconds": 165.89675998687744,
+      "end_time": 1781199616.7287223,
+      "files_integrated": 45,
+      "job_id": "c88e9d3c",
+      "outcome_quality": 0.0,
+      "phase": "complete",
+      "phase_a_prompt_version": "v7",
+      "phase_b_prompt_version": "v1",
+      "phase_b_skipped": false,
+      "prompt_version": "v7",
+      "quality_breakdown": {
+        "actionability": 0.56,
+        "applications": 0.7,
+        "artifact_richness": 0.25,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7899,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.926,
+        "novelty": 0.9405,
+        "proof_depth": 0.9199,
+        "usefulness": 0.9599
+      },
+      "quality_score": 0.5243702528507684,
+      "sorry_count": 2,
+      "sorry_density": 0.0009915716410510659,
+      "start_time": 1781199450.8319623,
+      "strategy_count": 0,
+      "theorem_count": 2017,
+      "timestamp": "2026-06-11T17:41:27.222007+00:00",
+      "title": "Close Proofs: The current formalization handles 0-dimensional persistence on discret"
     }
   ]
 }
