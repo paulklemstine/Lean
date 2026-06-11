@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "08bb99d3",
     "filename": "the_file_tropicalvaluationlimitbridgelean_formaliz.json",
     "pkg_num": 100,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6373599999999999,
     "title": "The Valuation\u2013Tropicalization Bridge: Functoriality of the Tropical Corner Locus"
   },
   {
@@ -3043,8 +3043,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "the_file_tropicalvaluationlimitbridgelean_formaliz",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6373599999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Valuation\u2013Tropicalization Bridge: Functoriality of the Tropical Corner Locus"
     }
