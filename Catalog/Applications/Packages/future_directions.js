@@ -18,7 +18,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof Complexity Collapse: P=NP via Proof Checking"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5c546f54",
     "description": "The key insight is that persistent homology \u2014 the backbone of topological data analysis \u2014 provides a natural framework for quantum error correction. Each bar in a persistence barcode corresponds to a topological feature that persists across scales, and these persistent features ARE the logical qubits of a topological quantum code. Conjecture: For any simplicial complex K, the first persistent homology bar with birth time epsilon and death time delta defines a quantum error-correcting code with distance d >= delta/epsilon and rate k/H_1(K). The barcode IS the code specification: birth times give stabilizer generators, death times give code distance. Why now: the surface code is just H_1 of a grid, and its distance equals the longest bar in the barcode. This generalizes immediately. Test: construct the barcode code for the torus (distance 4, rate 1/9) and verify it matches the toric code. Prove the distance bound for arbitrary complexes. Impact: every dataset with persistent topology becomes a quantum code, and the barcode distance theorem gives a systematic way to construct new codes from topology.",
     "domains": [
       "Physics",
@@ -28,7 +28,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.95,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:27.392825+00:00",
     "title": "Topological Quantum Error Correction from Homological Persistence"
   },
@@ -237,7 +237,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Topological Data Analysis: Persistent Homology Stability"
   },
   {
-    "consumed_by_exp_id": "8dea30c1",
+    "consumed_by_exp_id": "",
     "description": "Prove that higher signatures are homotopy invariants for all finitely presented groups. Formalize the assembly map in topological K-theory and connections to Baum-Connes.",
     "domains": [
       "Geometry"
@@ -246,9 +246,23 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:12.120491+00:00",
     "title": "Novikov Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle a55608ec (Q=0.770), which proved 830 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle a3442408 (Q=0.727) proved 2316 theorems in Applications but left 8 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: The Observation Gap\n\n## 1. Adaptive Observation Systems and Information-Theoretic Bounds\n\nThe curr",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_a55608ec_9f4871e9",
+    "priority_score": 0.8695069879518073,
+    "research_mode": "team",
+    "source_exp_id": "a55608ec",
+    "status": "available",
+    "timestamp": "2026-06-11T13:37:11.466341+00:00",
+    "title": "Deepening: Close Proofs: The current framework considers *static* observation systems where"
   },
   {
     "consumed_by_exp_id": "",
@@ -441,6 +455,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:18.441912+00:00",
     "title": "Willmore Conjecture Generalizations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle a55608ec (Q=0.770) proved 830 theorems in Applications but left 7 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle a3442408 (Q=0.727) proved 2316 theorems in Applications but left 8 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_a55608ec_d64808a5",
+    "priority_score": 0.8195069879518073,
+    "research_mode": "team",
+    "source_exp_id": "a55608ec",
+    "status": "available",
+    "timestamp": "2026-06-11T13:37:11.932232+00:00",
+    "title": "Close Proofs: Close Proofs: The current framework considers *static* observation sys"
   },
   {
     "consumed_by_exp_id": "",
@@ -982,7 +1010,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The quadratic residuosity results in this cycle (`qnr_product_is_qr`, `euler_cri"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7ad3117a",
     "description": "# Future Directions: Quantum Gravity as Topological Quantum Field Theory\n\n## 1. Turaev-Viro State Sum Invariance\n\nThe natural next step is to formalize the Turaev-Viro state sum construction itself. Given a fusion system `F` and a triangulation `T` of a closed 3-manifold, define the partition function `Z(T) = \u03a3 (colorings) \u03a0 (6j-symbols)` and prove it is independent of the triangulation (invariance under Pachner moves). The key insight is that the pentagon equation for the fusion system \u2014 which we have already axiomatized as the `associativity` field \u2014 is precisely the algebraic identity that ensures invariance under the 2-3 Pachner move. Why now? Our formalization of fusion systems provides the exact algebraic data needed; what remains is the combinatorial machinery of triangulations and Pachner moves, which is largely independent of TQFT-specific content.\n\n## 2. Modular S-Matrix and the Full Verlinde Formula\n\nOur current formalization proves that quantum dimensions form a simultaneous eigenvector of the fusion matrices. The full Verlinde formula goes further: it asserts the existence of a unitary matrix `S` that simultaneously diagonalizes all fusion matrices, with `N_{ij}^k = \u03a3_l S_{il} S_{jl} S*_{kl} / S_{0l}`. The key insight is that the fusion matrices form a commutative semisimple algebra over \u211d (commutativity is our Theorem 1), so simultaneous diagonalization is guaranteed by the spectral theorem for commuting normal matrices. Why now? Mathlib has the spectral theorem for normal operators on finite-dimensional inner product spaces, and our commutativity result provides the critical prerequisite.\n\n## 3. Mapping Class Group Representations and Unitarity\n\nFor a genus-g surface \u03a3_g, the TQFT assigns a finite-dimensional Hilbert space V(\u03a3_g) on which the mapping class group MCG(\u03a3_g) acts by unitary transformations. The conjecture is: formalize the MCG action via Dehn twist generators and prove unitarity using the inner product induced by the quantum trace. The key insight is that the MCG representation factors through the representation of the Temperley-Lieb or Hecke algebra, and unitarity follows from the positivity of quantum dimensions (which we have axiomatized as `qdim_positive`). Why now? The algebraic framework is in place; the main gap is formalizing the Dehn twist action in terms of fusion data, which requires only the 6j-symbols and braiding structure beyond what we have.\n\n## 4. Crane-Yetter Extension to 4D and State Sum Models\n\nThe Turaev-Viro theory lives in 3 dimensions. The Crane-Yetter state sum extends it to 4 dimensions using a modular tensor category. The conjecture to test: the Crane-Yetter partition function on a closed 4-manifold depends only on the signature and Euler characteristic, and equals `D^{3\u03c3+\u03c7}` where `D` is the global dimension. The key insight is that this formula reduces to checking invariance under the 4D Pachner moves (1-5, 2-4, 3-3), which in turn reduce to algebraic identities in the fusion system that generalize our associativity axiom. Why now? Our `globalDimSq_pos` theorem and the fusion system framework provide the foundation; the 4D extension is a natural and falsifiable generalization.\n\n## 5. Quantum Double Construction and Kitaev Models\n\nGiven a finite group G, the quantum double D(G) is a Hopf algebra whose representation category is a modular tensor category. The conjecture: formalize that D(G) yields a fusion system where the fusion coefficients equal the structure constants of the center of the group algebra Z(\u2102[G]), and the global dimension squared equals |G|\u00b2. The key insight is that this provides a concrete, computable instantiation of our abstract fusion system axioms, and connects to Kitaev's toric code model of topological quantum computation. Why now? Mathlib has extensive support for finite groups, group algebras, and representation theory \u2014 the ingredients needed to construct D(G) are largely available, making this a high-feasibility target for connecting our abstract framework to concrete examples.\n",
     "domains": [
       "Algebra",
@@ -992,7 +1020,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "2bc7ced0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T12:11:49.425824+00:00",
     "title": "The natural next step is to formalize the Turaev-Viro state sum construction its"
   },
@@ -2137,7 +2165,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The file `Catalog/Speculative/AutoResearch/FibonacciApparition.lean` establishes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ee25df8d",
     "description": "# Future Directions: Descent Basin Theory\n\n## Synthesis\n\nThis cycle built the `DescentSystem` abstraction from scratch (the catalog had no\nprior basin/descent infrastructure, so this was a cold start) and proved the\n**Basin Fixed Point Theorem**: for a finite state space equipped with a discrete\ndynamics `step` and a `\u2115`-valued Lyapunov (\"energy\") function that strictly\ndecreases away from fixed points, the number of basins of attraction equals the\nnumber of fixed points. The structural engine is a single induction\n(`step_iterate_isFix`): the energy value bounds the worst-case length of a descent\npath, so `step^[energy s] s` always lands on a fixed point. From this one lemma the\nwhole edifice follows \u2014 the limit map `limitPoint` is well defined, its range is\n*exactly* the fixed-point set (`range_limitPoint_eq_fixedPoints`), its fibers are the\nbasins, and these basins partition the space (`iUnion_basin_eq_univ`,\n`basin_disjoint`).\n\nThe cleanest structural insight is that **basins are literally the fibers of the\nlimit map**, so \"counting basins\" is a pure image/fiber computation rather than a\ndynamical one. This made two extensions almost syntactic: basin counts are\n*multiplicative* across independent subsystems (`prod_fixedPoint_count`), and they\nare *equivariant* under any energy-preserving symmetry of the dynamics\n(`limitPoint_equivariant`, `isFix_equiv`). The multiplicativity result is exactly\nthe classical (`q = 1`) shadow of the conjectured \"quantum\" deformation of basin\ncounting, and the equivariance result is exactly the group action one needs to feed\ninto a Burnside-style count of basins modulo symmetry.\n\nWhat did *not* make it into this cycle: a real-valued (rather than `\u2115`-valued)\nLyapunov function, and the Burnside count itself. The `\u2115`-valued energy was a\ndeliberate simplification \u2014 it gives a concrete iteration bound `energy s` and\nsidesteps well-foundedness subtleties. The boundary where the current proof breaks\nis precisely the move to `\u211d`-valued energy with only a *strict* (not quantized)\ndecrease: there the bound \"`energy s` steps suffice\" fails, and one needs either a\ndiscreteness/\u0141ojasiewicz-type hypothesis or a well-founded-recursion argument. That\nboundary is the seed for Directions 1 and 5 below.\n\n## Results Summary\n\n- `DescentSystem.step_iterate_isFix`: proved \u2014 the key descent lemma; `energy s`\n  iterations always reach a fixed point, giving the well-definedness of the limit map.\n- `DescentSystem.limitPoint_isFixedPt`: proved \u2014 every state flows to a fixed point.\n- `DescentSystem.limitPoint_eq_self`: proved \u2014 fixed points are their own limit.\n- `DescentSystem.range_limitPoint_eq_fixedPoints`: proved \u2014 the basin\u2013fixed-point\n  correspondence (image of the limit map = fixed-point set).\n- `DescentSystem.basin_count_eq_fixedPoint_count`: proved \u2014 **the Basin Fixed Point\n  Theorem** in cardinality form (#basins = #fixed points).\n- `DescentSystem.mem_basin_self`, `basin_disjoint`, `iUnion_basin_eq_univ`: proved \u2014\n  the basins form a partition of the state space indexed by fixed points.\n- `DescentSystem.prod`, `prod_isFix_iff`, `prod_fixedPoint_count`: proved \u2014\n  multiplicativity of basin counts across independent (product) subsystems.\n- `DescentSystem.isFix_equiv`, `limitPoint_equivariant`: proved \u2014 symmetries of the\n  dynamics permute fixed points and intertwine the basin map (equivariance of basins).\n\n## Research Directions\n\n### Direction 1: Discrete Morse inequalities from descent decomposition\n**Hypothesis**: Extend `DescentSystem` to track critical cells of every index (not\nonly minima) on a finite CW/simplicial complex, and prove the weak Morse\ninequality `b_k \u2264 c_k` (the k-th Betti number is bounded by the number of critical\nk-cells), together with the Euler identity `\u03a3 (\u22121)^k c_k = \u03c7`.\nThe key insight is that the orbit-injectivity / fiber structure of `limitPoint`\nalready gives the alternating-sum bookkeeping needed for the Euler characteristic;\neach basin is a \"descending cell\" and the partition `iUnion_basin_eq_univ` is the\ncell decomposition. **Test**: build a `DescentSystem` whose energy is a discrete\nMorse function on a small complex (e.g. a triangulated circle/torus), define\n`criticalCells k`, and prove `c_k \u2265 b_k` against the catalog's\n`Geometry.DiscreteMorseInequalities` (`homology_finrank_le`, `euler_char_eq`).\n**Why now?** The Lyapunov/non-cycling machinery (`step_iterate_isFix`) makes\ndiscrete gradient flow well defined, and `basin_count_eq_fixedPoint_count` is the\nindex-0 case of the inequality. **If true**: connects our geometry result to the\ncatalog's homological-algebra Morse file, a genuine cross-domain bridge.\n**If false**: pinpoints which non-cycling hypothesis is too weak to control\nhigher-index cells.\n\n### Direction 2: Equivariant basin counting via Burnside's lemma\n**Hypothesis**: For a finite group `G` acting on `S` by energy-preserving symmetries\nthat commute with `step`, the number of basins modulo `G` equals\n`(1/|G|) \u03a3_{g\u2208G} #{basins fixed by g}`, and a basin is fixed by `g` iff its limit\npoint is a `g`-symmetric critical point.\nThe key insight is that `limitPoint_equivariant` already shows `G` acts on the set\nof basins (= fibers of `limitPoint`), so Burnside applies verbatim to that action.\n**Test**: package the `G`-action as a `MulAction` on `Set.range D.limitPoint` and\ninvoke Mathlib's `MulAction.sum_card_fixedBy_eq_card_orbits` (verify exact name in\nthe project's Mathlib). **Why now?** `isFix_equiv` + `limitPoint_equivariant` give\nthe action and its compatibility with fixed points; only the orbit-counting wrapper\nis missing. **If true**: yields a closed-form count of *essentially distinct*\nminima found by symmetric descent (e.g. neural-net neuron-permutation symmetry).\n**If false**: reveals that energy-invariance alone does not make the action\nwell defined on basins, isolating the missing hypothesis.\n\n### Direction 3: Quantum deformation of basin counting (WDVV test)\n**Hypothesis**: Define `Q(q) = \u03a3_paths q^{length}` over descent paths and a\n`q`-deformed product on basins; then `prod_fixedPoint_count` is the `q\u21921` limit, and\nthe deformed product satisfies an associativity (WDVV) relation iff the basin\nstructure carries a quantum-cohomology ring.\nThe key insight is that multiplicativity of classical basin counts\n(`prod_fixedPoint_count`) is precisely the classical limit of quantum\nmultiplicativity, so deforming the product is the natural next algebraic step.\n**Test**: compute `Q(q)` symbolically for a handful of explicit small `DescentSystem`s\nand check the WDVV relation by `decide`/`norm_num` on rationals. **Why now?** We now\nhave a rigorous, computable classical count to deform. **If true**: strong evidence\nfor the Gromov\u2013Witten analogy motivating the whole program. **If false** (WDVV fails\ngenerically): the strong GW conjecture is refuted, which is itself a clean negative\nresult.\n\n### Direction 4: Real-valued / \u0141ojasiewicz Lyapunov functions\n**Hypothesis**: Replace `energy : S \u2192 \u2115` with `energy : S \u2192 \u211d` plus a *uniform* gap\n`\u2203 \u03b4 > 0, step s \u2260 s \u2192 energy s \u2212 energy (step s) \u2265 \u03b4`; then descent still reaches a\nfixed point in at most `\u2308(energy s \u2212 min energy)/\u03b4\u2309` steps and the Basin Fixed Point\nTheorem survives unchanged.\nThe key insight is that the integer iteration bound used in `step_iterate_isFix`\ngeneralizes to any *quantized* strict decrease, and a uniform gap is the minimal\nhypothesis that restores quantization over `\u211d`. **Test**: re-prove\n`step_iterate_isFix` with the `\u211d`+gap hypothesis using a `Nat.ceil` bound. **Why\nnow?** The current proof's only use of `\u2115` is the discreteness of the decrease; the\ngap hypothesis isolates exactly that dependence. **If true**: bridges to continuous\noptimization. **If false**: shows the discreteness is essential, not cosmetic.\n\n### Direction 5: Continuous basin theory via \u0141ojasiewicz gradient flow\n**Hypothesis**: For a real-analytic loss on `\u211d\u207f`, the \u0141ojasiewicz inequality\n`|\u2207L(\u03b8)|\u00b2 \u2265 c |L(\u03b8) \u2212 L(\u03b8*)|^\u03b1` forces gradient-flow trajectories to have finite\nlength and converge, yielding a continuous basin map whose fibers partition a\nneighborhood of the critical set \u2014 the continuous Basin Fixed Point Theorem.\nThe key insight is that the \u0141ojasiewicz inequality is the continuous analogue of our\n`strict_descent`/uniform-gap axiom: both forbid stalling at non-critical points, so\n\"bounded orbit length \u2192 Cauchy \u2192 convergence\" mirrors our discrete\n\"iterate count bounded \u2192 fixed point\". **Test**: state the \u0141ojasiewicz\u2013Simon\ninequality in Mathlib's analysis API and prove finite trajectory length implies\nconvergence. **Why now?** Direction 4 produces the exact intermediate abstraction\n(quantized-decrease descent) whose continuous limit this is. **If true**: extends\nthe theory to the setting of actual neural-network training. **If false**: identifies\nwhich regularity (analyticity vs. smoothness) the convergence genuinely requires.\n",
     "domains": [
       "Algebra",
@@ -2147,7 +2175,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "1320de4c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-11T00:07:01.521847+00:00",
     "title": "`DescentSystem` abstraction from scratch (the catalog had n"
   },
@@ -2348,6 +2376,110 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Observation Complexity Cycle\n\n## Synthesis\n\nThis cycle attacked the *information-theoretic gap* in the Observation framework\n(`Catalog/Algebra/ObservationGap.lean`, `Catalog/Algebra/AdaptiveObservationGap.lean`).\nThose files establish only the **one-sided** counting law: an observation system of\ndepth `n` can separate at most `2 ^ n` elements, and that bound is *achievable* on\n`Fin (2 ^ n)`. What was missing is the **exact query complexity** for an arbitrary\nfinite type. We closed this gap in `Catalog/Algebra/ObservationComplexity.lean` with\nthe theorem that the minimal depth needed to distinguish every element of a finite\ntype `\u03b1` is exactly `Nat.clog 2 |\u03b1| = \u2308log\u2082 |\u03b1|\u2309`, stated as an `IsLeast` fact\n(`min_distinguishing_depth`).\n\nThe structural insight that drove the proof is that `Nat.clog` is the *exact* inverse\nof `2 ^ \u00b7` on powers (`Nat.clog_pow`, `Nat.le_pow_clog`). This lets us *transport*\nboth directions of the existing counting law into a single depth statement: the\ncardinality bound `|\u03b1| \u2264 2 ^ n` becomes the depth lower bound by monotonicity of\n`clog`, and the `Fin (2 ^ n)` sufficiency result becomes a general construction by\nbinary-encoding an embedding `\u03b1 \u21aa Fin (2 ^ n)`. A second, conceptual payoff is that\nthe *same* number `Nat.clog 2 |\u03b1|` is optimal for both the static and the adaptive\n(decision-tree) models \u2014 the lower bound is proved for adaptive systems while the\nmatching upper bound is realized by a static one \u2014 so **adaptivity buys no speedup**\nfor the pure distinguishability task. The only genuine subtlety surfaced in the\ngeneralization: the base-`k` version is sharp only for `k \u2265 2`, and the `k \u2264 1`\nboundary (where `Nat.clog` collapses to `0`) had to be handled by an explicit case\nsplit. That degenerate case is itself informative: a unary alphabet carries no\ndiscriminative power, which is exactly why the logarithmic law needs `k \u2265 2`.\n\nWhat did *not* work cleanly: an attempt to phrase the result as an `sInf` equality\nbetween the static and adaptive optimal depths would have forced us to *pad* small\ndecision trees up to larger depths (a constructive operation on the `AdaptiveObs`\ninductive type). Re-casting the statement as `IsLeast` sidestepped this entirely and\nis in fact the stronger, cleaner statement. The padding operation remains an\ninteresting missing primitive (see Direction 3).\n\n## Results Summary\n\n- `distinguish_depth_ge_clog`: **proved** \u2014 any adaptive system distinguishing all of\n  `\u03b1` has depth `\u2265 Nat.clog 2 |\u03b1|`; sharpens the catalog cardinality bound into a\n  query lower bound.\n- `exists_distinguishing_static`: **proved** \u2014 a static system of depth exactly\n  `Nat.clog 2 |\u03b1|` distinguishes every finite type, generalizing\n  `observation_can_suffice` from `Fin (2 ^ n)` to all finite types.\n- `min_distinguishing_depth`: **proved** (flagship) \u2014 `Nat.clog 2 |\u03b1|` is the least\n  depth admitting a distinguishing adaptive system; the exact query complexity, with\n  adaptivity giving no advantage.\n- `min_distinguishing_depth_fin100`: **proved** \u2014 concrete witness: separating the\n  100 elements of `Fin 100` costs exactly 7 observations (`2^6 < 100 \u2264 2^7`).\n- `generalized_observation_complexity`: **proved** \u2014 the base-`k` lower bound\n  `Nat.clog k |\u03b1| \u2264 n` for observations valued in a `k`-element type; sharp for\n  `k \u2265 2`.\n\n## Research Directions\n\n### Direction 1: Sharp k-ary sufficiency (matching the generalized lower bound)\n**Hypothesis**: For every finite type `\u03b1` and every finite alphabet `\u03b2` with\n`|\u03b2| = k \u2265 2`, there exists a static `GenObsSys \u03b1 \u03b2 (Nat.clog k |\u03b1|)` whose profile is\ninjective; hence the exact `k`-ary query complexity is `Nat.clog k |\u03b1|`.\n**Test**: Construct a base-`k` digit-extraction system on `Fin (k ^ n)` (the `k`-ary\nanalogue of `observation_can_suffice`), then pull it back along an embedding\n`\u03b1 \u21aa Fin (k ^ n)` exactly as in `exists_distinguishing_static`. Prove the resulting\n`IsLeast`.\n**Why now**: We already proved the `k`-ary lower bound (`generalized_observation_complexity`)\nand the Boolean construction (`exists_distinguishing_static`); the only missing piece\nis a `Nat`-digit (rather than `testBit`) separation lemma. The key insight is that the\nembedding-pullback proof is *base-agnostic* \u2014 only the concrete `Fin (k ^ n)` witness\nchanges.\n**If true**: A complete base-`k` observation-complexity theorem, unifying Boolean and\nmulti-valued sensing under one logarithmic law.\n**If false**: It would reveal that `Nat`-digit extraction fails to be injective at some\nbase, pointing to an arithmetic obstruction invisible in the Boolean case.\n\n### Direction 2: Weighted / cost-sensitive observations\n**Hypothesis**: If query `i` costs `w i : \u2115`, the minimum *total cost* to distinguish\nall of `\u03b1` is governed by a Kraft-style inequality `\u2211 2^(-depth) \u2264 1`, and the optimal\ncost equals the Huffman-code cost of the uniform distribution on `\u03b1`.\n**Test**: Define `WeightedObs` extending `AdaptiveObs` with a cost annotation; prove a\nKraft inequality for the leaf depths of a distinguishing tree, then a Huffman-optimality\nlower bound.\n**Why now**: The decision-tree model `AdaptiveObs` already exposes per-branch structure,\nand `min_distinguishing_depth` shows the *uniform-cost* optimum is `\u2308log\u2082 |\u03b1|\u2309`. The key\ninsight is that variable costs turn the flat `clog` bound into an entropy/Kraft bound \u2014\nthe natural next refinement of \"1 bit per query\".\n**If true**: Connects the observation framework to coding theory and entropy, a genuine\ncross-domain bridge (Information Theory \u2194 Algebra catalog).\n**If false**: Would show decision trees over an abstract type lack enough structure for\nKraft, isolating exactly which probabilistic assumption is needed.\n\n### Direction 3: Tree padding and the static/adaptive sInf equality\n**Hypothesis**: If a distinguishing adaptive system of depth `n` exists, one of depth\n`n + 1` exists too; consequently the achievable-depth set is upward closed and\n`sInf {adaptive depths} = sInf {static depths} = Nat.clog 2 |\u03b1|`.\n**Test**: Define `AdaptiveObs.pad : AdaptiveObs \u03b1 n \u2192 AdaptiveObs \u03b1 (n+1)` (append a\nconstant query), prove it preserves transcript injectivity, then derive the `sInf`\nequality from `min_distinguishing_depth`.\n**Why now**: We deliberately used `IsLeast` to avoid padding; making padding a first-class\noperation closes that gap. The key insight is that upward closure is the one missing\nlemma separating `IsLeast` from a full `sInf`/monotonicity characterization.\n**If true**: A reusable `pad` primitive enabling monotone reasoning about all future\ndecision-tree results.\n**If false**: Would expose a rigidity in the `AdaptiveObs` inductive encoding (e.g. depth\nbeing intrinsic), motivating a depth-indexed-by-`\u2264` reformulation.\n\n### Direction 4: Quotient-refinement complexity (partial information)\n**Hypothesis**: To *refine* a given partition of `\u03b1` into `m` classes (rather than fully\nseparate all elements) the minimal depth is `Nat.clog 2 m`, where `m` is the number of\ntarget classes.\n**Test**: Generalize `min_distinguishing_depth` to a target `Setoid s` on `\u03b1`, replacing\n\"injective transcript\" with \"transcript refines `s`\" and `|\u03b1|` with the number of\n`s`-classes; reuse `refinement_monotone_separation` from `ObservationGap.lean`.\n**Why now**: `ObservationGap.observation_quotient_card_le` and\n`refinement_monotone_separation` already provide the quotient machinery; the key insight\nis that full distinguishability is the special case `s = \u22a5`, so the complexity theorem\nshould relativize to any target resolution.\n**If true**: A complexity theory of *partial* observation, modeling sensors that only\nneed to resolve coarse state classes \u2014 directly relevant to the \"adaptive observation\nsystems\" motivation of this research line.\n**If false**: Would indicate that intermediate partitions interact with adaptivity\ndifferently than full separation, the first place adaptivity might actually help.\n\n### Direction 5: Average-case (expected) query depth\n**Hypothesis**: Under the uniform distribution on `\u03b1`, the minimum *expected* number of\nqueries of any distinguishing decision tree is `\u2265 log\u2082 |\u03b1| - O(1)` and is achieved\nwithin `+1` of `\u2308log\u2082 |\u03b1|\u2309` by a balanced tree (Shannon\u2013Fano).\n**Test**: Define expected depth `\ud835\udd3c[depth]` over leaves of an `AdaptiveObs` tree; prove a\nJensen/entropy lower bound and a balanced-tree upper bound.\n**Why now**: `min_distinguishing_depth` settles the worst case exactly; the expected case\nis the natural complement. The key insight is that the worst-case `clog` bound already\nforces enough leaves, so the entropy lower bound follows from convexity of `2^(-x)` over\nthe leaf-depth multiset.\n**If true**: Completes the worst-case/average-case picture, tightening the link to\nShannon entropy.\n**If false**: Would reveal that abstract decision trees can beat the entropy bound on\naverage (impossible for prefix codes), signaling a modeling mismatch worth diagnosing.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1375",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a55608ec",
+    "status": "available",
+    "timestamp": "2026-06-11T13:36:42.634483+00:00",
+    "title": "This cycle attacked the *information-theoretic gap* in the Observation framework"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Fibonacci Rank of Apparition as a Lattice Morphism\n\n## Synthesis\n\nThis cycle took the catalog's well-developed theory of the Fibonacci **rank of\napparition** `z(m) = apparitionRank m` (the least `k > 0` with `m \u2223 F k`, proved to\nexist unconditionally for every `m \u2265 1` in `Catalog/Novelty/FibApparitionExistence.lean`,\ntogether with the characterization `m \u2223 F n \u2194 z(m) \u2223 n`) and asked a structural\nquestion: *how does `z` interact with the divisibility lattice on moduli?*\n\nThe central discovery is that `z` is a **join-morphism**: `z(lcm a b) = lcm(z a, z b)`\nfor **all** positive `a, b`. This strictly generalizes the catalog's earlier *coprime*\nmultiplicativity `z(a\u00b7b) = lcm(z a, z b)` (which is only the `gcd a b = 1` special case,\nwhere `lcm a b = a\u00b7b`). The proof is conceptually clean: the characterization says the\n\"appearance set\" of `m` is exactly the multiples of `z(m)`, so taking `lcm` of moduli\n*intersects* appearance sets, and the intersection of two sets-of-multiples is the\nset-of-multiples of the `lcm`. We isolated this as `rankFunction_lcm_abstract`, which\nshows the join law is *purely formal* \u2014 it depends only on the \"appearance \u2194 rank\ndivides index\" pattern and not on Fibonacci numbers at all.\n\nThe Critic phase produced the most informative negative result: the dual **meet-law\nfails**. `z(gcd a b) = gcd(z a, z b)` is false, witnessed by `a = 2, b = 17`\n(coprime, so `z(gcd) = z(1) = 1`, yet `gcd(z 2, z 17) = gcd(3, 9) = 3`). The structural\nreason is sharp: `gcd(a,b) \u2223 F n` is *not* a Boolean combination of `a \u2223 F n` and\n`b \u2223 F n`, whereas `lcm(a,b) \u2223 F n` *is* (it is their conjunction). So `z` respects the\noperation that corresponds to \"and\" on appearance, but not the one that would need \"or\".\nThis asymmetry is the organizing insight for the directions below.\n\n## Results Summary\n\n- `apparitionRank_eq`: proved \u2014 pins down `z(m)` from a minimal witness; the\n  computational workhorse for evaluating concrete ranks.\n- `apparitionRank_lcm`: proved \u2014 **main result**, `z(lcm a b) = lcm(z a, z b)` for all\n  positive `a, b`; generalizes the catalog's coprime multiplicativity.\n- `apparitionRank_dvd_of_dvd`: proved \u2014 `z` is monotone for divisibility\n  (`a \u2223 b \u2192 z a \u2223 z b`), an immediate corollary of the join law.\n- `apparitionRank_one`, `apparitionRank_two`, `apparitionRank_seventeen`: proved \u2014\n  concrete ranks `z 1 = 1`, `z 2 = 3`, `z 17 = 9`.\n- `apparitionRank_meet_fails`: proved (disproof) \u2014 explicit counterexample showing\n  `z` is **not** a meet-morphism; a join-but-not-meet lattice map.\n- `rankFunction_lcm_abstract`: proved \u2014 the join law holds for any abstract\n  appearance/rank system, decoupling it from Fibonacci specifics.\n\n## Research Directions\n\n### Direction 1: Transport the join law to other strong divisibility sequences\n**Hypothesis**: For the base-`a` Mersenne/repunit sequence `u n = a\u207f \u2212 1`, the rank of\napparition `w(m)` (least `k > 0` with `m \u2223 a\u1d4f \u2212 1`, i.e. the multiplicative order of `a`\nmod `m`) satisfies `w(lcm p q) = lcm(w p, w q)` for moduli coprime to `a`.\n**Test**: Instantiate `rankFunction_lcm_abstract` with `appears m n := m \u2223 a\u207f \u2212 1` and\nthe order function, after proving the characterization `m \u2223 a\u207f \u2212 1 \u2194 ord_m(a) \u2223 n`\n(Mathlib's `ZMod.orderOf` / `Nat.pow_sub_one`...). The abstract lemma then closes it.\n**Why now**: `rankFunction_lcm_abstract` already exists and asks for exactly two inputs;\nthe catalog's `StrongDivSeq` file (`FibonacciEntryPointInvariant.lean`) already supplies\nthe Mersenne gcd identity `gcd(a\u1d50\u22121, a\u207f\u22121) = a^{gcd m n}\u22121`, half the needed machinery.\n**If true**: A single abstract theorem unifies the apparition-lattice structure of\nFibonacci numbers and of multiplicative orders \u2014 a genuine cross-domain bridge.\n**If false**: It would reveal that the order function lacks the clean appearance\ncharacterization, pinpointing where the \"set of multiples\" picture degrades.\n\n### Direction 2: Characterize exactly when the meet-law holds\n**Hypothesis**: `z(gcd a b) = gcd(z a, z b)` holds **iff** `z a \u2223 z b` or `z b \u2223 z a`\n(i.e. the ranks are `\u2223`-comparable).\n**Test**: Prove the `\u21d0` direction from the join law plus `apparitionRank_dvd_of_dvd`;\nsearch computationally (with `apparitionRank_eq`) for a comparable-rank pair where it\n*fails*, or an incomparable pair where it *holds*, to settle `\u21d2`.\n**Why now**: This cycle produced both a clean failure (`a=2,b=17`, incomparable ranks\n`3,9`... note `3 \u2223 9`, so the naive guess needs refinement!) and the exact tools\n(`apparitionRank_eq`, the join law) to test boundary cases rapidly.\n**If true**: Completes the lattice picture \u2014 `z` becomes a morphism precisely on chains.\n**If false**: The counterexample (note `gcd(2,17)`: ranks `3,9` ARE comparable yet the\nlaw fails, so the hypothesis as stated is likely refuted) will force a finer invariant,\nprobably involving how `gcd(a,b)` factors relative to `a` and `b`.\n\n### Direction 3: Prime-power reduction and Wall's question\n**Hypothesis**: `z(p\u1d49) = p^{max(0, e \u2212 e\u2080)} \u00b7 z(p)` where `e\u2080` is the `p`-adic valuation\nof `F_{z(p)}`; combined with the join law this reduces *all* rank computation to primes.\n**Test**: Prove `z(p) \u2223 z(p\u1d49)` and `z(p\u1d49) \u2223 p\u1d49\u207b\u00b9 \u00b7 z(p)` using LTE (lifting-the-exponent)\nfor Fibonacci numbers, which the catalog already has\n(`Catalog/Shared/FibonacciLTE.lean`). The exact power is Wall's question territory.\n**Why now**: The join law (this cycle) plus existing LTE infrastructure means the only\nmissing piece is the prime-power case; everything composite then follows for free.\n**If true**: A complete, computable description of `z` on all of \u2115 from its values on\nprimes \u2014 the apparition analogue of the fundamental theorem of arithmetic.\n**If false**: A Wall\u2013Sun\u2013Sun-type prime would be implicated; even a conditional proof\nwould sharpen the connection to that open problem.\n\n### Direction 4: The appearance map as a poset embedding\n**Hypothesis**: The map sending `m` to its appearance set `A(m) = {n | m \u2223 F n}` is a\nlattice homomorphism `(\u2115_{\u22651}, lcm, \u00b7) \u2192 (sets of multiples, \u2229, ?)` that is *injective\nmodulo equal rank*: `A(a) = A(b) \u2194 z a = z b`.\n**Test**: Prove `A(m) = z(m)\u00b7\u2115` from the characterization, then `A(a) = A(b) \u2194 z a = z b`\nby `Nat.dvd_antisymm`. Investigate whether `A(a) \u222a A(b)` is ever again some `A(c)`\n(it generally is not \u2014 this is the meet-law failure in set language).\n**Why now**: `apparitionRank_meet_fails` is exactly the statement that appearance sets\nare not closed under union; framing it set-theoretically makes the obstruction precise.\n**If true**: Reframes the entire theory as the order-embedding `m \u21a6 z(m)\u2115`, clarifying\nwhich set operations the embedding preserves.\n**If false**: Would mean two moduli with different ranks share an appearance set,\ncontradicting the characterization \u2014 a sanity check that, if it failed, would expose a\nbug in the rank theory.\n\n### Direction 5: Pisano period divisibility\n**Hypothesis**: `z(m) \u2223 \u03c0(m)` for every `m \u2265 1`, where `\u03c0(m)` is the Pisano period\n(the period of `F mod m`), and moreover `\u03c0(m)/z(m) \u2208 {1, 2, 4}`.\n**Test**: Build the Pisano period from the `fibStep` permutation already defined in\n`FibApparitionExistence.lean` (its order on `(0,1)`), prove `m \u2223 F_{\u03c0(m)}` to get\n`z(m) \u2223 \u03c0(m)` from the characterization, then analyze the quotient.\n**Why now**: The pigeonhole/permutation argument that proved apparition *existence* this\ncycle's foundation already constructs the periodicity; extracting the period `\u03c0(m)` is a\nsmall additional step on the same `fibStep` machinery.\n**If true**: Gives the first formal link between rank of apparition and Pisano period in\nthis library \u2014 neither concept currently exists in Mathlib.\n**If false** (i.e. the quotient takes a value outside `{1,2,4}`): It would contradict a\nclassical theorem, almost certainly signaling an error in the Pisano-period formalization\nrather than new mathematics \u2014 a valuable correctness probe.\n",
+    "domains": [
+      "Pythagorean",
+      "Bridges"
+    ],
+    "id": "fd_1376",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8001e7b8",
+    "status": "available",
+    "timestamp": "2026-06-11T13:37:32.068109+00:00",
+    "title": "This cycle took the catalog's well-developed theory of the Fibonacci **rank of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Lattice Structure of the Fibonacci Rank of Apparition\n\nThis cycle established, `sorry`-free, the **lattice behaviour** of the Fibonacci entry\npoint (rank of apparition) `fibEntry m = least k > 0 with m \u2223 F k`, building directly on\nthe catalog's entry-point theory (`FibonacciApparition.fibEntry`, the law of apparition\n`fib_dvd_iff_fibEntry_dvd`, and the coprime multiplicativity\n`FibonacciEntryPointInvariant.fibEntry_mul_coprime`). The new file\n`Catalog/Speculative/AutoResearch/FibonacciApparitionLattice.lean` proves:\n\n* `fibEntry_lcm` \u2014 the **unrestricted** join law `fibEntry (lcm a b) = lcm (fibEntry a) (fibEntry b)`\n  (dropping the coprimality hypothesis of the existing `fibEntry_mul_coprime`);\n* `fibEntry_monotone` \u2014 `a \u2223 b \u2192 fibEntry a \u2223 fibEntry b`;\n* `fibEntry_gcd_dvd` \u2014 the meet bound `fibEntry (gcd a b) \u2223 gcd (fibEntry a) (fibEntry b)`;\n* `fibEntry_gcd_not_exact` \u2014 the concrete witness `a = 4, b = 6` proving the meet bound is\n  *strict*, so `fibEntry` is a join-morphism but **not** a meet-morphism of divisibility lattices.\n\nThe following directions are testable and falsifiable; each could be the seed of the next cycle.\n\n## 1. Abstract the lattice laws to every strong divisibility sequence\n\nThe join law and monotonicity proven here use *only* the law of apparition, which itself\nfollows from the strong-divisibility identity `gcd(u m, u n) = u (gcd m n)` already isolated\nabstractly in `StrongDivSeq` (`Catalog/Novelty/FibonacciEntryPointInvariant.lean`). Conjecture:\nfor any `u` with that identity, totality (`\u2200 m>0, \u2203 k>0, m \u2223 u k`) and `u 0 = 0`, one has\n`StrongDivSeq.entry u (lcm a b) = lcm (entry u a) (entry u b)` and `a \u2223 b \u2192 entry u a \u2223 entry u b`.\n**The key insight is** that nothing in the lattice argument touches the value of `F k`; only\nthe apparition equivalence `m \u2223 u k \u2194 entry u m \u2223 k` is used, and that equivalence is purely\na consequence of `dvd_of_dvd` plus `entry_dvd`, both already abstract. **Why now?** The\nabstract scaffolding (`StrongDivSeq.entry`, `entry_dvd`, `dvd_of_dvd`) is already in the\ncatalog and the Fibonacci proofs in this file are a line-for-line template, so the transfer to\nthe Mersenne/repunit model `u n = a\u207f \u2212 1` (giving the lcm law for multiplicative orders) costs\nalmost nothing.\n\n## 2. Prime-power tower: Wall's `fibEntry (p^(j+1)) \u2208 {fibEntry (p^j), p \u00b7 fibEntry (p^j)}`\n\nCombined with `fibEntry_lcm`, a full understanding of `fibEntry` reduces (by the multiplicative\nfactorization of `lcm` over prime powers) to computing `fibEntry (p^j)`. Conjecture: for prime\n`p` and `j \u2265 1`, `fibEntry (p^(j+1))` equals either `fibEntry (p^j)` or `p \u00b7 fibEntry (p^j)`.\n**The key insight is** that the `p`-adic valuation `v_p(F k)` grows by exactly one each time `k`\ncrosses a multiple of `fibEntry p` (lifting-the-exponent), which the catalog already formalizes in\n`Catalog/Algebra/Tropical_p_adic_Valuation_Bounds_and_Lifting_the_Exponent_for_Fibonacci_Primitive_Divisors.lean`.\n**Why now?** That LTE file supplies precisely the valuation step needed, so the tower statement\nbecomes a bookkeeping argument on top of `fibEntry_lcm` rather than new analytic input.\n\n## 3. Exact meet law on a co-Wall locus\n\n`fibEntry_gcd_not_exact` shows `fibEntry (gcd a b) = gcd (fibEntry a) (fibEntry b)` fails in\ngeneral, but it should hold under a structural hypothesis. Conjecture: equality holds whenever\n`a` and `b` are coprime, and more generally whenever no prime divides both `fibEntry a` and\n`fibEntry b` to different powers. **The key insight is** that the failure at `(4,6)` comes\nentirely from the prime `2` appearing with mismatched exponents in `fibEntry 4 = 6` and\n`fibEntry 6 = 12`; ruling that out restores the dual of the join law. **Why now?** With both the\njoin law (`fibEntry_lcm`) and the prime-power tower (Direction 2) in hand, the meet law becomes a\nprime-by-prime comparison of exponents \u2014 a finite, decidable check per prime.\n\n## 4. Density and growth of `fibEntry m`\n\nConjecture: `fibEntry m \u2264 2m` for all `m`, with the bound approached along `m = 5^j`\n(where `fibEntry (5^j) = 5^j`) and the average order `(1/x) \u03a3_{m\u2264x} fibEntry m` growing like\n`c \u00b7 x` for an explicit constant. **The key insight is** that the law of apparition forces\n`m \u2223 F (fibEntry m)` and the Pisano period (the order of the Fibonacci pair map mod `m`,\nalready constructed via `fibPair` in `FibonacciApparition`) is a multiple of `fibEntry m`,\nso period bounds transfer directly to entry-point bounds. **Why now?** The periodicity machinery\n`fibPair`/`fibPair_descent` is already proven in the catalog; turning the existing pigeonhole\ninto a quantitative period bound is the only missing ingredient.\n\n## 5. The entry-point spectrum as a complete invariant of divisibility sequences\n\nConjecture: two strong divisibility sequences `u, v` with the same entry-point function\n(`entry u = entry v` on all moduli) have identical divisibility lattices, i.e. `m \u2223 u k \u2194 m \u2223 v k`\nfor all `m, k`. **The key insight is** that the law of apparition makes `entry` a *complete*\nencoding of the divisibility relation \u2014 `m \u2223 u k \u2194 entry u m \u2223 k` \u2014 so equality of `entry`\nfunctions forces equality of the relations pointwise. **Why now?** The forward implication is an\nimmediate corollary of the apparition equivalence already isolated in this cycle, and it reframes\nthe catalog's `primitive_divisor_inj` (\"fractal injectivity\") as one facet of a sharper\nrepresentation theorem worth stating in full generality.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1377",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6e405308",
+    "status": "available",
+    "timestamp": "2026-06-11T13:38:07.253423+00:00",
+    "title": "This cycle established, `sorry`-free, the **lattice behaviour** of the Fibonacci"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Inverse Stereographic Renormalization Group\n\nThe file `Catalog/Geometry/IsingStereoRG.lean` establishes the first rigorous, machine-checked\nbridge between renormalization-group (RG) flow and stereographic/conformal geometry, in the\nexactly solvable 1D Ising model. It proves that Kadanoff decimation is the quadratic map\n`x \u21a6 x\u00b2` in the variable `x = tanh K`, that its eigenvalue at the ordered fixed point is exactly\nthe rescaling factor `2` (hence `\u03bd = 1`), and that the second stereographic coordinate is the\nCayley transform of the decimation map. These results extend the M\u00f6bius/pole-map theory in\n`Catalog/Geometry/StereographicRG.lean` (`moebiusF'`, `deriv_moebiusF'_formula`,\n`conformal_factor_le_two`) and the projection identities in\n`Catalog/Geometry/InverseStereoResearch.lean` (`inv_stereo_on_circle`, `inv_stereo_injective`).\nBelow are concrete, falsifiable directions that the next cycle should attack.\n\n## 1. Conjugacy of decimation to angle-doubling on the projected circle\n\nThe decimation map `x \u21a6 x\u00b2` becomes, on the projected circle, a genuine conformal map. We\nconjecture there is an explicit smooth conjugacy `h` with `h \u2218 isingRG = D \u2218 h`, where `D` is a\nfixed M\u00f6bius/rotation-type map of `S\u00b9` drawn from the `moebiusF'` family of `StereographicRG.lean`,\nso that decimation is *linearized* on the circle. **The key insight is** that squaring in the\nhalf-tangent variable is exactly angle-related on the circle, so the RG semigroup `rgIter` should\nbe conjugate to iterated composition of a single `moebiusF'` map with fixed poles. **Why now?**\nBoth halves now exist and are formalized in the same library \u2014 the Ising recursion here and the\ntwo-pole M\u00f6bius calculus in `StereographicRG.lean` \u2014 so the conjugacy is a finite algebraic\nidentity well within reach of the existing `grind`/`field_simp` machinery.\n\n## 2. Universality: every quadratic decimation gives `\u03bd = 1` via `logb` of the multiplier\n\nWe proved `ising_correlation_length_exponent : Real.logb 2 (deriv isingRG 1) = 1`. Conjecture: for\n*any* rescaling factor `b \u2265 2`, the corresponding decimation map (`x \u21a6 x^b`) has ordered-fixed-point\nmultiplier `b`, hence `Real.logb b (deriv (fun x => x^b) 1) = 1` and `\u03bd = 1` independent of `b`.\n**The key insight is** that `deriv (x^b) 1 = b` exactly, so the thermal exponent `log_b(b) = 1` is a\n`logb_self_eq_one` tautology, proving block-size independence of the 1D exponent rigorously.\n**Why now?** The `deriv_isingRG`/`Real.logb_self_eq_one` proof pattern generalizes verbatim, so a\nsingle parametric theorem `correlation_length_exponent_universal (b : \u2115) (hb : 2 \u2264 b)` is a small\nextension that turns a one-off computation into a universality statement.\n\n## 3. The beta-function/projection-derivative identity beyond the fixed point\n\n`eigenvalue_eq_one_add_beta_deriv` proves the RG multiplier equals `1 + \u03b2'(x)` everywhere, not just\nat fixed points. Conjecture: the *conformal factor* of the projected flow, `conformalFactor`, is the\ngeometric carrier of `\u03b2` \u2014 specifically that `deriv (fun x => (invStereo (isingRG x)).2) x` factors\nthrough `conformalFactor (isingRG x)` times `\u03b2'`-data, giving a coordinate-free \"beta equals\nprojection derivative\" statement. **The key insight is** that the Cayley identity\n`stereo_snd_eq_cayley_isingRG` turns RG flow into motion on `S\u00b9`, where the only scale is the\nconformal factor, so `\u03b2` must reappear as a circle-velocity. **Why now?** `deriv_stereo_fst_at_zero`\nshows the conformal factor is already computable as a derivative in Lean; chaining it with\n`deriv_betaIsing` via the chain rule is the natural next composition.\n\n## 4. M\u00f6bius cocycle for multi-step decimation matches `rgUpdate_composition`\n\nIterating decimation `n` times sends `x \u21a6 x^(2^n)`. Conjecture: under the Cayley/stereographic\nchange of variables this `n`-step flow equals a *composition* of `moebiusF'` maps obeying the\ntransitivity law `rgUpdate_composition` already proven in `StereographicRG.lean`, so the RG\nsemigroup embeds as a sub-semigroup of the two-pole M\u00f6bius group with a closed-form cocycle for the\naccumulated conformal factor `\u220f conformalFactor`. **The key insight is** that decimation eigenvalues\nmultiply (`2^n`) exactly as M\u00f6bius multipliers compose, matching `rgUpdate_det = (1+a\u00b2)(1+b\u00b2)`.\n**Why now?** `rgIter` and `rgUpdate_composition` are formalized and `rgIter_zero/one` give the base\ncases, so an induction on `n` connecting `isingRG^[n]` to iterated `moebiusF'` is structurally ready.\n\n## 5. Failure boundary: the bridge breaks for `x < 0` and complex couplings\n\nThe Cayley identity and circle membership hold for all real `x`, but the *physical* coupling region\nis `x \u2208 [0,1]`. Conjecture (falsifiable boundary case): for `x < 0` the decimation orbit still lands\non `S\u00b9` (so `invStereo_on_circle` is robust) yet the monotone RG-flow interpretation fails because\n`betaIsing` changes sign at `x = 1/2` (the zero of `deriv_betaIsing`), marking the crossover between\nthe two basins. **The key insight is** that `deriv betaIsing x = 2x \u2212 1` vanishes exactly at the\nmidpoint `x = 1/2`, which is the geometric watershed between the disordered and ordered basins.\n**Why now?** `deriv_betaIsing` is already proven, so locating and characterizing the `x = 1/2`\nwatershed \u2014 and showing the projected picture survives where the flow interpretation does not \u2014 is an\nimmediate, sharply testable corollary that delimits exactly where the conformal/RG dictionary holds.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1378",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "f165479e",
+    "status": "available",
+    "timestamp": "2026-06-11T13:38:35.160735+00:00",
+    "title": "The file `Catalog/Geometry/IsingStereoRG.lean` establishes the first rigorous, m"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Higher Signatures, Assembly, and Baum\u2013Connes\n\nThe file `Bridges/NovikovHigherSignatures.lean` isolates the *purely algebraic skeleton* of the\nNovikov conjecture: it proves, with no axioms beyond `propext`/`Quot.sound`, that injectivity (or\nmere splitting) of an abstract assembly map `\u03bc : H \u2192+ K`, together with the index formula\n`\u03bc \u2218 higherSig = symmSig` and homotopy invariance of `symmSig`, forces homotopy invariance of the\nhigher signatures, and it shows by explicit counterexample (`novikov_needs_injectivity`) that the\ninjectivity hypothesis cannot be removed. The bundled `HigherSignatureTheory G` records the\nconjecture as `NovikovHolds` for an arbitrary group `G`, with the trivial-group case discharged.\nThe following directions turn this skeleton into mathematics with real content.\n\n## 1. Rationalize the receptacles and prove \"rational injectivity suffices\"\n\nRight now injectivity is asked of `\u03bc : H \u2192+ K` on the nose. The actual Novikov conjecture only\nneeds injectivity *after tensoring with `\u211a`*. Build `H_\u211a := H \u2297[\u2124] \u211a`, `K_\u211a := K \u2297[\u2124] \u211a`, the\ninduced map `\u03bc_\u211a`, and prove `Function.Injective \u03bc_\u211a \u2192 NovikovHolds` for higher signatures valued\nin the rationalization. **The key insight is** that for the higher *signature* (an `L`-class /\ncharacteristic-number pairing) the relevant classes are already rational, so injectivity of\n`\u03bc_\u211a` is both necessary and sufficient, and torsion in `H` is irrelevant. **Why now?** Mathlib's\n`TensorProduct` and `Module \u211a` API (flatness of `\u211a`, `LinearMap.rTensor`) is mature enough to make\nthe rationalized assembly map and its injectivity a finite, mechanical extension of the present\n`AddMonoidHom` argument.\n\n## 2. Make the assembly map concrete for `\u2124\u207f` via the Fourier/torus model\n\nReplace the abstract `\u03bc` with the genuine assembly map for free abelian groups, where\n`B(\u2124\u207f) = T\u207f` and the assembly map is an isomorphism `H_*(T\u207f; \u211a) \u2245 L_*(\u2124[\u2124\u207f]) \u2297 \u211a` realized by\nFourier theory / the Shapiro lemma. Prove `StrongNovikov` for `\u2124\u207f` by exhibiting an explicit\nleft inverse and feed it to `novikov_of_split_assembly`. **The key insight is** that for `\u2124\u207f` the\n\"transfer map\" is literally an averaging/integration over the dual torus, so the splitting can be\nwritten down rather than invoked abstractly. **Why now?** The split-injectivity lemma is already in\nplace; only the construction of the explicit retraction `K \u2192+ H` for the group ring `\u2124[\u2124\u207f]` is\nmissing, and this is a finite linear-algebra computation.\n\n## 3. Formalize the descent principle: subgroups and products inherit Novikov\n\nProve closure properties of the class `{ G : NovikovHolds }`: if `H \u2264 G` and `G` satisfies Strong\nNovikov then so does `H` (restriction of the assembly map), and `StrongNovikov G\u2081 \u2192 StrongNovikov\nG\u2082 \u2192 StrongNovikov (G\u2081 \u00d7 G\u2082)` via the K\u00fcnneth/external-product structure on assembly. **The key\ninsight is** that injectivity of assembly is *functorial and monoidal* in the group, so the\npermanence properties are statements about commuting squares of `AddMonoidHom`s rather than about\nmanifolds at all. **Why now?** These are diagram-chase lemmas on `\u2192+` maps that the current\nabstraction supports directly; they convert the single-group result into a genuine theorem schema\nover a large class of groups (all finitely generated abelian, all their subgroups and products).\n\n## 4. Bridge to Baum\u2013Connes: K-theory assembly and the \u03b3-element\n\nIntroduce a parallel `HigherSignatureTheory`-style structure for the *topological K-theory*\nassembly map `\u03bc_K : K_*^{top}(BG) \u2192 K_*(C*_r G)` and prove that a Baum\u2013Connes section (the\n\"\u03b3-element equals 1\" condition) yields split injectivity, hence Novikov, through exactly the\n`novikov_of_split_assembly` mechanism. **The key insight is** that the L-theory and K-theory\nassembly maps share one formal pattern \u2014 a transfer splitting \u2014 so a single abstract lemma\n(\"a left inverse of assembly \u21d2 homotopy invariance of the pushed-forward index class\") covers both\nsignatures and Dirac operators. **Why now?** The abstract splitting theorem already proven here is\nliterally the C*-algebraic mechanism; wiring a second instance to it demonstrates the cross-theory\nunification that is the conceptual heart of the Baum\u2013Connes \u2194 Novikov relationship.\n\n## 5. A homotopy-theoretic counterexample boundary: non-injective assembly in the wild\n\nStrengthen `novikov_needs_injectivity` from a toy `\u2124/2` example to a structurally meaningful one:\nexhibit an abstract theory where `H` has a nontrivial kernel class detected by no homotopy-invariant\nin `K`, modeled on the failure of *integral* (as opposed to rational) injectivity. **The key\ninsight is** that the gap between integral and rational assembly is exactly a kernel/torsion\nphenomenon, so a faithful counterexample lives entirely inside finitely generated abelian groups and\ntheir `Ext`/torsion. **Why now?** Pinpointing where injectivity fails sharpens the rationalization\nprogram of Direction 1 and gives a falsifiable test: any proposed strengthening to *integral*\nhomotopy invariance of higher signatures must be consistent with such a counterexample, and the\npresent `AddCommGroup` framework can encode it without any manifold topology.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1379",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8dea30c1",
+    "status": "available",
+    "timestamp": "2026-06-11T13:39:00.237603+00:00",
+    "title": "The file `Bridges/NovikovHigherSignatures.lean` isolates the *purely algebraic s"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Provability Logic as a Fixed-Point Theory\n\nThe file `Logic/LobFixedPoint.lean` isolates the purely order-theoretic core of\nthe G\u00f6del\u2013L\u00f6b provability logic GL. A **G\u00f6del\u2013L\u00f6b algebra** is a Heyting algebra\nwith a provability operator `\u25a1` satisfying `\u25a1\u22a4 = \u22a4`, `\u25a1(a \u2293 b) = \u25a1a \u2293 \u25a1b`, and the\nL\u00f6b axiom `\u25a1(\u25a1a \u21e8 a) \u2264 \u25a1a`. From these three axioms alone we proved:\n\n* `loeb_rule` \u2014 L\u00f6b's theorem as the statement that `\u25a1` has *no nontrivial reflexive\n  points*: `\u25a1a \u2264 a \u2192 a = \u22a4`;\n* `loeb_fixed_point` \u2014 `\u25a1(\u25a1a \u21e8 a) = \u25a1a`, the de Jongh\u2013Sambin fixed point;\n* `box_transitive` \u2014 modal axiom 4 (`\u25a1a \u2264 \u25a1\u25a1a`) is *derived*, not assumed;\n* `godel_second` \u2014 G\u00f6del's Second Incompleteness Theorem as the instance of\n  `loeb_fixed_point` at `a = \u22a5`;\n* a concrete consistent model `NatGL` on `Set \u2115` from the well-founded frame `(\u2115, <)`.\n\nThe following directions extend this skeleton. Each is stated so that it could be\nformalized as Lean theorems building directly on `GLAlgebra`.\n\n## Direction 1 \u2014 Uniqueness of modal fixed points (de Jongh\u2013Sambin in algebra)\n\n**Conjecture.** In any G\u00f6del\u2013L\u00f6b algebra, if a one-variable \"box-guarded\" term\n`F(x)` is built so that every occurrence of `x` lies inside a `\u25a1`, then the fixed\npoint equation `x = F(x)` has a *unique* solution, and it is expressible without\n`x`. The minimal instance `F(x) = \u25a1(x \u21e8 a)` already has the explicit unique\nsolution `\u25a1a` (this is `loeb_fixed_point`).\n\n*The key insight is* that the L\u00f6b axiom is exactly the contraction condition making\nthe operator `x \u21a6 \u25a1(x \u21e8 a)` a Banach-style attracting map in the well-founded\norder, so its fixed point is forced and computable rather than merely existent.\n\n*Why now?* The two-element case is already proved (`loeb_fixed_point`); the project\ncatalog already contains a `BanachFixedPointBridge`, so the contraction analogy can\nbe made literal by transporting the well-founded descent into a metric/uniform\nfixed-point statement and reusing that bridge.\n\n## Direction 2 \u2014 Soundness and completeness against finite well-founded models\n\n**Conjecture.** An inequality `s \u2264 t` between `\u25a1`-terms holds in *every* G\u00f6del\u2013L\u00f6b\nalgebra iff it holds in every `NatGL`-style model built from a finite, irreflexive,\ntransitive frame. Equivalently, the finite converse-well-founded frames are\n*complete* for the equational theory of `GLAlgebra`.\n\n*The key insight is* that `box_transitive` already shows every G\u00f6del\u2013L\u00f6b algebra is\ninternally K4, so the canonical-model construction collapses to finite well-founded\nquotients, exactly the frames our `NatGL` instance exemplifies.\n\n*Why now?* We have both halves of the bridge available: the abstract algebra\n(`GLAlgebra`) and a working concrete frame model (`NatGL`, `natBox_loeb`). The\nremaining step is a filtration argument quotienting an arbitrary algebra by a finite\nset of subformulas.\n\n## Direction 3 \u2014 The Magari functor and a categorical internal-logic statement\n\n**Conjecture.** The assignment sending a Heyting algebra to its free G\u00f6del\u2013L\u00f6b\nalgebra is a monad whose algebras are exactly the `GLAlgebra` structures, and GL is\nthe internal propositional logic of the Eilenberg\u2013Moore category of this monad. The\nfree construction on the one-generator Boolean algebra is the Lindenbaum algebra of\nGL.\n\n*The key insight is* that `box_inf` plus `box_top` make `\u25a1` a finite-meet-preserving\nendofunctor on the algebra-as-thin-category, and the L\u00f6b axiom is a dinatural\n\"diagonal\" condition, so the whole package assembles into a (co)monad rather than a\nbare operator.\n\n*Why now?* Mathlib's category-theory library supports monads and Eilenberg\u2013Moore\ncategories directly, and our `GLAlgebra` structure is already phrased so that the\nforgetful functor and its axioms can be read off without redefinition.\n\n## Direction 4 \u2014 Quantitative G\u00f6del II: provability rank and unprovability spectra\n\n**Conjecture.** Define the *provability rank* of `a` as the least `k` with\n`\u25a1^{k}a = \u25a1^{k+1}a`. In `NatGL` the rank of `\u22a5` equals its frame depth, and\n`godel_second` generalizes to: for every `k`, the `k`-fold consistency statement\n`\u25a1^{k}\u22a5 \u21e8 \u22a5` is unprovable whenever `\u25a1^{k}\u22a5 \u2260 \u22a4`. There is a strictly increasing\nhierarchy of unprovable consistency strengths.\n\n*The key insight is* that iterating `loeb_fixed_point` yields `\u25a1(\u25a1^{k}\u22a5 \u21e8 \u22a5) =\n\u25a1^{k}\u22a5` for every `k`, turning the single G\u00f6del II statement into a graded family\nindexed by ordinal consistency strength.\n\n*Why now?* `godel_second` is the `k = 1` case and is already proved; the iteration\nis a clean induction over `k` that reuses `loeb_fixed_point` verbatim, and `NatGL`\ngives a concrete model in which the ranks are explicitly the natural numbers.\n\n## Direction 5 \u2014 Cross-domain bridge: provability operators as closure/interior duality\n\n**Conjecture.** The de Morgan dual `\u25c7a := \u00ac\u25a1\u00aca` of a G\u00f6del\u2013L\u00f6b provability operator\nis a *well-founded co-closure* (a deflationary, idempotent-on-its-image, join-\npreserving operator), and the fixed points of `\u25a1` form a frame (locale) on which\n`\u25c7` acts as the nucleus of a sublocale. This connects provability logic to the\npointfree-topology and closure-operator material already present in the catalog.\n\n*The key insight is* that `box_transitive` gives `\u25a1a \u2264 \u25a1\u25a1a` while `loeb_rule`\nforbids reflexive points, so `\u25a1` is simultaneously inflationary on theorems and\nstrictly contracting off them \u2014 precisely the signature of a *well-founded* nucleus,\na structure with no analogue among ordinary topological closure operators.\n\n*Why now?* The catalog already develops closure operators and locale-style dualities\nin several files; recasting `\u25a1` in that language is a direct cross-domain\nunification rather than new foundational work, and `NatGL` supplies a testable\nconcrete locale of upward-closed sets.\n",
+    "domains": [
+      "Logic",
+      "Bridges"
+    ],
+    "id": "fd_1380",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6b9ac787",
+    "status": "available",
+    "timestamp": "2026-06-11T13:39:29.016688+00:00",
+    "title": "The file `Logic/LobFixedPoint.lean` isolates the purely order-theoretic core of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 6e405308 (Q=0.651) proved 455 theorems in Applications but left 7 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle 76f09ec8 (Q=0.447) proved 1631 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions \u2014 Ra",
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_6e405308_bf7094e1",
+    "priority_score": 0.7010584615384616,
+    "research_mode": "team",
+    "source_exp_id": "6e405308",
+    "status": "available",
+    "timestamp": "2026-06-11T13:38:17.312812+00:00",
+    "title": "Close Proofs: Close Proofs: This cycle built, from scratch and `sorry`-free, the ari"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
     "domains": [
       "Cryptography",
@@ -2452,7 +2584,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Post-Quantum Cryptography: Lattice-Based Key Exchange"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6f2d2808",
     "description": "Prove that for overparameterized neural networks, almost all critical points are saddle points, not local minima. Formalize the Hessian spectrum at critical points. Show that the loss landscape satisfies the strict saddle property: the Hessian has a negative eigenvalue at non-minimum critical points. Prove that SGD escapes strict saddles in polynomial time.",
     "domains": [
       "MachineLearning",
@@ -2462,7 +2594,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:08.465935+00:00",
     "title": "ML Loss Landscape: Critical Points and Saddle Points"
   },
@@ -2512,7 +2644,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Neural Scaling Spectra as Universal Renormalization Fixed-Point Invariants"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "649bb1d3",
     "description": "Conjecture: For graph neural networks initialized in the lazy-training regime on families of d-regular arithmetic expander graphs, the empirical neural tangent kernel converges, after degree-normalization, to a universal operator determined only by the limiting nontrivial adjacency spectrum and not by the specific graph construction; moreover, test accuracy on bandlimited graph tasks is asymptotically controlled by the expander spectral gap through an explicit scaling law. Test: Train width-increasing graph neural networks on multiple non-isomorphic arithmetic expander families with matched degree and asymptotic spectral measures, then compare the limiting NTK eigenspectra and task performance on identical graph signal recovery/classification problems; the conjecture is confirmed if kernels and performance collapse to the same normalized law across families, and refuted if graph-construction-specific deviations persist in the infinite-width limit. Impact: This would create a new bridge between arithmetic graph theory and learning theory, yielding architecture-independent predictions for graph learning on highly connected discrete spaces and suggesting principled designs for robust, spectrum-aware neural algorithms.",
     "domains": [
       "Algebra",
@@ -2522,7 +2654,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-11T12:40:02.619638+00:00",
     "title": "Spectral Universality of Neural Tangent Kernels on Arithmetic Expanders"
   },
@@ -2760,7 +2892,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: The exponential decay bound `diffusionAlphaBar_exp_bound` shows that t"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1707fa10",
     "description": "Cycle f8049429 (Q=0.451) proved 972 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
     "domains": [
       "Applications"
@@ -2769,7 +2901,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5007441932737335,
     "research_mode": "team",
     "source_exp_id": "f8049429",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-09T05:52:35.318771+00:00",
     "title": "Close Proofs: Arithmetic Mirror Symmetry for Calabi-Yau"
   },
@@ -2844,20 +2976,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-11T04:29:25.946074+00:00",
     "title": "Close Proofs: Close Proofs: The file `Physics/TopologicalOrderGenus.lean` establishe"
-  },
-  {
-    "consumed_by_exp_id": "6b9ac787",
-    "description": "Cycle 703a169b (Q=0.440) proved 753 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize Lob's theorem as a fixed-point result: if PA proves \u25a1A \u2192 A then PA proves A. Bridge this to category theory: the modal logic GL (Godel-Lob) is the internal logic of the category of provabili",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_703a169b_1fc16d70",
-    "priority_score": 0.49027574377813427,
-    "research_mode": "team",
-    "source_exp_id": "703a169b",
-    "status": "in_progress",
-    "timestamp": "2026-06-11T13:04:10.626173+00:00",
-    "title": "Close Proofs: Bridge: Logic of Provability and Fixed Points in Arithmetic"
   },
   {
     "consumed_by_exp_id": "",
@@ -2986,7 +3104,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: **Conjecture:** If `{f_t}_{t \u2208 [0,1]}` is a continuous family of contr"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "64e5a38d",
     "description": "Cycle 84d1b2d7 (Q=0.424) proved 1602 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show th",
     "domains": [
       "Novelty"
@@ -2995,7 +3113,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.4737587309390048,
     "research_mode": "team",
     "source_exp_id": "84d1b2d7",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-11T12:42:13.249383+00:00",
     "title": "Close Proofs: Consciousness as Integrated Information: Mathematical Foundations"
   },
@@ -3026,20 +3144,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-10T19:16:00.530223+00:00",
     "title": "Close Proofs: Close Proofs: The sphere-packing bound gives an upper bound on code si"
-  },
-  {
-    "consumed_by_exp_id": "69b5ee54",
-    "description": "Cycle eb06b92f (Q=0.423) proved 1851 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Hadamard Matrix Theory in Lean 4\n\n## 1. Paley Construction and Quadratic Residues\n\nFormalize the Paley construction: for any prime power q \u2261 3 (mod 4), there exists a Hadamard mat",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_eb06b92f_506b17d7",
-    "priority_score": 0.47290948605178634,
-    "research_mode": "team",
-    "source_exp_id": "eb06b92f",
-    "status": "in_progress",
-    "timestamp": "2026-06-11T12:40:12.912280+00:00",
-    "title": "Close Proofs: Formalize the Paley construction: for any prime power q \u2261 3 (mod 4), t"
   },
   {
     "consumed_by_exp_id": "",
@@ -3112,7 +3216,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Entropy-Bounded Computation framework from a cold start as"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2a456ae3",
     "description": "Cycle 145c21f1 (Q=0.417) proved 277 theorems in Applications but left 20 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle 5c7661a0 (Q=0.427) proved 1443 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove a tropical an",
     "domains": [
       "Applications"
@@ -3121,7 +3225,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.4665579009547902,
     "research_mode": "team",
     "source_exp_id": "145c21f1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-11T08:19:15.997572+00:00",
     "title": "Close Proofs: Close Proofs: Tropical Hodge Theory"
   },
@@ -3439,7 +3543,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "ML Generalization Bounds: Rademacher Complexity of Neural Networks"
   },
   {
-    "consumed_by_exp_id": "f165479e",
+    "consumed_by_exp_id": "",
     "description": "The renormalization group in physics zooms out by integrating out high-energy modes. Formalize this as an inverse stereographic projection on the energy sphere: RG flow equals iterated stereographic projection with varying pole. Conjecture: The beta function beta(g) in phi^4 theory equals the derivative of the stereographic projection map at the critical coupling g*. Test: compute the stereographic map for the 1D Ising model and verify beta(g) matches. Impact: connects renormalization to conformal geometry.",
     "domains": [
       "Geometry",
@@ -3449,7 +3553,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.09999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.988240+00:00",
     "title": "Inverse Stereographic Renormalization Group"
   },

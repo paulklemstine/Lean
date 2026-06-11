@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6e405308",
     "filename": "close_proofs_this_cycle_built_from_scratch_and_sor.json",
     "pkg_num": 85,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6510584615384616,
     "title": "Finite Description Complexity: A Compression Barrier for Shallow Computation"
   },
   {
@@ -2580,8 +2580,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "close_proofs_this_cycle_built_from_scratch_and_sor",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6510584615384616,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Finite Description Complexity: A Compression Barrier for Shallow Computation"
     }
