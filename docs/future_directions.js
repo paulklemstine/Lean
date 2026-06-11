@@ -2617,7 +2617,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The file `Geometry/ImpossibleParallels.lean` establishes a clean combinatorial"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d66e4da",
     "description": "# Future Directions: Proof Phase Transitions\n\nThis cycle established the *deterministic skeleton* of derivability phase\ntransitions in `Catalog/Computation/ProofPhaseTransitions.lean`: an implicational\ntheory is a relation `T`, its consequences are `Derivable T = ReflTransGen T`,\nand on finite edge sets the reachability predicate `EDeriv E src tgt` is a genuine\n**monotone Boolean function** (`ederiv_mono`, `ederiv_upward_closed`). We proved the\nbarrier method for non-derivability (`barrier_not_derivable`), that the length-`n`\nchain derives `0 \u27f6 n` with exactly `n` axioms (`chain_derivable`, `chain_card`), and\nthat the chain is a **minimal certificate** \u2014 every axiom is critical\n(`chain_edge_critical`, `chain_minimal_certificate`) \u2014 with a boundary case\n(`redundant_edge_not_critical`) showing minimality is essential. These results are the\nexact monotonicity-and-minimal-certificate inputs that a probabilistic threshold\ntheorem consumes.\n\n## 1. Friedgut's sharp threshold for random implicational theories\n\nFormalize the random model `G(n,p)` on `Fin n` where each directed edge is kept\nindependently with probability `p`, and prove that `\u2119[EDeriv 0 (n-1)]` jumps from\n`o(1)` to `1 - o(1)` inside a window of vanishing width around a critical `p*(n)`.\nThe monotonicity hypothesis is *already discharged* by `ederiv_upward_closed`; what\nremains is Friedgut's theorem itself.\n\nThe key insight is that `EDeriv E src tgt`, as `E` ranges over the cube\n`{0,1}^{n\u00b2}`, is precisely a monotone Boolean function, so Friedgut's hypercontractive\n/ Fourier-analytic argument applies verbatim once that machinery exists in Lean.\n\nWhy now? `ederiv_mono` and `chain_minimal_certificate` give both the monotonicity and\nan explicit minimal certificate (the threshold's lower-bound witness); the only gap is\nFourier analysis on the Boolean cube, a reusable, broadly applicable formalization\ntarget.\n\n## 2. Proof-length phase transitions and resolution complexity\n\nRefine derivability to *short* derivability: a sharp threshold for the existence of\nderivations of length `\u2264 L(n)`. `chain_reach` already exhibits a length-`n` derivation;\nconjecture that below `p*` minimum proofs are super-polynomial (or absent) and above\n`p*` they are polynomial with high probability.\n\nThe key insight is that this implicational system is monotone resolution, so resolution\nlower bounds for random CNF transfer directly to derivation-length lower bounds here.\n\nWhy now? `chain_minimal_certificate` pins the tight proof structure of minimal-density\ntheories; extending it needs only a formal `graph-diameter \u21a6 derivation-length` bridge,\nbuilt on the existing `chain_reach` prefix lemma.\n\n## 3. Multi-premise theories and hypergraph thresholds\n\nGeneralize axioms `a \u2192 b` to `(a\u2081 \u2227 \u2026 \u2227 a_k) \u2192 b`, i.e. directed hypergraphs, so that\n`Derivable` becomes `k`-uniform hyper-reachability. Re-establish the barrier method and\nminimal-certificate theorems in this richer setting and study the `k`-dependence of the\nthreshold.\n\nThe key insight is that for `k \u2265 2` the critical window should sharpen as `k` grows,\nmirroring the random `k`-SAT threshold; the down-set barrier of `chain_edge_critical`\ngeneralizes to *closed* hypergraph barriers (sets closed under firing a hyperedge only\nwhen all premises are inside).\n\nWhy now? `closed_preserved` + `barrier_not_derivable` are stated for arbitrary\nrelations, so the closure-under-firing template lifts almost mechanically to the\nhypergraph closure operator.\n\n## 4. Giant derivability component and order entropy\n\nView derivability as a preorder on atoms and study, for random theories at density `p`,\nthe structural transition of the induced partial order on strongly connected\ncomponents: many small antichains below criticality, a giant derivability class above.\nConjecture a non-analytic point of the linear-extension entropy at `p*`.\n\nThe key insight is that the derivability order is the condensation of a random digraph,\nso the emergence of a giant strongly connected component at `p \u2248 1/n` drives the\norder-theoretic transition.\n\nWhy now? The clean `ImplTheory`/`Derivable` split formalized this cycle is exactly the\nabstraction that lets random-digraph theory act on the derived order without entangling\nthe random object with its consequence relation.\n\n## 5. Axiom criticality index and the proof-theoretic backbone\n\nDefine the criticality index of an axiom as the least number of axioms (including it)\nwhose removal breaks some derivation; in minimal theories this is `1`\n(`chain_edge_critical`). Prove the monotonicity law \u2014 adding axioms can only decrease\nexisting criticality indices \u2014 and conjecture a power-law index distribution at the\ncritical density.\n\nThe key insight is that critical axioms are the proof-theoretic analogue of SAT\n*backbone* variables (those fixed across all proofs), and phase-transition universality\npredicts the same heavy-tailed statistics.\n\nWhy now? `chain_minimal_certificate` already isolates index-`1` axioms, and the\nmonotonicity law follows from `ederiv_mono` plus a `Finset.sdiff` bookkeeping argument,\nmaking this the most immediate extension of the current infrastructure.\n",
     "domains": [
       "Computation",
@@ -2627,7 +2627,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "fee96555",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-10T22:40:52.191736+00:00",
     "title": "*deterministic skeleton* of derivability phase"
   },
@@ -2720,6 +2720,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-11T00:38:16.576274+00:00",
     "title": "The file `Core.lean` isolates the *analytic skeleton* shared by Occam, sample"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Unique Games, MAX-CUT, and SDP Gaps\n\nThe file `Cryptography/UniqueGamesMaxCut.lean` formalizes the combinatorial core of\nunique 2-prover label-cover games and pins down the *unconditional* facts that frame the\nUnique Games Conjecture (UGC): the per-edge `1/k` random-assignment probability\n(`edge_sat_card`), the resulting soundness floor `value \u2265 1/k`\n(`exists_assignment_sat_ge`, `exists_value_ge_inv_k`), the MAX-CUT bridge\n(`maxCut_sat_iff_cut`, `maxCut_exists_cut_half`), and the completeness side\n(`trivialGame_perfect`). These are the rigorous endpoints between which the UGC's hardness\ngap lives. The directions below extend this skeleton toward the quantitative theory of\ninapproximability. Each is testable, falsifiable, and (with effort) formalizable.\n\n## Direction 1 \u2014 Tightness of the `1/k` floor: random games saturate it\n\nThe theorem `exists_assignment_sat_ge` proves `value \u2265 1/k` for *every* no-self-loop game.\nThe natural converse is that this bound is asymptotically *tight*: for random unique games\n(each edge an independent uniform permutation of `Fin k`) on `n` vertices with `m = \u03c9(n log k)`\nedges, the value concentrates at `(1 + o(1))/k` with high probability. The key insight is\nthat the `edge_sat_card` double-count already gives the expectation `m/k` exactly, so the\nremaining content is purely a *concentration* statement (a Chernoff/Azuma bound over the\nindependent edge permutations), not a new counting identity. **Why now?** The expectation\nhalf is already a finished theorem in this file; only the deviation half remains, and\nMathlib's growing probability library (`MeasureTheory`, bounded-difference inequalities)\nmakes the concentration step feasible without building martingale theory from scratch.\n\n## Direction 2 \u2014 A formal SDP relaxation and the integrality-gap object\n\nIntroduce the basic semidefinite relaxation: replace each label assignment by unit vectors\n`x_{v,i} \u2208 \u211d^d` and relax `value` to `sdpValue := max \u03a3_e \u27e8vector constraints\u27e9` over feasible\nvector solutions. Define the *integrality gap* `gap(G) := sdpValue G / value G` and prove the\ntrivial direction `value G \u2264 sdpValue G` (every integral solution is an SDP solution). The key\ninsight is that the gap, not NP-hardness, is the formalizable heart of UGC-based\ninapproximability: the conjecture predicts that for MAX-CUT the worst-case gap equals the\nGoemans\u2013Williamson constant `\u03b1_GW \u2248 0.878`, and `gap \u2265 1` is already provable from the\nembedding `value \u2264 sdpValue`. **Why now?** The MAX-CUT bridge (`maxCut_sat_iff_cut`) already\nexpresses cuts as a unique game in this file, so the SDP layer can be bolted directly onto the\nexisting `satCount` and `maxCutGame` definitions rather than re-deriving the CSP from scratch.\n\n## Direction 3 \u2014 Goemans\u2013Williamson rounding lower bound for MAX-CUT\n\nBuilding on Direction 2, formalize the hyperplane-rounding analysis: a random hyperplane cuts\nan SDP edge of inner product `cos \u03b8` with probability `\u03b8/\u03c0`, giving the `0.878`-approximation.\nThe key insight is that the whole argument reduces to the single-variable inequality\n`\u03b8/\u03c0 \u2265 \u03b1_GW \u00b7 (1 - cos \u03b8)/2` for all `\u03b8 \u2208 [0, \u03c0]`, which is an elementary calculus fact\n(`Real.arccos`, monotonicity, one critical point) entirely inside Mathlib's analysis API.\nCombined with `maxCut_exists_cut_half` (the `1/2` floor proved here) this yields a strict\nhierarchy `1/2 \u2264 0.878 \u2264 sdp` of MAX-CUT guarantees. **Why now?** `maxCut_exists_cut_half`\nalready certifies the trivial endpoint, and Mathlib now has `Real.arccos`, `Real.pi`, and\nintegral/derivative machinery sufficient to discharge the rounding inequality, which two years\nago would have required substantial real-analysis scaffolding.\n\n## Direction 4 \u2014 Parallel repetition and label-amplification of the gap\n\nDefine the `t`-fold tensor product `G^{\u2297t}` of a unique game (labels `Fin (k^t)`, edges the\nproduct constraints) and prove the soundness floor scales as expected:\n`value(G^{\u2297t}) \u2265 (value G)^t` is the easy direction, with the conjectured strict decay\n`value(G^{\u2297t}) \u2264 value(G)^{\u03a9(t)}` (Raz's parallel repetition / Rao's theorem for projection\ngames) as the deep target. The key insight is that unique games are *projection games*, the\nexact regime where parallel repetition is cleanest, and the `edge_sat_card` permutation\nstructure tensorizes coordinatewise so the per-edge count of the product game factorizes as\n`(k^t)`. **Why now?** The product construction is a one-line extension of the `UniqueGame`\nstructure already defined here, and proving the easy `\u2265` direction immediately gives a\nfalsifiable, machine-checked anchor against which the hard decay bound can later be tested.\n\n## Direction 5 \u2014 Dictatorship tests and the long-code soundness threshold\n\nFormalize the long-code / dictatorship-test viewpoint: an assignment over the hypercube\n`Fin k \u2192 Bool`, with \"dictator\" functions (value `1`) versus functions with no influential\ncoordinate (value `\u2192 1/2` under noise). Prove the discrete Fourier identity that the test's\nacceptance probability is `\u03a3_S \\hat{f}(S)^2 \u03c1^{|S|}` and that dictators achieve `(1+\u03c1)/2`. The\nkey insight is that this Fourier expansion is the *bridge* connecting the combinatorial\n`satCount` of this file to the analytic UGC-hardness reductions: the gap between dictators and\nlow-influence functions is exactly the completeness/soundness gap `[1-\u03b5, \u03b5]` instantiated on\nthe long code. **Why now?** Mathlib has Boolean Fourier analysis on `ZMod 2`-cubes and\n`Finset`-indexed character sums maturing, so the Parseval/Fourier step is within reach, and the\n`trivialGame_perfect` completeness witness in this file already supplies the `value = 1`\nendpoint that the dictatorship test must reproduce.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1294",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "17cbb16f",
+    "status": "available",
+    "timestamp": "2026-06-11T01:09:41.907829+00:00",
+    "title": "The file `Cryptography/UniqueGamesMaxCut.lean` formalizes the combinatorial core"
   },
   {
     "consumed_by_exp_id": "",
@@ -3263,7 +3278,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Close Proofs: Stereographic Capacity Theory: Packing Bounds on Spheres"
   },
   {
-    "consumed_by_exp_id": "aff165fb",
+    "consumed_by_exp_id": "",
     "description": "Cycle 0320765b (Q=0.435) proved 643 theorems in Physics but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture: For natural families of randomly generated first-order axiom systems with bounded symbol complexity and a fixed theorem schema \u03c6_n, there exists a nontrivial critical clause-density parame",
     "domains": [
       "Physics"
@@ -3272,7 +3287,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.484768389530459,
     "research_mode": "team",
     "source_exp_id": "0320765b",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-09T04:08:52.761148+00:00",
     "title": "Close Proofs: Proof Phase Transitions: Sharp Thresholds in Random Formal Theories"
   },
@@ -3317,6 +3332,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-10T20:03:10.619688+00:00",
     "title": "Close Proofs: Close Proofs: ML Generalization Bounds: Rademacher Complexity of Neura"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 17cbb16f (Q=0.425) proved 631 theorems in Cryptography but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove or disprove: for every \u03b5 > 0, there exists k such that distinguishing value \u2265 1-\u03b5 from value \u2264 \u03b5 for unique 2-prover games with k labels is NP-hard. Connect to MAX-CUT and SDP gaps.",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "sorry_fill_17cbb16f_318339d0",
+    "priority_score": 0.47534312417415236,
+    "research_mode": "team",
+    "source_exp_id": "17cbb16f",
+    "status": "available",
+    "timestamp": "2026-06-11T01:09:50.998871+00:00",
+    "title": "Close Proofs: Unique Games Conjecture"
   },
   {
     "consumed_by_exp_id": "",
@@ -3547,7 +3576,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Hodge Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d53ae41",
     "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
     "domains": [
       "Bridges",
@@ -3557,7 +3586,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.798593+00:00",
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
   },
