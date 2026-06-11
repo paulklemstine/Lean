@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "641a9f86",
     "filename": "close_proofs_foundational_analytic_infrastructure_.json",
     "pkg_num": 74,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.51906,
     "title": "Close Proofs: Fibonacci Entry Points and Primitive Prime Divisors"
   },
   {
@@ -2233,8 +2233,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "close_proofs_foundational_analytic_infrastructure_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.51906,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Close Proofs: Fibonacci Entry Points and Primitive Prime Divisors"
     }
