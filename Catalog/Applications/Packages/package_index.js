@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "02c2ea6f",
     "filename": "close_proofs_cobhams_theorem_1972_states_that_if_a.json",
     "pkg_num": 94,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7191438202247191,
     "title": "The Multiplicative Independence Barrier behind Cobham's Theorem"
   },
   {
@@ -2848,8 +2848,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "close_proofs_cobhams_theorem_1972_states_that_if_a",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7191438202247191,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Multiplicative Independence Barrier behind Cobham's Theorem"
     }
