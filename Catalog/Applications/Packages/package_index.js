@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "98b2ef1b",
     "filename": "the_geometric_convergence_theorem_gdresidual_geome.json",
     "pkg_num": 68,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.48764719535476486,
     "title": "The Neural Tangent Kernel: A Machine-Checked Foundation for Convergence"
   },
   {
@@ -2045,8 +2045,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "the_geometric_convergence_theorem_gdresidual_geome",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.48764719535476486,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Neural Tangent Kernel: A Machine-Checked Foundation for Convergence"
     }

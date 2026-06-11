@@ -282,7 +282,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Information Geometry Connecting Statistics and Differential Geometry"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7797813f",
     "description": "Formalize core HoTT results in Lean 4: the univalence axiom, higher inductive types, and the fundamental theorem of identity types. Prove that HoTT provides a constructive foundation for mathematics.",
     "domains": [
       "Logic",
@@ -292,7 +292,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:03.446924+00:00",
     "title": "Homotopy Type Theory Foundations"
   },
@@ -310,21 +310,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:46.905756+00:00",
     "title": "Quantum Gravity as Topological Quantum Field Theory"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
-    "domains": [
-      "Bridges",
-      "Tropical"
-    ],
-    "id": "fd_0536",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "available",
-    "timestamp": "2026-06-03T22:10:06.637226+00:00",
-    "title": "Bridge: Tropical Geometry as a Limit of Classical Algebraic Geometry"
   },
   {
     "consumed_by_exp_id": "",
@@ -516,20 +501,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-11T03:22:11.056271+00:00",
     "title": "Close Proofs: Close Proofs: Linear Merkle\u2013Damg\u00e5rd collision-resistance theory"
-  },
-  {
-    "consumed_by_exp_id": "a4e33a5f",
-    "description": "Cycle d8cbaf8d (Q=0.735) proved 1070 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle cd85332e (Q=0.440) proved 1224 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize Joyal's combin",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_d8cbaf8d_741b8a96",
-    "priority_score": 0.7851678504672898,
-    "research_mode": "team",
-    "source_exp_id": "d8cbaf8d",
-    "status": "in_progress",
-    "timestamp": "2026-06-10T18:38:53.382872+00:00",
-    "title": "Close Proofs: Close Proofs: Combinatorial-Categorical Bridge: Species of Structures "
   },
   {
     "consumed_by_exp_id": "",
@@ -1761,7 +1732,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "**finite-temperature, probabilistic** backbone of Landauer'"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3f13837e",
     "description": "# Future Directions \u2014 Dream Logic / Paraconsistent Reasoning\n\nThe file `Paraconsistent.lean` builds a fully verified (axioms: `propext`, `Classical.choice`,\n`Quot.sound` only) semantics for Priest's three-valued **Logic of Paradox** (`LP`) and its\nminimally-inconsistent strengthening `LPm`. We proved that contradictions coexist\n(`contradiction_satisfiable`), do not explode (`explosion_fails`), that excluded middle and\nnon-contradiction survive as *laws* while explosion as an *inference* dies\n(`lem_valid`, `lnc_valid`), that material modus ponens fails (`mp_fails`), that glut-free dreams\ncollapse to classical reasoning (`classical_no_contradiction`), and \u2014 the centerpiece \u2014 that the\nminimal-glut consequence relation is genuinely **non-monotone**: a conclusion `q` derivable from\n`{p, p\u2192q}` is *retracted* when the contradictory belief `\u00acp` is added (`retraction_nonmonotone`).\n\nThese results connect to several catalog domains: the `Logic/` library already hosts\n`ProofSystemCollapse`, `ParadoxInteraction`, and `Completeness`, and the present work supplies the\nmissing *semantic* counterpart \u2014 a model theory in which paradox is a first-class citizen rather\nthan a pathology. Below are concrete, falsifiable conjectures the next cycle can attack, each\nphrased so that a single Lean theorem (or its disproof) settles it.\n\n## 1. Soundness and completeness of an `LP` Hilbert calculus\n\n**Conjecture.** There is a finite axiom schema + the single rule \"adjunction\" whose derivability\nrelation `\u22a2` coincides exactly with the semantic `entails` defined in `Paraconsistent.lean`:\n`\u0393 \u22a2 A \u2194 entails \u0393 A`, at least for finite `\u0393`.\n\nThe key insight is that because `lem_valid` and `lnc_valid` already show `LP` retains every\nclassical *tautology*, the only thing a proof system must *block* is the explosion rule\n`A, \u00acA \u22a2 B`; therefore a calculus obtained from a classical Hilbert system by **deleting\nex-falso and weakening disjunctive syllogism** should be both sound and complete, and the proof\nof completeness can reuse the three-valued canonical-model construction rather than a Boolean one.\n\nWhy now? The semantic side is already formalized and machine-checked here, so a completeness\ntheorem is no longer a moving target \u2014 the right-hand side of the biconditional is pinned down,\nand Mathlib's existing Lindenbaum/maximal-consistent-set machinery for classical logic can be\nadapted value-by-value.\n\n## 2. Decidability and a verified decision procedure for `entailsMin`\n\n**Conjecture.** For finite premise sets over finitely many atoms, `entailsMin \u0393 A` is decidable,\nand there is a `Decidable` instance whose correctness is proved against the `minimal`/`gluts`\ndefinitions in this file.\n\nThe key insight is that `eval v A` depends only on the finitely many atoms occurring in `\u0393 \u222a {A}`,\nso minimal models can be searched over the finite cube `{ff,bb,tt}^k`, and minimality reduces to a\n*finite* `\u2282`-comparison of glut sets rather than a quantifier over all of `\u2115 \u2192 LP`.\n\nWhy now? `retraction_nonmonotone` already exhibits the subtle interaction between minimality and\n`Set \u2282` by hand; turning that ad-hoc argument into a reusable `Finset`-based decision procedure is\nthe natural consolidation, and would let `decide`/`native_decide` certify non-monotonic inferences\nautomatically.\n\n## 3. A monotonicity *boundary* theorem: when does `LPm` agree with `LP`?\n\n**Conjecture.** `entailsMin \u0393 A` and `entails \u0393 A` coincide **exactly** on the consistent\nfragment: if `\u0393` has at least one glut-free model then `entailsMin \u0393 A \u2194 entails \u0393 A`, and the two\nrelations differ only when every model of `\u0393` is forced to contain an impossible object.\n\nThe key insight is that `retraction_nonmonotone` already pinpoints the mechanism \u2014 minimality\nbecomes informative precisely when consistency fails (the `\u00acp` premise forces `p = bb`); making\nthis an iff turns a single example into a structural dividing line between monotone and\nnon-monotone reasoning.\n\nWhy now? We have both relations defined side-by-side in one verified file with a worked example of\ntheir disagreement, so the general criterion is a direct generalization rather than a fresh theory.\n\n## 4. Belnap's four-valued `FOUR` and information-ordering retraction\n\n**Conjecture.** Extending `LP` with a fourth value `nn` (\"neither true nor false\") to obtain the\nbilattice `FOUR = {ff, nn, bb, tt}` yields a logic in which *two independent* orders coexist (a\ntruth order and a knowledge/information order), and belief retraction along the information order\nis dual to the glut-minimization used in `LPm`.\n\nThe key insight is that our `gluts`-minimization is really minimization along *one* axis of a\nhidden bilattice; making the second (\"gaps\") axis explicit should reveal that monotonicity holds\nalong the information order even where it fails along the truth order \u2014 a clean separation of \"more\ndata\" from \"more commitment\".\n\nWhy now? The three-valued core, its evaluation function, and the minimal-model apparatus are\nalready proved here; adding one constructor to `LP` and one clause to `eval`, `neg`, `conj`, `disj`\nreuses essentially all the existing proof scaffolding.\n\n## 5. Cross-domain bridge: paraconsistent valuations as a tropical/min-plus semiring\n\n**Conjecture.** The pair `(LP, conj=min, disj=max)` under the order `ff < bb < tt` is a bounded\ndistributive lattice, and its `disj`/`conj` operations form a commutative idempotent semiring; the\ndesignated-value filter `{bb, tt}` is precisely a prime-style filter, linking `LP` semantics to the\ntropical (max-plus) structures catalogued in the `Tropical/` library.\n\nThe key insight is that the truth tables we verified (`conj = min`, `disj = max`) are *literally* a\ntwo-element-spaced tropical semiring, so paraconsistent satisfiability can be recast as solvability\nof a min-plus system \u2014 and tropical eigenvalue/idempotency theorems from the catalog should\ntransfer to statements about stable belief states under iterated revision.\n\nWhy now? Both the logic side (this file) and the tropical algebra side (the `Tropical/` catalog\ndomain) are present in the same project; the `min`/`max` identity is the explicit bridge, and the\nresearch mandate to connect ideas across domains makes this the highest-novelty target.\n",
     "domains": [
       "Tropical",
@@ -1771,7 +1742,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "cb7c1dc0",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-10T10:52:16.926329+00:00",
     "title": "The file `Paraconsistent.lean` builds a fully verified (axioms: `propext`, `Clas"
   },
@@ -1911,7 +1882,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The file `Basic.lean` establishes a fully formal, axiom-clean depth-separation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46e45ca8",
     "description": "# FUTURE_DIRECTIONS \u2014 Fractal Fibonacci: the entry-point map as an arithmetic invariant\n\n## Synthesis\n\nThis cycle promoted a piece of *proof-internal scaffolding* from the catalog's Carmichael\ndevelopment (`fibEntryPt`, `primitive_of_entryPt_eq` in\n`Catalog/Speculative/AutoResearch/CarmichaelComposite.lean`, and the gcd identity in\n`Catalog/Shared/Fib_gcd_identity.lean`) into a **first-class invariant with its own theory**.\nThe organizing idea is \"fractal/self-similarity\": the renormalization identity\n`Nat.fib_gcd : fib (gcd m n) = gcd (fib m) (fib n)` says the divisibility lattice of the\nFibonacci values is a scale-invariant copy of the divisibility lattice of the indices.\nThe invariant produced by that self-similarity is the **entry point** (rank of apparition)\n`entryPoint p`, the least positive index whose Fibonacci value `p` divides.\n\nTwo structural results emerged. First, `entryPoint_dvd` (rank of apparition divides the index)\nneeds *no primality* \u2014 it is a pure consequence of the gcd renormalization and minimality of\n`Nat.find`. Second, and the conceptual payoff, `primitive_divisor_inj`: a fixed `p` can be a\n*primitive* (first-appearance) divisor of **at most one** Fibonacci number, because primitivity\nis exactly the fiber `entryPoint p = n`. This is \"fractal injectivity\": the self-similar lattice\nforbids a prime from making a first appearance twice. We also closed the existence question\nindependently of the catalog's heavy `native_decide` computation: `every_prime_dvd_fib` shows\nevery prime divides some Fibonacci number via pigeonhole on the finite pair-map mod `p`, whose\n*reversibility* (`fibPair_backward`) drags any collision back to index `0`. This makes the pair\nmap a bijection on the finite torus `(ZMod p)\u00b2` whose orbit through `(0,1)` is purely periodic \u2014 a\ndiscrete analogue of a self-map's recurrent set.\n\nWhat failed/needed care: forward periodicity alone is insufficient for existence; the *backward*\nrecurrence step `fib n = fib (n+2) - fib (n+1)` (valid in the ring `ZMod p`) is what closes the\nloop. Comparing `fib m` and `fib n` directly is intractable; everything became one-liners once it\nwas factored through the invariant `entryPoint`. The lesson seeding the next cycle: *find the\ninvariant the self-similarity induces, then prove injectivity/periodicity of the invariant\nrather than of the raw sequence.*\n\n## Results Summary\n\n- `fib_dvd_gcd`: proved \u2014 self-similarity at a fixed modulus: `p \u2223 fib m`, `p \u2223 fib n` \u27f9 `p \u2223 fib (gcd m n)`.\n- `entryPoint_spec`: proved \u2014 when an entry point exists it is positive, divisible-at, and minimal.\n- `entryPoint_dvd`: proved \u2014 rank of apparition divides every index of appearance (no primality needed).\n- `entryPoint_eq_of_primitive`: proved \u2014 a primitive divisor pins `entryPoint p = n`.\n- `isPrimitive_of_entryPoint_eq`: proved \u2014 converse: `entryPoint p = n` (when it exists) \u27f9 primitive divisor.\n- `primitive_divisor_inj`: proved \u2014 **(main)** a fixed `p` is a primitive divisor of at most one `fib n`.\n- `primitive_divisor_distinct`: proved \u2014 distinct indices have disjoint primitive-divisor sets.\n- `fibPair_backward`: proved \u2014 reversibility of the recurrence mod `p`.\n- `fibPair_collision_to_zero`: proved \u2014 any forward collision descends to index `0`.\n- `every_prime_dvd_fib`: proved \u2014 every prime divides some `fib k`, `k > 0` (entry point always exists).\n- `entryPoint_pos_of_prime`: proved \u2014 entry point of a prime is positive.\n- `infinite_fib_divisor_primes`: proved \u2014 infinitely many primes divide Fibonacci numbers.\n\n## Research Directions\n\n### Direction 1: Entry point of a prime power and lifting-the-exponent\n**Hypothesis**: For an odd prime `p` with entry point `e = entryPoint p`, the entry point of\n`p^k` is `e \u00b7 p^(max 0 (k - v))` where `v = padicValNat p (fib e)`; equivalently the rank of\napparition climbs by exactly one factor of `p` per exponent past the first.\n**Test**: Prove `entryPoint (p^(k+1)) = p * entryPoint (p^k)` for `k \u2265 v` and `= entryPoint (p^k)`\nbelow `v`, reusing `entryPoint_dvd` and a lifting-the-exponent lemma for `fib`\n(`Catalog/Shared/FibonacciLTE.lean` already has an LTE skeleton to build on); disprove by an\n`#eval` search over small `p, k` if the off-by-one fails.\n**Why now**: We now have `entryPoint` as a standalone invariant with `entryPoint_dvd` and the\nprimitive-divisor characterization, so the prime-power statement is a clean recursion on the\nexisting invariant rather than a fact about raw `fib` values. The key insight is that\nlifting-the-exponent is precisely the statement that the self-similar lattice *refines* uniformly\nunder `p`-adic zoom, so the entry point transforms by a single controlled `p`-factor.\n**If true**: gives a complete formula for `entryPoint (n)` for any `n` via multiplicativity over\nprime powers, and a self-contained route to Carmichael's theorem avoiding `native_decide`.\n**If false**: pinpoints the Wall\u2013Sun\u2013Sun phenomenon (primes with `fib (e) \u2261 0 mod p^2`) as the\nexact obstruction, which is itself a publishable computational target.\n\n### Direction 2: Entry point is multiplicative on coprime moduli\n**Hypothesis**: For coprime `a, b > 1`, `entryPoint (a * b) = Nat.lcm (entryPoint a) (entryPoint b)`.\n**Test**: Prove `\u2287` via `entryPoint_dvd` and CRT-style divisibility, and `\u2286` via minimality\n(`entryPoint_spec`); validate first with `#eval` over coprime pairs up to a few hundred.\n**Why now**: `entryPoint_dvd` plus `entryPoint_spec` give exactly the two inequalities an\nlcm-characterization needs, and `fib_dvd_gcd` already encodes the gcd half of the lattice\ncorrespondence. The key insight is that the entry point is a *lattice homomorphism* from the\ndivisibility lattice of moduli to the divisibility lattice of indices, with `gcd \u21a6 gcd` (proved)\ndual to `coprime-product \u21a6 lcm` (conjectured).\n**If true**: reduces all entry-point computation to the prime-power case (Direction 1), giving a\nfull multiplicative theory of the rank of apparition.\n**If false**: the failure must come from a shared entry point between `a` and `b`, exposing exactly\nwhich non-coprime interactions break multiplicativity.\n\n### Direction 3: Quantitative Pisano period bound from the pair-map orbit\n**Hypothesis**: The Pisano period `\u03c0(p)` (least `d > 0` with `fibPair p 0 = fibPair p d`) satisfies\n`entryPoint p \u2223 \u03c0(p)` and `\u03c0(p) \u2264 p^2 - 1` for every prime `p`, with the orbit of `fibPair p`\nthrough `(0,1)` purely periodic of period `\u03c0(p)`.\n**Test**: Formalize `\u03c0(p)` as `Nat.find` of the orbit-return predicate (existence is\n`every_prime_dvd_fib`'s pigeonhole), prove pure periodicity from `fibPair_backward`\n(bijectivity \u27f9 no pre-period), then the `p^2 - 1` bound from finiteness of nonzero pairs.\n**Why now**: `fibPair_backward` and `fibPair_collision_to_zero` already establish reversibility and\ndescent-to-zero, which are precisely the ingredients for \"eventually periodic + injective \u27f9 purely\nperiodic.\" The key insight is that reversibility upgrades the cheap pigeonhole existence into exact\nperiodicity, turning a one-shot existence proof into a quantitative invariant.\n**If true**: yields a verified, Mathlib-native Pisano period (currently absent from Mathlib \u2014 only a\n`PisanoPeriodBoundConjecture` placeholder exists in `Catalog/Bridges/ModularCFDynamics.lean`).\n**If false**: a counterexample to `entryPoint p \u2223 \u03c0(p)` would contradict basic group theory and so\nflags a formalization bug \u2014 a valuable self-check on the `ZMod` cast machinery.\n\n### Direction 4: General Lucas sequences and the abstract self-similarity axiom\n**Hypothesis**: Every integer Lucas sequence `U_n(P,Q)` with `gcd(P,Q)=1` satisfies the same\nrenormalization identity `gcd(U_m, U_n) = U_(gcd m n)` (up to sign), and hence admits an\n`entryPoint` with `entryPoint_dvd` and `primitive_divisor_inj` proved *verbatim*.\n**Test**: Abstract the proofs in this file over a hypothesis `H : \u2200 m n, gcd (u m) (u n) = u (gcd m n)`\nand re-derive `entryPoint_dvd`/`primitive_divisor_inj`; then instantiate at `u = fib` and at\n`u n = 2^n - 1` (Mersenne) to confirm reuse.\n**Why now**: All four structural theorems here used *only* `fib_dvd_gcd` and minimality \u2014 never a\nfib-specific value. The key insight is that \"fractal injectivity\" is a theorem about any\ndivisibility sequence, with `fib_gcd` merely one model. **Why now** specifically: the proofs are\nalready this thin, so the abstraction cost is near zero.\n**If true**: a single `StrongDivisibilitySequence` typeclass exports entry-point theory to\nMersenne numbers, `q`-integers, elliptic divisibility sequences, etc.\n**If false**: identifies which sequences fail the gcd identity (e.g. those with `gcd(P,Q) > 1`),\nsharpening the precise hypothesis under which the invariant exists.\n\n### Direction 5: Density / growth of the primitive-divisor index set\n**Hypothesis**: The set `{n | \u2203 p prime, IsPrimitiveDivisor p n}` has natural density `1`\n(all but finitely many `n \u2265 13` carry a primitive prime divisor \u2014 the strong form of Carmichael),\nand the counting function of distinct primes appearing as primitive divisors below `x` grows like\n`x / log \u03c6` where `\u03c6` is the golden ratio.\n**Test**: Combine `primitive_divisor_inj` (which makes the index \u21a6 primitive-prime assignment a\npartial injection) with the catalog's `fib_carmichael` existence result to get a lower bound on the\nprime-counting side; estimate growth via `fib_linear_lower`/`fib_exp_bound` from\n`Catalog/Shared/Fib_gcd_identity.lean`.\n**Why now**: `primitive_divisor_inj` is exactly the injectivity that converts \"each large `n` has a\nprimitive divisor\" into \"many distinct primes,\" and the catalog already proves the existence half.\nThe key insight is that injectivity of the invariant is the bridge from a *pointwise* existence\nstatement to a *global* density/growth statement.\n**If true**: a verified effective lower bound on the number of \"Fibonacci primes\" below `x`,\nconnecting the entry-point invariant to analytic number theory.\n**If false**: the density gap measures how often two indices must share their entire prime support,\nquantifying the failure of primitivity.\n",
     "domains": [
       "Pythagorean",
@@ -1921,7 +1892,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "47b6d2a8",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-10T14:44:27.311473+00:00",
     "title": "This cycle promoted a piece of *proof-internal scaffolding* from the catalog's C"
   },
@@ -2737,6 +2708,66 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Pinsker / Information-Geometry Cycle\n\nThese notes seed the next research cycle. The proved information-geometric\nKL sandwich lives in `Catalog/Speculative/AutoResearch/FisherInformationMetric.lean`,\nwhich establishes the upper two-sided control\n`0 \u2264 KL(p\u2016q) \u2264 \u03c7\u00b2(p\u2016q) = g_q(p\u2212q, p\u2212q)` (Gibbs + Fisher form). The\nmissing piece is the lower control by the L\u00b9 (total-variation) norm \u2014 Pinsker's\ninequality `(1/2)(\u2211|p\u1d62\u2212q\u1d62|)\u00b2 \u2264 KL(p\u2016q)` \u2014 recorded as the open conjecture\n`klDiv_ge_half_tv_sq`.\n\n## 1. General Pinsker Inequality for Finite Distributions\n\nThe natural next step is the general Pinsker inequality `TV(Q, P)\u00b2 \u2264 KL(Q \u2016 P) / 2`\nfor arbitrary finite distributions Q, P over a type \u03b1. The key insight is that the\ngeneral Pinsker inequality reduces to the Bernoulli case via the data-processing\ninequality (or equivalently, by projecting onto binary events). For any set A \u2286 \u03b1,\ndefine Q_A = Q(A) and P_A = P(A). Then KL(Ber(Q_A) \u2016 Ber(P_A)) \u2264 KL(Q \u2016 P) by data\nprocessing, and TV(Q, P) = max_A |Q(A) - P(A)| \u2264 \u221a(KL(Q \u2016 P)/2) follows from the\nBernoulli case. The Bernoulli base case uses an MVT-based approach (factoring the\nderivative as (q-p)\u00b7(1\u22122q)\u00b2/(q(1\u2212q))) that avoids the usual convex duality\narguments. Formalizing the data-processing inequality for finite distributions\nwould complete the picture and unlock tighter PAC-Bayes bounds.\n\n## 2. Spectral Convergence Rate with Eigenvalue Decay\n\nThe spectral contraction constant for the update operator I \u2212 \u03b7K equals (\u03ba\u22121)/(\u03ba+1)\nat the optimal learning rate, where \u03ba = \u03bb_max/\u03bb_min is the condition number. For\noverparameterized neural networks, the NTK eigenvalues typically decay as a power\nlaw: \u03bb_k ~ k^{\u2212\u03b1} for some \u03b1 > 1. Under power-law spectral decay, the effective\ncondition number for the top-k eigenvalues grows as k^\u03b1, so convergence of the\nfirst k components takes O(k^\u03b1 \u00b7 log(1/\u03b5)) steps. A formal theorem would bound the\nresidual \u2016u_t \u2212 u*\u2016 by decomposing into spectral components and summing geometric\ndecays with different rates, using `Matrix.IsHermitian.spectral_theorem`.\n\n## 3. Lazy Training Regime: Kernel Perturbation Bounds\n\nThe next step is to formalize the perturbation theory: if the actual (nonlinear)\nkernel deviates from the initial kernel by at most \u03b4 at each step, how does the\ntrajectory diverge from the kernel regression solution? The key insight is a\nGronwall-type stability estimate: if \u2016K_t \u2212 K_0\u2016_op \u2264 \u03b4 for all t, then\n\u2016u_t^{actual} \u2212 u_t^{linear}\u2016 \u2264 C \u00b7 \u03b4 \u00b7 t \u00b7 \u2016u_0\u2016 \u00b7 exp(\u03b7 \u00b7 \u2016K_0\u2016_op \u00b7 t). This\nexponential growth is tamed by the finite training time T ~ log(1/\u03b5) / (\u03b7 \u00b7 \u03bb_min),\ngiving a polynomial-in-parameters bound. The discrete Gronwall lemma in Mathlib\n(`Finset.prod_le_prod`) provides the induction machinery.\n\n## 4. PAC-Bayes Generalization Bounds via Catoni's Method\n\nWith the Pinsker inequality and the Catoni bound infrastructure both formalized, we\ncan prove end-to-end generalization bounds for NTK-trained networks: for an NTK\nmodel with n training points and kernel condition number \u03ba, the generalization gap\nis O(\u221a(\u03ba \u00b7 log(n) / n)). The PAC-Bayes framework with the Catoni bound combined with\nthe Bernoulli Pinsker inequality converts KL control of the posterior into risk\nbounds. The NTK spectral theory provides the KL bound through the effective dimension\nd_eff = \u03a3_k \u03bb_k/(\u03bb_k + \u03bb), connecting kernel spectrum to model complexity.\n\n## 5. Stochastic Gradient Descent Extension\n\nExtending to SGD requires formalizing the martingale structure of the gradient noise\nand proving that the NTK remains approximately constant under mini-batch updates.\nUnder the lazy training regime, SGD on the linearized model is equivalent to kernel\nregression with noise-perturbed updates. The residual satisfies\nu_{t+1} = (I \u2212 \u03b7_t K) u_t + \u03b7_t \u03be_t where \u03be_t is a martingale difference sequence\nwith E[\u03be_t | F_t] = 0 and E[\u2016\u03be_t\u2016\u00b2 | F_t] \u2264 \u03c3\u00b2. The convergence rate becomes O(1/t)\nfor appropriately decaying learning rates, matching the minimax optimal rate for\nkernel regression. Mathlib's measure theory library now includes conditional\nexpectation and martingale convergence theorems.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1319",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "bf0d0460",
+    "status": "available",
+    "timestamp": "2026-06-11T05:01:55.549800+00:00",
+    "title": "These notes seed the next research cycle. The proved information-geometric"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: NTK Spectral Convergence\n\nThis cycle's artifact: `Catalog/MachineLearning/NTKSpectral.lean`, building directly on\n`Catalog/MachineLearning/NTKCore.lean`.\n\n## Synthesis\n\nThe geometric convergence theorem in `NTKCore` (`gdResidual_geometric_decay`) hides all\nof its content inside an opaque contractivity constant `c < 1` (`IsContractive`). The\nquestion driving this cycle was: *can that black box be opened spectrally, and how much\nof the standard NTK convergence-rate story is actually elementary once you look along a\nsingle eigenvector?* The answer turned out to be: almost all of it. The gradient-descent\nupdate operator `I - \u03b7K` is **diagonal in any eigenbasis of `K`** \u2014 along an eigenvector\n`v` with eigenvalue `\u03bb` it acts as the pure scalar `1 - \u03b7\u03bb`. Consequently the residual\nobeys an *exact* (not merely bounded) geometric law `\u2016u_t\u2016 = |1 - \u03b7\u03bb|^t \u2016v\u2016`\n(`gdResidual_eigenvector_norm`), and mode stability collapses to the scalar window\n`0 < \u03b7\u03bb < 2` (`eigenvalue_stable_iff`). This reduces the entire per-mode rate analysis to\nreal-scalar facts, which is why the whole file is short and axiom-clean.\n\nThe genuinely non-trivial result is the **optimal learning-rate** triple. At\n`\u03b7* = 2/(\u03bc+L)` both extreme modes of a spectrum `[\u03bc, L]` contract by exactly the\ninverse-condition-number factor `(L-\u03bc)/(L+\u03bc)` (`optimalRate_contraction`), this factor is\n`< 1` precisely because `\u03bc > 0` (`optimalRate_lt_one`), and \u2014 the optimality direction \u2014\n*no* step size beats it on the worse of the two modes (`optimalRate_minimizes`). The\nminimization proof hinges on a small but decisive trick: the \u03b7-free linear combination\n`L(1-\u03b7\u03bc) - \u03bc(1-\u03b7L) = L - \u03bc`, after which the triangle inequality forces\n`(L+\u03bc)\u00b7max \u2265 L|1-\u03b7\u03bc| + \u03bc|1-\u03b7L| \u2265 L-\u03bc`. Finally the PSD structure already proved in\n`NTKCore` (`ntkGramMatrix_posSemidef`) was bridged to Mathlib's Hermitian eigenvalue API\n(`ntkGram_eigenvalues_nonneg`), so the eigenvalues feeding the stability window are\nprovably nonnegative, and the capstone (`ntk_eigen_convergence`) assembles the exact decay\nlaw plus the `< 1` rate for a genuine NTK mode.\n\nWhat we deliberately did **not** attempt: the full operator-norm identity\n`\u2016I - \u03b7K\u2016 = max_i |1 - \u03b7\u03bb_i|`. That requires expanding an *arbitrary* vector in the\neigenbasis of `K` and is heavy in Mathlib's spectral-theorem API. The structural insight\nof this cycle is that every bit of the *dynamics* lives along eigenvectors, so capturing\nthe mathematics exactly per-mode is both cheaper and more informative than a coarse\noperator-norm bound \u2014 and it is exactly the per-mode picture that the next directions need.\n\n## Results Summary\n\n- `gdUpdateOp_mulVec_eigenvector`: proved \u2014 the GD update operator `I - \u03b7K` acts as the scalar `1 - \u03b7\u03bb` on eigenvectors (diagonalization in the eigenbasis).\n- `gdResidual_eigenvector`: proved \u2014 the residual along an eigenvector is exactly `(1 - \u03b7\u03bb)^t v`.\n- `gdResidual_eigenvector_norm`: proved \u2014 exact geometric norm law `\u2016u_t\u2016 = |1 - \u03b7\u03bb|^t \u2016v\u2016` (sharpens `gdResidual_geometric_decay` from `\u2264` to `=` per mode).\n- `gdResidual_eigenvector_decay`: proved \u2014 any per-mode rate bound `|1-\u03b7\u03bb| \u2264 c` upgrades to `\u2016u_t\u2016 \u2264 c^t \u2016v\u2016`.\n- `eigenvalue_stable_iff`: proved \u2014 a mode is strictly contractive iff `0 < \u03b7\u03bb < 2`, the classical stability window.\n- `optimalRate_contraction`: proved \u2014 at `\u03b7* = 2/(\u03bc+L)` both extreme modes contract by exactly `(L-\u03bc)/(L+\u03bc)`.\n- `optimalRate_lt_one`: proved \u2014 that optimal factor is `< 1` exactly because `\u03bc > 0`.\n- `optimalRate_minimizes`: proved \u2014 optimality: no step size beats `(L-\u03bc)/(L+\u03bc)` on the worse extreme mode.\n- `ntkGram_eigenvalues_nonneg`: proved \u2014 NTK Gram eigenvalues are `\u2265 0`, bridging `ntkGramMatrix_posSemidef` to Mathlib's `Matrix.PosSemidef.eigenvalues_nonneg`.\n- `ntk_eigen_convergence`: proved \u2014 capstone: for a genuine NTK eigenmode with `\u03bb > 0` and `\u03b7` in range, exact geometric decay with an explicit `< 1` rate.\n\n## Research Directions\n\n### Direction 1: Operator-norm = spectral-radius for the symmetric update operator\n**Hypothesis**: For symmetric `K` with eigenvalues `\u03bb_i`, the Euclidean operator norm\nsatisfies `\u2016(I - \u03b7K).mulVec v\u2016 \u2264 (max_i |1 - \u03b7\u03bb_i|) \u00b7 \u2016v\u2016` for *all* `v`, hence `K`\nis `IsContractive` with `c = max_i |1 - \u03b7\u03bb_i|`.\n**Test**: Use Mathlib's spectral theorem (`Matrix.IsHermitian.spectral_theorem` /\neigenbasis) to expand an arbitrary `v` in eigenvector coordinates, apply the per-mode\nidentity `gdUpdateOp_mulVec_eigenvector` coordinatewise, and bound by the max. Confirm by\ndischarging `IsContractive K \u03b7 (max_i |1 - \u03b7\u03bb_i|)`.\n**Why now**: This cycle proved the per-mode action *exactly*; the only missing step is the\northonormal-eigenbasis expansion, which is precisely what `Matrix.IsHermitian` provides.\n**If true**: It eliminates the opaque `c` from `NTKCore` entirely \u2014 every convergence\nstatement becomes spectrally explicit, and `gdResidual_geometric_decay` becomes a\ncorollary with a computable rate.\n**If false**: The failure would localize to non-normal or coordinate effects, telling us\nthe Euclidean norm on `Fin n \u2192 \u211d` interacts with `mulVec` differently than expected.\n\n### Direction 2: Strict positive-definiteness from independent feature gradients\n**Hypothesis**: `ntkGramMatrix \u03a6` is positive *definite* (all eigenvalues `> 0`, so a\nspectral gap `\u03bc > 0`) **iff** the feature rows `{\u03a6 i \u00b7 : Fin n \u2192 (Fin p \u2192 \u211d)}` are linearly\nindependent (which forces `n \u2264 p`, the overparameterization condition).\n**Test**: Prove `(ntkGramMatrix \u03a6).PosDef \u2194 LinearIndependent \u211d \u03a6` via\n`ntkGramMatrix = \u03a6 \u03a6\u1d40` (already in `NTKCore` as `ntkGramMatrix_eq_mul_transpose`) and the\nkernel of `\u03a6\u1d40`; then derive `0 < eigenvalues i` from `PosDef`.\n**Why now**: `ntkGram_eigenvalues_nonneg` gives `\u2265 0`; upgrading the inequality to strict\nis the single remaining gap before the `\u03bc > 0` hypothesis of `optimalRate_*` becomes a\n*theorem about real networks* rather than an assumption.\n**If true**: It supplies the `\u03bc > 0` needed to instantiate `ntk_eigen_convergence` and\n`optimalRate_lt_one` from a checkable rank condition.\n**If false**: A counterexample (a PSD-but-singular Gram with independent rows) would expose\na subtlety in the Gram/rank correspondence over `\u211d`.\n\n### Direction 3: Whole-vector convergence rate from the spectral gap\n**Hypothesis**: If `K` is symmetric with all eigenvalues in `[\u03bc, L]`, `0 < \u03bc \u2264 L`, and\n`\u03b7 = 2/(\u03bc+L)`, then for *every* initial residual `u\u2080`,\n`\u2016gdResidual K \u03b7 u\u2080 t\u2016 \u2264 ((L-\u03bc)/(L+\u03bc))^t \u00b7 \u2016u\u2080\u2016`.\n**Test**: Combine Direction 1 (operator-norm bound) with `optimalRate_contraction` /\n`optimalRate_lt_one`, then iterate exactly as `gdResidual_geometric_decay` does.\n**Why now**: The two ingredients \u2014 the optimal scalar rate (proved this cycle) and the\noperator-norm reduction (Direction 1) \u2014 compose mechanically; only their conjunction is\nmissing.\n**If true**: This is the textbook NTK convergence theorem with a *fully explicit*,\ncondition-number-driven rate, formalized end to end.\n**If false**: It would mean the worst-case rate is not attained simultaneously across all\ninitial conditions, indicating a gap between per-mode and global behavior.\n\n### Direction 4: Multi-output / block NTK via product index types\n**Hypothesis**: Re-deriving the entire file with the index type `Fin n` replaced by a\ngeneral `Fintype \u03b9` (e.g. `\u03b9 = Fin n \u00d7 Fin k` for `k`-class outputs) leaves every theorem\ntrue verbatim, because none of the proofs use the linear order or cardinality of `Fin n`.\n**Test**: Generalize `ntkGramMatrix`, `gdUpdateOp`, `gdResidual`, and the spectral lemmas\nto `[Fintype \u03b9] [DecidableEq \u03b9]` and re-run the proofs; the block Gram structure is still\n`\u03a6 \u03a6\u1d40`, so `ntkGramMatrix_posSemidef` and `ntkGram_eigenvalues_nonneg` should transfer.\n**Why now**: The proofs in this cycle are already index-agnostic (they manipulate\n`mulVec`, `smul`, and scalars, never indices), making this a robustness stress-test of the\narchitecture rather than new mathematics.\n**If true**: A single parameterized development covers scalar and vector-valued networks,\nthe natural setting for classification.\n**If false**: The point of failure pinpoints exactly which lemma secretly depended on the\n`Fin n` structure \u2014 valuable to know before larger generalizations.\n\n### Direction 5: Loss decay rate and local strong convexity\n**Hypothesis**: With `K = ntkGramMatrix \u03a6` positive definite (gap `\u03bc > 0`) and the squared\nloss `L(u) = \u00bd\u2016u\u2016\u00b2` on the residual, gradient descent satisfies\n`L(u_t) \u2264 (1 - \u03b7\u03bc)^{2t} L(u\u2080)`, i.e. linear convergence of the *loss*, not just the\nresidual.\n**Test**: Square the residual bound from Direction 3 (or the per-mode law\n`gdResidual_eigenvector_norm`) and identify `1 - \u03b7\u03bc` as the slowest-decaying mode; relate\n`L(u_t)` to `\u2016u_t\u2016\u00b2` directly.\n**Why now**: `gdResidual_eigenvector_norm` already gives the *exact* squared norm per mode;\nthe loss is just a sum of these, so the loss-rate statement is a short corollary once the\nspectral gap (Direction 2) is in hand.\n**If true**: It connects the NTK picture to the strong-convexity / PL-inequality view of\noptimization, opening a bridge to the convex-optimization corner of the catalog.\n**If false**: A discrepancy between residual-rate and loss-rate would reveal a cross-term\nthe simple squaring argument misses.\n",
+    "domains": [
+      "MachineLearning",
+      "Logic"
+    ],
+    "id": "fd_1320",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "98b2ef1b",
+    "status": "available",
+    "timestamp": "2026-06-11T05:02:43.822819+00:00",
+    "title": "This cycle's artifact: `Catalog/MachineLearning/NTKSpectral.lean`, building dire"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE_DIRECTIONS\n\n## Synthesis\n\nThis cycle lifted the combinatorial\u2013analytic dictionary of Joyal's theory of\nspecies from the level of bare *counting sequences* (where the catalog file\n`Applications/CombinatorialSpecies.lean` already established the additive law\n`egf_add`, the binomial-convolution/product law `egf_mul`, and the cardinality\nbridge `egf_card_prodSpecies`) up to the level of honest *operations on species*\n\u2014 functors on the groupoid of finite sets. We defined the disjoint-union species\n`sumSpecies` with its genuine relabelling action (`Equiv.Perm.sumCongrHom`), the\nstructural Day-convolution product `prodSpecies`, and proved that the exponential\ngenerating function (EGF) carries `+` and `\u00b7` of species onto `+` and `\u00b7` of the\nformal power-series ring `\u211a\u27e6X\u27e7` (`EGF_sumSpecies`, `EGF_prodSpecies`). The\nstructural insight that emerged is a clean *separation of concerns*: the EGF\nfactors through the counting sequence, so every algebraic law of species reduces\nto an already-proven law about sequences plus a cardinality computation. This is\nwhy both bridge theorems were one-liners once the right objects were defined.\n\nThe most conceptually new result is the rigidity theorem `EGF_inj_coeffSeq`: the\nEGF is a *faithful* invariant \u2014 equal EGFs force equal counting sequences at every\narity \u2014 because division by `n!` is invertible in `\u211a`. This upgrades the EGF from\n\"a homomorphism\" to \"an injective homomorphism\" on counting sequences, the precise\nsense in which the analytic shadow loses no enumerative information. We then ran\nthe machine on a concrete instance: `E \u00b7 E` (pairs of complementary subsets) has\nexactly `2\u207f` structures and EGF `exp\u00b2`, and the corollary `binConv_const_one`\nexhibits the classical identity `\u2211\u2096 C(n,k) = 2\u207f` as nothing but the Cauchy product\nof `exp` with itself \u2014 the analytic shadow of \"a subset is a 2-colouring\".\n\nWhat did *not* get done, and why, points the way forward. We equipped `prodSpecies`\nwith the trivial relabelling action because a faithful Day-convolution action\n(permuting subsets and acting compatibly on `F[S] \u00d7 G[S\u1d9c]`) is intricate to build\nas a `MonoidHom` by hand; the EGF only sees cardinalities, so this did not block\nthe bridge, but a *functorial* product species is the natural next target. The\nlarger missing piece is the third species operation \u2014 *substitution/composition*\n`F \u2218 G` and its EGF law `EGF(F\u2218G) = (EGF F) \u2218 (EGF G)` \u2014 which is the deepest part\nof Joyal's bridge and is genuinely absent from Mathlib.\n\n## Results Summary\n\n- `sumSpecies`: proved (definition) \u2014 disjoint-union species with the genuine `sumCongrHom` relabelling action.\n- `coeffSeq_sumSpecies`: proved \u2014 the counting sequence of a sum is the pointwise sum of counting sequences.\n- `EGF_sumSpecies`: proved \u2014 the EGF carries disjoint union of species to addition in `\u211a\u27e6X\u27e7`.\n- `prodSpecies`: proved (definition) \u2014 the structural Day-convolution product species (trivial action, EGF-faithful).\n- `coeffSeq_prodSpecies`: proved \u2014 unfolds the product's counting sequence to the cardinality of the Day-convolution Sigma type.\n- `EGF_prodSpecies`: proved \u2014 the EGF carries the structural product of species to multiplication in `\u211a\u27e6X\u27e7`.\n- `EGF_inj_coeffSeq`: proved \u2014 **rigidity**: the EGF is a complete invariant of a species' counting sequence.\n- `coeffSeq_prod_setSpecies`: proved \u2014 `E \u00b7 E` has exactly `2\u207f` structures on an `n`-label set.\n- `EGF_prod_setSpecies`: proved \u2014 `(E \u00b7 E).EGF = exp\u00b2`, the worked instance of the product bridge.\n- `binConv_const_one`: proved \u2014 `\u2211_{i+j=n} C(n,i) = 2\u207f` as the binomial convolution of `1` with itself.\n\n## Research Directions\n\n### Direction 1: A faithful Day-convolution action for the product species\n**Hypothesis**: There is a `MonoidHom (Equiv.Perm (Fin n)) (Equiv.Perm ((prodSpecies F G).obj n))`\nmaking `prodSpecies` a genuine functor on finite sets: a permutation `\u03c3` sends the\ndatum `(S, x, y)` with `x : F[S]`, `y : G[S\u1d9c]` to `(\u03c3 \u207b\u00b9 '' S, F.act \u2026 x, G.act \u2026 y)`,\nand this assignment respects composition and identity.\n**Test**: Construct the hom in Lean and prove `map_one`/`map_mul`; confirm\n`EGF_prodSpecies` still holds verbatim (it must, since the EGF depends only on\ncardinality, which the action preserves). The key insight is that the action only\nrelabels indices and so is an automorphism of the Sigma type that fixes its\ncardinality.\n**Why now**: `EGF_prodSpecies` already pins down the *enumerative* content, so the\nremaining work is purely the equivariance bookkeeping \u2014 isolated and self-contained.\n**If true**: `prodSpecies` becomes a true monoidal product on the category of species,\nenabling species-level (not just EGF-level) algebraic statements.\n**If false**: it would reveal a coherence obstruction in the skeletal `Species`\nmodel, suggesting the groupoid action must be indexed by bijections, not just `Fin n`.\n\n### Direction 2: Species composition and the chain-rule bridge\n**Hypothesis**: For species `F`, `G` with `G[0] = \u2205`, the substitution species\n`(F \u2218 G)[n] = \u03a3 (partitions \u03c0 of [n]) F[\u03c0] \u00d7 \u220f_{B \u2208 \u03c0} G[B]` satisfies\n`EGF (F \u2218 G) = (EGF F) \u2218 (EGF G)` (composition of EGFs).\n**Test**: Define `compSpecies` over set partitions, compute its counting sequence,\nand prove the EGF identity; the special case `F = E` should recover the\nexponential formula `EGF(E \u2218 G) = exp(EGF G)`. The key insight is that the\npartition sum is exactly the combinatorial expansion of composition of power series.\n**Why now**: With `sumSpecies` and `prodSpecies` and their bridges in hand, the\ninductive scaffolding (sum over the size of the first block) reduces composition to\nproducts already handled by `EGF_prodSpecies`.\n**If true**: completes the three core operations (`+`, `\u00b7`, `\u2218`) of Joyal's calculus\nin Lean \u2014 the exponential formula, connected/disconnected structures, and species\nof trees all become accessible.\n**If false**: the failure would localize to the partition bookkeeping (Fa\u00e0 di Bruno\ncoefficients), pinpointing exactly which Mathlib partition lemmas are missing.\n\n### Direction 3: Sharpen rigidity to a ring isomorphism onto its image\n**Hypothesis**: The map `coeffSeq \u21a6 EGF` is an injective ring homomorphism from\n`(\u2115 \u2192 \u211a, +, \u22c6)` (with `\u22c6 = binConv`) into `\u211a\u27e6X\u27e7`, i.e. `EGF_inj_coeffSeq` extends to\na `RingHom` whose kernel is trivial, so two species are EGF-equal iff they are\ncounting-equal *and* this equivalence respects both operations.\n**Test**: Package `egf` as a `RingHom` (using `egf_add`, `egf_mul`, and the unit\n`egf (Pi.single 0 1) = 1`) and prove injectivity from `EGF_inj_coeffSeq`. The key\ninsight is that rigidity plus the two bridge laws is exactly the data of an\ninjective ring homomorphism.\n**Why now**: all three ingredients (additivity, multiplicativity, injectivity) are\nnow proved this cycle; only the bundling remains.\n**If true**: gives a structural theorem \"the EGF is a faithful representation of the\nbinomial-convolution ring\", a reusable algebraic object for downstream work.\n**If false**: a missing unit or distributivity law would surface, revealing that the\nbinomial-convolution structure on `\u2115 \u2192 \u211a` is weaker than a full ring.\n\n### Direction 4: Derivative/pointing and the operator `X \u00b7 d/dX`\n**Hypothesis**: The pointing species `F\u2022` with `F\u2022[n] = Fin n \u00d7 F[n]` (a distinguished\nlabel) has counting sequence `n \u21a6 n \u00b7 |F[n]|` and EGF `X \u00b7 (EGF F)\u2032`, where `\u2032` is the\nformal derivative on `\u211a\u27e6X\u27e7`.\n**Test**: Define `pointSpecies`, prove `coeffSeq (F\u2022) n = n * coeffSeq F n`, and match\nit against `PowerSeries.derivative`. The key insight is that multiplying the `n`-th\ncoefficient by `n` is exactly `X\u00b7d/dX` at the level of EGFs.\n**Why now**: pointing is the simplest *differential* operation and reuses the same\n\"EGF sees only the counting sequence\" reduction that made this cycle's bridges trivial.\n**If true**: opens the differential calculus of species (recurrences for labelled\ntrees and endofunctions via `L = E(C)`, etc.).\n**If false**: a mismatch with Mathlib's `PowerSeries.derivative` normalization would\nindicate the factor `n!` must be tracked more carefully than in the integral bridges.\n\n### Direction 5: Cycle-index / unlabelled enumeration beyond the EGF\n**Hypothesis**: The EGF is *not* a complete invariant of a species as a functor: there\nexist non-isomorphic species (different `act`) with identical EGFs, distinguished only\nby their cycle-index series (ordinary generating function of orbits under relabelling).\n**Test**: Exhibit two `Species` with equal `coeffSeq` (hence equal EGF by\n`EGF_inj_coeffSeq`'s converse) but non-isomorphic actions, e.g. `linearOrderSpecies`\nvs. a species with `n!` structures permuted trivially; compute their orbit counts\n(unlabelled structures) and show they differ. The key insight is that rigidity holds\nfor the EGF *only* because it forgets the action \u2014 the action carries strictly more\ninformation.\n**Why now**: `EGF_inj_coeffSeq` precisely delimits what the EGF *does* capture, so the\nnatural falsifiable question is what it *misses*; the catalog already provides two\nconcrete species (`setSpecies`, `linearOrderSpecies`) to contrast.\n**If true**: motivates formalizing the cycle-index series and Burnside/orbit-counting\nas the finer invariant \u2014 the genuinely categorical (not merely analytic) layer.\n**If false**: it would mean (surprisingly) that the action is determined by the counts,\ncollapsing the species/EGF distinction and overturning a basic tenet of Joyal's theory.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1321",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a4e33a5f",
+    "status": "available",
+    "timestamp": "2026-06-11T05:03:35.948727+00:00",
+    "title": "This cycle lifted the combinatorial\u2013analytic dictionary of Joyal's theory of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: The Natural Proofs Barrier, Quantified\n\nThe file `Catalog/Computation/NaturalProofsBarrier.lean` turns the qualitative\n\"natural proofs distinguisher\" skeleton (`natural_proof_distinguisher` in\n`Catalog/Computation/BarrierFramework.lean`) into a *quantitative* statement: a\nlarge + useful property `P` of Boolean functions has distinguishing **advantage**\n`\u2265 \u03b4` (its largeness) against any class `C` it is useful against, and under a PRG\nsecurity hypothesis (no constructive test beats `\u03b4`) such a property cannot exist\n(`razborov_rudich_barrier`). The strengthening `natural_proofs_distinguish_approx`\neven tolerates approximate usefulness. These directions push the formalization\ntoward a genuinely faithful, end-to-end Razborov\u2013Rudich theorem.\n\n## 1. Connect density to circuit-counting largeness automatically\n\nRight now largeness `\u03b4 \u2264 density P` is a hypothesis. We should *derive* it for\nconcrete combinatorial properties by counting truth tables, reusing\n`num_boolean_functions` / `card_boolFn` from `CircuitBarriers.lean` and\n`CircuitComplexityBarriers.lean`. Conjecture: the property \"`f` is not computed by\nany `BoolFormula` of size `\u2264 s`\" has density `\u2265 1 \u2212 (#formulas of size \u2264 s)/2^(2^n)`,\nwhich is `\u2265 1/2` once `s = o(2^n/n)` (Shannon regime).\n\n**The key insight is** that largeness is *not* an assumption but a corollary of the\nShannon counting bound already proved in the catalog: small-circuit functions are\na vanishing fraction, so *avoiding* them is automatically a large property.\n**Why now?** The circuit/formula size machinery (`BoolFormula.size`,\n`formula_leaves_le_pow_depth`, `shannonLowerBound`) and the function-counting\nlemmas already exist in the catalog, so the only missing step is a clean\n\"few small formulas\" enumeration bound \u2014 a self-contained finite count.\n\n## 2. Make `C` the genuine image of a pseudorandom function generator\n\nReplace the abstract finset `C` with the image of an explicit generator\n`G : Seed \u2192 BoolFn n` and define `advantage` against the *uniform distribution on\nseeds*. Conjecture: `empiricalFreq P (image G univ)` equals the seed-averaged test\nacceptance, so `razborov_rudich_barrier` becomes literally \"`P` breaks `G`.\"\n\n**The key insight is** that `empiricalFreq` over a finset is already a uniform\naverage, so swapping in `Finset.image G univ` only requires relating\n`(image G).card`-weighted and seed-weighted averages \u2014 a `Finset.sum_image`\nbookkeeping fact, not new mathematics. **Why now?** `Catalog/Cryptography`\ncontains pseudorandomness scaffolding that can supply the generator type, letting\nthis become a cross-domain bridge (complexity \u2194 cryptography) rather than a\nstandalone lemma.\n\n## 3. Formalize constructivity and the P/poly-test conclusion\n\nWe modeled \"constructive\" implicitly via the PRG hypothesis quantifying over the\ntest `P`. Promote constructivity to a first-class predicate: `P` is decidable by a\n`BoolCircuit` of size `2^{O(n)}` over the `2^n`-bit truth table. Conjecture: the\nclass of constructive `P` is closed under the Boolean operations used to build\ndistinguishers, so the barrier applies to the closure, not just individual tests.\n\n**The key insight is** that constructivity is exactly the hypothesis that lets the\ndistinguisher itself be implemented as a small circuit on the truth-table input,\nclosing the loop \"lower-bound proof \u27f9 efficient distinguisher \u27f9 no PRG.\"\n**Why now?** `BoolCircuit` and its `size` are already defined in\n`CircuitComplexityBarriers.lean`; reusing them gives a uniform notion of\n\"efficient test\" shared across the whole catalog.\n\n## 4. An algebrization analogue of the quantitative barrier\n\nThe catalog has `algebrization_barrier` (qualitative). Conjecture: a quantitative\nalgebrization barrier holds \u2014 for `AlgebraicOracle F`-relativized properties, the\ndistinguishing advantage of any *low-degree* test is bounded by `deg/|F|`\n(Schwartz\u2013Zippel), so a constructive low-degree natural property again forces a\nPRG break in the algebraic model.\n\n**The key insight is** that the same advantage = density \u2212 frequency decomposition\nsurvives relativization, but the upper bound on adversarial advantage now comes\nfrom a *polynomial identity testing* bound rather than a cryptographic assumption.\n**Why now?** `AlgebraicOracle`, `AlgebrizingStatement`, and Schwartz\u2013Zippel\n(available in Mathlib as `MvPolynomial.schwartz_zippel`-style results) are both in\nreach, making this the natural cross-domain (algebra \u2194 complexity) extension.\n\n## 5. Tightness: a matching upper bound on advantage\n\n`natural_proofs_distinguish` is a lower bound on advantage. Conjecture: it is\n*tight* \u2014 there exist properties whose advantage equals exactly `density P`\n(achieved when usefulness is perfect), and approximate-usefulness with frequency\n`\u03c1` cannot be improved beyond `density P \u2212 \u03c1`. A concrete witness: the\n\"non-constant\" property on small `n`, where all quantities are computable.\n\n**The key insight is** that `natural_property_advantage_eq` already proves equality\nunder perfect usefulness, so tightness only needs an *existence* witness with\npositive density and a matching `\u03c1`-frequency example \u2014 a finite, `decide`-able\nconstruction. **Why now?** With `n` small the entire `BoolFn n` is a concrete\nfinite type, so the witness and its advantage can be evaluated and verified\nmechanically, turning a sharpness claim into a checked computation.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1322",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "91bb2e2e",
+    "status": "available",
+    "timestamp": "2026-06-11T05:04:01.067054+00:00",
+    "title": "The file `Catalog/Computation/NaturalProofsBarrier.lean` turns the qualitative"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the lattice of cryptographic hardness assumptions: one-way functions \u2192 pseudorandom generators \u2192 pseudorandom functions \u2192 secure encryption. Prove separation results.",
     "domains": [
       "Cryptography",
@@ -2901,20 +2932,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Proof-Complexity Holography: Geometric Duals of Formal Derivations"
   },
   {
-    "consumed_by_exp_id": "7caf72b5",
-    "description": "Cycle 0866bc70 (Q=0.642) proved 783 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle e654db2b (Q=0.430) proved 892 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The 3D Poincar\u00e9 conjectur",
-    "domains": [
-      "Applications"
-    ],
-    "id": "sorry_fill_0866bc70_12a509e7",
-    "priority_score": 0.6920416858237549,
-    "research_mode": "team",
-    "source_exp_id": "0866bc70",
-    "status": "in_progress",
-    "timestamp": "2026-06-10T16:03:17.979697+00:00",
-    "title": "Close Proofs: Close Proofs: Poincar\u00e9 Conjecture Revisited: 4D Smooth"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle 52583c93 (Q=0.569) proved 1761 theorems in Applications but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle b676b19c (Q=0.667) proved 399 theorems in Applications but left 19 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle 7",
     "domains": [
@@ -3062,7 +3079,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Entropy Power Inequality: Sharp Version"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8b64729b",
     "description": "Develop a tropical scheme theory where ideals are replaced by tropical ideals (subsemimodules of the tropical polynomial semiring closed under tropical linear combinations). Prove a tropical Buchberger algorithm exists and characterize tropical Groebner bases.",
     "domains": [
       "Tropical",
@@ -3072,7 +3089,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:31.138945+00:00",
     "title": "Tropical Scheme Theory: Groebner Bases over the Tropical Semiring"
   },
@@ -3090,6 +3107,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:06.047788+00:00",
     "title": "Bridge: Fourier Analysis as a Functor"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 98b2ef1b (Q=0.488) proved 759 theorems in Bridges but left 9 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Neural Tangent Kernel Formalization\n\n## 1. Spectral Convergence Rate with Explicit Eigenvalue Bounds\n\nThe geometric convergence theorem (`gdResidual_geometric_decay`) assumes a co",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "sorry_fill_98b2ef1b_675150e6",
+    "priority_score": 0.5376471953547649,
+    "research_mode": "team",
+    "source_exp_id": "98b2ef1b",
+    "status": "available",
+    "timestamp": "2026-06-11T05:02:52.523657+00:00",
+    "title": "Close Proofs: The geometric convergence theorem (`gdResidual_geometric_decay`) assum"
   },
   {
     "consumed_by_exp_id": "",
@@ -3444,20 +3475,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Close Proofs: The sphere-packing bound gives an upper bound on code si"
   },
   {
-    "consumed_by_exp_id": "91bb2e2e",
-    "description": "Cycle d1cd701c (Q=0.423) proved 1117 theorems in Novelty but left 7 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_d1cd701c_c3ab8530",
-    "priority_score": 0.47301492299904074,
-    "research_mode": "team",
-    "source_exp_id": "d1cd701c",
-    "status": "in_progress",
-    "timestamp": "2026-06-11T04:28:50.413950+00:00",
-    "title": "Close Proofs: Natural Proofs Barrier: Formalization"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Cycle c74c695b (Q=0.423) proved 1729 theorems in Tropical but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Prove tropical versions of classical convexity theorems: tropical Helly (if every n+1 sets in a tropical Helly family intersect, then all intersect), tropical Caratheodory (every point in the tropical",
     "domains": [
@@ -3484,6 +3501,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-09T12:52:32.659237+00:00",
     "title": "Close Proofs: Close Proofs: One-Way Functions: Existence and Hierarchy"
+  },
+  {
+    "consumed_by_exp_id": "1b2bde48",
+    "description": "Cycle 57276ea9 (Q=0.421) proved 491 theorems in Novelty but left 9 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions \u2014 Rademacher Complexity of Neural Networks\n\nThese directions extend `Catalog/MachineLearning/RademacherSpectral.lean`, which\nformalizes the *empirical* Rademacher complexity as an ",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_57276ea9_fb663edf",
+    "priority_score": 0.47093477633570635,
+    "research_mode": "team",
+    "source_exp_id": "57276ea9",
+    "status": "in_progress",
+    "timestamp": "2026-06-11T05:03:18.420454+00:00",
+    "title": "Close Proofs: These directions extend `Catalog/MachineLearning/RademacherSpectral.le"
   },
   {
     "consumed_by_exp_id": "",
@@ -3526,6 +3557,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-10T17:24:00.693579+00:00",
     "title": "Close Proofs: The file `Computation/SpectralChain/Core.lean` builds, from first prin"
+  },
+  {
+    "consumed_by_exp_id": "d4c18496",
+    "description": "Cycle bf0d0460 (Q=0.406) proved 2328 theorems in Novelty but left 8 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Neural Tangent Kernel Convergence Theory\n\n## 1. General Pinsker Inequality for Finite Distributions\n\nThe Bernoulli Pinsker inequality `(p - q)\u00b2 \u2264 KL(Ber(p) \u2016 Ber(q)) / 2` is now f",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_bf0d0460_a65fa249",
+    "priority_score": 0.4562769072164949,
+    "research_mode": "team",
+    "source_exp_id": "bf0d0460",
+    "status": "in_progress",
+    "timestamp": "2026-06-11T05:02:23.068124+00:00",
+    "title": "Close Proofs: The Bernoulli Pinsker inequality `(p - q)\u00b2 \u2264 KL(Ber(p) \u2016 Ber(q)) / 2` "
   },
   {
     "consumed_by_exp_id": "",
@@ -3602,7 +3647,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Hodge Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8d1c1869",
     "description": "Prove that the Fisher information metric on a statistical manifold satisfies the axioms of a Riemannian metric. Construct explicit connections between the Fisher metric and the Kullback-Leibler divergence. Bridge statistical inference to differential geometry.",
     "domains": [
       "Bridges",
@@ -3612,7 +3657,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:29.281925+00:00",
     "title": "Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
   },
@@ -3662,7 +3707,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Galois Connections Between Order Theory and Topology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1c3d05a7",
     "description": "Prove that the tropical moduli space of genus-g curves M_g^trop is a metric graph with vertices corresponding to combinatorial types. Show that M_g^trop is the Berkovich skeleton of the classical M_g. Prove that the tropical Torelli map factors through the tropical Jacobian and that its fibers are finite.",
     "domains": [
       "Tropical",
@@ -3672,7 +3717,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3599999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.620386+00:00",
     "title": "Tropical Moduli Spaces: Curves and Their Tropical Counterparts"
   },
