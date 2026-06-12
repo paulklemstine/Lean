@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "22f6ffd2",
     "filename": "close_proofs_close_proofs_close_proofs_dream_logic.json",
     "pkg_num": 105,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6714818494055483,
     "title": "The Werewolf Paradox: Non-Monotone Win Probabilities in Random-Elimination Social-Deduction Games"
   },
   {
@@ -3202,8 +3202,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "close_proofs_close_proofs_close_proofs_dream_logic",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6714818494055483,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Werewolf Paradox: Non-Monotone Win Probabilities in Random-Elimination Social-Deduction Games"
     }

@@ -310,6 +310,11 @@ class TestStaleDirectionRecovery:
         # Mark old and fresh as in_progress
         fd_manager.mark_direction_consumed("stale_001", "exp_old")
         fd_manager.mark_direction_consumed("fresh_001", "exp_fresh")
+        
+        # Override the last_attempt_time for the stale direction to be 48h ago
+        for d in fd_manager._directions:
+            if d.id == "stale_001":
+                d.last_attempt_time = (datetime.now(timezone.utc) - timedelta(hours=48)).isoformat()
 
         recovered = fd_manager.recover_stale_directions(max_age_hours=24)
         assert recovered == 1  # Only the 48h-old one
@@ -327,8 +332,9 @@ class TestStaleDirectionRecovery:
         )
         fd_manager.add_direction(no_ts)
         fd_manager.mark_direction_consumed("nots_001", "exp_x")
-        # Manually clear timestamp to simulate missing field
+        # Manually clear timestamp and last_attempt_time to simulate missing field
         fd_manager._directions[0].timestamp = ""
+        fd_manager._directions[0].last_attempt_time = ""
         recovered = fd_manager.recover_stale_directions()
         assert recovered == 1
         assert fd_manager._directions[0].status == "available"

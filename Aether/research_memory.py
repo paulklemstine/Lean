@@ -489,8 +489,9 @@ class FutureDirectionsManager:
 
     def _update_snapshot(self) -> None:
         """Write a display-friendly snapshot for CI/GitHub Pages consumption."""
-        # Walk up from .aether_workspace to find repo root, then into Catalog
         repo_root = self.workspace.parent
+        if not (repo_root / "Catalog").exists() and (repo_root.parent / "Catalog").exists():
+            repo_root = repo_root.parent
         snapshot_path = repo_root / "Catalog" / "Applications" / "Packages" / "future_directions_snapshot.json"
         if not snapshot_path.parent.exists():
             return
@@ -1119,7 +1120,8 @@ class FutureDirectionsManager:
         for d in self._directions:
             if d.status == "in_progress":
                 try:
-                    ts = datetime.fromisoformat(d.timestamp)
+                    time_str = d.last_attempt_time or d.timestamp
+                    ts = datetime.fromisoformat(time_str)
                     # Ensure offset-aware comparison
                     if ts.tzinfo is None:
                         ts = ts.replace(tzinfo=timezone.utc)
