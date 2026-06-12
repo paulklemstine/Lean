@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-12T06:04:43Z",
+    "domain": "Cryptography",
+    "exp_id": "166e1d18",
+    "filename": "close_proofs_close_proofs_this_cycle_replaced_the_.json",
+    "pkg_num": 10,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "The Fibonacci Divisibility Lattice: Faithful Arithmetic and the Rank of Apparition"
+  },
+  {
     "date": "2026-06-12T04:28:20Z",
     "domain": "Algebra",
     "exp_id": "2ce3e872",
@@ -120,6 +130,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "One-Way Functions: Existence, Inversion Capacity, and the Hardness Hierarchy"
   },
+  "close_proofs_close_proofs_this_cycle_replaced_the_.json": {
+    "domain": "Cryptography",
+    "exp_id": "166e1d18",
+    "source_exp_ids": [
+      "12ce834d"
+    ],
+    "title": "The Fibonacci Divisibility Lattice: Faithful Arithmetic and the Rank of Apparition"
+  },
   "our_exists_revsim_of_surjective_proves_that_surjec.json": {
     "domain": "Computation",
     "exp_id": "3aabcb67",
@@ -179,7 +197,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T01:35:15Z",
       "domain": "Bridges",
-      "hue": 271,
+      "hue": 90,
       "id": "this_cycle_formalized_a_self_contained_fragment_of",
       "primary_domain": "Bridges",
       "priority_score": 0.4107094228460233,
@@ -190,7 +208,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T02:44:01Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 95,
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
       "primary_domain": "Bridges",
       "priority_score": 0.60229,
@@ -201,7 +219,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:51:59Z",
       "domain": "Algebra",
-      "hue": 271,
+      "hue": 91,
       "id": "this_cycle_isolated_the_primitivity_layer_of_fibon",
       "primary_domain": "Algebra",
       "priority_score": 0.66176,
@@ -212,7 +230,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:38Z",
       "domain": "Novelty",
-      "hue": 92,
+      "hue": 272,
       "id": "close_proofs_arithmetic_mirror_symmetry_for_calabi",
       "primary_domain": "Bridges",
       "priority_score": 0.4038523076923077,
@@ -234,7 +252,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:26:56Z",
       "domain": "Computation",
-      "hue": 270,
+      "hue": 272,
       "id": "our_exists_revsim_of_surjective_proves_that_surjec",
       "primary_domain": "Computation",
       "priority_score": 0.65648,
@@ -256,7 +274,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:03Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 112,
       "id": "algebraic_statistics_markov_bases_for_contingency_",
       "primary_domain": "Algebra",
       "priority_score": 0.63808,
@@ -267,13 +285,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:20Z",
       "domain": "Algebra",
-      "hue": 91,
+      "hue": 90,
       "id": "the_current_formalization_uses_an_abstract_dsepora",
       "primary_domain": "Algebra",
       "priority_score": 0.73536,
       "quality": "substantial",
       "shape": "tetrahedron",
       "title": "Concrete d-Separation via Reachability: Undirected Vertex Separation is a Compositional Graphoid"
+    },
+    {
+      "date": "2026-06-12T06:04:43Z",
+      "domain": "Cryptography",
+      "hue": 90,
+      "id": "close_proofs_close_proofs_this_cycle_replaced_the_",
+      "primary_domain": "Cryptography",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "dodecahedron",
+      "title": "The Fibonacci Divisibility Lattice: Faithful Arithmetic and the Rank of Apparition"
     }
   ]
 };
