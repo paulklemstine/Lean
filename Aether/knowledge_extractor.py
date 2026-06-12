@@ -655,18 +655,22 @@ class KnowledgeExtractor:
             md5_hash = int(hashlib.md5(job.job_id.encode()).hexdigest(), 16)
         else:
             md5_hash = job.cycle_n
-        # A/B/C split: 40% v6, 30% v7, 30% v8
-        # v6 (correctness-first) is the production baseline.
-        # v7 (structured output + proof completeness gates) is in wide testing.
-        # v8 (research team framing + scientific method loop + lab notebooks) is the
-        # new variant being tested at 30% to accumulate data for comparison.
-        bucket = md5_hash % 1000
-        if bucket < 400:
-            phase_a_version = "v6"
-        elif bucket < 700:
-            phase_a_version = "v7"
-        else:
+        # A/B testing: split equally among v8, v9, v10, v11, v12, v13, v14.
+        bucket = md5_hash % 7
+        if bucket == 0:
             phase_a_version = "v8"
+        elif bucket == 1:
+            phase_a_version = "v9"
+        elif bucket == 2:
+            phase_a_version = "v10"
+        elif bucket == 3:
+            phase_a_version = "v11"
+        elif bucket == 4:
+            phase_a_version = "v12"
+        elif bucket == 5:
+            phase_a_version = "v13"
+        else:
+            phase_a_version = "v14"
         job.prompt_version = phase_a_version  # legacy field
         job.phase = "A"  # Two-phase: this is Phase A (math)
         job.phase_a_prompt_version = phase_a_version
@@ -1520,8 +1524,9 @@ Research mode: {concept.research_mode}
               f"sorries={job.sorry_count}, theorems={job.theorem_count}"
               + (f", depth={job.quality_detail.proof_depth:.2f}" if hasattr(job, 'quality_detail') and job.quality_detail else ""))
 
-        # v8 output quality metrics: track research team protocol compliance
-        if getattr(job, 'phase_a_prompt_version', '') == 'v8' and job.result_lean:
+        # v8-v14 output quality metrics: track research team protocol compliance
+        phase_ver = getattr(job, 'phase_a_prompt_version', '')
+        if phase_ver in ('v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14') and job.result_lean:
             import re as _re
             lean_content = job.result_lean
             lab_notebook_count = lean_content.count("Lab Notebook")
@@ -1537,7 +1542,7 @@ Research mode: {concept.research_mode}
             # Count Lab Notebook detail fields
             ln_insight = lean_content.count("Insight:")
             ln_failure = lean_content.count("Failure analysis:")
-            print(f"[v8 Metrics] Lab_Notebooks={lab_notebook_count} hypotheses={hypothesis_count} "
+            print(f"[{phase_ver} Metrics] Lab_Notebooks={lab_notebook_count} hypotheses={hypothesis_count} "
                   f"disproved_theorems={disproved_theorem_count} disproved_keywords={disproved_keyword_count} "
                   f"Synthesis={'Y' if has_synthesis else 'N'} "
                   f"Results_Summary={'Y' if has_results_summary else 'N'} "
@@ -1967,12 +1972,13 @@ Research mode: {concept.research_mode}
 
             # v7 linting gate: reject Lean files from v7 prompts with basic syntax issues
             # v7 uses structured theorem declarations — verify they're well-formed
-            if getattr(job, 'phase_a_prompt_version', '') in ('v7', 'v8'):
+            phase_ver = getattr(job, 'phase_a_prompt_version', '')
+            if phase_ver in ('v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14'):
                 # Check 1: unclosed block comments (/- ... -/)
                 open_blocks = content.count("/-") - content.count("/-!")
                 close_blocks = content.count("-/")
                 if open_blocks > close_blocks:
-                    print(f"[Integrate] v7 lint: rejecting {target_path} — unclosed block comments "
+                    print(f"[Integrate] {phase_ver} lint: rejecting {target_path} — unclosed block comments "
                           f"(open={open_blocks}, close={close_blocks})")
                     return "REJECT"
                 # Check 2: bare 'sorry' in theorem statements (not in proof bodies)
@@ -1980,25 +1986,25 @@ Research mode: {concept.research_mode}
                 for line_no, line in enumerate(content.split("\n"), 1):
                     stripped = line.strip()
                     if stripped.startswith("theorem ") and stripped.endswith(":= sorry"):
-                        print(f"[Integrate] v7 lint: rejecting {target_path} — "
+                        print(f"[Integrate] {phase_ver} lint: rejecting {target_path} — "
                               f"trivial sorry-define on line {line_no}")
                         return "REJECT"
-                # Check 3: minimum theorem density for v7 (≥1 theorem per 100 lines)
+                # Check 3: minimum theorem density (≥1 theorem per 100 lines)
                 if lines > 50 and theorem_count / max(1, lines) < 0.01:
-                    print(f"[Integrate] v7 lint: rejecting {target_path} — theorem density too low "
+                    print(f"[Integrate] {phase_ver} lint: rejecting {target_path} — theorem density too low "
                           f"({theorem_count} theorems in {lines} lines)")
                     return "REJECT"
-            # v8 lint gate: check for research team protocol markers
-            if getattr(job, 'phase_a_prompt_version', '') == 'v8':
+            # v8-v14 lint gate: check for research team protocol markers
+            if phase_ver in ('v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14'):
                 has_lab_notebook = "Lab Notebook" in content or "lab notebook" in content.lower()
                 has_hypothesis = "hypothesis" in content.lower()
                 critic_count = content.lower().count("critic") + content.lower().count("critique")
                 if not has_lab_notebook and not has_hypothesis:
-                    print(f"[Integrate] v8 lint: {target_path} has no Lab Notebook or "
-                          f"hypothesis markers (expected from v8 research team protocol)")
+                    print(f"[Integrate] {phase_ver} lint: {target_path} has no Lab Notebook or "
+                          f"hypothesis markers (expected from {phase_ver} research team protocol)")
                 if critic_count == 0:
-                    print(f"[Integrate] v8 lint: {target_path} has zero critic/critique references — "
-                          f"the Critic step (Step 3) is MANDATORY in v8. This suggests the LLM "
+                    print(f"[Integrate] {phase_ver} lint: {target_path} has zero critic/critique references — "
+                          f"the Critic step (Step 3) is MANDATORY in {phase_ver}. This suggests the LLM "
                           f"skipped the critique step.")
             if has_sorry:
                 # Incomplete proofs go to Speculative/AutoResearch, preserving any

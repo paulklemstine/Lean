@@ -102,7 +102,7 @@ def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
             v = r.get("prompt_version", "unknown")
             by_ver.setdefault(v, []).append(r)
         lines = ["[A/B] Prompt version stats:"]
-        for v in ("v3", "v4", "v5", "v6", "v7", "v8"):
+        for v in ("v8", "v9", "v10", "v11", "v12", "v13", "v14"):
             rs = by_ver.get(v, [])
             if not rs:
                 continue
@@ -113,10 +113,10 @@ def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
             avg_dur = sum(durs) / len(durs) if durs else 0
             lines.append(f"  {v}: n={n:3d} avg_Q={avg_q:.3f} wc={wc}/{n} ({100*wc/n:.0f}%) avg_dur={avg_dur:.0f}min")
         # Last 20 only, to keep it fresh
-        recent = [r for r in records[-20:] if r.get("prompt_version") in ("v6", "v7", "v8")]
+        recent = [r for r in records[-20:] if r.get("prompt_version") in ("v8", "v9", "v10", "v11", "v12", "v13", "v14")]
         if recent:
             scores = {}
-            for v in ("v6", "v7", "v8"):
+            for v in ("v8", "v9", "v10", "v11", "v12", "v13", "v14"):
                 vrs = [r for r in recent if r.get("prompt_version") == v]
                 if vrs:
                     scores[v] = sum(r.get("quality_score", 0) for r in vrs) / len(vrs)
@@ -171,7 +171,7 @@ def _print_quality_metrics(extractor: "KnowledgeExtractor") -> None:
             by_ver.setdefault(v, []).append(r)
 
         lines = ["[Quality] Rolling metrics (last 30 cycles):"]
-        for v in ("v6", "v7", "v8"):
+        for v in ("v8", "v9", "v10", "v11", "v12", "v13", "v14"):
             rs = by_ver.get(v, [])
             if not rs:
                 continue
@@ -459,8 +459,8 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
                 # Phase B skipped — integrate the Lean files only
                 if phase_a_q < phase_b_threshold:
                     job.phase = "A_only"
-                    # For near-miss cycles (0.3-0.5), mark for potential retry with v6 prompt
-                    # The v6 prompt is more forgiving and may produce better results
+                    # For near-miss cycles (0.3-0.5), mark for potential retry with v8 prompt
+                    # The v8 prompt is more robust and may produce better results
                     if phase_a_q >= 0.3:
                         job.phase_b_skipped_reason = "low_quality_near_miss"
                     else:
@@ -509,7 +509,19 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
                 from research_memory import FutureDirectionsManager, FutureDirection
                 import uuid
                 fd_mgr = FutureDirectionsManager(Path(__file__).parent / ".aether_workspace")
-                follow_up_title = f"Deepening: {job.concept.title[:80]}"
+                
+                # Strip leading repeated "Close Proofs: " or "Deepening: " prefixes
+                title_clean = job.concept.title
+                while True:
+                    lower_title = title_clean.lower().strip()
+                    if lower_title.startswith("close proofs:"):
+                        title_clean = title_clean[len("close proofs:"):].strip()
+                    elif lower_title.startswith("deepening:"):
+                        title_clean = title_clean[len("deepening:"):].strip()
+                    else:
+                        break
+                
+                follow_up_title = f"Deepening: {title_clean[:80]}"
                 follow_up_desc = (
                     f"Building on cycle {job.job_id[:8]} (Q={job.quality_score:.3f}), "
                     f"which proved {job.theorem_count} theorems in {job.concept.domain}. "
@@ -537,7 +549,19 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
                 from research_memory import FutureDirectionsManager, FutureDirection
                 import uuid
                 fd_mgr = FutureDirectionsManager(Path(__file__).parent / ".aether_workspace")
-                fill_title = f"Close Proofs: {job.concept.title[:70]}"
+                
+                # Strip leading repeated "Close Proofs: " or "Deepening: " prefixes
+                title_clean = job.concept.title
+                while True:
+                    lower_title = title_clean.lower().strip()
+                    if lower_title.startswith("close proofs:"):
+                        title_clean = title_clean[len("close proofs:"):].strip()
+                    elif lower_title.startswith("deepening:"):
+                        title_clean = title_clean[len("deepening:"):].strip()
+                    else:
+                        break
+                
+                fill_title = f"Close Proofs: {title_clean[:70]}"
                 fill_desc = (
                     f"Cycle {job.job_id[:8]} (Q={job.quality_score:.3f}) proved "
                     f"{job.theorem_count} theorems in {job.concept.domain} but left "

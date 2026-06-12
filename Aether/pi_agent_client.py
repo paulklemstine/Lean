@@ -1570,273 +1570,294 @@ class PiAgentClient:
     # Dynamic prompt writing
     # ------------------------------------------------------------------
 
-    def _build_v3_depth_requirements(self) -> str:
-        """v3 depth requirements: novel mathematical structures + PEGB."""
-        return textwrap.dedent("""\
-            ## Depth Requirements (MANDATORY — WORLD-CLASS STANDARD)
+    def _build_v9_depth_requirements(self) -> str:
+        """v9: v8 variation focusing on Adversarial Critic & Boundary Mapping.
 
-            Your output must satisfy ALL of these. This is not incremental work.
-            This is the frontier. Act accordingly.
-
-            1. **NO trivial proofs**: Do NOT prove statements by `native_decide`, `decide`,
-               `norm_num`, or `rfl` unless the statement itself is genuinely important.
-               If the only proof tactic is enumeration, the theorem is not worth formalizing.
-
-            2. **DEFINE a novel mathematical structure** (CORE REQUIREMENT): Your cycle
-               must introduce at least one NEW mathematical object — a structure, a
-               construction, a notion, a category, an operator — that does not already
-               exist in the Catalog or in standard references. This is the seed of new
-               mathematics. The definition must be substantial (not a one-liner renaming
-               of a known concept) and must come with at least 3 theorems that PROVE
-               non-obvious properties of the new structure.
-
-               Think like Grothendieck defining schemes, or Rota defining matroids, or
-               Voiculescu defining free probability. The structure is the contribution.
-               The theorems are the evidence that the structure is useful.
-
-               **Critical constraint**: A "novel mathematical structure" must be a
-               genuine mathematical object — a formal construction with a precise
-               definition, ideally with operations or axioms. **Mathematics of X** where
-               X is a real-world phenomenon (memes, dreams, consciousness, art, music,
-               jokes, social networks) is NOT a mathematical structure unless you
-               formalize X as a precise mathematical object first and then prove
-               theorems about THAT object. If you can't formalize X rigorously, pick a
-               different X — choose a topic where the math comes naturally.
-
-            3. **PEGB for every major theorem** (Proof + Example + Generalization + Boundary):
-               For each of your top 3-5 theorems, you MUST produce all four:
-               - **P**roof: A complete, non-trivial Lean 4 proof
-               - **E**xample: A concrete worked example
-               - **G**eneralization: A one-level-up generalization
-               - **B**oundary: A counterexample or limit-case analysis
-
-               A theorem without PEGB is a one-off. A theorem WITH PEGB is a research
-               program. We are building research programs, not collecting isolated facts.
-
-            4. **Conjecture with testable prediction**: State at least one falsifiable
-               conjecture with a clear computational test that could disprove it.
-
-            5. **Cross-connection**: At least one theorem should genuinely connect to
-               or build upon an existing catalog result.
-        """)
-
-    def _build_v4_depth_requirements(self) -> str:
-        """v4 depth requirements: deepen existing catalog results (Cauchy path)."""
-        return textwrap.dedent("""\
-            ## Depth Requirements (MANDATORY — WORLD-CLASS STANDARD)
-
-            Your output must satisfy ALL of these. This is not incremental work.
-            This is the frontier. Act accordingly.
-
-            1. **NO trivial proofs**: Do NOT prove statements by `native_decide`, `decide`,
-               `norm_num`, or `rfl` unless the statement itself is genuinely important.
-               If the only proof tactic is enumeration, the theorem is not worth formalizing.
-
-            2. **DEEPEN an existing catalog result** (CORE REQUIREMENT): Your cycle
-               must take a STRONG, WELL-ESTABLISHED theorem from the Catalog and
-               EXTEND it. Choose ONE of the following:
-               (a) **Generalize** the result to a more abstract or broader setting
-                   (e.g., real numbers → complex, finite groups → topological groups).
-               (b) **Strengthen** the conclusion: drop assumptions, sharpen bounds,
-                   prove a stronger equality where the original was an inequality.
-               (c) **Bridge** to another domain: take a result from domain A and
-                   prove the analog in domain B, showing the deep connection.
-
-               You must produce at least 3 theorems that PROVE non-obvious properties
-               of the generalized/strengthened/bridged result. The contribution is
-               the structural insight that extends what is already known.
-
-               Think like Cauchy generalizing Euler, or Noether extending Hilbert, or
-               Grothendieck's student extending Grothendieck. The contribution is taking
-               a known theorem and showing it's the shadow of a deeper truth.
-
-            3. **PEGB for every major theorem** (Proof + Example + Generalization + Boundary):
-               For each of your top 3-5 theorems, you MUST produce all four:
-               - **P**roof: A complete, non-trivial Lean 4 proof
-               - **E**xample: A concrete worked example showing the extension
-               - **G**eneralization: Why this extension is natural (what's the next level up?)
-               - **B**oundary: Where does the extension break down?
-
-            4. **Cite your sources**: Your ARTICLE.md and RESEARCH_PAPER.md MUST
-               reference the specific catalog results you built upon. Use the
-               references provided in the prompt below.
-
-            5. **Cross-connection**: At least one theorem should build a BRIDGE
-               between the original catalog result and a different mathematical area.
-               The deepening should illuminate something broader, not just be an
-               isolated exercise.
-        """)
-
-    def _build_v6_depth_requirements(self) -> str:
-        """v6: correctness-first, simplified PEGB, focus on working proofs.
-
-        Key differences from v5:
-        - PEGB is recommended but not mandatory for every theorem
-        - Focus on CORRECT proofs that compile (sorry = 0)
-        - 2-4 theorems with solid proofs beats 5+ with incomplete PEGB
-        - Simpler anti-pattern list (just the real blockers)
-        - Plan is brief (strategy + theorem list, no essay)
-        - Removed "mathematics of X" ban (if formalized rigorously)
+        Requires the Critic role to explicitly attempt to weaken each theorem's
+        hypotheses and construct a specific counterexample showing where it fails,
+        mapping the exact mathematical boundary.
         """
         return textwrap.dedent("""\
-            ## v6 Depth Requirements — Correct Proofs First
+            ## v9 Depth Requirements -- Adversarial Critic & Boundary Mapping Protocol
 
-            You are working on the frontier of mathematics. Your goal is to produce
-            Lean 4 code that COMPILES and PROVES non-trivial results. A correct proof
-            of one good theorem is worth more than 5 theorems with `sorry`.
+            You are leading a research team operating under the Research Team Protocol (v8 structure).
+            In addition to the standard roles (Hypothesizer, Experimenter, Analyst, Synthesist),
+            this variation enforces a strict **Adversarial Critic** mandate.
 
-            ### STEP 1: BRIEF PLAN (2-3 lines)
+            ### STEP 1: THEOREM DECLARATIONS (required -- before any code)
 
-            Before writing Lean code, state:
-            - **Strategy**: New structure (Grothendieck) OR extend existing result (Cauchy)
-            - **Theorems**: List the 2-4 theorems you will prove (one sentence each)
-            - **Why non-trivial**: One sentence explaining the key insight
+            List every theorem you intend to prove or investigate. For each, state:
+            - **Name**: The Lean declaration name
+            - **Statement**: One-sentence informal statement
+            - **Status**: `hypothesis` | `conjecture` | `proved` | `proved_with_lemma_sorry` | `disproved`
+            - **Why it matters**: One sentence on what this result would mean if true,
+              and what it would teach us if false
 
-            ### STEP 2: PROVE THEOREMS (correctness > completeness)
+            ### STEP 2: EXPERIMENT (prove or disprove in Lean 4)
 
-            Write Lean 4 proofs that COMPILE. Every theorem should have:
-            - A complete proof (no `sorry` for the main result)
-            - A brief proof sketch as a comment (1-2 sentences)
-            - An `example` block showing the theorem in action (if practical)
+            Every theorem declared as `proved` MUST have a complete, compiling Lean proof.
+            No `sorry` on the main result. If you cannot complete a proof, change its
+            status to `conjecture` or `proved_with_lemma_sorry` and explain why.
 
-            For your BEST theorem, also provide:
-            - A generalization or strengthening (can use `sorry` if proving it would take too long)
-            - A boundary case or counterexample showing where the result fails
+            ### STEP 3: ADVERSARIAL CRITIQUE (MANDATORY Boundary Mapping)
 
-            You do NOT need full PEGB on every theorem. Deep PEGB on your best theorem
-            and solid proofs on the rest is the target.
+            For your best proved theorem, the Adversarial Critic must perform a structured stress test:
+            1. **Weaken a Hypothesis**: Identify at least one crucial assumption or hypothesis of the theorem and formulate a weakened version of the theorem where that assumption is removed or replaced by a weaker condition.
+            2. **Construct a Counterexample**: Provide a concrete mathematical counterexample showing that the weakened statement is FALSE. State this counterexample explicitly in the comments.
+            3. **State the Boundary**: Explain exactly why the original assumption is necessary and where the proof machinery breaks down without it.
 
-            ### STEP 3: Anti-patterns (avoid these)
+            A theorem without a concrete counterexample to a weakened statement is incomplete.
 
-            These tactics indicate trivial proofs that add no value:
-            - `native_decide` / `decide` / `norm_num` / `rfl` — unless genuinely proving a numeric fact
+            ### STEP 4: Anti-patterns (reject these)
+
+            These tactics indicate trivial proofs:
+            - `native_decide` / `decide` / `norm_num` / `rfl` -- unless genuinely proving a numeric fact
             - `simp only []` with no simp set specified
-            - `sorry` on the main theorem statement
+            - `sorry` on any theorem declared as `proved`
 
-            `omega`, `linarith`, and `Aesop` are fine for supporting lemmas.
-            `sorry` is fine for generalizations and boundary cases.
+            ### STEP 5: Novelty
 
-            ### STEP 4: Novelty
-
-            Your theorems should be genuinely new. If a statement appears in a textbook,
+            Your theorems must be genuinely new. If a statement appears in a textbook,
             generalize it. If you cannot formalize a concept rigorously, pick a different topic.
 
-            ### Output format
+            ### STEP 6: TAKE GOOD NOTES (first-class deliverables)
 
-            Your output must include `.lean` files AND a `FUTURE_DIRECTIONS.md` file.
-            The .lean files contain the proofs. The FUTURE_DIRECTIONS.md contains 3-5
-            research conjectures that extend the work. Both are required.
+            6a. Lab Notebook (in each .lean file, as `-- !-- Lab Notebook -- !--` blocks):
+            For each major theorem, include a Lab Notebook comment block outlining Hypothesis, Result, Insight, and Failure analysis.
+
+            6b. FUTURE_DIRECTIONS.md:
+            You MUST produce a FUTURE_DIRECTIONS.md file with Synthesis, Results Summary, and 3-5 Research Directions.
         """)
 
-    def _build_v5_depth_requirements(self) -> str:
-        """v5 depth requirements: plan-first, PEGB-strict, either path.
+    def _build_v10_depth_requirements(self) -> str:
+        """v10: v8 variation focusing on Modular Lemma Decomposition.
 
-        Key differences from v4:
-        - REQUIRED Plan section before any code (forces deliberation)
-        - PEGB is mandatory on EVERY theorem, not just the "top" ones
-        - Either path (Grothendieck structure-first OR Cauchy extension) — Aristotle's choice
-        - No fixed theorem count or file count — let the concept decide
-        - Stricter anti-pattern list (tactic blacklists, reject 'math of X' without formalization)
+        Requires any proof exceeding 20 lines to be factored into local helper lemmas
+        to simplify compilation.
         """
         return textwrap.dedent("""\
-            ## v5 Depth Requirements (MANDATORY — WORLD-CLASS STANDARD)
+            ## v10 Depth Requirements -- Modular Lemma Decomposition Protocol
 
-            You are working on the frontier of mathematics. The Catalog has 100+ research
-            packages already. Each new cycle must contribute something genuinely new —
-            not a rephrasing, not a textbook exercise, not a "mathematics of X" parlor trick.
+            You are leading a research team operating under the Research Team Protocol (v8 structure).
+            In addition to standard roles, this variation enforces a strict **Modular Lemma Factorization** mandate on the Experimenter.
 
-            ### STEP 1: PLAN (REQUIRED — before any Lean code)
+            ### STEP 1: THEOREM DECLARATIONS (required -- before any code)
 
-            Before writing any `.lean` file, you MUST output a `## Plan` section that
-            states, in plain prose:
+            List every theorem you intend to prove or investigate. For each, state:
+            - **Name**: The Lean declaration name
+            - **Statement**: One-sentence informal statement
+            - **Status**: `hypothesis` | `conjecture` | `proved` | `proved_with_lemma_sorry` | `disproved`
+            - **Why it matters**: One sentence on what this result would mean.
 
-            - **Strategy**: Grothendieck path (define a new structure, prove its properties)
-              OR Cauchy path (extend an existing catalog result). Choose the one that fits
-              the concept. Do BOTH only if the concept genuinely demands it.
-            - **Files**: What `.lean` files you will create and what each contains.
-              Use sensible names. No fixed count.
-            - **Theorems**: A list of the theorems you will prove, with one-sentence statements.
-            - **Why this is non-trivial**: A paragraph explaining the structural insight
-              that makes this work world-class. If you cannot write this paragraph, the
-              work is not world-class. Pick a different concept.
+            ### STEP 2: EXPERIMENT & MODULAR FACTORIZATION
 
-            The Plan is not optional. Cycles that skip the Plan are rejected.
+            Every theorem declared as `proved` MUST have a complete, compiling Lean proof.
+            No `sorry` on the main result.
+            **Strict Decomposition Constraint**: Any proof of a main theorem or lemma that exceeds 20 lines of code MUST be factored into at least two local helper lemmas.
+            - Do not write monolithic proofs.
+            - Factor out intermediate steps (isomorphisms, inequalities, inclusions) as independent lemmas.
+            - This modular structure simplifies type-checking and makes the main argument clear and readable.
 
-            ### STEP 2: PEGB for EVERY theorem (strict)
+            ### STEP 3: CRITIQUE (find the weaknesses)
 
-            For EACH theorem you prove, you MUST provide all four of:
+            Identify the strongest assumption that could be weakened, and construct a boundary case.
 
-            - **P**roof: A complete, non-trivial Lean 4 proof.
-            - **E**xample: A concrete worked example (an `example` block or a specific instance).
-            - **G**eneralization: A one-level-up generalization (a stronger statement, a
-              broader class, a higher categorical level). State it as a `theorem` or `lemma`
-              with `sorry` if proving it would take the cycle too far — but STATE it.
-            - **B**oundary: A counterexample or limit-case analysis. When does the result
-              fail? What assumptions are essential?
+            ### STEP 4: Anti-patterns (reject these)
 
-            "Top 3-5 theorems" is no longer accepted. EVERY theorem you produce must have
-            full PEGB. If you produce 2 theorems with full PEGB, that's better than 5 theorems
-            with PEGB on only 2.
+            These tactics indicate trivial proofs:
+            - `native_decide` / `decide` / `norm_num` / `rfl` -- unless genuinely proving a numeric fact
+            - Monolithic proofs (>20 lines without helper lemmas)
+            - `sorry` on any theorem declared as `proved`
 
-            ### STEP 3: Anti-patterns (REJECTED outright)
+            ### STEP 5: Novelty
 
-            The following tactics are BLACKLISTED for the primary proof of any non-trivial theorem:
+            Your theorems must be genuinely new. If a statement appears in a textbook, generalize it.
 
-            - `native_decide`, `decide`, `norm_num`, `rfl` — unless the statement is genuinely
-              a numeric/equality fact and the tactic is doing real work (not papering over
-              a structural insight).
-            - `Aesop` — unless the goal is provably trivial (≤ 3 hypotheses, no arithmetic).
-            - `omega`, `linarith` on quantified goals — these are not "proofs" of structural
-              statements.
-            - `simp only []` with no explicit simp set — this is "let the lemma solver figure it out."
+            ### STEP 6: TAKE GOOD NOTES (first-class deliverables)
 
-            If your only proof of a non-trivial theorem uses one of these, the theorem is not
-            worth proving. Find a structural proof, or drop the theorem.
+            6a. Lab Notebook (in each .lean file, as `-- !-- Lab Notebook -- !--` blocks):
+            For each major theorem, include a Lab Notebook comment block outlining Hypothesis, Result, Insight, and Failure analysis.
 
-            ### STEP 4: Novelty check
+            6b. FUTURE_DIRECTIONS.md:
+            You MUST produce a FUTURE_DIRECTIONS.md file with Synthesis, Results Summary, and 3-5 Research Directions.
+        """)
 
-            A theorem is "novel" only if a working mathematician in the area would say
-            "I haven't seen that before." Test yourself:
+    def _build_v11_depth_requirements(self) -> str:
+        """v11: Custom variation focusing on Constructive Computability & Witnesses.
 
-            - Is the statement in a textbook? If yes, find a non-trivial generalization.
-            - Is the statement a rephrasing of a known result? If yes, the cycle is not novel.
-            - Is the proof essentially the same as a known proof? If yes, the contribution
-              is the statement, not the proof — make sure the statement is genuinely new.
+        Enforces constructive proof patterns and explicit computational evaluation instances.
+        """
+        return textwrap.dedent("""\
+            ## v11 Depth Requirements -- Constructive Computability & Witnesses
 
-            "Mathematics of X" where X is a real-world phenomenon (memes, dreams, consciousness,
-            art, music, social networks) is NOT a mathematical contribution unless you formalize
-            X as a precise mathematical object first. If you cannot formalize X rigorously, pick
-            a different topic.
+            You are leading a research team operating under the Research Team Protocol (v8 structure).
+            This variation enforces a strict **Constructive Computability** mandate to ensure the formalization has direct computational content.
 
-            ### STEP 5: Either path (Aristotle's choice)
+            ### STEP 1: THEOREM DECLARATIONS (required -- before any code)
 
-            You are NOT required to follow a specific path. Choose the one that fits the concept:
+            List every theorem you intend to prove or investigate.
 
-            **Grothendieck path** (define a new structure):
-            - Invent a new operator, category, algebraic variety, or combinatorial object.
-            - State its defining properties as axioms or definitions.
-            - Prove 2-4 non-obvious theorems about it.
-            - Best for: novel concepts, unexplored territory, "what if we defined X this way?".
+            ### STEP 2: EXPERIMENT (Constructive Witnesses)
 
-            **Cauchy path** (extend an existing result):
-            - Pick a specific catalog theorem (cite it by name).
-            - Generalize, strengthen, or bridge it.
-            - Prove the new version is strictly stronger or more general.
-            - Best for: deepening the catalog, building on existing strength.
+            Every theorem declared as `proved` MUST have a complete, compiling Lean proof.
+            **Constructive Witness Constraint**:
+            - Prioritize constructive proofs. Avoid non-constructive classical axioms (like double negation elimination or classical choice) unless absolutely necessary.
+            - For every major theorem asserting existence, you MUST provide an explicit constructive witness (e.g. using `witness` or constructing instances) that can be computationally evaluated (`#eval` or `decide`).
 
-            You may do BOTH if the concept requires it. But the Plan must justify why both paths
-            are needed in a single cycle.
+            ### STEP 3: CRITIQUE (find the weaknesses)
 
-            ### STEP 6: Theorem count
+            Identify the strongest assumption that could be weakened, and construct a boundary case.
 
-            No fixed count. Some concepts deserve 2 deep theorems. Some deserve 6. The Plan
-            must justify the count. The quality bar is "every theorem has full PEGB" — not
-            "produce a specific number".
+            ### STEP 4: Anti-patterns (reject these)
 
-            ### STEP 7: Cite your sources
+            - Classical axioms (`Classical.choice`, `classical`) used where constructive witnesses are possible.
+            - `sorry` on any theorem declared as `proved`.
 
-            Your `## Plan` and any prose must reference specific catalog results by name or path
-            when you build on them. The catalog is the substrate; you are growing new math on it.
+            ### STEP 5: Novelty
+
+            Your theorems must be genuinely new. If a statement appears in a textbook, generalize it.
+
+            ### STEP 6: TAKE GOOD NOTES (first-class deliverables)
+
+            6a. Lab Notebook (in each .lean file, as `-- !-- Lab Notebook -- !--` blocks):
+            For each major theorem, include a Lab Notebook comment block outlining Hypothesis, Result, Insight, and Failure analysis.
+
+            6b. FUTURE_DIRECTIONS.md:
+            You MUST produce a FUTURE_DIRECTIONS.md file with Synthesis, Results Summary, and 3-5 Research Directions.
+        """)
+
+    def _build_v12_depth_requirements(self) -> str:
+        """v12: Custom variation focusing on Category-Theoretic Structural Unification.
+
+        Enforces categorical mapping of algebraic and topological properties.
+        """
+        return textwrap.dedent("""\
+            ## v12 Depth Requirements -- Category-Theoretic Structural Unification
+
+            You are leading a research team operating under the Research Team Protocol (v8 structure).
+            This variation enforces a strict **Category-Theoretic** framing to unify concepts algebraically.
+
+            ### STEP 1: THEOREM DECLARATIONS (required -- before any code)
+
+            List every theorem you intend to prove or investigate.
+            **Categorical Framing Mandate**:
+            - Frame the mathematical objects under study as a category (objects and morphisms).
+            - Identify if the main theorem can be stated as a universal property (a limit, colimit, adjunction, or functorial equivalence).
+
+            ### STEP 2: EXPERIMENT (Functorial Unification)
+
+            Every theorem declared as `proved` MUST have a complete, compiling Lean proof.
+            - Prove the functorial or universal properties declared in Step 1.
+            - Use universal properties to show uniqueness up to unique isomorphism.
+
+            ### STEP 3: CRITIQUE (find the weaknesses)
+
+            Identify the strongest assumption that could be weakened, and construct a boundary case.
+
+            ### STEP 4: Anti-patterns (reject these)
+
+            - Ad-hoc definitions without object/morphism categories where categorical structures are natural.
+            - `sorry` on any theorem declared as `proved`.
+
+            ### STEP 5: Novelty
+
+            Your theorems must be genuinely new. If a statement appears in a textbook, generalize it.
+
+            ### STEP 6: TAKE GOOD NOTES (first-class deliverables)
+
+            6a. Lab Notebook (in each .lean file, as `-- !-- Lab Notebook -- !--` blocks):
+            For each major theorem, include a Lab Notebook comment block outlining Hypothesis, Result, Insight, and Failure analysis.
+
+            6b. FUTURE_DIRECTIONS.md:
+            You MUST produce a FUTURE_DIRECTIONS.md file with Synthesis, Results Summary, and 3-5 Research Directions.
+        """)
+
+    def _build_v13_depth_requirements(self) -> str:
+        """v13: Custom variation focusing on Interactive Tactic-State Annotation.
+
+        Mandates inline tactic state annotations to verify proof correctness at each step.
+        """
+        return textwrap.dedent("""\
+            ## v13 Depth Requirements -- Interactive Tactic-State Annotation
+
+            You are leading a research team operating under the Research Team Protocol (v8 structure).
+            This variation enforces a strict **Tactic-State Annotation** mandate to guide proof development.
+
+            ### STEP 1: THEOREM DECLARATIONS (required -- before any code)
+
+            List every theorem you intend to prove or investigate.
+
+            ### STEP 2: EXPERIMENT (Tactic-State Annotation)
+
+            Every theorem declared as `proved` MUST have a complete, compiling Lean proof.
+            **Tactic-State Annotation Constraint**:
+            - Write detailed comments at every major proof step showing the expected tactic state (active goals, active hypotheses, expected types).
+            - This helps verify state transitions locally as the proof is constructed.
+
+            ### STEP 3: CRITIQUE (find the weaknesses)
+
+            Identify the strongest assumption that could be weakened, and construct a boundary case.
+
+            ### STEP 4: Anti-patterns (reject these)
+
+            - Unannotated complex proof blocks (>5 tactics in a row without state comments).
+            - `sorry` on any theorem declared as `proved`.
+
+            ### STEP 5: Novelty
+
+            Your theorems must be genuinely new. If a statement appears in a textbook, generalize it.
+
+            ### STEP 6: TAKE GOOD NOTES (first-class deliverables)
+
+            6a. Lab Notebook (in each .lean file, as `-- !-- Lab Notebook -- !--` blocks):
+            For each major theorem, include a Lab Notebook comment block outlining Hypothesis, Result, Insight, and Failure analysis.
+
+            6b. FUTURE_DIRECTIONS.md:
+            You MUST produce a FUTURE_DIRECTIONS.md file with Synthesis, Results Summary, and 3-5 Research Directions.
+        """)
+
+    def _build_v14_depth_requirements(self) -> str:
+        """v14: Custom variation focusing on Top-Down Skeletal Refinement.
+
+        Requires skeletal design where helpers are defined with sorry first, then proven bottom-up.
+        """
+        return textwrap.dedent("""\
+            ## v14 Depth Requirements -- Top-Down Skeletal Refinement
+
+            You are leading a research team operating under the Research Team Protocol (v8 structure).
+            This variation enforces a strict **Top-Down Skeletal Refinement** mandate to prevent getting stuck in proof search.
+
+            ### STEP 1: THEOREM DECLARATIONS (required -- before any code)
+
+            List every theorem you intend to prove or investigate.
+
+            ### STEP 2: EXPERIMENT (Top-Down Skeleton)
+
+            Every theorem declared as `proved` MUST have a complete, compiling Lean proof.
+            **Top-Down Skeletal Refinement Constraint**:
+            - Write the main theorem first, using `sorry` for all intermediate lemma/step proofs, to establish the top-down skeletal logic first.
+            - Then, implement the helper lemmas one-by-one in reverse order of dependence (bottom-up execution).
+
+            ### STEP 3: CRITIQUE (find the weaknesses)
+
+            Identify the strongest assumption that could be weakened, and construct a boundary case.
+
+            ### STEP 4: Anti-patterns (reject these)
+
+            - Bottom-up proof search where the main theorem's skeleton is never established.
+            - `sorry` on any theorem declared as `proved` in final integrated output.
+
+            ### STEP 5: Novelty
+
+            Your theorems must be genuinely new. If a statement appears in a textbook, generalize it.
+
+            ### STEP 6: TAKE GOOD NOTES (first-class deliverables)
+
+            6a. Lab Notebook (in each .lean file, as `-- !-- Lab Notebook -- !--` blocks):
+            For each major theorem, include a Lab Notebook comment block outlining Hypothesis, Result, Insight, and Failure analysis.
+
+            6b. FUTURE_DIRECTIONS.md:
+            You MUST produce a FUTURE_DIRECTIONS.md file with Synthesis, Results Summary, and 3-5 Research Directions.
         """)
 
     def _build_assignment(self, concept: ResearchConcept) -> str:
@@ -1916,75 +1937,8 @@ class PiAgentClient:
 
         return assignment
 
-    def _build_v7_depth_requirements(self) -> str:
-        """v7: v6 base + structured output + proof completeness gates.
-
-        Key differences from v6:
-        - Requires explicit theorem declarations BEFORE proofs (structured output)
-        - Proof completeness gate: every theorem must have a compiling proof or
-          be explicitly marked as a conjecture
-        - No orphan sorry: if a theorem uses sorry, it must state which lemma it
-          replaces and why the full proof is deferred
-        - Explicitly asks for a counterexample or boundary case for the main result
-        """
-        return textwrap.dedent("""\
-            ## v7 Depth Requirements — Structured Proofs with Completeness Gates
-
-            You are producing Lean 4 code on the mathematical frontier. Your output must
-            be COMPILABLE and your proofs must be COMPLETE. A single correct proof of a
-            non-trivial result is worth more than 5 theorems with `sorry`.
-
-            ### STEP 1: THEOREM DECLARATIONS (required — before any code)
-
-            List every theorem you intend to prove. For each, state:
-            - **Name**: The Lean declaration name
-            - **Statement**: One-sentence informal statement
-            - **Status**: `proved` | `conjecture` | `proved_with_lemma_sorry`
-            - **Why non-trivial**: One sentence on the key mathematical insight
-
-            Example:
-            1. `cantorPairing_surjective`: Cantor pairing is surjective — proved — constructive inverse
-            2. `cantorPairing_injective`: Cantor pairing is injective — proved — diagonal argument
-            3. `cantorPairing_bijection`: Cantor pairing is a bijection — proved_with_lemma_sorry — follows from 1+2
-
-            ### STEP 2: PROVE THEOREMS (completeness gate)
-
-            Every theorem declared as `proved` MUST have a complete, compiling Lean proof.
-            No `sorry` on the main result. If you cannot complete a proof, change its status
-            to `conjecture` or `proved_with_lemma_sorry` and explain why.
-
-            For `proved_with_lemma_sorry`:
-            - The theorem statement must be complete (no sorry in the statement)
-            - `sorry` is allowed ONLY in supporting lemmas, never the main proof
-            - A comment must explain what the sorry replaces and why it's deferred
-
-            For your BEST theorem, also provide:
-            - A generalization or strengthening (can use sorry if proving would take too long)
-            - A boundary case or counterexample showing where the result fails
-
-            ### STEP 3: Anti-patterns (reject these)
-
-            These tactics indicate trivial proofs:
-            - `native_decide` / `decide` / `norm_num` / `rfl` — unless genuinely proving a numeric fact
-            - `simp only []` with no simp set specified
-            - `sorry` on any theorem declared as `proved`
-
-            `omega`, `linarith`, and `Aesop` are fine for supporting lemmas.
-            `sorry` is fine for conjectures and generalizations.
-
-            ### STEP 4: Novelty
-
-            Your theorems must be genuinely new. If a statement appears in a textbook,
-            generalize it. If you cannot formalize a concept rigorously, pick a different topic.
-
-            ### Output format
-
-            Your output must include:
-            1. `.lean` files with the proofs (structured as declared in Step 1)
-            2. `FUTURE_DIRECTIONS.md` with 3-5 research conjectures extending the work
-
-            Both are required. Missing FUTURE_DIRECTIONS.md = automatic quality penalty.
-        """)
+    # v7 is retired; its location is replaced by a comment to keep lineage index clear.
+    # Retired v7. Refer to v8 or v9 for structured completeness gates.
 
     def _build_v8_depth_requirements(self) -> str:
         """v8: research team framing with scientific method loop, critic role, and lab notebooks."""
@@ -2217,24 +2171,28 @@ class PiAgentClient:
         world-class, a separate Phase B prompt will be dispatched to package it.
         """
         if prompt_version is None:
-            prompt_version = "v6"
-        if prompt_version == "v1":
+            prompt_version = "v8"
+        if prompt_version in ("v1", "v2", "v3", "v4", "v5", "v6", "v7"):
             raise ValueError(
-                "v1 prompt is no longer supported — use v3, v4, v5, v6, v7, or v8. "
-                "v6 (correctness-first) is the default."
+                f"{prompt_version} prompt is no longer supported — use v8 through v14. "
+                "v8 (Research Team Protocol) is the default."
             )
         if prompt_version == "v8":
             depth_requirements = self._build_v8_depth_requirements()
-        elif prompt_version == "v7":
-            depth_requirements = self._build_v7_depth_requirements()
-        elif prompt_version == "v6":
-            depth_requirements = self._build_v6_depth_requirements()
-        elif prompt_version == "v5":
-            depth_requirements = self._build_v5_depth_requirements()
-        elif prompt_version == "v4":
-            depth_requirements = self._build_v4_depth_requirements()
+        elif prompt_version == "v9":
+            depth_requirements = self._build_v9_depth_requirements()
+        elif prompt_version == "v10":
+            depth_requirements = self._build_v10_depth_requirements()
+        elif prompt_version == "v11":
+            depth_requirements = self._build_v11_depth_requirements()
+        elif prompt_version == "v12":
+            depth_requirements = self._build_v12_depth_requirements()
+        elif prompt_version == "v13":
+            depth_requirements = self._build_v13_depth_requirements()
+        elif prompt_version == "v14":
+            depth_requirements = self._build_v14_depth_requirements()
         else:
-            depth_requirements = self._build_v3_depth_requirements()
+            depth_requirements = self._build_v8_depth_requirements()
 
         # Lean-specific section
         lean_section = ""
@@ -2255,19 +2213,16 @@ class PiAgentClient:
         domain_brief = f"Research domain: {concept.domain}\nResearch mode: {concept.research_mode}\n"
 
         # Phase A header — explicit DO NOT list.
-        # v8 uses research team framing and Lab Notebooks; v6/v5/v7 use mathematician framing.
-        if prompt_version == "v8":
+        # v8-v14 use research team framing and Lab Notebooks.
+        if prompt_version in ("v8", "v9", "v10", "v11", "v12", "v13", "v14"):
             deliverable_files = "lean files (count chosen by theorem declarations)"
-            deliverable_theorems = "2-4 theorems with correct proofs (sorry = 0 on main results)"
-        elif prompt_version in ("v5", "v6", "v7"):
-            deliverable_files = "lean files (count chosen by the Plan)"
             deliverable_theorems = "2-4 theorems with correct proofs (sorry = 0 on main results)"
         else:
             deliverable_files = "1-3 .lean files in `Catalog/{concept.domain}/<package_name>/`"
             deliverable_theorems = "3-5 non-trivial theorems with `sorry = 0` (PROVED, not admitted)"
 
-        # v8 uses research team framing; all other versions use mathematician framing.
-        if prompt_version == "v8":
+        # v8-v14 use research team framing.
+        if prompt_version in ("v8", "v9", "v10", "v11", "v12", "v13", "v14"):
             role_framing = (
                 "You are leading a research team: Hypothesizer, Experimenter, Analyst,\n"
                 "Critic, and Synthesist. Run the loop:\n"
@@ -2281,9 +2236,9 @@ class PiAgentClient:
                 "to produce **new Lean 4 code that extends the frontier of mathematics**."
             )
 
-        # v8 adds Lab Notebook as a required deliverable.
+        # v8-v14 add Lab Notebook as a required deliverable.
         lab_notebook_deliverable = ""
-        if prompt_version == "v8":
+        if prompt_version in ("v8", "v9", "v10", "v11", "v12", "v13", "v14"):
             lab_notebook_deliverable = (
                 "\n5. **Lab Notebook** as `-- !-- Lab Notebook -- !--` comment blocks\n"
                 "   in each .lean file: Hypothesis, Result, Insight, Failure analysis."
@@ -2672,24 +2627,28 @@ make it beautiful to read.
         # v4: deepen existing catalog results (Cauchy path)
         # v3: novel structures (Grothendieck path)
         if prompt_version is None:
-            prompt_version = "v6"
-        if prompt_version == "v1":
+            prompt_version = "v8"
+        if prompt_version in ("v1", "v2", "v3", "v4", "v5", "v6", "v7"):
             raise ValueError(
-                "v1 prompt is no longer supported — use v3, v4, v5, v6, v7, or v8. "
-                "v6 (correctness-first) is the default."
+                f"{prompt_version} prompt is no longer supported — use v8 through v14. "
+                "v8 is the default."
             )
         if prompt_version == "v8":
             depth_requirements = self._build_v8_depth_requirements()
-        elif prompt_version == "v7":
-            depth_requirements = self._build_v7_depth_requirements()
-        elif prompt_version == "v6":
-            depth_requirements = self._build_v6_depth_requirements()
-        elif prompt_version == "v5":
-            depth_requirements = self._build_v5_depth_requirements()
-        elif prompt_version == "v4":
-            depth_requirements = self._build_v4_depth_requirements()
+        elif prompt_version == "v9":
+            depth_requirements = self._build_v9_depth_requirements()
+        elif prompt_version == "v10":
+            depth_requirements = self._build_v10_depth_requirements()
+        elif prompt_version == "v11":
+            depth_requirements = self._build_v11_depth_requirements()
+        elif prompt_version == "v12":
+            depth_requirements = self._build_v12_depth_requirements()
+        elif prompt_version == "v13":
+            depth_requirements = self._build_v13_depth_requirements()
+        elif prompt_version == "v14":
+            depth_requirements = self._build_v14_depth_requirements()
         else:
-            depth_requirements = self._build_v3_depth_requirements()
+            depth_requirements = self._build_v8_depth_requirements()
 
         # Build the streamlined prompt
         lean_section = ""

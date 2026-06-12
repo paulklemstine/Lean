@@ -116,21 +116,18 @@ def test_phase_b_prompt_includes_phase_a_lean(research_concept):
 def test_phase_a_prompt_size_reduced(research_concept):
     """Phase A prompt should be smaller than the legacy full prompt.
 
-    The default is v5 (Plan + PEGB + anti-patterns) at ~6K chars. v4 was ~3.7K.
-    Both are still smaller than the 10K A_full legacy prompt.
+    The default is v8 at ~6K chars.
+    Both are still smaller than the 12K A_full legacy prompt.
     """
     from pi_agent_client import PiAgentClient
     client = PiAgentClient.__new__(PiAgentClient)
-    phase_a_v5 = client._build_phase_a_lean_prompt(concept=research_concept)  # default = v5
-    phase_a_v4 = client._build_phase_a_lean_prompt(concept=research_concept, prompt_version="v4")
-    # Both versions should be substantially smaller than the 10K full prompt
-    assert len(phase_a_v5) < 10000, f"v5 Phase A prompt too large: {len(phase_a_v5)} chars"
-    assert len(phase_a_v4) < 10000, f"v4 Phase A prompt too large: {len(phase_a_v4)} chars"
-    # v4 should be smaller than v5 (v5 has Plan + strict PEGB)
-    assert len(phase_a_v4) < len(phase_a_v5), \
-        f"v4 ({len(phase_a_v4)}) should be smaller than v5 ({len(phase_a_v5)})"
+    phase_a_v8 = client._build_phase_a_lean_prompt(concept=research_concept)  # default = v8
+    phase_a_v9 = client._build_phase_a_lean_prompt(concept=research_concept, prompt_version="v9")
+    # Both versions should be substantially smaller than the 12K full prompt
+    assert len(phase_a_v8) < 12000, f"v8 Phase A prompt too large: {len(phase_a_v8)} chars"
+    assert len(phase_a_v9) < 12000, f"v9 Phase A prompt too large: {len(phase_a_v9)} chars"
     # Both should be substantial
-    assert len(phase_a_v5) > 1000
+    assert len(phase_a_v8) > 1000
 
 
 def test_phase_a_routing(research_concept):
@@ -193,7 +190,7 @@ def test_adaptive_threshold_cold_start(temp_workspace):
 
 
 def test_adaptive_threshold_warm(temp_workspace):
-    """With 50+ records, threshold uses p70 of last 50 quality scores."""
+    """With 50+ records, threshold uses p60 of last 50 quality scores."""
     # Create cycle_analytics.json with 60 records of known quality
     records = []
     for i in range(60):
@@ -208,15 +205,15 @@ def test_adaptive_threshold_warm(temp_workspace):
     ext = KnowledgeExtractor.__new__(KnowledgeExtractor)
     ext.workspace = temp_workspace
     threshold = ext._adaptive_phase_b_threshold()
-    # p70 of last 50 (which are 0.10 to 0.59): p70 = 0.10 + 0.70*0.49 = ~0.443
-    expected = sorted(r["quality_score"] for r in records[-50:])[int(0.7 * 49)]
-    # Clamp to [0.4, 0.6]
-    expected = max(0.4, min(0.6, expected))
+    # p60 of last 50 (which are 0.10 to 0.59): p60 = 0.10 + 0.60*0.49 = ~0.39
+    expected = sorted(r["quality_score"] for r in records[-50:])[int(0.6 * 49)]
+    # Clamp to [0.30, 0.6]
+    expected = max(0.30, min(0.6, expected))
     assert abs(threshold - expected) < 0.01, f"Expected ~{expected}, got {threshold}"
 
 
 def test_adaptive_threshold_clamped_low(temp_workspace):
-    """Threshold never goes below 0.4 even if p70 is lower."""
+    """Threshold never goes below 0.30 even if p60 is lower."""
     records = []
     for i in range(60):
         records.append({
@@ -229,7 +226,7 @@ def test_adaptive_threshold_clamped_low(temp_workspace):
     ext = KnowledgeExtractor.__new__(KnowledgeExtractor)
     ext.workspace = temp_workspace
     threshold = ext._adaptive_phase_b_threshold()
-    assert threshold >= 0.4, f"Threshold {threshold} below floor 0.4"
+    assert threshold >= 0.30, f"Threshold {threshold} below floor 0.30"
 
 
 def test_adaptive_threshold_clamped_high(temp_workspace):
@@ -269,19 +266,19 @@ def test_adaptive_threshold_caches(temp_workspace):
 
 def test_phase_b_skipped_on_low_quality(research_job, temp_workspace):
     """Phase A Q < threshold → Phase B skipped, phase='A_only'."""
-    # Setup: 60 records with quality 0.3 (well below threshold)
-    # p70 of these is 0.3, but clamped to 0.4 (the floor)
-    records = [{"quality_score": 0.3, "timestamp": "2026-06-01"}] * 60
+    # Setup: 60 records with quality 0.2 (well below threshold)
+    # p60 of these is 0.2, but clamped to 0.30 (the floor)
+    records = [{"quality_score": 0.2, "timestamp": "2026-06-01"}] * 60
     (temp_workspace / "cycle_analytics.json").write_text(json.dumps({"records": records}))
     from knowledge_extractor import KnowledgeExtractor
     ext = KnowledgeExtractor.__new__(KnowledgeExtractor)
     ext.workspace = temp_workspace
 
     threshold = ext._adaptive_phase_b_threshold()
-    # Threshold is at the floor (0.4) because all scores are 0.3
-    assert threshold == 0.4, f"Expected floor of 0.4, got {threshold}"
-    # A quality of 0.3 is below the threshold
-    phase_a_q = 0.3
+    # Threshold is at the floor (0.30) because all scores are 0.2
+    assert threshold == 0.30, f"Expected floor of 0.30, got {threshold}"
+    # A quality of 0.2 is below the threshold
+    phase_a_q = 0.2
     assert phase_a_q < threshold  # Phase B would be skipped
     if phase_a_q < threshold:
         research_job.phase = "A_only"
@@ -292,17 +289,17 @@ def test_phase_b_skipped_on_low_quality(research_job, temp_workspace):
 
 def test_phase_b_dispatched_on_high_quality(research_job, temp_workspace):
     """Phase A Q >= threshold → Phase B dispatched, phase='B'."""
-    # Same setup: threshold clamps to 0.4
-    records = [{"quality_score": 0.3, "timestamp": "2026-06-01"}] * 60
+    # Same setup: threshold clamps to 0.30
+    records = [{"quality_score": 0.2, "timestamp": "2026-06-01"}] * 60
     (temp_workspace / "cycle_analytics.json").write_text(json.dumps({"records": records}))
     from knowledge_extractor import KnowledgeExtractor
     ext = KnowledgeExtractor.__new__(KnowledgeExtractor)
     ext.workspace = temp_workspace
 
     threshold = ext._adaptive_phase_b_threshold()
-    assert threshold == 0.4
-    # A quality of 0.5 is above the floor
-    research_job.quality_score = 0.5
+    assert threshold == 0.30
+    # A quality of 0.4 is above the floor
+    research_job.quality_score = 0.4
     research_job.result_lean = "theorem foo : True := trivial"
     if research_job.quality_score >= threshold and research_job.result_lean:
         research_job.phase = "B"
@@ -329,18 +326,18 @@ def test_research_job_carries_two_phases(research_job):
 
 
 def test_phase_a_prompt_version_independent(research_concept):
-    """Phase A can use v3 or v4 — the A/B test still works in Phase A."""
+    """Phase A can use v8 or v9 — the A/B test still works in Phase A."""
     from pi_agent_client import PiAgentClient
     client = PiAgentClient.__new__(PiAgentClient)
-    p_v3 = client._build_phase_a_lean_prompt(concept=research_concept, prompt_version="v3")
-    p_v4 = client._build_phase_a_lean_prompt(concept=research_concept, prompt_version="v4")
-    # v3 emphasizes novel structures
-    assert "novel mathematical structure" in p_v3
-    # v4 emphasizes deepening existing results
-    assert "DEEPEN an existing catalog result" in p_v4
+    p_v8 = client._build_phase_a_lean_prompt(concept=research_concept, prompt_version="v8")
+    p_v9 = client._build_phase_a_lean_prompt(concept=research_concept, prompt_version="v9")
+    # v8 emphasizes Research Team Protocol
+    assert "Research Team Protocol" in p_v8
+    # v9 emphasizes adversarial critic
+    assert "Adversarial Critic" in p_v9 or "weakened" in p_v9.lower()
     # Both have Phase A header
-    assert "PHASE A: LEAN 4 ONLY" in p_v3
-    assert "PHASE A: LEAN 4 ONLY" in p_v4
+    assert "PHASE A: LEAN 4 ONLY" in p_v8
+    assert "PHASE A: LEAN 4 ONLY" in p_v9
 
 
 # ─── Analytics tests ─────────────────────────────────────────────────────
