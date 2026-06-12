@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "402dac72",
     "filename": "rigorous_formal_foundations_for_the_collatz_conj.json",
     "pkg_num": 21,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4422962891379977,
     "title": "Rigorous Formal Foundations for Collatz Contraction: The Sharp Logarithmic Threshold"
   },
   {
@@ -626,8 +626,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "rigorous_formal_foundations_for_the_collatz_conj",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4422962891379977,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Rigorous Formal Foundations for Collatz Contraction: The Sharp Logarithmic Threshold"
     }
