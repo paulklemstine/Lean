@@ -399,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (Array.isArray(data.interactive_demos)) {
                         data.interactive_demos.forEach((d, i) => {
                             if (typeof d === 'object' && d.html && d.html.trim()) {
-                                const name = (d.name || `interactive_${i+1}`).replace(/[^a-zA-Z0-9_]/g, '_');
+                                const name = (d.title || d.name || `interactive_${i+1}`).replace(/[^a-zA-Z0-9_]/g, '_');
                                 zip.file(`interactive_demos/${name}.html`, d.html);
                             }
                         });
@@ -675,7 +675,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const title = document.createElement('span');
             title.className = 'code-title';
-            title.textContent = item.name || `Interactive Demo ${idx + 1}`;
+            title.textContent = item.title || item.name || `Interactive Demo ${idx + 1}`;
 
             header.appendChild(title);
 
