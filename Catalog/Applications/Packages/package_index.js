@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-12T14:58:37Z",
+    "domain": "Applications",
+    "exp_id": "51df7a4d",
+    "filename": "the_file_catalognoveltygilbertvarshamovlean_closes.json",
+    "pkg_num": 31,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "The Code-Size Sandwich: Sphere-Packing and Gilbert-Varshamov Bounds"
+  },
+  {
     "date": "2026-06-12T14:24:02Z",
     "domain": "Applications",
     "exp_id": "2de6a6f2",
@@ -514,6 +524,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Analytic Bridge for Combinatorial Species: Inversion, Differentiation, and Pointing"
   },
+  "the_file_catalognoveltygilbertvarshamovlean_closes.json": {
+    "domain": "Applications",
+    "exp_id": "51df7a4d",
+    "source_exp_ids": [
+      "26dedf74"
+    ],
+    "title": "The Code-Size Sandwich: Sphere-Packing and Gilbert-Varshamov Bounds"
+  },
   "the_file_prooftheoreticordinalsepsilonlean_connect.json": {
     "domain": "Geometry",
     "exp_id": "5adb296d",
@@ -579,7 +597,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T01:35:15Z",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 91,
       "id": "this_cycle_formalized_a_self_contained_fragment_of",
       "primary_domain": "Bridges",
       "priority_score": 0.4107094228460233,
@@ -590,7 +608,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T02:44:01Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 271,
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
       "primary_domain": "Bridges",
       "priority_score": 0.60229,
@@ -601,7 +619,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:51:59Z",
       "domain": "Algebra",
-      "hue": 91,
+      "hue": 270,
       "id": "this_cycle_isolated_the_primitivity_layer_of_fibon",
       "primary_domain": "Algebra",
       "priority_score": 0.66176,
@@ -612,7 +630,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:38Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 91,
       "id": "close_proofs_arithmetic_mirror_symmetry_for_calabi",
       "primary_domain": "Bridges",
       "priority_score": 0.4038523076923077,
@@ -623,7 +641,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:55Z",
       "domain": "Applications",
-      "hue": 359,
+      "hue": 270,
       "id": "close_proofs_close_proofs_one_way_functions_existe",
       "primary_domain": "Bridges",
       "priority_score": 0.52037,
@@ -634,7 +652,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:26:56Z",
       "domain": "Computation",
-      "hue": 91,
+      "hue": 271,
       "id": "our_exists_revsim_of_surjective_proves_that_surjec",
       "primary_domain": "Computation",
       "priority_score": 0.65648,
@@ -656,7 +674,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:03Z",
       "domain": "Algebra",
-      "hue": 91,
+      "hue": 95,
       "id": "algebraic_statistics_markov_bases_for_contingency_",
       "primary_domain": "Algebra",
       "priority_score": 0.63808,
@@ -667,7 +685,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:20Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 271,
       "id": "the_current_formalization_uses_an_abstract_dsepora",
       "primary_domain": "Algebra",
       "priority_score": 0.73536,
@@ -678,7 +696,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:04:43Z",
       "domain": "Cryptography",
-      "hue": 90,
+      "hue": 292,
       "id": "close_proofs_close_proofs_this_cycle_replaced_the_",
       "primary_domain": "Cryptography",
       "priority_score": 0.6270279310344827,
@@ -689,7 +707,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:05:08Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 95,
       "id": "extend_the_integration_deficiency_framework_to_a_f",
       "primary_domain": "Algebra",
       "priority_score": 0.569817731958763,
@@ -700,7 +718,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:05:26Z",
       "domain": "Algebra",
-      "hue": 271,
+      "hue": 270,
       "id": "the_current_framework_uses_a_fixed_novelty_thresho",
       "primary_domain": "Algebra",
       "priority_score": 0.5326478527607362,
@@ -711,7 +729,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:40:28Z",
       "domain": "Applications",
-      "hue": 271,
+      "hue": 90,
       "id": "close_proofs_we_proved_that_the_biconjugate_satisf",
       "primary_domain": "Bridges",
       "priority_score": 0.5784016886543535,
@@ -722,7 +740,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T07:37:45Z",
       "domain": "Algebra",
-      "hue": 91,
+      "hue": 272,
       "id": "close_proofs_close_proofs_cobhams_theorem_1972_sta",
       "primary_domain": "Algebra",
       "priority_score": 0.6822099399599733,
@@ -733,7 +751,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T08:13:30Z",
       "domain": "Novelty",
-      "hue": 92,
+      "hue": 91,
       "id": "the_file_basiclean_establishes_a_fully_formal_axio",
       "primary_domain": "Bridges",
       "priority_score": 0.4599545454545455,
@@ -744,7 +762,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T08:13:58Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 275,
       "id": "close_proofs_close_proofs_this_cycle_added_catalog",
       "primary_domain": "Bridges",
       "priority_score": 0.7157600000000001,
@@ -755,7 +773,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T09:34:00Z",
       "domain": "Novelty",
-      "hue": 95,
+      "hue": 92,
       "id": "the_current_formalization_establishes_the_structur",
       "primary_domain": "Bridges",
       "priority_score": 0.6881600000000001,
@@ -766,7 +784,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T09:34:18Z",
       "domain": "Cryptography",
-      "hue": 271,
+      "hue": 90,
       "id": "close_proofs_this_cycle_isolated_the_arithmetic_co",
       "primary_domain": "Cryptography",
       "priority_score": 0.4453462700360554,
@@ -777,7 +795,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T09:34:39Z",
       "domain": "MachineLearning",
-      "hue": 270,
+      "hue": 92,
       "id": "close_proofs_the_file_basiclean_establishes_a_full",
       "primary_domain": "MachineLearning",
       "priority_score": 0.6913777777777779,
@@ -788,7 +806,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T10:10:02Z",
       "domain": "Applications",
-      "hue": 275,
+      "hue": 90,
       "id": "close_proofs_bridge_stone_duality_as_a_bridge_betw",
       "primary_domain": "Bridges",
       "priority_score": 0.6744679245283018,
@@ -799,7 +817,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T10:10:36Z",
       "domain": "Applications",
-      "hue": 91,
+      "hue": 95,
       "id": "rigorous_formal_foundations_for_the_collatz_conj",
       "primary_domain": "Bridges",
       "priority_score": 0.4422962891379977,
@@ -821,7 +839,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T10:46:10Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 271,
       "id": "close_proofs_arithmetic_universality_in_cellular_a",
       "primary_domain": "Bridges",
       "priority_score": 0.46680579704921854,
@@ -832,7 +850,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T11:56:43Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 281,
       "id": "close_proofs_close_proofs_formalized_bridge_betwee",
       "primary_domain": "Bridges",
       "priority_score": 0.6064691302466465,
@@ -843,7 +861,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T13:13:04Z",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 292,
       "id": "close_proofs_this_cycle_replaced_the_softmax_score",
       "primary_domain": "Bridges",
       "priority_score": 0.4600000000000001,
@@ -854,7 +872,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T13:13:26Z",
       "domain": "Bridges",
-      "hue": 91,
+      "hue": 275,
       "id": "the_file_tropicalvaluationlimitbridgelean_formaliz",
       "primary_domain": "Bridges",
       "priority_score": 0.69648,
@@ -865,7 +883,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T13:48:01Z",
       "domain": "Geometry",
-      "hue": 90,
+      "hue": 92,
       "id": "close_proofs_thermodynamic_proof_system_tps_framew",
       "primary_domain": "Geometry",
       "priority_score": 0.6592800000000001,
@@ -876,7 +894,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T13:48:24Z",
       "domain": "Geometry",
-      "hue": 271,
+      "hue": 272,
       "id": "the_file_prooftheoreticordinalsepsilonlean_connect",
       "primary_domain": "Geometry",
       "priority_score": 0.5413600000000001,
@@ -898,13 +916,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T14:24:02Z",
       "domain": "Applications",
-      "hue": 92,
+      "hue": 90,
       "id": "12_fully_proved_theorems_zero_sorry_formalizing_th",
       "primary_domain": "Bridges",
       "priority_score": 0.7159200000000001,
       "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Complexity-Barrier Lattice: A Distributive-Lattice Theory of Obstructions to P vs NP"
+    },
+    {
+      "date": "2026-06-12T14:58:37Z",
+      "domain": "Applications",
+      "hue": 270,
+      "id": "the_file_catalognoveltygilbertvarshamovlean_closes",
+      "primary_domain": "Bridges",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "icosahedron",
+      "title": "The Code-Size Sandwich: Sphere-Packing and Gilbert-Varshamov Bounds"
     }
   ]
 };
