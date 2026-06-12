@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "bc5a47bb",
     "filename": "close_proofs_the_file_basiclean_establishes_a_full.json",
     "pkg_num": 19,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6913777777777779,
     "title": "The Origami of Deep Networks: ReLU Depth Separation via the Tent Map"
   },
   {
@@ -568,8 +568,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "close_proofs_the_file_basiclean_establishes_a_full",
       "primary_domain": "MachineLearning",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6913777777777779,
+      "quality": "partial",
       "shape": "sphere_rings",
       "title": "The Origami of Deep Networks: ReLU Depth Separation via the Tent Map"
     }
