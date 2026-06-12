@@ -7,7 +7,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T01:35:15Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
@@ -16,7 +16,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T02:44:01Z",
-      "hue": 271
+      "hue": 281
     },
     {
       "id": "this_cycle_isolated_the_primitivity_layer_of_fibon",
@@ -25,7 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-12T03:51:59Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "close_proofs_arithmetic_mirror_symmetry_for_calabi",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T03:52:38Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "close_proofs_close_proofs_one_way_functions_existe",
@@ -43,7 +43,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T03:52:55Z",
-      "hue": 280
+      "hue": 95
     },
     {
       "id": "our_exists_revsim_of_surjective_proves_that_surjec",
@@ -61,7 +61,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T04:27:45Z",
-      "hue": 90
+      "hue": 275
     },
     {
       "id": "algebraic_statistics_markov_bases_for_contingency_",
@@ -79,7 +79,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-12T04:28:20Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "close_proofs_close_proofs_this_cycle_replaced_the_",
@@ -88,7 +88,7 @@
       "primary_domain": "Cryptography",
       "shape": "dodecahedron",
       "date": "2026-06-12T06:04:43Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "extend_the_integration_deficiency_framework_to_a_f",
@@ -97,7 +97,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-12T06:05:08Z",
-      "hue": 92
+      "hue": 270
     },
     {
       "id": "the_current_framework_uses_a_fixed_novelty_thresho",
@@ -106,7 +106,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-12T06:05:26Z",
-      "hue": 90
+      "hue": 270
     },
     {
       "id": "close_proofs_we_proved_that_the_biconjugate_satisf",
@@ -124,7 +124,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-12T07:37:45Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "the_file_basiclean_establishes_a_fully_formal_axio",
@@ -133,7 +133,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T08:13:30Z",
-      "hue": 280
+      "hue": 90
     },
     {
       "id": "close_proofs_close_proofs_this_cycle_added_catalog",
@@ -142,7 +142,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T08:13:58Z",
-      "hue": 91
+      "hue": 275
+    },
+    {
+      "id": "the_current_formalization_establishes_the_structur",
+      "title": "The Geometry of Consensus: Single-Peaked Preferences are Flat",
+      "domain": "Novelty",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-12T09:34:00Z",
+      "hue": 270
     }
   ],
   "edges": [],

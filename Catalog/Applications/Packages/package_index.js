@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-12T09:34:00Z",
+    "domain": "Novelty",
+    "exp_id": "1f5be36f",
+    "filename": "the_current_formalization_establishes_the_structur.json",
+    "pkg_num": 17,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "The Geometry of Consensus: Single-Peaked Preferences are Flat"
+  },
+  {
     "date": "2026-06-12T08:13:58Z",
     "domain": "Novelty",
     "exp_id": "c3e56876",
@@ -246,6 +256,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Holographic Verification of Tree-Structured Proofs"
   },
+  "the_current_formalization_establishes_the_structur.json": {
+    "domain": "Novelty",
+    "exp_id": "1f5be36f",
+    "source_exp_ids": [
+      "7e292267"
+    ],
+    "title": "The Geometry of Consensus: Single-Peaked Preferences are Flat"
+  },
   "the_current_formalization_uses_an_abstract_dsepora.json": {
     "domain": "Algebra",
     "exp_id": "2ce3e872",
@@ -305,7 +323,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T01:35:15Z",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 270,
       "id": "this_cycle_formalized_a_self_contained_fragment_of",
       "primary_domain": "Bridges",
       "priority_score": 0.4107094228460233,
@@ -316,7 +334,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T02:44:01Z",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 281,
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
       "primary_domain": "Bridges",
       "priority_score": 0.60229,
@@ -327,7 +345,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:51:59Z",
       "domain": "Algebra",
-      "hue": 90,
+      "hue": 270,
       "id": "this_cycle_isolated_the_primitivity_layer_of_fibon",
       "primary_domain": "Algebra",
       "priority_score": 0.66176,
@@ -338,7 +356,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:38Z",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 91,
       "id": "close_proofs_arithmetic_mirror_symmetry_for_calabi",
       "primary_domain": "Bridges",
       "priority_score": 0.4038523076923077,
@@ -349,7 +367,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:55Z",
       "domain": "Applications",
-      "hue": 280,
+      "hue": 95,
       "id": "close_proofs_close_proofs_one_way_functions_existe",
       "primary_domain": "Bridges",
       "priority_score": 0.52037,
@@ -371,7 +389,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:27:45Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 275,
       "id": "rigorous_formal_framework_for_holographic_proo",
       "primary_domain": "Bridges",
       "priority_score": 0.47824,
@@ -393,7 +411,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:20Z",
       "domain": "Algebra",
-      "hue": 90,
+      "hue": 270,
       "id": "the_current_formalization_uses_an_abstract_dsepora",
       "primary_domain": "Algebra",
       "priority_score": 0.73536,
@@ -404,7 +422,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:04:43Z",
       "domain": "Cryptography",
-      "hue": 271,
+      "hue": 91,
       "id": "close_proofs_close_proofs_this_cycle_replaced_the_",
       "primary_domain": "Cryptography",
       "priority_score": 0.6270279310344827,
@@ -415,7 +433,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:05:08Z",
       "domain": "Algebra",
-      "hue": 92,
+      "hue": 270,
       "id": "extend_the_integration_deficiency_framework_to_a_f",
       "primary_domain": "Algebra",
       "priority_score": 0.569817731958763,
@@ -426,7 +444,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:05:26Z",
       "domain": "Algebra",
-      "hue": 90,
+      "hue": 270,
       "id": "the_current_framework_uses_a_fixed_novelty_thresho",
       "primary_domain": "Algebra",
       "priority_score": 0.5326478527607362,
@@ -448,7 +466,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T07:37:45Z",
       "domain": "Algebra",
-      "hue": 91,
+      "hue": 90,
       "id": "close_proofs_close_proofs_cobhams_theorem_1972_sta",
       "primary_domain": "Algebra",
       "priority_score": 0.6822099399599733,
@@ -459,7 +477,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T08:13:30Z",
       "domain": "Novelty",
-      "hue": 280,
+      "hue": 90,
       "id": "the_file_basiclean_establishes_a_fully_formal_axio",
       "primary_domain": "Bridges",
       "priority_score": 0.4599545454545455,
@@ -470,13 +488,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T08:13:58Z",
       "domain": "Novelty",
-      "hue": 91,
+      "hue": 275,
       "id": "close_proofs_close_proofs_this_cycle_added_catalog",
       "primary_domain": "Bridges",
       "priority_score": 0.7157600000000001,
       "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Single Move That Connects Every Table: Markov Basis of the 2x2x2 No-Three-Way Interaction Model"
+    },
+    {
+      "date": "2026-06-12T09:34:00Z",
+      "domain": "Novelty",
+      "hue": 270,
+      "id": "the_current_formalization_establishes_the_structur",
+      "primary_domain": "Bridges",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "icosahedron",
+      "title": "The Geometry of Consensus: Single-Peaked Preferences are Flat"
     }
   ]
 };
