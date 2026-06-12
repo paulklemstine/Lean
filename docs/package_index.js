@@ -4,6 +4,46 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-12T19:38:07Z",
+    "domain": "Cryptography",
+    "exp_id": "026d95cd",
+    "filename": "close_proofs_formally_verified_framework_computati.json",
+    "pkg_num": 45,
+    "quality": "partial",
+    "quality_score": 0.6783541984732825,
+    "title": "The Fibonacci Rank-of-Apparition Map as a Lattice Adjoint"
+  },
+  {
+    "date": "2026-06-12T19:37:49Z",
+    "domain": "Logic",
+    "exp_id": "112283ee",
+    "filename": "the_file_computationeastinknilllean_isolates_the_a.json",
+    "pkg_num": 44,
+    "quality": "partial",
+    "quality_score": 0.528,
+    "title": "The Algebraic Kernel of the Eastin\u2013Knill No-Go Theorem"
+  },
+  {
+    "date": "2026-06-12T19:37:27Z",
+    "domain": "Novelty",
+    "exp_id": "039d1273",
+    "filename": "rigorous_lean_4_formalization_of_provability_logic.json",
+    "pkg_num": 43,
+    "quality": "partial",
+    "quality_score": 0.518,
+    "title": "Polymodal Provability, Ordinal Ranks, and the Category of Goedel-Loeb Frames"
+  },
+  {
+    "date": "2026-06-12T19:37:08Z",
+    "domain": "Logic",
+    "exp_id": "297d1b03",
+    "filename": "this_cycle_moved_the_catalogs_dream_logic_line_of_.json",
+    "pkg_num": 42,
+    "quality": "partial",
+    "quality_score": 0.65664,
+    "title": "Dream Logic II: The Structural Meta-Theory of Paraconsistent Consequence"
+  },
+  {
     "date": "2026-06-12T18:51:40Z",
     "domain": "Geometry",
     "exp_id": "89c02d7b",
@@ -504,6 +544,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Close Proofs: Tropicalization as the Image of a Non-Archimedean Valuation"
   },
+  "close_proofs_formally_verified_framework_computati.json": {
+    "domain": "Cryptography",
+    "exp_id": "026d95cd",
+    "source_exp_ids": [
+      "890ec8d0"
+    ],
+    "title": "The Fibonacci Rank-of-Apparition Map as a Lattice Adjoint"
+  },
   "close_proofs_the_file_basiclean_establishes_a_full.json": {
     "domain": "MachineLearning",
     "exp_id": "bc5a47bb",
@@ -616,6 +664,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Holographic Verification of Tree-Structured Proofs"
   },
+  "rigorous_lean_4_formalization_of_provability_logic.json": {
+    "domain": "Novelty",
+    "exp_id": "039d1273",
+    "source_exp_ids": [
+      "e406e7e8"
+    ],
+    "title": "Polymodal Provability, Ordinal Ranks, and the Category of Goedel-Loeb Frames"
+  },
   "the_current_formalization_establishes_the_structur.json": {
     "domain": "Novelty",
     "exp_id": "1f5be36f",
@@ -663,6 +719,14 @@ window.PACKAGE_DB_INDEX = {
       "26dedf74"
     ],
     "title": "The Code-Size Sandwich: Sphere-Packing and Gilbert-Varshamov Bounds"
+  },
+  "the_file_computationeastinknilllean_isolates_the_a.json": {
+    "domain": "Logic",
+    "exp_id": "112283ee",
+    "source_exp_ids": [
+      "fd181df7"
+    ],
+    "title": "The Algebraic Kernel of the Eastin\u2013Knill No-Go Theorem"
   },
   "the_file_logiclobfixedpointlean_isolates_the_purel.json": {
     "domain": "Bridges",
@@ -743,6 +807,14 @@ window.PACKAGE_DB_INDEX = {
       "d0fd806b"
     ],
     "title": "Strong Divisibility Sequences: Primitive Divisors and the Calculus of Apparition"
+  },
+  "this_cycle_moved_the_catalogs_dream_logic_line_of_.json": {
+    "domain": "Logic",
+    "exp_id": "297d1b03",
+    "source_exp_ids": [
+      "40aa69a1"
+    ],
+    "title": "Dream Logic II: The Structural Meta-Theory of Paraconsistent Consequence"
   }
 };
 
@@ -810,7 +882,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:38Z",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 90,
       "id": "close_proofs_arithmetic_mirror_symmetry_for_calabi",
       "primary_domain": "Bridges",
       "priority_score": 0.4038523076923077,
@@ -832,7 +904,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:26:56Z",
       "domain": "Computation",
-      "hue": 90,
+      "hue": 92,
       "id": "our_exists_revsim_of_surjective_proves_that_surjec",
       "primary_domain": "Computation",
       "priority_score": 0.65648,
@@ -843,7 +915,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:27:45Z",
       "domain": "Novelty",
-      "hue": 275,
+      "hue": 270,
       "id": "rigorous_formal_framework_for_holographic_proo",
       "primary_domain": "Bridges",
       "priority_score": 0.47824,
@@ -854,7 +926,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:03Z",
       "domain": "Algebra",
-      "hue": 91,
+      "hue": 90,
       "id": "algebraic_statistics_markov_bases_for_contingency_",
       "primary_domain": "Algebra",
       "priority_score": 0.63808,
@@ -865,7 +937,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:20Z",
       "domain": "Algebra",
-      "hue": 271,
+      "hue": 90,
       "id": "the_current_formalization_uses_an_abstract_dsepora",
       "primary_domain": "Algebra",
       "priority_score": 0.73536,
@@ -876,7 +948,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:04:43Z",
       "domain": "Cryptography",
-      "hue": 90,
+      "hue": 91,
       "id": "close_proofs_close_proofs_this_cycle_replaced_the_",
       "primary_domain": "Cryptography",
       "priority_score": 0.6270279310344827,
@@ -887,7 +959,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:05:08Z",
       "domain": "Algebra",
-      "hue": 90,
+      "hue": 270,
       "id": "extend_the_integration_deficiency_framework_to_a_f",
       "primary_domain": "Algebra",
       "priority_score": 0.569817731958763,
@@ -898,7 +970,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:05:26Z",
       "domain": "Algebra",
-      "hue": 281,
+      "hue": 270,
       "id": "the_current_framework_uses_a_fixed_novelty_thresho",
       "primary_domain": "Algebra",
       "priority_score": 0.5326478527607362,
@@ -909,7 +981,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:40:28Z",
       "domain": "Applications",
-      "hue": 92,
+      "hue": 91,
       "id": "close_proofs_we_proved_that_the_biconjugate_satisf",
       "primary_domain": "Bridges",
       "priority_score": 0.5784016886543535,
@@ -931,7 +1003,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T08:13:30Z",
       "domain": "Novelty",
-      "hue": 292,
+      "hue": 91,
       "id": "the_file_basiclean_establishes_a_fully_formal_axio",
       "primary_domain": "Bridges",
       "priority_score": 0.4599545454545455,
@@ -942,7 +1014,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T08:13:58Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 270,
       "id": "close_proofs_close_proofs_this_cycle_added_catalog",
       "primary_domain": "Bridges",
       "priority_score": 0.7157600000000001,
@@ -953,7 +1025,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T09:34:00Z",
       "domain": "Novelty",
-      "hue": 292,
+      "hue": 270,
       "id": "the_current_formalization_establishes_the_structur",
       "primary_domain": "Bridges",
       "priority_score": 0.6881600000000001,
@@ -975,7 +1047,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T09:34:39Z",
       "domain": "MachineLearning",
-      "hue": 92,
+      "hue": 271,
       "id": "close_proofs_the_file_basiclean_establishes_a_full",
       "primary_domain": "MachineLearning",
       "priority_score": 0.6913777777777779,
@@ -986,7 +1058,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T10:10:02Z",
       "domain": "Applications",
-      "hue": 100,
+      "hue": 270,
       "id": "close_proofs_bridge_stone_duality_as_a_bridge_betw",
       "primary_domain": "Bridges",
       "priority_score": 0.6744679245283018,
@@ -997,7 +1069,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T10:10:36Z",
       "domain": "Applications",
-      "hue": 91,
+      "hue": 270,
       "id": "rigorous_formal_foundations_for_the_collatz_conj",
       "primary_domain": "Bridges",
       "priority_score": 0.4422962891379977,
@@ -1008,7 +1080,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T10:45:48Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 91,
       "id": "close_proofs_the_new_file_catalogmachinelearningpe",
       "primary_domain": "Bridges",
       "priority_score": 0.7564252631578948,
@@ -1019,7 +1091,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T10:46:10Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 270,
       "id": "close_proofs_arithmetic_universality_in_cellular_a",
       "primary_domain": "Bridges",
       "priority_score": 0.46680579704921854,
@@ -1030,7 +1102,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T11:56:43Z",
       "domain": "Applications",
-      "hue": 92,
+      "hue": 91,
       "id": "close_proofs_close_proofs_formalized_bridge_betwee",
       "primary_domain": "Bridges",
       "priority_score": 0.6064691302466465,
@@ -1052,7 +1124,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T13:13:26Z",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 271,
       "id": "the_file_tropicalvaluationlimitbridgelean_formaliz",
       "primary_domain": "Bridges",
       "priority_score": 0.69648,
@@ -1063,7 +1135,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T13:48:01Z",
       "domain": "Geometry",
-      "hue": 272,
+      "hue": 270,
       "id": "close_proofs_thermodynamic_proof_system_tps_framew",
       "primary_domain": "Geometry",
       "priority_score": 0.6592800000000001,
@@ -1074,7 +1146,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T13:48:24Z",
       "domain": "Geometry",
-      "hue": 95,
+      "hue": 90,
       "id": "the_file_prooftheoreticordinalsepsilonlean_connect",
       "primary_domain": "Geometry",
       "priority_score": 0.5413600000000001,
@@ -1085,7 +1157,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T14:23:38Z",
       "domain": "Applications",
-      "hue": 271,
+      "hue": 90,
       "id": "close_proofs_the_file_geometryfractaldimensionlean",
       "primary_domain": "Bridges",
       "priority_score": 0.54053,
@@ -1096,7 +1168,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T14:24:02Z",
       "domain": "Applications",
-      "hue": 101,
+      "hue": 270,
       "id": "12_fully_proved_theorems_zero_sorry_formalizing_th",
       "primary_domain": "Bridges",
       "priority_score": 0.7159200000000001,
@@ -1118,7 +1190,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T14:58:55Z",
       "domain": "Applications",
-      "hue": 89,
+      "hue": 270,
       "id": "the_parametric_continuity_theorem_parametric_fixed",
       "primary_domain": "Bridges",
       "priority_score": 0.6108603592814372,
@@ -1129,7 +1201,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T14:59:16Z",
       "domain": "Applications",
-      "hue": 272,
+      "hue": 275,
       "id": "this_cycle_closed_the_single_open_sorry_in_bridges",
       "primary_domain": "Bridges",
       "priority_score": 0.5563721428571429,
@@ -1140,7 +1212,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T16:10:09Z",
       "domain": "Applications",
-      "hue": 271,
+      "hue": 272,
       "id": "the_sphere_packing_bound_gives_an_upper_bound_on_c",
       "primary_domain": "Bridges",
       "priority_score": 0.5291335915882679,
@@ -1151,7 +1223,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T16:10:30Z",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 270,
       "id": "close_proofs_conjecture_if_f_t_t__01_is_a_continuo",
       "primary_domain": "Bridges",
       "priority_score": 0.7850491896144769,
@@ -1162,7 +1234,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T16:52:49Z",
       "domain": "Applications",
-      "hue": 92,
+      "hue": 90,
       "id": "close_proofs_the_file_computationspectralchaincore",
       "primary_domain": "Bridges",
       "priority_score": 0.7025182961460447,
@@ -1173,7 +1245,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T17:39:55Z",
       "domain": "Novelty",
-      "hue": 95,
+      "hue": 90,
       "id": "close_proofs_this_cycles_artifact_is_catalogmachin",
       "primary_domain": "Bridges",
       "priority_score": 0.7005600000000001,
@@ -1184,7 +1256,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T18:15:51Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 272,
       "id": "the_natural_next_step_is_to_formalize_the_actual_p",
       "primary_domain": "Bridges",
       "priority_score": 0.45543999999999996,
@@ -1195,7 +1267,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T18:16:09Z",
       "domain": "Physics",
-      "hue": 270,
+      "hue": 91,
       "id": "reversible_computing_and_thermodynamic_efficiency",
       "primary_domain": "Physics",
       "priority_score": 0.8572,
@@ -1206,7 +1278,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T18:16:32Z",
       "domain": "Bridges",
-      "hue": 91,
+      "hue": 270,
       "id": "the_file_logiclobfixedpointlean_isolates_the_purel",
       "primary_domain": "Bridges",
       "priority_score": 0.7927200000000001,
@@ -1217,13 +1289,57 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T18:51:40Z",
       "domain": "Geometry",
-      "hue": 91,
+      "hue": 90,
       "id": "the_file_willmoreenergylean_establishes_the_elemen",
       "primary_domain": "Geometry",
       "priority_score": 0.6796971428571429,
       "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "The Elementary Willmore Energy: Curvature Lower Bounds by Genus"
+    },
+    {
+      "date": "2026-06-12T19:37:08Z",
+      "domain": "Logic",
+      "hue": 271,
+      "id": "this_cycle_moved_the_catalogs_dream_logic_line_of_",
+      "primary_domain": "Logic",
+      "priority_score": 0.65664,
+      "quality": "partial",
+      "shape": "star_of_david",
+      "title": "Dream Logic II: The Structural Meta-Theory of Paraconsistent Consequence"
+    },
+    {
+      "date": "2026-06-12T19:37:27Z",
+      "domain": "Novelty",
+      "hue": 92,
+      "id": "rigorous_lean_4_formalization_of_provability_logic",
+      "primary_domain": "Bridges",
+      "priority_score": 0.518,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "Polymodal Provability, Ordinal Ranks, and the Category of Goedel-Loeb Frames"
+    },
+    {
+      "date": "2026-06-12T19:37:49Z",
+      "domain": "Logic",
+      "hue": 271,
+      "id": "the_file_computationeastinknilllean_isolates_the_a",
+      "primary_domain": "Logic",
+      "priority_score": 0.528,
+      "quality": "partial",
+      "shape": "star_of_david",
+      "title": "The Algebraic Kernel of the Eastin\u2013Knill No-Go Theorem"
+    },
+    {
+      "date": "2026-06-12T19:38:07Z",
+      "domain": "Cryptography",
+      "hue": 271,
+      "id": "close_proofs_formally_verified_framework_computati",
+      "primary_domain": "Cryptography",
+      "priority_score": 0.6783541984732825,
+      "quality": "partial",
+      "shape": "dodecahedron",
+      "title": "The Fibonacci Rank-of-Apparition Map as a Lattice Adjoint"
     }
   ]
 };
