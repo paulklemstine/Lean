@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "1711ca61",
     "filename": "this_cycle_formalized_a_self_contained_fragment_of.json",
     "pkg_num": 1,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4107094228460233,
     "title": "Byzantine Certificates: A Cohomological Framework for Distributed Consensus"
   }
 ];
@@ -38,8 +38,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "this_cycle_formalized_a_self_contained_fragment_of",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4107094228460233,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Byzantine Certificates: A Cohomological Framework for Distributed Consensus"
     }
