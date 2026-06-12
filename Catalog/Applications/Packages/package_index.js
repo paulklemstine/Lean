@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "5adb296d",
     "filename": "the_file_prooftheoreticordinalsepsilonlean_connect.json",
     "pkg_num": 28,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5413600000000001,
     "title": "Composition Theory for Set-Local Distortion of Hausdorff Dimension"
   },
   {
@@ -843,8 +843,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "the_file_prooftheoreticordinalsepsilonlean_connect",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5413600000000001,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "Composition Theory for Set-Local Distortion of Hausdorff Dimension"
     }
