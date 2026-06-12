@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-12T03:51:59Z",
+    "domain": "Algebra",
+    "exp_id": "9b2bee2f",
+    "filename": "this_cycle_isolated_the_primitivity_layer_of_fibon.json",
+    "pkg_num": 3,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "Strong Divisibility Sequences: Primitive Divisors and the Calculus of Apparition"
+  },
+  {
     "date": "2026-06-12T02:44:01Z",
     "domain": "Novelty",
     "exp_id": "0805a8b9",
@@ -41,6 +51,14 @@ window.PACKAGE_DB_INDEX = {
       "fe68f57d"
     ],
     "title": "Byzantine Certificates: A Cohomological Framework for Distributed Consensus"
+  },
+  "this_cycle_isolated_the_primitivity_layer_of_fibon.json": {
+    "domain": "Algebra",
+    "exp_id": "9b2bee2f",
+    "source_exp_ids": [
+      "d0fd806b"
+    ],
+    "title": "Strong Divisibility Sequences: Primitive Divisors and the Calculus of Apparition"
   }
 };
 
@@ -53,7 +71,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T01:35:15Z",
       "domain": "Bridges",
-      "hue": 271,
+      "hue": 90,
       "id": "this_cycle_formalized_a_self_contained_fragment_of",
       "primary_domain": "Bridges",
       "priority_score": 0.4107094228460233,
@@ -64,13 +82,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T02:44:01Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 92,
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
       "primary_domain": "Bridges",
       "priority_score": 0.60229,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "The Analytic Bridge for Combinatorial Species: Inversion, Differentiation, and Pointing"
+    },
+    {
+      "date": "2026-06-12T03:51:59Z",
+      "domain": "Algebra",
+      "hue": 272,
+      "id": "this_cycle_isolated_the_primitivity_layer_of_fibon",
+      "primary_domain": "Algebra",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "tetrahedron",
+      "title": "Strong Divisibility Sequences: Primitive Divisors and the Calculus of Apparition"
     }
   ]
 };
