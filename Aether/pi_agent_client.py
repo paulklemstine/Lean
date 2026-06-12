@@ -2244,21 +2244,21 @@ Be precise, be deep, be world-class.
               "research_paper": "RESEARCH_PAPER.md",
               "demo": "demo.py",
               "demos": [
-                {"name": "descriptive_name", "description": "What this demo shows", "code": "# full Python source..."}
+                {"name": "Descriptive and Professional Title of the Python Demo", "description": "A comprehensive, high-quality description of what this Python demo calculates and shows mathematically.", "code": "# full Python source..."}
               ],
               "algorithms": [
                 {
-                  "name": "descriptive_name",
+                  "name": "Formal Mathematical Title of the Algorithm",
                   "description": "Detailed in-depth explanation of the algorithm, its mathematical foundation, computational complexity, and role in the pipeline.",
                   "pseudocode": "Formal, structured step-by-step pseudocode detailing the logic.",
                   "code": "# full Python source with type hints..."
                 }
               ],
               "visualizations": [
-                {"name": "descriptive_name", "description": "What this visualizes", "code": "# standalone Python script that generates a visualization..."}
+                {"name": "Descriptive Visualization Title", "description": "What this visualizes", "code": "# standalone Python script that generates a visualization..."}
               ],
               "interactive_demos": [
-                {"title": "Interactive Widget Title", "description": "What users can explore", "html": "<!DOCTYPE html><html>...</html>"}
+                {"title": "Beautiful Math-Rich Interactive Widget Title", "description": "Detailed description of the interactive widget and what users can explore.", "html": "<!DOCTYPE html><html>...</html>"}
               ],
               "lean_proofs": "LEAN_FILE_CONTENT_OR_PLACEHOLDER",
               "future_directions": "FUTURE_DIRECTIONS_CONTENT",
@@ -2329,7 +2329,7 @@ RESEARCH_PAPER.md: write the formal paper with abstract, definitions, results.
 demo.py: write numerical examples that demonstrate the results.
 PACKAGE.json: bundle everything into a single JSON with ALL fields populated.
 Make sure demos, algorithms, visualizations, and interactive_demos are arrays
-of objects (not placeholder strings). For each algorithm in the algorithms array, provide a name, a detailed explanation of its logic and complexity in 'description', formal step-by-step pseudocode in 'pseudocode', and clean type-hinted Python code in 'code'. Include future directions from Phase A in the future_directions field.
+of objects (not placeholder strings). For each algorithm in the algorithms array, provide a clear, professional mathematical title in 'name' (do not use generic placeholders; this will be displayed as the header on the interactive site), a detailed explanation of its logic and complexity in 'description', formal step-by-step pseudocode in 'pseudocode', and clean type-hinted Python code in 'code'. For each Python demo in the demos array, provide a highly descriptive title in 'name', a comprehensive functional description in 'description', and the implementation code in 'code'. For each interactive HTML demo in interactive_demos, provide a beautiful title in 'title' and a detailed description in 'description'. Include future directions from Phase A in the future_directions field.
 
 Be vivid, be precise, be world-class. The math has already been done — now
 make it beautiful to read.
