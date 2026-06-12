@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6af3ea9a",
     "filename": "the_abstract_simulation_preorder_formalized_in_pro.json",
     "pkg_num": 48,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.47530989871260887,
     "title": "Generation Certificates for Matrix Groups: Irreducible Characteristic Polynomials as Witnesses of Irreducible Action"
   },
   {
@@ -1423,8 +1423,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "the_abstract_simulation_preorder_formalized_in_pro",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.47530989871260887,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "Generation Certificates for Matrix Groups: Irreducible Characteristic Polynomials as Witnesses of Irreducible Action"
     }
