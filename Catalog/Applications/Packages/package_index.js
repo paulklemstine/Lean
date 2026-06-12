@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "392c9e56",
     "filename": "close_proofs_conjecture_if_f_t_t__01_is_a_continuo.json",
     "pkg_num": 35,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7850491896144769,
     "title": "Close Proofs: Tropicalization as the Image of a Non-Archimedean Valuation"
   },
   {
@@ -1046,8 +1046,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "close_proofs_conjecture_if_f_t_t__01_is_a_continuo",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7850491896144769,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Close Proofs: Tropicalization as the Image of a Non-Archimedean Valuation"
     }
