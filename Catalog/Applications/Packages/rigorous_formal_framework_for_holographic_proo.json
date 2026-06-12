@@ -5,7 +5,7 @@
   "authors": [
     "Harmonic"
   ],
-  "date": "2026-06-12T04:25:40Z",
+  "date": "2026-06-12T04:27:45Z",
   "key_results": [
     "Completeness: an honest authentication path always reconstructs the true Merkle root, with no assumption on the hash function.",
     "Soundness/binding: under an injective (collision-resistant) hash, only the committed leaf verifies against the root, so certificates cannot be forged.",
