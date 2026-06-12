@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "272f5326",
     "filename": "close_proofs_arithmetic_universality_in_cellular_a.json",
     "pkg_num": 23,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.46680579704921854,
     "title": "Arithmetic Universality in Additive Cellular Automata via p-adic Renormalization"
   },
   {
@@ -684,8 +684,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "close_proofs_arithmetic_universality_in_cellular_a",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.46680579704921854,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Arithmetic Universality in Additive Cellular Automata via p-adic Renormalization"
     }
