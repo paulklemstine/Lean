@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0805a8b9",
     "filename": "the_file_catalogapplicationscombinatorialspeciesle.json",
     "pkg_num": 2,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.60229,
     "title": "The Analytic Bridge for Combinatorial Species: Inversion, Differentiation, and Pointing"
   },
   {
@@ -67,8 +67,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.60229,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Analytic Bridge for Combinatorial Species: Inversion, Differentiation, and Pointing"
     }
