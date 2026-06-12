@@ -16,7 +16,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T02:44:01Z",
-      "hue": 90
+      "hue": 272
     },
     {
       "id": "this_cycle_isolated_the_primitivity_layer_of_fibon",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T03:52:38Z",
-      "hue": 91
+      "hue": 95
     },
     {
       "id": "close_proofs_close_proofs_one_way_functions_existe",
@@ -43,7 +43,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T03:52:55Z",
-      "hue": 271
+      "hue": 91
+    },
+    {
+      "id": "rigorous_formal_framework_for_holographic_proo",
+      "title": "Holographic Verification of Tree-Structured Proofs",
+      "domain": "Novelty",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-12T04:25:40Z",
+      "hue": 90
     }
   ],
   "edges": [],

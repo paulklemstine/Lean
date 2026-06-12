@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-12T04:25:40Z",
+    "domain": "Novelty",
+    "exp_id": "84c2dc55",
+    "filename": "rigorous_formal_framework_for_holographic_proo.json",
+    "pkg_num": 6,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "Holographic Verification of Tree-Structured Proofs"
+  },
+  {
     "date": "2026-06-12T03:52:55Z",
     "domain": "Applications",
     "exp_id": "5039f952",
@@ -72,6 +82,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "One-Way Functions: Existence, Inversion Capacity, and the Hardness Hierarchy"
   },
+  "rigorous_formal_framework_for_holographic_proo.json": {
+    "domain": "Novelty",
+    "exp_id": "84c2dc55",
+    "source_exp_ids": [
+      "7512203a"
+    ],
+    "title": "Holographic Verification of Tree-Structured Proofs"
+  },
   "the_file_catalogapplicationscombinatorialspeciesle.json": {
     "domain": "Novelty",
     "exp_id": "0805a8b9",
@@ -118,7 +136,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T02:44:01Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 272,
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
       "primary_domain": "Bridges",
       "priority_score": 0.60229,
@@ -140,7 +158,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:38Z",
       "domain": "Novelty",
-      "hue": 91,
+      "hue": 95,
       "id": "close_proofs_arithmetic_mirror_symmetry_for_calabi",
       "primary_domain": "Bridges",
       "priority_score": 0.4038523076923077,
@@ -151,13 +169,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:55Z",
       "domain": "Applications",
-      "hue": 271,
+      "hue": 91,
       "id": "close_proofs_close_proofs_one_way_functions_existe",
       "primary_domain": "Bridges",
       "priority_score": 0.52037,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "One-Way Functions: Existence, Inversion Capacity, and the Hardness Hierarchy"
+    },
+    {
+      "date": "2026-06-12T04:25:40Z",
+      "domain": "Novelty",
+      "hue": 90,
+      "id": "rigorous_formal_framework_for_holographic_proo",
+      "primary_domain": "Bridges",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "icosahedron",
+      "title": "Holographic Verification of Tree-Structured Proofs"
     }
   ]
 };
