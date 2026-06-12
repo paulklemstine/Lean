@@ -4,6 +4,26 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-12T08:13:58Z",
+    "domain": "Novelty",
+    "exp_id": "c3e56876",
+    "filename": "close_proofs_close_proofs_this_cycle_added_catalog.json",
+    "pkg_num": 16,
+    "quality": "substantial",
+    "quality_score": 0.7157600000000001,
+    "title": "The Single Move That Connects Every Table: Markov Basis of the 2x2x2 No-Three-Way Interaction Model"
+  },
+  {
+    "date": "2026-06-12T08:13:30Z",
+    "domain": "Novelty",
+    "exp_id": "5dac3011",
+    "filename": "the_file_basiclean_establishes_a_fully_formal_axio.json",
+    "pkg_num": 15,
+    "quality": "partial",
+    "quality_score": 0.4599545454545455,
+    "title": "The Folded Ruler: A Sharp ReLU Depth-Separation Theorem via the Tent Map"
+  },
+  {
     "date": "2026-06-12T07:37:45Z",
     "domain": "Algebra",
     "exp_id": "3c9f09e3",
@@ -178,6 +198,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "One-Way Functions: Existence, Inversion Capacity, and the Hardness Hierarchy"
   },
+  "close_proofs_close_proofs_this_cycle_added_catalog.json": {
+    "domain": "Novelty",
+    "exp_id": "c3e56876",
+    "source_exp_ids": [
+      "d5040457"
+    ],
+    "title": "The Single Move That Connects Every Table: Markov Basis of the 2x2x2 No-Three-Way Interaction Model"
+  },
   "close_proofs_close_proofs_this_cycle_replaced_the_.json": {
     "domain": "Cryptography",
     "exp_id": "166e1d18",
@@ -234,6 +262,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Certified Novelty: A Metric Geometry of What Counts as New"
   },
+  "the_file_basiclean_establishes_a_fully_formal_axio.json": {
+    "domain": "Novelty",
+    "exp_id": "5dac3011",
+    "source_exp_ids": [
+      "24c7b7e9"
+    ],
+    "title": "The Folded Ruler: A Sharp ReLU Depth-Separation Theorem via the Tent Map"
+  },
   "the_file_catalogapplicationscombinatorialspeciesle.json": {
     "domain": "Novelty",
     "exp_id": "0805a8b9",
@@ -269,7 +305,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T01:35:15Z",
       "domain": "Bridges",
-      "hue": 92,
+      "hue": 90,
       "id": "this_cycle_formalized_a_self_contained_fragment_of",
       "primary_domain": "Bridges",
       "priority_score": 0.4107094228460233,
@@ -280,7 +316,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T02:44:01Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 271,
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
       "primary_domain": "Bridges",
       "priority_score": 0.60229,
@@ -291,7 +327,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:51:59Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 90,
       "id": "this_cycle_isolated_the_primitivity_layer_of_fibon",
       "primary_domain": "Algebra",
       "priority_score": 0.66176,
@@ -302,7 +338,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:38Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 271,
       "id": "close_proofs_arithmetic_mirror_symmetry_for_calabi",
       "primary_domain": "Bridges",
       "priority_score": 0.4038523076923077,
@@ -313,7 +349,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:55Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 280,
       "id": "close_proofs_close_proofs_one_way_functions_existe",
       "primary_domain": "Bridges",
       "priority_score": 0.52037,
@@ -324,7 +360,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:26:56Z",
       "domain": "Computation",
-      "hue": 91,
+      "hue": 92,
       "id": "our_exists_revsim_of_surjective_proves_that_surjec",
       "primary_domain": "Computation",
       "priority_score": 0.65648,
@@ -357,7 +393,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:20Z",
       "domain": "Algebra",
-      "hue": 272,
+      "hue": 90,
       "id": "the_current_formalization_uses_an_abstract_dsepora",
       "primary_domain": "Algebra",
       "priority_score": 0.73536,
@@ -368,7 +404,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:04:43Z",
       "domain": "Cryptography",
-      "hue": 270,
+      "hue": 271,
       "id": "close_proofs_close_proofs_this_cycle_replaced_the_",
       "primary_domain": "Cryptography",
       "priority_score": 0.6270279310344827,
@@ -379,7 +415,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:05:08Z",
       "domain": "Algebra",
-      "hue": 90,
+      "hue": 92,
       "id": "extend_the_integration_deficiency_framework_to_a_f",
       "primary_domain": "Algebra",
       "priority_score": 0.569817731958763,
@@ -401,7 +437,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:40:28Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 90,
       "id": "close_proofs_we_proved_that_the_biconjugate_satisf",
       "primary_domain": "Bridges",
       "priority_score": 0.5784016886543535,
@@ -412,13 +448,35 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T07:37:45Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 91,
       "id": "close_proofs_close_proofs_cobhams_theorem_1972_sta",
       "primary_domain": "Algebra",
       "priority_score": 0.6822099399599733,
       "quality": "partial",
       "shape": "tetrahedron",
       "title": "The Checkerboard Move: A Rank-One Markov Basis for the 2x2x2 No-Three-Way Interaction Model"
+    },
+    {
+      "date": "2026-06-12T08:13:30Z",
+      "domain": "Novelty",
+      "hue": 280,
+      "id": "the_file_basiclean_establishes_a_fully_formal_axio",
+      "primary_domain": "Bridges",
+      "priority_score": 0.4599545454545455,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "The Folded Ruler: A Sharp ReLU Depth-Separation Theorem via the Tent Map"
+    },
+    {
+      "date": "2026-06-12T08:13:58Z",
+      "domain": "Novelty",
+      "hue": 91,
+      "id": "close_proofs_close_proofs_this_cycle_added_catalog",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7157600000000001,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "The Single Move That Connects Every Table: Markov Basis of the 2x2x2 No-Three-Way Interaction Model"
     }
   ]
 };

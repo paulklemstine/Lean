@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c3e56876",
     "filename": "close_proofs_close_proofs_this_cycle_added_catalog.json",
     "pkg_num": 16,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7157600000000001,
     "title": "The Single Move That Connects Every Table: Markov Basis of the 2x2x2 No-Three-Way Interaction Model"
   },
   {
@@ -473,8 +473,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "close_proofs_close_proofs_this_cycle_added_catalog",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7157600000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Single Move That Connects Every Table: Markov Basis of the 2x2x2 No-Three-Way Interaction Model"
     }
