@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-12T04:26:14Z",
+    "domain": "Algebra",
+    "exp_id": "f1b37415",
+    "filename": "algebraic_statistics_markov_bases_for_contingency_.json",
+    "pkg_num": 7,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "Algebraic Statistics: Markov Bases for Contingency Tables"
+  },
+  {
     "date": "2026-06-12T04:25:40Z",
     "domain": "Novelty",
     "exp_id": "84c2dc55",
     "filename": "rigorous_formal_framework_for_holographic_proo.json",
     "pkg_num": 6,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.47824,
     "title": "Holographic Verification of Tree-Structured Proofs"
   },
   {
@@ -66,6 +76,14 @@ window.PACKAGE_INDEX = [
 ];
 
 window.PACKAGE_DB_INDEX = {
+  "algebraic_statistics_markov_bases_for_contingency_.json": {
+    "domain": "Algebra",
+    "exp_id": "f1b37415",
+    "source_exp_ids": [
+      "seed"
+    ],
+    "title": "Algebraic Statistics: Markov Bases for Contingency Tables"
+  },
   "close_proofs_arithmetic_mirror_symmetry_for_calabi.json": {
     "domain": "Novelty",
     "exp_id": "f1cb7dfa",
@@ -125,7 +143,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T01:35:15Z",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 271,
       "id": "this_cycle_formalized_a_self_contained_fragment_of",
       "primary_domain": "Bridges",
       "priority_score": 0.4107094228460233,
@@ -136,7 +154,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T02:44:01Z",
       "domain": "Novelty",
-      "hue": 272,
+      "hue": 275,
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
       "primary_domain": "Bridges",
       "priority_score": 0.60229,
@@ -158,7 +176,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:38Z",
       "domain": "Novelty",
-      "hue": 95,
+      "hue": 270,
       "id": "close_proofs_arithmetic_mirror_symmetry_for_calabi",
       "primary_domain": "Bridges",
       "priority_score": 0.4038523076923077,
@@ -169,7 +187,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:55Z",
       "domain": "Applications",
-      "hue": 91,
+      "hue": 101,
       "id": "close_proofs_close_proofs_one_way_functions_existe",
       "primary_domain": "Bridges",
       "priority_score": 0.52037,
@@ -180,13 +198,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:25:40Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 271,
       "id": "rigorous_formal_framework_for_holographic_proo",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.47824,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Holographic Verification of Tree-Structured Proofs"
+    },
+    {
+      "date": "2026-06-12T04:26:14Z",
+      "domain": "Algebra",
+      "hue": 270,
+      "id": "algebraic_statistics_markov_bases_for_contingency_",
+      "primary_domain": "Algebra",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "tetrahedron",
+      "title": "Algebraic Statistics: Markov Bases for Contingency Tables"
     }
   ]
 };

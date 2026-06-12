@@ -1,211 +1,240 @@
-# The Hidden Geometry of Counting: How One Move Shuffles Every Table
+# The Shuffle That Connects Every Table
 
-## A puzzle from the census office
+## A puzzle hidden in a spreadsheet
 
-Imagine you are a statistician handed a small table of counts. Three yes/no
-questions were asked of a group of people — say, *Do you smoke?*, *Do you
-exercise?*, and *Do you sleep well?* — and the survey software has, for privacy
-reasons, thrown away the individual answers. All you are left with are the
-**summaries**: how many people smoke and exercise, how many exercise and sleep
-well, how many smoke and sleep well, and so on. Each of these is a two-way
-summary, a *margin*, obtained by collapsing one of the three questions.
+Imagine a market researcher who has just finished a survey. She arranges the
+answers in a grid. The rows might be age brackets — under 25, 25 to 50, over 50.
+The columns might be how people voted in the last election. Each cell of the
+grid holds a count: how many people fell into that particular combination.
 
-Here is the natural question. Given only those summaries, what could the original
-table of counts have looked like? There are eight possible answer-combinations
-(smoker/non-smoker × exerciser/non-exerciser × good-sleeper/bad-sleeper), so the
-hidden table is a cube of eight numbers. The margins pin down many sums of these
-numbers, but not the numbers themselves. The set of all eight-number tables that
-are consistent with the given margins — and that use only non-negative whole
-numbers, because you cannot have minus three people — is called a **fiber**.
+Tables like this are everywhere. Epidemiologists build them to compare a
+treatment against a placebo. Geneticists tabulate which mutations appear with
+which traits. Economists cross-tabulate income against region. The official
+name for this humble grid is a **contingency table**, and almost every
+introductory statistics course teaches a single question about it: *are the rows
+and the columns independent, or are they related?*
 
-Understanding the fiber matters enormously in practice. It is the engine behind
-*exact tests* in statistics: to judge whether your data are surprising, you want
-to wander randomly and uniformly through all the tables that share the same
-summaries, and see whether your particular table looks typical or extreme. But to
-wander through the fiber, you need a way to step from one valid table to another
-**without ever changing the margins and without ever going negative**. You need a
-set of legal moves. The deep and beautiful theory that answers this question is
-called the theory of **Markov bases**, and it sits at the crossroads of algebra,
-geometry, and statistics. This article tells the story of the smallest example
-where that theory shows its true face — and of the single, elegant move that runs
-the whole show.
+A vote that depends on age would show up as a pattern in the table. A vote that
+is unrelated to age would not. To decide between these two stories, a
+statistician needs to know what "no relationship" tables look like — and,
+crucially, how many of them there are. The trouble is that the universe of
+possible tables is astronomically large, and you cannot simply list them all.
 
-## What is a legal move?
+This article is about a beautiful and surprisingly deep idea that solves exactly
+this problem. It says that there is a tiny, fixed set of elementary *moves* —
+the same handful of moves no matter how large the table — and that by repeating
+those moves you can walk from any valid table to any other valid table without
+ever leaving the world of legal tables. It is a result with a grand name, the
+**Fundamental Theorem of Markov Bases**, and the moves themselves form what is
+called a **Markov basis**.
 
-Let us be concrete. Write the hidden table as eight integers `u(i, j, k)`, where
-each of `i`, `j`, `k` is either `0` or `1`. The three families of two-way margins
-are:
+## What must stay fixed
 
-- the **(i, j)-margins**: for each pair `(i, j)`, the sum `u(i, j, 0) + u(i, j, 1)`
-  (collapse the third question);
-- the **(i, k)-margins**: for each pair `(i, k)`, the sum `u(i, 0, k) + u(i, 1, k)`
-  (collapse the second question);
-- the **(j, k)-margins**: for each pair `(j, k)`, the sum `u(0, j, k) + u(1, j, k)`
-  (collapse the first question).
+To make the puzzle precise we have to say what "valid" means.
 
-This is the celebrated **no-three-way interaction model**. The name comes from
-statistics: fixing all three families of two-way margins is exactly the act of
-modelling the data with pairwise associations but *no genuine three-way
-interaction* among the variables.
+When a statistician tests whether rows and columns are related, she does not get
+to choose the totals of the rows or the totals of the columns. Those totals —
+how many people were under 25, how many people voted a certain way — are simply
+facts about who answered the survey. They are the *margins* of the table, the
+numbers you would write in the right-hand and bottom borders of the grid.
 
-A **legal move** is a way of changing the table — adding some pattern of integers
-to it — that leaves *all twelve* margins untouched. If a move keeps every margin
-fixed, you can apply it to any valid table and land on another table with the same
-summaries. The collection of all legal moves forms what algebraists call a
-**lattice**: you can add moves together, subtract them, and scale them by whole
-numbers, and you always get another legal move. A **Markov basis** is a finite set
-of moves that is rich enough to reach every table in every fiber, taking small
-steps that never stray into negative territory.
+So the right question is not "which tables exist?" but "which tables have these
+particular margins?" Fix the row totals and the column totals, and you carve out
+a special collection of tables: every grid of non-negative whole numbers whose
+borders match. Statisticians call this collection a **fiber**. Every table in a
+fiber tells a different internal story, but all of them are consistent with the
+same observed margins.
 
-The grand result of the field, the **Fundamental Theorem of Markov Bases** of
-Persi Diaconis and Bernd Sturmfels (1998), guarantees that such a finite generating
-set always exists, and ties it to a piece of pure algebra (the generators of a
-so-called toric ideal). In general, finding the Markov basis is hard. But for our
-little cube something almost magical happens.
+Here is the heart of the matter. To run the standard test of independence
+honestly — without leaning on approximations that fail for small or sparse data
+— you want to *sample uniformly at random* from a fiber, or at least walk around
+inside it. But to walk around a set, you need to be able to take steps. And any
+step you take must keep the margins fixed, because a table with different margins
+has left the fiber entirely. What, then, is a legal step?
 
-## One move to rule them all
+## The smallest possible move
 
-How many independent legal moves are there for the 2×2×2 cube? There are eight
-cells and a dozen margin equations, so you might expect a tangle of competing
-adjustments. The astonishing answer is: **there is essentially only one.**
+Picture two rows and two columns of your table — say rows $i$ and $i'$, columns
+$j$ and $j'$. They meet in four cells, forming a little $2 \times 2$ square
+inside the larger grid. Now do the following: **add one** to the two cells on
+one diagonal of the square, and **subtract one** from the two cells on the other
+diagonal.
 
-The single generating move is the **alternating sign pattern**
+$$
+\begin{pmatrix} -1 & +1 \\ +1 & -1 \end{pmatrix}
+$$
 
-```
-M3(i, j, k) = (-1)^(i + j + k),
-```
+That is the entire move. In symbols, writing $e_{a,b}$ for the table that has a
+single $1$ in cell $(a,b)$ and zeros everywhere else, the move is
 
-that is, `+1` whenever `i + j + k` is even and `-1` whenever it is odd. Picture the
-unit cube with its eight corners coloured like a 3-D checkerboard: four corners get
-`+1`, the four diagonally opposite corners get `-1`. Adding this pattern to a table
-nudges four cells up by one and four cells down by one, in a perfectly balanced
-way.
+$$
+B(i,i',j,j') \;=\; e_{i,j'} + e_{i',j} - e_{i,j} - e_{i',j'}.
+$$
 
-Why does this preserve every margin? Take any *line* through the cube — fix two of
-the coordinates and let the third run over `0` and `1`. Along that line the two
-values of `M3` are always one `+1` and one `-1`, because flipping a single
-coordinate flips the parity of `i + j + k`. So every line sums to `+1 + (-1) = 0`.
-But the margins are precisely sums along lines. Therefore adding any whole-number
-multiple of `M3` changes no margin at all. In the formal development this is the
-theorem
+It is called a **basic move**, and it is the smallest nontrivial change you can
+make. The magic is in the bookkeeping. Look at row $i$: we added $1$ in column
+$j'$ and subtracted $1$ in column $j$, so the row total is unchanged. Row $i'$:
+we added in $j$ and subtracted in $j'$ — unchanged again. Every other row was
+never touched. The same is true of every column. The move shuffles four counts
+around but leaves every single margin exactly where it was.
 
-> **Move preserves margins.** For every table `u` and every integer `t`, the table
-> `u + t·M3` has exactly the same two-way margins as `u`.
+In the language of the result we are about to describe, this is the first
+theorem:
 
-So `M3` is genuinely a legal move. The surprise is that it is the *only* one you
-ever need.
+> **Basic moves preserve the margins.** Adding any basic move $B(i,i',j,j')$
+> with $i \neq i'$ and $j \neq j'$ to a table changes none of its row sums and
+> none of its column sums.
 
-## Why a single move is enough: the rigidity of the cube
+A basic move, in other words, is always a *legal* step: it never carries you out
+of the fiber. The only catch is non-negativity. A count cannot go below zero, so
+you are only allowed to apply a basic move when the two cells you are
+subtracting from are at least $1$. The set of tables you can reach, taking legal
+basic moves and never letting any cell go negative, is what we will call being
+**connected**.
 
-Suppose two tables `u` and `v` have identical margins. Their difference
-`w = v − u` is then a legal move with **all margins zero**. The claim — the heart
-of the matter — is that any such `w` must be a whole-number multiple of `M3`.
+## Can you always get there?
 
-The argument is a cascade of forced choices. Pick the corner value `w(0, 0, 0)` and
-call it `c`. The (i, j)-margin condition on the edge above it says
-`w(0, 0, 0) + w(0, 0, 1) = 0`, so `w(0, 0, 1) = −c`. The (i, k)-margin says
-`w(0, 0, 0) + w(0, 1, 0) = 0`, so `w(0, 1, 0) = −c`. The (j, k)-margin forces
-`w(1, 0, 0) = −c`. Each single sign flip of a coordinate flips the value, and as
-you walk to the far corner `w(1, 1, 1)` you flip three times, landing back on `+c`.
-Working through all eight cells, every value is `±c`, and the sign is exactly
-`(-1)^(i + j + k)`. In other words `w = c·M3`. Formally:
+We now have everything we need to state the puzzle sharply. Take two tables in
+the same fiber — same row totals, same column totals, both filled with
+non-negative whole numbers. They look different on the inside. **Can you always
+transform one into the other using nothing but basic $2 \times 2$ moves, never
+passing through an illegal table along the way?**
 
-> **The move lattice has rank one.** If `u` and `v` have the same two-way margins,
-> then `v = u + (v(0,0,0) − u(0,0,0))·M3`.
+The answer is yes, always, for tables of any size. This is the Fundamental
+Theorem of Markov Bases for the independence model:
 
-This single equation is the statement that **`{M3}` is a Markov basis** — the
-entire lattice of legal moves is the set of integer multiples of one pattern. A
-problem that looked eight-dimensional collapses to a single line.
+> **The basic moves connect every fiber.** Any two non-negative integer tables
+> with the same row sums and the same column sums are joined by a sequence of
+> legal basic $2 \times 2$ moves, every intermediate table staying non-negative.
 
-## Staying positive: a walk that never goes negative
+It is a remarkable claim. The fiber can be enormous, twisting through
+high-dimensional space, and yet a fixed, tiny vocabulary of moves — the same
+little diagonal swaps, regardless of the table's dimensions — suffices to reach
+every corner of it. There are no isolated islands, no tables you can see but
+never touch.
 
-Knowing that `v − u` is a multiple of `M3` is not quite the end of the story. A
-table of counts must stay non-negative throughout. If you need to add, say,
-`5·M3` to get from `u` to `v`, can you do it in five unit steps `+M3, +M3, …`
-such that *every intermediate table* still has only non-negative entries? Or might
-the path dip below zero and out of the world of valid tables?
+## How the proof actually works
 
-This is where a piece of quiet geometry takes over. Think of the whole journey as
-sliding along a straight line — the **move line** — in the eight-dimensional space
-of tables, parametrised by how many copies of `M3` you have added. Look at any one
-cell. As you slide, that cell's value changes by `+1` or `−1` per step, depending
-on the sign of `M3` there; it is a straight, monotone ramp. The condition "this
-cell is non-negative" therefore holds on a single unbroken interval of the line.
-Intersecting eight such conditions, the set of positions where the *whole table* is
-non-negative is itself a single interval — a convex chunk of the line.
+What makes this theorem genuinely satisfying is that the proof is not an
+abstract existence argument. It is a *recipe*. Given two tables, it tells you
+which move to make next, and it guarantees you are always getting closer.
 
-Both endpoints `u` and `v` are valid, so they sit inside that interval; and because
-the interval is unbroken, **every integer point between them is valid too**. A
-monotone walk of unit `±M3` steps from `u` straight toward `v` never leaves the
-interval, hence never goes negative. This is the principle of **discrete
-convexity**, and it is the technical engine of the whole result:
+The notion of "closer" is made precise by a simple ruler. Lay the two tables
+side by side and add up, cell by cell, the absolute differences between them.
+This total is the **$\ell^1$ distance**:
 
-> **Connectivity of the move line.** If `u` and `u + t·M3` are both non-negative,
-> then they are joined by a walk of `±M3` steps that stays non-negative at every
-> step. (Proved by induction on the number of steps `|t|`: take one unit step
-> toward the target; the convexity bound guarantees you are still non-negative,
-> then repeat.)
+$$
+D(u, v) \;=\; \sum_{\text{cells } (a,b)} \bigl| u_{a,b} - v_{a,b} \bigr|.
+$$
 
-Concretely, the induction reasons like this. Suppose a cell carries `M3 = −1`, so
-the step `+M3` *decreases* it. If the far endpoint, after subtracting many copies,
-is still `≥ 0`, then the near value must have been at least as large as the number
-of steps remaining — so subtracting one keeps it `≥ 0`. Symmetrically for cells
-with `M3 = +1`. Every cell stays safe, so the whole table stays safe. Chain the
-steps and the walk is complete.
+It counts the total number of unit discrepancies between the two tables. It is
+zero precisely when the tables are identical — a small but essential sanity
+check — and otherwise it is a positive whole number. Because it can only step
+down by whole numbers, it cannot decrease forever. If every move we make shrinks
+$D$, we are guaranteed to arrive.
 
-## The Fundamental Theorem, in miniature
+So the whole proof comes down to one question: *given two different tables in the
+same fiber, can we always find a basic move that brings them closer?* The answer
+relies on a wonderfully elementary chain of reasoning — three applications of
+the pigeonhole principle in a row.
 
-Putting the two halves together gives the punchline, the Fundamental Theorem of
-Markov Bases specialised to this model:
+**Step one.** Since the two tables differ but have identical margins, the sum of
+all their cell-by-cell differences is zero (the margins cancel everything out).
+A collection of integers that sums to zero but is not all zeros must contain a
+*positive* entry. So somewhere there is a cell, call it $(i,j)$, where the first
+table is strictly larger than the second.
 
-> **Every fiber is connected by the single move `M3`.** Any two non-negative
-> tables with the same two-way margins are joined by a walk of `±M3` steps that
-> stays non-negative throughout.
+**Step two.** Look along row $i$. The two tables agree on this row's total, so
+the differences across that whole row also sum to zero. We just found a positive
+difference in that row at column $j$; to balance it, there must be a *negative*
+difference somewhere else in the same row, at some column $j'$. There the second
+table is strictly larger.
 
-Take any two valid tables sharing all their summaries. Rigidity tells you they
-differ by a whole-number multiple of `M3`. Discrete convexity tells you that the
-straight walk between them, step by step, never goes negative. So you can reach any
-table from any other, using nothing but the checkerboard move. The fiber, however
-many tables it contains, is a single connected world, and one move is its map.
+**Step three.** Now look down column $j'$. Its differences sum to zero too, and
+we just found a negative one at row $i$; so there must be a positive difference
+elsewhere in that column, at some row $i'$.
 
-## Why this is the textbook first example
+We have located a perfect $2 \times 2$ frame: rows $i, i'$ and columns $j, j'$,
+with the signs arranged exactly so that a basic move will help. The first table
+is too big at $(i,j)$ and at $(i',j')$, and too small at $(i,j')$. Crucially,
+the rows $i$ and $i'$ must be different (a cell cannot be both too big and too
+big-via-a-different-sign at once — the opposite signs force the indices apart),
+and likewise the columns. This is the result the proof calls the **sign-pattern
+pigeonhole**:
 
-You might wonder why so much fuss is made over a 2×2×2 cube. The reason is that it
-is the *smallest model whose Markov basis is not a boring swap*. For the simplest
-models — two-way tables of independence — the only move you ever need is the humble
-`2×2` swap: add one to two diagonal cells, subtract one from the other two. That
-move has degree 2; it touches four cells in a flat rectangle. The no-three-way move
-`M3` is different in kind: it has **degree 4**, it touches all eight cells of the
-cube at once, and there is no way to break it into smaller legal pieces. It is the
-first genuinely three-dimensional move in the subject, the place where the theory
-stops being obvious. That is exactly why Diaconis and Sturmfels chose it as their
-flagship illustration, and why it earns its place as a cornerstone example.
+> **Sign-pattern pigeonhole.** If two tables with equal margins differ, then
+> there is a $2 \times 2$ configuration of rows $i \neq i'$ and columns
+> $j \neq j'$ where the first table exceeds the second at $(i,j)$ and at
+> $(i',j')$, and falls short at $(i,j')$.
 
-There is also a sharp boundary lurking nearby, and it is worth naming. The miracle
-here is that the move lattice has **rank one** — a single generator. But this is a
-feature of the cube being 2×2×2. The instant you enlarge even one dimension — to a
-`2×2×n` model with more than two slices — the lattice sprouts several independent
-generators, the single-line walk argument breaks, and you truly need the full
-multi-generator strength of the Fundamental Theorem. The 2×2×2 cube is poised
-exactly on the edge of simplicity: complex enough to be interesting, simple enough
-to understand completely. Knowing precisely where rank-one stops working is itself
-one of the most useful signposts the subject offers.
+Apply the basic move on this frame in the direction that subtracts from the
+overshooting cells and adds to the undershooting one, and at least one unit of
+discrepancy is erased — usually more. The distance $D$ strictly drops:
 
-## The bigger picture
+> **Distance decrease.** The sign-aligned basic move strictly reduces the
+> $\ell^1$ distance to the target table.
 
-What makes this story lovely is how three different kinds of mathematics meet on a
-single small object. There is **statistics**, in the guise of contingency tables,
-margins, and the exact tests that wander through fibers. There is **linear algebra
-over the integers**, in the lattice of legal moves and the rank-one kernel
-computation. And there is **discrete geometry**, in the convexity argument that
-keeps the walk positive. The no-three-way model is where these threads tie
-themselves into a single, surprisingly tight knot.
+Because the distance is a non-negative whole number that strictly decreases at
+every step, the process must terminate, and it can only terminate when the
+distance is zero — that is, when we have reached the target. A short induction
+on the distance turns this into the full theorem. The argument is so concrete
+that it doubles as an algorithm: repeatedly find the frame, make the move,
+repeat.
 
-The practical payoff is real. Markov bases power the random walks behind exact
-goodness-of-fit testing for categorical data — the kind of analysis used to check
-whether an apparent association in a survey, a clinical trial, or a genetics study
-is real or just noise. Every time such a test runs, it is shuffling a table by
-legal moves, exploring a fiber, asking the same question our census officer asked:
-given only the summaries, what could the truth have been? For the 2×2×2 cube, the
-answer is as clean as mathematics ever gets. One checkerboard move, applied again
-and again, visits every possibility — and never has to imagine a negative person.
+## Why moving in both directions matters
+
+One more pleasing detail rounds out the picture. Every basic move can be undone
+by another basic move — just swap the roles of the two rows, and the diagonal of
+pluses becomes the diagonal of minuses. This means the "can reach" relation is
+symmetric: if you can walk from $u$ to $v$, you can walk back. Combined with
+connectivity, it tells us that the reachability relation is a genuine
+*equivalence relation*, and its classes are exactly the fibers. The fibers are
+not just sets of tables that happen to share margins; they are precisely the
+connected components of the world of tables under basic moves. Nothing is left
+over, nothing is double-counted.
+
+## The bigger world this opens
+
+Why does any of this matter beyond the elegance of the argument?
+
+Because it makes a previously impossible computation possible. To test
+independence on a table with small counts — exactly the regime where the
+classical chi-squared approximation is least trustworthy — statisticians run a
+**Markov chain Monte Carlo** algorithm. They start at the observed table and
+take random basic moves, wandering through the fiber, recording how "extreme"
+each table they visit is. The connectivity theorem is the license that makes
+this method valid: because the basic moves reach every table in the fiber, the
+random walk genuinely explores the whole space rather than getting trapped in
+some corner. Without connectivity, the resulting p-value would be meaningless.
+
+This is the founding idea of a field called **algebraic statistics**, which
+discovered something unexpected: the legal moves for a statistical model are the
+same objects that algebraists call the *generators of an ideal*. The hidden
+algebra of polynomials and the practical business of sampling tables turn out to
+be two faces of one structure. The independence model treated here is the
+gateway example — the one where the moves are simplest and the proof is cleanest
+— but the same framework extends to far more intricate models, where finding the
+right set of moves is a serious research problem in its own right.
+
+There is even a close cousin of this story, the **no-three-way interaction
+model**, which works with three-dimensional tables — a cube of counts instead of
+a grid. There the relevant move is a single alternating pattern of pluses and
+minuses across all eight corners of a $2 \times 2 \times 2$ block, and one can
+prove not only that this move connects every fiber but that the number of steps
+between two tables is *exactly* the difference in one corner cell. The grid and
+the cube are companions: in both, a tiny vocabulary of moves turns out to
+control an enormous landscape.
+
+## The shape of an idea
+
+Strip away the application and a clean mathematical statement remains. Inside a
+vast, high-dimensional set of grids, all sharing the same borders, lies an
+invisible web of connections. The threads of that web are nothing more than the
+humblest of moves — add one here, subtract one there, in a little square. Yet
+those threads reach everywhere. No table is an island.
+
+That is the quiet power of a Markov basis: a fixed, finite, almost trivial set
+of gestures that nonetheless ties an entire universe of possibilities together.
+It is the kind of result that feels, once you see it, less invented than
+discovered — as if the connections were always there, waiting for someone to
+notice that the smallest possible move was all it ever took.

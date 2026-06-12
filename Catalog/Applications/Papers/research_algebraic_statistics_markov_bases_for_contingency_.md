@@ -1,367 +1,460 @@
-# Markov Bases for the No-Three-Way Interaction Model: A Rank-One Fundamental Theorem
+# Markov Bases for Contingency Tables: A Complete Connectivity Proof for the Two-Way Independence Model
 
 ## Abstract
 
-We develop, from first principles, a self-contained theory of Markov bases for
-log-linear models on small contingency tables, and we establish the *Fundamental
-Theorem of Markov Bases* (Diaconis–Sturmfels, 1998) for the smallest model whose
-Markov basis is not a simple cell swap: the `2 × 2 × 2` **no-three-way interaction
-model**. We model a contingency table as an element of the free `ℤ`-module
-`Fin 2 → Fin 2 → Fin 2 → ℤ`, define the three families of two-way margins as
-explicit linear functionals, and define a *fiber* as the set of non-negative
-tables sharing prescribed margins. Our three principal results are: (i) the
-single alternating move `M3(i, j, k) = (−1)^{i+j+k}` lies in the kernel of the
-two-way margin map, hence is a legal model move; (ii) **the move lattice has
-rank one** — any two tables with equal margins differ by exactly an integer
-multiple of `M3`, so the singleton `{M3}` *is* the Markov basis; and (iii) the
-**Fundamental Theorem for this model** — any two non-negative tables with equal
-margins are connected by a walk of `±M3` steps that remains non-negative at every
-step. The connectivity proof rests on a reusable *discrete convexity* lemma: the
-non-negative locus along the move line is an integer interval, so a monotone unit
-walk never escapes the non-negative orthant. We discuss the sharp boundary at
-which the rank-one phenomenon fails (`2 × 2 × n`, `n > 2`) and outline the
-infrastructure needed to push the theory further.
+We present a self-contained development of the **Fundamental Theorem of Markov
+Bases** for the two-way independence model on $m \times n$ integer contingency
+tables. The independence model fixes the two families of one-dimensional margins
+(all row sums and all column sums); a *fiber* of the model is the set of
+non-negative integer tables sharing a prescribed pair of margins. We prove that
+the classical family of **basic $2 \times 2$ swap moves**
 
-**Keywords.** algebraic statistics, Markov basis, contingency table, no-three-way
-interaction, log-linear model, toric ideal, fiber connectivity, discrete
-convexity, lattice kernel.
+$$
+B(i,i',j,j') = e_{i,j'} + e_{i',j} - e_{i,j} - e_{i',j'}, \qquad i \neq i',\ j \neq j',
+$$
+
+forms a *Markov basis*: any two tables in the same fiber are connected by a walk
+of basic moves that never leaves the non-negative orthant. The argument is a
+constructive distance-reduction proof built on an $\ell^1$ potential function and
+a three-stage sign-pattern pigeonhole. We isolate the structural lemmas — margin
+invariance, the sign-pattern existence lemma, the local distance-decrease
+estimate, and a strong induction on $\ell^1$ distance — and show that the
+reachability relation is a genuine equivalence relation whose classes are exactly
+the fibers. The proof is fully constructive and yields a polynomial-time
+algorithm for connecting two tables, which we describe and analyze. We close with
+the relationship to the companion no-three-way interaction model and a discussion
+of sharp diameter bounds and the algebraic (ideal-generation) half of the
+theorem.
+
+**Keywords.** Algebraic statistics; Markov basis; contingency table; independence
+model; transportation polytope; lattice walk; Diaconis–Sturmfels; Markov chain
+Monte Carlo.
 
 ---
 
 ## 1. Introduction
 
-Algebraic statistics studies statistical models through the lens of commutative
-algebra and combinatorics. One of its founding contributions is the theory of
-**Markov bases** for exact conditional inference on contingency tables, introduced
-by Diaconis and Sturmfels. The setting is as follows. A discrete statistical model
-specifies a set of *sufficient statistics* — for log-linear models on contingency
-tables these are the *margins* of the table. Conditioning on the observed value of
-the sufficient statistic restricts attention to a **fiber**: the (finite) set of
-non-negative integer tables with the same margins as the observed data. To perform
-an exact test — for example a goodness-of-fit test free of large-sample
-approximations — one runs a random walk that is uniform (or appropriately weighted)
-on this fiber. The walk requires a set of **moves**: integer tables that preserve
-all margins, so that adding a move to a valid table produces another table with the
-same margins.
+### 1.1 Motivation
 
-The **Fundamental Theorem of Markov Bases** states that a finite set of moves
-(a *Markov basis*) connecting every fiber of the model always exists, and
-identifies one such basis with a generating set of the *toric ideal* associated to
-the model's design matrix. Computing Markov bases in general is a substantial
-algebraic task. This paper isolates the smallest non-trivial case — the
-`2 × 2 × 2` no-three-way interaction model — and proves the Fundamental Theorem
-for it by elementary, fully rigorous means, in a way that exposes the structural
-reason the case is special: its move lattice is generated by a single element.
+A two-way contingency table records joint counts of two categorical variables.
+Given an $m \times n$ table $u$ with non-negative integer entries, the
+fundamental inferential question is whether the row variable and the column
+variable are statistically independent. The classical test fixes the *sufficient
+statistics* of the independence model — the row margins and column margins — and
+asks how the observed table compares to the conditional distribution of tables
+with those same margins. When cell counts are small or the table is sparse, the
+asymptotic $\chi^2$ approximation is unreliable, and one instead performs an
+*exact* conditional test by sampling from the fiber of tables with the observed
+margins.
 
-The contributions are:
+Sampling requires a connected, irreducible Markov chain on the fiber. The
+landmark observation of Diaconis and Sturmfels is that such a chain can be built
+from a finite set of integer *moves* — a **Markov basis** — which is, equivalently,
+a generating set of a toric ideal associated to the model. The defining property
+of a Markov basis is **fiber connectivity**: the moves connect every fiber while
+preserving non-negativity. This paper formalizes and proves that property for the
+independence model with the smallest natural move set, the basic $2 \times 2$
+swaps.
 
-1. A clean module-theoretic formalisation of tables, margins, and fibers
-   (Section 2).
-2. A proof that the alternating move `M3` is a legal move (Theorem 3.2).
-3. A proof that the move lattice is *rank one*, so `{M3}` is the Markov basis
-   (Theorem 4.1).
-4. A discrete-convexity connectivity lemma (Lemma 5.3) and the consequent
-   Fundamental Theorem for the model (Theorem 5.4).
-5. A discussion of the rank-one boundary and future directions (Sections 6–7).
+### 1.2 Contributions
+
+1. A precise lattice-walk formulation of fiber connectivity for the independence
+   model on general $m \times n$ tables, with margins, moves, legality, and
+   connectivity all defined explicitly (Section 2).
+2. A complete, constructive proof that the basic $2 \times 2$ moves connect every
+   fiber (Theorem 4.1), decomposed into four reusable lemmas:
+   - **margin invariance** of basic moves (Lemma 3.1),
+   - the **sign-pattern pigeonhole** existence lemma (Lemma 3.3),
+   - the **local distance-decrease** estimate (Lemma 3.4), and
+   - a **strong induction on $\ell^1$ distance** (Lemma 3.5).
+3. A proof that the move relation is symmetric, so reachability is an equivalence
+   relation whose classes are the fibers (Section 4.2).
+4. An explicit connecting algorithm with complexity analysis (Section 5) and a
+   comparison to the companion no-three-way interaction model (Section 6).
 
 ---
 
 ## 2. Definitions
 
-### 2.1 Tables and margins
+Throughout, $m, n$ are fixed positive integers, and indices range over
+$\{0, \dots, m-1\}$ and $\{0, \dots, n-1\}$.
 
-> **Definition 2.1 (Table).** A `2 × 2 × 2` integer contingency table is a function
-> `u : Fin 2 → Fin 2 → Fin 2 → ℤ`. We write `Table3` for the type of all such
-> tables. Under pointwise addition and integer scaling, `Table3` is the free
-> `ℤ`-module of rank 8.
+**Definition 2.1 (Table).** An $m \times n$ *integer contingency table* is a
+function
+$$
+u : \{0,\dots,m-1\} \times \{0,\dots,n-1\} \to \mathbb{Z},
+$$
+written $u_{i,j}$ or $u\,i\,j$. The set of all such tables is a free
+$\mathbb{Z}$-module of rank $mn$.
 
-We index cells by triples `(i, j, k)` with `i, j, k ∈ {0, 1}`.
+**Definition 2.2 (Margins).** The *row margins* and *column margins* of $u$ are
+$$
+\operatorname{rowSum}(u)_i = \sum_{j} u_{i,j}, \qquad
+\operatorname{colSum}(u)_j = \sum_{i} u_{i,j}.
+$$
 
-> **Definition 2.2 (Two-way margins).** For a table `u` we define three families of
-> linear functionals, each obtained by summing out one coordinate:
->
-> - `m12(u)(i, j) = u(i, j, 0) + u(i, j, 1)`   (sum over the third index `k`);
-> - `m13(u)(i, k) = u(i, 0, k) + u(i, 1, k)`   (sum over the second index `j`);
-> - `m23(u)(j, k) = u(0, j, k) + u(1, j, k)`   (sum over the first index `i`).
->
-> Collectively these comprise twelve scalar equations (four per family).
+**Definition 2.3 (Same fiber / SameMargins).** Two tables $u, v$ lie in the same
+fiber of the independence model, written $\operatorname{SameMargins}(u,v)$, iff
+$$
+\bigl(\forall i,\ \operatorname{rowSum}(u)_i = \operatorname{rowSum}(v)_i\bigr)
+\ \wedge\
+\bigl(\forall j,\ \operatorname{colSum}(u)_j = \operatorname{colSum}(v)_j\bigr).
+$$
+The margin map $u \mapsto (\operatorname{rowSum}(u), \operatorname{colSum}(u))$ is
+$\mathbb{Z}$-linear, so $\operatorname{SameMargins}(u,v)$ holds iff $u - v$ lies
+in its kernel, the **lattice of moves**.
 
-> **Definition 2.3 (Same margins).** Two tables `u, v` lie in the same fiber of the
-> no-three-way interaction model, written `SameMargins u v`, iff all three families
-> of margins coincide:
-> `(∀ i j, m12 u i j = m12 v i j) ∧ (∀ i k, m13 u i k = m13 v i k) ∧
->  (∀ j k, m23 u j k = m23 v j k)`.
+**Definition 2.4 (Basic move).** For rows $i \neq i'$ and columns $j \neq j'$,
+the *basic $2 \times 2$ swap move* is
+$$
+B(i,i',j,j') = e_{i,j'} + e_{i',j} - e_{i,j} - e_{i',j'},
+$$
+where $e_{a,b}$ is the indicator table with a single $1$ in cell $(a,b)$. As a
+$2 \times 2$ pattern restricted to the affected cells,
+$$
+\begin{pmatrix} B_{i,j} & B_{i,j'} \\ B_{i',j} & B_{i',j'} \end{pmatrix}
+= \begin{pmatrix} -1 & +1 \\ +1 & -1 \end{pmatrix}.
+$$
 
-Fixing all three two-way margins is precisely the log-linear *no-three-way
-interaction model*: it captures all pairwise associations among the three binary
-variables while forbidding a genuine three-way interaction term.
+**Definition 2.5 (Non-negativity).** A table $u$ is *non-negative*,
+$\operatorname{Nonneg}(u)$, iff $u_{i,j} \geq 0$ for all $i,j$. A *fiber* of the
+independence model is a set of non-negative tables sharing a fixed pair of
+margins.
 
-### 2.2 The Markov move
+**Definition 2.6 (Legal step).** There is a *step* from $u$ to $v$, written
+$\operatorname{Step}(u,v)$, iff $u$ and $v$ are both non-negative and there exist
+$i \neq i'$, $j \neq j'$ with $v = u + B(i,i',j,j')$. (The reverse move is the
+basic move with $i, i'$ swapped, so steps come in inverse pairs.)
 
-> **Definition 2.4 (Alternating move).** The degree-4 alternating Markov move is
-> `M3 : Table3`, `M3(i, j, k) = 1` if `i + j + k` is even, and `−1` otherwise.
-> Equivalently `M3(i, j, k) = (−1)^{i+j+k}`.
+**Definition 2.7 (Connectivity).** $\operatorname{Connected}(u,v)$ is the
+reflexive–transitive closure of $\operatorname{Step}$: there is a finite walk
+$$
+u = w_0 \to w_1 \to \cdots \to w_\ell = v
+$$
+with $\operatorname{Step}(w_{t}, w_{t+1})$ for each $t$, every $w_t$ non-negative.
 
-Geometrically `M3` two-colours the eight corners of the cube as a 3-D
-checkerboard; it raises four cells by one and lowers the four antipodal cells by
-one.
-
-> **Lemma 2.5 (Move takes values ±1).** For all `i, j, k`, `M3(i, j, k) = 1` or
-> `M3(i, j, k) = −1`.
->
-> *Proof.* Immediate from the definition by case analysis on the parity of
-> `i + j + k`. ∎
-
-### 2.3 Fibers, steps, connectivity
-
-> **Definition 2.6 (Non-negativity).** A table `u` is non-negative, `Nonneg u`, iff
-> `u(i, j, k) ≥ 0` for all `i, j, k`. A *fiber* is a maximal set of non-negative
-> tables sharing fixed margins.
-
-> **Definition 2.7 (Legal step).** A single legal Markov step `Step u v` holds iff
-> `u` and `v` are both non-negative and `v = u + M3` or `v = u − M3`.
-
-> **Definition 2.8 (Connectivity).** `Connected u v` is the reflexive–transitive
-> closure of `Step`: there exists a finite walk
-> `u = w_0, w_1, …, w_n = v` with each consecutive pair related by `Step`.
-
-A Markov basis *connects every fiber* if `Connected u v` holds for every pair of
-non-negative tables with equal margins.
-
----
-
-## 3. The move is legal
-
-The defining property of a Markov move is that it preserves the sufficient
-statistic — here, all twelve margins.
-
-> **Lemma 3.1 (Lines of `M3` sum to zero).** Fix any two coordinates and let the
-> third range over `{0, 1}`. The two values of `M3` along that line are `+1` and
-> `−1` in some order, so they sum to `0`.
->
-> *Proof.* Flipping a single coordinate flips the parity of `i + j + k`, hence
-> flips the sign of `M3`. Thus the two cells of any axis-aligned line carry
-> opposite signs. ∎
-
-> **Theorem 3.2 (Move preserves margins).** For every table `u` and every integer
-> `t`, `SameMargins u (u + t · M3)`. Equivalently, `M3` lies in the kernel of the
-> two-way margin map.
->
-> *Proof.* Each margin is a sum of `u` along an axis-aligned line. By Lemma 3.1 the
-> corresponding line sum of `M3` is `0`, so the line sum of `t · M3` is `0`, and
-> `(u + t · M3)` has the same line sum as `u`. Concretely, expanding any one of the
-> twelve margins for `u + t · M3` and substituting the `±1` values of `M3` yields a
-> `+t − t = 0` cancellation, leaving the margin of `u` unchanged. (In the formal
-> development this is discharged by case analysis on the two free indices followed
-> by `norm_num`/`ring` after `M3` reduces to concrete `±1` on each cell.) ∎
-
-Thus every integer multiple of `M3` is a legal move: it can be added to any table
-without disturbing a single margin.
+**Definition 2.8 ($\ell^1$ distance).** The *$\ell^1$ distance* between tables is
+$$
+D(u,v) = \sum_{(i,j)} \bigl| u_{i,j} - v_{i,j} \bigr| \ \in \mathbb{Z}_{\geq 0}.
+$$
+It is the total number of unit cell-discrepancies between the two tables.
 
 ---
 
-## 4. The move lattice is rank one
+## 3. Structural lemmas
 
-The crux of the matter is that legality plus the margin constraints *forces* the
-move lattice to be one-dimensional.
+### 3.1 Basic moves are legal
 
-> **Theorem 4.1 (Rank-one move lattice; `{M3}` is the Markov basis).** If
-> `SameMargins u v`, then
-> `v = u + (v(0,0,0) − u(0,0,0)) · M3`.
-> Consequently the difference of any two equal-margin tables is an integer multiple
-> of `M3`, and the singleton `{M3}` generates the entire move lattice.
->
-> *Proof.* Let `w = v − u`. By hypothesis `w` has all twelve margins equal to zero.
-> Set `c = w(0,0,0) = v(0,0,0) − u(0,0,0)`. We show `w(i,j,k) = (−1)^{i+j+k} c` for
-> every cell, i.e. `w = c · M3`.
->
-> The twelve homogeneous margin equations on `w` are:
-> from `m12`: `w(i,j,0) + w(i,j,1) = 0` for each `(i,j)`;
-> from `m13`: `w(i,0,k) + w(i,1,k) = 0` for each `(i,k)`;
-> from `m23`: `w(0,j,k) + w(1,j,k) = 0` for each `(j,k)`.
-> Each equation states that flipping one coordinate negates the value of `w`. Hence
-> any single coordinate flip multiplies `w` by `−1`. Starting from `w(0,0,0) = c`
-> and reaching an arbitrary `(i,j,k)` by `i + j + k` flips yields
-> `w(i,j,k) = (−1)^{i+j+k} c`. (Consistency is automatic: the three families of
-> equations are mutually compatible because flips commute, so any two routes to the
-> same cell agree.) Reading off all eight cells gives `w = c · M3`, i.e.
-> `v = u + c · M3`. In the formal proof, the eight cell identities follow from the
-> twelve instantiated margin equations by `fin_cases` over the three indices
-> followed by `omega`. ∎
+**Lemma 3.1 (Margin invariance).** For any table $u$ and any $i \neq i'$,
+$j \neq j'$,
+$$
+\operatorname{SameMargins}\bigl(u,\ u + B(i,i',j,j')\bigr).
+$$
 
-Theorem 4.1 is a concrete kernel computation for the integer "design matrix" of the
-model: although there are 8 unknowns and 12 constraints, the solution space of the
-homogeneous system is the rank-one lattice `ℤ · M3`. This is exactly the statement
-that `{M3}` is a Markov basis in the lattice (algebraic) sense; what remains is the
-*combinatorial* content — that the basis connects fibers through the non-negative
-orthant.
+*Proof sketch.* Linearity of the margin map reduces the claim to showing that
+every row sum and every column sum of $B(i,i',j,j')$ is zero. Row $i$ of $B$ has
+a $+1$ in column $j'$ and a $-1$ in column $j$ (and zeros elsewhere), summing to
+$0$; row $i'$ has a $+1$ in column $j$ and a $-1$ in column $j'$, summing to $0$;
+all other rows are identically zero. The hypothesis $j \neq j'$ ensures the two
+nonzero entries in each affected row are distinct cells, so they genuinely
+cancel. The column sums vanish symmetrically, using $i \neq i'$. Splitting the
+margin of $u + B$ as the margin of $u$ plus the margin of $B$ via additivity of
+finite sums, and observing the latter is zero, completes the proof. $\qquad\square$
 
----
+A direct consequence is that every walk of basic moves stays within a single
+fiber: connectivity respects margins.
 
-## 5. Fiber connectivity: the Fundamental Theorem
+### 3.2 The distance is faithful
 
-The algebraic rank-one fact does not yet guarantee that one can walk between
-equal-margin tables *within the non-negative orthant*. This is supplied by a
-discrete convexity argument.
+**Lemma 3.2 (Distance non-degeneracy).** $D(u,v) = 0$ if and only if $u = v$.
 
-> **Lemma 5.1 (Pointwise evaluation).** For any table `u`, integer `t`, and cell
-> `(i,j,k)`, `(u + t · M3)(i,j,k) = u(i,j,k) + t · M3(i,j,k)`.
->
-> *Proof.* Pointwise definition of module operations on `Table3`. ∎
+*Proof sketch.* $D$ is a finite sum of non-negative integers $|u_{i,j} - v_{i,j}|$.
+A sum of non-negative terms is zero iff every term is zero, i.e. iff
+$u_{i,j} = v_{i,j}$ for all $(i,j)$, which by functional extensionality is
+$u = v$. $\qquad\square$
 
-> **Lemma 5.2 (Discrete convexity of the non-negative locus).** Fix `u` and let
-> `f(t) = u + t · M3`. The set `{ t ∈ ℤ : Nonneg (f(t)) }` is an integer interval
-> (possibly empty). In particular if `f(a)` and `f(b)` are non-negative then so is
-> `f(t)` for every integer `t` between `a` and `b`.
->
-> *Proof.* For each cell, `t ↦ u(i,j,k) + t · M3(i,j,k)` is an affine function of
-> `t` with slope `±1`, so the cell's non-negativity holds on a half-line, hence on
-> an interval; intersecting eight intervals (one per cell) yields an interval. ∎
+This makes $D$ a legitimate potential function: it certifies arrival precisely
+when it reaches its floor.
 
-> **Lemma 5.3 (Connectivity along the move line).** If `Nonneg u` and
-> `Nonneg (u + t · M3)`, then `Connected u (u + t · M3)`.
->
-> *Proof.* Induct on `n = |t|` (the natural-number absolute value of `t`).
-> If `n = 0` then `t = 0` and `u + t · M3 = u`, connected by the empty walk.
-> Otherwise split on the sign of `t`. Suppose `t > 0` (the case `t < 0` is
-> symmetric, replacing `+M3` by `−M3`). Take the first unit step `u → u + M3`.
-> We must check `Nonneg (u + M3)`. For a cell with `M3 = +1` the value only
-> increases, so it stays `≥ 0`. For a cell with `M3 = −1`, the step decreases it by
-> 1; but `Nonneg (u + t · M3)` gives `u(i,j,k) − t ≥ 0`, i.e.
-> `u(i,j,k) ≥ t ≥ 1`, so `u(i,j,k) − 1 ≥ 0`. Hence `Nonneg (u + M3)` and
-> `Step u (u + M3)`. Now `u + M3` and `(u + M3) + (t−1) · M3 = u + t · M3` are both
-> non-negative, and `|t − 1| = n − 1`, so by the induction hypothesis
-> `Connected (u + M3) (u + t · M3)`. Prepending the first step gives
-> `Connected u (u + t · M3)`. ∎
+### 3.3 The sign-pattern pigeonhole
 
-Lemma 5.3 is the technical heart of the development: a single, reusable
-discrete-convexity engine. Inducting on `|t|` (rather than on `t` directly) yields
-a clean natural-number recursion, and the sign split chooses whether the first step
-is `+M3` or `−M3`.
+This is the structural heart of the theorem.
 
-> **Theorem 5.4 (Fundamental Theorem of Markov Bases for the no-three-way model).**
-> Any two non-negative tables with equal two-way margins are connected by a walk of
-> `±M3` steps that stays non-negative at every step. Formally: if `Nonneg u`,
-> `Nonneg v`, and `SameMargins u v`, then `Connected u v`. Hence `{M3}` connects
-> every fiber.
->
-> *Proof.* By Theorem 4.1, `v = u + t · M3` with `t = v(0,0,0) − u(0,0,0)`. Both
-> `u` and `v` are non-negative by hypothesis, so Lemma 5.3 applies with this `t`,
-> giving `Connected u (u + t · M3) = Connected u v`. ∎
+**Lemma 3.3 (Sign-pattern pigeonhole).** If $\operatorname{SameMargins}(u,v)$ and
+$u \neq v$, then there exist rows $i \neq i'$ and columns $j \neq j'$ with
+$$
+v_{i,j} < u_{i,j}, \qquad u_{i,j'} < v_{i,j'}, \qquad v_{i',j'} < u_{i',j'}.
+$$
 
-This is precisely the Fundamental Theorem specialised to the model: the single
-explicit move `M3` suffices to connect every fiber, so a random walk using only
-`±M3` is irreducible on each fiber — exactly the property needed to drive an exact
-conditional test.
+That is, $u$ overshoots $v$ at the two cells $(i,j)$ and $(i',j')$ and
+undershoots it at $(i,j')$ — exactly the sign pattern that a basic move on the
+frame $\{i,i'\} \times \{j,j'\}$ can correct.
 
----
+*Proof sketch.* Write $d = u - v$. Because the margins agree, $\sum_{i,j} d_{i,j}
+= 0$, yet $d \not\equiv 0$; a collection of integers summing to zero with a
+nonzero member must contain a strictly positive entry. Fix a cell $(i,j)$ with
+$d_{i,j} > 0$, i.e. $v_{i,j} < u_{i,j}$. (Concretely: if no cell had $u > v$, then
+since margins agree pointwise comparison forces $u = v$, a contradiction.)
 
-## 6. Algorithms
+Next, the row margin equality $\operatorname{rowSum}(u)_i =
+\operatorname{rowSum}(v)_i$ gives $\sum_{j''} d_{i,j''} = 0$. Since one term
+$d_{i,j} > 0$ is positive, some other term in row $i$ must be negative: there is a
+column $j'$ with $d_{i,j'} < 0$, i.e. $u_{i,j'} < v_{i,j'}$.
 
-The theory yields an immediately executable inference procedure.
+Finally, the column margin equality for column $j'$ gives $\sum_{i''} d_{i'',j'} =
+0$. Since $d_{i,j'} < 0$, some other term in column $j'$ must be positive: there
+is a row $i'$ with $d_{i',j'} > 0$, i.e. $v_{i',j'} < u_{i',j'}$.
 
-### 6.1 Walk-to-base canonicalisation
+Distinctness of the indices is automatic from the opposite signs: if $i = i'$
+then cell $(i,j')$ would satisfy both $d_{i,j'} < 0$ and $d_{i,j'} > 0$, which is
+impossible; likewise $j \neq j'$ since $(i,j)$ has $d > 0$ and $(i,j')$ has
+$d < 0$. Thus $(i,i',j,j')$ is a valid frame. $\qquad\square$
 
-Because the move lattice is rank one, every fiber has a one-parameter structure:
-positions along the move line are indexed by the integer `t`. A table can be
-*canonicalised* by sliding it (via `±M3`) to the extreme non-negative position
-(minimum feasible `(0,0,0)`-entry). Two tables share a fiber iff they have equal
-margins iff they canonicalise to the same table. This gives an `O(1)` fiber-equality
-test for `2 × 2 × 2` tables.
+The three pigeonhole steps — **all-cells sum $\to$ row sum $\to$ column sum** —
+are the engine of the proof, and the fact that distinctness *falls out of the
+signs* rather than needing a separate hypothesis is what makes the move always
+admissible.
 
-### 6.2 Metropolis–Hastings on a fiber
+### 3.4 The local distance-decrease estimate
 
-To sample (approximately) uniformly from a fiber: from the current table `u`,
-propose `u ± M3` with equal probability; if the proposal is non-negative, accept it
-(the move preserves margins by Theorem 3.2 and the chain is irreducible by
-Theorem 5.4); otherwise stay. The chain is reversible with uniform stationary
-distribution on the fiber. For weighted (e.g. hypergeometric) targets, apply the
-usual Metropolis acceptance ratio.
+**Lemma 3.4 (Distance decrease).** With $(i,i',j,j')$ from Lemma 3.3, set
+$u' = u + B(i,i',j,j')$. Then $u'$ is non-negative whenever $u$ is, and
+$$
+D(u', v) < D(u, v).
+$$
 
-### 6.3 Exact conditional test
+*Proof sketch.* The move alters only the four cells of the frame. Outside the
+frame, $|u' - v| = |u - v|$, so those terms cancel in the difference $D(u,v) -
+D(u',v)$. Inside the frame, the basic move subtracts $1$ from $u_{i,j}$ and
+$u_{i',j'}$ and adds $1$ to $u_{i,j'}$ and $u_{i',j'}$ — precisely, recalling the
+sign pattern $\begin{psmallmatrix} -1 & +1 \\ +1 & -1 \end{psmallmatrix}$, it
+*decreases* $u$ at $(i,j)$ and $(i',j')$ and *increases* it at $(i,j')$ and
+$(i',j)$.
 
-Given observed data `u₀`: compute its margins; run the walk of §6.2 to sample
-fiber elements; for a chosen discrepancy statistic (e.g. the likelihood-ratio or
-chi-square statistic against the fitted model), estimate the conditional `p`-value
-as the fraction of sampled tables at least as extreme as `u₀`. Irreducibility
-(Theorem 5.4) is what makes this estimate valid.
+By Lemma 3.3, $u$ was strictly above $v$ at $(i,j)$ and $(i',j')$ and strictly
+below $v$ at $(i,j')$. Moving $u$ down at the two overshooting cells and up at the
+undershooting cell each reduces the corresponding $|u-v|$ term by exactly $1$ (no
+overshoot occurs because each gap was at least $1$). The fourth cell $(i',j)$ may
+move either way, changing its term by at most $1$. Summing, the three guaranteed
+unit reductions outweigh the at-most-one possible increase, so the net change is
+strictly negative: $D$ drops by at least $1$ (in fact by $2$ or $4$, see Section
+7). Non-negativity is preserved because the two decremented cells $u_{i,j},
+u_{i',j'}$ were strictly larger than the corresponding non-negative $v$ values, so
+they were at least $1$ before the move. $\qquad\square$
+
+### 3.5 Induction on distance
+
+**Lemma 3.5 (Connectivity from a distance bound).** For every $N$, if
+$\operatorname{Nonneg}(u)$, $\operatorname{Nonneg}(v)$,
+$\operatorname{SameMargins}(u,v)$, and $D(u,v) \leq N$, then
+$\operatorname{Connected}(u,v)$.
+
+*Proof sketch.* Strong induction on $N$. If $D(u,v) = 0$ then $u = v$ by Lemma
+3.2 and connectivity holds by reflexivity. Otherwise $u \neq v$; Lemmas 3.3 and
+3.4 produce a single legal step $u \to u'$ with $u'$ non-negative,
+$\operatorname{SameMargins}(u',v)$ (Lemma 3.1, since margins are preserved), and
+$D(u',v) < D(u,v) \leq N$. The induction hypothesis applies to $u'$ and $v$,
+giving $\operatorname{Connected}(u',v)$; prepending the step $u \to u'$ yields
+$\operatorname{Connected}(u,v)$. $\qquad\square$
+
+The packaging of Lemmas 3.3–3.4 into a single "always one good move" statement is
+sometimes recorded separately as *exists\_step*: every non-equal fiber pair admits
+a legal, distance-decreasing move. Lemma 3.5 is then a clean induction over that
+oracle.
 
 ---
 
-## 7. Applications
+## 4. Main results
 
-- **Exact goodness-of-fit testing.** The walk underlies Fisher-style exact tests
-  for three-way binary contingency data under the no-three-way interaction model,
-  avoiding large-sample chi-square approximations that are unreliable for sparse
-  tables.
-- **Privacy and disclosure limitation.** Fibers describe exactly the tables
-  consistent with released margins; the rank-one structure quantifies how much an
-  adversary can (or cannot) reconstruct from published two-way summaries.
-- **Pedagogy.** The model is the canonical first example beyond decomposable
-  models, where the Markov move stops being a `2×2` swap; it is an ideal teaching
-  vehicle for the algebra–statistics bridge.
+### 4.1 The Fundamental Theorem
+
+**Theorem 4.1 (Fundamental Theorem of Markov Bases, independence model).** Let
+$u, v$ be non-negative $m \times n$ integer tables with the same row sums and the
+same column sums. Then $\operatorname{Connected}(u,v)$: there is a walk of legal
+basic $2 \times 2$ moves from $u$ to $v$ that stays non-negative at every step.
+Equivalently, the family $\{B(i,i',j,j') : i \neq i',\ j \neq j'\}$ is a Markov
+basis for the two-way independence model.
+
+*Proof.* Apply Lemma 3.5 with $N = D(u,v)$, which is a finite non-negative
+integer. $\qquad\square$
+
+### 4.2 Fibers are equivalence classes
+
+**Lemma 4.2 (Step symmetry).** If $\operatorname{Step}(u,v)$ then
+$\operatorname{Step}(v,u)$.
+
+*Proof sketch.* If $v = u + B(i,i',j,j')$ then $u = v + B(i',i,j,j')$, since
+swapping the two rows negates the basic move: $B(i',i,j,j') = -B(i,i',j,j')$.
+Both $u$ and $v$ are non-negative by hypothesis, so the reverse step is also
+legal. $\qquad\square$
+
+**Corollary 4.3 (Connectivity is symmetric).** If $\operatorname{Connected}(u,v)$
+then $\operatorname{Connected}(v,u)$.
+
+*Proof sketch.* Reverse the walk, applying Lemma 4.2 to each edge. $\qquad\square$
+
+Since $\operatorname{Connected}$ is reflexive and transitive by construction
+(reflexive–transitive closure) and symmetric by Corollary 4.3, it is an
+**equivalence relation**. By Lemma 3.1 its classes refine the fibers, and by
+Theorem 4.1 each fiber is contained in a single class; hence the equivalence
+classes of $\operatorname{Connected}$ are *exactly* the fibers. The fibers are the
+connected components of the table space under basic moves — no isolated tables,
+no spurious merging.
 
 ---
 
-## 8. Discussion
+## 5. Algorithms
 
-The development exposes *why* the `2 × 2 × 2` no-three-way model is the textbook
-first interesting example. For decomposable models (two-way independence) the
-Markov basis consists of degree-2 `2×2` swaps, which are visibly local. The
-no-three-way move `M3` has **degree 4**: it touches all eight cells simultaneously
-and is indecomposable. Yet, remarkably, the move lattice remains **rank one**.
-This collapses the otherwise deep algebraic content (toric ideals, Gröbner bases)
-into a finite linear-algebra fact (Theorem 4.1) and reduces connectivity to a
-single discrete-convexity idea (Lemma 5.3).
+The proof is constructive and translates directly into algorithms.
 
-Two structural lessons stand out. First, the connectivity engine
-(Lemma 5.3) is model-agnostic in spirit: whenever a move lattice is rank one, the
-non-negative locus along the move line is an interval and a monotone walk connects
-any two feasible points. This is a reusable bridge between integer linear algebra
-and combinatorial connectivity. Second, rank-one is *fragile*: it is special to the
-`2 × 2 × 2` geometry.
+### 5.1 Connecting two tables
 
-> **Conjecture 8.1 (Boundary of rank one).** For the `2 × 2 × n` no-three-way
-> interaction model with `n > 2`, the move lattice has rank `> 1`; consequently no
-> single move connects all fibers, and the single-move-line argument of Lemma 5.3
-> no longer suffices. Connectivity then requires the genuine multi-generator
-> content of the Diaconis–Sturmfels theorem (the basic moves being the degree-4
-> alternating moves on each `2 × 2 × 2` sub-cube spanned by two of the `n` slices).
+**Algorithm A (Distance-reduction connector).** Given non-negative $u, v$ in the
+same fiber, repeatedly locate a sign-aligned $2 \times 2$ frame (Lemma 3.3),
+apply the corresponding basic move, and recurse until $u = v$.
 
-Identifying precisely where rank-one stops working is, we argue, the most valuable
-signpost for further work: it marks the transition from elementary linear algebra
-to the full force of the Fundamental Theorem.
+```
+INPUT  u, v : non-negative m×n tables with SameMargins(u, v)
+OUTPUT a list of basic moves transforming u into v
+moves := []
+while u ≠ v:
+    d := u - v
+    pick (i, j) with d[i][j] > 0            # all-cells sum is 0
+    pick j' with d[i][j'] < 0               # row i sum is 0
+    pick i' with d[i'][j'] > 0              # column j' sum is 0
+    apply B(i, i', j, j') to u
+    append (i, i', j, j') to moves
+return moves
+```
+
+**Correctness.** Each iteration decreases $D(u,v)$ by at least one (Lemma 3.4)
+and preserves non-negativity and margins, so the loop terminates in at most
+$D(u,v)$ iterations at the table $v$ (Lemma 3.2 and Theorem 4.1).
+
+**Complexity.** The naive frame search scans the difference table in $O(mn)$ time;
+with at most $D(u,v) \leq \tfrac12 \sum_{i,j}(u_{i,j}+v_{i,j})$ iterations, the
+total is $O(mn \cdot D(u,v))$. Maintaining lists of positive and negative cells
+per row and column reduces the per-iteration cost to $O(1)$ amortized after an
+$O(mn)$ setup, giving $O(mn + D(u,v))$.
+
+### 5.2 Random walk on a fiber (MCMC sampler)
+
+**Algorithm B (Metropolis–Hastings on the fiber).** To sample (approximately)
+uniformly from a fiber, run a random walk: at each step pick rows $i \neq i'$ and
+columns $j \neq j'$ uniformly, choose a sign $s \in \{+1,-1\}$, and propose
+$u \mapsto u + s\,B(i,i',j,j')$. Accept the proposal iff it remains non-negative;
+otherwise stay. Because the basic moves connect the fiber (Theorem 4.1) and come
+in inverse pairs (Lemma 4.2), the resulting chain is irreducible and reversible
+with the uniform stationary distribution; reweighting yields any desired
+exponential-family target (e.g. the hypergeometric conditional distribution used
+in the exact test of independence).
+
+---
+
+## 6. Applications
+
+### 6.1 Exact conditional testing of independence
+
+The motivating application is **Fisher-style exact testing** generalized beyond
+$2 \times 2$ tables. Given an observed table, the exact conditional $p$-value of a
+test statistic (e.g. the Pearson $\chi^2$ statistic, or the likelihood-ratio
+statistic) is its tail probability under the uniform/hypergeometric distribution
+on the fiber of tables with the observed margins. For all but the smallest tables,
+this fiber is too large to enumerate, so one estimates the $p$-value by the MCMC
+sampler of Algorithm B. Theorem 4.1 is the theoretical guarantee that the sampler
+is irreducible: without fiber connectivity, the chain could be trapped in a
+sub-collection of tables and report an invalid $p$-value.
+
+### 6.2 Disclosure limitation and table perturbation
+
+Statistical agencies releasing aggregated tables must perturb cell counts to
+protect privacy while preserving published margins. The basic moves are exactly
+the margin-preserving, non-negativity-preserving perturbations, and Theorem 4.1
+guarantees the full space of margin-consistent tables is reachable — the
+admissible perturbation space is a single connected component.
+
+### 6.3 Transportation polytopes
+
+The fiber of a fixed margin pair is the set of lattice points of a
+**transportation polytope** (the polytope of non-negative matrices with given row
+and column sums). Theorem 4.1 says these lattice points form a connected graph
+under $2 \times 2$ swaps — a discrete analogue of the polytope's connectedness,
+and the combinatorial substrate for lattice-point counting and sampling.
+
+---
+
+## 7. Discussion and sharp bounds
+
+The proof guarantees only that each move decreases $D$ by *at least* one, which
+suffices for termination. In fact the sign-aligned move decreases $D$ by exactly
+$2$ at the three sign-controlled cells (each contributes a unit reduction at two
+of them and the third is the undershoot), and possibly by $4$ if the fourth cell
+also happens to be aligned. This points to a sharp diameter result: because the
+margins force $\sum_{i,j}(u_{i,j}-v_{i,j}) = 0$, the $\ell^1$ distance equals
+twice the total positive part,
+$$
+D(u,v) = 2 \sum_{i,j} \max(u_{i,j} - v_{i,j},\, 0),
+$$
+and a move can be chosen to retire two units of positive part at once. This yields
+the conjectured exact graph diameter of $D(u,v)/2$, matching a $1$-Lipschitz
+potential lower bound. The companion no-three-way model exhibits the same
+phenomenon in its purest form: there the graph distance between two tables equals
+the absolute difference of a *single corner cell*, because that model's move
+lattice is rank one.
+
+The connectivity established here is the **combinatorial half** of the Fundamental
+Theorem. The **algebraic half** — that the basic moves $\mathbb{Z}$-span the
+entire move lattice (the kernel of the margin map), not merely connect fibers — is
+a separate statement, equivalent to the toric ideal of the independence model
+being generated by the $2 \times 2$ minors. Together they say $\{B(i,i',j,j')\}$
+is a Markov basis in both senses: a generating set of the lattice and a connector
+of every fiber.
+
+---
+
+## 8. Relationship to the no-three-way interaction model
+
+The independence model is the simplest member of a family. Its three-dimensional
+analogue, the **no-three-way interaction model** on $2 \times 2 \times 2$ tables,
+fixes *all three* families of two-dimensional margins. Remarkably, its move
+lattice is **rank one**: it is generated by the single degree-$4$ alternating move
+$M_3(i,j,k) = (-1)^{i+j+k}$, which touches all eight cells. There, two tables with
+the same two-way margins differ by exactly an integer multiple of $M_3$, the
+multiple being the difference of their corner cells, and the graph distance is
+*exactly* that corner difference. The contrast is instructive: the independence
+model needs the *full family* of $2 \times 2$ swaps and a genuine
+distance-reduction argument, whereas the no-three-way model collapses to a single
+generator and a one-dimensional interval walk. The present paper supplies the
+distance-reduction machinery that the higher, multi-generator models require.
 
 ---
 
 ## 9. Future work
 
-1. **`2 × 2 × n` and the lattice basis transition.** Prove Conjecture 8.1 and
-   exhibit the explicit multi-generator Markov basis (alternating moves on pairs of
-   slices), recovering the loss of rank-one connectivity.
-2. **General `r × c` two-way model.** Formalise that the `2×2` swaps connect every
-   fiber of the independence model for arbitrary `r, c` (a primitive-move /
-   bubble-sort argument), as the warm-up decomposable case.
-3. **A general discrete-convexity connectivity API.** Abstract Lemma 5.3 to a
-   statement about any rank-one integer sublattice of a free `ℤ`-module, decoupling
-   the convexity engine from the specific model.
-4. **Toric ideal bridge.** Connect the lattice kernel (Theorem 4.1) to the toric
-   ideal of the model's design matrix, formalising the algebraic half of the
-   Fundamental Theorem (moves ↔ binomials ↔ ideal generators).
-5. **Mixing time.** Quantify the mixing time of the `±M3` walk on a fiber as a
-   function of the margins (fiber diameter is `|t_max − t_min|`), giving runtime
-   guarantees for the exact test.
+- **Exact diameter.** Promote the "$D$ decreases by at least one" estimate to
+  "$D$ decreases by exactly two," and pair it with a $1$-Lipschitz potential lower
+  bound, to prove the graph diameter is exactly $D(u,v)/2$.
+- **Lattice spanning.** Prove the algebraic half: the basic moves
+  $\mathbb{Z}$-span the kernel of the margin map (equivalently, the toric ideal is
+  generated by $2 \times 2$ minors).
+- **Higher-dimensional and hierarchical models.** Extend the distance-reduction
+  framework to $2 \times 2 \times n$ no-three-way models (multi-generator Markov
+  bases) and to general hierarchical log-linear models, where the relevant moves
+  are no longer simple swaps.
+- **Mixing times.** Quantify the convergence rate of the Algorithm B sampler on
+  transportation-polytope fibers, connecting fiber geometry to MCMC efficiency.
 
 ---
 
 ## 10. Conclusion
 
-For the `2 × 2 × 2` no-three-way interaction model we have given a complete,
-elementary, and fully rigorous proof of the Fundamental Theorem of Markov Bases:
-the single alternating move `M3(i,j,k) = (−1)^{i+j+k}` is legal (Theorem 3.2),
-generates the entire rank-one move lattice (Theorem 4.1), and connects every fiber
-through the non-negative orthant (Theorem 5.4) via a discrete-convexity walk
-(Lemma 5.3). The result is the smallest instance where the subject's central
-theorem acquires genuine three-dimensional content, and it cleanly marks the
-boundary beyond which the rank-one miracle gives way to the full multi-generator
-theory.
+We have given a complete, constructive proof that the basic $2 \times 2$ swap
+moves connect every fiber of the two-way independence model on $m \times n$
+contingency tables — the Fundamental Theorem of Markov Bases in its foundational
+case. The proof rests on an $\ell^1$ potential, a three-stage sign-pattern
+pigeonhole, a local distance-decrease estimate, and an induction on distance, and
+it doubles as a polynomial-time connecting algorithm and the irreducibility
+certificate for exact conditional inference. The reachability relation is an
+equivalence relation whose classes are exactly the fibers, completing the picture
+of the table space as a disjoint union of connected components, each woven
+together by the smallest possible move.
