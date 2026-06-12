@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "64c5b386",
     "filename": "close_proofs_we_proved_that_the_biconjugate_satisf.json",
     "pkg_num": 13,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5784016886543535,
     "title": "Holes That Heal: CSS Quantum Codes as the Homology of Chain Complexes"
   },
   {
@@ -386,8 +386,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "close_proofs_we_proved_that_the_biconjugate_satisf",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5784016886543535,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Holes That Heal: CSS Quantum Codes as the Homology of Chain Complexes"
     }

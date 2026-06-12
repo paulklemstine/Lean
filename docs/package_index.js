@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-12T06:40:28Z",
+    "domain": "Applications",
+    "exp_id": "64c5b386",
+    "filename": "close_proofs_we_proved_that_the_biconjugate_satisf.json",
+    "pkg_num": 13,
+    "quality": "partial",
+    "quality_score": 0.5784016886543535,
+    "title": "Holes That Heal: CSS Quantum Codes as the Homology of Chain Complexes"
+  },
+  {
     "date": "2026-06-12T06:05:26Z",
     "domain": "Algebra",
     "exp_id": "dbb92078",
@@ -158,6 +168,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Fibonacci Divisibility Lattice: Faithful Arithmetic and the Rank of Apparition"
   },
+  "close_proofs_we_proved_that_the_biconjugate_satisf.json": {
+    "domain": "Applications",
+    "exp_id": "64c5b386",
+    "source_exp_ids": [
+      "781ad714"
+    ],
+    "title": "Holes That Heal: CSS Quantum Codes as the Homology of Chain Complexes"
+  },
   "extend_the_integration_deficiency_framework_to_a_f.json": {
     "domain": "Algebra",
     "exp_id": "352bb006",
@@ -244,7 +262,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T02:44:01Z",
       "domain": "Novelty",
-      "hue": 91,
+      "hue": 270,
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
       "primary_domain": "Bridges",
       "priority_score": 0.60229,
@@ -266,7 +284,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:38Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 95,
       "id": "close_proofs_arithmetic_mirror_symmetry_for_calabi",
       "primary_domain": "Bridges",
       "priority_score": 0.4038523076923077,
@@ -277,7 +295,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:55Z",
       "domain": "Applications",
-      "hue": 271,
+      "hue": 90,
       "id": "close_proofs_close_proofs_one_way_functions_existe",
       "primary_domain": "Bridges",
       "priority_score": 0.52037,
@@ -288,7 +306,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:26:56Z",
       "domain": "Computation",
-      "hue": 272,
+      "hue": 95,
       "id": "our_exists_revsim_of_surjective_proves_that_surjec",
       "primary_domain": "Computation",
       "priority_score": 0.65648,
@@ -310,7 +328,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:03Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 112,
       "id": "algebraic_statistics_markov_bases_for_contingency_",
       "primary_domain": "Algebra",
       "priority_score": 0.63808,
@@ -321,7 +339,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:20Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 271,
       "id": "the_current_formalization_uses_an_abstract_dsepora",
       "primary_domain": "Algebra",
       "priority_score": 0.73536,
@@ -332,7 +350,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:04:43Z",
       "domain": "Cryptography",
-      "hue": 91,
+      "hue": 270,
       "id": "close_proofs_close_proofs_this_cycle_replaced_the_",
       "primary_domain": "Cryptography",
       "priority_score": 0.6270279310344827,
@@ -343,7 +361,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:05:08Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 90,
       "id": "extend_the_integration_deficiency_framework_to_a_f",
       "primary_domain": "Algebra",
       "priority_score": 0.569817731958763,
@@ -354,13 +372,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:05:26Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 90,
       "id": "the_current_framework_uses_a_fixed_novelty_thresho",
       "primary_domain": "Algebra",
       "priority_score": 0.5326478527607362,
       "quality": "partial",
       "shape": "tetrahedron",
       "title": "Certified Novelty: A Metric Geometry of What Counts as New"
+    },
+    {
+      "date": "2026-06-12T06:40:28Z",
+      "domain": "Applications",
+      "hue": 271,
+      "id": "close_proofs_we_proved_that_the_biconjugate_satisf",
+      "primary_domain": "Bridges",
+      "priority_score": 0.5784016886543535,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "Holes That Heal: CSS Quantum Codes as the Homology of Chain Complexes"
     }
   ]
 };
