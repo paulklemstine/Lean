@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-12T00:08:08.583068+00:00",
+  "last_updated": "2026-06-12T01:02:07.365091+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -23983,6 +23983,45 @@
       "theorem_count": 1955,
       "timestamp": "2026-06-12T00:08:08.341253+00:00",
       "title": "Close Proofs: Close Proofs: The current framework considers *static* observation sys"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6615,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 47,
+      "domain": "Applications",
+      "duration_seconds": -1900.6464097499847,
+      "end_time": 1781223893.385916,
+      "files_integrated": 0,
+      "job_id": "1711ca61",
+      "outcome_quality": 0.0,
+      "phase": "B",
+      "phase_a_prompt_version": "v7",
+      "phase_b_prompt_version": "v1",
+      "phase_b_skipped": false,
+      "prompt_version": "v7",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.8,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.5,
+        "composite": 0.735,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.7326,
+        "novelty": 0.9452,
+        "proof_depth": 0.6415,
+        "usefulness": 0.8208
+      },
+      "quality_score": 0.5555617034700315,
+      "sorry_count": 5,
+      "sorry_density": 0.003943217665615142,
+      "start_time": 1781225794.0323257,
+      "strategy_count": 0,
+      "theorem_count": 1268,
+      "timestamp": "2026-06-12T01:02:07.085705+00:00",
+      "title": "This cycle formalized a self-contained fragment of **predicative ordinal analysi"
     }
   ]
 }

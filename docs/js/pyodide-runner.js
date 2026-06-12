@@ -251,14 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 header.appendChild(title);
                 header.appendChild(btnGroup);
 
-                if (item.description) {
-                    header.style.flexWrap = 'wrap';
-                    const desc = document.createElement('p');
-                    desc.style.cssText = 'color: var(--text-muted); font-size: 0.9em; margin: 8px 0 0 0; flex-basis: 100%;';
-                    desc.textContent = item.description;
-                    header.appendChild(desc);
-                }
-
                 const editor = document.createElement('textarea');
                 editor.className = 'code-editor collapsed';
                 editor.spellcheck = false;
