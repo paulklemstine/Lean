@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "4acdb3b1",
     "filename": "this_cycle_opened_a_constructive_bridge_between_th.json",
     "pkg_num": 51,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7075200000000001,
     "title": "The Staircase With No Bottom Step: A Constructive Bridge Between Well-Ordering, Termination, and the Fast-Growing Hierarchy"
   },
   {
@@ -1510,8 +1510,8 @@ window.PACKAGE_GRAPH = {
       "hue": 100,
       "id": "this_cycle_opened_a_constructive_bridge_between_th",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7075200000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Staircase With No Bottom Step: A Constructive Bridge Between Well-Ordering, Termination, and the Fast-Growing Hierarchy"
     }
