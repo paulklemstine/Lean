@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "89c02d7b",
     "filename": "the_file_willmoreenergylean_establishes_the_elemen.json",
     "pkg_num": 41,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6796971428571429,
     "title": "The Elementary Willmore Energy: Curvature Lower Bounds by Genus"
   },
   {
@@ -1220,8 +1220,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "the_file_willmoreenergylean_establishes_the_elemen",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6796971428571429,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "The Elementary Willmore Energy: Curvature Lower Bounds by Genus"
     }
