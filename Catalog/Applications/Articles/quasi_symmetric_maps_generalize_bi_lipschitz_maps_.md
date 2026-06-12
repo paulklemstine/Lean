@@ -1,228 +1,95 @@
-# The Shape of Distortion: How Maps Bend Fractals Without Breaking Their Dimension
+# The Shape of Stretching: How Quasi-Symmetric Maps Bend Space Without Breaking It
 
-## A number that survives stretching
+Imagine you have a photograph printed on a sheet of perfectly elastic rubber. You can grab the corners and pull, push the middle, twist it gently — and the picture distorts. Faces get longer, circles become ovals, straight lines start to curve. Now ask a deceptively simple question: *how badly* can you deform that sheet before the picture stops being recognizable? More precisely, what kinds of stretching preserve the deep structure of a shape, even when they wreck its superficial appearance?
 
-Imagine you hand a coastline to a cartographer who is allowed to stretch, squeeze,
-and warp the map however they like — but with one rule: nowhere are they allowed
-to crush two distinct points onto the same spot, and nowhere are they allowed to
-blow distances up infinitely or collapse them to zero. Their distortion is bounded.
-After all their warping, you compare the original coastline to the new one. Has
-anything survived the abuse?
+This question sits at the crossroads of geometry, analysis, and the strange world of fractals. The answer hinges on a beautiful idea called **quasi-symmetry**, and the story of how it generalizes a more familiar notion — and what it preserves — is the subject of this article.
 
-Surprisingly, yes. There is a single number attached to the coastline — its
-**Hausdorff dimension** — that the cartographer cannot change, as long as their
-distortion stays bounded both ways. The coastline of Britain has a Hausdorff
-dimension of roughly 1.25; it is "more than a line but less than a filled-in
-region." No amount of bounded, two-sided stretching can turn that 1.25 into a 1.30.
-The number is an invariant. It is, in a precise sense, the fingerprint of the
-fractal.
+## Two ways to be gentle
 
-This article is about a piece of mathematics that pins down *exactly when* and
-*exactly how* such warping preserves — or controllably distorts — that fingerprint.
-And it is about a subtle but crucial generalization: what happens when the
-cartographer behaves well only on **part** of the map?
+Mathematicians have long studied maps (transformations) of space that don't tear things apart. The gold standard of well-behaved deformation is the **bi-Lipschitz map**. The name is intimidating, but the idea is homely: a bi-Lipschitz map never stretches or shrinks distances by more than a fixed factor. If two points are a centimeter apart, then after the transformation they are at least, say, half a centimeter apart and at most two centimeters apart. There's a single "distortion budget" — call it `L` — and *every* pair of points, near or far, must obey it.
 
-## What is dimension, really?
+Formally, a map `f` is **`L`-bi-Lipschitz** (with `L ≥ 1`) when for all points `x` and `y`,
 
-We learn in school that a line is one-dimensional, a square two-dimensional, a cube
-three-dimensional. That intuition works for smooth, tidy shapes. But the world is
-not tidy. A coastline, a lightning bolt, a snowflake's edge, the branching of a
-lung, the cratered surface of the moon — these are *rough*. They wiggle at every
-scale. Zoom in on a coastline and you find smaller bays nested inside bigger bays,
-forever. Such an object is somehow "thicker" than a line but "thinner" than a
-region.
+> `(1/L) · dist(x, y)  ≤  dist(f(x), f(y))  ≤  L · dist(x, y)`.
 
-Hausdorff dimension captures this with a beautiful idea. To measure the size of a
-set, cover it with tiny balls of radius `r`, and ask: how does the number of balls
-you need grow as `r` shrinks? For a line segment, halving the ball size doubles the
-count — that scaling exponent is `1`. For a square, halving the ball size
-quadruples the count — exponent `2`. For a coastline, you might find the count
-grows like `r^{-1.25}`, and we say its dimension is `1.25`. Fractals are precisely
-the objects whose dimension is not a whole number.
+The left inequality forbids excessive crushing; the right forbids excessive stretching. Distances are protected from above and below by the same constant.
 
-The Hausdorff dimension, written `dimH S`, makes this rigorous by measuring the
-"critical exponent" at which the set transitions from having infinite measure to
-zero measure. It is one of the central invariants of modern geometry.
+This is a wonderful class of maps — but it is also rigid in a particular way. Bi-Lipschitz maps care about **absolute** distances. They demand that a millimeter and a mile be treated with the same uniform restraint. In the real world, and in the wild geometry of fractals, that's often too much to ask. A map might compress fine details enormously while treating coarse features gently, or vice versa — and still feel "conformal," still feel like an honest, structure-respecting deformation.
 
-## The cartographer's rulebook: Lipschitz and beyond
+Enter **quasi-symmetry**. A quasi-symmetric map relaxes the demand. Instead of controlling absolute distances, it controls **ratios** of distances. It says: I don't care how much you scale things overall, as long as you don't change the *relative* spacing of points too violently.
 
-To talk about "bounded distortion" precisely, mathematicians use the language of
-**Lipschitz maps**. A map `f` is *Lipschitz* with constant `K` if it never
-stretches distances by more than a factor of `K`:
+Picture three points: a center `x`, and two satellites `a` and `b`. Look at the ratio of how far `a` is from `x` versus how far `b` is from `x`. A quasi-symmetric map promises that whatever that ratio was *before*, the corresponding ratio *after* the map is controlled by a single bookkeeping function — a **gauge** — applied to the original ratio. Formally, `f` is **η-quasi-symmetric** when for any three points `x`, `a`, `b` (with `x ≠ b`),
 
-> `distance(f(x), f(y)) ≤ K · distance(x, y)` for all points `x, y`.
+> `dist(f(x), f(a))  ≤  η( dist(x, a) / dist(x, b) ) · dist(f(x), f(b))`.
 
-A Lipschitz map cannot tear or explode the space — it is a controlled deformation.
-A foundational fact is that **Lipschitz maps never increase Hausdorff dimension**.
-Squeezing things can only make them simpler, never more complex.
+The Greek letter `η` ("eta") here is the gauge: a single one-variable function from `[0, ∞)` to `[0, ∞)` that absorbs all the distortion. If the input ratio was small, `η` keeps the output ratio small; if it was large, `η` allows it to grow, but in a controlled way.
 
-The mirror image is the **antilipschitz** (or co-Lipschitz) condition: a map that
-never *contracts* distances by more than a factor `K`:
+The crucial conceptual leap is this: **bi-Lipschitz maps care about how far; quasi-symmetric maps care only about how far *compared to what*.** Scale is forgotten. Only proportion survives.
 
-> `distance(x, y) ≤ K · distance(f(x), f(y))` for all points `x, y`.
+## Every bi-Lipschitz map is quasi-symmetric — with a linear gauge
 
-An antilipschitz map cannot collapse the space; it keeps points spread apart. And
-the mirror fact holds: **antilipschitz maps never decrease Hausdorff dimension.**
+The first thing one wants to verify is that the new notion really does generalize the old one. It does, and the proof is elegant. If `f` is `L`-bi-Lipschitz, then it is quasi-symmetric with the simplest possible gauge: a straight line through the origin,
 
-Put the two together — a map that is both Lipschitz and antilipschitz is called
-**bi-Lipschitz** — and you get the cartographer of our opening parable: bounded
-distortion in both directions. Such a map is forced to preserve Hausdorff dimension
-*exactly*. This is the precise statement of "the fingerprint survives."
+> `η(t) = L² · t`.
 
-## The catch: real fractals are only well-behaved locally
+Here's the intuition. To bound the output ratio `dist(f(x), f(a)) / dist(f(x), f(b))`, push the numerator up using the stretching bound (`dist(f(x), f(a)) ≤ L · dist(x, a)`) and push the denominator down using the crushing bound (`dist(f(x), f(b)) ≥ (1/L) · dist(x, b)`). The two factors of `L` collude, the `L`'s multiply into `L²`, and what's left over is exactly the original ratio `dist(x, a) / dist(x, b)`. So the bi-Lipschitz class slots neatly inside the quasi-symmetric world, occupying the corner where the gauge happens to be a straight line. Quasi-symmetry is what you get when you allow the gauge to *bend*.
 
-Here is where the textbook story runs out. The classical theorems above are
-**global**: they demand good behavior *everywhere*, at every pair of points in the
-entire space. But the objects mathematicians actually care about — the attractors of
-iterated function systems, the boundaries of fractal sets, the images under
-quasi-symmetric maps — rarely cooperate everywhere. They cooperate only on the
-*relevant piece*, the subset `s` where the action happens.
+## A small calculus of gauges
 
-A map might stretch wildly near the edges of a region but behave perfectly on the
-fractal sitting in the middle. The global theorems are silent here. They simply do
-not apply. What you need is a **set-local** theory: invariance and distortion
-results that ask only for good behavior on the subset `s`, and conclude something
-about the image of `s`.
+Once you accept that the gauge `η` is the real protagonist, a surprising amount of structure emerges. The gauge is not rigid, immutable data attached to a map; it behaves like an algebraic object with its own little calculus. Three facts make this vivid.
 
-This is exactly the gap that the mathematics described here fills. It rebuilds the
-entire chain of dimension-distortion results from the ground up, demanding control
-only on a subset, and it introduces the right local vocabulary to state them
-cleanly.
+**1. You can always make the gauge bigger.** If `f` is η-quasi-symmetric and you have any larger function `η'` (meaning `η(t) ≤ η'(t)` for every `t`), then `f` is automatically `η'`-quasi-symmetric too. This sounds almost trivial, but it carries a philosophical point: quasi-symmetry is the property of *having some controlling gauge*, not of having one specific gauge. The gauge is an upper bound, and upper bounds can always be loosened. This is the **gauge enlargement** principle.
 
-## The four pillars
+**2. The gauge controls eccentricity at a single scale.** Suppose `a` and `b` are equidistant from `x` — they sit on a common sphere around the center. Before the map, the ratio `dist(x, a) / dist(x, b)` equals exactly `1`. After the map, how spread out can their images be? The quasi-symmetric inequality, evaluated at the ratio `1`, gives a clean answer:
 
-The theory rests on four results, each strengthening a global classic into a
-set-local one. Let me state them plainly.
+> `dist(f(x), f(a))  ≤  η(1) · dist(f(x), f(b))`.
 
-### Pillar 1: A good inverse forces dimension up
+A single number — `η(1)` — bounds how much a round configuration can become eccentric. This is the precise sense in which quasi-symmetric maps are "conformal-flavored": they send round things to things of *bounded* roundness. They may turn circles into ellipses, but never into infinitely thin slivers. The **eccentricity bound** `η(1)` is the quantitative heart of this intuition.
 
-Suppose `f` maps a set `s` somewhere, and suppose there is a partner map `g` that
-**undoes** `f` on `s` — formally, `g(f(x)) = x` for every `x` in `s` — and suppose
-this partner `g` is Lipschitz on the image `f(s)`. Then:
+**3. Iterating the map iterates the gauge.** This is the most striking piece of the calculus. Take an injective quasi-symmetric map from a space to itself, and apply it over and over: `f`, then `f∘f`, then `f∘f∘f`, and so on. What is the gauge of the `n`-fold iterate `f^[n]`? The answer is as clean as you could hope: it is the `n`-fold iterate of the gauge, `η^[n]` — that is, `η` composed with itself `n` times.
 
-> **`dimH s ≤ dimH (f(s))`.**
+> If `f` is η-quasi-symmetric and injective (with `η` monotone), then `f^[n]` is `η^[n]`-quasi-symmetric.
 
-The image cannot be simpler than the original. The intuition is clean: because `g`
-is a Lipschitz left inverse, applying it to the image `f(s)` recovers `s` exactly,
-and since Lipschitz maps don't increase dimension, the dimension of the image must
-have been at least as large as the dimension of `s` to begin with. A good inverse is
-a witness that no complexity was lost.
+This rests on a more basic fact, the **composition law**: if you chain two quasi-symmetric maps, their gauges compose. Stack the maps, and the gauges stack the same way. Iteration is just composition with yourself, repeated. The reason this matters far beyond aesthetics is that *iterated maps are how fractals are born*. The Cantor set, the Sierpiński gasket, the Koch snowflake — each is the fixed shape carved out by repeatedly applying a fixed family of contractions. The fact that the gauge iterates cleanly is the algebraic skeleton behind the "Hölder exponents" that govern how rough these fractal coding maps are. We have, in miniature, the first gear of the machine that drives fractal dimension theory.
 
-### Pillar 2: Set-local bi-Lipschitz invariance
+## The bi-Lipschitz monoid
 
-Now combine the two directions. If `f` is Lipschitz on `s` (so it can't raise the
-dimension) **and** it has a Lipschitz inverse `g` on `f(s)` (so by Pillar 1 it
-can't lower it either), then the dimension is trapped from both sides:
+Step back to the bi-Lipschitz class and look at its internal algebra. Two facts organize everything:
 
-> **`dimH (f(s)) = dimH s`.**
+- **The identity map is `1`-bi-Lipschitz.** Doing nothing distorts nothing; the distortion budget is exactly `1`.
+- **Composition multiplies the budgets.** If `f` is `L`-bi-Lipschitz and `g` is `M`-bi-Lipschitz, then `g∘f` is `(L·M)`-bi-Lipschitz. Stack two gentle deformations and their distortion factors simply multiply.
 
-This is the local cartographer's theorem. Bounded distortion in both directions,
-*even if only on the piece `s`*, preserves the fractal fingerprint exactly. This is
-the workhorse for proving that two fractals are "the same size" by exhibiting a
-two-sided bounded deformation between them.
+Together these say the bi-Lipschitz maps form a **monoid** — an algebraic system with an identity element and an associative composition, like the integers under multiplication, or like shuffles of a deck of cards. And because every bi-Lipschitz map is quasi-symmetric (with that linear gauge `L²·t`), this monoid sits comfortably inside the larger quasi-symmetric world. The classical, rigid notion lives as a well-behaved sub-society inside the flexible one.
 
-### Pillar 3: The two-sided Hölder squeeze
+## The payoff: dimension is preserved
 
-What if the distortion is not Lipschitz but something rougher? Many natural maps —
-the coding maps of fractal attractors, the building blocks of quasi-symmetric
-geometry — satisfy a weaker condition called a **Hölder estimate**. A map is Hölder
-with exponent `r` (where `0 < r ≤ 1`) if
+All of this structure would be a pretty curiosity if it didn't *do* something. Here is what it does. It protects the single most important invariant of a fractal: its **Hausdorff dimension**.
 
-> `distance(f(x), f(y)) ≤ C · distance(x, y)^r`.
+Hausdorff dimension is the rigorous way to assign a (often fractional) "dimension" to a set that captures how its detail proliferates as you zoom in. A smooth curve has dimension 1; a filled square has dimension 2. The Cantor set has dimension `log 2 / log 3 ≈ 0.631` — more than a point, less than a line. The Sierpiński triangle has dimension `log 3 / log 2 ≈ 1.585`. This number is the fingerprint of a fractal, and a central question in geometry is: *what transformations leave the fingerprint unchanged?*
 
-When `r = 1` this is just Lipschitz; when `r < 1`, the map is allowed to stretch
-small distances much more aggressively, and such maps genuinely *change* dimension.
-The remarkable thing is that the change is *quantitatively controlled*. If `f` is
-Hölder with exponent `rf > 0` on `s`, and its inverse `g` is Hölder with exponent
-`rg > 0` on the image, then the dimension is squeezed:
+The answer, made precise here, is clean:
 
-> **`dimH (f(s)) ≤ dimH s / rf`** and **`dimH s ≤ dimH (f(s)) / rg`.**
+> **A bi-Lipschitz map preserves the Hausdorff dimension of every set.** If `f` is bi-Lipschitz and `S` is any subset of the space, then `dimH(f(S)) = dimH(S)`.
 
-This single statement interpolates the entire spectrum. At `rf = rg = 1` it collapses
-to the exact invariance of Pillar 2. For smaller exponents it gives explicit
-"distortion bars" on how far the dimension can drift. This is the dimension-theoretic
-heart of *quasi-symmetric distortion* — the phenomenon that powers the theory of
-**conformal dimension**, where one asks how much a fractal's dimension can be reduced
-by warping it.
+The reasoning is satisfying once you see the trick. A bi-Lipschitz map carries *two* constants in one: its upper bound makes it a Lipschitz map (which can never *increase* Hausdorff dimension — Lipschitz maps don't manufacture new detail), and its lower bound makes it **antilipschitz** (which can never *decrease* dimension — it can't crush detail out of existence). One direction shows `dimH(f(S)) ≤ dimH(S)`; the other shows `dimH(f(S)) ≥ dimH(S)`. Sandwiched between the two, the dimension can only stay exactly the same. The single constant `L` does double duty — it is simultaneously the Lipschitz constant and the antilipschitz constant, because `(1/L) ≤ ·` and `· ≤ L` are two readings of the same bound. That is the whole secret: one number, two jobs, dimension invariant.
 
-### Pillar 4: The right local vocabulary — `AntilipschitzOnWith`
-
-To make Pillars 1–3 sing, the theory introduces a new predicate, the set-local
-analogue of the antilipschitz condition:
-
-> **`AntilipschitzOnWith K f s`** means: for all `x, y` in `s`,
-> `distance(x, y) ≤ K · distance(f(x), f(y))`.
-
-This compact definition packs a punch. From it alone, three things follow
-automatically:
-
-1. **Injectivity on `s`.** If `f(x) = f(y)`, the right-hand side is zero, forcing
-   `distance(x, y) = 0`, so `x = y`. A map that doesn't contract distances cannot
-   glue points together.
-
-2. **A canonical Lipschitz inverse.** Because `f` is injective on `s`, it has a
-   well-defined inverse on `f(s)`, and the antilipschitz bound is *exactly* the
-   statement that this inverse is Lipschitz with the same constant `K`.
-
-3. **The lower bound for free.** Feeding that canonical inverse into Pillar 1 gives
-   `dimH s ≤ dimH (f(s))` — the set-local version of the classical "antilipschitz
-   maps don't decrease dimension."
-
-And finally, the cleanest form of the invariance theorem: if `f` is *both* Lipschitz
-on `s` and `AntilipschitzOnWith` on `s`, then `dimH (f(s)) = dimH s`. No external
-inverse needs to be supplied — the antilipschitz condition manufactures its own.
+This is a genuine **bridge** between two worlds that usually speak different languages. On one side is the hands-on, distance-based geometry of conformal maps and quasi-symmetry, where everything is stated with `dist(x, y)`. On the other is the abstract, measure-theoretic machinery of Hausdorff dimension, built from coverings and infinite-dimensional bookkeeping. The theorem above translates faithfully from the first dialect into the second, letting the concrete control of distances speak directly to the abstract invariant.
 
 ## Why this matters
 
-These results are not abstract for abstraction's sake. They are precisely the tools
-the modern study of fractal geometry has been asking for.
+The picture that emerges is one of a layered hierarchy of "gentle" deformations, each preserving more or less structure:
 
-**Iterated function systems.** The Sierpiński triangle, the Cantor set, the Koch
-snowflake, Barnsley's fern — all are *attractors* of iterated function systems
-(IFS): finite collections of contracting maps whose repeated application converges to
-a fractal. The dimension of such an attractor is governed by a famous formula
-involving the contraction ratios. The standard proof routes through a **coding map**
-from an abstract sequence space onto the fractal — a map that is Hölder, and, under a
-geometric hypothesis called the *open set condition*, has a Hölder inverse on a large
-piece. Pillar 3, the two-sided Hölder squeeze, is *exactly* the engine that turns
-that coding map into the dimension formula.
+- **Bi-Lipschitz maps** preserve Hausdorff dimension *exactly* — they are the dimension-faithful transformations.
+- **Quasi-symmetric maps** relax to controlling ratios rather than distances, and they distort dimension only in a bounded, gauge-dependent way. They are the natural home for the geometry of fractals, where rigid distance control is too much to ask.
 
-**Quasi-symmetric maps and conformal dimension.** Quasi-symmetric maps generalize
-bi-Lipschitz maps by letting the distortion vary with scale. They are the natural
-maps of *conformal geometry* on fractals, and unlike bi-Lipschitz maps they can
-genuinely change dimension. The smallest dimension a fractal can be warped down to,
-over all quasi-symmetric deformations, is its **conformal dimension** — a deep
-invariant studied in connection with hyperbolic groups and the geometry of
-boundaries. The bi-Lipschitz invariance of Pillar 2 is the special case (linear
-modulus) that anchors the whole quasi-symmetric edifice; the conformal dimension is
-"what remains after you quotient out by quasi-symmetric sameness."
+Why should anyone outside pure mathematics care? Because these maps are the mathematical grammar of *shape recognition under deformation*. When you recognize a friend's face from an odd angle, in poor light, slightly distorted — you are, in effect, performing the inverse of a quasi-symmetric map and recovering invariant structure. When geologists classify the branching of river networks, when physicists study the roughness of fractured surfaces, when network scientists measure the self-similar sprawl of the internet, the relevant quantity is a dimension — and the relevant question is which transformations leave it alone. The theorems here answer that question precisely for the bi-Lipschitz case and lay the algebraic groundwork — the gauge calculus, the iteration law — for the harder quasi-symmetric one.
 
-**The honest subtlety.** It would be tempting to guess that *any* nice map can only
-shrink dimension. That guess is **false**, and beautifully so. Quasi-symmetric maps
-really do change dimension — and the fact that they do is the entire reason conformal
-dimension is an interesting and hard invariant rather than a triviality. The
-two-sided Hölder squeeze is the precise accounting of how much change is possible.
+There is also a deeper aesthetic point. Mathematics often advances by finding the *right* level of abstraction: weak enough to apply broadly, strong enough to prove theorems. Quasi-symmetry is a textbook example. It throws away the one thing bi-Lipschitz maps clung to — absolute scale — and keeps the one thing that matters for fractals — proportion. In return it gets a richer, more flexible category of maps that still controls dimension. The gauge `η`, born as a mere bookkeeping device, turns out to have a life of its own: you can enlarge it, read off eccentricity from its value at `1`, and iterate it in lockstep with the map. That a single one-variable function should encode so much geometry is the kind of compression that makes the subject beautiful.
 
-## The art of the local
+## The road ahead
 
-If there is a single lesson in this work, it is the power of *localization*. A
-theorem that demands perfect behavior everywhere is brittle: the moment one corner of
-your space misbehaves, the theorem evaporates. A theorem that demands good behavior
-only on the subset you care about is robust: it survives contact with the messy,
-realistic objects of actual mathematics.
+Several frontiers open immediately from here. The most tantalizing is the **inverse gauge**: if `f` is a quasi-symmetric bijection with a strictly increasing, surjective gauge `η`, then its inverse should be quasi-symmetric too, with the explicit gauge `η'(t) = 1 / η⁻¹(1/t)` — the original gauge reflected through the involution `t ↦ 1/t`. Reading the defining inequality "backwards" turns an upper bound into a lower bound on the reciprocal ratio, and the gauge flips accordingly.
 
-Fractals are messy by nature. They are defined by self-similarity that holds across
-scales but interacts unpredictably with any particular coordinate system. The
-set-local theory of dimension distortion meets them on their own terms. It says: tell
-me how your map behaves *on the fractal*, and I will tell you precisely what happens
-to its dimension — whether it is preserved exactly, or distorted within sharp,
-explicit bounds.
+Beyond that lies the dream application: a full theory of the **dimension of iterated-function-system attractors**, where the clean iteration law for gauges becomes the engine that computes the dimension of a fractal from the contraction ratios of the maps that build it. And further still is the notion of **conformal dimension** — the smallest Hausdorff dimension achievable across all quasi-symmetric "redrawings" of a space — a genuine topological invariant that strips away accidental geometry and reveals what is truly intrinsic.
 
-The coastline survives the cartographer. The Cantor set's `log 2 / log 3` is etched
-into it permanently. And now we have the local, scale-aware toolkit to prove it — not
-just for the tidy global maps of the textbook, but for the rough, partial, real maps
-of the fractal world.
-
-That number — that stubborn, fractional, immovable fingerprint — turns out to be one
-of the most durable things in mathematics. And understanding exactly what it takes to
-move it, or to keep it still, is understanding the very shape of distortion itself.
+For now, though, we have the foundation: a small, complete calculus of gauges, a bi-Lipschitz monoid nestled inside the quasi-symmetric universe, and a clean bridge carrying distance-based geometry across to the measure-theoretic notion of dimension. Stretch the rubber sheet however you like — as long as you respect proportion, the deepest fingerprint of the picture survives.
