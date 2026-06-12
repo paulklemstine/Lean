@@ -7,7 +7,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T01:35:15Z",
-      "hue": 271
+      "hue": 90
     },
     {
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
@@ -25,7 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-12T03:51:59Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "close_proofs_arithmetic_mirror_symmetry_for_calabi",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T03:52:38Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "close_proofs_close_proofs_one_way_functions_existe",
@@ -43,7 +43,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T03:52:55Z",
-      "hue": 101
+      "hue": 91
     },
     {
       "id": "rigorous_formal_framework_for_holographic_proo",
@@ -61,7 +61,16 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-12T04:26:14Z",
-      "hue": 270
+      "hue": 90
+    },
+    {
+      "id": "the_current_formalization_uses_an_abstract_dsepora",
+      "title": "Concrete d-Separation via Reachability: Undirected Vertex Separation is a Compositional Graphoid",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-06-12T04:26:35Z",
+      "hue": 90
     }
   ],
   "edges": [],
