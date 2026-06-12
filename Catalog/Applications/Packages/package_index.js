@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "1736668d",
     "filename": "close_proofs_the_file_computationspectralchaincore.json",
     "pkg_num": 36,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7025182961460447,
     "title": "Strong Divisibility Sequences: One Law for Fibonacci and Mersenne Divisibility"
   },
   {
@@ -1075,8 +1075,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "close_proofs_the_file_computationspectralchaincore",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7025182961460447,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Strong Divisibility Sequences: One Law for Fibonacci and Mersenne Divisibility"
     }

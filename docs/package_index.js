@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-12T16:52:49Z",
+    "domain": "Applications",
+    "exp_id": "1736668d",
+    "filename": "close_proofs_the_file_computationspectralchaincore.json",
+    "pkg_num": 36,
+    "quality": "substantial",
+    "quality_score": 0.7025182961460447,
+    "title": "Strong Divisibility Sequences: One Law for Fibonacci and Mersenne Divisibility"
+  },
+  {
     "date": "2026-06-12T16:10:30Z",
     "domain": "Bridges",
     "exp_id": "392c9e56",
@@ -452,6 +462,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Origami of Deep Networks: ReLU Depth Separation via the Tent Map"
   },
+  "close_proofs_the_file_computationspectralchaincore.json": {
+    "domain": "Applications",
+    "exp_id": "1736668d",
+    "source_exp_ids": [
+      "90709731"
+    ],
+    "title": "Strong Divisibility Sequences: One Law for Fibonacci and Mersenne Divisibility"
+  },
   "close_proofs_the_file_geometryfractaldimensionlean.json": {
     "domain": "Applications",
     "exp_id": "df064ef4",
@@ -669,7 +687,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T01:35:15Z",
       "domain": "Bridges",
-      "hue": 275,
+      "hue": 90,
       "id": "this_cycle_formalized_a_self_contained_fragment_of",
       "primary_domain": "Bridges",
       "priority_score": 0.4107094228460233,
@@ -680,7 +698,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T02:44:01Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 92,
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
       "primary_domain": "Bridges",
       "priority_score": 0.60229,
@@ -702,7 +720,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:38Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 270,
       "id": "close_proofs_arithmetic_mirror_symmetry_for_calabi",
       "primary_domain": "Bridges",
       "priority_score": 0.4038523076923077,
@@ -713,7 +731,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:55Z",
       "domain": "Applications",
-      "hue": 101,
+      "hue": 270,
       "id": "close_proofs_close_proofs_one_way_functions_existe",
       "primary_domain": "Bridges",
       "priority_score": 0.52037,
@@ -724,7 +742,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:26:56Z",
       "domain": "Computation",
-      "hue": 270,
+      "hue": 90,
       "id": "our_exists_revsim_of_surjective_proves_that_surjec",
       "primary_domain": "Computation",
       "priority_score": 0.65648,
@@ -746,7 +764,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:03Z",
       "domain": "Algebra",
-      "hue": 275,
+      "hue": 270,
       "id": "algebraic_statistics_markov_bases_for_contingency_",
       "primary_domain": "Algebra",
       "priority_score": 0.63808,
@@ -757,7 +775,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:20Z",
       "domain": "Algebra",
-      "hue": 90,
+      "hue": 270,
       "id": "the_current_formalization_uses_an_abstract_dsepora",
       "primary_domain": "Algebra",
       "priority_score": 0.73536,
@@ -768,7 +786,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:04:43Z",
       "domain": "Cryptography",
-      "hue": 90,
+      "hue": 271,
       "id": "close_proofs_close_proofs_this_cycle_replaced_the_",
       "primary_domain": "Cryptography",
       "priority_score": 0.6270279310344827,
@@ -779,7 +797,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:05:08Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 90,
       "id": "extend_the_integration_deficiency_framework_to_a_f",
       "primary_domain": "Algebra",
       "priority_score": 0.569817731958763,
@@ -790,7 +808,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:05:26Z",
       "domain": "Algebra",
-      "hue": 271,
+      "hue": 270,
       "id": "the_current_framework_uses_a_fixed_novelty_thresho",
       "primary_domain": "Algebra",
       "priority_score": 0.5326478527607362,
@@ -801,7 +819,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:40:28Z",
       "domain": "Applications",
-      "hue": 92,
+      "hue": 271,
       "id": "close_proofs_we_proved_that_the_biconjugate_satisf",
       "primary_domain": "Bridges",
       "priority_score": 0.5784016886543535,
@@ -812,7 +830,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T07:37:45Z",
       "domain": "Algebra",
-      "hue": 90,
+      "hue": 270,
       "id": "close_proofs_close_proofs_cobhams_theorem_1972_sta",
       "primary_domain": "Algebra",
       "priority_score": 0.6822099399599733,
@@ -823,7 +841,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T08:13:30Z",
       "domain": "Novelty",
-      "hue": 272,
+      "hue": 271,
       "id": "the_file_basiclean_establishes_a_fully_formal_axio",
       "primary_domain": "Bridges",
       "priority_score": 0.4599545454545455,
@@ -834,7 +852,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T08:13:58Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 91,
       "id": "close_proofs_close_proofs_this_cycle_added_catalog",
       "primary_domain": "Bridges",
       "priority_score": 0.7157600000000001,
@@ -845,7 +863,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T09:34:00Z",
       "domain": "Novelty",
-      "hue": 272,
+      "hue": 270,
       "id": "the_current_formalization_establishes_the_structur",
       "primary_domain": "Bridges",
       "priority_score": 0.6881600000000001,
@@ -856,7 +874,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T09:34:18Z",
       "domain": "Cryptography",
-      "hue": 91,
+      "hue": 95,
       "id": "close_proofs_this_cycle_isolated_the_arithmetic_co",
       "primary_domain": "Cryptography",
       "priority_score": 0.4453462700360554,
@@ -867,7 +885,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T09:34:39Z",
       "domain": "MachineLearning",
-      "hue": 271,
+      "hue": 275,
       "id": "close_proofs_the_file_basiclean_establishes_a_full",
       "primary_domain": "MachineLearning",
       "priority_score": 0.6913777777777779,
@@ -878,7 +896,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T10:10:02Z",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 272,
       "id": "close_proofs_bridge_stone_duality_as_a_bridge_betw",
       "primary_domain": "Bridges",
       "priority_score": 0.6744679245283018,
@@ -889,7 +907,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T10:10:36Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 90,
       "id": "rigorous_formal_foundations_for_the_collatz_conj",
       "primary_domain": "Bridges",
       "priority_score": 0.4422962891379977,
@@ -900,7 +918,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T10:45:48Z",
       "domain": "Novelty",
-      "hue": 112,
+      "hue": 270,
       "id": "close_proofs_the_new_file_catalogmachinelearningpe",
       "primary_domain": "Bridges",
       "priority_score": 0.7564252631578948,
@@ -911,7 +929,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T10:46:10Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 91,
       "id": "close_proofs_arithmetic_universality_in_cellular_a",
       "primary_domain": "Bridges",
       "priority_score": 0.46680579704921854,
@@ -922,7 +940,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T11:56:43Z",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 91,
       "id": "close_proofs_close_proofs_formalized_bridge_betwee",
       "primary_domain": "Bridges",
       "priority_score": 0.6064691302466465,
@@ -933,7 +951,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T13:13:04Z",
       "domain": "Bridges",
-      "hue": 91,
+      "hue": 272,
       "id": "close_proofs_this_cycle_replaced_the_softmax_score",
       "primary_domain": "Bridges",
       "priority_score": 0.4600000000000001,
@@ -944,7 +962,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T13:13:26Z",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 92,
       "id": "the_file_tropicalvaluationlimitbridgelean_formaliz",
       "primary_domain": "Bridges",
       "priority_score": 0.69648,
@@ -988,7 +1006,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T14:24:02Z",
       "domain": "Applications",
-      "hue": 91,
+      "hue": 270,
       "id": "12_fully_proved_theorems_zero_sorry_formalizing_th",
       "primary_domain": "Bridges",
       "priority_score": 0.7159200000000001,
@@ -999,7 +1017,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T14:58:37Z",
       "domain": "Applications",
-      "hue": 95,
+      "hue": 90,
       "id": "the_file_catalognoveltygilbertvarshamovlean_closes",
       "primary_domain": "Bridges",
       "priority_score": 0.6701403592814372,
@@ -1010,7 +1028,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T14:58:55Z",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 92,
       "id": "the_parametric_continuity_theorem_parametric_fixed",
       "primary_domain": "Bridges",
       "priority_score": 0.6108603592814372,
@@ -1021,7 +1039,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T14:59:16Z",
       "domain": "Applications",
-      "hue": 91,
+      "hue": 272,
       "id": "this_cycle_closed_the_single_open_sorry_in_bridges",
       "primary_domain": "Bridges",
       "priority_score": 0.5563721428571429,
@@ -1032,7 +1050,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T16:10:09Z",
       "domain": "Applications",
-      "hue": 91,
+      "hue": 275,
       "id": "the_sphere_packing_bound_gives_an_upper_bound_on_c",
       "primary_domain": "Bridges",
       "priority_score": 0.5291335915882679,
@@ -1043,13 +1061,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T16:10:30Z",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 92,
       "id": "close_proofs_conjecture_if_f_t_t__01_is_a_continuo",
       "primary_domain": "Bridges",
       "priority_score": 0.7850491896144769,
       "quality": "substantial",
       "shape": "icosahedron",
       "title": "Close Proofs: Tropicalization as the Image of a Non-Archimedean Valuation"
+    },
+    {
+      "date": "2026-06-12T16:52:49Z",
+      "domain": "Applications",
+      "hue": 272,
+      "id": "close_proofs_the_file_computationspectralchaincore",
+      "primary_domain": "Bridges",
+      "priority_score": 0.7025182961460447,
+      "quality": "substantial",
+      "shape": "icosahedron",
+      "title": "Strong Divisibility Sequences: One Law for Fibonacci and Mersenne Divisibility"
     }
   ]
 };
