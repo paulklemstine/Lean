@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f7a0c2c6",
     "filename": "the_file_logiclobfixedpointlean_isolates_the_purel.json",
     "pkg_num": 40,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7927200000000001,
     "title": "The Order-Theoretic Core of G\u00f6del\u2013L\u00f6b Provability Logic"
   },
   {
@@ -1191,8 +1191,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "the_file_logiclobfixedpointlean_isolates_the_purel",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7927200000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Order-Theoretic Core of G\u00f6del\u2013L\u00f6b Provability Logic"
     }
