@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "aec0362d",
     "filename": "close_proofs_this_cycles_artifact_is_catalogmachin.json",
     "pkg_num": 37,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7005600000000001,
     "title": "Generation Certificates for Matrix Groups: Irreducible Characteristic Polynomials as Certificates of Irreducible Action"
   },
   {
@@ -1104,8 +1104,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "close_proofs_this_cycles_artifact_is_catalogmachin",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7005600000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Generation Certificates for Matrix Groups: Irreducible Characteristic Polynomials as Certificates of Irreducible Action"
     }
