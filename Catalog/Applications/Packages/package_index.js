@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "2c008695",
     "filename": "close_proofs_the_file_cataloglogicproofphasetransi.json",
     "pkg_num": 52,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7200673684210526,
     "title": "Completeness of the Barrier Method and the Derivability Closure Operator"
   },
   {
@@ -1539,8 +1539,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "close_proofs_the_file_cataloglogicproofphasetransi",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7200673684210526,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Completeness of the Barrier Method and the Derivability Closure Operator"
     }
