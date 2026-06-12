@@ -379,7 +379,10 @@ class KnowledgeExtractor:
             return job
 
         try:
+            old_project_id = job.project_id
             project_id = await self._dispatch_to_aristotle(job)
+            if old_project_id and old_project_id in self.inflight:
+                del self.inflight[old_project_id]
             # Note: we replace the project_id, but also remember Phase A's
             # (Phase A's lean files should be in the same project_dir as before)
             job.project_id = project_id
