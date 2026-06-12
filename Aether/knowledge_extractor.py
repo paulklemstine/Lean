@@ -272,13 +272,11 @@ class KnowledgeExtractor:
         except Exception:
             return 0.5
 
-        n = len(records)
-        if n < 50:
-            return 0.5  # cold start
+        if not records:
+            return 0.5
 
-        # Check cache — recompute every 10 records so the threshold tracks
-        # quality trends.  Old cache used n//50 buckets which stayed stale for
-        # 50 cycles, hiding score degradation.
+        n = len(records)
+        # Check cache — recompute every 10 records so the threshold tracks quality trends.
         cache_bucket = n // 10
         try:
             if cache_path.exists():
@@ -288,18 +286,14 @@ class KnowledgeExtractor:
         except Exception:
             pass
 
-        # Compute p60 of recent quality_score values
+        # Compute p70 of the most recent quality scores (up to 50)
         recent = records[-50:]
         scores = sorted(r.get("quality_score", 0.0) for r in recent)
         if not scores:
             return 0.5
-        p60_idx = int(0.6 * (len(scores) - 1))
-        threshold = scores[p60_idx]
+        p70_idx = int(0.7 * (len(scores) - 1))
+        threshold = scores[p70_idx]
         # Clamp to [0.30, 0.6] — never gate too aggressively or too leniently.
-        # Lowered floor from 0.35 to 0.30: v6's 87% packaging rate means most
-        # Phase A results are high quality, so a lower threshold lets more
-        # through without sacrificing quality. Shifted from p70 to p60 for
-        # same reason — let the top 40% through instead of top 30%.
         threshold = max(0.30, min(0.6, threshold))
 
         # Cache

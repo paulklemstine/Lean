@@ -190,7 +190,7 @@ def test_adaptive_threshold_cold_start(temp_workspace):
 
 
 def test_adaptive_threshold_warm(temp_workspace):
-    """With 50+ records, threshold uses p60 of last 50 quality scores."""
+    """With 50+ records, threshold uses p70 of last 50 quality scores."""
     # Create cycle_analytics.json with 60 records of known quality
     records = []
     for i in range(60):
@@ -205,15 +205,15 @@ def test_adaptive_threshold_warm(temp_workspace):
     ext = KnowledgeExtractor.__new__(KnowledgeExtractor)
     ext.workspace = temp_workspace
     threshold = ext._adaptive_phase_b_threshold()
-    # p60 of last 50 (which are 0.10 to 0.59): p60 = 0.10 + 0.60*0.49 = ~0.39
-    expected = sorted(r["quality_score"] for r in records[-50:])[int(0.6 * 49)]
+    # p70 of last 50 (which are 0.10 to 0.59): p70 = 0.10 + 0.70*0.49 = ~0.44
+    expected = sorted(r["quality_score"] for r in records[-50:])[int(0.7 * 49)]
     # Clamp to [0.30, 0.6]
     expected = max(0.30, min(0.6, expected))
     assert abs(threshold - expected) < 0.01, f"Expected ~{expected}, got {threshold}"
 
 
 def test_adaptive_threshold_clamped_low(temp_workspace):
-    """Threshold never goes below 0.30 even if p60 is lower."""
+    """Threshold never goes below 0.30 even if p70 is lower."""
     records = []
     for i in range(60):
         records.append({
