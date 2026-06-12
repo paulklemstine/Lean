@@ -1,5 +1,15 @@
 {
-  "nodes": [],
+  "nodes": [
+    {
+      "id": "this_cycle_formalized_a_self_contained_fragment_of",
+      "title": "Byzantine Certificates: A Cohomological Framework for Distributed Consensus",
+      "domain": "Bridges",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-12T01:35:15Z",
+      "hue": 271
+    }
+  ],
   "edges": [],
   "domain_bridges": []
 }
