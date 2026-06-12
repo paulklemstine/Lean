@@ -3351,6 +3351,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Stereographic Proof Compression\n\n## Synthesis\n\nThis cycle turns the slogan *\"a proof is a path; the best proof is the geodesic\"*\ninto verified Lean 4 mathematics. We model proof steps as points on the unit\nsphere of a real inner-product space and define the **spherical proof distance**\n`sdist` as `InnerProductGeometry.angle`. Three threads were woven together:\n\n1. **A pseudo-metric of proofs.** `sdist_comm`, `sdist_nonneg`, `sdist_le_pi`,\n   `sdist_self` and the triangle inequality `sdist_triangle` establish that the\n   angular proof distance behaves like a bounded metric (diameter `π`).\n2. **The compression inequality.** `compression` shows by a telescoping\n   induction that the total spherical length of any step-by-step proof path is at\n   least the spherical distance between its endpoints — the geodesic (maximally\n   compressed) proof is never longer than an explicit decomposition.\n   `compression_le_pi` sharpens this with the global diameter bound.\n3. **A Geometry × Logic bridge.** `stereoParam` realises proof coordinates on the\n   circle `S¹ ⊂ EuclideanSpace ℝ (Fin 2)` via inverse stereographic projection,\n   proven to land on the sphere (`stereo_norm`, `stereo_on_circle`), be nowhere\n   degenerate (`stereo_ne_zero`), and be inverted classically (`stereo_inv`).\n   `stereo_compression` then transports the abstract compression inequality onto\n   concrete stereographic proof paths.\n\n## Results Summary\n\n| Theorem | Statement | Status |\n|---|---|---|\n| `sdist_triangle` | spherical triangle inequality | ✅ proved |\n| `compression` | `sdist (p 0) (p n) ≤ pathLength p n` | ✅ proved |\n| `compression_le_pi` | `sdist (p 0) (p n) ≤ min π (pathLength p n)` | ✅ proved |\n| `stereo_norm` / `stereo_on_circle` / `stereo_inv` | stereographic projection is a circle bijection | ✅ proved |\n| `stereo_compression` | stereographic realisation of compression | ✅ proved |\n\nZero `sorry`; all results depend only on `propext`, `Classical.choice`, `Quot.sound`.\n\n## Research Directions\n\n### 1. A genuine `MetricSpace`/`PseudoMetricSpace` instance for the sphere via `sdist`\nWe proved the metric *laws* pointwise but did not package them as a Mathlib\n`PseudoMetricSpace` (or `MetricSpace` on the unit sphere `Metric.sphere 0 1`).\n**The key insight is** that `sdist_self`, `sdist_comm`, `sdist_triangle` and\n`sdist_le_pi` are exactly the field obligations of a bounded pseudo-metric, so the\ninstance should follow mechanically once restricted to unit vectors where\n`sdist x x = 0` holds unconditionally. **Why now?** With the triangle inequality\nalready in Mathlib (`angle_le_angle_add_angle`, added in 2025) the last missing\ningredient is in place; bundling it would let downstream proofs use `dist`,\n`Metric.ball`, and completeness machinery for free. *Falsifiable*: the claim\nfails if `sdist x y = 0 → x = y` is false on the sphere (it is not — equal angles\nof `0` force equal unit vectors), which can be tested directly.\n\n### 2. Quantitative compression ratios and a \"proof curvature\" gap\nDefine the compression ratio `pathLength p n / sdist (p 0) (p n)` and ask for\nlower bounds in terms of the angular \"turning\" at each interior step.\n**The key insight is** that the slack in the telescoped triangle inequality at\nstep `k` equals `sdist (p 0)(p k) + sdist (p k)(p (k+1)) - sdist (p 0)(p(k+1))`,\na nonnegative *defect* that accumulates exactly the redundancy of the proof.\n**Why now?** `compression` already exposes the per-step inequality; summing the\ndefects gives an exact identity `pathLength - sdist_endpoints = Σ defects`, which\nis provable today and quantifies \"how far a proof is from optimal\".\n*Falsifiable*: predicts the total defect is `0` iff every consecutive triple is\ngeodesically aligned (lies on a common great-circle arc in order) — checkable on\nexplicit `stereoParam` examples.\n\n### 3. Stereographic projection as a conformal `PartialHomeomorph` to `ℝ`\nWe proved `stereoParam` is a bijection circle⁻north-pole ↔ ℝ with explicit\ninverse but not its continuity/conformality. **The key insight is** that our\nalgebraic inverse `x/(1-y)` matches Mathlib's manifold `stereographic'`\nconstruction, so the two can be identified and our elementary formulas can feed\nthe smooth-manifold API. **Why now?** Mathlib already carries the smooth sphere\nchart `stereographic`; bridging the elementary `Fin 2` formula to it would let\n\"proof distance\" inherit a *differentiable* structure, enabling gradient-style\nproof optimisation. *Falsifiable*: fails if `stereoParam` disagrees with\n`stereographic'.symm` up to the standard identification — a direct coordinate\ncomputation settles it.\n\n### 4. Higher-dimensional proofs: `S^n` and the curse/blessing of dimension\nGeneralise `stereoParam` from `S¹` to `S^n ⊂ EuclideanSpace ℝ (Fin (n+1))` and\nstudy how endpoint proof distance scales with the number of free coordinates.\n**The key insight is** that the compression theorem is already dimension-free\n(it lives in an abstract inner-product space), so only the *projection* needs\ngeneralising; the inverse stereographic formula `t ↦ (2t, |t|²-1)/(|t|²+1)`\nextends verbatim. **Why now?** The abstract `compression` proof requires no\nchange, so the marginal cost is purely the `S^n` norm computation, which\n`EuclideanSpace.norm_eq` + `field_simp` should discharge uniformly in `n`.\n*Falsifiable*: predicts `‖stereoParam_n t‖ = 1` for all `n`; a single failing `n`\nrefutes the uniform formula.\n\n### 5. Equality case: when is a proof already optimally compressed?\nCharacterise the proof paths for which `compression` is an *equality*.\n**The key insight is** that Mathlib's `angle_eq_angle_add_angle_iff` (the equality\ncase of the angle triangle inequality, in terms of membership in the nonnegative\nspan) gives a local criterion that should lift, by induction, to a global\n\"monotone great-circle\" condition on the whole path. **Why now?** The equality\nlemma was proved alongside the triangle inequality and is sitting unused; pairing\nit with our telescoping argument yields a clean structural theorem with no new\ngeometric input. *Falsifiable*: predicts equality holds iff each interior point\nlies in the nonnegative span of its neighbours — testable on stereographic paths\nwhere the spans are explicit rational vectors.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1458",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "08c2e9e7",
+    "status": "available",
+    "timestamp": "2026-06-12T02:11:07.072908+00:00",
+    "title": "This cycle turns the slogan *\"a proof is a path; the best proof is the geodesic\""
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle 6e405308 (Q=0.651) proved 455 theorems in Applications but left 7 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle 76f09ec8 (Q=0.447) proved 1631 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions — Ra",
     "domain_bridges": [],
     "domains": [
@@ -3883,7 +3903,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "45114de6",
     "description": "Cycle 2b45544c (Q=0.476) proved 1598 theorems in Logic but left 10 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle 75439445 (Q=0.444) proved 1450 theorems in Novelty but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Cycle b0a2670f (Q=0.406)",
     "domain_bridges": [],
     "domains": [
@@ -3895,7 +3915,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "2b45544c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-11T18:38:26.074556+00:00",
     "title": "Close Proofs: Close Proofs: Close Proofs: Proof-Theoretic Bridge: Ordinal Analysis A"
   },
@@ -4299,25 +4319,6 @@
     "status": "available",
     "timestamp": "2026-06-09T08:50:21.279350+00:00",
     "title": "Close Proofs: Tropical Hodge Theory"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "08c2e9e7",
-    "description": "Cycle ee73107a (Q=0.426) proved 2024 theorems in Novelty but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: A proof is a sequence of steps. Map each step to a point on S^n via stereographic projection. The proof distance between theorems is the spherical distance between their proof endpoints. Conjecture: T",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_ee73107a_204e5875",
-    "lineage_refs": [],
-    "priority_score": 0.47645480643106825,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "ee73107a",
-    "status": "in_progress",
-    "timestamp": "2026-06-12T01:35:06.521384+00:00",
-    "title": "Close Proofs: Stereographic Proof Compression: Proofs on Spheres"
   },
   {
     "ambition_level": "extension",
