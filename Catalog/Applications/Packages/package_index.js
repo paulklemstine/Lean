@@ -4,11 +4,21 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-12T04:28:20Z",
+    "domain": "Algebra",
+    "exp_id": "2ce3e872",
+    "filename": "the_current_formalization_uses_an_abstract_dsepora.json",
+    "pkg_num": 9,
+    "quality": "substantial",
+    "quality_score": 0.73536,
+    "title": "Concrete d-Separation via Reachability: Undirected Vertex Separation is a Compositional Graphoid"
+  },
+  {
     "date": "2026-06-12T04:28:03Z",
     "domain": "Algebra",
     "exp_id": "f1b37415",
     "filename": "algebraic_statistics_markov_bases_for_contingency_.json",
-    "pkg_num": 9,
+    "pkg_num": 8,
     "quality": "partial",
     "quality_score": 0.63808,
     "title": "Algebraic Statistics: Markov Bases for Contingency Tables"
@@ -18,7 +28,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "84c2dc55",
     "filename": "rigorous_formal_framework_for_holographic_proo.json",
-    "pkg_num": 8,
+    "pkg_num": 7,
     "quality": "partial",
     "quality_score": 0.47824,
     "title": "Holographic Verification of Tree-Structured Proofs"
@@ -28,20 +38,10 @@ window.PACKAGE_INDEX = [
     "domain": "Computation",
     "exp_id": "3aabcb67",
     "filename": "our_exists_revsim_of_surjective_proves_that_surjec.json",
-    "pkg_num": 7,
+    "pkg_num": 6,
     "quality": "partial",
     "quality_score": 0.65648,
     "title": "The Maximum Fiber Size: One Invariant for Reversible Computation and Landauer Cost"
-  },
-  {
-    "date": "2026-06-12T04:26:35Z",
-    "domain": "Algebra",
-    "exp_id": "2ce3e872",
-    "filename": "the_current_formalization_uses_an_abstract_dsepora.json",
-    "pkg_num": 6,
-    "quality": "substantial",
-    "quality_score": 0.73536,
-    "title": "Concrete d-Separation via Reachability: Undirected Vertex Separation is a Compositional Graphoid"
   },
   {
     "date": "2026-06-12T03:52:55Z",
@@ -190,7 +190,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T02:44:01Z",
       "domain": "Novelty",
-      "hue": 91,
+      "hue": 90,
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
       "primary_domain": "Bridges",
       "priority_score": 0.60229,
@@ -212,7 +212,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:38Z",
       "domain": "Novelty",
-      "hue": 91,
+      "hue": 92,
       "id": "close_proofs_arithmetic_mirror_symmetry_for_calabi",
       "primary_domain": "Bridges",
       "priority_score": 0.4038523076923077,
@@ -223,7 +223,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:55Z",
       "domain": "Applications",
-      "hue": 91,
+      "hue": 90,
       "id": "close_proofs_close_proofs_one_way_functions_existe",
       "primary_domain": "Bridges",
       "priority_score": 0.52037,
@@ -232,20 +232,9 @@ window.PACKAGE_GRAPH = {
       "title": "One-Way Functions: Existence, Inversion Capacity, and the Hardness Hierarchy"
     },
     {
-      "date": "2026-06-12T04:26:35Z",
-      "domain": "Algebra",
-      "hue": 270,
-      "id": "the_current_formalization_uses_an_abstract_dsepora",
-      "primary_domain": "Algebra",
-      "priority_score": 0.73536,
-      "quality": "substantial",
-      "shape": "tetrahedron",
-      "title": "Concrete d-Separation via Reachability: Undirected Vertex Separation is a Compositional Graphoid"
-    },
-    {
       "date": "2026-06-12T04:26:56Z",
       "domain": "Computation",
-      "hue": 90,
+      "hue": 270,
       "id": "our_exists_revsim_of_surjective_proves_that_surjec",
       "primary_domain": "Computation",
       "priority_score": 0.65648,
@@ -256,7 +245,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:27:45Z",
       "domain": "Novelty",
-      "hue": 91,
+      "hue": 90,
       "id": "rigorous_formal_framework_for_holographic_proo",
       "primary_domain": "Bridges",
       "priority_score": 0.47824,
@@ -267,13 +256,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:03Z",
       "domain": "Algebra",
-      "hue": 90,
+      "hue": 270,
       "id": "algebraic_statistics_markov_bases_for_contingency_",
       "primary_domain": "Algebra",
       "priority_score": 0.63808,
       "quality": "partial",
       "shape": "tetrahedron",
       "title": "Algebraic Statistics: Markov Bases for Contingency Tables"
+    },
+    {
+      "date": "2026-06-12T04:28:20Z",
+      "domain": "Algebra",
+      "hue": 91,
+      "id": "the_current_formalization_uses_an_abstract_dsepora",
+      "primary_domain": "Algebra",
+      "priority_score": 0.73536,
+      "quality": "substantial",
+      "shape": "tetrahedron",
+      "title": "Concrete d-Separation via Reachability: Undirected Vertex Separation is a Compositional Graphoid"
     }
   ]
 };
