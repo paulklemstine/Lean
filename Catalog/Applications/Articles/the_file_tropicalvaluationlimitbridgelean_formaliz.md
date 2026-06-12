@@ -1,284 +1,88 @@
-# Where Geometry Goes to Cool Down: The Shadow World of Tropical Curves
+# The Almost-Homomorphism: Where Arithmetic Quietly Breaks, and What It Builds
 
-## A map made of corners
+## A map that is almost perfect
 
-Imagine you are an air-traffic controller, but instead of routing planes you are
-routing the *cheapest* path light could take through a strange optical medium. In
-this medium, when two beams meet, they do not add their brightness — they simply
-keep the dimmer one. And when a beam passes through a lens, the lens does not
-multiply its intensity — it *adds* a fixed delay. This is a world where the two
-basic operations of arithmetic have been quietly replaced:
+Imagine a machine that takes numbers and reports a single statistic about each one — not its size, not its sign, but its *order*: how deeply it is divisible by some fixed prime, or how many times a small parameter divides it. Feed in two numbers, and the machine tells you their orders. Multiply the numbers first, and then ask the machine: the answer is always the clean sum of the two separate orders. Multiplication in, addition out, every single time, no exceptions. The machine is a flawless translator of multiplication.
 
-- **"Plus" becomes "take the minimum."**
-- **"Times" becomes "add."**
+Now try addition. Add two numbers, then ask the machine for the order of the sum. Most of the time it again gives a clean answer — the smaller of the two input orders. But not always. Once in a while, the machine stutters. The sum's order jumps higher than you predicted. The translation of addition is *almost* perfect, and the failures are not random noise.
 
-This is not a thought experiment for its own sake. It is a real and rigorously
-useful corner of modern mathematics called **tropical geometry**. The name is a
-tribute to the Brazilian mathematician Imre Simon, who pioneered the underlying
-algebra; the "tropical" label stuck simply because his colleagues thought of Brazil
-as tropical. The subject turns the smooth, curved shapes of classical algebra —
-circles, parabolas, elliptic curves — into stick figures made of straight line
-segments and sharp corners. A tropical curve looks like a subway map. And yet,
-astonishingly, these subway maps remember an enormous amount about the curved
-originals they came from.
+This article is about that stutter. It turns out that the places where the translator fails to be a perfect homomorphism are not a defect to be apologized for. They are the entire point. The failure locus of arithmetic is, exactly and provably, the skeleton of a beautiful geometric object — a *tropical curve*. The bug is the feature. This is the story of a precise theorem that says so.
 
-This article is about a precise bridge between the curved world and the
-stick-figure world, and about a recent, fully verified result that explains *why*
-the bridge behaves so well under multiplication. The punchline is a slogan that
-sounds almost too clean to be true:
+## Valuations: measuring the divisibility of a number
 
-> **To tropicalize a product, you just add the tropicalizations — and the
-> resulting tropical shapes simply overlay on top of one another.**
+The "machine" above has a real name: a **non-Archimedean valuation**. Pick a field of numbers `K` — you can keep the rational numbers in mind — and a prime, say `3`. The 3-adic valuation `v(x)` of a nonzero rational number counts the net power of 3 in it. So `v(9) = 2`, `v(6) = 1`, `v(5) = 0`, and `v(1/27) = -3`. The number `0`, being infinitely divisible by everything, is assigned the value `+∞`.
 
-We will build up to that slogan from scratch, state every result precisely, and
-then show why the proof is, at heart, a statement about ties.
+A valuation obeys two laws, and only two:
 
-## The valuation: a thermometer for numbers
+1. **Multiplicativity (exact).** `v(x·y) = v(x) + v(y)`. Powers of the prime add up under multiplication. This law never fails.
+2. **The ultrametric inequality.** `v(x + y) ≥ min(v(x), v(y))`. The order of a sum is *at least* the smaller of the two orders. It can be larger, but never smaller.
 
-The bridge between the two worlds is built from a single device called a
-**valuation**. Think of a valuation `v` as a thermometer that measures how
-"large" or "small" a number is — but in a very particular, non-Archimedean sense.
-The cleanest example lives among the rational numbers with a prime `p` fixed, say
-`p = 3`. The `3`-adic valuation `v(x)` counts how many factors of `3` divide `x`:
+That second law is the strange one. In ordinary measurement, the size of a sum can be anything up to the sum of sizes. Here, the order of a sum is pinned from *below* by the more divisible of the two inputs. Add `3` (order 1) and `9` (order 2): the sum is `12 = 4·3`, order 1 — equal to the minimum, as expected. But add `3` and `6` (both order 1): the sum is `9`, order 2 — strictly *bigger* than the minimum `1`. That is the stutter. It happened precisely because the two inputs had the *same* order, and their leading 3-parts cancelled.
 
-- `v(3) = 1`, `v(9) = 2`, `v(27) = 3`,
-- `v(5) = 0` (no factor of 3),
-- `v(1/3) = -1` (a factor of 3 in the denominator),
-- `v(0) = ∞` (zero is "infinitely divisible").
+This is the central observation, and it is exact: **the only way the ultrametric inequality can be strict is when the two valuations are equal.** When `v(x) ≠ v(y)`, one input strictly dominates, nothing can cancel it, and the order of the sum is exactly `min(v(x), v(y))`. When `v(x) = v(y)`, the leading parts are eligible to cancel, and the order may jump. We call `{v(x) = v(y)}` the **tie set**. The failures of additivity live entirely inside it.
 
-A valuation obeys two iron laws:
+## The tropical semiring: where min is plus and plus is times
 
-1. **It turns products into sums:** `v(x · y) = v(x) + v(y)`.
-2. **It satisfies the ultrametric inequality:** `v(x + y) ≥ min(v(x), v(y))`.
+To see why this matters geometrically, we change our arithmetic. The **tropical semiring** is the set of numbers (extended with `+∞`) where we redefine the two operations:
 
-Law 1 already looks tropical: multiplication on one side, addition on the other.
-Law 2 is the heart of everything that follows. It says the valuation of a sum is at
-least the smaller of the two valuations — the sum cannot be "smaller" than its
-smallest ingredient. In our optical metaphor: when two beams combine, the result is
-never dimmer than the dimmer beam.
+- **Tropical addition** is taking the minimum: `a ⊕ b := min(a, b)`.
+- **Tropical multiplication** is ordinary addition: `a ⊙ b := a + b`.
 
-But there is a subtlety hiding in that inequality, and it is the secret engine of
-the entire subject.
+This looks like a joke until you check that all the usual algebraic laws hold: tropical multiplication distributes over tropical addition (`a + min(b,c) = min(a+b, a+c)`), there is a multiplicative identity (`0`, since `a + 0 = a`), and an additive identity (`+∞`, since `min(a, ∞) = a`). It is a genuine, well-behaved algebraic system, just one where the graphs of "polynomials" are piecewise-linear and the geometry is made of straight line segments meeting at corners.
 
-## The winner-takes-all principle
+Now look back at the two valuation laws and read them through the tropical dictionary. Let `T(x)` denote the tropicalized value `v(x)`, viewed as an element of the tropical semiring.
 
-Suppose you add several numbers, and one of them, `f(j)`, has a *strictly* smaller
-valuation than all the others. Then the inequality upgrades to an *equality*:
+- Multiplicativity, `v(x·y) = v(x) + v(y)`, becomes **`T(x·y) = T(x) ⊙ T(y)`**. Classical multiplication maps onto tropical multiplication, perfectly.
+- The ultrametric inequality, `min(v(x), v(y)) ≤ v(x+y)`, becomes **`T(x) ⊕ T(y) ≤ T(x+y)`**. Classical addition maps onto tropical addition — but only as an *inequality*.
 
-> **Winner-takes-all.** If `v(f(j)) < v(f(i))` for every other term `i`, then
-> `v(f(j) + f(i) + ...) = v(f(j))`.
+So the valuation is a homomorphism from the classical world into the tropical world that is exact on multiplication and merely sub-additive on addition. In the formal development this is recorded as a bundled **monoid homomorphism** `tropVal : K →* Tropical Γ` — the honest multiplicative half — accompanied by the sub-additivity inequality as a separate, explicitly stated theorem.
 
-The unique smallest term completely dominates the sum; its valuation *is* the
-valuation of the whole. There is no interference, no cancellation, no surprise. The
-verified statement of this fact reads:
+## Why it cannot be a ring homomorphism — and why that is good
 
-> For a finite family of field elements `f` and a distinguished index `j`, if
-> `v(f(j)) < v(f(i))` for all `i ≠ j` in the family, then
-> `v(∑ᵢ f(i)) = v(f(j))`.
+A natural wish is to upgrade `tropVal` to a full ring homomorphism, exact on both operations. The wish is impossible, and the obstruction is instructive. Take any nonzero `x` and consider `x + (−x) = 0`. Tropically, the prediction for the sum would be `min(v(x), v(−x)) = v(x)`, a finite number. But the actual answer is `v(0) = +∞`. The gap is infinite. Additivity is not slightly off here; it is maximally off.
 
-This is the additive twin of a classical lemma about multiplicative valuations, and
-it has a delightfully sharp consequence. The *only* way for the sum's valuation to
-exceed the minimum — the only way for the winner-takes-all rule to fail — is if
-there is **no unique winner**. There must be a *tie*: at least two terms sharing the
-minimum valuation. Cancellation requires a tie. Remember that; it is the whole
-story.
+And of course `x` and `−x` have the *same* valuation. We are squarely inside the tie set. The single largest possible defect of the translator occurs exactly where the theory predicts defects can occur. There is no honest way to make addition exact, and the failure is structured, not chaotic. The correct packaging of a valuation is therefore not a ring homomorphism but a **monoid homomorphism plus a controlled additive defect** — and the control is the whole story.
 
-## Corners are ties
+## Corners: the geometry hiding in the defect
 
-Here is where the geometry enters. A tropical polynomial is a "min of linear
-functions." For example, the tropical polynomial
+Tropical geometry studies the "curves" cut out by tropical polynomials. A tropical polynomial in a point `x` is built from several **monomials**, each an affine-linear function of `x`. Its value is the *minimum* over all the monomials. As `x` moves, the winning monomial — the one achieving the minimum — usually stays the same, so the function is smoothly linear. But along certain surfaces two monomials tie for the minimum, and there the graph creases. The set of those creases is the **tropical hypersurface**, or **corner locus**: the set of points where the defining minimum is achieved by at least two monomials at once.
 
-> `x ↦ min( c₁ + a₁·x , c₂ + a₂·x , c₃ + a₃·x )`
+Formally, a family of weights `w` indexed by the monomials lies on the corner locus when it **attains its minimum at least twice**: there exist two distinct indices `i ≠ j` that both achieve the global minimum of `w`. This single predicate — call it "the minimum is attained at least twice" — is the definition of a tropical curve.
 
-is a piecewise-linear function: a sequence of straight ramps. Almost everywhere it
-is perfectly smooth — locally it equals exactly one of the linear pieces. But at
-special points two of the ramps cross at the same height and the graph develops a
-**corner**, a kink. Those corner points are the tropical version of "the curve."
-They are called the **corner locus** or the **tropical hypersurface**.
+Here is the punchline of the whole package. Take the simplest possible tropical polynomial: just two monomials, with values `a` and `b` at the point in question. When does this two-term polynomial have a corner? The minimum of `{a, b}` is attained twice exactly when `a = b`. So:
 
-When does a corner appear? Exactly when the minimum is achieved by *two different*
-linear pieces at once — a tie. We capture this with a clean, purely combinatorial
-definition. Given any list of weights `w` indexed by `i`, say the minimum is
-**attained at least twice** if:
+> **For a two-monomial tropical polynomial, the corner locus is precisely the tie set `{a = b}`.**
 
-> there exist two distinct indices `i ≠ j` such that `w(i) ≤ w(k)` for every `k`
-> **and** `w(j) ≤ w(k)` for every `k`.
+Compare this with the valuation story. There, the additive defect of `tropVal` lives precisely in the tie set `{v(x) = v(y)}`. The two "tie sets" are the *same kind of object*. The package makes the identification exact: every additive defect of the valuation — every place where `v(x + y) ≠ min(v(x), v(y))` — forces `v(x) = v(y)`, and that condition is literally the statement that the two-monomial weight family `(v(x), v(y))` sits on its corner locus. The slogan, now a theorem, is:
 
-In words: two different competitors are simultaneously tied for first place. This is
-the formal definition of "being on the corner locus." A single competitor can never
-tie with itself, so a tropical polynomial with only one monomial has *no* corners at
-all — its graph is a single straight line, smooth everywhere. (This boundary case is
-worth stating explicitly: when the index set has at most one element, the minimum is
-never attained at least twice.)
+> **Morphism defect = corner locus.**
 
-## The Fundamental Theorem (the easy half)
+The places where arithmetic's translation of addition breaks down are exactly the geometric creases of the tropical world. The two stories — the algebraic story of an almost-homomorphism and the combinatorial story of corners in piecewise-linear geometry — are one story.
 
-Now we can state the bridge. Take an ordinary polynomial equation — say a curve
-`a·X + b·Y + c = 0` — and a point `(x, y)` that lies on it over a valued field.
-Feed each *term* of the equation through the valuation thermometer. You get a list of
-numbers: `v(a·x)`, `v(b·y)`, `v(c)`. The claim of the **Fundamental Theorem of
-Tropical Geometry (easy direction, due to Kapranov)** is:
+## The four pillars, stated plainly
 
-> **If the point lies on the classical curve, its tropicalization lies on the
-> tropical curve.**
+Stripped of formalism, the package rests on four statements, each provable and each provable in a single clean step.
 
-Concretely and in full generality: let `T` be a finite, nonempty family of field
-elements (the terms of a polynomial evaluated at a point). Suppose they sum to zero,
-`∑ᵢ Tᵢ = 0`, and that not all of them vanish (`∃ i, Tᵢ ≠ 0`). Then the list of
-valuations `i ↦ v(Tᵢ)` attains its minimum at least twice.
+**Pillar 1 — Additivity holds off the tie set.** If `v(x) ≠ v(y)`, then `v(x + y) = min(v(x), v(y))`, with equality, not just inequality. *Why:* whichever input has the strictly smaller order dominates; the other cannot cancel it, so the sum inherits the minimum order exactly. There is no room for a jump.
 
-The proof is now a one-line miracle, thanks to winner-takes-all. The terms sum to
-zero, and the valuation of zero is `∞` — the largest possible value. If the minimum
-valuation among the terms were attained *uniquely*, winner-takes-all would force the
-sum's valuation to equal that finite minimum, not `∞`. Contradiction. So the minimum
-*must* be attained at least twice. The point sits on a corner.
+**Pillar 2 — Every defect lands on the tie set.** If `v(x + y) ≠ min(v(x), v(y))`, then `v(x) = v(y)`. *Why:* this is just Pillar 1 read in reverse. If the orders had differed, additivity would have held; since it failed, the orders must coincide. The defect locus is contained in the tie set.
 
-That is the entire content of the easy direction: **cancellation (the sum vanishing)
-forces a tie (a corner)**. The geometry of corners is the shadow of the algebra of
-cancellation. Applied to our line `a·X + b·Y + c = 0`, the theorem says the tropical
-line `min(v(a)+X, v(b)+Y, v(c))` has a corner precisely at the tropicalized point —
-the familiar "tropical line is three rays meeting at a vertex" picture, derived from
-the classical line by pure valuation bookkeeping.
+**Pillar 3 — Multiplication translates perfectly; addition translates sub-additively.** The map `tropVal(x) = T(x)` satisfies `tropVal(1) = 1` (the tropical unit), `tropVal(x·y) = tropVal(x) ⊙ tropVal(y)` (exact), and `tropVal(x) ⊕ tropVal(y) ≤ tropVal(x + y)` (sub-additive). The exact half is bundled into a genuine monoid homomorphism `K →* Tropical Γ`; the inequality is the tropical shadow of the ultrametric law. Off the tie set, by Pillar 1, the inequality tightens into equality, so `tropVal` is *also* additive everywhere except on the ties.
 
-There is even a strengthening: you do not actually need the sum to be *zero*. You
-only need its valuation to *jump above* the minimum term valuation —
-"leading-term cancellation." Whenever `v(Tₘ)` is minimal yet `v(∑ᵢ Tᵢ) > v(Tₘ)`,
-the minimum is again attained at least twice. The vanishing case is just the extreme
-where the jump goes all the way to `∞`.
+**Pillar 4 — The tie set is a corner locus.** For a two-monomial weight family with values `a` and `b`, the corner-locus condition "the minimum is attained at least twice" holds if and only if `a = b`. Consequently every additive defect of the valuation lands on the binary corner locus. Algebra's failure and geometry's crease are the same set.
 
-## Multiplying tropical polynomials
+## Why anyone should care
 
-So far we have one curve. Real geometry is about *several* curves and how they meet.
-For that we need to multiply tropical polynomials, and here the min-plus dictionary
-pays off spectacularly.
+This is more than a tidy reconciliation of two definitions. It is a working bridge with traffic in both directions.
 
-A tropical polynomial in `n` variables is a finite collection of monomials, each
-carrying a coefficient `coeff(i)` and an exponent vector `exp(i)`. Its value at a
-point `x` is the minimum over all monomials of
+**From algebra to geometry.** The valuation of a field is, in a precise sense that this package makes literal, a *tropicalization map*. It carries the rich arithmetic of `K` — primes, divisibility, cancellation — onto the combinatorial scaffolding of tropical geometry. The "easy direction of the Fundamental Theorem of Tropical Geometry," a companion result, says that any point on a classical hypersurface tropicalizes onto a corner. The present package explains *why* corners are the right target: a corner is exactly the signature of a cancellation, and cancellation is exactly when the translator stutters. The geometry is not an analogy for the algebra; it is the algebra's own defect, drawn to scale.
 
-> `termVal(i) = coeff(i) + ⟨exp(i), x⟩`,
+**From geometry to algebra.** Because `tropVal` is an honest monoid homomorphism, every multiplicative identity in the field transports, free of charge, into a tropical statement. Factorizations of numbers become Minkowski sums of Newton polytopes; degrees of products add; the tropical hypersurface of a product is the union of the hypersurfaces of its factors. The multiplicative half of arithmetic flows into tropical combinatorics with no loss, and the additive half flows as a controlled inequality whose failures are pinned to a thin, explicitly described set.
 
-an inner product plus a constant — exactly a linear ramp. The full evaluation is the
-minimum of these ramps. To **multiply** two tropical polynomials `P` and `Q`, you do
-exactly what ordinary polynomial multiplication does to exponents and coefficients,
-read through the dictionary: you form all pairs of monomials `(i, k)`, and the new
-monomial has coefficient `coeff_P(i) + coeff_Q(k)` and exponent
-`exp_P(i) + exp_Q(k)`.
+**A way of thinking.** The deeper lesson is methodological. We are trained to want maps that preserve everything. But some of the most useful maps in mathematics preserve *most* things and fail in a precisely controlled way — and the failure locus carries the interesting information. A valuation is not a flawed homomorphism to be patched; it is an exact monoid homomorphism whose additive imperfection is a measuring instrument for cancellation. Learn to read the defect, and a curve appears.
 
-The first verified payoff is **min-plus multiplicativity**:
+## The shape of the limit
 
-> **For all points `x`, `eval(P ⊙ Q)(x) = eval(P)(x) + eval(Q)(x).`**
+There is one final image worth holding. Classically, one studies a whole family of valuations at once — rescaling `v` by a parameter `t` and letting `t` grow without bound, which stretches the "amoeba" of a variety until, in the limit, it collapses onto the thin tropical skeleton. One naturally fears that taking such a limit is a delicate analytic act. It is not. Rescaling all weights by a positive constant is an order isomorphism: it moves every value but preserves *which* values tie. Since corners are defined purely by ties, the corner locus is invariant under rescaling. The "limit" is not a sequence of sets creeping toward a target; it is a single fixed shape that every member of the family already shares. The tropical curve was there all along — it is simply the place where the orders agree, the place where addition's translator catches its breath and stutters.
 
-Tropical evaluation turns the tropical product into ordinary addition of values.
-The reason is a beautiful distributive identity: the minimum over all *pairs*
-`(i, k)` of `f(i) + g(k)` equals `(min over i of f(i)) + (min over k of g(k))`. To
-minimize a sum of two independent quantities, minimize each separately. This is the
-combinatorial soul of *tropical Bézout's theorem* — the statement that the degrees
-of curves multiply when you intersect them — because adding evaluations means adding
-Newton polytopes, which means adding degrees.
-
-## The new result: corners overlay
-
-The freshly verified contribution of this work pushes the multiplication story one
-crucial step further, from *values* to *shapes*. Min-plus multiplicativity tells you
-what the product polynomial *evaluates to*. The new theorems tell you where its
-*corners* are.
-
-The key is a single combinatorial fact about ties in a "separated sum." Consider a
-two-coordinate weight `(i, k) ↦ f(i) + g(k)`. When is *its* minimum attained at
-least twice? The answer is exactly as clean as one could hope:
-
-> **Corner of a separated sum.** The minimum of `(i, k) ↦ f(i) + g(k)` is attained
-> at least twice **if and only if** the minimum of `f` is attained at least twice,
-> **or** the minimum of `g` is.
-
-The intuition: to minimize `f(i) + g(k)` you minimize each coordinate independently,
-so the set of joint minimizers is the *product* of the two minimizer sets. A product
-set has two distinct elements exactly when one of its factors does. A tie in the
-combined problem is a tie in one of the two sub-problems.
-
-Feed this into multiplication. Each monomial of the product `P ⊙ Q` splits cleanly:
-the `(i, k)` term value equals `termVal_P(i) + termVal_Q(k)`, a separated sum. So the
-corner condition for the product is the corner condition for `P` *or* the corner
-condition for `Q`. Defining the tropical hypersurface `V(P)` as the set of points
-where `P`'s defining minimum is attained at least twice, we arrive at the
-**union law**:
-
-> **`V(P ⊙ Q) = V(P) ∪ V(Q)`.**
-
-The tropical curve of a product is the *overlay* of the two tropical curves. Multiply
-two polynomials and their corner-sets simply lie on top of one another, no new
-corners and no lost corners. Combined with the lattice-geometry count of how those
-overlaid curves cross, this is the analytic half of a complete tropical Bézout
-theorem: degrees multiply, and the intersection points are exactly where the overlaid
-stick figures cross.
-
-## Tropicalization as cooling, and one fixed silhouette
-
-There is a famous way to picture tropicalization as a physical limit. Take the
-classical curve, apply a logarithm with an enormous base `t`, and watch what happens
-as `t → ∞`. The smooth curve's "amoeba" — its logarithmic shadow — contracts onto a
-skeleton of straight segments: the tropical curve. People say "tropicalization is the
-`t → ∞` limit," and the metaphor is one of *cooling*: as a temperature parameter goes
-to extremes, a fuzzy curved object freezes into a rigid crystalline skeleton.
-
-A second new result makes this slogan precise — and, surprisingly, *deflates* it.
-Rescaling the valuation by a positive factor `t` corresponds to multiplying every
-weight by `t`. But the corner locus does not care:
-
-> **Scale equivariance.** For any `t > 0`, the minimum of `t · w` is attained at
-> least twice **if and only if** the minimum of `w` is.
-
-Multiplying everything by a positive constant cannot change *which* competitors are
-tied for first place — a strictly increasing rescaling preserves all order relations.
-So the entire family of rescaled valuations `v_t = t·v` shares **one fixed tropical
-silhouette**, up to an overall zoom. The dramatic-sounding "limit as `t → ∞`" is not
-an analytic limit of moving sets converging onto a target; it is an algebraic
-*invariance*. Every member of the family already has the same shape. The crystal was
-never melting — it was the same crystal at different magnifications all along.
-
-## Why ties explain everything
-
-Step back and notice that one idea has appeared, in disguise, at every stage:
-
-- The valuation of a sum drops below the obvious minimum **only at a tie**
-  (winner-takes-all).
-- A classical curve casts a corner exactly where cancellation forces a tie
-  (Kapranov's easy direction).
-- A tropical polynomial is itself a valuation-like "morphism" that is perfectly
-  multiplicative and perfectly additive **except at ties**, where two valuations
-  coincide.
-- The corners of a product are the corners of the factors, because a tie in a
-  separated sum is a tie in one of its parts (the union law).
-- Rescaling cannot create or destroy ties (scale invariance).
-
-Tropical geometry, from this vantage point, is the study of where the smooth,
-generic behavior of arithmetic breaks down into a tie — and the remarkable discovery
-is that *those breakdowns assemble into a coherent geometry*. The corner locus is
-nothing but the set of ties, organized into a stick-figure curve, and every
-structural law about that curve (multiply, rescale, intersect) is a law about how
-ties combine.
-
-## The road ahead
-
-The results described here close the "easy" and "structural" halves of the bridge.
-The harder, still-open frontier is the *converse* of Kapranov's theorem: given a
-point on the tropical corner locus, can you always *lift* it back to a genuine point
-on the classical curve? The easy direction is pure inequality-becoming-equality; the
-hard direction needs a real construction — a Newton-polygon and Hensel's-lemma
-argument that promotes a tie into an actual root. With the union law and scale
-invariance now in hand, the remaining analytic obstacles on both the Bézout side and
-the limit side have been cleared away, leaving the lifting step in sharp focus.
-
-There are further horizons too: a *balancing condition* expressing that the edges of
-a tropical curve meeting at a corner must, weighted by their lattice lengths, sum to
-zero — a conservation law that is the tropical shadow of "a regular function has no
-poles" — and a clean packaging of the valuation as a genuine *tropical semiring
-homomorphism whose only defect is the tie set itself*. In each case the same theme
-recurs: the geometry of the stick-figure world is the algebra of ties, made visible.
-
-It is a rare pleasure in mathematics when a single, almost childishly simple idea —
-"who is tied for the minimum?" — turns out to be the hidden hinge on which an entire
-geometry swings. The tropical world is that world. Its curves are maps of ties, and
-once you learn to read them, the smooth curves they descend from feel a little less
-mysterious, and the stick figures a little more profound.
+Multiplication never lies. Addition almost never lies. And in the rare, exact places where it does, geometry is born.

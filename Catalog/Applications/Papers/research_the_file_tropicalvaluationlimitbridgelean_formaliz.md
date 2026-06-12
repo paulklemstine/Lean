@@ -1,353 +1,222 @@
-# Functoriality of the Tropical Corner Locus: Scale Invariance, the Union Law, and the Easy Half of Kapranov's Theorem
+# The Non-Archimedean Valuation as a Tropical Semiring Morphism, Up to Its Defect
 
 ## Abstract
 
-We develop a self-contained, machine-checked account of the *easy direction* of the
-Fundamental Theorem of Tropical Geometry together with the structural functoriality
-of the tropical corner locus. The bridge between classical algebraic geometry over a
-non-Archimedean valued field and tropical geometry is built from a single primitive,
-an additive valuation `v : K → Γ ∪ {∞}`, read as a tropicalization map. The
-technical core is an *ultrametric winner-takes-all lemma*: a finite sum whose minimal
-term valuation is attained uniquely has the valuation of that term. Its immediate
-corollary is Kapranov's easy direction — tropicalizing a point of a classical
-hypersurface lands it on the corner locus — and a strengthening replacing "the sum
-vanishes" by "the sum's valuation jumps." We then prove three functoriality results
-about the corner-locus predicate `AttainedAtLeastTwice`. First, **scale equivariance**:
-the corner locus is invariant under positive rescaling of all weights, so the rescaled
-valuation family `v_t = t·v` shares one fixed tropical shape, making the "`t → ∞`
-limit" an algebraic homothety rather than an analytic set-limit. Second, the
-**corner-of-a-separated-sum law**: the minimum of `(i,k) ↦ f(i)+g(k)` is attained at
-least twice iff one of `f`, `g` has its minimum attained at least twice, because the
-joint minimizer set is the product of the two minimizer sets. Third, the **union law**
-`V(P ⊙ Q) = V(P) ∪ V(Q)` for tropical hypersurfaces, the analytic engine of tropical
-Bézout, obtained by combining the separated-sum law with min-plus multiplicativity
-`eval(P ⊙ Q) = eval(P) + eval(Q)`. All results are formalized; the prose below states
-each theorem with its full mathematical content and a proof sketch.
-
-**Keywords.** tropical geometry, non-Archimedean valuation, Kapranov's theorem,
-corner locus, tropical hypersurface, min-plus algebra, tropical Bézout, ultrametric.
+A non-Archimedean additive valuation `v : K → Γ ∪ {∞}` on a field is, simultaneously, two things: the multiplicative backbone of a homomorphism into the tropical semiring, and an *almost*-additive map whose only failures are sharply localized. We make both halves precise. Tropicalizing `v` through the canonical map `trop` yields `tropVal v : K → Tropical Γ`, `x ↦ trop(v x)`. We prove that `tropVal v` is an exact homomorphism for the multiplicative structure — bundled as a monoid homomorphism `tropValMonoidHom : K →* Tropical Γ` — and is sub-additive, `tropVal(x) + tropVal(y) ≤ tropVal(x+y)`, the tropical shadow of the ultrametric inequality. The additive defect is then completely controlled: additivity holds with *equality* whenever `v x ≠ v y` (`addValuation_add_eq_min_of_ne`), and conversely every failure of additivity forces `v x = v y` (`addValuation_defect_imp_tie`). Hence the defect locus is exactly the diagonal **tie set** `{v x = v y}`. We connect this to tropical geometry by showing that, for a two-monomial weight family, the corner-locus predicate "the minimum is attained at least twice" is equivalent to the tie condition `a = b` (`attainedTwice_fin2_iff`), so every additive defect of `v` lands on the binary corner locus (`addValuation_defect_imp_corner`). The result unifies the additive (defect) and combinatorial (corner) descriptions of tropicalization under one slogan: *morphism defect = corner locus*. All results are fully formalized and machine-checked, depending only on the standard foundational axioms (propositional extensionality, choice, quotient soundness). We also explain the obstruction to upgrading `tropVal` to a ring homomorphism, which is genuine and maximal.
 
 ## 1. Introduction
 
-Tropical geometry replaces the field operations `(+, ×)` by the min-plus semiring
-operations `(min, +)`. Under this dictionary, polynomials become piecewise-linear
-convex functions, and algebraic varieties become polyhedral complexes. The
-foundational link between the classical and tropical worlds is the *tropicalization*
-of a variety via a non-Archimedean valuation, and the foundational theorem — the
-Fundamental Theorem of Tropical Geometry — asserts that this tropicalization coincides
-with the corner locus of the tropicalized defining polynomial. The theorem has two
-directions of very different character:
+Tropical geometry replaces classical algebraic varieties with piecewise-linear polyhedral complexes, trading the field operations `(+, ·)` for the *min-plus* operations `(min, +)`. The bridge between the two worlds is a valuation. Given a non-Archimedean valued field `(K, v)`, the **tropicalization** of a subvariety is the closure of the image of its points under the coordinatewise valuation map. The Fundamental Theorem of Tropical Geometry (Kapranov; Speyer–Sturmfels) states that this image equals the corner locus of the tropicalized defining polynomials.
 
-- the **easy direction** (Kapranov): the tropicalization is *contained* in the corner
-  locus; and
-- the **hard direction**: the corner locus is *contained* in the tropicalization,
-  which requires lifting tropical points to classical ones (Newton polygon + Hensel).
+The "easy direction" of that theorem — tropicalization is *contained in* the corner locus — is a consequence of one elementary phenomenon: in an ultrametric, a sum of terms with a unique minimal valuation inherits that minimal valuation exactly, so a cancellation (`∑ Tᵢ = 0`) is impossible unless the minimum is achieved at least twice. This phenomenon is purely about *ties*: the ultrametric inequality `v(x+y) ≥ min(v x, v y)` is an equality away from `{v x = v y}` and can be strict only on it.
 
-This paper formalizes the easy direction and, more importantly, isolates the
-*functorial* structure that governs how the corner locus interacts with the algebraic
-operations of rescaling and multiplication. The central conceptual claim is that a
-single combinatorial predicate — "the minimum is attained at least twice" — is
-preserved by positive scaling and transforms predictably under separated sums, and
-that these two facts are the pointwise reasons behind the geometric slogans
-"tropicalization is the `t → ∞` limit" and "the tropical hypersurface of a product is
-the union of hypersurfaces."
+This paper isolates and formalizes the *algebraic* content of that phenomenon, independent of any variety. We package the valuation itself as a structured map into the tropical semiring and prove that:
+
+1. It is an exact monoid homomorphism (multiplicativity has no defect).
+2. It is sub-additive, with the inequality tightening to equality off the tie set.
+3. The locus of additive defect is *exactly* the tie set.
+4. The tie set, for two monomials, *is* a corner locus.
+
+The conjunction is the identity "morphism defect = corner locus", settling Direction 5 of the future-directions program attached to the bridge files `TropicalValuationLimitBridge.lean` and `TropicalBezoutFactorization.lean`.
 
 ### 1.1 Contributions
 
-1. A clean, order-theoretic formulation of the corner locus via the predicate
-   `AttainedAtLeastTwice` (Definition 2.1), with the degenerate boundary case
-   (Proposition 2.2).
-2. The ultrametric winner-takes-all lemma for additive valuations (Theorem 3.1) and
-   Kapranov's easy direction (Theorem 3.2), with a concrete instance for lines
-   (Corollary 3.3) and a strengthening to leading-term cancellation (Theorem 3.4).
-3. Min-plus multiplicativity of tropical evaluation (Theorem 4.3) via min-plus
-   distributivity (Lemma 4.2).
-4. **New functoriality results:** scale equivariance (Theorem 5.1), the
-   corner-of-a-separated-sum law (Theorem 5.2), the monomial split for products
-   (Lemma 5.3), and the union law `V(P ⊙ Q) = V(P) ∪ V(Q)` (Theorem 5.4).
+- A bundled monoid homomorphism `tropValMonoidHom : K →* Tropical Γ` realizing the multiplicative half of a valuation as a tropical-semiring morphism.
+- A complete characterization of the additive defect of tropicalization as the diagonal tie set (Theorems 4.1, 4.2 below).
+- The identification of the binary corner locus with the tie set (Theorem 6.1), yielding the unifying statement that all additive defects are corner points (Theorem 6.2).
+- A precise account of why `tropVal` cannot be a ring homomorphism, with the maximal counterexample `x + (−x) = 0`.
 
-## 2. The corner locus predicate
+## 2. Preliminaries
 
-We work with an arbitrary index type `ι` and a linearly ordered codomain.
+### 2.1 Additive valuations
 
-**Definition 2.1 (Corner locus / attained at least twice).**
-Let `α` be a linear order and `w : ι → α`. We say `w` *attains its minimum at least
-twice*, written `AttainedAtLeastTwice w`, if
-> there exist `i, j` with `i ≠ j`, `∀ k, w(i) ≤ w(k)`, and `∀ k, w(j) ≤ w(k)`.
+Throughout, `K` is a field and `Γ` is a linearly ordered additive commutative monoid with a top element `∞` (`LinearOrderedAddCommMonoidWithTop`), which serves as the value group completed by the value of `0`.
 
-That is, two distinct indices are simultaneously global minima. Geometrically, when
-`w(i) = c_i + ⟨a_i, x⟩` ranges over the affine pieces of a tropical polynomial, this
-is exactly the condition that the piecewise-linear function `x ↦ min_i w(i)` is
-non-smooth (has a corner) — the defining minimum is realized by two distinct
-monomials.
+**Definition 2.1 (Additive valuation).** An *additive valuation* `v : K → Γ` is a map satisfying:
 
-**Proposition 2.2 (Boundary case).** If `ι` is a subsingleton (has at most one
-element), then `¬ AttainedAtLeastTwice w` for every `w`.
+- `v 0 = ∞` and `v 1 = 0`;
+- `v(x · y) = v x + v y` (multiplicativity, exact);
+- `v(x + y) ≥ min(v x, v y)` (the ultrametric / non-Archimedean inequality).
 
-*Proof sketch.* A witness requires `i ≠ j`, but any two elements of a subsingleton
-are equal, contradicting `i ≠ j`. ∎
+We write `v : AddValuation K Γ` for the bundled object. The key consequence we use repeatedly is that the ultrametric inequality is *forced to be an equality off the diagonal*:
 
-Thus a single-monomial tropical polynomial defines a globally smooth (affine-linear)
-function with empty corner locus; the bridge theorem genuinely requires at least two
-monomials.
+**Lemma 2.2 (Strict domination ⇒ equality).** If `v x < v y` then `v(x + y) = v x`. More generally `v(x + y) = min(v x, v y)` whenever `v x ≠ v y`.
 
-## 3. The ultrametric bridge
+This is `AddValuation.map_add_eq_of_lt_left` in the underlying library, applied after trichotomy.
 
-Fix a field `K` and a linearly ordered additive commutative monoid-with-top `Γ`
-(the value group augmented by `⊤ = ∞`). An *additive valuation* `v : AddValuation K Γ`
-satisfies `v(0) = ⊤`, `v(1) = 0`, `v(xy) = v(x) + v(y)`, and the ultrametric
-inequality `v(x + y) ≥ min(v(x), v(y))`.
+### 2.2 The tropical semiring
 
-**Theorem 3.1 (Winner-takes-all).**
-Let `s` be a finite index set, `f : ι → K`, and `j ∈ s` a distinguished index with
-> `v(f(j)) < v(f(i))` for every `i ∈ s` with `i ≠ j`.
+**Definition 2.3 (Tropical semiring).** For a linearly ordered additive monoid `Γ`, the tropical semiring `Tropical Γ` has carrier (a copy of) `Γ`, with the bijection `trop : Γ → Tropical Γ` and inverse `untrop`. Its operations are:
 
-Then `v(∑_{i ∈ s} f(i)) = v(f(j))`.
+- addition `a + b := trop(min(untrop a, untrop b))` — i.e. tropical `+` is `min`;
+- multiplication `a · b := trop(untrop a + untrop b)` — i.e. tropical `·` is `+`;
+- multiplicative identity `1 = trop 0`;
+- additive identity `0 = trop ∞`.
 
-*Proof sketch.* If `v(f(j)) = ⊤`, then strict minimality forces every other term to
-have valuation `> ⊤`, impossible, so `s = {j}` and the sum is `f(j)`. Otherwise split
-the sum as `f(j) + ∑_{i ∈ s \ {j}} f(i)`. Every remaining term has valuation strictly
-larger than `v(f(j))`, so the ultrametric "many-term" strict inequality gives
-`v(∑_{i ≠ j} f(i)) > v(f(j))`. The two-term addition rule
-`v(a + b) = v(a)` when `v(a) < v(b)` then yields `v(f(j) + ∑_{i≠j} f(i)) = v(f(j))`.
-∎
+These satisfy the semiring axioms; in particular `trop` is monotone and an order embedding, so `a ≤ b` in `Tropical Γ` iff `untrop a ≤ untrop b`.
 
-This is the additive analogue of the classical multiplicative statement
-`Valuation.map_sum_eq_of_lt`. Its essential consequence is the contrapositive: the
-valuation of a sum can exceed the minimal term valuation *only when the minimum is
-attained at least twice* — cancellation requires a tie.
+### 2.3 The corner-locus predicate
 
-**Theorem 3.2 (Kapranov, easy direction).**
-Let `ι` be finite and nonempty, `Γ` nontrivial, and `T : ι → K`. If
-> `∑_i T(i) = 0` and `∃ i, T(i) ≠ 0`,
+**Definition 2.4 (Attained at least twice / corner locus).** For a weight function `w : ι → α` on a linearly ordered type `α`, define
+```
+AttainedAtLeastTwice w  :⇔  ∃ i j, i ≠ j ∧ (∀ k, w i ≤ w k) ∧ (∀ k, w j ≤ w k).
+```
+That is, the global minimum of `w` is achieved by two distinct indices. Geometrically, when `w` is the family of monomial values of a tropical polynomial at a point, `AttainedAtLeastTwice w` says the point lies on the *corner locus* (tropical hypersurface): the defining minimum is non-smooth there.
 
-then `AttainedAtLeastTwice (fun i ↦ v(T(i)))`.
+## 3. The single additive defect is controlled by the tie set
 
-*Proof sketch.* Let `m` minimize `i ↦ v(T(i))`. Suppose for contradiction the minimum
-is attained only at `m`; then `v(T(m)) < v(T(i))` for all `i ≠ m`. By Theorem 3.1,
-`v(∑_i T(i)) = v(T(m))`. But `∑_i T(i) = 0`, so `v(∑_i T(i)) = v(0) = ⊤`, forcing
-`v(T(m)) = ⊤`. Since `T` is not identically zero, some `T(i) ≠ 0`; combined with
-`v(T(m)) = ⊤` being the *minimum*, every term then has valuation `⊤`, i.e. every term
-is `0` — contradicting `∃ i, T(i) ≠ 0`. Hence the minimum is attained at least twice.
-∎
+We first record the two facts that pin the additive behaviour of `v` to its diagonal.
 
-Interpreted geometrically: a point on the classical hypersurface `{∑_i T_i = 0}` (the
-`T_i` being the monomials of a polynomial evaluated at the point) tropicalizes to a
-point of the tropical hypersurface (corner locus). This is exactly the inclusion
-`trop(V(f)) ⊆ corner-locus(trop f)`.
+**Theorem 3.1 (Additivity off the tie set, `addValuation_add_eq_min_of_ne`).** Let `v : AddValuation K Γ` and `x, y : K` with `v x ≠ v y`. Then
+```
+v(x + y) = min(v x, v y).
+```
 
-**Corollary 3.3 (Tropical line).**
-For `a, b, c, x, y ∈ K` with `a·x + b·y + c = 0` and `(a·x, b·y, c)` not all zero, the
-weight vector `(v(a·x), v(b·y), v(c))` attains its minimum at least twice; i.e. the
-tropical line `min(v(a)+X, v(b)+Y, v(c))` has a corner at the tropicalized point.
+*Proof sketch.* Apply trichotomy to `v x` versus `v y`. The case `v x = v y` is excluded by hypothesis. If `v x < v y`, then `x` strictly dominates and `AddValuation.map_add_eq_of_lt_left` gives `v(x+y) = v x = min(v x, v y)`; the symmetric case `v y < v x` is identical. ∎
 
-*Proof sketch.* Apply Theorem 3.2 to the three-term family `T = (a·x, b·y, c)` over
-`ι = Fin 3`. The sum is the line equation; nonvanishing of one term is the
-nondegeneracy hypothesis. ∎
+**Theorem 3.2 (Defect locus ⊆ tie set, `addValuation_defect_imp_tie`).** Let `v : AddValuation K Γ` and `x, y : K` with `v(x + y) ≠ min(v x, v y)`. Then `v x = v y`.
 
-**Theorem 3.4 (Leading-term cancellation strengthening).**
-Let `ι` be finite nonempty, `T : ι → K`, and `m` an index with `∀ k, v(T(m)) ≤ v(T(k))`.
-If
-> `v(T(m)) < v(∑_i T(i))`,
+*Proof sketch.* Contrapositive of Theorem 3.1: if `v x ≠ v y`, Theorem 3.1 yields `v(x+y) = min(v x, v y)`, contradicting the assumed defect. Hence `v x = v y`. ∎
 
-then `AttainedAtLeastTwice (fun i ↦ v(T(i)))`.
+Theorems 3.1–3.2 together state that the *defect locus* `{(x,y) : v(x+y) ≠ min(v x, v y)}` is contained in the *tie set* `{(x,y) : v x = v y}`. The containment can be strict — ties do not *force* cancellation — but every cancellation is a tie.
 
-*Proof sketch.* Contrapositively, suppose the minimum is attained uniquely. Then
-`m` is the strict minimizer, and Theorem 3.1 gives `v(∑_i T(i)) = v(T(m))`,
-contradicting the strict jump `v(T(m)) < v(∑_i T(i))`. Concretely one produces a
-second minimizer `j ≠ m` with `v(T(j)) ≤ v(T(m))` whenever the strict-jump hypothesis
-holds. ∎
+## 4. Tropicalization as a monoid morphism plus a defect
 
-Theorem 3.2 is the special case where the sum is `0`, so its valuation is `⊤`, the
-maximal possible jump. The strengthening shows that *only* the jump above the minimum
-matters, not literal vanishing.
+**Definition 4.1 (Tropicalization map, `tropVal`).** For `v : AddValuation K Γ`, define
+```
+tropVal v : K → Tropical Γ,    tropVal v x := trop (v x).
+```
 
-## 4. Min-plus multiplicativity
+**Theorem 4.2 (Unit, `tropVal_one`).** `tropVal v 1 = 1`.
 
-We now formalize tropical polynomials and their product.
+*Proof sketch.* `v 1 = 0` (valuation axiom), and the tropical unit is `trop 0`; hence `trop (v 1) = trop 0 = 1`. ∎
 
-**Definition 4.1 (Tropical polynomial).**
-A *tropical polynomial* in `n` variables indexed by `ι` is a pair
-`P = (coeff : ι → ℝ, exp : ι → (Fin n → ℝ))`. Its `i`-th *term value* at `x : Fin n → ℝ`
-is
-> `termVal_P(x, i) = coeff_P(i) + ∑_{k} exp_P(i, k) · x_k`,
+**Theorem 4.3 (Exact multiplicativity, `tropVal_mul`).** For all `x, y : K`,
+```
+tropVal v (x · y) = tropVal v x · tropVal v y    (tropical product).
+```
 
-an affine-linear function of `x`. The *tropical evaluation* (for `ι` finite nonempty)
-is `eval_P(x) = min_{i} termVal_P(x, i)`. The *tropical product* of `P` (indexed by
-`ι`) and `Q` (indexed by `κ`) is the polynomial `P ⊙ Q` indexed by `ι × κ` with
-> `coeff_{P⊙Q}(i,k) = coeff_P(i) + coeff_Q(k)`,
-> `exp_{P⊙Q}(i,k) = exp_P(i) + exp_Q(k)`.
+*Proof sketch.* Unfold: `tropVal v (x·y) = trop(v(x·y)) = trop(v x + v y)`. Tropical multiplication is defined so that `trop(a + b) = trop a · trop b`, giving `trop(v x) · trop(v y) = tropVal v x · tropVal v y`. The multiplicativity axiom of `v` is the only ingredient; there is no defect. ∎
 
-This is exactly classical monomial multiplication read through the min-plus
-dictionary: exponents add, coefficients add.
+**Definition 4.4 (Bundled morphism, `tropValMonoidHom`).** The data of Theorems 4.2–4.3 assemble into a monoid homomorphism
+```
+tropValMonoidHom v : K →* Tropical Γ,    toFun = tropVal v,
+    map_one' = tropVal_one,    map_mul' = tropVal_mul.
+```
+This is the "honest half" of the bridge: the multiplicative structure of `K` maps onto the multiplicative (min-plus additive) structure of the tropical semiring with no loss.
 
-**Lemma 4.2 (Min-plus distributivity).**
-For finite nonempty `s ⊆ ι`, `t ⊆ κ`, and `f : ι → ℝ`, `g : κ → ℝ`,
-> `min_{(i,k) ∈ s × t} (f(i) + g(k)) = (min_{i ∈ s} f(i)) + (min_{k ∈ t} g(k))`.
+**Theorem 4.5 (Sub-additivity, `tropVal_add_le`).** For all `x, y : K`,
+```
+tropVal v x + tropVal v y ≤ tropVal v (x + y)    (tropical sum on the left).
+```
 
-*Proof sketch.* `≤`: pick coordinatewise minimizers `a ∈ s`, `b ∈ t`; then
-`(a,b) ∈ s × t` realizes the right side as a member of the left. `≥`: every pair
-`(i,k)` satisfies `f(i) ≥ min f` and `g(k) ≥ min g`, so their sum is bounded below by
-the right side. Antisymmetry concludes. ∎
+*Proof sketch.* Tropical addition is `min`, so the left side is `trop(min(v x, v y))`. The claim is `trop(min(v x, v y)) ≤ trop(v(x+y))`, i.e. by monotonicity of `trop`, `min(v x, v y) ≤ v(x+y)` — exactly the ultrametric inequality `AddValuation.map_add`. ∎
 
-**Theorem 4.3 (Min-plus multiplicativity).**
-For finite nonempty `ι, κ` and any `x`,
-> `eval_{P ⊙ Q}(x) = eval_P(x) + eval_Q(x)`.
+**Theorem 4.6 (Additivity off the tie set, tropical form, `tropVal_add_eq_of_ne`).** If `v x ≠ v y` then
+```
+tropVal v x + tropVal v y = tropVal v (x + y).
+```
 
-*Proof sketch.* Expanding `termVal_{P⊙Q}(x, (i,k))` via Definition 4.1 distributes
-the inner product to give exactly `termVal_P(x,i) + termVal_Q(x,k)`. Minimizing over
-the product index set and applying Lemma 4.2 separates the minimum into the sum of the
-two evaluations. ∎
+*Proof sketch.* By Theorem 3.1, `v(x+y) = min(v x, v y)`, so `trop(v(x+y)) = trop(min(v x, v y)) = tropVal v x + tropVal v y`. The sub-additive inequality of Theorem 4.5 becomes an equality precisely where Theorem 3.1 applies. ∎
 
-This is the analytic engine of tropical Bézout: tropical multiplication corresponds to
-adding evaluations, hence adding Newton polytopes, hence adding degrees.
+Thus `tropVal v` is a monoid homomorphism that is additionally additive everywhere except, possibly, on the tie set `{v x = v y}` — and on that set it can fail.
 
-## 5. Functoriality of the corner locus (new results)
+## 5. The obstruction to a ring homomorphism
 
-We now establish the structural properties that make the corner-locus predicate a
-*functorial* object: invariant under rescaling and compatible with products.
+It is natural to ask whether `tropVal v` extends to a semiring/ring homomorphism, i.e. whether additivity is exact everywhere. It is not, and the failure is maximal.
 
-**Theorem 5.1 (Scale equivariance).**
-For any `t ∈ ℝ` with `t > 0` and any `w : ι → ℝ`,
-> `AttainedAtLeastTwice (fun i ↦ t · w(i)) ↔ AttainedAtLeastTwice w`.
+**Proposition 5.1 (No additive homomorphism).** For any `x ≠ 0`, taking `y = −x` gives `x + y = 0`, so
+```
+tropVal v (x + y) = trop (v 0) = trop ∞ = 0_{Tropical}  (the tropical additive identity),
+```
+whereas the predicted value is
+```
+tropVal v x + tropVal v y = trop(min(v x, v(−x))) = trop(v x),
+```
+a finite (non-`0_{Tropical}`) element. The two differ. Since `v(−x) = v x`, this defect occurs *on the tie set*, consistent with Theorem 3.2, and it is the largest possible defect (an infinite gap in `Γ`).
 
-*Proof sketch.* Both directions transport the minimality clauses across the order
-equivalence `t · a ≤ t · b ↔ a ≤ b`, valid since `t > 0` (multiplication by a positive
-scalar is strictly monotone). The witnessing pair `(i, j)` and the inequality `i ≠ j`
-are unchanged; only the comparisons are rescaled. Forward: from `t·w(i) ≤ t·w(k)`
-divide by `t`. Backward: from `w(i) ≤ w(k)` multiply by `t ≥ 0`. ∎
+*Discussion.* Proposition 5.1 explains the asymmetry in the packaging: the correct structure is a **monoid homomorphism plus a sub-additivity inequality**, not a ring homomorphism. The additive imperfection is intrinsic and is exactly what makes valuations *measure cancellation* rather than merely transport addition. ∎
 
-*Significance.* Rescaling a valuation `v ↦ t·v` rescales all weights by `t`, so the
-entire family `v_t = t·v` (`t > 0`) has *identical* corner loci up to overall zoom. The
-classical slogan "tropicalization is the limit of `v_t` as `t → ∞`" is therefore not an
-analytic limit of moving sets but an algebraic homothety invariance: every member of
-the family already exhibits the same tropical silhouette.
+## 6. Morphism defect = corner locus
 
-**Theorem 5.2 (Corner of a separated sum).**
-Let `ι`, `κ` be finite and nonempty, `f : ι → ℝ`, `g : κ → ℝ`. Then
-> `AttainedAtLeastTwice (fun (i,k) ↦ f(i) + g(k)) ↔ AttainedAtLeastTwice f ∨ AttainedAtLeastTwice g`.
+We now connect the algebraic defect to the combinatorial corner locus of Definition 2.4.
 
-*Proof sketch.*
-(⇐) If `f` has distinct minimizers `i ≠ j`, fix any minimizer `k₀` of `g` (exists by
-finiteness/nonemptiness). Then `(i, k₀)` and `(j, k₀)` are distinct joint minimizers of
-`f + g`, since `f(i)+g(k₀) ≤ f(i')+g(k')` for all `(i',k')` by adding the two
-coordinate inequalities. Symmetrically if `g` is the one with a repeated minimizer.
+**Theorem 6.1 (Two-monomial corner locus = tie set, `attainedTwice_fin2_iff`).** Let `a b : α` and consider the two-element weight family `w : Fin 2 → α`, `w = ![a, b]`. Then
+```
+AttainedAtLeastTwice w  ⇔  a = b.
+```
 
-(⇒) Let `p ≠ q` be distinct joint minimizers of `(i,k) ↦ f(i)+g(k)`. Holding one
-coordinate fixed shows each projection is a coordinate minimizer: `p.1, q.1` minimize
-`f` and `p.2, q.2` minimize `g`. Since `p ≠ q`, the two points differ in at least one
-coordinate. If they differ in the first coordinate, `p.1 ≠ q.1` are distinct minimizers
-of `f`, giving `AttainedAtLeastTwice f`; if they differ in the second, we get
-`AttainedAtLeastTwice g`. ∎
+*Proof sketch.* (⇐) If `a = b`, the two distinct indices `0, 1` both achieve `min(a, b) = a = b`, witnessing the predicate. (⇒) The only pair of distinct indices in `Fin 2` is `{0, 1}`. If both achieve the global minimum, then `w 0 ≤ w 1` and `w 1 ≤ w 0`, i.e. `a ≤ b` and `b ≤ a`, hence `a = b`. ∎
 
-This is the precise combinatorial statement that *the joint minimizer set is the
-Cartesian product of the coordinate minimizer sets*, and a product set is non-trivial
-(has two distinct elements) iff one factor is.
+**Theorem 6.2 (Defects are corners, `addValuation_defect_imp_corner`).** Let `v : AddValuation K Γ` and `x, y : K` with `v(x + y) ≠ min(v x, v y)`. Then the two-monomial weight family `![v x, v y]` lies on the corner locus:
+```
+AttainedAtLeastTwice (![v x, v y]).
+```
 
-**Lemma 5.3 (Monomial split for products).**
-For tropical polynomials `P` (indexed by `ι`) and `Q` (indexed by `κ`), every `x` and
-every pair `p = (i,k)`,
-> `termVal_{P ⊙ Q}(x, p) = termVal_P(x, p.1) + termVal_Q(x, p.2)`.
+*Proof sketch.* By Theorem 3.2 the defect forces `v x = v y`; by Theorem 6.1 (with `a = v x`, `b = v y`) this is exactly the corner-locus condition for `![v x, v y]`. ∎
 
-*Proof sketch.* Substitute the product coefficients and exponents from Definition 4.1
-and distribute the inner product over the sum of exponent vectors; rearranging gives
-the sum of the two term values. ∎
+Theorem 6.2 is the headline identification. Every additive defect of the valuation — every point where tropicalization fails to be additive — is, verbatim, a corner of the associated two-monomial tropical polynomial. The algebraic failure locus and the geometric crease locus coincide.
 
-**Definition 5.4 (Tropical hypersurface).**
-For a tropical polynomial `P` in `n` variables, the *tropical hypersurface*
-(corner locus) is
-> `V(P) = { x ∈ ℝⁿ : AttainedAtLeastTwice (fun i ↦ termVal_P(x, i)) }`,
+### 6.1 Relation to the Fundamental Theorem (easy direction)
 
-the set of points where the defining minimum is attained by at least two monomials.
+The companion result `kapranov_easy_direction` states: if a point lies on a classical hypersurface `∑ᵢ Tᵢ = 0` with not all `Tᵢ` vanishing, then the tropicalized weights `i ↦ v(Tᵢ)` attain their minimum at least twice. Its proof is the *winner-takes-all* lemma: if the minimum were unique, the sum would inherit that finite valuation, contradicting `v(0) = ∞`. Theorem 6.2 is the two-term, defect-centric refinement: where Kapranov needs an entire vanishing sum to produce a corner, the present result shows that even a *single binary cancellation* — `v(x+y)` exceeding `min(v x, v y)` — already produces one. Both are powered by the same fact (Lemma 2.2): away from ties, one valuation strictly wins and pins the sum.
 
-**Theorem 5.5 (Union law).**
-For finite nonempty `ι, κ`,
-> `V(P ⊙ Q) = V(P) ∪ V(Q)`.
+## 7. Algorithms
 
-*Proof sketch.* Fix `x`. By Lemma 5.3 the term-value function of `P ⊙ Q` at `x` is the
-separated sum `(i,k) ↦ termVal_P(x,i) + termVal_Q(x,k)`. By Theorem 5.2 its minimum is
-attained at least twice iff the minimum of `termVal_P(x, ·)` is, or that of
-`termVal_Q(x, ·)` is — i.e. iff `x ∈ V(P)` or `x ∈ V(Q)`. ∎
+The theory is constructive enough to be checked numerically. We summarize the core procedures (full implementations appear in the accompanying `demo.py`).
 
-*Significance.* The corner set of a tropical product is the *overlay* of the corner
-sets of the factors. Together with min-plus multiplicativity (Theorem 4.3) this is the
-analytic half of tropical Bézout: degrees add under multiplication, and the
-intersection of two tropical curves is realized inside the union of their corner loci.
-Pairing this union law with the combinatorial lattice count of crossing multiplicities
-yields a complete degree statement; this paper supplies the analytic half cleanly.
+**Algorithm 7.1 (p-adic valuation).** Given a prime `p` and a nonzero rational `x = a/b`, return `v_p(a) − v_p(b)`, where `v_p(n)` counts factors of `p` in the integer `n`. Define `v_p(0) = ∞`. Complexity: `O(log_p |x|)` divisions.
 
-## 6. Algorithms
+**Algorithm 7.2 (Defect detector).** Given `v`, `x`, `y`, compute `lhs = v(x+y)` and `rhs = min(v x, v y)`. Report a *defect* when `lhs ≠ rhs`, and assert (by Theorem 3.2) that any reported defect satisfies `v x = v y`. Complexity: three valuation evaluations.
 
-The constructive content of the corner-locus theory yields three direct algorithms;
-full pseudocode and code appear in the accompanying package.
+**Algorithm 7.3 (Corner-locus checker for two monomials).** Given weights `a, b`, return `a == b` (Theorem 6.1). Cross-check against the brute-force search over the two index pairs of `Fin 2` for the corner predicate.
 
-**6.1 Corner detection.** Given weights `w : ι → ℝ`, compute `m = min_i w(i)` and the
-set `A = { i : w(i) = m }` (with a tolerance for floating point). Then
-`AttainedAtLeastTwice w ↔ |A| ≥ 2`. Complexity `O(|ι|)` time, `O(1)` extra space (two
-passes or one pass with running count of ties).
+## 7bis. Worked examples over the 3-adic rationals
 
-**6.2 Tropical evaluation and product.** Tropical evaluation is a single min over `|ι|`
-affine forms, `O(n · |ι|)`. The tropical product expands to `|ι| · |κ|` monomials whose
-coefficients and exponents are the pairwise sums; evaluating the product directly versus
-summing the factor evaluations gives a runtime witness of Theorem 4.3.
+To make the theorems concrete we instantiate `K = ℚ`, `Γ = ℤ ∪ {∞}`, and `v = v_3`, the 3-adic valuation. Recall `v_3(n)` counts factors of `3`, so `v_3(3) = 1`, `v_3(9) = 2`, `v_3(5) = 0`, `v_3(0) = ∞`.
 
-**6.3 Hypersurface membership and the union law.** To test `x ∈ V(P ⊙ Q)`, one may
-either expand the product (cost `O(n · |ι| · |κ|)`) and run corner detection, or invoke
-the union law and test `x ∈ V(P)` *or* `x ∈ V(Q)` separately (cost `O(n(|ι| + |κ|))`).
-The union law is therefore not only structurally clarifying but computationally cheaper.
+**Example A (multiplicativity, exact).** Take `x = 9`, `y = 3`. Then `v(x·y) = v_3(27) = 3`, while `v(x) + v(y) = 2 + 1 = 3`. The tropical product `tropVal x ⊙ tropVal y = trop(3)` equals `tropVal(x·y)`. As guaranteed by Theorem 4.3, there is no defect; this holds for every choice of `x, y`.
 
-## 7. Applications
+**Example B (additivity off the tie set).** Take `x = 3` (`v = 1`) and `y = 9` (`v = 2`), so `v x ≠ v y`. Then `x + y = 12 = 4·3`, giving `v(x+y) = 1 = min(1, 2)`. The sub-additivity inequality of Theorem 4.5 is an equality here, exactly as Theorem 3.1 (resp. its tropical form 4.6) predicts: away from ties, the lower-order term dominates and the sum inherits its valuation.
 
-- **Tropical Bézout.** The union law plus min-plus multiplicativity reduce the
-  intersection of plane tropical curves to the overlay of their corner loci; combined
-  with a lattice-index count of crossings, the number of stable intersection points of
-  curves of degrees `d₁, d₂` is `d₁ · d₂`.
-- **Amoeba degeneration.** Scale equivariance formalizes the limiting shape of amoebas
-  under `v_t = t·v`: the normalized tropical skeleton is the fixed point of the
-  rescaling family, not a moving target.
-- **Solving systems over valued fields.** Kapranov's easy direction constrains the
-  possible valuations of solutions of polynomial systems to the corner loci, a
-  combinatorial pre-filter for root location (the lifting converse refines this to
-  exactness).
+**Example C (a defect on the tie set).** Take `x = 3`, `y = 6`, both with `v = 1` (a tie). Then `x + y = 9`, so `v(x+y) = 2 > 1 = min(v x, v y)`. This is a genuine additive defect: the leading 3-parts (`3·1` and `3·2`) summed to `3·3`, raising the order. By Theorem 3.2 the defect *forces* the tie `v x = v y`, which it does. By Theorem 6.2 the weight family `![1, 1]` lies on the corner locus — and indeed both indices of `![1,1]` achieve the minimum `1`.
 
-## 8. Discussion
+**Example D (the maximal defect / no ring homomorphism).** Take `x = 3`, `y = −3`. Both have `v = 1` (a tie), but `x + y = 0`, so `v(x+y) = ∞`. The defect is now infinite, the largest possible: this is Proposition 5.1 in action and the precise reason `tropVal` cannot be promoted to an additive (ring) homomorphism. Consistent with Theorem 3.2, the defect sits on the tie set.
 
-The unifying observation is that one predicate, "the minimum is attained at least
-twice," is the carrier of all structure here. Winner-takes-all says cancellation in a
-valued sum requires a tie; Kapranov's easy direction reads that off geometrically;
-scale equivariance says ties are invariant under positive rescaling; and the union law
-says a tie in a separated sum is a tie in one summand. The corner locus is, literally,
-the *tie set*, and every operation on tropical hypersurfaces is an operation on tie
-sets. The valuation map is consequently a tropical semiring "morphism up to ties": it
-is exactly multiplicative (`v(xy) = v(x)+v(y)`) and exactly additive
-(`v(x+y) = min(v(x), v(y))`) except on the diagonal tie locus `{v(x) = v(y)}`, where the
-ultrametric inequality may be strict — and that defect locus is precisely the corner
-phenomenon driving Kapranov's theorem.
+**Example E (a tie without a defect).** Take `x = 3`, `y = −6`, both `v = 1` (a tie). Then `x + y = −3`, `v(x+y) = 1 = min(1, 1)`: no defect, even though we are on the tie set. This shows the containment of Theorem 3.2 (defect ⊆ tie) is *strict*: ties are necessary but not sufficient for a defect. The corner-locus membership of `![1,1]` still holds (it depends only on the tie), illustrating that the corner locus is the *closure* of the defect phenomenon, capturing where cancellation is *possible*.
 
-## 9. Future work
+These five examples exhaust the qualitative cases and are reproduced, with assertions, in the accompanying `demo.py`.
 
-- **Kapranov's hard direction.** Lift a corner-locus point to a classical root via a
-  Newton-polygon / Hensel argument; formalize the univariate case first, where the
-  Newton polygon is the lower convex hull of `{(i, v(c_i))}`.
-- **The limit as a genuine limit.** Upgrade scale equivariance to Hausdorff
-  convergence of normalized amoebas to the tropical variety on compact windows.
-- **Stable intersection / full Bézout.** Glue the union law to a lattice mixed-index
-  count to obtain an end-to-end tropical Bézout theorem connecting the analytic
-  (min-plus) and combinatorial (Newton polytope) descriptions.
-- **Balancing as conservation.** Show the primitive edge directions at a corner,
-  weighted by lattice length, sum to zero, exhibiting the tie set as the vertex set of
-  a balanced fan.
-- **Bundled tropical morphism.** Package `x ↦ v(x)` as a `Tropical`-valued semiring
-  homomorphism-up-to-defect, with defect locus equal to the diagonal tie set, so that
-  classical algebraic identities transport automatically to tropical inequalities.
+## 8. Applications
 
-## 10. Conclusion
+- **Tropicalization of varieties.** The monoid homomorphism `tropValMonoidHom` transports every multiplicative identity in `K` into a tropical identity. Combined with the companion `eval_mul` and `tropRoot_mul_iff` (the tropical hypersurface of a product is the union of hypersurfaces), this gives the multiplicative scaffolding for tropical Bézout-type degree counts: factorizations become Minkowski sums of Newton polytopes.
+- **Cancellation diagnostics.** Theorems 3.1–3.2 give an exact criterion for when summation in a valued field loses precision (a valuation jump): precisely on ties. This is the algebraic analogue of catastrophic cancellation in floating point, with an exact predictor.
+- **Scale-invariant limits.** Because corner membership depends only on which weights tie, rescaling `v ↦ t·v` (`t > 0`) preserves the corner locus. The "valuation → ∞" limit of the amoeba is therefore the fixed shape already shared by the whole family, not an analytic limit of moving sets.
 
-We have given a fully verified treatment of the easy direction of the Fundamental
-Theorem of Tropical Geometry and of the functoriality of the corner locus: it is
-invariant under positive rescaling and behaves as a "support of a sum of corners"
-under tropical multiplication, yielding the union law `V(P ⊙ Q) = V(P) ∪ V(Q)`. The
-recurring engine is the ultrametric principle that cancellation forces a tie, and the
-recurring object is the tie set itself, organized into tropical geometry. These results
-clear the analytic obstacles on both the Bézout and limit sides, leaving the lifting
-converse of Kapranov as the principal open frontier.
+## 9. Discussion
+
+The conceptual payoff is the reframing of a valuation as a *defective homomorphism whose defect is the geometry*. The multiplicative half is exact and bundled; the additive half is an inequality whose failures are confined to, and characterize, the tie set; and the tie set is, for two monomials, literally a tropical corner. This dissolves the apparent gap between the algebraic and combinatorial descriptions of tropicalization: they are two readings of the same defect.
+
+A methodological remark: the proofs are uniformly *one-step* reductions to a single underlying fact (Lemma 2.2 / `AddValuation.map_add_eq_of_lt_left`). Tropicalizing through `trop` turns each valuation axiom into a tropical-semiring (in)equality verbatim. The economy of the proofs is itself evidence that the packaging is the natural one.
+
+## 10. Future Directions
+
+(See the dedicated future-directions material in the package metadata.) The principal open targets are Kapranov's *hard* direction (surjectivity onto the corner locus via a Newton-polygon/Hensel lifting, starting from the univariate seed) and the *balancing condition* as a conservation law (the tie set that proves corner membership should carry the balanced-fan data for free). The morphism picture suggests three further programs: bundling the defect as an explicit `defect : K × K → Γ` cocycle; characterizing when the defect-locus containment of Theorem 3.2 is an equality; and extending `tropValMonoidHom` to a structured "morphism with controlled defect" abstraction reusable across valued-field constructions.
+
+## 11. Conclusion
+
+A non-Archimedean valuation is an exact tropical monoid homomorphism whose only additive imperfection lives precisely on the diagonal tie set, which is precisely the binary corner locus. Multiplication translates flawlessly; addition translates as a controlled inequality; and the controlled failures are the seeds of tropical geometry. *Morphism defect = corner locus.*
+
+## Appendix A. Formalization summary
+
+All statements are machine-checked. The principal declarations are:
+
+- `addValuation_add_eq_min_of_ne` — Theorem 3.1.
+- `addValuation_defect_imp_tie` — Theorem 3.2.
+- `tropVal`, `tropVal_one`, `tropVal_mul` — Definition 4.1, Theorems 4.2–4.3.
+- `tropValMonoidHom : K →* Tropical Γ` — Definition 4.4.
+- `tropVal_add_le`, `tropVal_add_eq_of_ne` — Theorems 4.5–4.6.
+- `attainedTwice_fin2_iff` — Theorem 6.1.
+- `addValuation_defect_imp_corner` — Theorem 6.2.
+
+The development depends only on the standard foundational axioms: propositional extensionality, the axiom of choice, and quotient soundness.
