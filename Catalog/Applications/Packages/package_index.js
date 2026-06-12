@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-12T09:34:18Z",
+    "domain": "Cryptography",
+    "exp_id": "c508c412",
+    "filename": "close_proofs_this_cycle_isolated_the_arithmetic_co.json",
+    "pkg_num": 18,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "One-Way Functions Are Computational, Not Information-Theoretic"
+  },
+  {
     "date": "2026-06-12T09:34:00Z",
     "domain": "Novelty",
     "exp_id": "1f5be36f",
     "filename": "the_current_formalization_establishes_the_structur.json",
     "pkg_num": 17,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6881600000000001,
     "title": "The Geometry of Consensus: Single-Peaked Preferences are Flat"
   },
   {
@@ -224,6 +234,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Fibonacci Divisibility Lattice: Faithful Arithmetic and the Rank of Apparition"
   },
+  "close_proofs_this_cycle_isolated_the_arithmetic_co.json": {
+    "domain": "Cryptography",
+    "exp_id": "c508c412",
+    "source_exp_ids": [
+      "d0a10181"
+    ],
+    "title": "One-Way Functions Are Computational, Not Information-Theoretic"
+  },
   "close_proofs_we_proved_that_the_biconjugate_satisf.json": {
     "domain": "Applications",
     "exp_id": "64c5b386",
@@ -334,7 +352,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T02:44:01Z",
       "domain": "Novelty",
-      "hue": 281,
+      "hue": 271,
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
       "primary_domain": "Bridges",
       "priority_score": 0.60229,
@@ -356,7 +374,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:38Z",
       "domain": "Novelty",
-      "hue": 91,
+      "hue": 95,
       "id": "close_proofs_arithmetic_mirror_symmetry_for_calabi",
       "primary_domain": "Bridges",
       "priority_score": 0.4038523076923077,
@@ -367,7 +385,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:55Z",
       "domain": "Applications",
-      "hue": 95,
+      "hue": 270,
       "id": "close_proofs_close_proofs_one_way_functions_existe",
       "primary_domain": "Bridges",
       "priority_score": 0.52037,
@@ -378,7 +396,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:26:56Z",
       "domain": "Computation",
-      "hue": 92,
+      "hue": 112,
       "id": "our_exists_revsim_of_surjective_proves_that_surjec",
       "primary_domain": "Computation",
       "priority_score": 0.65648,
@@ -389,7 +407,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:27:45Z",
       "domain": "Novelty",
-      "hue": 275,
+      "hue": 90,
       "id": "rigorous_formal_framework_for_holographic_proo",
       "primary_domain": "Bridges",
       "priority_score": 0.47824,
@@ -400,7 +418,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:03Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 271,
       "id": "algebraic_statistics_markov_bases_for_contingency_",
       "primary_domain": "Algebra",
       "priority_score": 0.63808,
@@ -411,7 +429,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:20Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 271,
       "id": "the_current_formalization_uses_an_abstract_dsepora",
       "primary_domain": "Algebra",
       "priority_score": 0.73536,
@@ -422,7 +440,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:04:43Z",
       "domain": "Cryptography",
-      "hue": 91,
+      "hue": 90,
       "id": "close_proofs_close_proofs_this_cycle_replaced_the_",
       "primary_domain": "Cryptography",
       "priority_score": 0.6270279310344827,
@@ -444,7 +462,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:05:26Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 92,
       "id": "the_current_framework_uses_a_fixed_novelty_thresho",
       "primary_domain": "Algebra",
       "priority_score": 0.5326478527607362,
@@ -455,7 +473,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:40:28Z",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 270,
       "id": "close_proofs_we_proved_that_the_biconjugate_satisf",
       "primary_domain": "Bridges",
       "priority_score": 0.5784016886543535,
@@ -466,7 +484,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T07:37:45Z",
       "domain": "Algebra",
-      "hue": 90,
+      "hue": 270,
       "id": "close_proofs_close_proofs_cobhams_theorem_1972_sta",
       "primary_domain": "Algebra",
       "priority_score": 0.6822099399599733,
@@ -477,7 +495,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T08:13:30Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 92,
       "id": "the_file_basiclean_establishes_a_fully_formal_axio",
       "primary_domain": "Bridges",
       "priority_score": 0.4599545454545455,
@@ -488,7 +506,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T08:13:58Z",
       "domain": "Novelty",
-      "hue": 275,
+      "hue": 271,
       "id": "close_proofs_close_proofs_this_cycle_added_catalog",
       "primary_domain": "Bridges",
       "priority_score": 0.7157600000000001,
@@ -502,10 +520,21 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "the_current_formalization_establishes_the_structur",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6881600000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Geometry of Consensus: Single-Peaked Preferences are Flat"
+    },
+    {
+      "date": "2026-06-12T09:34:18Z",
+      "domain": "Cryptography",
+      "hue": 272,
+      "id": "close_proofs_this_cycle_isolated_the_arithmetic_co",
+      "primary_domain": "Cryptography",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "dodecahedron",
+      "title": "One-Way Functions Are Computational, Not Information-Theoretic"
     }
   ]
 };
