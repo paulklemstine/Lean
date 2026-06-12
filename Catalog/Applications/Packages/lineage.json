@@ -7,7 +7,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T01:35:15Z",
-      "hue": 272
+      "hue": 270
     },
     {
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
@@ -16,7 +16,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T02:44:01Z",
-      "hue": 270
+      "hue": 90
     },
     {
       "id": "this_cycle_isolated_the_primitivity_layer_of_fibon",
@@ -34,7 +34,16 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T03:52:38Z",
-      "hue": 270
+      "hue": 91
+    },
+    {
+      "id": "close_proofs_close_proofs_one_way_functions_existe",
+      "title": "One-Way Functions: Existence, Inversion Capacity, and the Hardness Hierarchy",
+      "domain": "Applications",
+      "primary_domain": "Bridges",
+      "shape": "icosahedron",
+      "date": "2026-06-12T03:52:55Z",
+      "hue": 271
     }
   ],
   "edges": [],

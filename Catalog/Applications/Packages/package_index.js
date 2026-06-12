@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-12T03:52:55Z",
+    "domain": "Applications",
+    "exp_id": "5039f952",
+    "filename": "close_proofs_close_proofs_one_way_functions_existe.json",
+    "pkg_num": 5,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "One-Way Functions: Existence, Inversion Capacity, and the Hardness Hierarchy"
+  },
+  {
     "date": "2026-06-12T03:52:38Z",
     "domain": "Novelty",
     "exp_id": "f1cb7dfa",
     "filename": "close_proofs_arithmetic_mirror_symmetry_for_calabi.json",
     "pkg_num": 4,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4038523076923077,
     "title": "Close Proofs: Arithmetic Mirror Symmetry for Calabi-Yau"
   },
   {
@@ -54,6 +64,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Close Proofs: Arithmetic Mirror Symmetry for Calabi-Yau"
   },
+  "close_proofs_close_proofs_one_way_functions_existe.json": {
+    "domain": "Applications",
+    "exp_id": "5039f952",
+    "source_exp_ids": [
+      "7d85fa5d"
+    ],
+    "title": "One-Way Functions: Existence, Inversion Capacity, and the Hardness Hierarchy"
+  },
   "the_file_catalogapplicationscombinatorialspeciesle.json": {
     "domain": "Novelty",
     "exp_id": "0805a8b9",
@@ -89,7 +107,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T01:35:15Z",
       "domain": "Bridges",
-      "hue": 272,
+      "hue": 270,
       "id": "this_cycle_formalized_a_self_contained_fragment_of",
       "primary_domain": "Bridges",
       "priority_score": 0.4107094228460233,
@@ -100,7 +118,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T02:44:01Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 90,
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
       "primary_domain": "Bridges",
       "priority_score": 0.60229,
@@ -122,13 +140,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:38Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 91,
       "id": "close_proofs_arithmetic_mirror_symmetry_for_calabi",
+      "primary_domain": "Bridges",
+      "priority_score": 0.4038523076923077,
+      "quality": "partial",
+      "shape": "icosahedron",
+      "title": "Close Proofs: Arithmetic Mirror Symmetry for Calabi-Yau"
+    },
+    {
+      "date": "2026-06-12T03:52:55Z",
+      "domain": "Applications",
+      "hue": 271,
+      "id": "close_proofs_close_proofs_one_way_functions_existe",
       "primary_domain": "Bridges",
       "priority_score": null,
       "quality": "unrated",
       "shape": "icosahedron",
-      "title": "Close Proofs: Arithmetic Mirror Symmetry for Calabi-Yau"
+      "title": "One-Way Functions: Existence, Inversion Capacity, and the Hardness Hierarchy"
     }
   ]
 };
