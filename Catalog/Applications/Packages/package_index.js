@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-12T06:05:08Z",
+    "domain": "Algebra",
+    "exp_id": "352bb006",
+    "filename": "extend_the_integration_deficiency_framework_to_a_f.json",
+    "pkg_num": 11,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "Shannon Entropy on Finite Probability Distributions: A First-Principles Formalization"
+  },
+  {
     "date": "2026-06-12T06:04:43Z",
     "domain": "Cryptography",
     "exp_id": "166e1d18",
     "filename": "close_proofs_close_proofs_this_cycle_replaced_the_.json",
     "pkg_num": 10,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6270279310344827,
     "title": "The Fibonacci Divisibility Lattice: Faithful Arithmetic and the Rank of Apparition"
   },
   {
@@ -138,6 +148,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Fibonacci Divisibility Lattice: Faithful Arithmetic and the Rank of Apparition"
   },
+  "extend_the_integration_deficiency_framework_to_a_f.json": {
+    "domain": "Algebra",
+    "exp_id": "352bb006",
+    "source_exp_ids": [
+      "71ed406c"
+    ],
+    "title": "Shannon Entropy on Finite Probability Distributions: A First-Principles Formalization"
+  },
   "our_exists_revsim_of_surjective_proves_that_surjec.json": {
     "domain": "Computation",
     "exp_id": "3aabcb67",
@@ -208,7 +226,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T02:44:01Z",
       "domain": "Novelty",
-      "hue": 95,
+      "hue": 271,
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
       "primary_domain": "Bridges",
       "priority_score": 0.60229,
@@ -219,7 +237,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:51:59Z",
       "domain": "Algebra",
-      "hue": 91,
+      "hue": 275,
       "id": "this_cycle_isolated_the_primitivity_layer_of_fibon",
       "primary_domain": "Algebra",
       "priority_score": 0.66176,
@@ -230,7 +248,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:38Z",
       "domain": "Novelty",
-      "hue": 272,
+      "hue": 90,
       "id": "close_proofs_arithmetic_mirror_symmetry_for_calabi",
       "primary_domain": "Bridges",
       "priority_score": 0.4038523076923077,
@@ -241,7 +259,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:55Z",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 281,
       "id": "close_proofs_close_proofs_one_way_functions_existe",
       "primary_domain": "Bridges",
       "priority_score": 0.52037,
@@ -252,7 +270,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:26:56Z",
       "domain": "Computation",
-      "hue": 272,
+      "hue": 90,
       "id": "our_exists_revsim_of_surjective_proves_that_surjec",
       "primary_domain": "Computation",
       "priority_score": 0.65648,
@@ -274,7 +292,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:03Z",
       "domain": "Algebra",
-      "hue": 112,
+      "hue": 95,
       "id": "algebraic_statistics_markov_bases_for_contingency_",
       "primary_domain": "Algebra",
       "priority_score": 0.63808,
@@ -285,7 +303,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:20Z",
       "domain": "Algebra",
-      "hue": 90,
+      "hue": 271,
       "id": "the_current_formalization_uses_an_abstract_dsepora",
       "primary_domain": "Algebra",
       "priority_score": 0.73536,
@@ -296,13 +314,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:04:43Z",
       "domain": "Cryptography",
-      "hue": 90,
+      "hue": 270,
       "id": "close_proofs_close_proofs_this_cycle_replaced_the_",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6270279310344827,
+      "quality": "partial",
       "shape": "dodecahedron",
       "title": "The Fibonacci Divisibility Lattice: Faithful Arithmetic and the Rank of Apparition"
+    },
+    {
+      "date": "2026-06-12T06:05:08Z",
+      "domain": "Algebra",
+      "hue": 90,
+      "id": "extend_the_integration_deficiency_framework_to_a_f",
+      "primary_domain": "Algebra",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "tetrahedron",
+      "title": "Shannon Entropy on Finite Probability Distributions: A First-Principles Formalization"
     }
   ]
 };
