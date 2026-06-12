@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "5039f952",
     "filename": "close_proofs_close_proofs_one_way_functions_existe.json",
     "pkg_num": 5,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.52037,
     "title": "One-Way Functions: Existence, Inversion Capacity, and the Hardness Hierarchy"
   },
   {
@@ -154,8 +154,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "close_proofs_close_proofs_one_way_functions_existe",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.52037,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "One-Way Functions: Existence, Inversion Capacity, and the Hardness Hierarchy"
     }
