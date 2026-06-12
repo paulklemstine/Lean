@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-12T00:06:09.078480+00:00",
+  "last_updated": "2026-06-12T00:08:08.583068+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -23944,6 +23944,45 @@
       "theorem_count": 1425,
       "timestamp": "2026-06-12T00:06:08.730084+00:00",
       "title": "Close Proofs: Close Proofs: Emergent Spacetime from Quantum Entanglement"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.333,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 33,
+      "domain": "Applications",
+      "duration_seconds": 256.49509477615356,
+      "end_time": 1781222844.0074933,
+      "files_integrated": 4,
+      "job_id": "d0fd806b",
+      "outcome_quality": 0.4236000000000001,
+      "phase": "complete",
+      "phase_a_prompt_version": "v8",
+      "phase_b_prompt_version": "v1",
+      "phase_b_skipped": false,
+      "prompt_version": "v8",
+      "quality_breakdown": {
+        "actionability": 0.7,
+        "applications": 0.7,
+        "artifact_richness": 0.25,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7755,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.8593,
+        "novelty": 0.95,
+        "proof_depth": 0.8204,
+        "usefulness": 0.9102
+      },
+      "quality_score": 0.6945139641943734,
+      "sorry_count": 3,
+      "sorry_density": 0.001534526854219949,
+      "start_time": 1781222587.5123985,
+      "strategy_count": 0,
+      "theorem_count": 1955,
+      "timestamp": "2026-06-12T00:08:08.341253+00:00",
+      "title": "Close Proofs: Close Proofs: The current framework considers *static* observation sys"
     }
   ]
 }
