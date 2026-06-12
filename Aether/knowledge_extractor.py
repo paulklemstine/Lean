@@ -1506,8 +1506,10 @@ Research mode: {concept.research_mode}
 
                     # Store adversarial metadata
                     job.adversarial_result = adversarial_result
-                    primary_str = f"{adv_composite:.3f}" if adv_composite is not None else "?"
-                    print(f"[Adversarial] {agreement}: primary={primary_str} "
+                    primary_val = adversarial_result.get("primary_composite", composite)
+                    primary_str = f"{primary_val:.3f}" if primary_val is not None else "?"
+                    critic_str = f"{adv_composite:.3f}" if adv_composite is not None else "?"
+                    print(f"[Adversarial] {agreement}: primary={primary_str} critic={critic_str} "
                           f"adjudicated={adj_score:.3f} delta={delta:.3f}")
                 except Exception as ae:
                     print(f"[Adversarial] Failed (using primary only): {ae}")
