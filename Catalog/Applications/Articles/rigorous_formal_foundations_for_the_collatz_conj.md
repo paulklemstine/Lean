@@ -1,87 +1,195 @@
-# The Hidden Architecture of the World's Simplest Unsolved Problem
+# The Tightest Yardstick for the Most Stubborn Number Game
 
-## A Number Game That Humbles Mathematics
+## A simple rule, an impossible question
 
-Pick any positive whole number. If it's even, halve it. If it's odd, triple it and add one. Repeat. Do you always end up at 1?
+Pick any whole number. If it is even, cut it in half. If it is odd, triple it and
+add one. Now repeat. Forever, if you like.
 
-Try it with 7: 7 → 22 → 11 → 34 → 17 → 52 → 26 → 13 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1. Sixteen steps, a wild ride through peaks and valleys, but the number eventually spirals down to 1.
+Start with 6: you get 3, then 10, then 5, 16, 8, 4, 2, 1. Start with 7 and you
+wander up to 52 before crashing back down through 26, 13, 40, 20, 10, 5, 16, 8,
+4, 2, 1. Start with 27 and you embark on an epic 111-step journey that climbs all
+the way to 9,232 before it, too, finally tumbles to 1.
 
-Try 27. It takes 111 steps, climbing as high as 9,232 before finally collapsing. Every number anyone has ever tested — up to billions of trillions — eventually reaches 1. Yet no one has been able to prove that *every* number does.
+Every number anyone has ever tried — billions upon billions of them — eventually
+falls into the same trap: 4, 2, 1, 4, 2, 1, forever. The claim that this *always*
+happens, for *every* starting number, is the **Collatz conjecture**. It was posed
+by Lothar Collatz in 1937, and despite its kindergarten-simple statement, it has
+defeated every mathematician who has touched it. The great Paul Erdős said of it:
+"Mathematics may not be ready for such problems."
 
-This is the Collatz conjecture, proposed by Lothar Collatz in 1937. Paul Erdős, one of the twentieth century's greatest mathematicians, famously said that "mathematics may not be ready for such problems." Nearly ninety years later, it remains one of the most tantalizing open questions in mathematics — not because it requires exotic machinery, but because we genuinely do not understand why such a simple rule should always terminate.
+This article is about a small but genuinely sharp piece of progress: not a proof
+of the whole conjecture (no one has that), but the *best possible* version of one
+of the central inequalities that any future proof will almost certainly need. And
+it is a piece of progress that has been checked, line by line, with the
+uncompromising rigor of a machine-verified proof — every claim below is a theorem
+that has been formally established, with no hand-waving allowed.
 
-## Shifting Perspective: The Tropical Lens
+## Why the game tends downward
 
-What if the difficulty isn't in the arithmetic itself, but in how we look at it?
+The first thing to understand is *why* numbers tend to fall rather than rise. The
+two moves are wildly unequal in strength.
 
-A team of researchers has developed a new framework that reframes the Collatz problem through what mathematicians call *tropical geometry* — a world where multiplication becomes addition, and addition becomes taking the minimum. The key insight is deceptively simple: instead of tracking the number itself, track its *logarithm*.
+- An **even step** divides by 2. That is a big cut: it removes a full "bit" from
+  the number.
+- An **odd step** multiplies by 3 and adds 1. That roughly *triples* the number —
+  but here is the crucial subtlety.
 
-When you halve a number, its logarithm decreases by exactly log 2 — about 0.693. When you apply the odd step (triple and add one), the logarithm increases by at most log 4 — about 1.386. These are *translations* in logarithmic space: fixed shifts that don't depend on the number's size. The Collatz map, which looks chaotic in ordinary arithmetic, becomes something almost orderly in logarithmic coordinates.
+After an odd step, the result `3n + 1` is *always even*. Try it: 3 times any odd
+number is odd, and odd plus one is even. So every odd step is *immediately
+followed* by a forced even step. The triple is never allowed to stand on its own;
+it is instantly chopped in half. This is the **parity exclusion** principle: in a
+Collatz trajectory, **you can never have two odd steps in a row**.
 
-This is the tropical perspective. The word "tropical" honors the Brazilian mathematician Imre Simon, but the mathematics has spread far beyond its origins. In the tropical world, the minimum operation replaces addition, turning nonlinear optimization problems into linear ones. Applied to Collatz, it transforms an unpredictable dynamical system into something that resembles the *Bellman equation* of optimal control theory — the same mathematics used to plan rocket trajectories and train game-playing AI systems.
+That single observation already tells you something powerful. Because odd steps
+can never be consecutive, *at most half* of all the steps in any stretch of a
+trajectory can be odd steps. The odd steps are forced to space themselves out.
 
-## The Contraction Principle: Mathematics' Most Reliable Hammer
+## The tug-of-war, made precise
 
-The framework rests on one of the most powerful theorems in all of mathematics: the *Banach fixed-point theorem*, discovered by Stefan Banach in 1922. The theorem says: if you have a space of objects and a transformation that always brings any two objects closer together — a *contraction* — then there is exactly one object that the transformation leaves fixed. Moreover, starting from any object and repeatedly applying the transformation, you will converge to that fixed point.
+Now picture a stretch of the trajectory with `j` odd steps and `m` even steps.
+Each odd step multiplies (roughly) by 3; each even step divides by 2. So, ignoring
+the small "+1" nudges for a moment, the number gets multiplied by
 
-This theorem is the engine behind everything from GPS satellite positioning to weather prediction. It guarantees that iterative processes converge, provided the contraction condition holds.
+$$\frac{3^{j}}{2^{m}}.$$
 
-The researchers proved, rigorously and with machine-verified certainty, that the Collatz map, when recast as a *discounted Bellman operator* on bounded functions, is precisely such a contraction. The discount factor γ (any value strictly between 0 and 1) shrinks distances by a factor of γ at each step. The contraction property is not conjectural — it is a theorem.
+If this fraction is **less than 1**, the stretch shrinks the number. If it is
+bigger than 1, the stretch grows it. So the entire question of whether trajectories
+fall comes down to a deceptively clean inequality:
 
-This means there exists a unique *tropical value function* — a potential landscape over the positive integers — that the Bellman operator preserves. Starting from any initial guess (say, the zero function), Picard iteration converges to this value function geometrically fast. The value function encodes, at each integer, the optimal "cost" of reaching 1 under the discounted Collatz dynamics.
+$$3^{j} < 2^{m}\,?$$
 
-## Four Pillars of the Framework
+When does triple-`j` times lose to halve-`m` times?
 
-The work establishes four main results, each building on the last.
+## The crude answer, and why it wastes ground
 
-**First: Branch Geometry.** The even and odd branches of the Collatz map, lifted to logarithmic coordinates, are *isometries* — they preserve distances exactly. The even branch shifts left by log 2; the odd branch shifts right by log(3/2). This means neither branch individually distorts the geometry. The complexity of Collatz dynamics arises entirely from the *alternation* between branches, not from any individual step.
+There is an easy, almost childish argument that handles part of the question.
+Notice that `3 < 4`, and `4` is just `2²`. So `3^j < 4^j = 2^{2j}`. Therefore, if
+`2j < m` — that is, if the even steps outnumber the odd steps by more than two to
+one — then `3^j < 2^{2j} \le 2^m`, and the stretch contracts. This is the
+foundation result `pow3_lt_pow2_of_two_mul_lt`: *if `2j < m`, then `3^j < 2^m`*.
 
-**Second: Min-Plus Algebra.** The minimum of two quantities, when perturbed, changes by at most the maximum of the individual perturbations: |min(a,b) − min(c,d)| ≤ max(|a−c|, |b−d|). This seemingly elementary inequality is the algebraic cornerstone of tropical contraction. It ensures that the Bellman operator, which takes the minimum over branches, is nonexpansive — it doesn't stretch distances.
+In density terms: if the fraction of odd steps is **less than 1/2**, contraction is
+guaranteed.
 
-**Third: The Contraction Theorem.** Combining branch isometry with min-plus stability and discounting, the Bellman operator contracts the sup-norm distance between any two bounded functions by a factor of γ. This is the central technical achievement: a genuine contraction on a complete metric space, unlocking the full force of Banach's theorem.
+It works — but it is leaving a lot on the table. The crude trick pretends that `3`
+is as big as `4`. It is not. Three is smaller than four, and that gap is real
+mileage we are throwing away. The *true* break-even density — the exact point where
+`3^j` and `2^m` change places — is not 1/2 at all. It is a famous irrational
+number:
 
-**Fourth: The Reduction Architecture.** If logarithmic contraction holds with ratio c < 1 (meaning the potential drops by a definite fraction at each step), then arithmetic descent follows: the Collatz orbit of every sufficiently large number eventually decreases. Combined with a finite computational check for small numbers, this yields convergence to 1. The researchers formalized this entire logical chain — from log-contraction through arithmetic descent to orbit convergence — as a single, self-contained conditional theorem.
+$$\frac{\log 2}{\log 3} \approx 0.6309.$$
 
-## What This Proves — and What It Doesn't
+Between the crude 0.5 and the true 0.6309 lies a whole band of trajectory
+stretches that genuinely contract but that the crude argument cannot see. The work
+described here closes that gap exactly.
 
-Let us be precise. This work does *not* prove the Collatz conjecture. No one has. What it does is something arguably more valuable for the long-term assault on the problem: it identifies the *exact mathematical condition* that would suffice.
+## Turning multiplication into addition
 
-The conditional convergence theorem says: if you can find any accelerated Collatz operator that contracts logarithmic potentials by a ratio less than 1 above some finite threshold, and verify the finitely many small cases, then the conjecture is true. The framework converts the infinitary problem ("show all numbers reach 1") into two finite problems: (1) find the contraction ratio, and (2) check the threshold.
+The key move is one of the oldest and most beautiful ideas in mathematics: the
+**logarithm**, the tool that turns multiplication into addition and exponents into
+multiplication. John Napier introduced logarithms in 1614 precisely to tame
+unwieldy products; here they tame an unwieldy comparison of powers.
 
-The tropical value function, whose existence and uniqueness are unconditionally proved, is a concrete mathematical object that encodes the global structure of Collatz orbits. It is the natural "Lyapunov function" for the problem — the potential that, if shown to be strictly decreasing on average, would close the conjecture.
+Take logarithms of both sides of `3^j < 2^m`. Because the logarithm is *strictly
+increasing* — bigger inputs always give bigger outputs, with no exceptions — the
+inequality survives the translation intact, and the exponents come down to ground
+level:
 
-## The Arithmetic Engine
+$$3^{j} < 2^{m} \quad\Longleftrightarrow\quad j\,\log 3 < m\,\log 2.$$
 
-Underpinning the tropical theory is a collection of exact arithmetic results. The researchers proved that when a Collatz odd step produces a number divisible by 4, the quotient (3n+1)/4 is strictly less than the original number for all n ≥ 2. They showed that numbers congruent to 1 modulo 4 always trigger this favorable case. They established that the accelerated odd map (3n+1)/2 grows by at most a factor of 2 — a coarse but universal bound.
+This is the heart of the whole story, the theorem `pow3_lt_pow2_iff_log`. It says
+the awkward comparison of giant powers is **exactly, perfectly equivalent** to a
+simple straight-line inequality. Not "approximately," not "in most cases" —
+*exactly*, in both directions. The same equivalence holds whether you read `3^j`
+and `2^m` as real numbers or as plain whole numbers (`nat_pow3_lt_pow2_iff_log`).
 
-These arithmetic lemmas are individually elementary, but their formalization is meticulous. Each one is proved not with hand-waving but with machine-checked logical deduction from the axioms of arithmetic. Together, they constitute the "engine room" of the tropical framework: the concrete inequalities that feed into the abstract contraction theory.
+Once contraction is phrased as a straight-line inequality, the optimal density
+threshold simply *falls out*. Rearrange `j \log 3 < m \log 2` and you get
 
-## Two Steps Forward, One Step Back
+$$j \cdot \frac{\log 3}{\log 2} < m.$$
 
-Perhaps the most illuminating result concerns the *two-step dynamics*. For any odd number n, two steps of the Collatz map produce (3n+1)/2, and the logarithmic potential satisfies:
+That constant `\log 3 / \log 2` is `log₂ 3 ≈ 1.585`; its reciprocal is the magic
+`0.6309`. And so we arrive at the **sharp contraction criterion**, the theorem
+`pow3_lt_pow2_of_density`:
 
-> log((3n+1)/2) ≤ log(n) + log(2)
+> If `j · (log 3 / log 2) < m`, then `3^j < 2^m`.
 
-One odd step pushes the potential up; the mandatory even step that follows pulls it back down. The net effect of an odd-then-even pair is at most a log 2 increase. Compare this with the even branch alone, which decreases the potential by exactly log 2. The dynamics of Collatz are a tug-of-war between growth (odd steps) and contraction (even steps), and the tropical framework makes this tension quantitatively precise.
+This is the *best possible* threshold. You cannot push it any further, because at
+exactly that ratio the two powers are equal, and beyond it the multiplication wins
+and the stretch grows.
 
-The key question — the one that would settle the conjecture — is whether the even steps win on average. The parity exclusion principle (odd steps always produce even numbers, so consecutive odd steps are impossible) guarantees that even steps are at least as frequent as odd steps. But "at least as frequent" is not quite enough. The threshold is log 2 / log 3 ≈ 0.6309: if the fraction of odd steps stays below this critical density, contraction is guaranteed.
+## Proving that sharper really is sharper
 
-## A Bridge to the Future
+A new criterion is only worth having if it genuinely does more than the old one.
+Two clean results pin this down.
 
-The tropical Collatz framework does not stand alone. It connects to a constellation of mathematical ideas: dynamic programming and optimal control (through the Bellman equation), metric geometry (through contraction mappings), combinatorics (through parity exclusion), and number theory (through residue class analysis).
+First, **the new criterion never loses ground the old one held**. Whenever the
+crude condition `2j < m` is satisfied, the sharp condition is satisfied too. The
+reason is exactly the inequality `\log 3 < 2 \log 2` — which is just `3 < 4` viewed
+through the logarithm. This is the theorem `log_of_two_mul_lt`. Anything the old
+argument could prove, the new one proves as well.
 
-Most intriguingly, it opens a pathway to *spectral analysis*. The value function, as a fixed point of a linear-like operator, can in principle be decomposed into eigenmodes. The dominant eigenmode would reveal the asymptotic contraction rate of Collatz orbits — precisely the quantity needed to settle the conjecture.
+Second, **the new criterion genuinely catches more**. There is an explicit case
+where the sharp test fires but the crude one fails: take `j = 1` and `m = 2`. Here
+`3^1 = 3 < 4 = 2^2`, so the stretch really does contract — and the logarithmic test
+correctly says so, because `1 \cdot \log 3 < 2 \cdot \log 2`. But the crude test
+asks "is `2 \times 1 < 2`?" and the answer is no. The single most basic contracting
+stretch in the whole theory — one triple swallowed by two halvings — is invisible
+to the crude argument and visible to the sharp one. This separation is the theorem
+`sharp_threshold_strictly_stronger`. The sharp criterion is *strictly* better, and
+`(1, 2)` is the witness.
 
-The work also suggests a deep structural parallel with *Goodstein sequences*, another family of arithmetic iterations that always terminate despite appearing to grow without bound. Goodstein's theorem, proved by Reuben Goodstein in 1944, is true but unprovable in ordinary Peano arithmetic — it requires transfinite induction up to the ordinal ε₀. Whether the Collatz conjecture shares this logical character — true but unprovable in standard arithmetic — remains one of the most fascinating open questions in mathematical logic.
+Finally, to be sure we have located the threshold correctly, the constant itself is
+pinned down: `\log 3 / \log 2` lies strictly between `1` and `2` (the result
+`log3_div_log2_mem_Ioo`). It is above `1` — so you always need more halvings than
+triplings, never fewer — and below `2` — so you never need a full two-to-one
+margin. The true threshold lives in exactly the band the crude argument could not
+reach.
 
-## The Certainty of Uncertainty
+## What this does *not* do — told honestly
 
-What makes this work distinctive is not just its mathematical content but its *epistemic character*. Every theorem is machine-verified: checked not by human referees who might overlook an error, but by a formal proof assistant that mechanically validates each logical step. The conditional convergence theorem, the contraction mapping result, the branch isometries — all are established with a level of certainty that traditional mathematical publishing cannot match.
+It would be dishonest to suggest this resolves the Collatz conjecture. It does not,
+and the work is scrupulous about saying where the wall still stands.
 
-This matters because the Collatz conjecture has attracted more than its share of flawed proof attempts. The tropical framework does not claim to have solved the problem. It claims something more modest and more durable: here is the precise mathematical structure you need to exploit, here is the exact condition you need to verify, and here is a machine-checked proof that this condition suffices.
+Everything above is about the *idealized* multiplier `3^j / 2^m`. The real Collatz
+map carries that pesky "+1" at every odd step. Over a long trajectory those little
+additions accumulate into a geometric error term. For large starting numbers the
+error becomes negligible and segment-contraction should translate into genuine
+orbit-contraction — but proving that cleanly is a separate and harder problem. It
+is recorded openly as a conjecture (the file's single deliberate `sorry`), never
+disguised as a theorem.
 
-The world's simplest unsolved problem remains unsolved. But we now have a clearer map of the territory — a rigorous architectural blueprint for what a proof must look like. The tropical lens reveals that behind the apparent chaos of 3n+1 lies a contraction, waiting to be made strict.
+This is, in a sense, the real value of the work. It pins down *exactly* where the
+difficulty lives. The power arithmetic — the comparison of `3^j` against `2^m` — is
+now optimal; there is nothing more to extract there. The remaining mystery of
+Collatz is *not* in the exponents. It is in controlling those small additive
+nudges, and in the unpredictable way the density of odd steps fluctuates from one
+starting number to the next. Parity exclusion guarantees the density never exceeds
+1/2 over any segment — comfortably under the 0.6309 threshold — so *locally*,
+contraction is assured. The conjecture is hard because *globally*, the growth
+phases depend on the input in ways no one has been able to bound.
 
----
+## The bigger picture
 
-*The theorems described in this article are formalized in `Catalog/Computation/CollatzTropical.lean` and `Catalog/Computation/CollatzTropicalContraction.lean`.*
+Why does a near-trivial-looking rule resist the full force of modern mathematics?
+The honest answer is that the Collatz map is a tiny window onto computation itself.
+A generalization of these "triple-or-halve" rules — letting the multipliers and
+divisors vary by remainder class — was shown by John Conway to be **Turing
+complete**: such systems can, in principle, simulate any computer program at all.
+That means deciding the long-term fate of an arbitrary generalized Collatz rule is
+*undecidable* — no algorithm can do it in general. The original Collatz map is a
+single, very special point in that universe, and we simply do not know whether it
+sits on the tame side or the wild side of the line.
+
+That is what makes a sharp, fully-verified inequality worth celebrating even
+without a final proof. In a problem where intuition has repeatedly misled the best
+minds for almost a century, having one piece of the puzzle nailed down to its exact
+optimal form — with every step checked and nothing swept under the rug — is real
+ground gained. The crude estimate said "less than half the steps may be odd." The
+sharp result says: "up to 63% may be odd, and that is the precise, unimprovable
+boundary." Between those two numbers lived a whole region of the problem. Now it is
+mapped.
+
+The game of 3, halve, repeat keeps its biggest secret. But we now hold the tightest
+possible yardstick for measuring when it pulls a number downward — and we know, to
+the digit, exactly where that yardstick runs out.

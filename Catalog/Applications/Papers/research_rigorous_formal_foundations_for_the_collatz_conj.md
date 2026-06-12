@@ -1,351 +1,394 @@
-# Tropical Contraction Theory for the Collatz Iteration: A Formally Verified Framework
+# Rigorous Formal Foundations for Collatz Contraction: The Sharp Logarithmic Threshold
 
 ## Abstract
 
-We develop a rigorous tropical (min-plus) contraction framework for the Collatz iteration, lifting the standard map $n \mapsto n/2$ (even) or $n \mapsto 3n+1$ (odd) to logarithmic coordinates where it becomes a discounted Bellman operator on the complete metric space of bounded functions $\mathbb{N} \to_b \mathbb{R}$. We prove that both Collatz branches are isometries in log-coordinates, that the min-plus envelope is nonexpansive, and that discounting yields a genuine contraction mapping with factor $\gamma < 1$. By the Banach fixed-point theorem, the operator admits a unique fixed point — the tropical value function — and Picard iteration converges to it geometrically. We establish a conditional convergence architecture: logarithmic contraction with ratio $c < 1$ implies strict arithmetic descent, which combined with finite verification yields convergence of all orbits to 1. All results are machine-verified in Lean 4 with Mathlib.
+The Collatz map sends an even number `n` to `n/2` and an odd number `n` to
+`3n + 1`. The Collatz conjecture asserts that iterating this map from any positive
+integer eventually reaches `1`. A standard route toward such a result is a
+*density argument*: over a trajectory segment containing `j` odd ("multiply")
+steps and `m` even ("halve") steps, the segment contracts in size precisely when
+`3^j < 2^m`. The classical combinatorial treatment proves this under the
+suboptimal hypothesis `2j < m` (odd-step density below `1/2`), exploiting only the
+crude bound `3 < 4 = 2^2`. We sharpen this to the *optimal* threshold. Our central
+result is an **exact logarithmic characterization**: for natural numbers `j, m`,
 
-**Keywords:** Collatz conjecture, tropical geometry, Bellman equation, contraction mapping, formal verification, dynamical systems
+$$3^{j} < 2^{m} \iff j \log 3 < m \log 2,$$
+
+valid in both `\mathbb{R}` and `\mathbb{N}`. From it we derive the sharp
+contraction criterion — odd-step density below `\log 2 / \log 3 \approx 0.6309`
+forces contraction — and prove it *strictly dominates* the classical bound: every
+segment captured by `2j < m` is captured by the logarithmic criterion (via
+`\log 3 < 2 \log 2`), while the explicit pair `(j, m) = (1, 2)` is captured by the
+sharp criterion and not the crude one. We locate the threshold constant
+`\log 3 / \log 2 = \log_2 3` strictly in the open interval `(1, 2)`. We are careful
+to delimit what remains open: lifting *segment* contraction `3^j < 2^m` to *orbit*
+contraction `T^{[k]}(n) < n` is obstructed by the additive `+1` accrued at each odd
+step, and is recorded as an explicit conjecture rather than a theorem. All results
+described here have been formally verified in the Lean 4 proof assistant on top of
+Mathlib; this paper presents their mathematical content and proof sketches.
+
+**Keywords:** Collatz conjecture, density contraction, parity exclusion,
+logarithmic threshold, formal verification, `3x+1` problem.
 
 ---
 
 ## 1. Introduction
 
-The Collatz conjecture asserts that the iteration
-$$
-T(n) = \begin{cases} n/2 & \text{if } n \equiv 0 \pmod{2} \\ 3n+1 & \text{if } n \equiv 1 \pmod{2} \end{cases}
-$$
-eventually reaches 1 for every positive integer $n$. Despite extensive computational verification (up to $\sim 10^{20}$) and partial theoretical results — notably Terras (1976) on density-one convergence and Tao (2019) on almost-all convergence in a logarithmic density sense — the conjecture remains open.
+The Collatz conjecture (also the `3x+1` problem, Syracuse problem, or Ulam
+conjecture) is among the most notorious open problems in elementary number theory.
+Define the **Collatz map** `T : \mathbb{N} \to \mathbb{N}` by
 
-This paper develops a new structural framework based on tropical (min-plus) algebra and the Banach contraction principle. The central observation is that in logarithmic coordinates, the Collatz branches become *isometric translations*, and the dynamics of choosing between branches can be encoded as a *min-plus Bellman operator*. With discounting, this operator contracts the sup-norm, yielding a unique fixed point by Banach's theorem.
+$$T(n) = \begin{cases} n/2 & n \text{ even},\\ 3n + 1 & n \text{ odd}. \end{cases}$$
 
-The framework produces a clean conditional reduction: if a logarithmic contraction condition holds above a finite threshold, the Collatz conjecture follows. All results are formalized in Lean 4.
+The conjecture states that for every `n \ge 1` there is some `k` with
+`T^{[k]}(n) = 1`. Despite enormous computational verification (every `n` up to
+`2^{68}` and beyond) and deep analytic progress — notably Tao's 2019 result that
+almost all orbits attain *almost bounded* values — the full conjecture remains
+open, and is widely believed to be extraordinarily hard, possibly independent of
+standard axiom systems.
 
-### 1.1 Overview of Results
+A recurring strategy is the **density / contraction heuristic**. Consider a
+trajectory segment that performs `j` odd steps and `m` even steps. Each odd step
+multiplies the value by approximately `3`; each even step divides by `2`. Up to a
+lower-order additive correction, the value is scaled by `3^j / 2^m`. The segment is
+*contractive* — its endpoint smaller than its start — when this ratio is below `1`,
+i.e. when
 
-The results are organized across two formal modules:
+$$3^{j} < 2^{m}. \tag{$\star$}$$
 
-- **`Catalog/Computation/CollatzTropical.lean`**: Collatz map definitions, arithmetic contraction lemmas, logarithmic branch analysis, conditional convergence theorems, and the architectural reduction from log-contraction to orbit convergence.
-- **`Catalog/Computation/CollatzTropicalContraction.lean`**: Branch isometries, min-plus contraction algebra, Bellman operator construction on $\ell^\infty(\mathbb{N})$, contraction mapping property, fixed-point existence/uniqueness, and Picard iteration convergence.
+The fundamental structural constraint enabling such arguments is **parity
+exclusion**: if `n` is odd then `T(n) = 3n + 1` is even, so two odd steps can never
+occur consecutively. Consequently the odd-step density over any segment of length
+`k` is at most `\lceil k/2 \rceil / k \to 1/2`.
 
-### 1.2 Related Work
+The naive arithmetic resolution of `($\star$)` proves it under `2j < m`, using only
+`3 < 4 = 2^2`:
 
-**Terras (1976)** showed that a density-one set of integers eventually reaches a value smaller than their starting point. **Korec (1994)** extended this to show orbits grow slower than $n^c$ for any $c > \log_2 3$. **Tao (2019)** proved that almost all Collatz orbits attain almost-bounded values, using logarithmic density and entropy methods. **Conway (1972)** showed that generalized Collatz systems are Turing-complete, implying the conjecture cannot be resolved by purely local methods.
+$$3^{j} < 4^{j} = 2^{2j} \le 2^{m}.$$
 
-Our framework complements these by providing an *operator-theoretic* structure: rather than analyzing individual orbits, we study the Collatz dynamics as a contraction on function space.
+This corresponds to the rational threshold `1/2`. But the *exact* break-even density
+for `($\star$)` is `\log 2 / \log 3 \approx 0.6309`, strictly larger than `1/2`.
+The interval `(1/2,\, \log 2/\log 3)` contains genuinely contractive segments that
+the naive bound cannot certify. This paper closes that gap optimally.
 
----
+### 1.1 Contributions
 
-## 2. Definitions and Basic Properties
-
-### 2.1 The Collatz Map
-
-We define the standard Collatz map and its accelerated variant:
-
-**Definition 2.1** (Collatz Map). For $n \in \mathbb{N}$,
-$$T(n) = \begin{cases} n/2 & n \equiv 0 \pmod{2} \\ 3n+1 & n \equiv 1 \pmod{2} \end{cases}$$
-
-**Definition 2.2** (Accelerated Odd Map). $T_{\text{odd}}(n) = \lfloor(3n+1)/2\rfloor$.
-
-See `CollatzTropical.collatz` and `CollatzTropical.collatzOdd` in `Catalog/Computation/CollatzTropical.lean`.
-
-**Theorem 2.3** (Fundamental Cycle). The sequence $1 \to 4 \to 2 \to 1$ is a 3-cycle of $T$, and 1 is not a fixed point.
-
-*Formal reference:* `collatz_cycle` in `Catalog/Computation/CollatzTropical.lean`.
-
-### 2.2 Logarithmic Potential
-
-**Definition 2.4** (Log-Potential). The *tropical coordinate* of $n$ is $\phi(n) = \log n$.
-
-See `CollatzTropical.logPotential` in `Catalog/Computation/CollatzTropical.lean`.
-
-### 2.3 Branch Maps in Log-Coordinates
-
-**Definition 2.5** (Branch Maps).
-- Even branch: $\beta_E(x) = x - \log 2$
-- Odd branch: $\beta_O(x) = x + \log 3 - \log 2$
-
-See `CollatzTropicalContraction.branchEven` and `CollatzTropicalContraction.branchOdd` in `Catalog/Computation/CollatzTropicalContraction.lean`.
+1. **Exact logarithmic characterization** (`pow3_lt_pow2_iff_log`,
+   `nat_pow3_lt_pow2_iff_log`): `($\star$)` is *equivalent* to the affine inequality
+   `j \log 3 < m \log 2`, in both `\mathbb{R}` and `\mathbb{N}`.
+2. **Sharp contraction criterion** (`pow3_lt_pow2_of_density`): odd-step density
+   below `\log 2 / \log 3` forces `($\star$)`.
+3. **Strict domination** (`log_of_two_mul_lt`, `sharp_threshold_strictly_stronger`):
+   the criterion contains the naive bound and strictly exceeds it, with explicit
+   witness `(1, 2)`.
+4. **Threshold localization** (`log3_div_log2_mem_Ioo`): `\log 3/\log 2 \in (1,2)`.
+5. **Honest delimitation** (`sharp_orbit_contraction_conjecture`): the obstruction to
+   orbit-level contraction is isolated as the additive error of the affine map.
 
 ---
 
-## 3. Branch Isometry and Nonexpansiveness
+## 2. Preliminaries and Definitions
 
-### 3.1 Isometry of Individual Branches
+We work over the natural numbers `\mathbb{N}` and the reals `\mathbb{R}`. All
+logarithms are natural logarithms `\log = \ln`.
 
-**Theorem 3.1** (Branch Isometry). Both Collatz branches are isometries in log-coordinates:
-$$d(\beta_E(x), \beta_E(y)) = d(x, y), \quad d(\beta_O(x), \beta_O(y)) = d(x, y)$$
+**Definition 2.1 (Collatz map).**
+`T(n) = n/2` if `n` is even, and `T(n) = 3n + 1` if `n` is odd. (In Lean,
+`T n = if n % 2 = 0 then n / 2 else 3 * n + 1`.)
 
-*Proof sketch.* Both branches are translations by constants ($-\log 2$ and $\log(3/2)$ respectively). Translations are isometries in any normed space. $\square$
+**Definition 2.2 (Shortcut map).**
+For odd `n`, since `3n + 1` is even, the *shortcut* `T_{\mathrm{sc}}(n) = (3n+1)/2`
+equals `T(T(n))`. This folds each mandatory even step into the preceding odd step.
 
-*Formal reference:* `collatz_branchEven_isometry` and `collatz_branchOdd_isometry` in `Catalog/Computation/CollatzTropicalContraction.lean`.
+**Definition 2.3 (Orbit parity and odd count).**
+For a start value `n`, define `\mathrm{orbitParity}(n, i) = T^{[i]}(n) \bmod 2`, and
+the odd-position count over the first `k` steps,
+`\mathrm{oddCount}(n,k) = \#\{ i < k : T^{[i]}(n) \text{ odd}\}.`
 
-**Corollary 3.2** (Nonexpansiveness). For any branch $b \in \{E, O\}$ and any $x, y \in \mathbb{R}$:
-$$d(\beta_b(x), \beta_b(y)) \leq d(x, y)$$
+**Definition 2.4 (Segment data).**
+A trajectory segment of length `k = j + m` performs `j` odd steps and `m` even
+steps. Its idealized multiplier (ignoring additive corrections) is `3^j / 2^m`.
 
-*Formal reference:* `collatz_branch_nonexpansive` in `Catalog/Computation/CollatzTropicalContraction.lean`.
+We rely on the following established foundations from the parity-contraction layer.
 
-### 3.2 Logarithmic Branch Analysis
+**Proposition 2.5 (Parity exclusion).** If `n` is odd, `T(n)` is even. Equivalently,
+no two consecutive trajectory positions are both odd.
+*Proof.* `3n + 1` with `n` odd: write `n = 2t+1`, then `3n+1 = 6t+4 = 2(3t+2)`. ∎
 
-**Theorem 3.3** (Even Branch Identity). For $n \geq 2$ even:
-$$\phi(T(n)) = \phi(n) - \log 2$$
+**Proposition 2.6 (Density bound).** For all `n, k`,
+`\mathrm{oddCount}(n,k) \le \lceil k/2 \rceil = (k+1)/2` (integer division).
+*Proof.* Strong induction on `k`. Parity exclusion implies that whenever position
+`i` is odd, position `i+1` is even; hence odd positions never pair up, capping the
+count at `\lceil k/2 \rceil`. ∎
 
-This is *exact*, not an inequality.
+**Proposition 2.7 (Naive power comparison).** If `1 \le j` and `2j < m`, then
+`3^j < 2^m`.
+*Proof.* `3^j \le 4^j = (2^2)^j = 2^{2j} < 2^m`. ∎
 
-*Formal reference:* `collatz_log_even` in `Catalog/Computation/CollatzTropical.lean`.
-
-**Theorem 3.4** (Odd Branch Majorization). For $n \geq 1$ odd:
-$$\phi(T(n)) \leq \phi(n) + \log 4$$
-
-*Formal reference:* `collatz_log_odd_upper_coarse` in `Catalog/Computation/CollatzTropical.lean`.
-
-**Theorem 3.5** (Two-Step Bound). For $n \geq 1$ odd:
-$$\phi(T(T(n))) \leq \phi(n) + \log 2$$
-
-*Proof sketch.* Two Collatz steps from an odd number yield $(3n+1)/2 \leq 2n$. Taking logarithms: $\log((3n+1)/2) \leq \log(2n) = \log n + \log 2$. $\square$
-
-*Formal reference:* `collatz_two_step_log_bound` in `Catalog/Computation/CollatzTropical.lean`.
-
----
-
-## 4. Arithmetic Contraction Lemmas
-
-### 4.1 The 4-Divisibility Contraction
-
-**Theorem 4.1** (Strict Contraction under 4-Divisibility). For $n \geq 2$, if $4 \mid (3n+1)$, then $(3n+1)/4 < n$.
-
-*Formal reference:* `odd_branch_contracts_if_four_dvd` in `Catalog/Computation/CollatzTropical.lean`.
-
-**Theorem 4.2** (Favorable Residue Class). If $n \equiv 1 \pmod{4}$, then $4 \mid (3n+1)$.
-
-*Proof sketch.* $3 \cdot 1 + 1 = 4 \equiv 0 \pmod{4}$, and reducing $3n + 1 \pmod{4}$ for $n \equiv 1$ gives 0. $\square$
-
-*Formal reference:* `four_dvd_of_one_mod_four` in `Catalog/Computation/CollatzTropical.lean`.
-
-### 4.2 Coarse Growth Bound
-
-**Theorem 4.3** (Accelerated Map Growth). For $n \geq 1$: $T_{\text{odd}}(n) \leq 2n$.
-
-*Formal reference:* `collatzOdd_le_two_mul` in `Catalog/Computation/CollatzTropical.lean`.
+Proposition 2.6 guarantees odd-step density at most `1/2` over any segment, which
+sits comfortably below the optimal threshold derived below; this is exactly why
+*local* contraction is never the obstruction.
 
 ---
 
-## 5. Min-Plus Contraction Algebra
+## 3. The Exact Logarithmic Characterization
 
-### 5.1 The Min-Lipschitz Inequality
+The conceptual core of this work is to convert the multiplicative comparison
+`($\star$)` into an additive one via the strict monotonicity of `\log` on the
+positive reals.
 
-**Theorem 5.1** (Min-Plus Nonexpansiveness). For all $a, b, c, d \in \mathbb{R}$:
-$$|\min(a,b) - \min(c,d)| \leq \max(|a-c|, |b-d|)$$
+**Theorem 3.1 (Logarithmic characterization, `pow3_lt_pow2_iff_log`).**
+For all `j, m \in \mathbb{N}`,
+$$(3:\mathbb{R})^{j} < (2:\mathbb{R})^{m} \iff j \log 3 < m \log 2.$$
 
-This is the algebraic foundation of tropical contraction: the min (tropical addition) operation is 1-Lipschitz in the max-norm.
+*Proof sketch.* Use the identity `\log(a^n) = n \log a` (`Real.log_pow`) to rewrite
+`j \log 3 = \log(3^j)` and `m \log 2 = \log(2^m)`. The claim becomes
+`3^j < 2^m \iff \log(3^j) < \log(2^m)`, which is exactly the strict monotonicity of
+the real logarithm on positive arguments (`Real.log_lt_log_iff`), applicable since
+`3^j > 0` and `2^m > 0`. ∎
 
-*Formal reference:* `abs_min_sub_min_le` in `Catalog/Computation/CollatzTropicalContraction.lean`.
+**Theorem 3.2 (Natural-number transfer, `nat_pow3_lt_pow2_iff_log`).**
+For all `j, m \in \mathbb{N}`,
+$$3^{j} < 2^{m} \ (\text{in } \mathbb{N}) \iff j \log 3 < m \log 2.$$
 
----
+*Proof sketch.* The natural-number inequality `3^j < 2^m` is equivalent to its real
+cast `(3:\mathbb{R})^j < (2:\mathbb{R})^m` (`Nat.cast_lt` with `Nat.cast_pow`), then
+Theorem 3.1 applies. ∎
 
-## 6. The Bellman Operator and Its Contraction Property
-
-### 6.1 Definition
-
-**Definition 6.1** (Discounted Collatz Bellman Operator). For discount factor $\gamma \in [0,1)$, branch costs $a, b \in \mathbb{R}$, and bounded function $f : \mathbb{N} \to \mathbb{R}$:
-$$(\mathcal{B}_\gamma f)(n) = \gamma \cdot \min\bigl(f(n/2) + a,\; f((3n+1)/2) + b\bigr)$$
-
-See `CollatzTropicalContraction.collatzBellmanFn` in `Catalog/Computation/CollatzTropicalContraction.lean`.
-
-### 6.2 Pointwise Contraction
-
-**Theorem 6.2** (Pointwise Bound). For $\gamma \geq 0$ and bounded functions $f, g$:
-$$|(\mathcal{B}_\gamma f)(n) - (\mathcal{B}_\gamma g)(n)| \leq \gamma \cdot \|f - g\|_\infty$$
-
-*Proof sketch.* Factor out $\gamma$, apply the min-Lipschitz inequality (Theorem 5.1), and bound each component difference by the sup-norm distance. $\square$
-
-*Formal reference:* `collatzBellman_pointwise_bound` in `Catalog/Computation/CollatzTropicalContraction.lean`.
-
-### 6.3 Lifting to Bounded Functions
-
-The operator is lifted to the Banach space $\ell^\infty(\mathbb{N}) = (\mathbb{N} \to_b \mathbb{R})$ of bounded functions with the sup-norm topology.
-
-**Theorem 6.3** (Norm Bound). $\|\mathcal{B}_\gamma f\|_\infty \leq |\gamma| \cdot (\|f\|_\infty + \max(|a|, |b|))$.
-
-*Formal reference:* `abs_min_shifted_le` and the construction `collatzBellmanBCF` in `Catalog/Computation/CollatzTropicalContraction.lean`.
-
-### 6.4 The Contraction Mapping Theorem
-
-**Theorem 6.4** (Bellman Contraction). For $0 \leq \gamma < 1$, the operator $\mathcal{B}_\gamma : \ell^\infty(\mathbb{N}) \to \ell^\infty(\mathbb{N})$ is a contraction mapping with Lipschitz constant $\gamma$:
-$$d(\mathcal{B}_\gamma f, \mathcal{B}_\gamma g) \leq \gamma \cdot d(f, g)$$
-
-*Formal reference:* `collatzBellmanBCF_contracting` in `Catalog/Computation/CollatzTropicalContraction.lean`.
+**Remark 3.3.** Theorem 3.1 is an *exact* biconditional, not an estimate. This is
+what unlocks the sharp threshold: the rational bound `1/2` was an artifact of the
+crude `3 < 4` substitution, whereas the logarithm sees the true gap between `3` and
+`4` and yields the irrational optimum directly.
 
 ---
 
-## 7. Fixed-Point Theorems
+## 4. The Sharp Contraction Criterion
 
-### 7.1 Existence and Uniqueness
+Rearranging the affine inequality `j \log 3 < m \log 2` by dividing through by
+`\log 2 > 0` isolates the threshold constant.
 
-**Theorem 7.1** (Unique Tropical Value Function). For $0 \leq \gamma < 1$, there exists a unique $f^* \in \ell^\infty(\mathbb{N})$ satisfying the Bellman equation:
-$$f^*(n) = \gamma \cdot \min\bigl(f^*(n/2) + a,\; f^*((3n+1)/2) + b\bigr) \quad \forall n$$
+**Theorem 4.1 (Sharp contraction criterion, `pow3_lt_pow2_of_density`).**
+Let `j, m \in \mathbb{N}`. If
+$$j \cdot \frac{\log 3}{\log 2} < m,$$
+then `3^j < 2^m`.
 
-*Proof.* Direct application of the Banach fixed-point theorem to the contraction $\mathcal{B}_\gamma$ on the complete metric space $\ell^\infty(\mathbb{N})$. $\square$
+*Proof sketch.* Let `c = \log 2 > 0` (`Real.log_pos`, since `2 > 1`). Multiply the
+hypothesis by `c`: from `j \cdot (\log 3 / \log 2) < m` we obtain
+`j \cdot (\log 3/\log 2) \cdot \log 2 < m \log 2`. Associativity and the
+cancellation `(\log 3/\log 2)\cdot \log 2 = \log 3` (`div_mul_cancel₀`, valid as
+`\log 2 \ne 0`) give `j \log 3 < m \log 2`. Theorem 3.2 concludes `3^j < 2^m`. ∎
 
-*Formal references:* `collatzBellman_unique_fixed_point` and `collatzBellman_fixedPoint_eq` in `Catalog/Computation/CollatzTropicalContraction.lean`.
-
-### 7.2 Picard Iteration Convergence
-
-**Theorem 7.2** (Value Iteration Convergence). For any initial $f_0 \in \ell^\infty(\mathbb{N})$:
-$$\mathcal{B}_\gamma^k f_0 \xrightarrow{k \to \infty} f^* \quad \text{in } \|\cdot\|_\infty$$
-
-*Formal reference:* `collatzBellman_iterate_converges` in `Catalog/Computation/CollatzTropicalContraction.lean`.
-
-### 7.3 Uniqueness from Contraction (Generic)
-
-**Theorem 7.3** (Unique Fixed Point in Metric Spaces). In any metric space, a contraction mapping has at most one fixed point.
-
-*Formal reference:* `unique_fixed_point_of_contraction` in `Catalog/Computation/CollatzTropical.lean`.
-
----
-
-## 8. The Architectural Reduction Theorem
-
-### 8.1 From Log-Contraction to Arithmetic Descent
-
-**Theorem 8.1** (Bridge Theorem). Let $T : \mathbb{N} \to \mathbb{N}$ with $T(n) \geq 1$ for $n \geq 1$. If there exists $c < 1$ such that
-$$\log T(n) \leq c \cdot \log n \quad \forall n \geq 2,$$
-then $T(n) < n$ for all $n \geq 2$.
-
-*Proof sketch.* The hypothesis implies $T(n) \leq n^c$. Since $c < 1$ and $n \geq 2 > 1$, we have $n^c < n$. $\square$
-
-*Formal reference:* `log_contraction_implies_descent` in `Catalog/Computation/CollatzTropical.lean`.
-
-### 8.2 Conditional Convergence
-
-**Theorem 8.2** (Strict Descent Convergence). If $T : \mathbb{N} \to \mathbb{N}$ satisfies $T(n) \geq 1$ for $n \geq 1$ and $T(n) < n$ for $n \geq 2$, then every positive integer eventually reaches 1 under iteration of $T$.
-
-*Proof.* Strong induction on $\mathbb{N}$. For $n = 1$, take $m = 0$. For $n \geq 2$, $T(n) < n$ and $T(n) \geq 1$, so the inductive hypothesis applies. $\square$
-
-*Formal reference:* `convergence_of_strict_descent` in `Catalog/Computation/CollatzTropical.lean`.
-
-**Theorem 8.3** (Eventual Descent Convergence). Let $T, N$ be as above, with $T(n) < n$ for $n \geq N$ and finite verification that all $1 \leq n < N$ reach 1. Then every positive integer reaches 1.
-
-*Formal reference:* `collatz_convergence_of_eventual_descent` in `Catalog/Computation/CollatzTropical.lean`.
-
-### 8.3 The Complete Reduction
-
-**Theorem 8.4** (Architectural Reduction). If there exists an accelerated Collatz operator $T$, a threshold $N$, and a contraction ratio $c < 1$ such that:
-1. $T(n) \geq 1$ for $n \geq 1$ (positivity),
-2. $\log T(n) \leq c \cdot \log n$ for $n \geq N$ (log-contraction),
-3. All $1 \leq n < N$ reach 1 under $T$ (finite verification),
-
-then every positive integer reaches 1 under iteration of $T$.
-
-This composes the bridge theorem (8.1) with eventual descent convergence (8.3) to provide a complete conditional reduction.
-
-*Formal reference:* `collatz_convergence_of_log_contraction` in `Catalog/Computation/CollatzTropical.lean`.
+**Interpretation.** Writing the segment length as `k = j + m`, the hypothesis says
+the odd-step density `j/k` is below the optimal threshold
+`\frac{1}{1 + \log 3/\log 2} = \frac{\log 2}{\log 2 + \log 3} = \log_6 2`... more
+directly, with respect to even steps the break-even is `j/m < \log 2/\log 3 \approx
+0.6309`. The constant `\log 3 / \log 2 = \log_2 3 \approx 1.585` is the number of
+halvings needed to "pay for" one tripling at the exact margin.
 
 ---
 
-## 9. Discussion
+## 5. Strict Domination Over the Naive Bound
 
-### 9.1 Interpretation of the Value Function
+A sharper criterion is only meaningful if it (a) loses nothing the old bound held
+and (b) genuinely gains. We establish both.
 
-The unique fixed point $f^*$ of the Bellman operator is a *tropical value function*: it assigns to each integer $n$ the discounted optimal cost of reaching 1 under the best branch choices. In the Collatz setting, branch choice is deterministic (dictated by parity), but the min-plus formulation allows treating both branches symmetrically and studying the resulting contraction algebraically.
+**Theorem 5.1 (Forward containment, `log_of_two_mul_lt`).**
+If `2j < m` then `j \log 3 < m \log 2`.
 
-The discount factor $\gamma$ is an artificial regularization parameter. As $\gamma \to 1^-$, the value function should converge to the true Collatz potential (if it exists), but the contraction property degrades ($\gamma \to 1$ destroys strict contraction). Understanding the $\gamma \to 1$ limit is a key open problem. We note that this regularization strategy is standard in dynamic programming: the discounted cost function is always well-defined, while the undiscounted (average-cost) formulation may not converge. The passage from discounted to undiscounted is sometimes possible via Tauberian theorems, which is a promising direction for future work.
+*Proof sketch.* First, `\log 3 < 2\log 2`: indeed `\log 3 < \log 4`
+(`Real.log_lt_log` since `3 < 4`) and `\log 4 = \log(2^2) = 2 \log 2`. From the
+integer hypothesis `2j < m` we get `2j + 1 \le m`, i.e. `2j + 1 \le m` over
+`\mathbb{R}`. Scaling `\log 3 < 2\log 2` by `j \ge 0` gives
+`j \log 3 \le 2j \log 2`, and the strict slack `2j + 1 \le m` together with
+`\log 2 > 0` upgrades this to `j \log 3 < m \log 2` (a single `nlinarith`
+combination of the scaled product, the slack, and positivity of `\log 2`). ∎
 
-The value function $f^*$ has a natural interpretation in terms of *optimal branching strategies*. At each integer $n$, the Bellman equation selects the branch (even or odd) that minimizes the discounted future cost. For the standard Collatz dynamics, this selection is forced by parity, but the tropical formulation generalizes naturally to any Collatz-like system where branch choice is free — such as the "inverse Collatz" problem of constructing orbits that reach a target.
+Theorem 5.1 says: *whenever the naive bound `2j < m` certifies contraction, so does
+the logarithmic criterion.* Combined with Theorem 3.2, every naively-contractive
+segment is logarithmically-contractive.
 
-### 9.2 Connection to Tao's Work
+**Theorem 5.2 (Strict separation, `sharp_threshold_strictly_stronger`).**
+The pair `(j, m) = (1, 2)` satisfies the sharp logarithmic condition
+`1 \cdot \log 3 < 2 \cdot \log 2` but fails the naive condition `2 \cdot 1 < 2`.
 
-Tao (2019) proved that for almost all $n$ (in logarithmic density), $\min_{k \leq K} T^k(n) \leq f(n)$ for any $f$ tending to infinity. His approach uses entropy methods and Syracuse random variables. Our framework offers a complementary perspective: rather than probabilistic averaging over orbits, we construct a deterministic potential function on which the dynamics contracts. The two approaches target different aspects of the same problem — Tao's gives almost-everywhere results; ours gives conditional everywhere results.
+*Proof sketch.* The naive condition `2 < 2` is false by inspection. For the
+logarithmic side, `3^1 = 3 < 4 = 2^2`, so by Theorem 3.1 (with `j=1`, `m=2`)
+`1 \cdot \log 3 < 2 \cdot \log 2`. ∎
 
-The connection runs deeper than this superficial complementarity. Tao's Syracuse random variable model treats the Collatz iteration as a random walk in logarithmic coordinates — precisely the setting where our branch maps become isometric translations. The drift of the random walk is $\mathbb{E}[\log(3/4)] = \log(3) - 2\log(2) \approx -0.288$, which is negative, explaining why "most" orbits contract. Our framework makes this drift manifest as the difference between branch costs $a = -\log 2$ and $b = \log(3/2)$ in the Bellman equation.
-
-A potential synthesis would use the tropical value function to define a *corrected* Collatz potential that accounts for the deterministic deviations from random-walk behavior. The orbits that resist contraction — the "hard cases" for the conjecture — correspond to integers where the value function takes unusually large values, i.e., where the optimal discounted cost of reaching 1 is high.
-
-### 9.3 Connection to Dynamical Systems
-
-The tropical Bellman framework connects naturally to several strands of dynamical systems theory:
-
-**Lyapunov functions.** A Lyapunov function for the Collatz map would be a function $V : \mathbb{N} \to \mathbb{R}$ satisfying $V(T(n)) < V(n)$ for all $n \geq 2$. The logarithmic potential $\phi(n) = \log n$ fails as a Lyapunov function because odd steps increase it. The tropical value function $f^*$ is a candidate for a modified Lyapunov function, though in the discounted setting it satisfies $f^*(n) = \gamma \cdot (\text{branch minimum})$ rather than a strict decrease.
-
-**Transfer operators.** The Bellman operator $\mathcal{B}_\gamma$ is closely related to the *transfer operator* (Ruelle operator) of the Collatz system viewed as a piecewise-affine map. Transfer operators encode the statistical mechanics of dynamical systems; their spectral properties determine mixing rates and invariant measures. The contraction of $\mathcal{B}_\gamma$ corresponds to spectral gap in this language.
-
-**Ergodic theory.** The parity sequence of a Collatz orbit — the binary string recording whether each iterate is odd or even — is a symbolic dynamics encoding. The parity exclusion principle (no consecutive 1s) constrains this symbolic sequence to a shift of finite type. The entropy of this constrained shift is $\log \varphi$ where $\varphi = (1+\sqrt{5})/2$ is the golden ratio, which bounds the combinatorial complexity of Collatz orbits.
-
-### 9.4 The Gap: What Remains
-
-The framework reduces the Collatz conjecture to verifying a logarithmic contraction condition. The obstacle is that the standard Collatz map does not satisfy $\log T(n) \leq c \cdot \log n$ for any fixed $c < 1$ (the odd step can increase the logarithm). What is needed is an *accelerated* operator — perhaps the Syracuse map, or a multi-step composition — for which the contraction holds on average or along subsequences. The tropical value function $f^*$ is the natural candidate for constructing such an operator.
-
-Specifically, three approaches to closing the gap emerge from the framework:
-
-1. **Multi-step acceleration.** Instead of the one-step Collatz map, consider the $k$-step iterated map $T^k$. The two-step bound (Theorem 3.5) shows that odd-then-even pairs increase the potential by at most $\log 2$. If one could show that $k$-step blocks have a net potential decrease for sufficiently large $k$, the framework would apply with the accelerated operator $T^k$.
-
-2. **Weighted contraction.** Replace the uniform contraction condition $\log T(n) \leq c \cdot \log n$ with a weighted version: $\phi(T(n)) \leq \phi(n) - \delta$ for some modified potential $\phi$ and some $\delta > 0$. The tropical value function $f^*$ is the natural candidate for $\phi$.
-
-3. **Probabilistic contraction.** Show that the expected potential decrease over a random initial condition is strictly positive. Combined with concentration inequalities, this could yield convergence for all but a density-zero exceptional set — and then finite verification could handle the exceptions.
-
-### 9.5 Formal Verification Methodology
-
-All results in this paper are formalized in Lean 4 using the Mathlib library. The formalization serves two purposes:
-
-1. **Certainty.** Every theorem is machine-checked, eliminating the possibility of logical errors in the proofs. This is particularly important for conditional results where subtle sign errors or off-by-one mistakes could invalidate the reduction.
-
-2. **Composability.** Formally verified lemmas can be composed mechanically. The Architectural Reduction Theorem (Theorem 8.4) is constructed by composing the Bridge Theorem (8.1) with Eventual Descent Convergence (8.3). In informal mathematics, such compositions are error-prone; in the formal setting, they are guaranteed correct by construction.
-
-The formalization effort revealed several subtleties not apparent in the informal treatment. For example, the even branch identity (Theorem 3.3) requires careful handling of the division $n/2$ and its interaction with the logarithm. The `Nat.cast_div` lemma in Mathlib requires an explicit proof that 2 divides $n$, which connects the logical hypothesis ($n$ is even) with the arithmetic operation (exact division). Such details are invisible in pen-and-paper proofs but essential for formal correctness.
+Thus the inclusion of Theorem 5.1 is *strict*. The witness `(1,2)` is precisely the
+most elementary contractive event — one tripling absorbed by two halvings,
+`3 < 4` — and it is exactly the case the rational `1/2` threshold cannot reach. The
+sharp criterion captures the entire density band `(1/2,\ \log 2/\log 3)` that the
+naive argument discards.
 
 ---
 
-## 10. Algorithms
+## 6. Locating the Threshold Constant
 
-### 10.1 Picard Iteration for Value Function Approximation
+To confirm the threshold is correctly positioned relative to the trivial bounds, we
+bracket it.
 
-**Input:** Discount factor $\gamma \in (0,1)$, branch costs $a, b$, iteration count $K$, domain size $N$.
+**Theorem 6.1 (Threshold localization, `log3_div_log2_mem_Ioo`).**
+$$1 < \frac{\log 3}{\log 2} < 2.$$
 
-**Output:** Approximate value function $f_K : \{0, \ldots, N-1\} \to \mathbb{R}$.
+*Proof sketch.* Both bounds reduce to monotonicity of `\log` and `\log 2 > 0`.
+Lower: `\log 3 / \log 2 > 1 \iff \log 3 > \log 2 \iff 3 > 2`. Upper:
+`\log 3 / \log 2 < 2 \iff \log 3 < 2 \log 2 = \log 4 \iff 3 < 4`. ∎
 
-```
-f ← zero function on {0, ..., N-1}
-for k = 1 to K:
-    for n = 0 to N-1:
-        f_new[n] = γ · min(f[n/2] + a, f[(3n+1)/2] + b)
-    f ← f_new
-return f
-```
-
-The convergence rate is geometric: $\|f_K - f^*\|_\infty \leq \gamma^K \cdot \|f_0 - f^*\|_\infty$.
-
-### 10.2 Contraction Rate Verification
-
-For a given Collatz-like map $T$ and candidate contraction ratio $c$, verify:
-$$\max_{2 \leq n \leq N} \frac{\log T(n)}{\log n} \leq c$$
-
-If this holds for sufficiently large $N$ and all orbits below $N$ converge, the Architectural Reduction Theorem applies.
+Equivalently `\log_2 3 \in (1, 2)`: one always needs *more than one* but *fewer than
+two* halvings per tripling. The naive threshold corresponds to the upper endpoint
+`2` (it demands a full two-to-one margin); the true optimum sits strictly inside,
+which is exactly the slack the sharp criterion exploits.
 
 ---
 
-## 11. Future Work
+## 7. The Open Frontier: From Segments to Orbits
 
-1. **Sharp contraction thresholds** via real logarithms: replace the integer condition $2j < k$ (odd density $< 1/2$) with the optimal threshold $j/k < \log 2 / \log 3 \approx 0.6309$.
+The results above concern the *idealized* multiplier `3^j/2^m`. The genuine
+Collatz/shortcut map is **affine**, not purely multiplicative: each odd step applies
+`n \mapsto (3n+1)/2`, contributing an additive constant. Over a segment with odd
+steps at relative positions, the endpoint takes the form
 
-2. **Spectral analysis** of the tropical value function: decompose $f^*$ into eigenmodes of the Bellman operator to extract the dominant contraction rate.
+$$T^{[k]}(n) = \frac{3^{j}}{2^{m}}\, n + E,$$
 
-3. **Transfinite orbit measures**: construct ordinal-valued Lyapunov functions below $\varepsilon_0$, connecting to Goodstein-type independence phenomena.
+where `E > 0` is a geometric-series error term accumulated from the `+1`s. Even when
+`3^j < 2^m` (multiplicative contraction), `E` can dominate for *small* `n`. As
+`n \to \infty`, the multiplicative term overwhelms the bounded-by-`O(3^j/2^{?})`
+error, so segment contraction should yield orbit contraction `T^{[k]}(n) < n` for
+all sufficiently large `n`.
 
-4. **Undiscounted limits**: study the behavior of $f^*_\gamma$ as $\gamma \to 1^-$ and determine whether a limiting potential exists.
+**Conjecture 7.1 (Sharp orbit contraction, `sharp_orbit_contraction_conjecture`).**
+For a segment with realized parameters `j, m` satisfying `j \log 3 < m \log 2`,
+there exists `N_0` such that for all `n \ge N_0` lying on a trajectory realizing
+those parameters, `T^{[k]}(n) < n`.
 
-5. **Generalized Collatz systems**: extend the framework to Conway's $(m, d, r_0, \ldots, r_{m-1})$ systems, leveraging the GCS encoding for computability-theoretic connections.
+This is recorded as the file's single, explicitly-marked `sorry` — a conjecture,
+never claimed as a theorem. Its honest inclusion is the methodological point of the
+cycle: **the power arithmetic is now optimal, and the remaining difficulty is
+entirely in the affine error control and in the input-dependent fluctuation of
+realized density.** Parity exclusion (Prop. 2.6) bounds *segment* density at `1/2`,
+safely under the `0.6309` threshold, so local contraction is assured; the
+conjecture is hard because *global* behavior depends on growth phases that no known
+method bounds uniformly.
 
 ---
 
-## References
+## 8. Algorithms
 
-1. Collatz, L. (1937). Unpublished problem.
-2. Conway, J. H. (1972). Unpredictable iterations. *Proc. 1972 Number Theory Conf.*, 49–52.
-3. Terras, R. (1976). A stopping time problem on the positive integers. *Acta Arithmetica*, 30(3), 241–252.
-4. Korec, I. (1994). A density estimate for the 3x+1 problem. *Math. Slovaca*, 44(1), 85–89.
-5. Tao, T. (2019). Almost all orbits of the Collatz map attain almost bounded values. *arXiv:1909.03562*.
-6. Banach, S. (1922). Sur les opérations dans les ensembles abstraits et leur application aux équations intégrales. *Fund. Math.*, 3, 133–181.
-7. Lagarias, J. C. (2010). *The Ultimate Challenge: The 3x+1 Problem*. AMS.
+We summarize the computational procedures implicit in the results.
+
+**Algorithm 8.1 (Segment density classifier).** Given `(j, m)`, decide contraction
+by three tiers of increasing power: (i) the naive test `2j < m`; (ii) the exact
+integer test `3^j < 2^m`; (iii) the logarithmic density test
+`j \cdot \log 3 < m \cdot \log 2`. By Theorems 3.2 and 5.1 these satisfy
+naive `\Rightarrow` log `\Leftrightarrow` exact, so the log/exact tests agree and
+strictly refine the naive one. Complexity: the naive test is `O(1)`; the exact test
+is `O(\text{poly}(j+m))` bit operations via big-integer powering; the log test is
+`O(1)` floating-point (with care near the boundary, where the exact test should
+arbitrate).
+
+**Algorithm 8.2 (Orbit parity word extractor).** Given `n` and length `k`, iterate
+`T` and record the parity word `w \in \{0,1\}^k`, `w_i = T^{[i]}(n) \bmod 2`. By
+parity exclusion the word contains no `11` substring. Used to compute realized
+density `j/k` and to compare against the sharp threshold.
 
 ---
 
-*All theorems referenced in this paper are formally verified in Lean 4 with Mathlib. See `Catalog/Computation/CollatzTropical.lean` and `Catalog/Computation/CollatzTropicalContraction.lean` for complete machine-checked proofs.*
+## 9. Applications and Significance
+
+1. **Tightest formal contraction bound.** Any density-based attack on Collatz needs
+   the contraction criterion in its sharpest form. Replacing `1/2` with
+   `\log 2/\log 3` is not cosmetic: it is the difference between a heuristic that
+   discards a positive-measure band of contractive behaviors and one that does not.
+
+2. **Diagnosis of difficulty.** By proving the power arithmetic optimal, the work
+   relocates the entire residual difficulty to affine-error control. This is
+   valuable triage: future effort should target Conjecture 7.1's error term, not
+   the exponent comparison.
+
+3. **Bridge to computability.** Generalized Collatz systems (varying multipliers and
+   divisors by residue class) are Turing-complete (Conway), making their long-term
+   behavior undecidable in general. The exact density threshold for the *specific*
+   map `T` quantifies how close the genuine map sits to the contraction regime,
+   informing whether `T` lands on the decidable or undecidable side.
+
+4. **Verified rigor.** Every result here is machine-checked, eliminating the
+   subtle errors (off-by-one density bounds, sign of `\log`, boundary cases) that
+   have historically plagued informal Collatz arguments.
+
+---
+
+## 10. Discussion
+
+The pleasing structural lesson is that a famously irrational threshold
+(`\log 2/\log 3`) emerges *for free* the instant one phrases contraction additively
+rather than multiplicatively. The crude `3 < 4` argument is precisely the
+first-order rational underestimate of the true logarithmic boundary, and the gap it
+leaves — realized concretely by `(1,2)`, the inequality `3 < 4` itself — is exactly
+the region the sharp criterion reclaims.
+
+The honest limitation is equally instructive. Segment-level contraction is now
+optimal and complete; orbit-level contraction is not, and the reason is precise and
+isolated. This stands in contrast to informal treatments that often blur the
+segment/orbit distinction. By naming Conjecture 7.1 explicitly, the work makes the
+remaining obstruction a concrete, attackable target rather than a vague difficulty.
+
+---
+
+## 11. Future Directions
+
+The accompanying research program identifies five directions; we summarize the most
+salient.
+
+- **Sharp contraction threshold (extension, realized here).** Completed at the
+  segment level by Theorems 3.1–6.1; the orbit-level lift is Conjecture 7.1.
+- **Collatz encodings of finite automata (grand challenge).** Construct explicit
+  generalized Collatz systems simulating `n`-state DFAs, via Chinese-Remainder
+  separation of states — a constructive, finitary shadow of Conway universality.
+- **Transfinite orbit measures / Goodstein analogy (grand challenge).** Seek an
+  ordinal-valued measure `\mu : \mathbb{N} \to \mathrm{Ordinal}` below `\varepsilon_0`
+  that strictly decreases under `T`; existence would prove Collatz by transfinite
+  induction at the proof-theoretic strength of PA, mirroring Goodstein's theorem.
+- **Spectral analysis of parity words (extension).** Show the discrete Fourier
+  transform of a Collatz parity word concentrates at frequency `1/2` (the parity-
+  exclusion alternation), connecting the combinatorial approach to Tao-style
+  Fourier-analytic methods.
+- **Computational lower bounds on independence (grand challenge).** Tie
+  primitive-recursive boundedness of stopping times to PA-provability, converting
+  the metamathematical independence question into a concrete growth-rate question.
+
+---
+
+## 12. Conclusion
+
+We have established, with formal rigor, the optimal density threshold for Collatz
+segment contraction. The exact logarithmic characterization `3^j < 2^m \iff
+j\log 3 < m\log 2` converts a comparison of large powers into a single affine
+inequality, from which the sharp threshold `\log 2/\log 3 \approx 0.6309` follows
+immediately. We proved this criterion strictly dominates the classical `1/2` bound,
+exhibited the explicit separating case `(1,2)`, and localized the threshold constant
+`\log_2 3` in `(1,2)`. The remaining gap to a full Collatz proof — lifting segment
+contraction to orbit contraction against the affine `+1` error — is isolated and
+recorded honestly as an open conjecture. The power arithmetic of Collatz contraction
+is now optimal; the mystery lives elsewhere, and we have said precisely where.
+
+---
+
+## Appendix A: Statement Index
+
+| Name | Statement | Status |
+|------|-----------|--------|
+| `pow3_lt_pow2_iff_log` | `(3:ℝ)^j < 2^m ↔ j·log 3 < m·log 2` | Theorem |
+| `nat_pow3_lt_pow2_iff_log` | `3^j < 2^m (ℕ) ↔ j·log 3 < m·log 2` | Theorem |
+| `pow3_lt_pow2_of_density` | `j·(log 3/log 2) < m ⟹ 3^j < 2^m` | Theorem |
+| `log_of_two_mul_lt` | `2j < m ⟹ j·log 3 < m·log 2` | Theorem |
+| `sharp_threshold_strictly_stronger` | `1·log 3 < 2·log 2 ∧ ¬(2·1 < 2)` | Theorem |
+| `log3_div_log2_mem_Ioo` | `log 3/log 2 ∈ (1,2)` | Theorem |
+| `sharp_orbit_contraction_conjecture` | realized density `⟹` orbit contraction for large `n` | Conjecture |
+
+## Appendix B: Numerical Threshold Reference
+
+- `\log 2 \approx 0.693147`, `\log 3 \approx 1.098612`.
+- `\log 3 / \log 2 = \log_2 3 \approx 1.584963` (halvings per tripling, at margin).
+- `\log 2 / \log 3 = \log_3 2 \approx 0.630930` (optimal odd/even step ratio).
+- Naive threshold `1/2 = 0.5`; reclaimed band width `\approx 0.13093`.
