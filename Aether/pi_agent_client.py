@@ -1571,293 +1571,147 @@ class PiAgentClient:
     # ------------------------------------------------------------------
 
     def _build_v9_depth_requirements(self) -> str:
-        """v9: v8 variation focusing on Adversarial Critic & Boundary Mapping.
+        """v9: General-purpose mathematical research engine focusing on Adversarial Ground-Truth.
 
-        Requires the Critic role to explicitly attempt to weaken each theorem's
-        hypotheses and construct a specific counterexample showing where it fails,
-        mapping the exact mathematical boundary.
+        Trust nothing, assume everything is false until proven, and actively seek weaknesses/counterexamples.
         """
         return textwrap.dedent("""\
-            ## v9 Depth Requirements -- Adversarial Critic & Boundary Mapping Protocol
+            ## v9 Depth Requirements -- Adversarial Ground-Truth Research Engine
 
-            You are leading a research team operating under the Research Team Protocol (v8 structure).
-            In addition to the standard roles (Hypothesizer, Experimenter, Analyst, Synthesist),
-            this variation enforces a strict **Adversarial Critic** mandate.
+            You are leading a mathematical research team. Your goal is to produce groundbreaking,
+            master-class, useful, novel, and marvelous new Mathematics that pushes the frontier of human knowledge.
 
-            ### STEP 1: THEOREM DECLARATIONS (required -- before any code)
+            This engine is configured for **Adversarial Ground-Truth**. Trust nothing, assume everything is false until proven, and actively seek weaknesses. Think like an Adversarial Critic to pressure-test claims.
 
-            List every theorem you intend to prove or investigate. For each, state:
-            - **Name**: The Lean declaration name
-            - **Statement**: One-sentence informal statement
-            - **Status**: `hypothesis` | `conjecture` | `proved` | `proved_with_lemma_sorry` | `disproved`
-            - **Why it matters**: One sentence on what this result would mean if true,
-              and what it would teach us if false
+            ### RESEARCH CORE METHODOLOGY:
+            1. **Challenge Assumptions**: For every conjecture or theorem under investigation, actively search for counterexamples, corner cases, and boundary conditions. Proving that a claim is FALSE or identifying exactly where it fails is as valuable as a proof.
+            2. **Stress-Test the Frontier**: When a proof succeeds, push it to its limits. What happens if you drop or if a hypothesis is weakened? Write explicit comments documenting these boundary conditions.
+            3. **Relentless Rigor**: Write robust, clean, compilable Lean 4 proofs. Avoid trivial tautologies or simple wrapper theorems. Let your mathematical curiosity drive deep structural insights.
 
-            ### STEP 2: EXPERIMENT (prove or disprove in Lean 4)
-
-            Every theorem declared as `proved` MUST have a complete, compiling Lean proof.
-            No `sorry` on the main result. If you cannot complete a proof, change its
-            status to `conjecture` or `proved_with_lemma_sorry` and explain why.
-
-            ### STEP 3: ADVERSARIAL CRITIQUE (MANDATORY Boundary Mapping)
-
-            For your best proved theorem, the Adversarial Critic must perform a structured stress test:
-            1. **Weaken a Hypothesis**: Identify at least one crucial assumption or hypothesis of the theorem and formulate a weakened version of the theorem where that assumption is removed or replaced by a weaker condition.
-            2. **Construct a Counterexample**: Provide a concrete mathematical counterexample showing that the weakened statement is FALSE. State this counterexample explicitly in the comments.
-            3. **State the Boundary**: Explain exactly why the original assumption is necessary and where the proof machinery breaks down without it.
-
-            A theorem without a concrete counterexample to a weakened statement is incomplete.
-
-            ### STEP 4: Anti-patterns (reject these)
-
-            These tactics indicate trivial proofs:
-            - `native_decide` / `decide` / `norm_num` / `rfl` -- unless genuinely proving a numeric fact
-            - `simp only []` with no simp set specified
-            - `sorry` on any theorem declared as `proved`
-
-            ### STEP 5: Novelty
-
-            Your theorems must be genuinely new. If a statement appears in a textbook,
-            generalize it. If you cannot formalize a concept rigorously, pick a different topic.
-
-            ### STEP 6: TAKE GOOD NOTES (first-class deliverables)
-
-            6a. Lab Notebook (in each .lean file, as `-- !-- Lab Notebook -- !--` blocks):
-            For each major theorem, include a Lab Notebook comment block outlining Hypothesis, Result, Insight, and Failure analysis.
-
-            6b. FUTURE_DIRECTIONS.md:
-            You MUST produce a FUTURE_DIRECTIONS.md file with Synthesis, Results Summary, and 3-5 Research Directions.
+            ### DELIVERABLES:
+            - **Lean 4 proofs** of deep, non-trivial theorems with complete proofs (no sorry on main results).
+            - **Lab Notebook** comment blocks in each .lean file detailing Hypothesis, Result, Insight, and Failure analysis.
+            - **FUTURE_DIRECTIONS.md** outlining the Synthesis of your findings, a Results Summary, and 3-5 bold, falsifiable research directions to steer the next cycle.
         """)
 
     def _build_v10_depth_requirements(self) -> str:
-        """v10: v8 variation focusing on Modular Lemma Decomposition.
+        """v10: General-purpose mathematical research engine focusing on Conceptual Unification (Grothendieck style).
 
-        Requires any proof exceeding 20 lines to be factored into local helper lemmas
-        to simplify compilation.
+        Search for deep, hidden structures, universal patterns, and bridges across domains.
         """
         return textwrap.dedent("""\
-            ## v10 Depth Requirements -- Modular Lemma Decomposition Protocol
+            ## v10 Depth Requirements -- Conceptual Unifier Research Engine
 
-            You are leading a research team operating under the Research Team Protocol (v8 structure).
-            In addition to standard roles, this variation enforces a strict **Modular Lemma Factorization** mandate on the Experimenter.
+            You are leading a mathematical research team. Your goal is to produce groundbreaking,
+            master-class, useful, novel, and marvelous new Mathematics that pushes the frontier of human knowledge.
 
-            ### STEP 1: THEOREM DECLARATIONS (required -- before any code)
+            This engine is configured for **Conceptual Unification (Grothendieck style)**. Search for deep, hidden structures, universal patterns, and bridges across domains.
 
-            List every theorem you intend to prove or investigate. For each, state:
-            - **Name**: The Lean declaration name
-            - **Statement**: One-sentence informal statement
-            - **Status**: `hypothesis` | `conjecture` | `proved` | `proved_with_lemma_sorry` | `disproved`
-            - **Why it matters**: One sentence on what this result would mean.
+            ### RESEARCH CORE METHODOLOGY:
+            1. **Abstract Structural Patterns**: Frame your objects and mappings in terms of universal structures, symmetries, and invariant properties. Look for the underlying categorical, topological, or algebraic foundations that make the specific problem a special case of a deeper truth.
+            2. **Cross-Domain Bridges**: Connect apparently distinct mathematical worlds (e.g. applying algebraic structures to computational complexity, or geometry to logic).
+            3. **Generalization Over Specialization**: Prefer elegant, universal formulations that unify multiple separate facts into single, coherent conceptual frameworks.
 
-            ### STEP 2: EXPERIMENT & MODULAR FACTORIZATION
-
-            Every theorem declared as `proved` MUST have a complete, compiling Lean proof.
-            No `sorry` on the main result.
-            **Strict Decomposition Constraint**: Any proof of a main theorem or lemma that exceeds 20 lines of code MUST be factored into at least two local helper lemmas.
-            - Do not write monolithic proofs.
-            - Factor out intermediate steps (isomorphisms, inequalities, inclusions) as independent lemmas.
-            - This modular structure simplifies type-checking and makes the main argument clear and readable.
-
-            ### STEP 3: CRITIQUE (find the weaknesses)
-
-            Identify the strongest assumption that could be weakened, and construct a boundary case.
-
-            ### STEP 4: Anti-patterns (reject these)
-
-            These tactics indicate trivial proofs:
-            - `native_decide` / `decide` / `norm_num` / `rfl` -- unless genuinely proving a numeric fact
-            - Monolithic proofs (>20 lines without helper lemmas)
-            - `sorry` on any theorem declared as `proved`
-
-            ### STEP 5: Novelty
-
-            Your theorems must be genuinely new. If a statement appears in a textbook, generalize it.
-
-            ### STEP 6: TAKE GOOD NOTES (first-class deliverables)
-
-            6a. Lab Notebook (in each .lean file, as `-- !-- Lab Notebook -- !--` blocks):
-            For each major theorem, include a Lab Notebook comment block outlining Hypothesis, Result, Insight, and Failure analysis.
-
-            6b. FUTURE_DIRECTIONS.md:
-            You MUST produce a FUTURE_DIRECTIONS.md file with Synthesis, Results Summary, and 3-5 Research Directions.
+            ### DELIVERABLES:
+            - **Lean 4 proofs** of deep, non-trivial theorems with complete proofs (no sorry on main results).
+            - **Lab Notebook** comment blocks in each .lean file detailing Hypothesis, Result, Insight, and Failure analysis.
+            - **FUTURE_DIRECTIONS.md** outlining the Synthesis of your findings, a Results Summary, and 3-5 bold, falsifiable research directions to steer the next cycle.
         """)
 
     def _build_v11_depth_requirements(self) -> str:
-        """v11: Custom variation focusing on Constructive Computability & Witnesses.
+        """v11: General-purpose mathematical research engine focusing on Algorithmic / Constructive Generator.
 
-        Enforces constructive proof patterns and explicit computational evaluation instances.
+        Prioritize concrete computation, explicit witness constructions, and algorithmic content.
         """
         return textwrap.dedent("""\
-            ## v11 Depth Requirements -- Constructive Computability & Witnesses
+            ## v11 Depth Requirements -- Algorithmic & Constructive Research Engine
 
-            You are leading a research team operating under the Research Team Protocol (v8 structure).
-            This variation enforces a strict **Constructive Computability** mandate to ensure the formalization has direct computational content.
+            You are leading a mathematical research team. Your goal is to produce groundbreaking,
+            master-class, useful, novel, and marvelous new Mathematics that pushes the frontier of human knowledge.
 
-            ### STEP 1: THEOREM DECLARATIONS (required -- before any code)
+            This engine is configured for **Algorithmic & Constructive Generation**. Prioritize concrete computation, explicit witness constructions, and algorithmic content.
 
-            List every theorem you intend to prove or investigate.
+            ### RESEARCH CORE METHODOLOGY:
+            1. **Constructive Witness Extraction**: Whenever asserting that an object exists, focus on constructing it explicitly. Avoid non-constructive classical axioms (like double negation elimination or classical choice) unless absolutely necessary.
+            2. **Computational Verification**: Build definitions that can be computationally evaluated (`#eval` or `decide`). Connect abstract algebra/topology directly to effective algorithms and discrete models.
+            3. **Algorithmic Complexity**: Focus on the computational power and structures of your mathematical objects, proving properties about their stability, convergence, or decidability.
 
-            ### STEP 2: EXPERIMENT (Constructive Witnesses)
-
-            Every theorem declared as `proved` MUST have a complete, compiling Lean proof.
-            **Constructive Witness Constraint**:
-            - Prioritize constructive proofs. Avoid non-constructive classical axioms (like double negation elimination or classical choice) unless absolutely necessary.
-            - For every major theorem asserting existence, you MUST provide an explicit constructive witness (e.g. using `witness` or constructing instances) that can be computationally evaluated (`#eval` or `decide`).
-
-            ### STEP 3: CRITIQUE (find the weaknesses)
-
-            Identify the strongest assumption that could be weakened, and construct a boundary case.
-
-            ### STEP 4: Anti-patterns (reject these)
-
-            - Classical axioms (`Classical.choice`, `classical`) used where constructive witnesses are possible.
-            - `sorry` on any theorem declared as `proved`.
-
-            ### STEP 5: Novelty
-
-            Your theorems must be genuinely new. If a statement appears in a textbook, generalize it.
-
-            ### STEP 6: TAKE GOOD NOTES (first-class deliverables)
-
-            6a. Lab Notebook (in each .lean file, as `-- !-- Lab Notebook -- !--` blocks):
-            For each major theorem, include a Lab Notebook comment block outlining Hypothesis, Result, Insight, and Failure analysis.
-
-            6b. FUTURE_DIRECTIONS.md:
-            You MUST produce a FUTURE_DIRECTIONS.md file with Synthesis, Results Summary, and 3-5 Research Directions.
+            ### DELIVERABLES:
+            - **Lean 4 proofs** of deep, non-trivial theorems with complete proofs (no sorry on main results).
+            - **Lab Notebook** comment blocks in each .lean file detailing Hypothesis, Result, Insight, and Failure analysis.
+            - **FUTURE_DIRECTIONS.md** outlining the Synthesis of your findings, a Results Summary, and 3-5 bold, falsifiable research directions to steer the next cycle.
         """)
 
     def _build_v12_depth_requirements(self) -> str:
-        """v12: Custom variation focusing on Category-Theoretic Structural Unification.
+        """v12: General-purpose mathematical research engine focusing on Speculative Specifier & Bold Conjectures.
 
-        Enforces categorical mapping of algebraic and topological properties.
+        Target high-risk, high-reward, grand-challenge level speculative research.
         """
         return textwrap.dedent("""\
-            ## v12 Depth Requirements -- Category-Theoretic Structural Unification
+            ## v12 Depth Requirements -- Speculative Specifier Research Engine
 
-            You are leading a research team operating under the Research Team Protocol (v8 structure).
-            This variation enforces a strict **Category-Theoretic** framing to unify concepts algebraically.
+            You are leading a mathematical research team. Your goal is to produce groundbreaking,
+            master-class, useful, novel, and marvelous new Mathematics that pushes the frontier of human knowledge.
 
-            ### STEP 1: THEOREM DECLARATIONS (required -- before any code)
+            This engine is configured for **Speculative Specifying (Bold Conjectures)**. Target high-risk, high-reward, grand-challenge level research.
 
-            List every theorem you intend to prove or investigate.
-            **Categorical Framing Mandate**:
-            - Frame the mathematical objects under study as a category (objects and morphisms).
-            - Identify if the main theorem can be stated as a universal property (a limit, colimit, adjunction, or functorial equivalence).
+            ### RESEARCH CORE METHODOLOGY:
+            1. **Grand Challenges**: Formulate bold, surprising, and non-trivial conjectures that challenge existing intuition. Even if a complete proof cannot be achieved in this cycle, outline precise strategies, obstacles, and partial results.
+            2. **Deep Speculation**: Explore radical connections that seem distant or impossible at first glance. Frame your theorems as seeds for entirely new fields of study.
+            3. **Long-Term Roadmap**: Dedicate significant intellectual effort to detailing the proof strategies and testable predictions in your future directions, laying out a clear path for future researchers.
 
-            ### STEP 2: EXPERIMENT (Functorial Unification)
-
-            Every theorem declared as `proved` MUST have a complete, compiling Lean proof.
-            - Prove the functorial or universal properties declared in Step 1.
-            - Use universal properties to show uniqueness up to unique isomorphism.
-
-            ### STEP 3: CRITIQUE (find the weaknesses)
-
-            Identify the strongest assumption that could be weakened, and construct a boundary case.
-
-            ### STEP 4: Anti-patterns (reject these)
-
-            - Ad-hoc definitions without object/morphism categories where categorical structures are natural.
-            - `sorry` on any theorem declared as `proved`.
-
-            ### STEP 5: Novelty
-
-            Your theorems must be genuinely new. If a statement appears in a textbook, generalize it.
-
-            ### STEP 6: TAKE GOOD NOTES (first-class deliverables)
-
-            6a. Lab Notebook (in each .lean file, as `-- !-- Lab Notebook -- !--` blocks):
-            For each major theorem, include a Lab Notebook comment block outlining Hypothesis, Result, Insight, and Failure analysis.
-
-            6b. FUTURE_DIRECTIONS.md:
-            You MUST produce a FUTURE_DIRECTIONS.md file with Synthesis, Results Summary, and 3-5 Research Directions.
+            ### DELIVERABLES:
+            - **Lean 4 proofs** of deep, non-trivial theorems with complete proofs (no sorry on main results).
+            - **Lab Notebook** comment blocks in each .lean file detailing Hypothesis, Result, Insight, and Failure analysis.
+            - **FUTURE_DIRECTIONS.md** outlining the Synthesis of your findings, a Results Summary, and 3-5 bold, falsifiable research directions to steer the next cycle.
         """)
 
     def _build_v13_depth_requirements(self) -> str:
-        """v13: Custom variation focusing on Interactive Tactic-State Annotation.
+        """v13: General-purpose mathematical research engine focusing on First-Principles Grounding.
 
-        Mandates inline tactic state annotations to verify proof correctness at each step.
+        Focus on elegance, structural simplicity, and building blocks of deep theories.
         """
         return textwrap.dedent("""\
-            ## v13 Depth Requirements -- Interactive Tactic-State Annotation
+            ## v13 Depth Requirements -- First-Principles Grounding Engine
 
-            You are leading a research team operating under the Research Team Protocol (v8 structure).
-            This variation enforces a strict **Tactic-State Annotation** mandate to guide proof development.
+            You are leading a mathematical research team. Your goal is to produce groundbreaking,
+            master-class, useful, novel, and marvelous new Mathematics that pushes the frontier of human knowledge.
 
-            ### STEP 1: THEOREM DECLARATIONS (required -- before any code)
+            This engine is configured for **First-Principles Grounding**. Focus on elegance, structural simplicity, and building blocks of deep theories.
 
-            List every theorem you intend to prove or investigate.
+            ### RESEARCH CORE METHODOLOGY:
+            1. **Foundational Clarity**: Build theories starting from clean, minimal, first-principles assumptions. Keep definitions mathematically pure, elegant, and simple.
+            2. **Lemma Factorization**: Decompose large, complex theorems into a hierarchy of beautiful, standalone, reusable lemmas. Each lemma should be a complete mathematical statement of independent interest.
+            3. **Explanatory Elegance**: Design proofs that are not only correct but structurally beautiful and easy to understand. Let the proofs explain the mathematical mechanism.
 
-            ### STEP 2: EXPERIMENT (Tactic-State Annotation)
-
-            Every theorem declared as `proved` MUST have a complete, compiling Lean proof.
-            **Tactic-State Annotation Constraint**:
-            - Write detailed comments at every major proof step showing the expected tactic state (active goals, active hypotheses, expected types).
-            - This helps verify state transitions locally as the proof is constructed.
-
-            ### STEP 3: CRITIQUE (find the weaknesses)
-
-            Identify the strongest assumption that could be weakened, and construct a boundary case.
-
-            ### STEP 4: Anti-patterns (reject these)
-
-            - Unannotated complex proof blocks (>5 tactics in a row without state comments).
-            - `sorry` on any theorem declared as `proved`.
-
-            ### STEP 5: Novelty
-
-            Your theorems must be genuinely new. If a statement appears in a textbook, generalize it.
-
-            ### STEP 6: TAKE GOOD NOTES (first-class deliverables)
-
-            6a. Lab Notebook (in each .lean file, as `-- !-- Lab Notebook -- !--` blocks):
-            For each major theorem, include a Lab Notebook comment block outlining Hypothesis, Result, Insight, and Failure analysis.
-
-            6b. FUTURE_DIRECTIONS.md:
-            You MUST produce a FUTURE_DIRECTIONS.md file with Synthesis, Results Summary, and 3-5 Research Directions.
+            ### DELIVERABLES:
+            - **Lean 4 proofs** of deep, non-trivial theorems with complete proofs (no sorry on main results).
+            - **Lab Notebook** comment blocks in each .lean file detailing Hypothesis, Result, Insight, and Failure analysis.
+            - **FUTURE_DIRECTIONS.md** outlining the Synthesis of your findings, a Results Summary, and 3-5 bold, falsifiable research directions to steer the next cycle.
         """)
 
     def _build_v14_depth_requirements(self) -> str:
-        """v14: Custom variation focusing on Top-Down Skeletal Refinement.
+        """v14: General-purpose mathematical research engine focusing on Synthetic Catalog Integration.
 
-        Requires skeletal design where helpers are defined with sorry first, then proven bottom-up.
+        Focus on building a coherent body of work on top of our existing catalog.
         """
         return textwrap.dedent("""\
-            ## v14 Depth Requirements -- Top-Down Skeletal Refinement
+            ## v14 Depth Requirements -- Synthetic Catalog Integration Engine
 
-            You are leading a research team operating under the Research Team Protocol (v8 structure).
-            This variation enforces a strict **Top-Down Skeletal Refinement** mandate to prevent getting stuck in proof search.
+            You are leading a mathematical research team. Your goal is to produce groundbreaking,
+            master-class, useful, novel, and marvelous new Mathematics that pushes the frontier of human knowledge.
 
-            ### STEP 1: THEOREM DECLARATIONS (required -- before any code)
+            This engine is configured for **Synthetic Catalog Integration**. Focus on building a coherent body of work on top of our existing catalog.
 
-            List every theorem you intend to prove or investigate.
+            ### RESEARCH CORE METHODOLOGY:
+            1. **Lineage Synthesis**: Analyze the existing catalog context deeply. Do not reinvent definitions; import and build directly on top of the validated catalog results.
+            2. **Connect the Dots**: Search for "orphan" results or gaps in the catalog and construct bridges to connect them. Show how new theorems advance the overall mathematical architecture of the repository.
+            3. **Foundational Extension**: Take successful packages from the catalog and extend their results to broader algebraic settings, sharper bounds, or new domain applications.
 
-            ### STEP 2: EXPERIMENT (Top-Down Skeleton)
-
-            Every theorem declared as `proved` MUST have a complete, compiling Lean proof.
-            **Top-Down Skeletal Refinement Constraint**:
-            - Write the main theorem first, using `sorry` for all intermediate lemma/step proofs, to establish the top-down skeletal logic first.
-            - Then, implement the helper lemmas one-by-one in reverse order of dependence (bottom-up execution).
-
-            ### STEP 3: CRITIQUE (find the weaknesses)
-
-            Identify the strongest assumption that could be weakened, and construct a boundary case.
-
-            ### STEP 4: Anti-patterns (reject these)
-
-            - Bottom-up proof search where the main theorem's skeleton is never established.
-            - `sorry` on any theorem declared as `proved` in final integrated output.
-
-            ### STEP 5: Novelty
-
-            Your theorems must be genuinely new. If a statement appears in a textbook, generalize it.
-
-            ### STEP 6: TAKE GOOD NOTES (first-class deliverables)
-
-            6a. Lab Notebook (in each .lean file, as `-- !-- Lab Notebook -- !--` blocks):
-            For each major theorem, include a Lab Notebook comment block outlining Hypothesis, Result, Insight, and Failure analysis.
-
-            6b. FUTURE_DIRECTIONS.md:
-            You MUST produce a FUTURE_DIRECTIONS.md file with Synthesis, Results Summary, and 3-5 Research Directions.
+            ### DELIVERABLES:
+            - **Lean 4 proofs** of deep, non-trivial theorems with complete proofs (no sorry on main results).
+            - **Lab Notebook** comment blocks in each .lean file detailing Hypothesis, Result, Insight, and Failure analysis.
+            - **FUTURE_DIRECTIONS.md** outlining the Synthesis of your findings, a Results Summary, and 3-5 bold, falsifiable research directions to steer the next cycle.
         """)
 
     def _build_assignment(self, concept: ResearchConcept) -> str:
