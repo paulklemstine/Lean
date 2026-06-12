@@ -1,424 +1,511 @@
-# Proof System Collapse: The Simulation Preorder, its Lattice Duality, and the Closure of Polynomial Boundedness under Joins
+# Generation Certificates for Matrix Groups: Irreducible Characteristic Polynomials as Witnesses of Irreducible Action
 
 ## Abstract
 
-We develop an abstract theory of propositional proof systems in the sense of Cook
-and Reckhow, organized entirely around the **simulation preorder**. A proof system
-over a type of formulas `F` is modelled minimally as a triple `(Proof, concl, size)`:
-an abstract type of proofs, a conclusion map assigning each proof the formula it
-establishes, and a natural-number size measure. The central invariant is the
-**provable set** `Prov P`, the range of the conclusion map. Simulation is defined
-as containment of provable sets, and simulation-equivalence as their equality.
+We develop a certificate-based framework connecting an easily computable
+algebraic invariant — the irreducibility of the characteristic polynomial of a
+linear endomorphism — to the structural property of *irreducible action*: the
+absence of any nontrivial invariant subspace. The framework is designed for the
+study of random generation in finite linear groups, where such structural
+properties serve as *certificates* feeding into probabilistic lower bounds. Our
+central result states that if an endomorphism $\varphi$ of a finite-dimensional
+vector space has irreducible characteristic polynomial, then every
+$\varphi$-invariant submodule is either trivial or the whole space. We derive
+three corollaries that interpret this fact in coding theory (orbit spanning),
+finite geometry (Singer cycles with no fixed proper projective subspace), and
+group theory (positive certificate density yielding generation lower bounds).
+We package the abstract pattern as a *generation certificate system* unifying
+the matrix-group and symmetric-group settings, define a quantitative
+*certificate density*, and record two conjectures bounding the density of
+irreducible-fingerprint elements in $\mathrm{GL}_n(\mathbb{F}_q)$. All principal
+results have been formalized and machine-checked, and the proof proceeds
+through a clean chain of classical ingredients: the Cayley–Hamilton theorem,
+the divisibility of minimal polynomials under restriction, and dimension
+counting.
 
-Our results fall into three groups. **(1) Lattice duality.** We exhibit three
-constructions — disjoint union, fibred product, and indexed disjoint union — and
-prove that on provable sets they realize, respectively, the join, the meet, and
-arbitrary joins of the powerset lattice of `F`. Together with a realizability
-theorem showing that *every* subset of `F` is the provable set of some system, this
-establishes that proof systems modulo simulation form a structure order-isomorphic
-to the complete powerset lattice `(Set F, ⊆)`. **(2) Maximality.** Relative to any
-validity predicate, every complete system simulates every sound system — the
-abstract kernel of the Cook–Reckhow optimality phenomenon. **(3) Quantitative
-closure.** We define polynomial boundedness with respect to a formula-complexity
-measure and prove that the join of two p-bounded systems is p-bounded, and, as the
-quantitative flagship, that the indexed join of *finitely many* p-bounded systems is
-p-bounded. We isolate the finite-to-infinite gap in this closure as the precise
-locus of the Cook–Reckhow optimality conjecture. All results have been formally
-verified; this paper presents the mathematics and proof sketches.
-
-**Keywords.** Proof complexity, Cook–Reckhow, simulation, p-simulation, proof
-systems, lattice theory, polynomial boundedness, optimal proof systems.
+**Keywords:** matrix groups, characteristic polynomial, irreducibility,
+invariant subspaces, minimal polynomial, Singer cycle, random generation,
+certificate density, finite fields.
 
 ---
 
 ## 1. Introduction
 
-Proof complexity studies not whether a statement is *true* but how *expensive* it
-is to certify. Its founding framework, due to Cook and Reckhow, recasts a
-propositional proof system as a polynomial-time-computable surjection from strings
-("proofs") onto the set of tautologies, and compares systems by **p-simulation**:
-`Q` p-simulates `P` if every `P`-proof can be translated, in polynomial time, into a
-`Q`-proof of the same theorem with at most polynomial blow-up. The grand open
-problem of the field — whether a *polynomially bounded* proof system exists, which is
-equivalent to `NP = coNP` — and the related question of whether an *optimal* proof
-system exists, both live inside this comparison.
+A recurring theme in computational group theory is the search for *certificates*
+of structural properties: small, efficiently checkable pieces of data that
+guarantee a global property without requiring exploration of an exponentially
+large object. The paradigm originates with Dixon's theorem (1969) that two
+random permutations generate the symmetric or alternating group with
+probability tending to one, and runs through the matrix-group recognition
+program of Neumann and Praeger (1992) and its descendants. In each case, one
+identifies elements whose presence forces any containing subgroup to be large,
+and then argues that such elements are dense, so a few random draws suffice.
 
-Underneath the polynomial-time machinery lies a purely qualitative skeleton: which
-theorems each system can establish at all. This paper isolates that skeleton,
-develops its order theory completely, and then re-attaches the quantitative layer
-to study how efficiency interacts with the lattice operations. The qualitative core
-turns out to be a perfect duality with subsets of the formula type, and the
-quantitative layer turns out to respect the lattice join up to — and exactly up to —
-finite arity.
+For matrix groups over finite fields, the cleanest such certificate is
+*irreducibility of action*: an element whose linear action admits no nontrivial
+invariant subspace cannot be confined to a block-reducible subgroup. The
+difficulty is that irreducibility of action is, prima facie, a statement
+quantified over all subspaces — of which there are super-polynomially many.
+The contribution of this work is to reduce that quantified geometric statement
+to a single, polynomial-time algebraic check: *irreducibility of the
+characteristic polynomial*. We make the reduction fully rigorous and formal,
+and we organize the surrounding theory — orbit spanning, projective
+no-fixed-subspace, certificate density, and an abstract certificate system —
+around it.
 
-We work over an arbitrary type `F` of formulas, making no syntactic commitments;
-this maximal generality is what exposes the duality so cleanly.
+### 1.1 Setting and conventions
 
-### 1.1 Contributions
-
-- A minimal, syntax-free formalization of proof systems and the simulation preorder
-  (Section 2).
-- Three lattice constructions and the proofs that they compute join, meet, and
-  arbitrary join on provable sets (Section 3).
-- A realizability/duality theorem: `Prov` is surjective onto `Set F`, hence proof
-  systems modulo simulation reproduce the entire powerset lattice (Section 3.4).
-- Universal-property characterizations of join and meet within the simulation
-  order (Section 4).
-- The maximality theorem: complete systems simulate all sound systems (Section 5).
-- Definition of polynomial boundedness and the closure theorems for binary and
-  finite indexed joins, with an analysis of why the closure stops at finite arity
-  (Section 6).
-- Algorithms and applications to solver portfolios and cross-validation (Sections
-  7–8), and a research program for the quantitative theory (Section 9).
+Throughout, $K$ is a field and $V$ a finite-dimensional $K$-vector space. We
+write $\mathrm{End}_K(V)$ for the $K$-algebra of linear endomorphisms of $V$,
+and for $\varphi \in \mathrm{End}_K(V)$ we write $\chi_\varphi \in K[X]$ for its
+characteristic polynomial and $\mu_\varphi \in K[X]$ for its minimal
+polynomial. We use $\mathbb{F}_q$ for the finite field with $q$ elements and
+$\mathbb{F}_p = \mathbb{Z}/p\mathbb{Z}$ for the prime field. The dimension of
+$V$ is $n = \dim_K V$, and $\deg \chi_\varphi = n$.
 
 ---
 
-## 2. The simulation preorder
+## 2. Definitions
 
-### 2.1 Proof systems and provable sets
+We begin with the four definitions that organize the development.
 
-> **Definition 2.1 (Proof system).** A *proof system* over a type `F` is a triple
-> `P = (Proof, concl, size)` where `Proof` is a type, `concl : Proof → F`, and
-> `size : Proof → ℕ`.
+**Definition 2.1 (Invariant submodule).** Let $\varphi \in \mathrm{End}_K(V)$
+and let $W \subseteq V$ be a submodule (subspace). We say $W$ is
+*$\varphi$-invariant*, written $\mathrm{IsInvariantSubmodule}(\varphi, W)$, if
 
-The deliberate minimality matters: no inference rules, no syntax, no soundness
-built in. A proof is any object from which we can read a conclusion and a cost.
+$$
+\forall w \in W,\quad \varphi(w) \in W.
+$$
 
-> **Definition 2.2 (Provable set).** The *provable set* of `P` is
-> `Prov P := range(concl) = { f : F | ∃ p, concl p = f }`.
+Equivalently, $W$ is a submodule of $V$ regarded as a $K[X]$-module via
+$X \cdot v := \varphi(v)$. Invariant submodules are precisely the structures
+through which a linear action can be decomposed, which is why their absence is
+the hallmark of irreducibility.
 
-Membership unfolds definitionally: `f ∈ Prov P ↔ ∃ p, concl p = f`.
+**Definition 2.2 (Linear generation certificate).** For $K$ a field and $V$ a
+finite free $K$-module, a *linear generation certificate* is a triple
 
-### 2.2 Simulation
+$$
+(\varphi,\ \text{invertible},\ \text{charpoly\_irreducible})
+$$
 
-> **Definition 2.3 (Simulation).** For systems `P, Q`, say `Q` *simulates* `P`,
-> written `Simulates Q P`, when `Prov P ⊆ Prov Q`.
+consisting of an endomorphism $\varphi \in \mathrm{End}_K(V)$ together with a
+proof that $\varphi$ is bijective and a proof that $\chi_\varphi$ is irreducible
+in $K[X]$. This is the matrix-group analogue of a symmetric-group generation
+certificate: it isolates elements whose algebraic structure guarantees
+usefulness for generation.
 
-> **Proposition 2.4.** `Simulates` is reflexive and transitive (a preorder).
+**Definition 2.3 (Certificate density).** For a finite group $G$ and a
+decidable predicate $C : G \to \mathrm{Prop}$, the *certificate density* is the
+rational number
 
-*Proof.* Reflexivity is `Prov P ⊆ Prov P`. For transitivity, if `Prov Q ⊆ Prov R`
-and `Prov P ⊆ Prov Q` then `Prov P ⊆ Prov R` by transitivity of `⊆`. ∎
+$$
+\mathrm{density}(C) \;=\; \frac{\#\{g \in G : C(g)\}}{\#G} \in \mathbb{Q}.
+$$
 
-> **Definition 2.5 (Simulation-equivalence).** `P` and `Q` are *simulation-equivalent*,
-> `SimEquiv P Q`, when each simulates the other.
+This is the quantitative input to probabilistic generation arguments: higher
+density yields stronger guarantees that random sampling lands on certified
+elements.
 
-> **Theorem 2.6 (Equivalence is equality of repertoires).**
-> `SimEquiv P Q ↔ Prov P = Prov Q`.
+**Definition 2.4 (Generation certificate system).** For a group $G$, a
+*generation certificate system* consists of a predicate
+$\mathrm{Cert} : G \to \mathrm{Prop}$ together with the guarantee that for every
+$g$ with $\mathrm{Cert}(g)$ and every subgroup $H \leq G$ containing $g$,
 
-*Proof.* `SimEquiv P Q` unfolds to `Prov Q ⊆ Prov P ∧ Prov P ⊆ Prov Q`, which is
-antisymmetry of `⊆`, equivalent to `Prov P = Prov Q`. ∎
+$$
+H = G \quad\text{or}\quad [G : H] \leq 2.
+$$
 
-Theorem 2.6 is the licence to identify a proof system with its provable set up to
-simulation. Everything downstream exploits this identification.
-
----
-
-## 3. Lattice constructions and duality
-
-We now give three constructions of new systems and compute their provable sets,
-plus a realizability theorem. The slogan is: *`Prov` is a surjective lattice
-homomorphism onto `(Set F, ∪, ∩)`*.
-
-### 3.1 The join (disjoint union)
-
-> **Definition 3.1 (Union).** `union P Q` has proof type `P.Proof ⊕ Q.Proof`,
-> conclusion `Sum.elim P.concl Q.concl`, and size `Sum.elim P.size Q.size`.
-
-A proof is a proof from either component; sizes are inherited unchanged.
-
-> **Theorem 3.2 (Join).** `Prov (union P Q) = Prov P ∪ Prov Q`.
-
-*Proof.* Unfolding, a formula `f` lies in the left side iff some `p : P.Proof ⊕
-Q.Proof` has `Sum.elim P.concl Q.concl p = f`. Case-splitting on `p = inl a` or
-`p = inr b` gives `P.concl a = f` or `Q.concl b = f`, i.e. `f ∈ Prov P ∪ Prov Q`;
-conversely each disjunct supplies the corresponding injected proof. This is exactly
-`range (Sum.elim f g) = range f ∪ range g`. ∎
-
-### 3.2 The meet (fibred product)
-
-> **Definition 3.3 (Meet).** `meet P Q` has proof type
-> `{ (p, q) : P.Proof × Q.Proof // P.concl p = Q.concl q }` — pairs of proofs with a
-> *common conclusion* — conclusion `(p,q) ↦ P.concl p`, and size
-> `(p,q) ↦ P.size p + Q.size q`.
-
-A proof is a *certificate of agreement*: both components establish the same formula.
-The additive size is intrinsic to the construction and underlies the "meet preserves
-additive bounds" program of Section 9.
-
-> **Theorem 3.4 (Meet).** `Prov (meet P Q) = Prov P ∩ Prov Q`.
-
-*Proof.* If `f` is the conclusion of a pair `⟨(a,b), h⟩` with `h : P.concl a = Q.concl b`
-and `P.concl a = f`, then `f ∈ Prov P` (via `a`) and `f = Q.concl b ∈ Prov Q`.
-Conversely if `f = P.concl a` and `f = Q.concl b`, the pair `(a,b)` has matching
-conclusions, so `⟨(a,b), _⟩` is a valid proof concluding `f`. ∎
-
-### 3.3 Arbitrary joins (indexed disjoint union)
-
-> **Definition 3.5 (Indexed union).** For a family `P : ι → ProofSys F`, the system
-> `iUnion P` has proof type `Σ i, (P i).Proof`, conclusion `⟨i, p⟩ ↦ (P i).concl p`,
-> and size `⟨i, p⟩ ↦ (P i).size p`.
-
-> **Theorem 3.6 (Arbitrary join).** `Prov (iUnion P) = ⋃ᵢ Prov (P i)`.
-
-*Proof.* A formula is a conclusion of `iUnion P` iff it is `(P i).concl p` for some
-`i` and some `p : (P i).Proof`, i.e. iff it lies in `Prov (P i)` for some `i`. ∎
-
-### 3.4 Realizability and the duality
-
-> **Definition 3.7 (Tautology-table and singleton systems).** For `S : Set F`, the
-> system `setSys S` has proof type `S` (the subtype), conclusion `Subtype.val`, and
-> size constantly `0`. For `f : F`, `singletonSys f` has proof type `Unit`,
-> conclusion the constant `f`, and size `0`.
-
-> **Lemma 3.8.** `Prov (singletonSys f) = {f}` and `Prov (setSys S) = S`.
-
-*Proof.* The first is `range (const f) = {f}`. The second is `range Subtype.val = S`. ∎
-
-> **Theorem 3.9 (Duality / surjectivity).** The map `Prov : ProofSys F → Set F` is
-> surjective: every set `S : Set F` equals `Prov (setSys S)`.
-
-*Proof.* Immediate from Lemma 3.8. ∎
-
-**Consequence.** Combine Theorem 2.6 (simulation-equivalence = equality of provable
-sets), Theorems 3.2, 3.4, 3.6 (the constructions compute `∪`, `∩`, `⋃`), and Theorem
-3.9 (surjectivity). The provable-set map is a surjective homomorphism from the
-constructions on proof systems onto the lattice operations of `(Set F, ⊆)`, and its
-fibres are exactly the simulation-equivalence classes. Hence:
-
-> **Corollary 3.10 (Lattice collapse).** Proof systems modulo simulation-equivalence,
-> ordered by simulation, form a structure order-isomorphic to the complete,
-> bounded, distributive lattice `(Set F, ⊆)`, with `union` realizing join, `meet`
-> realizing meet, `iUnion` realizing arbitrary join, `setSys ∅` the bottom, and
-> `setSys univ` the top. The section `S ↦ setSys S` is a canonical right inverse to
-> `Prov`.
-
-This is the "proof system collapse": the wild combinatorics of proofs collapses, up
-to simulation, onto plain subset inclusion.
+This abstracts the common pattern shared by symmetric-group certificates
+(Dixon) and linear-group certificates (Singer): a certified element forces any
+containing subgroup to be everything, or at most an index-two near-miss.
 
 ---
 
-## 4. Universal properties of join and meet
+## 3. Technical lemmas: transferring polynomial identities under restriction
 
-The lattice structure can also be verified directly through universal properties,
-without passing through the powerset isomorphism. These give the operational meaning
-of "least upper bound" and "greatest lower bound" inside the simulation order.
+The proof of the main theorem rests on understanding how an endomorphism's
+polynomial identities behave under restriction to an invariant subspace. Let
+$\varphi \in \mathrm{End}_K(V)$ and let $W$ be $\varphi$-invariant. Invariance
+lets us define the *restriction* $\varphi|_W \in \mathrm{End}_K(W)$ by
+$\varphi|_W(w) = \varphi(w)$, which is well defined precisely because
+$\varphi(w) \in W$.
 
-> **Proposition 4.1 (Join is the least upper bound).**
-> (i) `Simulates (union P Q) P` and `Simulates (union P Q) Q`.
-> (ii) If `Simulates R P` and `Simulates R Q`, then `Simulates R (union P Q)`.
+**Lemma 3.1 (Restriction intertwines the inclusion).** With $\iota_W : W
+\hookrightarrow V$ the inclusion,
 
-*Proof.* (i) `Prov P ⊆ Prov P ∪ Prov Q = Prov(union P Q)` by Theorem 3.2, and
-symmetrically for `Q`. (ii) From `Prov P ⊆ Prov R` and `Prov Q ⊆ Prov R` we get
-`Prov P ∪ Prov Q ⊆ Prov R`, i.e. `Prov(union P Q) ⊆ Prov R`. ∎
+$$
+\iota_W \circ \varphi|_W \;=\; \varphi \circ \iota_W .
+$$
 
-> **Proposition 4.2 (Meet is the greatest lower bound).**
-> (i) `Simulates P (meet P Q)` (and symmetrically `Simulates Q (meet P Q)`).
-> (ii) If `Simulates P R` and `Simulates Q R`, then `Simulates (meet P Q) R`.
+*Proof sketch.* Both sides send $w \in W$ to $\varphi(w)$, by the definition of
+the restriction and of the inclusion. $\square$
 
-*Proof.* (i) `Prov(meet P Q) = Prov P ∩ Prov Q ⊆ Prov P` by Theorem 3.4. (ii) From
-`Prov R ⊆ Prov P` and `Prov R ⊆ Prov Q` we get `Prov R ⊆ Prov P ∩ Prov Q =
-Prov(meet P Q)`. ∎
+**Lemma 3.2 (Restriction inherits annihilating polynomials).** Let $p \in K[X]$
+with $p(\varphi) = 0$ (evaluation in the endomorphism algebra). Then
 
-Propositions 4.1–4.2 confirm that `union` and `meet` are genuinely the lattice
-operations of the simulation preorder, independently of Corollary 3.10.
+$$
+p(\varphi|_W) = 0 .
+$$
 
----
+*Proof sketch.* By Lemma 3.1 and induction on $k$, the $k$-th power satisfies
+$(\varphi|_W)^k(w) = \varphi^k(w)$ for all $w \in W$. Writing $p = \sum_k a_k
+X^k$ and evaluating, $p(\varphi|_W)(w) = \sum_k a_k \varphi^k(w) = p(\varphi)(w)
+= 0$ for every $w \in W$. Hence $p(\varphi|_W) = 0$ as an endomorphism of $W$.
+$\square$
 
-## 5. Soundness, completeness, and maximality
+**Lemma 3.3 (Minimal polynomial divides under restriction).**
 
-We now relativize to a notion of validity, the abstract stand-in for "tautology" or
-"true sentence."
+$$
+\mu_{\varphi|_W} \,\mid\, \mu_\varphi .
+$$
 
-> **Definition 5.1.** Fix `Valid : F → Prop`.
-> `P` is *sound* (for `Valid`) when `∀ f ∈ Prov P, Valid f`.
-> `P` is *complete* (for `Valid`) when `∀ f, Valid f → f ∈ Prov P`.
+*Proof sketch.* By Lemma 3.2 applied to $p = \mu_\varphi$ (which annihilates
+$\varphi$ by definition), we have $\mu_\varphi(\varphi|_W) = 0$. Since
+$\mu_{\varphi|_W}$ is the minimal annihilating polynomial of $\varphi|_W$, it
+divides any annihilating polynomial, in particular $\mu_\varphi$. $\square$
 
-Soundness says the repertoire is contained in the valid formulas; completeness says
-it contains them. A *correct* system is both, with repertoire exactly the valid set.
+**Lemma 3.4 (Irreducible charpoly forces $\mu = \chi$).** If $\chi_\varphi$ is
+irreducible then
 
-> **Theorem 5.2 (Maximality of complete systems).** If `C` is complete and `P` is
-> sound for the same `Valid`, then `Simulates C P`.
+$$
+\mu_\varphi = \chi_\varphi .
+$$
 
-*Proof.* Let `f ∈ Prov P`. By soundness of `P`, `Valid f`. By completeness of `C`,
-`f ∈ Prov C`. Hence `Prov P ⊆ Prov C`, i.e. `Simulates C P`. ∎
+*Proof sketch.* When $V$ is nonzero, $\mu_\varphi$ divides $\chi_\varphi$ (a
+standard consequence of Cayley–Hamilton, $\chi_\varphi(\varphi) = 0$), both are
+monic, and $\chi_\varphi$ is irreducible; a monic irreducible polynomial has, up
+to units, only itself and constants as divisors, and $\mu_\varphi$ is nonconstant
+on a nonzero space, so $\mu_\varphi = \chi_\varphi$. The degenerate case $V = 0$
+is handled separately: there $\varphi = 0$ and $\chi_\varphi$ would be a unit or
+of degree $\leq 1$, contradicting irreducibility, so the case is vacuous.
+$\square$
 
-Theorem 5.2 is the abstract Cook–Reckhow optimality phenomenon: among trustworthy
-systems, the complete ones are maximal in simulation power. Equivalently, in the
-lattice of Corollary 3.10, every complete system sits at the supremum `{f | Valid f}`
-of the sound systems, which all lie below it. The hard, open part of the real theory
-is to make "simulates" *efficient* (p-simulation) — the subject of the next section.
-
----
-
-## 6. Polynomial boundedness and its closure under joins
-
-We re-attach the quantitative layer. Fix a *formula-complexity* measure
-`cx : F → ℕ` (intuitively, the encoding length of a formula).
-
-> **Definition 6.1 (Polynomial boundedness).** A system `P` is *polynomially
-> bounded* with respect to `cx`, written `PBounded cx P`, when there exist constants
-> `c, k : ℕ` such that every theorem admits a short proof:
-> `∀ f ∈ Prov P, ∃ p, concl p = f ∧ size p ≤ c · (cx f + 1)^k`.
-
-The single pair `(c, k)` must work uniformly across the entire repertoire; this
-uniformity is the crux of the closure analysis.
-
-> **Theorem 6.2 (Binary join preserves p-boundedness).** If `PBounded cx P` and
-> `PBounded cx Q`, then `PBounded cx (union P Q)`.
-
-*Proof sketch.* Let `(c₁, k₁)` witness `P` and `(c₂, k₂)` witness `Q`. Put
-`c := c₁ + c₂` and `k := max(k₁, k₂)`. Take any `f ∈ Prov(union P Q) = Prov P ∪ Prov
-Q`. If `f ∈ Prov P`, pick the short `P`-proof `p` with `P.size p ≤ c₁ (cx f+1)^{k₁}`;
-inject it as `inl p`, whose size in the union is unchanged. Since `c₁ ≤ c` and
-`(cx f+1)^{k₁} ≤ (cx f+1)^{k}` (as `cx f + 1 ≥ 1`), we get
-`size(inl p) ≤ c (cx f+1)^k`. The case `f ∈ Prov Q` is symmetric with `inr`. ∎
-
-The same idea scales to any *finite* family. This is the quantitative flagship.
-
-> **Theorem 6.3 (Finite indexed join preserves p-boundedness).** Let `ι` be a finite
-> index type and `P : ι → ProofSys F` a family with `PBounded cx (P i)` for every `i`.
-> Then `PBounded cx (iUnion P)`.
-
-*Proof sketch.* For each `i`, choose witnesses `(c_i, k_i)`. Because `ι` is finite,
-the sets `{c_i}` and `{k_i}` are finite; set `c := Σ_i c_i` (or `max_i c_i`) and
-`k := max_i k_i`, both well-defined. Given `f ∈ Prov(iUnion P) = ⋃_i Prov(P i)`, fix
-an index `j` with `f ∈ Prov(P j)` and a short `P j`-proof `p` with
-`(P j).size p ≤ c_j (cx f+1)^{k_j}`. Its image `⟨j, p⟩` in `iUnion P` has the same
-size, and `c_j ≤ c`, `(cx f+1)^{k_j} ≤ (cx f+1)^{k}` give `size⟨j,p⟩ ≤ c (cx f+1)^k`.
-Hence `(c, k)` is a uniform witness. ∎
-
-### 6.1 Why finiteness is essential
-
-The proof of Theorem 6.3 consumes finiteness in exactly one place: forming
-`max_i k_i` and a finite sum/max of the `c_i`. For an *infinite* family with
-exponents `k_i → ∞` or constants `c_i → ∞`, no single `(c, k)` can dominate every
-component, and `iUnion P` need not be p-bounded even when each `P i` is. This is not
-an artifact of the argument: it is the genuine mathematical boundary. The
-**Cook–Reckhow optimality conjecture** — that no single proof system p-simulates all
-others — is precisely the assertion that the jump from finite to countable joins
-cannot be made uniformly. Our framework localizes the conjecture: the finite case is
-a theorem (6.3); the infinite case, *with a shared bound*, would follow by the same
-argument, so the entire difficulty is the absence of a shared bound across an
-infinite family. See Section 9.3.
+These four lemmas isolate the only nontrivial algebra in the development.
+Everything else is dimension bookkeeping.
 
 ---
 
-## 7. Algorithms
+## 4. Main theorem: irreducible characteristic polynomial implies irreducible action
 
-The abstract theory yields concrete procedures whenever provable sets are finite or
-enumerable. We record three.
+**Theorem 4.1 (Irreducible Action Theorem).** Let $V$ be a finite-dimensional
+$K$-vector space and $\varphi \in \mathrm{End}_K(V)$ with $\chi_\varphi$
+irreducible. Then for every $\varphi$-invariant submodule $W \subseteq V$,
 
-### 7.1 Simulation test (finite repertoires)
+$$
+W = \{0\} \quad\text{or}\quad W = V .
+$$
 
-To decide `Simulates Q P` when both repertoires are finite, check `Prov P ⊆ Prov Q`
-directly by membership tests. Complexity: `O(|Prov P| · T_Q)` where `T_Q` is the cost
-of a `Q`-membership test. Simulation-equivalence is two such tests.
+*Proof sketch.* Suppose $W$ is $\varphi$-invariant and $W \neq \{0\}$; we show
+$W = V$. Consider the restriction $\varphi|_W$.
 
-### 7.2 Join / meet repertoire computation
+1. *The restricted minimal polynomial is the full $\chi_\varphi$.* By Lemma 3.3,
+   $\mu_{\varphi|_W} \mid \mu_\varphi$, and by Lemma 3.4, $\mu_\varphi =
+   \chi_\varphi$, so $\mu_{\varphi|_W} \mid \chi_\varphi$. Because $W \neq
+   \{0\}$, the restricted map acts on a nonzero space, so $\mu_{\varphi|_W} \neq
+   1$. Since $\chi_\varphi$ is irreducible and $\mu_{\varphi|_W}$ is a monic
+   nonconstant divisor of it, $\mu_{\varphi|_W} = \chi_\varphi$.
 
-By Theorems 3.2 and 3.4, computing the repertoire of a combination reduces to a set
-union or intersection of the component repertoires — `O(|Prov P| + |Prov Q|)` with
-hashing. This makes the lattice operations executable: one never needs to inspect
-proof internals, only repertoires.
+2. *Dimension counting.* The degree of the minimal polynomial of any
+   endomorphism is at most the dimension of the space it acts on (it divides
+   the characteristic polynomial of that restricted map, whose degree equals
+   $\dim W$). Hence
 
-### 7.3 Uniform polynomial-bound synthesis
+   $$
+   \dim_K W \;\geq\; \deg \mu_{\varphi|_W} \;=\; \deg \chi_\varphi \;=\; \dim_K V .
+   $$
 
-Given per-system witnesses `(c_i, k_i)` for a finite family, the constructive content
-of Theorem 6.3 is an algorithm that returns the *combined* witness `(Σ c_i, max k_i)`
-in `O(|ι|)` time. This is the formal underpinning of the portfolio guarantee in
-Section 8.
+   Combined with $\dim_K W \leq \dim_K V$ (as $W \subseteq V$), we get
+   $\dim_K W = \dim_K V$, and therefore $W = V$. $\qquad\blacksquare$
 
----
-
-## 8. Applications
-
-**Solver portfolios.** Modern SAT/SMT practice runs several solvers in parallel and
-accepts the first certificate produced. This is exactly the join `iUnion`. Theorem
-3.6 says the portfolio's repertoire is the union of its members' repertoires (it
-solves anything any member solves), and Theorem 6.3 guarantees the portfolio stays
-polynomially bounded if its members are — it is never asymptotically worse than its
-best member. The synthesis algorithm of Section 7.3 produces the explicit combined
-bound.
-
-**Cross-validation / redundant certification.** Safety-critical pipelines often
-demand that two independent tools confirm the same result. This is the meet:
-Theorem 3.4 says the cross-validated repertoire is the intersection, and the
-*additive* size of meet proofs (Definition 3.3) quantifies the cost of redundancy —
-you pay the sum of both certificates. This makes the price of assurance explicit and
-prepares the "meet preserves additive bounds" result of Section 9.1.
-
-**Optimality landscape.** Theorem 5.2 identifies complete systems as simulation-maximal,
-giving a clean target for "as powerful as possible" reference systems, while Section
-6.1 pinpoints where efficiency-optimality becomes the famous open conjecture.
+The theorem is sharp in its hypotheses. Irreducibility cannot be weakened to,
+say, having no repeated roots: a diagonalizable map with distinct eigenvalues in
+$K$ has many invariant lines. And the field must be one over which the
+characteristic polynomial can genuinely be irreducible of degree $> 1$; over an
+algebraically closed field the theorem is non-vacuous only in dimension one.
 
 ---
 
-## 9. Discussion and future work
+## 5. Corollaries across three domains
 
-The framework converts proof-complexity comparisons into lattice operations on
-subsets, with a quantitative layer that respects joins up to finite arity. We close
-with the research program these results open.
+### 5.1 Coding theory: orbit spanning
 
-### 9.1 Meet preserves additive proof-size bounds
+**Lemma 5.1 (Orbit span is invariant).** For any $\varphi \in \mathrm{End}_K(V)$
+and any $v \in V$, the subspace
 
-The join lifts to the polynomial setting (Theorems 6.2–6.3). The dual question
-concerns the meet, whose proofs are pairs and whose size therefore *adds*:
-`(meet P Q).size = P.size ∘ fst + Q.size ∘ snd`. The optimal proof size in the meet
-is bounded by the *sum* of optimal sizes in the components; combined with Theorem
-3.4 this should give a quantitative meet law dual to Theorem 6.2:
-`PBounded cx P → PBounded cx Q → PBounded cx (meet P Q)`, taking `c = c₁ + c₂` and
-exponent `max(k₁, k₂)`. The `size` field and the fibred-product construction are
-already in place, so this is one provable lemma away. *Testable and falsifiable: the
-meet of two p-bounded systems is p-bounded.*
+$$
+\mathrm{span}_K \{\,\varphi^m v : m \in \mathbb{N}\,\}
+$$
 
-### 9.2 The simulation order as a complete distributive lattice
+is $\varphi$-invariant.
 
-Theorems 3.2, 3.4, 3.6, 3.9 say `Prov` is a surjective lattice homomorphism onto the
-powerset. With Theorem 2.6 in hand, one can form the quotient `ProofSys F / SimEquiv`
-and transport the `CompleteDistribLattice (Set F)` structure across the induced
-equivalence, obtaining a complete, distributive lattice whose order is exactly
-`Simulates` and which is order-isomorphic to `(Set F, ⊆)`, with `setSys` the
-canonical section. *Testable conjecture: the quotient carries a complete distributive
-lattice instance order-isomorphic to `Set F`.*
+*Proof sketch.* On a generator $\varphi^m v$, applying $\varphi$ yields
+$\varphi^{m+1} v$, again a generator; invariance extends to the whole span by
+linearity. $\square$
 
-### 9.3 p-optimal systems and the finite-to-infinite gap
+**Theorem 5.2 (Orbit Spanning Theorem).** If $\chi_\varphi$ is irreducible and
+$v \neq 0$, then
 
-A system is *p-optimal* when it simulates every p-bounded system with only
-polynomial blow-up. Theorem 6.3 already builds, from any *finite* family of p-bounded
-systems, a single p-bounded system simulating them all; the obstruction to a
-universal p-optimal system is exactly the jump from finite to countable joins. The
-finite case is closed, isolating the infinitary gap where the Cook–Reckhow
-conjecture lives. *Testable and falsifiable: a countable family `P : ℕ → ProofSys F`
-with a single shared `(c, k)` has p-bounded `iUnion P`; without a shared bound it
-need not.*
+$$
+\mathrm{span}_K \{\,\varphi^m v : m \in \mathbb{N}\,\} = V .
+$$
 
-### 9.4 Concrete instantiations
+*Proof sketch.* The orbit span is invariant (Lemma 5.1), hence $\{0\}$ or $V$
+(Theorem 4.1). It contains $v = \varphi^0 v \neq 0$, so it is not $\{0\}$;
+therefore it is $V$. $\square$
 
-Instantiating the abstract framework with resolution over CNF formulas and a Frege
-system would let one import known separations — e.g. the pigeonhole principle has
-polynomial Frege proofs but requires exponential resolution proofs — to witness
-`¬ Simulates Resolution Frege` within this lattice. The singleton/tautology-table
-constructions generalize to interpolation systems whose proofs encode Craig
-interpolants.
+This is the algebraic backbone of *linear feedback shift registers* and *cyclic
+codes*: an irreducible (indeed primitive) connection polynomial makes the state
+orbit visit a maximal spanning sequence, the source of maximal-length
+pseudorandom sequences and of cyclic codes generated by a single polynomial.
 
-### 9.5 Finite formula spaces and Dedekind numbers
+### 5.2 Finite geometry: Singer cycles
 
-When `F` is finite, every sound system has a finite repertoire and the simulation
-order is a finite distributive lattice. The maximality criterion becomes decidable
-by enumeration. A striking conjecture: for `F = Fin n`, the number of
-simulation-equivalence classes of sound systems equals the number of antichains in
-the powerset lattice of valid formulas — connecting proof-system collapse to
-**Dedekind numbers** and enumerative combinatorics.
+**Theorem 5.3 (No Fixed Proper Projective Subspace).** If $\chi_\varphi$ is
+irreducible, there is no submodule $W$ with $\{0\} \neq W \neq V$ that is
+$\varphi$-invariant.
+
+*Proof sketch.* Immediate contrapositive of Theorem 4.1: such a $W$ would be a
+$\varphi$-invariant submodule equal to neither $\{0\}$ nor $V$. $\square$
+
+In projective terms, an endomorphism with irreducible fingerprint induces a
+collineation of $\mathrm{PG}(n-1, q)$ fixing no proper projective subspace — a
+*Singer cycle*, after Singer's 1938 demonstration that such maps permute the
+points of a finite projective space in a single cycle. Singer cycles are the
+most transitive collineations a finite projective geometry admits.
+
+### 5.3 Group theory: certificate density and generation
+
+**Theorem 5.4 (Generation Lower Bound from Certificate Density).** Let $G$ be a
+finite group and $C : G \to \mathrm{Prop}$ a decidable predicate with at least
+one $g$ satisfying $C(g)$. Then
+
+$$
+\mathrm{density}(C) > 0 .
+$$
+
+*Proof sketch.* The numerator $\#\{g : C(g)\}$ is positive because the witness
+$g$ inhabits the subtype, and the denominator $\#G$ is positive because $G$
+contains the identity; the quotient of two positive naturals, cast to
+$\mathbb{Q}$, is positive. $\square$
+
+Modest as it is, this lemma is the formal hinge of every probabilistic
+generation argument: once a constant fraction of $G$ is certified, independent
+random draws hit certified elements with overwhelming probability, and certified
+elements — by Definition 2.4 — force the generated subgroup to be (almost) all
+of $G$.
+
+### 5.4 Specialization to prime fields
+
+**Theorem 5.5 (Singer certificate over $\mathbb{F}_p$).** Let $p$ be prime and
+$V$ a finite-dimensional $\mathbb{F}_p$-vector space. If $\varphi \in
+\mathrm{End}_{\mathbb{F}_p}(V)$ has irreducible $\chi_\varphi$, then every
+$\varphi$-invariant submodule is $\{0\}$ or $V$.
+
+*Proof sketch.* Direct instantiation of Theorem 4.1 with $K = \mathbb{F}_p =
+\mathbb{Z}/p\mathbb{Z}$. $\square$
+
+This is the case of greatest computational importance, since prime-field
+matrices are the workhorses of computational group theory and cryptography.
 
 ---
 
-## 10. Conclusion
+## 5.5 A worked example over $\mathbb{F}_5$
 
-By measuring proof systems solely through their repertoires, the apparently
-intractable comparison of proofs collapses, up to simulation, onto subset inclusion.
-Disjoint union, fibred product, and indexed union compute join, meet, and arbitrary
-join; every subset is realized; complete systems are maximal; and polynomial
-boundedness is closed under finite joins — exactly up to the finite/infinite
-boundary that houses the discipline's central open problem. The result is a complete
-order-theoretic map of the qualitative theory and a sharp delineation of where the
-quantitative theory turns hard.
+To make the mechanism concrete, take $K = \mathbb{F}_5$ and the companion matrix
+of the polynomial $X^2 + X + 1$,
+
+$$
+A = \begin{pmatrix} 0 & 4 \\ 1 & 4 \end{pmatrix} \in M_2(\mathbb{F}_5),
+$$
+
+whose characteristic polynomial is exactly $\chi_A(X) = X^2 + X + 1$. This
+quadratic has no root in $\mathbb{F}_5$ (one checks $x^2 + x + 1 \not\equiv 0$
+for $x = 0,1,2,3,4$), hence it is irreducible. By Theorem 4.1, $A$ has no
+invariant line. Indeed, an invariant line would be spanned by an eigenvector,
+and the absence of eigenvalues in $\mathbb{F}_5$ rules this out. Correspondingly,
+the orbit of, say, $v = (1,0)^\top$ is
+
+$$
+v = (1,0)^\top,\quad Av = (0,1)^\top,
+$$
+
+which are already linearly independent and so span all of $\mathbb{F}_5^2$,
+confirming Theorem 5.2. By contrast, the companion matrix of the *reducible*
+polynomial $X^2 - 1 = (X-1)(X+1)$,
+
+$$
+B = \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix},
+$$
+
+fixes the two eigenlines spanned by $(1,1)^\top$ and $(1,-1)^\top$, so it admits
+nontrivial invariant subspaces — exactly the non-certified case. This dichotomy
+is the empirical content reproduced by the accompanying numerical demonstrations.
+
+## 6. Algorithms
+
+The theory translates directly into certification procedures.
+
+**Algorithm A (Certify irreducible action).** *Input:* a matrix $A \in
+M_n(\mathbb{F}_q)$. *Output:* a boolean certifying that $A$ has no nontrivial
+invariant subspace.
+
+1. Compute $\chi_A(X) = \det(X I - A) \in \mathbb{F}_q[X]$ (e.g. by the
+   Faddeev–LeVerrier recurrence or fraction-free Gaussian elimination),
+   $O(n^3)$ field operations.
+2. Test $\chi_A$ for irreducibility over $\mathbb{F}_q$ (e.g. Rabin's test:
+   verify $X^{q^n} \equiv X$ and $\gcd(X^{q^{n/\ell}} - X,\, \chi_A) = 1$ for
+   each prime $\ell \mid n$), polynomial time in $n$ and $\log q$.
+3. Return *true* iff $\chi_A$ is irreducible.
+
+By Theorem 4.1, a *true* verdict is a sound certificate of irreducible action.
+
+**Algorithm B (Orbit-span verification).** *Input:* $A \in M_n(\mathbb{F}_q)$,
+nonzero $v \in \mathbb{F}_q^n$. *Output:* the dimension of the orbit span.
+
+1. Initialize a list with $v$; maintain a row-echelon basis.
+2. Repeatedly append $A^m v$, reducing against the current basis; stop when a
+   new iterate is linearly dependent (which must occur within $n$ steps).
+3. Return the basis size.
+
+By Theorem 5.2, if $\chi_A$ is irreducible and $v \neq 0$ the returned dimension
+is exactly $n$; this gives an independent empirical check of the theorem.
+
+**Algorithm C (Certificate-density estimate).** *Input:* a finite group $G$
+(given by efficient sampling) and predicate $C$. *Output:* a Monte-Carlo
+estimate of $\mathrm{density}(C)$.
+
+1. Draw $N$ independent uniform samples $g_1, \dots, g_N$ from $G$.
+2. Return $\frac{1}{N}\sum_i \mathbf{1}[C(g_i)]$.
+
+For $C(g) = $ "$\chi_g$ is irreducible," Theorem 5.4 guarantees the true density
+is positive, and the conjectures of §8 predict its asymptotics.
+
+---
+
+## 7. Applications
+
+- **Cryptography.** Maximal-period linear feedback shift registers require a
+  connection polynomial that is irreducible (indeed primitive); Theorem 5.2
+  certifies the spanning property that yields maximal-length sequences for
+  stream ciphers and pseudorandom generators. Densely certified matrix groups
+  underpin randomized key-agreement and hashing constructions.
+
+- **Coding theory.** Cyclic codes are exactly the ideals of $\mathbb{F}_q[X] /
+  (X^m - 1)$, generated by a single polynomial; irreducible-fingerprint shifts
+  give minimal cyclic codes and BCH-type constructions with controlled distance.
+
+- **Computational group theory.** The recognition algorithms of Neumann–Praeger
+  and successors rely on finding elements with irreducible (or "ppd") action to
+  pin down the isomorphism type of an unknown matrix group; Algorithm A is
+  precisely the certification step, and Theorem 5.4 supplies the density
+  guarantee that randomized search terminates quickly.
+
+- **Finite geometry.** Singer cycles (Theorem 5.3) organize $\mathrm{PG}(n-1,q)$
+  as a single orbit, the foundation of difference-set and perfect-difference
+  family constructions.
+
+---
+
+## 8. Conjectures and future directions
+
+The formal development records two conjectures that quantify the qualitative
+theory above.
+
+**Conjecture A (Linear certificate-density lower bound).** For fixed prime power
+$q$ and growing $n$, the density of elements of $\mathrm{GL}_n(\mathbb{F}_q)$
+with irreducible characteristic polynomial satisfies
+
+$$
+\frac{\#\{\,g \in \mathrm{GL}_n(\mathbb{F}_q) : \chi_g \text{ irreducible}\,\}}
+     {\#\mathrm{GL}_n(\mathbb{F}_q)} \;\geq\; \frac{c_q}{n}
+$$
+
+for some constant $c_q > 0$. (The expected leading behavior is $\sim 1/n$, in
+analogy with the proportion of irreducible monic polynomials of degree $n$,
+$\approx 1/n$ by the prime-polynomial theorem.)
+
+**Conjecture B (Certificate sufficiency for high-probability generation).** For
+random $g, h \in \mathrm{GL}_n(\mathbb{F}_q)$, if $\chi_g$ is irreducible and
+$\det(h)$ generates $\mathbb{F}_q^\times$, then
+
+$$
+\Pr[\,\langle g, h\rangle = \mathrm{GL}_n(\mathbb{F}_q)\,] \;\geq\; 1 - O(q^{-1}).
+$$
+
+Further directions naturally suggested by the framework:
+
+1. **From $\mathrm{End}$ to $\mathrm{GL}$.** Promote the certificate from a
+   structural statement about a single endomorphism to a quantitative bound on
+   pairs, formalizing Conjecture B via the irreducible-action of $g$ together
+   with the determinant condition on $h$.
+2. **Primitive prime divisor (ppd) certificates.** Replace plain irreducibility
+   with the weaker, denser ppd condition of Neumann–Praeger, broadening the
+   certified class while preserving the generation guarantee.
+3. **Effective density bounds.** Make $c_q$ in Conjecture A explicit using
+   cycle-index / generating-function machinery for $\mathrm{GL}_n(\mathbb{F}_q)$,
+   yielding concrete sample-complexity bounds for Algorithm C.
+4. **Tensor and wreath structures.** Extend the no-invariant-subspace criterion
+   to modules with extra structure (tensor decompositions, imprimitivity
+   blocks), matching the Aschbacher class analysis used in matrix-group
+   recognition.
+5. **Projective and unitary analogues.** Transport the Singer-cycle statement
+   (Theorem 5.3) to other classical groups, certifying maximal collineations in
+   symplectic, orthogonal, and unitary geometries.
+
+---
+
+## 8.1 On the role of the finite field
+
+The theory is genuinely a finite-field phenomenon. Over $\mathbb{C}$, or any
+algebraically closed field, every polynomial of degree $\geq 2$ factors, so the
+only endomorphisms with irreducible characteristic polynomial act on
+one-dimensional spaces and Theorem 4.1 is vacuous beyond $n = 1$. Over
+$\mathbb{R}$ irreducible quadratics exist (e.g. rotations), giving genuine
+two-dimensional examples, but no higher-degree irreducibles. It is precisely
+over finite fields $\mathbb{F}_q$ — where irreducible polynomials of *every*
+degree $n$ exist, and in abundance ($\approx q^n/n$ of them) — that the theorem
+becomes a rich source of irreducible actions in all dimensions. This is also
+why the construction matters computationally: finite fields are the arena of
+coding theory, cryptography, and computational group theory, and the existence
+of irreducible polynomials of every degree is what makes Singer cycles, maximal
+shift registers, and densely generated matrix groups possible.
+
+It is instructive to relate the theorem to the $K[X]$-module viewpoint. The
+pair $(V, \varphi)$ is a module over the principal ideal domain $K[X]$, with
+$X$ acting as $\varphi$. Invariant subspaces are exactly $K[X]$-submodules, so
+Theorem 4.1 says: *if $\chi_\varphi$ is irreducible, then $(V, \varphi)$ is a
+simple $K[X]$-module.* By the structure theorem, $(V,\varphi) \cong
+K[X]/(\mu_\varphi)$ when the module is cyclic, and $K[X]/(f)$ is a field — hence
+simple — exactly when $f$ is irreducible. Our development reaches the same
+conclusion by an elementary minimal-polynomial-and-dimension argument that
+avoids invoking the full structure theorem, which keeps the formal proof short
+and its dependencies light.
+
+## 9. Discussion
+
+The conceptual content of this work is a reduction: a property quantified over
+all subspaces (irreducible action) becomes a single polynomial-time algebraic
+test (irreducibility of $\chi_\varphi$). The reduction is not new mathematics —
+it is folklore that an irreducible characteristic polynomial yields a cyclic,
+irreducible module — but rendering it as a clean chain of formally verified
+lemmas, and surrounding it with the certificate abstractions (Definitions
+2.2–2.4) that connect it to the random-generation literature, gives a reusable,
+trustworthy core. The technical heart is small and robust: Cayley–Hamilton, the
+inheritance of annihilating polynomials under restriction (Lemma 3.2), and
+dimension counting. Everything domain-specific — coding theory, finite geometry,
+group theory — is a corollary obtained by reinterpreting the same structural
+fact. We regard this economy as the main strength of the framework: one theorem,
+formally certified, paying dividends across four neighboring fields.
+
+---
+
+## References
+
+- Dixon, J. D. (1969). *The probability of generating the symmetric group.*
+  Mathematische Zeitschrift, 110, 199–205.
+- Huppert, B. (1967). *Endliche Gruppen I.* Springer.
+- Neumann, P. M., Praeger, C. E. (1992). *A recognition algorithm for special
+  linear groups.* Proc. London Math. Soc., 65(3), 555–603.
+- Singer, J. (1938). *A theorem in finite projective geometry and some
+  applications to number theory.* Trans. Amer. Math. Soc., 43, 377–385.
