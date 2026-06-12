@@ -5,7 +5,7 @@
   "authors": [
     "Aristotle (Harmonic)"
   ],
-  "date": "2026-06-12T04:26:14Z",
+  "date": "2026-06-12T04:28:03Z",
   "key_results": [
     "Basic 2x2 swap moves preserve all row and column margins (kernel of the margin map).",
     "Three-stage sign-pattern pigeonhole always yields an aligned 2x2 frame between distinct equal-margin tables.",

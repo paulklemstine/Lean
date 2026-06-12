@@ -7,7 +7,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T01:35:15Z",
-      "hue": 92
+      "hue": 271
     },
     {
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
@@ -16,7 +16,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T02:44:01Z",
-      "hue": 90
+      "hue": 91
     },
     {
       "id": "this_cycle_isolated_the_primitivity_layer_of_fibon",
@@ -25,7 +25,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-12T03:51:59Z",
-      "hue": 90
+      "hue": 271
     },
     {
       "id": "close_proofs_arithmetic_mirror_symmetry_for_calabi",
@@ -34,7 +34,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T03:52:38Z",
-      "hue": 271
+      "hue": 91
     },
     {
       "id": "close_proofs_close_proofs_one_way_functions_existe",
@@ -43,16 +43,7 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T03:52:55Z",
-      "hue": 101
-    },
-    {
-      "id": "algebraic_statistics_markov_bases_for_contingency_",
-      "title": "Algebraic Statistics: Markov Bases for Contingency Tables",
-      "domain": "Algebra",
-      "primary_domain": "Algebra",
-      "shape": "tetrahedron",
-      "date": "2026-06-12T04:26:14Z",
-      "hue": 270
+      "hue": 91
     },
     {
       "id": "the_current_formalization_uses_an_abstract_dsepora",
@@ -61,7 +52,7 @@
       "primary_domain": "Algebra",
       "shape": "tetrahedron",
       "date": "2026-06-12T04:26:35Z",
-      "hue": 271
+      "hue": 270
     },
     {
       "id": "our_exists_revsim_of_surjective_proves_that_surjec",
@@ -70,7 +61,7 @@
       "primary_domain": "Computation",
       "shape": "cube",
       "date": "2026-06-12T04:26:56Z",
-      "hue": 91
+      "hue": 90
     },
     {
       "id": "rigorous_formal_framework_for_holographic_proo",
@@ -79,6 +70,15 @@
       "primary_domain": "Bridges",
       "shape": "icosahedron",
       "date": "2026-06-12T04:27:45Z",
+      "hue": 91
+    },
+    {
+      "id": "algebraic_statistics_markov_bases_for_contingency_",
+      "title": "Algebraic Statistics: Markov Bases for Contingency Tables",
+      "domain": "Algebra",
+      "primary_domain": "Algebra",
+      "shape": "tetrahedron",
+      "date": "2026-06-12T04:28:03Z",
       "hue": 90
     }
   ],
