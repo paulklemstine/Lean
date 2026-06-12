@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-12T03:52:38Z",
+    "domain": "Novelty",
+    "exp_id": "f1cb7dfa",
+    "filename": "close_proofs_arithmetic_mirror_symmetry_for_calabi.json",
+    "pkg_num": 4,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "Close Proofs: Arithmetic Mirror Symmetry for Calabi-Yau"
+  },
+  {
     "date": "2026-06-12T03:51:59Z",
     "domain": "Algebra",
     "exp_id": "9b2bee2f",
     "filename": "this_cycle_isolated_the_primitivity_layer_of_fibon.json",
     "pkg_num": 3,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.66176,
     "title": "Strong Divisibility Sequences: Primitive Divisors and the Calculus of Apparition"
   },
   {
@@ -36,6 +46,14 @@ window.PACKAGE_INDEX = [
 ];
 
 window.PACKAGE_DB_INDEX = {
+  "close_proofs_arithmetic_mirror_symmetry_for_calabi.json": {
+    "domain": "Novelty",
+    "exp_id": "f1cb7dfa",
+    "source_exp_ids": [
+      "f8049429"
+    ],
+    "title": "Close Proofs: Arithmetic Mirror Symmetry for Calabi-Yau"
+  },
   "the_file_catalogapplicationscombinatorialspeciesle.json": {
     "domain": "Novelty",
     "exp_id": "0805a8b9",
@@ -71,7 +89,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T01:35:15Z",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 272,
       "id": "this_cycle_formalized_a_self_contained_fragment_of",
       "primary_domain": "Bridges",
       "priority_score": 0.4107094228460233,
@@ -82,7 +100,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T02:44:01Z",
       "domain": "Novelty",
-      "hue": 92,
+      "hue": 270,
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
       "primary_domain": "Bridges",
       "priority_score": 0.60229,
@@ -93,13 +111,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:51:59Z",
       "domain": "Algebra",
-      "hue": 272,
+      "hue": 270,
       "id": "this_cycle_isolated_the_primitivity_layer_of_fibon",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.66176,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "Strong Divisibility Sequences: Primitive Divisors and the Calculus of Apparition"
+    },
+    {
+      "date": "2026-06-12T03:52:38Z",
+      "domain": "Novelty",
+      "hue": 270,
+      "id": "close_proofs_arithmetic_mirror_symmetry_for_calabi",
+      "primary_domain": "Bridges",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "icosahedron",
+      "title": "Close Proofs: Arithmetic Mirror Symmetry for Calabi-Yau"
     }
   ]
 };
