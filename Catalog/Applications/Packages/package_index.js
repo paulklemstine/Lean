@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "97e15ee6",
     "filename": "the_file_tropicalvaluationlimitbridgelean_formaliz.json",
     "pkg_num": 26,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.69648,
     "title": "The Valuation as a Tropical Morphism, Up to Its Defect"
   },
   {
@@ -785,8 +785,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "the_file_tropicalvaluationlimitbridgelean_formaliz",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.69648,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Valuation as a Tropical Morphism, Up to Its Defect"
     }
