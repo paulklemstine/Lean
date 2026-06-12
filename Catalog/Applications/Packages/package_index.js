@@ -4,13 +4,23 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-12T09:34:39Z",
+    "domain": "MachineLearning",
+    "exp_id": "bc5a47bb",
+    "filename": "close_proofs_the_file_basiclean_establishes_a_full.json",
+    "pkg_num": 19,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "The Origami of Deep Networks: ReLU Depth Separation via the Tent Map"
+  },
+  {
     "date": "2026-06-12T09:34:18Z",
     "domain": "Cryptography",
     "exp_id": "c508c412",
     "filename": "close_proofs_this_cycle_isolated_the_arithmetic_co.json",
     "pkg_num": 18,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4453462700360554,
     "title": "One-Way Functions Are Computational, Not Information-Theoretic"
   },
   {
@@ -234,6 +244,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Fibonacci Divisibility Lattice: Faithful Arithmetic and the Rank of Apparition"
   },
+  "close_proofs_the_file_basiclean_establishes_a_full.json": {
+    "domain": "MachineLearning",
+    "exp_id": "bc5a47bb",
+    "source_exp_ids": [
+      "5dac3011"
+    ],
+    "title": "The Origami of Deep Networks: ReLU Depth Separation via the Tent Map"
+  },
   "close_proofs_this_cycle_isolated_the_arithmetic_co.json": {
     "domain": "Cryptography",
     "exp_id": "c508c412",
@@ -336,7 +354,15 @@ window.PACKAGE_DB_INDEX = {
 // Knowledge Graph Data (auto-generated from lineage.json)
 window.PACKAGE_GRAPH = {
   "domain_bridges": [],
-  "edges": [],
+  "edges": [
+    {
+      "label": "inspired by",
+      "source": "the_file_basiclean_establishes_a_fully_formal_axio",
+      "strength": 1.0,
+      "target": "close_proofs_the_file_basiclean_establishes_a_full",
+      "type": "provenance"
+    }
+  ],
   "nodes": [
     {
       "date": "2026-06-12T01:35:15Z",
@@ -352,7 +378,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T02:44:01Z",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 270,
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
       "primary_domain": "Bridges",
       "priority_score": 0.60229,
@@ -363,7 +389,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:51:59Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 100,
       "id": "this_cycle_isolated_the_primitivity_layer_of_fibon",
       "primary_domain": "Algebra",
       "priority_score": 0.66176,
@@ -374,7 +400,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:38Z",
       "domain": "Novelty",
-      "hue": 95,
+      "hue": 314,
       "id": "close_proofs_arithmetic_mirror_symmetry_for_calabi",
       "primary_domain": "Bridges",
       "priority_score": 0.4038523076923077,
@@ -396,7 +422,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:26:56Z",
       "domain": "Computation",
-      "hue": 112,
+      "hue": 272,
       "id": "our_exists_revsim_of_surjective_proves_that_surjec",
       "primary_domain": "Computation",
       "priority_score": 0.65648,
@@ -407,7 +433,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:27:45Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 270,
       "id": "rigorous_formal_framework_for_holographic_proo",
       "primary_domain": "Bridges",
       "priority_score": 0.47824,
@@ -418,7 +444,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:03Z",
       "domain": "Algebra",
-      "hue": 271,
+      "hue": 90,
       "id": "algebraic_statistics_markov_bases_for_contingency_",
       "primary_domain": "Algebra",
       "priority_score": 0.63808,
@@ -429,7 +455,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:20Z",
       "domain": "Algebra",
-      "hue": 271,
+      "hue": 91,
       "id": "the_current_formalization_uses_an_abstract_dsepora",
       "primary_domain": "Algebra",
       "priority_score": 0.73536,
@@ -451,7 +477,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:05:08Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 91,
       "id": "extend_the_integration_deficiency_framework_to_a_f",
       "primary_domain": "Algebra",
       "priority_score": 0.569817731958763,
@@ -462,7 +488,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:05:26Z",
       "domain": "Algebra",
-      "hue": 92,
+      "hue": 112,
       "id": "the_current_framework_uses_a_fixed_novelty_thresho",
       "primary_domain": "Algebra",
       "priority_score": 0.5326478527607362,
@@ -484,7 +510,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T07:37:45Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 90,
       "id": "close_proofs_close_proofs_cobhams_theorem_1972_sta",
       "primary_domain": "Algebra",
       "priority_score": 0.6822099399599733,
@@ -495,7 +521,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T08:13:30Z",
       "domain": "Novelty",
-      "hue": 92,
+      "hue": 90,
       "id": "the_file_basiclean_establishes_a_fully_formal_axio",
       "primary_domain": "Bridges",
       "priority_score": 0.4599545454545455,
@@ -506,7 +532,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T08:13:58Z",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 275,
       "id": "close_proofs_close_proofs_this_cycle_added_catalog",
       "primary_domain": "Bridges",
       "priority_score": 0.7157600000000001,
@@ -517,7 +543,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T09:34:00Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 271,
       "id": "the_current_formalization_establishes_the_structur",
       "primary_domain": "Bridges",
       "priority_score": 0.6881600000000001,
@@ -528,13 +554,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T09:34:18Z",
       "domain": "Cryptography",
-      "hue": 272,
+      "hue": 280,
       "id": "close_proofs_this_cycle_isolated_the_arithmetic_co",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4453462700360554,
+      "quality": "partial",
       "shape": "dodecahedron",
       "title": "One-Way Functions Are Computational, Not Information-Theoretic"
+    },
+    {
+      "date": "2026-06-12T09:34:39Z",
+      "domain": "MachineLearning",
+      "hue": 270,
+      "id": "close_proofs_the_file_basiclean_establishes_a_full",
+      "primary_domain": "MachineLearning",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "sphere_rings",
+      "title": "The Origami of Deep Networks: ReLU Depth Separation via the Tent Map"
     }
   ]
 };
