@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "dbb92078",
     "filename": "the_current_framework_uses_a_fixed_novelty_thresho.json",
     "pkg_num": 12,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5326478527607362,
     "title": "Certified Novelty: A Metric Geometry of What Counts as New"
   },
   {
@@ -357,8 +357,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "the_current_framework_uses_a_fixed_novelty_thresho",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5326478527607362,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "Certified Novelty: A Metric Geometry of What Counts as New"
     }
