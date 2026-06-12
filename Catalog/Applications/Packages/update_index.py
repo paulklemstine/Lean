@@ -74,7 +74,7 @@ def get_creation_date(filename, catalog_root):
     try:
         import subprocess
         # Path relative to git root
-        rel_path = os.path.join("Catalog", "Applications", "Packages", filename)
+        rel_path = os.path.relpath(os.path.abspath(filename), catalog_root)
         result = subprocess.run(
             ["git", "log", "--diff-filter=A", "--format=%aI", "--", rel_path],
             capture_output=True, text=True, cwd=catalog_root
@@ -103,7 +103,10 @@ def load_quality_scores():
     scores = {}
     # Try Aether workspace (local dev) then relative path
     candidates = [
+        # From Catalog/Applications/Packages/
         os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "Aether", ".aether_workspace", "autoresearch", "autoresearch.jsonl")),
+        # From docs/
+        os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Aether", ".aether_workspace", "autoresearch", "autoresearch.jsonl")),
         os.path.abspath(os.path.join(os.path.dirname(__file__), "autoresearch.jsonl")),
     ]
     path = None
@@ -145,10 +148,17 @@ def update_index():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     os.chdir(script_dir)
 
-    # Find the Catalog root (grandparent of Packages dir) for git commands
-    catalog_root = os.path.abspath(os.path.join(script_dir, "..", ".."))
+    # Find the Catalog root or git root dynamically by walking up
+    catalog_root = script_dir
+    while catalog_root and catalog_root != os.path.dirname(catalog_root):
+        if os.path.exists(os.path.join(catalog_root, ".git")) or os.path.exists(os.path.join(catalog_root, "Aether")):
+            break
+        catalog_root = os.path.dirname(catalog_root)
+    else:
+        # Fallback if not found
+        catalog_root = os.path.abspath(os.path.join(script_dir, "..", ".."))
 
-    json_files = sorted(f for f in glob.glob("*.json") if f not in ("index.json", "package.json", "lineage.json", "future_directions.json", "statement.json"))
+    json_files = sorted(f for f in glob.glob("*.json") if f not in ("index.json", "package.json", "lineage.json", "future_directions.json", "statement.json", "future_directions_snapshot.json"))
 
     viz_dir = os.path.join(script_dir, "visualizations")
     os.makedirs(viz_dir, exist_ok=True)
