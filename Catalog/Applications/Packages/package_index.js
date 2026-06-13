@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f70562f4",
     "filename": "close_proofs_thermodynamic_proof_erasure_landauers.json",
     "pkg_num": 72,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6708000000000001,
     "title": "Close Proofs: Thermodynamic Proof Erasure - Landauer's Principle for Mathematics"
   },
   {
@@ -2189,8 +2189,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "close_proofs_thermodynamic_proof_erasure_landauers",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6708000000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Close Proofs: Thermodynamic Proof Erasure - Landauer's Principle for Mathematics"
     }
