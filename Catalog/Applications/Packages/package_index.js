@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "fab579e5",
     "filename": "speculativeautoresearchfibonaccientrypointdualityl.json",
     "pkg_num": 111,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6724,
     "title": "Entry-Point Duality for the Fibonacci Sequence"
   },
   {
@@ -3404,8 +3404,8 @@ window.PACKAGE_GRAPH = {
       "hue": 100,
       "id": "speculativeautoresearchfibonaccientrypointdualityl",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6724,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Entry-Point Duality for the Fibonacci Sequence"
     }
