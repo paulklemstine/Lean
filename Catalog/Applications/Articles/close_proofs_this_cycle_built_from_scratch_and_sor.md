@@ -1,204 +1,245 @@
-# The Arithmetic of "Too Few Codes": Why Shallow Machines Can Never Say Enough
+# The Shape of Sameness: When "Equal" Becomes a Journey
 
-Imagine you run a tiny publishing house whose entire catalog consists of
-numbered cards. Card 0, card 1, card 2, and so on, up to some last card.
-Each card carries exactly one picture. A customer walks in and asks for a
-specific picture — say, a photograph of their grandmother. You can only sell
-it if one of your cards happens to carry that exact image.
+## A circle, a counter, and the question of identity
 
-Now suppose you make a promise to your customers: *"You will never have to
-flip past card number k."* Every picture worth having, you claim, sits on one
-of the first few cards. It is a comforting promise. It is also, as we are about
-to see, a mathematical impossibility the moment the world contains more
-pictures than you have low-numbered cards.
+Take a piece of string and tie its ends together. You now hold a loop. Trace
+your finger around it once, twice, three times — or go the other way. Something
+quietly profound is happening: each way of running around the loop is *different*,
+yet they all live on the very same circle. You cannot smooth a double loop into
+a single loop without cutting the string. The number of times you wind around,
+counted with a sign for direction, is a genuine, indestructible invariant.
 
-This little parable is the whole story of a deep and ancient idea in computer
-science — **incompressibility** — stripped down to its bare, finite skeleton.
-The results below are exact, provable, and surprisingly sharp. They tell us
-something permanent about the limits of short descriptions, shallow circuits,
-small machine-learning models, and compressed files. And every one of them
-follows from a single childlike observation: *you cannot point at more things
-than you have fingers.*
+That single observation — that *how* you go around a circle carries real
+information — is the seed of one of the most surprising mathematical movements
+of the last two decades: **Homotopy Type Theory**, or HoTT. Its radical claim is
+that the everyday notion of "equals" is far richer than the flat, yes-or-no
+relation we learned in school. In HoTT, to say two things are equal is to
+exhibit a *path* between them, and there can be many genuinely different paths.
+Equality has shape.
 
-## What is a "description," really?
+This article tells the story of a small, self-contained mathematical
+construction that captures the heart of that idea and ties it back to the
+classical mathematics most of us already trust. We will meet a strict ladder of
+"how complicated can sameness get," a counter that turns loops into integers, a
+principle that says "equivalent things are interchangeable," and a precise
+accounting of how the great foundational systems of mathematics relate in
+strength. Every result below is stated exactly; nothing is hidden behind a
+reference.
 
-Strip away the romance of computation and you are left with a humble object:
-an **encoder**. An encoder is just a function that turns short labels into
-things. Type a short code, get an output. A ZIP file is an encoder: feed it the
-compressed bytes, out comes your document. A neural network is an encoder: feed
-it weights, out comes a function. A circuit family is an encoder: feed it a
-wiring diagram, out comes a Boolean function.
+## The ladder of complexity: truncation levels
 
-Let us be precise but gentle. Suppose there are `N` possible codes, numbered
-`0, 1, 2, …, N−1`. An encoder `E` assigns to each code number `i` some output
-`E(i)` living in a universe of objects we'll call `α`. The objects could be
-images, numbers, functions, DNA strings — it does not matter.
+Mathematicians eventually noticed that mathematical objects come with a built-in
+"dimension of sameness." Consider four rungs of a ladder:
 
-We now define the **description complexity** of an object `x` to be the
-*smallest code number that produces it*. If the smallest code that yields your
-grandmother's photo is code number 5, then her photo has description complexity
-5. If no code produces it at all, her photo is — relative to this encoder —
-literally indescribable.
+- **Contractible** objects are those with essentially *one* point — and not just
+  one point, but one point with no interesting way of being equal to itself. A
+  single dot. There is nothing to say.
+- **Propositions** are objects where any two points are equal. A true/false
+  statement: once it's true, all proofs of it are interchangeable. There may be
+  a point, but there's no choice in it.
+- **Sets** are objects where equality between points is itself a proposition:
+  two elements are either equal or not, with no further structure. The whole numbers
+  form a set. This is the world of classical mathematics.
+- **Groupoids** are objects where equality *itself* carries structure — where two
+  proofs that "a equals b" can themselves be unequal in interesting ways. The
+  circle is the first creature that lives genuinely at this level.
 
-Formally, we say `x` **has description complexity at most k** when there exists
-a code `i` with `i ≤ k` such that `E(i) = x`. In symbols:
+We can package this ladder cleanly. Define a **truncation level** to be simply a
+natural number index, with the dictionary: contractible = 0, proposition = 1,
+set = 2, groupoid = 3, and in general "n-truncated" = n + 2. Order them by their
+index. The first theorem of our story is the bedrock fact that *this ladder
+really is a ladder* — every rung is strictly above the last:
 
-> `x` has description complexity ≤ k  ⟺  ∃ i ≤ k with `E(i) = x`.
+> **The Truncation Hierarchy is Strict.** Contractible < Proposition < Set <
+> Groupoid. There is no collapsing; each level of complexity is genuinely new.
 
-This is the finite, concrete cousin of *Kolmogorov complexity*, the celebrated
-notion that measures the length of the shortest program that prints a given
-string. Kolmogorov complexity lives in the infinite world of Turing machines
-and is famously uncomputable. Our version lives in a finite world of numbered
-cards — and everything about it is not only computable but provable down to the
-last detail.
+It looks almost too simple to deserve a name. But its content is conceptual: it
+records, as a formal mathematical fact, that the dimensions of sameness do not
+secretly coincide. The ladder also behaves: stepping up one rung (the successor
+operation) always strictly increases the level, and being "at most as complex
+as" is transitive, so the rungs really form an order.
 
-## The counting bound: the bottleneck nobody can widen
+## Turning loops into numbers
 
-Here is the first theorem, and in a sense it is the only one — everything else
-is a variation on its theme.
+Now we return to our circle and make the finger-tracing precise. Imagine
+recording a trip around the loop as a string of instructions: at each step you
+either go **forward** (write `true`) or **backward** (write `false`). A whole
+loop is then just a list of booleans — a *formal loop*. The empty list is
+standing still: the trivial loop.
 
-> **Counting Bound.** For any encoder `E` and any budget `k`, the number of
-> *distinct* objects reachable by codes of index at most `k` is at most `k + 1`.
+To each such word we attach its **winding number**: start a counter at zero,
+read the instructions left to right, add one for every forward step, subtract one
+for every backward step. The final count is the net number of times you wound
+around the circle.
 
-Why `k + 1` and not `k`? Because the codes `0, 1, 2, …, k` number exactly
-`k + 1` of them — we count starting from zero, the way computers do. That is
-the entire content. There are only `k + 1` low-numbered cards, so they can show
-at most `k + 1` different pictures. If two cards happen to carry the same
-picture, you get *fewer* distinct pictures, never more.
+This little counter has three beautiful properties, and together they say
+something deep.
 
-It sounds almost too obvious to dignify with the word "theorem." But notice how
-much it forbids. It does not care how clever your encoder is. It does not care
-whether `E` is a state-of-the-art compression algorithm or a random scribble.
-It does not care how vast the universe `α` of possible objects is. **No
-encoder, however ingenious, can make `k + 1` codes describe `k + 2` distinct
-things.** The bottleneck is in the *number of codes*, and no amount of
-cleverness widens it.
+> **Additivity (concatenation law).** If you run loop A and then loop B, the
+> winding number of the combined journey is the sum of the two winding numbers:
+> winding(A then B) = winding(A) + winding(B).
 
-## Incompressibility: someone always gets left out
+> **Inversion (reverse law).** If you run a loop backwards — flipping every
+> forward step to backward and vice versa — the winding number flips sign:
+> winding(reverse of A) = −winding(A).
 
-Turn the counting bound around and you get its more dramatic twin.
+> **Surjectivity.** *Every* integer is achieved. For each whole number n, there
+> is a loop whose winding number is exactly n: wind n times forward if n is
+> positive, n times backward if negative, or stand still for zero.
 
-> **Incompressibility Principle.** If a collection `S` contains more than `k + 1`
-> objects, then at least one object in `S` cannot be produced by any code of
-> index at most `k`.
+Read those three statements again with a group theorist's eye. Concatenation of
+loops is an operation; the trivial loop is an identity; reversing gives inverses;
+and addition shows the operation matches the integers. What we have built, in
+miniature, is the statement that **the fundamental group of the circle is the
+integers** — written π₁(S¹) ≅ ℤ. This is a cornerstone of algebraic topology,
+and in HoTT it becomes a statement about *paths and their structure* rather than
+about continuous deformations. The winding number is the dictionary translating
+geometry into arithmetic. The fact that it is additive, sign-reversing, and onto
+is exactly the fact that loops on a circle, up to deformation, *are* the
+integers.
 
-This is the rigorous version of the slogan every computer scientist has heard:
-**"most things are incompressible."** If you have a million distinct files but
-only a thousand short codes, then no matter how you assign codes, at least one
-file — in fact, the overwhelming majority of them — must be left without a short
-code. There simply are not enough short codes to go around. The pigeons
-outnumber the holes.
+There is a complementary fact at the bottom of the ladder. A space can be so
+rigid that it has *no* interesting loops at all. Call a point rigid if the only
+structure-preserving self-map fixing it is the identity. Then:
 
-The proof is a single, elegant move. Suppose, to the contrary, that *every*
-object in `S` did have a short code. Then `S` would be contained in the set of
-short-code outputs — but we just proved that set has at most `k + 1` elements.
-So `S` would have at most `k + 1` elements, contradicting our assumption that it
-has more. The contradiction forces some object to be indescribable. Clean,
-final, no escape.
+> **Triviality for rigid spaces.** If a point a in a space is rigid, every loop
+> at a is the identity loop. Its fundamental group is trivial.
 
-A second version of this says the same thing about an *entire finite universe*:
-if the universe `α` itself contains more than `k + 1` objects, then for any
-encoder whatsoever, some object of `α` has no short code. Incompressibility is
-not a quirk of badly chosen examples; it is a law of arithmetic.
+So the circle is interesting precisely because it is *not* rigid — you can rotate
+it — while a discrete jumble of isolated points has nothing to wind around. The
+contrast is the whole point: topology is the study of which spaces let you go
+around.
 
-## Collisions: when the world is too small, codes must repeat
+## "Equivalent things are interchangeable": univalence
 
-The third theorem flips the lens. Instead of asking "are there enough codes for
-the objects?", it asks "are there too many codes for the objects?"
+The beating heart of Homotopy Type Theory is a principle named **univalence**,
+introduced by the Fields Medalist Vladimir Voevodsky. Stated as a slogan:
+*equivalent structures may be identified.* If two mathematical objects are
+interchangeable — if there is a perfect back-and-forth dictionary between them —
+then univalence declares them *equal*, and anything true of one is automatically
+true of the other.
 
-> **Collision Theorem.** If the universe `α` has fewer than `k + 1` objects, and
-> we have at least `k + 1` codes available, then two *different* codes among the
-> first `k + 1` must produce the *same* output.
+We capture a working model of this principle abstractly. A **univalence model**
+consists of a collection of "type names," an interpretation sending each name to
+an actual object, and an equivalence relation on names with one crucial
+guarantee: *whenever two names are related, their interpretations admit a perfect
+back-and-forth translation* (an equivalence). The relation is reflexive,
+symmetric, and transitive — the minimal honest bookkeeping for "is the same as."
 
-This is the pigeonhole principle wearing its work clothes. If you have more
-pigeons (codes) than holes (objects), two pigeons share a hole — two codes
-collide on one output. In the language of hashing, you cannot avoid collisions
-once you try to fit more keys than there are buckets. In the language of
-cryptography, this is exactly why hash functions that compress data *must* have
-collisions, the seed of every "birthday attack."
+Two consequences fall out immediately, and they are exactly the dividends
+mathematicians cherish about univalence.
 
-So our finite toolkit captures both sides of the descriptive ledger at once. Too
-many objects and too few codes? Someone is indescribable. Too few objects and
-too many codes? Codes must repeat. Either way, the arithmetic is merciless.
+> **Equivalence preserves cardinality.** In a univalence model, if two type
+> names are related, their interpretations have the same number of elements.
 
-## The binary version: counting in bits
+This is the formal echo of the everyday move "they're the same up to renaming, so
+of course they have the same size." Under univalence you don't have to *prove*
+that invariants transfer — they transfer for free, because the objects are
+literally equal.
 
-Real machines do not number their codes `0, 1, 2, …`; they spell them out in
-bits. A description of length `k` bits is a string of `k` zeros and ones, and
-there are precisely `2^(k+1) − 1` binary strings of length *at most* `k`
-(adding up `1 + 2 + 4 + … + 2^k`). Plug that number in where we wrote `N`, and
-the counting bound becomes the classical statement that launched a thousand
-lower-bound proofs:
+> **Function extensionality from univalence.** If two functions are equivalent at
+> every input — pointwise interchangeable — then their outputs are interchangeable
+> everywhere.
 
-> **Kolmogorov-Style Bound.** At most `2^(k+1) − 1` objects can have a
-> description of bitlength at most `k`.
+Function extensionality is the principle that two functions agreeing on all
+inputs are the same function. It sounds obvious, but in a bare constructive
+foundation it must be *assumed* or *derived*. One of univalence's celebrated
+gifts is that it *implies* function extensionality; our model makes that
+implication concrete.
 
-The general principle behind it is even simpler than the counting bound: the
-number of distinct outputs of *any* encoder with `M` codes is at most `M`. An
-encoder cannot produce more distinct things than it has inputs. And its mirror
-image:
+## Counting the finite worlds
 
-> **Binary Incompressibility.** If the universe has more than `M` objects, then
-> some object is not in the encoder's range at all — it has no code of length
-> ≤ k whatsoever.
+To see equivalence at its most tangible, descend to the finite. Write `Fin n` for
+the standard n-element set {0, 1, …, n−1}. When are two such sets interchangeable?
 
-This is why you cannot write a lossless compressor that shrinks *every* file.
-There are only so many short files; if your compressor mapped every long file to
-a distinct short one, you would be claiming more short files exist than actually
-do. Some file must grow. The dream of universal compression dies on the same
-arithmetic that started this article: you cannot point at more things than you
-have fingers.
+> **Finite univalence.** There is a perfect back-and-forth translation between
+> `Fin m` and `Fin n` if and only if m = n.
 
-## Why this matters far beyond cards and codes
+In other words, the *only* invariant of a finite set is its size, and that
+invariant is faithful: same size means interchangeable, different size means
+genuinely different. This is the cleanest possible illustration of the univalent
+philosophy — the "name" of a finite world is its cardinality, full stop.
 
-It is tempting to dismiss all this as combinatorial bookkeeping. It is anything
-but. The same counting skeleton, dressed in different costumes, underlies some
-of the most important impossibility results in all of computer science.
+Closely related is a characterization of *what it means* to be a perfect
+translation in the first place:
 
-**Circuit lower bounds.** Think of `E` as a catalog of shallow circuits, indexed
-by their wiring. The counting bound says a depth-bounded family with only `k + 1`
-configurations can realize at most `k + 1` distinct Boolean functions. Want to
-compute a *zoo* of distinct functions? Then your circuit catalog must itself be
-large. This is the seed of the entire field of circuit complexity: you cannot get
-representational richness for free.
+> **Equivalences are exactly the maps with unique fibers.** A function is a
+> bijection if and only if every target value is hit by exactly one source value.
 
-**Machine learning.** Let `E` be a learning algorithm that, given a short
-description (a hypothesis index, a compressed model), outputs a predictor. A
-hypothesis class describable in few bits contains few hypotheses. This is the
-arithmetic heart of **Occam's razor** and **sample compression bounds**: simple
-models — those with short descriptions — are necessarily few in number, which is
-exactly why they generalize. Complexity that can be written down briefly cannot
-be that complex.
+This recasts the abstract notion of equivalence as something you can check by
+hand: look at each output, count the inputs that map to it, and confirm the count
+is always exactly one.
 
-**Cryptography.** A "random" secret living in a huge space is, by the
-incompressibility principle, almost surely *not* the output of any small
-encoder. That is what it means for a key to have genuine entropy: no short
-recipe reproduces it. And the collision theorem is the reason secure hash
-functions must, in principle, admit collisions — the security rests on those
-collisions being *hard to find*, not on their being absent.
+## The structure identity principle
 
-**Everyday compression.** Every time your phone tells you a file "cannot be
-compressed further," it is brushing up against binary incompressibility. The file
-already sits near the bottom of its descriptive barrel, and there is no shorter
-code left to assign it.
+The grand payoff of this circle of ideas is what HoTT calls the **structure
+identity principle**: isomorphic structures are equal, so any construction
+respecting the structure transports along the isomorphism. We see a crisp finite
+instance: take finite groups packaged together with the data of an equivalence
+between their underlying sets that respects the group operation. Such
+"equivalences of finite groups" *compose* — chain a translation from G to H with
+one from H to K and you get a faithful translation from G to K.
 
-## The beauty of the finite
+> **Transitivity of structure equivalence.** Equivalences of finite group
+> structures compose to give equivalences. Sameness of structure is a transitive
+> relation: if G is the same as H, and H is the same as K, then G is the same as K.
 
-What is remarkable about this collection of theorems is not their difficulty —
-each proof is a single clean step — but their **certainty and reach**. Classical
-Kolmogorov complexity is haunted by uncomputability: you can never actually
-calculate the shortest description of a given string. Here, by retreating to the
-finite world of numbered codes, we lose nothing essential and gain everything
-concrete. The bounds are exact. The witnesses are explicit. The collisions are
-guaranteed. Every claim is the kind a careful skeptic could check by hand on a
-small example and trust forever on a large one.
+That transitivity is precisely what licenses mathematicians to speak of "*the*"
+group of a given type, or "*the*" finite set of a given size, without ever
+worrying which concrete copy they hold. The structure identity principle is the
+formal permission slip for the everyday phrase "without loss of generality, up to
+isomorphism."
 
-The grand lesson is one of humility for our machines and clarity for our minds.
-A description is a finite resource. Codes are countable. And once you count them,
-the limits of what can be said, computed, compressed, or learned with a bounded
-budget are not matters of engineering skill or future progress — they are
-matters of arithmetic, fixed for all time the moment you decide how many cards
-your catalog will hold.
+## How the great foundations relate
 
-You cannot point at more things than you have fingers. Everything else is a
-corollary.
+Finally, the construction zooms all the way out to ask: how do the rival
+foundational systems of mathematics stack up against one another? We model a
+**foundational system** as a record carrying a name, a numeric *consistency
+strength*, and three feature flags — is it constructive? does it have univalence?
+does it admit the axiom of choice? Five systems are catalogued:
+
+- **ZFC** (classical set theory): strength 100, non-constructive, has choice.
+- **MLTT** (Martin-Löf type theory): strength 80, constructive, no univalence.
+- **HoTT** (homotopy type theory): strength 100, constructive, has univalence.
+- **HoTT + LEM** (with the law of excluded middle): strength 100, classical, has choice.
+- **CIC** (the calculus of inductive constructions): strength 90, constructive.
+
+Ordering systems by strength, several facts emerge that mirror the real
+mathematical landscape:
+
+> **MLTT embeds in HoTT.** Martin-Löf type theory is interpretable in homotopy
+> type theory — HoTT extends MLTT by *adding* univalence (MLTT has none, HoTT
+> has it) without losing strength.
+
+> **HoTT is equiconsistent with ZFC.** The two share the same consistency
+> strength: HoTT is exactly as trustworthy as classical set theory, no more and
+> no less. So if you believe ZFC is consistent, you must believe HoTT is too.
+
+> **Consistency transfers upward.** If a weaker system is consistent (positive
+> strength) and a stronger system contains it, the stronger system is consistent
+> as well.
+
+The upshot is reassuring and precise: the constructive, univalent universe of
+HoTT is not some exotic gamble. It stands on exactly the same consistency
+footing as the set theory that has underwritten mathematics for a century, while
+offering a genuinely richer, shape-aware notion of equality.
+
+## Why it matters
+
+Strip away the formalism and a single idea remains: **identity is not flat**. The
+number of ways two things can be "the same" is itself a mathematical object worth
+studying. On a circle, those ways are counted by the integers. On a finite set,
+there is exactly one way for each matching of sizes. Across foundations, the
+ways translate cleanly enough that we can declare equiconsistency.
+
+This shape-aware view of sameness is not a curiosity. It underlies modern proof
+assistants, where verifying that two programs are "the same" or that two data
+structures are interchangeable is a daily, load-bearing task. It feeds back into
+algebraic topology, where the winding number we built by hand is the first entry
+in an infinite catalogue of invariants. And it offers working mathematicians the
+long-wished-for guarantee that "up to isomorphism" can be made literal, rigorous,
+and automatic.
+
+The circle, it turns out, was never just a circle. It was the first hint that
+even the word *equal* has a hidden geometry — and that the journey from one thing
+to another is as real as the things themselves.
