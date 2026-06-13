@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "80ea5c05",
     "filename": "this_cycle_isolated_the_entry_point_rank_of_appari.json",
     "pkg_num": 109,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.778,
     "title": "Entry Points of Strong Divisibility Sequences: Unifying Fibonacci and Mersenne Primitive Divisors"
   },
   {
@@ -3346,8 +3346,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "this_cycle_isolated_the_entry_point_rank_of_appari",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.778,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Entry Points of Strong Divisibility Sequences: Unifying Fibonacci and Mersenne Primitive Divisors"
     }
