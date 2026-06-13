@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "574dbade",
     "filename": "the_hodge_filtration_fp_on_the_complexification_of.json",
     "pkg_num": 99,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.48496,
     "title": "The Hodge Filtration as a Complete Invariant of a Weight-Two Hodge Structure"
   },
   {
@@ -3021,8 +3021,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "the_hodge_filtration_fp_on_the_complexification_of",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.48496,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "The Hodge Filtration as a Complete Invariant of a Weight-Two Hodge Structure"
     }
