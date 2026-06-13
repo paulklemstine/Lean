@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "dd767b4e",
     "filename": "this_cycle_consolidated_the_rank_of_apparition_the.json",
     "pkg_num": 98,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6964,
     "title": "The Rank of Apparition: The Spine of Fibonacci Primitive-Divisor Theory"
   },
   {
@@ -2992,8 +2992,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "this_cycle_consolidated_the_rank_of_apparition_the",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6964,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "The Rank of Apparition: The Spine of Fibonacci Primitive-Divisor Theory"
     }
