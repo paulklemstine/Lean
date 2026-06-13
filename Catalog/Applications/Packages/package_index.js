@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "908ecdae",
     "filename": "the_file_catalogapplicationscombinatorialspeciesle.json",
     "pkg_num": 113,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5454000000000001,
     "title": "The Taylor Calculus of Combinatorial Species"
   },
   {
@@ -3476,8 +3476,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5454000000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Taylor Calculus of Combinatorial Species"
     }
