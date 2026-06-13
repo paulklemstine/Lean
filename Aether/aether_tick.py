@@ -35,6 +35,22 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 
+# Load environment variables from .env file in Aether directory
+def _load_env_file():
+    env_path = Path(__file__).parent / ".env"
+    if env_path.exists():
+        for line in env_path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                k, v = line.split("=", 1)
+                k = k.strip()
+                v = v.strip().strip("\"'")
+                if k and k not in os.environ:
+                    os.environ[k] = v
+
+_load_env_file()
+
+
 # ── Override print to add terminal colors for errors and warnings ──
 import builtins
 import re as _re

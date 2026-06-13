@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "972329f6",
     "filename": "close_proofs_this_cycle_built_from_scratch_and_sor.json",
     "pkg_num": 80,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4512497048978154,
     "title": "The Shape of Sameness: Truncation Levels, Winding Numbers, and Bridges from Univalent to Classical Foundations"
   },
   {
@@ -2421,8 +2421,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "close_proofs_this_cycle_built_from_scratch_and_sor",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4512497048978154,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Shape of Sameness: Truncation Levels, Winding Numbers, and Bridges from Univalent to Classical Foundations"
     }

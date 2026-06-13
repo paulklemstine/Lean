@@ -67,7 +67,12 @@ async def main():
     print(f"Client timeout: {client.timeout}")
     print(f"Client polling_interval: {client.polling_interval}")
 
-    catalog_root = Path(config.get("catalog", {}).get("root_dir", "../")).resolve()
+    catalog_root = Path(config.get("catalog", {}).get("root_dir", "../Catalog")).resolve()
+    if not catalog_root.exists() or catalog_root.name != "Catalog":
+        if (catalog_root / "Catalog").exists():
+            catalog_root = catalog_root / "Catalog"
+        else:
+            catalog_root = (Path(__file__).parent.parent / "Catalog").resolve()
     project_dir = Path("output/job_debug_test")
     if project_dir.exists():
         shutil.rmtree(project_dir)

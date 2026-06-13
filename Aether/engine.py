@@ -42,10 +42,12 @@ class AetherEngine:
 
     def __init__(self, config_path: Optional[str] = None):
         self.config = self._load_config(config_path)
-        self.catalog_root = Path(self.config["catalog"]["root_dir"]).resolve()
-        if not self.catalog_root.exists():
-            # Fallback: assume we're in Catalog/Aether/
-            self.catalog_root = (Path(__file__).parent.parent).resolve()
+        self.catalog_root = Path(self.config["catalog"].get("root_dir", "../Catalog")).resolve()
+        if not self.catalog_root.exists() or self.catalog_root.name != "Catalog":
+            if (self.catalog_root / "Catalog").exists():
+                self.catalog_root = self.catalog_root / "Catalog"
+            else:
+                self.catalog_root = (Path(__file__).parent.parent / "Catalog").resolve()
 
         # Initialize subsystems
         self.telemetry = TelemetryLogger(self.config["telemetry"])
@@ -101,7 +103,7 @@ class AetherEngine:
         # Minimal default config
         return {
             "aristotle": {"api_key": os.environ.get("ARISTOTLE_API_KEY", "")},
-            "catalog": {"root_dir": "../"},
+            "catalog": {"root_dir": "../Catalog"},
             "research": {"arcs": [], "generation_batch_size": 5},
             "telemetry": {"log_dir": "./logs"},
             "integration": {"auto_merge": False, "require_human_review": True},

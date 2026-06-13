@@ -38,9 +38,12 @@ class FullCatalogDispatcher:
         self.domains = domains_config.get("domains", [])
         self.global_settings = domains_config.get("global_settings", {})
 
-        self.catalog_root = Path(config.get("catalog", {}).get("root_dir", "../")).resolve()
-        if not self.catalog_root.exists():
-            self.catalog_root = (Path(__file__).parent.parent).resolve()
+        self.catalog_root = Path(config.get("catalog", {}).get("root_dir", "../Catalog")).resolve()
+        if not self.catalog_root.exists() or self.catalog_root.name != "Catalog":
+            if (self.catalog_root / "Catalog").exists():
+                self.catalog_root = self.catalog_root / "Catalog"
+            else:
+                self.catalog_root = (Path(__file__).parent.parent / "Catalog").resolve()
 
         self.output_dir = Path("./output").resolve()
         self.output_dir.mkdir(parents=True, exist_ok=True)
