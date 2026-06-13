@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "cef8f402",
     "filename": "close_proofs_this_cycle_laid_the_missing_foundatio.json",
     "pkg_num": 59,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7716000000000001,
     "title": "Close Proofs: The Rank of Apparition as a Divisibility-Lattice Morphism"
   },
   {
@@ -1756,8 +1756,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "close_proofs_this_cycle_laid_the_missing_foundatio",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7716000000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Close Proofs: The Rank of Apparition as a Divisibility-Lattice Morphism"
     }
