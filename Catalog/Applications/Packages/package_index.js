@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "334c0262",
     "filename": "deepening_this_cycle_laid_the_missing_foundation_f.json",
     "pkg_num": 61,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.522,
     "title": "The Hidden Geometry of Proof: Foundations of the Proof Phase Transition Program"
   },
   {
@@ -1821,8 +1821,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "deepening_this_cycle_laid_the_missing_foundation_f",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.522,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Hidden Geometry of Proof: Foundations of the Proof Phase Transition Program"
     }
