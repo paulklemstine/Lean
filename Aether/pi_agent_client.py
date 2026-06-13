@@ -1667,52 +1667,54 @@ class PiAgentClient:
         """)
 
     def _build_v13_depth_requirements(self) -> str:
-        """v13: General-purpose mathematical research engine focusing on First-Principles Grounding.
+        """v13: Conceptual Unifier Variation (Homotopy & Path Spaces - infinity-categories, localization).
 
-        Focus on elegance, structural simplicity, and building blocks of deep theories.
+        Explore topological paths, homotopical structures, and higher categorical localization.
         """
         return textwrap.dedent("""\
-            ## v13 Depth Requirements -- First-Principles Grounding Engine
+            ## v13 Depth Requirements -- Conceptual Unifier: Homotopy & Path Spaces Research Engine
 
             You are leading a mathematical research team. Your goal is to produce groundbreaking,
             master-class, useful, novel, and marvelous new Mathematics that pushes the frontier of human knowledge.
 
-            This engine is configured for **First-Principles Grounding**. Focus on elegance, structural simplicity, and building blocks of deep theories.
+            This engine is configured for **Conceptual Unification (Homotopy & Path Spaces)**. Explore topological paths, homotopical structures, and higher categorical localization (such as infinity-categories, model categories, and path spaces).
 
             ### RESEARCH CORE METHODOLOGY:
-            1. **Foundational Clarity**: Build theories starting from clean, minimal, first-principles assumptions. Keep definitions mathematically pure, elegant, and simple.
-            2. **Lemma Factorization**: Decompose large, complex theorems into a hierarchy of beautiful, standalone, reusable lemmas. Each lemma should be a complete mathematical statement of independent interest.
-            3. **Explanatory Elegance**: Design proofs that are not only correct but structurally beautiful and easy to understand. Let the proofs explain the mathematical mechanism.
+            1. **Homotopy & Deformation**: Model mathematical structures and mappings up to continuous deformation or equivalence. Study path spaces, fundamental groupoids, and higher-dimensional homotopical invariants.
+            2. **Localization & Universality**: Define localizations that invert specific classes of morphisms, exposing the underlying universal homotopy properties of your mathematical structures.
+            3. **Higher Categorical Invariance**: Frame results through the lens of infinity-categories or model categories, ensuring definitions are invariant under homotopical equivalence.
 
             ### DELIVERABLES:
             - **Lean 4 proofs** of deep, non-trivial theorems with complete proofs (no sorry on main results).
             - **Lab Notebook** comment blocks in each .lean file detailing Hypothesis, Result, Insight, and Failure analysis.
             - **FUTURE_DIRECTIONS.md** outlining the Synthesis of your findings, a Results Summary, and 3-5 bold, falsifiable research directions to steer the next cycle.
         """)
+
 
     def _build_v14_depth_requirements(self) -> str:
-        """v14: General-purpose mathematical research engine focusing on Synthetic Catalog Integration.
+        """v14: Conceptual Unifier Variation (Local-to-Global Sheaves - cohomology, obstruction theory).
 
-        Focus on building a coherent body of work on top of our existing catalog.
+        Explore sheaf theory, local-to-global translations, and cohomological obstructions.
         """
         return textwrap.dedent("""\
-            ## v14 Depth Requirements -- Synthetic Catalog Integration Engine
+            ## v14 Depth Requirements -- Conceptual Unifier: Local-to-Global Sheaves Research Engine
 
             You are leading a mathematical research team. Your goal is to produce groundbreaking,
             master-class, useful, novel, and marvelous new Mathematics that pushes the frontier of human knowledge.
 
-            This engine is configured for **Synthetic Catalog Integration**. Focus on building a coherent body of work on top of our existing catalog.
+            This engine is configured for **Conceptual Unification (Local-to-Global Sheaves)**. Explore sheaf theory, local-to-global translations, and cohomological obstructions.
 
             ### RESEARCH CORE METHODOLOGY:
-            1. **Lineage Synthesis**: Analyze the existing catalog context deeply. Do not reinvent definitions; import and build directly on top of the validated catalog results.
-            2. **Connect the Dots**: Search for "orphan" results or gaps in the catalog and construct bridges to connect them. Show how new theorems advance the overall mathematical architecture of the repository.
-            3. **Foundational Extension**: Take successful packages from the catalog and extend their results to broader algebraic settings, sharper bounds, or new domain applications.
+            1. **Local-to-Global Translation**: Construct sheaves or presheaves to describe local properties that glue together to form global structures. Check if local solutions can be extended globally.
+            2. **Obstruction Theory & Cohomology**: Use cohomology groups or obstruction classes to mathematically measure the failure or boundaries of local-to-global extensions.
+            3. **Stalk-Level Reduction**: Reduce complex global proofs to stalk-level computations or local neighborhood verifications, using algebraic localization or geometric limits.
 
             ### DELIVERABLES:
             - **Lean 4 proofs** of deep, non-trivial theorems with complete proofs (no sorry on main results).
             - **Lab Notebook** comment blocks in each .lean file detailing Hypothesis, Result, Insight, and Failure analysis.
             - **FUTURE_DIRECTIONS.md** outlining the Synthesis of your findings, a Results Summary, and 3-5 bold, falsifiable research directions to steer the next cycle.
         """)
+
 
     def _build_assignment(self, concept: ResearchConcept) -> str:
         """Build a directive assignment section for Aristotle.
@@ -1795,158 +1797,29 @@ class PiAgentClient:
     # Retired v7. Refer to v8 or v9 for structured completeness gates.
 
     def _build_v8_depth_requirements(self) -> str:
-        """v8: research team framing with scientific method loop, critic role, and lab notebooks."""
+        """v8: Conceptual Unifier Variation (Duality & Representation - Stone, Gelfand, Fourier bridges).
+
+        Search for dualities, representation theorems, and algebraic-geometric translations.
+        """
         return textwrap.dedent("""\
-            ## v8 Depth Requirements -- Research Team Protocol
+            ## v8 Depth Requirements -- Conceptual Unifier: Duality & Representation Research Engine
 
-            You are leading a research team. Your team has different roles:
-            - The **Hypothesizer** generates bold, falsifiable conjectures
-            - The **Experimenter** proves or disproves them in Lean 4
-            - The **Analyst** examines what survived, what failed, and WHY
-            - The **Critic** searches for weaknesses, constructs counterexamples,
-              and identifies where proofs might break down. A well-constructed
-              counterexample is as valuable as a proof.
-            - The **Synthesist** upgrades the knowledge base and writes the
-              FUTURE_DIRECTIONS.md that seeds the next cycle
+            You are leading a mathematical research team. Your goal is to produce groundbreaking,
+            master-class, useful, novel, and marvelous new Mathematics that pushes the frontier of human knowledge.
 
-            You run this loop: **Hypothesize -> Experiment -> Analyze -> Critique -> Generalize -> Iterate**.
-            Each cycle is not a one-shot task. It is one iteration of an infinite
-            research process. Your notes (FUTURE_DIRECTIONS.md, Lab Notebooks,
-            proof sketches) determine whether the next team builds on your work
-            or starts over.
+            This engine is configured for **Conceptual Unification (Duality & Representation)**. Search for deep dualities, representation theorems, and dual translations (such as Stone duality, Gelfand duality, or Fourier/Pontryagin dualities).
 
-            **Take good notes.** A cycle without useful notes is a wasted cycle.
+            ### RESEARCH CORE METHODOLOGY:
+            1. **Dual Translations**: Look for dual formulations of your mathematical objects. Translate geometric or topological spaces into algebraic representations (e.g. rings of functions), and algebraic structures back into geometric spaces.
+            2. **Representation Theorems**: Seek to represent abstract algebraic or topological structures as concrete operations on simpler, well-understood spaces (e.g. matrices, sets, or functions).
+            3. **Spectral Perspectives**: Leverage spectral properties, duality pairings, and transform methods to translate hard problems in the primary space into easier problems in the dual space.
 
-            ### STEP 1: THEOREM DECLARATIONS (required -- before any code)
-
-            List every theorem you intend to prove or investigate. For each, state:
-            - **Name**: The Lean declaration name
-            - **Statement**: One-sentence informal statement
-            - **Status**: `hypothesis` | `conjecture` | `proved` | `proved_with_lemma_sorry` | `disproved`
-            - **Why it matters**: One sentence on what this result would mean if true,
-              and what it would teach us if false
-
-            Example:
-            1. `cantorPairing_surjective`: Cantor pairing is surjective -- proved -- constructive inverse -- confirms decidability of Nat x Nat
-            2. `cantorPairing_injective`: Cantor pairing is injective -- proved -- diagonal argument -- confirms invertibility
-            3. `cantorPairing_bijection`: Cantor pairing is a bijection -- proved_with_lemma_sorry -- follows from 1+2 -- completing the characterization
-
-            Use `hypothesis` for statements you are not yet sure you can prove but
-            want to investigate. Use `conjecture` for statements you believe are true
-            but cannot prove in this cycle. Use `disproved` for statements where you
-            found a counterexample. Use `proved` for statements with complete Lean
-            proofs. Use `proved_with_lemma_sorry` when the main proof is complete but
-            one or more supporting lemmas use `sorry`.
-
-            ### STEP 2: EXPERIMENT (prove or disprove in Lean 4)
-
-            Every theorem declared as `proved` MUST have a complete, compiling Lean proof.
-            No `sorry` on the main result. If you cannot complete a proof, change its
-            status to `conjecture` or `proved_with_lemma_sorry` and explain why.
-
-            For `proved_with_lemma_sorry`:
-            - The theorem statement must be complete (no sorry in the statement)
-            - `sorry` is allowed ONLY in supporting lemmas, never the main proof
-            - A comment must explain what the sorry replaces and why it is deferred
-
-            **Disproofs count.** If a hypothesis is false, prove its negation or
-            construct an explicit counterexample. A well-constructed counterexample
-            is as valuable as a proof. Change the status to `disproved` and state
-            the counterexample clearly.
-
-            ### STEP 3: CRITIQUE (find the weaknesses)
-
-            For your best theorem, the Critic must:
-            - Identify the strongest assumption that could be weakened
-            - Construct a boundary case: where does the result break down?
-            - If possible, state a `conjecture` for the generalized version and
-              explain what would need to change in the proof
-
-            This is NOT optional. A theorem without a critique is incomplete.
-
-            ### STEP 4: Anti-patterns (reject these)
-
-            These tactics indicate trivial proofs:
-            - `native_decide` / `decide` / `norm_num` / `rfl` -- unless genuinely proving a numeric fact
-            - `simp only []` with no simp set specified
-            - `sorry` on any theorem declared as `proved`
-
-            `omega`, `linarith`, and `Aesop` are fine for supporting lemmas.
-            `sorry` is fine for conjectures, generalizations, and boundary cases.
-
-            ### STEP 5: Novelty
-
-            Your theorems must be genuinely new. If a statement appears in a textbook,
-            generalize it. If you cannot formalize a concept rigorously, pick a different topic.
-
-            ### STEP 6: TAKE GOOD NOTES (first-class deliverables)
-
-            Your notes determine what the next research team investigates. They are NOT
-            an afterthought. They are your most important output after the proofs themselves.
-
-            **6a. Lab Notebook** (in each .lean file, as `-- !-- Lab Notebook -- !--` blocks):
-
-            For each major theorem, include a Lab Notebook comment block:
-            ```lean
-            -- !-- Lab Notebook: cantorPairing_bijection -- !--
-            -- !-- Hypothesis: Cantor pairing is bijective because both surjective and injective -- !--
-            -- !-- Result: Proved via composition of surjective and injective proofs -- !--
-            -- !-- Insight: The constructive inverse of surjectivity is key; diagonal argument handles injectivity -- !--
-            -- !-- Failure analysis: Initial attempt to prove bijection directly failed; decomposition into surjective+injective was necessary -- !--
-            -- !-- End Lab Notebook -- !--
-            ```
-
-            **6b. FUTURE_DIRECTIONS.md** (MANDATORY — your output WILL BE REJECTED if missing):
-
-            You MUST produce a FUTURE_DIRECTIONS.md file with this EXACT structure.
-            Copy the section headers below verbatim. Do NOT use freeform prose.
-
-            ## Synthesis
-
-            [2-3 paragraphs: what did this cycle discover? What failed and why? What
-            structural insight emerged? Tie the directions together into a narrative.]
-
-            ## Results Summary
-
-            [For EACH theorem: name, status (proved/conjecture/disproved), one-sentence
-            significance. Format as a bullet list:]
-
-            - `theoremName`: status — one-sentence significance
-
-            ## Research Directions
-
-            ### Direction 1: [Concise title]
-            **Hypothesis**: A precise, falsifiable mathematical statement.
-            **Test**: What experiment (proof/disproof/computation) would confirm or refute it.
-            **Why now**: What from THIS cycle makes this tractable.
-            **If true**: What new territory this opens.
-            **If false**: What the failure teaches us.
-
-            [Repeat for 3-5 directions]
-
-            IMPORTANT: The ## Synthesis and ## Results Summary sections are NOT optional.
-            If your FUTURE_DIRECTIONS.md is missing either section, it will be treated as
-            incomplete and the next research team will have no context to build on your work.
-
-            ### STEP 7: Generalization loop
-
-            For your BEST theorem, attempt one level of generalization:
-            - State a stronger version (can use sorry if proving would take too long)
-            - Identify the boundary: where does the result break down?
-            - If the generalization is itself interesting, mark it as a `conjecture`
-              in your theorem declarations and explain it in FUTURE_DIRECTIONS.md
-
-            ### Output format
-
-            Your output must include:
-            1. `.lean` files with proofs and Lab Notebook blocks (structured as declared in Step 1)
-            2. `FUTURE_DIRECTIONS.md` with Synthesis, Results Summary, and 3-5 research
-               directions (structured as in Step 6b)
-
-            Both are required. A cycle with proofs but no Lab Notebook or
-            FUTURE_DIRECTIONS.md is a cycle where the next team starts from scratch.
-            Take good notes.
+            ### DELIVERABLES:
+            - **Lean 4 proofs** of deep, non-trivial theorems with complete proofs (no sorry on main results).
+            - **Lab Notebook** comment blocks in each .lean file detailing Hypothesis, Result, Insight, and Failure analysis.
+            - **FUTURE_DIRECTIONS.md** outlining the Synthesis of your findings, a Results Summary, and 3-5 bold, falsifiable research directions to steer the next cycle.
         """)
+
 
     def write_aristotle_prompt(
         self,
@@ -2025,11 +1898,11 @@ class PiAgentClient:
         world-class, a separate Phase B prompt will be dispatched to package it.
         """
         if prompt_version is None:
-            prompt_version = "v8"
+            prompt_version = "v10"
         if prompt_version in ("v1", "v2", "v3", "v4", "v5", "v6", "v7"):
             raise ValueError(
                 f"{prompt_version} prompt is no longer supported — use v8 through v14. "
-                "v8 (Research Team Protocol) is the default."
+                "v10 (Conceptual Unifier) is the default."
             )
         if prompt_version == "v8":
             depth_requirements = self._build_v8_depth_requirements()
@@ -2046,7 +1919,7 @@ class PiAgentClient:
         elif prompt_version == "v14":
             depth_requirements = self._build_v14_depth_requirements()
         else:
-            depth_requirements = self._build_v8_depth_requirements()
+            depth_requirements = self._build_v10_depth_requirements()
 
         # Lean-specific section
         lean_section = ""
@@ -2481,11 +2354,11 @@ make it beautiful to read.
         # v4: deepen existing catalog results (Cauchy path)
         # v3: novel structures (Grothendieck path)
         if prompt_version is None:
-            prompt_version = "v8"
+            prompt_version = "v10"
         if prompt_version in ("v1", "v2", "v3", "v4", "v5", "v6", "v7"):
             raise ValueError(
                 f"{prompt_version} prompt is no longer supported — use v8 through v14. "
-                "v8 is the default."
+                "v10 is the default."
             )
         if prompt_version == "v8":
             depth_requirements = self._build_v8_depth_requirements()
@@ -2502,7 +2375,7 @@ make it beautiful to read.
         elif prompt_version == "v14":
             depth_requirements = self._build_v14_depth_requirements()
         else:
-            depth_requirements = self._build_v8_depth_requirements()
+            depth_requirements = self._build_v10_depth_requirements()
 
         # Build the streamlined prompt
         lean_section = ""

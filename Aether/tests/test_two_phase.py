@@ -116,18 +116,18 @@ def test_phase_b_prompt_includes_phase_a_lean(research_concept):
 def test_phase_a_prompt_size_reduced(research_concept):
     """Phase A prompt should be smaller than the legacy full prompt.
 
-    The default is v8 at ~6K chars.
+    The default is v10 at ~6K chars.
     Both are still smaller than the 12K A_full legacy prompt.
     """
     from pi_agent_client import PiAgentClient
     client = PiAgentClient.__new__(PiAgentClient)
-    phase_a_v8 = client._build_phase_a_lean_prompt(concept=research_concept)  # default = v8
+    phase_a_default = client._build_phase_a_lean_prompt(concept=research_concept)  # default = v10
     phase_a_v9 = client._build_phase_a_lean_prompt(concept=research_concept, prompt_version="v9")
     # Both versions should be substantially smaller than the 12K full prompt
-    assert len(phase_a_v8) < 12000, f"v8 Phase A prompt too large: {len(phase_a_v8)} chars"
+    assert len(phase_a_default) < 12000, f"Default Phase A prompt too large: {len(phase_a_default)} chars"
     assert len(phase_a_v9) < 12000, f"v9 Phase A prompt too large: {len(phase_a_v9)} chars"
     # Both should be substantial
-    assert len(phase_a_v8) > 1000
+    assert len(phase_a_default) > 1000
 
 
 def test_phase_a_routing(research_concept):
@@ -331,8 +331,8 @@ def test_phase_a_prompt_version_independent(research_concept):
     client = PiAgentClient.__new__(PiAgentClient)
     p_v8 = client._build_phase_a_lean_prompt(concept=research_concept, prompt_version="v8")
     p_v9 = client._build_phase_a_lean_prompt(concept=research_concept, prompt_version="v9")
-    # v8 emphasizes Research Team Protocol
-    assert "Research Team Protocol" in p_v8
+    # v8 emphasizes Duality & Representation
+    assert "Duality & Representation" in p_v8
     # v9 emphasizes adversarial critic
     assert "Adversarial Critic" in p_v9 or "weakened" in p_v9.lower()
     # Both have Phase A header
