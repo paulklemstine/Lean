@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "5b1caa2a",
     "filename": "this_cycle_formalized_the_fibonacci_rank_of_appari.json",
     "pkg_num": 106,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7400800000000001,
     "title": "The Fibonacci Rank of Apparition as a Local-to-Global Sheaf"
   },
   {
@@ -3245,8 +3245,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "this_cycle_formalized_the_fibonacci_rank_of_appari",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7400800000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Fibonacci Rank of Apparition as a Local-to-Global Sheaf"
     }
