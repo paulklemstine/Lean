@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "38457964",
     "filename": "the_file_bridgescombinatorialspecieslean_formalize.json",
     "pkg_num": 92,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.8055683582089552,
     "title": "The Exponential-Convolution Ring of Counting Sequences"
   },
   {
@@ -2804,8 +2804,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "the_file_bridgescombinatorialspecieslean_formalize",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.8055683582089552,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Exponential-Convolution Ring of Counting Sequences"
     }
