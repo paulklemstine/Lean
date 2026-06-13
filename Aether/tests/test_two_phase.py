@@ -385,3 +385,48 @@ def test_cycle_record_has_phase_fields():
     assert "phase_b_prompt_version" in fields
     assert "phase_b_skipped" in fields
     assert "phase_b_skip_reason" in fields
+
+
+def test_phase_b_pruned_workspace(temp_workspace, research_job):
+    """If phase is B, _build_project_dir should only copy Phase A output files."""
+    from knowledge_extractor import KnowledgeExtractor
+    
+    # Initialize extractor with mock/temp catalog
+    catalog_root = temp_workspace / "Catalog"
+    catalog_root.mkdir()
+    
+    # Create some mock Catalog files
+    file_a = catalog_root / "Algebra" / "Matrix.lean"
+    file_a.parent.mkdir()
+    file_a.write_text("-- Algebra file")
+    
+    file_b = catalog_root / "Geometry" / "Stereo.lean"
+    file_b.parent.mkdir()
+    file_b.write_text("-- Geometry file")
+    
+    # Instantiate extractor
+    config = {
+        "workspace_dir": str(temp_workspace),
+        "catalog_root": str(temp_workspace),
+    }
+    
+    with patch.object(KnowledgeExtractor, "_load_config", return_value=config):
+        extractor = KnowledgeExtractor()
+        extractor.catalog_root = catalog_root
+        
+        # 1. Test Phase A: should copy all files
+        research_job.phase = "A"
+        dir_a = extractor._build_project_dir(research_job)
+        assert dir_a is not None
+        assert (dir_a / "Catalog" / "Algebra" / "Matrix.lean").exists()
+        assert (dir_a / "Catalog" / "Geometry" / "Stereo.lean").exists()
+        
+        # 2. Test Phase B: should only copy targeted files
+        research_job.phase = "B"
+        research_job.phase_a_result = {
+            "lean_files": [str(file_a)]
+        }
+        dir_b = extractor._build_project_dir(research_job)
+        assert dir_b is not None
+        assert (dir_b / "Catalog" / "Algebra" / "Matrix.lean").exists()
+        assert not (dir_b / "Catalog" / "Geometry" / "Stereo.lean").exists()

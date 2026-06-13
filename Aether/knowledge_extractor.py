@@ -799,23 +799,49 @@ Research mode: {concept.research_mode}
         This gives Aristotle maximum context to build on existing verified theorems.
         """
         dir_path = self.workspace / f"projects/{job.job_id}"
+        if dir_path.exists():
+            shutil.rmtree(dir_path)
         dir_path.mkdir(parents=True, exist_ok=True)
 
-        # Copy the entire Lean-only Catalog into the project directory (skip .lake)
-        # Skip FINAL/ — those are symlinks to canonical copies already included
+        # Determine files to copy: Phase B gets a pruned workspace of only Phase A outputs, Phase A gets full catalog
+        is_phase_b = getattr(job, 'phase', '') == 'B'
+        files_to_copy = []
+        if is_phase_b:
+            phase_a_files = []
+            if hasattr(job, 'phase_a_result') and job.phase_a_result:
+                phase_a_files = job.phase_a_result.get("lean_files", [])
+            for fpath in phase_a_files:
+                p = Path(fpath)
+                if p.exists():
+                    files_to_copy.append(p)
+            print(f"[Project] Phase B detected: pruning workspace to {len(files_to_copy)} files from Phase A")
+            
+            # Fallback if no files resolved
+            if not files_to_copy:
+                print("[Project] Warning: Phase B has no files in phase_a_result['lean_files']. Falling back to full catalog.")
+                for src_file in self.catalog_root.rglob("*.lean"):
+                    if ".lake" in src_file.parts or "FINAL" in src_file.parts:
+                        continue
+                    if src_file.is_symlink() and not src_file.resolve().exists():
+                        continue
+                    files_to_copy.append(src_file)
+        else:
+            for src_file in self.catalog_root.rglob("*.lean"):
+                if ".lake" in src_file.parts or "FINAL" in src_file.parts:
+                    continue
+                if src_file.is_symlink() and not src_file.resolve().exists():
+                    continue
+                files_to_copy.append(src_file)
+
         catalog_dst = dir_path / "Catalog"
         lean_count = 0
-        for src_file in self.catalog_root.rglob("*.lean"):
-            if ".lake" in src_file.parts:
-                continue
-            if "FINAL" in src_file.parts:
-                continue
-            # Skip broken symlinks (target no longer exists)
-            if src_file.is_symlink() and not src_file.resolve().exists():
-                continue
+        for src_file in files_to_copy:
             # Resolve symlinks — copy the real file content
             real_src = src_file.resolve() if src_file.is_symlink() else src_file
-            rel = src_file.relative_to(self.catalog_root)
+            try:
+                rel = src_file.relative_to(self.catalog_root)
+            except ValueError:
+                rel = Path(src_file.name)
             dst_file = catalog_dst / rel
             dst_file.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(real_src, dst_file)
