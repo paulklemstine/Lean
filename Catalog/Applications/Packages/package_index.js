@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "3da4b14d",
     "filename": "order_theoretic_core_of_the_cookreckhow_program_as.json",
     "pkg_num": 63,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.67055,
     "title": "The Order-Theoretic Core of the Cook-Reckhow Program: A Fibonacci Separation Bridge"
   },
   {
@@ -1893,8 +1893,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "order_theoretic_core_of_the_cookreckhow_program_as",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.67055,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Order-Theoretic Core of the Cook-Reckhow Program: A Fibonacci Separation Bridge"
     }
