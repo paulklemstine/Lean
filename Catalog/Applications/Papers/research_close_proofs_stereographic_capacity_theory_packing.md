@@ -1,272 +1,450 @@
-# Stereographic Capacity Theory: Packing Bounds on Spheres via Plane Geometry
+# Generation Certificates for Matrix Groups: Irreducible Characteristic Polynomials as Structural Witnesses
 
 ## Abstract
 
-We develop the algebraic and geometric backbone of *stereographic capacity
-theory*, a program for converting spherical cap-packing questions on the
-`n`-sphere `Sⁿ` into weighted Euclidean separation problems on `ℝⁿ` through
-stereographic projection. The central object is the conformal scale factor
-`λ(x) = 2/(1 + ‖x‖²)` of the projection; we prove it is strictly positive,
-bounded above by `2`, and attains `2` exactly at the origin. From `λ` we derive a
-closed form for the *exclusion radius* — the flat-space forbidden disk that
-faithfully encodes a spherical guard radius — namely `tan(r)·(1 + ‖x‖²)/2`. For
-the `2`-sphere we reduce the area-versus-distortion packing bound to the single
-expression `8/(cos²r·(1 − cos r))`. Finally we establish a sharp degenerate
-regime: for geodesic radius `r > 1`, every `2r`-separated subset of `Sⁿ` is a
-singleton, yielding the packing bound `1`, together with monotonicity of the
-packing-bound predicate in its budget. All results are stated for general
-dimension where applicable and have been formally verified.
+We develop a certificate-based framework that turns an *algebraic*
+property of a single linear map — irreducibility of its characteristic
+polynomial — into a *structural* witness for the absence of invariant
+subspaces, and hence into a building block for probabilistic generation
+of finite linear groups. The central result is an **irreducible action
+theorem**: a finite-dimensional endomorphism whose characteristic
+polynomial is irreducible admits no proper nonzero invariant subspace.
+We derive two consequences of independent interest — an **orbit-spanning
+theorem** bridging to the theory of linear feedback shift registers and
+cyclic codes, and a **no-fixed-flat theorem** characterizing Singer
+cycles in finite projective geometry — together with a quantitative
+**positive-density** principle that underpins probabilistic generation
+arguments. We give a uniform abstract formulation, the *generation
+certificate system*, that subsumes the classical symmetric-group story
+of Dixon and the linear case under a single pattern. All principal
+results are formally verified; we record the proof strategy (via the
+minimal polynomial and the Cayley–Hamilton theorem) in full and state
+the remaining quantitative refinements as precise conjectures.
 
-**Keywords.** sphere packing, spherical codes, stereographic projection,
-conformal geometry, spherical caps, error-correcting codes, packing bounds.
+**Keywords:** matrix groups, characteristic polynomial, irreducibility,
+invariant subspace, Singer cycle, group generation, minimal polynomial,
+Cayley–Hamilton, finite fields, probabilistic generation.
 
 ---
 
 ## 1. Introduction
 
-The *spherical cap-packing problem* asks: given a geodesic radius `r`, what is the
-maximum number `A(n, r)` of points that can be placed on the unit sphere `Sⁿ ⊂
-ℝⁿ⁺¹` so that the geodesic distance between any two is at least `2r`? Equivalently,
-how many non-overlapping caps of radius `r` fit on `Sⁿ`? The quantity `A(n, r)` is
-the size of an optimal *spherical code*, a structure of direct importance to
-error-correcting codes, signal constellations, and the geometry of
-high-dimensional data. Exact values are known only in sporadic cases, and most
-progress takes the form of upper and lower bounds.
+A recurring problem in computational and theoretical group theory is to
+certify, cheaply and reliably, that a small set of elements generates a
+large group. For the symmetric groups `Sₙ`, Dixon (1969) proved that two
+uniformly random permutations generate `Sₙ` or `Aₙ` with probability
+tending to `1` as `n → ∞`; this result is the theoretical justification
+for the random-generation heuristics in computational algebra systems.
 
-This paper builds the foundational layer of a method for producing *upper* bounds
-by transporting the problem to the plane. Stereographic projection
-`σ : Sⁿ \ {N} → ℝⁿ` (from the north pole `N`) is a conformal diffeomorphism, so it
-preserves angles but distorts lengths by a position-dependent factor. If that
-factor is tracked precisely, a packing question on the curved sphere becomes a
-weighted separation question on the flat plane, where classical packing technology
-applies. We make the relevant distortion bookkeeping explicit and prove the
-elementary but foundational facts on which the rest of the theory depends.
+For *linear groups* — subgroups of `GL(V)` for a finite-dimensional
+vector space `V` over a finite field — the analogous statements are
+harder, because matrices carry rich internal structure. The principal
+obstruction to generation is the existence of a **common invariant
+subspace**: a proper nonzero subspace preserved by all the candidate
+generators. Any subgroup that fixes such a subspace is contained in a
+proper parabolic-type subgroup and cannot be the full general linear
+group.
 
-Throughout, points of `ℝⁿ` are modeled as elements of `EuclideanSpace ℝ (Fin n)`,
-and `‖·‖` denotes the Euclidean norm. We write `tan`, `cos` for the usual
-trigonometric functions and `⌈·⌉₊` for the natural-number ceiling.
+This paper isolates the precise algebraic feature of a single element
+that rules out invariant subspaces, packages it as a *generation
+certificate*, and assembles the surrounding theory:
 
----
+1. an **irreducible action theorem** (Theorem 4.1): irreducibility of
+   the characteristic polynomial implies no proper nonzero invariant
+   subspace;
+2. an **orbit-spanning theorem** (Theorem 5.1) linking to LFSRs and
+   cyclic codes;
+3. a **no-fixed-flat theorem** (Theorem 6.1) describing Singer cycles;
+4. a **positive-density** principle (Theorem 7.1) and an abstract
+   **generation certificate system** (Definition 3.4).
 
-## 2. Definitions
-
-We collect the core objects of the theory.
-
-**Definition 2.1 (conformal factor).** For `x ∈ ℝⁿ`,
-```
-λ(x) := stereoFactor x = 2 / (1 + ‖x‖²).
-```
-This is the local scale factor of stereographic projection from the north pole of
-`Sⁿ` to `ℝⁿ`: a length element `ds` on the plane at `x` corresponds to a length
-element `λ(x)·ds` on the sphere.
-
-**Definition 2.2 (exclusion radius).** For a spherical radius `r` and a plane
-point `x`,
-```
-exclusion(r, x) := stereoExclusionRadius r x = tan(r) / λ(x).
-```
-Under projection, a spherical cap of geodesic radius `r` centered at the
-spherical preimage of `x` maps to a Euclidean disk of approximately this radius.
-
-**Definition 2.3 (stereo-separation).** A finite set `s ⊂ ℝⁿ` is
-*stereo-separated for radius `r`*, written `StereoSeparated r s`, if for all
-`x, y ∈ s` with `x ≠ y`,
-```
-exclusion(r, x) + exclusion(r, y) ≤ ‖x − y‖.
-```
-This is the flat-space counterpart of pairwise `2r`-separation on the sphere: the
-two exclusion disks are required to be disjoint.
-
-**Definition 2.4 (areas on `S²`).** The total area of the unit `2`-sphere is
-```
-sphereArea = 4π,
-```
-and the area of a spherical cap of geodesic radius `r` on `S²` is
-```
-sphericalCapArea(r) = 2π(1 − cos r).
-```
-
-**Definition 2.5 (packing-bound predicate).** For dimension `n`, radius `r`, and
-budget `B`, the predicate `SphericalPackingBound n r B` asserts: every finite set
-`s` of points on the unit sphere `Sⁿ ⊂ ℝⁿ⁺¹` with pairwise Euclidean distance at
-least `2r` satisfies `|s| ≤ ⌈B⌉₊`. (Here pairwise distance is measured by the
-chordal/Euclidean metric of the ambient `ℝⁿ⁺¹`.)
-
-**Definition 2.6 (S² distortion bound).** Define
-```
-stereoBoundS2(r) = (2/cos r)² · (sphereArea / sphericalCapArea(r)),
-```
-and its conjectured closed form
-```
-stereoBoundS2Closed(r) = 8 / (cos²r · (1 − cos r)).
-```
+We work over an arbitrary field for the structural results and
+specialize to prime fields `ℤ/pℤ` for the computational instances.
 
 ---
 
-## 3. Conformal factor bounds
+## 2. Preliminaries and notation
 
-The conformal factor is the dictionary between the round and flat worlds, and its
-analytic control underwrites every later estimate.
+Throughout, `K` is a field and `V` a finite-dimensional `K`-vector
+space. We write `End_K(V)` for the `K`-algebra of linear endomorphisms
+of `V`, and for `φ ∈ End_K(V)`:
 
-**Theorem 3.1 (positivity).** For every `x ∈ ℝⁿ`, `λ(x) > 0`.
+- `charpoly(φ) ∈ K[X]` is the characteristic polynomial, a monic
+  polynomial of degree `dim_K V`;
+- `minpoly_K(φ) ∈ K[X]` is the minimal polynomial, the monic generator
+  of the annihilator ideal `{p ∈ K[X] : p(φ) = 0}`;
+- for a polynomial `p` and an endomorphism `φ`, `aeval_φ(p) = p(φ)`
+  denotes the algebra evaluation of `p` at `φ`.
 
-*Proof.* The numerator `2` is positive and the denominator `1 + ‖x‖² ≥ 1 > 0`, so
-the quotient is positive. ∎
+We use two classical facts without reproof.
 
-**Theorem 3.2 (upper bound).** For every `x ∈ ℝⁿ`, `λ(x) ≤ 2`.
+**Cayley–Hamilton.** For every `φ ∈ End_K(V)`, `charpoly(φ)(φ) = 0`;
+equivalently `minpoly_K(φ) ∣ charpoly(φ)`.
 
-*Proof.* Since `1 + ‖x‖² ≥ 1`, dividing `2` by a quantity at least `1` can only
-decrease it: `2/(1 + ‖x‖²) ≤ 2/1 = 2`. Formally this is `div_le_self` applied to
-`0 ≤ 2` and `1 ≤ 1 + ‖x‖²`, the latter from `‖x‖² ≥ 0`. ∎
+**Degree of charpoly.** `deg charpoly(φ) = dim_K V`, and `charpoly(φ)` is
+monic (hence nonzero).
 
-**Theorem 3.3 (extremal characterization).** `λ(x) = 2` if and only if `x = 0`.
-
-*Proof.* The equation `2/(1 + ‖x‖²) = 2` is equivalent (clearing the positive
-denominator) to `1 + ‖x‖² = 1`, i.e. `‖x‖² = 0`, i.e. `‖x‖ = 0`, i.e. `x = 0`.
-The converse is the direct computation `λ(0) = 2/(1 + 0) = 2`. ∎
-
-**Interpretation.** The maximum density of the projection, the value `λ = 2`,
-occurs uniquely at the origin — the image of the south pole, antipodal to the
-projection center. Distortion is least there and decays monotonically to `0` as
-`‖x‖ → ∞` (the north pole). The two-sided control `0 < λ(x) ≤ 2` is precisely what
-makes the dictionary uniformly usable across the whole plane.
-
----
-
-## 4. The exclusion radius closed form
-
-**Theorem 4.1 (exclusion radius).** For every `r ∈ ℝ` and `x ∈ ℝⁿ`,
-```
-exclusion(r, x) = tan(r) · (1 + ‖x‖²) / 2.
-```
-
-*Proof.* By definition `exclusion(r, x) = tan(r)/λ(x) = tan(r) / (2/(1 + ‖x‖²))`.
-Since `1 + ‖x‖² ≠ 0`, dividing by the fraction `2/(1 + ‖x‖²)` is multiplication by
-its reciprocal `(1 + ‖x‖²)/2`, giving `tan(r)·(1 + ‖x‖²)/2`. ∎
-
-**Discussion.** The formula factors cleanly into a *cap-size* term `tan(r)`,
-constant across the plane, and a *position* term `(1 + ‖x‖²)/2 = 1/λ(x)`, which
-grows quadratically in `‖x‖`. The position term is the "distortion tax": points
-projected far from the origin (near the north pole, where the sphere was sampled
-sparsely) require correspondingly large flat exclusion disks to faithfully
-represent a fixed spherical cap. This identity is the analytic bridge that converts
-`StereoSeparated` from a flat convenience into a faithful proxy for cap
-disjointness, and it is the engine of the separation transport program (§7).
+Recall that `p ∈ K[X]` is **irreducible** if it is not a unit and
+whenever `p = ab` one of `a, b` is a unit. Over a field, the units of
+`K[X]` are exactly the nonzero constants, so an irreducible polynomial
+has positive degree and no factorization into two positive-degree
+polynomials.
 
 ---
 
-## 5. Closed form of the S² distortion bound
+## 3. Core definitions
 
-**Theorem 5.1 (S² bound, closed form).** For all `r` with `cos r ≠ 0` and
-`cos r ≠ 1`,
-```
-stereoBoundS2(r) = 8 / (cos²r · (1 − cos r)).
-```
+### Definition 3.1 (Invariant submodule)
 
-*Proof.* Substitute the definitions `sphereArea = 4π` and `sphericalCapArea(r) =
-2π(1 − cos r)` into
+A submodule (subspace) `W ⊆ V` is **invariant** under `φ ∈ End_K(V)`,
+written `IsInvariantSubmodule φ W`, if
 ```
-stereoBoundS2(r) = (2/cos r)² · (4π) / (2π(1 − cos r)).
+∀ w ∈ W,  φ(w) ∈ W.
 ```
-The numerator simplifies as `(4/cos²r) · (4π)`, and clearing the common factor
-`π ≠ 0` from `4π / (2π(1 − cos r))` gives `2/(1 − cos r)`. Hence
-```
-stereoBoundS2(r) = (4/cos²r) · (2/(1 − cos r)) = 8 / (cos²r · (1 − cos r)),
-```
-where the manipulations are justified because `π ≠ 0`, `cos r ≠ 0`, and
-`1 − cos r ≠ 0` (the last from `cos r ≠ 1`). ∎
+Equivalently, `W` is a `K[X]`-submodule of `V` under the module
+structure in which `X` acts as `φ`. The lattice of `φ`-invariant
+subspaces is the lattice of these submodules; `⊥ = {0}` and `⊤ = V` are
+always invariant. We call `φ` **irreducible** (as an action) if its only
+invariant subspaces are `⊥` and `⊤`.
 
-**Discussion.** The bound combines the area ratio `sphereArea/sphericalCapArea`
-— the naive cap-count from a pure volume argument — with the squared conformal
-correction `(2/cos r)²` that accounts for worst-case distortion. The closed form
-is analytic in `r` on `(0, π/2)`: as `r → 0⁺` it diverges like `16/r⁴`
-(reflecting that arbitrarily many tiny caps fit), and it decreases monotonically as
-`r` grows toward `π/2`. Its smoothness makes it amenable to calculus-based
-comparison against true packing numbers.
+### Definition 3.2 (Linear generation certificate)
+
+A **linear generation certificate** for a finite free `K`-module `V`
+is a triple
+```
+( φ : End_K(V),  invertible : Bijective φ,  charpoly_irreducible : Irreducible (charpoly φ) ).
+```
+That is, a bijective endomorphism whose characteristic polynomial is
+irreducible. The certificate is a small datum (the matrix of `φ` plus a
+verified factorization-free polynomial) whose validity is decidable in
+polynomial time over a finite field.
+
+### Definition 3.3 (Certificate density)
+
+For a finite group `G` and a decidable predicate `C : G → Prop`, the
+**certificate density** is the rational number
+```
+certificateDensity(C) = #{ g ∈ G : C(g) } / #G ∈ ℚ,
+```
+the probability that a uniformly random element of `G` satisfies `C`.
+
+### Definition 3.4 (Generation certificate system)
+
+A **generation certificate system** on a group `G` is a predicate
+`Cert : G → Prop` together with the guarantee
+```
+∀ g, Cert(g) → ∀ H ≤ G, g ∈ H → (H = G  ∨  [G : H] ≤ 2),
+```
+i.e. any subgroup containing a certified element is the whole group or
+has index at most two. This abstracts the common shape of the
+symmetric-group certificate (a permutation of prime-cycle type forcing
+`Aₙ`-or-`Sₙ`) and the linear certificate developed below.
 
 ---
 
-## 6. Degenerate packing for large radius
+## 4. The irreducible action theorem
 
-When the guard radius exceeds the sphere's reach, packing collapses.
+The structural heart of the framework is the following.
 
-**Theorem 6.1 (singleton packing).** Let `r > 1`. Let `s` be a finite set of
-points on the unit sphere `Sⁿ ⊂ ℝⁿ⁺¹` such that any two distinct elements `x, y`
-satisfy `2r ≤ dist(x, y)` (Euclidean/chordal distance). Then `|s| ≤ 1`.
+### Theorem 4.1 (Irreducible action)
 
-*Proof.* Suppose `a, b ∈ s` are distinct. Each lies on the unit sphere, so
-`‖a‖ = ‖b‖ = 1`. By the triangle inequality,
-```
-dist(a, b) = ‖a − b‖ ≤ ‖a‖ + ‖b‖ = 2.
-```
-But separation requires `2r ≤ ‖a − b‖`, hence `2r ≤ 2`, i.e. `r ≤ 1`,
-contradicting `r > 1`. Therefore no two distinct points can coexist in `s`, so
-`|s| ≤ 1`. ∎
+Let `V` be finite-dimensional over `K` and `φ ∈ End_K(V)` with
+`charpoly(φ)` irreducible. Then every `φ`-invariant subspace `W ⊆ V`
+satisfies `W = ⊥` or `W = ⊤`.
 
-**Corollary 6.2 (packing bound 1).** For every `n` and every `r > 1`,
-`SphericalPackingBound n r 1` holds.
+The proof rests on three lemmas about restrictions of `φ` to invariant
+subspaces. For an invariant `W`, let `φ|_W ∈ End_K(W)` denote the
+restriction, characterized by the intertwining relation
+`ι_W ∘ φ|_W = φ ∘ ι_W`, where `ι_W : W ↪ V` is the inclusion.
 
-*Proof.* By Theorem 6.1 any admissible `s` has `|s| ≤ 1`, and `⌈(1 : ℝ)⌉₊ = 1`, so
-`|s| ≤ ⌈1⌉₊`. ∎
+#### Lemma 4.2 (Restriction intertwines)
 
-**Proposition 6.3 (monotonicity of the bound).** For every `n`, `r`, and budgets
-`B ≤ B′`, if `SphericalPackingBound n r B` holds then so does
-`SphericalPackingBound n r B′`.
+For invariant `W`, `ι_W ∘ φ|_W = φ ∘ ι_W` as maps `W → V`.
 
-*Proof.* For any admissible `s`, `|s| ≤ ⌈B⌉₊ ≤ ⌈B′⌉₊`, the second inequality from
-monotonicity of the ceiling under `B ≤ B′`. ∎
+*Proof sketch.* By definition of the restriction, evaluating both sides
+at `w ∈ W` gives `φ(w)` on the nose; the equality is the very statement
+that `φ|_W` is the corestriction of `φ ∘ ι_W` through the invariance
+hypothesis. ∎
 
-These results certify the sharp boundary of the problem: the chordal diameter of
-the unit sphere is exactly `2`, so a guard radius `r > 1` admits at most a single
-point, and our predicate records this exactly. Monotonicity ensures looser claims
-descend automatically from tighter ones.
+#### Lemma 4.3 (Annihilators descend to restrictions)
+
+If `p ∈ K[X]` satisfies `p(φ) = 0`, then `p(φ|_W) = 0`.
+
+*Proof sketch.* From Lemma 4.2 one shows by induction on `m` that
+`(φ|_W)^m = ` restriction of `φ^m`, i.e. `ι_W ∘ (φ|_W)^m = φ^m ∘ ι_W`.
+Writing `p = Σ aₘ Xᵐ` and using linearity, `ι_W ∘ p(φ|_W) = p(φ) ∘ ι_W
+= 0`. Since `ι_W` is injective, `p(φ|_W) = 0`. ∎
+
+#### Lemma 4.4 (Minimal polynomial divides)
+
+`minpoly_K(φ|_W) ∣ minpoly_K(φ)`.
+
+*Proof sketch.* `minpoly_K(φ)(φ) = 0` by definition, so by Lemma 4.3
+`minpoly_K(φ)(φ|_W) = 0`; hence `minpoly_K(φ)` lies in the annihilator
+ideal of `φ|_W`, which is generated by `minpoly_K(φ|_W)`. Thus
+`minpoly_K(φ|_W) ∣ minpoly_K(φ)`. ∎
+
+#### Lemma 4.5 (Minimal equals characteristic under irreducibility)
+
+If `charpoly(φ)` is irreducible then `minpoly_K(φ) = charpoly(φ)`.
+
+*Proof sketch.* By Cayley–Hamilton `minpoly_K(φ) ∣ charpoly(φ)`. An
+irreducible monic polynomial has, up to units, only the divisors `1` and
+itself; the minimal polynomial is monic and nonconstant on a nonzero
+space, so `minpoly_K(φ) = charpoly(φ)`. (The degenerate case `V = 0` is
+vacuous: there is no irreducible degree-`0` polynomial, so the
+hypothesis cannot hold; in the formalization this is handled by a direct
+case split on `dim V ∈ {0, 1, ≥2}`.) ∎
+
+#### Proof of Theorem 4.1
+
+Let `W` be invariant and suppose `W ≠ ⊥`; we show `W = ⊤`. Apply the
+lemmas to `φ|_W`:
+
+- By Lemma 4.4 and Cayley–Hamilton for `φ`,
+  `minpoly_K(φ|_W) ∣ minpoly_K(φ) ∣ charpoly(φ)`.
+- `minpoly_K(φ|_W) ≠ 1`: otherwise `id_W = 1(φ|_W) = 0`, forcing
+  `W = ⊥`, contrary to assumption.
+- Since `charpoly(φ)` is irreducible and `minpoly_K(φ|_W)` is a
+  nonconstant monic divisor, `minpoly_K(φ|_W) = charpoly(φ)`.
+
+Now compare dimensions. On one hand,
+`deg minpoly_K(φ|_W) ≤ deg charpoly(φ|_W) = dim_K W`. On the other,
+`deg minpoly_K(φ|_W) = deg charpoly(φ) = dim_K V`. Hence
+`dim_K V ≤ dim_K W ≤ dim_K V`, so `dim_K W = dim_K V` and therefore
+`W = ⊤`. ∎
+
+The argument never enumerates subspaces; it is a finite computation on
+polynomial degrees, which is why it scales to arbitrary dimension.
 
 ---
 
-## 7. Applications and outlook
+## 5. Orbit spanning: the coding-theory bridge
 
-**Spherical codes.** A `2r`-separated set on `Sⁿ` *is* a spherical code with
-minimum chordal distance `2r`; `SphericalPackingBound n r B` is literally an upper
-bound on code size. The closed-form `8/(cos²r(1−cos r))` therefore yields an
-explicit, easily evaluated ceiling on certain `S²` codes, useful as a quick
-benchmark against linear-programming bounds.
+### Lemma 5.1 (Orbit span is invariant)
 
-**Signal processing.** Spherical caps model the angular resolution of beams and
-constellations; the conformal-factor control of §3 quantifies how planar designs
-inflate or deflate when wrapped onto a direction sphere.
+For any `φ ∈ End_K(V)` and `v ∈ V`, the subspace
+`span_K { φ^m v : m ∈ ℕ }` is `φ`-invariant.
 
-**A computational pipeline.** Definitions 2.1–2.3 give a fully constructive test:
-project candidate sphere points, compute each exclusion radius
-`tan(r)(1+‖x‖²)/2`, and verify pairwise stereo-separation in the plane. This is the
-algorithmic content demonstrated in the companion numerical examples.
+*Proof sketch.* `φ` maps the generator `φ^m v` to `φ^{m+1} v`, again a
+generator; invariance of the span follows from linearity and the
+universal property of span. ∎
 
-### 7.1 Future directions
+### Theorem 5.2 (Orbit spanning)
 
-*Separation transport theorem.* We conjecture a regime in which
-`StereoSeparated r s` is equivalent to genuine `2r`-geodesic separation of the
-inverse stereographic images, with equivalence becoming exact as `r → 0`. Theorem
-4.1 shows the Euclidean exclusion radius is the spherical radius rescaled by the
-local conformal factor, so a first-order match of `tan r` to geodesic chord length
-should make `StereoSeparated` a faithful proxy for cap disjointness. Chaining
-Theorem 4.1 with closed-form geodesic-distance and bi-Lipschitz comparison results
-should yield an explicit two-sided estimate without new transcendental machinery.
+If `charpoly(φ)` is irreducible and `v ≠ 0`, then
+```
+span_K { v, φv, φ²v, φ³v, … } = V.
+```
 
-*Quantitative cap-packing upper bound on `S²`.* We conjecture that for every `r ∈
-(0, π/2)`, `SphericalPackingBound 2 r B` holds with `B = 8/(cos²r(1−cos r))`, and
-moreover that this is the best bound obtainable by the pure area/conformal-
-distortion method, off the true packing number by at most a bounded multiplicative
-constant. The route is a rigorous volume (area) argument carried through the
-distortion ledger of §§3–5.
+*Proof sketch.* By Lemma 5.1 the orbit span `U` is invariant; it is
+nonzero because `v ∈ U` and `v ≠ 0`. By Theorem 4.1, `U = ⊥` or `U = ⊤`;
+nonzeroness rules out `⊥`, so `U = ⊤ = V`. ∎
+
+**Interpretation.** This is the algebraic backbone of **linear feedback
+shift registers** (LFSRs) and **cyclic codes**. Identify `V ≅ K[X]/(f)`
+with `f = charpoly(φ)` and `φ` the multiplication-by-`X` (companion)
+operator. Theorem 5.2 says the state sequence `v, φv, φ²v, …` of an LFSR
+with irreducible feedback polynomial visits a spanning set of states; in
+the finite-field case this is exactly the *maximal-length* (m-sequence)
+property when `X` additionally generates the multiplicative group of the
+extension field. Cyclic codes arise as the `φ`-invariant subspaces of
+`K[X]/(X^n - 1)`; irreducibility of relevant factors controls the
+minimal ideals (the irreducible/minimal cyclic codes).
 
 ---
 
-## 8. Conclusion
+## 6. Finite geometry: Singer cycles
 
-We have laid the groundwork for stereographic capacity theory: precise control of
-the conformal factor (`0 < λ ≤ 2`, with equality only at the origin), a closed
-form for the exclusion radius (`tan(r)(1+‖x‖²)/2`), a closed form for the `S²`
-distortion bound (`8/(cos²r(1−cos r))`), and a sharp degenerate packing regime
-(`r > 1 ⇒` singleton), with monotonicity of the bound predicate. Together these
-turn questions about a curved surface into questions about a flat plane with an
-honest distortion ledger — the foundation on which the conjectured transport and
-quantitative-bound theorems can be built.
+### Theorem 6.1 (No fixed proper projective subspace)
+
+If `charpoly(φ)` is irreducible, there is no subspace `W` with
+`W ≠ ⊥`, `W ≠ ⊤`, and `IsInvariantSubmodule φ W`.
+
+*Proof sketch.* Immediate from Theorem 4.1: any invariant `W` is `⊥` or
+`⊤`, so the conjunction `W ≠ ⊥ ∧ W ≠ ⊤ ∧ invariant` is contradictory. ∎
+
+**Interpretation.** Passing to the projective space `PG(n-1, q)` of lines
+in `V = 𝔽_q^n`, a proper nonzero invariant subspace is precisely a fixed
+proper projective flat (point, line, plane, …). Theorem 6.1 says an
+endomorphism with irreducible characteristic polynomial fixes no proper
+flat. When `φ` has order `q^n − 1` (its eigenvalue is a primitive element
+of `𝔽_{q^n}`), it is a **Singer cycle**: a cyclic collineation that
+permutes the `(q^n − 1)/(q − 1)` points of `PG(n-1, q)` in a single
+orbit. Singer cycles are the source of cyclic projective planes, perfect
+difference sets (Singer difference sets), and many combinatorial designs;
+Theorem 6.1 is the structural reason for their maximal transitivity.
+
+---
+
+## 7. From elements to groups: density and the abstract system
+
+### Theorem 7.1 (Positive certificate density)
+
+Let `G` be a finite group and `C : G → Prop` a decidable predicate with
+at least one witness (`∃ g, C(g)`). Then `certificateDensity(C) > 0`.
+
+*Proof sketch.* The numerator `#{ g : C(g) }` is positive because the
+subtype `{ g // C(g) }` is inhabited by the witness; the denominator
+`#G ≥ 1` because `G` contains the identity. A positive rational divided
+by a positive rational is positive. ∎
+
+Though elementary, Theorem 7.1 is the indispensable base case of every
+probabilistic generation argument: *existence* of certified elements
+upgrades to a *positive probability* of sampling one, which is what makes
+random search succeed and what one then quantifies.
+
+### Specialization 7.2 (Prime-field Singer certificate)
+
+For `V` finite-dimensional over `K = ℤ/pℤ` (`p` prime) and
+`φ ∈ End(V)` with `charpoly(φ)` irreducible, every invariant subspace is
+`⊥` or `⊤`. This is the direct instantiation of Theorem 4.1 used in
+computational group theory, where matrices are stored over prime fields
+and characteristic-polynomial irreducibility is tested by Berlekamp's
+algorithm.
+
+### The unifying pattern
+
+Definition 3.4 packages the shared logic of the symmetric and linear
+cases: a predicate that forces any subgroup containing a certified
+element to be the whole group (or index ≤ 2, accommodating the
+`Aₙ`-vs-`Sₙ` dichotomy). In the linear setting the certificate predicate
+is "irreducible characteristic polynomial", whose structural payoff is
+Theorem 4.1; combined with a second random element controlling the
+determinant, it drives generation of `GL(V)` / `SL(V)`.
+
+---
+
+## 8. Algorithms
+
+The framework is constructive over finite fields. Two procedures are
+central.
+
+### 8.1 Certificate verification
+
+**Input:** a matrix `M ∈ 𝔽_q^{n×n}`. **Output:** `valid` iff `M` is a
+linear generation certificate.
+
+```
+1. Compute d = det(M); if d = 0, return invalid (not bijective).
+2. Compute p(X) = charpoly(M) ∈ 𝔽_q[X]  (e.g. Faddeev–LeVerrier or
+   Hessenberg method), an O(n³) field-operation computation.
+3. Test irreducibility of p over 𝔽_q (Rabin's test: p ∣ X^{q^n} − X and
+   gcd(p, X^{q^{n/ℓ}} − X) = 1 for each prime ℓ ∣ n), O(n³ log q).
+4. Return valid iff p is irreducible.
+```
+
+The whole test is polynomial time; the expensive geometric property
+(no invariant subspace) is certified for free by Theorem 4.1.
+
+### 8.2 Invariant-subspace audit (validation)
+
+To *empirically* corroborate Theorem 4.1 on small instances, enumerate
+all subspaces of `𝔽_q^n` (via reduced row-echelon representatives) and
+check invariance of each under `M`; confirm that only `{0}` and the full
+space survive whenever `charpoly(M)` is irreducible. This is exponential
+in `n` and used only as a test oracle, not in production.
+
+### 8.3 Density estimation
+
+Enumerate or sample `GL_n(𝔽_q)`, count the fraction with irreducible
+characteristic polynomial, and compare against the heuristic `≈ 1/n`
+(the proportion of degree-`n` polynomials over `𝔽_q` that are
+irreducible is `≈ 1/n` by the prime-polynomial theorem, and the bijection
+between separable irreducible charpolys and their companion conjugacy
+classes makes this the right first-order estimate).
+
+---
+
+## 9. Applications
+
+- **Computational group theory.** Random matrices with irreducible
+  charpoly are the preferred seeds for constructive recognition of
+  classical groups (Neumann–Praeger). Theorem 4.1 certifies their
+  irreducible action; Theorem 7.1 launches the probabilistic counting.
+- **Cryptography.** Maximal-length LFSRs (Theorem 5.2) generate the
+  keystream of stream ciphers and the spreading codes of CDMA/GPS; the
+  irreducibility certificate guarantees the maximal period.
+- **Coding theory.** Minimal cyclic codes correspond to irreducible
+  factors of `X^n − 1`; the invariant-subspace correspondence (Section 5)
+  is the module-theoretic foundation of the code decomposition.
+- **Finite geometry & design theory.** Singer cycles (Theorem 6.1)
+  furnish cyclic projective planes and Singer difference sets.
+
+---
+
+## 10. Discussion
+
+The methodological message is the substitution of an exponential
+geometric search (enumerate invariant subspaces) by a polynomial
+algebraic test (factor one polynomial). The bridge is Theorem 4.1, whose
+proof is purely about polynomial degrees and divisibility — no subspace
+is ever inspected. This robustness is why the result holds over an
+arbitrary field and specializes cleanly to the finite-field instances
+that matter computationally.
+
+The abstract generation certificate system (Definition 3.4) makes
+explicit that the symmetric-group and matrix-group generation theories
+are two readings of one template. This is more than cosmetic: it suggests
+a uniform interface in which a "certificate" is any cheaply checkable
+predicate with a proven structural consequence, and a "generation
+theorem" is a density bound on certified elements.
+
+---
+
+## 11. Future work and conjectures
+
+Two quantitative refinements remain open.
+
+### Conjecture A (Linear certificate density lower bound)
+
+For fixed prime power `q` and growing `n`,
+```
+#{ Singer certificates in GL_n(𝔽_q) } / #GL_n(𝔽_q)  ≥  c_q / n
+```
+for a constant `c_q > 0`. Heuristically the proportion of monic
+degree-`n` irreducible polynomials over `𝔽_q` is `~ 1/n`, and almost all
+such polynomials are separable and realized as characteristic polynomials
+of regular semisimple (cyclic-action) matrices; making the lower bound
+rigorous and uniform in `q` is the goal.
+
+### Conjecture B (Two-generator sufficiency)
+
+For random `g, h ∈ GL_n(𝔽_q)`, if `g` has irreducible characteristic
+polynomial and `det(h)` generates `𝔽_q^×`, then
+```
+Pr[ ⟨g, h⟩ = GL_n(𝔽_q) ]  ≥  1 − O(q^{-1}).
+```
+This is the linear analogue of Dixon's theorem and the practical
+justification for certificate-seeded random generation.
+
+Further directions include: a meet-side analysis of the invariant
+subspace lattice; quantitative orbit-length statistics for non-Singer
+irreducible elements; and extending the certificate system to the
+remaining classical groups (symplectic, orthogonal, unitary) where the
+relevant structural witness combines charpoly irreducibility with a
+preserved bilinear form.
+
+---
+
+## 12. Conclusion
+
+A single unfactorable polynomial certifies an entire group-theoretic
+phenomenon. Irreducibility of the characteristic polynomial — decidable
+in polynomial time — implies the complete absence of invariant subspaces
+(Theorem 4.1), which in turn yields maximal-length orbits (Theorem 5.2),
+transitive Singer actions in finite geometry (Theorem 6.1), and, through
+positive certificate density (Theorem 7.1), the probabilistic generation
+of matrix groups. The framework's value lies in trading an impossible
+search for a fast algebraic check, with a verified proof guaranteeing the
+trade is sound.
+
+---
+
+## References
+
+- Dixon, J. D. (1969). *The probability of generating the symmetric
+  group.* Mathematische Zeitschrift, 110, 199–205.
+- Huppert, B. (1967). *Endliche Gruppen I.* Springer.
+- Neumann, P. M., Praeger, C. E. (1992). *A recognition algorithm for
+  special linear groups.* Proc. London Math. Soc., 65(3), 555–603.

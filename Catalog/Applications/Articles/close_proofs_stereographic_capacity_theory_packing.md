@@ -1,170 +1,240 @@
-# Packing Oranges on a Sphere — by Flattening It First
+# The Atom That Refuses to Be Split: How a Single Polynomial Certifies a Whole Group
 
-## A very old question, and a new way to ask it
+## A puzzle about shuffling
 
-How many friends can you seat around a campfire so that no two are closer than
-arm's length? Stand them on a flat field and the answer is a familiar puzzle in
-plane geometry. Now bend the field into a globe and the puzzle becomes one of the
-oldest and most stubborn problems in mathematics: **how many non-overlapping caps
-of a given size can you fit on the surface of a sphere?**
+Imagine you are handed two shuffles of a deck of cards. Not the lazy
+riffle of a casino dealer, but two specific, fixed rearrangements. You
+are allowed to apply them in any order, any number of times. The
+question is deceptively simple: starting from these two moves, can you
+reach *every* possible arrangement of the deck?
 
-This is not an idle game. Each "cap" can be thought of as the cone of directions
-that one signal, one antenna beam, or one codeword can occupy without being
-confused for its neighbors. The maximum number of caps that fit is, quite
-literally, the size of the largest error-correcting code of a certain type — the
-backbone of reliable digital communication, from deep-space probes to the Wi-Fi
-in your kitchen. Mathematicians call these *spherical codes*, and counting them
-exactly is famously hard. Even the simplest version on an ordinary globe resists
-clean answers.
+For ordinary card decks this is the theory of the symmetric group, and
+mathematicians have known since the work of John Dixon in 1969 that two
+randomly chosen shuffles almost always suffice — the probability that
+they fail to generate everything shrinks toward zero as the deck grows.
+That single fact underwrites an enormous amount of modern computational
+algebra: when a computer wants to build a giant symmetry group, it does
+not laboriously construct it; it throws in a couple of random elements
+and trusts that they generate the whole thing.
 
-This article tells the story of a clean, geometric strategy for *bounding* that
-count from above — for proving statements of the form "you cannot possibly fit
-more than this many." The trick is disarmingly simple to state: **don't study the
-sphere. Flatten it, study the flat picture, and carry the answer back.** The
-flattening is an old friend called *stereographic projection*, and the careful
-bookkeeping of how it distorts distances is what we'll call **stereographic
-capacity theory**.
+But there is a parallel universe of groups where the "deck" is not a
+list of cards but a grid of numbers — a **matrix** — and the shuffles
+are linear transformations of space. These are the *matrix groups* (or
+*linear groups*), and they are the workhorses of cryptography, coding
+theory, and the classification of finite simple groups. Here the same
+question returns with a vengeance: given a couple of random invertible
+matrices over a finite field, do they generate the entire group of all
+invertible matrices?
 
-## How to flatten a sphere without lying too much
+The honest answer is that proving "yes, almost always" for matrix groups
+is much harder than for card shuffles, because matrices have far more
+internal structure to get stuck inside. The work described here isolates
+the precise structural feature that lets a single matrix break free of
+every trap — and packages that feature into a checkable *certificate*.
 
-Picture a globe sitting on a table, touching it at the South Pole. Put a tiny
-lamp at the North Pole. Every point on the globe (except the North Pole itself)
-casts a shadow somewhere on the infinite tabletop. That shadow map is
-stereographic projection: it turns the whole sphere, minus one point, into the
-entire flat plane.
+## The traps: invariant subspaces
 
-Stereographic projection has a magical property that map-makers have prized for
-centuries: it is *conformal*. It preserves angles perfectly. A small circle drawn
-on the globe casts a shadow that is still a small circle, never an ellipse. What
-it does **not** preserve is size. Near the South Pole — directly under the
-table-contact point — shadows are nearly true to scale. Out toward the equator and
-beyond, shadows stretch and balloon, and points near the North Pole are flung off
-toward infinity.
+To see what can go wrong, picture three-dimensional space and a linear
+transformation that rotates everything around a vertical axis. No matter
+how many times you apply that rotation, the vertical axis stays put, and
+the horizontal plane stays a plane. The rotation can never mix the
+vertical direction into the horizontal one. In the language of linear
+algebra, the axis and the plane are **invariant subspaces**: smaller
+worlds that the transformation maps into themselves.
 
-The entire art of stereographic capacity theory is to track that stretching with a
-single number at each location. We call it the **conformal factor**, written
-`λ(x)`, where `x` is a point on the flat plane:
+Invariant subspaces are exactly the traps that prevent generation. If
+two matrices share a common invariant subspace — some proper, nonzero
+slice of the space that both of them preserve — then no product of them
+will ever escape that slice's constraints. They are doomed to generate
+only a sub-collection of all matrices, never the full group. So the
+search for good generators becomes a search for matrices with *no*
+shared traps.
 
-> **Definition (conformal factor).** At a plane point `x`,
-> `λ(x) = 2 / (1 + ‖x‖²)`,
-> where `‖x‖` is the distance of `x` from the origin.
+Formally, given a linear map `φ` on a space `V`, a subspace `W` is
+invariant when applying `φ` to any vector of `W` keeps it inside `W`:
 
-This little formula is the dictionary between the round world and the flat one. A
-tiny step of length `ds` on the plane near `x` corresponds to a step of length
-roughly `λ(x) · ds` on the sphere. Where `λ` is large, the sphere is "denser" than
-the plane; where `λ` is small, it is sparser.
+> **Definition (invariant submodule).** A subspace `W ⊆ V` is invariant
+> under `φ` if for every `w ∈ W`, the vector `φ(w)` again lies in `W`.
 
-Our first results pin down exactly how this factor behaves.
+The whole space `V` and the trivial zero subspace `{0}` are always
+invariant — those are the uninteresting cases. The dangerous ones are
+the *proper, nonzero* invariant subspaces: the genuine traps. A linear
+map with no such traps is called **irreducible**, and irreducible maps
+are precisely the elements you want as generators.
 
-> **Theorem 1 (the factor is well-behaved).** For every point `x`:
-> 1. `λ(x) > 0` — the factor is always strictly positive;
-> 2. `λ(x) ≤ 2` — it never exceeds 2;
-> 3. `λ(x) = 2` exactly when `x = 0`, the origin.
+## The certificate: one polynomial to rule them out
 
-In plain words: the dictionary never breaks (you never divide by zero, never get a
-negative scale), the stretching is bounded — the sphere is never *more* than twice
-as dense as the plane — and the maximum density, the factor of exactly 2, happens
-at one special spot: the point under the South Pole, the place where the globe
-kisses the table. There the map is least distorted and the local scale is at its
-peak. Move away in any direction and `λ` strictly decreases, draining toward zero
-as you race off to infinity (the North Pole). It is a clean, gentle, fully
-predictable distortion — exactly the kind a mathematician can build an argument on.
+How can you tell, without exhaustively searching every subspace, whether
+a matrix has any traps at all? In dimension 100 over even a small field
+there are astronomically many subspaces to check; brute force is
+hopeless.
 
-## From spherical caps to flat exclusion zones
+The key is an algebraic fingerprint every matrix carries with it: its
+**characteristic polynomial**. For an `n × n` matrix this is a
+polynomial of degree `n`, computed once from the matrix's entries, whose
+roots are the matrix's eigenvalues. The central theorem of this work
+turns a property of that single polynomial into a guarantee about all
+the infinitely-many subspaces at once:
 
-Now we use the dictionary. Place a "guard radius" `r` on the sphere: we want every
-pair of chosen points to be at least a geodesic distance `2r` apart, so their caps
-of radius `r` never overlap. Project the chosen points down to the plane. Each one
-should now be surrounded by a flat *exclusion zone* — a forbidden disk that no
-other point may enter. How big is that disk?
+> **Theorem 1 (Irreducible action).** Let `φ` be a linear map on a
+> finite-dimensional space `V` over a field `K`. If the characteristic
+> polynomial of `φ` cannot be factored into smaller polynomials over `K`
+> — that is, if it is *irreducible* — then every `φ`-invariant subspace
+> of `V` is either the whole space `V` or the zero subspace `{0}`.
 
-Because the sphere stretches by `λ(x)`, a spherical radius `r` translates into a
-flat radius obtained by dividing out the local scale. The result is strikingly
-clean:
+In other words: **an irreducible characteristic polynomial certifies the
+complete absence of traps.** You compute one polynomial, you check that
+it does not factor, and you have proven that the matrix has no proper
+invariant subspace whatsoever — no axis, no plane, nothing for products
+to get stuck in. This is what we call a *generation certificate*: a
+small, cheaply verifiable piece of data that guarantees a global
+structural property.
 
-> **Theorem 2 (exclusion radius, closed form).** The flat exclusion radius
-> required at plane point `x` to enforce a spherical guard radius `r` is
-> `exclusion(r, x) = tan(r) · (1 + ‖x‖²) / 2`.
+The word "irreducible" appears on both sides of this theorem, and that
+is the whole point. On the left it is an *algebraic* statement about a
+polynomial — something a computer can check in microseconds by trial
+division or by Berlekamp's factoring algorithm. On the right it is a
+*geometric* statement about subspaces — something that would take an
+eternity to check directly. The theorem is a bridge that lets the cheap
+side certify the expensive side.
 
-Read this formula slowly, because it tells the whole geometric story. The factor
-`tan(r)` is the same everywhere — it encodes the size of the cap. But the factor
-`(1 + ‖x‖²)/2`, which is exactly `1/λ(x)`, *grows* as you move away from the
-origin. Points projected near the center need only a small exclusion disk; points
-projected far out — corresponding to spots near the North Pole, where the sphere
-was barely sampled by the plane — need huge ones. The flat picture must "pay back"
-the distortion the projection introduced. This is the bookkeeping that makes a
-plane-geometry argument honest about its spherical origins.
+## Why the bridge holds: the minimal polynomial argument
 
-A finite collection of plane points is called **stereo-separated** for radius `r`
-when every pair sits farther apart than the sum of their two exclusion radii.
-This is the exact flat shadow of "the caps don't overlap on the sphere," and it is
-a condition you can check with nothing but the distances and norms of points in the
-plane.
+The proof is a beautiful piece of structural reasoning, and its skeleton
+is worth seeing even without the technical machinery.
 
-## A sharp, honest bound on the simplest sphere
+Every matrix satisfies its own characteristic polynomial — feed the
+matrix into its characteristic polynomial as if the matrix were the
+variable, and you get the zero matrix. This is the celebrated
+**Cayley–Hamilton theorem**. Closely related is the **minimal
+polynomial**: the smallest-degree polynomial that the matrix satisfies.
+The minimal polynomial always divides the characteristic polynomial.
 
-For the ordinary 2-sphere `S²` — the surface of a globe — we can turn the
-area-versus-distortion accounting into a concrete ceiling on how many caps fit. The
-ingredients are textbook: the whole sphere has area `4π`, and a single cap of
-geodesic radius `r` has area `2π(1 − cos r)`. The naive ratio of these areas is a
-first guess at the packing number, but it ignores distortion. Folding in the worst
-the conformal factor can do (a `(2/cos r)²` correction) and simplifying yields a
-single, memorable closed form.
+Now suppose, for contradiction, that our matrix `φ` has a proper nonzero
+invariant subspace `W`. Because `W` is invariant, `φ` restricts to a
+genuine linear map on the smaller world `W`. That restricted map has its
+own minimal polynomial — and here is the crucial observation — since the
+big map satisfies the characteristic polynomial, so does its restriction
+to `W`. Therefore the minimal polynomial of the restriction *divides*
+the characteristic polynomial of `φ`.
 
-> **Theorem 3 (the S² distortion bound).** For radii `r` with `cos r ≠ 0` and
-> `cos r ≠ 1`, the stereographic distortion bound collapses to
-> `Bound(r) = 8 / (cos²r · (1 − cos r))`.
+But we assumed that polynomial is irreducible: its only divisors are
+constants and itself. The restriction's minimal polynomial is not a
+constant (a nonzero space cannot be annihilated by a constant), so it
+must equal the full characteristic polynomial. Comparing degrees, the
+degree of the minimal polynomial of the restriction is at most the
+dimension of `W`, while the degree of the characteristic polynomial of
+`φ` equals the dimension of the whole space `V`. Forcing these equal
+means `dim W = dim V`, so `W` is all of `V` — contradicting that it was a
+*proper* subspace. The trap was impossible all along.
 
-What began as a product of four awkward pieces — two squared secants, a total
-area, a cap area — becomes one fraction. As the caps shrink (`r → 0`), the
-denominator goes to zero and the bound blows up, correctly predicting that
-arbitrarily many tiny caps can fit. As the caps grow toward a hemisphere, the
-bound tightens toward the small handful of large caps that geometry allows. The
-formula is not just compact; it is differentiable, plottable, and ready to be
-compared against real packing numbers — which is exactly what a working bound
-should be.
+This argument is entirely algebraic; it never inspects a single subspace
+individually. That is why it scales to dimension a million as easily as
+dimension three.
 
-## When the answer is "just one"
+## Two consequences worth their own names
 
-Mathematics earns trust by getting the extreme cases exactly right, and capacity
-theory does. Suppose the guard radius is enormous — bigger than `1`. The unit
-sphere has diameter only `2` (the distance straight across through its center). If
-we demand that every pair of chosen points be at least `2r > 2` apart, we are
-demanding the impossible for any two distinct points: no two points on the sphere
-are ever farther apart than the diameter `2`.
+Once Theorem 1 is in hand, two striking corollaries fall out, each
+connecting to a different corner of mathematics.
 
-> **Theorem 4 (degenerate packing).** If `r > 1`, then any set of points on the
-> unit sphere that are pairwise at distance at least `2r` contains **at most one
-> point**.
+**The orbit spans everything.** Take any single nonzero vector `v` and
+watch where the irreducible map sends it: `v`, then `φv`, then `φ²v`, and
+so on. This *orbit* of iterates is the trajectory of a point under
+repeated transformation.
 
-The proof is a single line of honest geometry: any two points `a` and `b` on the
-unit sphere satisfy `‖a − b‖ ≤ ‖a‖ + ‖b‖ = 1 + 1 = 2`, by the triangle
-inequality, so they can never reach the required separation `2r > 2`. Hence the
-"packing number" for such a radius is exactly `1`: you can place one point, and
-nowhere is there room for a second. This is the sharp boundary where the problem
-stops being interesting — and our framework hits it precisely, certifying the bound
-`SphericalPackingBound n r 1` for every dimension `n` whenever `r > 1`.
+> **Theorem 2 (Orbit spanning).** If `φ` has an irreducible
+> characteristic polynomial, then for any nonzero vector `v`, the
+> iterates `v, φv, φ²v, φ³v, …` span the entire space `V`.
 
-One more small but useful fact rounds out the toolkit: bounds are **monotone**. If
-you have proven that no packing exceeds some budget `B`, then the same packing
-certainly does not exceed any larger budget `B′ ≥ B`. Looser claims follow for
-free from tighter ones — obvious, but exactly the kind of plumbing a usable theory
-needs in place.
+The reason is elegant: the span of an orbit is always itself an
+invariant subspace (applying `φ` just shifts the sequence forward by
+one), it is nonzero because it contains `v`, so by Theorem 1 it must be
+everything. This is exactly the principle behind **linear feedback shift
+registers** — the circuits that generate the pseudo-random sequences in
+GPS signals, stream ciphers, and error-correcting codes. A register
+whose "feedback polynomial" is irreducible cycles through a maximal-length
+sequence, visiting essentially every state before repeating, because its
+orbit fills the whole space.
 
-## Why flatten at all?
+**No fixed projective subspace.** Translated into the language of finite
+geometry, Theorem 1 says that an irreducible map acts on projective space
+with no fixed proper flat — no fixed point, no fixed line, no fixed plane.
 
-It is fair to ask: if the sphere is the real object, why detour through the plane?
-The answer is that the plane is where our sharpest tools live. Plane geometry has
-centuries of machinery — distances, norms, disks, packing arguments — that are far
-easier to wield than their curved counterparts. Stereographic projection lets us
-borrow all of it, *provided* we keep an honest ledger of the distortion. The
-conformal factor `λ(x)`, the exclusion radius `tan(r)(1+‖x‖²)/2`, and the closed
-bound `8/(cos²r(1−cos r))` are exactly that ledger, written out and checked. They
-turn a question about a curved world into one about a flat world that we already
-know how to answer.
+> **Theorem 3 (No fixed proper projective subspace).** An endomorphism
+> with irreducible characteristic polynomial preserves no subspace `W`
+> that is simultaneously nonzero and proper.
 
-That is the quiet promise of this circle of ideas. Sphere packing connects to the
-codes that protect every bit you send and receive, to the way molecules arrange
-themselves, to the geometry of high-dimensional data. Each of those lives,
-ultimately, on a sphere. And each, with the right dictionary, can be studied on a
-sheet of paper. Flatten the world, do the bookkeeping, and carry the answer home.
+Such maps are the famous **Singer cycles**: single matrices that, by
+repeated application, march transitively through every point of a finite
+projective space, the way a single well-chosen rotation can visit every
+hour-mark on a clock face. Singer cycles are prized in finite geometry,
+combinatorial design theory, and the construction of difference sets
+precisely because of this maximal transitivity, and Theorem 3 is the
+clean algebraic reason behind it.
+
+## From one matrix to a whole group: counting certificates
+
+A certificate for a single matrix is useful, but the ultimate goal is
+*generation*: showing that random matrices generate the entire group.
+The link between the two is **density** — what fraction of the group's
+elements carry a valid certificate?
+
+> **Definition (certificate density).** Given a finite group `G` and a
+> property `C` that some elements satisfy, the certificate density is the
+> fraction `#{g ∈ G : C(g)} / #G` — the probability that a uniformly
+> random element of `G` is certified.
+
+The framework records a basic but essential quantitative fact:
+
+> **Theorem 4 (Positive density).** If at least one element of a finite
+> group satisfies the certificate property, then the certificate density
+> is strictly positive.
+
+This sounds almost trivial, yet it is the hinge of every probabilistic
+generation argument: as long as certified elements *exist*, a random
+search finds them with positive probability, and one can begin to
+estimate how many random draws are needed. Stacking such density bounds
+is exactly how the symmetric-group story of Dixon was eventually
+extended to matrix groups. The framework abstracts the shared logic into
+a single reusable structure — a *generation certificate system* — so
+that the symmetric-group case and the linear case become two instances
+of one pattern: a checkable predicate on elements that forces any
+subgroup containing a certified element to be enormous (the whole group,
+or at worst index two).
+
+## What is proved, and what is conjectured
+
+Everything above — the invariant-subspace theorem, the orbit-spanning
+corollary, the no-fixed-flat statement, the positivity of density, and
+the specialization to matrices over a prime field `ℤ/pℤ` — is established
+with complete rigor. These are theorems, not hopes.
+
+Two natural quantitative refinements remain open and are stated as
+honest conjectures:
+
+- **Density lower bound.** For matrices over a fixed finite field, the
+  fraction carrying an irreducible characteristic polynomial should
+  decay only as slowly as `c/n` in dimension `n` — meaning certificates
+  remain abundant even in high dimensions.
+
+- **Two-generator sufficiency.** A random certified matrix together with
+  a second random matrix whose determinant has full multiplicative order
+  should generate the full general linear group with probability tending
+  to one.
+
+Both are believed true and supported by classical heuristics; pinning
+them down completely is the road ahead.
+
+## The takeaway
+
+The deep idea here is one that recurs throughout mathematics: **replace
+an impossible search with a single algebraic test.** You cannot examine
+all the subspaces of a high-dimensional space, but you can factor one
+polynomial. The irreducibility of that polynomial — a fact a laptop
+settles instantly — certifies a sweeping geometric truth: that the
+matrix has no hiding places, no invariant slices, no traps. From that
+one certificate flow maximal-length pseudo-random sequences, transitive
+motions of finite geometries, and the probabilistic generation of the
+great matrix groups on which modern cryptography stands. A single
+unfactorable polynomial, it turns out, is an atom that refuses to be
+split — and that refusal is exactly what makes it powerful.
