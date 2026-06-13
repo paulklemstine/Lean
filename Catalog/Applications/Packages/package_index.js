@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0e79b530",
     "filename": "this_cycle_laid_the_load_bearing_foundation_of_bak.json",
     "pkg_num": 83,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6396416883116883,
     "title": "The Coset Foundation of Baker\u2013Norine Divisor Theory on Finite Graphs"
   },
   {
@@ -2522,8 +2522,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "this_cycle_laid_the_load_bearing_foundation_of_bak",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6396416883116883,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Coset Foundation of Baker\u2013Norine Divisor Theory on Finite Graphs"
     }
