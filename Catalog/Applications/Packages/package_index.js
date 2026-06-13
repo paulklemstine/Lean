@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "24e21d72",
     "filename": "close_proofs_neural_network_training_as_renormaliz.json",
     "pkg_num": 64,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.64768,
     "title": "Close Proofs: Neural Network Training as Renormalization-Group Flow"
   },
   {
@@ -1922,8 +1922,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "close_proofs_neural_network_training_as_renormaliz",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.64768,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Close Proofs: Neural Network Training as Renormalization-Group Flow"
     }
