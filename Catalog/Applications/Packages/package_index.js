@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "a6231eff",
     "filename": "deepening_this_cycle_laid_the_missing_foundation_f.json",
     "pkg_num": 68,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.75616,
     "title": "Generation Certificates for Matrix Groups: Irreducible Characteristic Polynomials as Structural Witnesses"
   },
   {
@@ -2059,8 +2059,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "deepening_this_cycle_laid_the_missing_foundation_f",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.75616,
+      "quality": "substantial",
       "shape": "tetrahedron",
       "title": "Generation Certificates for Matrix Groups: Irreducible Characteristic Polynomials as Structural Witnesses"
     }
