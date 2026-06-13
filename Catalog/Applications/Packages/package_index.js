@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "7521d122",
     "filename": "the_new_file_catalogbridgeshodgeepolynomiallean_in.json",
     "pkg_num": 100,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7797956398104267,
     "title": "The Hodge-Deligne E-polynomial: A Bridge from Mirror Symmetry to Arithmetic"
   },
   {
@@ -3050,8 +3050,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "the_new_file_catalogbridgeshodgeepolynomiallean_in",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7797956398104267,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Hodge-Deligne E-polynomial: A Bridge from Mirror Symmetry to Arithmetic"
     }
