@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "759d6b7d",
     "filename": "close_proofs_stereographic_capacity_theory_packing.json",
     "pkg_num": 57,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5360561937716263,
     "title": "Generation Certificates for Matrix Groups"
   },
   {
@@ -1691,8 +1691,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "close_proofs_stereographic_capacity_theory_packing",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5360561937716263,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "Generation Certificates for Matrix Groups"
     }
