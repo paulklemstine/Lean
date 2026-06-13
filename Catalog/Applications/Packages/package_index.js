@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "4e80baa8",
     "filename": "for_a_calabi_yau_threefold_x_defined_over__the_l_f.json",
     "pkg_num": 110,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4503353609022557,
     "title": "The Diamond in the Mirror: A Ring-Valued Skeleton of Arithmetic Mirror Symmetry"
   },
   {
@@ -3375,8 +3375,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "for_a_calabi_yau_threefold_x_defined_over__the_l_f",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4503353609022557,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Diamond in the Mirror: A Ring-Valued Skeleton of Arithmetic Mirror Symmetry"
     }
