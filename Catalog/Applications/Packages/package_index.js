@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6d1f9fa2",
     "filename": "close_proofs_this_cycle_formalized_the_order_theor.json",
     "pkg_num": 105,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.70224,
     "title": "Close Proofs: The Rank-of-Apparition Engine for Strong Divisibility Sequences"
   },
   {
@@ -3209,8 +3209,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "close_proofs_this_cycle_formalized_the_order_theor",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.70224,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Close Proofs: The Rank-of-Apparition Engine for Strong Divisibility Sequences"
     }
