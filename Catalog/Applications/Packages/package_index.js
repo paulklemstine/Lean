@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d5fd302f",
     "filename": "close_proofs_algebraic_and_order_theoretic_backbon.json",
     "pkg_num": 76,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5492,
     "title": "Close Proofs: Algebraic and Order-Theoretic Backbone of Stereographic Capacity Theory"
   },
   {
@@ -2305,8 +2305,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "close_proofs_algebraic_and_order_theoretic_backbon",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5492,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Close Proofs: Algebraic and Order-Theoretic Backbone of Stereographic Capacity Theory"
     }
