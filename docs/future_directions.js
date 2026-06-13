@@ -3,7 +3,7 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "69d55bd4",
     "description": "Cycle 5b1caa2a (Q=0.740) proved 244 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # FUTURE_DIRECTIONS.md \u2014 Fibonacci Apparition as a Local-to-Global Sheaf\n\n## Synthesis\n\nThis cycle formalized the Fibonacci **rank of apparition** as a *local-to-global sheaf*\nover the divisibility si",
     "domains": [
       "Applications"
@@ -12,23 +12,9 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7900800000000001,
     "research_mode": "team",
     "source_exp_id": "5b1caa2a",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-13T21:05:16.036182+00:00",
     "title": "Close Proofs: This cycle formalized the Fibonacci **rank of apparition** as a *local"
-  },
-  {
-    "consumed_by_exp_id": "e48e0385",
-    "description": "Cycle 22207698 (Q=0.713) proved 2 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: Conserved Quantities along Reduction Paths\n\n## Synthesis\n\nThis cycle fused two strands of the catalog that had been developed\nindependently: the **conserved-quantity view of crypt",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_22207698_9b72db16",
-    "priority_score": 0.7625600000000001,
-    "research_mode": "team",
-    "source_exp_id": "22207698",
-    "status": "in_progress",
-    "timestamp": "2026-06-13T19:43:16.626880+00:00",
-    "title": "Close Proofs: This cycle fused two strands of the catalog that had been developed"
   },
   {
     "consumed_by_exp_id": "4e80baa8",
@@ -166,7 +152,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "`Applications/BoltzmannBridge/BottleneckStability.lean` closes the catalog's"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "91338db4",
     "description": "# Future Directions \u2014 Information-Geometric Bridge: the Fisher Metric on the Simplex `S`\n\n## Synthesis\n\nThis cycle laid the *global* foundations of a constructive, finite-alphabet bridge\nbetween the Fisher\u2013Rao information geometry on the probability simplex\n`S = {p : Fin n \u2192 \u211d | p \u2265 0, \u2211 p = 1}` and three classical geometries. The single\nunifying device is the **square-root chart** `p \u21a6 2\u221ap`, together with its\ntangent-level shadow, the reweighting `v \u21a6 v/\u221ap`. Six theorems are now proved in\n`Catalog/MachineLearning/FisherSimplexBridge.lean` with `sorry = 0` and only the\nstandard axioms (`propext`, `Classical.choice`, `Quot.sound`):\n\n- `fisher_sphere_embed` \u2014 `\u2211 (2\u221ap\u1d62)\u00b2 = 4`: the simplex lands on the radius-2 sphere.\n- `fisher_dominates_euclidean` \u2014 `\u2211 v\u1d62\u00b2 \u2264 \u2211 v\u1d62\u00b2/p\u1d62`: Fisher \u2ab0 Euclidean.\n- `fisher_ge_tv_sq` \u2014 `(\u2211|v\u1d62|)\u00b2 \u2264 \u2211 v\u1d62\u00b2/p\u1d62`: Fisher \u2ab0 (total variation)\u00b2, the\n  discrete infinitesimal Cram\u00e9r\u2013Rao/Cauchy\u2013Schwarz inequality.\n- `kl_nonneg` \u2014 Gibbs' inequality: `KL \u2265 0`, the integrated form of Fisher positivity.\n- `bhattacharyya_le_one` \u2014 `\u2211 \u221a(p\u1d62q\u1d62) \u2264 1`: the two sphere images make an acute\n  angle, so the great-circle (Hellinger/Bhattacharyya) distance is real-valued.\n- `renyi_affinity_le_one` \u2014 `\u2211 p\u1d62^\u03b1 q\u1d62^{1-\u03b1} \u2264 1` for `\u03b1 \u2208 [0,1]`: the\n  one-parameter \u03b1-affinity, which contains Bhattacharyya at `\u03b1 = 1/2` and reduces\n  to KL nonnegativity in the `\u03b1 \u2192 1` boundary.\n\nTogether these say: the Fisher form is the *largest* of the natural quadratic\nforms on tangent space; it is the round-sphere metric in disguise; its global\npotential `KL` is convex/nonnegative; and the entire \u03b1-family of divergences sits\nabove it with a single weighted-AM\u2013GM mechanism. This is the Archimedean mirror of\nthe catalog's p-adic `UltrametricKLDivergence`, the Riemannian completion of the\ntropical `TropicalInfoGeometry` seminorm story, and the *global* companion to the\n*differential* data-processing/Cram\u00e9r\u2013Rao layer in `Bridges.FisherMonotonicity`\nand `Bridges.FisherCramerRao`.\n\n## Results Summary\n\n| Theorem | Statement | Method |\n|---|---|---|\n| `fisher_sphere_embed` | `\u2211 (2\u221ap\u1d62)\u00b2 = 4` | `Real.sq_sqrt` + `Finset.mul_sum` |\n| `fisher_dominates_euclidean` | `\u2211 v\u1d62\u00b2 \u2264 \u2211 v\u1d62\u00b2/p\u1d62` | termwise, `le_div_iff\u2080`, `p\u1d62 \u2264 1` |\n| `fisher_ge_tv_sq` | `(\u2211|v\u1d62|)\u00b2 \u2264 \u2211 v\u1d62\u00b2/p\u1d62` | `Finset.sum_mul_sq_le_sq_mul_sq` |\n| `kl_nonneg` | `0 \u2264 \u2211 p\u1d62 log(p\u1d62/q\u1d62)` | `Real.log_le_sub_one_of_pos` |\n| `bhattacharyya_le_one` | `\u2211 \u221a(p\u1d62q\u1d62) \u2264 1` | Cauchy\u2013Schwarz + nonnegativity |\n| `renyi_affinity_le_one` | `\u2211 p\u1d62^\u03b1 q\u1d62^{1-\u03b1} \u2264 1` | `Real.geom_mean_le_arith_mean2_weighted` |\n\n## Research Directions\n\n### 1. Pythagorean theorem for KL divergence (information projection)\nFor an affine/exponential family `E \u2286 S` and the I-projection\n`p* = argmin_{p\u2208E} KL(p\u2016q)`, conjecture that `KL(p\u2016q) = KL(p\u2016p*) + KL(p*\u2016q)` for\nall `p \u2208 E`. This is falsifiable: a single `n = 3` numerical instance with a\nmismatched (non-affine) family would break the equality, while the identity should\nhold *exactly* when `E` is affine in the natural parameters. **The key insight is**\nthat `kl_nonneg` is precisely the degenerate (`E = {p}`) case of an orthogonal\ndecomposition, and the cross term vanishes exactly when the displacement `p \u2212 p*`\nis g-orthogonal to `\u2207KL(\u00b7\u2016q)` under the same `1/p` reweighting that powers\n`fisher_ge_tv_sq`. **Why now?** Gibbs nonnegativity and the Cauchy\u2013Schwarz\ninner-product machinery are both formal; the projection theorem is the next\nstructural layer, turning a single inequality into an equality with geometry.\n\n### 2. Sharp discrete Pinsker inequality from `fisher_ge_tv_sq`\nConjecture: integrating the tangent-level bound `fisher_ge_tv_sq` along the\nsquare-root geodesic yields `KL(p\u2016q) \u2265 2\u00b7TV(p,q)\u00b2` with the constant `2` sharp,\nthe deficit being controlled by a \u03c7\u00b2-divergence term. Falsifiable by exhibiting a\npair with `KL < 2\u00b7TV\u00b2` (which should be impossible) or by sharpening the constant\non a restricted family. **The key insight is** that `fisher_ge_tv_sq` *is* the\ninfinitesimal Pinsker inequality, so the global statement is its line integral over\nthe sphere chart certified by `fisher_sphere_embed`. **Why now?** Both endpoints \u2014\nthe tangent TV bound and the sphere embedding that linearises geodesics \u2014 are now\nformal, leaving only the integration step.\n\n### 3. Cram\u00e9r\u2013Rao lower bound as a re-instantiation of `fisher_ge_tv_sq`\nConjecture: for an unbiased estimator `T` of a parameter `\u03b8` over `S`, the variance\nobeys `Var(T) \u2265 1/I(\u03b8)`, and this follows from the *same*\n`Finset.sum_mul_sq_le_sq_mul_sq` split used in `fisher_ge_tv_sq`, now with\n`u\u1d62 = (T\u1d62 \u2212 \u03b8)\u221ap\u1d62` and `w\u1d62 = (\u2202_\u03b8 log p\u1d62)\u221ap\u1d62`. Falsifiable: any biased construction\nthat appears to violate the bound refutes the unbiasedness hypothesis, not the\ninequality. **The key insight is** that `fisher_ge_tv_sq` and Cram\u00e9r\u2013Rao are the\nidentical Cauchy\u2013Schwarz inequality under two choices of the two vectors. **Why\nnow?** `fisher_ge_tv_sq` already isolates the exact Cauchy\u2013Schwarz lemma and `1/\u221ap`\nreweighting, so Cram\u00e9r\u2013Rao is a near-mechanical re-instantiation that also dovetails\nwith the differential bound in `Bridges.FisherCramerRao`.\n\n### 4. Great-circle isometry: `d\u209b(p,q) = 2\u00b7arccos(\u2211\u221a(p\u1d62q\u1d62))`\nConjecture: the Fisher\u2013Rao geodesic distance on `S` equals\n`2\u00b7arccos(\u2211\u221a(p\u1d62q\u1d62))` (the Hellinger/Bhattacharyya great-circle distance), i.e. the\nembedding behind `fisher_sphere_embed` is a genuine *isometry*, not merely a set\ninclusion. Falsifiable by computing both sides on explicit triples and testing the\ntriangle inequality. **The key insight is** that `\u2211\u221a(p\u1d62q\u1d62)` is exactly the\nEuclidean inner product of the two sphere images divided by 4, and\n`bhattacharyya_le_one` already certifies this inner product lies in `[0,1]`, so the\narccos is well-defined and the metric question reduces to spherical trigonometry on\nthe sphere of `fisher_sphere_embed`. **Why now?** The sphere image and the\n`\u2264 1` affinity bound are both formal; lifting \"lands on the sphere\" to \"distances\nagree\" is the natural, immediately testable strengthening.\n\n### 5. The full \u03b1-divergence family is nonnegative and shares one Fisher Hessian\nConjecture: define `D_\u03b1(p\u2016q) = (1/(\u03b1(1\u2212\u03b1)))(1 \u2212 \u2211 p\u1d62^\u03b1 q\u1d62^{1-\u03b1})`. Then `D_\u03b1 \u2265 0`\nfor every `\u03b1 \u2208 (0,1)`, `D_\u03b1 \u2192 KL` as `\u03b1 \u2192 1`, and every `D_\u03b1` induces the *same*\nFisher metric as its common Hessian at the diagonal `p = q` (the dually-flat\nstructure). Falsifiable: a sign violation of `D_\u03b1` for some `\u03b1, p, q` (impossible by\nweighted AM\u2013GM) or a Hessian mismatch at `p = q` would refute dual flatness. **The\nkey insight is** that `renyi_affinity_le_one` already gives `\u2211 p\u1d62^\u03b1 q\u1d62^{1-\u03b1} \u2264 1`,\nwhich is *exactly* `D_\u03b1 \u2265 0` after dividing by the positive constant `\u03b1(1\u2212\u03b1)`; so the\nnonnegativity half is essentially done, and `kl_nonneg` is the `\u03b1 \u2192 1` boundary of\nthis same family. **Why now?** Both the \u03b1-affinity bound and Gibbs nonnegativity are\nformal, and the `log x \u2264 x \u2212 1` / weighted-AM\u2013GM toolchain generalises verbatim to\nthe power-mean inequalities that govern the whole interpolation.\n",
     "domains": [
       "Geometry",
@@ -176,7 +162,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "c8ba5b5f",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-13T13:54:54.078303+00:00",
     "title": "This cycle laid the *global* foundations of a constructive, finite-alphabet brid"
   },
@@ -286,6 +272,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "The conjecture that motivated this cycle \u2014 a *noise-stability phase transition f"
   },
   {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Arithmetic Concentration of Nodal Counts\n\n## Synthesis\n\nThis cycle isolated the *deterministic skeleton* hiding underneath the probabilistic\n\"variance-deficit\" conjecture for nodal edge counts of Hecke eigenfunctions on\nRamanujan graphs. Rather than assert an unproved asymptotic limit law, we formalized\nthe rigorous, finite, local-to-global core in `Core.lean`:\n\n- **Spectral bridge** (`quadForm_eq_eigen`): the adjacency quadratic form\n  `f\u1d40Af` of an eigenfunction equals `lam \u00b7 \u2016f\u2016\u00b2`. The signed edge sum\n  `\u2211_{u~v} f(u)f(v)` *is* the eigenvalue (up to the norm). This is the exact local-to-global\n  channel through which edge-local sign data becomes a global spectral invariant.\n- **Sign obstructions** (`exists_nodal_of_neg_eigen`, `nodalCount_pos_of_neg_eigen`,\n  `exists_concordant_of_pos_eigen`): the *sign* of the eigenvalue is a cohomology-flavored\n  obstruction \u2014 a negative eigenvalue forces at least one nodal edge, a positive one forces\n  a concordant edge. Local sign agreement cannot glue globally against the spectrum.\n- **Random-wave mean** (`nodal_density_half`): under the vertex sign-flip ensemble,\n  exactly half of the `2^|V|` configurations make a fixed (nonzero) edge nodal. This is the\n  rigorous benchmark against which any \"deficit\" must be measured, proved by an explicit\n  sign-flip involution.\n- **Hecke-symmetry rigidity** (`nodal_aut_invariant`): a graph automorphism fixing the\n  eigenfunction permutes the nodal edges. This is the discrete fingerprint of automorphic\n  symmetry acting on nodal geometry \u2014 the deterministic seed of the conjectured variance\n  deficit.\n\n## Results Summary\n\nFour theorems (plus two corollaries), all sorry-free, axioms limited to\n`propext`, `Classical.choice`, `Quot.sound`. The development is degree-agnostic and works\nfor any finite graph with real vertex functions; the Ramanujan/arithmetic hypotheses enter\nonly through the automorphism rigidity statement.\n\n## Bold, Falsifiable Directions\n\n### 1. Exact second moment of the sign-flip ensemble nodal count\nProve a closed formula for the *variance* of `nodalCount` over the full\n`twist`-ensemble: `Var = (1/4)|E_*| + (covariance over adjacent edge pairs)`, where\n`E_*` is the set of edges with both endpoints nonzero, and the covariance term is a sum\nover paths of length two. **The key insight is** that distinct edges sharing no vertex give\n*independent* sign indicators (so contribute zero covariance), so the entire variance is\ncarried by the \"cherries\" (paths `u\u2013w\u2013v`), reducing a global second moment to a purely local\ndegree-sequence statistic. **Why now?** `nodal_density_half` already supplies the first\nmoment via an involution; the same `Function.update` two-vertex-flip argument extends\nmechanically to pairs of edges, so the variance is within immediate reach and is the precise\nquantity the parent conjecture claims is \"deficient.\"\n\n### 2. Eigenvalue-quantitative nodal lower bound\nStrengthen the qualitative obstruction `exists_nodal_of_neg_eigen` to a quantitative count:\non a `d`-regular graph, `nodalCount(f) \u2265 (some explicit increasing function of) (lam + d)`\nwhen normalized. **The key insight is** that the *full* signed edge sum `lam\u00b7\u2016f\u2016\u00b2`, not just\nits sign, is available from `quadForm_eq_eigen`, and bounding `\u2211 over nodal edges |f(u)f(v)|`\nbelow by a Cauchy\u2013Schwarz/AM\u2013GM estimate against `\u2016f\u2016\u00b2` converts the scalar spectral gap\ndirectly into an edge count. **Why now?** The spectral bridge is already proved; only a\nclean inequality between the quadratic form and the nodal contribution remains, and Mathlib's\n`inner_mul_le_norm_mul_norm` machinery is directly applicable.\n\n### 3. Orbit-counting variance deficit under a fixed-point-free automorphism\nProve that if `\u03c3` is a fixed-point-free automorphism with `f \u2218 \u03c3 = f` and no fixed edges,\nthen `nodalCount(f)` is *even*, and more generally divisible by the order of `\u03c3` acting on\nedges. **The key insight is** that `nodal_aut_invariant` makes the nodal-edge set a union of\nfree `\u27e8\u03c3\u27e9`-orbits, so its cardinality inherits the orbit-size divisibility \u2014 a hard\n*parity/divisibility constraint* that mechanically shrinks the support of the count's\ndistribution, i.e. a literal, provable \"variance deficit.\" **Why now?** The invariance lemma\nis in hand; turning it into a quotient-by-group-action cardinality statement is a direct\napplication of Mathlib's `MulAction` orbit-partition API (`Finset.card` of orbits).\n\n### 4. Cheeger-type localization: nodal edges concentrate on the boundary of sign domains\nDefine the sign domains `{v : f v > 0}` and `{v : f v < 0}` and prove that every nodal edge\ncrosses between them, hence `nodalCount = ` (edge boundary of the positive domain), so\n`nodalCount \u2265 h(G)\u00b7min(|V\u208a|,|V\u208b|)` where `h(G)` is the edge-expansion (Cheeger) constant.\n**The key insight is** that the nodal set is *exactly* the cut induced by the sign partition,\nturning a spectral/analytic question into graph expansion \u2014 and Ramanujan graphs have\nnear-optimal expansion, which is precisely the arithmetic input that should pin the count.\n**Why now?** This is the cleanest cross-domain bridge to the expander material\n(`Algebra.ClassicalGroupExpanders`, `Algebra.ExpanderWalk.Amplification`) already in the\ncatalog, and reframes the conjecture in expansion language where strong tools exist.\n\n### 5. Sheaf-cohomological reformulation of the sign obstruction\nModel the sign datum as a `\u2124/2`-valued presheaf on the graph (a section assigns a sign to\neach nonzero vertex) and prove that the nodal edge count equals the number of edges where the\ngluing of local sections fails, i.e. a `\u010c^1` cocycle weight; show the spectral obstruction\nforces this class to be nonzero when `lam < 0`. **The key insight is** that nodal edges are\nliterally the first \u010cech obstruction to globally orienting the eigenfunction's sign, so\n\"negative eigenvalue \u21d2 nonzero `H^1`\" is a genuine local-to-global cohomology statement\ngeneralizing `exists_nodal_of_neg_eigen`. **Why now?** The obstruction theorem is already\nproved at the element level; lifting it to `ZMod 2` graph cohomology connects this work to\nthe catalog's sheaf/persistence machinery (`Applications.BoltzmannBridge`,\n`Applications.PoincareData`) and matches the engine's local-to-global mandate.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1774",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0c91c737",
+    "status": "available",
+    "timestamp": "2026-06-13T21:37:13.620199+00:00",
+    "title": "This cycle isolated the *deterministic skeleton* hiding underneath the probabili"
+  },
+  {
     "consumed_by_exp_id": "e06ac5f9",
     "description": "Conjecture: Let {X_n} be a family of bounded-degree d-dimensional simplicial expanders with uniformly positive higher-dimensional spectral gap, and let K_n be the neural tangent kernel induced by a width-infinite message-passing architecture whose updates are polynomially local on k-faces of X_n. Then there exists a sharp depth threshold L_c, determined explicitly by the nontrivial spectrum of the upper and lower Hodge Laplacians of X_n, such that for depths L < L_c the centered empirical eigenvalue distribution of K_n retains nontrivial topological signal (eigenvectors correlated with harmonic cochains), while for L > L_c it converges in probability to a topology-blind universal law depending only on local face-degree statistics. Test: Construct or simulate families of simplicial expanders with matched local degree distributions but different cohomology, compute the infinite-width kernel spectra as depth varies, and check whether (i) a reproducible critical depth aligns with Hodge spectral predictions, (ii) below threshold the leading eigenspaces correlate with harmonic representatives, and (iii) above threshold spectral statistics become indistinguishable across families with different topology. Refutation occurs if no such threshold appears, if it fails to track Hodge spectra, or if topological signal persists arbitrarily deep. Impact: This would identify a mathematically precise phase transition separating topology-sensitive from topology-blind geometric learning, yielding design principles for higher-order neural architectures, new links between random kernel universality and discrete Hodge theory, and a testable bridge between topological data analysis, spectral geometry, and learning theory.",
     "domains": [
@@ -315,34 +316,32 @@ window.FUTURE_DIRECTIONS = [
     "title": "Mod-p Monodromy Rigidity for Ap\u00e9ry-Type Picard\u2013Fuchs Operators"
   },
   {
-    "consumed_by_exp_id": "e90419e3",
-    "description": "Conjecture: For every rank-2 coefficient-free cluster algebra with exchange matrix B = [[0,b],[-c,0]] satisfying bc > 4, and for every positive integer initial seed (x1, x2), the resulting cluster sequence defined by x_{n+1} x_{n-1} = x_n^b for odd n and x_{n+1} x_{n-1} = x_n^c for even n has first-significant-digit frequencies converging to Benford's law along each parity subsequence, equivalently the fractional parts of log_10 x_n are equidistributed mod 1 separately on even and odd n. Test: Compute long orbits for many (b,c) with bc > 4 and diverse seeds, and statistically test mod-1 equidistribution of log_10 x_n on each parity class; refute by exhibiting a single hyperbolic pair and positive seed for which the discrepancy from uniform distribution does not tend to 0, or confirm by proving asymptotic linearization of tropicalized g-vector dynamics with irrational logarithmic slope forcing equidistribution. Impact: Establishes a new bridge between cluster algebra dynamics, tropical/integrable recurrences, and scale-invariant digit statistics, yielding a concrete universality principle for arithmetic chaos in Laurent phenomena and suggesting new randomness diagnostics for algebraic dynamical systems.",
+    "consumed_by_exp_id": "",
+    "description": "Cycle 0c91c737 (Q=0.556) proved 318 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture: Let {G_n} be a sequence of connected (q+1)-regular arithmetic Ramanujan graphs with |V(G_n)| -> infinity, and let f_n be an L^2-normalized Hecke eigenfunction of the graph adjacency operat",
     "domains": [
-      "Novelty",
-      "Pythagorean"
+      "Applications"
     ],
-    "id": "fd_1764",
-    "priority_score": 0.7,
+    "id": "sorry_fill_0c91c737_d734a3b6",
+    "priority_score": 0.6056226415094341,
     "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-13T19:43:09.731339+00:00",
-    "title": "Benford Renormalization for Cluster Variables in Rank-2 Laurent Dynamics"
+    "source_exp_id": "0c91c737",
+    "status": "available",
+    "timestamp": "2026-06-13T21:37:22.614891+00:00",
+    "title": "Close Proofs: Arithmetic Concentration of Nodal Counts in Random Hecke Eigenfunction"
   },
   {
-    "consumed_by_exp_id": "0c91c737",
-    "description": "Conjecture: Let {G_n} be a sequence of connected (q+1)-regular arithmetic Ramanujan graphs with |V(G_n)| -> infinity, and let f_n be an L^2-normalized Hecke eigenfunction of the graph adjacency operator with eigenvalue in a fixed compact subinterval of (-2sqrt(q), 2sqrt(q)). Define N_n as the number of edges {u,v} such that f_n(u)f_n(v) < 0 (the discrete nodal edge count). Then, after centering by its random-wave prediction and scaling by |V(G_n)|^(1/2), the distribution of N_n over Hecke eigenfunctions on G_n converges to a strictly smaller variance law than for non-arithmetic random regular graphs of the same degree; equivalently, arithmetic Hecke symmetry enforces a detectable variance deficit in nodal counts. Test: Compute full Hecke eigenbases for growing families of arithmetic Ramanujan graphs and compare the empirical mean/variance of normalized nodal edge counts against matched ensembles of non-arithmetic random regular graphs and Gaussian wave surrogates. The conjecture is supported if a stable, statistically significant variance deficit persists across graph families and spectral windows; it is refuted if the limiting variance matches the non-arithmetic random-wave benchmark. Impact: This would identify a new arithmetic fingerprint in quantum-chaotic graph observables, linking automorphic symmetry, discrete quantum ergodicity, and nodal geometry, and could yield new diagnostics for hidden arithmetic structure in networks and quantum simulators.",
+    "consumed_by_exp_id": "",
+    "description": "Cycle e90419e3 (Q=0.449) proved 388 theorems in Applications but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture: For every rank-2 coefficient-free cluster algebra with exchange matrix B = [[0,b],[-c,0]] satisfying bc > 4, and for every positive integer initial seed (x1, x2), the resulting cluster seq",
     "domains": [
-      "Algebra",
-      "Novelty"
+      "Applications"
     ],
-    "id": "fd_1768",
-    "priority_score": 0.7,
+    "id": "sorry_fill_e90419e3_6255d27e",
+    "priority_score": 0.49930340213936913,
     "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-13T19:44:17.577498+00:00",
-    "title": "Arithmetic Concentration of Nodal Counts in Random Hecke Eigenfunctions on Large"
+    "source_exp_id": "e90419e3",
+    "status": "available",
+    "timestamp": "2026-06-13T21:37:45.063127+00:00",
+    "title": "Close Proofs: Benford Renormalization for Cluster Variables in Rank-2 Laurent Dynami"
   },
   {
     "consumed_by_exp_id": "fcd11243",
@@ -359,7 +358,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: This cycle tested one structural hypothesis behind *self-referential t"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "03281f44",
     "description": "Cycle 9ea99386 (Q=0.426) proved 196 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture: Let B_d(Q_p) be the Bruhat\u2013Tits building of PGL_d(Q_p), and let K_L be the infinite-width neural tangent kernel induced by depth-L message passing with analytic, non-polynomial activation ",
     "domains": [
       "Novelty"
@@ -368,7 +367,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.4759965681637268,
     "research_mode": "team",
     "source_exp_id": "9ea99386",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-13T21:04:29.500520+00:00",
     "title": "Close Proofs: Noise-Stability Phase Transition for p-adic Neural Tangent Kernels on "
   },

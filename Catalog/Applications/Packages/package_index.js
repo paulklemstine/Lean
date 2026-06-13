@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "e48e0385",
     "filename": "close_proofs_this_cycle_fused_two_strands_of_the_c.json",
     "pkg_num": 107,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.62,
     "title": "The Hodge-Deligne E-polynomial: A Bridge from Geometry to Arithmetic"
   },
   {
@@ -3281,8 +3281,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "close_proofs_this_cycle_fused_two_strands_of_the_c",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.62,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Hodge-Deligne E-polynomial: A Bridge from Geometry to Arithmetic"
     }
