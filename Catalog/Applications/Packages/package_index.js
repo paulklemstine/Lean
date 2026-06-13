@@ -4,6 +4,16 @@
 
 window.PACKAGE_INDEX = [
   {
+    "date": "2026-06-13T13:53:52Z",
+    "domain": "Novelty",
+    "exp_id": "81fcaebc",
+    "filename": "the_foundational_file_catalogcomputationselfmodify.json",
+    "pkg_num": 87,
+    "quality": "unrated",
+    "quality_score": null,
+    "title": "Discrete Dynamics of Self-Modifying Computation"
+  },
+  {
     "date": "2026-06-13T13:19:50Z",
     "domain": "Novelty",
     "exp_id": "08a1059c",
@@ -1426,6 +1436,14 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Elementary Willmore Energy: Curvature Lower Bounds by Genus"
   },
+  "the_foundational_file_catalogcomputationselfmodify.json": {
+    "domain": "Novelty",
+    "exp_id": "81fcaebc",
+    "source_exp_ids": [
+      "23c33985"
+    ],
+    "title": "Discrete Dynamics of Self-Modifying Computation"
+  },
   "the_natural_next_step_is_to_formalize_the_actual_p.json": {
     "domain": "Novelty",
     "exp_id": "ff0f663c",
@@ -1685,7 +1703,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T01:35:15Z",
       "domain": "Bridges",
-      "hue": 272,
+      "hue": 271,
       "id": "this_cycle_formalized_a_self_contained_fragment_of",
       "primary_domain": "Bridges",
       "priority_score": 0.4107094228460233,
@@ -1696,7 +1714,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T02:44:01Z",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 91,
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
       "primary_domain": "Bridges",
       "priority_score": 0.60229,
@@ -1707,7 +1725,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:51:59Z",
       "domain": "Algebra",
-      "hue": 272,
+      "hue": 271,
       "id": "this_cycle_isolated_the_primitivity_layer_of_fibon",
       "primary_domain": "Algebra",
       "priority_score": 0.66176,
@@ -1729,7 +1747,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T03:52:55Z",
       "domain": "Applications",
-      "hue": 272,
+      "hue": 92,
       "id": "close_proofs_close_proofs_one_way_functions_existe",
       "primary_domain": "Bridges",
       "priority_score": 0.52037,
@@ -1740,7 +1758,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:26:56Z",
       "domain": "Computation",
-      "hue": 272,
+      "hue": 275,
       "id": "our_exists_revsim_of_surjective_proves_that_surjec",
       "primary_domain": "Computation",
       "priority_score": 0.65648,
@@ -1762,7 +1780,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T04:28:03Z",
       "domain": "Algebra",
-      "hue": 90,
+      "hue": 270,
       "id": "algebraic_statistics_markov_bases_for_contingency_",
       "primary_domain": "Algebra",
       "priority_score": 0.63808,
@@ -1784,7 +1802,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:04:43Z",
       "domain": "Cryptography",
-      "hue": 90,
+      "hue": 270,
       "id": "close_proofs_close_proofs_this_cycle_replaced_the_",
       "primary_domain": "Cryptography",
       "priority_score": 0.6270279310344827,
@@ -1817,7 +1835,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T06:40:28Z",
       "domain": "Applications",
-      "hue": 95,
+      "hue": 271,
       "id": "close_proofs_we_proved_that_the_biconjugate_satisf",
       "primary_domain": "Bridges",
       "priority_score": 0.5784016886543535,
@@ -1828,7 +1846,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T07:37:45Z",
       "domain": "Algebra",
-      "hue": 272,
+      "hue": 270,
       "id": "close_proofs_close_proofs_cobhams_theorem_1972_sta",
       "primary_domain": "Algebra",
       "priority_score": 0.6822099399599733,
@@ -1839,7 +1857,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T08:13:30Z",
       "domain": "Novelty",
-      "hue": 275,
+      "hue": 271,
       "id": "the_file_basiclean_establishes_a_fully_formal_axio",
       "primary_domain": "Bridges",
       "priority_score": 0.4599545454545455,
@@ -1850,7 +1868,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T08:13:58Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 271,
       "id": "close_proofs_close_proofs_this_cycle_added_catalog",
       "primary_domain": "Bridges",
       "priority_score": 0.7157600000000001,
@@ -1861,7 +1879,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T09:34:00Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 90,
       "id": "the_current_formalization_establishes_the_structur",
       "primary_domain": "Bridges",
       "priority_score": 0.6881600000000001,
@@ -1883,7 +1901,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T09:34:39Z",
       "domain": "MachineLearning",
-      "hue": 272,
+      "hue": 271,
       "id": "close_proofs_the_file_basiclean_establishes_a_full",
       "primary_domain": "MachineLearning",
       "priority_score": 0.6913777777777779,
@@ -1894,7 +1912,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T10:10:02Z",
       "domain": "Applications",
-      "hue": 272,
+      "hue": 95,
       "id": "close_proofs_bridge_stone_duality_as_a_bridge_betw",
       "primary_domain": "Bridges",
       "priority_score": 0.6744679245283018,
@@ -1905,7 +1923,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T10:10:36Z",
       "domain": "Applications",
-      "hue": 92,
+      "hue": 271,
       "id": "rigorous_formal_foundations_for_the_collatz_conj",
       "primary_domain": "Bridges",
       "priority_score": 0.4422962891379977,
@@ -1916,7 +1934,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T10:45:48Z",
       "domain": "Novelty",
-      "hue": 314,
+      "hue": 271,
       "id": "close_proofs_the_new_file_catalogmachinelearningpe",
       "primary_domain": "Bridges",
       "priority_score": 0.7564252631578948,
@@ -1927,7 +1945,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T10:46:10Z",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 270,
       "id": "close_proofs_arithmetic_universality_in_cellular_a",
       "primary_domain": "Bridges",
       "priority_score": 0.46680579704921854,
@@ -1949,7 +1967,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T13:13:04Z",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 95,
       "id": "close_proofs_this_cycle_replaced_the_softmax_score",
       "primary_domain": "Bridges",
       "priority_score": 0.4600000000000001,
@@ -1960,7 +1978,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T13:13:26Z",
       "domain": "Bridges",
-      "hue": 275,
+      "hue": 270,
       "id": "the_file_tropicalvaluationlimitbridgelean_formaliz",
       "primary_domain": "Bridges",
       "priority_score": 0.69648,
@@ -1971,7 +1989,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T13:48:01Z",
       "domain": "Geometry",
-      "hue": 270,
+      "hue": 90,
       "id": "close_proofs_thermodynamic_proof_system_tps_framew",
       "primary_domain": "Geometry",
       "priority_score": 0.6592800000000001,
@@ -1982,7 +2000,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T13:48:24Z",
       "domain": "Geometry",
-      "hue": 95,
+      "hue": 90,
       "id": "the_file_prooftheoreticordinalsepsilonlean_connect",
       "primary_domain": "Geometry",
       "priority_score": 0.5413600000000001,
@@ -1993,7 +2011,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T14:23:38Z",
       "domain": "Applications",
-      "hue": 314,
+      "hue": 270,
       "id": "close_proofs_the_file_geometryfractaldimensionlean",
       "primary_domain": "Bridges",
       "priority_score": 0.54053,
@@ -2004,7 +2022,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T14:24:02Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 90,
       "id": "12_fully_proved_theorems_zero_sorry_formalizing_th",
       "primary_domain": "Bridges",
       "priority_score": 0.7159200000000001,
@@ -2015,7 +2033,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T14:58:37Z",
       "domain": "Applications",
-      "hue": 272,
+      "hue": 270,
       "id": "the_file_catalognoveltygilbertvarshamovlean_closes",
       "primary_domain": "Bridges",
       "priority_score": 0.6701403592814372,
@@ -2026,7 +2044,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T14:58:55Z",
       "domain": "Applications",
-      "hue": 271,
+      "hue": 101,
       "id": "the_parametric_continuity_theorem_parametric_fixed",
       "primary_domain": "Bridges",
       "priority_score": 0.6108603592814372,
@@ -2037,7 +2055,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T14:59:16Z",
       "domain": "Applications",
-      "hue": 275,
+      "hue": 271,
       "id": "this_cycle_closed_the_single_open_sorry_in_bridges",
       "primary_domain": "Bridges",
       "priority_score": 0.5563721428571429,
@@ -2048,7 +2066,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T16:10:09Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 90,
       "id": "the_sphere_packing_bound_gives_an_upper_bound_on_c",
       "primary_domain": "Bridges",
       "priority_score": 0.5291335915882679,
@@ -2059,7 +2077,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T16:10:30Z",
       "domain": "Bridges",
-      "hue": 112,
+      "hue": 90,
       "id": "close_proofs_conjecture_if_f_t_t__01_is_a_continuo",
       "primary_domain": "Bridges",
       "priority_score": 0.7850491896144769,
@@ -2070,7 +2088,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T16:52:49Z",
       "domain": "Applications",
-      "hue": 272,
+      "hue": 270,
       "id": "close_proofs_the_file_computationspectralchaincore",
       "primary_domain": "Bridges",
       "priority_score": 0.7025182961460447,
@@ -2081,7 +2099,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T17:39:55Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 91,
       "id": "close_proofs_this_cycles_artifact_is_catalogmachin",
       "primary_domain": "Bridges",
       "priority_score": 0.7005600000000001,
@@ -2092,7 +2110,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T18:15:51Z",
       "domain": "Novelty",
-      "hue": 91,
+      "hue": 280,
       "id": "the_natural_next_step_is_to_formalize_the_actual_p",
       "primary_domain": "Bridges",
       "priority_score": 0.45543999999999996,
@@ -2103,7 +2121,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T18:16:09Z",
       "domain": "Physics",
-      "hue": 271,
+      "hue": 92,
       "id": "reversible_computing_and_thermodynamic_efficiency",
       "primary_domain": "Physics",
       "priority_score": 0.8572,
@@ -2114,7 +2132,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T18:16:32Z",
       "domain": "Bridges",
-      "hue": 92,
+      "hue": 272,
       "id": "the_file_logiclobfixedpointlean_isolates_the_purel",
       "primary_domain": "Bridges",
       "priority_score": 0.7927200000000001,
@@ -2125,7 +2143,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T18:51:40Z",
       "domain": "Geometry",
-      "hue": 275,
+      "hue": 92,
       "id": "the_file_willmoreenergylean_establishes_the_elemen",
       "primary_domain": "Geometry",
       "priority_score": 0.6796971428571429,
@@ -2136,7 +2154,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T19:37:08Z",
       "domain": "Logic",
-      "hue": 91,
+      "hue": 92,
       "id": "this_cycle_moved_the_catalogs_dream_logic_line_of_",
       "primary_domain": "Logic",
       "priority_score": 0.65664,
@@ -2158,7 +2176,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T19:37:49Z",
       "domain": "Logic",
-      "hue": 271,
+      "hue": 270,
       "id": "the_file_computationeastinknilllean_isolates_the_a",
       "primary_domain": "Logic",
       "priority_score": 0.528,
@@ -2169,7 +2187,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T19:38:07Z",
       "domain": "Cryptography",
-      "hue": 90,
+      "hue": 270,
       "id": "close_proofs_formally_verified_framework_computati",
       "primary_domain": "Cryptography",
       "priority_score": 0.6783541984732825,
@@ -2180,7 +2198,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T21:36:12Z",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 95,
       "id": "close_proofs_belnaps_four_is_the_smallest_non_triv",
       "primary_domain": "Bridges",
       "priority_score": 0.43117439116517287,
@@ -2191,7 +2209,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T22:10:53Z",
       "domain": "Novelty",
-      "hue": 91,
+      "hue": 90,
       "id": "self_contained_sorry_free_lean_4_formalization_of_",
       "primary_domain": "Bridges",
       "priority_score": 0.5484,
@@ -2213,7 +2231,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T22:46:43Z",
       "domain": "Geometry",
-      "hue": 92,
+      "hue": 270,
       "id": "quasi_symmetric_maps_generalize_bi_lipschitz_maps_",
       "primary_domain": "Geometry",
       "priority_score": 0.47216,
@@ -2224,7 +2242,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T22:47:06Z",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 91,
       "id": "predicative_ordinal_analysis_fragment",
       "primary_domain": "Bridges",
       "priority_score": 0.7887200000000001,
@@ -2235,7 +2253,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T22:47:23Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 179,
       "id": "this_cycle_opened_a_constructive_bridge_between_th",
       "primary_domain": "Bridges",
       "priority_score": 0.7075200000000001,
@@ -2246,7 +2264,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T23:22:21Z",
       "domain": "Applications",
-      "hue": 271,
+      "hue": 270,
       "id": "close_proofs_the_file_cataloglogicproofphasetransi",
       "primary_domain": "Bridges",
       "priority_score": 0.7200673684210526,
@@ -2257,7 +2275,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T23:57:46Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 90,
       "id": "deepening_close_proofs_the_current_framework_consi",
       "primary_domain": "Bridges",
       "priority_score": 0.7545574690508942,
@@ -2268,7 +2286,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T23:58:09Z",
       "domain": "Novelty",
-      "hue": 272,
+      "hue": 270,
       "id": "this_cycle_laid_the_missing_foundation_for_the_pro",
       "primary_domain": "Bridges",
       "priority_score": 0.7651974690508941,
@@ -2279,7 +2297,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T23:58:31Z",
       "domain": "Logic",
-      "hue": 91,
+      "hue": 92,
       "id": "deepening_the_file_logiclobfixedpointlean_isolates",
       "primary_domain": "Logic",
       "priority_score": 0.5479162011173184,
@@ -2290,7 +2308,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-12T23:58:50Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 90,
       "id": "close_proofs_this_cycle_formalized_the_abstract_si",
       "primary_domain": "Algebra",
       "priority_score": 0.5563100449775112,
@@ -2312,7 +2330,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T01:07:13Z",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 270,
       "id": "inverse_stereographic_persistence_topological_data",
       "primary_domain": "Bridges",
       "priority_score": 0.6672800000000001,
@@ -2323,7 +2341,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T01:07:34Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 92,
       "id": "close_proofs_this_cycle_laid_the_missing_foundatio",
       "primary_domain": "Bridges",
       "priority_score": 0.7716000000000001,
@@ -2334,7 +2352,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T01:42:42Z",
       "domain": "Applications",
-      "hue": 271,
+      "hue": 292,
       "id": "poincar_conjecture_revisited_4d_smooth",
       "primary_domain": "Bridges",
       "priority_score": 0.53344,
@@ -2345,7 +2363,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T02:18:13Z",
       "domain": "Logic",
-      "hue": 271,
+      "hue": 90,
       "id": "close_proofs_this_cycle_moved_the_catalogs_dream_l",
       "primary_domain": "Logic",
       "priority_score": 0.6836800000000001,
@@ -2356,7 +2374,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T02:18:32Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 90,
       "id": "order_theoretic_core_of_the_cookreckhow_program_as",
       "primary_domain": "Bridges",
       "priority_score": 0.67055,
@@ -2367,7 +2385,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T02:53:33Z",
       "domain": "Applications",
-      "hue": 275,
+      "hue": 272,
       "id": "close_proofs_neural_network_training_as_renormaliz",
       "primary_domain": "Bridges",
       "priority_score": 0.64768,
@@ -2378,7 +2396,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T03:27:08Z",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 92,
       "id": "thermodynamic_proof_erasure_landauers_principle_fo",
       "primary_domain": "Bridges",
       "priority_score": 0.410850132231405,
@@ -2389,7 +2407,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T03:59:42Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 91,
       "id": "order_theoretic_core_of_gdellb_provability_logic_g",
       "primary_domain": "Bridges",
       "priority_score": 0.7660915736040609,
@@ -2400,7 +2418,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T04:00:01Z",
       "domain": "Applications",
-      "hue": 90,
+      "hue": 92,
       "id": "kripke_semantic_core_of_gdellb_provability_logic",
       "primary_domain": "Bridges",
       "priority_score": 0.7239168975069252,
@@ -2411,7 +2429,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T04:00:25Z",
       "domain": "Applications",
-      "hue": 280,
+      "hue": 95,
       "id": "close_proofs_inverse_stereographic_renormalization",
       "primary_domain": "Bridges",
       "priority_score": 0.5729568975069252,
@@ -2422,7 +2440,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T04:00:48Z",
       "domain": "Algebra",
-      "hue": 270,
+      "hue": 271,
       "id": "deepening_this_cycle_laid_the_missing_foundation_f",
       "primary_domain": "Algebra",
       "priority_score": 0.75616,
@@ -2433,7 +2451,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T04:38:21Z",
       "domain": "Novelty",
-      "hue": 91,
+      "hue": 92,
       "id": "close_proofs_formal_foundations_for_the_logic_phys",
       "primary_domain": "Bridges",
       "priority_score": 0.6629942857142858,
@@ -2444,7 +2462,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T05:12:02Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 90,
       "id": "the_file_tropicalmodulidimensionlean_establishes_t",
       "primary_domain": "Bridges",
       "priority_score": 0.68944,
@@ -2455,7 +2473,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T05:51:53Z",
       "domain": "Applications",
-      "hue": 91,
+      "hue": 271,
       "id": "deepening_order_theoretic_core_of_gdellb_provabili",
       "primary_domain": "Bridges",
       "priority_score": 0.7199899999999999,
@@ -2466,7 +2484,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T06:02:16Z",
       "domain": "Applications",
-      "hue": 91,
+      "hue": 270,
       "id": "close_proofs_thermodynamic_proof_erasure_landauers",
       "primary_domain": "Bridges",
       "priority_score": 0.6708000000000001,
@@ -2477,7 +2495,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T07:15:55Z",
       "domain": "Applications",
-      "hue": 280,
+      "hue": 95,
       "id": "this_cycle_was_a_cold_start_on_the_clique_complex_",
       "primary_domain": "Bridges",
       "priority_score": 0.8016000000000001,
@@ -2488,7 +2506,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T07:47:47Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 91,
       "id": "close_proofs_the_file_cataloggeometryisingstereorg",
       "primary_domain": "Bridges",
       "priority_score": 0.5336230136986302,
@@ -2499,7 +2517,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T07:48:08Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 90,
       "id": "close_proofs_close_proofs_this_cycle_built_from_sc",
       "primary_domain": "Bridges",
       "priority_score": 0.7670104918032787,
@@ -2510,7 +2528,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T08:36:27Z",
       "domain": "Applications",
-      "hue": 92,
+      "hue": 272,
       "id": "close_proofs_algebraic_and_order_theoretic_backbon",
       "primary_domain": "Bridges",
       "priority_score": 0.5492,
@@ -2521,7 +2539,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T09:09:07Z",
       "domain": "Applications",
-      "hue": 112,
+      "hue": 272,
       "id": "we_have_formalized_belnaps_four_as_a_bounded_distr",
       "primary_domain": "Bridges",
       "priority_score": 0.6572,
@@ -2532,7 +2550,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T09:09:25Z",
       "domain": "Novelty",
-      "hue": 271,
+      "hue": 270,
       "id": "this_cycle_isolated_the_cardinal_mechanism_behind_",
       "primary_domain": "Bridges",
       "priority_score": 0.67256,
@@ -2543,7 +2561,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T10:52:02Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 91,
       "id": "close_proofs_kripke_semantic_core_of_gdellb_provab",
       "primary_domain": "Bridges",
       "priority_score": 0.6228,
@@ -2554,7 +2572,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T10:52:19Z",
       "domain": "Novelty",
-      "hue": 270,
+      "hue": 271,
       "id": "deepening_this_cycle_was_a_cold_start_on_the_cliqu",
       "primary_domain": "Bridges",
       "priority_score": 0.6899,
@@ -2565,7 +2583,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T10:52:39Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 271,
       "id": "close_proofs_proof_complexity_holography_geometric",
       "primary_domain": "Bridges",
       "priority_score": 0.8291200000000001,
@@ -2576,7 +2594,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T10:53:07Z",
       "domain": "Applications",
-      "hue": 95,
+      "hue": 271,
       "id": "the_file_higherpersistencelean_lifts_the_catalogs_",
       "primary_domain": "Bridges",
       "priority_score": 0.6702816883116883,
@@ -2587,7 +2605,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T10:53:26Z",
       "domain": "Applications",
-      "hue": 270,
+      "hue": 92,
       "id": "this_cycle_laid_the_load_bearing_foundation_of_bak",
       "primary_domain": "Bridges",
       "priority_score": 0.6396416883116883,
@@ -2598,7 +2616,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T11:32:01Z",
       "domain": "Bridges",
-      "hue": 90,
+      "hue": 270,
       "id": "close_proofs_this_cycle_built_from_scratch_and_sor",
       "primary_domain": "Bridges",
       "priority_score": 0.4512497048978154,
@@ -2609,7 +2627,7 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T12:18:29Z",
       "domain": "Bridges",
-      "hue": 270,
+      "hue": 91,
       "id": "this_cycle_isolated_the_rank_of_apparition_the_fib",
       "primary_domain": "Bridges",
       "priority_score": 0.7180000000000001,
@@ -2620,13 +2638,24 @@ window.PACKAGE_GRAPH = {
     {
       "date": "2026-06-13T13:19:50Z",
       "domain": "Novelty",
-      "hue": 90,
+      "hue": 92,
       "id": "this_cycle_adds_cataloglogictemporalprooforderlean",
       "primary_domain": "Bridges",
       "priority_score": 0.4716,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Belnap's FOUR: Paraconsistency and the Product Bilattice 2 \u2299 2"
+    },
+    {
+      "date": "2026-06-13T13:53:52Z",
+      "domain": "Novelty",
+      "hue": 270,
+      "id": "the_foundational_file_catalogcomputationselfmodify",
+      "primary_domain": "Bridges",
+      "priority_score": null,
+      "quality": "unrated",
+      "shape": "icosahedron",
+      "title": "Discrete Dynamics of Self-Modifying Computation"
     }
   ]
 };
