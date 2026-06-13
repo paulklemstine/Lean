@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "94ed24b3",
     "filename": "close_proofs_12_fully_proved_theorems_zero_sorry_f.json",
     "pkg_num": 93,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.74704,
     "title": "Certified Expanders for Classical Groups"
   },
   {
@@ -2833,8 +2833,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "close_proofs_12_fully_proved_theorems_zero_sorry_f",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.74704,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Certified Expanders for Classical Groups"
     }
