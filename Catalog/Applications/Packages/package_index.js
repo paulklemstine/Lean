@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d7d530ea",
     "filename": "the_file_tropicalmodulidimensionlean_establishes_t.json",
     "pkg_num": 70,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.68944,
     "title": "The Cone-Complex Dimension Theory of the Tropical Moduli Space M_g^trop"
   },
   {
@@ -2117,8 +2117,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "the_file_tropicalmodulidimensionlean_establishes_t",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.68944,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Cone-Complex Dimension Theory of the Tropical Moduli Space M_g^trop"
     }
