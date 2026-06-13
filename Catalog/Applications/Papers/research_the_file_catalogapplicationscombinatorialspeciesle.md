@@ -1,485 +1,427 @@
-# The Analytic Bridge for Combinatorial Species: Sum, Product, Inversion, Differentiation, and Pointing
+# The Taylor Calculus of Combinatorial Species: Iterated Differentiation, Maclaurin Reconstruction, Moment Towers, and the Higher Leibniz Rule
 
 ## Abstract
 
-We develop a self-contained, fully rigorous account of the classical correspondence,
-due to Joyal, between *combinatorial species* and *exponential generating functions*
-(EGFs), and we extend it from a merely algebraic correspondence into a *differential*
-and *bijective* one. Working over the rationals `ℚ`, we model a counting sequence as a
-function `a : ℕ → ℚ`, its EGF as the formal power series `egf(a) = Σₙ (aₙ/n!) Xⁿ`, and a
-combinatorial species (in skeletal form) as a family of finite structure types together
-with a symmetric-group action encoding relabelling. We prove four families of results.
-**(I) Homomorphism.** `egf` carries the disjoint-union (sum) of species to addition of
-series (`egf_add`) and the Day-convolution (structural) product of species to
-multiplication of series (`egf_mul`), the latter resting on the cardinality identity
-`card_prodSpecies` that the structural product realizes the binomial convolution; it sends
-the species of sets to `exp` and the species of linear orders to `1/(1−X)`. **(II)
-Inversion.** `egf` is a *bijection* `(ℕ → ℚ) ≃ ℚ⟦X⟧` with the explicit two-sided inverse
-`seqOf(f)ₙ = n!·[Xⁿ]f`; hence the EGF is a *complete invariant* for labelled enumeration
-(`Species.EGF_inj`). **(III) Differentiation and pointing.** The derivative species
-`F'[n] = F[n+1]` maps to the formal derivative `d/dX` (`egf_seqDeriv`), and the pointed
-species `F^•[n] = n·F[n]` maps to `X·d/dX` (`egf_seqPoint`). **(IV) Leibniz.** The
-structural product rule `(F·G)' = F'·G + F·G'` holds at the level of counting sequences
-(`binConv_leibniz`), obtained by transporting the analytic product rule across the
-bijective bridge with no index manipulation. We give proof sketches for all results,
-algorithms realizing them numerically, applications to classical enumeration and to random
-generation, and a programme of future directions (substitution/plethysm, cycle-index
-series and Pólya theory, the `λ`-ring/`RingHom` structure, and a skeletal-to-genuine
-categorical comparison).
+We develop, and machine-verify, the higher-order differential calculus of
+Joyal's combinatorial species through the exponential generating function (EGF)
+bridge. Working over the formal power series ring `ℚ⟦X⟧`, we establish that the
+EGF transform `egf(a) = Σ_n (a_n/n!)Xⁿ` is a bijection between counting sequences
+`ℕ → ℚ` and power series, and that under it Joyal's derivative species `F′[n] =
+F[n+1]` and pointed species `F•[n] = [n] × F[n]` correspond to the formal
+derivative `d/dX` and the Euler operator `θ = X·d/dX` respectively. Our main
+contributions iterate these first-order bridges into full towers. We prove
+(i) the *Taylor tower* identities `F^{(k)}[n] = F[n+k]` and `EGF(F^{(k)}) =
+(d/dX)^k EGF(F)`; (ii) the *species Maclaurin theorem*, that the constant term of
+the `k`-fold formal derivative of `EGF(F)` equals the un-normalised count `F[k]`,
+the exponential `1/n!` normalisation exactly cancelling the `k!` of an ordinary
+Taylor expansion; (iii) the *Taylor reconstruction theorem*, that every power
+series equals the EGF of the sequence of constant-terms of its own derivative
+tower — an exact, coefficientwise-finite algebraic inversion rather than an
+analytic limit; (iv) the *moment tower* `(F^{•k})[n] = nᵏ·F[n]` with EGF shadow
+`(X·d/dX)^k`; and (v) the *higher (binomial) Leibniz rule* on `ℚ⟦X⟧`. All results
+are formalized with no `sorry` and depend only on the standard foundational
+axioms. We give proof sketches, algorithms realising each identity numerically,
+and a discussion of the composition / exponential-formula extension that remains
+open.
 
-**Keywords.** combinatorial species, exponential generating function, binomial convolution,
-Day convolution, analytic functor, formal power series, formal derivative, complete
-invariant, Leibniz rule, enumerative combinatorics.
+**Keywords.** Combinatorial species, exponential generating functions, formal
+power series, Taylor expansion, Faà di Bruno, Euler operator, analytic functors,
+groupoid cardinality.
 
 ---
 
 ## 1. Introduction
 
-Enumerative combinatorics asks: in how many ways can one impose a given kind of structure
-on a finite set of `n` labelled elements? The answer is a sequence of nonnegative integers
-`(aₙ)_{n≥0}`. Generating-function methods encode such a sequence as a single analytic
-object whose algebraic manipulations mirror combinatorial constructions. For *labelled*
-structures the appropriate encoding is the **exponential generating function**
+Joyal's theory of combinatorial species reframes enumerative combinatorics as
+the study of functors from the groupoid of finite sets to finite sets. Each
+species `F` packages, for every label-count `n`, the finite set `F[n]` of
+`F`-structures on an `n`-element label set, together with the relabelling action
+of the symmetric group. The associated exponential generating function (EGF)
+linearises this categorical data into `ℚ⟦X⟧`, and the central theorems of the
+theory state that algebraic operations on species — sum, product, derivative,
+pointing, composition — correspond to algebraic operations on EGFs.
 
-```
-EGF(a)(X) = Σ_{n≥0} (aₙ / n!) Xⁿ.
-```
+The first-order layer of this dictionary (sum ↔ sum, Day-convolution product ↔
+Cauchy product, derivative ↔ `d/dX`, pointing ↔ `X·d/dX`) is classical. This
+paper concerns the *higher-order* layer: what happens when these operators are
+iterated. We show that iteration produces three coherent towers — the derivative
+(Taylor) tower, the pointing (moment) tower, and the binomial Leibniz tower — and
+that the derivative tower is, remarkably, *invertible*: a power series is
+reconstructed exactly from the constant terms of its iterated derivatives. The
+reconstruction is finite at each coefficient and purely algebraic, in sharp
+contrast to the analytic Taylor theorem it formally resembles.
 
-André Joyal's theory of **species** (1981) reorganizes this machinery conceptually: a
-species is a functor from the groupoid of finite sets and bijections to the category of
-finite sets, and its EGF is the associated *analytic functor's* exponential generating
-function. In this language, natural categorical operations on species — sum, product,
-substitution, derivative — correspond to natural operations on power series — sum, product,
-plethystic composition, formal derivative.
+All statements below have been formally verified. We present them with full
+mathematical statements and proof sketches; the verified development is the
+source of truth and the prose paraphrases it faithfully.
 
-This paper formalizes the foundational rungs of that correspondence and sharpens them.
-Beyond the standard homomorphism laws (sum and product), we establish three structural
-facts that are often left informal:
-
-1. The EGF is not merely structure-preserving but *bijective*, with an explicit inverse —
-   so it loses no enumerative information (a *complete invariant*).
-2. The EGF intertwines the combinatorial derivative (adjoining a ghost label) with the
-   analytic formal derivative, and the pointing operation with `X·d/dX`.
-3. The combinatorial Leibniz rule follows *for free* from the analytic one by transport
-   across the bijection.
-
-All statements are theorems with complete proofs; the proof sketches below indicate the
-key steps and the precise auxiliary facts they invoke.
-
-### 1.1 Conventions
-
-We work over the field `ℚ`. Formal power series in one variable over `ℚ` are written
-`ℚ⟦X⟧`, with `[Xⁿ]f` (or `coeff n f`) denoting the coefficient of `Xⁿ` in `f`. A *counting
-sequence* is a function `a : ℕ → ℚ` (we allow rational values for algebraic convenience;
-genuine counting sequences are `ℕ`-valued and are cast into `ℚ`). We write `n!` for the
-factorial and `C(n, i) = n!/(i!·(n−i)!)` for the binomial coefficient.
+The novelty of the present work is twofold. First, while the first-order
+bridges (derivative ↔ `d/dX`, pointing ↔ `X·d/dX`) are folklore, their
+*iterates* are usually handled informally; here every tower is proved by a clean
+`Function.iterate` induction whose inductive step is a single application of the
+corresponding first-order bridge, so the higher-order theory is reduced to the
+first-order theory in a structurally transparent way. Second, the Taylor
+reconstruction theorem isolates a phenomenon that the analytic analogy obscures:
+because the underlying data are discrete and `egf` is a bona fide bijection, the
+Taylor tower is *invertible* with no convergence hypothesis, a statement that has
+no classical analytic counterpart for general smooth functions.
 
 ---
 
-## 2. Generating functions of counting sequences
+## 2. Definitions
 
-### 2.1 Definition
+### 2.1 Counting sequences and the EGF transform
 
-**Definition 2.1 (EGF).** For `a : ℕ → ℚ`, the *exponential generating function* is
-```
-egf(a) := Σ_{n≥0} (aₙ / n!) Xⁿ  ∈ ℚ⟦X⟧,
-```
-i.e. the power series whose `n`-th coefficient is `aₙ / n!`.
+A **counting sequence** is a function `a : ℕ → ℚ`. Its **exponential generating
+function** is the formal power series
 
-**Lemma 2.2 (coefficient extraction, `coeff_egf`).** For all `n`,
-`[Xⁿ] egf(a) = aₙ / n!`.
+> `egf(a) := Σ_n (a_n / n!) Xⁿ ∈ ℚ⟦X⟧`,  i.e. `coeff_n(egf a) = a_n / n!`.
 
-*Proof sketch.* Immediate from the definition of `egf` as the series with prescribed
-coefficients (`PowerSeries.coeff_mk`). ∎
+Define the **inverse transform** `seqOf(f)_n := n! · coeff_n(f)`.
 
-Lemma 2.2 is the workhorse of the entire paper: every subsequent identity is verified by
-comparing coefficients and reducing to Lemma 2.2.
+### 2.2 Binomial convolution
 
-### 2.2 The binomial convolution
+The **binomial (exponential) convolution** of `a, b : ℕ → ℚ` is
 
-**Definition 2.3 (binomial convolution, `binConv`).** For `a, b : ℕ → ℚ`,
-```
-(a ⋆ b)ₙ := Σ_{i + j = n} C(n, i) · aᵢ · bⱼ,
-```
-the sum being over the antidiagonal `{(i,j) : i + j = n}`.
+> `(a ⋆ b)_n := Σ_{i+j=n} C(n,i) · a_i · b_j`,
 
-This is the *exponential* (or *binomial*) convolution, the labelled analogue of the Cauchy
-product; it is the counting sequence of the structural product of species (Section 5).
+written `binConv a b`. Its rig unit is `binConvOne_n = [n = 0]` (1 at `n=0`, else
+0).
 
----
+### 2.3 Species
 
-## 3. The homomorphism laws
+A **species** (skeletal form) is a structure consisting of:
+- a family `obj : ℕ → Type` of finite types (`F[n] := obj n`),
+- a finiteness instance for each `obj n`,
+- a relabelling action `act_n : Perm(Fin n) →* Perm(obj n)`.
 
-### 3.1 Sum
+Its **counting sequence** is `F.coeffSeq(n) := card(F[n])` and its **EGF** is
+`F.EGF := egf(n ↦ (F.coeffSeq n : ℚ))`.
 
-**Theorem 3.1 (Sum law, `egf_add`).** For all `a, b : ℕ → ℚ`,
-```
-egf(λ n, aₙ + bₙ) = egf(a) + egf(b).
-```
+Two basic species: the **species of sets** `E` with `E[n] = Unit` (so
+`coeffSeq = 1` constantly), and the **species of linear orders** `L` with
+`L[n] = Perm(Fin n)` (so `coeffSeq(n) = n!`).
 
-*Proof sketch.* Compare coefficients: by Lemma 2.2 both sides have `n`-th coefficient
-`(aₙ + bₙ)/n!`, which splits additively as `aₙ/n! + bₙ/n!`. ∎
+### 2.4 Differential operators on species
 
-### 3.2 Product
+- **Derivative species** `F′`: `obj n = F.obj(n+1)`, action lifted along
+  `Fin.castSuccEmb` (relabel the `n` real points, fix the ghost). Hence
+  `F′.coeffSeq(n) = F.coeffSeq(n+1)`.
+- **Pointed species** `F•`: `obj n = Fin n × F.obj n`, diagonal action. Hence
+  `F•.coeffSeq(n) = n · F.coeffSeq(n)`.
 
-**Theorem 3.2 (Product law, `egf_mul`).** For all `a, b : ℕ → ℚ`,
-```
-egf(a ⋆ b) = egf(a) · egf(b).
-```
-
-*Proof sketch.* The `n`-th coefficient of the right-hand side is the Cauchy product
-`Σ_{i+j=n} (aᵢ/i!)(bⱼ/j!)`. The `n`-th coefficient of the left-hand side is
-`(1/n!)·Σ_{i+j=n} C(n,i)·aᵢ·bⱼ`. Equality follows term by term from the factorial identity
-`C(n,i) = n!/(i!·j!)` (with `j = n−i`), i.e. `C(n,i)·i!·j! = n!`
-(`Nat.choose_mul_factorial_mul_factorial`). The formal proof distributes `1/n!` across the
-antidiagonal sum and rewrites `C(n,i)` via `Nat.cast_choose`, taking care that
-`j = n − i` on the antidiagonal. ∎
-
-Theorem 3.2 is the analytic heart of the theory: the exponential normalization turns the
-combinatorially natural binomial convolution into ordinary series multiplication.
-
-### 3.3 Two fundamental species (as sequences)
-
-**Theorem 3.3 (Sets ↔ `exp`, `egf_const_one`).** The constant-one sequence
-`a ≡ 1` (one structure on every label set — the species `E` of sets) has
-```
-egf(λ n, 1) = exp(X) = Σ_{n≥0} Xⁿ/n!.
-```
-
-*Proof sketch.* Both sides have `n`-th coefficient `1/n!` (Lemma 2.2 on the left;
-`PowerSeries.coeff_exp` on the right, noting `algebraMap ℚ ℚ = id`). ∎
-
-**Theorem 3.4 (Linear orders ↔ `1/(1−X)`, `egf_linearOrderSpecies`).** The factorial
-sequence `aₙ = n!` (the species `L` of linear orders, since there are `n!` orderings of `n`
-labels) satisfies
-```
-(1 − X) · egf(λ n, n!) = 1,
-```
-i.e. `egf(L) = 1/(1−X)`.
-
-*Proof sketch.* Here `egf(λ n, n!) = Σₙ (n!/n!) Xⁿ = Σₙ Xⁿ`, the geometric series. Multiply
-by `(1 − X)` and compare coefficients: the constant term is `1`, and for `n ≥ 1` the
-coefficient telescopes to `1 − 1 = 0`. ∎
+On power series we use Mathlib's formal derivative `derivativeFun` with
+`coeff_n(derivativeFun f) = (n+1)·coeff_{n+1}(f)`, and the Euler operator
+`θ(f) = X · derivativeFun(f)`.
 
 ---
 
-## 4. Species as functors on the groupoid of finite sets
+## 3. The first-order dictionary
 
-**Definition 4.1 (Species, skeletal form).** A *combinatorial species* `F` consists of:
-- a family `obj : ℕ → Type` with each `F[n] := obj(n)` finite (the set of `F`-structures
-  on a fixed `n`-element label set);
-- for each `n`, a monoid homomorphism `act(n) : Perm(Fin n) → Perm(F[n])` encoding the
-  functorial action of relabelling (the symmetric group `Sₙ`) on structures.
+These results, on which the towers are built, are formally verified.
 
-The `act` field records that `F` is a genuine functor on the *core groupoid* of finite
-sets, not merely a sequence of cardinalities. (It is not used by the EGF theorems, which
-see only cardinalities; it becomes load-bearing for the cycle-index/Pólya refinement —
-see Section 9.)
+**Proposition 3.1 (Coefficient and inversion).** `coeff_n(egf a) = a_n/n!`;
+`seqOf(egf a) = a` and `egf(seqOf f) = f`. Hence `egf` is a **bijection**
+`(ℕ → ℚ) ≃ ℚ⟦X⟧` with inverse `seqOf`, and in particular `egf` is injective.
+*Sketch.* Both composites are checked coefficientwise; `n! ≠ 0` in `ℚ` lets
+`field_simp` clear denominators. ∎
 
-**Definition 4.2 (counting sequence and EGF of a species).**
-```
-F.coeffSeq(n) := |F[n]|  (the cardinality, in ℕ),
-F.EGF := egf(λ n, (F.coeffSeq n : ℚ)).
-```
+**Proposition 3.2 (Sum and product).** `egf(a + b) = egf a + egf b` and
+`egf(a ⋆ b) = egf a · egf b`. *Sketch.* Additivity is coefficientwise. For the
+product, expand the Cauchy product `coeff_n(egf a · egf b) = Σ_{i+j=n}
+(a_i/i!)(b_j/j!)` and use `C(n,i) = n!/(i!j!)` to match `coeff_n(egf(a ⋆ b)) =
+(Σ_{i+j=n} C(n,i)a_ib_j)/n!`. ∎
 
-**Definition 4.3 (two basic species).**
-- The *species of sets* `E` (`setSpecies`): `E[n] := Unit` for all `n`, with trivial
-  action. Then `E.coeffSeq(n) = 1`.
-- The *species of linear orders* `L` (`linearOrderSpecies`): `L[n] := Perm(Fin n)`, with
-  `act` the regular (left-translation) action. Then `L.coeffSeq(n) = n!`
-  (`Fintype.card_perm`).
+**Proposition 3.3 (Generating functions of `E` and `L`).** `E.EGF = exp ℚ` and
+`(1−X)·L.EGF = 1` (so `L.EGF = 1/(1−X)`). *Sketch.* `E.EGF = egf(1) = Σ Xⁿ/n! =
+exp`; for `L`, `egf(n ↦ n!) = Σ Xⁿ = 1/(1−X)`. ∎
 
-**Corollary 4.4 (`EGF_setSpecies`).** `E.EGF = exp`. *Proof.* `E.coeffSeq ≡ 1`, then apply
-Theorem 3.3. ∎
+**Proposition 3.4 (Derivative and pointing bridges).**
+`egf(n ↦ a_{n+1}) = derivativeFun(egf a)` and `egf(n ↦ n·a_n) = X ·
+derivativeFun(egf a)`. Consequently `EGF(F′) = derivativeFun(F.EGF)` and
+`EGF(F•) = X · derivativeFun(F.EGF)`. *Sketch.* Coefficientwise:
+`coeff_n(derivativeFun(egf a)) = (n+1)·a_{n+1}/(n+1)! = a_{n+1}/n!`; the pointing
+case splits at `n=0` using `coeff_n(X·g)`. ∎
 
----
+**Proposition 3.5 (First-order Leibniz).** `seqDeriv(a ⋆ b) = seqDeriv a ⋆ b +
+a ⋆ seqDeriv b`, where `seqDeriv(a)_n = a_{n+1}`. *Sketch.* Apply `egf_injective`
+to `derivativeFun_mul` after translating both sides with Prop. 3.2 and 3.4. ∎
 
-## 5. The structural product and the bridge theorem
-
-The *structural product* (Day convolution) of two structure families `A, B : ℕ → Type` is
-```
-(A · B)[n] := Σ_{S ⊆ {1,…,n}} A[|S|] × B[n − |S|],
-```
-the disjoint union, over subsets `S` of the label set, of pairs consisting of an
-`A`-structure on `S` and a `B`-structure on its complement.
-
-**Theorem 5.1 (cardinality of the product, `card_prodSpecies`).** For families `A, B` with
-finite values,
-```
-| Σ_{S : Finset(Fin n)} A[|S|] × B[n − |S|] |  =  Σ_{i + j = n} C(n, i) · |A[i]| · |B[j]|.
-```
-
-*Proof sketch.* Compute the cardinality of the sigma-type as a sum over subsets `S`
-(`Fintype.card_sigma`, `Fintype.card_prod`), giving `Σ_{S} |A[|S|]|·|B[n−|S|]|`. Group the
-subsets by their cardinality `k`: the universe of subsets is the disjoint union over
-`k ∈ {0,…,n}` of the size-`k` subsets, and there are `C(n,k)` of those
-(`Finset.powersetCard`, with disjointness across distinct `k`). Re-indexing the resulting
-double sum as an antidiagonal sum yields the binomial convolution. ∎
-
-**Theorem 5.2 (product bridge, `egf_card_prodSpecies`).** With the same hypotheses,
-```
-egf(λ n, |(A·B)[n]|) = egf(λ n, |A[n]|) · egf(λ n, |B[n]|).
-```
-
-*Proof sketch.* By Theorem 5.1 the left-hand sequence equals the binomial convolution
-`(|A| ⋆ |B|)` (after casting `ℕ → ℚ`); apply Theorem 3.2 (`egf_mul`). ∎
-
-Theorem 5.2 is the precise statement that the EGF realizes the analytic functor: it turns
-the Day-convolution product of species into the ordinary product of power series.
+Proposition 3.5 exemplifies a recurring proof pattern in the development: a
+*structural* combinatorial identity (here the species product rule `(F·G)′ ≅
+F′·G + F·G′`) is proved with no index manipulation whatsoever by transporting the
+corresponding *analytic* identity (`derivativeFun_mul`) across the injective EGF
+bridge. Injectivity of `egf` upgrades every true power-series identity whose two
+sides are images of counting sequences into a true combinatorial identity. This
+is the lever that makes the higher towers cheap to establish once the first-order
+bridges are in place.
 
 ---
 
-## 6. Inversion: the EGF is a bijection
+## 4. The derivative (Taylor) tower
 
-The EGF is usually presented as a *homomorphism*. We show it is in fact an *isomorphism of
-sets* with an explicit inverse, hence loses no information.
+We now iterate Prop. 3.4. Write `g^[k]` for the `k`-fold iterate of a function
+`g`, and `F^{(k)} := derivative^[k] F`.
 
-**Definition 6.1 (inverse map, `seqOf`).** For `f ∈ ℚ⟦X⟧`,
-```
-seqOf(f)(n) := n! · [Xⁿ] f.
-```
+**Theorem 4.1 (Iterated sequence-shift bridge).** For every `a : ℕ → ℚ` and `k`,
 
-**Lemma 6.2 (`seqOf_egf`).** `seqOf(egf(a)) = a`.
-*Proof sketch.* By Lemmas 2.2 and Def. 6.1, `seqOf(egf(a))(n) = n!·(aₙ/n!) = aₙ`, using
-`n! ≠ 0` (`Nat.factorial_ne_zero`) to cancel. ∎
+> `egf(n ↦ a_{n+k}) = derivativeFun^[k](egf a)`.
 
-**Lemma 6.3 (`egf_seqOf`).** `egf(seqOf(f)) = f`.
-*Proof sketch.* Compare coefficients: `[Xⁿ] egf(seqOf f) = seqOf(f)(n)/n! = (n!·[Xⁿ]f)/n! =
-[Xⁿ]f`. ∎
+*Sketch.* Induction on `k`, generalising over `a`. The step rewrites `a_{n+(k+1)}
+= (shift a)_{n+k}`, applies the inductive hypothesis to `shift a`, and closes with
+the `k=1` bridge `egf_derivative` and `Function.iterate_succ_apply`. ∎
 
-**Theorem 6.4 (bijectivity, `egf_injective`, `egf_surjective`, `egf_bijective`).** The map
-`egf : (ℕ → ℚ) → ℚ⟦X⟧` is injective, surjective, and hence bijective.
+**Theorem 4.2 (Higher derivative species count).** `F^{(k)}.coeffSeq(n) =
+F.coeffSeq(n+k)`. *Sketch.* Induction on `k`, generalising `n`; the step exposes
+the outer `derivative` via `iterate_succ_apply'`, applies `coeffSeq_derivative`,
+and uses the hypothesis at `n+1`. ∎
 
-*Proof sketch.* Injectivity: if `egf(a) = egf(b)` apply `seqOf` and use Lemma 6.2.
-Surjectivity: for any `f`, `egf(seqOf f) = f` by Lemma 6.3. ∎
+**Theorem 4.3 (Taylor evaluation at the origin).** `F^{(k)}.coeffSeq(0) =
+F.coeffSeq(k)`. *Sketch.* Specialise Thm 4.2 at `n=0` and simplify `0+k=k`. ∎
 
-**Definition/Theorem 6.5 (the EGF equivalence, `egfEquiv`).** The data
-`(egf, seqOf)` with Lemmas 6.2–6.3 assemble into an equivalence of types
-```
-egfEquiv : (ℕ → ℚ) ≃ ℚ⟦X⟧.
-```
+**Theorem 4.4 (EGF of the derivative tower).** `EGF(F^{(k)}) =
+derivativeFun^[k](F.EGF)`. *Sketch.* Induction on `k` using `EGF_derivativeSpecies`
+on the outer factor. ∎
 
-**Theorem 6.6 (complete invariant, `Species.EGF_inj`).** For species `F, G`,
-```
-F.EGF = G.EGF  ⟺  F.coeffSeq = G.coeffSeq.
-```
+**Theorem 4.5 (Species Maclaurin reconstruction).** For every species `F` and
+every `k`,
 
-*Proof sketch.* (⇒) Apply `egf_injective` to obtain equality of the `ℚ`-valued sequences,
-then cast back to `ℕ` (the cardinalities are natural numbers, and the cast `ℕ → ℚ` is
-injective). (⇐) If the counting sequences agree, the EGFs are equal by definition. ∎
+> `coeff_0( derivativeFun^[k](F.EGF) ) = F.coeffSeq(k)`.
 
-Theorem 6.6 is the *labelled complete-invariance* statement: the EGF determines, and is
-determined by, the full counting sequence of a species.
+That is, the constant term of the `k`-fold formal derivative of the EGF recovers
+the *un-normalised* count `F[k]`. *Sketch.* By Thm 4.4 the constant term equals
+`coeff_0(EGF(F^{(k)})) = F^{(k)}.coeffSeq(0)/0! = F.coeffSeq(k)` using Thm 4.3 and
+`coeff_0(egf b) = b_0`. ∎
 
-**Remarks on the rig unit and zero.**
-- **Zero (`egf_zero`).** `egf(λ n, 0) = 0`, since every coefficient is `0/n! = 0`.
-- **Unit (`egf_binConvOne`).** Define `binConvOne(n) := 1` if `n = 0`, else `0` (the
-  sequence `(1,0,0,…)`, the unit `1` of the species rig: one structure on the empty set,
-  none otherwise). Then `egf(binConvOne) = 1`, because only the `n = 0` term survives,
-  contributing `1/0! = 1`.
-
-Together with Theorems 3.1 and 3.2, these say `egf` preserves `0`, `1`, `+`, and `⋆` — it
-is a rig homomorphism — and by Theorem 6.4 a bijective one.
+**Remark (why the exponential normalisation).** An ordinary Taylor expansion
+returns `f^{(k)}(0)/k!`; the `1/n!` weighting in the EGF cancels exactly this
+`k!`, so the EGF — not the ordinary GF — is the unique normalisation for which
+Taylor extraction yields raw counts. This is the structural reason the
+exponential convention is canonical for labelled enumeration.
 
 ---
 
-## 7. Differentiation and pointing
+## 5. Taylor reconstruction: invertibility of the tower
 
-**Definition 7.1 (derivative sequence/species, `seqDeriv`).**
-```
-seqDeriv(a)(n) := a(n + 1).
-```
-Combinatorially this is the *derivative species* `F'[n] := F[n + 1]`: an `F'`-structure on
-`n` labels is an `F`-structure on `n + 1` labels with a distinguished adjoined "ghost"
-label.
+Theorem 4.5 extracts coefficients singly. We now assemble them.
 
-**Theorem 7.2 (derivative law, `egf_seqDeriv`).**
-```
-egf(seqDeriv a) = (egf a)'   (the formal derivative d/dX).
-```
+**Theorem 5.1 (Analytic Maclaurin extraction).** For every `a : ℕ → ℚ`,
+`coeff_0(derivativeFun^[k](egf a)) = a_k`. *Sketch.* Read Thm 4.1 at `coeff 0`:
+the left side is `coeff_0(egf(a(·+k))) = a_{0+k}/0! = a_k`. ∎
 
-*Proof sketch.* Compare coefficients. On the left, `[Xⁿ] egf(seqDeriv a) = a(n+1)/n!`. On
-the right, the formal derivative has `[Xⁿ]` equal to `(n+1)·[Xⁿ⁺¹] egf(a) =
-(n+1)·a(n+1)/(n+1)!` (`PowerSeries.coeff_derivativeFun`). Since `(n+1)! = (n+1)·n!`, both
-equal `a(n+1)/n!`. ∎
+**Theorem 5.2 (Taylor reconstruction).** For every `f ∈ ℚ⟦X⟧`,
 
-**Definition 7.3 (pointing, `seqPoint`).**
-```
-seqPoint(a)(n) := n · a(n).
-```
-Combinatorially this is the *pointed species* `F^•[n] := {1,…,n} × F[n]`: mark one of the
-`n` labels as special.
+> `egf( k ↦ coeff_0(derivativeFun^[k](f)) ) = f`.
 
-**Theorem 7.4 (pointing law, `egf_seqPoint`).**
-```
-egf(seqPoint a) = X · (egf a)'.
-```
+*Sketch.* Write `f = egf(seqOf f)` (Prop. 3.1). By Thm 5.1, `coeff_0(
+derivativeFun^[k] f) = (seqOf f)_k`, so the argument sequence is `seqOf f` and the
+left side is `egf(seqOf f) = f`. ∎
 
-*Proof sketch.* For `n = 0` both sides have vanishing constant term (`X·(…)` kills it, and
-`seqPoint(a)(0) = 0`). For `n = m+1`, `[Xⁿ](X·(egf a)') = [Xᵐ](egf a)' = (m+1)·a(m+1)/(m+1)!
-= a(m+1)/m!`, matching `[Xⁿ] egf(seqPoint a) = (m+1)·a(m+1)/(m+1)! = a(m+1)/m!`. ∎
+**Theorem 5.3 (Species Taylor series).** `egf( k ↦ coeff_0(derivativeFun^[k]
+(F.EGF)) ) = F.EGF` for every species `F`. *Sketch.* Theorem 5.2 at `f = F.EGF`. ∎
 
-Theorems 7.2 and 7.4 upgrade the bridge from algebraic to *differential*: the
-combinatorial operations of adjoining and of marking a label are exactly `d/dX` and
-`X·d/dX`.
+**Discussion.** Theorem 5.2 is the conceptual core. It states that the map
+`f ↦ (k ↦ coeff_0(d^k/dX^k f))` is a genuine inverse of `egf`. Because `egf` is a
+bijection (Prop. 3.1) and the "differentiate-and-read-constant-term" map agrees
+with `seqOf` on every coefficient, the Taylor expansion is an *exact* algebraic
+inversion that terminates after `k` differentiations for the `k`-th coefficient.
+There is no convergence hypothesis and no limit: the discreteness of the species
+data makes the Taylor "series" a finite computation at each coefficient. This is
+the precise sense in which differentiation of species is **information-preserving**
+— a single derivative discards the head of the sequence, but the full tower,
+sampled at the origin, recovers everything.
 
 ---
 
-## 8. The structural Leibniz rule
+## 6. The moment tower: iterated pointing
 
-**Theorem 8.1 (combinatorial Leibniz, `binConv_leibniz`).** For counting sequences
-`a, b`,
-```
-seqDeriv(a ⋆ b) = (seqDeriv a) ⋆ b + a ⋆ (seqDeriv b),
-```
-i.e. at the level of species `(F·G)' = F'·G + F·G'`.
+**Theorem 6.1 (Iterated pointing weights by `nᵏ`).**
 
-*Proof sketch.* Apply the bijective bridge. Both sides are counting sequences; by
-injectivity of `egf` (Theorem 6.4) it suffices to prove the identity after applying `egf`.
-The left side becomes `egf(seqDeriv(a⋆b)) = (egf(a⋆b))' = (egf a · egf b)'` (Theorems 7.2,
-3.2). The right side becomes `egf(seqDeriv a)·egf b + egf a·egf(seqDeriv b) = (egf a)'·egf b
-+ egf a·(egf b)'` (Theorems 3.1, 3.2, 7.2). These agree by the analytic product rule
-`(fg)' = f'g + fg'` (`PowerSeries.derivativeFun_mul`, reconciling the scalar action `•`
-with multiplication via `smul_eq_mul` and commutativity). ∎
+> `(pointed^[k] F).coeffSeq(n) = nᵏ · F.coeffSeq(n)`.
 
-Theorem 8.1 exemplifies the central methodological dividend of inversion: a combinatorial
-identity about binomial convolutions is proved with *no* index manipulation, by transport
-of an analytic identity across the bijection.
+*Sketch.* Induction on `k`, generalising `n`. The step exposes the outer
+`pointed` via `iterate_succ_apply'`, applies `coeffSeq_pointed` (multiply by `n`),
+uses the hypothesis, and rearranges with `pow_succ`. ∎
 
----
+**Theorem 6.2 (EGF of the moment tower).**
 
-## 9. Discussion
+> `(pointed^[k] F).EGF = (f ↦ X · derivativeFun f)^[k] (F.EGF)`,
 
-### 9.1 What the bridge buys
+i.e. the EGF of the `k`-fold pointed species is the `k`-fold Euler operator
+`θ^k = (X·d/dX)^k` applied to `F.EGF`. *Sketch.* Induction on `k`; the step
+rewrites both sides with `iterate_succ_apply'` and applies `EGF_pointedSpecies` to
+the outer pointing, then the hypothesis. ∎
 
-The results assemble into a dictionary:
-
-| Species operation | EGF operation | Theorem |
-|---|---|---|
-| sum `F + G` | `+` | 3.1 |
-| product `F · G` (Day convolution) | `·` | 3.2, 5.2 |
-| sets `E` | `exp` | 3.3, 4.4 |
-| linear orders `L` | `1/(1−X)` | 3.4 |
-| zero / unit | `0` / `1` | §6 |
-| derivative `F'` (ghost label) | `d/dX` | 7.2 |
-| pointing `F^•` (mark a label) | `X·d/dX` | 7.4 |
-| Leibniz `(F·G)' = F'G + FG'` | product rule | 8.1 |
-| distinct counts | distinct series (bijection) | 6.4, 6.6 |
-
-Two methodological points stand out. First, the factorial normalization in Def. 2.1 is not
-cosmetic: it is exactly what converts the binomial convolution into ordinary multiplication
-(Theorem 3.2) and the `aₙ ↦ aₙ₊₁` shift into the formal derivative (Theorem 7.2). Second,
-the *explicit* inverse (Def. 6.1) makes inversion elementary — no analytic estimates, no
-fixed-point arguments — and that elementary inversion is precisely what powers the
-transport proof of the Leibniz rule.
-
-### 9.2 Relationship to analytic functors
-
-In Joyal's framework a species is a functor `B → FinSet` on the groupoid `B` of finite sets
-and bijections, and the EGF is the generating function of the associated analytic functor
-`Type → Type`, `F(A) = Σₙ F[n] ×_{Sₙ} Aⁿ`. The sum and product laws are the statements that
-this assignment is monoidal for the disjoint-union and Day-convolution monoidal structures.
-The derivative law is the species-level shadow of the derivative of an analytic functor
-(differentiation of data types, in the computer-science reading). Our skeletal model retains
-exactly the data needed for the labelled (EGF) theory; the `act` field anticipates the
-unlabelled (cycle-index/Pólya) refinement.
+**Interpretation.** The weights `nᵏ` are the (raw) **moments** of the counting
+sequence; pointing is thus the species-theoretic moment functor, and its analytic
+shadow is the iterated Euler operator. The interplay between the derivative tower
+(shift) and the moment tower (multiply by `n`) is governed by the Stirling
+transform `θᵏ = Σ_j S(k,j) Xʲ (d/dX)ʲ`, connecting moment weighting `nᵏ` to
+falling-factorial weighting; making this Stirling bridge formal is a natural next
+target (Section 8).
 
 ---
 
-## 10. Algorithms
+## 7. The higher Leibniz rule
 
-The bridge is constructive and yields directly executable algorithms over exact rational
-arithmetic.
+**Theorem 7.1 (Higher / binomial Leibniz rule).** For `f, g ∈ ℚ⟦X⟧` and every
+`k`,
 
-- **EGF coefficient evaluation.** Given `(aₙ)` and a truncation order `N`, output the list
-  `(aₙ/n!)_{n≤N}`. (Realizes Def. 2.1.)
-- **Inverse / `seqOf`.** Given series coefficients `(cₙ)`, output `(n!·cₙ)`. (Realizes
-  Def. 6.1; together with the previous algorithm it is a verified round-trip,
-  Lemmas 6.2–6.3.)
-- **Binomial convolution.** Given `(aₙ), (bₙ)` and `N`, output
-  `(Σ_{i+j=n} C(n,i) aᵢ bⱼ)_{n≤N}`. (Realizes Def. 2.3; cross-checked against the Cauchy
-  product of the EGFs, Theorem 3.2.)
-- **Derivative / pointing.** Shift `aₙ ↦ aₙ₊₁` and scale `aₙ ↦ n·aₙ`; cross-check against
-  `d/dX` and `X·d/dX` of the EGF (Theorems 7.2, 7.4).
-- **Leibniz check.** Verify `seqDeriv(a⋆b) = seqDeriv(a)⋆b + a⋆seqDeriv(b)` coefficientwise
-  (Theorem 8.1).
+> `derivativeFun^[k](f · g) = Σ_{i=0}^{k} C(k,i) · derivativeFun^[i](f) ·
+> derivativeFun^[k−i](g)`.
 
-See `demo.py` for reference implementations and worked numerical examples.
+*Sketch.* Induction on `k`. The base case is trivial; the step applies the
+first-order product rule `derivativeFun_mul` to each summand of the inductive
+hypothesis, then recombines the two resulting sums by the Pascal identity
+`C(k,i−1) + C(k,i) = C(k+1,i)` via an index split (`Finset.sum_range_succ'`).
+Linearity of `derivativeFun` handles the algebra, avoiding antidiagonal
+bookkeeping. ∎
 
----
-
-## 11. Applications
-
-- **Closed-form enumeration.** "Split `n` labels into a left order and a right order" is
-  `L · L`, EGF `1/(1−X)²`, coefficients `(n+1)!`. "Partition into an arbitrary number of
-  ordered blocks" and similar constructions reduce to series algebra.
-- **The exponential formula (next rung).** The substitution `E ∘ G` ("sets of
-  `G`-structures") has EGF `exp(EGF G)`; this is the single most-used identity in labelled
-  enumeration and the immediate sequel to the product law (Section 12).
-- **Random generation.** Boltzmann samplers draw uniform random labelled objects of a given
-  expected size directly from the EGF; the derivative and pointing operations (Theorems
-  7.2, 7.4) implement the standard size-targeting (pointing) step.
-- **Verified combinatorics.** Because the bridge is a *bijection* (Theorem 6.4), any
-  identity proved on either side transfers automatically; the Leibniz rule (Theorem 8.1) is
-  a template for deriving combinatorial identities from analytic ones with no manual index
-  algebra.
+**Species reading.** Translating Theorem 7.1 across the EGF bridge with
+Theorem 4.1 and Prop. 3.2 yields the *higher product rule for species*:
+differentiating a Day convolution `F·G` exactly `k` times distributes the `k`
+ghosts between the two factors in every way, weighted by the binomial count of
+how to assign which ghost to which factor. The `k=1` case is the classical species
+isomorphism `(F·G)′ ≅ F′·G + F·G′` (Prop. 3.5). This is the Faà di Bruno backbone
+on which a future formalization of species composition will rest.
 
 ---
 
-## 12. Future directions
+## 8. Algorithms
 
-**Direction 1 — Substitution (composition) and the exponential formula.** Define species
-substitution `(F ∘ G)[n] = Σ_{π ∈ Part(n)} F[π] × ∏_{B∈π} G[B]` over set partitions, and
-prove its EGF is the plethystic composition `(EGF F) ∘ (EGF G)` (for `G` with zero constant
-term). Specializing `F = E` (sets) yields the **exponential formula**: the EGF of "sets of
-`G`-structures" is `exp(EGF G)`. The cardinality computation `card_prodSpecies` already
-isolates the only hard step — counting subsets by cardinality — and substitution iterates
-it over a partition, so `|(F∘G)[n]|` is a partition-sum of multinomials times `∏|G[B]|`,
-which is exactly coefficient extraction for plethystic composition. The partition apparatus
-(`Finpartition`, Bell/Stirling numbers) is available, making this the natural next theorem.
+Each verified identity has a direct computational realisation over exact
+rationals. We summarise three.
 
-**Direction 2 — Cycle-index series and unlabelled enumeration (Pólya theory).** Replace the
-EGF (which sees only `|F[n]|`) by the cycle-index series
-`Z_F = Σₙ (1/n!) Σ_{σ∈Sₙ} |Fix(F[σ])| · p₁^{c₁(σ)} p₂^{c₂(σ)} ⋯` in symmetric functions, and
-prove `Z_{F+G} = Z_F + Z_G`, `Z_{F·G} = Z_F·Z_G`, and that specializing `pₖ ↦ xᵏ` yields the
-*ordinary* generating function for unlabelled structures while `p₁ ↦ x, p_{k≥2} ↦ 0`
-recovers the EGF. The `act` field is precisely the data the cycle index needs, turning the
-currently-decorative functorial structure into a load-bearing invariant and connecting to
-the symmetric-function (`MvPolynomial`) library.
+**Algorithm A — Maclaurin coefficient extraction.** Given a truncated EGF
+`f = (c_0, …, c_N)` (with `c_n` the coefficient of `Xⁿ`), compute the count
+`a_k = F[k]` by `k`-fold formal differentiation and reading the constant term.
+The formal derivative sends `(c_0, c_1, …) ↦ (c_1, 2c_2, 3c_3, …)`; after `k`
+steps the constant term is `k!·c_k`, equal to `a_k`. Complexity: `O(N·k)`
+rational operations for one coefficient, `O(N²)` for the whole tower up to `N`.
 
-**Direction 3 — The Species–EGF map as a `RingHom`/`λ`-ring.** Assemble counting sequences
-under `(+, ⋆)` into a commutative semiring and upgrade `egf` to a bundled `RingHom`, proving
-`egf 0 = 0`, `egf 1 = 1`, `egf(a+b) = egf a + egf b`, `egf(a⋆b) = egf a·egf b` at once, and
-its injectivity (so equal EGFs imply equal counting sequences). The homomorphism axioms are
-already proved (Theorems 3.1, 3.2), `egf_zero`/`egf_binConvOne` give unit/zero, and
-injectivity is immediate from the explicit inverse (Def. 6.1). Bundling makes the bridge
-reusable by `simp`/`ring`-style automation.
+**Algorithm B — Taylor reconstruction.** Given a power series `f`, recover the
+counting sequence `a` by `a_k = coeff_0(d^k/dX^k f)` (Algorithm A) for each `k`,
+then verify `egf(a) = f` coefficientwise. Returns the unique sequence whose EGF is
+`f`; equivalently `a_k = k!·coeff_k(f) = seqOf(f)_k`. Complexity `O(N²)`.
 
-**Direction 4 — Derivative and pointing as natural isomorphisms; the differential
-structure.** Promote Theorems 7.2, 7.4, and 8.1 to genuine natural isomorphisms of species
-(`F'`, `F^•`, and the product rule as a bijection of structure sets), making the species
-category a differential one and the bridge a differential ring map. Mathlib's
-`PowerSeries.derivativeFun` provides the analytic side for free.
-
-**Direction 5 — Skeletal-to-genuine categorical comparison.** Promote the skeletal `Species`
-structure to a genuine functor `FinBij ⥤ FintypeCat` on the groupoid of finite sets and
-bijections, and prove the two presentations equivalent (restriction to the skeleton
-`{Fin n}` is an equivalence of functor categories), so all EGF theorems transport. The
-groupoid of finite sets is equivalent to its skeleton `∐ₙ BSₙ` (one object per cardinality
-with automorphism group `Sₙ`), which is exactly the `(obj, act)` data; with mature
-`CategoryTheory.Skeleton` and `FintypeCat`, this justifies calling the EGF an *analytic
-functor* in the literal categorical sense.
+**Algorithm C — Higher Leibniz convolution.** Given derivative towers
+`f^{(i)}` and `g^{(j)}` (as truncated series), assemble `(f·g)^{(k)}` by the
+binomial sum `Σ_i C(k,i) f^{(i)} g^{(k−i)}` and compare with the direct `k`-fold
+derivative of the product. Complexity `O(k·N²)` for the convolution at order `k`.
 
 ---
 
-## 13. Conclusion
+## 9. Applications and worked examples
 
-We have formalized the foundational dictionary of combinatorial species and exponential
-generating functions and extended it into a bijective and differential correspondence. The
-EGF is a homomorphism for sum and product, sends the canonical species to `exp` and
-`1/(1−X)`, is a bijection with an explicit inverse (hence a complete invariant), and
-intertwines the combinatorial derivative and pointing with `d/dX` and `X·d/dX`; the
-combinatorial Leibniz rule then follows by transport. These results turn the
-combinatorial–analytic bridge from a heuristic into a precise, invertible, calculus-respecting
-equivalence, and lay the groundwork for substitution/plethysm, cycle-index/Pólya theory, and
-the full categorical theory of analytic functors.
+- **Sets `E`.** `coeffSeq = 1`, `E.EGF = eˣ`. Maclaurin extraction returns
+  `coeff_0(d^k/dX^k eˣ) = 1 = E[k]` for all `k` — the fixed point of
+  differentiation made discrete. Reconstruction returns the constant sequence.
+- **Linear orders `L`.** `coeffSeq(n) = n!`, `L.EGF = 1/(1−X)`. The `k`-fold
+  derivative of `1/(1−X)` is `k!/(1−X)^{k+1}`, whose constant term is `k!`, matching
+  `L[k] = k!`. Iterated pointing gives `(L^{•k})[n] = nᵏ·n!`.
+- **Derangements `D`.** `D.EGF = e^{−X}/(1−X)`; the Maclaurin tower reproduces the
+  subfactorials `1,0,1,2,9,44,…`, illustrating reconstruction for a non-trivial
+  sequence.
+- **Moments.** For any species, `(F^{•2})[n] = n²·F[n]` realises second moments;
+  combining with sums recovers variance-type statistics of label-marking.
+- **Products.** For `f = g = eˣ` (`E·E`), `(f·g)^{(k)} = 2ᵏ eˣ`, and the higher
+  Leibniz rule expands this as `Σ_i C(k,i) eˣ·eˣ = 2ᵏ eˣ`, a binomial-theorem
+  identity made structural.
+
+---
+
+## 10. Related structure
+
+The development sits atop a fuller species dictionary that the present towers
+extend.
+
+**The convolution ring.** The counting sequences `ℕ → ℚ` form a commutative ring
+under pointwise addition and binomial convolution `⋆`, with unit `binConvOne =
+(1,0,0,…)`. The verified facts `binConv_comm`, `binConv_assoc`,
+`binConv_one_left/right`, `binConv_add` package this, and the transform `egf`
+promotes to a *ring isomorphism* `(ℕ → ℚ, +, ⋆) ≅ (ℚ⟦X⟧, +, ·)`. Thus the
+species sum and product literally are the ring operations of formal power series,
+and the Leibniz towers of Section 7 are statements about a derivation on this
+ring.
+
+**Bijectivity and complete invariance.** `egf` is a bijection with explicit
+inverse `seqOf(f)_n = n!·coeff_n(f)` (Prop. 3.1); consequently two species have
+the same EGF iff they have the same counting sequence (`Species.EGF_inj`). The
+EGF is therefore a *complete invariant* for labelled enumeration, and the
+reconstruction theorem (Thm 5.2) is the explicit recipe for inverting it through
+the derivative tower rather than through `seqOf` directly.
+
+**Groupoid-cardinality reading.** The coefficient `coeff_n(F.EGF) =
+F.coeffSeq(n)/n!` admits a homotopy-theoretic interpretation: it is the
+*action-groupoid cardinality* of the relabelling action of `Perm(Fin n)` on
+`F[n]`, the homotopy-theoretic refinement of orbit counting (a quotient form of
+the orbit–stabiliser theorem). For the species of sets this is `1/n!` and for
+linear orders it is `1`, matching `exp` and `1/(1−X)` coefficientwise. Against
+this backdrop the Taylor, moment, and Leibniz towers complete the *differential*
+layer of the dictionary, and Section 11.5 conjectures that the derivative functor
+respects this groupoid-cardinality invariance.
+
+## 10b. On the absence of factorials in Maclaurin extraction
+
+It is worth dwelling on the precise bookkeeping behind Theorem 4.5, since it is
+the technical fulcrum of the paper. Classically, for an ordinary generating
+function `G(X) = Σ a_n Xⁿ`, the `k`-th derivative at the origin is
+`G^{(k)}(0) = k!·a_k`, so recovering `a_k` requires dividing by `k!`. For the
+*exponential* generating function `egf(a) = Σ (a_n/n!) Xⁿ`, the constant term of
+`d^k/dX^k` is instead
+`coeff_0(d^k/dX^k egf(a)) = k!·coeff_k(egf(a)) = k!·(a_k/k!) = a_k`.
+The `k!` produced by `k`-fold differentiation is cancelled exactly by the `1/k!`
+planted in the EGF coefficient, leaving the raw count with no residual factor.
+No other normalisation of the generating function has this property, which is the
+structural reason the exponential convention — and not the ordinary one — is the
+canonical transform for labelled species.
+
+---
+
+## 11. Discussion and future work
+
+The results identify three coherent higher-order towers and, most strikingly,
+establish that the derivative tower is invertible: Taylor reconstruction (Thm 5.2)
+exhibits the exact inverse of Maclaurin extraction (Thm 4.5). The following
+directions extend the program; each is stated as a falsifiable target.
+
+1. **The exponential formula `EGF(E ∘ G) = exp(EGF G)`.** Composition (plethysm)
+   `F ∘ G` is the major operation still absent from the dictionary; its flagship
+   instance is the exponential formula for assemblies of connected structures,
+   valid when `G` has no structure on the empty set (`G[0] = 0`). The needed new
+   ingredient is a cardinality count over set partitions, structurally analogous
+   to the already-proved product count, after which both sides can be compared
+   coefficientwise against the derivative tower using the Maclaurin theorem.
+
+2. **The full species Taylor series as an assembly statement.** Theorem 5.2
+   already inverts the tower; packaging it as `F.EGF = mk(k ↦ coeff_0(d^k/dX^k
+   F.EGF)/k!)` is a one-lemma `PowerSeries.ext` comparison.
+
+3. **The higher Leibniz rule at the species level.** Theorem 7.1 lives on
+   `ℚ⟦X⟧`; transporting it to a `Finset`-indexed species isomorphism via the EGF
+   bridge and `egf_seqDeriv_iterate` is a direct corollary to be recorded.
+
+4. **Iterated pointing and the Euler powers `(X d/dX)^k`.** Theorems 6.1–6.2 give
+   the moment tower; the Stirling-number expansion `θᵏ = Σ_j S(k,j) Xʲ(d/dX)ʲ`
+   would connect iterated pointing (`nᵏ`) to the falling-factorial / ordinary-
+   derivative towers, unifying the two lifts of `d/dX`.
+
+5. **Homotopy invariance of `d/dX`.** Since the EGF is a groupoid-cardinality
+   invariant, the derivative functor should respect species isomorphism: `F ≅ G ⇒
+   F^{(k)} ≅ G^{(k)}`. The single missing step is iso-preservation of one
+   derivative; the `k`-fold case then follows from Theorem 4.2, making the entire
+   differential calculus homotopy-invariant.
+
+---
+
+## 12. Conclusion
+
+We have machine-verified the higher-order differential calculus of combinatorial
+species: the derivative (Taylor) tower with its Maclaurin reconstruction and exact
+algebraic inversion, the pointing (moment) tower realised as the iterated Euler
+operator, and the binomial Leibniz rule. The unifying theme is that, for labelled
+structures, differentiation is not lossy: the tower of all derivatives sampled at
+the origin reconstructs the counting sequence exactly and finitely. The
+exponential normalisation of the EGF is precisely what makes this work, cancelling
+the factorial of the classical Taylor theorem and turning an analytic limit into a
+discrete identity.

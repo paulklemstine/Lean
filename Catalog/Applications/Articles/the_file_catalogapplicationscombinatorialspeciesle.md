@@ -1,263 +1,235 @@
-# Counting by Calculus: How a Power Series Remembers Every Structure
+# Counting by Calculus: How Derivatives Rebuild the Structures They Take Apart
 
-## A puzzle about labels
+## A bridge between two worlds
 
-Imagine you run a small print shop, and a customer asks you a strange question:
-*"In how many ways can I arrange `n` numbered cards in a row?"* You know the answer
-instantly — `n!` ways, the factorial. Then the customer asks a second question:
-*"And in how many ways can I split those `n` cards into two ordered rows, a left
-row and a right row?"* Now you have to think. For each card you decide left or
-right, then order each side. The arithmetic gets messy fast.
+There are two great ways to think about a collection of objects. The first is
+combinatorial: you *count* them. How many ways can you seat `n` people around a
+table? How many trees can you grow on `n` labelled vertices? How many ways can
+you split `n` people into committees? The answers are sequences of whole
+numbers, one for each size `n`.
 
-Combinatorics is full of questions like this. They share a hidden pattern: you are
-counting *structures built on a set of labelled objects* — orderings, groupings,
-trees, graphs, colourings. Each such family of structures has a **counting
-sequence**: a single number `aₙ` for every size `n`, recording how many structures
-sit on an `n`-element label set.
+The second way is analytic: you bundle the whole sequence into a single
+function, a *generating function*, and then you do calculus to it. You add it,
+multiply it, and — crucially — you differentiate it. Two centuries of
+mathematics have shown that operations that look hopelessly intricate when
+phrased as "count the objects of size `n`" become almost trivial when phrased
+as "multiply these two functions" or "take this derivative."
 
-The miracle at the heart of this article is that these infinite sequences of
-integers can be packed into a single analytic object — a **power series** — in such
-a way that the messy combinatorial operations (combining structures, splitting them,
-marking a special element) turn into the clean operations of high-school algebra and
-calculus: addition, multiplication, and differentiation. Counting becomes calculus.
+This article is about a precise, airtight version of that bridge for a very
+flexible notion of "structure" called a **combinatorial species**, and about a
+surprising fact at its heart: in this world, *differentiation is reversible*.
+The derivative of a structure does not lose information the way the derivative
+of an ordinary function famously does (the derivative forgets the constant
+term). Instead, a tower of derivatives, read at a single point, perfectly
+reconstructs the original counting sequence. Calculus here is not an
+approximation. It is an exact, finite, two-way dictionary.
 
-This is the theory of **combinatorial species**, invented by the mathematician
-André Joyal in 1981, and it is one of the most beautiful bridges in modern
-mathematics. This article tells the story of that bridge, and of a set of results
-that nail down *exactly* how faithful the bridge is — results that have been checked,
-line by line, with complete logical rigour.
+## What is a species?
 
-## The generating function: a clothesline for numbers
+The word "species," in the sense introduced by the mathematician André Joyal in
+1981, is a way of saying "a kind of structure you can put on a finite set of
+labels." A species `F` assigns, to each size `n`, a finite set `F[n]` of all the
+ways to build that structure on `n` labelled points. Two examples will carry us
+through the whole story.
 
-Suppose your counting sequence is `a₀, a₁, a₂, a₃, …`. The classical trick is to
-hang these numbers on a "clothesline" indexed by powers of a formal variable `X`:
+**The species of sets, written `E`.** On any label set there is exactly *one*
+way to "be a set" — you just take the labels as they are. So `E[n]` always has
+exactly one element. Its counting sequence is `1, 1, 1, 1, …`.
 
-> **Exponential generating function (EGF).**
-> `EGF(a) = a₀/0! + (a₁/1!)·X + (a₂/2!)·X² + (a₃/3!)·X³ + ⋯`
+**The species of linear orders, written `L`.** A linear order on `n` labels is a
+way of lining them up in a row. There are `n!` ways to do this (`n` choices for
+who goes first, `n−1` for second, and so on). Its counting sequence is
+`1, 1, 2, 6, 24, 120, …` — the factorials.
 
-Each coefficient `aₙ` is divided by `n!` before being attached to `Xⁿ`. Why divide
-by `n!`? Because we are counting *labelled* structures, and `n!` is the number of
-ways to permute `n` labels. Dividing by it is the bookkeeping that makes everything
-downstream snap together. (There is a companion theory, the *ordinary* generating
-function, that does not divide by `n!`; it is the right tool for *unlabelled*
-counting. We focus here on the labelled, exponential, world.)
+A species is more than a sequence of numbers, though. It also remembers
+*symmetry*: if you relabel the points, the structures get shuffled around in a
+consistent way. Formally, the symmetric group of permutations of the `n` labels
+acts on the set `F[n]`. This is what makes a species a genuine *functor* on the
+groupoid of finite sets, and it is what makes the bridge we are about to build
+not just an analogy but a theorem.
 
-Let us see the clothesline in action with two fundamental examples.
+## The exponential generating function
 
-**The species of sets.** Consider the family where there is exactly *one* structure
-on every label set — no choices at all, just "here is your set." Its counting
-sequence is `1, 1, 1, 1, …`. Feeding this into the EGF gives
+To turn a species into a function we use its **exponential generating
+function**, or EGF. If the counting sequence is `a_0, a_1, a_2, …`, the EGF is
+the formal power series
 
-> `1/0! + 1/1!·X + 1/2!·X² + 1/3!·X³ + ⋯ = eˣ`,
+> `EGF(F) = a_0 + a_1·X + (a_2/2!)·X² + (a_3/3!)·X³ + ⋯ = Σ_n (a_n / n!) Xⁿ`.
 
-the exponential function itself. The plainest possible combinatorial object produces
-the most famous function in analysis. This is the result recorded formally as
-`EGF_setSpecies`: *the EGF of the species of sets equals `exp`.*
+The little factorials in the denominators are the secret sauce. They look like a
+nuisance, but they are exactly what makes structural operations on species
+correspond to clean algebraic operations on power series. With this convention,
+our two examples become beautiful closed forms:
 
-**The species of linear orders.** Now consider orderings: a linear order on `n`
-labels is just a way to line them up, and there are `n!` of them. The counting
-sequence is `1, 1, 2, 6, 24, …` — the factorials. Its EGF is
+- The species of sets `E` has EGF `1 + X + X²/2! + X³/3! + ⋯`, which is the
+  exponential function `eˣ`.
+- The species of linear orders `L` has EGF `1 + X + X² + X³ + ⋯`, the geometric
+  series `1/(1−X)`.
 
-> `∑ₙ (n!/n!)·Xⁿ = ∑ₙ Xⁿ = 1 + X + X² + X³ + ⋯ = 1/(1 − X)`,
+That sets correspond to the exponential is the reason these are called
+*exponential* generating functions, and it is a formally verified theorem in our
+development: the EGF of `E` is literally `exp`.
 
-the geometric series. The formal statement, `egf_linearOrderSpecies`, is that
-`(1 − X) · EGF = 1`, the algebraic fingerprint of `1/(1−X)`.
+The first thing the bridge tells us is that nothing is lost. The map from
+counting sequences to power series is a **bijection**. Given any power series `f`,
+you recover its counting sequence by the explicit formula `a_n = n! · (coefficient
+of Xⁿ in f)`. Combinatorial data and analytic data are two faces of one coin;
+you can always pass freely between them. In particular, two species with the same
+EGF have exactly the same counting sequence — the EGF is a *complete invariant*
+of labelled enumeration.
 
-So already the dictionary reads: *sets ↔ `eˣ`*, *orderings ↔ `1/(1−X)`*. Two of the
-most important functions in all of mathematics are nothing but the shadows of the
-two simplest ways to organize a finite set.
+## Adding, multiplying, and the meaning of "product"
 
-## The grammar of combination
+The dictionary's first two entries are addition and multiplication.
 
-A dictionary of single words is nice, but language needs grammar — rules for
-combining words into sentences. Species have exactly two such rules, and they are
-the soul of the theory.
+**Addition** is easy: putting two species side by side (a structure is *either*
+an `F`-structure *or* a `G`-structure) adds their counting sequences, and
+correspondingly adds their EGFs.
 
-**Adding species (the "or" rule).** If you have two kinds of structure, you can form
-a new kind: "an `F`-structure *or* a `G`-structure." The counting sequence simply
-adds, `(a + b)ₙ = aₙ + bₙ`, and the EGF adds too:
+**Multiplication** is where the factorials earn their keep. The natural product
+of two species is the *Day convolution*: an `(F·G)`-structure on `n` labels is a
+way of splitting the labels into two groups, putting an `F`-structure on one
+group and a `G`-structure on the other. Counting these requires choosing which
+labels go where, and the number of choices is a binomial coefficient. The upshot
+is the **binomial convolution** of the two counting sequences:
 
-> **Sum law (`egf_add`).** `EGF(F + G) = EGF(F) + EGF(G)`.
+> `(a ⋆ b)_n = Σ_{i+j=n} C(n,i) · a_i · b_j`,
 
-Addition stays addition. No surprise — but it is the warm-up.
+where `C(n,i)` is the binomial coefficient "`n` choose `i`." And the theorem at
+the heart of the bridge says: this messy, choice-laden combinatorial product
+corresponds to nothing more than *ordinary multiplication of power series*. The
+EGF turns Day convolution into the product `EGF(F·G) = EGF(F) · EGF(G)`. This is
+why generating functions are so powerful: a hard counting problem about splitting
+labels becomes a routine multiplication.
 
-**Multiplying species (the "split" rule).** This is where the magic lives. To build
-an `F·G`-structure on a labelled set, you *split* the labels into two groups, put an
-`F`-structure on the first group and a `G`-structure on the second. Crucially, the
-split itself is a choice. If the first group has `i` labels and the second has `j`,
-with `i + j = n`, there are "`n` choose `i`" ways to make the split. So the counting
-sequence of the product is not the ordinary product but the **binomial
-convolution**:
+## Differentiation: adding a ghost
 
-> `(a ⋆ b)ₙ = Σ_{i+j=n} C(n, i) · aᵢ · bⱼ`,
+Now we come to calculus. What does it mean to *differentiate* a species?
 
-where `C(n,i) = n!/(i!·j!)` is the binomial coefficient. This looks intimidating.
-But watch what the `n!` bookkeeping does. When you compute the EGF of `a ⋆ b`, the
-binomial coefficients are *exactly* the factors that turn the convolution into the
-ordinary multiplication of power series:
+Joyal's answer is wonderfully concrete. The **derivative species** `F′` is
+defined by `F′[n] = F[n+1]`. In words: an `F′`-structure on `n` labels is an
+`F`-structure on `n+1` labels, where one of the points is a distinguished
+"ghost." You have adjoined a phantom label and then forgotten to count it.
 
-> **Product law (`egf_mul`).** `EGF(F · G) = EGF(F) · EGF(G)`.
+Why call this a derivative? Because under the EGF it becomes the ordinary formal
+derivative `d/dX`. Differentiating the power series `Σ a_n Xⁿ/n!` shifts every
+coefficient down by one — exactly the bookkeeping of replacing `a_n` by
+`a_{n+1}`, which is the counting sequence of `F′`. So:
 
-The complicated "split-and-choose" operation on the combinatorial side becomes plain
-multiplication of series on the analytic side. This is the keystone of the whole
-bridge. Returning to our print-shop puzzle — "split `n` cards into a left ordered row
-and a right ordered row" — this is precisely the product of the species of linear
-orders with itself. Its EGF is therefore `1/(1−X) · 1/(1−X) = 1/(1−X)²`, whose
-coefficients you can read off instantly: the answer is `(n+1)!`. A messy counting
-question dissolved into squaring a fraction.
+> **EGF(F′) = d/dX EGF(F).**
 
-To make the multiplication law airtight, one has to prove that the geometric picture
-("sum over all ways to split the labels into a subset and its complement") really does
-produce the binomial convolution. That counting identity is the theorem
-`card_prodSpecies`: the number of `(F·G)`-structures on `n` labels, summed over all
-subsets `S ⊆ {1,…,n}` of `F`-structures on `S` and `G`-structures on the complement,
-equals `Σ_{i+j=n} C(n,i)·|F[i]|·|G[j]|`. Combined with the product law, this gives the
-full bridge theorem `egf_card_prodSpecies`.
+There is a companion operation called **pointing**. The pointed species `F•` is
+defined by `F•[n] = [n] × F[n]`: a structure together with a chosen, marked
+label among the `n`. Since there are `n` labels to mark, pointing multiplies the
+`n`-th count by `n`. On the analytic side this is the *Euler operator*
+`θ = X · d/dX`:
 
-## Is the bridge a perfect mirror?
+> **EGF(F•) = X · d/dX EGF(F).**
 
-Here is a subtle worry that a careful reader should have. We have a translation from
-counting sequences to power series. Translations can lose information — think of how
-"thank you" and "thanks" both become a single word in some languages. Could two
-*genuinely different* counting sequences produce the *same* EGF? If so, the EGF would
-be a lossy summary, and conclusions drawn on the analytic side might not transfer
-faithfully back.
+Differentiation adjoins a ghost; pointing marks an existing label. Both are lifts
+of `d/dX` to the world of structures, and they behave differently — a distinction
+that will matter in a moment.
 
-The answer is a clean and satisfying *no*, and the reason is almost embarrassingly
-simple. The EGF attaches `aₙ/n!` to `Xⁿ`. So if you are handed the power series and
-you want the original number `aₙ`, you just read off the coefficient of `Xⁿ` and
-multiply by `n!`:
+## The Taylor tower, and the surprise
 
-> **Inversion (`seqOf`).** `aₙ = n! · (coefficient of Xⁿ in EGF(a))`.
+Here is where the story turns. In ordinary calculus you can iterate: take the
+derivative again, and again, building the *Taylor tower* of higher derivatives.
+We can do the same with species. The `k`-fold derivative `F^{(k)}` simply adds
+`k` ghosts at once: `F^{(k)}[n] = F[n+k]`. A clean induction confirms this, and
+it matches the analytic side perfectly — the EGF of the `k`-th derivative species
+is the `k`-th formal derivative of the EGF.
 
-The inverse map is not some abstract existence theorem conjured from the void; it is
-*written down explicitly*. Because the inverse exists and is exact, the EGF map is a
-genuine **bijection** between counting sequences and power series — formalized as
-`egfEquiv`, the statement `(ℕ → ℚ) ≃ ℚ⟦X⟧`. Nothing is lost, nothing is invented:
-the combinatorial world and the analytic world are two perfectly aligned copies of
-the same information.
+Now do the most natural thing in calculus: evaluate the derivatives *at the
+origin*. In classical analysis, the value of the `k`-th derivative at zero,
+divided by `k!`, is the `k`-th Taylor coefficient. Here something cleaner
+happens. Evaluating the `k`-fold derivative species on the *empty* label set
+gives
 
-The immediate payoff (`Species.EGF_inj`) is what combinatorialists call a *complete
-invariant* theorem: **two labelled species have the same EGF if and only if they have
-the same counting sequence.** If two families of structures look identical through the
-analytic lens, they really are identical, count for count. The mirror has no
-distortions.
+> `F^{(k)}[0] = F[k]`.
 
-## Calculus enters: differentiating a shape
+Read that again. The original `k`-th count `F[k]` — the number of structures on
+`k` labels — reappears as the number of structures on *zero* labels after `k`
+differentiations. The ghosts you added are exactly the labels you took away. And
+on the analytic side, the constant term of the `k`-fold formal derivative of the
+EGF returns the *un-normalised* count `F[k]` — with no leftover factorial. This
+is the **species Maclaurin theorem**:
 
-The bridge so far is *algebraic*: it respects `+` and `×`. The deepest part of the
-story is that it is also *differential* — it respects `d/dX`, the operation of
-calculus. To see why this should be true, ask what the derivative of a power series
-does to its coefficients. Differentiating `Xⁿ` gives `n·Xⁿ⁻¹`, which shifts and
-rescales the clothesline. When you push the `n!` bookkeeping through, the derivative
-of `EGF(a)` turns out to have the coefficient sequence `aₙ₊₁` — it *shifts the
-sequence down by one*.
+> **(constant term of `d^k/dX^k` of EGF(F)) = F[k].**
 
-What combinatorial operation shifts a counting sequence down by one? Adding a label!
-The **derivative of a species**, written `F'`, is defined by
+The factorial that an ordinary Taylor expansion would drag along (`f^{(k)}(0)/k!`)
+is precisely cancelled by the `1/n!` built into the exponential generating
+function. The exponential convention is not a cosmetic choice; it is the unique
+normalisation that makes Taylor extraction return raw counts.
 
-> `F'[n] = F[n + 1]`:
+## Reconstruction: calculus that doesn't forget
 
-an `F'`-structure on `n` labels is an `F`-structure on `n + 1` labels, where one
-extra "ghost" label has been adjoined. Its counting sequence is exactly `aₙ₊₁`, and so:
+The Maclaurin theorem extracts coefficients one at a time. The next theorem puts
+them back together, and this is the conceptual punchline of the whole program.
 
-> **Derivative law (`egf_seqDeriv`).** `EGF(F') = d/dX · EGF(F)`.
+Build a new sequence whose `k`-th term is "the constant term of the `k`-fold
+derivative of `f`." By the Maclaurin theorem, that is just the original counting
+sequence. Feed it back through the EGF, and you recover `f` exactly:
 
-The formal derivative of analysis *is* the "adjoin a ghost label" operation of
-combinatorics. This is one of those identities that, once seen, reorganizes how you
-think about both subjects.
+> **`egf( k ↦ constant term of d^k/dX^k of f ) = f`** — the **Taylor
+> reconstruction theorem**.
 
-A close cousin is **pointing**. To "point" a structure is to mark one of its `n`
-labels as special — a root, a base point, a distinguished element. There are `n`
-choices, so the pointed counting sequence is `n·aₙ`. On the analytic side, multiplying
-the coefficient by `n` is exactly the operator `X · d/dX`:
+Every formal power series over the rationals *is* the Taylor series of its own
+derivative tower. In ordinary analysis this is a statement about convergence, an
+infinite limit that requires the function to be analytic and that can still
+fail. Here it is an **exact algebraic identity**, and it terminates at every
+coefficient: to read off the count of structures of size `k`, you differentiate
+`k` times and look at one number. Nothing is lost, nothing is approximated.
 
-> **Pointing law (`egf_seqPoint`).** `EGF(F^•) = X · d/dX · EGF(F)`.
+The reason is structural. The EGF is a bijection, and the "differentiate-then-
+read-the-constant-term" map is its honest set-theoretic inverse. Taylor's tower,
+in the discrete world of species, is not an analytic limit but a finite,
+reversible machine. Differentiation here truly is information-preserving:
+the derivative discards the head of the sequence, but the tower of all
+derivatives, sampled at the origin, recovers every term.
 
-These two laws together let combinatorialists do *calculus on shapes*: rooting a
-tree, marking a vertex, taking a "derivative of structure," all become routine
-manipulations of power series.
+## Two more towers
 
-## The product rule, for free
+Once you can iterate derivatives, two neighbouring towers come along for free.
 
-Once you believe that the bridge respects multiplication *and* differentiation, a
-famous law of calculus must have a combinatorial twin. In calculus, the **product
-rule** (Leibniz's rule) says `(f·g)' = f'·g + f·g'`. Pull this back through the
-mirror, and it becomes a statement about species:
+**Iterated pointing and moments.** Pointing multiplies the `n`-th count by `n`.
+Point `k` times and you multiply by `nᵏ`:
 
-> **Structural Leibniz rule (`binConv_leibniz`).**
-> `(F · G)' = F' · G + F · G'`.
+> `(F^{•k})[n] = nᵏ · F[n]`.
 
-In words: to adjoin a ghost label to a product structure, the ghost must land on
-*either* the left factor *or* the right factor — `F'·G` or `F·G'`. That "either/or"
-is precisely the sum on the right. What is striking is the *method* of proof. Rather
-than wrestling with binomial-coefficient identities by hand, one simply observes that
-the analytic product rule is already a theorem, transports it across the bijective
-bridge, and lands the combinatorial identity with **zero index gymnastics**. The
-faithfulness of the mirror (its injectivity) is what makes this free: every true
-statement on the analytic side is automatically a true statement on the combinatorial
-side, and vice versa.
+Combinatorially, you are marking `k` labels in order, with repetition allowed. On
+the analytic side this is the `k`-fold Euler operator `(X·d/dX)ᵏ`. Statisticians
+will recognise the weighting `nᵏ`: these are the **moments** of the counting
+sequence. Pointing is the species-theoretic moment machine, and its EGF shadow is
+a clean power of the Euler operator.
 
-This is the recurring dividend of building a perfect dictionary. You prove a theorem
-*once*, in whichever world is easier, and you get it for free in the other.
+**The higher Leibniz rule.** The ordinary product rule `(f·g)′ = f′·g + f·g′`
+iterates into the binomial expansion familiar from calculus:
 
-## Why this matters beyond the puzzle
+> `(f·g)^{(k)} = Σ_{i=0}^{k} C(k,i) · f^{(i)} · g^{(k−i)}`.
 
-It is tempting to file all this under "clever bookkeeping," but the species
-perspective has real reach.
+This is the analytic backbone of Faà di Bruno's formula, and it holds verbatim on
+our power series. Translated back across the bridge, it is the *higher product
+rule for species*: differentiating a Day convolution `k` times distributes the
+`k` ghosts among the two factors in every possible way, weighted by how many ways
+there are to choose which ghosts go where.
 
-- **It unifies scattered formulas.** The exponential formula, the theory of rooted
-  trees (Cayley's `nⁿ⁻¹` count), the enumeration of permutations by cycle type — all
-  flow from the same handful of operations: sum, product, derivative, and (the next
-  rung on the ladder) substitution.
+## Why this is worth caring about
 
-- **It powers random generation.** The "Boltzmann sampler" method, used to generate
-  enormous random combinatorial objects (random trees, random maps, random molecules
-  in cheminformatics) uniformly and efficiently, is built directly on the
-  species-to-generating-function dictionary. The derivative and pointing operations
-  are exactly how these samplers target a desired size.
+There is a recurring dream in mathematics: to make a combinatorial fact *obvious*
+by translating it into algebra. The species bridge realises that dream with
+unusual completeness. Adding species is adding functions. Multiplying species is
+multiplying functions. Marking a label is the Euler operator. Adjoining a ghost
+is the derivative. Each entry in the dictionary has been pinned down exactly, and
+the calculus they generate closes up on itself: the operations interlock through
+the product rule, the chain of derivatives, and the moment tower, and they invert
+cleanly through Taylor reconstruction.
 
-- **It is a bridge between fields.** Joyal's insight was that a species is really a
-  *functor* — a structure-preserving map — from the world of finite labelled sets to
-  the world of finite sets. The generating function is then an *analytic functor*, a
-  concept that ties enumerative combinatorics to category theory, representation
-  theory, and even theoretical physics (where generating functions count Feynman
-  diagrams).
-
-What the results described here accomplish is to make the first three rungs of this
-ladder — sum, product, and the differential structure — completely precise and
-completely certain. The EGF is shown to be not just a convenient summary but an exact,
-invertible, calculus-respecting equivalence between counting and analysis.
-
-## The view from the bridge
-
-Stand back and look at what the dictionary says.
-
-| Combinatorial world (structures on labels) | Analytic world (power series) |
-|---|---|
-| species of sets | `eˣ` |
-| species of linear orders | `1/(1 − X)` |
-| "either `F` or `G`" (sum) | addition `+` |
-| "split labels, `F` on one part, `G` on the other" (product) | multiplication `×` |
-| "adjoin a ghost label" (derivative `F'`) | formal derivative `d/dX` |
-| "mark a special label" (pointing `F^•`) | the operator `X · d/dX` |
-| ghost lands left or right (Leibniz) | product rule `(fg)' = f'g + fg'` |
-| different structures, different counts | different power series (the mirror is exact) |
-
-Every entry in this table is a precise theorem. Together they say that the simple act
-of counting labelled structures is, in a deep and literal sense, the *same activity*
-as doing algebra and calculus on power series. The factorial in the denominator — that
-small, almost invisible piece of bookkeeping — is the hinge on which the entire
-correspondence turns.
-
-There is something quietly profound in this. We tend to think of combinatorics
-(discrete, finite, about counting) and analysis (continuous, infinite, about limits
-and derivatives) as opposite ends of mathematics. The theory of species shows they
-are not opposites at all. They are the same landscape, seen from two windows. The
-generating function is the bridge between the windows — and, as these results
-establish with full rigour, it is a bridge that loses nothing, distorts nothing, and
-carries calculus across intact.
-
-Next time you line up `n` cards, or split them into two rows, remember: you are not
-just counting. You are evaluating a power series. And somewhere on the other side of
-the bridge, `eˣ` and `1/(1−X)` are quietly keeping score.
+The deepest lesson is about reversibility. We are trained to think of the
+derivative as a lossy operation — it throws away constants, and integrating it
+back requires an extra constant of integration. But that intuition is about a
+*single* derivative of a *single* function. The full tower of derivatives,
+together with the discrete structure of species, carries strictly more
+information, enough to rebuild the original object from scratch. In the world of
+labelled structures, differentiation and counting are the same act seen from two
+sides, and the Taylor tower is the hinge that lets you walk across the bridge in
+either direction, one exact step at a time.
