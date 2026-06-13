@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "08a1059c",
     "filename": "this_cycle_adds_cataloglogictemporalprooforderlean.json",
     "pkg_num": 86,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4716,
     "title": "Belnap's FOUR: Paraconsistency and the Product Bilattice 2 \u2299 2"
   },
   {
@@ -2623,8 +2623,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "this_cycle_adds_cataloglogictemporalprooforderlean",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4716,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Belnap's FOUR: Paraconsistency and the Product Bilattice 2 \u2299 2"
     }
