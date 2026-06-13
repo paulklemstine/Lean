@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "e517b646",
     "filename": "close_proofs_close_proofs_this_cycle_built_from_sc.json",
     "pkg_num": 75,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7670104918032787,
     "title": "Certified Expanders for Classical Groups"
   },
   {
@@ -2276,8 +2276,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "close_proofs_close_proofs_this_cycle_built_from_sc",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7670104918032787,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Certified Expanders for Classical Groups"
     }
