@@ -2,45 +2,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "bea64f19",
-    "description": "Cycle bc66959c (Q=0.775) proved 69 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions — Boltzmann Bridge IX: the Interleaving Metric is *Geodesic*\n\n## Synthesis\n\n`Applications/BoltzmannBridge/InterleavingGeodesic.lean` closes the\npersistence-stability arc's metric s",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_bc66959c_9b6b314b",
-    "lineage_refs": [],
-    "priority_score": 0.8248660869565219,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "bc66959c",
-    "status": "in_progress",
-    "timestamp": "2026-06-14T16:17:30.967865+00:00",
-    "title": "Close Proofs: `Applications/BoltzmannBridge/InterleavingGeodesic.lean` closes the"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "0827184d",
-    "description": "# Future Directions — The Gauss-Sum Bridge between Even Lattices and Binary Codes\n\n## Synthesis\n\nThe `SmoothPoincare` family in `Catalog/Applications/SmoothPoincare/` builds the smooth/\ntopological gap in dimension 4 from two parallel towers:\n\n* the **lattice tower** — `IntersectionForms.lean` / `DirectSum.lean` /\n  `DirectSumObstruction.lean`: even unimodular forms (`E8form`, `E8E8form`), the\n  Donaldson obstruction `even_not_stdDiagonalizable`, and the rank-divisible-by-8\n  miracle;\n* the **code tower** — `TopologicalCodes.lean` / `SelfDualLength.lean` /\n  `MinimumDistance.lean`: the doubly-even self-dual `[8,4,4]` Hamming code, the bridge\n  `doublyEven_selfOrthogonal`, the weight enumerator `1 + 14x⁴ + x⁸`, and length\n  divisibility by 4.\n\nEvery prior lab notebook in the code tower flagged the same gap: the mod-4 length\ntheorem (`SelfDualLength.selfDual_doublyEven_length_div_four`) is **not sharp**; the\ntrue constant is 8 (Gleason), and reaching it \"is the genuinely harder,\nweight-enumerator/invariant-theory step.\" This cycle closes exactly that gap.\n\nThe new file `Catalog/Applications/SmoothPoincare/GleasonLength.lean` proves, fully\n`sorry`-free and for arbitrary length `n`:\n\n> **`doublyEven_selfDual_length_div_eight`** — every binary doubly-even self-dual code\n> has length divisible by 8.\n\nThe proof is a self-contained formalization of the classical **Gauss-sum / MacWilliams**\nargument over `ℂ`, never invoking external invariant theory:\n\n1. `csgn`/`bchar` set up the additive character `(-1)^⟨x,c⟩`;\n2. `char_orthogonality` proves the standard \"nontrivial character sums to zero\" on the\n   self-dual (hence *linear*) code, via the involution `c ↦ c + c₀`;\n3. `fourier_iwt` computes the discrete Fourier transform of `x ↦ Iʷᵗ⁽ˣ⁾` by\n   per-coordinate factorization, giving `(1+I)^{n−w}(1−I)^w`, which `fourier_iwt_doublyEven`\n   collapses to `(1+I)ⁿ` using `1−I = (−I)(1+I)` and `(−I)^w = 1`;\n4. `card_eq_onePlusI_pow` evaluates the double sum two ways to obtain the master\n   identity `(|C| : ℂ) = (1+I)ⁿ`;\n5. `eight_dvd_of_pos_real_pow` reads off `8 ∣ n` from the fact that `|C|` is a *positive\n   real* sitting on the `(1+I)`-tower of period 8 (`(1+I)⁴ = −4`, `(1+I)⁸ = 16`).\n\nThis is the precise code-side mirror of the lattice statement \"positive-definite even\nunimodular lattices have rank divisible by 8,\" with `E8 ↔ Hamming[8,4,4]` the minimal\nwitnesses on each side.\n\n## Results Summary\n\n* `doublyEven_selfDual_length_div_eight` — main theorem, arbitrary `n`, axioms\n  `propext / Classical.choice / Quot.sound` only.\n* `card_eq_onePlusI_pow` — the master Gauss-sum identity `(|C| : ℂ) = (1+I)ⁿ`, a reusable\n  engine for any doubly-even self-dual code.\n* `char_orthogonality`, `fourier_iwt`, `fourier_iwt_doublyEven` — standalone MacWilliams\n  infrastructure usable for further weight-enumerator work.\n* `hamming_length_div_eight` — corollary recovering `8 ∣ 8` for the Hamming code from the\n  *general* theorem (not by hand), exactly as `E8`'s obstruction is derived from\n  `E8_even`.\n\n## Research Directions\n\n### 1. The full MacWilliams identity and Gleason's structure theorem\n\nThe pieces `char_orthogonality` and `fourier_iwt` already are the entire engine of the\nMacWilliams transform; what is missing is to package them into the genuine identity\n`W_{C^⊥}(x,y) = |C|⁻¹ W_C(x+y, x−y)` on the two-variable weight enumerator, and then to\nprove Gleason's theorem that the weight enumerator of a doubly-even self-dual code is a\npolynomial in the two basic invariants `W_{Hamming[8]}` and `W_{Golay[24]}`.\n**The key insight is** that the present `card_eq_onePlusI_pow` is the evaluation of the\nMacWilliams identity at the single character `y = I`; replacing `I` by a formal variable\nturns the same double-sum/character-orthogonality computation into the full bivariate\ntransform with *no new ideas*, only bookkeeping over a polynomial ring. **Why now?**\nBecause the hard analytic kernel (character orthogonality on a self-dual code, and the\nper-coordinate Fourier factorization) is now formalized and reusable; the remaining work\nis algebraic and squarely in Mathlib's `MvPolynomial`/`Finset` comfort zone.\n\n### 2. Construction A: make the lattice↔code bridge a theorem, not an analogy\n\nSo far the two towers are linked by *narrative* (\"the Hamming code is the mod-2 shadow of\nE8\"). Promote this to a Lean theorem: define Construction A, `L(C) = {v ∈ ℤⁿ : v mod 2 ∈ C}/√2`,\nand prove `C` doubly-even self-dual ⟺ `L(C)` even unimodular, transporting\n`doublyEven_selfDual_length_div_eight` to a *new proof* of \"even unimodular ⟹ rank\ndivisible by 8\" that is independent of the lattice-side Donaldson machinery.\n**The key insight is** that divisibility-by-8 is a single invariant computed identically\non both sides — `wt mod 4` on codes and the diagonal `Q(v) mod 2` on lattices — so the\nmod-8 obstruction should *factor through* Construction A as one shared `ℤ/8` class.\n**Why now?** Both endpoints are already formalized (`E8form`/`E8_even` on one side,\n`GleasonLength` on the other); only the functor between them is missing, and proving an\nequivalence between two already-proved facts is far cheaper than proving either afresh.\n\n### 3. Sharpness and a classification at length 8\n\n`doublyEven_selfDual_length_div_eight` gives a necessary condition; is it the *only*\nconstraint, and is the Hamming code the *unique* doubly-even self-dual code of length 8?\nConjecture: every doubly-even self-dual binary code of length 8 is monomially equivalent\nto `Hamming[8,4,4]`, and there is exactly one such code up to permutation.\n**The key insight is** that the master identity pins `(|C| : ℂ) = (1+I)⁸ = 16`, so any\nlength-8 example has exactly 16 words with weight enumerator forced to `1 + 14x⁴ + x⁸` —\nthe enumerator is *determined*, not assumed, which should rigidify the code to a unique\none. **Why now?** The weight enumerator is already nailed (`MinimumDistance.lean`\n`hamming_weightEnum_*`), so the classification reduces to a finite, `decide`-able search\nover generator matrices constrained by a known spectrum.\n\n### 4. The mod-2 reduction of `E8 ⊕ E8` versus `D16⁺` as distinct length-16 codes\n\n`DirectSum.lean` proves `E8E8form` is even, unimodular, and *not* standard-diagonalizable.\nOn the code side this predicts two inequivalent doubly-even self-dual codes of length 16\n(the shadows of `E8⊕E8` and of `D16⁺`), both forced by `GleasonLength` to have length\ndivisible by 8. Conjecture: their *weight enumerators agree* but the codes are\ninequivalent — the first genuinely \"MacWilliams-invisible\" separation in the catalog.\n**The key insight is** that Gleason's theorem makes the length-16 weight enumerator\n*unique* (a fixed polynomial in the degree-8 invariant), so weight data alone *cannot*\ndistinguish the two codes — separation must come from a finer invariant such as the\nautomorphism group order. **Why now?** Direction 1's enumerator machinery plus the\nalready-formalized `E8E8_not_stdDiagonalizable` give both the obstruction to weight-based\nseparation and a concrete second example to compare against.\n\n### 5. Type II ⟹ a `ℤ/8`-valued signature and the Rokhlin connection\n\nThe number 8 in `GleasonLength` and the number 16 in Rokhlin's theorem (signature of a\nsmooth spin 4-manifold is divisible by 16) are the same arithmetic phenomenon one\ncategorical level apart. Define a `ℤ/8`-valued invariant of a doubly-even self-dual code\nas the class of `n` and prove it equals the Gauss-sum phase `arg((1+I)ⁿ)/(π/4)`.\n**The key insight is** that `eight_dvd_of_pos_real_pow` already isolates this phase as the\n*only* obstruction, so the invariant is literally the discrete logarithm of the master\nidentity's right-hand side — a number already computed inside the proof. **Why now?**\nThe phase is sitting unused inside `card_eq_onePlusI_pow`; exposing it as a named\ninvariant turns a proof step into a reusable bridge toward a formal Rokhlin-type\nsignature theorem on the lattice tower.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_1879",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "d16da345",
-    "status": "in_progress",
-    "timestamp": "2026-06-14T16:50:52.614262+00:00",
-    "title": "The `SmoothPoincare` family in `Catalog/Applications/SmoothPoincare/` builds the"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "# Future Directions — Discrete Hodge Laplacian, Green's Operator & Diffusion Message Passing\n\n## Synthesis\n\nThis cycle rebuilt the discrete Hodge program on a **self-contained Mathlib foundation**, after\ndiscovering that the catalog's entire `Hodge*` stack was non-elaborating: the files\n`HodgeGreenOperator`, `HodgeHarmonicProjector`, `HodgeIsomorphism`, `HodgeResolutionIdentity` and\n`HodgeThreeWayDecomposition` all `import` foundation modules (`HodgeBettiRank`,\n`HodgeSpectralPositivity`, `HodgeDiffusionContraction`) that **do not exist** in the repository, and\nthe package declared no `srcDir`, so even the present files could not be located by `lake`. A\none-line infrastructure repair (`srcDir = \"Catalog\"` in `lakefile.toml`) restored module\nresolution, and the new file `Catalog/Speculative/AutoResearch/HodgeLaplacianGreen.lean` re-derives\nthe operator-algebra, spectral, analytic and dynamical layers of the program from Mathlib alone.\n\nThe central object is the discrete **Hodge Laplacian** of a two-step cochain complex\n`U --e--> V --d--> W`,\n```\nΔ = d* ∘ d + e ∘ e*\n```\non the middle space `V`, with `d*`, `e*` the Mathlib adjoints. The single organizing identity is\nthe sum-of-squares **Dirichlet energy**\n```\n⟪Δ x, x⟫ = ‖d x‖² + ‖e* x‖²,\n```\nfrom which everything else follows: the harmonic space `ker Δ` is exactly the closed-and-co-closed\ncochains (`d x = 0 ∧ e* x = 0`); the Rayleigh form is strictly positive off `ker Δ`; self-adjointness\nturns `(ker Δ)ᗮ` into `range Δ`; and `Δ` is therefore invertible on the complement, yielding the\nunique **Green's operator** value. On the dynamical side, the explicit-Euler diffusion step\n`S = id − a·Δ` fixes the harmonic space pointwise and conserves the harmonic projection along the\nwhole trajectory `P (Sᵏ x) = P x`: diffusion never creates or destroys the topological (harmonic)\ncomponent, it only relaxes the exact/co-exact part.\n\nThis is the **local-to-global** picture of the engine's theme made discrete: local data (the maps\n`d`, `e` on individual cochains) glues, via the Hodge decomposition, into the global obstruction\nobject `ker Δ`, and the Green's operator is the cohomological measurement of how the non-harmonic\npart is inverted.\n\n## Results summary\n\n| Theorem | Statement |\n|---|---|\n| `hodgeLap_isSymmetric` | `Δ` is self-adjoint |\n| `hodgeLap_quadratic_form` | `⟪Δ x, x⟫ = ‖d x‖² + ‖e* x‖²` |\n| `hodgeLap_apply_eq_zero_iff` | `Δ x = 0 ↔ d x = 0 ∧ e* x = 0` (harmonic ⇔ closed & co-closed) |\n| `hodgeLap_quadratic_eq_zero_iff` | `⟪Δ x, x⟫ = 0 ↔ Δ x = 0` (strict positivity off the kernel) |\n| `hodgeLap_apply_mem_orthogonal_ker` | `Δ x ∈ (ker Δ)ᗮ` |\n| `hodgeLap_range_eq_orthogonal_ker` | `range Δ = (ker Δ)ᗮ` |\n| `hodgeLap_injOn_orthogonal_ker` | `Δ` is injective on `(ker Δ)ᗮ` |\n| `sub_harmonicProjection_mem_orthogonal_ker` | `x − P x ∈ (ker Δ)ᗮ` |\n| `hodgeLap_green_existsUnique` | unique `z ∈ (ker Δ)ᗮ` with `Δ z = x − P x` (Green value) |\n| `diffStep_harmonic_fixed` / `diffStep_pow_harmonic_fixed` | `Sᵏ h = h` for harmonic `h` |\n| `harmonicProjection_diffStep` / `harmonicProjection_diffStep_pow` | `P (Sᵏ x) = P x` |\n\nAll main results depend only on `propext`, `Classical.choice`, `Quot.sound`.\n\n## Research directions\n\n### 1. Bundle the Green's operator into an honest self-adjoint linear map\n`hodgeLap_green_existsUnique` currently delivers a *pointwise* `∃!`. Conjecture it bundles into a\ngenuine `G : V →ₗ[ℝ] V` with `G ∘ Δ = Δ ∘ G = id − P_harmonic`, `G ∘ P_harmonic = 0`, and `G`\nself-adjoint (`⟪G x, y⟫ = ⟪x, G y⟫`). Falsifiable by any candidate `G` with `Δ (G x) ≠ x − P x` on\nsome `x`, or with `⟪G x, y⟫ ≠ ⟪x, G y⟫`. **The key insight is** that uniqueness is the *only*\nobstruction to linearity of a solver: `z(x+y)` and `z(x)+z(y)` both solve the same `∃!` problem\n(`hodgeLap_injOn_orthogonal_ker` forces them equal), so `G x := Classical.choose (hodgeLap_green_exists x)`\nis automatically additive and homogeneous, and `LinearMap.mk` closes the construction.\n**Why now?** Injectivity on the complement is a theorem this cycle, so each `LinearMap` axiom is a\none-line uniqueness argument, with self-adjointness following from `hodgeLap_isSymmetric` restricted\nto the invariant complement.\n\n### 2. The diffusion energy is a strict Lyapunov function with harmonic limit\nConjecture the Dirichlet energy `E(x) = ⟪Δ x, x⟫` is non-increasing along admissible diffusion,\n`E(S x) ≤ E(x)` for `0 < a < 2/λ_max`, with equality iff `x` is harmonic, and that `Sᵏ x → P x` as\n`k → ∞`. Falsifiable by an `x` and admissible `a` with `E(S x) > E(x)`, or a non-harmonic fixed\npoint of `S`. **The key insight is** that `hodgeLap_quadratic_form` already exhibits `E` as a sum of\nsquares whose zero set is exactly `ker Δ` (`hodgeLap_quadratic_eq_zero_iff`), and\n`harmonicProjection_diffStep_pow` pins the limit's harmonic part to `P x`, so only the complementary\npart must be shown to vanish. **Why now?** Both the Lyapunov candidate (the proven quadratic form)\nand the conserved target (`P x`) are in hand; monotonicity reduces to a single algebraic estimate on\n`E(x) − E(Sx) = 2a⟪Δx,Δx⟫ − a²⟪Δx,Δ(Δx)⟫` once `Δ` is bounded by `λ_max` on the complement.\n\n### 3. Quantitative contraction at the spectral-gap rate\nConjecture that for an admissible step `0 < a < 2/λ_max`,\n`‖Sᵏ x − P x‖ ≤ ρᵏ ‖x − P x‖` with `ρ = max_{λ>0} |1 − aλ| < 1` over the nonzero eigenvalues of `Δ`.\nFalsifiable by a complex, an admissible `a`, and an iterate failing to contract by `ρ`. **The key\ninsight is** that `harmonicProjection_diffStep_pow` makes `x − P x` the only part that moves, and on\n`(ker Δ)ᗮ` the Laplacian has strictly positive eigenvalues (`hodgeLap_quadratic_eq_zero_iff` plus\n`hodgeLap_injOn_orthogonal_ker`), so `‖S y‖ ≤ ρ‖y‖` for `y ∈ (ker Δ)ᗮ` collapses to the\none-dimensional estimate `|1 − aλ| ≤ ρ` per eigenvector. **Why now?** The invariant splitting and\nstrict positivity are theorems, so contraction is a geometric per-eigenvalue bound rather than a\nfresh dynamical-systems study — it needs only the spectral resolution of Direction 4.\n\n### 4. Spectral resolution `Δ = Σ λᵢ Pᵢ` with `P₀ = P_harmonic` and `G = Σ_{λᵢ>0} λᵢ⁻¹ Pᵢ`\nConjecture the finite-dimensional spectral theorem for `Δ`: an orthonormal eigenbasis with\n`0 = λ₀ ≤ λ₁ ≤ …`, the `0`-eigenprojection equal to `P_harmonic`, `Δ = Σ λᵢ Pᵢ`, and the Green's\noperator of Direction 1 equal to `G = Σ_{λᵢ>0} λᵢ⁻¹ Pᵢ`. Falsifiable by a negative eigenvalue, a\nnon-harmonic `0`-eigenvector, or a mismatch `G ≠ Σ λᵢ⁻¹ Pᵢ`. **The key insight is** that\n`hodgeLap_isSymmetric` feeds Mathlib's finite-dimensional spectral theorem directly, the quadratic\nform pins the spectrum to `[0,∞)`, and `hodgeLap_quadratic_eq_zero_iff` identifies the `0`-eigenspace\nwith `ker Δ`, so the eigendecomposition is an *application* rather than a new theory. **Why now?** All\nthree hypotheses of the spectral theorem are theorems, and `hodgeLap_green_existsUnique` forces the\nGreen-operator formula once eigenprojections exist.\n\n### 5. The discrete Hodge isomorphism `H = ker d / range e ≃ ker Δ` as a quotient isometry\nConjecture that the harmonic representative realizes the cohomology quotient: every class `[x]` with\n`d x = 0` has a *unique* harmonic representative `P x ∈ ker Δ`, giving a linear isomorphism\n`ker d / range e ≃ ker Δ`, and that it is an **isometry** for the quotient norm,\n`‖[x]‖ = ‖P x‖`. Falsifiable by a closed `x` whose harmonic projection leaves the class, or a class\nwhose quotient norm differs from `‖P x‖`. **The key insight is** that `range Δ = (ker Δ)ᗮ` already\nsplits any closed cochain into a harmonic part `P x` and a part in `range Δ = range d* ⊕ range e`;\nrestricted to closed cochains the `d*`-component vanishes, so `x − P x ∈ range e` and `P x` is the\ncanonical class representative, with the energy minimization `‖P x‖ ≤ ‖x − e u‖` making the quotient\ninfimum attained exactly at `P x`. **Why now?** The orthogonal splitting and the harmonic-projection\nidentities are theorems this cycle; only the identification of Mathlib's `Submodule.Quotient.norm_mk`\ninfimum with this attained minimum remains, upgrading the linear iso to a `LinearIsometryEquiv`.\n",
     "domain_bridges": [],
@@ -221,26 +182,67 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "60b0b842",
-    "description": "Conjecture: For any bounded-degree finite simplicial complex family with uniformly expanding 1-skeletons, there exists a scale-dependent coarse-graining functor on the face poset such that the normalized k-Hodge Laplacian spectra converge, for each fixed k, to a renormalization fixed profile if and only if the family has asymptotically vanishing higher-order torsion density. Test: Construct explicit coarse-graining operators on random and structured simplicial complex ensembles, compute the k-Laplacian spectra across scales, and check whether spectral-profile convergence coincides exactly with torsion-density decay; a single counterexample separating convergence from torsion decay refutes the conjecture. Impact: This would supply a falsifiable renormalization principle for higher-order discrete geometry, linking topological obstructions to multiscale spectral universality and enabling compressed models of complex systems with certifiable preservation of higher-order dynamics.",
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Spectral Gap Rigidity for Hodge Laplacians under Coarse-Graining\n\n## Synthesis\n\nThis cycle built the linear-algebraic skeleton of the conjecture *Spectral Gap\nRigidity for Hypergraph Hodge Laplacians Under Simplicial Coarse-Graining*\n(`Catalog/Speculative/AutoResearch/HodgeSpectralRigidity.lean`). Rather than\nattack the full asymptotic renormalization statement, we isolated the *exact*,\nfinite, sorry-free core that every asymptotic version must rest on:\n\n* the **Hodge energy identity** `⟪Δ x, x⟫ = ‖d x‖² + ‖e* x‖²`, giving positive\n  semidefiniteness for free;\n* **harmonic = closed ∩ co-closed**, `ker Δ = ker d ⊓ ker e*`;\n* the **orthogonal Hodge decomposition** `ker d = range e ⊕ ker Δ`;\n* the **discrete Hodge theorem** `dim ker Δ + dim range e = dim ker d`, i.e. the\n  harmonic dimension is the real Betti number;\n* **Laplacian covariance** under a coarse-graining isometry, `Δ' = U Δ U⁻¹`, and\n  the resulting **harmonic-dimension rigidity** `dim ker Δ' = dim ker Δ`.\n\nThe key conceptual move is that over `ℝ` the Hodge theorem holds *unconditionally*\n— there is no torsion term — so the \"vanishing higher-order torsion density\"\nhypothesis of the governing conjecture is automatically satisfied in the real\nmodel. This is why the spectral bottom's multiplicity is rigid: it equals a\ntopological invariant that an isometric coarse-graining cannot move. The work\nextends the catalog's abstract Hodge–message-passing theory\n(`HodgeMessagePassingConvergence.lean`), which *assumed* a fixed PSD operator and\nits `ker_hodgeLaplacian` characterization; here that operator is *constructed*\nfrom honest coboundary data and the assumed facts are *proved*.\n\n## Results Summary\n\nTen theorems, all sorry-free, axioms limited to `propext`, `Classical.choice`,\n`Quot.sound`: `hodge_inner_self`, `hodge_nonneg`, `ker_adjoint_eq_orthogonal`,\n`ker_hodge`, `harmonic_inf_range`, `harmonic_sup_range`,\n`betti_eq_harmonic_finrank`, `hodge_coarse_grain`, `finrank_ker_conj`,\n`harmonic_finrank_rigidity`.\n\n## Research Directions\n\n### 1. Spectral rigidity beyond the kernel: the full spectrum is conjugation-invariant\n\nWe proved that the *multiplicity of the eigenvalue 0* (the harmonic dimension) is\npreserved by a coarse-graining isometry. The natural strengthening is that the\n*entire* spectrum is preserved: for every `λ`, `dim ker (Δ' - λ) = dim ker (Δ - λ)`,\nand indeed `Δ'` and `Δ` are unitarily equivalent. The key insight is that\n`hodge_coarse_grain` already gives `Δ' = U Δ U⁻¹` with `U` an isometry, so\n`Δ' - λ = U (Δ - λ) U⁻¹` and `finrank_ker_conj` applies verbatim to each shifted\noperator — the eigenvalue rigidity is a one-line corollary waiting to be stated.\n*Why now?* The covariance theorem `hodge_coarse_grain` is the only nontrivial\ningredient and it is already proved; this direction converts a proven equation\ninto a proven spectral-universality statement with almost no new machinery, and it\nis the precise finite-scale shadow of the conjecture's \"renormalization fixed\nprofile.\"\n\n### 2. A genuine non-isometric coarse-graining and the failure boundary\n\nReal simplicial coarse-graining (collapsing faces, merging vertices) is *not* an\nisometry — it is a surjection that is the identity on a coarse subspace. The\nfalsifiable question: does harmonic dimension survive a non-isometric coarse-grain?\nThe key insight is that an orthogonal *projection* coarse-graining `P` preserves\n`dim ker Δ` if and only if `P` restricts to an isomorphism on the harmonic space,\nwhich holds exactly when the discarded fine modes are spectrally gapped away from\n0 — converting \"rigidity\" into a checkable transversality condition. *Why now?*\nWe already have `ker_hodge` pinning the harmonic space as `ker d ⊓ (range e)ᗮ`, so\ntesting `P`-invariance reduces to an intersection-of-subspaces computation; a\nsingle explicit `P` that drops the harmonic dimension would sharply delimit which\ncoarse-grainings are admissible, refuting the naive \"any functor works\" reading.\n\n### 3. The integer Hodge theorem and the appearance of torsion\n\nOur real Hodge theorem `betti_eq_harmonic_finrank` has *no* torsion term. Over `ℤ`\nthe analogous statement must fail: `Hᵏ(X; ℤ)` carries torsion that the real\nharmonic space cannot see. The key insight is that the gap between the integer\ncohomology rank and the real harmonic dimension is *exactly* the torsion\ncontribution, so formalizing `dim_ℝ ker Δ_ℝ = rank Hᵏ(X;ℤ)` makes \"torsion density\"\na precisely measurable defect rather than a heuristic. *Why now?* The real side is\nfully proved and Mathlib's `Module` / `finrank` API plus its torsion theory\n(`Module.torsion`, `Module.rank`) are mature enough to state the comparison; this\ndirection directly operationalizes the conjecture's central \"vanishing higher-order\ntorsion density\" clause as the obstruction to integer–real agreement.\n\n### 4. Degree-wise chain functoriality and a coarse-graining functor\n\nWe transported a *single* middle degree. A true coarse-graining is a chain map\n`φ_• : C_• → C'_•` commuting with all coboundaries, inducing the transport in\nevery degree simultaneously. The key insight is that requiring `φ` to be a chain\nmap (`d' ∘ φ = φ ∘ d` and `φ ∘ e = e' ∘ φ`) forces the per-degree Laplacian\nintertwiners to glue into a single endofunctor of the cochain category, so\nharmonic rigidity in every degree becomes a property of *one* morphism rather than\na family of unrelated isometries. *Why now?* The single-degree covariance\n(`hodge_coarse_grain`) is the base case; promoting it to a chain map is a clean\ninductive packaging problem, and it is the bridge from our linear-algebra core to\nthe conjecture's \"coarse-graining functor on the face poset.\"\n\n### 5. Quantitative spectral-gap rigidity and stability under perturbation\n\nExact isometry is idealized; the impactful statement is *stability*: if a coarse-\ngraining is an `ε`-near-isometry, the bottom of the spectrum moves by `O(ε)` and\nthe harmonic dimension is preserved as long as `ε` is below the spectral gap. The\nkey insight is that the energy identity `⟪Δ x, x⟫ = ‖d x‖² + ‖e* x‖²` makes `Δ`\nLipschitz in the coboundary data, so a Weyl/`min-max` perturbation bound turns the\ndiscrete spectral gap into an explicit robustness radius for dimension rigidity.\n*Why now?* With the exact rigidity (`harmonic_finrank_rigidity`) and the energy\nidentity already in hand, the only new ingredient is a finite-dimensional min-max\neigenvalue bound (available in Mathlib's `InnerProductSpace.Rayleigh` /\n`Spectrum`), and a quantitative gap is exactly what makes the conjecture testable\non noisy, finite random simplicial ensembles.\n",
     "domain_bridges": [],
     "domains": [
-      "Novelty"
+      "Algebra",
+      "Geometry"
     ],
-    "id": "fd_1897",
+    "id": "fd_1910",
     "lineage_refs": [],
-    "priority_score": 0.7,
+    "priority_score": 0.75,
     "proof_strategy": "",
     "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-14T19:38:39.143048+00:00",
-    "title": "Spectral Gap Rigidity for Hypergraph Hodge Laplacians Under Simplicial Coarse-Gr"
+    "source_exp_id": "60b0b842",
+    "status": "available",
+    "timestamp": "2026-06-14T21:34:59.115980+00:00",
+    "title": "Linear-algebraic skeleton of the conjecture *Spectral Gap"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Boltzmann Bridge X: Primitive Divisors as a Strong-Divisibility Phenomenon\n\n## Synthesis\n\nThe Carmichael arc of this catalog set out to prove that every Fibonacci number `F(n)`\nwith `n ≥ 13` carries a *primitive prime divisor* — a prime dividing `F(n)` but no earlier\nterm. Two cycles back this was split into a prime-index case and a composite-index case,\nwith the prime case delegated to a file `Shared.CarmichaelHelper` that **was never written**\n(the catalog imported a phantom lemma `fib_primitive_divisor_prime`), and the composite case\ndelegated to `Shared.CarmichaelProof.fib_carmichael_composite`, whose *infinite tail*\n(`n > 10000`, beyond the `native_decide` window) was left as `sorry`.\n\nThis cycle closes the prime case **honestly and at full generality**, and in doing so\ndiscovers that the prime case is not a Fibonacci fact at all — it is a fact about *every\nstrong divisibility sequence normalized by `u 1 = 1`*. The catalog's generic\nrank-of-apparition engine (`Applications.UnifiedRankOfApparition`: `IsStrongDivSeq`, `rank`,\n`HasRank`, the spine `rank_dvd_iff`, `rank_min`, `dvd_rank`) turns out to be exactly the\nmachine needed: a prime `q ∣ u(p)` has rank dividing the prime `p`, and the rank cannot be\n`1` (else `q ∣ u(1) = 1`), so the rank equals `p` and `q` is primitive. The *same* one-line\nengine call yields the Fibonacci/Carmichael prime case **and** Bang's theorem at prime\nexponents (`2^p − 1` has a primitive prime divisor). The two classical theorems are facets of\none truth.\n\nWhat remains genuinely open is the *composite* case for large `n`. That is where the \"every\nprime divisor is automatically primitive\" miracle breaks: a prime dividing `u(mk)` may have\nrank a proper divisor of `mk`. This is the true mathematical content of Carmichael/Zsygmondy,\nand it is the spine of the next cycle.\n\n## Results Summary (this cycle, all `sorry = 0`, axioms = {propext, Classical.choice, Quot.sound})\n\n- `Shared/CarmichaelHelper.lean`\n  - `fib_primitive_divisor_prime` — the previously-phantom prime case of Carmichael, now a\n    real theorem. Restores compilation of both `Shared.CarmichaelProof` and\n    `Speculative.AutoResearch.CarmichaelComposite`.\n  - Supporting entry-point (rank of apparition) API: `entryPt`, `entryPt_dvd`, `entryPt_min`,\n    `entryPt_ne_one`, `dvd_fib_gcd`.\n- `Novelty/PrimitiveDivisorEntryLaw.lean`\n  - `sds_primitive_divisor_prime` — primitive prime divisor at prime index for **any** strong\n    divisibility sequence with `u 1 = 1`. Generalizes the Fibonacci result.\n  - `sds_primitive_divisor_apparition` — sharp form: the primitive prime's apparition set is\n    exactly the multiples of `p` (`q ∣ u n ↔ p ∣ n`).\n  - `fib_primitive_at_prime` — Fibonacci/Carmichael prime case, re-derived from the engine.\n  - `mersenne_primitive_at_prime` — Bang's theorem at prime exponents (`2^p − 1`), a\n    cross-domain corollary of the *same* abstract theorem.\n- Infrastructure: registered the orphaned `Applications` and `Novelty` source trees as Lake\n  libraries and set the package `srcDir` so the catalog sources actually build.\n\nThe one remaining `sorry` in the arc is `Shared.CarmichaelProof.fib_carmichael_composite`,\nthe composite case for `n > 10000`. The directions below lay out how to kill it.\n\n---\n\n## Direction 1 — The composite infinite tail via a Lean theory of the Fibonacci primitive part\n\nProve `fib_carmichael_composite` for all `n > 10000` (hence Carmichael in full) by formalizing\nthe cyclotomic factorization `F(n) = ∏_{d ∣ n} Φ_d`, where `Φ_d` is the homogeneous\n\"Fibonacci cyclotomic\" value, together with the growth bound `Φ_n > n` for `n ∉ {1,2,6,12}` and\nthe lemma that at most one prime (the largest prime factor `P` of `n`, to the first power) can\nbe non-primitive in `Φ_n`. Then `primPart n ≥ Φ_n / P > 1`.\n\nThe key insight is that the computational `primPart` already defined in `CarmichaelProof.lean`\nis, up to the single possible \"intrinsic\" prime, exactly `Φ_n`; so the missing analytic input\nis purely the inequality `Φ_n > P_max(n)`, which reduces to a `φ(n)`-many-factor lower bound on\n`|α^n − β^n|` against the elementary bound `P_max(n) ≤ n`.\n\nWhy now? The prime case is closed and the entry-point/rank engine (`rank_dvd_iff`,\n`rank_min`) is in place, so the *only* missing ingredient is the cyclotomic growth estimate —\na self-contained analytic lemma rather than a whole theory. Falsifiable: if one exhibits a\ncomposite `n > 10000` with `primPart n = 1`, the conjecture (and Carmichael) is false; the\n`native_decide` check already certifies no such `n ≤ 10000` exists.\n\n## Direction 2 — Generic Zsygmondy for Lucas sequences `u 1 = 1`\n\nConjecture: for every nondegenerate Lucas-type strong divisibility sequence `u` with `u 1 = 1`\nand strict eventual growth, there is `N` such that for all `n > N`, `u(n)` has a primitive\nprime divisor. This subsumes both Carmichael (Fibonacci) and Bang/Zsygmondy (`a^n − 1`) as the\n*composite* counterparts of the prime-case corollaries proved this cycle.\n\nThe key insight is that `sds_primitive_divisor_apparition` already isolates the exact failure\nmode for composites — a divisor whose rank is a proper divisor of `n` — so a generic proof\nneeds only a generic \"primitive part > 1\" estimate, abstracting Direction 1's growth bound\naway from Fibonacci specifics.\n\nWhy now? We have a *single* abstract theorem covering both classical prime-index results, which\nstrongly suggests the composite results are also a single abstract theorem; the abstraction\nbarrier (`IsStrongDivSeq` + `u 1 = 1` + growth) is now explicit and minimal. Falsifiable by any\ngrowing `u 1 = 1` SDS with infinitely many primitive-divisor-free terms.\n\n## Direction 3 — Effective entry-point (rank) bounds and the Wall–Sun–Sun frontier\n\nConjecture: for a prime `q`, the Fibonacci entry point `entryPt q` satisfies\n`entryPt q ∣ (q − (5/q))` (Legendre symbol), and `entryPt q = entryPt(q^2)` would force a\nWall–Sun–Sun prime. Formalize `entryPt q ∣ q − (5∣q)` and the rank-lifting law\n`entryPt(q^k) = q^{k-1} · entryPt q` under the non-Wall–Sun–Sun hypothesis.\n\nThe key insight is that the entry point `entryPt` is already a first-class object in\n`CarmichaelHelper`, so quadratic-reciprocity-driven divisibility of `entryPt q` is now a\nstatement we can *write down*, turning a folklore table into theorems.\n\nWhy now? `entryPt`, `entryPt_dvd`, and `entryPt_min` give the precise interface; the missing\npiece is the period/order bridge to `ZMod q`, which Mathlib supports. Falsifiable: a computer\nsearch verifying `entryPt q ∣ q − (5∣q)` for many primes is a direct sanity check, and a single\ncounterexample refutes it.\n\n## Direction 4 — A lattice/order-theoretic packaging of `rank` as a poset morphism\n\nConjecture: for a strong divisibility sequence with all ranks existing, `rank u` is a\nsurjective-onto-its-image morphism of the divisibility lattice `(ℕ_{>0}, ∣, gcd, lcm)` that\n*reflects* meets: `rank u (gcd a b)`-type identities hold, dualizing `Nat.fib_gcd`. Combine with\nthe catalog's `RankLatticeMorphism` to show the apparition map is a *Galois connection* between\n\"values\" and \"indices\".\n\nThe key insight is that `rank_dvd_iff` already says `rank` is left adjoint to the value map in\nthe divisibility order — `m ∣ u n ↔ rank m ∣ n` is literally an adjunction unit — so the entire\napparition theory is a Galois connection waiting to be named.\n\nWhy now? Both halves exist in the catalog (`UnifiedRankOfApparition` and `RankLatticeMorphism`)\nbut were never connected; the adjunction framing would make every apparition lemma a formal\nconsequence of one categorical statement. Falsifiable: if `rank` failed the adjunction\ntriangle identities on some SDS, the framing collapses.\n\n## Direction 5 — Carmichael exception classification as a finite, certified set\n\nConjecture: the complete set of `n` for which `F(n)` has *no* primitive prime divisor is exactly\n`{1, 2, 6, 12}`, and this can be certified in Lean by combining (a) the prime case (done),\n(b) the composite case for `n ≤ 10000` (done, `native_decide`), and (c) Direction 1's growth\nbound for `n > 10000`, with a small finite exceptional analysis at `6` and `12`.\n\nThe key insight is that the exceptions are *forced* by the few `n` where `Φ_n ≤ P_max(n)`, a\nfinite condition once the growth bound is effective, so the classification is a corollary of\nDirection 1 plus a `decide`-checkable finite list.\n\nWhy now? Two of the three ingredients are already formalized and `sorry`-free in this very arc;\nonly the growth bound stands between the catalog and a *fully certified* statement of\nCarmichael's theorem with its exact exception set. Falsifiable: exhibiting a fifth exceptional\n`n` refutes it outright.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_1911",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "36dba103",
+    "status": "available",
+    "timestamp": "2026-06-14T21:35:39.263106+00:00",
+    "title": "The Carmichael arc of this catalog set out to prove that every Fibonacci number "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "2ca3f901",
+    "description": "# Future Directions — Boltzmann Bridge X: Local-to-Global Gluing of Interleaving Geodesics\n\n## Synthesis\n\nBridge IX (`InterleavingGeodesic.lean`) turned the persistence-stability metric\ninto a *geodesic* one: the convex-interpolation path\n`lerp F G t := (1−t)·F.weight + t·G.weight` runs from `F` to `G` and the\ninterleaving distance varies exactly linearly along it\n(`eInterleavingDist_lerp`). Bridge X (`InterleavingGeodesicGluing.lean`) promotes\nthis single path to a *self-coherent field of geodesics*. The keystone is the\naffine gluing law\n\n> `lerp (lerp F G s) (lerp F G t) r = lerp F G ((1−r)·s + r·t)`  (`lerp_lerp`),\n\nwhich says the geodesic between two points *on* a geodesic is the **same**\ngeodesic, merely reparametrised. This is exactly a local-to-global coherence\ncondition: the global segment restricts consistently to every subinterval, the\ndefining sheaf-like axiom of a geodesic structure. Every metric corollary then\nfalls out by linearity of `ENNReal.ofReal` on nonnegative parameter gaps:\ndistance to the far endpoint (`eInterleavingDist_lerp_right`), exact additive\n*betweenness* for ordered parameters (`eInterleavingDist_lerp_betweenness`), the\nuniversal additive split at every interior point (`eInterleavingDist_lerp_bisect`,\ngeneralising the `t = ½` midpoint bisection of Bridge IX to the full continuum),\nand multiplicativity of speed under nesting (`eInterleavingDist_lerp_lerp`).\n\n## Results Summary\n\n- `lerp_lerp`: affine self-similarity / gluing of the geodesic.\n- `eInterleavingDist_lerp_right`: `d(lerp F G t, G) = ofReal (1−t) · d(F,G)`.\n- `eInterleavingDist_lerp_betweenness`: `d(s,u) + d(u,t) = d(s,t)` for `s ≤ u ≤ t`.\n- `eInterleavingDist_lerp_bisect`: `d(F, lerp t) + d(lerp t, G) = d(F,G)` for all `t`.\n- `eInterleavingDist_lerp_lerp`: nested speed multiplies — `ofReal|a−b| · (ofReal|s−t| · d)`.\n\nAll five are proved `sorry`-free over an arbitrary index type `α`, building on the\nBridge VIII isometry `eInterleavingDist_eq_weightSupEDist` and the Bridge IX law\n`eInterleavingDist_lerp`.\n\n## Research Directions\n\n### Direction 1 — The geodesic is a *non-unique* section: chart the convex family.\n\nBecause `eInterleavingDist` is a supremum over simplices, any path whose weights\nagree with `lerp` on the *maximising* simplices but wander (while staying within\nthe sup bound) on the rest is *also* a constant-speed geodesic. Conjecture: the\nset of constant-speed geodesics from `F` to `G` is exactly the convex set of paths\n`P t` with `P 0 = F`, `P 1 = G`, and `|P t .weight σ − ((1−t)F+tG).weight σ| ≤\n(slack at σ)` for every non-maximising `σ`. The key insight is that *betweenness is\ncontrolled coordinatewise but the metric only sees the supremum*, so freedom lives\nprecisely in the gap between the per-simplex gaps and their supremum. Why now? Bridge\nX's `eInterleavingDist_lerp_betweenness` already isolates betweenness as the additive\nstructure of `[0,1]` pushed through the isometry; the same isometry makes the\nnon-uniqueness statement a finite/`iSup` book-keeping problem rather than a geometric\none, so it is now formalisable without new analytic machinery.\n\n### Direction 2 — Geodesic convexity of the distance functional.\n\nFor a fixed third filtration `H`, conjecture that `t ↦ eInterleavingDist (lerp F G t) H`\nis *convex* on `[0,1]`: `d(lerp t, H) ≤ (1−t)·d(F,H) + t·d(G,H)`. The key insight is\nthat under the Bridge VIII isometry this is the pointwise convexity of\n`σ ↦ |(1−t)F(σ)+tG(σ) − H(σ)|` (an absolute value of an affine function, hence\nconvex) commuting with `⨆`, since a supremum of convex functions is convex. Why now?\n`eInterleavingDist_eq_weightSupEDist` reduces the whole statement to `Convex`-on-`ℝ`\nfacts already in Mathlib plus `iSup`-monotonicity; the `lerp_lerp` reparametrisation\nsupplies the affine substitution needed to phrase midpoint-convexity, which upgrades to\nfull convexity by continuity.\n\n### Direction 3 — A fundamental groupoid / path category of filtrations.\n\nCompose geodesics end-to-end: define concatenation of `lerp`-paths and ask whether the\nresulting *path category* (objects = filtrations, morphisms = constant-speed geodesics\nup to reparametrisation) is a groupoid, with `lerp F G` and `lerp G F` mutually inverse.\nThe key insight is that `lerp_lerp` already proves the only nontrivial coherence — affine\nreparametrisation invariance — so associativity and inverses reduce to arithmetic in\n`[0,1]`. Why now? The gluing law is the categorical glue; with it the path space studied\ninformally in `InterleavingPathSpace.lean` acquires honest composition, turning the\nmetric geodesic structure into a `1`-truncated homotopy type of persistence data.\n\n### Direction 4 — Realising geodesics inside the Vietoris–Rips locus.\n\nThe weights here are abstract; the geometrically meaningful filtrations are\n*diameter* filtrations of finite metric spaces. Conjecture: the linear interpolation\n`lerp` of two diameter-filtrations is itself a diameter-filtration of an interpolated\n(pseudo-)metric only when the two metrics are *comonotone* on simplices; otherwise the\ngeodesic leaves the Rips locus. The key insight is that diameter is a *max* over edges,\nand a convex combination of maxima is not the max of the convex combination, so the\nRips locus is geodesically convex exactly at the comonotone boundary. Why now? Bridge\nX gives the ambient geodesic explicitly, so the obstruction to staying inside the Rips\nlocus becomes a concrete, falsifiable inequality on edge-weights testable on small\npoint clouds before any general proof.\n\n### Direction 5 — Cohomological obstruction to global geodesic sections.\n\nTreat \"is there a constant-speed geodesic through a prescribed finite family of\nfiltrations in the right order?\" as a *local-to-global extension* problem: local\ngeodesic segments always exist (Bridge X), and the obstruction to gluing them into one\nglobally monotone path is a class in a (Čech-style) cohomology of the betweenness\nrelation over the indexing poset. The key insight is that `eInterleavingDist_lerp_betweenness`\nmakes each local compatibility an *equation* (additivity), so the gluing obstruction is\nliterally the failure of a cocycle condition `d(i,j) + d(j,k) = d(i,k)` to hold globally.\nWhy now? With betweenness proved as an equality rather than an inequality, the obstruction\ntheory has an exact (not merely lax) cocycle to measure, connecting this metric arc to the\n`CechNerve.lean` cohomological thread already in the BoltzmannBridge catalog.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Logic"
+    ],
+    "id": "fd_1913",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "bea64f19",
+    "status": "in_progress",
+    "timestamp": "2026-06-14T21:36:46.746241+00:00",
+    "title": "Bridge IX (`InterleavingGeodesic.lean`) turned the persistence-stability metric"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "646379f1",
     "description": "Conjecture: There exists a finite, explicitly Lean-definable one-dimensional cellular automaton rule R and a computable family of initial conditions {I_n} such that the prefix Kolmogorov complexity density of the time-t space-time diagram of R on I_n exhibits a sharp threshold: below a computable scaling regime t < c1 log n the diagrams have sublinear incompressibility, while above t > c2 log n they have complexity density bounded away from 0 uniformly in n. Test: Formalize R and {I_n}, then compute or rigorously bound compression proxies and logical lower bounds on description length for generated diagrams across the threshold; the conjecture is confirmed if a provable asymptotic separation is established and refuted if no such uniform threshold exists for the candidate rule family. Impact: This would create a bridge between formalized dynamical systems, algorithmic information theory, and complexity emergence, enabling machine-checked detection of genuine randomness phase transitions in simple deterministic systems and suggesting new routes to certified pseudorandomness from minimal dynamical laws.",
     "domain_bridges": [],
     "domains": [
@@ -253,7 +255,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-14T19:39:05.405957+00:00",
     "title": "Algorithmic Randomness Phase Transition in Lean-Definable Cellular Automata"
   },
@@ -280,59 +282,21 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "98b29bfc",
-    "description": "Conjecture: There exists a family of finite, Lean-definable discrete-time quantum walks on arithmetic Cayley graphs G_n = Cay(Z/nZ, S_n), with step sets S_n computable from n, such that the empirical spectral measure of the walk unitary U_n exhibits a sharp phase transition: for all sufficiently large squarefree n with at least k distinct prime factors, any local gate perturbation of operator norm at most epsilon leaves the low-discrepancy portion of the eigenphase distribution invariant up to Wasserstein error O(epsilon), whereas for prime-power n the same perturbation produces a strictly larger minimal Wasserstein deviation bounded below by c > 0 independent of n. Test: Formally define the walk family and perturbation class, then compute or prove asymptotic bounds on eigenphase spectral measures across squarefree versus prime-power moduli; the conjecture is confirmed if one demonstrates the uniform stability bound in the squarefree regime together with a nonvanishing instability lower bound in the prime-power regime, and refuted by any counterexample family or failure of the regime separation. Impact: This would reveal a new arithmetic/noise universality class linking prime factorization structure to robustness of quantum dynamics, enabling arithmetic certification of stable quantum algorithms and a new bridge between spectral number theory, quantum information, and formalized theorem proving.",
+    "consumed_by_exp_id": "70f20089",
+    "description": "Cycle 7eb7c87e (Q=0.631) proved 169 theorems in Novelty but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions — The Fundamental Theorem of Identity Systems and Homotopy-Initial Families\n\n## Synthesis of this cycle\n\nThe catalog's synthetic-HoTT layer (`Catalog/Logic/HoTT/Foundations.lean`) ",
     "domain_bridges": [],
     "domains": [
       "Novelty"
     ],
-    "id": "fd_1903",
+    "id": "sorry_fill_7eb7c87e_1b51597c",
     "lineage_refs": [],
-    "priority_score": 0.7,
+    "priority_score": 0.6810311834319527,
     "proof_strategy": "",
     "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
+    "source_exp_id": "7eb7c87e",
     "status": "in_progress",
-    "timestamp": "2026-06-14T19:47:59.838555+00:00",
-    "title": "Noise-Stable Prime Spectrum in Definable Quantum Walks"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "36dba103",
-    "description": "Cycle 47be570a (Q=0.579) proved 52 theorems in Novelty but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions — Boltzmann Bridge IX: Persistence as a Geodesic Path Space\n\n## Synthesis\n\nThe Boltzmann Bridge arc has, over several cycles, reduced the entire metric theory\nof persistence stabil",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_47be570a_225810cd",
-    "lineage_refs": [],
-    "priority_score": 0.6287153846153847,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "47be570a",
-    "status": "in_progress",
-    "timestamp": "2026-06-14T19:38:42.801879+00:00",
-    "title": "Close Proofs: The Boltzmann Bridge arc has, over several cycles, reduced the entire "
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "9fe725de",
-    "description": "Cycle 5204dcbf (Q=0.533) proved 9 theorems in Tropical but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions — Boltzmann Bridge X: The Persistence Geodesic is a Functorial, Self-Similar, Convexly-Stable Path Space\n\n## Synthesis\n\nThe Boltzmann Bridge arc reduced the metric theory of persis",
-    "domain_bridges": [],
-    "domains": [
-      "Tropical"
-    ],
-    "id": "sorry_fill_5204dcbf_df535a47",
-    "lineage_refs": [],
-    "priority_score": 0.5829500000000001,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "5204dcbf",
-    "status": "in_progress",
-    "timestamp": "2026-06-14T20:38:48.308411+00:00",
-    "title": "Close Proofs: The Boltzmann Bridge arc reduced the metric theory of persistence stab"
+    "timestamp": "2026-06-14T21:35:24.449701+00:00",
+    "title": "Close Proofs: The catalog's synthetic-HoTT layer (`Catalog/Logic/HoTT/Foundations.le"
   },
   {
     "ambition_level": "extension",
@@ -356,7 +320,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "831b154b",
     "description": "Cycle 75b4da8e (Q=0.522) proved 11 theorems in Physics but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture: There exists a nontrivial class of finite CSS quantum codes built from bounded-degree simplicial complexes for which a definable discrete Ricci-flow on the 1-skeleton, coupled to Hodge-Lap",
     "domain_bridges": [],
     "domains": [
@@ -368,7 +332,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "75b4da8e",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-14T21:01:49.252209+00:00",
     "title": "Close Proofs: Definable Ricci-Flow Renormalization Fixed Points in Simplicial Quantu"
   },
@@ -414,6 +378,25 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Cycle 0827184d (Q=0.477) proved 189 theorems in Pythagorean but left 6 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions — The Gauss-Sum Bridge between Even Lattices and Binary Codes\n\n## Synthesis\n\nThe `SmoothPoincare` family in `Catalog/Applications/SmoothPoincare/` builds the smooth/\ntopological ga",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "sorry_fill_0827184d_4289125c",
+    "lineage_refs": [],
+    "priority_score": 0.527207619047619,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "0827184d",
+    "status": "available",
+    "timestamp": "2026-06-14T21:36:31.691570+00:00",
+    "title": "Close Proofs: The `SmoothPoincare` family in `Catalog/Applications/SmoothPoincare/` "
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle cc67c014 (Q=0.477) proved 262 theorems in Novelty but left 22 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions — Boltzmann Bridge IX: The Persistence Functor and the Representation Theorem\n\n## Synthesis\n\n`Catalog/Applications/BoltzmannBridge/InterleavingFunctor.lean` (Bridge IX)\ndischarges ",
     "domain_bridges": [],
     "domains": [
@@ -432,7 +415,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1ef7d13b",
+    "description": "Cycle 60b0b842 (Q=0.448) proved 173 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture: For any bounded-degree finite simplicial complex family with uniformly expanding 1-skeletons, there exists a scale-dependent coarse-graining functor on the face poset such that the normali",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_60b0b842_b52a3c1c",
+    "lineage_refs": [],
+    "priority_score": 0.49761791485129225,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "60b0b842",
+    "status": "in_progress",
+    "timestamp": "2026-06-14T21:35:07.528913+00:00",
+    "title": "Close Proofs: Spectral Gap Rigidity for Hypergraph Hodge Laplacians Under Simplicial"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "91967634",
     "description": "Cycle 601ab928 (Q=0.422) proved 230 theorems in Applications but left 17 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions — Fibonacci Entry-Point Theory and Carmichael's Primitive-Divisor Theorem\n\n## Synthesis\n\nThe catalog's Carmichael work (`Catalog/Speculative/AutoResearch/CarmichaelComposite.lean`,",
     "domain_bridges": [],
     "domains": [
@@ -444,7 +446,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "601ab928",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-14T20:04:50.121481+00:00",
     "title": "Close Proofs: The catalog's Carmichael work (`Catalog/Speculative/AutoResearch/Carmi"
   }

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "36dba103",
     "filename": "close_proofs_the_boltzmann_bridge_arc_has_over_sev.json",
     "pkg_num": 171,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7248000000000001,
     "title": "The Apparition-Order Bridge: A Local-to-Global Dictionary for Ranks of Apparition"
   },
   {
@@ -5357,8 +5357,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "close_proofs_the_boltzmann_bridge_arc_has_over_sev",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7248000000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Apparition-Order Bridge: A Local-to-Global Dictionary for Ranks of Apparition"
     }
