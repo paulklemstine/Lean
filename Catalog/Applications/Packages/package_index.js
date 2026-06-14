@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6fec53b5",
     "filename": "this_cycle_delivered_fibcarmichaelstructurelean_a_.json",
     "pkg_num": 149,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.77481,
     "title": "The Primitive-Divisor Engine: One Computable Criterion for Strong Divisibility Sequences"
   },
   {
@@ -4628,8 +4628,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "this_cycle_delivered_fibcarmichaelstructurelean_a_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.77481,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Primitive-Divisor Engine: One Computable Criterion for Strong Divisibility Sequences"
     }
