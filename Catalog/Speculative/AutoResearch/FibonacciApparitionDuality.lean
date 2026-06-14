@@ -1,10 +1,5 @@
 import Mathlib
--- NOTE (build fix): the catalog file `Bridges/TropicalUltrametricBridge.lean` is
--- absent from this checkout, so the original `import Bridges.TropicalUltrametricBridge`
--- could not be resolved.  It is only used by the final `fibHeight_lt_one_iff` capstone
--- (§4), which is commented out below; the Mathlib-native `padicNorm_fib_lt_one_iff`
--- captstone is retained verbatim.
--- import Bridges.TropicalUltrametricBridge
+import Bridges.TropicalUltrametricBridge
 
 /-!
 # The Fibonacci Law of Apparition as an Arithmetic–Height / Tropical Duality
@@ -197,20 +192,21 @@ theorem padicNorm_fib_lt_one_iff (p : ℕ) [Fact p.Prime] (n : ℕ) :
   rw [padicNorm.int_lt_one_iff, Int.natCast_dvd_natCast,
     fib_dvd_iff_rank_dvd p (Nat.Prime.pos Fact.out)]
 
-/- **Capstone (catalog form): arithmetic height ↔ apparition.** (commented out — see build-fix note)
-The catalog's `p`-adic arithmetic-height norm `TropUltra.padicHeightNorm` of the
-Fibonacci value `fib n` is strictly below `1` exactly when the rank of apparition of
-`p` divides `n`.  Feeds the abstract ultrametric arithmetic height of
-`Bridges/TropicalUltrametricBridge.lean` the concrete Fibonacci inputs.
-`(padicHeightNorm p).N q = (padicNorm p q : ℝ)`; cast `< 1` down to `ℚ` (`Rat.cast_lt`)
-and apply `padicNorm_fib_lt_one_iff`. -/
--- (build fix) Depends on the missing `Bridges/TropicalUltrametricBridge.lean`
--- (`TropUltra.padicHeightNorm`); commented out so the file elaborates standalone.
--- theorem fibHeight_lt_one_iff (p : ℕ) [Fact p.Prime] (n : ℕ) :
---     (TropUltra.padicHeightNorm p).N ((Nat.fib n : ℤ) : ℚ) < 1 ↔ fibRank p ∣ n := by
---   have hN : (TropUltra.padicHeightNorm p).N ((Nat.fib n : ℤ) : ℚ)
---       = ((padicNorm p ((Nat.fib n : ℤ) : ℚ) : ℚ) : ℝ) := rfl
---   rw [hN, show (1 : ℝ) = ((1 : ℚ) : ℝ) by norm_num, Rat.cast_lt]
---   exact padicNorm_fib_lt_one_iff p n
+/-- **Capstone (catalog form): arithmetic height ↔ apparition.** The catalog's
+`p`-adic arithmetic-height norm `TropUltra.padicHeightNorm` of the Fibonacci value
+`fib n` is strictly below `1` exactly when the rank of apparition of `p` divides `n`.
+
+This feeds the abstract ultrametric arithmetic height of
+`Bridges/TropicalUltrametricBridge.lean` the concrete Fibonacci inputs: the
+non-archimedean "size" of `fib n` is governed precisely by the index sublattice
+`fibRank p · ℕ`. -/
+-- !-- `(padicHeightNorm p).N q = (padicNorm p q : ℝ)`; cast `< 1` down to `ℚ` (`Rat.cast_lt`)
+--     and apply `padicNorm_fib_lt_one_iff`. -- !--
+theorem fibHeight_lt_one_iff (p : ℕ) [Fact p.Prime] (n : ℕ) :
+    (TropUltra.padicHeightNorm p).N ((Nat.fib n : ℤ) : ℚ) < 1 ↔ fibRank p ∣ n := by
+  have hN : (TropUltra.padicHeightNorm p).N ((Nat.fib n : ℤ) : ℚ)
+      = ((padicNorm p ((Nat.fib n : ℤ) : ℚ) : ℚ) : ℝ) := rfl
+  rw [hN, show (1 : ℝ) = ((1 : ℚ) : ℝ) by norm_num, Rat.cast_lt]
+  exact padicNorm_fib_lt_one_iff p n
 
 end FibApparition
