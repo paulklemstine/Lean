@@ -1,0 +1,187 @@
+/-
+# HoTT: The Fundamental Theorem of Identity Systems
+
+This file proves the **fundamental theorem of identity types**
+(HoTT book §5.8 / Awodey–Gambino–Sojakova) inside the catalog's synthetic-HoTT
+fragment defined in `Catalog/Logic/HoTT/Foundations.lean`.
+
+The `Foundations` file *defined* `HoTTFound.IdentitySystem` — a based family `R`
+over `a₀` with a reflexivity witness `rflR : R a₀` and a proof that the total space
+`Σ' a, R a` is contractible, centred at `⟨a₀, rflR⟩` — and its docstring *promised*
+that "the fundamental theorem says this data yields an equivalence `(a₀ = a) ≃' R a`
+for all `a`." That theorem was never stated. Here we close the gap.
+
+## Main results
+- `IdentitySystem.idToR`              — the canonical transport map `(a₀ = a) → R a`.
+- `IdentitySystem.idToR_injective`    — always injective (proof irrelevance).
+- `IdentitySystem.idToR_surjective`   — surjective, paid for by contractibility.
+- `IdentitySystem.idToR_bijective`    — the fundamental theorem, fibrewise.
+- `IdentitySystem.fundamentalEquiv`   — the promised equivalence `(a₀ = a) ≃' R a`.
+- `IdentitySystem.fundamental`        — its `Nonempty` (Prop) shadow.
+- `pathIdentitySystem_idToR`          — coherence with the tautological path family.
+- `isIdentitySystem_of_fiberwise_equiv` — the converse, building an identity system
+                                          from any pointed fibrewise equivalence.
+- `fundamentalTheorem_iff`            — the full biconditional, in one statement.
+
+## Relationship to the catalog
+This file *extends* `HoTTFound.IdentitySystem`, `Contractible`, and `Equiv'` from
+`Foundations.lean`; it reproves nothing from that file and adds the previously
+missing universal-property half.
+-/
+
+import Logic.HoTT.Foundations
+
+/-
+-- !-- Lab Notebook -- !--
+
+Hypothesis:
+  The structure `IdentitySystem A a₀ R` (contractible total space `Σ' a, R a`
+  centred at `⟨a₀, rflR⟩`) should be *equivalent* to the assertion that the
+  transport map `idToR a : (a₀ = a) → R a`, `p ↦ p ▸ rflR`, is a fibrewise
+  equivalence. This is the fundamental theorem of identity types.
+
+Result:
+  Proved, `sorry`-free, as a genuine biconditional:
+    * forward  : `IdentitySystem.idToR_bijective` + `fundamentalEquiv`;
+    * converse : `isIdentitySystem_of_fiberwise_equiv`;
+    * combined : `fundamentalTheorem_iff`.
+
+Insight:
+  In Lean's proof-irrelevant `Prop`, the identity type `a₀ = a` is a
+  `Subsingleton`, so *injectivity of `idToR` is free* — every function out of a
+  subsingleton is injective. The entire mathematical content of the fundamental
+  theorem is therefore concentrated in **surjectivity**, and surjectivity is
+  exactly where contractibility of the total space is spent: a point `r : R a`
+  gives `⟨a, r⟩ : Σ' a, R a`, contractibility forces `⟨a, r⟩ = ⟨a₀, rflR⟩`, and
+  the first projection of that `PSigma` equality *is* the path `a₀ = a` we need.
+  This "injectivity is free, surjectivity is the theorem" split is a reusable
+  design principle for the whole homotopy/path-space program in a proof-irrelevant
+  ambient theory.
+
+Failure analysis:
+  The only friction was the dependent (`HEq`) component of the `PSigma`
+  equality. Naively `subst`ing the first projection and discharging the second
+  with `eq_of_heq` works, but orientation matters: contractibility yields
+  `r₀ = r` while `PSigma.ext` wants `r = r₀`, so a `.symm` is required. No deeper
+  obstruction: because the theory is 1-truncated (identity types are h-sets here),
+  there is no higher coherence to check.
+-/
+
+universe u v w
+
+namespace HoTTFound
+
+variable {A : Sort u} {a₀ : A} {R : A → Sort v}
+
+/-! ## The canonical transport map -/
+
+-- !-- `idToR a p` transports the reflexivity witness `rflR : R a₀` along the path
+-- `p : a₀ = a` to land in `R a`. This is the unique pointed fibrewise map. -- !--
+/-- The canonical map `(a₀ = a) → R a` sending `p` to `p ▸ rflR`. -/
+def IdentitySystem.idToR (S : IdentitySystem A a₀ R) (a : A) (p : a₀ = a) : R a :=
+  p ▸ S.rflR
+
+/-! ## Forward direction: an identity system makes `idToR` an equivalence -/
+
+-- !-- The domain `a₀ = a` is a `Subsingleton` (proof irrelevance), so any map out
+-- of it is injective; injectivity carries no homotopical content here. -- !--
+/-- `idToR` is always injective: the identity type is a subsingleton. -/
+theorem IdentitySystem.idToR_injective (S : IdentitySystem A a₀ R) (a : A) :
+    Function.Injective (S.idToR a) :=
+  fun p q _ => Subsingleton.elim p q
+
+-- !-- Given `r : R a`, contractibility forces `⟨a, r⟩ = ⟨a₀, rflR⟩`; the first
+-- projection is the path `a₀ = a` whose transport recovers `r`. -- !--
+/-- `idToR` is surjective: this is where contractibility of the total space is used. -/
+theorem IdentitySystem.idToR_surjective (S : IdentitySystem A a₀ R) (a : A) :
+    Function.Surjective (S.idToR a) := by
+  intro r
+  have h : (⟨a, r⟩ : Σ' x : A, R x) = ⟨a₀, S.rflR⟩ := by
+    rw [S.contr_total.contr ⟨a, r⟩, S.center_eq]
+  injection h with h1 h2
+  subst h1
+  exact ⟨rfl, (eq_of_heq h2).symm⟩
+
+-- !-- Bijectivity = (free) injectivity ∧ (substantive) surjectivity. -- !--
+/-- **Fundamental theorem (fibrewise).** `idToR a` is a bijection for every `a`. -/
+theorem IdentitySystem.idToR_bijective (S : IdentitySystem A a₀ R) (a : A) :
+    Function.Bijective (S.idToR a) :=
+  ⟨S.idToR_injective a, S.idToR_surjective a⟩
+
+-- !-- Package the bijection as an `Equiv'`: `toFun = idToR`, inverse chosen from
+-- surjectivity; `left_inv` is free by proof irrelevance, `right_inv` is the
+-- choice spec. -- !--
+/-- **Fundamental theorem (as an equivalence).** The promised `(a₀ = a) ≃' R a`. -/
+noncomputable def IdentitySystem.fundamentalEquiv
+    (S : IdentitySystem A a₀ R) (a : A) : (a₀ = a) ≃' R a where
+  toFun := S.idToR a
+  invFun r := (S.idToR_surjective a r).choose
+  left_inv _ := Subsingleton.elim _ _
+  right_inv r := (S.idToR_surjective a r).choose_spec
+
+/-- The `Nonempty`/`Prop` shadow of `fundamentalEquiv`. -/
+theorem IdentitySystem.fundamental (S : IdentitySystem A a₀ R) (a : A) :
+    Nonempty ((a₀ = a) ≃' R a) :=
+  ⟨S.fundamentalEquiv a⟩
+
+/-! ## Coherence with the tautological path family -/
+
+-- !-- For the based-path family `(a₀ = -)`, `idToR` is literally the identity:
+-- transporting `rfl` along `p` gives `p`. Verified by path induction (`cases p`). -- !--
+/-- On the tautological path identity system, `idToR` is the identity map. -/
+theorem pathIdentitySystem_idToR {A : Sort u} (a₀ a : A) (p : a₀ = a) :
+    (pathIdentitySystem a₀).idToR a p = p := by
+  cases p; rfl
+
+/-! ## Converse direction: a fibrewise equivalence is an identity system -/
+
+-- !-- A pointed fibrewise equivalence `e a : (a₀ = a) ≃' R a` (with `e a₀ rfl =
+-- r₀`) makes `Σ' a, R a` contractible: every `⟨a, r⟩` collapses to `⟨a₀, r₀⟩`
+-- by pulling `r` back to a path via `e` and doing path induction. -- !--
+/-- **Converse.** Any pointed family of equivalences `(a₀ = a) ≃' R a` assembles
+into an identity system. Together with `fundamentalEquiv` this is the full
+biconditional content of the fundamental theorem. -/
+def isIdentitySystem_of_fiberwise_equiv (r₀ : R a₀)
+    (e : ∀ a, (a₀ = a) ≃' R a) (hpt : (e a₀).toFun rfl = r₀) :
+    IdentitySystem A a₀ R where
+  rflR := r₀
+  contr_total :=
+    { center := ⟨a₀, r₀⟩
+      contr := by
+        rintro ⟨a, r⟩
+        have hr : (e a).toFun ((e a).invFun r) = r := (e a).right_inv r
+        generalize hp : (e a).invFun r = p
+        rw [hp] at hr
+        cases p
+        rw [hpt] at hr
+        exact PSigma.ext rfl (heq_of_eq hr.symm) }
+  center_eq := rfl
+
+/-! ## The fundamental theorem as a single biconditional -/
+
+-- !-- Forward reuses the surjectivity/proof-irrelevance argument; converse reuses
+-- the path-induction collapse. Stated directly on the transport map
+-- `p ↦ p ▸ r₀` so no auxiliary structure is needed. -- !--
+/-- **Fundamental theorem of identity types.** For a based family `R` over `a₀`
+with reflexivity witness `r₀`, the total space `Σ' a, R a` is contractible (centred
+at `⟨a₀, r₀⟩`) **iff** the transport map `p ↦ p ▸ r₀` is a bijection for every `a`. -/
+theorem fundamentalTheorem_iff (r₀ : R a₀) :
+    (∃ c : Contractible (Σ' a : A, R a), c.center = ⟨a₀, r₀⟩) ↔
+    (∀ a, Function.Bijective (fun p : a₀ = a => (p ▸ r₀ : R a))) := by
+  constructor
+  · rintro ⟨c, hc⟩ a
+    refine ⟨fun p q _ => Subsingleton.elim p q, ?_⟩
+    intro r
+    have h : (⟨a, r⟩ : Σ' x : A, R x) = ⟨a₀, r₀⟩ := by rw [c.contr ⟨a, r⟩, hc]
+    injection h with h1 h2
+    subst h1
+    exact ⟨rfl, (eq_of_heq h2).symm⟩
+  · intro hbij
+    refine ⟨⟨⟨a₀, r₀⟩, ?_⟩, rfl⟩
+    rintro ⟨a, r⟩
+    obtain ⟨p, hp⟩ := (hbij a).2 r
+    cases p
+    simp only at hp
+    exact PSigma.ext rfl (heq_of_eq hp.symm)
+
+end HoTTFound
