@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "72c0fc14",
     "filename": "the_file_intersectionformslean_formalizes_the_alge.json",
     "pkg_num": 122,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.73968,
     "title": "Intersection Forms and the Smooth 4D Poincare Frontier: The E8 Obstruction and Its Stability"
   },
   {
@@ -3744,8 +3744,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "the_file_intersectionformslean_formalizes_the_alge",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.73968,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Intersection Forms and the Smooth 4D Poincare Frontier: The E8 Obstruction and Its Stability"
     }
