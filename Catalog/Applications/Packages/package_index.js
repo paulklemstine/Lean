@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "81efc5ef",
     "filename": "applicationsboltzmannbridgeinterleavingmetriclean_.json",
     "pkg_num": 133,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.59781,
     "title": "The Extended Interleaving Metric: A Faithful Metric Geometry of Persistence Stability"
   },
   {
@@ -4094,8 +4094,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "applicationsboltzmannbridgeinterleavingmetriclean_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.59781,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Extended Interleaving Metric: A Faithful Metric Geometry of Persistence Stability"
     }
