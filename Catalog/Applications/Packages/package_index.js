@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "5c6d3fa8",
     "filename": "the_previous_cycle_established_the_spectral_depth_.json",
     "pkg_num": 144,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7638400000000001,
     "title": "Hodge-Laplacian Message Passing: Convergence to the Harmonic Projection"
   },
   {
@@ -4469,8 +4469,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "the_previous_cycle_established_the_spectral_depth_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7638400000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Hodge-Laplacian Message Passing: Convergence to the Harmonic Projection"
     }
