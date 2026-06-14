@@ -1,226 +1,173 @@
 /-
-# Spectral Depth Thresholds for Hodge-Laplacian Message Passing
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license.
 
-A rigorous, sorry-free linear-algebraic skeleton for the conjecture
-*"Spectral Universality Threshold for Hypergraph Neural Tangent Kernels on
-Simplicial Complexes."*
+# Spectral Depth Thresholds for Hodge–Laplacian Message Passing
 
-We model one layer of linearized / infinite-width message passing on `k`-cochains
-as the self-adjoint operator `T = 1 - t·Δ`, where `Δ = up + down` is the abstract
-combinatorial **Hodge Laplacian** — the sum of a positive-semidefinite upper
-Laplacian (`δδ*`) and a positive-semidefinite lower Laplacian (`d*d`).  Depth-`L`
-message passing is the iterate `Tᴸ`.
+This file extracts a rigorous, sorry-free linear-algebraic skeleton for the theory of
+*spectral depth thresholds* governing message passing with the combinatorial Hodge
+Laplacian on a simplicial complex / cell complex.
 
-Two halves of the conjecture become theorems:
+The Hodge Laplacian on `k`-cochains is built from a coboundary/incidence matrix `B`
+as the "up" Laplacian `L = Bᵀ B`.  A single layer of (gradient-descent style) message
+passing acts by `x ↦ x - α (L *ᵥ x)`.  Two phenomena are made precise:
 
-* **Topology is depth-invariant.**  The harmonic subspace `ker Δ` (= cohomology, by
-  discrete Hodge theory) consists of exact fixed points of `Tᴸ` at every depth, is
-  characterised intrinsically as `ker Δ = ker up ⊓ ker down`, and its orthogonal
-  complement is `T`-invariant.
-* **Everything non-harmonic is geometrically suppressed.**  After diagonalisation a
-  mode of eigenvalue `λ ≥ μ > 0` evolves by `(1 - tλ)ᴸ ≤ (1 - tμ)ᴸ → 0`, giving an
-  explicit, spectrum-uniform depth threshold `L_c`.
+* **Homotopy invariance of harmonic signals.**  The kernel of `L` is the space of
+  *harmonic* cochains, which (by the discrete Hodge theorem) is isomorphic to a
+  cohomology group and is therefore a homotopy/topological invariant.  We prove that
+  harmonic signals are *exact fixed points* of message passing at every depth: they
+  pass through arbitrarily deep networks undistorted.
 
--- !-- Lab Notebook -- !--
-Hypothesis:  "Depth in Hodge-Laplacian message passing acts as a low-pass filter on
-  the combinatorial spectrum whose only fixed amplitudes are the topological
-  (harmonic) ones; the transition scale is set explicitly by the spectral gap."
-Result:  Formalised and proved, with no finite-dimensionality assumption needed.
-  `psd_inner_self_eq_zero` (Hodge vanishing), `harmonic_iff` / `ker_hodgeLaplacian`
-  (harmonic = closed ∧ coclosed), `harmonic_depth_invariant` (exact fixed points at
-  every depth), `harmonic_orthogonal_invariant` (T-invariance of `(ker Δ)ᗮ`),
-  `mode_decay` / `gap_mode_tendsto_zero` / `depth_threshold` (uniform geometric
-  suppression of non-harmonic modes), and `harmonic_mode_invariant` (harmonic modes
-  stay at amplitude 1).
-Insight:  The vanishing principle `⟪Δx,x⟫ = 0 ⇒ Δx = 0` for a symmetric PSD operator
-  needs only a 1-parameter quadratic positivity argument (Cauchy–Schwarz for
-  semidefinite forms), so the entire harmonic-side theory is dimension-free.  The
-  spectral-gap side decouples completely into scalar real-analysis on `(1 - tμ)ᴸ`.
-Failure analysis:  An earlier attempt phrased `T` via `LinearMap.id`, which left the
-  scalar/identity type ambiguous on application; using the monoid identity `1` of
-  `Module.End ℝ E` fixes elaboration.  The cross term in the quadratic expansion
-  needs `real_inner_comm`, not just operator symmetry.
--- !-- Lab Notebook -- !--
+* **Spectral contraction off the harmonic core.**  On the complement (signals carrying
+  Dirichlet energy), message passing contracts the energy by a factor governed by the
+  spectral gap.  Iterating contracts geometrically, yielding a *finite spectral depth
+  threshold*: for any tolerance `ε`, finitely many layers suffice to drive the residual
+  below `ε`.
+
+## Main results
+
+* `hodge_isSymm`               — the Hodge Laplacian `Bᵀ B` is symmetric.
+* `hodge_quadform`             — `⟨x, Lx⟩ = ‖B x‖²` (Dirichlet energy identity).
+* `hodge_psd`                  — `L` is positive semidefinite.
+* `harmonic_iff_boundary`      — discrete Hodge theorem: `Lx = 0 ↔ Bx = 0`.
+* `mpStep_fixes_harmonic`      — harmonic signals are fixed by one layer.
+* `mpStep_iterate_fixes_harmonic` — harmonic signals are fixed at every depth.
+* `quadform_mpStep`            — exact energy expansion of one layer.
+* `mpStep_contraction`         — one-layer spectral contraction under a gap hypothesis.
+* `quadform_iterate_bound`     — geometric energy decay over depth.
+* `spectral_depth_threshold`   — finitely many layers suffice to reach any tolerance.
+
+## Catalog synthesis
+
+This bridges the *MachineLearning* domain (graph/simplicial neural networks, the
+oversmoothing phenomenon) with the *homotopy & path-space* program: the harmonic kernel
+is exactly the homotopy-invariant part of a signal, and message passing is a discrete
+deformation that fixes invariants while contracting everything else.  It extends the
+spirit of the catalog's spectral results (e.g. expander / spectral-gap machinery in
+`Algebra/ClassicalGroupExpanders` and `Algebra/ExpanderWalk/Amplification`) from scalar
+graph Laplacians to the higher Hodge Laplacian on cochains.
 -/
 import Mathlib
 
-open scoped InnerProductSpace BigOperators Topology
-
 namespace HodgeSpectralThreshold
 
-variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+open Matrix
 
-/-! ## The Hodge vanishing principle -/
+variable {m n : ℕ}
 
-/-
-!-- comment: For a symmetric PSD operator `S`, the Dirichlet energy `⟪Sx,x⟫`
-controls `S` via Cauchy–Schwarz for semidefinite forms, so zero energy kills `Sx`. -- !--
+-- !-- Lab Notebook -- !--
+-- Hypothesis: The combinatorial Hodge Laplacian `L = Bᵀ B` should behave as a symmetric
+--   PSD operator whose kernel (harmonic cochains) is fixed by message passing while the
+--   energy-carrying complement contracts geometrically with depth.
+-- Result: All ten statements below are proven sorry-free; the contraction is fully
+--   quantitative (factor `1 - αμ(2 - αλ)`) and yields a finite depth threshold.
+-- Insight: The Dirichlet-energy identity `⟨x,Lx⟩ = ⟨Bx,Bx⟩` is the linchpin — it turns
+--   both PSD-ness and the discrete Hodge theorem into one-line consequences of
+--   `dotProduct`-self positivity, and turns the contraction into pure `nlinarith`.
+-- Failure analysis: `positivity` cannot see through the `dotProduct` sum (entries are
+--   `v i * v i`, not `(v i)^2`); we unfold to `Finset.sum_nonneg` + `mul_self_nonneg`.
+--   The spectral-gap nonnegativity `0 ≤ μ` turned out logically unnecessary for the
+--   one-step contraction, so the stated theorem is strictly more general.
+-- !-- end Lab Notebook -- !--
 
-**Hodge vanishing principle.** If `S` is symmetric and positive semidefinite and
-the Dirichlet energy `⟪S x, x⟫` vanishes, then `S x = 0`.
--/
-theorem psd_inner_self_eq_zero (S : E →ₗ[ℝ] E)
-    (hsymm : ∀ x y, ⟪S x, y⟫_ℝ = ⟪x, S y⟫_ℝ)
-    (hpos : ∀ x, 0 ≤ ⟪S x, x⟫_ℝ)
-    {x : E} (hx : ⟪S x, x⟫_ℝ = 0) : S x = 0 := by
-  -- For every real s, by positivity hpos (x + s • y) ≥ 0. Expand using bilinearity and symmetry: ⟪S (x + s•y), x + s•y⟫_ℝ = ⟪S x, x⟫_ℝ + 2*s*⟪S x, y⟫_ℝ + s^2 * ⟪S y, y⟫_ℝ.
-  have h_expand : ∀ s : ℝ, 0 ≤ 2 * s * ⟪S x, x⟫_ℝ + s^2 * ⟪S x, x⟫_ℝ := by
-    aesop;
-  contrapose! h_expand;
-  -- By the properties of the inner product and the symmetry of $S$, we have $⟪S x, y⟫_ℝ = ⟪x, S y⟫_ℝ$ for all $y$.
-  have h_inner_symm : ∀ y : E, ⟪S x, y⟫_ℝ = 0 := by
-    intro y
-    have h_inner_zero : ∀ s : ℝ, 0 ≤ 2 * s * ⟪S x, y⟫_ℝ + s^2 * ⟪S y, y⟫_ℝ := by
-      intro s
-      have := hpos (x + s • y)
-      simp_all +decide [ inner_add_left, inner_add_right, inner_smul_left, inner_smul_right ];
-      convert this using 1 ; rw [ ← hsymm ] ; ring;
-      grind +suggestions;
-    by_cases hy : ⟪S y, y⟫_ℝ = 0;
-    · contrapose! h_inner_zero;
-      exact ⟨ -1 / ⟪S x, y⟫_ℝ, by rw [ hy ] ; ring_nf; norm_num [ h_inner_zero ] ⟩;
-    · nlinarith [ h_inner_zero ( -⟪S x, y⟫_ℝ / ⟪S y, y⟫_ℝ ), mul_div_cancel₀ ( -⟪S x, y⟫_ℝ ) hy, hpos y ];
-  exact absurd ( h_inner_symm ( S x ) ) ( by simp +decide [ h_expand ] )
+/-- The "up" combinatorial Hodge Laplacian associated with a coboundary/incidence
+matrix `B`. -/
+def hodge (B : Matrix (Fin m) (Fin n) ℝ) : Matrix (Fin n) (Fin n) ℝ := Bᵀ * B
 
-/-! ## Harmonic = closed and coclosed -/
+/-- One layer of (gradient-descent style) Hodge message passing with step size `α`:
+`x ↦ x - α (L x)`. -/
+def mpStep (L : Matrix (Fin n) (Fin n) ℝ) (α : ℝ) (x : Fin n → ℝ) : Fin n → ℝ :=
+  x - α • (L *ᵥ x)
 
-variable (up down : E →ₗ[ℝ] E)
+-- !-- The transpose of `Bᵀ B` is `Bᵀ B` since `(Bᵀ B)ᵀ = Bᵀ (Bᵀ)ᵀ = Bᵀ B`. -- !--
+theorem hodge_isSymm (B : Matrix (Fin m) (Fin n) ℝ) : (hodge B).IsSymm := by
+  simp [hodge, Matrix.IsSymm, Matrix.transpose_mul]
 
-/-- The abstract combinatorial **Hodge Laplacian** `Δ = up + down`. -/
-def hodgeLaplacian : E →ₗ[ℝ] E := up + down
+-- !-- `⟨x, (BᵀB)x⟩ = ⟨x, Bᵀ(Bx)⟩ = ⟨Bx, Bx⟩` via `mulVec_mulVec`, `dotProduct_mulVec`,
+--    and `vecMul_transpose`; this is the discrete Dirichlet energy. -- !--
+theorem hodge_quadform (B : Matrix (Fin m) (Fin n) ℝ) (x : Fin n → ℝ) :
+    x ⬝ᵥ (hodge B) *ᵥ x = (B *ᵥ x) ⬝ᵥ (B *ᵥ x) := by
+  unfold hodge
+  rw [← Matrix.mulVec_mulVec, Matrix.dotProduct_mulVec, Matrix.vecMul_transpose]
 
-/-
-!-- comment: With `up, down` symmetric PSD, `⟪Δx,x⟫ = ⟪up x,x⟫ + ⟪down x,x⟫` is a
-sum of nonnegatives, so it vanishes iff each does; apply the vanishing principle. -- !--
+-- !-- The Dirichlet energy is a sum of squares, hence nonnegative. -- !--
+theorem hodge_psd (B : Matrix (Fin m) (Fin n) ℝ) (x : Fin n → ℝ) :
+    0 ≤ x ⬝ᵥ (hodge B) *ᵥ x := by
+  rw [hodge_quadform]
+  exact Finset.sum_nonneg fun i _ => mul_self_nonneg _
 
-**Harmonic = closed ∧ coclosed.** A cochain is harmonic (`Δ x = 0`) iff it is both
-in the kernel of the upper and the lower Laplacian.
--/
-theorem harmonic_iff
-    (hsymm_up : ∀ x y, ⟪up x, y⟫_ℝ = ⟪x, up y⟫_ℝ)
-    (hpos_up : ∀ x, 0 ≤ ⟪up x, x⟫_ℝ)
-    (hsymm_down : ∀ x y, ⟪down x, y⟫_ℝ = ⟪x, down y⟫_ℝ)
-    (hpos_down : ∀ x, 0 ≤ ⟪down x, x⟫_ℝ)
-    (x : E) :
-    hodgeLaplacian up down x = 0 ↔ up x = 0 ∧ down x = 0 := by
-  constructor <;> intro h;
-  · -- By the properties of the inner product and the definition of the Hodge Laplacian, we have:
-    have h_inner : ⟪up x, x⟫_ℝ + ⟪down x, x⟫_ℝ = 0 := by
-      convert congr_arg ( fun y => ⟪y, x⟫_ℝ ) h using 1 <;> simp +decide [ *, hodgeLaplacian ];
-      rw [ ← hsymm_up, ← hsymm_down, inner_add_left ];
-    exact ⟨ psd_inner_self_eq_zero up hsymm_up hpos_up ( by linarith [ hpos_up x, hpos_down x ] ), psd_inner_self_eq_zero down hsymm_down hpos_down ( by linarith [ hpos_up x, hpos_down x ] ) ⟩;
-  · unfold hodgeLaplacian; aesop;
+-- !-- Discrete Hodge theorem: `Lx = 0 ↔ Bx = 0`.  The `←` is `mulVec_mulVec`; the `→`
+--    pushes `Lx = 0` into `⟨Bx,Bx⟩ = 0`, then `dotProduct_self_eq_zero`. -- !--
+theorem harmonic_iff_boundary (B : Matrix (Fin m) (Fin n) ℝ) (x : Fin n → ℝ) :
+    (hodge B) *ᵥ x = 0 ↔ B *ᵥ x = 0 := by
+  constructor
+  · intro h
+    have hq : (B *ᵥ x) ⬝ᵥ (B *ᵥ x) = 0 := by
+      rw [← hodge_quadform, h, dotProduct_zero]
+    exact dotProduct_self_eq_zero.mp hq
+  · intro h
+    unfold hodge
+    rw [← Matrix.mulVec_mulVec, h, Matrix.mulVec_zero]
 
-/-
-!-- comment: Pointwise rephrasing of `harmonic_iff` as an equality of submodules. -- !--
+-- !-- If `Lx = 0` then `x - α(Lx) = x - 0 = x`. -- !--
+theorem mpStep_fixes_harmonic (L : Matrix (Fin n) (Fin n) ℝ) (α : ℝ) (x : Fin n → ℝ)
+    (hx : L *ᵥ x = 0) : mpStep L α x = x := by
+  unfold mpStep
+  rw [hx, smul_zero, sub_zero]
 
-**Discrete Hodge harmonics.** `ker Δ = ker up ⊓ ker down`.
--/
-theorem ker_hodgeLaplacian
-    (hsymm_up : ∀ x y, ⟪up x, y⟫_ℝ = ⟪x, up y⟫_ℝ)
-    (hpos_up : ∀ x, 0 ≤ ⟪up x, x⟫_ℝ)
-    (hsymm_down : ∀ x y, ⟪down x, y⟫_ℝ = ⟪x, down y⟫_ℝ)
-    (hpos_down : ∀ x, 0 ≤ ⟪down x, x⟫_ℝ) :
-    LinearMap.ker (hodgeLaplacian up down)
-      = LinearMap.ker up ⊓ LinearMap.ker down := by
-  exact SetLike.ext fun x => by simpa using harmonic_iff up down hsymm_up hpos_up hsymm_down hpos_down x;
+-- !-- Harmonic signals are fixed at every depth: induction on `k`, applying
+--    `mpStep_fixes_harmonic` at the outermost layer. -- !--
+theorem mpStep_iterate_fixes_harmonic (L : Matrix (Fin n) (Fin n) ℝ) (α : ℝ)
+    (x : Fin n → ℝ) (hx : L *ᵥ x = 0) (k : ℕ) : (mpStep L α)^[k] x = x := by
+  induction k with
+  | zero => simp
+  | succ k ih => rw [Function.iterate_succ_apply', ih]; exact mpStep_fixes_harmonic L α x hx
 
-/-! ## Depth-`L` message passing and topology invariance -/
+-- !-- Exact energy expansion `‖x - αLx‖² = ‖x‖² - 2α⟨x,Lx⟩ + α²‖Lx‖²` via bilinearity
+--    of `dotProduct`. -- !--
+theorem quadform_mpStep (L : Matrix (Fin n) (Fin n) ℝ) (α : ℝ) (x : Fin n → ℝ) :
+    (mpStep L α x) ⬝ᵥ (mpStep L α x)
+      = (x ⬝ᵥ x) - 2 * α * (x ⬝ᵥ (L *ᵥ x)) + α ^ 2 * ((L *ᵥ x) ⬝ᵥ (L *ᵥ x)) := by
+  unfold mpStep
+  simp [dotProduct, mul_sub, mul_assoc, mul_comm, mul_left_comm]
+  simpa only [← Finset.mul_sum _ _ _, ← Finset.sum_mul] using by ring
 
-/-- One linearized message-passing layer `T = 1 - t·Δ` on cochains. -/
-def layer (t : ℝ) : E →ₗ[ℝ] E := (1 : Module.End ℝ E) - t • hodgeLaplacian up down
+-- !-- One-layer spectral contraction.  With spectral-gap lower bound `μ‖x‖² ≤ ⟨x,Lx⟩`,
+--    operator bound `‖Lx‖² ≤ λ⟨x,Lx⟩`, and admissible step `0 ≤ α`, `αλ ≤ 2`, the energy
+--    expansion plus `nlinarith` give the contraction factor `1 - αμ(2 - αλ)`. -- !--
+theorem mpStep_contraction (L : Matrix (Fin n) (Fin n) ℝ) (α μ lam : ℝ) (x : Fin n → ℝ)
+    (hα0 : 0 ≤ α) (hαlam : α * lam ≤ 2)
+    (hgap : μ * (x ⬝ᵥ x) ≤ x ⬝ᵥ (L *ᵥ x))
+    (hbound : (L *ᵥ x) ⬝ᵥ (L *ᵥ x) ≤ lam * (x ⬝ᵥ (L *ᵥ x))) :
+    (mpStep L α x) ⬝ᵥ (mpStep L α x) ≤ (1 - α * μ * (2 - α * lam)) * (x ⬝ᵥ x) := by
+  rw [quadform_mpStep]
+  nlinarith [mul_nonneg hα0 (sub_nonneg_of_le hαlam),
+    mul_le_mul_of_nonneg_left hgap hα0, mul_le_mul_of_nonneg_left hbound hα0]
 
-@[simp] theorem layer_apply (t : ℝ) (x : E) :
-    layer up down t x = x - t • (hodgeLaplacian up down x) := by
-  simp [layer]
+-- !-- Geometric energy decay over depth: if each layer `T` contracts the quadratic
+--    form by `ρ ≥ 0`, then `k` layers contract by `ρ^k`.  Induction on `k`, multiplying
+--    the inductive bound by `ρ ≥ 0`. -- !--
+theorem quadform_iterate_bound (T : (Fin n → ℝ) → (Fin n → ℝ)) (ρ : ℝ) (hρ : 0 ≤ ρ)
+    (hstep : ∀ y, (T y) ⬝ᵥ (T y) ≤ ρ * (y ⬝ᵥ y)) (x : Fin n → ℝ) (k : ℕ) :
+    (T^[k] x) ⬝ᵥ (T^[k] x) ≤ ρ ^ k * (x ⬝ᵥ x) := by
+  induction k with
+  | zero => simp
+  | succ k ih =>
+    rw [Function.iterate_succ_apply', pow_succ', mul_assoc]
+    exact le_trans (hstep _) (mul_le_mul_of_nonneg_left ih hρ)
 
-/-- Depth-`L` message passing is the `L`-fold iterate `Tᴸ`. -/
-def depthMap (t : ℝ) (L : ℕ) : E →ₗ[ℝ] E := (layer up down t) ^ L
-
-/-
-!-- comment: If `Δ x = 0` then one layer fixes `x` (`T x = x - t·0 = x`); iterate by
-induction on the depth `L`. -- !--
-
-**Topology is depth-invariant.** A harmonic cochain is an exact fixed point of
-depth-`L` message passing at every depth `L`.
--/
-theorem harmonic_depth_invariant (t : ℝ) {x : E}
-    (hx : hodgeLaplacian up down x = 0) (L : ℕ) :
-    depthMap up down t L x = x := by
-  -- By definition of composition of linear maps, we can write
-  have h_comp : ((layer up down t) ^ L) x = (layer up down t ^ L) x := by
-    rfl;
-  exact h_comp.trans ( Nat.recOn L ( by simp +decide ) fun n ihn => by simp +decide [ *, pow_succ' ] )
-
-/-
-!-- comment: For `y ∈ ker Δ`, symmetry of `Δ` gives `⟪Δx,y⟫ = ⟪x,Δy⟫ = 0`, and
-`x ⟂ y`, so `T x = x - t·Δx` is still orthogonal to all of `ker Δ`. -- !--
-
-**`T`-invariance of the non-harmonic block.** The orthogonal complement of the
-harmonic space `ker Δ` is invariant under one message-passing layer `T = 1 - t·Δ`.
--/
-theorem harmonic_orthogonal_invariant (t : ℝ)
-    (hsymm : ∀ x y, ⟪hodgeLaplacian up down x, y⟫_ℝ
-                      = ⟪x, hodgeLaplacian up down y⟫_ℝ)
-    {x : E} (hx : x ∈ (LinearMap.ker (hodgeLaplacian up down))ᗮ) :
-    layer up down t x ∈ (LinearMap.ker (hodgeLaplacian up down))ᗮ := by
-  simp_all +decide [ Submodule.mem_orthogonal', real_inner_comm ];
-  grind +suggestions
-
-/-! ## Scalar mode dynamics and the explicit depth threshold -/
-
-/-
-!-- comment: With a normalised step (`t·λ ≤ 1`), `0 ≤ 1 - tλ ≤ 1 - tμ`, so raising
-to the `L`-th power preserves the inequality. -- !--
-
-**Mode decay is monotone in the eigenvalue.** With a normalised step, a mode of
-larger eigenvalue is suppressed at least as fast: `(1 - tλ)ᴸ ≤ (1 - tμ)ᴸ`.
--/
-theorem mode_decay {t mu lam : ℝ} (ht : 0 ≤ t)
-    (hle : mu ≤ lam) (hnorm : t * lam ≤ 1) (L : ℕ) :
-    (1 - t * lam) ^ L ≤ (1 - t * mu) ^ L := by
-  exact pow_le_pow_left₀ ( by nlinarith ) ( by nlinarith ) _
-
-/-
-!-- comment: A harmonic mode has eigenvalue `λ = 0`, so its amplitude `(1 - t·0)ᴸ`
-equals `1` at every depth. -- !--
-
-**Harmonic modes are fixed.** The amplitude of a harmonic (eigenvalue `0`) mode is
-`1` at every depth.
--/
-theorem harmonic_mode_invariant (t : ℝ) (L : ℕ) :
-    (1 - t * (0 : ℝ)) ^ L = 1 := by
-  norm_num
-
-/-
-!-- comment: With `0 < tμ < 1` we have `|1 - tμ| < 1`, so the geometric sequence
-`(1 - tμ)ᴸ` tends to `0`. -- !--
-
-**Geometric suppression.** Every gap mode decays to zero with depth:
-`(1 - tμ)ᴸ → 0` as `L → ∞`.
--/
-theorem gap_mode_tendsto_zero {t mu : ℝ} (hpos : 0 < t * mu) (hlt : t * mu < 1) :
-    Filter.Tendsto (fun L : ℕ => (1 - t * mu) ^ L) Filter.atTop (𝓝 0) := by
-  exact tendsto_pow_atTop_nhds_zero_of_lt_one ( by linarith ) ( by linarith )
-
-/-
-!-- comment: From `gap_mode_tendsto_zero`, the gap amplitude is eventually `< ε`;
-`mode_decay` then suppresses every mode of eigenvalue `≥ μ` below `ε` uniformly. -- !--
-
-**Explicit, spectrum-uniform depth threshold.** Given a spectral gap `μ > 0`, a
-normalised step (so every admissible eigenvalue `λ` satisfies `t·λ ≤ 1`) and a
-tolerance `ε > 0`, there is a critical depth `L_c` beyond which *every* non-harmonic
-mode of eigenvalue `λ ≥ μ` is suppressed below `ε`, while harmonic modes (`λ = 0`)
-retain amplitude `1`.
--/
-theorem depth_threshold {t mu : ℝ} (ht : 0 < t) (hmu : 0 < mu) (hlt : t * mu < 1)
-    {ε : ℝ} (hε : 0 < ε) :
-    ∃ L_c : ℕ, ∀ L ≥ L_c, ∀ lam : ℝ, mu ≤ lam → t * lam ≤ 1 →
-      (1 - t * lam) ^ L < ε := by
-  -- By gap_mode_tendsto_zero, there exists an L_c such that for all L ≥ L_c, (1 - t * mu) ^ L < ε.
-  obtain ⟨L_c, hL_c⟩ : ∃ L_c, ∀ L ≥ L_c, (1 - t * mu) ^ L < ε := by
-    simpa using ( tendsto_pow_atTop_nhds_zero_of_lt_one ( by nlinarith ) ( by nlinarith : 1 - t * mu < 1 ) ) |> fun h => h.eventually ( gt_mem_nhds hε );
-  use L_c; intros L hL lam hlam hlam'; exact lt_of_le_of_lt (by
-  exact pow_le_pow_left₀ ( by nlinarith ) ( by nlinarith ) _) (hL_c L hL)
+-- !-- Finite spectral depth threshold: with contraction factor `ρ < 1`, the residual
+--    energy `ρ^k‖x‖²` eventually drops below any `ε > 0` (geometric series tends to `0`,
+--    via `quadform_iterate_bound`), so finitely many layers suffice. -- !--
+theorem spectral_depth_threshold (T : (Fin n → ℝ) → (Fin n → ℝ)) (ρ : ℝ)
+    (hρ0 : 0 ≤ ρ) (hρ1 : ρ < 1)
+    (hstep : ∀ y, (T y) ⬝ᵥ (T y) ≤ ρ * (y ⬝ᵥ y))
+    (x : Fin n → ℝ) (ε : ℝ) (hε : 0 < ε) :
+    ∃ N, ∀ k, N ≤ k → (T^[k] x) ⬝ᵥ (T^[k] x) ≤ ε := by
+  obtain ⟨N, hN⟩ : ∃ N : ℕ, ∀ k ≥ N, ρ ^ k * (x ⬝ᵥ x) ≤ ε := by
+    have htend : Filter.Tendsto (fun k : ℕ => ρ ^ k * (x ⬝ᵥ x)) Filter.atTop (nhds 0) := by
+      simpa using (tendsto_pow_atTop_nhds_zero_of_lt_one hρ0 hρ1).mul_const (x ⬝ᵥ x)
+    exact (htend.eventually (ge_mem_nhds hε)).exists_forall_of_atTop
+  exact ⟨N, fun k hk => le_trans (quadform_iterate_bound T ρ hρ0 hstep x k) (hN k hk)⟩
 
 end HodgeSpectralThreshold
