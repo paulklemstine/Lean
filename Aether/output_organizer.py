@@ -23,9 +23,9 @@ try:
     from catalog_analyzer import DOMAIN_DIRS as _DOMAIN_DIRS
 except ImportError:
     _DOMAIN_DIRS = [
-        "Algebra", "Applications", "Bridges", "Computation", "Cryptography",
-        "EML", "Geometry", "Logic", "MachineLearning", "Novelty", "Physics",
-        "Pythagorean", "Shared", "Speculative", "Tropical",
+        "Algebra", "Applications", "Bridges", "Combinatorics", "Computation", "Cryptography",
+        "EML", "Geometry", "Logic", "MachineLearning", "Novelty", "NumberTheory", "Physics",
+        "Probability", "Pythagorean", "Shared", "Speculative", "Tropical",
     ]
 
 DOMAIN_DIRS = _DOMAIN_DIRS
@@ -75,9 +75,12 @@ LOWER_TO_CATALOG_DIR = {
     "algebra": "Algebra",
     "applications": "Applications",
     "bridges": "Bridges",
+    "combinatorics": "Combinatorics",
     "computation": "Computation",
     "cryptography": "Cryptography",
     "eml": "Applications",  # EML merged into Applied super-domain
+    "numbertheory": "NumberTheory",
+    "probability": "Probability",
     "speculative": "Novelty",  # Speculative merged into Novelty (philosophy doesn't produce math)
     "geometry": "Geometry",
     "logic": "Logic",
@@ -114,13 +117,13 @@ LOWER_TO_CATALOG_DIR = {
     "temporal computation": "Computation",
     "eml cosmology": "Applications",  # EML merged into Applied
     # Common LLM-produced domain aliases -> Catalog domains
-    "number_theory": "Algebra", "numbertheory": "Algebra",
-    "number theory": "Algebra",
+    "number_theory": "NumberTheory", "numbertheory": "NumberTheory",
+    "number theory": "NumberTheory",
     "analysis": "Algebra",
     "topology": "Geometry",
-    "probability": "Computation",
+    "probability": "Probability",
     "statistics": "MachineLearning",
-    "combinatorics": "Algebra",
+    "combinatorics": "Combinatorics",
     "representation": "Algebra",
     "representationtheory": "Algebra", "representation_theory": "Algebra",
     "arithmetic": "Pythagorean",

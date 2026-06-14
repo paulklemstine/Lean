@@ -1151,13 +1151,13 @@ class TestDomainRebalance:
     def test_normalize_domain_aliases(self):
         """Common LLM-produced domain names should map to valid Catalog domains, not Speculative."""
         from output_organizer import normalize_domain
-        assert normalize_domain("NumberTheory") == "Algebra"
-        assert normalize_domain("number_theory") == "Algebra"
+        assert normalize_domain("NumberTheory") == "NumberTheory"
+        assert normalize_domain("number_theory") == "NumberTheory"
         assert normalize_domain("Analysis") == "Algebra"
         assert normalize_domain("Topology") == "Geometry"
         assert normalize_domain("topology") == "Geometry"
-        assert normalize_domain("Probability") == "Computation"
-        assert normalize_domain("Combinatorics") == "Algebra"
+        assert normalize_domain("Probability") == "Probability"
+        assert normalize_domain("Combinatorics") == "Combinatorics"
         assert normalize_domain("Arithmetic") == "Pythagorean"
         assert normalize_domain("Spectral") == "Physics"
         assert normalize_domain("Complexity") == "Computation"

@@ -36,9 +36,9 @@ class CatalogFileSummary:
 
 # Domain directories in the Catalog
 DOMAIN_DIRS = [
-    "Algebra", "Applications", "Bridges", "Computation", "Cryptography",
-    "EML", "Geometry", "Logic", "MachineLearning", "Novelty", "Physics",
-    "Pythagorean", "Shared", "Speculative", "Tropical",
+    "Algebra", "Applications", "Bridges", "Combinatorics", "Computation", "Cryptography",
+    "EML", "Geometry", "Logic", "MachineLearning", "Novelty", "NumberTheory", "Physics",
+    "Probability", "Pythagorean", "Shared", "Speculative", "Tropical",
 ]
 
 # The FINAL subdirectory contains vetted, high-quality catalog files

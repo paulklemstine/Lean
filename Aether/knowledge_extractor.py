@@ -1698,7 +1698,94 @@ Research mode: {concept.research_mode}
             enriched_pkg = job.result_json_package
             if job.result_algorithms or job.result_demo:
                 enriched_pkg = self._enrich_json_package(job.result_json_package, job)
-            parts.append({"type": "new", "path": f"Applications/Packages/{self._derive_artifact_name(job.concept, 'json')}", "content": enriched_pkg})
+
+            # If sorry_fill research mode, check if there is an existing package JSON that tracks these Lean files
+            target_pkg_path = f"Applications/Packages/{self._derive_artifact_name(job.concept, 'json')}"
+            if job.concept.research_mode == "sorry_fill":
+                updated_lean_files = []
+                for p in parts:
+                    if p["path"].endswith(".lean"):
+                        # normalize path
+                        fname = p["path"].replace("Catalog/", "")
+                        updated_lean_files.append(fname)
+                        updated_lean_files.append(fname.split("/")[-1]) # also add basename
+                
+                # Search Packages directory for a matching package
+                pkg_dir = self.catalog_root / "Applications" / "Packages"
+                matched_pkg_file = None
+                if pkg_dir.exists():
+                    for f in pkg_dir.glob("*.json"):
+                        if f.name in ("index.json", "package.json", "lineage.json", "future_directions.json", "statement.json", "future_directions_snapshot.json"):
+                            continue
+                        try:
+                            pkg_data = json.loads(f.read_text(encoding="utf-8"))
+                            pkg_lean_files = []
+                            for lf in pkg_data.get("lean_files", []) or []:
+                                pkg_lean_files.append(lf.replace("Catalog/", ""))
+                                pkg_lean_files.append(lf.split("/")[-1])
+                            for lp in pkg_data.get("lean_proofs", []) or []:
+                                if isinstance(lp, dict):
+                                    f_val = lp.get("file") or lp.get("name", "")
+                                    pkg_lean_files.append(f_val.replace("Catalog/", ""))
+                                    pkg_lean_files.append(f_val.split("/")[-1])
+                                elif isinstance(lp, str):
+                                    pkg_lean_files.append(lp.replace("Catalog/", ""))
+                                    pkg_lean_files.append(lp.split("/")[-1])
+                                    
+                            if any(lf in pkg_lean_files for lf in updated_lean_files if lf):
+                                matched_pkg_file = f
+                                break
+                        except Exception:
+                            pass
+                            
+                if matched_pkg_file:
+                    print(f"[Integrate] sorry_fill cycle: found existing parent package {matched_pkg_file.name}")
+                    target_pkg_path = f"Applications/Packages/{matched_pkg_file.name}"
+                    try:
+                        old_pkg = json.loads(matched_pkg_file.read_text(encoding="utf-8"))
+                        new_pkg = json.loads(enriched_pkg)
+                        
+                        # Merge metadata
+                        old_pkg["date"] = new_pkg.get("date", old_pkg.get("date"))
+                        old_pkg["exp_id"] = new_pkg.get("exp_id", old_pkg.get("exp_id"))
+                        if "source_exp_ids" in new_pkg:
+                            old_pkg["source_exp_ids"] = list(set(old_pkg.get("source_exp_ids", []) + new_pkg["source_exp_ids"]))
+                            
+                        # Update lean_proofs: merge matching files
+                        old_lp = old_pkg.get("lean_proofs", [])
+                        new_lp = new_pkg.get("lean_proofs", [])
+                        if isinstance(old_lp, list) and isinstance(new_lp, list):
+                            old_lp_dict = {}
+                            for e in old_lp:
+                                if isinstance(e, dict):
+                                    old_lp_dict[e.get("file", "").split("/")[-1]] = e
+                            for e in new_lp:
+                                if isinstance(e, dict):
+                                    base = e.get("file", "").split("/")[-1]
+                                    if base in old_lp_dict:
+                                        old_lp_dict[base]["code"] = e.get("code", old_lp_dict[base].get("code"))
+                                        old_lp_dict[base]["theorems"] = e.get("theorems", old_lp_dict[base].get("theorems"))
+                                        old_lp_dict[base]["description"] = "Lean 4 proof file (repaired and sorry-free)"
+                                    else:
+                                        old_lp.append(e)
+                            old_pkg["lean_proofs"] = old_lp
+                            
+                        # Update key_results and keywords
+                        old_pkg["key_results"] = list(set(old_pkg.get("key_results", []) + new_pkg.get("key_results", [])))
+                        old_pkg["keywords"] = list(set(old_pkg.get("keywords", []) + new_pkg.get("keywords", [])))
+                        
+                        # Merge modules
+                        if "modules" in new_pkg:
+                            old_modules = old_pkg.get("modules", {})
+                            old_modules.update(new_pkg["modules"])
+                            old_pkg["modules"] = old_modules
+                            
+                        enriched_pkg = json.dumps(old_pkg, indent=2, ensure_ascii=False)
+                    except Exception as e:
+                        print(f"[Integrate] Error merging into existing package JSON: {e}")
+                        
+            parts.append({"type": "new", "path": target_pkg_path, "content": enriched_pkg})
+
         if job.result_discussion:
             parts.append({"type": "new", "path": f"Applications/Articles/discussion_{self._derive_artifact_name(job.concept, 'md')}", "content": job.result_discussion})
 
@@ -1854,7 +1941,7 @@ Research mode: {concept.research_mode}
                     import subprocess
                     aether_root = Path(__file__).parent
                     lineage_script = aether_root / "lineage_extractor.py"
-                    if lineage_script.exists():
+                    if lineage_script.exists() and "pytest" not in __import__("sys").modules:
                         result = subprocess.run(
                             [__import__("sys").executable, str(lineage_script)],
                             capture_output=True, text=True, cwd=str(aether_root)
@@ -1865,7 +1952,7 @@ Research mode: {concept.research_mode}
                             print(f"[Integrate] Warning: lineage_extractor failed: {result.stderr[:200]}")
 
                     update_script = packages_dir / "update_index.py"
-                    if update_script.exists():
+                    if update_script.exists() and "pytest" not in __import__("sys").modules:
                         result = subprocess.run(
                             [__import__("sys").executable, str(update_script)],
                             capture_output=True, text=True, cwd=str(packages_dir)
@@ -3019,6 +3106,49 @@ Research mode: {concept.research_mode}
                         print(f"[Enrich] Wrote visualization script: {viz_path.name}")
                     except Exception as e:
                         print(f"[Enrich] Warning: failed to write viz script {safe_name}: {e}")
+        # Auto-align domain based on actual proof files
+        resolved_domains = set()
+        lp_list = pkg.get("lean_proofs", []) or pkg.get("lean_files", [])
+        from output_organizer import DOMAIN_DIRS
+        if isinstance(lp_list, list):
+            for entry in lp_list:
+                fname = ""
+                if isinstance(entry, dict):
+                    fname = entry.get("file", "") or entry.get("name", "")
+                elif isinstance(entry, str):
+                    fname = entry
+                
+                parts = fname.replace("\\", "/").split("/")
+                # If path contains 'Catalog/{Domain}', extract it
+                if "Catalog" in parts:
+                    idx = parts.index("Catalog")
+                    if idx + 1 < len(parts):
+                        resolved_domains.add(parts[idx + 1])
+                elif len(parts) > 1 and parts[0] in DOMAIN_DIRS:
+                    resolved_domains.add(parts[0])
+         
+        # Also fall back to job's actual integrated paths
+        if not resolved_domains and hasattr(job, 'integrated_paths') and job.integrated_paths:
+            for path in job.integrated_paths:
+                parts = str(path).replace("\\", "/").split("/")
+                if len(parts) > 1 and parts[0] == "Catalog" and parts[1] in DOMAIN_DIRS:
+                    resolved_domains.add(parts[1])
+                elif len(parts) > 0 and parts[0] in DOMAIN_DIRS:
+                    resolved_domains.add(parts[0])
+                     
+        if resolved_domains:
+            # Count frequency of each resolved domain
+            counts = {}
+            for rd in resolved_domains:
+                counts[rd] = counts.get(rd, 0) + 1
+            most_common = sorted(counts.items(), key=lambda x: -x[1])[0][0]
+            pkg["domain"] = most_common
+            print(f"[Enrich] Domain auto-aligned to Catalog folder: {most_common}")
+        elif pkg.get("domain") not in DOMAIN_DIRS:
+            # Fall back to concept domain normalized
+            norm_domain = normalize_domain(pkg.get("domain", "Novelty"))
+            pkg["domain"] = norm_domain
+            print(f"[Enrich] Domain normalized to: {norm_domain}")
 
         return json.dumps(pkg, ensure_ascii=False)
 

@@ -20,9 +20,9 @@ from typing import Dict, List, Optional, Tuple, Any
 
 # Domain indices for synergy matrix
 DOMAINS = [
-    "Algebra", "Bridges", "Computation", "Cryptography", "EML",
-    "Geometry", "Logic", "MachineLearning", "Novelty", "Physics",
-    "Pythagorean", "Shared", "Speculative", "Tropical",
+    "Algebra", "Bridges", "Combinatorics", "Computation", "Cryptography", "EML",
+    "Geometry", "Logic", "MachineLearning", "Novelty", "NumberTheory", "Physics",
+    "Probability", "Pythagorean", "Shared", "Speculative", "Tropical",
 ]
 DOMAIN_INDEX = {d: i for i, d in enumerate(DOMAINS)}
 N_DOMAINS = len(DOMAINS)
@@ -39,6 +39,7 @@ class DomainStats:
     total_reward: float = 0.0
     rewards: List[float] = field(default_factory=list)
     last_selection_time: float = 0.0
+    last_selected_index: int = 0
 
     @property
     def mean_reward(self) -> float:
@@ -110,6 +111,7 @@ class UCBSelector:
         self.domain_stats[domain].total_reward += reward
         self.domain_stats[domain].rewards.append(reward)
         self.domain_stats[domain].last_selection_time = time.time()
+        self.domain_stats[domain].last_selected_index = self.total_selections
 
         self.mode_stats[mode].n_selections += 1
         self.mode_stats[mode].total_reward += reward
@@ -207,13 +209,28 @@ class UCBSelector:
         if len(stats.rewards) >= 4:
             early = stats.rewards[:len(stats.rewards)//2]
             late = stats.rewards[len(stats.rewards)//2:]
-            early_mean = sum(early) / len(early)
-            late_mean = sum(late) / len(late)
-            if late_mean < early_mean * 0.8:
+            early_mean = sum(early) / len(early) if early else 0
+            late_mean = sum(late) / len(late) if late else 0
+            if late_mean < early_mean * 0.7:
                 # Diminishing returns detected — reduce exploration bonus
                 exploration *= 0.7
 
-        return mean + exploration
+        # Recency penalty: penalize domains selected recently to encourage rotation
+        cycles_since = self.total_selections - stats.last_selected_index
+        recency_penalty = 0.0
+        if stats.last_selected_index > 0 and cycles_since < 6:
+            # Severe penalty for selecting the same domain in back-to-back cycles
+            recency_penalty = 0.4 * (1.0 / (cycles_since + 0.1))
+
+        # Frequency penalty: penalize domains that have more than their fair share of selections
+        fair_share = 1.0 / len(DOMAINS)
+        actual_share = stats.n_selections / max(self.total_selections, 1)
+        frequency_penalty = 0.0
+        if actual_share > fair_share * 1.5:
+            # Penalize over-selected domains
+            frequency_penalty = 0.2 * (actual_share - fair_share)
+
+        return mean + exploration - recency_penalty - frequency_penalty
 
     def get_domain_recommendations(self, limit: int = 5) -> List[Tuple[str, float]]:
         """Get recommended domains ranked by UCB score."""
