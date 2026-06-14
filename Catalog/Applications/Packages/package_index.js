@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "7adea9e1",
     "filename": "close_proofs_the_catalogs_bridgescategoricaltropic.json",
     "pkg_num": 135,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6996,
     "title": "The Fibonacci Law of Apparition as an Arithmetic-Height / Tropical Duality"
   },
   {
@@ -4159,8 +4159,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "close_proofs_the_catalogs_bridgescategoricaltropic",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6996,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Fibonacci Law of Apparition as an Arithmetic-Height / Tropical Duality"
     }
