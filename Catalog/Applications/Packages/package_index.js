@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "5af43ad7",
     "filename": "this_cycle_pushed_the_spectral_depth_threshold_pro.json",
     "pkg_num": 131,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7068800000000001,
     "title": "The Full Hodge Decomposition and a Logarithmic Depth Law for Simplicial Message Passing"
   },
   {
@@ -4029,8 +4029,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "this_cycle_pushed_the_spectral_depth_threshold_pro",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7068800000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Full Hodge Decomposition and a Logarithmic Depth Law for Simplicial Message Passing"
     }
