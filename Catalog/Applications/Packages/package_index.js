@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "13a80f4d",
     "filename": "bridge_ix_interleavinggeodesiclean_gave_the_persis.json",
     "pkg_num": 174,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6571556692913385,
     "title": "The Path Space of Filtrations: Geodesy, Convexity, Contractibility, and Functorial Transport of the Interleaving Metric"
   },
   {
@@ -5458,8 +5458,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "bridge_ix_interleavinggeodesiclean_gave_the_persis",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6571556692913385,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "The Path Space of Filtrations: Geodesy, Convexity, Contractibility, and Functorial Transport of the Interleaving Metric"
     }
