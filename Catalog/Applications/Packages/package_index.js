@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "a4cf656f",
     "filename": "the_file_catalogmachinelearninghodgespectralthresh.json",
     "pkg_num": 127,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7568800000000001,
     "title": "Spectral Depth Thresholds for Hodge-Laplacian Message Passing"
   },
   {
@@ -3908,8 +3908,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "the_file_catalogmachinelearninghodgespectralthresh",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7568800000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Spectral Depth Thresholds for Hodge-Laplacian Message Passing"
     }
