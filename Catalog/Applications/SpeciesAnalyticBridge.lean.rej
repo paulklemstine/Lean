@@ -1,21 +1,21 @@
 --- SpeciesAnalyticBridge.lean
 +++ SpeciesAnalyticBridge.lean
-@@ -62,10 +62,14 @@
+@@ -62,14 +62,10 @@
  @[simp] lemma egf_seqOf (f : ℚ⟦X⟧) : egf (seqOf f) = f := by
    ext n; rw [coeff_egf, seqOf]; field_simp
  
--/-- **Complete invariance.** `egf` is injective: distinct counting sequences have distinct
--exponential generating functions. -/
--theorem egf_injective : Function.Injective egf := by
--  intro a b h; rw [← seqOf_egf a, ← seqOf_egf b, h]
-+-- NOTE (build fix): `egf_injective` is already declared in
-+-- `Catalog/Applications/CombinatorialSpecies.lean` in this same namespace, so re-declaring it
-+-- here is a duplicate declaration that breaks compilation.  Commented out; all references below
-+-- resolve to `CombinatorialSpecies.egf_injective` from the imported base file.
-+-- /-- **Complete invariance.** `egf` is injective: distinct counting sequences have distinct
-+-- exponential generating functions. -/
-+-- theorem egf_injective : Function.Injective egf := by
-+--   intro a b h; rw [← seqOf_egf a, ← seqOf_egf b, h]
+--- NOTE (build fix): `egf_injective` is already declared in
+--- `Catalog/Applications/CombinatorialSpecies.lean` in this same namespace, so re-declaring it
+--- here is a duplicate declaration that breaks compilation.  Commented out; all references below
+--- resolve to `CombinatorialSpecies.egf_injective` from the imported base file.
+--- /-- **Complete invariance.** `egf` is injective: distinct counting sequences have distinct
+--- exponential generating functions. -/
+--- theorem egf_injective : Function.Injective egf := by
+---   intro a b h; rw [← seqOf_egf a, ← seqOf_egf b, h]
++/-- **Complete invariance.** `egf` is injective: distinct counting sequences have distinct
++exponential generating functions. -/
++theorem egf_injective : Function.Injective egf := by
++  intro a b h; rw [← seqOf_egf a, ← seqOf_egf b, h]
  
  /-- **Surjectivity.** Every formal power series over `ℚ` is the EGF of some counting
  
