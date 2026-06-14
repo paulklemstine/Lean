@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "70f20089",
     "filename": "close_proofs_the_catalogs_synthetic_hott_layer_cat.json",
     "pkg_num": 173,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.74211,
     "title": "Close Proofs: The Fundamental Theorem of Identity Systems"
   },
   {
@@ -5422,8 +5422,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "close_proofs_the_catalogs_synthetic_hott_layer_cat",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.74211,
+      "quality": "substantial",
       "shape": "star_of_david",
       "title": "Close Proofs: The Fundamental Theorem of Identity Systems"
     }
