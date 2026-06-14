@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0bab5b6a",
     "filename": "this_cycle_took_the_fibrewise_characterisation_of_.json",
     "pkg_num": 139,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6547329411764705,
     "title": "The Equivalence Calculus and Contractibility as a Universal Property"
   },
   {
@@ -4296,8 +4296,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "this_cycle_took_the_fibrewise_characterisation_of_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6547329411764705,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Equivalence Calculus and Contractibility as a Universal Property"
     }
