@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "73abb816",
     "filename": "this_cycle_treated_the_rank_of_apparition_fibrank_.json",
     "pkg_num": 137,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7671145762711864,
     "title": "The Fibonacci Rank of Apparition as One Half of a Galois Adjunction"
   },
   {
@@ -4224,8 +4224,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "this_cycle_treated_the_rank_of_apparition_fibrank_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7671145762711864,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Fibonacci Rank of Apparition as One Half of a Galois Adjunction"
     }
