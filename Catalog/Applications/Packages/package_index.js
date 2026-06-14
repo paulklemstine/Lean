@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "633a535d",
     "filename": "this_cycle_added_geometryquasisymmetriciteratelean.json",
     "pkg_num": 116,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6266499999999999,
     "title": "Iteration & Semigroup Theory for Set-Local Distortion of Hausdorff Dimension"
   },
   {
@@ -3570,8 +3570,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "this_cycle_added_geometryquasisymmetriciteratelean",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6266499999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Iteration & Semigroup Theory for Set-Local Distortion of Hausdorff Dimension"
     }
