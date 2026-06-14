@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c8425ff8",
     "filename": "this_cycle_replaced_fixed_rademacher_sign_vectors_.json",
     "pkg_num": 119,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.66788,
     "title": "The Coin-Flip Cube: Expected Rademacher Complexity over the Boolean Hypercube"
   },
   {
@@ -3657,8 +3657,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "this_cycle_replaced_fixed_rademacher_sign_vectors_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.66788,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Coin-Flip Cube: Expected Rademacher Complexity over the Boolean Hypercube"
     }
