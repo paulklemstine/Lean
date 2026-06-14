@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "8e266d30",
     "filename": "applicationsboltzmannbridgeinterleavingquotientlea.json",
     "pkg_num": 143,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7527200000000001,
     "title": "The Interleaving Metric Quotient: A Genuine Metric Space of Persistent Shapes"
   },
   {
@@ -4440,8 +4440,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "applicationsboltzmannbridgeinterleavingquotientlea",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7527200000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Interleaving Metric Quotient: A Genuine Metric Space of Persistent Shapes"
     }
