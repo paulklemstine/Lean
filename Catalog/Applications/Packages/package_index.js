@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0914fa07",
     "filename": "applicationsboltzmannbridgeinterleavingisometrylea.json",
     "pkg_num": 157,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7653149514563107,
     "title": "The Persistence Isometry: Interleaving Distance is the Sup-Distance of Weights"
   },
   {
@@ -4902,8 +4902,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "applicationsboltzmannbridgeinterleavingisometrylea",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7653149514563107,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Persistence Isometry: Interleaving Distance is the Sup-Distance of Weights"
     }
