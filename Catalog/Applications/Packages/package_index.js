@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "755f7766",
     "filename": "ultrametric_lipschitz_bounds_induced_by_tropical_v.json",
     "pkg_num": 123,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6879818181818182,
     "title": "Ultrametric Lipschitz Bounds from Tropical Valuations on Arithmetic Height Spaces"
   },
   {
@@ -3771,8 +3771,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "ultrametric_lipschitz_bounds_induced_by_tropical_v",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6879818181818182,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Ultrametric Lipschitz Bounds from Tropical Valuations on Arithmetic Height Spaces"
     }
