@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "47f4bb3f",
     "filename": "the_previous_cycles_established_two_layers_of_the_.json",
     "pkg_num": 164,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7286333944954129,
     "title": "The Hodge\u2013Deligne E-Polynomial: Functional Equations for Duality and Mirror Symmetry"
   },
   {
@@ -5126,8 +5126,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "the_previous_cycles_established_two_layers_of_the_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7286333944954129,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Hodge\u2013Deligne E-Polynomial: Functional Equations for Duality and Mirror Symmetry"
     }
