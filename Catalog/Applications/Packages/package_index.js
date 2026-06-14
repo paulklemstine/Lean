@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "b352d088",
     "filename": "deepening_this_cycle_treated_the_rank_of_apparitio.json",
     "pkg_num": 140,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6842497560975611,
     "title": "The Fibonacci Apparition Adjunction: fibRank \u22a3 fib"
   },
   {
@@ -4339,8 +4339,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "deepening_this_cycle_treated_the_rank_of_apparitio",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6842497560975611,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Fibonacci Apparition Adjunction: fibRank \u22a3 fib"
     }

@@ -2,6 +2,25 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle 06bed695 (Q=0.754), which proved 17 theorems in Novelty. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Cycle e955f9f8 (Q=0.722) proved 219 theorems in Novelty but left 7 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: The Full Order Type of the p-Degrees\n\n## Synthesis\n\nThe order-theoretic core of the Cook–Reckhow program",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "push_06bed695_7cdae22f",
+    "lineage_refs": [],
+    "priority_score": 0.8543200000000001,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "06bed695",
+    "status": "available",
+    "timestamp": "2026-06-14T10:01:46.511270+00:00",
+    "title": "Deepening: The order-theoretic core of the Cook–Reckhow program in this catalog h"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "9812538e",
     "description": "Cycle de15e0b3 (Q=0.725) proved 52 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions — The Fibonacci Law of Apparition as an Arithmetic-Height / Tropical Duality\n\n## Synthesis\n\nThis cycle closed a concrete gap between two halves of the catalog that had only\nbeen li",
     "domain_bridges": [],
@@ -17,45 +36,6 @@
     "status": "in_progress",
     "timestamp": "2026-06-14T09:26:06.351376+00:00",
     "title": "Close Proofs: This cycle closed a concrete gap between two halves of the catalog tha"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "06bed695",
-    "description": "Cycle e955f9f8 (Q=0.722) proved 219 theorems in Novelty but left 7 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions: The Full Order Type of the p-Degrees\n\n## Synthesis\n\nThe order-theoretic core of the Cook–Reckhow program in this catalog has, over successive\ncycles, been assembled from the simul",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_e955f9f8_67b6bfa7",
-    "lineage_refs": [],
-    "priority_score": 0.7715210958904111,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "e955f9f8",
-    "status": "in_progress",
-    "timestamp": "2026-06-14T07:43:42.190994+00:00",
-    "title": "Close Proofs: The order-theoretic core of the Cook–Reckhow program in this catalog h"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "b7aaac14",
-    "description": "# Future Directions — Hodge–Laplacian Message Passing, Third Cycle\n\n## Synthesis\n\nThe previous cycles built the *spectral depth threshold* skeleton\n(`HodgeSpectralThreshold.lean`): the combinatorial Hodge Laplacian `L = BᵀB`, the\nmessage-passing layer `mpStep L α x = x - α(Lx)`, the discrete Hodge theorem\n`Lx = 0 ↔ Bx = 0`, the Dirichlet-energy identity, the one-layer spectral contraction,\nand the finite depth threshold. Those results all live at the level of a *single\ntrajectory's energy*.\n\nThis cycle promotes that scalar picture to the **global dynamical structure** of the\nmessage-passing semigroup, in the new self-contained file\n`HodgeMessagePassingDynamics.lean`. The pivot is the observation that `mpStep` is a\n*linear* operator, not merely energy-contracting. From linearity we obtain:\n\n1. **Linearity, single layer and depth-`k` iterate** — `mpStep_add`, `mpStep_smul`,\n   `mpStep_sub`, `mpStep_iterate_add`, `mpStep_iterate_sub`.\n2. **The Hodge decomposition flow** — `hodge_decomposition_dynamics`: writing a signal\n   `x = h + r` with `h` harmonic, the layer transports the harmonic part as a frozen\n   constant and lets the residual evolve on its own,\n   `(mpStep)^[k](h + r) = h + (mpStep)^[k] r`.\n3. **Oversmoothing as convergence to the harmonic projection** — `oversmoothing_limit`:\n   under a residual contraction `ρ < 1`, every input is driven within `ε` of its\n   harmonic (cohomological) component in finitely many layers.\n4. **Trajectory stability** — `trajectory_stability`: any two inputs have trajectories\n   whose energy gap decays as `ρ^k`; the dynamics is a contraction *modulo* the harmonic\n   kernel.\n\nThe conceptual payoff: **oversmoothing is not a defect to be patched but the exact\nstatement of a discrete Hodge decomposition for the message-passing semigroup** — the\noperator's fixed set is the cohomology group and its complement is uniformly contracted.\n\n## Results Summary\n\nAll eight theorems in `HodgeMessagePassingDynamics.lean` are proven `sorry`-free and\ndepend only on `propext`, `Classical.choice`, `Quot.sound`. The file is self-contained\n(`import Mathlib` only), re-stating the four catalog facts it builds on\n(`mpStep_iterate_fixes_harmonic`, `quadform_iterate_bound`, `spectral_depth_threshold`,\nand the `mpStep` definition) and then proving the genuinely new linearity, decomposition,\noversmoothing, and stability results.\n\n## Research Directions\n\n### 1. A quantitative, depth-explicit oversmoothing rate with an operator norm\n\nThe current `oversmoothing_limit` is an `∃N` statement; it hides the dependence of `N`\non `ε`, `ρ`, and the residual energy `r ⬝ᵥ r`. The next step is to prove the *explicit*\nthreshold `N(ε) = ⌈log(ε / (r⬝ᵥr)) / log ρ⌉` makes the residual energy `≤ ε`, turning the\nlimit into a closed-form depth budget. **The key insight is** that `quadform_iterate_bound`\nalready gives `ρ^k (r⬝ᵥr)` exactly, so the only missing piece is a clean\n`Nat.ceil`/`Real.log` inversion lemma — no new dynamics. **Why now?** With the\ndecomposition flow proven, the residual is literally `(mpStep)^[k] r`, so the explicit\nrate is a one-variable real-analysis exercise rather than a statement about the network;\nthis is the natural sharpening a downstream \"depth-vs-accuracy\" theorem needs.\n\n### 2. The two-sided spectral sandwich: a lower bound forbidding *over*-contraction\n\nWe bound the residual energy from above. A complementary, falsifiable claim is a *lower*\nbound: with `μ(x⬝ᵥx) ≤ ⟨x,Lx⟩` (spectral gap) and admissible step, a single layer cannot\ncontract faster than `(1 - αλ)²`, i.e. `(1-αλ)²(x⬝ᵥx) ≤ mpStep x ⬝ᵥ mpStep x` on the\nenergy-carrying complement. **The key insight is** that the same energy expansion\n`quadform_mpStep` that yields the upper contraction, read with the reverse operator\ninequality, yields the lower one — the two bounds are the two sides of one quadratic.\n**Why now?** Establishing both bounds pins the per-layer factor inside an interval and is\nthe precise hypothesis under which \"harmonic component is the *only* survivor\" becomes an\niff rather than an implication, closing the characterization of the limit set.\n\n### 3. Heat-semigroup consistency: `mpStep` as an Euler step of the Hodge heat flow\n\nMessage passing `x ↦ x - α(Lx)` is the explicit Euler discretization of the Hodge heat\nequation `ẋ = -Lx`, whose exact flow is `e^{-tL}`. Conjecture: for fixed `t = kα` and\n`α → 0` (equivalently `k → ∞`), `(mpStep L α)^[k] x → e^{-tL} x`, and both share the same\nfixed set (the harmonic kernel) and the same projection limit as `t → ∞`. **The key\ninsight is** that `hodge_decomposition_dynamics` already proves the discrete flow respects\nthe Hodge splitting *exactly at every step*, which is precisely the invariant the\ncontinuous semigroup preserves — so the limit is a convergence-of-Euler argument on the\ncontracting complement only. **Why now?** Mathlib has the matrix exponential and its\nbasic semigroup laws; bridging the discrete catalog operator to `Matrix.exp (-t • L)`\nconnects this MachineLearning thread to the analytic PDE/semigroup machinery and makes the\n\"oversmoothing = heat death\" slogan a theorem.\n\n### 4. Residual connections provably defeat oversmoothing\n\nAdd a skip connection: `mpStepRes L α β x = (1+β)x - α(Lx)` (or `x + β(x - mpStep)`).\nConjecture: there is a regime of `β > 0` in which the energy-carrying complement is\n*non-contracting* (spectral radius `≥ 1`) while the harmonic part is still preserved, so\ndeep residual networks do **not** collapse to the harmonic projection. **The key insight\nis** that the same energy expansion that gave the contraction factor `1 - αμ(2-αλ)` gives,\nfor the residual layer, a factor that crosses `1` exactly when `β` exceeds an explicit\nspectral-gap threshold — a sign-flip in one `nlinarith`-provable inequality. **Why now?**\nThis is the cleanest formal explanation of why residual/initial-connection GNNs avoid\noversmoothing, and it reuses the entire existing energy-expansion toolchain verbatim; the\nonly new object is the one-parameter family of layers.\n\n### 5. From the up-Laplacian to the full Hodge Laplacian and Betti-rank invariance\n\nThe catalog already has `HodgeFullDecomposition.lean` (full `L = BᵀB + CCᵀ`) and\n`HodgeBettiRank.lean` (kernel rank = Betti number). Conjecture: the decomposition flow\nand oversmoothing limit lift verbatim to the *full* Hodge Laplacian, and the dimension of\nthe limit set equals the `k`-th Betti number — so the asymptotic output of a deep\nsimplicial network is a representation of the cohomology group `H^k`, a topological\ninvariant. **The key insight is** that all four new theorems used only `L *ᵥ h = 0` and a\nscalar contraction, never the *up*-specific structure `L = BᵀB`; replacing `L` by the full\nsymmetric PSD Hodge Laplacian changes nothing in the proofs but changes the kernel's\nmeaning from \"harmonic up-cochains\" to \"genuine harmonic representatives of `H^k`. **Why\nnow?** This is the cross-domain capstone: it fuses the MachineLearning oversmoothing\nprogram with the topological Betti-rank results already in the catalog, yielding the\nstatement \"deep Hodge message passing computes cohomology.\"\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_1831",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "b898a49e",
-    "status": "in_progress",
-    "timestamp": "2026-06-14T08:50:18.993149+00:00",
-    "title": "The previous cycles built the *spectral depth threshold* skeleton"
   },
   {
     "ambition_level": "extension",
@@ -100,7 +80,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5c6d3fa8",
     "description": "# Future Directions — Hodge–Laplacian Message Passing, Convergence Cycle\n\n## Synthesis\n\nThe previous cycle established the **spectral depth threshold** picture\n(`HodgeSpectralThreshold.lean`): the up Hodge Laplacian `L = Bᵀ B` is symmetric and\npositive semidefinite, its kernel is the harmonic (cohomology) subspace, harmonic signals\nare *exact* fixed points of message passing `mpStep L α x = x - α(Lx)`, and off the kernel\nthe Dirichlet energy contracts geometrically — giving a finite depth threshold to reach any\nenergy tolerance. Separately, `HodgeThreeWayDecomposition.lean` / `HodgeBettiRank.lean`\npinned the harmonic subspace down as the middle summand of the orthogonal splitting\n`V = range d* ⊕ range e ⊕ ker Δ`, with `dim ker Δ` the Betti number.\n\nThis cycle closes the gap between those two strands. `HodgeMessagePassingConvergence.lean`\nproves that the layer map is **linear**, so the harmonic component of a signal is transported\nthrough every layer untouched while the residual is contracted at the spectral rate. The\nconsequence is a genuine *convergence* statement, not merely energy decay: the squared\ndistance from the depth-`k` output to the harmonic component is bounded by `ρ^k‖r‖²`, and a\nfinite depth reaches any tolerance (`mpStep_dist_to_harmonic_bound`,\n`mpStep_converges_to_harmonic`). We also pinned down the **optimal step**: the contraction\nfactor `1 - αμ(2 - αλ)` is minimised at the spectral step `α = 1/λ`, where it equals\n`1 - μ/λ` (`contraction_factor_optimal`, `contraction_factor_at_optimal`).\n\nThe upshot, made rigorous: **deep Hodge message passing computes the orthogonal projection\nonto cohomology**, i.e. a topological invariant of the input, and the spectral gap is exactly\nthe convergence rate.\n\n## Results Summary\n\n- `mpStep_add`, `mpStep_smul` — the message-passing layer is a linear operator.\n- `mpStep_iterate_add_harmonic` — depth transports the harmonic part as an additive constant.\n- `mpStep_dist_to_harmonic_bound` — geometric decay `ρ^k‖r‖²` of the distance to harmonics.\n- `mpStep_converges_to_harmonic` — finite depth reaches any tolerance of the harmonic part.\n- `contraction_factor_optimal` / `contraction_factor_at_optimal` — `α = 1/λ` is optimal,\n  giving rate `1 - μ/λ`.\n\nAll theorems are sorry-free and depend only on `propext`, `Classical.choice`, `Quot.sound`.\n\n## Research Directions\n\n### 1. The limit is *exactly* the harmonic orthogonal projection.\n\nWe proved the depth-`k` output converges to a fixed harmonic vector `h`; the next step is to\nidentify `h` intrinsically as `proj_{ker L} x`, the orthogonal projection of the input onto the\nharmonic subspace, independent of the chosen decomposition `x = h + r`. The key insight is that\nthe residual `r` produced by message passing always lives in `(ker L)ᗮ = range L` (the\nenergy-carrying complement), so the decomposition `x = proj x + (x - proj x)` is the *unique*\none with harmonic-plus-orthogonal parts, and convergence forces `h = proj x`. **Why now?**\n`HodgeThreeWayDecomposition` already supplies `(ker d)ᗮ = range d*` and the orthogonal splitting\nmachinery, and `mpStep_iterate_add_harmonic` already isolates `h`; the missing piece is purely\n`Submodule.orthogonalProjection` bookkeeping over the catalog's existing inner-product layer.\n\n### 2. Spectral-gap sufficiency: when does a concrete `B` satisfy the contraction hypothesis?\n\nOur convergence theorems take the per-layer contraction `⟨Tx,Tx⟩ ≤ ρ⟨x,x⟩` as a hypothesis.\nThe falsifiable conjecture: for `L = BᵀB` with smallest *nonzero* eigenvalue `μ > 0` and\nlargest eigenvalue `λ`, every step `α ∈ (0, 2/λ)` yields such a `ρ < 1` *on the orthogonal\ncomplement of the kernel*, with `ρ = 1 - αμ(2 - αλ)`. The key insight is that\n`mpStep_contraction` already proves the pointwise inequality from the spectral bounds\n`μ⟨x,x⟩ ≤ ⟨x,Lx⟩` and `⟨Lx,Lx⟩ ≤ λ⟨x,Lx⟩`; what remains is to *derive* those two bounds from\ngenuine eigenvalue data via the spectral theorem. **Why now?** Mathlib's\n`LinearMap.IsSymmetric.eigenvalue` / `Matrix.IsHermitian.spectral_theorem` give the eigen-decomposition\nof `BᵀB` off the shelf, so the spectral bounds become Rayleigh-quotient estimates.\n\n### 3. Higher-order / Chebyshev message passing beats plain gradient steps.\n\nReplace the single-step map `I - αL` by a degree-`m` polynomial `p_m(L)` (Chebyshev/Heavy-ball\nfilters used in spectral GNNs). Conjecture: the optimal degree-`m` polynomial achieves\ncontraction `ρ_m ≈ ((√λ - √μ)/(√λ + √μ))^m`, a quadratic speedup in depth over the linear rate\n`(1 - μ/λ)` of plain steps. The key insight is that our linearity lemmas (`mpStep_add`,\n`mpStep_smul`) generalise verbatim to *any* polynomial of `L`, since `p(L)` is linear and fixes\n`ker L`; only the contraction-factor analysis changes, becoming a Chebyshev-extremal problem on\n`[μ, λ]`. **Why now?** The linear-operator scaffolding is already in place and sorry-free, so the\nnew content is a self-contained real-analysis optimisation that `polyrith`/`nlinarith` can attack\nfor fixed small `m` before the general bound.\n\n### 4. Down-Laplacian and the full Hodge Laplacian `Δ = d*d + ee*`.\n\nWe worked with the up Laplacian `L = BᵀB`. Conjecture: the *same* convergence-to-harmonic\ntheorem holds for the full Hodge Laplacian `Δ` of `HodgeThreeWayDecomposition`, with the limit\nbeing the harmonic projection `ker Δ` and the rate set by the smallest nonzero eigenvalue of\n`Δ`. The key insight is that `Δ` is again symmetric PSD with `ker Δ` fixed by `I - αΔ`, so every\nlemma in this file transfers once `Δ` replaces `L`; the three-way decomposition guarantees the\nresidual splits cleanly into exact + coexact pieces that are *both* contracted. **Why now?**\n`hodgeLap`, `hodgeLap_ker = ker d ⊓ ker e*`, and the orthogonality lemmas are already proven, so\nthe harmonic-fixing step `Δh = 0 ⟹ mpStep h = h` is immediate.\n\n### 5. Quantitative oversmoothing: a matching *lower* bound forcing depth.\n\nWe proved an upper bound `ρ^k‖r‖²` on the residual. The falsifiable converse: there exist\ninputs (residuals aligned with the *slowest* nonzero mode) for which the distance to harmonics\nis bounded *below* by `c·σ^k‖r‖²` with `σ = (1 - αμ)² ` close to `1`, proving that the depth\nthreshold is essentially tight — you genuinely *need* `Θ(log(1/ε)/log(1/ρ))` layers. The key\ninsight is that the slowest mode is an eigenvector of `L` with eigenvalue `μ`, on which\n`mpStep` acts as exact scalar multiplication by `(1 - αμ)`, so the iterate is computed in closed\nform rather than merely bounded. **Why now?** Combined with Direction 2's eigen-decomposition,\nthe single-eigenvector orbit is an exact geometric sequence, turning the lower bound into an\nequality that needs no inequality slack at all.\n",
     "domain_bridges": [],
     "domains": [
@@ -113,7 +93,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "910ca369",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-14T09:26:53.811567+00:00",
     "title": "The previous cycle established the **spectral depth threshold** picture"
   },
@@ -140,6 +120,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Arithmetic Holography via Prime Geodesic Echoes on Modular Quantum Graphs\n\n## Synthesis\n\nThe grand conjecture — that spectral form factors of modular quantum graphs carry echoes\nof the Riemann zeta zeros beyond random-matrix universality — is, as stated, far beyond\npresent formalization. Our strategy was to isolate its *unconditional provable kernel* and\nprove that kernel completely in Lean 4, so that the next cycle can build upward from solid\nground rather than sideways into folklore.\n\nThree rigid facts emerged, and together they pin down *where* arithmetic must enter:\n\n1. **The spectral form factor is nothing but a pair sum of eigenvalue gaps.**\n   `sff_echo_decomposition` proves `SFF(μ, t) = ∑_{j,k} cos(t (μⱼ − μₖ))`. Every\n   oscillatory (\"echo\") component is an eigenvalue *difference*. There is no hidden\n   spectral information — the SFF is a transparent functional of the gap multiset.\n\n2. **Spectral moments count closed geodesics.** `trace_pow_eq_sum_eigenvalues` /\n   `closedWalks_eq_sum_eigenvalues` give `∑ᵢ μᵢ^k = trace(A^k) = #{closed length-k walks}`.\n   This is the elementary trace formula: short closed geodesics ↔ low spectral moments.\n\n3. **Modular graphs have arithmetic spectra.** `cayley_eigenvector` proves that on any\n   finite abelian group every additive character `ψ` is an eigenvector of the Cayley\n   adjacency operator, with eigenvalue the finite Fourier/Gauss sum `∑ₛ c(s) ψ(s)`.\n\nComposing (1) and (3): the SFF frequencies of a modular (Cayley) graph are *differences of\ncharacter sums*. The arithmetic content of the conjecture is therefore localized exactly at\nthe bridge between (3) and (1).\n\n## Results Summary\n\n| Theorem | Statement | Status |\n|---|---|---|\n| `sff_nonneg` | `0 ≤ SFF(μ,t)` | ✅ proved |\n| `sff_zero` | `SFF(μ,0) = n²` | ✅ proved |\n| `sff_echo_decomposition` | `SFF(μ,t) = ∑_{j,k} cos(t(μⱼ−μₖ))` | ✅ proved |\n| `trace_pow_eq_sum_eigenvalues` | `trace(A^k) = ∑ᵢ μᵢ^k` (Hermitian) | ✅ proved |\n| `closedWalks_eq_sum_eigenvalues` | closed-walk count = `k`-th power sum | ✅ proved |\n| `cayley_eigenvector` / `cayley_hasEigenvalue` | characters diagonalize Cayley graphs | ✅ proved |\n\nAll depend only on `propext`, `Classical.choice`, `Quot.sound`. Zero `sorry`.\n\n## Research Directions\n\n### 1. Gauss-sum modulus law for prime-level modular graphs\nFor `G = ZMod p` with `p` prime and connection weights `c` supported on the quadratic\nresidues, the character eigenvalues `∑ₛ c(s) ψₐ(s)` become quadratic Gauss sums, whose\nmodulus is exactly `√p` for `a ≠ 0`. **The key insight is** that this is the finite,\nunconditional avatar of \"square-root cancellation\" — the same phenomenon the zeta\nconjecture invokes asymptotically — and it is fully provable from `cayley_eigenvector`\nplus Mathlib's `gaussSum` API. *Why now?* We already have the eigenvector bridge formalized\nand Mathlib carries `ZMod`, `quadraticChar`, and `gaussSum_sq`; the only missing step is\nspecializing `cayleyEigenvalue` to the residue indicator, which is a direct computation.\n\n### 2. Ramp–plateau dichotomy for the averaged spectral form factor\nConjecture: for any spectrum with distinct eigenvalues, the long-time average\n`lim_{T→∞} (1/T)∫₀ᵀ SFF(μ,t) dt = n` (the \"plateau\"), separating cleanly from the `t=0`\nvalue `n²`. **The key insight is** that `sff_echo_decomposition` already reduces this to the\nstatement that each off-diagonal `cos(t(μⱼ−μₖ))` time-averages to zero while the `n`\ndiagonal terms survive — a pure equidistribution fact, not a physical assumption.\n*Why now?* The decomposition theorem hands us the exact integrand termwise; Mathlib's\n`Real.cos` integrability and average lemmas close the off-diagonal terms, making this a\nfinite, falsifiable target rather than a heuristic.\n\n### 3. Character orthogonality ⇒ full diagonalization and a Plancherel SFF\nThe single eigenvector theorem should be upgraded to a full spectral decomposition: the `n`\ncharacters of a finite abelian group form an orthogonal eigenbasis of every Cayley operator,\ngiving `SFF` a closed form purely in terms of `{cayleyEigenvalue c ψ}`. **The key insight\nis** that Cayley operators over abelian groups are *simultaneously* diagonalized by the\ncharacter basis independent of `c`, so the whole family is a commutative von-Neumann-style\nalgebra and the SFF becomes a Plancherel sum over the dual group. *Why now?* Mathlib's\n`AddChar` orthogonality relations (`AddChar.sum_eq_zero_of_ne` style) are already available,\nso promoting `cayley_eigenvector` to a basis statement is incremental, not foundational.\n\n### 4. Stability of echo frequencies under congruence-level refinement\nConjecture: as one passes from `ZMod N` to `ZMod (N·M)` with a compatible connection set,\na distinguished subset of eigenvalue gaps is *preserved* (scale-stable echoes), realized via\nthe projection `ZMod (N·M) → ZMod N` and pullback of characters. **The key insight is** that\ncharacter pullback along a quotient map embeds the level-`N` spectrum inside the level-`NM`\nspectrum, giving a literal, finite-dimensional mechanism for \"scale-stable oscillatory\ncomponents\" without invoking universality. *Why now?* `ZMod.castHom` and the induced\n`AddChar` comap are in Mathlib, so the inclusion of spectra is a concrete lemma we can state\nand attack immediately, turning the vague \"persistence across levels\" into a theorem.\n\n### 5. Null-model separation: random-circulant SFF concentration\nTo make the conjecture falsifiable we need the *null* side: for connection weights `c`\ndrawn i.i.d. with mean zero, the expected SFF equals the diagonal `n` plus a vanishing\noff-diagonal contribution, i.e. random modular graphs show *no* persistent echoes. **The\nkey insight is** that `sff_echo_decomposition` turns this into a statement about\n`E[cos(t(μⱼ−μₖ))]` for random character sums, which factorizes through independence and is\namenable to second-moment bounds. *Why now?* With the deterministic decomposition proved,\nthe probabilistic null model is a clean add-on using Mathlib's `ProbabilityTheory` variance\nmachinery, giving the contrast (signal vs. null) that the original test demands.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_1845",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "47ed24d5",
+    "status": "available",
+    "timestamp": "2026-06-14T10:02:51.829199+00:00",
+    "title": "The grand conjecture — that spectral form factors of modular quantum graphs carr"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "3b0048b9",
     "description": "Cycle 0bab5b6a (Q=0.655) proved 68 theorems in Applications but left 4 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions — The Equivalence Calculus and Contractibility as a Universal Property\n\n## Synthesis\n\nThis cycle took the fibrewise characterisation of equivalences proved last cycle\n(`HoTT.biject",
     "domain_bridges": [],
@@ -159,7 +159,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c6fd83da",
     "description": "Conjecture: In dimensions 4 and 7, manifolds that are homeomorphic but not diffeomorphic support inequivalent families of local Laplace-type operators whose low-energy harmonic sectors define distinct quantum error-correcting code spaces, with code distance scaling controlled by smooth-structure-sensitive spectral invariants rather than topology alone. Test: Construct explicit pairs of homeomorphic/non-diffeomorphic manifolds, discretize compatible differential complexes, and compare the resulting low-energy projector codes; the conjecture is confirmed if code parameters or logical operator structure differ in a way invariant under triangulation refinement but correlated with smooth-structure-sensitive analytic data, and refuted if all such code families collapse to topological equivalence. Impact: This would reveal smooth structure as a physically usable computational resource, opening a new route to fault-tolerant architectures, spectral probes of exotic geometry, and a bridge between differential topology, quantum information, and lattice field theory.",
     "domain_bridges": [],
     "domains": [
@@ -171,29 +171,9 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-14T09:27:04.474290+00:00",
     "title": "Topological Error-Correcting Codes from Exotic Smooth Structures"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "47ed24d5",
-    "description": "Conjecture: There exists a family of finite quantum graphs canonically constructed from congruence quotients of the modular surface such that the two-point spectral form factor of their Laplacians contains a statistically significant, scale-stable oscillatory component whose frequencies are in bijective correspondence with low-lying nontrivial zeros of the Riemann zeta function, beyond what is predicted by standard random matrix universality alone. Test: Build the graph family explicitly for increasing congruence level, compute Laplacian spectra and spectral form factors, extract persistent oscillatory modes, and compare them against matched null models from random regular and arithmetic expander graphs; the conjecture is supported if the same zeta-zero-correlated frequencies recur with increasing level and are absent in null models, and refuted if no excess reproducible correlation survives finite-size scaling and statistical controls. Impact: This would provide a concrete experimental bridge between arithmetic geometry, quantum chaos, and computable spectral statistics, potentially yielding a new finite, simulation-accessible probe of zeta zeros and a framework for engineering arithmetic signatures in quantum devices.",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Novelty"
-    ],
-    "id": "fd_1840",
-    "lineage_refs": [],
-    "priority_score": 0.7,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-14T09:27:37.203397+00:00",
-    "title": "Arithmetic Holography via Prime Geodesic Echoes on Modular Quantum Graphs"
   },
   {
     "ambition_level": "extension",
@@ -217,7 +197,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8f76f4ec",
     "description": "Conjecture: For families of algebraic varieties whose period integrals satisfy rigid hypergeometric differential equations with non-virtually-solvable monodromy, there exists a uniform sampling task based on approximating the associated period phases along parameter loops that is classically intractable under standard complexity assumptions, but efficiently implementable by quantum circuits simulating the induced monodromy representation to inverse-polynomial error. Test: Construct explicit one-parameter families with computable Picard-Fuchs systems, derive their monodromy matrices, compile the monodromy action into quantum circuits, and compare empirical scaling of phase-sampling distributions against best-known classical algorithms; the conjecture is supported if non-solvable monodromy families exhibit stable quantum-efficient sampling with no comparable classical polynomial-time simulation, and refuted if either the sampling reduces to efficient classical computation or the quantum implementation fails to preserve the predicted complexity separation. Impact: This would create a concrete bridge between arithmetic geometry, differential equations, and quantum complexity, yielding a new source of provable quantum advantage rooted in geometric monodromy rather than standard oracle constructions.",
     "domain_bridges": [],
     "domains": [
@@ -230,7 +210,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-14T09:28:34.614602+00:00",
     "title": "Monodromy-Driven Quantum Advantage in Hypergeometric Period Sampling"
   }
