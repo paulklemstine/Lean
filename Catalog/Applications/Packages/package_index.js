@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "7b63a6df",
     "filename": "deepening_the_file_applicationscombinatorialspecie.json",
     "pkg_num": 114,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7581655172413794,
     "title": "The Exponential-Convolution Ring: EGFs as an Isomorphism of Commutative Rings"
   },
   {
@@ -3512,8 +3512,8 @@ window.PACKAGE_GRAPH = {
       "hue": 281,
       "id": "deepening_the_file_applicationscombinatorialspecie",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7581655172413794,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Exponential-Convolution Ring: EGFs as an Isomorphism of Commutative Rings"
     }
