@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "5a4a0b2c",
     "filename": "deepening_applicationsboltzmannbridgeinterleavingg.json",
     "pkg_num": 169,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7868,
     "title": "The Path Space of Filtrations: Reparametrisation, Geodesic Betweenness, and Busemann Convexity of the Interleaving Metric"
   },
   {
@@ -5299,8 +5299,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "deepening_applicationsboltzmannbridgeinterleavingg",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7868,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Path Space of Filtrations: Reparametrisation, Geodesic Betweenness, and Busemann Convexity of the Interleaving Metric"
     }
