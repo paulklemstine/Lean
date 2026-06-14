@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "4302919c",
     "filename": "this_cycle_was_about_closing_proofs_in_the_fibonac.json",
     "pkg_num": 129,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.726744433497537,
     "title": "Path Spaces, h-Levels, and the Fibrewise Characterisation of Equivalences"
   },
   {
@@ -3964,8 +3964,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "this_cycle_was_about_closing_proofs_in_the_fibonac",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.726744433497537,
+      "quality": "substantial",
       "shape": "star_of_david",
       "title": "Path Spaces, h-Levels, and the Fibrewise Characterisation of Equivalences"
     }
