@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "fb3f3807",
     "filename": "close_proofs_the_fifth_cycle_established_pointwise.json",
     "pkg_num": 168,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.68156,
     "title": "Calabi-Yau Fourfold Hodge Diamonds and the F-Theory Mirror Involution"
   },
   {
@@ -5263,8 +5263,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "close_proofs_the_fifth_cycle_established_pointwise",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.68156,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "Calabi-Yau Fourfold Hodge Diamonds and the F-Theory Mirror Involution"
     }
