@@ -27,7 +27,7 @@ pi_agent:
     enabled: false
     api_key_env: "OLLAMA_API_KEY"
     # api_key_file: "/home/raver1975/lean/Aether/.aether_workspace/ollama_cloud_api_key"
-    model: "glm-5.1:cloud"
+    model: "deepseek-v4-pro:cloud"
     base_url: "https://ollama.com"
     timeout: 300
   max_catalog_references: 5
