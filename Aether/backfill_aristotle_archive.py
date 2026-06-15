@@ -156,10 +156,9 @@ def main():
 
     am = ArchiveManager(Path(args.archive_root))
 
-    if args.from_local_projects or args.no_api:
+    if args.from_local_projects:
         backfill_from_local_projects(am, Path(args.projects_root))
-
-    if not args.no_api:
+    elif not args.no_api:
         asyncio.run(backfill_from_api(am, args.max_pages, args.page_size))
 
     stats = am.get_stats()
