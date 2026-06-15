@@ -42,6 +42,7 @@ from typing import Any, Dict, List, Optional, Tuple
 import yaml
 
 from pi_agent_client import PiAgentClient, ResearchConcept, select_phase_a_prompt_version, DEFAULT_PHASE_A_PROMPT_WEIGHTS
+from archive_manager import ArchiveManager
 from catalog_analyzer import CatalogAnalyzer
 from autoresearch_bridge import AutoresearchBridge
 from research_memory import ResearchMemory
@@ -134,6 +135,10 @@ class KnowledgeExtractor:
             db_path=self.workspace / "theorems.sqlite",
             catalog_root=self.catalog_root,
         )
+
+        # Content-addressable archive of every Aristotle project input/output
+        archive_root = self.config.get("archive", {}).get("root_dir", "../Archive")
+        self.archive_manager = ArchiveManager(self.catalog_root.parent / archive_root)
 
         # Pi-Agent: the BRAINS of Aether
         pi_cfg = self.config.get("pi_agent", {})
@@ -3492,7 +3497,39 @@ Research mode: {concept.research_mode}
         except Exception as e:
             print(f"[Cleanup] Warning: catalog pruning failed: {e}")
 
+        # Archive project input/output for durable master catalog
+        try:
+            self._archive_job(job)
+        except Exception as e:
+            print(f"[Cleanup] Warning: project archive failed: {e}")
+
         return job
+
+    def _archive_job(self, job: "ResearchJob") -> None:
+        """Archive this job's input and output files to the CAS archive."""
+        if not job.project_id:
+            return
+        if self.archive_manager.project_exists(job.project_id):
+            return
+        input_dir: Optional[Path] = None
+        output_dir: Optional[Path] = None
+        if job.project_dir and Path(job.project_dir).exists():
+            input_dir = Path(job.project_dir)
+            extracted = input_dir / "result_extracted"
+            if extracted.exists():
+                output_dir = extracted
+        if not input_dir:
+            return
+        self.archive_manager.archive_project(
+            project_id=job.project_id,
+            description=getattr(job.concept, "title", "")[:100],
+            status=job.status or "integrated",
+            created_at=datetime.now(timezone.utc).isoformat(),
+            last_updated=datetime.now(timezone.utc).isoformat(),
+            input_dir=input_dir,
+            output_dir=output_dir,
+        )
+        print(f"[Archive] Archived project {job.project_id[:8]} to master catalog")
 
     # ==================================================================
     # Phase 8: COMMIT — Aether commits and tracks

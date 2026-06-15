@@ -79,6 +79,10 @@ output_organizer:
   require_pi_agent_classification: true
   max_sorry_count_for_direct_placement: 0
 
+archive:
+  root_dir: "../Archive"
+  enabled: true
+
 autoresearch:
   enabled: true
   metric_name: "concept_quality"
