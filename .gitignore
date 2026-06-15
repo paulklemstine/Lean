@@ -42,6 +42,10 @@ __pycache__/
 # Auto-generated demos
 /Catalog/Applications/Demos/
 
+# Aristotle archive transient SQLite files
+/Archive/catalog.sqlite-shm
+/Archive/catalog.sqlite-wal
+
 # Stale/old generated content
 /Catalog/Applications/Packages/old/
 /Catalog/Applications/Packages/packages_db.js

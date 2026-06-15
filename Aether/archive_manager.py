@@ -26,20 +26,10 @@ import sqlite3
 import tempfile
 import time
 from dataclasses import dataclass
-from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import tarfile
-
-
-@dataclass
-class ArchivedFile:
-    """Record of a single archived file."""
-    hash: str
-    size: int
-    content_type: str
-    first_seen_at: float
 
 
 @dataclass
@@ -70,12 +60,17 @@ class ArchiveManager:
         self.manifests_dir.mkdir(parents=True, exist_ok=True)
 
         self._conn: Optional[sqlite3.Connection] = None
+        self._theorem_cache: set = set()
         self._init_db()
 
     def _connect(self) -> sqlite3.Connection:
         if self._conn is None:
             self._conn = sqlite3.connect(str(self.db_path), check_same_thread=False)
             self._conn.row_factory = sqlite3.Row
+            # WAL mode + relaxed sync for bulk ingestion speed
+            self._conn.execute("PRAGMA journal_mode=WAL")
+            self._conn.execute("PRAGMA synchronous=NORMAL")
+            self._conn.execute("PRAGMA temp_store=MEMORY")
         return self._conn
 
     def _init_db(self) -> None:
@@ -117,13 +112,12 @@ class ArchiveManager:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
                 file_hash TEXT NOT NULL,
-                project_id TEXT,
                 domain TEXT,
                 statement_text TEXT,
                 theorem_type TEXT,
                 is_sorry INTEGER DEFAULT 0,
                 FOREIGN KEY (file_hash) REFERENCES files(hash),
-                FOREIGN KEY (project_id) REFERENCES projects(project_id)
+                UNIQUE(name, file_hash)
             );
             CREATE INDEX IF NOT EXISTS idx_theorems_name ON theorems(name);
             CREATE INDEX IF NOT EXISTS idx_theorems_hash ON theorems(file_hash);
@@ -170,7 +164,7 @@ class ArchiveManager:
     def file_exists(self, file_hash: str) -> bool:
         return self._blob_path(file_hash).exists()
 
-    def _scan_theorems(self, file_hash: str, content: str, project_id: str, domain: str) -> List[Dict]:
+    def _scan_theorems(self, file_hash: str, content: str, domain: str) -> List[Dict]:
         """Extract theorem/lemma/example declarations from Lean content."""
         decl_pattern = re.compile(
             r"^(?:theorem|lemma|nonrec theorem|protected theorem|private theorem|example)\s+(\w+)",
@@ -179,8 +173,12 @@ class ArchiveManager:
         theorems = []
         for m in decl_pattern.finditer(content):
             name = m.group(1)
+            key = (name, file_hash)
+            if key in self._theorem_cache:
+                continue
+            self._theorem_cache.add(key)
             start = m.end()
-            statement = content[start : start + 400].strip()
+            statement = content[start : start + 200].strip()
             is_sorry = "sorry" in statement.lower()
             theorem_type = (
                 "example" if m.group(0).startswith("example")
@@ -190,9 +188,8 @@ class ArchiveManager:
             theorems.append({
                 "name": name,
                 "file_hash": file_hash,
-                "project_id": project_id,
                 "domain": domain,
-                "statement_text": statement[:500],
+                "statement_text": statement[:200],
                 "theorem_type": theorem_type,
                 "is_sorry": is_sorry,
             })
@@ -209,17 +206,20 @@ class ArchiveManager:
 
     def _archive_directory(
         self,
-        project_id: str,
         directory: Path,
         role: str,
-    ) -> Tuple[List[Dict], Optional[str], Optional[str]]:
-        """Archive all files in a directory tree. Returns file records + prompt hash + main lean hash."""
+    ) -> Tuple[List[Dict], Optional[str], Optional[str], List[Dict]]:
+        """Archive all files in a directory tree.
+
+        Returns (file records, prompt_hash, main_lean_hash, new_theorems).
+        """
         files: List[Dict] = []
         prompt_hash: Optional[str] = None
         main_lean_hash: Optional[str] = None
+        theorems: List[Dict] = []
 
         if not directory.exists():
-            return files, prompt_hash, main_lean_hash
+            return files, prompt_hash, main_lean_hash, theorems
 
         for src in sorted(directory.rglob("*")):
             if not src.is_file():
@@ -244,7 +244,9 @@ class ArchiveManager:
             elif rel_str.endswith(".json"):
                 content_type = "application/json"
 
-            file_hash = self.store_file(data, content_type=content_type)
+            file_hash = hashlib.sha256(data).hexdigest()
+            is_new_file = not self.file_exists(file_hash)
+            self.store_file(data, content_type=content_type)
             record = {
                 "hash": file_hash,
                 "path": rel_str,
@@ -253,31 +255,21 @@ class ArchiveManager:
             }
             files.append(record)
 
-            # Capture prompt and main lean specially
             if role in ("input",) and rel_str.endswith("PROMPT.md"):
                 prompt_hash = file_hash
             if rel_str.endswith("Main.lean") and not main_lean_hash:
                 main_lean_hash = file_hash
 
-            # Index theorems for lean files
-            if rel_str.endswith(".lean"):
+            # Only scan theorems for newly-seen lean files to save time
+            if rel_str.endswith(".lean") and is_new_file:
                 try:
                     text = data.decode("utf-8", errors="replace")
                 except Exception:
                     text = ""
                 domain = self._extract_domain_from_path(rel_str)
-                theorems = self._scan_theorems(file_hash, text, project_id, domain)
-                if theorems:
-                    conn = self._connect()
-                    conn.executemany(
-                        "INSERT OR IGNORE INTO theorems "
-                        "(name, file_hash, project_id, domain, statement_text, theorem_type, is_sorry) "
-                        "VALUES (:name, :file_hash, :project_id, :domain, :statement_text, :theorem_type, :is_sorry)",
-                        theorems,
-                    )
-                    conn.commit()
+                theorems.extend(self._scan_theorems(file_hash, text, domain))
 
-        return files, prompt_hash, main_lean_hash
+        return files, prompt_hash, main_lean_hash, theorems
 
     def archive_project(
         self,
@@ -292,18 +284,18 @@ class ArchiveManager:
         output_archive_path: Optional[Path] = None,
     ) -> ProjectManifest:
         """Archive a project from extracted directories and/or tar.gz archives."""
-        # Extract input archive if provided
         if input_archive_path and input_archive_path.exists():
             input_dir = self._extract_tar(input_archive_path)
         if output_archive_path and output_archive_path.exists():
             output_dir = self._extract_tar(output_archive_path)
 
-        input_files, prompt_hash, main_lean_hash = self._archive_directory(
-            project_id, input_dir or Path("/nonexistent"), "input"
+        input_files, prompt_hash, main_lean_hash, input_theorems = self._archive_directory(
+            input_dir or Path("/nonexistent"), "input"
         )
-        output_files, _, _ = self._archive_directory(
-            project_id, output_dir or Path("/nonexistent"), "output"
+        output_files, _, _, output_theorems = self._archive_directory(
+            output_dir or Path("/nonexistent"), "output"
         )
+        all_theorems = input_theorems + output_theorems
 
         # Detect prompt version from prompt text
         prompt_version: Optional[str] = None
@@ -371,6 +363,16 @@ class ArchiveManager:
                 for f in all_files
             ],
         )
+
+        # Batch insert new theorems (deduped by unique(name, file_hash))
+        if all_theorems:
+            conn.executemany(
+                "INSERT OR IGNORE INTO theorems "
+                "(name, file_hash, domain, statement_text, theorem_type, is_sorry) "
+                "VALUES (:name, :file_hash, :domain, :statement_text, :theorem_type, :is_sorry)",
+                all_theorems,
+            )
+
         if prompt_hash:
             conn.execute(
                 "INSERT OR REPLACE INTO prompts (project_id, prompt_hash, prompt_version, length) "

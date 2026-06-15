@@ -112,14 +112,14 @@ async def _archive_one_api(am: ArchiveManager, project: Project):
 def backfill_from_local_projects(am: ArchiveManager, projects_root: Path):
     """Archive from locally-cached project directories (input only)."""
     if not projects_root.exists():
-        print(f"[Backfill] Local projects dir not found: {projects_root}")
+        print(f"[Backfill] Local projects dir not found: {projects_root}", flush=True)
         return
-    for project_dir in sorted(projects_root.iterdir()):
-        if not project_dir.is_dir():
-            continue
+    project_dirs = [d for d in sorted(projects_root.iterdir()) if d.is_dir()]
+    print(f"[Backfill] Found {len(project_dirs)} local project directories", flush=True)
+    for i, project_dir in enumerate(project_dirs, 1):
         project_id = project_dir.name
         if am.project_exists(project_id):
-            print(f"[Backfill] Skipping {project_id[:8]} (already archived)")
+            print(f"[Backfill] {i}/{len(project_dirs)} Skipping {project_id[:8]} (already archived)", flush=True)
             continue
         input_dir = project_dir
         output_dir: Optional[Path] = None
@@ -136,10 +136,10 @@ def backfill_from_local_projects(am: ArchiveManager, projects_root: Path):
                 input_dir=input_dir,
                 output_dir=output_dir,
             )
-            print(f"[Backfill] Archived local project {project_id[:8]} "
-                  f"(output={output_dir is not None})")
+            print(f"[Backfill] {i}/{len(project_dirs)} Archived local project {project_id[:8]} "
+                  f"(output={output_dir is not None})", flush=True)
         except Exception as e:
-            print(f"[Backfill] Failed to archive {project_id[:8]}: {e}")
+            print(f"[Backfill] {i}/{len(project_dirs)} Failed to archive {project_id[:8]}: {e}", flush=True)
 
 
 def main():
