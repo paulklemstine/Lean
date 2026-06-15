@@ -1,0 +1,36 @@
+{
+  "project_id": "d7603c28-1061-4e2e-8b11-76c8f345652f",
+  "description": "def430d4",
+  "status": "IDLE",
+  "created_at": "2026-06-15T12:58:28.809198",
+  "last_updated": "2026-06-15T13:27:25.120961",
+  "prompt_hash": "8574826292faec47d74f7eff52b056aa32626046434c2fa6663c4de75333dfdc",
+  "main_lean_hash": null,
+  "input_files": [
+    {
+      "hash": "8574826292faec47d74f7eff52b056aa32626046434c2fa6663c4de75333dfdc",
+      "path": "PROMPT.md",
+      "size": 2167,
+      "role": "input"
+    },
+    {
+      "hash": "116c6ef00aa899fb38c08c5e4c92c0e434d0e7f9d574fcb5d4d42cc90ffb07cb",
+      "path": "lake-manifest.json",
+      "size": 3109,
+      "role": "input"
+    },
+    {
+      "hash": "2f79b83dbdef42016efb16d123287ed802594adc4a2194c4f3f4fdb99171e654",
+      "path": "lakefile.toml",
+      "size": 1039,
+      "role": "input"
+    },
+    {
+      "hash": "db7bb24b756d745bbde83fe92718b51bd3625dae3701ba0f598d0eedcd3f3028",
+      "path": "lean-toolchain",
+      "size": 25,
+      "role": "input"
+    }
+  ],
+  "output_files": []
+}
