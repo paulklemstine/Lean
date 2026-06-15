@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-15T01:22:18.523707+00:00",
+  "last_updated": "2026-06-15T01:25:12.444386+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -57140,6 +57140,49 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-15T01:22:18.250593+00:00",
       "title": "Close Proofs: The discrete-Hodge program already carries a *geometric/decomposition*"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.3716,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 2,
+      "domain": "Shared",
+      "duration_seconds": 946.693247795105,
+      "end_time": 1781486682.810952,
+      "files_integrated": 8,
+      "job_id": "32c81afa",
+      "outcome_quality": 0.7607163636363636,
+      "phase": "complete",
+      "phase_a_prompt_version": "v9",
+      "phase_b_prompt_version": "v1",
+      "phase_b_skipped": false,
+      "prompt_version": "v9",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.92,
+        "artifact_richness": 0.8,
+        "catalog_anchoring": 0.5,
+        "composite": 0.7801,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.7391,
+        "novelty": 0.95,
+        "proof_depth": 0.6487,
+        "usefulness": 0.8244
+      },
+      "quality_score": 0.7607163636363636,
+      "sorry_count": 1,
+      "sorry_density": 0.045454545454545456,
+      "start_time": 1781485736.1177042,
+      "strategy_count": 0,
+      "theorem_count": 22,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-15T01:25:12.112593+00:00",
+      "title": "The persistence-stability arc of the catalog climbed a ladder of structure: a"
     }
   ]
 }

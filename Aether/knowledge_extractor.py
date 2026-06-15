@@ -128,6 +128,13 @@ class KnowledgeExtractor:
         self.aristotle_loop = AristotleLoop(exploration_constant=1.5)
         self.git = GitAutomator(self.catalog_root.parent)
 
+        # SQLite-backed theorem index for fast novelty/duplicate detection
+        from theorem_database import TheoremDatabase
+        self.theorem_db = TheoremDatabase(
+            db_path=self.workspace / "theorems.sqlite",
+            catalog_root=self.catalog_root,
+        )
+
         # Pi-Agent: the BRAINS of Aether
         pi_cfg = self.config.get("pi_agent", {})
         self.pi_agent = PiAgentClient(
@@ -1499,24 +1506,17 @@ Research mode: {concept.research_mode}
         """Classify each theorem in result_lean relative to the existing catalog.
 
         Returns counts by novelty bucket: new, strengthening, duplicate, disproof, unknown.
-        This is a lightweight heuristic based on theorem name + statement text.
+        Uses the SQLite theorem index for fast lookups.
         """
         import re as _re
         counts = {"new": 0, "strengthening": 0, "duplicate": 0, "disproof": 0, "unknown": 0}
         if not self.catalog_root or not self.catalog_root.exists():
             return counts
 
-        # Build catalog theorem name index from existing .lean files
-        catalog_names: set = set()
-        for f in self.catalog_root.rglob("*.lean"):
+        # Ensure the theorem DB is up to date with the latest catalog
+        if hasattr(self, "theorem_db") and self.theorem_db:
             try:
-                text = f.read_text(encoding="utf-8", errors="ignore")
-                for m in _re.finditer(
-                    r"^(?:theorem|lemma|nonrec theorem|protected theorem|private theorem|example)\s+(\w+)",
-                    text,
-                    _re.MULTILINE,
-                ):
-                    catalog_names.add(m.group(1))
+                self.theorem_db.rebuild_if_needed()
             except Exception:
                 pass
 
@@ -1527,19 +1527,36 @@ Research mode: {concept.research_mode}
         )
         for m in theorem_decl_pattern.finditer(result_lean):
             name = m.group(1)
-            # Grab the next ~200 chars as a rough statement signature
+            # Grab the next ~400 chars as a rough statement signature
             start = m.end()
-            statement = result_lean[start:start + 200].strip().lower()
+            statement = result_lean[start:start + 400].strip()
+            lower_stmt = statement.lower()
             is_disproof = any(
-                kw in statement for kw in ("not exists", "no such", "false", "disprove", "counterexample")
+                kw in lower_stmt for kw in ("not exists", "no such", "false", "disprove", "counterexample")
             )
+
+            # Use SQLite theorem index if available, fall back to file scan
+            in_catalog = False
+            if hasattr(self, "theorem_db") and self.theorem_db:
+                try:
+                    in_catalog = self.theorem_db.contains_name(name)
+                except Exception:
+                    pass
+            if not in_catalog and not (hasattr(self, "theorem_db") and self.theorem_db):
+                # Fallback for safety if DB not initialized
+                for f in self.catalog_root.rglob("*.lean"):
+                    try:
+                        if name in f.read_text(encoding="utf-8", errors="ignore"):
+                            in_catalog = True
+                            break
+                    except Exception:
+                        pass
+
             if is_disproof:
                 counts["disproof"] += 1
-            elif name in catalog_names:
+            elif in_catalog:
                 # Same name exists — treat as strengthening/duplicate heuristically
-                # If statement contains stronger quantifiers (e.g., "∀" with a weaker bound)
-                # or mentions 'general'/'stronger', classify as strengthening.
-                stronger_hints = any(kw in statement for kw in ("general", "stronger", "extends", "forall"))
+                stronger_hints = any(kw in lower_stmt for kw in ("general", "stronger", "extends", "forall"))
                 counts["strengthening" if stronger_hints else "duplicate"] += 1
             else:
                 counts["new"] += 1

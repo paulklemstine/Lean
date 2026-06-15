@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "32c81afa",
     "filename": "the_persistence_stability_arc_of_the_catalog_climb.json",
     "pkg_num": 141,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7607163636363636,
     "title": "Convexity & Bicombing of Interleaving Geodesics: The Interleaving Metric is a Busemann Space"
   },
   {
@@ -4355,8 +4355,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "the_persistence_stability_arc_of_the_catalog_climb",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7607163636363636,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Convexity & Bicombing of Interleaving Geodesics: The Interleaving Metric is a Busemann Space"
     }
