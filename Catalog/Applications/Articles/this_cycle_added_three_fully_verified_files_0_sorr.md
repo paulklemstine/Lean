@@ -1,105 +1,256 @@
-# The Numbers That Fool Fermat: Inside Korselt's Criterion
+# The Shape of Data Doesn't Care What You Call It
 
-## A test that almost works
+## A story about persistence, smoothing, and the freedom to rename
 
-In 1640, Pierre de Fermat noticed something beautiful about prime numbers. Pick a prime `p`, pick any whole number `a` that is not a multiple of `p`, and raise `a` to the power `p − 1`. The remainder you get when you divide by `p` is always exactly `1`. In modern shorthand,
+Imagine you are handed a cloud of points — the locations of cell-towers across a
+country, the genomes of a viral outbreak, the firing patterns of neurons in a
+slice of brain. You want to know its *shape*: Does it cluster into islands? Are
+there loops, tunnels, hollow voids? This is the central question of **topological
+data analysis**, and over the last two decades it has grown from a curiosity into
+a working tool used in oncology, materials science, neuroscience, and cosmology.
 
-> if `p` is prime and `p` does not divide `a`, then `a^(p−1) ≡ 1 (mod p)`.
+The engine that drives it is an idea of disarming simplicity. Take your points and
+start growing a ball around each one. When two balls touch, draw an edge. When
+three pairwise-touching balls all overlap, fill in the triangle. Keep growing. At
+radius zero you have nothing but isolated dots; at enormous radius everything is
+fused into one blob. In between — and this is the magic — features are *born* and
+later *die*. A loop appears at one scale and gets filled in at a larger one. A
+cluster splits off and later merges back. The record of these births and deaths,
+read across all scales at once, is a remarkably stable fingerprint of the data's
+shape. This growing family of shapes is called a **filtration**, and the
+fingerprint is its **persistence**.
 
-This is *Fermat's Little Theorem*, and it is one of the most useful facts in all of mathematics. It is the engine behind much of modern cryptography, and it suggests a tantalizingly simple way to test whether a number is prime: pick a base `a`, compute `a^(n−1) mod n`, and if the answer is not `1`, then `n` is definitely *not* prime.
+This article is about a small but foundational truth concerning filtrations — one
+of those facts that feels obvious once stated but must be nailed down with care
+before any of the towering theorems above can stand. It is the principle that the
+shape of your data **does not depend on what you call your data points.** Rename
+the cell towers, shuffle the genome labels, permute the neuron indices — the
+geometry you extract is exactly, provably, the same. And a companion principle:
+once you have measured *one* shape precisely, you get the measurement for all of
+its renamings, and for whole equivalence classes of shapes, completely for free.
 
-This test is fast. It is easy to program. And it has one fatal flaw: there exist composite numbers that pass it anyway — for *every* base coprime to them. These impostors are called **Carmichael numbers**, and they are the secret villains of computational number theory. The smallest is `561 = 3 × 11 × 17`. It is not prime, yet it satisfies `a^560 ≡ 1 (mod 561)` for every `a` that shares no factor with it. To Fermat's test, `561` looks exactly like a prime. It is a perfect counterfeit.
+These sound like truisms. They are not. Making them precise — and proving them
+rather than assuming them — is what turns persistence from a heuristic into
+mathematics.
 
-So how do you catch a counterfeit? You need a *structural* description — a fingerprint that the impostors cannot fake. That fingerprint was discovered by the Belgian mathematician Alwin Korselt in 1899, and the heart of his argument is the subject of this article.
+---
 
-## Korselt's fingerprint
+## Filtrations as tropical weightings
 
-Korselt's criterion says, in full:
+Let us be concrete. Fix a set of labels — call them vertices. A **simplex** is
+just a finite collection of vertices: a single point, a pair (an edge), a triple
+(a triangle), and so on. A **filtration** is a rule that assigns to every simplex
+a number, its *appearance time* — the scale at which it first shows up as you grow
+the balls. Write `weight(σ)` for the appearance time of the simplex `σ`.
 
-> A composite number `n` is a Carmichael number **if and only if** `n` is squarefree (no prime divides it twice) and, for every prime `p` dividing `n`, the number `p − 1` divides `n − 1`.
+Two rules govern these weights:
 
-Look at `561 = 3 × 11 × 17` through this lens. It is squarefree. And the three primes give us `p − 1` values of `2`, `10`, and `16`. Does each divide `560`?
+- **Monotonicity.** If a simplex `σ` is contained in a larger simplex `τ`, then
+  `σ` appears no later than `τ`: `weight(σ) ≤ weight(τ)`. You cannot build a
+  triangle before its edges exist.
+- **Grounding.** The empty simplex — the trivial "nothing" — sits at the bottom.
 
-- `560 / 2 = 280` ✓
-- `560 / 10 = 56` ✓
-- `560 / 16 = 35` ✓
+This is the entire definition, and it has a beautiful second reading. In **tropical
+mathematics** one replaces ordinary addition by *taking minimums* and ordinary
+multiplication by *addition*. In that arithmetic, a filtration is precisely a
+tropical weighting of simplices, and the operations we are about to meet are the
+natural tropical transformations. That is why we call this circle of ideas the
+**categorical tropical Rips** picture — "Rips" after the Vietoris–Rips complex,
+the ball-growing construction above.
 
-All three. So `561` is a Carmichael number, confirmed not by testing it against every possible base — an impossible task — but by a single, finite, mechanical check on its prime factors. Korselt turned an infinite verification into a finite one. That is the magic.
+Two operations on filtrations sit at the heart of the story.
 
-The deepest and most surprising part of Korselt's theorem is the **forward direction**: *if* a number fools Fermat's test on every base, *then* its prime factors must satisfy the divisibility condition `(p − 1) ∣ (n − 1)`. Why should fooling a test about powers force such a clean arithmetic relationship? This article is about that "why," and about a fully rigorous, machine-checked proof of exactly this implication.
+**Smoothing (the shift).** Pick a non-negative number `a`. The *shift by `a`*
+lowers every appearance time uniformly:
 
-## From "all bases" to "all units"
+> `(shift a F).weight(σ) = F.weight(σ) − a`.
 
-The first move is a change of language. Instead of speaking about every base `a` modulo `n`, we speak about the *units* of the ring `ℤ/nℤ` — the numbers from `0` to `n − 1` that have a multiplicative inverse, which are precisely the ones coprime to `n`. These units form a group under multiplication, written `(ℤ/nℤ)ˣ`. Fermat's test, applied to all coprime bases, becomes the single statement:
+Everything is born `a` units earlier. In the tropical dictionary this is the
+additive smoothing operator; in the ball-growing picture it is what you see if you
+start with the balls already grown to radius `a`. Crucially, smoothing respects
+both governing rules: lowering every weight by the same amount preserves order and
+keeps the ground grounded.
 
-> **Universal Fermat condition:** every unit `u` of `ℤ/nℤ` satisfies `u^(n−1) = 1`.
+**Relabeling (the comap).** Suppose you have a dictionary `e` that translates every
+label in one vocabulary into a unique label in another, and back again — a perfect
+one-to-one correspondence, what mathematicians call an *equivalence*. Given a
+filtration `F` written in the second vocabulary, you can *pull it back* into the
+first: to find the appearance time of a simplex `σ` in your vocabulary, translate
+its vertices through the dictionary and look up the time in `F`:
 
-This is exactly what it means for `n` to fool Fermat's test on every base it can. Our goal is to extract, from this one group-theoretic fact, the arithmetic consequence `(p − 1) ∣ (n − 1)` for each prime `p ∣ n`.
+> `(comap e F).weight(σ) = F.weight( e(σ) )`.
 
-The result we prove is precise and unconditional in its arithmetic core:
+This is renaming, formalized. It is the act of relabeling your cell towers,
+shuffling your genomes, permuting your neurons.
 
-> **Main theorem (the arithmetic heart of Korselt).** Let `n` be a positive integer and let `p` be a prime dividing `n`. If every unit `u` of `ℤ/nℤ` satisfies `u^(n−1) = 1`, then `(p − 1)` divides `(n − 1)`.
+---
 
-Interestingly, the squarefreeness hypothesis — usually quoted as part of Korselt's criterion — is *not needed* for this particular step. The divisibility `(p − 1) ∣ (n − 1)` follows from the unit condition alone. Squarefreeness enters elsewhere in the full criterion (it is what lets the local conditions glue back into a global one), but the local-divisibility extraction is cleaner than the textbook statement suggests. Discovering that a hypothesis is unnecessary is one of the quiet pleasures of building a proof carefully from the ground up.
+## How different are two shapes? The interleaving distance
 
-## The proof in three movements
+To say "the same shape" we need a way to measure *how far apart* two filtrations
+are. The accepted answer is the **interleaving distance**, and it is elegant.
 
-The argument has the elegance of a good chess combination: three moves, each natural, that together force the conclusion.
+Two filtrations `F` and `G` are said to be **δ-interleaved** if each can be made to
+sit inside the other after a smoothing by `δ`: everything that has appeared in `F`
+by scale `t` has appeared in `G` by scale `t + δ`, and vice versa. The smaller the
+`δ` you can get away with, the more alike the two filtrations are. The
+**interleaving distance** is the smallest such `δ`:
 
-### Movement 1: Pushing the condition down to `p`
+> `interleavingDist(F, G) = inf { δ ≥ 0 : F and G are δ-interleaved }`.
 
-We know something about the big group `(ℤ/nℤ)ˣ`. We want to know something about the small group `(ℤ/pℤ)ˣ`. The bridge between them is **reduction modulo `p`**. Because `p` divides `n`, there is a natural ring map `ℤ/nℤ → ℤ/pℤ` (just reduce further), and it restricts to a group homomorphism on units,
+For the appearance-time filtrations we are discussing, this distance has a wonderfully
+concrete face: it is simply the largest disagreement in appearance times across all
+simplices,
 
-> `reduce : (ℤ/nℤ)ˣ → (ℤ/pℤ)ˣ`.
+> `interleavingDist(F, G) = sup_σ | F.weight(σ) − G.weight(σ) |`.
 
-The crucial fact is that this map is **surjective** — every unit modulo `p` is the image of some unit modulo `n`. This is not obvious: lifting a number coprime to `p` to a number coprime to *all* the prime factors of `n` requires a Chinese-Remainder-style argument. But it is true, and once we have it, the universal Fermat condition transports downward. Take any unit `v` of `ℤ/pℤ`. Pull it back to a unit `u` of `ℤ/nℤ` with `reduce(u) = v`. Then
+If `F` and `G` never differ by more than `δ` on any simplex, they are
+`δ`-interleaved; and the worst single simplex sets the distance. This is the
+quantity proved stable under perturbation in the famous stability theorems of
+topological data analysis — wiggle your data a little and the persistence
+fingerprint moves only a little. Here it is the stage on which our two principles
+play out.
 
-> `v^(n−1) = reduce(u)^(n−1) = reduce(u^(n−1)) = reduce(1) = 1`.
+Two immediate consequences anchor everything else:
 
-So *every* unit `v` modulo `p` also satisfies `v^(n−1) = 1`. We have shifted the entire condition onto the small, well-understood group `(ℤ/pℤ)ˣ`.
+- **A shift moves you by exactly its size.** Smoothing a filtration by `a` displaces
+  it by precisely `a`: `interleavingDist(F, shift a F) = a`. Every simplex moved by
+  the same `a`, so the worst disagreement *is* `a`. The shift is a clean, calibrated
+  ruler.
+- **The distance is genuinely a distance.** It is zero between a filtration and
+  itself, it is symmetric, and it satisfies the triangle inequality — the
+  hallmarks of a metric (here an *extended* one, since infinite distances are
+  allowed for infinitely large vocabularies).
 
-### Movement 2: The order divides the exponent
+---
 
-Here we use a foundational principle of group theory, true in any monoid:
+## The first principle: renaming changes nothing
 
-> **Lemma.** If every element `g` of a group satisfies `g^m = 1`, then the *order* of every element — the smallest positive power that returns it to the identity — divides `m`.
+Now the centerpiece. Take any two filtrations `F` and `G` in some vocabulary, and
+any perfect dictionary `e`. Relabel both. The claim is that they are exactly as
+interleaved as before — neither more nor less:
 
-The order of `g` is the period of its cycle of powers; if `g^m = 1`, then `m` must be a whole number of full periods, so the order divides `m`. Applied with `m = n − 1`, this tells us that the order of every unit modulo `p` divides `n − 1`.
+> **Relabeling invariance of interleaving.** For every renaming `e` and every
+> scale `δ`, the relabeled pair `comap e F` and `comap e G` is δ-interleaved if and
+> only if the original pair `F` and `G` is.
 
-### Movement 3: Cyclicity delivers the punchline
+This biconditional is the technical heart, and the reason it holds is the reason
+renaming *ought* to be invisible: a witness that `F` slides into `G` after
+smoothing translates, vertex by vertex through the dictionary `e`, into a witness
+for the relabeled pair, and the dictionary's inverse translates it back. Nothing is
+created or destroyed in translation.
 
-The final ingredient is a jewel of classical number theory, going back to Gauss:
+From this single equivalence, the quantitative statements fall out at once:
 
-> **The group `(ℤ/pℤ)ˣ` is cyclic**, of order exactly `p − 1`.
+> **Distances are renaming-invariant.**
+> `interleavingDist(comap e F, comap e G) = interleavingDist(F, G)`,
+> and the same holds for the version that allows infinite distances.
 
-"Cyclic" means there is a single generator `g` — a *primitive root* modulo `p` — whose powers run through every nonzero residue before repeating. Its order is therefore the full size of the group: `p − 1`.
+The infimum of a set of admissible `δ`'s cannot change if the *set* of admissible
+`δ`'s does not change — and we just proved it does not. So the number is identical.
+In plain terms: **the interleaving distance is blind to labels.** It is a property
+of the shape, not of the spreadsheet.
 
-Now combine the movements. By Movement 1, this generator `g` satisfies `g^(n−1) = 1`. By Movement 2, its order divides `n − 1`. But its order *is* `p − 1`. Therefore
+A pleasant compatibility lemma rides alongside: **smoothing and renaming commute.**
+Whether you smooth first and then relabel, or relabel first and then smooth, you
+land on exactly the same filtration:
 
-> `(p − 1) ∣ (n − 1)`.
+> `comap e (shift a F) = shift a (comap e F)`.
 
-That is exactly Korselt's local condition. The three movements — *push down, extract the order, invoke the primitive root* — convert a statement about all powers into a statement about pure divisibility. The proof is complete.
+The two fundamental operations don't interfere. This is the kind of "naturality"
+that makes a construction trustworthy: it behaves the same no matter the order in
+which you apply the moves.
 
-## Why the primitive root is the hero
+---
 
-It is worth pausing on the role of cyclicity, because it is what makes the whole thing work. If `(ℤ/pℤ)ˣ` were some complicated group, knowing that every element's order divides `n − 1` would only tell us that the *exponent* of the group (the least common multiple of all orders) divides `n − 1`. That could be much smaller than `p − 1`. The conclusion `(p − 1) ∣ (n − 1)` would fail.
+## Quotients: when "the same shape" becomes a single point
 
-But because there is a single element whose order is the *entire* group size `p − 1`, the exponent and the group order coincide. The existence of a primitive root is precisely what upgrades "the exponent divides `n − 1`" to "`p − 1` divides `n − 1`." Gauss's theorem on primitive roots is doing the heavy lifting, even though it appears only in the final line.
+Here the story deepens. If two filtrations have interleaving distance *zero*, they
+are, for every purpose that the distance can detect, identical — even if their
+weight functions differ on some technicality. The honest thing to do is to *glue
+them together*, collapsing each family of distance-zero filtrations into a single
+point. The result is a new space — call it the space of *shape classes* — in which
+the interleaving distance becomes a true, point-separating metric: distinct classes
+sit at strictly positive distance, and the only way to be at distance zero is to be
+the same class.
 
-## The bridge in context
+The renaming invariance survives this collapse perfectly:
 
-This result is what we call an **arithmetic bridge**. It does not, by itself, classify Carmichael numbers — that requires gluing the local conditions back together and handling squarefreeness, the converse direction, and the composite-versus-prime distinction. What it does is forge one indispensable link in the chain, and forge it with complete rigor: every step, from the surjectivity of reduction to the cyclicity of `(ℤ/pℤ)ˣ`, is verified down to the foundations.
+> **Invariance descends to shape classes.** The genuine distance between the class
+> of `comap e F` and the class of `comap e G` equals the genuine distance between
+> the class of `F` and the class of `G`.
 
-The payoff is conceptual clarity. Carmichael numbers are mysterious when you meet them as raw counterexamples — `561`, `1105`, `1729`, `2465`, a thinning sequence of impostors with no obvious pattern. Korselt's criterion reveals the pattern: they are exactly the squarefree composites whose prime factors `p` all satisfy `(p − 1) ∣ (n − 1)`. The arithmetic bridge proved here is the reason the "`(p − 1) ∣ (n − 1)`" clause has to be there. It is not a coincidence or an empirical observation; it is forced by the structure of finite multiplicative groups.
+So even in the cleaned-up world of shape classes — the natural home of persistence,
+where Mathlib-style metric topology, completeness, and continuity all become
+available — relabeling remains invisible. The shape is the shape.
 
-## A wider view
+---
 
-The pattern of this proof — *take a condition on a big object, transport it along a surjection to a small object, then use the small object's special structure to draw a sharp conclusion* — recurs throughout mathematics. It is the same reflex that lets topologists compute the homotopy groups of spheres from exact sequences, where the vanishing of the "ends" of a sequence forces a map in the middle to be an isomorphism. It is the same reflex that lets geometers read off curvature from how probability distributions deform. The local-to-global, big-to-small dance is one of the great unifying themes of modern mathematics, and Korselt's criterion is one of its most charming instances.
+## The second principle: measure once, transport everywhere
 
-There is also a practical epilogue. Modern primality tests — the Miller–Rabin test, the Solovay–Strassen test, and the deterministic AKS algorithm — are all, in part, sophisticated responses to the existence of Carmichael numbers. Knowing exactly *why* the impostors exist, and exactly which structural condition they satisfy, is what allowed cryptographers and computer scientists to design tests the impostors cannot fool. The clean fingerprint `(p − 1) ∣ (n − 1)` is not just a theorem; it is a tool that shaped how we secure digital communication.
+The final movement of the piece is the most useful in practice. Suppose you have
+done the hard work of *exactly* computing some self-smoothing distance for a
+particular filtration `F`: you have established, say, that smoothing `F` by `a`
+moves it by precisely `a`,
 
-## The moral
+> `interleavingDist(F, shift a F) = a`.
 
-Fermat gave us a test that almost works. The Carmichael numbers are the cracks in it. And Korselt, with an argument that fits in a paragraph once you see it, explained the cracks completely. The mathematics rewards us with something better than a faster test: it gives us *understanding*. We no longer fear the impostors, because we know precisely what they are made of — squarefree products of primes locked together by the single elegant relation `(p − 1) ∣ (n − 1)`.
+This is the kind of sharp, hard-won equality (not just an inequality) that takes
+real effort to pin down for a specific filtration. The **transport principle** says
+you never have to do that work twice:
 
-That is the difference between detecting a counterfeit and understanding the mint. Korselt understood the mint. And now, line by verified line, so do we.
+> **Transport across renamings.** If `interleavingDist(F, shift a F) = a`, then for
+> *every* relabeling `e`,
+> `interleavingDist(comap e F, shift a (comap e F)) = a`.
+
+The proof is a two-line miracle made possible by the lemmas above: smoothing
+commutes with relabeling, so `shift a (comap e F)` is the same as
+`comap e (shift a F)`; and relabeling preserves distance, so the equation simply
+carries over. One exact measurement, infinitely many free corollaries — one for
+every way of renaming your data.
+
+And it goes further still, all the way down to the quotient:
+
+> **Transport into shape classes.** Any exact self-smoothing distance for `F`
+> transfers to the genuine distance between the shape classes of `comap e F` and
+> its smoothing.
+
+So a single precise statement about one filtration becomes a precise statement
+about an entire orbit of renamed filtrations *and* their idealized shape classes,
+with no additional labor.
+
+---
+
+## Why this matters
+
+It is tempting to wave all of this away as bookkeeping. It is not. Every applied
+pipeline in topological data analysis implicitly assumes that the answer doesn't
+depend on the arbitrary order in which the data arrived, or the arbitrary names of
+the samples. When that assumption is *proved* rather than presumed, three things
+happen.
+
+First, **algorithms become trustworthy.** If your software relabels points for
+efficiency — sorting them, hashing them, distributing them across machines — you
+now have a guarantee that the relabeling cannot corrupt the geometric answer.
+
+Second, **computation becomes cheaper.** The transport principle is a license to
+compute a distance on the most convenient representative of a shape and read off
+the answer for all the others. In a world where these computations are expensive,
+free corollaries are precious.
+
+Third, and most deeply, **the right objects come into focus.** By collapsing
+distance-zero filtrations into shape classes, we stop studying spreadsheets and
+start studying shapes. The interleaving distance, once a comparison of two
+arbitrary tables of numbers, becomes a genuine metric on a space of pure geometric
+content — exactly the setting in which the great stability theorems of the field
+live, and exactly the setting that the renaming and transport principles make
+rigorous.
+
+There is a tropical undertone to the whole composition. In min-plus arithmetic the
+shift is addition and interleaving is a tropical comparison; the fact that renaming
+commutes with smoothing is the statement that relabeling is a *tropical-linear*
+symmetry of the whole structure. Persistence, smoothing, and the freedom to rename
+turn out to be three facets of one min-plus gem.
+
+The data has a shape. It does not care what you call it. And once you have measured
+that shape once, carefully, you have measured it everywhere.

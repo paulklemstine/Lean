@@ -1,227 +1,422 @@
-# The Arithmetic Heart of Korselt's Criterion: A Verified Bridge from the Universal Fermat Condition to Local Divisibility
+# Relabeling Invariance and Quotient Transport for the Categorical Tropical Rips Interleaving Geometry
 
 ## Abstract
 
-We present a fully rigorous development of the central arithmetic implication underlying Korselt's criterion for Carmichael numbers. The classical criterion states that a composite integer `n` is a Carmichael number if and only if `n` is squarefree and `(p − 1) ∣ (n − 1)` for every prime `p ∣ n`. The deep direction is the extraction of the *local divisibility* conditions from the *global* behavior of `n` under exponentiation. We isolate this extraction as a self-contained theorem: if every unit of the residue ring `ℤ/nℤ` satisfies `u^(n−1) = 1` — the universal Fermat condition restricted to coprime bases — then for every prime divisor `p` of `n` one has `(p − 1) ∣ (n − 1)`. The proof proceeds in three movements: (i) transport of the universal Fermat condition along the surjective unit-reduction homomorphism `(ℤ/nℤ)ˣ ↠ (ℤ/pℤ)ˣ`; (ii) the elementary order-divides-exponent principle valid in any monoid; and (iii) the cyclicity of `(ℤ/pℤ)ˣ`, which forces the order of a primitive root to equal `p − 1`. A noteworthy by-product of the formal development is that the squarefreeness hypothesis, customarily quoted as part of Korselt's criterion, is *not* required for this local-divisibility step. We give full statements of all supporting lemmas, complete proof sketches, an algorithmic interpretation as a Carmichael-number recognizer, and a discussion of the broader "transport along a surjection" proof pattern.
+We develop a compact, fully formalized theory of **transport-compatibility and
+invariance** for the interleaving geometry of filtrations, read through a
+categorical–tropical lens. A *filtration* on a label set is a monotone, grounded
+real weighting of finite simplices — equivalently a tropical (min-plus) weight on
+the simplicial cone. Two endofunctors act on filtrations: the **shift** (additive
+smoothing) `shift a`, which lowers every weight by a constant `a ≥ 0`, and the
+**relabeling** functor `comap e` along an equivalence of label sets `e : α ≃ β`,
+which pulls a filtration back through the induced map on simplices. Our principal
+results are: (i) **functorial commutation** `comap e (shift a F) = shift a (comap e F)`;
+(ii) **relabeling invariance of interleaving** — for every scale `δ`, `comap e F`
+and `comap e G` are `δ`-interleaved iff `F` and `G` are, whence both the real-valued
+interleaving distance and its `ℝ≥0∞`-valued refinement are invariant under
+relabeling; (iii) **descent to the separation quotient**, where the interleaving
+pseudometric becomes a genuine extended metric and relabeling remains an isometry on
+classes; and (iv) a **transport principle** that propagates any exact
+self-shift-distance equation `interleavingDist(F, shift a F) = a` verbatim to every
+relabeling `comap e F` and to the corresponding quotient classes. The development
+introduces no new analytic machinery: it rests on a filtration extensionality
+lemma, the standard interleaving/pseudometric API, and the separation-quotient
+construction. The upshot is a clean statement that the interleaving distance is a
+true invariant of the *shape* of data, blind to the naming of data points, together
+with a mechanism to reuse exact computations across entire relabeling orbits.
 
-**Keywords:** Carmichael numbers, Korselt's criterion, Fermat pseudoprimes, cyclic groups, primitive roots, unit groups, order of an element, primality testing.
-
-**MSC 2020:** 11A51 (primality), 11A07 (congruences; primitive roots), 20K01 (finite abelian groups).
+**Keywords.** persistent homology, Vietoris–Rips, interleaving distance, tropical
+geometry, filtration, separation quotient, extended metric space, functoriality.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Fermat's test and its impostors
+Topological data analysis (TDA) extracts multiscale geometric features — connected
+components, loops, voids — from data by interpolating a one-parameter family of
+spaces, a *filtration*, and recording the births and deaths of homological
+features across scales. The comparison of two such families is governed by the
+**interleaving distance**, the canonical (extended pseudo-)metric on filtrations and
+on the persistence modules they generate, and the object whose stability under data
+perturbation underlies the entire field.
 
-Fermat's Little Theorem asserts that for a prime `p` and an integer `a` with `p ∤ a`,
-```
-a^(p−1) ≡ 1 (mod p).
-```
-The contrapositive yields a one-sided primality test: if `a^(n−1) ≢ 1 (mod n)` for some base `a` coprime to `n`, then `n` is composite. The test is computationally cheap, but it admits *absolute* counterexamples: composite numbers `n` for which `a^(n−1) ≡ 1 (mod n)` for **every** `a` coprime to `n`. These are the **Carmichael numbers**. The smallest is `561 = 3 · 11 · 17`; the sequence continues `1105, 1729, 2465, 2821, 6601, …`, and Alford, Granville, and Pomerance proved in 1994 that there are infinitely many.
+A foundational expectation, almost always left tacit in applications, is that the
+interleaving geometry depends only on the *shape* encoded by a filtration and not on
+the arbitrary labeling of the underlying data points. Sorting, hashing, sharding,
+or otherwise permuting samples is ubiquitous in practice; correctness of any such
+pipeline silently presumes that relabeling cannot alter the geometric answer. This
+paper isolates and proves that expectation, in a form strong enough to be reused
+mechanically.
 
-### 1.2 Korselt's criterion
+We work in a **categorical–tropical** presentation of the Rips interleaving arc. A
+filtration is a tropical (min-plus) weighting of simplices; the additive smoothing
+operator and the relabeling operator are the natural endofunctors; and interleaving
+distance is the induced extended pseudometric. In this language we prove four
+things:
 
-The structural classification is due to A. Korselt (1899):
+1. **Commutation** of smoothing and relabeling (Theorem 3.1).
+2. **Relabeling invariance** of interleaving and of the (real and `ℝ≥0∞`) distances
+   (Theorems 4.1–4.3).
+3. **Descent to the separation quotient**, where interleaving becomes a genuine
+   extended metric and relabeling remains an isometry (Theorem 5.1).
+4. A **transport principle** propagating exact self-shift-distance equations across
+   relabelings and into the quotient (Theorems 6.1–6.2).
 
-> **Korselt's criterion.** A composite integer `n > 1` is a Carmichael number if and only if `n` is squarefree and for every prime `p ∣ n` we have `(p − 1) ∣ (n − 1)`.
+All statements are theorems with complete formal proofs; below we give precise
+statements and self-contained proof sketches.
 
-The criterion replaces an infinite verification (over all coprime bases) by a finite one (over the prime factors of `n`). Its mathematical content splits into two directions. The *converse* (Korselt conditions ⟹ Carmichael) is a Chinese-Remainder-Theorem assembly. The *forward* direction (Carmichael ⟹ Korselt conditions) is where the structural insight lives: it must manufacture the clean divisibility relation `(p − 1) ∣ (n − 1)` from the mere fact that `n` fools Fermat's test universally.
+### 1.1 Context and motivation
 
-### 1.3 Contribution
+The interleaving distance was introduced to compare persistence modules and, more
+generally, functors out of a poset into a target category. Its defining feature is
+that it is computed not by a single optimal matching but by the existence of a pair
+of shift-compatible comparison morphisms in both directions. This makes it robust
+and functorial, but it also means that even basic invariance properties must be
+verified at the level of the comparison data rather than asserted by analogy with
+ordinary metrics. The present work treats one such property — invariance under
+relabeling of the underlying ground set — with the care it deserves, and turns it
+into reusable infrastructure.
 
-We formalize and prove, from first principles against a modern proof-assistant library, the **arithmetic core** of the forward direction:
-
-> **Theorem A (Local divisibility from the universal Fermat condition).**
-> Let `n ≥ 1` and let `p` be a prime with `p ∣ n`. If every unit `u ∈ (ℤ/nℤ)ˣ` satisfies `u^(n−1) = 1`, then `(p − 1) ∣ (n − 1)`.
-
-We present Theorem A together with three supporting lemmas, each stated in full generality and proved. The development is entirely constructive at the level of group theory and requires no analytic input. We further observe (Section 6) that **squarefreeness is not used** in the proof of Theorem A, a small but genuine sharpening of the usual presentation.
-
----
-
-## 2. Preliminaries and notation
-
-Throughout, `n` and `p` are positive integers with `p` prime and `p ∣ n`. We write:
-
-- `ℤ/nℤ` for the ring of integers modulo `n`;
-- `(ℤ/nℤ)ˣ` for its **group of units**, i.e. the multiplicative group of residues coprime to `n`. Its order is Euler's totient `φ(n)`;
-- `orderOf g` for the **order** of an element `g` of a monoid: the least `k > 0` with `g^k = 1` (and `0` if no such `k` exists, a case that does not arise in a finite group);
-- `1` for the multiplicative identity of whichever group is in scope.
-
-We use the following two standard structural facts, both classical:
-
-- **(Reduction homomorphism.)** For `p ∣ n` there is a ring homomorphism `ℤ/nℤ → ℤ/pℤ` given by further reduction, inducing a group homomorphism on units, the **unit-reduction map**
-  ```
-  reduce : (ℤ/nℤ)ˣ → (ℤ/pℤ)ˣ.
-  ```
-- **(Gauss's primitive root theorem.)** For a prime `p`, the group `(ℤ/pℤ)ˣ` is **cyclic** of order `p − 1`.
-
----
-
-## 3. Supporting lemmas
-
-### 3.1 Order divides any universal exponent
-
-The first lemma is purely monoid-theoretic and isolates the elementary principle that an order divides every exponent annihilating the whole structure.
-
-> **Lemma 1 (Order divides a universal exponent).**
-> Let `M` be a monoid and `m ∈ ℕ`. If `g^m = 1` for every `g ∈ M`, then for every `g ∈ M`, `orderOf g ∣ m`.
-
-*Proof sketch.* Fix `g`. By hypothesis `g^m = 1`. The defining universal property of the order of an element states that `orderOf g ∣ m` precisely when `g^m = 1`. Apply it. ∎
-
-The same underlying fact (`g^m = 1 ⟹ orderOf g ∣ m`) is the workhorse; Lemma 1 simply packages it for a hypothesis quantified over all elements, which is exactly the shape produced by the universal Fermat condition.
-
-### 3.2 Homomorphisms contract orders
-
-The second lemma records that group homomorphisms can only shrink (divide) orders. It is not logically required for the streamlined proof of Theorem A but clarifies why transporting the condition is legitimate and is of independent interest.
-
-> **Lemma 2 (Orders divide along homomorphisms).**
-> Let `φ : G → H` be a group homomorphism. Then for every `g ∈ G`, `orderOf (φ g) ∣ orderOf g`.
-
-*Proof sketch.* Let `k = orderOf g`, so `g^k = 1`. Then
-```
-(φ g)^k = φ(g^k) = φ(1) = 1,
-```
-using that `φ` preserves powers and the identity. By the order-divides-exponent property, `orderOf (φ g) ∣ k`. ∎
-
-### 3.3 Surjectivity of unit reduction
-
-The third lemma is the arithmetic crux that connects the global group to the local one.
-
-> **Lemma 3 (Surjectivity of unit reduction).**
-> Let `n ≥ 1` and `p ∣ n`. The unit-reduction homomorphism
-> ```
-> reduce : (ℤ/nℤ)ˣ → (ℤ/pℤ)ˣ
-> ```
-> is surjective.
-
-*Proof sketch.* This is the multiplicative content of the Chinese Remainder Theorem. Given a residue `v` coprime to `p`, one must produce an integer `u` coprime to *every* prime power dividing `n` and congruent to `v` modulo `p`. Writing `n = p^a · m` with `gcd(p, m) = 1`, choose `u ≡ v (mod p^a)` (lifting a unit mod `p` to a unit mod `p^a`, possible since the reduction `(ℤ/p^aℤ)ˣ ↠ (ℤ/pℤ)ˣ` is itself surjective) and `u ≡ 1 (mod m)`; such a `u` exists by CRT and is a unit mod `n` mapping to `v`. ∎
-
-In the formal development this is supplied directly by the library's surjectivity result for the canonical units map associated to a divisibility `p ∣ n`.
+There are two reasons this is more than pedantry. First, persistence pipelines
+routinely permute, sort, hash, and shard their inputs; a guarantee that these label
+manipulations cannot affect the geometric answer is precisely a relabeling-invariance
+theorem. Second, exact (as opposed to merely bounded) interleaving computations are
+rare and valuable; a principle that converts one exact computation into infinitely
+many — one per relabeling, plus one per shape class — multiplies the value of each
+hard-won equality. Both reasons converge on the same small set of structural
+lemmas, which we now make precise.
 
 ---
 
-## 4. The main theorem
+## 2. Definitions
 
-> **Theorem A (Local divisibility from the universal Fermat condition).**
-> Let `n ≥ 1` and let `p` be prime with `p ∣ n`. Suppose
-> ```
-> (★)   ∀ u ∈ (ℤ/nℤ)ˣ,  u^(n−1) = 1.
-> ```
-> Then `(p − 1) ∣ (n − 1)`.
+Throughout, `α`, `β`, `γ` denote label types (the vertex sets of the simplicial
+data). A *simplex* on `α` is a finite subset `σ` of `α`; the simplices form the
+lattice of finite subsets under inclusion.
 
-### 4.1 Proof
+### 2.1 Filtrations
 
-**Movement 1 — Transport (★) to `(ℤ/pℤ)ˣ`.**
-We claim every `v ∈ (ℤ/pℤ)ˣ` satisfies `v^(n−1) = 1`. By Lemma 3, `reduce` is surjective, so choose `u ∈ (ℤ/nℤ)ˣ` with `reduce(u) = v`. Since `reduce` is a group homomorphism it preserves powers and the identity, hence
+**Definition 2.1 (Filtration).** A *filtration* `F` on `α` is a function
+`weight : Finset α → ℝ` together with two properties:
+
+- **Monotonicity.** `σ ⊆ τ ⟹ weight(σ) ≤ weight(τ)`.
+- **Grounding.** `weight(∅)` is normalized at the bottom of the family
+  (`weight_empty`).
+
+Monotonicity is the order-preservation of appearance times: a face cannot appear
+later than a coface. In the min-plus reading, `weight` is a tropical weighting on
+the simplicial cone, and the sublevel family `{ σ : weight(σ) ≤ t }` is the
+sublevel complex at scale `t`.
+
+**Lemma 2.2 (Extensionality).** Two filtrations are equal as soon as their weight
+functions agree: if `F.weight = G.weight` then `F = G`.
+
+*Proof sketch.* The monotonicity and grounding fields are propositions
+(proof-irrelevant), so equality of the data field `weight` determines the structure
+up to definitional equality; destructuring both filtrations and substituting the
+hypothesis closes the goal. ∎
+
+### 2.2 The shift (smoothing) functor
+
+**Definition 2.3 (Shift).** For `a ≥ 0` and a filtration `F` on `α`, the *shift*
+`shift a F` is the filtration with
+
+> `(shift a F).weight(σ) = F.weight(σ) − a`.
+
+Monotonicity and grounding are inherited because subtracting a constant preserves
+order and the normalization (`0 ≤ a` ensures the grounding inequality persists).
+Operationally, the sublevel complex of `shift a F` at scale `t` is the sublevel
+complex of `F` at scale `t + a`; smoothing advances every appearance by `a`.
+
+### 2.3 The relabeling (comap) functor
+
+**Definition 2.4 (Comap / relabeling).** For an equivalence `e : α ≃ β` and a
+filtration `F` on `β`, the *relabeling* `comap e F` is the filtration on `α` with
+
+> `(comap e F).weight(σ) = F.weight( map(e)(σ) )`,
+
+where `map(e)(σ)` is the image of the simplex `σ` under the embedding induced by
+`e`. Grounding follows since `map(e)(∅) = ∅`; monotonicity follows because `map(e)`
+is inclusion-preserving (`σ ⊆ τ ⟹ map(e)(σ) ⊆ map(e)(τ)`), and `F` is monotone.
+Thus `comap` is a contravariant functor on the groupoid of label equivalences.
+
+### 2.4 Interleaving and interleaving distance
+
+Two filtrations on the same label set are compared via their sublevel families.
+
+**Definition 2.5 (δ-interleaving).** For `δ ≥ 0`, filtrations `F` and `G` are
+*δ-interleaved* if the sublevel complex of `F` at every scale `t` is contained in
+the sublevel complex of `G` at `t + δ`, and symmetrically with the roles reversed.
+Concretely, for every simplex and scale the appearance times satisfy mutual
+`δ`-domination.
+
+**Definition 2.6 (Interleaving distances).** The *interleaving distance* is
+
+> `interleavingDist(F, G) = inf { δ ≥ 0 : F and G are δ-interleaved }`,
+
+a real-valued quantity, and `eInterleavingDist(F, G)` is its `ℝ≥0∞`-valued
+refinement (allowing `+∞` when no finite interleaving exists). For the sublevel
+filtrations considered here, `interleavingDist(F, G)` coincides with the uniform
+(sup) norm of the weight difference, `sup_σ |F.weight(σ) − G.weight(σ)|`; this
+identity is the engine behind the explicit values in §6.
+
+**Proposition 2.7 (Pseudometric / extended metric structure).** `eInterleavingDist`
+is an extended pseudometric on filtrations: it is reflexive-zero, symmetric, and
+satisfies the triangle inequality. It need not separate points: two filtrations may
+have distance zero without being equal.
+
+---
+
+## 3. Smoothing commutes with relabeling
+
+**Theorem 3.1 (`shift_comap`).** For every equivalence `e : α ≃ β`, every `a ≥ 0`,
+and every filtration `F` on `β`,
+
+> `comap e (shift a F) = shift a (comap e F)`.
+
+*Proof sketch.* By extensionality (Lemma 2.2) it suffices to compare weight
+functions. On a simplex `σ`,
+
 ```
-v^(n−1) = reduce(u)^(n−1) = reduce(u^(n−1)) = reduce(1) = 1,
-```
-the third equality by (★). This proves the local universal condition
-```
-(★ₚ)   ∀ v ∈ (ℤ/pℤ)ˣ,  v^(n−1) = 1.
+(comap e (shift a F)).weight(σ) = (shift a F).weight(map(e)(σ))
+                                = F.weight(map(e)(σ)) − a,
+(shift a (comap e F)).weight(σ) = (comap e F).weight(σ) − a
+                                = F.weight(map(e)(σ)) − a.
 ```
 
-**Movement 2 — Extract an order divisibility.**
-Apply Lemma 1 to the finite group `M = (ℤ/pℤ)ˣ` with exponent `m = n − 1`. Condition `(★ₚ)` is exactly the hypothesis of Lemma 1, so for every `g ∈ (ℤ/pℤ)ˣ`,
-```
-orderOf g ∣ (n − 1).
-```
+The two are syntactically identical, so the weight functions agree and the
+filtrations are equal. ∎
 
-**Movement 3 — Invoke cyclicity.**
-By Gauss's theorem, `(ℤ/pℤ)ˣ` is cyclic of order `p − 1`. Cyclicity provides a generator `g` whose order equals the group order; formally, there exists `g` with `orderOf g = |(ℤ/pℤ)ˣ| = p − 1` (using `|(ℤ/pℤ)ˣ| = p − 1`). For this `g`, Movement 2 gives `orderOf g ∣ (n − 1)`, and substituting `orderOf g = p − 1` yields
-```
-(p − 1) ∣ (n − 1).
-```
+This is the naturality square of the two endofunctors: the diagram of "smooth then
+relabel" versus "relabel then smooth" commutes on the nose. It is the structural
+fact that powers the transport principle of §6.
+
+---
+
+## 4. Relabeling invariance of interleaving
+
+### 4.1 The interleaving biconditional
+
+**Theorem 4.1 (`Interleaved_comap_iff`).** For every equivalence `e : α ≃ β`,
+filtrations `F, G` on `β`, and scale `δ`,
+
+> `comap e F` and `comap e G` are δ-interleaved ⟺ `F` and `G` are δ-interleaved.
+
+*Proof sketch.* Unfold the sublevel-faces definition of interleaving on both sides.
+For the forward direction, a containment witness for the relabeled filtrations at
+scale `t` is transported to a witness for `F, G` by applying `map(e.symm)` to each
+simplex: since `map(e)` and `map(e.symm)` are mutually inverse bijections on
+simplices and preserve the sublevel conditions, the relabeled containment is carried
+back to the original. The reverse direction applies `map(e)` directly. The two
+sublevel inclusions (each direction of the interleaving) are handled symmetrically.
 ∎
 
-### 4.2 Remarks on the proof
+The conceptual content is that relabeling is an *isomorphism of the sublevel-complex
+diagrams*; it cannot change which scale shifts `δ` realize an interleaving, because
+it merely renames the simplices participating in each containment.
 
-- **No squarefreeness.** Nowhere did the argument use that `n` is squarefree. The hypothesis `(★)` together with `p ∣ n` suffices. We retain a squarefreeness parameter in the formal interface (to match the conventional statement of Korselt's criterion), but it is provably inert for this step. See Section 6.
-- **Where the strength comes from.** The conclusion is `(p − 1) ∣ (n − 1)`, not merely `exponent((ℤ/pℤ)ˣ) ∣ (n − 1)`. The upgrade is supplied entirely by cyclicity: in a cyclic group the exponent equals the order. Without a primitive root, Movement 3 collapses and one obtains only the weaker statement about the group exponent.
+### 4.2 Invariance of the distances
 
----
+**Theorem 4.2 (`interleavingDist_comap`).** For every equivalence `e : α ≃ β` and
+filtrations `F, G` on `β`,
 
-## 5. Algorithmic interpretation
+> `interleavingDist(comap e F, comap e G) = interleavingDist(F, G)`.
 
-Theorem A is the soundness lemma behind a finite **Carmichael recognizer**. The classical criterion, read algorithmically, is:
+*Proof sketch.* The interleaving distance is the infimum over the set
+`{ δ : F, G are δ-interleaved }`. By Theorem 4.1 this set is identical for the
+relabeled and original pairs, so the two infima coincide. ∎
 
-```
-function isCarmichael(n):
-    if n < 3 or isPrime(n):            return false
-    factor n = p₁^a₁ · … · p_k^a_k
-    if any aᵢ > 1:                      return false      # not squarefree
-    for each prime pᵢ:
-        if (n − 1) mod (pᵢ − 1) ≠ 0:    return false      # Korselt local condition
-    return true
-```
+**Theorem 4.3 (`eInterleavingDist_comap`).** With the same hypotheses, the
+`ℝ≥0∞`-valued interleaving distance is invariant:
 
-Theorem A guarantees that the **local condition loop is necessary**: any composite that passes the universal Fermat test (equivalently, that is a Carmichael number) must clear every `(pᵢ − 1) ∣ (n − 1)` check. Thus a number failing any single check provably fails the universal Fermat condition — the test is *complete* against Carmichael numbers. The converse direction of Korselt's criterion (CRT assembly) guarantees *soundness*: passing all checks, plus squarefreeness, is sufficient. Together they make the displayed routine an exact recognizer, with cost dominated by factoring `n`.
+> `eInterleavingDist(comap e F, comap e G) = eInterleavingDist(F, G)`.
 
-A second, base-oriented reading: the universal Fermat condition `(★)` is equivalent to `λ(n) ∣ (n − 1)`, where `λ` is the Carmichael function (the exponent of `(ℤ/nℤ)ˣ`). Theorem A is then the implication `λ(n) ∣ (n−1) ⟹ (p−1) ∣ (n−1)`, recovering each local condition from the global exponent condition.
+*Proof sketch.* Identical reasoning at the level of extended reals: the defining
+predicate set is unchanged by Theorem 4.1, so the extended infimum (taken in
+`ℝ≥0∞`, including the `+∞` case) is unchanged. ∎
 
----
-
-## 6. On the redundancy of squarefreeness
-
-We make precise the claim that squarefreeness is unnecessary in Theorem A.
-
-> **Proposition (Inertness of squarefreeness).** The conclusion `(p − 1) ∣ (n − 1)` of Theorem A holds under hypotheses `p ∣ n` and `(★)` alone; adding "`n` squarefree" neither strengthens nor is used by the proof.
-
-*Justification.* Inspect the proof of Theorem A: Movements 1–3 invoke only (i) `p ∣ n` (to obtain `reduce` and its surjectivity, Lemma 3), (ii) `(★)`, and (iii) the cyclicity and order of `(ℤ/pℤ)ˣ`, which depend only on `p` being prime. None of these mention the multiplicity of `p` in `n`. ∎
-
-This does not contradict Korselt's criterion: squarefreeness is genuinely required for the *converse* assembly (a non-squarefree `n` can satisfy all local divisibilities yet fail to be Carmichael, because `(ℤ/p^aℤ)ˣ` for `a ≥ 2` is not annihilated by `p − 1`). The point is simply that the *forward, local-divisibility extraction* — Theorem A — is logically prior to and independent of squarefreeness.
+Together these say the interleaving geometry is a **labeling-free invariant**: it is
+a function of the shape, not of any enumeration of the data.
 
 ---
 
-## 7. Worked example: `n = 561`
+## 5. Descent to the separation quotient
 
-Let `n = 561 = 3 · 11 · 17`, so `n − 1 = 560`. We verify the chain for `p = 17`.
+The pseudometric of Proposition 2.7 fails to separate points: distinct filtrations
+can sit at distance zero. The canonical remedy is the **separation quotient**, which
+collapses each distance-zero class to a point and yields a genuine extended metric
+space `IsoClass(α)`, the natural home of persistence "shape classes."
 
-1. `reduce : (ℤ/561ℤ)ˣ ↠ (ℤ/17ℤ)ˣ` is surjective (Lemma 3).
-2. Assuming `(★)` for `561` (which holds, as `561` is Carmichael), every `v ∈ (ℤ/17ℤ)ˣ` satisfies `v^560 = 1` (Movement 1).
-3. Hence every order in `(ℤ/17ℤ)ˣ` divides `560` (Movement 2).
-4. `(ℤ/17ℤ)ˣ` is cyclic of order `16`, with primitive root `g = 3` (indeed `3` has order `16` mod `17`); since `orderOf 3 = 16 ∣ 560` we conclude `16 ∣ 560` (Movement 3). Indeed `560 = 16 · 35`.
+**Theorem 5.1 (`edist_mk_comap`).** Equip filtrations with the interleaving
+pseudo-extended-metric, and let `mk` denote the quotient map to the separation
+quotient. For every equivalence `e : α ≃ β` and filtrations `F, G` on `β`,
 
-The same holds for `p = 3` (`2 ∣ 560`) and `p = 11` (`10 ∣ 560`). Conversely, `15 = 3 · 5` fails: `(5 − 1) = 4 ∤ 14 = 15 − 1`, so `15` cannot be Carmichael — and indeed it is not, e.g. `2^14 = 16384 ≡ 4 ≢ 1 (mod 15)`.
+> `edist( mk(comap e F), mk(comap e G) ) = edist( mk(F), mk(G) )`.
 
----
+*Proof sketch.* By the defining property of the separation quotient, the genuine
+extended distance between classes equals the pseudometric distance between
+representatives: `edist(mk(X), mk(Y)) = eInterleavingDist(X, Y)`. Applying this on
+both sides and invoking Theorem 4.3 yields the equality. ∎
 
-## 8. The proof pattern in a wider landscape
-
-Theorem A exemplifies a recurring three-step template:
-
-1. **Transport** a universal hypothesis from a large object to a smaller, better-understood one along a *surjection* (here, unit reduction).
-2. **Extract** a divisibility / annihilation statement using a structural invariant (here, order divides exponent).
-3. **Sharpen** the extracted statement using special structure of the target (here, cyclicity makes exponent = order).
-
-The same template recurs across mathematics. In algebraic topology, a four-term exact sequence `A → B → C → D` with vanishing ends `A, D` forces the middle map `B → C` to be an isomorphism — *transport* (exactness) plus *sharpening* (vanishing) deliver a rigid conclusion (e.g. `π₃(S²) ≅ ℤ` via the Hopf fibration). In information geometry, local Fisher-metric data is transported and sharpened into global curvature invariants. Recognizing the template is itself a payoff of careful formalization: it reveals that an apparently number-theoretic result shares its skeleton with computations far afield.
-
----
-
-## 9. Discussion and future work
-
-**Completing Korselt.** Theorem A is the local-extraction half of the forward direction. A complete formal Korselt's criterion additionally requires: (a) the converse CRT assembly; (b) the squarefreeness necessity in the *converse*; and (c) the equivalence between "Carmichael" (all bases, including non-units in the sense `a^n ≡ a`) and the universal unit condition `(★)`. Each is within reach using the same library infrastructure.
-
-**Carmichael function.** Recasting `(★)` as `λ(n) ∣ (n − 1)` and developing the Carmichael function `λ` as the group exponent would let Theorem A be stated as a clean divisibility transfer `λ(n) ∣ (n−1) ⟹ (p−1) ∣ (n−1)` and connect to Lehmer's totient problem and related open questions.
-
-**Quantitative refinements.** Building on the recognizer of Section 5, one can formalize bounds such as Erdős's heuristic for the count of Carmichael numbers up to `x`, or the Alford–Granville–Pomerance infinitude theorem — substantial targets that all rest on the local condition isolated here.
-
-**The order-contraction lemma.** Lemma 2 (orders divide along homomorphisms) is a reusable primitive; it underlies, for instance, the statement that quotient maps cannot increase order, and could anchor a small library on order behavior under morphisms.
+Thus relabeling descends to an **isometry of the quotient extended-metric space**.
+On `IsoClass(α)` the full Mathlib extended-metric topology — completeness,
+continuity, uniform structure — becomes available, and within it relabeling is
+invisible.
 
 ---
 
-## 10. Conclusion
+## 6. The transport principle
 
-We have isolated and rigorously proved the arithmetic heart of Korselt's criterion: the universal Fermat condition on the units of `ℤ/nℤ` forces, for each prime `p ∣ n`, the divisibility `(p − 1) ∣ (n − 1)`. The proof is a clean three-movement argument — transport along the surjective unit reduction, order-divides-exponent, and cyclicity of `(ℤ/pℤ)ˣ` — and, as a small bonus, reveals that the customary squarefreeness hypothesis is inert for this step. Beyond the specific result, the development showcases a transport-and-sharpen template that unifies it with computations in topology and geometry, and it lays a verified foundation on which a complete formalization of Carmichael-number theory can be built.
+We now harvest the structural lemmas into a reuse mechanism for *exact*
+self-shift-distance computations. Such equalities — distinguished from the routine
+upper bound `interleavingDist(F, shift a F) ≤ a` by asserting equality — are the
+sharp invariants one actually wants, and they can be costly to establish for a given
+filtration. The transport principle makes each one infinitely reusable.
+
+**Theorem 6.1 (Transport across relabelings, `selfShiftDist_comap`).** Let
+`e : α ≃ β`, `a ≥ 0`, and `F` a filtration on `β`. If
+
+> `interleavingDist(F, shift a F) = a`,
+
+then for the relabeling,
+
+> `interleavingDist(comap e F, shift a (comap e F)) = a`.
+
+*Proof sketch.* By Theorem 3.1, `shift a (comap e F) = comap e (shift a F)`. Hence
+`interleavingDist(comap e F, shift a (comap e F))
+= interleavingDist(comap e F, comap e (shift a F))`, which by Theorem 4.2 equals
+`interleavingDist(F, shift a F) = a`. ∎
+
+**Theorem 6.2 (Transport into the quotient, `eSelfShiftDist_transport`).** Let
+`e : α ≃ β`, `a ≥ 0`, `F` a filtration on `β`, and `d ∈ ℝ≥0∞`. If
+
+> `eInterleavingDist(F, shift a F) = d`,
+
+then the genuine extended distance between the quotient classes satisfies
+
+> `edist( mk(comap e F), mk(shift a (comap e F)) ) = d`.
+
+*Proof sketch.* Rewrite `shift a (comap e F)` as `comap e (shift a F)` via
+Theorem 3.1; pass to representatives using the separation-quotient identity
+`edist(mk(X), mk(Y)) = eInterleavingDist(X, Y)`; then apply Theorem 4.3 to move the
+`comap e` outside, reducing to `eInterleavingDist(F, shift a F) = d`. ∎
+
+**Worked instance.** For the sublevel-norm presentation of the distance, every
+simplex of `shift a F` is displaced by exactly `a`, so on any nontrivial label set
+`interleavingDist(F, shift a F) = a` (the supremum of `|−a|` over simplices is `a`).
+Theorem 6.1 then immediately yields `interleavingDist(comap e F, shift a (comap e F)) = a`
+for *every* relabeling `e`, and Theorem 6.2 propagates the value to all
+corresponding shape classes — with no further computation.
 
 ---
 
-## Appendix: Statements as formalized
+## 7. Algorithms
 
-For reference, the four results correspond to the following formal statements (variable names lightly normalized):
+Although the theory is qualitative, it has direct algorithmic content for finite
+data. We record two routines used in the accompanying numerical demonstrations.
 
-- **Lemma 1.** `∀ (M : Monoid) (m : ℕ), (∀ g : M, g^m = 1) → ∀ g : M, orderOf g ∣ m`.
-- **Lemma 2.** `∀ (φ : G →* H) (g : G), orderOf (φ g) ∣ orderOf g`.
-- **Lemma 3.** `∀ {n p : ℕ} [NeZero n] (h : p ∣ n), Function.Surjective (unitReduce h)`, where `unitReduce h : (ℤ/nℤ)ˣ →* (ℤ/pℤ)ˣ`.
-- **Theorem A.** `∀ {n : ℕ} [NeZero n] (p : ℕ) [Fact p.Prime], p ∣ n → Squarefree n → (∀ u : (ℤ/nℤ)ˣ, u^(n−1) = 1) → (p − 1) ∣ (n − 1)`, where the `Squarefree n` hypothesis is retained for interface compatibility but is unused.
+### 7.1 Finite interleaving distance via the sup-norm identity
+
+For filtrations on a finite label set, `interleavingDist` equals the maximum of
+`|F.weight(σ) − G.weight(σ)|` over all nonempty simplices `σ`. The algorithm
+enumerates the simplices and maximizes the absolute weight difference.
+Complexity: `Θ(2^n)` simplices on `n` labels (or `Θ(|S|)` if restricted to a fixed
+simplex set `S`).
+
+### 7.2 Relabeling-invariance checker
+
+Given a permutation `e` of labels and two filtrations, the checker computes the
+distance before and after applying `comap e`, confirming equality up to floating
+tolerance. This is an executable witness of Theorem 4.2, and (by composing with a
+shift) of Theorem 6.1.
+
+---
+
+## 8. Applications
+
+- **Pipeline correctness.** Any preprocessing step that permutes or relabels data
+  points — sorting, hashing, sharding across machines — is certified harmless to the
+  interleaving geometry by Theorems 4.2–4.3.
+- **Computation reuse.** The transport principle (Theorems 6.1–6.2) licenses
+  computing an exact self-shift distance on the most convenient representative of a
+  shape and reading off the answer for its entire relabeling orbit and quotient
+  class.
+- **Foundations for stability.** By descending to the separation quotient
+  (Theorem 5.1), the interleaving distance becomes a genuine extended metric on
+  shape classes — the setting in which algebraic stability theorems are most cleanly
+  stated and in which the standard extended-metric topology applies.
+- **Tropical symmetry.** Read tropically, the commutation `shift_comap` exhibits
+  relabeling as a min-plus-linear symmetry commuting with additive smoothing,
+  situating persistence inside tropical geometry.
+
+---
+
+## 9. Discussion
+
+The contribution is deliberately foundational: it makes precise, and proves, the
+assumption that an interleaving-based invariant depends only on the shape of data
+and not on its labeling, and it packages exact self-shift computations for reuse.
+Five observations are worth highlighting.
+
+**On the role of the equivalence.** The choice to relabel along an equivalence
+`e : α ≃ β` rather than an arbitrary function is exactly what upgrades invariance
+from a one-sided bound to a two-sided equality. A non-invertible relabeling could
+merge or duplicate simplices and would only yield a contraction; the inverse
+`e.symm` is what transports interleaving witnesses back across the renaming in
+Theorem 4.1, giving the `if` direction of the biconditional.
+
+**On proof economy.** The four headline theorems are short because they are
+organized around a single reusable equality (`shift_comap`) and a single reusable
+biconditional (`Interleaved_comap_iff`); everything quantitative is a corollary of
+one of these together with the standard infimum and separation-quotient APIs. This
+is the hallmark of a well-factored development: the conceptual content lives in two
+lemmas and the rest is bookkeeping.
+
+Further design choices:
+
+First, the entire development rides on a single extensionality lemma plus the
+existing interleaving and separation-quotient API; no new analytic theory is
+introduced. This keeps the results robust and easy to extend.
+
+Second, working through the equivalence `e : α ≃ β` rather than an arbitrary map is
+exactly what makes invariance an *equality* rather than a one-sided bound: the
+inverse `e.symm` transports witnesses both ways in Theorem 4.1.
+
+Third, the separation quotient is treated as the genuine object of interest. Once
+distance-zero filtrations are identified, the interleaving distance becomes a true
+metric and relabeling a true isometry, aligning the formal objects with the
+informal notion of "the shape of the data."
+
+---
+
+## 10. Future work
+
+Natural next targets, building directly on the lemmas above, include:
+
+- **Sharpness of contraction bounds.** Determine the cardinalities of the label set
+  at which rank/Betti-curve stability is an isometric invariant versus a strict
+  contraction, isolating saturation and strict-drop phenomena.
+- **An isometric `ℝ≥0`-action of shift on the quotient.** Descend the shift to the
+  shape-class space and prove it acts isometrically with displacement exactly `a`.
+- **A genuine extended-metric instance on shape classes.** Assemble reflexivity,
+  symmetry, triangle inequality, and point separation into a packaged
+  `EMetricSpace`, exporting completeness and continuity vocabulary.
+- **Lipschitz descent of functorial invariants.** Show that contracting functors
+  (e.g. rank) send distance-zero classes to distance-zero classes and hence descend
+  to 1-Lipschitz maps of quotient metrics.
+- **Characterizing tightness.** Identify exactly which filtrations make the
+  self-shift displacement equal to (rather than strictly below) `a`, in terms of
+  the absence of flat windows.
+
+---
+
+## 11. Conclusion
+
+We have shown, with full rigor, that the categorical–tropical Rips interleaving
+geometry is invariant under relabeling at every level — the interleaving relation,
+the real and extended distances, and the separation quotient — and that smoothing
+commutes with relabeling. From these we extracted a transport principle that
+propagates any exact self-shift-distance equality across all relabelings of a
+filtration and into its shape classes. The net statement is simple and
+consequential: the interleaving distance measures the shape of data and is blind to
+its names, and exact measurements made once may be reused everywhere.
