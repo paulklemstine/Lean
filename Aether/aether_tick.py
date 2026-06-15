@@ -1280,11 +1280,12 @@ def rebuild_commit_push() -> bool:
 
     # Git add only changed files (not -A which scans everything)
     try:
-        # Stage specific directories instead of -A
-        subprocess.run(["git", "add", "docs/"], cwd=str(REPO_ROOT), capture_output=True, timeout=60)
-        subprocess.run(["git", "add", ".aether_workspace/"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
-        subprocess.run(["git", "add", "Catalog/"], cwd=str(REPO_ROOT), capture_output=True, timeout=60)
-        subprocess.run(["git", "add", "Aether/"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
+        # Stage specific directories instead of -A. The repository can be large,
+        # so give git generous timeouts (especially for docs/ and Catalog/).
+        subprocess.run(["git", "add", "docs/"], cwd=str(REPO_ROOT), capture_output=True, timeout=120)
+        subprocess.run(["git", "add", ".aether_workspace/"], cwd=str(REPO_ROOT), capture_output=True, timeout=60)
+        subprocess.run(["git", "add", "Catalog/"], cwd=str(REPO_ROOT), capture_output=True, timeout=180)
+        subprocess.run(["git", "add", "Aether/"], cwd=str(REPO_ROOT), capture_output=True, timeout=60)
 
         diff = subprocess.run(
             ["git", "diff", "--cached", "--quiet"],
@@ -1296,7 +1297,7 @@ def rebuild_commit_push() -> bool:
             timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%MZ")
             commit_res = subprocess.run(
                 ["git", "commit", "-m", f"Aether local tick {timestamp}"],
-                cwd=str(REPO_ROOT), capture_output=True, timeout=30
+                cwd=str(REPO_ROOT), capture_output=True, timeout=180
             )
             if commit_res.returncode != 0:
                 print(f"[Tick] git commit failed: {commit_res.stderr.decode('utf-8', errors='replace')}")
@@ -1313,16 +1314,16 @@ def rebuild_commit_push() -> bool:
             try:
                 stash_res = subprocess.run(
                     ["git", "stash", "push", "--include-untracked", "-m", "Aether tick temporary stash"],
-                    cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
+                    cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=120
                 )
                 # Check if we actually saved a stash
                 stashed = ("No local changes to save" not in stash_res.stdout and "No local changes to save" not in stash_res.stderr)
             except subprocess.TimeoutExpired:
-                print("[Tick] git stash timed out (>30s) — likely too many untracked files. Skipping stash and continuing.")
+                print("[Tick] git stash timed out (>120s) — likely too many untracked files. Skipping stash and continuing.")
                 stashed = False
 
         # Fetch remote master
-        subprocess.run(["git", "fetch", "origin", "master"], cwd=str(REPO_ROOT), capture_output=True, timeout=60)
+        subprocess.run(["git", "fetch", "origin", "master"], cwd=str(REPO_ROOT), capture_output=True, timeout=120)
 
         # Merge remote master
         merge = subprocess.run(
@@ -1340,23 +1341,23 @@ def rebuild_commit_push() -> bool:
                 
                 # Check if conflicts were successfully resolved
                 if not _has_conflict_markers():
-                    subprocess.run(["git", "add", "-A"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
+                    subprocess.run(["git", "add", "-A"], cwd=str(REPO_ROOT), capture_output=True, timeout=120)
                     merge_commit = subprocess.run(
                         ["git", "-c", "core.editor=true", "commit", "--no-edit"],
-                        cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
+                        cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=180
                     )
                     if merge_commit.returncode == 0:
                         print("[Tick] Pull merge conflicts resolved and committed successfully")
                         merge_success = True
                     else:
                         print(f"[Tick] Failed to commit merge: {merge_commit.stderr}")
-                        subprocess.run(["git", "merge", "--abort"], cwd=str(REPO_ROOT), capture_output=True)
+                        subprocess.run(["git", "merge", "--abort"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
                 else:
                     print("[Tick] Failed to programmatically resolve all merge conflicts")
-                    subprocess.run(["git", "merge", "--abort"], cwd=str(REPO_ROOT), capture_output=True)
+                    subprocess.run(["git", "merge", "--abort"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
             else:
                 # Pull failed but no conflict markers (e.g. fast-forward conflict or locking issue)
-                subprocess.run(["git", "merge", "--abort"], cwd=str(REPO_ROOT), capture_output=True)
+                subprocess.run(["git", "merge", "--abort"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
                 print(f"[Tick] git merge failed (non-auto-resolvable): {merge.stderr}")
 
         # Final safety check: regenerate index if any conflict markers leaked through
@@ -1379,16 +1380,16 @@ def rebuild_commit_push() -> bool:
         if stashed:
             pop_res = subprocess.run(
                 ["git", "stash", "pop"],
-                cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
+                cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=120
             )
             if pop_res.returncode != 0:
                 print("[Tick] Stash pop conflict — auto-resolving stash programmatically")
                 resolve_all_conflicts()
                 _regenerate_index_if_needed()
-                subprocess.run(["git", "add", "-A"], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
+                subprocess.run(["git", "add", "-A"], cwd=str(REPO_ROOT), capture_output=True, timeout=120)
                 subprocess.run(
                     ["git", "-c", "core.editor=true", "commit", "--no-edit", "-m", "Auto-resolve stash conflict"],
-                    cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
+                    cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=180
                 )
 
         # Watchdog: check if core files changed after git pull
