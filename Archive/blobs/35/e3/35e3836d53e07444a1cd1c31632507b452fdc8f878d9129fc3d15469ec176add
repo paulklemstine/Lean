@@ -1,7 +1,0 @@
-# Summary of changes for run 90524db7-3525-4236-afed-05101509b880
-Created the single file `Catalog/Bridges/PrimeIndexPrimitiveDivisors.lean` containing, inside `namespace StrongDivSeq`, exactly the two requested theorems and nothing else (minimal import of `Catalog.Bridges.StrongDivisibilitySequences`, a short module docstring, and a `variable (s : StrongDivSeq)`).
-
-- `entryPoint_ne_one`: shows `s.entryPoint p ≠ 1` when `¬ p ∣ s.a 1`, by deriving the existence witness `hex` from `entryPoint = 1` and applying the existing `entryPoint_isPrimitive` at that index to contradict `h1`.
-- `isPrimitive_of_prime_index`: builds `hex` from `hn.pos`/`hpn`, uses `s.dvd_iff_entryPoint_dvd` to get `s.entryPoint p ∣ n`, applies the prime dichotomy `hn.eq_one_or_self_of_dvd` to get `= 1 ∨ = n`, excludes the `1` case via `entryPoint_ne_one`, and converts `s.entryPoint p = n` into `s.IsPrimitive p n` through the existing `primitive_iff_entryPoint_eq`.
-
-The proof reuses the imported bridge entry-point API as its backbone with a short `cases` split, introduces no new general theory, and is sorry-free. Verified that the file elaborates cleanly and that both theorems depend only on the standard axioms `propext`, `Classical.choice`, and `Quot.sound`.

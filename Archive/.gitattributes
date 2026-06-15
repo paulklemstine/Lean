@@ -1,4 +1,0 @@
-# Route content-addressable blobs through git-lfs if available.
-# If git-lfs is not installed, these lines are harmless and blobs are tracked
-# as normal git objects.
-Archive/blobs/** filter=lfs diff=lfs merge=lfs -text
