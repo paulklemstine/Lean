@@ -102,7 +102,9 @@ jobs:
       - name: Update catalog-lean branch
         run: |
           bash Aether/.aether_workspace/update-catalog-branch.sh
-          git push --force-with-lease origin catalog-lean
+          # The local pre-commit hook may have already pushed catalog-lean.
+          # Force-push is safe because the branch is fully derived from master.
+          git push --force origin catalog-lean || true
 
       - name: Update website index
         run: cd Catalog/Applications/Packages && python3 update_index.py
