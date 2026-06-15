@@ -18,24 +18,5 @@
     "status": "in_progress",
     "timestamp": "2026-06-15T13:41:56.222705+00:00",
     "title": "Derived from the v16b research cycle that produced"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "743f44e8",
-    "description": "Cycle c11e0165 (Q=0.639) proved 12 theorems in Logic but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\nThese directions extend the `ordEGF` bridge in\n`Catalog/Bridges/SpeciesTropicalValuation.lean` from a single order-only invariant toward\nricher tropical and valuation-theoretic se",
-    "domain_bridges": [],
-    "domains": [
-      "Logic"
-    ],
-    "id": "sorry_fill_c11e0165_d35140bd",
-    "lineage_refs": [],
-    "priority_score": 0.6887300000000001,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "c11e0165",
-    "status": "in_progress",
-    "timestamp": "2026-06-15T13:42:20.451516+00:00",
-    "title": "Close Proofs: These directions extend the `ordEGF` bridge in"
   }
 ]
