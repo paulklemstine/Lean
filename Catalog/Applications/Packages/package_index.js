@@ -10,7 +10,7 @@ window.PACKAGE_INDEX = [
     "filename": "this_cycle_added_three_fully_verified_files_0_sorr.json",
     "pkg_num": 155,
     "quality": "partial",
-    "quality_score": 0.4646015145005371,
+    "quality_score": 0.5042399999999999,
     "title": "Categorical Tropical Rips: Relabeling Invariance and Quotient Transport"
   },
   {
@@ -4791,7 +4791,7 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "this_cycle_added_three_fully_verified_files_0_sorr",
       "primary_domain": "Bridges",
-      "priority_score": 0.4646015145005371,
+      "priority_score": 0.5042399999999999,
       "quality": "partial",
       "shape": "icosahedron",
       "title": "Categorical Tropical Rips: Relabeling Invariance and Quotient Transport"

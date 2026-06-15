@@ -1310,12 +1310,16 @@ def rebuild_commit_push() -> bool:
 
         stashed = False
         if has_unstaged:
-            stash_res = subprocess.run(
-                ["git", "stash", "push", "--include-untracked", "-m", "Aether tick temporary stash"],
-                cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
-            )
-            # Check if we actually saved a stash
-            stashed = ("No local changes to save" not in stash_res.stdout and "No local changes to save" not in stash_res.stderr)
+            try:
+                stash_res = subprocess.run(
+                    ["git", "stash", "push", "--include-untracked", "-m", "Aether tick temporary stash"],
+                    cwd=str(REPO_ROOT), capture_output=True, text=True, timeout=30
+                )
+                # Check if we actually saved a stash
+                stashed = ("No local changes to save" not in stash_res.stdout and "No local changes to save" not in stash_res.stderr)
+            except subprocess.TimeoutExpired:
+                print("[Tick] git stash timed out (>30s) — likely too many untracked files. Skipping stash and continuing.")
+                stashed = False
 
         # Fetch remote master
         subprocess.run(["git", "fetch", "origin", "master"], cwd=str(REPO_ROOT), capture_output=True, timeout=60)
