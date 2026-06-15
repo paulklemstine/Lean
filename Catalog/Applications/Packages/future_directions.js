@@ -18,36 +18,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived from the v16b research cycle that produced"
   },
   {
-    "consumed_by_exp_id": "9e6c1d4d",
-    "description": "# Future Directions \u2014 Intersection Form Classification Pipeline via Self-Dual Code Direct Sum\n\nThis cycle established the **direct-sum functoriality** shared by integer\nintersection forms and binary self-dual codes, formalized in\n`Catalog/Logic/IntersectionFormSelfDual.lean` (10 main theorems, 0 sorries):\n\n- Forms: symmetry, determinant multiplicativity, unimodularity, even type, and\n  trace are all preserved/additive under the block-diagonal direct sum.\n- Codes: the Gram law `G G\u1d40 = 0`, self-orthogonality, linear independence of\n  generating rows, and the full self-dual property are preserved under direct\n  sum; self-dual codes have even length.\n\nThe conjectures below are concrete, falsifiable targets for follow-up cycles.\n\n## C1. Signature is additive (Sylvester / inertia bridge)\nDefine the signature `\u03c3(M)` of a symmetric integer (or real) form via its\npositive/negative inertia indices. **Conjecture:** `\u03c3(directSumForm A B) = \u03c3(A) + \u03c3(B)`\nand `rank(directSumForm A B) = rank A + rank B`, giving a genuine monoid\nhomomorphism `(form, \u2295) \u2192 (\u2124 \u00d7 \u2115, +)`. The crux is formalizing Sylvester's law\nof inertia for `Matrix.IsHermitian` eigenvalues; once available, additivity\nshould follow from the block-diagonal eigenvalue decomposition.\n\n## C2. The \"even \u21d2 8 | signature\" obstruction\n**Conjecture (van der Blij / Milnor\u2013Husemoller):** for an *even* unimodular\nsymmetric integer form `M`, the signature satisfies `\u03c3(M) \u2261 0 (mod 8)`. This is\nthe lattice-theoretic shadow of the famous fact that a binary *doubly-even*\nself-dual code has length divisible by 8. A first formal milestone: prove the\nlength-divisible-by-8 statement for doubly-even self-dual binary codes\n(`\u2200 c \u2208 C, 4 \u2223 weight c` and `C = C\u22a5` \u21d2 `8 \u2223 #\u03b9`).\n\n## C3. Construction A is a functor\nMake the code \u2192 lattice bridge explicit: for a binary code `C \u2286 \ud835\udd3d\u2082\u207f`, define\n`\u039b_C = { x \u2208 \u2124\u207f : (x mod 2) \u2208 C } / \u221a2` with its Gram form. **Conjecture:**\n`\u039b_{C\u2081 \u2295 C\u2082} \u2245 \u039b_{C\u2081} \u2295 \u039b_{C\u2082}` (direct sums commute with Construction A), and\n`C` self-dual \u21d4 `\u039b_C` unimodular, `C` doubly-even \u21d4 `\u039b_C` even. This upgrades the\n\"parallel bookkeeping\" of this cycle to an actual natural isomorphism.\n\n## C4. Indecomposability and unique factorization under \u2295\n**Conjecture:** every binary self-dual code (resp. unimodular form) factors as a\ndirect sum of indecomposable pieces, and \u2014 restricting to the *definite* /\npositive-rank-only regime \u2014 this factorization is unique up to permutation\n(Krull\u2013Schmidt for the direct-sum monoid). Falsifiable subgoal: exhibit and\nformally verify the smallest indecomposable self-dual codes (the `[2,1]` code\n`i\u2082` and the `[8,4]` Hamming code `e\u2088`) and prove `i\u2082` is indecomposable.\n\n## C5. Rank\u2013determinant rigidity of the direct-sum monoid\n**Conjecture:** the map `M \u21a6 (rank M, M.det, isEven M)` is a complete invariant\nfor *indefinite* unimodular forms (Milnor\u2013Husemoller classification), i.e. two\nindefinite unimodular forms with equal rank, equal `det = \u00b11` sign pattern, and\nequal type are isomorphic. A formal route: build the standard generators\n`\u27e81\u27e9, \u27e8-1\u27e9, H` (hyperbolic) and `E\u2088`, show every indefinite unimodular form is a\ndirect sum of these, then read off the invariants proved additive in this cycle.\n",
-    "domains": [
-      "Pythagorean",
-      "Bridges"
-    ],
-    "id": "fd_1966",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "6ec4b34b",
-    "status": "in_progress",
-    "timestamp": "2026-06-15T14:37:26.768264+00:00",
-    "title": "**direct-sum functoriality** shared by integer"
-  },
-  {
-    "consumed_by_exp_id": "87ef3294",
-    "description": "# Future Directions \u2014 Cryptography Cycle\n\nThis cycle added two fully-verified files (0 sorries) extending the\n`Catalog/Cryptography` directory:\n\n* `RSACorrectness.lean` \u2014 general (non-coprime) RSA correctness via a per-prime\n  Fermat engine and CRT recombination (`pow_modEq_self_of_prime`,\n  `rsa_correctness`, `rsa_decrypt_eq`).\n* `OneTimePadSecrecy.lean` \u2014 Shannon perfect secrecy of the group one-time pad,\n  in both combinatorial (`otp_key_count`, `otp_perfect_secrecy`) and\n  probabilistic (`otp_cipher_uniform`, `otp_cipher_indep`) form, for an\n  arbitrary finite (not necessarily abelian) group.\n\nBelow are bold, testable conjectures for follow-up cycles. Each is stated so\nthat it can be turned into a precise Lean theorem.\n\n## C1. Textbook-RSA homomorphism is total\n**Conjecture.** Define RSA encryption `enc m = m ^ e % (p*q)` and decryption\n`dec c = c ^ d % (p*q)` under the standard key relation. Then `enc` is a\n*multiplicative monoid homomorphism* on `ZMod (p*q)`, i.e.\n`enc (m\u2081 * m\u2082) = enc m\u2081 * enc m\u2082` in `ZMod (p*q)`, and `dec \u2218 enc = id` on all of\n`ZMod (p*q)` (not merely on residues `< p*q`). This upgrades `rsa_decrypt_eq` to\na clean `Equiv`/`MonoidHom` statement and exposes the malleability that\nmotivates padding.\n**Test.** State `rsa_perm : ZMod (p*q) \u2243 ZMod (p*q)` and prove it is the power\nmap `x \u21a6 x ^ e`, with inverse `x \u21a6 x ^ d`.\n\n## C2. CRT speedup is correct\n**Conjecture.** The CRT-based RSA decryption \u2014 compute `c^d mod p` and `c^d mod q`\nseparately and recombine via `Nat.chineseRemainder` \u2014 agrees with the direct\ncomputation `c^d mod (p*q)` for every ciphertext `c`. This formalizes the\n3\u20134\u00d7 implementation speedup used in practice.\n**Test.** Prove `Nat.chineseRemainder hcop (c^d % p) (c^d % q) = c^d % (p*q)`\nunder the RSA key hypotheses, reusing `pow_modEq_self_of_prime`.\n\n## C3. Group OTP perfect secrecy is *characterized* by the group axioms\n**Conjecture.** For a finite cancellative magma `(G, \u22c6)` with encryption\n`enc k m = k \u22c6 m`, the perfect-secrecy property \"`#{k | k \u22c6 m = c}` is\nindependent of `m`\" holds **iff** left-translations `k \u21a6 k \u22c6 m` are all\nbijections, which for a finite set is equivalent to `G` being a (quasi)group.\nThis pins down exactly which algebraic structures admit a perfectly-secret OTP.\n**Test.** Prove the forward direction (group \u21d2 uniform key count, already done as\n`otp_key_count`) and the converse (uniform key count for all `m,c` \u21d2 each\ntranslation is a bijection) for `Fintype` carriers.\n\n## C4. Key-length lower bound (Shannon's theorem)\n**Conjecture.** Any perfectly-secret symmetric scheme with message space `M`,\nkey space `K`, and ciphertext space `C` (finite, with a deterministic decryptor)\nmust satisfy `Fintype.card K \u2265 Fintype.card M`. The group OTP meets this with\nequality (`card K = card M`), so it is optimal.\n**Test.** Formalize a `PerfectlySecret` structure (a key PMF plus enc/dec with\ncorrectness and ciphertext-independence) and prove `card M \u2264 card K`.\n\n## C5. Two-time pad leaks: distinguisher exists\n**Conjecture.** Reusing an OTP key is insecure: for the group OTP there is an\nexplicit function of the *pair* of ciphertexts `(k\u22c6m\u2081, k\u22c6m\u2082)` that recovers\n`m\u2081\u207b\u00b9 \u22c6 m\u2082` (the \"difference\" of plaintexts) independent of the key `k`. Hence\nthe joint ciphertext distribution for `(m\u2081, m\u2082)` depends on `m\u2081\u207b\u00b9 \u22c6 m\u2082`,\nbreaking secrecy.\n**Test.** Prove `(k \u22c6 m\u2081)\u207b\u00b9 \u22c6 (k \u22c6 m\u2082) = m\u2081\u207b\u00b9 \u22c6 m\u2082` and conclude the joint\ndistribution is non-constant in the plaintext pair, formalizing the attack.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_1968",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "aba81cd6",
-    "status": "in_progress",
-    "timestamp": "2026-06-15T15:04:03.231472+00:00",
-    "title": "This cycle added two fully-verified files (0 sorries) extending the"
-  },
-  {
     "consumed_by_exp_id": "743f44e8",
     "description": "Cycle c11e0165 (Q=0.639) proved 12 theorems in Logic but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\nThese directions extend the `ordEGF` bridge in\n`Catalog/Bridges/SpeciesTropicalValuation.lean` from a single order-only invariant toward\nricher tropical and valuation-theoretic se",
     "domains": [
@@ -60,19 +30,5 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-06-15T13:42:20.451516+00:00",
     "title": "Close Proofs: These directions extend the `ordEGF` bridge in"
-  },
-  {
-    "consumed_by_exp_id": "a4d16ba9",
-    "description": "Cycle 049cc9b2 (Q=0.572) proved 49 theorems in Bridges but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the partial bridge attempt into a narrowly scoped formalization of the algebraic kernel of the 2\u00d72 Markov move for integer-valued two-way contingency tables. Work entirely with `Table m n := M",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "sorry_fill_049cc9b2_f1da26ac",
-    "priority_score": 0.6216955102040818,
-    "research_mode": "team",
-    "source_exp_id": "049cc9b2",
-    "status": "in_progress",
-    "timestamp": "2026-06-15T12:27:58.955289+00:00",
-    "title": "Close Proofs: Functorial bridge from combinatorial species generating functions to t"
   }
 ];

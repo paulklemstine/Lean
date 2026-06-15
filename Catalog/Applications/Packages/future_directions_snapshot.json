@@ -22,46 +22,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "9e6c1d4d",
-    "description": "# Future Directions — Intersection Form Classification Pipeline via Self-Dual Code Direct Sum\n\nThis cycle established the **direct-sum functoriality** shared by integer\nintersection forms and binary self-dual codes, formalized in\n`Catalog/Logic/IntersectionFormSelfDual.lean` (10 main theorems, 0 sorries):\n\n- Forms: symmetry, determinant multiplicativity, unimodularity, even type, and\n  trace are all preserved/additive under the block-diagonal direct sum.\n- Codes: the Gram law `G Gᵀ = 0`, self-orthogonality, linear independence of\n  generating rows, and the full self-dual property are preserved under direct\n  sum; self-dual codes have even length.\n\nThe conjectures below are concrete, falsifiable targets for follow-up cycles.\n\n## C1. Signature is additive (Sylvester / inertia bridge)\nDefine the signature `σ(M)` of a symmetric integer (or real) form via its\npositive/negative inertia indices. **Conjecture:** `σ(directSumForm A B) = σ(A) + σ(B)`\nand `rank(directSumForm A B) = rank A + rank B`, giving a genuine monoid\nhomomorphism `(form, ⊕) → (ℤ × ℕ, +)`. The crux is formalizing Sylvester's law\nof inertia for `Matrix.IsHermitian` eigenvalues; once available, additivity\nshould follow from the block-diagonal eigenvalue decomposition.\n\n## C2. The \"even ⇒ 8 | signature\" obstruction\n**Conjecture (van der Blij / Milnor–Husemoller):** for an *even* unimodular\nsymmetric integer form `M`, the signature satisfies `σ(M) ≡ 0 (mod 8)`. This is\nthe lattice-theoretic shadow of the famous fact that a binary *doubly-even*\nself-dual code has length divisible by 8. A first formal milestone: prove the\nlength-divisible-by-8 statement for doubly-even self-dual binary codes\n(`∀ c ∈ C, 4 ∣ weight c` and `C = C⊥` ⇒ `8 ∣ #ι`).\n\n## C3. Construction A is a functor\nMake the code → lattice bridge explicit: for a binary code `C ⊆ 𝔽₂ⁿ`, define\n`Λ_C = { x ∈ ℤⁿ : (x mod 2) ∈ C } / √2` with its Gram form. **Conjecture:**\n`Λ_{C₁ ⊕ C₂} ≅ Λ_{C₁} ⊕ Λ_{C₂}` (direct sums commute with Construction A), and\n`C` self-dual ⇔ `Λ_C` unimodular, `C` doubly-even ⇔ `Λ_C` even. This upgrades the\n\"parallel bookkeeping\" of this cycle to an actual natural isomorphism.\n\n## C4. Indecomposability and unique factorization under ⊕\n**Conjecture:** every binary self-dual code (resp. unimodular form) factors as a\ndirect sum of indecomposable pieces, and — restricting to the *definite* /\npositive-rank-only regime — this factorization is unique up to permutation\n(Krull–Schmidt for the direct-sum monoid). Falsifiable subgoal: exhibit and\nformally verify the smallest indecomposable self-dual codes (the `[2,1]` code\n`i₂` and the `[8,4]` Hamming code `e₈`) and prove `i₂` is indecomposable.\n\n## C5. Rank–determinant rigidity of the direct-sum monoid\n**Conjecture:** the map `M ↦ (rank M, M.det, isEven M)` is a complete invariant\nfor *indefinite* unimodular forms (Milnor–Husemoller classification), i.e. two\nindefinite unimodular forms with equal rank, equal `det = ±1` sign pattern, and\nequal type are isomorphic. A formal route: build the standard generators\n`⟨1⟩, ⟨-1⟩, H` (hyperbolic) and `E₈`, show every indefinite unimodular form is a\ndirect sum of these, then read off the invariants proved additive in this cycle.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Bridges"
-    ],
-    "id": "fd_1966",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "6ec4b34b",
-    "status": "in_progress",
-    "timestamp": "2026-06-15T14:37:26.768264+00:00",
-    "title": "**direct-sum functoriality** shared by integer"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "87ef3294",
-    "description": "# Future Directions — Cryptography Cycle\n\nThis cycle added two fully-verified files (0 sorries) extending the\n`Catalog/Cryptography` directory:\n\n* `RSACorrectness.lean` — general (non-coprime) RSA correctness via a per-prime\n  Fermat engine and CRT recombination (`pow_modEq_self_of_prime`,\n  `rsa_correctness`, `rsa_decrypt_eq`).\n* `OneTimePadSecrecy.lean` — Shannon perfect secrecy of the group one-time pad,\n  in both combinatorial (`otp_key_count`, `otp_perfect_secrecy`) and\n  probabilistic (`otp_cipher_uniform`, `otp_cipher_indep`) form, for an\n  arbitrary finite (not necessarily abelian) group.\n\nBelow are bold, testable conjectures for follow-up cycles. Each is stated so\nthat it can be turned into a precise Lean theorem.\n\n## C1. Textbook-RSA homomorphism is total\n**Conjecture.** Define RSA encryption `enc m = m ^ e % (p*q)` and decryption\n`dec c = c ^ d % (p*q)` under the standard key relation. Then `enc` is a\n*multiplicative monoid homomorphism* on `ZMod (p*q)`, i.e.\n`enc (m₁ * m₂) = enc m₁ * enc m₂` in `ZMod (p*q)`, and `dec ∘ enc = id` on all of\n`ZMod (p*q)` (not merely on residues `< p*q`). This upgrades `rsa_decrypt_eq` to\na clean `Equiv`/`MonoidHom` statement and exposes the malleability that\nmotivates padding.\n**Test.** State `rsa_perm : ZMod (p*q) ≃ ZMod (p*q)` and prove it is the power\nmap `x ↦ x ^ e`, with inverse `x ↦ x ^ d`.\n\n## C2. CRT speedup is correct\n**Conjecture.** The CRT-based RSA decryption — compute `c^d mod p` and `c^d mod q`\nseparately and recombine via `Nat.chineseRemainder` — agrees with the direct\ncomputation `c^d mod (p*q)` for every ciphertext `c`. This formalizes the\n3–4× implementation speedup used in practice.\n**Test.** Prove `Nat.chineseRemainder hcop (c^d % p) (c^d % q) = c^d % (p*q)`\nunder the RSA key hypotheses, reusing `pow_modEq_self_of_prime`.\n\n## C3. Group OTP perfect secrecy is *characterized* by the group axioms\n**Conjecture.** For a finite cancellative magma `(G, ⋆)` with encryption\n`enc k m = k ⋆ m`, the perfect-secrecy property \"`#{k | k ⋆ m = c}` is\nindependent of `m`\" holds **iff** left-translations `k ↦ k ⋆ m` are all\nbijections, which for a finite set is equivalent to `G` being a (quasi)group.\nThis pins down exactly which algebraic structures admit a perfectly-secret OTP.\n**Test.** Prove the forward direction (group ⇒ uniform key count, already done as\n`otp_key_count`) and the converse (uniform key count for all `m,c` ⇒ each\ntranslation is a bijection) for `Fintype` carriers.\n\n## C4. Key-length lower bound (Shannon's theorem)\n**Conjecture.** Any perfectly-secret symmetric scheme with message space `M`,\nkey space `K`, and ciphertext space `C` (finite, with a deterministic decryptor)\nmust satisfy `Fintype.card K ≥ Fintype.card M`. The group OTP meets this with\nequality (`card K = card M`), so it is optimal.\n**Test.** Formalize a `PerfectlySecret` structure (a key PMF plus enc/dec with\ncorrectness and ciphertext-independence) and prove `card M ≤ card K`.\n\n## C5. Two-time pad leaks: distinguisher exists\n**Conjecture.** Reusing an OTP key is insecure: for the group OTP there is an\nexplicit function of the *pair* of ciphertexts `(k⋆m₁, k⋆m₂)` that recovers\n`m₁⁻¹ ⋆ m₂` (the \"difference\" of plaintexts) independent of the key `k`. Hence\nthe joint ciphertext distribution for `(m₁, m₂)` depends on `m₁⁻¹ ⋆ m₂`,\nbreaking secrecy.\n**Test.** Prove `(k ⋆ m₁)⁻¹ ⋆ (k ⋆ m₂) = m₁⁻¹ ⋆ m₂` and conclude the joint\ndistribution is non-constant in the plaintext pair, formalizing the attack.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_1968",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "aba81cd6",
-    "status": "in_progress",
-    "timestamp": "2026-06-15T15:04:03.231472+00:00",
-    "title": "This cycle added two fully-verified files (0 sorries) extending the"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "743f44e8",
     "description": "Cycle c11e0165 (Q=0.639) proved 12 theorems in Logic but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions\n\nThese directions extend the `ordEGF` bridge in\n`Catalog/Bridges/SpeciesTropicalValuation.lean` from a single order-only invariant toward\nricher tropical and valuation-theoretic se",
     "domain_bridges": [],
@@ -77,24 +37,5 @@
     "status": "in_progress",
     "timestamp": "2026-06-15T13:42:20.451516+00:00",
     "title": "Close Proofs: These directions extend the `ordEGF` bridge in"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "a4d16ba9",
-    "description": "Cycle 049cc9b2 (Q=0.572) proved 49 theorems in Bridges but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the partial bridge attempt into a narrowly scoped formalization of the algebraic kernel of the 2×2 Markov move for integer-valued two-way contingency tables. Work entirely with `Table m n := M",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "sorry_fill_049cc9b2_f1da26ac",
-    "lineage_refs": [],
-    "priority_score": 0.6216955102040818,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "049cc9b2",
-    "status": "in_progress",
-    "timestamp": "2026-06-15T12:27:58.955289+00:00",
-    "title": "Close Proofs: Functorial bridge from combinatorial species generating functions to t"
   }
 ]
