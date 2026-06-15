@@ -1,6 +1,6 @@
 """AETHER v3: Pi-Agent Centered Autonomous Math Research Engine
 
-Pi-Agent (deepseek-v4-pro:cloud) orchestrates research direction, prompt writing,
+Pi-Agent (glm-5.1:cloud) orchestrates research direction, prompt writing,
 result evaluation, and file placement. Aristotle (Harmonic) proves theorems.
 """
 

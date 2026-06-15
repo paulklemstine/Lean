@@ -2,7 +2,7 @@
 """PiAgentOrchestrator: The central brain of Aether v3.
 
 Replaces CycleMaster with a Pi-Agent-centered architecture where
-Pi-Agent (deepseek-v4-pro:cloud) drives ALL decisions:
+Pi-Agent (glm-5.1:cloud) drives ALL decisions:
 - Which domain to research next
 - What concept to investigate
 - How to write the Aristotle prompt (dynamically, no templates)
@@ -121,11 +121,11 @@ class PiAgentOrchestrator:
 
         pi_cfg = config.get("pi_agent", {})
         self.pi_agent = PiAgentClient(
-            model=pi_cfg.get("model", "deepseek-v4-pro:cloud"),
+            model=pi_cfg.get("model", "glm-5.1:cloud"),
             memory=self.memory,
             catalog_root=self.catalog_root,
             timeout=pi_cfg.get("timeout", 300),
-            compact="cloud" in pi_cfg.get("model", "deepseek-v4-pro:cloud").lower(),
+            compact="cloud" in pi_cfg.get("model", "glm-5.1:cloud").lower(),
             pollinations=pi_cfg.get("pollinations", {}),
             use_ollama=pi_cfg.get("use_ollama", False),
             ollama_base_url=pi_cfg.get("ollama_base_url"),

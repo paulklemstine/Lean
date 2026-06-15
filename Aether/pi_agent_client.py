@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""PiAgentClient v3: Pi-Agent as the central brain using deepseek-v4-pro:cloud.
+"""PiAgentClient v3: Pi-Agent as the central brain using glm-5.1:cloud.
 
 Key changes from v2:
 - Uses httpx HTTP API (not subprocess) to call ollama
-- Model: deepseek-v4-pro:cloud
+- Model: glm-5.1:cloud
 - Dynamically writes Aristotle prompts (no templates)
 - Has full Catalog awareness via CatalogAnalyzer
 - Evaluates Aristotle results for quality
