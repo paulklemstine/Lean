@@ -41,7 +41,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import yaml
 
-from pi_agent_client import PiAgentClient, ResearchConcept
+from pi_agent_client import PiAgentClient, ResearchConcept, select_phase_a_prompt_version, DEFAULT_PHASE_A_PROMPT_WEIGHTS
 from catalog_analyzer import CatalogAnalyzer
 from autoresearch_bridge import AutoresearchBridge
 from research_memory import ResearchMemory
@@ -749,13 +749,20 @@ class KnowledgeExtractor:
         # Build previously proved theorems context
         theorem_context = self.research_context.build_discoveries_prompt()
 
-        # A/B test v3 vs v4: hash-based split, but DEFAULT is now v4 (winner).
-        # v3 path is kept for backwards compatibility and A/B analysis.
-        # A/B results (n=377 cycles): v4 wins +6.6% avg Q, +12% faster, more world_class.
-        # We always use the simplified PM Ticket Style (v15) to prevent
-        # Pi-Agent from generating detailed stubs and role-playing overhead,
-        # letting Aristotle focus entirely on the mathematical proofs.
-        phase_a_version = "v15"
+        # Phase A prompt version selection. v15 is the stable baseline.
+        # Weights can be overridden via config (pi_agent.phase_a_prompt_weights)
+        # or environment variable AETHER_PHASE_A_PROMPT_WEIGHTS as JSON.
+        prompt_weights = DEFAULT_PHASE_A_PROMPT_WEIGHTS.copy()
+        config_weights = self.config.get("pi_agent", {}).get("phase_a_prompt_weights")
+        if config_weights and isinstance(config_weights, dict):
+            prompt_weights.update(config_weights)
+        env_weights = os.environ.get("AETHER_PHASE_A_PROMPT_WEIGHTS")
+        if env_weights:
+            try:
+                prompt_weights.update(json.loads(env_weights))
+            except Exception as e:
+                print(f"[Dispatch] Ignoring invalid AETHER_PHASE_A_PROMPT_WEIGHTS: {e}")
+        phase_a_version = select_phase_a_prompt_version(prompt_weights)
         job.prompt_version = phase_a_version  # legacy field
         job.phase = "A"  # Two-phase: this is Phase A (math)
         job.phase_a_prompt_version = phase_a_version
@@ -2251,7 +2258,7 @@ Research mode: {concept.research_mode}
             # v7 linting gate: reject Lean files from v7 prompts with basic syntax issues
             # v7 uses structured theorem declarations — verify they're well-formed
             phase_ver = getattr(job, 'phase_a_prompt_version', '')
-            if phase_ver in ('v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14', 'v15'):
+            if phase_ver in ('v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14', 'v15', 'v16', 'v16a', 'v16b'):
                 # Check 1: unclosed block comments (/- ... -/)
                 open_blocks = content.count("/-") - content.count("/-!")
                 close_blocks = content.count("-/")
@@ -2272,17 +2279,18 @@ Research mode: {concept.research_mode}
                     print(f"[Integrate] {phase_ver} lint: rejecting {target_path} — theorem density too low "
                           f"({theorem_count} theorems in {lines} lines)")
                     return "REJECT"
-            # v8-v14 lint gate: check for research team protocol markers
-            if phase_ver in ('v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14'):
+            # v8-v16 lint gate: check for research team protocol markers
+            if phase_ver in ('v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14', 'v16', 'v16a', 'v16b'):
                 has_lab_notebook = "Lab Notebook" in content or "lab notebook" in content.lower()
+                has_lab_notes = "Lab Notes" in content or "lab notes" in content.lower()
                 has_hypothesis = "hypothesis" in content.lower()
                 critic_count = content.lower().count("critic") + content.lower().count("critique")
-                if not has_lab_notebook and not has_hypothesis:
-                    print(f"[Integrate] {phase_ver} lint: {target_path} has no Lab Notebook or "
+                if not has_lab_notebook and not has_lab_notes and not has_hypothesis:
+                    print(f"[Integrate] {phase_ver} lint: {target_path} has no Lab Notebook, Lab Notes, or "
                           f"hypothesis markers (expected from {phase_ver} research team protocol)")
                 if critic_count == 0:
                     print(f"[Integrate] {phase_ver} lint: {target_path} has zero critic/critique references — "
-                          f"the Critic step (Step 3) is MANDATORY in {phase_ver}. This suggests the LLM "
+                          f"the Critic step is MANDATORY in {phase_ver}. This suggests the LLM "
                           f"skipped the critique step.")
             # v15 lint gate: check for research team lab notes markers
             if phase_ver == 'v15':

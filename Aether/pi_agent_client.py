@@ -13,6 +13,7 @@ Key changes from v2:
 
 import json
 import os
+import random
 import re
 import textwrap
 import time
@@ -25,6 +26,38 @@ import httpx
 from catalog_analyzer import CatalogAnalyzer, CatalogFileSummary
 from pollinations_pollen import PollinationsPollenConfig, PollinationsPollenGate
 from research_memory import ResearchMemory
+
+
+# Phase A prompt version registry and default A/B weights.
+# New prompt variants are added here; the orchestrator samples from these weights.
+DEFAULT_PHASE_A_PROMPT_WEIGHTS: Dict[str, float] = {
+    "v15": 1.0,  # stable baseline
+    # "v16": 0.0,
+    # "v16a": 0.0,
+    # "v16b": 0.0,
+}
+
+
+def select_phase_a_prompt_version(weights: Optional[Dict[str, float]] = None) -> str:
+    """Sample a Phase A prompt version from the configured weights.
+
+    If no weights are provided, returns the stable baseline (v15). If all
+    weights are zero, also falls back to v15.
+    """
+    weights = weights or DEFAULT_PHASE_A_PROMPT_WEIGHTS
+    # Filter to known supported versions and positive weights
+    candidates = {v: w for v, w in weights.items() if w > 0}
+    if not candidates:
+        return "v15"
+    total = sum(candidates.values())
+    r = random.uniform(0, total)
+    cumulative = 0.0
+    for version, weight in candidates.items():
+        cumulative += weight
+        if r <= cumulative:
+            return version
+    return list(candidates.keys())[-1]
+
 
 @dataclass
 class ResearchConcept:
@@ -1733,6 +1766,82 @@ class PiAgentClient:
         """)
 
 
+    def _build_v16_depth_requirements(self) -> str:
+        """v16: Research-team scientific-method loop with adversarial review.
+
+        Replaces the flat v15 checklist with a loop: hypothesize → experiment →
+        analyze → critique → synthesize → report. The team is required to take
+        lab notes at every step and to derive future directions from actual
+        findings, not from the original brief.
+        """
+        return textwrap.dedent("""\
+            ## v16 Research Core Methodology — Scientific Team Loop
+
+            You are the Principal Investigator leading a research team with four
+            roles: **Hypothesizer**, **Experimenter**, **Analyst**, and **Critic**.
+            Run the following loop and record notes at each stage.
+
+            ### Stage 1 — Hypothesize (team: Hypothesizer)
+            Brainstorm 5–7 falsifiable conjectures about the topic. At least two
+            must be surprising or counter-intuitive. Rank them by expected
+            scientific impact, not by ease of proof.
+
+            ### Stage 2 — Experiment (team: Experimenter)
+            For each conjecture, attempt to prove it in Lean 4 or disprove it with
+            a concrete counterexample. Prioritize the most surprising conjectures
+            first. If a proof is beyond reach, prove the strongest lemma you can
+            and mark the remaining step with exactly one `sorry` that is clearly
+            documented.
+
+            ### Stage 3 — Analyze (team: Analyst)
+            Summarize what survived, what failed, and **why** failures failed.
+            Distinguish "true but hard", "false", and "needs a different
+            definition". These insights are as valuable as the proofs.
+
+            ### Stage 4 — Critique / Adversarial Review (team: Critic)
+            Before finalizing, challenge every theorem:
+            - Is any theorem trivial (True, definitional equality, `native_decide`)?
+            - Does every main theorem have 0 sorries?
+            - Do the results genuinely extend the attached catalog files?
+            - Are there hidden assumptions or corner cases that break the claim?
+            If you find a weakness, fix it or replace the theorem with a guarded
+            version and explain the boundary.
+
+            ### Stage 5 — Synthesize (team: Principal Investigator)
+            Combine the verified results into clean, compiling Lean 4 files.
+            Write a `FUTURE_DIRECTIONS.md` that lists 3–5 **bold, testable**
+            conjectures derived from Stage 3 and Stage 4. Each conjecture must
+            include a "The key insight is..." sentence and a "Why now?"
+            justification.
+        """)
+
+
+    def _build_v16a_depth_requirements(self) -> str:
+        """v16a: v16 with extra adversarial emphasis."""
+        base = self._build_v16_depth_requirements()
+        return base + textwrap.dedent("""\
+
+            ### Extra Adversarial Mandate (v16a)
+            Every claimed theorem must survive at least one explicit attempted
+            counterexample in Lean. Report the counterexample search in a Lab
+            Notes block. If no counterexample exists, briefly explain why the
+            claim is robust. If a counterexample exists, turn the original claim
+            into a precise characterization of the boundary case.
+        """)
+
+    def _build_v16b_depth_requirements(self) -> str:
+        """v16b: v16 with extra catalog-bridge emphasis."""
+        base = self._build_v16_depth_requirements()
+        return base + textwrap.dedent("""\
+
+            ### Extra Bridge Mandate (v16b)
+            At least one main theorem must import definitions or results from two
+            different catalog domains and combine them non-trivially. The Lab
+            Notes block must explicitly name which files from each domain were
+            used and what new connection they create.
+        """)
+
+
     def _build_assignment(self, concept: ResearchConcept) -> str:
         """Build a directive assignment section for Aristotle.
 
@@ -1895,6 +2004,110 @@ class PiAgentClient:
             prompt_version=prompt_version,
         )
 
+    def _build_phase_a_v16_prompt(
+        self,
+        concept: ResearchConcept,
+        catalog_references: Optional[List[str]] = None,
+        catalog_context: str = "",
+        theorem_context: str = "",
+        prompt_version: str = "v16",
+    ) -> str:
+        """Phase A v16: research-team scientific-method prompt.
+
+        This prompt explicitly asks Aristotle to run a multi-stage research
+        loop, keep lab notes, perform adversarial review, and derive future
+        directions from findings rather than from the original brief.
+        """
+        if prompt_version == "v16a":
+            depth_requirements = self._build_v16a_depth_requirements()
+        elif prompt_version == "v16b":
+            depth_requirements = self._build_v16b_depth_requirements()
+        else:
+            depth_requirements = self._build_v16_depth_requirements()
+
+        refs = catalog_references or concept.catalog_references or []
+        refs_section = ""
+        if refs:
+            refs_section = (
+                "### Attached Catalog References (read these first)\n"
+                + "\n".join(f"- `{r}`" for r in refs[:8])
+                + "\n"
+            )
+
+        catalog_section = ""
+        if catalog_context:
+            catalog_section = f"\n### Broader Catalog Context\n{catalog_context}\n"
+
+        theorem_section = ""
+        if theorem_context:
+            theorem_section = f"\n### Recent Discoveries in Catalog\n{theorem_context}\n"
+
+        anti_trivial_block = textwrap.dedent("""\
+            ### Anti-Trivial Guardrails (non-negotiable)
+            The following are NOT acceptable as main results:
+            - Theorems of the form `theorem name {X : Type*} [Inhabited X] : True := by trivial`.
+            - Definition-only theorems or definitional equalities proved by `rfl`.
+            - Results whose entire proof is `simp`, `norm_num`, `decide`, or `native_decide`.
+            - Wrapper types that rename existing definitions.
+            - Re-proving existing catalog theorems with minor notation changes.
+
+            Every main theorem must use at least one insight-bearing tactic or
+            technique such as `induction`, `by_contra`, `field_simp`, `ring_nf`,
+            `omega`, `linarith`, `rcases`, or a custom helper lemma.
+        """)
+
+        deliverables_block = textwrap.dedent("""\
+            ### Deliverables & Acceptance Criteria
+            1. **Lean 4 files** (2–4 files in the appropriate `Catalog/<domain>/` subtree).
+               - Main theorems must be fully proved (0 sorries).
+               - Each file must contain `-- !-- Lab Notes -- !--` blocks documenting
+                 the team loop: Hypothesis, Experiment, Analysis, Critique, Synthesis.
+            2. **FUTURE_DIRECTIONS.md** with 3–5 bold, falsifiable conjectures derived
+               from the cycle's findings. Each must have a "The key insight is..."
+               sentence and a "Why now?" justification.
+
+            ### Strictly Forbidden in Phase A
+            - `ARTICLE.md`, `RESEARCH_PAPER.md`, `demo.py`, HTML widgets, `PACKAGE.json`.
+            - Prose for human readers other than Lab Notes and FUTURE_DIRECTIONS.md.
+        """)
+
+        prompt = textwrap.dedent(f"""\
+            # Phase A Research Mission {prompt_version}: {concept.title}
+
+            ## Concept
+            **Domain**: {concept.domain}
+            **Research mode**: {concept.research_mode}
+            **Title**: {concept.title}
+            **Description**: {concept.concept_description}
+            **Mathematical framing**: {concept.mathematical_framing}
+
+            {refs_section}
+            {catalog_section}
+            {theorem_section}
+
+            {depth_requirements}
+
+            {anti_trivial_block}
+
+            {deliverables_block}
+
+            ## Self-Critique Checklist (perform before final output)
+            Review your candidate output and answer each item. If the answer is
+            unsatisfactory, revise the output before returning it.
+
+            - [ ] No theorem is trivial (True, Inhabited-only, native_decide-only, etc.).
+            - [ ] Every main theorem has 0 sorries.
+            - [ ] At least one theorem imports or uses results from the attached catalog.
+            - [ ] Lab Notes blocks contain real hypotheses, results, insights, and failure analysis.
+            - [ ] FUTURE_DIRECTIONS.md conjectures are derived from this cycle's findings.
+            - [ ] Every future direction includes a "The key insight is..." sentence and a "Why now?" justification.
+
+            ## Output Format Reminder
+            Return `.lean` files and `FUTURE_DIRECTIONS.md` only. Focus all compute
+            on the mathematics.
+        """)
+        return prompt
+
     def _build_phase_a_lean_prompt(
         self,
         concept: ResearchConcept,
@@ -1918,8 +2131,16 @@ class PiAgentClient:
             prompt_version = "v15"
         if prompt_version in ("v1", "v2", "v3", "v4", "v5", "v6", "v7"):
             raise ValueError(
-                f"{prompt_version} prompt is no longer supported — use v8 through v15. "
+                f"{prompt_version} prompt is no longer supported — use v8 through v16. "
                 "v15 (PM Ticket Style) is the default."
+            )
+        if prompt_version in ("v16", "v16a", "v16b"):
+            return self._build_phase_a_v16_prompt(
+                concept=concept,
+                catalog_references=catalog_references,
+                catalog_context=catalog_context,
+                theorem_context=theorem_context,
+                prompt_version=prompt_version,
             )
         if prompt_version == "v8":
             depth_requirements = self._build_v8_depth_requirements()
