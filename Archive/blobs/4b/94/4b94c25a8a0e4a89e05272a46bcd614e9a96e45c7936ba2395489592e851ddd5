@@ -1,0 +1,248 @@
+/-
+Copyright (c) 2026 Harmonic. All rights reserved.
+Released under Apache 2.0 license.
+
+# Tropical valuation profiles of combinatorial counting sequences
+
+This file builds a **coefficientwise bridge** from the additive/multiplicative world of
+counting sequences (the enumerative shadow of combinatorial species, cf.
+`Catalog/Applications/CombinatorialSpecies.lean`) to the **min-plus / tropical** world,
+mediated by the `p`-adic *valuation profile* of a sequence.
+
+For a fixed prime `p`, the `p`-adic valuation `val p : ℕ → ℕ∞` (with `val p 0 = ⊤`) sends a
+natural number to the exponent of `p` in its factorization.  Applied coefficientwise to a
+counting sequence `a : ℕ → ℕ`, it produces the **valuation profile** `n ↦ val p (a n)`, an
+element of `ℕ → ℕ∞`.  Tropicalizing (`trop`) lands this in `ℕ → Tropical ℕ∞`, where the
+tropical semiring has `⊕ = min` and `⊗ = +`.
+
+The central dictionary established here is that the valuation profile is a **lax tropical
+semiring morphism** on counting sequences:
+
+* `val_mul`            — `val` is *multiplicative*: `val p (xy) = val p x + val p y`
+                         (an exact tropical-`⊗` morphism).
+* `val_add`            — `val` is *super-additive*: `min (val p x) (val p y) ≤ val p (x+y)`
+                         (the tropical-`⊕` domination, the shadow of the ultrametric
+                         inequality).
+* `val_cauchy_ge`      — the valuation of a **Cauchy product** (ordinary generating-function
+                         convolution) dominates the **tropical convolution** of the
+                         valuation profiles.  This is the coefficientwise form of the
+                         *fundamental theorem of tropical geometry* inequality.
+* `val_binConv_ge`     — the analogous bound for the **binomial convolution**, the counting
+                         law of the *product of species* (`CombinatorialSpecies.binConv`),
+                         where the binomial coefficient contributes its own valuation
+                         (Kummer's carries).
+* `trop_val_mul`,
+  `trop_val_add_le`,
+  `trop_val_cauchy_ge` — the same statements transported into `Tropical ℕ∞`, exhibiting the
+                         tropical convolution `∑ Aᵢ ⊗ Bⱼ` as a coefficientwise lower bound
+                         for the tropicalized product profile.
+
+The take-away: **tropicalize-then-multiply ≤ multiply-then-tropicalize**, coefficientwise.
+Equality is generic (a unique minimizing index in the convolution); the inequality is
+unconditional and is what we prove here.
+-/
+import Mathlib
+
+open scoped BigOperators
+open Tropical Finset
+
+namespace SpeciesValuationProfile
+
+noncomputable section
+
+/-! ### The `p`-adic valuation profile -/
+
+/-- The `p`-adic valuation of a natural number, valued in `ℕ∞ = WithTop ℕ`.
+`val p 0 = ⊤` (infinite valuation), and for `n ≠ 0` it is the exponent of `p` in `n`. -/
+noncomputable def val (p n : ℕ) : ℕ∞ := if n = 0 then ⊤ else (n.factorization p : ℕ∞)
+
+@[simp] lemma val_zero (p : ℕ) : val p 0 = ⊤ := by simp [val]
+
+@[simp] lemma val_one (p : ℕ) : val p 1 = 0 := by simp [val]
+
+lemma val_eq_top_iff (p n : ℕ) : val p n = ⊤ ↔ n = 0 := by
+  unfold val; split_ifs with h <;> simp [h]
+
+-- !-- Lab Notes -- !--
+-- HYPOTHESIS: the `p`-adic valuation, applied coefficientwise to a counting sequence, should
+--   be the right "tropicalization" of enumerative data: products of sequences (the analytic
+--   shadow of the species product) must turn into tropical-⊗ = + on valuations, and sums into
+--   tropical-⊕ = min.  This is the ultrametric/Newton-polygon intuition.
+-- EXPERIMENT (val_mul): multiplicativity is *exact* — `Nat.factorization_mul` plus the ⊤
+--   absorption when a factor vanishes.  No prime hypothesis needed.  SUCCESS.
+-- EXPERIMENT (val_add): super-additivity needs `p` prime (the ultrametric inequality fails for
+--   composite "valuations").  Proof: `p ^ min(vₓ,v_y)` divides both x and y, hence x+y, so the
+--   valuation of the sum is ≥ the min.  Cast `Nat → ℕ∞` is the only friction.  SUCCESS.
+
+/-- **Tropical-⊗ morphism.** `val` is multiplicative: the valuation of a product is the sum of
+the valuations.  (Holds for every `p`, prime or not, with the `⊤`-absorption convention.) -/
+theorem val_mul (p x y : ℕ) : val p (x * y) = val p x + val p y := by
+  unfold val
+  by_cases hx : x = 0
+  · subst hx; simp
+  by_cases hy : y = 0
+  · subst hy; simp
+  have hxy : x * y ≠ 0 := Nat.mul_ne_zero hx hy
+  simp only [hx, hy, hxy, if_false]
+  rw [Nat.factorization_mul hx hy, Finsupp.add_apply]
+  push_cast; ring
+
+/-- A cast helper: `↑(min a b) = min ↑a ↑b` in `ℕ∞`. -/
+private lemma cast_min (a b : ℕ) : ((min a b : ℕ) : ℕ∞) = min (a : ℕ∞) (b : ℕ∞) := by
+  rcases le_total a b with h | h <;> simp [h, Nat.cast_le.mpr]
+
+/-- **Tropical-⊕ domination (ultrametric inequality).** For a prime `p`, the valuation of a
+sum is at least the minimum of the valuations. -/
+theorem val_add (p x y : ℕ) (hp : p.Prime) : min (val p x) (val p y) ≤ val p (x + y) := by
+  unfold val
+  by_cases hx : x = 0
+  · subst hx; simp
+  by_cases hy : y = 0
+  · subst hy; simp
+  have hxy : x + y ≠ 0 := by positivity
+  simp only [hx, hy, hxy, if_false]
+  set k := min (x.factorization p) (y.factorization p) with hk
+  have hdx : p ^ k ∣ x := (Nat.Prime.pow_dvd_iff_le_factorization hp hx).mpr (min_le_left _ _)
+  have hdy : p ^ k ∣ y := (Nat.Prime.pow_dvd_iff_le_factorization hp hy).mpr (min_le_right _ _)
+  have hk' : k ≤ (x + y).factorization p :=
+    (Nat.Prime.pow_dvd_iff_le_factorization hp hxy).mp (Dvd.dvd.add hdx hdy)
+  calc (min (↑(x.factorization p)) (↑(y.factorization p)) : ℕ∞)
+      = (↑k : ℕ∞) := by rw [hk]; exact (cast_min _ _).symm
+    _ ≤ ↑((x + y).factorization p) := by exact_mod_cast hk'
+
+/-- **Valuation of a finite sum.** The valuation of `∑ f i` dominates the infimum of the
+valuations of the summands (the tropical-⊕ over a finite index set). -/
+theorem val_sum_ge (p : ℕ) (hp : p.Prime) {β : Type*} (s : Finset β) (f : β → ℕ) :
+    s.inf (fun i => val p (f i)) ≤ val p (∑ i ∈ s, f i) := by
+  classical
+  induction s using Finset.induction with
+  | empty => simp
+  | @insert a s ha ih =>
+    rw [Finset.sum_insert ha, Finset.inf_insert]
+    calc (val p (f a)) ⊓ s.inf (fun i => val p (f i))
+        ≤ (val p (f a)) ⊓ val p (∑ i ∈ s, f i) := inf_le_inf_left _ ih
+      _ ≤ val p (f a + ∑ i ∈ s, f i) := val_add p _ _ hp
+
+/-! ### Convolutions of counting sequences -/
+
+/-- The **Cauchy product** (ordinary generating-function convolution) of two counting
+sequences: `(a ⋆ b)ₙ = ∑_{i+j=n} aᵢ bⱼ`. -/
+def cauchy (a b : ℕ → ℕ) (n : ℕ) : ℕ := ∑ x ∈ Finset.antidiagonal n, a x.1 * b x.2
+
+/-- The **binomial convolution** (exponential generating-function / species-product
+convolution) of two counting sequences: `(a ⋆ b)ₙ = ∑_{i+j=n} C(n,i) aᵢ bⱼ`.  This is the
+`ℕ`-valued counting law of the structural product of species
+(`CombinatorialSpecies.binConv`). -/
+def binConv (a b : ℕ → ℕ) (n : ℕ) : ℕ :=
+  ∑ x ∈ Finset.antidiagonal n, n.choose x.1 * (a x.1 * b x.2)
+
+-- !-- Lab Notes -- !--
+-- HYPOTHESIS: tropicalization should turn the (ordinary) Cauchy product into the tropical
+--   (min-plus) convolution of the valuation profiles — exactly the "fundamental theorem of
+--   tropical geometry" inequality `v(∑ aᵢbⱼ) ≥ minᵢ₊ⱼ₌ₙ (v(aᵢ)+v(bⱼ))`.
+-- EXPERIMENT (val_cauchy_ge): combine `val_sum_ge` (valuation of a sum ≥ inf of valuations)
+--   with `val_mul` (exact additivity on each term).  The `inf` is rewritten via a pointwise
+--   congruence.  SUCCESS — no genericity / unique-minimizer hypothesis needed for the bound.
+-- EXPERIMENT (val_binConv_ge): same skeleton, but each term carries the extra factor
+--   `C(n,i)`, whose valuation (Kummer's carry count) is *added* in.  This is the honest
+--   tropical law for the *species* product, where the binomial coefficient is not invisible.
+--   SUCCESS.
+
+/-- **Tropical Cauchy-product bound (fundamental tropical inequality).** The valuation of the
+Cauchy product dominates the tropical (min-plus) convolution of the valuation profiles. -/
+theorem val_cauchy_ge (p : ℕ) (hp : p.Prime) (a b : ℕ → ℕ) (n : ℕ) :
+    (Finset.antidiagonal n).inf (fun x => val p (a x.1) + val p (b x.2))
+      ≤ val p (cauchy a b n) := by
+  have hsum := val_sum_ge p hp (Finset.antidiagonal n) (fun x => a x.1 * b x.2)
+  calc (Finset.antidiagonal n).inf (fun x => val p (a x.1) + val p (b x.2))
+      = (Finset.antidiagonal n).inf (fun x => val p (a x.1 * b x.2)) := by
+        refine Finset.inf_congr rfl (fun x _ => ?_); rw [val_mul]
+    _ ≤ val p (cauchy a b n) := hsum
+
+/-- **Tropical binomial-convolution bound (species product).** The valuation of the binomial
+convolution dominates the tropical convolution of the valuation profiles, with the binomial
+coefficient `C(n,i)` contributing its own valuation (Kummer's carries) to each term. -/
+theorem val_binConv_ge (p : ℕ) (hp : p.Prime) (a b : ℕ → ℕ) (n : ℕ) :
+    (Finset.antidiagonal n).inf
+        (fun x => val p (n.choose x.1) + val p (a x.1) + val p (b x.2))
+      ≤ val p (binConv a b n) := by
+  have hsum := val_sum_ge p hp (Finset.antidiagonal n) (fun x => n.choose x.1 * (a x.1 * b x.2))
+  calc (Finset.antidiagonal n).inf
+          (fun x => val p (n.choose x.1) + val p (a x.1) + val p (b x.2))
+      = (Finset.antidiagonal n).inf (fun x => val p (n.choose x.1 * (a x.1 * b x.2))) := by
+        refine Finset.inf_congr rfl (fun x _ => ?_)
+        rw [val_mul, val_mul, add_assoc]
+    _ ≤ val p (binConv a b n) := hsum
+
+/-! ### Transport into the tropical semiring `Tropical ℕ∞`
+
+We package the valuation profile as a map into `Tropical ℕ∞`, where `⊕ = min` and `⊗ = +`,
+and restate the morphism laws using the genuine tropical operations.  Here `trop` is the
+order-preserving identification `ℕ∞ ≃ Tropical ℕ∞`. -/
+
+/-- The **tropical valuation profile** of a counting sequence: `n ↦ trop (val p (a n))`,
+an element of the function-space over the tropical semiring `Tropical ℕ∞`. -/
+def tropProfile (p : ℕ) (a : ℕ → ℕ) (n : ℕ) : Tropical ℕ∞ := trop (val p (a n))
+
+/-- **Tropical multiplicativity.** In `Tropical ℕ∞` (`⊗ = +`), the valuation of a product is
+the tropical product of the valuations. -/
+theorem trop_val_mul (p x y : ℕ) :
+    trop (val p (x * y)) = trop (val p x) * trop (val p y) := by
+  rw [val_mul, trop_add]
+
+/-- **Tropical super-additivity.** In `Tropical ℕ∞` (`⊕ = min`), the tropical sum of the
+valuations is a lower bound for the valuation of the sum. -/
+theorem trop_val_add_le (p x y : ℕ) (hp : p.Prime) :
+    trop (val p x) + trop (val p y) ≤ trop (val p (x + y)) := by
+  rw [← trop_min]
+  exact val_add p x y hp
+
+/-- **Tropical Cauchy-product bound, in `Tropical ℕ∞`.** The tropical convolution
+`∑_{i+j=n} Aᵢ ⊗ Bⱼ` of the tropical valuation profiles is a lower bound for the tropical
+valuation profile of the Cauchy product.  This is the clean coefficientwise statement that
+*tropicalize-then-convolve ≤ convolve-then-tropicalize*. -/
+theorem trop_val_cauchy_ge (p : ℕ) (hp : p.Prime) (a b : ℕ → ℕ) (n : ℕ) :
+    (∑ x ∈ Finset.antidiagonal n, tropProfile p a x.1 * tropProfile p b x.2)
+      ≤ tropProfile p (cauchy a b) n := by
+  have hbridge :
+      (∑ x ∈ Finset.antidiagonal n, tropProfile p a x.1 * tropProfile p b x.2)
+        = trop ((Finset.antidiagonal n).inf (fun x => val p (a x.1) + val p (b x.2))) := by
+    rw [Finset.trop_inf]
+    refine Finset.sum_congr rfl (fun x _ => ?_)
+    rw [tropProfile, tropProfile, ← trop_add]
+  rw [hbridge]
+  exact val_cauchy_ge p hp a b n
+
+/-! ### Worked sanity checks
+
+A handful of computations pinning down the conventions and confirming the bounds are sharp on
+small instances (the equality regime). -/
+
+example : val 2 8 = 3 := by
+  have h : (Nat.factorization 8) 2 = 3 := by native_decide
+  simp [val, h]
+example : val 3 144 = 2 := by
+  have h : (Nat.factorization 144) 3 = 2 := by native_decide
+  simp [val, h]
+example : val 2 144 = 4 := by
+  have h : (Nat.factorization 144) 2 = 4 := by native_decide
+  simp [val, h]
+
+-- !-- Lab Notes -- !--
+-- INSIGHT: the tropical valuation profile is a *lax* semiring morphism: it is an exact
+--   morphism for ⊗ (products) and only a lax morphism for ⊕ (sums / convolutions), with the
+--   slack measured by cancellation among same-valuation terms (the Newton-polygon "collinear"
+--   case).  This mirrors the general fact that tropicalization is a morphism precisely on the
+--   "generic" (unique-minimizer) locus.
+-- FAILURE ANALYSIS: an exact equality `val(cauchy) = inf(...)` is FALSE in general — e.g. two
+--   terms of equal minimal valuation can cancel `p`-adically, raising the valuation of the
+--   sum strictly above the min.  Hence only the ≥ direction is a theorem; the equality is a
+--   *generic* statement requiring a unique-minimizer hypothesis (recorded in
+--   FUTURE_DIRECTIONS.md).
+-- INSIGHT: connecting to `CombinatorialSpecies.binConv`, the binomial-coefficient valuations
+--   `val p (C(n,i))` are exactly Kummer's carry counts in base `p`; the species-product
+--   tropical law therefore *sees* the base-`p` carry structure of the index `n`.
+
+end
+
+end SpeciesValuationProfile

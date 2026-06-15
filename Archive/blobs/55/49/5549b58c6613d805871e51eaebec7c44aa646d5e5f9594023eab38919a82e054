@@ -1,0 +1,182 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+
+# Tropical–Ultrametric Stability of p-adic Valuation Depth
+
+Bridge: connects `Bridges/CategoricalTropicalUltrametric` (tropical max/min stability
+and ultrametric reconstruction) with `Computation/PadicValuationDepth` (valuation depth
+as a non-Archimedean complexity measure).
+
+**Core principle.** The p-adic valuation `padicValNat p` is *simultaneously* a tropical
+homomorphism and an ultrametric depth function:
+
+* it turns ordinary multiplication into ordinary addition (tropical multiplication), and
+* it turns ordinary addition into the `min` of valuations (tropical addition),
+
+and the resulting "valuation depth" is **ultrametrically stable**: a perturbation of
+strictly larger depth never changes the depth of a number. This is the arithmetic shadow
+of the categorical tropical↔ultrametric reconstruction in `CategoricalTropicalUltrametric`,
+specialised to the canonical valuation `(ℕ, ·, +) → (ℕ ∪ {∞}, +, min)`.
+
+## Main results
+* `valDepth_mul`, `valDepth_pow`, `valDepth_prime_pow` — tropical multiplicativity.
+* `dvd_iff_le_valDepth`, `valDepth_ultrametric` — the ultrametric (strong triangle) law.
+* `valDepth_add_eq_of_lt` — the *isosceles* / sharp-stability law.
+* `valDepth_stable_under_perturbation` — local constancy of depth (stability radius).
+* `pow_dvd_list_sum_of_forall`, `le_valDepth_list_sum` — stability of finite sums.
+* `valDepth_list_prod` — tropical additivity over a product.
+
+  -- !-- Lab Notes -- !--
+  Hypothesis H1 (tropical morphism): `v(ab) = v a + v b` and `v(a+b) ≥ min (v a) (v b)`.
+    Outcome: CONFIRMED. Both hold for `padicValNat` on positive naturals.
+  Hypothesis H2 (ultrametric stability / isosceles): when `v a < v b`, the sum has the
+    *exact* smaller depth, `v(a+b) = v a`. Outcome: CONFIRMED in ℕ — no need to pass to
+    ℤ or ℚ_[p]; the key trick is `a = (a+b) - b` with `Nat.dvd_sub`, which is valid
+    over ℕ because `a + b ≥ b`.
+  Hypothesis H3 (stability radius): perturbations of strictly larger depth are invisible.
+    Outcome: CONFIRMED — direct corollary of H2. This is the discrete analogue of the
+    "isosceles" lemma `ultrametric_reconstruction_isosceles` in the categorical bridge.
+  Failure analysis: the naive depth-of-sum lower bound `k ≤ v(a+b)` FAILS when `a+b = 0`
+    by the convention `v 0 = 0`; we therefore phrase the many-term stability result in the
+    robust divisibility form `p^k ∣ Σ` (no nonvanishing hypothesis) and derive the depth
+    form under an explicit `sum ≠ 0` hypothesis.
+-/
+
+import Mathlib
+
+open scoped BigOperators
+
+namespace TropUltraValDepth
+
+/-! ## §1. Valuation depth -/
+
+/-- `valDepth p n` is the p-adic valuation depth of `n`: the exponent of the largest power
+of `p` dividing `n`. This is the canonical non-Archimedean depth measure, and the value
+that the categorical reconstruction functor turns into an ultrametric seminorm. -/
+abbrev valDepth (p n : ℕ) : ℕ := padicValNat p n
+
+variable {p : ℕ} [Fact p.Prime]
+
+/-! ## §2. Tropical multiplicativity (valuation = tropical morphism) -/
+
+/-- **Tropical multiplicativity.** Ordinary multiplication becomes ordinary addition of
+depths: `v(ab) = v a + v b`. (Tropical multiplication is `+`.) -/
+theorem valDepth_mul {a b : ℕ} (ha : a ≠ 0) (hb : b ≠ 0) :
+    valDepth p (a * b) = valDepth p a + valDepth p b :=
+  padicValNat.mul ha hb
+
+/-- Power law: `v(aⁿ) = n · v a`. -/
+theorem valDepth_pow {a : ℕ} (n : ℕ) (ha : a ≠ 0) :
+    valDepth p (a ^ n) = n * valDepth p a :=
+  padicValNat.pow n ha
+
+/-- `v(pⁿ) = n`: the prime powers realise every depth exactly. -/
+theorem valDepth_prime_pow (n : ℕ) : valDepth p (p ^ n) = n :=
+  padicValNat.prime_pow n
+
+/-! ## §3. The ultrametric (strong triangle) law -/
+
+/-- Divisibility characterisation of depth (for nonzero inputs):
+`p^k ∣ a ↔ k ≤ v a`. -/
+theorem dvd_iff_le_valDepth {a k : ℕ} (ha : a ≠ 0) :
+    p ^ k ∣ a ↔ k ≤ valDepth p a :=
+  padicValNat_dvd_iff_le ha
+
+/-- **Ultrametric stability (strong triangle inequality).**
+`min (v a) (v b) ≤ v (a + b)`. This is the ℕ-shadow of `PadicInt.nonarchimedean`
+and of `ultrametric_reconstruction_isosceles` in the categorical bridge. -/
+theorem valDepth_ultrametric {a b : ℕ} (ha : a ≠ 0) (hb : b ≠ 0) (hab : a + b ≠ 0) :
+    min (valDepth p a) (valDepth p b) ≤ valDepth p (a + b) := by
+  rw [← dvd_iff_le_valDepth hab]
+  exact dvd_add ((dvd_iff_le_valDepth ha).mpr (min_le_left _ _))
+    ((dvd_iff_le_valDepth hb).mpr (min_le_right _ _))
+
+/-- **Isosceles / sharp-stability law.** If `v a < v b` then the depth of the sum is
+*exactly* the smaller depth: `v (a + b) = v a`. This is the discrete analogue of the
+ultrametric "all triangles are isosceles" principle. -/
+theorem valDepth_add_eq_of_lt {a b : ℕ} (ha : a ≠ 0) (hb : b ≠ 0)
+    (hlt : valDepth p a < valDepth p b) :
+    valDepth p (a + b) = valDepth p a := by
+  have hab : a + b ≠ 0 := by positivity
+  refine le_antisymm ?_ ?_
+  · -- upper bound: v (a+b) ≤ v a, else p^(v a + 1) would divide a
+    by_contra h
+    push_neg at h
+    have hdvd_ab : p ^ (valDepth p a + 1) ∣ a + b :=
+      (dvd_iff_le_valDepth hab).mpr h
+    have hdvd_b : p ^ (valDepth p a + 1) ∣ b :=
+      (dvd_iff_le_valDepth hb).mpr (by omega)
+    have hdvd_a : p ^ (valDepth p a + 1) ∣ a := by
+      have hsub := Nat.dvd_sub hdvd_ab hdvd_b
+      rwa [Nat.add_sub_cancel] at hsub
+    have := (dvd_iff_le_valDepth ha).mp hdvd_a
+    omega
+  · -- lower bound: v a ≤ v (a+b) from the ultrametric law
+    have h := valDepth_ultrametric (p := p) ha hb hab
+    rwa [min_eq_left hlt.le] at h
+
+/-! ## §4. Stability radius (local constancy of depth) -/
+
+/-- **Stability under perturbation.** A perturbation `δ` of strictly larger depth than `a`
+leaves the depth of `a` unchanged: `v (a + δ) = v a`. Thus `v a` is *locally constant*
+in the p-adic (ultrametric) topology — the "stability radius" of `a` is exactly its own
+depth. -/
+theorem valDepth_stable_under_perturbation {a δ : ℕ} (ha : a ≠ 0) (hδ : δ ≠ 0)
+    (hgt : valDepth p a < valDepth p δ) :
+    valDepth p (a + δ) = valDepth p a :=
+  valDepth_add_eq_of_lt ha hδ hgt
+
+/-- Symmetric form: perturbing on the left also preserves depth. -/
+theorem valDepth_stable_under_perturbation_left {a δ : ℕ} (ha : a ≠ 0) (hδ : δ ≠ 0)
+    (hgt : valDepth p a < valDepth p δ) :
+    valDepth p (δ + a) = valDepth p a := by
+  rw [Nat.add_comm]; exact valDepth_stable_under_perturbation ha hδ hgt
+
+/-! ## §5. Stability of finite sums and products -/
+
+omit [Fact p.Prime] in
+/-- **Divisibility stability of sums.** If `p^k` divides every term of a list, it divides
+the sum. (Robust form: no nonvanishing hypothesis needed.) -/
+theorem pow_dvd_list_sum_of_forall {k : ℕ} {l : List ℕ}
+    (h : ∀ x ∈ l, p ^ k ∣ x) : p ^ k ∣ l.sum :=
+  List.dvd_sum h
+
+/-- **Depth stability of sums.** If every term has depth ≥ `k` and the sum is nonzero,
+the sum has depth ≥ `k`. The ultrametric law propagates a uniform depth floor through any
+finite sum. -/
+theorem le_valDepth_list_sum {k : ℕ} {l : List ℕ}
+    (h : ∀ x ∈ l, k ≤ valDepth p x) (hsum : l.sum ≠ 0) :
+    k ≤ valDepth p l.sum := by
+  have hdvd : p ^ k ∣ l.sum := by
+    refine pow_dvd_list_sum_of_forall (fun x hx => ?_)
+    by_cases hx0 : x = 0
+    · simp [hx0]
+    · exact (dvd_iff_le_valDepth hx0).mpr (h x hx)
+  exact (dvd_iff_le_valDepth hsum).mp hdvd
+
+/-- **Tropical additivity over products.** The depth of a product of nonzero naturals is
+the sum of the depths: `v (∏ l) = Σ v`. This is the tropical-homomorphism property
+extended to finite products. -/
+theorem valDepth_list_prod {l : List ℕ} (h : ∀ x ∈ l, x ≠ 0) :
+    valDepth p l.prod = (l.map (valDepth p)).sum := by
+  induction l with
+  | nil => simp
+  | cons x xs ih =>
+    have hx : x ≠ 0 := h x (List.mem_cons.mpr (Or.inl rfl))
+    have hxs : ∀ y ∈ xs, y ≠ 0 := fun y hy => h y (List.mem_cons.mpr (Or.inr hy))
+    have hprod : xs.prod ≠ 0 := List.prod_ne_zero (fun hc => hxs 0 hc rfl)
+    rw [List.prod_cons, valDepth_mul hx hprod, List.map_cons, List.sum_cons, ih hxs]
+
+/-! ## §6. Tropical/ultrametric synthesis -/
+
+/-- **Synthesis theorem.** `valDepth p` is at once a tropical homomorphism
+(`v(ab) = v a + v b`) and an ultrametric depth (`min (v a) (v b) ≤ v(a+b)`).
+Packaging both laws makes explicit that the valuation realises the tropical↔ultrametric
+correspondence of `CategoricalTropicalUltrametric` on the canonical carrier `ℕ`. -/
+theorem valDepth_tropical_ultrametric {a b : ℕ} (ha : a ≠ 0) (hb : b ≠ 0)
+    (hab : a + b ≠ 0) :
+    valDepth p (a * b) = valDepth p a + valDepth p b ∧
+      min (valDepth p a) (valDepth p b) ≤ valDepth p (a + b) :=
+  ⟨valDepth_mul ha hb, valDepth_ultrametric ha hb hab⟩
+
+end TropUltraValDepth

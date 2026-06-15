@@ -1,0 +1,156 @@
+import Mathlib
+import Bridges.StrongDivisibilitySequences
+
+/-! # Prime-index primitive divisors for strong divisibility sequences
+
+Domain: Bridges / Conceptual unification (number theory ↔ algebra).
+
+This file **extends** `Bridges.StrongDivisibilitySequences` and **connects** it to the
+Carmichael primitive-divisor program developed in `Shared.CarmichaelHelper`,
+`Shared.CarmichaelProof`, and `Speculative.AutoResearch.CarmichaelComposite`.
+
+The catalog's `fib_primitive_divisor_prime` (in `Shared.CarmichaelHelper`) proves the
+*prime-index* case of Carmichael's theorem: for prime `n`, every prime divisor of the
+Fibonacci number `F n` is **primitive** (divides no earlier `F k`).  Reading that proof
+closely shows it uses nothing about Fibonacci beyond
+
+* the strong-divisibility identity (`gcd_eq`), packaged as `StrongDivSeq`, and
+* the fact that the prime in question does **not** divide `s 1`.
+
+Here we lift the prime-index argument to an **arbitrary** strong divisibility sequence
+`s : StrongDivSeq`.  The Fibonacci result then drops out because `F 1 = 1` makes the side
+condition vacuous, and the **same theorem** gives the classical Mersenne fact: for a prime
+exponent `n`, every prime divisor of `b ^ n - 1` that does *not* divide `b - 1` is a
+primitive divisor — the structural reason Mersenne-prime searches restrict to prime
+exponents.
+
+Main results (all generic over `s : StrongDivSeq`):
+
+* `StrongDivSeq.entryPoint_ne_one`       — `p ∤ s 1` forbids entry point `1`.
+* `StrongDivSeq.isPrimitive_of_prime_index` — prime index ⇒ any `p ∣ s n` with `p ∤ s 1`
+  is primitive.
+* `StrongDivSeq.exists_primitive_prime_of_prime_index` — when `s 1 = 1` and `1 < s n` with
+  `n` prime, `s n` has a primitive prime divisor.
+
+Cross-domain corollaries:
+
+* `fib_prime_index_primitive` / `fib_prime_index_has_primitive` — Fibonacci specialisation,
+  reproving the prime case of Carmichael.
+* `mersenne_prime_index_primitive` — the Mersenne / Zsygmondy-flavoured specialisation (new).
+
+-- !-- Lab Notes -- !--
+-- Hypothesis: the prime-index half of Carmichael (`fib_primitive_divisor_prime`) is not a
+--   Fibonacci fact at all; it is a property of any strong divisibility sequence together with
+--   the side condition `p ∤ s 1`.  In particular it should transfer verbatim to `b^n - 1`.
+-- Experiment: lift the entry-point argument from `Shared.CarmichaelHelper` into the
+--   `StrongDivSeq` framework of `Bridges.StrongDivisibilitySequences`, then instantiate at
+--   `fibSDS` and `mersenneSDS`.
+-- Outcome: confirmed.  The single generic theorem `isPrimitive_of_prime_index` specialises to
+--   both Fibonacci (side condition vacuous because `F 1 = 1`) and Mersenne (side condition
+--   `p ∤ b - 1` is genuinely needed: `p ∣ b - 1` divides every `b^k - 1`).
+-- Insight: the side condition `p ∤ s 1` is exactly what distinguishes the two domains.  For
+--   Fibonacci it is free; for Mersenne it is the substance of why prime exponents matter.
+-- Failure analysis: a first draft tried to drop the side condition uniformly; the Mersenne
+--   instance immediately falsifies that (take `b = 4`, `p = 3 ∣ b - 1 ∣ b^n - 1` for all `n`),
+--   so the side condition is load-bearing and cannot be removed in the generic statement.
+-- !--
+-/
+
+namespace StrongDivSeq
+
+variable (s : StrongDivSeq)
+
+/-! ## §1. Entry point cannot be `1` when `p ∤ s 1` -/
+
+/-- If `p` does not divide `s 1`, then the entry point of `p` is not `1`:
+either no positive index is hit (entry point `0`) or the least one is `> 1`. -/
+theorem entryPoint_ne_one {p : ℕ} (h1 : ¬ p ∣ s.a 1) : s.entryPoint p ≠ 1 := by
+  intro h
+  unfold StrongDivSeq.entryPoint at h
+  split_ifs at h with hex
+  have hdvd := (Nat.find_spec hex).2
+  rw [h] at hdvd
+  exact h1 hdvd
+
+/-! ## §2. Prime index forces primitivity -/
+
+/-- **Prime-index primitivity.** For a prime index `n`, any `p ∣ s n` with `p ∤ s 1` is a
+primitive divisor at `n` (it divides no `s k` for `0 < k < n`).
+
+This is the structural heart of the prime case of Carmichael's theorem, generalised from
+Fibonacci to an arbitrary strong divisibility sequence. -/
+theorem isPrimitive_of_prime_index {p n : ℕ} (hn : n.Prime)
+    (hp : p ∣ s.a n) (h1 : ¬ p ∣ s.a 1) : s.IsPrimitive p n := by
+  have hnpos : 0 < n := hn.pos
+  have hex : ∃ k, 0 < k ∧ p ∣ s.a k := ⟨n, hnpos, hp⟩
+  have hdvd : s.entryPoint p ∣ n := (s.dvd_iff_entryPoint_dvd hex n).1 hp
+  have hne1 : s.entryPoint p ≠ 1 := s.entryPoint_ne_one h1
+  rcases (Nat.dvd_prime hn).1 hdvd with h | h
+  · exact absurd h hne1
+  · exact (s.primitive_iff_entryPoint_eq hnpos hex).2 h
+
+/-! ## §3. Existence of a primitive prime divisor at a prime index -/
+
+/-- When `s 1 = 1`, every prime divisor automatically satisfies the side condition, so a prime
+index `n` with `1 < s n` yields a primitive prime divisor of `s n`. -/
+theorem exists_primitive_prime_of_prime_index (h1 : s.a 1 = 1) {n : ℕ}
+    (hn : n.Prime) (hsn : 1 < s.a n) :
+    ∃ p, p.Prime ∧ s.IsPrimitive p n := by
+  obtain ⟨p, hp, hpd⟩ := Nat.exists_prime_and_dvd (n := s.a n) (by omega)
+  refine ⟨p, hp, s.isPrimitive_of_prime_index hn hpd ?_⟩
+  rw [h1, Nat.dvd_one]
+  exact hp.ne_one
+
+end StrongDivSeq
+
+/-! ## §4. Fibonacci specialisation (reproving the prime case of Carmichael) -/
+
+/-- The Fibonacci sequence satisfies `F 1 = 1`. -/
+lemma fibSDS_one : fibSDS.a 1 = 1 := Nat.fib_one
+
+/-- **Prime-index primitivity for Fibonacci.** For a prime index `n`, any divisor `p ≠ 1` of
+`F n` is primitive — recovering the prime case of Carmichael's theorem
+(`fib_primitive_divisor_prime`) from the generic framework. -/
+theorem fib_prime_index_primitive {p n : ℕ} (hn : n.Prime) (hp1 : p ≠ 1)
+    (hp : p ∣ Nat.fib n) : fibSDS.IsPrimitive p n :=
+  fibSDS.isPrimitive_of_prime_index hn hp (by
+    rw [fibSDS_one, Nat.dvd_one]; exact hp1)
+
+/-- **Existence form for Fibonacci.** For a prime index `n` with `1 < F n`, the Fibonacci
+number `F n` has a primitive prime divisor. -/
+theorem fib_prime_index_has_primitive {n : ℕ} (hn : n.Prime) (hfn : 1 < Nat.fib n) :
+    ∃ p, p.Prime ∧ p ∣ Nat.fib n ∧ ∀ k, 0 < k → k < n → ¬ p ∣ Nat.fib k := by
+  obtain ⟨p, hp, hprim⟩ := fibSDS.exists_primitive_prime_of_prime_index fibSDS_one hn hfn
+  exact ⟨p, hp, hprim.1, hprim.2⟩
+
+/-! ## §5. Mersenne specialisation (new) -/
+
+/-- **Prime-index primitivity for Mersenne numbers.** For a prime exponent `n`, any prime
+divisor `p` of `b ^ n - 1` that does **not** divide `b - 1` is a primitive divisor of the
+Mersenne sequence: it divides no `b ^ k - 1` for `0 < k < n`.
+
+This is the structural reason Mersenne-prime searches restrict to prime exponents, obtained
+here for free from the unified strong-divisibility framework. -/
+theorem mersenne_prime_index_primitive {b p n : ℕ} (hn : n.Prime)
+    (hp : p ∣ b ^ n - 1) (h1 : ¬ p ∣ b - 1) :
+    (mersenneSDS b).IsPrimitive p n :=
+  (mersenneSDS b).isPrimitive_of_prime_index hn hp (by
+    show ¬ p ∣ b ^ 1 - 1
+    simpa using h1)
+
+/-! ## §6. Concrete sanity checks grounding the lab notes -/
+
+/-- **Necessity of the Mersenne side condition.** Take `b = 4` and the prime index `n = 2`.
+Then `3 ∣ 4 ^ 1 - 1 = 3` and `3 ∣ 4 ^ 2 - 1 = 15`, so `3` divides `b ^ 2 - 1` but is *not*
+primitive there — it already divides `b ^ 1 - 1`.  This is exactly the failure mode noted in
+the lab notes: dropping `p ∤ b - 1` from `mersenne_prime_index_primitive` makes it false. -/
+example : (3 ∣ 4 ^ 1 - 1) ∧ (3 ∣ 4 ^ 2 - 1) ∧ ¬ (mersenneSDS 4).IsPrimitive 3 2 := by
+  refine ⟨by decide, by decide, ?_⟩
+  intro h
+  exact h.2 1 (by norm_num) (by norm_num) (by decide)
+
+/-- **Concrete Fibonacci instance.** `F 7 = 13` is prime, so at the prime index `7` the
+Fibonacci number has the primitive prime divisor `13`. -/
+example : (13 : ℕ).Prime ∧ fibSDS.IsPrimitive 13 7 := by
+  refine ⟨by norm_num, fib_prime_index_primitive (by norm_num) (by norm_num) ?_⟩
+  decide

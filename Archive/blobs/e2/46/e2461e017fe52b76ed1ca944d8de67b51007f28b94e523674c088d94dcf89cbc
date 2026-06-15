@@ -1,0 +1,276 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+
+# Valuation-Depth ↔ Ultrametric ↔ Tropical : a quantitative bridge
+
+Bridge: Computation/valuation_depth  ↔  Algebra/ultrametric_geometry  ↔  Tropical/max_plus
+
+This file builds the missing theorem-level bridge requested in the research concept
+"Tropical valuation depth as an ultrametric bridge".  It connects:
+
+* `ValuationDepthMeasure` / `vdepth_sum_le` from
+  `Computation/PadicValuationDepth.lean` — the *computational* engine: a depth
+  subadditivity law `vdepth (f + g) ≤ max (vdepth f) (vdepth g) + 1`; and
+
+* `UltraNormObj`, `TropObj`, `TropicalValuationCarrier`, `valuationReconstruct`,
+  `tropicalization` from `Bridges/CategoricalTropicalUltrametric.lean` — the
+  *geometric/tropical* packaging.
+
+## The mathematical message
+
+The depth subadditivity of the computation side carries a `+1` defect (each layer of
+addition costs one query).  The *genuine* non-archimedean geometry lives one level
+sharper, in the **norm convention** `v (a + b) ≤ max (v a) (v b)` (no `+1`).  We isolate
+this algebraic engine as a class `AddValuationDepth` on an additive commutative group,
+prove that `d(x,y) := v (x - y)` is an honest ultrametric pseudodistance, that addition
+is non-expanding in the tropical / max-plus sense, and finally package any *multiplicative*
+valuation depth canonically into a `TropicalValuationCarrier`, hence an `UltraNormObj`,
+hence a `TropObj`.  Arithmetic depth data becomes ultrametric geometry becomes tropical
+optimization data.
+
+## Main results
+* `AddValuationDepth.vdist_self`           — reflexivity `d(x,x) = 0`
+* `AddValuationDepth.vdist_comm`           — symmetry `d(x,y) = d(y,x)`
+* `AddValuationDepth.vdist_strong_triangle`— ultrametric strong triangle inequality
+* `AddValuationDepth.add_nonexpanding`     — tropical max-plus control law for addition
+* `MulValuationDepth.toUltraNormObj` / `toTropObj` — the bridge constructors
+* `MulValuationDepth.toUltraNormObj_ultrametric` — reconstructed norm is ultrametric
+-/
+
+import Computation.PadicValuationDepth
+import Bridges.CategoricalTropicalUltrametric
+
+open CategoricalTropicalUltrametric
+
+namespace ValDepthBridge
+
+/-! ## §1. The algebraic engine: additive valuation depth (norm convention)
+
+-- !-- Lab Notebook -- !--
+Hypothesis: the strong triangle inequality of nonarchimedean geometry is *exactly* the
+`+1`-free version of the catalog law `vdepth_sum_le`.  Isolating it on an
+`AddCommGroup` (so all subtraction/negation lemmas come from Mathlib) should make the
+ultrametric and tropical bridge theorems short and robust.
+Result: confirmed — every metric axiom reduces to one `abel` rewrite plus `vdep_add_le`.
+Insight: working over `AddCommGroup α` (rather than re-axiomatizing a group by hand)
+removes the entire burden of proving `dist_symm`/translation invariance.
+Failure analysis: the computational `ValuationDepthMeasure` carries a `+1` and is over a
+bare `Semiring` (no negation), so it is *not* itself an ultrametric — which is precisely
+why the sharper `AddValuationDepth` layer is the correct bridge object.
+-/
+
+/-- An **additive valuation depth** in the *norm convention*: a depth/seminorm
+    `vdep : α → ℕ` on an additive commutative group satisfying the strong (ultrametric)
+    triangle inequality `vdep (a + b) ≤ max (vdep a) (vdep b)`.
+
+    This is the `+1`-free sharpening of `ValuationDepthMeasure.vdepth_sum_le`. -/
+class AddValuationDepth (α : Type*) [AddCommGroup α] where
+  vdep : α → ℕ
+  vdep_zero : vdep 0 = 0
+  vdep_neg : ∀ a, vdep (-a) = vdep a
+  vdep_add_le : ∀ a b, vdep (a + b) ≤ max (vdep a) (vdep b)
+
+namespace AddValuationDepth
+
+variable {α : Type*} [AddCommGroup α] [AddValuationDepth α]
+
+/-- The valuation-depth pseudodistance `d(x,y) = vdep (x - y)`. -/
+def vdist (x y : α) : ℕ := vdep (x - y)
+
+/-- Reflexivity: the depth distance from a state to itself is `0`. -/
+-- !-- `x - x = 0` then `vdep_zero`. -- !--
+@[simp] theorem vdist_self (x : α) : vdist x x = 0 := by
+  unfold vdist; rw [sub_self]; exact vdep_zero
+
+/-- Symmetry: `vdep (x - y) = vdep (-(x - y)) = vdep (y - x)`. -/
+-- !-- `neg_sub` plus `vdep_neg`. -- !--
+theorem vdist_comm (x y : α) : vdist x y = vdist y x := by
+  unfold vdist; rw [← vdep_neg (x - y), neg_sub]
+
+/-- **Ultrametric strong triangle inequality**: the depth distance is non-archimedean.
+    Engine: `x - z = (x - y) + (y - z)` then `vdep_add_le`. -/
+-- !-- rewrite `x - z` as a sum of the two legs, apply `vdep_add_le`. -- !--
+theorem vdist_strong_triangle (x y z : α) :
+    vdist x z ≤ max (vdist x y) (vdist y z) := by
+  unfold vdist
+  have h : x - z = (x - y) + (y - z) := by abel
+  rw [h]; exact vdep_add_le _ _
+
+/-- The ordinary (weak) triangle inequality follows from the strong one. -/
+-- !-- `max a b ≤ a + b` on ℕ. -- !--
+theorem vdist_triangle (x y z : α) :
+    vdist x z ≤ vdist x y + vdist y z :=
+  le_trans (vdist_strong_triangle x y z)
+    (max_le_add_of_nonneg (Nat.zero_le _) (Nat.zero_le _))
+
+/-- Translation invariance on the right: depth distance ignores a common shift. -/
+-- !-- `(x + a) - (y + a) = x - y` via `abel`. -- !--
+theorem vdist_add_right (x y a : α) : vdist (x + a) (y + a) = vdist x y := by
+  unfold vdist; congr 1; abel
+
+/-- Negation is an isometry of the depth distance. -/
+-- !-- `(-x) - (-y) = -(x - y)`, then `vdep_neg`. -- !--
+theorem vdist_neg (x y : α) : vdist (-x) (-y) = vdist x y := by
+  unfold vdist; rw [← vdep_neg (x - y)]; congr 1; abel
+
+/-- **Tropical / max-plus control law for addition**: the binary addition map is
+    non-expanding in the strong (max) sense — a genuine tropical Lipschitz estimate. -/
+-- !-- `(x₁+x₂) - (y₁+y₂) = (x₁-y₁) + (x₂-y₂)` via `abel`, then `vdep_add_le`. -- !--
+theorem add_nonexpanding (x₁ x₂ y₁ y₂ : α) :
+    vdist (x₁ + x₂) (y₁ + y₂) ≤ max (vdist x₁ y₁) (vdist x₂ y₂) := by
+  unfold vdist
+  have h : (x₁ + x₂) - (y₁ + y₂) = (x₁ - y₁) + (x₂ - y₂) := by abel
+  rw [h]; exact vdep_add_le _ _
+
+/-- Specialisation: adding a fixed element is `1`-Lipschitz (in fact an isometry). -/
+theorem add_left_isometry (a x y : α) : vdist (a + x) (a + y) = vdist x y := by
+  unfold vdist; congr 1; abel
+
+end AddValuationDepth
+
+/-! ## §2. Concrete instance: the trivial valuation depth on any group
+
+-- !-- Lab Notebook -- !--
+Hypothesis: the trivial `{0,1}`-valuation `v a = if a = 0 then 0 else 1` is a valid
+`AddValuationDepth` on every additive commutative group.
+Result: confirmed; the ultrametric law holds because the codomain is `{0,1}` so the max
+is `1` whenever any argument is nonzero.
+Insight: this gives a "discrete" non-archimedean geometry where every pair of distinct
+points is at distance exactly `1` — the depth-theoretic shadow of the indiscrete metric.
+-/
+
+open Classical in
+/-- The trivial `{0,1}`-valued valuation depth available on any additive commutative
+    group: distinct points sit at depth-distance `1`. -/
+noncomputable def trivialAddValuationDepth (α : Type*) [AddCommGroup α] :
+    AddValuationDepth α where
+  vdep := fun a => if a = 0 then 0 else 1
+  vdep_zero := by simp
+  vdep_neg := by intro a; rw [neg_eq_zero]
+  vdep_add_le := by
+    intro a b
+    by_cases ha : a = 0 <;> by_cases hb : b = 0 <;> simp_all
+    all_goals split <;> simp
+
+/-! ## §3. The multiplicative bridge object
+
+-- !-- Lab Notebook -- !--
+Hypothesis: a *multiplicative* valuation depth (a `CommRing` with a multiplicative
+ℕ-valued ultrametric valuation) supplies exactly the data of a `TropicalValuationCarrier`,
+so `valuationReconstruct` and `tropicalization` ship it functorially into `UltraNormObj`
+and `TropObj`.
+Result: confirmed — the constructor is pure field-plumbing and the reconstructed norm is
+*definitionally* the valuation, so the ultrametric/multiplicative bridge theorems are `rfl`
+up to the existing reconstruction lemmas.
+Insight: this realises the concept's "ValuationDepthMeasure → UltraNormObj → TropObj"
+pipeline as an honest sequence of constructors, not an analogy.
+Failure analysis: a bare `AddValuationDepth` cannot land in `TropicalValuationCarrier`
+because the latter demands a multiplicative `val_mul`; the multiplicative layer is the
+minimal extra hypothesis, witnessed concretely by the trivial valuation on a domain.
+-/
+
+/-- A **multiplicative valuation depth** on a commutative ring: an ℕ-valued ultrametric
+    valuation that is also multiplicative.  This is precisely the data needed to feed the
+    `valuationReconstruct` functor of `CategoricalTropicalUltrametric`. -/
+structure MulValuationDepth (α : Type u) [CommRing α] where
+  vdep : α → ℕ
+  vdep_zero : vdep 0 = 0
+  vdep_neg : ∀ a, vdep (-a) = vdep a
+  vdep_mul : ∀ a b, vdep (a * b) = vdep a * vdep b
+  vdep_add_le : ∀ a b, vdep (a + b) ≤ max (vdep a) (vdep b)
+
+namespace MulValuationDepth
+
+variable {α : Type u} [CommRing α] (V : MulValuationDepth α)
+
+/-- Every multiplicative valuation depth is in particular an additive valuation depth. -/
+def toAddValuationDepth : AddValuationDepth α where
+  vdep := V.vdep
+  vdep_zero := V.vdep_zero
+  vdep_neg := V.vdep_neg
+  vdep_add_le := V.vdep_add_le
+
+/-- **Bridge constructor**: a multiplicative valuation depth as a tropical valuation
+    carrier (the source object of `valuationReconstruct`). -/
+def toCarrier : TropicalValuationCarrier where
+  K := α
+  add_op := (· + ·)
+  neg_op := (- ·)
+  zero_val := 0
+  sub_op := (· - ·)
+  sub_def := fun x y => sub_eq_add_neg x y
+  mul_op := (· * ·)
+  one_val := 1
+  val := V.vdep
+  val_zero := V.vdep_zero
+  val_neg := V.vdep_neg
+  val_mul := V.vdep_mul
+  val_add := V.vdep_add_le
+
+/-- **Bridge constructor**: a multiplicative valuation depth as an ultrametric seminorm
+    object, via `valuationReconstruct`. -/
+def toUltraNormObj : UltraNormObj := valuationReconstruct V.toCarrier
+
+/-- **Bridge constructor**: the induced tropical object. -/
+def toTropObj : TropObj := tropicalization V.toUltraNormObj
+
+/-- The reconstructed ultranorm *is* the valuation depth (definitionally). -/
+theorem toUltraNormObj_norm_eq (x : α) : V.toUltraNormObj.norm x = V.vdep x := rfl
+
+/-- **The reconstructed norm is ultrametric** — the strong triangle inequality transports
+    through the bridge. -/
+-- !-- `valuationReconstruct_obj_ultrametric` applied to `V.toCarrier`. -- !--
+theorem toUltraNormObj_ultrametric (x y : α) :
+    V.toUltraNormObj.norm (V.toUltraNormObj.add_op x y)
+      ≤ max (V.toUltraNormObj.norm x) (V.toUltraNormObj.norm y) :=
+  valuationReconstruct_obj_ultrametric V.toCarrier x y
+
+/-- The reconstructed norm is multiplicative. -/
+-- !-- `ultrametric_reconstruction_mul`. -- !--
+theorem toUltraNormObj_mul (x y : α) :
+    V.toUltraNormObj.norm (V.toUltraNormObj.mul_op x y)
+      = V.toUltraNormObj.norm x * V.toUltraNormObj.norm y :=
+  ultrametric_reconstruction_mul V.toCarrier x y
+
+end MulValuationDepth
+
+/-! ## §4. Concrete multiplicative instance: trivial valuation on a domain
+
+-- !-- Lab Notebook -- !--
+Hypothesis: on an integral domain the trivial `{0,1}`-valuation is multiplicative,
+hence a `MulValuationDepth`, hence flows through the whole bridge.
+Result: confirmed; `vdep_mul` uses `mul_eq_zero` (no zero divisors).
+Insight: this exhibits a fully worked arithmetic-depth → tropical-object pipeline on `ℤ`.
+-/
+
+open Classical in
+/-- The trivial multiplicative valuation depth on an integral domain. -/
+noncomputable def trivialMulValuationDepth (α : Type u) [CommRing α] [IsDomain α] :
+    MulValuationDepth α where
+  vdep := fun a => if a = 0 then 0 else 1
+  vdep_zero := by simp
+  vdep_neg := by intro a; rw [neg_eq_zero]
+  vdep_mul := by
+    intro a b
+    by_cases ha : a = 0 <;> by_cases hb : b = 0 <;> simp_all [mul_eq_zero]
+  vdep_add_le := by
+    intro a b
+    by_cases ha : a = 0 <;> by_cases hb : b = 0 <;> simp_all
+    all_goals split <;> simp
+
+/-- The bridge object built from the trivial valuation on `ℤ`. -/
+noncomputable def trivIntUltraNormObj : UltraNormObj :=
+  (trivialMulValuationDepth ℤ).toUltraNormObj
+
+/-- Concrete check: in the reconstructed ultranorm on `ℤ`, nonzero points have norm `1`. -/
+-- !-- unfolds to `if (5:ℤ) = 0 then 0 else 1`. -- !--
+theorem trivInt_norm_five : trivIntUltraNormObj.norm (5 : ℤ) = 1 := by
+  show (trivialMulValuationDepth ℤ).vdep (5 : ℤ) = 1
+  simp [trivialMulValuationDepth]
+
+/-- Concrete check: zero has norm `0`. -/
+theorem trivInt_norm_zero : trivIntUltraNormObj.norm (0 : ℤ) = 0 := by
+  show (trivialMulValuationDepth ℤ).vdep (0 : ℤ) = 0
+  simp [trivialMulValuationDepth]
+
+end ValDepthBridge

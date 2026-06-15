@@ -1,0 +1,121 @@
+import Mathlib
+
+/-!
+# Valuation–Rips Bridge: the ultrametric core
+
+This file develops the minimal core of the bridge between ultrametric geometry and
+the Vietoris–Rips construction.
+
+Given a (pseudo) metric space `α` and a scale `ε`, the **closed Rips relation**
+`ripsRel ε x y` holds when `dist x y ≤ ε`.  In a general metric space this relation
+is reflexive (for `0 ≤ ε`), symmetric and monotone in `ε`, but *not* transitive.
+
+The key observation is that **ultrametricity** (`IsUltrametricDist α`,
+i.e. `dist x z ≤ max (dist x y) (dist y z)`) turns `ripsRel ε` into a genuine
+*equivalence relation*.  As a consequence the multi-step reachability relation
+`Relation.ReflTransGen (ripsRel ε)` collapses to single-step proximity:
+two points are connected by a Rips chain iff they are already within distance `ε`.
+Equivalently, every closed ball is a single Rips simplex.
+
+The more ambitious valuation-depth filtration and quotient-class descriptions are
+deliberately left out of this core file.
+-/
+
+namespace ValuationRipsBridge
+
+variable {α : Type u} [PseudoMetricSpace α]
+
+/-- The closed Rips relation at scale `ε`: two points are related when their
+distance is at most `ε`. -/
+def ripsRel (ε : ℝ) (x y : α) : Prop := dist x y ≤ ε
+
+/-- Reflexivity of the Rips relation for a non-negative scale. -/
+theorem ripsRel_refl {ε : ℝ} (hε : 0 ≤ ε) (x : α) : ripsRel ε x x := by
+  simp [ripsRel, hε]
+
+/-- Symmetry of the Rips relation. -/
+theorem ripsRel_symm {ε : ℝ} {x y : α} (h : ripsRel ε x y) : ripsRel ε y x := by
+  rwa [ripsRel, dist_comm]
+
+/-- Monotonicity of the Rips relation in the scale. -/
+theorem ripsRel_mono {ε ε' : ℝ} (hε : ε ≤ ε') {x y : α} (h : ripsRel ε x y) :
+    ripsRel ε' x y :=
+  le_trans h hε
+
+section Ultrametric
+
+variable [IsUltrametricDist α]
+
+/-- In an ultrametric space the Rips relation is transitive: this is the strong
+(non-Archimedean) triangle inequality `dist x z ≤ max (dist x y) (dist y z)`. -/
+theorem ripsRel_trans {ε : ℝ} {x y z : α} (hxy : ripsRel ε x y) (hyz : ripsRel ε y z) :
+    ripsRel ε x z := by
+  have h := IsUltrametricDist.dist_triangle_max x y z
+  exact le_trans h (max_le hxy hyz)
+
+/-- For a non-negative scale, the Rips relation is an equivalence relation on an
+ultrametric space. -/
+theorem ripsRel_equivalence {ε : ℝ} (hε : 0 ≤ ε) : Equivalence (ripsRel (α := α) ε) where
+  refl := ripsRel_refl hε
+  symm := ripsRel_symm
+  trans := ripsRel_trans
+
+/-- Rips reachability collapses to single-step proximity: any chain of Rips steps
+implies the endpoints are already within distance `ε`.
+
+The hypothesis `0 ≤ ε` is necessary: the empty chain relates a point to itself,
+but `ripsRel ε x x` unfolds to `0 ≤ ε`, which fails for negative scales. -/
+theorem ripsRel_of_reflTransGen {ε : ℝ} (hε : 0 ≤ ε) {x y : α}
+    (h : Relation.ReflTransGen (ripsRel ε) x y) : ripsRel ε x y := by
+  induction h with
+  | refl => exact ripsRel_refl hε x
+  | tail _ hbc ih => exact ripsRel_trans ih hbc
+
+/-- Rips reachability is equivalent to single-step proximity (for `0 ≤ ε`). -/
+theorem ripsReachable_iff {ε : ℝ} (hε : 0 ≤ ε) {x y : α} :
+    Relation.ReflTransGen (ripsRel ε) x y ↔ ripsRel ε x y := by
+  constructor
+  · exact ripsRel_of_reflTransGen hε
+  · exact fun h => Relation.ReflTransGen.single h
+
+/-- Rips reachability is equivalent to being within distance `ε` (for `0 ≤ ε`). -/
+theorem ripsReachable_iff_dist {ε : ℝ} (hε : 0 ≤ ε) {x y : α} :
+    Relation.ReflTransGen (ripsRel ε) x y ↔ dist x y ≤ ε :=
+  ripsReachable_iff hε
+
+/-- Rips reachability is equivalent to membership in the closed ball of radius `ε`
+(for `0 ≤ ε`). -/
+theorem ripsReachable_iff_mem_closedBall {ε : ℝ} (hε : 0 ≤ ε) {x y : α} :
+    Relation.ReflTransGen (ripsRel ε) x y ↔ y ∈ Metric.closedBall x ε := by
+  rw [ripsReachable_iff_dist hε, Metric.mem_closedBall, dist_comm]
+
+end Ultrametric
+
+/-- A set `S` is a **Rips simplex** at scale `ε` when every pair of its points is
+within distance `ε`. -/
+def IsRipsSimplex (ε : ℝ) (S : Set α) : Prop :=
+  ∀ ⦃x⦄, x ∈ S → ∀ ⦃y⦄, y ∈ S → ripsRel ε x y
+
+/-- A subset of a Rips simplex is again a Rips simplex. -/
+theorem IsRipsSimplex.mono {ε : ℝ} {S T : Set α} (hT : IsRipsSimplex ε T) (hST : S ⊆ T) :
+    IsRipsSimplex ε S :=
+  fun _ hx _ hy => hT (hST hx) (hST hy)
+
+section Ultrametric
+
+variable [IsUltrametricDist α]
+
+/-- In an ultrametric space, every closed ball is a single Rips simplex. -/
+theorem isRipsSimplex_closedBall {ε : ℝ} {x : α} :
+    IsRipsSimplex ε (Metric.closedBall x ε) := by
+  intro y hy z hz
+  rw [Metric.mem_closedBall] at hy hz
+  have hyx : ripsRel ε y x := hy
+  have hxz : ripsRel ε x z := by
+    show dist x z ≤ ε
+    rwa [dist_comm] at hz
+  exact ripsRel_trans hyx hxz
+
+end Ultrametric
+
+end ValuationRipsBridge

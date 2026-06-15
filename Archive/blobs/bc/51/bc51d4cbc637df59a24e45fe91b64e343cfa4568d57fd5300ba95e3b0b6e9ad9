@@ -1,0 +1,174 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+-/
+import Mathlib
+
+/-!
+# The Order–Generating Bridge (`ordEGF`)
+
+This file develops the **order–generating function bridge** for finite groups,
+the algebraic substrate of discrete-logarithm cryptography.  For a finite group
+`G` we study the *order spectrum*
+
+  `ordCount G d := #{ a : G | orderOf a = d }`,
+
+i.e. the number of elements of `G` of order exactly `d`.  The generating
+data of this spectrum — packaged as the divisor-indexed sequence `ordEGF` —
+recovers `|G|` (the size of the key space) and, in the cyclic case, the Euler
+totient.  Concretely the bridge connects three a priori distinct objects:
+
+* the **group order** `|G|` (the size of a Diffie–Hellman key space);
+* the **multiplicative order** `orderOf a` of individual elements (the period of
+  a cyclic subgroup / a discrete-log generator); and
+* the **totient generating identity** `∑_{d ∣ n} φ(d) = n`.
+
+## Main results
+
+* `orderOf_mem_divisors` — every element's order is a divisor of `|G|`.
+* `ordCount_sum_eq_card` — `∑_{d ∣ |G|} ordCount G d = |G|`
+  (the order spectrum partitions the group): the **order generating identity**.
+* `ordCount_cyclic` — in a cyclic group `ordCount G d = φ(d)` for `d ∣ |G|`.
+* `ordEGF_cyclic_eq_totient` — the cyclic order spectrum *is* the totient.
+* `card_generators_cyclic` — a cyclic group of order `n` has exactly `φ(n)`
+  generators, and (since `φ(n) > 0`) at least one — the existence of a
+  Diffie–Hellman generator.
+* `orderOf_dvd_totient_units` — Euler's bridge: in `(ZMod n)ˣ` every element's
+  order divides `φ(n)`.
+* `card_pow_eq_one_cyclic` — the number of `d`-torsion elements of a cyclic
+  group of order `n` is `gcd(d, n)` (the size of the unique order-`gcd(d,n)`
+  subgroup attacked by Pohlig–Hellman).
+
+-- !-- Lab Notes -- !--
+-- Hypothesis (H1): the "order spectrum" of any finite group sums to |G| when
+--   indexed by the divisors of |G|.  CONFIRMED via `card_eq_sum_card_fiberwise`
+--   with the fibre map `a ↦ orderOf a`; the side goal `orderOf a ∈ divisors |G|`
+--   is exactly `orderOf_dvd_card` + `card ≠ 0`.
+-- Hypothesis (H2): the spectrum specialises to φ in the cyclic case.  CONFIRMED;
+--   this is `IsCyclic.card_orderOf_eq_totient`, and composing H1 + H2 reproves
+--   `Nat.sum_totient` *intrinsically* (counting elements by order) rather than
+--   number-theoretically — the conceptual content of the bridge.
+-- Hypothesis (H3): a cyclic key space always contains a generator.  CONFIRMED as
+--   a corollary of H2 at `d = |G|` together with `Nat.totient_pos`.
+-- Failure analysis: an early attempt indexed the spectrum sum over
+--   `Finset.range (|G|+1)` instead of `divisors |G|`; this is also true but loses
+--   the totient bridge, since the cyclic value at non-divisors is `0` and the
+--   clean identity `∑_{d∣n} φ(d) = n` no longer appears.  Indexing by divisors is
+--   the load-bearing choice.
+-- !-- End Lab Notes -- !--
+-/
+
+open Finset
+
+namespace OrderEGFBridge
+
+variable (G : Type*) [Group G] [Fintype G] [DecidableEq G]
+
+/-- The **order spectrum**: the number of elements of `G` of order exactly `d`. -/
+noncomputable def ordCount (d : ℕ) : ℕ := #{a : G | orderOf a = d}
+
+/-- The order–generating sequence (`ordEGF`): the order spectrum restricted to
+the divisors of `|G|`, which is where it is supported. -/
+noncomputable def ordEGF : ℕ → ℕ := fun d => if d ∣ Fintype.card G then ordCount G d else 0
+
+variable {G}
+
+/-
+Every element of a finite group has order dividing `|G|`, hence the order
+spectrum is supported on the divisors of `|G|`.
+-/
+omit [DecidableEq G] in
+lemma orderOf_mem_divisors (a : G) : orderOf a ∈ (Fintype.card G).divisors := by
+  exact Nat.mem_divisors.mpr ⟨ orderOf_dvd_card, Fintype.card_ne_zero ⟩
+
+/-
+**Order generating identity.** Summing the order spectrum over the divisors
+of `|G|` recovers `|G|`: the orders partition the group.
+-/
+omit [DecidableEq G] in
+theorem ordCount_sum_eq_card :
+    ∑ d ∈ (Fintype.card G).divisors, ordCount G d = Fintype.card G := by
+  unfold ordCount;
+  rw [ ← Finset.card_eq_sum_card_fiberwise ];
+  · rfl;
+  · exact fun x _ => orderOf_mem_divisors x
+
+/-
+In a cyclic group the order spectrum is the Euler totient on divisors of `|G|`.
+-/
+omit [DecidableEq G] in
+theorem ordCount_cyclic [IsCyclic G] {d : ℕ} (hd : d ∣ Fintype.card G) :
+    ordCount G d = Nat.totient d := by
+  convert IsCyclic.card_orderOf_eq_totient hd
+
+/-
+The cyclic order–generating sequence is exactly the totient on divisors.
+-/
+omit [DecidableEq G] in
+theorem ordEGF_cyclic_eq_totient [IsCyclic G] {d : ℕ} (hd : d ∣ Fintype.card G) :
+    ordEGF G d = Nat.totient d := by
+  -- By definition of `ordEGF`, we have `ordEGF G d = ordCount G d`.
+  simp [ordEGF, hd];
+  convert ordCount_cyclic hd
+
+/-
+**Intrinsic totient identity.** Counting the elements of a cyclic group by
+their order reproves `∑_{d ∣ n} φ(d) = n` group-theoretically.
+-/
+omit [DecidableEq G] in
+theorem sum_totient_eq_card [IsCyclic G] :
+    ∑ d ∈ (Fintype.card G).divisors, Nat.totient d = Fintype.card G := by
+  convert Nat.sum_totient ( Fintype.card G ) using 1
+
+/-
+A cyclic group of order `n` has exactly `φ(n)` generators.
+-/
+omit [DecidableEq G] in
+theorem card_generators_cyclic [IsCyclic G] :
+    ordCount G (Fintype.card G) = Nat.totient (Fintype.card G) :=
+  ordCount_cyclic (dvd_refl _)
+
+/-
+**Existence of a Diffie–Hellman generator.** A finite cyclic group always
+contains an element of full order, since it has `φ(n) > 0` generators.
+-/
+omit [DecidableEq G] in
+theorem exists_generator_cyclic [IsCyclic G] :
+    ∃ a : G, orderOf a = Fintype.card G := by
+  obtain ⟨ g, hg ⟩ := IsCyclic.exists_generator ( α := G );
+  use g;
+  rw [ orderOf_eq_card_of_forall_mem_zpowers hg ];
+  rw [ Nat.card_eq_fintype_card ]
+
+/-
+**Euler's order bridge.** In the unit group `(ZMod n)ˣ` the order of every
+element divides `φ(n)` — the group-order interpretation of Euler's theorem.
+-/
+theorem orderOf_dvd_totient_units (n : ℕ) [NeZero n] (a : (ZMod n)ˣ) :
+    orderOf a ∣ Nat.totient n := by
+  rw [ orderOf_dvd_iff_pow_eq_one ];
+  convert ZMod.pow_totient a
+
+/-
+**Pohlig–Hellman torsion count.** In a cyclic group of order `n`, the number
+of solutions of `x ^ d = 1` is `gcd(d, n)` — the order of the unique subgroup of
+that size.
+-/
+theorem card_pow_eq_one_cyclic [IsCyclic G] (d : ℕ) (hd : 0 < d) :
+    #{a : G | a ^ d = 1} = Nat.gcd d (Fintype.card G) := by
+  -- Let g = gcd(d, n) and n = Fintype.card G.
+  set g := Nat.gcd d (Fintype.card G) with hg
+  set n := Fintype.card G with hn;
+  -- The set {a | a ^ d = 1} is exactly the set of elements whose order divides g.
+  have h_order_div_g : Finset.filter (fun a : G => a ^ d = 1) Finset.univ = Finset.filter (fun a : G => orderOf a ∣ g) Finset.univ := by
+    ext a;
+    simp +decide [ orderOf_dvd_iff_pow_eq_one, hg ];
+    exact fun h => by rw [ pow_card_eq_one ] ;
+  rw [ h_order_div_g, show ( Finset.filter ( fun a : G => orderOf a ∣ g ) Finset.univ : Finset G ) = Finset.biUnion ( Nat.divisors g ) ( fun e => Finset.filter ( fun a : G => orderOf a = e ) Finset.univ ) from ?_, Finset.card_biUnion ];
+  · convert Nat.sum_totient g using 1;
+    exact Finset.sum_congr rfl fun x hx => ordCount_cyclic <| Nat.dvd_trans ( Nat.dvd_of_mem_divisors hx ) <| Nat.gcd_dvd_right _ _;
+  · exact fun x hx y hy hxy => Finset.disjoint_left.mpr fun a ha₁ ha₂ => hxy <| by aesop;
+  · ext a; simp +decide ;
+    exact fun _ => Nat.ne_of_gt ( Nat.gcd_pos_of_pos_left _ hd )
+
+end OrderEGFBridge

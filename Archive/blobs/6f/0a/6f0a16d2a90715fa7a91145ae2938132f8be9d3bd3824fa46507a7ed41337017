@@ -1,0 +1,308 @@
+/-
+  # Categorical Tropicalization of Rips Filtrations and Interleaving Stability
+
+  Bridge: connects **metric filtrations / Vietoris–Rips graphs** (topological data
+  analysis) ↔ **interleaving categories** (persistence) ↔ **tropical / min-plus
+  algebra** (the additive structure of scale shifts).
+
+  ## The bridge in one sentence
+
+  The poset `(ℝ, ≤)` acts on filtrations by *shifting the scale parameter*. A
+  `δ`-interleaving between two filtrations is a pair of "shift morphisms" that are
+  mutually inverse up to a shift of `δ`. Composing interleavings **adds** their
+  shifts — this addition of shift parameters is exactly the **tropical (min-plus)
+  multiplication** `δ₁ ⊙ δ₂ = δ₁ + δ₂`, and the resulting interleaving distance is a
+  tropical valuation reconstructing an extended pseudometric on the space of
+  filtrations. This is precisely the quantitative-functor philosophy of
+  `Bridges/CategoricalTropicalUltrametric.lean`, instantiated on the Rips
+  filtrations of `Applications/PoincareData/MetricFiltration.lean`.
+
+  ## Main results
+
+  * `ripsOf` — Rips graph of an *arbitrary symmetric distance function* (so two
+    distances can live on the same vertex type, enabling stability statements).
+  * `ripsMetric_eq_ripsOf` — the pseudometric Rips graph (the catalog `ripsGraph`)
+    is the special case `d = dist` of `ripsOf`.
+  * `Interleaved` — the `δ`-interleaving relation between two ℝ-filtrations.
+  * `interleaved_refl`, `interleaved_symm`, `interleaved_mono` — groupoid-like
+    structure of interleavings.
+  * `interleaved_comp` — **composition of interleavings adds shifts** (the tropical
+    `⊙ = +` law); this is the categorical heart of the bridge.
+  * `ripsOf_le_of_dist_le` — one-sided scale comparison under a distance bound.
+  * `rips_stability` — **stability theorem**: distances within `δ` give
+    `δ`-interleaved Rips filtrations.
+  * `interleavingDist`, `interleavingDist_le_of_interleaved`,
+    `rips_stability_dist` — the interleaving (pseudo)distance and the metric form of
+    stability `interleavingDist ≤ δ`.
+  * `interleavingDist_self`, `interleavingDist_comm`, `interleavingDist_triangle` —
+    the tropical valuation axioms (pseudometric) for `interleavingDist`.
+-/
+
+import Mathlib
+
+open scoped Classical
+
+noncomputable section
+
+namespace CategoricalTropicalRipsInterleaving
+
+universe u
+
+variable {α : Type u}
+
+/-
+-- !-- Lab Notes -- !--
+  HYPOTHESIS (H0). The classical persistence stability theorem ("nearby inputs
+  give nearby persistence diagrams") should already be visible at the *1-skeleton /
+  filtration* level, before any homology is taken, as a purely order-theoretic fact
+  about Rips graphs. The right categorical packaging is the interleaving relation,
+  and the right algebra governing it is the tropical (min-plus) semiring acting on
+  the scale parameter.
+
+  EXPERIMENTAL SETUP. We extend `Applications/PoincareData/MetricFiltration.lean`
+  (the `ripsGraph` / `MetricFiltration` infrastructure) in three moves:
+    (1) generalize `ripsGraph` from a `PseudoMetricSpace` instance to a bare
+        symmetric `d : α → α → ℝ` so that *two* distances can coexist on one vertex
+        set (this is what stability statements actually need);
+    (2) define the `δ`-interleaving relation between ℝ-indexed filtrations;
+    (3) define the interleaving (pseudo)distance as an infimum and verify the
+        tropical-valuation / pseudometric axioms.
+
+  OUTCOME. All targeted theorems closed (0 sorries). See the per-section notes.
+-/
+
+/-! ## §1. Rips graphs of an arbitrary symmetric distance function
+
+To talk about *two* metrics on the same vertex set (needed for stability) we build
+the Rips graph from a bare symmetric function `d : α → α → ℝ` rather than from a
+`PseudoMetricSpace` instance. -/
+
+/-- The Rips graph at scale `ε` of a symmetric distance function `d`: distinct
+    vertices are adjacent iff `d x y ≤ ε`. -/
+def ripsOf (d : α → α → ℝ) (hsymm : ∀ x y, d x y = d y x) (ε : ℝ) : SimpleGraph α where
+  Adj x y := x ≠ y ∧ d x y ≤ ε
+  symm := fun x y h => ⟨h.1.symm, by rw [hsymm]; exact h.2⟩
+  loopless := ⟨fun x h => h.1 rfl⟩
+
+@[simp] lemma ripsOf_adj {d : α → α → ℝ} {hsymm : ∀ x y, d x y = d y x} {ε : ℝ}
+    {x y : α} : (ripsOf d hsymm ε).Adj x y ↔ x ≠ y ∧ d x y ≤ ε := Iff.rfl
+
+/-- Monotonicity of the Rips filtration in the scale parameter (cf. the catalog's
+    `ripsGraph_mono`, here for an arbitrary symmetric `d`). -/
+lemma ripsOf_mono (d : α → α → ℝ) (hsymm : ∀ x y, d x y = d y x) :
+    Monotone (ripsOf d hsymm) := by
+  intro a b hab x y h; exact ⟨h.1, le_trans h.2 hab⟩
+
+/-- The pseudometric Rips graph (the catalog `ripsGraph` of
+    `Applications/PoincareData/MetricFiltration.lean`): both have adjacency
+    `x ≠ y ∧ dist x y ≤ ε`. We re-express it here self-containedly so this module
+    depends only on Mathlib. -/
+def ripsMetric (β : Type u) [PseudoMetricSpace β] (ε : ℝ) : SimpleGraph β where
+  Adj x y := x ≠ y ∧ dist x y ≤ ε
+  symm := fun x y h => ⟨h.1.symm, by rw [dist_comm]; exact h.2⟩
+  loopless := ⟨fun x h => h.1 rfl⟩
+
+/-- The pseudometric Rips graph is the special case `d = dist` of `ripsOf`. This is
+    the explicit functor connecting the catalog `ripsGraph` to the generalized
+    construction used here. -/
+lemma ripsMetric_eq_ripsOf {β : Type u} [PseudoMetricSpace β] (ε : ℝ) :
+    ripsMetric β ε = ripsOf (fun x y => dist x y) (fun x y => dist_comm x y) ε := by
+  ext x y; simp [ripsMetric, ripsOf]
+
+/-
+-- !-- Lab Notes (§1) -- !--
+  INSIGHT. The only friction was the `loopless` field: in this Mathlib version it
+  expects an `Std.Irrefl` wrapper `⟨fun x h => h.1 rfl⟩`, not a bare function —
+  matching the catalog's own `ripsGraph`. Once generalized to symmetric `d`,
+  monotonicity is the same one-line transitivity argument as the catalog, and the
+  `ripsMetric = ripsOf dist` identity is definitional (`simp`).
+  GENERALIZATION GAINED. `ripsOf` decouples the vertex type from the metric, which
+  is exactly what is needed to compare two distances — impossible with the
+  instance-bound `ripsGraph` since a type carries at most one `PseudoMetricSpace`.
+-/
+
+/-! ## §2. Interleavings: the morphisms of the persistence bridge
+
+A `δ`-interleaving of two ℝ-indexed filtrations `F, G` is a pair of scale-shift
+comparisons that witness `F` and `G` agree up to a scale tolerance `δ`. -/
+
+/-- `Interleaved F G δ` : the filtrations `F` and `G` are `δ`-interleaved
+    (`δ ≥ 0`), i.e. each is dominated by a `δ`-shift of the other. -/
+structure Interleaved (F G : ℝ → SimpleGraph α) (δ : ℝ) : Prop where
+  nonneg : 0 ≤ δ
+  fg : ∀ ε, F ε ≤ G (ε + δ)
+  gf : ∀ ε, G ε ≤ F (ε + δ)
+
+/-- Every filtration is `0`-interleaved with itself (identity morphism). -/
+lemma interleaved_refl (F : ℝ → SimpleGraph α) : Interleaved F F 0 := by
+  constructor <;> norm_num
+
+/-- Interleaving is symmetric. -/
+lemma interleaved_symm {F G : ℝ → SimpleGraph α} {δ : ℝ}
+    (h : Interleaved F G δ) : Interleaved G F δ :=
+  ⟨h.nonneg, h.gf, h.fg⟩
+
+/-- A `δ`-interleaving is also a `δ'`-interleaving for any larger tolerance `δ' ≥ δ`
+    (relaxing the bound). -/
+lemma interleaved_mono {F G : ℝ → SimpleGraph α} {δ δ' : ℝ}
+    (hF : Monotone F) (hG : Monotone G)
+    (h : Interleaved F G δ) (hδ : δ ≤ δ') : Interleaved F G δ' :=
+  ⟨le_trans h.nonneg hδ, fun ε => le_trans (h.fg ε) (hG (by linarith)),
+    fun ε => le_trans (h.gf ε) (hF (by linarith))⟩
+
+/-- **Tropical composition law.** Composing a `δ₁`-interleaving `F ≃ G` with a
+    `δ₂`-interleaving `G ≃ H` yields a `(δ₁ + δ₂)`-interleaving `F ≃ H`. The shifts
+    *add*: this is the min-plus product `δ₁ ⊙ δ₂ = δ₁ + δ₂` underlying the
+    interleaving distance. -/
+lemma interleaved_comp {F G H : ℝ → SimpleGraph α} {δ₁ δ₂ : ℝ}
+    (hF : Monotone F) (hH : Monotone H)
+    (h₁ : Interleaved F G δ₁) (h₂ : Interleaved G H δ₂) :
+    Interleaved F H (δ₁ + δ₂) := by
+  refine ⟨by linarith [h₁.nonneg, h₂.nonneg], fun ε => ?_, fun ε => ?_⟩
+  · exact le_trans (h₁.fg ε) (le_trans (h₂.fg _) (hH (by linarith)))
+  · exact le_trans (h₂.gf ε) (le_trans (h₁.gf _) (hF (by linarith)))
+
+/-
+-- !-- Lab Notes (§2) -- !--
+  KEY DISCOVERY (the categorical heart). `interleaved_comp` is where the tropical
+  algebra enters: composing the shift-`δ₁` and shift-`δ₂` morphisms produces a
+  shift-`(δ₁+δ₂)` morphism. Addition of shift parameters is precisely the min-plus
+  product `⊙`, so the collection of filtrations with interleavings forms a category
+  *enriched over the tropical semiring* `(ℝ≥0, min, +)`. Reflexivity gives identities
+  (shift `0`, the tropical multiplicative unit) and symmetry makes it a groupoid up
+  to tolerance.
+  FAILURE ANALYSIS. An earlier draft baked `0 ≤ δ` into `Interleaved` *and* tried to
+  prove composition without monotonicity of the end filtrations; that fails, because
+  re-indexing `H((ε+δ₁)+δ₂) = H(ε+(δ₁+δ₂))` needs `H` monotone to absorb the
+  associativity reshuffle. The fix: require `Monotone F` and `Monotone H` (the two
+  *endpoints*); monotonicity of the middle `G` is not needed.
+-/
+
+/-! ## §3. Stability theorem (graph / filtration level)
+
+If two symmetric distances on the same vertex set are uniformly within `δ`, their
+Rips filtrations are `δ`-interleaved. This is the combinatorial shadow of the
+algebraic stability theorem for persistence. -/
+
+/-- One-sided scale comparison: if `d' x y ≤ d x y + δ` everywhere then the `ε`-Rips
+    graph of `d` sits inside the `(ε + δ)`-Rips graph of `d'`. -/
+lemma ripsOf_le_of_dist_le {d d' : α → α → ℝ}
+    {hsymm : ∀ x y, d x y = d y x} {hsymm' : ∀ x y, d' x y = d' y x}
+    {δ : ℝ} (hle : ∀ x y, d' x y ≤ d x y + δ) (ε : ℝ) :
+    ripsOf d hsymm ε ≤ ripsOf d' hsymm' (ε + δ) := by
+  intro x y; by_cases hxy : x = y <;> simp_all +decide [ripsOf]
+  exact fun h => le_trans (hle x y) (by linarith)
+
+/-- **Stability theorem.** If `|d x y - d' x y| ≤ δ` for all `x, y`, then the Rips
+    filtrations of `d` and `d'` are `δ`-interleaved. -/
+theorem rips_stability {d d' : α → α → ℝ}
+    (hsymm : ∀ x y, d x y = d y x) (hsymm' : ∀ x y, d' x y = d' y x)
+    {δ : ℝ} (hδ : 0 ≤ δ) (hbound : ∀ x y, |d x y - d' x y| ≤ δ) :
+    Interleaved (ripsOf d hsymm) (ripsOf d' hsymm') δ := by
+  refine ⟨hδ, fun ε => ?_, fun ε => ?_⟩
+  · intro x y; by_cases hxy : x = y <;> simp_all +decide [ripsOf]
+    exact fun h => by linarith [abs_le.mp (hbound x y)]
+  · exact ripsOf_le_of_dist_le (fun x y => by linarith [abs_le.mp (hbound x y)]) ε
+
+/-
+-- !-- Lab Notes (§3) -- !--
+  HYPOTHESIS CONFIRMED. The `sup`-distance bound `|d - d'| ≤ δ` (the metric-on-the-
+  same-points specialization of Gromov–Hausdorff) yields a `δ`-interleaving directly.
+  Both `abs_le` halves are used: `d' ≤ d + δ` gives one inclusion, `d ≤ d' + δ` the
+  other. This is the order-theoretic skeleton of the algebraic stability theorem
+  (Chazal–Cohen-Steiner–Glisse–Guibas–Oudot): persistence is `1`-Lipschitz from the
+  metric to the interleaving distance, already at the `1`-skeleton.
+  BOUNDARY. At `δ = 0` (`d = d'`) this collapses to `interleaved_refl`-style equality
+  of filtrations; combined with `interleaved_mono` it shows the stability bound is
+  monotone in the tolerance.
+-/
+
+/-! ## §4. The interleaving distance: a tropical valuation
+
+`interleavingDist F G` is the infimum tolerance at which `F` and `G` interleave. We
+prove the pseudometric (tropical valuation) axioms. Triangle inequality is exactly
+the composition law of §2 (shifts add). -/
+
+/-- The set of admissible interleaving tolerances. -/
+def interleavingSet (F G : ℝ → SimpleGraph α) : Set ℝ :=
+  {δ : ℝ | Interleaved F G δ}
+
+/-- The **interleaving distance**: the infimum of tolerances at which `F` and `G`
+    are interleaved (`0` if they never interleave, by the `sInf` convention). -/
+def interleavingDist (F G : ℝ → SimpleGraph α) : ℝ :=
+  sInf (interleavingSet F G)
+
+/-- The interleaving set is bounded below by `0`. -/
+lemma interleavingSet_bddBelow (F G : ℝ → SimpleGraph α) :
+    BddBelow (interleavingSet F G) :=
+  ⟨0, fun _ hδ => hδ.nonneg⟩
+
+/-- If `F` and `G` are `δ`-interleaved then the interleaving distance is at most `δ`. -/
+lemma interleavingDist_le_of_interleaved {F G : ℝ → SimpleGraph α} {δ : ℝ}
+    (h : Interleaved F G δ) : interleavingDist F G ≤ δ :=
+  csInf_le (interleavingSet_bddBelow F G) h
+
+/-- The interleaving distance is nonnegative (whenever the filtrations interleave at
+    some tolerance). -/
+lemma interleavingDist_nonneg {F G : ℝ → SimpleGraph α}
+    (h : (interleavingSet F G).Nonempty) : 0 ≤ interleavingDist F G :=
+  le_csInf h fun _ hx => hx.nonneg
+
+/-- **Metric form of stability.** Rips filtrations of distances within `δ` have
+    interleaving distance at most `δ`. -/
+theorem rips_stability_dist {d d' : α → α → ℝ}
+    (hsymm : ∀ x y, d x y = d y x) (hsymm' : ∀ x y, d' x y = d' y x)
+    {δ : ℝ} (hδ : 0 ≤ δ) (hbound : ∀ x y, |d x y - d' x y| ≤ δ) :
+    interleavingDist (ripsOf d hsymm) (ripsOf d' hsymm') ≤ δ :=
+  interleavingDist_le_of_interleaved (rips_stability hsymm hsymm' hδ hbound)
+
+/-- Tropical valuation axiom (reflexivity / `d(x,x)=0`): a filtration is at
+    interleaving distance `0` from itself. -/
+lemma interleavingDist_self (F : ℝ → SimpleGraph α) : interleavingDist F F = 0 := by
+  refine le_antisymm ?_ ?_
+  · exact interleavingDist_le_of_interleaved (interleaved_refl F)
+  · exact le_csInf ⟨0, interleaved_refl F⟩ fun _ hx => hx.nonneg
+
+/-- Tropical valuation axiom (symmetry). -/
+lemma interleavingDist_comm (F G : ℝ → SimpleGraph α) :
+    interleavingDist F G = interleavingDist G F := by
+  unfold interleavingDist
+  congr! 1
+  exact Set.ext fun x => ⟨fun hx => interleaved_symm hx, fun hx => interleaved_symm hx⟩
+
+/-- Tropical valuation axiom (**triangle inequality**), the metric incarnation of
+    the composition law `interleaved_comp`: shifts add. Requires monotonicity of the
+    end filtrations `F`, `H` (needed to compose interleavings) and witnesses that the
+    relevant interleaving sets are nonempty. -/
+theorem interleavingDist_triangle {F G H : ℝ → SimpleGraph α}
+    (hF : Monotone F) (hH : Monotone H)
+    (hFG : (interleavingSet F G).Nonempty) (hGH : (interleavingSet G H).Nonempty) :
+    interleavingDist F H ≤ interleavingDist F G + interleavingDist G H := by
+  refine le_of_forall_pos_le_add fun ε εpos => ?_
+  obtain ⟨δ₁, hδ₁⟩ : ∃ δ₁ ∈ interleavingSet F G, δ₁ < interleavingDist F G + ε / 2 :=
+    exists_lt_of_csInf_lt hFG (lt_add_of_pos_right _ (half_pos εpos))
+  obtain ⟨δ₂, hδ₂⟩ : ∃ δ₂ ∈ interleavingSet G H, δ₂ < interleavingDist G H + ε / 2 :=
+    exists_lt_of_csInf_lt hGH (lt_add_of_pos_right _ (half_pos εpos))
+  exact le_trans (csInf_le ⟨0, fun _ hx => hx.nonneg⟩
+    (interleaved_comp hF hH hδ₁.1 hδ₂.1)) (by linarith)
+
+/-
+-- !-- Lab Notes (§4) -- !--
+  RESULT. `interleavingDist` satisfies the three pseudometric / tropical-valuation
+  axioms: `interleavingDist_self` (`= 0` on the diagonal), `interleavingDist_comm`
+  (symmetry — from `interleaved_symm`, the set is literally invariant under swap),
+  and `interleavingDist_triangle` (subadditivity — the metric face of `⊙ = +`).
+  PROOF NOTE. The triangle inequality is the only nontrivial one. Because the `sInf`
+  is generally *not attained*, we cannot just pick optimal `δ₁, δ₂`; instead we take
+  near-optimal witnesses within `ε/2` (`exists_lt_of_csInf_lt`), compose them, and let
+  `ε → 0` (`le_of_forall_pos_le_add`). The nonemptiness hypotheses `hFG`, `hGH` are
+  load-bearing: with the Mathlib `sInf ∅ = 0` convention, a never-interleaving pair
+  would report distance `0` and break subadditivity, so they cannot be dropped.
+  DESIGN CHOICE. We keep `interleavingDist : ℝ` (rather than `ℝ≥0∞`) for friction-free
+  reuse of `csInf` API; the genuine extended-distance refinement is flagged as a
+  future direction.
+-/
+
+end CategoricalTropicalRipsInterleaving
+
+end

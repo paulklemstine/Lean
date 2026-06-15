@@ -1,0 +1,541 @@
+import Mathlib
+import Bridges.CoalgebraicNeuralMyhillNerode
+import Algebra.ProofSpectra.Core
+import Bridges.NeuralPseudometricProofSpectrumFunctor
+
+/-! # Depth-Graded Ultrametrics and Evaluation-Pullback Proof-Spectrum Points
+
+This file is a **conservative deepening** of the bridge developed in
+`Bridges.NeuralPseudometricProofSpectrumFunctor` (built on
+`Bridges.CoalgebraicNeuralMyhillNerode` and `Algebra.ProofSpectra.Core`).  It targets the
+two gaps explicitly flagged in the *Lab Notes* of the previous file:
+
+* **Failure analysis F1** (graded ultrametric).  The previous file only built the discrete
+  `obsDist` (distance `0` / `1`) pseudometric, deferring the depth-graded ultrametric to a
+  conjecture, because the least-separating-depth is undefined when no finite depth
+  separates two states.  Here we resolve this cleanly by valuing the grade in `ℕ∞`
+  (`WithTop ℕ`): the "infinitely close" case is the genuine top element `⊤`, so no
+  degenerate `0` is forced and the kernel characterisation survives.
+* **Failure analysis F2** (primality is not automatic).  The previous file correctly warned
+  that integral-domain output does *not* make the *global* behavior congruence prime.  Here
+  we give the honest, fully-proved alternative: primality arises by **pullback of the prime
+  equality congruence along a fixed evaluation point**, and the global behavior congruence is
+  prime exactly when some evaluation point is *faithful*.
+
+## Reusable lemma schemata
+
+1. **Ultrametricity from nested finite-depth equivalences.**  Section `GradedUltrametric`
+   abstracts the construction: any family `E : ℕ → X → X → Prop` of reflexive, symmetric,
+   transitive relations that is *antitone in depth* (`E (n+1) ⊆ E n`) induces a closeness
+   grade `cl E : X → X → ℕ∞` satisfying the **strong (ultrametric) inequality**
+   `min (cl E x y) (cl E y z) ≤ cl E x z` together with `cl E x x = ⊤`, symmetry, and the
+   kernel identity `cl E x y = ⊤ ↔ ∀ n, E n x y`.  The neural depth filtration
+   `neural_equiv_upto` is one instance.
+
+2. **Proof-spectrum points by congruence pullback.**  Section `Pullback` abstracts: a map
+   `f : R → K` preserving `0`, `+`, `*` pulls back any semiring congruence `SRCong K` to an
+   `SRCong R`, and pulls back any *prime* congruence to a *prime* congruence.  Evaluating
+   `algBehavior` at a fixed observation word `w₀` is such a map, so the equality congruence
+   on an integral-domain output pulls back to a **prime** congruence on the state semiring;
+   when `w₀` is faithful this prime congruence *is* the global behavior congruence, exhibiting
+   it as a genuine point of the proof spectrum.
+
+## Main results
+
+* `cl_self`, `cl_symm`, `cl_eq_top_iff`, `cl_strong_triangle` — the order-valued ultrametric.
+* `obsCloseness_*` — the neural instance over `neural_equiv_upto`.
+* `obsUltraDist_*` — the dyadic real corollary `2⁻ᵏ`, including the strong triangle inequality.
+* `obsCloseness_top_iff_obsDist_zero` — compatibility with the previous `obsDist` kernel.
+* `pullbackCong`, `pullbackPrime` — the pullback schema for (prime) congruences.
+* `congAt`, `congAt_prime` — the evaluation-pullback congruence and its primality.
+* `behaviorSpectrumPoint` — under a faithful evaluation point, the global behavior
+  congruence is a proof-spectrum point.
+-/
+
+noncomputable section
+open Classical
+open Bridges.AlgebraMachineLearning
+open Bridges.NeuralProofSpectrum
+
+namespace Bridges.NeuralGradedUltrametric
+
+universe u v w
+
+/-! ## Part I.A: Abstract schema — ultrametricity from nested finite-depth equivalences -/
+
+section GradedUltrametric
+
+variable {X : Type*}
+
+/-- A **nested family of finite-depth equivalences**: for each depth `n` the relation `E n`
+    is an equivalence relation, and the family is *antitone in depth*, i.e. agreement at
+    depth `n+1` implies agreement at depth `n`.  This is the exact structure carried by the
+    neural depth filtration `neural_equiv_upto`. -/
+structure NestedEquivFamily (E : ℕ → X → X → Prop) : Prop where
+  /-- Each depth is reflexive. -/
+  rfl' : ∀ n x, E n x x
+  /-- Each depth is symmetric. -/
+  symm' : ∀ n {x y}, E n x y → E n y x
+  /-- Each depth is transitive. -/
+  trans' : ∀ n {x y z}, E n x y → E n y z → E n x z
+  /-- Deeper agreement implies shallower agreement. -/
+  antitone' : ∀ n {x y}, E (n + 1) x y → E n x y
+
+variable {E : ℕ → X → X → Prop}
+
+/-
+Monotone version of antitonicity: agreement at any depth `m ≥ n` implies agreement at
+    depth `n`.
+-/
+theorem NestedEquivFamily.antitone_le (hE : NestedEquivFamily E) {n m : ℕ} (hnm : n ≤ m)
+    {x y : X} (h : E m x y) : E n x y := by
+  induction' hnm with m hm ih;
+  · exact h;
+  · exact ih ( hE.antitone' m h )
+
+/-- **Separation at depth `n`**: the negation of depth-`n` agreement. -/
+def Sep (E : ℕ → X → X → Prop) (n : ℕ) (x y : X) : Prop := ¬ E n x y
+
+/-
+Separation is symmetric.
+-/
+theorem sep_symm (hE : NestedEquivFamily E) {n : ℕ} {x y : X} (h : Sep E n x y) :
+    Sep E n y x := by
+  exact fun hyx => h ( hE.symm' n hyx )
+
+/-
+Separation is monotone in depth: separation at depth `n` persists at every deeper
+    depth `m ≥ n`.
+-/
+theorem sep_mono (hE : NestedEquivFamily E) {n m : ℕ} (hnm : n ≤ m) {x y : X}
+    (h : Sep E n x y) : Sep E m x y := by
+  exact fun h' => h ( hE.antitone_le hnm h' )
+
+/-
+**Ternary separation lemma.**  If `x` and `z` are separated at depth `n`, then either
+    `x` and `y`, or `y` and `z`, are separated at depth `n`.  This is the contrapositive of
+    transitivity and is the engine of the strong triangle inequality.
+-/
+theorem sep_ternary (hE : NestedEquivFamily E) {n : ℕ} {x y z : X}
+    (h : Sep E n x z) : Sep E n x y ∨ Sep E n y z := by
+  contrapose! h;
+  exact Classical.not_not.2 ( hE.trans' n ( Classical.not_not.1 h.1 ) ( Classical.not_not.1 h.2 ) )
+
+/-- The **closeness grade** valued in `ℕ∞`: the least depth at which the two points are
+    separated, or `⊤` when no finite depth separates them (they agree forever).  Larger grade
+    means closer; `⊤` is "identical observable behavior". -/
+def cl (E : ℕ → X → X → Prop) (x y : X) : ℕ∞ :=
+  if h : ∃ n, Sep E n x y then (↑(Nat.find h) : ℕ∞) else ⊤
+
+/-
+If some depth separates the points, the closeness equals the least separating depth.
+-/
+theorem cl_eq_find {x y : X} (h : ∃ n, Sep E n x y) :
+    cl E x y = (↑(Nat.find h) : ℕ∞) := by
+  unfold cl; aesop;
+
+/-
+The closeness is `⊤` exactly when the points agree at every finite depth.
+-/
+theorem cl_eq_top_iff {x y : X} : cl E x y = ⊤ ↔ ∀ n, E n x y := by
+  unfold cl;
+  by_cases h : ∃ n, Sep E n x y <;> simp +decide [ h ];
+  · exact h.imp fun n hn => by simpa [ Sep ] using hn;
+  · exact fun n => Classical.not_not.1 fun hn => h ⟨ n, hn ⟩
+
+/-
+Self-closeness is `⊤`.
+-/
+theorem cl_self (hE : NestedEquivFamily E) (x : X) : cl E x x = ⊤ := by
+  convert cl_eq_top_iff.mpr ( fun n => hE.rfl' n x )
+
+/-
+Closeness is symmetric.
+-/
+theorem cl_symm (hE : NestedEquivFamily E) (x y : X) : cl E x y = cl E y x := by
+  unfold cl;
+  have hpred : (fun n => Sep E n x y) = (fun n => Sep E n y x) := by
+    ext n; exact (by
+    exact ⟨ fun h => sep_symm hE h, fun h => sep_symm hE h ⟩);
+  simp_all +decide [ funext_iff ]
+
+/-
+If `(n : ℕ∞)` is strictly below the closeness, then the points agree at depth `n`.
+-/
+theorem eq_of_lt_cl {n : ℕ} {x y : X}
+    (h : (↑n : ℕ∞) < cl E x y) : E n x y := by
+  contrapose! h;
+  convert Nat.find_min' _ _;
+  convert Nat.cast_le;
+  convert cl_eq_find _;
+  · exact ⟨ n, h ⟩;
+  · infer_instance;
+  · infer_instance;
+  · infer_instance;
+  · exact h
+
+/-
+Separation at depth `n` forces the closeness to be at most `n`.
+-/
+theorem cl_le_of_sep {n : ℕ} {x y : X} (h : Sep E n x y) : cl E x y ≤ (↑n : ℕ∞) := by
+  unfold cl;
+  split_ifs <;> norm_cast;
+  · exact Nat.find_min' _ h;
+  · tauto
+
+/-
+**Strong (ultrametric) triangle inequality** for the closeness grade:
+    `min (cl x y) (cl y z) ≤ cl x z`.  Equivalently, in the dyadic distance picture below,
+    `dist x z ≤ max (dist x y) (dist y z)`.
+-/
+theorem cl_strong_triangle (hE : NestedEquivFamily E) (x y z : X) :
+    min (cl E x y) (cl E y z) ≤ cl E x z := by
+  by_cases h' : ∃ n, Sep E n x z;
+  · rw [ cl_eq_find h' ];
+    exact le_of_not_gt fun h => Nat.find_spec h' <| hE.trans' _ ( eq_of_lt_cl <| lt_min_iff.mp h |>.1 ) ( eq_of_lt_cl <| lt_min_iff.mp h |>.2 );
+  · simp_all +decide [ cl ]
+
+end GradedUltrametric
+
+/-! ## Part I.B: The neural instance over the depth filtration `neural_equiv_upto` -/
+
+section NeuralInstance
+
+variable {σ α β : Type*}
+
+/-- The neural depth filtration as a family of relations. -/
+def neuralEqFamily (N : NeuralObservationSystem σ α β) : ℕ → σ → σ → Prop :=
+  fun n => neural_equiv_upto N n
+
+/-- Depth-`n` equivalence is symmetric. -/
+theorem neural_equiv_upto_symm (N : NeuralObservationSystem σ α β) (n : ℕ) {s t : σ}
+    (h : neural_equiv_upto N n s t) : neural_equiv_upto N n t s :=
+  fun w hw => (h w hw).symm
+
+/-- Depth-`n` equivalence is transitive. -/
+theorem neural_equiv_upto_trans (N : NeuralObservationSystem σ α β) (n : ℕ) {s t u : σ}
+    (hst : neural_equiv_upto N n s t) (htu : neural_equiv_upto N n t u) :
+    neural_equiv_upto N n s u :=
+  fun w hw => (hst w hw).trans (htu w hw)
+
+/-- The neural depth filtration is a nested family of finite-depth equivalences. -/
+theorem neural_nestedEquivFamily (N : NeuralObservationSystem σ α β) :
+    NestedEquivFamily (neuralEqFamily N) where
+  rfl' := fun _ _ => fun _ _ => rfl
+  symm' := fun n {_ _} h => neural_equiv_upto_symm N n h
+  trans' := fun n {_ _ _} h₁ h₂ => neural_equiv_upto_trans N n h₁ h₂
+  antitone' := fun _ {_ _} h => finite_depth_refinement_monotone N h
+
+/-- **Separation at a given depth** in the concrete neural sense: some observation context of
+    length at most `n` distinguishes the two states. -/
+def SeparatesAtDepth (N : NeuralObservationSystem σ α β) (n : ℕ) (s t : σ) : Prop :=
+  ∃ w : NeuralContext α, w.length ≤ n ∧ neural_behavior N s w ≠ neural_behavior N t w
+
+/-
+The concrete separation predicate coincides with the abstract `Sep` of the depth
+    filtration.
+-/
+theorem separatesAtDepth_iff (N : NeuralObservationSystem σ α β) (n : ℕ) (s t : σ) :
+    SeparatesAtDepth N n s t ↔ Sep (neuralEqFamily N) n s t := by
+  unfold SeparatesAtDepth Sep neuralEqFamily;
+  unfold neural_equiv_upto; aesop;
+
+/-- The **neural observation closeness**: the order-valued graded ultrametric on states. -/
+def obsCloseness (N : NeuralObservationSystem σ α β) (s t : σ) : ℕ∞ :=
+  cl (neuralEqFamily N) s t
+
+/-- Self-closeness is `⊤`. -/
+theorem obsCloseness_self (N : NeuralObservationSystem σ α β) (s : σ) :
+    obsCloseness N s s = ⊤ :=
+  cl_self (neural_nestedEquivFamily N) s
+
+/-- Closeness is symmetric. -/
+theorem obsCloseness_symm (N : NeuralObservationSystem σ α β) (s t : σ) :
+    obsCloseness N s t = obsCloseness N t s :=
+  cl_symm (neural_nestedEquivFamily N) s t
+
+/-
+**Kernel identity**: closeness is `⊤` exactly for behaviorally equivalent states.
+-/
+theorem obsCloseness_eq_top_iff (N : NeuralObservationSystem σ α β) (s t : σ) :
+    obsCloseness N s t = ⊤ ↔ neural_equiv N s t := by
+  convert cl_eq_top_iff using 1;
+  exact ⟨ fun h n => neural_equiv_implies_upto N h, fun h => neural_equiv_of_all_upto N h ⟩
+
+/-- **Strong (ultrametric) triangle inequality** for the neural closeness grade. -/
+theorem obsCloseness_strong_triangle (N : NeuralObservationSystem σ α β) (s t u : σ) :
+    min (obsCloseness N s t) (obsCloseness N t u) ≤ obsCloseness N s u :=
+  cl_strong_triangle (neural_nestedEquivFamily N) s t u
+
+end NeuralInstance
+
+/-! ## Part I.C: The dyadic real corollary `2⁻ᵏ` -/
+
+section DyadicReal
+
+variable {σ α β : Type*}
+
+/-- Decode a grade `ℕ∞` to a dyadic real: `⊤ ↦ 0` and `k ↦ 2⁻ᵏ`.  Order-reversing:
+    larger closeness gives smaller distance. -/
+def gradeReal (g : ℕ∞) : ℝ := g.recTopCoe 0 (fun k => (2 : ℝ)⁻¹ ^ k)
+
+/-- `gradeReal` of `⊤` is `0`. -/
+theorem gradeReal_top : gradeReal (⊤ : ℕ∞) = 0 := rfl
+
+/-- `gradeReal` of a natural `k` is `2⁻ᵏ`. -/
+theorem gradeReal_coe (k : ℕ) : gradeReal (↑k : ℕ∞) = (2 : ℝ)⁻¹ ^ k := rfl
+
+/-
+`gradeReal` is nonnegative.
+-/
+theorem gradeReal_nonneg (g : ℕ∞) : 0 ≤ gradeReal g := by
+  unfold gradeReal;
+  cases g <;> norm_num
+
+/-
+`gradeReal` is order-reversing.
+-/
+theorem gradeReal_antitone {g h : ℕ∞} (hgh : g ≤ h) : gradeReal h ≤ gradeReal g := by
+  unfold gradeReal;
+  cases g <;> cases h <;> norm_num at *;
+  exact pow_le_pow_of_le_one ( by norm_num ) ( by norm_num ) hgh
+
+/-
+`gradeReal` turns `min` into `max` (it is an order anti-isomorphism onto its image).
+-/
+theorem gradeReal_min (g h : ℕ∞) :
+    gradeReal (min g h) = max (gradeReal g) (gradeReal h) := by
+  cases le_total g h <;> simp +decide [ *, gradeReal ];
+  · cases g <;> cases h <;> simp_all +decide [ ENat.recTopCoe ];
+    gcongr ; norm_num;
+  · cases g <;> cases h <;> norm_num at *;
+    gcongr ; norm_num
+
+/-
+`gradeReal g = 0` exactly when `g = ⊤`.
+-/
+theorem gradeReal_eq_zero_iff (g : ℕ∞) : gradeReal g = 0 ↔ g = ⊤ := by
+  cases g <;> simp [gradeReal]
+
+/-- The **dyadic observation ultrametric** `2⁻ᵏ`, where `k` is the least separating depth
+    (and `0` for behaviorally equivalent states). -/
+def obsUltraDist (N : NeuralObservationSystem σ α β) (s t : σ) : ℝ :=
+  gradeReal (obsCloseness N s t)
+
+/-- The dyadic ultrametric is nonnegative. -/
+theorem obsUltraDist_nonneg (N : NeuralObservationSystem σ α β) (s t : σ) :
+    0 ≤ obsUltraDist N s t :=
+  gradeReal_nonneg _
+
+/-
+Self-distance is `0`.
+-/
+theorem obsUltraDist_self (N : NeuralObservationSystem σ α β) (s : σ) :
+    obsUltraDist N s s = 0 := by
+  rw [ obsUltraDist, obsCloseness_self, gradeReal_top ]
+
+/-
+The dyadic ultrametric is symmetric.
+-/
+theorem obsUltraDist_symm (N : NeuralObservationSystem σ α β) (s t : σ) :
+    obsUltraDist N s t = obsUltraDist N t s := by
+  exact congr_arg _ ( obsCloseness_symm N s t )
+
+/-
+**Distance zero iff behaviorally equivalent.**
+-/
+theorem obsUltraDist_eq_zero_iff (N : NeuralObservationSystem σ α β) (s t : σ) :
+    obsUltraDist N s t = 0 ↔ neural_equiv N s t := by
+  -- By definition of obsUltraDist, we have obsUltraDist N s t = gradeReal (obsCloseness N s t).
+  rw [show obsUltraDist N s t = gradeReal (obsCloseness N s t) from rfl];
+  rw [ gradeReal_eq_zero_iff, obsCloseness_eq_top_iff ]
+
+/-
+**Strong (ultrametric) triangle inequality** for the dyadic distance.
+-/
+theorem obsUltraDist_strong_triangle (N : NeuralObservationSystem σ α β) (s t u : σ) :
+    obsUltraDist N s u ≤ max (obsUltraDist N s t) (obsUltraDist N t u) := by
+  convert gradeReal_antitone ( obsCloseness_strong_triangle N s t u ) using 1;
+  convert gradeReal_min ( obsCloseness N s t ) ( obsCloseness N t u ) |> Eq.symm using 1
+
+end DyadicReal
+
+/-! ## Part I.D: Compatibility with the previous `obsDist` kernel -/
+
+section Compatibility
+
+variable {R K : Type*} {α : Type*} [Semiring R] [Semiring K]
+
+/-
+**Compatibility**: the new graded kernel agrees with the previous discrete
+    pseudometric kernel.  Closeness `⊤` (infinite agreement depth) holds exactly when the
+    previous `obsDist` vanishes.
+-/
+theorem obsCloseness_top_iff_obsDist_zero (N : AlgNeuralSystem R K α) (x y : R) :
+    obsCloseness (weighted_to_neural N.toWeighted) x y = ⊤ ↔ obsDist N x y = 0 := by
+  convert obsCloseness_eq_top_iff ( weighted_to_neural N.toWeighted ) x y using 1;
+  convert obsDist_eq_zero_iff N x y using 1
+
+end Compatibility
+
+/-! ## Part II.A: Abstract schema — congruence pullback along a multiplicative-additive map -/
+
+section Pullback
+
+variable {R K : Type*} [Semiring R] [Semiring K]
+
+/-- A minimal "semiring-congruence map": a function preserving `0`, `+` and `*` (but not
+    necessarily `1`).  This is exactly the structure needed to pull back a semiring
+    congruence, and it is what evaluation of `algBehavior` at a fixed word provides. -/
+structure SRHom (R K : Type*) [Semiring R] [Semiring K] where
+  /-- The underlying function. -/
+  toFun : R → K
+  /-- Preserves `0`. -/
+  map_zero' : toFun 0 = 0
+  /-- Preserves `+`. -/
+  map_add' : ∀ a b, toFun (a + b) = toFun a + toFun b
+  /-- Preserves `*`. -/
+  map_mul' : ∀ a b, toFun (a * b) = toFun a * toFun b
+
+/-- The **pullback congruence**: pull a semiring congruence `D` on `K` back along an
+    `SRHom f` to a congruence on `R`. -/
+def pullbackCong (f : SRHom R K) (D : SRCong K) : SRCong R where
+  rel x y := D.rel (f.toFun x) (f.toFun y)
+  refl a := D.refl _
+  symm h := D.symm h
+  trans h₁ h₂ := D.trans h₁ h₂
+  add_compat := by
+    intro a b c d hab hcd
+    have := D.add_compat hab hcd
+    rwa [← f.map_add', ← f.map_add'] at this
+  mul_compat := by
+    intro a b c d hab hcd
+    have := D.mul_compat hab hcd
+    rwa [← f.map_mul', ← f.map_mul'] at this
+
+/-- The pullback congruence relates `x` and `y` exactly when their images are `D`-related. -/
+theorem pullbackCong_rel (f : SRHom R K) (D : SRCong K) (x y : R) :
+    (pullbackCong f D).rel x y ↔ D.rel (f.toFun x) (f.toFun y) := Iff.rfl
+
+/-
+**Pullback of a prime congruence is prime.**
+-/
+def pullbackPrime (f : SRHom R K) (P : PrimeSRCong K) : PrimeSRCong R where
+  toSRCong := pullbackCong f P.toSRCong
+  prime_prop := by
+    intro a b h
+    simp_all +decide [ pullbackCong ];
+    convert P.prime_prop _;
+    · exact f.map_zero';
+    · exact f.map_zero';
+    · convert h using 1;
+      · exact f.map_mul' a b ▸ rfl;
+      · exact Eq.symm ( f.map_zero' )
+
+/-- The **equality congruence** on a semiring. -/
+def eqCong (K : Type*) [Semiring K] : SRCong K where
+  rel := Eq
+  refl _ := rfl
+  symm h := h.symm
+  trans h₁ h₂ := h₁.trans h₂
+  add_compat h₁ h₂ := by rw [h₁, h₂]
+  mul_compat h₁ h₂ := by rw [h₁, h₂]
+
+/-- On an integral domain (no zero divisors) the **equality congruence is prime**: this is
+    precisely `mul_eq_zero`. -/
+def eqPrime (K : Type*) [Semiring K] [NoZeroDivisors K] : PrimeSRCong K where
+  toSRCong := eqCong K
+  prime_prop := by
+    intro a b h
+    exact mul_eq_zero.mp h
+
+end Pullback
+
+/-! ## Part II.B: The evaluation map and the evaluation-pullback congruence -/
+
+section Evaluation
+
+variable {R K : Type*} {α : Type*} [Semiring R] [Semiring K]
+
+/-- **Evaluation at a fixed observation word `w₀`** as an `SRHom`: `x ↦ algBehavior N x w₀`.
+    It preserves `0`, `+`, `*` by the algebraic-behavior lemmas of the previous file. -/
+def evalAt (N : AlgNeuralSystem R K α) (w₀ : List α) : SRHom R K where
+  toFun x := algBehavior N x w₀
+  map_zero' := algBehavior_zero N w₀
+  map_add' x y := algBehavior_add N x y w₀
+  map_mul' x y := algBehavior_mul N x y w₀
+
+/-- The **congruence at a fixed observation word**: equality of behavior at `w₀`, obtained as
+    the pullback of the equality congruence along `evalAt`. -/
+def congAt (N : AlgNeuralSystem R K α) (w₀ : List α) : SRCong R :=
+  pullbackCong (evalAt N w₀) (eqCong K)
+
+/-- The congruence at `w₀` relates `x` and `y` exactly when they have equal behavior at `w₀`:
+    it is literally the pullback of equality along evaluation. -/
+theorem congAt_rel (N : AlgNeuralSystem R K α) (w₀ : List α) (x y : R) :
+    (congAt N w₀).rel x y ↔ algBehavior N x w₀ = algBehavior N y w₀ := Iff.rfl
+
+/-- The global behavior congruence is the intersection of the pointwise congruences. -/
+theorem behaviorRel_iff_all_congAt (N : AlgNeuralSystem R K α) (x y : R) :
+    behaviorRel N x y ↔ ∀ w₀ : List α, (congAt N w₀).rel x y := Iff.rfl
+
+/-- **Primality by evaluation pullback.**  If the output semiring is an integral domain, then
+    the congruence at any fixed observation word is a *prime* congruence — without any claim
+    about the global behavior congruence. -/
+def congAt_prime (N : AlgNeuralSystem R K α) (w₀ : List α) [NoZeroDivisors K] :
+    PrimeSRCong R :=
+  pullbackPrime (evalAt N w₀) (eqPrime K)
+
+/-- The relation of `congAt_prime` is exactly behavior-equality at `w₀`. -/
+theorem congAt_prime_rel (N : AlgNeuralSystem R K α) (w₀ : List α) [NoZeroDivisors K]
+    (x y : R) :
+    (congAt_prime N w₀).rel x y ↔ algBehavior N x w₀ = algBehavior N y w₀ := Iff.rfl
+
+end Evaluation
+
+/-! ## Part II.C: Faithful evaluation points and the global spectrum point -/
+
+section Faithful
+
+variable {R K : Type*} {α : Type*} [Semiring R] [Semiring K]
+
+/-- An observation word `w₀` is **faithful** when behavior-equality at `w₀` already implies
+    (hence equals) global behavioral equivalence.  Equivalently, the pullback congruence at
+    `w₀` coincides with the global behavior congruence. -/
+def Faithful (N : AlgNeuralSystem R K α) (w₀ : List α) : Prop :=
+  ∀ x y : R, behaviorRel N x y ↔ algBehavior N x w₀ = algBehavior N y w₀
+
+/-- Under a faithful evaluation point the global behavior congruence coincides with the
+    pullback congruence at `w₀`. -/
+theorem congAt_rel_eq_behaviorRel (N : AlgNeuralSystem R K α) (w₀ : List α)
+    (hf : Faithful N w₀) (x y : R) :
+    (congAt N w₀).rel x y ↔ behaviorRel N x y :=
+  (hf x y).symm
+
+/-
+**Global primality under faithfulness.**  If the output is an integral domain and some
+    observation word `w₀` is faithful, then the global behavior congruence satisfies the
+    prime property.
+-/
+theorem behaviorRel_prime_of_faithful (N : AlgNeuralSystem R K α) (w₀ : List α)
+    [NoZeroDivisors K] (hf : Faithful N w₀) {a b : R}
+    (h : behaviorRel N (a * b) 0) : behaviorRel N a 0 ∨ behaviorRel N b 0 := by
+  simp_all +decide [ Faithful ];
+  simp_all +decide [ algBehavior_mul, algBehavior_zero ]
+
+/-- **The behavior congruence as a proof-spectrum point.**  Under a faithful evaluation
+    point into an integral domain, the global behavior congruence `behaviorCongruence N` is a
+    *prime* congruence, i.e. a genuine point of the proof spectrum `ProofSpectrum R`. -/
+def behaviorSpectrumPoint (N : AlgNeuralSystem R K α) (w₀ : List α) [NoZeroDivisors K]
+    (hf : Faithful N w₀) : ProofSpectrum R where
+  toSRCong := behaviorCongruence N
+  prime_prop h := behaviorRel_prime_of_faithful N w₀ hf h
+
+/-- The spectrum point's relation is exactly the global behavioral equivalence. -/
+theorem behaviorSpectrumPoint_rel (N : AlgNeuralSystem R K α) (w₀ : List α)
+    [NoZeroDivisors K] (hf : Faithful N w₀) (x y : R) :
+    (behaviorSpectrumPoint N w₀ hf).rel x y ↔ behaviorRel N x y := Iff.rfl
+
+end Faithful
+
+end Bridges.NeuralGradedUltrametric

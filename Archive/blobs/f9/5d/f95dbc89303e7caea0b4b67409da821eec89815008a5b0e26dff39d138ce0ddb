@@ -1,0 +1,216 @@
+import Mathlib
+
+/-! # Density in the proof-complexity size-system preorder
+
+A **size system** is a function `S : ℕ → ℕ`.  We equip size systems with the *simulation
+preorder* `Simulates S T`, meaning `S(n) ≤ (c + T(n))^d` for some fixed `c, d` and all
+large `n` — i.e. `S` is bounded by a polynomial in `T`.  Strict simulation `S ≺ T` is
+`Simulates S T ∧ ¬ Simulates T S`.
+
+The *power ladder* `powSystem k n = 2 ^ (n ^ k)` is a strictly increasing chain of degrees
+(`powSystem_lt_powSystem`).  We show the ladder is *dense* in a strong, explicit sense: the
+*intermediate system* `interPowSys k n = 2 ^ (n ^ k * Nat.sqrt n)` (size grows like
+`2 ^ (n ^ (k + 1/2))`) sits strictly between consecutive rungs:
+`powSystem k ≺ interPowSys k ≺ powSystem (k+1)` (`interPowSys_strictly_between`).
+
+Everything is self-contained: only `Mathlib` (for `Nat.sqrt` and basic arithmetic) is used.
+-/
+
+namespace LadderDensity
+
+/-- The simulation preorder: `S` is simulated by `T` if `S(n) ≤ (c + T(n))^d` for some
+constants `c, d` and all sufficiently large `n` (polynomial domination of size values). -/
+def Simulates (S T : ℕ → ℕ) : Prop :=
+  ∃ d : ℕ, ∃ c : ℕ, ∃ N : ℕ, ∀ n ≥ N, S n ≤ (c + T n) ^ d
+
+/-- Strict simulation: `S ≺ T` iff `S` is simulated by `T` but not conversely. -/
+def StrictSim (S T : ℕ → ℕ) : Prop := Simulates S T ∧ ¬ Simulates T S
+
+@[inherit_doc] scoped infix:50 " ≺ " => StrictSim
+
+/-- The power ladder rung of index `k`: size `2 ^ (n ^ k)`. -/
+def powSystem (k : ℕ) (n : ℕ) : ℕ := 2 ^ (n ^ k)
+
+/-- The intermediate system: size `2 ^ (n ^ k * Nat.sqrt n)` (and `1` at `n = 0`).
+Its exponent grows like `n ^ (k + 1/2)`, strictly between `n ^ k` and `n ^ (k+1)`. -/
+def interPowSys (k : ℕ) (n : ℕ) : ℕ :=
+  if n = 0 then 1 else 2 ^ (n ^ k * Nat.sqrt n)
+
+/-! ## Basic bounds -/
+
+lemma sqrt_ge_one {n : ℕ} (hn : 1 ≤ n) : 1 ≤ Nat.sqrt n := by
+  -- Since $n \geq 1$, we have $\sqrt{n} \geq 1$ by the properties of the square root function.
+  apply Nat.sqrt_pos.mpr hn
+
+lemma interPowSys_eq (k n : ℕ) (hn : 1 ≤ n) :
+    interPowSys k n = 2 ^ (n ^ k * Nat.sqrt n) := by
+  rw [interPowSys, if_neg (by omega)]
+
+/-
+`n ^ k * Nat.sqrt n ≤ n ^ (k+1)` for `n ≥ 1`, since `Nat.sqrt n ≤ n`.
+-/
+lemma exp_mul_sqrt_le (k n : ℕ) :
+    n ^ k * Nat.sqrt n ≤ n ^ (k + 1) := by
+  simpa only [ pow_succ ] using Nat.mul_le_mul_left _ ( Nat.sqrt_le_self n )
+
+/-
+Core "take logs" lemma: if `2^A ≤ (c + 2^B)^d` with `c ≤ 2^B`, then `A ≤ d*(B+1)`.
+-/
+lemma log_exp_bound {A B c d : ℕ} (hc : c ≤ 2 ^ B) (h : 2 ^ A ≤ (c + 2 ^ B) ^ d) :
+    A ≤ d * (B + 1) := by
+  revert h;
+  intro h
+  have h_bound : 2 ^ A ≤ (2 ^ (B + 1)) ^ d := by
+    exact h.trans ( Nat.pow_le_pow_left ( by rw [ pow_succ' ] ; linarith ) _ );
+  contrapose! h_bound;
+  rw [ ← pow_mul' ] ; exact pow_lt_pow_right₀ ( by norm_num ) h_bound
+
+/-! ## Arithmetic contradiction cores
+
+Each of the following says that a certain polynomial-in-the-exponent inequality fails for
+infinitely many `n` (above any threshold `M`), which is what powers the non-simulation
+proofs after taking logs. -/
+
+/-
+For `k ≥ 1`, `d * (n^k + 1) < n^k * Nat.sqrt n` for some `n ≥ M`
+(used to refute `Simulates (interPowSys k) (powSystem k)`).
+-/
+lemma arith_false_inter_pow (k d M : ℕ) (hk : 1 ≤ k) :
+    ∃ n, M ≤ n ∧ d * (n ^ k + 1) < n ^ k * Nat.sqrt n := by
+  -- Choose `n := max M ((d+1)*(d+1))`. Then `M ≤ n` and `(d+1)*(d+1) ≤ n`, so by `Nat.le_sqrt` (`m ≤ Nat.sqrt n ↔ m*m ≤ n`), `d+1 ≤ Nat.sqrt n`.
+  set n := max M ((d+1)*(d+1)) with hn
+  have hn_ge_M : M ≤ n := by
+    exact le_max_left _ _
+  have hn_sqrt : d + 1 ≤ Nat.sqrt n := by
+    rw [ Nat.le_sqrt ] ; aesop;
+  -- Also `n ≥ d+1` so `n > d`, hence with `1 ≤ k`, `n^k ≥ n > d` (use `Nat.le_self_pow` or `Nat.pow_le_pow_right`/`Nat.one_le_iff`; `n ≤ n^k` since `k≥1`).
+  have hn_gt_d : n > d := by
+    grind
+  have hn_k_gt_d : n^k > d := by
+    exact lt_of_lt_of_le hn_gt_d ( Nat.le_self_pow ( by linarith ) _ );
+  exact ⟨ n, hn_ge_M, by nlinarith ⟩
+
+/-
+For `k ≥ 1`, `d * (n^k * Nat.sqrt n + 1) < n^(k+1)` for some `n ≥ M`
+(used to refute `Simulates (powSystem (k+1)) (interPowSys k)`).
+-/
+lemma arith_false_pow_inter (k d M : ℕ) :
+    ∃ n, M ≤ n ∧ d * (n ^ k * Nat.sqrt n + 1) < n ^ (k + 1) := by
+  obtain ⟨n, hn⟩ : ∃ n, M ≤ n ∧ (d + 1) * (d + 1) ≤ n := by
+    exact ⟨ Max.max M ( ( d + 1 ) * ( d + 1 ) ), le_max_left _ _, le_max_right _ _ ⟩;
+  refine' ⟨ n, hn.1, _ ⟩;
+  -- Use `Nat.sqrt_le n : Nat.sqrt n * Nat.sqrt n ≤ n`. From these `n ≥ Nat.sqrt n * Nat.sqrt n ≥ (d+1)*Nat.sqrt n`.
+  have h_sqrt : n ≥ (d + 1) * Nat.sqrt n := by
+    nlinarith [ Nat.sqrt_le n ];
+  rw [ pow_succ' ];
+  nlinarith [ Nat.zero_le ( n ^ k * n.sqrt ), Nat.one_le_pow k n ( by nlinarith : 0 < n ), Nat.mul_le_mul_left ( n ^ k ) h_sqrt ]
+
+/-
+For `k ≥ 1`, `d * (n^k + 1) < n^(k+1)` for some `n ≥ M`
+(used to refute `Simulates (powSystem (k+1)) (powSystem k)`).
+-/
+lemma arith_false_pow_pow (k d M : ℕ) (hk : 1 ≤ k) :
+    ∃ n, M ≤ n ∧ d * (n ^ k + 1) < n ^ (k + 1) := by
+  -- Let's choose any $n$ such that $n \geq M + d + 2$.
+  use M + d + 2;
+  exact ⟨ by linarith, by rw [ pow_succ' ] ; nlinarith [ pow_le_pow_right₀ ( by linarith : 1 ≤ M + d + 2 ) hk ] ⟩
+
+/-! ## The four simulation facts -/
+
+/-
+`2^(n^k) ≤ 2^(n^k * Nat.sqrt n)`: the lower rung is simulated by the intermediate.
+-/
+theorem powSystem_simulates_interPowSys (k : ℕ) :
+    Simulates (powSystem k) (interPowSys k) := by
+  exact ⟨ 1, 0, 1, fun n hn => by
+    simp [powSystem, interPowSys]
+    rw [ if_neg ( by linarith ) ] ; exact pow_le_pow_right₀ ( by norm_num ) ( by nlinarith [ pow_pos ( by linarith : 0 < n ) k, Nat.sqrt_pos.mpr ( by linarith : 0 < n ) ] ) ; ⟩
+
+/-
+The intermediate system is *not* simulated by the lower rung.
+-/
+theorem not_interPowSys_simulates_powSystem (k : ℕ) (hk : 1 ≤ k) :
+    ¬ Simulates (interPowSys k) (powSystem k) := by
+  intro h
+  obtain ⟨d, c, N, h⟩ := h
+  obtain ⟨n, hn1, hn2⟩ := arith_false_inter_pow k d (N + c + 1) hk
+  have h_c_le_2_pow : c ≤ 2 ^ (n ^ k) := by
+    exact le_trans ( by linarith ) ( Nat.le_trans ( Nat.le_self_pow ( by linarith ) _ ) ( Nat.le_of_lt ( Nat.recOn ( n ^ k ) ( by norm_num ) fun n ihn => by rw [ pow_succ' ] ; linarith [ Nat.one_le_pow n 2 zero_lt_two ] ) ) )
+  generalize_proofs at *; (
+  have := h n ( by linarith ) ; rw [ interPowSys_eq k n ( by linarith ) ] at this; rw [ show powSystem k n = 2 ^ n ^ k from rfl ] at this; exact absurd ( log_exp_bound h_c_le_2_pow this ) ( by linarith ) ;)
+
+/-
+The intermediate system is simulated by the upper rung.
+-/
+theorem interPowSys_simulates_powSystem_succ (k : ℕ) :
+    Simulates (interPowSys k) (powSystem (k + 1)) := by
+  use 1, 0, 1;
+  intro n hn; rw [ interPowSys_eq k n hn ] ; norm_num [ powSystem ] ;
+  exact pow_le_pow_right₀ ( by norm_num ) ( exp_mul_sqrt_le k n )
+
+/-
+The upper rung is *not* simulated by the intermediate system.
+-/
+theorem not_powSystem_succ_simulates_interPowSys (k : ℕ) (hk : 1 ≤ k) :
+    ¬ Simulates (powSystem (k + 1)) (interPowSys k) := by
+  intro h
+  obtain ⟨d, c, N, h⟩ := h
+  obtain ⟨n, hn₁, hn₂⟩ := arith_false_pow_inter k d (N + c + 1)
+  have h_c_le : c ≤ 2 ^ (n ^ k * Nat.sqrt n) := by
+    have h_c_le : c ≤ n ^ k * Nat.sqrt n := by
+      nlinarith [ Nat.sqrt_pos.2 ( show 0 < n by linarith ), Nat.pow_le_pow_right ( show 1 ≤ n by linarith ) hk, Nat.sqrt_le n ];
+    exact le_trans h_c_le ( Nat.recOn ( n ^ k * n.sqrt ) ( by norm_num ) fun n ihn => by rw [ pow_succ' ] ; linarith [ Nat.one_le_pow n 2 zero_lt_two ] );
+  -- Apply h_log_bound to get what we need
+  have hh := h n (by omega);
+  rw [interPowSys_eq k n (by omega)] at hh;
+  simp only [powSystem] at hh;
+  exact absurd ( log_exp_bound h_c_le hh ) ( by linarith )
+
+/-! ## Main results -/
+
+/-
+The lower rung is simulated by the upper rung.
+-/
+theorem powSystem_simulates_powSystem_succ (k : ℕ) :
+    Simulates (powSystem k) (powSystem (k + 1)) := by
+  use 1, 0, 1;
+  simp +zetaDelta at *;
+  exact fun n hn => Nat.pow_le_pow_right ( by norm_num ) ( Nat.pow_le_pow_right hn ( Nat.le_succ _ ) )
+
+/-
+The upper rung is *not* simulated by the lower rung.
+-/
+theorem not_powSystem_succ_simulates_powSystem (k : ℕ) (hk : 1 ≤ k) :
+    ¬ Simulates (powSystem (k + 1)) (powSystem k) := by
+  intro h
+  obtain ⟨d, c, N, h⟩ := h
+  obtain ⟨n, hn1, hn2⟩ := arith_false_pow_pow k d (N + c + 1) hk
+  have h_exp : n ^ (k + 1) ≤ d * (n ^ k + 1) := by
+    convert log_exp_bound _ _ using 1;
+    exact c;
+    · exact le_trans ( by linarith ) ( Nat.le_self_pow ( by positivity ) _ ) |> le_trans <| Nat.le_of_lt <| Nat.recOn ( n ^ k ) ( by norm_num ) fun n ihn => by rw [ pow_succ' ] ; linarith [ Nat.one_le_pow n 2 zero_lt_two ] ;
+    · exact h n ( by linarith )
+  linarith [hn2]
+
+/-- **The power ladder is strict.** For `k ≥ 1`, `powSystem k ≺ powSystem (k+1)`. -/
+theorem powSystem_lt_powSystem (k : ℕ) (hk : 1 ≤ k) :
+    powSystem k ≺ powSystem (k + 1) :=
+  ⟨powSystem_simulates_powSystem_succ k, not_powSystem_succ_simulates_powSystem k hk⟩
+
+/-- `powSystem k ≺ interPowSys k` for `k ≥ 1`. -/
+theorem powSystem_lt_interPowSys (k : ℕ) (hk : 1 ≤ k) :
+    powSystem k ≺ interPowSys k :=
+  ⟨powSystem_simulates_interPowSys k, not_interPowSys_simulates_powSystem k hk⟩
+
+/-- `interPowSys k ≺ powSystem (k+1)` for `k ≥ 1`. -/
+theorem interPowSys_lt_powSystem_succ (k : ℕ) (hk : 1 ≤ k) :
+    interPowSys k ≺ powSystem (k + 1) :=
+  ⟨interPowSys_simulates_powSystem_succ k, not_powSystem_succ_simulates_interPowSys k hk⟩
+
+/-- **Density of the ladder.** For `k ≥ 1`, `interPowSys k` lies strictly between the
+consecutive rungs `powSystem k` and `powSystem (k+1)`. -/
+theorem interPowSys_strictly_between (k : ℕ) (hk : 1 ≤ k) :
+    powSystem k ≺ interPowSys k ∧ interPowSys k ≺ powSystem (k + 1) :=
+  ⟨powSystem_lt_interPowSys k hk, interPowSys_lt_powSystem_succ k hk⟩
+
+end LadderDensity

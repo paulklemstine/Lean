@@ -1,0 +1,172 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+
+# The `2 × 2` basic move for two-way contingency tables
+
+This file develops, from scratch and in an entirely elementary way, the algebra of
+the *basic move* for two-way contingency tables with integer entries.
+
+A two-way contingency table is just an `m × n` matrix of integers.  In algebraic
+statistics one studies how to walk between tables sharing the same row and column
+sums (the *margins*).  The fundamental building block of such a walk for the
+independence model is the `2 × 2` basic move: pick two distinct rows `i, i'` and
+two distinct columns `j, j'` and add the pattern
+
+```
+        j    j'
+   i  [ -1   +1 ]
+   i' [ +1   -1 ]
+```
+
+to the table (leaving all other entries untouched).  Adding such a move changes no
+margin, so it produces another table with the same row and column sums.
+
+This file proves exactly that elementary fact and nothing more: it is meant as a
+reusable foundation for later work on contingency-table moves and Markov bases.
+No connectivity theorems, Smith normal form, or general Markov-basis machinery is
+used or developed here.
+
+## Main definitions
+
+* `Table m n` : the type of `m × n` integer matrices.
+* `rowSum`, `colSum`, `totalSum` : the marginal sums.
+* `sameMargins` : two tables have equal row sums and equal column sums.
+* `basicMove i i' j j'` : the basic move pattern described above.
+* `legalBasicStep T i i' j j'` : the move keeps every entry of `T` nonnegative.
+
+## Main results
+
+* `rowSum_basicMove` / `colSum_basicMove` : each marginal of the move vanishes.
+* `totalSum_basicMove_zero` : the grand total of the move is `0`.
+* `basicMove_preserves_rowSum` / `basicMove_preserves_colSum` : adding the move to
+  a table does not change its margins entrywise.
+* `basicMove_preserves_margins` : adding the move preserves all margins.
+* `legalBasicStep_preserves_margins` : the same conclusion, packaged with the
+  legality hypothesis (which is *not* needed for the margin computation and is
+  retained only to record the typical context in which the move is applied).
+
+## A note on hypotheses
+
+The informal description of the basic move asks, for the *row* version, only that
+`i ≠ i'`, and for the *column* version only that `j ≠ j'`.  With the concrete
+pattern above this is not quite enough: the row sums of the move vanish precisely
+when `j ≠ j'` (the `+1`/`-1` in a given row must sit in distinct columns to
+cancel), while the column sums vanish precisely when `i ≠ i'`.  Accordingly each
+statement below carries the hypothesis it genuinely needs.  We additionally keep
+the originally requested hypothesis (`i ≠ i'` for the row statements, `j ≠ j'` for
+the column statements); it is logically unused there but is harmless and records
+the intended setting of a genuine basic move where all four indices are pairwise
+"non-degenerate".
+-/
+
+import Mathlib
+
+namespace Catalog.MarkovBases
+
+open scoped BigOperators
+
+variable {m n : ℕ}
+
+/-- A two-way contingency table is an `m × n` matrix of integers. -/
+abbrev Table (m n : ℕ) := Matrix (Fin m) (Fin n) ℤ
+
+/-- The sum of the entries in row `r`. -/
+def rowSum (T : Table m n) (r : Fin m) : ℤ := ∑ c, T r c
+
+/-- The sum of the entries in column `c`. -/
+def colSum (T : Table m n) (c : Fin n) : ℤ := ∑ r, T r c
+
+/-- The grand total of all entries of the table. -/
+def totalSum (T : Table m n) : ℤ := ∑ r, ∑ c, T r c
+
+/-- Two tables have the *same margins* when their row sums agree and their column
+sums agree. -/
+def sameMargins (S T : Table m n) : Prop :=
+  (∀ r, rowSum S r = rowSum T r) ∧ (∀ c, colSum S c = colSum T c)
+
+/-- The `2 × 2` basic move: it places `-1` at `(i, j)`, `+1` at `(i, j')`,
+`+1` at `(i', j)`, `-1` at `(i', j')`, and `0` everywhere else. -/
+def basicMove (i i' : Fin m) (j j' : Fin n) : Table m n :=
+  fun r c =>
+    if r = i then (if c = j then -1 else if c = j' then 1 else 0)
+    else if r = i' then (if c = j then 1 else if c = j' then -1 else 0)
+    else 0
+
+/-- A basic step is *legal* at `T` when adding the move keeps every entry
+nonnegative (so that the result is again a genuine, non-negative, contingency
+table). -/
+def legalBasicStep (T : Table m n) (i i' : Fin m) (j j' : Fin n) : Prop :=
+  ∀ r c, 0 ≤ (T + basicMove i i' j j') r c
+
+/-! ### Pointwise description of the basic move -/
+
+/-- Outside the two distinguished rows the move is identically zero. -/
+theorem basicMove_apply_of_ne_rows (i i' : Fin m) (j j' : Fin n) {r : Fin m}
+    (hr : r ≠ i) (hr' : r ≠ i') (c : Fin n) :
+    basicMove i i' j j' r c = 0 := by
+  unfold basicMove; aesop
+
+/-! ### Marginals of the basic move -/
+
+/-- Every row sum of the basic move vanishes (assuming the two columns are
+distinct). The hypothesis `i ≠ i'` is retained from the informal statement but is
+not needed for the row computation. -/
+theorem rowSum_basicMove (i i' : Fin m) (j j' : Fin n) (_hi : i ≠ i') (hj : j ≠ j')
+    (r : Fin m) : rowSum (basicMove i i' j j') r = 0 := by
+  unfold basicMove rowSum; by_cases h : r = i <;> by_cases h' : r = i' <;> simp_all +decide [ Finset.sum_ite ] ;
+  · rw [ Finset.card_filter ] ; aesop;
+  · rw [ Finset.card_filter ] ; aesop
+
+/-- Every column sum of the basic move vanishes (assuming the two rows are
+distinct). The hypothesis `j ≠ j'` is retained from the informal statement but is
+not needed for the column computation. -/
+theorem colSum_basicMove (i i' : Fin m) (j j' : Fin n) (hi : i ≠ i') (_hj : j ≠ j')
+    (c : Fin n) : colSum (basicMove i i' j j') c = 0 := by
+  unfold colSum
+  simp +decide [*, Finset.sum_ite, Finset.filter_ne', Finset.filter_eq', basicMove]
+  omega
+
+/-- The grand total of the basic move is zero.  We deduce it from the vanishing of
+the (row) margins. -/
+theorem totalSum_basicMove_zero (i i' : Fin m) (j j' : Fin n) (hi : i ≠ i')
+    (hj : j ≠ j') : totalSum (basicMove i i' j j') = 0 := by
+  convert Finset.sum_eq_zero fun r hr => rowSum_basicMove i i' j j' hi hj r
+
+/-! ### The basic move preserves margins -/
+
+/-- Adding the basic move to a table leaves each row sum unchanged. -/
+theorem basicMove_preserves_rowSum (T : Table m n) (i i' : Fin m) (j j' : Fin n)
+    (hi : i ≠ i') (hj : j ≠ j') (r : Fin m) :
+    rowSum (T + basicMove i i' j j') r = rowSum T r := by
+  have h : ∑ c, basicMove i i' j j' r c = 0 := rowSum_basicMove i i' j j' hi hj r
+  simp only [rowSum, Matrix.add_apply, Finset.sum_add_distrib]
+  rw [h, add_zero]
+
+/-- Adding the basic move to a table leaves each column sum unchanged. -/
+theorem basicMove_preserves_colSum (T : Table m n) (i i' : Fin m) (j j' : Fin n)
+    (hi : i ≠ i') (hj : j ≠ j') (c : Fin n) :
+    colSum (T + basicMove i i' j j') c = colSum T c := by
+  have h : ∑ r, basicMove i i' j j' r c = 0 := colSum_basicMove i i' j j' hi hj c
+  simp only [colSum, Matrix.add_apply, Finset.sum_add_distrib]
+  rw [h, add_zero]
+
+/-- Adding the basic move to a table preserves all of its margins. -/
+theorem basicMove_preserves_margins (T : Table m n) (i i' : Fin m) (j j' : Fin n)
+    (hi : i ≠ i') (hj : j ≠ j') :
+    sameMargins T (T + basicMove i i' j j') := by
+  refine ⟨fun r => ?_, fun c => ?_⟩
+  · exact (basicMove_preserves_rowSum T i i' j j' hi hj r).symm
+  · exact (basicMove_preserves_colSum T i i' j j' hi hj c).symm
+
+/-- The legal version: if the basic step is legal and the indices are
+non-degenerate, then it preserves all margins.  The proof makes explicit that the
+legality hypothesis `_hlegal` plays no role in the margin computation: it is
+introduced into the context but never used, the conclusion following directly from
+`basicMove_preserves_margins`. -/
+theorem legalBasicStep_preserves_margins (T : Table m n) (i i' : Fin m)
+    (j j' : Fin n) (_hlegal : legalBasicStep T i i' j j') (hi : i ≠ i')
+    (hj : j ≠ j') : sameMargins T (T + basicMove i i' j j') :=
+  basicMove_preserves_margins T i i' j j' hi hj
+
+end Catalog.MarkovBases

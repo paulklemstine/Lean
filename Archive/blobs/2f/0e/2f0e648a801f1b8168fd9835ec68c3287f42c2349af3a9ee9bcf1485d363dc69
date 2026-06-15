@@ -1,0 +1,211 @@
+import Mathlib
+
+/-! # Fibonacci divisibility: gcd identity, coprimality, and rank of apparition
+
+Domain: Number Theory / Algebra.
+
+This is a **self-contained arithmetic file** (against Mathlib only) collecting the core
+divisibility theory of the Fibonacci numbers `Nat.fib`.  It is organised around four targets:
+
+1. **Strong divisibility / gcd identity** (`fib_gcd_comm`): the Fibonacci sequence is a strong
+   divisibility sequence, `gcd (F m) (F n) = F (gcd m n)`.  Mathlib already proves the
+   reversed orientation as `Nat.fib_gcd`; we export the symmetric statement under a clean name.
+
+2. **Exact coprimality criterion** (`fib_coprime_iff`):
+   `Coprime (F m) (F n) ↔ gcd m n = 1 ∨ gcd m n = 2`.  The proof rewrites coprimality through
+   the gcd identity and uses `F 1 = F 2 = 1` together with `1 < F k` for `k ≥ 3`
+   (`one_lt_fib`, `fib_eq_one_iff`).
+
+3. **Rank of apparition spine** (`fibRank`, `fibRank_dvd_iff`): for `m` with a rank,
+   `m ∣ F n ↔ fibRank m ∣ n`.  Existence of the rank for every positive modulus
+   (`hasFibRank_of_pos`) is proved by a pigeonhole argument on the reversible Fibonacci shift
+   over `ZMod m` (the abstract Pisano-period mechanism).
+
+4. **Lattice law for the rank** (`fibRank_lcm`): for `a, b > 0`,
+   `fibRank (lcm a b) = lcm (fibRank a) (fibRank b)`, with the coprime-product corollary
+   `fibRank_mul_coprime`.
+
+The arithmetic backbone throughout is the spine `m ∣ F n ↔ fibRank m ∣ n`, which converts
+Fibonacci divisibility into divisibility of indices, where lattice identities are elementary.
+
+The rank-layer existence proof reuses the strategy from
+`Catalog/Applications/RankOfApparition.lean`, inlined here so the file depends on Mathlib only.
+-/
+
+namespace FibonacciDivisibility
+
+open scoped Classical
+
+/-! ## §1. The gcd identity (strong divisibility sequence) -/
+
+/-- **Strong divisibility identity for Fibonacci numbers.**
+`gcd (F m) (F n) = F (gcd m n)`.  This is the symmetric orientation of Mathlib's
+`Nat.fib_gcd`; it expresses that `Nat.fib` is a strong divisibility sequence. -/
+theorem fib_gcd_comm (m n : ℕ) :
+    Nat.gcd (Nat.fib m) (Nat.fib n) = Nat.fib (Nat.gcd m n) :=
+  (Nat.fib_gcd m n).symm
+
+/-! ## §2. Coprimality criterion -/
+
+/-- `1 < F k` exactly when `k ≥ 3`. -/
+theorem one_lt_fib {k : ℕ} (hk : 3 ≤ k) : 1 < Nat.fib k := by
+  have : Nat.fib 2 < Nat.fib k := (Nat.fib_lt_fib (by norm_num)).2 (by omega)
+  simpa using this
+
+/-- `F k = 1` exactly for `k = 1` or `k = 2`. -/
+theorem fib_eq_one_iff {k : ℕ} : Nat.fib k = 1 ↔ k = 1 ∨ k = 2 := by
+  constructor
+  · intro h
+    rcases Nat.lt_or_ge k 3 with hlt | hge
+    · interval_cases k <;> simp_all
+    · exact absurd h (by have := one_lt_fib hge; omega)
+  · rintro (rfl | rfl) <;> simp
+
+/-- **Exact coprimality criterion for Fibonacci numbers.**
+`F m` and `F n` are coprime iff `gcd m n` is `1` or `2`. -/
+theorem fib_coprime_iff (m n : ℕ) :
+    Nat.Coprime (Nat.fib m) (Nat.fib n) ↔ Nat.gcd m n = 1 ∨ Nat.gcd m n = 2 := by
+  unfold Nat.Coprime
+  rw [fib_gcd_comm, fib_eq_one_iff]
+
+/-! ## §3. Rank of apparition: existence -/
+
+/-- `m` *has a rank of apparition* if it divides some positive-index Fibonacci number. -/
+def HasFibRank (m : ℕ) : Prop := ∃ k, 0 < k ∧ m ∣ Nat.fib k
+
+/-- The Fibonacci "shift" permutation on pairs over `ZMod m`: `(a, b) ↦ (b, a + b)`,
+with inverse `(a, b) ↦ (b - a, a)`. -/
+def fibStep (m : ℕ) : ZMod m × ZMod m ≃ ZMod m × ZMod m where
+  toFun p := (p.2, p.1 + p.2)
+  invFun p := (p.2 - p.1, p.1)
+  left_inv := by intro p; simp
+  right_inv := by intro p; simp [add_comm]
+
+theorem fibStep_iterate (m k : ℕ) :
+    (fibStep m)^[k] (0, 1) = ((Nat.fib k : ZMod m), (Nat.fib (k + 1) : ZMod m)) := by
+  induction k <;> simp_all +decide [Function.iterate_succ_apply']
+  simp +decide [fibStep, Nat.fib_add_two]
+
+/-- Every positive modulus has a rank of apparition (apparition is total), by pigeonhole on
+the finite set `(ZMod m)²` and reversibility of the Fibonacci shift. -/
+theorem hasFibRank_of_pos (m : ℕ) (hm : 0 < m) : HasFibRank m := by
+  obtain ⟨i, j, hij, h_pair⟩ :
+      ∃ i j : ℕ, i < j ∧
+        ((Nat.fib i : ZMod m) = (Nat.fib j : ZMod m) ∧
+          (Nat.fib (i + 1) : ZMod m) = (Nat.fib (j + 1) : ZMod m)) := by
+    have h_pigeonhole :
+        ∃ i j : ℕ, i < j ∧
+          ((Nat.fib i : ZMod m), (Nat.fib (i + 1) : ZMod m))
+            = ((Nat.fib j : ZMod m), (Nat.fib (j + 1) : ZMod m)) := by
+      by_contra! h
+      have h_finite :
+          Set.Finite (Set.range
+            (fun n : ℕ => ((Nat.fib n : ZMod m), (Nat.fib (n + 1) : ZMod m)))) := by
+        cases m <;> [aesop; exact Set.toFinite _]
+      exact h_finite.not_infinite <| Set.infinite_range_of_injective fun i j hij =>
+        le_antisymm (le_of_not_gt fun hi => h _ _ hi hij.symm)
+          (le_of_not_gt fun hj => h _ _ hj hij)
+    aesop
+  induction' i with i ih generalizing j
+  · exact ⟨j, hij, by simpa [← ZMod.natCast_eq_zero_iff] using h_pair.1.symm⟩
+  · specialize ih (j - 1) (Nat.lt_pred_iff.mpr hij)
+    rcases j <;> simp_all +decide [Nat.fib_add_two]
+    grind
+
+/-! ## §4. The rank function and its defining properties -/
+
+/-- The Fibonacci rank of apparition of `m`: the least positive `k` with `m ∣ F k`
+(or `0` if none exists; for `m ≥ 1` existence is `hasFibRank_of_pos`). -/
+noncomputable def fibRank (m : ℕ) : ℕ :=
+  if h : ∃ k, 0 < k ∧ m ∣ Nat.fib k then Nat.find h else 0
+
+theorem fibRank_pos {m : ℕ} (hm : HasFibRank m) : 0 < fibRank m := by
+  unfold fibRank; split_ifs with h
+  · exact (Nat.find_spec h).1
+  · exact absurd hm h
+
+theorem dvd_fib_fibRank {m : ℕ} (hm : HasFibRank m) : m ∣ Nat.fib (fibRank m) := by
+  unfold fibRank; split_ifs with h
+  · exact (Nat.find_spec h).2
+  · exact absurd hm h
+
+theorem fibRank_min {m k : ℕ} (hk : 0 < k) (hlt : k < fibRank m) : ¬ m ∣ Nat.fib k := by
+  unfold fibRank at hlt; split_ifs at hlt with h
+  · exact fun hd => Nat.find_min h hlt ⟨hk, hd⟩
+  · simp at hlt
+
+/-! ## §5. The spine: `m ∣ F n ↔ fibRank m ∣ n` -/
+
+/-- **The spine of apparition.** For any modulus with a rank, `m ∣ F n ↔ fibRank m ∣ n`. -/
+theorem fibRank_dvd_iff {m : ℕ} (hm : HasFibRank m) (n : ℕ) :
+    m ∣ Nat.fib n ↔ fibRank m ∣ n := by
+  have hz : 0 < fibRank m := fibRank_pos hm
+  have hmz : m ∣ Nat.fib (fibRank m) := dvd_fib_fibRank hm
+  constructor <;> intro hn
+  · contrapose! hn
+    have hgcd_lt : Nat.gcd (fibRank m) n < fibRank m :=
+      lt_of_le_of_ne (Nat.le_of_dvd hz (Nat.gcd_dvd_left _ _))
+        (fun h => hn (h ▸ Nat.gcd_dvd_right _ _))
+    refine fun hcontra => fibRank_min (Nat.gcd_pos_of_pos_left _ hz) hgcd_lt ?_
+    have := Nat.dvd_gcd hmz hcontra
+    simpa [Nat.fib_gcd] using this
+  · obtain ⟨k, rfl⟩ := hn
+    exact dvd_trans hmz (Nat.fib_dvd _ _ ⟨k, rfl⟩)
+
+/-! ## §6. Edge cases of the spine -/
+
+/-- `fibRank 1 = 1`: every Fibonacci number is divisible by `1`, and the least positive index
+is `1`. -/
+theorem fibRank_one : fibRank 1 = 1 := by
+  unfold fibRank
+  split_ifs with h
+  · simp [Nat.find_eq_iff]
+  · exact absurd ⟨1, one_pos, one_dvd _⟩ h
+
+/-- `fibRank 0 = 0`: `0` divides no positive-index Fibonacci number (all are positive). -/
+theorem fibRank_zero : fibRank 0 = 0 := by
+  unfold fibRank
+  split_ifs with h
+  · obtain ⟨k, hk, hdvd⟩ := h
+    have hpos := Nat.fib_pos.mpr hk
+    rw [Nat.eq_zero_of_zero_dvd hdvd] at hpos
+    exact absurd hpos (lt_irrefl 0)
+  · rfl
+
+/-! ## §7. Order-morphism law -/
+
+/-- `fibRank` is an order morphism of divisibility posets:
+`b ∣ a → 0 < a → fibRank b ∣ fibRank a`. -/
+theorem fibRank_dvd_of_dvd {a b : ℕ} (ha : 0 < a) (hab : b ∣ a) :
+    fibRank b ∣ fibRank a := by
+  have hb : 0 < b := Nat.pos_of_dvd_of_pos hab ha
+  have hrb : HasFibRank b := hasFibRank_of_pos b hb
+  have hra : HasFibRank a := hasFibRank_of_pos a ha
+  have hbdvd : b ∣ Nat.fib (fibRank a) := dvd_trans hab (dvd_fib_fibRank hra)
+  exact (fibRank_dvd_iff hrb (fibRank a)).1 hbdvd
+
+/-! ## §8. The lattice (join) law and the coprime-product corollary -/
+
+/-- Two naturals that are divisibility-equivalent (`d ∣ k ↔ e ∣ k` for all `k`) coincide. -/
+theorem nat_eq_of_dvd_iff {d e : ℕ} (h : ∀ k, d ∣ k ↔ e ∣ k) : d = e :=
+  Nat.dvd_antisymm ((h e).mpr dvd_rfl) ((h d).mp dvd_rfl)
+
+/-- **The join (lcm) law for the rank of apparition.** For all `a, b > 0`,
+`fibRank (lcm a b) = lcm (fibRank a) (fibRank b)`. -/
+theorem fibRank_lcm {a b : ℕ} (ha : 0 < a) (hb : 0 < b) :
+    fibRank (Nat.lcm a b) = Nat.lcm (fibRank a) (fibRank b) := by
+  have hl : 0 < Nat.lcm a b := Nat.lcm_pos ha hb
+  have hla : HasFibRank (Nat.lcm a b) := hasFibRank_of_pos _ hl
+  have hra : HasFibRank a := hasFibRank_of_pos a ha
+  have hrb : HasFibRank b := hasFibRank_of_pos b hb
+  refine nat_eq_of_dvd_iff (fun k => ?_)
+  rw [← fibRank_dvd_iff hla k, Nat.lcm_dvd_iff,
+    fibRank_dvd_iff hra k, fibRank_dvd_iff hrb k, ← Nat.lcm_dvd_iff]
+
+/-- **Coprime-product corollary.** For coprime positive `a, b`,
+`fibRank (a * b) = lcm (fibRank a) (fibRank b)`. -/
+theorem fibRank_mul_coprime {a b : ℕ} (ha : 0 < a) (hb : 0 < b)
+    (hab : Nat.Coprime a b) : fibRank (a * b) = Nat.lcm (fibRank a) (fibRank b) := by
+  rw [← Nat.Coprime.lcm_eq_mul hab, fibRank_lcm ha hb]
+
+end FibonacciDivisibility

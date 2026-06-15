@@ -1,0 +1,251 @@
+import Mathlib
+
+/-!
+# Complexity Phase Structure of the Additive (Rule 90) Cellular Automaton
+
+We study the one-dimensional **additive** cellular automaton over `𝔽₂` (Wolfram's
+*Rule 90*): the single-seed row at time `t` is exactly row `t` of Pascal's
+triangle reduced mod `2`.  A position is **live** when its binomial coefficient is
+odd, so the natural computable *compression proxy* for the complexity of the row
+is the number of live cells:
+
+  `complexity t = #{ k ≤ t : Nat.choose t k is odd }`.
+
+We prove the exact closed form
+
+  `complexity t = 2 ^ (popcount t)`,   `popcount t = (Nat.digits 2 t).sum`,
+
+and deduce that the complexity *density* `complexity t / (t+1)` oscillates between
+`1` (at Mersenne times `2^k - 1`, where the row is completely full) and `0`
+(at powers of two `2^k`, where the row collapses to two live cells), infinitely
+often.  Hence the linear rule has **no monotone log-time randomness threshold**:
+its complexity is governed by the binary-digit structure of the time index, not
+by `t` versus `log n`.
+
+This *adversarially refutes*, for the linear rule, the cryptographic conjecture of
+a sharp monotone complexity phase transition.
+
+## Catalog synthesis
+This file is the cryptographic / incompressibility counterpart to the algebraic
+renormalization theory in `Catalog/Novelty/AdditiveCAPadicRenorm.lean`
+(`AdditiveCA.caOp_renorm`, `caOp_binomial`), where the same Rule 90 automaton is
+encoded as multiplication by `T + T⁻¹` in the Laurent polynomial ring.  There the
+power-of-two collapse `(caOp)^(2^k) = T^(2^k)+T^(-2^k)` is a Frobenius identity;
+here it manifests as the *sparse* rows `complexity (2^k) = 2`.  The proofs route
+through Mathlib's `Choose.choose_modEq_choose_mod_mul_choose_div_nat` (Lucas's
+theorem), connecting the algebraic CA strand to the combinatorics of
+Lucas/Kummer and to the cryptographic incompressibility theme.
+
+## Main results
+* `complexity_eq_two_pow_popcount` — `complexity t = 2 ^ popcount t`.
+* `mersenne_row_odd` / `pow_two_row_even` — the Lucas/Kummer building blocks.
+* `complexity_mersenne` / `complexity_pow_two` — full vs sparse rows.
+* `density_full_infinitely_often` / `density_not_bounded_below` — the oscillation.
+* `complexity_sum_pow_two` — `∑_{t < 2^m} complexity t = 3 ^ m` (typical-case
+  exponential sparsity coexisting with worst-case fullness).
+-/
+
+namespace AdditiveCAComplexity
+
+open Finset
+
+-- !-- Lab Notebook -- !--
+--
+-- Hypothesis. The cryptographic conjecture under adversarial test claims a *sharp,
+--   monotone* randomness phase transition for a minimal Lean-definable 1D cellular
+--   automaton: the space-time diagram is compressible below `t ≈ c₁·log n` and
+--   uniformly incompressible above `t ≈ c₂·log n`. We test it on the additive
+--   (Rule 90) automaton with the live-cell count `complexity t` (number of odd
+--   binomial coefficients in row `t`) as a rigorous compression proxy.
+--
+-- Result. The conjecture is REFUTED for the linear rule. We proved the exact law
+--   `complexity t = 2 ^ popcount t` (`complexity_eq_two_pow_popcount`). Hence the
+--   density `complexity t / (t+1)` equals `1` at every Mersenne time `2^k-1`
+--   (`density_mersenne`, `density_full_infinitely_often`) and equals
+--   `2/(2^k+1) → 0` at every power of two `2^k` (`density_pow_two`,
+--   `density_not_bounded_below`): it oscillates between `1` and `0` infinitely
+--   often. We also showed the typical-case identity
+--   `∑_{t<2^m} complexity t = 3^m` (`complexity_sum_pow_two`).
+--
+-- Insight. Complexity is controlled by the *binary digit structure* of the time
+--   index, not by `t` versus `log n`. The whole rigidity flows from one Lucas
+--   recurrence: `complexity (2m) = complexity m` and `complexity (2m+1) =
+--   2·complexity m`, the digit-peeling shadow of `(a+b)^2 = a^2+b^2` in
+--   characteristic 2. The supposed `log`-time "phase transition" is really the gap
+--   between average (`(3/4)^m → 0`) and worst-case (full rows recur forever)
+--   behaviour, not a time threshold.
+--
+-- Failure analysis. A direct submask/`Nat.land` characterization of oddness was
+--   abandoned in favour of the `% 2` recurrence through Mathlib's Lucas lemma
+--   `Choose.choose_modEq_choose_mod_mul_choose_div_nat`, which peels exactly one
+--   binary digit and matches the `popcount` recurrence one-to-one. The ℕ-subtraction
+--   in `2^k - 1` (Mersenne) is the main coercion hazard; it is tamed via
+--   `Nat.sub_add_cancel` with `1 ≤ 2^k`.
+-- !-- Lab Notebook -- !--
+
+/-- The Hamming weight (population count) of `t`: the number of `1`s in its
+binary expansion, computed as the sum of its base-`2` digits. -/
+def popcount (t : ℕ) : ℕ := (Nat.digits 2 t).sum
+
+/-- The complexity proxy: the number of live cells in Rule 90's single-seed row at
+time `t`, i.e. the number of odd binomial coefficients `C(t, k)` for `k ≤ t`. -/
+def complexity (t : ℕ) : ℕ :=
+  ((Finset.range (t + 1)).filter (fun k => t.choose k % 2 = 1)).card
+
+/-- The complexity density: live cells divided by the row width `t + 1`. -/
+def density (t : ℕ) : ℚ := (complexity t : ℚ) / (t + 1)
+
+/-! ## Population count recurrences -/
+
+-- !-- popcount peels the lowest binary digit: doubling shifts digits, so the
+-- digit-sum is unchanged. -- !--
+lemma popcount_two_mul (m : ℕ) : popcount (2 * m) = popcount m := by
+  unfold popcount;
+  cases m <;> norm_num
+
+-- !-- 2*m+1 prepends a `1` digit, increasing the digit-sum by one. -- !--
+lemma popcount_two_mul_succ (m : ℕ) : popcount (2 * m + 1) = popcount m + 1 := by
+  unfold popcount;
+  norm_num [ Nat.add_mod, Nat.add_div ];
+  ring
+
+lemma popcount_zero : popcount 0 = 0 := by simp [popcount]
+
+/-! ## Oddness of binomial coefficients via Lucas's theorem (`p = 2`) -/
+
+-- !-- Lucas mod 2 with the lowest digit peeled: `C(2m,k) ≡ C(0,k%2)·C(m,k/2)`,
+-- and `C(0,k%2)=1` iff `k` is even, so an even row entry is odd iff its half is. -- !--
+lemma odd_choose_two_mul (m k : ℕ) :
+    (2 * m).choose k % 2 = 1 ↔ (k % 2 = 0 ∧ m.choose (k / 2) % 2 = 1) := by
+  haveI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  have h := Choose.choose_modEq_choose_mod_mul_choose_div_nat (n := 2 * m) (k := k) (p := 2)
+  rw [Nat.ModEq, show (2 * m) % 2 = 0 from by omega, show (2 * m) / 2 = m from by omega] at h
+  rw [h]
+  rcases Nat.mod_two_eq_zero_or_one k with hk | hk <;> rw [hk] <;> simp [Nat.choose]
+
+-- !-- Lucas mod 2: `C(2m+1,k) ≡ C(1,k%2)·C(m,k/2)` and `C(1,·)=1`, so oddness
+-- only depends on `C(m, k/2)`; both children `2j, 2j+1` inherit it. -- !--
+lemma odd_choose_two_mul_succ (m k : ℕ) :
+    (2 * m + 1).choose k % 2 = 1 ↔ m.choose (k / 2) % 2 = 1 := by
+  haveI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  have h := Choose.choose_modEq_choose_mod_mul_choose_div_nat (n := 2 * m + 1) (k := k) (p := 2)
+  rw [Nat.ModEq, show (2 * m + 1) % 2 = 1 from by omega,
+    show (2 * m + 1) / 2 = m from by omega] at h
+  rw [h]
+  rcases Nat.mod_two_eq_zero_or_one k with hk | hk <;> rw [hk] <;> simp [Nat.choose]
+
+/-! ## Complexity recurrences -/
+
+-- !-- Even rows: `k ↦ 2k` bijects odd entries of row `m` onto odd entries of row
+-- `2m` (only even columns survive), so the count is preserved. -- !--
+lemma complexity_two_mul (m : ℕ) : complexity (2 * m) = complexity m := by
+  refine' Finset.card_bij ( fun k hk => k / 2 ) _ _ _;
+  · simp +zetaDelta at *;
+    intro a ha h; rw [ odd_choose_two_mul ] at h; omega;
+  · grind +suggestions;
+  · simp +zetaDelta at *;
+    exact fun b hb hb' => ⟨ 2 * b, ⟨ by linarith, by rw [ odd_choose_two_mul ] ; aesop ⟩, by norm_num ⟩
+
+-- !-- Odd rows: each odd entry of row `m` lifts to the two columns `2j, 2j+1`,
+-- doubling the count. -- !--
+lemma complexity_two_mul_succ (m : ℕ) : complexity (2 * m + 1) = 2 * complexity m := by
+  unfold complexity;
+  rw [ Finset.card_filter, Finset.card_filter ];
+  rw [ show ( Finset.range ( 2 * m + 2 ) ) = Finset.image ( fun i => 2 * i ) ( Finset.range ( m + 1 ) ) ∪ Finset.image ( fun i => 2 * i + 1 ) ( Finset.range ( m + 1 ) ) from ?_, Finset.sum_union ];
+  · rw [ Finset.sum_image, Finset.sum_image ] <;> simp +arith +decide [ odd_choose_two_mul_succ ];
+    norm_num [ Nat.add_div ];
+  · norm_num [ Finset.disjoint_right ];
+    intros; omega;
+  · ext i
+    simp [Finset.mem_range, Finset.mem_image];
+    exact ⟨ fun hi => by rcases Nat.even_or_odd' i with ⟨ k, rfl | rfl ⟩ <;> [ left; right ] <;> exact ⟨ k, by linarith, rfl ⟩, fun hi => by rcases hi with ( ⟨ k, hk, rfl ⟩ | ⟨ k, hk, rfl ⟩ ) <;> linarith ⟩
+
+lemma complexity_zero : complexity 0 = 1 := by decide
+
+/-! ## The closed form -/
+
+-- !-- Strong induction on `t`; the even/odd cases match the popcount recurrences
+-- exactly (`complexity_two_mul`/`complexity_two_mul_succ` vs
+-- `popcount_two_mul`/`popcount_two_mul_succ`). -- !--
+theorem complexity_eq_two_pow_popcount (t : ℕ) : complexity t = 2 ^ popcount t := by
+  induction' t using Nat.strongRecOn with t ih;
+  rcases Nat.even_or_odd' t with ⟨ m, rfl | rfl ⟩;
+  · rcases m with ( _ | m ) <;> simp_all +decide [ complexity_two_mul, popcount_two_mul ];
+  · rw [ complexity_two_mul_succ, ih m ( by linarith ), popcount_two_mul_succ, pow_succ' ]
+
+/-! ## Lucas/Kummer building blocks as standalone statements -/
+
+-- !-- All binary digits of `2^a - 1` are `1`, so every column `k ≤ 2^a-1` is a
+-- binary submask of `2^a-1`; by Lucas mod 2 the whole Mersenne row is odd. -- !--
+theorem mersenne_row_odd (a k : ℕ) (hk : k ≤ 2 ^ a - 1) :
+    (2 ^ a - 1).choose k % 2 = 1 := by
+      induction' a with a ih generalizing k;
+      · aesop;
+      · rw [ show 2 ^ ( a + 1 ) - 1 = 2 * ( 2 ^ a - 1 ) + 1 by zify ; norm_num ; ring ];
+        rw [ odd_choose_two_mul_succ ];
+        grind +revert
+
+-- !-- Kummer: `2^k` has a single nonzero binary digit, so any interior column
+-- forces a carry; hence every interior entry of row `2^k` is even. -- !--
+theorem pow_two_row_even (k j : ℕ) (hj0 : 0 < j) (hj : j < 2 ^ k) :
+    (2 ^ k).choose j % 2 = 0 := by
+      exact Nat.mod_eq_zero_of_dvd ( Nat.dvd_trans ( by norm_num ) ( Nat.dvd_of_mod_eq_zero ( Nat.mod_eq_zero_of_dvd <| Nat.prime_two.dvd_choose_pow ( by linarith ) ( by linarith ) ) ) )
+
+/-! ## Full vs sparse rows -/
+
+-- !-- `popcount (2^k - 1) = k`, so `complexity = 2^k`. -- !--
+theorem complexity_mersenne (k : ℕ) : complexity (2 ^ k - 1) = 2 ^ k := by
+  rw [ complexity_eq_two_pow_popcount, show popcount ( 2 ^ k - 1 ) = k from by
+                                        induction' k with k ih;
+                                        · simp [popcount];
+                                        · rw [ show 2 ^ ( k + 1 ) - 1 = 2 * ( 2 ^ k - 1 ) + 1 by zify ; norm_num ; ring, popcount_two_mul_succ, ih ] ]
+
+-- !-- `popcount (2^k) = 1`, so `complexity = 2`. -- !--
+theorem complexity_pow_two (k : ℕ) : complexity (2 ^ k) = 2 := by
+  induction k <;> simp_all +decide [ pow_succ', complexity_eq_two_pow_popcount ];
+  rw [ popcount_two_mul ] ; aesop
+
+/-! ## Density oscillation -/
+
+-- !-- The Mersenne row width is `2^k` and it is full, so density is exactly `1`. -- !--
+theorem density_mersenne (k : ℕ) : density (2 ^ k - 1) = 1 := by
+  convert complexity_mersenne k;
+  rw [ density, div_eq_iff ] <;> norm_cast ; norm_num;
+  rw [ Nat.sub_add_cancel ( Nat.one_le_pow _ _ ( by decide ) ) ]
+
+-- !-- The power-of-two row width is `2^k+1` with `2` live cells. -- !--
+theorem density_pow_two (k : ℕ) : density (2 ^ k) = 2 / (2 ^ k + 1) := by
+  unfold density;
+  rw [ complexity_pow_two ] ; norm_cast
+
+-- !-- Mersenne times `2^k-1` are unbounded and each gives density `1`. -- !--
+theorem density_full_infinitely_often (N : ℕ) :
+    ∃ t, N ≤ t ∧ density t = 1 := by
+      exact ⟨ 2 ^ N - 1, Nat.le_sub_one_of_lt ( Nat.recOn N ( by norm_num ) fun n ihn => by norm_num [ Nat.pow_succ' ] at * ; linarith ), density_mersenne N ⟩
+
+-- !-- Power-of-two times give density `2/(2^k+1) → 0`, so the density has no
+-- positive lower bound. -- !--
+theorem density_not_bounded_below (ε : ℚ) (hε : 0 < ε) :
+    ∃ t, 0 < density t ∧ density t < ε := by
+      -- Choose $k$ large enough such that $2^k > 2/ε$.
+      obtain ⟨k, hk⟩ : ∃ k : ℕ, (2 : ℚ) ^ k > 2 / ε := by
+        exact pow_unbounded_of_one_lt _ one_lt_two;
+      refine' ⟨ 2 ^ k, _, _ ⟩ <;> norm_num [ density_pow_two ];
+      · positivity;
+      · rw [ gt_iff_lt, div_lt_iff₀ ] at * <;> nlinarith [ pow_pos ( zero_lt_two' ℚ ) k ]
+
+/-! ## Typical-case sparsity vs worst-case fullness -/
+
+-- !-- `∑_{t<2^{m+1}} 2^popcount = ∑_{j<2^m}(2^popcount(2j)+2^popcount(2j+1))
+-- = ∑_{j<2^m} 3·2^popcount j = 3·3^m`, by the popcount recurrences. -- !--
+theorem complexity_sum_pow_two (m : ℕ) :
+    ∑ t ∈ Finset.range (2 ^ m), complexity t = 3 ^ m := by
+      induction m <;> simp_all +decide [ pow_succ' ];
+      rename_i k hk;
+      -- Split the sum into two parts: one over even indices and one over odd indices.
+      have h_split : ∑ x ∈ Finset.range (2 * 2 ^ k), complexity x = (∑ j ∈ Finset.range (2 ^ k), complexity (2 * j)) + (∑ j ∈ Finset.range (2 ^ k), complexity (2 * j + 1)) := by
+        induction 2 ^ k <;> simp_all +arith +decide [ Nat.mul_succ, Finset.sum_range_succ ];
+      simp_all +decide [ complexity_two_mul, complexity_two_mul_succ ];
+      rw [ ← Finset.mul_sum _ _ _, hk ] ; ring
+
+end AdditiveCAComplexity

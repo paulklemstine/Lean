@@ -1,0 +1,169 @@
+import Mathlib
+import Algebra.BerggrenLorentz.Core
+
+/-!
+# Berggren Word Certificates
+
+This file is the *monoid-certification layer* built directly on
+`Algebra/BerggrenLorentz/Core.lean`.  It packages the single-generator facts of
+the core file into statements about **whole words** in the three Berggren
+generators.
+
+The development is intentionally small and self-contained:
+
+* `Gen` — the three Berggren generators as an enum, with `genMatrix` sending each
+  generator to its matrix (`matA`, `matB`, `matC`) from the core file.
+* `wordMatrix` — the matrix of a word, defined by simple list recursion
+  (`[] ↦ 1`, `g :: w ↦ genMatrix g * wordMatrix w`).
+* Whole-word Lorentz-form preservation: every word matrix lies in `O(2,1;ℤ)`,
+  proved from closure of the preservation property under matrix multiplication.
+* A multiplicative determinant recursion, an explicit sign formula
+  `det = (-1) ^ (number of B-generators)`, and the `IsUnit` corollary.
+* Quadratic-form invariance `lorentzForm (wordMatrix w *ᵥ v) = lorentzForm v`.
+* Pythagorean preservation for whole words, using the `lorentzQ`/`IsPythag`
+  bridge already provided by the core file.
+
+Everything is kept concrete over `ℤ` and `Fin 3` to minimise coercion overhead.
+-/
+
+namespace BerggrenLorentz.Word
+
+open Matrix BerggrenLorentz
+
+/-! ## Generators and word matrices -/
+
+/-- The three Berggren generators as an enum type. -/
+inductive Gen
+  | A | B | C
+  deriving DecidableEq, Repr
+
+/-- The matrix attached to each Berggren generator. -/
+def genMatrix : Gen → Matrix (Fin 3) (Fin 3) ℤ
+  | .A => matA
+  | .B => matB
+  | .C => matC
+
+/-- The matrix of a word, by list recursion:
+`[] ↦ 1` and `g :: w ↦ genMatrix g * wordMatrix w`. -/
+def wordMatrix : List Gen → Matrix (Fin 3) (Fin 3) ℤ
+  | [] => 1
+  | g :: w => genMatrix g * wordMatrix w
+
+@[simp] theorem wordMatrix_nil : wordMatrix [] = 1 := rfl
+
+@[simp] theorem wordMatrix_cons (g : Gen) (w : List Gen) :
+    wordMatrix (g :: w) = genMatrix g * wordMatrix w := rfl
+
+/-- Word matrices multiply along concatenation of words. -/
+theorem wordMatrix_append (w₁ w₂ : List Gen) :
+    wordMatrix (w₁ ++ w₂) = wordMatrix w₁ * wordMatrix w₂ := by
+  induction w₁ with
+  | nil => simp
+  | cons g w ih => simp [ih, mul_assoc]
+
+/-! ## Whole-word Lorentz-form preservation -/
+
+/-- Closure of Lorentz-form preservation under matrix multiplication:
+if `A` and `B` each preserve the metric, then so does `A * B`. -/
+theorem mul_preserves_metricQ {A B : Matrix (Fin 3) (Fin 3) ℤ}
+    (hA : Aᵀ * metricQ * A = metricQ) (hB : Bᵀ * metricQ * B = metricQ) :
+    (A * B)ᵀ * metricQ * (A * B) = metricQ := by
+  rw [transpose_mul,
+    show Bᵀ * Aᵀ * metricQ * (A * B) = Bᵀ * (Aᵀ * metricQ * A) * B from by noncomm_ring,
+    hA, hB]
+
+/-- Each single generator preserves the Lorentz metric (repackaging the core
+single-matrix preservation lemmas). -/
+theorem genMatrix_preserves_metricQ (g : Gen) :
+    (genMatrix g)ᵀ * metricQ * genMatrix g = metricQ := by
+  cases g with
+  | A => exact matA_preserves_lorentz
+  | B => exact matB_preserves_lorentz
+  | C => exact matC_preserves_lorentz
+
+/-- **Whole-word Lorentz preservation.** Every Berggren word matrix lies in the
+integer Lorentz group `O(2,1;ℤ)`. -/
+theorem wordMatrix_preserves_metricQ (w : List Gen) :
+    (wordMatrix w)ᵀ * metricQ * wordMatrix w = metricQ := by
+  induction w with
+  | nil => simp
+  | cons g w ih =>
+    rw [wordMatrix_cons]
+    exact mul_preserves_metricQ (genMatrix_preserves_metricQ g) ih
+
+/-! ## Determinant of a word -/
+
+/-- The number of orientation-reversing `B`-generators in a word. -/
+def numB : List Gen → ℕ
+  | [] => 0
+  | g :: w => (if g = Gen.B then 1 else 0) + numB w
+
+/-- The determinant of a single generator: `+1` except for `B`, which is `-1`. -/
+theorem det_genMatrix (g : Gen) :
+    (genMatrix g).det = if g = Gen.B then -1 else 1 := by
+  cases g with
+  | A => simpa [genMatrix] using det_matA
+  | B => simpa [genMatrix] using det_matB
+  | C => simpa [genMatrix] using det_matC
+
+/-- **Multiplicative determinant recursion.** -/
+theorem det_wordMatrix_cons (g : Gen) (w : List Gen) :
+    (wordMatrix (g :: w)).det = (genMatrix g).det * (wordMatrix w).det := by
+  rw [wordMatrix_cons, Matrix.det_mul]
+
+/-- **Explicit sign formula:** the determinant of a word matrix is `(-1)` raised
+to the number of `B`-generators. -/
+theorem det_wordMatrix (w : List Gen) :
+    (wordMatrix w).det = (-1) ^ numB w := by
+  induction w with
+  | nil => simp [numB]
+  | cons g w ih =>
+    rw [det_wordMatrix_cons, ih, det_genMatrix, numB, pow_add]
+    cases g <;> simp
+
+/-- Every Berggren word matrix has a unit determinant (`±1`), hence is invertible
+over `ℤ`. -/
+theorem isUnit_det_wordMatrix (w : List Gen) :
+    IsUnit (wordMatrix w).det := by
+  rw [det_wordMatrix]
+  exact (isUnit_one.neg).pow (numB w)
+
+/-! ## Quadratic-form invariance -/
+
+/-- The Lorentz form written as a quadratic form via the metric matrix. -/
+theorem lorentzForm_eq_quad (v : Fin 3 → ℤ) :
+    lorentzForm v = (metricQ *ᵥ v) ⬝ᵥ v := by
+  simp [lorentzForm, metricQ, dotProduct, Fin.sum_univ_three]
+  ring
+
+/-- Any matrix preserving the metric also preserves the Lorentz form on vectors. -/
+theorem lorentzForm_invariant {M : Matrix (Fin 3) (Fin 3) ℤ}
+    (h : Mᵀ * metricQ * M = metricQ) (v : Fin 3 → ℤ) :
+    lorentzForm (M *ᵥ v) = lorentzForm v := by
+  rw [lorentzForm_eq_quad, lorentzForm_eq_quad, mulVec_mulVec, dotProduct_mulVec,
+    ← mulVec_transpose, mulVec_mulVec, ← mul_assoc, h]
+
+/-- **Whole-word quadratic-form invariance.** -/
+theorem wordMatrix_preserves_lorentzForm (w : List Gen) (v : Fin 3 → ℤ) :
+    lorentzForm (wordMatrix w *ᵥ v) = lorentzForm v :=
+  lorentzForm_invariant (wordMatrix_preserves_metricQ w) v
+
+/-! ## Pythagorean preservation for whole words -/
+
+/-- **Berggren words send Pythagorean triples to Pythagorean triples.**
+Using the core `lorentzForm`/`lorentzQ`/`IsPythag` bridge, the image of any
+Pythagorean triple under a whole-word Berggren matrix is again Pythagorean. -/
+theorem wordMatrix_preserves_pythag (w : List Gen) (a b c : ℤ)
+    (h : IsPythag a b c) :
+    IsPythag ((wordMatrix w *ᵥ ![a, b, c]) 0)
+             ((wordMatrix w *ᵥ ![a, b, c]) 1)
+             ((wordMatrix w *ᵥ ![a, b, c]) 2) := by
+  have hzero : lorentzForm ![a, b, c] = 0 := by
+    rw [lorentzForm_eq_lorentzQ]
+    simpa using (lorentzQ_zero_iff_pythag a b c).2 h
+  have key := wordMatrix_preserves_lorentzForm w ![a, b, c]
+  rw [hzero] at key
+  rw [← lorentzQ_zero_iff_pythag, ← lorentzForm_eq_lorentzQ]
+  exact key
+
+end BerggrenLorentz.Word

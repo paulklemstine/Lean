@@ -1,0 +1,225 @@
+/-
+# The Boltzmann Bridge XII — Functorial Transport of Geodesics, Sharpened
+
+This file is a *narrow* continuation of Bridge XI
+(`Applications.BoltzmannBridge.InterleavingPathFunctor`).  It isolates a single
+metric/functorial theme: how the contravariant pullback `pullback f`
+(`InterleavingFunctor`) interacts with the affine geodesic `lerp`
+(`InterleavingGeodesic`) at the level of *distances along the path*.
+
+The two structural inputs are already in the catalog and are both *affine in the
+weight*:
+
+* `pullback f` acts on weights by the reindexing `σ ↦ σ.image f`
+  (`Filtration.pullback_weight`);
+* `lerp F G t` acts on weights by the convex combination
+  `σ ↦ (1−t)·F.weight σ + t·G.weight σ` (`Filtration.lerp_weight`).
+
+Because both are affine, they commute on the nose (`pullback_lerp`), so the
+pullback functor sends the `F`–`G` geodesic to the
+`pullback f F`–`pullback f G` geodesic.  Combining this with the catalog's
+**surjective isometry** `Filtration.eInterleavingDist_pullback_eq_of_surjective`
+gives the sharp path-level statement: for a **surjective** vertex map the pullback
+*preserves* every pairwise distance along the geodesic
+(`eInterleavingDist_pullback_lerp_eq_of_surjective`), and that common value is the
+constant-speed geodesic distance (`eInterleavingDist_pullback_lerp_speed_of_surjective`).
+
+Surjectivity is genuinely necessary: a non-surjective map can collapse the whole
+geodesic to a single point while the upstream geodesic has positive length.  We
+record this as an explicit finite computation over `Bool`
+(`exists_pullback_strict_contraction`,
+`exists_pullback_lerp_strict_contraction`), exhibiting the strict contraction that
+obstructs an unconditional isometry in the `ℓ∞` interleaving geometry.
+
+(A sheaf-theoretic reading — `pullback` as inverse image of the persistence
+sheaf — is possible but secondary; the formal content here is purely
+metric/functorial.)
+
+## Main results
+
+* `pullback_lerp` — pullback commutes with the affine geodesic interpolation.
+* `eInterleavingDist_pullback_lerp_eq_of_surjective` — for surjective `f`, the
+  pairwise distances along the transported geodesic equal those along the original
+  geodesic (path-level isometry).
+* `eInterleavingDist_pullback_lerp_speed_of_surjective` — that common value is the
+  constant-speed geodesic distance `ofReal |s − t| · d(F, G)`.
+* `exists_pullback_strict_contraction` /
+  `exists_pullback_lerp_strict_contraction` — an explicit `Bool`-valued
+  counterexample proving surjectivity cannot be dropped.
+-/
+import Mathlib
+import Applications.BoltzmannBridge.InterleavingMetric
+import Applications.BoltzmannBridge.InterleavingClosure
+import Applications.BoltzmannBridge.InterleavingIsometry
+import Applications.BoltzmannBridge.InterleavingGeodesic
+import Applications.BoltzmannBridge.InterleavingFunctor
+
+open Finset BigOperators
+open scoped ENNReal
+
+namespace BoltzmannBridge
+
+namespace BridgeXII
+
+open Filtration
+
+variable {α β : Type*}
+
+/-! ## Pullback commutes with the affine geodesic -/
+
+/-- **Pullback commutes with the geodesic interpolation.**  `pullback f` acts on
+weights by the affine reindexing `σ ↦ σ.image f`, and `lerp` acts by the affine
+convex combination; both weights of the two sides equal
+`(1 − t)·F.weight (σ.image f) + t·G.weight (σ.image f)`.  Hence `pullback f` sends
+the `F`–`G` geodesic to the geodesic between the pullbacks. -/
+theorem pullback_lerp [DecidableEq β] (f : α → β) (F G : Filtration β) {t : ℝ}
+    (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
+    pullback f (lerp F G t ht0 ht1)
+      = lerp (pullback f F) (pullback f G) t ht0 ht1 := by
+  apply ext_weight; funext σ; simp [lerp_weight]
+
+/-! ## Path-level distance preservation under surjectivity -/
+
+/-- **Path-level isometry of functorial transport (sharp form).**  When the vertex
+map `f` is *surjective*, pullback preserves the interleaving distance between any
+two points of the geodesic:
+`d(pullback f (lerp F G s), pullback f (lerp F G t)) = d(lerp F G s, lerp F G t)`.
+
+This is the strongest precise statement the API supports: it follows by applying the
+catalog's surjective isometry `eInterleavingDist_pullback_eq_of_surjective` to the two
+path points `lerp F G s` and `lerp F G t`.  (Surjectivity, not injectivity, is the
+correct hypothesis — see `InterleavingFunctor`.) -/
+theorem eInterleavingDist_pullback_lerp_eq_of_surjective
+    [DecidableEq α] [DecidableEq β] (f : α → β) (hf : Function.Surjective f)
+    (F G : Filtration β) {s t : ℝ}
+    (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
+    eInterleavingDist (pullback f (lerp F G s hs0 hs1))
+        (pullback f (lerp F G t ht0 ht1))
+      = eInterleavingDist (lerp F G s hs0 hs1) (lerp F G t ht0 ht1) :=
+  eInterleavingDist_pullback_eq_of_surjective f hf _ _
+
+/-- **Constant-speed form of the path-level isometry.**  Composing the path-level
+isometry with the Bridge IX geodesic identity `eInterleavingDist_lerp`, the
+transported geodesic is itself constant-speed with the *same* speed `d(F, G)` as the
+upstream geodesic. -/
+theorem eInterleavingDist_pullback_lerp_speed_of_surjective
+    [DecidableEq α] [DecidableEq β] (f : α → β) (hf : Function.Surjective f)
+    (F G : Filtration β) {s t : ℝ}
+    (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
+    eInterleavingDist (pullback f (lerp F G s hs0 hs1))
+        (pullback f (lerp F G t ht0 ht1))
+      = ENNReal.ofReal |s - t| * eInterleavingDist F G := by
+  rw [eInterleavingDist_pullback_lerp_eq_of_surjective f hf F G,
+      eInterleavingDist_lerp]
+
+/-! ## Surjectivity is necessary: an explicit `Bool` counterexample
+
+We exhibit a non-surjective vertex map `cexMap : Unit → Bool` and two filtrations
+on `Bool` whose pullbacks coincide (so the pullback distance is `0`) even though the
+filtrations are at positive interleaving distance.  This collapses the entire
+geodesic to a point: a strict contraction that no unconditional isometry can avoid.
+-/
+
+/-- The weight function `σ ↦ [false ∈ σ]` (indicator of the vertex `false`).
+Monotone and `∅`-grounded, hence a valid filtration weight. -/
+def cexWeight : Finset Bool → ℝ := fun σ => if (false : Bool) ∈ σ then 1 else 0
+
+theorem cexWeight_empty : cexWeight ∅ ≤ 0 := by simp [cexWeight]
+
+theorem cexWeight_mono : Monotone cexWeight := by
+  intro σ τ h
+  by_cases hσ : (false : Bool) ∈ σ
+  · have hτ : (false : Bool) ∈ τ := h hσ
+    simp [cexWeight, hσ, hτ]
+  · simp only [cexWeight, hσ, if_false]
+    split <;> norm_num
+
+/-- The filtration on `Bool` detecting the vertex `false`. -/
+noncomputable def cexF : Filtration Bool := ofWeight cexWeight cexWeight_empty cexWeight_mono
+
+/-- The zero filtration on `Bool`. -/
+noncomputable def cexG : Filtration Bool := ofWeight (fun _ => 0) le_rfl monotone_const
+
+/-- The constant (hence non-surjective) vertex map `Unit → Bool`. -/
+def cexMap : Unit → Bool := fun _ => true
+
+theorem cexMap_not_surjective : ¬ Function.Surjective cexMap := by
+  intro hs
+  obtain ⟨u, hu⟩ := hs false
+  simp [cexMap] at hu
+
+/-- The two pullbacks coincide: `cexMap` never reaches the vertex `false`, so the
+only weights `cexF` and `cexG` ever expose through pullback are equal. -/
+theorem cexF_pullback_eq : pullback cexMap cexF = pullback cexMap cexG := by
+  apply ext_weight; funext σ
+  have hnm : (false : Bool) ∉ σ.image cexMap := by
+    simp [Finset.mem_image, cexMap]
+  simp [cexF, cexG, cexWeight, hnm]
+
+/-- **Strict contraction (object level).**  For the non-surjective `cexMap`, the
+pullback collapses two filtrations that are at positive interleaving distance onto a
+single point, so the pullback distance strictly undercuts the upstream distance.
+This is the obstruction that forces the surjectivity hypothesis in
+`eInterleavingDist_pullback_eq_of_surjective`. -/
+theorem exists_pullback_strict_contraction :
+    ∃ (f : Unit → Bool) (F G : Filtration Bool),
+      ¬ Function.Surjective f ∧
+      eInterleavingDist (pullback f F) (pullback f G)
+        < eInterleavingDist F G := by
+  refine ⟨cexMap, cexF, cexG, cexMap_not_surjective, ?_⟩
+  rw [cexF_pullback_eq, eInterleavingDist_self,
+      eInterleavingDist_eq_weightSupEDist, weightSupEDist]
+  have hF : cexF.weight ({false} : Finset Bool) = 1 := by
+    simp [cexF, cexWeight]
+  have hG : cexG.weight ({false} : Finset Bool) = 0 := by
+    simp [cexG]
+  have hterm : (0 : ℝ≥0∞)
+      < ENNReal.ofReal |cexF.weight ({false} : Finset Bool)
+          - cexG.weight ({false} : Finset Bool)| := by
+    rw [hF, hG]; norm_num
+  exact lt_of_lt_of_le hterm
+    (le_iSup (fun σ : Finset Bool =>
+      ENNReal.ofReal |cexF.weight σ - cexG.weight σ|) ({false} : Finset Bool))
+
+/-- **Strict contraction along the geodesic (path level).**  The same witness
+collapses the *entire* geodesic `lerp cexF cexG` to a single point under pullback:
+for every `s ≠ t` in `[0,1]` the transported pairwise distance is `0`, while the
+upstream geodesic has the strictly positive distance `ofReal |s − t| · d(cexF, cexG)`.
+Hence the path-level isometry of
+`eInterleavingDist_pullback_lerp_eq_of_surjective` genuinely requires surjectivity. -/
+theorem exists_pullback_lerp_strict_contraction :
+    ∃ (f : Unit → Bool) (F G : Filtration Bool),
+      ¬ Function.Surjective f ∧
+      ∀ {s t : ℝ} (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (ht0 : 0 ≤ t) (ht1 : t ≤ 1),
+        s ≠ t →
+        eInterleavingDist (pullback f (lerp F G s hs0 hs1))
+            (pullback f (lerp F G t ht0 ht1))
+          < eInterleavingDist (lerp F G s hs0 hs1) (lerp F G t ht0 ht1) := by
+  refine ⟨cexMap, cexF, cexG, cexMap_not_surjective, ?_⟩
+  intro s t hs0 hs1 ht0 ht1 hst
+  -- The transported geodesic is constant: both pullbacks of the endpoints agree.
+  have hcollapse : eInterleavingDist (pullback cexMap (lerp cexF cexG s hs0 hs1))
+      (pullback cexMap (lerp cexF cexG t ht0 ht1)) = 0 := by
+    rw [pullback_lerp, pullback_lerp, cexF_pullback_eq, eInterleavingDist_lerp,
+        eInterleavingDist_self, mul_zero]
+  rw [hcollapse, eInterleavingDist_lerp]
+  -- The upstream geodesic has positive length.
+  have hpos : (0 : ℝ≥0∞) < eInterleavingDist cexF cexG := by
+    rw [eInterleavingDist_eq_weightSupEDist, weightSupEDist]
+    have hF : cexF.weight ({false} : Finset Bool) = 1 := by simp [cexF, cexWeight]
+    have hG : cexG.weight ({false} : Finset Bool) = 0 := by simp [cexG]
+    have hterm : (0 : ℝ≥0∞)
+        < ENNReal.ofReal |cexF.weight ({false} : Finset Bool)
+            - cexG.weight ({false} : Finset Bool)| := by
+      rw [hF, hG]; norm_num
+    exact lt_of_lt_of_le hterm
+      (le_iSup (fun σ : Finset Bool =>
+        ENNReal.ofReal |cexF.weight σ - cexG.weight σ|) ({false} : Finset Bool))
+  have hofs : (0 : ℝ≥0∞) < ENNReal.ofReal |s - t| := by
+    rw [ENNReal.ofReal_pos]
+    simpa [abs_pos, sub_ne_zero] using hst
+  exact ENNReal.mul_pos hofs.ne' hpos.ne'
+
+end BridgeXII
+
+end BoltzmannBridge

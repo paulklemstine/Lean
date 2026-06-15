@@ -1,0 +1,144 @@
+import Mathlib
+import Shared.KorseltCriterion
+
+/-!
+# Bridge: Korselt's Criterion ↔ Group-Action Order Conditions
+
+This file forges a **cross-domain bridge** between
+
+* **Number theory** (`Catalog/Shared/KorseltCriterion.lean`): Korselt's criterion and
+  absolute Fermat pseudoprimality, and
+* **Cryptography** (`Catalog/Cryptography/CSIFiShAdvanced.lean`): the abstract
+  `CryptoGroupAction` framework underlying isogeny-based key exchange.
+
+The connecting object is the **order of the multiplicative group** `(ℤ/nℤ)ˣ`.
+Korselt's criterion is exactly the statement that the order of *every* unit of
+`ℤ/nℤ` divides `n - 1`. Recast through a `CryptoGroupAction` of `(ℤ/nℤ)ˣ`, this says
+that the `(n-1)`-st power of every group element acts as the **identity** on the
+whole space — the order-theoretic phenomenon that makes a Fermat primality test fail
+for every base.
+
+The `CryptoGroupAction` / `FreeTrans` structures below faithfully mirror those of
+`Catalog/Cryptography/CSIFiShAdvanced.lean`; that catalog file does not currently
+elaborate (its final section is truncated), so the relevant definitions are
+reproduced here to keep the bridge self-contained and verifiable.
+
+-- !-- Lab Notes -- !--
+**Hypothesis (Hypothesizer).**
+H4 (bridge): Korselt `n` is equivalent to an order-divisibility condition on
+    `(ℤ/nℤ)ˣ`, and therefore to "the `(n-1)`-power acts trivially" in *any*
+    group action of `(ℤ/nℤ)ˣ`.
+H5 (counter-intuitive): in a *free* and transitive action (a `FreeTrans`, the
+    CSI-FiSh torsor model), "acts trivially" forces "is the identity element", so
+    the order condition is *recoverable* from the action — number theory is encoded
+    in the geometry of the torsor.
+
+**Experiment (Experimenter).**
+Imported the Shared-domain result `KorseltCriterion.korselt_imp_fermatPsp` and lifted
+its ℕ-`ModEq` conclusion to `(ZMod n)ˣ` (`korselt_units_pow_eq_one`). Reproduced the
+Cryptography-domain `CryptoGroupAction`/`FreeTrans` structures and proved the trivial-
+action bridge (`korselt_action_pow_trivial`) and its free-action converse-flavored
+companion (`korselt_freeTrans_recovers_order`).
+
+**Analysis (Analyst).**
+H4 holds and is genuinely cross-domain: the proof consumes a Shared-domain theorem
+and a Cryptography-domain structure in the *same* statement. The only friction was
+the `ZMod`/ℕ coercion (`ZMod.natCast_eq_natCast_iff`, `ZMod.natCast_val`). H5 holds:
+freeness collapses `act g x = x` to `g = 1`, and combined with the trivial-action
+bridge it re-derives `g^(n-1) = 1` purely from the action — confirming that the
+torsor "sees" the pseudoprimality.
+
+**Critique (Critic).**
+Non-vacuity: `561` (smallest Carmichael number) instantiates every hypothesis, and
+`(ZMod 561)ˣ` is a nontrivial finite group, so `korselt_action_pow_trivial` is not an
+empty statement. No `native_decide`; the bridge theorems use the imported number-
+theoretic content and structural group lemmas, not brute force.
+
+**Synthesis (PI).**
+The bridge exports a clean dictionary:
+  `IsKorselt n`  ⇔  every unit has order dividing `n-1`  ⇔
+  `(n-1)`-power acts trivially in any `(ℤ/nℤ)ˣ`-action.
+This is the first Shared → Cryptography connection via multiplicative group order.
+-- !-- end Lab Notes -- !--
+-/
+
+namespace Cryptography.KorseltBridge
+
+open KorseltCriterion
+
+/-! ## The order condition on `(ℤ/nℤ)ˣ` -/
+
+/-- **Korselt ⇒ unit order divides `n-1`.**
+If `n > 1` satisfies Korselt's criterion then every unit of `ℤ/nℤ` is annihilated by
+the `(n-1)`-st power. Equivalently, `orderOf g ∣ n - 1` for every `g : (ZMod n)ˣ`. -/
+theorem korselt_units_pow_eq_one {n : ℕ} [NeZero n] (hn : 1 < n) (hk : IsKorselt n)
+    (g : (ZMod n)ˣ) : g ^ (n - 1) = 1 := by
+  have H : IsFermatPsp n := korselt_imp_fermatPsp hn hk
+  set a : ℕ := ((g : ZMod n)).val with ha
+  have hcop : Nat.Coprime a n := ZMod.val_coe_unit_coprime g
+  have hmod := H a hcop
+  have h1 : ((a : ZMod n)) ^ (n - 1) = 1 := by
+    have h := (ZMod.natCast_eq_natCast_iff (a ^ (n - 1)) 1 n).mpr hmod
+    push_cast at h
+    simpa using h
+  have hag : (a : ZMod n) = (g : ZMod n) := by
+    rw [ha]; simp [ZMod.natCast_val, ZMod.cast_id]
+  rw [hag] at h1
+  apply Units.ext
+  push_cast
+  simpa using h1
+
+/-- Restated as a divisibility of orders: `orderOf g ∣ n - 1`. -/
+theorem korselt_orderOf_dvd {n : ℕ} [NeZero n] (hn : 1 < n) (hk : IsKorselt n)
+    (g : (ZMod n)ˣ) : orderOf g ∣ (n - 1) :=
+  orderOf_dvd_of_pow_eq_one (korselt_units_pow_eq_one hn hk g)
+
+/-! ## The Cryptography-domain framework (mirror of `CSIFiShAdvanced`) -/
+
+/-- Abstract group action of a finite group `G` on a finite set `X`.
+Faithful copy of `Cryptography.CSIFiShAdvanced.CryptoGroupAction`. -/
+structure CryptoGroupAction (G : Type*) (X : Type*) [Group G] [Fintype G] [Fintype X]
+    [DecidableEq G] [DecidableEq X] where
+  act : G → X → X
+  act_one : ∀ x : X, act 1 x = x
+  act_mul : ∀ (g h : G) (x : X), act (g * h) x = act g (act h x)
+
+/-- A free transitive action (a torsor), the CSI-FiSh model.
+Faithful copy of `Cryptography.CSIFiShAdvanced.FreeTrans`. -/
+structure FreeTrans (G : Type*) (X : Type*) [Group G] [Fintype G] [Fintype X]
+    [DecidableEq G] [DecidableEq X] extends CryptoGroupAction G X where
+  transitive : ∀ x y : X, ∃ g : G, act g x = y
+  free : ∀ (g : G) (x : X), act g x = x → g = 1
+
+/-! ## The bridge theorems -/
+
+variable {n : ℕ} [NeZero n]
+  {X : Type*} [Fintype X] [DecidableEq X]
+
+/-- **Bridge (Shared → Cryptography).**
+For a Korselt number `n`, the `(n-1)`-st power of every element acts as the identity
+in *any* `CryptoGroupAction` of `(ℤ/nℤ)ˣ`. This is the order-theoretic core of why a
+Fermat primality test on a Carmichael number fails for every base: the
+"exponentiation-by-`n-1`" map collapses the entire group action to the identity. -/
+theorem korselt_action_pow_trivial (hn : 1 < n) (hk : IsKorselt n)
+    (A : CryptoGroupAction (ZMod n)ˣ X) (g : (ZMod n)ˣ) (x : X) :
+    A.act (g ^ (n - 1)) x = x := by
+  rw [korselt_units_pow_eq_one hn hk g, A.act_one]
+
+/-- **Free-action converse (H5).**
+In a *free* transitive action of `(ℤ/nℤ)ˣ`, the trivial-action bridge re-derives the
+purely number-theoretic order condition `g ^ (n-1) = 1` from the geometry of the
+torsor: the only group element acting trivially is the identity. -/
+theorem korselt_freeTrans_recovers_order (hn : 1 < n) (hk : IsKorselt n)
+    (T : FreeTrans (ZMod n)ˣ X) (g : (ZMod n)ˣ) (x : X) :
+    g ^ (n - 1) = 1 := by
+  exact T.free (g ^ (n - 1)) x (korselt_action_pow_trivial hn hk T.toCryptoGroupAction g x)
+
+/-! ## Instantiation at the smallest Carmichael number -/
+
+/-- The bridge is non-vacuous: at `n = 561` (the smallest Carmichael number) every
+unit of `ℤ/561ℤ` is annihilated by the `560`-th power. -/
+theorem units_561_pow_eq_one (g : (ZMod 561)ˣ) : g ^ 560 = 1 :=
+  korselt_units_pow_eq_one (by norm_num) isKorselt_561 g
+
+end Cryptography.KorseltBridge

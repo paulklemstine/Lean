@@ -1,0 +1,288 @@
+import Mathlib
+
+/-!
+# The spectral decomposition of the Pisano period: `π(m) = z(m) · ord_m(F_{z(m)+1})`
+
+For a modulus `m ≥ 1` let
+
+* `z(m)` (`entryPt`) be the **entry point** (rank of apparition): the least `k > 0`
+  with `m ∣ F k`, and
+* `π(m)` (`pisanoPeriod`) be the **Pisano period**: the order of the Fibonacci shift
+  automorphism `Q : (a, b) ↦ (b, a + b)` on `ZMod m × ZMod m`.
+
+The catalog already established, *separately*, that the entry point exists and obeys the
+ideal law `m ∣ F n ↔ z(m) ∣ n` (`Novelty.FibApparitionExistence`,
+`Speculative.AutoResearch.FibonacciEntryPointCharacterization`), and that the Pisano
+period is `orderOf Q` with the CRT law `π(mn) = lcm(π m, π n)`
+(`Applications.FibonacciPisanoRepresentation`).  What was *missing* is the exact
+quantitative bridge between the two invariants.
+
+This file proves that bridge.  The organizing discovery is the
+
+> **Scalar-action lemma** (`fibStep_pow_entryPt`).  At the entry point the shift acts
+> as a *scalar*: `Q^{z(m)} (a, b) = (c·a, c·b)` where `c = F_{z(m)+1} (mod m)`.
+
+Since consecutive Fibonacci numbers are coprime and `m ∣ F_{z}`, the scalar `c` is a
+**unit** of `ZMod m` (`entryPt_unit`).  Iterating the scalar action and matching
+principal ideals then yields the headline
+
+> **Spectral decomposition** (`pisano_eq_entryPt_mul_orderOf`).
+> `π(m) = z(m) · orderOf (F_{z(m)+1} : ZMod m)`.
+
+so the Pisano period factors as the entry point times the multiplicative order of a
+single explicit residue.  Immediate corollaries: `entryPt ∣ π` recovered with an
+*exact quotient* (`pisano_div_entryPt`), and the sharp criterion
+`π(m) = z(m) ↔ F_{z(m)+1} ≡ 1 (mod m)` (`pisano_eq_entryPt_iff`) — the case where the
+period is as short as divisibility permits.
+
+## Catalog synthesis
+
+* `fibStep`, `fibStep_iterate_apply`, `fibStep_pow_eq_one_iff`, `pisanoPeriod` are the
+  shift-representation tools of `Applications.FibonacciPisanoRepresentation` (here made
+  self-contained so the file depends only on Mathlib).
+* `entryPt`, `entry_exists`, `fib_dvd_iff_entryPt_dvd` re-establish, self-contained, the
+  totality and ideal law of `Novelty.FibApparitionExistence`
+  (`fib_apparition_exists`, `fib_dvd_iff_apparitionRank_dvd`).
+* The genuinely new content — the scalar-action lemma and the exact period
+  decomposition — closes the quantitative gap Direction 4 of the catalog's
+  `FUTURE_DIRECTIONS` identified between `z` and `π`.
+
+-- !-- Lab Notebook -- !--
+-- !-- Hypothesis: the Pisano period π(m) is not an independent invariant but is pinned
+--     to the entry point z(m) by π(m) = z(m)·ord_m(F_{z+1}); the mechanism should be
+--     that the shift map, raised to the entry point, degenerates to a scalar c=F_{z+1}. -- !--
+-- !-- Result: proved the scalar-action lemma Q^z(a,b)=(c·a,c·b), that c is a unit, the
+--     iterate law Q^{z·j}(a,b)=(c^j·a,c^j·b), and the exact decomposition
+--     π(m)=z(m)·ord_m(F_{z+1}), with the corollaries z ∣ π (exact quotient ord c) and
+--     π = z ↔ F_{z+1} ≡ 1 (mod m). -- !--
+-- !-- Insight: the closed form Q^[k](a,b)=(a(F_{k+1}-F_k)+bF_k, aF_k+bF_{k+1}) collapses
+--     at k=z (where F_z≡0) to multiplication by the single scalar F_{z+1}; everything
+--     after that is `orderOf`/principal-ideal algebra in ℕ via `nat_eq_of_dvd_iff`. -- !--
+-- !-- Failure analysis: the only care points are (i) extracting the scalar from a Perm
+--     equality by evaluating at (1,b) and (ii) the m=1 degenerate ring, both handled by
+--     `Subsingleton`/`ZMod.natCast_zero_iff` bookkeeping rather than new mathematics. -- !--
+-- !-- End Lab Notebook -- !--
+-/
+
+namespace FibPisanoSpectrum
+
+open scoped Classical
+
+/-! ## Shift representation (self-contained port of the catalog's `FibPisano`) -/
+
+/-- The Fibonacci **shift** automorphism on `ZMod m × ZMod m`, `(a, b) ↦ (b, a + b)`. -/
+def fibStep (m : ℕ) : Equiv.Perm (ZMod m × ZMod m) where
+  toFun p := (p.2, p.1 + p.2)
+  invFun p := (p.2 - p.1, p.1)
+  left_inv := by intro p; simp
+  right_inv := by intro p; simp [add_comm]
+
+/-- The **Pisano period** of `m`: the order of the Fibonacci shift. -/
+noncomputable def pisanoPeriod (m : ℕ) : ℕ := orderOf (fibStep m)
+
+/-- Closed form for the `k`-th iterate of the shift (the Fibonacci `Q^k` matrix). -/
+theorem fibStep_iterate_apply (m k : ℕ) (a b : ZMod m) :
+    (⇑(fibStep m))^[k] (a, b) =
+      (a * ((Nat.fib (k + 1) : ZMod m) - (Nat.fib k : ZMod m)) + b * (Nat.fib k : ZMod m),
+       a * (Nat.fib k : ZMod m) + b * (Nat.fib (k + 1) : ZMod m)) := by
+  induction' k with k ih generalizing a b
+  · simp
+  · rw [Function.iterate_succ_apply', ih]
+    simp only [fibStep, Equiv.coe_fn_mk, Nat.fib_add_two]
+    push_cast
+    rw [Prod.mk.injEq]
+    exact ⟨by ring, by ring⟩
+
+/-- Iterating the shift from `(0,1)` reads off consecutive Fibonacci numbers mod `m`. -/
+theorem fibStep_iterate (m k : ℕ) :
+    (⇑(fibStep m))^[k] (0, 1) = ((Nat.fib k : ZMod m), (Nat.fib (k + 1) : ZMod m)) := by
+  induction k <;> simp_all +decide [ Function.iterate_succ_apply', Nat.fib_add_two ];
+  rfl
+
+/-- `Q^k = 1` iff the sequence returned to its seed: `F k ≡ 0`, `F (k+1) ≡ 1`. -/
+theorem fibStep_pow_eq_one_iff (m k : ℕ) :
+    (fibStep m) ^ k = 1 ↔
+      ((Nat.fib k : ZMod m) = 0 ∧ (Nat.fib (k + 1) : ZMod m) = 1) := by
+  constructor;
+  · intro h
+    have h_fib : (fibStep m)^[k] (0, 1) = (0, 1) := by
+      convert congr_arg ( fun f : Equiv.Perm ( ZMod m × ZMod m ) => f ( 0, 1 ) ) h using 1;
+    rw [ fibStep_iterate ] at h_fib ; aesop;
+  · intro h;
+    ext ⟨ a, b ⟩;
+    · convert fibStep_iterate_apply m k a b |> congr_arg Prod.fst using 1;
+      aesop;
+    · convert congr_arg Prod.snd ( fibStep_iterate_apply m k a b ) using 1 ; aesop
+
+/-- `π(m) ∣ k` iff `F k ≡ 0` and `F (k+1) ≡ 1` (mod `m`). -/
+theorem pisano_dvd_iff (m k : ℕ) :
+    pisanoPeriod m ∣ k ↔
+      ((Nat.fib k : ZMod m) = 0 ∧ (Nat.fib (k + 1) : ZMod m) = 1) := by
+  rw [ ← fibStep_pow_eq_one_iff ];
+  exact orderOf_dvd_iff_pow_eq_one
+
+theorem pisanoPeriod_pos (m : ℕ) [NeZero m] : 0 < pisanoPeriod m := by
+  apply orderOf_pos
+
+/-- The Pisano period is an apparition index: `m ∣ F (π m)`. -/
+theorem dvd_fib_pisanoPeriod (m : ℕ) : m ∣ Nat.fib (pisanoPeriod m) := by
+  have h := (pisano_dvd_iff m (pisanoPeriod m)).1 (dvd_refl _)
+  rw [← ZMod.natCast_eq_zero_iff]
+  exact h.1
+
+/-! ## Entry point: totality and the ideal law (self-contained) -/
+
+/-- The Fibonacci **entry point** of `m`: least `k > 0` with `m ∣ F k`, else `0`. -/
+noncomputable def entryPt (m : ℕ) : ℕ :=
+  if h : ∃ k, 0 < k ∧ m ∣ Nat.fib k then Nat.find h else 0
+
+/-- **Totality.** For `m ≥ 1` the entry point exists: the Pisano period is a witness. -/
+theorem entry_exists (m : ℕ) (hm : 0 < m) : ∃ k, 0 < k ∧ m ∣ Nat.fib k := by
+  haveI : NeZero m := ⟨hm.ne'⟩
+  exact ⟨pisanoPeriod m, pisanoPeriod_pos m, dvd_fib_pisanoPeriod m⟩
+
+theorem entryPt_pos {m : ℕ} (hm : 0 < m) : 0 < entryPt m := by
+  have h := entry_exists m hm
+  unfold entryPt; rw [dif_pos h]; exact (Nat.find_spec h).1
+
+theorem entryPt_dvd_fib {m : ℕ} (hm : 0 < m) : m ∣ Nat.fib (entryPt m) := by
+  have h := entry_exists m hm
+  unfold entryPt; rw [dif_pos h]; exact (Nat.find_spec h).2
+
+/-- **Ideal law.** For `m ≥ 1`: `m ∣ F n ↔ z(m) ∣ n`. -/
+theorem fib_dvd_iff_entryPt_dvd (m : ℕ) (hm : 0 < m) (n : ℕ) :
+    m ∣ Nat.fib n ↔ entryPt m ∣ n := by
+  have hpos := entryPt_pos hm
+  have hdvd := entryPt_dvd_fib hm
+  have h := entry_exists m hm
+  have hmin : ∀ k, 0 < k → m ∣ Nat.fib k → entryPt m ≤ k := by
+    intro k hk hmk
+    unfold entryPt; rw [dif_pos h]; exact Nat.find_min' h ⟨hk, hmk⟩
+  constructor <;> intro hn
+  · contrapose! hmin
+    refine ⟨ Nat.gcd (entryPt m) n,
+      Nat.pos_of_dvd_of_pos (Nat.gcd_dvd_left _ _) hpos, ?_,
+      lt_of_le_of_ne (Nat.le_of_dvd hpos (Nat.gcd_dvd_left _ _)) ?_ ⟩
+    · have := Nat.dvd_gcd hdvd hn; simpa [Nat.fib_gcd] using this
+    · exact fun hh => hmin (hh ▸ Nat.gcd_dvd_right _ _)
+  · exact dvd_trans hdvd (by obtain ⟨k, rfl⟩ := hn; simp [Nat.fib_dvd])
+
+/-! ## The scalar-action lemma and the spectral decomposition (NEW) -/
+
+/-- Helper: a natural number is determined by the principal ideal it generates. -/
+theorem nat_eq_of_dvd_iff {d e : ℕ} (h : ∀ k, d ∣ k ↔ e ∣ k) : d = e :=
+  Nat.dvd_antisymm ((h e).mpr dvd_rfl) ((h d).mp dvd_rfl)
+
+/-- The scalar at the entry point: `c = F_{z(m)+1} (mod m)`. -/
+noncomputable def entryScalar (m : ℕ) : ZMod m := (Nat.fib (entryPt m + 1) : ZMod m)
+
+/-
+!-- The closed form of `Q^[z]` collapses at the entry point where `F_z ≡ 0`, leaving
+pure multiplication by `c = F_{z+1}`; evaluate `fibStep_iterate_apply` and simplify. -- !--
+
+**Scalar-action lemma.** At the entry point the shift acts as the scalar `c`:
+`Q^{z(m)} (a, b) = (c·a, c·b)`.
+-/
+theorem fibStep_pow_entryPt (m : ℕ) (hm : 0 < m) (a b : ZMod m) :
+    (⇑(fibStep m))^[entryPt m] (a, b) = (entryScalar m * a, entryScalar m * b) := by
+  convert fibStep_iterate_apply m ( entryPt m ) a b using 1;
+  rw [ show ( Nat.fib ( entryPt m ) : ZMod m ) = 0 from by rw [ ZMod.natCast_eq_zero_iff ] ; exact entryPt_dvd_fib hm ] ; ring;
+  unfold entryScalar; simp +decide [ add_comm, mul_comm ] ;
+
+/-
+!-- Iterate the scalar action: `Q^[z·j] = (c^j)·`; induction on `j` via
+`Function.iterate_add_apply` and the scalar-action lemma. -- !--
+
+Iterated scalar action: `Q^{z(m)·j} (a, b) = (c^j·a, c^j·b)`.
+-/
+theorem fibStep_pow_entryPt_mul (m : ℕ) (hm : 0 < m) (j : ℕ) (a b : ZMod m) :
+    (⇑(fibStep m))^[entryPt m * j] (a, b) =
+      (entryScalar m ^ j * a, entryScalar m ^ j * b) := by
+  induction' j with j ih;
+  · aesop;
+  · convert fibStep_pow_entryPt m hm ( entryScalar m ^ j * a ) ( entryScalar m ^ j * b ) using 1;
+    · rw [ Nat.mul_succ, add_comm, Function.iterate_add_apply, ih ];
+    · ring
+
+/-
+!-- `F_z` and `F_{z+1}` are consecutive, hence coprime; since `m ∣ F_z`, the residue
+`c = F_{z+1}` is coprime to `m`, i.e. a unit of `ZMod m`. -- !--
+
+The entry scalar `c = F_{z(m)+1}` is a unit of `ZMod m`.
+-/
+theorem entryScalar_isUnit (m : ℕ) (hm : 0 < m) : IsUnit (entryScalar m) := by
+  rw [ isUnit_iff_exists_inv ];
+  -- Since $m \mid F_{entryPt m}$ and $F_{entryPt m}$ and $F_{entryPt m + 1}$ are coprime, it follows that $F_{entryPt m + 1}$ is coprime to $m$.
+  have h_coprime : Nat.Coprime m (Nat.fib (entryPt m + 1)) := by
+    refine' Nat.Coprime.coprime_dvd_left ( entryPt_dvd_fib hm ) _;
+    exact Nat.recOn ( entryPt m ) ( by norm_num ) fun n ih => by simp_all +decide [ Nat.fib_add_two, Nat.Coprime, Nat.gcd_comm ] ;
+  have := Nat.gcd_eq_gcd_ab m ( Nat.fib ( entryPt m + 1 ) );
+  exact ⟨ Nat.gcdB m ( Nat.fib ( entryPt m + 1 ) ), by simpa [ h_coprime ] using congr_arg ( fun x : ℤ => x : ℤ → ZMod m ) this.symm ⟩
+
+/-
+!-- `Q^{z·j} = 1` iff the scalar power `c^j` fixes every point, i.e. `c^j = 1`
+(evaluate at `(1,0)` via the iterated scalar action). -- !--
+
+`Q^{z(m)·j} = 1` iff `c^j = 1` in `ZMod m`.
+-/
+theorem fibStep_pow_entryPt_mul_eq_one_iff (m : ℕ) (hm : 0 < m) (j : ℕ) :
+    (fibStep m) ^ (entryPt m * j) = 1 ↔ entryScalar m ^ j = 1 := by
+  constructor <;> intro h;
+  · have h_eval : (entryScalar m ^ j * 1, entryScalar m ^ j * 0) = (1, 0) := by
+      convert congr_arg ( fun f : Equiv.Perm ( ZMod m × ZMod m ) => f ( 1, 0 ) ) h using 1;
+      convert fibStep_pow_entryPt_mul m hm j 1 0 |> Eq.symm using 1;
+    aesop;
+  · convert fibStep_pow_entryPt_mul m hm j using 1;
+    constructor <;> intro h' <;> simp_all +decide [ Equiv.Perm.ext_iff ]
+
+/-
+!-- Match principal ideals via `nat_eq_of_dvd_iff`: `π ∣ k` ↔ `Q^k = 1` ↔ (`F_k ≡ 0`
+and `F_{k+1} ≡ 1`) ↔ (`z ∣ k`, write `k = z·j`, and `c^j = 1`) ↔ `z·ord(c) ∣ k`. -- !--
+
+**Spectral decomposition of the Pisano period.**
+`π(m) = z(m) · orderOf (F_{z(m)+1} : ZMod m)`.
+-/
+theorem pisano_eq_entryPt_mul_orderOf (m : ℕ) (hm : 0 < m) :
+    pisanoPeriod m = entryPt m * orderOf (entryScalar m) := by
+  apply nat_eq_of_dvd_iff;
+  intro k;
+  constructor;
+  · intro hk
+    obtain ⟨j, hj⟩ : ∃ j, k = entryPt m * j := by
+      have := (pisano_dvd_iff m k).mp hk;
+      exact fib_dvd_iff_entryPt_dvd m hm k |>.1 ( by rw [ ZMod.natCast_eq_zero_iff ] at this; exact this.1 )
+    have h_j : orderOf (entryScalar m) ∣ j := by
+      rw [ orderOf_dvd_iff_pow_eq_one ];
+      exact fibStep_pow_entryPt_mul_eq_one_iff m hm j |>.1 ( by rw [ ← hj ] ; exact ( orderOf_dvd_iff_pow_eq_one.mp hk ) )
+    exact ⟨j / orderOf (entryScalar m), by
+      rw [ hj, mul_assoc, Nat.mul_div_cancel' h_j ]⟩;
+  · rintro ⟨ j, rfl ⟩;
+    convert orderOf_dvd_iff_pow_eq_one.mpr _ using 1;
+    convert fibStep_pow_entryPt_mul_eq_one_iff m hm ( orderOf ( entryScalar m ) * j ) |>.2 _ using 1;
+    · grind;
+    · rw [ pow_mul, pow_orderOf_eq_one, one_pow ]
+
+/-
+!-- Divide the spectral decomposition by `z(m) > 0`. -- !--
+
+The entry point divides the Pisano period, with exact quotient `ord_m(F_{z+1})`.
+-/
+theorem pisano_div_entryPt (m : ℕ) (hm : 0 < m) :
+    pisanoPeriod m / entryPt m = orderOf (entryScalar m) := by
+  convert Nat.mul_div_cancel_left _ ( entryPt_pos hm ) using 1;
+  rw [ ← pisano_eq_entryPt_mul_orderOf m hm ]
+
+/-
+!-- From the decomposition, `π = z ↔ ord(c) = 1 ↔ c = 1`, i.e. `F_{z+1} ≡ 1 (mod m)`. -- !--
+
+**Sharp shortness criterion.** The Pisano period equals the entry point iff the
+Fibonacci sequence returns to `1` already at the first apparition.
+-/
+theorem pisano_eq_entryPt_iff (m : ℕ) (hm : 0 < m) :
+    pisanoPeriod m = entryPt m ↔ (Nat.fib (entryPt m + 1) : ZMod m) = 1 := by
+  have h_eq : pisanoPeriod m = entryPt m ↔ orderOf (entryScalar m) = 1 := by
+    rw [ pisano_eq_entryPt_mul_orderOf m hm ];
+    exact ⟨ fun h => by nlinarith [ entryPt_pos hm ], fun h => by rw [ h, mul_one ] ⟩;
+  aesop
+
+end FibPisanoSpectrum

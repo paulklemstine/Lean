@@ -1,0 +1,204 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+-/
+import Mathlib
+
+/-!
+# Cayley Connectivity and Zero-Energy Rigidity
+
+This file is the finite-group **Cayley connectivity / zero-energy** bridge.  It is
+fully self-contained: it depends only on `Mathlib` and defines every notion it
+uses.  The earlier experimental material (the `MaxPlusDepthSystem`, the Rips
+graph, and the broader tropical-comparison infrastructure) has been deliberately
+left out of this cycle; the focus here is the core finite-group package.
+
+## Proof architecture
+
+1. **Words from generation.** `word_in_generators_of_mem_closure` shows every
+   element of `Subgroup.closure (↑S)` is the product of a list of generators
+   (using symmetry of `S` to handle inverses).  The proof is a direct
+   `Subgroup.closure_induction`.
+
+2. **Connectivity.** `cayley_connected_of_closure_eq_top` packages the above into
+   a *walk* statement: when `S` generates `G`, any two vertices `x`, `y` of the
+   Cayley graph are joined by a generator walk.  We model a walk concretely by a
+   list `l` of generators with `l.prod * x = y`; the explicit inductive walk
+   predicate `CayleyWalk` is provided and shown equivalent for downstream reuse.
+
+3. **Dirichlet energy.** `cayleyDirichletEnergy S f = ∑ x, ∑ s ∈ S, (f (s*x) - f x)^2`
+   over `f : G → ℝ`.  Nonnegativity of each square gives the rigidity lemmas:
+   * `cayleyDirichletEnergy_zero_imp_generator_invariant`,
+   * `constant_of_generator_invariant` (by word induction),
+   * `cayleyDirichletEnergy_eq_zero_iff_constant` (the main characterization).
+
+## Main results
+
+* `word_in_generators_of_mem_closure`
+* `cayley_connected_of_closure_eq_top`
+* `cayleyDirichletEnergy_zero_imp_generator_invariant`
+* `constant_of_generator_invariant`
+* `cayleyDirichletEnergy_eq_zero_iff_constant`
+-/
+
+open Finset BigOperators
+
+namespace Bridges.CayleyConnectivityEnergy
+
+/-! ## Word reachability from generation -/
+
+/-- Any element of the subgroup closure of a symmetric finite set `S` is
+representable as a product of elements drawn from `S`. -/
+theorem word_in_generators_of_mem_closure
+    {G : Type*} [Group G]
+    (S : Finset G)
+    (hSsymm : ∀ g ∈ S, g⁻¹ ∈ S)
+    {g : G}
+    (hg : g ∈ Subgroup.closure (↑S : Set G)) :
+    ∃ l : List G, (∀ s, s ∈ l → s ∈ S) ∧ l.prod = g := by
+  refine Subgroup.closure_induction ?_ ?_ ?_ ?_ hg
+  · exact fun x hx => ⟨[x], by simpa using hx⟩
+  · exact ⟨[], by simp⟩
+  · rintro x y _ _ ⟨l₁, hl₁, rfl⟩ ⟨l₂, hl₂, rfl⟩
+    exact ⟨l₁ ++ l₂, by aesop⟩
+  · rintro x _ ⟨l, hl, rfl⟩
+    refine ⟨l.reverse.map fun s => s⁻¹, ?_, ?_⟩ <;>
+      simp_all [List.prod_inv_reverse]
+    exact fun s hs => by simpa using hSsymm _ (hl _ hs)
+
+/-! ## Cayley walks and connectivity -/
+
+/-- A concrete inductive notion of a Cayley walk: `CayleyWalk S x y` holds when one
+can travel from `x` to `y` by left-multiplying by a sequence of generators in `S`.
+`nil` is the empty walk; `cons` prepends a generator step `x ↦ s * x`. -/
+inductive CayleyWalk {G : Type*} [Group G] (S : Finset G) : G → G → Prop
+  | nil (x : G) : CayleyWalk S x x
+  | cons {x y : G} (s : G) (hs : s ∈ S) : CayleyWalk S x y → CayleyWalk S x (s * y)
+
+/-- A walk described by a list of generators yields a `CayleyWalk`. -/
+theorem cayleyWalk_of_word {G : Type*} [Group G] (S : Finset G) (x : G) :
+    ∀ l : List G, (∀ s, s ∈ l → s ∈ S) → CayleyWalk S x (l.prod * x) := by
+  intro l
+  induction l with
+  | nil => intro _; simpa using CayleyWalk.nil x
+  | cons a t ih =>
+      intro hmem
+      have ht : ∀ s, s ∈ t → s ∈ S := fun s hs => hmem s (List.mem_cons_of_mem _ hs)
+      have ha : a ∈ S := hmem a (List.mem_cons_self)
+      have : (a :: t).prod * x = a * (t.prod * x) := by
+        simp [List.prod_cons, mul_assoc]
+      rw [this]
+      exact CayleyWalk.cons a ha (ih ht)
+
+/-- **Cayley connectivity from generation.**
+If `S` is a symmetric generating set for the finite group `G`, then any two
+vertices `x`, `y` are joined by a generator walk.  We expose both the explicit
+word form (a list `l` with `l.prod * x = y`) and the inductive `CayleyWalk`. -/
+theorem cayley_connected_of_closure_eq_top
+    {G : Type*} [Fintype G] [Group G]
+    (S : Finset G)
+    (hSsymm : ∀ g ∈ S, g⁻¹ ∈ S)
+    (hgen : Subgroup.closure (↑S : Set G) = ⊤) :
+    ∀ x y : G, ∃ l : List G,
+      (∀ s, s ∈ l → s ∈ S) ∧ l.prod * x = y := by
+  intro x y
+  obtain ⟨l, hl⟩ :=
+    word_in_generators_of_mem_closure S hSsymm
+      (show y * x⁻¹ ∈ Subgroup.closure (S : Set G) from by
+        rw [hgen]; exact Subgroup.mem_top _)
+  exact ⟨l, hl.1, by rw [hl.2, mul_assoc, inv_mul_cancel, mul_one]⟩
+
+/-- The inductive-walk form of connectivity, derived from the word form. -/
+theorem cayleyWalk_of_closure_eq_top
+    {G : Type*} [Fintype G] [Group G]
+    (S : Finset G)
+    (hSsymm : ∀ g ∈ S, g⁻¹ ∈ S)
+    (hgen : Subgroup.closure (↑S : Set G) = ⊤) :
+    ∀ x y : G, CayleyWalk S x y := by
+  intro x y
+  obtain ⟨l, hlmem, hlprod⟩ := cayley_connected_of_closure_eq_top S hSsymm hgen x y
+  have := cayleyWalk_of_word S x l hlmem
+  rwa [hlprod] at this
+
+/-! ## Dirichlet energy -/
+
+/-- The Cayley–Dirichlet energy of `f : G → ℝ` with respect to generators `S`:
+the sum over all vertices `x` and generators `s ∈ S` of the squared difference
+`(f (s * x) - f x)^2`. -/
+def cayleyDirichletEnergy {G : Type*} [Fintype G] [Group G]
+    (S : Finset G) (f : G → ℝ) : ℝ :=
+  ∑ x : G, ∑ s ∈ S, (f (s * x) - f x) ^ 2
+
+/-- The energy of a constant function is zero. -/
+theorem cayleyDirichletEnergy_const {G : Type*} [Fintype G] [Group G]
+    (S : Finset G) (c : ℝ) :
+    cayleyDirichletEnergy S (fun _ => c) = 0 := by
+  simp [cayleyDirichletEnergy]
+
+/-- **Zero-energy implies generator invariance.**
+If the Dirichlet energy vanishes, then `f` is invariant under left
+multiplication by every generator: `f (s * x) = f x`. -/
+theorem cayleyDirichletEnergy_zero_imp_generator_invariant
+    {G : Type*} [Fintype G] [Group G]
+    (S : Finset G)
+    (f : G → ℝ)
+    (hE : cayleyDirichletEnergy S f = 0) :
+    ∀ s ∈ S, ∀ x : G, f (s * x) = f x := by
+  unfold cayleyDirichletEnergy at hE
+  rw [Finset.sum_eq_zero_iff_of_nonneg
+        (fun _ _ => Finset.sum_nonneg fun _ _ => sq_nonneg _)] at hE
+  intro s hs x
+  have hx := hE x (Finset.mem_univ x)
+  rw [Finset.sum_eq_zero_iff_of_nonneg (fun _ _ => sq_nonneg _)] at hx
+  have := hx s hs
+  have : f (s * x) - f x = 0 := by
+    nlinarith [this, sq_nonneg (f (s * x) - f x)]
+  linarith [sub_eq_zero.mp this]
+
+/-- **Constancy from generator invariance.**
+If `f` is invariant under every generator and `S` generates `G`, then `f` is
+constant.  Proved by word induction via `word_in_generators_of_mem_closure`. -/
+theorem constant_of_generator_invariant
+    {G : Type*} [Fintype G] [Group G]
+    (S : Finset G)
+    (hSsymm : ∀ g ∈ S, g⁻¹ ∈ S)
+    (hgen : Subgroup.closure (↑S : Set G) = ⊤)
+    (f : G → ℝ)
+    (hinv : ∀ s ∈ S, ∀ x : G, f (s * x) = f x) :
+    ∃ c : ℝ, ∀ x : G, f x = c := by
+  have h_word : ∀ x : G, ∃ l : List G, (∀ s, s ∈ l → s ∈ S) ∧ l.prod = x := by
+    intro x
+    apply word_in_generators_of_mem_closure S hSsymm
+    rw [hgen]; exact Subgroup.mem_top x
+  refine ⟨f 1, ?_⟩
+  intro x
+  obtain ⟨l, hlS, rfl⟩ := h_word x
+  induction l with
+  | nil => simp
+  | cons a t ih =>
+      have ha : a ∈ S := hlS a (List.mem_cons_self)
+      have ht : ∀ s, s ∈ t → s ∈ S := fun s hs => hlS s (List.mem_cons_of_mem _ hs)
+      have hprod : (a :: t).prod = a * t.prod := by simp [List.prod_cons]
+      rw [hprod, hinv a ha t.prod]
+      exact ih ht
+
+/-- **Zero-energy characterization (main theorem).**
+For a symmetric generating set `S` of a finite group `G`, the Cayley–Dirichlet
+energy of `f` is zero iff `f` is constant. -/
+theorem cayleyDirichletEnergy_eq_zero_iff_constant
+    {G : Type*} [Fintype G] [Group G]
+    (S : Finset G)
+    (hSsymm : ∀ g ∈ S, g⁻¹ ∈ S)
+    (hgen : Subgroup.closure (↑S : Set G) = ⊤)
+    (f : G → ℝ) :
+    cayleyDirichletEnergy S f = 0 ↔ ∃ c : ℝ, ∀ x : G, f x = c := by
+  constructor
+  · intro hE
+    exact constant_of_generator_invariant S hSsymm hgen f
+      (cayleyDirichletEnergy_zero_imp_generator_invariant S f hE)
+  · rintro ⟨c, hc⟩
+    have hf : f = fun _ => c := funext hc
+    rw [hf]
+    exact cayleyDirichletEnergy_const S c
+
+end Bridges.CayleyConnectivityEnergy

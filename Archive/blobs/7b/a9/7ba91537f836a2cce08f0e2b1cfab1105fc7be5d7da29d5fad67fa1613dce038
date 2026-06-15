@@ -1,0 +1,158 @@
+import Mathlib
+
+/-!
+# Korselt's Criterion and Fermat Pseudoprimality
+
+This file formalizes the classical **Korselt criterion** characterizing *Carmichael
+numbers* (absolute Fermat pseudoprimes) and proves the central, constructive
+implication:
+
+> If `n` is squarefree and `(p - 1) ∣ (n - 1)` for every prime `p ∣ n`,
+> then `a ^ (n - 1) ≡ 1 [MOD n]` for every base `a` coprime to `n`.
+
+This is the property that makes a composite number *fool* the Fermat primality
+test for **every** base — the precise mechanism behind cryptographic
+pseudoprimality failures.
+
+The proof is the Chinese-Remainder decomposition argument in disguise:
+* per prime `p ∣ n`, Fermat's little theorem plus `(p-1) ∣ (n-1)` gives
+  `a ^ (n-1) ≡ 1 [MOD p]`;
+* squarefreeness of `n` lets us reassemble these congruences (the prime factors
+  are pairwise coprime, so their product `= n` divides `a^(n-1) - 1`).
+
+## Bridge
+
+The conclusion `a ^ (n - 1) ≡ 1 [MOD n]` is an **order-divisibility condition** on
+the multiplicative group `(ℤ/nℤ)ˣ`: the order of every unit divides `n - 1`.
+This order-theoretic statement is the object exported to the Cryptography domain in
+`Catalog/Cryptography/KorseltGroupActionBridge.lean`, where it is combined with the
+abstract `CryptoGroupAction` framework of `Catalog/Cryptography/CSIFiShAdvanced.lean`.
+
+-- !-- Lab Notes -- !--
+**Hypothesis (Hypothesizer).**
+H1: The "bridge" between Carmichael's theorem and Korselt's criterion is *not* the
+    Fibonacci primitive-divisor machinery in `Shared/CarmichaelProof.lean`; it is the
+    CRT decomposition of `(ℤ/nℤ)ˣ`. (Surprising: the catalog file's name suggests a
+    Fibonacci connection, but the actual Korselt content is purely about modular
+    exponentiation.)
+H2: Korselt `⇒` "absolute Fermat pseudoprime" is fully constructive and needs *no*
+    primality of `n`; squarefreeness + the divisibility conditions suffice.
+H3 (counter-intuitive): the implication holds with `n - 1` replaced by *any* common
+    multiple of the `p - 1`; the value `n - 1` is not special to the proof.
+
+**Experiment (Experimenter).**
+Proved H2 in full (`korselt_imp_fermatPsp`). Verified H1 by reducing the whole
+argument to `Nat.ModEq.pow_totient` (Fermat/Euler) + `Finset.prod_primes_dvd`
+(squarefree reassembly), with zero Fibonacci input. Confirmed H3 structurally: the
+per-prime lemma `pow_modEq_one_of_prime_factor` only uses `(p-1) ∣ (n-1)`.
+
+**Analysis (Analyst).**
+H2 survives unconditionally. The single delicate point is ℕ-subtraction: one must
+record `1 ≤ a^(n-1)` (which needs `a ≠ 0`, i.e. `n > 1`) before translating
+`ModEq` to divisibility via `Nat.modEq_iff_dvd'`. The converse of Korselt
+(Carmichael `⇒` Korselt) is *true but harder* and is recorded as a future
+direction, not proved here.
+
+**Critique (Critic).**
+Guarded against vacuity: `IsFermatPsp` quantifies over genuine units (`a` coprime to
+`n`), and `n > 1` rules out the trivial ring. The worked example `isKorselt_561`
+(561 = 3·11·17, the smallest Carmichael number) certifies the hypothesis set is
+inhabited by a genuinely composite number, so the main theorem is non-vacuous.
+
+**Synthesis (PI).**
+`korselt_imp_fermatPsp` is the reusable export. It is stated over ℕ with `Nat.ModEq`
+to stay decoupled from any particular group encoding, and re-expressed for
+`(ZMod n)ˣ` in the bridge file.
+-- !-- end Lab Notes -- !--
+-/
+
+namespace KorseltCriterion
+
+/-- A number `n` satisfies **Korselt's criterion** if it is squarefree and
+`(p - 1) ∣ (n - 1)` for every prime `p` dividing `n`. -/
+def IsKorselt (n : ℕ) : Prop :=
+  Squarefree n ∧ ∀ p : ℕ, p.Prime → p ∣ n → (p - 1) ∣ (n - 1)
+
+/-- `n` is an **absolute Fermat pseudoprime** (the defining property of a Carmichael
+number) if `a ^ (n - 1) ≡ 1 [MOD n]` for every base `a` coprime to `n`. -/
+def IsFermatPsp (n : ℕ) : Prop :=
+  ∀ a : ℕ, Nat.Coprime a n → a ^ (n - 1) ≡ 1 [MOD n]
+
+/-- Squarefree reassembly: a squarefree `n` divides `m` as soon as every prime
+factor of `n` divides `m`. (The prime factors are pairwise coprime and multiply to
+`n`.) -/
+lemma dvd_of_squarefree_forall_prime_dvd {n m : ℕ} (hsf : Squarefree n)
+    (h : ∀ p, p.Prime → p ∣ n → p ∣ m) : n ∣ m := by
+  rw [← Nat.prod_primeFactors_of_squarefree hsf]
+  apply Finset.prod_primes_dvd
+  · intro p hp; exact (Nat.prime_of_mem_primeFactors hp).prime
+  · intro p hp
+    exact h p (Nat.prime_of_mem_primeFactors hp) (Nat.dvd_of_mem_primeFactors hp)
+
+/-- Per-prime step: if `p ∣ n` is prime, `(p-1) ∣ (n-1)`, and `a` is coprime to `n`,
+then `a ^ (n-1) ≡ 1 [MOD p]`. This is Fermat's little theorem composed with the
+order-divisibility hypothesis. -/
+lemma pow_modEq_one_of_prime_factor {n a : ℕ} (hcop : Nat.Coprime a n)
+    {p : ℕ} (hp : p.Prime) (hpn : p ∣ n) (hdiv : (p - 1) ∣ (n - 1)) :
+    a ^ (n - 1) ≡ 1 [MOD p] := by
+  have hcp : a.Coprime p := hcop.coprime_dvd_right hpn
+  obtain ⟨k, hk⟩ := hdiv
+  have hfermat : a ^ (p - 1) ≡ 1 [MOD p] := by
+    have h := Nat.ModEq.pow_totient hcp
+    rwa [Nat.totient_prime hp] at h
+  calc a ^ (n - 1) = (a ^ (p - 1)) ^ k := by rw [← pow_mul, ← hk]
+    _ ≡ 1 ^ k [MOD p] := hfermat.pow k
+    _ = 1 := one_pow k
+
+/-- **Korselt's criterion (constructive direction).**
+If `n > 1` satisfies Korselt's criterion, then `n` is an absolute Fermat
+pseudoprime: `a ^ (n - 1) ≡ 1 [MOD n]` for every base coprime to `n`. -/
+theorem korselt_imp_fermatPsp {n : ℕ} (hn : 1 < n) (hk : IsKorselt n) :
+    IsFermatPsp n := by
+  obtain ⟨hsf, hdivs⟩ := hk
+  intro a hcop
+  -- `a ≠ 0`, hence `1 ≤ a ^ (n-1)`.
+  have ha : a ≠ 0 := by
+    rintro rfl
+    rw [Nat.coprime_zero_left] at hcop
+    omega
+  have hpos : 1 ≤ a ^ (n - 1) := Nat.one_le_iff_ne_zero.mpr (pow_ne_zero _ ha)
+  -- `n ∣ a^(n-1) - 1`, assembled from the per-prime congruences.
+  have hdvd : n ∣ a ^ (n - 1) - 1 := by
+    apply dvd_of_squarefree_forall_prime_dvd hsf
+    intro p hp hpn
+    have hm := pow_modEq_one_of_prime_factor hcop hp hpn (hdivs p hp hpn)
+    exact (Nat.modEq_iff_dvd' hpos).mp hm.symm
+  exact ((Nat.modEq_iff_dvd' hpos).mpr hdvd).symm
+
+/-- The smallest Carmichael number `561 = 3 · 11 · 17` satisfies Korselt's
+criterion. This certifies that `IsKorselt` is inhabited by a genuinely composite
+number, so the main theorem is non-vacuous. -/
+lemma isKorselt_561 : IsKorselt 561 := by
+  refine ⟨?_, ?_⟩
+  · -- 561 = 3 · 11 · 17 is squarefree
+    have h : (561 : ℕ) = 3 * (11 * 17) := by norm_num
+    rw [h]
+    have s3 : Squarefree (3 : ℕ) := (Nat.prime_iff.mp (by norm_num)).squarefree
+    have s11 : Squarefree (11 : ℕ) := (Nat.prime_iff.mp (by norm_num)).squarefree
+    have s17 : Squarefree (17 : ℕ) := (Nat.prime_iff.mp (by norm_num)).squarefree
+    refine Nat.squarefree_mul_iff.mpr ⟨by norm_num, s3, ?_⟩
+    exact Nat.squarefree_mul_iff.mpr ⟨by norm_num, s11, s17⟩
+  · -- every prime factor p ∈ {3, 11, 17} satisfies (p-1) ∣ 560
+    intro p hp hpn
+    have hcase : p = 3 ∨ p = 11 ∨ p = 17 := by
+      have h : p ∣ 3 * (11 * 17) := by
+        have e : (3 * (11 * 17) : ℕ) = 561 := by norm_num
+        rw [e]; exact hpn
+      rcases hp.dvd_mul.mp h with h3 | h2
+      · exact Or.inl ((Nat.prime_dvd_prime_iff_eq hp (by norm_num)).mp h3)
+      · rcases hp.dvd_mul.mp h2 with h11 | h17
+        · exact Or.inr (Or.inl ((Nat.prime_dvd_prime_iff_eq hp (by norm_num)).mp h11))
+        · exact Or.inr (Or.inr ((Nat.prime_dvd_prime_iff_eq hp (by norm_num)).mp h17))
+    rcases hcase with rfl | rfl | rfl <;> decide
+
+/-- Consequently `561` is an absolute Fermat pseudoprime. -/
+theorem fermatPsp_561 : IsFermatPsp 561 :=
+  korselt_imp_fermatPsp (by norm_num) isKorselt_561
+
+end KorseltCriterion

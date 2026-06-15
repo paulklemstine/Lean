@@ -1,0 +1,110 @@
+import Mathlib
+
+/-! # The Fibonacci entry-point function: existence and characterization
+
+The *entry point* (rank of apparition) of `m` is the least `k > 0` with `m ∣ Fₖ`.
+It is the conceptual backbone of Carmichael's primitive-divisor theorem: a prime `p`
+is a *primitive* divisor of `Fₙ` exactly when its entry point equals `n`.
+
+This file develops that theory from scratch, fully `sorry`-free:
+
+* `FibEntry.entry_exists` — **every** positive `m` divides some positive Fibonacci
+  number (so the entry point is always defined). Proved by a pigeonhole / pure
+  periodicity argument on the pair `(Fₖ, Fₖ₊₁)` modulo `m`.
+* `FibEntry.fib_dvd_iff_entryPt_dvd` — the divisibility characterization:
+  `m ∣ Fₙ ↔ entryPt m ∣ n`. This generalises `Nat.fib_dvd` / `Nat.fib_gcd`.
+* `FibEntry.primitive_iff_entryPt_eq` — `p` is a primitive prime divisor of `Fₙ`
+  iff `entryPt p = n`. This is the structural heart of Carmichael's theorem,
+  abstracted away from the finite `native_decide` certificates used elsewhere
+  in the catalog (`CarmichaelComposite.primitive_of_entryPt_eq`,
+  `CarmichaelComposite.fibEntryPt_dvd_of_fib_dvd`).
+
+-- !-- Lab Notebook -- !--
+Hypothesis : The entry-point function `entryPt m = min { k>0 : m ∣ Fₖ }` is total
+  on `m ≥ 1`, and `m ∣ Fₙ` is equivalent to `entryPt m ∣ n`; primitivity of a prime
+  divisor is equivalent to `entryPt p = n`.
+Result     : All four headline theorems proved `sorry`-free.
+  `entry_exists` (totality via pigeonhole), `dvd_fib_entryPt` / `entryPt_min`
+  (defining properties), `fib_dvd_iff_entryPt_dvd` (capstone characterization),
+  and `primitive_iff_entryPt_eq` (Carmichael-style primitivity criterion).
+Insight    : Totality needs only finiteness of the state `(Fₖ, Fₖ₊₁) mod m` plus
+  *reversibility* of the recurrence (`Fₐ = Fₐ₊₂ - Fₐ₊₁`), which forces the orbit to
+  be *purely* periodic, hence `F₀ ≡ F_d` for the period `d`. The divisibility
+  characterization then reduces to `Nat.fib_gcd` + minimality of the entry point.
+Failure analysis : `ZMod m` is essential — doing the reverse step with truncated `ℕ`
+  subtraction modulo `m` is unworkable; casting to `ZMod m` makes the reverse step a
+  one-line `push_cast`/`ring` fact.
+-/
+
+namespace FibEntry
+
+open Classical in
+/-- The Fibonacci entry point (rank of apparition) of `m`: the least `k > 0`
+with `m ∣ Fₖ`, or `0` if no such `k` exists (which, by `entry_exists`, never
+happens for `m ≥ 1`). -/
+noncomputable def entryPt (m : ℕ) : ℕ :=
+  if h : ∃ k, 0 < k ∧ m ∣ Nat.fib k then Nat.find h else 0
+
+/-
+!-- Pigeonhole on the finite state `(Fₖ, Fₖ₊₁) : ZMod m × ZMod m` gives `i < j`
+with equal states; reversing the recurrence `m` times yields a pure period `d=j-i>0`
+with `F₀ ≡ F_d (mod m)`, i.e. `m ∣ F_d`. -- !--
+-/
+theorem entry_exists (m : ℕ) (hm : 0 < m) : ∃ k, 0 < k ∧ m ∣ Nat.fib k := by
+  -- By the pigeonhole principle, since there are only $m^2$ possible pairs $(F_k \mod m, F_{k+1} \mod m)$, there must exist indices $i < j$ such that $(F_i \mod m, F_{i+1} \mod m) = (F_j \mod m, F_{j+1} \mod m)$.
+  obtain ⟨i, j, hij, h_pair⟩ : ∃ i j : ℕ, i < j ∧ (Nat.fib i % m = Nat.fib j % m) ∧ (Nat.fib (i + 1) % m = Nat.fib (j + 1) % m) := by
+    by_contra! h_contra;
+    exact absurd ( Set.infinite_range_of_injective ( show Function.Injective fun k => ( Nat.fib k % m, Nat.fib ( k + 1 ) % m ) from fun i j hij => le_antisymm ( not_lt.1 fun hi => h_contra _ _ hi ( by aesop ) ( by aesop ) ) ( not_lt.1 fun hj => h_contra _ _ hj ( by aesop ) ( by aesop ) ) ) ) ( Set.not_infinite.mpr <| Set.finite_iff_bddAbove.mpr ⟨ ( m, m ), by rintro a ⟨ k, rfl ⟩ ; exact ⟨ Nat.le_of_lt <| Nat.mod_lt _ hm, Nat.le_of_lt <| Nat.mod_lt _ hm ⟩ ⟩ );
+  induction' i with i ih generalizing j;
+  · exact ⟨ j, hij, Nat.dvd_of_mod_eq_zero <| by simpa using h_pair.1.symm ⟩;
+  · rcases j <;> simp_all +decide [ Nat.fib_add_two, Nat.add_mod ];
+    simp_all +decide [ ← ZMod.natCast_eq_natCast_iff' ];
+    grind
+
+theorem dvd_fib_entryPt (m : ℕ) (hm : 0 < m) : m ∣ Nat.fib (entryPt m) := by
+  unfold entryPt;
+  split_ifs <;> simp_all +decide [ Nat.find_spec ( entry_exists m hm ) ]
+
+theorem entryPt_pos (m : ℕ) (hm : 0 < m) : 0 < entryPt m := by
+  unfold FibEntry.entryPt;
+  split_ifs <;> simp_all +decide [ Nat.find_eq_iff ];
+  exact ‹∀ x : ℕ, 0 < x → ¬m ∣ Nat.fib x› _ ( entry_exists m hm |> Classical.choose_spec |> And.left ) ( entry_exists m hm |> Classical.choose_spec |> And.right )
+
+theorem entryPt_min (m : ℕ) (hm : 0 < m) :
+    ∀ k, 0 < k → k < entryPt m → ¬ m ∣ Nat.fib k := by
+  intro k hk hk' hk'';
+  unfold FibEntry.entryPt at hk';
+  split_ifs at hk' <;> simp_all +decide [ Nat.find_eq_iff ]
+
+/-
+!-- Forward: `m ∣ F_{entryPt} ` and `m ∣ Fₙ` give `m ∣ F_{gcd}` via `Nat.fib_gcd`;
+minimality forces `gcd = entryPt`. Backward: `entryPt ∣ n ⇒ F_{entryPt} ∣ Fₙ` (`Nat.fib_dvd`). -- !--
+-/
+theorem fib_dvd_iff_entryPt_dvd (m n : ℕ) (hm : 0 < m) :
+    m ∣ Nat.fib n ↔ entryPt m ∣ n := by
+  constructor;
+  · intro hmn;
+    by_cases hn : n = 0;
+    · aesop;
+    · have h_gcd : Nat.gcd (entryPt m) n = entryPt m := by
+        refine' Nat.le_antisymm _ _;
+        · exact Nat.le_of_dvd ( entryPt_pos m hm ) ( Nat.gcd_dvd_left _ _ );
+        · contrapose! hmn;
+          exact fun h => entryPt_min m hm _ ( Nat.gcd_pos_of_pos_right _ ( Nat.pos_of_ne_zero hn ) ) hmn ( Nat.dvd_gcd ( dvd_fib_entryPt m hm ) h |> fun x => Nat.dvd_trans x ( by simp +decide [ Nat.fib_gcd ] ) );
+      exact h_gcd ▸ Nat.gcd_dvd_right _ _;
+  · exact fun h => dvd_trans ( dvd_fib_entryPt m hm ) ( Nat.fib_dvd _ _ h )
+
+/-
+!-- `p` primitive at `n` ⇔ `entryPt p = n`: `⇐` is `dvd_fib_entryPt` + `entryPt_min`;
+`⇒` uses the divisibility characterization (`entryPt p ∣ n`) plus primitivity ruling out
+`entryPt p < n`. -- !--
+-/
+theorem primitive_iff_entryPt_eq (p n : ℕ) (hp : Nat.Prime p) (hn : 0 < n) :
+    (p ∣ Nat.fib n ∧ ∀ k, 0 < k → k < n → ¬ p ∣ Nat.fib k) ↔ entryPt p = n := by
+  constructor <;> intro h;
+  · refine' le_antisymm _ _;
+    · unfold entryPt; aesop;
+    · grind +suggestions;
+  · exact ⟨ h ▸ dvd_fib_entryPt p hp.pos, fun k hk₁ hk₂ hk₃ => entryPt_min p hp.pos k hk₁ ( h ▸ hk₂ ) hk₃ ⟩
+
+end FibEntry

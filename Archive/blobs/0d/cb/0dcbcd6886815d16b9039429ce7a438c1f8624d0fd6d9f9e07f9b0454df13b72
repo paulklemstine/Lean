@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Korselt Bridge Explorer</title>
+<style>
+  :root { --bg:#0f1320; --card:#1a2030; --ink:#e8ecf5; --accent:#5aa9ff;
+          --good:#46c98b; --bad:#ff6b6b; --muted:#8a93a8; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+         background: radial-gradient(circle at 20% -10%, #1b2440, var(--bg)); color: var(--ink); }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 28px 20px 64px; }
+  h1 { font-size: 1.8rem; margin: 0 0 6px; }
+  .sub { color: var(--muted); margin: 0 0 24px; }
+  .card { background: var(--card); border:1px solid #28324a; border-radius: 14px;
+          padding: 20px; margin: 16px 0; box-shadow: 0 8px 28px rgba(0,0,0,.3); }
+  label { font-size: .92rem; color: var(--muted); }
+  input[type=number] { width: 140px; font-size:1.1rem; padding:8px 10px; border-radius:8px;
+        border:1px solid #33405e; background:#0e1422; color:var(--ink); }
+  button { background: var(--accent); color:#06132a; border:none; padding:9px 16px;
+        border-radius:8px; font-weight:700; cursor:pointer; font-size:.95rem; }
+  button:hover { filter:brightness(1.08); }
+  .pill { display:inline-block; padding:3px 10px; border-radius:999px; font-size:.8rem;
+          font-weight:700; }
+  .pill.good { background: rgba(70,201,139,.16); color:var(--good); }
+  .pill.bad { background: rgba(255,107,107,.16); color:var(--bad); }
+  table { width:100%; border-collapse: collapse; margin-top:10px; }
+  th, td { text-align:left; padding:7px 8px; border-bottom:1px solid #26304a; font-size:.92rem; }
+  th { color: var(--muted); font-weight:600; }
+  .mono { font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+  .verdict { font-size:1.15rem; font-weight:700; margin-top:8px; }
+  .quick { margin: 4px 6px 0 0; background:#222c44; color:var(--ink);
+           border:1px solid #33405e; }
+  .formula { background:#0e1422; border-left:3px solid var(--accent); padding:10px 14px;
+             border-radius:8px; color:#cdd6ea; font-family: ui-monospace, Menlo, monospace;
+             font-size:.9rem; overflow-x:auto; }
+  .legend { color: var(--muted); font-size:.85rem; margin-top:6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>The Korselt Bridge Explorer</h1>
+  <p class="sub">Discover why some composite numbers fool Fermat's primality test —
+     and watch the multiplicative-order bridge in action.</p>
+
+  <div class="card">
+    <div class="formula">
+      Arithmetic bridge: if n is squarefree and every unit u satisfies
+      u^(n-1) ≡ 1 (mod n), then for every prime p | n we have (p-1) | (n-1).
+    </div>
+    <p style="margin:14px 0 6px"><label for="n">Enter an integer n &gt; 1:</label></p>
+    <input id="n" type="number" min="2" value="561" />
+    <button onclick="analyze()">Analyze</button>
+    <div style="margin-top:12px">
+      <span class="legend">Try:</span>
+      <button class="quick" onclick="setN(561)">561</button>
+      <button class="quick" onclick="setN(1105)">1105</button>
+      <button class="quick" onclick="setN(1729)">1729</button>
+      <button class="quick" onclick="setN(15)">15</button>
+      <button class="quick" onclick="setN(97)">97 (prime)</button>
+      <button class="quick" onclick="setN(8911)">8911</button>
+    </div>
+  </div>
+
+  <div id="out"></div>
+</div>
+
+<script>
+function gcd(a,b){ while(b){ [a,b]=[b,a%b]; } return a; }
+function factorize(n){ const f={}; let m=n,d=2;
+  while(d*d<=m){ while(m%d===0){ f[d]=(f[d]||0)+1; m/=d; } d++; }
+  if(m>1) f[m]=(f[m]||0)+1; return f; }
+function powmod(a,e,m){ let r=1n; a=BigInt(a)%BigInt(m); e=BigInt(e); const M=BigInt(m);
+  while(e>0n){ if(e&1n) r=(r*a)%M; a=(a*a)%M; e>>=1n; } return Number(r); }
+function units(n){ const u=[]; for(let a=1;a<n;a++) if(gcd(a,n)===1) u.push(a); return u; }
+function order(a,n){ let k=1,cur=a%n; while(cur!==1){ cur=(cur*a)%n; k++; } return k; }
+function isPrime(n){ if(n<2) return false; const f=factorize(n); const ks=Object.keys(f);
+  return ks.length===1 && f[ks[0]]===1; }
+
+function setN(v){ document.getElementById('n').value=v; analyze(); }
+
+function analyze(){
+  const n = parseInt(document.getElementById('n').value,10);
+  const out = document.getElementById('out');
+  if(!(n>=2)){ out.innerHTML='<div class="card">Please enter n ≥ 2.</div>'; return; }
+  const f = factorize(n);
+  const primes = Object.keys(f).map(Number);
+  const squarefree = Object.values(f).every(e=>e===1);
+  const prime = isPrime(n);
+
+  // Fermat hypothesis: u^(n-1) = 1 for all units u.
+  let allKilled = true, total=0, liars=0;
+  const us = units(n);
+  for(const u of us){ total++; if(powmod(u,n-1,n)===1) liars++; else allKilled=false; }
+
+  // Per-prime divisibility (p-1)|(n-1)
+  const rows = primes.map(p=>({p, ok: (n-1)%(p-1)===0}));
+
+  const korselt = !prime && squarefree && rows.every(r=>r.ok);
+
+  let html = '<div class="card">';
+  html += `<div class="verdict">n = ${n} = ${primes.map(p=>f[p]>1?`${p}<sup>${f[p]}</sup>`:`${p}`).join(' · ')}</div>`;
+  html += `<p>` +
+    `${prime?'<span class="pill bad">prime</span>':'<span class="pill good">composite</span>'} ` +
+    `${squarefree?'<span class="pill good">squarefree</span>':'<span class="pill bad">not squarefree</span>'} ` +
+    `${(!prime&&allKilled)?'<span class="pill good">Fermat pseudoprime</span>':'<span class="pill bad">fails Fermat test for some base</span>'}` +
+    `</p>`;
+
+  html += `<p class="legend">Fermat liars: ${liars} of ${total} units satisfy u^(n-1) ≡ 1 (mod n).</p>`;
+
+  html += '<table><tr><th>prime p | n</th><th>p − 1</th><th>(p−1) | (n−1)?</th></tr>';
+  for(const r of rows){
+    html += `<tr><td class="mono">${r.p}</td><td class="mono">${r.p-1}</td>` +
+      `<td>${r.ok?'<span class="pill good">yes</span>':'<span class="pill bad">no</span>'}</td></tr>`;
+  }
+  html += `<tr><td class="mono">n − 1</td><td class="mono" colspan="2">${n-1}</td></tr></table>`;
+
+  if(korselt){
+    html += `<p class="verdict" style="color:var(--good)">★ Carmichael number — ` +
+            `the bridge's hypothesis and conclusion both hold for every prime factor.</p>`;
+  } else if(prime){
+    html += `<p class="verdict" style="color:var(--accent)">This is prime — Fermat's test ` +
+            `is supposed to pass it.</p>`;
+  } else if(!allKilled){
+    html += `<p class="verdict" style="color:var(--bad)">Not a Fermat pseudoprime: ` +
+            `the hypothesis u^(n-1)≡1 fails, so the bridge does not apply.</p>`;
+  } else {
+    html += `<p class="verdict" style="color:var(--bad)">Composite but not Korselt.</p>`;
+  }
+  html += '</div>';
+
+  // Order spectrum card
+  if(!prime && n<=20000){
+    const counts={};
+    let maxOrd=1;
+    for(const u of us){ const o=order(u,n); counts[o]=(counts[o]||0)+1; maxOrd=Math.max(maxOrd,o); }
+    const divisorsOk = Object.keys(counts).every(o=>(n-1)%Number(o)===0);
+    html += '<div class="card"><div class="verdict">Order spectrum of (Z/nZ)<sup>×</sup></div>';
+    html += `<p class="legend">Every bar is an order ord(a); for a Carmichael n every order divides n−1 ` +
+            `(${divisorsOk?'all do here':'not all do here'}).</p>`;
+    html += '<table><tr><th>order k</th><th>count</th><th>k | (n−1)?</th></tr>';
+    for(const o of Object.keys(counts).map(Number).sort((a,b)=>a-b)){
+      html += `<tr><td class="mono">${o}</td><td class="mono">${counts[o]}</td>` +
+        `<td>${(n-1)%o===0?'<span class="pill good">yes</span>':'<span class="pill bad">no</span>'}</td></tr>`;
+    }
+    html += '</table></div>';
+  }
+
+  out.innerHTML = html;
+}
+analyze();
+</script>
+</body>
+</html>

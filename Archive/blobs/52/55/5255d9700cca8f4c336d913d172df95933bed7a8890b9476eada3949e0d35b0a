@@ -1,0 +1,235 @@
+import Algebra.BerggrenLorentz.Core
+
+/-!
+# Berggren–Lorentz Tropical Certificate: the `B`-count growth certificate
+
+This file builds a **complete, fully verified** combinatorial growth certificate on
+Berggren words on top of the core Berggren–Lorentz development (`Algebra.BerggrenLorentz.Core`).
+
+## The certificate
+
+A *Berggren word* is a list of generator indices `List (Fin 3)`, where the index
+convention is fixed by the core file:
+
+* `0` ↦ `matA` / `childA`  (a proper Lorentz transformation, `det = 1`),
+* `1` ↦ `matB` / `childB`  (the **`B` generator**, the improper one with `det = -1`),
+* `2` ↦ `matC` / `childC`  (a proper Lorentz transformation, `det = 1`).
+
+The certificate is the **`B`-count** `bCount w`, the number of occurrences of the
+generator index `1` in the word `w`.  Its significance is the following growth
+theorem (`hyp_growth`):
+
+> For every admissible positive Pythagorean triple `t`,
+> `3 ^ (bCount w) * hyp t ≤ hyp (applyWord w t)`,
+
+where `hyp` reads off the hypotenuse (third coordinate) of a triple and `applyWord`
+applies the child maps of the letters of `w` in order.  In words: **each `B` letter
+multiplies the hypotenuse by at least `3`**, while the `A` and `C` letters never
+decrease it.  Consequently a word with `bCount w = n` forces the hypotenuse to grow
+by a factor of at least `3 ^ n`, i.e. the `B`-count certifies an exponential lower
+bound on hypotenuse growth (equivalently an `O(log c)` upper bound on tree depth).
+
+## Functoriality
+
+The `B`-count is additive on concatenation (`bCount_append`), so it is a monoid
+homomorphism from the free monoid of words to `(ℕ, +)`.  We package this functorially
+as `tropCert w = Multiplicative.ofAdd (bCount w) : Multiplicative ℕ`, for which
+concatenation of words becomes multiplication (`tropCert_append`), and we record the
+decoding theorem `tropCert_untrop` recovering `bCount w` as the underlying exponent.
+
+We use `Multiplicative ℕ` as the (tropical-flavoured) target rather than an exotic
+tropical semiring: it yields a clean monoid-homomorphism certificate with no
+typeclass friction, which is exactly the formally cleanest functorial statement of
+"the multiplicative growth factor `3 ^ bCount`".
+-/
+
+set_option maxHeartbeats 1600000
+
+namespace BerggrenLorentz
+
+/-! ## Section 1: The `B`-count word statistic -/
+
+/-- `bCount w` counts the occurrences of the `B` generator (index `1`) in the
+Berggren word `w`.  This is the certificate value. -/
+def bCount : List (Fin 3) → ℕ
+  | [] => 0
+  | k :: w => (if k = 1 then 1 else 0) + bCount w
+
+@[simp] theorem bCount_nil : bCount [] = 0 := rfl
+
+theorem bCount_cons (k : Fin 3) (w : List (Fin 3)) :
+    bCount (k :: w) = (if k = 1 then 1 else 0) + bCount w := rfl
+
+@[simp] theorem bCount_append (w₁ w₂ : List (Fin 3)) :
+    bCount (w₁ ++ w₂) = bCount w₁ + bCount w₂ := by
+  induction w₁ with
+  | nil => simp
+  | cons k w ih => simp only [List.cons_append, bCount_cons, ih]; omega
+
+/-! ## Section 2: The triple action of words
+
+The core file provides the explicit child maps `childA`, `childB`, `childC` on
+triples.  We bundle them into a single per-letter action and then fold along a word. -/
+
+/-- The hypotenuse (third coordinate) of a triple. -/
+def hyp (t : ℤ × ℤ × ℤ) : ℤ := t.2.2
+
+@[simp] theorem hyp_mk (a b c : ℤ) : hyp (a, b, c) = c := rfl
+
+/-- The child map associated to a single generator index. -/
+def applyLetter : Fin 3 → ℤ × ℤ × ℤ → ℤ × ℤ × ℤ
+  | 0, (a, b, c) => childA a b c
+  | 1, (a, b, c) => childB a b c
+  | 2, (a, b, c) => childC a b c
+
+@[simp] theorem applyLetter_zero (a b c : ℤ) :
+    applyLetter 0 (a, b, c) = childA a b c := rfl
+@[simp] theorem applyLetter_one (a b c : ℤ) :
+    applyLetter 1 (a, b, c) = childB a b c := rfl
+@[simp] theorem applyLetter_two (a b c : ℤ) :
+    applyLetter 2 (a, b, c) = childC a b c := rfl
+
+/-- Apply the child maps of the letters of a word, in order. -/
+def applyWord (w : List (Fin 3)) (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
+  w.foldl (fun acc k => applyLetter k acc) t
+
+@[simp] theorem applyWord_nil (t : ℤ × ℤ × ℤ) : applyWord [] t = t := rfl
+
+theorem applyWord_cons (k : Fin 3) (w : List (Fin 3)) (t : ℤ × ℤ × ℤ) :
+    applyWord (k :: w) t = applyWord w (applyLetter k t) := rfl
+
+/-! ## Section 3: Admissibility and its preservation along words
+
+An admissible triple is a strictly positive Pythagorean triple.  This is exactly the
+hypothesis under which the generator inequalities of Section 4 hold, and it is
+preserved by every letter (Section 3) — this is the `applyWord_preserves` statement. -/
+
+/-- A triple is *admissible* if it is a strictly positive Pythagorean triple. -/
+def Admissible (t : ℤ × ℤ × ℤ) : Prop :=
+  0 < t.1 ∧ 0 < t.2.1 ∧ 0 < t.2.2 ∧ IsPythag t.1 t.2.1 t.2.2
+
+/-- Every single letter preserves admissibility (positivity + Pythagorean property). -/
+theorem applyLetter_admissible (k : Fin 3) (t : ℤ × ℤ × ℤ)
+    (h : Admissible t) : Admissible (applyLetter k t) := by
+  obtain ⟨a, b, c⟩ := t
+  obtain ⟨ha, hb, hc, hpy⟩ := h
+  have hac : a ≤ c := pythag_hyp_ge_leg_a a b c hpy hb hc
+  have hbc : b ≤ c := pythag_hyp_ge_leg_b a b c hpy ha hc
+  fin_cases k
+  · exact ⟨by show (0:ℤ) < a - 2*b + 2*c; linarith,
+          by show (0:ℤ) < 2*a - b + 2*c; linarith,
+          by show (0:ℤ) < 2*a - 2*b + 3*c; linarith,
+          childA_preserves_pythag a b c hpy⟩
+  · exact ⟨by show (0:ℤ) < a + 2*b + 2*c; linarith,
+          by show (0:ℤ) < 2*a + b + 2*c; linarith,
+          by show (0:ℤ) < 2*a + 2*b + 3*c; linarith,
+          childB_preserves_pythag a b c hpy⟩
+  · exact ⟨by show (0:ℤ) < -a + 2*b + 2*c; linarith,
+          by show (0:ℤ) < -2*a + b + 2*c; linarith,
+          by show (0:ℤ) < -2*a + 2*b + 3*c; linarith,
+          childC_preserves_pythag a b c hpy⟩
+
+/-- **`applyWord_preserves`.** Admissibility (positivity + Pythagorean property) is
+preserved along an entire Berggren word. -/
+theorem applyWord_admissible (w : List (Fin 3)) (t : ℤ × ℤ × ℤ)
+    (h : Admissible t) : Admissible (applyWord w t) := by
+  induction w generalizing t with
+  | nil => simpa using h
+  | cons k ws ih =>
+      rw [applyWord_cons]
+      exact ih _ (applyLetter_admissible k t h)
+
+/-! ## Section 4: Generator-level hypotenuse inequalities
+
+* `A` and `C` are hypotenuse-nondecreasing on admissible triples.
+* `B` multiplies the hypotenuse by at least `3`.
+
+These are read off the explicit coordinate formulas in the core file, using that for a
+positive Pythagorean triple each leg is at most the hypotenuse. -/
+
+/-- The `A` generator does not decrease the hypotenuse. -/
+theorem childA_hyp_nondecr (a b c : ℤ) (h : Admissible (a, b, c)) :
+    hyp (a, b, c) ≤ hyp (childA a b c) := by
+  obtain ⟨ha, hb, hc, hpy⟩ := h
+  have hbc : b ≤ c := pythag_hyp_ge_leg_b a b c hpy ha hc
+  simp only [hyp, childA]
+  linarith
+
+/-- The `C` generator does not decrease the hypotenuse. -/
+theorem childC_hyp_nondecr (a b c : ℤ) (h : Admissible (a, b, c)) :
+    hyp (a, b, c) ≤ hyp (childC a b c) := by
+  obtain ⟨ha, hb, hc, hpy⟩ := h
+  have hac : a ≤ c := pythag_hyp_ge_leg_a a b c hpy hb hc
+  simp only [hyp, childC]
+  linarith
+
+/-- The `B` generator multiplies the hypotenuse by at least `3`. -/
+theorem childB_hyp_growth (a b c : ℤ) (h : Admissible (a, b, c)) :
+    3 * hyp (a, b, c) ≤ hyp (childB a b c) := by
+  obtain ⟨ha, hb, hc, hpy⟩ := h
+  simpa [hyp] using iterB_hypotenuse_growth a b c ha hb
+
+/-- Per-letter growth, uniform across generators: applying letter `k` multiplies the
+hypotenuse by at least `3 ^ (if k = 1 then 1 else 0)` on admissible triples. -/
+theorem letter_hyp_growth (k : Fin 3) (t : ℤ × ℤ × ℤ) (h : Admissible t) :
+    (3 : ℤ) ^ (if k = 1 then 1 else 0) * hyp t ≤ hyp (applyLetter k t) := by
+  obtain ⟨a, b, c⟩ := t
+  fin_cases k
+  · simpa using childA_hyp_nondecr a b c h
+  · simpa using childB_hyp_growth a b c h
+  · simpa using childC_hyp_nondecr a b c h
+
+/-! ## Section 5: The main growth theorem -/
+
+/-- **Main growth theorem.** For every admissible positive Pythagorean triple `t`,
+the hypotenuse after applying the word `w` is at least `3 ^ (bCount w)` times the
+starting hypotenuse.  Equivalently, each `B` letter contributes a factor of at least
+`3`, and the `A`/`C` letters never shrink the hypotenuse. -/
+theorem hyp_growth (w : List (Fin 3)) (t : ℤ × ℤ × ℤ) (h : Admissible t) :
+    (3 : ℤ) ^ (bCount w) * hyp t ≤ hyp (applyWord w t) := by
+  induction w generalizing t with
+  | nil => simp
+  | cons k ws ih =>
+      rw [applyWord_cons, bCount_cons, pow_add]
+      have hadm : Admissible (applyLetter k t) := applyLetter_admissible k t h
+      calc
+        (3 : ℤ) ^ (if k = 1 then 1 else 0) * 3 ^ bCount ws * hyp t
+            = 3 ^ bCount ws * ((3 : ℤ) ^ (if k = 1 then 1 else 0) * hyp t) := by ring
+        _ ≤ 3 ^ bCount ws * hyp (applyLetter k t) :=
+            mul_le_mul_of_nonneg_left (letter_hyp_growth k t h) (by positivity)
+        _ ≤ hyp (applyWord ws (applyLetter k t)) := ih (applyLetter k t) hadm
+
+/-! ## Section 6: Functorial packaging of the certificate
+
+The `B`-count is additive on concatenation, hence a monoid homomorphism from words to
+`(ℕ, +)`.  We package it as a homomorphism into `Multiplicative ℕ` so that concatenation
+of words becomes multiplication of certificates — the cleanest tropical-flavoured target. -/
+
+/-- The tropical (multiplicative) certificate of a word: `ofAdd` of its `B`-count.
+Lives in `Multiplicative ℕ`, where multiplication models the additive `B`-count and
+hence the multiplicative growth factor. -/
+def tropCert (w : List (Fin 3)) : Multiplicative ℕ := Multiplicative.ofAdd (bCount w)
+
+/-- The certificate is multiplicative under concatenation: it is a monoid homomorphism
+from the free monoid of words into `Multiplicative ℕ`. -/
+@[simp] theorem tropCert_append (w₁ w₂ : List (Fin 3)) :
+    tropCert (w₁ ++ w₂) = tropCert w₁ * tropCert w₂ := by
+  unfold tropCert
+  rw [bCount_append, ofAdd_add]
+
+/-- The empty word maps to the unit of `Multiplicative ℕ`. -/
+@[simp] theorem tropCert_nil : tropCert [] = 1 := rfl
+
+/-- **Decoding theorem.** The underlying additive exponent of the tropical certificate
+is exactly the `B`-count. -/
+@[simp] theorem tropCert_untrop (w : List (Fin 3)) :
+    Multiplicative.toAdd (tropCert w) = bCount w := rfl
+
+/-- The growth bound expressed through the decoded certificate exponent: the hypotenuse
+grows by at least `3` raised to the certificate exponent of the word. -/
+theorem tropCert_hyp_lower_bound (w : List (Fin 3)) (t : ℤ × ℤ × ℤ)
+    (h : Admissible t) :
+    (3 : ℤ) ^ (Multiplicative.toAdd (tropCert w)) * hyp t ≤ hyp (applyWord w t) := by
+  simpa using hyp_growth w t h
+
+end BerggrenLorentz

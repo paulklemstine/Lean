@@ -1,0 +1,335 @@
+import Mathlib
+import Algebra.BerggrenLorentz.Core
+
+/-!
+# Tropical Automorphic Forms on the Berggren Tree
+
+Bridge: Number theory (Pythagorean triples / Berggren tree) ↔ tropical (max-plus)
+algebra ↔ automorphic / Hecke-eigenform theory ↔ ultrametric valuation depth.
+
+The **Berggren tree** is the infinite rooted ternary tree whose vertices are the
+primitive Pythagorean triples, with root `(3,4,5)` and the three children of a
+vertex given by the Berggren maps `childA`, `childB`, `childC` (see
+`Algebra/BerggrenLorentz/Core.lean`). Vertices are indexed by *words*
+`w : List (Fin 3)` — a path from the root spelling out which branch (A=0, B=1,
+C=2) to follow.
+
+A function `f : List (Fin 3) → ℤ` on the vertices is studied through the two
+**tropical Hecke operators** obtained by aggregating over the three children:
+
+* `heckeMax f w = max_k f (w ++ [k])`  (the max-plus / tropical "trace")
+* `heckeMin f w = min_k f (w ++ [k])`  (the min-plus / tropical "trace")
+
+We call `f` a *tropical automorphic form of weight `λ`* when it is an eigenform
+of a Hecke operator, i.e. `hecke f w = f w + λ` for every vertex `w` (in the
+tropical semiring, `+λ` is multiplication by the scalar `λ`, so this is exactly
+the eigenvector equation `T f = λ ⊙ f`).
+
+## Main results
+
+* `applyWord_append` / `treeTriple_snoc` — the Berggren monoid action is a
+  cocycle: the automorphy factor is the word, acting by concatenation.
+* `treeTriple_good` — every tree vertex is a genuine positive Pythagorean triple
+  (the light-cone invariant of Core, propagated through the whole tree).
+* `depth_isMaxTropForm` / `depth_isMinTropForm` — the depth (word length) is an
+  *exact tropical harmonic eigenform of weight 1*: the cleanest automorphic form
+  on the tree.
+* `affine_isMaxTropForm` / `affine_isMinTropForm` — every affine-in-depth function
+  `m·|w| + c` is a tropical eigenform of weight `m`; these are the only ones that
+  are simultaneously max- and min-harmonic.
+* `heckeMax_treeHyp` — the max-plus Hecke operator on the hypotenuse form always
+  *selects the B-branch* (B is the most expanding generator).
+* `heckeMax_treeHyp_lower` / `heckeMax_treeHyp_upper` — the hypotenuse is a
+  tropical *quasi*-eigenform with eigenvalue pinned between `log 5` and `log 7`.
+* `treeHyp_strict_mono_step` — the hypotenuse form is strictly increasing down
+  every branch (a tropical form with no fixed points, echoing
+  `BerggrenLorentz.matB_no_eigenvalue_one`).
+* `treeHyp_upper` / `treeHyp_Bspine_lower` — two-sided exponential control,
+  giving `Θ(log c)` tree depth, the tropical/ultrametric "valuation depth".
+
+-- !-- Lab Notes -- !--
+HYPOTHESIS H1 (depth is the fundamental automorphic form). We conjectured the
+depth function is a tropical eigenform. CONFIRMED, and stronger than expected:
+because all three children share the same depth, depth is *harmonic* (same
+eigenvalue 1 for max and min). The whole one-parameter family `affine m c` is
+harmonic — see `affine_is*`.
+
+HYPOTHESIS H2 (hypotenuse is an exact eigenform). REFUTED. We initially expected
+`heckeMax treeHyp = treeHyp + λ` for a constant additive `λ` (i.e. constant
+multiplicative growth). FAILURE ANALYSIS: the seed child `childA (3,4,5)=(5,12,13)`
+has `13 < 3·5`, while the B-child `(21,20,29)` has `29 > 5·5`; the per-step
+multiplicative factor is genuinely *variable* in `(1,7]`. The honest statement is
+the quasi-eigenform sandwich `5·c < heckeMax treeHyp ≤ 7·c`, with the B-branch
+always realizing the max (`heckeMax_treeHyp`). So the hypotenuse is an eigenform
+only in the *interval* sense — a tropical Lyapunov spectrum, not a single
+eigenvalue.
+
+HYPOTHESIS H3 (uniform 3·c lower bound across all branches). REFUTED — the A and
+C branches can shrink the multiplicative factor below 3 (e.g. the `13/5` above).
+The correct uniform statement is strict growth `treeHyp w < treeHyp (w++[k])`;
+the `5·c` lower bound holds only after taking the Hecke max (which lands on B).
+-/
+
+set_option maxHeartbeats 1600000
+
+namespace TropicalBerggren
+
+open BerggrenLorentz
+
+/-! ## §1. The Berggren tree as a monoid action on words -/
+
+/-- One Berggren branching step applied to a triple, indexed by the branch
+    `A=0, B=1, C=2`. -/
+def step (t : ℤ × ℤ × ℤ) (k : Fin 3) : ℤ × ℤ × ℤ :=
+  if k = 0 then childA t.1 t.2.1 t.2.2
+  else if k = 1 then childB t.1 t.2.1 t.2.2
+  else childC t.1 t.2.1 t.2.2
+
+/-- The Berggren monoid action: follow the word `w` (a path from `t`),
+    branch by branch, reading left to right. -/
+def applyWord (t : ℤ × ℤ × ℤ) (w : List (Fin 3)) : ℤ × ℤ × ℤ :=
+  w.foldl step t
+
+/-- The root of the Berggren tree: the seed triple `(3,4,5)`. -/
+def seed : ℤ × ℤ × ℤ := (3, 4, 5)
+
+/-- The Pythagorean triple sitting at vertex `w` of the Berggren tree. -/
+def treeTriple (w : List (Fin 3)) : ℤ × ℤ × ℤ := applyWord seed w
+
+/-- The hypotenuse form: the tropical automorphic form sending a vertex to the
+    hypotenuse of its triple. -/
+def treeHyp (w : List (Fin 3)) : ℤ := (treeTriple w).2.2
+
+@[simp] theorem applyWord_nil (t : ℤ × ℤ × ℤ) : applyWord t [] = t := rfl
+
+theorem applyWord_cons (t : ℤ × ℤ × ℤ) (k : Fin 3) (w : List (Fin 3)) :
+    applyWord t (k :: w) = applyWord (step t k) w := rfl
+
+/-- **Cocycle / automorphy property.** The action of a concatenated word is the
+    composite action: the word is the automorphy factor and concatenation is the
+    group law. -/
+theorem applyWord_append (t : ℤ × ℤ × ℤ) (v w : List (Fin 3)) :
+    applyWord t (v ++ w) = applyWord (applyWord t v) w := by
+  unfold applyWord; rw [List.foldl_append]
+
+theorem applyWord_snoc (t : ℤ × ℤ × ℤ) (w : List (Fin 3)) (k : Fin 3) :
+    applyWord t (w ++ [k]) = step (applyWord t w) k := by
+  rw [applyWord_append]; rfl
+
+/-- The triple at a child vertex is one Berggren step from its parent. -/
+theorem treeTriple_snoc (w : List (Fin 3)) (k : Fin 3) :
+    treeTriple (w ++ [k]) = step (treeTriple w) k := by
+  unfold treeTriple; rw [applyWord_snoc]
+
+/-- Equivariance: the subtree rooted at `v` is the image of the whole tree under
+    the word `v`. -/
+theorem treeTriple_append (v w : List (Fin 3)) :
+    treeTriple (v ++ w) = applyWord (treeTriple v) w := by
+  unfold treeTriple; rw [applyWord_append]
+
+/-! ## §2. The light-cone invariant propagates through the whole tree -/
+
+/-- A triple is *good* if it is a Pythagorean triple with strictly positive legs
+    and hypotenuse: this is the invariant carved out by the Berggren branching. -/
+def Good (t : ℤ × ℤ × ℤ) : Prop :=
+  IsPythag t.1 t.2.1 t.2.2 ∧ 0 < t.1 ∧ 0 < t.2.1 ∧ 0 < t.2.2
+
+theorem good_seed : Good seed := by
+  unfold Good seed IsPythag; norm_num
+
+/-- A single Berggren step preserves the good invariant. -/
+theorem step_good {t : ℤ × ℤ × ℤ} (h : Good t) (k : Fin 3) : Good (step t k) := by
+  unfold Good at *;
+  fin_cases k <;> simp_all +decide [ IsPythag ];
+  · unfold step;
+    unfold childA; simp +decide ;
+    exact ⟨ by linarith, by nlinarith, by nlinarith, by nlinarith ⟩;
+  · unfold step; simp +decide [ childB ] ;
+    exact ⟨ by linarith, by linarith, by linarith, by linarith ⟩;
+  · simp_all +decide [ step, childC ];
+    exact ⟨ by linarith, by nlinarith, by nlinarith, by nlinarith ⟩
+
+/-- The good invariant is preserved by the whole monoid action. -/
+theorem applyWord_good {t : ℤ × ℤ × ℤ} (h : Good t) (w : List (Fin 3)) :
+    Good (applyWord t w) := by
+  induction w generalizing t with
+  | nil => simpa using h
+  | cons k rest ih => rw [applyWord_cons]; exact ih (step_good h k)
+
+/-- **Every Berggren-tree vertex is a positive Pythagorean triple.** -/
+theorem treeTriple_good (w : List (Fin 3)) : Good (treeTriple w) :=
+  applyWord_good good_seed w
+
+/-- Every tree vertex lies on the Lorentz light cone `Q = 0` (Core bridge). -/
+theorem treeTriple_on_cone (w : List (Fin 3)) :
+    lorentzQ (treeTriple w).1 (treeTriple w).2.1 (treeTriple w).2.2 = 0 := by
+  have h := (treeTriple_good w).1
+  rwa [lorentzQ_zero_iff_pythag]
+
+/-- Hypotenuses along the tree are strictly positive. -/
+theorem treeHyp_pos (w : List (Fin 3)) : 0 < treeHyp w :=
+  (treeTriple_good w).2.2.2
+
+/-! ## §3. Tropical Hecke operators and automorphic forms -/
+
+/-- The max-plus (tropical) Hecke operator: aggregate a vertex function over the
+    three children by taking the maximum. -/
+def heckeMax (f : List (Fin 3) → ℤ) (w : List (Fin 3)) : ℤ :=
+  max (f (w ++ [0])) (max (f (w ++ [1])) (f (w ++ [2])))
+
+/-- The min-plus (tropical) Hecke operator. -/
+def heckeMin (f : List (Fin 3) → ℤ) (w : List (Fin 3)) : ℤ :=
+  min (f (w ++ [0])) (min (f (w ++ [1])) (f (w ++ [2])))
+
+/-- `f` is a *max-tropical automorphic form of weight `λ`*: an eigenform of the
+    max-plus Hecke operator, `heckeMax f = f + λ`. -/
+def IsMaxTropForm (f : List (Fin 3) → ℤ) (lam : ℤ) : Prop :=
+  ∀ w, heckeMax f w = f w + lam
+
+/-- `f` is a *min-tropical automorphic form of weight `λ`*. -/
+def IsMinTropForm (f : List (Fin 3) → ℤ) (lam : ℤ) : Prop :=
+  ∀ w, heckeMin f w = f w + lam
+
+/-- The depth (word length) function — a vertex's distance from the root. -/
+def depth (w : List (Fin 3)) : ℤ := (w.length : ℤ)
+
+/-- A function affine in the depth, with slope `m` and intercept `c`. -/
+def affine (m c : ℤ) (w : List (Fin 3)) : ℤ := m * (w.length : ℤ) + c
+
+/-- **Depth is an exact tropical eigenform of weight 1** for the max operator. -/
+theorem depth_isMaxTropForm : IsMaxTropForm depth 1 := by
+  intro w
+  simp [heckeMax, depth, List.length_append]
+
+/-- **Depth is harmonic**: it is also a min-tropical eigenform of weight 1, with
+    the *same* eigenvalue. -/
+theorem depth_isMinTropForm : IsMinTropForm depth 1 := by
+  intro w
+  simp [heckeMin, depth, List.length_append]
+
+/-- **Every affine-in-depth function is a max-tropical eigenform of weight `m`.** -/
+theorem affine_isMaxTropForm (m c : ℤ) : IsMaxTropForm (affine m c) m := by
+  intro w; simp +decide [ heckeMax, affine ] ; ring
+
+/-- Every affine-in-depth function is also a min-tropical eigenform of weight `m`,
+    confirming the affine family is exactly tropically harmonic. -/
+theorem affine_isMinTropForm (m c : ℤ) : IsMinTropForm (affine m c) m := by
+  intro w; exact (by
+  unfold heckeMin affine; norm_num; ring;);
+
+/-! ## §4. The hypotenuse form: Hecke selects the B-branch -/
+
+/-
+**The max-plus Hecke operator on the hypotenuse always lands on the B-branch.**
+    Among the three children, the B-child has the largest hypotenuse (B is the
+    most expanding Berggren generator, `trace B = 5`).
+-/
+theorem heckeMax_treeHyp (w : List (Fin 3)) :
+    heckeMax treeHyp w = treeHyp (w ++ [1]) := by
+  -- By definition of `treeTriple`, we know that `treeTriple w = (a, b, c)` for some `a`, `b`, and `c`.
+  obtain ⟨a, b, c, h_triple⟩ : ∃ a b c, treeTriple w = (a, b, c) := by
+    exact ⟨ _, _, _, rfl ⟩;
+  -- By definition of `treeTriple`, we know that `treeTriple w = (a, b, c)` for some `a`, `b`, and `c`, and `a`, `b`, and `c` are positive.
+  have h_pos : 0 < a ∧ 0 < b ∧ 0 < c := by
+    have := treeTriple_good w;
+    unfold Good at this; aesop;
+  unfold heckeMax treeHyp;
+  simp +decide [ *, treeTriple_snoc, step ];
+  unfold childA childB childC; simp +decide ;
+  grind
+
+/-- The hypotenuse form strictly increases down every branch: it has no fixed
+    points (compare `BerggrenLorentz.matB_no_eigenvalue_one`). -/
+theorem treeHyp_strict_mono_step (w : List (Fin 3)) (k : Fin 3) :
+    treeHyp w < treeHyp (w ++ [k]) := by
+  fin_cases k <;> simp +decide [ treeHyp, treeTriple_snoc ];
+  · have := treeTriple_good w;
+    cases this ; simp_all +decide [ step ];
+    unfold childA; nlinarith [ ‹IsPythag _ _ _›.symm ] ;
+  · -- By definition of `step`, we have `step (treeTriple w) 1 = childB (treeTriple w)`.
+    simp [step, childB];
+    linarith [ treeTriple_good w |>.2.1, treeTriple_good w |>.2.2.1, treeTriple_good w |>.2.2.2 ];
+  · -- By definition of `step`, we have `step (treeTriple w) 2 = childC (treeTriple w).1 (treeTriple w).2.1 (treeTriple w).2.2`.
+    simp [step];
+    obtain ⟨h1, h2, h3⟩ := treeTriple_good w;
+    unfold childC; nlinarith [ h1.symm ] ;
+
+/-- Lower half of the quasi-eigenform sandwich: after the Hecke max the
+    multiplicative growth is `> 5` (the Pythagorean-strengthened B bound). -/
+theorem heckeMax_treeHyp_lower (w : List (Fin 3)) :
+    5 * treeHyp w < heckeMax treeHyp w := by
+  rw [ heckeMax_treeHyp ];
+  obtain ⟨a, b, c, h_pyth, h_pos⟩ : ∃ a b c : ℤ, IsPythag a b c ∧ 0 < a ∧ 0 < b ∧ 0 < c ∧ treeTriple w = (a, b, c) := by
+    exact ⟨ _, _, _, treeTriple_good w |>.1, treeTriple_good w |>.2.1, treeTriple_good w |>.2.2.1, treeTriple_good w |>.2.2.2, rfl ⟩;
+  unfold treeHyp; rw [ treeTriple_snoc ] ; simp +decide [ *, step ] ;
+  exact hypB_pythag_lower a b c h_pyth h_pos.1 h_pos.2.1 h_pos.2.2.1
+
+/-- Upper half of the quasi-eigenform sandwich: the growth never exceeds `7`. -/
+theorem heckeMax_treeHyp_upper (w : List (Fin 3)) :
+    heckeMax treeHyp w ≤ 7 * treeHyp w := by
+  rw [ heckeMax_treeHyp ];
+  unfold treeHyp;
+  rw [ treeTriple_snoc ];
+  apply_rules [ hypB_upper_bound ];
+  · exact treeTriple_good w |>.2.1;
+  · exact treeTriple_good w |>.2.2.1;
+  · exact pythag_hyp_ge_leg_a _ _ _ ( treeTriple_good w |>.1 ) ( treeTriple_good w |>.2.2.1 ) ( treeTriple_good w |>.2.2.2 );
+  · have := treeTriple_good w; exact pythag_hyp_ge_leg_b _ _ _ this.1 this.2.1 this.2.2.2;
+
+/-! ## §5. Two-sided exponential control: tropical valuation depth -/
+
+/-- Generic per-step upper bound from a good triple: any child hypotenuse is at
+    most `7×` the parent. -/
+theorem step_hyp_upper {t : ℤ × ℤ × ℤ} (h : Good t) (k : Fin 3) :
+    (step t k).2.2 ≤ 7 * t.2.2 := by
+  fin_cases k <;> simp +decide [ step ];
+  · exact by unfold childA; nlinarith [ sq_nonneg ( t.1 - t.2.1 ), sq_nonneg ( t.1 + t.2.1 ), h.1.symm, h.2.1, h.2.2.1, h.2.2.2 ] ;
+  · rcases h with ⟨ h₁, h₂, h₃, h₄ ⟩;
+    unfold childB; nlinarith [ sq_nonneg ( t.1 - t.2.2 ), sq_nonneg ( t.2.1 - t.2.2 ), h₁.symm ] ;
+  · obtain ⟨ ha, hb, hc ⟩ := h;
+    unfold childC; nlinarith [ ha.symm, sq_nonneg ( t.2.2 - t.1 ), sq_nonneg ( t.2.2 - t.2.1 ) ] ;
+
+/-- **Upper exponential bound.** The hypotenuse at depth `n` is at most `5·7ⁿ`,
+    so the tree depth to reach hypotenuse `c` is at least `log₇(c/5)` — the
+    `Θ(log c)` certified-enumeration depth, read tropically. -/
+theorem treeHyp_upper (w : List (Fin 3)) :
+    treeHyp w ≤ 5 * 7 ^ (w.length) := by
+  induction' w using List.reverseRecOn with w k ih;
+  · decide +revert;
+  · -- By definition of `treeHyp`, we have `treeHyp (w ++ [k]) = (step (treeTriple w) k).2.2`.
+    simp [treeHyp, treeTriple];
+    rw [ applyWord_append ];
+    -- Apply the step_hyp_upper lemma to the treeTriple w and k.
+    have h_step : (step (treeTriple w) k).2.2 ≤ 7 * (treeTriple w).2.2 := by
+      exact step_hyp_upper ( treeTriple_good w ) k;
+    convert h_step.trans ( mul_le_mul_of_nonneg_left ih ( by norm_num ) ) using 1 ; ring
+
+/-- **Lower exponential bound along the B-spine.** Following the B-branch `n`
+    times gives hypotenuse at least `5ⁿ⁺¹`: the tropical automorphic form grows
+    at least linearly in depth (slope `≥ log 5`) along the maximal branch. -/
+theorem treeHyp_Bspine_lower (n : ℕ) :
+    (5 : ℤ) ^ (n + 1) ≤ treeHyp (List.replicate n 1) := by
+  induction' n with n ih <;> simp_all +decide [ pow_succ' ];
+  -- By definition of `treeHyp`, we have:
+  have h_step : treeHyp (List.replicate (n + 1) 1) = (step (treeTriple (List.replicate n 1)) 1).2.2 := by
+    convert congr_arg ( fun x : ℤ × ℤ × ℤ => x.2.2 ) ( treeTriple_snoc ( List.replicate n 1 ) 1 ) using 1;
+    rw [ List.replicate_succ' ] ; rfl;
+  have h_step : (step (treeTriple (List.replicate n 1)) 1).2.2 > 5 * treeHyp (List.replicate n 1) := by
+    have := BerggrenLorentz.hypB_pythag_lower ( treeTriple ( List.replicate n 1 ) |>.1 ) ( treeTriple ( List.replicate n 1 ) |>.2.1 ) ( treeTriple ( List.replicate n 1 ) |>.2.2 ) ?_ ?_ ?_ ?_ <;> norm_num at *;
+    · convert this using 1;
+    · exact treeTriple_good _ |>.1;
+    · exact treeTriple_good _ |>.2.1;
+    · exact treeTriple_good _ |>.2.2.1;
+    · exact treeHyp_pos _;
+  linarith
+
+/-! ## §6. Weight is additive (tropical multiplicativity of automorphy factors) -/
+
+/-- The depth cocycle: weight along a concatenated path is additive. In the
+    tropical dictionary this is the multiplicativity `j(g₁g₂) = j(g₁)·j(g₂)` of
+    the automorphy factor. -/
+theorem depth_append (v w : List (Fin 3)) :
+    depth (v ++ w) = depth v + depth w := by
+  unfold depth; rw [List.length_append]; push_cast; ring
+
+end TropicalBerggren

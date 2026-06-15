@@ -1,0 +1,92 @@
+import Mathlib
+
+/-! # Tropical Convexity: General-Degree Tropical Polynomials over `ℝ`
+
+A general-degree tropical polynomial is a finite maximum of affine functions
+`x ↦ a i + i * x` for `i : Fin (n+1)`.  Equivalently it is a max-plus polynomial
+of degree `n`.
+
+This file records the basic structural facts:
+
+* `tropPoly_apply`     : pointwise expansion as a `Finset.sup'`.
+* `piece_le_tropPoly`  : each affine piece is bounded above by the polynomial.
+* `tropPoly_attained`  : the supremum is attained at some index.
+* `piece_mono`         : each piece is monotone (slope `i ≥ 0`).
+* `tropPolyFun_mono`   : the polynomial is monotone.
+* `piece_convexOn`     : each affine piece is convex on `ℝ`.
+* `tropPolyFun_convexOn`: the polynomial is convex on `ℝ`.
+-/
+
+namespace TropicalConvexity
+
+variable {n : ℕ}
+
+/-- The `i`-th affine piece of a tropical polynomial: `x ↦ a i + i * x`. -/
+def piece (a : Fin (n + 1) → ℝ) (i : Fin (n + 1)) : ℝ → ℝ :=
+  fun x => a i + (i : ℝ) * x
+
+/-- A general-degree tropical polynomial: the finite maximum over all indices of
+the affine pieces. -/
+noncomputable def tropPolyFun (a : Fin (n + 1) → ℝ) : ℝ → ℝ :=
+  fun x => Finset.univ.sup' Finset.univ_nonempty (fun i => piece a i x)
+
+/-
+Pointwise expansion of `tropPolyFun`.
+-/
+theorem tropPoly_apply (a : Fin (n + 1) → ℝ) (x : ℝ) :
+    tropPolyFun a x =
+      Finset.univ.sup' Finset.univ_nonempty (fun i => a i + (i : ℝ) * x) := by
+  rfl
+
+/-
+Each affine piece is bounded above by the tropical polynomial.
+-/
+theorem piece_le_tropPoly (a : Fin (n + 1) → ℝ) (i : Fin (n + 1)) (x : ℝ) :
+    piece a i x ≤ tropPolyFun a x := by
+  exact Finset.le_sup' ( fun i => piece a i x ) ( Finset.mem_univ i )
+
+/-
+The tropical polynomial attains its value at some index.
+-/
+theorem tropPoly_attained (a : Fin (n + 1) → ℝ) (x : ℝ) :
+    ∃ i : Fin (n + 1), tropPolyFun a x = piece a i x := by
+  obtain ⟨ i, hi ⟩ := Finset.exists_max_image Finset.univ ( fun i => piece a i x ) ( Finset.univ_nonempty );
+  exact ⟨ i, le_antisymm ( Finset.sup'_le _ _ fun j hj => hi.2 j hj ) ( piece_le_tropPoly a i x ) ⟩
+
+/-
+Each affine piece is monotone (its slope `i` is nonnegative).
+-/
+theorem piece_mono (a : Fin (n + 1) → ℝ) (i : Fin (n + 1)) :
+    Monotone (piece a i) := by
+  exact fun x y hxy => add_le_add_right ( mul_le_mul_of_nonneg_left hxy <| Nat.cast_nonneg _ ) _
+
+/-
+The tropical polynomial is monotone, as a finite supremum of monotone pieces.
+-/
+theorem tropPolyFun_mono (a : Fin (n + 1) → ℝ) :
+    Monotone (tropPolyFun a) := by
+  intros x y hxy;
+  convert Finset.sup'_mono_fun ( fun i _ => piece_mono a i hxy )
+
+/-
+Each affine piece is convex on `ℝ`.
+-/
+theorem piece_convexOn (a : Fin (n + 1) → ℝ) (i : Fin (n + 1)) :
+    ConvexOn ℝ Set.univ (piece a i) := by
+  convert ConvexOn.add ?_ ?_ using 1;
+  · infer_instance;
+  · exact convexOn_const _ ( convex_univ );
+  · exact ⟨ convex_univ, fun x _ y _ a b ha hb hab => by simpa using by nlinarith ⟩
+
+/-
+The tropical polynomial is convex on `ℝ`, as a finite supremum of convex pieces.
+-/
+theorem tropPolyFun_convexOn (a : Fin (n + 1) → ℝ) :
+    ConvexOn ℝ Set.univ (tropPolyFun a) := by
+  refine' ⟨ convex_univ, _ ⟩;
+  intro x _ y _ a b ha hb hab;
+  unfold tropPolyFun; simp_all +decide [ ← eq_sub_iff_add_eq' ] ;
+  intro i; exact (by
+  exact le_trans ( by unfold piece; nlinarith ) ( add_le_add ( mul_le_mul_of_nonneg_left ( Finset.le_sup' ( fun i => piece _ i x ) ( Finset.mem_univ i ) ) ha ) ( mul_le_mul_of_nonneg_left ( Finset.le_sup' ( fun i => piece _ i y ) ( Finset.mem_univ i ) ) ( sub_nonneg.mpr hb ) ) ))
+
+end TropicalConvexity

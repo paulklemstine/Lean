@@ -1,0 +1,337 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Rinf}{\overline{\R}_{\geq 0}}
+\newcommand{\trop}{\operatorname{trop}}
+\newcommand{\obj}{\mathrm{obj}}
+\newcommand{\Interleaved}{\mathrm{Interleaved}}
+\newcommand{\idist}{\mathrm{interleavingDist}}
+\newcommand{\RipsMod}{\mathrm{RipsMod}}
+\newcommand{\ofReal}{\mathrm{ofReal}}
+\newcommand{\sInf}{\operatorname{sInf}}
+\DeclareMathOperator{\Mono}{Monotone}
+
+\title{Categorical Tropicalization of Interleaving Distance \\ and Vietoris--Rips Stability}
+\author{Aristotle (Harmonic)}
+\date{2026-06-15}
+
+\begin{document}
+
+\begin{abstract}
+We develop, in a deliberately minimal order-theoretic setting, the algebraic and
+geometric core of persistence stability and exhibit its tropical (min-plus)
+nature. A \emph{persistence module} is modeled as a monotone map
+$M : \R \to \alpha$ into a preorder $\alpha$; an \emph{$\varepsilon$-interleaving}
+of two modules is a pair of $\varepsilon$-shifted dominations. We prove that
+interleavings form a reflexive, symmetric system that is monotone in the shift
+and, crucially, \emph{composable with additive shifts}: an
+$\varepsilon$-interleaving followed by a $\delta$-interleaving is an
+$(\varepsilon+\delta)$-interleaving. From this composition law we build the
+\emph{interleaving distance} $\idist$ valued in $\Rinf = [0,\infty]$ and prove it
+is an extended pseudometric. The triangle inequality is shown to be
+\emph{literally} a statement of tropical algebra: under the embedding
+$\trop : \Rinf \to \mathrm{Tropical}\,\Rinf$ (multiplication is ordinary
+addition, addition is infimum), it is exactly submultiplicativity,
+$\trop\,d(M,L) \leq \trop\,d(M,N) \cdot \trop\,d(N,L)$. Specializing to
+\emph{Vietoris--Rips modules} of a dissimilarity $d : X \to X \to \R$, modeled by
+edge sets $\{(x,y) : d\,x\,y \leq t\}$ in the lattice $\mathrm{Set}(X\times X)$,
+we prove \emph{stability}: sup-close dissimilarities yield interleaved modules,
+hence $\idist(\RipsMod d, \RipsMod d') \leq \ofReal\,\lVert d - d'\rVert_\infty$.
+All results are fully formally verified. We close with five falsifiable
+conjectures.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+Persistent homology summarizes a parametrized family of spaces---a
+\emph{filtration}---by tracking the birth and death of topological features
+across a scale parameter. Its practical utility rests on \emph{stability}: a
+small perturbation of the input produces a small change in the output summary.
+The standard quantitative formalization is the \emph{interleaving distance} of
+Chazal, Cohen-Steiner, Glisse, Guibas, and Oudot.
+
+This paper isolates the order-theoretic skeleton of stability and makes explicit
+a structural fact often left implicit: the interleaving distance is a
+\emph{tropical} object. Composition of interleavings \emph{adds shifts}, and
+ordinary addition is multiplication in the min-plus semiring; the optimal
+interleaving is an infimum, which is tropical addition. The triangle inequality
+is therefore submultiplicativity in a tropical semiring, after a faithful
+embedding.
+
+We achieve maximal simplicity, without loss of faithfulness, by valuing modules
+in an arbitrary \emph{preorder} $\alpha$: there at most one comparison exists
+between any two elements, so an interleaving's naturality squares commute
+automatically and an interleaving reduces to a pair of shifted inequalities.
+
+\section{Persistence modules and interleavings}
+
+Throughout, $\alpha$ is a preorder.
+
+\begin{definition}[Persistence module]
+A \emph{persistence module} valued in $\alpha$ consists of a function
+$M.\obj : \R \to \alpha$ together with a proof that it is monotone:
+$s \leq t \Rightarrow M.\obj\,s \leq M.\obj\,t$.
+\end{definition}
+
+\begin{definition}[$\varepsilon$-interleaving]
+For $\varepsilon \in \R$, modules $M, N$ are \emph{$\varepsilon$-interleaved},
+written $\Interleaved\,\varepsilon\,M\,N$, iff
+\[
+  \bigl(\forall t,\ M.\obj\,t \leq N.\obj\,(t+\varepsilon)\bigr)
+  \ \wedge\
+  \bigl(\forall t,\ N.\obj\,t \leq M.\obj\,(t+\varepsilon)\bigr).
+\]
+In a preorder the usual coherence (naturality) conditions of an interleaving
+hold automatically, so this pair of shifted dominations is a complete
+description.
+\end{definition}
+
+\begin{proposition}[Reflexivity, symmetry, weakening]\label{prop:basic}
+\quad
+\begin{enumerate}
+  \item $\Interleaved\,0\,M\,M$.
+  \item If $\Interleaved\,\varepsilon\,M\,N$ then $\Interleaved\,\varepsilon\,N\,M$.
+  \item If $\Interleaved\,\varepsilon\,M\,N$ and $\varepsilon \leq \delta$ then
+        $\Interleaved\,\delta\,M\,N$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(1) Both conjuncts read $M.\obj\,t \leq M.\obj\,(t+0)=M.\obj\,t$. (2) Swap the
+conjuncts. (3) $M.\obj\,t \leq N.\obj\,(t+\varepsilon) \leq N.\obj\,(t+\delta)$
+by monotonicity since $t+\varepsilon \leq t+\delta$; symmetrically for the
+second conjunct.
+\end{proof}
+
+\begin{theorem}[Composition / tropical multiplication of interleavings]\label{thm:comp}
+If $\Interleaved\,\varepsilon\,M\,N$ and $\Interleaved\,\delta\,N\,L$, then
+$\Interleaved\,(\varepsilon+\delta)\,M\,L$.
+\end{theorem}
+
+\begin{proof}
+For the forward domination,
+\[
+  M.\obj\,t \leq N.\obj\,(t+\varepsilon) \leq L.\obj\,((t+\varepsilon)+\delta)
+            = L.\obj\,(t+(\varepsilon+\delta)),
+\]
+using the two interleavings and associativity of $+$. The reverse domination is
+symmetric:
+$L.\obj\,t \leq N.\obj\,(t+\delta) \leq M.\obj\,(t+(\varepsilon+\delta))$.
+\end{proof}
+
+The decisive structural content is that the shift is \emph{additive} under
+composition.
+
+\section{The interleaving distance}
+
+Let $\Rinf = [0,\infty]$ denote the extended nonnegative reals.
+
+\begin{definition}
+The \emph{set of admissible shifts} and the \emph{interleaving distance} are
+\[
+  \mathrm{interleavingSet}\,M\,N :=
+  \{\, x \in \Rinf \mid \exists\,\varepsilon\geq 0,\
+       \Interleaved\,\varepsilon\,M\,N \wedge x = \ofReal\,\varepsilon \,\},
+\]
+\[
+  \idist\,M\,N := \sInf\,(\mathrm{interleavingSet}\,M\,N) \in \Rinf,
+\]
+with the convention $\sInf \emptyset = \top$.
+\end{definition}
+
+\begin{theorem}[Self-distance]
+$\idist\,M\,M = 0$.
+\end{theorem}
+\begin{proof}
+$0 = \ofReal\,0 \in \mathrm{interleavingSet}\,M\,M$ by reflexivity
+(Proposition~\ref{prop:basic}), so the infimum is $\leq 0$; it is $\geq 0$ in
+$\Rinf$.
+\end{proof}
+
+\begin{theorem}[Symmetry]
+$\idist\,M\,N = \idist\,N\,M$.
+\end{theorem}
+\begin{proof}
+$\Interleaved\,\varepsilon\,M\,N \Leftrightarrow \Interleaved\,\varepsilon\,N\,M$
+(Proposition~\ref{prop:basic}), so the two admissible-shift sets coincide.
+\end{proof}
+
+\begin{lemma}[Upper bound from a witness]\label{lem:witness}
+If $\varepsilon \geq 0$ and $\Interleaved\,\varepsilon\,M\,N$, then
+$\idist\,M\,N \leq \ofReal\,\varepsilon$.
+\end{lemma}
+\begin{proof}
+$\ofReal\,\varepsilon$ is a member of $\mathrm{interleavingSet}\,M\,N$, and an
+infimum lies below any member.
+\end{proof}
+
+\begin{theorem}[Triangle inequality]\label{thm:triangle}
+$\idist\,M\,L \leq \idist\,M\,N + \idist\,N\,L$.
+\end{theorem}
+\begin{proof}
+It suffices to show, for every admissible $x$ for $(M,N)$ and $y$ for $(N,L)$,
+that $\idist\,M\,L \leq x + y$; the result then follows from the $\Rinf$
+identities $\sInf A + \sInf B = \sInf\{x+y\}$. Writing $x=\ofReal\,\varepsilon$,
+$y=\ofReal\,\delta$ with $\varepsilon,\delta \geq 0$ and the corresponding
+interleavings, Theorem~\ref{thm:comp} gives
+$\Interleaved\,(\varepsilon+\delta)\,M\,L$, whence by Lemma~\ref{lem:witness}
+\[
+  \idist\,M\,L \leq \ofReal\,(\varepsilon+\delta)
+               = \ofReal\,\varepsilon + \ofReal\,\delta = x+y,
+\]
+using $\ofReal\,(\varepsilon+\delta)=\ofReal\,\varepsilon+\ofReal\,\delta$ for
+$\varepsilon,\delta\geq 0$.
+\end{proof}
+
+Thus $\idist$ is an extended pseudometric. Separation
+($\idist\,M\,N = 0 \Rightarrow M=N$) fails in general and is correctly not
+claimed (cf.\ Conjecture~\ref{conj:emetric}).
+
+\section{The tropical reformulation}
+
+The tropical (min-plus) semiring $\mathrm{Tropical}\,\Rinf$ has carrier $\Rinf$
+with tropical addition $a \oplus b = \min(a,b)$ (infimum for families), tropical
+multiplication $a \odot b = a + b$, tropical unit $0$, and tropical zero
+$\top$. Let $\trop : \Rinf \to \mathrm{Tropical}\,\Rinf$ be the canonical
+embedding.
+
+\begin{theorem}[Tropical submultiplicativity]
+\[
+  \trop(\idist\,M\,L) \leq \trop(\idist\,M\,N) \cdot \trop(\idist\,N\,L),
+\]
+where $\cdot$ is tropical multiplication.
+\end{theorem}
+\begin{proof}
+The right-hand side equals $\trop(\idist\,M\,N + \idist\,N\,L)$; since $\trop$ is
+order-preserving the statement unfolds to the ordinary triangle inequality
+(Theorem~\ref{thm:triangle}).
+\end{proof}
+
+Conceptually, $(M,N) \mapsto \trop(\idist\,M\,N)$ is a lax tropical enrichment:
+composition of interleavings is tropical multiplication, the self-distance
+$\trop\,0$ is the tropical unit, and the optimal interleaving is a tropical sum.
+The interleaving distance is a min-plus valuation on pairs of modules.
+
+\section{Vietoris--Rips modules and stability}
+
+We instantiate $\alpha = \mathrm{Set}(X \times X)$, ordered by inclusion.
+
+\begin{definition}[Vietoris--Rips module]
+For a dissimilarity $d : X \to X \to \R$ (no axioms required), the
+\emph{Vietoris--Rips module} is
+\[
+  \RipsMod\,d : \quad (\RipsMod\,d).\obj\,t := \{\, p \mid d\,p_1\,p_2 \leq t \,\}.
+\]
+Monotonicity holds since $s \leq t$ and $d\,p_1\,p_2 \leq s$ imply
+$d\,p_1\,p_2 \leq t$.
+\end{definition}
+
+\begin{theorem}[Rips stability]\label{thm:rips}
+If $\varepsilon \geq 0$ and $|d\,x\,y - d'\,x\,y| \leq \varepsilon$ for all
+$x,y$, then $\Interleaved\,\varepsilon\,(\RipsMod\,d)\,(\RipsMod\,d')$.
+\end{theorem}
+\begin{proof}
+Fix $t$ and $p=(x,y)$ with $d\,x\,y \leq t$. Then
+$d'\,x\,y \leq d\,x\,y + \varepsilon \leq t+\varepsilon$, so
+$p \in (\RipsMod\,d').\obj\,(t+\varepsilon)$. Hence
+$(\RipsMod\,d).\obj\,t \subseteq (\RipsMod\,d').\obj\,(t+\varepsilon)$;
+symmetrically for the reverse domination.
+\end{proof}
+
+\begin{corollary}[Distance bound]
+Under the hypotheses of Theorem~\ref{thm:rips},
+$\idist(\RipsMod\,d, \RipsMod\,d') \leq \ofReal\,\varepsilon$. Taking
+$\varepsilon = \lVert d-d'\rVert_\infty = \sup_{x,y}|d\,x\,y - d'\,x\,y|$ (when
+finite),
+\[
+  \idist(\RipsMod\,d, \RipsMod\,d') \leq \ofReal\,\lVert d-d'\rVert_\infty.
+\]
+\end{corollary}
+\begin{proof}
+Immediate from Theorem~\ref{thm:rips} and Lemma~\ref{lem:witness}.
+\end{proof}
+
+\section{Discussion}
+
+\subsection*{Faithfulness} Interleaving distance, the pseudometric axioms, and
+Rips stability are statements about existence of shifted dominations and the
+arithmetic of shifts; the preorder model captures exactly this layer, without the
+coherence bookkeeping that obscures the additive composition law in richer
+categories.
+
+\subsection*{Why tropical} Any quantity defined as a best-case combination over
+chains that compose additively is governed by min-plus algebra---the same reason
+shortest paths, Legendre transforms, and large-deviation rate functions are
+tropical. Interleaving distance is the persistence-theoretic member of that
+family.
+
+\subsection*{Separation} We do not assert $\idist\,M\,N=0 \Rightarrow M=N$; it
+is false in this generality. Restricting to left-continuous modules recovers
+separation (Conjecture~\ref{conj:emetric}).
+
+\section{Future directions}
+
+\begin{conjecture}[Isometry / sharpness]
+For finite $X$ and pseudometrics $d,d'$,
+$\idist(\RipsMod\,d,\RipsMod\,d') = \ofReal\,(\sup_{x,y}|d\,x\,y-d'\,x\,y|)$
+whenever finite. The $\geq$ direction follows by evaluating an
+$\varepsilon$-interleaving at $t = d\,x\,y$. Falsifier: a $3$-point strict gap.
+\end{conjecture}
+
+\begin{conjecture}[Genuine pseudo-emetric]\label{conj:emetric}
+The $\Rinf$-valued distance is a \texttt{PseudoEMetricSpace} on monotone
+filtrations, with $d(F,G)=0 \Leftrightarrow F=G$ on left-continuous filtrations.
+Falsifier: distinct left-continuous filtrations at distance $0$.
+\end{conjecture}
+
+\begin{conjecture}[Functoriality]
+A $1$-Lipschitz map $\varphi$ induces homomorphisms $\RipsMod\,d\,\varepsilon \to
+\RipsMod\,d'\,\varepsilon$, and the induced map on filtrations is $1$-Lipschitz
+for $\idist$. Falsifier: a Lipschitz map strictly increasing some interleaving
+distance.
+\end{conjecture}
+
+\begin{conjecture}[Single-linkage ultrametric]
+$d_{SL}(x,y) := \inf\{\varepsilon \mid x,y \text{ connected in }
+\RipsMod\,d\,\varepsilon\}$ is an ultrametric, with
+$\idist(\RipsMod\,d,\RipsMod\,d') \leq \lVert d_{SL}-d'_{SL}\rVert_\infty \leq
+\lVert d-d'\rVert_\infty$. Falsifier: a $4$-point violation of the strong
+triangle inequality.
+\end{conjecture}
+
+\begin{conjecture}[Connectivity-threshold stability]
+$\theta(d) := \inf\{\varepsilon \mid \RipsMod\,d\,\varepsilon \text{ connected}\}$
+is $1$-Lipschitz: $|\theta(d)-\theta(d')| \leq \lVert d-d'\rVert_\infty$.
+Falsifier: a perturbation moving $\theta$ by more than $\lVert d-d'\rVert_\infty$.
+\end{conjecture}
+
+\section{Conclusion}
+
+The additive composition law for interleavings (Theorem~\ref{thm:comp}) makes the
+interleaving distance an extended pseudometric and realizes it as a min-plus
+valuation in the tropical semiring. Specializing to Vietoris--Rips modules yields
+stability as a single metric estimate. The result is a clean, fully verified
+bridge between categorical persistence theory, tropical algebra, and the geometry
+of data.
+
+\end{document}

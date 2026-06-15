@@ -1,0 +1,84 @@
+import Catalog.Tropical.Core.TropicalConvexity
+
+/-! # Tropical Multiplicativity: evaluation as a max-plus homomorphism
+
+Tropical (max-plus) multiplication of polynomials should correspond to *pointwise addition*
+of their evaluations, because tropical multiplication of scalars **is** ordinary addition.
+This file proves that principle in its clean "product-index" form, building on the
+general-degree tropical polynomials of `TropicalConvexity`.
+
+## Main results
+
+* `sup'_add_sup'`        : `(sup' f) + (sup' g) = sup'_{(i,j)} (f i + g j)` over a product —
+                           the order-theoretic engine, valid for any nonempty finsets.
+* `tropPoly_mul_product` : **the homomorphism**, `p(x) + q(x) = max_{(i,j)} (aᵢ + bⱼ + (i+j)·x)`.
+                           The RHS is exactly the evaluation of the (max-plus convolution)
+                           product polynomial, written as a single max over monomial pairs.
+* `tropPoly_mul_ge`      : every cross term `aᵢ + bⱼ + (i+j)·x` is `≤ p(x) + q(x)`.
+
+-- !-- Lab Notes -- !--
+HYPOTHESIS.  `tropPolyFun a x + tropPolyFun b x` should equal a single tropical polynomial's
+evaluation, namely the max over all monomial pairs of the products.
+
+EXPERIMENTAL OUTCOME.  The whole result reduces to one purely order-theoretic identity:
+`(⨆ᵢ fᵢ) + (⨆ⱼ gⱼ) = ⨆_{(i,j)} (fᵢ + gⱼ)`.  We proved it (`sup'_add_sup'`) by antisymmetry:
+the `≥` direction adds two `Finset.le_sup'` bounds; the `≤` direction evaluates each `sup'` at
+its maximizer (`Finset.exists_mem_eq_sup'`) and lands inside the product via
+`Finset.mk_mem_product`.  Then `tropPoly_mul_product` follows by instantiating
+`f i = aᵢ + i·x`, `g j = bⱼ + j·x` and a `push_cast; ring` to regroup `(i·x) + (j·x)` into
+`(i+j)·x` over `univ ×ˢ univ = univ` (a definitional equality fed to `Finset.sup'_congr`).
+
+FAILURE ANALYSIS.  `rw [show univ ×ˢ univ = univ from rfl]` fails with "motive is not type
+correct" because the `Finset.sup'` nonemptiness proof depends on the set; routing the set
+equality through `Finset.sup'_congr`'s `h₁` argument sidesteps the dependent motive entirely.
+
+OPEN (see FUTURE_DIRECTIONS C1).  Regrouping the product-indexed max by total degree
+`k = i + j` to exhibit explicit convolution coefficients `cₖ = max_{i+j=k}(aᵢ + bⱼ)` (a
+`Fin (m+n+1) → ℝ` vector) needs a fiberwise `sup'` partition with per-`k` nonemptiness; left
+to a follow-up cycle.
+-/
+
+open Finset
+
+namespace TropicalConvexity
+
+variable {m n : ℕ}
+
+/-- Order-theoretic engine: the sum of two finite maxima equals the maximum, over the product
+index set, of the sums.  Valid for arbitrary nonempty finsets and `ℝ`-valued maps. -/
+theorem sup'_add_sup' {ι κ : Type*} (s : Finset ι) (t : Finset κ)
+    (hs : s.Nonempty) (ht : t.Nonempty) (f : ι → ℝ) (g : κ → ℝ) :
+    s.sup' hs f + t.sup' ht g = (s ×ˢ t).sup' (hs.product ht) (fun p => f p.1 + g p.2) := by
+  apply le_antisymm
+  · obtain ⟨i, hi, hfi⟩ := Finset.exists_mem_eq_sup' hs f
+    obtain ⟨j, hj, hgj⟩ := Finset.exists_mem_eq_sup' ht g
+    rw [hfi, hgj]
+    exact Finset.le_sup' (fun p => f p.1 + g p.2) (Finset.mk_mem_product hi hj)
+  · apply Finset.sup'_le
+    rintro ⟨i, j⟩ hp
+    rw [Finset.mem_product] at hp
+    exact add_le_add (Finset.le_sup' f hp.1) (Finset.le_sup' g hp.2)
+
+/-- **Tropical multiplicativity (product-index form).**  The pointwise sum of the evaluations
+of two tropical polynomials is the single max, over all monomial pairs `(i, j)`, of
+`aᵢ + bⱼ + (i + j)·x`.  This is the evaluation of the tropical (max-plus convolution) product
+polynomial, expressed without naming its coefficients. -/
+theorem tropPoly_mul_product (a : Fin (m + 1) → ℝ) (b : Fin (n + 1) → ℝ) (x : ℝ) :
+    tropPolyFun a x + tropPolyFun b x =
+      (Finset.univ : Finset (Fin (m + 1) × Fin (n + 1))).sup' Finset.univ_nonempty
+        (fun p => a p.1 + b p.2 + ((p.1.val + p.2.val : ℕ) : ℝ) * x) := by
+  rw [tropPoly_apply, tropPoly_apply]
+  rw [sup'_add_sup' Finset.univ Finset.univ Finset.univ_nonempty Finset.univ_nonempty
+        (fun i => a i + (i : ℝ) * x) (fun j => b j + (j : ℝ) * x)]
+  refine Finset.sup'_congr _ (by rfl) (fun p _ => ?_)
+  push_cast; ring
+
+/-- Each monomial cross term is bounded by the product evaluation. -/
+theorem tropPoly_mul_ge (a : Fin (m + 1) → ℝ) (b : Fin (n + 1) → ℝ) (x : ℝ)
+    (i : Fin (m + 1)) (j : Fin (n + 1)) :
+    a i + b j + ((i.val + j.val : ℕ) : ℝ) * x ≤ tropPolyFun a x + tropPolyFun b x := by
+  rw [tropPoly_mul_product]
+  exact Finset.le_sup' (fun p => a p.1 + b p.2 + ((p.1.val + p.2.val : ℕ) : ℝ) * x)
+    (Finset.mem_univ (i, j))
+
+end TropicalConvexity

@@ -1,0 +1,162 @@
+import Mathlib
+
+/-! # Dream Logic, Core: a tropical model of paraconsistent evidence
+
+This file develops the algebraic core of **Dream Logic**: a model of
+non-monotone reasoning in which contradictions are allowed to *coexist*
+without trivializing the theory ("ex contradictione quodlibet" fails).
+
+The carrier is built on the **tropical reals**.  A *dream value* records two
+independent tropical scores:
+
+* `x.1` — the accumulated **evidence-for** a proposition;
+* `x.2` — the accumulated **evidence-against** it.
+
+The key design choice is that these two coordinates are *independent*: there is
+no global negation collapsing them, so a proposition can simultaneously carry
+large evidence-for and large evidence-against.  That is the formal shadow of a
+dream, where mutually contradictory facts are held at once.
+
+Two orders live on `DreamVal`, exactly as in a Belnap–Ginsberg bilattice:
+
+* the **truth order** `tle` (more true / less false), with meet `tand` and join
+  `tor`;
+* the **knowledge order** `kle` (more total information), whose join `kjoin` is
+  the genuinely *tropical* operation: it merges evidence coordinatewise by `max`,
+  i.e. `kjoin = (max, max)`, the max-plus additive semilattice on each
+  coordinate.
+
+`tneg` is the De Morgan negation, swapping the two evidence coordinates.
+
+## Main results
+
+* `kjoin` is an idempotent, commutative, associative semilattice operation
+  (`kjoin_idem`, `kjoin_comm`, `kjoin_assoc`) — the tropical heart of the model.
+* `tneg` is an involution (`tneg_tneg`) commuting with `kjoin`
+  (`tneg_kjoin`) and turning `tand`/`tor` into each other
+  (De Morgan: `tneg_tand`, `tneg_tor`).
+* `tand`/`tor` form a distributive lattice on the truth order
+  (`tand_comm`, `tor_comm`, `tand_assoc`, `tor_assoc`, `tand_tor_absorb`,
+  `tand_distrib_tor`).
+* The two orders interact correctly: `kjoin` is monotone for the knowledge
+  order (`kle_kjoin_left`), the tropical signature of information growth.
+
+-- !-- Lab Notes -- !--
+Hypothesis (H1): the "evidence pair" carrier with coordinatewise `max` as the
+knowledge join is *literally* the square of the max-plus tropical semilattice,
+so all idempotent-semiring laws should transfer coordinatewise for free.
+Outcome: confirmed — every algebraic law below reduces to `max`/`min` lemmas
+applied in each coordinate.  This is what makes the model "tropical" rather
+than merely "lattice-theoretic": the information-merge operation IS tropical
+addition.
+Insight: keeping `tand = (min, max)` and `tor = (max, min)` (mixed coordinates)
+while `kjoin = (max, max)` (pure tropical) is exactly the bilattice split, and
+is the reason paraconsistency (next file) does not break the lattice laws.
+-/
+
+namespace Tropical.DreamLogic
+
+/-- A **dream value**: a pair of tropical real scores, the evidence *for* a
+proposition (`.1`) and the evidence *against* it (`.2`). -/
+abbrev DreamVal := ℝ × ℝ
+
+namespace DreamVal
+
+/-- Truth-order **conjunction**: needs both sides for, fails if either is against. -/
+def tand (x y : DreamVal) : DreamVal := (min x.1 y.1, max x.2 y.2)
+
+/-- Truth-order **disjunction**: succeeds if either side is for, needs both against. -/
+def tor (x y : DreamVal) : DreamVal := (max x.1 y.1, min x.2 y.2)
+
+/-- De Morgan **negation**: swaps evidence-for and evidence-against. -/
+def tneg (x : DreamVal) : DreamVal := (x.2, x.1)
+
+/-- **Knowledge join**: merge information by taking the tropical (`max`) of each
+coordinate.  This is the max-plus additive operation, the tropical core. -/
+def kjoin (x y : DreamVal) : DreamVal := (max x.1 y.1, max x.2 y.2)
+
+/-- The **truth order**: more true and less false. -/
+def tle (x y : DreamVal) : Prop := x.1 ≤ y.1 ∧ y.2 ≤ x.2
+
+/-- The **knowledge order**: at least as much evidence of each kind. -/
+def kle (x y : DreamVal) : Prop := x.1 ≤ y.1 ∧ x.2 ≤ y.2
+
+/-! ### Tropical knowledge semilattice -/
+
+theorem kjoin_idem (x : DreamVal) : kjoin x x = x := by
+  simp [kjoin]
+
+theorem kjoin_comm (x y : DreamVal) : kjoin x y = kjoin y x := by
+  simp [kjoin, max_comm]
+
+theorem kjoin_assoc (x y z : DreamVal) :
+    kjoin (kjoin x y) z = kjoin x (kjoin y z) := by
+  simp [kjoin, max_assoc]
+
+/-- Knowledge join is the least upper bound for the knowledge order on the left. -/
+theorem kle_kjoin_left (x y : DreamVal) : kle x (kjoin x y) := by
+  constructor <;> simp [kjoin]
+
+theorem kle_kjoin_right (x y : DreamVal) : kle y (kjoin x y) := by
+  constructor <;> simp [kjoin]
+
+theorem kle_refl (x : DreamVal) : kle x x := ⟨le_refl _, le_refl _⟩
+
+theorem kle_trans {x y z : DreamVal} (h1 : kle x y) (h2 : kle y z) : kle x z :=
+  ⟨le_trans h1.1 h2.1, le_trans h1.2 h2.2⟩
+
+/-! ### Negation -/
+
+theorem tneg_tneg (x : DreamVal) : tneg (tneg x) = x := by
+  simp [tneg]
+
+theorem tneg_kjoin (x y : DreamVal) : tneg (kjoin x y) = kjoin (tneg x) (tneg y) := by
+  simp [tneg, kjoin]
+
+/-- De Morgan law for conjunction. -/
+theorem tneg_tand (x y : DreamVal) : tneg (tand x y) = tor (tneg x) (tneg y) := by
+  simp [tneg, tand, tor]
+
+/-- De Morgan law for disjunction. -/
+theorem tneg_tor (x y : DreamVal) : tneg (tor x y) = tand (tneg x) (tneg y) := by
+  simp [tneg, tand, tor]
+
+/-! ### Truth distributive lattice -/
+
+theorem tand_comm (x y : DreamVal) : tand x y = tand y x := by
+  simp [tand, min_comm, max_comm]
+
+theorem tor_comm (x y : DreamVal) : tor x y = tor y x := by
+  simp [tor, min_comm, max_comm]
+
+theorem tand_assoc (x y z : DreamVal) : tand (tand x y) z = tand x (tand y z) := by
+  simp [tand, min_assoc, max_assoc]
+
+theorem tor_assoc (x y z : DreamVal) : tor (tor x y) z = tor x (tor y z) := by
+  simp [tor, min_assoc, max_assoc]
+
+theorem tand_idem (x : DreamVal) : tand x x = x := by
+  simp [tand]
+
+theorem tor_idem (x : DreamVal) : tor x x = x := by
+  simp [tor]
+
+/-- Absorption law: `x ∧ (x ∨ y) = x`. -/
+theorem tand_tor_absorb (x y : DreamVal) : tand x (tor x y) = x := by
+  simp [tand, tor]
+
+/-- Absorption law: `x ∨ (x ∧ y) = x`. -/
+theorem tor_tand_absorb (x y : DreamVal) : tor x (tand x y) = x := by
+  simp [tand, tor]
+
+/-- Distributivity of conjunction over disjunction. -/
+theorem tand_distrib_tor (x y z : DreamVal) :
+    tand x (tor y z) = tor (tand x y) (tand x z) := by
+  unfold tand tor
+  ext
+  · exact inf_sup_left x.1 y.1 z.1
+  · exact sup_inf_left x.2 y.2 z.2
+
+end DreamVal
+
+end Tropical.DreamLogic

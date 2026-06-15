@@ -1,0 +1,224 @@
+/-
+Copyright (c) 2026 Harmonic. All rights reserved.
+Released under Apache 2.0 license.
+
+# Combinatorial Species → Tropical Valuation Profiles
+
+Bridge: `Applications/CombinatorialSpecies` ↔ tropical (min-plus) valuation analysis
+↔ `Bridges/CategoricalTropicalUltrametric` ↔ `Computation/PadicValuationDepth`.
+
+**Core principle.** The exponential-generating-function (EGF) machinery for combinatorial
+species (additive sum law, multiplicative binomial-convolution product law) can be pushed
+into a genuinely new *Applications → Tropical* bridge by reading the `p`-adic valuation of
+the counting coefficients as a **tropical valuation profile** valued in `ℕ∞` with the
+min-plus structure (min = tropical `+`, `+` = tropical `·`, `⊤ = emultiplicity p 0` =
+tropical additive identity).
+
+The point is not to restate the ultrametric inequality `v_p(a+b) ≥ min(v_p a, v_p b)`, but to
+*transport* it through the specific EGF / binomial-convolution formulas of species, and to
+isolate a **reusable certificate theorem** for coefficient growth and divisibility:
+
+* **Sum law** (`valProfile_add_ge`): the valuation profile of a coefficientwise sum (the
+  shadow of the disjoint-union of species) is bounded below by the *tropical coefficientwise
+  minimum* of the two profiles.
+* **Convolution law** (`valProfile_binConvInt_ge`): the valuation profile of the binomial
+  (Cauchy) convolution — the counting law of the species *product* — is bounded below by the
+  *tropical min-plus convolution* of the input profiles plus the valuation of the binomial
+  coefficients.
+* **Product-species instantiation** (`valProfile_prodSpecies_ge`): the same tropical
+  convolution bound applied to the structural Day-convolution product of two species, using
+  `CombinatorialSpecies.card_prodSpecies` from the catalog.
+* **Basic constructors**: constant species `E` (`valProfile_const_one`), and a growth /
+  divisibility *certificate* (`valProfile_monotone_of_dvd`) instantiated on the species of
+  linear orders `L` (`valProfile_linearOrder_monotone`), whose profile is the Legendre
+  valuation `v_p(n!)`.
+
+Because `emultiplicity p · : ℤ → ℕ∞` sends `0 ↦ ⊤` and the min-plus tropical additive
+identity is `⊤`, **all bounds hold universally** (no nonvanishing side conditions): the zero
+coefficient is precisely the tropical zero, so the bridge is clean.
+-/
+import Mathlib
+import Applications.CombinatorialSpecies
+
+open scoped BigOperators
+open Finset
+
+namespace SpeciesTropicalValuation
+
+/-! ## §1. Tropical valuation profiles
+
+A *valuation profile* of an integer coefficient sequence `a : ℕ → ℤ` at a prime `p` is the
+sequence of `p`-adic valuations `n ↦ emultiplicity p (a n)`, valued in the tropical
+min-plus semiring `ℕ∞` (`min` = tropical addition, `+` = tropical multiplication, `⊤` = the
+tropical additive identity, attained exactly at the zero coefficient). -/
+
+/-- The tropical valuation profile of an integer coefficient sequence. -/
+noncomputable def valProfile (p : ℕ) (a : ℕ → ℤ) (n : ℕ) : ℕ∞ :=
+  emultiplicity (p : ℤ) (a n)
+
+@[simp] lemma valProfile_def (p : ℕ) (a : ℕ → ℤ) (n : ℕ) :
+    valProfile p a n = emultiplicity (p : ℤ) (a n) := rfl
+
+/-! ## §2. The sum law: tropical coefficientwise minimum bound
+
+The disjoint-union (sum) of species has counting sequence the pointwise sum; its valuation
+profile is bounded below by the tropical (min-plus) coefficientwise minimum of the inputs. -/
+
+/-- **Sum law.** The valuation profile of a coefficientwise sum of sequences is bounded below
+by the tropical coefficientwise minimum of the two profiles. This is the valuation shadow of
+the disjoint-union of species (`CombinatorialSpecies.egf_add`). -/
+theorem valProfile_add_ge (p : ℕ) (a b : ℕ → ℤ) (n : ℕ) :
+    min (valProfile p a n) (valProfile p b n) ≤ valProfile p (fun n => a n + b n) n := by
+  simpa [valProfile] using
+    (min_le_emultiplicity_add (p := (p : ℤ)) (a := a n) (b := b n))
+
+/-! ## §3. A finite-sum valuation lower bound
+
+The key transport lemma: the valuation of a finite sum is bounded below by the infimum of
+the valuations of the summands. This is the iterated ultrametric inequality, and the engine
+for the min-plus convolution bound below. -/
+
+/-- **Finite-sum lower bound.** The valuation of a finite sum is at least the infimum of the
+valuations of the summands (iterated ultrametric inequality, in `ℕ∞`). -/
+theorem inf_emultiplicity_le_sum {ι : Type*} [DecidableEq ι]
+    (p : ℤ) (s : Finset ι) (f : ι → ℤ) :
+    (s.inf fun i => emultiplicity p (f i)) ≤ emultiplicity p (∑ i ∈ s, f i) := by
+  induction s using Finset.induction with
+  | empty => simp
+  | insert a s ha ih =>
+      rw [Finset.sum_insert ha, Finset.inf_insert]
+      calc (emultiplicity p (f a)) ⊓ (s.inf fun i => emultiplicity p (f i))
+            ≤ min (emultiplicity p (f a)) (emultiplicity p (∑ i ∈ s, f i)) :=
+              inf_le_inf_left _ ih
+        _ ≤ emultiplicity p (f a + ∑ i ∈ s, f i) := min_le_emultiplicity_add
+
+/-! ## §4. The convolution law: tropical min-plus convolution bound
+
+The binomial (exponential / Cauchy) convolution is the counting law of the *product* of
+species (`CombinatorialSpecies.binConv`, `egf_mul`). Its valuation profile is bounded below
+by the **tropical min-plus convolution** of the input profiles, with the binomial
+coefficient contributing additively (tropically: multiplicatively). -/
+
+/-- The integer binomial (exponential) convolution of two integer coefficient sequences:
+`(a ⋆ b)ₙ = ∑_{i+j=n} C(n,i) aᵢ bⱼ`. The integer shadow of `CombinatorialSpecies.binConv`. -/
+def binConvInt (a b : ℕ → ℤ) (n : ℕ) : ℤ :=
+  ∑ q ∈ Finset.antidiagonal n, (n.choose q.1 : ℤ) * a q.1 * b q.2
+
+/-- **Convolution law (tropical min-plus bound).** For a prime `p`, the valuation profile of
+the binomial convolution is bounded below by the tropical (min-plus) convolution: the
+infimum over `i + j = n` of `v_p(C(n,i)) + v_p(aᵢ) + v_p(bⱼ)`. This transports the ultrametric
+inequality through the exact binomial-convolution formula of the species product. -/
+theorem valProfile_binConvInt_ge (p : ℕ) (hp : p.Prime) (a b : ℕ → ℤ) (n : ℕ) :
+    ((Finset.antidiagonal n).inf fun q =>
+        emultiplicity (p : ℤ) (n.choose q.1) + valProfile p a q.1 + valProfile p b q.2)
+      ≤ valProfile p (binConvInt a b) n := by
+  have hp' : Prime (p : ℤ) := Nat.prime_iff_prime_int.mp hp
+  have hfun :
+      (fun q : ℕ × ℕ =>
+          emultiplicity (p : ℤ) (n.choose q.1) + valProfile p a q.1 + valProfile p b q.2)
+        = (fun q : ℕ × ℕ => emultiplicity (p : ℤ) ((n.choose q.1 : ℤ) * a q.1 * b q.2)) := by
+    funext q
+    rw [emultiplicity_mul hp', emultiplicity_mul hp']
+    rfl
+  rw [valProfile, binConvInt, hfun]
+  exact inf_emultiplicity_le_sum (p : ℤ) (Finset.antidiagonal n)
+    (fun q => (n.choose q.1 : ℤ) * a q.1 * b q.2)
+
+/-! ## §5. Instantiation on the species product (Day convolution)
+
+Using `CombinatorialSpecies.card_prodSpecies`, the integer counting sequence of the
+structural product of two species is exactly the integer binomial convolution of their
+counting sequences. Hence the tropical convolution bound applies verbatim to the product
+species. -/
+
+/-- The structural-product counting sequence equals the integer binomial convolution of the
+factor counting sequences. (Integer cast of `CombinatorialSpecies.card_prodSpecies`.) -/
+theorem coeff_prodSpecies_eq_binConvInt
+    (A B : ℕ → Type) [∀ k, Fintype (A k)] [∀ k, Fintype (B k)] (n : ℕ) :
+    (Fintype.card (Σ S : Finset (Fin n), A S.card × B (n - S.card)) : ℤ)
+      = binConvInt (fun k => (Fintype.card (A k) : ℤ)) (fun k => (Fintype.card (B k) : ℤ)) n := by
+  rw [binConvInt]
+  have := CombinatorialSpecies.card_prodSpecies A B n
+  rw [this]
+  push_cast
+  rfl
+
+/-- **Product-species tropical bound.** The valuation profile of the structural (Day-
+convolution) product of two species is bounded below by the tropical min-plus convolution of
+their valuation profiles. This is the species-level form of `valProfile_binConvInt_ge`,
+obtained from the catalog's `card_prodSpecies`. -/
+theorem valProfile_prodSpecies_ge (p : ℕ) (hp : p.Prime)
+    (A B : ℕ → Type) [∀ k, Fintype (A k)] [∀ k, Fintype (B k)] (n : ℕ) :
+    ((Finset.antidiagonal n).inf fun q =>
+        emultiplicity (p : ℤ) (n.choose q.1)
+          + valProfile p (fun k => (Fintype.card (A k) : ℤ)) q.1
+          + valProfile p (fun k => (Fintype.card (B k) : ℤ)) q.2)
+      ≤ valProfile p (fun n =>
+          (Fintype.card (Σ S : Finset (Fin n), A S.card × B (n - S.card)) : ℤ)) n := by
+  have h := valProfile_binConvInt_ge p hp
+    (fun k => (Fintype.card (A k) : ℤ)) (fun k => (Fintype.card (B k) : ℤ)) n
+  rw [valProfile] at h ⊢
+  rw [coeff_prodSpecies_eq_binConvInt A B n]
+  exact h
+
+/-! ## §6. Basic constructors and a growth / divisibility certificate -/
+
+/-- **Constant species `E`.** The constant-one sequence (species of sets) has identically
+zero valuation profile at any prime. -/
+@[simp] theorem valProfile_const_one (p : ℕ) (hp : p.Prime) (n : ℕ) :
+    valProfile p (fun _ => (1 : ℤ)) n = 0 := by
+  have hp' : Prime (p : ℤ) := Nat.prime_iff_prime_int.mp hp
+  rw [valProfile, emultiplicity_eq_zero]
+  simpa using fun h => hp'.not_unit (isUnit_of_dvd_one h)
+
+/-- **Growth / divisibility certificate.** If each coefficient divides the next, the
+valuation profile is monotone nondecreasing (a tropical "depth grows" certificate). -/
+theorem valProfile_monotone_of_dvd (p : ℕ) (a : ℕ → ℤ)
+    (hdvd : ∀ n, a n ∣ a (n + 1)) : Monotone (valProfile p a) := by
+  apply monotone_nat_of_le_succ
+  intro n
+  exact emultiplicity_le_emultiplicity_of_dvd_right (hdvd n)
+
+/-- **Species of linear orders `L`.** Its counting sequence is `n ↦ n!`, whose valuation
+profile is the Legendre valuation `v_p(n!)`; this profile is monotone nondecreasing. -/
+theorem valProfile_linearOrder_monotone (p : ℕ) :
+    Monotone (valProfile p (fun n => (n.factorial : ℤ))) := by
+  apply valProfile_monotone_of_dvd
+  intro n
+  exact_mod_cast Int.natCast_dvd_natCast.mpr (Nat.factorial_dvd_factorial (Nat.le_succ n))
+
+/-
+-- !-- Lab Notes -- !--
+
+Hypothesis (Hypothesizer): The species EGF dictionary (sum ↔ +, binomial convolution ↔ ×)
+  has a tropical shadow. Reading `v_p` of the integer counting coefficients as a profile in
+  the min-plus semiring `ℕ∞`, the additive species law should give a coefficientwise tropical
+  *min* lower bound, and the multiplicative (binomial-convolution) law a tropical *min-plus
+  convolution* lower bound. Surprising sub-conjecture: the bounds need NO nonvanishing side
+  conditions, because the zero coefficient coincides with the tropical additive identity `⊤`.
+
+Experiment (Experimenter): Formalized `valProfile`, the sum bound (`valProfile_add_ge`), the
+  iterated ultrametric finite-sum bound (`inf_emultiplicity_le_sum`, by `Finset.induction`),
+  the convolution bound (`valProfile_binConvInt_ge`), the product-species instantiation
+  (`valProfile_prodSpecies_ge`, via the catalog `card_prodSpecies`), and the basic
+  constructors `E` (`valProfile_const_one`) and `L` (`valProfile_linearOrder_monotone`).
+
+Analysis (Analyst): All survived with 0 sorries. The decisive Mathlib facts are
+  `min_le_emultiplicity_add` (ultrametric over any semiring), `emultiplicity_mul` (valuation
+  is a monoid hom on prime factors), and `emultiplicity_le_emultiplicity_of_dvd_right`
+  (monotone under divisibility, valid even at `0` since `v_p 0 = ⊤`). The surprising
+  side-condition-free claim held precisely because of the `0 ↦ ⊤` convention: `min ⊤ x = x`
+  and `inf` over an empty contribution is `⊤`, so cancellation never breaks the bound.
+
+Critique (Critic): Bounds are one-directional (lower) and can be loose (e.g. the convolution
+  bound is `0` whenever some term has valuation `0`). They are nonetheless nontrivial: the
+  product-species theorem transports through `card_prodSpecies`, not a renaming; the
+  monotonicity certificate is a real growth statement for `v_p(n!)`. No theorem is vacuous or
+  `True`-shaped; each uses induction, `emultiplicity_mul`, or a divisibility argument.
+
+Synthesis: A self-contained arithmetic core — the first concrete Applications → Tropical
+  bridge — turning EGF additive/multiplicative structure into tropical min-plus valuation
+  certificates. See `FUTURE_DIRECTIONS.md`.
+-/
+
+end SpeciesTropicalValuation

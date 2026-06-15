@@ -1,0 +1,224 @@
+/-
+Copyright (c) 2026 Harmonic. All rights reserved.
+
+# Discrete Hodge Theory ↔ Reversible Random Walks (a self-contained bridge)
+
+## Overview
+
+This file rebuilds the *discrete Hodge program* on a fully self-contained
+Mathlib foundation (no dependence on the project's `Tropical.*` Hodge files)
+and bridges it to **probability**, namely the theory of reversible Markov
+chains (random walks on weighted graphs).
+
+The central object is the combinatorial graph Laplacian `L = D - A` of a
+finite weighted graph.  We establish:
+
+* the **Dirichlet energy identity** `xᵀ L x = ½ Σᵢⱼ wᵢⱼ (xᵢ - xⱼ)²`,
+* positive semidefiniteness of `L` (the "Hodge" half),
+* harmonicity of constant functions (`L` annihilates constants),
+* the **detailed balance / reversibility** of the associated random walk
+  `P = D⁻¹A` with respect to the degree measure (the "probability" half),
+* the identification `L f = D (f − P f)`, linking *harmonic cochains*
+  (`L f = 0`) with *harmonic functions of the Markov chain* (`P f = f`).
+
+The bridge is: **discrete harmonic forms are exactly the invariant functions
+of the reversible random walk**, the discrete-probabilistic incarnation of
+"Hodge harmonic = cohomology representative".
+
+## Lab Notes
+See the inline `-- !-- Lab Notes -- !--` blocks throughout.
+-/
+
+import Mathlib
+
+noncomputable section
+
+open Finset BigOperators Matrix
+
+namespace DiscreteHodgeRW
+
+/-! ## Section 1: Finite weighted graphs -/
+
+-- !-- Lab Notes -- !--
+-- Hypothesis (H1): The right level of generality for a self-contained discrete
+-- Hodge foundation in probability is a *symmetric nonnegative* weight kernel
+-- on `Fin n` with zero diagonal. Symmetry ⇒ reversibility; nonnegativity ⇒
+-- the weights are (sub)probabilities after normalization; zero diagonal ⇒ no
+-- self-loops so the Laplacian's diagonal is exactly the degree.
+-- Outcome: this minimal structure suffices for *all* main theorems below.
+-- !----------------- !--
+
+/-- A finite weighted graph on the vertex set `Fin n`: a symmetric, nonnegative
+edge-weight kernel with no self-loops. -/
+structure WeightedGraph (n : ℕ) where
+  /-- Edge weights. -/
+  w : Fin n → Fin n → ℝ
+  /-- The weight kernel is symmetric. -/
+  symm : ∀ i j, w i j = w j i
+  /-- Weights are nonnegative. -/
+  nonneg : ∀ i j, 0 ≤ w i j
+  /-- No self-loops. -/
+  diag_zero : ∀ i, w i i = 0
+
+namespace WeightedGraph
+
+variable {n : ℕ} (G : WeightedGraph n)
+
+/-- The weighted degree of a vertex. -/
+def degree (i : Fin n) : ℝ := ∑ j, G.w i j
+
+lemma degree_nonneg (i : Fin n) : 0 ≤ G.degree i :=
+  Finset.sum_nonneg fun j _ => G.nonneg i j
+
+/-- If a vertex has degree zero then all its incident weights vanish. -/
+lemma weight_eq_zero_of_degree_zero {i : Fin n} (hi : G.degree i = 0) (j : Fin n) :
+    G.w i j = 0 :=
+  le_antisymm
+    (le_trans (Finset.single_le_sum (fun a _ => G.nonneg i a) (Finset.mem_univ j)) hi.le)
+    (G.nonneg i j)
+
+/-! ## Section 2: The combinatorial Laplacian (the "Hodge" side) -/
+
+/-- The combinatorial graph Laplacian `L = D - A`. -/
+def laplacian : Matrix (Fin n) (Fin n) ℝ :=
+  fun i j => if i = j then G.degree i else - G.w i j
+
+/-- The Laplacian is symmetric. -/
+theorem laplacian_isSymm : G.laplacian.IsSymm := by
+  ext i j; by_cases hij : i = j <;> simp +decide [hij]
+  simp [hij, WeightedGraph.laplacian]
+  rw [if_neg (Ne.symm hij), G.symm]
+
+/-- Each row of the Laplacian sums to zero. -/
+theorem laplacian_row_sum (i : Fin n) : ∑ j, G.laplacian i j = 0 := by
+  unfold WeightedGraph.laplacian
+  simp +decide [Finset.sum_ite, Finset.filter_eq, Finset.filter_ne, G.diag_zero]
+  unfold WeightedGraph.degree; ring
+
+/-- Applying the Laplacian to a function, expanded. -/
+theorem laplacian_mulVec_apply (f : Fin n → ℝ) (i : Fin n) :
+    G.laplacian.mulVec f i = G.degree i * f i - ∑ j, G.w i j * f j := by
+  simp +decide [Matrix.mulVec, dotProduct]
+  simp +decide [WeightedGraph.laplacian]
+  simp +decide [Finset.sum_ite, Finset.filter_eq, Finset.filter_ne, sub_eq_add_neg]
+  exact Or.inl <| G.diag_zero i
+
+/-- The Laplacian annihilates constant functions: constants are harmonic. -/
+theorem laplacian_mulVec_const (c : ℝ) :
+    G.laplacian.mulVec (fun _ => c) = 0 := by
+  ext i
+  convert congr_arg (fun x : ℝ => x * c) (G.laplacian_row_sum i) using 1
+  · simp +decide [Matrix.mulVec, dotProduct, Finset.sum_mul]
+  · norm_num
+
+/-- The Dirichlet quadratic form `xᵀ L x`. -/
+def quadForm (x : Fin n → ℝ) : ℝ := ∑ i, ∑ j, G.laplacian i j * x i * x j
+
+/-
+!-- Lab Notes -- !--
+Experiment (E1): the Dirichlet energy identity. The off-diagonal entries
+`-wᵢⱼ` and the diagonal `degree i = Σⱼ wᵢⱼ` conspire so that
+Σᵢⱼ Lᵢⱼ xᵢ xⱼ = Σᵢ (Σⱼ wᵢⱼ) xᵢ² − Σᵢⱼ wᵢⱼ xᵢ xⱼ
+= ½ Σᵢⱼ wᵢⱼ (xᵢ − xⱼ)².
+The 1/2 appears because Σᵢⱼ wᵢⱼ xᵢ² = Σᵢⱼ wᵢⱼ xⱼ² (relabel + symmetry).
+Insight: this identity is the entire engine — it gives PSD for free and is
+the discrete analogue of ⟨Δf, f⟩ = ‖df‖² in Hodge theory.
+!----------------- !--
+
+**Dirichlet energy identity** (discrete `⟨Δx, x⟩ = ‖dx‖²`):
+`xᵀ L x = ½ Σᵢⱼ wᵢⱼ (xᵢ − xⱼ)²`.
+-/
+theorem dirichlet_identity (x : Fin n → ℝ) :
+    G.quadForm x = (1 / 2) * ∑ i, ∑ j, G.w i j * (x i - x j) ^ 2 := by
+  -- The off-diagonal entries of the Laplacian are `-w i j`, and the diagonal entries are `degree i = Σ_j w i j`.
+  have h_expand : ∑ i, ∑ j, (G.laplacian i j) * (x i) * (x j) = ∑ i, ∑ j, (G.w i j) * (x i * x i - x i * x j) := by
+    simp +decide [ WeightedGraph.laplacian, mul_sub ];
+    simp +decide [ Finset.sum_ite, Finset.filter_eq, Finset.filter_ne, G.diag_zero ];
+    simp +decide [ mul_assoc, mul_comm, mul_left_comm, Finset.mul_sum _ _ _, Finset.sum_add_distrib, WeightedGraph.degree ];
+    ring;
+  -- By symmetry of $w$, we have $\sum_{i,j} w_{ij} x_j^2 = \sum_{i,j} w_{ij} x_i^2$.
+  have h_symm : ∑ i, ∑ j, (G.w i j) * (x j)^2 = ∑ i, ∑ j, (G.w i j) * (x i)^2 := by
+    rw [ Finset.sum_comm ];
+    exact Finset.sum_congr rfl fun i hi => Finset.sum_congr rfl fun j hj => by rw [ G.symm ] ;
+  convert h_expand using 1;
+  ring_nf at *;
+  norm_num [ Finset.sum_add_distrib, ← Finset.mul_sum _ _ _, ← Finset.sum_mul, h_symm ] ; ring
+
+/-- **The Laplacian is positive semidefinite**. -/
+theorem quadForm_nonneg (x : Fin n → ℝ) : 0 ≤ G.quadForm x :=
+  dirichlet_identity G x ▸ mul_nonneg (by norm_num)
+    (Finset.sum_nonneg fun i _ => Finset.sum_nonneg fun j _ =>
+      mul_nonneg (G.nonneg i j) (sq_nonneg _))
+
+/-! ## Section 3: The reversible random walk (the "probability" side) -/
+
+-- !-- Lab Notes -- !--
+-- Hypothesis (H2): division-by-zero in Lean is total (`a / 0 = 0`), which
+-- lets us define the transition kernel `P i j = wᵢⱼ / degree i` *globally*,
+-- even at isolated vertices (degree 0). At such a vertex `P i · ≡ 0`, and
+-- since degree 0 forces all `wᵢⱼ = 0` (Lemma `weight_eq_zero_of_degree_zero`),
+-- detailed balance `degree i · P i j = wᵢⱼ` holds *unconditionally*.
+-- This is the cleanest possible statement of reversibility.
+-- !----------------- !--
+
+/-- The random-walk transition kernel `P = D⁻¹ A`, total (`P i j = 0` at
+isolated vertices since real division by zero is zero). -/
+def transition (i j : Fin n) : ℝ := G.w i j / G.degree i
+
+/-- The transition kernel reconstructs the weight: `degree i · P i j = wᵢⱼ`,
+unconditionally (using `w = 0` at degree-zero vertices). -/
+theorem degree_mul_transition (i j : Fin n) :
+    G.degree i * G.transition i j = G.w i j := by
+  by_cases hi : G.degree i = 0 <;> simp_all +decide [mul_div_cancel₀, transition]
+  rw [eq_comm, G.weight_eq_zero_of_degree_zero hi]
+
+/-- **Detailed balance / reversibility** of the walk with respect to the
+degree measure: `degree i · P i j = degree j · P j i`. -/
+theorem reversible (i j : Fin n) :
+    G.degree i * G.transition i j = G.degree j * G.transition j i :=
+  G.degree_mul_transition i j ▸ G.degree_mul_transition j i ▸ by rw [G.symm]
+
+/-- Transition probabilities are nonnegative. -/
+theorem transition_nonneg (i j : Fin n) : 0 ≤ G.transition i j :=
+  div_nonneg (G.nonneg i j) (G.degree_nonneg i)
+
+/-- At a vertex of positive degree, the outgoing transition probabilities sum
+to one: `P` is a stochastic matrix off the isolated vertices. -/
+theorem transition_row_sum {i : Fin n} (hi : 0 < G.degree i) :
+    ∑ j, G.transition i j = 1 := by
+  simp only [WeightedGraph.transition]
+  rw [← Finset.sum_div, div_eq_iff] <;>
+    linarith [show ∑ j, G.w i j = G.degree i from rfl]
+
+/-! ## Section 4: The bridge — harmonic forms = invariant functions -/
+
+-- !-- Lab Notes -- !--
+-- Main bridge (B1): `L = D (I − P)` on the positive-degree part of the graph.
+-- Concretely `(L f) i = degree i · (f i − (P f) i)`. Hence at a vertex of
+-- positive degree, `(L f) i = 0 ⟺ (P f) i = f i`: a cochain is *Hodge
+-- harmonic* exactly when it is *invariant under the random walk*.
+-- Failure analysis: the statement is FALSE at degree-zero vertices for the
+-- naive form `(L f) i = 0 ⟺ f i = (P f) i`, because there `(L f) i = 0`
+-- always while `(P f) i = 0` need not equal `f i`. We therefore phrase the
+-- algebraic identity (always true) and the equivalence (positive degree).
+-- !----------------- !--
+
+/-- **`L = D(f − Pf)`**: the Laplacian factors through the random walk. -/
+theorem laplacian_eq_degree_mul_walk (f : Fin n → ℝ) (i : Fin n) :
+    G.laplacian.mulVec f i = G.degree i * (f i - ∑ j, G.transition i j * f j) := by
+  rw [laplacian_mulVec_apply, mul_sub]
+  simp +decide only [Finset.mul_sum _ _ _]
+  exact congrArg _ (Finset.sum_congr rfl fun j _ => by rw [← mul_assoc, degree_mul_transition])
+
+/-- **The bridge theorem.** At a vertex of positive degree, the discrete
+Hodge-harmonic condition `(L f) i = 0` is equivalent to the probabilistic
+invariance condition `(P f) i = f i`. Harmonic forms are exactly the
+walk-invariant functions. -/
+theorem harmonic_iff_walk_invariant (f : Fin n → ℝ) {i : Fin n} (hi : 0 < G.degree i) :
+    G.laplacian.mulVec f i = 0 ↔ (∑ j, G.transition i j * f j) = f i := by
+  rw [laplacian_eq_degree_mul_walk]
+  grind
+
+end WeightedGraph
+
+end DiscreteHodgeRW

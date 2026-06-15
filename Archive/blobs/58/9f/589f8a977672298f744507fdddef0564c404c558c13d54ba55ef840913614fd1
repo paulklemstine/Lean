@@ -1,0 +1,243 @@
+import Mathlib
+import Algebra.BerggrenLorentz.Core
+
+/-!
+# Functorial Tropical Certificate for the Berggren–Lorentz Monoid
+
+This file develops a **functorial tropical growth certificate** for the action of the
+Berggren monoid on (positive) Pythagorean triples, building on the core theory in
+`Algebra.BerggrenLorentz.Core`.
+
+## The idea
+
+The Berggren monoid is the free monoid on three generators `A, B, C` (encoded as
+`Fin 3` letters), acting on `ℤ × ℤ × ℤ` by the child maps `childA, childB, childC`.
+A *word* `w : List (Fin 3)` acts by iterated application (`applyWord`).
+
+Empirically (see Lab Notes below), the three generators have **wildly different
+growth behaviour** on the hypotenuse `c`:
+
+* `B` always *triples* the hypotenuse:  `c ↦ ≥ 3·c`  (exponential).
+* `A` and `C` are only *non-contracting*: `c ↦ ≥ c`   (in fact polynomial along a pure
+  `A`-branch: `5, 13, 25, 41, 61, …` ~ quadratic).
+
+The decisive invariant is therefore the **`B`-count** of a word.  We package this as a
+genuine **tropical (min-plus) homomorphism**
+
+  `tropCert : (List (Fin 3), ++, []) → (Tropical (WithTop ℕ), *, 1)`
+
+into the multiplicative monoid of the tropical semiring, where tropical multiplication
+is ordinary `+` of exponents.  Functoriality (`tropCert_append`) is exactly the
+statement that the certificate of a concatenation is the tropical *product* of the
+certificates — i.e. the certificate is a monoid functor.  The certificate's underlying
+value equals the `B`-count (`tropCert_untrop`), and it controls the hypotenuse growth:
+
+  `3 ^ (Bcount w) · c ≤ hyp (applyWord w (a,b,c))`   (`applyWord_hyp_growth`)
+
+for every positive Pythagorean seed `(a,b,c)`.  This is the *certificate*: from the
+purely combinatorial datum `tropCert w` one reads off a provable exponential lower
+bound on the geometric growth of the orbit.
+
+## Bridge (Domain: MachineLearning)
+A word `w` is a composition of fixed linear maps; the tropical certificate is a
+log-domain Lipschitz/expansion certificate. `3 ^ (Bcount w)` is a certified lower bound
+on the expansion factor of the composed map along the light cone, computed *functorially*
+from the word — the discrete analogue of accumulating per-layer Lipschitz constants in
+the (max,+) / log domain to certify a network's behaviour.
+
+-- !-- Lab Notes -- !--
+HYPOTHESIS 1 (growth dichotomy): Each generator either triples or merely preserves the
+  hypotenuse on positive Pythagorean triples. EXPERIMENT (`#eval` on the Berggren tree):
+  pure A-branch from (3,4,5): c = 5,13,25,41,61 (2nd differences constant = 8 ⇒ quadratic,
+  NOT exponential). B-branch: 5,29,169,985 (ratio → 3+2√2 ≈ 5.83, ≥3 each step). C-branch
+  behaves like A. OUTCOME: confirmed — only B is exponentially expanding.
+HYPOTHESIS 2 (telescoping): since A,C are non-contracting (factor ≥ 1) and B triples
+  (factor ≥ 3), the worst-case orbit growth of any word telescopes to 3 ^ (#B). The order
+  of letters is irrelevant to the LOWER bound. OUTCOME: proved (`applyWord_hyp_growth`).
+HYPOTHESIS 3 (functoriality): the worst-case exponent is additive under concatenation, so
+  the certificate is a monoid hom into the tropical semiring. OUTCOME: proved
+  (`tropCert_append`, `tropCert_untrop`). The (min,+) structure is the natural home: the
+  exponent of a composite is the (tropical) product = sum of exponents.
+FAILURE ANALYSIS: an earlier attempt tried to certify growth of the *perimeter* a+b+c;
+  this fails because the A-branch can have factor < 2 and the bookkeeping is not clean.
+  Restricting the certified quantity to the hypotenuse `c` (the dominant coordinate, and
+  the one with a clean ≥3 / ≥1 dichotomy) gives the crisp telescoping argument.
+-/
+
+set_option maxHeartbeats 1600000
+
+namespace BerggrenLorentz
+
+/-! ## Section 1: Indexed child action and word application -/
+
+/-- The child map for generator index `k` acting on a triple `(a,b,c)`. -/
+def childGen (k : Fin 3) (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
+  if k = 0 then childA t.1 t.2.1 t.2.2
+  else if k = 1 then childB t.1 t.2.1 t.2.2
+  else childC t.1 t.2.1 t.2.2
+
+/-- Apply a Berggren word (list of generator indices, read left to right) to a triple. -/
+def applyWord (w : List (Fin 3)) (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
+  w.foldl (fun acc k => childGen k acc) t
+
+/-- The `B`-count of a word: the number of `B` (index `1`) generators it contains.
+    This is the exponent in the growth certificate. -/
+def Bcount (w : List (Fin 3)) : ℕ := w.count 1
+
+/-- A triple is a *positive Pythagorean* triple: strictly positive legs/hypotenuse on
+    the light cone. This is the invariant region for the Berggren action. -/
+def IsPosPythag (t : ℤ × ℤ × ℤ) : Prop :=
+  0 < t.1 ∧ 0 < t.2.1 ∧ 0 < t.2.2 ∧ IsPythag t.1 t.2.1 t.2.2
+
+/-! ## Section 2: Sanity checks on the action -/
+
+theorem applyWord_nil (t : ℤ × ℤ × ℤ) : applyWord [] t = t := rfl
+
+theorem applyWord_cons (k : Fin 3) (w : List (Fin 3)) (t : ℤ × ℤ × ℤ) :
+    applyWord (k :: w) t = applyWord w (childGen k t) := rfl
+
+/-- The seed `(3,4,5)` is a positive Pythagorean triple. -/
+theorem seed_isPosPythag : IsPosPythag (3, 4, 5) := by
+  refine ⟨by norm_num, by norm_num, by norm_num, ?_⟩
+  unfold IsPythag; norm_num
+
+theorem Bcount_nil : Bcount [] = 0 := rfl
+
+theorem Bcount_cons (k : Fin 3) (w : List (Fin 3)) :
+    Bcount (k :: w) = (if k = 1 then 1 else 0) + Bcount w := by
+  unfold Bcount
+  rw [List.count_cons]
+  by_cases h : k = 1 <;> simp [h, Nat.add_comm, beq_iff_eq]
+
+/-- Functoriality of the `B`-count: it is a monoid homomorphism
+    `(List (Fin 3), ++) → (ℕ, +)`. -/
+theorem Bcount_append (w₁ w₂ : List (Fin 3)) :
+    Bcount (w₁ ++ w₂) = Bcount w₁ + Bcount w₂ := by
+  unfold Bcount; rw [List.count_append]
+
+/-! ## Section 3: Geometric facts — c ≥ legs for positive Pythagorean triples -/
+
+/-- For a positive Pythagorean triple, the hypotenuse dominates each leg. -/
+theorem posPythag_hyp_ge (t : ℤ × ℤ × ℤ) (h : IsPosPythag t) :
+    t.1 ≤ t.2.2 ∧ t.2.1 ≤ t.2.2 := by
+  obtain ⟨ha, hb, hc, hpyth⟩ := h
+  unfold IsPythag at hpyth
+  constructor
+  · nlinarith [sq_nonneg t.2.1, sq_nonneg (t.2.2 - t.1)]
+  · nlinarith [sq_nonneg t.1, sq_nonneg (t.2.2 - t.2.1)]
+
+/-! ## Section 4: The action preserves positive Pythagorean triples -/
+
+/-- Each generator preserves the positive Pythagorean region. -/
+theorem childGen_preserves (k : Fin 3) (t : ℤ × ℤ × ℤ) (h : IsPosPythag t) :
+    IsPosPythag (childGen k t) := by
+  fin_cases k <;> simp +decide [ childGen ] at *;
+  · unfold IsPosPythag at *;
+    unfold childA; simp_all +decide [ IsPythag ] ;
+    exact ⟨ by nlinarith, by nlinarith, by nlinarith, by linarith ⟩;
+  · constructor <;> norm_num [ childB ];
+    · linarith [ h.1, h.2.1, h.2.2.1 ];
+    · exact ⟨ by linarith [ h.1, h.2.1, h.2.2.1 ], by linarith [ h.1, h.2.1, h.2.2.1 ], by unfold IsPythag; linarith [ h.2.2.2.symm ] ⟩;
+  · rcases h with ⟨ ha, hb, hc, h ⟩;
+    constructor <;> norm_num [ childC ];
+    · linarith [ posPythag_hyp_ge t ⟨ ha, hb, hc, h ⟩ ];
+    · exact ⟨ by nlinarith [ h.symm, posPythag_hyp_ge t ⟨ ha, hb, hc, h ⟩ ], by nlinarith [ h.symm, posPythag_hyp_ge t ⟨ ha, hb, hc, h ⟩ ], by unfold IsPythag; linarith [ h.symm ] ⟩
+
+/-- Iterating any word preserves the positive Pythagorean region. -/
+theorem applyWord_preserves (w : List (Fin 3)) (t : ℤ × ℤ × ℤ) (h : IsPosPythag t) :
+    IsPosPythag (applyWord w t) := by
+  induction' w with k w ih generalizing t;
+  · exact h;
+  · exact ih _ ( childGen_preserves k t h )
+
+/-! ## Section 5: The per-step growth dichotomy -/
+
+/-- Every generator is non-contracting on the hypotenuse. -/
+theorem childGen_hyp_nonContract (k : Fin 3) (t : ℤ × ℤ × ℤ) (h : IsPosPythag t) :
+    t.2.2 ≤ (childGen k t).2.2 := by
+  fin_cases k <;> simp +decide [ childGen ];
+  · obtain ⟨ ha, hb, hc, h ⟩ := h;
+    unfold childA; nlinarith [ h.le, posPythag_hyp_ge t ⟨ ha, hb, hc, h ⟩ ] ;
+  · unfold childB; linarith [ h.1, h.2.1, h.2.2.1 ] ;
+  · unfold childC; norm_num;
+    linarith [ h.1, h.2.1, h.2.2.1, posPythag_hyp_ge t h ]
+
+/-- The `B`-generator triples the hypotenuse. -/
+theorem childGen_hyp_triple_of_B (t : ℤ × ℤ × ℤ) (h : IsPosPythag t) :
+    3 * t.2.2 ≤ (childGen 1 t).2.2 := by
+  unfold childGen;
+  unfold childB; simp +decide ; linarith [ h.1, h.2.1, h.2.2.1 ] ;
+
+/-! ## Section 6: The functorial tropical certificate -/
+
+/-- Per-letter tropical weight in the min-plus semiring `Tropical (WithTop ℕ)`:
+    the `B`-generator gets weight `trop 1`, the others the multiplicative unit `trop 0 = 1`. -/
+def letterWeight (k : Fin 3) : Tropical (WithTop ℕ) :=
+  if k = 1 then Tropical.trop (1 : WithTop ℕ) else 1
+
+/-- The tropical certificate of a word: the (tropical) product of its letter weights.
+    Tropical multiplication is `+` of exponents, so this accumulates the `B`-count. -/
+def tropCert (w : List (Fin 3)) : Tropical (WithTop ℕ) :=
+  (w.map letterWeight).prod
+
+/-- **Functoriality.** The certificate of a concatenation is the tropical product of
+    the certificates: `tropCert` is a monoid homomorphism
+    `(List (Fin 3), ++, []) → (Tropical (WithTop ℕ), *, 1)`. -/
+theorem tropCert_append (w₁ w₂ : List (Fin 3)) :
+    tropCert (w₁ ++ w₂) = tropCert w₁ * tropCert w₂ := by
+  unfold tropCert; rw [List.map_append, List.prod_append]
+
+theorem tropCert_nil : tropCert [] = 1 := rfl
+
+/-- The underlying value of the tropical certificate is exactly the `B`-count. -/
+theorem tropCert_untrop (w : List (Fin 3)) :
+    (tropCert w).untrop = (Bcount w : WithTop ℕ) := by
+  induction' w using List.reverseRecOn with w ih;
+  · rfl;
+  · fin_cases ih <;> simp_all +decide [ tropCert, Bcount ]
+
+/-! ## Section 7: The growth certificate (main theorem) -/
+
+/-- **Main theorem (functorial tropical growth certificate).**
+    For every positive Pythagorean seed `(a,b,c)` and every Berggren word `w`, the
+    hypotenuse of the orbit point `applyWord w (a,b,c)` is at least `3 ^ (Bcount w)`
+    times the seed hypotenuse. The exponent is read off functorially from the tropical
+    certificate via `tropCert_untrop`. -/
+theorem applyWord_hyp_growth (w : List (Fin 3)) (t : ℤ × ℤ × ℤ) (h : IsPosPythag t) :
+    3 ^ (Bcount w) * t.2.2 ≤ (applyWord w t).2.2 := by
+  induction' w with k w ih generalizing t;
+  · unfold Bcount applyWord; aesop;
+  · convert le_trans _ ( ih ( childGen k t ) ( childGen_preserves k t h ) ) using 1;
+    fin_cases k <;> simp +decide [ Bcount_cons ];
+    · exact childGen_hyp_nonContract 0 t h;
+    · convert mul_le_mul_of_nonneg_left ( childGen_hyp_triple_of_B t h ) ( pow_nonneg ( by decide : ( 0 : ℤ ) ≤ 3 ) ( Bcount w ) ) using 1 ; ring;
+    · exact childGen_hyp_nonContract 2 t h
+
+/-- Restatement of the certificate directly in terms of the tropical certificate's
+    underlying value: `(tropCert w).untrop = Bcount w` is the certified exponent. -/
+theorem applyWord_hyp_growth_trop (w : List (Fin 3)) (t : ℤ × ℤ × ℤ) (h : IsPosPythag t) :
+    (3 : ℤ) ^ ((tropCert w).untrop.untop (by
+      rw [tropCert_untrop]; exact WithTop.coe_ne_top)) * t.2.2 ≤ (applyWord w t).2.2 := by
+  have hval : (tropCert w).untrop.untop (by rw [tropCert_untrop]; exact WithTop.coe_ne_top)
+      = Bcount w := by
+    rw [WithTop.untop_eq_iff]; exact tropCert_untrop w
+  rw [hval]; exact applyWord_hyp_growth w t h
+
+/-! ## Section 8: Corollaries from the seed (3,4,5) -/
+
+/-- From the seed, every word gives hypotenuse `≥ 5 · 3 ^ (Bcount w)`. -/
+theorem seed_hyp_growth (w : List (Fin 3)) :
+    5 * 3 ^ (Bcount w) ≤ (applyWord w (3, 4, 5)).2.2 := by
+  have := applyWord_hyp_growth w (3, 4, 5) seed_isPosPythag
+  simpa [mul_comm] using this
+
+/-- A pure `B`-word of length `n` from the seed has hypotenuse `≥ 5 · 3 ^ n`
+    (certified exponential growth). -/
+theorem pureB_exponential (n : ℕ) :
+    5 * 3 ^ n ≤ (applyWord (List.replicate n 1) (3, 4, 5)).2.2 := by
+  have hB : Bcount (List.replicate n 1) = n := by
+    unfold Bcount; rw [List.count_replicate]; simp
+  have := seed_hyp_growth (List.replicate n 1)
+  rwa [hB] at this
+
+end BerggrenLorentz

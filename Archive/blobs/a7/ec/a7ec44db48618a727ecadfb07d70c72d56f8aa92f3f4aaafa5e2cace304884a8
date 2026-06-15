@@ -1,0 +1,189 @@
+import Mathlib
+
+/-! # General-Degree Tropical Polynomials: Convexity, Monotonicity and Structure
+
+This file develops a **self-contained Mathlib foundation** for tropical (max-plus)
+polynomials of *arbitrary* degree, generalizing the degree-1 and degree-2 cases
+already recorded in `Catalog/Tropical/Core/TropicalPolynomials.lean`.
+
+A tropical polynomial with coefficients `a₀, …, aₙ` is the max-plus analogue of a
+classical polynomial; its *evaluation* at `x` is
+
+  `tropPolyFun a x = max_{0 ≤ i ≤ n} (aᵢ + i · x)`.
+
+We model this with a `Finset.sup'` taken in the function space `ℝ → ℝ`, which makes
+the structural lemmas (`Finset.sup'_apply`, `Finset.sup'_induction`) directly
+applicable.
+
+## Main results
+
+* `tropPolyFun`            : the general-degree tropical polynomial function.
+* `tropPoly_apply`         : pointwise evaluation as a `sup'` of affine pieces.
+* `tropPoly_ge` / `tropPoly_le` : the value is the least upper bound of the pieces.
+* `tropPoly_eq_some`       : the value is *attained* by one of the monomials.
+* `tropPoly_convex`        : every tropical polynomial is a **convex** function.
+* `tropPoly_monotone`      : every tropical polynomial is **monotone increasing**
+                             (all exponents `i ≥ 0`).
+* `tropPoly_midpoint`      : the midpoint (Jensen) inequality, a corollary of convexity.
+* `tropPoly_const_add`     : adding a constant to all coefficients shifts the value.
+* `tropPoly_at_zero`       : at `x = 0` the value is the largest coefficient.
+* `tropPoly_linear` / `tropPoly_quadratic` : bridges to the catalog's degree-1/2 defs.
+
+-- !-- Lab Notes -- !--
+HYPOTHESIS.  The degree-1 and degree-2 monotonicity/convexity facts in the existing
+catalog are special cases of a single structural principle: a tropical polynomial is a
+finite max of affine functions, hence convex; and since every exponent `i : Fin (n+1)`
+satisfies `(i : ℝ) ≥ 0`, every affine piece is monotone increasing, hence so is their max.
+
+EXPERIMENTAL OUTCOME.  Modelling the polynomial as `Finset.univ.sup'` *in the function
+space* `ℝ → ℝ` (rather than pointwise as a real number) was the decisive design choice.
+It let us:
+  • lift `ConvexOn.sup` (binary) to arbitrary finite degree via `Finset.sup'_induction`;
+  • lift `Monotone.sup` the same way;
+  • recover the pointwise formula on demand via `Finset.sup'_apply`.
+
+FAILURE ANALYSIS.  Two dead-ends were recorded.
+  (1) `AffineMap.convexOn` does **not** exist in this Mathlib; proving "affine ⇒ convex"
+      had to be done from the `ConvexOn` definition (`affine_conv`), exploiting that an
+      affine map meets the convexity inequality with *equality*.
+  (2) Rewriting `Finset.univ` to `{0,1}` for the bridge lemmas triggered a
+      "motive is not type correct" error because the `Nonempty` proof depends on the set;
+      the robust fix is the antisymmetric `tropPoly_ge` / `tropPoly_le` sandwich.
+-/
+
+open Finset
+
+namespace TropicalConvexity
+
+variable {n : ℕ}
+
+/-- The general-degree tropical (max-plus) polynomial with coefficients `a : Fin (n+1) → ℝ`,
+viewed as a function `ℝ → ℝ`.  Its value at `x` is `max_i (aᵢ + i·x)`. -/
+noncomputable def tropPolyFun (a : Fin (n + 1) → ℝ) : ℝ → ℝ :=
+  Finset.univ.sup' Finset.univ_nonempty (fun i x => a i + (i : ℝ) * x)
+
+/-- Pointwise evaluation: the value is the finite max of the affine monomials. -/
+theorem tropPoly_apply (a : Fin (n + 1) → ℝ) (x : ℝ) :
+    tropPolyFun a x = Finset.univ.sup' Finset.univ_nonempty (fun i => a i + (i : ℝ) * x) := by
+  rw [tropPolyFun, Finset.sup'_apply]
+
+/-- Each monomial is a lower bound for the value. -/
+theorem tropPoly_ge (a : Fin (n + 1) → ℝ) (i : Fin (n + 1)) (x : ℝ) :
+    a i + (i : ℝ) * x ≤ tropPolyFun a x := by
+  rw [tropPoly_apply]
+  exact Finset.le_sup' (fun i => a i + (i : ℝ) * x) (Finset.mem_univ i)
+
+/-- Any common upper bound of the monomials bounds the value: the value is the *least*
+upper bound. -/
+theorem tropPoly_le (a : Fin (n + 1) → ℝ) (x C : ℝ) (h : ∀ i, a i + (i : ℝ) * x ≤ C) :
+    tropPolyFun a x ≤ C := by
+  rw [tropPoly_apply]
+  exact Finset.sup'_le _ _ (fun i _ => h i)
+
+/-- The value is *attained*: some monomial realizes it. -/
+theorem tropPoly_eq_some (a : Fin (n + 1) → ℝ) (x : ℝ) :
+    ∃ i : Fin (n + 1), tropPolyFun a x = a i + (i : ℝ) * x := by
+  rw [tropPoly_apply]
+  obtain ⟨i, _, hi⟩ :=
+    Finset.exists_mem_eq_sup' Finset.univ_nonempty (fun i => a i + (i : ℝ) * x)
+  exact ⟨i, hi⟩
+
+/-! ## Convexity -/
+
+/-- An affine function `x ↦ b + c·x` is convex (indeed affine functions satisfy the
+convexity inequality with equality). This replaces the missing `AffineMap.convexOn`. -/
+theorem affine_conv (b c : ℝ) : ConvexOn ℝ (Set.univ : Set ℝ) (fun x => b + c * x) := by
+  refine ⟨convex_univ, ?_⟩
+  intro x _ y _ s t _ _ hst
+  simp only [smul_eq_mul]
+  have key : s * (b + c * x) + t * (b + c * y) - (b + c * (s * x + t * y)) = (s + t - 1) * b := by
+    ring
+  have h0 : (s + t - 1) * b = 0 := by rw [hst]; ring
+  linarith [key, h0]
+
+/-- **Every tropical polynomial is convex.** A finite max of affine functions is convex,
+proved by `Finset.sup'_induction` on `ConvexOn.sup`. -/
+theorem tropPoly_convex (a : Fin (n + 1) → ℝ) :
+    ConvexOn ℝ (Set.univ : Set ℝ) (tropPolyFun a) := by
+  rw [tropPolyFun]
+  apply Finset.sup'_induction
+  · intro f hf g hg; exact hf.sup hg
+  · intro i _; exact affine_conv (a i) (i : ℝ)
+
+/-- **Every tropical polynomial is monotone increasing.** Each affine piece has slope
+`(i : ℝ) ≥ 0`, so each is monotone, and so is their max. -/
+theorem tropPoly_monotone (a : Fin (n + 1) → ℝ) : Monotone (tropPolyFun a) := by
+  rw [tropPolyFun]
+  apply Finset.sup'_induction
+  · intro f hf g hg; exact hf.sup hg
+  · intro i _ x y h
+    have : (i : ℝ) * x ≤ (i : ℝ) * y := mul_le_mul_of_nonneg_left h (by positivity)
+    simpa using by linarith
+
+/-- The midpoint (Jensen) inequality, a direct corollary of convexity. -/
+theorem tropPoly_midpoint (a : Fin (n + 1) → ℝ) (x y : ℝ) :
+    tropPolyFun a ((x + y) / 2) ≤ (tropPolyFun a x + tropPolyFun a y) / 2 := by
+  have h := (tropPoly_convex a).2 (Set.mem_univ x) (Set.mem_univ y)
+    (by norm_num : (0 : ℝ) ≤ 1 / 2) (by norm_num : (0 : ℝ) ≤ 1 / 2) (by norm_num)
+  simp only [smul_eq_mul] at h
+  have e1 : (x + y) / 2 = 1 / 2 * x + 1 / 2 * y := by ring
+  rw [e1]; linarith [h]
+
+/-! ## Coefficient operations -/
+
+/-- Adding a constant `c` to every coefficient shifts the value by `c`
+(tropical multiplication by the scalar `c`). -/
+theorem tropPoly_const_add (a : Fin (n + 1) → ℝ) (c x : ℝ) :
+    tropPolyFun (fun i => a i + c) x = tropPolyFun a x + c := by
+  rw [tropPoly_apply, tropPoly_apply, Finset.sup'_add]
+  exact Finset.sup'_congr _ rfl (fun i _ => by ring)
+
+/-- At `x = 0` a tropical polynomial evaluates to its largest coefficient. -/
+theorem tropPoly_at_zero (a : Fin (n + 1) → ℝ) :
+    tropPolyFun a 0 = Finset.univ.sup' Finset.univ_nonempty a := by
+  rw [tropPoly_apply]
+  exact Finset.sup'_congr _ rfl (fun i _ => by ring)
+
+/-! ## Bridges to the catalog's degree-1 and degree-2 polynomials -/
+
+/-- Degree-1 bridge: the general construction reproduces `tropicalLinear`. -/
+theorem tropPoly_linear (a₀ a₁ x : ℝ) :
+    tropPolyFun (n := 1) ![a₀, a₁] x = max a₀ (a₁ + x) := by
+  apply le_antisymm
+  · apply tropPoly_le; intro i; fin_cases i <;> norm_num [le_max_iff]
+  · rw [max_le_iff]
+    exact ⟨by simpa using tropPoly_ge (n := 1) ![a₀, a₁] 0 x,
+           by simpa using tropPoly_ge (n := 1) ![a₀, a₁] 1 x⟩
+
+/-- Degree-2 bridge: the general construction reproduces `tropicalQuadratic`. -/
+theorem tropPoly_quadratic (a₀ a₁ a₂ x : ℝ) :
+    tropPolyFun (n := 2) ![a₀, a₁, a₂] x = max a₀ (max (a₁ + x) (a₂ + 2 * x)) := by
+  apply le_antisymm
+  · apply tropPoly_le; intro i; fin_cases i <;> norm_num [le_max_iff]
+  · rw [max_le_iff, max_le_iff]
+    refine ⟨by simpa using tropPoly_ge (n := 2) ![a₀, a₁, a₂] 0 x,
+            by simpa using tropPoly_ge (n := 2) ![a₀, a₁, a₂] 1 x, ?_⟩
+    have := tropPoly_ge (n := 2) ![a₀, a₁, a₂] 2 x
+    norm_num at this ⊢; convert this using 2
+
+/-! ## Asymptotic degree
+
+-- !-- Lab Notes -- !--
+CONJECTURE-TURNED-THEOREM.  For large `x` the highest-degree monomial dominates, so the
+tropical polynomial is *eventually* the affine function `a (last n) + n·x`. This captures
+the notion of "tropical degree". The threshold `X` is assembled as a finite `sup'` of the
+per-index crossover points. -/
+
+theorem tropPoly_eventually_top (a : Fin (n + 1) → ℝ) :
+    ∃ X : ℝ, ∀ x ≥ X, tropPolyFun a x = a (Fin.last n) + (n : ℝ) * x := by
+  use sSup (Set.image (fun i : Fin (n + 1) => (a i - a (Fin.last n)) / (n - i.val : ℝ)) (Finset.univ.erase (Fin.last n)));
+  intro x hx
+  have h_upper : ∀ i : Fin (n + 1), i ≠ Fin.last n → a i + i.val * x ≤ a (Fin.last n) + n * x := by
+    intro i hi;
+    have := le_csSup ( show BddAbove ( ( fun i : Fin ( n + 1 ) => ( a i - a ( Fin.last n ) ) / ( n - i.val : ℝ ) ) '' ( Finset.univ.erase ( Fin.last n ) ) ) from ?_ ) ( Set.mem_image_of_mem _ ( Finset.mem_erase_of_ne_of_mem hi ( Finset.mem_univ i ) ) );
+    · rw [ div_le_iff₀ ] at this <;> nlinarith [ show ( i : ℝ ) < n from mod_cast lt_of_le_of_ne ( Fin.le_last _ ) ( by simpa [ Fin.ext_iff ] using hi ) ];
+    · exact Set.Finite.bddAbove <| Set.toFinite _;
+  refine' le_antisymm ( tropPoly_le _ _ _ fun i => _ ) ( tropPoly_ge _ _ _ );
+  grind
+
+end TropicalConvexity

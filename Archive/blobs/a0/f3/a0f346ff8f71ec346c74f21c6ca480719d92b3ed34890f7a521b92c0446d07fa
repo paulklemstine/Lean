@@ -1,0 +1,220 @@
+/-
+Copyright (c) 2026 Harmonic. All rights reserved.
+Released under Apache 2.0 license.
+
+# Functorial tropical-style lower bounds for minimum distance via metric filtrations
+
+This file builds the **bridge** between the two so-far-isolated layers of the catalog:
+
+* the *metric-filtration* layer
+  (`Catalog.Applications.PoincareData.MetricFiltration`: `ripsGraph`, `ripsGraph_mono`),
+  which models the Vietoris–Rips 1-skeleton of a (pseudo)metric space and its
+  monotone filtration; and
+* the *smooth-Poincaré coding* layer
+  (`Catalog.Applications.SmoothPoincare.TopologicalCodes`: `wt`, `overlap`, `ip`,
+  `wt_add_overlap`, `ip_eq_overlap`, the extended Hamming code `hamming`), which
+  isolates the arithmetic invariants of the mod-2 shadow of even unimodular forms.
+
+The new idea is to read each binary codeword as a *point* in the Hamming metric space
+`HCode n = Hamming (fun _ : Fin n => ZMod 2)`.  Then:
+
+* the Hamming distance between two codewords is `wt (x + y)` and is *controlled by the
+  overlap invariant*: `hammingDist x y + 2·overlap x y = wt x + wt y`
+  (`hammingDist_add_two_overlap`), the metric avatar of `wt_add_overlap`/`ip_eq_overlap`;
+* an edge of `ripsGraph (HCode n) ε` between codewords means their Hamming distance is
+  `≤ ε`; so **if the Rips graph of a code has no edge below radius `r`, every nonzero
+  codeword has weight `> r`** (`minWeight_lower_of_ripsEdgeless`,
+  `minWeight_ge_of_ripsEdgeless_nat`).  This turns the metric invariant `overlap` into a
+  *computable certificate* for the Hamming minimum distance;
+* the certificate is **monotone**: edgelessness at radius `r` propagates downward
+  (`ripsEdgeless_antitone`, from `ripsGraph_mono`), so the smallest radius at which the
+  first edge appears *is* the minimum distance.
+
+As a sharp instantiation we recover the `[8,4,4]` minimum distance of the extended
+Hamming code (the mod-2 shadow of `E8`) *geometrically*, from edgelessness of its Rips
+graph below radius `4` (`hamming_ripsEdgeless_three`, `hamming_minDist_via_filtration`).
+
+-- !-- Lab Notes -- !--
+Hypothesis (Hypothesizer): codeword supports carry genuine finite-metric data, and the
+  monotone Rips filtration of the catalog's `MetricFiltration` layer should convert the
+  arithmetic `overlap`/`ip` invariants of the coding layer into a monotone obstruction
+  to small-weight codewords — a computable lower bound on Hamming minimum distance.
+Experiment (Experimenter): equip `Fin n → ZMod 2` with Mathlib's `Hamming` metric;
+  prove `wt = hammingNorm` and `hammingDist x y = wt (x+y)`; feed these into `ripsGraph`
+  and `ripsGraph_mono`.
+Analysis (Analyst): the bridge collapses cleanly — `hammingDist_add_two_overlap` is just
+  `wt_add_overlap` transported across the metric, and the lower-bound certificate
+  `minWeight_lower_of_ripsEdgeless` is a two-line consequence of `dist_zero_eq_wt`.
+  Monotonicity of the certificate is exactly `ripsGraph_mono`, confirming the
+  "filtration ⇒ distance" pathway is real and functorial.
+Critique (Critic): the certificate is not vacuous — it is exercised on the genuine
+  `[8,4,4]` Hamming code, where edgelessness below radius `4` (a finite `decide`) yields
+  the textbook minimum distance `4` through the geometric route, not the arithmetic one.
+Synthesis: a reusable Applications↔Applications bridge: `overlap` (an intersection-form
+  invariant) ⇒ Hamming distance ⇒ Rips edge ⇒ monotone minimum-distance certificate.
+-/
+
+import Mathlib
+import Catalog.Applications.SmoothPoincare.TopologicalCodes
+import Catalog.Applications.PoincareData.MetricFiltration
+
+open scoped BigOperators
+open SmoothPoincare.Codes
+
+namespace SmoothPoincare
+namespace CodeFiltration
+
+variable {n : ℕ}
+
+/-! ## Part 1: Codewords as points in the Hamming metric space -/
+
+/-- A binary length-`n` code lives in the **Hamming metric space** `HCode n`, the type
+synonym `Hamming (fun _ : Fin n => ZMod 2)` carrying `dist x y = hammingDist x y`. -/
+abbrev HCode (n : ℕ) : Type := Hamming (fun _ : Fin n => ZMod 2)
+
+/-- The catalog Hamming weight `wt` agrees with Mathlib's `hammingNorm`. -/
+theorem wt_eq_hammingNorm (v : Fin n → ZMod 2) : wt v = hammingNorm v := by
+  unfold wt hammingNorm
+  congr 1
+  apply Finset.filter_congr
+  intro i _
+  have h : ∀ a : ZMod 2, (a = 1) ↔ (a ≠ 0) := by decide
+  exact h (v i)
+
+/-- The Hamming distance is the weight of the sum (in characteristic two,
+`x - y = x + y`).  This is the metric incarnation of the coding-layer arithmetic. -/
+theorem hammingDist_eq_wt_add (x y : Fin n → ZMod 2) :
+    hammingDist x y = wt (x + y) := by
+  rw [hammingDist_eq_hammingNorm, wt_eq_hammingNorm]
+  have hsub : x - y = x + y := by
+    funext i
+    have : ∀ a b : ZMod 2, a - b = a + b := by decide
+    exact this (x i) (y i)
+  rw [hsub]
+
+/-- **Overlap controls the metric.** The Hamming distance and the overlap invariant
+(the coding-theory shadow of an intersection-form pairing) satisfy
+`hammingDist x y + 2·overlap x y = wt x + wt y`.  This is `wt_add_overlap` /
+`ip_eq_overlap` transported to the metric layer. -/
+theorem hammingDist_add_two_overlap (x y : Fin n → ZMod 2) :
+    hammingDist x y + 2 * overlap x y = wt x + wt y := by
+  rw [hammingDist_eq_wt_add]
+  exact wt_add_overlap x y
+
+/-! ## Part 2: The Rips graph of a code -/
+
+/-- Adjacency in the Rips graph of a code is "distinct and within Hamming distance `ε`".
+This is definitional but records the bridge explicitly. -/
+theorem rips_adj_iff (ε : ℝ) (x y : HCode n) :
+    (ripsGraph (HCode n) ε).Adj x y ↔ x ≠ y ∧ (hammingDist x y : ℝ) ≤ ε := Iff.rfl
+
+/-- Distance to the zero codeword is the weight. -/
+theorem dist_zero_eq_wt (x : HCode n) :
+    (hammingDist x (0 : HCode n) : ℝ) = (wt (Hamming.ofHamming x) : ℝ) := by
+  have : hammingDist (Hamming.ofHamming x) (Hamming.ofHamming (0 : HCode n))
+      = wt (Hamming.ofHamming x) := by
+    rw [Hamming.ofHamming_zero, hammingDist_zero_right, ← wt_eq_hammingNorm]
+  exact_mod_cast this
+
+/-- A code `C` is **Rips-edgeless at scale `ε`** when no two of its members are joined
+by an edge of `ripsGraph (HCode n) ε` — the "connectivity fails below radius `ε`"
+condition. -/
+def RipsEdgeless (C : Finset (HCode n)) (ε : ℝ) : Prop :=
+  ∀ x ∈ C, ∀ y ∈ C, ¬ (ripsGraph (HCode n) ε).Adj x y
+
+/-- **Monotone obstruction (from `ripsGraph_mono`).** If a code is Rips-edgeless at a
+scale `ε₂`, it is Rips-edgeless at every smaller scale `ε₁ ≤ ε₂`.  This is exactly the
+filtration monotonicity of the metric-filtration layer, packaged as antitonicity of the
+edgelessness certificate. -/
+theorem ripsEdgeless_antitone {C : Finset (HCode n)} {ε₁ ε₂ : ℝ}
+    (h : ε₁ ≤ ε₂) (hE : RipsEdgeless C ε₂) : RipsEdgeless C ε₁ := by
+  intro x hx y hy hadj
+  exact hE x hx y hy (ripsGraph_mono h hadj)
+
+/-- Edgelessness is the statement that all distinct codewords lie at distance `> ε`. -/
+theorem ripsEdgeless_iff {C : Finset (HCode n)} {ε : ℝ} :
+    RipsEdgeless C ε ↔ ∀ x ∈ C, ∀ y ∈ C, x ≠ y → (ε : ℝ) < (hammingDist x y : ℝ) := by
+  constructor
+  · intro hE x hx y hy hxy
+    have := hE x hx y hy
+    rw [rips_adj_iff] at this
+    push_neg at this
+    exact this hxy
+  · intro hD x hx y hy hadj
+    rw [rips_adj_iff] at hadj
+    exact absurd hadj.2 (not_le.mpr (hD x hx y hy hadj.1))
+
+/-! ## Part 3: The minimum-distance certificate -/
+
+/-- **The distance certificate.** If the zero word is in `C` and `C` is Rips-edgeless at
+scale `r`, then every nonzero codeword has weight strictly greater than `r`.  The
+geometric edgelessness condition is thus a *lower bound* on Hamming minimum distance. -/
+theorem minWeight_lower_of_ripsEdgeless {C : Finset (HCode n)} {r : ℝ}
+    (h0 : (0 : HCode n) ∈ C) (hE : RipsEdgeless C r)
+    {v : HCode n} (hv : v ∈ C) (hv0 : v ≠ 0) :
+    r < (wt (Hamming.ofHamming v) : ℝ) := by
+  have hlt := (ripsEdgeless_iff.mp hE) v hv 0 h0 hv0
+  rwa [dist_zero_eq_wt] at hlt
+
+/-- **Explicit integer lower bound.** If `C` is Rips-edgeless at an integer radius `r`,
+every nonzero codeword has weight at least `r + 1`.  This is the computable
+`d ≥ r + 1` certificate the metric filtration produces. -/
+theorem minWeight_ge_of_ripsEdgeless_nat {C : Finset (HCode n)} {r : ℕ}
+    (h0 : (0 : HCode n) ∈ C) (hE : RipsEdgeless C (r : ℝ))
+    {v : HCode n} (hv : v ∈ C) (hv0 : v ≠ 0) :
+    r + 1 ≤ wt (Hamming.ofHamming v) := by
+  have hlt := minWeight_lower_of_ripsEdgeless h0 hE hv hv0
+  have : (r : ℝ) < (wt (Hamming.ofHamming v) : ℝ) := hlt
+  exact_mod_cast Nat.add_one_le_iff.mpr (by exact_mod_cast this)
+
+/-- **Converse: a minimum-distance hypothesis produces edgelessness.** If every distinct
+pair of codewords has Hamming distance `> r`, the Rips graph is edgeless at `r`.  Together
+with `minWeight_lower_of_ripsEdgeless` this makes the threshold "smallest `ε` with an
+edge" coincide with the minimum distance. -/
+theorem ripsEdgeless_of_minDist {C : Finset (HCode n)} {r : ℝ}
+    (hD : ∀ x ∈ C, ∀ y ∈ C, x ≠ y → (r : ℝ) < (hammingDist x y : ℝ)) :
+    RipsEdgeless C r :=
+  ripsEdgeless_iff.mpr hD
+
+/-- Helper to certify edgelessness from a purely combinatorial (ℕ) distance bound. -/
+theorem ripsEdgeless_of_nat_lt {C : Finset (HCode n)} {r : ℕ}
+    (hD : ∀ x ∈ C, ∀ y ∈ C, x ≠ y → r < hammingDist x y) :
+    RipsEdgeless C (r : ℝ) := by
+  apply ripsEdgeless_of_minDist
+  intro x hx y hy hxy
+  exact_mod_cast hD x hx y hy hxy
+
+/-! ## Part 4: Sharp instantiation — the extended Hamming code `[8,4,4]` -/
+
+/-- The extended Hamming code, viewed inside the Hamming metric space `HCode 8`. -/
+def hammingMetric : Finset (HCode 8) := hamming
+
+/-- **Geometric edgelessness below radius `4`.** No two distinct codewords of the
+extended Hamming code are joined by a Rips edge at scale `3`; equivalently, every pair
+of distinct codewords is at Hamming distance `≥ 4`.  Verified by finite computation. -/
+theorem hamming_ripsEdgeless_three : RipsEdgeless hammingMetric (3 : ℝ) := by
+  apply ripsEdgeless_of_nat_lt
+  intro x hx y hy hxy
+  have : ∀ x ∈ hamming, ∀ y ∈ hamming, x ≠ y → 3 < hammingDist x y := by
+    native_decide
+  exact this x hx y hy hxy
+
+/-- The zero word is a codeword of the extended Hamming code. -/
+theorem hamming_zero_mem : (0 : HCode 8) ∈ hammingMetric := by
+  have : (0 : Fin 8 → ZMod 2) ∈ hamming := by native_decide
+  exact this
+
+/-- **Minimum distance `≥ 4`, derived geometrically.** Every nonzero codeword of the
+extended Hamming code has weight `≥ 4`, obtained from the *metric filtration* certificate
+(edgelessness below radius `4`) rather than from a direct weight computation.  This is the
+`d = 4` of the parameter triple `[8,4,4]` — the mod-2 shadow of `E8` — read off the
+Vietoris–Rips filtration. -/
+theorem hamming_minDist_via_filtration :
+    ∀ v ∈ hammingMetric, v ≠ 0 → 4 ≤ wt (Hamming.ofHamming v) := by
+  intro v hv hv0
+  have := minWeight_ge_of_ripsEdgeless_nat (r := 3) hamming_zero_mem
+    hamming_ripsEdgeless_three hv hv0
+  simpa using this
+
+end CodeFiltration
+end SmoothPoincare

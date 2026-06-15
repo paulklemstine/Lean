@@ -1,0 +1,190 @@
+/-
+# Two-way independence model: the algebra of `2 × 2` basic moves
+
+This file develops the *algebraic foundation* for the study of Markov bases of the
+two-way independence model of contingency tables.
+
+A contingency table is an `m × n` array of nonnegative integers.  In algebraic
+statistics one fixes the *margins* (row sums and column sums) of a table and asks
+which tables share those margins; the set of all such tables is the *fiber*.  The
+classical theorem of Diaconis–Sturmfels says that for the two-way independence
+model the fiber is connected by the *basic moves*
+`B(i,i',j,j') = e_{i,j'} + e_{i',j} - e_{i,j} - e_{i',j'}` (for `i ≠ i'`,
+`j ≠ j'`), i.e. one can walk between any two tables of the same margins using a
+sequence of these `± 1` adjustments to a `2 × 2` sub-rectangle while staying
+nonnegative.
+
+## Scope
+
+This file is deliberately limited to the *soundness* direction of the theory and
+the algebraic bookkeeping that supports it:
+
+* a basic move never changes any row sum or column sum (so it preserves the
+  fiber), and its total sum is zero;
+* the one-step legal move relation `LegalBasicStep` (which additionally records
+  that both endpoints are entrywise nonnegative) keeps two tables in the same
+  fiber;
+* the "kernel" lemma that two equal-margin tables differ by something with all
+  row sums and column sums equal to zero.
+
+It does **not** prove the full connectivity (completeness) theorem that *every*
+pair of equal-margin nonnegative tables is connected by basic moves.  The API
+here is intended to be a stable, reusable basis for such a later development.
+
+## Main definitions
+
+* `MarkovBases.TwoWay.Table m n` — an `m × n` integer table.
+* `rowSum`, `colSum`, `totalSum` — the marginals and the grand total.
+* `sameMargins` — two tables agree on all row and column sums.
+* `basicMove i i' j j'` — the elementary `2 × 2` move.
+* `Nonneg` — entrywise nonnegativity.
+* `LegalBasicStep` — the one-step move relation.
+
+## Main results
+
+* `basicMove_rowSum`, `basicMove_colSum` — a basic move has all row/column sums `0`.
+* `basicMove_totalSum_zero` — a basic move has total sum `0`.
+* `basicMove_sameMargins` — adding a basic move preserves all margins.
+* `LegalBasicStep.sameMargins` — a legal step connects tables in the same fiber.
+* `sameMargins_sub` — equal margins force the difference to have zero marginals.
+-/
+
+import Mathlib
+
+namespace MarkovBases.TwoWay
+
+/-- An `m × n` integer contingency table.  Entry `T i j` is the count in row `i`
+and column `j`.  We work over `ℤ` so that differences of tables (and the basic
+moves) live in the same type; nonnegativity is tracked separately by `Nonneg`. -/
+abbrev Table (m n : ℕ) := Fin m → Fin n → ℤ
+
+/-- The `i`-th **row sum** (row marginal) of a table. -/
+def rowSum {m n : ℕ} (T : Table m n) (i : Fin m) : ℤ := ∑ j, T i j
+
+/-- The `j`-th **column sum** (column marginal) of a table. -/
+def colSum {m n : ℕ} (T : Table m n) (j : Fin n) : ℤ := ∑ i, T i j
+
+/-- The **grand total** of a table, computed as the sum of its row sums. -/
+def totalSum {m n : ℕ} (T : Table m n) : ℤ := ∑ i, rowSum T i
+
+/-- Two tables have the **same margins** when they agree on every row sum and on
+every column sum.  The fiber over a fixed margin is exactly an equivalence class
+of this relation (restricted to nonnegative tables). -/
+def sameMargins {m n : ℕ} (T S : Table m n) : Prop :=
+  (∀ i, rowSum T i = rowSum S i) ∧ (∀ j, colSum T j = colSum S j)
+
+/-- The elementary **basic move** `B(i,i',j,j') = e_{i,j'} + e_{i',j} - e_{i,j} -
+e_{i',j'}`.
+
+As a table it adds `1` to the `(i,j')` and `(i',j)` cells and subtracts `1` from
+the `(i,j)` and `(i',j')` cells, i.e. it rotates `± 1` around the `2 × 2`
+sub-rectangle with rows `i, i'` and columns `j, j'`.  The definition does not
+require `i ≠ i'` or `j ≠ j'`; the marginal-preservation lemmas below hold for all
+indices, and the genuine "non-degenerate" requirement is imposed where it matters
+in `LegalBasicStep`. -/
+def basicMove {m n : ℕ} (i i' : Fin m) (j j' : Fin n) : Table m n :=
+  fun a b =>
+    (if a = i ∧ b = j' then 1 else 0)
+    + (if a = i' ∧ b = j then 1 else 0)
+    - (if a = i ∧ b = j then 1 else 0)
+    - (if a = i' ∧ b = j' then 1 else 0)
+
+/-- Summing a single "indicator" `e_{i,j'}` along a row collapses to the row
+indicator `[a = i]`. -/
+private lemma sum_col_ite {m n : ℕ} (i : Fin m) (j' : Fin n) (a : Fin m) :
+    ∑ b : Fin n, (if a = i ∧ b = j' then (1 : ℤ) else 0) = if a = i then 1 else 0 := by
+  by_cases h : a = i <;> simp [h]
+
+/-- Summing a single "indicator" `e_{i,j'}` along a column collapses to the column
+indicator `[b = j']`. -/
+private lemma sum_row_ite {m n : ℕ} (i : Fin m) (j' : Fin n) (b : Fin n) :
+    ∑ a : Fin m, (if a = i ∧ b = j' then (1 : ℤ) else 0) = if b = j' then 1 else 0 := by
+  by_cases h : b = j' <;> simp [h, and_comm]
+
+/-- Row sums are additive in the table. -/
+theorem rowSum_add {m n : ℕ} (T S : Table m n) (i : Fin m) :
+    rowSum (T + S) i = rowSum T i + rowSum S i := by
+  simp [rowSum, Finset.sum_add_distrib]
+
+/-- Column sums are additive in the table. -/
+theorem colSum_add {m n : ℕ} (T S : Table m n) (j : Fin n) :
+    colSum (T + S) j = colSum T j + colSum S j := by
+  simp [colSum, Finset.sum_add_distrib]
+
+/-- Row sums respect subtraction of tables. -/
+theorem rowSum_sub {m n : ℕ} (T S : Table m n) (i : Fin m) :
+    rowSum (T - S) i = rowSum T i - rowSum S i := by
+  simp [rowSum, Finset.sum_sub_distrib]
+
+/-- Column sums respect subtraction of tables. -/
+theorem colSum_sub {m n : ℕ} (T S : Table m n) (j : Fin n) :
+    colSum (T - S) j = colSum T j - colSum S j := by
+  simp [colSum, Finset.sum_sub_distrib]
+
+/-- **Every row sum of a basic move is zero.**  The `+1` at `(i,j')` and the `-1`
+at `(i,j)` cancel within row `i`, and likewise the `+1` at `(i',j)` and `-1` at
+`(i',j')` cancel within row `i'`; all other rows are empty.  This holds for all
+indices, even degenerate ones. -/
+theorem basicMove_rowSum {m n : ℕ} (i i' : Fin m) (j j' : Fin n) (a : Fin m) :
+    rowSum (basicMove i i' j j') a = 0 := by
+  simp only [rowSum, basicMove, Finset.sum_sub_distrib, Finset.sum_add_distrib,
+    sum_col_ite]
+  ring
+
+/-- **Every column sum of a basic move is zero.**  Dual to `basicMove_rowSum`. -/
+theorem basicMove_colSum {m n : ℕ} (i i' : Fin m) (j j' : Fin n) (b : Fin n) :
+    colSum (basicMove i i' j j') b = 0 := by
+  simp only [colSum, basicMove, Finset.sum_sub_distrib, Finset.sum_add_distrib,
+    sum_row_ite]
+  ring
+
+/-- **The total sum of a basic move is zero.**  Immediate from
+`basicMove_rowSum`, since the grand total is the sum of the (all-zero) row sums. -/
+theorem basicMove_totalSum_zero {m n : ℕ} (i i' : Fin m) (j j' : Fin n) :
+    totalSum (basicMove i i' j j') = 0 := by
+  simp [totalSum, basicMove_rowSum]
+
+/-- **Adding a basic move preserves every margin.**  Hence `T` and
+`T + basicMove i i' j j'` lie in the same fiber.  (Stated with `T + move` on the
+left so that it reads "the moved table has the same margins as the original".) -/
+theorem basicMove_sameMargins {m n : ℕ} (T : Table m n) (i i' : Fin m) (j j' : Fin n) :
+    sameMargins (T + basicMove i i' j j') T := by
+  refine ⟨fun a => ?_, fun b => ?_⟩
+  · rw [rowSum_add, basicMove_rowSum]; ring
+  · rw [colSum_add, basicMove_colSum]; ring
+
+/-- A table is **nonnegative** when all of its entries are `≥ 0`, i.e. it is a
+genuine array of counts. -/
+def Nonneg {m n : ℕ} (T : Table m n) : Prop := ∀ a b, 0 ≤ T a b
+
+/-- The **legal one-step move** relation: `LegalBasicStep u v` holds when `v` is
+obtained from `u` by adding a non-degenerate basic move (`i ≠ i'`, `j ≠ j'`) and
+both `u` and `v` are nonnegative tables.  These are the edges of the Markov
+graph on a fiber. -/
+def LegalBasicStep {m n : ℕ} (u v : Table m n) : Prop :=
+  ∃ (i i' : Fin m) (j j' : Fin n),
+    i ≠ i' ∧ j ≠ j' ∧ v = u + basicMove i i' j j' ∧ Nonneg u ∧ Nonneg v
+
+/-- **Soundness of one legal step.**  A legal basic move connects two tables in
+the same fiber: if `LegalBasicStep u v` then `u` and `v` have the same margins.
+This is the "easy" half of fiber connectivity, and the part this file is about. -/
+theorem LegalBasicStep.sameMargins {m n : ℕ} {u v : Table m n}
+    (h : LegalBasicStep u v) : sameMargins u v := by
+  obtain ⟨i, i', j, j', _, _, hv, _, _⟩ := h
+  subst hv
+  refine ⟨fun a => ?_, fun b => ?_⟩
+  · rw [rowSum_add, basicMove_rowSum]; ring
+  · rw [colSum_add, basicMove_colSum]; ring
+
+/-- **Kernel lemma.**  If `u` and `v` have the same margins then their difference
+`u - v` lies in the lattice kernel of the margin map: all of its row sums and all
+of its column sums vanish.  This is the algebraic object whose lattice of moves
+the basic moves are meant to generate. -/
+theorem sameMargins_sub {m n : ℕ} {u v : Table m n} (h : sameMargins u v) :
+    (∀ i, rowSum (u - v) i = 0) ∧ (∀ j, colSum (u - v) j = 0) := by
+  obtain ⟨hr, hc⟩ := h
+  refine ⟨fun i => ?_, fun j => ?_⟩
+  · rw [rowSum_sub, hr]; ring
+  · rw [colSum_sub, hc]; ring
+
+end MarkovBases.TwoWay

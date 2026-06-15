@@ -1,0 +1,317 @@
+/-
+  # Tropical Lipschitz Stability of Rips Filtrations from Valuation-Depth Envelopes
+
+  Bridge: connects **metric filtrations / persistent homology**
+  (`Applications/PoincareData/MetricFiltration.lean`), **tropical–ultrametric algebra**
+  (`Bridges/CategoricalTropicalUltrametric.lean`), and **p-adic valuation depth**
+  (`Computation/PadicValuationDepth.lean`).
+
+  **Core principle.** A *valuation-depth envelope* is a symmetric, reflexive,
+  non-negative "distance" `D : α → α → ℝ` (a `DistEnvelope`). From any such envelope we
+  build a Rips graph filtration `E.rips ε` exactly as in `MetricFiltration.lean`, but for
+  an *arbitrary* envelope rather than a fixed `PseudoMetricSpace` distance. This frees the
+  filtration from the triangle inequality and lets us perturb the envelope.
+
+  The mathematical message has four movements:
+
+  1. **Lipschitz interleaving (Movement A).** If two envelopes are within `δ` in sup-norm,
+     their Rips filtrations are `δ`-interleaved: `E.rips ε ≤ E'.rips (ε + δ)`. This is the
+     edge-level stability theorem; it *generalizes* `sphere_perturbation_stability` from
+     `MetricFiltration.lean` (which is the special case of perturbing one center distance).
+
+  2. **Tropical rigidity (Movement B).** When the envelope is *ultrametric*
+     (`D x z ≤ max (D x y) (D y z)`, i.e. the **tropical** strong triangle inequality where
+     `max = ⊕` is tropical addition, cf. `add_eq_max'` in `CategoricalTropicalUltrametric`),
+     the relation `D x y ≤ ε` is an **equivalence relation**, so each Rips graph is a
+     disjoint union of cliques. Consequently graph *reachability* collapses to a *single
+     distance comparison*: `Reachable x y ↔ x = y ∨ D x y ≤ ε`. Persistent connectivity is
+     governed by the raw valuation distance, with no chains.
+
+  3. **Tropical Lipschitz stability / denoising (Movement C — capstone).** Combining A and B:
+     if `E` is an ultrametric (valuation-depth) envelope and `E'` is any `δ`-perturbation of
+     it, then connectivity in the *noisy* filtration `E'.rips ε` recovers the *true*
+     ultrametric distance up to `δ`:  `(E'.rips ε).Reachable x y → x = y ∨ D x y ≤ ε + δ`.
+
+  4. **Realizing ultrametric envelopes from valuation depth (Movement D).** A symmetric
+     "shared-depth" function `v` with the min-superadditivity `min (v x y) (v y z) ≤ v x z`
+     (the defining property of p-adic valuations and longest-common-prefix depths) yields,
+     via `D x y = b^{-v x y}` (`b ≥ 1`), an ultrametric envelope. This is the
+     non-Archimedean `|x - y|_p = p^{-v_p(x-y)}` construction, tying the whole development
+     back to `PadicValuationDepth.lean`.
+
+  ## Main results
+  * `DistEnvelope`                       — generalized symmetric distance data
+  * `DistEnvelope.rips`                  — Rips graph of an envelope at scale `ε`
+  * `DistEnvelope.rips_mono`             — filtration monotonicity
+  * `DistEnvelope.rips_interleave_le`    — one-sided Lipschitz interleaving (Movement A)
+  * `DistEnvelope.rips_interleave`       — two-sided `δ`-interleaving from sup-distance
+  * `DistEnvelope.IsUltrametric`         — tropical strong-triangle predicate
+  * `DistEnvelope.ultrametric_ball_trans`/`_equivalence` — tropical rigidity (Movement B)
+  * `DistEnvelope.ultrametric_reachable_iff` — reachability = single distance comparison
+  * `DistEnvelope.tropical_rips_lipschitz_stability` — capstone denoising (Movement C)
+  * `DistEnvelope.valDepthEnvelope` / `valDepthEnvelope_isUltrametric`
+        — valuation-depth → ultrametric (Movement D)
+  * `DistEnvelope.isUltrametric_iff_sublevel_transitive`
+        — tropical rigidity is a *characterization* of ultrametricity (bonus)
+-/
+import Mathlib
+
+open Function
+
+noncomputable section
+
+namespace TropicalRipsLipschitz
+
+universe u
+variable {α : Type u}
+
+/-! ## §1. Valuation-depth envelopes and their Rips filtration
+
+A `DistEnvelope` packages the minimal data needed to build a Rips filtration: a symmetric,
+reflexive, non-negative real "distance". No triangle inequality is assumed, so envelopes can
+be perturbed freely — this is what makes Lipschitz stability statements meaningful. -/
+
+/-- A **valuation-depth envelope**: symmetric, reflexive, non-negative dissimilarity data.
+    Generalizes a `PseudoMetricSpace` distance by dropping the triangle inequality. -/
+structure DistEnvelope (α : Type u) where
+  /-- The dissimilarity / envelope value. -/
+  D : α → α → ℝ
+  /-- Symmetry. -/
+  symm : ∀ x y, D x y = D y x
+  /-- Reflexive points have zero envelope value. -/
+  refl : ∀ x, D x x = 0
+  /-- Non-negativity. -/
+  nonneg : ∀ x y, 0 ≤ D x y
+
+namespace DistEnvelope
+
+/-- The **Rips graph** of an envelope at scale `ε`: distinct points are adjacent iff their
+    envelope value is `≤ ε`. For `E = ofPseudoMetric`, this is definitionally `ripsGraph`. -/
+def rips (E : DistEnvelope α) (ε : ℝ) : SimpleGraph α where
+  Adj x y := x ≠ y ∧ E.D x y ≤ ε
+  symm := by
+    rintro x y ⟨hne, hd⟩
+    exact ⟨hne.symm, by rw [E.symm]; exact hd⟩
+  loopless := ⟨fun _ h => h.1 rfl⟩
+
+@[simp] theorem rips_adj (E : DistEnvelope α) (ε : ℝ) (x y : α) :
+    (E.rips ε).Adj x y ↔ x ≠ y ∧ E.D x y ≤ ε := Iff.rfl
+
+/-- Filtration monotonicity: a larger scale yields a supergraph. Generalizes
+    `ripsGraph_mono` from `MetricFiltration.lean`. -/
+theorem rips_mono (E : DistEnvelope α) {ε₁ ε₂ : ℝ} (h : ε₁ ≤ ε₂) :
+    E.rips ε₁ ≤ E.rips ε₂ := by
+  rintro x y ⟨hne, hd⟩
+  exact ⟨hne, le_trans hd h⟩
+
+/-- Boundary: at negative scale the Rips graph is empty. -/
+theorem rips_bot_of_neg (E : DistEnvelope α) {ε : ℝ} (hε : ε < 0) :
+    E.rips ε = ⊥ := by
+  ext x y
+  simp only [rips_adj, SimpleGraph.bot_adj, iff_false, not_and]
+  intro _ hd
+  linarith [E.nonneg x y]
+
+/-! ## §2. Movement A — Lipschitz interleaving stability -/
+
+-- !-- Lab Notes -- !--
+-- HYPOTHESIS (A): "Rips filtrations are 1-Lipschitz in the envelope (sup-norm)."
+-- We first proved the one-sided form `rips_interleave_le` from the bound
+-- `E'.D x y ≤ E.D x y + δ`; the two-sided `rips_interleave` then drops out of the absolute
+-- value. EXPERIMENT: we initially tried to phrase interleaving via an explicit graph
+-- isomorphism shift; that was the wrong abstraction (graphs share the same vertex set α,
+-- so the interleaving is literally a subgraph inclusion at shifted scale, not a map).
+-- INSIGHT: this is exactly the classical persistence stability theorem specialized to the
+-- 0-skeleton, and it *generalizes* `sphere_perturbation_stability`: perturbing X to Y with
+-- dist(Xᵢ,Yᵢ) ≤ δ perturbs the envelope D(i,j)=dist(Xᵢ,Xⱼ) by ≤ 2δ (triangle), giving a
+-- 2δ-interleaving of the point-cloud Rips filtrations. -- !--
+
+/-- **One-sided Lipschitz interleaving.** If `E'` overestimates `E` by at most `δ`
+    pointwise, then `E`'s Rips graph at scale `ε` embeds in `E'`'s at scale `ε + δ`. -/
+theorem rips_interleave_le (E E' : DistEnvelope α) {δ : ℝ}
+    (h : ∀ x y, E'.D x y ≤ E.D x y + δ) {ε : ℝ} :
+    E.rips ε ≤ E'.rips (ε + δ) := by
+  rintro x y ⟨hxy, hD⟩
+  exact ⟨hxy, by linarith [h x y]⟩
+
+/-- **Two-sided `δ`-interleaving** from a sup-norm bound `|D - D'| ≤ δ`: the two Rips
+    filtrations interleave at scale shift `δ` in both directions. -/
+theorem rips_interleave (E E' : DistEnvelope α) {δ : ℝ}
+    (h : ∀ x y, |E.D x y - E'.D x y| ≤ δ) {ε : ℝ} :
+    E.rips ε ≤ E'.rips (ε + δ) ∧ E'.rips ε ≤ E.rips (ε + δ) := by
+  refine ⟨rips_interleave_le E E' (fun x y => ?_), rips_interleave_le E' E (fun x y => ?_)⟩
+  · linarith [abs_le.mp (h x y)]
+  · linarith [abs_le.mp (h x y)]
+
+/-! ## §3. Movement B — Tropical rigidity of ultrametric envelopes -/
+
+/-- An envelope is **ultrametric** when it satisfies the *tropical* strong triangle
+    inequality `D x z ≤ max (D x y) (D y z)`. Here `max` is tropical addition `⊕`
+    (cf. `add_eq_max'` in `CategoricalTropicalUltrametric`). -/
+def IsUltrametric (E : DistEnvelope α) : Prop :=
+  ∀ x y z, E.D x z ≤ max (E.D x y) (E.D y z)
+
+-- !-- Lab Notes -- !--
+-- HYPOTHESIS (B): "Ultrametric Rips graphs are disjoint unions of cliques; reachability
+-- collapses to a single distance comparison." The engine is `ultrametric_ball_trans`:
+-- D x y ≤ ε and D y z ≤ ε ⟹ D x z ≤ max(D x y, D y z) ≤ ε. So `(· ≤ ε)`-balls are
+-- transitive, hence (with symm + refl) the relation `D · · ≤ ε` is an equivalence.
+-- FAILURE ANALYSIS: a tempting but FALSE generalization is "in a general metric, two-step
+-- reachability gives D x z ≤ 2ε"; that 2ε factor is exactly the non-tropical defect that
+-- the ultrametric (max instead of +) eliminates. The whole rigidity phenomenon IS the gap
+-- between `max` and `+`, i.e. between tropical and classical addition. -- !--
+
+/-- The **tropical engine**: in an ultrametric envelope, `(· ≤ ε)`-balls are transitive.
+    This is the single distance comparison that classical (non-tropical) metrics lack. -/
+theorem ultrametric_ball_trans (E : DistEnvelope α) (hu : E.IsUltrametric) {ε : ℝ}
+    {x y z : α} (hxy : E.D x y ≤ ε) (hyz : E.D y z ≤ ε) : E.D x z ≤ ε :=
+  le_trans (hu x y z) (max_le hxy hyz)
+
+/-- In an ultrametric envelope the relation `fun x y => x = y ∨ D x y ≤ ε` is an
+    equivalence relation. (Reflexivity needs no sign hypothesis thanks to the `x = y`
+    disjunct.) This is the "Rips graph = union of cliques" statement at the relational
+    level. -/
+theorem ultrametric_rel_equivalence (E : DistEnvelope α) (hu : E.IsUltrametric) (ε : ℝ) :
+    Equivalence (fun x y => x = y ∨ E.D x y ≤ ε) := by
+  refine ⟨fun x => Or.inl rfl, ?_, ?_⟩
+  · rintro x y (rfl | h)
+    · exact Or.inl rfl
+    · exact Or.inr (by rw [E.symm]; exact h)
+  · rintro x y z (rfl | hxy) (rfl | hyz)
+    · exact Or.inl rfl
+    · exact Or.inr hyz
+    · exact Or.inr hxy
+    · exact Or.inr (ultrametric_ball_trans E hu hxy hyz)
+
+/-- **Reachability = single distance comparison.** In an ultrametric envelope, two points
+    are connected in the Rips graph at scale `ε` iff they are equal or already within `ε`.
+    Persistent connectivity is governed by the raw valuation distance, with no chains. -/
+theorem ultrametric_reachable_iff (E : DistEnvelope α) (hu : E.IsUltrametric) (ε : ℝ)
+    (x y : α) : (E.rips ε).Reachable x y ↔ (x = y ∨ E.D x y ≤ ε) := by
+  refine ⟨fun h => ?_, fun h => ?_⟩
+  · obtain ⟨p⟩ := h
+    induction p with
+    | nil => exact Or.inl rfl
+    | @cons a b c hadj _ ih =>
+        exact (ultrametric_rel_equivalence E hu ε).trans (Or.inr hadj.2) ih
+  · rcases h with rfl | hd
+    · exact SimpleGraph.Reachable.refl x
+    · by_cases hxy : x = y
+      · exact hxy ▸ SimpleGraph.Reachable.refl x
+      · exact (SimpleGraph.Adj.reachable ⟨hxy, hd⟩)
+
+/-! ## §4. Movement C — Capstone: tropical Lipschitz stability (denoising) -/
+
+-- !-- Lab Notes -- !--
+-- HYPOTHESIS (C): "An ultrametric (valuation-depth) envelope can be DENOISED through its
+-- Rips connectivity: even after a δ-perturbation that destroys the ultrametric property,
+-- graph reachability in the noisy filtration recovers the TRUE distance up to δ."
+-- PROOF STRATEGY: transport reachability across the interleaving inclusion
+-- `E'.rips ε ≤ E.rips (ε + δ)` (Movement A, using only the one-sided bound
+-- E.D ≤ E'.D + δ), then apply Movement B's `ultrametric_reachable_iff` to the *clean*
+-- envelope E at scale ε + δ. INSIGHT: only the clean envelope needs to be tropical; the
+-- noise E' is arbitrary. This is the precise sense in which valuation-depth envelopes are
+-- "Lipschitz stable" — and why the tropical hypothesis lives on the ground truth, not the
+-- data. -- !--
+
+/-- **Tropical Lipschitz stability / denoising (capstone).** Let `E` be an ultrametric
+    valuation-depth envelope and `E'` any envelope within sup-distance `δ`. If `x` and `y`
+    are connected in the *noisy* Rips filtration `E'.rips ε`, then the *true* ultrametric
+    distance satisfies `D x y ≤ ε + δ` (or `x = y`). The clean ground-truth distance is
+    recovered from noisy connectivity up to the perturbation level. -/
+theorem tropical_rips_lipschitz_stability (E E' : DistEnvelope α) (hu : E.IsUltrametric)
+    {δ : ℝ} (hδ : ∀ x y, |E.D x y - E'.D x y| ≤ δ) {ε : ℝ} {x y : α}
+    (hreach : (E'.rips ε).Reachable x y) : x = y ∨ E.D x y ≤ ε + δ := by
+  have hsub : E'.rips ε ≤ E.rips (ε + δ) :=
+    rips_interleave_le E' E (fun x y => by linarith [abs_le.mp (hδ x y)])
+  exact (ultrametric_reachable_iff E hu (ε + δ) x y).mp (hreach.mono hsub)
+
+/-! ## §5. Movement D — Realizing ultrametric envelopes from valuation depth -/
+
+-- !-- Lab Notes -- !--
+-- HYPOTHESIS (D): "Genuine valuation/depth data yields ultrametric envelopes." A symmetric
+-- 'shared-depth' v with the MIN-superadditivity `min (v x y) (v y z) ≤ v x z` — the
+-- defining law of p-adic valuations v_p and of longest-common-prefix depths — produces an
+-- ultrametric via D x y = b^{-v x y}, b ≥ 1 (the |x-y|_p = p^{-v_p(x-y)} construction).
+-- KEY ALGEBRA: monotonicity of t ↦ b^t (b ≥ 1) turns `min` on valuations into `max` on
+-- envelope values: b^{-v x z} ≤ b^{-min(v x y, v y z)} = max(b^{-v x y}, b^{-v y z}).
+-- This is precisely the tropical "valuation ↦ ultrametric seminorm" functor of
+-- CategoricalTropicalUltrametric, made concrete and connected to PadicValuationDepth's
+-- "composition uses max not sum" law. EXPERIMENT note: we use `if x = y then 0` for the
+-- diagonal because finite-valued v cannot send v x x ↦ ∞; the conditional gives refl = 0
+-- cleanly and is harmless for the ultrametric case analysis. -- !--
+
+/-- The **valuation-depth envelope** of a symmetric depth function `v` with base `b ≥ 1`:
+    `D x y = b^{-v x y}` off the diagonal and `0` on it. Models `|x - y|_p = p^{-v_p(x-y)}`. -/
+def valDepthEnvelope [DecidableEq α] (v : α → α → ℝ) (b : ℝ) (hb : 1 ≤ b)
+    (hsymm : ∀ x y, v x y = v y x) : DistEnvelope α where
+  D := fun x y => if x = y then 0 else b ^ (- v x y)
+  symm := by
+    intro x y
+    by_cases hxy : x = y
+    · subst hxy; simp
+    · rw [if_neg hxy, if_neg (fun h => hxy h.symm), hsymm]
+  refl := by intro x; simp
+  nonneg := by
+    intro x y
+    by_cases hxy : x = y
+    · simp [hxy]
+    · rw [if_neg hxy]; positivity
+
+/-- **Valuation depth ⟹ ultrametric.** If `v` is symmetric and min-superadditive
+    (`min (v x y) (v y z) ≤ v x z`), the valuation-depth envelope is ultrametric. This is
+    the concrete realization of the tropical valuation-reconstruction functor. -/
+theorem valDepthEnvelope_isUltrametric [DecidableEq α] (v : α → α → ℝ) (b : ℝ) (hb : 1 ≤ b)
+    (hsymm : ∀ x y, v x y = v y x) (hmin : ∀ x y z, min (v x y) (v y z) ≤ v x z) :
+    (valDepthEnvelope v b hb hsymm).IsUltrametric := by
+  intro x y z
+  by_cases hxy : x = y <;> by_cases hxz : x = z <;> by_cases hyz : y = z <;>
+    simp_all +decide
+  · simp +decide [valDepthEnvelope, hxy, hyz]
+    exact Or.inl (by positivity)
+  · simp +decide [valDepthEnvelope, hxy, hxz, hyz]
+    cases hmin x y z <;> [left; right] <;>
+      exact Real.rpow_le_rpow_of_exponent_le hb (by linarith)
+
+/-! ## §6. Cross-connection to `MetricFiltration.lean` and the tropical semiring -/
+
+/-- Every `PseudoMetricSpace` distance is a valuation-depth envelope. Its Rips graph has the
+    same adjacency as `ripsGraph` from `Applications/PoincareData/MetricFiltration.lean`. -/
+def ofPseudoMetric (α : Type u) [PseudoMetricSpace α] : DistEnvelope α where
+  D := dist
+  symm := fun x y => dist_comm x y
+  refl := fun x => dist_self x
+  nonneg := fun _ _ => dist_nonneg
+
+@[simp] theorem ofPseudoMetric_rips_adj (α : Type u) [PseudoMetricSpace α] (ε : ℝ)
+    (x y : α) : ((ofPseudoMetric α).rips ε).Adj x y ↔ x ≠ y ∧ dist x y ≤ ε := Iff.rfl
+
+/-- The tropical strong-triangle inequality phrased with the lattice `⊔` (= `max`), the
+    tropical addition `⊕` of `CategoricalTropicalUltrametric`. Definitionally the same as
+    `IsUltrametric`; recorded to make the tropical bridge explicit. -/
+theorem isUltrametric_iff_sup (E : DistEnvelope α) :
+    E.IsUltrametric ↔ ∀ x y z, E.D x z ≤ E.D x y ⊔ E.D y z := Iff.rfl
+
+-- !-- Lab Notes -- !--
+-- BONUS (rigidity characterization). Movement B used ultrametric ⟹ every sublevel relation
+-- `D · · ≤ ε` is transitive. The CONVERSE is also true and clean: instantiating the
+-- transitivity hypothesis at `ε = max (D x y) (D y z)` (which makes both premises hold)
+-- forces `D x z ≤ max (D x y) (D y z)`, i.e. ultrametricity. So "all Rips graphs are
+-- disjoint unions of cliques" is EXACTLY the tropical strong-triangle inequality — a purely
+-- order-combinatorial characterization of being ultrametric. -- !--
+
+/-- **Tropical rigidity is a characterization.** An envelope is ultrametric iff *every*
+    sublevel relation `D x y ≤ ε` is transitive (equivalently, every Rips graph is a
+    disjoint union of cliques). The forward direction is `ultrametric_ball_trans`; the
+    converse instantiates transitivity at `ε = max (D x y) (D y z)`. -/
+theorem isUltrametric_iff_sublevel_transitive (E : DistEnvelope α) :
+    E.IsUltrametric ↔ ∀ ε : ℝ, Transitive (fun x y => E.D x y ≤ ε) := by
+  constructor
+  · intro hu ε x y z hxy hyz
+    exact ultrametric_ball_trans E hu hxy hyz
+  · intro h x y z
+    exact h (max (E.D x y) (E.D y z)) (le_max_left _ _) (le_max_right _ _)
+
+end DistEnvelope
+
+end TropicalRipsLipschitz

@@ -1,0 +1,124 @@
+import Mathlib
+import MachineLearning.TropicalReLUBridge
+
+/-!
+# Diophantine approximation on ReLU networks, I: rational closure
+
+A feed-forward ReLU network is built out of three operations: affine combination
+(`+`, `*`), the rectifier `ReLU t = max t 0`, and summation of hidden units.
+Each of these operations *preserves rationality*: starting from rational weights,
+biases, and inputs one can never leave `ℚ`.  Consequently a ReLU network whose
+parameters are all rational, evaluated at a rational input, produces a **rational**
+output — and therefore can never *equal* an irrational constant such as `π`.
+
+This is the Diophantine heart of the question "how well can ReLU approximate `π`?":
+with real weights the question is vacuous (the constant network `f ≡ π` is exact),
+so the only meaningful regime is *bounded-complexity* (here: rational) parameters,
+in which exact representation is **impossible** and one is forced into genuine
+approximation (quantified in the companion file `LeibnizRate.lean`).
+
+We reuse the catalog's one-hidden-layer network
+`MachineLearning.TropicalReLUBridge.reluNet`
+(which `reluNet_isTropRational` identifies with a tropical rational function), so
+the impossibility theorem below applies verbatim to that tropical-rational class.
+
+-- !-- Lab Notes -- !--
+Hypothesis (Hypothesizer): the operations of a ReLU network form a *field-like*
+  closed system on the rationals, so rational nets are "blind" to irrational
+  targets — they can approach but never hit `π`.
+Experiment (Experimenter): formalize a `RatPt` predicate (a real that is the cast
+  of a rational), prove it closed under `+, *, max, neg, finite sums`, lift the
+  closure through `affEval`, `relu` and `reluNet`, and finish with `irrational_pi`.
+Analysis (Analyst): closure is *robust* — `max` is handled by a value-by-value
+  case split, so even the nonlinearity respects ℚ.  The one subtlety is that the
+  affine input layer needs *both* the weights and the evaluation point rational.
+Critique (Critic): the result is non-vacuous precisely because Mathlib certifies
+  `Irrational π`; the theorem would be false for rational targets, so the
+  hypothesis `irrational_pi` is genuinely load-bearing, not decorative.
+-- !-- -- !--
+-/
+
+noncomputable section
+
+open TropicalReLUBridge
+
+namespace ReLUDiophantine
+
+/-- A real number that is the image of a rational under the canonical cast,
+i.e. a "rational point" of `ℝ`.  Equivalently `¬ Irrational x`. -/
+def RatPt (x : ℝ) : Prop := ∃ q : ℚ, (q : ℝ) = x
+
+@[simp] theorem ratPt_ratCast (q : ℚ) : RatPt (q : ℝ) := ⟨q, rfl⟩
+
+theorem ratPt_zero : RatPt 0 := ⟨0, by simp⟩
+
+theorem ratPt_one : RatPt 1 := ⟨1, by simp⟩
+
+theorem RatPt.add {x y : ℝ} (hx : RatPt x) (hy : RatPt y) : RatPt (x + y) := by
+  obtain ⟨a, ha⟩ := hx; obtain ⟨b, hb⟩ := hy
+  exact ⟨a + b, by push_cast; rw [ha, hb]⟩
+
+theorem RatPt.neg {x : ℝ} (hx : RatPt x) : RatPt (-x) := by
+  obtain ⟨a, ha⟩ := hx; exact ⟨-a, by push_cast; rw [ha]⟩
+
+theorem RatPt.mul {x y : ℝ} (hx : RatPt x) (hy : RatPt y) : RatPt (x * y) := by
+  obtain ⟨a, ha⟩ := hx; obtain ⟨b, hb⟩ := hy
+  exact ⟨a * b, by push_cast; rw [ha, hb]⟩
+
+theorem RatPt.max {x y : ℝ} (hx : RatPt x) (hy : RatPt y) : RatPt (max x y) := by
+  obtain ⟨a, ha⟩ := hx; obtain ⟨b, hb⟩ := hy
+  rcases le_total x y with h | h
+  · exact ⟨b, by rw [max_eq_right h, hb]⟩
+  · exact ⟨a, by rw [max_eq_left h, ha]⟩
+
+theorem RatPt.sum {ι : Type*} (s : Finset ι) (g : ι → ℝ)
+    (h : ∀ i ∈ s, RatPt (g i)) : RatPt (∑ i ∈ s, g i) := by
+  classical
+  induction s using Finset.induction with
+  | empty => simpa using ratPt_zero
+  | insert a s ha ih =>
+    rw [Finset.sum_insert ha]
+    exact (h a (Finset.mem_insert_self a s)).add
+      (ih (fun i hi => h i (Finset.mem_insert_of_mem hi)))
+
+/-- `relu` preserves rationality. -/
+theorem RatPt.relu {t : ℝ} (ht : RatPt t) : RatPt (relu t) := by
+  simpa [TropicalReLUBridge.relu] using ht.max ratPt_zero
+
+/-- `affEval` preserves rationality, given rational weights, bias and input. -/
+theorem RatPt.affEval {d : ℕ} (ab : (Fin d → ℝ) × ℝ) (x : Fin d → ℝ)
+    (hw : ∀ j, RatPt (ab.1 j)) (hb : RatPt ab.2) (hx : ∀ j, RatPt (x j)) :
+    RatPt (affEval ab x) := by
+  refine (RatPt.sum Finset.univ (fun j => ab.1 j * x j) ?_).add hb
+  exact fun j _ => (hw j).mul (hx j)
+
+/-- **Rational closure of a one-hidden-layer ReLU network.**  A `reluNet` with all
+parameters rational, evaluated at a rational input, has a rational output. -/
+theorem RatPt.reluNet {d n : ℕ} (A : Fin n → (Fin d → ℝ)) (bh : Fin n → ℝ)
+    (c : Fin n → ℝ) (b0 : ℝ) (x : Fin d → ℝ)
+    (hA : ∀ i j, RatPt (A i j)) (hbh : ∀ i, RatPt (bh i))
+    (hc : ∀ i, RatPt (c i)) (hb0 : RatPt b0) (hx : ∀ j, RatPt (x j)) :
+    RatPt (reluNet A bh c b0 x) := by
+  refine hb0.add (RatPt.sum Finset.univ _ ?_)
+  intro i _
+  exact (hc i).mul (RatPt.relu (RatPt.affEval (A i, bh i) x (hA i) (hbh i) hx))
+
+/-- A rational point of `ℝ` is never `π`. -/
+theorem RatPt.ne_pi {x : ℝ} (hx : RatPt x) : x ≠ Real.pi := by
+  obtain ⟨q, hq⟩ := hx
+  rw [← hq]
+  intro h
+  exact irrational_pi ⟨q, h⟩
+
+/-- **Impossibility of exact representation.**  No one-hidden-layer ReLU network
+with rational parameters, evaluated at a rational input, can equal `π`.  Exact
+representation of `π` is impossible in the rational-parameter regime; only
+approximation (see `LeibnizRate.lean`) is available. -/
+theorem reluNet_ne_pi {d n : ℕ} (A : Fin n → (Fin d → ℝ)) (bh : Fin n → ℝ)
+    (c : Fin n → ℝ) (b0 : ℝ) (x : Fin d → ℝ)
+    (hA : ∀ i j, RatPt (A i j)) (hbh : ∀ i, RatPt (bh i))
+    (hc : ∀ i, RatPt (c i)) (hb0 : RatPt b0) (hx : ∀ j, RatPt (x j)) :
+    reluNet A bh c b0 x ≠ Real.pi :=
+  (RatPt.reluNet A bh c b0 x hA hbh hc hb0 hx).ne_pi
+
+end ReLUDiophantine

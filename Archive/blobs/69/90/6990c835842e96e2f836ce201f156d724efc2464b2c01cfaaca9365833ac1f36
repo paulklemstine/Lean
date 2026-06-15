@@ -1,0 +1,399 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+-/
+import Mathlib
+
+/-!
+# Complexity Phase Structure of the Additive (Rule-90) Cellular Automaton
+
+This file develops a machine-checked **algorithmic-complexity analysis** of the
+one-dimensional additive nearest-neighbour cellular automaton over `𝔽₂`
+("Rule 90"), the automaton whose time-`t` space-time row started from a single
+seed is the `t`-th row of Pascal's triangle reduced mod `2`.
+
+It is the *complexity-theoretic* companion to the catalog's algebraic treatment
+`Catalog/Novelty/AdditiveCAPadicRenorm.lean` (the `AdditiveCA` namespace), which
+encodes configurations as Laurent polynomials and proves the renormalization
+tower `(T + T⁻¹)^(2^k) = T^(2^k) + T^(−2^k)` (`AdditiveCA.caOp_renorm`) and the
+generating-function closed form `(T + T⁻¹)^n = ∑_{k≤n} C(n,k) T^(2k−n)`
+(`AdditiveCA.caOp_binomial`).  Here we take the **number of live cells**
+(positions carrying an odd binomial coefficient) in row `t` as an explicit,
+computable *compression proxy* / description-length witness, and analyze how it
+behaves across time.
+
+## The conjecture being tested
+
+The motivating cryptographic conjecture posits a **sharp single threshold**: a
+scaling regime `t ≷ c·log n` below which space-time diagrams are highly
+compressible (sublinear complexity density) and above which the complexity
+density is uniformly bounded away from `0`.
+
+## What we actually prove (adversarial ground truth)
+
+For this concrete, minimal additive rule the truth is **sharper and stranger**
+than a monotone threshold:
+
+* `mersenne_row_odd` / `complexity_mersenne` — at *Mersenne times* `t = 2^k − 1`
+  the row is **completely full**: every one of its `2^k` cells is live, so the
+  complexity density is exactly `1` (maximal incompressibility).
+* `pow_two_row_even` / `complexity_pow_two` — at *power-of-two times* `t = 2^k`
+  the row collapses to just **two** live cells (the light-cone rays of
+  `AdditiveCA.caOp_renorm`), so the complexity density is `2/(2^k+1) → 0`.
+* `density_mersenne`, `density_pow_two` — the exact density values above.
+* `density_full_infinitely_often` — density `= 1` happens at arbitrarily large
+  times.
+* `density_not_bounded_below` — density drops below **any** positive `c` at
+  arbitrarily large times.
+
+Together the last two theorems **refute** the existence of any uniform
+positive-density floor (hence any clean monotone `c·log n` threshold) for this
+rule, while simultaneously **confirming** that genuine maximal-complexity rows
+recur forever.  The "phase" is governed not by `t` versus `log n` but by the
+*binary digit structure* of `t`: the complexity oscillates between the two
+extremes infinitely often.
+
+## Main results
+* `mersenne_row_odd`     — full Mersenne rows (via Lucas' theorem).
+* `pow_two_row_even`     — sparse power-of-two rows (via Kummer / `p`-adic valuation).
+* `complexity_mersenne`  — `complexity (2^k − 1) = 2^k`.
+* `complexity_pow_two`   — `complexity (2^k) = 2` for `k ≥ 1`.
+* `density_mersenne`     — density `= 1` at Mersenne times.
+* `density_pow_two`      — density `= 2/(2^k+1)` at power-of-two times.
+* `density_full_infinitely_often`, `density_not_bounded_below` — the oscillation.
+
+## Catalog synthesis
+This bridges three domains of the catalog: the **dynamical-systems / number-theory**
+algebra of `AdditiveCA` (Frobenius renormalization), the **combinatorics** of
+binomial coefficients mod `2` (Lucas, Kummer), and the **cryptography** theme of
+incompressibility / pseudorandomness, by turning the abstract Sierpiński
+self-similarity into a quantitative, refutable statement about description-length
+density.
+-/
+
+open Nat Finset
+
+namespace AdditiveCAComplexity
+
+/-! ## Digit lemma for Mersenne numbers -/
+
+-- !-- Every low-order base-2 digit of `2^a − 1` is `1`: this is the algebraic
+-- reason a Mersenne-time row of Pascal's triangle mod 2 is completely full. -- !--
+theorem bit_mers (a i : ℕ) (h : i < a) : (2 ^ a - 1) / 2 ^ i % 2 = 1 := by
+  have ht := Nat.testBit_two_pow_sub_one a i
+  rw [Nat.testBit_eq_decide_div_mod_eq] at ht
+  simp only [h, decide_true] at ht
+  exact of_decide_eq_true ht
+
+/-! ## Parity of binomial coefficients along the two critical time families -/
+
+-- !-- Lab Notebook -- !--
+-- Hypothesis: At Mersenne times t = 2^a − 1 the whole Pascal row is odd, so the
+--   automaton's space-time row is fully "live" (maximally incompressible).
+-- Result: `mersenne_row_odd` — proven by Lucas' theorem; since every base-2 digit
+--   of 2^a−1 equals 1, every digit-wise factor `choose 1 (k_i)` is 1, product = 1.
+-- Insight: "Fullness" is exactly the statement that 2^a−1 is the all-ones mask, so
+--   every j ≤ 2^a−1 is a submask of it — a clean digit-combinatorial characterization.
+-- Failure analysis: A naive numeric `decide` is hopeless (rows are exponentially long);
+--   Lucas reduces an exponential count to an a-fold product of trivial 1×1 factors.
+
+-- !-- Full Mersenne row: for t = 2^a − 1 every binomial coefficient C(t, j) is odd.
+-- Proof: Lucas mod 2; each digit factor is `choose 1 b = 1`. -- !--
+theorem mersenne_row_odd (a j : ℕ) (hj : j ≤ 2 ^ a - 1) : Odd ((2 ^ a - 1).choose j) := by
+  haveI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  have h1 : (2 ^ a - 1) < 2 ^ a := by have : 1 ≤ 2 ^ a := Nat.one_le_two_pow; omega
+  have h2 : j < 2 ^ a := lt_of_le_of_lt hj h1
+  have hluc := Choose.choose_modEq_prod_range_choose_nat (p := 2) (a := a) h1 h2
+  have hprod : (∏ i ∈ range a, ((2 ^ a - 1) / 2 ^ i % 2).choose (j / 2 ^ i % 2)) = 1 := by
+    apply Finset.prod_eq_one
+    intro i hi
+    rw [Finset.mem_range] at hi
+    rw [bit_mers a i hi]
+    have : j / 2 ^ i % 2 < 2 := Nat.mod_lt _ (by norm_num)
+    interval_cases (j / 2 ^ i % 2) <;> rfl
+  rw [hprod] at hluc
+  rw [Nat.odd_iff]
+  unfold Nat.ModEq at hluc
+  simpa using hluc
+
+-- !-- Lab Notebook -- !--
+-- Hypothesis: At power-of-two times t = 2^k the row collapses to its two endpoints,
+--   matching the renormalization rays of `AdditiveCA.caOp_renorm`.
+-- Result: `pow_two_row_even` — every interior C(2^k, j), 0 < j < 2^k, is even,
+--   via Kummer's theorem in the form `factorization_choose_prime_pow_add_factorization`.
+-- Insight: v₂(C(2^k,j)) = k − v₂(j) ≥ 1 because v₂(j) < k for 0 < j < 2^k; this is the
+--   "freshman's dream" collapse seen algebraically as (a+b)^(2^k) = a^(2^k)+b^(2^k).
+-- Failure analysis: Needed `Nat.ordProj_dvd` to convert "v₂(j) ≥ k" into "2^k ∣ j",
+--   contradicting 0 < j < 2^k.
+
+-- !-- Sparse power-of-two row: every interior C(2^k, j) (0 < j < 2^k) is even.
+-- Proof: Kummer's theorem gives v₂(C(2^k,j)) = k − v₂(j) ≥ 1. -- !--
+theorem pow_two_row_even (k j : ℕ) (hj0 : 0 < j) (hjk : j < 2 ^ k) :
+    Even ((2 ^ k).choose j) := by
+  have hk : j ≤ 2 ^ k := le_of_lt hjk
+  have hadd := Nat.factorization_choose_prime_pow_add_factorization Nat.prime_two hk (by omega)
+  have hjval : j.factorization 2 < k := by
+    by_contra hcon
+    push_neg at hcon
+    have hd : 2 ^ k ∣ j := (pow_dvd_pow 2 hcon).trans (Nat.ordProj_dvd j 2)
+    have := Nat.le_of_dvd hj0 hd
+    omega
+  have hdvd : (2 : ℕ) ∣ (2 ^ k).choose j := Nat.dvd_of_factorization_pos (by omega)
+  exact (even_iff_two_dvd).mpr hdvd
+
+/-! ## The complexity proxy -/
+
+/-- Live cells of space-time row `t`: positions `k ≤ t` carrying an *odd* binomial
+coefficient `C(t,k)`.  These are exactly the cells equal to `1` in the additive-CA
+space-time diagram started from a single seed. -/
+def liveCells (t : ℕ) : Finset ℕ := (Finset.range (t + 1)).filter (fun k => Odd (t.choose k))
+
+/-- Complexity proxy of row `t`: the number of live cells (a computable lower-bound
+witness on the description length of the row). -/
+def complexity (t : ℕ) : ℕ := (liveCells t).card
+
+-- !-- The full Mersenne row has every one of its `2^k` cells live. -- !--
+theorem complexity_mersenne (a : ℕ) : complexity (2 ^ a - 1) = 2 ^ a := by
+  unfold complexity liveCells
+  have hfull :
+      (range (2 ^ a - 1 + 1)).filter (fun k => Odd ((2 ^ a - 1).choose k)) =
+        range (2 ^ a - 1 + 1) := by
+    apply Finset.filter_true_of_mem
+    intro k hk
+    rw [Finset.mem_range] at hk
+    exact mersenne_row_odd a k (by omega)
+  rw [hfull, Finset.card_range]
+  have : 1 ≤ 2 ^ a := Nat.one_le_two_pow
+  omega
+
+-- !-- The sparse power-of-two row (k ≥ 1) has exactly two live cells: the endpoints. -- !--
+theorem complexity_pow_two (k : ℕ) (hk : 1 ≤ k) : complexity (2 ^ k) = 2 := by
+  unfold complexity liveCells
+  have h2k : 2 ≤ 2 ^ k := by
+    calc 2 = 2 ^ 1 := (pow_one 2).symm
+      _ ≤ 2 ^ k := Nat.pow_le_pow_right (by norm_num) hk
+  have hset :
+      (range (2 ^ k + 1)).filter (fun j => Odd ((2 ^ k).choose j)) = {0, 2 ^ k} := by
+    ext j
+    simp only [Finset.mem_filter, Finset.mem_range, Finset.mem_insert, Finset.mem_singleton]
+    constructor
+    · rintro ⟨hj, hodd⟩
+      by_contra hcon
+      push_neg at hcon
+      obtain ⟨hj0, hjk⟩ := hcon
+      have hlt : j < 2 ^ k := by omega
+      have heven := pow_two_row_even k j (Nat.pos_of_ne_zero hj0) hlt
+      exact (Nat.not_even_iff_odd.mpr hodd) heven
+    · rintro (rfl | rfl)
+      · exact ⟨by positivity, by simp⟩
+      · exact ⟨by omega, by rw [Nat.choose_self]; exact odd_one⟩
+  rw [hset, Finset.card_pair (by omega)]
+
+/-! ## Complexity density and the phase oscillation -/
+
+-- !-- Lab Notebook -- !--
+-- Hypothesis: If the conjecture's "uniform positive density above a log threshold"
+--   held, the density (complexity t)/(t+1) would be ≥ some c>0 for all large t.
+-- Result: It is refuted: `density_not_bounded_below` shows density < any c at t = 2^k,
+--   while `density_full_infinitely_often` shows density = 1 at t = 2^k−1, both for
+--   arbitrarily large t.  The phase is set by the binary structure of t, not by log n.
+-- Insight: Linear (additive) automata are too algebraically rigid for a monotone
+--   randomness phase transition; their complexity profile is exactly self-similar and
+--   hence oscillatory.  Genuine monotone thresholds require nonlinearity.
+-- Failure analysis: An attempt to force a single threshold fails precisely because
+--   `complexity` is invariant under t ↦ 2t and doubles under t ↦ 2t+1 — scale symmetry.
+
+-- !-- Density is exactly 1 at Mersenne times: the row is completely incompressible. -- !--
+theorem density_mersenne (a : ℕ) :
+    (complexity (2 ^ a - 1) : ℝ) / ((2 ^ a - 1 : ℕ) + 1) = 1 := by
+  rw [complexity_mersenne]
+  have h1 : (1 : ℕ) ≤ 2 ^ a := Nat.one_le_two_pow
+  have hden : ((2 ^ a - 1 : ℕ) : ℝ) + 1 = (2 : ℝ) ^ a := by
+    have : ((2 ^ a - 1 : ℕ) : ℝ) = (2 : ℝ) ^ a - 1 := by push_cast [h1]; ring
+    rw [this]; ring
+  rw [hden]
+  have : ((2 ^ a : ℕ) : ℝ) = (2 : ℝ) ^ a := by push_cast; ring
+  rw [this]; field_simp
+
+-- !-- Density is `2/(2^k+1)` at power-of-two times: it tends to 0 as k → ∞. -- !--
+theorem density_pow_two (k : ℕ) (hk : 1 ≤ k) :
+    (complexity (2 ^ k) : ℝ) / ((2 ^ k : ℕ) + 1) = 2 / ((2 : ℝ) ^ k + 1) := by
+  rw [complexity_pow_two k hk]
+  have : ((2 ^ k : ℕ) : ℝ) = (2 : ℝ) ^ k := by push_cast; ring
+  rw [this]; norm_num
+
+-- !-- Maximal complexity recurs forever: density = 1 at arbitrarily large times. -- !--
+theorem density_full_infinitely_often :
+    ∀ N : ℕ, ∃ t : ℕ, N < t ∧ (complexity t : ℝ) / ((t : ℝ) + 1) = 1 := by
+  intro N
+  refine ⟨2 ^ (N + 1) - 1, ?_, ?_⟩
+  · have h1 : N + 1 < 2 ^ (N + 1) := Nat.lt_two_pow_self
+    have h2 : 1 ≤ 2 ^ (N + 1) := Nat.one_le_two_pow
+    omega
+  · rw [complexity_mersenne]
+    have h1 : (1 : ℕ) ≤ 2 ^ (N + 1) := Nat.one_le_two_pow
+    have hden : ((2 ^ (N + 1) - 1 : ℕ) : ℝ) + 1 = (2 : ℝ) ^ (N + 1) := by
+      have : ((2 ^ (N + 1) - 1 : ℕ) : ℝ) = (2 : ℝ) ^ (N + 1) - 1 := by push_cast [h1]; ring
+      rw [this]; ring
+    rw [hden]
+    have : ((2 ^ (N + 1) : ℕ) : ℝ) = (2 : ℝ) ^ (N + 1) := by push_cast; ring
+    rw [this]; field_simp
+
+-- !-- ADVERSARIAL refutation of a uniform density floor: at power-of-two times the
+-- complexity density drops below ANY positive threshold, for arbitrarily large t. -- !--
+theorem density_not_bounded_below :
+    ∀ c : ℝ, 0 < c → ∀ N : ℕ, ∃ t : ℕ, N < t ∧ (complexity t : ℝ) / ((t : ℝ) + 1) < c := by
+  intro c hc N
+  obtain ⟨K, hK⟩ := exists_nat_ge (2 / c)
+  set k := max (N + 1) (K + 1) with hkdef
+  have hk1 : 1 ≤ k := le_trans (by omega) (le_max_left _ _)
+  have hpow : k < 2 ^ k := Nat.lt_two_pow_self
+  refine ⟨2 ^ k, by omega, ?_⟩
+  rw [complexity_pow_two k hk1]
+  have hcast : ((2 ^ k : ℕ) : ℝ) = (2 : ℝ) ^ k := by push_cast; ring
+  rw [hcast]
+  push_cast
+  have hden_pos : (0 : ℝ) < (2 : ℝ) ^ k + 1 := by positivity
+  rw [div_lt_iff₀ hden_pos]
+  have hKlt : (K : ℝ) < (2 : ℝ) ^ k := by
+    have h1 : (K : ℝ) < (k : ℝ) := by exact_mod_cast (by omega : K < k)
+    have h2 : (k : ℝ) < (2 : ℝ) ^ k := by exact_mod_cast hpow
+    linarith
+  have hlt : (2 : ℝ) / c < (2 : ℝ) ^ k + 1 := by linarith [hK]
+  rw [div_lt_iff₀ hc] at hlt
+  nlinarith [hlt]
+
+/-! ## The exact complexity law: `complexity t = 2 ^ (popcount t)`
+
+The two extreme families above are special cases of a single closed form: the
+number of live cells in row `t` is `2` raised to the number of `1`s in the binary
+expansion of `t` (`(Nat.digits 2 t).sum`).  This is the quantitative core of the
+Sierpiński self-similarity and the precise reason the complexity density oscillates:
+it is invariant under `t ↦ 2t` and doubles under `t ↦ 2t+1`. -/
+
+-- !-- Lab Notebook -- !--
+-- Hypothesis: The complexity proxy obeys a clean self-similar recursion driven by
+--   the binary digits of t, giving complexity t = 2^(popcount t) exactly.
+-- Result: `complexity_eq_two_pow_digitsum` proves it by strong induction, using the
+--   digit-recursion form of Lucas' theorem (`choose_two_mul_odd_iff`,
+--   `choose_two_mul_succ_odd_iff`) to get the cardinality recursions
+--   complexity(2t) = complexity(t) and complexity(2t+1) = 2·complexity(t).
+-- Insight: This single law SUBSUMES both extreme theorems above
+--   (popcount(2^a−1) = a ⇒ 2^a full; popcount(2^k) = 1 ⇒ 2 sparse) and *explains*
+--   the oscillation: complexity depends only on the Hamming weight of the time index,
+--   which is wildly non-monotone in t, so no monotone log-threshold can exist.
+-- Failure analysis: A direct counting of odd binomials is hopeless; routing through
+--   Lucas' one-digit peel turns it into two elementary Finset bijections
+--   (image by `(2·)`, and a 2-to-1 `biUnion`).
+
+-- !-- Parity recursion (even index): `C(2t,j)` is odd iff `j` is even and `C(t,j/2)`
+-- is odd. This is Lucas' theorem peeling off the lowest binary digit. -- !--
+theorem choose_two_mul_odd_iff (t j : ℕ) :
+    Odd ((2 * t).choose j) ↔ (Even j ∧ Odd (t.choose (j / 2))) := by
+  haveI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  have h := Choose.choose_modEq_choose_mod_mul_choose_div_nat (p := 2) (n := 2 * t) (k := j)
+  unfold Nat.ModEq at h
+  rw [Nat.mul_mod_right, Nat.mul_div_cancel_left _ (by norm_num : 0 < 2)] at h
+  rw [Nat.odd_iff, h]
+  rcases Nat.even_or_odd j with he | ho
+  · rw [Nat.even_iff] at he
+    rw [he, Nat.choose_zero_right, one_mul]
+    simp [Nat.odd_iff, Nat.even_iff, he]
+  · rw [Nat.odd_iff] at ho
+    rw [ho]
+    simp [Nat.choose, Nat.even_iff, ho]
+
+-- !-- Parity recursion (odd index): `C(2t+1,j)` is odd iff `C(t,j/2)` is odd. -- !--
+theorem choose_two_mul_succ_odd_iff (t j : ℕ) :
+    Odd ((2 * t + 1).choose j) ↔ Odd (t.choose (j / 2)) := by
+  haveI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  have h := Choose.choose_modEq_choose_mod_mul_choose_div_nat (p := 2) (n := 2 * t + 1) (k := j)
+  unfold Nat.ModEq at h
+  have e1 : (2 * t + 1) % 2 = 1 := by omega
+  have e2 : (2 * t + 1) / 2 = t := by omega
+  rw [e1, e2] at h
+  rw [Nat.odd_iff, h, Nat.odd_iff]
+  rcases Nat.mod_two_eq_zero_or_one j with hj | hj <;> rw [hj] <;> simp [Nat.choose]
+
+-- !-- Scale-invariance of complexity under `t ↦ 2t` (insert a `0` binary digit). -- !--
+theorem complexity_two_mul (t : ℕ) : complexity (2 * t) = complexity t := by
+  unfold complexity liveCells
+  have hset : (range (2 * t + 1)).filter (fun j => Odd ((2 * t).choose j))
+      = ((range (t + 1)).filter (fun m => Odd (t.choose m))).image (fun m => 2 * m) := by
+    ext j
+    simp only [Finset.mem_image, Finset.mem_filter, Finset.mem_range]
+    constructor
+    · rintro ⟨hj, hodd⟩
+      rw [choose_two_mul_odd_iff] at hodd
+      obtain ⟨hev, hodd2⟩ := hodd
+      rw [Nat.even_iff] at hev
+      exact ⟨j / 2, ⟨by omega, hodd2⟩, by omega⟩
+    · rintro ⟨m, ⟨hm, hodd⟩, rfl⟩
+      refine ⟨by omega, ?_⟩
+      rw [choose_two_mul_odd_iff]
+      refine ⟨⟨m, by ring⟩, ?_⟩
+      have : 2 * m / 2 = m := by omega
+      rwa [this]
+  rw [hset, Finset.card_image_of_injective _ (by intro a b h; dsimp only at h; omega)]
+
+-- !-- Doubling of complexity under `t ↦ 2t+1` (insert a `1` binary digit). -- !--
+theorem complexity_two_mul_succ (t : ℕ) : complexity (2 * t + 1) = 2 * complexity t := by
+  unfold complexity liveCells
+  have hset : (range (2 * t + 1 + 1)).filter (fun j => Odd ((2 * t + 1).choose j))
+      = ((range (t + 1)).filter (fun m => Odd (t.choose m))).biUnion (fun m => {2 * m, 2 * m + 1}) := by
+    ext j
+    simp only [Finset.mem_biUnion, Finset.mem_filter, Finset.mem_range, Finset.mem_insert,
+      Finset.mem_singleton]
+    constructor
+    · rintro ⟨hj, hodd⟩
+      rw [choose_two_mul_succ_odd_iff] at hodd
+      exact ⟨j / 2, ⟨by omega, hodd⟩, by omega⟩
+    · rintro ⟨m, ⟨hm, hodd⟩, hj⟩
+      refine ⟨by omega, ?_⟩
+      rw [choose_two_mul_succ_odd_iff]
+      have : j / 2 = m := by omega
+      rwa [this]
+  rw [hset, Finset.card_biUnion]
+  · rw [Finset.sum_congr rfl (fun m _ => Finset.card_pair (by omega : 2 * m ≠ 2 * m + 1))]
+    rw [Finset.sum_const, smul_eq_mul]; ring
+  · intro a _ b _ hab
+    simp only [Finset.disjoint_left, Finset.mem_insert, Finset.mem_singleton]
+    intro x hxa hxb
+    rcases hxa with rfl | rfl <;> rcases hxb with h | h <;> omega
+
+-- !-- Base case: the single-seed row at time 0 has exactly one live cell. -- !--
+theorem complexity_zero : complexity 0 = 1 := by
+  unfold complexity liveCells; decide
+
+-- !-- Hamming weight is unchanged by `t ↦ 2t` (for t > 0). -- !--
+theorem digitsum_two_mul (s : ℕ) (hs : 0 < s) :
+    (Nat.digits 2 (2 * s)).sum = (Nat.digits 2 s).sum := by
+  rw [Nat.digits_def' (by norm_num : 2 ≤ 2) (by omega)]
+  simp [Nat.mul_mod_right, Nat.mul_div_cancel_left _ (by norm_num : 0 < 2)]
+
+-- !-- Hamming weight increases by one under `t ↦ 2t+1`. -- !--
+theorem digitsum_two_mul_succ (s : ℕ) :
+    (Nat.digits 2 (2 * s + 1)).sum = (Nat.digits 2 s).sum + 1 := by
+  rw [Nat.digits_def' (by norm_num : 2 ≤ 2) (by omega)]
+  have e1 : (2 * s + 1) % 2 = 1 := by omega
+  have e2 : (2 * s + 1) / 2 = s := by omega
+  rw [e1, e2]; simp [List.sum_cons]; ring
+
+-- !-- THE EXACT COMPLEXITY LAW: the number of live cells in space-time row `t` is
+-- `2` to the Hamming weight (popcount) of `t`. Subsumes both extreme theorems. -- !--
+theorem complexity_eq_two_pow_digitsum (t : ℕ) :
+    complexity t = 2 ^ ((Nat.digits 2 t).sum) := by
+  induction t using Nat.strong_induction_on with
+  | _ t ih =>
+    rcases Nat.eq_zero_or_pos t with h0 | hpos
+    · subst h0; simp [complexity_zero]
+    · rcases Nat.even_or_odd t with ⟨s, hs⟩ | ⟨s, hs⟩
+      · have hs2 : t = 2 * s := by omega
+        have hs_pos : 0 < s := by omega
+        subst hs2
+        rw [complexity_two_mul, ih s (by omega), digitsum_two_mul s hs_pos]
+      · subst hs
+        rw [complexity_two_mul_succ, ih s (by omega), digitsum_two_mul_succ s]
+        rw [pow_succ]; ring
+
+end AdditiveCAComplexity

@@ -1,0 +1,230 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license.
+
+# The discrete heat semigroup of Hodge message passing: monotone dissipation,
+# finite total energy, and convergence to cohomology
+
+This file develops the *dissipative semigroup* theory of the gradient message-passing layer
+`T = 1 - α·L` of a symmetric positive-semidefinite operator `L` (the Hodge Laplacian).  It is
+a companion to the catalog's convergence study
+`Catalog/Speculative/AutoResearch/HodgeMessagePassingConvergence.lean`
+(`mpStep`, `mpStep_iterate_contraction`, `mpStep_dist_to_harmonic_bound`), but — because the
+catalog's `Speculative` import graph is currently fragmented (that file transitively depends on
+a non-default target `HodgeSpectralThreshold`) — it is kept **self-contained against Mathlib**,
+restating the short `mpStep` core so the dissipation results stand on their own.
+
+The catalog showed *geometric residual decay* `⟪Tᵏ r, Tᵏ r⟫ ≤ ρᵏ ⟪r, r⟫`.  Here we upgrade the
+qualitative picture to the three sharp **discrete heat semigroup** statements that characterise
+a dissipative flow, plus an honest convergence limit:
+
+* `mpStep_semigroup` — depth is additive: `T^{j+k} = T^j ∘ T^k`, the discrete analogue of
+  `e^{-(s+t)L} = e^{-sL} e^{-tL}`.
+* `mpStep_energy_antitone` — the residual energy `k ↦ ⟪Tᵏ r, Tᵏ r⟫` is **monotonically
+  non-increasing** (for a contraction `ρ ≤ 1`): heat only dissipates.
+* `mpStep_energy_summable` / `mpStep_total_dissipation_bound` — for a strict contraction the
+  energies are **summable** with **finite total dissipation**
+  `∑ₖ ⟪Tᵏ r, Tᵏ r⟫ ≤ ⟪r, r⟫ / (1 - ρ)`: the whole infinite-depth flow dissipates only a finite
+  amount of energy, controlled by the spectral gap `1 - ρ`.
+* `mpStep_tendsto_harmonic` — the depth-`k` output of `h + r` (harmonic `h` + residual `r`)
+  converges, in the energy sense, **exactly to the harmonic/cohomology component `h`**.
+
+Together: *Hodge message passing is a discrete heat semigroup that monotonically dissipates a
+finite total energy and flows every signal to its cohomology class.*
+
+-- !-- Lab Notebook -- !--
+Hypothesis:  Geometric residual decay `⟪Tᵏr⟫ ≤ ρᵏ⟪r⟫` should imply the three defining marks of
+  a dissipative semigroup: monotone energy (heat dissipates), finite *total* dissipation (a
+  geometric series), and an honest limit onto the harmonic part (not merely ε-closeness).
+Result:  All four proved sorry-free against Mathlib.  `mpStep_semigroup` is `pow_add`;
+  antitonicity is one application of the per-layer bound with `ρ ≤ 1` and `⟪·,·⟫ ≥ 0`;
+  summability/total dissipation compare term-by-term against the geometric series `∑ρᵏ⟪r⟫`
+  whose sum is `⟪r⟫·(1-ρ)⁻¹`; the limit is a `squeeze_zero` between `0` and `ρᵏ⟪r⟫ → 0`.
+Insight:  The spectral gap `1 - ρ` is simultaneously the convergence *rate* and the reciprocal
+  of the *total dissipated energy*: a smaller gap means both slower convergence and more total
+  heat released.  Working with the inner-product energy `⟪v,v⟫` (never `‖v‖`) keeps every
+  estimate polynomial and lets the geometric-series comparison go through verbatim.
+Failure analysis:  Monotonicity needs only `ρ ≤ 1`; strictness `ρ < 1` is required for
+  summability/convergence.  The harmonic split must be applied *before* the contraction bound
+  (`mpStep_iterate_add_harmonic`) so the residual `Tᵏ r` is what gets squeezed.
+-- !-- Lab Notebook -- !--
+-/
+import Mathlib
+
+open scoped InnerProductSpace BigOperators Topology
+
+namespace HodgeHeatSemigroupDissipation
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+/-! ## §0. The message-passing layer (self-contained `mpStep` core) -/
+
+/-- One layer of gradient message passing `T = 1 - α·L`, acting by `x ↦ x - α • (L x)`,
+modeled as a `Module.End ℝ E` so that depth (iteration) is automatically linear. -/
+def mpStep (L : E →ₗ[ℝ] E) (α : ℝ) : E →ₗ[ℝ] E := (1 : Module.End ℝ E) - α • L
+
+@[simp] theorem mpStep_apply (L : E →ₗ[ℝ] E) (α : ℝ) (x : E) :
+    mpStep L α x = x - α • (L x) := by
+  simp [mpStep]
+
+/-
+!-- comment: `mpStep L α` is a linear map (`Module.End`), so `T h = h - α•0 = h` when `L h = 0`. -- !--
+-/
+theorem mpStep_harmonic_fixed (L : E →ₗ[ℝ] E) (α : ℝ) {h : E} (hh : L h = 0) :
+    mpStep L α h = h := by
+  simp [mpStep, hh]
+
+/-
+!-- comment: Iterate `mpStep_harmonic_fixed` over depth `k` by induction with `pow_succ'`. -- !--
+-/
+theorem mpStep_iterate_harmonic_fixed (L : E →ₗ[ℝ] E) (α : ℝ) {h : E}
+    (hh : L h = 0) (k : ℕ) :
+    ((mpStep L α) ^ k) h = h := by
+  induction k with
+  | zero => simp
+  | succ k ih => rw [pow_succ']; simp [Module.End.mul_apply, ih, mpStep_harmonic_fixed L α hh]
+
+/-
+!-- comment: By linearity of `Tᵏ` (`map_add`) and `mpStep_iterate_harmonic_fixed`, the
+harmonic part `h` passes through depth as an additive constant. -- !--
+-/
+theorem mpStep_iterate_add_harmonic (L : E →ₗ[ℝ] E) (α : ℝ) {h : E}
+    (hh : L h = 0) (r : E) (k : ℕ) :
+    ((mpStep L α) ^ k) (h + r) = h + ((mpStep L α) ^ k) r := by
+  rw [map_add, mpStep_iterate_harmonic_fixed L α hh]
+
+/-
+!-- comment: Induct on `k`: `⟪Tᵏ⁺¹r⟫ = ⟪T(Tᵏr)⟫ ≤ ρ⟪Tᵏr⟫ ≤ ρ·ρᵏ⟪r⟫`, using `0 ≤ ρ`. -- !--
+
+**Geometric decay of residual energy.** If a single layer contracts every energy by `ρ ≥ 0`,
+then depth-`k` message passing contracts it by `ρᵏ`.
+-/
+theorem mpStep_iterate_contraction (L : E →ₗ[ℝ] E) (α ρ : ℝ) (hρ : 0 ≤ ρ)
+    (hc : ∀ x, ⟪mpStep L α x, mpStep L α x⟫_ℝ ≤ ρ * ⟪x, x⟫_ℝ) (r : E) (k : ℕ) :
+    ⟪((mpStep L α) ^ k) r, ((mpStep L α) ^ k) r⟫_ℝ ≤ ρ ^ k * ⟪r, r⟫_ℝ := by
+  induction k with
+  | zero => simp
+  | succ k ih =>
+      have hstep := hc (((mpStep L α) ^ k) r)
+      rw [pow_succ']
+      calc ⟪(mpStep L α) (((mpStep L α) ^ k) r), (mpStep L α) (((mpStep L α) ^ k) r)⟫_ℝ
+          ≤ ρ * ⟪((mpStep L α) ^ k) r, ((mpStep L α) ^ k) r⟫_ℝ := by
+            simpa [Module.End.mul_apply] using hstep
+        _ ≤ ρ * (ρ ^ k * ⟪r, r⟫_ℝ) := by exact mul_le_mul_of_nonneg_left ih hρ
+        _ = ρ ^ (k + 1) * ⟪r, r⟫_ℝ := by ring
+
+/-! ## §1. The discrete heat semigroup law -/
+
+/-
+!-- comment: Depth is additive: `T^{j+k} = T^j * T^k` (`pow_add`); `Module.End` multiplication
+is composition (`Module.End.mul_apply`), so it applies as `T^j (T^k x)`. -- !--
+
+**Discrete heat semigroup.** Iterating message passing is a one-parameter discrete-time
+semigroup: depth `j + k` equals depth `j` after depth `k` — the discrete analogue of
+`e^{-(s+t)L} = e^{-sL} e^{-tL}`.
+-/
+theorem mpStep_semigroup (L : E →ₗ[ℝ] E) (α : ℝ) (j k : ℕ) (x : E) :
+    ((mpStep L α) ^ (j + k)) x = ((mpStep L α) ^ j) (((mpStep L α) ^ k) x) := by
+  rw [pow_add, Module.End.mul_apply]
+
+/-! ## §2. Monotone dissipation of the residual energy -/
+
+/-
+!-- comment: `T^{k+1} r = T (Tᵏ r)`; the per-layer bound gives energy `≤ ρ·⟪Tᵏr⟫`, and `ρ ≤ 1`
+with `⟪Tᵏr⟫ ≥ 0` makes that `≤ ⟪Tᵏr⟫`. -- !--
+
+**One-step dissipation.** Under a per-layer contraction with factor `ρ ≤ 1`, the residual
+energy never increases from one layer to the next.
+-/
+theorem mpStep_energy_succ_le (L : E →ₗ[ℝ] E) (α ρ : ℝ) (hρ1 : ρ ≤ 1)
+    (hc : ∀ x, ⟪mpStep L α x, mpStep L α x⟫_ℝ ≤ ρ * ⟪x, x⟫_ℝ) (r : E) (k : ℕ) :
+    ⟪((mpStep L α) ^ (k + 1)) r, ((mpStep L α) ^ (k + 1)) r⟫_ℝ
+      ≤ ⟪((mpStep L α) ^ k) r, ((mpStep L α) ^ k) r⟫_ℝ := by
+  have hstep := hc (((mpStep L α) ^ k) r)
+  have hnn : (0 : ℝ) ≤ ⟪((mpStep L α) ^ k) r, ((mpStep L α) ^ k) r⟫_ℝ := real_inner_self_nonneg
+  rw [pow_succ']
+  calc ⟪(mpStep L α) (((mpStep L α) ^ k) r), (mpStep L α) (((mpStep L α) ^ k) r)⟫_ℝ
+      ≤ ρ * ⟪((mpStep L α) ^ k) r, ((mpStep L α) ^ k) r⟫_ℝ := by
+        simpa [Module.End.mul_apply] using hstep
+    _ ≤ 1 * ⟪((mpStep L α) ^ k) r, ((mpStep L α) ^ k) r⟫_ℝ :=
+        mul_le_mul_of_nonneg_right hρ1 hnn
+    _ = ⟪((mpStep L α) ^ k) r, ((mpStep L α) ^ k) r⟫_ℝ := one_mul _
+
+/-
+!-- comment: Promote the one-step bound `mpStep_energy_succ_le` to global antitonicity via
+`antitone_nat_of_succ_le`. -- !--
+
+**Monotone dissipation.** The residual energy `k ↦ ⟪Tᵏ r, Tᵏ r⟫` is antitone in the depth `k`.
+-/
+theorem mpStep_energy_antitone (L : E →ₗ[ℝ] E) (α ρ : ℝ) (hρ1 : ρ ≤ 1)
+    (hc : ∀ x, ⟪mpStep L α x, mpStep L α x⟫_ℝ ≤ ρ * ⟪x, x⟫_ℝ) (r : E) :
+    Antitone (fun k => ⟪((mpStep L α) ^ k) r, ((mpStep L α) ^ k) r⟫_ℝ) :=
+  antitone_nat_of_succ_le (fun k => mpStep_energy_succ_le L α ρ hρ1 hc r k)
+
+/-! ## §3. Finite total dissipation -/
+
+/-
+!-- comment: The terms are `≥ 0` (`real_inner_self_nonneg`) and `≤ ρᵏ⟪r,r⟫`
+(`mpStep_iterate_contraction`); the majorant `ρᵏ⟪r,r⟫` is a summable geometric series, so
+`Summable.of_nonneg_of_le` gives summability. -- !--
+
+**Summable dissipation.** For a strict contraction (`0 ≤ ρ < 1`) the residual energies over all
+depths form a summable family: the total dissipated energy is finite.
+-/
+theorem mpStep_energy_summable (L : E →ₗ[ℝ] E) (α ρ : ℝ) (hρ0 : 0 ≤ ρ) (hρ1 : ρ < 1)
+    (hc : ∀ x, ⟪mpStep L α x, mpStep L α x⟫_ℝ ≤ ρ * ⟪x, x⟫_ℝ) (r : E) :
+    Summable (fun k => ⟪((mpStep L α) ^ k) r, ((mpStep L α) ^ k) r⟫_ℝ) := by
+  have hmaj : Summable (fun k : ℕ => ρ ^ k * ⟪r, r⟫_ℝ) :=
+    (summable_geometric_of_lt_one hρ0 hρ1).mul_right _
+  refine Summable.of_nonneg_of_le (fun k => real_inner_self_nonneg) (fun k => ?_) hmaj
+  exact mpStep_iterate_contraction L α ρ hρ0 hc r k
+
+/-
+!-- comment: Term-by-term `⟪Tᵏr⟫ ≤ ρᵏ⟪r,r⟫` and `Summable.tsum_le_tsum`, then
+`∑ ρᵏ⟪r,r⟫ = (∑ ρᵏ)·⟪r,r⟫ = (1-ρ)⁻¹·⟪r,r⟫` (`tsum_geometric_of_lt_one`,
+`Summable.tsum_mul_right`). -- !--
+
+**Finite total dissipation bound.** The total energy dissipated by the infinite-depth flow is
+bounded by the initial residual energy divided by the spectral gap:
+`∑ₖ ⟪Tᵏ r, Tᵏ r⟫ ≤ ⟪r, r⟫ / (1 - ρ)`.
+-/
+theorem mpStep_total_dissipation_bound (L : E →ₗ[ℝ] E) (α ρ : ℝ) (hρ0 : 0 ≤ ρ) (hρ1 : ρ < 1)
+    (hc : ∀ x, ⟪mpStep L α x, mpStep L α x⟫_ℝ ≤ ρ * ⟪x, x⟫_ℝ) (r : E) :
+    (∑' k, ⟪((mpStep L α) ^ k) r, ((mpStep L α) ^ k) r⟫_ℝ) ≤ ⟪r, r⟫_ℝ / (1 - ρ) := by
+  have hsum := mpStep_energy_summable L α ρ hρ0 hρ1 hc r
+  have hmaj : Summable (fun k : ℕ => ρ ^ k * ⟪r, r⟫_ℝ) :=
+    (summable_geometric_of_lt_one hρ0 hρ1).mul_right _
+  have hle : (∑' k, ⟪((mpStep L α) ^ k) r, ((mpStep L α) ^ k) r⟫_ℝ)
+      ≤ ∑' k : ℕ, ρ ^ k * ⟪r, r⟫_ℝ :=
+    hsum.tsum_le_tsum (fun k => mpStep_iterate_contraction L α ρ hρ0 hc r k) hmaj
+  have hgeo : (∑' k : ℕ, ρ ^ k * ⟪r, r⟫_ℝ) = ⟪r, r⟫_ℝ / (1 - ρ) := by
+    rw [tsum_mul_right, tsum_geometric_of_lt_one hρ0 hρ1]
+    rw [div_eq_mul_inv, mul_comm]
+  rw [hgeo] at hle
+  exact hle
+
+/-! ## §4. Convergence to the cohomology component -/
+
+/-
+!-- comment: The gap energy is `≥ 0` and `≤ ρᵏ⟪r,r⟫` (`mpStep_iterate_add_harmonic` +
+`mpStep_iterate_contraction`), and `ρᵏ⟪r,r⟫ → 0`; `squeeze_zero` closes it. -- !--
+
+**Flow to cohomology.** For a strict contraction, the energy of the gap between the depth-`k`
+output of `h + r` (harmonic `h` plus residual `r`, `L h = 0`) and the harmonic part `h` tends
+to `0`: deep message passing flows every signal exactly to its cohomology class.
+-/
+theorem mpStep_tendsto_harmonic (L : E →ₗ[ℝ] E) (α ρ : ℝ) (hρ0 : 0 ≤ ρ) (hρ1 : ρ < 1)
+    (hc : ∀ x, ⟪mpStep L α x, mpStep L α x⟫_ℝ ≤ ρ * ⟪x, x⟫_ℝ)
+    {h : E} (hh : L h = 0) (r : E) :
+    Filter.Tendsto
+      (fun k => ⟪((mpStep L α) ^ k) (h + r) - h, ((mpStep L α) ^ k) (h + r) - h⟫_ℝ)
+      Filter.atTop (nhds 0) := by
+  have hmaj : Filter.Tendsto (fun k : ℕ => ρ ^ k * ⟪r, r⟫_ℝ) Filter.atTop (nhds 0) := by
+    simpa using (tendsto_pow_atTop_nhds_zero_of_lt_one hρ0 hρ1).mul_const (⟪r, r⟫_ℝ)
+  refine squeeze_zero (fun k => real_inner_self_nonneg) (fun k => ?_) hmaj
+  have hsplit : ((mpStep L α) ^ k) (h + r) - h = ((mpStep L α) ^ k) r := by
+    rw [mpStep_iterate_add_harmonic L α hh r k]; abel
+  rw [hsplit]
+  exact mpStep_iterate_contraction L α ρ hρ0 hc r k
+
+end HodgeHeatSemigroupDissipation

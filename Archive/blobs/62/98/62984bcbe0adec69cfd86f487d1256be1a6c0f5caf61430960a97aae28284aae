@@ -1,0 +1,284 @@
+import Mathlib
+import Algebra.BerggrenLorentz.Core
+
+/-!
+# Tropicalized Berggren Dynamics: a Valuation-Monotone Factorization Invariant
+
+This file builds a **tropical / valuation shadow** of the Berggren–Lorentz dynamics on
+Pythagorean triples developed in `Algebra/BerggrenLorentz/Core.lean`.
+
+The central object is the **content** of an integer triple,
+`gcd3 a b c = gcd(gcd(a,b),c)`, which is the additive-valuation-depth profile in
+disguise: for every prime `p`, the `p`-adic depth `v_p(gcd3 a b c)` equals the
+min-plus (tropical) aggregate `min (v_p a) (min (v_p b) (v_p c))` of the coordinate
+valuations.
+
+## Main results
+
+* `gcd3_childA`, `gcd3_childB`, `gcd3_childC` — every Berggren generator acts as an
+  **exact isometry of the content**: the content is invariant along each branch.
+  This is the strongest possible form of the "valuation-monotone" target: the
+  tropical depth profile is not merely nondecreasing, it is *fixed*, because the
+  Berggren generators are unimodular (integer-invertible).
+* `tropDepth_childA/B/C` — consequently the `p`-adic tropical depth is branch-invariant.
+* `gcd3_eq_tropical_min` — the content valuation equals the min-plus convolution of the
+  coordinate valuations (the bridge from `IsPythag` data to the tropical preorder).
+* `berggren_preserves_primitivity` — primitivity (`content = 1`) is preserved by every
+  generator: the Berggren tree never leaves the primitive locus.
+* `content_pruning` — algorithmic corollary: a target whose content differs from the
+  current node's content cannot be any of its three children, so the entire subtree may
+  be discarded in a search.
+
+## Bridge
+Number theory (Pythagorean triples) ↔ tropical/min-plus algebra (valuation depth) ↔
+factorization (content / primitivity) ↔ computation (Berggren-tree search pruning).
+
+-- !-- Lab Notebook -- !--
+-- Hypothesis: The Berggren generators, being integer linear maps, should be
+--   "valuation-monotone": the p-adic depth of each output coordinate is at least the
+--   min of the input depths (ultrametric / vdepth_sum_le philosophy). We conjectured a
+--   one-sided inequality T(B t) >= F(T(t)).
+-- Result: The inequality is in fact an *equality*. Because each Berggren generator is
+--   unimodular (det = ±1, integer inverse — see invA/invB/invC in the catalog), both the
+--   map and its inverse have integer entries, so common divisors are preserved in BOTH
+--   directions. Hence the content gcd3 (equivalently the whole tropical depth profile) is
+--   an exact orbit invariant, not just a sub/super-solution.
+-- Insight: Unimodularity upgrades a tropical sub-invariant into a genuine conserved
+--   quantity. The min-plus aggregate min_p v_p is the "energy" conserved by the discrete
+--   Lorentz flow. This is the tropical analogue of Q-invariance (childX_preserves_Q):
+--   Q is the *quadratic* (light-cone) conserved quantity, content is the *valuation*
+--   (factorization) conserved quantity.
+-- Failure analysis: Early attempts used `ValuationDepthMeasure.vdepth_sum_le` directly,
+--   but that typeclass measures circuit/query depth of abstract functions, not the
+--   p-adic valuation of concrete integers; it cannot see the unimodular cancellation.
+--   Switching to the concrete content gcd (with a min-plus = factorization bridge via
+--   `Nat.factorization_gcd`) made the exact invariance provable and meaningful.
+-- !-- Lab Notebook -- !--
+-/
+
+set_option maxHeartbeats 1600000
+
+namespace TropicalBerggrenDepth
+
+open BerggrenLorentz
+
+/-! ## Section 1: The content (tropical depth profile) -/
+
+/-- The **content** of an integer triple: `gcd(gcd(a,b),c)`. As a natural number it is
+    the additive valuation-depth profile; for each prime `p`, `v_p (content)` is the
+    min-plus aggregate of the coordinate `p`-adic valuations. -/
+def gcd3 (a b c : ℤ) : ℕ := Int.gcd (Int.gcd a b : ℤ) c
+
+-- !-- comment -- !--
+-- The content divides each coordinate (it is a common divisor); this is the easy
+-- "tropical depth ≤ coordinate depth" direction. -- !-- comment -- !--
+/-- The content divides every coordinate. -/
+lemma gcd3_dvd (a b c : ℤ) :
+    (gcd3 a b c : ℤ) ∣ a ∧ (gcd3 a b c : ℤ) ∣ b ∧ (gcd3 a b c : ℤ) ∣ c :=
+  ⟨(Int.gcd_dvd_left _ _).trans (Int.gcd_dvd_left _ _),
+   (Int.gcd_dvd_left _ _).trans (Int.gcd_dvd_right _ _), Int.gcd_dvd_right _ _⟩
+
+-- !-- comment -- !--
+-- Any common divisor of the coordinates divides the content (universal property of gcd),
+-- giving the "coordinate depth ≤ tropical depth" direction. -- !-- comment -- !--
+/-- Any common divisor of the three coordinates divides the content. -/
+lemma dvd_gcd3 {a b c : ℤ} {g : ℕ} (ha : (g : ℤ) ∣ a) (hb : (g : ℤ) ∣ b)
+    (hc : (g : ℤ) ∣ c) : g ∣ gcd3 a b c :=
+  Int.dvd_gcd (Int.natCast_dvd_natCast.mpr (Int.dvd_gcd ha hb)) hc
+
+-- !-- comment -- !--
+-- If a linear substitution sends every common divisor of (a,b,c) to a common divisor of
+-- (a',b',c'), the content of the source divides the content of the target. -- !-- comment -- !--
+/-- Monotonicity of content under a divisor-preserving substitution. -/
+lemma gcd3_dvd_of {a b c a' b' c' : ℤ}
+    (h : ∀ d : ℤ, d ∣ a → d ∣ b → d ∣ c → d ∣ a' ∧ d ∣ b' ∧ d ∣ c') :
+    gcd3 a b c ∣ gcd3 a' b' c' := by
+  obtain ⟨da, db, dc⟩ := gcd3_dvd a b c
+  obtain ⟨ha', hb', hc'⟩ := h _ da db dc
+  exact dvd_gcd3 ha' hb' hc'
+
+-- !-- comment -- !--
+-- A two-sided divisor correspondence (unimodular substitution) forces content equality
+-- by antisymmetry of divisibility on ℕ. -- !-- comment -- !--
+/-- If the common divisors of `(a,b,c)` and `(a',b',c')` coincide, so do their contents. -/
+lemma gcd3_eq_of {a b c a' b' c' : ℤ}
+    (h1 : ∀ d : ℤ, d ∣ a → d ∣ b → d ∣ c → d ∣ a' ∧ d ∣ b' ∧ d ∣ c')
+    (h2 : ∀ d : ℤ, d ∣ a' → d ∣ b' → d ∣ c' → d ∣ a ∧ d ∣ b ∧ d ∣ c) :
+    gcd3 a' b' c' = gcd3 a b c :=
+  Nat.dvd_antisymm (gcd3_dvd_of h2) (gcd3_dvd_of h1)
+
+/-! ## Section 2: Content invariance along the three Berggren branches -/
+
+-- !-- comment -- !--
+-- Branch A is unimodular (det = 1, integer inverse invA), so a divisor of (a,b,c) is a
+-- divisor of childA and conversely; antisymmetry gives exact content invariance. -- !-- comment -- !--
+/-- The A-generator preserves the content exactly. -/
+theorem gcd3_childA (a b c : ℤ) :
+    gcd3 (childA a b c).1 (childA a b c).2.1 (childA a b c).2.2 = gcd3 a b c := by
+  apply gcd3_eq_of
+  · intro d ha hb hc
+    simp only [childA]
+    exact ⟨dvd_add (dvd_sub ha (hb.mul_left 2)) (hc.mul_left 2),
+           dvd_add (dvd_sub (ha.mul_left 2) hb) (hc.mul_left 2),
+           dvd_add (dvd_sub (ha.mul_left 2) (hb.mul_left 2)) (hc.mul_left 3)⟩
+  · intro d ha hb hc
+    refine ⟨?_, ?_, ?_⟩
+    · have e : a = (childA a b c).1 + 2 * (childA a b c).2.1 - 2 * (childA a b c).2.2 := by
+        simp only [childA]; ring
+      rw [e]; exact dvd_sub (dvd_add ha (hb.mul_left 2)) (hc.mul_left 2)
+    · have e : b = 2 * (childA a b c).2.2 - 2 * (childA a b c).1 - (childA a b c).2.1 := by
+        simp only [childA]; ring
+      rw [e]; exact dvd_sub (dvd_sub (hc.mul_left 2) (ha.mul_left 2)) hb
+    · have e : c = 3 * (childA a b c).2.2 - 2 * (childA a b c).1 - 2 * (childA a b c).2.1 := by
+        simp only [childA]; ring
+      rw [e]; exact dvd_sub (dvd_sub (hc.mul_left 3) (ha.mul_left 2)) (hb.mul_left 2)
+
+-- !-- comment -- !--
+-- Branch B is the determinant -1 generator but still has an integer inverse invB, so the
+-- same two-sided divisor argument yields exact content invariance. -- !-- comment -- !--
+/-- The B-generator preserves the content exactly. -/
+theorem gcd3_childB (a b c : ℤ) :
+    gcd3 (childB a b c).1 (childB a b c).2.1 (childB a b c).2.2 = gcd3 a b c := by
+  apply gcd3_eq_of
+  · intro d ha hb hc
+    simp only [childB]
+    exact ⟨dvd_add (dvd_add ha (hb.mul_left 2)) (hc.mul_left 2),
+           dvd_add (dvd_add (ha.mul_left 2) hb) (hc.mul_left 2),
+           dvd_add (dvd_add (ha.mul_left 2) (hb.mul_left 2)) (hc.mul_left 3)⟩
+  · intro d ha hb hc
+    refine ⟨?_, ?_, ?_⟩
+    · have e : a = (childB a b c).1 + 2 * (childB a b c).2.1 - 2 * (childB a b c).2.2 := by
+        simp only [childB]; ring
+      rw [e]; exact dvd_sub (dvd_add ha (hb.mul_left 2)) (hc.mul_left 2)
+    · have e : b = 2 * (childB a b c).1 + (childB a b c).2.1 - 2 * (childB a b c).2.2 := by
+        simp only [childB]; ring
+      rw [e]; exact dvd_sub (dvd_add (ha.mul_left 2) hb) (hc.mul_left 2)
+    · have e : c = 3 * (childB a b c).2.2 - 2 * (childB a b c).1 - 2 * (childB a b c).2.1 := by
+        simp only [childB]; ring
+      rw [e]; exact dvd_sub (dvd_sub (hc.mul_left 3) (ha.mul_left 2)) (hb.mul_left 2)
+
+-- !-- comment -- !--
+-- Branch C is unimodular (det = 1, integer inverse invC); two-sided divisor preservation
+-- again gives exact content invariance. -- !-- comment -- !--
+/-- The C-generator preserves the content exactly. -/
+theorem gcd3_childC (a b c : ℤ) :
+    gcd3 (childC a b c).1 (childC a b c).2.1 (childC a b c).2.2 = gcd3 a b c := by
+  apply gcd3_eq_of
+  · intro d ha hb hc
+    refine ⟨?_, ?_, ?_⟩
+    · have e : (childC a b c).1 = 2 * b + 2 * c - a := by simp only [childC]; ring
+      rw [e]; exact dvd_sub (dvd_add (hb.mul_left 2) (hc.mul_left 2)) ha
+    · have e : (childC a b c).2.1 = b + 2 * c - 2 * a := by simp only [childC]; ring
+      rw [e]; exact dvd_sub (dvd_add hb (hc.mul_left 2)) (ha.mul_left 2)
+    · have e : (childC a b c).2.2 = 2 * b + 3 * c - 2 * a := by simp only [childC]; ring
+      rw [e]; exact dvd_sub (dvd_add (hb.mul_left 2) (hc.mul_left 3)) (ha.mul_left 2)
+  · intro d ha hb hc
+    refine ⟨?_, ?_, ?_⟩
+    · have e : a = 2 * (childC a b c).2.2 - (childC a b c).1 - 2 * (childC a b c).2.1 := by
+        simp only [childC]; ring
+      rw [e]; exact dvd_sub (dvd_sub (hc.mul_left 2) ha) (hb.mul_left 2)
+    · have e : b = 2 * (childC a b c).1 + (childC a b c).2.1 - 2 * (childC a b c).2.2 := by
+        simp only [childC]; ring
+      rw [e]; exact dvd_sub (dvd_add (ha.mul_left 2) hb) (hc.mul_left 2)
+    · have e : c = 3 * (childC a b c).2.2 - 2 * (childC a b c).1 - 2 * (childC a b c).2.1 := by
+        simp only [childC]; ring
+      rw [e]; exact dvd_sub (dvd_sub (hc.mul_left 3) (ha.mul_left 2)) (hb.mul_left 2)
+
+/-! ## Section 3: The tropical (min-plus) depth profile -/
+
+/-- The `p`-adic **tropical depth** of a triple: `v_p` of its content. -/
+def tropDepth (p : ℕ) (a b c : ℤ) : ℕ := (gcd3 a b c).factorization p
+
+-- !-- comment -- !--
+-- The content gcd is `Nat.gcd` of the coordinate absolute values, and `Nat.factorization`
+-- of a gcd is the pointwise min of factorizations; reading off prime `p` gives the
+-- min-plus identity. -- !-- comment -- !--
+/-- **Tropical bridge.** For nonzero coordinates, the `p`-adic content depth equals the
+    min-plus convolution of the coordinate `p`-adic valuations. This identifies the
+    content invariant with the tropical aggregate `T(t)`. -/
+theorem gcd3_eq_tropical_min (p : ℕ) (a b c : ℤ)
+    (ha : a ≠ 0) (hb : b ≠ 0) (hc : c ≠ 0) :
+    tropDepth p a b c =
+      min (a.natAbs.factorization p) (min (b.natAbs.factorization p) (c.natAbs.factorization p)) := by
+  have hgab : Int.gcd a b ≠ 0 := fun h => ha (Int.gcd_eq_zero_iff.mp h).1
+  have h1 : gcd3 a b c = Nat.gcd (Int.gcd a b) c.natAbs := by
+    simp [gcd3, Int.gcd]
+  unfold tropDepth
+  rw [h1, Nat.factorization_gcd hgab (by simpa [Int.natAbs_eq_zero] using hc)]
+  rw [Int.gcd, Nat.factorization_gcd (by simpa [Int.natAbs_eq_zero] using ha)
+        (by simpa [Int.natAbs_eq_zero] using hb)]
+  simp [Finsupp.inf_apply, min_assoc]
+
+-- !-- comment -- !--
+-- Tropical depth is a function of the content, which is branch-invariant; hence the
+-- depth is branch-invariant for every prime. -- !-- comment -- !--
+/-- The tropical depth is invariant along the A-branch (for every prime). -/
+theorem tropDepth_childA (p : ℕ) (a b c : ℤ) :
+    tropDepth p (childA a b c).1 (childA a b c).2.1 (childA a b c).2.2 = tropDepth p a b c := by
+  unfold tropDepth; rw [gcd3_childA]
+
+/-- The tropical depth is invariant along the B-branch (for every prime). -/
+theorem tropDepth_childB (p : ℕ) (a b c : ℤ) :
+    tropDepth p (childB a b c).1 (childB a b c).2.1 (childB a b c).2.2 = tropDepth p a b c := by
+  unfold tropDepth; rw [gcd3_childB]
+
+/-- The tropical depth is invariant along the C-branch (for every prime). -/
+theorem tropDepth_childC (p : ℕ) (a b c : ℤ) :
+    tropDepth p (childC a b c).1 (childC a b c).2.1 (childC a b c).2.2 = tropDepth p a b c := by
+  unfold tropDepth; rw [gcd3_childC]
+
+/-! ## Section 4: Primitivity preservation and search pruning -/
+
+-- !-- comment -- !--
+-- "Primitive" means content 1; each generator fixes the content, so it fixes the
+-- property `content = 1` in both directions. -- !-- comment -- !--
+/-- Each Berggren generator preserves primitivity (`content = 1`). -/
+theorem berggren_preserves_primitivity (a b c : ℤ) :
+    (gcd3 (childA a b c).1 (childA a b c).2.1 (childA a b c).2.2 = 1 ↔ gcd3 a b c = 1) ∧
+    (gcd3 (childB a b c).1 (childB a b c).2.1 (childB a b c).2.2 = 1 ↔ gcd3 a b c = 1) ∧
+    (gcd3 (childC a b c).1 (childC a b c).2.1 (childC a b c).2.2 = 1 ↔ gcd3 a b c = 1) := by
+  refine ⟨?_, ?_, ?_⟩
+  · rw [gcd3_childA]
+  · rw [gcd3_childB]
+  · rw [gcd3_childC]
+
+-- !-- comment -- !--
+-- The three children all share the parent's content, so any triple with a different
+-- content is none of them — the contrapositive of content invariance. -- !-- comment -- !--
+/-- **Pruning criterion.** If a target triple has content different from the current
+    node's content, it is none of the three children, so its entire Berggren subtree can
+    be discarded during a search. -/
+theorem content_pruning (a b c a' b' c' : ℤ)
+    (h : gcd3 a' b' c' ≠ gcd3 a b c) :
+    (a', b', c') ≠ childA a b c ∧ (a', b', c') ≠ childB a b c ∧ (a', b', c') ≠ childC a b c := by
+  refine ⟨?_, ?_, ?_⟩ <;> intro hEq <;> apply h
+  · rw [show a' = (childA a b c).1 from congrArg Prod.fst hEq,
+        show b' = (childA a b c).2.1 from congrArg (Prod.fst ∘ Prod.snd) hEq,
+        show c' = (childA a b c).2.2 from congrArg (Prod.snd ∘ Prod.snd) hEq, gcd3_childA]
+  · rw [show a' = (childB a b c).1 from congrArg Prod.fst hEq,
+        show b' = (childB a b c).2.1 from congrArg (Prod.fst ∘ Prod.snd) hEq,
+        show c' = (childB a b c).2.2 from congrArg (Prod.snd ∘ Prod.snd) hEq, gcd3_childB]
+  · rw [show a' = (childC a b c).1 from congrArg Prod.fst hEq,
+        show b' = (childC a b c).2.1 from congrArg (Prod.fst ∘ Prod.snd) hEq,
+        show c' = (childC a b c).2.2 from congrArg (Prod.snd ∘ Prod.snd) hEq, gcd3_childC]
+
+/-! ## Section 5: Numerical sanity checks (the primitive seed and its children) -/
+
+/-- The seed `(3,4,5)` is primitive: content `1`. -/
+theorem seed_primitive : gcd3 3 4 5 = 1 := by decide
+
+/-- The first-generation children of the primitive seed are primitive — a concrete
+    instance of `berggren_preserves_primitivity`. -/
+theorem gen1_primitive :
+    gcd3 5 12 13 = 1 ∧ gcd3 21 20 29 = 1 ∧ gcd3 15 8 17 = 1 := by
+  refine ⟨?_, ?_, ?_⟩ <;> decide
+
+/-- A scaled (imprimitive) triple has content `> 1`, and that content is invariant:
+    `(6,8,10) = 2·(3,4,5)` has content `2`, shared by its A-child. -/
+theorem scaled_content :
+    gcd3 6 8 10 = 2 ∧
+    gcd3 (childA 6 8 10).1 (childA 6 8 10).2.1 (childA 6 8 10).2.2 = 2 := by
+  refine ⟨by decide, ?_⟩
+  rw [gcd3_childA]; decide
+
+end TropicalBerggrenDepth

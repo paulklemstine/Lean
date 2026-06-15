@@ -1,0 +1,86 @@
+import Mathlib
+
+/-!
+# Minimal max-plus (tropical) polynomial evaluation on `ℝ`
+
+Fix `n : ℕ` and coefficients `a : Fin (n+1) → ℝ`.  The max-plus (tropical)
+polynomial evaluated at `x : ℝ` is the maximum over the `n+1` affine "pieces"
+`a i + i * x`.
+
+We use `Finset.sup'` (the version of the finite supremum for a `SemilatticeSup`
+that takes a nonemptiness witness) since `ℝ` has no `⊥`.  The index type
+`Fin (n+1)` is always nonempty, so `Finset.univ_nonempty` supplies the witness.
+
+We prove:
+* `tropPolyFun_eq` — the pointwise characterization (definitional unfolding);
+* `exists_piece_eq` — attainment: the maximum is realized by some piece;
+* `tropPolyFun_mono_coeff` — coefficientwise monotonicity;
+* `tropPolyFun_convex` — the Jensen / convexity inequality in `x`.
+
+Remark on monotonicity.  Monotonicity *in `x`* is false in general: distinct
+pieces have distinct slopes `i`, so the value can decrease then increase.  The
+correct, robust monotonicity statement is coefficientwise, which is what we
+formalize.
+-/
+
+namespace TropicalMaxPlus
+
+variable {n : ℕ}
+
+/-- The `i`-th affine piece of the tropical polynomial: `a i + i * x`. -/
+def piece (a : Fin (n + 1) → ℝ) (i : Fin (n + 1)) (x : ℝ) : ℝ :=
+  a i + (i : ℝ) * x
+
+/-- Evaluation of the max-plus (tropical) polynomial with coefficients `a` at `x`:
+the maximum over all affine pieces. -/
+noncomputable def tropPolyFun (a : Fin (n + 1) → ℝ) (x : ℝ) : ℝ :=
+  Finset.univ.sup' Finset.univ_nonempty (fun i => piece a i x)
+
+/-- **Pointwise characterization.** `tropPolyFun a x` is the finite supremum over
+all pieces.  This holds definitionally. -/
+theorem tropPolyFun_eq (a : Fin (n + 1) → ℝ) (x : ℝ) :
+    tropPolyFun a x = Finset.univ.sup' Finset.univ_nonempty (fun i => piece a i x) :=
+  rfl
+
+/-- Every piece is bounded above by the tropical polynomial value. -/
+theorem piece_le_tropPolyFun (a : Fin (n + 1) → ℝ) (i : Fin (n + 1)) (x : ℝ) :
+    piece a i x ≤ tropPolyFun a x :=
+  Finset.le_sup' (fun i => piece a i x) (Finset.mem_univ i)
+
+/-- **Attainment.** For every `x` there is an index `i` realizing the maximum. -/
+theorem exists_piece_eq (a : Fin (n + 1) → ℝ) (x : ℝ) :
+    ∃ i : Fin (n + 1), tropPolyFun a x = piece a i x := by
+  obtain ⟨i, _, hi⟩ :=
+    Finset.exists_mem_eq_sup' (Finset.univ_nonempty) (fun i => piece a i x)
+  exact ⟨i, hi⟩
+
+/-- **Coefficientwise monotonicity.** If `a i ≤ b i` for all `i`, then the
+tropical polynomial values are ordered accordingly. -/
+theorem tropPolyFun_mono_coeff {a b : Fin (n + 1) → ℝ} (h : ∀ i, a i ≤ b i)
+    (x : ℝ) : tropPolyFun a x ≤ tropPolyFun b x := by
+  refine Finset.sup'_le _ _ (fun i _ => ?_)
+  calc piece a i x = a i + (i : ℝ) * x := rfl
+    _ ≤ b i + (i : ℝ) * x := by linarith [h i]
+    _ = piece b i x := rfl
+    _ ≤ tropPolyFun b x := piece_le_tropPolyFun b i x
+
+/-- Each affine piece is itself affine in `x`. -/
+theorem piece_affine (a : Fin (n + 1) → ℝ) (i : Fin (n + 1)) (t x y : ℝ) :
+    piece a i (t * x + (1 - t) * y) = t * piece a i x + (1 - t) * piece a i y := by
+  simp only [piece]; ring
+
+/-- **Convexity / Jensen inequality.** `tropPolyFun a` is convex in `x`. -/
+theorem tropPolyFun_convex (a : Fin (n + 1) → ℝ) (t x y : ℝ)
+    (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
+    tropPolyFun a (t * x + (1 - t) * y)
+      ≤ t * tropPolyFun a x + (1 - t) * tropPolyFun a y := by
+  refine Finset.sup'_le _ _ (fun i _ => ?_)
+  have hx : piece a i x ≤ tropPolyFun a x := piece_le_tropPolyFun a i x
+  have hy : piece a i y ≤ tropPolyFun a y := piece_le_tropPolyFun a i y
+  have h1t : 0 ≤ 1 - t := by linarith
+  calc piece a i (t * x + (1 - t) * y)
+      = t * piece a i x + (1 - t) * piece a i y := piece_affine a i t x y
+    _ ≤ t * tropPolyFun a x + (1 - t) * tropPolyFun a y := by
+        gcongr
+
+end TropicalMaxPlus

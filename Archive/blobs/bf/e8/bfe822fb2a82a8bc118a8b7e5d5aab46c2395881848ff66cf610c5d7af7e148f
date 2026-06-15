@@ -1,0 +1,226 @@
+import Bridges.NeuralPseudometricProofSpectrumFunctor
+
+/-! # Functoriality and quotient descent for the neural proof-spectrum bridge
+
+This file is a focused continuation of
+`Bridges.NeuralPseudometricProofSpectrumFunctor`.  That file builds, for an *algebraic
+neural observation system* `AlgNeuralSystem R K α`, the behavioral-equivalence semiring
+congruence `behaviorCongruence N : SRCong R`, an observation pseudometric `obsDist`, and a
+behavior-preserving pushforward `behaviorCongruence_map` along morphisms `AlgNeuralHom`.
+
+Here we complete that picture with the *categorical* and *quotient* layers that are
+directly supported by the existing API:
+
+* **Category structure on morphisms.** `AlgNeuralHom.id` and `AlgNeuralHom.comp`, together
+  with extensionality (`AlgNeuralHom.ext`) and the defining `simp` lemmas
+  `AlgNeuralHom.id_toFun`, `AlgNeuralHom.comp_toFun`.
+
+* **Functoriality of the behavior data.**  The behavior map and the induced congruence
+  pushforward respect identities and composition: `algBehavior_id`, `algBehavior_comp`,
+  `behaviorCongruence_map_id`, `behaviorCongruence_map_comp`.  These hold at exactly the
+  strength the underlying `algBehavior_map` provides — no extra hypotheses.
+
+* **Quotient pseudometric descent.**  The behavioral kernel is packaged as a `Setoid`
+  (`behaviorSetoid`); `obsDist` is congruent for it (`obsDist_congr`) and therefore
+  descends to a well-defined function `quotObsDist` on the Myhill–Nerode quotient
+  `NeuralQuotient`.  On the quotient the pseudometric becomes a genuine *metric*: distance
+  `0` is equivalent to equality of classes (`quotObsDist_eq_zero_iff`), and the
+  pseudometric laws transport (`quotObsDist_self`, `quotObsDist_comm`,
+  `quotObsDist_triangle`).
+
+We deliberately do **not** assert any prime-congruence statement: as recorded in the
+imported file's lab notes, primality of `behaviorCongruence N` does not follow from the
+available API.
+-/
+
+noncomputable section
+open Classical
+
+namespace Bridges.NeuralProofSpectrum
+
+universe u v w
+
+variable {R S T K : Type*} {α : Type*}
+
+/-! ## Section 1: The category of algebraic neural morphisms -/
+
+/-- Two morphisms of algebraic neural systems are equal as soon as their underlying state
+    maps agree (the remaining fields are propositions). -/
+@[ext]
+theorem AlgNeuralHom.ext [Semiring R] [Semiring S] [Semiring K]
+    {N : AlgNeuralSystem R K α} {M : AlgNeuralSystem S K α}
+    {f g : AlgNeuralHom N M} (h : f.toFun = g.toFun) : f = g := by
+  cases f; cases g; subst h; rfl
+
+/-- The identity morphism of an algebraic neural system. -/
+def AlgNeuralHom.id [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) : AlgNeuralHom N N where
+  toFun := fun x => x
+  map_step := fun _ _ => rfl
+  map_observe := fun _ => rfl
+
+@[simp]
+theorem AlgNeuralHom.id_toFun [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x : R) : (AlgNeuralHom.id N).toFun x = x := rfl
+
+/-- Composition of morphisms of algebraic neural systems. -/
+def AlgNeuralHom.comp [Semiring R] [Semiring S] [Semiring T] [Semiring K]
+    {N : AlgNeuralSystem R K α} {M : AlgNeuralSystem S K α} {P : AlgNeuralSystem T K α}
+    (g : AlgNeuralHom M P) (f : AlgNeuralHom N M) : AlgNeuralHom N P where
+  toFun := fun x => g.toFun (f.toFun x)
+  map_step := fun x a => by rw [f.map_step, g.map_step]
+  map_observe := fun x => by rw [f.map_observe, g.map_observe]
+
+@[simp]
+theorem AlgNeuralHom.comp_toFun [Semiring R] [Semiring S] [Semiring T] [Semiring K]
+    {N : AlgNeuralSystem R K α} {M : AlgNeuralSystem S K α} {P : AlgNeuralSystem T K α}
+    (g : AlgNeuralHom M P) (f : AlgNeuralHom N M) (x : R) :
+    (g.comp f).toFun x = g.toFun (f.toFun x) := rfl
+
+/-- Left identity law. -/
+@[simp]
+theorem AlgNeuralHom.id_comp [Semiring R] [Semiring S] [Semiring K]
+    {N : AlgNeuralSystem R K α} {M : AlgNeuralSystem S K α} (f : AlgNeuralHom N M) :
+    (AlgNeuralHom.id M).comp f = f := by
+  ext x; rfl
+
+/-- Right identity law. -/
+@[simp]
+theorem AlgNeuralHom.comp_id [Semiring R] [Semiring S] [Semiring K]
+    {N : AlgNeuralSystem R K α} {M : AlgNeuralSystem S K α} (f : AlgNeuralHom N M) :
+    f.comp (AlgNeuralHom.id N) = f := by
+  ext x; rfl
+
+/-- Associativity of composition. -/
+theorem AlgNeuralHom.comp_assoc
+    {U : Type*} [Semiring R] [Semiring S] [Semiring T] [Semiring U] [Semiring K]
+    {N : AlgNeuralSystem R K α} {M : AlgNeuralSystem S K α} {P : AlgNeuralSystem T K α}
+    {Q : AlgNeuralSystem U K α}
+    (h : AlgNeuralHom P Q) (g : AlgNeuralHom M P) (f : AlgNeuralHom N M) :
+    (h.comp g).comp f = h.comp (g.comp f) := by
+  ext x; rfl
+
+/-! ## Section 2: Functoriality of the behavior map and the congruence pushforward -/
+
+/-- The behavior map is invariant under the identity morphism (trivially, since its state
+    map is the identity). -/
+theorem algBehavior_id [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x : R) (w : List α) :
+    algBehavior N ((AlgNeuralHom.id N).toFun x) w = algBehavior N x w := rfl
+
+/-- The behavior map factors through composition of morphisms: a state's behavior is
+    preserved all the way along `g ∘ f`. -/
+theorem algBehavior_comp [Semiring R] [Semiring S] [Semiring T] [Semiring K]
+    {N : AlgNeuralSystem R K α} {M : AlgNeuralSystem S K α} {P : AlgNeuralSystem T K α}
+    (g : AlgNeuralHom M P) (f : AlgNeuralHom N M) (x : R) (w : List α) :
+    algBehavior P ((g.comp f).toFun x) w = algBehavior N x w := by
+  rw [AlgNeuralHom.comp_toFun, ← algBehavior_map g (f.toFun x) w,
+    ← algBehavior_map f x w]
+
+/-- Functoriality, identity part: the pushforward of the behavior congruence along the
+    identity morphism is the identity. -/
+theorem behaviorCongruence_map_id [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) {x y : R} :
+    (behaviorCongruence N).rel ((AlgNeuralHom.id N).toFun x) ((AlgNeuralHom.id N).toFun y)
+      ↔ (behaviorCongruence N).rel x y := Iff.rfl
+
+/-- Functoriality, composition part: pushing a related pair forward along `g ∘ f` is the
+    same as pushing it forward along `f` and then along `g`. -/
+theorem behaviorCongruence_map_comp [Semiring R] [Semiring S] [Semiring T] [Semiring K]
+    {N : AlgNeuralSystem R K α} {M : AlgNeuralSystem S K α} {P : AlgNeuralSystem T K α}
+    (g : AlgNeuralHom M P) (f : AlgNeuralHom N M) {x y : R}
+    (h : (behaviorCongruence N).rel x y) :
+    (behaviorCongruence P).rel ((g.comp f).toFun x) ((g.comp f).toFun y) :=
+  behaviorCongruence_map g (behaviorCongruence_map f h)
+
+/-! ## Section 3: Quotient pseudometric descent
+
+The behavioral kernel is an equivalence relation, hence a `Setoid`; we form the
+Myhill–Nerode quotient and show the observation pseudometric descends to a genuine metric
+on it. -/
+
+/-- The behavioral equivalence kernel as a `Setoid`. -/
+def behaviorSetoid [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) : Setoid R where
+  r := behaviorRel N
+  iseqv :=
+    ⟨behaviorRel_refl N,
+     fun h => behaviorRel_symm N h,
+     fun h₁ h₂ => behaviorRel_trans N h₁ h₂⟩
+
+/-- The Myhill–Nerode quotient of an algebraic neural system by behavioral equivalence. -/
+def NeuralQuotient [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) : Type _ :=
+  Quotient (behaviorSetoid N)
+
+/-- The observation pseudometric is congruent for the behavioral kernel: equivalent
+    arguments give equal distances. This is exactly the well-definedness needed to descend
+    `obsDist` to the quotient. -/
+theorem obsDist_congr [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) {x x' y y' : R}
+    (hx : behaviorRel N x x') (hy : behaviorRel N y y') :
+    obsDist N x y = obsDist N x' y' := by
+  have h : behaviorRel N x y ↔ behaviorRel N x' y' := by
+    constructor
+    · intro hxy
+      exact behaviorRel_trans N (behaviorRel_trans N (behaviorRel_symm N hx) hxy) hy
+    · intro hxy
+      exact behaviorRel_trans N (behaviorRel_trans N hx hxy) (behaviorRel_symm N hy)
+  unfold obsDist
+  by_cases hxy : behaviorRel N x y
+  · rw [if_pos hxy, if_pos (h.mp hxy)]
+  · rw [if_neg hxy, if_neg (fun c => hxy (h.mpr c))]
+
+/-- The descended distance on the Myhill–Nerode quotient. -/
+def quotObsDist [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) : NeuralQuotient N → NeuralQuotient N → ℝ :=
+  Quotient.lift₂ (obsDist N) (fun _ _ _ _ hx hy => obsDist_congr N hx hy)
+
+@[simp]
+theorem quotObsDist_mk [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x y : R) :
+    quotObsDist N (Quotient.mk (behaviorSetoid N) x) (Quotient.mk (behaviorSetoid N) y)
+      = obsDist N x y := rfl
+
+/-- The descended distance is nonnegative. -/
+theorem quotObsDist_nonneg [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (qx qy : NeuralQuotient N) :
+    0 ≤ quotObsDist N qx qy := by
+  refine Quotient.inductionOn₂ qx qy ?_
+  intro x y; rw [quotObsDist_mk]; exact obsDist_nonneg N x y
+
+/-- The descended distance vanishes on the diagonal. -/
+theorem quotObsDist_self [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (q : NeuralQuotient N) :
+    quotObsDist N q q = 0 := by
+  refine Quotient.inductionOn q ?_
+  intro x; rw [quotObsDist_mk]; exact obsDist_self N x
+
+/-- The descended distance is symmetric. -/
+theorem quotObsDist_comm [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (qx qy : NeuralQuotient N) :
+    quotObsDist N qx qy = quotObsDist N qy qx := by
+  refine Quotient.inductionOn₂ qx qy ?_
+  intro x y; rw [quotObsDist_mk, quotObsDist_mk]; exact obsDist_comm N x y
+
+/-- The descended distance satisfies the triangle inequality. -/
+theorem quotObsDist_triangle [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (qx qy qz : NeuralQuotient N) :
+    quotObsDist N qx qz ≤ quotObsDist N qx qy + quotObsDist N qy qz := by
+  refine Quotient.inductionOn₃ qx qy qz ?_
+  intro x y z; rw [quotObsDist_mk, quotObsDist_mk, quotObsDist_mk]
+  exact obsDist_triangle N x y z
+
+/-- **Quotient descent / separation.** On the Myhill–Nerode quotient the observation
+    pseudometric becomes a genuine *metric*: two classes are at distance `0` exactly when
+    they are equal.  This is the analytic counterpart of the proof-spectrum congruence
+    quotient. -/
+theorem quotObsDist_eq_zero_iff [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (qx qy : NeuralQuotient N) :
+    quotObsDist N qx qy = 0 ↔ qx = qy := by
+  refine Quotient.inductionOn₂ qx qy ?_
+  intro x y
+  rw [quotObsDist_mk, obsDist_eq_zero_iff]
+  exact ⟨fun h => Quotient.sound h, fun h => Quotient.exact h⟩
+
+end Bridges.NeuralProofSpectrum

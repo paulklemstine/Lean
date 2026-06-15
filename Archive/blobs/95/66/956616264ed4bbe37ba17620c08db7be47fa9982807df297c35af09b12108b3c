@@ -1,0 +1,193 @@
+/-
+Copyright (c) 2026 Harmonic. All rights reserved.
+
+# Discrete Hodge Theory ↔ Reversible Random Walks
+
+This file establishes a self-contained Mathlib foundation for the discrete Hodge
+program on finite weighted graphs and bridges it to the probability theory of
+reversible random walks.
+
+A finite weighted graph is encoded by a symmetric, entrywise-nonnegative weight
+matrix `w : Matrix (Fin n) (Fin n) ℝ`. From it we build:
+
+* `degree w i = ∑ j, w i j`             — the (weighted) degree of vertex `i`;
+* `degMat w   = diagonal (degree w)`    — the degree matrix `D`;
+* `lap w      = degMat w - w`           — the combinatorial Laplacian `L = D - A`;
+* `walk w i j = w i j / degree w i`     — the reversible random walk `P = D⁻¹A`.
+
+## Main results
+
+* `lap_quadForm`        — Dirichlet energy identity `xᵀLx = ½ Σᵢⱼ wᵢⱼ(xᵢ−xⱼ)²`.
+* `lap_posSemidef`      — positive semidefiniteness of `L`.
+* `lap_isSymm`          — symmetry of `L`.
+* `lap_mulVec_const`    — constants are harmonic (`L` has zero row sums).
+* `walk_reversible`     — detailed balance `dᵢ Pᵢⱼ = dⱼ Pⱼᵢ` (unconditional).
+* `lap_eq_deg_sub_walk` — factorization `L f = D (f − P f)`.
+* `lap_zero_iff_walk_fixed` — bridge: at a positive-degree vertex,
+  `(L f)ᵢ = 0 ⟺ (P f)ᵢ = fᵢ` (harmonic forms = walk-invariant functions).
+-/
+
+import Mathlib
+
+noncomputable section
+
+open Matrix BigOperators Finset
+
+namespace DiscreteHodge
+
+variable {n : ℕ}
+
+/-- The (weighted) degree of vertex `i`: the sum of the weights of incident edges. -/
+def degree (w : Matrix (Fin n) (Fin n) ℝ) (i : Fin n) : ℝ := ∑ j, w i j
+
+/-- The degree matrix `D = diagonal (degree)`. -/
+def degMat (w : Matrix (Fin n) (Fin n) ℝ) : Matrix (Fin n) (Fin n) ℝ :=
+  Matrix.diagonal (degree w)
+
+/-- The combinatorial graph Laplacian `L = D - A`, with `A = w` the adjacency matrix. -/
+def lap (w : Matrix (Fin n) (Fin n) ℝ) : Matrix (Fin n) (Fin n) ℝ :=
+  degMat w - w
+
+/-- The reversible random walk transition matrix `P = D⁻¹ A`, defined entrywise as
+    `wᵢⱼ / degree i`.  Using totality of real division this is defined unconditionally. -/
+def walk (w : Matrix (Fin n) (Fin n) ℝ) : Matrix (Fin n) (Fin n) ℝ :=
+  fun i j => w i j / degree w i
+
+/-
+If a vertex has zero degree (and all weights are nonnegative), every incident
+    weight is zero.
+-/
+theorem weight_eq_zero_of_degree_eq_zero (w : Matrix (Fin n) (Fin n) ℝ)
+    (hpos : ∀ i j, 0 ≤ w i j) {i : Fin n} (hi : degree w i = 0) (j : Fin n) :
+    w i j = 0 := by
+      exact le_antisymm ( le_trans ( Finset.single_le_sum ( fun a _ => hpos i a ) ( Finset.mem_univ j ) ) hi.le ) ( hpos i j )
+
+/-
+Key cancellation: `degree i * (wᵢⱼ / degree i) = wᵢⱼ` holds unconditionally,
+    because a zero degree forces the numerator to vanish.
+-/
+theorem degree_mul_walk (w : Matrix (Fin n) (Fin n) ℝ) (hpos : ∀ i j, 0 ≤ w i j)
+    (i j : Fin n) : degree w i * walk w i j = w i j := by
+      by_cases h : degree w i = 0 <;> simp_all +decide [ mul_div_cancel₀, walk ];
+      exact Eq.symm ( weight_eq_zero_of_degree_eq_zero w hpos h j )
+
+/-
+**Dirichlet energy identity.** For a symmetric weight matrix,
+    `xᵀ L x = ½ Σᵢⱼ wᵢⱼ (xᵢ − xⱼ)²`.
+-/
+theorem lap_quadForm (w : Matrix (Fin n) (Fin n) ℝ) (hsymm : w.IsSymm) (x : Fin n → ℝ) :
+    x ⬝ᵥ (lap w).mulVec x = (1 / 2) * ∑ i, ∑ j, w i j * (x i - x j) ^ 2 := by
+      unfold lap;
+      unfold degMat; simp +decide [ Matrix.mulVec, dotProduct, Finset.mul_sum _ _ _, sub_mul, mul_sub ] ; ring;
+      simp +decide [ Finset.sum_add_distrib, pow_two, mul_assoc, mul_comm, mul_left_comm, diagonal ] ; ring;
+      rw [ show ( ∑ i : Fin n, ∑ j : Fin n, w i j * x j ^ 2 * ( 1 / 2 ) ) = ( ∑ i : Fin n, ∑ j : Fin n, w i j * x i ^ 2 * ( 1 / 2 ) ) from ?_ ] ; norm_num [ ← Finset.mul_sum _ _ _, ← Finset.sum_mul, degree ] ; ring;
+      · simpa only [ mul_comm, Finset.mul_sum _ _ _ ] using by ring;
+      · rw [ Finset.sum_comm ] ; congr ; ext i ; congr ; ext j ; rw [ ← hsymm.apply ] ;
+
+/-
+**Positive semidefiniteness** of the combinatorial Laplacian.
+-/
+theorem lap_posSemidef (w : Matrix (Fin n) (Fin n) ℝ) (hsymm : w.IsSymm)
+    (hpos : ∀ i j, 0 ≤ w i j) (x : Fin n → ℝ) :
+    0 ≤ x ⬝ᵥ (lap w).mulVec x := by
+      convert mul_nonneg ( by norm_num : ( 0 : ℝ ) ≤ 1 / 2 ) ( Finset.sum_nonneg fun i _ => Finset.sum_nonneg fun j _ => mul_nonneg ( hpos i j ) ( sq_nonneg ( x i - x j ) ) ) using 1;
+      convert lap_quadForm w hsymm x using 1
+
+/-
+**Symmetry** of the combinatorial Laplacian.
+-/
+theorem lap_isSymm (w : Matrix (Fin n) (Fin n) ℝ) (hsymm : w.IsSymm) :
+    (lap w).IsSymm := by
+      unfold lap;
+      unfold degMat;
+      simp_all +decide [ Matrix.IsSymm, Matrix.transpose_sub ]
+
+/-
+**Constants are harmonic**: `L` annihilates constant functions (zero row sums).
+-/
+theorem lap_mulVec_const (w : Matrix (Fin n) (Fin n) ℝ) (c : ℝ) :
+    (lap w).mulVec (fun _ => c) = 0 := by
+      ext i
+      simp only [lap, degMat, Matrix.sub_mulVec, Pi.sub_apply, Matrix.mulVec_diagonal,
+        Pi.zero_apply, sub_eq_zero]
+      simp only [degree, Matrix.mulVec, dotProduct, Finset.sum_mul]
+
+/-
+**Detailed balance / reversibility** of the walk with respect to the degree
+    measure: `dᵢ Pᵢⱼ = dⱼ Pⱼᵢ`.  Stated unconditionally.
+-/
+theorem walk_reversible (w : Matrix (Fin n) (Fin n) ℝ) (hsymm : w.IsSymm)
+    (hpos : ∀ i j, 0 ≤ w i j) (i j : Fin n) :
+    degree w i * walk w i j = degree w j * walk w j i := by
+      convert degree_mul_walk w hpos i j using 1;
+      exact hsymm.apply j i ▸ degree_mul_walk w hpos j i
+
+/-
+**Factorization** `L f = D (f − P f)`.
+-/
+theorem lap_eq_deg_sub_walk (w : Matrix (Fin n) (Fin n) ℝ) (hpos : ∀ i j, 0 ≤ w i j)
+    (f : Fin n → ℝ) :
+    (lap w).mulVec f = (degMat w).mulVec (fun i => f i - (walk w).mulVec f i) := by
+      ext i;
+      simp [lap, degMat];
+      simp +decide [ Matrix.mulVec, dotProduct, Finset.mul_sum _ _ _, mul_sub ];
+      simp +decide [ sub_mul, Finset.sum_sub_distrib, Matrix.diagonal ];
+      exact Finset.sum_congr rfl fun j _ => by rw [ ← mul_assoc, degree_mul_walk w hpos i j ] ;
+
+/-
+**Bridge theorem.** At a positive-degree vertex, a function is discrete-harmonic
+    iff it is invariant under the random walk:
+    `(L f)ᵢ = 0 ⟺ (P f)ᵢ = fᵢ`.
+-/
+theorem lap_zero_iff_walk_fixed (w : Matrix (Fin n) (Fin n) ℝ) (hpos : ∀ i j, 0 ≤ w i j)
+    (f : Fin n → ℝ) (i : Fin n) (hi : 0 < degree w i) :
+    (lap w).mulVec f i = 0 ↔ (walk w).mulVec f i = f i := by
+      rw [ lap_eq_deg_sub_walk w hpos f ];
+      simp +decide [ degMat, Matrix.mulVec, dotProduct ];
+      simp +decide [ diagonal, hi.ne' ];
+      grind +splitIndPred
+
+end DiscreteHodge
+
+/-
+-- !-- Lab Notes -- !--
+
+## Hypothesis (Hypothesizer)
+Finite weighted graphs carry a combinatorial Laplacian `L = D - A` whose algebra
+(symmetry, PSD, zero row sums) should exactly mirror the probabilistic structure
+of the reversible walk `P = D⁻¹A`.  Concretely we conjectured: (a) the quadratic
+form of `L` equals the Dirichlet energy `½ Σ wᵢⱼ(xᵢ−xⱼ)²`; (b) `L` is PSD; (c) the
+degree measure makes `P` reversible; (d) `L f = D(f − P f)`; and (e) harmonicity
+of `f` at a vertex coincides with walk-invariance there.
+
+## Experiment (Experimenter)
+All five statements were formalized over `Matrix (Fin n) (Fin n) ℝ` and proved.
+The decisive technical step is the Dirichlet identity, which needs symmetry of `w`
+to fold `Σ wᵢⱼ xⱼ²` into `Σ wᵢⱼ xᵢ²` via `Finset.sum_comm`.  Reversibility and the
+factorization were stated *unconditionally* in the degree using totality of real
+division: the cancellation `degree i * (wᵢⱼ / degree i) = wᵢⱼ` holds even when
+`degree i = 0`, because nonnegativity forces every incident weight to vanish there
+(`weight_eq_zero_of_degree_eq_zero`).
+
+## Analysis (Analyst)
+The nonnegativity hypothesis is load-bearing in exactly two places: PSD (each
+energy summand must be ≥ 0) and the unconditional cancellation lemmas.  Symmetry is
+load-bearing only for the Dirichlet identity / PSD, not for the factorization or the
+bridge — a pleasant separation that the statements record faithfully.
+
+## Critique (Critic) — adversarial counterexample search
+* Drop nonnegativity: with `w = ![![0,-1],![-1,0]]` the form `xᵀLx` becomes
+  indefinite, so PSD genuinely fails; the hypothesis is necessary, not cosmetic.
+* Drop symmetry: a non-symmetric `w` breaks the `sum_comm` fold, and `xᵀLx` is no
+  longer the symmetric Dirichlet energy; necessary.
+* Zero-degree corner: the bridge theorem is guarded by `0 < degree i`; at an
+  isolated vertex `(L f)ᵢ = 0` holds trivially while `(P f)ᵢ = 0 ≠ fᵢ` in general,
+  so the positivity guard is exactly the boundary and cannot be removed.
+
+## Synthesis (PI)
+The foundation is a clean dictionary: `lap_quadForm` ↔ energy, `lap_posSemidef` ↔
+Dirichlet ≥ 0, `walk_reversible` ↔ detailed balance, `lap_eq_deg_sub_walk` ↔
+generator factorization, `lap_zero_iff_walk_fixed` ↔ harmonic = invariant.  These
+feed directly into the kernel theorem (C1) and the reversibility characterization
+(C4) in the sibling files.
+-/

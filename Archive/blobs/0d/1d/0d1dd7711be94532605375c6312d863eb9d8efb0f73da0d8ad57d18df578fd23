@@ -1,0 +1,197 @@
+import Mathlib
+import Bridges.NeuralPseudometricProofSpectrumFunctor
+
+/-! # Functoriality and Prime Geometry of the Neural Proof-Spectrum Bridge
+
+This file extends `Bridges.NeuralPseudometricProofSpectrumFunctor` with the *categorical*
+content that the base file announces but does not develop:
+
+* the identity and composition of `AlgNeuralHom` morphisms of algebraic neural systems;
+* the **functor laws** for the assignment `N ↦ behaviorCongruence N`, expressed both on the
+  behavior map (`algBehavior_map_id`, `algBehavior_map_comp`) and on the proof-spectrum
+  congruence itself (`behaviorCongruence_map_id`, `behaviorCongruence_map_comp`);
+* the **prime congruence** refinement `behaviorPrimeCongruence`, made honest by the explicit
+  hypothesis `DetectsBehavior` (a *single* context separates all states), which is exactly
+  the obstruction flagged in the base file's "Failure analysis F2"; and
+* the **quotient (pseudo)metric** `quotObsDist` descended from `obsDist` along the
+  Myhill–Nerode quotient, together with the well-definedness lemma `obsDist_congr` and the
+  capstone `quotObsDist_eq_zero_iff` showing the descended distance is a genuine metric
+  (distance `0` iff equal in the quotient).
+
+## Notes on statement strength relative to the base file
+
+* The functor laws are **definitional** after unfolding `AlgNeuralHom.id`/`AlgNeuralHom.comp`,
+  so they are proved by `rfl`/extensionality with no weakening.
+* The prime claim is **stated only under the genuinely-used hypothesis** `DetectsBehavior`.
+  Without it the congruence need not be prime (see base-file F2), so this is the *weakest
+  correct* upgrade; the conclusion (`PrimeSRCong R`) is as strong as intended.
+* The quotient-metric results are exactly the well-definedness/compatibility lemmas
+  supported by the existing pseudometric construction; nothing speculative is added.
+-/
+
+noncomputable section
+open Classical
+open Bridges.AlgebraMachineLearning
+
+namespace Bridges.NeuralProofSpectrum
+
+universe u v w
+
+variable {R S T K : Type*} {α : Type*}
+
+/-! ## Section 1: Identity and composition of algebraic neural morphisms
+
+`AlgNeuralHom` morphisms form a category: the identity state map intertwines the dynamics
+trivially, and intertwining maps compose.  These are the data needed to phrase the functor
+laws below. -/
+
+/-- The identity morphism of an algebraic neural system. -/
+def AlgNeuralHom.id [Semiring R] [Semiring K] (N : AlgNeuralSystem R K α) :
+    AlgNeuralHom N N where
+  toFun := _root_.id
+  map_step := fun _ _ => rfl
+  map_observe := fun _ => rfl
+
+@[simp] theorem AlgNeuralHom.id_toFun [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) : (AlgNeuralHom.id N).toFun = _root_.id := rfl
+
+/-- Composition of morphisms of algebraic neural systems. -/
+def AlgNeuralHom.comp [Semiring R] [Semiring S] [Semiring T] [Semiring K]
+    {N : AlgNeuralSystem R K α} {M : AlgNeuralSystem S K α} {P : AlgNeuralSystem T K α}
+    (f : AlgNeuralHom N M) (g : AlgNeuralHom M P) : AlgNeuralHom N P where
+  toFun := g.toFun ∘ f.toFun
+  map_step := fun x a => by
+    simp only [Function.comp_apply]
+    rw [f.map_step, g.map_step]
+  map_observe := fun x => (f.map_observe x).trans (g.map_observe (f.toFun x))
+
+@[simp] theorem AlgNeuralHom.comp_toFun [Semiring R] [Semiring S] [Semiring T] [Semiring K]
+    {N : AlgNeuralSystem R K α} {M : AlgNeuralSystem S K α} {P : AlgNeuralSystem T K α}
+    (f : AlgNeuralHom N M) (g : AlgNeuralHom M P) :
+    (f.comp g).toFun = g.toFun ∘ f.toFun := rfl
+
+/-! ## Section 2: Functor laws on the behavior map -/
+
+/-- **Identity law (behavior).** The identity morphism does not change behavior. -/
+theorem algBehavior_map_id [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x : R) (w : List α) :
+    algBehavior N ((AlgNeuralHom.id N).toFun x) w = algBehavior N x w := rfl
+
+/-- **Composition law (behavior).** Behavior is transported along a composite morphism by
+    transporting along its two factors in turn. -/
+theorem algBehavior_map_comp [Semiring R] [Semiring S] [Semiring T] [Semiring K]
+    {N : AlgNeuralSystem R K α} {M : AlgNeuralSystem S K α} {P : AlgNeuralSystem T K α}
+    (f : AlgNeuralHom N M) (g : AlgNeuralHom M P) (x : R) (w : List α) :
+    algBehavior N x w = algBehavior P ((f.comp g).toFun x) w := by
+  rw [algBehavior_map f x w, algBehavior_map g (f.toFun x) w]
+  rfl
+
+/-! ## Section 3: Functor laws on the proof-spectrum congruence
+
+The assignment `N ↦ behaviorCongruence N` is functorial: identity morphisms act as the
+identity on the congruence relation, and the pushforward along a composite equals the
+composite of the pushforwards. -/
+
+/-- **Identity law (congruence).** Pushing the congruence forward along the identity
+    morphism is the identity on the relation. -/
+theorem behaviorCongruence_map_id [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x y : R) :
+    (behaviorCongruence N).rel ((AlgNeuralHom.id N).toFun x) ((AlgNeuralHom.id N).toFun y)
+      ↔ (behaviorCongruence N).rel x y := Iff.rfl
+
+/-- **Composition law (congruence).** The pushforward of the congruence along a composite
+    morphism factors as the two successive pushforwards. -/
+theorem behaviorCongruence_map_comp [Semiring R] [Semiring S] [Semiring T] [Semiring K]
+    {N : AlgNeuralSystem R K α} {M : AlgNeuralSystem S K α} {P : AlgNeuralSystem T K α}
+    (f : AlgNeuralHom N M) (g : AlgNeuralHom M P) {x y : R}
+    (h : (behaviorCongruence N).rel x y) :
+    (behaviorCongruence P).rel ((f.comp g).toFun x) ((f.comp g).toFun y) :=
+  behaviorCongruence_map g (behaviorCongruence_map f h)
+
+/-! ## Section 4: Prime congruence under a detecting context
+
+The base file's "Failure analysis F2" notes that `behaviorCongruence N` is **not** prime in
+general, even when `K` has no zero divisors, because the pointwise disjunction
+`∀ w, b a w = 0 ∨ b b w = 0` does not factor.  The clean fix is to assume a *single*
+context `w₀` that already detects behavioral equivalence; then the disjunction is decided at
+`w₀` and primality follows.  This hypothesis is genuinely used in the proof. -/
+
+/-- `DetectsBehavior N w₀` says the single context `w₀` separates all states: two states are
+    behaviorally equivalent iff their observations on `w₀` agree.  (For example, in a
+    finite-memory system a sufficiently long universal probing word has this property.) -/
+def DetectsBehavior [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (w₀ : List α) : Prop :=
+  ∀ x y : R, behaviorRel N x y ↔ algBehavior N x w₀ = algBehavior N y w₀
+
+/-- With a detecting context, vanishing in the congruence is detected at `w₀`. -/
+theorem behaviorRel_zero_iff_of_detects [Semiring R] [Semiring K]
+    {N : AlgNeuralSystem R K α} {w₀ : List α} (h : DetectsBehavior N w₀) (x : R) :
+    behaviorRel N x 0 ↔ algBehavior N x w₀ = 0 := by
+  rw [h x 0, algBehavior_zero]
+
+/-- **The prime refinement.** If the output semiring has no zero divisors and a single
+    context `w₀` detects behavioral equivalence, then the behavior congruence is a *prime*
+    semiring congruence — a point of the proof spectrum `ProofSpectrum R`. -/
+def behaviorPrimeCongruence [Semiring R] [Semiring K] [NoZeroDivisors K]
+    (N : AlgNeuralSystem R K α) (w₀ : List α) (h : DetectsBehavior N w₀) :
+    PrimeSRCong R :=
+  { behaviorCongruence N with
+    prime_prop := by
+      intro a b hab
+      have h0 : algBehavior N (a * b) w₀ = 0 :=
+        (behaviorRel_zero_iff_of_detects h (a * b)).mp hab
+      rw [algBehavior_mul] at h0
+      rcases mul_eq_zero.mp h0 with ha | hb
+      · exact Or.inl ((behaviorRel_zero_iff_of_detects h a).mpr ha)
+      · exact Or.inr ((behaviorRel_zero_iff_of_detects h b).mpr hb) }
+
+/-- The prime refinement has the expected underlying relation. -/
+theorem behaviorPrimeCongruence_rel [Semiring R] [Semiring K] [NoZeroDivisors K]
+    (N : AlgNeuralSystem R K α) (w₀ : List α) (h : DetectsBehavior N w₀) (x y : R) :
+    (behaviorPrimeCongruence N w₀ h).rel x y ↔ (behaviorCongruence N).rel x y := Iff.rfl
+
+/-! ## Section 5: The descended metric on the Myhill–Nerode quotient
+
+The observation pseudometric `obsDist` is constant on behavioral-equivalence classes, so it
+descends to the Myhill–Nerode quotient
+`Quotient (neural_setoid (weighted_to_neural N.toWeighted))` as a genuine *metric*
+(distance `0` iff equal). -/
+
+/-- **Well-definedness / compatibility.** `obsDist` is invariant under replacing either
+    argument by a behaviorally-equivalent state. -/
+theorem obsDist_congr [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) {x x' y y' : R}
+    (hx : behaviorRel N x x') (hy : behaviorRel N y y') :
+    obsDist N x y = obsDist N x' y' := by
+  have hiff : behaviorRel N x y ↔ behaviorRel N x' y' :=
+    ⟨fun h => behaviorRel_trans N (behaviorRel_trans N (behaviorRel_symm N hx) h) hy,
+     fun h => behaviorRel_trans N (behaviorRel_trans N hx h) (behaviorRel_symm N hy)⟩
+  unfold obsDist
+  rw [propext hiff]
+
+/-- The observation pseudometric descended to the Myhill–Nerode quotient. -/
+def quotObsDist [Semiring R] [Semiring K] (N : AlgNeuralSystem R K α) :
+    Quotient (neural_setoid (weighted_to_neural N.toWeighted)) →
+    Quotient (neural_setoid (weighted_to_neural N.toWeighted)) → ℝ :=
+  Quotient.lift₂ (obsDist N) (fun _ _ _ _ hx hy => obsDist_congr N hx hy)
+
+@[simp] theorem quotObsDist_mk [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x y : R) :
+    quotObsDist N (Quotient.mk _ x) (Quotient.mk _ y) = obsDist N x y := rfl
+
+/-- **Capstone (quotient metric).** The descended distance is a genuine metric: it vanishes
+    exactly on the diagonal of the Myhill–Nerode quotient. -/
+theorem quotObsDist_eq_zero_iff [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α)
+    (p q : Quotient (neural_setoid (weighted_to_neural N.toWeighted))) :
+    quotObsDist N p q = 0 ↔ p = q := by
+  refine Quotient.inductionOn₂ p q ?_
+  intro x y
+  constructor
+  · intro h
+    exact Quotient.sound ((obsDist_eq_zero_iff N x y).mp (by rwa [quotObsDist_mk] at h))
+  · intro h
+    rw [quotObsDist_mk]
+    exact (obsDist_eq_zero_iff N x y).mpr (Quotient.exact h)
+
+end Bridges.NeuralProofSpectrum

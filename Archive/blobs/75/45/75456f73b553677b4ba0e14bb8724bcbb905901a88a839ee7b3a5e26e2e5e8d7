@@ -1,0 +1,125 @@
+import Mathlib
+
+/-!
+# Strict density between consecutive polynomial complexity systems
+
+This file develops a tiny, self-contained theory of *unary complexity systems* `PSystem`,
+which are just functions `ℕ → ℕ` recording a size/complexity at each input length.
+
+We compare them under **eventual domination** `S ≼ T` (the size of `S` is eventually pointwise
+below that of `T`) and the associated **strict** relation `S ≺ T`.
+
+The main result, `strict_density_between_consecutive_powers`, exhibits, for every `k ≥ 1`, an
+*explicit* intermediate system strictly between the polynomial rungs `n^k` and `n^(k+1)`:
+the parity-glued system `interPowSys k` that behaves like `n^(k+1)` on even inputs and like
+`n^k` on odd inputs. This shows the preorder `≼` is not dense-free between consecutive powers:
+there is genuinely something strictly in between.
+
+The development is deliberately elementary: no asymptotic classes, quotients, filters, or
+big-O machinery — only explicit witnesses and pointwise power inequalities.
+-/
+
+namespace Computation.AsymptoticDensity
+
+/-- A *unary complexity system*: a size/complexity function of the input length. -/
+structure PSystem where
+  size : ℕ → ℕ
+
+/-- Eventual (pointwise) domination: `S.size n ≤ T.size n` for all sufficiently large `n`. -/
+def EventuallyLE (S T : PSystem) : Prop := ∃ N, ∀ n ≥ N, S.size n ≤ T.size n
+
+@[inherit_doc] infix:50 " ≼ " => EventuallyLE
+
+/-- Strict eventual domination. -/
+def EventuallyLT (S T : PSystem) : Prop := S ≼ T ∧ ¬ T ≼ S
+
+@[inherit_doc] infix:50 " ≺ " => EventuallyLT
+
+/-- The polynomial system `n ↦ n^k`. -/
+def powSystem (k : ℕ) : PSystem := ⟨fun n => n ^ k⟩
+
+/-- The parity-glued intermediate system: `n^(k+1)` on even inputs, `n^k` on odd inputs. -/
+def interPowSys (k : ℕ) : PSystem :=
+  ⟨fun n => if Even n then n ^ (k + 1) else n ^ k⟩
+
+/-! ### Small arithmetic lemmas -/
+
+/-- For `n ≥ 1`, `n^k ≤ n^(k+1)`. -/
+lemma pow_le_pow_succ_right {n : ℕ} (hn : 1 ≤ n) (k : ℕ) : n ^ k ≤ n ^ (k + 1) := by
+  exact Nat.pow_le_pow_right hn (Nat.le_succ k)
+
+/-- For `n ≥ 2`, `n^(k+1) ≤ n^k` fails. -/
+lemma not_pow_succ_le_pow {n k : ℕ} (hn : 2 ≤ n) : ¬ n ^ (k + 1) ≤ n ^ k := by
+  have hlt : n ^ k < n ^ (k + 1) := Nat.pow_lt_pow_right hn (Nat.lt_succ_self k)
+  omega
+
+/-! ### Basic eventual bounds -/
+
+/-- `powSystem k ≼ interPowSys k`. -/
+lemma powSystem_le_interPowSys (k : ℕ) : powSystem k ≼ interPowSys k := by
+  refine ⟨1, ?_⟩
+  intro n hn
+  simp only [powSystem, interPowSys]
+  by_cases h : Even n
+  · simp only [if_pos h]
+    exact pow_le_pow_succ_right hn k
+  · simp only [if_neg h]
+    exact le_refl _
+
+/-- `interPowSys k ≼ powSystem (k+1)`. -/
+lemma interPowSys_le_powSystem_succ (k : ℕ) : interPowSys k ≼ powSystem (k + 1) := by
+  refine ⟨1, ?_⟩
+  intro n hn
+  simp only [powSystem, interPowSys]
+  by_cases h : Even n
+  · simp only [if_pos h]
+    exact le_refl _
+  · simp only [if_neg h]
+    exact pow_le_pow_succ_right hn k
+
+/-! ### Strictness -/
+
+/-- `interPowSys k` is not eventually dominated by `powSystem k`:
+on even `n ≥ 2`, `interPowSys k n = n^(k+1) > n^k`. -/
+lemma not_interPowSys_le_powSystem (k : ℕ) : ¬ interPowSys k ≼ powSystem k := by
+  rintro ⟨N, hN⟩
+  -- Pick an even number `n ≥ max N 2`.
+  set m := max N 2 with hm
+  have heven : Even (2 * m) := ⟨m, by ring⟩
+  have hge : 2 * m ≥ N := by omega
+  have h2 : 2 ≤ 2 * m := by omega
+  have := hN (2 * m) hge
+  simp only [interPowSys, powSystem, if_pos heven] at this
+  exact not_pow_succ_le_pow h2 this
+
+/-- `powSystem (k+1)` is not eventually dominated by `interPowSys k`:
+on odd `n ≥ 3`, `interPowSys k n = n^k < n^(k+1)`. -/
+lemma not_powSystem_succ_le_interPowSys (k : ℕ) :
+    ¬ powSystem (k + 1) ≼ interPowSys k := by
+  rintro ⟨N, hN⟩
+  -- Pick an odd number `n ≥ max N 3`.
+  set m := max N 3 with hm
+  have hodd : ¬ Even (2 * m + 1) := by
+    simp
+  have hge : 2 * m + 1 ≥ N := by omega
+  have h2 : 2 ≤ 2 * m + 1 := by omega
+  have := hN (2 * m + 1) hge
+  simp only [interPowSys, powSystem, if_neg hodd] at this
+  exact not_pow_succ_le_pow h2 this
+
+/-! ### Main theorem -/
+
+/-- **Strict density between consecutive polynomial rungs.**
+For every `k ≥ 1`, the parity-glued system `interPowSys k` lies strictly between the
+polynomial complexity systems `n^k` and `n^(k+1)` under eventual domination.
+
+(The hypothesis `1 ≤ k` is requested in the statement; in fact the strictness here holds for
+every `k`, so this assumption turns out to be unnecessary.) -/
+theorem strict_density_between_consecutive_powers {k : ℕ} (hk : 1 ≤ k) :
+    powSystem k ≺ interPowSys k ∧ interPowSys k ≺ powSystem (k + 1) := by
+  have : 1 ≤ k := hk
+  refine ⟨⟨powSystem_le_interPowSys k, ?_⟩, ⟨interPowSys_le_powSystem_succ k, ?_⟩⟩
+  · exact not_interPowSys_le_powSystem k
+  · exact not_powSystem_succ_le_interPowSys k
+
+end Computation.AsymptoticDensity

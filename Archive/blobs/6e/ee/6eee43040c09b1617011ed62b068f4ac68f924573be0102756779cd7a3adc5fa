@@ -1,0 +1,118 @@
+/-
+Copyright (c) 2026 Harmonic. All rights reserved.
+
+# C4 — Reversibility characterizes self-adjointness of a Markov kernel
+
+Building on `Bridges.DiscreteHodgeRandomWalk`, this file proves the equivalence
+that upgrades reversibility from a property of graph-derived walks to a full
+characterization: a kernel `P` on `Fin n` is reversible with respect to a measure
+`π` **iff** it is self-adjoint for the `π`-weighted inner product
+`⟨f, g⟩_π = Σᵢ πᵢ fᵢ gᵢ`, **iff** the associated weight kernel `wᵢⱼ = πᵢ Pᵢⱼ`
+is symmetric.  The last clause says reversible Markov chains are *exactly*
+weighted graphs, canonically.
+
+## Main results
+
+* `reversible_iff_selfAdjoint`           — detailed balance ⟺ `π`-self-adjointness.
+* `weightKernel_isSymm_iff_reversible`   — symmetric weight kernel ⟺ detailed balance.
+* `reversible_tfae`                       — the three conditions are equivalent.
+-/
+
+import Mathlib
+import Bridges.DiscreteHodgeRandomWalk
+
+noncomputable section
+
+open Matrix BigOperators Finset
+
+namespace DiscreteHodge
+
+variable {n : ℕ}
+
+/-- `P` is **reversible** with respect to the measure `π` (detailed balance):
+    `πᵢ Pᵢⱼ = πⱼ Pⱼᵢ`. -/
+def Reversible (π : Fin n → ℝ) (P : Matrix (Fin n) (Fin n) ℝ) : Prop :=
+  ∀ i j, π i * P i j = π j * P j i
+
+/-- `P` is **self-adjoint** for the `π`-weighted inner product
+    `⟨f, g⟩_π = Σᵢ πᵢ fᵢ gᵢ`: `⟨f, P g⟩_π = ⟨P f, g⟩_π` for all `f, g`. -/
+def SelfAdjointPi (π : Fin n → ℝ) (P : Matrix (Fin n) (Fin n) ℝ) : Prop :=
+  ∀ f g : Fin n → ℝ,
+    ∑ i, π i * f i * (P.mulVec g) i = ∑ i, π i * (P.mulVec f) i * g i
+
+/-
+**C4 (core).** A kernel is reversible w.r.t. `π` iff it is self-adjoint for the
+    `π`-weighted inner product.
+-/
+theorem reversible_iff_selfAdjoint (π : Fin n → ℝ) (P : Matrix (Fin n) (Fin n) ℝ) :
+    Reversible π P ↔ SelfAdjointPi π P := by
+      constructor
+      · intro h f g
+        simp only [Matrix.mulVec, dotProduct, Finset.mul_sum, Finset.sum_mul]
+        rw [Finset.sum_comm]
+        refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
+        linear_combination (f j * g i) * h j i
+      · intro h i j; specialize h ( fun k => if k = i then 1 else 0 ) ( fun k => if k = j then 1 else 0 ) ; simp_all +decide [ Matrix.mulVec, dotProduct ] ;
+
+/-
+**C4 (weight-kernel form).** The weight kernel `wᵢⱼ = πᵢ Pᵢⱼ` is symmetric iff
+    `P` is reversible w.r.t. `π`.  Thus reversible chains are exactly weighted graphs.
+-/
+theorem weightKernel_isSymm_iff_reversible (π : Fin n → ℝ)
+    (P : Matrix (Fin n) (Fin n) ℝ) :
+    (Matrix.of (fun i j => π i * P i j)).IsSymm ↔ Reversible π P := by
+      constructor <;> intro h <;> simp_all +decide [ Matrix.IsSymm, Reversible ];
+      · exact fun i j => by simpa using congr_fun ( congr_fun h j ) i;
+      · ext i j; aesop;
+
+/-
+The three characterizations of reversibility are equivalent.
+-/
+theorem reversible_tfae (π : Fin n → ℝ) (P : Matrix (Fin n) (Fin n) ℝ) :
+    [Reversible π P,
+     SelfAdjointPi π P,
+     (Matrix.of (fun i j => π i * P i j)).IsSymm].TFAE := by
+      tfae_have 1 ↔ 2 := reversible_iff_selfAdjoint π P
+      tfae_have 1 ↔ 3 := (weightKernel_isSymm_iff_reversible π P).symm
+      tfae_finish
+
+end DiscreteHodge
+
+/-
+-- !-- Lab Notes -- !--
+
+## Hypothesis (Hypothesizer)
+C4 of the cycle: reversibility of a Markov kernel is not merely *sufficient* for
+self-adjointness in the `π`-inner product — it is *equivalent*, and equivalent in
+turn to symmetry of the weight kernel `wᵢⱼ = πᵢ Pᵢⱼ`.  The bold reading: reversible
+Markov chains and weighted graphs are the *same objects* under a canonical bijection.
+
+## Experiment (Experimenter)
+We stated the `π`-inner product self-adjointness elementwise (avoiding any
+`InnerProductSpace` instance) and proved the three-way equivalence.  Forward
+(reversible ⇒ self-adjoint) is a double-sum manipulation: expand `P.mulVec`, push
+products in, apply detailed balance termwise, then `Finset.sum_comm`.  Backward
+(self-adjoint ⇒ reversible) probes the bilinear identity with indicator vectors
+`Pi.single i 1`, collapsing both sums to a single term `πᵢ Pᵢⱼ = πⱼ Pⱼᵢ`.  The
+weight-kernel clause is `Matrix.IsSymm` unfolded, joined by `tfae_finish`.
+
+## Analysis (Analyst)
+No positivity of `π` is needed for the equivalence itself — it is a pure bilinear
+algebra fact — so we deliberately omitted that hypothesis to obtain the strongest
+statement.  Positivity only matters when one wants `⟨·,·⟩_π` to be a genuine inner
+product; the characterization survives without it.
+
+## Critique (Critic) — adversarial counterexample search
+* The indicator-vector probe is what makes backward non-trivial: a weaker test
+  (only `f = g = 1`) would *not* recover detailed balance, since stochasticity plus
+  `π` stationarity already give the `1`-test for free.  Distinct `i ≠ j` indicators
+  are essential, confirming the result is not vacuous.
+* Asymmetric kernels: take `π = 1`, `P = ![![0,1],![0,1]]` (not symmetric); then
+  `π₀P₀₁ = 1 ≠ 0 = π₁P₁₀`, so it is not reversible, and indeed self-adjointness
+  fails for `f = e₀, g = e₁`.  The equivalence has genuine content.
+
+## Synthesis (PI)
+`reversible_tfae` upgrades `walk_reversible` from a property of graph-derived walks
+to a structural identification: every reversible chain *is* a weighted graph.  This
+is the canonical dictionary entry that the spectral conjectures (C2, C5) build on.
+-/

@@ -1,0 +1,10 @@
+import Speculative.AutoResearch.CarmichaelHelper
+
+/-! # `Shared.CarmichaelHelper`
+
+This module is the stable entry point for the prime-case half of Carmichael's
+primitive-divisor theorem for the Fibonacci sequence.  The mathematical content
+lives in `Speculative.AutoResearch.CarmichaelHelper`; this file re-exports it so
+that `Shared.CarmichaelProof` and `Speculative.AutoResearch.CarmichaelComposite`
+can depend on the stable name `fib_primitive_divisor_prime`.
+-/

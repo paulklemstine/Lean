@@ -1,0 +1,81 @@
+import Catalog.Bridges.StrongDivisibilitySequences
+
+/-! # Prime-index primitive divisors for strong divisibility sequences
+
+Domain: Bridges / Number theory (primitive divisors, rank of apparition).
+
+This file completes the strong-divisibility-sequence development of
+`Catalog/Bridges/StrongDivisibilitySequences.lean` with the **prime-index
+primitive-divisor theorem**:
+
+> If `n` is prime, `p ∣ s n` and `p ∤ s 1`, then `p` is a *primitive* divisor at
+> index `n` — it divides `s n` but none of the earlier positive terms.
+
+The proof is purely structural and uses only the already-developed entry-point
+API (`entryPoint`, `entryPoint_isPrimitive`, `dvd_iff_entryPoint_dvd`,
+`primitive_iff_entryPoint_eq`).
+
+## Proof architecture
+
+* `entryPoint_ne_one` — the auxiliary rigidity lemma: if `p ∤ s 1` then the entry
+  point of `p` cannot be `1` (otherwise the entry point would be a positive index
+  `1` where `p` divides `s 1`, contradicting the hypothesis).
+* `isPrimitive_of_prime_index` — the generic theorem.  From `p ∣ s n` we get a
+  positive index witness, so `entryPoint p` is defined and divides `n`
+  (`dvd_iff_entryPoint_dvd`).  Primality of `n` forces `entryPoint p ∈ {1, n}`;
+  `entryPoint_ne_one` rules out `1`, hence `entryPoint p = n` and primitivity
+  follows from `primitive_iff_entryPoint_eq`.
+
+The Fibonacci and Mersenne corollaries are one-line specialisations through the
+existing `fibSDS` / `mersenneSDS` instances.
+-/
+
+namespace StrongDivSeq
+
+variable (s : StrongDivSeq)
+
+/-! ## §1. The auxiliary rigidity lemma -/
+
+/-
+If `p` does not divide `s 1`, then the entry point of `p` is not `1`.
+
+If it were `1`, then (since the entry point is then necessarily realised by the
+`Nat.find` branch) `p` would divide `s 1`, contradicting the hypothesis.
+-/
+theorem entryPoint_ne_one {p : ℕ} (h : ¬ p ∣ s.a 1) : s.entryPoint p ≠ 1 := by
+  contrapose! h;
+  unfold StrongDivSeq.entryPoint at h;
+  split_ifs at h ; simp_all +decide [ Nat.find_eq_iff ]
+
+/-! ## §2. The generic prime-index primitive-divisor theorem -/
+
+/-
+**Prime-index primitive-divisor theorem.**  For an arbitrary strong
+divisibility sequence `s`, if `n` is prime, `p ∣ s n` and `p ∤ s 1`, then `p` is
+a primitive divisor at index `n`: it divides `s n` but no earlier positive term.
+-/
+theorem isPrimitive_of_prime_index {n p : ℕ} (hn : Nat.Prime n)
+    (hpn : p ∣ s.a n) (hp1 : ¬ p ∣ s.a 1) : s.IsPrimitive p n := by
+  -- Let `hex : ∃ k, 0 < k ∧ p ∣ s.a k := ⟨n, hn.pos, hpn⟩`.
+  obtain ⟨k, hk_pos, hk_div⟩ : ∃ k, 0 < k ∧ p ∣ s.a k := by
+    exact ⟨ n, hn.pos, hpn ⟩;
+  exact ( s.primitive_iff_entryPoint_eq hn.pos ⟨ k, hk_pos, hk_div ⟩ ) |>.2 ( Or.resolve_left ( hn.eq_one_or_self_of_dvd _ ( s.dvd_iff_entryPoint_dvd ⟨ k, hk_pos, hk_div ⟩ n |>.1 hpn ) ) ( s.entryPoint_ne_one hp1 ) )
+
+end StrongDivSeq
+
+/-! ## §3. Corollaries: Fibonacci and Mersenne -/
+
+/-- **Fibonacci prime-index primitive divisors.**  If `n` is prime, `p ∣ F n` and
+`p ≠ 1`, then `p` is a primitive divisor of the Fibonacci sequence at index `n`.
+Here `p ≠ 1` is exactly `p ∤ F 1 = p ∤ 1`. -/
+theorem fib_isPrimitive_of_prime_index {n p : ℕ} (hn : Nat.Prime n)
+    (hpn : p ∣ Nat.fib n) (hp : p ≠ 1) : fibSDS.IsPrimitive p n :=
+  fibSDS.isPrimitive_of_prime_index hn hpn (by
+    simpa [fibSDS, Nat.fib_one, Nat.dvd_one] using hp)
+
+/-- **Mersenne prime-index primitive divisors.**  For the sequence `b ^ n - 1`,
+if `n` is prime, `p ∣ b ^ n - 1` and `p ∤ b - 1`, then `p` is a primitive divisor
+at index `n`.  A direct specialisation of the generic theorem through `mersenneSDS`. -/
+theorem mersenne_isPrimitive_of_prime_index (b : ℕ) {n p : ℕ} (hn : Nat.Prime n)
+    (hpn : p ∣ b ^ n - 1) (hp1 : ¬ p ∣ b - 1) : (mersenneSDS b).IsPrimitive p n :=
+  (mersenneSDS b).isPrimitive_of_prime_index hn hpn (by simpa [mersenneSDS] using hp1)

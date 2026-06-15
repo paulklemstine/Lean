@@ -1,0 +1,62 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+-/
+import Mathlib
+
+/-!
+# Perfect Secrecy of the One-Time Pad over a Finite Group
+
+This file develops, in an elementary and self-contained way, the perfect secrecy of
+the one-time pad construction where the key space, message space and ciphertext space
+are all a finite group `G`, and encryption is given by group multiplication
+`enc k m = k * m`.
+
+## Main results
+
+* `otp_unique_key` — for any message `m` and ciphertext `c`, there is a unique key `k`
+  with `enc k m = c`; the witness is `c * m⁻¹`.
+* `otp_key_count` — the finite set of keys mapping `m` to `c` has cardinality `1`.
+* `otp_perfect_secrecy` — the number of keys mapping `m₁` to `c` equals the number
+  mapping `m₂` to `c`, for all messages `m₁ m₂` and ciphertext `c`.
+
+The proofs are elementary: the equation `k * m = c` is solved by group cancellation,
+which both exhibits the unique witness `c * m⁻¹` and forces the key set to be a singleton.
+-/
+
+namespace Cryptography.OneTimePad
+
+variable {G : Type*} [Group G] [Fintype G] [DecidableEq G]
+
+/-- One-time pad encryption over a group: multiply the message by the key. -/
+def enc (k m : G) : G := k * m
+
+/-- **Unique key.** For any message `m` and ciphertext `c`, there is a unique key `k`
+with `enc k m = c`, namely `k = c * m⁻¹`. -/
+omit [Fintype G] [DecidableEq G] in
+theorem otp_unique_key (m c : G) : ∃! k : G, enc k m = c := by
+  refine ⟨c * m⁻¹, ?_, ?_⟩
+  · simp [enc, mul_assoc]
+  · intro y hy
+    simp only [enc] at hy
+    rw [← hy, mul_inv_cancel_right]
+
+/-- **Key count.** The finite set of keys sending `m` to `c` has exactly one element. -/
+theorem otp_key_count (m c : G) :
+    (Finset.univ.filter (fun k : G => enc k m = c)).card = 1 := by
+  rw [Finset.card_eq_one]
+  refine ⟨c * m⁻¹, ?_⟩
+  ext k
+  simp only [Finset.mem_filter, Finset.mem_univ, true_and, Finset.mem_singleton, enc]
+  constructor
+  · intro hk; rw [← hk, mul_inv_cancel_right]
+  · intro hk; rw [hk, inv_mul_cancel_right]
+
+/-- **Perfect secrecy (combinatorial form).** The number of keys sending `m₁` to `c`
+equals the number of keys sending `m₂` to `c`. -/
+theorem otp_perfect_secrecy (m₁ m₂ c : G) :
+    (Finset.univ.filter (fun k : G => enc k m₁ = c)).card
+      = (Finset.univ.filter (fun k : G => enc k m₂ = c)).card := by
+  rw [otp_key_count, otp_key_count]
+
+end Cryptography.OneTimePad

@@ -1,0 +1,187 @@
+import Mathlib
+
+/-! # An intermediate rung on the height ladder of p-degrees
+
+This file is a self-contained development of the *parity-interpolating* intermediate
+ladder system `interPowSys k` and the two strict **degree** inequalities
+
+* `degree (powSystem k) < degree (interPowSys k)`
+* `degree (interPowSys k) < degree (powSystem (k+1))`
+
+for every admissible exponent `k ≥ 1`.
+
+A **proof system** is abstracted by its proof-size profile `size : ℕ → ℕ`.  The
+*simulation preorder* `A ≤ B` ("`B` p-simulates `A`") holds when `A`'s sizes are
+polynomially bounded in terms of `B`'s sizes at the same index.  The **degree** of a
+system is its class in the antisymmetrization (the induced partial order of *p-degrees*).
+
+The height ladder is `powSystem k`, with size `2 ^ (n ^ k)`; one has
+`powSystem k < powSystem (k+1)` for `k ≥ 1`.  The witness `interPowSys k` is the
+parity-glued size profile that runs the *upper* rate `2 ^ (n ^ (k+1))` on the even
+indices and the *lower* rate `2 ^ (n ^ k)` on the odd indices: super-polynomially above
+the lower rung (even indices keep the faster rate), yet too thin to recover the upper
+rung (odd indices fall back to the slower rate).
+
+The engine is the uniform super-polynomial gap `pow_pow_succ_gap_strong`: for `k ≥ 1`
+and every exponent `c`, `(2 ^ (n ^ k) + 2) ^ c < 2 ^ (n ^ (k + 1))` for **all**
+`n ≥ c + 2`.  Because the gap holds for all large `n`, a witness of a *chosen parity*
+is always available, which is exactly what the two-sided separation needs.
+-/
+
+set_option maxHeartbeats 1000000
+
+namespace ProofComplexity
+
+open Order
+
+/-! ## The simulation preorder and degrees -/
+
+/-- A proof system, abstracted by its proof-size profile `size : ℕ → ℕ`. -/
+structure ProofSystem where
+  /-- The proof-size profile of the system. -/
+  size : ℕ → ℕ
+
+/-- A monotone, polynomially bounded reindexing of size *values*. -/
+def PolyMono (f : ℕ → ℕ) : Prop :=
+  Monotone f ∧ ∃ c : ℕ, ∀ m, f m + 1 ≤ (m + 2) ^ c
+
+/-- The identity is a polynomial reindexing. -/
+theorem polyMono_id : PolyMono id := by
+  refine ⟨monotone_id, 1, fun m => ?_⟩
+  simp [pow_one]
+
+/-- Polynomial reindexings compose. -/
+theorem polyMono_comp {f g : ℕ → ℕ} (hf : PolyMono f) (hg : PolyMono g) :
+    PolyMono (f ∘ g) := by
+  refine' ⟨ hf.1.comp hg.1, _ ⟩;
+  obtain ⟨ c, hc ⟩ := hf.2
+  obtain ⟨ d, hd ⟩ := hg.2
+  use c * (d + 1);
+  intro m; specialize hc ( g m ) ; specialize hd m; rw [ pow_mul' ] ; exact le_trans hc ( Nat.pow_le_pow_left ( by nlinarith [ pow_succ' ( m + 2 ) d ] ) _ ) ;
+
+/-- The simulation preorder: `A ≤ B` ("`B` p-simulates `A`") iff `A`'s proof sizes are
+polynomially bounded in terms of `B`'s proof sizes. -/
+instance : Preorder ProofSystem where
+  le A B := ∃ f, PolyMono f ∧ ∀ n, A.size n ≤ f (B.size n)
+  le_refl A := ⟨id, polyMono_id, fun _ => le_rfl⟩
+  le_trans A B C := by
+    rintro ⟨f, hf, hfb⟩ ⟨g, hg, hgb⟩
+    exact ⟨f ∘ g, polyMono_comp hf hg, fun n => le_trans (hfb n) (hf.1 (hgb n))⟩
+
+theorem ProofSystem.le_iff {A B : ProofSystem} :
+    A ≤ B ↔ ∃ f, PolyMono f ∧ ∀ n, A.size n ≤ f (B.size n) := Iff.rfl
+
+/-- The **degree** (p-degree) of a proof system: its class in the antisymmetrization of
+the simulation preorder. -/
+noncomputable def degree (S : ProofSystem) : Antisymmetrization ProofSystem (· ≤ ·) :=
+  toAntisymmetrization (· ≤ ·) S
+
+theorem degree_lt_degree_iff {A B : ProofSystem} :
+    degree A < degree B ↔ A < B :=
+  toAntisymmetrization_lt_toAntisymmetrization_iff
+
+/-! ## The ladder systems and the intermediate system -/
+
+/-- The height ladder rung of index `k`: proof-size profile `2 ^ (n ^ k)`. -/
+def powSystem (k : ℕ) : ProofSystem := ⟨fun n => 2 ^ (n ^ k)⟩
+
+/-- The parity-glued intermediate system: size `2 ^ (n ^ (k+1))` on even `n`, size
+`2 ^ (n ^ k)` on odd `n`. -/
+def interPowSys (k : ℕ) : ProofSystem :=
+  ⟨fun n => if Even n then 2 ^ (n ^ (k + 1)) else 2 ^ (n ^ k)⟩
+
+@[simp] theorem powSystem_size (k n : ℕ) : (powSystem k).size n = 2 ^ (n ^ k) := rfl
+
+theorem interPowSys_size_even {n : ℕ} (k : ℕ) (hn : Even n) :
+    (interPowSys k).size n = 2 ^ (n ^ (k + 1)) := by
+  simp [interPowSys, hn]
+
+theorem interPowSys_size_odd {n : ℕ} (k : ℕ) (hn : ¬ Even n) :
+    (interPowSys k).size n = 2 ^ (n ^ k) := by
+  simp [interPowSys, hn]
+
+/-! ## A uniform (all-large-`n`) super-polynomial gap -/
+
+/-- **Uniform ladder gap.**  For `k ≥ 1` and every exponent `c`, the inequality
+`(2 ^ (n ^ k) + 2) ^ c < 2 ^ (n ^ (k + 1))` holds for *all* `n ≥ c + 2`. -/
+theorem pow_pow_succ_gap_strong (k : ℕ) (hk : 1 ≤ k) (c : ℕ) :
+    ∀ n, c + 2 ≤ n → (2 ^ (n ^ k) + 2) ^ c < 2 ^ (n ^ (k + 1)) := by
+  have h_pow : ∀ n, c + 2 ≤ n → (2 ^ (n ^ k) + 2) ^ c ≤ 2 ^ (c * (n ^ k + 1)) := by
+    intros n hn; rw [pow_mul']; gcongr
+    rw [pow_succ']
+    linarith [Nat.pow_le_pow_right (by decide : 1 ≤ 2)
+      (show n ^ k ≥ 1 by exact Nat.one_le_pow _ _ (by linarith))]
+  refine fun n hn ↦ lt_of_le_of_lt (h_pow n hn) ?_
+  gcongr <;> norm_num
+  rw [pow_succ']; nlinarith [Nat.pow_le_pow_right (by linarith : 1 ≤ n) hk]
+
+/-! ## The two `≤` directions (pointwise domination) -/
+
+/-- The lower rung is below the glued system: `powSystem k ≤ interPowSys k` for `k ≥ 1`. -/
+theorem powSystem_le_interPow (k : ℕ) (hk : 1 ≤ k) :
+    powSystem k ≤ interPowSys k := by
+  constructor;
+  refine' ⟨ polyMono_id, fun n => _ ⟩;
+  by_cases hn : Even n <;> simp +decide [ *, powSystem, interPowSys ];
+  rcases n with ( _ | _ | n ) <;> simp_all +decide [ Nat.pow_succ' ];
+  · cases k <;> norm_num at *;
+  · exact pow_le_pow_right₀ ( by decide ) ( Nat.le_mul_of_pos_left _ ( Nat.succ_pos _ ) )
+
+/-- The glued system is below the upper rung: `interPowSys k ≤ powSystem (k+1)`. -/
+theorem interPow_le_powSystem_succ (k : ℕ) :
+    interPowSys k ≤ powSystem (k + 1) := by
+  refine' ⟨ id, polyMono_id, fun n => _ ⟩ ; by_cases h : Even n <;> simp +decide [ *, powSystem_size, interPowSys_size_even, interPowSys_size_odd ];
+  exact pow_le_pow_right₀ ( by decide ) ( Nat.pow_le_pow_right ( Nat.pos_of_ne_zero ( by aesop ) ) ( Nat.le_succ _ ) )
+
+/-! ## The two strict separations (gap witnesses of prescribed parity) -/
+
+/-- The glued system is *not* simulated by the lower rung: the even indices keep the
+faster rate, so a gap witness of even parity refutes the simulation. -/
+theorem not_interPow_le_powSystem (k : ℕ) (hk : 1 ≤ k) :
+    ¬ interPowSys k ≤ powSystem k := by
+  intro h
+  obtain ⟨f, hf_mono, hf_bound⟩ := h;
+  -- Choose an even witness $n = 2(c + 2)$.
+  obtain ⟨c, hc⟩ := hf_mono.right
+  set n := 2 * (c + 2) with hn_def;
+  have := pow_pow_succ_gap_strong k hk c ( 2 * ( c + 2 ) ) ( by linarith ) ; simp_all +decide ;
+  grind +suggestions
+
+/-- The upper rung is *not* simulated by the glued system: the odd indices fall back to
+the slower rate, so a gap witness of odd parity refutes the simulation. -/
+theorem not_powSystem_succ_le_interPow (k : ℕ) (hk : 1 ≤ k) :
+    ¬ powSystem (k + 1) ≤ interPowSys k := by
+  intro h
+  obtain ⟨f, hf_mono, hf_bound⟩ := h;
+  obtain ⟨c, hc⟩ := hf_mono.right;
+  set n := 2 * (c + 2) + 1 with hn_def;
+  have := pow_pow_succ_gap_strong k hk c n (by linarith) ; simp_all +decide ;
+  grind +suggestions
+
+/-! ## The strict system inequalities -/
+
+/-- `powSystem k < interPowSys k` for `k ≥ 1`. -/
+theorem powSystem_lt_interPow (k : ℕ) (hk : 1 ≤ k) :
+    powSystem k < interPowSys k :=
+  lt_iff_le_not_ge.mpr ⟨powSystem_le_interPow k hk, not_interPow_le_powSystem k hk⟩
+
+/-- `interPowSys k < powSystem (k+1)` for `k ≥ 1`. -/
+theorem interPow_lt_powSystem_succ (k : ℕ) (hk : 1 ≤ k) :
+    interPowSys k < powSystem (k + 1) :=
+  lt_iff_le_not_ge.mpr ⟨interPow_le_powSystem_succ k, not_powSystem_succ_le_interPow k hk⟩
+
+/-! ## The two strict degree inequalities (main results) -/
+
+/-- **Main result 1.**  The degree of the intermediate system is strictly above the lower
+rung: `degree (powSystem k) < degree (interPowSys k)` for every `k ≥ 1`. -/
+theorem degree_powSystem_lt_degree_interPow (k : ℕ) (hk : 1 ≤ k) :
+    degree (powSystem k) < degree (interPowSys k) :=
+  degree_lt_degree_iff.mpr (powSystem_lt_interPow k hk)
+
+/-- **Main result 2.**  The degree of the intermediate system is strictly below the upper
+rung: `degree (interPowSys k) < degree (powSystem (k+1))` for every `k ≥ 1`. -/
+theorem degree_interPow_lt_degree_powSystem_succ (k : ℕ) (hk : 1 ≤ k) :
+    degree (interPowSys k) < degree (powSystem (k + 1)) :=
+  degree_lt_degree_iff.mpr (interPow_lt_powSystem_succ k hk)
+
+end ProofComplexity

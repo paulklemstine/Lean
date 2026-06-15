@@ -1,0 +1,71 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+
+# An arithmetic bridge toward Korselt's criterion
+
+This file isolates one precise arithmetic step that occurs in the proof of
+Korselt's criterion: if every unit modulo `n` is killed by the exponent
+`n - 1`, then for each prime divisor `p` of `n` we have `(p - 1) ∣ (n - 1)`.
+
+The argument is purely group-theoretic once the right reduction map is in place:
+
+* `orderOf_dvd_of_forall_pow_eq_one` — a uniform `pow = 1` hypothesis bounds
+  every order by `m`.
+* `orderOf_map_dvd_of_surjective` — a monoid hom never increases orders.
+* The reduction map `(ZMod n)ˣ →* (ZMod p)ˣ` (`ZMod.unitsMap`) is surjective.
+* `(ZMod p)ˣ` is cyclic of order `p - 1`, so it contains an element of order
+  exactly `p - 1`; that order divides `n - 1`.
+
+These combine in `prime_sub_one_dvd_of_forall_units_pow_eq_one`.
+-/
+import Mathlib
+
+namespace KorseltUnitsBridge
+
+/-- If `g ^ m = 1` for every `g` in a monoid, then `orderOf g ∣ m` for every `g`.
+No finiteness assumption is needed. -/
+theorem orderOf_dvd_of_forall_pow_eq_one {G : Type*} [Monoid G]
+    (m : ℕ) (h : ∀ g : G, g ^ m = 1) (g : G) : orderOf g ∣ m :=
+  orderOf_dvd_of_pow_eq_one (h g)
+
+/-- A group homomorphism never increases the order of an element:
+`orderOf (φ g) ∣ orderOf g`.
+
+The surjectivity hypothesis `hφ` is part of the intended interface (it is used at
+the call site to transport the `pow = 1` hypothesis), but it is not needed for
+this particular inequality. -/
+theorem orderOf_map_dvd_of_surjective {G H : Type*} [Group G] [Group H]
+    (φ : G →* H) (_hφ : Function.Surjective φ) (g : G) :
+    orderOf (φ g) ∣ orderOf g := by
+  apply orderOf_dvd_of_pow_eq_one
+  rw [← map_pow, pow_orderOf_eq_one, map_one]
+
+/-- **The arithmetic bridge toward Korselt's criterion.**
+
+Let `n` be squarefree, `p` a prime divisor of `n`, and suppose every unit modulo
+`n` satisfies `u ^ (n - 1) = 1`. Then `(p - 1) ∣ (n - 1)`.
+
+(Squarefreeness is used only to guarantee `n ≠ 0`, i.e. `NeZero n`.) -/
+theorem prime_sub_one_dvd_of_forall_units_pow_eq_one
+    {n p : ℕ} (hn : Squarefree n) (hp : p.Prime) (hpn : p ∣ n)
+    (h : ∀ u : (ZMod n)ˣ, u ^ (n - 1) = 1) : (p - 1) ∣ (n - 1) := by
+  haveI : Fact p.Prime := ⟨hp⟩
+  haveI : NeZero n := ⟨hn.ne_zero⟩
+  -- The reduction map on units `(ZMod n)ˣ →* (ZMod p)ˣ`, which is surjective.
+  set f := ZMod.unitsMap (n := p) (m := n) hpn
+  have hsurj : Function.Surjective f := ZMod.unitsMap_surjective hpn
+  -- Every unit modulo `p` is killed by `n - 1`, by lifting along `f`.
+  have hpow : ∀ v : (ZMod p)ˣ, v ^ (n - 1) = 1 := by
+    intro v
+    obtain ⟨u, rfl⟩ := hsurj v
+    rw [← map_pow, h u, map_one]
+  -- `(ZMod p)ˣ` is cyclic of order `p - 1`, so it has an element of order `p - 1`.
+  obtain ⟨g, hg⟩ := IsCyclic.exists_ofOrder_eq_natCard (α := (ZMod p)ˣ)
+  have hord : orderOf g = p - 1 := by
+    rw [hg, Nat.card_eq_fintype_card, ZMod.card_units p]
+  -- That order divides `n - 1`.
+  rw [← hord]
+  exact orderOf_dvd_of_pow_eq_one (hpow g)
+
+end KorseltUnitsBridge

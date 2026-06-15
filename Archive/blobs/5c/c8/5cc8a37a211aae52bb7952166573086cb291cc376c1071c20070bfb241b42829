@@ -1,0 +1,123 @@
+/-
+Copyright (c) 2026 Harmonic. All rights reserved.
+
+# C1 — Kernel of the discrete Laplacian = locally constant functions (discrete H⁰)
+
+Building on `Bridges.DiscreteHodgeRandomWalk`, this file proves the discrete
+0-th Hodge theorem: on a *connected* finite weighted graph, the kernel of the
+combinatorial Laplacian `L` consists exactly of the constant functions.  This is
+the discrete `H⁰` and identifies the 0-th Betti number of a connected graph as 1.
+
+The proof routes through the Dirichlet energy identity `lap_quadForm`: if
+`L f = 0` then the energy `½ Σᵢⱼ wᵢⱼ (fᵢ − fⱼ)²` vanishes, forcing `fᵢ = fⱼ`
+across every positive-weight edge, and connectivity propagates this to all pairs.
+
+## Main results
+
+* `quadForm_eq_zero_local`        — zero energy ⇒ `f` agrees across every edge.
+* `const_of_local`                — edge-agreement + connectivity ⇒ globally constant.
+* `lap_mulVec_of_const`           — constants lie in `ker L`.
+* `lap_mulVec_eq_zero_iff_const`  — **C1**: on a connected graph, `ker L` = constants.
+-/
+
+import Mathlib
+import Bridges.DiscreteHodgeRandomWalk
+
+noncomputable section
+
+open Matrix BigOperators Finset
+
+namespace DiscreteHodge
+
+variable {n : ℕ}
+
+/-- A weighted graph is **connected** when any two vertices are joined by a path of
+    positive-weight edges (the reflexive-transitive closure of the positive-weight
+    relation is total). -/
+def Connected (w : Matrix (Fin n) (Fin n) ℝ) : Prop :=
+  ∀ i j, Relation.ReflTransGen (fun a b => 0 < w a b) i j
+
+/-
+If the Dirichlet energy of `x` vanishes, then `x` takes equal values across every
+    positive-weight edge.
+-/
+theorem quadForm_eq_zero_local (w : Matrix (Fin n) (Fin n) ℝ) (hsymm : w.IsSymm)
+    (hpos : ∀ i j, 0 ≤ w i j) (x : Fin n → ℝ)
+    (h0 : x ⬝ᵥ (lap w).mulVec x = 0) :
+    ∀ i j, 0 < w i j → x i = x j := by
+      -- By lap_quadForm w hsymm x, h0 gives (1/2) * ∑ i, ∑ j, w i j * (x i - x j)^2 = 0, so ∑ i, ∑ j, w i j * (x i - x j)^2 = 0.
+      have h_sum_zero : ∑ i, ∑ j, w i j * (x i - x j)^2 = 0 := by
+        linarith [ lap_quadForm w hsymm x ];
+      rw [ Finset.sum_eq_zero_iff_of_nonneg fun i _ => Finset.sum_nonneg fun j _ => mul_nonneg ( hpos i j ) ( sq_nonneg _ ) ] at h_sum_zero;
+      simp_all +decide [ Finset.sum_eq_zero_iff_of_nonneg, mul_nonneg, sq_nonneg ];
+      exact fun i j hij => sub_eq_zero.mp ( Or.resolve_left ( h_sum_zero i j ) hij.ne' )
+
+/-
+Edge-agreement propagates along paths: if `f` is constant across every
+    positive-weight edge and the graph is connected, then `f` is globally constant.
+-/
+theorem const_of_local (w : Matrix (Fin n) (Fin n) ℝ) (hconn : Connected w)
+    {f : Fin n → ℝ} (hloc : ∀ i j, 0 < w i j → f i = f j) :
+    ∀ i j, f i = f j := by
+      intro i j; induction' hconn i j with j hij ih ih;
+      · rfl;
+      · grind
+
+/-
+Constant functions lie in the kernel of the Laplacian.
+-/
+theorem lap_mulVec_of_const (w : Matrix (Fin n) (Fin n) ℝ) {f : Fin n → ℝ}
+    (hf : ∀ i j, f i = f j) : (lap w).mulVec f = 0 := by
+      ext i;
+      convert congrFun ( lap_mulVec_const w ( f i ) ) i using 1;
+      congr ; aesop
+
+/-
+**C1 (discrete H⁰).** On a connected finite weighted graph, the kernel of the
+    combinatorial Laplacian is exactly the space of constant functions.
+-/
+theorem lap_mulVec_eq_zero_iff_const (w : Matrix (Fin n) (Fin n) ℝ) (hsymm : w.IsSymm)
+    (hpos : ∀ i j, 0 ≤ w i j) (hconn : Connected w) (f : Fin n → ℝ) :
+    (lap w).mulVec f = 0 ↔ ∀ i j, f i = f j := by
+      refine' ⟨ fun h => _, fun h => lap_mulVec_of_const _ h ⟩;
+      apply_rules [ const_of_local, quadForm_eq_zero_local ];
+      aesop
+
+end DiscreteHodge
+
+/-
+-- !-- Lab Notes -- !--
+
+## Hypothesis (Hypothesizer)
+C1 of the cycle: on a connected weighted graph the kernel of `L` is exactly the
+constants, so `dim ker L = 1` and the 0-th Betti number is 1.  The surprising
+claim is that a purely *spectral* object (`ker L`) is governed by a purely
+*combinatorial* one (path-connectivity through positive-weight edges).
+
+## Experiment (Experimenter)
+We routed the forward direction through the Dirichlet identity proved in the
+foundation: `L f = 0` ⟹ energy `f ⬝ᵥ L f = 0` ⟹ every positive-weight edge has
+`fᵢ = fⱼ` (`quadForm_eq_zero_local`).  Connectivity (defined as totality of
+`Relation.ReflTransGen` of the positive-weight relation) then propagates equality
+to all pairs by induction on the closure (`const_of_local`).  The reverse direction
+is `lap_mulVec_of_const`, reusing `lap_mulVec_const`.
+
+## Analysis (Analyst)
+The `ReflTransGen` induction is the crux: the `tail` constructor supplies precisely
+one new positive-weight edge, which is where `quadForm_eq_zero_local` is consumed.
+The energy route avoids any eigenvalue machinery — no spectral theorem is needed
+for `H⁰`, only PSD + connectivity.
+
+## Critique (Critic) — adversarial counterexample search
+* Drop connectivity: on two disjoint vertices (`w = 0`) every `f` is harmonic but
+  non-constant `f` exists, so `ker L` strictly contains the constants.  This is the
+  exact boundary — `dim ker L` counts components — and motivates stating C1 under
+  the `Connected` hypothesis.
+* Self-loops / nonzero diagonal: harmless, since `(xᵢ−xᵢ)² = 0` kills diagonal
+  terms in the energy; the theorem holds verbatim.
+
+## Synthesis (PI)
+`lap_mulVec_eq_zero_iff_const` is the discrete Hodge `H⁰`.  The disconnected
+counterexample is not a defect but the next theorem: `dim ker L` = number of
+components, recorded as a future direction.
+-/

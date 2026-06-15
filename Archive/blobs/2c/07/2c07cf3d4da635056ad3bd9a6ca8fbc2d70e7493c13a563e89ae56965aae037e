@@ -1,0 +1,100 @@
+import Mathlib
+
+/-! # Coefficient certificates via `p`-adic valuation lower bounds
+
+This file develops a tiny self-contained "coefficient certificate" calculus.
+
+We work with a minimal expression language `SpExpr` whose elements denote integer
+coefficient sequences `ℕ → ℤ`:
+
+* `one`  is the delta sequence supported at `0`;
+* `zero` is the identically zero sequence;
+* `add`  is pointwise addition;
+* `mul`  is the ordinary Cauchy convolution of sequences.
+
+For a fixed prime `p` we measure each coefficient by its `p`-adic valuation,
+encoded through `emultiplicity (p : ℤ) (·) : ℤ → ℕ∞` (with the convention that the
+valuation of `0` is `⊤`).  This is the *valuation profile* `vp p e n`.
+
+The structural recursion `lb e n` produces, purely from the syntax tree, a lower
+bound certificate for the valuation profile.  The "tropical" reading is that `lb`
+computes in the min-plus / `(min, +)` semiring on `ℕ∞`: sums become `min`,
+products become `+`, and convolution becomes a finite infimum of `+`-combinations.
+
+The main theorem `lb_le_vp` certifies that this structural bound is always valid:
+
+`lb e n ≤ vp p e n`  for every expression `e` and index `n`.
+-/
+
+open scoped Classical
+
+namespace CoefficientCertificate
+
+/-- A tiny expression language denoting integer coefficient sequences `ℕ → ℤ`. -/
+inductive SpExpr
+  | one
+  | zero
+  | add (e₁ e₂ : SpExpr)
+  | mul (e₁ e₂ : SpExpr)
+  deriving Inhabited
+
+namespace SpExpr
+
+/-- Semantics: the integer coefficient sequence denoted by an expression. -/
+def eval : SpExpr → ℕ → ℤ
+  | one, n => if n = 0 then 1 else 0
+  | zero, _ => 0
+  | add e₁ e₂, n => eval e₁ n + eval e₂ n
+  | mul e₁ e₂, n => ∑ k ∈ Finset.range (n + 1), eval e₁ k * eval e₂ (n - k)
+
+@[simp] theorem eval_one_zero : eval one 0 = 1 := rfl
+@[simp] theorem eval_one_succ (n : ℕ) : eval one (n + 1) = 0 := rfl
+@[simp] theorem eval_zero (n : ℕ) : eval zero n = 0 := rfl
+@[simp] theorem eval_add (e₁ e₂ : SpExpr) (n : ℕ) :
+    eval (add e₁ e₂) n = eval e₁ n + eval e₂ n := rfl
+theorem eval_mul (e₁ e₂ : SpExpr) (n : ℕ) :
+    eval (mul e₁ e₂) n = ∑ k ∈ Finset.range (n + 1), eval e₁ k * eval e₂ (n - k) := rfl
+
+end SpExpr
+
+/-- The valuation profile: the `p`-adic valuation of the `n`-th coefficient. -/
+noncomputable def vp (p : ℕ) (e : SpExpr) (n : ℕ) : ℕ∞ :=
+  emultiplicity (p : ℤ) (e.eval n)
+
+/-- The structural lower-bound certificate, computed in the min-plus semiring. -/
+noncomputable def lb : SpExpr → ℕ → ℕ∞
+  | SpExpr.one, 0 => 0
+  | SpExpr.one, (_ + 1) => ⊤
+  | SpExpr.zero, _ => ⊤
+  | SpExpr.add e₁ e₂, n => min (lb e₁ n) (lb e₂ n)
+  | SpExpr.mul e₁ e₂, n => ⨅ k : Fin (n + 1), lb e₁ k + lb e₂ (n - k)
+
+/-
+A finite-sum valuation lower bound: if every summand has valuation at least `b`,
+so does the sum.
+-/
+theorem le_emultiplicity_finset_sum {ι : Type*} (p : ℤ) (s : Finset ι)
+    (f : ι → ℤ) (b : ℕ∞) (h : ∀ i ∈ s, b ≤ emultiplicity p (f i)) :
+    b ≤ emultiplicity p (∑ i ∈ s, f i) := by
+  induction' s using Finset.induction with i s hi ih generalizing b;
+  · simp +decide [ emultiplicity_zero ];
+  · have h_min : min (emultiplicity p (f i)) (emultiplicity p (∑ i ∈ s, f i)) ≤ emultiplicity p (f i + ∑ i ∈ s, f i) := by
+      apply min_le_emultiplicity_add;
+    grind +revert
+
+/-
+The certificate `lb` is a genuine lower bound for the valuation profile `vp`.
+-/
+theorem lb_le_vp {p : ℕ} (hp : Nat.Prime p) : ∀ e n, lb e n ≤ vp p e n := by
+  intro e n; induction' e with e₁ e₂ ih₁ ih₂ generalizing n;
+  · cases n <;> simp +decide [ lb, vp ];
+  · unfold vp; aesop;
+  · exact le_trans ( min_le_min ( ih₁ n ) ( ih₂ n ) ) ( min_le_emultiplicity_add );
+  · rename_i e₁ e₂ ih₁ ih₂;
+    convert le_emultiplicity_finset_sum ( p : ℤ ) ( Finset.range ( n + 1 ) ) ( fun k => e₁.eval k * e₂.eval ( n - k ) ) _ _ using 1;
+    intro i hi
+    refine le_trans ?_ (le_trans (add_le_add (ih₁ i) (ih₂ (n - i)))
+      (le_of_eq (emultiplicity_mul (Nat.prime_iff_prime_int.mp hp)).symm))
+    exact iInf_le_of_le ⟨i, Finset.mem_range.mp hi⟩ le_rfl
+
+end CoefficientCertificate

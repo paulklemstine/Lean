@@ -1,0 +1,282 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license.
+
+# The Discrete Hodge Decomposition Theorem
+
+This file *extends* the self-contained discrete-Hodge foundation
+(`HodgeLaplacianGreen`: the Dirichlet identity `⟪Δx,x⟫ = ‖dx‖² + ‖e*x‖²`, the
+harmonic = closed-&-co-closed characterisation, self-adjointness, and diffusion
+message passing) from the *analytic* properties of the Hodge Laplacian to its
+central *structural* theorem: the **Hodge / Helmholtz–Hodge decomposition**.
+
+We work with a two-step cochain complex of finite-dimensional real inner-product
+spaces
+
+    U --e--> V --d--> W ,        d ∘ e = 0      (cochain condition)
+
+and the Hodge Laplacian on the middle space `V`,
+
+    Δ = d* ∘ d + e ∘ e* ,     d* = adjoint d ,  e* = adjoint e .
+
+The three canonical subspaces of `V` are
+
+* `coExact   = range d*`   (the *co-exact* part),
+* `exactPart = range e`    (the *exact* part / coboundaries), and
+* `harmonic  = ker Δ`      (the *harmonic* / topological part).
+
+The **main theorem** (`hodge_decomposition`, `exists_hodge_decomposition`) is that
+these three subspaces are pairwise orthogonal and together span all of `V`:
+
+    V = range e  ⊕  range d*  ⊕  ker Δ      (orthogonal direct sum).
+
+Equivalently `(ker Δ)ᗮ = range e ⊔ range d*` (`harmonic_orthogonal_eq`), and
+`ker Δ` is the orthogonal complement of the exact + co-exact parts
+(`isCompl_harmonic`).  Since `range e ⊆ ker d` (from `d ∘ e = 0`), the harmonic
+space is the unique-representative model of the cohomology `ker d / range e`
+(`harmonic_inter_exact_eq_bot`, `range_e_le_ker_d`).
+
+This file is deliberately independent of the rest of the catalog (it imports only
+Mathlib), so it provides a stand-alone foundation for the discrete Hodge program.
+
+-- !-- Lab Notes -- !--
+Hypothesis:  Because `Δ = d*d + e e*` is self-adjoint and positive semidefinite with
+  `ker Δ = {dx = 0 ∧ e*x = 0}`, the orthogonal complement of `ker Δ` should be exactly
+  `range d* ⊔ range e`, giving the three-way orthogonal Hodge decomposition.  The
+  cochain condition `d ∘ e = 0` makes `range d*` and `range e` mutually orthogonal.
+Experiment / outcome:  Formalised and proved sorry-free.  The orthogonality lemmas
+  (`exact_isOrtho_coExact`, `coExact_isOrtho_harmonic`, `exact_isOrtho_harmonic`) are
+  one-line adjunction calculations; the spanning statement
+  `exact_sup_coExact_sup_harmonic_eq_top` is the decisive step.
+  The Hodge–de Rham representative theorem `closed_eq_harmonic_add_exact` (every
+  closed cochain `= harmonic + exact`) then drops out because the co-exact part `b`
+  of a closed cochain satisfies `d b = 0` and `b = d* w`, forcing `‖b‖² = ⟪ w, d b⟫ = 0`.
+  Surprising finding: the *spanning* half and `harmonic_orthogonal_eq` never use the
+  cochain condition `d ∘ e = 0` — it is needed only for `exact ⟂ coExact` and the
+  cohomology connection.
+Insight:  The spanning proof needs *no* surjectivity / rank bookkeeping.  Showing
+  `(range e ⊔ range d* ⊔ ker Δ)ᗮ = ⊥` suffices: any `v` orthogonal to all three has
+  `e* v = 0` and `d v = 0` (pick the test vectors `e* v`, `d v`), hence `Δ v = 0`, so
+  `v ∈ ker Δ ∩ (ker Δ)ᗮ = 0`.  This is the entire decomposition in five lines.
+Failure analysis:  Avoid `range Δ`; routing the proof through the explicit kernel
+  characterisation `d v = 0 ∧ e* v = 0` keeps every step a pure adjunction rewrite and
+  sidesteps the symmetric-operator `range = (ker)ᗮ` machinery.
+-- !-- Lab Notes -- !--
+-/
+import Mathlib
+
+open scoped InnerProductSpace BigOperators
+
+namespace DiscreteHodge
+
+variable {U V W : Type*}
+  [NormedAddCommGroup U] [InnerProductSpace ℝ U] [FiniteDimensional ℝ U]
+  [NormedAddCommGroup V] [InnerProductSpace ℝ V] [FiniteDimensional ℝ V]
+  [NormedAddCommGroup W] [InnerProductSpace ℝ W] [FiniteDimensional ℝ W]
+
+/-- The discrete **Hodge Laplacian** of the two-step complex `U --e--> V --d--> W`,
+acting on the middle space `V` by `Δ = d* ∘ d + e ∘ e*`. -/
+noncomputable def hodgeLap (e : U →ₗ[ℝ] V) (d : V →ₗ[ℝ] W) : V →ₗ[ℝ] V :=
+  LinearMap.adjoint d ∘ₗ d + e ∘ₗ LinearMap.adjoint e
+
+variable (e : U →ₗ[ℝ] V) (d : V →ₗ[ℝ] W)
+
+@[simp] theorem hodgeLap_apply (x : V) :
+    hodgeLap e d x = LinearMap.adjoint d (d x) + e (LinearMap.adjoint e x) := by
+  simp [hodgeLap]
+
+/-- The **Dirichlet energy** is a sum of squares: `⟪Δ x, x⟫ = ‖d x‖² + ‖e* x‖²`. -/
+theorem hodgeLap_quadratic_form (x : V) :
+    (⟪hodgeLap e d x, x⟫_ℝ) = ‖d x‖ ^ 2 + ‖LinearMap.adjoint e x‖ ^ 2 := by
+  have h1 : ⟪LinearMap.adjoint d (d x), x⟫_ℝ = ‖d x‖ ^ 2 := by
+    rw [LinearMap.adjoint_inner_left, real_inner_self_eq_norm_sq]
+  have h2 : ⟪e (LinearMap.adjoint e x), x⟫_ℝ = ‖LinearMap.adjoint e x‖ ^ 2 := by
+    rw [← LinearMap.adjoint_inner_right, real_inner_self_eq_norm_sq]
+  simp only [hodgeLap, LinearMap.add_apply, LinearMap.comp_apply, inner_add_left, h1, h2]
+
+/-- **Harmonic ⇔ closed & co-closed**: `Δ x = 0 ↔ d x = 0 ∧ e* x = 0`. -/
+theorem hodgeLap_apply_eq_zero_iff (x : V) :
+    hodgeLap e d x = 0 ↔ d x = 0 ∧ LinearMap.adjoint e x = 0 := by
+  constructor
+  · intro h
+    have hq : ‖d x‖ ^ 2 + ‖LinearMap.adjoint e x‖ ^ 2 = 0 := by
+      rw [← hodgeLap_quadratic_form e d x, h]; simp
+    rw [add_eq_zero_iff_of_nonneg (by positivity) (by positivity)] at hq
+    refine ⟨?_, ?_⟩
+    · have h1 := hq.1; rw [pow_eq_zero_iff (by norm_num)] at h1; exact norm_eq_zero.mp h1
+    · have h2 := hq.2; rw [pow_eq_zero_iff (by norm_num)] at h2; exact norm_eq_zero.mp h2
+  · rintro ⟨h1, h2⟩
+    simp [hodgeLap, h1, h2]
+
+/-- The **harmonic space** `ker Δ`. -/
+noncomputable def harmonicSpace : Submodule ℝ V := LinearMap.ker (hodgeLap e d)
+
+/-- The **co-exact** subspace `range d*`. -/
+noncomputable def coExact : Submodule ℝ V := LinearMap.range (LinearMap.adjoint d)
+
+/-- The **exact** subspace `range e`. -/
+noncomputable def exactPart : Submodule ℝ V := LinearMap.range e
+
+theorem mem_harmonicSpace_iff (x : V) :
+    x ∈ harmonicSpace e d ↔ d x = 0 ∧ LinearMap.adjoint e x = 0 := by
+  rw [harmonicSpace, LinearMap.mem_ker, hodgeLap_apply_eq_zero_iff]
+
+/-! ### Pairwise orthogonality of the three Hodge subspaces -/
+
+omit [FiniteDimensional ℝ U] in
+/-- `range e ⟂ range d*` — this is where the cochain condition `d ∘ e = 0` is used. -/
+theorem exact_isOrtho_coExact (hc : d ∘ₗ e = 0) :
+    exactPart e ⟂ coExact d := by
+  rw [Submodule.isOrtho_iff_inner_eq]
+  rintro _ ⟨u, rfl⟩ _ ⟨w, rfl⟩
+  rw [LinearMap.adjoint_inner_right]
+  have : d (e u) = 0 := by
+    have := congrArg (fun (f : U →ₗ[ℝ] W) => f u) hc; simpa using this
+  rw [show d (e u) = (0 : W) from this]
+  simp
+
+/-- `range d* ⟂ ker Δ`. -/
+theorem coExact_isOrtho_harmonic :
+    coExact d ⟂ harmonicSpace e d := by
+  rw [Submodule.isOrtho_iff_inner_eq]
+  rintro _ ⟨w, rfl⟩ x hx
+  rw [LinearMap.adjoint_inner_left]
+  rw [(mem_harmonicSpace_iff e d x).mp hx |>.1]
+  simp
+
+/-- `range e ⟂ ker Δ`. -/
+theorem exact_isOrtho_harmonic :
+    exactPart e ⟂ harmonicSpace e d := by
+  rw [Submodule.isOrtho_iff_inner_eq]
+  rintro _ ⟨u, rfl⟩ x hx
+  rw [← LinearMap.adjoint_inner_right]
+  rw [(mem_harmonicSpace_iff e d x).mp hx |>.2]
+  simp
+
+/-! ### The Hodge decomposition theorem -/
+
+/-- **Spanning**: the exact, co-exact and harmonic subspaces span `V`. -/
+theorem exact_sup_coExact_sup_harmonic_eq_top :
+    exactPart e ⊔ coExact d ⊔ harmonicSpace e d = ⊤ := by
+  rw [← Submodule.orthogonal_eq_bot_iff]
+  rw [Submodule.eq_bot_iff]
+  intro v hv
+  -- v is orthogonal to each of the three pieces
+  have hsub_e : (exactPart e ⊔ coExact d ⊔ harmonicSpace e d)ᗮ ≤ (exactPart e)ᗮ :=
+    Submodule.orthogonal_le (le_sup_of_le_left le_sup_left)
+  have hsub_c : (exactPart e ⊔ coExact d ⊔ harmonicSpace e d)ᗮ ≤ (coExact d)ᗮ :=
+    Submodule.orthogonal_le (le_sup_of_le_left le_sup_right)
+  have hsub_h : (exactPart e ⊔ coExact d ⊔ harmonicSpace e d)ᗮ ≤ (harmonicSpace e d)ᗮ :=
+    Submodule.orthogonal_le le_sup_right
+  have hve : v ∈ (exactPart e)ᗮ := hsub_e hv
+  have hvc : v ∈ (coExact d)ᗮ := hsub_c hv
+  have hvh : v ∈ (harmonicSpace e d)ᗮ := hsub_h hv
+  -- e* v = 0
+  have hev : LinearMap.adjoint e v = 0 := by
+    have : ⟪e (LinearMap.adjoint e v), v⟫_ℝ = 0 :=
+      (Submodule.mem_orthogonal _ _).mp hve _ ⟨_, rfl⟩
+    rw [← LinearMap.adjoint_inner_right, real_inner_self_eq_norm_sq] at this
+    exact norm_eq_zero.mp (by nlinarith [norm_nonneg (LinearMap.adjoint e v)])
+  -- d v = 0
+  have hdv : d v = 0 := by
+    have : ⟪LinearMap.adjoint d (d v), v⟫_ℝ = 0 :=
+      (Submodule.mem_orthogonal _ _).mp hvc _ ⟨_, rfl⟩
+    rw [LinearMap.adjoint_inner_left, real_inner_self_eq_norm_sq] at this
+    exact norm_eq_zero.mp (by nlinarith [norm_nonneg (d v)])
+  -- hence v harmonic
+  have hvharm : v ∈ harmonicSpace e d := (mem_harmonicSpace_iff e d v).mpr ⟨hdv, hev⟩
+  -- but v ⊥ harmonic, so v ⊥ v
+  have : ⟪v, v⟫_ℝ = 0 := (Submodule.mem_orthogonal' _ _).mp hvh _ hvharm
+  exact inner_self_eq_zero.mp this
+
+/-- **Existence of the Hodge decomposition**: every cochain `x : V` splits as
+`x = (exact) + (co-exact) + (harmonic)`. -/
+theorem exists_hodge_decomposition (x : V) :
+    ∃ a ∈ exactPart e, ∃ b ∈ coExact d, ∃ c ∈ harmonicSpace e d, x = a + b + c := by
+  have hx : x ∈ exactPart e ⊔ coExact d ⊔ harmonicSpace e d := by
+    rw [exact_sup_coExact_sup_harmonic_eq_top]; trivial
+  rw [Submodule.mem_sup] at hx
+  obtain ⟨ab, hab, c, hc, rfl⟩ := hx
+  rw [Submodule.mem_sup] at hab
+  obtain ⟨a, ha, b, hb, rfl⟩ := hab
+  exact ⟨a, ha, b, hb, c, hc, rfl⟩
+
+/-- The orthogonal complement of the harmonic space is the exact + co-exact part:
+`(ker Δ)ᗮ = range e ⊔ range d*`. -/
+theorem harmonic_orthogonal_eq :
+    (harmonicSpace e d)ᗮ = exactPart e ⊔ coExact d := by
+  apply le_antisymm
+  · -- any v ⊥ harmonic is in exact ⊔ coExact, using the full decomposition
+    intro v hv
+    obtain ⟨a, ha, b, hb, c, hc', rfl⟩ := exists_hodge_decomposition e d v
+    -- c must be 0 since a+b ⊥ harmonic and the whole thing ⊥ harmonic
+    have hcc : c ∈ harmonicSpace e d := hc'
+    have hab_orth : (a + b) ∈ (harmonicSpace e d)ᗮ := by
+      apply Submodule.add_mem
+      · exact (Submodule.isOrtho_iff_le.mp (exact_isOrtho_harmonic e d)) ha
+      · exact (Submodule.isOrtho_iff_le.mp (coExact_isOrtho_harmonic e d)) hb
+    have : c ∈ (harmonicSpace e d)ᗮ := by
+      have := Submodule.sub_mem _ hv hab_orth
+      simpa using this
+    have hc0 : c = 0 := by
+      have hcv : ⟪c, c⟫_ℝ = 0 := (Submodule.mem_orthogonal' _ _).mp this _ hcc
+      exact inner_self_eq_zero.mp hcv
+    rw [hc0, add_zero]
+    exact Submodule.add_mem_sup ha hb
+  · rw [sup_le_iff]
+    exact ⟨Submodule.isOrtho_iff_le.mp (exact_isOrtho_harmonic e d),
+           Submodule.isOrtho_iff_le.mp (coExact_isOrtho_harmonic e d)⟩
+
+/-- The harmonic space is the orthogonal complement of (and is complementary to) the
+exact + co-exact part. -/
+theorem isCompl_harmonic :
+    IsCompl (harmonicSpace e d) (exactPart e ⊔ coExact d) := by
+  rw [← harmonic_orthogonal_eq e d]
+  exact Submodule.isCompl_orthogonal_of_hasOrthogonalProjection
+
+/-! ### Connection to cohomology -/
+
+omit [FiniteDimensional ℝ U] [FiniteDimensional ℝ V] [FiniteDimensional ℝ W] in
+/-- The cochain condition gives `range e ⊆ ker d`. -/
+theorem range_e_le_ker_d (hc : d ∘ₗ e = 0) :
+    exactPart e ≤ LinearMap.ker d := by
+  rintro _ ⟨u, rfl⟩
+  rw [LinearMap.mem_ker]
+  have := congrArg (fun (f : U →ₗ[ℝ] W) => f u) hc
+  simpa using this
+
+/-- **Existence of a harmonic representative**: every *closed* cochain `z` (`d z = 0`)
+differs from a (unique) harmonic cochain by an exact one, `z = c + a` with
+`c ∈ ker Δ` and `a ∈ range e`.  Together with `harmonic_inter_exact_eq_bot` this is
+the discrete Hodge–de Rham theorem: the harmonic space is a system of unique
+representatives for the cohomology `ker d / range e`. -/
+theorem closed_eq_harmonic_add_exact (hc : d ∘ₗ e = 0) {z : V} (hz : d z = 0) :
+    ∃ c ∈ harmonicSpace e d, ∃ a ∈ exactPart e, z = c + a := by
+  obtain ⟨a, ha, b, hb, c, hcm, rfl⟩ := exists_hodge_decomposition e d z
+  -- the co-exact part `b` is forced to vanish on closed cochains
+  have hda : d a = 0 := by
+    have := range_e_le_ker_d e d hc ha; rwa [LinearMap.mem_ker] at this
+  have hdc : d c = 0 := ((mem_harmonicSpace_iff e d c).mp hcm).1
+  have hdb : d b = 0 := by
+    have : d (a + b + c) = 0 := hz
+    simp only [map_add, hda, hdc] at this; simpa using this
+  obtain ⟨w, rfl⟩ := hb
+  have hb0 : LinearMap.adjoint d w = 0 := by
+    have hbb : ⟪(LinearMap.adjoint d) w, (LinearMap.adjoint d) w⟫_ℝ = 0 := by
+      rw [LinearMap.adjoint_inner_left, hdb, inner_zero_right]
+    exact inner_self_eq_zero.mp hbb
+  refine ⟨c, hcm, a, ha, ?_⟩
+  rw [hb0]; abel
+
+/-- Harmonic representatives are unique within a cohomology class: a harmonic cochain
+that is also exact must vanish. -/
+theorem harmonic_inter_exact_eq_bot :
+    harmonicSpace e d ⊓ exactPart e = ⊥ := by
+  rw [Submodule.eq_bot_iff]
+  intro x hx
+  obtain ⟨hxh, hxe⟩ := hx
+  have : ⟪x, x⟫_ℝ = 0 :=
+    (Submodule.isOrtho_iff_inner_eq.mp (exact_isOrtho_harmonic e d)) x hxe x hxh
+  exact inner_self_eq_zero.mp this
+
+end DiscreteHodge

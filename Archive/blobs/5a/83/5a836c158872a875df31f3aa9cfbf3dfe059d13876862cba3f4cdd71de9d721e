@@ -1,0 +1,143 @@
+import Mathlib
+
+/-!
+# The basic `2 × 2` move on two-way contingency tables
+
+This file develops, in a fully self-contained way, the *algebraic soundness* of the basic
+`2 × 2` move used in the analysis of two-way (`m × n`) contingency tables.
+
+A table is an integer-valued matrix `T : Matrix (Fin m) (Fin n) ℤ`.  Associated to it are the
+row margins `rowSum T i = ∑ j, T i j`, the column margins `colSum T j = ∑ i, T i j`, and the
+grand total `totalSum T = ∑ i, ∑ j, T i j`.
+
+The *basic move* `basicMove i i' j j'` for two rows `i, i'` and two columns `j, j'` is the
+table with entries `-1` at `(i, j)`, `+1` at `(i, j')`, `+1` at `(i', j)`, `-1` at `(i', j')`
+and `0` everywhere else.
+
+## Main results
+
+* `rowSum_add`, `colSum_add`, `totalSum_add` — additivity of the three margin maps.
+* `rowSum_basicMove`, `colSum_basicMove`, `totalSum_basicMove` — every margin of a basic move
+  vanishes (assuming the two rows and the two columns are distinct).
+* `basicMove_preserves_rowSum`, `basicMove_preserves_colSum`, `basicMove_preserves_margins` —
+  adding a basic move to a table preserves all of its row and column margins.
+
+All statements hold for arbitrary `m n : ℕ`, including the degenerate cases `m = 0` or
+`n = 0`, since the indices range over `Fin m` / `Fin n`.
+-/
+
+namespace Algebra.MarkovBases.TwoWay
+
+variable {m n : ℕ}
+
+/-- An `m × n` integer contingency table. -/
+abbrev Table (m n : ℕ) := Matrix (Fin m) (Fin n) ℤ
+
+/-- The `i`-th row margin: the sum of row `i` over all columns. -/
+def rowSum (T : Table m n) (i : Fin m) : ℤ := ∑ j, T i j
+
+/-- The `j`-th column margin: the sum of column `j` over all rows. -/
+def colSum (T : Table m n) (j : Fin n) : ℤ := ∑ i, T i j
+
+/-- The grand total of all entries of the table. -/
+def totalSum (T : Table m n) : ℤ := ∑ i, ∑ j, T i j
+
+/-- Two tables have the same margins iff all of their row sums and all of their column sums
+agree. -/
+def sameMargins (T T' : Table m n) : Prop :=
+  (∀ i, rowSum T i = rowSum T' i) ∧ (∀ j, colSum T j = colSum T' j)
+
+/-- The basic `2 × 2` move on rows `i, i'` and columns `j, j'`.  Its entries are `-1` at
+`(i, j)`, `+1` at `(i, j')`, `+1` at `(i', j)`, `-1` at `(i', j')`, and `0` elsewhere. -/
+def basicMove (i i' : Fin m) (j j' : Fin n) : Table m n :=
+  Matrix.of fun a b =>
+    if a = i then
+      (if b = j then -1 else if b = j' then 1 else 0)
+    else if a = i' then
+      (if b = j then 1 else if b = j' then -1 else 0)
+    else 0
+
+/-! ### A. Additivity of the margin maps -/
+
+@[simp] lemma rowSum_add (T U : Table m n) (i : Fin m) :
+    rowSum (T + U) i = rowSum T i + rowSum U i := by
+  simp [rowSum, Matrix.add_apply, Finset.sum_add_distrib]
+
+@[simp] lemma colSum_add (T U : Table m n) (j : Fin n) :
+    colSum (T + U) j = colSum T j + colSum U j := by
+  simp [colSum, Matrix.add_apply, Finset.sum_add_distrib]
+
+@[simp] lemma totalSum_add (T U : Table m n) :
+    totalSum (T + U) = totalSum T + totalSum U := by
+  simp [totalSum, Matrix.add_apply, Finset.sum_add_distrib]
+
+@[simp] lemma rowSum_zero (i : Fin m) : rowSum (0 : Table m n) i = 0 := by
+  simp [rowSum]
+
+@[simp] lemma colSum_zero (j : Fin n) : colSum (0 : Table m n) j = 0 := by
+  simp [colSum]
+
+@[simp] lemma totalSum_zero : totalSum (0 : Table m n) = 0 := by
+  simp [totalSum]
+
+/-! ### B. The basic move has vanishing margins -/
+
+lemma rowSum_basicMove (i i' : Fin m) (j j' : Fin n) (hjj' : j ≠ j') (r : Fin m) :
+    rowSum (basicMove i i' j j') r = 0 := by
+  unfold rowSum basicMove
+  simp only [Matrix.of_apply]
+  by_cases hr : r = i
+  · rw [Finset.sum_congr rfl (fun b _ => if_pos hr)]
+    have h : ∀ b : Fin n, (if b = j then (-1 : ℤ) else if b = j' then 1 else 0)
+        = (if b = j then -1 else 0) + (if b = j' then 1 else 0) := by
+      intro b; by_cases h1 : b = j <;> by_cases h2 : b = j' <;> simp_all
+    rw [Finset.sum_congr rfl (fun b _ => h b), Finset.sum_add_distrib]
+    simp
+  · by_cases hr' : r = i'
+    · rw [Finset.sum_congr rfl (fun b _ => by rw [if_neg hr, if_pos hr'])]
+      have h : ∀ b : Fin n, (if b = j then (1 : ℤ) else if b = j' then -1 else 0)
+          = (if b = j then 1 else 0) + (if b = j' then -1 else 0) := by
+        intro b; by_cases h1 : b = j <;> by_cases h2 : b = j' <;> simp_all
+      rw [Finset.sum_congr rfl (fun b _ => h b), Finset.sum_add_distrib]
+      simp
+    · simp only [if_neg hr, if_neg hr', Finset.sum_const_zero]
+
+lemma colSum_basicMove (i i' : Fin m) (j j' : Fin n) (hii' : i ≠ i') (c : Fin n) :
+    colSum (basicMove i i' j j') c = 0 := by
+  unfold colSum basicMove
+  simp only [Matrix.of_apply]
+  have h : ∀ a : Fin m,
+      (if a = i then (if c = j then (-1 : ℤ) else if c = j' then 1 else 0)
+        else if a = i' then (if c = j then 1 else if c = j' then -1 else 0) else 0)
+      = (if a = i then (if c = j then (-1 : ℤ) else if c = j' then 1 else 0) else 0)
+        + (if a = i' then (if c = j then 1 else if c = j' then -1 else 0) else 0) := by
+    intro a; by_cases h1 : a = i <;> by_cases h2 : a = i' <;> simp_all
+  rw [Finset.sum_congr rfl (fun a _ => h a), Finset.sum_add_distrib]
+  simp only [Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  by_cases hc : c = j <;> by_cases hc' : c = j' <;> simp_all
+
+lemma totalSum_basicMove (i i' : Fin m) (j j' : Fin n) (hjj' : j ≠ j') :
+    totalSum (basicMove i i' j j') = 0 := by
+  have h : totalSum (basicMove i i' j j') = ∑ r, rowSum (basicMove i i' j j') r := rfl
+  rw [h]
+  simp [rowSum_basicMove i i' j j' hjj']
+
+/-! ### C. The basic move preserves all margins -/
+
+lemma basicMove_preserves_rowSum (T : Table m n) (i i' : Fin m) (j j' : Fin n)
+    (hjj' : j ≠ j') (r : Fin m) :
+    rowSum (T + basicMove i i' j j') r = rowSum T r := by
+  rw [rowSum_add, rowSum_basicMove i i' j j' hjj', add_zero]
+
+lemma basicMove_preserves_colSum (T : Table m n) (i i' : Fin m) (j j' : Fin n)
+    (hii' : i ≠ i') (c : Fin n) :
+    colSum (T + basicMove i i' j j') c = colSum T c := by
+  rw [colSum_add, colSum_basicMove i i' j j' hii', add_zero]
+
+lemma basicMove_preserves_margins (T : Table m n) (i i' : Fin m) (j j' : Fin n)
+    (hii' : i ≠ i') (hjj' : j ≠ j') :
+    sameMargins T (T + basicMove i i' j j') :=
+  ⟨fun r => (basicMove_preserves_rowSum T i i' j j' hjj' r).symm,
+   fun c => (basicMove_preserves_colSum T i i' j j' hii' c).symm⟩
+
+end Algebra.MarkovBases.TwoWay

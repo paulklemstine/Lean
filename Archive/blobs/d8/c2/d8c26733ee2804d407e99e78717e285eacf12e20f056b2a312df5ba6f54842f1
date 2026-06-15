@@ -1,0 +1,204 @@
+/-
+Copyright (c) 2025. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+-/
+import Mathlib
+import Logic.HomotopyTypeTheory
+
+set_option autoImplicit false
+
+/-!
+# Universal Transport over an Arbitrary Finitary Signature
+
+This file generalises the binary "structure identity" transports of the synthetic-HoTT
+foundation `Logic.HomotopyTypeTheory` — namely `HoTT.magma_comm_transport` and
+`HoTT.magma_assoc_transport`, which transport *one fixed binary axiom* along a
+`HoTT.MagmaIso` — to a single **universal transport theorem** valid for *every* equation
+over *any* finitary algebraic signature.
+
+We introduce:
+
+* `HoTT.Sig` — a signature: a type of operation symbols, each with a natural-number arity.
+* `HoTT.Term` — the free term algebra over a signature and a variable set (a nested
+  inductive whose `app` constructor stores an arity-indexed family of subterms).
+* `HoTT.Structure` — an interpretation of a signature on a carrier type.
+* `HoTT.StructureHom` / `HoTT.StructureIso` — homomorphisms / isomorphisms of structures.
+* `HoTT.evalTerm` — evaluation of a term in a structure under a variable assignment.
+
+The naturality square `HoTT.evalTerm_hom` (a homomorphism commutes with term evaluation)
+is proved by structural induction whose `app`-case hypothesis is the arity-agnostic
+`∀ i, …`. It drives the headline theorem `HoTT.equation_transport`: **any equation that
+holds for all assignments in `A` holds for all assignments in any isomorphic `B`**, by
+pulling each assignment back through the surjective inverse. The original binary magma
+transports reappear as the one-operation corollaries `HoTT.comm_transport_of_universal`
+and `HoTT.assoc_transport_of_universal`.
+
+-- !-- Lab Notebook -- !--
+Hypothesis: The two ad-hoc binary transports (`magma_comm_transport`, `magma_assoc_transport`)
+  are shadows of one theorem: equational truth is invariant under isomorphism for an
+  arbitrary finitary signature, with no positivity restriction on arities.
+Result: `equation_transport` is proved `sorry`-free for arbitrary signatures (including
+  arity-0 constants). Commutativity and associativity transport are recovered as
+  instances over the one-binary-operation signature `binarySig`.
+Insight: The only structural fact needed is that a homomorphism commutes with term
+  evaluation (`evalTerm_hom`); transport is then a pure pullback — choose a preimage
+  assignment via `Function.surjInv`, apply the hypothesis there, push forward by `φ.f`,
+  and the naturality square rewrites the result into a statement about `B`. The carrier is
+  never inspected as anything but "a type with interpreted operations", which is why the
+  argument is arity- and sort-agnostic in spirit.
+Failure analysis: The nested inductive `Term` initially looked like it would need a manual
+  well-founded recursion for `evalTerm`; in fact Lean's structural recursion handles the
+  `Fin (S.ar o) → Term S V` argument directly. Attempting to phrase `equation_transport`
+  with a *single fixed* assignment (rather than "for all assignments") fails — the pullback
+  needs the universally-quantified form to instantiate at the chosen preimage.
+-/
+
+noncomputable section
+
+namespace HoTT
+
+/-! ## Signatures, terms, structures -/
+
+/-- A finitary algebraic signature: operation symbols with natural-number arities. -/
+structure Sig where
+  /-- The type of operation symbols. -/
+  Op : Type
+  /-- The arity of each operation symbol. -/
+  ar : Op → ℕ
+
+/-- The free term algebra over signature `S` and variable set `V`. The `app` constructor
+stores an arity-indexed family of subterms (a nested inductive). -/
+inductive Term (S : Sig) (V : Type) where
+  | var : V → Term S V
+  | app : (o : S.Op) → (Fin (S.ar o) → Term S V) → Term S V
+
+/-- A structure for signature `S`: a carrier together with an interpretation of each
+operation symbol as a function on arity-many arguments. -/
+structure Structure (S : Sig) where
+  /-- The carrier type. -/
+  C : Type
+  /-- The interpretation of each operation symbol. -/
+  interp : (o : S.Op) → (Fin (S.ar o) → C) → C
+
+/-- Evaluation of a term in a structure under a variable assignment `ρ`. -/
+def evalTerm {S : Sig} {V : Type} (A : Structure S) (ρ : V → A.C) : Term S V → A.C
+  | .var v => ρ v
+  | .app o args => A.interp o (fun i => evalTerm A ρ (args i))
+
+/-- A homomorphism of `S`-structures: a carrier map commuting with every interpretation. -/
+structure StructureHom {S : Sig} (A B : Structure S) where
+  /-- The underlying carrier map. -/
+  f : A.C → B.C
+  /-- Compatibility with each interpreted operation. -/
+  map : ∀ (o : S.Op) (args : Fin (S.ar o) → A.C),
+    f (A.interp o args) = B.interp o (fun i => f (args i))
+
+/-- An isomorphism of `S`-structures: a bijective homomorphism. -/
+structure StructureIso {S : Sig} (A B : Structure S) extends StructureHom A B where
+  /-- The underlying carrier map is bijective. -/
+  bij : Function.Bijective f
+
+/-! ## Naturality of evaluation -/
+
+-- !-- Structural induction on the term: variables are immediate; in the `app` case, push
+-- `φ.f` through the interpretation with `φ.map`, then rewrite each argument with the
+-- arity-agnostic induction hypothesis `∀ i, …`. -- !--
+/-- **Naturality of evaluation.** A homomorphism commutes with term evaluation:
+`φ.f (evalTerm A ρ t) = evalTerm B (φ.f ∘ ρ) t`. -/
+theorem evalTerm_hom {S : Sig} {V : Type} {A B : Structure S} (φ : StructureHom A B)
+    (ρ : V → A.C) :
+    ∀ t : Term S V, φ.f (evalTerm A ρ t) = evalTerm B (fun v => φ.f (ρ v)) t := by
+  intro t
+  induction t with
+  | var v => rfl
+  | app o args ih =>
+    simp only [evalTerm]
+    rw [φ.map]
+    congr 1
+    funext i
+    exact ih i
+
+/-! ## Universal transport of equations -/
+
+-- !-- Pull `σ : V → B.C` back to `ρ := Function.surjInv ∘ σ` so that `φ.f ∘ ρ = σ`; apply
+-- the hypothesis at `ρ`, push the equation forward by `φ.f`, and rewrite both sides with
+-- `evalTerm_hom` to land on the desired statement about `B`. -- !--
+/-- **Universal transport of equations.** If an equation `lhs = rhs` holds for *all*
+assignments in `A`, then it holds for all assignments in any isomorphic structure `B`. -/
+theorem equation_transport {S : Sig} {V : Type} {A B : Structure S} (φ : StructureIso A B)
+    (lhs rhs : Term S V) (h : ∀ ρ : V → A.C, evalTerm A ρ lhs = evalTerm A ρ rhs) :
+    ∀ σ : V → B.C, evalTerm B σ lhs = evalTerm B σ rhs := by
+  intro σ
+  set ρ : V → A.C := fun v => Function.surjInv φ.bij.2 (σ v) with hρ
+  have hφρ : (fun v => φ.f (ρ v)) = σ := by
+    funext v
+    exact Function.surjInv_eq φ.bij.2 (σ v)
+  have key := congrArg φ.f (h ρ)
+  rw [evalTerm_hom φ.toStructureHom ρ lhs, evalTerm_hom φ.toStructureHom ρ rhs, hφρ] at key
+  exact key
+
+/-! ## Recovering the binary magma transports as one-operation instances -/
+
+/-- The signature with a single binary operation. -/
+def binarySig : Sig := ⟨Unit, fun _ => 2⟩
+
+/-- Evaluation of a binary application collapses to the interpretation applied to the two
+evaluated subterms. This is the only computational lemma needed for the corollaries. -/
+theorem evalTerm_binary {V : Type} (A : Structure binarySig) (ρ : V → A.C)
+    (t0 t1 : Term binarySig V) :
+    evalTerm A ρ (Term.app (S := binarySig) () ![t0, t1])
+      = A.interp () ![evalTerm A ρ t0, evalTerm A ρ t1] := by
+  simp only [evalTerm]
+  congr 1
+  funext k
+  fin_cases k <;> rfl
+
+-- !-- Encode commutativity as the equation `op(x,y) = op(y,x)` over `Fin 2`; verify it for
+-- all assignments in `A` from `hcomm` via `evalTerm_binary`, transport with
+-- `equation_transport`, and read it back at the assignment `![x, y]`. -- !--
+/-- **Commutativity transports universally.** If the single binary operation of `A` is
+commutative and `φ : A ≅ B`, then the operation of `B` is commutative. Recovers
+`HoTT.magma_comm_transport` as an instance of `equation_transport`. -/
+theorem comm_transport_of_universal {A B : Structure binarySig} (φ : StructureIso A B)
+    (hcomm : ∀ a b : A.C, A.interp () ![a, b] = A.interp () ![b, a]) :
+    ∀ x y : B.C, B.interp () ![x, y] = B.interp () ![y, x] := by
+  have key := equation_transport φ
+    (Term.app (S := binarySig) () ![Term.var (0 : Fin 2), Term.var (1 : Fin 2)])
+    (Term.app (S := binarySig) () ![Term.var (1 : Fin 2), Term.var (0 : Fin 2)])
+    (by
+      intro ρ
+      rw [evalTerm_binary, evalTerm_binary]
+      exact hcomm (ρ 0) (ρ 1))
+  intro x y
+  have := key ![x, y]
+  rw [evalTerm_binary, evalTerm_binary] at this
+  simpa using this
+
+-- !-- Encode associativity as `op(op(x,y),z) = op(x,op(y,z))` over `Fin 3`; verify it in
+-- `A` from `hassoc` by unfolding the nested applications with `evalTerm_binary`, transport
+-- with `equation_transport`, and read it back at `![x,y,z]`. -- !--
+/-- **Associativity transports universally.** If the single binary operation of `A` is
+associative and `φ : A ≅ B`, then the operation of `B` is associative. Recovers
+`HoTT.magma_assoc_transport` as an instance of `equation_transport`. -/
+theorem assoc_transport_of_universal {A B : Structure binarySig} (φ : StructureIso A B)
+    (hassoc : ∀ a b c : A.C,
+      A.interp () ![A.interp () ![a, b], c] = A.interp () ![a, A.interp () ![b, c]]) :
+    ∀ x y z : B.C,
+      B.interp () ![B.interp () ![x, y], z] = B.interp () ![x, B.interp () ![y, z]] := by
+  have key := equation_transport φ
+    (Term.app (S := binarySig) ()
+      ![Term.app (S := binarySig) () ![Term.var (0 : Fin 3), Term.var (1 : Fin 3)],
+        Term.var (2 : Fin 3)])
+    (Term.app (S := binarySig) ()
+      ![Term.var (0 : Fin 3),
+        Term.app (S := binarySig) () ![Term.var (1 : Fin 3), Term.var (2 : Fin 3)]])
+    (by
+      intro ρ
+      rw [evalTerm_binary, evalTerm_binary, evalTerm_binary, evalTerm_binary]
+      exact hassoc (ρ 0) (ρ 1) (ρ 2))
+  intro x y z
+  have := key ![x, y, z]
+  rw [evalTerm_binary, evalTerm_binary, evalTerm_binary, evalTerm_binary] at this
+  simpa using this
+
+end HoTT

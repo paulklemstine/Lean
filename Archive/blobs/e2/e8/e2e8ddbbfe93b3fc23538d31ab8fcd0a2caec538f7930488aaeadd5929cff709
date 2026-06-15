@@ -1,0 +1,247 @@
+/-
+Copyright (c) 2026 Harmonic. All rights reserved.
+Released under Apache 2.0 license.
+
+# A Functorial Bridge: Combinatorial Species Growth → Tropical Generating-Function Valuations
+
+This file builds a quantitative bridge connecting **Joyal's combinatorial species** (via the
+exponential generating function transform of `Catalog/Applications/CombinatorialSpecies.lean`)
+to **tropical valuation theory** (in the spirit of
+`Catalog/Bridges/CategoricalTropicalUltrametric.lean`).
+
+## The idea
+
+The `X`-adic **order** of a power series — the index of its first nonzero coefficient — is the
+prototypical valuation: it sends products to sums and sums to the *minimum*. Composing it with the
+EGF transform yields a map
+
+  `tropOrder : Species → ℕ∞,   F ↦ order (EGF F)`
+
+which we show is a *tropical semiring homomorphism*: the combinatorial **product** of species maps
+to tropical multiplication (`+` in `ℕ∞`), and the combinatorial **sum** of species maps to tropical
+addition (`min` in `ℕ∞`). Crucially, because species counting sequences are **non-negative**, there
+is *no leading-term cancellation*, so the sum law holds with *equality* (not merely `≥`): the
+valuation functor is **exact** on the rig of species.
+
+Finally, `tropOrder F` is identified combinatorially with the **size of the smallest non-empty
+`F`-structure** (`tropOrder_eq_nat`) — i.e. the "onset of growth" of the species. This is the
+precise sense in which species *growth* is read off by a *tropical generating-function valuation*.
+
+## Main results
+
+* `egf_order_mul`            — `order (EGF of product) = order + order` (valuation of a product).
+* `egf_order_add_ge`         — `min (order, order) ≤ order (EGF of sum)` (general sub-additivity).
+* `egf_order_add_of_nonneg`  — **exact** `min` law for non-negative sequences (no cancellation).
+* `tropVal_mul` / `tropVal_add_of_nonneg` — packaged as a homomorphism into `Tropical (ℕ∞)`.
+* `Species.sum`, `EGF_sum`   — the sum (disjoint-union) species and its EGF.
+* `tropOrder_sum`            — `tropOrder (F + G) = min (tropOrder F) (tropOrder G)`.
+* `tropOrder_prodCard`       — `tropOrder (F · G) = tropOrder F + tropOrder G`.
+* `egf_order_eq_nat`         — valuation = index of first nonzero term (the growth onset).
+* `Species.tropOrder_eq_nat` — valuation = size of the smallest non-empty `F`-structure.
+* `tropOrder_setSpecies`, `tropOrder_linearOrderSpecies` — worked examples (both `0`).
+-/
+import Mathlib
+import Catalog.Applications.CombinatorialSpecies
+
+open scoped BigOperators
+open PowerSeries Finset CombinatorialSpecies
+
+namespace SpeciesTropicalValuation
+
+noncomputable section
+
+/-! ## §1. The tropical valuation of a counting sequence
+
+The order (= `X`-adic valuation) of the EGF turns the species product (binomial convolution)
+into addition in `ℕ∞`, and the species sum into the minimum. -/
+
+-- !-- Lab Notes -- !--
+-- Hypothesis: `order ∘ egf` should be a valuation: multiplicative on the binomial
+--   convolution `binConv` and (at least) sub-additive on pointwise sums.  The product law
+--   is immediate from the catalog's `egf_mul` plus `PowerSeries.order_mul` (ℚ is a domain).
+-- Result: confirmed; both `egf_order_mul` and `egf_order_add_ge` are one-liners over the
+--   catalog bridge.  The *interesting* refinement is the exact `min` law below.
+
+/-- **Valuation of a product.** The order of the EGF of the binomial convolution is the *sum*
+of the orders: the tropical multiplication law. -/
+theorem egf_order_mul (a b : ℕ → ℚ) :
+    (egf (binConv a b)).order = (egf a).order + (egf b).order := by
+  rw [egf_mul]; exact order_mul _ _
+
+/-- **Sub-additivity (general sum law).** For arbitrary sequences the order of a sum is at
+least the minimum of the orders — the tropical addition *inequality*. -/
+theorem egf_order_add_ge (a b : ℕ → ℚ) :
+    min (egf a).order (egf b).order ≤ (egf (fun n => a n + b n)).order := by
+  rw [egf_add]; exact min_order_le_order_add _ _
+
+-- !-- Lab Notes -- !--
+-- Hypothesis: For species the coefficients are cardinalities `≥ 0`, so the leading terms of
+--   two EGFs can never cancel.  Therefore the sub-additivity above should be an *equality*.
+-- Proof plan: `min ≤ order(a+b)` is `egf_order_add_ge`.  For `order(a+b) ≤ min`, show
+--   `order(a+b) ≤ order a` and `≤ order b`.  If `order a = ⊤` it is trivial; else at
+--   `k = (order a).toNat` we have `a k > 0` (non-negative & nonzero), so `(a+b) k ≥ a k > 0`,
+--   giving `order(a+b) ≤ k` by `PowerSeries.order_le`.
+-- Failure analysis: this fails without non-negativity (e.g. `a = X`, `b = -X` cancel).
+
+/-- **Exact tropical addition law (no cancellation).** For *non-negative* counting sequences,
+the order of the EGF of the sum equals the **minimum** of the orders. This is the precise
+statement that the species sum has no leading-term cancellation. -/
+theorem egf_order_add_of_nonneg (a b : ℕ → ℚ)
+    (ha : ∀ n, 0 ≤ a n) (hb : ∀ n, 0 ≤ b n) :
+    (egf (fun n => a n + b n)).order = min (egf a).order (egf b).order := by
+  refine' le_antisymm _ _;
+  · by_cases ha0 : egf a = 0 <;> by_cases hb0 : egf b = 0 <;> simp_all +decide;
+    · simp_all +decide [ egf, PowerSeries.ext_iff ];
+      simp_all +decide [ Nat.factorial_ne_zero ];
+    · rw [ show ( egf fun n => a n + b n ) = egf a from _ ];
+      simp_all +decide [ egf, PowerSeries.ext_iff ];
+      exact fun n => by cases hb0 n <;> simp_all +decide [ Nat.factorial_ne_zero ] ;
+    · constructor <;> rw [ PowerSeries.order ];
+      · split_ifs <;> simp_all +decide [ PowerSeries.order ];
+        · simp_all +decide [ egf, PowerSeries.ext_iff ];
+          exact ha0.elim fun n hn => hn.1 <| by cases ‹∀ n : ℕ, a n + b n = 0 ∨ n.factorial = 0› n <;> simp_all +decide [ Nat.factorial_ne_zero, add_eq_zero_iff_of_nonneg ] ;
+        · grind;
+      · split_ifs <;> simp_all +decide [ PowerSeries.order ];
+        · simp_all +decide [ egf, PowerSeries.ext_iff ];
+          exact ha0.elim fun n hn => hn.1 <| by cases ‹∀ n : ℕ, a n + b n = 0 ∨ n.factorial = 0› n <;> simp_all +decide [ Nat.factorial_ne_zero, add_eq_zero_iff_of_nonneg ] ;
+        · grind +suggestions;
+  · exact egf_order_add_ge a b
+
+/-! ## §2. Packaging as a tropical-semiring homomorphism
+
+`Tropical (ℕ∞)` is the min-plus semiring: tropical `*` is `+` in `ℕ∞`, tropical `+` is `min`.
+The map `tropVal` below is then a genuine semiring-style homomorphism on non-negative sequences. -/
+
+/-- The tropical valuation of a counting sequence, as an element of the tropical semiring
+`Tropical (ℕ∞)` (min-plus). -/
+def tropVal (a : ℕ → ℚ) : Tropical (WithTop ℕ) := Tropical.trop (egf a).order
+
+/-- **Multiplicativity.** `tropVal` sends the binomial convolution (species product) to
+tropical multiplication. -/
+theorem tropVal_mul (a b : ℕ → ℚ) :
+    tropVal (binConv a b) = tropVal a * tropVal b := by
+  unfold tropVal; rw [egf_order_mul]; rfl
+
+/-- **Additivity on non-negative sequences.** `tropVal` sends a pointwise sum (species sum)
+to tropical addition (`min`). -/
+theorem tropVal_add_of_nonneg (a b : ℕ → ℚ)
+    (ha : ∀ n, 0 ≤ a n) (hb : ∀ n, 0 ≤ b n) :
+    tropVal (fun n => a n + b n) = tropVal a + tropVal b := by
+  unfold tropVal; rw [egf_order_add_of_nonneg a b ha hb]; rfl
+
+/-! ## §3. The valuation as "size of the smallest structure" (growth onset)
+
+The valuation reads off exactly where the species first has a structure. -/
+
+-- !-- Lab Notes -- !--
+-- These translate `PowerSeries.order_eq_top` / `order_eq_nat` through the EGF, using
+--   `a n / n! = 0 ↔ a n = 0` (since `n! ≠ 0` in ℚ).
+
+/-- The EGF valuation is `⊤` (infinite) iff the sequence is identically zero (the species is
+empty). -/
+theorem egf_order_eq_top (a : ℕ → ℚ) :
+    (egf a).order = ⊤ ↔ ∀ n, a n = 0 := by
+  constructor <;> intro h;
+  · simp_all +decide [ PowerSeries.ext_iff, egf ];
+    exact fun n => Or.resolve_right ( h n ) ( Nat.factorial_ne_zero _ );
+  · unfold egf; aesop;
+
+/-- **Growth onset.** The EGF valuation equals `n` iff `n` is the index of the first nonzero
+term: `a n ≠ 0` and `a i = 0` for all `i < n`. -/
+theorem egf_order_eq_nat (a : ℕ → ℚ) (n : ℕ) :
+    (egf a).order = (n : ℕ∞) ↔ a n ≠ 0 ∧ ∀ i < n, a i = 0 := by
+  rw [ PowerSeries.order_eq_nat ];
+  simp +decide [ CombinatorialSpecies.coeff_egf, Nat.factorial_ne_zero ]
+
+/-! ## §4. Species-level statements
+
+We introduce the sum (disjoint-union) species, and read the bridge at the level of species. -/
+
+/-- The **sum species** `F + G`: a structure is a structure of `F` or of `G` on the same labels.
+Relabelling acts componentwise via `Equiv.Perm.sumCongrHom`. -/
+def _root_.CombinatorialSpecies.Species.sum (F G : Species) : Species where
+  obj := fun n => F.obj n ⊕ G.obj n
+  fintypeObj := fun _ => inferInstance
+  act := fun n => (Equiv.Perm.sumCongrHom (F.obj n) (G.obj n)).comp ((F.act n).prod (G.act n))
+
+@[simp] lemma coeffSeq_sum (F G : Species) (n : ℕ) :
+    (F.sum G).coeffSeq n = F.coeffSeq n + G.coeffSeq n := by
+  simp [Species.coeffSeq, Species.sum, Fintype.card_sum]
+
+/-- The EGF of the sum species is the sum of the EGFs (re-deriving the catalog `egf_add` at the
+species level). -/
+theorem EGF_sum (F G : Species) : (F.sum G).EGF = F.EGF + G.EGF := by
+  convert egf_add ( fun n => ( F.coeffSeq n : ℚ ) ) ( fun n => ( G.coeffSeq n : ℚ ) ) using 1;
+  exact congr_arg _ ( funext fun n => by norm_cast; rw [ coeffSeq_sum ] )
+
+/-- The tropical valuation (order of EGF) of a species. -/
+def _root_.CombinatorialSpecies.Species.tropOrder (F : Species) : ℕ∞ := F.EGF.order
+
+/-- **Species sum law (exact).** The valuation of a sum of species is the minimum of the
+valuations — no cancellation, because cardinalities are non-negative. -/
+theorem tropOrder_sum (F G : Species) :
+    (F.sum G).tropOrder = min F.tropOrder G.tropOrder := by
+  -- Unfold `tropOrder` and `EGF`.
+  unfold Species.tropOrder Species.EGF;
+  convert egf_order_add_of_nonneg _ _ _ _ using 2;
+  · congr! 2;
+    exact mod_cast coeffSeq_sum F G _;
+  · exact fun n => Nat.cast_nonneg _;
+  · exact fun n => Nat.cast_nonneg _
+
+/-- **Species product law.** The valuation of the structural (Day-convolution) product of two
+species is the *sum* of the valuations, stated on the underlying structure families. -/
+theorem tropOrder_prodCard (A B : ℕ → Type) [∀ k, Fintype (A k)] [∀ k, Fintype (B k)] :
+    (egf (fun n => (Fintype.card (Σ S : Finset (Fin n), A S.card × B (n - S.card)) : ℚ))).order
+      = (egf (fun n => (Fintype.card (A n) : ℚ))).order
+        + (egf (fun n => (Fintype.card (B n) : ℚ))).order := by
+  convert egf_order_mul _ _ using 1;
+  congr! 2;
+  ext n; erw [ card_prodSpecies ] ;
+  norm_num [ binConv ]
+
+/-- **Combinatorial reading of the valuation.** `tropOrder F = n` iff `n` is the size of the
+smallest non-empty `F`-structure: `|F[n]| ≠ 0` and `|F[i]| = 0` for `i < n`. -/
+theorem _root_.CombinatorialSpecies.Species.tropOrder_eq_nat (F : Species) (n : ℕ) :
+    F.tropOrder = (n : ℕ∞) ↔ F.coeffSeq n ≠ 0 ∧ ∀ i < n, F.coeffSeq i = 0 := by
+  convert egf_order_eq_nat ( fun n => ( F.coeffSeq n : ℚ ) ) n using 1 ;
+  norm_cast
+
+/-! ## §5. Worked examples -/
+
+/-- The species of sets `E` has valuation `0` (there is a structure on the empty label set). -/
+@[simp] theorem tropOrder_setSpecies : setSpecies.tropOrder = 0 := by
+  apply (CombinatorialSpecies.Species.tropOrder_eq_nat setSpecies 0).mpr;
+  simp +decide
+
+/-- The species of linear orders `L` has valuation `0` (the empty order on the empty set). -/
+@[simp] theorem tropOrder_linearOrderSpecies : linearOrderSpecies.tropOrder = 0 := by
+  convert CombinatorialSpecies.Species.tropOrder_eq_nat linearOrderSpecies 0 |>.mpr ?_ using 1;
+  simp +decide
+
+-- !-- Lab Notes (cycle summary) -- !--
+-- Hypotheses tested:
+--   (H1) `order ∘ egf` is a tropical valuation: products → `+`, sums → `min`.  CONFIRMED.
+--   (H2) For species (non-negative coefficients) the `min` law is *exact*, not just `≥`.
+--        CONFIRMED via `egf_order_add_of_nonneg`; the no-cancellation phenomenon is the
+--        crux that turns a sub-additive inequality into a semiring homomorphism.
+--   (H3) The valuation has a purely combinatorial meaning = size of the smallest non-empty
+--        structure.  CONFIRMED via `egf_order_eq_nat` / `Species.tropOrder_eq_nat`.
+-- Key insight: the EGF bridge of the catalog (`egf_mul`, `egf_add`, `egf_card_prodSpecies`)
+--   composes cleanly with `PowerSeries.order` because ℚ is an integral domain
+--   (`order_mul` needs `NoZeroDivisors`).  The min-plus semiring `Tropical (ℕ∞)` then receives
+--   the data *definitionally*: tropical `*` is `+` and tropical `+` is `min`, so `tropVal_mul`
+--   and `tropVal_add_of_nonneg` are `rfl` after rewriting the order laws.
+-- Failure analysis:
+--   * Naming: `Species.sum`/`Species.tropOrder` had to be declared with `_root_.` so that
+--     dot-notation resolves into the *catalog's* `CombinatorialSpecies.Species` namespace
+--     rather than this file's namespace.
+--   * The exact `min` law genuinely requires non-negativity: `a = X`, `b = -X` cancel and
+--     break it, so the hypotheses `ha`, `hb` are load-bearing (they hold for all species
+--     since `Fintype.card ≥ 0`).
+--   * Only the *order* (first exponent) is captured here; the full support / Newton-polygon
+--     refinement (inf-convolution) is left to FUTURE_DIRECTIONS.md, Conjecture 4.
+
+end
+
+end SpeciesTropicalValuation

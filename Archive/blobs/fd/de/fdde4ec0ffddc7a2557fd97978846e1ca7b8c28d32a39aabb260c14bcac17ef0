@@ -1,0 +1,210 @@
+/-
+# The Boltzmann Bridge X — Local-to-Global Gluing of Interleaving Geodesics
+
+Bridge IX (`Applications.BoltzmannBridge.InterleavingGeodesic`) exhibited the
+convex-interpolation path `lerp F G t := (1−t)·F.weight + t·G.weight` as a
+*constant-speed geodesic* of the interleaving metric, proving the linear law
+
+> `eInterleavingDist (lerp F G s) (lerp F G t) = ofReal |s − t| · eInterleavingDist F G`
+> (`eInterleavingDist_lerp`).
+
+Bridge X adds the **local-to-global** layer that turns this single path into a
+self-coherent *sheaf of geodesics*.  The decisive structural fact is
+
+> **`lerp (lerp F G s) (lerp F G t) r = lerp F G ((1−r)·s + r·t)`**
+> (`lerp_lerp`),
+
+i.e. the geodesic between two points *on* the geodesic `F ⟶ G` is again the
+**same** geodesic, merely reparametrised by the affine map `r ↦ (1−r)s + rt`.
+This is the gluing axiom: the global geodesic is determined by, and consistent
+with, its restriction to every subinterval.  From it we read off the genuinely
+*metric* consequences:
+
+* `eInterleavingDist_lerp_right` — distance from `lerp F G t` to the far endpoint
+  `G` is `ofReal (1 − t) · d(F, G)` (the mirror of Bridge IX's
+  `eInterleavingDist_lerp_left`).
+* `eInterleavingDist_lerp_betweenness` — for `s ≤ u ≤ t` the three points are in
+  exact metric *betweenness*: `d(s,u) + d(u,t) = d(s,t)`.  The triangle
+  inequality is realised as an **equality** all along the path.
+* `eInterleavingDist_lerp_bisect` — every interior point splits the total distance
+  additively: `d(F, lerp t) + d(lerp t, G) = d(F, G)` for all `t ∈ [0,1]`.  This
+  generalises Bridge IX's `eInterleavingDist_midpoint` (the case `t = ½`) from a
+  single point to the whole continuum.
+* `eInterleavingDist_lerp_lerp` — speed is *multiplicative* under reparametrisation:
+  a sub-geodesic of a sub-geodesic scales the base distance by the product of the
+  two parameter gaps.
+
+## Main results
+
+* `lerp_lerp` — the affine self-similarity / gluing law of the geodesic.
+* `eInterleavingDist_lerp_right` — distance to the far endpoint.
+* `eInterleavingDist_lerp_betweenness` — exact additive betweenness for `s ≤ u ≤ t`.
+* `eInterleavingDist_lerp_bisect` — additive split at every interior point.
+* `eInterleavingDist_lerp_lerp` — multiplicativity of geodesic speed under nesting.
+-/
+import Mathlib
+import Applications.BoltzmannBridge.HigherPersistence
+import Applications.BoltzmannBridge.PersistenceStability
+import Applications.BoltzmannBridge.BottleneckStability
+import Applications.BoltzmannBridge.InterleavingMetric
+import Applications.BoltzmannBridge.InterleavingClosure
+import Applications.BoltzmannBridge.InterleavingIsometry
+import Applications.BoltzmannBridge.InterleavingGeodesic
+
+open Finset BigOperators
+open scoped ENNReal
+
+namespace BoltzmannBridge
+
+namespace Filtration
+
+variable {α : Type*}
+
+/-! ## The gluing law: a geodesic of geodesic-points is the same geodesic -/
+
+-- !-- Expand both inner `lerp` weights and the outer one via `lerp_weight`; the
+-- !-- coefficient of `F` is `(1−r)(1−s)+r(1−t) = 1−((1−r)s+rt)` and of `G` is
+-- !-- `(1−r)s+rt`, so `ext_weight`/`ring` close it.  The new endpoint parameter
+-- !-- `(1−r)s+rt` is a convex combination of `s,t ∈ [0,1]`, hence again in `[0,1]`. -- !--
+/-- **The affine self-similarity (gluing) law of the geodesic.**  Interpolating
+between two points `lerp F G s` and `lerp F G t` of the geodesic `F ⟶ G` returns the
+*same* geodesic, reparametrised by the affine map `r ↦ (1−r)·s + r·t`.  This is the
+local-to-global coherence: the global geodesic restricts consistently to every
+subsegment. -/
+theorem lerp_lerp (F G : Filtration α) {s t r : ℝ}
+    (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (ht0 : 0 ≤ t) (ht1 : t ≤ 1)
+    (hr0 : 0 ≤ r) (hr1 : r ≤ 1) :
+    lerp (lerp F G s hs0 hs1) (lerp F G t ht0 ht1) r hr0 hr1
+      = lerp F G ((1 - r) * s + r * t)
+          (by nlinarith [mul_nonneg (sub_nonneg.mpr hr1) hs0, mul_nonneg hr0 ht0])
+          (by nlinarith [mul_le_mul_of_nonneg_left hs1 (sub_nonneg.mpr hr1),
+                mul_le_mul_of_nonneg_left ht1 hr0]) := by
+  apply ext_weight; funext σ
+  simp only [lerp_weight]
+  ring
+
+/-! ## Distance to the far endpoint -/
+
+-- !-- `G = lerp F G 1` (`lerp_one`), so the distance is `d(lerp t, lerp 1) =
+-- !-- ofReal |t − 1| · d`; `|t − 1| = 1 − t` since `t ≤ 1` (`abs_sub_comm`,
+-- !-- `abs_of_nonneg`). -- !--
+/-- **Distance from an interior point to the far endpoint `G`.**  The mirror image of
+Bridge IX's `eInterleavingDist_lerp_left`: `d(lerp F G t, G) = ofReal (1 − t) · d(F, G)`. -/
+theorem eInterleavingDist_lerp_right (F G : Filtration α) {t : ℝ}
+    (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
+    eInterleavingDist (lerp F G t ht0 ht1) G
+      = ENNReal.ofReal (1 - t) * eInterleavingDist F G := by
+  have h : eInterleavingDist (lerp F G t ht0 ht1) G
+      = eInterleavingDist (lerp F G t ht0 ht1) (lerp F G 1 zero_le_one le_rfl) := by
+    rw [lerp_one]
+  rw [h, eInterleavingDist_lerp,
+      show |t - 1| = 1 - t from by rw [abs_sub_comm]; exact abs_of_nonneg (by linarith)]
+
+/-! ## Exact metric betweenness along the geodesic -/
+
+-- !-- Rewrite all three distances by `eInterleavingDist_lerp`; with `s ≤ u ≤ t` the
+-- !-- gaps are `|s−u| = u−s`, `|u−t| = t−u`, `|s−t| = t−s`.  Pull the scalar out
+-- !-- (`add_mul`), merge the two `ofReal` halves (`ENNReal.ofReal_add`), and
+-- !-- `(u−s)+(t−u) = t−s` by `ring`. -- !--
+/-- **Exact additive betweenness.**  For `s ≤ u ≤ t` in `[0,1]` the three geodesic
+points satisfy `d(s,u) + d(u,t) = d(s,t)`: the triangle inequality holds as an
+*equality*, witnessing that `lerp` traverses the metric on a straight, non-wasteful
+path. -/
+theorem eInterleavingDist_lerp_betweenness (F G : Filtration α) {s u t : ℝ}
+    (hs0 : 0 ≤ s) (hsu : s ≤ u) (hut : u ≤ t) (ht1 : t ≤ 1) :
+    eInterleavingDist (lerp F G s hs0 (by linarith)) (lerp F G u (by linarith) (by linarith))
+      + eInterleavingDist (lerp F G u (by linarith) (by linarith)) (lerp F G t (by linarith) ht1)
+      = eInterleavingDist (lerp F G s hs0 (by linarith)) (lerp F G t (by linarith) ht1) := by
+  rw [eInterleavingDist_lerp, eInterleavingDist_lerp, eInterleavingDist_lerp,
+      show |s - u| = u - s from by rw [abs_sub_comm]; exact abs_of_nonneg (by linarith),
+      show |u - t| = t - u from by rw [abs_sub_comm]; exact abs_of_nonneg (by linarith),
+      show |s - t| = t - s from by rw [abs_sub_comm]; exact abs_of_nonneg (by linarith),
+      ← add_mul, ← ENNReal.ofReal_add (by linarith) (by linarith)]
+  congr 2
+  ring
+
+/-! ## Additive splitting at every interior point -/
+
+-- !-- `d(F, lerp t) = ofReal t · d` (`eInterleavingDist_lerp_left`), `d(lerp t, G) =
+-- !-- ofReal (1−t) · d` (`eInterleavingDist_lerp_right`); merge the halves to
+-- !-- `ofReal (t + (1−t)) · d = ofReal 1 · d = d`. -- !--
+/-- **Additive split at every interior point.**  For all `t ∈ [0,1]`, the point
+`lerp F G t` lies exactly on the metric segment from `F` to `G`:
+`d(F, lerp F G t) + d(lerp F G t, G) = d(F, G)`.  This generalises Bridge IX's
+`eInterleavingDist_midpoint` (the case `t = ½`) to the full continuum of interior
+points. -/
+theorem eInterleavingDist_lerp_bisect (F G : Filtration α) {t : ℝ}
+    (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
+    eInterleavingDist F (lerp F G t ht0 ht1)
+      + eInterleavingDist (lerp F G t ht0 ht1) G
+      = eInterleavingDist F G := by
+  rw [eInterleavingDist_lerp_left, eInterleavingDist_lerp_right,
+      ← add_mul, ← ENNReal.ofReal_add ht0 (by linarith),
+      show t + (1 - t) = 1 from by ring, ENNReal.ofReal_one, one_mul]
+
+/-! ## Multiplicativity of geodesic speed under reparametrisation -/
+
+-- !-- Rewrite both nested `lerp`s by the gluing law `lerp_lerp` to land on
+-- !-- `lerp F G` of affine parameters, apply `eInterleavingDist_lerp`, factor the
+-- !-- parameter gap `((1−a)s+at) − ((1−b)s+bt) = (a−b)(t−s)`, and split the absolute
+-- !-- value and `ofReal` multiplicatively (`abs_mul`, `ENNReal.ofReal_mul`). -- !--
+/-- **Speed is multiplicative under nesting.**  A sub-geodesic of the sub-geodesic
+`lerp F G s ⟶ lerp F G t`, traversed from parameter `a` to `b`, has interleaving
+length equal to the product of the two parameter gaps times the base distance:
+`d = ofReal |a − b| · (ofReal |s − t| · d(F, G))`.  Constant speed composes by
+multiplication of rates — the hallmark of a self-similar geodesic field. -/
+theorem eInterleavingDist_lerp_lerp (F G : Filtration α) {s t a b : ℝ}
+    (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (ht0 : 0 ≤ t) (ht1 : t ≤ 1)
+    (ha0 : 0 ≤ a) (ha1 : a ≤ 1) (hb0 : 0 ≤ b) (hb1 : b ≤ 1) :
+    eInterleavingDist
+        (lerp (lerp F G s hs0 hs1) (lerp F G t ht0 ht1) a ha0 ha1)
+        (lerp (lerp F G s hs0 hs1) (lerp F G t ht0 ht1) b hb0 hb1)
+      = ENNReal.ofReal |a - b| * (ENNReal.ofReal |s - t| * eInterleavingDist F G) := by
+  rw [lerp_lerp, lerp_lerp, eInterleavingDist_lerp,
+      show ((1 - a) * s + a * t) - ((1 - b) * s + b * t) = (a - b) * (t - s) from by ring,
+      abs_mul, abs_sub_comm t s, ENNReal.ofReal_mul (abs_nonneg _), mul_assoc]
+
+end Filtration
+
+/-
+-- !-- Lab Notebook -- !--
+
+## Hypothesis
+Bridge IX proved `lerp` is a constant-speed geodesic via the linear law
+`eInterleavingDist (lerp s) (lerp t) = ofReal |s − t| · d` but treated the path as a
+single object.  The adversarial hypothesis: the geodesic is *self-coherent* in the
+sheaf sense — its restriction to any subinterval is again the geodesic of the
+restricted endpoints, and consequently every interior point realises the triangle
+inequality as an exact equality (betweenness), not merely an upper bound.
+
+## Result
+Confirmed.  The gluing law `lerp_lerp` shows that interpolating between two geodesic
+points `lerp s`, `lerp t` reproduces `lerp F G` reparametrised by the affine map
+`r ↦ (1−r)s + rt` — a single `ext_weight`/`ring` computation, with the new endpoint
+parameter automatically convex (hence in `[0,1]`).  From it: the far-endpoint
+distance `eInterleavingDist_lerp_right`, the exact betweenness
+`eInterleavingDist_lerp_betweenness` for `s ≤ u ≤ t`, the universal additive split
+`eInterleavingDist_lerp_bisect` (generalising the midpoint bisection to all `t`), and
+the multiplicative speed law `eInterleavingDist_lerp_lerp`.
+
+## Insight
+Local-to-global coherence is *algebraic*: the geodesic is the image of the affine
+line under one linear map (convex combination of weights), and affine maps compose to
+affine maps — that single fact is `lerp_lerp`, and every metric corollary follows by
+linearity of `ENNReal.ofReal` on the nonnegative parameter gaps.  Betweenness is thus
+not an extra geometric input but the additive structure of `[0,1]` transported across
+the Bridge VIII isometry.  The geodesic is a *sheaf of segments* whose gluing is
+matrix-free: only the endpoints and a scalar parameter are ever needed.
+
+## Failure analysis
+The convexity hypotheses `0 ≤ · ≤ 1` are load-bearing throughout: outside `[0,1]` the
+reparametrised endpoint can leave the valid-filtration locus, breaking `lerp_lerp`'s
+target.  Betweenness requires the *ordering* `s ≤ u ≤ t`; without it the gaps no longer
+add (`|s−u| + |u−t| > |s−t|`), and indeed only the triangle *inequality* survives — the
+equality is special to monotone parameters.  Uniqueness of the geodesic is still open:
+because `eInterleavingDist` is a `⨆` over simplices, non-maximising coordinates may
+detour freely, so `lerp` is one section of a convex family of geodesics (see
+FUTURE_DIRECTIONS).
+-/
+
+end BoltzmannBridge

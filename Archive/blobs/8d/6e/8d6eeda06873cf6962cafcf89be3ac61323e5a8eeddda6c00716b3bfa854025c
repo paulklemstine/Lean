@@ -1,0 +1,323 @@
+import Mathlib
+import Bridges.CoalgebraicNeuralMyhillNerode
+import Applications.PoincareData.MetricFiltration
+
+/-! # Neural Myhill–Nerode Quotients Preserve Rips-Filtration Interleavings
+
+This file builds a **bridge** between the coalgebraic Myhill–Nerode theory of neural
+observation systems (`Bridges/CoalgebraicNeuralMyhillNerode.lean`) and the metric
+filtration / Vietoris–Rips machinery of topological data analysis
+(`Applications/PoincareData/MetricFiltration.lean`).
+
+## The bridge in one sentence
+
+The observational behavior of a `NeuralObservationSystem`, restricted to a finite
+observation budget `W : Finset (NeuralContext α)`, induces a genuine **pseudometric**
+`behaviorDist` on the state space (the supremum-of-coordinates metric pulled back along
+the behavior embedding `s ↦ (fun w => neural_behavior N s w)`).  Coalgebra morphisms are
+then **isometries** for this pseudometric, hence (when injective) induce **graph
+homomorphisms** of the Rips graphs at every scale `ε`, i.e. a *morphism of metric
+filtrations*.  Finally, two systems whose behaviors are pointwise within `ε` produce
+Rips filtrations that are **`2ε`-interleaved**.
+
+## Main results
+
+* `behaviorDist_le_iff`            — characterization of the behavior pseudometric.
+* `behaviorDist_eq_zero_iff_agree` — zero distance ⇔ observational agreement on `W`
+                                     (the Myhill–Nerode quotient relation descends).
+* `behaviorDist_hom`               — coalgebra morphisms are **isometries** of `behaviorDist`.
+* `ripsGraph_hom_of_nonexpansive`  — (cross-domain, reusable) nonexpansive + injective
+                                     maps preserve Rips adjacency.
+* `neural_ripsGraph_hom`           — an injective neural morphism preserves Rips adjacency.
+* `neuralRipsFiltrationHom`        — the induced **filtration morphism** (a graph hom at
+                                     every scale, with the *same* underlying map).
+* `behaviorDist_interleave`        — `ε`-pointwise-close behaviors give a `2ε` distance shift.
+* `neural_rips_interleaving`       — the **`2ε`-interleaving** of the two Rips filtrations.
+
+These results are precise and falsifiable: failure of nonexpansiveness or of quotient
+well-definedness immediately blocks the filtration map, and the `2ε` shift in the
+interleaving is the sharp price of an `ε`-approximate simulation.
+
+-- !-- Lab Notebook -- !--
+**Hypothesis.** Observational indistinguishability of neural states is the kernel of a
+1-Lipschitz "behavior" map into a finite product pseudometric space, so it should act as a
+nonexpansive compression that is functorial for the Rips construction.
+
+**Result.** Confirmed. By pulling back the finite-product sup-metric along the behavior
+embedding (`PseudoMetricSpace.induced`), all four pseudometric axioms come for free from
+Mathlib, coalgebra morphisms become isometries (`behaviorDist_hom`), and Rips functoriality
+plus a sharp `2ε`-interleaving follow.
+
+**Insight.** The right move is to *reuse* Mathlib's finite `Pi` pseudometric via `induced`
+rather than hand-rolling a supremum metric; this makes `dist_pi_le_iff` / `dist_le_pi_dist`
+the only nontrivial engine needed, and reduces every "global" filtration claim to a
+"stalk-level" per-context computation — a local-to-global reduction in the literal sense.
+
+**Failure analysis.** A naïve attempt to use an unrestricted supremum over *all* contexts
+fails (the set of coordinate distances is unbounded in a general metric space). Restricting
+to a finite observation budget `W` is exactly the `O(|α|^k)` budget already present in the
+catalog (`observation_signature_upto`), so the finite restriction is principled, not a
+workaround. Adjacency preservation also genuinely *requires* injectivity: a behavior-
+collapsing morphism deletes Rips edges, so the injective hypothesis is load-bearing.
+-- !-- Lab Notebook -- !--
+-/
+
+noncomputable section
+open Classical
+open Bridges.AlgebraMachineLearning
+
+namespace Bridges.NeuralRipsInterleaving
+
+/-! ## Part 1: The behavior embedding and the behavior pseudometric -/
+
+/-- The **behavior embedding** at observation budget `W`: a state is sent to the tuple of
+    its observable behaviors on the contexts in `W`, landing in the finite product
+    pseudometric space `W → β`. -/
+def behVec {σ α β : Type*} [PseudoMetricSpace β]
+    (N : NeuralObservationSystem σ α β) (W : Finset (List α)) (x : σ) : (W → β) :=
+  fun w => neural_behavior N x w.1
+
+/-- The **behavior pseudometric** on states at observation budget `W`: the
+    supremum-of-coordinates distance between behavior tuples. -/
+def behaviorDist {σ α β : Type*} [PseudoMetricSpace β]
+    (N : NeuralObservationSystem σ α β) (W : Finset (List α)) (x y : σ) : ℝ :=
+  dist (behVec N W x) (behVec N W y)
+
+/-- The state space repackaged as a **pseudometric space** under `behaviorDist`. -/
+def BehStates {σ α β : Type*} [PseudoMetricSpace β]
+    (_N : NeuralObservationSystem σ α β) (_W : Finset (List α)) : Type _ := σ
+
+/-- `behaviorDist` is realized as the induced pseudometric pulled back along `behVec`. -/
+instance instBehStatesPMS {σ α β : Type*} [PseudoMetricSpace β]
+    (N : NeuralObservationSystem σ α β) (W : Finset (List α)) :
+    PseudoMetricSpace (BehStates N W) :=
+  PseudoMetricSpace.induced (fun x : σ => behVec N W x) inferInstance
+
+/-- The distance on `BehStates` is exactly `behaviorDist` (definitional bridge). -/
+theorem dist_behStates_eq {σ α β : Type*} [PseudoMetricSpace β]
+    (N : NeuralObservationSystem σ α β) (W : Finset (List α)) (x y : BehStates N W) :
+    dist x y = behaviorDist N W (x : σ) (y : σ) := rfl
+
+/-! ## Part 2: Pseudometric axioms and the key characterization -/
+
+theorem behaviorDist_self {σ α β : Type*} [PseudoMetricSpace β]
+    (N : NeuralObservationSystem σ α β) (W : Finset (List α)) (x : σ) :
+    behaviorDist N W x x = 0 := by
+  unfold behaviorDist; exact dist_self _
+
+theorem behaviorDist_comm {σ α β : Type*} [PseudoMetricSpace β]
+    (N : NeuralObservationSystem σ α β) (W : Finset (List α)) (x y : σ) :
+    behaviorDist N W x y = behaviorDist N W y x := by
+  unfold behaviorDist; exact dist_comm _ _
+
+theorem behaviorDist_nonneg {σ α β : Type*} [PseudoMetricSpace β]
+    (N : NeuralObservationSystem σ α β) (W : Finset (List α)) (x y : σ) :
+    0 ≤ behaviorDist N W x y := by
+  unfold behaviorDist; exact dist_nonneg
+
+theorem behaviorDist_triangle {σ α β : Type*} [PseudoMetricSpace β]
+    (N : NeuralObservationSystem σ α β) (W : Finset (List α)) (x y z : σ) :
+    behaviorDist N W x z ≤ behaviorDist N W x y + behaviorDist N W y z := by
+  unfold behaviorDist; exact dist_triangle _ _ _
+
+-- !-- The sup-metric is `≤ r` iff every coordinate is, via `dist_pi_le_iff`; the `W`-bundling
+-- just rewrites quantification over `↥W` as quantification over `w ∈ W`. -- !--
+/-- **Key characterization.** The behavior pseudometric is `≤ r` (for `r ≥ 0`) exactly
+    when every context in the budget `W` separates the two states by at most `r`. -/
+theorem behaviorDist_le_iff {σ α β : Type*} [PseudoMetricSpace β]
+    (N : NeuralObservationSystem σ α β) (W : Finset (List α)) (x y : σ)
+    {r : ℝ} (hr : 0 ≤ r) :
+    behaviorDist N W x y ≤ r ↔
+      ∀ w ∈ W, dist (neural_behavior N x w) (neural_behavior N y w) ≤ r := by
+  unfold behaviorDist behVec
+  rw [dist_pi_le_iff hr]
+  constructor
+  · intro h w hw; exact h ⟨w, hw⟩
+  · intro h w; exact h w.1 w.2
+
+/-- A single coordinate distance is dominated by the behavior pseudometric. -/
+theorem dist_behavior_le_behaviorDist {σ α β : Type*} [PseudoMetricSpace β]
+    (N : NeuralObservationSystem σ α β) (W : Finset (List α)) (x y : σ)
+    {w : List α} (hw : w ∈ W) :
+    dist (neural_behavior N x w) (neural_behavior N y w) ≤ behaviorDist N W x y := by
+  have h := dist_le_pi_dist (behVec N W x) (behVec N W y) ⟨w, hw⟩
+  simpa [behVec, behaviorDist] using h
+
+/-! ## Part 3: The Myhill–Nerode quotient relation descends -/
+
+/-
+!-- In a metric space `dist a b = 0 ↔ a = b`; combine with `behaviorDist_le_iff` at `r = 0`
+(and antisymmetry against `behaviorDist_nonneg`) to turn zero distance into agreement. -- !--
+
+**Quotient well-definedness.** With genuine outputs (a `MetricSpace β`), zero behavior
+    distance is exactly observational agreement on the budget `W`.  Hence the relation
+    "`behaviorDist = 0`" is the budget-`W` Myhill–Nerode equivalence, and any behavior-
+    respecting map descends to its quotient.
+-/
+theorem behaviorDist_eq_zero_iff_agree {σ α β : Type*} [MetricSpace β]
+    (N : NeuralObservationSystem σ α β) (W : Finset (List α)) (x y : σ) :
+    behaviorDist N W x y = 0 ↔
+      ∀ w ∈ W, neural_behavior N x w = neural_behavior N y w := by
+  constructor;
+  · intro h w hw
+    have h_le : dist (neural_behavior N x w) (neural_behavior N y w) ≤ behaviorDist N W x y := dist_behavior_le_behaviorDist N W x y hw
+    rw [h] at h_le
+    exact dist_le_zero.mp h_le;
+  · intro hxy
+    have h_dist : behaviorDist N W x y ≤ 0 := by
+      exact behaviorDist_le_iff N W x y le_rfl |>.2 fun w hw => by simp +decide [ hxy w hw ] ;
+    exact le_antisymm h_dist ( behaviorDist_nonneg N W x y )
+
+/-
+When the empty context is in budget, zero behavior distance forces equal observations:
+    the observation map descends to the behavior quotient.
+-/
+theorem behaviorDist_zero_observe {σ α β : Type*} [MetricSpace β]
+    (N : NeuralObservationSystem σ α β) (W : Finset (List α)) (hW : [] ∈ W)
+    (x y : σ) (h : behaviorDist N W x y = 0) :
+    N.observe x = N.observe y := by
+  replace h := behaviorDist_eq_zero_iff_agree N W x y |>.mp h;
+  simpa [ neural_behavior_nil ] using h [] hW
+
+/-
+Connection to the catalog Myhill–Nerode equivalence: behaviorally equivalent states
+    (`neural_equiv`) collapse to distance `0` under *every* observation budget `W`.  Thus
+    the canonical compression of `CoalgebraicNeuralMyhillNerode.lean` is a sub-relation of
+    every behavior-pseudometric quotient.
+-/
+theorem behaviorDist_zero_of_equiv {σ α β : Type*} [MetricSpace β]
+    (N : NeuralObservationSystem σ α β) (W : Finset (List α)) (x y : σ)
+    (h : neural_equiv N x y) :
+    behaviorDist N W x y = 0 := by
+  rw [ behaviorDist_eq_zero_iff_agree ];
+  exact fun w hw => h w
+
+/-! ## Part 4: Coalgebra morphisms are isometries -/
+
+/-
+!-- `neural_hom_preserves_behavior` makes the two behavior tuples *equal* as functions,
+so the induced (pulled-back) distances coincide on the nose. -- !--
+
+**Isometry.** A coalgebra morphism of neural observation systems preserves the behavior
+    pseudometric exactly (`neural_hom_preserves_behavior`).  Morphisms are 1-Lipschitz, and
+    in fact distance-preserving.
+-/
+theorem behaviorDist_hom {σ τ α β : Type*} [PseudoMetricSpace β]
+    {N : NeuralObservationSystem σ α β} {M : NeuralObservationSystem τ α β}
+    (f : NeuralHom N M) (W : Finset (List α)) (x y : σ) :
+    behaviorDist M W (f.toFun x) (f.toFun y) = behaviorDist N W x y := by
+  unfold behaviorDist;
+  unfold behVec; congr!;
+  · exact funext fun w => neural_hom_preserves_behavior f x w ▸ rfl;
+  · exact funext fun w => neural_hom_preserves_behavior f y w |> Eq.symm
+
+/-! ## Part 5: Cross-domain Rips functoriality (reusable, no neural input) -/
+
+end Bridges.NeuralRipsInterleaving
+
+/-
+!-- A nonexpansive map preserves `≠` when injective, and shrinks distances below `ε`,
+so it sends Rips edges to Rips edges. -- !--
+
+**(Cross-domain, reusable.)** A nonexpansive injective map between pseudometric spaces
+    preserves Rips adjacency at every scale.  This is the functoriality engine for
+    `ripsGraph_mono`: it upgrades pointwise nonexpansion into a graph homomorphism.
+-/
+theorem ripsGraph_hom_of_nonexpansive {A B : Type*}
+    [PseudoMetricSpace A] [PseudoMetricSpace B]
+    (f : A → B) (hf : ∀ x y, dist (f x) (f y) ≤ dist x y)
+    (hinj : Function.Injective f) {ε : ℝ} {x y : A}
+    (h : (ripsGraph A ε).Adj x y) :
+    (ripsGraph B ε).Adj (f x) (f y) := by
+  exact ⟨ hinj.ne h.1, le_trans ( hf x y ) h.2 ⟩
+
+/-- The bundled Rips graph homomorphism induced by a nonexpansive injective map. -/
+def ripsGraphHom {A B : Type*} [PseudoMetricSpace A] [PseudoMetricSpace B]
+    (f : A → B) (hf : ∀ x y, dist (f x) (f y) ≤ dist x y)
+    (hinj : Function.Injective f) (ε : ℝ) :
+    ripsGraph A ε →g ripsGraph B ε where
+  toFun := f
+  map_rel' := ripsGraph_hom_of_nonexpansive f hf hinj
+
+namespace Bridges.NeuralRipsInterleaving
+
+/-! ## Part 6: The neural Rips filtration morphism -/
+
+/-
+An injective neural morphism preserves Rips adjacency of the behavior pseudometric
+    at every scale.
+-/
+theorem neural_ripsGraph_hom {σ τ α β : Type*} [PseudoMetricSpace β]
+    {N : NeuralObservationSystem σ α β} {M : NeuralObservationSystem τ α β}
+    (f : NeuralHom N M) (hinj : Function.Injective f.toFun) (W : Finset (List α))
+    {ε : ℝ} {x y : BehStates N W}
+    (h : (ripsGraph (BehStates N W) ε).Adj x y) :
+    (ripsGraph (BehStates M W) ε).Adj (f.toFun x) (f.toFun y) := by
+  convert ripsGraph_hom_of_nonexpansive ( f := f.toFun ) _ hinj h;
+  exact fun x y => le_of_eq ( by rw [ dist_behStates_eq, dist_behStates_eq, behaviorDist_hom f W x y ] )
+
+-- !-- Package the per-scale graph homs (all with the *same* underlying map `f`) into a
+-- filtration morphism; naturality with `ripsGraph_mono` is then definitional. -- !--
+/-- **Filtration morphism.** An injective neural morphism induces a graph homomorphism of
+    the behavior Rips graphs at *every* scale `ε`, i.e. a morphism of metric filtrations.
+    The underlying map is independent of `ε`, so it commutes with all filtration
+    inclusions `ripsGraph_mono`. -/
+def neuralRipsFiltrationHom {σ τ α β : Type*} [PseudoMetricSpace β]
+    {N : NeuralObservationSystem σ α β} {M : NeuralObservationSystem τ α β}
+    (f : NeuralHom N M) (hinj : Function.Injective f.toFun) (W : Finset (List α))
+    (ε : ℝ) :
+    ripsGraph (BehStates N W) ε →g ripsGraph (BehStates M W) ε where
+  toFun := f.toFun
+  map_rel' := neural_ripsGraph_hom f hinj W
+
+/-- Naturality: the filtration morphism has the same underlying map at every scale, so it
+    is compatible with the monotone Rips inclusions. -/
+theorem neuralRipsFiltrationHom_underlying {σ τ α β : Type*} [PseudoMetricSpace β]
+    {N : NeuralObservationSystem σ α β} {M : NeuralObservationSystem τ α β}
+    (f : NeuralHom N M) (hinj : Function.Injective f.toFun) (W : Finset (List α))
+    (ε₁ ε₂ : ℝ) (x : BehStates N W) :
+    (neuralRipsFiltrationHom f hinj W ε₁) x = (neuralRipsFiltrationHom f hinj W ε₂) x :=
+  rfl
+
+/-! ## Part 7: ε-approximate simulation and the 2ε-interleaving -/
+
+/-
+!-- Per context `w ∈ W`, two triangle steps give
+`dist (behM x w)(behM y w) ≤ ε + dist (behN x w)(behN y w) + ε`; bound the middle term by
+`behaviorDist N` and take the sup via `behaviorDist_le_iff`. -- !--
+
+**Approximate simulation distance shift.** If two systems on the same state space have
+    behaviors pointwise within `ε` on the budget `W`, their behavior pseudometrics differ
+    by at most `2ε`.
+-/
+theorem behaviorDist_interleave {σ α β : Type*} [PseudoMetricSpace β]
+    (N M : NeuralObservationSystem σ α β) (W : Finset (List α)) {ε : ℝ} (hε : 0 ≤ ε)
+    (hNM : ∀ x : σ, ∀ w ∈ W,
+      dist (neural_behavior N x w) (neural_behavior M x w) ≤ ε)
+    (x y : σ) :
+    behaviorDist M W x y ≤ behaviorDist N W x y + 2 * ε := by
+  apply le_of_forall_le; intro r hr;
+  contrapose! hr;
+  exact lt_of_le_of_lt ( behaviorDist_le_iff _ _ _ _ ( by linarith [ behaviorDist_nonneg N W x y ] ) |>.2 fun w hw => by linarith [ dist_triangle4 ( neural_behavior M x w ) ( neural_behavior N x w ) ( neural_behavior N y w ) ( neural_behavior M y w ), hNM x w hw, hNM y w hw, dist_comm ( neural_behavior N x w ) ( neural_behavior M x w ), dist_comm ( neural_behavior N y w ) ( neural_behavior M y w ), dist_behavior_le_behaviorDist N W x y hw ] ) hr
+
+/-
+!-- Same vertices, `≠` preserved; the distance bound `behaviorDist_interleave` pushes a
+scale-`r` edge of `N` into a scale-`(r + 2ε)` edge of `M`. -- !--
+
+**`2ε`-interleaving.** An `ε`-approximate simulation between two neural systems makes
+    their Rips filtrations `2ε`-interleaved: every edge at scale `r` in the source appears
+    at scale `r + 2ε` in the target.
+-/
+theorem neural_rips_interleaving {σ α β : Type*} [PseudoMetricSpace β]
+    (N M : NeuralObservationSystem σ α β) (W : Finset (List α)) {ε : ℝ} (hε : 0 ≤ ε)
+    (hNM : ∀ x : σ, ∀ w ∈ W,
+      dist (neural_behavior N x w) (neural_behavior M x w) ≤ ε)
+    {r : ℝ} {x y : σ}
+    (h : (ripsGraph (BehStates N W) r).Adj
+        (x : BehStates N W) (y : BehStates N W)) :
+    (ripsGraph (BehStates M W) (r + 2 * ε)).Adj
+        (x : BehStates M W) (y : BehStates M W) := by
+  obtain ⟨hne, hd⟩ := h;
+  exact ⟨ hne, by linarith [ behaviorDist_interleave N M W hε hNM x y, dist_behStates_eq N W x y, dist_behStates_eq M W x y ] ⟩
+
+end Bridges.NeuralRipsInterleaving

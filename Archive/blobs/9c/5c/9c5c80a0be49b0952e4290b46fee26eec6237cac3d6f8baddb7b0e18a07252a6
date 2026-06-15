@@ -1,0 +1,248 @@
+/-
+  # A Bridge from Tropical Valuation Objects to Metric Filtrations
+  ## Rips-graph comparison via pointwise distance domination
+
+  This file connects two mature pieces of the catalog:
+
+  * `Bridges/CategoricalTropicalUltrametric.lean` — the categorical theory of
+    `TropicalValuationObject`, `UltraNormObj`, and the `valuationReconstruct`
+    functor producing an ultrametric seminorm `norm : α → ℕ` from valuation data.
+  * `Applications/PoincareData/MetricFiltration.lean` — the `ripsGraph` /
+    `MetricFiltration` apparatus (`ripsGraph_mono`, `ripsGraph_bot_of_metric`)
+    underlying persistent-homology pipelines.
+
+  The bridge is built around a *distance-parametric* Rips graph `genRipsGraph d ε`,
+  whose adjacency `x ≠ y ∧ d x y ≤ ε ∧ d y x ≤ ε` makes sense for an arbitrary
+  (not necessarily symmetric, not necessarily metric) pairwise weight `d : α → α → ℝ`.
+  This object is:
+
+  * **monotone in the scale** `ε`  (`genRipsGraph_mono`), matching `ripsGraph_mono`;
+  * **antitone in the distance** `d`  (`genRipsGraph_antitone`) — the central
+    comparison principle: making distances *smaller* can only *add* edges;
+  * **compatible** with the canonical metric Rips graph
+    (`genRipsGraph_eq_ripsGraph`), so the parametric layer specializes to the
+    catalog's `ripsGraph`;
+  * **trivial below scale 0** for any nonnegative weight (`genRipsGraph_bot_of_neg`).
+
+  Instantiating `d` with the *tropical/ultrametric distance*
+  `ultraDist X x y = (X.norm (X.sub_op x y) : ℝ)` extracted from an `UltraNormObj`,
+  the antitone principle yields a clean **filtration transfer theorem**: a pointwise
+  domination between the ambient metric and the tropical distance forces a pointwise
+  inclusion of the corresponding Rips filtrations, with the scale-monotone and
+  endpoint (emptiness) corollaries falling out for free.
+
+  ## A note on direction (faithfulness correction)
+
+  The Rips graph is *antitone* in its distance: smaller distance ⟹ more edges.
+  Consequently the natural valuation domination `ultraDist ≤ dist` (the tropical
+  distance is *dominated* by the ambient metric) yields the inclusion
+  `ripsGraph ⊆ genRipsGraph (ultraDist)` (ambient filtration contained in the
+  tropical one), and the *reverse* domination `dist ≤ ultraDist` yields
+  `genRipsGraph (ultraDist) ⊆ ripsGraph` (tropical contained in ambient).
+  Both directions are proved below; the proposing concept stated only one
+  hypothesis/conclusion pair, which is corrected here to the mathematically
+  faithful statements.
+-/
+
+-- !-- Lab Notebook --!--
+-- Hypothesis: The Rips-graph filtration of `MetricFiltration.lean` should be a
+--   functor of the pairwise distance, so any valuation-induced distance dominated
+--   by (or dominating) the ambient metric must yield a comparison of Rips graphs.
+-- Result: Proved a distance-parametric `genRipsGraph` with scale-monotonicity,
+--   distance-ANTItonicity, metric compatibility, and a negative-scale boundary,
+--   then transferred all of it onto `UltraNormObj.ultraDist` to get a two-sided
+--   tropical↔metric filtration comparison plus emptiness endpoints.
+-- Insight: The decisive structural fact is *antitonicity in the distance*, not
+--   monotonicity. Phrasing adjacency with the symmetrized condition
+--   `d x y ≤ ε ∧ d y x ≤ ε` makes `genRipsGraph` a genuine `SimpleGraph` for
+--   *asymmetric* weights, so the valuation distance needs no symmetry axiom — the
+--   `UltraNormObj` API (which lacks a group law and hence cannot prove symmetry of
+--   `norm ∘ sub_op`) plugs in directly.
+-- Failure analysis: A first attempt followed the concept's literal direction
+--   (`d_trop ≤ d ⟹ ripsGraph d_trop ⊆ ripsGraph d`); this is false because Rips
+--   is antitone. The fix was to prove the general antitone lemma once and derive
+--   BOTH inclusion directions from it under the correct domination hypotheses.
+-- !-- end Lab Notebook --!--
+
+import Bridges.CategoricalTropicalUltrametric
+
+open CategoricalTropicalUltrametric
+
+noncomputable section
+
+namespace TropicalMetricFiltrationBridge
+
+/-! ## Part 1: The distance-parametric Rips graph
+
+`genRipsGraph d ε` is the Vietoris–Rips 1-skeleton attached to an *arbitrary*
+real-valued pairwise weight `d`. The symmetrized adjacency condition makes it a
+`SimpleGraph` even when `d` is not symmetric, so it accepts valuation-induced
+distances with no symmetry hypothesis. -/
+
+/-- The Rips graph of a (possibly asymmetric) pairwise weight `d` at scale `ε`:
+    two distinct points are adjacent iff each is within `ε` of the other. -/
+def genRipsGraph {α : Type*} (d : α → α → ℝ) (ε : ℝ) : SimpleGraph α where
+  Adj x y := x ≠ y ∧ d x y ≤ ε ∧ d y x ≤ ε
+  symm := fun _ _ ⟨hne, h1, h2⟩ => ⟨hne.symm, h2, h1⟩
+  loopless := ⟨fun _ h => h.1 rfl⟩
+
+/-- The canonical metric Rips graph, mirroring
+    `Applications/PoincareData/MetricFiltration.lean`'s `ripsGraph`
+    (re-stated here because that module is not import-visible from this library). -/
+def ripsGraph (α : Type*) [PseudoMetricSpace α] (ε : ℝ) : SimpleGraph α where
+  Adj x y := x ≠ y ∧ dist x y ≤ ε
+  symm _ _ h := ⟨h.1.symm, by rw [dist_comm]; exact h.2⟩
+  loopless := ⟨fun _ h => h.1 rfl⟩
+
+-- !-- Proof: an edge at scale ε₁ has d x y ≤ ε₁ ≤ ε₂ and d y x ≤ ε₁ ≤ ε₂. Mirrors
+--      the catalog's `ripsGraph_mono`. --!--
+/-- **Scale monotonicity** (matching `ripsGraph_mono`): growing the scale only adds
+    edges, for any fixed weight `d`. -/
+theorem genRipsGraph_mono {α : Type*} (d : α → α → ℝ) {ε₁ ε₂ : ℝ} (h : ε₁ ≤ ε₂) :
+    genRipsGraph d ε₁ ≤ genRipsGraph d ε₂ := by
+  intro x y hxy
+  obtain ⟨hne, h1, h2⟩ := hxy
+  exact ⟨hne, h1.trans h, h2.trans h⟩
+
+-- !-- Proof: if d₂ ≤ d₁ pointwise then d₁ x y ≤ ε forces d₂ x y ≤ ε, so every edge
+--      of the d₁-graph survives in the d₂-graph. --!--
+/-- **Distance antitonicity** — the central comparison principle. If `d₂` is
+    *pointwise dominated* by `d₁` (`d₂ ≤ d₁`), then the `d₁`-Rips graph is a subgraph
+    of the `d₂`-Rips graph at every scale: shrinking distances can only create edges. -/
+theorem genRipsGraph_antitone {α : Type*} {d₁ d₂ : α → α → ℝ}
+    (hge : ∀ x y, d₂ x y ≤ d₁ x y) (ε : ℝ) :
+    genRipsGraph d₁ ε ≤ genRipsGraph d₂ ε := by
+  intro x y hxy
+  obtain ⟨hne, h1, h2⟩ := hxy
+  exact ⟨hne, (hge x y).trans h1, (hge y x).trans h2⟩
+
+-- !-- Proof: for the symmetric `dist`, the two halves `dist x y ≤ ε` and
+--      `dist y x ≤ ε` coincide via `dist_comm`. --!--
+/-- **Compatibility**: specializing the weight to the canonical metric recovers the
+    catalog's metric Rips graph. The parametric layer is a conservative extension. -/
+theorem genRipsGraph_eq_ripsGraph {α : Type*} [PseudoMetricSpace α] (ε : ℝ) :
+    genRipsGraph (dist : α → α → ℝ) ε = ripsGraph α ε := by
+  ext x y
+  simp only [genRipsGraph, ripsGraph]
+  constructor
+  · rintro ⟨hne, h1, _⟩; exact ⟨hne, h1⟩
+  · rintro ⟨hne, h1⟩; exact ⟨hne, h1, by rw [dist_comm]; exact h1⟩
+
+-- !-- Proof: a nonnegative weight cannot be ≤ a negative scale, so no edges. Mirrors
+--      `ripsGraph_bot_of_neg`. --!--
+/-- **Negative-scale boundary**: any nonnegative weight gives the empty graph below
+    scale 0 (matching `ripsGraph_bot_of_neg`). -/
+theorem genRipsGraph_bot_of_neg {α : Type*} {d : α → α → ℝ}
+    (hd : ∀ x y, 0 ≤ d x y) {ε : ℝ} (hε : ε < 0) :
+    genRipsGraph d ε = ⊥ := by
+  ext x y
+  simp only [genRipsGraph, SimpleGraph.bot_adj]
+  refine ⟨?_, fun h => h.elim⟩
+  rintro ⟨_, h1, _⟩
+  linarith [hd x y]
+
+-- !-- Proof: in a metric space dist x y ≤ 0 and 0 ≤ dist force dist = 0, hence x = y,
+--      contradicting the loopless condition. Mirrors `ripsGraph_bot_of_metric`. --!--
+/-- **Zero-scale boundary** in a genuine metric space (re-stated from the catalog):
+    the metric Rips graph is empty at scale 0. -/
+theorem ripsGraph_bot_of_metric {α : Type*} [MetricSpace α] :
+    ripsGraph α 0 = ⊥ := by
+  ext x y
+  simp only [ripsGraph, SimpleGraph.bot_adj]
+  refine ⟨?_, fun h => h.elim⟩
+  rintro ⟨hne, hd⟩
+  exact absurd (dist_eq_zero.mp (le_antisymm hd dist_nonneg)) hne
+
+/-! ## Part 2: The tropical/ultrametric distance of an `UltraNormObj`
+
+From a `CategoricalTropicalUltrametric.UltraNormObj` we extract a real-valued
+pairwise weight, the *valuation distance*, by casting the ℕ-valued ultrametric
+seminorm of the difference. -/
+
+/-- The **tropical valuation distance** induced by an `UltraNormObj`:
+    `ultraDist X x y = (X.norm (X.sub_op x y) : ℝ)`. No symmetry or triangle
+    hypothesis is required for the bridge below. -/
+def ultraDist (X : UltraNormObj) (x y : X.α) : ℝ := (X.norm (X.sub_op x y) : ℝ)
+
+-- !-- Proof: a `Nat.cast` into ℝ is always nonnegative. --!--
+/-- The valuation distance is nonnegative (it is a cast of a `ℕ`-valued seminorm). -/
+theorem ultraDist_nonneg (X : UltraNormObj) (x y : X.α) : 0 ≤ ultraDist X x y := by
+  unfold ultraDist
+  exact_mod_cast Nat.zero_le _
+
+/-! ## Part 3: The bridge theorems — tropical ↔ metric filtration comparison
+
+We endow `X.α` with an ambient `PseudoMetricSpace` and compare its metric Rips
+filtration with the tropical filtration `ε ↦ genRipsGraph (ultraDist X) ε`. -/
+
+-- !-- Proof: from `dist ≤ ultraDist`, antitonicity gives
+--      genRipsGraph (ultraDist) ≤ genRipsGraph dist, which equals ripsGraph. --!--
+/-- **Bridge (tropical ⊆ ambient).** If the ambient metric is pointwise dominated by
+    the valuation distance (`dist ≤ ultraDist`), then the tropical Rips graph is a
+    subgraph of the metric Rips graph at every scale. -/
+theorem tropRips_le_metricRips (X : UltraNormObj) [PseudoMetricSpace X.α]
+    (hdom : ∀ x y, dist x y ≤ ultraDist X x y) (ε : ℝ) :
+    genRipsGraph (ultraDist X) ε ≤ ripsGraph X.α ε := by
+  have h := genRipsGraph_antitone (d₁ := ultraDist X) (d₂ := dist) hdom ε
+  rw [genRipsGraph_eq_ripsGraph] at h
+  exact h
+
+-- !-- Proof: from `ultraDist ≤ dist`, antitonicity gives
+--      genRipsGraph dist ≤ genRipsGraph (ultraDist); rewrite the LHS as ripsGraph. --!--
+/-- **Bridge (ambient ⊆ tropical).** Under the natural valuation domination
+    `ultraDist ≤ dist` (the tropical distance is dominated by the ambient metric),
+    the metric Rips graph is a subgraph of the tropical Rips graph at every scale.
+    This is the mathematically correct direction for the natural hypothesis. -/
+theorem metricRips_le_tropRips (X : UltraNormObj) [PseudoMetricSpace X.α]
+    (hdom : ∀ x y, ultraDist X x y ≤ dist x y) (ε : ℝ) :
+    ripsGraph X.α ε ≤ genRipsGraph (ultraDist X) ε := by
+  have h := genRipsGraph_antitone (d₁ := (dist : X.α → X.α → ℝ)) (d₂ := ultraDist X)
+    hdom ε
+  rw [genRipsGraph_eq_ripsGraph] at h
+  exact h
+
+-- !-- Proof: chain the tropical-⊆-ambient bridge at ε₁ with `ripsGraph_mono` from
+--      ε₁ to ε₂ (re-derived from `genRipsGraph` monotonicity + compatibility). --!--
+/-- **Scale-monotone bridge.** Combining `tropRips_le_metricRips` with scale
+    monotonicity: the tropical Rips graph at any smaller scale `ε₁` embeds into the
+    metric Rips graph at any larger scale `ε₂`. -/
+theorem tropRips_le_metricRips_mono (X : UltraNormObj) [PseudoMetricSpace X.α]
+    (hdom : ∀ x y, dist x y ≤ ultraDist X x y) {ε₁ ε₂ : ℝ} (hε : ε₁ ≤ ε₂) :
+    genRipsGraph (ultraDist X) ε₁ ≤ ripsGraph X.α ε₂ := by
+  refine le_trans (tropRips_le_metricRips X hdom ε₁) ?_
+  rw [← genRipsGraph_eq_ripsGraph, ← genRipsGraph_eq_ripsGraph]
+  exact genRipsGraph_mono _ hε
+
+-- !-- Proof: the tropical graph is below the metric graph (bridge), which is ⊥ at
+--      scale 0 in a metric space (`ripsGraph_bot_of_metric`); `le_bot_iff` closes it. --!--
+/-- **Endpoint transfer.** If the ambient metric filtration is trivial at scale 0
+    (true for any genuine `MetricSpace`), then so is the tropical filtration:
+    triviality of the ambient filtration is inherited by the dominated tropical one. -/
+theorem tropRips_bot_of_metric (X : UltraNormObj) [MetricSpace X.α]
+    (hdom : ∀ x y, dist x y ≤ ultraDist X x y) :
+    genRipsGraph (ultraDist X) 0 = ⊥ := by
+  rw [← le_bot_iff]
+  calc genRipsGraph (ultraDist X) 0 ≤ ripsGraph X.α 0 := tropRips_le_metricRips X hdom 0
+    _ = ⊥ := ripsGraph_bot_of_metric
+
+-- !-- Proof: the tropical valuation distance is a nonnegative cast, so the
+--      negative-scale boundary `genRipsGraph_bot_of_neg` applies directly. --!--
+/-- **Negative-scale endpoint** for the tropical filtration itself: empty below
+    scale 0 (no domination hypothesis needed). -/
+theorem tropRips_bot_of_neg (X : UltraNormObj) {ε : ℝ} (hε : ε < 0) :
+    genRipsGraph (ultraDist X) ε = ⊥ :=
+  genRipsGraph_bot_of_neg (ultraDist_nonneg X) hε
+
+-- !-- Proof: just the universally quantified form of `tropRips_le_metricRips`. --!--
+/-- **Filtration comparison.** Packaged statement: under `dist ≤ ultraDist`, the
+    entire tropical Rips filtration is pointwise contained in the ambient metric
+    Rips filtration — a monotone bridge from valuation semantics into the
+    `MetricFiltration` apparatus. -/
+theorem tropFiltration_le_metricFiltration (X : UltraNormObj) [PseudoMetricSpace X.α]
+    (hdom : ∀ x y, dist x y ≤ ultraDist X x y) :
+    ∀ ε, genRipsGraph (ultraDist X) ε ≤ ripsGraph X.α ε :=
+  fun ε => tropRips_le_metricRips X hdom ε
+
+end TropicalMetricFiltrationBridge
+
+end

@@ -1,0 +1,186 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license.
+
+# Hodge Spectral Duality — Seventh Cycle
+
+This file is the **synthesis** cycle of the discrete-Hodge program.  It welds the two
+previously separate strands:
+
+* the *decomposition / spectral foundation*
+  `Catalog/Speculative/AutoResearch/HodgeSpectralThreshold.lean`
+  (`hodgeLaplacian`, `harmonic_iff`, `ker_hodgeLaplacian`, `hodgeLaplacian_symm`), and
+* the *spectral representation of message passing*
+  `Catalog/Speculative/AutoResearch/HodgeMessagePassingDuality.lean`
+  (`mpStep_eigen`, `mpStep_iterate_eigen`, `mpStep_eigen_energy`, `mpStep_symm`,
+  `mpStep_fixed_iff`, `mpStep_eigenspace_one`),
+
+into a single statement about the *full* Hodge Laplacian `Δ = up + down`.
+
+The decisive new phenomenon is **eigenvalue additivity**: on a cochain that is a
+*simultaneous* eigenvector of the up and down pieces (`up x = a•x`, `down x = b•x`),
+the Hodge Laplacian acts as the scalar `a + b` (`hodgeLaplacian_joint_eigen`).  Feeding
+this into the spectral representation of message passing shows that one layer
+`T = 1 - α·Δ` acts as the scalar `1 - α(a+b)` (`mpStep_hodge_joint_eigen`), every depth
+iterate as `(1 - α(a+b))ᵏ` (`mpStep_hodge_joint_eigen_iterate`), and the energy of such
+a joint mode after `k` layers is *exactly* `(1 - α(a+b))^{2k}‖x‖²`
+(`mpStep_hodge_joint_eigen_energy`).
+
+Dually, at the *kernel* end of the spectrum the dynamical and algebraic descriptions
+coincide on the nose: for a nonzero step the fixed points of full-Hodge message passing
+are exactly the closed-and-coclosed (harmonic) cochains
+(`mpStep_hodge_fixed_iff_harmonic`), and as submodules the unit eigenspace of message
+passing equals the intersection of the two kernels
+(`mpStep_hodge_eigenspace_one_eq_ker_inf`).  Finally the layer inherits the
+self-adjointness of `Δ` (`mpStep_hodge_symm`).
+
+The upshot: **the spectrum of full-Hodge message passing is the affine image
+`1 - α·(spec(up) + spec(down))` on joint modes, and its fixed-point space is exactly
+Hodge cohomology** — the two ends of the program, decomposition and dynamics, are one.
+
+-- !-- Lab Notebook -- !--
+Hypothesis:  The up/down split of the Hodge Laplacian should be *spectrally additive*:
+  on a simultaneous eigenvector the eigenvalues add, so the whole message-passing
+  representation theory of `HodgeMessagePassingDuality` (scalar action, exact energy,
+  fixed ↔ kernel) lifts verbatim from a single operator `L` to the composite
+  `Δ = up + down`, with eigenvalue `a + b`.  At the kernel end, `mpStep_fixed_iff`
+  (`Tx = x ↔ Δx = 0`) composed with `harmonic_iff` (`Δx = 0 ↔ closed ∧ coclosed`) should
+  identify fixed points with cohomology, and `mpStep_eigenspace_one` composed with
+  `ker_hodgeLaplacian` should do the same at the submodule level.
+Result:  Formalised and proved sorry-free.  `hodgeLaplacian_joint_eigen` (additive
+  eigenvalues), `mpStep_hodge_joint_eigen` / `mpStep_hodge_joint_eigen_iterate`
+  (scalar action of one / many layers), `mpStep_hodge_joint_eigen_energy` (exact
+  `(1-α(a+b))^{2k}` energy), `mpStep_hodge_fixed_iff_harmonic` (fixed ↔ harmonic),
+  `mpStep_hodge_eigenspace_one_eq_ker_inf` (unit eigenspace = `ker up ⊓ ker down`),
+  and `mpStep_hodge_symm` (self-adjoint layer).
+Insight:  Every theorem here is a *composition* of one decomposition fact with one
+  dynamics fact — no new analysis is introduced.  The only genuinely new computation is
+  `up x + down x = a•x + b•x = (a+b)•x` via `add_smul`; afterwards `mpStep_eigen`,
+  `mpStep_fixed_iff`, `mpStep_eigenspace_one`, and `mpStep_symm` are instantiated at
+  `L := hodgeLaplacian up down`, and the catalog's `harmonic_iff` / `ker_hodgeLaplacian`
+  translate the kernel of `Δ` into the closed-and-coclosed data.
+Failure analysis:  Stating eigenvalue additivity with `lam := a + b` (rather than
+  carrying `a` and `b` separately through `mpStep_eigen`) keeps the energy and iterate
+  statements identical in shape to the single-operator versions, so each proof is a
+  one-line instantiation rather than a fresh induction.
+-- !-- Lab Notebook -- !--
+-/
+import Mathlib
+import Speculative.AutoResearch.HodgeSpectralThreshold
+import Speculative.AutoResearch.HodgeMessagePassingConvergence
+import Speculative.AutoResearch.HodgeMessagePassingDuality
+
+open scoped InnerProductSpace BigOperators Topology
+open HodgeSpectralThreshold HodgeMessagePassingConvergence HodgeMessagePassingDuality
+
+namespace HodgeSpectralDuality
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+/-! ## Eigenvalue additivity of the Hodge Laplacian -/
+
+/-
+!-- comment: `Δ x = up x + down x = a•x + b•x = (a+b)•x` by `add_smul`. -- !--
+
+**Eigenvalue additivity.** On a simultaneous eigenvector of the up and down pieces,
+the Hodge Laplacian `Δ = up + down` acts as the *sum* of the eigenvalues.
+-/
+theorem hodgeLaplacian_joint_eigen (up down : E →ₗ[ℝ] E) (a b : ℝ) {x : E}
+    (hup : up x = a • x) (hdown : down x = b • x) :
+    hodgeLaplacian up down x = (a + b) • x := by
+  rw [ add_smul, ← hup, ← hdown, hodgeLaplacian_apply ]
+
+/-! ## Spectral action of message passing on joint modes -/
+
+/-
+!-- comment: Instantiate `mpStep_eigen` at `L := Δ`, `lam := a + b`, using
+`hodgeLaplacian_joint_eigen`. -- !--
+
+**Scalar action of one layer.** On a joint eigenvector, one layer of full-Hodge
+message passing `T = 1 - α·Δ` acts as the scalar `1 - α(a+b)`.
+-/
+theorem mpStep_hodge_joint_eigen (up down : E →ₗ[ℝ] E) (α a b : ℝ) {x : E}
+    (hup : up x = a • x) (hdown : down x = b • x) :
+    mpStep (hodgeLaplacian up down) α x = (1 - α * (a + b)) • x := by
+  convert mpStep_eigen ( hodgeLaplacian up down ) α ( a + b ) ( hodgeLaplacian_joint_eigen up down a b hup hdown ) using 1
+
+/-
+!-- comment: Instantiate `mpStep_iterate_eigen` at `L := Δ`, `lam := a + b`. -- !--
+
+**Scalar action of depth `k`.** All iterates act as the scalar `(1 - α(a+b))ᵏ` on a
+joint eigenvector — the spectral representation of deep full-Hodge message passing.
+-/
+theorem mpStep_hodge_joint_eigen_iterate (up down : E →ₗ[ℝ] E) (α a b : ℝ) {x : E}
+    (hup : up x = a • x) (hdown : down x = b • x) (k : ℕ) :
+    ((mpStep (hodgeLaplacian up down) α) ^ k) x = (1 - α * (a + b)) ^ k • x := by
+  convert HodgeMessagePassingDuality.mpStep_iterate_eigen ( HodgeSpectralThreshold.hodgeLaplacian up down ) α ( a + b ) _ k;
+  convert hodgeLaplacian_joint_eigen up down a b hup hdown using 1
+
+/-
+!-- comment: Instantiate `mpStep_eigen_energy` at `L := Δ`, `lam := a + b`. -- !--
+
+**Exact joint-mode energy.** After `k` layers the energy of a joint eigen-mode is
+*exactly* `(1 - α(a+b))^{2k}` times its initial energy.
+-/
+theorem mpStep_hodge_joint_eigen_energy (up down : E →ₗ[ℝ] E) (α a b : ℝ) {x : E}
+    (hup : up x = a • x) (hdown : down x = b • x) (k : ℕ) :
+    ⟪((mpStep (hodgeLaplacian up down) α) ^ k) x,
+        ((mpStep (hodgeLaplacian up down) α) ^ k) x⟫_ℝ
+      = (1 - α * (a + b)) ^ (2 * k) * ⟪x, x⟫_ℝ := by
+  convert mpStep_eigen_energy ( hodgeLaplacian up down ) α ( a + b ) ( hodgeLaplacian_joint_eigen up down a b hup hdown ) k using 1
+
+/-! ## Fixed points of full-Hodge message passing are cohomology -/
+
+/-
+!-- comment: Compose `mpStep_fixed_iff` (`Tx = x ↔ Δx = 0`) with `harmonic_iff`
+(`Δx = 0 ↔ up x = 0 ∧ down x = 0`). -- !--
+
+**Fixed points = harmonic cochains.** For a nonzero step the dynamical fixed points of
+full-Hodge message passing are exactly the closed-and-coclosed (harmonic) cochains.
+-/
+theorem mpStep_hodge_fixed_iff_harmonic (up down : E →ₗ[ℝ] E)
+    (hsymm_up : ∀ x y, ⟪up x, y⟫_ℝ = ⟪x, up y⟫_ℝ)
+    (hpos_up : ∀ x, 0 ≤ ⟪up x, x⟫_ℝ)
+    (hsymm_down : ∀ x y, ⟪down x, y⟫_ℝ = ⟪x, down y⟫_ℝ)
+    (hpos_down : ∀ x, 0 ≤ ⟪down x, x⟫_ℝ)
+    {α : ℝ} (hα : α ≠ 0) (x : E) :
+    mpStep (hodgeLaplacian up down) α x = x ↔ (up x = 0 ∧ down x = 0) := by
+  rw [mpStep_fixed_iff (hodgeLaplacian up down) hα]
+  exact harmonic_iff up down hsymm_up hpos_up hsymm_down hpos_down x
+
+/-
+!-- comment: Compose `mpStep_eigenspace_one` (`ker (T - 1) = ker Δ`) with
+`ker_hodgeLaplacian` (`ker Δ = ker up ⊓ ker down`). -- !--
+
+**Unit eigenspace = cohomology (submodule form).** As submodules, the unit eigenspace
+of full-Hodge message passing equals the intersection of the closed and coclosed
+cochains, `ker (T - 1) = ker up ⊓ ker down`.
+-/
+theorem mpStep_hodge_eigenspace_one_eq_ker_inf (up down : E →ₗ[ℝ] E)
+    (hsymm_up : ∀ x y, ⟪up x, y⟫_ℝ = ⟪x, up y⟫_ℝ)
+    (hpos_up : ∀ x, 0 ≤ ⟪up x, x⟫_ℝ)
+    (hsymm_down : ∀ x y, ⟪down x, y⟫_ℝ = ⟪x, down y⟫_ℝ)
+    (hpos_down : ∀ x, 0 ≤ ⟪down x, x⟫_ℝ)
+    {α : ℝ} (hα : α ≠ 0) :
+    LinearMap.ker (mpStep (hodgeLaplacian up down) α - 1)
+      = LinearMap.ker up ⊓ LinearMap.ker down := by
+  rw [mpStep_eigenspace_one (hodgeLaplacian up down) hα]
+  exact ker_hodgeLaplacian up down hsymm_up hpos_up hsymm_down hpos_down
+
+/-! ## Self-adjointness of the full-Hodge layer -/
+
+/-
+!-- comment: Instantiate `mpStep_symm` at `L := Δ`, using `hodgeLaplacian_symm`. -- !--
+
+**Self-adjoint layer.** When both pieces are symmetric, every full-Hodge message-passing
+layer is its own adjoint for the Riesz pairing.
+-/
+theorem mpStep_hodge_symm (up down : E →ₗ[ℝ] E)
+    (hsymm_up : ∀ x y, ⟪up x, y⟫_ℝ = ⟪x, up y⟫_ℝ)
+    (hsymm_down : ∀ x y, ⟪down x, y⟫_ℝ = ⟪x, down y⟫_ℝ)
+    (α : ℝ) (x y : E) :
+    ⟪mpStep (hodgeLaplacian up down) α x, y⟫_ℝ
+      = ⟪x, mpStep (hodgeLaplacian up down) α y⟫_ℝ := by
+  convert mpStep_symm ( hodgeLaplacian up down ) α ( hodgeLaplacian_symm up down hsymm_up hsymm_down ) x y using 1
+
+end HodgeSpectralDuality

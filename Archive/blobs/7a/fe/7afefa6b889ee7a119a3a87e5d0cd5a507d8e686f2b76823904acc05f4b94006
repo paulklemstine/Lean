@@ -1,0 +1,333 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license.
+
+# Spectral Gap Rigidity for Abstract Hodge Laplacians
+
+A self-contained, `sorry`-free local-to-global theory for abstract Hodge Laplacians
+and its consequences for spectral-gap message passing.  The architecture mirrors the
+sheaf-theoretic playbook: a **stalk-level** rigidity fact is proved first, glued into
+a **global** harmonicity criterion, made **functorial** under coarse-graining, and
+finally turned into **quantitative dynamics**.
+
+The conceptual spine is a single pointwise identity,
+`psd_operator_inner_self_eq_zero`: for a symmetric positive–semidefinite operator,
+the *scalar* energy equation `⟪x, L x⟫ = 0` forces the *vector* equation `L x = 0`.
+This is the algebraic analogue of "a harmonic form with zero energy is zero," and it
+is proved purely algebraically via the Cauchy–Schwarz inequality for the
+positive–semidefinite bilinear form `B(x,y) = ⟪x, L y⟫` — **no spectral theorem and
+no finite-dimensionality is used**.
+
+From this stalk fact we obtain, by `inner_add_right` bookkeeping alone:
+
+* `harmonic_iff` — the Hodge harmonicity criterion: a cochain is globally harmonic
+  (`Δ x = 0`) iff it is locally closed and coclosed (`up x = 0 ∧ down x = 0`).  This
+  is the algebraic heart of `ker Δ ≅ H*`, the local-to-global gluing of cohomology.
+* `harmonic_pushforward` — cohomology is functorial under any intertwiner.
+* `gap_transfer_isometry` — an isometric intertwiner transfers the spectral gap
+  exactly (coarse-graining an expander into an isometric model preserves the gap).
+* `gap_implies_vanishing` — a positive spectral gap kills all harmonics (an expander
+  has no nontrivial cohomology).
+
+The message-passing engine (`mpStep`, `mpStep_contraction`,
+`mpStep_iterate_contraction`, `gap_mpStep_converges`, `gap_optimal_mpStep_converges`)
+then drives every signal to the trivial cohomology at the spectral rate `1 - μ/λ`,
+with the spectral step `α = 1/λ` optimal (`contraction_factor_optimal`).
+
+## Main results
+
+* `psd_operator_inner_self_eq_zero` — stalk rigidity of the energy form.
+* `hodgeLaplacian_symm`, `hodgeLaplacian_psd` — `Δ = up + down` is symmetric PSD.
+* `harmonic_iff` — global harmonic ⇔ local closed + coclosed.
+* `harmonic_pushforward` — functoriality of cohomology under intertwiners.
+* `gap_transfer_isometry` — isometric intertwiners transfer the spectral gap.
+* `gap_implies_vanishing` — positive gap ⇒ trivial harmonic space.
+* `mpStep_apply`, `mpStep_harmonic_fixed`, `mpStep_iterate_harmonic_fixed` — the
+  message-passing layer and exact transport of harmonics.
+* `mpStep_contraction`, `mpStep_iterate_contraction`, `gap_mpStep_converges` —
+  per-layer and geometric energy contraction, convergence to tolerance.
+* `contraction_factor_optimal`, `contraction_factor_at_optimal`,
+  `gap_optimal_mpStep_converges` — the spectral step `α = 1/λ` is optimal with rate
+  `1 - μ/λ`, and deep optimal message passing collapses every signal.
+
+-- !-- Lab Notebook -- !--
+Hypothesis:  The whole Hodge / spectral-gap story should reduce to ONE algebraic
+  fact: a symmetric PSD operator with zero diagonal energy is zero.  If true, the
+  harmonicity criterion, functoriality, gap transfer, vanishing, and message-passing
+  convergence all follow by linear bookkeeping with NO analysis (no spectral theorem,
+  no finite dimension).
+Result:  Confirmed and proved `sorry`-free.  The stalk lemma
+  `psd_operator_inner_self_eq_zero` is proved from Cauchy–Schwarz for the PSD form
+  `B(x,y) = ⟪x, L y⟫`; `harmonic_iff` is then a two-line `inner_add_right` argument,
+  and `harmonic_pushforward`/`gap_transfer_isometry`/`gap_implies_vanishing` are pure
+  linear algebra.  The message-passing layer reproduces the contraction/optimality
+  results in self-contained form.
+Insight:  Cauchy–Schwarz for a *semidefinite* form is exactly the bridge from a
+  scalar equation to a vector equation, and it needs no completeness.  Treating the
+  layer `T = 1 - α L` as a `Module.End ℝ E` makes every iterate linear for free, so
+  convergence reduces to the scalar recursion `⟪Tᵏ⁺¹ r⟫ ≤ ρ ⟪Tᵏ r⟫`.
+Failure analysis:  Phrasing the spectral gap as a clean `∀ x` scalar Rayleigh bound
+  (rather than a quotient over `(ker L)ᗮ`) avoids all subspace/projection bookkeeping
+  and makes the gap an additive, `linarith`-friendly inequality.  Working with the
+  inner-product energy `⟪v,v⟫` instead of `‖v‖` keeps every step polynomial and avoids
+  `Real.sqrt`.
+-- !-- Lab Notebook -- !--
+-/
+import Mathlib
+
+open scoped InnerProductSpace BigOperators Topology
+
+namespace SpectralGapRigidity
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+variable {F : Type*} [NormedAddCommGroup F] [InnerProductSpace ℝ F]
+
+/-! ## §1. Stalk rigidity: the energy form detects the kernel -/
+
+/-
+!-- For a symmetric PSD operator `L`, the form `B(x,y)=⟪x,Ly⟫` is symmetric and PSD,
+so Cauchy–Schwarz gives `B(x,y)² ≤ B(x,x)·B(y,y)`; if `B(x,x)=0` then `B(x,y)=0`
+for all `y`, and symmetry turns this into `⟪Lx,y⟫=0 ∀y`, hence `Lx=0`. -- !--
+
+**Stalk rigidity of the energy form.**  For a symmetric positive–semidefinite
+operator `L`, the scalar equation `⟪x, L x⟫ = 0` forces the vector equation `L x = 0`.
+Proved purely algebraically (Cauchy–Schwarz for a semidefinite bilinear form); no
+spectral theorem or finite dimension is used.
+-/
+theorem psd_operator_inner_self_eq_zero (L : E →ₗ[ℝ] E)
+    (hsymm : ∀ x y, ⟪L x, y⟫_ℝ = ⟪x, L y⟫_ℝ)
+    (hpsd : ∀ x, 0 ≤ ⟪x, L x⟫_ℝ)
+    {x : E} (hx : ⟪x, L x⟫_ℝ = 0) : L x = 0 := by
+  -- By the properties of the inner product and the symmetry of $L$, we have:
+  have h_inner : ∀ y : E, ⟪x, L y⟫_ℝ = 0 := by
+    intro y
+    have h_inner : ∀ t : ℝ, 0 ≤ t^2 * ⟪y, L y⟫_ℝ + 2 * t * ⟪x, L y⟫_ℝ := by
+      intro t
+      have := hpsd (t • y + x);
+      simp_all +decide [ inner_add_left, inner_add_right, inner_smul_left, inner_smul_right ];
+      grind +suggestions;
+    contrapose! h_inner;
+    exact ⟨ -⟪x, L y⟫_ℝ / ( ⟪y, L y⟫_ℝ + 1 ), by nlinarith [ mul_div_cancel₀ ( -⟪x, L y⟫_ℝ ) ( show ( ⟪y, L y⟫_ℝ + 1 ) ≠ 0 by linarith [ hpsd y ] ), hpsd y, mul_self_pos.2 h_inner ] ⟩;
+  exact ext_inner_right ℝ fun y => by simp +decide [ hsymm, h_inner ] ;
+
+/-! ## §2. The abstract Hodge Laplacian `Δ = up + down` -/
+
+/-- The abstract Hodge Laplacian `Δ = up + down` (codifferential ∘ differential plus
+differential ∘ codifferential), as a linear operator. -/
+def hodgeLaplacian (up down : E →ₗ[ℝ] E) : E →ₗ[ℝ] E := up + down
+
+@[simp] theorem hodgeLaplacian_apply (up down : E →ₗ[ℝ] E) (x : E) :
+    hodgeLaplacian up down x = up x + down x := rfl
+
+/-
+!-- Symmetry of `up + down` is additivity of the inner product on each slot. -- !--
+
+`Δ = up + down` is symmetric when `up` and `down` are.
+-/
+theorem hodgeLaplacian_symm (up down : E →ₗ[ℝ] E)
+    (hup : ∀ x y, ⟪up x, y⟫_ℝ = ⟪x, up y⟫_ℝ)
+    (hdown : ∀ x y, ⟪down x, y⟫_ℝ = ⟪x, down y⟫_ℝ)
+    (x y : E) : ⟪hodgeLaplacian up down x, y⟫_ℝ = ⟪x, hodgeLaplacian up down y⟫_ℝ := by
+  simp +decide [ *, hodgeLaplacian ];
+  rw [ inner_add_left, inner_add_right, hup, hdown ]
+
+/-
+!-- PSD of `up + down` is the sum of two nonnegative energies. -- !--
+
+`Δ = up + down` is positive–semidefinite when `up` and `down` are.
+-/
+theorem hodgeLaplacian_psd (up down : E →ₗ[ℝ] E)
+    (hup : ∀ x, 0 ≤ ⟪x, up x⟫_ℝ) (hdown : ∀ x, 0 ≤ ⟪x, down x⟫_ℝ)
+    (x : E) : 0 ≤ ⟪x, hodgeLaplacian up down x⟫_ℝ := by
+  unfold hodgeLaplacian; simp +decide [ *, inner_add_right ];
+  exact add_nonneg ( hup x ) ( hdown x )
+
+/-! ## §3. The Hodge harmonicity criterion (local ⇔ global) -/
+
+/-
+!-- `⟪x,Δx⟫ = ⟪x,up x⟫ + ⟪x,down x⟫` is a sum of nonnegatives, so it vanishes iff
+both vanish; then `psd_operator_inner_self_eq_zero` upgrades each scalar zero to
+`up x = 0`, `down x = 0`.  Conversely `up x = down x = 0 ⟹ Δ x = 0`. -- !--
+
+**Hodge harmonicity criterion.**  A cochain is globally harmonic (`Δ x = 0`) iff
+it is locally closed and coclosed (`up x = 0 ∧ down x = 0`).  This is the algebraic
+heart of `ker Δ ≅ H*` — the local-to-global gluing of cohomology.
+-/
+theorem harmonic_iff (up down : E →ₗ[ℝ] E)
+    (hsymm_up : ∀ x y, ⟪up x, y⟫_ℝ = ⟪x, up y⟫_ℝ) (hpos_up : ∀ x, 0 ≤ ⟪x, up x⟫_ℝ)
+    (hsymm_down : ∀ x y, ⟪down x, y⟫_ℝ = ⟪x, down y⟫_ℝ)
+    (hpos_down : ∀ x, 0 ≤ ⟪x, down x⟫_ℝ) (x : E) :
+    hodgeLaplacian up down x = 0 ↔ up x = 0 ∧ down x = 0 := by
+  constructor;
+  · intro hx
+    have h_sum_zero : ⟪x, up x⟫_ℝ + ⟪x, down x⟫_ℝ = 0 := by
+      rw [ ← inner_add_right, ← hodgeLaplacian_apply ];
+      rw [ hx, inner_zero_right ];
+    exact ⟨ psd_operator_inner_self_eq_zero up hsymm_up hpos_up ( by linarith [ hpos_up x, hpos_down x ] ), psd_operator_inner_self_eq_zero down hsymm_down hpos_down ( by linarith [ hpos_up x, hpos_down x ] ) ⟩;
+  · aesop
+
+/-! ## §4. Functoriality of cohomology under intertwiners -/
+
+/-
+!-- If `T` intertwines (`T ∘ L_E = L_F ∘ T`) then `L_F (T h) = T (L_E h) = T 0 = 0`. -- !--
+
+**Functoriality of cohomology.**  An intertwiner `T` (with `T ∘ L_E = L_F ∘ T`)
+maps harmonic cochains to harmonic cochains: `ker L_E → ker L_F`.
+-/
+theorem harmonic_pushforward (LE : E →ₗ[ℝ] E) (LF : F →ₗ[ℝ] F) (T : E →ₗ[ℝ] F)
+    (hT : ∀ x, T (LE x) = LF (T x)) {h : E} (hh : LE h = 0) : LF (T h) = 0 := by
+  rw [ ← hT, hh, map_zero ]
+
+/-! ## §5. Spectral gap and its transfer / vanishing consequences -/
+
+/-
+!-- An isometric intertwiner preserves the Rayleigh quotient:
+`⟪x,L_E x⟫ = ⟪Tx, T(L_E x)⟫ = ⟪Tx, L_F(Tx)⟫ ≥ μ⟪Tx,Tx⟫ = μ⟪x,x⟫`. -- !--
+
+**Gap transfer along an isometric intertwiner.**  If `T` is isometric
+(`⟪T x, T y⟫_F = ⟪x, y⟫_E`) and intertwines `L_E` and `L_F`, then any spectral gap
+`μ` of `L_F` is inherited by `L_E`.  Rigidity: an isometric coarse-graining preserves
+the gap exactly.
+-/
+theorem gap_transfer_isometry (LE : E →ₗ[ℝ] E) (LF : F →ₗ[ℝ] F) (T : E →ₗ[ℝ] F)
+    (hiso : ∀ x y, ⟪T x, T y⟫_ℝ = ⟪x, y⟫_ℝ) (hT : ∀ x, T (LE x) = LF (T x))
+    (μ : ℝ) (hgap : ∀ y, μ * ⟪y, y⟫_ℝ ≤ ⟪y, LF y⟫_ℝ) (x : E) :
+    μ * ⟪x, x⟫_ℝ ≤ ⟪x, LE x⟫_ℝ := by
+  grind +qlia
+
+/-
+!-- `⟪h, L h⟫ = 0` (since `L h = 0`), so `μ⟪h,h⟫ ≤ 0`; with `μ>0`, `⟪h,h⟫ ≤ 0`
+forces `h = 0`. -- !--
+
+**Gap ⇒ vanishing.**  A positive spectral gap kills all harmonics: if `L` has a
+strictly positive Rayleigh gap then its only harmonic cochain is `0` (an expander has
+no nontrivial cohomology).
+-/
+theorem gap_implies_vanishing (L : E →ₗ[ℝ] E) (μ : ℝ) (hμ : 0 < μ)
+    (hgap : ∀ x, μ * ⟪x, x⟫_ℝ ≤ ⟪x, L x⟫_ℝ) {h : E} (hh : L h = 0) : h = 0 := by
+  specialize hgap h; simp_all +decide [ inner_self_eq_norm_sq_to_K ] ;
+  exact norm_eq_zero.mp ( by contrapose! hgap; positivity )
+
+/-! ## §6. The message-passing layer `T = 1 - α·L` -/
+
+/-- One layer of gradient message passing `T = 1 - α·L`, acting by `x ↦ x - α • (L x)`.
+Modeled as an element of `Module.End ℝ E` so iteration (depth) is automatically
+linear. -/
+def mpStep (L : E →ₗ[ℝ] E) (α : ℝ) : E →ₗ[ℝ] E := (1 : Module.End ℝ E) - α • L
+
+@[simp] theorem mpStep_apply (L : E →ₗ[ℝ] E) (α : ℝ) (x : E) :
+    mpStep L α x = x - α • (L x) := by
+  simp [mpStep]
+
+-- !-- If `L h = 0` then `T h = h - α•0 = h`. -- !--
+/-- Harmonic signals are exact fixed points of the message-passing layer. -/
+theorem mpStep_harmonic_fixed (L : E →ₗ[ℝ] E) (α : ℝ) {h : E} (hh : L h = 0) :
+    mpStep L α h = h := by
+  simp [mpStep, hh]
+
+-- !-- Iterate `mpStep_harmonic_fixed` over depth by induction. -- !--
+/-- Harmonic signals are fixed at every depth. -/
+theorem mpStep_iterate_harmonic_fixed (L : E →ₗ[ℝ] E) (α : ℝ) {h : E}
+    (hh : L h = 0) (k : ℕ) : ((mpStep L α) ^ k) h = h := by
+  induction k <;> simp_all [pow_succ', mpStep]
+
+/-! ## §7. Per-layer and geometric energy contraction -/
+
+/-
+!-- Expand `⟪Tx,Tx⟫ = ⟪x,x⟫ - 2α⟪x,Lx⟫ + α²⟪Lx,Lx⟫`; bound `⟪Lx,Lx⟫ ≤ λ⟪x,Lx⟫`
+then `⟪x,Lx⟫ ≥ μ⟪x,x⟫`, using `α ≥ 0`, `αλ ≤ 2`. -- !--
+
+**Per-layer contraction.**  From the Rayleigh bounds `μ⟪x,x⟫ ≤ ⟪x,Lx⟫` and
+`⟪Lx,Lx⟫ ≤ λ⟪x,Lx⟫`, one layer contracts the energy by the factor `1 - αμ(2 - αλ)`.
+-/
+theorem mpStep_contraction (L : E →ₗ[ℝ] E) (α μ lam : ℝ)
+    (hα : 0 ≤ α) (hstep : α * lam ≤ 2)
+    (hlower : ∀ x, μ * ⟪x, x⟫_ℝ ≤ ⟪x, L x⟫_ℝ)
+    (hupper : ∀ x, ⟪L x, L x⟫_ℝ ≤ lam * ⟪x, L x⟫_ℝ) (x : E) :
+    ⟪mpStep L α x, mpStep L α x⟫_ℝ ≤ (1 - α * μ * (2 - α * lam)) * ⟪x, x⟫_ℝ := by
+  have hexp : ⟪mpStep L α x, mpStep L α x⟫_ℝ
+      = ⟪x, x⟫_ℝ - 2 * α * ⟪x, L x⟫_ℝ + α ^ 2 * ⟪L x, L x⟫_ℝ := by
+    simp only [mpStep_apply, inner_sub_left, inner_sub_right, real_inner_smul_left,
+      real_inner_smul_right, real_inner_comm x (L x)]
+    ring
+  rw [hexp]
+  nlinarith [hlower x, hupper x, mul_nonneg hα (sub_nonneg.2 hstep),
+    mul_le_mul_of_nonneg_left (hupper x) (sq_nonneg α),
+    mul_le_mul_of_nonneg_left (hlower x) (mul_nonneg hα (sub_nonneg.2 hstep))]
+
+/-
+!-- Induct on `k`: `⟪Tᵏ⁺¹r⟫ = ⟪T(Tᵏr)⟫ ≤ ρ⟪Tᵏr⟫ ≤ ρ·ρᵏ⟪r⟫`, using `0 ≤ ρ`. -- !--
+
+**Geometric decay.**  If a single layer contracts every energy by `ρ ≥ 0`, then
+depth-`k` message passing contracts it by `ρᵏ`.
+-/
+theorem mpStep_iterate_contraction (L : E →ₗ[ℝ] E) (α ρ : ℝ) (hρ : 0 ≤ ρ)
+    (hc : ∀ x, ⟪mpStep L α x, mpStep L α x⟫_ℝ ≤ ρ * ⟪x, x⟫_ℝ) (r : E) (k : ℕ) :
+    ⟪((mpStep L α) ^ k) r, ((mpStep L α) ^ k) r⟫_ℝ ≤ ρ ^ k * ⟪r, r⟫_ℝ := by
+  induction' k with k ih;
+  · simp +decide;
+  · simpa only [ pow_succ', mul_assoc, mul_left_comm, Module.End.mul_apply ] using le_trans ( hc _ ) ( mul_le_mul_of_nonneg_left ih hρ )
+
+/-! ## §8. Convergence to the trivial cohomology at the spectral rate -/
+
+-- !-- With `0 ≤ ρ < 1`, `ρᵏ → 0`, so `ρᵏ⟪r,r⟫` is eventually `< ε`; combine with
+-- `mpStep_iterate_contraction`. -- !--
+/-- **Convergence to tolerance.**  If a layer is a strict contraction (`0 ≤ ρ < 1`),
+then for every tolerance `ε > 0` there is a depth `K` beyond which the residual energy
+is below `ε`: deep message passing drives every signal to the trivial cohomology. -/
+theorem gap_mpStep_converges (L : E →ₗ[ℝ] E) (α ρ : ℝ) (hρ0 : 0 ≤ ρ) (hρ1 : ρ < 1)
+    (hc : ∀ x, ⟪mpStep L α x, mpStep L α x⟫_ℝ ≤ ρ * ⟪x, x⟫_ℝ) (r : E) {ε : ℝ}
+    (hε : 0 < ε) :
+    ∃ K : ℕ, ∀ k ≥ K, ⟪((mpStep L α) ^ k) r, ((mpStep L α) ^ k) r⟫_ℝ < ε := by
+  have h_rho_pow_zero :
+      Filter.Tendsto (fun k : ℕ => ρ ^ k * ⟪r, r⟫_ℝ) Filter.atTop (nhds 0) := by
+    simpa using Filter.Tendsto.mul
+      (tendsto_pow_atTop_nhds_zero_of_lt_one hρ0 hρ1) tendsto_const_nhds
+  obtain ⟨K, hK⟩ := Filter.eventually_atTop.mp (h_rho_pow_zero.eventually (gt_mem_nhds hε))
+  exact ⟨K, fun k hk =>
+    lt_of_le_of_lt (mpStep_iterate_contraction L α ρ hρ0 hc r k) (hK k hk)⟩
+
+/-! ## §9. Optimality of the spectral step `α = 1/λ` -/
+
+-- !-- `(1 - αμ(2 - αλ)) - (1 - μ/λ) = μ·(αλ - 1)²/λ ≥ 0`, a perfect square. -- !--
+/-- **The spectral step is optimal.**  Among all steps `α`, the contraction factor
+`1 - αμ(2 - αλ)` is minimized at `α = 1/λ`, where it equals `1 - μ/λ`. -/
+theorem contraction_factor_optimal (μ lam α : ℝ) (hμ : 0 < μ) (hlam : 0 < lam) :
+    1 - μ / lam ≤ 1 - α * μ * (2 - α * lam) := by
+  nlinarith [sq_nonneg (α * lam - 1), mul_pos hμ hlam, div_mul_cancel₀ μ hlam.ne']
+
+/-
+!-- Substitute `α = 1/λ`: `(1/λ)·μ·(2 - 1) = μ/λ`. -- !--
+
+**Value at the optimal step.**  At `α = 1/λ` the contraction factor equals
+`1 - μ/λ` (one minus the spectral gap ratio).
+-/
+theorem contraction_factor_at_optimal (μ lam : ℝ) (hlam : lam ≠ 0) :
+    1 - (1 / lam) * μ * (2 - (1 / lam) * lam) = 1 - μ / lam := by
+  grind
+
+/-
+!-- The optimal step gives `ρ = 1 - μ/λ ∈ [0,1)` (since `0 < μ ≤ λ`), so
+`gap_mpStep_converges` applies with the per-layer factor from `mpStep_contraction`
+at `α = 1/λ`. -- !--
+
+**Optimal message passing collapses every signal.**  With the spectral step
+`α = 1/λ`, a strictly positive gap `0 < μ ≤ λ` makes every layer a strict contraction
+with rate `1 - μ/λ`, so for every tolerance the residual energy is eventually below
+it.
+-/
+theorem gap_optimal_mpStep_converges (L : E →ₗ[ℝ] E) (μ lam : ℝ)
+    (hμ : 0 < μ) (hμlam : μ ≤ lam)
+    (hlower : ∀ x, μ * ⟪x, x⟫_ℝ ≤ ⟪x, L x⟫_ℝ)
+    (hupper : ∀ x, ⟪L x, L x⟫_ℝ ≤ lam * ⟪x, L x⟫_ℝ) (r : E) {ε : ℝ} (hε : 0 < ε) :
+    ∃ K : ℕ, ∀ k ≥ K,
+      ⟪((mpStep L (1 / lam)) ^ k) r, ((mpStep L (1 / lam)) ^ k) r⟫_ℝ < ε := by
+  convert gap_mpStep_converges L ( 1 / lam ) ( 1 - μ / lam ) ?_ ?_ ( ?_ ) r hε;
+  · exact sub_nonneg.2 ( div_le_one_of_le₀ hμlam ( by linarith ) );
+  · exact sub_lt_self _ ( div_pos hμ ( by linarith ) );
+  · convert mpStep_contraction L ( 1 / lam ) μ lam _ _ hlower hupper using 1;
+    · grind +suggestions;
+    · exact one_div_nonneg.2 ( by linarith );
+    · rw [ div_mul_cancel₀ ] <;> linarith
+
+end SpectralGapRigidity

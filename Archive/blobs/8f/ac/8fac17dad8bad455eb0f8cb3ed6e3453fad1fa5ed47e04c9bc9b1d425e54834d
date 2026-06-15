@@ -1,0 +1,326 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+
+# Categorical Tropicalization of Valuation-Depth Sublevel Filtrations into Persistence Modules
+
+Bridge: connects **tropical algebra** (min/max idempotent semiring) ↔ **non-archimedean
+valuation theory** (p-adic / ultrametric depth) ↔ **persistent topology** (persistence
+modules, interleaving, stability).
+
+This file extends and connects three existing catalog developments:
+
+* `Bridges/CategoricalTropicalUltrametric.lean` — tropical valuation objects and the
+  ultrametric reconstruction principle ("valuation reconstruction is a functor").
+* `Computation/PadicValuationDepth.lean` — the p-adic valuation-depth viewpoint, where the
+  ultrametric inequality `|a+b| ≤ max(|a|,|b|)` is the central structural device.
+* `Applications/PoincareData/MetricFiltration.lean` — monotone scale-indexed filtrations
+  (Rips graphs) underlying topological data analysis.
+
+## Core principle
+
+A **valuation depth** `v : X → ℝ` (think: p-adic norm, ultrametric distance to a basepoint,
+or any "cost"/"depth" assignment) generates a **sublevel filtration**
+`t ↦ {x | v x ≤ t}`. This filtration is exactly a **persistence module**: a functor from the
+thin category `(ℝ, ≤)` into the thin category `(Set X, ⊆)`.
+
+The "tropicalization" is *categorical and quantitative*:
+
+1. **Functoriality (decategorified):** the sublevel assignment is an order homomorphism, and
+   the valuation is recovered as the entrance time `v x = inf {t | x ∈ sublevel}`.
+2. **Tropical ⊕/⊗ ↦ lattice ∪/∩:** the idempotent semiring operations on valuations,
+   `min` (tropical addition) and `max` (tropical product order), map *functorially* to the
+   lattice operations `∪` and `∩` on persistence modules. This is the precise sense in which
+   the construction is a *tropicalization* of valuation data.
+3. **Quantitative stability:** sup-distance of valuations bounds the interleaving distance of
+   the resulting persistence modules — the algebraic stability theorem, in concrete form.
+4. **Ultrametric closure:** when `v` is non-archimedean (ultrametric distance, p-adic norm),
+   the sublevel sets are *balls that are pairwise nested* and *closed under addition*.
+
+## Main definitions
+
+* `PersMod X` — a persistence module over `ℝ` valued in `(Set X, ⊆)` (a functor of posets).
+* `sublevel v t`, `sublevelPM v` — the sublevel filtration of a valuation and its module.
+* `PersMod.Interleaved δ M N` — `δ`-interleaving of two persistence modules.
+
+## Main results
+
+* `valuation_isGLB_entrance` — the valuation is the entrance time (GLB recovery).
+* `sublevel_min`, `sublevel_max` — tropical `min`/`max` ↦ `∪`/`∩` (categorical tropicalization).
+* `sublevelPM_min`, `sublevelPM_max` — the same, packaged at the persistence-module level.
+* `sublevel_stability` — sup-close valuations give interleaved persistence modules (stability).
+* `PersMod.Interleaved.trans` — interleavings compose additively (interleaving pseudometric).
+* `sublevel_distVal_eq_closedBall` — sublevels of a distance valuation are closed balls.
+* `ultrametric_sublevel_nested` — in an ultrametric space, equal-scale balls that meet coincide.
+* `sublevel_add_closed` — non-archimedean sublevels are closed under addition.
+* `padicNorm_sublevel_add_closed` — the p-adic instance: p-adic sublevels are additive.
+-/
+
+import Mathlib
+
+open Set
+
+namespace TropicalValuationPersistence
+
+universe u
+variable {X : Type u}
+
+/-! ## §1. Persistence modules over `ℝ` valued in subsets
+
+A persistence module over the poset `(ℝ, ≤)` valued in the poset `(Set X, ⊆)` is precisely a
+monotone (order-preserving) map. Since both `(ℝ, ≤)` and `(Set X, ⊆)` are thin categories, an
+order-preserving map *is* a functor: the structure maps are inclusions, identities and
+composition hold automatically. We bundle this as a structure to attach a clean API. -/
+
+-- !-- Lab Notes -- !--
+-- HYPOTHESIS: A valuation-depth sublevel filtration is *literally* a persistence module, with
+--   no extra data, once one accepts the thin-category view: a functor (ℝ,≤) ⥤ (Set X,⊆) is just
+--   a monotone map. We model PersMod as `obj : ℝ → Set X` plus `Monotone obj`.
+-- EXPERIMENT: We tried bundling structure maps as explicit inclusion morphisms (à la a
+--   `CategoryTheory.Functor`); this drowned the algebra in coercions. Modelling morphisms as the
+--   *proofs* `M.obj s ⊆ M.obj t` (proof-irrelevant) made identity/composition free (`map_id`,
+--   `map_comp` are `Subset.rfl` / `Subset.trans`).
+-- INSIGHT: Decategorification is painless precisely because both index and value categories are
+--   thin. The categorical content survives entirely in `mono`.
+-- !-- end Lab Notes -- !--
+
+/-- A **persistence module** over `ℝ` valued in `(Set X, ⊆)`: a monotone scale-indexed family
+of subsets. This is a functor `(ℝ, ≤) ⥤ (Set X, ⊆)`. -/
+structure PersMod (X : Type u) where
+  /-- The object assigned to each scale parameter. -/
+  obj : ℝ → Set X
+  /-- Functoriality: the family is monotone (structure maps are inclusions). -/
+  mono : Monotone obj
+
+namespace PersMod
+
+/-- The structure map (functorial inclusion) of a persistence module for `s ≤ t`. -/
+theorem map {M : PersMod X} {s t : ℝ} (h : s ≤ t) : M.obj s ⊆ M.obj t := M.mono h
+
+/-- Functoriality, identity law: the structure map at `t ≤ t` is the identity inclusion. -/
+theorem map_id (M : PersMod X) (t : ℝ) : M.obj t ⊆ M.obj t := Set.Subset.rfl
+
+/-- Functoriality, composition law: structure maps compose. -/
+theorem map_comp (M : PersMod X) {s t u : ℝ} (h₁ : s ≤ t) (h₂ : t ≤ u) :
+    M.obj s ⊆ M.obj u := (M.mono h₁).trans (M.mono h₂)
+
+end PersMod
+
+/-! ## §2. The sublevel filtration of a valuation depth
+
+Given a valuation depth `v : X → ℝ`, the sublevel set at scale `t` collects the elements of
+depth at most `t`. As `t` grows the sets grow: a persistence module. -/
+
+/-- The **sublevel set** of a valuation `v` at scale `t`: elements of depth at most `t`. -/
+def sublevel (v : X → ℝ) (t : ℝ) : Set X := {x | v x ≤ t}
+
+@[simp] theorem mem_sublevel {v : X → ℝ} {t : ℝ} {x : X} :
+    x ∈ sublevel v t ↔ v x ≤ t := Iff.rfl
+
+/-- The sublevel filtration is monotone: this is the persistence-module functoriality. -/
+theorem sublevel_mono (v : X → ℝ) : Monotone (sublevel v) :=
+  fun _ _ h _ hx => le_trans hx h
+
+/-- The **sublevel persistence module** of a valuation depth `v`. -/
+def sublevelPM (v : X → ℝ) : PersMod X := ⟨sublevel v, sublevel_mono v⟩
+
+@[simp] theorem sublevelPM_obj (v : X → ℝ) (t : ℝ) : (sublevelPM v).obj t = sublevel v t := rfl
+
+/-! ### Entrance-time recovery
+
+The valuation can be read back off the filtration: `v x` is the *entrance time* of `x`, i.e.
+the greatest lower bound of the set of scales at which `x` has appeared. -/
+
+/-- The set of scales at which `x` is present is the ray `[v x, ∞)`. -/
+theorem sublevel_param_eq_Ici (v : X → ℝ) (x : X) :
+    {t | x ∈ sublevel v t} = Set.Ici (v x) := by
+  ext t; simp [Set.mem_Ici]
+
+/-- **Entrance-time recovery.** The valuation `v x` is the greatest lower bound of the set of
+scales at which `x` is present in the filtration. Hence `v` is reconstructible from its
+sublevel persistence module. -/
+theorem valuation_isGLB_entrance (v : X → ℝ) (x : X) :
+    IsGLB {t | x ∈ sublevel v t} (v x) := by
+  rw [sublevel_param_eq_Ici]; exact isGLB_Ici
+
+/-! ## §3. Categorical tropicalization: tropical `min`/`max` ↦ lattice `∪`/`∩`
+
+This is the heart of the bridge. The set of valuations `X → ℝ` carries the **tropical
+(min-plus) idempotent semiring** structure pointwise, with tropical addition `min` and the
+product order via `max`. The sublevel construction is a *homomorphism* onto the lattice of
+persistence modules `(Set X, ∪, ∩)`:
+
+* tropical addition `min` ↦ union `∪`  (join / coproduct of filtrations);
+* `max` ↦ intersection `∩`  (meet / product of filtrations).
+
+The `min ↦ ∪` law is the decisive one: tropical addition of depths is union of sublevels. -/
+
+-- !-- Lab Notes -- !--
+-- HYPOTHESIS: The pointwise tropical structure on valuations (⊕ = min, with the order induced
+--   by max) should map *homomorphically* to the lattice (∪, ∩) of persistence modules. The
+--   slogan to test: "tropical addition of depths = union of sublevels."
+-- EXPERIMENT: `sublevel_min` / `sublevel_max` reduce to `min_le_iff` / `max_le_iff` after `ext`.
+--   Surprisingly `simp [sublevel]` alone discharges the `min` case — `min_le_iff` is already a
+--   simp lemma — so the homomorphism is essentially definitional.
+-- INSIGHT: This is the precise sense of "categorical tropicalization": the contravariant-looking
+--   max ↦ ∩ and the covariant min ↦ ∪ are *both* functorial, exhibiting `sublevel` as a lattice
+--   homomorphism out of the (min,max) idempotent semiring of depths.
+-- FAILURE ANALYSIS: An earlier draft conjectured `sublevel (v + w) = ...`; false — ordinary `+`
+--   is not the tropical operation and has no clean sublevel description. Only min/max work.
+-- !-- end Lab Notes -- !--
+
+/-- **Tropicalization, additive law.** The sublevel set of the pointwise minimum of two
+valuations is the union of their sublevel sets: tropical `⊕ = min` maps to `∪`. -/
+theorem sublevel_min (v w : X → ℝ) (t : ℝ) :
+    sublevel (fun x => min (v x) (w x)) t = sublevel v t ∪ sublevel w t := by
+  ext x; simp [sublevel]
+
+/-- **Tropicalization, multiplicative/order law.** The sublevel set of the pointwise maximum
+is the intersection of sublevel sets: `max` maps to `∩`. -/
+theorem sublevel_max (v w : X → ℝ) (t : ℝ) :
+    sublevel (fun x => max (v x) (w x)) t = sublevel v t ∩ sublevel w t := by
+  ext x; simp [sublevel, Set.mem_inter_iff]
+
+/-- The additive tropical law at the level of persistence modules. -/
+theorem sublevelPM_min (v w : X → ℝ) (t : ℝ) :
+    (sublevelPM (fun x => min (v x) (w x))).obj t
+      = (sublevelPM v).obj t ∪ (sublevelPM w).obj t := sublevel_min v w t
+
+/-- The multiplicative tropical law at the level of persistence modules. -/
+theorem sublevelPM_max (v w : X → ℝ) (t : ℝ) :
+    (sublevelPM (fun x => max (v x) (w x))).obj t
+      = (sublevelPM v).obj t ∩ (sublevelPM w).obj t := sublevel_max v w t
+
+/-! ## §4. Interleaving and the stability theorem
+
+The interleaving (pseudo)distance is the central metric of persistence theory. We show it is a
+genuine extended pseudometric on persistence modules (reflexive, symmetric, triangle via
+additive composition), and prove the **stability theorem**: the interleaving distance of two
+sublevel modules is controlled by the sup-distance of the underlying valuations. -/
+
+-- !-- Lab Notes -- !--
+-- HYPOTHESIS: Interleaving makes persistence modules into an (extended) pseudometric space, and
+--   the sublevel functor is 1-Lipschitz from (valuations, sup-distance) to (modules, interleaving).
+-- EXPERIMENT: `Interleaved.trans` composes a δ₁- and δ₂-interleaving into a (δ₁+δ₂) one. Key
+--   observation: NO sign hypothesis on δ is needed for `trans` — pure associativity of the shift
+--   `(t+δ₁)+δ₂ = t+(δ₁+δ₂)` does it. Monotonicity is only needed for `mono_shift` (enlarging δ).
+-- INSIGHT: The stability theorem `sublevel_stability` is then a two-line `linarith` from
+--   `abs_le`: the hard "algebraic stability theorem" of persistence is, in the sublevel model,
+--   elementary. The depth of the classical theorem lives in *interval-decomposition*, which the
+--   set-valued model sidesteps while keeping the quantitative bound.
+-- !-- end Lab Notes -- !--
+
+/-- `δ`-**interleaving** of two persistence modules: each is contained in the other shifted by
+`δ`. -/
+def PersMod.Interleaved (δ : ℝ) (M N : PersMod X) : Prop :=
+  (∀ t, M.obj t ⊆ N.obj (t + δ)) ∧ (∀ t, N.obj t ⊆ M.obj (t + δ))
+
+/-- Interleaving is symmetric. -/
+theorem PersMod.Interleaved.symm {δ : ℝ} {M N : PersMod X}
+    (h : PersMod.Interleaved δ M N) : PersMod.Interleaved δ N M := ⟨h.2, h.1⟩
+
+/-- Every module is `0`-interleaved with itself (reflexivity of the interleaving distance). -/
+theorem PersMod.interleaved_zero_self (M : PersMod X) :
+    PersMod.Interleaved 0 M M := ⟨fun t => by rw [add_zero], fun t => by rw [add_zero]⟩
+
+/-- **Triangle inequality / additive composition** of interleavings: a `δ₁`-interleaving
+followed by a `δ₂`-interleaving yields a `(δ₁ + δ₂)`-interleaving. This makes interleaving an
+extended pseudometric on persistence modules. -/
+theorem PersMod.Interleaved.trans {δ₁ δ₂ : ℝ} {M N P : PersMod X}
+    (h₁ : PersMod.Interleaved δ₁ M N) (h₂ : PersMod.Interleaved δ₂ N P) :
+    PersMod.Interleaved (δ₁ + δ₂) M P := by
+  refine ⟨fun t => ?_, fun t => ?_⟩
+  · have := (h₁.1 t).trans (h₂.1 (t + δ₁))
+    rwa [add_assoc] at this
+  · have := (h₂.2 t).trans (h₁.2 (t + δ₂))
+    rw [show t + δ₂ + δ₁ = t + (δ₁ + δ₂) by ring] at this
+    exact this
+
+/-- Monotonicity in the shift: a `δ`-interleaving is also a `δ'`-interleaving for any larger
+`δ'`. -/
+theorem PersMod.Interleaved.mono_shift {δ δ' : ℝ} {M N : PersMod X}
+    (h : PersMod.Interleaved δ M N) (hδ : δ ≤ δ') :
+    PersMod.Interleaved δ' M N :=
+  ⟨fun t => (h.1 t).trans (N.mono (by linarith)),
+   fun t => (h.2 t).trans (M.mono (by linarith))⟩
+
+/-- **Stability theorem.** If two valuations are within `δ` in sup-distance, then their sublevel
+persistence modules are `δ`-interleaved. This is the concrete algebraic stability theorem:
+small perturbations of the valuation depth produce small interleaving distance. -/
+theorem sublevel_stability {v w : X → ℝ} {δ : ℝ} (h : ∀ x, |v x - w x| ≤ δ) :
+    PersMod.Interleaved δ (sublevelPM v) (sublevelPM w) := by
+  refine ⟨fun t x hx => ?_, fun t x hx => ?_⟩ <;>
+  · simp only [sublevelPM_obj, mem_sublevel] at *
+    have hb := abs_le.mp (h x)
+    linarith [hb.1, hb.2]
+
+/-! ## §5. Ultrametric bridge: distance valuations and ball nesting
+
+When the valuation is the distance to a basepoint, the sublevel sets are closed balls, and the
+ultrametric (non-archimedean) inequality forces the characteristic *ball nesting*: any two
+equal-radius balls that meet coincide. This connects to the ultrametric reconstruction of
+`CategoricalTropicalUltrametric` and to the metric filtrations of `MetricFiltration`. -/
+
+/-- The distance-to-basepoint valuation. -/
+def distVal [PseudoMetricSpace X] (p : X) : X → ℝ := fun x => dist x p
+
+/-- The sublevel set of the distance valuation is exactly the closed ball. -/
+theorem sublevel_distVal_eq_closedBall [PseudoMetricSpace X] (p : X) (t : ℝ) :
+    sublevel (distVal p) t = Metric.closedBall p t := by
+  ext x; simp [sublevel, distVal, Metric.mem_closedBall]
+
+/-- **Ultrametric ball nesting.** In an ultrametric (non-archimedean) space, two equal-scale
+sublevel balls that share a common point are equal. This is the sublevel-filtration form of
+the defining ultrametric property. -/
+theorem ultrametric_sublevel_nested [PseudoMetricSpace X] [IsUltrametricDist X]
+    {p q : X} {t : ℝ} (z : X) (hp : z ∈ sublevel (distVal p) t)
+    (hq : z ∈ sublevel (distVal q) t) :
+    sublevel (distVal p) t = sublevel (distVal q) t := by
+  rw [sublevel_distVal_eq_closedBall] at hp hq ⊢
+  rw [sublevel_distVal_eq_closedBall,
+    IsUltrametricDist.closedBall_eq_of_mem hp, IsUltrametricDist.closedBall_eq_of_mem hq]
+
+/-! ## §6. Non-archimedean closure and the p-adic instance
+
+The non-archimedean inequality `v (a + b) ≤ max (v a) (v b)` says precisely that each sublevel
+set is closed under addition — the structural reason p-adic arithmetic carries no information
+across scales (cf. `PadicValuationDepth`). We prove this abstractly and instantiate it for the
+`p`-adic norm. -/
+
+-- !-- Lab Notes -- !--
+-- HYPOTHESIS: The non-archimedean inequality v(a+b) ≤ max(v a, v b) is EQUIVALENT to the
+--   statement "every sublevel set is an additive subobject." This is the algebraic shadow of
+--   the geometric ball-nesting in §5 and ties directly to PadicValuationDepth's thesis that the
+--   ultrametric inequality eliminates carry propagation.
+-- EXPERIMENT: `sublevel_add_closed` is `le_trans (hultra a b) (max_le ha hb)` — one line. We then
+--   instantiate at the p-adic norm via `padicNorm.nonarchimedean`, casting ℚ → ℝ with
+--   `exact_mod_cast` (the only friction: `max` must be recognised across the cast, which
+--   `norm_cast` handles).
+-- INSIGHT: This realises the bridge concretely: the p-adic valuation depth produces sublevel
+--   filtrations whose every level is an additive subgroup of ℚ — the standard fractional-ideal
+--   filtration, now reinterpreted as a tropical persistence module.
+-- !-- end Lab Notes -- !--
+
+/-- **Non-archimedean closure.** If a valuation on an additive monoid satisfies the
+ultrametric inequality, then every sublevel set is closed under addition. -/
+theorem sublevel_add_closed {G : Type u} [Add G] {v : G → ℝ}
+    (hultra : ∀ a b, v (a + b) ≤ max (v a) (v b)) (t : ℝ) {a b : G}
+    (ha : a ∈ sublevel v t) (hb : b ∈ sublevel v t) :
+    a + b ∈ sublevel v t := by
+  simp only [mem_sublevel] at *
+  exact le_trans (hultra a b) (max_le ha hb)
+
+/-- **p-adic instance.** Each sublevel set of the `p`-adic norm valuation on `ℚ` is closed
+under addition. This realizes the abstract non-archimedean closure for the p-adic
+valuation depth of `PadicValuationDepth`. -/
+theorem padicNorm_sublevel_add_closed (p : ℕ) [hp : Fact (Nat.Prime p)] (t : ℝ)
+    {a b : ℚ} (ha : a ∈ sublevel (fun q => (padicNorm p q : ℝ)) t)
+    (hb : b ∈ sublevel (fun q => (padicNorm p q : ℝ)) t) :
+    a + b ∈ sublevel (fun q => (padicNorm p q : ℝ)) t := by
+  have hultra : ∀ x y : ℚ, ((padicNorm p (x + y) : ℝ)) ≤
+      max (padicNorm p x : ℝ) (padicNorm p y : ℝ) := by
+    intro x y
+    exact_mod_cast padicNorm.nonarchimedean (p := p) (q := x) (r := y)
+  exact sublevel_add_closed hultra t ha hb
+
+end TropicalValuationPersistence

@@ -1,0 +1,349 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+
+# Valuation-Depth Sublevel Filtrations ↔ Metric Rips Filtrations
+
+Bridge: Algebra/valuation_theory ↔ Applications/PoincareData (metric Rips filtrations)
+
+This file builds a **functorial comparison** between two filtration constructions that,
+on the surface, live in very different worlds:
+
+* the **metric Rips filtration** `ripsGraph α ε` of a (pseudo)metric space (the 1-skeleton
+  of the Vietoris–Rips complex), studied in `Applications/PoincareData/MetricFiltration.lean`;
+* the **valuation-depth sublevel filtration** coming from a non-archimedean valuation /
+  agreement-depth function, in the spirit of `Computation/PadicValuationDepth.lean` and the
+  longest-common-valued-prefix valuation of `Bridges/LongestCommonValuedPrefix.lean`.
+
+The unifying idea is the **ultrametric (strong triangle) inequality**
+`dist x z ≤ max (dist x y) (dist y z)`. In a non-archimedean world the Rips relation
+`dist x y ≤ ε` is not merely a graph: it is an **equivalence relation** at every scale.
+Hence the ultrametric Rips filtration is a nested family of *partitions* — exactly the
+dendrogram / hierarchical-clustering structure that controls `π₀` of the Vietoris–Rips
+complex — and it coincides with the sublevel filtration of the associated valuation depth.
+
+## Main results
+
+* `ripsRel_trans` — the closed Rips relation is transitive in an ultrametric space (the
+  non-archimedean heart of the comparison).
+* `ripsSetoid` — at every nonnegative scale the closed Rips relation is a `Setoid`.
+* `ripsReachable_iff` — Rips graph reachability *equals* the closed `ε`-ball relation:
+  the 1-skeleton already computes `π₀`, no higher simplices needed.
+* `DepthFiltration` — the abstract valuation-depth sublevel filtration (a nested family of
+  equivalence relations indexed by depth).
+* `DepthFiltration.ofUltrametric` — the **functor** sending an ultrametric space together
+  with a scale schedule to its valuation-depth sublevel filtration.
+* `ofUltrametric_depthGraph_eq_ripsGraph` — the **functorial comparison**: the depth-`n`
+  sublevel graph equals the Rips graph at scale `s n`.
+* `PadicInt.depthFiltration` and `padic_dist_le_pow_iff` — the concrete `ℤ_[p]` instance,
+  connecting Rips scale `p^{-n}` to congruence modulo `pⁿ` (valuation depth ≥ n).
+* `rips_rel_not_trans_real` — failure analysis: without the ultrametric hypothesis the Rips
+  relation is *not* transitive, so the equivalence-relation structure genuinely needs
+  non-archimedeanness.
+-/
+
+import Mathlib
+
+open Metric
+
+namespace ValuationRipsBridge
+
+universe u
+variable {α : Type u}
+
+/-! ## Part 1: The Rips graph (self-contained) -/
+
+/-- The **Rips graph** of a pseudometric space at scale `ε`: distinct points within
+distance `ε`. (Self-contained copy of the construction in `MetricFiltration.lean`.) -/
+def ripsGraph (α : Type u) [PseudoMetricSpace α] (ε : ℝ) : SimpleGraph α where
+  Adj x y := x ≠ y ∧ dist x y ≤ ε
+  symm x y h := ⟨h.1.symm, by rw [dist_comm]; exact h.2⟩
+  loopless := ⟨fun x h => h.1 rfl⟩
+
+@[simp] theorem ripsGraph_adj [PseudoMetricSpace α] {ε : ℝ} {x y : α} :
+    (ripsGraph α ε).Adj x y ↔ x ≠ y ∧ dist x y ≤ ε := Iff.rfl
+
+theorem ripsGraph_mono [PseudoMetricSpace α] {ε₁ ε₂ : ℝ} (h : ε₁ ≤ ε₂) :
+    ripsGraph α ε₁ ≤ ripsGraph α ε₂ := by
+  intro x y ⟨hne, hd⟩; exact ⟨hne, le_trans hd h⟩
+
+theorem ripsGraph_bot_of_neg [PseudoMetricSpace α] {ε : ℝ} (hε : ε < 0) :
+    ripsGraph α ε = ⊥ := by
+  ext x y
+  simp only [ripsGraph_adj, SimpleGraph.bot_adj]
+  exact ⟨fun ⟨_, hd⟩ => absurd (le_trans dist_nonneg hd) (by linarith), fun h => h.elim⟩
+
+/-! ## Part 2: The closed Rips relation is an equivalence relation in ultrametric spaces
+
+This is the structural pivot of the whole bridge: a non-archimedean metric upgrades the
+Rips *graph* into a Rips *equivalence relation*. -/
+
+-- !-- Lab Notes -- !--
+-- Hypothesis: the Rips construction and the p-adic valuation-depth construction, despite
+--   living in different catalog domains (Applications/PoincareData vs Computation/Padic...),
+--   are two presentations of ONE filtration, glued by the ultrametric inequality.
+-- Experiment: identify the closed Rips relation `dist x y ≤ ε` with the valuation sublevel
+--   set `v(x-y) ≥ k`. The only nontrivial axiom to transport is transitivity.
+-- Outcome: CONFIRMED. `ripsRel_trans` goes through using exactly `dist_triangle_max`
+--   (Mathlib's `IsUltrametricDist`). Reflexivity needs `0 ≤ ε`; symmetry is free.
+-- Insight: transitivity is *not* available in general metric spaces (see Part 7), so the
+--   equivalence-relation upgrade is the genuine non-archimedean content of the bridge —
+--   it is what turns a filtration of graphs into a filtration of partitions (a dendrogram).
+-- !-- Lab Notes -- !--
+
+/-- The **closed Rips relation** at scale `ε`: `x` and `y` are within distance `ε`
+(including `x = y`). This is the reflexive closure of the Rips adjacency. -/
+def ripsRel (α : Type u) [PseudoMetricSpace α] (ε : ℝ) (x y : α) : Prop :=
+  dist x y ≤ ε
+
+theorem ripsRel_refl [PseudoMetricSpace α] {ε : ℝ} (hε : 0 ≤ ε) (x : α) :
+    ripsRel α ε x x := by
+  unfold ripsRel; rw [dist_self]; exact hε
+
+theorem ripsRel_symm [PseudoMetricSpace α] {ε : ℝ} {x y : α}
+    (h : ripsRel α ε x y) : ripsRel α ε y x := by
+  unfold ripsRel at *; rwa [dist_comm]
+
+/-- **Non-archimedean transitivity** of the Rips relation: this is exactly where the
+ultrametric inequality is used. -/
+theorem ripsRel_trans [PseudoMetricSpace α] [IsUltrametricDist α] {ε : ℝ} {x y z : α}
+    (hxy : ripsRel α ε x y) (hyz : ripsRel α ε y z) : ripsRel α ε x z := by
+  unfold ripsRel at *
+  exact le_trans (dist_triangle_max x y z) (max_le hxy hyz)
+
+/-- **Main Theorem A.** In an ultrametric space, the closed Rips relation at any
+nonnegative scale is an equivalence relation. The Rips filtration is thus a filtration of
+*partitions* (a dendrogram), not just of graphs. -/
+def ripsSetoid (α : Type u) [PseudoMetricSpace α] [IsUltrametricDist α] {ε : ℝ}
+    (hε : 0 ≤ ε) : Setoid α where
+  r := ripsRel α ε
+  iseqv := ⟨ripsRel_refl hε, ripsRel_symm, ripsRel_trans⟩
+
+/-- The closed Rips relation coarsens as the scale grows: a sublevel inclusion that makes
+the family of partitions a genuine filtration. -/
+theorem ripsRel_mono [PseudoMetricSpace α] {ε₁ ε₂ : ℝ} (h : ε₁ ≤ ε₂) {x y : α}
+    (hxy : ripsRel α ε₁ x y) : ripsRel α ε₂ x y :=
+  le_trans hxy h
+
+/-! ## Part 3: Rips reachability computes π₀ exactly -/
+
+/-- Adjacency in the Rips graph implies the closed Rips relation. -/
+theorem ripsRel_of_adj [PseudoMetricSpace α] {ε : ℝ} {x y : α}
+    (h : (ripsGraph α ε).Adj x y) : ripsRel α ε x y := h.2
+
+/-
+**Main Theorem B (π₀ via the 1-skeleton).** In an ultrametric space, two points are
+connected by a Rips edge-path at scale `ε` iff they are equal or within distance `ε`.
+Equivalently: the connected components of the Rips graph are exactly the closed `ε`-balls,
+so the 1-skeleton already determines `π₀` of the Vietoris–Rips complex.
+-/
+theorem ripsReachable_iff [PseudoMetricSpace α] [IsUltrametricDist α] {ε : ℝ}
+    (x y : α) :
+    (ripsGraph α ε).Reachable x y ↔ (x = y ∨ ripsRel α ε x y) := by
+  refine' ⟨ fun h => _, fun h => _ ⟩;
+  · obtain ⟨ p ⟩ := h;
+    induction' p with x y p ih;
+    · exact Or.inl rfl;
+    · cases ‹p = ih ∨ ripsRel α ε p ih› <;> simp_all +decide [ ripsRel ];
+      exact Or.inr ( le_trans ( dist_triangle_max _ _ _ ) ( max_le ( by tauto ) ( by tauto ) ) );
+  · cases' h with h h;
+    · aesop;
+    · by_cases hxy : x = y;
+      · aesop;
+      · exact SimpleGraph.Adj.reachable ⟨ hxy, h ⟩
+
+/-! ## Part 4: The abstract valuation-depth sublevel filtration
+
+A `DepthFiltration` records, for each depth threshold `k : ℕ`, the relation "`x` and `y`
+agree to valuation depth at least `k`". The non-archimedean axioms say each such relation
+is an equivalence relation and that deeper agreement refines shallower agreement. This is
+the order-theoretic skeleton of any valuation (`p`-adic valuation, longest common prefix,
+etc.). -/
+
+/-- A **valuation-depth sublevel filtration** on `α`: a nested family of equivalence
+relations `agree k` ("agreement to depth ≥ k"). -/
+structure DepthFiltration (α : Type u) where
+  /-- `agree k x y`: the elements agree to valuation depth at least `k`. -/
+  agree : ℕ → α → α → Prop
+  agree_refl : ∀ k x, agree k x x
+  agree_symm : ∀ k x y, agree k x y → agree k y x
+  agree_trans : ∀ k x y z, agree k x y → agree k y z → agree k x z
+  /-- Deeper agreement implies shallower agreement (the sublevel/filtration direction). -/
+  agree_antitone : ∀ {k l : ℕ} (x y), k ≤ l → agree l x y → agree k x y
+
+namespace DepthFiltration
+
+variable (F : DepthFiltration α)
+
+/-- The `k`-th relation of a depth filtration is an equivalence relation. -/
+def setoid (k : ℕ) : Setoid α where
+  r := F.agree k
+  iseqv := ⟨F.agree_refl k, F.agree_symm k _ _, F.agree_trans k _ _ _⟩
+
+/-- The **sublevel graph** at depth `k`: distinct points agreeing to depth ≥ k. This is
+the Rips-style 1-skeleton of the valuation-depth filtration. -/
+def depthGraph (k : ℕ) : SimpleGraph α where
+  Adj x y := x ≠ y ∧ F.agree k x y
+  symm _ _ h := ⟨h.1.symm, F.agree_symm k _ _ h.2⟩
+  loopless := ⟨fun _ h => h.1 rfl⟩
+
+@[simp] theorem depthGraph_adj (k : ℕ) {x y : α} :
+    (F.depthGraph k).Adj x y ↔ x ≠ y ∧ F.agree k x y := Iff.rfl
+
+/-- The sublevel graphs are **antitone** in depth: increasing the depth threshold removes
+edges (the contravariant counterpart of Rips monotonicity in scale). -/
+theorem depthGraph_antitone {k l : ℕ} (h : k ≤ l) :
+    F.depthGraph l ≤ F.depthGraph k := by
+  intro x y hxy
+  exact ⟨hxy.1, F.agree_antitone x y h hxy.2⟩
+
+/-
+Reachability in a sublevel graph collapses to the agreement relation (the depth-side
+analogue of `ripsReachable_iff`): the 1-skeleton already computes the depth-`k` partition.
+-/
+theorem depth_reachable_iff (k : ℕ) (x y : α) :
+    (F.depthGraph k).Reachable x y ↔ (x = y ∨ F.agree k x y) := by
+  constructor;
+  · rintro ⟨ p ⟩;
+    induction' p with x y p ih;
+    · exact Or.inl rfl;
+    · cases ‹p = ih ∨ F.agree k p ih› <;> simp_all +decide [ DepthFiltration.depthGraph ];
+      exact Or.inr ( F.agree_trans k _ _ _ ( by tauto ) ( by tauto ) );
+  · intro hxy
+    cases' hxy with hxy hxy;
+    · aesop;
+    · by_cases hxy' : x = y;
+      · aesop;
+      · exact SimpleGraph.Adj.reachable ⟨ hxy', hxy ⟩
+
+end DepthFiltration
+
+/-! ## Part 5: The functor — ultrametric space + scale schedule ⟹ depth filtration
+
+This is the heart of the comparison. Any ultrametric (pseudo)metric space, together with a
+nonincreasing nonnegative *scale schedule* `s : ℕ → ℝ`, gives a valuation-depth sublevel
+filtration whose depth-`n` relation is the closed Rips relation at scale `s n`. -/
+
+-- !-- Lab Notes -- !--
+-- Hypothesis: the comparison is functorial, i.e. it is induced by a single construction
+--   sending (ultrametric space + decreasing scale schedule) to a depth filtration, with the
+--   depth-n level being the Rips graph at scale s n.
+-- Experiment: abstract the needed axioms into `DepthFiltration` (nested equivalence
+--   relations), then build `ofUltrametric` and check `ofUltrametric_depthGraph_eq_ripsGraph`.
+-- Outcome: CONFIRMED — the comparison is an *equality of graphs*, the strongest possible
+--   form, proven by `simp` once the definitions are unfolded (both sides are the same
+--   sublevel set). The scale schedule must be nonnegative (reflexivity) and antitone
+--   (the contravariance between metric scale ε and valuation depth k: bigger ε ⇔ smaller k).
+-- Insight: the contravariance (Rips is monotone in ε, depth filtration is antitone in k) is
+--   captured cleanly by feeding an antitone schedule into the covariant functor; no
+--   order-reversal machinery is needed at the type level.
+-- Failure analysis: an early ℕ∞-valued `depth` formulation (with `depth x x = ⊤`) forced a
+--   real exponential `2^{-depth}` with a `⊤ ↦ 0` convention, creating coercion friction.
+--   Replacing it with the level-indexed `agree : ℕ → α → α → Prop` (sublevel sets directly)
+--   removed all coercions and made every axiom a one-liner.
+-- !-- Lab Notes -- !--
+
+/-- The **functor** from an ultrametric space (with a scale schedule `s`) to its
+valuation-depth sublevel filtration. Agreement to depth `n` means "within Rips scale
+`s n`". The schedule must be nonnegative (so each level is reflexive) and antitone (so
+deeper levels refine, matching the contravariance between scale and depth). -/
+def DepthFiltration.ofUltrametric (α : Type u) [PseudoMetricSpace α] [IsUltrametricDist α]
+    (s : ℕ → ℝ) (hs0 : ∀ n, 0 ≤ s n) (hanti : Antitone s) : DepthFiltration α where
+  agree n x y := ripsRel α (s n) x y
+  agree_refl n x := ripsRel_refl (hs0 n) x
+  agree_symm _ _ _ h := ripsRel_symm h
+  agree_trans _ _ _ _ hxy hyz := ripsRel_trans hxy hyz
+  agree_antitone _ _ h hl := ripsRel_mono (hanti h) hl
+
+@[simp] theorem ofUltrametric_agree [PseudoMetricSpace α] [IsUltrametricDist α]
+    (s : ℕ → ℝ) (hs0 : ∀ n, 0 ≤ s n) (hanti : Antitone s) (n : ℕ) (x y : α) :
+    (DepthFiltration.ofUltrametric α s hs0 hanti).agree n x y ↔ dist x y ≤ s n := Iff.rfl
+
+/-- **Functorial comparison (graph level).** The depth-`n` sublevel graph of the
+ultrametric-induced filtration is *literally equal* to the Rips graph at scale `s n`.
+This identifies the valuation-depth sublevel filtration with the metric Rips filtration. -/
+theorem ofUltrametric_depthGraph_eq_ripsGraph [PseudoMetricSpace α] [IsUltrametricDist α]
+    (s : ℕ → ℝ) (hs0 : ∀ n, 0 ≤ s n) (hanti : Antitone s) (n : ℕ) :
+    (DepthFiltration.ofUltrametric α s hs0 hanti).depthGraph n = ripsGraph α (s n) := by
+  ext x y
+  simp only [DepthFiltration.depthGraph_adj, ofUltrametric_agree, ripsGraph_adj]
+
+/-! ## Part 6: The concrete `p`-adic instance
+
+Connects the abstract comparison to genuine non-archimedean number theory: in `ℤ_[p]` the
+Rips scale `p^{-n}` corresponds exactly to congruence modulo `pⁿ`, i.e. to `p`-adic
+valuation depth ≥ n. -/
+
+section Padic
+variable (p : ℕ) [hp : Fact p.Prime]
+
+/-- **Rips scale = valuation depth in `ℤ_[p]`.** Two `p`-adic integers are within Rips
+scale `p^{-n}` iff their difference lies in `(p)ⁿ`, i.e. they are congruent modulo `pⁿ`
+(`p`-adic valuation of the difference ≥ n). This is the concrete dictionary between the
+metric scale and the valuation depth. -/
+theorem padic_dist_le_pow_iff (x y : ℤ_[p]) (n : ℕ) :
+    ripsRel ℤ_[p] ((p : ℝ) ^ (-n : ℤ)) x y ↔
+      (x - y) ∈ (Ideal.span {(p : ℤ_[p]) ^ n} : Ideal ℤ_[p]) := by
+  rw [ripsRel, dist_eq_norm, PadicInt.norm_le_pow_iff_mem_span_pow]
+
+/-- The canonical **`p`-adic valuation-depth sublevel filtration** on `ℤ_[p]`, obtained by
+applying the functor to the schedule `n ↦ p^{-n}`. Its depth-`n` relation is congruence
+modulo `pⁿ`. -/
+noncomputable def PadicInt.depthFiltration : DepthFiltration ℤ_[p] :=
+  DepthFiltration.ofUltrametric ℤ_[p] (fun n => (p : ℝ) ^ (-n : ℤ))
+    (fun n => by positivity)
+    (by
+      intro a b hab
+      apply zpow_le_zpow_right₀
+      · exact_mod_cast hp.out.one_lt.le
+      · omega)
+
+/-- The depth-`n` agreement of the `p`-adic filtration is exactly congruence modulo `pⁿ`. -/
+theorem PadicInt.depthFiltration_agree (x y : ℤ_[p]) (n : ℕ) :
+    (PadicInt.depthFiltration p).agree n x y ↔
+      (x - y) ∈ (Ideal.span {(p : ℤ_[p]) ^ n} : Ideal ℤ_[p]) := by
+  rw [PadicInt.depthFiltration, ofUltrametric_agree]
+  exact (padic_dist_le_pow_iff p x y n)
+
+end Padic
+
+/-! ## Part 7: Failure analysis — the ultrametric hypothesis is load-bearing
+
+Without non-archimedeanness, the Rips relation is *not* transitive, so the
+equivalence-relation / partition structure (and hence `ripsReachable_iff`) genuinely fails
+in ordinary metric spaces. -/
+
+-- !-- Lab Notes -- !--
+-- Hypothesis: "Rips relation is an equivalence relation" might hold for all metric spaces.
+-- Experiment: test the chain 0 — 1 — 2 in ℝ at scale ε = 1.
+--   dist 0 1 = 1 ≤ 1 and dist 1 2 = 1 ≤ 1, but dist 0 2 = 2 > 1.
+-- Outcome: FALSIFIED in the archimedean case. Transitivity (ripsRel_trans) crucially uses
+--   `dist_triangle_max`, i.e. `IsUltrametricDist`. This is what makes the valuation-depth
+--   ↔ Rips comparison special to the non-archimedean world: in the archimedean world the
+--   Rips graph is genuinely a graph (with nontrivial higher homology), whereas in the
+--   ultrametric world it degenerates to a partition (a dendrogram).
+-- Insight: the comparison theorem `ofUltrametric_depthGraph_eq_ripsGraph` is an *equality*
+--   precisely because both sides are sublevel sets of the same ultrametric; the content is
+--   that the ultrametric upgrades the filtration of graphs to a filtration of partitions.
+-- !-- Lab Notes -- !--
+
+/-- The Rips relation on `ℝ` is **not** transitive: a concrete archimedean witness showing
+that `IsUltrametricDist` is necessary in `ripsRel_trans`. -/
+theorem rips_rel_not_trans_real :
+    ¬ (∀ x y z : ℝ, ripsRel ℝ 1 x y → ripsRel ℝ 1 y z → ripsRel ℝ 1 x z) := by
+  intro h
+  have := h 0 1 2 (by rw [ripsRel, Real.dist_eq]; norm_num)
+    (by rw [ripsRel, Real.dist_eq]; norm_num)
+  rw [ripsRel, Real.dist_eq] at this
+  norm_num at this
+
+/-- Correspondingly, in `ℝ` the Rips relation at scale `1` is not an equivalence relation
+extended by reachability the way it is in the ultrametric case: `0` and `2` are Rips-reachable
+(via `1`) but not within distance `1`. This contrasts with `ripsReachable_iff`. -/
+theorem rips_reachable_ne_rel_real :
+    (ripsGraph ℝ 1).Reachable 0 2 ∧ ¬ ripsRel ℝ 1 (0 : ℝ) 2 := by
+  refine ⟨?_, by rw [ripsRel, Real.dist_eq]; norm_num⟩
+  have h01 : (ripsGraph ℝ 1).Adj 0 1 := ⟨by norm_num, by rw [Real.dist_eq]; norm_num⟩
+  have h12 : (ripsGraph ℝ 1).Adj 1 2 := ⟨by norm_num, by rw [Real.dist_eq]; norm_num⟩
+  exact (h01.reachable).trans (h12.reachable)
+
+end ValuationRipsBridge

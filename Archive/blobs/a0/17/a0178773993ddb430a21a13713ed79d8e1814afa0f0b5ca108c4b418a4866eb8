@@ -1,0 +1,230 @@
+import Mathlib
+import Catalog.Algebra.BerggrenLorentz.Core
+
+/-!
+# A Tropical Height Invariant on the Berggren Tree
+
+This file builds a **tropical (max-plus) dynamical invariant** on the Berggren
+ternary tree of primitive Pythagorean triples, on top of the Berggren–Lorentz
+formalization in `Catalog.Algebra.BerggrenLorentz.Core`.
+
+The Berggren tree generates every primitive Pythagorean triple from the seed
+`(3,4,5)` via the three integer child maps `childA`, `childB`, `childC`
+(the rows of Berggren's matrices `matA`, `matB`, `matC`).
+
+## The tropical observable
+
+We attach to each triple `(a,b,c)` the **tropical height**
+`T(a,b,c) = max (max a b) c`, the max-plus linear form reading off the largest
+coordinate.  On triples in *standard position* (positive legs, hypotenuse
+largest) this is exactly the hypotenuse `c`, and the three Berggren generators
+act on it by the explicit affine forms
+
+* `T (childA x) = 2a - 2b + 3c`,
+* `T (childB x) = 2a + 2b + 3c`,
+* `T (childC x) = -2a + 2b + 3c`,
+
+which are precisely the third rows `hypA`, `hypB`, `hypC` of the generators.
+
+## Main results
+
+* `tropHeight_childA / B / C` : the exact tropical recursion formulas above.
+* `tropHeight_childA_grow / B / C` and `T_step_grow` : every child strictly
+  increases `T`, in fact by at least `2`; `T_step_mono` records monotonicity.
+* `applyWord_ordered` : standard position is preserved along the whole tree.
+* `T_applyWord_lower` : along any word `w` of generators, the tropical height
+  grows at least linearly in the depth: `T (applyWord w x) ≥ T x + 2 * |w|`.
+* Executable `applyWord` together with concrete evaluation theorems.
+
+All statements are proved by direct computation from the integer matrix
+formulas and elementary `max` case splits, giving a precise tropical dynamical
+invariant on the Berggren tree.
+-/
+
+namespace BerggrenLorentz.Tropical
+
+open BerggrenLorentz
+
+/-! ## Section 1: The tropical height and the standard-position region -/
+
+/-- The **tropical height** of a triple: the max-plus linear form picking out the
+largest coordinate, `T(a,b,c) = max (max a b) c`. Explicit and computable. -/
+def tropHeight (a b c : ℤ) : ℤ := max (max a b) c
+
+/-- The **standard-position region**: positive coordinates with the third
+coordinate (the hypotenuse) at least as large as both legs.  Every primitive
+Pythagorean triple with positive legs lies here. -/
+def Ordered (a b c : ℤ) : Prop := 0 < a ∧ 0 < b ∧ 0 < c ∧ a ≤ c ∧ b ≤ c
+
+/-- Primitive Pythagorean triples with positive entries lie in standard position. -/
+theorem ordered_of_pythag (a b c : ℤ) (h : IsPythag a b c)
+    (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) : Ordered a b c :=
+  ⟨ha, hb, hc, by nlinarith only [ha, hb, hc, h.symm], by nlinarith only [ha, hb, hc, h.symm]⟩
+
+/-- On standard-position triples the tropical height is exactly the hypotenuse. -/
+theorem tropHeight_eq_hyp (a b c : ℤ) (h : Ordered a b c) :
+    tropHeight a b c = c :=
+  max_eq_right (max_le h.2.2.2.1 h.2.2.2.2)
+
+/-! ## Section 2: Closure of standard position under the Berggren children -/
+
+/-- The A-child of a standard-position triple is again in standard position. -/
+theorem ordered_childA (a b c : ℤ) (h : Ordered a b c) :
+    Ordered (childA a b c).1 (childA a b c).2.1 (childA a b c).2.2 := by
+  obtain ⟨ha, hb, hc, hab, hbc⟩ := h
+  constructor <;> norm_num [childA] <;> omega
+
+/-- The B-child of a standard-position triple is again in standard position. -/
+theorem ordered_childB (a b c : ℤ) (h : Ordered a b c) :
+    Ordered (childB a b c).1 (childB a b c).2.1 (childB a b c).2.2 := by
+  obtain ⟨ha, hb, hc, hac, hbc⟩ := h
+  constructor <;> norm_num [childB] <;> omega
+
+/-- The C-child of a standard-position triple is again in standard position. -/
+theorem ordered_childC (a b c : ℤ) (h : Ordered a b c) :
+    Ordered (childC a b c).1 (childC a b c).2.1 (childC a b c).2.2 := by
+  obtain ⟨ha, hb, hc, h₁, h₂⟩ := h
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩ <;> · unfold childC; norm_num; omega
+
+/-! ## Section 3: Exact tropical recursion formulas for the three children -/
+
+/-- Tropical recursion along the A-branch: `T (childA x) = 2a - 2b + 3c`
+(the `hypA` row). -/
+theorem tropHeight_childA (a b c : ℤ) (h : Ordered a b c) :
+    tropHeight (childA a b c).1 (childA a b c).2.1 (childA a b c).2.2
+      = 2*a - 2*b + 3*c := by
+  unfold tropHeight childA
+  grind +locals
+
+/-- Tropical recursion along the B-branch: `T (childB x) = 2a + 2b + 3c`
+(the `hypB` row). -/
+theorem tropHeight_childB (a b c : ℤ) (h : Ordered a b c) :
+    tropHeight (childB a b c).1 (childB a b c).2.1 (childB a b c).2.2
+      = 2*a + 2*b + 3*c := by
+  unfold tropHeight childB
+  grind +locals
+
+/-- Tropical recursion along the C-branch: `T (childC x) = -2a + 2b + 3c`
+(the `hypC` row). -/
+theorem tropHeight_childC (a b c : ℤ) (h : Ordered a b c) :
+    tropHeight (childC a b c).1 (childC a b c).2.1 (childC a b c).2.2
+      = -2*a + 2*b + 3*c := by
+  unfold tropHeight childC
+  grind +locals
+
+/-! ## Section 4: Strict tropical growth (monotonicity) for each child -/
+
+/-- The A-child strictly increases the tropical height, by at least `2`. -/
+theorem tropHeight_childA_grow (a b c : ℤ) (h : Ordered a b c) :
+    tropHeight a b c + 2
+      ≤ tropHeight (childA a b c).1 (childA a b c).2.1 (childA a b c).2.2 := by
+  obtain ⟨ha, hb, hc, hab, hbc⟩ := h
+  unfold tropHeight childA
+  grind
+
+/-- The B-child strictly increases the tropical height, by at least `2`. -/
+theorem tropHeight_childB_grow (a b c : ℤ) (h : Ordered a b c) :
+    tropHeight a b c + 2
+      ≤ tropHeight (childB a b c).1 (childB a b c).2.1 (childB a b c).2.2 := by
+  unfold tropHeight childB
+  grind +locals
+
+/-- The C-child strictly increases the tropical height, by at least `2`. -/
+theorem tropHeight_childC_grow (a b c : ℤ) (h : Ordered a b c) :
+    tropHeight a b c + 2
+      ≤ tropHeight (childC a b c).1 (childC a b c).2.1 (childC a b c).2.2 := by
+  unfold tropHeight childC at *
+  grind +locals
+
+/-! ## Section 5: The Berggren dynamics on triples and words -/
+
+/-- One Berggren step indexed by a generator `k : Fin 3`. -/
+def step : Fin 3 → ℤ × ℤ × ℤ → ℤ × ℤ × ℤ
+  | 0, t => childA t.1 t.2.1 t.2.2
+  | 1, t => childB t.1 t.2.1 t.2.2
+  | 2, t => childC t.1 t.2.1 t.2.2
+
+/-- The tropical height as a function on triples. -/
+def T (t : ℤ × ℤ × ℤ) : ℤ := tropHeight t.1 t.2.1 t.2.2
+
+/-- Standard position as a predicate on triples. -/
+def OrderedT (t : ℤ × ℤ × ℤ) : Prop := Ordered t.1 t.2.1 t.2.2
+
+/-- Apply a word of Berggren generators, reading letters left to right. -/
+def applyWord (w : List (Fin 3)) (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
+  w.foldl (fun acc k => step k acc) t
+
+/-- A single Berggren step preserves standard position. -/
+theorem ordered_step (k : Fin 3) (t : ℤ × ℤ × ℤ) (h : OrderedT t) :
+    OrderedT (step k t) := by
+  fin_cases k <;> simp_all +decide [OrderedT]
+  · exact ordered_childA _ _ _ h
+  · exact ordered_childB _ _ _ h
+  · exact ordered_childC _ _ _ h
+
+/-- A single Berggren step increases the tropical height by at least `2`. -/
+theorem T_step_grow (k : Fin 3) (t : ℤ × ℤ × ℤ) (h : OrderedT t) :
+    T t + 2 ≤ T (step k t) := by
+  fin_cases k <;> simp +decide [T, OrderedT] at *
+  · exact tropHeight_childA_grow _ _ _ h
+  · convert tropHeight_childB_grow t.1 t.2.1 t.2.2 h using 1
+  · convert tropHeight_childC_grow t.1 t.2.1 t.2.2 h using 1
+
+/-- Monotonicity: every Berggren child has tropical height at least that of its
+parent. -/
+theorem T_step_mono (k : Fin 3) (t : ℤ × ℤ × ℤ) (h : OrderedT t) :
+    T t ≤ T (step k t) := by
+  have := T_step_grow k t h
+  omega
+
+/-! ## Section 6: The path-growth theorem along a word -/
+
+/-- Standard position is preserved along an arbitrary word of generators,
+so the whole Berggren tree stays in the region where `T` is the hypotenuse. -/
+theorem applyWord_ordered (w : List (Fin 3)) (t : ℤ × ℤ × ℤ) (h : OrderedT t) :
+    OrderedT (applyWord w t) := by
+  induction w generalizing t with
+  | nil => simpa [applyWord] using h
+  | cons k w ih => exact ih (step k t) (ordered_step k t h)
+
+/-- **Path-growth theorem.** Along any word `w` of Berggren generators, the
+tropical height grows at least linearly in the depth:
+`T (applyWord w x) ≥ T x + 2 * |w|`. -/
+theorem T_applyWord_lower (w : List (Fin 3)) (t : ℤ × ℤ × ℤ) (h : OrderedT t) :
+    T t + 2 * (w.length : ℤ) ≤ T (applyWord w t) := by
+  induction w generalizing t with
+  | nil => simp [applyWord]
+  | cons k w ih =>
+    have hstep := T_step_grow k t h
+    have hih := ih (step k t) (ordered_step k t h)
+    simp only [applyWord, List.foldl_cons, List.length_cons] at *
+    push_cast
+    linarith
+
+/-! ## Section 7: Executable evaluation and concrete instances -/
+
+/-- The Berggren seed triple `(3,4,5)`. -/
+def seed : ℤ × ℤ × ℤ := (3, 4, 5)
+
+/-- The seed is in standard position. -/
+theorem ordered_seed : OrderedT seed := by
+  unfold OrderedT Ordered seed
+  refine ⟨?_, ?_, ?_, ?_, ?_⟩ <;> decide
+
+/-- Concrete evaluation: three B-steps from the seed reach `(697, 696, 985)`. -/
+theorem applyWord_BBB : applyWord [1, 1, 1] seed = (697, 696, 985) := by
+  unfold applyWord seed
+  decide
+
+/-- Concrete tropical height after three B-steps. -/
+theorem T_applyWord_BBB : T (applyWord [1, 1, 1] seed) = 985 := by
+  rw [applyWord_BBB]; decide
+
+/-- The path-growth bound, instantiated at the seed and the word `BBB`:
+the tropical height grows by at least `6` over three steps (here it grows from
+`5` to `985`). -/
+theorem T_seed_BBB_lower :
+    T seed + 2 * (([1, 1, 1] : List (Fin 3)).length : ℤ) ≤ T (applyWord [1, 1, 1] seed) :=
+  T_applyWord_lower [1, 1, 1] seed ordered_seed
+
+end BerggrenLorentz.Tropical

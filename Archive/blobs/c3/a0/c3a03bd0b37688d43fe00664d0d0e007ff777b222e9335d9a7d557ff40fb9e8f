@@ -1,0 +1,261 @@
+/-
+  # Functorial Tropical Lower Bounds on Persistent Betti-0
+  ## via Valuation-Depth (Ultrametric) Čech/Rips Nerves
+
+  Bridge: connects **tropical algebra** (Bridges/CategoricalTropicalUltrametric.lean) ↔
+  **p-adic / non-Archimedean valuation depth** (Computation/PadicValuationDepth.lean) ↔
+  **persistent topology** (Applications/PoincareData/MetricFiltration.lean).
+
+  ## Core mathematical message
+
+  The *tropical* triangle inequality `dist x z ≤ max (dist x y) (dist y z)` (i.e. the
+  `IsUltrametricDist` / non-Archimedean / "valuation-depth" axiom — exactly the
+  `add_eq_max'` principle of `TropicalValuationObject` and the `|a+b| ≤ max(|a|,|b|)`
+  law of `PadicValuationDepth`) is precisely what turns the Vietoris–Rips nerve into an
+  **equivalence relation**.  Consequently, over an ultrametric (valuation) space the
+  persistent 0-th Betti number — the number of connected components of the Rips graph —
+  is *exactly* the maximal ε-packing number, and it is a (contravariant) **functor**
+  from the scale poset `(ℝ, ≤)` to `(ℕ, ≥)`.
+
+  In an arbitrary metric space a packing only gives a heuristic; the *valuation-depth*
+  hypothesis upgrades it to a **sharp, functorial lower bound**.  This is the bridge
+  theorem of the file: `betti0_isGreatest_packing`.
+
+  ## Main results
+  * `ripsGraph` / `ripsGraph_mono` — the Rips 1-skeleton filtration (mirrors
+    `Applications/PoincareData/MetricFiltration.lean`, kept local so the `Bridges`
+    library is self-contained).
+  * `persistentBetti0` — β₀ at scale ε, defined as `Nat.card` of connected components.
+  * `persistentBetti0_antitone` — **functoriality**: β₀ is antitone in the scale.
+  * `persistentBetti0_le_card`, `persistentBetti0_neg` — boundary behaviour.
+  * `reachable_of_dist_le` — backward nerve direction (any pseudometric).
+  * `dist_le_of_reachable` — **tropical/ultrametric** forward direction (valuation depth).
+  * `ripsGraph_reachable_iff` — the Rips nerve is an *ultrametric equivalence relation*.
+  * `tropical_lower_bound` — packing ⟹ β₀ lower bound (needs valuation depth).
+  * `exists_packing_card_eq_betti0` — sharpness witness (any pseudometric).
+  * `betti0_isGreatest_packing` — β₀ = maximal ε-packing number over a valuation space.
+  * p-adic instantiation `padic_reachable_iff` over `ℤ_[p]`.
+-/
+import Mathlib
+
+open Function SimpleGraph
+
+noncomputable section
+
+namespace TropicalPersistentBetti
+
+/-! ## §1. The Rips nerve (self-contained mirror of `MetricFiltration.lean`) -/
+
+/-- The **Rips graph** (Vietoris–Rips 1-skeleton) of a pseudometric space at scale `ε`:
+    distinct points are adjacent iff within distance `ε`.  This is the 1-dimensional Čech
+    nerve whose connected components compute persistent β₀. -/
+def ripsGraph (α : Type*) [PseudoMetricSpace α] (ε : ℝ) : SimpleGraph α where
+  Adj x y := x ≠ y ∧ dist x y ≤ ε
+  symm x y h := ⟨h.1.symm, by rw [_root_.dist_comm]; exact h.2⟩
+  loopless := ⟨fun x h => h.1 rfl⟩
+
+theorem ripsGraph_adj_iff {α : Type*} [PseudoMetricSpace α] {ε : ℝ} {x y : α} :
+    (ripsGraph α ε).Adj x y ↔ x ≠ y ∧ dist x y ≤ ε := Iff.rfl
+
+/-- Filtration monotonicity: larger scale ⟹ more edges. -/
+theorem ripsGraph_mono {α : Type*} [PseudoMetricSpace α] {ε₁ ε₂ : ℝ} (h : ε₁ ≤ ε₂) :
+    ripsGraph α ε₁ ≤ ripsGraph α ε₂ := fun _ _ ⟨hne, hd⟩ => ⟨hne, hd.trans h⟩
+
+/-- Boundary: at negative scale the nerve is edgeless. -/
+theorem ripsGraph_bot_of_neg {α : Type*} [PseudoMetricSpace α] {ε : ℝ} (hε : ε < 0) :
+    ripsGraph α ε = ⊥ := by
+  ext x y
+  simp only [ripsGraph, SimpleGraph.bot_adj]
+  constructor
+  · intro ⟨_, hd⟩; linarith [dist_nonneg (α := α) (x := x) (y := y)]
+  · intro h; exact h.elim
+
+/-! ## §2. Persistent Betti-0 and its functoriality -/
+
+/-- The **persistent 0-th Betti number** at scale `ε`: the number of connected
+    components of the Rips nerve. -/
+def persistentBetti0 (α : Type*) [PseudoMetricSpace α] [Fintype α] (ε : ℝ) : ℕ :=
+  Nat.card (ripsGraph α ε).ConnectedComponent
+
+/-
+**Functoriality of persistence**: β₀ is antitone in the scale, i.e. it is a
+    contravariant functor `(ℝ, ≤) → (ℕ, ≥)`.  Components only ever merge as ε grows.
+-/
+theorem persistentBetti0_antitone (α : Type*) [PseudoMetricSpace α] [Fintype α] :
+    Antitone (persistentBetti0 α) := by
+  intro ε₁ ε₂ hε;
+  have h_card_le_card : Nat.card (ripsGraph α ε₂).ConnectedComponent ≤ Nat.card (ripsGraph α ε₁).ConnectedComponent := by
+    have h_le : ripsGraph α ε₁ ≤ ripsGraph α ε₂ := ripsGraph_mono hε
+    convert SimpleGraph.ConnectedComponent.card_le_card_of_le h_le;
+  exact h_card_le_card
+
+/-
+β₀ never exceeds the number of points.
+-/
+theorem persistentBetti0_le_card (α : Type*) [PseudoMetricSpace α] [Fintype α] (ε : ℝ) :
+    persistentBetti0 α ε ≤ Nat.card α := by
+  obtain ⟨f, hf⟩ : ∃ f : α → (ripsGraph α ε).ConnectedComponent, Function.Surjective f := by
+    exact ⟨ _, fun x => by rcases x with ⟨ x ⟩ ; exact ⟨ x, rfl ⟩ ⟩;
+  have h_card_le_card : Nat.card (ripsGraph α ε).ConnectedComponent ≤ Nat.card α := by
+    have : Function.Surjective f := hf
+    convert Nat.card_le_card_of_surjective f this
+  exact h_card_le_card
+
+/-
+Boundary: below scale `0` every point is isolated, so β₀ equals the point count.
+-/
+theorem persistentBetti0_neg (α : Type*) [PseudoMetricSpace α] [Fintype α]
+    {ε : ℝ} (hε : ε < 0) : persistentBetti0 α ε = Nat.card α := by
+  convert Nat.card_congr ?_;
+  symm;
+  refine' Equiv.ofBijective ( fun x => ( ripsGraph α ε ).connectedComponentMk x ) ⟨ fun x y hxy => _, fun x => _ ⟩;
+  · simp_all +decide [ ripsGraph_bot_of_neg hε ];
+  · exact Quot.exists_rep x
+
+-- !-- Lab Notes -- !--
+-- HYPOTHESIS (H1): persistent β₀ of the Rips nerve should be antitone in scale and
+--   bounded by the vertex count, mirroring filtration monotonicity from
+--   `MetricFiltration.lean` lifted from the graph level to the homology level.
+-- EXPERIMENT: defined `persistentBetti0 := Nat.card · .ConnectedComponent` so that the
+--   Mathlib lemma `ConnectedComponent.card_le_card_of_le` applies *verbatim* — this was
+--   the decisive API choice (an earlier `Fintype.card` phrasing forced manual `Nat.card`
+--   bridging). OUTCOME: `persistentBetti0_antitone` is a one-liner; functoriality of
+--   persistence is essentially free once β₀ is phrased via `Nat.card`.
+-- INSIGHT: β₀ as a functor `(ℝ,≤) → (ℕ,≥)ᵒᵖ` needs only `Finite` vertices, NO metric
+--   structure on the index — persistence is purely order-theoretic here.
+-- !-- end Lab Notes -- !--
+
+/-! ## §3. The valuation-depth (ultrametric) nerve is an equivalence relation -/
+
+/-
+**Backward nerve direction** (holds in *any* pseudometric space): points within
+    distance `ε` are reachable in the Rips nerve.
+-/
+theorem reachable_of_dist_le {α : Type*} [PseudoMetricSpace α] {ε : ℝ} {x y : α}
+    (hd : dist x y ≤ ε) : (ripsGraph α ε).Reachable x y := by
+  by_cases hxy : x = y;
+  · aesop;
+  · exact SimpleGraph.Adj.reachable ( by exact ⟨ hxy, hd ⟩ )
+
+/-
+**Forward nerve direction — the tropical/valuation-depth step.**  In an ultrametric
+    (non-Archimedean) space, reachability in the Rips nerve forces the endpoints to be
+    within `ε`.  The proof walks the path and collapses it with the tropical inequality
+    `dist x z ≤ max (dist x y) (dist y z)`; without it the statement is false.
+-/
+theorem dist_le_of_reachable {α : Type*} [PseudoMetricSpace α] [IsUltrametricDist α]
+    {ε : ℝ} (hε : 0 ≤ ε) {x y : α} (h : (ripsGraph α ε).Reachable x y) :
+    dist x y ≤ ε := by
+  obtain ⟨ p ⟩ := h;
+  induction' p with u v w p ih;
+  · simpa using hε;
+  · exact le_trans ( IsUltrametricDist.dist_triangle_max v w p ) ( max_le ( ih.2 ) ‹_› )
+
+/-- **The Rips nerve of a valuation space is an ultrametric equivalence relation.**
+    Reachability ⟺ direct ε-proximity.  This is the precise sense in which the tropical
+    `max` law trivialises persistent homology over a non-Archimedean base. -/
+theorem ripsGraph_reachable_iff {α : Type*} [PseudoMetricSpace α] [IsUltrametricDist α]
+    {ε : ℝ} (hε : 0 ≤ ε) {x y : α} :
+    (ripsGraph α ε).Reachable x y ↔ dist x y ≤ ε :=
+  ⟨dist_le_of_reachable hε, reachable_of_dist_le⟩
+
+-- !-- Lab Notes -- !--
+-- HYPOTHESIS (H2 — the core conjecture): the tropical/ultrametric `max` triangle law is
+--   *exactly* what makes Rips-reachability coincide with direct ε-proximity. In a general
+--   metric space reachability is strictly coarser (chains of short hops connect far points).
+-- EXPERIMENT: split the iff into `reachable_of_dist_le` (TRUE in any pseudometric — pure
+--   adjacency) and `dist_le_of_reachable` (requires `IsUltrametricDist`). The forward
+--   direction is proved by walk induction collapsing every path with
+--   `IsUltrametricDist.dist_triangle_max` down to a single `max ε ε = ε` bound.
+-- FAILURE ANALYSIS: dropping `[IsUltrametricDist]` from `dist_le_of_reachable` makes it
+--   FALSE (e.g. three collinear reals 0,ε,2ε are reachable at scale ε but 2ε > ε). This
+--   confirms the valuation-depth hypothesis is load-bearing, not cosmetic.
+-- INSIGHT: over a valuation base the nerve is an honest equivalence relation, so β₀
+--   degenerates to a counting problem — the bridge between non-Archimedean analysis and
+--   trivial persistent homology.
+-- !-- end Lab Notes -- !--
+
+/-! ## §4. Tropical lower bound and its sharpness -/
+
+/-- An **ε-packing**: a finite set whose distinct points are pairwise more than `ε` apart. -/
+def IsPacking {α : Type*} [PseudoMetricSpace α] (P : Finset α) (ε : ℝ) : Prop :=
+  ∀ x ∈ P, ∀ y ∈ P, x ≠ y → ε < dist x y
+
+/-
+**Functorial tropical lower bound.**  Over a valuation (ultrametric) space, any
+    ε-packing injects into the set of connected components, so its size is a lower bound
+    for persistent β₀.  This *fails* in general metric spaces, where packing points may be
+    joined through chains; the valuation-depth hypothesis is exactly what rules that out.
+-/
+theorem tropical_lower_bound {α : Type*} [PseudoMetricSpace α] [IsUltrametricDist α]
+    [Fintype α] {ε : ℝ} (hε : 0 ≤ ε) {P : Finset α} (hP : IsPacking P ε) :
+    P.card ≤ persistentBetti0 α ε := by
+  have h_inj : Function.Injective (fun x : P => (ripsGraph α ε).connectedComponentMk x) := by
+    intro x y hxy;
+    contrapose! hxy;
+    intro h; have := hP x x.2 y y.2; simp_all +decide [ ripsGraph_reachable_iff ] ;
+    linarith;
+  convert Fintype.card_le_of_injective _ h_inj;
+  · rw [ Fintype.card_of_subtype ] ; aesop;
+  · convert Nat.card_eq_fintype_card
+
+/-
+**Sharpness witness** (any pseudometric space): a set of one representative per
+    connected component is an ε-packing of size exactly β₀.  Combined with
+    `tropical_lower_bound` this shows the bound is attained.
+-/
+theorem exists_packing_card_eq_betti0 {α : Type*} [PseudoMetricSpace α] [Fintype α]
+    (ε : ℝ) : ∃ P : Finset α, IsPacking P ε ∧ P.card = persistentBetti0 α ε := by
+  by_contra h_contra
+  push_neg at h_contra
+  generalize_proofs at *; (
+  convert h_contra ( Finset.image ( fun c : ( ripsGraph α ε ).ConnectedComponent => c.out ) Finset.univ ) ?_ ?_ using 1;
+  exact Classical.decEq α;
+  · intro x hx y hy hxy; simp_all +decide [ IsPacking ] ;
+    obtain ⟨ a, rfl ⟩ := hx; obtain ⟨ b, rfl ⟩ := hy; contrapose! hxy;
+    have h_eq : (ripsGraph α ε).Reachable (Quot.out a) (Quot.out b) := by
+      exact reachable_of_dist_le hxy
+    generalize_proofs at *; (
+    convert Quot.sound h_eq using 1;
+    grind +suggestions);
+  · convert Finset.card_image_of_injective _ _;
+    · simp +decide [ persistentBetti0 ];
+    · intro c₁ c₂ h; have := c₁.out_eq; have := c₂.out_eq; aesop;)
+
+/-
+**Bridge theorem.**  Over a valuation-depth (ultrametric) space the persistent
+    0-th Betti number *equals* the maximal ε-packing number: it is the greatest cardinal
+    attained by an ε-packing.  Tropical lower bound + sharpness witness = exact functorial
+    identification of β₀ with non-Archimedean packing.
+-/
+theorem betti0_isGreatest_packing {α : Type*} [PseudoMetricSpace α] [IsUltrametricDist α]
+    [Fintype α] {ε : ℝ} (hε : 0 ≤ ε) :
+    IsGreatest {n : ℕ | ∃ P : Finset α, IsPacking P ε ∧ P.card = n}
+      (persistentBetti0 α ε) := by
+  refine' ⟨ _, fun n hn => _ ⟩;
+  · convert exists_packing_card_eq_betti0 ε;
+  · exact hn.choose_spec.2 ▸ tropical_lower_bound hε hn.choose_spec.1
+
+-- !-- Lab Notes -- !--
+-- HYPOTHESIS (H3): the packing lower bound on β₀, heuristic in general TDA, becomes a
+--   SHARP functorial identity over a valuation space: β₀ = maximal ε-packing number.
+-- EXPERIMENT: `tropical_lower_bound` (needs ultrametricity, via H2's forward direction)
+--   injects a packing into the component set; `exists_packing_card_eq_betti0` (needs only
+--   a pseudometric!) builds a section `ConnectedComponent.out` realising β₀ as a packing.
+--   `betti0_isGreatest_packing` glues them via `IsGreatest`.
+-- INSIGHT / ASYMMETRY: sharpness (the witness) is free in any metric, but the *upper*
+--   control of every packing by β₀ is precisely where valuation depth enters. The two
+--   inequalities meet only over an ultrametric base — a clean separation of where the
+--   non-Archimedean hypothesis is and is not needed.
+-- !-- end Lab Notes -- !--
+
+/-! ## §5. p-adic instantiation (valuation depth made concrete) -/
+
+/-- Over the `p`-adic integers `ℤ_[p]` — the archetypal valuation-depth space of
+    `Computation/PadicValuationDepth.lean` — the Rips nerve is the ultrametric
+    equivalence "agree to valuation depth ε". -/
+theorem padic_reachable_iff (p : ℕ) [Fact (Nat.Prime p)] {ε : ℝ} (hε : 0 ≤ ε)
+    {x y : ℤ_[p]} : (ripsGraph ℤ_[p] ε).Reachable x y ↔ dist x y ≤ ε :=
+  ripsGraph_reachable_iff hε
+
+end TropicalPersistentBetti

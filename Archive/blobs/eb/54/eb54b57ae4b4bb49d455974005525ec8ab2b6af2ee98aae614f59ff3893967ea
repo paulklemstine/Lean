@@ -1,0 +1,56 @@
+import Mathlib
+
+/-!
+# Fibonacci divisibility core
+
+This file packages the basic divisibility/coprimality theory of Fibonacci numbers
+on top of Mathlib's strong-divisibility result `Nat.fib_gcd`.
+
+## Main results
+
+* `fib_gcd_comm` — the symmetric form of Mathlib's `Nat.fib_gcd`:
+  `Nat.gcd (Nat.fib m) (Nat.fib n) = Nat.fib (Nat.gcd m n)`.
+* `one_lt_fib` — `1 < Nat.fib k` for `3 ≤ k`.
+* `fib_eq_one_iff` — `Nat.fib k = 1 ↔ k = 1 ∨ k = 2`.
+* `fib_coprime_iff` — the exact coprimality criterion
+  `Nat.Coprime (Nat.fib m) (Nat.fib n) ↔ Nat.gcd m n = 1 ∨ Nat.gcd m n = 2`.
+
+## Theorem chain
+
+`Nat.fib_gcd` ⟶ `fib_gcd_comm`, together with the small-value lemmas
+`one_lt_fib` and `fib_eq_one_iff`, combine to give `fib_coprime_iff`:
+coprimality of `fib m` and `fib n` reduces (via `fib_gcd_comm`) to
+`Nat.fib (Nat.gcd m n) = 1`, which `fib_eq_one_iff` characterizes.
+
+## Future work
+
+This is intended as a foundation for a later development of the *rank of
+apparition* of Fibonacci numbers (entry points modulo `n`, `ZMod` periodicity,
+pigeonhole arguments). None of that machinery is introduced here.
+-/
+
+namespace Catalog.Algebra
+
+open Nat
+
+/-- Symmetric repackaging of Mathlib's strong divisibility theorem `Nat.fib_gcd`. -/
+theorem fib_gcd_comm (m n : Nat) :
+    Nat.gcd (Nat.fib m) (Nat.fib n) = Nat.fib (Nat.gcd m n) :=
+  (Nat.fib_gcd m n).symm
+
+/-- For `k ≥ 3` the Fibonacci number `fib k` exceeds `1`. -/
+theorem one_lt_fib {k : Nat} (hk : 3 ≤ k) : 1 < Nat.fib k := by
+  have h : k ≤ Nat.fib k + 1 := Nat.le_fib_add_one k
+  linarith
+
+/-- `fib k = 1` exactly when `k = 1` or `k = 2`. -/
+theorem fib_eq_one_iff {k : Nat} : Nat.fib k = 1 ↔ k = 1 ∨ k = 2 := by
+  rcases k with (_ | _ | _ | _ | k) <;> simp_all +arith +decide [fib_add_two]
+  grind
+
+/-- Exact coprimality criterion for Fibonacci numbers. -/
+theorem fib_coprime_iff (m n : Nat) :
+    Nat.Coprime (Nat.fib m) (Nat.fib n) ↔ Nat.gcd m n = 1 ∨ Nat.gcd m n = 2 := by
+  rw [Nat.Coprime, fib_gcd_comm, fib_eq_one_iff]
+
+end Catalog.Algebra

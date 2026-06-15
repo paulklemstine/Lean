@@ -1,0 +1,165 @@
+import Mathlib
+
+/-!
+# A Submultiplicative Row-Sum Norm for Berggren Matrices
+
+The three Berggren matrices `A`, `B`, `C` (each `3×3` with integer entries)
+generate all primitive Pythagorean triples via multiplication from a root vector.
+Words over `{A, B, C}` correspond to paths in the Berggren tree.
+
+This file formalizes the **row-sum norm** `rowNorm M = max_i ∑_j |M i j|` on
+integer matrices, proves it is **submultiplicative**, and derives concrete bounds
+linking the length (depth) of a word to the hypotenuse of the resulting triple.
+
+## Corrections to the original research brief
+
+Two numerical claims in the original brief do not match the actual matrices and
+have been corrected here (the corrected statements are proved in full):
+
+* The brief claimed `rowNorm A ≤ 2`.  In fact each Berggren generator has
+  `rowNorm = 7` (the bottom row `(2, 2, 3)` already sums to `7`).  All the
+  generator/word/hypotenuse bounds below therefore use base `7` rather than `2`.
+
+* The brief's `depth_bound` claimed `w.length ≤ log₂(hyp) + C`.  This is **false**:
+  the generator `A` is *parabolic* (its only eigenvalue is `1`), so iterating `A`
+  makes the hypotenuse grow only *linearly* in the depth, e.g. `(A^100 *ᵥ root) 2 = 20605`
+  while a length-`100` word would need `hyp ≥ 2^(100-C)`.  What the row-norm
+  machinery genuinely yields (by rearranging the upper bound on the hypotenuse) is
+  the reverse inequality: the **bit-length of the hypotenuse is at most the word
+  length** (up to a constant factor), i.e. `Nat.log2 |hyp| ≤ 3 * w.length + 3`,
+  equivalently `w.length ≥ (log₂|hyp| - 3) / 3`.  This is the form proved below.
+
+All proofs are complete; `decide` is used only for the finite checks on the three
+generator matrices.
+-/
+
+namespace Berggren
+
+open Matrix
+
+/-! ## Generator matrices and words -/
+
+/-- The Berggren matrix `A` (first generator). -/
+def A : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
+
+/-- The Berggren matrix `B` (second generator). -/
+def B : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, 2; 2, 1, 2; 2, 2, 3]
+
+/-- The Berggren matrix `C` (third generator). -/
+def C : Matrix (Fin 3) (Fin 3) ℤ := !![-1, 2, 2; -2, 1, 2; -2, 2, 3]
+
+/-- A generator letter. -/
+inductive Generator
+  | A : Generator
+  | B : Generator
+  | C : Generator
+  deriving DecidableEq, Repr
+
+/-- The matrix associated with a generator letter. -/
+def genMatrix : Generator → Matrix (Fin 3) (Fin 3) ℤ
+  | Generator.A => A
+  | Generator.B => B
+  | Generator.C => C
+
+/-- The matrix associated with a word: the product of the corresponding generators. -/
+def wordMatrix (w : List Generator) : Matrix (Fin 3) (Fin 3) ℤ :=
+  (w.map genMatrix).prod
+
+/-- The root vector `(3, 4, 5)` — the smallest primitive Pythagorean triple. -/
+def root : Fin 3 → ℤ := ![3, 4, 5]
+
+/-- The hypotenuse of a triple vector is its third component. -/
+def hypotenuse (v : Fin 3 → ℤ) : ℤ := v 2
+
+/-! ## The row-sum norm and the vector max-abs norm -/
+
+/-- The row-sum norm `max_i ∑_j |M i j|` (using `Int.natAbs`), valued in `ℕ`. -/
+def rowNorm (M : Matrix (Fin 3) (Fin 3) ℤ) : ℕ :=
+  Finset.univ.sup (fun i => ∑ j, (M i j).natAbs)
+
+/-- The max-abs norm `max_j |v j|` of a vector, valued in `ℕ`. -/
+def vecNorm (v : Fin 3 → ℤ) : ℕ :=
+  Finset.univ.sup (fun j => (v j).natAbs)
+
+/-! ## Submultiplicativity -/
+
+/-
+**Submultiplicativity** of the row-sum norm.
+-/
+theorem rowNorm_mul_le (M N : Matrix (Fin 3) (Fin 3) ℤ) :
+    rowNorm (M * N) ≤ rowNorm M * rowNorm N := by
+  refine' Finset.sup_le _;
+  intro i hi
+  have h_sum : ∑ j, ((M * N) i j).natAbs ≤ ∑ k, (M i k).natAbs * rowNorm N := by
+    have h_sum : ∑ j, ((M * N) i j).natAbs ≤ ∑ k, (M i k).natAbs * ∑ j, (N k j).natAbs := by
+      have h_row : ∀ j, ((M * N) i j).natAbs ≤ ∑ k, (M i k).natAbs * (N k j).natAbs := by
+        exact fun j => by simpa [ ← Int.ofNat_le, Matrix.mul_apply ] using Finset.abs_sum_le_sum_abs _ _ |> le_trans <| Finset.sum_le_sum fun k _ => by simp +decide [ abs_mul ] ;
+      refine' le_trans ( Finset.sum_le_sum fun j _ => h_row j ) _;
+      rw [ Finset.sum_comm, Finset.sum_congr rfl fun _ _ => Finset.mul_sum _ _ _ ];
+    exact h_sum.trans ( Finset.sum_le_sum fun k hk => Nat.mul_le_mul_left _ <| Finset.le_sup ( f := fun i => ∑ j, Int.natAbs ( N i j ) ) <| Finset.mem_univ k );
+  exact h_sum.trans ( by rw [ ← Finset.sum_mul _ _ _ ] ; exact Nat.mul_le_mul_right _ <| Finset.le_sup ( f := fun i => ∑ j, ( M i j |> Int.natAbs ) ) hi )
+
+/-
+The product `M *ᵥ v` is controlled by `rowNorm M * vecNorm v`, entrywise.
+-/
+theorem matVec_natAbs_le (M : Matrix (Fin 3) (Fin 3) ℤ) (v : Fin 3 → ℤ) (i : Fin 3) :
+    ((M *ᵥ v) i).natAbs ≤ rowNorm M * vecNorm v := by
+  refine' le_trans _ ( Nat.mul_le_mul_right _ <| Finset.le_sup <| Finset.mem_univ i );
+  rw [ Matrix.mulVec, dotProduct ];
+  rw [ ← @Nat.cast_le ℤ ] ; norm_num;
+  exact le_trans ( Finset.abs_sum_le_sum_abs _ _ ) ( by rw [ Finset.sum_mul _ _ _ ] ; exact Finset.sum_le_sum fun j _ => by rw [ abs_mul ] ; exact mul_le_mul_of_nonneg_left ( by simpa [ ← Int.ofNat_le ] using Finset.le_sup ( f := fun j => Int.natAbs ( v j ) ) ( Finset.mem_univ j ) ) ( abs_nonneg _ ) )
+
+/-! ## Generator and word bounds -/
+
+/-- Each generator has row-sum norm `7` (the brief's claimed bound `2` was wrong). -/
+theorem generator_norms : rowNorm A ≤ 7 ∧ rowNorm B ≤ 7 ∧ rowNorm C ≤ 7 := by
+  refine ⟨?_, ?_, ?_⟩ <;> decide
+
+/-
+The row-sum norm of a word matrix is at most `7 ^ (length of the word)`.
+-/
+theorem rowNorm_wordMatrix_le (w : List Generator) :
+    rowNorm (wordMatrix w) ≤ 7 ^ w.length := by
+  induction' w using List.reverseRecOn with w ih;
+  · decide +revert;
+  · -- Using `rowNorm_mul_le`, we get `rowNorm (wordMatrix (w ++ [ih])) ≤ rowNorm (wordMatrix w) * rowNorm (genMatrix ih)`.
+    have h_mul : rowNorm (wordMatrix (w ++ [ih])) ≤ rowNorm (wordMatrix w) * rowNorm (genMatrix ih) := by
+      convert rowNorm_mul_le _ _ using 2 ; simp +decide [ wordMatrix ];
+    convert h_mul.trans ( Nat.mul_le_mul ‹_› ( show rowNorm ( genMatrix ih ) ≤ 7 by ( cases ih <;> decide ) ) ) using 1 ; simp +decide [ pow_succ' ];
+    ring
+
+/-! ## Hypotenuse and depth bounds -/
+
+/-
+**Hypotenuse bound.** The hypotenuse of the triple generated by a word `w`
+is at most `7 ^ (length w) * 5`, where `5 = vecNorm root` is the norm of the root
+vector.
+-/
+theorem hyp_of_word_le (w : List Generator) :
+    hypotenuse (wordMatrix w *ᵥ root) ≤ (7 ^ w.length) * 5 := by
+  -- By matVec_natAbs_le, we have ((wordMatrix w *ᵥ root) 2).natAbs ≤ rowNorm (wordMatrix w) * vecNorm root.
+  have h_abs : ((wordMatrix w *ᵥ root) 2).natAbs ≤ rowNorm (wordMatrix w) * vecNorm root := by
+    convert matVec_natAbs_le _ _ _ using 1;
+  exact le_trans ( Int.le_natAbs ) ( by exact le_trans ( Nat.cast_le.mpr h_abs ) ( by exact mod_cast Nat.mul_le_mul ( rowNorm_wordMatrix_le w ) ( by decide ) ) )
+
+/-
+**Depth bound (corrected direction).** The bit-length of the hypotenuse is
+controlled by the word length: `log₂ |hyp| ≤ 3 * (length w) + 3`.
+
+Equivalently `w.length ≥ (Nat.log2 |hyp| - 3) / 3`, a genuine lower bound on the
+depth in terms of the hypotenuse.  See the module docstring for why the brief's
+opposite inequality `w.length ≤ log₂ hyp + C` is false (the generator `A` is
+parabolic, so the hypotenuse can grow only linearly in the depth).
+-/
+theorem depth_bound (w : List Generator) :
+    Nat.log2 (hypotenuse (wordMatrix w *ᵥ root)).natAbs ≤ 3 * w.length + 3 := by
+  -- By the properties of logarithms and powers, we can simplify the right-hand side to $2^{3w.length + 3}$.
+  have h_simplified : (hypotenuse (wordMatrix w *ᵥ root)).natAbs ≤ 2 ^ (3 * w.length + 3) := by
+    -- By matVec_natAbs_le and rowNorm_wordMatrix_le and vecNorm root = 5 (decide), we get h ≤ rowNorm (wordMatrix w) * vecNorm root ≤ 7 ^ w.length * 5.
+    have h_le : (hypotenuse (wordMatrix w *ᵥ root)).natAbs ≤ 7 ^ w.length * 5 := by
+      convert matVec_natAbs_le ( wordMatrix w ) root 2 |> le_trans <| mul_le_mul_of_nonneg_right ( rowNorm_wordMatrix_le w ) _ using 1 ; norm_num [ vecNorm ];
+    refine le_trans h_le ?_ ; norm_num [ pow_add, pow_mul ] ; ring_nf ;
+    gcongr <;> norm_num;
+  grind +suggestions
+
+end Berggren

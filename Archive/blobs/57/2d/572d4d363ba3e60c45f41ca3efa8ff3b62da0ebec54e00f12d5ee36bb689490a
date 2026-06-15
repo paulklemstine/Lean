@@ -1,0 +1,165 @@
+/-
+  # Categorical Tropical Rips Interleaving — Shift Action & Finite-Distance Equivalence
+  ## The constant-shift functor acts by tropical multiplication on the interleaving
+  ## distance, and "finite interleaving distance" is an equivalence relation.
+
+  This file develops **Conjecture 2** (tropical/shift action) and **Conjecture 4**
+  (lattice-valued finite-distance equivalence) of
+  `Bridges.CategoricalTropicalRipsInterleaving`.
+
+  * `shift c M`: precompose the parameter line with `· + c`.
+  * `interleaved_shift_iff`: simultaneously shifting both modules leaves the interleaving
+    relation invariant — the shift is an *isometry* of the interleaving distance
+    (`interleavingDist_shift`).
+  * `interleavingDist_self_shift`: a module is `c`-close to its own `c`-shift,
+    `interleavingDist M (shift c M) ≤ ENNReal.ofReal c` — the shift functor moves a module
+    by at most `c` (tropical multiplication by `c`).
+  * `trop_interleavingDist_self`: the self-distance is the **tropical unit**
+    `trop 0 = (1 : Tropical ℝ≥0∞)`.
+  * `FinInterleaved` and `finInterleaved_equivalence`: having *some* finite interleaving is
+    an equivalence relation (reflexive/symmetric/transitive via the catalog's composition
+    law), and `finInterleaved_iff_dist_ne_top` identifies it with `interleavingDist ≠ ⊤`.
+
+  -- !-- Lab Notes -- !--
+  -- HYPOTHESIS (Hypothesizer): the constant-shift reparametrisation `t ↦ t + c` is the
+  --   "tropical scalar action" on persistence modules. Conjecturally it (a) is an isometry
+  --   on pairs, (b) displaces a module by ≤ c, and (c) the self-distance is the tropical
+  --   multiplicative unit. Separately, the union over ε of the ε-interleaving relations
+  --   should be an equivalence relation because the catalog already proved the composition
+  --   law `Interleaved.trans`.
+  -- EXPERIMENT (Experimenter): `interleaved_shift_iff` is proved by evaluating the shifted
+  --   inequalities at the translated parameter `t - c` / `t + c`; `interleavingDist_shift`
+  --   then follows because the two interleaving *sets* coincide. `interleavingDist_self_shift`
+  --   uses `interleavingDist_le_ofReal` with the explicit `c`-interleaving `M ↔ shift c M`.
+  --   The equivalence is `interleaved_refl` / `Interleaved.symm` / `Interleaved.trans`.
+  --   The `≠ ⊤` characterisation uses `Interleaved.weaken` (one way) and `sInf_empty` (other).
+  -- ANALYSIS (Analyst): SURVIVED. Note `interleaved_self_shift` needs `0 ≤ c` (a backward
+  --   shift would move information the wrong way); and `interleavingDist_shift` is an
+  --   *equality*, confirming the shift is a strict isometry, not merely 1-Lipschitz.
+  -- CRITIQUE (Critic): `trop_interleavingDist_self` is more than `rfl` on `trop 0 = 1`: it
+  --   first *computes* `interleavingDist M M = 0` from the catalog, so it genuinely links
+  --   the geometric self-distance to the tropical unit. No vacuous/`native_decide` proofs.
+-/
+
+import Mathlib
+import Bridges.CategoricalTropicalRipsInterleaving
+
+open scoped ENNReal
+open Tropical
+open CategoricalTropicalRipsInterleaving
+
+noncomputable section
+
+namespace CategoricalTropicalRipsShift
+
+universe u
+
+variable {α : Type u} [Preorder α]
+
+/-! ## §1. The constant-shift functor. -/
+
+/-- The constant-shift reparametrisation: `(shift c M).obj t = M.obj (t + c)`. -/
+def shift (c : ℝ) (M : PersMod α) : PersMod α where
+  obj t := M.obj (t + c)
+  mono := fun _ _ hab => M.mono (by linarith)
+
+/-! ## §2. The shift is an isometry of the interleaving distance. -/
+
+/-- Simultaneously shifting both modules by the same constant does not change which shifts
+    interleave them. -/
+theorem interleaved_shift_iff {c ε : ℝ} {M N : PersMod α} :
+    Interleaved ε (shift c M) (shift c N) ↔ Interleaved ε M N := by
+  constructor
+  · rintro ⟨h1, h2⟩
+    refine ⟨fun t => ?_, fun t => ?_⟩
+    · have := h1 (t - c)
+      simpa only [shift, sub_add_cancel, show t - c + ε + c = t + ε by ring] using this
+    · have := h2 (t - c)
+      simpa only [shift, sub_add_cancel, show t - c + ε + c = t + ε by ring] using this
+  · rintro ⟨h1, h2⟩
+    refine ⟨fun t => ?_, fun t => ?_⟩
+    · have := h1 (t + c)
+      simpa only [shift, show t + ε + c = t + c + ε by ring] using this
+    · have := h2 (t + c)
+      simpa only [shift, show t + ε + c = t + c + ε by ring] using this
+
+/-- The constant-shift functor is an **isometry** for the interleaving distance. -/
+theorem interleavingDist_shift (c : ℝ) (M N : PersMod α) :
+    interleavingDist (shift c M) (shift c N) = interleavingDist M N := by
+  unfold interleavingDist interleavingSet
+  congr 1
+  ext x
+  constructor
+  · rintro ⟨ε, hε, hI, rfl⟩
+    exact ⟨ε, hε, interleaved_shift_iff.1 hI, rfl⟩
+  · rintro ⟨ε, hε, hI, rfl⟩
+    exact ⟨ε, hε, interleaved_shift_iff.2 hI, rfl⟩
+
+/-! ## §3. A module is `c`-close to its own `c`-shift (tropical multiplication by `c`). -/
+
+/-- For `c ≥ 0`, a module and its `c`-shift are explicitly `c`-interleaved. -/
+theorem interleaved_self_shift {c : ℝ} (hc : 0 ≤ c) (M : PersMod α) :
+    Interleaved c M (shift c M) := by
+  refine ⟨fun t => ?_, fun t => ?_⟩
+  · show M.obj t ≤ M.obj (t + c + c)
+    exact M.mono (by linarith)
+  · show M.obj (t + c) ≤ M.obj (t + c)
+    exact le_rfl
+
+/-- The shift functor displaces a module by at most `c`. -/
+theorem interleavingDist_self_shift {c : ℝ} (hc : 0 ≤ c) (M : PersMod α) :
+    interleavingDist M (shift c M) ≤ ENNReal.ofReal c :=
+  interleavingDist_le_ofReal hc (interleaved_self_shift hc M)
+
+/-! ## §4. The tropical unit. -/
+
+/-- The self-distance, transported to the tropical semiring, is the **tropical unit**
+    `1 = trop 0`. (Computed from `interleavingDist_self`, then `trop 0 = 1`.) -/
+theorem trop_interleavingDist_self (M : PersMod α) :
+    trop (interleavingDist M M) = 1 := by
+  rw [interleavingDist_self]
+  rfl
+
+/-! ## §5. Finite interleaving distance is an equivalence relation. -/
+
+/-- Two modules have *finite interleaving distance* iff they are `ε`-interleaved for some
+    real `ε` (`R = ⋃_ε R_ε`). -/
+def FinInterleaved (M N : PersMod α) : Prop := ∃ ε : ℝ, Interleaved ε M N
+
+/-- `FinInterleaved` is an equivalence relation; transitivity is the catalog's composition
+    law `Interleaved.trans`. -/
+theorem finInterleaved_equivalence : Equivalence (@FinInterleaved α _) where
+  refl M := ⟨0, interleaved_refl M⟩
+  symm := fun ⟨ε, h⟩ => ⟨ε, h.symm⟩
+  trans := fun ⟨ε, h1⟩ ⟨δ, h2⟩ => ⟨ε + δ, h1.trans h2⟩
+
+/-- `FinInterleaved` is exactly the relation of *finite* interleaving distance. -/
+theorem finInterleaved_iff_dist_ne_top {M N : PersMod α} :
+    FinInterleaved M N ↔ interleavingDist M N ≠ ⊤ := by
+  constructor
+  · rintro ⟨ε, h⟩
+    have hpos : Interleaved (max ε 0) M N := h.weaken (le_max_left _ _)
+    have hle : interleavingDist M N ≤ ENNReal.ofReal (max ε 0) :=
+      interleavingDist_le_ofReal (le_max_right _ _) hpos
+    exact ne_top_of_le_ne_top ENNReal.ofReal_ne_top hle
+  · intro hne
+    by_contra hcon
+    apply hne
+    have hempty : interleavingSet M N = ∅ := by
+      ext x
+      simp only [interleavingSet, Set.mem_setOf_eq, Set.mem_empty_iff_false, iff_false]
+      rintro ⟨ε, _, hI, rfl⟩
+      exact hcon ⟨ε, hI⟩
+    show interleavingDist M N = ⊤
+    unfold interleavingDist
+    rw [hempty, sInf_empty]
+
+-- !-- Lab Notes -- !--
+-- SYNTHESIS (Principal Investigator): Conjectures 2 and 4 are discharged with 0 sorries.
+--   The constant shift is a strict isometry (`interleavingDist_shift`) that displaces a
+--   module by ≤ c (`interleavingDist_self_shift`); the self-distance is the tropical unit.
+--   Finite interleaving distance is an equivalence relation matching `interleavingDist ≠ ⊤`.
+--   The remaining quotient-metric refinement of Conjecture 4 is recorded in
+--   FUTURE_DIRECTIONS.md.
+
+end CategoricalTropicalRipsShift

@@ -1,0 +1,79 @@
+import Catalog.Geometry.HomotopyTypeTheory.EckmannHiltonBiunital
+
+/-!
+# The Eckmann–Hilton Bridge III: Fibrewise gluing and faithful representation
+
+This file is the *product* half of the dictionary. Given a family of bi-unital
+interchange data `S i` on carriers `α i`, the pointwise (sections) carrier `∀ i, α i`
+inherits a bi-unital interchange datum `piSystem S` whose interchange law glues
+fibrewise. Quoting the object-level commutativity theorem on the glued datum gives
+commutativity of the section operation (`pi_comm`), and evaluation at each fibre is a
+homomorphism (`eval_preserves`) with the family of evaluations separating points
+(`pi_faithful`) — the algebraic shadow of a "points separate functions" representation.
+
+## Main definitions
+* `piSystem` — the bi-unital interchange datum on the sections carrier `∀ i, α i`.
+
+## Main results
+* `pi_interchange` — interchange holds fibrewise on the glued datum.
+* `pi_comm` — the glued first operation is commutative (via `BiunitalInterchange.comm`).
+* `eval_preserves` — evaluation at a fibre preserves the first operation.
+* `pi_faithful` — the family of fibre evaluations separates points (faithfulness).
+
+-- !-- Lab Notebook -- !--
+Hypothesis: Bi-unital interchange structure is closed under arbitrary products, and the
+  section datum is faithfully represented by its fibres.
+Result: Confirmed; `piSystem` glues every field pointwise (all by `funext`), `pi_comm`
+  is a direct quotation of the object-level `comm`, and `pi_faithful` is `funext`.
+Insight: Commutativity of the section monoid needs no new argument — it is *imported*
+  from the single-carrier engine applied to the product carrier, demonstrating the
+  catalog engine is genuinely reusable, not just re-instantiable.
+Failure analysis: None; the only subtlety is that gluing requires `funext`, so the
+  structure fields are proved by `funext` then the per-fibre axiom.
+-/
+
+universe u v
+
+variable {ι : Type u} {α : ι → Type v} (S : ∀ i, BiunitalInterchange (α i))
+
+/-- The **section system**: a family of bi-unital interchange data glues to a single
+bi-unital interchange datum on the product (sections) carrier `∀ i, α i`, all operations
+acting pointwise. -/
+def piSystem : BiunitalInterchange (∀ i, α i) where
+  op₁ := fun f g i => (S i).op₁ (f i) (g i)
+  op₂ := fun f g i => (S i).op₂ (f i) (g i)
+  e₁ := fun i => (S i).e₁
+  e₂ := fun i => (S i).e₂
+  e₁_op₁ := fun f => funext fun i => (S i).e₁_op₁ (f i)
+  op₁_e₁ := fun f => funext fun i => (S i).op₁_e₁ (f i)
+  e₂_op₂ := fun f => funext fun i => (S i).e₂_op₂ (f i)
+  op₂_e₂ := fun f => funext fun i => (S i).op₂_e₂ (f i)
+  interchange := fun a b c d => funext fun i => (S i).interchange (a i) (b i) (c i) (d i)
+
+-- !-- The interchange field of `piSystem` already *is* fibrewise gluing of each
+-- `(S i).interchange`. -- !--
+/-- Interchange on the section system holds and is the fibrewise gluing of the fibre
+interchange laws. -/
+theorem pi_interchange (a b c d : ∀ i, α i) :
+    (piSystem S).op₁ ((piSystem S).op₂ a b) ((piSystem S).op₂ c d)
+      = (piSystem S).op₂ ((piSystem S).op₁ a c) ((piSystem S).op₁ b d) :=
+  (piSystem S).interchange a b c d
+
+-- !-- Apply the single-carrier `BiunitalInterchange.comm` to the glued datum
+-- `piSystem S`. -- !--
+/-- The section first operation is commutative — obtained by quoting the object-level
+Eckmann–Hilton commutativity on the glued datum. -/
+theorem pi_comm (f g : ∀ i, α i) :
+    (piSystem S).op₁ f g = (piSystem S).op₁ g f :=
+  (piSystem S).comm f g
+
+-- !-- Evaluation at `i` sends `op₁` to `(S i).op₁` definitionally. -- !--
+/-- Evaluation at a fibre `i` preserves the first operation. -/
+theorem eval_preserves (i : ι) (f g : ∀ i, α i) :
+    ((piSystem S).op₁ f g) i = (S i).op₁ (f i) (g i) := rfl
+
+-- !-- Two sections agreeing on every fibre are equal — `funext`. -- !--
+/-- **Faithfulness**: the family of fibre evaluations separates points; two sections
+that agree under every evaluation are equal. -/
+theorem pi_faithful (f g : ∀ i, α i) (h : ∀ i, f i = g i) : f = g :=
+  funext h

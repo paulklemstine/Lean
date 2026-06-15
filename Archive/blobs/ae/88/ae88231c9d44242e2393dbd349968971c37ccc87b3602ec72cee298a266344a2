@@ -1,0 +1,93 @@
+/-
+Copyright (c) 2026 Harmonic. All rights reserved.
+Released under Apache 2.0 license.
+
+# The Boltzmann Bridge for the Linear-Order Species
+
+This file develops the *labeled* (exponential) Boltzmann distribution attached to the
+combinatorial **species of linear orders** `L`, and computes its mean.
+
+Recall that for a finite set of size `n` the number of linear orders is `n!`, so the
+exponential generating function (EGF) of `L` is the normalizing geometric series
+`∑ₙ (|L[n]|/n!) xⁿ = ∑ₙ xⁿ = 1 / (1 - x)`.
+
+In the labeled Boltzmann model at parameter `0 ≤ x < 1` the *weight* of size `n` is
+`(|L[n]|/n!) · xⁿ = xⁿ`, so the partition function (`boltzmannPartition_linOrder`) is the
+geometric series `∑ₙ xⁿ`, and the size distribution `boltzmannPMF_linOrder` is the
+**geometric distribution** `p(n) = xⁿ (1 - x)`.
+
+## Main results
+
+* `boltzmannPartition_linearOrderSpecies` — the partition function in closed form:
+  `∑ₙ xⁿ = (1 - x)⁻¹`.
+* `boltzmannPMF_linearOrderSpecies` — the explicit Boltzmann pmf: `p(n) = xⁿ (1 - x)`.
+* `linOrderSpecies_boltzmann_mean` — the mean of the Boltzmann size distribution:
+  `E[N] = x / (1 - x)`, obtained from the geometric-derivative identity
+  `∑ₙ n xⁿ = x / (1 - x)²`.
+-/
+import Mathlib
+
+open scoped BigOperators
+
+namespace SpeciesBoltzmannBridge
+
+/-- The number of linear orders on a labeled set of size `n`, i.e. `|L[n]| = n!`. -/
+def linOrderSpeciesCard (n : ℕ) : ℕ := n.factorial
+
+/-- The labeled Boltzmann weight of size `n` for the linear-order species at parameter
+`x`: it equals `(|L[n]|/n!) · xⁿ = xⁿ` (see `linOrderWeight_eq`). -/
+noncomputable def linOrderWeight (x : ℝ) (n : ℕ) : ℝ := x ^ n
+
+/-- The Boltzmann weight is the EGF coefficient `(|L[n]|/n!)` times `xⁿ`; since
+`|L[n]| = n!` the coefficient is `1`, leaving `xⁿ`. -/
+theorem linOrderWeight_eq (x : ℝ) (n : ℕ) :
+    linOrderWeight x n = ((linOrderSpeciesCard n : ℝ) / (n.factorial : ℝ)) * x ^ n := by
+  unfold linOrderWeight linOrderSpeciesCard
+  have hfac : (n.factorial : ℝ) ≠ 0 := by
+    exact_mod_cast Nat.factorial_ne_zero n
+  rw [div_self hfac, one_mul]
+
+/-- The Boltzmann partition function of the linear-order species: `∑ₙ xⁿ`. -/
+noncomputable def boltzmannPartition_linOrder (x : ℝ) : ℝ := ∑' n, linOrderWeight x n
+
+/-- The Boltzmann size pmf of the linear-order species: the weight of size `n` divided by
+the partition function. -/
+noncomputable def boltzmannPMF_linOrder (x : ℝ) (n : ℕ) : ℝ :=
+  linOrderWeight x n / boltzmannPartition_linOrder x
+
+/-- The mean of the Boltzmann size distribution, `E[N] = ∑ₙ n · p(n)`. -/
+noncomputable def boltzmannMean_linOrder (x : ℝ) : ℝ :=
+  ∑' n : ℕ, (n : ℝ) * boltzmannPMF_linOrder x n
+
+/-- **Closed form of the partition function.** For `0 ≤ x < 1` the linear-order species
+partition function is the geometric series `∑ₙ xⁿ = (1 - x)⁻¹`. -/
+theorem boltzmannPartition_linearOrderSpecies (x : ℝ) (hx0 : 0 ≤ x) (hx1 : x < 1) :
+    boltzmannPartition_linOrder x = (1 - x)⁻¹ := by
+  unfold boltzmannPartition_linOrder linOrderWeight
+  exact tsum_geometric_of_lt_one hx0 hx1
+
+/-- **Explicit Boltzmann pmf.** For `0 ≤ x < 1` the Boltzmann size distribution of the
+linear-order species is the geometric distribution `p(n) = xⁿ (1 - x)`. -/
+theorem boltzmannPMF_linearOrderSpecies (x : ℝ) (hx0 : 0 ≤ x) (hx1 : x < 1) (n : ℕ) :
+    boltzmannPMF_linOrder x n = x ^ n * (1 - x) := by
+  unfold boltzmannPMF_linOrder linOrderWeight
+  rw [boltzmannPartition_linearOrderSpecies x hx0 hx1, div_eq_mul_inv, inv_inv]
+
+/-- **Mean of the Boltzmann distribution.** For `0 ≤ x < 1` the expected size sampled
+from the linear-order species Boltzmann distribution is `x / (1 - x)`.
+
+The proof reduces the expectation `∑ₙ n · xⁿ (1 - x)` to the geometric-derivative
+identity `∑ₙ n xⁿ = x / (1 - x)²`. -/
+theorem linOrderSpecies_boltzmann_mean (x : ℝ) (hx0 : 0 ≤ x) (hx1 : x < 1) :
+    boltzmannMean_linOrder x = x / (1 - x) := by
+  have hnorm : ‖x‖ < 1 := by rw [Real.norm_eq_abs, abs_of_nonneg hx0]; exact hx1
+  unfold boltzmannMean_linOrder
+  simp_rw [boltzmannPMF_linearOrderSpecies x hx0 hx1]
+  have hterm : ∀ n : ℕ, (n : ℝ) * (x ^ n * (1 - x)) = (1 - x) * ((n : ℝ) * x ^ n) := by
+    intro n; ring
+  simp_rw [hterm]
+  rw [tsum_mul_left, tsum_coe_mul_geometric_of_norm_lt_one hnorm]
+  have hx1' : (1 : ℝ) - x ≠ 0 := by linarith
+  field_simp
+
+end SpeciesBoltzmannBridge

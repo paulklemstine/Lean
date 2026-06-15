@@ -1,0 +1,327 @@
+import Mathlib
+import Bridges.NeuralPseudometricProofSpectrumFunctor
+
+/-! # Functoriality, Primality, and Quotient Geometry of the Neural ↔ Proof-Spectrum Bridge
+
+This file is a **research extension** of
+`Bridges.NeuralPseudometricProofSpectrumFunctor`, which built a comparison
+
+  neural observation pseudometric  ⟶  congruence kernel  ⟶  proof-spectrum congruence
+
+and recorded two open ends in its Lab Notes:
+
+* the assignment `N ↦ behaviorCongruence N` was shown to *push forward* along an
+  intertwining morphism, but the **functor laws** (identity / composition) were not
+  stated; and
+* **Failure analysis F2** observed that `behaviorCongruence N` is *not* automatically a
+  *prime* congruence even when `K` is an integral domain, leaving primality as an open
+  problem requiring "a genuine extra hypothesis".
+
+Here we close both ends and add quotient-geometry results:
+
+## Main results
+
+* `AlgNeuralHom.id`, `AlgNeuralHom.comp` — the identity and composition of morphisms of
+  algebraic neural systems, with `id_toFun` / `comp_toFun` computing their state maps.
+* `algBehavior_map_id`, `algBehavior_map_comp` — the behavior map is functorial: identity
+  morphisms act trivially and composites act by chaining.
+* `behaviorCongruence_map_id`, `behaviorCongruence_map_comp` — the induced pushforward on
+  congruences satisfies the functor laws.
+* `ObserveDetectsNull` + `behaviorPrimeCongruence` — **closing F2**: a precise extra
+  hypothesis (the read-out *detects* behavioral nullity) under which the behavior
+  congruence is a genuine `PrimeSRCong`, i.e. a point of the proof spectrum.
+* `idAlgSystem` + `idAlgSystem_observeDetectsNull` — a concrete witness showing the
+  hypothesis is satisfiable and nondegenerate (the diagonal congruence on an integral
+  domain is prime).
+* `behaviorPrime_zeroClass_isPrimeTheory`, `behaviorPrime_vanishes_iff` — the prime
+  congruence's zero-class is a prime theory and its vanishing locus is the set of
+  behaviorally-null states.
+* `neural_equiv_upto_antitone` — the depth filtration is an antitone refinement chain.
+* `obsDist_eq_one_iff`, `obsDist_mem_zero_one`, `obsDist_well_defined`,
+  `obsDist_pos_of_not_rel` — the observation pseudometric is `{0,1}`-valued, descends to
+  the Myhill–Nerode quotient, and is strictly positive off the congruence.
+-/
+
+noncomputable section
+open Classical
+open Bridges.AlgebraMachineLearning
+
+namespace Bridges.NeuralProofSpectrum
+
+universe u v w
+
+variable {R S P K : Type*} {α : Type*}
+
+/-! ## Section 0: Behavior at the empty context
+
+-- !-- Lab Notes -- !--
+-- Hypothesis H3: the empty-context behavior `algBehavior N x []` is literally the
+-- read-out `observe x`.  This trivial identity is the linchpin of the primality argument
+-- below: it lets a *global* statement (`∀ w, …`) be tested at the single context `[]`,
+-- where multiplicativity collapses to the read-out semiring and `NoZeroDivisors K` can
+-- bite.
+-/
+
+theorem algBehavior_nil [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x : R) :
+    algBehavior N x [] = N.observe x := rfl
+
+/-! ## Section 1: The functor laws
+
+-- !-- Lab Notes -- !--
+-- Result R3 (functoriality, completed): the parent file proved the *object* part
+-- (`behaviorCongruence`) and a single *morphism* pushforward (`behaviorCongruence_map`).
+-- A functor also needs identity and composition.  We supply `AlgNeuralHom.id` /
+-- `AlgNeuralHom.comp` and verify `algBehavior` is strictly functorial:
+--   * identity morphisms fix every behavior value (`algBehavior_map_id`), and
+--   * composite morphisms chain (`algBehavior_map_comp`),
+-- which immediately yield the congruence-level functor laws.  Because `SRCong.rel` is
+-- `Prop`-valued, the laws are most informatively stated as equalities of the underlying
+-- *state maps* (`id_toFun`, `comp_toFun`) together with the behavior identities.
+-/
+
+/-- The identity morphism of an algebraic neural system. -/
+def AlgNeuralHom.id [Semiring R] [Semiring K] (N : AlgNeuralSystem R K α) :
+    AlgNeuralHom N N where
+  toFun := _root_.id
+  map_step := fun _ _ => rfl
+  map_observe := fun _ => rfl
+
+/-- Composition of morphisms of algebraic neural systems. -/
+def AlgNeuralHom.comp [Semiring R] [Semiring S] [Semiring P] [Semiring K]
+    {N : AlgNeuralSystem R K α} {M : AlgNeuralSystem S K α} {Q : AlgNeuralSystem P K α}
+    (g : AlgNeuralHom M Q) (f : AlgNeuralHom N M) : AlgNeuralHom N Q where
+  toFun := g.toFun ∘ f.toFun
+  map_step := by
+    intro x a
+    show g.toFun (f.toFun (N.step x a)) = Q.step (g.toFun (f.toFun x)) a
+    rw [f.map_step, g.map_step]
+  map_observe := by
+    intro x
+    show N.observe x = Q.observe (g.toFun (f.toFun x))
+    rw [f.map_observe, g.map_observe]
+
+@[simp] theorem AlgNeuralHom.id_toFun [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) :
+    (AlgNeuralHom.id N).toFun = _root_.id := rfl
+
+@[simp] theorem AlgNeuralHom.comp_toFun [Semiring R] [Semiring S] [Semiring P] [Semiring K]
+    {N : AlgNeuralSystem R K α} {M : AlgNeuralSystem S K α} {Q : AlgNeuralSystem P K α}
+    (g : AlgNeuralHom M Q) (f : AlgNeuralHom N M) :
+    (g.comp f).toFun = g.toFun ∘ f.toFun := rfl
+
+/-- Identity functor law for the behavior map. -/
+theorem algBehavior_map_id [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x : R) (w : List α) :
+    algBehavior N ((AlgNeuralHom.id N).toFun x) w = algBehavior N x w := rfl
+
+/-- Composition functor law for the behavior map. -/
+theorem algBehavior_map_comp [Semiring R] [Semiring S] [Semiring P] [Semiring K]
+    {N : AlgNeuralSystem R K α} {M : AlgNeuralSystem S K α} {Q : AlgNeuralSystem P K α}
+    (g : AlgNeuralHom M Q) (f : AlgNeuralHom N M) (x : R) (w : List α) :
+    algBehavior N x w = algBehavior Q ((g.comp f).toFun x) w := by
+  rw [algBehavior_map f x w]
+  exact algBehavior_map g (f.toFun x) w
+
+/-- Identity functor law at the level of congruences. -/
+theorem behaviorCongruence_map_id [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) {x y : R}
+    (h : (behaviorCongruence N).rel x y) :
+    (behaviorCongruence N).rel ((AlgNeuralHom.id N).toFun x) ((AlgNeuralHom.id N).toFun y) :=
+  behaviorCongruence_map (AlgNeuralHom.id N) h
+
+/-- Composition functor law at the level of congruences: the pushforward along a composite
+    equals the composite of the pushforwards. -/
+theorem behaviorCongruence_map_comp [Semiring R] [Semiring S] [Semiring P] [Semiring K]
+    {N : AlgNeuralSystem R K α} {M : AlgNeuralSystem S K α} {Q : AlgNeuralSystem P K α}
+    (g : AlgNeuralHom M Q) (f : AlgNeuralHom N M) {x y : R}
+    (h : (behaviorCongruence N).rel x y) :
+    (behaviorCongruence Q).rel ((g.comp f).toFun x) ((g.comp f).toFun y) :=
+  behaviorCongruence_map (g.comp f) h
+
+/-! ## Section 2: A primality criterion — closing Failure analysis F2
+
+-- !-- Lab Notes -- !--
+-- Result R4 (primality, closing F2): the parent file noted that
+-- `∀ w, alg(a*b) w = 0` only gives a *pointwise* disjunction `∀ w, alg a w = 0 ∨ alg b w = 0`,
+-- which does not factor.  The fix is to demand that the read-out already *detects*
+-- nullity:  `ObserveDetectsNull N` says `observe x = 0 → x` is behaviorally null.  Then
+-- testing at the empty context `[]` (where `alg x [] = observe x`, Section 0) reduces the
+-- product hypothesis to `observe a * observe b = 0`; `NoZeroDivisors K` splits it, and
+-- the detection hypothesis promotes the chosen factor to global nullity.  This yields a
+-- genuine `PrimeSRCong R` — a point of the proof spectrum.
+--
+-- Insight I2: `ObserveDetectsNull` is exactly the assertion that the read-out is
+-- "behaviorally faithful at 0", i.e. the depth-0 observer already separates the zero
+-- class.  It is *not* vacuous: the diagonal system `idAlgSystem` (Section 3) satisfies it,
+-- and there it recovers the classical fact that the trivial congruence on an integral
+-- domain is prime.
+-/
+
+/-- The read-out **detects behavioral nullity**: any state whose read-out is `0` is
+    behaviorally null (indistinguishable from `0` in every context). -/
+def ObserveDetectsNull [Semiring R] [Semiring K] (N : AlgNeuralSystem R K α) : Prop :=
+  ∀ x : R, N.observe x = 0 → behaviorRel N x 0
+
+/-- **Closing F2.** Under `NoZeroDivisors K` and `ObserveDetectsNull N`, the behavioral
+    congruence is a genuine *prime* congruence — a point of the proof spectrum. -/
+def behaviorPrimeCongruence [Semiring R] [Semiring K] [NoZeroDivisors K]
+    (N : AlgNeuralSystem R K α) (hdet : ObserveDetectsNull N) : PrimeSRCong R where
+  toSRCong := behaviorCongruence N
+  prime_prop := by
+    intro a b hab
+    have h0 : algBehavior N a [] * algBehavior N b [] = 0 := by
+      have hw := hab []
+      rw [algBehavior_mul, algBehavior_zero] at hw
+      exact hw
+    rw [algBehavior_nil, algBehavior_nil] at h0
+    rcases mul_eq_zero.mp h0 with h | h
+    · exact Or.inl (hdet a h)
+    · exact Or.inr (hdet b h)
+
+@[simp] theorem behaviorPrimeCongruence_rel [Semiring R] [Semiring K] [NoZeroDivisors K]
+    (N : AlgNeuralSystem R K α) (hdet : ObserveDetectsNull N) (x y : R) :
+    (behaviorPrimeCongruence N hdet).rel x y ↔ behaviorRel N x y := Iff.rfl
+
+/-- The zero-class of the behavior prime congruence is a prime theory in the proof
+    spectrum. -/
+theorem behaviorPrime_zeroClass_isPrimeTheory [Semiring R] [Semiring K] [NoZeroDivisors K]
+    (N : AlgNeuralSystem R K α) (hdet : ObserveDetectsNull N) :
+    IsPrimeTheory (behaviorPrimeCongruence N hdet).toSRCong.zeroClass :=
+  prime_cong_zero_class_prime_theory (behaviorPrimeCongruence N hdet)
+
+/-- The vanishing locus of the behavior prime congruence (as a point of the proof
+    spectrum) is exactly the set of behaviorally-null states. -/
+theorem behaviorPrime_vanishes_iff [Semiring R] [Semiring K] [NoZeroDivisors K]
+    (N : AlgNeuralSystem R K α) (hdet : ObserveDetectsNull N) (a : R) :
+    vanishes (behaviorPrimeCongruence N hdet) a ↔ ∀ w : List α, algBehavior N a w = 0 := by
+  constructor
+  · intro h w
+    have := h w
+    rwa [algBehavior_zero] at this
+  · intro h w
+    rw [algBehavior_zero]
+    exact h w
+
+/-! ## Section 3: A concrete witness — the diagonal (identity) system
+
+-- !-- Lab Notes -- !--
+-- Result R5 (nondegeneracy): `idAlgSystem` is the algebraic neural system whose state
+-- never moves (`step x a = x`) and whose read-out is the identity.  Its behavioral
+-- equivalence is literal equality of states, so `behaviorCongruence` is the diagonal
+-- congruence.  It satisfies `ObserveDetectsNull` trivially, so `behaviorPrimeCongruence`
+-- applies over any integral domain — recovering the classical statement that the
+-- diagonal/trivial congruence is prime exactly when there are no zero divisors.  This
+-- certifies that the F2 hypothesis is consistent and the prime-congruence construction is
+-- nonvacuous.
+-/
+
+/-- The diagonal algebraic neural system on a semiring: state never moves and the
+    read-out is the identity. -/
+def idAlgSystem (R : Type*) (α : Type*) [Semiring R] : AlgNeuralSystem R R α where
+  step := fun x _ => x
+  observe := _root_.id
+  step_zero := fun _ => rfl
+  step_add := fun _ _ _ => rfl
+  step_mul := fun _ _ _ => rfl
+  observe_zero := rfl
+  observe_add := fun _ _ => rfl
+  observe_mul := fun _ _ => rfl
+
+theorem idAlgSystem_algBehavior [Semiring R] (x : R) (w : List α) :
+    algBehavior (idAlgSystem R α) x w = x := by
+  rw [algBehavior_def]
+  have : ∀ (z : R), List.foldl (idAlgSystem R α).step z w = z := by
+    intro z
+    induction w generalizing z with
+    | nil => rfl
+    | cons a w ih => simp only [List.foldl_cons]; exact ih ((idAlgSystem R α).step z a)
+  rw [this]
+  rfl
+
+/-- For the diagonal system, behavioral equivalence is literal equality. -/
+theorem idAlgSystem_behaviorRel_iff_eq [Semiring R] (x y : R) :
+    behaviorRel (idAlgSystem R α) x y ↔ x = y := by
+  constructor
+  · intro h
+    have := h []
+    rwa [idAlgSystem_algBehavior, idAlgSystem_algBehavior] at this
+  · intro h w
+    rw [idAlgSystem_algBehavior, idAlgSystem_algBehavior, h]
+
+/-- The diagonal system's read-out detects nullity. -/
+theorem idAlgSystem_observeDetectsNull [Semiring R] :
+    ObserveDetectsNull (idAlgSystem R α) := by
+  intro x hx
+  rw [idAlgSystem_behaviorRel_iff_eq]
+  exact hx
+
+/-- Over an integral domain, the diagonal behavior congruence is prime: a concrete,
+    nondegenerate point of the proof spectrum. -/
+def idAlgSystem_primeCongruence (R : Type*) (α : Type*) [Semiring R] [NoZeroDivisors R] :
+    PrimeSRCong R :=
+  behaviorPrimeCongruence (idAlgSystem R α) idAlgSystem_observeDetectsNull
+
+/-! ## Section 4: The depth filtration is an antitone refinement chain
+
+-- !-- Lab Notes -- !--
+-- Insight I3: the parent file showed the congruence kernel is the intersection over depth
+-- of `neural_equiv_upto`.  We record the missing monotonicity: deeper observers separate
+-- more, so `neural_equiv_upto N (·)` is *antitone*.  Combined with the parent's
+-- `behaviorRel_iff_all_depth`, the kernel is genuinely the limit of a decreasing chain of
+-- finite-depth partitions.
+-/
+
+theorem neural_equiv_upto_antitone
+    {σ β : Type*} (N : NeuralObservationSystem σ α β) {j k : ℕ} (hjk : j ≤ k)
+    {s t : σ} (h : neural_equiv_upto N k s t) : neural_equiv_upto N j s t :=
+  fun w hw => h w (le_trans hw hjk)
+
+/-! ## Section 5: Quotient geometry of the observation pseudometric
+
+-- !-- Lab Notes -- !--
+-- Insight I4: the observation pseudometric is `{0,1}`-valued, is constant on congruence
+-- classes (`obsDist_well_defined`), and is strictly positive between distinct classes.
+-- Hence it descends to a genuine *metric* on the Myhill–Nerode quotient — the analytic
+-- avatar of "the proof-spectrum congruence separates points of the quotient".
+-/
+
+theorem obsDist_mem_zero_one [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x y : R) :
+    obsDist N x y = 0 ∨ obsDist N x y = 1 := by
+  unfold obsDist
+  split_ifs
+  · exact Or.inl rfl
+  · exact Or.inr rfl
+
+theorem obsDist_eq_one_iff [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x y : R) :
+    obsDist N x y = 1 ↔ ¬ behaviorRel N x y := by
+  unfold obsDist
+  split_ifs with h <;> simp [h]
+
+theorem obsDist_pos_of_not_rel [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) {x y : R} (h : ¬ behaviorRel N x y) :
+    0 < obsDist N x y := by
+  unfold obsDist
+  rw [if_neg h]
+  norm_num
+
+/-- The pseudometric descends to the Myhill–Nerode quotient: it is constant along
+    behavioral equivalence in both arguments. -/
+theorem obsDist_well_defined [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) {x x' y y' : R}
+    (hx : behaviorRel N x x') (hy : behaviorRel N y y') :
+    obsDist N x y = obsDist N x' y' := by
+  have hiff : behaviorRel N x y ↔ behaviorRel N x' y' := by
+    constructor
+    · intro h
+      exact behaviorRel_trans N (behaviorRel_trans N (behaviorRel_symm N hx) h) hy
+    · intro h
+      exact behaviorRel_trans N (behaviorRel_trans N hx h) (behaviorRel_symm N hy)
+  unfold obsDist
+  by_cases hb : behaviorRel N x y
+  · rw [if_pos hb, if_pos (hiff.mp hb)]
+  · rw [if_neg hb, if_neg (fun h => hb (hiff.mpr h))]
+
+end Bridges.NeuralProofSpectrum

@@ -1,0 +1,192 @@
+/-
+# Cayley connectivity and zero-energy rigidity (finite-group core)
+
+This file isolates the finite-group core of a Cayley-graph connectivity and
+zero-energy rigidity package.  It deliberately avoids the broader tropical /
+valuation-depth / Rips-graph comparison infrastructure (e.g. `MaxPlusDepthSystem`)
+and only develops the self-contained finite-group statements:
+
+* a reachability/word lemma from a generation hypothesis,
+* connectivity of the (symmetric) Cayley graph,
+* a pointwise rigidity step for the discrete Dirichlet energy,
+* propagation of right-multiplication invariance to global constancy,
+* the main equivalence `cayleyDirichletEnergy S f = 0 ↔ f is constant`.
+
+Throughout we use right multiplication `x ↦ x * s` consistently.
+-/
+import Mathlib
+
+namespace CayleyConnectivityEnergy
+
+variable {G : Type*} [Group G] [Fintype G] [DecidableEq G]
+
+/-- Symmetric adjacency in the Cayley graph of `G` with generating set `S`:
+`x` and `y` are adjacent if `y = x * s` or `x = y * s` for some `s ∈ S`. -/
+def CayleyAdj (S : Finset G) (x y : G) : Prop :=
+  ∃ s ∈ S, y = x * s ∨ x = y * s
+
+/-- Reachability in the Cayley graph: the reflexive-transitive closure of
+`CayleyAdj`. -/
+def Reachable (S : Finset G) : G → G → Prop :=
+  Relation.ReflTransGen (CayleyAdj S)
+
+/-- The discrete Dirichlet energy of `f : G → ℝ` on the Cayley graph: a finite
+sum of squared differences over all vertices and all generators. -/
+def cayleyDirichletEnergy (S : Finset G) (f : G → ℝ) : ℝ :=
+  ∑ x : G, ∑ s ∈ S, (f (x * s) - f x) ^ 2
+
+omit [Fintype G] [DecidableEq G] in
+/-- Adjacency is symmetric. -/
+theorem cayleyAdj_symm {S : Finset G} {x y : G} (h : CayleyAdj S x y) :
+    CayleyAdj S y x := by
+  obtain ⟨s, hs, h⟩ := h
+  exact ⟨s, hs, h.symm⟩
+
+omit [Fintype G] [DecidableEq G] in
+/-- Adjacency is invariant under left translation. -/
+theorem cayleyAdj_left {S : Finset G} {x y : G} (z : G) (h : CayleyAdj S x y) :
+    CayleyAdj S (z * x) (z * y) := by
+  obtain ⟨s, hs, h⟩ := h
+  refine ⟨s, hs, ?_⟩
+  rcases h with h | h
+  · left; rw [h, mul_assoc]
+  · right; rw [h, mul_assoc]
+
+omit [Fintype G] [DecidableEq G] in
+/-- Reachability is symmetric. -/
+theorem reachable_symm {S : Finset G} {x y : G} (h : Reachable S x y) :
+    Reachable S y x := by
+  refine Relation.ReflTransGen.symmetric ?_ h
+  intro a b hab
+  exact cayleyAdj_symm hab
+
+omit [Fintype G] [DecidableEq G] in
+/-- Reachability is invariant under left translation. -/
+theorem reachable_left {S : Finset G} {x y : G} (z : G) (h : Reachable S x y) :
+    Reachable S (z * x) (z * y) := by
+  induction h with
+  | refl => exact Relation.ReflTransGen.refl
+  | tail _ hbc ih => exact ih.tail (cayleyAdj_left z hbc)
+
+omit [Fintype G] [DecidableEq G] in
+/-- A single generator step: `x` is reachable from itself times a generator. -/
+theorem reachable_step {S : Finset G} {x : G} {s : G} (hs : s ∈ S) :
+    Reachable S x (x * s) :=
+  Relation.ReflTransGen.single ⟨s, hs, Or.inl rfl⟩
+
+/-- The set of group elements reachable from `1`, packaged as a subgroup. -/
+def reachableSubgroup (S : Finset G) : Subgroup G where
+  carrier := {g | Reachable S 1 g}
+  one_mem' := Relation.ReflTransGen.refl
+  mul_mem' := by
+    intro a b ha hb
+    have hab : Reachable S a (a * b) := by
+      have := reachable_left a hb
+      simpa using this
+    exact ha.trans hab
+  inv_mem' := by
+    intro a ha
+    have h1 : Reachable S a 1 := reachable_symm ha
+    have h2 : Reachable S (a⁻¹ * a) (a⁻¹ * 1) := reachable_left a⁻¹ h1
+    simpa using h2
+
+omit [Fintype G] [DecidableEq G] in
+/-- **Word/reachability lemma.** From a generation hypothesis, every `g : G` is
+reachable from `1` in the Cayley graph (i.e. obtained from `1` by finitely many
+generator steps). -/
+theorem reachable_one (S : Finset G) (hgen : Subgroup.closure (↑S : Set G) = ⊤)
+    (g : G) : Reachable S 1 g := by
+  have hsub : Subgroup.closure (↑S : Set G) ≤ reachableSubgroup S := by
+    rw [Subgroup.closure_le]
+    intro s hs
+    simpa using reachable_step (S := S) (x := 1) hs
+  have : g ∈ reachableSubgroup S := by
+    have : g ∈ Subgroup.closure (↑S : Set G) := by rw [hgen]; exact Subgroup.mem_top g
+    exact hsub this
+  exact this
+
+omit [Fintype G] [DecidableEq G] in
+/-- **Cayley connectivity.** From a generation hypothesis, any two vertices are
+connected by generator steps in the Cayley graph. -/
+theorem reachable_all (S : Finset G) (hgen : Subgroup.closure (↑S : Set G) = ⊤)
+    (x y : G) : Reachable S x y := by
+  have hx : Reachable S 1 x := reachable_one S hgen x
+  have hy : Reachable S 1 y := reachable_one S hgen y
+  exact (reachable_symm hx).trans hy
+
+omit [DecidableEq G] in
+/-- **Rigidity step.** If the Dirichlet energy vanishes, then `f` is invariant
+under right multiplication by every generator. -/
+theorem energy_zero_invariant {S : Finset G} {f : G → ℝ}
+    (h : cayleyDirichletEnergy S f = 0) (x : G) {s : G} (hs : s ∈ S) :
+    f (x * s) = f x := by
+  have hnonneg_outer : ∀ x ∈ (Finset.univ : Finset G),
+      (0 : ℝ) ≤ ∑ s ∈ S, (f (x * s) - f x) ^ 2 := by
+    intro x _
+    exact Finset.sum_nonneg (fun s _ => sq_nonneg _)
+  have houter := (Finset.sum_eq_zero_iff_of_nonneg hnonneg_outer).1 h
+  have hx := houter x (Finset.mem_univ x)
+  have hnonneg_inner : ∀ s ∈ S, (0 : ℝ) ≤ (f (x * s) - f x) ^ 2 :=
+    fun s _ => sq_nonneg _
+  have hinner := (Finset.sum_eq_zero_iff_of_nonneg hnonneg_inner).1 hx
+  have hzero := hinner s hs
+  have : f (x * s) - f x = 0 := by
+    have := pow_eq_zero_iff (n := 2) (by norm_num) |>.1 hzero
+    exact this
+  linarith
+
+/-- The subgroup of elements `h` such that `f` is invariant under right
+multiplication by `h`. -/
+def invarianceSubgroup (f : G → ℝ) : Subgroup G where
+  carrier := {h | ∀ x, f (x * h) = f x}
+  one_mem' := by intro x; rw [mul_one]
+  mul_mem' := by
+    intro a b ha hb x
+    rw [← mul_assoc, hb (x * a), ha x]
+  inv_mem' := by
+    intro a ha x
+    have := ha (x * a⁻¹)
+    rw [mul_assoc, inv_mul_cancel, mul_one] at this
+    exact this.symm
+
+omit [Fintype G] [DecidableEq G] in
+/-- **Propagation to constancy.** If `f` is invariant under right multiplication
+by every generator and `S` generates `G`, then `f` is constant. -/
+theorem invariant_isConstant {S : Finset G} {f : G → ℝ}
+    (hf : ∀ x, ∀ s ∈ S, f (x * s) = f x)
+    (hgen : Subgroup.closure (↑S : Set G) = ⊤) :
+    ∃ c, ∀ x, f x = c := by
+  refine ⟨f 1, ?_⟩
+  have hsub : Subgroup.closure (↑S : Set G) ≤ invarianceSubgroup f := by
+    rw [Subgroup.closure_le]
+    intro s hs x
+    exact hf x s hs
+  intro x
+  have hx : x ∈ invarianceSubgroup f := by
+    have : x ∈ Subgroup.closure (↑S : Set G) := by rw [hgen]; exact Subgroup.mem_top x
+    exact hsub this
+  have := hx 1
+  rw [one_mul] at this
+  exact this
+
+omit [DecidableEq G] in
+/-- **Main equivalence.** Under the generation hypothesis, the Dirichlet energy
+vanishes iff `f` is constant. -/
+theorem energy_zero_iff_constant {S : Finset G} {f : G → ℝ}
+    (hgen : Subgroup.closure (↑S : Set G) = ⊤) :
+    cayleyDirichletEnergy S f = 0 ↔ ∃ c, ∀ x, f x = c := by
+  constructor
+  · intro h
+    apply invariant_isConstant (S := S) (f := f) _ hgen
+    intro x s hs
+    exact energy_zero_invariant h x hs
+  · rintro ⟨c, hc⟩
+    unfold cayleyDirichletEnergy
+    apply Finset.sum_eq_zero
+    intro x _
+    apply Finset.sum_eq_zero
+    intro s _
+    rw [hc (x * s), hc x, sub_self]
+    ring
+
+end CayleyConnectivityEnergy

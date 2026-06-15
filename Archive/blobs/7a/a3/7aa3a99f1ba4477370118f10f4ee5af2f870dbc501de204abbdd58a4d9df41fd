@@ -1,0 +1,197 @@
+"""
+demo.py — Numerical demonstrations of the Tropical Convolution Bound.
+
+This script illustrates the main theorem of the package:
+
+    tropConv(vprofile(a), vprofile(b))(n)  <=  v( (a * b)(n) )
+
+where
+  * v is an additive valuation (here the p-adic valuation v_p),
+  * vprofile(a) is the coefficient-wise valuation of a sequence a,
+  * (a * b) is the finite Cauchy convolution
+        (a * b)(n) = sum_{k=0}^{n} a[k] * b[n-k],
+  * tropConv is the min-plus (tropical) convolution
+        tropConv(u, w)(n) = min_{k=0}^{n} ( u[k] + w[n-k] ).
+
+We use math.inf to model the top element (infinity) of WithTop N, the value
+assigned to the valuation of 0.
+
+Every function is inlined and fully type hinted; the file is self-contained and
+requires only the Python standard library.
+"""
+
+from __future__ import annotations
+
+import math
+from fractions import Fraction
+from typing import Callable, List, Sequence, Tuple
+
+# A valuation maps a number to an element of WithTop N, modelled as float
+# (a nonnegative integer, or math.inf for the valuation of 0).
+Valuation = Callable[[Fraction], float]
+
+
+# --------------------------------------------------------------------------- #
+# Valuations                                                                   #
+# --------------------------------------------------------------------------- #
+def p_adic_valuation(p: int) -> Valuation:
+    """Return the p-adic valuation v_p on the rationals.
+
+    v_p(0) = inf; otherwise v_p(x) = (exponent of p in numerator)
+                                   - (exponent of p in denominator).
+    For integer inputs this is the usual count of factors of p.
+    """
+
+    def v(x: Fraction) -> float:
+        if x == 0:
+            return math.inf
+        x = Fraction(x)
+        num, den = abs(x.numerator), x.denominator
+
+        def order(m: int) -> int:
+            c = 0
+            while m % p == 0:
+                m //= p
+                c += 1
+            return c
+
+        return float(order(num) - order(den))
+
+    return v
+
+
+# --------------------------------------------------------------------------- #
+# Core operations                                                             #
+# --------------------------------------------------------------------------- #
+def vprofile(v: Valuation, a: Sequence[Fraction]) -> List[float]:
+    """Coefficient-wise valuation profile of a finite sequence."""
+    return [v(Fraction(x)) for x in a]
+
+
+def cauchy_conv(a: Sequence[Fraction], b: Sequence[Fraction], n: int) -> Fraction:
+    """Finite Cauchy convolution (a * b)(n) = sum_{k=0}^{n} a[k] * b[n-k]."""
+    total = Fraction(0)
+    for k in range(n + 1):
+        ak = Fraction(a[k]) if k < len(a) else Fraction(0)
+        bnk = Fraction(b[n - k]) if (n - k) < len(b) else Fraction(0)
+        total += ak * bnk
+    return total
+
+
+def trop_conv(u: Sequence[float], w: Sequence[float], n: int) -> float:
+    """Min-plus convolution tropConv(u, w)(n) = min_k (u[k] + w[n-k])."""
+    best = math.inf
+    for k in range(n + 1):
+        uk = u[k] if k < len(u) else math.inf
+        wnk = w[n - k] if (n - k) < len(w) else math.inf
+        best = min(best, uk + wnk)
+    return best
+
+
+# --------------------------------------------------------------------------- #
+# Certification of the main theorem                                          #
+# --------------------------------------------------------------------------- #
+def certify_bound(
+    a: Sequence[Fraction],
+    b: Sequence[Fraction],
+    v: Valuation,
+    n_max: int,
+) -> List[Tuple[int, float, float, float]]:
+    """For n = 0..n_max, compute the tropical lower bound and the true valuation
+    of the Cauchy convolution, assert the bound, and return a report table of
+    (n, tropical_bound, true_valuation, gap) where gap = true - bound >= 0.
+    """
+    ua, ub = vprofile(v, a), vprofile(v, b)
+    table: List[Tuple[int, float, float, float]] = []
+    for n in range(n_max + 1):
+        lhs = trop_conv(ua, ub, n)
+        c_n = cauchy_conv(a, b, n)
+        rhs = v(c_n)
+        assert lhs <= rhs, f"BOUND VIOLATED at n={n}: {lhs} > {rhs}"
+        gap = math.inf if rhs == math.inf else rhs - lhs
+        table.append((n, lhs, rhs, gap))
+    return table
+
+
+def fmt(x: float) -> str:
+    return "inf" if x == math.inf else str(int(x))
+
+
+def print_table(title: str, table: List[Tuple[int, float, float, float]]) -> None:
+    print(title)
+    print(f"  {'n':>3} | {'trop bound':>11} | {'v(a*b)(n)':>10} | {'gap':>5}")
+    print("  " + "-" * 40)
+    for n, lhs, rhs, gap in table:
+        print(f"  {n:>3} | {fmt(lhs):>11} | {fmt(rhs):>10} | {fmt(gap):>5}")
+    print()
+
+
+# --------------------------------------------------------------------------- #
+# Demonstrations                                                              #
+# --------------------------------------------------------------------------- #
+def demo_geometric() -> None:
+    """A geometric example a[k]=b[k]=3^k. The minimizing split ties across
+    the antidiagonal, so the bound is exact where the number of tied terms is
+    coprime to p and strict (gap>0) where that count is divisible by p."""
+    # a[k] = p^k, b[k] = p^k with p = 3.  v_3(a[k]) = k, v_3(b[k]) = k.
+    p = 3
+    v = p_adic_valuation(p)
+    a = [Fraction(p) ** k for k in range(6)]
+    b = [Fraction(p) ** k for k in range(6)]
+    table = certify_bound(a, b, v, n_max=5)
+    print_table("[Geometric]  a[k]=b[k]=3^k, valuation v_3:", table)
+
+
+def demo_cancellation() -> None:
+    """A non-transverse example exhibiting cancellation, so the tropical bound
+    is a STRICT lower bound (gap > 0) at some indices."""
+    p = 2
+    v = p_adic_valuation(p)
+    # Two terms tie for the minimum and cancel mod higher powers of 2.
+    a = [Fraction(1), Fraction(2), Fraction(1)]   # 1 + 2x + x^2 = (1+x)^2
+    b = [Fraction(1), Fraction(-2), Fraction(1)]  # 1 - 2x + x^2 = (1-x)^2
+    # product = (1-x^2)^2 = 1 - 2x^2 + x^4 ; the x^1, x^3 coeffs vanish -> v=inf
+    table = certify_bound(a, b, v, n_max=4)
+    print_table("[Cancellation]  (1+x)^2 * (1-x)^2, valuation v_2  (expect gaps):", table)
+
+
+def demo_binomial_kummer() -> None:
+    """Binomial coefficients and Kummer's theorem: convolving the all-ones
+    sequence with itself yields partial sums; here we showcase how the
+    tropical bound tracks v_p of convolution coefficients."""
+    p = 2
+    v = p_adic_valuation(p)
+    # a = b = (1,1,1,...) ; (a*b)(n) = n+1.  v_2(n+1) is the bound's target.
+    a = [Fraction(1)] * 8
+    b = [Fraction(1)] * 8
+    table = certify_bound(a, b, v, n_max=7)
+    print_table("[Counting]  all-ones * all-ones = (n+1), valuation v_2:", table)
+
+
+def demo_newton_polygon() -> None:
+    """Newton-polygon flavour: a sequence whose valuation profile is convex.
+    The tropical convolution of two such profiles is their inf-convolution,
+    a discrete Minkowski sum of Newton polygons."""
+    p = 5
+    v = p_adic_valuation(p)
+    # a[k] = p^(k*k) gives a strictly convex profile (k^2).
+    a = [Fraction(p) ** (k * k) for k in range(5)]
+    b = [Fraction(p) ** (k * k) for k in range(5)]
+    table = certify_bound(a, b, v, n_max=4)
+    print_table("[Newton]  a[k]=b[k]=5^(k^2) (convex profile), valuation v_5:", table)
+
+
+def main() -> None:
+    print("=" * 52)
+    print(" Tropical Convolution Bound — numerical demonstrations")
+    print("=" * 52)
+    print()
+    demo_geometric()
+    demo_cancellation()
+    demo_binomial_kummer()
+    demo_newton_polygon()
+    print("All bounds verified:  tropConv(profiles)(n) <= v((a*b)(n)).")
+
+
+if __name__ == "__main__":
+    main()

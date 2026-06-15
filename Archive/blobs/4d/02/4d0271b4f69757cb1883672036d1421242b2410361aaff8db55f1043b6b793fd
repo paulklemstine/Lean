@@ -1,0 +1,55 @@
+import Catalog.Geometry.HomotopyTypeTheory.EckmannHiltonBiunital
+
+/-!
+# The Eckmann–Hilton Bridge II: Morphism rigidity
+
+This file is the *morphism* half of the dictionary opened in `EckmannHiltonBiunital`.
+The catalog's Eckmann–Hilton argument shows an *object* is rigid: its two operations
+are forced to coincide (`BiunitalInterchange.ops_eq`). Here we prove the morphism
+analogue: a carrier map between two bi-unital interchange data that preserves the first
+operation **automatically** preserves the second, and the two preservation conditions
+are literally equivalent.
+
+## Main definitions
+* `Preserves₁`, `Preserves₂` — a map preserves the respective operation.
+
+## Main results
+* `morphism_rigidity` — preserving `op₁` forces preserving `op₂`.
+* `preserves_iff` — the two preservation conditions are equivalent.
+
+-- !-- Lab Notebook -- !--
+Hypothesis: Object rigidity (`ops_eq`) should upgrade to morphism rigidity: a map can
+  preserve one operation without "knowing" it thereby preserves the other.
+Result: Confirmed; `morphism_rigidity` and `preserves_iff` are immediate once `ops_eq`
+  is available on both source and target.
+Insight: Because each datum's two operations are *equal as functions*, preservation of
+  one is definitionally interchangeable with preservation of the other after a rewrite —
+  the morphism layer carries no extra mathematical content, exactly as predicted.
+Failure analysis: None substantive; the only care needed is to rewrite `ops_eq` on the
+  correct (source vs. target) side.
+-/
+
+universe u v
+
+variable {α : Type u} {β : Type v}
+variable (A : BiunitalInterchange α) (B : BiunitalInterchange β)
+
+/-- A carrier map preserves the first operation. -/
+def Preserves₁ (f : α → β) : Prop := ∀ a b, f (A.op₁ a b) = B.op₁ (f a) (f b)
+
+/-- A carrier map preserves the second operation. -/
+def Preserves₂ (f : α → β) : Prop := ∀ a b, f (A.op₂ a b) = B.op₂ (f a) (f b)
+
+-- !-- Rewrite `ops_eq` on the source to turn `op₂` into `op₁`, apply `Preserves₁`, then
+-- rewrite `ops_eq` on the target back to `op₂`. -- !--
+/-- **Morphism rigidity**: a map preserving `op₁` automatically preserves `op₂`. -/
+theorem morphism_rigidity (f : α → β) (hf : Preserves₁ A B f) : Preserves₂ A B f := by
+  intro a b
+  rw [← A.ops_eq, hf, B.ops_eq]
+
+-- !-- Both directions are the same `ops_eq` rewrite, run forwards and backwards. -- !--
+/-- The two preservation conditions are equivalent. -/
+theorem preserves_iff (f : α → β) : Preserves₁ A B f ↔ Preserves₂ A B f := by
+  constructor
+  · intro hf a b; rw [← A.ops_eq, hf, B.ops_eq]
+  · intro hf a b; rw [A.ops_eq, hf, ← B.ops_eq]

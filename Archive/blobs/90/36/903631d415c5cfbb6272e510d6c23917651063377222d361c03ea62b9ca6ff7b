@@ -1,0 +1,146 @@
+import Algebra.BerggrenLorentz.Core
+
+/-!
+# Berggren–Lorentz `B`-count Hypotenuse-Growth Certificate
+
+This file develops a narrowly scoped certificate: along any word in the three
+Berggren generators, the hypotenuse coordinate grows by at least a factor of `3`
+for every `B`-generator (index `1`) applied. In particular, words with no
+`B`-generator never decrease the hypotenuse.
+
+Everything is built directly from the concrete coordinate formulas
+(`childA`, `childB`, `childC`) and the invariants established in the core file.
+-/
+
+namespace BerggrenLorentz
+
+/-- The hypotenuse coordinate of a triple. -/
+def hyp (t : ℤ × ℤ × ℤ) : ℤ := t.2.2
+
+/-- A triple is admissible if it has positive legs, positive hypotenuse, and is
+    Pythagorean. -/
+def Admissible (t : ℤ × ℤ × ℤ) : Prop :=
+  0 < t.1 ∧ 0 < t.2.1 ∧ 0 < t.2.2 ∧ IsPythag t.1 t.2.1 t.2.2
+
+/-- The action of a single generator, indexed by `Fin 3`. -/
+def applyGen (i : Fin 3) (t : ℤ × ℤ × ℤ) : ℤ × ℤ × ℤ :=
+  match i with
+  | 0 => childA t.1 t.2.1 t.2.2
+  | 1 => childB t.1 t.2.1 t.2.2
+  | 2 => childC t.1 t.2.1 t.2.2
+
+/-- The left action of a word (list of generator indices) on a triple. -/
+def applyWord : List (Fin 3) → (ℤ × ℤ × ℤ) → (ℤ × ℤ × ℤ)
+  | [], t => t
+  | i :: w, t => applyWord w (applyGen i t)
+
+/-- The number of `B`-generators (index `1`) in a word. -/
+def bCount (w : List (Fin 3)) : ℕ := w.count 1
+
+@[simp] theorem applyWord_nil (t : ℤ × ℤ × ℤ) : applyWord [] t = t := rfl
+
+@[simp] theorem applyWord_cons (i : Fin 3) (w : List (Fin 3)) (t : ℤ × ℤ × ℤ) :
+    applyWord (i :: w) t = applyWord w (applyGen i t) := rfl
+
+@[simp] theorem bCount_nil : bCount [] = 0 := rfl
+
+theorem bCount_single_zero : bCount [0] = 0 := rfl
+
+theorem bCount_single_one : bCount [1] = 1 := rfl
+
+theorem bCount_single_two : bCount [2] = 0 := rfl
+
+theorem bCount_append (u v : List (Fin 3)) : bCount (u ++ v) = bCount u + bCount v := by
+  unfold bCount; rw [List.count_append]
+
+/-- Each generator preserves admissibility. -/
+theorem applyGen_admissible {t : ℤ × ℤ × ℤ} (i : Fin 3) (h : Admissible t) :
+    Admissible (applyGen i t) := by
+  obtain ⟨ha, hb, hc, hpy⟩ := h
+  set a := t.1
+  set b := t.2.1
+  set c := t.2.2
+  have hca : a ≤ c := pythag_hyp_ge_leg_a a b c hpy hb hc
+  have hcb : b ≤ c := pythag_hyp_ge_leg_b a b c hpy ha hc
+  fin_cases i
+  · refine ⟨?_, ?_, ?_, ?_⟩
+    · show 0 < a - 2 * b + 2 * c; linarith
+    · show 0 < 2 * a - b + 2 * c; linarith
+    · show 0 < 2 * a - 2 * b + 3 * c; linarith
+    · exact childA_preserves_pythag a b c hpy
+  · refine ⟨?_, ?_, ?_, ?_⟩
+    · show 0 < a + 2 * b + 2 * c; linarith
+    · show 0 < 2 * a + b + 2 * c; linarith
+    · show 0 < 2 * a + 2 * b + 3 * c; linarith
+    · exact childB_preserves_pythag a b c hpy
+  · refine ⟨?_, ?_, ?_, ?_⟩
+    · show 0 < -a + 2 * b + 2 * c; linarith
+    · show 0 < -2 * a + b + 2 * c; linarith
+    · show 0 < -2 * a + 2 * b + 3 * c; linarith
+    · exact childC_preserves_pythag a b c hpy
+
+/-- A whole word preserves admissibility. -/
+theorem applyWord_admissible {t : ℤ × ℤ × ℤ} (w : List (Fin 3)) (h : Admissible t) :
+    Admissible (applyWord w t) := by
+  induction w generalizing t with
+  | nil => simpa using h
+  | cons i w ih =>
+    rw [applyWord_cons]
+    exact ih (applyGen_admissible i h)
+
+/-- One-step hypotenuse growth: a `B`-generator multiplies the hypotenuse by at
+    least `3`, while the other generators never decrease it. -/
+theorem hyp_step {t : ℤ × ℤ × ℤ} (i : Fin 3) (h : Admissible t) :
+    (3 : ℤ) ^ bCount [i] * hyp t ≤ hyp (applyWord [i] t) := by
+  obtain ⟨ha, hb, hc, hpy⟩ := h
+  set a := t.1
+  set b := t.2.1
+  set c := t.2.2
+  have hca : a ≤ c := pythag_hyp_ge_leg_a a b c hpy hb hc
+  have hcb : b ≤ c := pythag_hyp_ge_leg_b a b c hpy ha hc
+  fin_cases i
+  · show (3 : ℤ) ^ bCount [0] * c ≤ (childA a b c).2.2
+    rw [bCount_single_zero]
+    show (3 : ℤ) ^ 0 * c ≤ 2 * a - 2 * b + 3 * c
+    rw [pow_zero]; linarith
+  · show (3 : ℤ) ^ bCount [1] * c ≤ (childB a b c).2.2
+    rw [bCount_single_one]
+    show (3 : ℤ) ^ 1 * c ≤ 2 * a + 2 * b + 3 * c
+    rw [pow_one]; linarith
+  · show (3 : ℤ) ^ bCount [2] * c ≤ (childC a b c).2.2
+    rw [bCount_single_two]
+    show (3 : ℤ) ^ 0 * c ≤ -2 * a + 2 * b + 3 * c
+    rw [pow_zero]; linarith
+
+/-- Multiplicative hypotenuse-growth certificate: along any word, the hypotenuse
+    grows by at least `3` per `B`-generator. -/
+theorem hyp_growth {t : ℤ × ℤ × ℤ} (w : List (Fin 3)) (h : Admissible t) :
+    (3 : ℤ) ^ bCount w * hyp t ≤ hyp (applyWord w t) := by
+  induction w generalizing t with
+  | nil => simp
+  | cons i w ih =>
+    have hstep : (3 : ℤ) ^ bCount [i] * hyp t ≤ hyp (applyGen i t) := by
+      have := hyp_step i h
+      rwa [applyWord_cons, applyWord_nil] at this
+    have hadm : Admissible (applyGen i t) := applyGen_admissible i h
+    have hih := ih hadm
+    rw [applyWord_cons]
+    have hcount : bCount (i :: w) = bCount [i] + bCount w := by
+      have := bCount_append [i] w
+      simpa using this
+    rw [hcount, pow_add]
+    have hpos : (0 : ℤ) ≤ (3 : ℤ) ^ bCount w := by positivity
+    calc (3 : ℤ) ^ bCount [i] * (3 : ℤ) ^ bCount w * hyp t
+        = (3 : ℤ) ^ bCount w * ((3 : ℤ) ^ bCount [i] * hyp t) := by ring
+      _ ≤ (3 : ℤ) ^ bCount w * hyp (applyGen i t) := by
+          exact mul_le_mul_of_nonneg_left hstep hpos
+      _ ≤ hyp (applyWord w (applyGen i t)) := hih
+
+/-- Words with no `B`-generator never decrease the hypotenuse. -/
+theorem hyp_growth_no_B {t : ℤ × ℤ × ℤ} (w : List (Fin 3)) (h : Admissible t)
+    (hw : bCount w = 0) : hyp t ≤ hyp (applyWord w t) := by
+  have := hyp_growth w h
+  rw [hw, pow_zero, one_mul] at this
+  exact this
+
+end BerggrenLorentz

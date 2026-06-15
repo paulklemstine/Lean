@@ -1,0 +1,214 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+
+# Functorial Depth → Tropical Lipschitz Bridge
+
+Bridge: Computation/valuation_depth ↔ Tropical/exponential_growth
+
+This file develops a small, self-contained abstract interface turning *max-plus
+depth inequalities* into *multiplicative tropical-style bounds* via the exponential
+shadow `b ^ depth`, and recovering depth back via `Nat.log`.
+
+## Main definitions
+* `MaxPlusDepthSystem` — a type `α` with a natural-valued `depth`, a `comp` operation,
+  and the core max-plus composition law `depth (comp f g) ≤ max (depth f) (depth g) + 1`.
+* `MaxPlusDepthSystem.iter` — recursive iteration built from `comp`.
+* `MaxPlusDepthSystem.shadow` — exponential shadow `b ^ depth f` for a base `b ≥ 2`.
+
+## Main theorems
+* `shadow_comp_le` — composition shadow inequality
+  `shadow b (comp f g) ≤ b * max (shadow b f) (shadow b g)`.
+* `depth_iter_le` — sharp iterate depth bound `depth (iter n f) ≤ depth f + n`.
+* `shadow_iter_le` — iterate shadow bound `shadow b (iter n f) ≤ b ^ n * shadow b f`,
+  matching the multiplicative-rate form of the catalog's tropical iteration theorem.
+* `log_shadow` — logarithmic recovery `Nat.log b (shadow b f) = depth f`.
+
+## Bridge to the catalog
+* `ofUltrametricCompositionLaw` — every `UltrametricCompositionLaw` from
+  `Computation/PadicValuationDepth.lean` is an instance of `MaxPlusDepthSystem`
+  (with `comp = Function.comp` and `depth = vdepth`).
+* The resulting `shadow_iter_le` has exactly the shape
+  `value (iterate n f) ≤ rate ^ n * value f` of
+  `CategoricalTropicalUltrametric.iterated_tropical_lipschitz_rate`, exhibiting both
+  as instances of exponential growth under iteration.
+-/
+
+import Mathlib
+import Computation.PadicValuationDepth
+import Bridges.CategoricalTropicalUltrametric
+
+namespace MaxPlusDepthSystem
+
+/-- A **max-plus depth system** on a type `α`: a natural-valued complexity measure
+`depth`, a composition operation `comp`, and the core max-plus composition law
+`depth (comp f g) ≤ max (depth f) (depth g) + 1`. This is the abstract interface
+on which the whole bridge is built. -/
+structure _root_.MaxPlusDepthSystem (α : Type*) where
+  /-- The natural-valued complexity (valuation depth) of an object. -/
+  depth : α → ℕ
+  /-- The composition operation on objects. -/
+  comp : α → α → α
+  /-- The core max-plus composition law: composing adds at most one level of depth. -/
+  depth_comp_le : ∀ f g : α, depth (comp f g) ≤ max (depth f) (depth g) + 1
+
+variable {α : Type*} (S : MaxPlusDepthSystem α)
+
+/-- Recursive iteration built from `comp`: `iter 0 f = f` and
+`iter (n+1) f = comp f (iter n f)`. -/
+def iter (n : ℕ) (f : α) : α :=
+  Nat.rec f (fun _ acc => S.comp f acc) n
+
+@[simp] theorem iter_zero (f : α) : S.iter 0 f = f := rfl
+
+@[simp] theorem iter_succ (n : ℕ) (f : α) :
+    S.iter (n + 1) f = S.comp f (S.iter n f) := rfl
+
+/-- The **exponential shadow** of an object at base `b`: `shadow b f = b ^ depth f`.
+For `b ≥ 2` this turns max-plus (tropical) depth bounds into ordinary multiplicative
+bounds. -/
+def shadow (b : ℕ) (f : α) : ℕ := b ^ S.depth f
+
+@[simp] theorem shadow_def (b : ℕ) (f : α) : S.shadow b f = b ^ S.depth f := rfl
+
+/-- **Composition shadow inequality.** The exponential shadow of a composite is at most
+`b` times the larger of the two shadows. This is the multiplicative counterpart of the
+max-plus composition law. -/
+theorem shadow_comp_le {b : ℕ} (hb : 2 ≤ b) (f g : α) :
+    S.shadow b (S.comp f g) ≤ b * max (S.shadow b f) (S.shadow b g) := by
+  have hb1 : 1 ≤ b := by omega
+  have hmax : b ^ (max (S.depth f) (S.depth g)) = max (S.shadow b f) (S.shadow b g) := by
+    rcases le_total (S.depth f) (S.depth g) with h | h
+    · rw [max_eq_right h, shadow_def, shadow_def,
+        max_eq_right (Nat.pow_le_pow_right hb1 h)]
+    · rw [max_eq_left h, shadow_def, shadow_def,
+        max_eq_left (Nat.pow_le_pow_right hb1 h)]
+  calc S.shadow b (S.comp f g)
+      = b ^ S.depth (S.comp f g) := rfl
+    _ ≤ b ^ (max (S.depth f) (S.depth g) + 1) :=
+        Nat.pow_le_pow_right hb1 (S.depth_comp_le f g)
+    _ = b * b ^ (max (S.depth f) (S.depth g)) := by rw [pow_succ]; ring
+    _ = b * max (S.shadow b f) (S.shadow b g) := by rw [hmax]
+
+/-- **Sharp iterate depth bound.** Iterating `n` times costs at most `n` extra levels of
+depth: `depth (iter n f) ≤ depth f + n`. Proved by induction using the composition law. -/
+theorem depth_iter_le (n : ℕ) (f : α) : S.depth (S.iter n f) ≤ S.depth f + n := by
+  induction n with
+  | zero => simp
+  | succ k ih =>
+    calc S.depth (S.iter (k + 1) f)
+        = S.depth (S.comp f (S.iter k f)) := rfl
+      _ ≤ max (S.depth f) (S.depth (S.iter k f)) + 1 := S.depth_comp_le _ _
+      _ ≤ S.depth f + (k + 1) := by omega
+
+/-- **Iterate shadow bound.** The exponential shadow of the `n`-fold iterate grows at most
+multiplicatively at rate `b`: `shadow b (iter n f) ≤ b ^ n * shadow b f`. This is the
+direct multiplicative consequence of `depth_iter_le`, and matches the
+`value (iterate n f) ≤ rate ^ n * value f` form of the catalog's tropical iteration
+theorem. -/
+theorem shadow_iter_le {b : ℕ} (hb : 2 ≤ b) (n : ℕ) (f : α) :
+    S.shadow b (S.iter n f) ≤ b ^ n * S.shadow b f := by
+  have hb1 : 1 ≤ b := by omega
+  calc S.shadow b (S.iter n f)
+      = b ^ S.depth (S.iter n f) := rfl
+    _ ≤ b ^ (S.depth f + n) := Nat.pow_le_pow_right hb1 (S.depth_iter_le n f)
+    _ = b ^ n * b ^ S.depth f := by rw [pow_add]; ring
+    _ = b ^ n * S.shadow b f := rfl
+
+/-- **Logarithmic recovery.** Taking `Nat.log b` of the exponential shadow recovers the
+original depth exactly, for any base `b ≥ 2`. Thus the shadow loses no information. -/
+theorem log_shadow {b : ℕ} (hb : 2 ≤ b) (f : α) :
+    Nat.log b (S.shadow b f) = S.depth f := by
+  rw [shadow_def, Nat.log_pow (by omega)]
+
+end MaxPlusDepthSystem
+
+/-! ## Bridge to `Computation/PadicValuationDepth.lean`
+
+The catalog's `UltrametricCompositionLaw α` packages, on the type of functions
+`α → α`, a valuation depth `vdepth` together with the ultrametric composition law
+`vdepth (f ∘ g) ≤ max (vdepth f) (vdepth g) + 1`. That is *exactly* the hypothesis of
+`MaxPlusDepthSystem`, with `comp = Function.comp` and `depth = vdepth`. We package the
+identification and then transport the abstract shadow theorems to the concrete instance.
+-/
+
+namespace MaxPlusDepthSystem
+
+/-- Every `UltrametricCompositionLaw` from `Computation/PadicValuationDepth.lean` is a
+`MaxPlusDepthSystem` on the function type `α → α`, with composition `Function.comp` and
+depth `vdepth`. -/
+def ofUltrametricCompositionLaw (α : Type*) [Semiring α] [UltrametricCompositionLaw α] :
+    MaxPlusDepthSystem (α → α) where
+  depth f := ValuationDepthMeasure.vdepth f
+  comp f g := f ∘ g
+  depth_comp_le f g := UltrametricCompositionLaw.vdepth_comp f g
+
+/-- **Concrete max-plus law holds.** The imported valuation depth measure satisfies the
+abstract max-plus composition hypothesis. -/
+theorem ultrametric_satisfies_maxplus (α : Type*) [Semiring α]
+    [UltrametricCompositionLaw α] (f g : α → α) :
+    (ofUltrametricCompositionLaw α).depth ((ofUltrametricCompositionLaw α).comp f g)
+      ≤ max ((ofUltrametricCompositionLaw α).depth f)
+            ((ofUltrametricCompositionLaw α).depth g) + 1 :=
+  (ofUltrametricCompositionLaw α).depth_comp_le f g
+
+/-- **Concrete composition shadow inequality** for the imported valuation depth: the
+exponential shadow `b ^ vdepth` of a composite is at most `b` times the larger shadow. -/
+theorem ultrametric_shadow_comp_le (α : Type*) [Semiring α]
+    [UltrametricCompositionLaw α] {b : ℕ} (hb : 2 ≤ b) (f g : α → α) :
+    b ^ (ValuationDepthMeasure.vdepth (f ∘ g))
+      ≤ b * max (b ^ ValuationDepthMeasure.vdepth f)
+                (b ^ ValuationDepthMeasure.vdepth g) :=
+  (ofUltrametricCompositionLaw α).shadow_comp_le hb f g
+
+/-- **Concrete iterate shadow bound** for the imported valuation depth: the shadow of the
+abstract `n`-fold iterate grows at most at multiplicative rate `b`. This has exactly the
+multiplicative-rate form `value (iter n f) ≤ rate ^ n * value f` shared with
+`CategoricalTropicalUltrametric.iterated_tropical_lipschitz_rate`. -/
+theorem ultrametric_shadow_iter_le (α : Type*) [Semiring α]
+    [UltrametricCompositionLaw α] {b : ℕ} (hb : 2 ≤ b) (n : ℕ) (f : α → α) :
+    (ofUltrametricCompositionLaw α).shadow b ((ofUltrametricCompositionLaw α).iter n f)
+      ≤ b ^ n * (ofUltrametricCompositionLaw α).shadow b f :=
+  (ofUltrametricCompositionLaw α).shadow_iter_le hb n f
+
+/-- **Depth recovery for the concrete instance**: `Nat.log b` of the shadow recovers the
+imported valuation depth exactly. -/
+theorem ultrametric_log_shadow (α : Type*) [Semiring α]
+    [UltrametricCompositionLaw α] {b : ℕ} (hb : 2 ≤ b) (f : α → α) :
+    Nat.log b ((ofUltrametricCompositionLaw α).shadow b f)
+      = ValuationDepthMeasure.vdepth f :=
+  (ofUltrametricCompositionLaw α).log_shadow hb f
+
+end MaxPlusDepthSystem
+
+/-! ## Same multiplicative form as the tropical iteration theorem
+
+The catalog already proves, in `Bridges/CategoricalTropicalUltrametric.lean`, the
+tropical iteration rate
+`iterated_tropical_lipschitz_rate : X.val ((f^[n]) x) ≤ C ^ n * X.val x`.
+Our `shadow_iter_le` is the depth-shadow analogue
+`shadow b (iter n f) ≤ b ^ n * shadow b f`.
+Both assert the *same* multiplicative growth shape `quantity (iterate n) ≤ rate ^ n *
+quantity (base)`. The following theorem makes that shared shape explicit as a single
+abstract statement that both results instantiate. -/
+
+/-- A bare predicate capturing "exponential growth under iteration at multiplicative
+rate `r`": the iterated quantity is bounded by `r ^ n` times the base quantity. -/
+def ExponentialGrowthUnderIteration {β : Type*} (value : β → ℕ) (step : ℕ → β → β)
+    (r : ℕ) : Prop :=
+  ∀ n x, value (step n x) ≤ r ^ n * value x
+
+/-- Our depth-shadow iteration bound is an instance of `ExponentialGrowthUnderIteration`
+with rate `b`. -/
+theorem shadow_iter_exponential_growth {α : Type*} (S : MaxPlusDepthSystem α)
+    {b : ℕ} (hb : 2 ≤ b) :
+    ExponentialGrowthUnderIteration (S.shadow b) S.iter b :=
+  fun n f => S.shadow_iter_le hb n f
+
+/-- The catalog's tropical Lipschitz iteration bound is an instance of
+`ExponentialGrowthUnderIteration` with rate `C`, exhibiting it as the *same* exponential
+growth phenomenon as the depth-shadow bound `shadow_iter_exponential_growth`. -/
+theorem tropical_lipschitz_exponential_growth
+    {X : CategoricalTropicalUltrametric.TropicalValuationCarrier}
+    {f : X.K → X.K} {C : ℕ} (hLip : ∀ x, X.val (f x) ≤ C * X.val x) :
+    ExponentialGrowthUnderIteration X.val (fun n => f^[n]) C :=
+  fun n x => CategoricalTropicalUltrametric.iterated_tropical_lipschitz_rate hLip n x

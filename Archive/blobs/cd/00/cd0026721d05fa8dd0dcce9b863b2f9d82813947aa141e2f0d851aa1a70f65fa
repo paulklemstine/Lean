@@ -1,0 +1,318 @@
+import Mathlib
+
+/-! # Fibonacci entry-point reciprocity (the law of apparition mod a prime)
+
+The *entry point* (rank of apparition) `z(p)` of a prime `p` is the least positive
+index `k` with `p ∣ F_k`.  Carmichael's classical "law of apparition" pins down a
+multiple of `z(p)` purely from the quadratic character of `5` modulo `p`:
+
+* if `5` is a quadratic residue mod `p`  (i.e. `p ≡ ±1 mod 5`), then `p ∣ F_{p-1}`;
+* if `5` is a quadratic non-residue mod `p` (i.e. `p ≡ ±2 mod 5`), then `p ∣ F_{p+1}`.
+
+Equivalently, writing `(5/p)` for the Legendre symbol, `p ∣ F_{p - (5/p)}`.  This is the
+Fibonacci analogue of quadratic reciprocity: the index at which `p` first appears is
+governed by a reciprocity law for the discriminant `5` of `x² - x - 1`.
+
+The engine of the proof is the *golden ring* `R = (ℤ/p)[x]/(x² - x - 1)`.  Its root
+`φ` satisfies `φ² = φ + 1`, hence `φⁿ = Fₙ·φ + Fₙ₋₁` (a Cayley–Hamilton style identity,
+`golden_pow`).  Setting `s = 2φ - 1` we get `s² = 5`, and the Frobenius endomorphism
+`x ↦ xᵖ` of the characteristic-`p` ring `R` computes `sᵖ = (5/p)·s` via Euler's
+criterion.  Reading off the `{1, φ}`-coordinates of `φᵖ` yields `Fₚ ≡ (5/p)` and
+`2·Fₚ₋₁ ≡ 1 - (5/p)` modulo `p`, from which the apparition law and its corollaries follow.
+
+## Main results
+* `golden_pow`              — `tⁿ⁺¹ = F_{n+1}·t + Fₙ` in any commutative ring with `t² = t+1`.
+* `fib_p_eq_legendre`       — `Fₚ ≡ (5/p) (mod p)`.
+* `fib_dvd_p_sub_legendre`  — `p ∣ F_{p - (5/p)}` (the reciprocity / apparition law).
+* `fib_dvd_p_sub_one_of_residue` / `fib_dvd_p_add_one_of_nonresidue` — the two explicit cases.
+* `fib_dvd_psq_sub_one`     — `p ∣ F_{p²-1}` for every odd prime `p ≠ 5` (`(5/p)`-free corollary).
+* `fibEntry_dvd_psq_sub_one`— the entry point `z(p)` divides `p² - 1`.
+
+-- !-- Lab Notes -- !--
+-- !-- Hypothesis: the first index of apparition of a prime `p` in the Fibonacci
+--     sequence is constrained by the Legendre symbol `(5/p)`, mirroring quadratic
+--     reciprocity for the discriminant of `x² - x - 1`. -- !--
+-- !-- Approach: realise the golden ratio inside `R = (ℤ/p)[x]/(x²-x-1)` and let the
+--     Frobenius endomorphism do the work.  The single nontrivial input is Euler's
+--     criterion `(5/p) ≡ 5^((p-1)/2)`, packaged in Mathlib as `legendreSym.eq_pow`. -- !--
+-- !-- Result: full reciprocity `Fₚ ≡ (5/p)` and `p ∣ F_{p-(5/p)}`, plus the clean
+--     `(5/p)`-independent corollary `p ∣ F_{p²-1}` obtained because `(5/p)² = 1`. -- !--
+-- !-- Insight: coordinate extraction in `R` is painless via `AdjoinRoot.mk_eq_zero`:
+--     a degree `< 2` polynomial annihilated by the monic `x²-x-1` must vanish, so
+--     `{1, φ}` are linearly independent over `ℤ/p` with no splitting-field case work. -- !--
+-- !-- Insight: `s = 2φ - 1` is a uniform algebraic `√5` valid in *every* `ℤ/p`, even
+--     when `5` is a non-residue and no actual square root exists in `ℤ/p` itself; the
+--     ambient quadratic ring `R` always contains it.  Euler's criterion then turns the
+--     Frobenius twist `sᵖ = ±s` into the residue/non-residue dichotomy. -- !--
+-- !-- Failure analysis: the only boundary cases are `p = 2` (no `(5/p)`, handled by
+--     requiring `Odd p`) and `p = 5` (`5 ≡ 0`, where Euler's criterion is vacuous);
+--     both are excluded by hypothesis and recorded in `FUTURE_DIRECTIONS.md`. -- !--
+-- !-- End Lab Notes -- !--
+-/
+
+namespace FibEntryReciprocity
+
+open Polynomial
+
+/-- The golden-ratio power law: in any commutative ring, an element `t` with
+`t² = t + 1` satisfies `tⁿ⁺¹ = F_{n+1}·t + Fₙ`.  This is the algebraic heart that
+turns Fibonacci index arithmetic into ring arithmetic. -/
+theorem golden_pow {S : Type*} [CommRing S] (t : S) (ht : t ^ 2 = t + 1) :
+    ∀ n : ℕ, t ^ (n + 1) = (Nat.fib (n + 1) : S) * t + (Nat.fib n : S) := by
+  intro n
+  induction n with
+  | zero => simp
+  | succ k ih =>
+    have hstep : t ^ (k + 2) = t * t ^ (k + 1) := by ring
+    rw [hstep, ih, Nat.fib_add_two]
+    push_cast
+    linear_combination (Nat.fib (k + 1) : S) * ht
+
+section Prime
+
+variable (p : ℕ) [hp : Fact p.Prime]
+
+/-- The minimal polynomial `x² - x - 1` of the golden ratio, over `ℤ/p`. -/
+noncomputable abbrev g : (ZMod p)[X] := X ^ 2 - X - 1
+
+/-- The *golden ring* `(ℤ/p)[x]/(x² - x - 1)`. -/
+noncomputable abbrev R := AdjoinRoot (g p)
+
+/-- The image of the golden ratio `φ` in `R`. -/
+noncomputable abbrev phi : R p := AdjoinRoot.root (g p)
+
+theorem gdeg : (g p).degree ≠ 0 := by
+  unfold g
+  rw [show (X ^ 2 - X - 1 : (ZMod p)[X]).degree = 2 from by compute_degree!]
+  decide
+
+noncomputable instance instCharP : CharP (R p) p :=
+  charP_of_injective_algebraMap
+    (by rw [AdjoinRoot.algebraMap_eq]; exact AdjoinRoot.coe_injective (gdeg p)) p
+
+instance instExpChar : ExpChar (R p) p := by
+  have := instCharP p; exact ExpChar.prime hp.out
+
+/-- The defining relation of the golden ratio: `φ² = φ + 1`. -/
+theorem phi_sq : (phi p) ^ 2 = phi p + 1 := by
+  have h := AdjoinRoot.eval₂_root (g p)
+  unfold g at h
+  simp only [eval₂_sub, eval₂_pow, eval₂_X, eval₂_one] at h
+  unfold phi g
+  ring_nf at h ⊢
+  linear_combination h
+
+/-- `s = 2φ - 1` is a square root of `5` in `R` (it is `√5`). -/
+theorem s_sq : (2 * phi p - 1) ^ 2 = 5 := by
+  linear_combination (4 : R p) * phi_sq p
+
+/-- Coordinate extraction in `R`: `{1, φ}` is linearly independent over `ℤ/p`.
+A degree `< 2` polynomial divisible by the monic degree-`2` `g` must vanish. -/
+theorem adjoin_coeff_eq (a b : ZMod p)
+    (h : (algebraMap (ZMod p) (R p)) a * phi p + (algebraMap (ZMod p) (R p)) b = 0) :
+    a = 0 ∧ b = 0 := by
+  have key : AdjoinRoot.mk (g p) (C a * X + C b)
+      = (algebraMap (ZMod p) (R p)) a * phi p + (algebraMap (ZMod p) (R p)) b := by
+    rw [map_add, map_mul, AdjoinRoot.mk_C, AdjoinRoot.mk_C, AdjoinRoot.mk_X,
+      AdjoinRoot.algebraMap_eq]
+  rw [← key, AdjoinRoot.mk_eq_zero] at h
+  have hdeg : (C a * X + C b).degree < (g p).degree := by
+    have hg : (g p).degree = 2 := by unfold g; compute_degree!
+    rw [hg]
+    apply lt_of_le_of_lt (degree_add_le _ _)
+    apply max_lt
+    · apply lt_of_le_of_lt (degree_mul_le _ _)
+      apply lt_of_le_of_lt (add_le_add degree_C_le (le_refl _))
+      rw [degree_X]; decide
+    · exact lt_of_le_of_lt degree_C_le (by decide)
+  have hzero := Polynomial.eq_zero_of_dvd_of_degree_lt h hdeg
+  exact ⟨by have := congrArg (fun q => coeff q 1) hzero; simpa using this,
+         by have := congrArg (fun q => coeff q 0) hzero; simpa using this⟩
+
+/-- Euler's criterion inside `R`: the Frobenius image of `s = √5` is `(5/p)·s`. -/
+theorem s_pow_p (hodd : Odd p) :
+    (2 * phi p - 1) ^ p
+      = (algebraMap (ZMod p) (R p)) ((legendreSym p 5 : ZMod p)) * (2 * phi p - 1) := by
+  have hsplit : (2 * phi p - 1) ^ p = ((2 * phi p - 1) ^ 2) ^ (p / 2) * (2 * phi p - 1) := by
+    rw [← pow_mul, ← pow_succ]; congr 1; rcases hodd with ⟨k, hk⟩; omega
+  rw [hsplit, s_sq]
+  congr 1
+  have heq : (5 : R p) ^ (p / 2) = (algebraMap (ZMod p) (R p)) ((5 : ZMod p) ^ (p / 2)) := by
+    rw [map_pow, map_ofNat]
+  rw [heq]
+  congr 1
+  have := legendreSym.eq_pow p 5
+  push_cast at this
+  rw [this]
+
+/-- The Frobenius endomorphism applied to `s = 2φ - 1`. -/
+theorem s_frob1 : (2 * phi p - 1) ^ p = 2 * (phi p) ^ p - 1 := by
+  have : (2 * phi p - 1) ^ (p ^ 1) = 2 * (phi p) ^ (p ^ 1) - 1 := by
+    rw [← iterateFrobenius_def]
+    simp only [map_sub, map_mul, map_one, map_ofNat]
+    rw [iterateFrobenius_def]
+  simpa using this
+
+/-- The two coordinate relations: comparing `{1, φ}`-coordinates of `φᵖ` computed two
+ways (Frobenius vs. `golden_pow`) gives, modulo `p`,
+`2·Fₚ = 2·(5/p)` and `2·Fₚ₋₁ = 1 - (5/p)`. -/
+theorem coeff_relations (hodd : Odd p) :
+    (2 * (Nat.fib p : ZMod p) - 2 * (legendreSym p 5 : ZMod p) = 0) ∧
+    (2 * (Nat.fib (p - 1) : ZMod p) - 1 + (legendreSym p 5 : ZMod p) = 0) := by
+  have hp1 : 1 ≤ p := hp.out.one_le
+  have hgp : (phi p) ^ p = (Nat.fib p : R p) * phi p + (Nat.fib (p - 1) : R p) := by
+    have := golden_pow (phi p) (phi_sq p) (p - 1)
+    rwa [Nat.sub_add_cancel hp1] at this
+  have hcomb : 2 * ((Nat.fib p : R p) * phi p + (Nat.fib (p - 1) : R p)) - 1
+      = (algebraMap (ZMod p) (R p)) ((legendreSym p 5 : ZMod p)) * (2 * phi p - 1) := by
+    rw [← hgp, ← s_frob1]; exact s_pow_p p hodd
+  have hA : (algebraMap (ZMod p) (R p))
+        (2 * (Nat.fib p : ZMod p) - 2 * (legendreSym p 5 : ZMod p)) * phi p
+      + (algebraMap (ZMod p) (R p))
+        (2 * (Nat.fib (p - 1) : ZMod p) - 1 + (legendreSym p 5 : ZMod p)) = 0 := by
+    push_cast [map_sub, map_add, map_mul, map_ofNat, map_one, map_natCast]
+    linear_combination hcomb
+  exact adjoin_coeff_eq p _ _ hA
+
+theorem two_ne_zero (hodd : Odd p) : (2 : ZMod p) ≠ 0 := by
+  have hp2 : p ≠ 2 := by rcases hodd with ⟨k, hk⟩; omega
+  intro h
+  rw [show (2 : ZMod p) = ((2 : ℕ) : ZMod p) by push_cast; ring, ZMod.natCast_eq_zero_iff] at h
+  exact hp2 ((Nat.prime_dvd_prime_iff_eq hp.out Nat.prime_two).1 h)
+
+/-- **`Fₚ ≡ (5/p)` mod `p`** — the Fibonacci analogue of Euler's criterion. -/
+theorem fib_p_eq_legendre (hodd : Odd p) :
+    (Nat.fib p : ZMod p) = (legendreSym p 5 : ZMod p) := by
+  have h := (coeff_relations p hodd).1
+  have h2 := two_ne_zero p hodd
+  have hmul : (2 : ZMod p) * ((Nat.fib p : ZMod p) - (legendreSym p 5 : ZMod p)) = 0 := by
+    linear_combination h
+  rcases mul_eq_zero.1 hmul with h' | h'
+  · exact absurd h' h2
+  · exact sub_eq_zero.1 h'
+
+theorem legendre5_ne_zero (hp5 : p ≠ 5) : ((5 : ℤ) : ZMod p) ≠ 0 := by
+  intro h
+  rw [show ((5 : ℤ) : ZMod p) = ((5 : ℕ) : ZMod p) by push_cast; ring, ZMod.natCast_eq_zero_iff] at h
+  exact hp5 ((Nat.prime_dvd_prime_iff_eq hp.out (by norm_num)).1 h)
+
+/-- The Fibonacci reciprocity / apparition law in its unified form:
+`p ∣ F_{p - (5/p)}`, where `(p : ℤ) - legendreSym p 5` is `p-1` or `p+1`. -/
+theorem fib_dvd_p_sub_legendre (hodd : Odd p) (hp5 : p ≠ 5) :
+    p ∣ Nat.fib (((p : ℤ) - legendreSym p 5).toNat) := by
+  have hp1 : 1 ≤ p := hp.out.one_le
+  have h2 := two_ne_zero p hodd
+  have hlne : ((5 : ℤ) : ZMod p) ≠ 0 := legendre5_ne_zero p hp5
+  rcases legendreSym.eq_one_or_neg_one p (a := 5) hlne with hL | hL
+  · have hidx : ((p : ℤ) - legendreSym p 5).toNat = p - 1 := by rw [hL]; omega
+    rw [hidx]
+    have hc := (coeff_relations p hodd).2
+    rw [hL] at hc; push_cast at hc
+    have hz : (2 : ZMod p) * (Nat.fib (p - 1) : ZMod p) = 0 := by linear_combination hc
+    have : (Nat.fib (p - 1) : ZMod p) = 0 := by
+      rcases mul_eq_zero.1 hz with h' | h'
+      · exact absurd h' h2
+      · exact h'
+    rwa [ZMod.natCast_eq_zero_iff] at this
+  · have hidx : ((p : ℤ) - legendreSym p 5).toNat = p + 1 := by rw [hL]; omega
+    rw [hidx]
+    have hc := (coeff_relations p hodd).2
+    rw [hL] at hc; push_cast at hc
+    have hfp1 : (Nat.fib (p - 1) : ZMod p) = 1 := by
+      have hz : (2 : ZMod p) * ((Nat.fib (p - 1) : ZMod p) - 1) = 0 := by linear_combination hc
+      rcases mul_eq_zero.1 hz with h' | h'
+      · exact absurd h' h2
+      · exact sub_eq_zero.1 h'
+    have hfp : (Nat.fib p : ZMod p) = -1 := by
+      have := fib_p_eq_legendre p hodd; rw [hL] at this; push_cast at this; exact this
+    have he : Nat.fib (p + 1) = Nat.fib (p - 1) + Nat.fib p := by
+      have h1 : p + 1 = (p - 1) + 2 := by omega
+      have h3 : p - 1 + 1 = p := by omega
+      rw [h1, Nat.fib_add_two, h3]
+    have hadd : (Nat.fib (p + 1) : ZMod p) = 0 := by rw [he]; push_cast; rw [hfp1, hfp]; ring
+    rwa [ZMod.natCast_eq_zero_iff] at hadd
+
+end Prime
+
+/-- Quadratic-residue case: if `5` is a square mod `p` then `p ∣ F_{p-1}`. -/
+theorem fib_dvd_p_sub_one_of_residue (p : ℕ) [Fact p.Prime] (hodd : Odd p) (hp5 : p ≠ 5)
+    (hres : legendreSym p 5 = 1) : p ∣ Nat.fib (p - 1) := by
+  have h := fib_dvd_p_sub_legendre p hodd hp5
+  rw [hres] at h
+  have : ((p : ℤ) - 1).toNat = p - 1 := by
+    have : 1 ≤ p := (Fact.out (p := p.Prime)).one_le
+    omega
+  rwa [this] at h
+
+/-- Quadratic-non-residue case: if `5` is a non-square mod `p` then `p ∣ F_{p+1}`. -/
+theorem fib_dvd_p_add_one_of_nonresidue (p : ℕ) [Fact p.Prime] (hodd : Odd p) (hp5 : p ≠ 5)
+    (hnonres : legendreSym p 5 = -1) : p ∣ Nat.fib (p + 1) := by
+  have h := fib_dvd_p_sub_legendre p hodd hp5
+  rw [hnonres] at h
+  have : ((p : ℤ) - (-1)).toNat = p + 1 := by omega
+  rwa [this] at h
+
+/-- Helper: `p² - 1 = (p-1)(p+1)` for `p ≥ 1`. -/
+theorem psq_sub_one_eq (p : ℕ) (hp1 : 1 ≤ p) : p ^ 2 - 1 = (p - 1) * (p + 1) := by
+  obtain ⟨m, rfl⟩ : ∃ m, p = m + 1 := ⟨p - 1, by omega⟩
+  simp only [Nat.add_sub_cancel]
+  ring_nf
+  omega
+
+/-- Legendre-free corollary: every odd prime `p ≠ 5` divides `F_{p²-1}`. Indeed
+`p - (5/p)` divides `p² - 1 = (p-1)(p+1)` in both cases, and Fibonacci numbers
+form a strong divisibility sequence. -/
+theorem fib_dvd_psq_sub_one (p : ℕ) [Fact p.Prime] (hodd : Odd p) (hp5 : p ≠ 5) :
+    p ∣ Nat.fib (p ^ 2 - 1) := by
+  have hp1 : 1 ≤ p := (Fact.out (p := p.Prime)).one_le
+  have hlne : ((5 : ℤ) : ZMod p) ≠ 0 := legendre5_ne_zero p hp5
+  rcases legendreSym.eq_one_or_neg_one p (a := 5) hlne with hL | hL
+  · have hd := fib_dvd_p_sub_one_of_residue p hodd hp5 hL
+    have hdvd : (p - 1) ∣ (p ^ 2 - 1) := by rw [psq_sub_one_eq p hp1]; exact dvd_mul_right _ _
+    exact hd.trans (Nat.fib_dvd _ _ hdvd)
+  · have hd := fib_dvd_p_add_one_of_nonresidue p hodd hp5 hL
+    have hdvd : (p + 1) ∣ (p ^ 2 - 1) := by rw [psq_sub_one_eq p hp1]; exact dvd_mul_left _ _
+    exact hd.trans (Nat.fib_dvd _ _ hdvd)
+
+/-! ## Connection to the entry point (rank of apparition) -/
+
+open Classical in
+/-- The Fibonacci entry point of `p`: least `k > 0` with `p ∣ F_k` (or `0`). -/
+noncomputable def fibEntry (p : ℕ) : ℕ :=
+  if h : ∃ k, 0 < k ∧ p ∣ Nat.fib k then Nat.find h else 0
+
+/-- The master duality `p ∣ F_n ↔ z(p) ∣ n`. -/
+theorem fib_dvd_iff_fibEntry_dvd (p n : ℕ) :
+    p ∣ Nat.fib n ↔ fibEntry p ∣ n := by
+  have fib_dvd_gcd : ∀ {a b : ℕ}, p ∣ Nat.fib a → p ∣ Nat.fib b → p ∣ Nat.fib (Nat.gcd a b) := by
+    intro a b ha hb
+    exact Nat.dvd_gcd ha hb |> fun h => dvd_trans h (by simp [Nat.fib_gcd])
+  constructor
+  · by_cases h : ∃ k, 0 < k ∧ p ∣ Nat.fib k <;> simp_all [fibEntry]
+    · intro hn
+      have h_gcd : p ∣ Nat.fib (Nat.gcd n (Nat.find h)) := fib_dvd_gcd hn (Nat.find_spec h |>.2)
+      contrapose! h_gcd
+      exact fun h' => not_le_of_gt (Nat.lt_of_le_of_ne
+        (Nat.le_of_dvd (Nat.find_spec h |>.1) (Nat.gcd_dvd_right _ _))
+        fun con => h_gcd <| con.symm ▸ Nat.gcd_dvd_left _ _)
+        (Nat.find_min' h ⟨Nat.gcd_pos_of_pos_right _ (Nat.find_spec h |>.1), h'⟩)
+    · cases n <;> aesop
+  · by_cases h : ∃ k, 0 < k ∧ p ∣ Nat.fib k <;> simp_all [fibEntry]
+    · exact fun hn => Nat.dvd_trans (Nat.find_spec h |>.2) (Nat.fib_dvd _ _ hn)
+    · cases n <;> aesop
+
+/-- **Entry-point reciprocity**: the rank of apparition `z(p)` divides `p² - 1`
+for every odd prime `p ≠ 5`. -/
+theorem fibEntry_dvd_psq_sub_one (p : ℕ) [Fact p.Prime] (hodd : Odd p) (hp5 : p ≠ 5) :
+    fibEntry p ∣ (p ^ 2 - 1) :=
+  (fib_dvd_iff_fibEntry_dvd p (p ^ 2 - 1)).1 (fib_dvd_psq_sub_one p hodd hp5)
+
+/-! ## Sanity checks -/
+
+/-- `7 ≡ 2 mod 5`, so `5` is a non-residue mod `7` and `7 ∣ F₈ = 21`. -/
+example : (7 : ℕ) ∣ Nat.fib 8 := by decide
+
+/-- `11 ≡ 1 mod 5`, so `5` is a residue mod `11` and `11 ∣ F₁₀ = 55`. -/
+example : (11 : ℕ) ∣ Nat.fib 10 := by decide
+
+end FibEntryReciprocity

@@ -1,0 +1,188 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license.
+
+# Discrete Hodge Decomposition Core: harmonic = closed ∧ coclosed, and the split
+  Dirichlet energy
+
+This file provides a **self-contained** algebraic foundation for the discrete-Hodge
+program.  Given a real inner-product space `E` and the **abstract Hodge Laplacian**
+
+  `Δ = up + down`
+
+built from two symmetric positive-semidefinite operators `up = d∘dᵀ` (the *up*
+Laplacian, measuring failure to be *closed*) and `down = eᵀ∘e` (the *down* Laplacian,
+measuring failure to be *coclosed*), we prove the four pillars of discrete Hodge
+theory:
+
+* `psd_inner_self_eq_zero` — for a symmetric PSD operator `A`, the energy `⟪x, A x⟫`
+  vanishes **iff** `A x = 0`.  This is the local-to-global engine: a *quadratic*
+  (energy) obstruction is upgraded to a *linear* (vanishing) one.
+* `dirichlet_energy_split` — the Dirichlet energy of `Δ` splits additively into the
+  up- and down-energies: `⟪x, Δ x⟫ = ⟪x, up x⟫ + ⟪x, down x⟫`.
+* `harmonic_iff` / `energy_zero_iff_harmonic` — a cochain is **harmonic** (`Δ x = 0`)
+  iff it is simultaneously **closed and coclosed** (`up x = 0 ∧ down x = 0`) iff its
+  total Dirichlet energy vanishes.  This is the discrete analogue of "a harmonic form
+  is the unique closed-and-coclosed representative of its cohomology class".
+* `harmonic_orthogonal_image` — every harmonic cochain is orthogonal to both image
+  subspaces `range up` and `range down`; i.e. the cohomology (harmonic) part is the
+  orthogonal complement of the "exact + coexact" part.  This is the *gluing*
+  statement: locally-trivial (energy-free) data is exactly the data orthogonal to all
+  coboundaries.
+
+The local-to-global reading: `up x = 0` is a *local closedness* condition and
+`down x = 0` a *local coclosedness* condition; `harmonic_iff` shows the single global
+spectral condition `Δ x = 0` glues these, and `harmonic_orthogonal_image` exhibits the
+cohomology as the obstruction-free orthogonal complement.
+
+-- !-- Lab Notebook -- !--
+Hypothesis:  For a symmetric positive-semidefinite operator `A`, the energy form
+  `(x, y) ↦ ⟪x, A y⟫` is a genuine PSD symmetric bilinear form, so it obeys
+  Cauchy–Schwarz; hence `⟪x, A x⟫ = 0` forces `⟪x, A y⟫ = 0` for all `y`, and by
+  symmetry `A x = 0`.  Combined with additivity of energy across `Δ = up + down`,
+  this should make "harmonic ⇔ closed ∧ coclosed" a short energy argument rather
+  than an eigenvector computation.
+Result:  Formalised and proved sorry-free: `psd_inner_self_eq_zero` (energy-vanishing
+  ⇔ kernel), `dirichlet_energy_split` (additive energy), `harmonic_iff` and
+  `energy_zero_iff_harmonic` (the three equivalent harmonicity conditions), and
+  `harmonic_orthogonal_image` (cohomology ⊥ coboundaries).
+Insight:  The PSD Cauchy–Schwarz step needs only the one-variable nonnegativity
+  `0 ≤ ⟪x + t•y, A (x + t•y)⟫` expanded as a quadratic `d t² + 2 c t ≥ 0` in `t`;
+  case-splitting on whether the leading coefficient `d = ⟪y, A y⟫` is zero turns the
+  whole thing into `nlinarith`.  Symmetry collapses the two cross terms into `2 c t`.
+Failure analysis:  Trying to invoke a generic Cauchy–Schwarz lemma from Mathlib for an
+  *arbitrary* PSD form is brittle (the library form is tied to the canonical inner
+  product); the bare quadratic-nonnegativity argument is more robust and fully local.
+-- !-- Lab Notebook -- !--
+-/
+import Mathlib
+
+open scoped InnerProductSpace BigOperators
+
+namespace HodgeDecompositionCore
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+/-- The abstract Hodge Laplacian `Δ = up + down`. -/
+def hodgeLaplacian (up down : E →ₗ[ℝ] E) : E →ₗ[ℝ] E := up + down
+
+@[simp] theorem hodgeLaplacian_apply (up down : E →ₗ[ℝ] E) (x : E) :
+    hodgeLaplacian up down x = up x + down x := by
+  simp [hodgeLaplacian]
+
+/-! ## The PSD energy-vanishing principle -/
+
+/-
+!-- comment: Expand `0 ≤ ⟪x+t•y, A(x+t•y)⟫ = ⟪x,Ax⟫ + 2t⟪x,Ay⟫ + t²⟪y,Ay⟫` (symmetry
+merges cross terms); with `⟪x,Ax⟫=0` the quadratic `2t·c + t²·d ≥ 0` forces `c=0`,
+i.e. `⟪x,Ay⟫=0` for all `y`; set `y = A x` and use symmetry to get `⟪Ax,Ax⟫=0`. -- !--
+
+**Energy-vanishing ⇔ kernel.** For a symmetric positive-semidefinite operator `A`, the
+Dirichlet energy `⟪x, A x⟫` vanishes if and only if `A x = 0`.
+-/
+theorem psd_inner_self_eq_zero (A : E →ₗ[ℝ] E)
+    (hsymm : ∀ x y, ⟪A x, y⟫_ℝ = ⟪x, A y⟫_ℝ)
+    (hpos : ∀ x, 0 ≤ ⟪x, A x⟫_ℝ)
+    (x : E) : ⟪x, A x⟫_ℝ = 0 ↔ A x = 0 := by
+  refine' ⟨ fun hx => _, _ ⟩;
+  · -- By the properties of the inner product and the symmetry of $A$, we have:
+    have h_inner : ∀ t : ℝ, ∀ y : E, 0 ≤ ⟪x + t • y, A (x + t • y)⟫_ℝ := by
+      exact fun t y => hpos _;
+    -- Expanding the inner product using linearity and symmetry, we get:
+    have h_expand : ∀ t : ℝ, ∀ y : E, 0 ≤ ⟪x, A x⟫_ℝ + 2 * t * ⟪x, A y⟫_ℝ + t^2 * ⟪y, A y⟫_ℝ := by
+      simp_all +decide [ inner_add_left, inner_add_right, inner_smul_left, inner_smul_right ];
+      intro t y; convert h_inner t y using 1; rw [ ← hsymm ] ; ring;
+      rw [ real_inner_comm y ( A x ) ] ; ring;
+    -- Since $⟪x, A x⟫_ℝ = 0$, we have $0 ≤ 2 * t * ⟪x, A y⟫_ℝ + t^2 * ⟪y, A y⟫_ℝ$ for all $t$ and $y$.
+    have h_zero : ∀ y : E, ⟪x, A y⟫_ℝ = 0 := by
+      intro y
+      by_cases hy : ⟪y, A y⟫_ℝ = 0;
+      · contrapose! h_expand;
+        exact ⟨ -1 / ⟪x, A y⟫_ℝ, y, by nlinarith [ mul_div_cancel₀ ( -1 ) h_expand ] ⟩;
+      · contrapose! h_expand;
+        exact ⟨ -⟪x, A y⟫_ℝ / ⟪y, A y⟫_ℝ, y, by nlinarith [ mul_div_cancel₀ ( -⟪x, A y⟫_ℝ ) hy, hpos y, mul_self_pos.2 h_expand, mul_self_pos.2 hy ] ⟩;
+    exact ext_inner_right ℝ fun y => by simp +decide [ hsymm, h_zero ] ;
+  · aesop
+
+/-! ## Additive splitting of the Dirichlet energy -/
+
+/-
+!-- comment: `Δ x = up x + down x`, so `⟪x, Δ x⟫ = ⟪x, up x⟫ + ⟪x, down x⟫` by
+additivity of the inner product in the second slot. -- !--
+
+**Split Dirichlet energy.** The total Hodge energy is the sum of the up-energy
+(failure of closedness) and the down-energy (failure of coclosedness).
+-/
+theorem dirichlet_energy_split (up down : E →ₗ[ℝ] E) (x : E) :
+    ⟪x, hodgeLaplacian up down x⟫_ℝ = ⟪x, up x⟫_ℝ + ⟪x, down x⟫_ℝ := by
+  rw [ ← inner_add_right, hodgeLaplacian_apply ]
+
+/-! ## Harmonic ⇔ closed ∧ coclosed ⇔ energy-free -/
+
+/-
+!-- comment: `(←)` immediate since `Δ x = up x + down x = 0`.  `(→)`: from `Δ x = 0`,
+the split energy `⟪x,upx⟫+⟪x,downx⟫ = 0` with both summands `≥ 0` forces each `= 0`,
+then `psd_inner_self_eq_zero` gives `up x = 0` and `down x = 0`. -- !--
+
+**Discrete Hodge harmonicity.** With `up`, `down` symmetric PSD, a cochain is harmonic
+(`Δ x = 0`) iff it is simultaneously closed and coclosed (`up x = 0 ∧ down x = 0`).
+-/
+theorem harmonic_iff (up down : E →ₗ[ℝ] E)
+    (hsymm_up : ∀ x y, ⟪up x, y⟫_ℝ = ⟪x, up y⟫_ℝ)
+    (hpos_up : ∀ x, 0 ≤ ⟪x, up x⟫_ℝ)
+    (hsymm_down : ∀ x y, ⟪down x, y⟫_ℝ = ⟪x, down y⟫_ℝ)
+    (hpos_down : ∀ x, 0 ≤ ⟪x, down x⟫_ℝ)
+    (x : E) :
+    hodgeLaplacian up down x = 0 ↔ up x = 0 ∧ down x = 0 := by
+  constructor;
+  · intro h
+    have h_inner : ⟪x, up x⟫_ℝ = 0 ∧ ⟪x, down x⟫_ℝ = 0 := by
+      have h_inner : ⟪x, up x⟫_ℝ + ⟪x, down x⟫_ℝ = 0 := by
+        rw [ ← dirichlet_energy_split, h, inner_zero_right ];
+      constructor <;> linarith [ hpos_up x, hpos_down x ];
+    exact ⟨ psd_inner_self_eq_zero up hsymm_up hpos_up x |>.1 h_inner.1, psd_inner_self_eq_zero down hsymm_down hpos_down x |>.1 h_inner.2 ⟩;
+  · simp +contextual [ hodgeLaplacian_apply ]
+
+/-
+!-- comment: Combine `dirichlet_energy_split` with `psd_inner_self_eq_zero` for `up`
+and `down` (both nonneg summing to zero ⇒ each zero), then re-assemble via
+`harmonic_iff`. -- !--
+
+**Energy criterion for harmonicity.** A cochain is harmonic iff its total Dirichlet
+energy is zero — the variational characterisation of discrete harmonic representatives.
+-/
+theorem energy_zero_iff_harmonic (up down : E →ₗ[ℝ] E)
+    (hsymm_up : ∀ x y, ⟪up x, y⟫_ℝ = ⟪x, up y⟫_ℝ)
+    (hpos_up : ∀ x, 0 ≤ ⟪x, up x⟫_ℝ)
+    (hsymm_down : ∀ x y, ⟪down x, y⟫_ℝ = ⟪x, down y⟫_ℝ)
+    (hpos_down : ∀ x, 0 ≤ ⟪x, down x⟫_ℝ)
+    (x : E) :
+    ⟪x, hodgeLaplacian up down x⟫_ℝ = 0 ↔ hodgeLaplacian up down x = 0 := by
+  constructor;
+  · intro h;
+    have h_up : ⟪x, up x⟫_ℝ = 0 := by
+      simp_all +decide [ hodgeLaplacian, inner_add_right ];
+      linarith [ hpos_up x, hpos_down x ]
+    have h_down : ⟪x, down x⟫_ℝ = 0 := by
+      unfold hodgeLaplacian at h; simp_all +decide [ inner_add_right ] ;
+    have := psd_inner_self_eq_zero up hsymm_up hpos_up x; have := psd_inner_self_eq_zero down hsymm_down hpos_down x; aesop;
+  · aesop
+
+/-! ## Cohomology is orthogonal to the coboundaries -/
+
+/-
+!-- comment: For harmonic `h`, `⟪h, up y⟫ = ⟪up h, y⟫ = ⟪0, y⟫ = 0` by symmetry, and
+likewise for `down`. -- !--
+
+**Hodge orthogonality.** Every harmonic cochain is orthogonal to both image subspaces
+`range up` and `range down`: the cohomology (harmonic) part is the obstruction-free
+orthogonal complement of the exact + coexact part.
+-/
+theorem harmonic_orthogonal_image (up down : E →ₗ[ℝ] E)
+    (hsymm_up : ∀ x y, ⟪up x, y⟫_ℝ = ⟪x, up y⟫_ℝ)
+    (hsymm_down : ∀ x y, ⟪down x, y⟫_ℝ = ⟪x, down y⟫_ℝ)
+    {h : E} (hh : up h = 0 ∧ down h = 0) (y : E) :
+    ⟪h, up y⟫_ℝ = 0 ∧ ⟪h, down y⟫_ℝ = 0 := by
+  simp +decide [ ← hsymm_up, ← hsymm_down, hh ]
+
+end HodgeDecompositionCore

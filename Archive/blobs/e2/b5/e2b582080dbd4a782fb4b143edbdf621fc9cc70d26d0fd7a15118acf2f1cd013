@@ -1,0 +1,175 @@
+import Mathlib
+
+/-!
+# A matrix-growth certificate for Berggren generation of Pythagorean triples
+
+The Berggren ternary tree generates every primitive Pythagorean triple from the
+root `(3,4,5)` by repeatedly applying three fixed integer matrices `A`, `B`, `C`.
+This file establishes an explicit *growth certificate*: the entries (and hence the
+hypotenuse) of any triple reachable by a word of length `n` in the generators grow
+at most like `7^n`.
+
+## The constant
+
+A natural row-sum absolute-value norm is used:
+`rowNorm M = max_i ∑_j |M i j|`.
+For each of the three Berggren generators this norm equals `7` (the third row has
+absolute-value sum `2+2+3 = 7`).  Consequently the honest, falsifiable constant in
+the certificate is `7`, **not** `3`: applying `B` to the root `(3,4,5)` already
+produces the triple `(21,20,29)` whose hypotenuse `29` exceeds `5·3 = 15`, so a
+bound `hypotenuse ≤ 5·3^n` is simply false at `n = 1`.  With the correct constant
+`7` we have `5·7 = 35 ≥ 29`, and the whole chain goes through.
+
+## Dependency chain
+
+* `rowNorm_mul_le`            — submultiplicativity of the row norm
+* `rowNorm_generator_le`      — each generator has row norm `≤ 7`
+* `rowNorm_wordMatrix_le`     — a length-`n` word has row norm `≤ 7^n`
+* `hypotenuse_le_rowNorm_mul_root` — hypotenuse bounded by `rowNorm · 5`
+* `hypotenuse_of_word_le`     — `hypotenuse ≤ 5·7^n`
+* `word_length_lower_bound`   — a depth lower bound corollary
+-/
+
+open Matrix Finset
+
+namespace BerggrenGrowth
+
+/-! ## Generators and the row norm -/
+
+/-- Berggren generator `A`. -/
+def A : Matrix (Fin 3) (Fin 3) ℤ := !![1, -2, 2; 2, -1, 2; 2, -2, 3]
+
+/-- Berggren generator `B`. -/
+def B : Matrix (Fin 3) (Fin 3) ℤ := !![1, 2, 2; 2, 1, 2; 2, 2, 3]
+
+/-- Berggren generator `C`. -/
+def C : Matrix (Fin 3) (Fin 3) ℤ := !![-1, 2, 2; -2, 1, 2; -2, 2, 3]
+
+/-- Row-sum absolute-value norm, natural-number valued:
+`rowNorm M = max_i ∑_j |M i j|`. -/
+def rowNorm (M : Matrix (Fin 3) (Fin 3) ℤ) : ℕ :=
+  Finset.univ.sup (fun i => ∑ j, (M i j).natAbs)
+
+/-- The row norm is reached on each individual row, i.e. every row's absolute-value
+sum is `≤ rowNorm M`. -/
+theorem row_le_rowNorm (M : Matrix (Fin 3) (Fin 3) ℤ) (i : Fin 3) :
+    (∑ j, (M i j).natAbs) ≤ rowNorm M :=
+  Finset.le_sup (f := fun i => ∑ j, (M i j).natAbs) (Finset.mem_univ i)
+
+/-
+**Submultiplicativity of the row norm.**
+-/
+theorem rowNorm_mul_le (M N : Matrix (Fin 3) (Fin 3) ℤ) :
+    rowNorm (M * N) ≤ rowNorm M * rowNorm N := by
+  refine' Finset.sup_le fun i _ => _;
+  -- Apply the triangle inequality to each term in the sum.
+  have h_triangle : ∀ j, (M * N) i j = ∑ k, M i k * N k j := by
+    exact fun j => rfl;
+  have h_triangle : ∀ j, Int.natAbs ((M * N) i j) ≤ ∑ k, Int.natAbs (M i k) * Int.natAbs (N k j) := by
+    exact fun j => by rw [ h_triangle j ] ; simpa [ ← Int.ofNat_le ] using Finset.abs_sum_le_sum_abs _ _ |> le_trans <| Finset.sum_le_sum fun k _ => by rw [ abs_mul ] ;
+  refine' le_trans ( Finset.sum_le_sum fun j _ => h_triangle j ) _;
+  rw [ Finset.sum_comm ];
+  refine' le_trans ( Finset.sum_le_sum fun j _ => _ ) _;
+  use fun j => Int.natAbs ( M i j ) * rowNorm N;
+  · rw [ ← Finset.mul_sum _ _ _ ] ; exact Nat.mul_le_mul_left _ ( row_le_rowNorm N j ) ;
+  · rw [ ← Finset.sum_mul _ _ _ ];
+    exact Nat.mul_le_mul_right _ ( row_le_rowNorm M i )
+
+/-! ## Norms of the generators -/
+
+theorem rowNorm_A_le : rowNorm A ≤ 7 := by
+  decide
+
+theorem rowNorm_B_le : rowNorm B ≤ 7 := by
+  decide
+
+theorem rowNorm_C_le : rowNorm C ≤ 7 := by
+  decide
+
+theorem rowNorm_one_le : rowNorm (1 : Matrix (Fin 3) (Fin 3) ℤ) ≤ 1 := by
+  decide
+
+/-! ## Words in the generators -/
+
+/-- A Berggren generator label. -/
+inductive Gen : Type
+  | a : Gen
+  | b : Gen
+  | c : Gen
+deriving DecidableEq, Repr
+
+/-- The matrix attached to a single generator. -/
+def genMatrix : Gen → Matrix (Fin 3) (Fin 3) ℤ
+  | .a => A
+  | .b => B
+  | .c => C
+
+theorem rowNorm_generator_le (g : Gen) : rowNorm (genMatrix g) ≤ 7 := by
+  cases g with
+  | a => exact rowNorm_A_le
+  | b => exact rowNorm_B_le
+  | c => exact rowNorm_C_le
+
+/-- The matrix of a word: a product of generator matrices (empty word ↦ identity). -/
+def wordMatrix : List Gen → Matrix (Fin 3) (Fin 3) ℤ
+  | [] => 1
+  | g :: w => genMatrix g * wordMatrix w
+
+/-
+**Growth certificate for word matrices:** a length-`n` word has row norm `≤ 7^n`.
+-/
+theorem rowNorm_wordMatrix_le (w : List Gen) :
+    rowNorm (wordMatrix w) ≤ 7 ^ w.length := by
+  induction' w with g w ih;
+  · decide +revert;
+  · simpa [ pow_succ' ] using le_trans ( rowNorm_mul_le _ _ ) ( Nat.mul_le_mul ( rowNorm_generator_le g ) ih )
+
+/-! ## Action on the root triple and the hypotenuse bound -/
+
+/-- The root triple `(3,4,5)` as a vector. -/
+def root : Fin 3 → ℤ := ![3, 4, 5]
+
+/-- The action of a word on a vector. -/
+def act (w : List Gen) (v : Fin 3 → ℤ) : Fin 3 → ℤ := (wordMatrix w).mulVec v
+
+/-- The hypotenuse is the third coordinate. -/
+def hypotenuse (v : Fin 3 → ℤ) : ℤ := v 2
+
+/-
+Each coordinate of `M.mulVec root` has absolute value at most `rowNorm M · 5`,
+because every entry of `root` has absolute value `≤ 5`.
+-/
+theorem mulVec_root_natAbs_le (M : Matrix (Fin 3) (Fin 3) ℤ) (i : Fin 3) :
+    (M.mulVec root i).natAbs ≤ rowNorm M * 5 := by
+  norm_num [ Matrix.mulVec, root ];
+  refine' le_trans _ ( Nat.mul_le_mul_right _ ( row_le_rowNorm M i ) );
+  rw [ Fin.sum_univ_three ] ; exact by cases abs_cases ( M i 0 * 3 + ( M i 1 * 4 + M i 2 * 5 ) ) <;> cases abs_cases ( M i 0 ) <;> cases abs_cases ( M i 1 ) <;> cases abs_cases ( M i 2 ) <;> linarith!;
+
+/-
+**Hypotenuse bounded by the matrix norm.**
+-/
+theorem hypotenuse_le_rowNorm_mul_root (w : List Gen) :
+    hypotenuse (act w root) ≤ (rowNorm (wordMatrix w) : ℤ) * 5 := by
+  convert Int.le_natAbs.trans ( Int.ofNat_le.mpr ( mulVec_root_natAbs_le ( wordMatrix w ) 2 ) ) using 1
+
+/-
+**The growth certificate for the hypotenuse:** any triple produced by a word of
+length `n` has hypotenuse at most `5·7^n`.
+-/
+theorem hypotenuse_of_word_le (w : List Gen) :
+    hypotenuse (act w root) ≤ 5 * 7 ^ w.length := by
+  convert hypotenuse_le_rowNorm_mul_root w |> le_trans <| mul_le_mul_of_nonneg_right ( Nat.cast_le.mpr <| rowNorm_wordMatrix_le w ) ( by norm_num ) using 1 ; norm_cast ; ring
+
+/-
+**Depth lower bound.** If a word produces a triple with hypotenuse `c`, then any
+`n` whose certificate value `5·7^n` is still below `c` must be strictly less than the
+word's length.  Equivalently, the length of any word producing hypotenuse `c` is at
+least the least `n` with `c ≤ 5·7^n`.
+-/
+theorem word_length_lower_bound (w : List Gen) (c : ℤ)
+    (h : hypotenuse (act w root) = c) (n : ℕ) (hn : 5 * 7 ^ n < c) :
+    n < w.length := by
+  contrapose! hn;
+  exact h ▸ le_trans ( hypotenuse_of_word_le _ ) ( by gcongr ; norm_num )
+
+end BerggrenGrowth

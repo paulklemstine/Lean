@@ -1,0 +1,336 @@
+/-
+  # Functorial Tropical–Ultrametric Connectivity Bounds for Rips Filtrations
+  ## from Valuation-Depth Data
+
+  Bridge: connects valuation/ultrametric geometry ↔ tropical algebra ↔ Rips
+  filtrations / topological data analysis.
+
+  **Core principle.** When the metric on a point cloud comes from *valuation-depth
+  data* (a non-archimedean "depth of agreement" satisfying the strong/ultrametric
+  triangle inequality `d(x,z) ≤ max (d(x,y)) (d(y,z))`), the Vietoris–Rips
+  1-skeleton becomes dramatically rigid: at every scale `ε`, two points are
+  *connected by a path* in the Rips graph **iff** they are already within distance
+  `ε`. Path-connectivity collapses to a single edge. Consequently the connected
+  components of the Rips graph are exactly the closed `ε`-balls, and these balls
+  partition the space — the classic ultrametric "balls are cosets" phenomenon,
+  here phrased at the level of Rips connectivity.
+
+  The ultrametric inequality `≤ max` is precisely the *tropical* triangle
+  inequality (tropical addition is `max`). So this file is a quantitative bridge:
+  tropical/valuation structure on the depth data ⟹ exact control of Rips
+  connectivity. The control is moreover **functorial**: any depth-non-expansive
+  map `f` (one with `d'(f x, f y) ≤ d(x, y)`) transports Rips-connectivity
+  forward, giving "functorial bound transfer."
+
+  This file extends, in spirit:
+  * `Applications/PoincareData/MetricFiltration.lean` (`ripsGraph`, `ripsGraph_mono`),
+  * `Bridges/CategoricalTropicalUltrametric.lean` (tropical `add = max` principle),
+  * `Computation/PadicValuationDepth.lean` (valuation-depth as a complexity/algebra bridge).
+
+  (Those files live in lean libraries this one does not import, so the relevant
+  constructions are reproduced here as `vRipsGraph` over abstract depth data,
+  generalizing `ripsGraph` from pseudometric spaces to valuation-depth data.)
+
+  ## Main results
+  * `ValuationDepthData` — abstract non-archimedean depth data (an ultrametric spec).
+  * `vRipsGraph` — the Rips 1-skeleton built directly from depth data.
+  * `vReachable_iff` — **path-connectivity = single-edge** at every scale (main theorem).
+  * `vRipsGraph_components_are_balls` — connected components are exactly closed balls.
+  * `vReachable_map` — **functorial bound transfer** along depth-non-expansive maps.
+  * `vReachable_iff_ultrametric` — the same collapse for honest
+    `IsUltrametricDist` metric spaces.
+  * `padic_vReachable_iff` — concrete instantiation on the `p`-adics `ℚ_[p]`.
+-/
+import Mathlib
+
+open SimpleGraph
+
+noncomputable section
+
+namespace TropUltraRips
+
+/-! ## §1. Valuation-Depth Data and the Rips graph it generates
+
+`ValuationDepthData α` packages an ℝ-valued non-archimedean "distance" obtained
+from valuation-depth: a symmetric, nonnegative function vanishing on the diagonal
+and satisfying the **strong/ultrametric (= tropical) triangle inequality**.
+
+Bridge note (tropical): the axiom `vdist_ultra` reads `d(x,z) ≤ max (d x y) (d y z)`.
+`max` is tropical addition, so this is the tropical triangle inequality — the
+exact structure studied in `Bridges/CategoricalTropicalUltrametric.lean`. -/
+
+/-- Abstract valuation-depth data on a type `α`: an ultrametric pseudo-distance
+arising from a non-archimedean valuation / depth of agreement. -/
+structure ValuationDepthData (α : Type*) where
+  /-- The depth-induced distance (e.g. `2 ^ (-agree x y)` or `|x - y|_p`). -/
+  vdist : α → α → ℝ
+  vdist_nonneg : ∀ x y, 0 ≤ vdist x y
+  vdist_self : ∀ x, vdist x x = 0
+  vdist_comm : ∀ x y, vdist x y = vdist y x
+  /-- Strong (ultrametric = tropical) triangle inequality. -/
+  vdist_ultra : ∀ x y z, vdist x z ≤ max (vdist x y) (vdist y z)
+
+variable {α β : Type*}
+
+/-- The Rips 1-skeleton at scale `ε` built directly from valuation-depth data:
+distinct points are adjacent iff their depth-distance is `≤ ε`. -/
+def vRipsGraph (D : ValuationDepthData α) (ε : ℝ) : SimpleGraph α where
+  Adj x y := x ≠ y ∧ D.vdist x y ≤ ε
+  symm x y h := ⟨h.1.symm, by rw [D.vdist_comm]; exact h.2⟩
+  loopless := ⟨fun x h => h.1 rfl⟩
+
+/-! ## §2. Monotonicity (filtration structure)
+
+Mirrors `ripsGraph_mono` from `MetricFiltration.lean`, now for depth data. -/
+
+theorem vRipsGraph_mono (D : ValuationDepthData α) {ε₁ ε₂ : ℝ} (h : ε₁ ≤ ε₂) :
+    vRipsGraph D ε₁ ≤ vRipsGraph D ε₂ := by
+  intro x y hxy
+  exact ⟨hxy.1, le_trans hxy.2 h⟩
+
+theorem vRipsGraph_bot_of_neg (D : ValuationDepthData α) {ε : ℝ} (hε : ε < 0) :
+    vRipsGraph D ε = ⊥ := by
+  ext x y
+  simp only [vRipsGraph, SimpleGraph.bot_adj]
+  constructor
+  · intro h; exact absurd (le_trans (D.vdist_nonneg x y) h.2) (not_le.mpr hε)
+  · intro h; exact h.elim
+
+/-! ## §3. The connectivity collapse — main theorem
+
+-- !-- Lab Notes -- !--
+HYPOTHESIS H1. Under ultrametric depth data, a Rips path of any length cannot
+reach farther than a single edge: walking through intermediate points never
+helps, because `max` of step-lengths is again `≤ ε`. Formally, every walk in
+`vRipsGraph D ε` has endpoints within `ε`.
+
+EXPERIMENT. Proved `vdist_le_of_walk` by induction on the walk; the `cons` case
+is exactly one application of `vdist_ultra`. The base case needs `vdist_self = 0
+≤ ε`, hence the hypothesis `0 ≤ ε`.
+
+OUTCOME. `vReachable_iff`: `Reachable x y ↔ vdist x y ≤ ε` for `ε ≥ 0`. This is
+the central rigidity result and the engine for everything below.
+
+INSIGHT. In ordinary (archimedean) metric spaces this is FALSE — a Rips path can
+chain many small hops to connect far-apart points (that is the entire point of
+persistent homology). Ultrametricity is exactly what removes the chaining. So the
+theorem sharply separates the non-archimedean world from the archimedean one. -- !--
+-/
+
+/-- Key lemma: in ultrametric depth data, any Rips walk keeps its endpoints within
+the scale `ε`. Proven by induction on the walk via `vdist_ultra`. -/
+theorem vdist_le_of_walk (D : ValuationDepthData α) {ε : ℝ} (hε : 0 ≤ ε) :
+    ∀ {x y : α}, (vRipsGraph D ε).Walk x y → D.vdist x y ≤ ε := by
+  intro x y w
+  induction w with
+  | nil => simpa [D.vdist_self] using hε
+  | @cons u v z h p ih =>
+      exact le_trans (D.vdist_ultra u v z) (max_le h.2 ih)
+
+/-- **Main theorem (connectivity collapse).** For ultrametric valuation-depth data
+and any nonnegative scale, path-connectivity in the Rips graph coincides with the
+single-edge relation: `Reachable x y ↔ vdist x y ≤ ε`. -/
+theorem vReachable_iff (D : ValuationDepthData α) {ε : ℝ} (hε : 0 ≤ ε) (x y : α) :
+    (vRipsGraph D ε).Reachable x y ↔ D.vdist x y ≤ ε := by
+  constructor
+  · rintro ⟨w⟩
+    exact vdist_le_of_walk D hε w
+  · intro hd
+    by_cases hxy : x = y
+    · subst hxy; exact Reachable.refl x
+    · exact (SimpleGraph.Adj.reachable ⟨hxy, hd⟩)
+
+/-! ## §4. Components are balls; global connectivity bound -/
+
+/-- The closed `ε`-ball around `x` in the depth data. -/
+def vBall (D : ValuationDepthData α) (ε : ℝ) (x : α) : Set α :=
+  {y | D.vdist x y ≤ ε}
+
+/-- **Connected components are exactly closed balls.** For `ε ≥ 0`, the set of
+points reachable from `x` in `vRipsGraph D ε` is precisely the closed `ε`-ball
+around `x`. (Ultrametric "balls are components".) -/
+theorem vRipsGraph_components_are_balls (D : ValuationDepthData α) {ε : ℝ}
+    (hε : 0 ≤ ε) (x : α) :
+    {y | (vRipsGraph D ε).Reachable x y} = vBall D ε x := by
+  ext y
+  simp only [Set.mem_setOf_eq, vBall]
+  exact vReachable_iff D hε x y
+
+/-- **Global connectivity bound.** If every pair of points lies within `ε`
+(`ε` an upper bound for the depth-diameter), the whole Rips graph is connected. -/
+theorem vRipsGraph_connected_of_diam_le (D : ValuationDepthData α) [Nonempty α]
+    {ε : ℝ} (hε : 0 ≤ ε) (h : ∀ x y, D.vdist x y ≤ ε) :
+    (vRipsGraph D ε).Connected := by
+  refine { preconnected := fun x y => ?_, nonempty := ‹Nonempty α› }
+  exact (vReachable_iff D hε x y).mpr (h x y)
+
+/-- Conversely, connectivity forces the depth-diameter bound: if the Rips graph at
+scale `ε ≥ 0` is preconnected, every pair is within `ε`. Together with the
+previous lemma this gives an *exact* threshold characterization. -/
+theorem vRipsGraph_diam_le_of_preconnected (D : ValuationDepthData α) {ε : ℝ}
+    (hε : 0 ≤ ε) (h : (vRipsGraph D ε).Preconnected) :
+    ∀ x y, D.vdist x y ≤ ε := by
+  intro x y
+  exact (vReachable_iff D hε x y).mp (h x y)
+
+/-! ## §5. Functorial bound transfer
+
+-- !-- Lab Notes -- !--
+HYPOTHESIS H2. The connectivity collapse should be *functorial*: a map that does
+not increase depth-distance (`d'(f x, f y) ≤ d(x, y)`) should transport Rips
+connectivity forward. Equivalently, valuation/tropical bounds proved upstream
+transfer to downstream connectivity — the "functorial bound transfer" slogan of
+`CategoricalTropicalUltrametric.lean`, now at the level of Rips filtrations.
+
+EXPERIMENT. `vReachable_map` chains the two directions of `vReachable_iff`:
+upstream reachability ⟹ `d(x,y) ≤ ε` ⟹ `d'(f x, f y) ≤ ε` ⟹ downstream
+reachability. No induction needed once the collapse theorem is in hand — the
+collapse does the heavy lifting and functoriality is a one-liner on top.
+
+INSIGHT. Depth-non-expansive maps are the morphisms of the (pseudo)ultrametric
+category; this lemma says `vRipsGraph(·, ε)` together with `Reachable` is a
+functor to graphs-with-reachability. The hypothesis is satisfied by every
+1-Lipschitz map, in particular by ring homomorphisms contracting valuations. -- !--
+-/
+
+/-- **Functorial bound transfer.** A depth-non-expansive map `f` (one satisfying
+`D'.vdist (f x) (f y) ≤ D.vdist x y`) transports Rips path-connectivity forward:
+points connected at scale `ε` upstream remain connected at scale `ε` downstream. -/
+theorem vReachable_map (D : ValuationDepthData α) (D' : ValuationDepthData β)
+    (f : α → β) (hf : ∀ x y, D'.vdist (f x) (f y) ≤ D.vdist x y)
+    {ε : ℝ} (hε : 0 ≤ ε) {x y : α}
+    (h : (vRipsGraph D ε).Reachable x y) :
+    (vRipsGraph D' ε).Reachable (f x) (f y) := by
+  have hxy : D.vdist x y ≤ ε := (vReachable_iff D hε x y).mp h
+  exact (vReachable_iff D' hε (f x) (f y)).mpr (le_trans (hf x y) hxy)
+
+/-- Functorial transfer of global connectivity: a depth-non-expansive *surjection*
+sends a connected Rips graph to a connected Rips graph. -/
+theorem vRipsGraph_connected_map (D : ValuationDepthData α) (D' : ValuationDepthData β)
+    (f : α → β) (hf : ∀ x y, D'.vdist (f x) (f y) ≤ D.vdist x y)
+    (hsurj : Function.Surjective f) {ε : ℝ} (hε : 0 ≤ ε)
+    (h : (vRipsGraph D ε).Connected) :
+    (vRipsGraph D' ε).Connected := by
+  have hne : Nonempty α := h.nonempty
+  refine { preconnected := fun a b => ?_, nonempty := ⟨f (Classical.choice hne)⟩ }
+  obtain ⟨x, rfl⟩ := hsurj a
+  obtain ⟨y, rfl⟩ := hsurj b
+  exact vReachable_map D D' f hf hε (h.preconnected x y)
+
+/-! ## §6. Honest metric instantiation via `IsUltrametricDist`
+
+The same collapse holds for any `IsUltrametricDist` pseudometric space, recovering
+the `ripsGraph` story of `MetricFiltration.lean`. -/
+
+/-- Any `IsUltrametricDist` pseudometric space yields valuation-depth data with
+`vdist = dist`. -/
+def ofUltrametric (α : Type*) [PseudoMetricSpace α] [IsUltrametricDist α] :
+    ValuationDepthData α where
+  vdist := dist
+  vdist_nonneg := fun _ _ => dist_nonneg
+  vdist_self := dist_self
+  vdist_comm := dist_comm
+  vdist_ultra := IsUltrametricDist.dist_triangle_max
+
+/-- **Connectivity collapse for honest ultrametric metric spaces.** In any
+`IsUltrametricDist` space, `vRipsGraph` path-connectivity equals being within `ε`. -/
+theorem vReachable_iff_ultrametric (α : Type*) [PseudoMetricSpace α]
+    [IsUltrametricDist α] {ε : ℝ} (hε : 0 ≤ ε) (x y : α) :
+    (vRipsGraph (ofUltrametric α) ε).Reachable x y ↔ dist x y ≤ ε :=
+  vReachable_iff (ofUltrametric α) hε x y
+
+/-! ## §7. Concrete instantiation: the `p`-adics
+
+`ℚ_[p]` and `ℤ_[p]` carry the canonical valuation-depth metric. The collapse
+theorem applies verbatim — Rips connectivity on `p`-adic point clouds is
+single-edge, the ultimate non-archimedean analogue of TDA. This is the bridge to
+`Computation/PadicValuationDepth.lean`. -/
+
+theorem padic_vReachable_iff (p : ℕ) [hp : Fact (Nat.Prime p)]
+    {ε : ℝ} (hε : 0 ≤ ε) (x y : ℚ_[p]) :
+    (vRipsGraph (ofUltrametric ℚ_[p]) ε).Reachable x y ↔ dist x y ≤ ε :=
+  vReachable_iff_ultrametric ℚ_[p] hε x y
+
+theorem padicInt_vReachable_iff (p : ℕ) [hp : Fact (Nat.Prime p)]
+    {ε : ℝ} (hε : 0 ≤ ε) (x y : ℤ_[p]) :
+    (vRipsGraph (ofUltrametric ℤ_[p]) ε).Reachable x y ↔ dist x y ≤ ε :=
+  vReachable_iff_ultrametric ℤ_[p] hε x y
+
+/-- On `ℤ_[p]`, the Rips graph is connected at every scale `ε ≥ 1`, since the
+whole ring of `p`-adic integers has diameter `≤ 1`. -/
+theorem padicInt_vRipsGraph_connected_of_one_le (p : ℕ) [hp : Fact (Nat.Prime p)]
+    {ε : ℝ} (hε : 1 ≤ ε) :
+    (vRipsGraph (ofUltrametric ℤ_[p]) ε).Connected := by
+  refine vRipsGraph_connected_of_diam_le (ofUltrametric ℤ_[p]) (le_trans zero_le_one hε)
+    (fun x y => ?_)
+  have hx : ‖x - y‖ ≤ 1 := PadicInt.norm_le_one _
+  simpa [ofUltrametric, dist_eq_norm] using le_trans hx hε
+
+/-! ## §8. The collapse *characterizes* ultrametricity (converse direction)
+
+-- !-- Lab Notes -- !--
+HYPOTHESIS H3 (Conjecture 4). The connectivity collapse is not merely a
+consequence of ultrametricity — it is *equivalent* to it. If a symmetric distance
+has the property that two `ε`-close-via-an-intermediate-point points are
+themselves `ε`-close (the engine of `vdist_le_of_walk` at length 2), then it
+satisfies the strong triangle inequality.
+
+EXPERIMENT. Instantiate the collapse hypothesis at `ε = max (d x y) (d y z)`.
+Both `d x y ≤ ε` and `d y z ≤ ε` hold by `le_max_left/right`, so the hypothesis
+yields `d x z ≤ ε`, which is exactly `vdist_ultra`. One line.
+
+OUTCOME. `ultra_of_rips_collapse`: ultrametricity ⟺ the length-2 collapse. This
+turns the main theorem into a genuine characterization of non-archimedean depth
+data, not just a sufficient condition. -- !--
+-/
+
+/-- **Converse characterization (Conjecture 4, proved).** A symmetric distance
+that satisfies the length-2 Rips collapse — `ε`-closeness through an intermediate
+point implies `ε`-closeness — is automatically ultrametric. Hence `vdist_ultra`
+is necessary, not just sufficient, for the connectivity collapse. -/
+theorem ultra_of_rips_collapse (d : α → α → ℝ)
+    (hnonneg : ∀ x y, 0 ≤ d x y)
+    (hcollapse : ∀ ε, 0 ≤ ε → ∀ x y z, d x y ≤ ε → d y z ≤ ε → d x z ≤ ε) :
+    ∀ x y z, d x z ≤ max (d x y) (d y z) := by
+  intro x y z
+  refine hcollapse (max (d x y) (d y z)) ?_ x y z (le_max_left _ _) (le_max_right _ _)
+  exact le_trans (hnonneg x y) (le_max_left _ _)
+
+/-! ## §9. Cliques are balls; higher-Rips triviality
+
+-- !-- Lab Notes -- !--
+HYPOTHESIS H4 (Conjecture 5). Every clique of the ultrametric Rips graph fits
+inside a single closed ball, and every ball is a clique. So the full
+Vietoris–Rips *complex* at scale `ε` is a disjoint union of simplices.
+
+EXPERIMENT. Forward: any member `x` of a nonempty clique `S` is a center —
+`vdist x x = 0` and pairwise adjacency bounds the rest. Reverse: for distinct
+`a,b` in a ball around `x`, `vdist a b ≤ max (vdist a x) (vdist x b) ≤ ε` by
+`vdist_ultra` + symmetry. Both directions land cleanly.
+
+INSIGHT. This is the higher-dimensional shadow of the π₀ collapse: with cliques
+confined to balls, no nontrivial cycles can form, so all higher persistent
+homology vanishes. Recorded as Conjecture 5 for the homological follow-up. -- !--
+-/
+
+/-- **Cliques are balls (Conjecture 5, finite-pair core).** For ultrametric depth
+data and a nonempty set `S`, `S` is a clique of `vRipsGraph D ε` iff it is
+contained in some closed `ε`-ball. -/
+theorem vRipsGraph_isClique_iff_subset_ball (D : ValuationDepthData α) {ε : ℝ}
+    (hε : 0 ≤ ε) {S : Set α} (hne : S.Nonempty) :
+    (vRipsGraph D ε).IsClique S ↔ ∃ x, ∀ y ∈ S, D.vdist x y ≤ ε := by
+  constructor
+  · intro hcl
+    obtain ⟨x, hx⟩ := hne
+    refine ⟨x, fun y hy => ?_⟩
+    by_cases hxy : x = y
+    · subst hxy; simpa [D.vdist_self] using hε
+    · exact (hcl hx hy hxy).2
+  · rintro ⟨x, hx⟩ a ha b hb hab
+    refine ⟨hab, ?_⟩
+    calc D.vdist a b ≤ max (D.vdist a x) (D.vdist x b) := D.vdist_ultra a x b
+      _ ≤ ε := by
+          rw [D.vdist_comm a x]
+          exact max_le (hx a ha) (hx b hb)
+
+end TropUltraRips

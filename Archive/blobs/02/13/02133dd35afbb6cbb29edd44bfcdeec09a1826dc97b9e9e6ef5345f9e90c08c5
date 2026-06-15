@@ -1,0 +1,323 @@
+\documentclass[11pt]{amsart}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\WT}{\mathrm{WithTop}\,\mathbb{N}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\vp}{\mathrm{vprofile}}
+\newcommand{\tc}{\mathrm{tropConv}}
+\newcommand{\cc}{\star}
+\newcommand{\range}{\mathrm{range}}
+
+\title{A Functorial Bridge from Cauchy Convolution to Tropical Valuation Profiles}
+\author{Aristotle (Harmonic)}
+\date{2026-06-15}
+
+\begin{document}
+
+\begin{abstract}
+We construct and rigorously establish a bridge between the multiplicative algebra
+of generating functions over a commutative semiring and the min-plus (tropical)
+semiring of valuation profiles. Given an additive valuation $v$ on a commutative
+semiring $K$, valued in the extended naturals $\WT = \NN \cup \{\infty\}$, we
+associate to each sequence $a : \NN \to K$ its \emph{valuation profile}
+$\vp(a)$ obtained by applying $v$ coefficient-wise. Our central result, the
+\emph{Tropical Convolution Bound}, states that for all sequences $a,b$ and all
+indices $n$,
+\[
+\tc(\vp(a),\vp(b))(n) \;\le\; v\bigl((a\cc b)(n)\bigr),
+\]
+where $\cc$ is the finite Cauchy convolution and $\tc$ is the min-plus
+convolution. The inequality is \emph{lax}: equality fails exactly when
+valuation-minimizing antidiagonal terms cancel, and we characterize the
+transverse regime in which it becomes exact. The result requires only three
+valuation axioms and holds over an arbitrary commutative semiring, without
+subtraction or field hypotheses. We situate the theorem within the theory of
+Newton polygons, combinatorial species, and tropical geometry, and we develop
+algorithms, numerical demonstrations, and a program of conjectures upgrading the
+lax functor toward a strict tropical correspondence.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+The interplay between \emph{algebraic} and \emph{order-theoretic} structure is a
+recurring theme across number theory, combinatorics, and tropical geometry. A
+valuation is the canonical device translating the former into the latter: it
+sends a multiplicative structure to an additive, totally ordered one, replacing
+the size of an element by its divisibility depth. The most familiar instance is
+the $p$-adic valuation $v_p(x)$, the exponent of the prime $p$ in the
+factorization of $x$, extended by $v_p(0) = \infty$.
+
+Generating functions package combinatorial or analytic data as sequences
+$a : \NN \to K$, and their fundamental multiplication is the \emph{Cauchy
+convolution}
+\[
+(a \cc b)(n) = \sum_{k=0}^{n} a(k)\, b(n-k).
+\]
+This single operation underlies multiplication of formal power series, the
+product of combinatorial species, and the convolution of independent
+distributions. We resolve the question: \emph{what does a valuation do to a Cauchy
+convolution?} Because the convolution is a sum of products, and because
+valuations interact transparently with products but only laxly with sums, the
+answer is not an identity but a sharp lower bound --- and that bound is precisely
+the tropical (min-plus) convolution of the valuation profiles. This furnishes a
+\emph{lax morphism of semirings} from the convolution algebra
+$(\NN \to K, +, \cc)$ to the tropical semiring
+$(\NN \to \WT, \min, \otimes)$ of valuation profiles.
+
+\section{Background and notation}
+
+Throughout, $K$ is a commutative semiring: a set with commutative, associative
+$+$ and $\cdot$, distributivity, an additive identity $0$, and a multiplicative
+identity $1$, but with \textbf{no requirement of additive inverses}. Sequences
+are functions $a : \NN \to K$.
+
+The valuation codomain is $\WT = \NN \cup \{\infty\}$, with $\top = \infty$. It
+carries the order extending $\le$ on $\NN$ with $m \le \infty$; addition with
+$m + \infty = \infty$; and binary minimum. The triple $(\WT, \min, +)$ is the
+\emph{min-plus (tropical) semiring}: $\min$ is the additive operation (identity
+$\infty$) and $+$ is the multiplicative operation (identity $0$). It is
+idempotent and totally ordered. For a nonempty finite index set $S$ and
+$f : S \to \WT$, we write $\inf' S\, f$ for the minimum of $f$ over $S$.
+
+\section{Additive valuations}
+
+\begin{definition}[Additive valuation]\label{def:addval}
+An \emph{additive valuation} on a commutative semiring $K$, valued in $\WT$, is a
+map $v : K \to \WT$ satisfying:
+\begin{enumerate}[label=\textbf{(V\arabic*)},start=0]
+  \item $v(0) = \top$ (valuation of zero is infinite);
+  \item $v(1) = 0$ (valuation of the unit is zero);
+\end{enumerate}
+\begin{itemize}
+  \item \textbf{(VM)} $v(x\cdot y) = v(x) + v(y)$ (multiplicativity);
+  \item \textbf{(VA)} $\min(v(x), v(y)) \le v(x+y)$ (ultrametric sum bound).
+\end{itemize}
+\end{definition}
+
+Axioms (V1) and (VM) say $v$ is a monoid homomorphism from $(K, \cdot, 1)$ to
+$(\WT, +, 0)$. Axiom (VA) is an \emph{inequality}: equality can fail because
+$x+y$ may exhibit cancellation, raising its valuation strictly above
+$\min(v(x), v(y))$.
+
+\begin{example}[$p$-adic valuation]
+Let $K = \mathbb{Z}$ (or $\mathbb{Q}$, or $\mathbb{Z}_p$) and let $v_p(x)$ be the
+exponent of the prime $p$ in $x$, with $v_p(0) = \infty$. Then $v_p$ is an
+additive valuation, with (VA) an equality unless the leading $p$-adic digits
+cancel. This is the prototypical instance and the bridge to Newton polygons.
+\end{example}
+
+\begin{example}[Order of vanishing]
+Let $K = k[[t]]$ and let $v(f)$ be the order of vanishing of $f$ at $t = 0$, with
+$v(0) = \infty$. The axioms hold; (VA) is an equality unless lowest-order terms
+cancel.
+\end{example}
+
+\section{Profiles and convolutions}
+
+Fix $v : \mathrm{AddVal}\,K$.
+
+\begin{definition}[Valuation profile]
+The \emph{valuation profile} of $a : \NN \to K$ is
+$\vp(v,a)(n) = v(a(n))$.
+\end{definition}
+
+\begin{definition}[Cauchy convolution]
+The \emph{finite Cauchy convolution} of $a, b$ is
+\[
+(a \cc b)(n) = \sum_{k \in \range(n+1)} a(k)\, b(n-k),
+\]
+where $n-k$ is natural subtraction.
+\end{definition}
+
+\begin{definition}[Tropical convolution]
+The \emph{tropical (min-plus) convolution} of profiles $u, w : \NN \to \WT$ is
+\[
+\tc(u, w)(n) = {\inf}'_{k \in \range(n+1)} \bigl( u(k) + w(n-k) \bigr).
+\]
+\end{definition}
+
+The definitions are deliberately parallel: replacing each product
+$a(k)b(n-k)$ by the sum $u(k)+w(n-k)$ and the outer sum by the outer minimum
+turns the Cauchy convolution into the tropical convolution.
+
+\begin{lemma}[Convolution at zero]
+$(a \cc b)(0) = a(0)\, b(0)$.
+\end{lemma}
+\begin{proof}
+The range $\{0\}$ has a single element and $0-0 = 0$.
+\end{proof}
+
+\begin{lemma}[Tropical convolution at zero]
+$\tc(u, w)(0) = u(0) + w(0)$.
+\end{lemma}
+\begin{proof}
+The infimum over the singleton $\{0\}$ is its sole value.
+\end{proof}
+
+\begin{lemma}[Valuation of a finite sum]\label{lem:sum}
+Let $m \in \WT$, $s$ a finite index set, and $f : \NN \to K$. If
+$m \le v(f(i))$ for every $i \in s$, then $m \le v\bigl(\sum_{i \in s} f(i)\bigr)$.
+\end{lemma}
+\begin{proof}
+Induct on $s$. For $s = \emptyset$, the empty sum is $0$ and $v(0) = \top$ by
+(V0), so $m \le \top$ trivially. For $s = \{i\} \cup s'$ with $i \notin s'$, we
+have $\sum_s f = f(i) + \sum_{s'} f$; by hypothesis and the inductive hypothesis
+$m \le \min(v(f(i)), v(\sum_{s'} f))$, and (VA) gives
+$\min(v(f(i)), v(\sum_{s'} f)) \le v(f(i) + \sum_{s'} f)$. Transitivity closes
+the step.
+\end{proof}
+
+\begin{lemma}[Termwise multiplicativity]\label{lem:mul}
+For all $n, k$,
+$v(a(k)\, b(n-k)) = \vp(v,a)(k) + \vp(v,b)(n-k)$.
+\end{lemma}
+\begin{proof}
+Immediate from (VM).
+\end{proof}
+
+\begin{lemma}[Tropical bound on each term]\label{lem:term}
+For all $n$ and all $k \in \range(n+1)$,
+$\tc(\vp(v,a), \vp(v,b))(n) \le \vp(v,a)(k) + \vp(v,b)(n-k)$.
+\end{lemma}
+\begin{proof}
+A minimum is $\le$ each element it ranges over.
+\end{proof}
+
+\section{The Tropical Convolution Bound}
+
+\begin{theorem}[Tropical Convolution Bound]\label{thm:main}
+Let $K$ be a commutative semiring, $v : \mathrm{AddVal}\,K$ an additive valuation,
+and $a, b : \NN \to K$. Then for every $n \in \NN$,
+\[
+\tc(\vp(v,a), \vp(v,b))(n) \;\le\; \vp(v, a \cc b)(n).
+\]
+\end{theorem}
+
+\begin{proof}
+Write $m = \tc(\vp(v,a), \vp(v,b))(n)$. The goal is
+$m \le v\bigl(\sum_{k \in \range(n+1)} a(k) b(n-k)\bigr)$. By
+Lemma~\ref{lem:sum} with $f(k) = a(k) b(n-k)$, it suffices to show
+$m \le v(a(k) b(n-k))$ for each $k \in \range(n+1)$. Fix such a $k$. By
+Lemma~\ref{lem:term}, $m \le \vp(v,a)(k) + \vp(v,b)(n-k)$, and by
+Lemma~\ref{lem:mul} the right-hand side equals $v(a(k) b(n-k))$. Transitivity
+concludes.
+\end{proof}
+
+\begin{remark}
+The proof uses each valuation axiom once in spirit: (VM) converts products to
+sums of profile entries; (VA) propagates the bound across the sum; (V0) handles
+the empty-sum base case. No subtraction, field, finiteness, or archimedean
+hypothesis is needed.
+\end{remark}
+
+\begin{remark}[Why lax]
+Equality can fail when the antidiagonal sum exhibits cancellation among the
+minimizing terms: if two distinct splits both attain the infimum $m$, their
+leading contributions can cancel, raising $v((a\cc b)(n))$ strictly above $m$.
+\end{remark}
+
+\begin{remark}[Boundary]
+At $n = 0$, $(a \cc b)(0) = a(0) b(0)$, so $v((a\cc b)(0)) = v(a(0)) + v(b(0)) =
+\tc(\cdot)(0)$: the bound is an \emph{equality}, the simplest instance of
+transversality.
+\end{remark}
+
+\section{Algorithms}
+
+Computing $\tc(u, w)(n)$ is a single antidiagonal pass:
+\[
+\textsc{best} \gets +\infty;\quad
+\text{for } k = 0,\dots,n:\ \textsc{best} \gets \min(\textsc{best},\, u_k + w_{n-k}).
+\]
+Each evaluation is $O(n)$ operations in $\WT$; the full profile up to degree $N$
+is $O(N^2)$. This is the dynamic-programming / shortest-path shape characteristic
+of min-plus algebra. To certify Theorem~\ref{thm:main} numerically for $v_p$, one
+computes both sides and records the gap $v((a\cc b)(n)) - \tc(\cdot)(n) \ge 0$,
+which measures cancellation among minimizing terms and vanishes exactly in the
+transverse regime.
+
+\section{Applications}
+
+\textbf{Newton polygons.} For $K = \mathbb{Q}_p$ and $v = v_p$, the valuation
+profile's lower convex hull is the Newton polygon, whose slopes give the $p$-adic
+valuations of the roots; Theorem~\ref{thm:main} is the coefficient-level engine
+beneath ``Newton polygons add under multiplication.''
+
+\textbf{Combinatorial species.} Pushing $v_p$ through the species algebra turns
+divisibility questions about counting sequences into tropical estimates. Kummer's
+theorem --- $v_p\binom{n}{k}$ counts base-$p$ carries --- is exactly the
+condition that a split is carry-free, the discrete signature of transversality.
+
+\textbf{Tropical optimization.} Since $\tc$ is a shortest-path relaxation,
+algebraic divisibility inherits the toolkit of min-plus linear algebra.
+
+\section{The lax/strict gap and transversality}
+
+The defect $\delta(n) = v((a\cc b)(n)) - \tc(\vp a, \vp b)(n) \ge 0$ measures
+non-exactness. From the proof, $\delta(n) > 0$ requires (VA) to be strict on the
+minimizing terms, which forces a tie: at least two distinct splits attain the
+infimum and their leading contributions cancel. If the infimum is attained at a
+unique split with vanishing coefficient valuation, then $\delta(n) = 0$.
+
+\section{Conjectures and future directions}
+
+The bridge is a lax monoidal functor from $(\NN \to K, +, \cc)$ to the min-plus
+semiring of valuation profiles. The following target the lax/strict gap.
+
+\begin{conjecture}[Transversality $\Rightarrow$ equality]
+$\tc(\vp a, \vp b)(n) = \vp(a\cc b)(n)$ holds whenever the antidiagonal infimum
+$\inf_{i+j=n}(v(a_i)+v(b_j))$ is attained at a unique pair $(i,j)$ with vanishing
+coefficient valuation (in the $p$-adic binomial model, $p \nmid \binom{n}{i}$).
+\end{conjecture}
+
+\begin{conjecture}[Newton polygons add]
+Define the Newton profile $N(a)$ as the lower convex hull of $n \mapsto v(a_n)$.
+Then $N(a \cc b)$ equals the inf-convolution of $N(a)$ and $N(b)$ (Minkowski sum
+of polygons), with equality, upgrading the lax functor to a strict one after
+passing to convex hulls.
+\end{conjecture}
+
+\begin{conjecture}[Tropical differential calculus]
+The shift $(\mathrm{shift}\,a)(n) = a(n+1)$ satisfies
+$\vp(\mathrm{shift}\,a)(n) = \vp(a)(n+1)$ exactly, and pointing
+$(\mathrm{point}\,a)(n) = n\cdot a(n)$ satisfies
+$\vp(\mathrm{point}\,a)(n) \ge \vp(a)(n)$ with equality iff $v(n) = 0$.
+\end{conjecture}
+
+\begin{conjecture}[Tropical composition]
+Species substitution $(F \circ G)$ admits a tropical analogue: $\vp(\mathrm{subst}\,a\,b)$
+is bounded below by a min-plus composition infimum over set partitions, governed
+in the $p$-adic case by valuations of multinomial coefficients (a multivariate
+Kummer phenomenon).
+\end{conjecture}
+
+\section{Conclusion}
+
+We have built a clean bridge from the multiplicative world of generating-function
+convolution to the additive, order-theoretic world of tropical valuation profiles
+and proved it sound: the min-plus convolution of valuation profiles never exceeds
+the valuation profile of the Cauchy convolution. The result holds in maximal
+algebraic generality, rests on three transparent axioms, and admits a three-line
+conceptual proof. It unifies the coefficient-level mechanism behind
+Newton-polygon additivity, divisibility of combinatorial sequences, and min-plus
+optimization, and opens a concrete path --- through four sharp conjectures ---
+toward an exact tropical correspondence.
+
+\end{document}

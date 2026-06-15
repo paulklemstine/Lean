@@ -1,0 +1,228 @@
+import Mathlib
+import Catalog.Applications.StrongDivisibilitySequences
+
+/-! # An abstract, verified primitive-divisor certificate for strong divisibility sequences
+
+Domain: Number Theory / Applications.
+
+The Carmichael primitive-divisor machinery shipped in
+`Catalog/Shared/CarmichaelProof.lean` and
+`Catalog/Speculative/AutoResearch/FibonacciPrimitiveDivisorBounded.lean` was written *only*
+for the Fibonacci sequence: a GCD-stripping routine (`stripAllAux`) computes the
+"primitive part" of `F(n)` by deleting every prime shared with a proper-divisor Fibonacci
+number `F(d)`, and a positive residue certifies a primitive prime divisor.
+
+This file **abstracts that certificate to an arbitrary strong divisibility sequence**
+`u : ℕ → ℕ` (`StrongDivSeq.IsStrongDivSeq`, defined in
+`Catalog/Applications/StrongDivisibilitySequences.lean`).  The soundness theorem
+
+  `primPart_sound : IsStrongDivSeq u → (∀ k, 0 < k → 0 < u k) → 0 < n → 1 < primPart u n
+       → ∃ p, p.Prime ∧ IsPrimitive u p n`
+
+reduces *existence of a primitive prime divisor* to a single computable positivity check
+`1 < primPart u n`, for **every** strong divisibility sequence at once.  Two payoffs are
+recorded by reflection:
+
+* `fib_has_primitive_divisor` — Carmichael's primitive-divisor theorem on `13 ≤ n ≤ 2000`,
+  re-derived from the *abstract* certificate (no Fibonacci-specific stripping proof).
+* `mersenne_two_has_primitive_divisor` — a **bounded Zsygmondy theorem for `2ⁿ − 1`** on
+  `2 ≤ n ≤ 120`, `n ≠ 6`: every such `2ⁿ − 1` has a primitive prime divisor, and `n = 6`
+  is the genuine exception (`2⁶ − 1 = 63 = 7·9` with `7 ∣ 2³−1`, `3 ∣ 2²−1`).  This is the
+  first Mersenne/Zsygmondy primitive-divisor result in the catalog, obtained for free from
+  the shared certificate.
+
+-- !-- Lab Notes -- !--
+-- HYPOTHESIS: The Fibonacci `primPart` soundness proof never used a single Fibonacci fact
+--   beyond the strong-divisibility meet law `gcd (u m) (u n) = u (gcd m n)` and positivity
+--   `u k > 0` for `k > 0`.  If true, the entire certificate lifts verbatim to any strong
+--   divisibility sequence, and Mersenne primitive divisors (Zsygmondy) fall out for free.
+-- EXPERIMENT 1: Re-derived `stripAllAux_dvd` / `stripAllAux_coprime` with the sequence `u`
+--   abstracted away — these are pure GCD facts about the stripping loop, independent of `u`.
+--   SUCCESS.  INSIGHT: the "delete shared primes" loop is sequence-agnostic.
+-- EXPERIMENT 2: The Fibonacci coprime-fold proof in `CarmichaelProof.lean` was hairy because
+--   it had to handle `F(d) = 0` and `F(d) = 1` corner cases via `Nat.fib_pos`/`Nat.fib_add_two`.
+--   Replacing those with the clean hypothesis `∀ k, 0 < k → 0 < u k` collapses the corner
+--   cases (proper divisors are positive, so `u d ≥ 1`).  SUCCESS — much shorter proof.
+-- EXPERIMENT 3: `native_decide` on the positivity check is the bottleneck.  Fibonacci scales
+--   to thousands; Mersenne `2ⁿ−1` blows up in bit-length, so the certified range is smaller
+--   (`n ≤ 120`).  The asymptotic Zsygmondy tail (all `n`) needs LTE; see FUTURE_DIRECTIONS.md.
+-- FAILURE ANALYSIS: an early attempt without the positivity hypothesis left a `gcd(r, 0) = r`
+--   branch in the fold (a proper divisor `d` with `u d = 0`), which breaks coprimality.
+--   Positivity on positive indices is exactly the hypothesis that rules this out.
+-/
+
+set_option maxHeartbeats 1600000
+
+namespace StrongDivSeq
+
+/-! ## §1. The GCD-stripping certificate (sequence-agnostic core) -/
+
+/-- Strip all prime factors of `m` from `r`, with bounded fuel. -/
+def stripAllAux (r m : ℕ) : ℕ → ℕ
+  | 0 => r
+  | fuel + 1 =>
+    if m ≤ 1 then r
+    else
+      let g := Nat.gcd r m
+      if g ≤ 1 then r
+      else stripAllAux (r / g) m fuel
+
+/-- Proper divisors of `n` (`d` with `0 < d < n` and `d ∣ n`). -/
+def propDivs (n : ℕ) : List ℕ :=
+  (List.range n).filter fun d => 0 < d && d < n && n % d == 0
+
+/-- The **primitive part** of `u n`: strip from `u n` every prime shared with a
+proper-divisor value `u d`. -/
+def primPart (u : ℕ → ℕ) (n : ℕ) : ℕ :=
+  (propDivs n).foldl (fun r d => stripAllAux r (u d) r) (u n)
+
+/-! ## §2. Properties of the stripping loop (independent of `u`) -/
+
+/-
+!-- Lab Notebook: stripAllAux_dvd / stripAllAux_coprime -- !--
+!-- Hypothesis: the strip loop returns a divisor of its input that is coprime to `m`. -- !--
+!-- Result: pure GCD induction on the fuel, no sequence facts used. -- !--
+!-- End Lab Notebook -- !--
+-/
+lemma stripAllAux_dvd (r m fuel : ℕ) : stripAllAux r m fuel ∣ r := by
+  induction fuel generalizing r with
+  | zero => exact dvd_refl r
+  | succ fuel ih =>
+    simp only [stripAllAux]
+    split_ifs with h1 h2
+    · exact dvd_refl r
+    · exact dvd_refl r
+    · exact dvd_trans (ih (r / Nat.gcd r m)) (Nat.div_dvd_of_dvd (Nat.gcd_dvd_left r m))
+
+lemma stripAllAux_coprime (r m fuel : ℕ) (hm : 1 < m) (hr : 0 < r) (hfuel : r ≤ fuel) :
+    Nat.gcd (stripAllAux r m fuel) m = 1 := by
+  induction' fuel with fuel ih generalizing r m
+  · grind +qlia
+  · by_cases hgr : Nat.gcd r m > 1
+    · convert ih (r / Nat.gcd r m) m hm
+        (Nat.div_pos (Nat.le_of_dvd hr (Nat.gcd_dvd_left _ _)) hgr.le) _ using 1
+      · grind +locals
+      · exact Nat.le_of_lt_succ (Nat.div_lt_of_lt_mul <| by
+          nlinarith [Nat.div_mul_cancel (Nat.gcd_dvd_left r m)])
+    · interval_cases _ : Nat.gcd r m <;> simp_all +decide [stripAllAux]
+
+/-! ## §3. Properties of the fold -/
+
+/-- The primitive part divides `u n`. -/
+lemma primPart_dvd (u : ℕ → ℕ) (n : ℕ) : primPart u n ∣ u n := by
+  simp only [primPart]
+  induction' (propDivs n) using List.reverseRecOn with d l ih <;> simp_all +decide [List.foldl]
+  exact dvd_trans (stripAllAux_dvd _ _ _) ih
+
+/-
+Every prime factor of the primitive part is coprime to `u d` for each proper divisor `d`,
+provided `u` is positive on positive indices.
+-/
+lemma primPart_coprime_proper_divs (u : ℕ → ℕ) (n : ℕ)
+    (hpos : ∀ k, 0 < k → 0 < u k) (hpp : 1 < primPart u n) (d : ℕ)
+    (hd : d ∈ propDivs n) : ¬ ((primPart u n).minFac ∣ u d) := by
+  -- By definition of `primPart`, we know that `primPart u n` is coprime to `u d` for any proper divisor `d` of `n`.
+  have h_coprime : Nat.gcd (primPart u n) (u d) = 1 := by
+    -- By definition of `primPart`, we know that `primPart u n` is coprime to `u d` for any proper divisor `d` of `n`. Use this fact.
+    have h_coprime : ∀ l : List ℕ, (∀ e ∈ l, 0 < u e) → ∀ d ∈ l, 0 < u n → Nat.gcd (List.foldl (fun r e => stripAllAux r (u e) r) (u n) l) (u d) = 1 := by
+      intros l hl d hd hn_pos
+      induction' l using List.reverseRecOn with l' e ih generalizing d;
+      · contradiction;
+      · by_cases h : d = e <;> simp_all +decide [ List.foldl_append ];
+        · by_cases he : 1 < u e;
+          · apply stripAllAux_coprime;
+            · grind +splitImp;
+            · have h_fold_pos : ∀ l : List ℕ, (∀ e ∈ l, 0 < u e) → 0 < List.foldl (fun r e => stripAllAux r (u e) r) (u n) l := by
+                intros l hl; induction' l using List.reverseRecOn with l' e ih <;> simp_all +decide [ List.foldl_append ] ;
+                exact Nat.pos_of_dvd_of_pos ( stripAllAux_dvd _ _ _ ) ih;
+              exact h_fold_pos l' fun e he => hl e <| Or.inl he;
+            · rfl;
+          · interval_cases _ : u e <;> simp_all +decide;
+            grind;
+        · refine' Nat.Coprime.coprime_dvd_left ( stripAllAux_dvd _ _ _ ) ( ih _ hd );
+    convert h_coprime ( propDivs n ) _ d hd _ using 1;
+    · exact fun e he => hpos e <| by unfold propDivs at he; aesop;
+    · exact hpos n ( Nat.pos_of_ne_zero ( by rintro rfl; contradiction ) );
+  exact fun h => Nat.Prime.not_dvd_one ( Nat.minFac_prime hpp.ne' ) ( h_coprime ▸ Nat.dvd_gcd ( Nat.minFac_dvd _ ) h )
+
+/-! ## §4. Soundness of the certificate -/
+
+/-
+**Abstract primitive-divisor certificate.**  For a strong divisibility sequence `u`
+positive on positive indices, a positive primitive part `1 < primPart u n` certifies a
+*primitive prime divisor* of `u n`.
+-/
+theorem primPart_sound (u : ℕ → ℕ) (hu : IsStrongDivSeq u)
+    (hpos : ∀ k, 0 < k → 0 < u k) (n : ℕ) (hn : 0 < n) (hpp : 1 < primPart u n) :
+    ∃ p, Nat.Prime p ∧ IsPrimitive u p n := by
+  refine' ⟨ Nat.minFac ( primPart u n ), Nat.minFac_prime hpp.ne', ⟨ _, _ ⟩ ⟩;
+  · exact Nat.dvd_trans ( Nat.minFac_dvd _ ) ( primPart_dvd u n );
+  · intro k hk hk' hk'';
+    convert primPart_coprime_proper_divs u n hpos hpp ( Nat.gcd n k ) _;
+    · have := hu n k; simp_all +decide ;
+      exact Nat.dvd_gcd ( Nat.dvd_trans ( Nat.minFac_dvd _ ) ( primPart_dvd u n ) ) hk'';
+    · simp [propDivs];
+      exact ⟨ lt_of_le_of_lt ( Nat.le_of_dvd hk ( Nat.gcd_dvd_right _ _ ) ) hk', ⟨ Or.inl hn, lt_of_le_of_lt ( Nat.le_of_dvd hk ( Nat.gcd_dvd_right _ _ ) ) hk' ⟩, Nat.mod_eq_zero_of_dvd ( Nat.gcd_dvd_left _ _ ) ⟩
+
+/-! ## §5. Fibonacci specialization (Carmichael, abstract route) -/
+
+/-- Positivity of Fibonacci on positive indices. -/
+lemma fib_pos_of_pos (k : ℕ) (hk : 0 < k) : 0 < Nat.fib k := Nat.fib_pos.mpr hk
+
+/-- Verified by reflection: for `13 ≤ n ≤ 2000`, `primPart Nat.fib n > 1`.
+Note the uniformity: at a *prime* index `n` the only proper divisor is `1` with `F(1) = 1`,
+which strips nothing, so `primPart Nat.fib n = F(n) > 1` as well — no prime/composite split. -/
+theorem fib_primPart_check :
+    ∀ n ∈ Finset.Icc 13 2000, 1 < primPart Nat.fib n := by
+  native_decide
+
+/-- **Carmichael's primitive-divisor theorem (range `13 ≤ n ≤ 2000`), via the abstract
+certificate.** Both prime and composite indices are handled by one application of
+`primPart_sound`, since the primitive part of `F(n)` exceeds `1` throughout the range. -/
+theorem fib_has_primitive_divisor (n : ℕ) (hn : 13 ≤ n) (hN : n ≤ 2000) :
+    ∃ p, Nat.Prime p ∧ IsPrimitive Nat.fib p n := by
+  refine primPart_sound Nat.fib fib_isStrongDivSeq fib_pos_of_pos n (by omega) ?_
+  exact fib_primPart_check n (Finset.mem_Icc.mpr ⟨hn, hN⟩)
+
+/-! ## §6. Mersenne specialization: a bounded Zsygmondy theorem for `2ⁿ − 1` -/
+
+/-- Positivity of `2ⁿ − 1` on positive indices. -/
+lemma mersenne_two_pos (k : ℕ) (hk : 0 < k) : 0 < 2 ^ k - 1 := by
+  have : 2 ≤ 2 ^ k := by
+    calc 2 = 2 ^ 1 := (pow_one 2).symm
+    _ ≤ 2 ^ k := Nat.pow_le_pow_right (by norm_num) hk
+  omega
+
+/-- Verified by reflection: for `2 ≤ n ≤ 120` with `n ≠ 6`, `primPart (2ⁿ−1) > 1`. -/
+theorem mersenne_two_primPart_check :
+    ∀ n ∈ Finset.Icc 2 120, n ≠ 6 → 1 < primPart (fun k => 2 ^ k - 1) n := by
+  native_decide
+
+/-- **Bounded Zsygmondy theorem for `2ⁿ − 1` (range `2 ≤ n ≤ 120`, `n ≠ 6`).**
+For every such `n`, the Mersenne number `2ⁿ − 1` has a primitive prime divisor: a prime `p`
+with `p ∣ 2ⁿ − 1` but `p ∤ 2ᵏ − 1` for all `0 < k < n`.  The single exception `n = 6`
+(`2⁶ − 1 = 63 = 7·9`) is genuinely excluded. -/
+theorem mersenne_two_has_primitive_divisor (n : ℕ) (hn : 2 ≤ n) (hN : n ≤ 120) (h6 : n ≠ 6) :
+    ∃ p, Nat.Prime p ∧ IsPrimitive (fun k => 2 ^ k - 1) p n := by
+  refine primPart_sound (fun k => 2 ^ k - 1) (mersenne_isStrongDivSeq 2) mersenne_two_pos n
+    (by omega) ?_
+  exact mersenne_two_primPart_check n (Finset.mem_Icc.mpr ⟨hn, hN⟩) h6
+
+/-! ## §7. Sharpness of the Mersenne exception `n = 6` -/
+
+/-- **Sharpness.** `2⁶ − 1 = 63` has no primitive prime divisor: its prime factors are
+`7 ∣ 2³−1` and `3 ∣ 2²−1`, both appearing at smaller indices. -/
+theorem mersenne_two_six_no_primitive :
+    ¬ ∃ p, Nat.Prime p ∧ IsPrimitive (fun k => 2 ^ k - 1) p 6 := by
+  rintro ⟨p, hp, hpd, hprim⟩
+  simp only at hpd
+  have h63 : (2 : ℕ) ^ 6 - 1 = 63 := by norm_num
+  rw [h63] at hpd
+  have hle : p ≤ 63 := Nat.le_of_dvd (by norm_num) hpd
+  have hp2 : p = 3 ∨ p = 7 := by
+    have := hp.two_le; interval_cases p <;> simp_all (config := {decide := true})
+  rcases hp2 with rfl | rfl
+  · exact hprim 2 (by decide) (by decide) (by decide)
+  · exact hprim 3 (by decide) (by decide) (by decide)
+
+end StrongDivSeq

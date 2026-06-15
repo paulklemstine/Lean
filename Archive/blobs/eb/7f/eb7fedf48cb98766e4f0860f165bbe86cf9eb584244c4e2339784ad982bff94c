@@ -1,0 +1,15 @@
+import Speculative.AutoResearch.CarmichaelHelper
+
+/-!
+# Carmichael helper (compatibility re-export)
+
+Several catalog files (`Shared.CarmichaelProof`,
+`Speculative.AutoResearch.CarmichaelComposite`, and assorted `Applications.*`
+Fibonacci files) import the module name `Shared.CarmichaelHelper` to obtain the
+*prime case* of Carmichael's primitive-divisor theorem,
+`fib_primitive_divisor_prime`, together with the `CarmHelper` entry-point API.
+
+The actual development of that prime case lives in
+`Speculative.AutoResearch.CarmichaelHelper`.  This thin module re-exports it so
+that the historical `import Shared.CarmichaelHelper` paths resolve.
+-/

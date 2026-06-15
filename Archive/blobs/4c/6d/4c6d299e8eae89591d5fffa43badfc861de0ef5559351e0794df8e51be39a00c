@@ -1,0 +1,145 @@
+/-
+# Vietoris–Rips Graph Filtrations and Stability
+
+This file develops, from scratch and using only Mathlib's `SimpleGraph` together
+with basic real arithmetic, the elementary stability theory of Vietoris–Rips
+*graph* filtrations.
+
+Given a dissimilarity function `d : α → α → ℝ`, the Vietoris–Rips graph at scale
+`t` connects two distinct points `x`, `y` whenever both `d x y ≤ t` and
+`d y x ≤ t` (a two-sided condition that makes sense even when `d` is not
+symmetric). As `t` increases these graphs form a filtration, and the central
+result here is that a uniform perturbation of `d` produces a uniformly
+interleaved filtration:
+
+* `ripsOf_stability`: if `|d x y - e x y| ≤ δ` for all `x y`, then the
+  Vietoris–Rips filtrations of `d` and `e` are `δ`-interleaved.
+
+The development is deliberately concrete: there is no categorical abstraction,
+no interleaving distance, and no pseudometric instance — only the shifted graph
+inclusions that the stability theorem actually needs.
+
+## Main definitions
+
+* `ripsOf d t`   : the Vietoris–Rips graph of `d` at scale `t`.
+* `Interleaved δ F G` : the two filtrations `F`, `G` are `δ`-interleaved.
+
+## Main results
+
+* `ripsOf_mono`         : `ripsOf d` is monotone in the scale parameter.
+* `Interleaved.refl`    : every filtration is `0`-interleaved with itself.
+* `Interleaved.symm`    : interleaving is symmetric in the two filtrations.
+* `Interleaved.mono`    : interleavings relax to larger shifts (for monotone
+                          filtrations).
+* `Interleaved.comp`    : interleavings compose additively in the shift.
+* `ripsOf_le_of_bound`  : a pointwise bound yields a shifted graph inclusion.
+* `ripsOf_stability`    : uniform perturbation yields a `δ`-interleaving.
+* `ripsOf_adj_of_symm`, `ripsOf_dist_adj` : for symmetric `d`, adjacency in
+                          `ripsOf d t` is the single-sided condition
+                          `x ≠ y ∧ d x y ≤ t`.
+-/
+import Mathlib
+
+namespace RipsStability
+
+variable {α : Type*}
+
+/-- The Vietoris–Rips graph of a dissimilarity `d : α → α → ℝ` at scale `t`.
+Two distinct points are adjacent when their dissimilarity is at most `t` in both
+directions; the two-sided condition keeps the graph symmetric even when `d`
+itself need not be. -/
+def ripsOf (d : α → α → ℝ) (t : ℝ) : SimpleGraph α where
+  Adj x y := x ≠ y ∧ d x y ≤ t ∧ d y x ≤ t
+  symm := by rintro x y ⟨hxy, hd1, hd2⟩; exact ⟨hxy.symm, hd2, hd1⟩
+  loopless := ⟨fun x h => h.1 rfl⟩
+
+/-- Two filtrations `F G : ℝ → SimpleGraph α` are `δ`-interleaved when each is
+contained in the other shifted forward by `δ`. -/
+def Interleaved (δ : ℝ) (F G : ℝ → SimpleGraph α) : Prop :=
+  ∀ t, F t ≤ G (t + δ) ∧ G t ≤ F (t + δ)
+
+/-- The Vietoris–Rips graph is monotone in the scale parameter: enlarging `t`
+can only add edges. -/
+theorem ripsOf_mono (d : α → α → ℝ) : Monotone (ripsOf d) := by
+  intro t₁ t₂ hle x y h
+  exact ⟨h.1, le_trans h.2.1 hle, le_trans h.2.2 hle⟩
+
+/-- Every filtration is `0`-interleaved with itself. -/
+theorem Interleaved.refl (F : ℝ → SimpleGraph α) : Interleaved 0 F F := by
+  intro t; simp
+
+/-- Interleaving is symmetric in its two filtration arguments. -/
+theorem Interleaved.symm {δ : ℝ} {F G : ℝ → SimpleGraph α}
+    (h : Interleaved δ F G) : Interleaved δ G F :=
+  fun t => ⟨(h t).2, (h t).1⟩
+
+/-- A `δ₁`-interleaving of monotone filtrations is also a `δ₂`-interleaving for
+any larger shift `δ₂ ≥ δ₁`. Monotonicity of the filtrations is what lets us
+relax the shift. -/
+theorem Interleaved.mono {δ₁ δ₂ : ℝ} {F G : ℝ → SimpleGraph α}
+    (hF : Monotone F) (hG : Monotone G) (hδ : δ₁ ≤ δ₂)
+    (h : Interleaved δ₁ F G) : Interleaved δ₂ F G := by
+  intro t
+  exact ⟨le_trans (h t).1 (hG (by linarith)), le_trans (h t).2 (hF (by linarith))⟩
+
+/-- Interleavings compose: a `δ₁`-interleaving of `F` and `G` together with a
+`δ₂`-interleaving of `G` and `H` yields a `(δ₁ + δ₂)`-interleaving of `F` and
+`H`. No monotonicity is required. -/
+theorem Interleaved.comp {δ₁ δ₂ : ℝ} {F G H : ℝ → SimpleGraph α}
+    (h₁ : Interleaved δ₁ F G) (h₂ : Interleaved δ₂ G H) :
+    Interleaved (δ₁ + δ₂) F H := by
+  intro t
+  refine ⟨?_, ?_⟩
+  · have b := (h₂ (t + δ₁)).1
+    rw [show t + δ₁ + δ₂ = t + (δ₁ + δ₂) by ring] at b
+    exact le_trans (h₁ t).1 b
+  · have b := (h₁ (t + δ₂)).2
+    rw [show t + δ₂ + δ₁ = t + (δ₁ + δ₂) by ring] at b
+    exact le_trans (h₂ t).2 b
+
+/-- If `e` is pointwise dominated by `d + δ`, then the `d`-Rips graph at scale
+`t` is contained in the `e`-Rips graph at scale `t + δ`. -/
+theorem ripsOf_le_of_bound {d e : α → α → ℝ} {δ t : ℝ}
+    (hbound : ∀ x y, e x y ≤ d x y + δ) :
+    ripsOf d t ≤ ripsOf e (t + δ) := by
+  intro x y h
+  exact ⟨h.1, le_trans (hbound x y) (by linarith [h.2.1]),
+    le_trans (hbound y x) (by linarith [h.2.2])⟩
+
+/-- The reverse-direction inclusion: if `d` is pointwise dominated by `e + δ`,
+then the `e`-Rips graph at scale `t` is contained in the `d`-Rips graph at scale
+`t + δ`. -/
+theorem ripsOf_le_of_bound' {d e : α → α → ℝ} {δ t : ℝ}
+    (hbound : ∀ x y, d x y ≤ e x y + δ) :
+    ripsOf e t ≤ ripsOf d (t + δ) :=
+  ripsOf_le_of_bound hbound
+
+/-- **Stability of Vietoris–Rips graph filtrations.** A uniform perturbation of
+the dissimilarity, `|d x y - e x y| ≤ δ` for all `x y`, produces
+`δ`-interleaved Vietoris–Rips filtrations. -/
+theorem ripsOf_stability {d e : α → α → ℝ} {δ : ℝ}
+    (h : ∀ x y, |d x y - e x y| ≤ δ) :
+    Interleaved δ (ripsOf d) (ripsOf e) := by
+  have hde : ∀ x y, e x y ≤ d x y + δ := fun x y => by
+    have := (abs_le.mp (h x y)).1; linarith
+  have hed : ∀ x y, d x y ≤ e x y + δ := fun x y => by
+    have := (abs_le.mp (h x y)).2; linarith
+  exact fun t => ⟨ripsOf_le_of_bound hde, ripsOf_le_of_bound hed⟩
+
+/-- For a symmetric dissimilarity `d`, the two-sided adjacency condition
+defining `ripsOf d t` collapses to the single inequality `d x y ≤ t`. -/
+theorem ripsOf_adj_of_symm {d : α → α → ℝ} {t : ℝ} {x y : α}
+    (hsymm : ∀ a b, d a b = d b a) :
+    (ripsOf d t).Adj x y ↔ x ≠ y ∧ d x y ≤ t := by
+  constructor
+  · rintro ⟨hxy, hd1, _⟩; exact ⟨hxy, hd1⟩
+  · rintro ⟨hxy, hd⟩; exact ⟨hxy, hd, by rw [hsymm y x]; exact hd⟩
+
+/-- Restatement of `ripsOf_adj_of_symm`: for symmetric `d`, adjacency in
+`ripsOf d t` is exactly `x ≠ y ∧ d x y ≤ t`. -/
+theorem ripsOf_dist_adj {d : α → α → ℝ} {t : ℝ} {x y : α}
+    (hsymm : ∀ a b, d a b = d b a) :
+    (ripsOf d t).Adj x y ↔ x ≠ y ∧ d x y ≤ t :=
+  ripsOf_adj_of_symm hsymm
+
+end RipsStability

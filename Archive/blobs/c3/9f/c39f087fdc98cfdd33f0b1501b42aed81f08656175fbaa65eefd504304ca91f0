@@ -1,0 +1,133 @@
+/-
+# Additive nonarchimedean valuations and tropical convolution lower bounds
+
+This file builds the bridge from additive (nonarchimedean) valuations
+`v : K → WithTop ℤ` on a commutative semiring `K` to lower bounds for the
+valuation profiles of convolutions, phrased via the tropical (min-plus)
+convolution on `WithTop ℤ`.
+
+Note on imports: the task statement requested importing only
+`Mathlib.Data.Nat.Choose.Basic` and `Mathlib.Algebra.Order.WithTop`.
+In the Mathlib version used by this project `Mathlib.Algebra.Order.WithTop`
+is no longer a single importable module (it was split into a directory), so we
+import `Mathlib` instead to obtain the required `WithTop ℤ` order/lattice and
+`Nat.choose` API. The mathematical content is exactly as requested.
+
+The order structure on `WithTop ℤ` is only a `ConditionallyCompleteLattice`
+(it has no bottom element), so the bounded infima `⨅ i ∈ s, w i` are handled
+through the conditionally-complete `ciInf` API together with the finiteness of
+the index set (to supply the `BddBelow` side conditions).
+-/
+import Mathlib
+
+open scoped Classical
+
+/-- An additive nonarchimedean valuation on a commutative semiring `K`, valued in
+`WithTop ℤ` (where `⊤` plays the role of the value of `0`, i.e. `+∞`). -/
+structure AddVal (K : Type*) [CommSemiring K] where
+  /-- The underlying valuation map. -/
+  v : K → WithTop ℤ
+  /-- The valuation of `0` is `⊤` (`+∞`). -/
+  map_zero : v 0 = ⊤
+  /-- The valuation is multiplicative (turning products into sums). -/
+  map_mul : ∀ x y, v (x * y) = v x + v y
+  /-- The nonarchimedean (ultrametric) inequality, additively phrased. -/
+  min_le_map_add : ∀ x y, min (v x) (v y) ≤ v (x + y)
+
+/-- The valuation profile of a sequence `a : ℕ → K`. -/
+def vprofile {K : Type*} [CommSemiring K] (av : AddVal K) (a : ℕ → K) : ℕ → WithTop ℤ :=
+  fun n => av.v (a n)
+
+/-- The tropical (min-plus) convolution of two profiles `u, w : ℕ → WithTop ℤ`. -/
+noncomputable def tropConv (u w : ℕ → WithTop ℤ) : ℕ → WithTop ℤ :=
+  fun n => ⨅ i ∈ Finset.range (n + 1), u i + w (n - i)
+
+/-- The Cauchy convolution of two sequences `a, b : ℕ → K`. -/
+def cauchyConv {K : Type*} [CommSemiring K] (a b : ℕ → K) : ℕ → K :=
+  fun n => ∑ i ∈ Finset.range (n + 1), a i * b (n - i)
+
+/-- The binomial convolution of two sequences `a, b : ℕ → K`. -/
+def binConv {K : Type*} [CommSemiring K] (a b : ℕ → K) : ℕ → K :=
+  fun n => ∑ i ∈ Finset.range (n + 1), (n.choose i : K) * a i * b (n - i)
+
+/-- The range of the bounded-infimum integrand over a finset is bounded below
+(it is finite), supplying the side condition needed for the `ciInf` API on
+`WithTop ℤ`. -/
+lemma bddBelow_biInf (w : ℕ → WithTop ℤ) (t : Finset ℕ) :
+    BddBelow (Set.range (fun i => ⨅ (_ : i ∈ t), w i)) := by
+  apply Set.Finite.bddBelow
+  have hfin : (insert (⊤ : WithTop ℤ) (w '' (↑t : Set ℕ))).Finite :=
+    ((t.finite_toSet.image w).insert ⊤)
+  apply hfin.subset
+  rintro x ⟨i, rfl⟩
+  simp only [Set.mem_insert_iff, Set.mem_image, Finset.mem_coe]
+  by_cases hi : i ∈ t
+  · right; refine ⟨i, hi, ?_⟩; rw [ciInf_pos hi]
+  · left; rw [ciInf_neg hi, WithTop.sInf_empty]
+
+/-- Insertion rule for bounded infima over a finset in `WithTop ℤ`. -/
+lemma bIInf_insert (w : ℕ → WithTop ℤ) (a : ℕ) (s : Finset ℕ) :
+    (⨅ i ∈ insert a s, w i) = min (w a) (⨅ i ∈ s, w i) := by
+  apply le_antisymm
+  · apply le_min
+    · refine ciInf_le_of_le (bddBelow_biInf w (insert a s)) a ?_
+      rw [ciInf_pos (Finset.mem_insert_self a s)]
+    · apply le_ciInf; intro i
+      by_cases hi : i ∈ s
+      · rw [ciInf_pos hi]
+        refine ciInf_le_of_le (bddBelow_biInf w (insert a s)) i ?_
+        rw [ciInf_pos (Finset.mem_insert_of_mem hi)]
+      · rw [ciInf_neg hi, WithTop.sInf_empty]; exact le_top
+  · apply le_ciInf; intro i
+    by_cases hi : i ∈ insert a s
+    · rw [ciInf_pos hi]
+      rcases Finset.mem_insert.mp hi with rfl | hmem
+      · exact min_le_of_left_le le_rfl
+      · refine min_le_of_right_le ?_
+        refine ciInf_le_of_le (bddBelow_biInf w s) i ?_
+        rw [ciInf_pos hmem]
+    · rw [ciInf_neg hi, WithTop.sInf_empty]; exact le_top
+
+/-- Key helper: if each summand has valuation at least `w i`, then the sum has
+valuation at least the (tropical) infimum of the `w i`. -/
+lemma v_finset_sum_ge {K : Type*} [CommSemiring K] {av : AddVal K} {s : Finset ℕ}
+    {w : ℕ → WithTop ℤ} {f : ℕ → K} (h : ∀ i ∈ s, av.v (f i) ≥ w i) :
+    av.v (∑ i ∈ s, f i) ≥ ⨅ i ∈ s, w i := by
+  classical
+  revert h
+  induction s using Finset.induction with
+  | empty => intro _; simp [av.map_zero]
+  | insert a s ha ih =>
+      intro h
+      rw [Finset.sum_insert ha, bIInf_insert]
+      have h1 : w a ≤ av.v (f a) := h a (Finset.mem_insert_self a s)
+      have h2 : (⨅ i ∈ s, w i) ≤ av.v (∑ i ∈ s, f i) :=
+        ih (fun i hi => h i (Finset.mem_insert_of_mem hi))
+      calc min (w a) (⨅ i ∈ s, w i)
+          ≤ min (av.v (f a)) (av.v (∑ i ∈ s, f i)) := min_le_min h1 h2
+        _ ≤ av.v (f a + ∑ i ∈ s, f i) := av.min_le_map_add _ _
+
+/-- Valuation profile of a Cauchy convolution dominates the tropical convolution
+of the valuation profiles. -/
+theorem vprofile_cauchyConv_ge {K : Type*} [CommSemiring K] (av : AddVal K)
+    (a b : ℕ → K) (n : ℕ) :
+    vprofile av (cauchyConv a b) n ≥ tropConv (vprofile av a) (vprofile av b) n := by
+  unfold vprofile cauchyConv tropConv
+  apply v_finset_sum_ge
+  intro i _
+  rw [av.map_mul]
+
+/-- Valuation profile of a binomial convolution dominates the tropical convolution
+of the valuation profiles, provided the integer multiples `(m : K)` all have
+nonnegative valuation. -/
+theorem vprofile_binConv_ge {K : Type*} [CommSemiring K] (av : AddVal K)
+    (a b : ℕ → K) (h : ∀ n, av.v (n : K) ≥ 0) (n : ℕ) :
+    vprofile av (binConv a b) n ≥ tropConv (vprofile av a) (vprofile av b) n := by
+  unfold vprofile binConv tropConv
+  apply v_finset_sum_ge
+  intro i _
+  rw [av.map_mul, av.map_mul]
+  have hc : (0 : WithTop ℤ) ≤ av.v (n.choose i : K) := h (n.choose i)
+  calc av.v (a i) + av.v (b (n - i))
+      = 0 + av.v (a i) + av.v (b (n - i)) := by rw [zero_add]
+    _ ≤ av.v (n.choose i : K) + av.v (a i) + av.v (b (n - i)) := by gcongr

@@ -1,0 +1,285 @@
+/-
+Copyright (c) 2026 Harmonic. All rights reserved.
+
+# Discrete Hodge Theory on a Self-Contained Mathlib Foundation
+
+This file rebuilds the **discrete Hodge program** directly on top of Mathlib's
+finite-dimensional real inner product space and `LinearMap.adjoint` machinery,
+rather than on an ad-hoc matrix encoding.  The central object is a length-three
+cochain complex of finite-dimensional real inner product spaces
+
+  E₀ --d₀--> E₁ --d₁--> E₂      with   d₁ ∘ d₀ = 0.
+
+Equipping each space with its inner product, the coboundary maps acquire formal
+adjoints (codifferentials) `δ₀ = d₀*` and `δ₁ = d₁*`.  The **combinatorial /
+discrete Hodge Laplacian** on the middle space is
+
+  Δ = d₀ δ₀ + δ₁ d₁ : E₁ → E₁,
+
+the sum of the "down" Laplacian `d₀ δ₀` and the "up" Laplacian `δ₁ d₁`.
+
+## Main results
+
+* `inner_laplacian_self` — the energy identity ⟨Δx, x⟩ = ‖δ₀x‖² + ‖d₁x‖².
+* `ker_laplacian_eq` — **harmonic characterization**: ker Δ = ker δ₀ ⊓ ker d₁.
+* `harmonic_eq_orthogonal` — harmonics are the orthogonal complement of
+  im d₀ ⊔ im δ₁.
+* `range_d0_inner_range_codiff1` / `..._orthogonal` — the "up" and "down"
+  images are orthogonal (this is exactly where `d₁ ∘ d₀ = 0` is used).
+* `hodge_decomposition` — **discrete Hodge decomposition**:
+  E₁ = (im d₀ ⊔ im δ₁) ⊕ harmonics, an internal orthogonal direct sum.
+* `sup_range_d0_harmonic` / `disjoint_range_d0_harmonic` — inside the cocycles
+  `ker d₁`, coboundaries `im d₀` and harmonics are complementary.
+* `finrank_harmonic_eq_betti` — **Hodge theorem (numerical form)**: the space of
+  harmonics has dimension equal to the first Betti number
+  dim(ker d₁) − dim(im d₀).
+
+## General helper lemmas (reusable)
+
+* `ker_adjoint_eq_orthogonal_range` — ker(T*) = (im T)ᗮ.
+* `finrank_range_adjoint` — rank(T*) = rank(T).
+
+-- !-- Lab Notes -- !--
+-- HYPOTHESIS: The discrete Hodge decomposition is *not* an analytic statement;
+--   it is pure finite-dimensional linear algebra once one has adjoints and the
+--   orthogonal-complement splitting `IsCompl K Kᗮ`.  Mathlib already provides
+--   `LinearMap.adjoint` (finite dim), `Submodule.isCompl_orthogonal_of_*`, and
+--   `Submodule.finrank_add_finrank_orthogonal`, so the whole program should
+--   collapse to a handful of `inner`-pushing arguments + dimension counts.
+-- OUTCOME: Confirmed.  The energy identity ⟨Δx,x⟩ = ‖δ₀x‖²+‖d₁x‖² immediately
+--   yields ker Δ = ker δ₀ ⊓ ker d₁ via positive-definiteness, and the
+--   identity ker(T*) = (im T)ᗮ turns the harmonic space into the orthogonal
+--   complement of the image lattice, giving the decomposition for free.
+-- INSIGHT: The single non-trivial *use* of the cochain condition d₁∘d₀ = 0 is
+--   the orthogonality im d₀ ⊥ im δ₁.  Everything else is formal adjunction.
+-- FAILURE ANALYSIS: working with the original concrete `Matrix`/weighted model
+--   (see `Catalog/Tropical/HodgeDecomposition/Defs.lean`) makes the dimension
+--   counting painful; lifting to abstract inner product spaces + `finrank`
+--   makes the Betti-number identity a two-line `omega` once rank(T*) = rank(T).
+-/
+
+import Mathlib
+
+noncomputable section
+
+open LinearMap
+open scoped RealInnerProductSpace
+
+namespace DiscreteHodge
+
+/-! ## Section 0: Reusable adjoint/orthogonality helpers -/
+
+variable {E F : Type*}
+  [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+  [NormedAddCommGroup F] [InnerProductSpace ℝ F] [FiniteDimensional ℝ F]
+
+/-- The kernel of the adjoint is the orthogonal complement of the range. -/
+theorem ker_adjoint_eq_orthogonal_range (T : E →ₗ[ℝ] F) :
+    LinearMap.ker (adjoint T) = (LinearMap.range T)ᗮ := by
+  ext y
+  simp only [LinearMap.mem_ker, Submodule.mem_orthogonal]
+  constructor
+  · intro h x hx
+    obtain ⟨z, rfl⟩ := hx
+    rw [← adjoint_inner_right, h, inner_zero_right]
+  · intro h
+    rw [← inner_self_eq_zero (𝕜 := ℝ), adjoint_inner_left, real_inner_comm]
+    exact h _ ⟨_, rfl⟩
+
+/-- The kernel of a map is the orthogonal complement of the range of its adjoint. -/
+theorem ker_eq_orthogonal_range_adjoint (T : E →ₗ[ℝ] F) :
+    LinearMap.ker T = (LinearMap.range (adjoint T))ᗮ := by
+  have := ker_adjoint_eq_orthogonal_range (adjoint T)
+  rwa [adjoint_adjoint] at this
+
+/-- The adjoint has the same rank as the original map. -/
+theorem finrank_range_adjoint (T : E →ₗ[ℝ] F) :
+    Module.finrank ℝ (LinearMap.range (adjoint T)) = Module.finrank ℝ (LinearMap.range T) := by
+  have h1 := (adjoint T).finrank_range_add_finrank_ker
+  have h2 := Submodule.finrank_add_finrank_orthogonal (K := LinearMap.range T)
+  rw [← ker_adjoint_eq_orthogonal_range] at h2
+  omega
+
+/-! ## Section 1: The discrete Hodge complex and its Laplacian -/
+
+variable {E₀ E₁ E₂ : Type*}
+  [NormedAddCommGroup E₀] [InnerProductSpace ℝ E₀] [FiniteDimensional ℝ E₀]
+  [NormedAddCommGroup E₁] [InnerProductSpace ℝ E₁] [FiniteDimensional ℝ E₁]
+  [NormedAddCommGroup E₂] [InnerProductSpace ℝ E₂] [FiniteDimensional ℝ E₂]
+
+variable (d₀ : E₀ →ₗ[ℝ] E₁) (d₁ : E₁ →ₗ[ℝ] E₂)
+
+/-- The codifferential `δ₀ = d₀*` mapping `E₁ → E₀`. -/
+def codiff₀ : E₁ →ₗ[ℝ] E₀ := adjoint d₀
+
+/-- The codifferential `δ₁ = d₁*` mapping `E₂ → E₁`. -/
+def codiff₁ : E₂ →ₗ[ℝ] E₁ := adjoint d₁
+
+/-- The discrete Hodge Laplacian on the middle space:
+    `Δ = d₀ δ₀ + δ₁ d₁` (down Laplacian + up Laplacian). -/
+def laplacian : E₁ →ₗ[ℝ] E₁ := d₀ ∘ₗ adjoint d₀ + adjoint d₁ ∘ₗ d₁
+
+/-- The space of **harmonic cochains**: the kernel of the Laplacian. -/
+def harmonic : Submodule ℝ E₁ := LinearMap.ker (laplacian d₀ d₁)
+
+@[simp] theorem laplacian_apply (x : E₁) :
+    laplacian d₀ d₁ x = d₀ (adjoint d₀ x) + adjoint d₁ (d₁ x) := rfl
+
+/-! ## Section 2: The energy identity and harmonic characterization -/
+
+/-
+**Energy identity** (discrete Bochner formula):
+    ⟨Δx, x⟩ = ‖δ₀x‖² + ‖d₁x‖².
+-/
+theorem inner_laplacian_self (x : E₁) :
+    (inner ℝ (laplacian d₀ d₁ x) x) = ‖adjoint d₀ x‖ ^ 2 + ‖d₁ x‖ ^ 2 := by
+  convert inner_add_left ( d₀ ( adjoint d₀ x ) ) ( adjoint d₁ ( d₁ x ) ) x using 1;
+  rw [ ← real_inner_self_eq_norm_sq, ← real_inner_self_eq_norm_sq, adjoint_inner_right, adjoint_inner_left ]
+
+/-
+The Laplacian is self-adjoint.
+-/
+theorem laplacian_isSelfAdjoint : IsSelfAdjoint (laplacian d₀ d₁) := by
+  ext x;
+  simp [laplacian, star]
+
+/-
+**Harmonic characterization**: a cochain is harmonic iff it is both
+    closed (`d₁ x = 0`) and coclosed (`δ₀ x = 0`).  Equivalently
+    `ker Δ = ker δ₀ ⊓ ker d₁`.
+-/
+theorem ker_laplacian_eq :
+    LinearMap.ker (laplacian d₀ d₁) =
+      LinearMap.ker (adjoint d₀) ⊓ LinearMap.ker d₁ := by
+  ext x;
+  constructor <;> intro h;
+  · have h_norm : ‖adjoint d₀ x‖^2 + ‖d₁ x‖^2 = 0 := by
+      rw [ ← inner_laplacian_self ];
+      aesop;
+    exact ⟨ by contrapose! h_norm; positivity, by contrapose! h_norm; positivity ⟩;
+  · unfold laplacian; aesop;
+
+/-- A direct restatement: `harmonic = ker δ₀ ⊓ ker d₁`. -/
+theorem harmonic_eq_inf :
+    harmonic d₀ d₁ = LinearMap.ker (adjoint d₀) ⊓ LinearMap.ker d₁ :=
+  ker_laplacian_eq d₀ d₁
+
+/-! ## Section 3: Orthogonality (the role of the cochain condition) -/
+
+variable (hdd : d₁ ∘ₗ d₀ = 0)
+
+omit [FiniteDimensional ℝ E₀] in
+include hdd in
+/-- The "down" image `im d₀` and the "up" image `im δ₁` are orthogonal.
+    This is the unique place the cochain condition `d₁ ∘ d₀ = 0` is used. -/
+theorem range_d0_inner_codiff1 (a : E₀) (c : E₂) :
+    (inner ℝ (d₀ a) (adjoint d₁ c)) = 0 := by
+  rw [adjoint_inner_right]
+  have h : d₁ (d₀ a) = 0 := by rw [← LinearMap.comp_apply, hdd, LinearMap.zero_apply]
+  rw [h, inner_zero_left]
+
+omit [FiniteDimensional ℝ E₀] in
+include hdd in
+/-- `im d₀ ⊆ (im δ₁)ᗮ`. -/
+theorem range_d0_le_orthogonal_range_codiff1 :
+    LinearMap.range d₀ ≤ (LinearMap.range (adjoint d₁))ᗮ := by
+  intro x hx y hy
+  obtain ⟨a, rfl⟩ := hx
+  obtain ⟨b, rfl⟩ := hy
+  rw [real_inner_comm]
+  exact range_d0_inner_codiff1 d₀ d₁ hdd a b
+
+/-! ## Section 4: The discrete Hodge decomposition -/
+
+/-
+The harmonic space is exactly the orthogonal complement of the image lattice
+    `im d₀ ⊔ im δ₁`.
+-/
+theorem harmonic_eq_orthogonal :
+    harmonic d₀ d₁ = (LinearMap.range d₀ ⊔ LinearMap.range (adjoint d₁))ᗮ := by
+  rw [ harmonic_eq_inf, ker_adjoint_eq_orthogonal_range, ker_eq_orthogonal_range_adjoint, Submodule.inf_orthogonal ]
+
+/-
+**Discrete Hodge decomposition**: the middle cochain space splits as the
+    internal orthogonal direct sum of the image lattice and the harmonics.
+-/
+theorem hodge_decomposition :
+    IsCompl (LinearMap.range d₀ ⊔ LinearMap.range (adjoint d₁)) (harmonic d₀ d₁) := by
+  rw [ harmonic_eq_orthogonal ];
+  apply_rules [ Submodule.isCompl_orthogonal_of_hasOrthogonalProjection ]
+
+/-! ## Section 5: The Hodge theorem — harmonics compute cohomology -/
+
+omit [FiniteDimensional ℝ E₀] [FiniteDimensional ℝ E₁] [FiniteDimensional ℝ E₂] in
+include hdd in
+/-- The coboundaries are cocycles: `im d₀ ≤ ker d₁`. -/
+theorem range_d0_le_ker_d1 : LinearMap.range d₀ ≤ LinearMap.ker d₁ := by
+  rintro _ ⟨a, rfl⟩
+  rw [LinearMap.mem_ker, ← LinearMap.comp_apply, hdd, LinearMap.zero_apply]
+
+/-
+The harmonics are cocycles: `harmonic ≤ ker d₁`.
+-/
+theorem harmonic_le_ker_d1 : harmonic d₀ d₁ ≤ LinearMap.ker d₁ := by
+  exact fun x hx => by simp_all +decide [ LinearMap.mem_ker, harmonic_eq_inf ] ;
+
+/-
+Inside the cocycles, coboundaries and harmonics are disjoint.
+-/
+theorem disjoint_range_d0_harmonic :
+    Disjoint (LinearMap.range d₀) (harmonic d₀ d₁) := by
+  rw [ disjoint_iff_inf_le, SetLike.le_def ];
+  simp +decide [ harmonic_eq_orthogonal, Submodule.mem_orthogonal' ];
+  intro a ha; specialize ha a 0; simp_all +decide [ inner_self_eq_norm_sq_to_K ] ;
+
+include hdd in
+/-- Inside the cocycles, coboundaries and harmonics span everything:
+    `im d₀ ⊔ harmonic = ker d₁`.  Together with `disjoint_range_d0_harmonic`
+    this is the discrete Hodge isomorphism `ker d₁ = im d₀ ⊕ harmonic`. -/
+theorem sup_range_d0_harmonic :
+    LinearMap.range d₀ ⊔ harmonic d₀ d₁ = LinearMap.ker d₁ := by
+  -- Rewrite the harmonics as `(im d₀)ᗮ ⊓ ker d₁`, then use the modular law and
+  -- the orthogonal splitting `im d₀ ⊔ (im d₀)ᗮ = ⊤`.
+  have hH : harmonic d₀ d₁ = (LinearMap.range d₀)ᗮ ⊓ LinearMap.ker d₁ := by
+    rw [harmonic_eq_inf, ker_adjoint_eq_orthogonal_range]
+  rw [hH, ← sup_inf_assoc_of_le _ (range_d0_le_ker_d1 d₀ d₁ hdd),
+    (Submodule.isCompl_orthogonal_of_hasOrthogonalProjection
+      (K := LinearMap.range d₀)).codisjoint.eq_top, top_inf_eq]
+
+include hdd in
+/-- **Hodge theorem (numerical form)**: the dimension of the harmonic space
+    equals the first Betti number `dim(ker d₁) − dim(im d₀)`. -/
+theorem finrank_harmonic_eq_betti :
+    Module.finrank ℝ (harmonic d₀ d₁) =
+      Module.finrank ℝ (LinearMap.ker d₁) - Module.finrank ℝ (LinearMap.range d₀) := by
+  rw [ eq_comm, tsub_eq_of_eq_add ];
+  rw [ ← sup_range_d0_harmonic d₀ d₁ hdd, add_comm, ← Submodule.finrank_sup_add_finrank_inf_eq ];
+  rw [ show d₀.range ⊓ harmonic d₀ d₁ = ⊥ from ?_, finrank_bot, add_zero ];
+  convert ( disjoint_range_d0_harmonic d₀ d₁ ).eq_bot
+
+/-! ## Section 6: The two-term specialization (`d₁ = 0`)
+
+Setting `d₁ = 0` collapses the program to a single coboundary `d₀ : E₀ → E₁`.
+The cochain condition `0 ∘ d₀ = 0` is automatic, and the Hodge decomposition
+becomes the classical orthogonal (least-squares) splitting
+`E₁ = im d₀ ⊕ (im d₀)ᗮ`, with harmonics = coclosed cochains `ker δ₀`.  This is
+the abstract counterpart of the two-term weighted Laplacian theory in
+`Catalog/Tropical/HodgeDecomposition/Defs.lean` (`ker_laplacianUp_eq_ker_d`). -/
+
+/-- In the two-term case the harmonics are exactly the coclosed cochains
+    `ker δ₀ = (im d₀)ᗮ`. -/
+theorem harmonic_zero_d1 :
+    harmonic d₀ (0 : E₁ →ₗ[ℝ] E₂) = LinearMap.ker (adjoint d₀) := by
+  rw [harmonic_eq_inf]
+  simp
+
+/-- In the two-term case the harmonic dimension is the corank of `d₀`:
+    `dim E₁ − dim(im d₀)`. -/
+theorem finrank_harmonic_zero_d1 :
+    Module.finrank ℝ (harmonic d₀ (0 : E₁ →ₗ[ℝ] E₂)) =
+      Module.finrank ℝ E₁ - Module.finrank ℝ (LinearMap.range d₀) := by
+  have h := finrank_harmonic_eq_betti d₀ (0 : E₁ →ₗ[ℝ] E₂) (by simp)
+  rw [LinearMap.ker_zero] at h
+  rw [h, finrank_top]
+
+end DiscreteHodge

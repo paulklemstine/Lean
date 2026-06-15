@@ -1,0 +1,73 @@
+import Mathlib
+import Geometry.HomotopyTypeTheory.EckmannHilton
+
+/-!
+# Morphism rigidity for Eckmann–Hilton data
+
+The catalog file `Geometry.HomotopyTypeTheory.EckmannHilton` proves *object*-level
+rigidity: under interchange with a shared unit the two operations coincide
+(`HoTT.eckmann_hilton_ops_eq`). This file supplies the **morphism** analogue: a map
+between two Eckmann–Hilton carriers that preserves the *first* operation automatically
+preserves the *second*, because both operations are the same function on each side.
+
+Hence "preserves the vertical operation" and "preserves the horizontal operation" are
+the same condition, and an Eckmann–Hilton structure map is determined by its action on
+either operation alone.
+
+## Main results
+
+* `morphism_rigidity` — `op`-preservation transports across `eckmann_hilton_ops_eq`.
+* `preserves_iff` — preserving the first operation is equivalent to preserving the
+  second.
+
+-- !-- Lab Notebook -- !--
+Hypothesis: The catalog's object rigidity (`op = op`) should upgrade to morphism
+  rigidity: a homomorphism for one operation is automatically one for the other.
+Result: Confirmed. `morphism_rigidity` rewrites both `T.op`s as `S.op`s (via
+  `eckmann_hilton_ops_eq` on source and target) and applies the assumed
+  `S`-homomorphism property. `preserves_iff` packages the two directions, which are
+  symmetric.
+Insight: On the object level the two operations are *equal as functions*; therefore
+  any predicate phrased in terms of one operation is literally the same predicate
+  phrased in terms of the other, with no coherence data required. Morphism rigidity is
+  object rigidity transported pointwise along a carrier map.
+Failure analysis: A first attempt sought an independent four-term argument for the
+  morphism level; unnecessary — once `eckmann_hilton_ops_eq` is available on *both*
+  the source and target, the morphism statement is a pure rewrite with no fresh
+  interchange instance consumed.
+-/
+
+namespace Logic.AutoResearch.Morphism
+
+universe u v
+
+variable {α : Type u} {β : Type v}
+
+-- !-- Rewrite `T.op`/`T'.op` to `S.op`/`S'.op` via `eckmann_hilton_ops_eq` on both
+-- sides, then apply the `S`-homomorphism hypothesis `hf`. -- !--
+/-- A map preserving the first operation of an Eckmann–Hilton datum automatically
+preserves the second. -/
+theorem morphism_rigidity
+    (S T : HoTT.BinarySystem α) (hu : S.e = T.e) (h : HoTT.InterchangeLaw S T)
+    (S' T' : HoTT.BinarySystem β) (hu' : S'.e = T'.e) (h' : HoTT.InterchangeLaw S' T')
+    (f : α → β) (hf : ∀ a b, f (S.op a b) = S'.op (f a) (f b)) :
+    ∀ a b, f (T.op a b) = T'.op (f a) (f b) := by
+  intro a b
+  rw [← HoTT.eckmann_hilton_ops_eq S T hu h, ← HoTT.eckmann_hilton_ops_eq S' T' hu' h', hf]
+
+-- !-- Both directions are `morphism_rigidity` with the roles of `S`/`T` swapped; the
+-- swapped interchange/unit hypotheses are obtained symbolically. -- !--
+/-- Preserving the first operation is equivalent to preserving the second. -/
+theorem preserves_iff
+    (S T : HoTT.BinarySystem α) (hu : S.e = T.e) (h : HoTT.InterchangeLaw S T)
+    (S' T' : HoTT.BinarySystem β) (hu' : S'.e = T'.e) (h' : HoTT.InterchangeLaw S' T')
+    (f : α → β) :
+    (∀ a b, f (S.op a b) = S'.op (f a) (f b)) ↔
+      (∀ a b, f (T.op a b) = T'.op (f a) (f b)) := by
+  constructor
+  · intro hf
+    exact morphism_rigidity S T hu h S' T' hu' h' f hf
+  · intro hf a b
+    rw [HoTT.eckmann_hilton_ops_eq S T hu h, HoTT.eckmann_hilton_ops_eq S' T' hu' h', hf]
+
+end Logic.AutoResearch.Morphism

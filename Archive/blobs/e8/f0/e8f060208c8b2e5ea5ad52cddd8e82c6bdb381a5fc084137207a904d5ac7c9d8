@@ -1,0 +1,165 @@
+import Mathlib
+
+/-! # The Fibonacci divisibility spectrum: gcd, coprimality, and the rank lattice
+
+Domain: Algebra / Number Theory.
+
+This file extends the catalog's rank-of-apparition theory
+(`Catalog/Applications/RankOfApparition.lean`, namespace `RankOfApparition`) with the
+**spectral / lattice** structure of Fibonacci divisibility.
+
+Because the catalog's `import` graph is currently fragmented (the rank-of-apparition file
+lives in a non-default build target), we follow the catalog's established convention and keep
+this file **self-contained against Mathlib**: §0–§2 restate the short existence/biconditional
+spine `m ∣ F n ↔ fibRank m ∣ n`, and §3–§5 contribute the new spectral results.
+
+The rank of apparition `fibRank m` is the least positive `k` with `m ∣ F k`.  Its defining
+property is the *spine* `fibRank_dvd_iff : m ∣ F n ↔ fibRank m ∣ n`.  We use it to settle:
+
+* `Fib_gcd_identity` — the classical strong-divisibility identity
+  `gcd (F m) (F n) = F (gcd m n)`, packaged as a named catalog theorem.
+* `fib_coprime_iff` — *new*: two Fibonacci numbers are coprime **iff** the gcd of their
+  indices is `1` or `2`.  This is the exact coprimality criterion for the Fibonacci
+  sequence and is not in Mathlib.
+* `fibRank_lcm` — *new*: the rank of apparition is an **lcm-morphism**,
+  `fibRank (lcm a b) = lcm (fibRank a) (fibRank b)` for positive `a, b`.
+* `fibRank_mul_coprime` — *new corollary*: for coprime positive `a, b`,
+  `fibRank (a * b) = lcm (fibRank a) (fibRank b)`.
+-/
+
+namespace FibonacciDivisibilitySpectrum
+
+open scoped Classical
+
+/-! ## §0. The rank of apparition (self-contained spine) -/
+
+/-- `m` *has a rank of apparition* if it divides some positive-index Fibonacci number. -/
+def HasFibRank (m : ℕ) : Prop := ∃ k, 0 < k ∧ m ∣ Nat.fib k
+
+/-- The Fibonacci "shift" permutation on pairs over `ZMod m`: `(a, b) ↦ (b, a + b)`. -/
+def fibStep (m : ℕ) : ZMod m × ZMod m ≃ ZMod m × ZMod m where
+  toFun p := (p.2, p.1 + p.2)
+  invFun p := (p.2 - p.1, p.1)
+  left_inv := by intro p; simp
+  right_inv := by intro p; simp [add_comm]
+
+theorem fibStep_iterate (m k : ℕ) :
+    (fibStep m)^[k] (0, 1) = ((Nat.fib k : ZMod m), (Nat.fib (k + 1) : ZMod m)) := by
+  induction k <;> simp_all +decide [ Function.iterate_succ_apply' ];
+  simp +decide [ fibStep, Nat.fib_add_two ]
+
+theorem hasFibRank_of_pos (m : ℕ) (hm : 0 < m) : HasFibRank m := by
+  obtain ⟨i, j, hij, h_pair⟩ :
+      ∃ i j : ℕ, i < j ∧
+        ((Nat.fib i : ZMod m) = (Nat.fib j : ZMod m) ∧
+          (Nat.fib (i + 1) : ZMod m) = (Nat.fib (j + 1) : ZMod m)) := by
+    have h_pigeonhole :
+        ∃ i j : ℕ, i < j ∧
+          ((Nat.fib i : ZMod m), (Nat.fib (i + 1) : ZMod m))
+            = ((Nat.fib j : ZMod m), (Nat.fib (j + 1) : ZMod m)) := by
+      by_contra! h
+      have h_finite :
+          Set.Finite (Set.range
+            (fun n : ℕ => ((Nat.fib n : ZMod m), (Nat.fib (n + 1) : ZMod m)))) := by
+        cases m <;> [ aesop; exact Set.toFinite _ ]
+      exact h_finite.not_infinite <| Set.infinite_range_of_injective fun i j hij =>
+        le_antisymm (le_of_not_gt fun hi => h _ _ hi hij.symm)
+          (le_of_not_gt fun hj => h _ _ hj hij)
+    aesop
+  induction' i with i ih generalizing j
+  · exact ⟨ j, hij, by simpa [ ← ZMod.natCast_eq_zero_iff ] using h_pair.1.symm ⟩
+  · specialize ih ( j - 1 ) ( Nat.lt_pred_iff.mpr hij )
+    rcases j <;> simp_all +decide [ Nat.fib_add_two ]
+    grind
+
+/-- The Fibonacci rank of apparition of `m`: the least positive `k` with `m ∣ F k`. -/
+noncomputable def fibRank (m : ℕ) : ℕ :=
+  if h : ∃ k, 0 < k ∧ m ∣ Nat.fib k then Nat.find h else 0
+
+theorem fibRank_pos {m : ℕ} (hm : HasFibRank m) : 0 < fibRank m := by
+  unfold fibRank; split_ifs with h
+  · exact (Nat.find_spec h).1
+  · exact absurd hm h
+
+theorem dvd_fib_fibRank {m : ℕ} (hm : HasFibRank m) : m ∣ Nat.fib (fibRank m) := by
+  unfold fibRank; split_ifs with h
+  · exact (Nat.find_spec h).2
+  · exact absurd hm h
+
+theorem fibRank_min {m k : ℕ} (hk : 0 < k) (hlt : k < fibRank m) : ¬ m ∣ Nat.fib k := by
+  unfold fibRank at hlt; split_ifs at hlt with h
+  · exact fun hd => Nat.find_min h hlt ⟨hk, hd⟩
+  · simp at hlt
+
+/-- **The spine.** `m ∣ F n ↔ fibRank m ∣ n`. -/
+theorem fibRank_dvd_iff {m : ℕ} (hm : HasFibRank m) (n : ℕ) :
+    m ∣ Nat.fib n ↔ fibRank m ∣ n := by
+  have hz : 0 < fibRank m := fibRank_pos hm
+  have hmz : m ∣ Nat.fib (fibRank m) := dvd_fib_fibRank hm
+  constructor <;> intro hn
+  · contrapose! hn
+    have hgcd_lt : Nat.gcd (fibRank m) n < fibRank m :=
+      lt_of_le_of_ne (Nat.le_of_dvd hz (Nat.gcd_dvd_left _ _))
+        (fun h => hn (h ▸ Nat.gcd_dvd_right _ _))
+    refine fun hcontra => fibRank_min (Nat.gcd_pos_of_pos_left _ hz) hgcd_lt ?_
+    have := Nat.dvd_gcd hmz hcontra
+    simpa [Nat.fib_gcd] using this
+  · obtain ⟨k, rfl⟩ := hn
+    exact dvd_trans hmz (Nat.fib_dvd _ _ ⟨k, rfl⟩)
+
+/-! ## §1. The strong-divisibility gcd identity -/
+
+/-
+**Fibonacci gcd identity.** The Fibonacci sequence is a *strong divisibility sequence*:
+the gcd of two Fibonacci numbers is the Fibonacci number of the gcd of the indices.
+-/
+theorem Fib_gcd_identity (m n : ℕ) :
+    Nat.gcd (Nat.fib m) (Nat.fib n) = Nat.fib (Nat.gcd m n) := by
+  rw [ ← Nat.fib_gcd ]
+
+/-! ## §2. Exact coprimality criterion -/
+
+/-
+A Fibonacci number equals `1` exactly at indices `1` and `2`.
+-/
+theorem fib_eq_one_iff {k : ℕ} : Nat.fib k = 1 ↔ k = 1 ∨ k = 2 := by
+  rcases k with ( _ | _ | _ | k ) <;> simp_all +arith +decide [ Nat.fib_add_two ];
+  linarith [ Nat.fib_pos.2 k.succ_pos ]
+
+/-
+**Coprimality criterion.** Two Fibonacci numbers are coprime iff the gcd of their
+indices is `1` or `2`.
+-/
+theorem fib_coprime_iff (m n : ℕ) :
+    Nat.Coprime (Nat.fib m) (Nat.fib n) ↔ Nat.gcd m n = 1 ∨ Nat.gcd m n = 2 := by
+  convert fib_eq_one_iff using 1;
+  rw [ ← Fib_gcd_identity m n ]
+
+/-! ## §3. The rank of apparition is an lcm-morphism -/
+
+/-
+**Rank lcm-morphism.** The Fibonacci rank of apparition turns lcm into lcm:
+`fibRank (lcm a b) = lcm (fibRank a) (fibRank b)` for positive `a, b`.
+-/
+theorem fibRank_lcm {a b : ℕ} (ha : 0 < a) (hb : 0 < b) :
+    fibRank (Nat.lcm a b) = Nat.lcm (fibRank a) (fibRank b) := by
+  apply Nat.dvd_antisymm;
+  · convert fibRank_dvd_iff _ _ |>.1 _ using 1;
+    · exact hasFibRank_of_pos _ ( Nat.lcm_pos ha hb );
+    · exact Nat.lcm_dvd ( dvd_trans ( dvd_fib_fibRank ( hasFibRank_of_pos a ha ) ) ( Nat.fib_dvd _ _ ( Nat.dvd_lcm_left _ _ ) ) ) ( dvd_trans ( dvd_fib_fibRank ( hasFibRank_of_pos b hb ) ) ( Nat.fib_dvd _ _ ( Nat.dvd_lcm_right _ _ ) ) );
+  · refine' Nat.lcm_dvd _ _;
+    · apply fibRank_dvd_iff (hasFibRank_of_pos a ha) (fibRank (Nat.lcm a b)) |>.1;
+      exact dvd_trans ( Nat.dvd_lcm_left _ _ ) ( dvd_fib_fibRank ( hasFibRank_of_pos _ ( Nat.lcm_pos ha hb ) ) );
+    · apply (fibRank_dvd_iff (hasFibRank_of_pos _ hb) _).mp;
+      exact dvd_trans ( Nat.dvd_lcm_right _ _ ) ( dvd_fib_fibRank ( hasFibRank_of_pos _ ( Nat.lcm_pos ha hb ) ) )
+
+/-
+**Rank on coprime products.** For coprime positive `a, b` the rank of the product is the
+lcm of the ranks.
+-/
+theorem fibRank_mul_coprime {a b : ℕ} (ha : 0 < a) (hb : 0 < b)
+    (hab : Nat.Coprime a b) :
+    fibRank (a * b) = Nat.lcm (fibRank a) (fibRank b) := by
+  rw [ ← fibRank_lcm ha hb, hab.lcm_eq_mul ]
+
+end FibonacciDivisibilitySpectrum

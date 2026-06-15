@@ -1,0 +1,196 @@
+import Mathlib
+import Algebra.BerggrenLorentz.Core
+
+/-!
+# A Row-Norm Certificate for Berggren Words (Berggren–Lorentz Reduction)
+
+This file builds a small, fully elementary *certificate* for words in the
+Berggren monoid, following the Berggren–Lorentz reduction philosophy but kept
+deliberately concrete and proof-oriented rather than categorical.
+
+The certificate is the **maximum absolute row sum** matrix norm
+
+```
+rowNorm M = maxᵢ Σⱼ |M i j|.
+```
+
+This is the operator norm of `M` acting on `(ℝ³, ‖·‖_∞)`, restricted here to the
+3×3 integer matrices used in the Berggren development.  Its two key properties
+are recorded over `ℕ`:
+
+* `rowNorm_one : rowNorm 1 = 1`;
+* `rowNorm_mul_le : rowNorm (M * N) ≤ rowNorm M * rowNorm N` (submultiplicativity).
+
+Each Berggren generator has row norm exactly `7`
+(`rowNorm_genA`, `rowNorm_genB`, `rowNorm_genC`), so for the word-evaluation map
+`wordMatrix : List (Fin 3) → Matrix (Fin 3) (Fin 3) ℤ` (a product of generator
+matrices) submultiplicativity upgrades to the exponential certificate
+
+```
+rowNorm (wordMatrix w) ≤ 7 ^ w.length.        (rowNorm_wordMatrix_le)
+```
+
+Applying the matrix to the root Pythagorean triple `(3,4,5)` and reading off the
+hypotenuse coordinate then yields a quantitative depth bound for the Berggren
+tree:
+
+```
+hyp (act (wordMatrix w) rootTriple) ≤ 5 * 7 ^ w.length,   (hyp_of_word_le)
+```
+
+and the converse elementary statement that a triple realised at depth `d` has
+hypotenuse at most `5 * 7 ^ d` (`hyp_depth_bound`).
+
+## Tropical commentary
+
+Taking logarithms turns the submultiplicative inequality
+`rowNorm (M * N) ≤ rowNorm M * rowNorm N` into the subadditive inequality
+`log (rowNorm (M * N)) ≤ log (rowNorm M) + log (rowNorm N)`, i.e. `log ∘ rowNorm`
+is a length-style (tropical / min-plus) valuation on the Berggren monoid sending
+each generator to `log 7`.  We keep this only as commentary; the formal content
+is the elementary `ℕ`-valued certificate above.
+-/
+
+open Matrix
+
+namespace TropicalBerggrenCertificate
+
+open BerggrenLorentz
+
+/-! ## The row-norm certificate -/
+
+/-- `rowNorm M` is the maximum over rows of the row sum of entrywise absolute
+values, returned as a natural number.  This is the `‖·‖_∞ → ‖·‖_∞` operator norm
+restricted to integer matrices. -/
+def rowNorm (M : Matrix (Fin 3) (Fin 3) ℤ) : ℕ :=
+  Finset.univ.sup (fun i => ∑ j, (M i j).natAbs)
+
+/-- The identity matrix has row norm `1`. -/
+theorem rowNorm_one : rowNorm 1 = 1 := by decide
+
+/-- A convenient characterisation: each individual row sum is `≤ rowNorm M`. -/
+theorem rowSum_le_rowNorm (M : Matrix (Fin 3) (Fin 3) ℤ) (i : Fin 3) :
+    (∑ j, (M i j).natAbs) ≤ rowNorm M :=
+  Finset.le_sup (f := fun i => ∑ j, (M i j).natAbs) (Finset.mem_univ i)
+
+/-- Submultiplicativity of the row norm. -/
+theorem rowNorm_mul_le (M N : Matrix (Fin 3) (Fin 3) ℤ) :
+    rowNorm (M * N) ≤ rowNorm M * rowNorm N := by
+  refine' Finset.sup_le fun i _ => _;
+  refine' le_trans _ ( Nat.mul_le_mul ( Finset.le_sup ( f := fun i => ∑ j, Int.natAbs ( M i j ) ) <| Finset.mem_univ i ) le_rfl );
+  -- By definition of matrix multiplication, we have $(M * N) i j = \sum k, M i k * N k j$.
+  have h_mul : ∀ j, (M * N) i j = ∑ k, M i k * N k j := by
+    exact fun j => rfl;
+  -- Apply the triangle inequality to each term in the sum.
+  have h_triangle : ∀ j, Int.natAbs (∑ k, M i k * N k j) ≤ ∑ k, Int.natAbs (M i k) * Int.natAbs (N k j) := by
+    exact fun j => by simpa [ ← Int.ofNat_le ] using Finset.abs_sum_le_sum_abs _ _ |> le_trans <| Finset.sum_le_sum fun _ _ => by rw [ abs_mul ] ;
+  refine' le_trans ( Finset.sum_le_sum fun j _ => h_mul j ▸ h_triangle j ) _;
+  rw [ Finset.sum_comm ];
+  simp +decide only [← Finset.mul_sum _ _ _];
+  rw [ Finset.sum_mul _ _ _ ] ; exact Finset.sum_le_sum fun _ _ => Nat.mul_le_mul_left _ ( Finset.le_sup ( f := fun i => ∑ j, Int.natAbs ( N i j ) ) ( Finset.mem_univ _ ) ) ;
+
+/-! ## Exact generator norms -/
+
+/-- The first Berggren generator `A` has row norm `7`. -/
+theorem rowNorm_genA : rowNorm matA = 7 := by decide
+
+/-- The second Berggren generator `B` has row norm `7`. -/
+theorem rowNorm_genB : rowNorm matB = 7 := by decide
+
+/-- The third Berggren generator `C` has row norm `7`. -/
+theorem rowNorm_genC : rowNorm matC = 7 := by decide
+
+/-- Every Berggren generator has row norm exactly `7`. -/
+theorem rowNorm_berggrenGen (g : Fin 3) : rowNorm (berggrenGen g) = 7 := by
+  fin_cases g <;> decide
+
+/-! ## Word evaluation and functoriality -/
+
+/-- The matrix associated to a Berggren word, as a product of generator
+matrices.  This is the monoid homomorphism `(List (Fin 3), ++, []) → (M₃(ℤ), *, 1)`. -/
+def wordMatrix (w : List (Fin 3)) : Matrix (Fin 3) (Fin 3) ℤ :=
+  (w.map berggrenGen).prod
+
+/-- The empty word evaluates to the identity matrix. -/
+@[simp] theorem wordMatrix_nil : wordMatrix [] = 1 := by
+  simp [wordMatrix]
+
+/-- Word evaluation is functorial: concatenation goes to matrix product. -/
+theorem wordMatrix_append (u v : List (Fin 3)) :
+    wordMatrix (u ++ v) = wordMatrix u * wordMatrix v := by
+  simp [wordMatrix, List.map_append, List.prod_append]
+
+/-- Cons rule for word evaluation. -/
+theorem wordMatrix_cons (g : Fin 3) (w : List (Fin 3)) :
+    wordMatrix (g :: w) = berggrenGen g * wordMatrix w := by
+  simp [wordMatrix]
+
+/-- The certificate bound: the row norm of a word matrix is at most `7 ^ length`. -/
+theorem rowNorm_wordMatrix_le (w : List (Fin 3)) :
+    rowNorm (wordMatrix w) ≤ 7 ^ w.length := by
+  induction w with
+  | nil => simp [rowNorm_one]
+  | cons g w ih =>
+      rw [wordMatrix_cons, List.length_cons, pow_succ]
+      calc
+        rowNorm (berggrenGen g * wordMatrix w)
+            ≤ rowNorm (berggrenGen g) * rowNorm (wordMatrix w) :=
+              rowNorm_mul_le _ _
+        _ = 7 * rowNorm (wordMatrix w) := by rw [rowNorm_berggrenGen]
+        _ ≤ 7 * 7 ^ w.length := by exact Nat.mul_le_mul_left 7 ih
+        _ = 7 ^ w.length * 7 := by ring
+
+/-! ## Bridge to triples and hypotenuse growth -/
+
+/-- The root Pythagorean triple `(3,4,5)` as a vector. -/
+def rootTriple : Fin 3 → ℤ := ![3, 4, 5]
+
+/-- The action of a Berggren matrix on a triple is matrix–vector multiplication. -/
+def act (M : Matrix (Fin 3) (Fin 3) ℤ) (v : Fin 3 → ℤ) : Fin 3 → ℤ :=
+  M.mulVec v
+
+/-- The hypotenuse coordinate of a triple, as a natural number. -/
+def hyp (v : Fin 3 → ℤ) : ℕ := (v 2).natAbs
+
+/-- Entrywise bound: every coordinate of `M.mulVec v` is bounded by the row norm
+of `M` times a uniform bound on the entries of `v`. -/
+theorem mulVec_entry_natAbs_le (M : Matrix (Fin 3) (Fin 3) ℤ) (v : Fin 3 → ℤ)
+    (B : ℕ) (hv : ∀ j, (v j).natAbs ≤ B) (i : Fin 3) :
+    ((M.mulVec v) i).natAbs ≤ rowNorm M * B := by
+  refine' le_trans _ ( Nat.mul_le_mul_right _ <| rowSum_le_rowNorm M i );
+  have h_abs_sum : ∀ (a : Fin 3 → ℤ), (Finset.sum Finset.univ fun j => a j).natAbs ≤ Finset.sum Finset.univ fun j => (a j).natAbs := by
+    exact fun a => nat_abs_sum_le Finset.univ a
+  convert h_abs_sum ( fun j => M i j * v j ) |> le_trans <| Finset.sum_le_sum fun j _ => ?_ using 1;
+  rw [ Finset.sum_mul _ _ _ ];
+  simpa only [ Int.natAbs_mul ] using Nat.mul_le_mul_left _ ( hv j )
+
+/-- Each entry of the root triple has absolute value at most `5`. -/
+theorem rootTriple_bound (j : Fin 3) : (rootTriple j).natAbs ≤ 5 := by
+  fin_cases j <;> decide
+
+/-- The hypotenuse of the triple produced by a word is bounded by `5 · 7 ^ length`.
+This is the explicit certificate-to-geometry bridge. -/
+theorem hyp_of_word_le (w : List (Fin 3)) :
+    hyp (act (wordMatrix w) rootTriple) ≤ 5 * 7 ^ w.length := by
+  have h1 : hyp (act (wordMatrix w) rootTriple) ≤ rowNorm (wordMatrix w) * 5 := by
+    have := mulVec_entry_natAbs_le (wordMatrix w) rootTriple 5 rootTriple_bound 2
+    simpa [hyp, act] using this
+  calc
+    hyp (act (wordMatrix w) rootTriple) ≤ rowNorm (wordMatrix w) * 5 := h1
+    _ ≤ 7 ^ w.length * 5 := Nat.mul_le_mul_right 5 (rowNorm_wordMatrix_le w)
+    _ = 5 * 7 ^ w.length := by ring
+
+/-! ## Converse depth lower bound -/
+
+/-- Elementary depth bound: any triple obtained from the root by a word of length
+at most `d` has hypotenuse at most `5 * 7 ^ d`.  Equivalently, a triple with
+hypotenuse `c` realised at depth `d` satisfies `c ≤ 5 * 7 ^ d`; contrapositively,
+realising a triple of hypotenuse `c` requires depth `d ≥ log₇ (c / 5)`. -/
+theorem hyp_depth_bound (w : List (Fin 3)) (d : ℕ) (hd : w.length ≤ d) :
+    hyp (act (wordMatrix w) rootTriple) ≤ 5 * 7 ^ d := by
+  calc
+    hyp (act (wordMatrix w) rootTriple) ≤ 5 * 7 ^ w.length := hyp_of_word_le w
+    _ ≤ 5 * 7 ^ d := by
+        exact Nat.mul_le_mul_left 5 (Nat.pow_le_pow_right (by norm_num) hd)
+
+end TropicalBerggrenCertificate

@@ -1,0 +1,113 @@
+/-
+# The L-Function Oracle, Part I: Search, Roots, and Factoring
+
+This module formalizes the *honest mathematical core* of the "L-function oracle"
+thought experiment. The grand conjectures (RH, BSD, Sato–Tate, Langlands) are not
+literally formalizable as consequences of an "O(1) evaluation oracle" — the "O(1)"
+cost is meta-information about a model of computation, not a mathematical statement.
+
+What *is* genuine, and what we prove here, is the **reduction skeleton** underlying
+each oracle claim: the abstract step that turns *evaluating a function* into
+*deciding/finding a witness*. These are real theorems, fully proved.
+
+* `oracle_decides_exists` — an oracle (a `Bool`-valued decision procedure) for a
+  predicate over a finite domain reduces the existential `∃ a, P a` to a finite
+  search. (The combinatorial heart of "the oracle collapses search to evaluation".)
+* `oracle_root_of_sign_change` — a continuous function with opposite signs at the
+  endpoints has a zero strictly between them (Intermediate Value Theorem). This is
+  the *RH-flavored* primitive: detect a zero by a sign change on a grid.
+* `oracle_root_in_grid` — iterate the previous result along a monotone grid: a sign
+  change between consecutive grid points yields a genuine zero. (The "O(R²) grid
+  scan for zeros up to height R" made rigorous.)
+* `oracle_factor_of_composite` — a divisibility oracle finds a nontrivial factor of
+  any composite `n`. This is the *factoring-flavored* primitive.
+
+-- !-- Lab Notebook -- !--
+Hypothesis: The "L-function oracle" mythology hides three reusable reductions:
+  (search → evaluation), (root-finding → sign detection), (factoring → divisor test).
+Result: All three are provable in Lean with zero `sorry`, by reducing to Fintype
+  decidability, the Mathlib IVT, and `Nat.exists_dvd_of_not_prime` respectively.
+Insight: The mathematical content of "oracle implies X" is always a *reduction*,
+  never the oracle's cost. Separating the cost model from the reduction makes the
+  honest theorem appear.
+Failure analysis: An earlier framing tried to state RH itself as "∀ grids, sign
+  scan terminates"; this is not equivalent to RH (a grid can miss a zero on the
+  critical line). We retreat to the correct, provable primitive: sign change ⇒ zero.
+-/
+
+import Mathlib
+
+open Set
+
+namespace LFunctionOracle
+
+/-- An **oracle** for a function `f : α → β` is, mathematically, just the function
+itself; the "answers any query in `O(1)`" is a statement about a cost model and is
+deliberately *not* part of the Lean type. We keep the abbreviation to document
+intent throughout the development. -/
+def Oracle (α β : Type*) : Type _ := α → β
+
+/-! ## Search reduction: oracle evaluation collapses bounded existentials -/
+
+/-
+!-- comment -- !-- A `Bool`-valued oracle agreeing with `P` turns `∃ a, P a`
+into the decidable finite search `∃ a, o a = true`; `decidable_of_iff` then applies. -- !--
+
+If an oracle `o : α → Bool` decides a predicate `P` pointwise, then the
+existential quantifier `∃ a, P a` is equivalent to the (decidable) finite search
+`∃ a, o a = true`. Over a `Fintype`, this makes `∃ a, P a` decidable by evaluation
+alone — the rigorous core of "the oracle collapses search to evaluation".
+-/
+theorem oracle_decides_exists {α : Type*} (P : α → Prop)
+    (o : Oracle α Bool) (ho : ∀ a, o a = true ↔ P a) :
+    (∃ a, P a) ↔ (∃ a, o a = true) := by
+      simp +decide only [ho]
+
+/-! ## RH-flavored primitive: a sign change certifies a zero -/
+
+/-
+!-- comment -- !-- Direct application of the Intermediate Value Theorem
+(`intermediate_value_Ioo`): `0 ∈ f '' Ioo a b` since `f a < 0 < f b`. -- !--
+
+**Sign-change root detection.** A continuous function that is negative at `a`
+and positive at `b > a` has a zero strictly inside `(a, b)`. This is the primitive
+behind "evaluate the L-function on a grid and read off zeros from sign changes".
+-/
+theorem oracle_root_of_sign_change {f : ℝ → ℝ} {a b : ℝ} (hab : a ≤ b)
+    (hf : ContinuousOn f (Icc a b)) (h1 : f a < 0) (h2 : 0 < f b) :
+    ∃ c ∈ Ioo a b, f c = 0 := by
+      apply_rules [ intermediate_value_Ioo ] ; aesop
+
+/-
+!-- comment -- !-- Pick the grid cell with the sign change and apply
+`oracle_root_of_sign_change` on `[x i, x (i+1)]`; continuity gives `ContinuousOn`. -- !--
+
+**Grid scan for zeros.** Given a strictly increasing grid `x : ℕ → ℝ` and a
+globally continuous `f`, a sign change across some consecutive cell `[x i, x (i+1)]`
+(with `i < N`) yields a genuine zero of `f`. This is the "O(R²) grid scan" made
+rigorous: finitely many evaluations certify the existence of a zero.
+-/
+theorem oracle_root_in_grid {f : ℝ → ℝ} (hf : Continuous f)
+    {x : ℕ → ℝ} (hmono : StrictMono x) {N : ℕ}
+    (hsign : ∃ i < N, f (x i) < 0 ∧ 0 < f (x (i + 1))) :
+    ∃ c, f c = 0 := by
+      obtain ⟨ i, hi, hi' ⟩ := hsign;
+      have := intermediate_value_Ioo ( show x i ≤ x ( i + 1 ) from hmono.monotone ( Nat.le_succ _ ) ) hf.continuousOn;
+      exact Exists.elim ( this ⟨ hi'.1, hi'.2 ⟩ ) fun x hx => ⟨ x, hx.2 ⟩
+
+/-! ## Factoring-flavored primitive: a divisibility oracle splits composites -/
+
+/-
+!-- comment -- !-- `Nat.exists_dvd_of_not_prime2` yields a divisor `1 < d < n`;
+a divisibility oracle just confirms `d ∣ n` for each candidate. -- !--
+
+**Oracle factoring.** Every composite `n` (i.e. `1 < n` and not prime) admits a
+nontrivial divisor `1 < d < n`. A divisibility oracle finds it by testing candidates;
+this is the number-theoretic primitive behind "the L-function of `E / (ℤ/nℤ)` detects
+factors of `n`".
+-/
+theorem oracle_factor_of_composite {n : ℕ} (h1 : 1 < n) (hn : ¬ n.Prime) :
+    ∃ d, d ∣ n ∧ 1 < d ∧ d < n := by
+      exact Exists.imp ( by tauto ) ( Nat.exists_dvd_of_not_prime2 h1 hn )
+
+end LFunctionOracle

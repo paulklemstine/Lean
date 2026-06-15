@@ -1,0 +1,127 @@
+import Mathlib
+
+/-!
+# A tropical lower-bound certificate for coefficient expressions
+
+This file is a deliberately small, self-contained **coefficient-level abstraction** of the
+earlier species/tropical idea.  Instead of working with combinatorial species, we strip the
+construction down to its arithmetic core: a tiny expression language whose semantics are
+integer *coefficient sequences*, together with a *tropical* (min-plus) lower bound on the
+`p`-adic valuation of those coefficients.
+
+The expression language is
+
+```
+inductive SpExpr | one | zero | add e₁ e₂ | mul e₁ e₂
+```
+
+with semantics `eval : SpExpr → ℕ → ℤ` given by ordinary finite *convolution* for products.
+(We use the plain convolution `∑ k, eval e₁ k * eval e₂ (n - k)` rather than the binomial
+convolution; the binomial coefficient factor only ever *raises* the valuation, so it is
+inessential to the certificate and merely adds technical overhead.  The statement and proof
+below are the arithmetic core certificate for the expression semantics.)
+
+The valuation profile at a prime `p` is `vp p e n = emultiplicity (p : ℤ) (eval e n)`, valued
+in `ℕ∞`.  We define a purely structural tropical lower bound `lb : SpExpr → ℕ → ℕ∞` and prove
+the certificate
+
+```
+lb e n ≤ vp p e n      (for `p` prime, all `e`, all `n`).
+```
+
+## Main definitions
+
+* `SpExpr`           — the expression syntax.
+* `SpExpr.eval`      — integer coefficient-sequence semantics (convolution product).
+* `vp`               — the `p`-adic valuation profile of an expression's coefficients.
+* `lb`               — the structural min-plus lower bound.
+
+## Main result
+
+* `lb_le_vp` — the tropical lower-bound certificate `lb e n ≤ vp p e n`.
+-/
+
+open scoped Classical
+
+/-- A tiny expression language for integer coefficient sequences. -/
+inductive SpExpr
+  | one
+  | zero
+  | add (e₁ e₂ : SpExpr)
+  | mul (e₁ e₂ : SpExpr)
+  deriving Repr
+
+namespace SpExpr
+
+/-- Coefficient-sequence semantics: `eval e n` is the `n`-th coefficient of `e`.
+Products use ordinary finite convolution. -/
+def eval : SpExpr → ℕ → ℤ
+  | one,        _ => 1
+  | zero,       _ => 0
+  | add e₁ e₂,  n => eval e₁ n + eval e₂ n
+  | mul e₁ e₂,  n => ∑ k ∈ Finset.range (n + 1), eval e₁ k * eval e₂ (n - k)
+
+@[simp] lemma eval_one (n : ℕ) : eval one n = 1 := rfl
+@[simp] lemma eval_zero (n : ℕ) : eval zero n = 0 := rfl
+@[simp] lemma eval_add (e₁ e₂ : SpExpr) (n : ℕ) :
+    eval (add e₁ e₂) n = eval e₁ n + eval e₂ n := rfl
+@[simp] lemma eval_mul (e₁ e₂ : SpExpr) (n : ℕ) :
+    eval (mul e₁ e₂) n = ∑ k ∈ Finset.range (n + 1), eval e₁ k * eval e₂ (n - k) := rfl
+
+/-- The `p`-adic valuation profile of an expression's coefficients, valued in `ℕ∞`. -/
+noncomputable def vp (p : ℕ) (e : SpExpr) (n : ℕ) : ℕ∞ :=
+  emultiplicity (p : ℤ) (eval e n)
+
+/-- The structural tropical (min-plus) lower bound on the valuation profile. -/
+noncomputable def lb : SpExpr → ℕ → ℕ∞
+  | one,        _ => 0
+  | zero,       _ => ⊤
+  | add e₁ e₂,  n => min (lb e₁ n) (lb e₂ n)
+  | mul e₁ e₂,  n =>
+      (Finset.range (n + 1)).inf' Finset.nonempty_range_add_one
+        (fun k => lb e₁ k + lb e₂ (n - k))
+
+/-- Finite-sum lower bound: if every summand has valuation at least `L`, then so does the sum. -/
+lemma le_emultiplicity_sum {ι : Type*} (p : ℤ) (s : Finset ι) (f : ι → ℤ) (L : ℕ∞)
+    (h : ∀ i ∈ s, L ≤ emultiplicity p (f i)) :
+    L ≤ emultiplicity p (∑ i ∈ s, f i) := by
+  classical
+  induction s using Finset.induction with
+  | empty => simp [emultiplicity_zero]
+  | insert a s ha ih =>
+      rw [Finset.sum_insert ha]
+      have ha' : L ≤ emultiplicity p (f a) := h a (Finset.mem_insert_self a s)
+      have hs' : L ≤ emultiplicity p (∑ i ∈ s, f i) :=
+        ih (fun i hi => h i (Finset.mem_insert_of_mem hi))
+      exact le_trans (le_min ha' hs') min_le_emultiplicity_add
+
+/-- The tropical lower-bound certificate: the structural bound `lb` is a genuine lower bound
+for the `p`-adic valuation profile of the coefficient sequence. -/
+theorem lb_le_vp (p : ℕ) (hp : p.Prime) (e : SpExpr) (n : ℕ) :
+    lb e n ≤ vp p e n := by
+  have hpZ : Prime (p : ℤ) := Nat.prime_iff_prime_int.mp hp
+  induction e generalizing n with
+  | one =>
+      -- `emultiplicity p 1 = 0`
+      simp only [lb, vp, eval_one]
+      rw [emultiplicity_eq_zero.mpr hpZ.not_dvd_one]
+  | zero =>
+      -- `emultiplicity p 0 = ⊤`
+      simp only [lb, vp, eval_zero, emultiplicity_zero, le_top]
+  | add e₁ e₂ ih₁ ih₂ =>
+      -- `min (vp e₁) (vp e₂) ≤ vp (e₁ + e₂)`
+      simp only [lb, vp, eval_add]
+      exact le_trans (le_min (le_trans (min_le_left _ _) (ih₁ n))
+        (le_trans (min_le_right _ _) (ih₂ n))) min_le_emultiplicity_add
+  | mul e₁ e₂ ih₁ ih₂ =>
+      -- convolution: bound each summand, then apply the finite-sum lower bound.
+      simp only [lb, vp, eval_mul]
+      refine le_emultiplicity_sum (p : ℤ) _ _ _ ?_
+      intro k hk
+      have hterm :
+          lb e₁ k + lb e₂ (n - k) ≤ emultiplicity (p : ℤ) (eval e₁ k * eval e₂ (n - k)) := by
+        rw [emultiplicity_mul hpZ]
+        exact add_le_add (ih₁ k) (ih₂ (n - k))
+      exact le_trans (Finset.inf'_le _ hk) hterm
+
+end SpExpr

@@ -1,0 +1,154 @@
+/-
+  # Vietoris–Rips Graph Filtrations and Stability under Uniform Perturbation
+
+  This file develops a sharply scoped, fully concrete theory of graph-valued
+  Vietoris–Rips filtrations on a fixed vertex type `α`, and proves their
+  stability under uniform perturbation of the underlying distance-like function.
+
+  Everything is phrased in terms of `SimpleGraph α` with its natural pointwise
+  inclusion order.  No categorical abstraction, interleaving distance, or
+  pseudometric instance is introduced — only the concrete shifted graph
+  inclusions needed for the stability theorem.
+
+  ## Main definitions
+
+  * `ripsOf d t` — the Rips graph of a distance-like function `d : α → α → ℝ`
+    at scale `t`: distinct `x, y` are adjacent iff `d x y ≤ t` and `d y x ≤ t`.
+  * `Interleaved δ F G` — a `δ`-interleaving between two graph filtrations
+    `F G : ι → SimpleGraph α`.
+
+  ## Main results
+
+  * `ripsOf_mono` — `ripsOf d` is a monotone filtration.
+  * `Interleaved.refl`, `Interleaved.symm`, `Interleaved.mono`,
+    `Interleaved.comp` — the basic calculus of interleavings.
+  * `ripsOf_le_of_bound` — the key shifted inclusion from a one-sided bound.
+  * `ripsOf_stability` — if `d` and `e` are uniformly `δ`-close, then their Rips
+    filtrations are `δ`-interleaved.
+  * `ripsOf_adj_of_symm` / `ripsOf_dist_adj` — the two-sided condition collapses
+    to the usual one-sided Vietoris–Rips condition for symmetric distances.
+-/
+import Mathlib
+
+open scoped Classical
+
+namespace RipsStability
+
+/-! ## Part 1: The Rips graph of a distance-like function -/
+
+/-- The **Rips graph** of a distance-like function `d : α → α → ℝ` at scale `t`.
+    Two distinct vertices are adjacent iff `d x y ≤ t` and `d y x ≤ t`.  We use the
+    symmetric two-sided condition so that `d` need not be assumed symmetric. -/
+def ripsOf {α : Type*} (d : α → α → ℝ) (t : ℝ) : SimpleGraph α where
+  Adj x y := x ≠ y ∧ d x y ≤ t ∧ d y x ≤ t
+  symm := by
+    rintro x y ⟨hne, hxy, hyx⟩
+    exact ⟨hne.symm, hyx, hxy⟩
+  loopless := ⟨fun _ ⟨hne, _, _⟩ => hne rfl⟩
+
+@[simp]
+theorem ripsOf_adj {α : Type*} (d : α → α → ℝ) (t : ℝ) (x y : α) :
+    (ripsOf d t).Adj x y ↔ x ≠ y ∧ d x y ≤ t ∧ d y x ≤ t := Iff.rfl
+
+/-- Filtration monotonicity: as the scale grows, the Rips graph grows. -/
+theorem ripsOf_mono {α : Type*} (d : α → α → ℝ) {s t : ℝ} (h : s ≤ t) :
+    ripsOf d s ≤ ripsOf d t := by
+  rintro x y ⟨hne, hxy, hyx⟩
+  exact ⟨hne, hxy.trans h, hyx.trans h⟩
+
+theorem ripsOf_monotone {α : Type*} (d : α → α → ℝ) : Monotone (ripsOf d) :=
+  fun _ _ h => ripsOf_mono d h
+
+/-! ## Part 2: Interleavings of graph filtrations -/
+
+/-- A `δ`-interleaving between two graph filtrations `F G : ι → SimpleGraph α`:
+    each filtration is contained in the `δ`-shift of the other. -/
+def Interleaved {α : Type*} {ι : Type*} [Add ι] (δ : ι)
+    (F G : ι → SimpleGraph α) : Prop :=
+  (∀ t, F t ≤ G (t + δ)) ∧ (∀ t, G t ≤ F (t + δ))
+
+variable {α : Type*} {ι : Type*}
+
+/-- Every filtration is `0`-interleaved with itself. -/
+theorem Interleaved.refl [AddZeroClass ι] (F : ι → SimpleGraph α) :
+    Interleaved (0 : ι) F F := by
+  refine ⟨fun t => ?_, fun t => ?_⟩ <;> simp
+
+/-- Interleaving is symmetric in the two filtrations. -/
+theorem Interleaved.symm [Add ι] {δ : ι} {F G : ι → SimpleGraph α}
+    (h : Interleaved δ F G) : Interleaved δ G F :=
+  ⟨h.2, h.1⟩
+
+/-- A `δ`-interleaving of monotone filtrations is also an `ε`-interleaving for any
+    larger shift `ε`. -/
+theorem Interleaved.mono [AddCommMonoid ι] [PartialOrder ι]
+    [CovariantClass ι ι (· + ·) (· ≤ ·)]
+    {δ ε : ι} {F G : ι → SimpleGraph α}
+    (hF : Monotone F) (hG : Monotone G) (hδε : δ ≤ ε)
+    (h : Interleaved δ F G) : Interleaved ε F G := by
+  refine ⟨fun t => ?_, fun t => ?_⟩
+  · exact (h.1 t).trans (hG (by gcongr))
+  · exact (h.2 t).trans (hF (by gcongr))
+
+/-- Interleavings compose additively in the shift parameter. -/
+theorem Interleaved.comp [AddCommMonoid ι]
+    {δ ε : ι} {F G H : ι → SimpleGraph α}
+    (h₁ : Interleaved δ F G) (h₂ : Interleaved ε G H) :
+    Interleaved (δ + ε) F H := by
+  refine ⟨fun t => ?_, fun t => ?_⟩
+  · refine (h₁.1 t).trans ((h₂.1 (t + δ)).trans ?_)
+    rw [add_assoc]
+  · refine (h₂.2 t).trans ((h₁.2 (t + ε)).trans ?_)
+    rw [add_assoc, add_comm ε δ]
+
+/-! ## Part 3: Stability of Rips filtrations -/
+
+/-- Key shifted-inclusion lemma.  If `e` is dominated by `d` up to an additive
+    shift `δ` (a one-sided bound), then the Rips graph of `d` at scale `t` is
+    contained in the Rips graph of `e` at scale `t + δ`. -/
+theorem ripsOf_le_of_bound (d e : α → α → ℝ) (δ t : ℝ)
+    (h : ∀ x y, e x y ≤ d x y + δ) :
+    ripsOf d t ≤ ripsOf e (t + δ) := by
+  rintro x y ⟨hne, hxy, hyx⟩
+  refine ⟨hne, ?_, ?_⟩
+  · exact (h x y).trans (by linarith)
+  · exact (h y x).trans (by linarith)
+
+/-- **Main stability theorem.**  If two distance-like functions `d` and `e` are
+    uniformly `δ`-close, i.e. `|d x y - e x y| ≤ δ` for all `x, y`, then their
+    Rips filtrations are `δ`-interleaved. -/
+theorem ripsOf_stability (d e : α → α → ℝ) (δ : ℝ)
+    (h : ∀ x y, |d x y - e x y| ≤ δ) :
+    Interleaved δ (ripsOf d) (ripsOf e) := by
+  have hde : ∀ x y, e x y ≤ d x y + δ := by
+    intro x y
+    have := (abs_le.mp (h x y)).1
+    linarith
+  have hed : ∀ x y, d x y ≤ e x y + δ := by
+    intro x y
+    have := (abs_le.mp (h x y)).2
+    linarith
+  exact ⟨fun t => ripsOf_le_of_bound d e δ t hde,
+         fun t => ripsOf_le_of_bound e d δ t hed⟩
+
+/-! ## Part 4: The symmetric (Vietoris–Rips) special case -/
+
+/-- For a symmetric distance-like function the two-sided adjacency condition
+    collapses to the familiar one-sided Vietoris–Rips condition. -/
+theorem ripsOf_adj_of_symm (d : α → α → ℝ) (hsymm : ∀ x y, d x y = d y x)
+    (t : ℝ) (x y : α) :
+    (ripsOf d t).Adj x y ↔ x ≠ y ∧ d x y ≤ t := by
+  rw [ripsOf_adj]
+  constructor
+  · rintro ⟨hne, hxy, _⟩
+    exact ⟨hne, hxy⟩
+  · rintro ⟨hne, hxy⟩
+    exact ⟨hne, hxy, by rw [hsymm]; exact hxy⟩
+
+/-- Specialisation to a genuine pseudometric: the Rips graph of `dist` recovers
+    the usual one-sided Vietoris–Rips adjacency. -/
+theorem ripsOf_dist_adj {α : Type*} [PseudoMetricSpace α] (t : ℝ) (x y : α) :
+    (ripsOf (fun x y => dist x y) t).Adj x y ↔ x ≠ y ∧ dist x y ≤ t :=
+  ripsOf_adj_of_symm _ (fun x y => dist_comm x y) t x y
+
+end RipsStability

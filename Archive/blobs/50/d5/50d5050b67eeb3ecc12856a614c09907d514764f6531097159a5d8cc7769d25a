@@ -1,0 +1,189 @@
+/-
+# The Boltzmann Bridge X — The Persistence Geodesic is Functorial, Self-Similar, and Convexly Stable
+
+Bridge IX (`Applications.BoltzmannBridge.InterleavingGeodesic`) opened the
+path-space chapter of the persistence-stability arc with the affine
+weight path `lerp F G t` (weight `σ ↦ (1 − t)·F.weight σ + t·G.weight σ`) and the
+constant-speed geodesic identity
+`eInterleavingDist (lerp F G s) (lerp F G t) = ofReal |s − t| · eInterleavingDist F G`.
+
+Bridge X closes the **structural** layer of that path space.  Where Bridge IX
+described the metric *behaviour along one geodesic*, this file describes how
+geodesics interact with the persistence functor (Bridge IX's `pullback`), with
+**reparametrisation**, and with **perturbation of their endpoints**.  Every result
+is read through Bridge VIII's isometry
+(`eInterleavingDist_eq_weightSupEDist`): naturality and self-similarity are `ring`
+identities on weights, convex stability is the coordinatewise triangle inequality
+pushed through `ENNReal.ofReal` and `⨆`.
+
+## Main results
+
+* `pullback_lerp` — **naturality**: the persistence functor transports the geodesic
+  on the nose, `pullback f (lerp F G t) = lerp (pullback f F) (pullback f G) t`.  So
+  persistence is a functor into *geodesic* spaces and short maps, not merely metric
+  spaces.
+* `lerp_lerp` — **self-similarity**: a sub-segment of the geodesic is again the
+  geodesic, `lerp (lerp F G a) (lerp F G b) t = lerp F G ((1−t)·a + t·b)`.  The
+  algebraic witness that `lerp` traces a genuine straight segment.
+* `eInterleavingDist_lerp_endpoints_le` — **joint convex stability**: same-parameter
+  interpolants of two geodesics satisfy
+  `d(lerp F₁ G₁ t, lerp F₂ G₂ t) ≤ ofReal (1−t)·d(F₁,F₂) + ofReal t·d(G₁,G₂)`.
+* `eInterleavingDist_lerp_endpoints_le_of_le` — **uniform `ε`-stability**: `ε`-close
+  endpoints give `ε`-close geodesics for *every* parameter `t`, the path-space
+  capstone of the entire arc.
+-/
+import Mathlib
+import Applications.BoltzmannBridge.HigherPersistence
+import Applications.BoltzmannBridge.PersistenceStability
+import Applications.BoltzmannBridge.BottleneckStability
+import Applications.BoltzmannBridge.InterleavingMetric
+import Applications.BoltzmannBridge.InterleavingClosure
+import Applications.BoltzmannBridge.InterleavingIsometry
+import Applications.BoltzmannBridge.InterleavingFunctor
+import Applications.BoltzmannBridge.InterleavingGeodesic
+
+open Finset BigOperators
+open scoped ENNReal
+
+namespace BoltzmannBridge
+
+namespace Filtration
+
+variable {α β : Type*}
+
+/-! ## Naturality: the persistence functor transports the geodesic -/
+
+/-
+!-- Both sides have weight `(1−t)·F.weight (σ.image f) + t·G.weight (σ.image f)` at
+!-- `σ`: `pullback` of `lerp` evaluates `lerp` at `σ.image f`, `lerp` of `pullback`
+!-- precomposes each endpoint weight with `·.image f`.  `ext_weight`, `funext`,
+!-- `simp [lerp_weight, pullback_weight]`. -- !--
+
+**Naturality of the geodesic.**  The contravariant pullback functor transports
+the affine geodesic exactly: `pullback f (lerp F G t) = lerp (pullback f F)
+(pullback f G) t`.  Persistence is therefore a functor into geodesic spaces and
+short maps.
+-/
+theorem pullback_lerp [DecidableEq β] (f : α → β) (F G : Filtration β) (t : ℝ)
+    (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
+    pullback f (lerp F G t ht0 ht1)
+      = lerp (pullback f F) (pullback f G) t ht0 ht1 := by
+  apply ext_weight; funext σ; simp [lerp_weight, pullback_weight]
+
+/-! ## Self-similarity: a sub-segment of the geodesic is the geodesic -/
+
+/-
+!-- At `σ`, LHS weight `(1−t)·((1−a)F+aG) + t·((1−b)F+bG)` equals RHS weight
+!-- `(1−c)F + cG` with `c = (1−t)a+tb` by `ring`.  The new parameter lies in `[0,1]`:
+!-- `0 ≤ c` and `c ≤ (1−t)+t = 1` by `nlinarith`.  `ext_weight`, `funext`,
+!-- `simp only [lerp_weight]`, `ring`. -- !--
+
+**Self-similarity of the geodesic.**  Interpolating between two points of the
+geodesic returns the geodesic at an affinely reparametrised time:
+`lerp (lerp F G a) (lerp F G b) t = lerp F G ((1−t)·a + t·b)`.  Every sub-segment of
+the curve is again the constant-speed geodesic.
+-/
+theorem lerp_lerp (F G : Filtration α) {a b t : ℝ}
+    (ha0 : 0 ≤ a) (ha1 : a ≤ 1) (hb0 : 0 ≤ b) (hb1 : b ≤ 1)
+    (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
+    lerp (lerp F G a ha0 ha1) (lerp F G b hb0 hb1) t ht0 ht1
+      = lerp F G ((1 - t) * a + t * b)
+          (by nlinarith) (by nlinarith) := by
+  exact ext_weight ( funext fun x => by simp +decide [ lerp_weight ] ; ring )
+
+/-! ## Joint convex stability of same-parameter interpolants -/
+
+/-
+!-- Rewrite both distances by Bridge VIII's `eInterleavingDist_eq_weightSupEDist`
+!-- and unfold `weightSupEDist` to `⨆ σ, ofReal |·|`.  At each `σ` the interpolant
+!-- gap is `(1−t)(F₁−F₂) + t(G₁−G₂)`, so by the triangle inequality (coefficients
+!-- `1−t, t ≥ 0`) `ofReal |gap| ≤ ofReal((1−t)|F₁−F₂|) + ofReal(t|G₁−G₂|)`
+!-- (`ENNReal.ofReal_add`, `ENNReal.ofReal_mul`).  Bound the `⨆` of a sum by the sum
+!-- of `⨆`s (`iSup_le` + `add_le_add (le_iSup …)`), then pull the constants out with
+!-- `ENNReal.mul_iSup`. -- !--
+
+**Joint convex stability.**  Same-parameter interpolants of two geodesics are no
+farther apart than the convex combination of their endpoint distances:
+`d(lerp F₁ G₁ t, lerp F₂ G₂ t) ≤ ofReal (1−t)·d(F₁,F₂) + ofReal t·d(G₁,G₂)`.  This is
+the convexity of the interleaving metric along parallel geodesics.
+-/
+theorem eInterleavingDist_lerp_endpoints_le (F₁ G₁ F₂ G₂ : Filtration α) {t : ℝ}
+    (ht0 : 0 ≤ t) (ht1 : t ≤ 1) :
+    eInterleavingDist (lerp F₁ G₁ t ht0 ht1) (lerp F₂ G₂ t ht0 ht1)
+      ≤ ENNReal.ofReal (1 - t) * eInterleavingDist F₁ F₂
+        + ENNReal.ofReal t * eInterleavingDist G₁ G₂ := by
+  rw [Filtration.eInterleavingDist_eq_weightSupEDist, Filtration.eInterleavingDist_eq_weightSupEDist, Filtration.eInterleavingDist_eq_weightSupEDist];
+  refine' iSup_le _;
+  intro σ
+  have h_triangle : ENNReal.ofReal |((1 - t) * F₁.weight σ + t * G₁.weight σ) - ((1 - t) * F₂.weight σ + t * G₂.weight σ)| ≤ ENNReal.ofReal ((1 - t) * |F₁.weight σ - F₂.weight σ| + t * |G₁.weight σ - G₂.weight σ|) := by
+    exact ENNReal.ofReal_le_ofReal ( by cases abs_cases ( F₁.weight σ - F₂.weight σ ) <;> cases abs_cases ( G₁.weight σ - G₂.weight σ ) <;> cases abs_cases ( ( 1 - t ) * F₁.weight σ + t * G₁.weight σ - ( ( 1 - t ) * F₂.weight σ + t * G₂.weight σ ) ) <;> nlinarith );
+  refine' le_trans _ ( h_triangle.trans _ );
+  · simp +decide [ Filtration.lerp_weight ];
+  · refine' le_trans _ ( add_le_add ( mul_le_mul_left' ( le_iSup _ σ ) _ ) ( mul_le_mul_left' ( le_iSup _ σ ) _ ) );
+    rw [ ENNReal.ofReal_add ( mul_nonneg ( sub_nonneg.2 ht1 ) ( abs_nonneg _ ) ) ( mul_nonneg ht0 ( abs_nonneg _ ) ), ENNReal.ofReal_mul ( sub_nonneg.2 ht1 ), ENNReal.ofReal_mul ht0 ]
+
+/-! ## Uniform `ε`-stability of geodesics in the parameter -/
+
+/-
+!-- Chain `eInterleavingDist_lerp_endpoints_le` with `hF, hG` via `gcongr`, then
+!-- `ofReal (1−t)·ε + ofReal t·ε = (ofReal (1−t) + ofReal t)·ε = ofReal 1 · ε = ε`
+!-- using `← add_mul`, `← ENNReal.ofReal_add` (both `1−t, t ≥ 0`), `(1−t)+t = 1`,
+!-- `ENNReal.ofReal_one`, `one_mul`. -- !--
+
+**Uniform `ε`-stability of the geodesic (path-space capstone).**  If the endpoints
+of two geodesics are within `ε` (`d(F₁,F₂) ≤ ε`, `d(G₁,G₂) ≤ ε`), then the geodesics
+are within `ε` at *every* parameter `t ∈ [0,1]`.  Endpoint stability propagates to the
+whole path with no loss of constant.
+-/
+theorem eInterleavingDist_lerp_endpoints_le_of_le (F₁ G₁ F₂ G₂ : Filtration α)
+    {t : ℝ} (ht0 : 0 ≤ t) (ht1 : t ≤ 1) {ε : ℝ≥0∞}
+    (hF : eInterleavingDist F₁ F₂ ≤ ε) (hG : eInterleavingDist G₁ G₂ ≤ ε) :
+    eInterleavingDist (lerp F₁ G₁ t ht0 ht1) (lerp F₂ G₂ t ht0 ht1) ≤ ε := by
+  refine' le_trans _ ( _ : ENNReal.ofReal ( 1 - t ) * ε + ENNReal.ofReal t * ε ≤ ε );
+  · refine' le_trans _ ( add_le_add ( mul_le_mul_left' hF _ ) ( mul_le_mul_left' hG _ ) );
+    convert eInterleavingDist_lerp_endpoints_le F₁ G₁ F₂ G₂ ht0 ht1 using 1;
+  · rw [ ← add_mul, ← ENNReal.ofReal_add ] <;> norm_num [ ht0, ht1 ]
+
+end Filtration
+
+/-
+-- !-- Lab Notebook -- !--
+
+## Hypothesis
+Bridge IX proved `lerp` is *a* constant-speed geodesic of `(Filtration α,
+eInterleavingDist)`.  The adversarial hypotheses for Bridge X: (1) the geodesic is
+*canonical* — the persistence functor `pullback` transports it exactly, and it is
+closed under affine reparametrisation (self-similar); (2) the geodesic is
+*Lipschitz-stable in its endpoints* — same-parameter interpolants of two geodesics
+are convexly bounded, and `ε`-close endpoints give `ε`-close geodesics uniformly in
+the parameter.
+
+## Result
+All confirmed, sorry-free.  `pullback_lerp` and `lerp_lerp` are `ring` identities on
+weights (naturality and self-similarity), exhibiting `lerp` as a functorial,
+straight-segment construction.  `eInterleavingDist_lerp_endpoints_le` is the
+coordinatewise triangle inequality `(1−t)(F₁−F₂)+t(G₁−G₂)` pushed through
+`ENNReal.ofReal` and the `⨆` of Bridge VIII's isometry; its corollary
+`eInterleavingDist_lerp_endpoints_le_of_le` collapses the convex bound to `ε` because
+`ofReal (1−t) + ofReal t = 1`.
+
+## Insight
+Every structural property of the geodesic is a *linearity phenomenon read through the
+isometry*.  Once Bridge VIII identifies the metric with `⨆ σ, ofReal |weight gap|`,
+naturality is "image-reindexing commutes with affine combination", self-similarity is
+"affine combination of affine combinations is affine", and convex stability is "the
+sup of triangle inequalities is a triangle inequality".  The functor, the
+reparametrisation group, and the perturbation all act *coordinatewise* on weights, so
+the supremum that defines the metric never sees them as anything but scalars.
+
+## Failure analysis
+The convex bound is genuinely *joint*: the naive route through the metric triangle
+inequality `d(lerp F₁ G₁ t, lerp F₂ G₂ t) ≤ d(lerp F₁ G₁ t, lerp F₁ G₂ t) + …` loses
+the `(1−t), t` weighting and only yields the `2ε`/additive bound; the sharp `ε` bound
+*requires* the coordinatewise argument that keeps the two coefficients attached to
+their respective endpoint gaps.  Uniqueness of the geodesic still fails (the `⨆`
+leaves slack in non-maximising simplices free to wander — see FUTURE_DIRECTIONS,
+Direction 1), so `lerp` remains one canonical geodesic among a convex family.
+-/
+
+end BoltzmannBridge

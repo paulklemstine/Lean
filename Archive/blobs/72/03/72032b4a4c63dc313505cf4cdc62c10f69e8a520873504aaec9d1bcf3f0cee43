@@ -1,0 +1,193 @@
+import Mathlib
+import Shared.CarmichaelProof
+import Speculative.AutoResearch.PrimitiveDivisorEntryLaw
+
+/-! # The unified composite-case primitive-divisor engine
+
+Domain: Number Theory (cross-domain unification).
+
+The catalog's `Shared.CarmichaelProof` proves the *composite case* of Carmichael's
+primitive-divisor theorem for the **Fibonacci** sequence, by a computational "primitive
+part" construction: starting from `F n`, strip away every prime that already appears in
+`F d` for a proper divisor `d ∣ n` (`stripAllAux`/`primPart`).  If the residual
+`primPart n > 1` then its least prime factor is a *primitive* divisor of `F n`.  The
+finite range `13 ≤ n ≤ 10000` is then discharged by `native_decide`.
+
+This file **lifts that entire engine off the Fibonacci sequence**.  The stripping
+machinery (`stripAllAux`, `stripAllAux_dvd`, `stripAllAux_coprime`, `propDivs`,
+`bridge_lemma`) is *already generic* — it never mentions `Nat.fib`.  Only the wrapper
+`primPart` and its correctness lemmas were specialized.  We re-introduce the wrapper for
+an arbitrary sequence `u` (`genPrimPart`) and prove the generic existence theorem
+
+  `genPrimPart_implies_primitive` :
+      `IsStrongDivSeq u → 1 < genPrimPart u n →`
+      `∃ p, p.Prime ∧ p ∣ u n ∧ ∀ k, 0 < k → k < n → ¬ p ∣ u k`,
+
+whose only structural input is the gcd-meet law `IsStrongDivSeq u` of
+`Applications.UnifiedRankOfApparition`.  Two classical theorems then drop out of **one**
+engine, each finite range certified by `native_decide`:
+
+* `fib_carmichael_composite_range`  — Carmichael's composite case for `13 ≤ n ≤ 10000`
+  (recovering `Shared.CarmichaelProof.fib_carmichael_composite` through the generic engine);
+* `mersenne_bang_composite_range`   — **Bang's theorem (composite case)** for `7 ≤ n ≤ 64`:
+  every Mersenne number `2ⁿ − 1` with composite `n` in range has a primitive prime divisor.
+
+Combining the composite engine with the prime case
+`Speculative.AutoResearch.PrimitiveDivisorEntryLaw.sds_primitive_divisor_prime` yields the
+*full* Carmichael statement on the verified range, `fib_primitive_divisor_range`.
+
+-- !-- Lab Notebook -- !--
+Hypothesis : The Fibonacci-specific "primitive part" engine of `CarmichaelProof` is in
+  fact a theorem about *any* strong divisibility sequence `u`; the only Fibonacci input used
+  in the final certification is `Nat.fib_gcd`, an instance of `IsStrongDivSeq`.
+Result     : Confirmed.  `genPrimPart_implies_primitive` is proved generically, and both
+  the Fibonacci (Carmichael) and the Mersenne (Bang) composite cases follow as `native_decide`
+  instances of the SAME engine, `sorry`-free.
+Insight    : The load-bearing fact is the meet law `u (gcd k n) = gcd (u k) (u n)`:
+  a prime that survives the stripping cannot divide any earlier `u k`, because then it would
+  divide `u (gcd k n)` for the proper divisor `gcd k n ∣ n`.  This is exactly `bridge_lemma`,
+  and it is what makes the engine sequence-agnostic.
+Failure analysis : The construction certifies only a *finite* range, because `genPrimPart`
+  must be evaluated by `native_decide`.  The infinite composite tail (`n > 10000`) needs the
+  size/cyclotomic bound `D(n) > 1`, which is the genuine grand challenge (see
+  FUTURE_DIRECTIONS.md); the engine here reduces that open problem to a single inequality
+  about the primitive part `genPrimPart`.
+-- !--
+-/
+
+open UnifiedRank
+
+/-- Membership in `propDivs n` is exactly being a proper positive divisor of `n`. -/
+lemma mem_propDivs {n d : ℕ} : d ∈ propDivs n ↔ 0 < d ∧ d < n ∧ d ∣ n := by
+  simp only [propDivs, List.mem_filter, List.mem_range, Bool.and_eq_true,
+    decide_eq_true_eq, beq_iff_eq, Nat.dvd_iff_mod_eq_zero]
+  constructor
+  · rintro ⟨_, ⟨hpos, hlt⟩, hmod⟩; exact ⟨hpos, hlt, hmod⟩
+  · rintro ⟨hpos, hlt, hmod⟩; exact ⟨hlt, ⟨hpos, hlt⟩, hmod⟩
+
+/-- The **generic primitive part** of `u n`: start from `u n` and strip every prime that
+already appears in `u d` for some proper divisor `d ∣ n`.  Specializing `u := Nat.fib`
+gives back `Shared.CarmichaelProof.primPart`. -/
+def genPrimPart (u : ℕ → ℕ) (n : ℕ) : ℕ :=
+  (propDivs n).foldl (fun r d => stripAllAux r (u d) r) (u n)
+
+-- !-- The generic primitive part divides `u n` (it is obtained from `u n` by repeated division). -- !--
+lemma genPrimPart_dvd (u : ℕ → ℕ) (n : ℕ) : genPrimPart u n ∣ u n := by
+  simp only [genPrimPart]
+  induction (propDivs n) using List.reverseRecOn with
+  | nil => simp
+  | append_singleton l d ih =>
+    simp only [List.foldl_append, List.foldl_cons, List.foldl_nil]
+    exact dvd_trans (stripAllAux_dvd _ _ _) ih
+
+/-
+!-- The least prime factor of the (nontrivial) primitive part divides no `u d` for proper
+`d ∣ n`: it was explicitly stripped out, so it is coprime to `u d`.  This mirrors the
+Fibonacci-specific `Shared.CarmichaelProof.primPart_coprime_proper_divs`, generalized
+to an arbitrary `u`. -- !--
+-/
+lemma genPrimPart_coprime_proper_divs (u : ℕ → ℕ) (hupos : ∀ k, 0 < k → 0 < u k)
+    (n : ℕ) (hpp : 1 < genPrimPart u n) (d : ℕ) (hd : d ∈ propDivs n) :
+    ¬ ((genPrimPart u n).minFac ∣ u d) := by
+  contrapose! hpp; simp_all +decide [ propDivs ] ;
+  -- By definition of `genPrimPart`, we know that `genPrimPart u n` is coprime to `u d` for every `d` in the list `propDivs n`.
+  have h_coprime : ∀ d ∈ propDivs n, Nat.gcd (genPrimPart u n) (u d) = 1 := by
+    intro d hd
+    have h_coprime_step : ∀ l : List ℕ, (∀ d ∈ l, 0 < d ∧ d < n ∧ d ∣ n) → Nat.gcd (List.foldl (fun r d => stripAllAux r (u d) r) (u n) l) (List.foldl (fun r d => u d * r) 1 l) = 1 := by
+      intro l hl; induction' l using List.reverseRecOn with l ih <;> simp_all +decide [ Nat.coprime_mul_iff_left, Nat.coprime_mul_iff_right ] ;
+      refine' ⟨ _, _ ⟩;
+      · by_cases hi : 1 < u ih <;> simp_all +decide [ Nat.Coprime, Nat.gcd_comm ];
+        · convert Nat.Coprime.symm ( stripAllAux_coprime _ _ _ _ _ _ ) using 1;
+          · grind;
+          · have h_foldl_pos : ∀ l : List ℕ, (∀ d ∈ l, 0 < d ∧ d < n ∧ d ∣ n) → 0 < List.foldl (fun r d => stripAllAux r (u d) r) (u n) l := by
+              intro l hl; induction' l using List.reverseRecOn with l ih <;> simp_all +decide [ Nat.Coprime, Nat.gcd_comm ] ;
+              · exact hupos n ( by linarith [ hl _ ( Or.inr rfl ) ] );
+              · exact Nat.pos_of_dvd_of_pos ( stripAllAux_dvd _ _ _ ) ‹_›;
+            exact h_foldl_pos l fun d hd => hl d <| Or.inl hd;
+          · rfl;
+        · interval_cases _ : u ih <;> simp_all +decide [ Nat.Coprime ];
+          linarith [ hupos ih ( hl ih ( Or.inr rfl ) |>.1 ) ];
+      · refine' Nat.Coprime.coprime_dvd_left ( stripAllAux_dvd _ _ _ ) _;
+        assumption;
+    refine' Nat.Coprime.coprime_dvd_right _ ( h_coprime_step _ _ );
+    · have h_foldl : ∀ {l : List ℕ}, d ∈ l → u d ∣ List.foldl (fun r d => u d * r) 1 l := by
+        intros l hl; induction' l using List.reverseRecOn with l ih <;> simp_all +decide [ Nat.mul_dvd_mul_iff_left ] ;
+        cases hl <;> simp_all +decide [ Nat.dvd_iff_mod_eq_zero, Nat.mul_mod ];
+      exact h_foldl hd;
+    · exact fun x hx => by rw [ mem_propDivs ] at hx; exact hx;
+  specialize h_coprime d ; simp_all +decide [ propDivs ] ;
+  have := Nat.dvd_gcd ( Nat.minFac_dvd ( genPrimPart u n ) ) hpp; aesop;
+
+-- !-- If the primitive part is nontrivial, its least prime factor is a primitive divisor:
+--     it divides `u n`, and via the meet law `IsStrongDivSeq` it divides no earlier `u k`,
+--     since otherwise it would divide `u (gcd k n)` with `gcd k n` a proper divisor of `n`. -- !--
+lemma genPrimPart_implies_primitive {u : ℕ → ℕ} (hu : IsStrongDivSeq u)
+    (hupos : ∀ k, 0 < k → 0 < u k) (n : ℕ) (hpp : 1 < genPrimPart u n) :
+    ∃ p, Nat.Prime p ∧ p ∣ u n ∧ ∀ k, 0 < k → k < n → ¬ (p ∣ u k) := by
+  have hdvd : genPrimPart u n ∣ u n := genPrimPart_dvd u n
+  refine ⟨(genPrimPart u n).minFac, Nat.minFac_prime hpp.ne',
+    dvd_trans (Nat.minFac_dvd _) hdvd, ?_⟩
+  intro k hk hkn hpk
+  have hpn : (genPrimPart u n).minFac ∣ u n := dvd_trans (Nat.minFac_dvd _) hdvd
+  have hgcd : (genPrimPart u n).minFac ∣ u (Nat.gcd k n) := by
+    rw [hu k n]; exact Nat.dvd_gcd hpk hpn
+  have hle : Nat.gcd k n ≤ k := Nat.le_of_dvd hk (Nat.gcd_dvd_left _ _)
+  have hmem : Nat.gcd k n ∈ propDivs n :=
+    mem_propDivs.mpr ⟨Nat.gcd_pos_of_pos_left _ hk, lt_of_le_of_lt hle hkn,
+      Nat.gcd_dvd_right _ _⟩
+  exact genPrimPart_coprime_proper_divs u hupos n hpp _ hmem hgcd
+
+/-! ## Instance I — Fibonacci (Carmichael's composite case, via the generic engine) -/
+
+-- !-- `genPrimPart Nat.fib` agrees with the catalog's `primPart`; the finite range is the same
+--     `native_decide` certificate. -- !--
+theorem fib_genPrimPart_check :
+    ∀ n ∈ Finset.Icc 13 10000, Nat.Prime n ∨ 1 < genPrimPart Nat.fib n := by
+  native_decide
+
+/-- **Carmichael's composite case, via the unified engine.** For composite `n` with
+`13 ≤ n ≤ 10000`, `F n` has a primitive prime divisor — obtained from the generic
+`genPrimPart_implies_primitive`, not a Fibonacci-bespoke argument. -/
+theorem fib_carmichael_composite_range (n : ℕ) (hn : 13 ≤ n) (hle : n ≤ 10000)
+    (hnp : ¬ Nat.Prime n) :
+    ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧ ∀ k, 0 < k → k < n → ¬ (p ∣ Nat.fib k) := by
+  have hcheck := fib_genPrimPart_check n (Finset.mem_Icc.mpr ⟨hn, hle⟩)
+  exact genPrimPart_implies_primitive fib_isStrongDivSeq
+    (fun k hk => Nat.fib_pos.mpr hk) n (hcheck.resolve_left hnp)
+
+/-! ## Instance II — Mersenne / `2ⁿ − 1` (Bang's theorem, composite case) -/
+
+-- !-- Bang: `2ⁿ − 1` has a primitive prime divisor for all `n ≠ 1, 6`.  The `native_decide`
+--     certificate covers the composite range `7 ≤ n ≤ 64`. -- !--
+theorem mersenne_genPrimPart_check :
+    ∀ n ∈ Finset.Icc 7 64, Nat.Prime n ∨ 1 < genPrimPart (fun k => 2 ^ k - 1) n := by
+  native_decide
+
+/-- **Bang's theorem, composite case (via the unified engine).** For composite `n` with
+`7 ≤ n ≤ 64`, the Mersenne number `2ⁿ − 1` has a primitive prime divisor: a prime dividing
+`2ⁿ − 1` but no smaller `2ᵏ − 1`.  Same engine call as the Fibonacci/Carmichael case. -/
+theorem mersenne_bang_composite_range (n : ℕ) (hn : 7 ≤ n) (hle : n ≤ 64)
+    (hnp : ¬ Nat.Prime n) :
+    ∃ p, Nat.Prime p ∧ p ∣ (2 ^ n - 1) ∧ ∀ k, 0 < k → k < n → ¬ (p ∣ (2 ^ k - 1)) := by
+  have hcheck := mersenne_genPrimPart_check n (Finset.mem_Icc.mpr ⟨hn, hle⟩)
+  refine genPrimPart_implies_primitive (mersenne_isStrongDivSeq 2) ?_ n (hcheck.resolve_left hnp)
+  intro k hk
+  have : 2 ≤ 2 ^ k := by
+    calc (2:ℕ) = 2 ^ 1 := by norm_num
+      _ ≤ 2 ^ k := Nat.pow_le_pow_right (by norm_num) hk
+  omega
+
+/-! ## The full Carmichael statement on the verified range (prime + composite) -/
+
+/-- **Carmichael's primitive-divisor theorem for `F n`, full statement on `13 ≤ n ≤ 10000`.**
+For every `n` in this range (prime or composite), `F n` has a primitive prime divisor.
+The prime case routes through the abstract `sds_primitive_divisor_prime`, the composite case
+through the abstract `genPrimPart_implies_primitive` — two facets of the same engine. -/
+theorem fib_primitive_divisor_range (n : ℕ) (hn : 13 ≤ n) (hle : n ≤ 10000) :
+    ∃ p, Nat.Prime p ∧ p ∣ Nat.fib n ∧ ∀ k, 0 < k → k < n → ¬ (p ∣ Nat.fib k) := by
+  by_cases hnp : Nat.Prime n
+  · refine sds_primitive_divisor_prime fib_isStrongDivSeq (by decide) hnp ?_
+    have h1 : Nat.fib 13 ≤ Nat.fib n := Nat.fib_mono hn
+    have h2 : Nat.fib 13 = 233 := by decide
+    omega
+  · exact fib_carmichael_composite_range n hn hle hnp

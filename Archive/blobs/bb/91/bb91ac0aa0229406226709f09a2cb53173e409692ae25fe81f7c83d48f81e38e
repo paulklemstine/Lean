@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Markov Basis Explorer &mdash; 2&times;2 Swaps Connect Every Fiber</title>
+<style>
+  :root { --bg:#0f1226; --panel:#1a1f3c; --ink:#eef1ff; --accent:#5ad1ff; --pos:#3ddc84; --neg:#ff6b6b; --grid:#2c3360; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+         background:radial-gradient(1200px 600px at 50% -10%, #1c2350, var(--bg)); color:var(--ink); padding:24px; }
+  h1 { font-size:1.5rem; margin:0 0 4px; }
+  p.sub { color:#aeb6e6; margin:0 0 20px; max-width:720px; line-height:1.5; }
+  .wrap { display:flex; flex-wrap:wrap; gap:24px; align-items:flex-start; }
+  .panel { background:var(--panel); border:1px solid var(--grid); border-radius:14px; padding:18px; box-shadow:0 8px 30px rgba(0,0,0,.35); }
+  table { border-collapse:collapse; }
+  td.cell { width:54px; height:48px; text-align:center; border:1px solid var(--grid); font-size:1.1rem; }
+  td.cell input { width:48px; background:transparent; border:none; color:var(--ink); text-align:center; font-size:1.05rem; }
+  td.marg { color:var(--accent); font-weight:700; padding:0 10px; }
+  th { color:#9fb0ff; font-weight:600; padding:4px; font-size:.85rem; }
+  .hot-pos { background:rgba(61,220,132,.22); }
+  .hot-neg { background:rgba(255,107,107,.22); }
+  button { background:var(--accent); color:#04243a; border:none; border-radius:9px; padding:9px 14px;
+           font-weight:700; cursor:pointer; margin:4px 6px 4px 0; font-size:.95rem; }
+  button.secondary { background:#39406e; color:var(--ink); }
+  button:disabled { opacity:.4; cursor:not-allowed; }
+  .stat { font-size:1.1rem; margin:10px 0; }
+  .big { font-size:1.6rem; font-weight:800; color:var(--accent); }
+  code { background:#0c0f24; padding:1px 6px; border-radius:6px; color:#bfe9ff; }
+  .ok { color:var(--pos); font-weight:700; }
+  .legend span { display:inline-block; margin-right:16px; }
+  .swatch { display:inline-block; width:12px; height:12px; border-radius:3px; vertical-align:middle; margin-right:5px; }
+</style>
+</head>
+<body>
+  <h1>Markov Basis Explorer</h1>
+  <p class="sub">
+    Two integer contingency tables with the <b>same row and column margins</b> can always be
+    joined by a walk of basic <b>2&times;2 swaps</b> &mdash; adding <code>+1</code> on one diagonal of a
+    rectangle and <code>&minus;1</code> on the other &mdash; that never leaves the world of non-negative counts.
+    Press <b>Step</b> to apply the greedy distance-reducing swap, or <b>Auto-solve</b> to watch the
+    <code>&#8467;&sup1;</code> distance fall to zero. The highlighted rectangle is the one found by the
+    three-stage pigeonhole argument.
+  </p>
+
+  <div class="wrap">
+    <div class="panel">
+      <h3>Current table&nbsp; u</h3>
+      <div id="uTable"></div>
+    </div>
+    <div class="panel">
+      <h3>Target table&nbsp; v</h3>
+      <div id="vTable"></div>
+    </div>
+    <div class="panel" style="min-width:240px">
+      <h3>Walk</h3>
+      <div class="stat">&#8467;&sup1; distance <span class="big" id="dist">&mdash;</span></div>
+      <div class="stat">swaps applied: <b id="count">0</b></div>
+      <div class="stat" id="margMsg"></div>
+      <div>
+        <button id="stepBtn">Step &#9654;</button>
+        <button id="autoBtn">Auto-solve &#9889;</button>
+      </div>
+      <div>
+        <button class="secondary" id="randBtn">Random fiber pair &#8635;</button>
+        <button class="secondary" id="resetBtn">Reset</button>
+      </div>
+      <div class="legend" style="margin-top:14px; font-size:.85rem; color:#aeb6e6">
+        <span><span class="swatch" style="background:rgba(61,220,132,.6)"></span>u &gt; v (overshoot)</span>
+        <span><span class="swatch" style="background:rgba(255,107,107,.6)"></span>u &lt; v (undershoot)</span>
+      </div>
+    </div>
+  </div>
+
+<script>
+const M = 3, N = 3;
+let u, v;
+
+function zeros() { return Array.from({length:M}, () => Array(N).fill(0)); }
+function clone(a) { return a.map(r => r.slice()); }
+function rowSum(a,i){ return a[i].reduce((s,x)=>s+x,0); }
+function colSum(a,j){ let s=0; for(let i=0;i<M;i++) s+=a[i][j]; return s; }
+function l1(a,b){ let s=0; for(let i=0;i<M;i++) for(let j=0;j<N;j++) s+=Math.abs(a[i][j]-b[i][j]); return s; }
+function sameMargins(a,b){
+  for(let i=0;i<M;i++) if(rowSum(a,i)!==rowSum(b,i)) return false;
+  for(let j=0;j<N;j++) if(colSum(a,j)!==colSum(b,j)) return false;
+  return true;
+}
+
+// Three-stage pigeonhole: returns {i,ip,j,jp} or null when u==v.
+function findIndices(a,b){
+  const d = a.map((r,i)=>r.map((x,j)=>x-b[i][j]));
+  let i=-1,j=-1;
+  outer: for(let r=0;r<M;r++) for(let c=0;c<N;c++) if(d[r][c]>0){ i=r; j=c; break outer; }
+  if(i<0) return null;
+  let jp=-1; for(let c=0;c<N;c++) if(d[i][c]<0){ jp=c; break; }
+  let ip=-1; for(let r=0;r<M;r++) if(d[r][jp]>0){ ip=r; break; }
+  return {i, ip, j, jp};
+}
+
+function applyMove(a,m){
+  const w = clone(a);
+  w[m.i][m.jp]+=1; w[m.ip][m.j]+=1; w[m.i][m.j]-=1; w[m.ip][m.jp]-=1;
+  return w;
+}
+
+let count = 0;
+
+function render(){
+  const idx = (l1(u,v)>0) ? findIndices(u,v) : null;
+  drawTable('uTable', u, v, idx, true);
+  drawTable('vTable', v, v, null, false);
+  const d = l1(u,v);
+  document.getElementById('dist').textContent = d;
+  document.getElementById('count').textContent = count;
+  const same = sameMargins(u,v);
+  document.getElementById('margMsg').innerHTML = same
+    ? (d===0 ? '<span class="ok">Connected! u = v &#10003;</span>' : 'margins match &#10003;')
+    : '<span style="color:#ff6b6b">margins differ &mdash; not a fiber</span>';
+  document.getElementById('stepBtn').disabled = (d===0) || !same;
+  document.getElementById('autoBtn').disabled = (d===0) || !same;
+}
+
+function drawTable(elId, a, target, idx, editable){
+  let html = '<table><tr><th></th>';
+  for(let j=0;j<N;j++) html += '<th>c'+j+'</th>';
+  html += '<th></th></tr>';
+  for(let i=0;i<M;i++){
+    html += '<tr><th>r'+i+'</th>';
+    for(let j=0;j<N;j++){
+      let cls='cell';
+      if(editable){
+        const diff=a[i][j]-target[i][j];
+        if(diff>0) cls+=' hot-pos'; else if(diff<0) cls+=' hot-neg';
+      }
+      const ring = (idx && ((i===idx.i&&j===idx.j)||(i===idx.i&&j===idx.jp)||
+                            (i===idx.ip&&j===idx.j)||(i===idx.ip&&j===idx.jp)))
+                   ? ' style="outline:3px solid #5ad1ff; outline-offset:-3px"' : '';
+      html += '<td class="'+cls+'"'+ring+'>'+a[i][j]+'</td>';
+    }
+    html += '<td class="marg">'+rowSum(a,i)+'</td></tr>';
+  }
+  html += '<tr><th></th>';
+  for(let j=0;j<N;j++) html += '<td class="marg">'+colSum(a,j)+'</td>';
+  html += '<td></td></tr></table>';
+  document.getElementById(elId).innerHTML = html;
+}
+
+function step(){
+  const idx = findIndices(u,v);
+  if(!idx) return;
+  u = applyMove(u, idx);
+  count++;
+  render();
+}
+
+function auto(){
+  const timer = setInterval(()=>{
+    if(l1(u,v)===0){ clearInterval(timer); return; }
+    step();
+  }, 450);
+}
+
+// Build a random fiber pair: start from a random table, then scramble with random
+// legal 2x2 swaps so the two share identical margins by construction.
+function randomFiber(){
+  u = zeros();
+  for(let k=0;k<8;k++){
+    const i=Math.floor(Math.random()*M), j=Math.floor(Math.random()*N);
+    u[i][j]+=1+Math.floor(Math.random()*3);
+  }
+  v = clone(u);
+  for(let k=0;k<40;k++){
+    const i=Math.floor(Math.random()*M);
+    let ip=Math.floor(Math.random()*M); if(ip===i) ip=(ip+1)%M;
+    const j=Math.floor(Math.random()*N);
+    let jp=Math.floor(Math.random()*N); if(jp===j) jp=(jp+1)%N;
+    // apply +1/-1 swap only if it keeps v non-negative
+    if(v[i][j]>0 && v[ip][jp]>0){
+      v[i][j]-=1; v[ip][jp]-=1; v[i][jp]+=1; v[ip][j]+=1;
+    }
+  }
+  count=0; render();
+}
+
+let u0, v0;
+document.getElementById('stepBtn').onclick = step;
+document.getElementById('autoBtn').onclick = auto;
+document.getElementById('randBtn').onclick = ()=>{ randomFiber(); u0=clone(u); v0=clone(v); };
+document.getElementById('resetBtn').onclick = ()=>{ u=clone(u0); v=clone(v0); count=0; render(); };
+
+// Initial demo pair (equal margins).
+u = [[3,0,1],[0,2,2],[1,2,1]];
+v = [[1,2,1],[1,1,2],[2,1,1]];
+u0=clone(u); v0=clone(v);
+render();
+</script>
+</body>
+</html>

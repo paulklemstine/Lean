@@ -1,0 +1,335 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\DeclareMathOperator{\vdepth}{vdepth}
+\DeclareMathOperator{\expo}{exponent}
+\DeclareMathOperator{\TropLip}{TropLip}
+\DeclareMathOperator{\UltraLip}{UltraLip}
+\DeclareMathOperator{\Natlog}{Nat.log}
+\newcommand{\VAL}{\mathrm{VAL}}
+\newcommand{\base}{\mathrm{base}}
+\newcommand{\rec}{\mathrm{rec}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\title{A Functorial Lipschitz Comparison Between\\
+Valuation Depth and Tropical Valuation Objects}
+\author{Harmonic Catalog Project}
+\date{2026-06-15}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We develop a quantitative, structure-preserving comparison between two
+\emph{a priori} unrelated cost measures on functions: \emph{valuation depth}, an
+additive (max-plus) complexity measure native to non-Archimedean computation, and
+the \emph{Lipschitz constants of tropical valuation objects}, a multiplicative
+growth measure native to tropical algebra and ultrametric analysis. The central
+thesis is that valuation depth is the discrete logarithm of a tropical Lipschitz
+constant: the exponential map $d \mapsto \base^d$ carries the max-plus depth law
+$\vdepth(f\circ g)\le \max(\vdepth f, \vdepth g)+1$ to the multiplicative tropical
+Lipschitz law $v(f^{[n]})\le C^n v$, and the discrete logarithm $\Natlog$ inverts
+it. We organize the bridge into three layers: an axiomatic theory of valuation
+depth with a max-plus composition law, an infinite strict complexity hierarchy
+$\VAL_k$, and an iteration-stability theorem; a category of tropical valuation
+objects with a norm-faithful \emph{valuation reconstruction functor} to
+ultrametric seminormed objects that transfers Lipschitz bounds with no loss of
+constant; and the comparison itself, the identity
+$\base^{\max(a,b)+1} = \base\cdot\max(\base^a,\base^b)$, which exhibits the
+exponential as a $1$-Lipschitz comparison functor between the two laws. We close
+with applications to certified robustness, post-quantum security-gap transfer, and
+Hensel iteration complexity, and with testable conjectures.
+\end{abstract}
+
+\section{Introduction}
+
+A recurring phenomenon in mathematics is that two theories obey ``the same'' law
+up to a substitution of operations: where one has $+$ and $\max$, the other has
+$\times$ and $\cdot$. Whenever this happens, a logarithm typically mediates. This
+paper makes one such mediation precise and quantitative.
+
+On one side is \emph{valuation depth}, a complexity measure modeled on
+non-Archimedean (p-adic) arithmetic, whose defining feature is that
+\emph{combining} two computations costs the \emph{maximum} of their costs plus a
+constant, never the sum. This max-plus signature stems from the ultrametric
+inequality $\|a+b\|\le\max(\|a\|,\|b\|)$, which removes carry propagation. On the
+other side are \emph{tropical valuation objects}: ordered idempotent semiring-like
+structures whose addition is maximum, $a\oplus b=\max(a,b)$, carrying a valuation
+$v$ whose Lipschitz maps are multiplicative, $v(f(x))\le C\,v(x)$, with iteration
+producing $C^n$.
+
+Our contribution is a faithful comparison: the additive depth law and the
+multiplicative Lipschitz law are interchanged by the exponential/logarithm pair,
+exactly and without losing constants; the tropical world reconstructs the
+ultrametric world through a norm-faithful functor; and bounds proved cheaply
+transfer with the same constants to ultrametric certified guarantees used in
+cryptography and machine learning. All results stated below have been formalized
+and machine-checked.
+
+\section{Valuation depth: the additive (max-plus) side}
+
+\subsection{The depth measure}
+
+\begin{definition}[Valuation depth measure]
+Let $\alpha,\beta$ be semirings. A \emph{valuation depth measure} assigns to each
+$f:\alpha\to\beta$ a natural number $\vdepth(f)$ with
+\begin{enumerate}
+\item $\vdepth(\lambda x.\,0)=0$;
+\item $\vdepth(\lambda x.\,f(x)+g(x))\le\max(\vdepth f,\vdepth g)+1$;
+\item $\vdepth(\lambda x.\,f(x)\cdot g(x))\le\max(\vdepth f,\vdepth g)+1$.
+\end{enumerate}
+\end{definition}
+
+\begin{lemma}[Derived depth bounds]
+$\vdepth(f\cdot f)\le\vdepth f+1$ (squaring), $\vdepth(f+f)\le\vdepth f+1$
+(doubling), and $\vdepth(f+g+h)\le\max(\max(\vdepth f,\vdepth g)+1,\vdepth h)+1$.
+\end{lemma}
+\begin{proof}[Proof sketch]
+Specialize the binary axioms with $g=f$ and use $\max(d,d)=d$; for the triple
+sum apply axiom (2) twice and finish over $\N$.
+\end{proof}
+
+\subsection{The composition (max-plus) law}
+
+\begin{definition}[Ultrametric composition law]
+A depth measure on $\alpha\to\alpha$ satisfies the \emph{ultrametric composition
+law} if $\vdepth(f\circ g)\le\max(\vdepth f,\vdepth g)+1$.
+\end{definition}
+
+\begin{theorem}[Triple composition and one-step iteration]
+Under the composition law,
+\[ \vdepth(f\circ g\circ h)\le\max(\max(\vdepth f,\vdepth g)+1,\vdepth h)+1, \]
+and $\vdepth(f^{[n+1]})\le\max(\vdepth f,\vdepth(f^{[n]}))+1$.
+\end{theorem}
+\begin{proof}[Proof sketch]
+Reassociate $f\circ g\circ h=(f\circ g)\circ h$ and apply the law twice; for
+iteration write $f^{[n+1]}=f\circ f^{[n]}$.
+\end{proof}
+
+\subsection{Complexity classes and a strict hierarchy}
+
+\begin{definition}[Depth classes]
+$\VAL_k=\{f:\vdepth(f)\le k\}$.
+\end{definition}
+
+\begin{proposition}[Lattice of classes]
+$\VAL_k\subseteq\VAL_{k+1}$; if $f,g\in\VAL_k$ then $f+g,f\cdot g\in\VAL_{k+1}$;
+and $\bigcup_k\VAL_k$ is everything.
+\end{proposition}
+
+\begin{definition}[Depth witness]
+A \emph{depth witness} for level $k$ is a function $w$ with $\vdepth(w)=k+1$.
+\end{definition}
+
+\begin{theorem}[Strict hierarchy]
+If a depth witness for level $k$ exists, then $\VAL_k\subsetneq\VAL_{k+1}$.
+\end{theorem}
+\begin{proof}[Proof sketch]
+$w\in\VAL_{k+1}\setminus\VAL_k$; equality would force $\vdepth(w)\le k$, a
+contradiction.
+\end{proof}
+
+\subsection{Ultrametric Lipschitz data and iteration stability}
+
+\begin{definition}[Ultrametric Lipschitz data]
+A triple of an integer $\expo\in\Z$, a boolean non-expansiveness flag, and the
+consistency law $\text{flag}\Leftrightarrow\expo\ge0$. Composition takes the
+minimum, $\expo(f\circ g)=\min(\expo f,\expo g)$, with
+$\mathrm{iter}(f,0)=f$, $\mathrm{iter}(f,n+1)=\mathrm{compose}(\mathrm{iter}(f,n),f)$.
+\end{definition}
+
+\begin{theorem}[Ultrametric robustness / iteration stability]
+$\expo(\mathrm{iter}(f,n))=\expo(f)$ for all $n$: the exponent is invariant under
+iteration.
+\end{theorem}
+\begin{proof}[Proof sketch]
+Induction on $n$ with $\min(\expo f,\expo f)=\expo f$.
+\end{proof}
+
+\begin{theorem}[Classical--ultrametric gap]
+For $L\ge2$ and $n\ge2$, $L^n/L\ge L$: classical iterates blow up while the
+ultrametric exponent is unchanged.
+\end{theorem}
+\begin{proof}[Proof sketch]
+$L^n=L^{n-1}\cdot L$; cancel and bound $L^{n-1}\ge L$.
+\end{proof}
+
+\subsection{Locality speedup and Hensel complexity}
+
+\begin{theorem}[Ultrametric locality speedup]
+For $n\ge2$ there are depths $\mathrm{classical}\ge\log_2 n$ and
+$\mathrm{ultra}=1$ with $\mathrm{classical}\ge\mathrm{ultra}$, and the gap
+$\log_2 n$ is unbounded.
+\end{theorem}
+
+\begin{theorem}[Hensel quadratic convergence and complexity]
+For a certified Hensel--Newton sequence with $\mathrm{prec}(n+1)\ge2\,\mathrm{prec}(n)$
+and $\mathrm{prec}(0)\ge1$: $\mathrm{prec}(n)\ge2^n$; $\lceil\log_2 n\rceil+1$
+steps suffice for $n$ digits; and $\log_2 n+1<n$ for $n\ge3$. Concretely $11$
+steps give $\ge1024$ digits and $21$ steps give $\ge10^6$ digits.
+\end{theorem}
+
+\section{Tropical valuation objects: the multiplicative side}
+
+\begin{definition}[Tropical valuation object]
+A linearly ordered $(R,\le)$ with $0,1$, operations $\oplus,\otimes,\max$, where
+$\max$ is the join, $\otimes$ a commutative monoid with unit $1$ and absorbing
+$0$, $a\oplus0=a$, and the tropical principle $a\oplus b=\max(a,b)$. A
+\emph{carrier} additionally has $v:K\to\N$ with $v(x\oplus y)\le\max(v(x),v(y))$
+and $v(x\otimes y)=v(x)\cdot v(y)$.
+\end{definition}
+
+\begin{definition}[Ultrametric seminorm object]
+A type $\alpha$ with operations and a norm $\|\cdot\|:\alpha\to\N$ obeying the
+strong triangle inequality $\|x+y\|\le\max(\|x\|,\|y\|)$.
+\end{definition}
+
+\begin{definition}[Valuation reconstruction]
+The functor sending a carrier $X$ to the ultrametric object on $X.K$ with the
+same operations and with norm equal to $v$.
+\end{definition}
+
+\begin{theorem}[Faithfulness of reconstruction]
+$\|x\|_{\rec(X)}=v(x)$ and $\|x\otimes y\|_{\rec(X)}=v(x)\cdot v(y)$; the
+reconstructed object is ultrametric. The reconstruction is functorial (preserves
+identities and composition).
+\end{theorem}
+\begin{proof}[Proof sketch]
+The norm is defined as $v$; the laws are the carrier axioms.
+\end{proof}
+
+\begin{definition}[Lipschitz predicates]
+$\TropLip_C(f)$ iff $v(f(x))\le C\,v(x)$ for all $x$; $\UltraLip_C(f)$ iff
+$\|f(x)\|\le C\,\|x\|$ for all $x$.
+\end{definition}
+
+\begin{theorem}[Sharp Lipschitz transfer]
+$\TropLip_C(f)$ on $X$ implies $\UltraLip_C(f)$ on $\rec(X)$, with the same
+constant $C$; nonexpansiveness transfers likewise.
+\end{theorem}
+\begin{proof}[Proof sketch]
+The ultrametric norm is the valuation, so the two inequalities coincide.
+\end{proof}
+
+\begin{theorem}[Iterated tropical and ultrametric rates]
+If $v(f(x))\le C\,v(x)$ then $v(f^{[n]}(x))\le C^n v(x)$ for all $n,x$, and the
+same $C^n$ bound holds for the reconstructed norm.
+\end{theorem}
+\begin{proof}[Proof sketch]
+Induction on $n$: base $C^0=1$; step uses $f^{[n+1]}=f\circ f^{[n]}$,
+monotonicity, and $C\cdot C^n=C^{n+1}$.
+\end{proof}
+
+\begin{remark}[Application transfers]
+With the same constants: quantum-certified radius transfer, post-quantum
+security-gap transfer ($v(y\ominus\mathrm{secret})\ge\mathrm{gap}$), Lipschitz
+certified robustness ($\|f(x)\|\le L\,\|\mathrm{center}\|$), and max-stability
+$\|x\oplus y\|\le\max(\|x\|,\|y\|)$.
+\end{remark}
+
+\section{The comparison functor: depth $=$ log of tropical Lipschitz constant}
+
+Fix $\base>1$.
+
+\begin{lemma}[Exponential intertwines max-plus and multiplicative]
+For all $a,b\in\N$, $\base^{\max(a,b)+1}=\base\cdot\max(\base^a,\base^b)$.
+\end{lemma}
+\begin{proof}[Proof sketch]
+$d\mapsto\base^d$ is strictly monotone, so
+$\base^{\max(a,b)}=\max(\base^a,\base^b)$; multiply by $\base$.
+\end{proof}
+
+\begin{theorem}[Comparison of laws]
+Let $T(f):=\base^{\vdepth(f)}$ be the \emph{tropical shadow}. Then
+$\vdepth(f\circ g)\le\max(\vdepth f,\vdepth g)+1$ holds iff
+$T(f\circ g)\le\base\cdot\max(T(f),T(g))$, and
+$\vdepth=\Natlog_{\base}\circ T$ recovers depth.
+\end{theorem}
+\begin{proof}[Proof sketch]
+Apply the strictly monotone $\base^{(-)}$ and the previous lemma; invert with
+$\Natlog_{\base}$.
+\end{proof}
+
+\begin{theorem}[Faithful comparison]
+$d\mapsto\base^d$ and $C\mapsto\Natlog_{\base}C$ form a monotone Galois pair,
+exact on powers of $\base$. For $\base\ge2$, $d_1<d_2\Rightarrow
+\base^{d_1}<\base^{d_2}$, so the depth order embeds isometrically into the shadow
+order and $\VAL_k$ maps to the strictly increasing classes $\{f:T(f)\le\base^k\}$.
+\end{theorem}
+\begin{proof}[Proof sketch]
+Strict monotonicity and the round-trip identity
+$\Natlog_{\base}(\base^d)=d$.
+\end{proof}
+
+\begin{remark}[Iteration under the comparison]
+Depth iteration gives depth $O(n)$, whose shadow $\base^{O(n)}$ matches the
+tropical rate $C^n$. The stable-exponent law corresponds to the multiplicative
+fixed point $C=1$ ($1^n=1$): ``no blow-up'' and ``non-expansive stays
+non-expansive'' are the same theorem through $\exp/\log$.
+\end{remark}
+
+\section{Algorithms}
+\begin{enumerate}
+\item \textbf{Depth evaluation.} Bottom-up fold of an expression tree;
+internal node returns $\max(\text{children})+1$; $O(\text{size})$.
+\item \textbf{Shadow and inverse.} $b^d$ and $\lfloor\log_b s\rfloor$; exact on
+powers; $O(\log s)$.
+\item \textbf{Iterated rate.} $C^n$ by fast exponentiation; depth
+$\approx n\log_b C$; $O(\log n)$.
+\item \textbf{Hensel step count.} $\lfloor\log_2 D\rfloor+1$ for $D$ digits;
+$O(\log D)$.
+\end{enumerate}
+
+\section{Applications}
+Certified robustness (a tropical Lipschitz bound becomes an ultrametric
+robustness radius with the same constant), post-quantum security (gap
+preservation), fast non-Archimedean arithmetic (depth $1$ vs. $\log_2 n$;
+$O(\log n)$ Hensel lifting), and max-plus scheduling (depth $=$ makespan, shadow
+$=$ throughput).
+
+\section{Discussion}
+The comparison is deliberately quantitative: constants are preserved and the
+exponential is an order-embedding comparison, so one may prove in the cheap,
+carry-free world and quote in the expensive, adversarial world. The ``+1'' per
+depth layer is absorbed into the multiplicative factor $\base$, which makes the
+comparison exact for iteration and carries an additive defect of size $1$ for
+genuinely parallel composition.
+
+\section{Future directions}
+\textbf{C1 (Fekete limit).} $\vdepth(a^{[n]})/(n+1)$ converges to a tropical
+Lyapunov exponent; prove $\vdepth(a^{[m+n]})\le\vdepth(a^{[m]})+\vdepth(a^{[n]})+1$
+and apply a discrete Fekete lemma. \textbf{C2 (Strictness transfer).} A depth
+witness separating $\VAL_k\subsetneq\VAL_{k+1}$ transfers under $T$ to strict
+separation of rate classes. \textbf{C3 (Two-sided defect).} A universal $c$ with
+$|\log_\base T(\mathrm{comp}(a,b))-\max(\vdepth a,\vdepth b)|\le c$, with $c=1$
+sharp; balanced trees of $n$ leaves have depth
+$\le\lceil\log_2 n\rceil\cdot(\text{per-leaf}+1)$. \textbf{C4 (Naturality).} $T$
+extends to a functor on morphism categories and the depth$\leftrightarrow$log-rate
+equality is a natural isomorphism, $\log_\base\circ T\circ\varphi_* =
+\varphi_*\circ\vdepth$.
+
+\section{Conclusion}
+Valuation depth and tropical Lipschitz constants are two coordinate systems for
+one phenomenon, related by $\exp$ and $\log$. The additive max-plus depth law and
+the multiplicative tropical rate law are interchanged exactly by the exponential
+comparison functor; valuation reconstruction turns tropical data into ultrametric
+norms without loss of constant; and the resulting transfers certify robustness and
+security guarantees computed in the cheaper world.
+
+\end{document}

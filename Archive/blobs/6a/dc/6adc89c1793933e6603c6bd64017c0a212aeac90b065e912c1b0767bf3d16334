@@ -1,0 +1,229 @@
+/-
+Copyright (c) 2026 Harmonic. All rights reserved.
+Released under Apache 2.0 license.
+
+# Spectral Gap Rigidity for Hodge Laplacians under Simplicial Coarse-Graining
+
+This file develops the linear-algebraic core of the conjecture
+
+> *Spectral Gap Rigidity for Hypergraph Hodge Laplacians Under Simplicial
+> Coarse-Graining* — coarse-graining a higher-order complex by a scale map should
+> preserve the harmonic (cohomological) content of every fixed degree, and the
+> real Hodge theorem is exactly the obstruction-free (torsion-free) shadow of
+> this principle.
+
+We model one degree of a real cochain complex by three finite-dimensional inner
+product spaces and two maps
+
+  `F  --e-->  E  --d-->  G`,   with the chain condition  `d ∘ e = 0`,
+
+(`e` is the incoming coboundary `∂_{k+1}`, `d` the outgoing coboundary `∂_k`).
+The **Hodge Laplacian** in the middle degree is
+
+  `Δ  =  d* d  +  e e*`     (`up` Laplacian `d* d` plus `down` Laplacian `e e*`).
+
+This *extends* the catalog's abstract Hodge–message-passing theory
+(`Catalog/Speculative/AutoResearch/HodgeMessagePassingConvergence.lean`, whose
+`mpStep`, `harmonic_iff`, `ker_hodgeLaplacian` operate on a fixed PSD operator)
+by **constructing** the operator from genuine coboundary data and proving the two
+facts that abstract framework assumes: the harmonic characterization and the
+*discrete Hodge theorem*, and then proving the new **coarse-graining rigidity**.
+
+## Main results
+
+* `hodge_inner_self` / `hodge_nonneg` — the Hodge energy identity
+  `⟪Δ x, x⟫ = ‖d x‖² + ‖e* x‖²`, hence `Δ` is positive semidefinite.
+* `ker_adjoint_eq_orthogonal` — `ker e* = (range e)ᗮ`.
+* `ker_hodge` — harmonic = closed ∩ co-closed: `ker Δ = ker d ⊓ ker e*`.
+* `harmonic_inf_range`, `harmonic_sup_range` — the **Hodge decomposition**
+  `ker d = (range e) ⊕ ker Δ` (internal direct sum inside `E`).
+* `betti_eq_harmonic_finrank` — the **discrete Hodge theorem**:
+  `dim (ker Δ) + dim (range e) = dim (ker d)`, i.e. the harmonic dimension equals
+  the real Betti number `dim Hᵏ = dim ker d − dim range e`.
+* `hodge_coarse_grain` — **covariance**: a coarse-graining isometry `U : E ≃ₗᵢ E'`
+  transports the Laplacian by conjugation, `Δ' = U Δ U⁻¹`.
+* `finrank_ker_conj`, `harmonic_finrank_rigidity` — **spectral gap rigidity**: the
+  harmonic dimension (the multiplicity of the eigenvalue `0`) is invariant under
+  coarse-graining.
+
+-- !-- Lab Notebook -- !--
+Hypothesis:  Building the Hodge Laplacian `Δ = d*d + e e*` from honest coboundary
+  data with `d ∘ e = 0` should make the harmonic space `ker Δ` *equal* (not merely
+  abstractly isomorphic) to a complement of `range e` inside `ker d`, giving the
+  discrete Hodge theorem `dim ker Δ = dim ker d − dim range e`; and because a
+  coarse-graining isometry conjugates `Δ`, this dimension — the multiplicity of the
+  spectral bottom `0` — must be a rigid invariant.
+Result:  Formalised and proved sorry-free.  Energy identity (`hodge_inner_self`),
+  PSD (`hodge_nonneg`), harmonic = closed ∩ coclosed (`ker_hodge`), the orthogonal
+  Hodge decomposition (`harmonic_inf_range`/`harmonic_sup_range`), the Betti identity
+  (`betti_eq_harmonic_finrank`), Laplacian covariance (`hodge_coarse_grain`) and the
+  rigidity corollaries (`finrank_ker_conj`, `harmonic_finrank_rigidity`).
+Insight:  The decisive identity is `⟪Δ x, x⟫ = ‖d x‖² + ‖e* x‖²`, which collapses
+  the *operator* equation `Δ x = 0` to the *scalar* `‖d x‖² + ‖e* x‖² = 0`; from
+  there `ker Δ = ker d ⊓ (range e)ᗮ` and the orthogonal splitting
+  `range e ⊕ (range e)ᗮ = ⊤` give the decomposition mechanically.  Coarse-graining
+  rigidity is then pure functoriality: `adjoint` of an isometry is its inverse, so
+  `Δ` conjugates, and conjugation by *any* linear equivalence preserves `dim ker`.
+Failure analysis:  Working over `ℝ` (rather than `RCLike 𝕜`) is deliberate: the
+  real Hodge theorem holds with *no* torsion term, which is precisely the
+  "asymptotically vanishing higher-order torsion density" hypothesis of the
+  governing conjecture — over `ℝ` torsion is invisible, so harmonic ↔ cohomology is
+  unconditional.  Over `ℤ` the same statement would acquire a torsion correction.
+-/
+import Mathlib
+
+open LinearMap Submodule
+open scoped InnerProductSpace
+
+noncomputable section
+
+variable {E F G E' : Type*}
+variable [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E]
+variable [NormedAddCommGroup F] [InnerProductSpace ℝ F] [FiniteDimensional ℝ F]
+variable [NormedAddCommGroup G] [InnerProductSpace ℝ G] [FiniteDimensional ℝ G]
+variable [NormedAddCommGroup E'] [InnerProductSpace ℝ E'] [FiniteDimensional ℝ E']
+
+/-- The degree-`k` **Hodge Laplacian** built from outgoing coboundary `d` and
+incoming coboundary `e`: `Δ = d* d + e e*` (`up` plus `down` Laplacian). -/
+def hodge (d : E →ₗ[ℝ] G) (e : F →ₗ[ℝ] E) : E →ₗ[ℝ] E :=
+  (LinearMap.adjoint d) ∘ₗ d + e ∘ₗ (LinearMap.adjoint e)
+
+/-
+!-- The Hodge energy identity: pairing `Δ x` with `x` splits as the sum of the
+up-energy `‖d x‖²` and down-energy `‖e* x‖²`, by the adjoint relation. -- !--
+-/
+theorem hodge_inner_self (d : E →ₗ[ℝ] G) (e : F →ₗ[ℝ] E) (x : E) :
+    (inner ℝ (hodge d e x) x) = ‖d x‖ ^ 2 + ‖LinearMap.adjoint e x‖ ^ 2 := by
+  unfold hodge;
+  simp +decide [ inner_add_left, sq, adjoint_inner_left ];
+  rw [ ← real_inner_self_eq_norm_mul_norm, ← adjoint_inner_right ]
+
+/-
+!-- Positive semidefiniteness is immediate from the energy identity: a sum of
+two squared norms is nonnegative. -- !--
+-/
+theorem hodge_nonneg (d : E →ₗ[ℝ] G) (e : F →ₗ[ℝ] E) (x : E) :
+    0 ≤ (inner ℝ (hodge d e x) x) := by
+  exact ( by rw [ hodge_inner_self ] ; positivity )
+
+/-
+!-- `ker e* = (range e)ᗮ`: `e* x = 0` iff `x` is orthogonal to every `e y`,
+by the adjoint pairing `⟪e* x, y⟫ = ⟪x, e y⟫`. -- !--
+-/
+theorem ker_adjoint_eq_orthogonal (e : F →ₗ[ℝ] E) :
+    LinearMap.ker (LinearMap.adjoint e) = (LinearMap.range e)ᗮ := by
+  -- In the reverse direction, when multiplying by -- for all -- elements --
+  ext x
+  simp [LinearMap.mem_ker, Submodule.mem_orthogonal'];
+  rw [ show ( adjoint e ) x = 0 ↔ ( ∀ a : F, ⟪ ( adjoint e ) x, a⟫_ℝ = 0 ) from ?_ ];
+  · simp +decide [ adjoint_inner_left ];
+  · exact ⟨ fun h a => by rw [ h, inner_zero_left ], fun h => by_contra fun hx => hx <| by simpa using h ( ( adjoint e ) x ) ⟩
+
+/-
+!-- Harmonic = closed ∩ co-closed: `Δ x = 0` forces the energy `‖dx‖²+‖e*x‖²`
+to vanish, so `d x = 0` and `e* x = 0`; the converse is immediate. -- !--
+-/
+theorem ker_hodge (d : E →ₗ[ℝ] G) (e : F →ₗ[ℝ] E) :
+    LinearMap.ker (hodge d e) = LinearMap.ker d ⊓ LinearMap.ker (LinearMap.adjoint e) := by
+  -- By definition of kernel, $x \in \ker(\Delta)$ if and only if $\Delta x = 0$.
+  apply le_antisymm;
+  · intro x hx
+    have h_eq : ‖d x‖^2 + ‖LinearMap.adjoint e x‖^2 = 0 := by
+      rw [ ← hodge_inner_self ];
+      aesop;
+    exact ⟨ norm_eq_zero.mp ( by contrapose! h_eq; positivity ), norm_eq_zero.mp ( by contrapose! h_eq; positivity ) ⟩;
+  · intro x hx; simp_all +decide [ hodge ] ;
+
+/-
+!-- Harmonic vectors lie in `(range e)ᗮ`, so a harmonic vector that is also in
+`range e` is orthogonal to itself, hence zero. -- !--
+-/
+theorem harmonic_inf_range (d : E →ₗ[ℝ] G) (e : F →ₗ[ℝ] E) :
+    LinearMap.ker (hodge d e) ⊓ LinearMap.range e = ⊥ := by
+  -- Since $x \in \text{range } e$, we have $x = e(y)$ for some $y \in F$.
+  have h_x_range_e : ∀ x ∈ LinearMap.ker (hodge d e) ⊓ LinearMap.range e, ∃ y ∈ (LinearMap.range e)ᗮ, x = y := by
+    simp +decide [ ker_hodge, ker_adjoint_eq_orthogonal ];
+    tauto;
+  refine' eq_bot_iff.mpr fun x hx => _;
+  obtain ⟨ y, hy, rfl ⟩ := h_x_range_e x hx; simpa using hy x ( by aesop ) ;
+
+/-
+!-- Hodge decomposition `ker d = range e ⊕ ker Δ`: split `z ∈ ker d` along
+`range e ⊕ (range e)ᗮ = ⊤`; the orthogonal part stays in `ker d`, hence harmonic. -- !--
+-/
+theorem harmonic_sup_range (d : E →ₗ[ℝ] G) (e : F →ₗ[ℝ] E)
+    (hde : d ∘ₗ e = 0) :
+    LinearMap.ker (hodge d e) ⊔ LinearMap.range e = LinearMap.ker d := by
+  refine' le_antisymm ( sup_le ( _ ) _ ) _;
+  · exact fun x hx => by simp_all +decide [ ker_hodge ] ;
+  · exact fun x hx => by obtain ⟨ y, rfl ⟩ := hx; simpa using LinearMap.congr_fun hde y;
+  · intro z hz
+    have h_decomp : z ∈ LinearMap.range e ⊔ (LinearMap.range e)ᗮ := by
+      rw [ Submodule.sup_orthogonal_of_hasOrthogonalProjection ] ; aesop
+    obtain ⟨a, ha, b, hb, hab⟩ : ∃ a ∈ LinearMap.range e, ∃ b ∈ (LinearMap.range e)ᗮ, a + b = z := by
+      exact Submodule.mem_sup.mp h_decomp
+    have hb_ker : b ∈ LinearMap.ker d := by
+      obtain ⟨ x, rfl ⟩ := ha; simp_all +decide [ LinearMap.ext_iff ] ;
+      rw [ ← eq_sub_iff_add_eq' ] at hab ; aesop;
+    have hb_hodge : b ∈ LinearMap.ker (hodge d e) := by
+      simp_all +decide [ ker_hodge, ker_adjoint_eq_orthogonal ]
+    have hz_decomp : z ∈ LinearMap.ker (hodge d e) ⊔ LinearMap.range e := by
+      exact hab ▸ Submodule.mem_sup.mpr ⟨ b, hb_hodge, a, ha, add_comm _ _ ⟩
+    exact hz_decomp
+
+/-
+!-- Discrete Hodge theorem / real Betti number: from the direct-sum
+decomposition and `dim(s⊔t)+dim(s⊓t)=dim s+dim t`. -- !--
+-/
+theorem betti_eq_harmonic_finrank (d : E →ₗ[ℝ] G) (e : F →ₗ[ℝ] E)
+    (hde : d ∘ₗ e = 0) :
+    Module.finrank ℝ (LinearMap.ker (hodge d e)) + Module.finrank ℝ (LinearMap.range e)
+      = Module.finrank ℝ (LinearMap.ker d) := by
+  rw [ ← harmonic_sup_range d e hde, ← finrank_sup_add_finrank_inf_eq ];
+  rw [ harmonic_inf_range d e, finrank_bot, add_zero ]
+
+/-
+!-- Covariance of the Hodge Laplacian under a coarse-graining isometry: since
+the adjoint of an isometry is its inverse, transporting `d ↦ d∘U⁻¹`, `e ↦ U∘e`
+conjugates the Laplacian, `Δ' = U Δ U⁻¹`. -- !--
+-/
+theorem hodge_coarse_grain (d : E →ₗ[ℝ] G) (e : F →ₗ[ℝ] E) (U : E ≃ₗᵢ[ℝ] E') :
+    hodge (d ∘ₗ (U.symm.toLinearEquiv : E' →ₗ[ℝ] E))
+          ((U.toLinearEquiv : E →ₗ[ℝ] E') ∘ₗ e)
+      = (U.toLinearEquiv : E →ₗ[ℝ] E') ∘ₗ hodge d e ∘ₗ (U.symm.toLinearEquiv : E' →ₗ[ℝ] E) := by
+  ext x
+  simp [hodge];
+  congr 2;
+  · convert U.symm.adjoint_toLinearMap_eq_symm;
+  · simp +decide [ LinearIsometryEquiv.adjoint_toLinearMap_eq_symm ]
+
+/-
+!-- Conjugation by a linear equivalence preserves the dimension of the kernel:
+`U⁻¹` restricts to a linear isomorphism `ker (U L U⁻¹) ≃ ker L`. -- !--
+-/
+omit [FiniteDimensional ℝ E] [FiniteDimensional ℝ E'] in
+theorem finrank_ker_conj (L : E →ₗ[ℝ] E) (U : E ≃ₗ[ℝ] E') :
+    Module.finrank ℝ (LinearMap.ker ((U : E →ₗ[ℝ] E') ∘ₗ L ∘ₗ (U.symm : E' →ₗ[ℝ] E)))
+      = Module.finrank ℝ (LinearMap.ker L) := by
+  by_contra h;
+  convert h <| LinearEquiv.finrank_eq <| ?_;
+  refine' ( LinearEquiv.ofBijective _ ⟨ _, _ ⟩ );
+  refine' { toFun := fun x => ⟨ U.symm x, _ ⟩, map_add' := _, map_smul' := _ };
+  all_goals simp +decide [ Function.Injective, Function.Surjective ];
+  · simpa using x.2;
+  · exact fun x hx => ⟨ U x, by simpa using hx, by simp +decide ⟩
+
+/-
+!-- Spectral gap rigidity: the harmonic dimension (the multiplicity of the
+spectral bottom `0`, i.e. the real Betti number) is invariant under coarse-graining,
+by `hodge_coarse_grain` followed by `finrank_ker_conj`. -- !--
+-/
+theorem harmonic_finrank_rigidity (d : E →ₗ[ℝ] G) (e : F →ₗ[ℝ] E) (U : E ≃ₗᵢ[ℝ] E') :
+    Module.finrank ℝ (LinearMap.ker
+        (hodge (d ∘ₗ (U.symm.toLinearEquiv : E' →ₗ[ℝ] E))
+               ((U.toLinearEquiv : E →ₗ[ℝ] E') ∘ₗ e)))
+      = Module.finrank ℝ (LinearMap.ker (hodge d e)) := by
+  rw [ hodge_coarse_grain ];
+  convert finrank_ker_conj ( hodge d e ) U.toLinearEquiv using 1
+
+end

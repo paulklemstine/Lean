@@ -1,0 +1,189 @@
+import Mathlib
+
+/-!
+# Tropical Systolic Distance Bounds for Expander Quantum Codes
+
+This file develops a self-contained, fully formal core of the program
+*"Topological Error Thresholds from Systolic Expansion."*  The grand conjecture
+(circuit-level fault-tolerance thresholds from cosystolic expansion of
+hypergraph-product CSS codes) is far beyond a single cycle, so here we isolate and
+prove the *load-bearing geometric step* on which every threshold argument secretly
+rests: **expansion forces large code distance**, expressed in the language of the
+tropical / min-plus semiring.
+
+## Mathematical content
+
+A binary cochain is modelled by its support `S : Finset Bit` (the support model of an
+`𝔽₂` vector).  Symmetric difference is `𝔽₂` addition and `Finset.card` is the
+Hamming weight.  The Hamming distance `d(A,B) = |A ∆ B|` is a genuine metric — this
+is the *min-plus metric* underlying every tropical distance computation: shortest
+weight = tropical infimum.
+
+A classical / quantum-CSS check structure is a Tanner incidence `nbhd : Check → Finset Bit`.
+A codeword is a support meeting every check an even number of times (every parity check
+satisfied); the **syndrome map** `syndrome` is the tropical coboundary, and codewords are
+exactly the cocycles (empty syndrome).
+
+The central result (`codeword_weight_gt`) is the *Sipser–Spielman unique-neighbour
+expansion bound* in cosystolic form: a unique-neighbour expander has **no light nonzero
+codeword**, so the tropical code distance is bounded below by `k + 1`.  The CSS distance
+is the tropical *sum* (min) of the `X` and `Z` distances, so expansion of both sectors
+gives a min-plus lower bound on the full quantum code distance — the geometric input to
+any threshold theorem.
+
+## Main results
+
+* `hamming_triangle`         — the min-plus metric triangle inequality.
+* `hamming_subadditive`      — Hamming weight is `𝔽₂`-subadditive (tropical 1-Lipschitz).
+* `isCodeword_iff_syndrome_eq_empty` — codewords are exactly cocycles (empty syndrome).
+* `codeword_weight_gt`       — unique-neighbour expansion ⇒ no light nonzero codeword.
+* `tropDistance_lower_bound` — expansion ⇒ tropical distance `≥ k + 1`.
+* `cssDistance_lower_bound`  — CSS distance (min-plus sum of sectors) `≥ min kX kZ + 1`.
+
+## Catalog synthesis
+
+This extends the min-plus foundations of `Tropical.MinPlusAlgebra` (the `(ℝ, min, +)`
+semiring and its `inf`-Lipschitz theory) and `Tropical.IdempotentSemiring.Defs` from a
+*static* algebraic object into a *predictive design principle*: the tropical infimum
+`tropDistance` is the all-pairs-shortest-codeword analogue of the shortest-path reading of
+min-plus products, and `cssDistance` realises CSS distance as a genuine tropical sum.
+-/
+
+open Finset
+
+namespace TropicalSystolic
+
+/-! ## Part I — The min-plus (Hamming) metric -/
+
+variable {V : Type*} [DecidableEq V]
+
+/-- Hamming distance of two `𝔽₂` cochains given by their supports: the weight of their
+symmetric difference.  This is the metric whose infima the tropical semiring computes. -/
+def hammingDist (A B : Finset V) : ℕ := (symmDiff A B).card
+
+/-
+!-- `d(A,A) = |A ∆ A| = |∅| = 0`. -- !--
+-/
+theorem hamming_self_zero (A : Finset V) : hammingDist A A = 0 := by
+  simp +decide [ hammingDist, symmDiff ]
+
+/-
+!-- Symmetric difference is commutative, so the distance is symmetric. -- !--
+-/
+theorem hamming_comm (A B : Finset V) : hammingDist A B = hammingDist B A := by
+  unfold hammingDist; rw [ symmDiff_comm ] ;
+
+/-
+!-- `|A ∆ B| ≤ |A| + |B|` since `A ∆ B ⊆ A ∪ B` and `card_union_le`. -- !--
+-/
+theorem hamming_subadditive (A B : Finset V) :
+    (symmDiff A B).card ≤ A.card + B.card := by
+      exact le_trans ( Finset.card_union_le _ _ ) ( add_le_add ( Finset.card_le_card ( by aesop_cat ) ) ( Finset.card_le_card ( by aesop_cat ) ) )
+
+/-
+!-- Min-plus triangle inequality: write `A ∆ C = (A ∆ B) ∆ (B ∆ C)` then apply
+subadditivity.  This is the metric axiom making `tropDistance` a genuine tropical infimum. -- !--
+-/
+theorem hamming_triangle (A B C : Finset V) :
+    hammingDist A C ≤ hammingDist A B + hammingDist B C := by
+      unfold hammingDist;
+      convert hamming_subadditive ( symmDiff A B ) ( symmDiff B C ) using 1;
+      congr 1 with x ; simp +decide [ symmDiff ] ; tauto;
+
+/-! ## Part II — Tanner codes, the syndrome coboundary, and expansion -/
+
+variable {Bit Check : Type*} [DecidableEq Bit] [Fintype Check]
+
+/- A parity-check structure is carried as an explicit argument
+   `nbhd : Check → Finset Bit`: each check is incident to a finite set of bits. -/
+
+/-- The **syndrome map** (tropical coboundary `δ`): the set of checks that see an odd
+number of active bits.  Syndrome extraction returns exactly this set. -/
+def syndrome (nbhd : Check → Finset Bit) (S : Finset Bit) : Finset Check :=
+  univ.filter (fun ch => Odd ((nbhd ch ∩ S).card))
+
+/-- A codeword's support meets every check evenly (every parity check is satisfied);
+equivalently it is a cocycle of the tropical coboundary. -/
+def IsCodeword (nbhd : Check → Finset Bit) (S : Finset Bit) : Prop :=
+  ∀ ch, Even ((nbhd ch ∩ S).card)
+
+/-- **Unique-neighbour expansion** at scale `k`: every nonempty set of at most `k` bits
+has a check incident to *exactly one* of them.  This is the combinatorial avatar of
+(co)systolic expansion for bounded-degree complexes. -/
+def UniqueNeighbourExpansion (nbhd : Check → Finset Bit) (k : ℕ) : Prop :=
+  ∀ S : Finset Bit, S.Nonempty → S.card ≤ k → ∃ ch, (nbhd ch ∩ S).card = 1
+
+/-
+!-- Unfold both sides: `Even` of every check ↔ no check has odd intersection ↔ the
+`filter` is empty. -- !--
+-/
+theorem isCodeword_iff_syndrome_eq_empty (nbhd : Check → Finset Bit) (S : Finset Bit) :
+    IsCodeword nbhd S ↔ syndrome nbhd S = ∅ := by
+      simp +decide [ IsCodeword, syndrome, Finset.ext_iff ]
+
+/-
+!-- The empty support is a codeword (`∅ ∩ nbhd ch = ∅`, card `0`, which is even). -- !--
+-/
+omit [Fintype Check] in
+theorem empty_isCodeword (nbhd : Check → Finset Bit) : IsCodeword nbhd (∅ : Finset Bit) := by
+  exact fun _ => by simp +decide ;
+
+/-
+**Sipser–Spielman cosystolic bound.**  Under unique-neighbour expansion at scale `k`,
+every nonempty codeword has weight `> k`: a unique neighbour would be a check seeing
+exactly one (odd!) active bit, contradicting evenness.  Hence light nonzero codewords
+cannot exist — expansion forces large distance.
+
+!-- If a nonempty codeword had `card ≤ k`, expansion yields a check with intersection
+card `= 1`, but `IsCodeword` makes that card even, and `1` is odd. -- !--
+-/
+omit [Fintype Check] in
+theorem codeword_weight_gt {nbhd : Check → Finset Bit} {k : ℕ}
+    (hexp : UniqueNeighbourExpansion nbhd k) {S : Finset Bit}
+    (hcode : IsCodeword nbhd S) (hne : S.Nonempty) : k < S.card := by
+      -- By contradiction, assume $S$ has cardinality $\leq k$.
+      by_contra h_contra;
+      obtain ⟨ ch, hch ⟩ := hexp S hne ( le_of_not_gt h_contra ) ; specialize hcode ch ; simp_all +decide [ parity_simps ] ;
+
+/-! ## Part III — Tropical code distance -/
+
+/-- The **tropical code distance**: the min-plus infimum of the weights of nonzero
+codewords, valued in `WithTop ℕ` (so an empty code has distance `⊤`).  Tropical addition
+is `min`, so this infimum is the natural tropical reading of "minimum distance". -/
+noncomputable def tropDistance (nbhd : Check → Finset Bit) : WithTop ℕ :=
+  ⨅ S ∈ {S : Finset Bit | IsCodeword nbhd S ∧ S.Nonempty}, (S.card : WithTop ℕ)
+
+/-
+!-- `codeword_weight_gt` gives `k + 1 ≤ |S|` for every nonzero codeword `S`; conclude by
+`le_iInf` (the defining property of the tropical infimum). -- !--
+-/
+omit [Fintype Check] in
+theorem tropDistance_lower_bound {nbhd : Check → Finset Bit} {k : ℕ}
+    (hexp : UniqueNeighbourExpansion nbhd k) :
+    ((k + 1 : ℕ) : WithTop ℕ) ≤ tropDistance nbhd := by
+      convert le_iInf fun S => le_iInf fun hS => ?_;
+      exact_mod_cast codeword_weight_gt hexp hS.1 hS.2
+
+/-! ## Part IV — CSS / hypergraph-product combination (the min-plus sum) -/
+
+variable {CheckX CheckZ : Type*} [Fintype CheckX] [Fintype CheckZ]
+
+/-- The **CSS distance** is the tropical *sum* (= `min`) of the `X`- and `Z`-sector
+tropical distances.  In a hypergraph product the two sectors come from the two factor
+complexes; the quantum code distance is the smaller of the two. -/
+noncomputable def cssDistance (nbhdX : CheckX → Finset Bit) (nbhdZ : CheckZ → Finset Bit) :
+    WithTop ℕ :=
+  min (tropDistance nbhdX) (tropDistance nbhdZ)
+
+/-
+!-- Expansion of each sector gives `kX+1 ≤ dX` and `kZ+1 ≤ dZ`; since `min kX kZ + 1` is
+below both bounds, `le_min` closes it.  Min-plus addition is the CSS distance. -- !--
+-/
+omit [Fintype CheckX] [Fintype CheckZ] in
+theorem cssDistance_lower_bound {nbhdX : CheckX → Finset Bit} {nbhdZ : CheckZ → Finset Bit}
+    {kX kZ : ℕ} (hX : UniqueNeighbourExpansion nbhdX kX)
+    (hZ : UniqueNeighbourExpansion nbhdZ kZ) :
+    ((min kX kZ + 1 : ℕ) : WithTop ℕ) ≤ cssDistance nbhdX nbhdZ := by
+      exact le_min ( le_trans ( by norm_cast; omega ) ( tropDistance_lower_bound hX ) ) ( le_trans ( by norm_cast; omega ) ( tropDistance_lower_bound hZ ) )
+
+end TropicalSystolic

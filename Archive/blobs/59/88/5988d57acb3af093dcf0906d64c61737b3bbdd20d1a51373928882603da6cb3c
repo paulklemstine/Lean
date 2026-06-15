@@ -1,0 +1,277 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+
+# Functorial Lipschitz Comparison: Valuation Depth ↔ Tropical Valuation Objects
+
+Bridge: Computation/PadicValuationDepth ↔ Bridges/CategoricalTropicalUltrametric
+
+This file bridges two existing catalog developments:
+
+* `Computation.PadicValuationDepth` — the `ValuationDepthMeasure` / `UltrametricCompositionLaw`
+  hierarchy, where the cost of composing computations obeys the *max-plus* law
+  `vdepth (f ∘ g) ≤ max (vdepth f) (vdepth g) + 1`.
+
+* `Bridges.CategoricalTropicalUltrametric` — `TropicalValuationCarrier` /
+  `valuationReconstruct`, where Lipschitz constants compose *multiplicatively*
+  (`iterated_tropical_lipschitz_rate : X.val (f^[n] x) ≤ C ^ n * X.val x`).
+
+## Core mathematical message
+
+> **Valuation depth is the logarithmic shadow of the tropical Lipschitz constant.**
+
+Composition in the depth world is governed by `max .. + 1` (latency / critical-path),
+whereas composition in the tropical-Lipschitz world is governed by a product `C₂ * C₁`
+(amplification / work). The exponential map `d ↦ base ^ d` is the *comparison functor*
+that intertwines the two:
+
+* it turns one unit of depth (the `+ 1` shift) into exactly one tropical factor `base`
+  (`shadow_comp_le`), and
+* it turns `n`-fold iteration's additive depth growth (`depth_iterC_le`) into the
+  multiplicative tropical rate `base ^ n` (`shadow_iterC_le`),
+
+precisely mirroring `iterated_tropical_lipschitz_rate`. The inverse `Nat.log base`
+recovers depth exactly (`depth_eq_log_shadow`), so depth and log-rate are *equal*, not
+just comparable: the comparison is a 1-Lipschitz isometry of the two cost grades.
+
+## Main definitions
+* `MaxPlusDepthSystem`         — abstract carrier with a max-plus composition cost.
+* `MaxPlusDepthSystem.iterC`   — self-composition (the abstract analogue of `f^[n+1]`).
+* `MaxPlusDepthSystem.tropShadow` — the exponential comparison functor `a ↦ base ^ depth a`.
+* `depthSystemOfUltrametric`   — every `UltrametricCompositionLaw` is a `MaxPlusDepthSystem`.
+
+## Main theorems
+* `MaxPlusDepthSystem.depth_iterC_le`  — depth grows *additively* under iteration.
+* `MaxPlusDepthSystem.shadow_comp_le`  — composition costs a tropical factor `base`.
+* `MaxPlusDepthSystem.shadow_iterC_le` — iteration's tropical shadow is `base ^ n`.
+* `MaxPlusDepthSystem.depth_eq_log_shadow` — depth = `log_base` of the tropical shadow.
+* `vdepth_iterate_additive` — concrete additive iterate bound for `vdepth (f^[n+1])`.
+* `depth_iterate_shadow_matches_tropical_rate` — depth shadow matches the tropical rate form.
+* `rate_log_equals_depth_increment` — `log_C (C ^ n) = n`: the comparison is unit-Lipschitz.
+-/
+
+import Mathlib
+import Computation.PadicValuationDepth
+import Bridges.CategoricalTropicalUltrametric
+
+namespace FunctorialDepthTropicalLipschitz
+
+/-! ## §1. Abstract max-plus depth systems
+
+-- !-- Lab Notes -- !--
+Hypothesis: the `max .. + 1` composition law that powers `UltrametricCompositionLaw`
+is a self-contained algebraic structure worth isolating. By abstracting it into
+`MaxPlusDepthSystem` we can prove the comparison theorems once and instantiate them for
+the concrete `vdepth` measure (and any future depth-like cost). This kept the proofs
+tiny and reusable. -/
+
+/-- A `MaxPlusDepthSystem` packages a type of "computations" with a natural-number
+    `depth` cost whose composition obeys the tropical max-plus latency law
+    `depth (comp a b) ≤ max (depth a) (depth b) + 1`. This is the structural core of
+    `UltrametricCompositionLaw`, isolated so that the depth↔tropical comparison
+    theorems can be proved generically. -/
+structure MaxPlusDepthSystem where
+  /-- The carrier of computations. -/
+  Obj : Type u
+  /-- The depth (critical-path / latency) cost of a computation. -/
+  depth : Obj → ℕ
+  /-- Composition of computations. -/
+  comp : Obj → Obj → Obj
+  /-- The defining max-plus law: composing adds one to the larger depth. -/
+  depth_comp_le : ∀ a b, depth (comp a b) ≤ max (depth a) (depth b) + 1
+
+namespace MaxPlusDepthSystem
+
+/-- Self-composition: `iterC a n` is `a` composed with itself `n` further times,
+    the abstract analogue of `f^[n+1]`. -/
+def iterC (S : MaxPlusDepthSystem) (a : S.Obj) : ℕ → S.Obj
+  | 0 => a
+  | n + 1 => S.comp a (S.iterC a n)
+
+@[simp] theorem iterC_zero (S : MaxPlusDepthSystem) (a : S.Obj) : S.iterC a 0 = a := rfl
+
+theorem iterC_succ (S : MaxPlusDepthSystem) (a : S.Obj) (n : ℕ) :
+    S.iterC a (n + 1) = S.comp a (S.iterC a n) := rfl
+
+/-- **Additive depth growth.** In the max-plus world, iterating a computation `n` times
+    increases its depth by *at most `n`* — the depth grows additively, not multiplicatively.
+    This is the latency analogue of the tropical rate `C ^ n`. -/
+theorem depth_iterC_le (S : MaxPlusDepthSystem) (a : S.Obj) (n : ℕ) :
+    S.depth (S.iterC a n) ≤ S.depth a + n := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+    have hc := S.depth_comp_le a (S.iterC a n)
+    rw [iterC_succ]
+    omega
+
+/-! ## §2. The exponential comparison functor
+
+-- !-- Lab Notes -- !--
+Insight (the central one): the map `base ^ (·)` converts the max-plus depth grade into
+the multiplicative tropical-Lipschitz grade. The `+1` shift in `depth_comp_le` becomes a
+clean factor of `base` (`shadow_comp_le`). Failure analysis: this requires `1 ≤ base` so
+that `base ^ (·)` is monotone (`Nat.pow_le_pow_right`) and `pow_distrib_max` holds; for
+`base = 0` the picture degenerates (`0 ^ 0 = 1`). -/
+
+/-- The exponential comparison functor `a ↦ base ^ depth a`: it sends a depth grade to its
+    tropical-Lipschitz shadow. -/
+def tropShadow (S : MaxPlusDepthSystem) (base : ℕ) (a : S.Obj) : ℕ := base ^ S.depth a
+
+@[simp] theorem tropShadow_def (S : MaxPlusDepthSystem) (base : ℕ) (a : S.Obj) :
+    S.tropShadow base a = base ^ S.depth a := rfl
+
+/-- Exponentiation distributes over `max` (for `1 ≤ base`): the exponential functor
+    intertwines tropical `max` with tropical `max`. -/
+theorem pow_distrib_max (base a b : ℕ) (h : 1 ≤ base) :
+    base ^ (max a b) = max (base ^ a) (base ^ b) := by
+  rcases le_total a b with hab | hab
+  · rw [max_eq_right hab, max_eq_right (Nat.pow_le_pow_right h hab)]
+  · rw [max_eq_left hab, max_eq_left (Nat.pow_le_pow_right h hab)]
+
+/-- **One depth layer = one tropical factor.** The `+1` shift of the depth composition law
+    transfers, under the exponential functor, to a factor of exactly `base`: the Lipschitz
+    constant of the comparison functor. This is the quantitative heart of the bridge. -/
+theorem shadow_comp_le (S : MaxPlusDepthSystem) (base : ℕ) (h : 1 ≤ base) (a b : S.Obj) :
+    S.tropShadow base (S.comp a b) ≤ base * max (S.tropShadow base a) (S.tropShadow base b) := by
+  have hmono : base ^ S.depth (S.comp a b) ≤ base ^ (max (S.depth a) (S.depth b) + 1) :=
+    Nat.pow_le_pow_right h (S.depth_comp_le a b)
+  calc S.tropShadow base (S.comp a b)
+      = base ^ S.depth (S.comp a b) := rfl
+    _ ≤ base ^ (max (S.depth a) (S.depth b) + 1) := hmono
+    _ = base ^ (max (S.depth a) (S.depth b)) * base := by rw [pow_succ]
+    _ = base * base ^ (max (S.depth a) (S.depth b)) := by ring
+    _ = base * max (base ^ S.depth a) (base ^ S.depth b) := by
+          rw [pow_distrib_max _ _ _ h]
+    _ = base * max (S.tropShadow base a) (S.tropShadow base b) := rfl
+
+/-- **Iteration's tropical shadow is `base ^ n`.** The additive depth growth of
+    `depth_iterC_le` transfers, under the exponential functor, to the multiplicative
+    tropical rate `base ^ n` — exactly the shape of
+    `CategoricalTropicalUltrametric.iterated_tropical_lipschitz_rate`. -/
+theorem shadow_iterC_le (S : MaxPlusDepthSystem) (base : ℕ) (h : 1 ≤ base) (a : S.Obj) (n : ℕ) :
+    S.tropShadow base (S.iterC a n) ≤ base ^ n * S.tropShadow base a := by
+  have hmono : base ^ S.depth (S.iterC a n) ≤ base ^ (S.depth a + n) :=
+    Nat.pow_le_pow_right h (S.depth_iterC_le a n)
+  calc S.tropShadow base (S.iterC a n)
+      = base ^ S.depth (S.iterC a n) := rfl
+    _ ≤ base ^ (S.depth a + n) := hmono
+    _ = base ^ S.depth a * base ^ n := by rw [pow_add]
+    _ = base ^ n * base ^ S.depth a := by ring
+    _ = base ^ n * S.tropShadow base a := rfl
+
+/-- **Depth = `log_base` of the tropical shadow.** The inverse of the comparison functor is
+    `Nat.log base`, and it recovers the depth on the nose. Hence depth and log-tropical-rate
+    are not merely comparable — they are *equal*, making the comparison a 1-Lipschitz
+    isometry between the latency grade and the (log of the) amplification grade. -/
+theorem depth_eq_log_shadow (S : MaxPlusDepthSystem) (base : ℕ) (h : 1 < base) (a : S.Obj) :
+    Nat.log base (S.tropShadow base a) = S.depth a := by
+  rw [tropShadow_def, Nat.log_pow h]
+
+end MaxPlusDepthSystem
+
+/-! ## §3. Instantiation from `UltrametricCompositionLaw`
+
+-- !-- Lab Notes -- !--
+Experiment: connect the abstract system to the concrete `vdepth`. The composition law
+`UltrametricCompositionLaw.vdepth_comp` is *literally* the `depth_comp_le` field, so the
+instantiation is definitional. The only mildly fiddly part was matching `iterC` (which
+starts at `a` and composes `n` more times) with `Function.iterate` (`f^[n+1]`); the offset
+`iterC f n = f^[n+1]` is the right alignment and was proved by a one-line induction. -/
+
+open ValuationDepthMeasure UltrametricCompositionLaw
+
+/-- Every `UltrametricCompositionLaw` is a `MaxPlusDepthSystem` on its endofunctions, with
+    `depth = vdepth` and `comp = (· ∘ ·)`. -/
+def depthSystemOfUltrametric (α : Type*) [Semiring α] [UltrametricCompositionLaw α] :
+    MaxPlusDepthSystem where
+  Obj := α → α
+  depth := ValuationDepthMeasure.vdepth
+  comp := fun f g => f ∘ g
+  depth_comp_le := UltrametricCompositionLaw.vdepth_comp
+
+/-- Abstract self-composition matches concrete `Function.iterate` with a one-step offset. -/
+theorem iterC_eq_iterate (α : Type*) [Semiring α] [UltrametricCompositionLaw α]
+    (f : α → α) (n : ℕ) :
+    (depthSystemOfUltrametric α).iterC f n = f^[n + 1] := by
+  induction n with
+  | zero => simp [depthSystemOfUltrametric]
+  | succ n ih =>
+    rw [MaxPlusDepthSystem.iterC_succ, ih]
+    show f ∘ f^[n + 1] = f^[n + 1 + 1]
+    rw [← Function.iterate_succ']
+
+/-- **Concrete additive iterate bound.** For any `UltrametricCompositionLaw`, the valuation
+    depth of `f^[n+1]` exceeds that of `f` by at most `n`. Contrast with the *multiplicative*
+    tropical rate `C ^ n` of `iterated_tropical_lipschitz_rate`: depth is its logarithm. -/
+theorem vdepth_iterate_additive (α : Type*) [Semiring α] [UltrametricCompositionLaw α]
+    (f : α → α) (n : ℕ) :
+    ValuationDepthMeasure.vdepth (f^[n + 1]) ≤ ValuationDepthMeasure.vdepth f + n := by
+  have h := (depthSystemOfUltrametric α).depth_iterC_le f n
+  rwa [iterC_eq_iterate] at h
+
+/-- **Depth shadow matches the tropical Lipschitz rate.** Reading the exponential of the
+    valuation depth as a tropical Lipschitz constant, depth-iteration produces the same
+    `base ^ n` rate as `CategoricalTropicalUltrametric.iterated_tropical_lipschitz_rate`.
+    This is the explicit functorial Lipschitz comparison between the two catalog worlds. -/
+theorem depth_iterate_shadow_matches_tropical_rate
+    (α : Type*) [Semiring α] [UltrametricCompositionLaw α]
+    (f : α → α) (n : ℕ) (base : ℕ) (h : 1 ≤ base) :
+    base ^ ValuationDepthMeasure.vdepth (f^[n + 1]) ≤
+      base ^ n * base ^ ValuationDepthMeasure.vdepth f := by
+  have hsh := (depthSystemOfUltrametric α).shadow_iterC_le base h f n
+  rw [iterC_eq_iterate] at hsh
+  simpa [MaxPlusDepthSystem.tropShadow, depthSystemOfUltrametric] using hsh
+
+/-! ## §4. The comparison is unit-Lipschitz: depth ↔ log-rate
+
+-- !-- Lab Notes -- !--
+Synthesis: the two worlds are not just analogous, they are connected by an honest
+isometry. On the tropical side an `n`-fold iterate multiplies the rate by `C ^ n`; taking
+`log_C` of that factor returns `n`, exactly the additive depth increment from
+`vdepth_iterate_additive`. So the comparison functor (and its log inverse) is 1-Lipschitz:
+one composition layer ↦ one unit of depth ↦ one unit of log-rate. -/
+
+/-- **Comparison is unit-Lipschitz.** The tropical multiplicative rate factor `C ^ n` has
+    `log_C` equal to `n`, the additive depth increment from `vdepth_iterate_additive`. Hence
+    depth and log-tropical-rate advance in lock-step: the comparison functor is a
+    1-Lipschitz isometry of the two cost grades. -/
+theorem rate_log_equals_depth_increment (C n : ℕ) (hC : 1 < C) :
+    Nat.log C (C ^ n) = n :=
+  Nat.log_pow hC n
+
+/-- **Round-trip on the depth system.** Applying the exponential comparison functor and
+    then `Nat.log` recovers the valuation depth exactly, on the concrete `vdepth` measure. -/
+theorem vdepth_eq_log_shadow (α : Type*) [Semiring α] [UltrametricCompositionLaw α]
+    (base : ℕ) (h : 1 < base) (f : α → α) :
+    Nat.log base (base ^ ValuationDepthMeasure.vdepth f) = ValuationDepthMeasure.vdepth f :=
+  Nat.log_pow h _
+
+/-! ## §5. Bridging into the tropical valuation carrier world
+
+-- !-- Lab Notes -- !--
+Final cross-link: the tropical-Lipschitz iterate bound of
+`CategoricalTropicalUltrametric` is itself an instance of the additive↔multiplicative
+comparison. We re-expose it here phrased as a *rate*, and pair it with the depth-side
+additive bound, so a downstream consumer sees both grades side by side with matching
+constants. -/
+
+open CategoricalTropicalUltrametric in
+/-- The tropical-Lipschitz iterate rate (catalog result) restated for the comparison:
+    a `C`-Lipschitz map's `n`-fold iterate has rate `C ^ n`, whose `log_C` is `n`. The
+    depth side (`vdepth_iterate_additive`) gives the *same* `+ n`. -/
+theorem tropical_rate_and_depth_agree
+    (X : CategoricalTropicalUltrametric.TropicalValuationCarrier)
+    {f : X.K → X.K} {C : ℕ} (hC : 1 < C)
+    (hLip : ∀ x, X.val (f x) ≤ C * X.val x) (n : ℕ) (x : X.K) :
+    X.val ((f^[n]) x) ≤ C ^ n * X.val x ∧ Nat.log C (C ^ n) = n :=
+  ⟨CategoricalTropicalUltrametric.iterated_tropical_lipschitz_rate hLip n x, Nat.log_pow hC n⟩
+
+end FunctorialDepthTropicalLipschitz
+
+-- Axiom audit for the key bridge theorems.
+#print axioms FunctorialDepthTropicalLipschitz.MaxPlusDepthSystem.shadow_comp_le
+#print axioms FunctorialDepthTropicalLipschitz.MaxPlusDepthSystem.shadow_iterC_le
+#print axioms FunctorialDepthTropicalLipschitz.MaxPlusDepthSystem.depth_eq_log_shadow
+#print axioms FunctorialDepthTropicalLipschitz.vdepth_iterate_additive
+#print axioms FunctorialDepthTropicalLipschitz.depth_iterate_shadow_matches_tropical_rate
+#print axioms FunctorialDepthTropicalLipschitz.tropical_rate_and_depth_agree

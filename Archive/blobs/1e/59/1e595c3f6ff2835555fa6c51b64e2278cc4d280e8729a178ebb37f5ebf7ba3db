@@ -1,0 +1,153 @@
+/-
+  # Categorical Tropical Rips Interleaving — Sharpness of Rank Stability on Two Points
+  ## On a 2-point space the rank/Betti-0 curve loses no information, so the catalog's
+  ## 1-Lipschitz contraction `rips_rank_interleavingDist_le` becomes an *equality*.
+
+  This file discharges **Conjecture E** of the Rank & Shift cycle's `FUTURE_DIRECTIONS`.
+  The catalog proved the inequality
+  `rips_rank_interleavingDist_le : interleavingDist (ripsRankCurve d) (ripsRankCurve d')
+    ≤ ENNReal.ofReal ε` (for sup-`ε`-close dissimilarities). On a *two-point* space this is
+  sharp: for the one-parameter family of 2-point metrics `twoPtMetric r` (off-diagonal
+  distance `r`, zero on the diagonal),
+  `interleavingDist (ripsRankCurve (twoPtMetric r)) (ripsRankCurve (twoPtMetric r'))
+    = ENNReal.ofReal |r - r'|`.
+
+  * `twoPtMetric r`: the 2-point dissimilarity on `Bool` with the single off-diagonal value `r`.
+  * `twoPt_rank_full`: above the threshold the rank curve saturates at `4` (the whole
+    edge lattice `Bool × Bool`).
+  * `twoPt_rank_lt`: below the threshold the off-diagonal edge is missing, so the rank curve
+    is `< 4` (a strict subset of the saturated lattice).
+  * `two_point_le`: a threshold-extraction lemma — any `ε`-interleaving forces
+    `r' - r ≤ ε` (when `r ≤ r'`).
+  * `rips_rank_two_point`: the sharpness equality.
+
+  -- !-- Lab Notes -- !--
+  -- HYPOTHESIS (Hypothesizer): on two points the edge-set lattice `Set (Bool × Bool)` is
+  --   tiny, and the rank curve (edge count) records the single threshold `r = d(x,y)`
+  --   faithfully. So the generic strict contraction of the rank functor (the open
+  --   Conjecture A) should *degenerate to equality* here — a clean sharpness companion to
+  --   the catalog's general inequality.
+  -- EXPERIMENT (Experimenter): the rank curve of `twoPtMetric r` is the step function
+  --   `t ↦ (0 if t<0 ; 2 if 0≤t<r ; 4 if r≤t)`. We avoid computing the middle value by only
+  --   using the two facts we need: it *saturates at 4* for `t ≥ r` (`twoPt_rank_full`, the
+  --   edge set is `Set.univ`, `ncard = Nat.card (Bool×Bool) = 4`), and it is *strictly below
+  --   4* for `t < r` because the off-diagonal pair `(true,false)` is absent
+  --   (`twoPt_rank_lt`, via `Set.ncard_lt_ncard` on a strict subset). Evaluating the
+  --   forward interleaving at `t = r` then forces `r' - r ≤ ε`.
+  -- ANALYSIS (Analyst): SURVIVED. The `≤` direction is the catalog's stability with the
+  --   sup perturbation `|r - r'|` (diagonal entries cost `0`, the single off-diagonal entry
+  --   costs `|r - r'|`); the `≥` direction is the threshold extraction. Equality is exactly
+  --   the "no information lost" phenomenon special to two points.
+  -- CRITIQUE (Critic): COUNTEREXAMPLE CHECK. On *three or more* points equality is expected
+  --   to fail (Conjecture A: `ncard` collapses non-nested equal-size edge sets), so the
+  --   theorem is genuinely 2-point-specific, not a generic identity — see FUTURE_DIRECTIONS.
+  --   The proof is non-vacuous: it uses the real threshold `r`, a strict cardinality drop,
+  --   and `le_antisymm` of two independent bounds. No `native_decide`, no `True`.
+-/
+
+import Mathlib
+import Bridges.CategoricalTropicalRipsInterleaving
+import Bridges.CategoricalTropicalRipsRank
+
+open scoped ENNReal
+open Tropical
+open CategoricalTropicalRipsInterleaving
+open CategoricalTropicalRipsRank
+
+noncomputable section
+
+namespace CategoricalTropicalRipsRankSharp
+
+/-! ## §1. The one-parameter family of two-point metrics. -/
+
+/-- The two-point dissimilarity on `Bool`: distance `0` on the diagonal and the single
+    off-diagonal value `r`. -/
+def twoPtMetric (r : ℝ) : Bool → Bool → ℝ := fun x y => if x = y then 0 else r
+
+/-! ## §2. Saturation and the strict drop of the rank curve. -/
+
+/-
+Above the threshold the edge set is the whole lattice `Bool × Bool`.
+-/
+theorem twoPt_full {r t : ℝ} (hr : 0 ≤ r) (ht : r ≤ t) :
+    {p : Bool × Bool | twoPtMetric r p.1 p.2 ≤ t} = Set.univ := by
+  unfold twoPtMetric;
+  grind
+
+/-
+Above the threshold the rank curve saturates at `4` (the size of `Bool × Bool`).
+-/
+theorem twoPt_rank_full {r t : ℝ} (hr : 0 ≤ r) (ht : r ≤ t) :
+    (ripsRankCurve (twoPtMetric r)).obj t = 4 := by
+  convert Set.ncard_univ ( α := Bool × Bool );
+  · convert congr_arg Set.ncard ( twoPt_full hr ht ) using 1;
+  · norm_num
+
+/-
+Below the threshold the off-diagonal edge `(true, false)` is missing.
+-/
+theorem twoPt_missing {r s : ℝ} (hs : s < r) :
+    ((true, false) : Bool × Bool) ∉ {p : Bool × Bool | twoPtMetric r p.1 p.2 ≤ s} := by
+  unfold twoPtMetric; aesop;
+
+/-
+Below the threshold the rank curve is strictly below the saturated value `4`.
+-/
+theorem twoPt_rank_lt {r s : ℝ} (hs : s < r) :
+    (ripsRankCurve (twoPtMetric r)).obj s < 4 := by
+  refine' lt_of_lt_of_le ( Set.ncard_lt_ncard _ _ ) _;
+  exact Set.univ;
+  · exact ⟨ Set.subset_univ _, fun h => twoPt_missing hs <| h <| Set.mem_univ _ ⟩;
+  · exact Set.toFinite _;
+  · norm_num [ Set.ncard_univ ]
+
+/-! ## §3. Threshold extraction: the lower bound on the interleaving distance. -/
+
+/-- **Threshold extraction.** If the two rank curves are `ε`-interleaved and `r ≤ r'`,
+    then `r' - r ≤ ε`: the rank curve faithfully records the off-diagonal threshold, so no
+    interleaving can be cheaper than the gap of thresholds. -/
+theorem two_point_le {r r' ε : ℝ} (hr : 0 ≤ r)
+    (h : Interleaved ε (ripsRankCurve (twoPtMetric r)) (ripsRankCurve (twoPtMetric r'))) :
+    r' - r ≤ ε := by
+  by_contra hcon
+  push_neg at hcon
+  have h1 : (ripsRankCurve (twoPtMetric r)).obj r = 4 := twoPt_rank_full hr le_rfl
+  have h2 := h.1 r
+  rw [h1] at h2
+  have h3 : (ripsRankCurve (twoPtMetric r')).obj (r + ε) < 4 := twoPt_rank_lt (by linarith)
+  omega
+
+/-! ## §4. Sharpness of rank stability on two points. -/
+
+/-- **Conjecture E (sharpness on two points).** For the one-parameter family of two-point
+    metrics, the Vietoris–Rips rank-curve interleaving distance is *exactly* the gap of
+    off-diagonal thresholds: the catalog's 1-Lipschitz contraction is an equality here. -/
+theorem rips_rank_two_point (r r' : ℝ) (hr : 0 ≤ r) (hr' : 0 ≤ r') :
+    interleavingDist (ripsRankCurve (twoPtMetric r)) (ripsRankCurve (twoPtMetric r'))
+      = ENNReal.ofReal |r - r'| := by
+  refine le_antisymm ?_ ?_
+  · -- catalog stability with sup perturbation |r - r'|
+    apply rips_rank_interleavingDist_le (twoPtMetric r) (twoPtMetric r') (abs_nonneg _)
+    intro x y
+    by_cases hxy : x = y
+    · simp only [twoPtMetric, if_pos hxy, sub_self, abs_zero]; positivity
+    · simp only [twoPtMetric, if_neg hxy]; exact le_refl _
+  · -- threshold extraction in both orderings
+    refine le_sInf ?_
+    rintro x ⟨ε, hε, hI, rfl⟩
+    apply ENNReal.ofReal_le_ofReal
+    rcases le_total r r' with hle | hle
+    · have hkey := two_point_le hr hI
+      rw [abs_of_nonpos (by linarith)]; linarith
+    · have hkey := two_point_le hr' hI.symm
+      rw [abs_of_nonneg (by linarith)]; linarith
+
+-- !-- Lab Notes -- !--
+-- SYNTHESIS (Principal Investigator): Conjecture E is discharged with 0 sorries. On a
+--   two-point space the Rips rank/Betti-0 curve is an isometric invariant: the interleaving
+--   distance of the rank curves equals `ofReal |r - r'|`, the only off-diagonal distance,
+--   so the catalog's general 1-Lipschitz contraction `rips_rank_interleavingDist_le` is
+--   sharp. The genericity of strict contraction (≥ 3 points) is recorded in
+--   FUTURE_DIRECTIONS.md (Conjecture A).
+
+end CategoricalTropicalRipsRankSharp

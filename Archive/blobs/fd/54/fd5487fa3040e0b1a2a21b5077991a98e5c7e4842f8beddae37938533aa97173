@@ -1,0 +1,76 @@
+/-
+# A local, fully-proved bridge for polynomial identity testing (PIT)
+
+This file salvages the core idea of the earlier (partial) `NullstellensatzPIT`
+development by keeping only what can be proved completely and locally, using
+nothing beyond Mathlib.
+
+We introduce a tiny syntactic language `SpExpr n` of arithmetic expressions in
+`n` variables built from `zero`, `one`, variable atoms, addition and
+multiplication.  Such an expression has two natural meanings over a commutative
+semiring `R`:
+
+* a *polynomial interpretation* `interp e : MvPolynomial (Fin n) R`, and
+* a *semantic evaluation* `sem v e : R` on an assignment `v : Fin n → R`.
+
+The single precise bridge theorem `eval_interp` says these agree: evaluating the
+polynomial interpretation at `v` returns the semantic evaluation.  From it we
+deduce the *local PIT lemma* `interp_zero_sem_zero`: if the polynomial
+interpretation is the zero polynomial, then the expression evaluates to `0` on
+every assignment.
+
+No finite-field converse, Schwartz–Zippel, degree/root counting, ideal
+membership, varieties, or Nullstellensatz statements are used or stated.  Every
+declaration below is proved with zero `sorry`s.
+-/
+import Mathlib
+
+open MvPolynomial
+
+/-- A tiny inductive language of arithmetic expressions in `n` variables. -/
+inductive SpExpr (n : ℕ) where
+  | zero : SpExpr n
+  | one : SpExpr n
+  | atom : Fin n → SpExpr n
+  | add : SpExpr n → SpExpr n → SpExpr n
+  | mul : SpExpr n → SpExpr n → SpExpr n
+
+namespace SpExpr
+
+variable {R : Type*} [CommSemiring R] {n : ℕ}
+
+/-- Polynomial interpretation of an expression into `MvPolynomial (Fin n) R`. -/
+noncomputable def interp : SpExpr n → MvPolynomial (Fin n) R
+  | zero => 0
+  | one => 1
+  | atom i => X i
+  | add a b => interp a + interp b
+  | mul a b => interp a * interp b
+
+/-- Semantic evaluation of an expression on an assignment `v : Fin n → R`. -/
+def sem (v : Fin n → R) : SpExpr n → R
+  | zero => 0
+  | one => 1
+  | atom i => v i
+  | add a b => sem v a + sem v b
+  | mul a b => sem v a * sem v b
+
+/-- **Bridge theorem.** Evaluating the polynomial interpretation at an
+assignment `v` agrees with the semantic evaluation. -/
+theorem eval_interp (v : Fin n → R) (e : SpExpr n) :
+    MvPolynomial.eval v (interp e : MvPolynomial (Fin n) R) = sem v e := by
+  induction e with
+  | zero => simp [interp, sem]
+  | one => simp [interp, sem]
+  | atom i => simp [interp, sem]
+  | add a b ha hb => simp [interp, sem, ha, hb]
+  | mul a b ha hb => simp [interp, sem, ha, hb]
+
+/-- **Local PIT lemma.** If the polynomial interpretation of an expression is the
+zero polynomial, then the expression evaluates to `0` on every assignment. -/
+theorem interp_zero_sem_zero {e : SpExpr n}
+    (h : (interp e : MvPolynomial (Fin n) R) = 0) (v : Fin n → R) :
+    sem v e = 0 := by
+  rw [← eval_interp, h, map_zero]
+
+end SpExpr

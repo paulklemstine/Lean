@@ -1,0 +1,117 @@
+/-
+Copyright (c) 2026 Harmonic. All rights reserved.
+Released under Apache 2.0 license.
+
+# Computable minimum-distance criteria from double-evenness
+
+This file turns the local algebraic identity `wt_add_overlap` of
+`Catalog.Applications.SmoothPoincare.TopologicalCodes` into a *computable
+minimum-distance criterion* for binary codes, exactly the "concrete lower-bound
+consequence for minimum distance" the Smooth-Poincaré coding programme calls for.
+
+The catalog already shows (by `native_decide`) that the extended Hamming code `[8,4,4]`
+has minimum distance `4` (`MinimumDistance.hamming_minDist_lower`).  Here we instead
+*derive* the lower bound `4 ≤ wt v` from the **doubly-even** structure alone, with no
+brute-force enumeration — mirroring how the lattice-side `E8` obstruction is derived
+from `E8_even` rather than checked by hand.
+
+We prove, fully `sorry`-free:
+
+* `wt_eq_zero_iff` — a binary vector has weight `0` iff it is the zero vector.
+* `wt_add_mod_two` — Hamming weight is additive **mod 2**:
+  `wt (x + y) ≡ wt x + wt y (mod 2)`, the parity shadow of `wt_add_overlap`.
+* `doublyEven_pos_wt_ge_four` — **the criterion**: any *nonzero* doubly-even vector has
+  weight `≥ 4`.  (A divisible-by-`4` positive natural number is at least `4`.)
+* `hdist_doublyEven_of_mem` — in a *linear* doubly-even code every pairwise Hamming
+  distance `hdist x y = wt (x + y)` is divisible by `4`.
+* `hamming_minDist_ge_four` / `hamming_hdist_div_four` — the `[8,4,4]` minimum-distance
+  bound and the divisibility of every pairwise distance by `4`, both obtained
+  *structurally* from `hamming_doublyEven` + `hamming_add_closed` rather than by
+  `native_decide`.
+
+-- !-- Lab Notes -- !--
+Hypothesis: the minimum-distance `4` of doubly-even codes is not a numerical accident
+  of the Hamming code but a structural consequence of `4 ∣ wt`; the only extra input is
+  "positive multiple of 4 ⇒ ≥ 4", so the bound should follow with no enumeration.
+Experiment: prove `wt_eq_zero_iff` and `doublyEven_pos_wt_ge_four`, then specialise to
+  `hamming` via `TopologicalCodes.hamming_doublyEven`; add the pairwise-distance
+  divisibility for linear codes via `hamming_add_closed`.
+Analysis: `doublyEven_pos_wt_ge_four` is the load-bearing step and is a pure `omega`
+  consequence of divisibility plus positivity; every Hamming corollary then drops out by
+  feeding in the catalog's `hamming_doublyEven` / `hamming_add_closed`.
+Critique: the results are general (`doublyEven_pos_wt_ge_four`, `hdist_doublyEven_of_mem`
+  hold for arbitrary `n` and arbitrary linear doubly-even codes), and the Hamming bound
+  is *derived*, not a `decide` wrapper, so the anti-trivial guardrail is met.
+Synthesis: a reusable certificate `doublyEven ⇒ minDist ≥ 4` plus `4 ∣` every distance.
+Failure analysis: `wt v = 0 ↔ v = 0` needs `Finset.card_eq_zero` together with a
+  coordinatewise `ZMod 2` case split; routing positivity through `Nat.pos_of_ne_zero`
+  keeps the final `omega` step linear.
+-/
+
+import Mathlib
+import Catalog.Applications.SmoothPoincare.TopologicalCodes
+
+open scoped BigOperators
+
+namespace SmoothPoincare
+namespace Codes
+
+variable {n : ℕ}
+
+/-- **Hamming distance** of two binary vectors: the weight of their (mod-2) difference,
+which over `ZMod 2` equals `wt (x + y)`. -/
+def hdist (x y : Fin n → ZMod 2) : ℕ := wt (x + y)
+
+/-
+A binary vector has weight `0` iff it is the zero vector.
+-/
+theorem wt_eq_zero_iff (v : Fin n → ZMod 2) : wt v = 0 ↔ v = 0 := by
+  rw [ eq_comm ];
+  constructor <;> intro h <;> simp_all +decide [ funext_iff, Finset.ext_iff ];
+  · rw [ eq_comm, wt ] at h;
+    intro i; have := Fin.exists_fin_two.mp ⟨ v i, rfl ⟩ ; aesop;
+  · unfold wt; aesop;
+
+/-
+**Hamming weight is additive mod 2** — the parity shadow of `wt_add_overlap`.
+-/
+theorem wt_add_mod_two (x y : Fin n → ZMod 2) :
+    wt (x + y) % 2 = (wt x + wt y) % 2 := by
+  have := @wt_add_overlap n x y; omega;
+
+/-
+**The minimum-distance criterion.** Any nonzero doubly-even vector has weight at
+least `4`: a positive multiple of `4` is at least `4`.
+-/
+theorem doublyEven_pos_wt_ge_four {v : Fin n → ZMod 2}
+    (h4 : DoublyEven v) (hv : v ≠ 0) : 4 ≤ wt v := by
+  exact Nat.le_of_dvd ( Nat.pos_of_ne_zero ( by simpa [ wt_eq_zero_iff ] using hv ) ) h4
+
+/-
+**Pairwise distances in a linear doubly-even code are divisible by `4`.**  If `C` is
+closed under addition and every codeword is doubly even, then for `x, y ∈ C` the Hamming
+distance `hdist x y` is divisible by `4`.
+-/
+theorem hdist_doublyEven_of_mem {C : Finset (Fin n → ZMod 2)}
+    (hadd : ∀ {x y}, x ∈ C → y ∈ C → x + y ∈ C)
+    (hDE : ∀ v ∈ C, DoublyEven v) {x y : Fin n → ZMod 2}
+    (hx : x ∈ C) (hy : y ∈ C) : 4 ∣ hdist x y := by
+  exact hDE _ ( hadd hx hy )
+
+/-! ## Structural `[8,4,4]` bounds for the extended Hamming code -/
+
+/-- **Minimum distance `≥ 4` for the Hamming code, derived structurally** from
+`hamming_doublyEven` via `doublyEven_pos_wt_ge_four`, with no `native_decide`. -/
+theorem hamming_minDist_ge_four {v : Fin 8 → ZMod 2}
+    (hv : v ∈ hamming) (hne : v ≠ 0) : 4 ≤ wt v :=
+  doublyEven_pos_wt_ge_four (hamming_doublyEven hv) hne
+
+/-- **Every pairwise distance of the Hamming code is divisible by `4`**, derived from
+linearity (`hamming_add_closed`) and double-evenness (`hamming_doublyEven`). -/
+theorem hamming_hdist_div_four {x y : Fin 8 → ZMod 2}
+    (hx : x ∈ hamming) (hy : y ∈ hamming) : 4 ∣ hdist x y :=
+  hdist_doublyEven_of_mem (fun hx hy => hamming_add_closed hx hy)
+    (fun _ hv => hamming_doublyEven hv) hx hy
+
+end Codes
+end SmoothPoincare

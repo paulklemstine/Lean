@@ -1,0 +1,349 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\newcommand{\Fin}{\mathrm{Fin}}
+\newcommand{\rowsum}{\mathrm{rowSum}}
+\newcommand{\colsum}{\mathrm{colSum}}
+\newcommand{\Nonneg}{\mathrm{Nonneg}}
+\newcommand{\SameMargins}{\mathrm{SameMargins}}
+\newcommand{\Step}{\mathrm{Step}}
+\newcommand{\Connected}{\mathrm{Connected}}
+\newcommand{\Bmove}{B}
+\newcommand{\Dist}{D}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+
+\title{The Markov Basis of the Two-Way Independence Model:\\
+A Constructive Connectivity Theorem}
+\author{Harmonic}
+\date{2026-06-15}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We give a complete, constructive treatment of the Fundamental Theorem of Markov
+Bases for the two-way independence model on integer contingency tables, in the
+form due to Diaconis and Sturmfels. Working with $m \times n$ integer tables and
+their one-dimensional margins (row sums and column sums), we prove that the family
+of \emph{basic $2 \times 2$ swap moves} --- the pinwheels
+$\Bmove(i,i',j,j') = e_{i,j'} + e_{i',j} - e_{i,j} - e_{i',j'}$ for distinct rows
+$i \neq i'$ and distinct columns $j \neq j'$ --- connects every fiber of the
+model: any two non-negative tables with identical margins are joined by a walk of
+legal basic moves that remains non-negative at every step. The proof is a
+potential-function (distance-reduction) argument built on a three-stage
+sign-pattern pigeonhole, and yields, as corollaries, that fiber connectivity is an
+equivalence relation whose classes are exactly the model's fibers. We state every
+definition, lemma, and theorem inline, supply proof sketches faithful to a fully
+formalized development, give explicit algorithms with complexity analysis, and
+discuss applications to exact conditional inference and directions for
+generalization.
+\end{abstract}
+
+\textbf{Keywords.} Algebraic statistics, Markov basis, contingency tables,
+independence model, Diaconis--Sturmfels theorem, fiber connectivity, lattice
+walks, exact conditional tests.
+
+\section{Introduction}
+
+A central task in categorical data analysis is to test whether two categorical
+variables are independent. Given an observed $m \times n$ table of counts, the
+exact conditional approach conditions on the sufficient statistics of the
+independence model --- the row and column margins --- and asks how extreme the
+observed table is relative to the \emph{fiber}: the set of all non-negative
+integer tables with those same margins. Because fibers are typically far too large
+to enumerate, one samples from them by a Markov chain Monte Carlo random walk. The
+walk takes small local steps between tables in the fiber, and the validity of the
+resulting inference rests on a single structural prerequisite: the step set must
+make the fiber connected, so that the chain is irreducible.
+
+Diaconis and Sturmfels (1998) crystallized this requirement into the notion of a
+\emph{Markov basis}: a finite set of moves whose induced walk connects every fiber
+of a model simultaneously, for all values of the sufficient statistics. Their
+theorem identifies Markov bases with generating sets of an associated toric ideal.
+For the two-way independence model, the Markov basis takes its simplest and most
+classical form: the $2 \times 2$ swap moves. This paper presents a self-contained,
+constructive proof that these swaps indeed connect every fiber, together with the
+surrounding structural theory (margin invariance, reversibility, the
+equivalence-relation structure of connectivity), at a level of rigor matching a
+complete formal verification.
+
+\section{Definitions}
+
+Throughout, fix natural numbers $m, n$. Indices range over the finite sets
+$\Fin\,m = \{0, \dots, m-1\}$ and $\Fin\,n = \{0, \dots, n-1\}$.
+
+\begin{definition}[Table]
+An $m \times n$ \emph{contingency table} is a function
+$u : \Fin\,m \to \Fin\,n \to \Z$. We write $u\,i\,j$ for the entry in row $i$,
+column $j$. Tables form an abelian group under pointwise addition.
+\end{definition}
+
+\begin{definition}[Margins]
+The \emph{row margin} and \emph{column margin} of a table $u$ are
+\[
+\rowsum\,u\,i = \sum_{j} u\,i\,j, \qquad \colsum\,u\,j = \sum_{i} u\,i\,j.
+\]
+\end{definition}
+
+\begin{definition}[Same fiber]
+Two tables $u, v$ have the \emph{same margins}, written $\SameMargins\,u\,v$, when
+\[
+(\forall i,\ \rowsum\,u\,i = \rowsum\,v\,i) \quad\text{and}\quad
+(\forall j,\ \colsum\,u\,j = \colsum\,v\,j).
+\]
+For non-negative tables this is precisely the condition that they lie in the same
+fiber of the independence model.
+\end{definition}
+
+\begin{definition}[Basic move]
+For rows $i, i'$ and columns $j, j'$, the \emph{basic $2 \times 2$ swap move} is
+the table
+\[
+\Bmove(i,i',j,j') = e_{i,j'} + e_{i',j} - e_{i,j} - e_{i',j'},
+\]
+i.e.\ the table that is $+1$ at cells $(i,j')$ and $(i',j)$, $-1$ at cells $(i,j)$
+and $(i',j')$, and $0$ elsewhere. On the $2 \times 2$ sub-rectangle spanned by
+$\{i,i'\} \times \{j,j'\}$:
+\[
+\begin{array}{c|cc}
+        & \text{col } j & \text{col } j' \\\hline
+\text{row } i  & -1 & +1 \\
+\text{row } i' & +1 & -1
+\end{array}
+\]
+\end{definition}
+
+\begin{definition}[Non-negativity]
+A table $u$ is \emph{non-negative}, $\Nonneg\,u$, when $u\,i\,j \geq 0$ for all
+$i, j$.
+\end{definition}
+
+\begin{definition}[Legal step]
+There is a \emph{legal step} from $u$ to $v$, $\Step\,u\,v$, when both $u$ and $v$
+are non-negative and there exist distinct rows $i \neq i'$ and distinct columns
+$j \neq j'$ with $v = u + \Bmove(i,i',j,j')$.
+\end{definition}
+
+\begin{definition}[Connectivity]
+Tables $u, v$ are \emph{connected}, $\Connected\,u\,v$, when there is a finite walk
+of legal steps from $u$ to $v$; formally, $\Connected$ is the reflexive--transitive
+closure of $\Step$.
+\end{definition}
+
+\begin{definition}[Distance]
+The $\ell^1$ (taxicab) distance between tables is
+\[
+\Dist(u, v) = \sum_{(i,j)} \lvert u\,i\,j - v\,i\,j \rvert \ \in \N.
+\]
+\end{definition}
+
+\section{Main Results}
+
+\begin{theorem}[Margin invariance]\label{thm:margins}
+For distinct rows $i \neq i'$ and distinct columns $j \neq j'$, and any table $u$,
+$\SameMargins\,u\,(u + \Bmove(i,i',j,j'))$. Every basic move lies in the kernel of
+the margin map.
+\end{theorem}
+
+\begin{theorem}[Distance separates tables]\label{thm:dzero}
+For all $u, v$, we have $\Dist(u,v) = 0 \iff u = v$.
+\end{theorem}
+
+\begin{theorem}[Sign-pattern pigeonhole]\label{thm:pigeon}
+If $\SameMargins\,u\,v$ and $u \neq v$, then there exist rows $i \neq i'$ and
+columns $j \neq j'$ with
+\[
+v\,i\,j < u\,i\,j, \qquad u\,i\,j' < v\,i\,j', \qquad v\,i'\,j' < u\,i'\,j'.
+\]
+That is, $u - v$ is positive at $(i,j)$, negative at $(i,j')$, and positive at
+$(i',j')$.
+\end{theorem}
+
+\begin{theorem}[Strict distance decrease]\label{thm:decrease}
+Under the hypotheses and conclusions of Theorem~\ref{thm:pigeon}, the
+corresponding basic move strictly decreases the distance to $v$:
+\[
+\Dist(u + \Bmove(i,i',j,j'),\, v) < \Dist(u, v).
+\]
+\end{theorem}
+
+\begin{theorem}[One legal downhill step]\label{thm:step}
+If $u, v$ are non-negative with $\SameMargins\,u\,v$ and $u \neq v$, then there
+exists a table $u'$ with $\Step\,u\,u'$ and $\Dist(u', v) < \Dist(u, v)$.
+\end{theorem}
+
+\begin{theorem}[Fundamental Theorem of Markov Bases, independence model]\label{thm:main}
+If $u, v$ are non-negative with $\SameMargins\,u\,v$, then $\Connected\,u\,v$. The
+basic $2 \times 2$ moves connect every fiber of the two-way independence model.
+\end{theorem}
+
+\begin{theorem}[Reversibility]\label{thm:symm}
+The step relation is symmetric: $\Step\,u\,v$ implies $\Step\,v\,u$. The inverse of
+$\Bmove(i,i',j,j')$ is $\Bmove(i',i,j,j')$, the same move with its two rows
+swapped, and $\Bmove(i,i',j,j') + \Bmove(i',i,j,j') = 0$.
+\end{theorem}
+
+\begin{corollary}[Fibers are equivalence classes]\label{cor:equiv}
+$\Connected$ is an equivalence relation (reflexive and transitive by construction,
+symmetric by Theorem~\ref{thm:symm}). Its equivalence classes are exactly the
+fibers of the independence model.
+\end{corollary}
+
+\section{Proof Sketches}
+
+\subsection{Margin invariance (Theorem~\ref{thm:margins})}
+By additivity of summation, $\rowsum\,(u + \Bmove)\,i = \rowsum\,u\,i +
+\rowsum\,\Bmove\,i$, so it suffices to show every margin of
+$\Bmove = \Bmove(i,i',j,j')$ vanishes. For a row $k \notin \{i,i'\}$ the entire row
+of $\Bmove$ is zero. For $k = i$ the only nonzero entries are $-1$ at column $j$
+and $+1$ at column $j'$; since $j \neq j'$ these are distinct cells and the row sum
+is $-1 + 1 = 0$. The case $k = i'$ is symmetric, and the column argument is
+identical with $i \neq i'$ in place of $j \neq j'$. Hence all margins of $\Bmove$
+vanish. \qed
+
+\subsection{Distance separates tables (Theorem~\ref{thm:dzero})}
+$\Dist(u,v)$ is a finite sum of natural numbers $\lvert u\,i\,j - v\,i\,j\rvert$. A
+sum of natural numbers is zero iff every summand is zero, and
+$\lvert u\,i\,j - v\,i\,j\rvert = 0$ iff $u\,i\,j = v\,i\,j$. Function
+extensionality gives $\Dist(u,v) = 0 \iff u = v$. \qed
+
+\subsection{Sign-pattern pigeonhole (Theorem~\ref{thm:pigeon})}
+Let $d = u - v$. Equal margins say every row and every column of $d$ sums to zero.
+
+\emph{Step 1 (surplus cell).} If $d\,i\,j \leq 0$ for all cells, then each row is a
+list of non-positive numbers summing to zero, forcing $d \equiv 0$ and $u = v$, a
+contradiction. So some $(i,j)$ has $d\,i\,j > 0$, i.e.\ $v\,i\,j < u\,i\,j$.
+
+\emph{Step 2 (deficit in row $i$).} Row $i$ sums to zero and contains the positive
+entry $d\,i\,j$; if all other entries were $\geq 0$ the row sum would be positive.
+So some $j'$ has $d\,i\,j' < 0$, i.e.\ $u\,i\,j' < v\,i\,j'$, and $j \neq j'$ since
+the two entries have opposite signs.
+
+\emph{Step 3 (surplus in column $j'$).} Column $j'$ sums to zero and contains the
+negative entry $d\,i\,j'$; so some $i'$ has $d\,i'\,j' > 0$, i.e.\
+$v\,i'\,j' < u\,i'\,j'$, and $i \neq i'$ by opposite signs.
+
+The triple realizes the required pattern with $i \neq i'$, $j \neq j'$. \qed
+
+\subsection{Strict distance decrease (Theorem~\ref{thm:decrease})}
+The move $\Bmove$ is supported on the four distinct cells
+$(i,j),(i,j'),(i',j),(i',j')$. Off this frame $u + \Bmove = u$, so all other cells
+contribute identically to $\Dist(u+\Bmove,v)$ and $\Dist(u,v)$ and cancel. On the
+frame: at $(i,j)$, $\Bmove = -1$ with $v\,i\,j < u\,i\,j$, so the term drops by $1$;
+at $(i,j')$, $\Bmove = +1$ with $u\,i\,j' < v\,i\,j'$, so the term drops by $1$; at
+$(i',j')$, $\Bmove = -1$ with $v\,i'\,j' < u\,i'\,j'$, so the term drops by $1$; at
+$(i',j)$, $\Bmove = +1$ with no sign information, so the term rises by at most $1$.
+The net change is at most $-1-1-1+1 = -2 < 0$. \qed
+
+\subsection{One legal downhill step (Theorem~\ref{thm:step})}
+Apply Theorem~\ref{thm:pigeon} and set $u' = u + \Bmove(i,i',j,j')$. Theorem~\ref{thm:decrease}
+gives $\Dist(u',v) < \Dist(u,v)$. For legality we check $u' \geq 0$: the cells where
+$\Bmove$ subtracts are $(i,j)$ and $(i',j')$, where $u$ strictly exceeds the
+non-negative $v$, hence is $\geq 1$, so decreasing by $1$ keeps them $\geq 0$; the
+cell where $\Bmove$ adds only increases a non-negative value. Thus $\Step\,u\,u'$.
+\qed
+
+\subsection{Fundamental Theorem (Theorem~\ref{thm:main})}
+Strong induction on a bound $N \geq \Dist(u,v)$. If $u = v$, use reflexivity.
+Otherwise $\Dist(u,v) > 0$ and Theorem~\ref{thm:step} gives a legal step
+$u \to u'$ with $\Dist(u',v) < \Dist(u,v) \leq N$. By Theorem~\ref{thm:margins}
+the step preserves margins, so $\SameMargins\,u'\,v$ and $u'$ is non-negative; the
+induction hypothesis yields $\Connected\,u'\,v$, and prepending the step gives
+$\Connected\,u\,v$. Specialize $N = \Dist(u,v)$. \qed
+
+\subsection{Reversibility and equivalence structure (Theorem~\ref{thm:symm}, Corollary~\ref{cor:equiv})}
+Swapping the two rows negates the move: $\Bmove(i',i,j,j') = -\Bmove(i,i',j,j')$,
+so $v = u + \Bmove(i,i',j,j')$ implies $u = v + \Bmove(i',i,j,j')$. The
+non-negativity conditions in $\Step$ are symmetric, so $\Step\,u\,v \Rightarrow
+\Step\,v\,u$. Folding through the reflexive--transitive closure shows $\Connected$
+is symmetric, hence an equivalence relation; by Theorem~\ref{thm:main} its classes
+are exactly the fibers. \qed
+
+\section{Algorithms}
+
+\subsection{Locating an aligned move}
+\textbf{Input:} distinct tables $u, v$ with equal margins. \textbf{Output:}
+indices $(i,i',j,j')$ realizing the sign pattern of Theorem~\ref{thm:pigeon}.
+\begin{enumerate}[label=\arabic*.]
+\item $d \gets u - v$.
+\item $(i,j) \gets$ any cell with $d[i][j] > 0$ (surplus, Step 1).
+\item $j' \gets$ any column with $d[i][j'] < 0$ (deficit in row $i$, Step 2).
+\item $i' \gets$ any row with $d[i'][j'] > 0$ (surplus in column $j'$, Step 3).
+\item \textbf{return} $(i,i',j,j')$.
+\end{enumerate}
+\emph{Complexity:} $O(mn)$ for the global scan plus $O(n)$ and $O(m)$ for the row
+and column searches; total $O(mn)$.
+
+\subsection{Connecting two tables (distance-reduction walk)}
+\textbf{Input:} non-negative $u, v$ with equal margins. \textbf{Output:} a
+non-negative walk of basic moves from $u$ to $v$.
+\begin{enumerate}[label=\arabic*.]
+\item $\text{walk} \gets [u]$.
+\item \textbf{while} $u \neq v$:
+  \begin{enumerate}[label=(\alph*)]
+  \item $(i,i',j,j') \gets \textsc{FindAlignedMove}(u,v)$.
+  \item $u \gets u + \Bmove(i,i',j,j')$; append $u$ to walk.
+  \end{enumerate}
+\item \textbf{return} walk.
+\end{enumerate}
+\emph{Termination and complexity:} each iteration decreases $\Dist$ by at least
+$2$, so the loop runs at most $\lceil \Dist(u_0,v)/2 \rceil$ times; each iteration
+costs $O(mn)$. Total $O(mn \cdot \Dist(u_0,v))$ with $\Dist(u_0,v) \leq 2N$, $N$
+the common grand total.
+
+\section{Applications}
+The $2\times2$ case is Fisher's exact test; the general case requires sampling the
+fiber, which Theorem~\ref{thm:main} legitimizes by guaranteeing the irreducibility
+needed for consistent Monte Carlo $p$-values. The same connectivity underlies
+disclosure-limitation analysis (the fiber is the adversary's uncertainty set),
+the lattice-point structure of transportation polytopes, and the foundational
+case of the Diaconis--Sturmfels correspondence between Markov bases and toric
+ideals.
+
+\section{Discussion}
+The value of this treatment is its constructive, gap-free character. The
+potential-function method --- an integer-valued distance plus a uniform
+strict-decrease lemma --- is robust and transfers to many connectivity questions.
+The one subtle ingredient is the three-stage pigeonhole, which uses equal margins
+exactly three times and extracts the distinctness $i \neq i'$, $j \neq j'$ for free
+from opposing signs. Distinctness is essential to margin cancellation, and
+non-negativity is what gives the theorem content: over the full integer lattice
+connectivity is trivial, but staying in the non-negative cone requires the careful
+sign-aligned orientation.
+
+\section{Future Directions}
+\begin{itemize}
+\item Extend the constructive framework to $n$-way and hierarchical log-linear
+models, where minimal Markov bases are richer.
+\item Quantify mixing: explicit fiber-diameter and mixing-time bounds for the
+symmetric random walk.
+\item Formalize the Markov-basis / toric-ideal correspondence.
+\item Study shortest connecting walks and optimality of greedy sign-aligned steps.
+\item Treat constrained fibers (structural zeros, cell bounds) where $2 \times 2$
+moves no longer suffice.
+\end{itemize}
+
+\section{Conclusion}
+The basic $2 \times 2$ swap moves form a Markov basis for the two-way independence
+model: any two non-negative tables with equal margins are connected by a
+non-negative walk of these moves. The proof rests on margin invariance, a
+three-stage sign-pattern pigeonhole, and a uniform $\ell^1$ distance-decrease
+lemma assembled by strong induction; reversibility upgrades connectivity to an
+equivalence relation whose classes are the fibers.
+
+\end{document}

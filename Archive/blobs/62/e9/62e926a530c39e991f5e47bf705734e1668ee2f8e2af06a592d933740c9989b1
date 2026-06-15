@@ -1,0 +1,165 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license.
+
+# Spectral Threshold Foundation for the Discrete Hodge Program
+
+This file is the **decomposition / spectral foundation** on which the message-passing
+cycles (`HodgeMessagePassingConvergence`, `HodgeMessagePassingDuality`,
+`HodgeMessagePassingEnergy`, `HodgeDeepLimit`) are built.
+
+The abstract combinatorial Hodge Laplacian is the sum of an *up* (coboundary∘boundary)
+and a *down* (boundary∘coboundary) piece,
+
+  `Δ = up + down`  (`hodgeLaplacian up down`),
+
+each of which is symmetric and positive semidefinite (PSD) for the inner product.
+The headline structural fact of the cycle is the **harmonic characterisation**
+
+  `Δ x = 0  ↔  up x = 0 ∧ down x = 0`   (`harmonic_iff`),
+
+i.e. a cochain is harmonic (= a representative of Hodge cohomology) exactly when it is
+simultaneously *closed* (`down x = 0`) and *coclosed* (`up x = 0`).  The non-trivial
+direction rests on the Cauchy–Schwarz fact that a symmetric PSD operator `A` has
+`⟪A x, x⟫ = 0 → A x = 0` (`psd_inner_self_eq_zero`); applied to `up` and `down`
+separately after splitting the Dirichlet energy `⟪Δx,x⟫ = ⟪up x,x⟫ + ⟪down x,x⟫`.
+As a submodule statement this reads `ker Δ = ker up ⊓ ker down`
+(`ker_hodgeLaplacian`).
+
+-- !-- Lab Notebook -- !--
+Hypothesis:  The Hodge Laplacian `Δ = up + down` is symmetric PSD, and its kernel is
+  the intersection of the kernels of the two PSD pieces — because the Dirichlet energy
+  splits as a sum of two nonnegative terms, each of which must vanish on a harmonic
+  cochain, and a symmetric PSD operator is determined to be zero by the vanishing of
+  its diagonal quadratic form.
+Result:  Formalised and proved sorry-free.  `psd_inner_self_eq_zero` (the Cauchy–Schwarz
+  kernel criterion), `hodgeLaplacian_symm` / `hodgeLaplacian_pos` (Δ is symmetric PSD),
+  `hodgeLaplacian_energy_split` (additive Dirichlet energy), `harmonic_iff`
+  (closed-and-coclosed characterisation), and `ker_hodgeLaplacian` (submodule form).
+Insight:  The decisive lemma is `psd_inner_self_eq_zero`: for a symmetric PSD `A`,
+  the form `B(u,v) = ⟪A u, v⟫` is a semidefinite symmetric bilinear form, so the
+  Cauchy–Schwarz inequality `B(x,y)² ≤ B(x,x)·B(y,y)` forces `B(x, A x) = ‖A x‖² = 0`
+  once `B(x,x) = 0`.  No spectral theorem or finite-dimensionality is needed.
+Failure analysis:  Working with the inner-product energy `⟪A x, x⟫` (rather than the
+  norm) keeps every estimate polynomial and avoids `Real.sqrt`; phrasing the quadratic
+  `0 ≤ ⟪A (x - t • A x), x - t • A x⟫` in `t` lets a single `nlinarith`/derivative-free
+  argument extract `‖A x‖² = 0`.
+-- !-- Lab Notebook -- !--
+-/
+import Mathlib
+
+open scoped InnerProductSpace BigOperators Topology
+
+namespace HodgeSpectralThreshold
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E]
+
+/-! ## The abstract Hodge Laplacian `Δ = up + down` -/
+
+/-- The abstract combinatorial Hodge Laplacian as the sum of its up and down pieces. -/
+def hodgeLaplacian (up down : E →ₗ[ℝ] E) : E →ₗ[ℝ] E := up + down
+
+@[simp] theorem hodgeLaplacian_apply (up down : E →ₗ[ℝ] E) (x : E) :
+    hodgeLaplacian up down x = up x + down x := rfl
+
+/-! ## Cauchy–Schwarz kernel criterion for symmetric PSD operators -/
+
+/-
+!-- comment: For symmetric PSD `A`, `B(u,v) = ⟪A u, v⟫` is a semidefinite symmetric
+form.  With `B(x,x) = 0`, expand `0 ≤ B(x - t•A x, x - t•A x) = -2t‖A x‖² + t²·B(Ax,Ax)`;
+choosing `t` small and positive forces `‖A x‖² = 0`, i.e. `A x = 0`. -- !--
+
+**Cauchy–Schwarz kernel criterion.** A symmetric positive-semidefinite operator `A`
+sends `x` to `0` whenever its diagonal quadratic form `⟪A x, x⟫` vanishes.
+-/
+theorem psd_inner_self_eq_zero (A : E →ₗ[ℝ] E)
+    (hsymm : ∀ x y, ⟪A x, y⟫_ℝ = ⟪x, A y⟫_ℝ)
+    (hpos : ∀ x, 0 ≤ ⟪A x, x⟫_ℝ) {x : E} (h : ⟪A x, x⟫_ℝ = 0) : A x = 0 := by
+  by_contra h_contra;
+  -- For every real t, the nonnegativity 0 ≤ ⟪A (x - t • A x), (x - t • A x)⟫ (from hpos). Expand using bilinearity of the inner product and symmetry of A:
+  have h_expand : ∀ t : ℝ, 0 ≤ -2 * t * ‖A x‖^2 + t^2 * ⟪A (A x), A x⟫_ℝ := by
+    intro t
+    have := hpos (x - t • A x)
+    simp_all +decide [ inner_sub_left, inner_sub_right, inner_smul_left, inner_smul_right ];
+    linarith;
+  contrapose! h_expand;
+  exact ⟨ ‖A x‖ ^ 2 / ( ⟪A ( A x ), A x⟫_ℝ + 1 ), by nlinarith [ show 0 < ‖A x‖ ^ 2 by exact sq_pos_of_pos ( norm_pos_iff.mpr h_contra ), show 0 ≤ ⟪A ( A x ), A x⟫_ℝ by exact hpos _, div_mul_cancel₀ ( ‖A x‖ ^ 2 ) ( show ( ⟪A ( A x ), A x⟫_ℝ + 1 ) ≠ 0 by linarith [ hpos ( A x ) ] ) ] ⟩
+
+/-! ## `Δ` is symmetric and positive semidefinite -/
+
+/-
+!-- comment: `⟪(up+down)x, y⟫ = ⟪up x,y⟫ + ⟪down x,y⟫ = ⟪x,up y⟫ + ⟪x,down y⟫`. -- !--
+
+**Symmetry of the Hodge Laplacian.** If both pieces are symmetric, so is `Δ`.
+-/
+theorem hodgeLaplacian_symm (up down : E →ₗ[ℝ] E)
+    (hsymm_up : ∀ x y, ⟪up x, y⟫_ℝ = ⟪x, up y⟫_ℝ)
+    (hsymm_down : ∀ x y, ⟪down x, y⟫_ℝ = ⟪x, down y⟫_ℝ) (x y : E) :
+    ⟪hodgeLaplacian up down x, y⟫_ℝ = ⟪x, hodgeLaplacian up down y⟫_ℝ := by
+  simp +decide [ hodgeLaplacian, inner_add_left, inner_add_right, hsymm_up, hsymm_down ]
+
+/-
+!-- comment: `⟪Δx,x⟫ = ⟪up x,x⟫ + ⟪down x,x⟫`, a sum of two nonnegative terms. -- !--
+
+**Additive Dirichlet energy.** The quadratic form of `Δ` splits as the sum of the
+up- and down-energies.
+-/
+theorem hodgeLaplacian_energy_split (up down : E →ₗ[ℝ] E) (x : E) :
+    ⟪hodgeLaplacian up down x, x⟫_ℝ = ⟪up x, x⟫_ℝ + ⟪down x, x⟫_ℝ := by
+  exact inner_add_left _ _ _
+
+/-
+!-- comment: The energy splits as two nonnegative pieces by
+`hodgeLaplacian_energy_split`. -- !--
+
+**Positive semidefiniteness of the Hodge Laplacian.** If both pieces are PSD, so is
+`Δ`.
+-/
+theorem hodgeLaplacian_pos (up down : E →ₗ[ℝ] E)
+    (hpos_up : ∀ x, 0 ≤ ⟪up x, x⟫_ℝ)
+    (hpos_down : ∀ x, 0 ≤ ⟪down x, x⟫_ℝ) (x : E) :
+    0 ≤ ⟪hodgeLaplacian up down x, x⟫_ℝ := by
+  convert add_nonneg ( hpos_up x ) ( hpos_down x ) using 1;
+  convert hodgeLaplacian_energy_split up down x using 1
+
+/-! ## The harmonic characterisation: closed ∧ coclosed -/
+
+/-
+!-- comment: (⇐) trivial.  (⇒) take `⟪Δx,x⟫ = ⟪up x,x⟫ + ⟪down x,x⟫ = 0` with both
+terms `≥ 0`, so each is `0`; apply `psd_inner_self_eq_zero` to `up` and `down`. -- !--
+
+**Harmonic characterisation.** A cochain is harmonic (`Δ x = 0`) iff it is closed and
+coclosed (`up x = 0 ∧ down x = 0`); the structural core of discrete Hodge theory.
+-/
+theorem harmonic_iff (up down : E →ₗ[ℝ] E)
+    (hsymm_up : ∀ x y, ⟪up x, y⟫_ℝ = ⟪x, up y⟫_ℝ)
+    (hpos_up : ∀ x, 0 ≤ ⟪up x, x⟫_ℝ)
+    (hsymm_down : ∀ x y, ⟪down x, y⟫_ℝ = ⟪x, down y⟫_ℝ)
+    (hpos_down : ∀ x, 0 ≤ ⟪down x, x⟫_ℝ) (x : E) :
+    hodgeLaplacian up down x = 0 ↔ (up x = 0 ∧ down x = 0) := by
+  constructor <;> intro h;
+  · -- By the properties of the inner product and the symmetry of `up` and `down`, we have:
+    have h_inner : ⟪up x, x⟫_ℝ + ⟪down x, x⟫_ℝ = 0 := by
+      rw [ ← hodgeLaplacian_energy_split, h, inner_zero_left ];
+    exact ⟨ psd_inner_self_eq_zero up hsymm_up hpos_up ( by linarith [ hpos_up x, hpos_down x ] ), psd_inner_self_eq_zero down hsymm_down hpos_down ( by linarith [ hpos_up x, hpos_down x ] ) ⟩;
+  · unfold hodgeLaplacian; aesop;
+
+/-
+!-- comment: `ext x`; membership in `ker Δ` is `Δ x = 0`, which `harmonic_iff` turns
+into `up x = 0 ∧ down x = 0`, i.e. membership in `ker up ⊓ ker down`. -- !--
+
+**Kernel of the Hodge Laplacian (submodule form).** `ker Δ = ker up ⊓ ker down`:
+the harmonic space is the intersection of the closed and coclosed cochains.
+-/
+theorem ker_hodgeLaplacian (up down : E →ₗ[ℝ] E)
+    (hsymm_up : ∀ x y, ⟪up x, y⟫_ℝ = ⟪x, up y⟫_ℝ)
+    (hpos_up : ∀ x, 0 ≤ ⟪up x, x⟫_ℝ)
+    (hsymm_down : ∀ x y, ⟪down x, y⟫_ℝ = ⟪x, down y⟫_ℝ)
+    (hpos_down : ∀ x, 0 ≤ ⟪down x, x⟫_ℝ) :
+    LinearMap.ker (hodgeLaplacian up down)
+      = LinearMap.ker up ⊓ LinearMap.ker down := by
+  ext x
+  simp only [LinearMap.mem_ker, Submodule.mem_inf,
+    harmonic_iff up down hsymm_up hpos_up hsymm_down hpos_down x]
+
+end HodgeSpectralThreshold

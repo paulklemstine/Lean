@@ -1,0 +1,396 @@
+import Mathlib
+import Bridges.CoalgebraicNeuralMyhillNerode
+import Algebra.ProofSpectra.Core
+import Bridges.NeuralPseudometricProofSpectrumFunctor
+
+/-! # Deepening the Neural-Pseudometric ↔ Proof-Spectrum Functor
+
+This file *deepens* `Bridges.NeuralPseudometricProofSpectrumFunctor`, which built the
+bridge
+
+  neural observation pseudometric  ⟶  congruence kernel  ⟶  proof-spectrum congruence
+
+via the discrete pseudometric `obsDist` (distance `0`/`1`).  Two explicit conjectures were
+left open in that file's lab notes:
+
+* **F1 (graded ultrametric).** Replace the discrete pseudometric by a *depth-graded
+  ultrametric* `gradedDist x y = 2^(-d)` where `d` is the least observation depth that
+  separates `x` from `y`.  The earlier note worried that the `sInf` of a possibly-empty
+  separating set degenerates.  Here we resolve it: with the `if behaviorRel` guard the
+  value is well defined, and — crucially — it satisfies the **strong (ultrametric)
+  triangle inequality**, refining the discrete pseudometric while keeping the same kernel.
+
+* **F2 (primality).** `behaviorCongruence N` need not be a *prime* congruence.  Here we
+  isolate a clean, genuine extra hypothesis — a **faithful observation point** `w₀`
+  together with an integral-domain output — under which the behavior congruence upgrades
+  to a `PrimeSRCong R`, i.e. an honest point of the `ProofSpectrum R`.
+
+We also push the *geometric* (Lipschitz/functorial) story further: morphisms of algebraic
+neural systems are **non-expansive** for the graded ultrametric, and the graded ultrametric
+**refines** the discrete pseudometric.
+
+## Main results
+
+* `gradedDist_nonneg`, `gradedDist_self`, `gradedDist_comm`, `gradedDist_eq_zero_iff` —
+  `gradedDist` is a pseudometric-like distance with kernel = behavioral equivalence.
+* `gradedDist_strong_triangle` — the **ultrametric** (strong triangle) inequality.
+* `gradedDist_le_obsDist` — the graded ultrametric refines the discrete pseudometric.
+* `gradedDist_kernel_eq_congruence` — same kernel as the proof-spectrum congruence.
+* `gradedDist_map_le` — morphisms of algebraic neural systems are non-expansive.
+* `behaviorPrimeCongruence` — under a faithful point + integral domain, the behavior
+  congruence is a `PrimeSRCong R`.
+* `behaviorPrimeCongruence_mem_spectrum` / `behaviorPrime_vanishes_iff` — it is a point of
+  the proof spectrum, with the expected vanishing locus.
+-/
+
+noncomputable section
+open Classical
+open Bridges.AlgebraMachineLearning
+open Bridges.NeuralProofSpectrum
+
+namespace Bridges.NeuralProofSpectrumDeep
+
+universe u v w
+
+variable {R S K : Type*} {α : Type*}
+
+/-! ## Section 0: the underlying coalgebra and depth-wise agreement
+
+We abbreviate the underlying (unweighted) neural observation system and recall the
+definitional identity `neural_behavior (toNeural N) = algBehavior N`.
+-/
+
+/-- The underlying coalgebra of an algebraic neural system. -/
+def toNeural [Semiring R] [Semiring K] (N : AlgNeuralSystem R K α) :
+    NeuralObservationSystem R α K :=
+  weighted_to_neural N.toWeighted
+
+theorem neural_behavior_eq_algBehavior [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x : R) (w : List α) :
+    neural_behavior (toNeural N) x w = algBehavior N x w := rfl
+
+/-- Depth-`k` agreement of two states (agree on all contexts of length `≤ k`). -/
+def agreeUpto [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (k : ℕ) (x y : R) : Prop :=
+  neural_equiv_upto (toNeural N) k x y
+
+theorem agreeUpto_iff [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (k : ℕ) (x y : R) :
+    agreeUpto N k x y ↔ ∀ w : List α, w.length ≤ k → algBehavior N x w = algBehavior N y w :=
+  Iff.rfl
+
+theorem agreeUpto_symm [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) {k : ℕ} {x y : R}
+    (h : agreeUpto N k x y) : agreeUpto N k y x :=
+  fun w hw => (h w hw).symm
+
+theorem agreeUpto_trans [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) {k : ℕ} {x y z : R}
+    (hxy : agreeUpto N k x y) (hyz : agreeUpto N k y z) : agreeUpto N k x z :=
+  fun w hw => (hxy w hw).trans (hyz w hw)
+
+theorem agreeUpto_mono [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) {j k : ℕ} (hjk : j ≤ k) {x y : R}
+    (h : agreeUpto N k x y) : agreeUpto N j x y :=
+  fun w hw => h w (hw.trans hjk)
+
+/-- Behavioral equivalence is exactly agreement at every depth. -/
+theorem behaviorRel_iff_agree_all [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x y : R) :
+    behaviorRel N x y ↔ ∀ k, agreeUpto N k x y :=
+  behaviorRel_iff_all_depth N x y
+
+/-! ## Section 1: separating depth and the graded ultrametric
+
+-- !-- Lab Notes -- !--
+-- Hypothesis H1 (resolving F1).  Define `sepDepth x y = sInf {k | ¬ agreeUpto N k x y}`.
+-- When `x ≁ y` the set is nonempty (a separating word of some length exists), so
+-- `sepDepth` is a genuine least separating depth and lands *in* the set
+-- (`Nat.sInf_mem`).  Guarded by `if behaviorRel` the distance `2^(-sepDepth)` is well
+-- defined and strictly positive off the diagonal.
+--
+-- Insight I1.  The STRONG triangle inequality holds.  Key combinatorial fact:
+-- depth-`m` agreement is, for each fixed `m`, an equivalence relation (`agreeUpto_trans`).
+-- If `x ≁ z` and `m = sepDepth x z`, then if BOTH `gradedDist x y < gradedDist x z` and
+-- `gradedDist y z < gradedDist x z`, we would get `agreeUpto m x y` and `agreeUpto m y z`,
+-- hence `agreeUpto m x z` — contradicting `m ∈ {k | ¬ agreeUpto N k x z}`.  Hence the max
+-- of the two dominates, which is exactly the ultrametric inequality.
+-/
+
+/-- The least observation depth that separates `x` from `y` (`0` by convention when they
+    are behaviorally equivalent — guarded away in `gradedDist`). -/
+def sepDepth [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x y : R) : ℕ :=
+  sInf {k | ¬ agreeUpto N k x y}
+
+theorem sepDepth_symm [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x y : R) :
+    sepDepth N x y = sepDepth N y x := by
+  unfold sepDepth
+  congr 1
+  ext k
+  exact ⟨fun h hh => h (agreeUpto_symm N hh), fun h hh => h (agreeUpto_symm N hh)⟩
+
+/-- If `x ≁ y` the separating set is nonempty, so `sepDepth` realises an actual
+    separating depth: `x` and `y` do **not** agree up to `sepDepth N x y`. -/
+theorem not_agree_sepDepth [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) {x y : R} (h : ¬ behaviorRel N x y) :
+    ¬ agreeUpto N (sepDepth N x y) x y := by
+  have hne : {k | ¬ agreeUpto N k x y}.Nonempty := by
+    by_contra hc
+    apply h
+    rw [behaviorRel_iff_agree_all]
+    intro k
+    by_contra hk
+    exact hc ⟨k, hk⟩
+  exact Nat.sInf_mem hne
+
+/-- If a depth `j` is below the separating depth, the states agree up to `j`. -/
+theorem agree_of_lt_sepDepth [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) {x y : R} {j : ℕ} (hj : j < sepDepth N x y) :
+    agreeUpto N j x y := by
+  by_contra hc
+  have : sepDepth N x y ≤ j := Nat.sInf_le hc
+  omega
+
+/-- The **depth-graded observation ultrametric**: distance `0` for behaviorally
+    indistinguishable states, else `2^(-d)` where `d` is the least separating depth. -/
+def gradedDist [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x y : R) : ℝ :=
+  if behaviorRel N x y then 0 else (2 : ℝ) ^ (-(sepDepth N x y : ℤ))
+
+theorem gradedDist_nonneg [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x y : R) : 0 ≤ gradedDist N x y := by
+  unfold gradedDist
+  split_ifs with h
+  · exact le_refl 0
+  · positivity
+
+theorem gradedDist_self [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x : R) : gradedDist N x x = 0 := by
+  simp [gradedDist, behaviorRel_refl]
+
+theorem gradedDist_comm [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x y : R) : gradedDist N x y = gradedDist N y x := by
+  unfold gradedDist
+  rw [sepDepth_symm N x y]
+  by_cases h : behaviorRel N x y
+  · rw [if_pos h, if_pos (behaviorRel_symm N h)]
+  · rw [if_neg h, if_neg (fun hh => h (behaviorRel_symm N hh))]
+
+theorem gradedDist_eq_zero_iff [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x y : R) :
+    gradedDist N x y = 0 ↔ behaviorRel N x y := by
+  unfold gradedDist
+  split_ifs with h
+  · simp [h]
+  · constructor
+    · intro hz
+      exact absurd hz (by positivity)
+    · intro hh; exact absurd hh h
+
+/-- Positivity off the diagonal, with the explicit value. -/
+theorem gradedDist_of_not_rel [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) {x y : R} (h : ¬ behaviorRel N x y) :
+    gradedDist N x y = (2 : ℝ) ^ (-(sepDepth N x y : ℤ)) := by
+  simp [gradedDist, h]
+
+/-- The graded ultrametric **refines** the discrete observation pseudometric:
+    `gradedDist ≤ obsDist` everywhere (and they share the same kernel). -/
+theorem gradedDist_le_obsDist [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x y : R) :
+    gradedDist N x y ≤ obsDist N x y := by
+  unfold gradedDist obsDist
+  split_ifs with h
+  · norm_num
+  · have : (2 : ℝ) ^ (-(sepDepth N x y : ℤ)) ≤ 1 := by
+      apply zpow_le_one_of_nonpos₀ (by norm_num)
+      simp
+    simpa using this
+
+/-- The kernel of the graded ultrametric is exactly the proof-spectrum congruence. -/
+theorem gradedDist_kernel_eq_congruence [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x y : R) :
+    gradedDist N x y = 0 ↔ (behaviorCongruence N).rel x y := by
+  rw [gradedDist_eq_zero_iff]; rfl
+
+/-! ### The ultrametric (strong triangle) inequality
+
+-- !-- Lab Notes -- !--
+-- Result R1 (resolving F1).  The crux is `gradedDist_strong_triangle`.  The helper
+-- `agree_of_dist_lt` says: if `gradedDist x y < gradedDist x z` (with `x ≁ z`), then `x`
+-- and `y` agree up to `m = sepDepth x z`.  Two regimes: if `x ~ y` it is automatic; else
+-- `2^(-sepDepth x y) < 2^(-m)` forces `sepDepth x y > m`, hence `agreeUpto m x y` by
+-- `agree_of_lt_sepDepth`.  Combining the two helpers with `agreeUpto_trans` against
+-- `not_agree_sepDepth` gives the contradiction, i.e. the strong triangle bound.
+-/
+
+/-- If a state `y` is strictly closer to `x` than `z` is, then `x` and `y` agree up to the
+    separating depth of `x` and `z`. -/
+theorem agree_of_dist_lt [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) {x y z : R} (hxz : ¬ behaviorRel N x z)
+    (hlt : gradedDist N x y < gradedDist N x z) :
+    agreeUpto N (sepDepth N x z) x y := by
+  by_cases hxy : behaviorRel N x y
+  · -- behavioral equivalence implies agreement at every depth
+    exact (behaviorRel_iff_agree_all N x y).mp hxy _
+  · -- strict inequality on the exponentials forces a deeper separation depth
+    rw [gradedDist_of_not_rel N hxy, gradedDist_of_not_rel N hxz] at hlt
+    have hbase : (1 : ℝ) < 2 := by norm_num
+    have hexp : (-(sepDepth N x y : ℤ)) < (-(sepDepth N x z : ℤ)) :=
+      (zpow_lt_zpow_iff_right₀ hbase).mp hlt
+    have : (sepDepth N x z : ℤ) < (sepDepth N x y : ℤ) := by omega
+    have hmlt : sepDepth N x z < sepDepth N x y := by exact_mod_cast this
+    exact agree_of_lt_sepDepth N hmlt
+
+/-- **The ultrametric inequality.** `gradedDist` satisfies the strong triangle
+    inequality, so the observation distance is a genuine pseudo-ultrametric. -/
+theorem gradedDist_strong_triangle [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x y z : R) :
+    gradedDist N x z ≤ max (gradedDist N x y) (gradedDist N y z) := by
+  by_cases hxz : behaviorRel N x z
+  · rw [(gradedDist_eq_zero_iff N x z).mpr hxz]
+    exact le_max_of_le_left (gradedDist_nonneg N x y)
+  · -- it suffices that not both legs are strictly shorter than `x`–`z`
+    rw [le_max_iff]
+    by_contra hcon
+    push_neg at hcon
+    obtain ⟨h1, h2⟩ := hcon
+    have hxy : agreeUpto N (sepDepth N x z) x y := agree_of_dist_lt N hxz h1
+    have hyz : agreeUpto N (sepDepth N x z) y z := by
+      have hzx : ¬ behaviorRel N z x := fun h => hxz (behaviorRel_symm N h)
+      have hlt : gradedDist N z y < gradedDist N z x := by
+        rw [gradedDist_comm N z y, gradedDist_comm N z x]; exact h2
+      have hzy := agree_of_dist_lt N hzx hlt
+      rw [sepDepth_symm N z x] at hzy
+      exact agreeUpto_symm N hzy
+    exact not_agree_sepDepth N hxz (agreeUpto_trans N hxy hyz)
+
+/-! ## Section 2: functoriality is non-expansive (Lipschitz geometry)
+
+-- !-- Lab Notes -- !--
+-- Result R2 (geometric functoriality).  In the base file morphisms preserve the kernel.
+-- Here we sharpen this to a *metric* statement: an `AlgNeuralHom` is non-expansive for the
+-- graded ultrametric.  Reason: depth-`k` agreement is preserved by morphisms (immediate
+-- from `algBehavior_map`), so the separating set of the image is contained in that of the
+-- source, whence `sepDepth` can only grow, whence the distance can only shrink.
+-/
+
+/-- Morphisms preserve depth-wise agreement (they can only merge states). -/
+theorem agreeUpto_map [Semiring R] [Semiring S] [Semiring K]
+    {N : AlgNeuralSystem R K α} {M : AlgNeuralSystem S K α} (f : AlgNeuralHom N M)
+    {k : ℕ} {x y : R} (h : agreeUpto N k x y) :
+    agreeUpto M k (f.toFun x) (f.toFun y) := by
+  intro w hw
+  rw [neural_behavior_eq_algBehavior, neural_behavior_eq_algBehavior,
+      ← algBehavior_map f x w, ← algBehavior_map f y w]
+  exact h w hw
+
+/-- Morphisms cannot decrease the separating depth. -/
+theorem sepDepth_map_ge [Semiring R] [Semiring S] [Semiring K]
+    {N : AlgNeuralSystem R K α} {M : AlgNeuralSystem S K α} (f : AlgNeuralHom N M)
+    {x y : R} (h : ¬ behaviorRel M (f.toFun x) (f.toFun y)) :
+    sepDepth N x y ≤ sepDepth M (f.toFun x) (f.toFun y) := by
+  -- the image separates at `sepDepth M`, hence so does the source
+  have hsep : ¬ agreeUpto N (sepDepth M (f.toFun x) (f.toFun y)) x y := by
+    intro hc
+    exact not_agree_sepDepth M h (agreeUpto_map f hc)
+  exact Nat.sInf_le hsep
+
+/-- **Non-expansiveness.** An `AlgNeuralHom` is `1`-Lipschitz for the graded ultrametric:
+    images are never farther apart than their preimages. -/
+theorem gradedDist_map_le [Semiring R] [Semiring S] [Semiring K]
+    {N : AlgNeuralSystem R K α} {M : AlgNeuralSystem S K α} (f : AlgNeuralHom N M)
+    (x y : R) :
+    gradedDist M (f.toFun x) (f.toFun y) ≤ gradedDist N x y := by
+  by_cases hM : behaviorRel M (f.toFun x) (f.toFun y)
+  · rw [(gradedDist_eq_zero_iff M (f.toFun x) (f.toFun y)).mpr hM]
+    exact gradedDist_nonneg N x y
+  · have hN : ¬ behaviorRel N x y := by
+      intro h
+      exact hM (behaviorCongruence_map f h)
+    rw [gradedDist_of_not_rel M hM, gradedDist_of_not_rel N hN]
+    have hge : sepDepth N x y ≤ sepDepth M (f.toFun x) (f.toFun y) := sepDepth_map_ge f hM
+    have hexp : (-(sepDepth M (f.toFun x) (f.toFun y) : ℤ)) ≤ -(sepDepth N x y : ℤ) := by
+      simp only [neg_le_neg_iff]; exact_mod_cast hge
+    exact zpow_le_zpow_right₀ (by norm_num) hexp
+
+/-! ## Section 3: a primality criterion (resolving F2)
+
+-- !-- Lab Notes -- !--
+-- Hypothesis H2 (resolving F2).  The base file noted that primality of
+-- `behaviorCongruence N` fails because the pointwise factorisation
+-- `∀ w, b(a,w)=0 ∨ b(b,w)=0` does not pull out the quantifier.  The clean cure is a
+-- *faithful observation point*: a single context `w₀` whose vanishing already detects
+-- behavioral nullity, `behaviorRel N a 0 ↔ algBehavior N a w₀ = 0`.  Then in an integral
+-- domain `K`, `algBehavior N (a*b) w₀ = algBehavior N a w₀ * algBehavior N b w₀ = 0`
+-- factors at the single point `w₀`, and faithfulness lifts each branch back to behavioral
+-- nullity.  This yields a genuine `PrimeSRCong R` — an honest point of `ProofSpectrum R`.
+--
+-- Failure analysis F3.  Faithfulness is a real restriction (it forces a "generic
+-- point").  Without it, primality can fail even over a field; the conjecture in
+-- FUTURE_DIRECTIONS.md asks for the exact class of systems admitting a faithful point.
+-/
+
+/-- A **faithful observation point**: a context `w₀` whose vanishing detects behavioral
+    nullity (`a` is behaviorally null iff its `w₀`-observation is `0`). -/
+def FaithfulPoint [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (w₀ : List α) : Prop :=
+  ∀ a : R, behaviorRel N a 0 ↔ algBehavior N a w₀ = 0
+
+/-- **Primality criterion.** With a faithful observation point and an integral-domain
+    output, the behavior congruence is prime. -/
+theorem behaviorRel_prime_of_faithful [Semiring R] [Semiring K] [IsDomain K]
+    (N : AlgNeuralSystem R K α) {w₀ : List α} (hf : FaithfulPoint N w₀)
+    {a b : R} (h : behaviorRel N (a * b) 0) :
+    behaviorRel N a 0 ∨ behaviorRel N b 0 := by
+  have hab : algBehavior N (a * b) w₀ = 0 := (hf (a * b)).mp h
+  rw [algBehavior_mul] at hab
+  rcases mul_eq_zero.mp hab with ha | hb
+  · exact Or.inl ((hf a).mpr ha)
+  · exact Or.inr ((hf b).mpr hb)
+
+/-- **The prime functor object.** Under a faithful point and an integral-domain output,
+    the behavior congruence upgrades to a `PrimeSRCong R` — a point of the proof
+    spectrum. -/
+def behaviorPrimeCongruence [Semiring R] [Semiring K] [IsDomain K]
+    (N : AlgNeuralSystem R K α) {w₀ : List α} (hf : FaithfulPoint N w₀) :
+    PrimeSRCong R where
+  toSRCong := behaviorCongruence N
+  prime_prop := fun h => behaviorRel_prime_of_faithful N hf h
+
+/-- The prime behavior congruence is, in particular, a point of the `ProofSpectrum`. -/
+def behaviorPrimeCongruence_mem_spectrum [Semiring R] [Semiring K] [IsDomain K]
+    (N : AlgNeuralSystem R K α) {w₀ : List α} (hf : FaithfulPoint N w₀) :
+    ProofSpectrum R :=
+  behaviorPrimeCongruence N hf
+
+/-- The vanishing locus of the proof-spectrum point is exactly the behaviorally-null
+    states, detected by the faithful point `w₀`. -/
+theorem behaviorPrime_vanishes_iff [Semiring R] [Semiring K] [IsDomain K]
+    (N : AlgNeuralSystem R K α) {w₀ : List α} (hf : FaithfulPoint N w₀) (a : R) :
+    vanishes (behaviorPrimeCongruence_mem_spectrum N hf) a ↔ algBehavior N a w₀ = 0 := by
+  exact hf a
+
+/-! ## Section 4: capstone — the deepened comparison
+
+-- !-- Lab Notes -- !--
+-- Summary S1.  Bundling the deepened facts: the graded ultrametric, the discrete
+-- pseudometric, the coalgebraic behavioral equivalence, and the proof-spectrum congruence
+-- all share one kernel; and the graded distance dominates none of them — it refines the
+-- discrete pseudometric while carrying strictly more information (the separating depth).
+-/
+
+/-- The deepened comparison: graded ultrametric kernel, discrete pseudometric kernel,
+    coalgebraic behavioral equivalence, and proof-spectrum congruence all coincide, and
+    the graded ultrametric refines the discrete pseudometric. -/
+theorem deep_neural_pseudometric_comparison [Semiring R] [Semiring K]
+    (N : AlgNeuralSystem R K α) (x y : R) :
+    (gradedDist N x y = 0 ↔ obsDist N x y = 0) ∧
+    (obsDist N x y = 0 ↔ (behaviorCongruence N).rel x y) ∧
+    gradedDist N x y ≤ obsDist N x y := by
+  refine ⟨?_, ?_, gradedDist_le_obsDist N x y⟩
+  · rw [gradedDist_eq_zero_iff, obsDist_eq_zero_iff]
+  · rw [obsDist_eq_zero_iff]; rfl
+
+end Bridges.NeuralProofSpectrumDeep

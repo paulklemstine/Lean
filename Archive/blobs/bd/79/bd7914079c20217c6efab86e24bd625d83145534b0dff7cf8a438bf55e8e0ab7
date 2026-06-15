@@ -1,0 +1,197 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+-/
+import Mathlib
+
+/-!
+# `p`-adic Valuation Depth: Arithmetic Stability
+
+This file develops a self-contained *arithmetic substrate* for the `p`-adic valuation
+`padicValNat p` on natural numbers, packaged under the name `padicDepth`.  It is intended
+as the prerequisite layer for a later *tropical / ultrametric bridge* (developed in a
+separate file): the valuation `padicDepth p` is the prototypical non-archimedean (ultrametric)
+"depth" function, and the theorems below establish exactly the multiplicative, additive, and
+finitary stability laws that such a bridge needs.
+
+We deliberately do **not** lead with categorical abstractions.  Instead we prove concrete,
+fully-checked arithmetic theorems, reusing existing Mathlib lemmas about `padicValNat`
+wherever possible.
+
+## Main results
+
+* `PadicDepth.le_iff_dvd` : the divisibility criterion `k ≤ padicDepth p a ↔ p ^ k ∣ a`
+  (for `a ≠ 0`), the workhorse of the file.
+* `PadicDepth.mul` : multiplicativity, `padicDepth p (m * n) = padicDepth p m + padicDepth p n`.
+* `PadicDepth.pow` : `padicDepth p (m ^ k) = k * padicDepth p m`.
+* `PadicDepth.prime_pow` : `padicDepth p (p ^ k) = k`, and `PadicDepth.self : padicDepth p p = 1`.
+* `PadicDepth.ultrametric_add` : the non-archimedean lower bound
+  `min (padicDepth p m) (padicDepth p n) ≤ padicDepth p (m + n)`.
+* `PadicDepth.isosceles` : the sharp *isosceles* law — if `padicDepth p m < padicDepth p n`
+  then `padicDepth p (m + n) = padicDepth p m`.
+* `PadicDepth.perturbation_stable` : a perturbation of strictly greater depth does not change
+  the depth (a direct corollary of `isosceles`).
+* `PadicDepth.list_prod` : the depth of a finite product is the sum of depths.
+* `PadicDepth.list_sum_le` : if every term of a list has depth `≥ k`, so does the sum.
+
+## Implementation notes
+
+`padicDepth` is a reducible abbreviation for `padicValNat`, so all Mathlib lemmas about
+`padicValNat` apply directly.  Care is taken around `0`: since `padicValNat p 0 = 0`, several
+statements either carry explicit nonzero hypotheses or are phrased as inequalities that remain
+true regardless.
+-/
+
+open Nat
+
+namespace PadicDepth
+
+/-- The `p`-adic **valuation depth** of a natural number: a reducible alias for
+`padicValNat p`.  Being an `abbrev`, every Mathlib lemma about `padicValNat` is available. -/
+abbrev padicDepth (p n : ℕ) : ℕ := padicValNat p n
+
+variable {p : ℕ}
+
+/-- Unfolding lemma: `padicDepth` is definitionally `padicValNat`. -/
+theorem padicDepth_def (n : ℕ) : padicDepth p n = padicValNat p n := rfl
+
+@[simp] theorem zero : padicDepth p 0 = 0 := padicValNat.zero
+
+@[simp] theorem one : padicDepth p 1 = 0 := padicValNat.one
+
+/-! ### Divisibility criterion -/
+
+/-- **Divisibility criterion.**  For a nonzero `a`, the depth dominates `k` exactly when
+`p ^ k` divides `a`.  This is the two-sided form of `padicValNat_dvd_iff`. -/
+theorem le_iff_dvd [Fact p.Prime] {k a : ℕ} (ha : a ≠ 0) :
+    k ≤ padicDepth p a ↔ p ^ k ∣ a := by
+  rw [padicDepth, padicValNat_dvd_iff]; simp [ha]
+
+/-- From a depth bound to a divisibility (the "easy" direction, still needs `a ≠ 0`). -/
+theorem pow_dvd_of_le [Fact p.Prime] {k a : ℕ} (ha : a ≠ 0) (h : k ≤ padicDepth p a) :
+    p ^ k ∣ a := (le_iff_dvd ha).mp h
+
+/-- From a divisibility to a depth bound. -/
+theorem le_of_pow_dvd [Fact p.Prime] {k a : ℕ} (ha : a ≠ 0) (h : p ^ k ∣ a) :
+    k ≤ padicDepth p a := (le_iff_dvd ha).mpr h
+
+/-! ### Multiplicativity and powers -/
+
+/-- **Multiplicativity.** -/
+theorem mul [Fact p.Prime] {m n : ℕ} (hm : m ≠ 0) (hn : n ≠ 0) :
+    padicDepth p (m * n) = padicDepth p m + padicDepth p n :=
+  padicValNat.mul hm hn
+
+/-- **Powers.**  `padicDepth p (m ^ k) = k * padicDepth p m`. -/
+theorem pow [Fact p.Prime] (k : ℕ) {m : ℕ} (hm : m ≠ 0) :
+    padicDepth p (m ^ k) = k * padicDepth p m :=
+  padicValNat.pow k hm
+
+/-- **Prime powers.**  `padicDepth p (p ^ k) = k`. -/
+@[simp] theorem prime_pow [Fact p.Prime] (k : ℕ) : padicDepth p (p ^ k) = k :=
+  padicValNat.prime_pow k
+
+/-- The depth of the prime itself is `1`. -/
+theorem self [Fact p.Prime] : padicDepth p p = 1 :=
+  padicValNat.self (Fact.out (p := p.Prime)).one_lt
+
+/-! ### Ultrametric (non-archimedean) addition laws -/
+
+/-- **Ultrametric lower bound for addition.**  The depth of a sum is at least the minimum of
+the depths of the summands.  Phrased with `m + n ≠ 0` so that it is the genuine valuation;
+the `m = 0` and `n = 0` corner cases are handled directly. -/
+theorem ultrametric_add [Fact p.Prime] {m n : ℕ} (hmn : m + n ≠ 0) :
+    min (padicDepth p m) (padicDepth p n) ≤ padicDepth p (m + n) := by
+  set k := min (padicDepth p m) (padicDepth p n) with hk
+  rw [le_iff_dvd hmn]
+  rcases eq_or_ne m 0 with hm | hm
+  · have : k = 0 := by simp [hk, hm]
+    rw [this]; simp
+  · rcases eq_or_ne n 0 with hn | hn
+    · have : k = 0 := by simp [hk, hn]
+      rw [this]; simp
+    · have hdm : p ^ k ∣ m := (le_iff_dvd hm).mp (Nat.min_le_left _ _)
+      have hdn : p ^ k ∣ n := (le_iff_dvd hn).mp (Nat.min_le_right _ _)
+      exact Nat.dvd_add hdm hdn
+
+/-- **Sharp isosceles law.**  If the depths of the two summands differ, the depth of the sum
+equals the smaller one.  (Here `m` carries the smaller depth, hence the hypothesis `m ≠ 0`;
+`n ≠ 0` follows from `padicDepth p m < padicDepth p n`.) -/
+theorem isosceles [Fact p.Prime] {m n : ℕ} (hm : m ≠ 0)
+    (h : padicDepth p m < padicDepth p n) :
+    padicDepth p (m + n) = padicDepth p m := by
+  set va := padicDepth p m with hva
+  have hn : n ≠ 0 := by
+    rintro rfl; simp [padicDepth] at h
+  have hmn : m + n ≠ 0 := by simp [hm]
+  refine le_antisymm ?_ ?_
+  · -- `padicDepth p (m + n) ≤ va`
+    by_contra hc
+    push_neg at hc
+    have hd1 : p ^ (va + 1) ∣ m + n := (le_iff_dvd hmn).mp hc
+    have hd2 : p ^ (va + 1) ∣ n := (le_iff_dvd hn).mp (by omega)
+    have hd3 : p ^ (va + 1) ∣ m := by simpa using Nat.dvd_sub hd1 hd2
+    have : va + 1 ≤ va := (le_iff_dvd hm).mpr hd3
+    omega
+  · -- `va ≤ padicDepth p (m + n)`
+    have hdm : p ^ va ∣ m := (le_iff_dvd hm).mp le_rfl
+    have hdn : p ^ va ∣ n := (le_iff_dvd hn).mp (by omega)
+    exact (le_iff_dvd hmn).mpr (Nat.dvd_add hdm hdn)
+
+/-- A symmetric restatement of `isosceles`: the sum's depth is the minimum of the depths,
+provided they are unequal. -/
+theorem add_eq_min_of_ne [Fact p.Prime] {m n : ℕ} (hm : m ≠ 0) (hn : n ≠ 0)
+    (h : padicDepth p m ≠ padicDepth p n) :
+    padicDepth p (m + n) = min (padicDepth p m) (padicDepth p n) := by
+  rcases lt_or_gt_of_ne h with hlt | hgt
+  · rw [isosceles hm hlt, min_eq_left hlt.le]
+  · rw [add_comm, isosceles hn hgt, min_eq_right hgt.le]
+
+/-- **Perturbation stability.**  Adding a perturbation `e` of strictly greater depth than `m`
+leaves the depth of `m` unchanged.  This is the practical form of the isosceles law used by the
+later ultrametric bridge. -/
+theorem perturbation_stable [Fact p.Prime] {m e : ℕ} (hm : m ≠ 0)
+    (h : padicDepth p m < padicDepth p e) :
+    padicDepth p (m + e) = padicDepth p m :=
+  isosceles hm h
+
+/-! ### Finite lists -/
+
+/-- If every entry of a list is divisible by `p ^ k`, then so is the list's sum.  This holds
+unconditionally (no primality, no nonzero hypotheses). -/
+theorem list_dvd_sum {k : ℕ} :
+    ∀ {l : List ℕ}, (∀ x ∈ l, p ^ k ∣ x) → p ^ k ∣ l.sum
+  | [], _ => by simp
+  | a :: l, h => by
+      rw [List.sum_cons]
+      exact Nat.dvd_add (h a (by simp)) (list_dvd_sum (fun x hx => h x (by simp [hx])))
+
+/-- **List sum lower bound.**  If every term of a list has depth at least `k`, and the sum is
+nonzero, then the sum has depth at least `k`. -/
+theorem list_sum_le [Fact p.Prime] {k : ℕ} {l : List ℕ} (hsum : l.sum ≠ 0)
+    (hk : ∀ x ∈ l, k ≤ padicDepth p x) : k ≤ padicDepth p l.sum := by
+  have hd : ∀ x ∈ l, p ^ k ∣ x := by
+    intro x hx
+    rcases eq_or_ne x 0 with h | h
+    · simp [h]
+    · exact (le_iff_dvd h).mp (hk x hx)
+  exact (le_iff_dvd hsum).mpr (list_dvd_sum hd)
+
+/-- **List product formula.**  The depth of a finite product of nonzero naturals is the sum of
+the depths of the factors. -/
+theorem list_prod [Fact p.Prime] :
+    ∀ {l : List ℕ}, (∀ x ∈ l, x ≠ 0) →
+      padicDepth p l.prod = (l.map (padicDepth p)).sum
+  | [], _ => by simp
+  | a :: l, h => by
+      have ha : a ≠ 0 := h a (by simp)
+      have hl : l.prod ≠ 0 := by
+        simp only [ne_eq, List.prod_eq_zero_iff]
+        intro hc; exact (h 0 (by simp [hc])) rfl
+      rw [List.prod_cons, List.map_cons, List.sum_cons]
+      show padicValNat p (a * l.prod) = padicValNat p a + (l.map (padicDepth p)).sum
+      rw [padicValNat.mul ha hl]
+      congr 1
+      exact list_prod (fun x hx => h x (by simp [hx]))
+
+end PadicDepth

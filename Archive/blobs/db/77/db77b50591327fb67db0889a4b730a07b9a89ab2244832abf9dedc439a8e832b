@@ -1,0 +1,85 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+-/
+import Mathlib
+
+/-!
+# RSA Correctness over General Messages
+
+This file gives a fully general, machine-checked proof of the **correctness of
+the RSA cryptosystem**: decryption inverts encryption for *every* plaintext
+`m`, including plaintexts that are not coprime to the modulus `n = p * q`.
+
+Most textbook presentations only prove correctness for `m` coprime to `n` (a
+direct application of Euler's theorem). The general statement requires the
+Chinese Remainder Theorem: one proves the congruence modulo each prime `p` and
+`q` separately — where the troublesome case `p ∣ m` becomes trivial because both
+sides are `≡ 0` — and recombines using coprimality of `p` and `q`.
+
+## Main results
+
+* `pow_modEq_self_of_prime` — the per-prime engine: if `1 ≤ k` and
+  `k ≡ 1 [MOD p-1]`, then `m ^ k ≡ m [MOD p]` for *every* `m` (prime `p`).
+* `rsa_correctness` — for distinct primes `p`, `q`, modulus `n = p*q`, and
+  exponents with `e * d ≡ 1 [MOD (p-1)*(q-1)]`, we have
+  `m ^ (e*d) ≡ m [MOD p*q]` for every message `m`.
+* `rsa_decrypt_eq` — the small-message form: if additionally `m < p*q`, then
+  `m ^ (e*d) % (p*q) = m`, i.e. decryption literally returns the plaintext.
+
+## Lab Notes
+
+-- !-- Lab Notes -- !--
+-- Hypothesis: the general (non-coprime) RSA correctness reduces cleanly to a
+--   single per-prime lemma `pow_modEq_self_of_prime`, with the CRT recombination
+--   handled by `Nat.modEq_and_modEq_iff_modEq_mul`.
+-- Experiment: phrase the per-prime lemma in `ZMod p` (where `ZMod.pow_card_sub_one_eq_one`
+--   handles the unit case and `x = 0` handles the divisible case), then transport
+--   to `Nat.ModEq` via `ZMod.natCast_eq_natCast_iff` and `push_cast`.
+-- Insight: working modulo `p-1` in the exponent, write `k = 1 + (p-1)*t` using
+--   `(p-1) ∣ (k-1)`; the factor `(x^(p-1))^t = 1` collapses.
+-- Insight: the divisor reduction `e*d ≡ 1 [MOD (p-1)*(q-1)] → e*d ≡ 1 [MOD p-1]`
+--   is `Nat.ModEq.of_dvd` with `Dvd.intro`.
+-- Failure mode avoided: a naive Euler-only proof cannot cover `gcd(m,n) > 1`,
+--   which genuinely occurs for valid RSA messages; CRT is essential.
+-- !-- Lab Notes -- !--
+-/
+
+namespace Catalog.Cryptography.RSA
+
+open Nat
+
+/-- **Per-prime RSA engine.** For a prime `p`, if the exponent `k ≥ 1` satisfies
+`k ≡ 1 [MOD p-1]`, then `m ^ k ≡ m [MOD p]` for *every* natural number `m` —
+including `m` divisible by `p` (where both sides are `≡ 0`). -/
+theorem pow_modEq_self_of_prime {p : ℕ} (hp : p.Prime) {k : ℕ} (hk : 1 ≤ k)
+    (hkey : k ≡ 1 [MOD p - 1]) (m : ℕ) : m ^ k ≡ m [MOD p] := by
+  obtain ⟨t, ht⟩ : ∃ t : ℕ, k = 1 + (p - 1) * t := by
+    exact ⟨ ( k - 1 ) / ( p - 1 ), by linarith [ Nat.div_mul_cancel ( show p - 1 ∣ k - 1 from by rw [ ← Int.natCast_dvd_natCast ] ; simpa [ Nat.cast_sub hk ] using hkey.symm.dvd ), Nat.sub_add_cancel hk ] ⟩;
+  haveI := Fact.mk hp; simp +decide [ ← ZMod.natCast_eq_natCast_iff, ht, pow_add, pow_mul ] ;
+  by_cases hm : ( m : ZMod p ) = 0 <;> simp_all +decide [ ZMod.pow_card_sub_one_eq_one ]
+
+/-- **RSA correctness (general messages).** Let `p ≠ q` be primes and let the RSA
+key exponents satisfy `e * d ≡ 1 [MOD (p-1)*(q-1)]` with `e, d ≥ 1`. Then for
+every plaintext `m`, decryption inverts encryption modulo `n = p * q`:
+`m ^ (e * d) ≡ m [MOD p * q]`. No coprimality assumption on `m` is needed. -/
+theorem rsa_correctness {p q : ℕ} (hp : p.Prime) (hq : q.Prime) (hpq : p ≠ q)
+    {e d : ℕ} (he : 1 ≤ e) (hd : 1 ≤ d)
+    (hkey : e * d ≡ 1 [MOD (p - 1) * (q - 1)]) (m : ℕ) :
+    m ^ (e * d) ≡ m [MOD p * q] := by
+  rw [ ← Nat.modEq_and_modEq_iff_modEq_mul ];
+  · exact ⟨ pow_modEq_self_of_prime hp ( Nat.one_le_iff_ne_zero.mpr <| by positivity ) ( hkey.of_dvd <| by simp ) m, pow_modEq_self_of_prime hq ( Nat.one_le_iff_ne_zero.mpr <| by positivity ) ( hkey.of_dvd <| by simp ) m ⟩;
+  · simpa [ hpq ] using Nat.coprime_primes hp hq
+
+/-- **RSA decryption recovers the plaintext.** Under the RSA correctness
+hypotheses, if the plaintext `m` is a residue (`m < p * q`), then reducing the
+decrypted value modulo `n = p * q` returns `m` exactly. -/
+theorem rsa_decrypt_eq {p q : ℕ} (hp : p.Prime) (hq : q.Prime) (hpq : p ≠ q)
+    {e d : ℕ} (he : 1 ≤ e) (hd : 1 ≤ d)
+    (hkey : e * d ≡ 1 [MOD (p - 1) * (q - 1)]) {m : ℕ} (hm : m < p * q) :
+    m ^ (e * d) % (p * q) = m := by
+  have h_mod_eq : m ^ (e * d) ≡ m [MOD p * q] :=
+    rsa_correctness hp hq hpq he hd hkey m
+  exact h_mod_eq.symm ▸ Nat.mod_eq_of_lt hm
+
+end Catalog.Cryptography.RSA

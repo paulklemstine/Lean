@@ -1,0 +1,224 @@
+/-
+  # Categorical Tropical Rips Interleaving — The Zero-Distance Quotient Metric
+  ## The interleaving distance descends to a genuine point-separating `ℝ≥0∞`-valued
+  ## metric on persistence modules modulo the zero-distance relation.
+
+  This file develops the **corrected** quotient-metric refinement of
+  `Bridges.CategoricalTropicalRipsShift` (Conjecture 4).
+
+  ### The correction
+
+  The earlier development quotiented persistence modules by `FinInterleaved` — having
+  *some* finite interleaving distance.  That relation is an equivalence relation
+  (`CategoricalTropicalRipsShift.finInterleaved_equivalence`), but the interleaving
+  distance is **not constant** on its classes, so it does **not** descend to a
+  well-defined distance on the `FinInterleaved` quotient, let alone a separating one.
+  The reason is purely the triangle inequality: finite interleaving only bounds the
+  difference of distances by a *finite* value, it does not force that difference to be
+  `0`.  Concretely, a module and a nonzero shift of itself are finitely interleaved
+  but lie at strictly positive distance (`finInterleaved_not_distZero`,
+  `finInterleaved_dist_not_welldefined`).
+
+  The mathematically correct replacement is the quotient by the **zero-distance**
+  relation `DistZero M N := interleavingDist M N = 0`.  We prove:
+
+  * `interleavingDist_eq_of_dist_zero` — the four-point descent lemma: the interleaving
+    distance is invariant under replacing either argument by a zero-distance partner.
+    This is exactly the hypothesis `Quotient.lift₂` needs.
+  * `distZeroSetoid` — `DistZero` is an equivalence relation (self distance `0`,
+    commutativity, triangle inequality from the catalog).
+  * `quotDist` — the induced distance on `Quotient distZeroSetoid`.
+  * `quotDist_self`, `quotDist_comm`, `quotDist_triangle`, `quotDist_eq_zero_iff` —
+    the metric laws, including **point separation**: two classes are at distance `0`
+    iff they are equal.  Thus `quotDist` is a genuine (extended) metric.
+  * `rankMod_descends_to_quotient` — the 1-Lipschitz rank invariant of the catalog
+    factors through the zero-distance quotient and remains 1-Lipschitz.
+
+  -- !-- Lab Notes -- !--
+  -- CORRECTION (Principal Investigator): the `FinInterleaved` quotient cannot carry a
+  --   separating metric.  Constancy of `interleavingDist` on a class *forces* the
+  --   representatives to be at distance `0` (`constancy_forces_distZero`), which finite
+  --   interleaving does not supply.  The zero-distance quotient is the correct object.
+-/
+
+import Mathlib
+import Bridges.CategoricalTropicalRipsInterleaving
+import Bridges.CategoricalTropicalRipsShift
+import Bridges.CategoricalTropicalRipsRank
+
+open scoped ENNReal
+open Tropical
+open CategoricalTropicalRipsInterleaving
+open CategoricalTropicalRipsShift
+open CategoricalTropicalRipsRank
+
+noncomputable section
+
+namespace CategoricalTropicalRipsQuotient
+
+universe u
+
+variable {α : Type u} [Preorder α]
+
+/-! ## §1. The zero-distance relation and the four-point descent lemma. -/
+
+/-- The **zero-distance** relation: two persistence modules are related when their
+    interleaving distance vanishes. -/
+def DistZero (M N : PersMod α) : Prop := interleavingDist M N = 0
+
+/-- **Four-point descent lemma.** The interleaving distance is invariant under replacing
+    either argument by a zero-distance partner.  This is the technical heart enabling the
+    quotient construction: it is precisely the well-definedness hypothesis of
+    `Quotient.lift₂`. -/
+theorem interleavingDist_eq_of_dist_zero {M M' N N' : PersMod α}
+    (hM : DistZero M M') (hN : DistZero N N') :
+    interleavingDist M N = interleavingDist M' N' := by
+  have hM' : interleavingDist M M' = 0 := hM
+  have hN' : interleavingDist N N' = 0 := hN
+  apply le_antisymm
+  · calc interleavingDist M N
+        ≤ interleavingDist M M' + interleavingDist M' N := interleavingDist_triangle M M' N
+      _ = interleavingDist M' N := by rw [hM', zero_add]
+      _ ≤ interleavingDist M' N' + interleavingDist N' N := interleavingDist_triangle M' N' N
+      _ = interleavingDist M' N' := by rw [interleavingDist_comm N' N, hN', add_zero]
+  · calc interleavingDist M' N'
+        ≤ interleavingDist M' M + interleavingDist M N' := interleavingDist_triangle M' M N'
+      _ = interleavingDist M N' := by rw [interleavingDist_comm M' M, hM', zero_add]
+      _ ≤ interleavingDist M N + interleavingDist N N' := interleavingDist_triangle M N N'
+      _ = interleavingDist M N := by rw [hN', add_zero]
+
+/-! ## §2. `DistZero` is an equivalence relation (the setoid). -/
+
+/-- Every module is at zero distance from itself. -/
+theorem distZero_refl (M : PersMod α) : DistZero M M := interleavingDist_self M
+
+/-- The zero-distance relation is symmetric. -/
+theorem distZero_symm {M N : PersMod α} (h : DistZero M N) : DistZero N M :=
+  Eq.trans (interleavingDist_comm N M) h
+
+/-- The zero-distance relation is transitive (via the triangle inequality). -/
+theorem distZero_trans {M N L : PersMod α} (h₁ : DistZero M N) (h₂ : DistZero N L) :
+    DistZero M L := by
+  have h₁' : interleavingDist M N = 0 := h₁
+  have h₂' : interleavingDist N L = 0 := h₂
+  refine le_antisymm ?_ (zero_le _)
+  calc interleavingDist M L
+      ≤ interleavingDist M N + interleavingDist N L := interleavingDist_triangle M N L
+    _ = 0 := by rw [h₁', h₂', add_zero]
+
+/-- `DistZero` packaged as a setoid on persistence modules. -/
+instance distZeroSetoid : Setoid (PersMod α) where
+  r := DistZero
+  iseqv := ⟨distZero_refl, distZero_symm, distZero_trans⟩
+
+/-! ## §3. The quotient distance and its metric laws. -/
+
+/-- The interleaving distance descended to the zero-distance quotient. -/
+def quotDist : Quotient (distZeroSetoid (α := α)) → Quotient (distZeroSetoid (α := α)) → ℝ≥0∞ :=
+  Quotient.lift₂ interleavingDist
+    (fun _ _ _ _ hM hN => interleavingDist_eq_of_dist_zero hM hN)
+
+@[simp]
+theorem quotDist_mk (M N : PersMod α) :
+    quotDist (⟦M⟧ : Quotient (distZeroSetoid (α := α))) ⟦N⟧ = interleavingDist M N := rfl
+
+/-- The quotient distance from a class to itself is `0`. -/
+theorem quotDist_self (q : Quotient (distZeroSetoid (α := α))) : quotDist q q = 0 := by
+  obtain ⟨M, rfl⟩ := Quotient.exists_rep q
+  exact quotDist_mk M M ▸ interleavingDist_self M
+
+/-- The quotient distance is symmetric. -/
+theorem quotDist_comm (q q' : Quotient (distZeroSetoid (α := α))) :
+    quotDist q q' = quotDist q' q := by
+  obtain ⟨M, rfl⟩ := Quotient.exists_rep q
+  obtain ⟨N, rfl⟩ := Quotient.exists_rep q'
+  simpa using interleavingDist_comm M N
+
+/-- The quotient distance satisfies the triangle inequality. -/
+theorem quotDist_triangle (q q' r : Quotient (distZeroSetoid (α := α))) :
+    quotDist q r ≤ quotDist q q' + quotDist q' r := by
+  obtain ⟨M, rfl⟩ := Quotient.exists_rep q
+  obtain ⟨N, rfl⟩ := Quotient.exists_rep q'
+  obtain ⟨L, rfl⟩ := Quotient.exists_rep r
+  simpa using interleavingDist_triangle M N L
+
+/-- **Point separation.** Two classes are at quotient distance `0` iff they are equal.
+    This is exactly the property `FinInterleaved` could not deliver: the zero-distance
+    quotient turns the pseudometric into a genuine separating metric. -/
+theorem quotDist_eq_zero_iff (q q' : Quotient (distZeroSetoid (α := α))) :
+    quotDist q q' = 0 ↔ q = q' := by
+  obtain ⟨M, rfl⟩ := Quotient.exists_rep q
+  obtain ⟨N, rfl⟩ := Quotient.exists_rep q'
+  exact ⟨fun h => Quotient.sound h, fun h => h ▸ quotDist_self _⟩
+
+/-! ## §4. The obstruction: why the `FinInterleaved` quotient fails. -/
+
+/-- **Constancy forces zero distance.**  If the interleaving distance from `M` agrees with
+    the interleaving distance from `M'` against *every* third module, then `M` and `M'` are
+    already at distance `0`.  Hence any relation along which `interleavingDist` is constant
+    must refine `DistZero`; mere finiteness of the interleaving distance is not enough. -/
+theorem constancy_forces_distZero {M M' : PersMod α}
+    (h : ∀ N, interleavingDist M N = interleavingDist M' N) : DistZero M M' := by
+  show interleavingDist M M' = 0
+  rw [h M', interleavingDist_self]
+
+/-- A concrete witness over `ℝ`: the identity module and its `+1` shift are *finitely*
+    interleaved but **not** at distance `0`.  So `FinInterleaved` is strictly coarser than
+    `DistZero`. -/
+theorem finInterleaved_not_distZero :
+    ∃ M N : PersMod ℝ, FinInterleaved M N ∧ ¬ DistZero M N := by
+  refine ⟨⟨fun t => t, fun a b hab => hab⟩, ⟨fun t => t + 1, fun a b hab => by linarith⟩, ?_, ?_⟩
+  · exact ⟨1, ⟨fun t => by simp; linarith, fun t => by simp⟩⟩
+  · -- `interleavingDist M N ≠ 0` because it is bounded below by `1`.
+    refine ne_of_gt (lt_of_lt_of_le zero_lt_one ?_)
+    refine le_sInf ?_
+    rintro x ⟨ε, hε, ⟨h₁, h₂⟩, rfl⟩
+    have hε1 : (1 : ℝ) ≤ ε := by have := h₂ 0; simp at this; linarith
+    calc (1 : ℝ≥0∞) = ENNReal.ofReal 1 := by simp
+      _ ≤ ENNReal.ofReal ε := ENNReal.ofReal_le_ofReal hε1
+
+/-- **The `FinInterleaved` quotient distance is ill-defined.**  There exist modules `M`, `N`
+    in the *same* `FinInterleaved` class whose interleaving distances to a common third
+    module `L` differ.  Therefore `interleavingDist` does not descend along `FinInterleaved`,
+    and no `Quotient.lift₂` over `FinInterleaved` can recover it — in stark contrast to the
+    zero-distance quotient of §3. -/
+theorem finInterleaved_dist_not_welldefined :
+    ∃ M N L : PersMod ℝ, FinInterleaved M N ∧ interleavingDist M L ≠ interleavingDist N L := by
+  obtain ⟨M, N, hfin, hndist⟩ := finInterleaved_not_distZero
+  refine ⟨M, N, M, hfin, ?_⟩
+  rw [interleavingDist_self, interleavingDist_comm N M]
+  exact fun h => hndist h.symm
+
+/-! ## §5. The rank invariant descends to the quotient (1-Lipschitz). -/
+
+variable {β : Type u} [Finite β]
+
+/-- The rank functor sends zero-distance modules to zero-distance modules. -/
+theorem rankMod_distZero {M N : PersMod (Set β)} (h : DistZero M N) :
+    DistZero (rankMod M) (rankMod N) := by
+  have h' : interleavingDist M N = 0 := h
+  refine le_antisymm ?_ (zero_le _)
+  calc interleavingDist (rankMod M) (rankMod N)
+      ≤ interleavingDist M N := rank_interleavingDist_le M N
+    _ = 0 := h'
+
+/-- The induced map of the rank invariant on the zero-distance quotients. -/
+def rankModQuot :
+    Quotient (distZeroSetoid (α := Set β)) → Quotient (distZeroSetoid (α := ℕ)) :=
+  Quotient.lift (fun M => (⟦rankMod M⟧ : Quotient (distZeroSetoid (α := ℕ))))
+    (fun _ _ h => Quotient.sound (rankMod_distZero h))
+
+@[simp]
+theorem rankModQuot_mk (M : PersMod (Set β)) :
+    rankModQuot (⟦M⟧ : Quotient (distZeroSetoid (α := Set β))) = ⟦rankMod M⟧ := rfl
+
+/-- **The rank invariant descends to a 1-Lipschitz map of quotient metrics.**  Passing to
+    rank curves on the zero-distance quotient can only contract the quotient distance. -/
+theorem rankMod_descends_to_quotient
+    (q q' : Quotient (distZeroSetoid (α := Set β))) :
+    quotDist (rankModQuot q) (rankModQuot q') ≤ quotDist q q' := by
+  obtain ⟨M, rfl⟩ := Quotient.exists_rep q
+  obtain ⟨N, rfl⟩ := Quotient.exists_rep q'
+  simpa using rank_interleavingDist_le M N
+
+end CategoricalTropicalRipsQuotient

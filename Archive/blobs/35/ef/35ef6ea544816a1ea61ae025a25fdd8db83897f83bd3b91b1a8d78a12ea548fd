@@ -1,0 +1,222 @@
+/-
+Copyright (c) 2026 Harmonic. All rights reserved.
+Released under Apache 2.0 license.
+
+# A Probabilistic Bridge: Boltzmann Distributions of Combinatorial Species ↔ Poisson Law
+
+This file extends the **combinatorial-species ↔ exponential-generating-function (EGF)**
+dictionary of `Applications/CombinatorialSpecies.lean` one step further, into
+**probability theory**.  The classical analytic combinatorics construction (Duchon–
+Flajolet–Louchard–Schaeffer) attaches to every species `F` and every parameter `x > 0`
+its **Boltzmann probability distribution** on the sizes `n`:
+
+  `P_x(N = n) = (|F[n]| · xⁿ / n!) / F̂(x)`,   where   `F̂(x) = Σₙ |F[n]| xⁿ / n!`
+
+is the EGF *evaluated* at `x` (the "partition function").  This is the natural sampling
+measure underlying Boltzmann samplers; its size distribution is the bridge object linking
+the *formal* EGF (a power series) with an honest *probability law*.
+
+## Main results
+
+* `boltzmann_tsum_eq_one`  — the Boltzmann weights are a genuine probability distribution
+  (they sum to `1`) as soon as the partition function is nonzero.
+* `boltzmann_nonneg`, `boltzmann_le_one` — each Boltzmann probability lies in `[0,1]`.
+* `boltzmann_eq_poisson` / `setSpecies_boltzmann_eq_poisson` — **the headline bridge:** the
+  Boltzmann distribution of the *species of sets* `E` (`EGF = exp`) is *exactly* the
+  **Poisson distribution** `poissonPMFReal` of Mathlib's probability library.
+* `boltzmannMean_eq` — the Boltzmann **mean** equals `(pointed EGF)(x) / EGF(x)`, the
+  probabilistic incarnation of Joyal's **pointing / Euler operator** `x·d/dx`
+  (cf. `CombinatorialSpecies.EGF_pointedSpecies`).
+* `setSpecies_boltzmann_mean` — for the species of sets the mean is `x`, recovering the
+  classical fact that the Poisson parameter *is* its expectation.
+
+The species-level statements genuinely consume the catalog: they are phrased through
+`CombinatorialSpecies.Species`, `setSpecies` and `coeffSeq_setSpecies`.
+
+-- !-- Lab Notes — Hypothesis -- !--
+Hypothesis (Hypothesizer): the EGF dictionary of `CombinatorialSpecies` (sum ↦ +,
+  product ↦ ×, pointing ↦ `x d/dx`) should *probabilize*: evaluating the EGF at a real
+  `x>0` and normalizing must turn the species' counting sequence into a probability law,
+  and the simplest species `E` (sets) must map to the most basic discrete law — Poisson.
+  Surprising sub-claim: the *pointing* operator of species theory, a purely structural
+  "distinguish one atom" construction, should coincide with taking the probabilistic
+  *expectation* of the size — i.e. the categorified `x d/dx` is literally the mean.
+
+-- !-- Lab Notes — Experiment -- !--
+Experiment (Experimenter): formalized the partition function `F̂(x)` as a `tsum`, the
+  Boltzmann PMF as the normalized weight, and tried to (a) prove normalization, (b) match
+  the sets-species to `ProbabilityTheory.poissonPMFReal`, (c) compute the mean.  The
+  partition function for sets is `Σ xⁿ/n! = exp x` (`NormedSpace.exp_eq_tsum_div`); the
+  Poisson identity then drops out of `Real.exp_neg` + `field_simp`.  The mean reduces, via
+  `tsum_div_const`, to `(Σ n·aₙ xⁿ/n!)/F̂(x)`, and `Σ n·xⁿ/n! = x·exp x` is proved by
+  peeling the `n=0` term and reindexing the shift `n ↦ n+1` (`Summable.tsum_eq_zero_add`).
+
+-- !-- Lab Notes — Analysis -- !--
+Analysis (Analyst): all five headline statements survive `sorry`-free.  Normalization is
+  unconditional beyond `F̂(x) ≠ 0` (the divide-through cancels even without summability,
+  thanks to `tsum_div_const`).  Membership in `[0,1]` *does* require summability +
+  positivity (`Summable.le_tsum`) — a genuine hypothesis, not cosmetic: without
+  summability the partial weights need not be bounded by `F̂(x)`.  The mean identity is
+  the cleanest "shadow" result: the species pointing operator and the probabilistic mean
+  are *definitionally* the same numerator `Σ n·aₙ xⁿ/n!`.
+
+-- !-- Lab Notes — Critique -- !--
+Critique (Critic): no theorem is vacuous — `boltzmann_eq_poisson` is a pointwise function
+  identity with both sides nontrivial, proved with `field_simp`/`Real.exp_neg`, not by
+  `rfl`/`decide`.  Corner cases checked: `x = 0` gives the degenerate law concentrated at
+  `0` (consistent: Poisson(0) = δ₀, and `boltzmannMean (·) 0 = 0`); negative `x` is allowed
+  in the *mean* identity (the algebra is sign-agnostic) but the `[0,1]` bounds correctly
+  require `0 ≤ x`.  The species layer truly imports the catalog (`setSpecies`,
+  `coeffSeq_setSpecies`) rather than re-deriving it.
+
+-- !-- Lab Notes — Synthesis -- !--
+Synthesis (PI): the Boltzmann normalization closes the triangle
+  `species  →(EGF)→  power series  →(eval@x, normalize)→  probability law`,
+  and identifies the apex with Mathlib's Poisson PMF.  The pointing↔mean correspondence
+  upgrades the catalog's `EGF_pointedSpecies` (`F•.EGF = X·F.EGF′`) from a formal power
+  series identity to a statement about *expectations* of a real random variable.
+-/
+import Mathlib
+import Applications.CombinatorialSpecies
+
+open scoped BigOperators
+open ProbabilityTheory
+
+namespace SpeciesBoltzmann
+
+/-! ### Sequence-level Boltzmann distribution -/
+
+/-- The unnormalized Boltzmann weight of size `n` for a counting sequence `a` at parameter
+`x`: `aₙ · xⁿ / n!`. -/
+noncomputable def boltzmannWeight (a : ℕ → ℝ) (x : ℝ) (n : ℕ) : ℝ :=
+  a n * x ^ n / n.factorial
+
+/-- The Boltzmann **partition function** `F̂(x) = Σₙ aₙ xⁿ / n!`: the EGF of `a` evaluated
+at the real number `x`. -/
+noncomputable def boltzmannPartition (a : ℕ → ℝ) (x : ℝ) : ℝ :=
+  ∑' k, boltzmannWeight a x k
+
+/-- The Boltzmann probability of size `n`: the weight normalized by the partition function. -/
+noncomputable def boltzmannPMFReal (a : ℕ → ℝ) (x : ℝ) (n : ℕ) : ℝ :=
+  boltzmannWeight a x n / boltzmannPartition a x
+
+/-- For the all-ones sequence (the species of sets) the partition function is `exp x`. -/
+lemma partition_setLike (x : ℝ) : boltzmannPartition (fun _ => 1) x = Real.exp x := by
+  unfold boltzmannPartition boltzmannWeight
+  simp only [one_mul]
+  rw [Real.exp_eq_exp_ℝ, NormedSpace.exp_eq_tsum_div]
+
+/-- **Normalization.** The Boltzmann weights form a genuine probability distribution: they
+sum to `1` whenever the partition function is nonzero. -/
+theorem boltzmann_tsum_eq_one (a : ℕ → ℝ) (x : ℝ) (hne : boltzmannPartition a x ≠ 0) :
+    (∑' n, boltzmannPMFReal a x n) = 1 := by
+  unfold boltzmannPMFReal
+  rw [tsum_div_const]
+  exact div_self hne
+
+/-- Each Boltzmann probability is nonnegative (for a nonnegative sequence and `x ≥ 0`). -/
+theorem boltzmann_nonneg (a : ℕ → ℝ) (x : ℝ) (n : ℕ) (ha : ∀ k, 0 ≤ a k) (hx : 0 ≤ x)
+    (hpos : 0 < boltzmannPartition a x) : 0 ≤ boltzmannPMFReal a x n := by
+  unfold boltzmannPMFReal boltzmannWeight
+  exact div_nonneg (div_nonneg (mul_nonneg (ha n) (pow_nonneg hx n)) (by positivity)) hpos.le
+
+/-- Each Boltzmann probability is at most `1`. -/
+theorem boltzmann_le_one (a : ℕ → ℝ) (x : ℝ) (n : ℕ) (ha : ∀ k, 0 ≤ a k) (hx : 0 ≤ x)
+    (hsum : Summable (fun k => boltzmannWeight a x k))
+    (hpos : 0 < boltzmannPartition a x) : boltzmannPMFReal a x n ≤ 1 := by
+  unfold boltzmannPMFReal
+  rw [div_le_one hpos]
+  unfold boltzmannPartition
+  apply hsum.le_tsum n
+  intro m _
+  unfold boltzmannWeight
+  exact div_nonneg (mul_nonneg (ha m) (pow_nonneg hx m)) (by positivity)
+
+/-! ### The headline bridge: species of sets ↦ Poisson -/
+
+/-- **Bridge theorem (sequence form).** The Boltzmann distribution of the all-ones counting
+sequence — i.e. of the species of sets `E`, whose EGF is `exp` — is *exactly* the Poisson
+distribution `poissonPMFReal r` of Mathlib's probability library. -/
+theorem boltzmann_eq_poisson (r : NNReal) (n : ℕ) :
+    boltzmannPMFReal (fun _ => 1) (r : ℝ) n = poissonPMFReal r n := by
+  unfold boltzmannPMFReal boltzmannWeight poissonPMFReal
+  rw [show boltzmannPartition (fun _ => 1) (r:ℝ) = Real.exp r from partition_setLike _]
+  simp only [one_mul]
+  rw [Real.exp_neg]
+  field_simp
+
+/-! ### The Boltzmann mean and the pointing / Euler operator -/
+
+/-- The expected size of a Boltzmann-distributed structure. -/
+noncomputable def boltzmannMean (a : ℕ → ℝ) (x : ℝ) : ℝ :=
+  ∑' n : ℕ, (n : ℝ) * boltzmannPMFReal a x n
+
+/-- **Pointing ↔ mean.** The Boltzmann mean equals the *pointed* EGF (numerator
+`Σ n·aₙ xⁿ/n!`, the analytic shadow of Joyal's pointing `F•`, see
+`CombinatorialSpecies.EGF_pointedSpecies`) divided by the partition function — the
+probabilistic incarnation of the Euler operator `x·d/dx`. -/
+theorem boltzmannMean_eq (a : ℕ → ℝ) (x : ℝ) :
+    boltzmannMean a x
+      = (∑' n : ℕ, ((n:ℝ) * a n) * x ^ n / n.factorial) / boltzmannPartition a x := by
+  unfold boltzmannMean boltzmannPMFReal boltzmannWeight
+  rw [← tsum_div_const]
+  congr 1
+  funext n
+  rw [mul_div_assoc]
+  ring
+
+/-- Auxiliary analytic identity: `Σ n·xⁿ/n! = x·exp x` (the pointed EGF of the set species). -/
+lemma tsum_n_pow_div_factorial (x : ℝ) :
+    (∑' n : ℕ, (n:ℝ) * x ^ n / n.factorial) = x * Real.exp x := by
+  have hsum : Summable (fun n : ℕ => (n:ℝ) * x ^ n / n.factorial) := by
+    rw [← summable_nat_add_iff 1]
+    have h : (fun n : ℕ => ((n+1:ℕ):ℝ) * x ^ (n+1) / (n+1).factorial)
+         = (fun n : ℕ => x * (x ^ n / n.factorial)) := by
+      funext n; rw [Nat.factorial_succ]; push_cast; field_simp; ring
+    rw [h]; exact (Real.summable_pow_div_factorial x).mul_left x
+  rw [hsum.tsum_eq_zero_add]
+  simp only [Nat.cast_zero, zero_mul, zero_div, zero_add]
+  have h : (fun n : ℕ => ((n:ℝ)+1) * x ^ (n+1) / (n+1).factorial)
+       = (fun n : ℕ => x * (x ^ n / n.factorial)) := by
+    funext n; rw [Nat.factorial_succ]; push_cast; field_simp; ring
+  push_cast
+  rw [h, tsum_mul_left, Real.exp_eq_exp_ℝ, NormedSpace.exp_eq_tsum_div]
+
+/-- **Mean of the set species' Boltzmann law is `x`.** Combined with `boltzmann_eq_poisson`,
+this recovers the classical statement that the Poisson parameter is its own expectation. -/
+theorem boltzmannMean_setLike (x : ℝ) : boltzmannMean (fun _ => 1) x = x := by
+  rw [boltzmannMean_eq, partition_setLike]
+  simp only [mul_one]
+  rw [tsum_n_pow_div_factorial, mul_div_assoc, div_self (Real.exp_ne_zero x), mul_one]
+
+/-! ### Species-level statements (consuming the catalog) -/
+
+open CombinatorialSpecies
+
+/-- The Boltzmann distribution attached to a combinatorial species `F` via its counting
+sequence `coeffSeq` (the catalog's `Species.coeffSeq`). -/
+noncomputable def Species.boltzmannPMFReal (F : CombinatorialSpecies.Species) (x : ℝ) (n : ℕ) :
+    ℝ :=
+  SpeciesBoltzmann.boltzmannPMFReal (fun k => (F.coeffSeq k : ℝ)) x n
+
+/-- **Species-level bridge.** The Boltzmann distribution of the catalog's species of sets
+`setSpecies` is the Poisson distribution. -/
+theorem setSpecies_boltzmann_eq_poisson (r : NNReal) (n : ℕ) :
+    Species.boltzmannPMFReal setSpecies (r : ℝ) n = poissonPMFReal r n := by
+  unfold Species.boltzmannPMFReal
+  simp only [coeffSeq_setSpecies, Nat.cast_one]
+  exact boltzmann_eq_poisson r n
+
+/-- The mean size of the Boltzmann law of a species. -/
+noncomputable def Species.boltzmannMean (F : CombinatorialSpecies.Species) (x : ℝ) : ℝ :=
+  SpeciesBoltzmann.boltzmannMean (fun k => (F.coeffSeq k : ℝ)) x
+
+/-- **Species-level mean.** The expected size of a Boltzmann-sampled set structure equals
+the parameter `x` (the Poisson mean), via the catalog's `coeffSeq_setSpecies`. -/
+theorem setSpecies_boltzmann_mean (x : ℝ) :
+    Species.boltzmannMean setSpecies x = x := by
+  unfold Species.boltzmannMean
+  simp only [coeffSeq_setSpecies, Nat.cast_one]
+  exact boltzmannMean_setLike x
+
+end SpeciesBoltzmann

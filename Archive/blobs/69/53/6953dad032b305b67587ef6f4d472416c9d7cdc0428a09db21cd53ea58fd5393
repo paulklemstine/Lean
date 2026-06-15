@@ -1,0 +1,125 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+Released under Apache 2.0 license.
+
+# Hodge Spectral Duality — the Duality & Representation layer of the discrete-Hodge program
+
+This file isolates a *single* boundary matrix `D : Matrix (Fin m) (Fin n) ℝ` and exhibits
+its two Gram–Laplacians as two representations of one spectral object:
+
+* the **up-Laplacian** `Dᵀ * D : Matrix (Fin n) (Fin n) ℝ` on the source cochains, and
+* the **down-Laplacian** `D * Dᵀ : Matrix (Fin m) (Fin m) ℝ` on the target cochains.
+
+Everything flows from one algebraic fact, the *intertwining* `(D Dᵀ) D = D (Dᵀ D)`
+(`hodge_intertwine`), itself just associativity of matrix multiplication, together with the
+self-dual pairing `⟪D x, y⟫ = ⟪x, Dᵀ y⟫` (`hodge_adjunction`).  From these we derive trace
+duality, two mutually-dual eigenvector dictionaries, and the capstone *set-level
+isospectrality* of the nonzero spectra (`hodge_spectral_duality`).
+
+This is the discrete avatar of the analytic fact that a boundary operator `∂` and its adjoint
+`∂*` share their nonzero singular values — the representation-theoretic heart of Hodge theory
+as an elementary, determinant-free statement over `ℝ`.
+
+This file *extends* the discrete-Hodge program of the `Speculative/AutoResearch` namespace
+(the message-passing layer `HodgeMessagePassingConvergence`, whose per-layer spectral rates it
+complements with a layer-to-layer spectral correspondence).
+
+-- !-- Lab Notebook -- !--
+Hypothesis:  For one boundary matrix `D`, the up-Laplacian `Dᵀ D` and the down-Laplacian
+  `D Dᵀ` should be two faces of a single spectral object: their nonzero spectra ought to
+  coincide, transported explicitly by `v ↦ D v` one way and `w ↦ Dᵀ w` the other.  The whole
+  correspondence should reduce to associativity (`(D Dᵀ) D = D (Dᵀ D)`) plus the adjunction
+  `⟪D x, y⟫ = ⟪x, Dᵀ y⟫`.
+Result:  Formalised and proved sorry-free.  `hodge_adjunction` (self-dual pairing),
+  `hodge_intertwine` (the single engine), `hodge_trace_duality` (sum of squared singular
+  values agree), `eigvec_transfer_up_down` / `eigvec_transfer_down_up` (the two eigenvector
+  dictionaries, with nonvanishing of the transported vector), and the capstone
+  `hodge_spectral_duality` (`nonzeroSpectrum (Dᵀ D) = nonzeroSpectrum (D Dᵀ)`).
+Insight:  The decisive computation is `(D Dᵀ) (D v) = D ((Dᵀ D) v) = D (μ v) = μ (D v)`,
+  which is just `mulVec_mulVec` + `Matrix.mul_assoc` + `mulVec_smul`.  Nonvanishing of `D v`
+  is forced by the eigen-equation itself: if `D v = 0` then `(Dᵀ D) v = 0 = μ v`, so `v = 0`
+  since `μ ≠ 0`.  Thus the entire duality is an *algebraic*, determinant-free statement.
+Failure analysis:  Rectangular matrices have no `Semigroup` instance, so generic `mul_assoc`
+  fails; one must use `Matrix.mul_assoc` explicitly.  Likewise associativity must be applied
+  to the *post*-`mulVec_mulVec` form `(D Dᵀ D) v`, not to the original `mulVec` expression.
+-/
+
+import Mathlib
+
+open Matrix
+open scoped BigOperators
+
+namespace HodgeSpectralDuality
+
+variable {m n : ℕ}
+
+/-- The set of nonzero eigenvalues of a square matrix `A` (with a witnessing eigenvector). -/
+def nonzeroSpectrum {k : ℕ} (A : Matrix (Fin k) (Fin k) ℝ) : Set ℝ :=
+  {μ : ℝ | μ ≠ 0 ∧ ∃ v : Fin k → ℝ, v ≠ 0 ∧ A *ᵥ v = μ • v}
+
+-- !-- The self-dual pairing: move `D` across the inner product to its transpose `Dᵀ`,
+-- using `dotProduct_mulVec` and `mulVec_transpose`. -- !--
+/-- **Hodge adjunction.** The boundary map `D` and its transpose `Dᵀ` are adjoint for the
+standard dot product: `⟪D x, y⟫ = ⟪x, Dᵀ y⟫`. -/
+theorem hodge_adjunction (D : Matrix (Fin m) (Fin n) ℝ) (x : Fin n → ℝ) (y : Fin m → ℝ) :
+    (D *ᵥ x) ⬝ᵥ y = x ⬝ᵥ (Dᵀ *ᵥ y) := by
+  rw [dotProduct_comm (D *ᵥ x) y, dotProduct_mulVec, mulVec_transpose, dotProduct_comm]
+
+-- !-- The single engine of every transfer: associativity of matrix multiplication. -- !--
+/-- **Hodge intertwining.** The boundary map intertwines the two Laplacians:
+`(D Dᵀ) D = D (Dᵀ D)`. -/
+theorem hodge_intertwine (D : Matrix (Fin m) (Fin n) ℝ) :
+    (D * Dᵀ) * D = D * (Dᵀ * D) :=
+  Matrix.mul_assoc D Dᵀ D
+
+-- !-- Trace is conjugation-invariant: `tr(Dᵀ D) = tr(D Dᵀ)` is `trace_mul_comm`. -- !--
+/-- **Trace duality.** The two Laplacians have equal trace — the common sum of squared
+singular values of `D`. -/
+theorem hodge_trace_duality (D : Matrix (Fin m) (Fin n) ℝ) :
+    (Dᵀ * D).trace = (D * Dᵀ).trace :=
+  trace_mul_comm Dᵀ D
+
+-- !-- Forward dictionary: `(D Dᵀ)(D v) = D((Dᵀ D) v) = D(μ v) = μ (D v)`; and `D v ≠ 0`
+-- because otherwise `(Dᵀ D) v = 0 = μ v` forces `v = 0`. -- !--
+/-- **Eigenvector transfer (up → down).** A nonzero `μ`-eigenvector `v` of the up-Laplacian
+`Dᵀ D` is carried by `D` to a nonzero `μ`-eigenvector `D v` of the down-Laplacian `D Dᵀ`. -/
+theorem eigvec_transfer_up_down (D : Matrix (Fin m) (Fin n) ℝ) {μ : ℝ} (hμ : μ ≠ 0)
+    {v : Fin n → ℝ} (hv : v ≠ 0) (he : (Dᵀ * D) *ᵥ v = μ • v) :
+    (D * Dᵀ) *ᵥ (D *ᵥ v) = μ • (D *ᵥ v) ∧ D *ᵥ v ≠ 0 := by
+  refine ⟨?_, ?_⟩
+  · rw [mulVec_mulVec, Matrix.mul_assoc D Dᵀ D, ← mulVec_mulVec, he, mulVec_smul]
+  · intro h
+    have hz : (Dᵀ * D) *ᵥ v = 0 := by rw [← mulVec_mulVec, h, mulVec_zero]
+    rw [he] at hz
+    exact hv (by simpa [hμ] using smul_eq_zero.mp hz)
+
+-- !-- Backward dictionary: the mirror of `eigvec_transfer_up_down` with `Dᵀ` in the role of
+-- the boundary map, using `transpose_transpose` to identify `(Dᵀ)ᵀ = D`. -- !--
+/-- **Eigenvector transfer (down → up).** A nonzero `μ`-eigenvector `w` of the down-Laplacian
+`D Dᵀ` is carried by `Dᵀ` to a nonzero `μ`-eigenvector `Dᵀ w` of the up-Laplacian `Dᵀ D`. -/
+theorem eigvec_transfer_down_up (D : Matrix (Fin m) (Fin n) ℝ) {μ : ℝ} (hμ : μ ≠ 0)
+    {w : Fin m → ℝ} (hw : w ≠ 0) (he : (D * Dᵀ) *ᵥ w = μ • w) :
+    (Dᵀ * D) *ᵥ (Dᵀ *ᵥ w) = μ • (Dᵀ *ᵥ w) ∧ Dᵀ *ᵥ w ≠ 0 := by
+  refine ⟨?_, ?_⟩
+  · rw [mulVec_mulVec, Matrix.mul_assoc Dᵀ D Dᵀ, ← mulVec_mulVec, he, mulVec_smul]
+  · intro h
+    have hz : (D * Dᵀ) *ᵥ w = 0 := by rw [← mulVec_mulVec, h, mulVec_zero]
+    rw [he] at hz
+    exact hw (by simpa [hμ] using smul_eq_zero.mp hz)
+
+-- !-- Capstone: set extensionality, feeding each direction's witness through the matching
+-- eigenvector dictionary (`eigvec_transfer_up_down` / `eigvec_transfer_down_up`). -- !--
+/-- **Hodge spectral duality (capstone).** The up-Laplacian `Dᵀ D` and the down-Laplacian
+`D Dᵀ` have *equal nonzero spectra*.  This is the discrete isospectrality of `∂` and `∂*`. -/
+theorem hodge_spectral_duality (D : Matrix (Fin m) (Fin n) ℝ) :
+    nonzeroSpectrum (Dᵀ * D) = nonzeroSpectrum (D * Dᵀ) := by
+  ext μ
+  constructor
+  · rintro ⟨hμ, v, hv, he⟩
+    obtain ⟨he', hv'⟩ := eigvec_transfer_up_down D hμ hv he
+    exact ⟨hμ, D *ᵥ v, hv', he'⟩
+  · rintro ⟨hμ, w, hw, he⟩
+    obtain ⟨he', hw'⟩ := eigvec_transfer_down_up D hμ hw he
+    exact ⟨hμ, Dᵀ *ᵥ w, hw', he'⟩
+
+end HodgeSpectralDuality

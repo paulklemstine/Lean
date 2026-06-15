@@ -1,0 +1,103 @@
+import Mathlib
+
+/-!
+# Markov bases for two-way contingency tables
+
+This file develops a small algebraic foundation for the Markov basis of two-way
+contingency tables with fixed row and column margins.
+
+A `Table m n` is an integer matrix.  The fundamental *basic move* adds `±1` to the
+four corners of a `2 × 2` sub-rectangle, an operation that preserves all row and
+column sums.  We record this fact together with the additivity needed to show that
+a legal basic step between two non-negative tables preserves the margins.
+-/
+
+open scoped BigOperators
+
+namespace MarkovBases.TwoWay
+
+/-- An integer-valued two-way table. -/
+abbrev Table (m n : ℕ) := Matrix (Fin m) (Fin n) ℤ
+
+variable {m n : ℕ}
+
+/-- The sum of the entries in row `i`. -/
+def rowSum (T : Table m n) (i : Fin m) : ℤ := ∑ j, T i j
+
+/-- The sum of the entries in column `j`. -/
+def colSum (T : Table m n) (j : Fin n) : ℤ := ∑ i, T i j
+
+/-- The sum of all entries of the table. -/
+def totalSum (T : Table m n) : ℤ := ∑ i, ∑ j, T i j
+
+/-- Two tables have the same margins when their row sums and column sums agree. -/
+def sameMargins (T₁ T₂ : Table m n) : Prop :=
+  (∀ i, rowSum T₁ i = rowSum T₂ i) ∧ (∀ j, colSum T₁ j = colSum T₂ j)
+
+/-- The basic move on the `2 × 2` sub-rectangle with rows `i, i'` and columns `j, j'`:
+it places `+1` at `(i, j')` and `(i', j)`, `-1` at `(i, j)` and `(i', j')`, and `0`
+elsewhere. -/
+def basicMove (i i' : Fin m) (j j' : Fin n) (_hii' : i ≠ i') (_hjj' : j ≠ j') :
+    Table m n :=
+  fun a b =>
+    if a = i ∧ b = j' then 1
+    else if a = i' ∧ b = j then 1
+    else if a = i ∧ b = j then -1
+    else if a = i' ∧ b = j' then -1
+    else 0
+
+/-- A table is non-negative when all of its entries are. -/
+def Nonneg (T : Table m n) : Prop := ∀ i j, 0 ≤ T i j
+
+/-- `T'` is obtained from `T` by a legal basic step: a basic move that keeps both
+tables non-negative. -/
+def LegalBasicStep (T T' : Table m n) : Prop :=
+  ∃ (i i' : Fin m) (j j' : Fin n) (hii' : i ≠ i') (hjj' : j ≠ j'),
+    T' = T + basicMove i i' j j' hii' hjj' ∧ Nonneg T ∧ Nonneg T'
+
+/-- Each row sum of a basic move is zero. -/
+lemma basicMove_rowSum_zero (i i' : Fin m) (j j' : Fin n) (hii' : i ≠ i')
+    (hjj' : j ≠ j') (k : Fin m) :
+    rowSum (basicMove i i' j j' hii' hjj') k = 0 := by
+  by_cases hi : k = i <;> by_cases hi' : k = i' <;> simp_all +decide [ rowSum ];
+  · grind;
+  · simp +decide [ basicMove, Finset.sum_ite ];
+    simp_all +decide [ Finset.filter_eq', Finset.filter_ne' ];
+  · simp +decide [ basicMove ];
+    simp +decide [ Finset.sum_ite, hi ];
+    rw [ Finset.card_filter ] ; aesop;
+  · unfold basicMove; aesop;
+
+/-- Each column sum of a basic move is zero. -/
+lemma basicMove_colSum_zero (i i' : Fin m) (j j' : Fin n) (hii' : i ≠ i')
+    (hjj' : j ≠ j') (l : Fin n) :
+    colSum (basicMove i i' j j' hii' hjj') l = 0 := by
+  convert basicMove_rowSum_zero j j' i i' hjj' hii' l using 1;
+  convert rfl using 2;
+  ext; simp +decide [ rowSum, colSum, basicMove ] ;
+  grind
+
+/-- A basic move preserves margins: it has the same margins as the zero table. -/
+lemma basicMove_preserves_margins (i i' : Fin m) (j j' : Fin n) (hii' : i ≠ i')
+    (hjj' : j ≠ j') :
+    sameMargins (basicMove i i' j j' hii' hjj') (0 : Table m n) := by
+  constructor <;> intro k <;> simp_all +decide [ basicMove_rowSum_zero, basicMove_colSum_zero ];
+  · exact Eq.symm ( Finset.sum_eq_zero fun _ _ => rfl );
+  · unfold colSum; aesop;
+
+/-- The total sum of a basic move is zero. -/
+lemma basicMove_totalSum_zero (i i' : Fin m) (j j' : Fin n) (hii' : i ≠ i')
+    (hjj' : j ≠ j') :
+    totalSum (basicMove i i' j j' hii' hjj') = 0 := by
+  exact Finset.sum_eq_zero fun x hx => basicMove_rowSum_zero i i' j j' hii' hjj' x
+
+/-- A legal basic step preserves the margins of the table. -/
+lemma legalBasicStep_preserves_margins (T T' : Table m n)
+    (h : LegalBasicStep T T') : sameMargins T T' := by
+  obtain ⟨ i, i', j, j', hii', hjj', rfl, hT, hT' ⟩ := h;
+  constructor <;> intro k <;> simp_all +decide [ rowSum, colSum ];
+  · rw [ Finset.sum_add_distrib, show ∑ x : Fin n, basicMove i i' j j' hii' hjj' k x = 0 from by { exact basicMove_rowSum_zero i i' j j' hii' hjj' k } ] ; ring;
+  · simp +decide [ Finset.sum_add_distrib ];
+    convert basicMove_colSum_zero i i' j j' hii' hjj' k using 1
+
+end MarkovBases.TwoWay

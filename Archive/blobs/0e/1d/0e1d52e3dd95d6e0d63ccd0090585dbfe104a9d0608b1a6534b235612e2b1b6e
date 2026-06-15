@@ -1,0 +1,240 @@
+/-
+# The Markov Basis Theorem for the Two-Way Independence Model
+
+This file gives a self-contained formalization of the classical theorem from
+algebraic statistics that the set of basic `2 × 2` swap moves
+
+  `B(i,i',j,j') = e_{i,j'} + e_{i',j} - e_{i,j} - e_{i',j'}`   (`i ≠ i'`, `j ≠ j'`)
+
+is a *Markov basis* for the two-way independence model: any two nonnegative
+contingency tables with the same row and column margins are connected by a finite
+sequence of these moves that stays inside the nonnegative fiber.
+
+## Main definitions
+
+* `Table m n`         — integer contingency tables on `Fin m × Fin n`.
+* `rowSum`, `colSum`  — the row and column margins.
+* `SameMargins u v`   — `u` and `v` have equal row sums and equal column sums.
+* `Nonneg u`          — all entries of `u` are `≥ 0`.
+* `basicMove i i' j j'`— the basic `2 × 2` move with the standard `±1` pattern.
+* `Step u v`          — one oriented move between two nonnegative tables.
+* `tdist u v`         — the `ℓ¹` distance `∑ |u i j - v i j|`.
+
+## Main results
+
+* `basicMove_preserves_rowSums`, `basicMove_preserves_colSums`,
+  `basicMove_preserves_margins`, `Step.preserve_margins` — margin invariance.
+* `exists_sign_rectangle` — the combinatorial extraction lemma: a nonzero
+  difference with zero margins contains a sign-changing `2 × 2` rectangle.
+* `exists_reducing_step` — distance reduction: an oriented move strictly
+  decreasing the `ℓ¹` distance while staying nonnegative.
+* `twoWay_fiber_connected` — the Markov basis theorem: connectivity of the
+  nonnegative fiber via `Relation.ReflTransGen Step`.
+-/
+
+import Mathlib
+
+open scoped BigOperators
+
+namespace TwoWayMarkov
+
+/-- An integer-valued contingency table on `Fin m × Fin n`. -/
+abbrev Table (m n : ℕ) := Fin m → Fin n → ℤ
+
+variable {m n : ℕ}
+
+/-- The `i`-th row margin. -/
+def rowSum (u : Table m n) (i : Fin m) : ℤ := ∑ j, u i j
+
+/-- The `j`-th column margin. -/
+def colSum (u : Table m n) (j : Fin n) : ℤ := ∑ i, u i j
+
+/-- Two tables lie in the same fiber: they have equal row and column margins. -/
+def SameMargins (u v : Table m n) : Prop :=
+  (∀ i, rowSum u i = rowSum v i) ∧ (∀ j, colSum u j = colSum v j)
+
+/-- A table is nonnegative if all of its entries are `≥ 0`. -/
+def Nonneg (u : Table m n) : Prop := ∀ i j, 0 ≤ u i j
+
+/-- The basic `2 × 2` move `B(i,i',j,j') = e_{i,j'} + e_{i',j} - e_{i,j} - e_{i',j'}`. -/
+def basicMove (i i' : Fin m) (j j' : Fin n) : Table m n := fun a b =>
+  (if a = i ∧ b = j' then 1 else 0)
+    + (if a = i' ∧ b = j then 1 else 0)
+    - (if a = i ∧ b = j then 1 else 0)
+    - (if a = i' ∧ b = j' then 1 else 0)
+
+/-- One oriented basic move between two nonnegative tables in the same fiber. -/
+def Step (u v : Table m n) : Prop :=
+  Nonneg u ∧ Nonneg v ∧ ∃ (i i' : Fin m) (j j' : Fin n),
+    i ≠ i' ∧ j ≠ j' ∧ (v = u + basicMove i i' j j' ∨ v = u - basicMove i i' j j')
+
+/-! ### Basic arithmetic of margins -/
+
+theorem rowSum_add (u v : Table m n) (i : Fin m) :
+    rowSum (u + v) i = rowSum u i + rowSum v i := by
+  exact Finset.sum_add_distrib
+
+theorem colSum_add (u v : Table m n) (j : Fin n) :
+    colSum (u + v) j = colSum u j + colSum v j := by
+  exact Finset.sum_add_distrib
+
+theorem rowSum_sub (u v : Table m n) (i : Fin m) :
+    rowSum (u - v) i = rowSum u i - rowSum v i := by
+  simp only [rowSum, Pi.sub_apply, Finset.sum_sub_distrib]
+
+theorem colSum_sub (u v : Table m n) (j : Fin n) :
+    colSum (u - v) j = colSum u j - colSum v j := by
+  simp only [colSum, Pi.sub_apply, Finset.sum_sub_distrib]
+
+/-! ### Margins of a basic move vanish -/
+
+theorem rowSum_basicMove (i i' : Fin m) (j j' : Fin n) (a : Fin m) :
+    rowSum (basicMove i i' j j') a = 0 := by
+  simp only [rowSum, basicMove, Finset.sum_sub_distrib, Finset.sum_add_distrib, ite_and,
+    Finset.sum_ite_irrel, Finset.sum_const_zero, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+  split_ifs <;> ring
+
+theorem colSum_basicMove (i i' : Fin m) (j j' : Fin n) (b : Fin n) :
+    colSum (basicMove i i' j j') b = 0 := by
+  convert rowSum_basicMove j j' i i' b using 1;
+  grind +locals
+
+/-! ### Margin invariance of the moves -/
+
+theorem basicMove_preserves_rowSums (u : Table m n) (i i' : Fin m) (j j' : Fin n) (a : Fin m) :
+    rowSum (u + basicMove i i' j j') a = rowSum u a := by
+  convert rowSum_add u ( basicMove i i' j j' ) a using 1 ; norm_num [ rowSum_basicMove i i' j j' a ]
+
+theorem basicMove_preserves_colSums (u : Table m n) (i i' : Fin m) (j j' : Fin n) (b : Fin n) :
+    colSum (u + basicMove i i' j j') b = colSum u b := by
+  rw [ colSum_add, colSum_basicMove, add_zero ]
+
+theorem basicMove_preserves_margins (u : Table m n) (i i' : Fin m) (j j' : Fin n) :
+    SameMargins (u + basicMove i i' j j') u := by
+  exact ⟨ fun a => basicMove_preserves_rowSums u i i' j j' a, fun b => basicMove_preserves_colSums u i i' j j' b ⟩
+
+theorem Step.preserve_margins {u v : Table m n} (h : Step u v) : SameMargins u v := by
+  -- Unfold the definitions of `Step` and `SameMargins`.
+  rcases h with ⟨hu, hv, ⟨i, i', j, j', hij, hjj', hv_cases⟩⟩
+  rcases hv_cases with (rfl | rfl);
+  · exact ⟨ fun a => by simp +decide [ rowSum_add, rowSum_basicMove ], fun b => by simp +decide [ colSum_add, colSum_basicMove ] ⟩;
+  · constructor <;> intro a <;> simp +decide [ *, rowSum_sub, colSum_sub, rowSum_basicMove, colSum_basicMove ]
+
+/-! ### The combinatorial extraction lemma -/
+
+/-- If a finite sum of integers is zero and one term is positive, some term is negative. -/
+theorem exists_neg_of_pos_sum_zero {ι : Type*} [Fintype ι] (f : ι → ℤ)
+    (hsum : ∑ i, f i = 0) (a : ι) (hpos : 0 < f a) : ∃ b, f b < 0 := by
+  by_contra! h;
+  exact absurd hsum ( ne_of_gt ( lt_of_lt_of_le hpos ( Finset.single_le_sum ( fun i _ => h i ) ( Finset.mem_univ a ) ) ) )
+
+/-- If a finite sum of integers is zero and one term is negative, some term is positive. -/
+theorem exists_pos_of_neg_sum_zero {ι : Type*} [Fintype ι] (f : ι → ℤ)
+    (hsum : ∑ i, f i = 0) (a : ι) (hneg : f a < 0) : ∃ b, 0 < f b := by
+  exact not_forall_not.mp fun h => hneg.not_ge ( by simpa [ * ] using Finset.single_le_sum ( fun x _ => neg_nonneg.mpr ( le_of_not_gt fun hx => h x hx ) ) ( Finset.mem_univ a ) )
+
+/-- **Sign-changing rectangle.**  A nonzero difference `d` with vanishing row and
+column margins contains a `2 × 2` rectangle with two positive corners in general
+position and a negative corner, suitable for a distance-reducing basic move. -/
+theorem exists_sign_rectangle (d : Table m n)
+    (hrow : ∀ i, rowSum d i = 0) (hcol : ∀ j, colSum d j = 0) (hd : d ≠ 0) :
+    ∃ (i i' : Fin m) (j j' : Fin n),
+      i ≠ i' ∧ j ≠ j' ∧ 0 < d i j ∧ 0 < d i' j' ∧ d i' j < 0 := by
+  obtain ⟨i, j, h_pos⟩ : ∃ i j, 0 < d i j := by
+    contrapose! hd;
+    ext i j; specialize hrow i; specialize hcol j; simp_all +decide [ rowSum, colSum ];
+    exact le_antisymm ( hd i j ) ( by simpa [ * ] using Finset.single_le_sum ( fun a _ => neg_nonneg.mpr ( hd i a ) ) ( Finset.mem_univ j ) );
+  -- From `0 < d i j` and `colSum d j = 0`, i.e. `∑ x, d x j = 0`, apply `exists_neg_of_pos_sum_zero (fun x => d x j) (hcol j) i (show 0 < d i j)` to get `i'` with `d i' j < 0`.
+  obtain ⟨i', hi'⟩ : ∃ i', d i' j < 0 := by
+    exact exists_neg_of_pos_sum_zero ( fun x => d x j ) ( hcol j ) i h_pos;
+  -- From `d i' j < 0` and `rowSum d i' = 0`, i.e. `∑ y, d i' y = 0`, apply `exists_pos_of_neg_sum_zero (fun y => d i' y) (hrow i') j (show d i' j < 0)` to get `j'` with `0 < d i' j'`.
+  obtain ⟨j', hj'⟩ : ∃ j', 0 < d i' j' := by
+    exact exists_pos_of_neg_sum_zero ( fun y => d i' y ) ( hrow i' ) j hi';
+  grind
+
+/-! ### The ℓ¹ distance and distance reduction -/
+
+/-- The `ℓ¹` distance between two tables, summed over all cells. -/
+def tdist (u v : Table m n) : ℕ := ∑ p : Fin m × Fin n, (u p.1 p.2 - v p.1 p.2).natAbs
+
+theorem tdist_eq_zero_iff (u v : Table m n) : tdist u v = 0 ↔ u = v := by
+  simp +decide [ tdist ];
+  exact ⟨ fun h => funext fun i => funext fun j => sub_eq_zero.mp ( h i j ), fun h => by simp +decide [ h ] ⟩
+
+/-- The oriented move `u + B(i,i',j,j')` stays nonnegative when its two decremented
+cells `(i,j)` and `(i',j')` strictly exceed the corresponding entries of a
+nonnegative reference table `v` (so the underlying counts are at least one). -/
+theorem nonneg_move {u v : Table m n} (hu : Nonneg u) (hv : Nonneg v)
+    {i i' : Fin m} {j j' : Fin n}
+    (hij : 0 < u i j - v i j) (hi'j' : 0 < u i' j' - v i' j') :
+    Nonneg (u + basicMove i i' j j') := by
+  unfold Nonneg at *; simp_all +decide [ basicMove ]
+  grind
+
+/-- The four cells `(i,j), (i,j'), (i',j), (i',j')` of a sign-changing rectangle
+are pairwise distinct, and the oriented move `u + B(i,i',j,j')` strictly decreases
+the `ℓ¹` distance to `v`: three of the four affected cells move strictly toward
+their target while the fourth can worsen by at most one. -/
+theorem tdist_move_lt {u v : Table m n}
+    {i i' : Fin m} {j j' : Fin n} (hii : i ≠ i') (hjj : j ≠ j')
+    (hij : 0 < u i j - v i j) (hi'j' : 0 < u i' j' - v i' j')
+    (hi'j : u i' j - v i' j < 0) :
+    tdist (u + basicMove i i' j j') v < tdist u v := by
+  convert Int.lt_of_sub_pos _ using 1;
+  rotate_left;
+  exact ∑ p : Fin m × Fin n, ( u p.1 p.2 - v p.1 p.2 ).natAbs;
+  exact ∑ p : Fin m × Fin n, Int.natAbs ( ( u + basicMove i i' j j' ) p.1 p.2 - v p.1 p.2 );
+  · rw [ ← Finset.sum_sub_distrib ];
+    refine' lt_of_lt_of_le _ ( Finset.sum_le_sum_of_subset_of_nonneg _ _ );
+    rotate_left;
+    exact { ( i, j ), ( i', j' ), ( i', j ), ( i, j' ) };
+    · exact Finset.subset_univ _;
+    · simp +decide [ basicMove ];
+      grind;
+    · simp +decide [ *, Finset.sum ];
+      rw [ Multiset.ndinsert_of_notMem ] <;> simp +decide [ *, basicMove ];
+      · grind;
+      · tauto;
+  · norm_cast
+
+/-- **Distance reduction.**  If `u ≠ v` are nonnegative tables in the same fiber,
+there is a nonnegative table `w` obtained from `u` by one oriented basic move,
+still in the fiber of `v`, and strictly closer to `v`. -/
+theorem exists_reducing_step {u v : Table m n}
+    (hu : Nonneg u) (hv : Nonneg v) (h : SameMargins u v) (hne : u ≠ v) :
+    ∃ w : Table m n, Step u w ∧ SameMargins w v ∧ tdist w v < tdist u v := by
+  -- By `exists_sign_rectangle` on `d := u - v`, we get `i i' j j'` with:
+  obtain ⟨i, i', j, j', hii, hjj, hz⟩ : ∃ i i' j j', i ≠ i' ∧ j ≠ j' ∧ 0 < u i j - v i j ∧ 0 < u i' j' - v i' j' ∧ u i' j - v i' j < 0 := by
+    obtain ⟨i, i', j, j', hii, hjj, hij, hi'j', hi'j⟩ : ∃ i i' j j', i ≠ i' ∧ j ≠ j' ∧ 0 < (u - v) i j ∧ 0 < (u - v) i' j' ∧ (u - v) i' j < 0 := by
+      apply exists_sign_rectangle;
+      · exact fun i => by rw [ rowSum_sub, h.1 i, sub_self ] ;
+      · exact fun j => by rw [ colSum_sub, h.2 j, sub_self ] ;
+      · exact sub_ne_zero_of_ne hne;
+    exact ⟨ i, i', j, j', hii, hjj, hij, hi'j', hi'j ⟩;
+  refine' ⟨ u + basicMove i i' j j', _, _, _ ⟩;
+  · exact ⟨ hu, nonneg_move hu hv hz.1 hz.2.1, i, i', j, j', hii, hjj, Or.inl rfl ⟩;
+  · exact ⟨ fun a => by linarith [ basicMove_preserves_rowSums u i i' j j' a, h.1 a ], fun b => by linarith [ basicMove_preserves_colSums u i i' j j' b, h.2 b ] ⟩;
+  · exact tdist_move_lt hii hjj hz.1 hz.2.1 hz.2.2
+
+/-! ### The Markov basis theorem -/
+
+/-- **Two-way Markov basis theorem.**  Any two nonnegative contingency tables with
+equal row and column margins are connected by a finite sequence of basic `2 × 2`
+moves that stays inside the nonnegative fiber. -/
+theorem twoWay_fiber_connected {u v : Table m n}
+    (hu : Nonneg u) (hv : Nonneg v) (h : SameMargins u v) :
+    Relation.ReflTransGen Step u v := by
+  -- Strong induction on the ℓ¹ distance `tdist u v`.
+  have h_ind : ∀ N : ℕ, ∀ u : Table m n, Nonneg u → SameMargins u v →
+      tdist u v = N → Relation.ReflTransGen Step u v := by
+    intro N
+    induction N using Nat.strong_induction_on with
+    | _ N ih =>
+      intro u hu h_sameMargins h_dist
+      by_cases h_eq : u = v
+      · exact h_eq ▸ Relation.ReflTransGen.refl
+      · obtain ⟨w, hw₁, hw₂, hw₃⟩ := exists_reducing_step hu hv h_sameMargins h_eq
+        exact Relation.ReflTransGen.head hw₁ (ih _ (by omega) _ hw₁.2.1 hw₂ rfl)
+  exact h_ind _ _ hu h rfl
+
+end TwoWayMarkov

@@ -1,0 +1,151 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+
+# A Local Tropicalization Bridge for Valuation Depth
+
+Bridge: connects the verified **valuation-depth invariant**
+(`Computation/PadicValuationDepth.lean`, the `ValuationDepthMeasure.vdepth` API) to a
+**minimal tropical (max-plus) cost language** on `WithBot ℕ`.
+
+This file is deliberately narrow and self-contained. It introduces no search
+certificates, theory morphisms, categories, or new object hierarchies. It defines the two
+tropical operations (`tropAdd = max`, `tropShift = additive shift fixing `⊥``) plus a unit
+cost, proves their pure algebra (commutativity, associativity, idempotence, identity,
+shift laws, monotonicity), and then *reuses* the existing valuation-depth theorems
+`ValuationDepthMeasure.vdepth_add`, `vdepth_mul`, `vdepth_square_bound`,
+`vdepth_double_bound` to express the depth bounds in the tropical cost language:
+
+* the depth of a sum is bounded by `tropAdd` of the two depths, at one unit of cost;
+* multiplying a value by itself (a single multiplicative step, e.g. by the uniformizer)
+  increases the depth by exactly one unit, expressed as `tropShift depth costUnit`.
+
+The referenced valuation-depth file contains no list/tree depth-folding combinators, so —
+per the task's "if and only if" condition — no fold corollaries are added here.
+-/
+
+import Mathlib
+import Computation.PadicValuationDepth
+
+namespace TropicalValuationDepthBridge
+
+open ValuationDepthMeasure
+
+/-! ## §1. The minimal tropical cost language on `WithBot ℕ` -/
+
+/-- Tropical (max-plus) addition on `WithBot ℕ`: the cost of running two computations in
+parallel is the maximum of their costs. -/
+def tropAdd : WithBot ℕ → WithBot ℕ → WithBot ℕ := max
+
+/-- Tropical shift: a finite cost is increased by `k`, while the absorbing element `⊥`
+(the tropical zero / "no cost") is fixed. Implemented as ordinary addition by `↑k`, which
+on `WithBot ℕ` fixes `⊥` automatically. -/
+def tropShift (x : WithBot ℕ) (k : ℕ) : WithBot ℕ := x + (k : WithBot ℕ)
+
+/-- The unit cost of a single elementary (valuation) step. -/
+def costUnit : ℕ := 1
+
+@[simp] theorem tropAdd_def (a b : WithBot ℕ) : tropAdd a b = max a b := rfl
+@[simp] theorem tropShift_def (x : WithBot ℕ) (k : ℕ) :
+    tropShift x k = x + (k : WithBot ℕ) := rfl
+@[simp] theorem costUnit_def : costUnit = 1 := rfl
+
+/-! ## §2. Pure tropical algebra -/
+
+theorem tropAdd_comm (a b : WithBot ℕ) : tropAdd a b = tropAdd b a := max_comm a b
+
+theorem tropAdd_assoc (a b c : WithBot ℕ) :
+    tropAdd (tropAdd a b) c = tropAdd a (tropAdd b c) := max_assoc a b c
+
+theorem tropAdd_idem (a : WithBot ℕ) : tropAdd a a = a := max_self a
+
+/-- `⊥` is a left identity for tropical addition. -/
+theorem tropAdd_bot_left (a : WithBot ℕ) : tropAdd ⊥ a = a := max_eq_right bot_le
+
+/-- `⊥` is a right identity for tropical addition. -/
+theorem tropAdd_bot_right (a : WithBot ℕ) : tropAdd a ⊥ = a := max_eq_left bot_le
+
+/-- The tropical shift fixes the absorbing element `⊥`. -/
+@[simp] theorem tropShift_bot (k : ℕ) : tropShift ⊥ k = ⊥ := WithBot.bot_add _
+
+/-- Shifting by zero is the identity. -/
+@[simp] theorem tropShift_zero (x : WithBot ℕ) : tropShift x 0 = x := by
+  simp [tropShift]
+
+/-- Shifts compose additively. -/
+theorem tropShift_add (x : WithBot ℕ) (j k : ℕ) :
+    tropShift (tropShift x j) k = tropShift x (j + k) := by
+  simp only [tropShift, Nat.cast_add]
+  rw [add_assoc]
+
+/-- Tropical addition is monotone in its left argument. -/
+theorem tropAdd_mono_left {a b : WithBot ℕ} (c : WithBot ℕ) (h : a ≤ b) :
+    tropAdd a c ≤ tropAdd b c := max_le_max_right c h
+
+/-- Tropical addition is monotone in its right argument. -/
+theorem tropAdd_mono_right {a b : WithBot ℕ} (c : WithBot ℕ) (h : a ≤ b) :
+    tropAdd c a ≤ tropAdd c b := max_le_max_left c h
+
+/-- The tropical shift is monotone in the shifted cost. -/
+theorem tropShift_mono {a b : WithBot ℕ} (k : ℕ) (h : a ≤ b) :
+    tropShift a k ≤ tropShift b k := by
+  simp only [tropShift]; gcongr
+
+/-! ## §3. The valuation-depth → tropical-cost bridge
+
+We reuse, without reproving, the verified depth bounds from
+`Computation/PadicValuationDepth.lean`. The natural-number depth `vdepth f` embeds into the
+cost language via the coercion `ℕ → WithBot ℕ`. -/
+
+variable {α β : Type*} [Semiring α] [Semiring β] [ValuationDepthMeasure α β]
+
+/-- **Sum bound.** The depth of a sum is bounded by the tropical sum (`tropAdd = max`) of
+the two depths, at one unit of cost. This is `ValuationDepthMeasure.vdepth_add` transported
+into the tropical cost language. -/
+theorem vdepth_sum_tropAdd_le (f g : α → β) :
+    (↑(vdepth (fun x => f x + g x)) : WithBot ℕ)
+      ≤ tropShift (tropAdd ↑(vdepth f) ↑(vdepth g)) costUnit := by
+  have h := vdepth_add f g
+  simp only [tropShift, tropAdd, costUnit]
+  calc (↑(vdepth (fun x => f x + g x)) : WithBot ℕ)
+        ≤ ((max (vdepth f) (vdepth g) + 1 : ℕ) : WithBot ℕ) := by exact_mod_cast h
+    _ = max (↑(vdepth f)) (↑(vdepth g)) + (1 : WithBot ℕ) := by
+          push_cast; rfl
+
+/-- **Product bound.** The depth of a product is bounded by the tropical sum of the two
+depths, at one unit of cost. This is `ValuationDepthMeasure.vdepth_mul` transported into the
+tropical cost language. -/
+theorem vdepth_mul_tropAdd_le (f g : α → β) :
+    (↑(vdepth (fun x => f x * g x)) : WithBot ℕ)
+      ≤ tropShift (tropAdd ↑(vdepth f) ↑(vdepth g)) costUnit := by
+  have h := vdepth_mul f g
+  simp only [tropShift, tropAdd, costUnit]
+  calc (↑(vdepth (fun x => f x * g x)) : WithBot ℕ)
+        ≤ ((max (vdepth f) (vdepth g) + 1 : ℕ) : WithBot ℕ) := by exact_mod_cast h
+    _ = max (↑(vdepth f)) (↑(vdepth g)) + (1 : WithBot ℕ) := by
+          push_cast; rfl
+
+/-- **Uniformizer / single multiplicative step.** Multiplying a value by itself — a single
+multiplicative step, the depth-theoretic analogue of multiplying by the distinguished
+uniformizer/prime — increases the depth by exactly one unit, expressed as
+`tropShift depth costUnit`. This is `ValuationDepthMeasure.vdepth_square_bound` transported
+into the tropical cost language. -/
+theorem vdepth_square_tropShift_le (f : α → β) :
+    (↑(vdepth (fun x => f x * f x)) : WithBot ℕ) ≤ tropShift ↑(vdepth f) costUnit := by
+  have h := vdepth_square_bound f
+  simp only [tropShift, costUnit]
+  calc (↑(vdepth (fun x => f x * f x)) : WithBot ℕ)
+        ≤ ((vdepth f + 1 : ℕ) : WithBot ℕ) := by exact_mod_cast h
+    _ = ↑(vdepth f) + (1 : WithBot ℕ) := by push_cast; rfl
+
+/-- **Doubling step.** Adding a value to itself increases the depth by one unit, expressed
+as `tropShift depth costUnit`. This is `ValuationDepthMeasure.vdepth_double_bound`
+transported into the tropical cost language. -/
+theorem vdepth_double_tropShift_le (f : α → β) :
+    (↑(vdepth (fun x => f x + f x)) : WithBot ℕ) ≤ tropShift ↑(vdepth f) costUnit := by
+  have h := vdepth_double_bound f
+  simp only [tropShift, costUnit]
+  calc (↑(vdepth (fun x => f x + f x)) : WithBot ℕ)
+        ≤ ((vdepth f + 1 : ℕ) : WithBot ℕ) := by exact_mod_cast h
+    _ = ↑(vdepth f) + (1 : WithBot ℕ) := by push_cast; rfl
+
+end TropicalValuationDepthBridge

@@ -1,0 +1,349 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{booktabs}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\newcommand{\FF}{\mathbb{F}_2}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\wt}{\operatorname{wt}}
+\newcommand{\ip}[2]{\langle #1, #2 \rangle}
+\newcommand{\concat}{\,\|\,}
+\newcommand{\dsum}{\oplus}
+
+\title{An Intersection-Form Classification Pipeline\\
+via Direct Sums of Binary Self-Dual Codes}
+\author{Harmonic}
+\date{2026-06-15}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We develop the coding-theory mirror of the orthogonal direct-sum (connected-sum)
+operation on intersection forms, and prove that the three structural predicates
+governing the classification of even unimodular lattices---\emph{self-duality},
+\emph{double-evenness}, and the resulting \emph{length divisibility by $8$}---are
+each closed under coordinate concatenation of binary codes. For a binary code
+$C \subseteq \FF^m$ and $D \subseteq \FF^n$, we define the direct sum
+$C \dsum D \subseteq \FF^{m+n}$ as the set of concatenations of a $C$-codeword
+and a $D$-codeword, and establish: (i)~weight additivity,
+$\wt(a \concat b) = \wt(a) + \wt(b)$; (ii)~block-diagonality of the binary inner
+product, $\ip{a \concat b}{c \concat d} = \ip{a}{c} + \ip{b}{d}$;
+(iii)~cardinality multiplicativity, $|C \dsum D| = |C|\cdot|D|$; (iv)~closure of
+double-evenness; and (v)~the headline closure of self-duality. Combining
+(iii)--(v) with the Gleason length theorem---every binary doubly-even self-dual
+code has length divisible by $8$, proved here from a self-contained
+Gauss-sum/MacWilliams evaluation yielding the master identity $|C| = (1+i)^n$ over
+$\CC$---we obtain additive divisibility of the Gleason length under direct sums.
+As the headline application, $\mathrm{Hamming} \dsum \mathrm{Hamming}$, the
+length-$16$ concatenation of two copies of the extended Hamming $[8,4,4]$ code, is
+shown to be self-dual, doubly even, to possess exactly $256 = 16 \cdot 16$
+codewords, and to have length $16$ divisible by $8$---all \emph{derived} from the
+general closure theorems rather than by brute force over the $2^{16}$ candidate
+vectors. This is the exact mod-$2$ shadow, under Construction~A, of the rank-$16$
+even unimodular lattice $E_8 \dsum E_8$. Every result is formally verified.
+\end{abstract}
+
+\section{Introduction}
+
+\subsection{Three classifications, one number}
+The classification of even unimodular lattices, the classification of binary
+doubly-even self-dual codes, and the topological classification of simply
+connected smooth $4$-manifolds via their intersection forms are governed by a
+common arithmetic skeleton, with the integer $\mathbf{8}$ at its center.
+Positive-definite even unimodular lattices exist only in ranks divisible by $8$,
+with $E_8$ the minimal example. Binary doubly-even self-dual codes exist only in
+lengths divisible by $8$ (Gleason). On the topological side, Rokhlin's theorem
+and Donaldson's diagonalization theorem pin obstructions whose characteristic
+constant is again $8$.
+
+These theories are linked by \emph{Construction~A}, which builds a lattice from a
+binary code by lifting codewords to $\ZZ^n$ and rescaling. Under Construction~A,
+the orthogonal direct sum of even unimodular lattices reduces, modulo $2$, to the
+\emph{direct sum} (coordinate concatenation) of binary self-dual codes. The
+lattice-side closure theorems have verbatim coding-theory shadows, which we prove
+here.
+
+\subsection{Contributions}
+All results are formally verified for codes of arbitrary length.
+\begin{enumerate}
+  \item We define the direct sum $C \dsum D$ and characterize its membership
+    (Theorem~\ref{thm:mem}).
+  \item We prove weight additivity (Theorem~\ref{thm:wt}) and inner-product
+    block-diagonality (Theorem~\ref{thm:ip}).
+  \item We prove cardinality multiplicativity (Theorem~\ref{thm:card}).
+  \item We prove closure of double-evenness (Theorem~\ref{thm:de}) and the
+    headline closure of self-duality (Theorem~\ref{thm:sd}).
+  \item We give a self-contained proof of the Gleason length theorem
+    (Theorem~\ref{thm:gleason}) and deduce additive Gleason divisibility
+    (Corollary~\ref{cor:additive}).
+  \item We instantiate everything on $\mathrm{Hamming} \dsum \mathrm{Hamming}$,
+    the mod-$2$ shadow of $E_8 \dsum E_8$ (Section~\ref{sec:app}).
+\end{enumerate}
+
+\section{Preliminaries and definitions}
+
+Vectors are functions $\{0,\dots,n-1\} \to \FF$, identified with binary strings.
+We write $a \concat b$ for the concatenation of $a \in \FF^m$ and $b \in \FF^n$,
+the length-$(m+n)$ vector whose first $m$ coordinates are $a$ and last $n$ are $b$.
+
+\begin{definition}[Hamming weight]
+The \emph{weight} of $v \in \FF^n$ is $\wt(v) = \#\{ i : v(i) = 1\}$.
+\end{definition}
+
+\begin{definition}[Binary inner product]
+For $x, y \in \FF^n$, $\ip{x}{y} = \sum_i x(i)\,y(i) \in \FF$. Vectors with
+$\ip{x}{y}=0$ are \emph{orthogonal}.
+\end{definition}
+
+\begin{definition}[Doubly even]
+A vector $v$ is \emph{doubly even} when $4 \mid \wt(v)$; a code is doubly even when
+all its codewords are.
+\end{definition}
+
+\begin{definition}[Self-dual code]
+A code $C \subseteq \FF^n$ is \emph{self-dual} when, for every $x$,
+$x \in C \iff (\forall y \in C,\ \ip{x}{y} = 0)$, i.e. $C = C^\perp$.
+\end{definition}
+
+\begin{lemma}[Self-dual codes are linear]\label{lem:linear}
+If $C$ is self-dual then $0 \in C$ and $a, b \in C \Rightarrow a+b \in C$.
+\end{lemma}
+\begin{proof}
+The zero vector is orthogonal to everything, so $0 \in C^\perp = C$. If
+$a, b \in C$, then for all $y \in C$, $\ip{a+b}{y} = \ip{a}{y} + \ip{b}{y} = 0$,
+hence $a+b \in C^\perp = C$.
+\end{proof}
+
+\begin{definition}[Direct sum of codes]
+For $C \subseteq \FF^m$, $D \subseteq \FF^n$, the \emph{direct sum} is
+$C \dsum D = \{\, a \concat b : a \in C,\ b \in D \,\} \subseteq \FF^{m+n}$,
+the code-side analogue of the orthogonal direct sum of intersection forms with
+block-diagonal Gram matrix $\operatorname{diag}(G_Q, G_R)$.
+\end{definition}
+
+We use the block projections $\mathrm{left}(z)(i) = z(i)$ for $i<m$ and
+$\mathrm{right}(z)(j) = z(m+j)$ for $j<n$, satisfying
+$\mathrm{left}(z) \concat \mathrm{right}(z) = z$,
+$\mathrm{left}(a \concat b) = a$, and $\mathrm{right}(a \concat b) = b$.
+
+\section{Membership in the direct sum}
+
+\begin{theorem}[Membership criterion]\label{thm:mem}
+For $z \in \FF^{m+n}$,
+$z \in C \dsum D \iff \mathrm{left}(z) \in C \wedge \mathrm{right}(z) \in D$.
+\end{theorem}
+\begin{proof}
+($\Rightarrow$) If $z = a \concat b$ with $a \in C, b\in D$, the projection
+identities give $\mathrm{left}(z)=a\in C$, $\mathrm{right}(z)=b\in D$.
+($\Leftarrow$) The pair $(\mathrm{left}(z), \mathrm{right}(z))$ witnesses
+membership since $\mathrm{left}(z) \concat \mathrm{right}(z) = z$.
+\end{proof}
+
+\section{Numerical invariants under direct sum}
+
+\begin{theorem}[Weight additivity]\label{thm:wt}
+$\wt(a \concat b) = \wt(a) + \wt(b)$.
+\end{theorem}
+\begin{proof}
+The support of $a \concat b$ is the disjoint union of the support of $a$ in the
+first $m$ coordinates and that of $b$ in the last $n$; counting each block gives
+the sum.
+\end{proof}
+
+\begin{theorem}[Inner-product block-diagonality]\label{thm:ip}
+$\ip{a \concat b}{c \concat d} = \ip{a}{c} + \ip{b}{d}$.
+\end{theorem}
+\begin{proof}
+Splitting $\sum_{i<m+n} (a\concat b)(i)(c\concat d)(i)$ over the two blocks yields
+$a(i)c(i)$ on the first $m$ coordinates and $b(j)d(j)$ on the last $n$, with no
+cross terms.
+\end{proof}
+
+\begin{theorem}[Cardinality multiplicativity]\label{thm:card}
+$|C \dsum D| = |C| \cdot |D|$.
+\end{theorem}
+\begin{proof}
+The map $(a,b) \mapsto a \concat b$ from $C \times D$ onto $C \dsum D$ is injective
+(invert by the block projections), so the image has cardinality $|C|\cdot|D|$.
+\end{proof}
+
+\section{Closure of the structural predicates}
+
+\begin{theorem}[Closure of double-evenness]\label{thm:de}
+If every codeword of $C$ and of $D$ is doubly even, so is every codeword of
+$C \dsum D$.
+\end{theorem}
+\begin{proof}
+For $z \in C \dsum D$, Theorem~\ref{thm:mem} gives $\mathrm{left}(z)\in C$,
+$\mathrm{right}(z)\in D$, so $4 \mid \wt(\mathrm{left}(z))$ and
+$4 \mid \wt(\mathrm{right}(z))$; by Theorem~\ref{thm:wt}, $\wt(z)$ is a sum of two
+multiples of $4$.
+\end{proof}
+
+\begin{theorem}[Closure of self-duality]\label{thm:sd}
+If $C$ and $D$ are self-dual, so is $C \dsum D$.
+\end{theorem}
+\begin{proof}
+($\Rightarrow$) For $x = a\concat b$ ($a\in C, b\in D$) and any
+$y = c\concat d \in C \dsum D$, Theorem~\ref{thm:ip} gives
+$\ip{x}{y} = \ip{a}{c} + \ip{b}{d} = 0$ by self-duality of $C$ and $D$.
+
+\noindent($\Leftarrow$) Suppose $\ip{x}{y}=0$ for all $y \in C \dsum D$. Since
+$0 \in C$ and $0 \in D$ (Lemma~\ref{lem:linear}), we may probe each block. For any
+$c \in C$, $c \concat 0 \in C \dsum D$, so
+$0 = \ip{x}{c\concat 0} = \ip{\mathrm{left}(x)}{c}$; thus $\mathrm{left}(x) \in
+C^\perp = C$. Symmetrically $\mathrm{right}(x) \in D$. By Theorem~\ref{thm:mem},
+$x \in C \dsum D$.
+\end{proof}
+
+\section{The Gleason length theorem and additive divisibility}
+
+Let $\mathrm{csgn}(a) = (-1)^a$ be the nontrivial multiplicative character of
+$(\FF, +)$ valued in $\CC$, and set $\mathrm{bchar}(x,c) = \prod_j
+\mathrm{csgn}(x(j)c(j)) = (-1)^{\ip{x}{c}}$ and
+$\mathrm{iwt}(x) = i^{\wt(x)}$.
+
+\begin{lemma}[Character orthogonality]\label{lem:orth}
+For a self-dual code $C$, $\sum_{c \in C} \mathrm{bchar}(x,c) = |C|$ if $x \in C$,
+and $0$ otherwise.
+\end{lemma}
+\begin{proof}[Proof sketch]
+If $x \in C$, every term is $1$. Otherwise some $c_0 \in C$ has
+$\ip{x}{c_0} \neq 0$; the involution $c \mapsto c + c_0$ of $C$ negates each term,
+forcing the sum $S = -S = 0$.
+\end{proof}
+
+\begin{lemma}[Fourier transform of $\mathrm{iwt}$]\label{lem:fourier}
+$\sum_x \mathrm{iwt}(x)\,\mathrm{bchar}(x,y)
+   = (1+i)^{\,n - \wt(y)} (1-i)^{\,\wt(y)}$.
+For doubly-even $y$ this collapses to $(1+i)^n$ via $1-i = -i(1+i)$ and
+$(-i)^{\wt(y)} = 1$.
+\end{lemma}
+\begin{proof}[Proof sketch]
+The sum factors over coordinates; the $j$-th factor is $1+i$ if $y(j)=0$ and
+$1-i$ if $y(j)=1$.
+\end{proof}
+
+\begin{lemma}[Master identity]\label{lem:master}
+For a doubly-even self-dual code $C$, $|C| = (1+i)^n$ in $\CC$.
+\end{lemma}
+\begin{proof}[Proof sketch]
+Evaluate $\sum_x \mathrm{iwt}(x)\big(\sum_{c\in C}\mathrm{bchar}(x,c)\big)$ two
+ways. By Lemma~\ref{lem:orth} and $\mathrm{iwt} \equiv 1$ on $C$, it equals
+$|C|^2$. By Fubini and Lemma~\ref{lem:fourier}, it equals $|C|(1+i)^n$. Cancel
+$|C| \neq 0$.
+\end{proof}
+
+\begin{theorem}[Gleason length theorem]\label{thm:gleason}
+Every binary doubly-even self-dual code has length divisible by $8$.
+\end{theorem}
+\begin{proof}
+By Lemma~\ref{lem:master}, $|C| = (1+i)^n$, a positive integer. Writing
+$n = 8q + r$ with $0 \le r < 8$ and using $(1+i)^8 = 16$, we get
+$(1+i)^n = 16^q (1+i)^r$. For $r \in \{1,\dots,7\}$, $(1+i)^r$ is non-real or
+negative real (e.g. $(1+i)^4 = -4$), contradicting positivity; hence $r=0$.
+\end{proof}
+
+\begin{corollary}[Additive Gleason length]\label{cor:additive}
+If $C \subseteq \FF^m$ and $D \subseteq \FF^n$ are doubly even and self-dual, then
+$C \dsum D$ is doubly even and self-dual (Theorems~\ref{thm:de},~\ref{thm:sd}), so
+$8 \mid (m+n)$.
+\end{corollary}
+
+\section{The headline application: $\mathrm{Hamming} \dsum \mathrm{Hamming}$}
+\label{sec:app}
+
+The extended Hamming code $H \subseteq \FF^8$ is the image of the encoder
+$a \mapsto \sum_i a(i) g_i$ over generator rows
+$g_0 = 11111111$, $g_1 = 00001111$, $g_2 = 00110011$, $g_3 = 01010101$.
+It has $16$ codewords and weight enumerator $W_H(x) = 1 + 14x^4 + x^8$, hence is
+doubly even and self-dual with minimum distance $4$: a $[8,4,4]$ code, whose
+Construction~A lift is $E_8$.
+
+Setting $\mathrm{Hamming16} = H \dsum H \subseteq \FF^{16}$, the general theory
+gives, with no enumeration over $2^{16}$ vectors:
+\begin{itemize}
+  \item self-dual (Theorem~\ref{thm:sd});
+  \item doubly even (Theorem~\ref{thm:de});
+  \item $256 = 16 \cdot 16$ codewords (Theorem~\ref{thm:card});
+  \item length $16$ divisible by $8$ (Corollary~\ref{cor:additive}).
+\end{itemize}
+This is the mod-$2$ shadow of the rank-$16$ even unimodular lattice
+$E_8 \dsum E_8$.
+
+\paragraph{Decomposability dichotomy.}
+In rank $16$ there are exactly two even unimodular lattices: $E_8 \dsum E_8$
+(decomposable) and $D_{16}^+$ (indecomposable). Their code shadows share the
+weight enumerator $(1 + 14x^4 + x^8)^2 = 1 + 28x^4 + 198x^8 + 28x^{12} + x^{16}$
+but are inequivalent: only the former factors as a direct sum.
+
+\section{Discussion}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Lattice / topology & Code \\
+\midrule
+orthogonal direct sum $Q \dsum R$ & concatenation $C \dsum D$ \\
+block-diagonal Gram & block-diagonal inner product (Thm~\ref{thm:ip}) \\
+determinant multiplicativity & $|C \dsum D| = |C||D|$ (Thm~\ref{thm:card}) \\
+unimodular ($=$ self-dual) & self-dual (Thm~\ref{thm:sd}) \\
+even form & doubly even (Thm~\ref{thm:de}) \\
+rank divisible by $8$ & length divisible by $8$ (Thm~\ref{thm:gleason}) \\
+$E_8$ & extended Hamming $[8,4,4]$ \\
+$E_8 \dsum E_8$ & $\mathrm{Hamming} \dsum \mathrm{Hamming}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Every closure theorem reduces, via Theorem~\ref{thm:mem}, to the two blocks not
+interfering, made precise by Theorem~\ref{thm:ip}. The constant $8$ in
+Theorem~\ref{thm:gleason} is sharp, attained by $E_8$ (length $8$) and
+$\mathrm{Hamming} \dsum \mathrm{Hamming}$ (length $16$).
+
+\section{Future directions}
+
+\begin{conjecture}[Weight-enumerator multiplicativity]
+$W_{C \dsum D}(x) = W_C(x)\,W_D(x)$; for $\mathrm{Hamming16}$ this predicts
+$(1 + 14x^4 + x^8)^2 = 1 + 28x^4 + 198x^8 + 28x^{12} + x^{16}$, refining
+Theorem~\ref{thm:card} and mirroring $\Theta_{E_8 \oplus E_8} = \Theta_{E_8}^2$.
+\end{conjecture}
+
+\begin{conjecture}[Minimum distance of a direct sum]
+For nonzero-containing self-dual $C, D$, $d(C \dsum D) = \min(d(C), d(D))$; hence
+$\mathrm{Hamming16}$ is a $[16,8,4]$ code (distance $4$, not $8$), strictly worse
+than the indecomposable $D_{16}^+$ shadow.
+\end{conjecture}
+
+\begin{conjecture}[Rank-16 dichotomy]
+$E_8 \dsum E_8$ and $D_{16}^+$ are the only even unimodular rank-$16$ lattices;
+their code shadows are inequivalent doubly-even self-dual $[16,8,4]$ codes with
+equal weight enumerators but distinct automorphism structure, the latter not of
+the form $C \dsum D$ for any nontrivial split.
+\end{conjecture}
+
+\section{Conclusion}
+
+We built the coding-theory mirror of the orthogonal direct-sum operation on
+intersection forms, showing self-duality, double-evenness, cardinality, and
+Gleason length divisibility are each closed under concatenation, with
+block-diagonality of the binary inner product as the unifying mechanism. The
+headline instance $\mathrm{Hamming} \dsum \mathrm{Hamming}$ recovers all defining
+properties of the mod-$2$ shadow of $E_8 \dsum E_8$ from the length-$8$ summand
+alone, yielding a formally verified pipeline relating the classification of even
+unimodular lattices to that of binary doubly-even self-dual codes.
+
+\end{document}

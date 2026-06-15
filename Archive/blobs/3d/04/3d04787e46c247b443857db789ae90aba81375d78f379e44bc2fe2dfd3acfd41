@@ -1,0 +1,155 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+
+# From Max-Plus Depth Inequalities to Multiplicative Shadow Bounds
+
+This file develops a small, self-contained arithmetic package translating
+"max-plus" (tropical) depth inequalities into multiplicative "shadow" bounds,
+together with one concrete adapter to the valuation-depth catalog.
+
+## Main structure
+* `MaxPlusDepthSystem α` — an abstract system carrying a composition operation
+  `comp : α → α → α` and a depth measure `depth : α → ℕ` satisfying the max-plus
+  composition inequality `depth (comp f g) ≤ max (depth f) (depth g) + 1`.
+
+## Main definitions
+* `MaxPlusDepthSystem.shadow b f := b ^ depth f` — the multiplicative shadow of `f`
+  at base `b`.
+* `MaxPlusDepthSystem.iter n f` — the `n`-fold right composition of `f` with itself,
+  defined so that `iter 0 f = f` and `iter (n+1) f = comp (iter n f) f`.
+
+## Main theorems
+1. `shadow_comp_le` : `shadow b (comp f g) ≤ b * max (shadow b f) (shadow b g)`.
+   The additive `+1` in the depth inequality becomes a multiplicative factor `b`.
+2. `depth_iter_succ_le` : `depth (iter n f) ≤ depth f + n`.
+   A sharp linear depth growth bound for iteration.
+3. `shadow_iter_le` : `shadow b (iter n f) ≤ b ^ n * shadow b f`.
+   The multiplicative shadow of the iterate grows by at most `b ^ n`.
+4. `log_shadow` : `Nat.log b (shadow b f) = depth f`.
+   The depth is recovered exactly as the base-`b` logarithm of the shadow.
+
+## Adapter
+* `MaxPlusDepthSystem.ofUltrametric` turns any `UltrametricCompositionLaw α` into a
+  `MaxPlusDepthSystem (α → α)` using ordinary function composition and valuation
+  depth, with one instantiated shadow-composition corollary.
+-/
+
+import Mathlib
+import Computation.PadicValuationDepth
+
+namespace MaxPlusDepthSystem
+
+/-- An abstract max-plus depth system: a composition operation together with a
+natural-number depth measure obeying the tropical composition inequality. -/
+structure _root_.MaxPlusDepthSystem (α : Type*) where
+  /-- The composition operation. -/
+  comp : α → α → α
+  /-- The depth measure. -/
+  depth : α → Nat
+  /-- Max-plus composition inequality: composing adds at most one to the larger depth. -/
+  depth_comp_le : ∀ f g, depth (comp f g) ≤ max (depth f) (depth g) + 1
+
+variable {α : Type*}
+
+/-- The multiplicative shadow of `f` at base `b`: `b ^ depth f`. -/
+def shadow (S : MaxPlusDepthSystem α) (b : Nat) (f : α) : Nat := b ^ S.depth f
+
+/-- The `n`-fold right self-composition of `f`.  The base case is `iter 0 f = f`
+(rather than the identity) so that the depth bound `depth (iter n f) ≤ depth f + n`
+holds with equality in the base case. -/
+def iter (S : MaxPlusDepthSystem α) : Nat → α → α
+  | 0,     f => f
+  | n + 1, f => S.comp (iter S n f) f
+
+@[simp] theorem iter_zero (S : MaxPlusDepthSystem α) (f : α) : S.iter 0 f = f := rfl
+
+@[simp] theorem iter_succ (S : MaxPlusDepthSystem α) (n : Nat) (f : α) :
+    S.iter (n + 1) f = S.comp (S.iter n f) f := rfl
+
+@[simp] theorem shadow_def (S : MaxPlusDepthSystem α) (b : Nat) (f : α) :
+    S.shadow b f = b ^ S.depth f := rfl
+
+/-! ### Helper arithmetic lemmas -/
+
+/-- Monotonicity of natural-number exponentiation in the exponent. -/
+theorem pow_le_pow_of_le {b m n : Nat} (hb : 1 ≤ b) (h : m ≤ n) : b ^ m ≤ b ^ n :=
+  Nat.pow_le_pow_right hb h
+
+/-- Exponentiation distributes over `max` of exponents when the base is at least `1`. -/
+theorem pow_max_eq_max_pow {b m n : Nat} (hb : 1 ≤ b) :
+    b ^ max m n = max (b ^ m) (b ^ n) := by
+  rcases le_total m n with h | h
+  · rw [max_eq_right h, max_eq_right (pow_le_pow_of_le hb h)]
+  · rw [max_eq_left h, max_eq_left (pow_le_pow_of_le hb h)]
+
+/-- Rewriting `b ^ (k + 1)` as `b * b ^ k`. -/
+theorem pow_succ_eq_mul {b k : Nat} : b ^ (k + 1) = b * b ^ k := by
+  rw [pow_succ]; ring
+
+/-! ### Core theorems -/
+
+/-- The shadow of a composition is bounded by `b` times the max of the shadows. -/
+theorem shadow_comp_le (S : MaxPlusDepthSystem α) {b : Nat} (hb : 2 ≤ b) (f g : α) :
+    S.shadow b (S.comp f g) ≤ b * max (S.shadow b f) (S.shadow b g) := by
+  have hb1 : 1 ≤ b := by omega
+  calc S.shadow b (S.comp f g)
+      = b ^ S.depth (S.comp f g) := rfl
+    _ ≤ b ^ (max (S.depth f) (S.depth g) + 1) :=
+          pow_le_pow_of_le hb1 (S.depth_comp_le f g)
+    _ = b * b ^ (max (S.depth f) (S.depth g)) := pow_succ_eq_mul
+    _ = b * max (b ^ S.depth f) (b ^ S.depth g) := by rw [pow_max_eq_max_pow hb1]
+    _ = b * max (S.shadow b f) (S.shadow b g) := rfl
+
+/-- Linear depth growth for iteration: `depth (iter n f) ≤ depth f + n`. -/
+theorem depth_iter_succ_le (S : MaxPlusDepthSystem α) (n : Nat) (f : α) :
+    S.depth (S.iter n f) ≤ S.depth f + n := by
+  induction n with
+  | zero => simp
+  | succ n ih =>
+      have h := S.depth_comp_le (S.iter n f) f
+      have key : max (S.depth f + n) (S.depth f) = S.depth f + n := by omega
+      simp only [iter_succ]
+      omega
+
+/-- The shadow of an iterate grows by at most `b ^ n`. -/
+theorem shadow_iter_le (S : MaxPlusDepthSystem α) {b : Nat} (hb : 2 ≤ b) (n : Nat) (f : α) :
+    S.shadow b (S.iter n f) ≤ b ^ n * S.shadow b f := by
+  have hb1 : 1 ≤ b := by omega
+  calc S.shadow b (S.iter n f)
+      = b ^ S.depth (S.iter n f) := rfl
+    _ ≤ b ^ (S.depth f + n) := pow_le_pow_of_le hb1 (S.depth_iter_succ_le n f)
+    _ = b ^ n * b ^ S.depth f := by rw [pow_add]; ring
+    _ = b ^ n * S.shadow b f := rfl
+
+/-- The depth is exactly the base-`b` logarithm of the shadow. -/
+theorem log_shadow (S : MaxPlusDepthSystem α) {b : Nat} (hb : 2 ≤ b) (f : α) :
+    Nat.log b (S.shadow b f) = S.depth f := by
+  have hb1 : 1 < b := by omega
+  simpa [shadow] using Nat.log_pow hb1 (S.depth f)
+
+/-! ### Adapter to `UltrametricCompositionLaw` -/
+
+/-- Any `UltrametricCompositionLaw α` induces a `MaxPlusDepthSystem (α → α)` by taking
+ordinary function composition as `comp` and valuation depth as `depth`. -/
+def ofUltrametric (α : Type*) [Semiring α] [UltrametricCompositionLaw α] :
+    MaxPlusDepthSystem (α → α) where
+  comp := Function.comp
+  depth := ValuationDepthMeasure.vdepth
+  depth_comp_le := UltrametricCompositionLaw.vdepth_comp
+
+/-- Instantiated shadow-composition inequality for the valuation-depth adapter:
+the shadow of a composite map is at most `b` times the max of the component shadows. -/
+theorem ofUltrametric_shadow_comp_le (α : Type*) [Semiring α] [UltrametricCompositionLaw α]
+    {b : Nat} (hb : 2 ≤ b) (f g : α → α) :
+    (ofUltrametric α).shadow b (f ∘ g)
+      ≤ b * max ((ofUltrametric α).shadow b f) ((ofUltrametric α).shadow b g) :=
+  (ofUltrametric α).shadow_comp_le hb f g
+
+/-- Instantiated iteration shadow bound for the valuation-depth adapter. -/
+theorem ofUltrametric_shadow_iter_le (α : Type*) [Semiring α] [UltrametricCompositionLaw α]
+    {b : Nat} (hb : 2 ≤ b) (n : Nat) (f : α → α) :
+    (ofUltrametric α).shadow b ((ofUltrametric α).iter n f)
+      ≤ b ^ n * (ofUltrametric α).shadow b f :=
+  (ofUltrametric α).shadow_iter_le hb n f
+
+end MaxPlusDepthSystem

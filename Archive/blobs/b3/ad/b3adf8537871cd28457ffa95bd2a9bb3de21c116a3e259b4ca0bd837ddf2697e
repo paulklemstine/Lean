@@ -1,0 +1,65 @@
+import Catalog.NumberTheory.Zeckendorf.Core
+
+/-! # Zeckendorf's theorem: existence
+
+Domain: Number Theory.
+
+Building on `Catalog/NumberTheory/Zeckendorf/Core.lean`, we prove that **every** natural
+number has a Zeckendorf representation (`exists_zeck`).  The construction is the classical
+*greedy algorithm*: repeatedly subtract the largest Fibonacci number not exceeding the
+remainder.  The non-consecutiveness of the chosen indices is forced by the crux bound
+`value_lt_fib_succ_head` / the interval `[F a, F (a+1))`.
+
+* `exists_greatest_fib_le` — for `n ≥ 1` there is a largest index `a ≥ 2` with
+  `F a ≤ n < F (a+1)`.
+* `exists_zeck`            — every `n : ℕ` equals `value l` for some valid `l`.
+
+-- !-- Lab Notes -- !--
+-- HYPOTHESIS: the greedy step never produces consecutive indices. Subtracting the largest
+--   `F a ≤ n` leaves a remainder `r = n - F a` with `r < F (a-1)` (because `n < F (a+1) = F a + F (a-1)`).
+--   The next greedy index `b` satisfies `F b ≤ r < F (a-1)`, hence `b ≤ a - 2`, i.e. the `+2` gap.
+-- EXPERIMENT: implement the largest-index selection as `Nat.findGreatest (fun k => F k ≤ n) (n+1)`.
+--   The bound `n+1` is valid because `F a ≤ n` forces `a ≤ n+1` (Fibonacci grows at least linearly).
+--   SUCCESS.
+-- INSIGHT: the greedy correctness reduces *entirely* to the half-open Fibonacci interval
+--   `[F a, F (a+1))` established in Core; no extra estimates are needed.
+-- FAILURE ANALYSIS: an off-by-one trap is `a - 1` in ℕ; we keep `a ≥ 2` throughout so that
+--   `a - 1 ≥ 1` and `F (a+1) = F (a-1) + F a` (`Nat.fib_add_two` at `a-1`) is valid.
+-- !-- End Lab Notes -- !--
+-/
+
+namespace Zeckendorf
+
+/-
+For `n ≥ 1` there is a largest Fibonacci index `a ≥ 2` with `F a ≤ n < F (a+1)`.
+-/
+lemma exists_greatest_fib_le (n : ℕ) (hn : 1 ≤ n) :
+    ∃ a, 2 ≤ a ∧ Nat.fib a ≤ n ∧ n < Nat.fib (a + 1) := by
+  -- By definition of `Nat.findGreatest`, such an `a` exists.
+  obtain ⟨a, ha⟩ : ∃ a, Nat.fib a ≤ n ∧ n < Nat.fib (a + 1) := by
+    -- We can find such an `a` using the fact that the Fibonacci sequence is unbounded.
+    have h_unbounded : ∃ a, Nat.fib a > n := by
+      exact ⟨ n + 2, by linarith [ Nat.le_fib_add_one ( n + 2 ) ] ⟩;
+    contrapose! h_unbounded;
+    exact fun a => Nat.recOn a ( by norm_num ) h_unbounded;
+  rcases a with ( _ | _ | a ) <;> aesop
+
+/-
+**Existence.**  Every natural number is the value of some Zeckendorf index list.
+-/
+theorem exists_zeck (n : ℕ) : ∃ l, IsZeck l ∧ value l = n := by
+  induction' n using Nat.strongRecOn with n ih;
+  by_cases hn : n = 0;
+  · exact ⟨ [ ], isZeck_nil, hn.symm ▸ rfl ⟩;
+  · -- By `exists_greatest_fib_le`, there exists an `a ≥ 2` such that `Nat.fib a ≤ n < Nat.fib (a + 1)`.
+    obtain ⟨a, ha1, ha2⟩ : ∃ a, 2 ≤ a ∧ Nat.fib a ≤ n ∧ n < Nat.fib (a + 1) := exists_greatest_fib_le n (Nat.pos_of_ne_zero hn);
+    -- Let `r := n - Nat.fib a`. Then `Nat.fib a ≥ 1` so `r < n`; IH gives `l'` with `IsZeck l'`, `value l' = r`.
+    obtain ⟨r, hr⟩ : ∃ r, n = Nat.fib a + r ∧ r < Nat.fib (a - 1) := by
+      rcases a with ( _ | _ | a ) <;> simp_all +decide [ Nat.fib_add_two ];
+      exact ⟨ n - ( Nat.fib a + Nat.fib ( a + 1 ) ), by rw [ Nat.add_sub_cancel' ha2.1 ], by rw [ tsub_lt_iff_left ha2.1 ] ; linarith ⟩;
+    obtain ⟨ l', hl' ⟩ := ih r ( by linarith [ Nat.fib_pos.2 ( zero_lt_two.trans_le ha1 ) ] );
+    refine' ⟨ a :: l', _, _ ⟩ <;> simp_all +decide [ Zeckendorf.isZeck_cons ];
+    intro b hb; have := Zeckendorf.fib_head_le_value hb; rcases a with ( _ | _ | a ) <;> simp_all +arith +decide [ Nat.fib_add_two ] ;
+    exact le_of_not_gt fun h => by linarith [ Nat.fib_mono h ] ;
+
+end Zeckendorf

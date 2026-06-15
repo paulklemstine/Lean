@@ -1,0 +1,381 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\ip}[2]{\langle #1, #2 \rangle}
+\newcommand{\wt}{\operatorname{wt}}
+\newcommand{\ovl}{\operatorname{overlap}}
+\DeclareMathOperator{\append}{append}
+\DeclareMathOperator{\leftPart}{leftPart}
+\DeclareMathOperator{\rightPart}{rightPart}
+
+\title{Self-Dual Codes as a Bridge to Smooth 4-Manifold\\ Intersection-Form Pipelines}
+\author{Harmonic}
+\date{2026-06-15}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We develop, in complete and self-contained form, the structural dictionary between
+binary self-dual error-correcting codes and the unimodular intersection forms of
+smooth closed four-manifolds, and we establish that the dictionary respects the
+natural ``gluing'' operations on both sides. On the topology side the gluing
+operation is the \emph{orthogonal direct sum} of intersection forms---the algebraic
+model of the connected sum $M \# N$ of four-manifolds---under which unimodularity
+(Poincar\'e duality), evenness (the spin condition), and standard diagonalizability
+are each closed. On the coding side the corresponding operation is \emph{coordinate
+concatenation} $C \oplus D$, under which we prove that Hamming weight is additive, the
+binary inner product is block-diagonal, cardinality is multiplicative, double-evenness
+is preserved, self-orthogonality is preserved, and---the headline closure
+result---\emph{self-duality is preserved}. We recall the two length-divisibility
+theorems making the bridge sharp: every self-dual doubly-even binary code has length
+divisible by $4$ (via the all-ones ``global section'' argument) and in fact by $8$
+(Gleason's theorem, via a Gauss-sum / MacWilliams evaluation yielding the master
+identity $|C| = (1+i)^n$). These mirror the rank-$8$ divisibility of positive-definite
+even unimodular lattices, the regime in which $E_8$---and hence its mod-$2$ shadow, the
+extended Hamming $[8,4,4]$ code---lives. As capstone we construct the length-$16$ code
+$H_{16} = \mathrm{Hamming} \oplus \mathrm{Hamming}$, the precise mod-$2$ shadow of the
+rank-$16$ form $E_8 \oplus E_8$, and derive all of its invariants from the general
+closure theorems rather than by brute-force enumeration over $2^{16}$ vectors. All
+results have been formally verified.
+\end{abstract}
+
+\section{Introduction}
+
+The classification of smooth closed simply-connected four-manifolds is controlled to a
+remarkable extent by a single algebraic invariant: the \emph{intersection form}, a
+symmetric unimodular bilinear form on the second homology lattice. Poincar\'e duality
+forces the form to be unimodular; Donaldson's diagonalization theorem forces every
+\emph{smooth definite} form to be a standard diagonal of $\pm 1$'s, so that the even
+unimodular form $E_8$---algebraically impeccable---describes a topological shape
+admitting no smooth structure of the required kind.
+
+In parallel, coding theory has long known that \emph{binary self-dual codes} obey a
+structurally identical set of laws: self-duality plays the role of unimodularity,
+double-evenness plays the role of the spin/even condition, and the length of a
+doubly-even self-dual code is divisible by $8$ (Gleason's theorem), exactly as the rank
+of a positive-definite even unimodular lattice is divisible by $8$. The link is not
+coincidental: \emph{Construction A} reduces an even unimodular lattice modulo $2$ to a
+doubly-even self-dual code, identifying the two divisibility miracles as one.
+
+This paper formalizes the bridge with emphasis on \emph{stability under gluing}. The
+natural operation on four-manifolds is the connected sum $M \# N$, whose intersection
+form is the orthogonal direct sum of the summands' forms. We prove that the entire
+structural package transports to the coding side under coordinate concatenation, and we
+deploy the resulting closure theorems to build the length-$16$ code $H_{16}$, the
+faithful mod-$2$ image of $E_8 \oplus E_8$. We work over the binary field
+$\F_2 = \Z/2\Z$, identifying a binary vector of length $n$ with a function
+$\{0,\dots,n-1\} \to \F_2$.
+
+\section{Definitions}
+
+\begin{definition}[Hamming weight]
+For a binary vector $v$ of length $n$, $\wt v = |\{ i : v_i = 1 \}|$.
+\end{definition}
+
+\begin{definition}[Overlap]
+$\ovl(x,y) = |\{ i : x_i = 1 \wedge y_i = 1 \}|$.
+\end{definition}
+
+\begin{definition}[Binary inner product]
+$\ip{x}{y} = \sum_i x_i y_i \in \F_2$.
+\end{definition}
+
+\begin{definition}[Doubly even]
+A vector $v$ is \emph{doubly even} when $4 \mid \wt v$; a code $C$ is doubly even when
+every $v \in C$ is.
+\end{definition}
+
+\begin{definition}[Self-dual code]
+A finite set $C \subseteq \F_2^n$ is \emph{self-dual} when it coincides with its own
+orthogonal complement: for all $x$, $\;x \in C \iff (\forall y \in C,\ \ip{x}{y} = 0)$.
+\end{definition}
+
+\begin{definition}[All-ones vector]
+$\mathbf{1}_n$ is the constant vector $i \mapsto 1$ of length $n$.
+\end{definition}
+
+\begin{definition}[Coordinate concatenation]
+For $C \subseteq \F_2^m$, $D \subseteq \F_2^n$, the \emph{direct sum} is
+\[
+  C \oplus D = \{ \append(a,b) : a \in C,\ b \in D \} \subseteq \F_2^{m+n},
+\]
+where $\append(a,b)$ places the $m$ coordinates of $a$ first and the $n$ coordinates of
+$b$ second. We write $\leftPart(z)$ for the first $m$ coordinates of $z$ and
+$\rightPart(z)$ for the last $n$, so $\append(\leftPart(z), \rightPart(z)) = z$.
+\end{definition}
+
+\begin{definition}[Intersection form]
+An \emph{intersection form} of rank $n$ is a symmetric integer matrix $G$ (the Gram
+matrix). It is \emph{unimodular} when $\det G = \pm 1$; \emph{even} when $v^\top G v$ is
+even for all $v$ (equivalently every $G_{ii}$ is even); and \emph{standard
+diagonalizable} when $T^\top G T = I$ for some integer change of basis $T$.
+\end{definition}
+
+\begin{definition}[Orthogonal direct sum of forms]
+For forms $Q$ (rank $m$) and $R$ (rank $n$), $Q \oplus R$ has block-diagonal Gram matrix
+$\operatorname{diag}(G_Q, G_R)$ reindexed along $\{0,\dots,m-1\} \sqcup \{0,\dots,n-1\}
+\cong \{0,\dots,m+n-1\}$. It models the connected sum $M \# N$.
+\end{definition}
+
+\section{The structural dictionary}
+
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+\textbf{Coding theory} & \textbf{Smooth 4-manifold topology} \\
+\midrule
+binary code $C \subseteq \F_2^n$ & intersection form $Q$ of rank $n$ \\
+self-dual: $C = C^\perp$ & unimodular: $\det = \pm 1$ (Poincar\'e duality) \\
+doubly even: $4 \mid \wt v$ & even form: even diagonal (spin) \\
+length $n$ & rank $n$ \\
+concatenation $C \oplus D$ & orthogonal sum $Q \oplus R$ (connected sum) \\
+$|C \oplus D| = |C|\,|D|$ & $\det(Q \oplus R) = \det Q \cdot \det R$ \\
+extended Hamming $[8,4,4]$ & the lattice/form $E_8$ \\
+Gleason: $8 \mid n$ & even unimodular definite $\Rightarrow 8 \mid$ rank \\
+$\mathrm{Hamming} \oplus \mathrm{Hamming}$ (len $16$) & $E_8 \oplus E_8$ (rank $16$) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Block arithmetic of concatenation}
+
+\begin{lemma}[Membership criterion]
+$z \in C \oplus D \iff \leftPart(z) \in C \wedge \rightPart(z) \in D$; equivalently
+$z \in C \oplus D \iff \exists a \in C,\ \exists b \in D,\ z = \append(a,b)$.
+\end{lemma}
+\begin{proof}[Proof sketch]
+The image definition gives the forward direction by extracting the preimage pair; the
+reverse uses $\append(\leftPart(z),\rightPart(z)) = z$ and
+$\leftPart(\append(a,b)) = a$, $\rightPart(\append(a,b)) = b$.
+\end{proof}
+
+\begin{lemma}[Weight is additive]
+$\wt(\append(a,b)) = \wt a + \wt b$.
+\end{lemma}
+\begin{proof}[Proof sketch]
+The support of $\append(a,b)$ is the disjoint union of the supports of $a$ and $b$ in
+the two blocks; count via $\sum_{i<m+n} = \sum_{i<m} + \sum_{i<n}$.
+\end{proof}
+
+\begin{lemma}[Inner product is block-diagonal]\label{lem:ipappend}
+$\ip{\append(a,b)}{\append(c,d)} = \ip{a}{c} + \ip{b}{d}$.
+\end{lemma}
+\begin{proof}[Proof sketch]
+Split the defining sum over $\{0,\dots,m+n-1\}$ into the first-block and second-block
+sums; each coordinate belongs to exactly one block, so no cross-terms appear.
+\end{proof}
+
+\begin{lemma}[Cardinality is multiplicative]\label{lem:card}
+$|C \oplus D| = |C| \cdot |D|$.
+\end{lemma}
+\begin{proof}[Proof sketch]
+The map $(a,b) \mapsto \append(a,b)$ is injective on $C \times D$: from
+$\append(a,b) = \append(a',b')$ recover $a=a'$ by reading the first $m$ coordinates and
+$b=b'$ from the last $n$. This is the code-side image of $\det$ multiplicativity across
+block-diagonal blocks.
+\end{proof}
+
+\section{Closure theorems}
+
+\begin{theorem}[Double-evenness is closed under $\oplus$]
+If every $v \in C$ and every $v \in D$ is doubly even, then every $v \in C \oplus D$ is.
+\end{theorem}
+\begin{proof}[Proof sketch]
+Any $v \in C \oplus D$ is $\append(a,b)$ with $a \in C$, $b \in D$; then
+$\wt v = \wt a + \wt b$, and $4 \mid \wt a$, $4 \mid \wt b$ give $4 \mid \wt v$. Mirrors
+$\textsf{directSum\_isEven}$: evenness is governed by the diagonal, which in a
+block-diagonal sum is the concatenation of the two diagonals.
+\end{proof}
+
+\begin{theorem}[Self-orthogonality is closed under $\oplus$]\label{thm:selforth}
+If $\ip{x}{y} = 0$ for all $x,y \in C$ and for all $x,y \in D$, then $\ip{x}{y} = 0$ for
+all $x,y \in C \oplus D$.
+\end{theorem}
+\begin{proof}[Proof sketch]
+Write $x = \append(a,b)$, $y = \append(c,d)$; by Lemma~\ref{lem:ipappend},
+$\ip{x}{y} = \ip{a}{c} + \ip{b}{d} = 0 + 0 = 0$. This is exactly the vanishing of the
+off-diagonal blocks of $\operatorname{diag}(G_Q, G_R)$.
+\end{proof}
+
+\begin{theorem}[Self-duality is closed under $\oplus$ --- headline]\label{thm:selfdual}
+If $C$ and $D$ are each self-dual, then $C \oplus D$ is self-dual.
+\end{theorem}
+\begin{proof}[Proof sketch]
+We prove $x \in C \oplus D \iff \forall y \in C \oplus D,\ \ip{x}{y} = 0$.
+
+\emph{($\Rightarrow$)} If $x \in C \oplus D$ then $\leftPart(x) \in C$,
+$\rightPart(x) \in D$; for $y = \append(a,b)$ split
+$\ip{x}{y} = \ip{\leftPart(x)}{a} + \ip{\rightPart(x)}{b}$ via
+Lemma~\ref{lem:ipappend}, both summands vanishing by self-duality of $C$ and $D$.
+
+\emph{($\Leftarrow$)} Suppose $x$ is orthogonal to all of $C \oplus D$. Probe the left
+block with codewords $\append(a,0)$, $a \in C$ (which lie in $C \oplus D$ since the zero
+word lies in any self-dual code, so $0 \in D$): the splitting collapses
+$\ip{x}{\append(a,0)}$ to $\ip{\leftPart(x)}{a}$, so $\leftPart(x)$ is orthogonal to all
+of $C$, hence $\leftPart(x) \in C$. Symmetrically $\rightPart(x) \in D$, so
+$x \in C \oplus D$. The essential content of the backward direction is the existence of
+the probing codewords---i.e.\ that a self-dual code contains the zero word. This mirrors
+the block-diagonal $T^\top G T$ argument proving $\textsf{directSum\_unimodular}$:
+Poincar\'e self-duality is preserved by connected sum.
+\end{proof}
+
+\begin{theorem}[Length divisibility is additive]\label{thm:lenadd}
+If $C$ and $D$ are each doubly-even and self-dual, then $8 \mid (m+n)$.
+\end{theorem}
+\begin{proof}[Proof sketch]
+By the previous two theorems $C \oplus D$ is doubly-even and self-dual; apply Gleason's
+theorem (Theorem~\ref{thm:gleason}) to $C \oplus D$, of length $m+n$.
+\end{proof}
+
+\section{The length-divisibility tower}
+
+\begin{theorem}[Inner product equals overlap parity]
+$\ip{x}{y} = \ovl(x,y) \bmod 2$.
+\end{theorem}
+\begin{proof}[Proof sketch]
+In $\F_2$, $x_i y_i = 1$ iff both factors are $1$; summing counts overlap positions mod
+$2$.
+\end{proof}
+
+\begin{theorem}[All-ones inner product]
+$\ip{\mathbf{1}_n}{y} = \wt y \bmod 2$, and $\wt(\mathbf{1}_n) = n$.
+\end{theorem}
+
+\begin{theorem}[Mod-4 length theorem]
+Any self-dual doubly-even binary code $C$ of length $n$ satisfies $4 \mid n$.
+\end{theorem}
+\begin{proof}[Proof sketch]
+Every codeword has even weight, so $\ip{\mathbf{1}_n}{y} = 0$ for all $y \in C$; by
+self-duality $\mathbf{1}_n \in C$. As a codeword it is doubly even, and
+$\wt(\mathbf{1}_n) = n$, so $4 \mid n$. The all-ones vector is a canonical ``global
+section'' whose forced membership records the length.
+\end{proof}
+
+\begin{theorem}[Gleason's length theorem]\label{thm:gleason}
+Any self-dual doubly-even binary code $C$ of length $n$ satisfies $8 \mid n$.
+\end{theorem}
+\begin{proof}[Proof sketch]
+A self-contained Gauss-sum / MacWilliams argument over $\C$.
+\begin{enumerate}[leftmargin=1.5em]
+\item Let $\operatorname{csgn}(a) = (-1)^a$ be the nontrivial character of $\F_2$, and
+$\operatorname{bchar}(x,c) = \prod_j (-1)^{x_j c_j} = (-1)^{\ip{x}{c}}$.
+\item \emph{Character orthogonality.} For self-dual (hence linear) $C$,
+$\sum_{c \in C} (-1)^{\ip{x}{c}} = |C|$ if $x \in C$ and $0$ otherwise; the vanishing
+case uses the involution $c \mapsto c + c_0$ for some $c_0 \in C$ with
+$\ip{x}{c_0} \ne 0$.
+\item \emph{Fourier transform of $i^{\wt x}$.} A per-coordinate factorization gives
+$\sum_x i^{\wt x}(-1)^{\ip{x}{y}} = (1+i)^{n-\wt y}(1-i)^{\wt y}$, which for doubly-even
+$y$ collapses to $(1+i)^n$ via $1-i = (-i)(1+i)$ and $(-i)^{\wt y} = 1$.
+\item \emph{Master identity.} Evaluating
+$\sum_x i^{\wt x} \sum_{c \in C}(-1)^{\ip{x}{c}}$ two ways yields
+$\;|C| = (1+i)^n$ in $\C$.
+\item \emph{Number theory.} $|C|$ is a positive real, while powers of $1+i$ cycle with
+period $8$: $(1+i)^4 = -4$ and the intermediate powers are non-real, so only exponents
+divisible by $8$ are positive real ($(1+i)^8 = 16$). Hence $8 \mid n$.
+\end{enumerate}
+\end{proof}
+
+\section{The flagship instance: extended Hamming $[8,4,4]$}
+
+\begin{definition}
+$\mathrm{Hamming} \subseteq \F_2^8$ is the image of the encoder
+$a \mapsto \sum_i a_i g_i$ with generator rows
+\[
+g_0 = 11111111,\quad g_1 = 00001111,\quad g_2 = 00110011,\quad g_3 = 01010101,
+\]
+equivalently the first-order Reed--Muller code $RM(1,3)$.
+\end{definition}
+
+\begin{theorem}
+$\mathrm{Hamming}$ is self-dual and doubly even, with $16$ codewords, weight enumerator
+$1 + 14X^4 + X^8$, and minimum distance $4$.
+\end{theorem}
+
+\begin{corollary}
+Applying Gleason's theorem to $\mathrm{Hamming}$ recovers $8 \mid 8$ from the general
+theorem rather than by hand. The extended Hamming code is the mod-$2$ shadow of $E_8$
+under Construction~A.
+\end{corollary}
+
+\section{Capstone: $\mathrm{Hamming} \oplus \mathrm{Hamming}$, shadow of $E_8 \oplus E_8$}
+
+\begin{definition}
+$H_{16} = \mathrm{Hamming} \oplus \mathrm{Hamming} \subseteq \F_2^{16}$.
+\end{definition}
+
+\begin{theorem}
+$H_{16}$ is doubly even, self-dual, has exactly $256 = 16 \cdot 16$ codewords, and
+length $16$ divisible by $8$---all derived from the general closure theorems, not from
+enumeration over $2^{16} = 65536$ vectors.
+\end{theorem}
+\begin{proof}[Proof sketch]
+Double-evenness and self-duality follow from Theorems for the closure of those
+predicates applied with both halves $\mathrm{Hamming}$; cardinality from
+Lemma~\ref{lem:card}; length from Theorem~\ref{thm:lenadd}.
+\end{proof}
+
+\paragraph{Topological mirror.} On the lattice side $E_8 \oplus E_8$ is the rank-$16$
+form that is even and unimodular yet \emph{not} standard diagonalizable (the evenness
+obstruction transfers through the direct sum). It is the smallest even unimodular form
+clearing Rokhlin's signature-$16$ hurdle while still failing Donaldson's
+diagonalization, so it is not the intersection form of any smooth closed
+simply-connected four-manifold. $H_{16}$ is its faithful mod-$2$ reflection: the
+stability of the $8$-divisibility under gluing on the code side mirrors the stability of
+the $E_8$ obstruction under connected sum.
+
+\section{Algorithms}
+
+\begin{description}[leftmargin=1.5em]
+\item[A (Code generation).] Enumerate $2^k$ messages, encode
+$c_j = \sum_i a_i G_{ij} \bmod 2$, collect distinct codewords. Cost $O(2^k k n)$.
+\item[B (Self-duality test).] For each candidate $x \in \F_2^n$, check that $x \in C$
+agrees with ``$x \perp C$''. Cost $O(2^n |C| n)$.
+\item[C (Concatenation).] Output $\{\append(a,b) : a\in C, b\in D\}$, of size $|C||D|$.
+Cost $O(|C||D|(m+n))$.
+\item[D (Gleason evaluator).] Evaluate $\sum_{c\in C} i^{\wt c}$, confirm it equals
+$(1+i)^n$ and $|C| = 2^{n/2}$, deduce $8 \mid n$. Cost $O(|C| n)$.
+\end{description}
+
+\section{Applications, discussion and future work}
+
+The bridge transfers obstructions between coding theory and four-manifold topology,
+builds large flagship objects (such as $H_{16}$) from small verified ones without
+exponential enumeration, and exhibits stability under gluing as a single phenomenon on
+both sides. Future directions include: the minimum-distance law
+$d(C \oplus D) = \min(d C, d D)$; the two-variable MacWilliams identity and Gleason's
+invariant-theoretic description of weight enumerators as polynomials in
+$X^8 + 14X^4Y^4 + Y^8$ and $X^4Y^4(X^4-Y^4)^4$; Gleason's distance bound
+$d \le 4\lfloor n/24\rfloor + 4$ (extremal case $n=24$: the binary Golay code, shadow of
+the Leech lattice); and the evenness-free cardinality layer $|C|^2 = 2^n$, $2 \mid n$,
+$|C| = 2^{n/2}$.
+
+\section{Conclusion}
+
+We have made precise and verified the bridge between binary self-dual codes and the
+unimodular intersection forms of smooth four-manifolds, with stability under gluing as
+the central content: concatenation of codes mirrors connected sum of manifolds, and
+double-evenness, self-orthogonality, self-duality, cardinality, and the $8$-divisibility
+of the length are each preserved. The extended Hamming $[8,4,4]$ code is the mod-$2$
+shadow of $E_8$; its self-concatenation $H_{16}$ is the mod-$2$ shadow of the
+smooth-impossible form $E_8 \oplus E_8$. Through Construction~A, both $8$'s are one.
+
+\end{document}

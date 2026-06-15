@@ -1,0 +1,120 @@
+/-
+Copyright (c) 2025. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+-/
+import Mathlib
+import Logic.HomotopyTypeTheory
+
+set_option autoImplicit false
+
+/-!
+# The Equivalence Ladder: 2-out-of-3 and 2-out-of-6 for the class of equivalences
+
+This file develops the **closure laws of the class of equivalences** in the synthetic-HoTT
+foundation `Logic.HomotopyTypeTheory`, where a homotopical equivalence is represented
+faithfully by `Function.Bijective` (cf. `HoTT.fiber_equiv_characterization`,
+`HoTT.bijective_of_contr_fibers`, `HoTT.isHEquiv_to_bijective`).
+
+The headline structural law is the **2-out-of-6 law**: for a composable triple
+
+  `A --f--> B --g--> C --h--> D`,
+
+if the two adjacent length-two composites `g ∘ f` and `h ∘ g` are equivalences then *all
+four* maps `f`, `g`, `h`, and `h ∘ g ∘ f` are equivalences. The crux is the *middle map*
+lemma `HoTT.isEquiv_middle_of_six`, which squeezes `g` between its two neighbours with no
+extra section data (`Function.Surjective.of_comp` on one side, `Function.Injective.of_comp`
+on the other). The classical **2-out-of-3** laws appear as the `n = 2` rungs.
+
+These are precisely the saturation laws that the class `W` of equivalences must satisfy
+before one can build a calculus of fractions inverting `W` (see `FUTURE_DIRECTIONS.md`).
+
+-- !-- Lab Notebook -- !--
+Hypothesis: The class of types-equivalences, represented by `Function.Bijective`, is
+  saturated: not only does it satisfy 2-out-of-3, it satisfies the stronger 2-out-of-6
+  law, and the middle map of a composable triple is pinned down by its two neighbouring
+  composites alone.
+Result: All four ladder lemmas are proved `sorry`-free. `isEquiv_middle_of_six` uses *no*
+  classical axioms (only the `of_comp` factorisation lemmas), and the 2-out-of-3 laws are
+  recovered as immediate corollaries / used as the per-step dictionary.
+Insight: The decisive observation is that surjectivity and injectivity decompose along
+  composition in *opposite* directions — `Surjective.of_comp` reads off the *outer* factor,
+  `Injective.of_comp` reads off the *inner* factor. A map sandwiched as the outer factor of
+  one composite and the inner factor of another therefore inherits both halves of
+  bijectivity, with no inverse ever constructed.
+Failure analysis: An earlier instinct was to build an explicit two-sided inverse of `g`
+  from the inverses of `g ∘ f` and `h ∘ g`; this needs `Classical.choice` and adjunction
+  bookkeeping. Replacing it by the `of_comp` squeeze made the middle lemma axiom-free and
+  three lines long.
+-/
+
+noncomputable section
+
+namespace HoTT
+
+/-! ## The 2-out-of-3 law (the `n = 2` rungs) -/
+
+-- !-- If `f` and `g ∘ f` are equivalences, so is `g`: `g` is surjective as the outer
+-- factor of the surjective `g ∘ f`, and injective because `f` is a surjection through
+-- which `g ∘ f` is injective. -- !--
+/-- **2-out-of-3 (known left factor).** If `f` and `g ∘ f` are equivalences then `g` is. -/
+theorem isEquiv_two_out_of_three_left {A B C : Type*} {f : A → B} {g : B → C}
+    (hf : Function.Bijective f) (hgf : Function.Bijective (g ∘ f)) :
+    Function.Bijective g := by
+  refine ⟨?_, hgf.2.of_comp⟩
+  intro x y hxy
+  obtain ⟨a, rfl⟩ := hf.2 x
+  obtain ⟨b, rfl⟩ := hf.2 y
+  exact congrArg f (hgf.1 hxy)
+
+-- !-- If `g` and `g ∘ f` are equivalences, so is `f`: `f` is injective as the inner factor
+-- of the injective `g ∘ f`, and surjective because `g` is injective and `g ∘ f` hits
+-- everything in the image of `g`. -- !--
+/-- **2-out-of-3 (known right factor).** If `g` and `g ∘ f` are equivalences then `f` is. -/
+theorem isEquiv_two_out_of_three_right {A B C : Type*} {f : A → B} {g : B → C}
+    (hg : Function.Bijective g) (hgf : Function.Bijective (g ∘ f)) :
+    Function.Bijective f := by
+  refine ⟨hgf.1.of_comp, ?_⟩
+  intro b
+  obtain ⟨a, ha⟩ := hgf.2 (g b)
+  exact ⟨a, hg.1 ha⟩
+
+/-! ## The middle map and the 2-out-of-6 law -/
+
+-- !-- The middle map `g` of `A→B→C→D` is squeezed: it is the outer factor of the
+-- surjective `g ∘ f` (so surjective via `Surjective.of_comp`) and the inner factor of the
+-- injective `h ∘ g` (so injective via `Injective.of_comp`). No inverse is built. -- !--
+/-- **The middle-map lemma.** For `f : A → B`, `g : B → C`, `h : C → D`, if `g ∘ f` and
+`h ∘ g` are equivalences then the middle map `g` is an equivalence. Uses no axioms. -/
+theorem isEquiv_middle_of_six {A B C D : Type*} {f : A → B} {g : B → C} {h : C → D}
+    (hgf : Function.Bijective (g ∘ f)) (hhg : Function.Bijective (h ∘ g)) :
+    Function.Bijective g :=
+  ⟨hhg.1.of_comp, hgf.2.of_comp⟩
+
+-- !-- From the middle lemma, `g` is an equivalence; then 2-out-of-3 forces `f` (right
+-- factor of `g ∘ f`), `h` (left factor of `h ∘ g`), and the triple composite. -- !--
+/-- **The 2-out-of-6 law.** For a composable triple `A→B→C→D`, if the two adjacent
+composites `g ∘ f` and `h ∘ g` are equivalences then all four of `f`, `g`, `h`, and
+`h ∘ g ∘ f` are equivalences. -/
+theorem isEquiv_two_out_of_six {A B C D : Type*} {f : A → B} {g : B → C} {h : C → D}
+    (hgf : Function.Bijective (g ∘ f)) (hhg : Function.Bijective (h ∘ g)) :
+    Function.Bijective f ∧ Function.Bijective g ∧ Function.Bijective h ∧
+      Function.Bijective (h ∘ g ∘ f) := by
+  have hg : Function.Bijective g := isEquiv_middle_of_six hgf hhg
+  have hf : Function.Bijective f := isEquiv_two_out_of_three_right hg hgf
+  have hh : Function.Bijective h := isEquiv_two_out_of_three_left hg hhg
+  exact ⟨hf, hg, hh, by
+    have : (h ∘ g ∘ f) = (h ∘ g) ∘ f := rfl
+    rw [this]; exact hhg.comp hf⟩
+
+/-! ## Sanity rungs: identities and refl -/
+
+/-- The identity map is an equivalence (the reflexivity rung of the ladder). -/
+theorem isEquiv_id (A : Type*) : Function.Bijective (id : A → A) :=
+  Function.bijective_id
+
+/-- Equivalences are closed under composition (the transitivity rung). -/
+theorem isEquiv_comp {A B C : Type*} {f : A → B} {g : B → C}
+    (hf : Function.Bijective f) (hg : Function.Bijective g) :
+    Function.Bijective (g ∘ f) := hg.comp hf
+
+end HoTT

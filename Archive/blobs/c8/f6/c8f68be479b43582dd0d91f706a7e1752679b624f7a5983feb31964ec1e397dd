@@ -1,0 +1,206 @@
+import Mathlib
+
+/-!
+# Row complexity of Rule 90 via parity of binomial coefficients
+
+The elementary cellular automaton **Rule 90** started from a single live cell
+produces, in row `t`, exactly the parities of the binomial coefficients
+`Nat.choose t k` for `0 ≤ k ≤ t` (Pascal's triangle modulo `2`).  The
+*row complexity* `complexity t` counts the number of live cells in row `t`,
+i.e. the number of indices `k ≤ t` with `Nat.choose t k` odd.
+
+This file proves the exact closed form
+
+  `complexity t = 2 ^ bitcount t`,
+
+where `bitcount t` is the number of `1`-bits in the binary expansion of `t`
+(by Kummer/Lucas this equals the number of odd entries in row `t`).
+
+The proof is deliberately conservative.  The only parity input is the base-`2`
+case of Mathlib's Lucas theorem
+(`Choose.choose_modEq_choose_mod_mul_choose_div_nat`), specialised to two clean
+classification lemmas, which are then translated into `Finset` cardinality
+recurrences:
+
+  * `complexity (2*n)     = complexity n`
+  * `complexity (2*n + 1) = 2 * complexity n`
+
+together with the matching bit-count recurrences
+
+  * `bitcount (2*n)     = bitcount n`
+  * `bitcount (2*n + 1) = bitcount n + 1`.
+
+Binary recursion then yields the main theorem and two explicit corollaries
+describing the two natural infinite subsequences:
+
+  * along the powers of two `t = 2^k`, the complexity is constantly `2`
+    (`complexity_two_pow`);
+  * along `t = 2^k - 1` (the all-ones binary strings), the complexity is the
+    full row length `2^k` (`complexity_two_pow_sub_one`).
+-/
+
+open Nat
+open Choose
+
+/-- The Rule 90 row complexity: the number of indices `k ≤ t` for which
+`Nat.choose t k` is odd. -/
+def complexity (t : ℕ) : ℕ :=
+  ((Finset.range (t + 1)).filter (fun k => Odd (Nat.choose t k))).card
+
+/-- The number of `1`-bits in the binary expansion of `n` (population count). -/
+def bitcount : ℕ → ℕ
+  | 0 => 0
+  | (n + 1) => (n + 1) % 2 + bitcount ((n + 1) / 2)
+decreasing_by exact Nat.div_lt_self (Nat.succ_pos n) (by norm_num)
+
+theorem bitcount_zero : bitcount 0 = 0 := by simp [bitcount]
+
+theorem bitcount_one : bitcount 1 = 1 := by simp [bitcount]
+
+theorem complexity_zero : complexity 0 = 1 := by decide
+
+/-! ## Bit-count recurrences -/
+
+theorem bitcount_two_mul (n : ℕ) : bitcount (2 * n) = bitcount n := by
+  rcases n with _ | m
+  · simp [bitcount]
+  · have h : 2 * (m + 1) = (2 * m + 1) + 1 := by ring
+    rw [h, bitcount]
+    have e1 : (2 * m + 1 + 1) % 2 = 0 := by omega
+    have e2 : (2 * m + 1 + 1) / 2 = m + 1 := by omega
+    rw [e1, e2, Nat.zero_add]
+
+theorem bitcount_two_mul_add_one (n : ℕ) : bitcount (2 * n + 1) = bitcount n + 1 := by
+  rw [bitcount]
+  have e1 : (2 * n + 1) % 2 = 1 := by omega
+  have e2 : (2 * n + 1) / 2 = n := by omega
+  rw [e1, e2]; ring
+
+/-! ## Parity classification of binomial coefficients (base-2 Lucas) -/
+
+/-- `Nat.choose (2*n) m` is odd iff `m` is even and `Nat.choose n (m/2)` is odd. -/
+theorem odd_choose_two_mul_iff (n m : ℕ) :
+    Odd (Nat.choose (2 * n) m) ↔ (Even m ∧ Odd (Nat.choose n (m / 2))) := by
+  haveI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  have h := @choose_modEq_choose_mod_mul_choose_div_nat (2 * n) m 2 _
+  unfold Nat.ModEq at h
+  have e1 : (2 * n) % 2 = 0 := by omega
+  have e3 : (2 * n) / 2 = n := by omega
+  rw [e1, e3] at h
+  rcases Nat.even_or_odd m with he | ho
+  · have hm2 : m % 2 = 0 := Nat.even_iff.mp he
+    rw [hm2] at h
+    simp only [Nat.choose_zero_right, Nat.one_mul] at h
+    rw [Nat.odd_iff, h, Nat.odd_iff]; simp [he]
+  · have hm2 : m % 2 = 1 := Nat.odd_iff.mp ho
+    rw [hm2] at h
+    simp only [Nat.choose] at h
+    rw [Nat.odd_iff, h]; simp [Nat.even_iff, hm2]
+
+/-- `Nat.choose (2*n+1) m` is odd iff `Nat.choose n (m/2)` is odd. -/
+theorem odd_choose_two_mul_add_one_iff (n m : ℕ) :
+    Odd (Nat.choose (2 * n + 1) m) ↔ Odd (Nat.choose n (m / 2)) := by
+  haveI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  have h := @choose_modEq_choose_mod_mul_choose_div_nat (2 * n + 1) m 2 _
+  unfold Nat.ModEq at h
+  have e1 : (2 * n + 1) % 2 = 1 := by omega
+  have e3 : (2 * n + 1) / 2 = n := by omega
+  rw [e1, e3] at h
+  have hc : Nat.choose 1 (m % 2) = 1 := by
+    rcases Nat.mod_two_eq_zero_or_one m with hm | hm <;> rw [hm] <;> rfl
+  rw [hc, Nat.one_mul] at h
+  rw [Nat.odd_iff, h, Nat.odd_iff]
+
+/-! ## Complexity recurrences -/
+
+theorem complexity_two_mul (n : ℕ) : complexity (2 * n) = complexity n := by
+  unfold complexity
+  rw [← Finset.card_image_of_injective
+        ((Finset.range (n + 1)).filter (fun j => Odd (Nat.choose n j)))
+        (mul_right_injective₀ (a := 2) (by norm_num))]
+  congr 1
+  ext m
+  simp only [Finset.mem_filter, Finset.mem_range, Finset.mem_image, odd_choose_two_mul_iff]
+  constructor
+  · rintro ⟨hm, heven, hodd⟩
+    refine ⟨m / 2, ⟨?_, hodd⟩, ?_⟩
+    · omega
+    · obtain ⟨j, rfl⟩ := heven; omega
+  · rintro ⟨j, ⟨hj, hodd⟩, rfl⟩
+    refine ⟨by omega, ⟨even_two_mul j, ?_⟩⟩
+    rw [Nat.mul_div_cancel_left j (by norm_num)]; exact hodd
+
+theorem complexity_two_mul_add_one (n : ℕ) : complexity (2 * n + 1) = 2 * complexity n := by
+  unfold complexity
+  set S := (Finset.range (n + 1)).filter (fun j => Odd (Nat.choose n j)) with hS
+  have hAinj : Function.Injective (fun j => 2 * j) := mul_right_injective₀ (a := 2) (by norm_num)
+  have hBinj : Function.Injective (fun j => 2 * j + 1) := by intro a b hab; simpa using hab
+  have hcardA : (S.image (fun j => 2 * j)).card = S.card := Finset.card_image_of_injective S hAinj
+  have hcardB : (S.image (fun j => 2 * j + 1)).card = S.card := Finset.card_image_of_injective S hBinj
+  have hdisj : Disjoint (S.image (fun j => 2 * j)) (S.image (fun j => 2 * j + 1)) := by
+    rw [Finset.disjoint_left]
+    rintro x hx hx'
+    simp only [Finset.mem_image] at hx hx'
+    obtain ⟨a, _, rfl⟩ := hx
+    obtain ⟨b, _, hb⟩ := hx'
+    omega
+  have hunion : (Finset.range (2 * n + 1 + 1)).filter (fun k => Odd (Nat.choose (2 * n + 1) k))
+      = (S.image (fun j => 2 * j)) ∪ (S.image (fun j => 2 * j + 1)) := by
+    ext m
+    simp only [Finset.mem_filter, Finset.mem_range, Finset.mem_union, Finset.mem_image,
+      odd_choose_two_mul_add_one_iff, hS]
+    constructor
+    · rintro ⟨hm, hodd⟩
+      rcases Nat.even_or_odd m with he | ho
+      · left; refine ⟨m / 2, ⟨by omega, hodd⟩, ?_⟩; obtain ⟨j, rfl⟩ := he; omega
+      · right; refine ⟨m / 2, ⟨by omega, hodd⟩, ?_⟩; obtain ⟨j, rfl⟩ := ho; omega
+    · rintro (⟨j, ⟨hj, hodd⟩, rfl⟩ | ⟨j, ⟨hj, hodd⟩, rfl⟩)
+      · refine ⟨by omega, ?_⟩; have : (2 * j) / 2 = j := by omega
+        rwa [this]
+      · refine ⟨by omega, ?_⟩; have : (2 * j + 1) / 2 = j := by omega
+        rwa [this]
+  rw [hunion, Finset.card_union_of_disjoint hdisj, hcardA, hcardB]; ring
+
+/-! ## Main theorem -/
+
+/-- Exact row-complexity formula for Rule 90:
+the number of odd entries in row `t` of Pascal's triangle equals `2 ^ bitcount t`. -/
+theorem complexity_eq_two_pow_bitcount (t : ℕ) : complexity t = 2 ^ bitcount t := by
+  induction t using Nat.strong_induction_on with
+  | _ t ih =>
+    rcases Nat.even_or_odd t with ⟨m, hm⟩ | ⟨m, hm⟩
+    · rcases Nat.eq_zero_or_pos m with rfl | hpos
+      · subst hm; simp only [Nat.add_zero, complexity_zero, bitcount_zero, pow_zero]
+      · have h2 : t = 2 * m := by omega
+        rw [h2, complexity_two_mul, bitcount_two_mul, ih m (by omega)]
+    · have h2 : t = 2 * m + 1 := by omega
+      rw [h2, complexity_two_mul_add_one, bitcount_two_mul_add_one, pow_succ,
+          ih m (by omega)]; ring
+
+/-! ## Bit-count along the two distinguished subsequences -/
+
+theorem bitcount_two_pow (k : ℕ) : bitcount (2 ^ k) = 1 := by
+  induction k with
+  | zero => rw [pow_zero, bitcount_one]
+  | succ n ih => rw [pow_succ, mul_comm, bitcount_two_mul, ih]
+
+theorem bitcount_two_pow_sub_one (k : ℕ) : bitcount (2 ^ k - 1) = k := by
+  induction k with
+  | zero => simp [bitcount_zero]
+  | succ n ih =>
+    have h : 2 ^ (n + 1) - 1 = 2 * (2 ^ n - 1) + 1 := by
+      have : 1 ≤ 2 ^ n := Nat.one_le_two_pow
+      rw [pow_succ]; omega
+    rw [h, bitcount_two_mul_add_one, ih]
+
+/-! ## Corollaries: the two infinite subsequences -/
+
+/-- Along the powers of two, the Rule 90 row complexity is constantly `2`
+(valid for every `k`, including `k = 0` since `2^0 = 1` already has complexity `2`). -/
+theorem complexity_two_pow (k : ℕ) : complexity (2 ^ k) = 2 := by
+  rw [complexity_eq_two_pow_bitcount, bitcount_two_pow]; rfl
+
+/-- Along `t = 2^k - 1` (all-ones binary strings), every entry of the row is odd,
+so the complexity is the full row length `2^k`. -/
+theorem complexity_two_pow_sub_one (k : ℕ) : complexity (2 ^ k - 1) = 2 ^ k := by
+  rw [complexity_eq_two_pow_bitcount, bitcount_two_pow_sub_one]

@@ -1,0 +1,245 @@
+/-
+Copyright (c) 2025 Harmonic. All rights reserved.
+
+# Tropical Valuation Depth Core: a fully verified max-plus bridge
+
+Bridge: Computation/PadicValuationDepth ↔ Tropical/max-plus algebra
+
+This file develops a *small but completely proved* bridge between the valuation-depth
+complexity measure of `Computation/PadicValuationDepth` and the max-plus ("tropical")
+semiring on `WithBot ℕ`.
+
+The depth measure `ValuationDepthMeasure.vdepth` satisfies the ultrametric addition law
+
+  `vdepth (f + g) ≤ max (vdepth f) (vdepth g) + 1`,
+
+which is *exactly* a max-plus statement: combining two computations costs the `max` of
+their depths, plus one unit of cost.  We make this explicit by introducing a tiny
+max-plus gadget on `WithBot ℕ` (`tropAdd = max`, `tropCost x c = x + c`, `costUnit = 1`)
+and restating the core bound in tropicalized form.
+
+We then prove a logarithmic-depth balanced-reduction theorem: a balanced binary tree of
+height `k` whose leaves each have depth `≤ d` computes a function of depth `≤ d + k`.
+
+## Main results
+* `tropAdd`, `tropCost`, `costUnit` — the local max-plus gadget on `WithBot ℕ`
+* `depthTrop` — tropicalization of `vdepth` into `WithBot ℕ`
+* `depth_add_bound` — ordinary-arithmetic core bound (wrapper around `vdepth_add`)
+* `depth_trop_add_bound` — the same bound in explicit max-plus form
+* `BinTree`, `BinTree.height`, `treeSum`, `BinTree.BoundedLeaves`
+* `treeSum_depth_le` — `vdepth (treeSum t) ≤ d + t.height`
+* `perfectTree`, `perfectTree_height`, `perfectTree_depth_le` — `vdepth ≤ d + k`
+* `treeSum_depth_trop_le` — tropicalized form of the height bound
+-/
+
+import Mathlib
+import Computation.PadicValuationDepth
+
+namespace TropicalValuationDepthCore
+
+open ValuationDepthMeasure
+
+/-! ## Section 1: A local max-plus tropical gadget on `WithBot ℕ`
+
+We use `WithBot ℕ` as the carrier (`⊥` plays the role of the additive identity of the
+max-plus semiring, i.e. the depth of "no computation"). -/
+
+/-- Tropical addition is `max`. -/
+@[reducible] def tropAdd (x y : WithBot ℕ) : WithBot ℕ := max x y
+
+/-- Tropical cost: add a (classical) cost `c` to a tropical value `x`. -/
+@[reducible] def tropCost (x : WithBot ℕ) (c : ℕ) : WithBot ℕ := x + (c : WithBot ℕ)
+
+/-- The unit cost charged for combining two computations. -/
+@[reducible] def costUnit : ℕ := 1
+
+@[simp] theorem tropAdd_def (x y : WithBot ℕ) : tropAdd x y = max x y := rfl
+@[simp] theorem tropCost_def (x : WithBot ℕ) (c : ℕ) : tropCost x c = x + (c : WithBot ℕ) := rfl
+@[simp] theorem costUnit_def : costUnit = 1 := rfl
+
+/-- `tropAdd` agrees with coercion: max of coerced naturals is the coercion of the max. -/
+theorem tropAdd_coe (a b : ℕ) :
+    tropAdd (a : WithBot ℕ) (b : WithBot ℕ) = ((max a b : ℕ) : WithBot ℕ) := by
+  rw [tropAdd]; exact (WithBot.coe_max a b).symm
+
+/-- `tropCost` agrees with coercion: adding a classical cost commutes with coercion. -/
+theorem tropCost_coe (a c : ℕ) :
+    tropCost (a : WithBot ℕ) c = ((a + c : ℕ) : WithBot ℕ) := by
+  simp [tropCost]
+
+/-! ## Section 2: Tropicalization of valuation depth -/
+
+variable {α β : Type*} [Semiring α] [Semiring β] [ValuationDepthMeasure α β]
+
+/-- The tropicalization of valuation depth: coerce the natural-number depth into the
+max-plus carrier `WithBot ℕ`. -/
+@[reducible] def depthTrop (f : α → β) : WithBot ℕ := (vdepth f : WithBot ℕ)
+
+@[simp] theorem depthTrop_def (f : α → β) : depthTrop f = (vdepth f : WithBot ℕ) := rfl
+
+/-! ## Section 3: The core bridge theorem in two forms -/
+
+/-- **Core depth-add bound (ordinary form).** The depth of a sum is bounded by the max
+of the depths plus one. This is a direct wrapper around `ValuationDepthMeasure.vdepth_add`. -/
+theorem depth_add_bound (f g : α → β) :
+    vdepth (fun x => f x + g x) ≤ max (vdepth f) (vdepth g) + costUnit :=
+  vdepth_add f g
+
+/-- **Core depth-add bound (tropicalized / max-plus form).** The tropical depth of a sum
+is bounded by `tropCost (tropAdd (depthTrop f) (depthTrop g)) costUnit`, i.e. the max of
+the depths plus the unit cost, all computed in `WithBot ℕ`. -/
+theorem depth_trop_add_bound (f g : α → β) :
+    depthTrop (fun x => f x + g x)
+      ≤ tropCost (tropAdd (depthTrop f) (depthTrop g)) costUnit := by
+  have h := depth_add_bound f g
+  rw [depthTrop, depthTrop, depthTrop, tropAdd_coe, tropCost_coe, costUnit_def]
+  exact_mod_cast h
+
+/-! ## Section 4: Balanced binary reduction via a full binary tree -/
+
+/-- A full binary tree with leaves labelled by terms of type `γ`. -/
+inductive BinTree (γ : Type*) where
+  | leaf : γ → BinTree γ
+  | node : BinTree γ → BinTree γ → BinTree γ
+
+namespace BinTree
+
+/-- Height of a binary tree: a leaf has height `0`, a node one more than the max of its
+children's heights. -/
+def height {γ : Type*} : BinTree γ → ℕ
+  | leaf _ => 0
+  | node l r => max (height l) (height r) + 1
+
+@[simp] theorem height_leaf {γ : Type*} (x : γ) : (leaf x).height = 0 := rfl
+@[simp] theorem height_node {γ : Type*} (l r : BinTree γ) :
+    (node l r).height = max l.height r.height + 1 := rfl
+
+end BinTree
+
+/-- Fold a tree of functions into a single function by combining children pointwise via
+addition (the tropical "max-plus" combine at the level of the depth measure). -/
+def treeSum : BinTree (α → β) → (α → β)
+  | BinTree.leaf f => f
+  | BinTree.node l r => fun x => treeSum l x + treeSum r x
+
+omit [Semiring α] [ValuationDepthMeasure α β] in
+@[simp] theorem treeSum_leaf (f : α → β) : treeSum (BinTree.leaf f) = f := rfl
+omit [Semiring α] [ValuationDepthMeasure α β] in
+@[simp] theorem treeSum_node (l r : BinTree (α → β)) :
+    treeSum (BinTree.node l r) = (fun x => treeSum l x + treeSum r x) := rfl
+
+namespace BinTree
+
+/-- Every leaf of the tree has valuation depth at most `d`. -/
+def BoundedLeaves (d : ℕ) : BinTree (α → β) → Prop
+  | leaf f => vdepth f ≤ d
+  | node l r => BoundedLeaves d l ∧ BoundedLeaves d r
+
+@[simp] theorem boundedLeaves_leaf (d : ℕ) (f : α → β) :
+    BoundedLeaves d (leaf f) ↔ vdepth f ≤ d := Iff.rfl
+@[simp] theorem boundedLeaves_node (d : ℕ) (l r : BinTree (α → β)) :
+    BoundedLeaves d (node l r) ↔ BoundedLeaves d l ∧ BoundedLeaves d r := Iff.rfl
+
+end BinTree
+
+/-! ## Section 5: The logarithmic-depth balanced-reduction theorem -/
+
+/-- **Balanced reduction depth bound.** If every leaf of a binary tree `t` has valuation
+depth at most `d`, then the depth of the folded computation `treeSum t` is at most
+`d + t.height`.  Since a balanced tree over `2^k` leaves has height `k`, this is the
+logarithmic-depth bound `depth ≤ d + log₂(#leaves)`. -/
+theorem treeSum_depth_le (d : ℕ) :
+    ∀ t : BinTree (α → β), t.BoundedLeaves d → vdepth (treeSum t) ≤ d + t.height := by
+  intro t
+  induction t with
+  | leaf f =>
+      intro h
+      simpa using h
+  | node l r ihl ihr =>
+      intro h
+      rw [BinTree.boundedLeaves_node] at h
+      have hl := ihl h.1
+      have hr := ihr h.2
+      have hadd := depth_add_bound (treeSum l) (treeSum r)
+      simp only [treeSum_node, BinTree.height_node, costUnit_def] at *
+      omega
+
+/-! ## Section 6: A perfect (balanced) tree of height `k` over `2^k` leaves -/
+
+/-- A perfect binary tree of height `k` whose leaves are taken from a family
+`φ : ℕ → (α → β)` with an offset; offsets keep the `2^k` leaves distinct. -/
+def perfectTree (φ : ℕ → (α → β)) : ℕ → ℕ → BinTree (α → β)
+  | 0, off => BinTree.leaf (φ off)
+  | k + 1, off => BinTree.node (perfectTree φ k off) (perfectTree φ k (off + 2 ^ k))
+
+omit [Semiring α] [Semiring β] [ValuationDepthMeasure α β] in
+/-- A perfect tree of height parameter `k` indeed has height `k`. -/
+theorem perfectTree_height (φ : ℕ → (α → β)) (k off : ℕ) :
+    (perfectTree φ k off).height = k := by
+  induction k generalizing off with
+  | zero => simp [perfectTree]
+  | succ k ih => simp [perfectTree, ih]
+
+/-- If every member of the family is depth-bounded by `d`, so is every leaf of a perfect
+tree built from it. -/
+theorem perfectTree_boundedLeaves (φ : ℕ → (α → β)) (d : ℕ)
+    (hφ : ∀ n, vdepth (φ n) ≤ d) (k off : ℕ) :
+    (perfectTree φ k off).BoundedLeaves d := by
+  induction k generalizing off with
+  | zero => simpa [perfectTree] using hφ off
+  | succ k ih => exact ⟨ih off, ih (off + 2 ^ k)⟩
+
+/-- **Logarithmic-depth theorem (perfect-tree form).** If every leaf has depth `≤ d`, the
+balanced reduction over `2^k` leaves has depth `≤ d + k`. -/
+theorem perfectTree_depth_le (φ : ℕ → (α → β)) (d : ℕ)
+    (hφ : ∀ n, vdepth (φ n) ≤ d) (k off : ℕ) :
+    vdepth (treeSum (perfectTree φ k off)) ≤ d + k := by
+  have h := treeSum_depth_le d (perfectTree φ k off)
+    (perfectTree_boundedLeaves φ d hφ k off)
+  rwa [perfectTree_height] at h
+
+/-- **Tropicalized logarithmic-depth bound.** The tropical depth of a balanced reduction
+of height `t.height` is at most `tropCost (depthTrop-of-best-leaf-bound) height`, i.e.
+`d + t.height` interpreted in the max-plus carrier `WithBot ℕ`. -/
+theorem treeSum_depth_trop_le (d : ℕ) (t : BinTree (α → β)) (h : t.BoundedLeaves d) :
+    depthTrop (treeSum t) ≤ tropCost (d : WithBot ℕ) t.height := by
+  have hle := treeSum_depth_le d t h
+  rw [depthTrop, tropCost_coe]
+  exact_mod_cast hle
+
+/-! ## Section 7: The exact gap to `Bridges/CategoricalTropicalUltrametric`
+
+The existing categorical bridge layer in
+`Catalog/Bridges/CategoricalTropicalUltrametric.lean` is organized around the bundled
+structure `CategoricalTropicalUltrametric.TropicalValuationObject`, whose tropical
+addition is the abstract `max_op` field on a *generic* ordered idempotent carrier `R`
+(with separate `mul`, `zero`, `one`, ...).  Its reconstructed ultrametric seminorm
+(`UltraNormObj`) lands in `ℕ`.
+
+Our gadget here, by contrast, is the *concrete* max-plus semiring on `WithBot ℕ`
+(`tropAdd = max`, `tropCost x c = x + c`).  The two are not definitionally the same
+object: one is an abstract bundled structure carrying its own order and operations, the
+other is the fixed concrete carrier `WithBot ℕ` used directly as the codomain of depth
+tropicalization.
+
+The remaining gap is therefore purely *interface-level*: to plug `depthTrop` and
+`depth_trop_add_bound` into the categorical layer one must exhibit a `TropicalValuationObject`
+instance whose `max_op` is `max` on `WithBot ℕ` (a translation functor), or generalize
+`TropicalValuationObject` so that `WithBot ℕ` with `max` is directly an object of that
+interface.  The statement below records the precise algebraic shape that such a
+translation must respect: tropical addition is `max` and combination cost is additive. -/
+
+/-- A lightweight record of the exact algebraic fit a future categorical translation must
+respect: on the concrete carrier `WithBot ℕ`, tropical addition is commutative-idempotent
+`max`, and the unit combination cost adds. This is the precise compatibility data a
+`TropicalValuationObject`-style instance over `WithBot ℕ` would have to provide. -/
+theorem maxplus_translation_shape :
+    (∀ x y : WithBot ℕ, tropAdd x y = tropAdd y x) ∧
+    (∀ x : WithBot ℕ, tropAdd x x = x) ∧
+    (∀ (a : ℕ), tropCost (a : WithBot ℕ) costUnit = ((a + 1 : ℕ) : WithBot ℕ)) := by
+  refine ⟨fun x y => ?_, fun x => ?_, fun a => ?_⟩
+  · simp [tropAdd, max_comm]
+  · simp [tropAdd]
+  · simp [tropCost]
+
+end TropicalValuationDepthCore

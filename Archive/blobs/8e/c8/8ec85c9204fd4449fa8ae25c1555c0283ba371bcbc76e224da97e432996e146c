@@ -1,0 +1,199 @@
+/-
+Copyright (c) 2026 Harmonic. All rights reserved.
+Released under Apache 2.0 license.
+
+# Direct sums (concatenation) of binary codes: the connected sum on the code side
+
+This file is the coding-theory mirror of
+`Catalog.Applications.SmoothPoincare.DirectSum`, which shows the lattice predicates
+`Unimodular`, `IsEven`, `StdDiagonalizable` are closed under the orthogonal block sum
+`Q ⊕ R` (the algebraic model of the connected sum `M # N`).  Here we build the analogous
+**concatenation** `C ⊕ D` of binary codes and show the code predicates are closed under
+it, and — crucially — that the cardinality invariant `|C| = 2^(n/2)` of
+`SelfDualCardinality` is *multiplicative*, exactly as ranks add under `⊕` on the lattice
+side.
+
+* `directSum` — concatenation `C ⊕ D ⊆ (ZMod 2)^(m+n)` via `Fin.append`.
+* `directSum_card` — `|C ⊕ D| = |C| · |D|` (concatenation is injective).
+* `directSum_selfDual` — **self-duality is additive**: `C ⊕ D` is self-dual iff `C` and
+  `D` both are (here, the "if" direction).  The mirror of `directSum_unimodular`.
+* `directSum_doublyEven` — **double-evenness is additive** (`wt` splits across the
+  concatenation).  The mirror of `directSum_isEven`.
+* `directSum_card_consistent` — the cardinality identity `2^((m+n)/2) = 2^(m/2)·2^(n/2)`
+  drops out of `directSum_card` + `selfDual_card`, the code shadow of "ranks add".
+* `hammingSq` — the rank-16 example `hamming ⊕ hamming`: a doubly-even self-dual code of
+  length `16` with `256 = 2⁸` codewords, the code shadow of `E8 ⊕ E8`
+  (`IntersectionForm.E8E8_not_stdDiagonalizable`), recovering `8 ∣ 16` from Gleason.
+
+-- !-- Lab Notes -- !--
+Hypothesis: the orthogonal direct sum that makes `E8 ⊕ E8` even/unimodular (catalog
+  `DirectSum.lean`) has a verbatim code shadow — coordinate concatenation `Fin.append`
+  — under which self-duality, double-evenness and the half-dimension cardinality law are
+  all additive/multiplicative, with `hamming ⊕ hamming` the shadow of `E8 ⊕ E8`.
+Result: `directSum_card` (`|C⊕D| = |C|·|D|`), `directSum_selfDual`,
+  `directSum_doublyEven`, and the consistency law `2^((m+n)/2) = 2^(m/2)·2^(n/2)` all
+  proved `sorry`-free; `hammingSq` realized as a length-16 doubly-even self-dual code
+  with `256` words, recovering `8 ∣ 16` via `GleasonLength`.
+Insight: the load-bearing identity is `ip (append a b) (append c d) = ip a c + ip b d`
+  — orthogonality *decouples across the concatenation seam* — exactly the block-diagonal
+  decoupling that makes the Gram matrix of `Q ⊕ R` split.  Self-duality is then additive
+  because `⟂ all of C⊕D` ⟺ (`⟂ all C` via the `d=0` slice) ∧ (`⟂ all D` via the `c=0`
+  slice), and the slices land back in `C`, `D` because `0 ∈ C`, `0 ∈ D`.
+Failure analysis: the only friction is `Fin (m+n)` vs `Fin m ⊕ Fin n`; routing every
+  sum through `Fin.sum_univ_add` / `Fin.append_left` / `Fin.append_right` keeps all index
+  arithmetic implicit, mirroring how `DirectSum.lean` routes through `finSumFinEquiv`.
+-/
+
+import Mathlib
+import Catalog.Applications.SmoothPoincare.SelfDualCardinality
+
+open scoped BigOperators
+
+namespace SmoothPoincare
+namespace Codes
+
+variable {m n : ℕ}
+
+/-! ## The concatenation `C ⊕ D` -/
+
+/-- **Direct sum (concatenation)** of binary codes: the image of `C ×ˢ D` under
+coordinate concatenation `Fin.append`. -/
+def directSum (C : Finset (Fin m → ZMod 2)) (D : Finset (Fin n → ZMod 2)) :
+    Finset (Fin (m + n) → ZMod 2) :=
+  (C ×ˢ D).image (fun p => Fin.append p.1 p.2)
+
+/-! ## The decoupling identities -/
+
+/-
+**The inner product decouples across the concatenation seam.**
+-/
+lemma ip_append (a c : Fin m → ZMod 2) (b d : Fin n → ZMod 2) :
+    ip (Fin.append a b) (Fin.append c d) = ip a c + ip b d := by
+  unfold ip;
+  rw [ Fin.sum_univ_add ] ; aesop
+
+/-
+**The weight is additive across the concatenation seam.**
+-/
+lemma wt_append (a : Fin m → ZMod 2) (b : Fin n → ZMod 2) :
+    wt (Fin.append a b) = wt a + wt b := by
+  unfold wt;
+  rw [ Finset.card_filter, Finset.card_filter, Finset.card_filter ];
+  rw [ Fin.sum_univ_add ] ; aesop
+
+/-
+Concatenation is injective on pairs.
+-/
+lemma append_injective :
+    Function.Injective
+      (fun p : (Fin m → ZMod 2) × (Fin n → ZMod 2) => Fin.append p.1 p.2) := by
+  intro p q h_eq
+  have h_first : p.1 = q.1 := by
+    exact funext fun i => by simpa using congr_fun h_eq ( Fin.castAdd n i ) ;
+  have h_second : p.2 = q.2 := by
+    exact funext fun i => by simpa [ h_first ] using congr_fun h_eq ( Fin.natAdd m i ) ;
+  exact Prod.ext h_first h_second
+
+/-! ## Closure theorems -/
+
+/-
+**Cardinality is multiplicative**: `|C ⊕ D| = |C| · |D|`.
+-/
+theorem directSum_card (C : Finset (Fin m → ZMod 2)) (D : Finset (Fin n → ZMod 2)) :
+    (directSum C D).card = C.card * D.card := by
+  convert Finset.card_image_of_injective _ ( append_injective ) using 1;
+  rw [ Finset.card_product ]
+
+/-
+**Self-duality is additive**: if `C` and `D` are self-dual then so is `C ⊕ D`.
+-/
+theorem directSum_selfDual
+    (C : Finset (Fin m → ZMod 2)) (D : Finset (Fin n → ZMod 2))
+    (hC : ∀ x, x ∈ C ↔ ∀ y ∈ C, ip x y = 0)
+    (hD : ∀ x, x ∈ D ↔ ∀ y ∈ D, ip x y = 0) :
+    ∀ w, w ∈ directSum C D ↔ ∀ v ∈ directSum C D, ip w v = 0 := by
+  intro w
+  constructor
+  intro hw
+  have h_factor : ∃ a ∈ C, ∃ b ∈ D, w = Fin.append a b := by
+    unfold directSum at hw; obtain ⟨ p, hp, rfl ⟩ := Finset.mem_image.mp hw; exact ⟨ _, Finset.mem_product.mp hp |>.1, _, Finset.mem_product.mp hp |>.2, rfl ⟩ ;
+  obtain ⟨a, ha, b, hb, hw_eq⟩ := h_factor
+  simp [hw_eq] at hw ⊢
+  rintro v hv
+  obtain ⟨c, hc, d, hd, rfl⟩ : ∃ c ∈ C, ∃ d ∈ D, v = Fin.append c d := by
+    unfold directSum at hv; obtain ⟨ p, hp, rfl ⟩ := Finset.mem_image.mp hv; exact ⟨ p.1, Finset.mem_product.mp hp |>.1, p.2, Finset.mem_product.mp hp |>.2, rfl ⟩ ;
+  simp [ip_append] at hv ⊢
+  generalize_proofs at *; (
+  rw [ hC a |>.1 ha c hc, hD b |>.1 hb d hd, add_zero ])
+  intro hw
+  obtain ⟨a, b, ha, hb, rfl⟩ : ∃ a : Fin m → ZMod 2, ∃ b : Fin n → ZMod 2, w = Fin.append a b := by
+    use fun i => w (Fin.castAdd n i), fun i => w (Fin.natAdd m i);
+    exact funext fun i => by cases i using Fin.addCases <;> simp +decide [ * ] ;
+  -- By definition of $C$ and $D$, we know that $a \in C$ and $b \in D$.
+  have haC : a ∈ C := by
+    refine' hC a |>.2 fun y hy => _;
+    specialize hw ( Fin.append y 0 ) ?_ <;> simp +decide [ ip_append ] at *;
+    · exact Finset.mem_image.mpr ⟨ ( y, 0 ), Finset.mem_product.mpr ⟨ hy, hD _ |>.2 fun z hz => by simp +decide [ ip ] ⟩, rfl ⟩;
+    · simp +decide [ ip ] at hw ⊢ ; tauto;
+  have hbD : b ∈ D := by
+    rw [ hD ];
+    intro y hy; specialize hw ( Fin.append 0 y ) ; simp +decide [ ip_append ] at hw ⊢;
+    simp +decide [ ip ] at hw ⊢;
+    exact hw <| Finset.mem_image.mpr ⟨ ( 0, y ), Finset.mem_product.mpr ⟨ by rw [ hC ] ; exact fun _ _ => by simp +decide [ ip ], hy ⟩, by simp +decide [ Fin.append ] ⟩
+  exact Finset.mem_image.mpr ⟨(a, b), Finset.mem_product.mpr ⟨haC, hbD⟩, rfl⟩
+
+/-
+**Double-evenness is additive**: if every codeword of `C` and of `D` is doubly even,
+so is every codeword of `C ⊕ D`.
+-/
+theorem directSum_doublyEven
+    (C : Finset (Fin m → ZMod 2)) (D : Finset (Fin n → ZMod 2))
+    (hC : ∀ v ∈ C, DoublyEven v) (hD : ∀ v ∈ D, DoublyEven v) :
+    ∀ v ∈ directSum C D, DoublyEven v := by
+  intro v hv; rw [ directSum ] at hv; simp_all +decide [ DoublyEven ] ;
+  rcases hv with ⟨ a, b, ⟨ ha, hb ⟩, rfl ⟩ ; exact ( by simpa [ wt_append ] using dvd_add ( hC a ha ) ( hD b hb ) ) ;
+
+/-! ## Consistency with the half-dimension law -/
+
+/-
+**The cardinality law `2^(n/2)` is consistent with concatenation**:
+`2^((m+n)/2) = 2^(m/2) · 2^(n/2)` for self-dual `C, D`, the code shadow of "ranks add"
+under `⊕`.
+-/
+theorem directSum_card_consistent
+    (C : Finset (Fin m → ZMod 2)) (D : Finset (Fin n → ZMod 2))
+    (hC : ∀ x, x ∈ C ↔ ∀ y ∈ C, ip x y = 0)
+    (hD : ∀ x, x ∈ D ↔ ∀ y ∈ D, ip x y = 0) :
+    2 ^ ((m + n) / 2) = 2 ^ (m / 2) * 2 ^ (n / 2) := by
+  rw [ ← pow_add, Nat.add_div ];
+  · cases Nat.mod_two_eq_zero_or_one m <;> cases Nat.mod_two_eq_zero_or_one n <;> simp +decide [ * ];
+    have := selfDual_length_even C hC; have := selfDual_length_even D hD; omega;
+  · decide +revert
+
+/-! ## The rank-16 example `hamming ⊕ hamming` (shadow of `E8 ⊕ E8`) -/
+
+/-- The length-16 code `hamming ⊕ hamming`, the code shadow of `E8 ⊕ E8`. -/
+def hammingSq : Finset (Fin (8 + 8) → ZMod 2) := directSum hamming hamming
+
+/-- `hamming ⊕ hamming` is self-dual. -/
+theorem hammingSq_selfDual :
+    ∀ w, w ∈ hammingSq ↔ ∀ v ∈ hammingSq, ip w v = 0 :=
+  directSum_selfDual hamming hamming hamming_selfDual hamming_selfDual
+
+/-- `hamming ⊕ hamming` is doubly even. -/
+theorem hammingSq_doublyEven : ∀ v ∈ hammingSq, DoublyEven v :=
+  directSum_doublyEven hamming hamming hamming_doublyEven hamming_doublyEven
+
+/-- `hamming ⊕ hamming` has `256 = 2⁸` codewords. -/
+theorem hammingSq_card : hammingSq.card = 256 := by
+  rw [hammingSq, directSum_card, hamming_card]
+
+/-- **Corollary (Gleason on the rank-16 shadow).**  The length `16` of `hamming ⊕
+hamming` is divisible by `8`, recovered from the general Gleason theorem applied to the
+*concatenated* doubly-even self-dual code — the code shadow of `E8 ⊕ E8` clearing the
+mod-8 obstruction. -/
+theorem hammingSq_length_div_eight : (8 : ℕ) ∣ (8 + 8) :=
+  doublyEven_selfDual_length_div_eight hammingSq hammingSq_doublyEven hammingSq_selfDual
+
+end Codes
+end SmoothPoincare

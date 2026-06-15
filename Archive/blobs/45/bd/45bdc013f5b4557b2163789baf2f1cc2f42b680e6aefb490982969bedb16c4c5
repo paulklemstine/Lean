@@ -1,0 +1,258 @@
+import Mathlib
+
+/-!
+# Tropical Automorphic Norms from Berggren–Lorentz Orbits
+
+Bridge: Number theory (Pythagorean triples) ↔ discrete Lorentz group O(2,1;ℤ)
+↔ tropical (max-plus) algebra ↔ certified Lipschitz robustness / lattice-style metrics.
+
+## Research narrative
+
+The Berggren monoid acts on the light cone `Q(a,b,c) = a² + b² − c² = 0` (the set of
+Pythagorean triples), with the Lorentz form `Q` as an **automorphic invariant**:
+`Q(M · v) = Q(v)` for every generator `M`. The orbit of the seed `(3,4,5)` is therefore
+trapped on the cone `Q = 0` forever, yet its coordinates blow up.
+
+This file studies the *size* of orbit points through a **tropical norm** — the `ℓ∞`
+(max) norm `‖(a,b,c)‖ = max(|a|, |b|, |c|)`, which is the natural norm of the tropical
+`(ℤ, max, +)` semiring. The central message:
+
+* The tropical norm is the **hypotenuse** on the positive light cone
+  (`tnorm (a,b,c) = c` for positive Pythagorean triples).
+* Each Berggren generator is **tropically Lipschitz** with constant `7`
+  (the `ℓ∞` operator norm of every generator), and the `B`-generator is moreover a
+  **tropical expansion** with factor `> 5` on the positive cone.
+* Iterating `B` from the seed therefore produces a sequence whose tropical norm is
+  squeezed geometrically: `5·5ⁿ ≤ tnorm ≤ 5·7ⁿ`. Taking the tropical valuation
+  (max-plus logarithm) this says the norm grows *tropically linearly* in the tree
+  depth `n`, with slope between `log 5` and `log 7`. The depth is the tropical
+  valuation of the orbit point; this is the "automorphic norm growth law".
+
+This file extends `Algebra/BerggrenLorentz/Core.lean` (which proves `Q`-invariance and
+raw hypotenuse bounds) and connects to `Bridges/CategoricalTropicalUltrametric.lean`
+(tropical valuation ↔ ultrametric/certified bounds). The Berggren definitions
+(`IsPythag`, `lorentzQ`, `childA/B/C`) are reproduced locally so that this Bridges file
+is self-contained.
+
+-- !-- Lab Notes -- !--
+-- Hypothesis H1: the ℓ∞ (tropical/max) norm of a positive Pythagorean triple equals
+--   its hypotenuse. CONFIRMED (`tnorm_pythag_pos`): follows since the hypotenuse
+--   dominates both legs and all entries are nonneg.
+-- Hypothesis H2: every Berggren child increases the tropical norm by a factor in a
+--   bounded band. CONFIRMED for the B-branch: upper factor 7 (operator ℓ∞ norm),
+--   strict lower factor 5 on the positive cone. The general single-step Lipschitz
+--   bound `tnorm_child*_le` holds for ALL integer inputs (no Pythagorean hypothesis
+--   needed) — it is purely the triangle inequality for |·| applied to the matrix rows,
+--   whose maximal absolute row sum is 7.
+-- Hypothesis H3: the geometric squeeze iterates, giving 5·5ⁿ ≤ tnorm(orbitⁿ) ≤ 5·7ⁿ.
+--   CONFIRMED by induction (`orbitB_tnorm_lower`, `orbitB_tnorm_upper`).
+-- Insight: because Q ≡ 0 is preserved while tnorm → ∞, the orbit witnesses an
+--   *unbounded isotropic ray* in O(2,1;ℤ): the tropical norm is the only nontrivial
+--   "automorphic size" available on the cone (the quadratic invariant is frozen at 0).
+-- Failure analysis: an attempt to also bound the A- and C-branches *below* on the cone
+--   fails — A and C do NOT uniformly expand (e.g. they can shrink a leg), so only the
+--   upper Lipschitz factor 7 is uniform across all three generators. The clean
+--   two-sided squeeze is special to the B-branch.
+-- !-- end Lab Notes -- !--
+-/
+
+set_option maxHeartbeats 1600000
+
+namespace TropicalAutomorphicNorms
+
+/-! ## §0. Berggren–Lorentz data (reproduced from `Algebra/BerggrenLorentz/Core.lean`) -/
+
+/-- The Lorentzian quadratic form `Q(a,b,c) = a² + b² − c²`. -/
+def lorentzQ (a b c : ℤ) : ℤ := a ^ 2 + b ^ 2 - c ^ 2
+
+/-- A triple `(a,b,c)` is Pythagorean iff it lies on the light cone `Q = 0`. -/
+def IsPythag (a b c : ℤ) : Prop := a ^ 2 + b ^ 2 = c ^ 2
+
+/-- Berggren child A: explicit coordinate formulas. -/
+def childA (a b c : ℤ) : ℤ × ℤ × ℤ := (a - 2*b + 2*c, 2*a - b + 2*c, 2*a - 2*b + 3*c)
+
+/-- Berggren child B: explicit coordinate formulas. -/
+def childB (a b c : ℤ) : ℤ × ℤ × ℤ := (a + 2*b + 2*c, 2*a + b + 2*c, 2*a + 2*b + 3*c)
+
+/-- Berggren child C: explicit coordinate formulas. -/
+def childC (a b c : ℤ) : ℤ × ℤ × ℤ := (-a + 2*b + 2*c, -2*a + b + 2*c, -2*a + 2*b + 3*c)
+
+/-- `Q = 0` iff Pythagorean. -/
+theorem lorentzQ_zero_iff_pythag (a b c : ℤ) : lorentzQ a b c = 0 ↔ IsPythag a b c := by
+  unfold lorentzQ IsPythag; omega
+
+/-- The B-branch preserves Pythagorean triples. -/
+theorem childB_preserves_pythag (a b c : ℤ) (h : IsPythag a b c) :
+    IsPythag (childB a b c).1 (childB a b c).2.1 (childB a b c).2.2 := by
+  unfold IsPythag childB at *; nlinarith [h]
+
+/-! ## §1. The tropical (ℓ∞ / max) norm -/
+
+/-- The tropical norm of an integer triple: the `ℓ∞` (max-of-absolute-values) norm,
+    i.e. the natural norm of the tropical `(ℤ, max, +)` semiring. -/
+def tnorm (t : ℤ × ℤ × ℤ) : ℤ := max (max |t.1| |t.2.1|) |t.2.2|
+
+@[simp] theorem tnorm_def (a b c : ℤ) : tnorm (a, b, c) = max (max |a| |b|) |c| := rfl
+
+/-
+The tropical norm is nonnegative.
+-/
+theorem tnorm_nonneg (t : ℤ × ℤ × ℤ) : 0 ≤ tnorm t := by
+  exact le_max_of_le_left ( le_max_of_le_left ( abs_nonneg _ ) )
+
+/-
+Each coordinate is bounded by the tropical norm.
+-/
+theorem abs_fst_le_tnorm (a b c : ℤ) : |a| ≤ tnorm (a, b, c) := by
+  exact le_max_of_le_left ( le_max_left _ _ )
+
+theorem abs_snd_le_tnorm (a b c : ℤ) : |b| ≤ tnorm (a, b, c) := by
+  -- By definition of tnorm, we know that |b| ≤ tnorm (a, b, c).
+  simp [tnorm]
+
+theorem abs_thd_le_tnorm (a b c : ℤ) : |c| ≤ tnorm (a, b, c) := by
+  exact le_max_right _ _
+
+/-! ## §2. On the positive light cone the tropical norm is the hypotenuse -/
+
+/-
+For a positive Pythagorean triple, the tropical norm equals the hypotenuse.
+    Bridge: the `ℓ∞`/tropical norm specialises to the geometric hypotenuse on the cone.
+-/
+theorem tnorm_pythag_pos (a b c : ℤ) (h : IsPythag a b c) (ha : 0 < a) (hb : 0 < b)
+    (hc : 0 < c) : tnorm (a, b, c) = c := by
+      simp +decide [ tnorm, * ];
+      rw [ abs_of_pos ha, abs_of_pos hb, abs_of_pos hc, max_eq_right ];
+      · exact max_eq_right ( by nlinarith [ h.symm ] );
+      · exact le_max_of_le_right ( by nlinarith [ h.symm ] )
+
+/-! ## §3. Single-step tropical Lipschitz bounds (factor 7 = ℓ∞ operator norm)
+
+These hold for ALL integer inputs — they are the triangle inequality for the rows of
+the generator matrices, whose `ℓ∞` operator norm (max absolute row sum) is `7`. -/
+
+/-
+The `A`-generator is tropically `7`-Lipschitz.
+-/
+theorem tnorm_childA_le (a b c : ℤ) : tnorm (childA a b c) ≤ 7 * tnorm (a, b, c) := by
+  unfold tnorm childA;
+  grind
+
+/-
+The `B`-generator is tropically `7`-Lipschitz.
+-/
+theorem tnorm_childB_le (a b c : ℤ) : tnorm (childB a b c) ≤ 7 * tnorm (a, b, c) := by
+  simp +decide only [childB, tnorm_def];
+  grind +qlia
+
+/-
+The `C`-generator is tropically `7`-Lipschitz.
+-/
+theorem tnorm_childC_le (a b c : ℤ) : tnorm (childC a b c) ≤ 7 * tnorm (a, b, c) := by
+  grind +locals
+
+/-! ## §4. The B-generator is a strict tropical expansion on the positive cone -/
+
+/-
+The `B`-child of a positive Pythagorean triple is again positive.
+-/
+theorem childB_pos (a b c : ℤ) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
+    0 < (childB a b c).1 ∧ 0 < (childB a b c).2.1 ∧ 0 < (childB a b c).2.2 := by
+      unfold childB; exact ⟨ by positivity, by positivity, by positivity ⟩ ;
+
+/-
+On the positive cone, the `B`-generator strictly expands the tropical norm by `> 5`.
+-/
+theorem tnorm_childB_expand (a b c : ℤ) (h : IsPythag a b c)
+    (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
+    5 * tnorm (a, b, c) < tnorm (childB a b c) := by
+      -- By definition of childB, we have:
+      unfold childB;
+      unfold tnorm; rw [ max_eq_right ] <;> norm_num;
+      · exact Or.inr <| Or.inr <| by rw [ abs_of_pos, abs_of_pos ] <;> nlinarith [ sq_nonneg ( a - b ), h.symm ] ;
+      · constructor <;> rw [ abs_of_pos, abs_of_pos ] <;> nlinarith [ h.symm ]
+
+/-! ## §5. The iterated `B`-orbit from the seed `(3,4,5)` -/
+
+/-- The orbit obtained by repeatedly applying the `B`-generator to the seed `(3,4,5)`. -/
+def orbitB : ℕ → ℤ × ℤ × ℤ
+  | 0 => (3, 4, 5)
+  | n + 1 => childB (orbitB n).1 (orbitB n).2.1 (orbitB n).2.2
+
+/-
+Every orbit point is a positive triple.
+-/
+theorem orbitB_pos (n : ℕ) :
+    0 < (orbitB n).1 ∧ 0 < (orbitB n).2.1 ∧ 0 < (orbitB n).2.2 := by
+      induction' n with n ih;
+      · decide +revert;
+      · exact childB_pos _ _ _ ih.1 ih.2.1 ih.2.2
+
+/-
+Every orbit point is Pythagorean (stays on the light cone `Q = 0`).
+    This is the *automorphic invariance*: `Q` is frozen along the whole orbit.
+-/
+theorem orbitB_pythag (n : ℕ) :
+    IsPythag (orbitB n).1 (orbitB n).2.1 (orbitB n).2.2 := by
+      induction' n with n ih;
+      · exact show 3 ^ 2 + 4 ^ 2 = 5 ^ 2 by decide;
+      · exact childB_preserves_pythag _ _ _ ih
+
+/-
+Equivalent statement of automorphic invariance via the Lorentz form.
+-/
+theorem orbitB_on_cone (n : ℕ) :
+    lorentzQ (orbitB n).1 (orbitB n).2.1 (orbitB n).2.2 = 0 := by
+      exact lorentzQ_zero_iff_pythag _ _ _ |>.2 ( orbitB_pythag n )
+
+/-
+On the orbit, the tropical norm equals the hypotenuse (third coordinate).
+-/
+theorem orbitB_tnorm_eq (n : ℕ) : tnorm (orbitB n) = (orbitB n).2.2 := by
+  obtain ⟨ ha, hb, hc ⟩ := orbitB_pos n;
+  convert tnorm_pythag_pos ( orbitB n |>.1 ) ( orbitB n |>.2.1 ) ( orbitB n |>.2.2 ) ( orbitB_pythag n ) ha hb hc using 1
+
+/-! ## §6. Geometric squeeze: the automorphic norm growth law -/
+
+/-
+Tropical-norm lower bound: `5 · 5ⁿ ≤ tnorm(orbitⁿ)`.
+-/
+theorem orbitB_tnorm_lower (n : ℕ) : 5 * 5 ^ n ≤ tnorm (orbitB n) := by
+  induction' n with n ih;
+  · native_decide;
+  · have h.childB : 5 * tnorm (orbitB n) < tnorm (childB (orbitB n).1 (orbitB n).2.1 (orbitB n).2.2) := by
+      apply tnorm_childB_expand;
+      · exact orbitB_pythag n;
+      · exact orbitB_pos n |>.1;
+      · exact orbitB_pos n |>.2.1;
+      · exact orbitB_pos n |>.2.2;
+    convert h.childB.le.trans' ( mul_le_mul_of_nonneg_left ih ( by norm_num ) ) using 1 ; ring
+
+/-
+Tropical-norm upper bound: `tnorm(orbitⁿ) ≤ 5 · 7ⁿ`.
+-/
+theorem orbitB_tnorm_upper (n : ℕ) : tnorm (orbitB n) ≤ 5 * 7 ^ n := by
+  induction' n with n ih;
+  · native_decide +revert;
+  · convert le_trans ( tnorm_childB_le _ _ _ ) ( mul_le_mul_of_nonneg_left ih ( by norm_num ) ) using 1 ; ring
+
+/-- **Automorphic norm growth law (tropical squeeze).** The tropical norm of the
+    `n`-th orbit point is sandwiched between two geometric (tropically linear) rates.
+    Bridge: in the tropical valuation (max-plus log) this reads
+    `n·log 5 + log 5 ≤ val ≤ n·log 7 + log 5`, i.e. the valuation tracks the tree depth. -/
+theorem orbitB_tnorm_squeeze (n : ℕ) :
+    5 * 5 ^ n ≤ tnorm (orbitB n) ∧ tnorm (orbitB n) ≤ 5 * 7 ^ n :=
+  ⟨orbitB_tnorm_lower n, orbitB_tnorm_upper n⟩
+
+/-
+The orbit is unbounded in the tropical norm: an unbounded isotropic ray on the cone.
+    Despite `Q ≡ 0` throughout, the tropical "size" diverges.
+-/
+theorem orbitB_tnorm_unbounded (N : ℤ) : ∃ n : ℕ, N < tnorm (orbitB n) := by
+  -- Choose n such that N < 5 * 5 ^ n.
+  obtain ⟨n, hn⟩ : ∃ n : ℕ, N < 5 * 5 ^ n := by
+    cases' pow_unbounded_of_one_lt ( N.toNat + 1 ) ( by norm_num : ( 1 : ℕ ) < 5 ) with n hn;
+    grind;
+  exact ⟨ n, hn.trans_le ( orbitB_tnorm_lower n ) ⟩
+
+end TropicalAutomorphicNorms

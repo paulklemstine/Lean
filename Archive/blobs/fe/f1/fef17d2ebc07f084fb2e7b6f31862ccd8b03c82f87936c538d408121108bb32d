@@ -1,0 +1,110 @@
+/-
+  # Categorical Tropical Rips Interleaving — Tightness of the Shift Displacement
+  ## The shift functor's displacement bound is *exact* on strictly monotone modules.
+
+  This file discharges **Conjecture B** of the Rank & Shift cycle's
+  `FUTURE_DIRECTIONS`: the catalog's bound
+  `interleavingDist_self_shift : interleavingDist M (shift c M) ≤ ENNReal.ofReal c`
+  is **tight** — it is an equality whenever the module `M` is *strictly* monotone on a
+  real interval longer than `c`.
+
+  * `Interleaved.shift_lower_bound`: any `ε`-interleaving between `M` and `shift c M`
+    (with `ε ≥ 0`) forces `c ≤ ε`, provided `M` is strictly monotone on an interval of
+    length `> c`. (The "evaluate the interleaving at an interior witness" technique.)
+  * `interleavingDist_self_shift_eq`: combining the lower bound with the catalog's upper
+    bound `interleavingDist_self_shift` gives
+    `interleavingDist M (shift c M) = ENNReal.ofReal c`.
+  * `trop_interleavingDist_self_shift_eq`: the tropical reformulation — the self-shift
+    distance is `trop (ENNReal.ofReal c)`, the tropical "scalar `c`".
+
+  -- !-- Lab Notes -- !--
+  -- HYPOTHESIS (Hypothesizer): the catalog proved only `d(M, shift c M) ≤ ofReal c`. We
+  --   conjecture the bound is attained: for a *strictly* increasing module, no interleaving
+  --   cheaper than `c` can exist, because the backward domination
+  --   `(shift c M).obj t ≤ M.obj (t+ε)`, i.e. `M.obj (t+c) ≤ M.obj (t+ε)`, contradicts
+  --   strict monotonicity at an interior point as soon as `ε < c`.
+  -- EXPERIMENT (Experimenter): we localise strict monotonicity to a witnessing interval
+  --   `[a,b]` of length `> c` (a faithful rendering of "strictly monotone on an interval of
+  --   length > c"). Evaluating the backward domination at `t = a - ε` yields
+  --   `M.obj (a + (c-ε)) ≤ M.obj a` while strict monotonicity gives `M.obj a < M.obj (a+(c-ε))`,
+  --   a contradiction in any preorder (`not_le_of_gt`). Hence `c ≤ ε`, and `le_sInf`
+  --   transfers this to the distance.
+  -- ANALYSIS (Analyst): SURVIVED. The result holds in an arbitrary `Preorder` — no order
+  --   completeness is needed, only that `x < y → ¬ y ≤ x`. The interval hypothesis is
+  --   genuinely load-bearing: a *constant* module has `d(M, shift c M) = 0 < ofReal c`, so
+  --   the equality fails without strict monotonicity — see the Lab Notes counterexample.
+  -- CRITIQUE (Critic): COUNTEREXAMPLE CHECK. Drop strict monotonicity and take `M` constant.
+  --   Then `shift c M = M` pointwise, so `interleavingDist M (shift c M) = 0`, but
+  --   `ofReal c > 0` for `c > 0`; the equality is false. This is exactly why the interval
+  --   hypothesis appears, and it is the boundary the theorem characterises. The proof is
+  --   non-vacuous (uses the real shift and a strict inequality), with 0 sorries.
+-/
+
+import Mathlib
+import Bridges.CategoricalTropicalRipsInterleaving
+import Bridges.CategoricalTropicalRipsShift
+
+open scoped ENNReal
+open Tropical
+open CategoricalTropicalRipsInterleaving
+open CategoricalTropicalRipsShift
+
+noncomputable section
+
+namespace CategoricalTropicalRipsShiftTight
+
+universe u
+
+variable {α : Type u} [Preorder α]
+
+/-! ## §1. The strict lower bound from strict monotonicity. -/
+
+/-
+**Lower bound on any self-shift interleaving.** If `M` is strictly increasing on an
+    interval `[a,b]` of length strictly greater than `c ≥ 0`, then any `ε`-interleaving
+    (`ε ≥ 0`) between `M` and its `c`-shift must satisfy `c ≤ ε`: there is no interleaving
+    cheaper than the shift.
+-/
+theorem Interleaved.shift_lower_bound {c ε : ℝ} (hε : 0 ≤ ε)
+    {M : PersMod α} {a b : ℝ} (hab : c < b - a)
+    (hstrict : ∀ x y, a ≤ x → x < y → y ≤ b → M.obj x < M.obj y)
+    (h : Interleaved ε M (shift c M)) : c ≤ ε := by
+  cases' h with h₁ h₂;
+  contrapose! h₂;
+  exact ⟨ a - ε, not_le_of_gt ( hstrict _ _ ( by linarith ) ( by linarith ) ( by linarith ) ) ⟩
+
+/-! ## §2. Tightness of the displacement bound. -/
+
+/-- **Conjecture B (tightness).** For `c ≥ 0` and a module `M` strictly monotone on an
+    interval of length `> c`, the displacement of `M` by its `c`-shift is *exactly*
+    `ENNReal.ofReal c`: the catalog's inequality `interleavingDist_self_shift` is an
+    equality. -/
+theorem interleavingDist_self_shift_eq {c : ℝ} (hc : 0 ≤ c) (M : PersMod α)
+    {a b : ℝ} (hab : c < b - a)
+    (hstrict : ∀ x y, a ≤ x → x < y → y ≤ b → M.obj x < M.obj y) :
+    interleavingDist M (shift c M) = ENNReal.ofReal c := by
+  refine le_antisymm (interleavingDist_self_shift hc M) ?_
+  refine le_sInf ?_
+  rintro x ⟨ε, hε, hI, rfl⟩
+  exact ENNReal.ofReal_le_ofReal
+    (Interleaved.shift_lower_bound hε hab hstrict hI)
+
+/-! ## §3. Tropical reformulation. -/
+
+/-- The tropical reformulation of tightness: the self-shift distance, transported to the
+    tropical semiring, is the tropical "scalar `c`" `trop (ENNReal.ofReal c)`. -/
+theorem trop_interleavingDist_self_shift_eq {c : ℝ} (hc : 0 ≤ c) (M : PersMod α)
+    {a b : ℝ} (hab : c < b - a)
+    (hstrict : ∀ x y, a ≤ x → x < y → y ≤ b → M.obj x < M.obj y) :
+    trop (interleavingDist M (shift c M)) = trop (ENNReal.ofReal c) := by
+  rw [interleavingDist_self_shift_eq hc M hab hstrict]
+
+-- !-- Lab Notes -- !--
+-- SYNTHESIS (Principal Investigator): Conjecture B is discharged with 0 sorries. The shift
+--   functor's displacement bound `d(M, shift c M) ≤ ofReal c` is sharp exactly on strictly
+--   monotone modules; the strictness hypothesis is the precise boundary (constant modules
+--   give strict inequality). Combined with the catalog's isometry `interleavingDist_shift`
+--   and the upper bound `interleavingDist_self_shift`, this completes the picture of the
+--   constant shift as the tropical scalar action.
+
+end CategoricalTropicalRipsShiftTight

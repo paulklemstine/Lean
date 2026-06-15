@@ -1,0 +1,80 @@
+import Catalog.NumberTheory.Zeckendorf.Existence
+
+/-! # Zeckendorf's theorem: uniqueness and the existence-and-uniqueness package
+
+Domain: Number Theory.
+
+Building on `Core.lean` (the crux interval bound) and `Existence.lean` (the greedy
+construction), we close Zeckendorf's theorem: every natural number has a **unique**
+representation as a sum of non-consecutive Fibonacci numbers.
+
+* `head_interval`   — a nonempty valid list with largest index `a` has value in `[F a, F (a+1))`.
+* `head_eq_of_value_eq` — two nonempty valid lists of equal value have the **same** largest index.
+* `zeck_unique`     — equal value forces equal list.
+* `zeckendorf`      — the headline `∃!` theorem: `∃! l, IsZeck l ∧ value l = n`.
+* `zeck_value_injective` — `value` is injective on valid lists (reformulation).
+
+-- !-- Lab Notes -- !--
+-- HYPOTHESIS: uniqueness is forced by the same half-open interval `[F a, F (a+1))` used for
+--   existence: the value alone pins the largest index `a` (the unique `a` with `F a ≤ value < F (a+1)`),
+--   after which we strip the head and recurse on the strictly smaller value.
+-- EXPERIMENT: strong induction on `value l₁` (= `value l₂`). The empty case is `value = 0`
+--   (`value_eq_zero_iff`); otherwise both lists are nonempty and `head_eq_of_value_eq` pins a common
+--   head `a`, and stripping it drops the value by `F a ≥ 1`, enabling the IH. SUCCESS.
+-- INSIGHT: existence and uniqueness are *dual readings* of one lemma. Existence reads the interval
+--   "from above" (greedy pick of `a`); uniqueness reads it "from below" (the value determines `a`).
+-- FAILURE ANALYSIS: the WLOG `a₁ ≤ a₂` step needs both directions of the strict bound; symmetry of
+--   the contradiction (`value < F (a₁+1) ≤ F a₂ ≤ value`) makes `a₁ = a₂` immediate via `omega`.
+-- !-- End Lab Notes -- !--
+-/
+
+namespace Zeckendorf
+
+/-- A nonempty valid list with largest index `a` has value in the half-open interval
+`[F a, F (a+1))`. -/
+lemma head_interval {l : List ℕ} (hl : IsZeck l) {a : ℕ} (ha : l.head? = some a) :
+    Nat.fib a ≤ value l ∧ value l < Nat.fib (a + 1) :=
+  ⟨fib_head_le_value ha, value_lt_fib_succ_head hl ha⟩
+
+/-
+Two nonempty valid lists with equal value have the same largest index.
+-/
+lemma head_eq_of_value_eq {l₁ l₂ : List ℕ} (h₁ : IsZeck l₁) (h₂ : IsZeck l₂)
+    {a b : ℕ} (ha : l₁.head? = some a) (hb : l₂.head? = some b)
+    (hv : value l₁ = value l₂) : a = b := by
+  obtain ⟨h₁a, h₁b⟩ := head_interval h₁ ha
+  obtain ⟨h₂a, h₂b⟩ := head_interval h₂ hb;
+  exact le_antisymm ( le_of_not_gt fun h => by linarith [ Nat.fib_mono ( by linarith : b + 1 ≤ a ) ] ) ( le_of_not_gt fun h => by linarith [ Nat.fib_mono ( by linarith : a + 1 ≤ b ) ] )
+
+/-
+**Uniqueness.**  Two valid lists with the same value are equal.
+-/
+theorem zeck_unique {l₁ l₂ : List ℕ} (h₁ : IsZeck l₁) (h₂ : IsZeck l₂)
+    (hv : value l₁ = value l₂) : l₁ = l₂ := by
+  induction' n : value l₁ using Nat.strong_induction_on with n ih generalizing l₁ l₂;
+  rcases l₁ with ( _ | ⟨ a, l₁ ⟩ ) <;> rcases l₂ with ( _ | ⟨ b, l₂ ⟩ ) <;> simp_all +decide [ Zeckendorf.value_cons ];
+  · linarith [ Nat.fib_pos.2 ( show 0 < b by linarith [ h₂.2 b ( by simp +decide ) ] ), Zeckendorf.value_pos h₂ ( by simp +decide ) ];
+  · linarith [ Nat.fib_pos.2 ( show 0 < a by linarith [ h₁.2 a ( by simp +decide ) ] ), show 0 ≤ value l₁ from Nat.zero_le _ ];
+  · -- By `head_eq_of_value_eq`, we get `a = b`.
+    have hab : a = b := by
+      apply head_eq_of_value_eq h₁ h₂;
+      · rfl;
+      · rfl;
+      · simp_all +decide [ value ];
+    specialize ih ( value l₁ ) ; simp_all +decide [ value_cons ];
+    exact ih ( by linarith [ Nat.fib_pos.mpr ( show 0 < b by linarith [ h₁.2 b ( by simp +decide ) ] ) ] ) ( isZeck_cons.mp h₁ |>.2.1 ) ( isZeck_cons.mp h₂ |>.2.1 ) ( by linarith ) ( by linarith )
+
+/-
+**Zeckendorf's theorem.**  Every natural number has a unique representation as a
+sum of non-consecutive Fibonacci numbers.
+-/
+theorem zeckendorf (n : ℕ) : ∃! l, IsZeck l ∧ value l = n := by
+  obtain ⟨l, hl⟩ := Zeckendorf.exists_zeck n;
+  exact ⟨ l, hl, fun l' hl' => zeck_unique hl'.1 hl.1 ( hl'.2.trans hl.2.symm ) ⟩
+
+/-- `value` is injective on Zeckendorf index lists. -/
+theorem zeck_value_injective {l₁ l₂ : List ℕ} (h₁ : IsZeck l₁) (h₂ : IsZeck l₂)
+    (hv : value l₁ = value l₂) : l₁ = l₂ :=
+  zeck_unique h₁ h₂ hv
+
+end Zeckendorf

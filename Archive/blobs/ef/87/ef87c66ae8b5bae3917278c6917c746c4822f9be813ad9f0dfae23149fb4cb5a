@@ -1,0 +1,163 @@
+"""
+The Apparition-Order Bridge -- numerical demonstration.
+
+This self-contained script demonstrates the main results of the package:
+
+  * The Apparition-Order Bridge (Theorem 4.1):
+        entryPoint(p) in (b^n - 1)  =  orderOf(b mod p)
+    for every prime p not dividing the base b.
+
+  * Fermat descent (Theorem 4.2):
+        entryPoint(p) divides p - 1.
+
+  * The support theorem (Theorem 2.1):
+        { n : p | a(n) }  =  { n : entryPoint(p) | n },
+    verified both for the Mersenne sequence b^n - 1 and for Fibonacci.
+
+Run with:  python demo.py
+No third-party dependencies are required.
+"""
+
+from __future__ import annotations
+
+from typing import Callable, List, Optional
+
+
+# --------------------------------------------------------------------------- #
+# Core arithmetic                                                             #
+# --------------------------------------------------------------------------- #
+def is_prime(p: int) -> bool:
+    """Deterministic trial-division primality test for small/medium p."""
+    if p < 2:
+        return False
+    if p % 2 == 0:
+        return p == 2
+    d = 3
+    while d * d <= p:
+        if p % d == 0:
+            return False
+        d += 2
+    return True
+
+
+def multiplicative_order(b: int, p: int) -> int:
+    """Least k > 0 with b^k = 1 (mod p), for a prime p not dividing b.
+
+    This is orderOf(b mod p) inside the unit group of the residue field Z/pZ.
+    By Fermat's little theorem the order always divides p - 1, so it suffices
+    to scan the divisors of p - 1 (we do a straightforward incremental scan).
+    """
+    b %= p
+    assert b != 0, "base must be a unit mod p (p must not divide b)"
+    val = b % p
+    k = 1
+    while val != 1:
+        val = (val * b) % p
+        k += 1
+    return k
+
+
+def entry_point_mersenne(b: int, p: int, search_limit: int = 100_000) -> Optional[int]:
+    """Rank of apparition of p in the sequence a(n) = b^n - 1.
+
+    The *global* definition: least k > 0 with p | b^k - 1, found by scanning.
+    Returns None if not found within search_limit (should never happen for p | b
+    excluded, since the order is at most p - 1).
+    """
+    val = 1  # tracks b^k mod p, starting with k about to become 1
+    for k in range(1, search_limit + 1):
+        val = (val * b) % p
+        if (val - 1) % p == 0:  # p | b^k - 1
+            return k
+    return None
+
+
+def fibonacci(n: int) -> int:
+    """The n-th Fibonacci number, F(0) = 0, F(1) = 1."""
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
+
+
+def entry_point_fibonacci(p: int, search_limit: int = 100_000) -> Optional[int]:
+    """Rank of apparition of p in the Fibonacci sequence: least k>0 with p | F_k."""
+    a, b = 0, 1
+    for k in range(1, search_limit + 1):
+        a, b = b, a + b  # now a = F_k
+        if a % p == 0:
+            return k
+    return None
+
+
+# --------------------------------------------------------------------------- #
+# Demonstrations                                                              #
+# --------------------------------------------------------------------------- #
+def demo_bridge(b: int, primes: List[int]) -> None:
+    """Verify entryPoint = order and entryPoint | (p-1) for the Mersenne family."""
+    print(f"\n=== Apparition-Order Bridge for a(n) = {b}^n - 1 ===")
+    print(f"{'p':>5} | {'order(b mod p)':>14} | {'entryPoint':>11} | "
+          f"{'equal?':>7} | {'divides p-1?':>12}")
+    print("-" * 62)
+    for p in primes:
+        if not is_prime(p) or b % p == 0:
+            continue
+        order = multiplicative_order(b, p)
+        ep = entry_point_mersenne(b, p)
+        equal = (order == ep)
+        descent = (ep is not None and (p - 1) % ep == 0)
+        print(f"{p:>5} | {order:>14} | {str(ep):>11} | "
+              f"{str(equal):>7} | {str(descent):>12}")
+        assert equal, f"BRIDGE FAILED at p={p}"
+        assert descent, f"FERMAT DESCENT FAILED at p={p}"
+    print("All rows: bridge holds and entry point divides p - 1.")
+
+
+def demo_support(b: int, p: int, upto: int) -> None:
+    """Verify support(p) = multiples of entryPoint(p) for b^n - 1, up to 'upto'."""
+    ep = entry_point_mersenne(b, p)
+    assert ep is not None
+    observed = [n for n in range(1, upto + 1) if (pow(b, n, p) - 1) % p == 0]
+    predicted = [n for n in range(1, upto + 1) if n % ep == 0]
+    print(f"\n=== Support theorem: {b}^n - 1, p = {p}, entryPoint = {ep} ===")
+    print(f"  indices n<= {upto} with p | a(n)   : {observed}")
+    print(f"  multiples of entryPoint (predicted): {predicted}")
+    assert observed == predicted, "SUPPORT THEOREM FAILED"
+    print("  Support equals the principal progression of multiples. OK.")
+
+
+def demo_fibonacci_support(p: int, upto: int) -> None:
+    """Verify the Fibonacci support theorem: support(p) = multiples of entry point."""
+    ep = entry_point_fibonacci(p)
+    assert ep is not None
+    observed = [n for n in range(1, upto + 1) if fibonacci(n) % p == 0]
+    predicted = [n for n in range(1, upto + 1) if n % ep == 0]
+    print(f"\n=== Fibonacci support theorem: p = {p}, entryPoint = {ep} ===")
+    print(f"  indices n<= {upto} with p | F_n     : {observed}")
+    print(f"  multiples of entryPoint (predicted): {predicted}")
+    assert observed == predicted, "FIBONACCI SUPPORT FAILED"
+    print("  Fibonacci support equals the principal progression. OK.")
+
+
+def main() -> None:
+    primes = [3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 73, 89, 127]
+
+    # The bridge for base 2 (classical Mersenne numbers) and base 3.
+    demo_bridge(2, primes)
+    demo_bridge(3, primes)
+
+    # The support theorem in action.
+    demo_support(2, 7, upto=20)
+    demo_support(2, 31, upto=30)
+    demo_support(3, 11, upto=24)
+
+    # The same support shape for Fibonacci.
+    demo_fibonacci_support(7, upto=40)
+    demo_fibonacci_support(11, upto=40)
+
+    print("\nAll demonstrations passed: the Apparition-Order Bridge, Fermat "
+          "descent, and the support theorem are confirmed numerically.")
+
+
+if __name__ == "__main__":
+    main()

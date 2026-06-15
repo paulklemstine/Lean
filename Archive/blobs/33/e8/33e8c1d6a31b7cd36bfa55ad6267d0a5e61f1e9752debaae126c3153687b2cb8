@@ -1,0 +1,112 @@
+/-
+  # Categorical Tropical Rips Interleaving — Rank / Betti Curve Stability
+  ## Algebraic stability of the rank invariant: the rank functor
+  ## `PersMod (Set β) → PersMod ℕ` (for finite `β`) is 1-Lipschitz for the
+  ## interleaving distance.
+
+  This file develops **Conjecture 5** of
+  `Bridges.CategoricalTropicalRipsInterleaving` (rank/Betti curves are 1-Lipschitz).
+
+  Given a persistence module valued in the lattice of subsets of a *finite* type `β`,
+  the **rank curve** sends a scale `t` to the cardinality `ncard (M.obj t)` of the
+  scale-`t` object. We prove:
+
+  * `rankMod` is a genuine persistence module valued in `ℕ` (the rank curve is monotone);
+  * `rank_preserves_interleaving`: the rank functor sends `ε`-interleavings to
+    `ε`-interleavings — the categorical heart of "algebraic stability of the rank
+    invariant";
+  * `rank_interleavingDist_le`: the rank functor is **1-Lipschitz** for the interleaving
+    distance;
+  * `rips_rank_stability` / `rips_rank_interleavingDist_le`: specialising to Vietoris–Rips,
+    sup-close dissimilarities give `ε`-interleaved rank curves over a finite point set,
+    with controlled interleaving distance.
+
+  -- !-- Lab Notes -- !--
+  -- HYPOTHESIS (Hypothesizer): The catalog's lattice-valued model `PersMod (Set β)` is the
+  --   right place to define the rank invariant: `ncard` is monotone under inclusion exactly
+  --   when sets are finite, so over a `Finite` type the rank functor is total and monotone.
+  --   The interleaving inequalities `M.obj t ⊆ N.obj (t+ε)` should pass through `ncard`
+  --   verbatim, giving 1-Lipschitzness *for free* from `Set.ncard_le_ncard`.
+  -- EXPERIMENT (Experimenter): formalised `rankMod`, proved `rank_preserves_interleaving`
+  --   by pushing both inclusion bounds of `Interleaved` through `Set.ncard_le_ncard`, then
+  --   `rank_interleavingDist_le` by a `sInf`-monotonicity (subset of interleaving sets).
+  -- ANALYSIS (Analyst): SURVIVED. The crucial finiteness hypothesis is `Finite β`
+  --   (equivalently `Fintype X` for the Rips case, since `Finite (X × X)`); without it
+  --   `Set.ncard` of an infinite set is `0` and monotonicity fails — a genuine, not
+  --   cosmetic, hypothesis. `rank_interleavingDist_le` is an inequality, NOT an equality:
+  --   the rank functor forgets information, so distances can strictly contract.
+  -- CRITIQUE (Critic): the results are non-vacuous — `rankMod` is monotone but not constant
+  --   (it is the Betti-0/edge-count curve), and the interleaving conclusions use the real
+  --   shift `ε` nontrivially. No `native_decide`, no `True`, no definitional wrappers.
+-/
+
+import Mathlib
+import Bridges.CategoricalTropicalRipsInterleaving
+
+open scoped ENNReal
+open Tropical
+open CategoricalTropicalRipsInterleaving
+
+noncomputable section
+
+namespace CategoricalTropicalRipsRank
+
+universe u
+
+/-! ## §1. The rank functor `PersMod (Set β) → PersMod ℕ`. -/
+
+/-- The **rank curve** of a lattice-valued persistence module over a finite type `β`:
+    at scale `t` it returns the cardinality `ncard (M.obj t)` of the scale-`t` object.
+    Monotone in `t` because `ncard` is monotone under inclusion for finite sets. -/
+def rankMod {β : Type u} [Finite β] (M : PersMod (Set β)) : PersMod ℕ where
+  obj t := (M.obj t).ncard
+  mono := fun _ _ hab => Set.ncard_le_ncard (M.mono hab) (Set.toFinite _)
+
+/-! ## §2. The rank functor is 1-Lipschitz. -/
+
+/-- **Algebraic stability of the rank invariant.** The rank functor sends `ε`-interleavings
+    to `ε`-interleavings: an `ε`-interleaving of lattice-valued modules forces the rank
+    curves to be `ε`-interleaved as `ℕ`-valued persistence modules. -/
+theorem rank_preserves_interleaving {β : Type u} [Finite β] {ε : ℝ}
+    {M N : PersMod (Set β)} (h : Interleaved ε M N) :
+    Interleaved ε (rankMod M) (rankMod N) :=
+  ⟨fun t => Set.ncard_le_ncard (h.1 t) (Set.toFinite _),
+   fun t => Set.ncard_le_ncard (h.2 t) (Set.toFinite _)⟩
+
+/-- The rank functor is **1-Lipschitz** for the interleaving distance: passing to rank
+    curves can only contract distances. -/
+theorem rank_interleavingDist_le {β : Type u} [Finite β] (M N : PersMod (Set β)) :
+    interleavingDist (rankMod M) (rankMod N) ≤ interleavingDist M N := by
+  apply sInf_le_sInf
+  rintro x ⟨ε, hε, hI, rfl⟩
+  exact ⟨ε, hε, rank_preserves_interleaving hI, rfl⟩
+
+/-! ## §3. Vietoris–Rips rank/Betti curves over a finite point set. -/
+
+variable {X : Type u} [Finite X]
+
+/-- The Vietoris–Rips **rank (edge-count) curve** of a dissimilarity on a finite point set:
+    at scale `t` it counts the pairs `(x,y)` with `d x y ≤ t`. -/
+def ripsRankCurve (d : X → X → ℝ) : PersMod ℕ := rankMod (RipsMod d)
+
+/-- **Stability of the rank curve.** Sup-close dissimilarities on a finite point set have
+    `ε`-interleaved Vietoris–Rips rank curves. -/
+theorem rips_rank_stability (d d' : X → X → ℝ) {ε : ℝ}
+    (h : ∀ x y, |d x y - d' x y| ≤ ε) :
+    Interleaved ε (ripsRankCurve d) (ripsRankCurve d') :=
+  rank_preserves_interleaving (rips_stability d d' h)
+
+/-- The interleaving distance of the Rips rank curves is bounded by the sup perturbation. -/
+theorem rips_rank_interleavingDist_le (d d' : X → X → ℝ) {ε : ℝ} (hε : 0 ≤ ε)
+    (h : ∀ x y, |d x y - d' x y| ≤ ε) :
+    interleavingDist (ripsRankCurve d) (ripsRankCurve d') ≤ ENNReal.ofReal ε :=
+  le_trans (rank_interleavingDist_le _ _) (rips_interleavingDist_le d d' hε h)
+
+-- !-- Lab Notes -- !--
+-- SYNTHESIS (Principal Investigator): Conjecture 5 is fully discharged with 0 sorries.
+--   The rank functor is a 1-Lipschitz functor `PersMod (Set β) → PersMod ℕ` and, composed
+--   with `RipsMod`, yields a stability theorem for the edge-count / Betti-0 curve. The
+--   remaining open content (whether the contraction `rank_interleavingDist_le` is ever
+--   strict, and a multiset-of-bars refinement) is recorded in FUTURE_DIRECTIONS.md.
+
+end CategoricalTropicalRipsRank

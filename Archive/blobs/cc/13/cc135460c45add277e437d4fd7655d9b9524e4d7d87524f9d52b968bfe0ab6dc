@@ -1,0 +1,348 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Rsr}{R}
+\newcommand{\Ksr}{K}
+\newcommand{\foldl}{\operatorname{foldl}}
+\newcommand{\step}{\mathsf{step}}
+\newcommand{\observe}{\mathsf{observe}}
+\newcommand{\behav}{\mathsf{behavior}}
+\newcommand{\algbehav}{\mathsf{algBehavior}}
+\newcommand{\behavRel}{\mathsf{behaviorRel}}
+\newcommand{\behavCong}{\mathsf{behaviorCongruence}}
+\newcommand{\obsDist}{\mathsf{obsDist}}
+\newcommand{\zeroClass}{\mathsf{zeroClass}}
+\newcommand{\SRCong}{\mathsf{SRCong}}
+\newcommand{\List}{\mathsf{List}}
+\newcommand{\equk}{\approx_{k}}
+
+\title{A Functor from Neural Observation Pseudometrics\\
+to Proof-Spectrum Congruence Kernels}
+\author{Harmonic}
+\date{2026-06-15}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We construct an explicit bridge between two structures that arise independently
+in the semantics of neural architectures and in the algebraic geometry of proof
+systems. A \emph{neural observation system} is a deterministic state machine
+$(\step,\observe)$ whose behavioral (Myhill--Nerode) equivalence collapses
+internal states that no input word can distinguish; quotienting by it yields the
+canonical minimal realization, i.e.\ certified compression. A \emph{semiring
+congruence} is the basic datum of proof-theoretic algebraic geometry, whose
+prime instances are the points of a proof spectrum. We isolate the minimal
+hypothesis under which these worlds meet: an \emph{algebraic neural observation
+system}, whose state and output spaces are semirings and whose layers and
+read-out are semiring maps preserving $0$, $+$, and $\cdot$ (but \emph{not} the
+multiplicative unit). Under this hypothesis the behavior map $x \mapsto (w
+\mapsto \behav(x,w))$ is a semiring homomorphism in its state argument, so
+behavioral equivalence is a genuine \emph{semiring congruence} $\behavCong$, and
+the assignment $N \mapsto \behavCong(N)$ is \emph{functorial} along intertwining
+morphisms. We realize the same kernel analytically as the zero-set of an
+\emph{observation pseudometric} $\obsDist$, prove $\obsDist$ is a pseudometric,
+and prove the keystone identity: the metric kernel equals the semiring
+congruence. We further identify the kernel with the intersection of the depth-$k$
+partition-refinement filtration. All results have been formally verified.
+\end{abstract}
+
+\section{Introduction}
+
+Two classical impulses meet in this paper. The first is the \textbf{Myhill--Nerode}
+impulse: understand a state machine through the equivalence that identifies states
+no observation can separate, and study the quotient as the canonical minimal
+realization. In the neural setting this models \emph{certified compression} ---
+discarding redundant internal degrees of freedom while preserving every
+observable output. The second is the \textbf{proof-spectrum} impulse: treat a
+proof or computation system as a semiring (disjunction as $+$, conjunction as
+$\cdot$), and develop an algebraic geometry of its \emph{congruences} in analogy
+with the Zariski geometry of ideals; the prime congruences are geometric points.
+
+Our contribution is to make these impulses literally the same object under a
+minimal hypothesis. We show that behavioral equivalence of an \emph{algebraic}
+neural observation system is a \textbf{semiring congruence}, that the assignment
+is \textbf{functorial}, and that the congruence is simultaneously the zero-set of
+an \textbf{observation pseudometric} and the limit of the depth filtration used by
+partition refinement.
+
+\paragraph{Contributions.}
+\begin{enumerate}[leftmargin=*]
+  \item Algebraic neural observation systems (Definition~\ref{def:alg}).
+  \item The behavior map is a semiring homomorphism in its state
+        (Theorems~\ref{thm:foldzero}--\ref{thm:hom}).
+  \item The behavior congruence $\behavCong : \SRCong\,\Rsr$
+        (Definition~\ref{def:behavcong}, Theorem~\ref{thm:iscong}).
+  \item Zero-class and depth filtration (Theorems~\ref{thm:zeroclass}--\ref{thm:filt}).
+  \item Functoriality (Theorems~\ref{thm:transport}--\ref{thm:functor}).
+  \item The observation pseudometric and the keystone
+        (Definition~\ref{def:obsdist}, Theorems~\ref{thm:nonneg}--\ref{thm:keystone}).
+\end{enumerate}
+
+\section{Preliminaries}
+
+A \emph{semiring} is a set with $0,1,+,\cdot$ where $(+,0)$ is a commutative
+monoid, $(\cdot,1)$ is a monoid, multiplication distributes over addition, and
+$0$ annihilates. $\alpha$ is a fixed input alphabet, and a \emph{word} is a
+finite list $w \in \List\,\alpha$. For $\step : \Rsr \to \alpha \to \Rsr$ and a
+state $x$, $w.\foldl\,\step\,x$ denotes the left fold of $w$ over $\step$ from
+$x$.
+
+\begin{definition}[Neural observation system]
+A \emph{neural observation system} over $(\sigma,\alpha,\beta)$ is a pair
+$N=(\step,\observe)$ with $\step:\sigma\to\alpha\to\sigma$ and
+$\observe:\sigma\to\beta$. Its \emph{behavior} is
+$\behav(N,x,w)=\observe(w.\foldl\,\step\,x)$. States $s,t$ are \emph{behaviorally
+equivalent}, $s\approx t$, iff $\behav(N,s,w)=\behav(N,t,w)$ for all $w$; the
+\emph{depth-$k$} approximation $s\equk t$ requires this only for $|w|\le k$.
+\end{definition}
+
+We use the structural identities $\behav(N,x,[])=\observe(x)$ and
+$\behav(N,\step(x,a),w)=\behav(N,x,a::w)$, that $\approx$ is an equivalence
+relation and a right congruence for the dynamics, and that $\approx=\bigcap_k
+\equk$ with $\approx_{k+1}\subseteq\equk$.
+
+\begin{definition}[Semiring congruence]
+A \emph{semiring congruence} on a semiring $\Rsr$ is a relation
+$\mathrm{rel}:\Rsr\to\Rsr\to\mathrm{Prop}$ that is reflexive, symmetric,
+transitive and compatible:
+$\mathrm{rel}\,a\,b \to \mathrm{rel}\,c\,d \to \mathrm{rel}\,(a+c)\,(b+d)$ and
+$\mathrm{rel}\,a\,b \to \mathrm{rel}\,c\,d \to \mathrm{rel}\,(a\cdot c)\,(b\cdot
+d)$. We write $\SRCong\,\Rsr$ for the type of such congruences.
+\end{definition}
+
+\begin{definition}[Zero-class]
+The \emph{zero-class} of $C:\SRCong\,\Rsr$ is $\zeroClass(C)=\{a : C.\mathrm{rel}\,
+a\,0\}$. It contains $0$, is closed under addition, and absorbs multiplication.
+$C$ is \emph{prime} when $a\cdot b\in\zeroClass(C)$ implies $a\in\zeroClass(C)$ or
+$b\in\zeroClass(C)$; primes are the points of the proof spectrum.
+\end{definition}
+
+\section{Algebraic neural observation systems}
+
+\begin{definition}[Algebraic neural observation system]\label{def:alg}
+Let $\Rsr,\Ksr$ be semirings. An \emph{algebraic neural observation system}
+$N : \mathsf{AlgNeuralSystem}\,\Rsr\,\Ksr\,\alpha$ consists of $\step:\Rsr\to
+\alpha\to\Rsr$ and $\observe:\Rsr\to\Ksr$ satisfying, for all $a,x,y$,
+\[
+\begin{aligned}
+&\step(0,a)=0, && \step(x+y,a)=\step(x,a)+\step(y,a), && \step(x\cdot y,a)=\step(x,a)\cdot\step(y,a),\\
+&\observe(0)=0, && \observe(x+y)=\observe(x)+\observe(y), && \observe(x\cdot y)=\observe(x)\cdot\observe(y).
+\end{aligned}
+\]
+We set $\algbehav(N,x,w)=\observe(w.\foldl\,\step\,x)$.
+\end{definition}
+
+\begin{remark}[Minimality]
+We omit preservation of the multiplicative unit. Behavioral equivalence never
+inspects the unit of the state space --- only sums and products of states enter
+--- so a unit-preservation hypothesis would be unused and is false in many
+natural models (projections, truncations, weighting layers). Every congruence
+axiom below goes through with exactly the six laws above.
+\end{remark}
+
+\section{The behavior map is a semiring homomorphism}
+
+\begin{theorem}[Fold preserves zero]\label{thm:foldzero}
+$w.\foldl\,\step\,0 = 0$ for all $w$.
+\end{theorem}
+\begin{proof}[Proof sketch]
+Induction on $w$; each layer fixes $0$ by $\step(0,a)=0$.
+\end{proof}
+
+\begin{theorem}[Fold is additive / multiplicative]\label{thm:foldadd}
+$w.\foldl\,\step\,(x+y)=w.\foldl\,\step\,x+w.\foldl\,\step\,y$ and
+$w.\foldl\,\step\,(x\cdot y)=(w.\foldl\,\step\,x)\cdot(w.\foldl\,\step\,y)$.
+\end{theorem}
+\begin{proof}[Proof sketch]
+Induction from the right (\texttt{reverseRecOn}): the prefix is handled by the
+inductive hypothesis and the final layer is additive (resp.\ multiplicative).
+\end{proof}
+
+\begin{theorem}[Behavior of zero]\label{thm:behzero}
+$\algbehav(N,0,w)=0$.
+\end{theorem}
+\begin{proof}[Proof sketch]
+$\observe(w.\foldl\,\step\,0)=\observe(0)=0$ by Theorem~\ref{thm:foldzero} and
+$\observe(0)=0$.
+\end{proof}
+
+\begin{theorem}[Behavior is a homomorphism in the state]\label{thm:hom}
+For all $x,y,w$,
+\[
+\algbehav(N,x+y,w)=\algbehav(N,x,w)+\algbehav(N,y,w),\qquad
+\algbehav(N,x\cdot y,w)=\algbehav(N,x,w)\cdot\algbehav(N,y,w).
+\]
+\end{theorem}
+\begin{proof}[Proof sketch]
+Apply $\observe$ to Theorem~\ref{thm:foldadd} and use additivity/multiplicativity
+of $\observe$. Equivalently, $B:\Rsr\to(\List\,\alpha\to\Ksr)$, $B(x)=(w\mapsto
+\algbehav(N,x,w))$, is a semiring homomorphism into the pointwise semiring.
+\end{proof}
+
+\section{The behavior congruence}
+
+\begin{definition}[Behavior relation and congruence]\label{def:behavcong}
+The \emph{behavior relation} is
+$\behavRel(N,x,y) :\iff \forall w,\ \algbehav(N,x,w)=\algbehav(N,y,w)$, i.e.\
+$B(x)=B(y)$. We package it as $\behavCong(N):\SRCong\,\Rsr$.
+\end{definition}
+
+\begin{theorem}[$\behavCong$ is a congruence]\label{thm:iscong}
+$\behavRel(N)$ is reflexive, symmetric, transitive, and compatible with $+$ and
+$\cdot$.
+\end{theorem}
+\begin{proof}[Proof sketch]
+Equivalence properties are pointwise from equality in $\Ksr$. For additive
+compatibility, if $\behavRel(N,a,b)$ and $\behavRel(N,c,d)$ then for each $w$,
+Theorem~\ref{thm:hom} gives $\algbehav(N,a+c,w)=\algbehav(N,a,w)+\algbehav(N,c,w)
+=\algbehav(N,b,w)+\algbehav(N,d,w)=\algbehav(N,b+d,w)$; multiplicative
+compatibility is identical.
+\end{proof}
+
+\begin{theorem}[Zero-class = behaviorally-null states]\label{thm:zeroclass}
+$\zeroClass(\behavCong(N))=\{x : \forall w,\ \algbehav(N,x,w)=0\}$.
+\end{theorem}
+\begin{proof}[Proof sketch]
+$x\in\zeroClass$ means $\behavRel(N,x,0)$, and $\algbehav(N,0,w)=0$ by
+Theorem~\ref{thm:behzero}.
+\end{proof}
+
+\begin{theorem}[Kernel = intersection of the depth filtration]\label{thm:filt}
+$\behavCong(N).\mathrm{rel}\,x\,y \iff \forall k,\ x\equk y$ (for the underlying
+system).
+\end{theorem}
+\begin{proof}[Proof sketch]
+$(\Leftarrow)$ For a word $w$, take $k=|w|$. $(\Rightarrow)$ Behavioral
+equivalence gives agreement on all words, in particular those of length $\le k$.
+This is the finite-depth stabilization theorem of the coalgebraic theory.
+\end{proof}
+
+Each $\equk$ is decidable with an $O(|\alpha|^k)$ budget and the filtration is
+monotone, so Theorem~\ref{thm:filt} makes the congruence a computable
+partition-refinement target.
+
+\section{Functoriality}
+
+A \emph{morphism} $f:N\to N'$ of algebraic neural systems is a state map
+$f:\Rsr\to\Rsr'$ with $f(\step(x,a))=\step'(f(x),a)$ and
+$\observe(x)=\observe'(f(x))$.
+
+\begin{theorem}[Behavior transports along morphisms]\label{thm:transport}
+$\algbehav(N,x,w)=\algbehav(N',f(x),w)$ for all $x,w$.
+\end{theorem}
+\begin{proof}[Proof sketch]
+Induction on $w$ gives $f(w.\foldl\,\step\,x)=w.\foldl\,\step'\,(f(x))$ via
+$\mathsf{map\_step}$; applying $\mathsf{map\_observe}$ equates read-outs.
+\end{proof}
+
+\begin{theorem}[Functoriality / push-forward]\label{thm:functor}
+If $f:N\to N'$ and $f(x)=f(y)$ then $\behavCong(N).\mathrm{rel}\,x\,y$; the
+assignment $N\mapsto\behavCong(N)$ is functorial.
+\end{theorem}
+\begin{proof}[Proof sketch]
+By Theorem~\ref{thm:transport}, $\algbehav(N,x,w)=\algbehav(N',f(x),w)
+=\algbehav(N',f(y),w)=\algbehav(N,y,w)$ for all $w$, i.e.\ $\behavRel(N,x,y)$.
+Identities and composites preserve behavior.
+\end{proof}
+
+\section{The observation pseudometric and the keystone}
+
+\begin{definition}[Observation pseudometric]\label{def:obsdist}
+Define $\obsDist(N,x,y)=0$ if $\behavRel(N,x,y)$, and $\obsDist(N,x,y)=1$
+otherwise --- the discrete pseudometric induced by the behavior relation.
+\end{definition}
+
+\begin{theorem}[Pseudometric axioms]\label{thm:nonneg}
+$0\le\obsDist(N,x,y)$; $\obsDist(N,x,x)=0$; $\obsDist(N,x,y)=\obsDist(N,y,x)$;
+and $\obsDist(N,x,z)\le\obsDist(N,x,y)+\obsDist(N,y,z)$.
+\end{theorem}
+\begin{proof}[Proof sketch]
+Non-negativity and self-distance are immediate (reflexivity selects the $0$
+branch). Symmetry follows from symmetry of $\behavRel$. For the triangle
+inequality: if both summands are $1$ the bound is trivial; if either is $0$,
+transitivity of $\behavRel$ reduces $\obsDist(N,x,z)$ to the other summand.
+\end{proof}
+
+\begin{theorem}[Keystone: metric kernel = semiring congruence]\label{thm:keystone}
+\[
+\{(x,y) : \obsDist(N,x,y)=0\} = \{(x,y) : \behavCong(N).\mathrm{rel}\,x\,y\}.
+\]
+\end{theorem}
+\begin{proof}[Proof sketch]
+$\obsDist(N,x,y)=0$ holds exactly in the branch where $\behavRel(N,x,y)$ holds,
+and $\behavRel(N)=\behavCong(N).\mathrm{rel}$ by definition.
+\end{proof}
+
+Hence the analytic quotient (collapse distance-zero pairs), the algebraic
+quotient (by the congruence), and the coalgebraic Myhill--Nerode quotient
+coincide; the chain
+\[
+\text{neural observation pseudometric} \longrightarrow \text{congruence kernel}
+\longrightarrow \text{proof-spectrum congruence}
+\]
+is a sequence of identities of relations.
+
+\section{Discussion}
+
+Behavioral equivalence is testable by sums and products of states alone, so the
+multiplicative unit of the state semiring is invisible to it; dropping
+$1$-preservation widens the admissible architectures without losing any
+congruence axiom. The payoff is that three a-priori-different equivalences ---
+coalgebraic, metric, algebraic --- are literally equal, each donating tools:
+coalgebra donates the depth filtration and a partition-refinement algorithm;
+metric geometry donates a topology and completion; proof-spectrum geometry
+donates primality, radicals, and zero-classes. Primality is a genuine
+restriction: $\behavCong(N)$ need not be prime even when $\Ksr$ is an integral
+domain, because $\forall w,\ \algbehav(N,x\cdot y,w)=0$ yields only a pointwise
+disjunction.
+
+\section{Future directions}
+
+\begin{conjecture}[Primality criterion]
+For $\Ksr$ an integral domain, $\behavCong(N)$ is prime iff the behavioral image
+$B(\Rsr)$ is an integral domain under pointwise operations, i.e.\ for all $x,y$,
+$(\forall w,\ \algbehav(N,x,w)\cdot\algbehav(N,y,w)=0)$ implies
+$(\forall w,\ \algbehav(N,x,w)=0)\lor(\forall w,\ \algbehav(N,y,w)=0)$.
+\end{conjecture}
+
+\begin{conjecture}[Graded ultrametric]
+$\mathsf{ugobsDist}(N,x,y)=\sum_{k\ge0}2^{-(k+1)}[x\not\equk y]$ is an
+ultrametric, topologically equivalent to $\obsDist$ on behaviorally-finite
+systems, with $\mathsf{ugobsDist}(N,x,y)=0\iff\behavCong(N).\mathrm{rel}\,x\,y$.
+\end{conjecture}
+
+\begin{conjecture}[Fullness]
+Every finitely generated congruence $C:\SRCong\,\Rsr$ arises as $\behavCong(N)$
+for some algebraic neural system $N$ over a suitable output semiring.
+\end{conjecture}
+
+\section{Conclusion}
+
+Under a minimal six-law algebraic hypothesis, the behavioral equivalence of a
+neural observation system is a semiring congruence --- a point datum in the
+algebraic geometry of proofs --- and the assignment is functorial. The same
+congruence is the zero-set of an observation pseudometric and the intersection of
+a computable depth filtration; the analytic, algebraic, and coalgebraic quotients
+coincide. The way a machine sees and the way a proof adds up are, under the right
+hypothesis, the same shape.
+
+\end{document}

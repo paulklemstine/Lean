@@ -1,0 +1,295 @@
+/-
+# The Boltzmann Bridge X — The Lattice of Filtrations and Order-Functoriality
+
+This file extends **Boltzmann Bridge IX** (`Applications.BoltzmannBridge.InterleavingFunctor`)
+along its own Future Directions 2 and 5, fusing three previously separate layers
+of the persistence catalog into a single order-theoretic picture:
+
+* the **representation theorem** of Bridge IX (`weightEquiv`, `ofWeight`,
+  `weight_surjective`), which identifies `Filtration α` with the monotone,
+  `∅`-grounded functions `Finset α → ℝ`;
+* the **isometry formula** of Bridge VIII
+  (`eInterleavingDist_eq_weightSupEDist`), which pins the interleaving emetric to
+  the sup-distance of weights;
+* the **contravariant pullback functor** of Bridge IX (`pullback`,
+  `pullback_id`, `pullback_comp`).
+
+## The synthesis
+
+Bridge IX showed the carrier `Filtration α` *is* (up to `weightEquiv`) a set of
+functions closed under pointwise `max`/`min` — because both defining constraints
+`w ∅ ≤ 0` and `Monotone w` are preserved by `⊔` and `⊓`.  Hence:
+
+* **The pointwise order** `F ≤ G ↔ ∀ σ, F.weight σ ≤ G.weight σ` makes
+  `Filtration α` a `PartialOrder` (antisymmetry is Bridge VII's `ext_weight`).
+* **`Filtration α` is a `Lattice`**: `(F ⊔ G).weight = F.weight ⊔ G.weight`,
+  `(F ⊓ G).weight = F.weight ⊓ G.weight` (`weight_sup`, `weight_inf`).
+* **The pullback functor is a lattice homomorphism**: it is `Monotone`
+  (`pullback_mono`) and commutes with `⊔` and `⊓` (`pullback_sup`,
+  `pullback_inf`) — because precomposition with `·.image f` is pointwise.
+* **`weightEquiv` is an order isomorphism** (`weightOrderIso`): the representation
+  of Bridge IX is not merely a bijection but an iso of partial orders.
+
+## The metric–order bridge (cross-domain)
+
+Combining the lattice order with Bridge VIII's isometry collapses the absolute
+value: **between comparable filtrations the interleaving distance is the
+sup-*gap*** (`eInterleavingDist_of_le`):
+
+> `F ≤ G  ⟹  eInterleavingDist F G = ⨆ σ, ENNReal.ofReal (G.weight σ - F.weight σ)`.
+
+In particular the join and meet are nonexpansive contractions of a pair
+(`eInterleavingDist_sup_le`, `eInterleavingDist_inf_le`).
+
+## Direction 5 — faithfulness
+
+Bridge IX proved `pullback` along a *surjection* is an isometry.  Here we add the
+companion faithfulness statement: `pullback` along a surjection is **injective**
+(`pullback_injective_of_surjective`) — distinct filtrations stay distinct, so the
+persistence functor is faithful on the subcategory of surjections.
+
+## Main results
+
+* `instPartialOrderFiltration`, `weight_le_iff` — the pointwise order.
+* `instLatticeFiltration`, `weight_sup`, `weight_inf` — the lattice structure.
+* `pullback_mono`, `pullback_sup`, `pullback_inf` — pullback is a lattice hom.
+* `weightOrderIso` — the representation is an order isomorphism.
+* `eInterleavingDist_of_le` — the metric–order bridge.
+* `eInterleavingDist_sup_le`, `eInterleavingDist_inf_le` — join/meet are short.
+* `pullback_injective_of_surjective` — faithfulness (Direction 5).
+-/
+import Mathlib
+import Applications.BoltzmannBridge.HigherPersistence
+import Applications.BoltzmannBridge.PersistenceStability
+import Applications.BoltzmannBridge.BottleneckStability
+import Applications.BoltzmannBridge.InterleavingMetric
+import Applications.BoltzmannBridge.InterleavingClosure
+import Applications.BoltzmannBridge.InterleavingIsometry
+import Applications.BoltzmannBridge.InterleavingFunctor
+
+open Finset BigOperators
+open scoped ENNReal
+
+namespace BoltzmannBridge
+
+namespace Filtration
+
+variable {α β γ : Type*}
+
+/-! ## The pointwise order on filtrations -/
+
+-- !-- `le F G := ∀ σ, F.weight σ ≤ G.weight σ`; refl/trans are pointwise, and
+-- !-- antisymmetry is `ext_weight (funext (le_antisymm …))` (Bridge VII). -- !--
+/-- **The pointwise order on filtrations.**  `F ≤ G` means `F.weight σ ≤ G.weight σ`
+for every simplex `σ`.  Antisymmetry is Bridge VII's `ext_weight`: a filtration is
+its weight function. -/
+instance instPartialOrderFiltration : PartialOrder (Filtration α) where
+  le F G := ∀ σ, F.weight σ ≤ G.weight σ
+  le_refl F σ := le_refl _
+  le_trans F G H h₁ h₂ σ := le_trans (h₁ σ) (h₂ σ)
+  le_antisymm F G h₁ h₂ := ext_weight (funext fun σ => le_antisymm (h₁ σ) (h₂ σ))
+
+@[simp] theorem weight_le_iff (F G : Filtration α) :
+    F ≤ G ↔ ∀ σ, F.weight σ ≤ G.weight σ := Iff.rfl
+
+/-! ## The lattice structure -/
+
+/-- The pointwise maximum of two filtrations: `max` preserves monotonicity and
+`∅`-grounding, so it is again a filtration (Bridge IX's `ofWeight`). -/
+def supFiltration (F G : Filtration α) : Filtration α :=
+  ofWeight (fun σ => F.weight σ ⊔ G.weight σ)
+    (sup_le F.weight_empty G.weight_empty)
+    ((weight_monotone F).sup (weight_monotone G))
+
+/-- The pointwise minimum of two filtrations. -/
+def infFiltration (F G : Filtration α) : Filtration α :=
+  ofWeight (fun σ => F.weight σ ⊓ G.weight σ)
+    (le_trans inf_le_left F.weight_empty)
+    ((weight_monotone F).inf (weight_monotone G))
+
+-- !-- Reuse the `PartialOrder` instance; `sup := supFiltration`, `inf := infFiltration`.
+-- !-- All six lattice axioms are pointwise `le_sup_left`/`sup_le`/`inf_le_left`/`le_inf`
+-- !-- on the weights (the weights of `supFiltration`/`infFiltration` are `⊔`/`⊓` by
+-- !-- `rfl`). -- !--
+/-- **`Filtration α` is a lattice.**  Pointwise `max` and `min` of monotone,
+`∅`-grounded weight functions are again monotone and `∅`-grounded (Bridge IX), so
+the representation set is closed under `⊔`/`⊓` and `Filtration α` inherits the
+pointwise lattice order. -/
+instance instLatticeFiltration : Lattice (Filtration α) :=
+  { instPartialOrderFiltration with
+    sup := supFiltration
+    inf := infFiltration
+    le_sup_left := fun _ _ _ => le_sup_left
+    le_sup_right := fun _ _ _ => le_sup_right
+    sup_le := fun _ _ _ h₁ h₂ σ => sup_le (h₁ σ) (h₂ σ)
+    inf_le_left := fun _ _ _ => inf_le_left
+    inf_le_right := fun _ _ _ => inf_le_right
+    le_inf := fun _ _ _ h₁ h₂ σ => le_inf (h₁ σ) (h₂ σ) }
+
+@[simp] theorem weight_sup (F G : Filtration α) (σ : Finset α) :
+    (F ⊔ G).weight σ = F.weight σ ⊔ G.weight σ := rfl
+
+@[simp] theorem weight_inf (F G : Filtration α) (σ : Finset α) :
+    (F ⊓ G).weight σ = F.weight σ ⊓ G.weight σ := rfl
+
+/-! ## Order-functoriality of the pullback -/
+
+/-
+!-- Unfold `≤` and `pullback_weight`; `h (σ.image f)` is exactly the goal. -- !--
+
+**Pullback is monotone (order-preserving).**  The contravariant persistence
+functor of Bridge IX respects the pointwise order.
+-/
+theorem pullback_mono [DecidableEq β] (f : α → β) {F G : Filtration β} (h : F ≤ G) :
+    pullback f F ≤ pullback f G := by
+      exact fun σ => h _
+
+/-
+!-- `ext_weight`; both sides have weight `F.weight (σ.image f) ⊔ G.weight (σ.image f)`
+!-- by `pullback_weight`/`weight_sup`. -- !--
+
+**Pullback preserves joins.**  Precomposition with `·.image f` is pointwise, so
+`pullback f` is a `⊔`-homomorphism.
+-/
+theorem pullback_sup [DecidableEq β] (f : α → β) (F G : Filtration β) :
+    pullback f (F ⊔ G) = pullback f F ⊔ pullback f G := by
+      convert ext_weight _;
+      ext σ; simp +decide [ pullback_weight, weight_sup ] ;
+
+/-
+!-- `ext_weight`; both sides have weight `F.weight (σ.image f) ⊓ G.weight (σ.image f)`. -- !--
+
+**Pullback preserves meets.**  `pullback f` is a `⊓`-homomorphism; together with
+`pullback_sup` it is a lattice homomorphism.
+-/
+theorem pullback_inf [DecidableEq β] (f : α → β) (F G : Filtration β) :
+    pullback f (F ⊓ G) = pullback f F ⊓ pullback f G := by
+      exact ext_weight (by ext σ; simp [pullback_weight, weight_inf])
+
+/-! ## The representation order isomorphism -/
+
+/-
+!-- `toEquiv := weightEquiv`; `map_rel_iff'` unfolds both sides to
+!-- `∀ σ, F.weight σ ≤ G.weight σ` (`Subtype.coe_le_coe`, `Pi.le_def`), i.e. `Iff.rfl`. -- !--
+
+**The representation is an order isomorphism.**  Bridge IX's bijection
+`weightEquiv` upgrades to an iso of partial orders between `Filtration α` and the
+monotone, `∅`-grounded functions under the pointwise order.
+-/
+def weightOrderIso : Filtration α ≃o {w : Finset α → ℝ // w ∅ ≤ 0 ∧ Monotone w} where
+  toEquiv := weightEquiv
+  map_rel_iff' := by
+    simp +decide [ weightEquiv, Pi.le_def, weight_le_iff ]
+
+/-! ## The metric–order bridge -/
+
+/-
+!-- By Bridge VIII `eInterleavingDist_eq_weightSupEDist` and `weightSupEDist`; for
+!-- each `σ`, `h σ : F.weight σ ≤ G.weight σ` gives
+!-- `|F.weight σ - G.weight σ| = G.weight σ - F.weight σ` (`abs_of_nonpos`/`abs_sub_comm`). -- !--
+
+**The metric–order bridge.**  Between comparable filtrations the interleaving
+distance is the supremum of the (nonnegative) weight *gap* — the absolute value of
+Bridge VIII's isometry formula disappears.
+-/
+theorem eInterleavingDist_of_le (F G : Filtration α) (h : F ≤ G) :
+    eInterleavingDist F G = ⨆ σ, ENNReal.ofReal (G.weight σ - F.weight σ) := by
+      convert eInterleavingDist_eq_weightSupEDist F G using 1;
+      convert ( iSup_congr fun σ => ?_ );
+      rw [ abs_sub_comm, abs_of_nonneg ( sub_nonneg_of_le ( h σ ) ) ]
+
+/-
+!-- `eInterleavingDist_eq_weightSupEDist` on both sides; for each `σ`,
+!-- `|F.weight σ - (F ⊔ G).weight σ| ≤ |F.weight σ - G.weight σ|` because
+!-- `(F ⊔ G).weight σ = max (F.weight σ) (G.weight σ)` lies between them; conclude with
+!-- `iSup`-monotonicity. -- !--
+
+**The join is nonexpansive.**  Moving from `F` to `F ⊔ G` never increases the
+distance from `F` beyond `eInterleavingDist F G`.
+-/
+theorem eInterleavingDist_sup_le (F G : Filtration α) :
+    eInterleavingDist F (F ⊔ G) ≤ eInterleavingDist F G := by
+      rw [ eInterleavingDist_eq_weightSupEDist, eInterleavingDist_eq_weightSupEDist ];
+      refine' iSup_le fun σ => _;
+      refine' le_trans _ ( le_iSup _ σ );
+      cases le_total ( F.weight σ ) ( G.weight σ ) <;> simp +decide [ *, abs_of_nonneg, abs_of_nonpos ]
+
+/-
+!-- Symmetric to `eInterleavingDist_sup_le`, with `min` in place of `max`. -- !--
+
+**The meet is nonexpansive.**  Moving from `F` to `F ⊓ G` never increases the
+distance from `F` beyond `eInterleavingDist F G`.
+-/
+theorem eInterleavingDist_inf_le (F G : Filtration α) :
+    eInterleavingDist F (F ⊓ G) ≤ eInterleavingDist F G := by
+      rw [ eInterleavingDist_eq_weightSupEDist, eInterleavingDist_eq_weightSupEDist ];
+      refine' iSup_mono fun σ => _;
+      cases le_total ( F.weight σ ) ( G.weight σ ) <;> simp +decide [ *, weight_inf ]
+
+/-! ## Faithfulness (Direction 5) -/
+
+/-
+!-- If `pullback f F = pullback f G` then `∀ σ, F.weight (σ.image f) = G.weight (σ.image f)`
+!-- (`congrArg weight` + `pullback_weight`).  Surjectivity of `f` makes `σ ↦ σ.image f`
+!-- surjective (use `Function.surjInv` as in `…_of_surjective`), so weights agree on
+!-- every `τ`; conclude `F = G` by `ext_weight`. -- !--
+
+**Pullback along a surjection is injective (faithfulness, Direction 5).**
+Companion to Bridge IX's isometry-under-surjection: distinct filtrations have
+distinct pullbacks along a surjection, so the persistence functor is faithful on the
+subcategory of surjections.
+-/
+theorem pullback_injective_of_surjective [DecidableEq α] [DecidableEq β]
+    (f : α → β) (hf : Function.Surjective f) :
+    Function.Injective (pullback f : Filtration β → Filtration α) := by
+      intro F G hFG
+      have h_eq : ∀ σ : Finset α, F.weight (σ.image f) = G.weight (σ.image f) := by
+        exact fun σ => by simpa using congr_arg ( fun F => F.weight σ ) hFG;
+      refine' ext_weight ( funext fun τ => _ );
+      convert h_eq ( Finset.image ( Function.surjInv hf ) τ ) using 1;
+      · congr! 1;
+        ext x; simp +decide [ Function.surjInv_eq hf ] ;
+      · congr! 1;
+        ext x; simp +decide [ Function.surjInv_eq hf ] ;
+
+end Filtration
+
+/-
+-- !-- Lab Notebook -- !--
+
+## Hypothesis
+Bridge IX identified `Filtration α` with the monotone, `∅`-grounded functions
+`Finset α → ℝ`.  Both defining constraints are preserved by pointwise `max`/`min`,
+so the carrier should be a *lattice*, the pullback functor a *lattice
+homomorphism*, and the representation `weightEquiv` an *order isomorphism* — and,
+fusing with Bridge VIII, the interleaving distance between comparable filtrations
+should be a sup-*gap* with the absolute value removed.
+
+## Result
+Confirmed.  `Filtration α` is a `PartialOrder` (antisymmetry = `ext_weight`) and a
+`Lattice` (`weight_sup`, `weight_inf` by `rfl`).  `pullback f` is `Monotone`
+(`pullback_mono`) and a lattice hom (`pullback_sup`, `pullback_inf`).
+`weightEquiv` is an order iso (`weightOrderIso`).  The metric–order bridge
+`eInterleavingDist_of_le` removes the absolute value of Bridge VIII's formula for
+comparable filtrations, and join/meet are nonexpansive (`eInterleavingDist_sup_le`,
+`eInterleavingDist_inf_le`).  Faithfulness under surjections
+(`pullback_injective_of_surjective`) completes Direction 5.
+
+## Insight
+Once the carrier is a function set cut out by `≤`-constraints (Bridge IX), every
+order question is pointwise bookkeeping: lattice axioms are pointwise
+`le_sup`/`inf_le`, the functor laws transport through precomposition, and the order
+iso is `Iff.rfl` on the underlying pointwise relation.  The metric content is the
+*only* place analysis enters, through Bridge VIII's isometry, and even there the
+order hypothesis `F ≤ G` collapses `|·|` to a difference.
+
+## Failure analysis
+There is no global `⊥`/`⊤`: weights are unbounded below (any constant `≤ 0` weight
+is a filtration) and above, so `Filtration α` is a lattice but not a bounded one —
+`OrderBot`/`OrderTop` would falsely assert a uniform extreme weight.  Faithfulness
+needs *surjectivity* of `f`, not injectivity, mirroring the isometry of Bridge IX:
+an injective non-surjective `f` leaves simplices of `β` untouched by `·.image f`,
+where two filtrations may differ while sharing a pullback.
+-/
+
+end BoltzmannBridge

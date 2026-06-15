@@ -1,0 +1,186 @@
+/-
+Copyright (c) 2026 Harmonic. All rights reserved.
+Released under Apache 2.0 license.
+
+# The Gauss-Sum Bridge: linearity of doubly-even self-orthogonal binary codes
+
+This file is the *linear-algebraic engine* behind the local-to-global story of
+`Catalog.Applications.SmoothPoincare.SelfDualLength`.  There, the headline
+`selfDual_doublyEven_length_div_four` upgrades the *local* (per-pair) bridge
+`doublyEven_selfOrthogonal` to a global length divisibility `4 ∣ n` by evaluating the
+dual at the all-ones global section.  That argument silently uses one structural fact
+about doubly-even codes that the `Finset` formulation does **not** assume: that the set
+of doubly-even, mutually orthogonal vectors is **closed under addition** — the coding
+shadow of "an even lattice is closed under the group law and stays even".
+
+We isolate and prove that closure here, fully `sorry`-free, from the single
+combinatorial identity
+
+    wt (x + y) + 2 * overlap x y = wt x + wt y          (`wt_add_overlap`)
+
+which is the binary analogue of the lattice polarization identity
+`‖x+y‖² = ‖x‖² + ‖y‖² + 2⟨x,y⟩`.  From it we read off:
+
+* `wt_add_overlap`            — the polarization identity for Hamming weight.
+* `overlap_even_of_ip_zero`   — orthogonality (`ip = 0`) forces *even* overlap.
+* `doublyEven_add_of_ip_zero` — **the linearity bridge**: the sum of two orthogonal
+                                doubly-even vectors is again doubly even.
+* `code_doublyEven_closed`    — global corollary for a self-orthogonal doubly-even code.
+
+Finally we cross the bridge to analysis: the **Gauss sum** `∑_{c∈C} i^{wt c}` (`i = √-1`,
+the canonical 4-th root of unity) collapses to the cardinality `|C|` precisely because
+double-evenness sends every weight into `4ℤ`, where `i` is trivial:
+
+* `gaussSum_doublyEven` — `gaussSum C = |C|` for any doubly-even code.
+
+This is the degree-4 shadow of the genuinely harder degree-8 (Gleason) Gauss sum that
+forces `8 ∣ n` for self-dual codes — recorded in `FUTURE_DIRECTIONS.md`.
+
+-- !-- Lab Notebook -- !--
+Hypothesis: the `4 ∣ n` length theorem of `SelfDualLength` rests on an unstated
+  *linearity* of doubly-even codes; that linearity should follow from a single
+  polarization identity for Hamming weight, exactly as evenness of a lattice follows
+  from `‖x+y‖² = ‖x‖² + ‖y‖² + 2⟨x,y⟩`.
+Result: `wt_add_overlap` proved coordinatewise; from it `doublyEven_add_of_ip_zero`
+  and the global `code_doublyEven_closed` drop out, and the degree-4 Gauss sum
+  `gaussSum_doublyEven = |C|` is recovered analytically — all `sorry`-free.
+Insight: `overlap` is the binary inner product *lifted to ℤ* (`ip` is its mod-2
+  reduction, `ip_eq_overlap`); orthogonality kills the cross term mod 2, and a doubly
+  even weight kills it mod 4, which is *exactly* the gap between the degree-4 and the
+  degree-8 Gauss sums.  Linearity is therefore not an extra axiom on codes — it is a
+  theorem about how the cross term `overlap` interacts with the `4ℤ` filtration.
+Failure analysis: the only friction is ℕ-subtraction; routing everything through the
+  *additive* identity `wt (x+y) + 2*overlap = wt x + wt y` (never `wt x - 2*overlap`)
+  keeps `omega`/divisibility reasoning linear and avoids truncation pitfalls.
+-/
+
+import Mathlib
+
+open scoped BigOperators
+
+namespace SmoothPoincare
+namespace GaussBridge
+
+variable {n : ℕ}
+
+/-! ## Core definitions (self-contained mirror of `SelfDualLength`) -/
+
+/-- **Hamming weight**: the number of nonzero coordinates of a binary vector. -/
+def wt (v : Fin n → ZMod 2) : ℕ := (Finset.univ.filter (fun i => v i = 1)).card
+
+/-- **Overlap**: the number of coordinates where both vectors equal `1`
+(the integer lift of the binary inner product). -/
+def overlap (x y : Fin n → ZMod 2) : ℕ :=
+  (Finset.univ.filter (fun i => x i = 1 ∧ y i = 1)).card
+
+/-- **Binary inner product** in `ZMod 2`. -/
+def ip (x y : Fin n → ZMod 2) : ZMod 2 := ∑ i, x i * y i
+
+/-- A vector is **doubly even** when its weight is divisible by `4`. -/
+def DoublyEven (v : Fin n → ZMod 2) : Prop := 4 ∣ wt v
+
+/-! ## The polarization identity for Hamming weight -/
+
+/-
+!-- Coordinatewise, with `a = [xᵢ=1]`, `b = [yᵢ=1]`: the support indicator of `x+y`
+is `a + b - 2ab` and the overlap indicator is `ab`, so their `+2·` combination is
+`a + b`; summing over coordinates gives the identity. -- !--
+
+**Polarization for Hamming weight** — the binary shadow of
+`‖x+y‖² = ‖x‖² + ‖y‖² + 2⟨x,y⟩`.  Stated additively to avoid ℕ-subtraction.
+-/
+theorem wt_add_overlap (x y : Fin n → ZMod 2) :
+    wt (x + y) + 2 * overlap x y = wt x + wt y := by
+  unfold wt overlap
+  rw [Finset.card_filter, Finset.card_filter, Finset.card_filter, Finset.card_filter,
+      Finset.mul_sum, ← Finset.sum_add_distrib, ← Finset.sum_add_distrib]
+  refine Finset.sum_congr rfl fun i _ => ?_
+  show (if x i + y i = 1 then 1 else 0) + 2 * (if x i = 1 ∧ y i = 1 then 1 else 0)
+     = (if x i = 1 then 1 else 0) + (if y i = 1 then 1 else 0)
+  generalize x i = a
+  generalize y i = b
+  revert a b
+  decide
+
+/-
+!-- `xᵢ·yᵢ = 1` in `ZMod 2` iff both factors are `1`, so the sum defining `ip` is the
+parity of the overlap count. -- !--
+
+The binary inner product is the parity (mod-2 reduction) of the integer overlap.
+-/
+theorem ip_eq_overlap (x y : Fin n → ZMod 2) :
+    ip x y = (overlap x y : ZMod 2) := by
+  convert Finset.sum_congr rfl fun i _ => ?_;
+  rotate_left;
+  exact fun i => if x i = 1 ∧ y i = 1 then 1 else 0;
+  · cases Fin.exists_fin_two.mp ⟨ x i, rfl ⟩ <;> cases Fin.exists_fin_two.mp ⟨ y i, rfl ⟩ <;> simp +decide [ * ];
+  · simp +decide [ overlap ]
+
+/-
+!-- `ip = 0` means the overlap is `0` mod 2, i.e. `2 ∣ overlap`. -- !--
+
+**Orthogonality forces even overlap.**  The cross term in the polarization identity
+is killed mod 2.
+-/
+theorem overlap_even_of_ip_zero (x y : Fin n → ZMod 2) (h : ip x y = 0) :
+    2 ∣ overlap x y := by
+  grind +suggestions
+
+/-! ## The linearity bridge -/
+
+/-
+!-- From `wt_add_overlap`, `4 ∣ wt x`, `4 ∣ wt y` and `4 ∣ 2*overlap` (since overlap is
+even), so `4 ∣ wt(x+y)`. -- !--
+
+**The linearity bridge.**  The sum of two *orthogonal* doubly-even vectors is again
+doubly even.  This is the structural fact tacitly used by
+`SelfDualLength.selfDual_doublyEven_length_div_four`: doubly-even codes are closed under
+the group law, the coding shadow of "an even lattice stays even under addition".
+-/
+theorem doublyEven_add_of_ip_zero (x y : Fin n → ZMod 2)
+    (hx : DoublyEven x) (hy : DoublyEven y) (hxy : ip x y = 0) :
+    DoublyEven (x + y) := by
+  obtain ⟨ k₁, hk₁ ⟩ := hx;
+  obtain ⟨ k₂, hk₂ ⟩ := hy;
+  obtain ⟨ k₃, hk₃ ⟩ := overlap_even_of_ip_zero x y hxy;
+  exact ⟨ k₁ + k₂ - k₃, by rw [ mul_tsub ] ; exact eq_tsub_of_add_eq <| by linarith [ wt_add_overlap x y ] ⟩
+
+-- !-- Direct application of `doublyEven_add_of_ip_zero` to two codewords of a
+-- self-orthogonal doubly-even code. -- !--
+/-- **Global corollary.**  In a self-orthogonal (`ip x y = 0` for all codewords) doubly
+even code, the sum of any two codewords is doubly even — the code is closed under the
+weight-`4ℤ` filtration. -/
+theorem code_doublyEven_closed
+    (C : Finset (Fin n → ZMod 2))
+    (hDE : ∀ v ∈ C, DoublyEven v)
+    (hSO : ∀ x ∈ C, ∀ y ∈ C, ip x y = 0)
+    (x y : Fin n → ZMod 2) (hx : x ∈ C) (hy : y ∈ C) :
+    DoublyEven (x + y) :=
+  doublyEven_add_of_ip_zero x y (hDE x hx) (hDE y hy) (hSO x hx y hy)
+
+/-! ## Crossing to analysis: the degree-4 Gauss sum -/
+
+/-- The **degree-4 Gauss sum** of a code: `∑_{c∈C} i^{wt c}`, with `i = √-1` the
+canonical primitive 4-th root of unity. -/
+noncomputable def gaussSum (C : Finset (Fin n → ZMod 2)) : ℂ :=
+  ∑ c ∈ C, Complex.I ^ (wt c)
+
+/-
+!-- Double-evenness puts every weight in `4ℤ`, where `i^{4k} = (i⁴)^k = 1`, so every
+summand is `1` and the Gauss sum counts `|C|`. -- !--
+
+**Gauss-sum bridge (degree 4).**  For a doubly-even code the degree-4 Gauss sum
+collapses to the cardinality, because `i` is trivial on `4ℤ`.  This is the analytic
+shadow whose degree-8 refinement (a primitive 8-th root) is the Gleason obstruction
+`8 ∣ n` for self-dual codes.
+-/
+theorem gaussSum_doublyEven (C : Finset (Fin n → ZMod 2))
+    (hDE : ∀ v ∈ C, DoublyEven v) :
+    gaussSum C = (C.card : ℂ) := by
+  -- For each $c \in C$, we have $i^{wt(c)} = 1$ because $wt(c)$ is a multiple of $4$.
+  have h_gauss_sum : ∀ c ∈ C, Complex.I ^ (wt c) = 1 := by
+    intro c hc; specialize hDE c hc; obtain ⟨ k, hk ⟩ := hDE; simp +decide [ hk, pow_mul ] ;
+  simpa [ gaussSum ] using Finset.sum_congr rfl h_gauss_sum
+
+end GaussBridge
+end SmoothPoincare

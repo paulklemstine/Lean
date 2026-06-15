@@ -1,0 +1,207 @@
+import Mathlib
+
+/-!
+# Ultrametric Rips Relations ↔ Thresholded Depth/Valuation Relations — Bridge
+
+This file gives a **concrete, relation-level** bridge between two equivalence
+relations attached to an ultrametric distance valued in `ℕ`:
+
+* the **Rips relation** at scale `ε`: `x ~ y` iff `d x y ≤ ε`;
+* the **depth/valuation relation** at threshold `n`: `x ~ y` iff `n ≤ v x y`,
+  where `v` is a "co-distance"/valuation depth.
+
+Over an ultrametric (strong triangle inequality), each of these is an equivalence
+relation, packaged here as a `Setoid`. On a *bounded* discrete model with bound
+`K` we define the valuation `v x y := K - d x y` (truncated `ℕ` subtraction) and
+prove the exact dictionary
+
+    `ripsRel d ε x y ↔ depthRel v (K - ε) x y`   (for `ε ≤ K`).
+
+Everything is elementary `ℕ` arithmetic. We close with a worked toy model: the
+discrete ultrametric on `Fin n` (`0` if equal, `1` otherwise), for which all the
+hypotheses hold and the comparison theorem specializes concretely.
+
+Bridge: connects **metric / Vietoris–Rips filtrations** ↔ **non-Archimedean
+valuation depth**, at the level of the induced equivalence relations.
+-/
+
+namespace UltrametricRipsValuationBridge
+
+variable {α : Type*}
+
+/-! ## §1. Core Rips relation -/
+
+/-- The Rips relation at scale `ε`: two points are related when their distance is
+    at most `ε`. -/
+def ripsRel (d : α → α → ℕ) (ε : ℕ) : α → α → Prop := fun x y => d x y ≤ ε
+
+theorem ripsRel_def (d : α → α → ℕ) (ε : ℕ) (x y : α) :
+    ripsRel d ε x y ↔ d x y ≤ ε := Iff.rfl
+
+/-- Reflexivity of the Rips relation, from a zero diagonal. -/
+theorem ripsRel_refl (d : α → α → ℕ) (ε : ℕ) (h_refl : ∀ x, d x x = 0) (x : α) :
+    ripsRel d ε x x := by
+  simp only [ripsRel, h_refl x]; exact Nat.zero_le ε
+
+/-- Symmetry of the Rips relation, from symmetry of `d`. -/
+theorem ripsRel_symm (d : α → α → ℕ) (ε : ℕ) (h_symm : ∀ x y, d x y = d y x)
+    {x y : α} (h : ripsRel d ε x y) : ripsRel d ε y x := by
+  simp only [ripsRel] at h ⊢; rwa [h_symm y x]
+
+/-- Transitivity of the Rips relation: the strong triangle inequality together with
+    `max a b ≤ ε` whenever `a ≤ ε` and `b ≤ ε`. -/
+theorem ripsRel_trans (d : α → α → ℕ) (ε : ℕ)
+    (h_ultra : ∀ x y z, d x z ≤ max (d x y) (d y z))
+    {x y z : α} (hxy : ripsRel d ε x y) (hyz : ripsRel d ε y z) :
+    ripsRel d ε x z := by
+  simp only [ripsRel] at hxy hyz ⊢
+  exact le_trans (h_ultra x y z) (max_le hxy hyz)
+
+/-- The Rips relation packaged as a `Setoid` for each threshold `ε`. -/
+def ripsSetoid (d : α → α → ℕ) (ε : ℕ)
+    (h_refl : ∀ x, d x x = 0) (h_symm : ∀ x y, d x y = d y x)
+    (h_ultra : ∀ x y z, d x z ≤ max (d x y) (d y z)) : Setoid α where
+  r := ripsRel d ε
+  iseqv :=
+    ⟨ripsRel_refl d ε h_refl,
+     fun h => ripsRel_symm d ε h_symm h,
+     fun h₁ h₂ => ripsRel_trans d ε h_ultra h₁ h₂⟩
+
+/-! ## §2. Core depth/valuation relation -/
+
+/-- The depth/valuation relation at threshold `n`: two points are related when their
+    valuation depth `v x y` is at least `n`. -/
+def depthRel (v : α → α → ℕ) (n : ℕ) : α → α → Prop := fun x y => n ≤ v x y
+
+theorem depthRel_def (v : α → α → ℕ) (n : ℕ) (x y : α) :
+    depthRel v n x y ↔ n ≤ v x y := Iff.rfl
+
+/-- Reflexivity of the depth relation, from a bounded diagonal `n ≤ v x x`. -/
+theorem depthRel_refl (v : α → α → ℕ) (n : ℕ) (hvrefl : ∀ x, n ≤ v x x) (x : α) :
+    depthRel v n x x := hvrefl x
+
+/-- Symmetry of the depth relation, from symmetry of `v`. -/
+theorem depthRel_symm (v : α → α → ℕ) (n : ℕ) (hvsymm : ∀ x y, v x y = v y x)
+    {x y : α} (h : depthRel v n x y) : depthRel v n y x := by
+  simp only [depthRel] at h ⊢; rwa [hvsymm y x]
+
+/-- Transitivity of the depth relation, from the dual ultrametric inequality
+    `min (v x y) (v y z) ≤ v x z`. -/
+theorem depthRel_trans (v : α → α → ℕ) (n : ℕ)
+    (hv_ultra : ∀ x y z, min (v x y) (v y z) ≤ v x z)
+    {x y z : α} (hxy : depthRel v n x y) (hyz : depthRel v n y z) :
+    depthRel v n x z := by
+  simp only [depthRel] at hxy hyz ⊢
+  exact le_trans (le_min hxy hyz) (hv_ultra x y z)
+
+/-- The depth relation packaged as a `Setoid` for each threshold `n`. -/
+def depthSetoid (v : α → α → ℕ) (n : ℕ)
+    (hvrefl : ∀ x, n ≤ v x x) (hvsymm : ∀ x y, v x y = v y x)
+    (hv_ultra : ∀ x y z, min (v x y) (v y z) ≤ v x z) : Setoid α where
+  r := depthRel v n
+  iseqv :=
+    ⟨depthRel_refl v n hvrefl,
+     fun h => depthRel_symm v n hvsymm h,
+     fun h₁ h₂ => depthRel_trans v n hv_ultra h₁ h₂⟩
+
+/-! ## §3. Explicit comparison theorem on a bounded discrete model -/
+
+/-- The valuation depth associated to a distance bounded by `K`: `v x y := K - d x y`
+    (truncated `ℕ` subtraction). Larger valuation = smaller distance = "deeper" link. -/
+def boundedVal (d : α → α → ℕ) (K : ℕ) : α → α → ℕ := fun x y => K - d x y
+
+/-- The valuation `v = K - d` is symmetric whenever `d` is. -/
+theorem boundedVal_symm (d : α → α → ℕ) (K : ℕ) (h_symm : ∀ x y, d x y = d y x)
+    (x y : α) : boundedVal d K x y = boundedVal d K y x := by
+  simp only [boundedVal, h_symm x y]
+
+/-- Key arithmetic dictionary: under `d ≤ K` and `ε ≤ K`,
+    `d ≤ ε ↔ K - ε ≤ K - d`. -/
+theorem sub_le_sub_iff_of_le {d ε K : ℕ} (hdK : d ≤ K) (hεK : ε ≤ K) :
+    d ≤ ε ↔ K - ε ≤ K - d := by omega
+
+/-- **Comparison theorem.** On a model where `d` is bounded by `K`, the Rips relation
+    at scale `ε` (for `ε ≤ K`) coincides pointwise with the depth relation of the
+    valuation `v = K - d` at threshold `K - ε`. -/
+theorem ripsRel_iff_depthRel (d : α → α → ℕ) (K ε : ℕ)
+    (hbounded : ∀ x y, d x y ≤ K) (hεK : ε ≤ K) (x y : α) :
+    ripsRel d ε x y ↔ depthRel (boundedVal d K) (K - ε) x y := by
+  simp only [ripsRel, depthRel, boundedVal]
+  exact sub_le_sub_iff_of_le (hbounded x y) hεK
+
+/-! ## §4. Worked concrete model: the discrete ultrametric on `Fin n` -/
+
+/-- The discrete metric on `Fin n` valued in `ℕ`: `0` if the points are equal,
+    `1` otherwise. This is a (bounded) ultrametric. -/
+def discreteDist {n : ℕ} (x y : Fin n) : ℕ := if x = y then 0 else 1
+
+theorem discreteDist_refl {n : ℕ} (x : Fin n) : discreteDist x x = 0 := by
+  simp [discreteDist]
+
+theorem discreteDist_symm {n : ℕ} (x y : Fin n) :
+    discreteDist x y = discreteDist y x := by
+  unfold discreteDist
+  by_cases h : x = y <;> simp [h, eq_comm]
+
+theorem discreteDist_ultra {n : ℕ} (x y z : Fin n) :
+    discreteDist x z ≤ max (discreteDist x y) (discreteDist y z) := by
+  unfold discreteDist
+  by_cases hxy : x = y <;> by_cases hyz : y = z <;> by_cases hxz : x = z <;>
+    simp_all
+
+theorem discreteDist_bounded {n : ℕ} (x y : Fin n) : discreteDist x y ≤ 1 := by
+  unfold discreteDist; by_cases h : x = y <;> simp [h]
+
+/-- The Rips `Setoid` of the discrete ultrametric on `Fin n` at scale `ε`. -/
+def discreteRipsSetoid (n ε : ℕ) : Setoid (Fin n) :=
+  ripsSetoid discreteDist ε discreteDist_refl discreteDist_symm discreteDist_ultra
+
+/-- The depth `Setoid` of the valuation `1 - discreteDist` on `Fin n` at threshold `n₀`.
+    Reflexivity holds because `n₀ ≤ 1` forces `n₀ ≤ 1 - 0`. -/
+def discreteDepthSetoid (n n₀ : ℕ) (hn₀ : n₀ ≤ 1) : Setoid (Fin n) :=
+  depthSetoid (boundedVal discreteDist 1) n₀
+    (fun x => by
+      simp only [boundedVal, discreteDist_refl]; omega)
+    (boundedVal_symm discreteDist 1 discreteDist_symm)
+    (fun x y z => by
+      -- dual ultrametric for v = 1 - d follows from the ultrametric for d
+      simp only [boundedVal]
+      have h := discreteDist_ultra x y z
+      have hxy := discreteDist_bounded x y
+      have hyz := discreteDist_bounded y z
+      have hxz := discreteDist_bounded x z
+      omega)
+
+/-- **Specialization of the comparison theorem.** On the discrete ultrametric over
+    `Fin n` with bound `K = 1`, the Rips relation at scale `ε ≤ 1` equals the depth
+    relation of `1 - discreteDist` at threshold `1 - ε`. -/
+theorem discrete_ripsRel_iff_depthRel (n ε : ℕ) (hε : ε ≤ 1) (x y : Fin n) :
+    ripsRel discreteDist ε x y ↔
+      depthRel (boundedVal discreteDist 1) (1 - ε) x y :=
+  ripsRel_iff_depthRel discreteDist 1 ε discreteDist_bounded hε x y
+
+/-- Concrete instance at scale `ε = 0`: the Rips relation collapses to equality, and
+    so does the depth relation at threshold `1`. -/
+theorem discrete_rips_zero_iff_depth_one (n : ℕ) (x y : Fin n) :
+    ripsRel discreteDist 0 x y ↔
+      depthRel (boundedVal discreteDist 1) 1 x y := by
+  have h := discrete_ripsRel_iff_depthRel n 0 (Nat.zero_le 1) x y
+  simpa using h
+
+/-- A fully concrete example: in `Fin 3`, the distinct points `0` and `1` are *not*
+    Rips-related at scale `0`. -/
+example : ¬ ripsRel discreteDist 0 (0 : Fin 3) (1 : Fin 3) := by
+  rw [ripsRel_def]; decide
+
+/-- A fully concrete example: in `Fin 3`, the point `2` is Rips-related to itself at
+    scale `0`, and hence depth-related at threshold `1` via the comparison theorem. -/
+example : depthRel (boundedVal discreteDist 1) 1 (2 : Fin 3) (2 : Fin 3) := by
+  rw [← discrete_rips_zero_iff_depth_one]
+  exact ripsRel_refl discreteDist 0 discreteDist_refl 2
+
+/-- A fully concrete example: in `Fin 3`, distinct points are Rips-related at scale `1`
+    (the whole space is one block), demonstrating the threshold dependence. -/
+example : ripsRel discreteDist 1 (0 : Fin 3) (1 : Fin 3) := by
+  rw [ripsRel_def]; decide
+
+end UltrametricRipsValuationBridge
