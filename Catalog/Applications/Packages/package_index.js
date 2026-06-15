@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6feb33cc",
     "filename": "a_functorial_tropical_lower_bound_for_rips_connect.json",
     "pkg_num": 142,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6565799999999999,
     "title": "A Functorial Tropical Lower Bound for Rips Connectivity via Valuation-Depth Sublevel Graphs"
   },
   {
@@ -4382,8 +4382,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "a_functorial_tropical_lower_bound_for_rips_connect",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6565799999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "A Functorial Tropical Lower Bound for Rips Connectivity via Valuation-Depth Sublevel Graphs"
     }
