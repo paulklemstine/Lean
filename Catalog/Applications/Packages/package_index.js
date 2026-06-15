@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "2c181743",
     "filename": "the_catalogs_synthetic_hott_layer_cataloglogichott.json",
     "pkg_num": 139,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.65692,
     "title": "The Fundamental Theorem of Identity Systems and Homotopy-Initial Families"
   },
   {
@@ -4297,8 +4297,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "the_catalogs_synthetic_hott_layer_cataloglogichott",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.65692,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Fundamental Theorem of Identity Systems and Homotopy-Initial Families"
     }

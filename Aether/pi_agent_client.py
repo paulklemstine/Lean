@@ -1107,7 +1107,10 @@ class PiAgentClient:
             high-quality results). Do real science — hypotheses that can fail.
             At least one concept MUST bridge to a different domain.
 
-            Respond with JSON: {{"domain": "...", "concept_title": "...", "concept_description": "The key insight is [core novelty]. Why now: [what makes this tractable]. [Freeform mathematical insight]", "mathematical_framing": "...", "lean_guess": "", "catalog_references": ["..."], "research_mode": "prove|formalize|discover|sorry_fill", "novelty_estimate": 0.0-1.0, "breakthrough_potential": 0.0-1.0, "key_references": ["..."]}}
+            DO NOT generate any code stubs, draft Lean code, or mathematical framings. 
+            Focus entirely on the high-level objective, relevant files, and rationale.
+
+            Respond with JSON: {{"domain": "...", "concept_title": "...", "concept_description": "The key insight is [core novelty]. Why now: [what makes this tractable]. [Freeform mathematical insight]", "catalog_references": ["..."], "research_mode": "prove|formalize|discover|sorry_fill", "novelty_estimate": 0.0-1.0, "breakthrough_potential": 0.0-1.0, "key_references": ["..."]}}
         """)
 
         # Concept generation: try LLM with short timeout, quick fallback to local
@@ -1716,6 +1719,20 @@ class PiAgentClient:
         """)
 
 
+    def _build_v15_depth_requirements(self) -> str:
+        """v15: PM Ticket Style (Objective, Scope, Acceptance Criteria, Context).
+
+        Concise description focusing purely on mathematics and deliverables,
+        structured like a developer issue/ticket.
+        """
+        return textwrap.dedent("""\
+            ## RESEARCH CORE METHODOLOGY:
+            1. **Catalog Leverage**: Examine existing catalog theorems carefully. Your theorems should extend, generalize, or connect catalog results.
+            2. **Pure Math Focus**: Focus 100% of your compute on standard Lean 4 definitions, lemmas, and theorems. Prove non-trivial math that represents genuine progress.
+            3. **Falsifiable Conjectures**: Formulate precise conjectures in FUTURE_DIRECTIONS.md to guide future research cycles.
+        """)
+
+
     def _build_assignment(self, concept: ResearchConcept) -> str:
         """Build a directive assignment section for Aristotle.
 
@@ -1898,11 +1915,11 @@ class PiAgentClient:
         world-class, a separate Phase B prompt will be dispatched to package it.
         """
         if prompt_version is None:
-            prompt_version = "v10"
+            prompt_version = "v15"
         if prompt_version in ("v1", "v2", "v3", "v4", "v5", "v6", "v7"):
             raise ValueError(
-                f"{prompt_version} prompt is no longer supported — use v8 through v14. "
-                "v10 (Conceptual Unifier) is the default."
+                f"{prompt_version} prompt is no longer supported — use v8 through v15. "
+                "v15 (PM Ticket Style) is the default."
             )
         if prompt_version == "v8":
             depth_requirements = self._build_v8_depth_requirements()
@@ -1918,8 +1935,49 @@ class PiAgentClient:
             depth_requirements = self._build_v13_depth_requirements()
         elif prompt_version == "v14":
             depth_requirements = self._build_v14_depth_requirements()
+        elif prompt_version == "v15":
+            depth_requirements = self._build_v15_depth_requirements()
         else:
-            depth_requirements = self._build_v10_depth_requirements()
+            depth_requirements = self._build_v15_depth_requirements()
+
+        if prompt_version == "v15":
+            catalog_section = ""
+            if catalog_context:
+                catalog_section = f"\n### Catalog Context\n{catalog_context}\n"
+
+            theorem_section = ""
+            if theorem_context:
+                theorem_section = f"\n### Recent Discoveries in Catalog\n{theorem_context}\n"
+
+            prompt = textwrap.dedent(f"""\
+                # RESEARCH TASK SPECIFICATION (Jira/GitHub Ticket Style)
+
+                ## TICKET TITLE: AETHER-RESEARCH: {concept.title}
+
+                ## OBJECTIVE:
+                Prove non-trivial theorems that extend the mathematical frontier in the {concept.domain} domain, building directly on the existing catalog files.
+
+                ## DESCRIPTION / OVERALL DIRECTION:
+                {concept.concept_description}
+
+                ## CONTEXT & RESOURCES:
+                - Domain: {concept.domain}
+                - Existing Catalog References: {", ".join(concept.catalog_references) if concept.catalog_references else "None"}
+                {catalog_section}
+                {theorem_section}
+
+                {depth_requirements}
+
+                ## DELIVERABLES & ACCEPTANCE CRITERIA:
+                1. **Lean 4 Proofs**: Prove 2-4 non-trivial theorems with correct, compiling Lean 4 proofs (no sorry on main results).
+                2. **Self-Contained Files**: Put the proofs in the designated catalog subdirectory. Follow existing import paths and definitions.
+                3. **FUTURE_DIRECTIONS.md**: Outlining 3-5 bold, falsifiable research directions/conjectures to guide the next research cycle. Each direction must include a "key insight" and "why now" rationale.
+
+                ## CONSTRAINTS (Strictly Enforced):
+                - **NO prose or documentation articles**: Do NOT output ARTICLE.md, RESEARCH_PAPER.md, python algorithms, HTML widgets, or PACKAGE.json.
+                - **No elaborate roleplay**: Do NOT output lab notebook sections or fictional team dialogues. Focus 100% of your compute on standard Lean 4 code and proofs.
+                """)
+            return prompt
 
         # Lean-specific section
         lean_section = ""

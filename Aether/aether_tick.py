@@ -430,7 +430,27 @@ async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: 
         job = extractor.evaluate(job)
         extractor._save_inflight()
 
+        # ── Dialogue-Based Proof Repair Loop ──
+        if not is_phase_b_completion and job.quality_assessment and job.quality_assessment.get("should_retry"):
+            if job.retry_count < extractor.max_retries:
+                print(f"[Tick] Job {job.job_id[:8]} quality check failed (Q={job.quality_score:.3f}, quality={job.quality_assessment.get('quality')}). "
+                      f"Initiating proof repair retry {job.retry_count + 1}/{extractor.max_retries}...")
+                
+                # Retrieve suggestion from Pi Agent
+                suggestion = extractor.pi_agent.suggest_retry_improvement(
+                    concept=job.concept,
+                    previous_prompt=job.prompt,
+                    result_lean=job.result_lean or "",
+                    quality_assessment=job.quality_assessment,
+                )
+                
+                # Dispatch the retry
+                job = await extractor.dispatch_retry_async(job, suggestion)
+                extractor._save_inflight()
+                continue
+
         # ── Two-phase dispatch: gate Phase B on Phase A quality ──
+
         # Phase A was just evaluated. If the math is good enough, dispatch
         # Phase B to package it. Otherwise mark as A_only and integrate
         # the Lean files directly (no article/paper/widgets).

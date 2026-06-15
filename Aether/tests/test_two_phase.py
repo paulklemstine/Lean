@@ -73,17 +73,14 @@ def test_phase_a_prompt_excludes_packaging(research_concept):
     # Skip actual API client init
     client = PiAgentClient.__new__(PiAgentClient)
     prompt = client._build_phase_a_lean_prompt(concept=research_concept)
-    # Should have the explicit Phase A header
-    assert "PHASE A: LEAN 4 ONLY" in prompt
-    # Should mention ARTICLE.md in the DO NOT list
-    assert "NO `ARTICLE.md`" in prompt
-    assert "NO `RESEARCH_PAPER.md`" in prompt
-    assert "NO HTML widgets" in prompt
-    assert "NO `PACKAGE.json`" in prompt
+    # Should have the explicit Ticket header
+    assert "RESEARCH TASK SPECIFICATION" in prompt
+    # Should mention ARTICLE.md in constraints
+    assert "ARTICLE.md" in prompt
+    assert "RESEARCH_PAPER.md" in prompt
+    assert "PACKAGE.json" in prompt
     # Should NOT request the deliverables as a positive list
     assert "1. **Lean 4 proofs**" not in prompt  # old format absent
-    # Depth requirements should still be there
-    assert "Depth Requirements" in prompt
 
 
 def test_phase_b_prompt_includes_phase_a_lean(research_concept):
@@ -116,12 +113,12 @@ def test_phase_b_prompt_includes_phase_a_lean(research_concept):
 def test_phase_a_prompt_size_reduced(research_concept):
     """Phase A prompt should be smaller than the legacy full prompt.
 
-    The default is v10 at ~6K chars.
+    The default is v15.
     Both are still smaller than the 12K A_full legacy prompt.
     """
     from pi_agent_client import PiAgentClient
     client = PiAgentClient.__new__(PiAgentClient)
-    phase_a_default = client._build_phase_a_lean_prompt(concept=research_concept)  # default = v10
+    phase_a_default = client._build_phase_a_lean_prompt(concept=research_concept)  # default = v15
     phase_a_v9 = client._build_phase_a_lean_prompt(concept=research_concept, prompt_version="v9")
     # Both versions should be substantially smaller than the 12K full prompt
     assert len(phase_a_default) < 12000, f"Default Phase A prompt too large: {len(phase_a_default)} chars"
@@ -138,7 +135,7 @@ def test_phase_a_routing(research_concept):
         concept=research_concept,
         phase="A_lean_only",
     )
-    assert "PHASE A: LEAN 4 ONLY" in prompt
+    assert "RESEARCH TASK SPECIFICATION" in prompt
 
 
 def test_phase_b_routing(research_concept):
@@ -158,7 +155,7 @@ def test_default_phase_is_a_lean_only(research_concept):
     from pi_agent_client import PiAgentClient
     client = PiAgentClient.__new__(PiAgentClient)
     prompt = client.write_aristotle_prompt(concept=research_concept)
-    assert "PHASE A: LEAN 4 ONLY" in prompt
+    assert "RESEARCH TASK SPECIFICATION" in prompt
 
 
 def test_legacy_a_full_routing(research_concept):

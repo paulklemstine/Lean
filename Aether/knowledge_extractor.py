@@ -94,6 +94,9 @@ class ResearchJob:
     phase_b_prompt_version: Optional[str] = None  # currently only "v1" packaging
     phase_a_quality_score: Optional[float] = None  # saved before phase B so we can re-evaluate after B
     phase_b_skipped_reason: Optional[str] = None  # "low_quality" | "threshold_not_met" | "phase_a_failed"
+    retry_count: int = 0
+    retry_of: Optional[str] = None
+
 
 
 class KnowledgeExtractor:
@@ -178,6 +181,8 @@ class KnowledgeExtractor:
         self.locked_titles = set()
         self.completed_count = 0
         self.failed_count = 0
+        self.max_retries = self.config.get("autoresearch", {}).get("max_retries", 2)
+
         
         self._load_inflight()
 
@@ -391,6 +396,56 @@ class KnowledgeExtractor:
             job.error_message = f"Phase B dispatch failed: {e}"
             print(f"[Dispatch-B] FAILED: {e}")
         return job
+
+    async def dispatch_retry_async(self, job: "ResearchJob", retry_suggestion: Dict[str, Any]) -> "ResearchJob":
+        """Dispatch a proof repair retry to Aristotle asynchronously."""
+        old_project_id = job.project_id
+
+        # Update concept and prompt with retry suggestions
+        job.concept.concept_description = retry_suggestion.get("revised_concept_description", job.concept.concept_description)
+        job.prompt = retry_suggestion.get("revised_prompt", job.prompt)
+        job.concept.catalog_references = retry_suggestion.get("revised_catalog_references", job.concept.catalog_references)
+        job.concept.research_mode = retry_suggestion.get("revised_research_mode", job.concept.research_mode)
+
+        # Set retry fields
+        job.retry_count += 1
+        if not job.retry_of:
+            job.retry_of = job.job_id
+
+        # Re-build project directory with the new suffix
+        job.project_dir = self._build_project_dir(job)
+        if not job.project_dir:
+            job.status = "failed"
+            job.error_message = f"Could not build retry project directory for job {job.job_id}"
+            return job
+
+        # Write prompt.md for context
+        (job.project_dir / "PROMPT.md").write_text(job.prompt)
+
+        # Prepare dispatch
+        job.status = "preparing"
+
+        try:
+            project_id = await self._dispatch_to_aristotle(job)
+            if old_project_id and old_project_id in self.inflight:
+                del self.inflight[old_project_id]
+            job.project_id = project_id
+            job.status = "dispatched"
+            job.dispatch_time = time.time()
+            self.inflight[project_id] = job
+            self._save_inflight()
+            print(f"[Retry-Dispatch] Aristotle project: {project_id} (Retry {job.retry_count} for job {job.job_id})")
+        except Exception as e:
+            job.status = "failed"
+            job.error_message = f"Retry dispatch failed: {e}"
+            print(f"[Retry-Dispatch] FAILED: {e}")
+
+        return job
+
+    def dispatch_retry(self, job: "ResearchJob", retry_suggestion: Dict[str, Any]) -> "ResearchJob":
+        """Synchronous version of dispatch_retry_async."""
+        return asyncio.run(self.dispatch_retry_async(job, retry_suggestion))
+
 
     # ==================================================================
     # Phase 1: DISCOVER — Pi decides what to research
@@ -687,27 +742,10 @@ class KnowledgeExtractor:
         # A/B test v3 vs v4: hash-based split, but DEFAULT is now v4 (winner).
         # v3 path is kept for backwards compatibility and A/B analysis.
         # A/B results (n=377 cycles): v4 wins +6.6% avg Q, +12% faster, more world_class.
-        import hashlib
-        if job.job_id:
-            md5_hash = int(hashlib.md5(job.job_id.encode()).hexdigest(), 16)
-        else:
-            md5_hash = job.cycle_n
-        # A/B testing: split equally among v8, v9, v10, v11, v12, v13, v14.
-        bucket = md5_hash % 7
-        if bucket == 0:
-            phase_a_version = "v8"
-        elif bucket == 1:
-            phase_a_version = "v9"
-        elif bucket == 2:
-            phase_a_version = "v10"
-        elif bucket == 3:
-            phase_a_version = "v11"
-        elif bucket == 4:
-            phase_a_version = "v12"
-        elif bucket == 5:
-            phase_a_version = "v13"
-        else:
-            phase_a_version = "v14"
+        # We always use the simplified PM Ticket Style (v15) to prevent
+        # Pi-Agent from generating detailed stubs and role-playing overhead,
+        # letting Aristotle focus entirely on the mathematical proofs.
+        phase_a_version = "v15"
         job.prompt_version = phase_a_version  # legacy field
         job.phase = "A"  # Two-phase: this is Phase A (math)
         job.phase_a_prompt_version = phase_a_version
@@ -838,10 +876,12 @@ Research mode: {concept.research_mode}
         preserving the domain subdirectory structure (Algebra/, Tropical/, etc.).
         This gives Aristotle maximum context to build on existing verified theorems.
         """
-        dir_path = self.workspace / f"projects/{job.job_id}"
+        suffix = f"_retry{job.retry_count}" if getattr(job, "retry_count", 0) > 0 else ""
+        dir_path = self.workspace / f"projects/{job.job_id}{suffix}"
         if dir_path.exists():
             shutil.rmtree(dir_path)
         dir_path.mkdir(parents=True, exist_ok=True)
+
 
         # Determine files to copy: Phase B gets a pruned workspace of only Phase A outputs, Phase A gets full catalog
         is_phase_b = getattr(job, 'phase', '') == 'B'
@@ -3566,11 +3606,30 @@ Research mode: {concept.research_mode}
         # 4. EXTRACT
         job = self.extract(job)
 
-        # 5. EVALUATE
+        # 5. EVALUATE & RETRY
         job = self.evaluate(job)
+        while job.quality_assessment and job.quality_assessment.get("should_retry") and job.retry_count < self.max_retries:
+            print(f"[Cycle] Job {job.job_id[:8]} quality check failed (Q={job.quality_score:.3f}, quality={job.quality_assessment.get('quality')}). "
+                  f"Initiating proof repair retry {job.retry_count + 1}/{self.max_retries}...")
+
+            suggestion = self.pi_agent.suggest_retry_improvement(
+                concept=job.concept,
+                previous_prompt=job.prompt,
+                result_lean=job.result_lean or "",
+                quality_assessment=job.quality_assessment,
+            )
+
+            job = self.dispatch_retry(job, suggestion)
+            if job.project_id:
+                job = self._await_job(job)
+                job = self.extract(job)
+                job = self.evaluate(job)
+            else:
+                break
 
         # 6. INTEGRATE
         job = self.integrate(job)
+
 
         # 6b. EXTRACT FUTURE DIRECTIONS from Aristotle's output
         self._extract_future_directions(job)
@@ -3680,7 +3739,27 @@ Research mode: {concept.research_mode}
                 if job.status == "completed":
                     job = await self.extract_async(job)
                     job = self.evaluate(job)
+
+                    # Intercept for Dialogue-Based Proof Repair Loop
+                    is_phase_b_completion = (job.phase == "B" or job.phase == "B_dispatched")
+                    if not is_phase_b_completion and job.quality_assessment and job.quality_assessment.get("should_retry"):
+                        if job.retry_count < self.max_retries:
+                            print(f"[Continuous] Job {job.job_id[:8]} quality check failed (Q={job.quality_score:.3f}, quality={job.quality_assessment.get('quality')}). "
+                                  f"Initiating proof repair retry {job.retry_count + 1}/{self.max_retries}...")
+
+                            suggestion = self.pi_agent.suggest_retry_improvement(
+                                concept=job.concept,
+                                previous_prompt=job.prompt,
+                                result_lean=job.result_lean or "",
+                                quality_assessment=job.quality_assessment,
+                            )
+
+                            job = await self.dispatch_retry_async(job, suggestion)
+                            self._save_inflight()
+                            continue
+
                     job = await self.integrate_async(job)
+
 
                     # Extract future directions and mark consumed direction as completed
                     if job.status == "integrated" and job.job_id:
