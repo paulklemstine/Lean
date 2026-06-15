@@ -1763,6 +1763,9 @@ class PiAgentClient:
             1. **Catalog Leverage**: Examine existing catalog theorems carefully. Your theorems should extend, generalize, or connect catalog results.
             2. **Pure Math Focus**: Focus 100% of your compute on standard Lean 4 definitions, lemmas, and theorems. Prove non-trivial math that represents genuine progress.
             3. **Falsifiable Conjectures**: Formulate precise conjectures in FUTURE_DIRECTIONS.md to guide future research cycles.
+
+            ### Perpetual Scientific Iteration (do not stop at first synthesis)
+            When the research team comes together with results, do not stop. Treat the synthesized findings as the next problem statement and immediately run the full scientific-method loop again: hypothesize, experiment, review, synthesize, critique. Repeat this cycle continuously within the available context window, refining, deepening, and cross-checking until forced to emit output. Use Aristotle to its fullest.
         """)
 
 
@@ -1813,6 +1816,9 @@ class PiAgentClient:
             conjectures derived from Stage 3 and Stage 4. Each conjecture must
             include a "The key insight is..." sentence and a "Why now?"
             justification.
+
+            ### Perpetual Scientific Iteration (do not stop at first synthesis)
+            When the research team comes together with results, do not stop. Treat the synthesized findings as the next problem statement and immediately run the full scientific-method loop again: hypothesize, experiment, review, synthesize, critique. Repeat this cycle continuously within the available context window, refining, deepening, and cross-checking until forced to emit output. Use Aristotle to its fullest.
         """)
 
 
@@ -1859,6 +1865,9 @@ class PiAgentClient:
             4. **Critique**: Check for triviality, missing sorries, weak assumptions.
             5. **Synthesize**: Clean Lean files + FUTURE_DIRECTIONS.md (3–5 testable
                conjectures, each with "The key insight is..." and "Why now?").
+
+            ### Perpetual Scientific Iteration (do not stop at first synthesis)
+            When the research team comes together with results, do not stop. Treat the synthesized findings as the next problem statement and immediately run the full scientific-method loop again: hypothesize, experiment, review, synthesize, critique. Repeat this cycle continuously within the available context window, refining, deepening, and cross-checking until forced to emit output. Use Aristotle to its fullest.
         """)
 
     def _build_v18_depth_requirements(self, concept: "ResearchConcept") -> str:

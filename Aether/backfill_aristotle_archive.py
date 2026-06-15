@@ -61,9 +61,14 @@ async def backfill_from_api(am: ArchiveManager, max_pages: Optional[int], page_s
         )
         print(f"[Backfill] API page {page}: {len(projects)} projects")
         for project in projects:
-            if am.project_exists(project.project_id):
-                print(f"[Backfill] Skipping {project.project_id[:8]} (already archived)")
+            exists = am.project_exists(project.project_id)
+            has_output = am.project_has_output(project.project_id)
+            if exists and (has_output or not project.has_files):
+                print(f"[Backfill] Skipping {project.project_id[:8]} "
+                      f"(exists={exists}, has_output={has_output}, has_files={project.has_files})")
                 continue
+            if exists and project.has_files and not has_output:
+                print(f"[Backfill] {project.project_id[:8]} already archived input; downloading output")
             await _archive_one_api(am, project)
             await asyncio.sleep(0.05)
         if not pagination_key:
@@ -85,10 +90,10 @@ async def _archive_one_api(am: ArchiveManager, project: Project):
             except Exception as e:
                 print(f"[Backfill] Input download failed for {project.project_id[:8]}: {e}")
 
-            # Output archive
+            # Output archive (agent result files); endpoint is /result, not /files
             if project.has_files:
                 try:
-                    r = await client.get(f"/project/{project.project_id}/files")
+                    r = await client.get(f"/project/{project.project_id}/result")
                     output_archive = tmpdir / "output.tar.gz"
                     output_archive.write_bytes(r.content)
                 except Exception as e:
@@ -135,6 +140,7 @@ def backfill_from_local_projects(am: ArchiveManager, projects_root: Path):
                 last_updated="",
                 input_dir=input_dir,
                 output_dir=output_dir,
+                skip_input_catalog_context=False if output_dir else True,
             )
             print(f"[Backfill] {i}/{len(project_dirs)} Archived local project {project_id[:8]} "
                   f"(output={output_dir is not None})", flush=True)
@@ -144,7 +150,7 @@ def backfill_from_local_projects(am: ArchiveManager, projects_root: Path):
 
 def main():
     parser = argparse.ArgumentParser(description="Backfill Aristotle archive")
-    parser.add_argument("--archive-root", default="../Archive", help="Archive root directory")
+    parser.add_argument("--archive-root", default=str(Path(__file__).parent.parent / "Archive"), help="Archive root directory")
     parser.add_argument("--max-pages", type=int, default=None, help="Max API pages")
     parser.add_argument("--page-size", type=int, default=100, help="Projects per API page")
     parser.add_argument("--from-local-projects", action="store_true",

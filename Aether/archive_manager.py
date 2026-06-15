@@ -407,6 +407,14 @@ class ArchiveManager:
         row = conn.execute("SELECT 1 FROM projects WHERE project_id=?", (project_id,)).fetchone()
         return row is not None
 
+    def project_has_output(self, project_id: str) -> bool:
+        conn = self._connect()
+        row = conn.execute(
+            "SELECT 1 FROM project_files WHERE project_id=? AND role='output' LIMIT 1",
+            (project_id,),
+        ).fetchone()
+        return row is not None
+
     def get_stats(self) -> Dict:
         conn = self._connect()
         stats = {}
