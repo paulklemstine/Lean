@@ -4,21 +4,11 @@
 
 window.PACKAGE_INDEX = [
   {
-    "date": "2026-06-14T23:22:03Z",
-    "domain": "Geometry",
-    "exp_id": "13a80f4d",
-    "filename": "bridge_ix_interleavinggeodesiclean_gave_the_persis.json",
-    "pkg_num": 174,
-    "quality": "partial",
-    "quality_score": 0.6571556692913385,
-    "title": "The Path Space of Filtrations: Geodesy, Convexity, Contractibility, and Functorial Transport of the Interleaving Metric"
-  },
-  {
     "date": "2026-06-14T22:46:23Z",
     "domain": "Logic",
     "exp_id": "70f20089",
     "filename": "close_proofs_the_catalogs_synthetic_hott_layer_cat.json",
-    "pkg_num": 173,
+    "pkg_num": 138,
     "quality": "substantial",
     "quality_score": 0.74211,
     "title": "Close Proofs: The Fundamental Theorem of Identity Systems"
@@ -28,57 +18,27 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "2ca3f901",
     "filename": "bridge_ix_interleavinggeodesiclean_turned_the_pers.json",
-    "pkg_num": 172,
+    "pkg_num": 137,
     "quality": "partial",
     "quality_score": 0.5287685714285715,
     "title": "Local-to-Global Gluing of Interleaving Geodesics (Boltzmann Bridge X)"
-  },
-  {
-    "date": "2026-06-14T21:35:36Z",
-    "domain": "Bridges",
-    "exp_id": "36dba103",
-    "filename": "close_proofs_the_boltzmann_bridge_arc_has_over_sev.json",
-    "pkg_num": 171,
-    "quality": "substantial",
-    "quality_score": 0.7248000000000001,
-    "title": "The Apparition-Order Bridge: A Local-to-Global Dictionary for Ranks of Apparition"
-  },
-  {
-    "date": "2026-06-14T21:35:13Z",
-    "domain": "Bridges",
-    "exp_id": "7eb7c87e",
-    "filename": "the_catalogs_synthetic_hott_layer_cataloglogichott.json",
-    "pkg_num": 170,
-    "quality": "partial",
-    "quality_score": 0.6310311834319526,
-    "title": "The Apparition-Order Bridge: From Global Divisibility to Local Group Order"
   },
   {
     "date": "2026-06-14T19:09:21Z",
     "domain": "Applications",
     "exp_id": "5a4a0b2c",
     "filename": "deepening_applicationsboltzmannbridgeinterleavingg.json",
-    "pkg_num": 169,
+    "pkg_num": 136,
     "quality": "substantial",
     "quality_score": 0.7868,
     "title": "The Path Space of Filtrations: Reparametrisation, Geodesic Betweenness, and Busemann Convexity of the Interleaving Metric"
-  },
-  {
-    "date": "2026-06-14T18:34:37Z",
-    "domain": "Geometry",
-    "exp_id": "fb3f3807",
-    "filename": "close_proofs_the_fifth_cycle_established_pointwise.json",
-    "pkg_num": 168,
-    "quality": "partial",
-    "quality_score": 0.68156,
-    "title": "Calabi-Yau Fourfold Hodge Diamonds and the F-Theory Mirror Involution"
   },
   {
     "date": "2026-06-14T18:34:22Z",
     "domain": "Applications",
     "exp_id": "d6769d5d",
     "filename": "deepening_applicationsboltzmannbridgeinterleavingi.json",
-    "pkg_num": 167,
+    "pkg_num": 135,
     "quality": "substantial",
     "quality_score": 0.74884,
     "title": "Boltzmann Bridge IX \u2014 Representation & Edge-Realization of the Persistence Isometry"
@@ -88,57 +48,17 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "79dd61d7",
     "filename": "close_proofs_this_cycle_delivered_catalogbridgesap.json",
-    "pkg_num": 166,
+    "pkg_num": 134,
     "quality": "substantial",
     "quality_score": 0.7172923076923078,
     "title": "The Eckmann-Hilton Equational Theory is Commutative Monoids"
-  },
-  {
-    "date": "2026-06-14T18:00:50Z",
-    "domain": "Novelty",
-    "exp_id": "0c8e6531",
-    "filename": "this_cycle_catalogspeculativeautoresearchhodgefilt.json",
-    "pkg_num": 165,
-    "quality": "partial",
-    "quality_score": 0.68738,
-    "title": "Hodge\u2013Laplacian Message Passing: Exact Mode Dynamics & Polynomial Filters"
-  },
-  {
-    "date": "2026-06-14T16:51:42Z",
-    "domain": "Novelty",
-    "exp_id": "47f4bb3f",
-    "filename": "the_previous_cycles_established_two_layers_of_the_.json",
-    "pkg_num": 164,
-    "quality": "substantial",
-    "quality_score": 0.7286333944954129,
-    "title": "The Hodge\u2013Deligne E-Polynomial: Functional Equations for Duality and Mirror Symmetry"
-  },
-  {
-    "date": "2026-06-14T16:51:26Z",
-    "domain": "Novelty",
-    "exp_id": "24067fd2",
-    "filename": "this_cycle_delivered_catalogbridgesapparitionorder.json",
-    "pkg_num": 163,
-    "quality": "substantial",
-    "quality_score": 0.7492381651376147,
-    "title": "The Apparition-Order Bridge: A Local-to-Global Dictionary for Ranks of Apparition"
-  },
-  {
-    "date": "2026-06-14T16:51:07Z",
-    "domain": "Bridges",
-    "exp_id": "d5286918",
-    "filename": "the_fifth_cycle_established_pointwise_convergence_.json",
-    "pkg_num": 162,
-    "quality": "substantial",
-    "quality_score": 0.7285881081081081,
-    "title": "The Hodge\u2013Deligne E-polynomial: Functional Equations from Mirror Symmetry and Serre Duality"
   },
   {
     "date": "2026-06-14T16:50:48Z",
     "domain": "Applications",
     "exp_id": "d16da345",
     "filename": "close_proofs_the_catalogs_smoothpoincare_files_dev.json",
-    "pkg_num": 161,
+    "pkg_num": 133,
     "quality": "partial",
     "quality_score": 0.6925063157894736,
     "title": "Gleason's Length Theorem: The Gauss-Sum Bridge Between Even Lattices and Binary Codes"
@@ -148,7 +68,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "bc66959c",
     "filename": "applicationsboltzmannbridgeinterleavinggeodesiclea.json",
-    "pkg_num": 160,
+    "pkg_num": 132,
     "quality": "substantial",
     "quality_score": 0.7748660869565218,
     "title": "The Interleaving Metric is Geodesic: Constant-Speed Paths Between Data Shapes"
@@ -158,27 +78,17 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "f164e37c",
     "filename": "this_cycle_pushed_the_discrete_hodge_program_from_.json",
-    "pkg_num": 159,
+    "pkg_num": 131,
     "quality": "substantial",
     "quality_score": 0.7433942857142857,
     "title": "Spectral Positivity and the Resolution of the Identity for the Discrete Hodge Laplacian"
-  },
-  {
-    "date": "2026-06-14T16:16:27Z",
-    "domain": "Bridges",
-    "exp_id": "c73ec1f1",
-    "filename": "close_proofs_this_cycle_closes_the_conceptual_loop.json",
-    "pkg_num": 158,
-    "quality": "substantial",
-    "quality_score": 0.7388800000000001,
-    "title": "The Hodge\u2013Deligne E-polynomial: A Bridge from Geometric Duality to Algebraic Functional Equations"
   },
   {
     "date": "2026-06-14T15:42:10Z",
     "domain": "Novelty",
     "exp_id": "0914fa07",
     "filename": "applicationsboltzmannbridgeinterleavingisometrylea.json",
-    "pkg_num": 157,
+    "pkg_num": 130,
     "quality": "substantial",
     "quality_score": 0.7653149514563107,
     "title": "The Persistence Isometry: Interleaving Distance is the Sup-Distance of Weights"
@@ -188,7 +98,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "12557248",
     "filename": "close_proofs_this_cycle_delivered_fibcarmichaelstr.json",
-    "pkg_num": 156,
+    "pkg_num": 129,
     "quality": "partial",
     "quality_score": 0.6776800000000001,
     "title": "The Apparition\u2013Order Bridge: From Global Entry Points to Local Multiplicative Order"
@@ -198,27 +108,17 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "7cc436bd",
     "filename": "close_proofs_this_cycle_hardened_the_foundation_th.json",
-    "pkg_num": 155,
+    "pkg_num": 128,
     "quality": "partial",
     "quality_score": 0.4886400000000001,
     "title": "The Fibonacci Divisibility Calculus: A Complete Index-to-Value Dictionary"
-  },
-  {
-    "date": "2026-06-14T15:03:30Z",
-    "domain": "Applications",
-    "exp_id": "a7e4a8d3",
-    "filename": "close_proofs_this_cycle_delivered_catalogapplicati.json",
-    "pkg_num": 154,
-    "quality": "substantial",
-    "quality_score": 0.7199621052631578,
-    "title": "The Rank of Apparition: A Self-Contained Primitive-Divisor Criterion"
   },
   {
     "date": "2026-06-14T15:02:58Z",
     "domain": "Geometry",
     "exp_id": "6c2e238b",
     "filename": "deepening_this_cycle_delivered_fibcarmichaelstruct.json",
-    "pkg_num": 153,
+    "pkg_num": 127,
     "quality": "substantial",
     "quality_score": 0.8078933333333334,
     "title": "Hodge Diamonds of Calabi-Yau Fourfolds: Mirror Exchange, Even-Dimensional Euler Invariance, and the KLRY Formula"
@@ -228,27 +128,17 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "9f75da83",
     "filename": "applicationsboltzmannbridgeinterleavingclosurelean.json",
-    "pkg_num": 152,
+    "pkg_num": 126,
     "quality": "partial",
     "quality_score": 0.6715834782608695,
     "title": "Persistence is an Isometry: The Interleaving Distance is the Sup-Distance of Weights"
-  },
-  {
-    "date": "2026-06-14T13:54:11Z",
-    "domain": "Applications",
-    "exp_id": "209bf283",
-    "filename": "the_catalogs_smoothpoincare_files_develop_the_latt.json",
-    "pkg_num": 151,
-    "quality": "partial",
-    "quality_score": 0.6648000000000001,
-    "title": "Topological Error-Correcting Codes from Exotic Smooth Structures: The Mod-2 Shadow of E8"
   },
   {
     "date": "2026-06-14T13:53:53Z",
     "domain": "Applications",
     "exp_id": "de75d365",
     "filename": "this_cycle_did_two_things_first_it_repaired_and_re.json",
-    "pkg_num": 150,
+    "pkg_num": 125,
     "quality": "partial",
     "quality_score": 0.60545,
     "title": "Discrete Hodge Theory for Message Passing: Decomposition, Cohomology, and Spectral Convergence"
@@ -258,7 +148,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "6fec53b5",
     "filename": "this_cycle_delivered_fibcarmichaelstructurelean_a_.json",
-    "pkg_num": 149,
+    "pkg_num": 124,
     "quality": "substantial",
     "quality_score": 0.77481,
     "title": "The Primitive-Divisor Engine: One Computable Criterion for Strong Divisibility Sequences"
@@ -268,27 +158,17 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "0645fcab",
     "filename": "the_file_corelean_distills_the_empirical_ml_flavor.json",
-    "pkg_num": 148,
+    "pkg_num": 123,
     "quality": "partial",
     "quality_score": 0.6242644628099173,
     "title": "Universal Scaling of Minimal PDE-Solver Size at a Spectral Phase Transition"
-  },
-  {
-    "date": "2026-06-14T13:19:09Z",
-    "domain": "Applications",
-    "exp_id": "d3b0eeba",
-    "filename": "deepening_the_order_theoretic_core_of_the_cookreck.json",
-    "pkg_num": 147,
-    "quality": "partial",
-    "quality_score": 0.6192341176470588,
-    "title": "The Order-Theoretic Core of the Cook-Reckhow Program"
   },
   {
     "date": "2026-06-14T12:45:13Z",
     "domain": "Applications",
     "exp_id": "bdf748b3",
     "filename": "close_proofs_topological_error_correcting_codes_fr.json",
-    "pkg_num": 146,
+    "pkg_num": 122,
     "quality": "partial",
     "quality_score": 0.6847152941176471,
     "title": "Close Proofs: Topological Error-Correcting Codes from Exotic Smooth Structures"
@@ -298,7 +178,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "636bb98c",
     "filename": "close_proofs_applicationsboltzmannbridgeinterleavi.json",
-    "pkg_num": 145,
+    "pkg_num": 121,
     "quality": "substantial",
     "quality_score": 0.7054400000000001,
     "title": "The Interleaving Distance Is a Genuine Metric (Boltzmann Bridge VII)"
@@ -308,7 +188,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "5c6d3fa8",
     "filename": "the_previous_cycle_established_the_spectral_depth_.json",
-    "pkg_num": 144,
+    "pkg_num": 120,
     "quality": "substantial",
     "quality_score": 0.7638400000000001,
     "title": "Hodge-Laplacian Message Passing: Convergence to the Harmonic Projection"
@@ -318,27 +198,17 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "8e266d30",
     "filename": "applicationsboltzmannbridgeinterleavingquotientlea.json",
-    "pkg_num": 143,
+    "pkg_num": 119,
     "quality": "substantial",
     "quality_score": 0.7527200000000001,
     "title": "The Interleaving Metric Quotient: A Genuine Metric Space of Persistent Shapes"
-  },
-  {
-    "date": "2026-06-14T10:57:29Z",
-    "domain": "Novelty",
-    "exp_id": "9812538e",
-    "filename": "close_proofs_this_cycle_closed_a_concrete_gap_betw.json",
-    "pkg_num": 142,
-    "quality": "substantial",
-    "quality_score": 0.74728,
-    "title": "Close Proofs: The Rank of Apparition as a Join-Semilattice Morphism"
   },
   {
     "date": "2026-06-14T10:36:02Z",
     "domain": "Geometry",
     "exp_id": "f0bae6d0",
     "filename": "this_cycle_promoted_the_hodgebetti_dimension_count.json",
-    "pkg_num": 141,
+    "pkg_num": 118,
     "quality": "partial",
     "quality_score": 0.5244,
     "title": "Calabi-Yau Fourfold Hodge Diamonds and the Mirror Involution"
@@ -348,47 +218,27 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "b352d088",
     "filename": "deepening_this_cycle_treated_the_rank_of_apparitio.json",
-    "pkg_num": 140,
+    "pkg_num": 117,
     "quality": "partial",
     "quality_score": 0.6842497560975611,
     "title": "The Fibonacci Apparition Adjunction: fibRank \u22a3 fib"
-  },
-  {
-    "date": "2026-06-14T10:01:33Z",
-    "domain": "Novelty",
-    "exp_id": "06bed695",
-    "filename": "close_proofs_the_order_theoretic_core_of_the_cookr.json",
-    "pkg_num": 139,
-    "quality": "substantial",
-    "quality_score": 0.7543200000000001,
-    "title": "Close Proofs: The Order Type of the p-Degrees"
   },
   {
     "date": "2026-06-14T09:26:13Z",
     "domain": "Applications",
     "exp_id": "0bab5b6a",
     "filename": "this_cycle_took_the_fibrewise_characterisation_of_.json",
-    "pkg_num": 138,
+    "pkg_num": 116,
     "quality": "partial",
     "quality_score": 0.6547329411764705,
     "title": "The Equivalence Calculus and Contractibility as a Universal Property"
-  },
-  {
-    "date": "2026-06-14T09:25:52Z",
-    "domain": "Applications",
-    "exp_id": "de15e0b3",
-    "filename": "this_cycle_closed_a_concrete_gap_between_two_halve.json",
-    "pkg_num": 137,
-    "quality": "substantial",
-    "quality_score": 0.7247030769230769,
-    "title": "The Fibonacci Law of Apparition as an Arithmetic-Height / Tropical Duality"
   },
   {
     "date": "2026-06-14T08:52:01Z",
     "domain": "Applications",
     "exp_id": "73abb816",
     "filename": "this_cycle_treated_the_rank_of_apparition_fibrank_.json",
-    "pkg_num": 136,
+    "pkg_num": 115,
     "quality": "substantial",
     "quality_score": 0.7671145762711864,
     "title": "The Fibonacci Rank of Apparition as One Half of a Galois Adjunction"
@@ -398,7 +248,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "87e9d710",
     "filename": "this_cycle_closed_two_of_the_standing_conjectures_.json",
-    "pkg_num": 135,
+    "pkg_num": 114,
     "quality": "substantial",
     "quality_score": 0.7047844776119403,
     "title": "Harmonic Cores and the Logarithmic Depth Clock: A Discrete Hodge Theory of Message Passing"
@@ -408,7 +258,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "7adea9e1",
     "filename": "close_proofs_the_catalogs_bridgescategoricaltropic.json",
-    "pkg_num": 134,
+    "pkg_num": 113,
     "quality": "partial",
     "quality_score": 0.6996,
     "title": "The Fibonacci Law of Apparition as an Arithmetic-Height / Tropical Duality"
@@ -418,7 +268,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "3b32f006",
     "filename": "this_cycle_pushed_the_catalogs_synthetic_homotopy_.json",
-    "pkg_num": 133,
+    "pkg_num": 112,
     "quality": "partial",
     "quality_score": 0.6461466666666668,
     "title": "Path Spaces, h-Levels, and Contractibility as a Universal Property"
@@ -428,7 +278,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "81efc5ef",
     "filename": "applicationsboltzmannbridgeinterleavingmetriclean_.json",
-    "pkg_num": 132,
+    "pkg_num": 111,
     "quality": "partial",
     "quality_score": 0.59781,
     "title": "The Extended Interleaving Metric: A Faithful Metric Geometry of Persistence Stability"
@@ -438,7 +288,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "e955f9f8",
     "filename": "the_order_theoretic_core_of_the_cookreckhow_progra.json",
-    "pkg_num": 131,
+    "pkg_num": 110,
     "quality": "substantial",
     "quality_score": 0.721521095890411,
     "title": "The Order Type of the p-Degrees: Height, Width, Bottom, and Density in the Cook-Reckhow Simulation Order"
@@ -448,7 +298,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "5af43ad7",
     "filename": "this_cycle_pushed_the_spectral_depth_threshold_pro.json",
-    "pkg_num": 130,
+    "pkg_num": 109,
     "quality": "substantial",
     "quality_score": 0.7068800000000001,
     "title": "The Full Hodge Decomposition and a Logarithmic Depth Law for Simplicial Message Passing"
@@ -458,7 +308,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "996a8ea4",
     "filename": "close_proofs_tropical_valuation_to_ultrametric_fil.json",
-    "pkg_num": 129,
+    "pkg_num": 108,
     "quality": "partial",
     "quality_score": 0.5113714285714286,
     "title": "Close Proofs: A Quantitative Functorial Bridge from Tropical Valuations to Ultrametric Seminorms"
@@ -468,7 +318,7 @@ window.PACKAGE_INDEX = [
     "domain": "Logic",
     "exp_id": "4302919c",
     "filename": "this_cycle_was_about_closing_proofs_in_the_fibonac.json",
-    "pkg_num": 128,
+    "pkg_num": 107,
     "quality": "substantial",
     "quality_score": 0.726744433497537,
     "title": "Path Spaces, h-Levels, and the Fibrewise Characterisation of Equivalences"
@@ -478,47 +328,17 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "d3523e31",
     "filename": "nonarchimedean_triangle_inequality_for_arithmetic_.json",
-    "pkg_num": 127,
+    "pkg_num": 106,
     "quality": "partial",
     "quality_score": 0.68948,
     "title": "Arithmetic-Height-Induced Ultrametrics: A Nonarchimedean Bridge"
-  },
-  {
-    "date": "2026-06-14T05:35:09Z",
-    "domain": "Novelty",
-    "exp_id": "a4cf656f",
-    "filename": "the_file_catalogmachinelearninghodgespectralthresh.json",
-    "pkg_num": 126,
-    "quality": "substantial",
-    "quality_score": 0.7568800000000001,
-    "title": "Spectral Depth Thresholds for Hodge-Laplacian Message Passing"
-  },
-  {
-    "date": "2026-06-14T04:27:05Z",
-    "domain": "Applications",
-    "exp_id": "a6c77942",
-    "filename": "close_proofs_the_file_hodgespectralthresholdlean_e.json",
-    "pkg_num": 125,
-    "quality": "partial",
-    "quality_score": 0.6768233009708737,
-    "title": "Spectral Depth Thresholds for Hodge-Laplacian Message Passing"
-  },
-  {
-    "date": "2026-06-14T04:26:39Z",
-    "domain": "Novelty",
-    "exp_id": "3413b24f",
-    "filename": "the_file_catalogspeculativeautoresearchproteinfold.json",
-    "pkg_num": 124,
-    "quality": "partial",
-    "quality_score": 0.6652590990990991,
-    "title": "The Minimum-Spanning-Tree Law for H0 Persistence"
   },
   {
     "date": "2026-06-14T03:52:58Z",
     "domain": "Bridges",
     "exp_id": "755f7766",
     "filename": "ultrametric_lipschitz_bounds_induced_by_tropical_v.json",
-    "pkg_num": 123,
+    "pkg_num": 105,
     "quality": "partial",
     "quality_score": 0.6879818181818182,
     "title": "Ultrametric Lipschitz Bounds from Tropical Valuations on Arithmetic Height Spaces"
@@ -528,7 +348,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "72c0fc14",
     "filename": "the_file_intersectionformslean_formalizes_the_alge.json",
-    "pkg_num": 122,
+    "pkg_num": 104,
     "quality": "substantial",
     "quality_score": 0.73968,
     "title": "Intersection Forms and the Smooth 4D Poincare Frontier: The E8 Obstruction and Its Stability"
@@ -538,7 +358,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "d93eaf52",
     "filename": "applicationsboltzmannbridgebottleneckstabilitylean.json",
-    "pkg_num": 121,
+    "pkg_num": 103,
     "quality": "substantial",
     "quality_score": 0.7654400000000001,
     "title": "The Interleaving Distance & Bottleneck Stability of Persistence"
@@ -548,7 +368,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "24946444",
     "filename": "the_file_hodgespectralthresholdlean_extracts_a_rig.json",
-    "pkg_num": 120,
+    "pkg_num": 102,
     "quality": "partial",
     "quality_score": 0.6830417021276596,
     "title": "Spectral Depth Thresholds for Hodge-Laplacian Message Passing"
@@ -558,7 +378,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "c8425ff8",
     "filename": "this_cycle_replaced_fixed_rademacher_sign_vectors_.json",
-    "pkg_num": 119,
+    "pkg_num": 101,
     "quality": "partial",
     "quality_score": 0.66788,
     "title": "The Coin-Flip Cube: Expected Rademacher Complexity over the Boolean Hypercube"
@@ -568,7 +388,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "d16ea1a1",
     "filename": "the_previous_cycle_established_the_hodgedeligne_e_.json",
-    "pkg_num": 118,
+    "pkg_num": 100,
     "quality": "partial",
     "quality_score": 0.5432,
     "title": "The Hodge\u2013Deligne E-polynomial as a Motivic Measure"
@@ -578,27 +398,17 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "2b4745d6",
     "filename": "close_proofs_the_file_catalogspeculativeautoresear.json",
-    "pkg_num": 117,
+    "pkg_num": 99,
     "quality": "partial",
     "quality_score": 0.63384,
     "title": "The Minimum-Spanning-Tree Law for H0 Persistence"
-  },
-  {
-    "date": "2026-06-14T01:37:25Z",
-    "domain": "Novelty",
-    "exp_id": "633a535d",
-    "filename": "this_cycle_added_geometryquasisymmetriciteratelean.json",
-    "pkg_num": 116,
-    "quality": "partial",
-    "quality_score": 0.6266499999999999,
-    "title": "Iteration & Semigroup Theory for Set-Local Distortion of Hausdorff Dimension"
   },
   {
     "date": "2026-06-14T01:37:10Z",
     "domain": "Applications",
     "exp_id": "57d24d4d",
     "filename": "pointwise_novelty_certification_framework_of.json",
-    "pkg_num": 115,
+    "pkg_num": 98,
     "quality": "partial",
     "quality_score": 0.64464,
     "title": "Certified Novelty in Metric Spaces: Regions, Filtrations, Approximate Transport, and Hausdorff Duality"
@@ -608,27 +418,17 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "7b63a6df",
     "filename": "deepening_the_file_applicationscombinatorialspecie.json",
-    "pkg_num": 114,
+    "pkg_num": 97,
     "quality": "substantial",
     "quality_score": 0.7581655172413794,
     "title": "The Exponential-Convolution Ring: EGFs as an Isomorphism of Commutative Rings"
-  },
-  {
-    "date": "2026-06-13T23:55:07Z",
-    "domain": "Novelty",
-    "exp_id": "908ecdae",
-    "filename": "the_file_catalogapplicationscombinatorialspeciesle.json",
-    "pkg_num": 113,
-    "quality": "partial",
-    "quality_score": 0.5454000000000001,
-    "title": "The Taylor Calculus of Combinatorial Species"
   },
   {
     "date": "2026-06-13T23:54:47Z",
     "domain": "Applications",
     "exp_id": "126a3d45",
     "filename": "deepening_this_cycle_isolated_the_entry_point_rank.json",
-    "pkg_num": 112,
+    "pkg_num": 96,
     "quality": "substantial",
     "quality_score": 0.7108000000000001,
     "title": "The Pisano Period as the Order of the Fibonacci Shift"
@@ -638,7 +438,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "6f1514f1",
     "filename": "close_proofs_order_theoretic_core_of_the_cookreckh.json",
-    "pkg_num": 111,
+    "pkg_num": 95,
     "quality": "substantial",
     "quality_score": 0.70124,
     "title": "Close Proofs: The Order-Theoretic Geometry of the Poset of p-Degrees"
@@ -648,57 +448,27 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "fab579e5",
     "filename": "speculativeautoresearchfibonaccientrypointdualityl.json",
-    "pkg_num": 110,
+    "pkg_num": 94,
     "quality": "partial",
     "quality_score": 0.6724,
     "title": "Entry-Point Duality for the Fibonacci Sequence"
-  },
-  {
-    "date": "2026-06-13T22:47:57Z",
-    "domain": "Novelty",
-    "exp_id": "4e80baa8",
-    "filename": "for_a_calabi_yau_threefold_x_defined_over__the_l_f.json",
-    "pkg_num": 109,
-    "quality": "partial",
-    "quality_score": 0.4503353609022557,
-    "title": "The Diamond in the Mirror: A Ring-Valued Skeleton of Arithmetic Mirror Symmetry"
   },
   {
     "date": "2026-06-13T22:11:45Z",
     "domain": "Applications",
     "exp_id": "80ea5c05",
     "filename": "this_cycle_isolated_the_entry_point_rank_of_appari.json",
-    "pkg_num": 108,
+    "pkg_num": 93,
     "quality": "substantial",
     "quality_score": 0.778,
     "title": "Entry Points of Strong Divisibility Sequences: Unifying Fibonacci and Mersenne Primitive Divisors"
-  },
-  {
-    "date": "2026-06-13T22:11:23Z",
-    "domain": "Applications",
-    "exp_id": "5253a57e",
-    "filename": "the_file_applicationscombinatorialspecieslean_orig.json",
-    "pkg_num": 107,
-    "quality": "substantial",
-    "quality_score": 0.77432,
-    "title": "The Taylor / Maclaurin Calculus of Combinatorial Species"
-  },
-  {
-    "date": "2026-06-13T21:37:51Z",
-    "domain": "Bridges",
-    "exp_id": "e48e0385",
-    "filename": "close_proofs_this_cycle_fused_two_strands_of_the_c.json",
-    "pkg_num": 106,
-    "quality": "partial",
-    "quality_score": 0.62,
-    "title": "The Hodge-Deligne E-polynomial: A Bridge from Geometry to Arithmetic"
   },
   {
     "date": "2026-06-13T21:04:53Z",
     "domain": "Applications",
     "exp_id": "5b1caa2a",
     "filename": "this_cycle_formalized_the_fibonacci_rank_of_appari.json",
-    "pkg_num": 105,
+    "pkg_num": 92,
     "quality": "substantial",
     "quality_score": 0.7400800000000001,
     "title": "The Fibonacci Rank of Apparition as a Local-to-Global Sheaf"
@@ -708,7 +478,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "6d1f9fa2",
     "filename": "close_proofs_this_cycle_formalized_the_order_theor.json",
-    "pkg_num": 104,
+    "pkg_num": 91,
     "quality": "substantial",
     "quality_score": 0.70224,
     "title": "Close Proofs: The Rank-of-Apparition Engine for Strong Divisibility Sequences"
@@ -718,7 +488,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "22207698",
     "filename": "this_cycle_fused_two_strands_of_the_catalog_that_h.json",
-    "pkg_num": 103,
+    "pkg_num": 90,
     "quality": "substantial",
     "quality_score": 0.7125600000000001,
     "title": "Conserved Quantities along Reduction Paths: Unifying Cryptographic Hybrids and Fibonacci Divisibility"
@@ -728,7 +498,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "52e9f99d",
     "filename": "close_proofs_the_file_bridgescombinatorialspeciesl.json",
-    "pkg_num": 102,
+    "pkg_num": 89,
     "quality": "partial",
     "quality_score": 0.61388,
     "title": "Homotopy Cardinality of Species: The EGF Coefficient as a Groupoid Cardinality"
@@ -738,7 +508,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "c0931058",
     "filename": "deepening_the_file_bridgescombinatorialspecieslean.json",
-    "pkg_num": 101,
+    "pkg_num": 88,
     "quality": "partial",
     "quality_score": 0.6834399999999999,
     "title": "The Differential Calculus of Combinatorial Species"
@@ -748,7 +518,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "c2e8d76d",
     "filename": "this_cycle_isolated_the_rank_of_apparition_rp__min.json",
-    "pkg_num": 100,
+    "pkg_num": 87,
     "quality": "substantial",
     "quality_score": 0.76214,
     "title": "The Rank of Apparition for Strong Divisibility Sequences: A Bridge to the Multiplicative Order"
@@ -758,7 +528,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "7521d122",
     "filename": "the_new_file_catalogbridgeshodgeepolynomiallean_in.json",
-    "pkg_num": 99,
+    "pkg_num": 86,
     "quality": "substantial",
     "quality_score": 0.7797956398104267,
     "title": "The Hodge-Deligne E-polynomial: A Bridge from Mirror Symmetry to Arithmetic"
@@ -768,27 +538,17 @@ window.PACKAGE_INDEX = [
     "domain": "Algebra",
     "exp_id": "574dbade",
     "filename": "the_hodge_filtration_fp_on_the_complexification_of.json",
-    "pkg_num": 98,
+    "pkg_num": 85,
     "quality": "partial",
     "quality_score": 0.48496,
     "title": "The Hodge Filtration as a Complete Invariant of a Weight-Two Hodge Structure"
-  },
-  {
-    "date": "2026-06-13T17:15:41Z",
-    "domain": "Algebra",
-    "exp_id": "dd767b4e",
-    "filename": "this_cycle_consolidated_the_rank_of_apparition_the.json",
-    "pkg_num": 97,
-    "quality": "partial",
-    "quality_score": 0.6964,
-    "title": "The Rank of Apparition: The Spine of Fibonacci Primitive-Divisor Theory"
   },
   {
     "date": "2026-06-13T17:15:23Z",
     "domain": "Geometry",
     "exp_id": "26841929",
     "filename": "the_file_mirrorsymmetryarithmeticmirrorlean_formal.json",
-    "pkg_num": 96,
+    "pkg_num": 84,
     "quality": "partial",
     "quality_score": 0.6568,
     "title": "The Mirror in the Diamond: A Ring-Valued Skeleton of Arithmetic Mirror Symmetry"
@@ -798,47 +558,27 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "381ade33",
     "filename": "close_proofs_this_cycle_deepened_the_entry_point_r.json",
-    "pkg_num": 95,
+    "pkg_num": 83,
     "quality": "partial",
     "quality_score": 0.6648000000000001,
     "title": "The Lucas Bridge for the Fibonacci Rank of Apparition"
-  },
-  {
-    "date": "2026-06-13T17:14:45Z",
-    "domain": "Computation",
-    "exp_id": "e8431c0a",
-    "filename": "close_proofs_this_cycle_closed_the_single_open_sor.json",
-    "pkg_num": 94,
-    "quality": "substantial",
-    "quality_score": 0.7680000000000001,
-    "title": "Strong Divisibility Sequences: One Axiom Unifying Fibonacci and Mersenne Primitive-Divisor Theory"
   },
   {
     "date": "2026-06-13T16:42:17Z",
     "domain": "Shared",
     "exp_id": "6854a3a7",
     "filename": "renormalization_fixed_points_in_transformer_in_con.json",
-    "pkg_num": 93,
+    "pkg_num": 82,
     "quality": "partial",
     "quality_score": 0.648,
     "title": "Renormalization Fixed Points in Transformer In-Context Learning via p-adic Attention"
-  },
-  {
-    "date": "2026-06-13T16:08:31Z",
-    "domain": "Shared",
-    "exp_id": "94ed24b3",
-    "filename": "close_proofs_12_fully_proved_theorems_zero_sorry_f.json",
-    "pkg_num": 92,
-    "quality": "substantial",
-    "quality_score": 0.74704,
-    "title": "Certified Expanders for Classical Groups"
   },
   {
     "date": "2026-06-13T15:34:30Z",
     "domain": "Bridges",
     "exp_id": "38457964",
     "filename": "the_file_bridgescombinatorialspecieslean_formalize.json",
-    "pkg_num": 91,
+    "pkg_num": 81,
     "quality": "substantial",
     "quality_score": 0.8055683582089552,
     "title": "The Exponential-Convolution Ring of Counting Sequences"
@@ -848,7 +588,7 @@ window.PACKAGE_INDEX = [
     "domain": "Cryptography",
     "exp_id": "d4325e20",
     "filename": "this_cycle_isolated_the_two_engines_that_drive_eve.json",
-    "pkg_num": 90,
+    "pkg_num": 80,
     "quality": "partial",
     "quality_score": 0.6424483582089553,
     "title": "Conservation Laws of Cryptographic Reductions: Advantage as a Pseudo-Metric and Rank as a Black-Box Invariant"
@@ -858,7 +598,7 @@ window.PACKAGE_INDEX = [
     "domain": "Pythagorean",
     "exp_id": "9b788018",
     "filename": "close_proofs_impossible_geometries_where_parallel_.json",
-    "pkg_num": 89,
+    "pkg_num": 79,
     "quality": "substantial",
     "quality_score": 0.7838083582089553,
     "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
@@ -868,7 +608,7 @@ window.PACKAGE_INDEX = [
     "domain": "MachineLearning",
     "exp_id": "315ae032",
     "filename": "from_scratch_clique_complex_theory_in.json",
-    "pkg_num": 88,
+    "pkg_num": 78,
     "quality": "partial",
     "quality_score": 0.6962400000000001,
     "title": "From-Scratch Clique-Complex Theory: The One-Skeleton Galois Connection and Vietoris-Rips Filtrations"
@@ -878,7 +618,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "d4312d23",
     "filename": "deepening_this_cycle_built_from_scratch_and_sorry_.json",
-    "pkg_num": 87,
+    "pkg_num": 77,
     "quality": "substantial",
     "quality_score": 0.7923639215686276,
     "title": "The Corner Cell is a Ruler: Exact Geodesics in the Markov Graph of the No-Three-Way Model"
@@ -888,27 +628,17 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "81fcaebc",
     "filename": "the_foundational_file_catalogcomputationselfmodify.json",
-    "pkg_num": 86,
+    "pkg_num": 76,
     "quality": "partial",
     "quality_score": 0.68776,
     "title": "Discrete Dynamics of Self-Modifying Computation"
-  },
-  {
-    "date": "2026-06-13T13:19:50Z",
-    "domain": "Novelty",
-    "exp_id": "08a1059c",
-    "filename": "this_cycle_adds_cataloglogictemporalprooforderlean.json",
-    "pkg_num": 85,
-    "quality": "partial",
-    "quality_score": 0.4716,
-    "title": "Belnap's FOUR: Paraconsistency and the Product Bilattice 2 \u2299 2"
   },
   {
     "date": "2026-06-13T12:18:29Z",
     "domain": "Bridges",
     "exp_id": "acb48683",
     "filename": "this_cycle_isolated_the_rank_of_apparition_the_fib.json",
-    "pkg_num": 84,
+    "pkg_num": 75,
     "quality": "substantial",
     "quality_score": 0.7180000000000001,
     "title": "The Rank of Apparition: The Spine of Fibonacci Primitive-Divisor Theory"
@@ -918,7 +648,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "972329f6",
     "filename": "close_proofs_this_cycle_built_from_scratch_and_sor.json",
-    "pkg_num": 83,
+    "pkg_num": 74,
     "quality": "partial",
     "quality_score": 0.4512497048978154,
     "title": "The Shape of Sameness: Truncation Levels, Winding Numbers, and Bridges from Univalent to Classical Foundations"
@@ -928,7 +658,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "0e79b530",
     "filename": "this_cycle_laid_the_load_bearing_foundation_of_bak.json",
-    "pkg_num": 82,
+    "pkg_num": 73,
     "quality": "partial",
     "quality_score": 0.6396416883116883,
     "title": "The Coset Foundation of Baker\u2013Norine Divisor Theory on Finite Graphs"
@@ -938,7 +668,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "7fe13ffe",
     "filename": "the_file_higherpersistencelean_lifts_the_catalogs_.json",
-    "pkg_num": 81,
+    "pkg_num": 72,
     "quality": "partial",
     "quality_score": 0.6702816883116883,
     "title": "The Boltzmann Bridge: A Verified Filtration Calculus for Persistent Topology"
@@ -948,7 +678,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "23baf044",
     "filename": "close_proofs_proof_complexity_holography_geometric.json",
-    "pkg_num": 80,
+    "pkg_num": 71,
     "quality": "substantial",
     "quality_score": 0.8291200000000001,
     "title": "Proof-Complexity Holography: Geometric Duals of Formal Derivations"
@@ -958,7 +688,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "ae289ab7",
     "filename": "deepening_this_cycle_was_a_cold_start_on_the_cliqu.json",
-    "pkg_num": 79,
+    "pkg_num": 70,
     "quality": "partial",
     "quality_score": 0.6899,
     "title": "Korselt's Criterion and Carmichael Numbers: The Anatomy of Perfect Pseudoprimes"
@@ -968,7 +698,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "f24ee9dc",
     "filename": "close_proofs_kripke_semantic_core_of_gdellb_provab.json",
-    "pkg_num": 78,
+    "pkg_num": 69,
     "quality": "partial",
     "quality_score": 0.6228,
     "title": "Close Proofs: Ordinal Rank as a Functor on G\u00f6del\u2013L\u00f6b Frames"
@@ -978,7 +708,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "34c076cc",
     "filename": "this_cycle_isolated_the_cardinal_mechanism_behind_.json",
-    "pkg_num": 77,
+    "pkg_num": 68,
     "quality": "partial",
     "quality_score": 0.67256,
     "title": "The Oracle Counting Barrier: A Cardinal Mechanism for Finite Non-Computability"
@@ -988,7 +718,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "fb03edbd",
     "filename": "we_have_formalized_belnaps_four_as_a_bounded_distr.json",
-    "pkg_num": 76,
+    "pkg_num": 67,
     "quality": "partial",
     "quality_score": 0.6572,
     "title": "Belnap's FOUR: Gluts, Gaps, and the Algebra of Paraconsistency"
@@ -998,27 +728,17 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "d5fd302f",
     "filename": "close_proofs_algebraic_and_order_theoretic_backbon.json",
-    "pkg_num": 75,
+    "pkg_num": 66,
     "quality": "partial",
     "quality_score": 0.5492,
     "title": "Close Proofs: Algebraic and Order-Theoretic Backbone of Stereographic Capacity Theory"
-  },
-  {
-    "date": "2026-06-13T07:48:08Z",
-    "domain": "Applications",
-    "exp_id": "e517b646",
-    "filename": "close_proofs_close_proofs_this_cycle_built_from_sc.json",
-    "pkg_num": 74,
-    "quality": "substantial",
-    "quality_score": 0.7670104918032787,
-    "title": "Certified Expanders for Classical Groups"
   },
   {
     "date": "2026-06-13T07:47:47Z",
     "domain": "Novelty",
     "exp_id": "b1999396",
     "filename": "close_proofs_the_file_cataloggeometryisingstereorg.json",
-    "pkg_num": 73,
+    "pkg_num": 65,
     "quality": "partial",
     "quality_score": 0.5336230136986302,
     "title": "Certified Expanders for Classical Groups: A Certificate Architecture for Cayley-Graph Expansion"
@@ -1028,7 +748,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "21edf563",
     "filename": "this_cycle_was_a_cold_start_on_the_clique_complex_.json",
-    "pkg_num": 72,
+    "pkg_num": 64,
     "quality": "substantial",
     "quality_score": 0.8016000000000001,
     "title": "Clique Complexes, Flag Complexes, and the Vietoris-Rips Filtration"
@@ -1038,7 +758,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "f70562f4",
     "filename": "close_proofs_thermodynamic_proof_erasure_landauers.json",
-    "pkg_num": 71,
+    "pkg_num": 63,
     "quality": "partial",
     "quality_score": 0.6708000000000001,
     "title": "Close Proofs: Thermodynamic Proof Erasure - Landauer's Principle for Mathematics"
@@ -1048,7 +768,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "5d886208",
     "filename": "deepening_order_theoretic_core_of_gdellb_provabili.json",
-    "pkg_num": 70,
+    "pkg_num": 62,
     "quality": "substantial",
     "quality_score": 0.7199899999999999,
     "title": "Constructive de Jongh-Sambin Fixed Points: The Order-Theoretic Core of Goedel-Loeb Provability Logic"
@@ -1058,7 +778,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "d7d530ea",
     "filename": "the_file_tropicalmodulidimensionlean_establishes_t.json",
-    "pkg_num": 69,
+    "pkg_num": 61,
     "quality": "partial",
     "quality_score": 0.68944,
     "title": "The Cone-Complex Dimension Theory of the Tropical Moduli Space M_g^trop"
@@ -1068,27 +788,17 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "447d1e0c",
     "filename": "close_proofs_formal_foundations_for_the_logic_phys.json",
-    "pkg_num": 68,
+    "pkg_num": 60,
     "quality": "partial",
     "quality_score": 0.6629942857142858,
     "title": "Consistency Is Existence: The Logic-Physics Bridge"
-  },
-  {
-    "date": "2026-06-13T04:00:48Z",
-    "domain": "Algebra",
-    "exp_id": "a6231eff",
-    "filename": "deepening_this_cycle_laid_the_missing_foundation_f.json",
-    "pkg_num": 67,
-    "quality": "substantial",
-    "quality_score": 0.75616,
-    "title": "Generation Certificates for Matrix Groups: Irreducible Characteristic Polynomials as Structural Witnesses"
   },
   {
     "date": "2026-06-13T04:00:25Z",
     "domain": "Applications",
     "exp_id": "35b751f0",
     "filename": "close_proofs_inverse_stereographic_renormalization.json",
-    "pkg_num": 66,
+    "pkg_num": 59,
     "quality": "partial",
     "quality_score": 0.5729568975069252,
     "title": "Close Proofs: Inverse Stereographic Renormalization Group"
@@ -1098,27 +808,17 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "d497e126",
     "filename": "kripke_semantic_core_of_gdellb_provability_logic.json",
-    "pkg_num": 65,
+    "pkg_num": 58,
     "quality": "substantial",
     "quality_score": 0.7239168975069252,
     "title": "Kripke-Semantic Core of G\u00f6del\u2013L\u00f6b Provability Logic: Ordinal Ranks, Polymodal Reductions, and Categorical Products"
-  },
-  {
-    "date": "2026-06-13T03:59:42Z",
-    "domain": "Novelty",
-    "exp_id": "00d3bac3",
-    "filename": "order_theoretic_core_of_gdellb_provability_logic_g.json",
-    "pkg_num": 64,
-    "quality": "substantial",
-    "quality_score": 0.7660915736040609,
-    "title": "The Order-Theoretic Core of G\u00f6del-L\u00f6b Provability Logic"
   },
   {
     "date": "2026-06-13T03:27:08Z",
     "domain": "Applications",
     "exp_id": "cb00416d",
     "filename": "thermodynamic_proof_erasure_landauers_principle_fo.json",
-    "pkg_num": 63,
+    "pkg_num": 57,
     "quality": "partial",
     "quality_score": 0.410850132231405,
     "title": "Thermodynamic Proof Erasure: Landauer's Principle for Mathematics"
@@ -1128,7 +828,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "24e21d72",
     "filename": "close_proofs_neural_network_training_as_renormaliz.json",
-    "pkg_num": 62,
+    "pkg_num": 56,
     "quality": "partial",
     "quality_score": 0.64768,
     "title": "Close Proofs: Neural Network Training as Renormalization-Group Flow"
@@ -1138,7 +838,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "3da4b14d",
     "filename": "order_theoretic_core_of_the_cookreckhow_program_as.json",
-    "pkg_num": 61,
+    "pkg_num": 55,
     "quality": "partial",
     "quality_score": 0.67055,
     "title": "The Order-Theoretic Core of the Cook-Reckhow Program: A Fibonacci Separation Bridge"
@@ -1148,7 +848,7 @@ window.PACKAGE_INDEX = [
     "domain": "Logic",
     "exp_id": "f16f9f91",
     "filename": "close_proofs_this_cycle_moved_the_catalogs_dream_l.json",
-    "pkg_num": 60,
+    "pkg_num": 54,
     "quality": "partial",
     "quality_score": 0.6836800000000001,
     "title": "Dream Logic III: A First-Principles Structural Core of Paraconsistent Consequence"
@@ -1158,7 +858,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "0256b9e7",
     "filename": "poincar_conjecture_revisited_4d_smooth.json",
-    "pkg_num": 59,
+    "pkg_num": 53,
     "quality": "partial",
     "quality_score": 0.53344,
     "title": "Poincar\u00e9 Conjecture Revisited: 4D Smooth \u2014 The Intersection-Form Engine"
@@ -1168,7 +868,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "cef8f402",
     "filename": "close_proofs_this_cycle_laid_the_missing_foundatio.json",
-    "pkg_num": 58,
+    "pkg_num": 52,
     "quality": "substantial",
     "quality_score": 0.7716000000000001,
     "title": "Close Proofs: The Rank of Apparition as a Divisibility-Lattice Morphism"
@@ -1178,57 +878,27 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "12f4360f",
     "filename": "inverse_stereographic_persistence_topological_data.json",
-    "pkg_num": 57,
+    "pkg_num": 51,
     "quality": "partial",
     "quality_score": 0.6672800000000001,
     "title": "Inverse Stereographic Persistence: Topological Data Analysis on Spheres"
-  },
-  {
-    "date": "2026-06-13T00:32:11Z",
-    "domain": "Algebra",
-    "exp_id": "759d6b7d",
-    "filename": "close_proofs_stereographic_capacity_theory_packing.json",
-    "pkg_num": 56,
-    "quality": "partial",
-    "quality_score": 0.5360561937716263,
-    "title": "Generation Certificates for Matrix Groups"
-  },
-  {
-    "date": "2026-06-12T23:58:50Z",
-    "domain": "Algebra",
-    "exp_id": "9883562d",
-    "filename": "close_proofs_this_cycle_formalized_the_abstract_si.json",
-    "pkg_num": 55,
-    "quality": "partial",
-    "quality_score": 0.5563100449775112,
-    "title": "Generation Certificates for Matrix Groups: Irreducible Characteristic Polynomials as Structural Witnesses"
   },
   {
     "date": "2026-06-12T23:58:31Z",
     "domain": "Logic",
     "exp_id": "1ebdc56b",
     "filename": "deepening_the_file_logiclobfixedpointlean_isolates.json",
-    "pkg_num": 54,
+    "pkg_num": 50,
     "quality": "partial",
     "quality_score": 0.5479162011173184,
     "title": "Provability Logic as a Fixed-Point Theory: The Order-Theoretic Core of G\u00f6del\u2013L\u00f6b"
-  },
-  {
-    "date": "2026-06-12T23:58:09Z",
-    "domain": "Novelty",
-    "exp_id": "bdd5cb68",
-    "filename": "this_cycle_laid_the_missing_foundation_for_the_pro.json",
-    "pkg_num": 53,
-    "quality": "substantial",
-    "quality_score": 0.7651974690508941,
-    "title": "Proof Phase Transitions: Monotonicity, Barriers, and the Hypergraph Generalization"
   },
   {
     "date": "2026-06-12T23:57:46Z",
     "domain": "Novelty",
     "exp_id": "c432039d",
     "filename": "deepening_close_proofs_the_current_framework_consi.json",
-    "pkg_num": 52,
+    "pkg_num": 49,
     "quality": "substantial",
     "quality_score": 0.7545574690508942,
     "title": "The Thermodynamic Proof System: Landauer & Bennett Principles as Theorems of Finite Information Theory"
@@ -1238,7 +908,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "2c008695",
     "filename": "close_proofs_the_file_cataloglogicproofphasetransi.json",
-    "pkg_num": 51,
+    "pkg_num": 48,
     "quality": "substantial",
     "quality_score": 0.7200673684210526,
     "title": "Completeness of the Barrier Method and the Derivability Closure Operator"
@@ -1248,7 +918,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "4acdb3b1",
     "filename": "this_cycle_opened_a_constructive_bridge_between_th.json",
-    "pkg_num": 50,
+    "pkg_num": 47,
     "quality": "substantial",
     "quality_score": 0.7075200000000001,
     "title": "The Staircase With No Bottom Step: A Constructive Bridge Between Well-Ordering, Termination, and the Fast-Growing Hierarchy"
@@ -1258,7 +928,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "0ce7a9d1",
     "filename": "predicative_ordinal_analysis_fragment.json",
-    "pkg_num": 49,
+    "pkg_num": 46,
     "quality": "substantial",
     "quality_score": 0.7887200000000001,
     "title": "The Ordinal Collapsing Bridge: Arithmetic of Strongly Critical Ordinals"
@@ -1268,27 +938,17 @@ window.PACKAGE_INDEX = [
     "domain": "Geometry",
     "exp_id": "4d121eae",
     "filename": "quasi_symmetric_maps_generalize_bi_lipschitz_maps_.json",
-    "pkg_num": 48,
+    "pkg_num": 45,
     "quality": "partial",
     "quality_score": 0.47216,
     "title": "Quasi-Symmetric Gauges, the Bi-Lipschitz Monoid, and Hausdorff-Dimension Invariance"
-  },
-  {
-    "date": "2026-06-12T22:11:12Z",
-    "domain": "Algebra",
-    "exp_id": "6af3ea9a",
-    "filename": "the_abstract_simulation_preorder_formalized_in_pro.json",
-    "pkg_num": 47,
-    "quality": "partial",
-    "quality_score": 0.47530989871260887,
-    "title": "Generation Certificates for Matrix Groups: Irreducible Characteristic Polynomials as Witnesses of Irreducible Action"
   },
   {
     "date": "2026-06-12T22:10:53Z",
     "domain": "Novelty",
     "exp_id": "ff5654a7",
     "filename": "self_contained_sorry_free_lean_4_formalization_of_.json",
-    "pkg_num": 46,
+    "pkg_num": 44,
     "quality": "partial",
     "quality_score": 0.5484,
     "title": "The Finite Algebra of Softmax Policy Gradients: Score Identities, Fisher Geometry, and Optimal Baselines"
@@ -1298,7 +958,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "1407a635",
     "filename": "close_proofs_belnaps_four_is_the_smallest_non_triv.json",
-    "pkg_num": 45,
+    "pkg_num": 43,
     "quality": "partial",
     "quality_score": 0.43117439116517287,
     "title": "Hidden Coordinate Systems: Log-Affine Normal Forms and the Modular Structure of Pythagorean Triples"
@@ -1308,7 +968,7 @@ window.PACKAGE_INDEX = [
     "domain": "Cryptography",
     "exp_id": "026d95cd",
     "filename": "close_proofs_formally_verified_framework_computati.json",
-    "pkg_num": 44,
+    "pkg_num": 42,
     "quality": "partial",
     "quality_score": 0.6783541984732825,
     "title": "The Fibonacci Rank-of-Apparition Map as a Lattice Adjoint"
@@ -1318,7 +978,7 @@ window.PACKAGE_INDEX = [
     "domain": "Logic",
     "exp_id": "112283ee",
     "filename": "the_file_computationeastinknilllean_isolates_the_a.json",
-    "pkg_num": 43,
+    "pkg_num": 41,
     "quality": "partial",
     "quality_score": 0.528,
     "title": "The Algebraic Kernel of the Eastin\u2013Knill No-Go Theorem"
@@ -1328,7 +988,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "039d1273",
     "filename": "rigorous_lean_4_formalization_of_provability_logic.json",
-    "pkg_num": 42,
+    "pkg_num": 40,
     "quality": "partial",
     "quality_score": 0.518,
     "title": "Polymodal Provability, Ordinal Ranks, and the Category of Goedel-Loeb Frames"
@@ -1338,7 +998,7 @@ window.PACKAGE_INDEX = [
     "domain": "Logic",
     "exp_id": "297d1b03",
     "filename": "this_cycle_moved_the_catalogs_dream_logic_line_of_.json",
-    "pkg_num": 41,
+    "pkg_num": 39,
     "quality": "partial",
     "quality_score": 0.65664,
     "title": "Dream Logic II: The Structural Meta-Theory of Paraconsistent Consequence"
@@ -1348,7 +1008,7 @@ window.PACKAGE_INDEX = [
     "domain": "Geometry",
     "exp_id": "89c02d7b",
     "filename": "the_file_willmoreenergylean_establishes_the_elemen.json",
-    "pkg_num": 40,
+    "pkg_num": 38,
     "quality": "partial",
     "quality_score": 0.6796971428571429,
     "title": "The Elementary Willmore Energy: Curvature Lower Bounds by Genus"
@@ -1358,7 +1018,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "f7a0c2c6",
     "filename": "the_file_logiclobfixedpointlean_isolates_the_purel.json",
-    "pkg_num": 39,
+    "pkg_num": 37,
     "quality": "substantial",
     "quality_score": 0.7927200000000001,
     "title": "The Order-Theoretic Core of G\u00f6del\u2013L\u00f6b Provability Logic"
@@ -1368,7 +1028,7 @@ window.PACKAGE_INDEX = [
     "domain": "Physics",
     "exp_id": "ec1b3df1",
     "filename": "reversible_computing_and_thermodynamic_efficiency.json",
-    "pkg_num": 38,
+    "pkg_num": 36,
     "quality": "substantial",
     "quality_score": 0.8572,
     "title": "Reversible Computing and Thermodynamic Efficiency"
@@ -1378,7 +1038,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "ff0f663c",
     "filename": "the_natural_next_step_is_to_formalize_the_actual_p.json",
-    "pkg_num": 37,
+    "pkg_num": 35,
     "quality": "partial",
     "quality_score": 0.45543999999999996,
     "title": "Proof Phase Transitions: Implicational Theories as Monotone Reachability"
@@ -1388,40 +1048,20 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "aec0362d",
     "filename": "close_proofs_this_cycles_artifact_is_catalogmachin.json",
-    "pkg_num": 36,
+    "pkg_num": 34,
     "quality": "substantial",
     "quality_score": 0.7005600000000001,
     "title": "Generation Certificates for Matrix Groups: Irreducible Characteristic Polynomials as Certificates of Irreducible Action"
-  },
-  {
-    "date": "2026-06-12T16:52:49Z",
-    "domain": "Applications",
-    "exp_id": "1736668d",
-    "filename": "close_proofs_the_file_computationspectralchaincore.json",
-    "pkg_num": 35,
-    "quality": "substantial",
-    "quality_score": 0.7025182961460447,
-    "title": "Strong Divisibility Sequences: One Law for Fibonacci and Mersenne Divisibility"
   },
   {
     "date": "2026-06-12T16:10:30Z",
     "domain": "Bridges",
     "exp_id": "392c9e56",
     "filename": "close_proofs_conjecture_if_f_t_t__01_is_a_continuo.json",
-    "pkg_num": 34,
+    "pkg_num": 33,
     "quality": "substantial",
     "quality_score": 0.7850491896144769,
     "title": "Close Proofs: Tropicalization as the Image of a Non-Archimedean Valuation"
-  },
-  {
-    "date": "2026-06-12T16:10:09Z",
-    "domain": "Applications",
-    "exp_id": "2a5bb902",
-    "filename": "the_sphere_packing_bound_gives_an_upper_bound_on_c.json",
-    "pkg_num": 33,
-    "quality": "partial",
-    "quality_score": 0.5291335915882679,
-    "title": "CSS Codes as Cohomology: Quantum Error Correction from Homological Algebra"
   },
   {
     "date": "2026-06-12T14:59:16Z",
@@ -1810,14 +1450,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Interleaving Metric Quotient: A Genuine Metric Space of Persistent Shapes"
   },
-  "bridge_ix_interleavinggeodesiclean_gave_the_persis.json": {
-    "domain": "Geometry",
-    "exp_id": "13a80f4d",
-    "source_exp_ids": [
-      "5a4a0b2c"
-    ],
-    "title": "The Path Space of Filtrations: Geodesy, Convexity, Contractibility, and Functorial Transport of the Interleaving Metric"
-  },
   "bridge_ix_interleavinggeodesiclean_turned_the_pers.json": {
     "domain": "Novelty",
     "exp_id": "2ca3f901",
@@ -1825,14 +1457,6 @@ window.PACKAGE_DB_INDEX = {
       "bea64f19"
     ],
     "title": "Local-to-Global Gluing of Interleaving Geodesics (Boltzmann Bridge X)"
-  },
-  "close_proofs_12_fully_proved_theorems_zero_sorry_f.json": {
-    "domain": "Shared",
-    "exp_id": "94ed24b3",
-    "source_exp_ids": [
-      "436a6e78"
-    ],
-    "title": "Certified Expanders for Classical Groups"
   },
   "close_proofs_algebraic_and_order_theoretic_backbon.json": {
     "domain": "Applications",
@@ -1894,7 +1518,8 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Applications",
     "exp_id": "8625cb36",
     "source_exp_ids": [
-      "15a7bd19"
+      "15a7bd19",
+      "51a047ff"
     ],
     "title": "CSS Codes as Cohomology: Quantum Error Correction from Homological Algebra"
   },
@@ -1913,14 +1538,6 @@ window.PACKAGE_DB_INDEX = {
       "d5040457"
     ],
     "title": "The Single Move That Connects Every Table: Markov Basis of the 2x2x2 No-Three-Way Interaction Model"
-  },
-  "close_proofs_close_proofs_this_cycle_built_from_sc.json": {
-    "domain": "Applications",
-    "exp_id": "e517b646",
-    "source_exp_ids": [
-      "6e405308"
-    ],
-    "title": "Certified Expanders for Classical Groups"
   },
   "close_proofs_close_proofs_this_cycle_replaced_the_.json": {
     "domain": "Cryptography",
@@ -2002,27 +1619,12 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Proof-Complexity Holography: Geometric Duals of Formal Derivations"
   },
-  "close_proofs_stereographic_capacity_theory_packing.json": {
-    "domain": "Algebra",
-    "exp_id": "759d6b7d",
-    "source_exp_ids": [
-      "1d743d09"
-    ],
-    "title": "Generation Certificates for Matrix Groups"
-  },
-  "close_proofs_the_boltzmann_bridge_arc_has_over_sev.json": {
-    "domain": "Bridges",
-    "exp_id": "36dba103",
-    "source_exp_ids": [
-      "47be570a"
-    ],
-    "title": "The Apparition-Order Bridge: A Local-to-Global Dictionary for Ranks of Apparition"
-  },
   "close_proofs_the_catalogs_bridgescategoricaltropic.json": {
     "domain": "Applications",
     "exp_id": "7adea9e1",
     "source_exp_ids": [
-      "415b1517"
+      "415b1517",
+      "7adea9e1"
     ],
     "title": "The Fibonacci Law of Apparition as an Arithmetic-Height / Tropical Duality"
   },
@@ -2041,14 +1643,6 @@ window.PACKAGE_DB_INDEX = {
       "7eb7c87e"
     ],
     "title": "Close Proofs: The Fundamental Theorem of Identity Systems"
-  },
-  "close_proofs_the_fifth_cycle_established_pointwise.json": {
-    "domain": "Geometry",
-    "exp_id": "fb3f3807",
-    "source_exp_ids": [
-      "d5286918"
-    ],
-    "title": "Calabi-Yau Fourfold Hodge Diamonds and the F-Theory Mirror Involution"
   },
   "close_proofs_the_file_basiclean_establishes_a_full.json": {
     "domain": "MachineLearning",
@@ -2070,7 +1664,9 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Novelty",
     "exp_id": "b1999396",
     "source_exp_ids": [
-      "257f7c90"
+      "257f7c90",
+      "436a6e78",
+      "6e405308"
     ],
     "title": "Certified Expanders for Classical Groups: A Certificate Architecture for Cayley-Graph Expansion"
   },
@@ -2086,17 +1682,10 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Applications",
     "exp_id": "2b4745d6",
     "source_exp_ids": [
+      "2b4745d6",
       "d9001a1b"
     ],
     "title": "The Minimum-Spanning-Tree Law for H0 Persistence"
-  },
-  "close_proofs_the_file_computationspectralchaincore.json": {
-    "domain": "Applications",
-    "exp_id": "1736668d",
-    "source_exp_ids": [
-      "90709731"
-    ],
-    "title": "Strong Divisibility Sequences: One Law for Fibonacci and Mersenne Divisibility"
   },
   "close_proofs_the_file_geometryfractaldimensionlean.json": {
     "domain": "Applications",
@@ -2106,14 +1695,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Set-Local Distortion of Hausdorff Dimension"
   },
-  "close_proofs_the_file_hodgespectralthresholdlean_e.json": {
-    "domain": "Applications",
-    "exp_id": "a6c77942",
-    "source_exp_ids": [
-      "24946444"
-    ],
-    "title": "Spectral Depth Thresholds for Hodge-Laplacian Message Passing"
-  },
   "close_proofs_the_new_file_catalogmachinelearningpe.json": {
     "domain": "Novelty",
     "exp_id": "6f395b3c",
@@ -2121,14 +1702,6 @@ window.PACKAGE_DB_INDEX = {
       "15f2a404"
     ],
     "title": "Perturbation-Stable Generalization Bounds: A Bridge Between Compression and Robustness"
-  },
-  "close_proofs_the_order_theoretic_core_of_the_cookr.json": {
-    "domain": "Novelty",
-    "exp_id": "06bed695",
-    "source_exp_ids": [
-      "e955f9f8"
-    ],
-    "title": "Close Proofs: The Order Type of the p-Degrees"
   },
   "close_proofs_thermodynamic_proof_erasure_landauers.json": {
     "domain": "Applications",
@@ -2154,30 +1727,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Shape of Sameness: Truncation Levels, Winding Numbers, and Bridges from Univalent to Classical Foundations"
   },
-  "close_proofs_this_cycle_closed_a_concrete_gap_betw.json": {
-    "domain": "Novelty",
-    "exp_id": "9812538e",
-    "source_exp_ids": [
-      "de15e0b3"
-    ],
-    "title": "Close Proofs: The Rank of Apparition as a Join-Semilattice Morphism"
-  },
-  "close_proofs_this_cycle_closed_the_single_open_sor.json": {
-    "domain": "Computation",
-    "exp_id": "e8431c0a",
-    "source_exp_ids": [
-      "c86fcece"
-    ],
-    "title": "Strong Divisibility Sequences: One Axiom Unifying Fibonacci and Mersenne Primitive-Divisor Theory"
-  },
-  "close_proofs_this_cycle_closes_the_conceptual_loop.json": {
-    "domain": "Bridges",
-    "exp_id": "c73ec1f1",
-    "source_exp_ids": [
-      "e1443601"
-    ],
-    "title": "The Hodge\u2013Deligne E-polynomial: A Bridge from Geometric Duality to Algebraic Functional Equations"
-  },
   "close_proofs_this_cycle_deepened_the_entry_point_r.json": {
     "domain": "Applications",
     "exp_id": "381ade33",
@@ -2185,14 +1734,6 @@ window.PACKAGE_DB_INDEX = {
       "b6f0ca1b"
     ],
     "title": "The Lucas Bridge for the Fibonacci Rank of Apparition"
-  },
-  "close_proofs_this_cycle_delivered_catalogapplicati.json": {
-    "domain": "Applications",
-    "exp_id": "a7e4a8d3",
-    "source_exp_ids": [
-      "3856eb7f"
-    ],
-    "title": "The Rank of Apparition: A Self-Contained Primitive-Divisor Criterion"
   },
   "close_proofs_this_cycle_delivered_catalogbridgesap.json": {
     "domain": "Applications",
@@ -2206,17 +1747,12 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Novelty",
     "exp_id": "12557248",
     "source_exp_ids": [
-      "6fec53b5"
+      "12557248",
+      "47be570a",
+      "6fec53b5",
+      "b6018fb7"
     ],
     "title": "The Apparition\u2013Order Bridge: From Global Entry Points to Local Multiplicative Order"
-  },
-  "close_proofs_this_cycle_formalized_the_abstract_si.json": {
-    "domain": "Algebra",
-    "exp_id": "9883562d",
-    "source_exp_ids": [
-      "274d33e1"
-    ],
-    "title": "Generation Certificates for Matrix Groups: Irreducible Characteristic Polynomials as Structural Witnesses"
   },
   "close_proofs_this_cycle_formalized_the_order_theor.json": {
     "domain": "Novelty",
@@ -2225,14 +1761,6 @@ window.PACKAGE_DB_INDEX = {
       "132f9096"
     ],
     "title": "Close Proofs: The Rank-of-Apparition Engine for Strong Divisibility Sequences"
-  },
-  "close_proofs_this_cycle_fused_two_strands_of_the_c.json": {
-    "domain": "Bridges",
-    "exp_id": "e48e0385",
-    "source_exp_ids": [
-      "22207698"
-    ],
-    "title": "The Hodge-Deligne E-polynomial: A Bridge from Geometry to Arithmetic"
   },
   "close_proofs_this_cycle_hardened_the_foundation_th.json": {
     "domain": "Applications",
@@ -2254,7 +1782,8 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Applications",
     "exp_id": "cef8f402",
     "source_exp_ids": [
-      "bdd5cb68"
+      "bdd5cb68",
+      "de15e0b3"
     ],
     "title": "Close Proofs: The Rank of Apparition as a Divisibility-Lattice Morphism"
   },
@@ -2278,6 +1807,10 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Novelty",
     "exp_id": "aec0362d",
     "source_exp_ids": [
+      "1d743d09",
+      "274d33e1",
+      "cef8f402",
+      "e0ad2634",
       "ee125918"
     ],
     "title": "Generation Certificates for Matrix Groups: Irreducible Characteristic Polynomials as Certificates of Irreducible Action"
@@ -2286,6 +1819,7 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Applications",
     "exp_id": "bdf748b3",
     "source_exp_ids": [
+      "bdf748b3",
       "c6fd83da"
     ],
     "title": "Close Proofs: Topological Error-Correcting Codes from Exotic Smooth Structures"
@@ -2310,6 +1844,7 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Applications",
     "exp_id": "5a4a0b2c",
     "source_exp_ids": [
+      "5a4a0b2c",
       "bc66959c"
     ],
     "title": "The Path Space of Filtrations: Reparametrisation, Geodesic Betweenness, and Busemann Convexity of the Interleaving Metric"
@@ -2350,7 +1885,9 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Applications",
     "exp_id": "c0931058",
     "source_exp_ids": [
-      "38457964"
+      "38457964",
+      "5253a57e",
+      "c0931058"
     ],
     "title": "The Differential Calculus of Combinatorial Species"
   },
@@ -2361,14 +1898,6 @@ window.PACKAGE_DB_INDEX = {
       "f7a0c2c6"
     ],
     "title": "Provability Logic as a Fixed-Point Theory: The Order-Theoretic Core of G\u00f6del\u2013L\u00f6b"
-  },
-  "deepening_the_order_theoretic_core_of_the_cookreck.json": {
-    "domain": "Applications",
-    "exp_id": "d3b0eeba",
-    "source_exp_ids": [
-      "06bed695"
-    ],
-    "title": "The Order-Theoretic Core of the Cook-Reckhow Program"
   },
   "deepening_this_cycle_built_from_scratch_and_sorry_.json": {
     "domain": "Novelty",
@@ -2394,14 +1923,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Pisano Period as the Order of the Fibonacci Shift"
   },
-  "deepening_this_cycle_laid_the_missing_foundation_f.json": {
-    "domain": "Algebra",
-    "exp_id": "a6231eff",
-    "source_exp_ids": [
-      "cef8f402"
-    ],
-    "title": "Generation Certificates for Matrix Groups: Irreducible Characteristic Polynomials as Structural Witnesses"
-  },
   "deepening_this_cycle_treated_the_rank_of_apparitio.json": {
     "domain": "Novelty",
     "exp_id": "b352d088",
@@ -2425,14 +1946,6 @@ window.PACKAGE_DB_INDEX = {
       "71ed406c"
     ],
     "title": "Shannon Entropy on Finite Probability Distributions: A First-Principles Formalization"
-  },
-  "for_a_calabi_yau_threefold_x_defined_over__the_l_f.json": {
-    "domain": "Novelty",
-    "exp_id": "4e80baa8",
-    "source_exp_ids": [
-      "f8049429"
-    ],
-    "title": "The Diamond in the Mirror: A Ring-Valued Skeleton of Arithmetic Mirror Symmetry"
   },
   "from_scratch_clique_complex_theory_in.json": {
     "domain": "MachineLearning",
@@ -2464,18 +1977,11 @@ window.PACKAGE_DB_INDEX = {
     "source_exp_ids": [],
     "title": "Arithmetic-Height-Induced Ultrametrics: A Nonarchimedean Bridge"
   },
-  "order_theoretic_core_of_gdellb_provability_logic_g.json": {
-    "domain": "Novelty",
-    "exp_id": "00d3bac3",
-    "source_exp_ids": [
-      "f7a0c2c6"
-    ],
-    "title": "The Order-Theoretic Core of G\u00f6del-L\u00f6b Provability Logic"
-  },
   "order_theoretic_core_of_the_cookreckhow_program_as.json": {
     "domain": "Applications",
     "exp_id": "3da4b14d",
     "source_exp_ids": [
+      "06bed695",
       "9883562d"
     ],
     "title": "The Order-Theoretic Core of the Cook-Reckhow Program: A Fibonacci Separation Bridge"
@@ -2576,30 +2082,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Entry-Point Duality for the Fibonacci Sequence"
   },
-  "the_abstract_simulation_preorder_formalized_in_pro.json": {
-    "domain": "Algebra",
-    "exp_id": "6af3ea9a",
-    "source_exp_ids": [
-      "e0ad2634"
-    ],
-    "title": "Generation Certificates for Matrix Groups: Irreducible Characteristic Polynomials as Witnesses of Irreducible Action"
-  },
-  "the_catalogs_smoothpoincare_files_develop_the_latt.json": {
-    "domain": "Applications",
-    "exp_id": "209bf283",
-    "source_exp_ids": [
-      "bdf748b3"
-    ],
-    "title": "Topological Error-Correcting Codes from Exotic Smooth Structures: The Mod-2 Shadow of E8"
-  },
-  "the_catalogs_synthetic_hott_layer_cataloglogichott.json": {
-    "domain": "Bridges",
-    "exp_id": "7eb7c87e",
-    "source_exp_ids": [
-      "b6018fb7"
-    ],
-    "title": "The Apparition-Order Bridge: From Global Divisibility to Local Group Order"
-  },
   "the_current_formalization_establishes_the_structur.json": {
     "domain": "Novelty",
     "exp_id": "1f5be36f",
@@ -2624,22 +2106,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Certified Novelty: A Metric Geometry of What Counts as New"
   },
-  "the_fifth_cycle_established_pointwise_convergence_.json": {
-    "domain": "Bridges",
-    "exp_id": "d5286918",
-    "source_exp_ids": [
-      "ac0f7856"
-    ],
-    "title": "The Hodge\u2013Deligne E-polynomial: Functional Equations from Mirror Symmetry and Serre Duality"
-  },
-  "the_file_applicationscombinatorialspecieslean_orig.json": {
-    "domain": "Applications",
-    "exp_id": "5253a57e",
-    "source_exp_ids": [
-      "c0931058"
-    ],
-    "title": "The Taylor / Maclaurin Calculus of Combinatorial Species"
-  },
   "the_file_basiclean_establishes_a_fully_formal_axio.json": {
     "domain": "Novelty",
     "exp_id": "5dac3011",
@@ -2656,22 +2122,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Exponential-Convolution Ring of Counting Sequences"
   },
-  "the_file_catalogapplicationscombinatorialspeciesle.json": {
-    "domain": "Novelty",
-    "exp_id": "908ecdae",
-    "source_exp_ids": [
-      "5253a57e"
-    ],
-    "title": "The Taylor Calculus of Combinatorial Species"
-  },
-  "the_file_catalogmachinelearninghodgespectralthresh.json": {
-    "domain": "Novelty",
-    "exp_id": "a4cf656f",
-    "source_exp_ids": [
-      "a6c77942"
-    ],
-    "title": "Spectral Depth Thresholds for Hodge-Laplacian Message Passing"
-  },
   "the_file_catalognoveltygilbertvarshamovlean_closes.json": {
     "domain": "Applications",
     "exp_id": "51df7a4d",
@@ -2679,14 +2129,6 @@ window.PACKAGE_DB_INDEX = {
       "26dedf74"
     ],
     "title": "The Code-Size Sandwich: Sphere-Packing and Gilbert-Varshamov Bounds"
-  },
-  "the_file_catalogspeculativeautoresearchproteinfold.json": {
-    "domain": "Novelty",
-    "exp_id": "3413b24f",
-    "source_exp_ids": [
-      "2b4745d6"
-    ],
-    "title": "The Minimum-Spanning-Tree Law for H0 Persistence"
   },
   "the_file_computationeastinknilllean_isolates_the_a.json": {
     "domain": "Logic",
@@ -2716,7 +2158,9 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Novelty",
     "exp_id": "24946444",
     "source_exp_ids": [
-      "07f1d56d"
+      "07f1d56d",
+      "24946444",
+      "a6c77942"
     ],
     "title": "Spectral Depth Thresholds for Hodge-Laplacian Message Passing"
   },
@@ -2732,7 +2176,8 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Bridges",
     "exp_id": "f7a0c2c6",
     "source_exp_ids": [
-      "6b9ac787"
+      "6b9ac787",
+      "f7a0c2c6"
     ],
     "title": "The Order-Theoretic Core of G\u00f6del\u2013L\u00f6b Provability Logic"
   },
@@ -2740,7 +2185,8 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Geometry",
     "exp_id": "26841929",
     "source_exp_ids": [
-      "1707fa10"
+      "1707fa10",
+      "f8049429"
     ],
     "title": "The Mirror in the Diamond: A Ring-Valued Skeleton of Arithmetic Mirror Symmetry"
   },
@@ -2748,7 +2194,8 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Geometry",
     "exp_id": "5adb296d",
     "source_exp_ids": [
-      "c47fbb21"
+      "c47fbb21",
+      "cc78e8bc"
     ],
     "title": "Composition Theory for Set-Local Distortion of Hausdorff Dimension"
   },
@@ -2796,7 +2243,8 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Novelty",
     "exp_id": "ff0f663c",
     "source_exp_ids": [
-      "0320765b"
+      "0320765b",
+      "26580044"
     ],
     "title": "Proof Phase Transitions: Implicational Theories as Monotone Reachability"
   },
@@ -2804,7 +2252,11 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Applications",
     "exp_id": "7521d122",
     "source_exp_ids": [
-      "8ea0e641"
+      "0e6eb2a4",
+      "22207698",
+      "8ea0e641",
+      "ac0f7856",
+      "e1443601"
     ],
     "title": "The Hodge-Deligne E-polynomial: A Bridge from Mirror Symmetry to Arithmetic"
   },
@@ -2812,7 +2264,8 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Novelty",
     "exp_id": "e955f9f8",
     "source_exp_ids": [
-      "74e1359a"
+      "74e1359a",
+      "e955f9f8"
     ],
     "title": "The Order Type of the p-Degrees: Height, Width, Bottom, and Density in the Cook-Reckhow Simulation Order"
   },
@@ -2836,25 +2289,10 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Novelty",
     "exp_id": "5c6d3fa8",
     "source_exp_ids": [
+      "448d8857",
       "910ca369"
     ],
     "title": "Hodge-Laplacian Message Passing: Convergence to the Harmonic Projection"
-  },
-  "the_previous_cycles_established_two_layers_of_the_.json": {
-    "domain": "Novelty",
-    "exp_id": "47f4bb3f",
-    "source_exp_ids": [
-      "0e6eb2a4"
-    ],
-    "title": "The Hodge\u2013Deligne E-Polynomial: Functional Equations for Duality and Mirror Symmetry"
-  },
-  "the_sphere_packing_bound_gives_an_upper_bound_on_c.json": {
-    "domain": "Applications",
-    "exp_id": "2a5bb902",
-    "source_exp_ids": [
-      "51a047ff"
-    ],
-    "title": "CSS Codes as Cohomology: Quantum Error Correction from Homological Algebra"
   },
   "thermodynamic_proof_erasure_landauers_principle_fo.json": {
     "domain": "Applications",
@@ -2863,38 +2301,6 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Thermodynamic Proof Erasure: Landauer's Principle for Mathematics"
-  },
-  "this_cycle_added_geometryquasisymmetriciteratelean.json": {
-    "domain": "Novelty",
-    "exp_id": "633a535d",
-    "source_exp_ids": [
-      "cc78e8bc"
-    ],
-    "title": "Iteration & Semigroup Theory for Set-Local Distortion of Hausdorff Dimension"
-  },
-  "this_cycle_adds_cataloglogictemporalprooforderlean.json": {
-    "domain": "Novelty",
-    "exp_id": "08a1059c",
-    "source_exp_ids": [
-      "6bd3627f"
-    ],
-    "title": "Belnap's FOUR: Paraconsistency and the Product Bilattice 2 \u2299 2"
-  },
-  "this_cycle_catalogspeculativeautoresearchhodgefilt.json": {
-    "domain": "Novelty",
-    "exp_id": "0c8e6531",
-    "source_exp_ids": [
-      "448d8857"
-    ],
-    "title": "Hodge\u2013Laplacian Message Passing: Exact Mode Dynamics & Polynomial Filters"
-  },
-  "this_cycle_closed_a_concrete_gap_between_two_halve.json": {
-    "domain": "Applications",
-    "exp_id": "de15e0b3",
-    "source_exp_ids": [
-      "7adea9e1"
-    ],
-    "title": "The Fibonacci Law of Apparition as an Arithmetic-Height / Tropical Duality"
   },
   "this_cycle_closed_the_single_open_sorry_in_bridges.json": {
     "domain": "Applications",
@@ -2911,22 +2317,6 @@ window.PACKAGE_DB_INDEX = {
       "5af43ad7"
     ],
     "title": "Harmonic Cores and the Logarithmic Depth Clock: A Discrete Hodge Theory of Message Passing"
-  },
-  "this_cycle_consolidated_the_rank_of_apparition_the.json": {
-    "domain": "Algebra",
-    "exp_id": "dd767b4e",
-    "source_exp_ids": [
-      "acb48683"
-    ],
-    "title": "The Rank of Apparition: The Spine of Fibonacci Primitive-Divisor Theory"
-  },
-  "this_cycle_delivered_catalogbridgesapparitionorder.json": {
-    "domain": "Novelty",
-    "exp_id": "24067fd2",
-    "source_exp_ids": [
-      "12557248"
-    ],
-    "title": "The Apparition-Order Bridge: A Local-to-Global Dictionary for Ranks of Apparition"
   },
   "this_cycle_delivered_fibcarmichaelstructurelean_a_.json": {
     "domain": "Novelty",
@@ -2988,6 +2378,8 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Algebra",
     "exp_id": "9b2bee2f",
     "source_exp_ids": [
+      "90709731",
+      "c86fcece",
       "d0fd806b"
     ],
     "title": "Strong Divisibility Sequences: Primitive Divisors and the Calculus of Apparition"
@@ -3004,7 +2396,9 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Bridges",
     "exp_id": "acb48683",
     "source_exp_ids": [
-      "a7005d73"
+      "3856eb7f",
+      "a7005d73",
+      "acb48683"
     ],
     "title": "The Rank of Apparition: The Spine of Fibonacci Primitive-Divisor Theory"
   },
@@ -3023,14 +2417,6 @@ window.PACKAGE_DB_INDEX = {
       "fee9cff0"
     ],
     "title": "The Coset Foundation of Baker\u2013Norine Divisor Theory on Finite Graphs"
-  },
-  "this_cycle_laid_the_missing_foundation_for_the_pro.json": {
-    "domain": "Novelty",
-    "exp_id": "bdd5cb68",
-    "source_exp_ids": [
-      "26580044"
-    ],
-    "title": "Proof Phase Transitions: Monotonicity, Barriers, and the Hypergraph Generalization"
   },
   "this_cycle_moved_the_catalogs_dream_logic_line_of_.json": {
     "domain": "Logic",
@@ -3052,7 +2438,8 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Geometry",
     "exp_id": "f0bae6d0",
     "source_exp_ids": [
-      "87e9d710"
+      "87e9d710",
+      "d5286918"
     ],
     "title": "Calabi-Yau Fourfold Hodge Diamonds and the Mirror Involution"
   },
@@ -3130,7 +2517,8 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Applications",
     "exp_id": "fb03edbd",
     "source_exp_ids": [
-      "362ed1b3"
+      "362ed1b3",
+      "6bd3627f"
     ],
     "title": "Belnap's FOUR: Gluts, Gaps, and the Algebra of Paraconsistency"
   }
@@ -3907,8 +3295,8 @@ window.PACKAGE_GRAPH = {
       "hue": 101,
       "id": "the_sphere_packing_bound_gives_an_upper_bound_on_c",
       "primary_domain": "Bridges",
-      "priority_score": 0.5291335915882679,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "CSS Codes as Cohomology: Quantum Error Correction from Homological Algebra"
     },
@@ -3929,8 +3317,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "close_proofs_the_file_computationspectralchaincore",
       "primary_domain": "Bridges",
-      "priority_score": 0.7025182961460447,
-      "quality": "substantial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Strong Divisibility Sequences: One Law for Fibonacci and Mersenne Divisibility"
     },
@@ -4061,8 +3449,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "the_abstract_simulation_preorder_formalized_in_pro",
       "primary_domain": "Algebra",
-      "priority_score": 0.47530989871260887,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "tetrahedron",
       "title": "Generation Certificates for Matrix Groups: Irreducible Characteristic Polynomials as Witnesses of Irreducible Action"
     },
@@ -4127,8 +3515,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "this_cycle_laid_the_missing_foundation_for_the_pro",
       "primary_domain": "Bridges",
-      "priority_score": 0.7651974690508941,
-      "quality": "substantial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Proof Phase Transitions: Monotonicity, Barriers, and the Hypergraph Generalization"
     },
@@ -4149,8 +3537,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "close_proofs_this_cycle_formalized_the_abstract_si",
       "primary_domain": "Algebra",
-      "priority_score": 0.5563100449775112,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "tetrahedron",
       "title": "Generation Certificates for Matrix Groups: Irreducible Characteristic Polynomials as Structural Witnesses"
     },
@@ -4160,8 +3548,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "close_proofs_stereographic_capacity_theory_packing",
       "primary_domain": "Algebra",
-      "priority_score": 0.5360561937716263,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "tetrahedron",
       "title": "Generation Certificates for Matrix Groups"
     },
@@ -4248,8 +3636,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "order_theoretic_core_of_gdellb_provability_logic_g",
       "primary_domain": "Bridges",
-      "priority_score": 0.7660915736040609,
-      "quality": "substantial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Order-Theoretic Core of G\u00f6del-L\u00f6b Provability Logic"
     },
@@ -4281,8 +3669,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "deepening_this_cycle_laid_the_missing_foundation_f",
       "primary_domain": "Algebra",
-      "priority_score": 0.75616,
-      "quality": "substantial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "tetrahedron",
       "title": "Generation Certificates for Matrix Groups: Irreducible Characteristic Polynomials as Structural Witnesses"
     },
@@ -4358,8 +3746,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "close_proofs_close_proofs_this_cycle_built_from_sc",
       "primary_domain": "Bridges",
-      "priority_score": 0.7670104918032787,
-      "quality": "substantial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Certified Expanders for Classical Groups"
     },
@@ -4479,8 +3867,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "this_cycle_adds_cataloglogictemporalprooforderlean",
       "primary_domain": "Bridges",
-      "priority_score": 0.4716,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Belnap's FOUR: Paraconsistency and the Product Bilattice 2 \u2299 2"
     },
@@ -4556,8 +3944,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "close_proofs_12_fully_proved_theorems_zero_sorry_f",
       "primary_domain": "Bridges",
-      "priority_score": 0.74704,
-      "quality": "substantial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Certified Expanders for Classical Groups"
     },
@@ -4578,8 +3966,8 @@ window.PACKAGE_GRAPH = {
       "hue": 112,
       "id": "close_proofs_this_cycle_closed_the_single_open_sor",
       "primary_domain": "Computation",
-      "priority_score": 0.7680000000000001,
-      "quality": "substantial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "cube",
       "title": "Strong Divisibility Sequences: One Axiom Unifying Fibonacci and Mersenne Primitive-Divisor Theory"
     },
@@ -4611,8 +3999,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "this_cycle_consolidated_the_rank_of_apparition_the",
       "primary_domain": "Algebra",
-      "priority_score": 0.6964,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "tetrahedron",
       "title": "The Rank of Apparition: The Spine of Fibonacci Primitive-Divisor Theory"
     },
@@ -4710,8 +4098,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "close_proofs_this_cycle_fused_two_strands_of_the_c",
       "primary_domain": "Bridges",
-      "priority_score": 0.62,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Hodge-Deligne E-polynomial: A Bridge from Geometry to Arithmetic"
     },
@@ -4721,8 +4109,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "the_file_applicationscombinatorialspecieslean_orig",
       "primary_domain": "Bridges",
-      "priority_score": 0.77432,
-      "quality": "substantial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Taylor / Maclaurin Calculus of Combinatorial Species"
     },
@@ -4743,8 +4131,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "for_a_calabi_yau_threefold_x_defined_over__the_l_f",
       "primary_domain": "Bridges",
-      "priority_score": 0.4503353609022557,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Diamond in the Mirror: A Ring-Valued Skeleton of Arithmetic Mirror Symmetry"
     },
@@ -4787,8 +4175,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "the_file_catalogapplicationscombinatorialspeciesle",
       "primary_domain": "Bridges",
-      "priority_score": 0.5454000000000001,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Taylor Calculus of Combinatorial Species"
     },
@@ -4820,8 +4208,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "this_cycle_added_geometryquasisymmetriciteratelean",
       "primary_domain": "Bridges",
-      "priority_score": 0.6266499999999999,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Iteration & Semigroup Theory for Set-Local Distortion of Hausdorff Dimension"
     },
@@ -4908,8 +4296,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "the_file_catalogspeculativeautoresearchproteinfold",
       "primary_domain": "Bridges",
-      "priority_score": 0.6652590990990991,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Minimum-Spanning-Tree Law for H0 Persistence"
     },
@@ -4919,8 +4307,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "close_proofs_the_file_hodgespectralthresholdlean_e",
       "primary_domain": "Bridges",
-      "priority_score": 0.6768233009708737,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Spectral Depth Thresholds for Hodge-Laplacian Message Passing"
     },
@@ -4930,8 +4318,8 @@ window.PACKAGE_GRAPH = {
       "hue": 89,
       "id": "the_file_catalogmachinelearninghodgespectralthresh",
       "primary_domain": "Bridges",
-      "priority_score": 0.7568800000000001,
-      "quality": "substantial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Spectral Depth Thresholds for Hodge-Laplacian Message Passing"
     },
@@ -5051,8 +4439,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "this_cycle_closed_a_concrete_gap_between_two_halve",
       "primary_domain": "Bridges",
-      "priority_score": 0.7247030769230769,
-      "quality": "substantial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Fibonacci Law of Apparition as an Arithmetic-Height / Tropical Duality"
     },
@@ -5073,8 +4461,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "close_proofs_the_order_theoretic_core_of_the_cookr",
       "primary_domain": "Bridges",
-      "priority_score": 0.7543200000000001,
-      "quality": "substantial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Close Proofs: The Order Type of the p-Degrees"
     },
@@ -5106,8 +4494,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "close_proofs_this_cycle_closed_a_concrete_gap_betw",
       "primary_domain": "Bridges",
-      "priority_score": 0.74728,
-      "quality": "substantial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Close Proofs: The Rank of Apparition as a Join-Semilattice Morphism"
     },
@@ -5161,8 +4549,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "deepening_the_order_theoretic_core_of_the_cookreck",
       "primary_domain": "Bridges",
-      "priority_score": 0.6192341176470588,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Order-Theoretic Core of the Cook-Reckhow Program"
     },
@@ -5205,8 +4593,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "the_catalogs_smoothpoincare_files_develop_the_latt",
       "primary_domain": "Bridges",
-      "priority_score": 0.6648000000000001,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Topological Error-Correcting Codes from Exotic Smooth Structures: The Mod-2 Shadow of E8"
     },
@@ -5238,8 +4626,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "close_proofs_this_cycle_delivered_catalogapplicati",
       "primary_domain": "Bridges",
-      "priority_score": 0.7199621052631578,
-      "quality": "substantial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Rank of Apparition: A Self-Contained Primitive-Divisor Criterion"
     },
@@ -5282,8 +4670,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "close_proofs_this_cycle_closes_the_conceptual_loop",
       "primary_domain": "Bridges",
-      "priority_score": 0.7388800000000001,
-      "quality": "substantial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Hodge\u2013Deligne E-polynomial: A Bridge from Geometric Duality to Algebraic Functional Equations"
     },
@@ -5326,8 +4714,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "the_fifth_cycle_established_pointwise_convergence_",
       "primary_domain": "Bridges",
-      "priority_score": 0.7285881081081081,
-      "quality": "substantial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Hodge\u2013Deligne E-polynomial: Functional Equations from Mirror Symmetry and Serre Duality"
     },
@@ -5337,8 +4725,8 @@ window.PACKAGE_GRAPH = {
       "hue": 275,
       "id": "this_cycle_delivered_catalogbridgesapparitionorder",
       "primary_domain": "Bridges",
-      "priority_score": 0.7492381651376147,
-      "quality": "substantial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Apparition-Order Bridge: A Local-to-Global Dictionary for Ranks of Apparition"
     },
@@ -5348,8 +4736,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "the_previous_cycles_established_two_layers_of_the_",
       "primary_domain": "Bridges",
-      "priority_score": 0.7286333944954129,
-      "quality": "substantial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Hodge\u2013Deligne E-Polynomial: Functional Equations for Duality and Mirror Symmetry"
     },
@@ -5359,8 +4747,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "this_cycle_catalogspeculativeautoresearchhodgefilt",
       "primary_domain": "Bridges",
-      "priority_score": 0.68738,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Hodge\u2013Laplacian Message Passing: Exact Mode Dynamics & Polynomial Filters"
     },
@@ -5392,8 +4780,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "close_proofs_the_fifth_cycle_established_pointwise",
       "primary_domain": "Geometry",
-      "priority_score": 0.68156,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "hexagonal_prism",
       "title": "Calabi-Yau Fourfold Hodge Diamonds and the F-Theory Mirror Involution"
     },
@@ -5414,8 +4802,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "the_catalogs_synthetic_hott_layer_cataloglogichott",
       "primary_domain": "Bridges",
-      "priority_score": 0.6310311834319526,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Apparition-Order Bridge: From Global Divisibility to Local Group Order"
     },
@@ -5425,8 +4813,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "close_proofs_the_boltzmann_bridge_arc_has_over_sev",
       "primary_domain": "Bridges",
-      "priority_score": 0.7248000000000001,
-      "quality": "substantial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "The Apparition-Order Bridge: A Local-to-Global Dictionary for Ranks of Apparition"
     },
@@ -5458,8 +4846,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "bridge_ix_interleavinggeodesiclean_gave_the_persis",
       "primary_domain": "Geometry",
-      "priority_score": 0.6571556692913385,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "hexagonal_prism",
       "title": "The Path Space of Filtrations: Geodesy, Convexity, Contractibility, and Functorial Transport of the Interleaving Metric"
     }
