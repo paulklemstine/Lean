@@ -45,18 +45,36 @@ def _fmt_duration(seconds: float) -> str:
 
 
 def _setup_logging(log_path: Optional[Path]):
+    # Some imported modules call logging.basicConfig before we do, which makes
+    # basicConfig a no-op and drops our handlers. Work around this by clearing
+    # the root logger handlers and installing ours explicitly.
+    root = logging.getLogger()
+    for h in list(root.handlers):
+        try:
+            h.flush()
+            h.close()
+        except Exception:
+            pass
+        root.removeHandler(h)
+
+    formatter = logging.Formatter(
+        "%(asctime)s [%(levelname)s] %(message)s",
+        datefmt="%Y-%m-%dT%H:%M:%SZ",
+    )
+    # Force UTC for %(asctime)s
+    formatter.converter = time.gmtime
+
     handlers: List[logging.Handler] = [logging.StreamHandler(sys.stdout)]
     if log_path:
         log_path.parent.mkdir(parents=True, exist_ok=True)
         handlers.append(logging.FileHandler(log_path, mode="a"))
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-        datefmt="%Y-%m-%dT%H:%M:%S.%fZ",
-        handlers=handlers,
-    )
-    # Force UTC for %(asctime)s
-    logging.Formatter.converter = time.gmtime
+
+    for h in handlers:
+        h.setFormatter(formatter)
+        h.setLevel(logging.INFO)
+        root.addHandler(h)
+
+    root.setLevel(logging.INFO)
 
 
 class Telemetry:
