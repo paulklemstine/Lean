@@ -1629,12 +1629,12 @@ Research mode: {concept.research_mode}
               f"sorries={job.sorry_count}, theorems={job.theorem_count}"
               + (f", depth={job.quality_detail.proof_depth:.2f}" if hasattr(job, 'quality_detail') and job.quality_detail else ""))
 
-        # v8-v14 output quality metrics: track research team protocol compliance
+        # v8-v15 output quality metrics: track research team protocol compliance
         phase_ver = getattr(job, 'phase_a_prompt_version', '')
-        if phase_ver in ('v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14') and job.result_lean:
+        if phase_ver in ('v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14', 'v15') and job.result_lean:
             import re as _re
             lean_content = job.result_lean
-            lab_notebook_count = lean_content.count("Lab Notebook")
+            lab_notebook_count = lean_content.count("Lab Notebook") + lean_content.count("Lab Notes")
             hypothesis_count = lean_content.lower().count("hypothesis")
             # Track disproved theorems: count theorem declarations with status disproved
             disproved_pattern = _re.compile(r'status.*disproved|disproved.*status', _re.IGNORECASE)
@@ -2167,7 +2167,7 @@ Research mode: {concept.research_mode}
             # v7 linting gate: reject Lean files from v7 prompts with basic syntax issues
             # v7 uses structured theorem declarations — verify they're well-formed
             phase_ver = getattr(job, 'phase_a_prompt_version', '')
-            if phase_ver in ('v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14'):
+            if phase_ver in ('v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14', 'v15'):
                 # Check 1: unclosed block comments (/- ... -/)
                 open_blocks = content.count("/-") - content.count("/-!")
                 close_blocks = content.count("-/")
@@ -2200,6 +2200,13 @@ Research mode: {concept.research_mode}
                     print(f"[Integrate] {phase_ver} lint: {target_path} has zero critic/critique references — "
                           f"the Critic step (Step 3) is MANDATORY in {phase_ver}. This suggests the LLM "
                           f"skipped the critique step.")
+            # v15 lint gate: check for research team lab notes markers
+            if phase_ver == 'v15':
+                has_lab_notes = "Lab Notes" in content or "lab notes" in content.lower()
+                has_hypothesis = "hypothesis" in content.lower()
+                if not has_lab_notes and not has_hypothesis:
+                    print(f"[Integrate] {phase_ver} lint: {target_path} has no Lab Notes or "
+                          f"hypothesis markers (expected from {phase_ver} research team protocol)")
             if has_sorry:
                 # Incomplete proofs go to Speculative/AutoResearch, preserving any
                 # subdirectory structure Pi suggested (e.g. EML/ReflectionCapacity/).
