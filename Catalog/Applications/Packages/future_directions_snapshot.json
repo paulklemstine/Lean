@@ -56,5 +56,45 @@
     "status": "in_progress",
     "timestamp": "2026-06-15T07:16:41.178841+00:00",
     "title": "**functorial tropical certificate** for the Berggren–Lo"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "cb2c4d8f",
+    "description": "# Future Directions — Categorical Tropical Rips Interleaving\n\nThis cycle established, in `Catalog/Bridges/CategoricalTropicalRipsInterleaving.lean`, a\nself-contained, fully-verified bridge between **categorical persistence theory**,\n**tropical / min-plus algebra**, and **geometry / topological data analysis**:\n\n- Persistence modules as monotone functors `ℝ → α` (`PersMod`).\n- `ε`-interleavings, with reflexivity, symmetry, monotone weakening, and the **composition\n  law** `Interleaved.trans` (`ε`-interleaving ∘ `δ`-interleaving = `(ε+δ)`-interleaving).\n- The `ℝ≥0∞`-valued **interleaving distance** `interleavingDist`, proven to be a pseudometric\n  (`interleavingDist_self`, `interleavingDist_comm`, `interleavingDist_triangle`).\n- The **tropical reformulation** `interleaving_tropical_submul`: the triangle inequality is\n  *exactly* submultiplicativity of `trop ∘ interleavingDist` in `Tropical ℝ≥0∞`.\n- **Vietoris–Rips stability** (`rips_stability`, `rips_interleavingDist_le`): sup-close\n  dissimilarities yield interleaved Rips modules.\n\nThe following conjectures are precise, falsifiable targets for the next cycles.\n\n## Conjecture 1 (Isometry / converse stability)\nFor Rips modules of pseudometrics `d, d'` on a fixed point set, the interleaving distance is\n*equal* to (not just bounded by) the sup perturbation:\n`interleavingDist (RipsMod d) (RipsMod d') = ENNReal.ofReal (⨆ x y, |d x y - d' x y|)`\nwhenever the sup is finite. **Test:** prove the `≥` direction by extracting, from any\n`ε`-interleaving of edge-set modules, the pointwise bound `|d x y - d' x y| ≤ ε` (evaluate the\ninterleaving at `t = d x y`). This would upgrade §4 to a genuine isometry theorem.\n\n## Conjecture 2 (Tropical semiring action on the distance lattice)\nThe map `(M, N) ↦ trop (interleavingDist M N)` is a lax functor into `Tropical ℝ≥0∞`: not only\nsubmultiplicative under composition (proved), but the *self-distance is the tropical unit*\n(`trop 0 = 1` in `Tropical ℝ≥0∞`) and constant shifts act by tropical multiplication, i.e.\n`interleavingDist (shift c M) (shift c N) = interleavingDist M N` and the shift functor `M ↦\nshift c M` satisfies `interleavingDist M (shift c M) ≤ ENNReal.ofReal c`. **Test:** define\n`shift c M := ⟨fun t => M.obj (t + c), …⟩` and prove these three identities.\n\n## Conjecture 3 (Stability is 1-Lipschitz / sub-additive in the tropical metric)\nComposition of perturbations is tropically multiplicative end-to-end: for dissimilarities\n`d, d', d''`,\n`trop (interleavingDist (RipsMod d) (RipsMod d''))\n   ≤ trop (idist (RipsMod d) (RipsMod d')) * trop (idist (RipsMod d') (RipsMod d''))`,\nand moreover this is *tight* when the perturbations are aligned (same sign everywhere).\n**Test:** the inequality is immediate from Conjecture-free results already proved; the tightness\nclause is the falsifiable content and should be attacked with a 2-point metric space.\n\n## Conjecture 4 (Lattice-valued generalization: persistence in any complete lattice is a\ntropical module)\nFor any complete lattice `α`, the assignment `ε ↦ {(M,N) | Interleaved ε M N}` defines a graded\nsub-relation whose graded pieces are closed under min-plus convolution: if `R_ε` and `R_δ` are\nthe `ε`- and `δ`-interleaving relations then `R_ε ∘ R_δ ⊆ R_{ε+δ}` (proved as\n`Interleaved.trans`) and `R = ⋃_ε R_ε` is the relation of *finite* interleaving distance, which\nis an equivalence relation refining bisimilarity. **Test:** prove `R` is transitive and that the\nquotient `PersMod α / R` carries a well-defined `Tropical ℝ≥0∞`-valued metric.\n\n## Conjecture 5 (Stability of derived invariants: rank/Betti curves are 1-Lipschitz)\nDefine, for a Rips module over a *finite* point set, the rank curve `r(t) = card {(x,y) | d x y\n≤ t}`. Then `t ↦ r(t)` is monotone and any `ε`-interleaving of Rips modules forces\n`r_d(t) ≤ r_{d'}(t + ε)` and symmetrically, hence the rank curves are `ε`-interleaved as\nℕ-valued persistence modules. **Test:** prove the rank functor `PersMod (Set (X×X)) → PersMod ℕ`\n(for `Fintype X`) sends `ε`-interleavings to `ε`-interleavings, i.e. it is a 1-Lipschitz functor\nfor the interleaving distance — a baby \"algebraic stability of the rank invariant\".\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1945",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "b9cc2fac",
+    "status": "in_progress",
+    "timestamp": "2026-06-15T09:01:36.127271+00:00",
+    "title": "This cycle established, in `Catalog/Bridges/CategoricalTropicalRipsInterleaving."
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "02bb27d8",
+    "description": "# FUTURE DIRECTIONS — Discrete Hodge ↔ Probability\n\nThis cycle established a self-contained Mathlib foundation for the discrete Hodge\nprogram on finite weighted graphs and bridged it to the probability of reversible\nrandom walks (file `Catalog/Bridges/DiscreteHodgeRandomWalk.lean`).\n\nProved this cycle:\n- Dirichlet energy identity `xᵀ L x = ½ Σᵢⱼ wᵢⱼ (xᵢ − xⱼ)²`.\n- Positive semidefiniteness of the combinatorial Laplacian `L = D − A`.\n- Symmetry of `L`, zero row-sums, and harmonicity of constants.\n- Detailed balance / reversibility of `P = D⁻¹A` w.r.t. the degree measure\n  (stated *unconditionally* using totality of real division).\n- The factorization `L f = D(f − Pf)` and the bridge theorem:\n  at a positive-degree vertex, `(L f) i = 0 ⟺ (P f) i = f i`\n  (discrete harmonic forms = walk-invariant functions).\n\nThe following conjectures are bold, precise, and testable in subsequent cycles.\n\n## C1 — Kernel of `L` = locally constant functions (connectivity ⇒ 0th Hodge number)\nFor a finite weighted graph whose positive-weight relation is connected,\n`L.mulVec f = 0 ↔ f` is constant. More generally, `dim ker L` equals the number\nof connected components of the support graph. This is the discrete `H⁰` and the\n0th Betti number; it is the natural next theorem after `laplacian_mulVec_const`\nand `quadForm_nonneg` (the energy `½ Σ wᵢⱼ(fᵢ−fⱼ)²` vanishes iff `f` is constant\non each component).\n\n## C2 — Spectral gap ⇒ exponential mixing of the reversible walk\nLet `0 = λ₀ ≤ λ₁ ≤ … ` be the eigenvalues of the *normalized* Laplacian\n`𝓛 = I − D^{-1/2} A D^{-1/2}`. Conjecture: for a connected graph with\n`λ₁ > 0`, the reversible walk `P` satisfies a Poincaré inequality\n`Var_π(f) ≤ (1/λ₁) · 𝓔(f, f)` (Dirichlet form), hence `Lᵖ` mixing\n`‖Pᵗf − π(f)‖ ≤ (1 − λ₁)ᵗ ‖f‖`. This connects the Hodge spectrum directly to\nthe probabilistic convergence rate; the Dirichlet identity proved here is the\nexact `𝓔(f,f)` appearing in the inequality.\n\n## C3 — Discrete Hodge decomposition `ℝ^V = ker L ⊕ im L`\nBecause `L` is symmetric PSD, `ℝ^V` orthogonally decomposes as\n`ker L ⊕ range L`, with `ker L` the harmonic part and `range L` the \"exact +\nco-exact\" part. Conjecture (and formalize): every function uniquely splits as\n`f = h + Lg` with `h` harmonic, and `h` is the orthogonal projection minimizing\nDirichlet energy among representatives of `f mod range L`. This is the finite-\ndimensional Hodge theorem; it needs only `Matrix.IsSymm` + PSD already proved.\n\n## C4 — Reversibility characterizes self-adjointness of `P` in the `π`-inner product\nConjecture: a stochastic kernel `P` on `Fin n` is reversible w.r.t. a positive\nmeasure `π` (`πᵢ Pᵢⱼ = πⱼ Pⱼᵢ`) **iff** `P` is self-adjoint for the weighted\ninner product `⟨f,g⟩_π = Σ πᵢ fᵢ gᵢ`, **iff** `P` arises from some symmetric\nweight kernel `w` via `wᵢⱼ = πᵢ Pᵢⱼ`. This upgrades `reversible` from a property\nof graph-derived walks to a full equivalence, identifying \"reversible Markov\nchain\" with \"weighted graph\" canonically.\n\n## C5 — Effective resistance is a metric, and a graph-Green's-function identity\nDefine effective resistance `R(i,j)` via the energy-minimizing `g` with\n`L g = eᵢ − eⱼ` (well-defined on connected graphs by C3). Conjecture:\n`R` is a metric on vertices (the \"resistance metric\"), `R(i,j) = (eᵢ−eⱼ)ᵀ L⁺ (eᵢ−eⱼ)`\nwith `L⁺` the Moore–Penrose pseudoinverse, and it equals the expected commute\ntime of the reversible walk up to the factor `2·(total weight)`. This is the\ndeepest probability↔Hodge bridge: the Green's function `L⁺` simultaneously\ngoverns harmonic extension (Hodge) and commute/hitting times (probability).\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_1947",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "94b6b70d",
+    "status": "in_progress",
+    "timestamp": "2026-06-15T09:03:05.891155+00:00",
+    "title": "Self-contained Mathlib foundation for the discrete Hodg"
   }
 ]

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "94b6b70d",
     "filename": "this_cycle_rebuilds_the_discrete_hodge_program_on_.json",
     "pkg_num": 145,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.3848171428571429,
     "title": "The Markov Basis of the Two-Way Independence Model"
   },
   {
@@ -4474,8 +4474,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "this_cycle_rebuilds_the_discrete_hodge_program_on_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.3848171428571429,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Markov Basis of the Two-Way Independence Model"
     }
