@@ -208,6 +208,7 @@ class ArchiveManager:
         self,
         directory: Path,
         role: str,
+        skip_input_catalog_context: bool = True,
     ) -> Tuple[List[Dict], Optional[str], Optional[str], List[Dict]]:
         """Archive all files in a directory tree.
 
@@ -231,6 +232,12 @@ class ArchiveManager:
             if any(part in (".lake", "build", "lake-packages", "__pycache__") for part in rel.parts):
                 continue
             if rel_str.endswith(".olean") or rel_str.endswith(".ilean"):
+                continue
+
+            # For inputs, skip the full Catalog/ context tree — it is already
+            # stored in the live Catalog directory and deduplicated there. We
+            # still archive the unique files (PROMPT.md, Main.lean, configs).
+            if role == "input" and skip_input_catalog_context and rel_str.startswith("Catalog/"):
                 continue
 
             data = src.read_bytes()
@@ -282,6 +289,7 @@ class ArchiveManager:
         output_dir: Optional[Path] = None,
         input_archive_path: Optional[Path] = None,
         output_archive_path: Optional[Path] = None,
+        skip_input_catalog_context: bool = True,
     ) -> ProjectManifest:
         """Archive a project from extracted directories and/or tar.gz archives."""
         if input_archive_path and input_archive_path.exists():
@@ -290,7 +298,7 @@ class ArchiveManager:
             output_dir = self._extract_tar(output_archive_path)
 
         input_files, prompt_hash, main_lean_hash, input_theorems = self._archive_directory(
-            input_dir or Path("/nonexistent"), "input"
+            input_dir or Path("/nonexistent"), "input", skip_input_catalog_context=skip_input_catalog_context
         )
         output_files, _, _, output_theorems = self._archive_directory(
             output_dir or Path("/nonexistent"), "output"

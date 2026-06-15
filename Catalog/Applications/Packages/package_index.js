@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "a72aaf71",
     "filename": "self_dual_code_length_enumerators_as_a_bridge_to_s.json",
     "pkg_num": 153,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6582600000000001,
     "title": "Self-Dual Codes as a Bridge to Smooth 4-Manifold Intersection Forms"
   },
   {
@@ -4726,8 +4726,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "self_dual_code_length_enumerators_as_a_bridge_to_s",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6582600000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Self-Dual Codes as a Bridge to Smooth 4-Manifold Intersection Forms"
     }
