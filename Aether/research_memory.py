@@ -454,7 +454,20 @@ class FutureDirectionsManager:
                     recovered += 1
                     completed_via_recovery += 1
                 else:
-                    # Truly stale — no record anywhere
+                    # Truly stale — no record anywhere.
+                    # But wait! If it was attempted very recently (e.g. in the last 15 minutes),
+                    # it might be in the middle of being prepared/dispatched. Do not recover it yet!
+                    if d.last_attempt_time:
+                        try:
+                            from datetime import datetime, timezone
+                            attempt_ts = datetime.fromisoformat(d.last_attempt_time)
+                            if attempt_ts.tzinfo is None:
+                                attempt_ts = attempt_ts.replace(tzinfo=timezone.utc)
+                            now = datetime.now(timezone.utc)
+                            if (now - attempt_ts).total_seconds() < 900:  # 15 minutes grace period
+                                continue
+                        except Exception:
+                            pass
                     d.status = "available"
                     d.consumed_by_exp_id = ""
                     recovered += 1

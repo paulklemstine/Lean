@@ -175,6 +175,7 @@ class KnowledgeExtractor:
         # State
         self.cycle_count = 0
         self.inflight: Dict[str, ResearchJob] = {}
+        self.locked_titles = set()
         self.completed_count = 0
         self.failed_count = 0
         
@@ -463,6 +464,8 @@ class KnowledgeExtractor:
 
         # Inflight concepts (to avoid repeating requests)
         inflight_concepts = [j.concept.title for j in self.inflight.values()] if hasattr(self, 'inflight') and self.inflight else []
+        if hasattr(self, 'locked_titles'):
+            inflight_concepts.extend(self.locked_titles)
 
         # Select future direction — the primary path
         # Domain decay and anti-repetition handle diversity; no need for redirect logic
@@ -534,6 +537,9 @@ class KnowledgeExtractor:
                 inflight_concepts=inflight_concepts,
             )
 
+        if hasattr(self, 'locked_titles') and concept.title:
+            self.locked_titles.add(concept.title)
+
         print(f"[Pi] concept={concept.title}, domain={concept.domain}, "
               f"mode={concept.research_mode}, novelty={concept.novelty_estimate:.2f}")
 
@@ -563,11 +569,22 @@ class KnowledgeExtractor:
         """
         job = self._prepare_dispatch(job, dry_run=dry_run)
         if dry_run or job.status in ("failed", "dry_run"):
+            if hasattr(self, 'locked_titles') and job.concept:
+                self.locked_titles.discard(job.concept.title)
             return job
+
+        # Pre-register in inflight to avoid race conditions during the network call
+        job.status = "preparing"
+        self.inflight[job.job_id] = job
+        self._save_inflight()
 
         # Dispatch to Aristotle
         try:
             project_id = asyncio.run(self._dispatch_to_aristotle(job))
+            self.inflight.pop(job.job_id, None)
+            if hasattr(self, 'locked_titles') and job.concept:
+                self.locked_titles.discard(job.concept.title)
+
             job.project_id = project_id
             job.status = "dispatched"
             job.dispatch_time = time.time()
@@ -575,6 +592,10 @@ class KnowledgeExtractor:
             self._save_inflight()
             print(f"[Dispatch] Aristotle project: {project_id}")
         except RuntimeError as e:
+            self.inflight.pop(job.job_id, None)
+            if hasattr(self, 'locked_titles') and job.concept:
+                self.locked_titles.discard(job.concept.title)
+            self._save_inflight()
             if "already running" in str(e) or "cannot be called from a running event loop" in str(e):
                 # We're inside an async loop — caller should use dispatch_async
                 job.status = "failed"
@@ -585,6 +606,10 @@ class KnowledgeExtractor:
                 job.error_message = f"Dispatch failed: {e}"
                 print(f"[Dispatch] FAILED: {e}")
         except Exception as e:
+            self.inflight.pop(job.job_id, None)
+            if hasattr(self, 'locked_titles') and job.concept:
+                self.locked_titles.discard(job.concept.title)
+            self._save_inflight()
             job.status = "failed"
             job.error_message = f"Dispatch failed: {e}"
             print(f"[Dispatch] FAILED: {e}")
@@ -598,11 +623,22 @@ class KnowledgeExtractor:
         """
         job = self._prepare_dispatch(job, dry_run=dry_run)
         if dry_run or job.status in ("failed", "dry_run"):
+            if hasattr(self, 'locked_titles') and job.concept:
+                self.locked_titles.discard(job.concept.title)
             return job
+
+        # Pre-register in inflight to avoid race conditions during the network call
+        job.status = "preparing"
+        self.inflight[job.job_id] = job
+        self._save_inflight()
 
         # Dispatch to Aristotle (we're already in an async context, just await)
         try:
             project_id = await self._dispatch_to_aristotle(job)
+            self.inflight.pop(job.job_id, None)
+            if hasattr(self, 'locked_titles') and job.concept:
+                self.locked_titles.discard(job.concept.title)
+
             job.project_id = project_id
             job.status = "dispatched"
             job.dispatch_time = time.time()
@@ -620,6 +656,10 @@ class KnowledgeExtractor:
             except Exception as e:
                 pass  # Don't break dispatch on log errors
         except Exception as e:
+            self.inflight.pop(job.job_id, None)
+            if hasattr(self, 'locked_titles') and job.concept:
+                self.locked_titles.discard(job.concept.title)
+            self._save_inflight()
             job.status = "failed"
             job.error_message = f"Dispatch failed: {e}"
             print(f"[Dispatch] FAILED: {e}")
@@ -1723,14 +1763,16 @@ Research mode: {concept.research_mode}
                             for lf in pkg_data.get("lean_files", []) or []:
                                 pkg_lean_files.append(lf.replace("Catalog/", ""))
                                 pkg_lean_files.append(lf.split("/")[-1])
-                            for lp in pkg_data.get("lean_proofs", []) or []:
-                                if isinstance(lp, dict):
-                                    f_val = lp.get("file") or lp.get("name", "")
-                                    pkg_lean_files.append(f_val.replace("Catalog/", ""))
-                                    pkg_lean_files.append(f_val.split("/")[-1])
-                                elif isinstance(lp, str):
-                                    pkg_lean_files.append(lp.replace("Catalog/", ""))
-                                    pkg_lean_files.append(lp.split("/")[-1])
+                            lp_field = pkg_data.get("lean_proofs", [])
+                            if isinstance(lp_field, list):
+                                for lp in lp_field:
+                                    if isinstance(lp, dict):
+                                        f_val = lp.get("file") or lp.get("name", "")
+                                        pkg_lean_files.append(f_val.replace("Catalog/", ""))
+                                        pkg_lean_files.append(f_val.split("/")[-1])
+                                    elif isinstance(lp, str):
+                                        pkg_lean_files.append(lp.replace("Catalog/", ""))
+                                        pkg_lean_files.append(lp.split("/")[-1])
                                     
                             if any(lf in pkg_lean_files for lf in updated_lean_files if lf):
                                 matched_pkg_file = f
@@ -3323,6 +3365,8 @@ Research mode: {concept.research_mode}
         """Release the future direction consumed by a failed job back to available."""
         if not job.job_id:
             return
+        if hasattr(self, 'locked_titles') and job.concept:
+            self.locked_titles.discard(job.concept.title)
         try:
             from research_memory import FutureDirectionsManager
             fd_manager = FutureDirectionsManager(self.workspace)
