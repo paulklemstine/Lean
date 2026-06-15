@@ -1,0 +1,196 @@
+[
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "b3a33fd0",
+    "description": "Building on cycle 32c81afa (Q=0.761), which proved 22 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # Future Directions — Boltzmann Bridge XI: Convexity & Bicombing of Interleaving Geodesics\n\n## Synthesis\n\nThe persistence-stability arc of the catalog climbed a ladder of structure: a\nrelational preorder (`BottleneckStability`), a pseudo-emetric\n(`InterleavingMetric`), a genuine `EMetricSpace` (`Int",
+    "domain_bridges": [],
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_32c81afa_c3f8549b",
+    "lineage_refs": [],
+    "priority_score": 0.8607163636363636,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "32c81afa",
+    "status": "in_progress",
+    "timestamp": "2026-06-15T01:25:05.582801+00:00",
+    "title": "Deepening: The persistence-stability arc of the catalog climbed a ladder of structure: a"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "306ac326",
+    "description": "# Future Directions — Boltzmann Bridge XI: Functorial Transport and the Contractible Path Space\n\n## Synthesis\n\nBridge XI (`InterleavingPathFunctor.lean`) discharged the two purely *constructive*\nFuture Directions left open by Bridge X. It turned the static path space of\nfiltrations into a **functorial and contractible** object, resting on a single\nstructural observation: both the pullback `pullback f` and the geodesic interpolation\n`lerp` are *affine in the weight*, so they commute on the nose.\n\nThree facts now interlock over the geodesic `lerp`:\n\n* a **functorial** law — `pullback_lerp` shows `pullback f (lerp F G t) =\n  lerp (pullback f F) (pullback f G) t`, so the contravariant persistence functor\n  carries the `F`–`G` geodesic onto the geodesic of the pulled-back endpoints. This\n  upgrades Bridge IX''s point-level `1`-Lipschitz statement (`pullback_lipschitzWith_one`)\n  to the path-level isometry `eInterleavingDist_pullback_lerp` and its contraction\n  bound `eInterleavingDist_pullback_lerp_le`. The assignment `α ↦ (Filtration α, lerp)`\n  is thus a functor into geodesic spaces.\n* a **homotopical** law — `lerp_straightLine_contraction` builds the explicit\n  straight-line homotopy `H s r = lerp F (γ r) s` contracting any path `γ` to its\n  basepoint `F` at constant `s`-speed, witnessing that the path space is contractible.\n* a **diagonal** law — `eInterleavingDist_convex_sharp` records that Bridge X's\n  Busemann convexity inequality becomes an *equality* at `H = F`, identifying the\n  Bridge IX geodesic identity as the sharp diagonal of convexity.\n\nThe decisive insight of this cycle is that **transport and contraction are the same\nalgebraic fact wearing two hats**: \"affine commutes with affine\" is what makes\n`pullback` commute with `lerp` (functoriality) and equally what keeps the contracting\ntwo-parameter family `lerp F (γ r) s` inside the geodesic algebra (contractibility).\nNo metric reasoning enters the structural layer; the metric content is inherited\nverbatim through the Bridge VIII isometry and the Bridge IX geodesic identity.\n\n## Results summary\n\n| Theorem | Statement | Role |\n|---|---|---|\n| `pullback_lerp` | `pullback f (lerp F G t) = lerp (pullback f F) (pullback f G) t` | geodesic transport (algebraic) |\n| `eInterleavingDist_pullback_lerp` | `d(pb (lerp s), pb (lerp t)) = ofReal\\|s−t\\|·d(pb F, pb G)` | path-level isometry |\n| `eInterleavingDist_pullback_lerp_le` | `… ≤ ofReal\\|s−t\\|·d(F,G)` | pullback is short on paths |\n| `lerp_straightLine_contraction` | `∃ H, H 0 = F ∧ H 1 = γ ∧ constant-speed` | contractible path space |\n| `eInterleavingDist_convex_sharp` | `d(F, lerp F G t) = ofReal(1−t)·d(F,F)+ofReal t·d(F,G)` | sharp diagonal of convexity |\n\nAll five compile with `sorry`-count 0 and depend only on `propext`, `Classical.choice`,\n`Quot.sound`.\n\n---\n\n## Direction 1 — The strict convexity defect and genuinely non-unique geodesics\n\n**Conjecture.** The Busemann defect\n`δ(H,F,G,t) := ofReal(1−t)·d(H,F) + ofReal t·d(H,G) − d(H, lerp F G t)` is `≥ 0`\neverywhere (Bridge X's `eInterleavingDist_convex`) and equals `0` at `H = F`\n(Bridge XI's `eInterleavingDist_convex_sharp`), but is *not* identically zero: over\n`α = Fin 2` there is an explicit triple `F, G, H` of `ofWeight`-filtrations and a\n`t ∈ (0,1)` with `δ(H,F,G,t) > 0`. Consequently `(Filtration α, eInterleavingDist)`\nadmits two genuinely distinct constant-speed geodesics between some pair, so it is\ngeodesic but **not uniquely geodesic**, hence not CAT(0), despite Busemann convexity.\n\n**The key insight is** that the interleaving metric is, by Bridge VIII's\n`eInterleavingDist_eq_weightSupEDist`, an ℓ∞-type supremum over simplices, and ℓ∞\nballs are cubes: when the simplex maximising `|H − lerp t|` *migrates* from one\ncoordinate to another as `t` crosses a threshold, the straight convex bound is\nstrictly slack and a bent path realises the same endpoint distance.\n\n**Why now?** Bridge VIII already reduces every distance to a finite `⨆` over\n`Finset (Fin 2)` (four simplices), and `ofWeight` builds filtrations from explicit\nweight tables. The defect is therefore a finite `#eval`-checkable sup computation, not\nan analytic argument — the entire CAT(0) question collapses to exhibiting one weight\ntable where the argmax of the gap moves with `t`.\n\n---\n\n## Direction 2 — Naturality of the contraction: pullback transports homotopies\n\n**Conjecture.** The straight-line contraction of `lerp_straightLine_contraction` is\n*natural* in the vertex type: for `f : α → β`, pulling back the contraction of a path\n`γ` based at `F` is the contraction of the pulled-back path `pullback f ∘ γ` based at\n`pullback f F`, i.e. `pullback f (H s r) = H' s r` where `H'` is the contraction\nproduced from `pullback f F` and `pullback f ∘ γ`. Hence `pullback f` is not merely a\nmorphism of geodesic spaces but a morphism of **contractions**, and the assignment\n`α ↦ (path space of Filtration α)` is a functor into contractible spaces with\nbasepoint-preserving, contraction-preserving maps.\n\n**The key insight is** that `pullback_lerp` already commutes `pullback` past a single\n`lerp`, and the contraction homotopy `H s r = lerp F (γ r) s` is built entirely from\n`lerp`s; so `pullback` commutes past the *whole two-parameter family* for the same\n\"affine commutes with affine\" reason, with no new metric input.\n\n**Why now?** `pullback_lerp` is the exact one-step commutation lemma, and\n`lerp_straightLine_contraction` packages the homotopy explicitly as a term in `lerp`;\nthe naturality square is therefore a direct `ext_weight`/`simp` rewrite of the\nhomotopy term, immediately promoting Bridge XI's two separate functorial and\nhomotopical chapters into a single functor-of-contractible-spaces statement.\n\n---\n\n## Direction 3 — Geodesics leave the Vietoris–Rips locus\n\n**Conjecture.** Let `diamFiltration` (from `HigherPersistence.lean`) be the\nVietoris–Rips diameter filtration of a finite metric space. The geodesic between two\ndiameter-filtrations generically *leaves* the diameter locus: there is a finite metric\nconfiguration (a 3- or 4-point space) and a `t ∈ (0,1)` for which\n`(lerp (diamFiltration X) (diamFiltration Y) t).weight` violates the diameter\nmax-rule `weight(triangle) = max over its edges`, so no metric `Z` has\n`diamFiltration Z = lerp (diamFiltration X) (diamFiltration Y) t`. The VR locus is\ngeodesically *non-convex* inside `(Filtration α, eInterleavingDist)`.\n\n**The key insight is** that diameter weights obey a cross-simplex compatibility\nconstraint — a triangle's weight is the max of its three edge weights — whereas\n`lerp` mixes the weight of each simplex *independently* and affinely; an affine blend\nof two maxima is generally not the max of the blended edges, so the interpolant stays\na valid monotone filtration but ceases to be a valid *metric* filtration.\n\n**Why now?** Bridge IX flagged this frontier but had no path object; Bridge X gave\n`lerp` and Bridge XI confirmed `lerp` is transported and contracted functorially.\nWith `diamWeight` already a concrete `sup'` over pairwise distances, the violation is\na single arithmetic inequality on one triangle of a 3-point space — falsifiable by one\n`#eval`.\n\n---\n\n## Direction 4 — The equality locus of functorial transport\n\n**Conjecture.** The path-level contraction `eInterleavingDist_pullback_lerp_le` is\n*sharp exactly when `f` is surjective*: for surjective `f`, the transported geodesic\nspeed equals the upstream speed, `d(pb (lerp s), pb (lerp t)) = ofReal|s−t|·d(F,G)`\nfor all `s,t ∈ [0,1]`; and for any non-surjective `f` whose missed simplices carry a\nstrictly larger weight gap, the inequality is strict at every `s ≠ t`. Thus\n`pullback f` is a *path-isometry* iff it is a metric isometry iff `f` is surjective —\na clean trichotomy fusing Bridge IX''s corrected Direction 3 with Bridge XI's path\nlayer.\n\n**The key insight is** that `eInterleavingDist_pullback_lerp` already factors the\ntransported speed as `ofReal|s−t|` times `d(pb F, pb G)`, and Bridge IX''s\n`eInterleavingDist_pullback_eq_of_surjective` pins exactly when `d(pb F, pb G) =\nd(F,G)`; the path equality is therefore the scalar `ofReal|s−t|` multiplied through\nthe *endpoint* equality, so the geodesic-speed equality locus *is* the endpoint\nisometry locus.\n\n**Why now?** Both halves exist: `eInterleavingDist_pullback_lerp` gives the speed\nfactorisation and `eInterleavingDist_pullback_eq_of_surjective` gives the endpoint\ncharacterisation. Multiplying one by `ofReal|s−t|` is a one-line `congr`/`rw`, turning\ntwo endpoint-level facts into a complete path-level isometry classification — the\nnatural capstone of the functorial-transport chapter.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1924",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "13a80f4d",
+    "status": "in_progress",
+    "timestamp": "2026-06-14T23:22:06.943927+00:00",
+    "title": "Bridge XI (`InterleavingPathFunctor.lean`) discharged the two purely *constructi"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Identity Systems II: After the Converse, Eliminator, and Mathlib Bridge\n\n## Synthesis of this cycle\n\nThe previous cycle proved the **Fundamental Theorem of Identity Systems**\n(`fundamentalIdentitySystem` in `Catalog/Logic/HoTT/IdentitySystems.lean`): an\n`IdentitySystem A a₀ R` yields a fibrewise equivalence `(a₀ = a) ≃' R a`. It left\nopen five concrete research directions. This cycle\n(`Catalog/Logic/HoTT/IdentitySystemsConverse.lean`) closes four of them, all\n`sorry`-free and depending only on `propext`.\n\nThe unifying discovery is that **contractibility transport across an `Equiv'`**\n(`HoTTFound.Equiv'.contractible`, added last cycle) is the single reusable engine\nfor the entire identity-system calculus. Once the right `Σ'`-equivalence is named,\nthe converse, the closure properties, and the eliminator all become one-line\nassemblies:\n\n- `Equiv'.psigmaCongr` assembles fibrewise equivalences into one equivalence of\n  total spaces;\n- `idSys_of_fiber_equiv` (**Direction 1, the converse**) transports\n  contractibility of the based path total space across it, so a family fibrewise\n  equivalent to `a₀ = ·` *is* an identity system — giving, with the previous\n  cycle, the full characterisation;\n- `idSysElim` + `idSysElim_beta` (**Direction 4**) is the induced path-induction\n  eliminator with its computation rule, free on `rfl` because every base-loop\n  transport in a `Prop`-valued `Eq` is the identity (`mpr_congr_loop`);\n- `Equiv'.toEquiv` + `fundamentalIdentitySystemEquiv` (**Direction 5**) exports\n  the fundamental equivalence to Mathlib's `Equiv`;\n- `Contractible.prod`, `Equiv'.sigmaProd`, `idSys_prod` (**Direction 3**) give\n  closure under products.\n\n## Results summary\n\n| Theorem | Statement | Status |\n|---|---|---|\n| `Equiv'.psigmaCongr` | `(∀ a, P a ≃' Q a) → (Σ' a, P a) ≃' (Σ' a, Q a)` | ✅ proved |\n| `idSys_of_fiber_equiv` | `(∀ a, (a₀ = a) ≃' R a) → IdentitySystem A a₀ R` | ✅ proved |\n| `mpr_congr_loop` | transport along a loop is the identity | ✅ proved |\n| `idSysElim` | dependent eliminator induced by an identity system | ✅ proved |\n| `idSysElim_beta` | `idSysElim S D d a₀ S.rflR = d` (computation rule) | ✅ proved |\n| `Equiv'.toEquiv` | `α ≃' β → α ≃ β` (Mathlib bridge) | ✅ proved |\n| `fundamentalIdentitySystemEquiv` | `IdentitySystem A a₀ R → (a₀ = a) ≃ R a` | ✅ proved |\n| `Contractible.prod` | product of contractibles is contractible | ✅ proved |\n| `Equiv'.sigmaProd` | `Σ'`-distribution over a product base | ✅ proved |\n| `idSys_prod` | product of identity systems is an identity system | ✅ proved |\n\nAll results depend only on `propext` (and `idSysElim_beta` on no axioms at all).\n\n## Research directions\n\n### 1. The structure identity principle for `HProp'` (the last untouched direction)\n\nThe one remaining open direction from the previous cycle is a **structure identity\nprinciple** for the catalog's `HProp'` universe. Conjecture (two halves): (a)\n*unconditionally*, `HPropEquiv P Q` upgrades to an `Equiv' P.carrier Q.carrier`,\nbecause `HProp'` is subsingleton-valued so a logical equivalence is already a type\nequivalence; (b) *given a propositional-univalence hypothesis supplied as an\nexplicit parameter* `(univ : ∀ P Q, (P.carrier ↔ Q.carrier) → P = Q)`, that\nequivalence becomes an honest `Eq`. *The key insight is* that the data-free\nhalf needs no univalence — `Equiv'.toEquiv` and `Equiv'.contractible` already turn\n\"logically equivalent subsingletons\" into \"equivalent as types\"; univalence is\nonly the final repackaging into `Eq`, and must be threaded as a hypothesis rather\nthan an axiom. **Why now?** With `Equiv'.toEquiv` in place the unconditional half\nis immediate, isolating exactly where (and whether) univalence is genuinely\nneeded.\n\n### 2. Package the characterisation as a single `Equiv'`-valued biconditional\n\nWe have both implications — `fundamentalIdentitySystem` (forward) and\n`idSys_of_fiber_equiv` (converse) — but never assembled them into one statement.\nConjecture: there is a *coherent* round trip, `idSys_of_fiber_equiv` applied to\nthe family `fun a => fundamentalIdentitySystem S a` reproduces `S` up to a\ncanonical `IdentitySystem`-isomorphism, and conversely the encode map of\n`idSys_of_fiber_equiv e` agrees fibrewise with `e`. *The key insight is* that both\ndirections factor through the same contractible total space `Σ' a, R a`, so the\nround trip is governed by `Subsingleton`-ness of maps out of a contractible type,\nnot by new homotopy. **Why now?** `idSysElim`/`idSysElim_beta` give exactly the\nuniqueness principle (\"a map out of `R` is determined by its value on `rflR`\")\nneeded to prove the two families of maps agree without path induction by hand.\n\n### 3. Dependent-sum and pullback closure (finishing Direction 3)\n\nProducts are done; the dependent-sum and pullback cases remain. Conjecture: if `R`\nis an identity system on `A` at `a₀` and, for each `a`, `Rᵃ` is an identity system\non `B a` at `b₀ a`, then the total family is an identity system on `Σ' a, B a` at\n`⟨a₀, b₀ a₀⟩`; and identity systems pull back along any `f : C → A` whenever `f`\nreflects the relevant paths. *The key insight is* that the contractibility of an\niterated `Σ'` total space again reduces, via `Equiv'.contractible` and a\n`Σ'`-reassociation equivalence (the dependent analogue of `Equiv'.sigmaProd`), to\ncontractibility of the pieces. **Why now?** `Equiv'.psigmaCongr` plus\n`Equiv'.sigmaProd` are templates; the dependent reassociation `Equiv'` is the only\nnew gadget, and its roundtrips are again definitional `rfl`s.\n\n### 4. η / uniqueness for the induced eliminator\n\n`idSysElim_beta` gives the β-rule; the dual is an **η/uniqueness rule**: any\nsection `g : ∀ a r, D a r` equals `idSysElim S D (g a₀ S.rflR)`. Conjecture: this\nholds for every identity system, making `idSysElim` the *unique* dependent\neliminator and certifying `IdentitySystem` as a genuine higher-inductive-style\nrecursor. *The key insight is* that two sections agreeing on `rflR` agree\neverywhere, because they agree on the centre of the contractible total space and\nsections out of a contractible type are determined by their value at the centre.\n**Why now?** The machinery is already present: `idSysElim` is transport from the\ncentre, and `mpr_congr_loop` shows that transport degenerates on loops, so the\nuniqueness proof is the same `proof_irrel`-driven argument applied one level up.\n\n### 5. Transport the Mathlib bridge: subsingleton/`Prop` consequences for free\n\n`fundamentalIdentitySystemEquiv` lands the fundamental theorem in Mathlib's\n`Equiv` API. Conjecture: this immediately yields, for any identity system, that\n`R a` inherits every `Equiv`-stable property of the path space `a₀ = a` — e.g.\n`Subsingleton (R a)` when `A` has decidable/`Prop`-level equality, and a\n`DecidableEq`-style transport. *The key insight is* that `Equiv.subsingleton`,\n`Equiv.decidableEq`, and friends are stated for Mathlib's `Equiv`, so the bridge\nturns purely synthetic identity-system data into mainstream instances with no\nextra proof. **Why now?** With the bridge proven to use only `propext`, exporting\nthese consequences is zero marginal cost and demonstrates the cross-domain payoff\n(topology, category theory, decidability) promised by Direction 5.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Bridges"
+    ],
+    "id": "fd_1931",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2c181743",
+    "status": "available",
+    "timestamp": "2026-06-15T00:19:30.310311+00:00",
+    "title": "The previous cycle proved the **Fundamental Theorem of Identity Systems**"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "9ad9f2a6",
+    "description": "# Future Directions — Discrete Hodge Laplacian, Harmonic Space & Diffusion Message Passing\n\n## Synthesis\n\nThis cycle rebuilds the discrete Hodge program on a **self-contained Mathlib foundation**.\nThe previous catalog `Hodge*` stack did not elaborate: `HodgeMessagePassingConvergence`\nimports a module `Speculative.AutoResearch.HodgeSpectralThreshold` that does not exist in the\nrepository, and the package declared no `srcDir`, so `lake` could not even locate the catalog\nsources. Two infrastructure repairs were made — adding `srcDir = \"Catalog\"` to `lakefile.toml`\nso module resolution works at all — and a new, dependency-free file\n`Catalog/Speculative/AutoResearch/HodgeLaplacianGreen.lean` re-derives the operator-algebra,\nanalytic, and dynamical layers of the program from Mathlib alone.\n\nThe central object is the discrete **Hodge Laplacian** of a two-step cochain complex of\nfinite-dimensional real inner-product spaces\n\n```\nU --e--> V --d--> W ,        Δ = d* ∘ d + e ∘ e*   on   V ,\n```\n\nwith `d* = LinearMap.adjoint d` and `e* = LinearMap.adjoint e`. The single organizing identity\nis the sum-of-squares **Dirichlet energy**\n\n```\n⟪Δ x, x⟫ = ‖d x‖² + ‖e* x‖² ,\n```\n\nfrom which everything else follows. The harmonic space `ker Δ` is exactly the\nclosed-and-co-closed cochains (`d x = 0 ∧ e* x = 0`); the Rayleigh form is strictly positive\noff `ker Δ`; self-adjointness places the image of `Δ` inside `(ker Δ)ᗮ`. On the dynamical\nside, the explicit-Euler diffusion step `S = id − a·Δ` fixes the harmonic space pointwise and\nconserves the harmonic projection along the whole trajectory, `P (Sᵏ x) = P x`: diffusion\nnever creates or destroys the topological (harmonic) component, it only relaxes the\nexact / co-exact part. This is the local-to-global picture made discrete: local data (the maps\n`d`, `e` on individual cochains) glues, via the Hodge decomposition, into the global\nobstruction object `ker Δ`.\n\n## Results summary (proved sorry-free; axioms `propext, Classical.choice, Quot.sound`)\n\n| Theorem | Statement |\n|---|---|\n| `hodgeLap_isSymmetric` | `Δ` is self-adjoint |\n| `hodgeLap_quadratic_form` | `⟪Δ x, x⟫ = ‖d x‖² + ‖e* x‖²` |\n| `hodgeLap_apply_eq_zero_iff` | `Δ x = 0 ↔ d x = 0 ∧ e* x = 0` (harmonic ⇔ closed & co-closed) |\n| `hodgeLap_quadratic_eq_zero_iff` | `⟪Δ x, x⟫ = 0 ↔ Δ x = 0` (strict positivity off the kernel) |\n| `hodgeLap_apply_mem_orthogonal_ker` | `Δ x ∈ (ker Δ)ᗮ` |\n| `diffStep_harmonic_fixed` / `diffStep_pow_harmonic_fixed` | `Sᵏ h = h` for harmonic `h` |\n| `harmonicProjection_diffStep` / `harmonicProjection_diffStep_pow` | `P (Sᵏ x) = P x` |\n\n## Research directions\n\n### 1. From \"image in `(ker Δ)ᗮ`\" to the orthogonal splitting `range Δ = (ker Δ)ᗮ`\nThis cycle proves the easy inclusion `Δ x ∈ (ker Δ)ᗮ` (`hodgeLap_apply_mem_orthogonal_ker`).\nConjecture the full identity `range Δ = (ker Δ)ᗮ`, and consequently that `Δ` is a linear\nisomorphism of `(ker Δ)ᗮ` onto itself. Falsifiable by any `y ∈ (ker Δ)ᗮ` not of the form\n`Δ x`, or any nonzero `z ∈ (ker Δ)ᗮ` with `Δ z = 0`. **The key insight is** that injectivity\non the complement is immediate from strict positivity — if `z ∈ (ker Δ)ᗮ` and `Δ z = 0` then\n`z ∈ ker Δ ∩ (ker Δ)ᗮ = 0` — and in finite dimensions an injective self-map of `(ker Δ)ᗮ` is\nsurjective, so the rank–nullity count `dim(range Δ) = dim V − dim(ker Δ) = dim (ker Δ)ᗮ`\ncloses the inclusion to an equality. **Why now?** Self-adjointness, strict positivity, and the\nmembership lemma are all theorems this cycle, so the remaining step is a dimension count using\nMathlib's `LinearMap.finrank_range_add_finrank_ker` and `Submodule.finrank_add_finrank_orthogonal`.\n\n### 2. Bundle the Green's operator into an honest self-adjoint linear map\nWith Direction 1 in hand, every `x` has a unique `z ∈ (ker Δ)ᗮ` with `Δ z = x − P x`.\nConjecture this assembles into a genuine `G : V →ₗ[ℝ] V` with `Δ ∘ G = G ∘ Δ = id − P`,\n`G ∘ P = 0`, and `G` self-adjoint (`⟪G x, y⟫ = ⟪x, G y⟫`). Falsifiable by a candidate `G` with\n`Δ (G x) ≠ x − P x` on some `x`, or with `⟪G x, y⟫ ≠ ⟪x, G y⟫`. **The key insight is** that\nuniqueness is the *only* obstruction to linearity of a solver: `z(x+y)` and `z(x)+z(y)` solve\nthe same problem, so injectivity on `(ker Δ)ᗮ` forces them equal, making\n`G x := Classical.choose …` automatically additive and homogeneous, with `LinearMap.mk` closing\nthe construction. **Why now?** Direction 1 supplies the existence-and-uniqueness needed; each\n`LinearMap` axiom is then a one-line uniqueness argument, and self-adjointness follows from\n`hodgeLap_isSymmetric` restricted to the invariant complement.\n\n### 3. The diffusion energy is a strict Lyapunov function with harmonic limit\nConjecture the Dirichlet energy `E(x) = ⟪Δ x, x⟫` is non-increasing along admissible diffusion,\n`E(S x) ≤ E(x)` for `0 < a < 2/λ_max`, with equality iff `x` is harmonic, and that `Sᵏ x → P x`\nas `k → ∞`. Falsifiable by an `x` and admissible `a` with `E(S x) > E(x)`, or a non-harmonic\nfixed point of `S`. **The key insight is** that `hodgeLap_quadratic_form` already exhibits `E`\nas a sum of squares whose zero set is exactly `ker Δ` (`hodgeLap_quadratic_eq_zero_iff`), and\n`harmonicProjection_diffStep_pow` pins the limit's harmonic part to `P x`, so only the\ncomplementary part must be shown to vanish. **Why now?** Both the Lyapunov candidate (the proven\nquadratic form) and the conserved target (`P x`) are in hand; monotonicity reduces to the single\nalgebraic estimate `E(x) − E(Sx) = 2a⟪Δx,Δx⟫ − a²⟪Δx,Δ(Δx)⟫ ≥ 0` once `Δ` is bounded by `λ_max`\non the complement.\n\n### 4. Spectral resolution `Δ = Σ λᵢ Pᵢ` with `P₀ = P` and `G = Σ_{λᵢ>0} λᵢ⁻¹ Pᵢ`\nConjecture the finite-dimensional spectral theorem for `Δ`: an orthonormal eigenbasis with\n`0 = λ₀ ≤ λ₁ ≤ …`, the `0`-eigenprojection equal to the harmonic projection `P`, `Δ = Σ λᵢ Pᵢ`,\nand the Green's operator of Direction 2 equal to `G = Σ_{λᵢ>0} λᵢ⁻¹ Pᵢ`. Falsifiable by a\nnegative eigenvalue, a non-harmonic `0`-eigenvector, or a mismatch `G ≠ Σ λᵢ⁻¹ Pᵢ`. **The key\ninsight is** that `hodgeLap_isSymmetric` feeds Mathlib's finite-dimensional spectral theorem\ndirectly, the quadratic form pins the spectrum to `[0, ∞)`, and `hodgeLap_quadratic_eq_zero_iff`\nidentifies the `0`-eigenspace with `ker Δ`, so the eigendecomposition is an *application* rather\nthan a new theory. **Why now?** All three hypotheses of the spectral theorem are theorems this\ncycle, and Direction 2's Green operator forces the inverse-eigenvalue formula once the\neigenprojections exist; the contraction rate `ρ = max_{λ>0} |1 − aλ|` of diffusion then drops out\nper eigenvector.\n\n### 5. The discrete Hodge isomorphism `ker d / range e ≃ ker Δ` as a quotient isometry\nConjecture that the harmonic representative realizes the cohomology quotient: every closed class\n`[x]` (with `d x = 0`) has a unique harmonic representative `P x ∈ ker Δ`, giving a linear\nisomorphism `ker d / range e ≃ ker Δ` that is moreover an **isometry** for the quotient norm,\n`‖[x]‖ = ‖P x‖`. (This direction needs the cochain condition `d ∘ e = 0`, which the present file\ndoes not yet assume.) Falsifiable by a closed `x` whose harmonic projection leaves the class, or a\nclass whose quotient norm differs from `‖P x‖`. **The key insight is** that Direction 1's splitting\n`range Δ = (ker Δ)ᗮ` separates any closed cochain into a harmonic part `P x` and a part in\n`range Δ = range d* ⊕ range e`; restricted to closed cochains the `d*`-component vanishes, so\n`x − P x ∈ range e` and `P x` is the canonical representative, with `‖P x‖ ≤ ‖x − e u‖` making the\nquotient infimum attained exactly at `P x`. **Why now?** The orthogonal splitting and harmonic\nprojection identities are (or shortly will be) theorems; only the identification of Mathlib's\n`Submodule.Quotient.norm_mk` infimum with this attained minimum remains to upgrade the linear iso\nto a `LinearIsometryEquiv`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_1933",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "123e2af3",
+    "status": "in_progress",
+    "timestamp": "2026-06-15T00:54:24.083436+00:00",
+    "title": "This cycle rebuilds the discrete Hodge program on a **self-contained Mathlib fou"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "8833e49e",
+    "description": "Conjecture: There exists a universal constant c > 0 such that any infinite family of CSS quantum codes constructed from bounded-degree hypergraph products of 2-dimensional simplicial complexes with cosystolic expansion at least c has a nonzero circuit-level fault-tolerance threshold under local stochastic Pauli noise, and this threshold is bounded below by an explicit monotone function of the complexes' first and second systolic expansion constants. Test: Build code families from complexes with tunable cosystolic/systolic expansion, simulate syndrome extraction and decoding under circuit-level noise, and determine whether the empirical threshold stays bounded away from zero precisely when the measured expansion constants exceed the predicted bound; a refutation is any family satisfying the expansion hypothesis whose threshold vanishes asymptotically, or any family below the bound that still exhibits a robust threshold contradicting monotonicity. Impact: This would convert high-dimensional topological expansion from a static combinatorial property into a predictive design principle for scalable quantum memories and fault-tolerant architectures, linking geometric group theory, quantum LDPC code construction, and noise-threshold physics.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_1929",
+    "lineage_refs": [],
+    "priority_score": 0.7,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "in_progress",
+    "timestamp": "2026-06-15T00:02:37.294950+00:00",
+    "title": "Topological Error Thresholds from Systolic Expansion in Hypergraph Product Quant"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "d9a410f9",
+    "description": "Conjecture: For any sufficiently expressive formal system with a terminating local rewrite kernel, the directed graph of proof states generated by bounded-length theorem-search trajectories admits a persistent path-homology spectrum whose low-dimensional Betti profile converges, after size normalization, to a system-independent universal law determined only by the logical fragment's computational complexity class. Test: Construct proof-state graphs from multiple theorem provers and logical fragments under matched search budgets, compute normalized persistent path-homology invariants, and check whether the resulting spectra cluster by complexity class rather than by prover architecture or encoding; the conjecture is refuted if no such cross-system universality appears or if spectra are dominated by implementation-specific details. Impact: If true, this would provide a new invariant for reasoning complexity, enable architecture-agnostic diagnostics for theorem provers, and open a route to importing renormalization and universality ideas into formal mathematics and automated reasoning.",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Novelty"
+    ],
+    "id": "fd_1932",
+    "lineage_refs": [],
+    "priority_score": 0.7,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "in_progress",
+    "timestamp": "2026-06-15T00:19:39.138431+00:00",
+    "title": "Spectral Universality of Proof-State Complexes in Automated Theorem Search"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "88dc4a03",
+    "description": "Cycle 123e2af3 (Q=0.628) proved 6 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions — Discrete Hodge Laplacian, Green's Operator & Diffusion Message Passing\n\n## Synthesis\n\nThis cycle rebuilt the discrete Hodge program on a **self-contained Mathlib foundation**, af",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_123e2af3_0ea73f32",
+    "lineage_refs": [],
+    "priority_score": 0.67783,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "123e2af3",
+    "status": "in_progress",
+    "timestamp": "2026-06-15T00:54:28.562552+00:00",
+    "title": "Close Proofs: This cycle rebuilt the discrete Hodge program on a **self-contained Ma"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "abeb345e",
+    "description": "Cycle 75b4da8e (Q=0.522) proved 11 theorems in Physics but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Conjecture: There exists a nontrivial class of finite CSS quantum codes built from bounded-degree simplicial complexes for which a definable discrete Ricci-flow on the 1-skeleton, coupled to Hodge-Lap",
+    "domain_bridges": [],
+    "domains": [
+      "Physics"
+    ],
+    "id": "sorry_fill_75b4da8e_c5723346",
+    "lineage_refs": [],
+    "priority_score": 0.5719054545454546,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "75b4da8e",
+    "status": "in_progress",
+    "timestamp": "2026-06-14T21:01:49.252209+00:00",
+    "title": "Close Proofs: Definable Ricci-Flow Renormalization Fixed Points in Simplicial Quantu"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "fae03353",
+    "description": "Cycle 1ab7ab39 (Q=0.520) proved 6 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # Future Directions — Hodge Spectral Duality\n\n## Synthesis\n\nThe discrete-Hodge program already carries a *geometric/decomposition* layer\n(`HodgeFullDecomposition`: the split Dirichlet energy `⟨x, Lx⟩ ",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_1ab7ab39_15e458ba",
+    "lineage_refs": [],
+    "priority_score": 0.56996,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "1ab7ab39",
+    "status": "in_progress",
+    "timestamp": "2026-06-14T23:57:20.619620+00:00",
+    "title": "Close Proofs: The discrete-Hodge program already carries a *geometric/decomposition*"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 2509286d (Q=0.427) proved 15 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a minimal, completely self-contained asymptotic order on unary complexity functions and prove a strict density theorem between consecutive polynomial growth classes, abandoning the incomplet",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_2509286d_ba29f2f4",
+    "lineage_refs": [],
+    "priority_score": 0.4772732837662338,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2509286d",
+    "status": "available",
+    "timestamp": "2026-06-15T01:56:25.585076+00:00",
+    "title": "Close Proofs: Self-contained, `sorry`-free local-to-global theory for abstr"
+  }
+]

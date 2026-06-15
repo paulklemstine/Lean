@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" font-family="'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#16213e"/>
+    </linearGradient>
+    <linearGradient id="expGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#e74c3c"/>
+      <stop offset="100%" stop-color="#e55039"/>
+    </linearGradient>
+    <linearGradient id="logGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3498db"/>
+      <stop offset="100%" stop-color="#2980b9"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="600" fill="url(#bg3)"/>
+
+  <!-- Title -->
+  <text x="450" y="40" text-anchor="middle" fill="#fff" font-size="22" font-weight="bold">EML: The Universal Arithmetic Primitive</text>
+  <text x="450" y="62" text-anchor="middle" fill="#8395a7" font-size="13">EML(a, b) = eᵃ − ln(b)  — One operation to compute them all</text>
+
+  <!-- Central EML box -->
+  <rect x="310" y="90" width="280" height="80" rx="15" fill="#2d3436" stroke="#6c5ce7" stroke-width="3"/>
+  <text x="450" y="120" text-anchor="middle" fill="#a29bfe" font-size="20" font-weight="bold">EML(a, b)</text>
+  <text x="450" y="148" text-anchor="middle" fill="#dfe6e9" font-size="16">= eᵃ − ln(b)</text>
+
+  <!-- exp component -->
+  <rect x="325" y="105" width="60" height="30" rx="5" fill="url(#expGrad)" opacity="0.3"/>
+  <text x="355" y="125" text-anchor="middle" fill="#e74c3c" font-size="14" font-weight="bold">eᵃ</text>
+
+  <!-- minus -->
+  <text x="410" y="125" text-anchor="middle" fill="#fff" font-size="20">−</text>
+
+  <!-- ln component -->
+  <rect x="430" y="105" width="70" height="30" rx="5" fill="url(#logGrad)" opacity="0.3"/>
+  <text x="465" y="125" text-anchor="middle" fill="#3498db" font-size="14" font-weight="bold">ln(b)</text>
+
+  <!-- Derived operations -->
+  <!-- Row 1: Basic operations -->
+  <rect x="30" y="210" width="200" height="70" rx="10" fill="#2d3436" stroke="#00b894" stroke-width="1.5"/>
+  <text x="130" y="235" text-anchor="middle" fill="#00b894" font-size="14" font-weight="bold">Exponentiation</text>
+  <text x="130" y="258" text-anchor="middle" fill="#dfe6e9" font-size="12">EML(x, 1) = eˣ</text>
+  <text x="130" y="272" text-anchor="middle" fill="#636e72" font-size="9">✓ EMLd_exp</text>
+
+  <rect x="250" y="210" width="200" height="70" rx="10" fill="#2d3436" stroke="#fdcb6e" stroke-width="1.5"/>
+  <text x="350" y="235" text-anchor="middle" fill="#fdcb6e" font-size="14" font-weight="bold">Logarithm</text>
+  <text x="350" y="258" text-anchor="middle" fill="#dfe6e9" font-size="12">EML(0, eᴱᴹᴸ⁽⁰'ˣ⁾) = ln x</text>
+  <text x="350" y="272" text-anchor="middle" fill="#636e72" font-size="9">✓ EMLd_recovers_ln</text>
+
+  <rect x="470" y="210" width="200" height="70" rx="10" fill="#2d3436" stroke="#e17055" stroke-width="1.5"/>
+  <text x="570" y="235" text-anchor="middle" fill="#e17055" font-size="14" font-weight="bold">Inversion</text>
+  <text x="570" y="258" text-anchor="middle" fill="#dfe6e9" font-size="12">EML(EML(0,x), 1) = e/x</text>
+  <text x="570" y="272" text-anchor="middle" fill="#636e72" font-size="9">✓ EMLd_inv_scaled</text>
+
+  <rect x="690" y="210" width="180" height="70" rx="10" fill="#2d3436" stroke="#a29bfe" stroke-width="1.5"/>
+  <text x="780" y="235" text-anchor="middle" fill="#a29bfe" font-size="14" font-weight="bold">Identity</text>
+  <text x="780" y="258" text-anchor="middle" fill="#dfe6e9" font-size="12">EML(0,eᴱᴹᴸ⁽⁰'ᵉˣ⁾) = x</text>
+  <text x="780" y="272" text-anchor="middle" fill="#636e72" font-size="9">✓ EMLd_double_neg</text>
+
+  <!-- Arrows from center to row 1 -->
+  <line x1="380" y1="170" x2="130" y2="210" stroke="#00b894" stroke-width="1.5" opacity="0.4"/>
+  <line x1="420" y1="170" x2="350" y2="210" stroke="#fdcb6e" stroke-width="1.5" opacity="0.4"/>
+  <line x1="480" y1="170" x2="570" y2="210" stroke="#e17055" stroke-width="1.5" opacity="0.4"/>
+  <line x1="520" y1="170" x2="780" y2="210" stroke="#a29bfe" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- Row 2: Properties -->
+  <rect x="50" y="320" width="240" height="70" rx="10" fill="#2d3436" stroke="#74b9ff" stroke-width="1.5"/>
+  <text x="170" y="345" text-anchor="middle" fill="#74b9ff" font-size="14" font-weight="bold">Log Splitting</text>
+  <text x="170" y="368" text-anchor="middle" fill="#dfe6e9" font-size="12">EML(x, yz) = EML(x,y) − ln z</text>
+  <text x="170" y="382" text-anchor="middle" fill="#636e72" font-size="9">✓ EMLd_log_split</text>
+
+  <rect x="330" y="320" width="240" height="70" rx="10" fill="#2d3436" stroke="#55efc4" stroke-width="1.5"/>
+  <text x="450" y="345" text-anchor="middle" fill="#55efc4" font-size="14" font-weight="bold">Shift Property</text>
+  <text x="450" y="368" text-anchor="middle" fill="#dfe6e9" font-size="12">EML(x+c, 1) = eᶜ · eˣ</text>
+  <text x="450" y="382" text-anchor="middle" fill="#636e72" font-size="9">✓ EMLd_shift</text>
+
+  <rect x="610" y="320" width="240" height="70" rx="10" fill="#2d3436" stroke="#fd79a8" stroke-width="1.5"/>
+  <text x="730" y="345" text-anchor="middle" fill="#fd79a8" font-size="14" font-weight="bold">Unit Interval Map</text>
+  <text x="730" y="368" text-anchor="middle" fill="#dfe6e9" font-size="12">EML(0, x) ∈ (0,1) for x ∈ (1,e)</text>
+  <text x="730" y="382" text-anchor="middle" fill="#636e72" font-size="9">✓ EMLd_maps_to_unit_interval</text>
+
+  <!-- Row 3: Applications -->
+  <text x="450" y="435" text-anchor="middle" fill="#636e72" font-size="15" font-weight="bold">━━━━━━  Applications  ━━━━━━</text>
+
+  <rect x="30" y="455" width="200" height="85" rx="10" fill="#2d3436" stroke="#00cec9" stroke-width="1.5"/>
+  <text x="130" y="480" text-anchor="middle" fill="#00cec9" font-size="13" font-weight="bold">Neural Compression</text>
+  <text x="130" y="498" text-anchor="middle" fill="#b2bec3" font-size="10">4 params/output vs d²</text>
+  <text x="130" y="513" text-anchor="middle" fill="#b2bec3" font-size="10">Algorithm 11</text>
+  <text x="130" y="530" text-anchor="middle" fill="#636e72" font-size="9">✓ Verified savings bound</text>
+
+  <rect x="250" y="455" width="200" height="85" rx="10" fill="#2d3436" stroke="#ffeaa7" stroke-width="1.5"/>
+  <text x="350" y="480" text-anchor="middle" fill="#ffeaa7" font-size="13" font-weight="bold">Universal Approx.</text>
+  <text x="350" y="498" text-anchor="middle" fill="#b2bec3" font-size="10">EML closure dense in ℝ</text>
+  <text x="350" y="513" text-anchor="middle" fill="#b2bec3" font-size="10">Algorithm 22</text>
+  <text x="350" y="530" text-anchor="middle" fill="#636e72" font-size="9">✓ fullEMLClosure density</text>
+
+  <rect x="470" y="455" width="200" height="85" rx="10" fill="#2d3436" stroke="#dfe6e9" stroke-width="1.5"/>
+  <text x="570" y="480" text-anchor="middle" fill="#dfe6e9" font-size="13" font-weight="bold">Instruction Set</text>
+  <text x="570" y="498" text-anchor="middle" fill="#b2bec3" font-size="10">Single-op ISA</text>
+  <text x="570" y="513" text-anchor="middle" fill="#b2bec3" font-size="10">Algorithm 32</text>
+  <text x="570" y="530" text-anchor="middle" fill="#636e72" font-size="9">✓ Computationally universal</text>
+
+  <rect x="690" y="455" width="180" height="85" rx="10" fill="#2d3436" stroke="#fab1a0" stroke-width="1.5"/>
+  <text x="780" y="480" text-anchor="middle" fill="#fab1a0" font-size="13" font-weight="bold">Irrationality</text>
+  <text x="780" y="498" text-anchor="middle" fill="#b2bec3" font-size="10">EML(0,1) = e is irrational</text>
+  <text x="780" y="513" text-anchor="middle" fill="#b2bec3" font-size="10">Problem 6</text>
+  <text x="780" y="530" text-anchor="middle" fill="#636e72" font-size="9">✓ e_irrational</text>
+
+  <!-- Footer -->
+  <text x="450" y="575" text-anchor="middle" fill="#636e72" font-size="11">All identities formally verified in Lean 4 · Computation/DensityTheory.lean</text>
+</svg>
