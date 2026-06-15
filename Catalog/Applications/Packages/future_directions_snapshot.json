@@ -96,24 +96,5 @@
     "status": "in_progress",
     "timestamp": "2026-06-15T12:27:58.955289+00:00",
     "title": "Close Proofs: Functorial bridge from combinatorial species generating functions to t"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "cd281b27",
-    "description": "Cycle 406af8f7 (Q=0.531) proved 14 theorems in Shared but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: # FUTURE DIRECTIONS — Discrete Hodge ↔ Probability (cycle v16a)\n\nThis cycle delivered a self-contained Mathlib foundation for the discrete Hodge\nprogram on finite weighted graphs and proved two of the",
-    "domain_bridges": [],
-    "domains": [
-      "Shared"
-    ],
-    "id": "sorry_fill_406af8f7_640a103f",
-    "lineage_refs": [],
-    "priority_score": 0.5813228571428571,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "406af8f7",
-    "status": "in_progress",
-    "timestamp": "2026-06-15T12:28:59.884619+00:00",
-    "title": "Close Proofs: This cycle delivered a self-contained Mathlib foundation for the discr"
   }
 ]
