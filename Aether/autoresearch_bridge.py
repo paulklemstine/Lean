@@ -135,6 +135,10 @@ echo "METRIC $QUALITY concept_quality"
         prompt_length: int = 0,
         theorem_count: int = 0,
         sorry_count: int = 0,
+        theorem_novelty_new: int = 0,
+        theorem_novelty_strengthening: int = 0,
+        theorem_novelty_duplicate: int = 0,
+        theorem_novelty_disproof: int = 0,
         has_cross_domain: bool = False,
         advances_open_problem: bool = False,
         breakthrough_grade: str = "incremental",
@@ -246,9 +250,22 @@ echo "METRIC $QUALITY concept_quality"
             elif has_cross_domain and theorem_count >= 5:
                 breakthrough_bonus = 0.12
 
+        # ---- Theorem-level novelty bonus ----
+        # Reward genuinely new results and disproofs; penalize duplicates
+        theorem_novelty_bonus = 0.0
+        total_novelty = theorem_novelty_new + theorem_novelty_strengthening + theorem_novelty_duplicate + theorem_novelty_disproof
+        if total_novelty > 0:
+            # Disproofs are rare and scientifically valuable
+            theorem_novelty_bonus += theorem_novelty_disproof * 0.10
+            # New theorems and strengthenings are the core contribution
+            theorem_novelty_bonus += (theorem_novelty_new + theorem_novelty_strengthening) * 0.05
+            # Duplicates reduce score slightly
+            theorem_novelty_bonus -= theorem_novelty_duplicate * 0.08
+            theorem_novelty_bonus = max(-0.20, min(0.30, theorem_novelty_bonus))
+
         score = (base_quality + depth_bonus + cross_domain_bonus +
                  open_problem_bonus + ref_bonus + mode_bonus +
-                 compile_bonus + breakthrough_bonus -
+                 compile_bonus + breakthrough_bonus + theorem_novelty_bonus -
                  length_penalty - novelty_penalty)
         return max(0.0, min(1.0, score))
 
