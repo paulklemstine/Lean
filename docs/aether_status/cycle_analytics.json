@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-15T01:41:33.202896+00:00",
+  "last_updated": "2026-06-15T01:49:12.401888+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -57309,6 +57309,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-15T01:41:32.843341+00:00",
       "title": "Close Proofs: This cycle rebuilt the discrete Hodge program on a **self-contained Ma"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.6984,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 1,
+      "domain": "Tropical",
+      "duration_seconds": -289.3795521259308,
+      "end_time": 1781487859.7534616,
+      "files_integrated": 0,
+      "job_id": "8833e49e",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v12",
+      "phase_b_skipped": false,
+      "prompt_version": "v12",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.8,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 1.0,
+        "composite": 0.8334,
+        "cross_domain": 1.0,
+        "grade": "world_class",
+        "importance": 0.9005,
+        "novelty": 0.95,
+        "proof_depth": 0.8792,
+        "usefulness": 0.9396
+      },
+      "quality_score": 0.5208649350649351,
+      "sorry_count": 2,
+      "sorry_density": 0.125,
+      "start_time": 1781488149.1330137,
+      "strategy_count": 0,
+      "theorem_count": 16,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-15T01:49:11.994846+00:00",
+      "title": "Topological Error Thresholds from Systolic Expansion in Hypergraph Product Quant"
     }
   ]
 }
