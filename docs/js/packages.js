@@ -770,14 +770,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Explanations/Description
                 let explanationHtml = '';
-                const desc = item.description || item.explanation || '';
+                const desc = (item.description || item.explanation || '').replace(/\\n/g, '\n');
                 if (desc.trim()) {
-                    explanationHtml = `<div class="algo-explanation" style="padding: 16px; border-bottom: 1px solid var(--border-color); color: var(--text-main); font-size: 0.95rem; line-height: 1.6; background: var(--bg-main);">${marked.parse(desc)}</div>`;
+                    explanationHtml = `<div class="algo-explanation" style="padding: 16px; border-bottom: 1px solid var(--border-color); color: var(--text-main); font-size: 0.95rem; line-height: 1.6; background: var(--bg-main); white-space: pre-line;">${marked.parse(desc)}</div>`;
                 }
 
                 // Check what code fields we have
-                const pseudocode = item.pseudocode || '';
-                const code = item.code || '';
+                const pseudocode = (item.pseudocode || '').replace(/\\n/g, '\n');
+                const code = (item.code || '').replace(/\\n/g, '\n');
 
                 let tabsHtml = '';
                 let blocksHtml = '';
