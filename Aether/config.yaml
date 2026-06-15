@@ -38,11 +38,12 @@ pi_agent:
   # Phase A prompt A/B weights. v15 is the stable baseline. Weights are
   # sampled per cycle. Keep the baseline majority so regressions are bounded.
   phase_a_prompt_weights:
-    v15: 0.55
+    v15: 0.50
     v16: 0.20
     v16a: 0.10
     v16b: 0.10
     v17: 0.05
+    v18: 0.05
   research_modes:
     - prove
     - formalize

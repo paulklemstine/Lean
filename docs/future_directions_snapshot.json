@@ -2,25 +2,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "3f92e6d5",
-    "description": "Building on cycle 51575ef7 (Q=0.794), which proved 68 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The key insight is that the catalog already contains two independently developed notions of behavioral indistinguishability — coalgebraic neural behavior in `Bridges/CoalgebraicNeuralMyhillNerode.lean` and algebraic congruence classes in `Algebra/ProofSpectra/Core.lean` — and these should be linked ",
-    "domain_bridges": [],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "push_51575ef7_4ab3c654",
-    "lineage_refs": [],
-    "priority_score": 0.894,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "51575ef7",
-    "status": "in_progress",
-    "timestamp": "2026-06-15T06:29:51.421066+00:00",
-    "title": "Deepening: Functorial comparison between neural observation pseudometrics and proof-spectru"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "afe8c8b6",
     "description": "Cycle 51575ef7 (Q=0.794) proved 68 theorems in Bridges but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: The key insight is that the catalog already contains two independently developed notions of behavioral indistinguishability — coalgebraic neural behavior in `Bridges/CoalgebraicNeuralMyhillNerode.lean",
     "domain_bridges": [],
@@ -40,7 +21,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "842c56ce",
     "description": "Cycle a64f762c (Q=0.705) proved 6 theorems in Bridges but left 3 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Salvage the original bridge by shrinking it to a single arithmetic theorem package that is fully self-contained and only depends on elementary `Nat` lemmas plus the existing valuation-depth adapter. D",
     "domain_bridges": [],
     "domains": [
@@ -52,28 +33,28 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "a64f762c",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-15T06:54:22.120757+00:00",
     "title": "Close Proofs: Functorial Lipschitz comparison between valuation depth and tropical v"
   },
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b9cc2fac",
-    "description": "# Future Directions — Categorical Tropicalization of Rips Filtrations and Interleaving Stability\n\nThis cycle established (in `Catalog/Bridges/CategoricalTropicalRipsInterleaving.lean`,\n0 sorries, axioms `propext / Classical.choice / Quot.sound` only) the order-theoretic\ncore of persistence stability:\n\n- a Rips filtration `ripsOf` of an **arbitrary symmetric distance** `d : α → α → ℝ`\n  (generalizing the instance-bound `ripsGraph` of\n  `Applications/PoincareData/MetricFiltration.lean`, related by `ripsMetric_eq_ripsOf`);\n- the `δ`-**interleaving** relation `Interleaved`, with `interleaved_refl`,\n  `interleaved_symm`, `interleaved_mono`, and the **tropical composition law**\n  `interleaved_comp` (shifts add: `δ₁ ⊙ δ₂ = δ₁ + δ₂`);\n- the **stability theorem** `rips_stability` (`|d − d'| ≤ δ ⇒ δ`-interleaved) and its\n  metric form `rips_stability_dist`;\n- the **interleaving (pseudo)distance** `interleavingDist` satisfying the tropical\n  valuation / pseudometric axioms `interleavingDist_self`, `interleavingDist_comm`,\n  `interleavingDist_triangle`.\n\nThe conjectures below are concrete, falsifiable next steps. Each is phrased so that a\nfollow-up cycle can either produce a Lean theorem or a Lean counterexample.\n\n---\n\n## Conjecture 1 — Sharpness of stability (the converse Lipschitz bound)\n\n**Statement.** For finite `α` with two symmetric distances `d, d'`, the interleaving\ndistance of their Rips filtrations *equals* a tropical \"best matching\" of edge-birth\nscales:\n```\ninterleavingDist (ripsOf d) (ripsOf d') = sInf { δ ≥ 0 | ∀ x y, |d x y − d' x y| ≤ δ on the relevant edge set }.\n```\nIn particular stability is **tight**: there exist `d, d'` with\n`interleavingDist (ripsOf d) (ripsOf d') = ‖d − d'‖_∞`. \n\n**Test.** Prove `interleavingDist (ripsOf d) (ripsOf d') ≥ f(d,d')` for an explicit\nlower bound `f`, complementing the upper bound `rips_stability_dist`; or exhibit a\n3-point counterexample where the inequality is strict. *Falsifiable:* a single finite\nexample with strict gap refutes tightness.\n\n## Conjecture 2 — `interleavingDist` is a genuine extended pseudometric on filtrations\n\n**Statement.** Replacing `ℝ` by `ℝ≥0∞` and dropping the nonemptiness hypotheses,\n`interleavingDistExt : (ℝ → SimpleGraph α) → (ℝ → SimpleGraph α) → ℝ≥0∞` is a true\n`PseudoEMetricSpace` structure on the type of **monotone** filtrations, with\n`interleavingDistExt F G = 0 ↔ F = G` on left-continuous filtrations.\n\n**Test.** Build the `ℝ≥0∞`-valued version, prove `edist`-style triangle/symmetry\nunconditionally (the `sInf ∅ = ⊤` convention removes the `Nonempty` hypotheses that are\nload-bearing in the current `ℝ` version), and register a `PseudoEMetricSpace` instance.\n*Falsifiable:* exhibiting two distinct left-continuous monotone filtrations at distance\n`0` refutes the separation half.\n\n## Conjecture 3 — Functoriality: 1-Lipschitz maps contract interleaving distance\n\n**Statement.** A `1`-Lipschitz map `φ : (α, d) → (α', d')` (i.e. `d' (φx)(φy) ≤ d x y`)\ninduces graph homomorphisms `ripsOf d ε → ripsOf d' ε` for all `ε`, and the induced map\non filtrations is **`1`-Lipschitz for `interleavingDist`**. Hence `interleavingDist`\nis a functor `(FiniteMetricSpaces, Lipschitz) ⥤ (Filtrations, interleaving)` landing in\nthe tropical-enriched category of §2.\n\n**Test.** Define the induced filtration map, prove the homomorphism existence, and prove\nthe contraction `interleavingDist (push φ F) (push φ G) ≤ interleavingDist F G`.\n*Falsifiable:* a Lipschitz map increasing some interleaving distance.\n\n## Conjecture 4 — Tropical idempotency: an ultrametric refinement via single-linkage\n\n**Statement.** The **`π₀`/connected-components** functor applied to `ripsOf d` recovers\nthe single-linkage (sub-)dendrogram, and the associated \"merge-scale\" distance\n`d_SL x y := inf { ε | x, y connected in ripsOf d ε }` is an **ultrametric**, with\n```\ninterleavingDist (ripsOf d) (ripsOf d') ≤ ‖d_SL − d'_SL‖_∞ ≤ ‖d − d'‖_∞,\n```\nso single-linkage is a tropical-idempotent contraction of the metric. This directly\nlinks this bridge to `Bridges/CategoricalTropicalUltrametric.lean`: `d_SL` is the\nultrametric *reconstructed* from the tropical valuation data of the filtration.\n\n**Test.** Define `d_SL` via `SimpleGraph.Reachable` on `ripsOf d ε`, prove the strong\ntriangle inequality `d_SL x z ≤ max (d_SL x y) (d_SL y z)`, and prove the chained bound.\n*Falsifiable:* a 4-point example violating the ultrametric inequality for `d_SL`.\n\n## Conjecture 5 — Stability of the connectivity (Poincaré) threshold\n\n**Statement.** Define the connectivity threshold `θ(d) := inf { ε | ripsOf d ε is\nconnected }` (the `MetricFiltration`-level \"Poincaré threshold\" of the catalog). Then\n`θ` is **`1`-Lipschitz** in the `sup`-distance:\n```\n|θ(d) − θ(d')| ≤ ‖d − d'‖_∞,\n```\nas a corollary of `rips_stability` plus monotone-connectivity transfer along\ninterleavings (`δ`-interleaved filtrations have connectivity thresholds within `δ`).\n\n**Test.** Prove \"connected at scale `ε` ⇒ connected at scale `ε + δ` for a\n`δ`-interleaved filtration\" (using `interleaved.fg` and `SimpleGraph.Connected.mono`),\nthen derive the Lipschitz bound on `θ`. *Falsifiable:* a finite perturbation moving the\nconnectivity threshold by more than `‖d − d'‖_∞`.\n",
+    "consumed_by_exp_id": "b221d007",
+    "description": "# FUTURE DIRECTIONS — Functorial Tropical Certificates for Berggren–Lorentz Lattice Reduction\n\nThis cycle established a **functorial tropical certificate** for the Berggren–Lorentz\nmonoid acting on Pythagorean triples\n(`Catalog/Bridges/TropicalBerggrenCertificate.lean`):\n\n- `rowNorm` — the ℕ-valued L∞ matrix row-norm — is **submultiplicative**\n  (`rowNorm_mul_le`).\n- Every Berggren generator has row-norm exactly `7` (`rowNorm_gen`).\n- `wordMatrix` is a genuine **monoid homomorphism** `(List, ++) → (GL₃ℤ, *)`\n  (`wordMatrix_append`), making the certificate functorial.\n- Consequently a depth-`d` triple has all coordinates `≤ 5·7^d`\n  (`berggren_hypotenuse_certificate`), and `tropCert = log ∘ rowNorm` is **subadditive**\n  (`tropCert_mul_le`, `tropCert_wordMatrix_le`) — the tropical/max-plus image of the\n  multiplicative bound.\n\nThe following conjectures are precise and falsifiable; each is intended to seed a\nfollow-up Lean formalization.\n\n## Conjecture 1 (Sharpness of the tropical depth bound)\nThe `7^d` certificate is tight up to the constant: for the all-`B` word `Bᵈ`, the\nhypotenuse of the resulting triple satisfies `c ≥ 5·5^d` and `c ≤ 5·7^d`, and the\nratio `log c / d → log r` for some `r ∈ [5,7]`. **Sharper claim:** `r = 1+2√2`\n(the spectral radius / dominant eigenvalue of `matB`), i.e.\n`lim_{d→∞} (1/d)·tropCert(Bᵈ) = log(1+2√2)`. Falsifiable by computing `rowNorm(Bᵈ)`\ngrowth vs. `(1+2√2)^d`.\n\n## Conjecture 2 (Spectral-radius refinement of `rowNorm`)\nFor every Berggren word matrix `M = wordMatrix w`, the *exact* asymptotic growth of\n`rowNorm(Mᵏ)` as `k→∞` is governed by the Perron eigenvalue `λ(M)` of `|M|`, giving a\nstrengthened certificate `tropCert(Mᵏ) = k·log λ(M) + O(1)`. This would replace the\nuniform constant `log 7` by a per-word Lyapunov exponent and is the tropical\nlinearization of the Berggren dynamics.\n\n## Conjecture 3 (Reduction is the inverse functor and strictly decreases the certificate)\nDefine the reduction step by the inverse generators `invA, invB, invC` (from Core).\nThen for any non-seed primitive triple `v` with hypotenuse `c > 5`, exactly one inverse\ngenerator strictly decreases the hypotenuse, and the induced reduction word `w⁻¹`\nsatisfies `tropCert(wordMatrix w⁻¹) = tropCert(wordMatrix w)` (the certificate is a\ntwo-sided invariant of the word, not just an upper bound). Equivalently: the Berggren\nreduction algorithm terminates in exactly `length(w)` steps, matching the certificate.\n\n## Conjecture 4 (Functorial transfer to ultrametric robustness)\nComposing the tropical certificate with the valuation-reconstruction functor of\n`Bridges/CategoricalTropicalUltrametric.lean` yields a certified ultrametric Lipschitz\nbound: the Berggren action is `7^d`-Lipschitz in the L∞ metric, and the reconstructed\nultrametric seminorm makes it `1`-Lipschitz (an isometry) after rescaling by the\ntropical certificate. Falsifiable by exhibiting a triple pair whose ultrametric\ndistance is *not* preserved.\n\n## Conjecture 5 (Generalization to higher-dimensional Lorentz monoids)\nFor the O(n-1,1;ℤ) analogue generating Pythagorean (n-1)-tuples, the same L∞ row-norm\ncertificate holds with uniform generator norm `g(n) = 2n-1` (so `g(3)=7`). The\nfunctorial tropical bound becomes depth `≥ log_{2n-1}(c/seed)`. Falsifiable by\nconstructing the n=4 generators (quadruples `a²+b²+c²=d²`) and checking\n`rowNorm = 9` uniformly.\n",
     "domain_bridges": [],
     "domains": [
-      "Algebra",
-      "Tropical"
+      "Physics",
+      "Bridges"
     ],
-    "id": "fd_1940",
+    "id": "fd_1942",
     "lineage_refs": [],
     "priority_score": 0.75,
     "proof_strategy": "",
     "research_mode": "team",
-    "source_exp_id": "88475cc5",
+    "source_exp_id": "a37014f1",
     "status": "in_progress",
-    "timestamp": "2026-06-15T06:30:12.551925+00:00",
-    "title": "(in `Catalog/Bridges/CategoricalTropicalRipsInterleaving."
+    "timestamp": "2026-06-15T07:16:41.178841+00:00",
+    "title": "**functorial tropical certificate** for the Berggren–Lo"
   }
 ]
