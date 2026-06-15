@@ -300,13 +300,15 @@ class KnowledgeExtractor:
         except Exception:
             pass
 
-        # Compute p70 of the most recent quality scores (up to 50)
+        # Compute p55 of the most recent quality scores (up to 50)
+        # Lowering from p70 packages more near-miss cycles while still
+        # gating roughly the top half of recent work.
         recent = records[-50:]
         scores = sorted(r.get("quality_score", 0.0) for r in recent)
         if not scores:
             return 0.5
-        p70_idx = int(0.7 * (len(scores) - 1))
-        threshold = scores[p70_idx]
+        p55_idx = int(0.55 * (len(scores) - 1))
+        threshold = scores[p55_idx]
         # Clamp to [0.30, 0.6] — never gate too aggressively or too leniently.
         threshold = max(0.30, min(0.6, threshold))
 

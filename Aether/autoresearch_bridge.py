@@ -175,15 +175,16 @@ echo "METRIC $QUALITY concept_quality"
             effective_theorems = min(theorem_count, 50)  # Cap raw count
             depth_bonus = min(3.0 * (1 + math.log1p(effective_theorems)), 0.30) * completeness
 
-        # Cross-domain bridge bonus (theses are genuinely novel)
+        # Cross-domain bridge bonus — these are the highest-value results
+        # because they weave isolated domains into a connected web
         cross_domain_bonus = 0.0
         if has_cross_domain:
-            cross_domain_bonus = 0.08
+            cross_domain_bonus = 0.12
 
         # Open problem progress bonus
         open_problem_bonus = 0.0
         if advances_open_problem:
-            open_problem_bonus = 0.10
+            open_problem_bonus = 0.12
 
         # Bonus for catalog references (more context = better grounded research)
         ref_bonus = min(len(catalog_references) * 0.015, 0.08)
@@ -235,11 +236,17 @@ echo "METRIC $QUALITY concept_quality"
 
         # ---- Lean Compilation Bonus (the gold standard) ----
         # A theorem that actually compiles in Lean 4 is worth far more
-        # than one that just looks good textually. This is the 
+        # than one that just looks good textually. This is the
         # difference between "maybe correct" and "definitely correct".
         compile_bonus = 0.0
         if quality_assessment.get("compiles", False):
-            compile_bonus = 0.20  # Major bonus for compilable results
+            compile_bonus = 0.25  # Major bonus for compilable results
+
+        # Sorry-free bonus: cycles with no sorries on main theorems are
+        # more complete and trustworthy, closer to publication-ready.
+        sorry_free_bonus = 0.0
+        if sorry_count == 0 and theorem_count >= 2:
+            sorry_free_bonus = 0.08
 
         # LLM-graded breakthrough bonus (or structural fallback)
         breakthrough_bonus_map = {"incremental": 0.0, "significant": 0.12, "breakthrough": 0.25}
@@ -259,17 +266,18 @@ echo "METRIC $QUALITY concept_quality"
         total_novelty = theorem_novelty_new + theorem_novelty_strengthening + theorem_novelty_duplicate + theorem_novelty_disproof
         if total_novelty > 0:
             # Disproofs are rare and scientifically valuable
-            theorem_novelty_bonus += theorem_novelty_disproof * 0.10
+            theorem_novelty_bonus += theorem_novelty_disproof * 0.12
             # New theorems and strengthenings are the core contribution
-            theorem_novelty_bonus += theorem_novelty_new * 0.01
-            theorem_novelty_bonus += theorem_novelty_strengthening * 0.015
+            theorem_novelty_bonus += theorem_novelty_new * 0.015
+            theorem_novelty_bonus += theorem_novelty_strengthening * 0.02
             # Duplicates reduce score slightly
-            theorem_novelty_bonus -= theorem_novelty_duplicate * 0.08
-            theorem_novelty_bonus = max(-0.20, min(0.30, theorem_novelty_bonus))
+            theorem_novelty_bonus -= theorem_novelty_duplicate * 0.10
+            theorem_novelty_bonus = max(-0.25, min(0.35, theorem_novelty_bonus))
 
         score = (base_quality + depth_bonus + cross_domain_bonus +
                  open_problem_bonus + ref_bonus + mode_bonus +
-                 compile_bonus + breakthrough_bonus + theorem_novelty_bonus -
+                 compile_bonus + sorry_free_bonus + breakthrough_bonus +
+                 theorem_novelty_bonus -
                  length_penalty - novelty_penalty)
         return max(0.0, min(1.0, score))
 
