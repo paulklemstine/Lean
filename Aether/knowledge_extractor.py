@@ -80,6 +80,7 @@ class ResearchJob:
     quality_detail: Optional[Any] = None  # 8-axis QualityScore from quality_evaluator
     sorry_count: int = 0
     theorem_count: int = 0
+    theorem_novelty: Optional[Dict[str, int]] = None  # new/strengthening/duplicate/disproof/unknown counts
     files_integrated: int = 0  # Actual count of files written to Catalog during integrate
     integrated_paths: list = None  # Paths of files written to Catalog (relative to repo root)
     error_message: Optional[str] = None
@@ -1477,12 +1478,72 @@ Research mode: {concept.research_mode}
               f"Discussion: {len(discussion_files)} files, "
               f"Sorries: {job.sorry_count}, Theorems: {job.theorem_count}")
 
+        # Theorem-level novelty classification
+        if job.result_lean and hasattr(self, "catalog_root") and self.catalog_root:
+            novelty = self._classify_theorem_novelty(job.result_lean, lean_files)
+            job.theorem_novelty = novelty
+            print(f"[Novelty] Theorems: {novelty.get('new', 0)} new, "
+                  f"{novelty.get('strengthening', 0)} strengthening, "
+                  f"{novelty.get('duplicate', 0)} duplicate, "
+                  f"{novelty.get('disproof', 0)} disproof, "
+                  f"{novelty.get('unknown', 0)} unknown")
+
         # Persist extraction results to inflight_jobs
         if job.project_id and job.project_id in self.inflight:
             self.inflight[job.project_id] = job
             self._save_inflight()
 
         return job
+
+    def _classify_theorem_novelty(self, result_lean: str, lean_files: List[str]) -> Dict[str, int]:
+        """Classify each theorem in result_lean relative to the existing catalog.
+
+        Returns counts by novelty bucket: new, strengthening, duplicate, disproof, unknown.
+        This is a lightweight heuristic based on theorem name + statement text.
+        """
+        import re as _re
+        counts = {"new": 0, "strengthening": 0, "duplicate": 0, "disproof": 0, "unknown": 0}
+        if not self.catalog_root or not self.catalog_root.exists():
+            return counts
+
+        # Build catalog theorem name index from existing .lean files
+        catalog_names: set = set()
+        for f in self.catalog_root.rglob("*.lean"):
+            try:
+                text = f.read_text(encoding="utf-8", errors="ignore")
+                for m in _re.finditer(
+                    r"^(?:theorem|lemma|nonrec theorem|protected theorem|private theorem|example)\s+(\w+)",
+                    text,
+                    _re.MULTILINE,
+                ):
+                    catalog_names.add(m.group(1))
+            except Exception:
+                pass
+
+        # Extract theorems from the new result
+        theorem_decl_pattern = _re.compile(
+            r"^(?:theorem|lemma|nonrec theorem|protected theorem|private theorem|example)\s+(\w+)",
+            _re.MULTILINE,
+        )
+        for m in theorem_decl_pattern.finditer(result_lean):
+            name = m.group(1)
+            # Grab the next ~200 chars as a rough statement signature
+            start = m.end()
+            statement = result_lean[start:start + 200].strip().lower()
+            is_disproof = any(
+                kw in statement for kw in ("not exists", "no such", "false", "disprove", "counterexample")
+            )
+            if is_disproof:
+                counts["disproof"] += 1
+            elif name in catalog_names:
+                # Same name exists — treat as strengthening/duplicate heuristically
+                # If statement contains stronger quantifiers (e.g., "∀" with a weaker bound)
+                # or mentions 'general'/'stronger', classify as strengthening.
+                stronger_hints = any(kw in statement for kw in ("general", "stronger", "extends", "forall"))
+                counts["strengthening" if stronger_hints else "duplicate"] += 1
+            else:
+                counts["new"] += 1
+        return counts
 
     # ==================================================================
     # Phase 5: EVALUATE — Pi judges the quality
@@ -1539,6 +1600,10 @@ Research mode: {concept.research_mode}
             prompt_length=len(job.prompt),
             theorem_count=job.theorem_count,
             sorry_count=job.sorry_count,
+            theorem_novelty_new=job.theorem_novelty.get("new", 0) if job.theorem_novelty else 0,
+            theorem_novelty_strengthening=job.theorem_novelty.get("strengthening", 0) if job.theorem_novelty else 0,
+            theorem_novelty_duplicate=job.theorem_novelty.get("duplicate", 0) if job.theorem_novelty else 0,
+            theorem_novelty_disproof=job.theorem_novelty.get("disproof", 0) if job.theorem_novelty else 0,
             has_cross_domain="Bridge" in (job.concept.title or "") or "bridge" in (job.concept.domain or "").lower(),
             advances_open_problem=job.concept.research_mode == "sorry_fill" and job.sorry_count == 0,
             breakthrough_grade=breakthrough_grade,

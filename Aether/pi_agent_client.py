@@ -2052,22 +2052,36 @@ class PiAgentClient:
             If your work is genuinely world-class, the packaging step is dispatched
             automatically and cheaply.
 
-            ### CATALOG SYNTHESIS (required — read the catalog context below):
-            The Catalog Context and Recent Discoveries sections list existing theorems
-            already proven in this project. You MUST analyze these and combine concepts
-            from the catalog with the research direction above. Specifically:
+            ### CATALOG SYNTHESIS (required — examine the catalog yourself):
+            The entire project catalog is attached to this prompt. You have access
+            to all existing Lean 4 files in `Catalog/`. Do NOT rely only on the
+            summary sections below — OPEN the relevant files, read their theorems,
+            definitions, and proof strategies, and use them as your foundation.
+            Specifically:
 
-            1. **Identify relevant catalog theorems** — Which existing results connect
+            1. **Read the catalog files directly** — Open `Catalog/<Domain>/` files
+               related to your direction. Understand their theorem statements, tactics,
+               and proof structures. Use `import` to build on them.
+            2. **Identify relevant catalog theorems** — Which existing results connect
                to your research direction? Cite them by name in your proof sketches.
-            2. **Build on catalog foundations** — Your theorems should EXTEND or
-               GENERALIZE catalog results, not reprove them from scratch. Use `import`
-               and reference existing definitions and lemmas where possible.
-            3. **Combine concepts across domains** — The most valuable theorems connect
+            3. **Build on catalog foundations** — Your theorems should EXTEND or
+               GENERALIZE catalog results, not reprove them from scratch.
+            4. **Combine concepts across domains** — The most valuable theorems connect
                ideas from different catalog domains (e.g., applying algebraic structures
                to topological problems, or using combinatorial arguments in number theory).
                Look for cross-domain connections in the catalog context.
-            4. **Avoid duplication** — Check the catalog context before proving. If a
-               similar result already exists, extend it rather than reproving it.
+            5. **Avoid duplication** — Before proving, search the catalog for similar
+               results. If one exists, extend it rather than reproving it.
+
+            ### DISPROVE-AS-SUCCESS (required):
+            Not every conjecture is true — and that is valuable science. If a hypothesis
+            seems false, attempt to DISPROVE it with a concrete counterexample or a
+            proof of negation. A well-justified disproof is as valuable as a proof.
+            When you disprove a conjecture:
+            - State the disproved theorem clearly (e.g., `theorem no_such_object_exists`)
+            - Provide the counterexample or contradiction
+            - Explain why the original conjecture failed
+            - Suggest a modified conjecture that might hold
             """)
 
         prompt = f"""{phase_a_header}
@@ -2152,7 +2166,12 @@ Be precise, be deep, be world-class.
                inline with its full mathematical statement and proof sketch. Do NOT
                use @file references or reference other files. A reader with only this
                paper must be able to follow every result from start to finish.
-            3. **demo.py** — Numerical examples demonstrating the key results.
+            3. **RESEARCH_PAPER.tex** (NEW) — A clean, compilable LaTeX version of
+               the paper that mirrors the content of RESEARCH_PAPER.md. Use standard
+               amsmath/amsart or article class, define all theorems inline, and make
+               it suitable for direct PDF compilation with `pdflatex`. This is the
+               publishable artifact.
+            4. **demo.py** — Numerical examples demonstrating the key results.
                Self-contained Python, type hints, all functions inlined.
             4. **PACKAGE.json** — Single JSON bundling all of the above, with this schema:
 
@@ -2167,6 +2186,7 @@ Be precise, be deep, be world-class.
               "keywords": ["keyword1", "keyword2"],
               "article": "ARTICLE.md",
               "research_paper": "RESEARCH_PAPER.md",
+              "research_paper_tex": "RESEARCH_PAPER.tex",
               "demo": "demo.py",
               "demos": [
                 {"name": "Descriptive and Professional Title of the Python Demo", "description": "A comprehensive, high-quality description of what this Python demo calculates and shows mathematically.", "code": "# full Python source..."}

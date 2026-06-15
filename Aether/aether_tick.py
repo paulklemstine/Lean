@@ -187,7 +187,7 @@ def _print_quality_metrics(extractor: "KnowledgeExtractor") -> None:
             by_ver.setdefault(v, []).append(r)
 
         lines = ["[Quality] Rolling metrics (last 30 cycles):"]
-        for v in ("v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15"):
+        for v in ("v6", "v7", "v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15"):
             rs = by_ver.get(v, [])
             if not rs:
                 continue
@@ -201,8 +201,14 @@ def _print_quality_metrics(extractor: "KnowledgeExtractor") -> None:
             avg_theorems = sum(r.get("theorem_count", 0) for r in rs) / n
             # Avg quality score
             avg_q = sum(r.get("quality_score", 0) for r in rs) / n
+            # Theorem novelty: new vs strengthening vs duplicate vs disproof
+            total_new = sum(r.get("theorem_novelty_new", 0) for r in rs)
+            total_strength = sum(r.get("theorem_novelty_strengthening", 0) for r in rs)
+            total_dup = sum(r.get("theorem_novelty_duplicate", 0) for r in rs)
+            total_disproof = sum(r.get("theorem_novelty_disproof", 0) for r in rs)
             lines.append(f"  {v}: n={n} avg_Q={avg_q:.3f} sorry_rate={sorry_rate:.0f}% "
-                         f"avg_sorry={avg_sorry:.1f} avg_theorems={avg_theorems:.0f}")
+                         f"avg_sorry={avg_sorry:.1f} avg_theorems={avg_theorems:.0f} "
+                         f"novelty=[new={total_new} +{total_strength} dup={total_dup} ¬={total_disproof}]")
 
         # Trend: compare last 15 vs first 15 of recent
         if len(recent) >= 20:

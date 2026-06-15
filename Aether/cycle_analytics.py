@@ -32,6 +32,10 @@ class CycleRecord:
     theorem_count: int = 0
     sorry_count: int = 0
     sorry_density: float = 0.0  # sorry_count / max(theorem_count, 1)
+    theorem_novelty_new: int = 0
+    theorem_novelty_strengthening: int = 0
+    theorem_novelty_duplicate: int = 0
+    theorem_novelty_disproof: int = 0
     quality_score: float = 0.0
     quality_breakdown: Optional[Dict[str, float]] = None
     novelty_score: Optional[float] = None
