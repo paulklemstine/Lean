@@ -766,6 +766,7 @@ class KnowledgeExtractor:
         job.prompt_version = phase_a_version  # legacy field
         job.phase = "A"  # Two-phase: this is Phase A (math)
         job.phase_a_prompt_version = phase_a_version
+        print(f"[Dispatch] Phase A prompt version: {phase_a_version}")
         # Default to Phase A lean-only prompt; full A_full is legacy
         phase_arg = "A_lean_only"
         # Build the prompt with the chosen version
