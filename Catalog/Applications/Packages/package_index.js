@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "51575ef7",
     "filename": "functorial_comparison_between_neural_observation_p.json",
     "pkg_num": 143,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.794,
     "title": "Functorial Comparison: Neural Observation Pseudometrics and Proof-Spectrum Congruence Kernels"
   },
   {
@@ -4409,8 +4409,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "functorial_comparison_between_neural_observation_p",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.794,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Functorial Comparison: Neural Observation Pseudometrics and Proof-Spectrum Congruence Kernels"
     }
