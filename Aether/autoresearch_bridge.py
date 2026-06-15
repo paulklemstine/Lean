@@ -8,6 +8,7 @@ Uses the pi-autoresearch extension pattern for pipeline optimization:
 """
 
 import json
+import math
 import subprocess
 import time
 from dataclasses import dataclass, field
@@ -165,12 +166,14 @@ echo "METRIC $QUALITY concept_quality"
         }
         base_quality = quality_map.get(quality_assessment.get("quality", "partial"), 0.45)
 
-        # Mathematical depth bonus
-        # More theorems = deeper work; fewer sorries = more complete proof
+        # Mathematical depth bonus — depth over breadth
+        # We reward complete, focused work, not theorem inflation.
+        # Use log scaling so 5 deep theorems beat 500 trivial declarations.
         depth_bonus = 0.0
         if theorem_count > 0:
             completeness = max(0, 1.0 - sorry_count / max(theorem_count, 1))
-            depth_bonus = min(theorem_count * 0.03, 0.15) * completeness
+            effective_theorems = min(theorem_count, 50)  # Cap raw count
+            depth_bonus = min(3.0 * (1 + math.log1p(effective_theorems)), 0.30) * completeness
 
         # Cross-domain bridge bonus (theses are genuinely novel)
         cross_domain_bonus = 0.0
@@ -258,7 +261,8 @@ echo "METRIC $QUALITY concept_quality"
             # Disproofs are rare and scientifically valuable
             theorem_novelty_bonus += theorem_novelty_disproof * 0.10
             # New theorems and strengthenings are the core contribution
-            theorem_novelty_bonus += (theorem_novelty_new + theorem_novelty_strengthening) * 0.05
+            theorem_novelty_bonus += theorem_novelty_new * 0.01
+            theorem_novelty_bonus += theorem_novelty_strengthening * 0.015
             # Duplicates reduce score slightly
             theorem_novelty_bonus -= theorem_novelty_duplicate * 0.08
             theorem_novelty_bonus = max(-0.20, min(0.30, theorem_novelty_bonus))

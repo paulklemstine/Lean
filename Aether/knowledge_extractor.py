@@ -2534,7 +2534,13 @@ Research mode: {concept.research_mode}
         except Exception as e:
             print(f"[Cleanup] Warning: structural hole mining failed: {e}")
 
-        # 8. ArXiv mining is handled by cycle_master.py Phase 10.7
+        # 8. Cross-domain bridge directions from this cycle's result
+        try:
+            await asyncio.to_thread(self._generate_bridge_directions_from_cycle, job)
+        except Exception as e:
+            print(f"[Cleanup] Warning: bridge direction generation failed: {e}")
+
+        # 9. ArXiv mining is handled by cycle_master.py Phase 10.7
 
         return job
 
@@ -2970,12 +2976,104 @@ Research mode: {concept.research_mode}
             print(f"[Prune] CatalogPruner execution failed: {e}")
 
 
+    def _generate_bridge_directions_from_cycle(self, job: ResearchJob) -> None:
+        """Generate 2-3 cross-domain future directions implied by this cycle's result.
+
+        Uses a lightweight LLM call to identify how the proven theorems could
+        connect to other catalog domains. These become high-priority future
+        directions that build bridges between isolated packages.
+        """
+        from research_memory import FutureDirection, FutureDirectionsManager
+
+        if not job.result_lean or not job.concept:
+            return
+
+        title = job.concept.title
+        domain = job.concept.domain
+        exp_id = job.job_id if hasattr(job, 'job_id') else ""
+
+        # Avoid duplicate bridge generation for the same cycle
+        fd_manager = FutureDirectionsManager(self.workspace)
+        existing = any(
+            d.source_exp_id == exp_id and d.source_path == "cycle_bridge"
+            for d in fd_manager._directions
+            if d.status in ("available", "in_progress")
+        )
+        if existing:
+            return
+
+        # Extract key theorems and a short summary of the result
+        key_theorems = []
+        if job.result_lean:
+            for m in re.finditer(r"(?:theorem|lemma)\s+(\w+)", job.result_lean[:2000]):
+                key_theorems.append(m.group(1))
+
+        lean_summary = job.result_lean[:1500].strip()
+        theorem_ctx = f" Key theorems: {', '.join(key_theorems[:5])}." if key_theorems else ""
+
+        system = (
+            "You are a cross-domain mathematics strategist for an autonomous research engine.\n\n"
+            "Given a proven result, identify 2-3 specific ways it could connect to OTHER mathematical domains. "
+            "Each bridge must be a falsifiable conjecture that extends the result into a new domain, not just a vague analogy.\n\n"
+            "For each bridge direction provide:\n"
+            "- A precise conjecture\n"
+            "- The target domain (different from the result's domain)\n"
+            "- Why the connection is plausible given the existing proof\n\n"
+            "Respond in this exact JSON format:\n"
+            '{\n'
+            '  "bridges": [\n'
+            '    {\n'
+            '      "title": "Short, compelling title",\n'
+            '      "target_domain": "DomainName",\n'
+            '      "description": "Conjecture: [precise statement]. Test: [what confirms/refutes]. Impact: [why it matters]",\n'
+            '      "proof_strategy": "How to build on the existing result"\n'
+            '    }\n'
+            '  ]\n'
+            '}'
+        )
+
+        user = (
+            f"Proven result: {title}\n"
+            f"Source domain: {domain}\n"
+            f"Result excerpt:\n```\n{lean_summary}\n```\n"
+            f"{theorem_ctx}\n\n"
+            f"Suggest 2-3 bridge directions to other mathematical domains."
+        )
+
+        added = 0
+        try:
+            raw = self.pi_agent._call_ollama(system, user, timeout=60)
+            result = self.pi_agent._parse_json_response(raw)
+            if not result:
+                return
+            bridges = result.get("bridges", [])
+            for b in bridges:
+                target = b.get("target_domain", "Bridges")
+                direction = FutureDirection(
+                    id=fd_manager._next_id(),
+                    title=b.get("title", f"Bridge: {domain} → {target}")[:80],
+                    description=b.get("description", "")[:2000],
+                    source_exp_id=exp_id,
+                    source_path="cycle_bridge",
+                    domains=list(set([domain, target])),
+                    depth_estimate=4,
+                    priority_score=0.88,
+                    proof_strategy=b.get("proof_strategy", f"Extend {title} into {target}.")[:1000],
+                )
+                fd_manager.add_direction(direction)
+                added += 1
+            if added > 0:
+                fd_manager._save()
+                print(f"[BridgeDirs] Generated {added} cross-domain bridge directions from {title}")
+        except Exception as e:
+            print(f"[BridgeDirs] LLM bridge generation failed: {e}")
+
     def _verify_catalog_sync(self, job: ResearchJob) -> dict:
         """Verify all output files are properly placed in the Catalog."""
         report = {"missing_files": [], "verified_files": []}
         # Check that key artifacts exist at expected paths
         catalog_root = self.catalog_root
-        
+
         # Check Applications directories exist
         for subdir in ["Papers", "Demos", "Visuals", "Articles", "Packages"]:
             d = catalog_root / "Applications" / subdir
