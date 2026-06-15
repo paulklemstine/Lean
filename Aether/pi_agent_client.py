@@ -1950,32 +1950,26 @@ class PiAgentClient:
                 theorem_section = f"\n### Recent Discoveries in Catalog\n{theorem_context}\n"
 
             prompt = textwrap.dedent(f"""\
-                # RESEARCH TASK SPECIFICATION (Jira/GitHub Ticket Style)
+                # MATHEMATICAL RESEARCH MISSION: {concept.title}
 
-                ## TICKET TITLE: AETHER-RESEARCH: {concept.title}
+                ## Objective / Task Brief:
+                Create a team to research this mathematical direction. Brainstorm new hypotheses, run experiments, analyze results, take notes, iterate. Combine all the researchers' findings into clean, verified Lean 4 files, and then brainstorm a list of the next research directions.
 
-                ## OBJECTIVE:
-                Prove non-trivial theorems that extend the mathematical frontier in the {concept.domain} domain, building directly on the existing catalog files.
+                ## Deliverables & Acceptance Criteria:
+                1. **Lean 4 Proofs**: Fully verified, compiling Lean 4 files under the appropriate Catalog directory. Main theorems must be fully proved (0 sorries).
+                2. **Lab Notes**: Include inline comment blocks (`-- !-- Lab Notes -- !--`) in the Lean files detailing your hypotheses, experimental outcomes, insights, and failure analysis.
+                3. **FUTURE_DIRECTIONS.md**: Outlining 3-5 bold, testable mathematical conjectures for follow-up cycles based on your combined findings.
 
-                ## DESCRIPTION / OVERALL DIRECTION:
-                {concept.concept_description}
+                ## Constraints (Strictly Enforced):
+                - **NO prose or documentation articles**: Do NOT output ARTICLE.md, RESEARCH_PAPER.md, python algorithms, HTML widgets, or PACKAGE.json. Focus 100% of your compute on standard Lean 4 code and proofs.
 
-                ## CONTEXT & RESOURCES:
+                ## Context & Resources:
                 - Domain: {concept.domain}
                 - Existing Catalog References: {", ".join(concept.catalog_references) if concept.catalog_references else "None"}
                 {catalog_section}
                 {theorem_section}
 
                 {depth_requirements}
-
-                ## DELIVERABLES & ACCEPTANCE CRITERIA:
-                1. **Lean 4 Proofs**: Prove 2-4 non-trivial theorems with correct, compiling Lean 4 proofs (no sorry on main results).
-                2. **Self-Contained Files**: Put the proofs in the designated catalog subdirectory. Follow existing import paths and definitions.
-                3. **FUTURE_DIRECTIONS.md**: Outlining 3-5 bold, falsifiable research directions/conjectures to guide the next research cycle. Each direction must include a "key insight" and "why now" rationale.
-
-                ## CONSTRAINTS (Strictly Enforced):
-                - **NO prose or documentation articles**: Do NOT output ARTICLE.md, RESEARCH_PAPER.md, python algorithms, HTML widgets, or PACKAGE.json.
-                - **No elaborate roleplay**: Do NOT output lab notebook sections or fictional team dialogues. Focus 100% of your compute on standard Lean 4 code and proofs.
                 """)
             return prompt
 

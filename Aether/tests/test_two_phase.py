@@ -74,7 +74,7 @@ def test_phase_a_prompt_excludes_packaging(research_concept):
     client = PiAgentClient.__new__(PiAgentClient)
     prompt = client._build_phase_a_lean_prompt(concept=research_concept)
     # Should have the explicit Ticket header
-    assert "RESEARCH TASK SPECIFICATION" in prompt
+    assert "MATHEMATICAL RESEARCH MISSION" in prompt
     # Should mention ARTICLE.md in constraints
     assert "ARTICLE.md" in prompt
     assert "RESEARCH_PAPER.md" in prompt
@@ -135,7 +135,7 @@ def test_phase_a_routing(research_concept):
         concept=research_concept,
         phase="A_lean_only",
     )
-    assert "RESEARCH TASK SPECIFICATION" in prompt
+    assert "MATHEMATICAL RESEARCH MISSION" in prompt
 
 
 def test_phase_b_routing(research_concept):
@@ -155,7 +155,7 @@ def test_default_phase_is_a_lean_only(research_concept):
     from pi_agent_client import PiAgentClient
     client = PiAgentClient.__new__(PiAgentClient)
     prompt = client.write_aristotle_prompt(concept=research_concept)
-    assert "RESEARCH TASK SPECIFICATION" in prompt
+    assert "MATHEMATICAL RESEARCH MISSION" in prompt
 
 
 def test_legacy_a_full_routing(research_concept):

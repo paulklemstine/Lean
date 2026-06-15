@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "123e2af3",
     "filename": "this_cycle_rebuilt_the_discrete_hodge_program_on_a.json",
     "pkg_num": 140,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.62783,
     "title": "The Discrete Hodge Laplacian, Harmonic Space & Diffusion Message Passing"
   },
   {
@@ -4326,8 +4326,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "this_cycle_rebuilt_the_discrete_hodge_program_on_a",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.62783,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Discrete Hodge Laplacian, Harmonic Space & Diffusion Message Passing"
     }
