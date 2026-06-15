@@ -1,234 +1,241 @@
-# The Secret Clock Inside Every Prime
+# The Shape of Sameness: How One Idea Tames Identity
 
-## How a single number controls when primes divide the powers of two
+## A puzzle about equality
 
-Pick a prime number — say 7. Now write down the powers of two, and subtract one
-from each:
+Mathematics begins with a deceptively simple word: *equal*. Two and two equal
+four. The morning star equals the evening star. The diagonal of a unit square
+equals the square root of two. We use the word so freely that it rarely occurs
+to us to ask what it really means — or whether there might be *many different
+ways* for two things to be the same.
 
-```
-2¹ − 1 = 1
-2² − 1 = 3
-2³ − 1 = 7
-2⁴ − 1 = 15
-2⁵ − 1 = 31
-2⁶ − 1 = 63
-2⁷ − 1 = 127
-...
-```
+For most of the twentieth century the standard answer was that equality is the
+flattest, most featureless relation imaginable: either two things are equal or
+they are not, and there is nothing more to say. But over the last two decades a
+new picture has emerged, born from an unexpected marriage between **logic** and
+**geometry**. In this picture, equality is not a yes-or-no verdict but a *space*.
+The different ways one thing can be identified with another are the *points* of
+that space; the ways those identifications can themselves be matched up are
+*paths* between the points; and so on, upward, forever. This is the central
+intuition of **Homotopy Type Theory** (HoTT), and it reimagines the foundations
+of mathematics by treating "being the same" as a fundamentally *spatial*
+phenomenon.
 
-These are the **Mersenne numbers**, the raw material from which the largest known
-primes are forged. Now ask a simple question: *which of these numbers does 7
-divide?*
+This article is about one crisp, powerful theorem at the heart of that picture —
+a theorem that answers the question: **when does some other relation deserve to
+be called "equality" in disguise?** It is called the *Fundamental Theorem of
+Identity Systems*, and it turns out to have a beautifully economical proof, a
+surprising converse, and a cascade of structural consequences. Along the way we
+will see how an abstract slogan about contractible spaces becomes a precise,
+reusable engine for reasoning.
 
-Scanning the list: 7 divides 7 (= 2³ − 1). It does not divide 1, 3, or 15. The
-next one it divides is 63 = 9 × 7 (= 2⁶ − 1). Then 2⁹ − 1 = 511 = 7 × 73. Then
-2¹² − 1 = 4095 = 7 × 585. A pattern leaps out:
+## Paths, points, and the geometry of identity
 
-> **7 divides 2ⁿ − 1 exactly when n is a multiple of 3.**
+Start with the geometric picture. Fix a single point — call it `a₀` — somewhere
+in a space. Now ask: *what are all the paths in the space that start at `a₀`?*
 
-The number 3 is special to the prime 7. It is the *first* exponent at which 7
-shows up, and — remarkably — once you know it, you know *everything*: 7 divides
-2ⁿ − 1 if and only if 3 divides n. That first exponent has a classical name. It
-is called the **rank of apparition**, or the **entry point**, of 7. It is the
-moment the prime first *appears* in the sequence, and it acts like the period of
-a hidden clock: the prime reappears, like clockwork, at every multiple of its
-entry point and nowhere else.
+There is one obvious path: the path that does not move at all, the "stay put"
+path, which we call **reflexivity** and write `rfl`. From there you can wander
+to any nearby point along some route. The collection of *all* such journeys —
+every destination `a` together with every path from `a₀` to it — forms what
+topologists call the **based path space**.
 
-This article is about a clean, fully machine-checked theorem that explains *where
-that clock comes from*. The entry point looks like a global, list-scanning,
-search-the-whole-sequence kind of quantity. We will see that it is secretly a
-**local** quantity — a single piece of arithmetic you can do inside the prime
-itself, without ever writing out the sequence. The bridge between the two worlds
-is one of the most beautiful small facts in elementary number theory, and it
-generalizes far beyond the powers of two.
+Here is the first delightful fact. If you bundle together *every* destination
+with *every* way of reaching it from `a₀`, the resulting megastructure is, in a
+precise sense, **contractible**: it can be continuously shrunk down to a single
+point, namely "stay at `a₀`." Intuitively, every journey can be smoothly rewound
+back to the trivial non-journey. There is essentially only one based path "up to
+deformation," and it is the trivial one.
 
----
+We can state this with complete precision. Call a type (a space) `X`
+**contractible** when it comes equipped with two pieces of data:
 
-## Two ways of looking at a prime
+> a distinguished element `center : X`, and a proof that **every** element
+> `y : X` is equal to that center.
 
-There are two completely different mental pictures of what the entry point of a
-prime *is*.
+Contractibility is the type-theoretic word for "topologically a point." The
+based path space is contractible — that is the geometric seed from which
+everything in this article grows.
 
-**The global picture.** Lay out the whole infinite sequence 2¹ − 1, 2² − 1,
-2³ − 1, … and highlight every term that 7 divides. You get a sparse, regular
-constellation of marked positions: 3, 6, 9, 12, … The entry point is the first
-marked position, and the marked set is the arithmetic progression of its
-multiples. To find the entry point this way you must *search*: test term after
-term until the prime first divides one. This is divisibility in the integers — a
-global, order-theoretic, "scan the list" notion.
+## When is a relation secretly equality?
 
-**The local picture.** Forget the sequence entirely. Work *inside* the prime.
-When you do arithmetic modulo 7, you are working in a small, closed universe with
-only seven elements: {0, 1, 2, 3, 4, 5, 6}. In that universe, take the number 2
-and keep multiplying it by itself:
+Now the key move. Suppose someone hands you a completely different family of
+relationships. For each point `a` they give you a type `R a` — think of `R a` as
+"the set of certificates that `a` is related to `a₀` in some specified way."
+Maybe `R a` records that `a` and `a₀` have the same fingerprint, or that they are
+connected by some algebraic isomorphism, or that they are joined by an edge in a
+graph. At first glance `R` has nothing to do with paths or equality. It is just
+*some* relation.
 
-```
-2¹ = 2
-2² = 4
-2³ = 8 = 1   (mod 7)
-```
+When does this arbitrary relation `R` secretly *behave exactly like equality
+based at `a₀`*?
 
-After three steps you cycle back to 1. The number 2 has **multiplicative order 3**
-modulo 7 — three is the smallest number of times you must multiply 2 by itself to
-return to the identity. This is a one-line group-theory computation. No sequence,
-no searching, no infinity.
+The brilliant answer, distilled into a definition, is the notion of an
+**identity system**. An identity system based at `a₀` consists of:
 
-And there it is again: **3**. The global entry point and the local
-multiplicative order are *the same number*. This is not a coincidence about 7 and
-2; it is a theorem.
+1. a relation family `R a` for every point `a`;
+2. a **reflexivity witness** `rflR : R a₀` — a certificate that `a₀` is related
+   to itself, the analogue of `rfl`;
+3. a proof that the **total space** — the bundle of every point `a` together
+   with every certificate in `R a` — is **contractible**, and contractible *with
+   its center sitting exactly at the reflexivity witness* `⟨a₀, rflR⟩`.
 
-> **The Apparition–Order Bridge.** For any base b and any prime p that does not
-> divide b, the entry point of p in the sequence bⁿ − 1 equals the
-> multiplicative order of b modulo p.
+That third condition is the whole ballgame. It says: just as the based path
+space collapses to the single trivial path, this new bundle of certificates
+collapses to the single certificate `rflR`. The relation `R`, however exotic it
+looked, has the same *global shape* as equality.
 
-In symbols, with the rank of apparition written `entryPoint`, and the order of
-b in the finite ring of integers mod p written `orderOf (b mod p)`:
+## The Fundamental Theorem
 
-> **entryPoint(p) = orderOf(b mod p).**
+The payoff is a theorem of striking clarity.
 
-A global search over an infinite sequence collapses to a finite computation
-inside a single prime. That is the whole story — but the consequences are lovely.
+> **Fundamental Theorem of Identity Systems.** If `R` is an identity system
+> based at `a₀`, then for *every* point `a` there is an equivalence
+>
+> $$ (a_0 = a) \;\simeq\; R\,a. $$
+>
+> In words: the type of *genuine equalities* between `a₀` and `a` is
+> interchangeable, point for point, with the type of *certificates* `R a`. The
+> exotic relation really was equality in disguise.
 
----
+What makes the theorem sing is *how little work the proof requires*, once the
+definitions are right. The equivalence is built from two maps that are almost
+forced upon us:
 
-## Why the two pictures must agree
+- **Encode.** Given an honest equality `p : a₀ = a`, transport the reflexivity
+  certificate `rflR` along `p`. Equality lets you carry data from one point to
+  another; carry `rflR` from `a₀` over to `a`, and you obtain an element of
+  `R a`. This is the map `p ↦ p ▸ rflR`.
 
-You can feel *why* the bridge is true with one short chain of reasoning, and it
-is worth seeing because the same chain is exactly what the formal proof
-mechanizes.
+- **Decode.** Given a certificate `r : R a`, look at where it lives in the total
+  space: the pair `⟨a, r⟩`. By contractibility, *every* element of the total
+  space equals the center `⟨a₀, rflR⟩`. So `⟨a, r⟩ = ⟨a₀, rflR⟩`. Reading off the
+  first coordinates of that equation yields an honest equality `a₀ = a`. The
+  certificate has handed you a genuine path.
 
-Start with the question "does p divide bⁿ − 1?" Reducing modulo p, this is the
-same as asking whether bⁿ leaves a remainder of 1 when divided by p — that is,
-whether **bⁿ = 1 in the world mod p**. (This step quietly uses that b ≥ 1, so that
-bⁿ − 1 is an honest subtraction, and that p does not divide b, so b is a genuine
-nonzero element with an order.)
+To finish, one checks the two maps are mutually inverse. And here a quiet
+miracle occurs. One of the two round-trips — start with an equality, encode it,
+decode it, and ask whether you get the same equality back — is *automatically
+free*. The reason is a foundational feature of the logical setting: equalities
+themselves form *proof-irrelevant* propositions, so any two proofs that `a₀ = a`
+are themselves equal. The first round-trip can therefore never fail. All the
+real mathematical content concentrates into the *other* round-trip — start with a
+certificate, decode it to a path, encode that path back to a certificate — which
+is dispatched by transporting along the recovered path and using exactly the
+contractibility we assumed. The architecture of the proof is a study in
+economy: assume the right global shape, and the local comparison maps fall out
+on their own.
 
-Now bring in the defining property of multiplicative order: bⁿ = 1 modulo p
-**exactly when** the order of b divides n. (The powers of b march around a cycle
-of length equal to the order; they land back on 1 precisely at multiples of that
-length.)
+## Three immediate dividends
 
-Putting the two halves together:
+Once the Fundamental Theorem is in hand, several structural facts tumble out
+almost for free, each illuminating a different facet of "shape."
 
-> p divides bⁿ − 1 ⟺ bⁿ = 1 (mod p) ⟺ order(b) divides n.
+**Contractibility travels.** If two spaces are equivalent and one of them is
+contractible, so is the other. Equivalences preserve the property of "being
+essentially a point." This sounds obvious, but stated precisely — *push the
+center across the equivalence, and pull every target point back through the
+inverse* — it becomes the single reusable lever behind everything that follows.
 
-But the entry point is *defined* by the very same divisibility pattern: p divides
-bⁿ − 1 exactly when entryPoint(p) divides n. So both `entryPoint(p)` and
-`order(b mod p)` are positive numbers with the *identical* set of multiples — and
-two positive whole numbers that have the same multiples must be equal. The clock
-in the sequence and the cycle inside the prime are one and the same.
+**Every identity system has a contractible reflexivity fibre.** Specialize the
+Fundamental Theorem to the base point itself: the certificates `R a₀` are
+equivalent to the self-equalities `a₀ = a₀`. The latter is contractible
+(inhabited by `rfl`, and proof-irrelevant), so `R a₀` is contractible too. There
+is, up to deformation, *only one* certificate that `a₀` relates to itself, and it
+is the reflexivity witness.
 
----
+**Identity is unique.** Suppose two different people hand you two different
+identity systems based at the same point `a₀` — different relations `R` and `R'`,
+each independently passing the contractibility test. Are they related? Yes,
+inevitably: for every point `a`, `R a` is equivalent to `R' a`. Both are
+equivalent to the path space, so they are equivalent to each other. This is
+**homotopy-initiality**: the based path family is the *universal* identity
+system, and any other is a faithful copy of it. There is, in the deepest sense,
+only one notion of equality based at a point.
 
-## A free gift from Fermat
+## Turning the theorem around
 
-Once you know the entry point is a multiplicative order, a famous 350-year-old
-theorem hands you a bonus. **Fermat's Little Theorem** says that for any prime p
-and any b not divisible by p,
+A good theorem invites its own converse. We showed that *being an identity
+system* forces *fibrewise equivalence to the path family*. Is the reverse true?
 
-> b^(p−1) = 1 (mod p).
+It is. If you are merely told that, for every point `a`, your relation `R a` is
+equivalent to the path space `a₀ = a`, then `R` is automatically an identity
+system. The proof is a single elegant move. Fibrewise equivalences can be
+**assembled** into one big equivalence between total spaces: the bundle
+`Σ a, (a₀ = a)` is equivalent to the bundle `Σ a, R a`. The first bundle is the
+based path space, which we know is contractible. Push that contractibility across
+the assembled equivalence — using the "contractibility travels" lever — and the
+second bundle is contractible too, with its center landing exactly on the image
+of `rfl`. That is precisely the data of an identity system.
 
-In words: raising to the power (p − 1) always returns you to the identity inside
-the prime. But the order of b is the *smallest* power that does this, and every
-power that returns to 1 must be a multiple of the order. Therefore:
+Combine the two directions and you get a clean *characterization*:
 
-> **The entry point of p always divides p − 1.**
+> A relation `R` based at `a₀` **is an identity system** if and only if it is
+> **fibrewise equivalent to the based path family**.
 
-This is sometimes called **Fermat descent**. It is a striking constraint. The
-entry point — that mysterious first appearance buried somewhere in an infinite
-sequence — can never exceed p − 1, and in fact must be one of its divisors. For
-p = 7, the entry point must divide 6, and indeed 3 divides 6. For a prime like
-p = 31, the entry point of 2 must divide 30; in fact 2⁵ − 1 = 31, so the entry
-point is exactly 5, and sure enough 5 divides 30. The size of the "secret clock"
-is bounded by the size of the prime's multiplicative world.
+Two very different-looking conditions — a global statement about contractibility
+of a total space, and a local statement about equivalences fibre by fibre — turn
+out to be the same condition wearing two hats.
 
----
+## A new induction principle, for free
 
-## The support sheaf: bookkeeping made geometric
+Equality in type theory comes with a famous superpower called **path
+induction**: to prove something about *all* equalities `a₀ = a`, it suffices to
+prove it for the single trivial equality `rfl`. Every fact about equality reduces
+to the reflexive case.
 
-Step back and think about *all* primes at once. For each index n, the number
-bⁿ − 1 has some set of prime divisors. As n grows, those prime sets shift and
-overlap in an intricate pattern. Number theorists like to organize this kind of
-data as a **support**: for a fixed prime p, the *support of p* is the set of all
-indices n where p shows up,
+A marvelous consequence of the Fundamental Theorem is that *every identity
+system inherits its own version of this superpower*. If `R` is an identity
+system, then to define or prove something for all certificates `r : R a`, it
+suffices to handle the single reflexivity witness `rflR`. The construction
+transports the base case along the contractibility of the total space, and — by
+the same proof-irrelevance miracle that made one round-trip free — it satisfies
+the expected **computation rule**: applied to the reflexivity witness, the new
+eliminator gives back exactly the base case you supplied, on the nose. Each
+exotic relation that passes the identity-system test thereby earns its own
+bespoke induction principle, identical in spirit to induction on equality.
 
-> support(p) = { n : p divides bⁿ − 1 }.
+## Building blocks combine
 
-The bridge tells us this set is never complicated. It is always a single
-arithmetic progression — the multiples of the entry point:
+Identity systems are not fragile one-off constructions; they are closed under the
+operations you would hope. If `R` is an identity system on a space `A` at `a₀`,
+and `R'` is one on a space `A'` at `a₀'`, then the obvious product relation on
+`A × A'` — pairing a certificate from each side — is again an identity system,
+based at `(a₀, a₀')`. The proof reuses the same machinery: the product of two
+contractible spaces is contractible, and a bundle over a product regroups into a
+product of bundles. The calculus of identity systems composes.
 
-> **support(p) = { n : entryPoint(p) divides n } = { 0, e, 2e, 3e, … },**
-> where e = entryPoint(p).
+## Why this matters beyond the abstraction
 
-This is the "global sections" view: knowing one number, the entry point, you know
-the *entire* infinite pattern of where p lives. The local order computation gives
-you e; the support theorem turns e into the full picture for free. (The empty
-edge case is handled too: if a prime never divides any term, its support is
-exactly the multiples of the convention value 0, which is just {0}.)
+It is tempting to file all of this under "elegant but ethereal." It is not. The
+identity-system pattern is one of the most practically deployed tools in modern
+type theory, precisely because it converts a hard problem into a routine one.
 
-There is a deeper reason this is so clean, and it is the real engine behind the
-result. The sequences bⁿ − 1 are examples of **strong divisibility sequences** —
-sequences with the magical property that
+Whenever you introduce a new mathematical structure — the rationals, a quotient,
+a record of fields, an inductive datatype — you eventually need to know *when two
+of its elements are equal*, and you need to *reason* about that equality without
+drowning in case analysis. The naive equality is often clumsy. The
+identity-system pattern lets you replace it with a hand-crafted, computationally
+convenient relation `R` — "two rationals are equal when their cross-multiplied
+numerators match," say — and then *prove once* that `R` is an identity system.
+From that single proof you instantly inherit: a clean equivalence between honest
+equality and your convenient relation, a contractible reflexivity fibre, a custom
+induction principle, and uniqueness. You have, in effect, taught the system that
+your bespoke relation *is* equality, with all the reasoning power that entails.
 
-> gcd(term m, term n) = term(gcd(m, n)).
+This is why the theorem is called *fundamental*. It is the bridge between the
+equality the foundations hand you and the equality you actually want to compute
+with. And the converse, the eliminator, the closure properties, and the
+uniqueness statement together turn a single bridge into a complete toolkit.
 
-The greatest common divisor of two terms is the term at the gcd of their indices.
-This single algebraic law is what forces the divisibility pattern of every prime
-to be a clean arithmetic progression, and it is shared by an entire family of
-famous sequences.
+## The deeper lesson
 
----
+Step back and the moral is almost philosophical. We began by asking what it means
+for two things to be the same, and worried that there might be many incompatible
+answers. The Fundamental Theorem of Identity Systems and its companions give a
+reassuring verdict: **there is essentially only one notion of identity based at a
+point, and you can recognize it by its shape.** Any relation whose global bundle
+of certificates collapses to a single point — that is contractible, centered at
+reflexivity — is equality in disguise, and all such relations are
+interchangeable.
 
-## The same clock ticks in Fibonacci
-
-The most celebrated strong divisibility sequence of all is not the Mersenne
-sequence — it is the **Fibonacci sequence**:
-
-```
-0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
-```
-
-It, too, satisfies gcd(Fₘ, Fₙ) = F₍gcd(m,n)₎. And so it, too, has entry points.
-Ask: which Fibonacci numbers does 7 divide?
-
-```
-F₈ = 21 = 3 × 7    ← first appearance
-F₁₆ = 987 = 3 × 7 × 47
-F₂₄ = 46368 = ... = 7 × 6624
-```
-
-7 first divides F₈, and thereafter divides Fₙ exactly when 8 divides n. The entry
-point of 7 in Fibonacci is 8. The clock is real here too. The very same support
-theorem applies verbatim:
-
-> **{ n : p divides Fₙ } = { n : entryPoint(p) divides n }.**
-
-The set of Fibonacci indices that a prime divides is always a single arithmetic
-progression generated by that prime's Fibonacci entry point. This connects
-directly to the theory of *primitive divisors* and to the deep results of
-Carmichael and Zsygmondy on when a new prime first appears in such sequences —
-the engine room of a surprising amount of modern number theory and even
-cryptography, where the difficulty of running these clocks *backwards* (recovering
-n from bⁿ mod p) underlies the security of widely used public-key systems.
-
----
-
-## Why this matters
-
-At first glance the Apparition–Order Bridge is a small observation about powers of
-two. But it is a perfect miniature of one of the grand themes of modern
-mathematics: the **local-to-global principle**. A "global" object — an infinite
-sequence, a search with no obvious end — is controlled, completely, by a "local"
-computation you can perform inside a single prime. The hard, unbounded problem
-becomes a finite, mechanical one.
-
-That theme echoes everywhere. It is why number theorists study a number "one prime
-at a time." It is why elliptic-curve cryptography can promise security with
-provably bounded computation. It is the spirit of algebraic geometry's sheaves,
-where local data on small patches glues into global structure. Here, in the most
-elementary possible setting, you can watch the principle work with your bare
-hands: a prime's entire infinite footprint across the Mersenne numbers is decided
-by how long it takes a single element to cycle home.
-
-Every prime, it turns out, carries a clock. The Mersenne sequence merely lets us
-hear it tick.
+Sameness, it turns out, has a shape. And the shape of sameness is a point.
