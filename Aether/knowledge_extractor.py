@@ -4039,7 +4039,9 @@ Research mode: {concept.research_mode}
                 self._save_inflight()
 
             # Dispatch new jobs to fill queue
-            while len(self.inflight) < max_inflight and self.cycle_count < max_cycles:
+            active_inflight = len([j for j in self.inflight.values()
+                                   if j.status not in ("completed", "failed", "integrated", "rejected")])
+            while active_inflight < max_inflight and self.cycle_count < max_cycles:
                 domain = domain_cycle[domain_idx % len(domain_cycle)]
                 domain_idx += 1
 
@@ -4054,9 +4056,14 @@ Research mode: {concept.research_mode}
                     await asyncio.sleep(30)
                     break
 
+                active_inflight = len([j for j in self.inflight.values()
+                                       if j.status not in ("completed", "failed", "integrated", "rejected")])
+
             # Status
+            active_inflight = len([j for j in self.inflight.values()
+                                   if j.status not in ("completed", "failed", "integrated", "rejected")])
             print(f"\n[Status] Cycle {self.cycle_count}/{max_cycles} | "
-                  f"Inflight: {len(self.inflight)}/{max_inflight} | "
+                  f"Inflight: {active_inflight}/{max_inflight} | "
                   f"Completed: {self.completed_count} | Failed: {self.failed_count}")
 
             await asyncio.sleep(poll_interval)

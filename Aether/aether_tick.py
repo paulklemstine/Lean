@@ -13,6 +13,7 @@ Usage:
 
 import argparse
 import asyncio
+import fcntl
 import http.server
 import os
 import sys
@@ -34,6 +35,41 @@ from typing import Dict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
+
+
+class FileLock:
+    """Advisory, process-scoped lock file using Unix flock(2).
+
+    Used to ensure only one Aether tick runs across all local/CI processes
+    that share the same workspace. This prevents two processes from each
+    dispatching up to max_inflight jobs and overflowing the Aristotle queue.
+    """
+
+    def __init__(self, path: Path):
+        self.path = path
+        self._fd = None
+
+    def __enter__(self):
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self._fd = open(self.path, "w")
+        try:
+            fcntl.flock(self._fd.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            print(f"[Lock] Waiting for tick lock ({self.path.name}) ...")
+            fcntl.flock(self._fd.fileno(), fcntl.LOCK_EX)
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        if self._fd:
+            try:
+                fcntl.flock(self._fd.fileno(), fcntl.LOCK_UN)
+            except Exception:
+                pass
+            try:
+                self._fd.close()
+            except Exception:
+                pass
+        return False
 
 # Load environment variables from .env file in Aether directory
 def _load_env_file():
@@ -337,6 +373,21 @@ def _check_core_file_changes(pre_pull_hashes: Dict[str, str]) -> bool:
 
 
 async def tick(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: int = 3) -> None:
+    """Run one tick inside a single event loop, with a cross-process lock.
+
+    Only one process can execute a tick at a time. This prevents the local
+    loop and CI from each dispatching up to max_inflight jobs and overflowing
+    the Aristotle queue.
+    """
+    lock_path = extractor.workspace / "aether_tick.lock"
+    with FileLock(lock_path):
+        # Reload inflight state from disk in case another process updated it
+        # while we were waiting for the lock.
+        extractor._load_inflight()
+        await _tick_impl(extractor, max_inflight, novelty_slots)
+
+
+async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_slots: int = 3) -> None:
     """Run one tick inside a single event loop.
 
     novelty_slots: number of dispatch slots reserved for novelty/wild directions

@@ -26,6 +26,7 @@ __pycache__/
 /Aether/.aether_workspace/*.sqlite
 /Aether/.aether_workspace/*.sqlite-journal
 /Aether/.aether_workspace/*.db
+/Aether/.aether_workspace/*.lock
 /Aether/*.log
 *.log
 /Aether/artifacts

@@ -88,16 +88,21 @@ jobs:
         run: |
           git config user.name "Aether Bot"
           git config user.email "aether-bot[bot]@users.noreply.github.com"
-          
+
           # SAFETY MEASURE: Ensure we aren't staging hidden cache folders or massive models
           # If your script downloaded a 10GB file, git add -A will crash the runner here.
           echo ".hf_cache/" >> .gitignore
           echo "Aether/.aether_workspace/logs/" >> .gitignore # Reconsider if you want 4x daily logs in git history
-          
+
           git add -A
           git diff --cached --quiet || git commit -m "Aether CI: tick $(date -u +%Y-%m-%dT%H:%MZ)"
           git pull --rebase -X ours origin master || git rebase --abort
           git push
+
+      - name: Update catalog-lean branch
+        run: |
+          bash Aether/.aether_workspace/update-catalog-branch.sh
+          git push --force-with-lease origin catalog-lean
 
       - name: Update website index
         run: cd Catalog/Applications/Packages && python3 update_index.py
