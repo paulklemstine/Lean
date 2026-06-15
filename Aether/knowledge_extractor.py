@@ -2258,7 +2258,7 @@ Research mode: {concept.research_mode}
             # v7 linting gate: reject Lean files from v7 prompts with basic syntax issues
             # v7 uses structured theorem declarations — verify they're well-formed
             phase_ver = getattr(job, 'phase_a_prompt_version', '')
-            if phase_ver in ('v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14', 'v15', 'v16', 'v16a', 'v16b'):
+            if phase_ver in ('v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14', 'v15', 'v16', 'v16a', 'v16b', 'v17', 'v18'):
                 # Check 1: unclosed block comments (/- ... -/)
                 open_blocks = content.count("/-") - content.count("/-!")
                 close_blocks = content.count("-/")
@@ -2279,8 +2279,8 @@ Research mode: {concept.research_mode}
                     print(f"[Integrate] {phase_ver} lint: rejecting {target_path} — theorem density too low "
                           f"({theorem_count} theorems in {lines} lines)")
                     return "REJECT"
-            # v8-v16 lint gate: check for research team protocol markers
-            if phase_ver in ('v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14', 'v16', 'v16a', 'v16b'):
+            # v8-v18 lint gate: check for research team protocol markers
+            if phase_ver in ('v8', 'v9', 'v10', 'v11', 'v12', 'v13', 'v14', 'v16', 'v16a', 'v16b', 'v17', 'v18'):
                 has_lab_notebook = "Lab Notebook" in content or "lab notebook" in content.lower()
                 has_lab_notes = "Lab Notes" in content or "lab notes" in content.lower()
                 has_hypothesis = "hypothesis" in content.lower()

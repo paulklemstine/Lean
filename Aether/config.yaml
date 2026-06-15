@@ -35,10 +35,14 @@ pi_agent:
   temperature: 0.85
   top_p: 0.92
   num_predict: 4096
-  # Phase A prompt A/B weights. v15 is the stable baseline; set v16 weights to
-  # enable experimental prompts. Weights are sampled per cycle.
+  # Phase A prompt A/B weights. v15 is the stable baseline. Weights are
+  # sampled per cycle. Keep the baseline majority so regressions are bounded.
   phase_a_prompt_weights:
-    v15: 1.0
+    v15: 0.55
+    v16: 0.20
+    v16a: 0.10
+    v16b: 0.10
+    v17: 0.05
   research_modes:
     - prove
     - formalize

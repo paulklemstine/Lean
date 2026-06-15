@@ -163,3 +163,54 @@ def test_write_aristotle_prompt_routes_v15(pi_client, research_concept):
     assert "MATHEMATICAL RESEARCH MISSION" in prompt
     # v15 should NOT have the v16 self-critique checklist
     assert "Self-Critique Checklist" not in prompt
+
+
+def test_v17_is_concise(pi_client, research_concept):
+    prompt = pi_client.write_aristotle_prompt(
+        concept=research_concept,
+        catalog_references=research_concept.catalog_references,
+        prompt_version="v17",
+        phase="A_lean_only",
+    )
+    assert "Phase A Research Mission v17" in prompt
+    assert "Concise Scientific Loop" in prompt
+    # v17 strips long examples, so it should be shorter than v16
+    v16_prompt = pi_client.write_aristotle_prompt(
+        concept=research_concept,
+        catalog_references=research_concept.catalog_references,
+        prompt_version="v16",
+        phase="A_lean_only",
+    )
+    assert len(prompt) < len(v16_prompt)
+
+
+def test_v18_is_mode_specific(pi_client, research_concept):
+    prompt = pi_client.write_aristotle_prompt(
+        concept=research_concept,
+        catalog_references=research_concept.catalog_references,
+        prompt_version="v18",
+        phase="A_lean_only",
+    )
+    assert "Phase A Research Mission v18" in prompt
+    assert "Mode-Specific Mission: prove" in prompt
+
+
+def test_v18_sorry_fill_mode(pi_client):
+    from pi_agent_client import ResearchConcept
+    concept = ResearchConcept(
+        title="Fill remaining sorries",
+        domain="Algebra",
+        concept_description="Fill sorries in an existing file",
+        mathematical_framing="sorry_fill target",
+        research_mode="sorry_fill",
+    )
+    prompt = pi_client.write_aristotle_prompt(
+        concept=concept,
+        catalog_references=["Catalog/Algebra/Target.lean"],
+        prompt_version="v18",
+        phase="A_lean_only",
+    )
+    assert "Phase A Research Mission v18" in prompt
+    assert "Mode-Specific Mission: sorry_fill" in prompt
+    assert " Hypothesizer" in prompt
+    assert " Experimenter" in prompt

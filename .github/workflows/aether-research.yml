@@ -9,6 +9,10 @@ on:
         description: 'Max inflight Aristotle jobs'
         required: false
         default: '9'
+      phase_a_prompt_weights:
+        description: 'JSON weights for Phase A prompt A/B test'
+        required: false
+        default: '{"v15":0.55,"v16":0.20,"v16a":0.10,"v16b":0.10,"v17":0.05}'
 
 permissions:
   contents: write
@@ -20,9 +24,10 @@ concurrency:
 
 env:
   AETHER_MAX_INFLIGHT: ${{ github.event.inputs.maxinflight || '9' }}
+  AETHER_PHASE_A_PROMPT_WEIGHTS: ${{ github.event.inputs.phase_a_prompt_weights || '{"v15":0.55,"v16":0.20,"v16a":0.10,"v16b":0.10,"v17":0.05}' }}
   PYTHONUNBUFFERED: '1'
   # Force HuggingFace to download to the workspace so we can track its size, if you use it.
-  HF_HOME: ${{ github.workspace }}/.hf_cache 
+  HF_HOME: ${{ github.workspace }}/.hf_cache
 
 jobs:
   research:

@@ -1841,6 +1841,68 @@ class PiAgentClient:
             used and what new connection they create.
         """)
 
+    def _build_v17_depth_requirements(self) -> str:
+        """v17: Concise scientific-method loop.
+
+        Same team-loop structure as v16 but stripped of examples and repeated
+        phrasing so the prompt fits more easily within cloud input budgets.
+        """
+        return textwrap.dedent("""\
+            ## v17 Research Core Methodology — Concise Scientific Loop
+
+            Lead a 4-role team: Hypothesizer, Experimenter, Analyst, Critic.
+            Loop: Hypothesize → Experiment → Analyze → Critique → Synthesize.
+
+            1. **Hypothesize**: 5–7 falsifiable conjectures; ≥2 surprising.
+            2. **Experiment**: Prove or disprove in Lean 4; prioritize surprise.
+            3. **Analyze**: Document what survived, failed, and why.
+            4. **Critique**: Check for triviality, missing sorries, weak assumptions.
+            5. **Synthesize**: Clean Lean files + FUTURE_DIRECTIONS.md (3–5 testable
+               conjectures, each with "The key insight is..." and "Why now?").
+        """)
+
+    def _build_v18_depth_requirements(self, concept: "ResearchConcept") -> str:
+        """v18: Mode-specific team briefs.
+
+        Inherits the v16 loop but adds a mode-specific mission paragraph based on
+        concept.research_mode so prove, sorry_fill, and discover get distinct
+        instructions.
+        """
+        base = self._build_v16_depth_requirements()
+        mode = getattr(concept, "research_mode", "prove")
+        if mode == "sorry_fill":
+            mode_extra = textwrap.dedent("""\
+
+                ### Mode-Specific Mission: sorry_fill
+                Your team is filling `sorry` placeholders in an existing proof.
+                The Hypothesizer should identify the exact lemma or technique that
+                closes each gap; the Experimenter proves only that gap; the Analyst
+                verifies the filled proof compiles and does not weaken the original
+                theorem; the Critic checks that no new sorries were introduced.
+            """)
+        elif mode == "discover":
+            mode_extra = textwrap.dedent("""\
+
+                ### Mode-Specific Mission: discover
+                Your team is surveying uncharted territory. The Hypothesizer
+                proposes definitions and conjectures; the Experimenter tests them;
+                the Analyst extracts structural patterns; the Critic rejects
+                trivial observations. It is acceptable if most conjectures remain
+                open, as long as FUTURE_DIRECTIONS.md precisely states them.
+            """)
+        else:
+            # prove / formalize / counterexample all map to the standard directive
+            mode_extra = textwrap.dedent("""\
+
+                ### Mode-Specific Mission: prove
+                Your team is proving a targeted theorem. The Hypothesizer breaks
+                the main claim into lemmas; the Experimenter proves each lemma;
+                the Analyst ensures the pieces assemble into the main result;
+                the Critic tries to break the proof with edge cases. Main results
+                must have 0 sorries.
+            """)
+        return base + mode_extra
+
 
     def _build_assignment(self, concept: ResearchConcept) -> str:
         """Build a directive assignment section for Aristotle.
@@ -2022,6 +2084,10 @@ class PiAgentClient:
             depth_requirements = self._build_v16a_depth_requirements()
         elif prompt_version == "v16b":
             depth_requirements = self._build_v16b_depth_requirements()
+        elif prompt_version == "v17":
+            depth_requirements = self._build_v17_depth_requirements()
+        elif prompt_version == "v18":
+            depth_requirements = self._build_v18_depth_requirements(concept)
         else:
             depth_requirements = self._build_v16_depth_requirements()
 
@@ -2131,10 +2197,10 @@ class PiAgentClient:
             prompt_version = "v15"
         if prompt_version in ("v1", "v2", "v3", "v4", "v5", "v6", "v7"):
             raise ValueError(
-                f"{prompt_version} prompt is no longer supported — use v8 through v16. "
+                f"{prompt_version} prompt is no longer supported — use v8 through v18. "
                 "v15 (PM Ticket Style) is the default."
             )
-        if prompt_version in ("v16", "v16a", "v16b"):
+        if prompt_version in ("v16", "v16a", "v16b", "v17", "v18"):
             return self._build_phase_a_v16_prompt(
                 concept=concept,
                 catalog_references=catalog_references,
