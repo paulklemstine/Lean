@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-15T07:17:57.684238+00:00",
+  "last_updated": "2026-06-15T07:20:23.683924+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -59298,6 +59298,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-15T07:17:57.363130+00:00",
       "title": "Berggren\u2013Lorentz certificates for lattice reduction in Pythagorean cryptography"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.3566,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 8,
+      "domain": "MachineLearning",
+      "duration_seconds": -42.411303758621216,
+      "end_time": 1781507974.3785925,
+      "files_integrated": 0,
+      "job_id": "d1ba4f5a",
+      "outcome_quality": 0.70472,
+      "phase": "A",
+      "phase_a_prompt_version": "v15",
+      "phase_b_skipped": false,
+      "prompt_version": "v15",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.62,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.8,
+        "composite": 0.5116,
+        "cross_domain": 0.7,
+        "grade": "substantial",
+        "importance": 0.3482,
+        "novelty": 0.8233,
+        "proof_depth": 0.1445,
+        "usefulness": 0.4223
+      },
+      "quality_score": 0.61184,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1781508016.7898962,
+      "strategy_count": 0,
+      "theorem_count": 9,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-15T07:20:23.363502+00:00",
+      "title": "These conjectures build on `Bridges/ValuationRipsBridge.lean`, which established"
     }
   ]
 }
