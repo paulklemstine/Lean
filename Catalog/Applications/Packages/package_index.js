@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6ce4a7be",
     "filename": "metric_filtration_rank_profiles_as_tropical_valuat.json",
     "pkg_num": 164,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.76292,
     "title": "Metric Filtration Rank Profiles as Tropical Valuation Objects"
   },
   {
@@ -5074,8 +5074,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "metric_filtration_rank_profiles_as_tropical_valuat",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.76292,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Metric Filtration Rank Profiles as Tropical Valuation Objects"
     }
