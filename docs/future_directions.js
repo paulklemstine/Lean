@@ -280,21 +280,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "K\u00e4hler-Einstein Metrics and K-Stability"
   },
   {
-    "consumed_by_exp_id": "14986cd2",
-    "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0114",
-    "priority_score": 0.87,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.944657+00:00",
-    "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that for every positive integer n, there exists a prime between n\u00b2 and (n+1)\u00b2. Formalize known partial results on prime gaps and connect to the Cram\u00e9r model of primes.",
     "domains": [
@@ -1354,6 +1339,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Spectral Graph Theory Meets Network Robustness\n\nThis cycle established, fully in Lean 4 (0 sorries), a faithful bridge between the\ngraph Laplacian and network robustness in\n`Catalog/MachineLearning/SpectralRobustness/Core.lean`:\n\n- `dirichletEnergy` = the Laplacian quadratic form `x\u1d40 L x`;\n- `dirichletEnergy_mono` \u2014 adding edges only increases each signal's energy;\n- `connected_iff_finrank_ker_eq_one` \u2014 Fiedler's criterion (connected \u21d4 Laplacian\n  nullity 1);\n- `card_connectedComponent_antitone` / `finrank_ker_lapMatrix_antitone` \u2014 denser\n  networks have no more components / no larger Laplacian nullity;\n- `not_connected_iff_exists_nonconstant_zero_energy` \u2014 a spectral disconnection\n  certificate.\n\nBelow are bold, testable conjectures to formalize in follow-up cycles. Each is\nstated so that it can become a Lean theorem (or be refuted by a counterexample).\n\n## C1. Algebraic connectivity as an ordered eigenvalue, and its monotonicity\nDefine `algConnectivity G : \u211d` as the second\u2013smallest eigenvalue of `lapMatrix \u211d G`\n(the Fiedler value), using a Courant\u2013Fischer / min\u2013max characterization over\nsignals orthogonal to the constants. **Conjecture:** `algConnectivity` is monotone\nunder edge addition, i.e. `H \u2264 G \u2192 algConnectivity H \u2264 algConnectivity G`, and\n`algConnectivity G > 0 \u2194 G.Connected`. This upgrades the pointwise\n`dirichletEnergy_mono` and the nullity statement `connected_iff_finrank_ker_eq_one`\nto the genuine eigenvalue level. Requires building min\u2013max for `lapMatrix`, which\nMathlib currently lacks.\n\n## C2. Fiedler's bound: algebraic connectivity \u2264 vertex connectivity\n**Conjecture:** for a graph that is not complete, `algConnectivity G \u2264 \u03ba(G)`, the\nvertex connectivity (minimum number of vertices whose removal disconnects `G`).\nThis is the classical robustness inequality linking the spectral gap to the\ncombinatorial cut size. A formal first step is the edge version:\n`algConnectivity G \u2264 minEdgeCut G`.\n\n## C3. Cheeger inequality for the normalized Laplacian\nDefine the conductance / isoperimetric number `h(G) = min_S |\u2202S| / min(vol S, vol S\u1d9c)`\nand the normalized Laplacian spectral gap `\u03bb\u2082`. **Conjecture (Cheeger):**\n`\u03bb\u2082 / 2 \u2264 h(G) \u2264 sqrt(2 \u03bb\u2082)`. The easy direction (`\u03bb\u2082 / 2 \u2264 h(G)`) is a realistic\nformalization target using the Dirichlet-energy machinery already in this file:\nplug the indicator-style test signals into `dirichletEnergy` and bound the\nRayleigh quotient.\n\n## C4. Quantitative robustness: spectral lower bound on edges to disconnect\n**Conjecture:** the minimum number of edges whose deletion disconnects a connected\ngraph on `n` vertices is at least `algConnectivity G` (and at least\n`\u2308 algConnectivity G \u2309`). Equivalently, a single edge deletion drops the algebraic\nconnectivity by at most a controlled amount: `algConnectivity G - algConnectivity (G \\ e) \u2264 1`.\nThis is the eigenvalue-interlacing counterpart of `finrank_ker_lapMatrix_antitone`\nand would give a verified \"robustness margin\" for ML network design.\n\n## C5. Spectral robustness of graph products (scalability)\nFor the Cartesian product `G \u25a1 H`, the Laplacian spectrum is the sumset of the two\nspectra. **Conjecture:** `algConnectivity (G \u25a1 H) = min (algConnectivity G) (algConnectivity H)`,\nand consequently `dirichletEnergy_(G \u25a1 H)` decomposes additively over the factors.\nThis predicts how to build large robust networks (e.g. expander products) from\nsmall robust ones, and pairs with the existing catalog work on expander walks.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_2030",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1aac4615",
+    "status": "available",
+    "timestamp": "2026-06-16T23:47:38.176332+00:00",
+    "title": "This cycle established, fully in Lean 4 (0 sorries), a faithful bridge between t"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Time-Travel Consistency as a Fixed-Point Theorem\n\nDerived from the research cycle formalized in\n`Catalog/Computation/NovikovConsistency.lean` and\n`Catalog/Computation/NovikovPolynomial.lean`, where Novikov's self-consistency\nprinciple is realized as the Banach fixed point of a causal *round-trip* map\n`T : X \u2192 X` (a self-consistent history is exactly a fixed point `T x = x`), with the\ntopological existence half reusing the catalog's\n`brouwer_fixedPoint_Icc_general`.\n\nThe cycle established a sharp **existence/uniqueness gap**: existence of a\nself-consistent history is *topological* (it holds for any continuous self-map of an\ninterval, and even pins an interior, irrational golden-ratio history for `x \u21a6 1 - x\u00b2`),\nwhereas *uniqueness* is *metric* and fails the moment the loop stops contracting\n(`x \u21a6 x\u00b2` carries two consistent histories `0` and `1`). The directions below push on\nexactly that gap.\n\n## 1. Quantitative paradox index from the spectral gap `1 - K`\n\n**Conjecture.** Define the *paradox index* of a guessed history `x` as\n`P(x) = dist x (T x)` (its one-step inconsistency). Then for a contracting causal map\nthe realized history is within `P(x)/(1-K)` of consistency, and this bound is *tight*\nfor affine maps: `dist x x* = P(x)/(1+a)` when `a < 0`.\n\n*The key insight is...* that `novikov_error_bound` already turns \"how paradoxical is\nthis guess?\" into a single scalar controlled by the spectral gap `1 - K`, so the gap\nitself is a measurable, falsifiable physical observable rather than a metaphor.\n\n*Why now?* `novikov_error_bound` and `affine_contracting` are proved; the tightness\nclaim is a finite affine computation (`field_simp`/`nlinarith`) that the current file\nis one lemma away from.\n\n## 2. Bifurcation of consistent histories at the contraction boundary `K = 1`\n\n**Conjecture.** Parameterize causal maps by gain `r` (e.g. logistic `r\u00b7x\u00b7(1-x)`). The\nnumber of self-consistent histories in `[0,1]` is `1` for `r \u2264 1` and `\u2265 2` for\n`r > 1`, with the new branch born exactly at the loss of contraction (`K \u2192 1`).\n\n*The key insight is...* that `logistic_carrying_capacity_consistent` exhibits the\nsecond (nonzero) history `1 - 1/r` appearing precisely as `r` crosses `1`, mirroring a\ntranscritical bifurcation \u2014 uniqueness is destroyed at the same threshold where\ncontraction is lost.\n\n*Why now?* The two logistic histories (`0` and `1 - 1/r`) are already formalized; what\nremains is to prove there are *exactly* these for `r \u2208 (1,3]`, a real-root-counting\nargument within reach of `polyrith`/`nlinarith`.\n\n## 3. Multidimensional Novikov: consistent field histories on `\u211d\u207f`\n\n**Conjecture.** For a causal map `T : \u211d\u207f \u2192 \u211d\u207f` that is `K`-Lipschitz with `K < 1` in\nthe Euclidean metric (e.g. an affine map `x \u21a6 A x + b` with `\u2016A\u2016 < 1`), there is a\nunique self-consistent field history, given by `(I - A)\u207b\u00b9 b`.\n\n*The key insight is...* that the abstract `novikov_unique_consistent` is already stated\nover an arbitrary complete metric space, so the entire content is the spectral\ncriterion `\u2016A\u2016 < 1 \u27f9 ContractingWith \u2016A\u2016 (A\u00b7+b)` \u2014 a matrix-norm lemma, not new\nfixed-point theory.\n\n*Why now?* `novikov_unique_consistent` is domain-agnostic and proved; Mathlib's\noperator-norm API (`ContinuousLinearMap.opNorm`) makes the `\u211d\u207f` instantiation a\nself-contained next step.\n\n## 4. Necessity is generic: most degree-\u22652 causal maps break uniqueness\n\n**Conjecture.** A real polynomial causal map of degree `d \u2265 2` whose leading\ncoefficient is positive has at least two real fixed points (hence is never a\ncontraction on all of `\u211d`) for an open, dense set of coefficient vectors.\n\n*The key insight is...* that `square_no_contraction` is not an isolated pathology: the\nfixed-point equation `p(x) = x` is itself a degree-`d` polynomial, so generically it\nhas multiple real roots, making the failure of Novikov uniqueness the *typical* case\nfor nonlinear causal maps.\n\n*Why now?* `square_no_contraction` gives the d=2 witness and the proof template\n(two fixed points \u21d2 no contraction, via `fixedPoint_unique'`); generalizing needs only\na root-existence count for `p(x) - x`.\n\n## 5. Approximate Novikov: \u03b5-consistent histories always exist on compacta\n\n**Conjecture.** Even when no exact contraction holds, every continuous causal map on a\ncompact state space admits, for each `\u03b5 > 0`, an *\u03b5-self-consistent* history with\n`dist (T x) x \u2264 \u03b5`; and if the space is additionally convex these upgrade to an exact\nconsistent history.\n\n*The key insight is...* that the catalog already contains the compactness upgrade\nprinciple (`exists_fixedPoint_of_approx_fixedPoint_compactness`), so approximate\nself-consistency \u2014 the physically realistic notion under measurement error \u2014 is the\nright weakening that survives the loss of contraction.\n\n*Why now?* `novikov_exists_interval` connects this file to the catalog's fixed-point\ncore; wiring in the compactness-upgrade lemma extends Novikov existence from intervals\nto arbitrary compact convex history spaces with no new heavy machinery.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2031",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "14986cd2",
+    "status": "available",
+    "timestamp": "2026-06-16T23:48:48.355410+00:00",
+    "title": "Derived from the research cycle formalized in"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -1720,21 +1735,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:31.219688+00:00",
     "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
-  },
-  {
-    "consumed_by_exp_id": "1aac4615",
-    "description": "Prove that the algebraic connectivity of a neural network's computation graph bounds its certified robustness radius. Formalize the connection between graph spectra and function Lipschitz constants.",
-    "domains": [
-      "MachineLearning",
-      "Algebra"
-    ],
-    "id": "fd_0478",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T21:01:44.884438+00:00",
-    "title": "Spectral Graph Theory Meets Network Robustness"
   },
   {
     "consumed_by_exp_id": "",
@@ -2456,7 +2456,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "29ffc67c",
     "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
     "domains": [
       "Novelty",
@@ -2466,7 +2466,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.491505+00:00",
     "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
   },
@@ -2906,7 +2906,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Isomorphisms of Meaning: When Structures Collide"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1873f003",
     "description": "Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
     "domains": [
       "Novelty",
@@ -2916,7 +2916,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.852132+00:00",
     "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
   },
