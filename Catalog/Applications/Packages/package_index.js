@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "fba6400c",
     "filename": "the_borsuk_ulam_theorem_implies_arrows_impossibili.json",
     "pkg_num": 171,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.64064,
     "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
   },
   {
@@ -5285,8 +5285,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "the_borsuk_ulam_theorem_implies_arrows_impossibili",
       "primary_domain": "Computation",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.64064,
+      "quality": "partial",
       "shape": "cube",
       "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
     }
