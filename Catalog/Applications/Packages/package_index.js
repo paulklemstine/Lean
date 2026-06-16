@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "e42393e4",
     "filename": "functor_from_finite_linear_codes_to_tropical_valua.json",
     "pkg_num": 166,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.79224,
     "title": "From Error-Correcting Codes to Tropical Geometry: The Weight-Threshold Profile Functor"
   },
   {
@@ -5128,8 +5128,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "functor_from_finite_linear_codes_to_tropical_valua",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.79224,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "From Error-Correcting Codes to Tropical Geometry: The Weight-Threshold Profile Functor"
     }
