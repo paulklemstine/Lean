@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0d42792c",
     "filename": "diophantine_approximation_on_neural_networks_how_w.json",
     "pkg_num": 172,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5761099999999999,
     "title": "The Parity Theorem for Eulerian Trails: Why You Can't Cross Every Bridge Once"
   },
   {
@@ -5314,8 +5314,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "diophantine_approximation_on_neural_networks_how_w",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5761099999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Parity Theorem for Eulerian Trails: Why You Can't Cross Every Bridge Once"
     }
