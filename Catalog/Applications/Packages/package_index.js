@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "096aa5b9",
     "filename": "a_1_lipschitz_functor_from_valuation_depth_measure.json",
     "pkg_num": 158,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5430773913043478,
     "title": "The One-Step Tax: A 1-Lipschitz Functor from Valuation-Depth Measures to Tropical Valuation Objects"
   },
   {
@@ -4881,8 +4881,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "a_1_lipschitz_functor_from_valuation_depth_measure",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5430773913043478,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The One-Step Tax: A 1-Lipschitz Functor from Valuation-Depth Measures to Tropical Valuation Objects"
     }
