@@ -272,13 +272,14 @@ class TestCompletingDirections:
         assert d.status == "completed"
         assert fd_manager.get_available_directions() == []
 
-    def test_mark_abandoned_resets_to_available(self, fd_manager, sample_direction):
+    def test_mark_abandoned_is_terminal_failed(self, fd_manager, sample_direction):
         fd_manager.add_direction(sample_direction)
         fd_manager.mark_direction_consumed("test_001", "exp_001")
         fd_manager.mark_direction_abandoned("test_001")
         d = fd_manager._directions[0]
-        assert d.status == "available"
+        assert d.status == "failed"
         assert d.consumed_by_exp_id == ""
+        assert fd_manager.get_available_directions() == []
 
 
 class TestStaleDirectionRecovery:
@@ -776,8 +777,8 @@ class TestRestoreDirection:
 
 # ── Test: Auto-Prune ──
 
-class TestAutoPrune:
-    def test_auto_prune_triggers_on_add(self, fd_manager):
+class TestNoAutoPrune:
+    def test_auto_prune_does_not_trigger_on_add(self, fd_manager):
         # Add seed direction to keep
         fd_manager.add_direction(FutureDirection(
             id="seed_001", title="Seed Direction",
@@ -785,18 +786,16 @@ class TestAutoPrune:
             source_exp_id="seed", source_path="seed:manual_v2",
             domains=["Tropical"], priority_score=0.90,
         ))
-        # Add auto-parsed directions up to cap
-        from unittest.mock import patch
-        original_cap = 5
-        for i in range(original_cap + 5):
+        # Add distinct auto-parsed directions; with pruning removed, all should stay.
+        for i in range(15):
             fd_manager.add_direction(FutureDirection(
                 id=f"auto_{i:03d}", title=f"Auto Direction {i}",
-                description=f"Exploring novel approaches to tropical mathematics and idempotent algebra topic number {i} for advanced research.",
+                description=_UNIQUE_DESCRIPTIONS[i],
                 source_exp_id="exp_001", source_path="result_future_directions",
                 domains=["Tropical"], priority_score=0.70,
             ))
-        # Auto-prune should have been triggered; list should be manageable
-        assert len(fd_manager._directions) <= original_cap + 1  # +1 for seed
+        assert len(fd_manager._directions) == 16  # seed + 15 added
+        assert len(fd_manager.get_available_directions()) > 0
 
 
 # ── Test: Backward Compatibility ──
@@ -1375,3 +1374,94 @@ class TestGenericTitleRejection:
         # anti-repetition penalties, and weighted direction selection handle diversity.
         # Verify that discover() works without redirect logic.
         assert True  # Placeholder: redirect logic is no longer in discover()
+
+
+# ── Tests for no-pruning / no-retry policy ──
+
+class TestNoPruningNoRetry:
+    def test_attempt_count_never_prunes_direction(self, fd_manager):
+        d = FutureDirection(
+            id="retried_001", title="Retried Direction",
+            description="A direction that has been attempted many times but must never be pruned.",
+            source_exp_id="exp_001", source_path="result_future_directions",
+            domains=["Tropical"], priority_score=0.70, attempt_count=5,
+        )
+        fd_manager.add_direction(d)
+        selected = fd_manager.select_direction_weighted()
+        assert selected is not None
+        assert selected.id == "retried_001"
+        assert selected.status == "available"
+
+    def test_failed_direction_becomes_terminal_failed(self, fd_manager):
+        d = FutureDirection(
+            id="fail_001", title="Failing Direction",
+            description="A direction consumed by a job that ultimately fails.",
+            source_exp_id="exp_001", source_path="result_future_directions",
+            domains=["Tropical"], priority_score=0.70,
+        )
+        fd_manager.add_direction(d)
+        fd_manager.mark_direction_consumed("fail_001", "job_001")
+        fd_manager.mark_direction_failed("fail_001")
+        updated = fd_manager.get_direction_by_id("fail_001")
+        assert updated.status == "failed"
+        assert updated.consumed_by_exp_id == ""
+        assert fd_manager.get_available_directions() == []
+
+    def test_failed_direction_is_not_retried(self, fd_manager):
+        d = FutureDirection(
+            id="fail_002", title="Another Failing Direction",
+            description="A direction whose failure must not return to the available pool.",
+            source_exp_id="exp_001", source_path="result_future_directions",
+            domains=["Tropical"], priority_score=0.70,
+        )
+        fd_manager.add_direction(d)
+        fd_manager.mark_direction_consumed("fail_002", "job_002")
+        fd_manager.mark_direction_abandoned("fail_002")
+        assert fd_manager.get_available_directions() == []
+        assert fd_manager.get_direction_by_id("fail_002").status == "failed"
+
+    def test_stats_counts_failed(self, fd_manager):
+        d = FutureDirection(
+            id="fail_003", title="Stats Failing Direction",
+            description="A direction used to verify failed status is counted.",
+            source_exp_id="exp_001", source_path="result_future_directions",
+            domains=["Tropical"], priority_score=0.70,
+        )
+        fd_manager.add_direction(d)
+        fd_manager.mark_direction_consumed("fail_003", "job_003")
+        fd_manager.mark_direction_failed("fail_003")
+        stats = fd_manager.get_stats()
+        assert stats["failed"] == 1
+
+
+# ── Tests for tighter fallback extraction ──
+
+class TestExtractionQualityGate:
+    def test_short_fallback_description_rejected(self, fd_manager):
+        text = "Prove stuff."
+        added, _ = fd_manager.add_directions_from_text(text, "exp_short", "result_future_directions")
+        assert added == 0
+
+    def test_generic_fallback_title_rejected(self, fd_manager):
+        text = "1. **Further Research.** More work is needed to explore the consequences of this result."
+        added, _ = fd_manager.add_directions_from_text(text, "exp_generic", "result_future_directions")
+        assert added == 0
+
+    def test_bridges_only_without_strategy_rejected(self, fd_manager):
+        text = "1. **Some Bridge Idea.** Investigate possible connections between different areas of mathematics."
+        added, _ = fd_manager.add_directions_from_text(text, "exp_bridge", "result_future_directions")
+        assert added == 0
+
+    def test_fallback_splits_paragraphs(self, fd_manager):
+        text = """Paragraph one: prove that tropical min-plus circuits have super-polynomial size lower bounds for parity languages.
+
+Paragraph two: formalize a tropical lens rigidity theorem connecting min-plus algebraic structures to inverse spectral problems on graphs."""
+        added, _ = fd_manager.add_directions_from_text(text, "exp_para", "result_future_directions")
+        assert added == 2
+        titles = [d.title for d in fd_manager._directions]
+        assert any("tropical" in t.lower() for t in titles)
+
+    def test_quality_gate_keeps_good_direction(self, fd_manager):
+        text = "1. **Tropical Eigenvalue Gap for Parity.** Prove that the eigenvalue gap of tropical transfer matrices yields super-polynomial circuit lower bounds for parity, using min-plus Perron-Frobenius theory and explicit combinatorial witnesses."
+        added, _ = fd_manager.add_directions_from_text(text, "exp_good", "result_future_directions")
+        assert added == 1

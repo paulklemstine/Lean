@@ -244,7 +244,7 @@ class FutureDirection:
     research_mode: str = "team"
     depth_estimate: int = 3
     priority_score: float = 0.5
-    status: str = "available"  # available, in_progress, completed
+    status: str = "available"  # available, in_progress, completed, failed, pruned
     consumed_by_exp_id: str = ""
     timestamp: str = ""
     prune_reason: str = ""
@@ -572,6 +572,24 @@ class FutureDirectionsManager:
         self._directions.append(direction)
         self._save()
 
+    def _is_quality_direction(self, fd: FutureDirection) -> bool:
+        """Quality gate for extracted directions.
+
+        Rejects:
+        - descriptions shorter than 80 characters
+        - generic titles (e.g. "Further Research", "Conjecture 4:")
+        - directions that map only to Bridges with no proof strategy
+        """
+        from pi_agent_client import PiAgentClient
+        if len(fd.description) < 80:
+            return False
+        if PiAgentClient._is_generic_title(fd.title):
+            return False
+        # Bridges-only directions need a concrete proof strategy
+        if set(fd.domains) == {"Bridges"} and not fd.proof_strategy.strip():
+            return False
+        return True
+
     def add_directions_from_text(
         self, text: str, source_exp_id: str, source_path: str
     ) -> tuple:
@@ -582,6 +600,22 @@ class FutureDirectionsManager:
         import re
         added = 0
         synthesis_text = ""
+
+        def _maybe_add(fd: FutureDirection) -> bool:
+            """Add a direction if it passes the quality gate."""
+            nonlocal added
+            if not self._is_quality_direction(fd):
+                return False
+            # Cap auto-generated priority to computed quality score
+            quality = self._compute_quality_score(fd)
+            fd.priority_score = min(fd.priority_score, max(0.40, quality))
+            if fd.title.startswith("Direction "):
+                fd.priority_score = min(fd.priority_score, 0.50)
+            elif fd.title.startswith("This research cycle") or fd.title.startswith("This cycle"):
+                fd.priority_score = min(fd.priority_score, 0.50)
+            self.add_direction(fd)
+            added += 1
+            return True
 
         # ── Pattern 0: Structured hybrid format (### Direction N: with **Field**: entries) ──
         structured_pattern = re.compile(
@@ -647,24 +681,14 @@ class FutureDirectionsManager:
                     domains=self._infer_domains(title + " " + description),
                     proof_strategy=proof_strategy,
                     depth_estimate=3,
-                    priority_score=0.80,  # Default; will be overridden by quality score
+                    priority_score=0.80,
                     catalog_references=catalog_references,
                     ambition_level=ambition_level,
                     lineage_refs=lineage_refs,
                     domain_bridges=domain_bridges,
                     lean_theorem_stub=lean_theorem_stub,
                 )
-                # Cap auto-generated priority to computed quality score
-                quality = self._compute_quality_score(fd)
-                fd.priority_score = min(fd.priority_score, max(0.40, quality))
-                # Auto-titled "Direction N:" directions get an even stricter cap
-                if fd.title.startswith("Direction "):
-                    fd.priority_score = min(fd.priority_score, 0.50)
-                # Auto-generated "This research cycle..." titles get a strict cap
-                elif fd.title.startswith("This research cycle") or fd.title.startswith("This cycle"):
-                    fd.priority_score = min(fd.priority_score, 0.50)
-                self.add_direction(fd)
-                added += 1
+                _maybe_add(fd)
 
         # ── Pattern 1: Bold-numbered sections like "1. **Title.** Description..." ──
         if added == 0:
@@ -690,14 +714,7 @@ class FutureDirectionsManager:
                         depth_estimate=3,
                         priority_score=0.75,
                     )
-                    quality = self._compute_quality_score(fd)
-                    fd.priority_score = min(fd.priority_score, max(0.40, quality))
-                    if fd.title.startswith("Direction "):
-                        fd.priority_score = min(fd.priority_score, 0.50)
-                    elif fd.title.startswith("This research cycle") or fd.title.startswith("This cycle"):
-                        fd.priority_score = min(fd.priority_score, 0.50)
-                    self.add_direction(fd)
-                    added += 1
+                    _maybe_add(fd)
 
         # Pattern 2: Markdown headers with research content
         if added == 0:
@@ -722,14 +739,7 @@ class FutureDirectionsManager:
                         depth_estimate=3,
                         priority_score=0.7,
                     )
-                    quality = self._compute_quality_score(fd)
-                    fd.priority_score = min(fd.priority_score, max(0.40, quality))
-                    if fd.title.startswith("Direction "):
-                        fd.priority_score = min(fd.priority_score, 0.50)
-                    elif fd.title.startswith("This research cycle") or fd.title.startswith("This cycle"):
-                        fd.priority_score = min(fd.priority_score, 0.50)
-                    self.add_direction(fd)
-                    added += 1
+                    _maybe_add(fd)
 
         # Pattern 3: Bullet items with mathematical content
         if added == 0:
@@ -749,19 +759,31 @@ class FutureDirectionsManager:
                         depth_estimate=3,
                         priority_score=0.65,
                     )
-                    quality = self._compute_quality_score(fd)
-                    fd.priority_score = min(fd.priority_score, max(0.40, quality))
-                    if fd.title.startswith("Direction "):
-                        fd.priority_score = min(fd.priority_score, 0.50)
-                    elif fd.title.startswith("This research cycle") or fd.title.startswith("This cycle"):
-                        fd.priority_score = min(fd.priority_score, 0.50)
-                    self.add_direction(fd)
-                    added += 1
+                    _maybe_add(fd)
 
-        # Auto-prune if the list has grown beyond the cap
-        if len(self._directions) > DEFAULT_DIRECTION_CAP:
-            self.prune_directions(cap=DEFAULT_DIRECTION_CAP)
+        # Pattern 4: Fallback paragraph split for free-form blobs
+        if added == 0 and len(text) > 80:
+            paragraphs = [p.strip() for p in re.split(r'\n\s*\n', text) if p.strip()]
+            for para in paragraphs:
+                if len(para) < 80:
+                    continue
+                # Try to extract a title from the first sentence, otherwise first line
+                sentences = re.split(r'(?<=[.!?])\s+', para, maxsplit=1)
+                title = sentences[0][:200].strip()
+                description = para[:3000].strip()
+                fd = FutureDirection(
+                    id=self._next_id(),
+                    title=title,
+                    description=description,
+                    source_exp_id=source_exp_id,
+                    source_path=source_path,
+                    domains=self._infer_domains(title + " " + description),
+                    depth_estimate=3,
+                    priority_score=0.65,
+                )
+                _maybe_add(fd)
 
+        # No automatic pruning. The pool only grows when new directions are extracted.
         return (added, synthesis_text)
 
     @staticmethod
@@ -948,30 +970,9 @@ class FutureDirectionsManager:
         if not available:
             return None
 
-        # Duplicate-dispatch prevention: any direction with attempt_count >= 3 has
-        # already been tried at least 3 times. The dispatch feedback loop in the
-        # Sonic cycle bug meant the same direction kept coming back. Prune
-        # direction-tracking at the dispatch level so a runaway direction can never
-        # be re-dispatched more than 3 times in its lifetime.
-        # After 3 attempts, mark the direction as pruned — this is permanent
-        # removal, not just quarantine.
-        max_attempts = 3
-        pruned_high_attempt = 0
-        kept = []
-        for d in available:
-            if d.attempt_count >= max_attempts:
-                # Prune permanently — don't keep re-trying forever
-                d.status = "pruned"
-                pruned_high_attempt += 1
-            else:
-                kept.append(d)
-        if pruned_high_attempt:
-            self._save()
-            print(f"[FutureDirections] Pruned {pruned_high_attempt} direction(s) with "
-                  f"attempt_count >= {max_attempts} (preventing infinite re-dispatch loop)")
-        available = kept
-        if not available:
-            return None
+        # No attempt-count pruning and no automatic retirement. Directions are
+        # never removed from the pool based on retries. Low-quality directions are
+        # handled by quarantine (Q<0.3) and quality-scoring decay only.
         import random
         scores = [self._compute_quality_score(d, recent_domain_quality, catalog_analyzer) for d in available]
 
@@ -1060,8 +1061,20 @@ class FutureDirectionsManager:
 
     def mark_direction_abandoned(self, direction_id: str) -> None:
         """Mark a direction as abandoned (e.g., trivial proof).
-        Deprecated: now resets to available so the direction can be retried."""
-        self.mark_direction_available(direction_id)
+
+        Directions are no longer retried; abandoned directions become terminal
+        'failed' records so they are not re-dispatched.
+        """
+        self.mark_direction_failed(direction_id)
+
+    def mark_direction_failed(self, direction_id: str) -> None:
+        """Mark a direction as terminal failed. It will not be retried."""
+        for d in self._directions:
+            if d.id == direction_id:
+                d.status = "failed"
+                d.consumed_by_exp_id = ""
+                break
+        self._save()
 
     def get_direction_by_id(self, direction_id: str) -> Optional[FutureDirection]:
         """Look up a direction by its ID."""
@@ -1208,50 +1221,14 @@ class FutureDirectionsManager:
         return None
 
     def rebalance_domains(self, max_domain_fraction: float = 0.30, prune_bottom_fraction: float = 0.15) -> Dict[str, int]:
-        """Auto-rebalance domain distribution by pruning overrepresented domains.
+        """No-op: automatic domain rebalancing by pruning has been disabled.
 
-        If any domain exceeds max_domain_fraction of available directions,
-        prune the bottom prune_bottom_fraction of that domain's lowest-quality directions.
-        Uses _compute_quality_score for sorting when all priority_scores are equal.
+        Directions are no longer automatically retired. Domain diversity is
+        enforced by inverse-frequency weighting in select_direction_weighted().
 
-        Returns dict of {domain: count_pruned}.
+        Returns empty dict.
         """
-        from collections import Counter
-        available = [d for d in self._directions if d.status == "available"]
-        if not available:
-            return {}
-
-        domain_counts = Counter()
-        for d in available:
-            for dom in d.domains:
-                domain_counts[dom] += 1
-
-        total = sum(domain_counts.values())
-        if total == 0:
-            return {}
-
-        pruned = {}
-        for domain, count in domain_counts.items():
-            fraction = count / total
-            if fraction > max_domain_fraction:
-                # Find directions in this domain that are available
-                domain_dirs = [d for d in available if domain in d.domains]
-                # Sort by computed quality score (ascending = lowest quality first)
-                # Falls back to priority_score when all equal
-                domain_dirs.sort(key=lambda d: (self._compute_quality_score(d), d.priority_score))
-                # Prune the bottom prune_bottom_fraction
-                n_prune = max(1, int(len(domain_dirs) * prune_bottom_fraction))
-                # Don't prune Novelty-tagged directions
-                to_prune = [d for d in domain_dirs[:n_prune] if "Novelty" not in d.domains]
-                for d in to_prune:
-                    d.status = "pruned"
-                    d.prune_reason = f"auto-rebalance: {domain} at {fraction:.0%} of available"
-                    d.pruned_at = datetime.now(timezone.utc).isoformat()
-                pruned[domain] = len(to_prune)
-
-        if any(pruned.values()):
-            self._save()
-        return pruned
+        return {}
 
     @staticmethod
     def _tokenize(text: str) -> Set[str]:
@@ -1333,6 +1310,7 @@ class FutureDirectionsManager:
             "available": statuses.get("available", 0),
             "in_progress": statuses.get("in_progress", 0),
             "completed": statuses.get("completed", 0),
+            "failed": statuses.get("failed", 0),
             "pruned": len(self._pruned),
             "retried_directions": len(retried),
             "retry_rate": round(retry_rate, 3),

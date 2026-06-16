@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aether Future Directions — Planning Questionnaire</title>
+  <style>
+    :root {
+      --bg: #0b0c15;
+      --panel: #141622;
+      --text: #e6e8ef;
+      --muted: #9aa0b2;
+      --accent: #60a5fa;
+      --accent-2: #c084fc;
+      --ok: #34d399;
+      --warn: #fbbf24;
+      --danger: #f87171;
+      --border: #2a2d3e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
+    h1 { font-weight: 700; margin: 0 0 0.25rem; }
+    .subtitle { color: var(--muted); margin: 0 0 2rem; }
+    .section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .section h2 { margin: 0 0 0.75rem; font-size: 1.15rem; color: var(--accent); }
+    .section p { margin: 0 0 1rem; color: var(--muted); }
+    .option {
+      display: block;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      margin: 0.5rem 0;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .option:hover { border-color: var(--accent); background: rgba(96,165,250,0.08); }
+    .option input { margin-right: 0.75rem; }
+    .option .label { font-weight: 600; }
+    .option .desc { display: block; color: var(--muted); font-size: 0.92rem; margin-top: 0.25rem; }
+    .option .preview {
+      display: none;
+      margin-top: 0.6rem;
+      padding: 0.6rem 0.75rem;
+      background: #0d101c;
+      border-left: 3px solid var(--accent-2);
+      border-radius: 0 6px 6px 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.82rem;
+      color: #d1d5db;
+      white-space: pre-wrap;
+    }
+    .option.selected .preview { display: block; }
+    .option.selected { border-color: var(--accent); background: rgba(96,165,250,0.12); }
+    .actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+    button {
+      background: var(--accent);
+      color: #0b0c15;
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem 1.25rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button.secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    button:hover { filter: brightness(1.15); }
+    #plan {
+      margin-top: 2rem;
+      display: none;
+    }
+    #plan h2 { color: var(--ok); }
+    pre {
+      background: #0d101c;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      overflow-x: auto;
+      font-size: 0.85rem;
+    }
+    .missing { color: var(--danger); margin-top: 0.5rem; }
+    .status {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      background: rgba(52,211,153,0.12);
+      border: 1px solid var(--ok);
+      color: var(--ok);
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Aether Future Directions — Planning Questionnaire</h1>
+    <p class="subtitle">
+      Current state: <strong>2,448 total</strong>, <strong>0 available</strong>,
+      <strong>5 in_progress</strong>, <strong>1,030 completed</strong>,
+      <strong>1,413 pruned in-place</strong>.
+      Pick the options below; the live plan will update instantly.
+    </p>
+
+    <form id="planner">
+      <!-- Q1 -->
+      <div class="section" data-required="true">
+        <h2>1. Refill the pool</h2>
+        <p>How should we restore a usable set of available directions?</p>
+        <label class="option">
+          <input type="radio" name="refill" value="reseed_keep_completed" />
+          <span class="label">A. Re-seed from seed_directions.py while keeping completed history</span>
+          <span class="desc">Fast and safe. ~201 available directions; 1,030 completed remain recorded.</span>
+          <code class="preview">python research_memory.py reset --keep-completed</code>
+        </label>
+        <label class="option">
+          <input type="radio" name="refill" value="restore_pruned_reset_attempts" />
+          <span class="label">B. Restore all 1,413 in-place pruned directions to available and reset their attempt counts</span>
+          <span class="desc">Zero attempt_count on every pruned direction so they are selectable again.</span>
+          <code class="preview"># One-shot repair: set status='available' and attempt_count=0
+# for every direction currently marked pruned.</code>
+        </label>
+        <label class="option">
+          <input type="radio" name="refill" value="both_raise_cap" />
+          <span class="label">C. Both: restore pruned + re-seed, and raise the soft cap from 2,000 to 5,000</span>
+          <span class="desc">Largest refill. ~1,600+ available directions after repair.</span>
+          <code class="preview">DEFAULT_DIRECTION_CAP = 5000
+# repair pruned in-place -> available
+python research_memory.py reset --keep-completed</code>
+        </label>
+        <label class="option">
+          <input type="radio" name="refill" value="synthetic_llm_refill" />
+          <span class="label">D. Generate ~100 fresh synthetic directions from recent cycle syntheses via Pi-Agent</span>
+          <span class="desc">New helper reads _cycle_syntheses and asks Pi-Agent for coherent new directions.</span>
+          <code class="preview"># New helper: synthesize_directions_from_recent_cycles(n=100)</code>
+        </label>
+      </div>
+
+      <!-- Q2 -->
+      <div class="section" data-required="true">
+        <h2>2. Pruning / attempt-count policy</h2>
+        <p>Remove or replace the hard 3-attempt retire block?</p>
+        <label class="option">
+          <input type="radio" name="pruning" value="remove_cap" />
+          <span class="label">A. Remove the hard 3-attempt cap entirely</span>
+          <span class="desc">Rely on quarantine and quality scoring to suppress bad directions.</span>
+          <code class="preview"># Delete the max_attempts block in select_direction_weighted.
+# Keep quarantine_direction() for Q<0.3 cycles.</code>
+        </label>
+        <label class="option">
+          <input type="radio" name="pruning" value="quarantine_not_prune" />
+          <span class="label">B. Replace pruning with 30-day quarantine after 3 attempts</span>
+          <span class="desc">Directions return automatically after cooldown instead of being retired.</span>
+          <code class="preview"># In select_direction_weighted, replace d.status='pruned'
+# with fd_manager.quarantine_direction(d.id, days=30)</code>
+        </label>
+        <label class="option">
+          <input type="radio" name="pruning" value="lenient_cap_reset" />
+          <span class="label">C. Lenient cap: max_attempts=10 and reset attempt_count on release</span>
+          <span class="desc">Retry loop can run longer; runaway directions still retire eventually.</span>
+          <code class="preview">max_attempts = 10
+# In mark_direction_available:
+d.attempt_count = 0</code>
+        </label>
+        <label class="option">
+          <input type="radio" name="pruning" value="protect_seeds" />
+          <span class="label">D. Keep auto-pruning for machine-extracted directions only</span>
+          <span class="desc">Seed and Novelty-tagged directions are never retired by attempt count.</span>
+          <code class="preview">if d.attempt_count >= max_attempts and not (
+    d.source_path.startswith("seed:") or "Novelty" in d.domains
+):
+    d.status = "pruned"</code>
+        </label>
+      </div>
+
+      <!-- Q3 -->
+      <div class="section" data-required="false">
+        <h2>3. Tighten the extraction pipeline (choose any)</h2>
+        <p>Which extraction-pipeline improvements should we implement?</p>
+        <label class="option">
+          <input type="checkbox" name="extraction" value="enforce_hybrid_and_count" />
+          <span class="label">A. Enforce hybrid format + require ≥5 directions per cycle</span>
+          <span class="desc">Update Phase A prompt to require ### Direction N: / Conjecture / Test / Impact and ask for at least 5 directions.</span>
+          <code class="preview"># Update pi_agent_client.py prompt fragments
+# and _DIRECTION_SYSTEM_PROMPT.</code>
+        </label>
+        <label class="option">
+          <input type="checkbox" name="extraction" value="llm_extractor" />
+          <span class="label">B. Add an LLM-based structured extractor for free-form output</span>
+          <span class="desc">Add a Pi-Agent call that turns a free-form FUTURE_DIRECTIONS blob into multiple structured directions.</span>
+          <code class="preview"># New method in knowledge_extractor.py:
+# _llm_extract_structured_directions(fd_text, job_id)</code>
+        </label>
+        <label class="option">
+          <input type="checkbox" name="extraction" value="fallback_split_quality_gate" />
+          <span class="label">C. Smarter fallback parser + extraction quality gate</span>
+          <span class="desc">Split paragraphs into separate directions; drop entries that are too short or have generic titles.</span>
+          <code class="preview"># Improve add_directions_from_text fallback path.
+# Add minimum description length / generic-title check.</code>
+        </label>
+        <label class="option">
+          <input type="checkbox" name="extraction" value="stricter_dedup" />
+          <span class="label">D. Stricter dedup: lower overlap threshold + title near-duplicate filter</span>
+          <span class="desc">Lower word-overlap threshold from 0.8 to 0.6 and reject near-duplicate titles.</span>
+          <code class="preview"># In add_direction:
+# overlap > 0.6 -> skip
+# title similarity >= 0.85 -> skip</code>
+        </label>
+      </div>
+
+      <!-- Q4 -->
+      <div class="section" data-required="true">
+        <h2>4. Safety / testing approach</h2>
+        <p>How should we validate and protect the changes?</p>
+        <label class="option">
+          <input type="radio" name="safety" value="backup_tdd" />
+          <span class="label">A. Backup JSON and follow TDD</span>
+          <span class="desc">Snapshot the current state, write failing tests, implement, run pytest.</span>
+          <code class="preview">cp .aether_workspace/future_directions.json \
+   .aether_workspace/future_directions.pre-refill.json
+pytest tests/test_future_directions.py -v</code>
+        </label>
+        <label class="option">
+          <input type="radio" name="safety" value="live_fast" />
+          <span class="label">B. Apply changes live and skip backup/tests to move fast</span>
+          <span class="desc">Edit in place and restart aether_tick.py immediately. Higher risk.</span>
+          <code class="preview"># No backup. Edit in place and restart pipeline.</code>
+        </label>
+      </div>
+
+      <div class="actions">
+        <button type="button" id="generate">Generate Plan</button>
+        <button type="button" class="secondary" id="copy">Copy Plan JSON</button>
+        <button type="button" class="secondary" id="save">Save Plan to JSON</button>
+      </div>
+      <div class="missing" id="missing"></div>
+      <div class="status" id="status"></div>
+    </form>
+
+    <div id="plan">
+      <h2>Proposed Implementation Plan</h2>
+      <pre id="planText"></pre>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('planner');
+    const generateBtn = document.getElementById('generate');
+    const copyBtn = document.getElementById('copy');
+    const saveBtn = document.getElementById('save');
+    const planDiv = document.getElementById('plan');
+    const planText = document.getElementById('planText');
+    const missingDiv = document.getElementById('missing');
+    const statusDiv = document.getElementById('status');
+
+    const optionDetails = {
+      reseed_keep_completed: {
+        label: "Re-seed from seed_directions.py while keeping completed history",
+        actions: [
+          "Run: python research_memory.py reset --keep-completed",
+          "~201 seed directions become available; 1,030 completed remain recorded."
+        ]
+      },
+      restore_pruned_reset_attempts: {
+        label: "Restore all 1,413 in-place pruned directions",
+        actions: [
+          "Write one-shot repair script: set status='available' and attempt_count=0 for every pruned direction.",
+          "Result: ~1,418 available directions."
+        ]
+      },
+      both_raise_cap: {
+        label: "Restore pruned + re-seed + raise cap",
+        actions: [
+          "Set DEFAULT_DIRECTION_CAP = 5000 in research_memory.py.",
+          "Repair pruned in-place -> available with attempt_count=0.",
+          "Run: python research_memory.py reset --keep-completed.",
+          "Result: ~1,600+ available directions."
+        ]
+      },
+      synthetic_llm_refill: {
+        label: "Generate ~100 fresh synthetic directions from recent syntheses",
+        actions: [
+          "Add helper synthesize_directions_from_recent_cycles(n=100).",
+          "Read _cycle_syntheses and call Pi-Agent to propose coherent new directions.",
+          "Add resulting directions to the pool."
+        ]
+      },
+      remove_cap: {
+        label: "Remove the hard 3-attempt cap entirely",
+        actions: [
+          "Delete max_attempts=3 retire block in select_direction_weighted().",
+          "Keep quarantine_direction() for Q<0.3 cycles.",
+          "Rely on quality decay and domain balancing for diversity."
+        ]
+      },
+      quarantine_not_prune: {
+        label: "Replace pruning with 30-day quarantine after 3 attempts",
+        actions: [
+          "In select_direction_weighted(), replace d.status='pruned' with quarantine_direction(d.id, days=30).",
+          "Expired quarantines are automatically cleaned up by cleanup_expired_quarantines()."
+        ]
+      },
+      lenient_cap_reset: {
+        label: "Lenient cap: max_attempts=10 and reset attempt_count on release",
+        actions: [
+          "Set max_attempts = 10 in select_direction_weighted().",
+          "In mark_direction_available(), set d.attempt_count = 0.",
+          "Runaway directions still retire, but normal retries are not consumed."
+        ]
+      },
+      protect_seeds: {
+        label: "Keep auto-pruning for machine-extracted directions only",
+        actions: [
+          "In select_direction_weighted(), skip retirement if source_path starts with 'seed:' or 'Novelty' is in domains.",
+          "Machine-extracted directions still retire after 3 attempts."
+        ]
+      },
+      enforce_hybrid_and_count: {
+        label: "Enforce hybrid format + require ≥5 directions per cycle",
+        actions: [
+          "Update pi_agent_client.py _DIRECTION_SYSTEM_PROMPT to require ### Direction N: format.",
+          "Add explicit 'produce at least 5 directions' directive.",
+          "Update extraction to prefer / validate the hybrid format."
+        ]
+      },
+      llm_extractor: {
+        label: "Add LLM-based structured extractor for free-form output",
+        actions: [
+          "Add _llm_extract_structured_directions(fd_text, job_id) in knowledge_extractor.py.",
+          "Call Pi-Agent with a JSON schema for direction list extraction.",
+          "Use as fallback when hybrid parser returns 0 directions."
+        ]
+      },
+      fallback_split_quality_gate: {
+        label: "Smarter fallback parser + extraction quality gate",
+        actions: [
+          "Split fallback FUTURE_DIRECTIONS text into paragraph-sized chunks.",
+          "Reject entries with description < 80 chars or generic titles.",
+          "Reject entries that map only to Bridges with no proof strategy."
+        ]
+      },
+      stricter_dedup: {
+        label: "Stricter dedup: lower overlap threshold + title near-duplicate filter",
+        actions: [
+          "Lower description word-overlap threshold from 0.8 to 0.6 in add_direction().",
+          "Add title near-duplicate detection (Jaccard >= 0.85 -> skip)."
+        ]
+      },
+      backup_tdd: {
+        label: "Backup JSON and follow TDD",
+        actions: [
+          "cp .aether_workspace/future_directions.json .aether_workspace/future_directions.pre-refill.json",
+          "Add tests to tests/test_future_directions.py for new behaviors.",
+          "Run: pytest tests/test_future_directions.py -v",
+          "Apply code changes only after tests pass."
+        ]
+      },
+      live_fast: {
+        label: "Apply changes live and skip backup/tests",
+        actions: [
+          "Edit files in place and restart aether_tick.py.",
+          "Higher risk; current JSON is the only source of truth."
+        ]
+      }
+    };
+
+    function getFormData() {
+      const data = new FormData(form);
+      return {
+        refill: data.get('refill'),
+        pruning: data.get('pruning'),
+        extraction: data.getAll('extraction'),
+        safety: data.get('safety')
+      };
+    }
+
+    function validate() {
+      const d = getFormData();
+      const missing = [];
+      if (!d.refill) missing.push("1. Refill the pool");
+      if (!d.pruning) missing.push("2. Pruning / attempt-count policy");
+      if (!d.safety) missing.push("4. Safety / testing approach");
+      return missing;
+    }
+
+    function generatePlan() {
+      const d = getFormData();
+      const missing = validate();
+      if (missing.length) {
+        missingDiv.textContent = "Please answer: " + missing.join("; ");
+        planDiv.style.display = 'none';
+        statusDiv.style.display = 'none';
+        return null;
+      }
+      missingDiv.textContent = "";
+
+      const plan = {
+        timestamp: new Date().toISOString(),
+        choices: d,
+        steps: [
+          { phase: "Backup / Safety", actions: optionDetails[d.safety].actions },
+          { phase: "Refill Pool", actions: optionDetails[d.refill].actions },
+          { phase: "Update Pruning Policy", actions: optionDetails[d.pruning].actions },
+          ...(d.extraction.length ? [{
+            phase: "Tighten Extraction Pipeline",
+            actions: d.extraction.flatMap(k => optionDetails[k].actions)
+          }] : []),
+          { phase: "Validation", actions: d.safety === 'backup_tdd'
+              ? ["Run pytest tests/test_future_directions.py -v", "Confirm available count > 0 via python research_memory.py stats"]
+              : ["Confirm available count > 0 via python research_memory.py stats", "Restart aether_tick.py"] }
+        ]
+      };
+      return plan;
+    }
+
+    function renderPlan() {
+      const plan = generatePlan();
+      if (!plan) return;
+      planText.textContent = JSON.stringify(plan, null, 2);
+      planDiv.style.display = 'block';
+    }
+
+    function updateSelectionVisuals() {
+      document.querySelectorAll('.option').forEach(label => {
+        const input = label.querySelector('input');
+        if (input.type === 'radio' || input.type === 'checkbox') {
+          label.classList.toggle('selected', input.checked);
+        }
+      });
+    }
+
+    generateBtn.addEventListener('click', renderPlan);
+
+    copyBtn.addEventListener('click', () => {
+      const plan = generatePlan();
+      if (!plan) return;
+      navigator.clipboard.writeText(JSON.stringify(plan, null, 2)).then(() => {
+        statusDiv.textContent = "Plan JSON copied to clipboard.";
+        statusDiv.style.display = 'block';
+      });
+    });
+
+    saveBtn.addEventListener('click', () => {
+      const plan = generatePlan();
+      if (!plan) return;
+      const blob = new Blob([JSON.stringify(plan, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'future_directions_plan.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      statusDiv.textContent = "Saved future_directions_plan.json";
+      statusDiv.style.display = 'block';
+    });
+
+    form.addEventListener('change', updateSelectionVisuals);
+    updateSelectionVisuals();
+  </script>
+</body>
+</html>

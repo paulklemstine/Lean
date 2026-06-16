@@ -3637,7 +3637,10 @@ Research mode: {concept.research_mode}
     # ==================================================================
 
     def _release_direction(self, job: ResearchJob) -> None:
-        """Release the future direction consumed by a failed job back to available."""
+        """Mark the future direction consumed by a failed job as terminal failed.
+
+        Directions are no longer retried; a failed job consumes the direction once.
+        """
         if not job.job_id:
             return
         if hasattr(self, 'locked_titles') and job.concept:
@@ -3647,11 +3650,11 @@ Research mode: {concept.research_mode}
             fd_manager = FutureDirectionsManager(self.workspace)
             for d in fd_manager._directions:
                 if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
-                    fd_manager.mark_direction_available(d.id)
-                    print(f"[Tick] Released direction {d.id}: {d.title[:50]}")
+                    fd_manager.mark_direction_failed(d.id)
+                    print(f"[Tick] Direction {d.id} marked failed (no retry): {d.title[:50]}")
                     break
         except Exception as e:
-            print(f"[Tick] Warning: could not release direction: {e}")
+            print(f"[Tick] Warning: could not mark direction failed: {e}")
 
     def _quarantine_direction_for_job(self, job: ResearchJob, days: int = 30) -> None:
         """Quarantine the direction consumed by this job after a low-quality cycle.
@@ -3824,18 +3827,18 @@ Research mode: {concept.research_mode}
 
         if job.status not in ("completed",):
             print(f"[Cycle] Job {job.job_id} ended with status: {job.status}")
-            # Mark the consumed direction as available again so it can be retried
+            # Directions are no longer retried. Mark the consumed direction failed.
             if job.job_id:
                 try:
                     from research_memory import FutureDirectionsManager
                     fd_mgr = FutureDirectionsManager(self.workspace)
                     for d in fd_mgr._directions:
                         if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
-                            fd_mgr.mark_direction_available(d.id)
-                            print(f"[Cycle] Released direction {d.id}: {d.title[:50]}")
+                            fd_mgr.mark_direction_failed(d.id)
+                            print(f"[Cycle] Direction {d.id} marked failed (no retry): {d.title[:50]}")
                             break
                 except Exception as e:
-                    print(f"[Cycle] Warning: could not release direction: {e}")
+                    print(f"[Cycle] Warning: could not mark direction failed: {e}")
             return job
 
         # 4. EXTRACT
@@ -4066,18 +4069,18 @@ Research mode: {concept.research_mode}
                         del self.inflight[job.project_id]
                 else:
                     self.failed_count += 1
-                    # Release the consumed direction so it can be retried
+                    # Directions are no longer retried. Mark consumed direction failed.
                     if job.job_id:
                         try:
                             from research_memory import FutureDirectionsManager
                             fd_mgr = FutureDirectionsManager(self.workspace)
                             for d in fd_mgr._directions:
                                 if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
-                                    fd_mgr.mark_direction_available(d.id)
-                                    print(f"[Continuous] Released direction {d.id}: {d.title[:50]}")
+                                    fd_mgr.mark_direction_failed(d.id)
+                                    print(f"[Continuous] Direction {d.id} marked failed (no retry): {d.title[:50]}")
                                     break
                         except Exception as e:
-                            print(f"[Continuous] Warning: could not release direction: {e}")
+                            print(f"[Continuous] Warning: could not mark direction failed: {e}")
                     if job.project_id in self.inflight:
                         del self.inflight[job.project_id]
             
