@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d9dd0490",
     "filename": "derived_from_this_cycles_findings_in_corelean_and_.json",
     "pkg_num": 162,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6056199999999999,
     "title": "The Edge-Count Profile of Vietoris\u2013Rips Filtrations: A Monotone, Functorial Invariant of Finite Metric Spaces"
   },
   {
@@ -5018,8 +5018,8 @@ window.PACKAGE_GRAPH = {
       "hue": 280,
       "id": "derived_from_this_cycles_findings_in_corelean_and_",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6056199999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Edge-Count Profile of Vietoris\u2013Rips Filtrations: A Monotone, Functorial Invariant of Finite Metric Spaces"
     }
