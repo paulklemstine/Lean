@@ -59,8 +59,8 @@ def compileToEMLOnly : EMLExpr → EMLOnlyExpr
 theorem compile_correct (e : EMLExpr) (env : ℕ → ℝ) :
     (compileToEMLOnly e).eval env = e.eval env := by
   induction e with
-  | const c => simp [compileToEMLOnly, EMLOnlyExpr.eval, EMLExpr.eval]
-  | var n => simp [compileToEMLOnly, EMLOnlyExpr.eval, EMLExpr.eval]
+  | const c => simp [compileToEMLOnly, EMLExpr.eval]
+  | var n => simp [compileToEMLOnly, EMLExpr.eval]
   | add e₁ e₂ ih₁ ih₂ =>
     simp [compileToEMLOnly, EMLOnlyExpr.eval, EMLExpr.eval, ih₁, ih₂]
   | mul e₁ e₂ ih₁ ih₂ =>
@@ -124,8 +124,8 @@ def compileFromEMLOnly : EMLOnlyExpr → EMLExpr
 theorem compile_from_correct (e : EMLOnlyExpr) (env : ℕ → ℝ) :
     (compileFromEMLOnly e).eval env = e.eval env := by
   induction e with
-  | const c => simp [compileFromEMLOnly, EMLExpr.eval, EMLOnlyExpr.eval]
-  | var n => simp [compileFromEMLOnly, EMLExpr.eval, EMLOnlyExpr.eval]
+  | const c => simp [compileFromEMLOnly, EMLOnlyExpr.eval]
+  | var n => simp [compileFromEMLOnly, EMLOnlyExpr.eval]
   | add e₁ e₂ ih₁ ih₂ =>
     simp [compileFromEMLOnly, EMLExpr.eval, EMLOnlyExpr.eval, ih₁, ih₂]
   | mul e₁ e₂ ih₁ ih₂ =>
