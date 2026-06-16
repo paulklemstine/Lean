@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c38e2bf9",
     "filename": "tropical_weight_enumerator_profiles_for_binary_lin.json",
     "pkg_num": 165,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7101600000000001,
     "title": "Tropical Weight Enumerator Profiles for Binary Linear Codes"
   },
   {
@@ -5101,8 +5101,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "tropical_weight_enumerator_profiles_for_binary_lin",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7101600000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Tropical Weight Enumerator Profiles for Binary Linear Codes"
     }
