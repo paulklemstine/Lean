@@ -84,6 +84,12 @@ FutureDirections  Lean 4 proofs    Article, Paper,     Catalog +
 | `Aether/output_organizer.py` | Maps domain names to Catalog directories; `DOMAIN_DIRS` — valid domain list |
 | `Aether/aristotle_loop.py` | UCB-based domain selection, cross-domain synergy tracking |
 | `Aether/seed_directions.py` | 201 seed directions including 97 novelty-tagged directions |
+| `Aether/backfill_aristotle_archive.py` | One-shot backfill of all past Aristotle projects into the local archive |
+| `Aether/package_single_job.py` | Build or extract a research package for one Aristotle project |
+| `Aether/planning_guide.py` | Interactive questionnaire that emits backfill/package commands |
+| `Aether/theorem_extractor.py` | Lean theorem parser used by the archive for rich metadata |
+| `Aether/archive_utils.py` | Shared streaming download / memory-cap helpers |
+| `Aether/backfill_aristotle_archive.py` | One-shot backfill of all past Aristotle projects into the local archive |
 | `Catalog/Applications/Packages/update_index.py` | Bundles packages into `packages_db.js`, adds quality scores |
 | `Catalog/Applications/Packages/js/packages.js` | Frontend rendering — tabbed views, interactive demos, light/dark themes |
 | `Catalog/Applications/Packages/style.css` | Frontend styling — fixed sidebar layout, gradient titles, responsive design |
@@ -188,6 +194,206 @@ tail -f .aether_workspace/aether.log
 ```
 
 The log file includes every `[Tick]`, `[Poll]`, `[Dispatch]`, `[Evaluate]`, and `[Integrate]` message. To rotate or truncate the log, simply overwrite the file — the Tee writer opens in append mode and will keep writing.
+
+## Backfilling the Aristotle Archive
+
+`Aether/backfill_aristotle_archive.py` downloads every historical Aristotle project (input and result archives) and stores them in a local content-addressable archive under `Archive/`. This is useful when you want a local copy of every past project for offline analysis, catalog rebuilds, or theorem mining.
+
+```bash
+cd Aether
+python3 backfill_aristotle_archive.py \
+  --archive-root ../Archive \
+  --log .aether_workspace/backfill_aristotle_archive.log
+```
+
+The backfill is **idempotent** — re-running it skips projects already present in `Archive/catalog.sqlite` and only fetches missing output archives.
+
+| Flag | Default | Description |
+|------|---------|-------------|
+| `--archive-root PATH` | `../Archive` | Where the local archive (blobs + SQLite catalog) is stored |
+| `--max-pages N` | unlimited | Stop after N API listing pages |
+| `--page-size N` | 100 | Projects per API listing page |
+| `--from-local-projects` | off | Archive from `.aether_workspace/projects` instead of the API |
+| `--projects-root PATH` | `./.aether_workspace/projects` | Local project root for `--from-local-projects` |
+| `--no-api` | off | Skip the API entirely |
+| `--log PATH` | off | Persist output to a log file (still prints to stdout) |
+| `--summary-every N` | 25 | Print a progress summary every N projects |
+| `--max-memory-mb N` | 6000 | Cap process virtual memory so an OOM in the script raises `MemoryError` instead of killing the WSL2 VM |
+| `--download-timeout N` | 600 | Seconds to wait while streaming a single project archive |
+| `--extract-packages` | on | Store any `PACKAGE.json` found in project output |
+| `--no-extract-packages` | off | Disable package extraction |
+| `--extract-theorem-metadata` | on | Store rich theorem metadata (docstrings, statements, proofs) |
+| `--no-extract-theorem-metadata` | off | Disable theorem metadata extraction |
+| `--reprocess-existing` | off | Re-scan already-archived projects for packages/theorems |
+
+### Memory-safe backfill on small VMs
+
+If your machine has ≤8 GB RAM, run the backfill with a lower memory cap. The script uses streaming downloads, removes the unbounded theorem de-duplication cache, and forces garbage collection between projects to keep RSS low. If RSS still climbs, the `--max-memory-mb` cap causes a contained `MemoryError` rather than an OOM kill of the whole WSL2 VM.
+
+Recommended settings:
+
+```bash
+cd Aether
+python3 backfill_aristotle_archive.py \
+  --archive-root ../Archive \
+  --max-memory-mb 5500 \
+  --download-timeout 600 \
+  --log .aether_workspace/backfill_aristotle_archive.log
+```
+
+Then tail the log:
+
+```bash
+tail -f .aether_workspace/backfill_aristotle_archive.log
+```
+
+### Split archive: SQLite on WSL local disk, blobs on `E:`
+
+The archive can grow to several gigabytes. The recommended layout keeps the SQLite catalog and manifests on WSL’s fast `ext4` disk while putting the content-addressable `blobs/` tree on a larger drive like `E:`:
+
+```bash
+# 1. Stop any running backfill/reprocess.
+# 2. Create a local directory for the DB + manifests.
+mkdir -p /home/raver1975/lean/Aether/.aether_workspace/archive_db
+
+# 3. Move catalog.sqlite and manifests/ there.
+mv /home/raver1975/lean/Archive/catalog.sqlite \
+   /home/raver1975/lean/Archive/catalog.sqlite-* \
+   /home/raver1975/lean/Aether/.aether_workspace/archive_db/
+mv /home/raver1975/lean/Archive/manifests \
+   /home/raver1975/lean/Aether/.aether_workspace/archive_db/
+
+# 4. Leave the blobs tree on E: for space.
+mkdir -p /mnt/e/AetherArchive/blobs
+mv /home/raver1975/lean/Archive/blobs/* /mnt/e/AetherArchive/blobs/ 2>/dev/null || true
+
+# 5. Repoint the Archive symlink and add a blobs symlink inside.
+rm -f /home/raver1975/lean/Archive
+ln -s /home/raver1975/lean/Aether/.aether_workspace/archive_db /home/raver1975/lean/Archive
+ln -s /mnt/e/AetherArchive/blobs /home/raver1975/lean/Archive/blobs
+```
+
+Verify:
+
+```bash
+ls -la /home/raver1975/lean/Archive
+cd Aether && python3 -c "
+from archive_manager import ArchiveManager
+from pathlib import Path
+am = ArchiveManager(
+    Path('/home/raver1975/lean/Aether/.aether_workspace/archive_db'),
+    blobs_root=Path('/mnt/e/AetherArchive/blobs')
+)
+print(am.get_stats())
+"
+```
+
+Backfill automatically detects the split via symlinks. If you use a non-standard layout, pass `--blobs-root`:
+
+```bash
+cd Aether
+python3 backfill_aristotle_archive.py \
+  --archive-root /home/raver1975/lean/Aether/.aether_workspace/archive_db \
+  --blobs-root /mnt/e/AetherArchive/blobs \
+  --max-memory-mb 5500
+```
+
+**Note:** The WSL2 virtual disk file (`ext4.vhdx`) on `C:` does not automatically shrink after files are deleted. To reclaim space on `C:`, shut down WSL2 and compact the VHDX from PowerShell (admin):
+
+```powershell
+wsl --shutdown
+# Find your ext4.vhdx under %LOCALAPPDATA%\Packages\CanonicalGroupLimited...\LocalState\
+# Compact it (Windows Pro / Hyper-V):
+optimize-vhd -Path "C:\Users\paulk\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu_...\LocalState\ext4.vhdx" -Mode Full
+```
+
+### WSL2 tuning
+
+If the VM still dies from memory pressure, add this to `%UserProfile%\.wslconfig` on Windows and then run `wsl --shutdown`:
+
+```ini
+[wsl2]
+memory=6GB
+processors=4
+swap=8GB
+swapFile=C:\Users\<your-username>\wsl-swap.vhdx
+```
+
+Inside WSL you can also add a swap file:
+
+```bash
+sudo fallocate -l 8G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+```
+
+### Package and theorem metadata extraction
+
+The backfill now stores two additional things in `Archive/catalog.sqlite`:
+
+1. **Research packages** — any `PACKAGE.json` found in a project's output is parsed and stored in the `packages` table.
+2. **Rich theorem metadata** — every `.lean` file is scanned into the `theorems` table with docstrings, full statements, proof bodies, line numbers, and `sorry`/`admit` detection.
+
+These are on by default. To disable them:
+
+```bash
+cd Aether
+python3 backfill_aristotle_archive.py \
+  --no-extract-packages \
+  --no-extract-theorem-metadata
+```
+
+To reprocess already-archived projects without re-downloading (work in progress — currently logs a warning):
+
+```bash
+cd Aether
+python3 backfill_aristotle_archive.py --reprocess-existing
+```
+
+### Packaging a single job
+
+`Aether/package_single_job.py` turns one Aristotle project into a research package:
+
+```bash
+cd Aether
+python3 package_single_job.py df33b02b \
+  --archive-root ../Archive \
+  --output ../Archive/packages/df33b02b.package.json
+```
+
+If the project already has a `PACKAGE.json`, that is stored. Otherwise a minimal package is built from the project's Lean files, Python demos/algorithms, and markdown artifacts.
+
+### Interactive planning guide
+
+`Aether/planning_guide.py` asks a few questions and produces a ready-to-run command or shell script:
+
+```bash
+cd Aether && python3 planning_guide.py
+```
+
+It detects RAM, suggests a `--max-memory-mb` cap, asks whether to reprocess the existing archive, and writes the plan to `.aether_workspace/run_plan.sh`.
+
+### Querying the archived theorem database
+
+Once the backfill has run, you can inspect the deduplicated theorem index:
+
+```bash
+cd Aether
+python3 -c "
+import sys
+sys.path.insert(0, '.')
+from archive_manager import ArchiveManager
+from pathlib import Path
+am = ArchiveManager(Path('../Archive'))
+conn = am._connect()
+print('Theorems by domain:')
+for row in conn.execute('SELECT domain, COUNT(*) FROM theorems GROUP BY domain ORDER BY COUNT(*) DESC'):
+    print(' ', row['domain'], row['COUNT(*)'])
+print('Packages stored:', am.get_stats().get('packages'))
+"
+```
 
 ## Testing
 
