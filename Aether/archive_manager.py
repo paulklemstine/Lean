@@ -49,9 +49,19 @@ class ProjectManifest:
 class ArchiveManager:
     """Content-addressable archive manager with SQLite master catalog."""
 
-    def __init__(self, archive_root: Path):
+    def __init__(self, archive_root: Path, blobs_root: Optional[Path] = None):
+        """Initialize archive manager.
+
+        Args:
+            archive_root: Directory containing catalog.sqlite and manifests/.
+            blobs_root: Optional separate directory for the content-addressable
+                blobs tree. Use this to put large blob storage on a different
+                drive (e.g. E:) while keeping the SQLite DB on fast WSL local disk.
+                Defaults to archive_root / "blobs".
+        """
         self.archive_root = Path(archive_root)
-        self.blobs_dir = self.archive_root / "blobs"
+        self.blobs_root = Path(blobs_root) if blobs_root else self.archive_root / "blobs"
+        self.blobs_dir = self.blobs_root
         self.manifests_dir = self.archive_root / "manifests"
         self.db_path = self.archive_root / "catalog.sqlite"
 

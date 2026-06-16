@@ -325,6 +325,34 @@ def _reprocess_existing(
                 )
 
 
+async def _count_total_api_pages(page_size: int) -> int:
+    """Lightweight counting pass: list all API pages without downloading."""
+    key = await get_api_key()
+    set_api_key(key)
+    pagination_key: Optional[str] = None
+    total_pages = 0
+    total_projects = 0
+    t0 = time.time()
+    while True:
+        try:
+            projects, pagination_key = await Project.list_projects(
+                pagination_key=pagination_key, limit=page_size
+            )
+        except Exception as e:
+            logging.warning("[Backfill] Counting pass failed to list page: %s", e)
+            break
+        total_pages += 1
+        total_projects += len(projects)
+        if not pagination_key:
+            break
+    elapsed = time.time() - t0
+    logging.info(
+        "[Backfill] Counting pass complete: %s projects across %s pages in %.2fs",
+        total_projects, total_pages, elapsed
+    )
+    return total_pages
+
+
 async def backfill_from_api(
     am: ArchiveManager,
     max_pages: Optional[int],
@@ -338,6 +366,8 @@ async def backfill_from_api(
     """List projects via API and archive any not already in the catalog."""
     key = await get_api_key()
     set_api_key(key)
+
+    total_pages = await _count_total_api_pages(page_size)
 
     pagination_key: Optional[str] = None
     page = 0
@@ -354,14 +384,14 @@ async def backfill_from_api(
             )
         except Exception as e:
             telemetry.add_error("list_projects", "", e)
-            logging.error("[Backfill] Failed to list API page %s: %s", page, e)
+            logging.error("[Backfill] Failed to list API page %s/%s: %s", page, total_pages or "?", e)
             break
 
         telemetry.api_pages += 1
         page_fetch_elapsed = time.time() - page_fetch_start
         logging.info(
-            "[Backfill] API page %s fetched in %.2fs: %s projects (next_page=%s)",
-            page, page_fetch_elapsed, len(projects), pagination_key is not None
+            "[Backfill] API page %s/%s fetched in %.2fs: %s projects (next_page=%s)",
+            page, total_pages or "?", page_fetch_elapsed, len(projects), pagination_key is not None
         )
 
         for idx, project in enumerate(projects, 1):
@@ -373,9 +403,9 @@ async def backfill_from_api(
             if exists and (has_output or not project.has_files):
                 telemetry.projects_skipped += 1
                 logging.info(
-                    "[Backfill] %s/%s page=%s skipping %s "
+                    "[Backfill] %s/%s page=%s/%s skipping %s "
                     "(exists=%s, has_output=%s, has_files=%s)",
-                    idx, len(projects), page, project.project_id[:8],
+                    idx, len(projects), page, total_pages or "?", project.project_id[:8],
                     exists, has_output, project.has_files
                 )
                 _maybe_print_summary(telemetry, summary_every)
@@ -384,8 +414,8 @@ async def backfill_from_api(
             if exists and project.has_files and not has_output:
                 telemetry.projects_input_only += 1
                 logging.info(
-                    "[Backfill] %s/%s page=%s %s already archived input; downloading output",
-                    idx, len(projects), page, project.project_id[:8]
+                    "[Backfill] %s/%s page=%s/%s %s already archived input; downloading output",
+                    idx, len(projects), page, total_pages or "?", project.project_id[:8]
                 )
 
             try:
@@ -399,9 +429,9 @@ async def backfill_from_api(
                 telemetry.theorems_extracted += _count_theorems(am, project.project_id)
                 project_elapsed = time.time() - project_t0
                 logging.info(
-                    "[Backfill] %s/%s page=%s archived %s in %.2fs "
+                    "[Backfill] %s/%s page=%s/%s archived %s in %.2fs "
                     "(input_files=%s, output_files=%s, prompt_hash=%s, main_lean_hash=%s)%s",
-                    idx, len(projects), page, project.project_id[:8], project_elapsed,
+                    idx, len(projects), page, total_pages or "?", project.project_id[:8], project_elapsed,
                     len(manifest.input_files), len(manifest.output_files),
                     manifest.prompt_hash[:12] if manifest.prompt_hash else None,
                     manifest.main_lean_hash[:12] if manifest.main_lean_hash else None,
@@ -411,8 +441,8 @@ async def backfill_from_api(
                 telemetry.projects_failed += 1
                 telemetry.add_error("archive_one_api", project.project_id, e)
                 logging.exception(
-                    "[Backfill] %s/%s page=%s FAILED to archive %s: %s",
-                    idx, len(projects), page, project.project_id[:8], e
+                    "[Backfill] %s/%s page=%s/%s FAILED to archive %s: %s",
+                    idx, len(projects), page, total_pages or "?", project.project_id[:8], e
                 )
 
             _maybe_print_summary(telemetry, summary_every)
@@ -611,7 +641,9 @@ def backfill_from_local_projects(
 
 def main():
     parser = argparse.ArgumentParser(description="Backfill Aristotle archive")
-    parser.add_argument("--archive-root", default=str(Path(__file__).parent.parent / "Archive"), help="Archive root directory")
+    parser.add_argument("--archive-root", default=str(Path(__file__).parent.parent / "Archive"), help="Archive root directory (contains catalog.sqlite + manifests/)")
+    parser.add_argument("--blobs-root", default=None,
+                        help="Optional separate blobs directory (defaults to archive-root/blobs). Use this to put blobs on a different drive while keeping the SQLite DB fast.")
     parser.add_argument("--max-pages", type=int, default=None, help="Max API pages")
     parser.add_argument("--page-size", type=int, default=100, help="Projects per API page")
     parser.add_argument("--from-local-projects", action="store_true",
@@ -647,7 +679,7 @@ def main():
     logging.info("[Backfill] Starting run at %s pid=%s", _now(), os.getpid())
     logging.info("[Backfill] args=%s", vars(args))
 
-    am = ArchiveManager(Path(args.archive_root))
+    am = ArchiveManager(Path(args.archive_root), blobs_root=Path(args.blobs_root) if args.blobs_root else None)
     before_stats = am.get_stats()
     logging.info("[Backfill] Before stats: %s", json.dumps(before_stats, indent=2))
 

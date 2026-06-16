@@ -383,13 +383,14 @@ async def package_single_job(
 def main():
     parser = argparse.ArgumentParser(description="Package a single Aristotle project")
     parser.add_argument("project_id", help="Aristotle project id to package")
-    parser.add_argument("--archive-root", default=str(Path(__file__).parent.parent / "Archive"), help="Archive root directory")
+    parser.add_argument("--archive-root", default=str(Path(__file__).parent.parent / "Archive"), help="Archive root directory (contains catalog.sqlite + manifests/)")
+    parser.add_argument("--blobs-root", default=None, help="Optional separate blobs directory (defaults to archive-root/blobs)")
     parser.add_argument("--output", default=None, help="Path to write the package JSON file")
     parser.add_argument("--download-timeout", type=float, default=600, help="Seconds to wait per archive download")
     parser.add_argument("--no-store", action="store_true", help="Do not store the package in the database")
     args = parser.parse_args()
 
-    am = ArchiveManager(Path(args.archive_root))
+    am = ArchiveManager(Path(args.archive_root), blobs_root=Path(args.blobs_root) if args.blobs_root else None)
     output_path = Path(args.output) if args.output else None
     package_json = asyncio.run(package_single_job(
         am,

@@ -151,7 +151,7 @@ def run_interactive(write_script: bool = True, script_path: Optional[Path] = Non
             f"cd Aether && python3 -c \"import sys; "
             f"sys.path.insert(0,'.'); "
             f"from archive_manager import ArchiveManager; "
-            f"am=ArchiveManager(Path('{archive_root}')); "
+            f"am=ArchiveManager(Path('{archive_root}'), blobs_root=Path('/mnt/e/AetherArchive/blobs')); "
             f"print(list(am._connect().execute('SELECT domain, COUNT(*) FROM theorems GROUP BY domain'))); "
             f"print('packages', am.get_stats().get('packages'))\"{domain_arg}"
         )

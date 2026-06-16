@@ -54,7 +54,9 @@
       "Bash(awk '{s+=$4} END {print s/1024/1024 \" MB\"}')",
       "Bash(git rev-list *)",
       "Bash(git cat-file *)",
-      "Bash(awk '/^blob/ {s+=$3} END {print s/1024/1024 \" MB total blob\"}')"
+      "Bash(awk '/^blob/ {s+=$3} END {print s/1024/1024 \" MB total blob\"}')",
+      "Bash(pytest tests/test_future_directions.py -v)",
+      "Bash(echo \"Started backfill PID=$!\")"
     ]
   }
 }
