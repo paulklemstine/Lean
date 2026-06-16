@@ -1,220 +1,411 @@
-# Diophantine Approximation Complexity of ReLU Networks
+# The Parity Theorem for Eulerian Trails on Finite Multigraphs
 
 ## Abstract
 
-We establish rigorous bounds on how well ReLU neural networks can approximate real constants, bridging neural network architecture theory with Diophantine approximation. Our main results are: (1) the **exponential depth advantage** theorem, proving that a depth-L width-w network achieves w^L linear pieces while using only O(wL) parameters, with the ratio growing exponentially; (2) the **Leibniz approximation pipeline**, showing that π can be approximated to within ε using depth O(log(1/ε)) and width 2, giving O(log(1/ε)) total parameters; (3) the **tropical-ReLU bridge**, proving that the gap between the smooth softplus activation and the hard ReLU is exactly log(1 + exp(−|x|)), bounded by log(2); (4) an **information-theoretic lower bound** showing that any ε-approximation of an irrational constant requires Ω(log(1/ε)) parameters; and (5) the **parameter efficiency theorem**, proving that for width ≥ 3 and depth ≥ 3, the piece count exceeds the parameter count. All results are formalized and verified in Lean 4 with Mathlib.
+We present a self-contained, fully rigorous treatment of the classical parity
+obstruction to Eulerian trails on finite multigraphs — the theorem underlying
+Euler's 1736 resolution of the Königsberg bridge problem and, with it, the birth of
+graph theory. Working with multigraphs encoded by an endpoint map
+$\mathrm{ends}\colon \{0,\dots,n_E-1\} \to V \times V$ and with vertex degree
+defined as the number of incident *edge endpoints* (so loops count twice), we prove
+a sequence of five results. The cornerstone is a **double-counting identity**
+(Theorem A) equating the degree of a vertex with a sum over the steps of an
+Eulerian trail, followed by an **endpoint-correction identity** (Theorem B) which
+exhibits the corrected degree as a manifestly even number. From these two
+arithmetic facts the qualitative theory follows mechanically: interior vertices have
+even degree (Theorem C), odd-degree vertices must be the trail's endpoints
+(Theorem D), and hence a multigraph admitting an Eulerian trail has **at most two
+odd-degree vertices** (Theorem E). We give complete proof sketches, an explicit
+verification on the seven bridges of Königsberg, algorithmic consequences for route
+inspection, and a discussion of applications ranging from genome assembly to
+circuit testing. All definitions and theorems are stated inline; the paper is
+self-contained.
 
-**Keywords**: ReLU networks, piecewise linear functions, Diophantine approximation, tropical geometry, depth-width tradeoff, Leibniz series
+**Keywords:** Eulerian trail, multigraph, degree parity, handshake lemma,
+double counting, Königsberg bridges, route inspection.
+
+---
 
 ## 1. Introduction
 
-### 1.1 Background
-
-A ReLU (Rectified Linear Unit) neural network computes a piecewise linear function. A network with width w and depth L produces a function with at most w^L linear pieces [Montúfar et al., 2014; Raghu et al., 2017]. This exponential growth in representational capacity with depth is the fundamental reason deep networks outperform shallow ones.
-
-While the universal approximation theorem guarantees that sufficiently large networks can approximate any continuous function to arbitrary accuracy, it says nothing about the *rate* of approximation for specific targets. We initiate the study of **Diophantine approximation complexity**: for a given real constant α, what is the minimum network complexity needed to approximate α to within ε?
-
-### 1.2 Our Contributions
-
-We make five main contributions, all formally verified in Lean 4:
-
-1. **Exponential depth advantage** (Theorem 3.1): w·L ≤ w^L for w ≥ 2, L ≥ 1. This means the piece count (representational capacity) grows exponentially faster than the parameter count (computational cost).
-
-2. **Quadratic depth advantage** (Theorem 3.2): L² ≤ w^L for w ≥ 4, L ≥ 1. The piece count grows superlinearly even compared to L².
-
-3. **Parameter efficiency** (Theorem 3.3): For w ≥ 3 and L ≥ 3, the piece count w^L exceeds the parameter count 2wL + w + 1. This marks the threshold where depth becomes more efficient than width.
-
-4. **Tropical-ReLU bridge** (Theorems 5.1-5.4): The gap between the smooth softplus log(1 + exp(x)) and the hard ReLU max(0, x) is exactly log(1 + exp(−|x|)), bounded by log(2) and nonnegative. This connects neural network theory to tropical geometry via Maslov's dequantization.
-
-5. **Approximation pipeline** (Theorem 4.1): For any ε > 0, there exists N > 0 with 1/(2N+1) < ε, giving the number of Leibniz terms needed for ε-approximation of π/4. Combined with the depth advantage, this yields networks of depth O(log(1/ε)).
-
-### 1.3 Related Work
-
-The piece count bound w^L was established by Montúfar et al. (2014) and refined by Raghu et al. (2017). The tropical geometry connection was developed by Zhang et al. (2018), who showed that ReLU networks compute tropical rational functions. The information-theoretic perspective on neural network expressiveness has been studied by Bartlett et al. (1998) and more recently by Eldan and Shamir (2016), who proved exponential depth separations for specific function classes.
-
-Our contribution is novel in connecting these threads to **constant approximation**: we study the specific complexity of approximating individual real numbers, not function classes. This perspective bridges classical number theory (Diophantine approximation) with modern neural network theory.
-
-## 2. Preliminaries
-
-### 2.1 ReLU Function
-
-**Definition 2.1** (ReLU). The ReLU activation function is defined as:
-$$\text{relu}(x) = \max(0, x)$$
-
-We establish four fundamental properties:
-
-**Theorem 2.1** (Lipschitz). |relu(x) − relu(y)| ≤ |x − y|.
-
-**Theorem 2.2** (Idempotence). relu(relu(x)) = relu(x).
-
-**Theorem 2.3** (Monotonicity). relu is monotone.
-
-**Theorem 2.4** (Decomposition). For all x ∈ ℝ: x = relu(x) − relu(−x).
-
-Theorem 2.4 is particularly significant: it shows that any real number can be decomposed into its positive and negative parts via ReLU. This means any affine function can be computed using two ReLU neurons.
-
-### 2.2 Piecewise Linear Functions
-
-A **piecewise linear function** f: ℝ → ℝ consists of finitely many affine pieces. The number of pieces is a fundamental measure of complexity. Composition of piecewise linear functions multiplies piece counts:
-
-**Theorem 2.5** (Composition). If f has m pieces and g has n pieces, then f ∘ g has at most m·n pieces.
-
-By induction, L layers of width w give at most w^L pieces.
-
-### 2.3 Leibniz Series
-
-The Leibniz formula for π/4 is:
-$$\frac{\pi}{4} = \sum_{k=0}^{\infty} \frac{(-1)^k}{2k+1} = 1 - \frac{1}{3} + \frac{1}{5} - \frac{1}{7} + \cdots$$
-
-**Theorem 2.6** (Term magnitude). |(-1)^k / (2k+1)| = 1/(2k+1).
-
-**Theorem 2.7** (Antitone). The terms 1/(2k+1) form a decreasing sequence.
-
-## 3. Depth-Width Tradeoff
-
-### 3.1 Main Results
-
-**Theorem 3.1** (Exponential Depth Advantage). For w ≥ 2 and L ≥ 1:
-$$w \cdot L \leq w^L$$
-
-*Proof sketch*. By induction on L. Base case L = 1: w·1 = w ≤ w¹. Inductive step: assuming w·n ≤ w^n, we have w·(n+1) = w·n + w ≤ w^n + w ≤ w·w^n = w^(n+1), where the last inequality uses w^n ≥ 1. ∎
-
-**Theorem 3.2** (Quadratic Growth). For w ≥ 4 and L ≥ 1:
-$$L^2 \leq w^L$$
-
-**Theorem 3.3** (Parameter Efficiency). For w ≥ 3 and L ≥ 3:
-$$2wL + w + 1 \leq w^L$$
-
-*Proof sketch*. The parameter count 2wL + w + 1 grows linearly in L, while w^L grows exponentially. By induction on L from the base case L = 3. ∎
-
-**Theorem 3.4** (Doubling Depth Squares Capacity). w^(2L) = (w^L)².
-
-This last result encapsulates the depth advantage: doubling the depth costs twice the parameters but squares the representational capacity.
-
-### 3.2 Logarithmic Depth Sufficiency
-
-**Theorem 3.5** (Log Depth). For w ≥ 2 and N ≥ 1:
-$$N \leq w^{\lfloor\log_w N\rfloor + 1}$$
-
-This means depth ⌊log_w(N)⌋ + 1 always suffices to achieve N pieces. Combined with the Leibniz approximation pipeline, this gives:
-
-**Corollary 3.6**. To approximate π to within ε, depth O(log_w(1/ε)) suffices with width w.
-
-## 4. Leibniz Approximation Pipeline
-
-### 4.1 Error Bound
-
-**Theorem 4.1** (Approximation Terms). For any ε > 0, there exists N > 0 such that:
-$$\frac{1}{2N+1} < \varepsilon$$
-
-This gives the number of Leibniz terms needed for ε/4-approximation of π/4. To achieve |f(1) − π| < ε, we need approximately N ≈ 2/ε terms.
-
-### 4.2 Network Construction
-
-Given ε > 0:
-1. Compute N = ⌈2/ε⌉ (number of Leibniz terms)
-2. Each term (-1)^k/(2k+1) is a rational constant, representable by a width-1 network
-3. Sum N terms using a binary tree of depth ⌈log₂ N⌉
-4. Multiply by 4 (one additional affine transformation)
-
-Total: width 2, depth ⌈log₂(2/ε)⌉ + 1, parameters O(log(1/ε)).
-
-### 4.3 Comparison with Naive Approach
-
-The information-theoretic lower bound (Theorem 5.5 below) shows that Ω(log(1/ε)) parameters are necessary. Our construction achieves O(log(1/ε)) parameters, so it is **optimal up to constants**.
-
-| Method | Width | Depth | Parameters | Pieces |
-|--------|-------|-------|------------|--------|
-| Shallow | O(1/ε) | 1 | O(1/ε) | O(1/ε) |
-| Deep (w=2) | 2 | O(log(1/ε)) | O(log(1/ε)) | O(1/ε) |
-| Deep (w=10) | 10 | O(log₁₀(1/ε)) | O(log(1/ε)) | O(1/ε) |
-
-## 5. Tropical-ReLU Bridge
-
-### 5.1 The Connection
-
-The tropical semiring is (ℝ ∪ {−∞}, ⊕, ⊙) where a ⊕ b = max(a,b) and a ⊙ b = a + b. ReLU computes the tropical sum of 0 and x:
-
-**Theorem 5.1** (Tropical Identity). relu(x) = 0 ⊕ x in the tropical semiring.
-
-### 5.2 Maslov Dequantization
-
-The softplus function log(1 + exp(x)) is the "quantum" version of max(0, x). We prove:
-
-**Theorem 5.2** (Softplus Bounds ReLU). relu(x) ≤ log(1 + exp(x)).
-
-**Theorem 5.3** (Gap Bound). log(1 + exp(x)) − relu(x) ≤ log(2).
-
-**Theorem 5.4** (Gap Formula). log(1 + exp(x)) − relu(x) = log(1 + exp(−|x|)).
-
-**Theorem 5.5** (Gap Nonnegative). 0 ≤ log(1 + exp(x)) − relu(x).
-
-The gap formula (Theorem 5.4) is the most surprising result. It shows the discrepancy between "quantum" and "tropical" computation depends only on |x| and vanishes exponentially as |x| → ∞. The maximum gap of log(2) occurs at x = 0.
-
-### 5.3 Interpretation
-
-The softplus → ReLU transition is an instance of **Maslov's dequantization**: as the Planck constant h → 0, quantum mechanics (where probabilities add) becomes classical mechanics (where energies take minima). Similarly, as the temperature parameter t → 0 in the parameterized softplus t·log(1 + exp(x/t)), we recover max(0, x).
-
-This tropical perspective explains ReLU's success: neural networks are performing *tropical optimization* — a globally efficient form of computation where the max operation naturally selects dominant terms.
-
-## 6. Information-Theoretic Lower Bounds
-
-### 6.1 Parameter Count Lower Bound
-
-**Theorem 6.1** (Parameter Lower Bound). For B ≥ 1:
-$$P \leq (2B+1)^P$$
-
-This says that P parameters, each taking values in {−B, …, B}, can encode at most (2B+1)^P distinct configurations. To approximate a target to within ε from a set of (2B+1)^P possible outputs, we need the output set to be ε-dense in the target range, requiring (2B+1)^P ≥ Ω(1/ε).
-
-Taking logarithms: P·log(2B+1) ≥ log(1/ε), so P ≥ log(1/ε) / log(2B+1) = Ω(log(1/ε)).
-
-### 6.2 Density of Rationals
-
-**Theorem 6.2** (Rational Density). For any α ∈ ℝ and ε > 0, there exists q ∈ ℚ with |α − q| < ε.
-
-This shows that rational constants — which are exactly representable by trivial (zero-hidden-unit) networks — are dense in ℝ. The approximation complexity is thus about the *rate* of convergence, not the possibility of approximation.
-
-## 7. Discussion
-
-### 7.1 The Approximation Dichotomy
-
-Our results reveal a clean dichotomy:
-- **Rational targets**: Exact representation with O(1) parameters
-- **Irrational targets**: O(log(1/ε)) parameters for ε-approximation
-
-The depth plays a crucial role: deep networks achieve the O(log(1/ε)) bound with O(log(1/ε)) total parameters, while shallow networks require O(1/ε) parameters for the same accuracy.
-
-### 7.2 Connection to Irrationality Measure
-
-The irrationality measure μ(α) of a real number α governs how well α can be approximated by rationals: |α − p/q| > q^{−μ−ε} for all but finitely many p/q. For algebraic irrationals, μ = 2 (Roth's theorem). For Liouville numbers, μ = ∞.
-
-In the network context, the piece count w^L plays the role of the denominator q. Higher irrationality measure means *easier* approximation (more rational approximants available), which translates to *smaller* networks needed. This is the reverse of what one might expect: "more irrational" numbers (in the Liouville sense) are easier for networks to approximate.
-
-### 7.3 Tropical Perspective
-
-The tropical-ReLU bridge (Section 5) suggests viewing neural network computation through tropical geometry. The gap bound of log(2) quantifies the "price of smoothness" — using softplus instead of ReLU costs at most log(2) per neuron. For a network with W total neurons, the total smoothing error is at most W·log(2).
+In 1736 Leonhard Euler proved that no walk through Königsberg could cross each of
+the city's seven bridges exactly once. His argument inaugurated graph theory and
+crystallized a style of reasoning — abstract to a combinatorial structure, then
+exploit a conserved parity — that pervades modern mathematics and computer science.
+
+The purpose of this paper is to isolate and prove, from first principles, the exact
+arithmetic kernel of Euler's theorem: the parity constraint on vertex degrees
+imposed by the existence of an Eulerian trail. We deliberately avoid invoking any
+prior graph-theoretic machinery. Everything reduces to two counting identities and
+the observation that an expression of the form $2k$ is even.
+
+### 1.1 Contributions
+
+1. A clean encoding of finite multigraphs and Eulerian trails suitable for
+   completely formal reasoning (Section 2).
+2. **Theorem A** (degree = walk-step count): a double-counting identity that
+   re-expresses the static notion of degree in terms of the dynamics of a trail.
+3. **Theorem B** (endpoint correction): a telescoping identity exhibiting
+   $\deg(v) + (\text{endpoint indicators})$ as twice an integer.
+4. **Theorems C–E**: the qualitative parity theory — even degree for interior
+   vertices, endpoint-membership for odd vertices, and the bound of at most two
+   odd-degree vertices.
+5. A worked verification on Königsberg, algorithmic consequences, and applications
+   (Sections 4–6).
+
+---
+
+## 2. Definitions
+
+Throughout, $n_V$ and $n_E$ are natural numbers (the number of vertices and edges),
+and we identify the vertex set with $\{0, 1, \dots, n_V - 1\}$ and the edge set with
+$\{0, 1, \dots, n_E - 1\}$. We write $[\,P\,]$ for the **Iverson bracket**, equal to
+$1$ when the proposition $P$ holds and $0$ otherwise.
+
+### 2.1 Multigraphs
+
+> **Definition 2.1 (Multigraph).** A *multigraph* on $n_V$ vertices and $n_E$ edges
+> is a map
+> $$ \mathrm{ends} \colon \{0,\dots,n_E-1\} \longrightarrow \{0,\dots,n_V-1\} \times \{0,\dots,n_V-1\}, $$
+> assigning to each edge $e$ an *ordered* pair $\mathrm{ends}(e) = (\mathrm{ends}(e).1,\ \mathrm{ends}(e).2)$ of endpoints.
+
+The ordering of the pair is a representational convenience only; it carries no
+combinatorial meaning, and every result below is invariant under swapping the two
+coordinates. **Multi-edges** (several edges with identical endpoint pairs) and
+**loops** (edges $e$ with $\mathrm{ends}(e).1 = \mathrm{ends}(e).2$) are permitted.
+
+> **Definition 2.2 (Degree).** The *degree* of a vertex $v$ in a multigraph $G$ is
+> the number of edge endpoints equal to $v$:
+> $$ \deg_G(v) \;=\; \sum_{e=0}^{n_E-1} \Big( [\,\mathrm{ends}(e).1 = v\,] + [\,\mathrm{ends}(e).2 = v\,] \Big). $$
+
+Each edge contributes the sum of two indicators. An ordinary edge $\{u,w\}$ with
+$u \neq w$ contributes $1$ to $\deg_G(u)$ and $1$ to $\deg_G(w)$; a **loop** at $v$
+contributes $1 + 1 = 2$ to $\deg_G(v)$. Counting *endpoints* rather than *edges* is
+the convention that makes the parity argument seamless, since it is endpoints, not
+edges, that are consumed when a trail steps across a loop.
+
+### 2.2 Eulerian trails
+
+A trail that crosses each of the $n_E$ edges exactly once passes through a sequence
+of $n_E + 1$ vertices. We index trail positions by $j \in \{0, 1, \dots, n_E\}$ and
+trail *steps* by $i \in \{0, 1, \dots, n_E - 1\}$; step $i$ moves from position $i$
+to position $i+1$.
+
+> **Definition 2.3 (Eulerian trail).** An *Eulerian trail* of a multigraph $G$
+> consists of:
+> - a vertex sequence $\mathrm{walk} \colon \{0,1,\dots,n_E\} \to \{0,\dots,n_V-1\}$;
+> - a permutation $\mathrm{edgeAt}$ of the edge set $\{0,\dots,n_E-1\}$;
+>
+> subject to the *compatibility condition*: for every step $i$,
+> $$ \mathrm{ends}(\mathrm{edgeAt}(i)) = (\mathrm{walk}(i),\ \mathrm{walk}(i{+}1)) \quad\text{or}\quad \mathrm{ends}(\mathrm{edgeAt}(i)) = (\mathrm{walk}(i{+}1),\ \mathrm{walk}(i)). $$
+
+Two features deserve emphasis.
+
+- **The permutation enforces "each edge exactly once."** Because $\mathrm{edgeAt}$
+  is a bijection of the edge set, every edge $e$ equals $\mathrm{edgeAt}(i)$ for
+  precisely one step $i$. This is the formal content of an *Eulerian* (as opposed to
+  arbitrary) trail.
+- **Orientation-agnosticism.** The disjunction in the compatibility condition lets
+  a trail cross an edge in either direction, as a physical walker would.
+
+We write $\mathrm{start} = \mathrm{walk}(0)$ and $\mathrm{end} = \mathrm{walk}(n_E)$
+for the first and last vertices of the trail.
+
+### 2.4 Design choices and their consequences
+
+Three modelling decisions deserve comment, because each is load-bearing for the
+proofs that follow.
+
+*Endpoints, not edges.* Degree counts incident endpoints. The alternative
+— counting incident edges — would mishandle loops, which contribute two endpoints
+but one edge. With the endpoint convention, a loop at $v$ adds $2$ to $\deg_G(v)$,
+which is exactly what the trail dynamics demand: traversing a loop both arrives at
+and departs from $v$, consuming two of its incidences. Any convention that broke
+this symmetry would invalidate the endpoint-correction identity (Theorem B).
+
+*Permutation, not surjection.* The requirement “every edge exactly once” is encoded
+as a bijection $\mathrm{edgeAt}$ from step indices to edges. This is strictly
+stronger than asking the steps to *cover* the edges, and strictly stronger than a
+counting constraint, yet it is the cleanest hypothesis: it makes the
+reindexing in Theorem A an exact, assumption-free change of summation variable. It
+also transparently handles multi-edges — parallel edges are distinct elements of the
+edge set and are permuted independently.
+
+*Ordered endpoint pairs with an orientation disjunction.* Storing $\mathrm{ends}(e)$
+as an ordered pair keeps the data type simple, while the disjunction in the
+compatibility condition restores the physical reality that a walker may cross an
+edge in either direction. Every theorem below is invariant under swapping the two
+coordinates of any $\mathrm{ends}(e)$, so no genuine orientation is imposed.
+
+Together these choices yield a model that is both faithful to the combinatorics of
+physical walks and frictionless for arithmetic manipulation.
+
+---
+
+## 3. Main results
+
+Fix a multigraph $G$ on $n_V$ vertices and $n_E$ edges and an Eulerian trail
+$(\mathrm{walk}, \mathrm{edgeAt})$ of $G$.
+
+### 3.1 The double-counting identity
+
+> **Theorem A (Degree equals walk-step count).** For every vertex $v$,
+> $$ \deg_G(v) \;=\; \sum_{i=0}^{n_E-1} \Big( [\,\mathrm{walk}(i) = v\,] + [\,\mathrm{walk}(i{+}1) = v\,] \Big). \tag{A} $$
+
+*Proof sketch.* Start from Definition 2.2,
+$\deg_G(v) = \sum_{e}\big([\mathrm{ends}(e).1=v]+[\mathrm{ends}(e).2=v]\big)$. Since
+$\mathrm{edgeAt}$ is a permutation of the edge set, reindexing the sum along
+$e = \mathrm{edgeAt}(i)$ leaves the total unchanged:
+$$ \deg_G(v) = \sum_{i} \big([\,\mathrm{ends}(\mathrm{edgeAt}(i)).1 = v\,] + [\,\mathrm{ends}(\mathrm{edgeAt}(i)).2 = v\,]\big). $$
+Now apply the compatibility condition step by step. In either branch of the
+disjunction, the *unordered* pair of endpoints of $\mathrm{edgeAt}(i)$ equals the
+unordered pair $\{\mathrm{walk}(i), \mathrm{walk}(i{+}1)\}$; hence the two-indicator
+sum for that edge equals
+$[\mathrm{walk}(i)=v] + [\mathrm{walk}(i{+}1)=v]$ regardless of which orientation
+holds. Substituting term by term yields (A). $\qquad\blacksquare$
+
+Theorem A is a textbook instance of **double counting**: the same quantity (the
+number of incidences at $v$) is enumerated first by edges and then by trail steps.
+The permutation is precisely the bijection that licenses the change of summation
+index.
+
+### 3.2 The endpoint-correction identity
+
+> **Theorem B (Endpoint correction).** For every vertex $v$,
+> $$ \deg_G(v) + \Big( [\,\mathrm{walk}(0) = v\,] + [\,\mathrm{walk}(n_E) = v\,] \Big) \;=\; 2 \sum_{j=0}^{n_E} [\,\mathrm{walk}(j) = v\,]. \tag{B} $$
+
+*Proof sketch.* Let $N_v = \sum_{j=0}^{n_E} [\mathrm{walk}(j)=v]$ be the number of
+trail positions equal to $v$. Split the step-sum in Theorem A into its two halves
+and reindex each as a sum over positions:
+$$ \sum_{i=0}^{n_E-1} [\mathrm{walk}(i)=v] = \sum_{j=0}^{n_E} [\mathrm{walk}(j)=v] - [\mathrm{walk}(n_E)=v] = N_v - [\mathrm{walk}(n_E)=v], $$
+because the index $i$ ranges over positions $0,\dots,n_E-1$ — all positions except
+the last. Symmetrically,
+$$ \sum_{i=0}^{n_E-1} [\mathrm{walk}(i{+}1)=v] = \sum_{j=1}^{n_E} [\mathrm{walk}(j)=v] = N_v - [\mathrm{walk}(0)=v], $$
+since $i+1$ ranges over positions $1,\dots,n_E$ — all positions except the first.
+Adding the two displays and invoking Theorem A,
+$$ \deg_G(v) = \big(N_v - [\mathrm{walk}(n_E)=v]\big) + \big(N_v - [\mathrm{walk}(0)=v]\big) = 2N_v - [\mathrm{walk}(0)=v] - [\mathrm{walk}(n_E)=v]. $$
+Rearranging gives (B). $\qquad\blacksquare$
+
+The right-hand side of (B) is $2N_v$, a manifestly even integer. The bracketed term
+on the left is the *endpoint correction*: it equals $0$, $1$, or $2$ according to
+whether $v$ coincides with neither, one, or both of the trail's two extremities.
+This single equation contains the entire parity theory.
+
+### 3.3 Parity of interior vertices
+
+> **Theorem C (Interior vertices have even degree).** If $v \neq \mathrm{walk}(0)$
+> and $v \neq \mathrm{walk}(n_E)$, then $\deg_G(v)$ is even.
+
+*Proof sketch.* Under the hypothesis, both indicators
+$[\mathrm{walk}(0)=v]$ and $[\mathrm{walk}(n_E)=v]$ vanish, so the correction term
+in (B) is $0$. Identity (B) then reads $\deg_G(v) = 2N_v$, which is even.
+$\qquad\blacksquare$
+
+### 3.4 Odd vertices are endpoints
+
+> **Theorem D (Odd-degree vertices are trail endpoints).** If $\deg_G(v)$ is odd,
+> then $v = \mathrm{walk}(0)$ or $v = \mathrm{walk}(n_E)$.
+
+*Proof sketch.* This is the contrapositive of Theorem C. If $v$ were neither
+endpoint, Theorem C would force $\deg_G(v)$ even, contradicting oddness. Hence $v$
+is one of the two endpoints. $\qquad\blacksquare$
+
+Equivalently and directly from (B): since the right side $2N_v$ is even, the parity
+of $\deg_G(v)$ equals the parity of the correction $[\mathrm{walk}(0)=v] +
+[\mathrm{walk}(n_E)=v]$. For this correction to be odd it must equal $1$, which
+requires $v$ to be exactly one of the endpoints.
+
+### 3.5 The two-odd-vertex bound
+
+> **Theorem E (At most two odd-degree vertices).** The number of vertices of odd
+> degree is at most $2$:
+> $$ \#\{\, v : \deg_G(v) \text{ is odd} \,\} \;\le\; 2. $$
+
+*Proof sketch.* By Theorem D, every odd-degree vertex lies in the two-element set
+$\{\mathrm{walk}(0),\ \mathrm{walk}(n_E)\}$. Hence the set of odd-degree vertices is
+a subset of a set of cardinality at most $2$, and its cardinality is therefore at
+most $2$. (If the start and end coincide — a closed trail, or *Eulerian circuit* —
+the bound improves to $0$, recovering the fact that an Eulerian circuit forces all
+degrees even.) $\qquad\blacksquare$
+
+### 3.6 The handshake corollary and the parity of the odd set
+
+The parity identities also re-derive, with no extra work, the most basic global
+invariant of any multigraph.
+
+> **Corollary F (Handshake lemma).** In any multigraph,
+> $$ \sum_{v} \deg_G(v) = 2 n_E. $$
+> Consequently the number of odd-degree vertices is *even*.
+
+*Proof sketch.* Summing Definition 2.2 over all vertices and exchanging the order
+of summation, each edge $e$ contributes the indicator $[\mathrm{ends}(e).1 = v]$ to
+exactly one vertex and $[\mathrm{ends}(e).2 = v]$ to exactly one vertex, for a total
+of $2$ per edge; hence the grand total is $2n_E$. A sum of integers is even if and
+only if an even number of its summands are odd, so the count of odd-degree vertices
+is even. $\qquad\blacksquare$
+
+Corollary F sharpens Theorem E in the trail case: the number of odd-degree vertices
+is *even and at most two*, hence exactly $0$ or exactly $2$. An Eulerian trail with
+distinct endpoints has exactly two odd-degree vertices (its endpoints); one whose
+endpoints coincide — an *Eulerian circuit* — has none. There is no multigraph with
+a single odd-degree vertex, trail or no trail. This dichotomy is precisely what one
+expects physically: a one-way walk has a head and a tail, or it closes up.
+
+### 3.7 Remarks on sharpness and the converse
+
+The bound in Theorem E is tight: a single edge between two distinct vertices is an
+Eulerian trail with exactly two odd-degree vertices (each of degree $1$). The
+results above establish the **necessary** condition for the existence of an Eulerian
+trail. The celebrated **converse** — that a connected multigraph with at most two
+odd-degree vertices in fact admits an Eulerian trail (Euler–Hierholzer) — is a
+separate constructive theorem requiring a connectivity hypothesis and is not treated
+here; the present paper isolates and proves the parity obstruction, which is the
+half responsible for *impossibility* results such as Königsberg.
+
+---
+
+## 4. Worked example: the seven bridges of Königsberg
+
+Model the city with four vertices — the north bank $N$, the south bank $S$, the
+large island $A$, and the smaller island $B$ — and seven edges representing the
+historical bridges. In the standard configuration the bridges connect:
+
+| Bridge | Endpoints |
+|-------:|:----------|
+| 1 | $A$ – $N$ |
+| 2 | $A$ – $N$ |
+| 3 | $A$ – $S$ |
+| 4 | $A$ – $S$ |
+| 5 | $A$ – $B$ |
+| 6 | $B$ – $N$ |
+| 7 | $B$ – $S$ |
+
+Counting endpoints (Definition 2.2):
+
+$$ \deg(A) = 5, \qquad \deg(B) = 3, \qquad \deg(N) = 3, \qquad \deg(S) = 3. $$
+
+All four vertices have **odd** degree. By Theorem E, any multigraph admitting an
+Eulerian trail has at most two odd-degree vertices. Since $4 > 2$, **no Eulerian
+trail exists**: it is impossible to cross every bridge exactly once. This is Euler's
+1736 conclusion, recovered as a one-line corollary of the parity bound.
+
+Had the city authorities removed or added a bridge to reduce the count of
+odd-degree landmasses to two (or zero), a single-pass route would have become
+possible — a quantitative design principle still used when planning sweep routes
+over road networks.
+
+---
+
+## 5. Algorithms
+
+The parity theory yields immediate, linear-time decision and design procedures.
+
+### 5.1 Deciding the parity obstruction
+
+Given a multigraph as an endpoint list, computing all degrees and counting odd ones
+is a single linear pass.
+
+```
+Algorithm DEGREE-PARITY-CHECK
+Input:  endpoint list ends[0..nE-1], each a pair (u, w) of vertices in 0..nV-1
+Output: number of odd-degree vertices, and whether the parity obstruction allows
+        an Eulerian trail
+1.  deg[v] <- 0  for all v in 0..nV-1
+2.  for e in 0..nE-1:
+3.        (u, w) <- ends[e]
+4.        deg[u] <- deg[u] + 1
+5.        deg[w] <- deg[w] + 1        # a loop (u = w) adds 2 to deg[u]
+6.  odd <- count of v with deg[v] odd
+7.  return (odd, odd <= 2)            # necessary condition for an Eulerian trail
+```
+
+Complexity: $O(n_V + n_E)$ time and $O(n_V)$ space. By Theorem E the predicate
+`odd <= 2` is a *necessary* condition; combined with a connectivity test (a
+breadth/depth-first search over the non-isolated vertices) it becomes the *exact*
+Euler–Hierholzer criterion.
+
+### 5.2 Counting the forced repetitions (route inspection)
+
+When the obstruction fails, the *route inspection* (Chinese-postman) problem asks
+how many edge-traversals must be repeated to cover every edge. The number of
+odd-degree vertices, always even by the handshake lemma, controls the answer: they
+must be paired up and the shortest paths between paired vertices duplicated.
+
+```
+Algorithm ROUTE-INSPECTION-LOWER-BOUND
+Input:  connected multigraph G
+Output: a lower bound on extra traversals for a closed covering walk
+1.  D <- { v : deg[v] is odd }        # |D| is even (handshake lemma)
+2.  if D is empty: return 0           # Eulerian circuit exists, no repeats
+3.  pair the vertices of D into |D|/2 pairs minimizing total shortest-path length
+4.  return the total length of the minimizing pairing
+```
+
+The set $D$ in step 1 is exactly the object bounded by Theorem E (in the trail case
+$|D| \le 2$); for general covering walks its size is the engine of the optimization.
+
+---
+
+## 6. Applications and discussion
+
+**Route inspection and logistics.** Snowplows, street-sweepers, meter-readers, and
+postal carriers all face the problem of traversing every street with minimum
+backtracking. The first quantity any solver computes is the multiset of odd-degree
+intersections — precisely the object constrained by Theorems D and E.
+
+**Genome assembly.** De Bruijn–graph assemblers reconstruct a sequence from short
+reads by seeking a trail that uses every edge (a $k$-mer overlap). Existence and
+multiplicity of such trails are governed by node in/out balance, the directed
+analogue of the parity condition proved here.
+
+**Circuit testing and network sweeps.** Verifying that every connection in a network
+or every wire on a board has been exercised exactly once is an Eulerian-trail
+question; the parity count determines whether a single sweep suffices.
+
+**Methodological significance.** Beyond its applications, the result is a model of
+the *conserved-quantity* method. Theorem B exhibits an invariant — the corrected
+degree is always twice an integer — and every qualitative conclusion is read off
+from the parity of that invariant. This is the same reasoning pattern that yields
+conservation laws in physics, invariants in topology, and checksums in computing.
+The whole edifice rests on the trivial observation that you cannot enter a vertex
+mid-trail without leaving it, so interior incidences pair up perfectly, and only the
+two trail-ends escape the pairing.
+
+**On the role of the permutation.** A subtle but essential modelling choice is that
+"uses every edge exactly once" is encoded as a *permutation* of the edge set rather
+than, say, a surjection or a counting constraint. This makes the change-of-variables
+in Theorem A exact and assumption-free, and it cleanly accommodates multi-edges and
+loops, which no simpler edge-set formulation handles gracefully.
+
+---
+
+## 7. Future directions
+
+- **The constructive converse.** Formalize the Euler–Hierholzer theorem: a
+  connected multigraph with at most two odd-degree vertices admits an Eulerian
+  trail. This complements the obstruction proved here with an existence statement
+  and an explicit trail-construction algorithm.
+- **Directed and mixed multigraphs.** Replace degree parity by the in-degree =
+  out-degree balance condition, and treat mixed graphs (some edges oriented), which
+  are the relevant model for one-way-street route inspection and de Bruijn assembly.
+- **Quantitative route inspection.** Turn the lower bound of Section 5.2 into a
+  proved optimality guarantee via minimum-weight perfect matching on the odd-degree
+  set, with certified approximation ratios.
+- **Higher-dimensional analogues.** Investigate parity obstructions for "trails" in
+  simplicial complexes, where boundary operators generalize the in/out pairing that
+  drives Theorem B.
+
+---
 
 ## 8. Conclusion
 
-We have established the Diophantine approximation complexity of ReLU networks, proving that:
-1. Depth provides an exponential advantage over width for constant approximation
-2. π (and other computable irrationals) can be approximated with logarithmic depth
-3. The tropical-ReLU bridge quantifies the cost of smooth activation functions
-4. Information-theoretic lower bounds match our upper bounds up to constants
-
-All results are formally verified in Lean 4 with the Mathlib library.
-
-## References
-
-1. Montúfar, G., Pascanu, R., Cho, K., & Bengio, Y. (2014). On the number of linear regions of deep neural networks. NeurIPS 2014.
-2. Raghu, M., Poole, B., Kleinberg, J., Ganguli, S., & Sohl-Dickstein, J. (2017). On the expressive power of deep neural networks. ICML 2017.
-3. Zhang, L., Naitzat, G., & Lim, L.-H. (2018). Tropical geometry of deep neural networks. ICML 2018.
-4. Maslov, V. P. (1992). Idempotent analysis. Advances in Soviet Mathematics.
-5. Bartlett, P. L., Maiorov, V., & Meir, R. (1998). Almost linear VC dimension bounds for piecewise polynomial networks. Neural Computation.
-6. Eldan, R., & Shamir, O. (2016). The power of depth for feedforward neural networks. COLT 2016.
-
-### Catalog References
-
-- `depth_width_pieces` from `Catalog/Tropical/TropicalOracleResearch.lean`
-- `network_size_for_epsilon` from `Catalog/MachineLearning/DiophantineReLU/Basic.lean`
-- `relu_network_lipschitz_depth` from `Catalog/Cryptography/TropicalCryptoRobustnessBridge.lean`
+We have given a complete, self-contained proof of the parity obstruction to
+Eulerian trails. Two counting identities — degree equals walk-step count
+(Theorem A) and the endpoint correction (Theorem B) — reduce the entire qualitative
+theory to the parity of an explicitly even quantity, yielding even interior degrees
+(Theorem C), endpoint-membership of odd vertices (Theorem D), and the bound of at
+most two odd-degree vertices (Theorem E). Applied to Königsberg's four odd
+landmasses, the bound delivers Euler's impossibility verdict in a single line. The
+argument is elementary yet final: it certifies that *no* route can succeed, and it
+exemplifies the conserved-quantity reasoning that has shaped mathematics since
+Euler first walked the bridges in his mind.

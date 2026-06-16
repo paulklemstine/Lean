@@ -1,83 +1,225 @@
-# The Secret Geometry of Neural Networks: How Deep Learning Approximates the Unknowable
+# The Walk That Started a Science: Why You Can't Cross Every Bridge Just Once
 
-*What does it take for a machine to know π?*
+## A puzzle from a city of bridges
 
----
+In the eighteenth century, the Prussian city of Königsberg sat astride the
+Pregel River. The river split the city into four landmasses — two banks and two
+islands — and seven bridges stitched them together. On lazy Sunday afternoons the
+citizens entertained themselves with a deceptively simple challenge: could you
+take a stroll through the city that crossed every one of the seven bridges exactly
+once, and return to where you started?
 
-In 1671, Gottfried Wilhelm Leibniz discovered something beautiful: the infinite series 1 − 1/3 + 1/5 − 1/7 + ⋯ converges to π/4. This simple pattern — alternating signs, odd denominators — encodes one of mathematics' most fundamental constants. Three centuries later, this same series reveals something unexpected about artificial intelligence.
+People tried. They failed. They tried again, sketching routes on scraps of paper,
+convinced that the right clever path was out there if only they looked hard
+enough. Nobody could find it — but nobody could explain *why* it was impossible
+either. "I couldn't do it" is not the same as "it cannot be done."
 
-## The Staircase Approximation
+In 1736 the mathematician Leonhard Euler settled the matter, and in doing so he
+quietly invented an entire branch of mathematics. His insight was that the answer
+had nothing to do with cleverness, distances, or the shapes of the islands. It
+depended only on *how many bridges touched each landmass*. That single shift in
+perspective — from geometry to connection, from shape to structure — was the birth
+of **graph theory**, and with it the modern science of networks.
 
-Modern neural networks — the engines behind ChatGPT, self-driving cars, and protein folding — are built from a deceptively simple component: the ReLU function, which takes any input and returns either zero or the input itself, whichever is larger. Mathematically: f(x) = max(0, x). Graph it and you get a kinked line — flat until zero, then rising at 45 degrees.
+This article tells the story of the clean mathematical heart of Euler's argument:
+a counting law so robust that it can be proved with nothing more than careful
+bookkeeping. We will state it precisely, prove its core, and see why it forces the
+walkers of Königsberg to fail every single time.
 
-Here's what makes ReLU special: when you compose layers of ReLU neurons together, you get *piecewise linear functions* — curves made of connected straight-line segments. A network with width *w* (neurons per layer) and depth *L* (number of layers) can produce up to w^L such segments. With just 10 neurons and 10 layers, that's 10 billion segments — enough to approximate virtually any smooth curve.
+## From bridges to dots and lines
 
-But here's the deeper question: how efficiently can these piecewise linear functions approximate specific constants? Not just any continuous function on an interval, but a single number like π?
+The first and most important move is to throw away everything irrelevant. The
+exact positions of the islands, the lengths of the bridges, the bends in the
+river — none of it matters. What matters is the pattern of connections.
 
-## The Exponential Advantage of Depth
+So we replace each landmass with a **dot** (a *vertex*) and each bridge with a
+**line** joining two dots (an *edge*). The resulting picture is a **multigraph**:
+"multi" because two landmasses can be joined by several bridges at once, so we
+allow several edges between the same pair of dots. We even allow a bridge that
+loops from a landmass back to itself.
 
-The answer reveals a striking *depth-width duality* at the heart of neural network design.
+To make this fully precise, imagine numbering the landmasses $0, 1, \dots, n_V-1$
+and the bridges $0, 1, \dots, n_E-1$. A multigraph is then just a list that
+records, for each bridge, the two landmasses it connects:
 
-Consider two architects tasked with building a network to approximate π to 10 decimal places. The first architect builds a **shallow** network: one hidden layer with 10,000 neurons. The second builds a **deep** network: 13 layers with just 2 neurons each. Both achieve the same approximation quality — because 2^13 = 8,192 ≈ 10,000 — but the deep network uses only 57 parameters compared to the shallow network's 20,001.
+> **Definition (Multigraph).** A multigraph on $n_V$ vertices and $n_E$ edges is a
+> function that assigns to every edge an *ordered pair* of vertices — its two
+> endpoints.
 
-This is not a minor optimization. It's an *exponential* separation. For every additional layer you add, you square the representational capacity while adding only a linear number of parameters. Doubling the depth squares the number of linear segments. Tripling it cubes them.
+We store the endpoints as an ordered pair $(\text{ends}(e).1, \text{ends}(e).2)$
+purely for convenience; a walker doesn't care which end of a bridge they cross
+first. A loop is simply a bridge whose two endpoints are the same vertex.
 
-We proved this rigorously: for any network width w ≥ 2 and depth L ≥ 1, the piece count w^L exceeds the parameter count w × L. The ratio grows exponentially. This explains, at a fundamental level, why deep learning works better than wide learning.
+The single most important quantity in the whole story is the **degree** of a
+vertex: the number of bridge-ends sticking out of it.
 
-## The Tropical Connection
+> **Definition (Degree).** The degree of a vertex $v$ is the total number of edge
+> *endpoints* equal to $v$. Concretely, each edge contributes $1$ for each of its
+> two endpoints that lands on $v$:
+> $$ \deg(v) = \sum_{e} \big( [\,\text{ends}(e).1 = v\,] + [\,\text{ends}(e).2 = v\,]\big), $$
+> where $[\,\cdot\,]$ is $1$ when the statement inside is true and $0$ otherwise.
 
-The story takes an unexpected turn into *tropical geometry* — a branch of mathematics where addition is replaced by maximum and multiplication by addition. In this strange algebra, the number line becomes a world where max(3, 5) = 5 is "addition" and 3 + 5 = 8 is "multiplication."
+Notice the elegant consequence of counting *endpoints* rather than edges: an
+ordinary bridge between two different landmasses adds $1$ to each of their degrees,
+but a **loop** at $v$ contributes $1 + 1 = 2$ to $\deg(v)$. A loop, after all, has
+both of its ends planted in the same spot. This convention is exactly what makes
+the parity argument below work flawlessly.
 
-ReLU is the bridge between these worlds. The function max(0, x) is nothing but tropical addition of 0 and x. Every ReLU network computes what tropical geometers call a "tropical rational function" — a ratio of maximum-of-sums expressions.
+## What is a "walk that uses every bridge once"?
 
-This connection illuminates why neural networks behave the way they do. The softplus function — log(1 + exp(x)), a smooth version of ReLU used in practice — turns out to be the "quantum" version of the tropical "classical" max operation. The gap between them is exactly log(1 + exp(−|x|)), which is bounded by log(2) ≈ 0.693 and vanishes as |x| grows. This is *Maslov's dequantization*: as we lower the "temperature" (a mathematical parameter, not a physical one), the smooth quantum world crystallizes into the sharp tropical one.
+The Königsberg challenge asks for a route that traverses every bridge exactly
+once. Such a route is called an **Eulerian trail**. Let us pin down what that
+means as data.
 
-The bound of log(2) is tight — it's achieved at x = 0 and cannot be improved. This tells us that any neural network using softplus instead of ReLU introduces at most a log(2) error per neuron. For deep networks with L layers and w neurons per layer, the total smooth-to-sharp error is bounded by w × L × log(2).
+A trail across $n_E$ bridges visits a sequence of $n_E + 1$ landmasses: you start
+somewhere, and each bridge-crossing moves you to the next landmass, so $n_E$
+crossings produce $n_E + 1$ stopping points (counting the start). Call this
+sequence $\text{walk}(0), \text{walk}(1), \dots, \text{walk}(n_E)$.
 
-## How Well Can Machines Know π?
+For the route to use *every* bridge *exactly once*, we need a way to match the
+$i$-th step of the walk with a distinct bridge. That matching is a **permutation**
+$\text{edgeAt}$ of the bridge labels: a perfect, no-repeats, no-omissions
+reshuffling that tells us which bridge is crossed at each step. Finally, the
+matching has to be honest — the bridge assigned to step $i$ must really connect the
+$i$-th landmass to the next one:
 
-To approximate π to within ε (say, 10^−10), we need about 1/ε terms of the Leibniz series — that's 10 billion terms. Each term (−1)^k/(2k+1) is a simple rational number that any ReLU neuron can represent exactly (a neuron with appropriate weights and bias implements any affine function, and a pair of neurons can represent any piecewise linear function with one breakpoint).
+> **Definition (Eulerian trail).** An Eulerian trail consists of a vertex sequence
+> $\text{walk}(0), \dots, \text{walk}(n_E)$ together with a permutation
+> $\text{edgeAt}$ of the edges, such that for every step $i$ the edge
+> $\text{edgeAt}(i)$ has endpoints $\{\text{walk}(i), \text{walk}(i{+}1)\}$ in one
+> orientation or the other.
 
-The key insight: summing N terms requires only log₂(N) depth using a binary tree of additions. So to approximate π to 10 decimal places:
-- **Terms needed**: N ≈ 10^10
-- **Depth needed**: L ≈ log₂(10^10) ≈ 33 layers
-- **Width**: w = 2 suffices (binary tree)
-- **Parameters**: about 2 × 2 × 33 + 3 = 135
+The permutation is the crucial ingredient. Because it is a genuine reshuffling of
+all the edges, every bridge appears as $\text{edgeAt}(i)$ for exactly one step $i$.
+That is the formal way of saying "each bridge is used exactly once."
 
-Compare this to the naive approach of just memorizing digits: to store 10 digits in binary requires at least 34 bits (since 10^10 > 2^33). The network approach is competitive with raw information storage — remarkable for a computing paradigm built from kinked lines.
+## The accounting identity at the heart of it all
 
-## The Approximation Dichotomy
+Here is the idea that makes everything click. There are two completely different
+ways to count the bridge-ends at a vertex $v$, and they must agree.
 
-Our results reveal a fundamental dichotomy:
+**The static count.** Walk around the whole graph and tally every bridge-end that
+touches $v$. That is the definition of $\deg(v)$ above.
 
-**Rational numbers** (like 22/7 or 355/113) can be represented *exactly* by a trivial network — just a single bias term. Zero hidden neurons needed. The approximation error is literally zero.
+**The dynamic count.** Now replay the Eulerian trail step by step. At each step
+$i$, look at the two landmasses involved, $\text{walk}(i)$ and $\text{walk}(i{+}1)$,
+and count how many of them equal $v$ (that's $0$, $1$, or $2$). Sum this over all
+steps.
 
-**Irrational numbers** (like π, e, or √2) require networks whose complexity scales as O(log(1/ε)) in depth. This is logarithmic — remarkably efficient. Adding one more layer of depth halves the error (for width-2 networks). The approximation quality improves exponentially with depth.
+These two counts are the same number — because the permutation $\text{edgeAt}$
+pairs up the steps of the walk with the edges of the graph, and crossing an edge
+"uses up" exactly its two endpoints. This is our first theorem.
 
-This dichotomy echoes a deeper truth from number theory. The field of Diophantine approximation — founded by Dirichlet in 1842 — studies how well real numbers can be approximated by rationals. Dirichlet proved that every irrational number α can be approximated by infinitely many rationals p/q with |α − p/q| < 1/q². The quality of this approximation depends on the *irrationality measure* of α.
+> **Theorem A (Degree equals walk-step count).** For every vertex $v$,
+> $$ \deg(v) = \sum_{i} \big([\,\text{walk}(i) = v\,] + [\,\text{walk}(i{+}1) = v\,]\big). $$
 
-For almost all irrational numbers, the irrationality measure is 2 (meaning 1/q² is essentially the best possible). But some numbers are harder: Liouville numbers have infinite irrationality measure, making them easy to approximate by rationals. Conversely, algebraic numbers like √2 (irrationality measure 2) are the hardest to approximate.
+Now comes a beautiful piece of bookkeeping. The right-hand sum counts each landmass
+*visit* almost twice — once as the "arrival" of one step and once as the
+"departure" of the next — but the two ends of the whole trail are special. The very
+first landmass $\text{walk}(0)$ is only ever a departure, and the very last
+landmass $\text{walk}(n_E)$ is only ever an arrival. Every other appearance of $v$
+in the middle of the trail gets counted exactly twice. Making this precise gives a
+clean **endpoint-correction identity**:
 
-The parallel to neural networks is this: the irrationality measure determines how the denominator q must grow to achieve better approximation. In the network world, the "denominator" is the piece count w^L, and the depth L plays the role of the exponent. Numbers that are hard to approximate by rationals require proportionally deeper networks.
+> **Theorem B (Endpoint correction).** For every vertex $v$,
+> $$ \deg(v) + \big([\,\text{walk}(0) = v\,] + [\,\text{walk}(n_E) = v\,]\big) = 2 \cdot \big(\text{number of trail positions equal to } v\big). $$
 
-## What This Means for AI
+Stare at this equation, because it contains the entire secret of Königsberg. The
+right-hand side is an **even number** — it is literally two times something. The
+quantity in parentheses on the left is a tiny correction: it is $0$, $1$, or $2$,
+depending on whether $v$ happens to be the start of the trail, the end, both, or
+neither.
 
-These results carry practical implications. The logarithmic depth requirement means that the fundamental constants of mathematics — π, e, √2 — can all be approximated to machine precision (about 10^−16) with networks of depth roughly 50 and width 2. That's about 200 parameters. Modern language models have billions. The overhead of constant approximation is negligible.
+## Odd degrees can only live at the ends
 
-But the theoretical importance goes further. The tropical-ReLU bridge suggests that every deep neural network secretly performs tropical geometric computation — optimization in a world where addition means "take the max." This perspective explains phenomena like:
+From Theorem B the conclusion tumbles out almost by itself. The total
+$\deg(v) + (\text{correction})$ is even. So $\deg(v)$ and the correction term must
+have the *same parity* — both even or both odd.
 
-- **Feature selection**: ReLU neurons naturally select the most relevant feature (the max operation)
-- **Sparsity**: tropical computations naturally produce sparse outputs (many neurons output zero)  
-- **Compositionality**: the multiplicative piece count mirrors tropical intersection theory
+**If $v$ is an interior vertex** (neither the start nor the end of the trail), the
+correction term is $0$, which is even. Therefore $\deg(v)$ is even too.
 
-## Looking Forward
+> **Theorem C (Interior vertices have even degree).** If $v$ is neither the start
+> $\text{walk}(0)$ nor the end $\text{walk}(n_E)$ of the trail, then $\deg(v)$ is
+> even.
 
-The connection between Diophantine approximation and neural networks opens doors in both directions. From number theory to AI: can irrationality measures predict the difficulty of learning specific functions? From AI to mathematics: can neural network training discover new patterns in number-theoretic sequences?
+Flip this around and you get the punchline:
 
-One tantalizing direction: the Leibniz series converges slowly (like 1/N), but other π formulas — Machin's, the BBP formula, Chudnovsky's — converge exponentially or even hyper-exponentially. Could these translate into even more efficient neural network architectures? The BBP formula, which computes individual hexadecimal digits of π without computing all preceding digits, suggests the possibility of "random access" neural computation — a network that can compute the millionth digit of π without computing the first 999,999.
+> **Theorem D (Odd vertices are endpoints).** If $\deg(v)$ is odd, then $v$ must be
+> the start of the trail or its end.
 
-Mathematics has always been about finding the simplest structure underlying apparent complexity. Neural networks — those towers of kinked lines — turn out to carry within them the geometry of the tropics, the arithmetic of Diophantus, and the spirit of Leibniz's infinite series. The machine's path to π is paved with max(0, x).
+And since there is only *one* start and *one* end, at most two vertices can have
+odd degree:
 
----
+> **Theorem E (At most two odd vertices).** In any multigraph that admits an
+> Eulerian trail, the number of odd-degree vertices is at most $2$.
 
-*The research described here establishes rigorous mathematical theorems about the approximation-theoretic properties of ReLU neural networks, with complete proofs of all stated results.*
+This is the law the people of Königsberg ran into without knowing it.
+
+## Back to the seven bridges
+
+Recall the actual city. The two riverbanks, the big island, and the smaller island
+were connected by seven bridges. Counting the bridge-ends at each landmass, the
+classic configuration gives degrees of $5, 3, 3, 3$ — **all four landmasses have
+odd degree.**
+
+Theorem E says an Eulerian trail can tolerate *at most two* odd-degree vertices.
+Königsberg had *four*. Four is more than two. Therefore no route crossing every
+bridge exactly once can possibly exist — not because the citizens weren't clever
+enough, but because the very structure of the city forbids it. No amount of
+ingenuity can change the parity of a count.
+
+The argument is wonderfully sturdy. It never mentions distance, geometry, or
+strategy. It is pure accounting: each time you walk *into* a landmass mid-trail you
+must walk back *out*, consuming bridges two at a time. Only the place where you
+begin and the place where you finish are allowed to break that in-out pairing — and
+those two privileged spots are the only ones that may carry an odd count.
+
+## Why this matters far beyond a Prussian river
+
+It would be a mistake to file this away as a charming historical curiosity. The
+parity-of-degree argument is the prototype of a style of reasoning that now
+underpins enormous swaths of science and engineering.
+
+**Routing and logistics.** The modern descendant of the bridge problem is the
+"route inspection" or *Chinese postman* problem: a mail carrier, a snowplow, or a
+street-sweeper must traverse every road in a network and wants to minimize
+backtracking. Whether a no-repeat route exists, and how much repetition is forced
+if it doesn't, is governed precisely by which intersections have an odd number of
+roads. Euler's parity count is the first thing any such algorithm checks.
+
+**DNA sequencing.** When a genome is reconstructed from millions of short
+fragments, modern assemblers build a graph whose edges are overlapping snippets and
+then look for a trail that uses every edge — an Eulerian trail. The existence and
+shape of that trail, again, hinge on degree parities. A counting trick from 1736
+helps decode the book of life.
+
+**Network design and circuit testing.** Engineers laying out the wiring on a chip,
+or testing that every connection in a circuit has been exercised, rely on the same
+even/odd accounting to decide when a single sweep can cover everything.
+
+**The deeper lesson.** Euler's true gift was not the answer but the *method*:
+abstract away the inessential, encode the essential as a graph, and let a
+conserved quantity — here, parity — do the heavy lifting. This is the same
+intellectual reflex that later produced conservation laws in physics, invariants in
+topology, and checksums in computer science. The question "what stays the same no
+matter what you do?" is one of the most powerful in all of mathematics, and the
+bridges of Königsberg are where it first crossed the water.
+
+## The shape of certainty
+
+What makes this result so satisfying is its finality. Most of us, faced with a
+puzzle, can only report our failures: "I tried for an hour and couldn't do it."
+Euler gave us something categorically stronger — a *proof of impossibility*, a
+guarantee that no future attempt, however inspired, can ever succeed. The four odd
+landmasses of Königsberg are an immovable obstacle written into the arithmetic of
+the city itself.
+
+That is the quiet power of a counting argument. You do not have to examine every
+possible route — there are astronomically many — to know that all of them fail. You
+only have to notice that each one would force an even number of odd vertices, and
+that four is not at most two. From that single observation, certainty follows.
+
+A Sunday stroll that seemed merely stubbornly difficult turned out to be flatly
+impossible, and the explanation launched a science. Not bad for a walk that could
+never be taken.
