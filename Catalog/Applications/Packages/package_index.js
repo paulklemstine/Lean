@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "999c0f6b",
     "filename": "follow_up_conjectures_arising_from_catalogbridgesv.json",
     "pkg_num": 159,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7756000000000001,
     "title": "The Only Cost Is Height: A Unit-Cost Ultrametric Functor from Valuation Depth to Tropical Trees"
   },
   {
@@ -4917,8 +4917,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "follow_up_conjectures_arising_from_catalogbridgesv",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7756000000000001,
+      "quality": "substantial",
       "shape": "tetrahedron",
       "title": "The Only Cost Is Height: A Unit-Cost Ultrametric Functor from Valuation Depth to Tropical Trees"
     }
