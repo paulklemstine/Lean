@@ -150,20 +150,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Whitehead Problem: Independence from ZFC"
   },
   {
-    "consumed_by_exp_id": "3b102b1d",
-    "description": "Building on cycle 3fd7a316 (Q=0.805), which proved 25 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # FUTURE DIRECTIONS \u2014 Functorial Tropical Ultrametric from Pythagorean Lorentz Triples\n\nThis cycle produced `Catalog/Bridges/FunctorialTropicalPythagorean.lean` (0 sorries, only\nstandard axioms). It builds the canonical **tree ultrametric** `d` on the boundary\n`Addr = \u2115 \u2192 Fin 3` of the ternary Bergg",
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_3fd7a316_45e02c46",
-    "priority_score": 0.90536,
-    "research_mode": "team",
-    "source_exp_id": "3fd7a316",
-    "status": "in_progress",
-    "timestamp": "2026-06-16T03:36:42.186330+00:00",
-    "title": "Deepening: `Catalog/Bridges/FunctorialTropicalPythagorean.lean` (0 sorr"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
     "domains": [
@@ -632,7 +618,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
   {
-    "consumed_by_exp_id": "48c069d0",
+    "consumed_by_exp_id": "",
     "description": "The Riemann zeta function zeta(s) has non-trivial zeros at s = 1/2 + i*gamma_n on the critical line (assuming RH). These zeros encode deep arithmetic information. Conjecture: the zeros gamma_n are the spectrum of a self-adjoint operator on a Hilbert space, and this operator is the Casimir element of a quantum group G_q. Specifically, define the 'zeta quantum group' G_q as the q-deformation of SU(2) where q = e^{2*pi*i*gamma_1} (using the first zero gamma_1 ~ 14.13). The Casimir element C_q of G_q has eigenvalues that are quadratic functions of the representation labels, and the spectrum of C_q is {n(n+1) : n in N}. Conjecture: the Riemann zeros gamma_n are related to the spectrum of C_q by gamma_n = f(spectrum(C_q)) for some function f. If f is linear, this would mean the zeros are evenly spaced, which is false (the zeros have Poisson-like spacings). If f is logarithmic, gamma_n ~ pi*n/log(n) which matches the average spacing. Conjecture: the spectral statistics of C_q match the GUE random matrix statistics of the Riemann zeros (Montgomery's pair correlation conjecture). Test: compute the spectrum of C_q for G_q with q = e^{2*pi*i*gamma_1} and compare the spectral statistics with the Riemann zeros. Impact: the Riemann hypothesis is a representation-theoretic statement about quantum groups.",
     "domains": [
       "Novelty",
@@ -642,7 +628,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-06-01T12:30:30.711975+00:00",
     "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
   },
@@ -1245,6 +1231,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-16T12:53:09.336726+00:00",
     "title": "Derived from the Phase A cycle that produced"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Functorial Tropical\u2013Pythagorean Bridge (Probability)\n\nThis cycle established a *normalization functor into the probability simplex*\nthat unifies three threads:\n\n* **Tropical**: `lse2`, `softmax2`, and the general `softmax`, with the Maslov\n  dequantization sandwich `max \u2264 lse2 \u2264 max + log 2`.\n* **Probability**: two-point (Bernoulli) laws, `bernVar`, and the cumulant\n  identities `deriv lse2 = softmax2` (mean) and `deriv\u00b2 lse2 = bernVar \u2218 softmax2`\n  (variance = tropical curvature).\n* **Pythagorean**: the map `(a,b,c) \u21a6 ((a/c)\u00b2, (b/c)\u00b2)` lands in the simplex,\n  is dilation-invariant, equals the softmax image of log-squared coordinates,\n  and yields the Pythagorean probability identity `(p\u2212q)\u00b2 + 4\u00b7Var = 1`.\n\nThe conjectures below are precise, falsifiable targets for the next cycle. Each\nis stated so it can be dropped into Lean as a `theorem \u2026 := by sorry` and\nattacked directly.\n\n## Conjecture 1 (n-point tropical Hessian = covariance)\nThe general softmax `softmax w` is the gradient of the n-point free energy\n`lse w := log \u2211\u2c7c exp (w j)`, and the Hessian of `lse` is the covariance matrix of\nthe Gibbs law:\n```\n\u2202\u00b2/\u2202w\u1d62\u2202w\u2c7c lse w = (if i = j then softmax w i \u00b7 (1 - softmax w i)\n                    else - softmax w i \u00b7 softmax w j).\n```\n**Test.** Prove `deriv (fun t => lse (Function.update w i t)) (w i) = softmax w i`\nand the diagonal/off-diagonal second-derivative formulas. Expected: the diagonal\nspecializes to `bernVar (softmax w i)`, generalizing `deriv2_lse2_eq_bernVar`.\n\n## Conjecture 2 (Pythagorean parametrization of the full simplex)\nEvery interior Bernoulli law arises from a *real* Pythagorean relation: for all\n`p \u2208 (0,1)` there exist `a,b,c > 0` with `a\u00b2 + b\u00b2 = c\u00b2`, `(a/c)\u00b2 = p`. Concretely\n`a = \u221ap\u00b7c`, `b = \u221a(1\u2212p)\u00b7c`. Moreover the induced standard deviation satisfies\n`\u03c3 = |ab|/c\u00b2 = \u221a(p(1\u2212p))`, so **the Bernoulli standard deviation is exactly half\nthe normalized area `2ab/c\u00b2` of the right triangle**.\n**Test.** Prove surjectivity of `p \u21a6` Pythagorean triple and the identity\n`2 * Real.sqrt (bernVar p) = 2*a*b/c^2` for the canonical triple. Falsifiable:\nthe area-to-\u03c3 proportionality constant is conjectured to be exactly `2`.\n\n## Conjecture 3 (Maslov interpolation is monotone and contracts to max)\nDefine the temperature-scaled functional `lseT h a b := h \u00b7 log(exp(a/h)+exp(b/h))`\nfor `h > 0`. Then `h \u21a6 lseT h a b` is monotone non-decreasing, `lseT h a b \u2192 max a b`\nas `h \u2192 0\u207a`, and the *Gibbs entropy gap* `lseT h a b \u2212 max a b \u2208 [0, h\u00b7log 2]`.\n**Test.** Prove the sandwich `max a b \u2264 lseT h a b \u2264 max a b + h\u00b7log 2` (rescale\nthe proved `lse2` sandwich) and the limit `Filter.Tendsto (fun h => lseT h a b)\n(nhdsWithin 0 (Set.Ioi 0)) (nhds (max a b))`. This is the quantitative\ndequantization underlying the whole bridge.\n\n## Conjecture 4 (Pythagorean identity is the \u03c7\u00b2 / information projection at 2 points)\nFor the Pythagorean-induced law `p = (a/c)\u00b2`, the polarization leg `p \u2212 q` equals\nthe (signed) \u03c7\u00b2-type discrepancy from the uniform law `(\u00bd,\u00bd)`:\n`(p \u2212 \u00bd)\u00b2 + (q \u2212 \u00bd)\u00b2 = \u00bd\u00b7(p \u2212 q)\u00b2 = \u00bd\u00b7(1 \u2212 4\u00b7Var)`. Hence **maximal Bernoulli\nvariance \u21d4 minimal \u03c7\u00b2-distance to uniform \u21d4 the degenerate right triangle\n`a = b`**, i.e. the isoceles Pythagorean triple `(1,1,\u221a2)`.\n**Test.** Prove the \u03c7\u00b2 identity and that `Var` is maximized exactly when\n`(a/c)\u00b2 = (b/c)\u00b2`, characterizing the optimizer as the isoceles triple. Connect\nto a genuine `Real.rpow`-based R\u00e9nyi/Tsallis entropy and show the leg `p\u2212q`\ncontrols a one-parameter family of divergences from uniform.\n\n## Conjecture 5 (Functorial naturality square)\nThe two functors into the simplex commute with their symmetries: softmax\nintertwines the additive `\u211d`-shift action on log-coordinates with the trivial\naction on the simplex, and the Pythagorean functor intertwines the multiplicative\n`\u211d\u02e3`-dilation action on triples with the trivial action. Conjecture: there is a\n*natural transformation* `log\u2218(\u00b7)\u00b2 : (Pythagorean triples / dilation) \u27f9\n(log-coordinates / shift)` making the triangle\n`softmax \u2218 (log \u2218 sq) = pythProb` commute as functors, not merely pointwise.\n**Test.** Formalize both as actions (`AddAction \u211d` and `MulAction \u211d\u02e3`) on the\nrespective domains, define the quotients, and prove the induced maps to the\nsimplex are well-defined and equal. The pointwise version is already proved\n(`pyth_eq_softmax2`); the goal is to upgrade it to an equivariant/quotient\nstatement.\n",
+    "domains": [
+      "Tropical",
+      "Bridges"
+    ],
+    "id": "fd_2012",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3b102b1d",
+    "status": "available",
+    "timestamp": "2026-06-16T13:27:48.242946+00:00",
+    "title": "*normalization functor into the probability simplex*"
   },
   {
     "consumed_by_exp_id": "",
@@ -2710,7 +2711,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fba6400c",
     "description": "Arrow's impossibility theorem states that no ranked voting system can be fair (Pareto efficient, non-dictatorial, and independent of irrelevant alternatives). The Borsuk-Ulam theorem states that every continuous function f: S^n -> R^n maps some pair of antipodal points to the same value: f(x) = f(-x). Conjecture: Arrow's theorem is a corollary of Borsuk-Ulam. Specifically, define the 'preference sphere' S^{n-1} as the set of all preference profiles over n alternatives, where antipodal points represent opposite preferences (x prefers A > B > C, -x prefers C > B > A). Define f: S^{n-1} -> R^{n-1} by f(x) = (social_preference(x)_1, ..., social_preference(x)_{n-1}). By Borsuk-Ulam, there exists x such that f(x) = f(-x), meaning the social preference for profile x equals the social preference for profile -x. This contradicts Pareto efficiency (if all voters prefer A to B, the social preference should prefer A to B). Therefore, no continuous voting function satisfies all of Arrow's axioms. Conjecture: this proof generalizes: any social choice function on n alternatives is either discontinuous or dictatorial. Test: formalize the Borsuk-Ulam proof of Arrow's theorem in Lean 4. Impact: social choice theory is topology. Arrow's impossibility is a topological theorem about spheres.",
     "domains": [
       "Novelty",
@@ -2720,7 +2721,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.691072+00:00",
     "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
   },
@@ -3130,7 +3131,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Homological Algebra Connecting Algebra and Topology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "eef6f30f",
     "description": "Model mathematical theories as species in an ecosystem. Define a fitness function: f(theory) = (number of connections to other theories) * (proof density) / (axiom count). Conjecture: theories evolve toward the niche of maximum fitness, and the resulting ecosystem satisfies a mathematical analog of the competitive exclusion principle (no two theories occupy the same niche). Prove that ZFC + large cardinals has higher fitness than ZFC alone.",
     "domains": [
       "Novelty"
@@ -3139,7 +3140,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T23:40:36.123707+00:00",
     "title": "Speculative: Mathematics as an Evolving Ecosystem"
   },
