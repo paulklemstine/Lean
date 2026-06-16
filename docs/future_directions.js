@@ -530,21 +530,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
   {
-    "consumed_by_exp_id": "8dbe2c7e",
-    "description": "Formalize the hard problem of consciousness as a theorem about the gap between functional descriptions and subjective experience. Prove that any system satisfying the functional definition of consciousness can have a zombie twin that is functionally identical but experientially void. Show this gap is isomorphic to G\u00f6del's incompleteness gap.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0130",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:31.042804+00:00",
-    "title": "Zombies and Qualia: Mathematics of Subjective Experience"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
     "domains": [
@@ -1351,6 +1336,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-16T20:28:41.794432+00:00",
     "title": "This cycle formalized the lone king vs. finite line-piece pursuit on the infinit"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThese build directly on `BehavioralEquivalence.lean` and stay within precise, provable\nmathematics \u2014 no metaphysical extensions.\n\n## 1. Dynamical / transition systems\n\nReplace the static `behavior : S \u2192 B` with a labelled transition system\n`step : S \u2192 A \u2192 S` together with an output `out : S \u2192 B`, and define **behavioral equivalence as\nbisimilarity** (or trace/observational equivalence). Re-prove the supervenience/factorization\ncharacterization at the level of observable trajectories, and relate the quotient model to the\nstandard minimal-automaton / Nerode-congruence construction. Target theorem: a supervening\nrepresentation descends to the bisimulation quotient, and for finite automata the count of\nsupervening representations is `|R|` raised to the number of Nerode classes.\n\n## 2. Probabilistic / noisy observation and statistical identifiability\n\nGeneralize `behavior` to a Markov kernel `S \u2192 Measure B` (or `repr` to `S \u2192 Measure R`). The\ndeterministic notion \"behavior determines representation\" becomes statistical **identifiability**\nof the latent representation from the observable distribution. Formalize identifiability as\ninjectivity of the induced map on distributions and connect non-identifiability witnesses to\nthe existence of distinct latent models with identical observable law \u2014 the exact obstruction\nstudied for latent-variable and hidden-Markov models.\n\n## 3. Quantitative non-identifiability and metric structure\n\nEquip `B` and `R` with (pseudo)metrics and replace exact equality by approximate behavioral\nequivalence. Define a modulus measuring how much representation can vary over an\n\u03b5-behavioral ball, and prove Lipschitz-type \"approximate supervenience\" results: bounded\nbehavioral distinguishability implies bounded representational ambiguity only under explicit\nregularity hypotheses. This quantifies the gap between behavior and representation.\n\n## 4. Functorial / categorical packaging\n\nTreat `System S B R` morphisms (state maps commuting with `behavior` and `repr`) as a category\nand show the quotient-by-behavioral-equivalence is a functor / reflective construction. Express\n`supervenes_iff_factors` as a universal property of the behavioral image, and study how\nbehavior-preserving twins form a fiber over a fixed behavior map. This yields reusable\ninfrastructure for composing systems compositionally.\n\n## 5. Counting refinements and enumeration algorithms\n\nStrengthen `card_supervening_repr` into a fully explicit enumeration: a computable function that,\ngiven a behavior table and a choice of values on the image, returns every supervening\nrepresentation, with a proof that it is a bijection onto the supervening set. Add counts for\nbehavior-preserving twins, for non-identifiable systems, and for the number of distinct\nobservable behaviors realizable by a fixed family of representation maps \u2014 all over `Fintype`\nstate spaces with `decide`-checkable small instances.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2028",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8dbe2c7e",
+    "status": "available",
+    "timestamp": "2026-06-16T21:05:14.517268+00:00",
+    "title": "These build directly on `BehavioralEquivalence.lean` and stay within precise, pr"
   },
   {
     "consumed_by_exp_id": "",
@@ -2801,7 +2801,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5f9a16a6",
     "description": "An argumentation framework AF = (A, R) consists of a set of arguments A and an attack relation R subset A x A. The preferred extensions of AF are the maximal admissible sets (subsets S of A that defend themselves against all attacks and are maximal with this property). Conjecture: the preferred extensions of AF form a simplicial complex K(AF) on the vertex set A. The homology groups H_n(K(AF)) measure the 'holes' in the argumentation structure. H_0 measures the number of connected components (independent debate threads). H_1 measures circular arguments (cycles where each argument attacks the next, and the last attacks the first). H_2 measures 'spheres' of arguments (3D cycles where arguments form a spherical shell). Conjecture: for any argumentation framework, the Euler characteristic chi(K(AF)) = |A| - |R| + sum_{n>=2} (-1)^n * dim(H_n) equals |preferred extensions| - |grounded extension size|. This connects the topology of the argument to its semantics. Test: construct K(AF) for 100 argumentation frameworks from debate transcripts, compute homology groups, and verify the Euler characteristic formula. Impact: arguments have topology. Circular arguments are 1-holes, and 3D argument spheres are 2-holes. The shape of a debate is a topological invariant.",
     "domains": [
       "Novelty",
@@ -2811,7 +2811,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.739014+00:00",
     "title": "The Topology of Argumentation: Why Debates Have Holes"
   },
