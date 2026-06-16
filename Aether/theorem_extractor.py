@@ -227,7 +227,7 @@ class TheoremExtractor:
             )
             lower_proof = proof_text.lower()
             uses_sorry = "sorry" in lower_proof or "admit" in lower_proof
-            is_complete = not uses_sorry and proof_text and not proof_text.startswith("_")
+            is_complete = bool(not uses_sorry and proof_text and not proof_text.startswith("_"))
             statement_preview = full_statement[:200].strip()
             is_sorry = "sorry" in statement_preview.lower()
 

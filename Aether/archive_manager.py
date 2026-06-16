@@ -135,7 +135,6 @@ class ArchiveManager:
             CREATE INDEX IF NOT EXISTS idx_theorems_name ON theorems(name);
             CREATE INDEX IF NOT EXISTS idx_theorems_hash ON theorems(file_hash);
             CREATE INDEX IF NOT EXISTS idx_theorems_domain ON theorems(domain);
-            CREATE INDEX IF NOT EXISTS idx_theorems_project ON theorems(project_id);
 
             CREATE TABLE IF NOT EXISTS prompts (
                 project_id TEXT PRIMARY KEY,
@@ -192,6 +191,10 @@ class ArchiveManager:
         for col, dtype in new_columns:
             if col not in existing:
                 conn.execute(f"ALTER TABLE theorems ADD COLUMN {col} {dtype}")
+        # Index on project_id is conditional on the column now existing.
+        conn.execute(
+            "CREATE INDEX IF NOT EXISTS idx_theorems_project ON theorems(project_id)"
+        )
 
     def _blob_path(self, file_hash: str) -> Path:
         """Map a SHA-256 hash to a 4-level sharded blob path."""
@@ -432,6 +435,8 @@ class ArchiveManager:
 
         # Batch insert new theorems (deduped by unique(name, file_hash))
         if all_theorems:
+            for t in all_theorems:
+                t.setdefault("project_id", project_id)
             conn.executemany(
                 "INSERT OR IGNORE INTO theorems "
                 "(name, file_hash, project_id, domain, statement_text, full_statement, "

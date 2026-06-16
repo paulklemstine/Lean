@@ -1173,6 +1173,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Weight-Threshold Profiles & the Codes \u2192 Tropical Valuation Functor\n\nDerived from the research cycle recorded in\n`Catalog/Novelty/ThresholdDirectSum.lean`, `Catalog/Novelty/ThresholdEnumerator.lean`,\nand `Catalog/Novelty/OrderValuation.lean`, which extend\n`Catalog/Speculative/AutoResearch/CodeThresholdValuation.lean`.\n\n## What this cycle established (and refuted)\n\n* **Conjecture 4 (direct sum) \u2014 corrected and proved.** The naive max-plus law\n  `tprof (append a b) = max (tprof a) (m + tprof b)` is **false** at `b = 0`\n  (`tprof_append_naive_counterexample`). The corrected law\n  `tprof (append a b) = if b = 0 then tprof a else m + tprof b`\n  (`tprof_append_eq`, `tprof_append_maxplus`) holds for all blocks, with the laxity\n  isolated entirely in the right-block unit.\n* **Conjecture 1 (tropical enumerator) \u2014 partly refuted.** `maxWtProfile` and\n  `thresholdCount` are monotone for every code (`maxWtProfile_mono`,\n  `thresholdCount_mono`), but for `hamming` the tropical enumerator is **not concave**\n  (`hamming_maxWtProfile_not_concave`) and its breakpoints `{3,7}` are **not** the\n  attained `tprof` values `{0,4,6,7,8}` (`hamming_breakpoints_ne_tprofValues`). Only the\n  *count* of jumps (`= 2 = 1 + d/4`) survived (`hamming_maxWtProfile_jumpCount`).\n* **Conjecture 3 (ultrametric MacWilliams) \u2014 refuted.** On the self-dual `hamming`,\n  `N_C(r)\u00b7N_C(8\u2212r)` is not constant (`hamming_macwilliams_nonconstant`).\n* **Conjecture 5 (order valuation) \u2014 confirmed.** `ord` is a dual ultrametric valuation\n  (`ord_add_ge`) and is multiplicative up to truncation,\n  `ord (x\u00b7y) = min (ord x + ord y) n` (`ord_cmul`), with the `min \u2026 n` shown essential\n  (`ord_cmul_truncation_failure`).\n\n---\n\n## Direction 1 \u2014 `tprof` is the *initial* lax-monoidal code valuation\n\n**Conjecture.** Among all functors `(FinLinCodes, \u2295) \u2192 (\u2115, max, +)` that are additive on\ncodewords and lax-monoidal with laxity supported only at the unit, `tprof` is initial:\nevery other such valuation factors uniquely through it.\n\n*The key insight is* that this cycle pinned the laxity of `tprof \u2295` to **exactly the\nright-block zero** (`tprof_append_eq`): the lax-monoidal structure map is an isomorphism\naway from the unit, which is the categorical signature of an initial object.\n\n*Why now?* We have, for the first time, a closed-form direct-sum law with the corner case\nexplicitly quantified, so the comparison maps to other valuations are now writable and\nmechanically checkable.\n\n*Falsifiable by* exhibiting an additive `\u2115`-valued ultrametric code valuation whose\ndirect-sum laxity is **not** unit-supported, i.e. that does not factor through `tprof`.\n\n## Direction 2 \u2014 `B^{val}` is a genuine multiplicative ultranorm into `\u211d`\n\n**Conjecture.** For any base `B > 1`, the map `x \u21a6 B^{val x}` with `val x = n \u2212 ord x` is a\n*multiplicative* nonarchimedean seminorm on `F\u2082[t]/(t\u207f)`:\n`\u2016x\u00b7y\u2016 = \u2016x\u2016\u00b7\u2016y\u2016` whenever `ord x + ord y < n`, landing codes in the catalog's full\n`CategoricalTropicalUltrametric.UltraNormObj` (the axiom `tprof` could not meet).\n\n*The key insight is* that `ord_cmul` already gives `ord (x\u00b7y) = ord x + ord y` below the\ntruncation length, so the exponential turns the additive `ord` into an exactly\nmultiplicative norm; the only obstruction is truncation, which `B^{val}` records as a\n*sub*multiplicative defect above degree `n`.\n\n*Why now?* `ord_cmul` is the missing multiplicative law identified in the parent file's\nfailure analysis; with it proved, the bridge into `UltraNormObj`/`valuationReconstruct`\nis a finite formalization away.\n\n*Falsifiable by* finding `x, y` with `ord x + ord y < n` and `\u2016x\u00b7y\u2016 \u2260 \u2016x\u2016\u00b7\u2016y\u2016`, which\n`ord_cmul` predicts cannot exist.\n\n## Direction 3 \u2014 the true breakpoint invariant is the *weight spectrum*, not `tprof`\n\n**Conjecture.** For every binary code, the number of jumps of the tropical enumerator\n`maxWtProfile C` equals `(#distinct nonzero Hamming weights of C)`, and its jump *heights*\nare exactly the gaps of the weight spectrum \u2014 independent of the `tprof` value set.\n\n*The key insight is* that this cycle showed the extra `tprof` values `6, 7` carry **no new\nmaximum weight** (`hamming_breakpoints_ne_tprofValues`): the enumerator sees the weight\nspectrum, while `tprof` measures degree, so the two filtrations are genuinely different.\n\n*Why now?* The explicit `hamming` profile `0,0,0,0,4,4,4,4,8` (3 distinct values, weight\nspectrum `{0,4,8}`) is the first computed witness aligning jumps with weights and divorcing\nthem from `tprof` values.\n\n*Falsifiable by* a code where the jump count of `maxWtProfile` differs from the number of\ndistinct nonzero weights.\n\n## Direction 4 \u2014 a *degree-graded* duality replaces the failed MacWilliams identity\n\n**Conjecture.** The linear product MacWilliams identity fails for `tprof`\n(`hamming_macwilliams_nonconstant`), but the generating function\n`Z_C(q) = \u03a3_{c\u2208C} q^{tprof c}` satisfies a `q`-MacWilliams transform relating `Z_C` and\n`Z_{C\u22a5}` through the *order* valuation `ord` (degree-from-the-bottom), not `wt`.\n\n*The key insight is* that `tprof` and `ord` are the top/`sup` and bottom/`inf` ends of the\nsame coordinate filtration; duality should swap the two ends (`tprof \u2194 n \u2212 ord`), so the\ncorrect dual pairing is degree-reversal, not weight-complementation.\n\n*Why now?* We now possess *both* ends of the filtration as proved valuations\n(`tprof_add_le` and `ord_add_ge`/`ord_cmul`), making the conjectured `tprof \u2194 ord` duality\nconcretely testable on `hamming` and `hamming \u2295 hamming`.\n\n*Falsifiable by* computing `Z_C` and `Z_{C\u22a5}` on a non-self-dual code and checking no\ndegree-reversal transform links them.\n\n## Direction 5 \u2014 laxity-free direct sums characterise *prefix-saturated* codes\n\n**Conjecture.** The corrected direct-sum law degenerates to the *naive* max-plus law\n(no `b = 0` correction needed on codewords) **iff** the right summand `D` is\n\"prefix-saturated\": every threshold `t \u2264 n` is attained by some codeword of `D`.\n\n*The key insight is* that the laxity in `tprof_append_eq` is triggered only by the zero\ncodeword of the right block; a code with no \"threshold gaps\" never exposes the corner case\non its nonzero codewords, so its direct sums look strictly additive.\n\n*Why now?* The explicit corner-case analysis of `tprof_append_eq` lets us state exactly\nwhich codes hide the laxity, turning a definitional subtlety into a structural code\nproperty.\n\n*Falsifiable by* a prefix-saturated code whose direct sum still violates the naive law on a\nnonzero codeword, or a non-saturated code that obeys it.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_2006",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "bfb62bb9",
+    "status": "available",
+    "timestamp": "2026-06-16T10:48:41.715150+00:00",
+    "title": "Derived from the research cycle recorded in"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -1292,6 +1307,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: For any finite-type moduli space M of algebraic curves or polarized varieties equipped with its natural orbifold metric, there exists a family of width-increasing geometric neural networks whose neural tangent kernels converge, after explicit metric normalization, to a universal operator determined by the Laplace-Beltrami spectrum of M, and this limiting kernel predicts generalization error solely from low-lying spectral data. Test: Construct such networks on sampled points from moduli spaces of low genus curves, K3 surfaces, or abelian varieties; compute empirical neural tangent kernels as width grows; compare their spectra and learning curves against the conjectured Laplace-Beltrami-derived limit. Confirmation requires convergence across architectures and tasks to the same spectral law and error predictor; refutation occurs if limiting kernels depend essentially on architecture details or fail to correlate with geometric spectral invariants. Impact: This would connect deep learning universality to arithmetic geometry, provide a principled theory of learning on highly singular geometric parameter spaces, and enable geometry-aware model design using moduli-space spectra.",
+    "domains": [
+      "Algebra",
+      "MachineLearning"
+    ],
+    "id": "fd_2007",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-16T10:48:58.195627+00:00",
+    "title": "Spectral Universality of Neural Tangent Kernels on Moduli Spaces"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that 10 is a solitary number \u2014 no other integer shares its abundancy index \u03c3(n)/n. Formalize the theory of friendly numbers and abundancy, connecting to the distribution of divisor sums.",
     "domains": [
       "Algebra"
@@ -1333,6 +1363,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:26.751445+00:00",
     "title": "EML Quantum Activation Functions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle bfb62bb9 (Q=0.524) proved 22 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a minimal, self-contained core of the order-valuation program for truncated binary polynomials, avoiding any unverified functorial or uniqueness claims. Work in the concrete algebra `R_n := ",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_bfb62bb9_34e4a38a",
+    "priority_score": 0.5736521220159152,
+    "research_mode": "team",
+    "source_exp_id": "bfb62bb9",
+    "status": "available",
+    "timestamp": "2026-06-16T10:49:09.086340+00:00",
+    "title": "Close Proofs: These conjectures extend `Catalog/Bridges/CodeThresholdValuation.lean`"
   },
   {
     "consumed_by_exp_id": "",
@@ -2308,21 +2352,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
   {
-    "consumed_by_exp_id": "3f78e0f7",
-    "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0009",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.493320+00:00",
-    "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
     "domains": [
@@ -2428,7 +2457,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7e82348b",
     "description": "The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci sequence governs the spiral arrangement of bulbs. Conjecture: The period of the bulb at angle p/q (in lowest terms) is exactly q. Moreover, the Lyapunov exponent lambda(c) at the center of the p/q bulb equals log(2) * cos(pi*p/q). The 'prime bulbs' \u2014 bulbs at angles 1/q where q is prime \u2014 have special symmetry: they are the only bulbs with dihedral symmetry D_q. The composite bulbs have more complex symmetry groups. The prime factorization of the period determines the bulb's topology: a bulb of period n = p1^a1 * ... * pk^ak is topologically a product of k bulbs of periods p1^a1, ..., pk^ak. Test: for each rational p/q with q <= 20, locate the corresponding bulb in M, compute its Lyapunov exponent, and verify lambda = log(2) * cos(pi*p/q). Classify bulbs by the prime factorization of their period and verify the product structure. Impact: the Mandelbrot set is a visual calculator for prime factorization \u2014 every bulb encodes number-theoretic information about its period.",
     "domains": [
       "Novelty",
@@ -2438,7 +2467,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.530929+00:00",
     "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
   },

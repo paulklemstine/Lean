@@ -229,6 +229,93 @@ def _extract_theorem_metadata(
         )
 
 
+def _reprocess_existing(
+    am: ArchiveManager,
+    telemetry: Telemetry,
+    extract_packages: bool = True,
+    extract_theorem_metadata: bool = True,
+    domain_filter: Optional[str] = None,
+) -> None:
+    """Re-extract packages and theorem metadata from already-archived projects."""
+    conn = am._connect()
+    rows = conn.execute(
+        "SELECT project_id FROM projects ORDER BY archived_at"
+    ).fetchall()
+    logging.info("[Backfill] Reprocessing %s existing projects", len(rows))
+
+    extractor = TheoremExtractor()
+    for row in rows:
+        project_id = row["project_id"]
+        project_t0 = time.time()
+
+        # Find output .lean and package files for this project
+        file_rows = conn.execute(
+            "SELECT pf.file_hash, pf.path_inside_archive, f.content_type "
+            "FROM project_files pf JOIN files f ON pf.file_hash = f.hash "
+            "WHERE pf.project_id=? AND pf.role='output'",
+            (project_id,),
+        ).fetchall()
+
+        if extract_packages:
+            package_found = False
+            for fr in file_rows:
+                path = fr["path_inside_archive"].lower()
+                if path == "package.json" or path.endswith(".package.json") or path.endswith("package.json"):
+                    data = am.read_file(fr["file_hash"])
+                    if not data:
+                        continue
+                    try:
+                        package_json = data.decode("utf-8", errors="ignore")
+                        json.loads(package_json)
+                        am.store_package(project_id, package_json)
+                        telemetry.packages_stored += 1
+                        package_found = True
+                        logging.info(
+                            "[Backfill]   %s re-stored package from %s",
+                            project_id[:8], fr["path_inside_archive"]
+                        )
+                        break
+                    except Exception as e:
+                        telemetry.add_error("reprocess_package", project_id, e)
+
+        if extract_theorem_metadata:
+            all_records: List[Dict] = []
+            for fr in file_rows:
+                if not fr["path_inside_archive"].endswith(".lean"):
+                    continue
+                data = am.read_file(fr["file_hash"])
+                if not data:
+                    continue
+                if domain_filter:
+                    domain = extractor._extract_domain_from_path(fr["path_inside_archive"])
+                    if domain != domain_filter:
+                        continue
+                records = extractor.extract_from_bytes(
+                    data,
+                    file_hash=fr["file_hash"],
+                    file_path=fr["path_inside_archive"],
+                    project_id=project_id,
+                )
+                all_records.extend(extractor.records_to_db_rows(records))
+            if all_records:
+                conn.executemany(
+                    "INSERT OR IGNORE INTO theorems "
+                    "(name, file_hash, project_id, domain, statement_text, full_statement, "
+                    "proof_text, docstring, line_number, file_path, theorem_type, declaration_kind, "
+                    "is_sorry, uses_sorry, is_complete, parameters, return_type, metadata_json) "
+                    "VALUES (:name, :file_hash, :project_id, :domain, :statement_text, :full_statement, "
+                    ":proof_text, :docstring, :line_number, :file_path, :theorem_type, :declaration_kind, "
+                    ":is_sorry, :uses_sorry, :is_complete, :parameters, :return_type, :metadata_json)",
+                    all_records,
+                )
+                conn.commit()
+                telemetry.theorem_metadata_extracted += len(all_records)
+                logging.info(
+                    "[Backfill]   %s re-extracted theorem metadata for %s theorems in %.2fs",
+                    project_id[:8], len(all_records), time.time() - project_t0
+                )
+
+
 async def backfill_from_api(
     am: ArchiveManager,
     max_pages: Optional[int],
@@ -539,6 +626,8 @@ def main():
                         help="Disable theorem metadata extraction")
     parser.add_argument("--reprocess-existing", action="store_true",
                         help="Re-scan already-archived projects for packages and theorem metadata")
+    parser.add_argument("--domain", default=None,
+                        help="When reprocessing, only process theorem metadata for this Catalog domain")
     args = parser.parse_args()
 
     log_path = Path(args.log) if args.log else None
@@ -555,9 +644,13 @@ def main():
 
     try:
         if args.reprocess_existing:
-            # TODO: implement reprocessing pass that scans archived manifests and
-            # extracts packages/theorem metadata without re-downloading.
-            logging.info("[Backfill] --reprocess-existing is not yet implemented; ignoring")
+            _reprocess_existing(
+                am,
+                telemetry,
+                extract_packages=args.extract_packages,
+                extract_theorem_metadata=args.extract_theorem_metadata,
+                domain_filter=args.domain,
+            )
         if args.from_local_projects:
             backfill_from_local_projects(
                 am, Path(args.projects_root), telemetry, args.summary_every,
