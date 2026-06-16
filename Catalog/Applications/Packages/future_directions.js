@@ -3,20 +3,6 @@
 // Future Research Directions (auto-generated from future_directions.json)
 window.FUTURE_DIRECTIONS = [
   {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 29017e68 (Q=0.786), which proved 28 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Narrow the bridge to a fully formalizable finite-combinatorial theorem package over `Fintype \u03b1`: define `IsRipsClique \u03b5 s` for `Finset \u03b1`, prove scale monotonicity, prove a clean finite extension lemma for distinct vertices under hypotheses `2 \u2264 m` and `m \u2264 Fintype.card \u03b1`, and then prove the sharp ",
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_29017e68_c527f0fe",
-    "priority_score": 0.8856,
-    "research_mode": "team",
-    "source_exp_id": "29017e68",
-    "status": "available",
-    "timestamp": "2026-06-16T04:49:38.551010+00:00",
-    "title": "Deepening: Follow-up conjectures arising from `Catalog/Bridges/RipsTropicalFunctor.lean`, w"
-  },
-  {
     "consumed_by_exp_id": "835afc43",
     "description": "Building on cycle 6ce4a7be (Q=0.763), which proved 39 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Complete the finite single-linkage construction in two staged files, avoiding brittle global minimization over `\u211d` until the finite combinatorial layer is proved. Formalize the symmetrized Rips graph `ripsGraphOf d \u03b5` on a finite type, define `ConnAt d \u03b5 x y` as graph reachability, prove monotonicit",
     "domains": [
@@ -29,21 +15,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-06-16T04:50:03.373186+00:00",
     "title": "Deepening: Metric filtration rank profiles as tropical valuation objects"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Monodromy Compression Principle for Neural PDE Solvers\n\nThis research cycle established the **Monodromy Compression Principle** in\n`Catalog/Physics/MonodromyCompression.lean`: the long-horizon amplification of a\nlinear neural PDE solver is compressed into a single monodromy (period-map)\noperator `M = \u220f T\u1d62`, whose gain is controlled multiplicatively (`\u2016M\u2016 \u2264 \u220f\u2016T\u1d62\u2016`),\nadditively (`log\u2016M\u2016 \u2264 \u03a3 log\u2016T\u1d62\u2016`, the Lyapunov form), and spectrally\n(`\u03c1(M) \u2264 \u2016M\u2016`, the Floquet-multiplier bound), yielding unconditional stability of\ncontractive solvers, an exponential horizon bound, and dissipativity (forgetting\nof initial data) under uniform contraction. The theory was instantiated on the\noperator algebra `E \u2192L[\ud835\udd5c] E` of a Banach field space, the genuine setting of a\nlinear neural solver.\n\nThe following conjectures are bold, precise, and testable in Lean for follow-up\ncycles. Each is stated so that it can be falsified by a single counterexample or\nproved by an explicit construction.\n\n## Conjecture 1 \u2014 Gelfand-sharp Lyapunov exponent (asymptotic compression is tight)\nFor a single repeated period operator `a` in a unital Banach algebra, the\nper-layer log-gain bound is asymptotically *tight*:\n`lim_{n\u2192\u221e} (1/n) log \u2016a\u207f\u2016 = log \u03c1(a)`,\ni.e. the finite-time Lyapunov exponent `monodromy_ftle` of a periodic solver\nconverges to the log spectral radius (the true Floquet exponent). This is the\noperator Gelfand formula; the conjecture is that it upgrades the one-sided\n`monodromy_ftle` inequality to an equality in the periodic limit. **Test:** prove\n`Tendsto (fun n => Real.log \u2016a^n\u2016 / n) atTop (\ud835\udcdd (Real.log (spectralRadius \u211d a).toReal))`\nunder suitable nonzero/spectral-radius-positive hypotheses, building on Mathlib's\n`spectrum.spectralRadius_le_pow_nnnorm_pow_one_div`.\n\n## Conjecture 2 \u2014 Sub-multiplicative defect controls non-normality (compression gap)\nDefine the *compression defect* `\u03b4(T) = (\u220f\u2016T\u1d62\u2016) \u2212 \u2016M\u2016 \u2265 0`. Conjecture: for\nself-adjoint / normal commuting layers the defect vanishes (`\u03b4 = 0`, the bound is\nan equality), and conversely a strictly positive defect certifies\nnon-commutativity / non-normality of the schedule. **Test:** prove\n`\u03b4(T) = 0` when all `T\u1d62` are scalar multiples of a fixed normal operator, and\nexhibit a 2\u00d72 nilpotent pair with `\u03b4 > 0`.\n\n## Conjecture 3 \u2014 Averaged-contraction stability (beyond layerwise contraction)\n`monodromy_stable` requires *every* layer to be a contraction. Conjecture the\nweaker hypothesis suffices in the periodic limit: if the *average* log-gain is\nnegative, `(1/k) \u03a3 log\u2016T\u1d62\u2016 < 0`, then the repeated-schedule monodromy decays,\n`\u2016M^n\u2016 \u2192 0`, even when some individual `\u2016T\u1d62\u2016 > 1`. **Test:** combine\n`monodromy_lyapunov` with `monodromy_dissipative` to prove decay of\n`\u2016monodromy (replicate n (join P))\u2016` whenever `(P.map (log \u2218 norm)).sum < 0`.\n\n## Conjecture 4 \u2014 Cocycle bridge to the smooth Lyapunov theory\nThe monodromy product is the operator-valued shadow of the derivative cocycle in\n`Catalog/Physics/LyapunovChaos.lean` (`deriv_iterate_eq_prod`). Conjecture an\nexact bridge: for a smooth map `f` the 1\u00d71 monodromy of the linearized layers\n`T\u1d62 = f'(x\u1d62)` reproduces the finite-time Lyapunov exponent `ftle f x n`, i.e.\n`monodromy_ftle` specializes to `ftle_ge_log`. **Test:** prove\n`Real.log \u2016monodromy (map (fun i => f' (f^[i] x)) (range n))\u2016 = Real.log |deriv f^[n] x|`\nand derive the chaos lower bound as a corollary of the compression principle.\n\n## Conjecture 5 \u2014 Trotter / spectral-gap accelerated compression\nFor dissipative parabolic solvers the decay rate should be governed by a spectral\n*gap*, not merely the norm: if `\u03c1(M) = r < 1` then `\u2016M^n\u2016 \u2264 C\u00b7r\u207f\u00b7poly(n)` with the\npolynomial degree bounded by the largest Jordan block of `M`. Conjecture this\nFloquet decay estimate holds with explicit constants, strengthening\n`monodromy_dissipative` (which uses `\u2016M\u2016 < 1`) to the strictly weaker\n`\u03c1(M) < 1`. **Test:** prove `Tendsto (fun n => \u2016a^n\u2016) atTop (\ud835\udcdd 0)` from\n`spectralRadius \u211d a < 1` for `a` in a finite-dimensional algebra, then quantify.\n",
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_1991",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "b3f0c15e",
-    "status": "available",
-    "timestamp": "2026-06-16T04:48:28.350546+00:00",
-    "title": "**Monodromy Compression Principle** in"
   },
   {
     "consumed_by_exp_id": "841c1580",
