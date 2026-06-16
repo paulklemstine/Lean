@@ -60,7 +60,6 @@ class ArchiveManager:
         self.manifests_dir.mkdir(parents=True, exist_ok=True)
 
         self._conn: Optional[sqlite3.Connection] = None
-        self._theorem_cache: set = set()
         self._init_db()
 
     def _connect(self) -> sqlite3.Connection:
@@ -225,42 +224,59 @@ class ArchiveManager:
     def file_exists(self, file_hash: str) -> bool:
         return self._blob_path(file_hash).exists()
 
-    def _scan_theorems(self, file_hash: str, content: str, domain: str) -> List[Dict]:
-        """Extract theorem/lemma/example declarations from Lean content."""
-        decl_pattern = re.compile(
-            r"^(?:theorem|lemma|nonrec theorem|protected theorem|private theorem|example)\s+(\w+)",
-            re.MULTILINE,
+    def _scan_theorems(
+        self,
+        file_hash: str,
+        content: str,
+        domain: str,
+        file_path: str = "",
+        project_id: str = "",
+    ) -> List[Dict]:
+        """Extract theorem/lemma/example declarations from Lean content.
+
+        Delegates to TheoremExtractor for rich metadata.
+        """
+        from theorem_extractor import TheoremExtractor
+        extractor = TheoremExtractor()
+        records = extractor.extract_from_text(
+            content,
+            file_hash=file_hash,
+            file_path=file_path,
+            project_id=project_id,
         )
-        theorems = []
-        for m in decl_pattern.finditer(content):
-            name = m.group(1)
-            key = (name, file_hash)
-            if key in self._theorem_cache:
-                continue
-            self._theorem_cache.add(key)
-            start = m.end()
-            statement = content[start : start + 200].strip()
-            is_sorry = "sorry" in statement.lower()
-            theorem_type = (
-                "example" if m.group(0).startswith("example")
-                else "lemma" if "lemma" in m.group(0).lower()
-                else "theorem"
-            )
-            theorems.append({
-                "name": name,
+        result = []
+        for r in records:
+            result.append({
+                "name": r.name,
                 "file_hash": file_hash,
+                "project_id": project_id,
                 "domain": domain,
-                "statement_text": statement[:200],
-                "theorem_type": theorem_type,
-                "is_sorry": is_sorry,
+                "statement_text": r.statement_text,
+                "full_statement": r.full_statement,
+                "proof_text": r.proof_text,
+                "docstring": r.docstring,
+                "line_number": r.line_number,
+                "file_path": file_path,
+                "theorem_type": r.declaration_kind,
+                "declaration_kind": r.declaration_kind,
+                "is_sorry": int(r.is_sorry),
+                "uses_sorry": int(r.uses_sorry),
+                "is_complete": int(r.is_complete),
+                "parameters": r.parameters,
+                "return_type": r.return_type,
+                "metadata_json": json.dumps(r.metadata_json, ensure_ascii=False),
             })
-        return theorems
+        return result
 
     def _extract_domain_from_path(self, rel_path: str) -> str:
-        """Infer catalog domain from a relative path like 'Catalog/Algebra/Foo.lean'."""
+        """Infer catalog domain from a relative path like 'Catalog/Algebra/Foo.lean'.
+
+        Handles temporary extraction prefixes such as 'abc123_aristotle/Catalog/...'.
+        """
         parts = Path(rel_path).parts
-        if len(parts) >= 2 and parts[0].lower() in ("catalog",):
-            return parts[1]
+        for i, part in enumerate(parts):
+            if part.lower() == "catalog" and i + 1 < len(parts):
+                return parts[i + 1]
         if parts:
             return parts[0]
         return "Unknown"
@@ -270,6 +286,7 @@ class ArchiveManager:
         directory: Path,
         role: str,
         skip_input_catalog_context: bool = True,
+        project_id: str = "",
     ) -> Tuple[List[Dict], Optional[str], Optional[str], List[Dict]]:
         """Archive all files in a directory tree.
 
@@ -335,7 +352,7 @@ class ArchiveManager:
                 except Exception:
                     text = ""
                 domain = self._extract_domain_from_path(rel_str)
-                theorems.extend(self._scan_theorems(file_hash, text, domain))
+                theorems.extend(self._scan_theorems(file_hash, text, domain, rel_str, project_id))
 
         return files, prompt_hash, main_lean_hash, theorems
 
@@ -359,10 +376,12 @@ class ArchiveManager:
             output_dir = self._extract_tar(output_archive_path)
 
         input_files, prompt_hash, main_lean_hash, input_theorems = self._archive_directory(
-            input_dir or Path("/nonexistent"), "input", skip_input_catalog_context=skip_input_catalog_context
+            input_dir or Path("/nonexistent"), "input",
+            skip_input_catalog_context=skip_input_catalog_context,
+            project_id=project_id,
         )
         output_files, _, _, output_theorems = self._archive_directory(
-            output_dir or Path("/nonexistent"), "output"
+            output_dir or Path("/nonexistent"), "output", project_id=project_id
         )
         all_theorems = input_theorems + output_theorems
 
@@ -435,8 +454,6 @@ class ArchiveManager:
 
         # Batch insert new theorems (deduped by unique(name, file_hash))
         if all_theorems:
-            for t in all_theorems:
-                t.setdefault("project_id", project_id)
             conn.executemany(
                 "INSERT OR IGNORE INTO theorems "
                 "(name, file_hash, project_id, domain, statement_text, full_statement, "

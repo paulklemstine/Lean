@@ -846,7 +846,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "48c069d0",
     "description": "The Riemann zeta function zeta(s) has non-trivial zeros at s = 1/2 + i*gamma_n on the critical line (assuming RH). These zeros encode deep arithmetic information. Conjecture: the zeros gamma_n are the spectrum of a self-adjoint operator on a Hilbert space, and this operator is the Casimir element of a quantum group G_q. Specifically, define the 'zeta quantum group' G_q as the q-deformation of SU(2) where q = e^{2*pi*i*gamma_1} (using the first zero gamma_1 ~ 14.13). The Casimir element C_q of G_q has eigenvalues that are quadratic functions of the representation labels, and the spectrum of C_q is {n(n+1) : n in N}. Conjecture: the Riemann zeros gamma_n are related to the spectrum of C_q by gamma_n = f(spectrum(C_q)) for some function f. If f is linear, this would mean the zeros are evenly spaced, which is false (the zeros have Poisson-like spacings). If f is logarithmic, gamma_n ~ pi*n/log(n) which matches the average spacing. Conjecture: the spectral statistics of C_q match the GUE random matrix statistics of the Riemann zeros (Montgomery's pair correlation conjecture). Test: compute the spectrum of C_q for G_q with q = e^{2*pi*i*gamma_1} and compare the spectral statistics with the Riemann zeros. Impact: the Riemann hypothesis is a representation-theoretic statement about quantum groups.",
     "domain_bridges": [],
     "domains": [
@@ -859,7 +859,7 @@
     "proof_strategy": "Define the quantum group SU_q(2) with q = e^{2*pi*i*gamma_1} where gamma_1 ~ 14.13 is the first Riemann zero. The representation theory: irreducible representations V_n of dimension n+1 for n = 0, 1, 2, .... The Casimir element C_q acts on V_n with eigenvalue [n]_q * [n+1]_q where [m]_q = (q^m - q^{-m})/(q - q^{-1}) is the q-integer. For q = e^{2*pi*i*gamma_1}: [m]_q = sin(m * pi * gamma_1) / sin(pi * gamma_1). The eigenvalues of C_q on V_n are: lambda_n = [n]_q * [n+1]_q = sin(n*pi*gamma_1) * sin((n+1)*pi*gamma_1) / sin(pi*gamma_1)^2. Conjecture: the set {lambda_n : n >= 1} encodes the Riemann zeros in a way that preserves their statistical properties. Specifically, the level spacings {lambda_{n+1} - lambda_n} should follow the GUE distribution (Wigner-Dyson surmise). Test: compute lambda_n for n = 1..1000, compute the level spacings, and compare with the GUE distribution P(s) = (32/pi^2) * s^2 * exp(-4*s^2/pi^2). Also compare with the Riemann zero spacings. This requires numerical computation of q-deformed representations.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.711975+00:00",
     "title": "Quantum Groups from Number Theory: The Riemann Hypothesis as a Representation Problem"
   },
@@ -1592,6 +1592,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS — Tropicalized binary weight enumerator profiles\n\nFollow-up conjectures for the `SmoothPoincare` tropical-code thread. Each builds on the\nverified results in `TropicalWeightEnumerator.lean` (cycles 1–2: `twe`, `twePlus`,\nadditivity, `minDist` min-law, Hamming closed forms) and `TropicalProfile.lean`\n(cycles 3–4: the covering-radius collapse `twe = min(0, maxWt·t)`, the recovery theorem\n`twe (C.erase 0) = minDist·t`, the universal self-duality `twe+twePlus = n·t` for\nself-complementary codes). All conjectures are stated to be falsifiable by either a\n`native_decide` computation on a concrete code or a general `le_antisymm`-style proof.\n\n---\n\n## Conjecture 1 (Replication power law) — *strong, likely provable*\n\nLet `C^{⊕k}` denote the `k`-fold direct sum (coordinate concatenation) of a code\n`C ⊆ (ZMod 2)ⁿ`, a code of length `k·n`. Then for every `k` and every real `t`,\n```\ntwe (C^{⊕k}) t = k · twe C t,     twePlus (C^{⊕k}) t = k · twePlus C t,\nmaxWt (C^{⊕k}) = k · maxWt C,     minDist (C^{⊕k}) = minDist C.\n```\n*Basis*: proved for `k = 2` on Hamming (`hamming16_twe`, `hamming16_minDist`) and the\nsingle-step laws `twe_append`, `twePlus_append`, `maxWt_append`, `minDist_append`.\n*Test*: induction on `k` using the cycle-3 append laws; the only obstacle is the `Fin`\nre-association `Fin ((k·n)+n) ≃ Fin (k·n + n)`, soluble with `Fin.append` /\n`finCongr`. Falsifiable: any failure of `maxWt (C^{⊕k}) = k·maxWt C` on a small code.\n\n## Conjecture 2 (Tropical profile rigidity / inverse problem) — *bold*\n\nTwo codes `C, D` both containing `0` have *identical full-code tropical profiles*\n(`twe C = twe D` and `twePlus C = twePlus D` as functions of `t`) **iff**\n`maxWt C = maxWt D`. Consequently the pair `(twe, twePlus)` on the *full* code is a\ncomplete invariant of the single number `maxWt`, and is *blind* to everything else\n(length, dimension, minimum distance, the entire interior weight spectrum).\n*Basis*: the collapse theorems `twe_eq_min_zero_maxWt`, `twePlus_eq_max_zero_maxWt`\nmake this immediate in one direction; the converse is `min(0,at)=min(0,bt) ∀t ⟹ a=b`.\n*Test*: a short real-analysis lemma (evaluate at `t = -1`). Falsifiable by exhibiting\ntwo `0`-containing codes with equal `maxWt` but different `twe` — the conjecture\npredicts this is impossible.\n\n## Conjecture 3 (Punctured profile reconstructs the convex hull) — *bold, central*\n\nFor a code `C` containing `0`, define the **doubly-punctured** enumerator on\n`C.erase 0 \\ {maxWt-attaining words}`. Iterating the puncture-and-recover operation of\n`twe_erase_eq_minDist_mul` peels off the weight spectrum from both ends, and the full\nordered sequence of distinct slopes obtained equals exactly the **vertices of the lower\nconvex hull** of the weight-multiset `{wt c : c ∈ C}`. Equivalently: the tropical\nenumerator family `{ twe(C minus its current extreme words) }` is a complete encoding of\nthe Newton polygon of the weight spectrum.\n*Basis*: cycle-2 \"information loss\" insight + `twe_erase_eq_minDist_mul` (the `minDist`\nslope) + the `maxWt` slope. *Test*: define `slopes C := image wt C` and prove the\nrecovered slopes are precisely its convex-hull vertices; verify on Hamming that the\nrecovered slopes are `{0,4,8}` with hull `{0,8}` and the punctured slope `4`.\nFalsifiable on any code whose interior weight is a hull vertex.\n\n## Conjecture 4 (Tropical Singleton / Gleason envelope) — *speculative, high-value*\n\nFor every binary doubly-even self-dual code of length `n` (length `8 ∣ n` by\n`GleasonLength.doublyEven_selfDual_length_div_eight`), the tropical \"gap\" between the\ncovering radius and packing radius obeys\n```\nmaxWt C + minDist C ≤ n + 4,\n```\nwith equality for the extended Hamming `[8,4,4]` code (`8 + 4 = 8 + 4`). More boldly,\n`minDist C ≤ 4·⌊n/24⌋ + 4` (the tropical shadow of the Mallows–Sloane bound), and the\nextremal codes are exactly those whose tropical profile pair `(twe, twe∘erase)` has\nslope set `{0, 4·⌊n/24⌋+4, n}`.\n*Basis*: Hamming endpoints `maxWt = 8`, `minDist = 4`, `n = 8`; `selfDual_even_weight`\nforces even weights. *Test*: prove the additive bound from `wt_add_overlap` and\nself-orthogonality; check `native_decide` on the `[24,12,8]` Golay code if encodable.\nFalsifiable by any doubly-even self-dual code violating `maxWt + minDist ≤ n + 4`.\n\n## Conjecture 5 (Tropical MacWilliams duality) — *speculative, deepest*\n\nDefine the **dual-code tropical enumerator** `twe (C⊥) t`. Conjecture a tropical\nMacWilliams relation: for every linear code `C ⊆ (ZMod 2)ⁿ` and every `t ≤ 0`,\n```\ntwe (C⊥) t = (n · t) − maxWt C · t  =  (n − maxWt C) · t,\n```\ni.e. the covering radius of `C` controls the minimum distance of `C⊥` through\n`minDist(C⊥) = n − maxWt C` whenever `0 ∈ C` (a tropicalized \"dual distance =\nco-covering radius\"). For self-dual `C` this degenerates to the fixed point\n`maxWt C = n − minDist(C)`, predicting `maxWt hamming = 8 − 4 = 4`? — **NB this last\nnumerical check fails for Hamming (`maxWt = 8 ≠ 4`), so the precise constant is part of\nwhat must be discovered**; the robust, testable core is the *linear-in-`t`* form of\n`twe(C⊥)` for `t ≤ 0` and its dependence only on a single dual invariant.\n*Basis*: classical MacWilliams `W_{C⊥} = |C|⁻¹ W_C(x+y, x−y)`, whose tropicalization\nturns the Hadamard transform into an inf-convolution. *Test*: formalize the tropical\n(inf-plus) MacWilliams transform and verify additivity under direct sum mirrors\n`twe_append`. Falsifiable: compute `twe(hamming⊥) = twe(hamming)` (self-dual) and check\nagainst the conjectured linear form.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2008",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2ec4044e",
+    "status": "available",
+    "timestamp": "2026-06-16T11:24:51.896540+00:00",
+    "title": "Follow-up conjectures for the `SmoothPoincare` tropical-code thread. Each builds"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Rips ↔ Tropical Valuation Bridge (cycle output)\n\nThis cycle built and verified the missing **anchor** of the program:\n\n* `Catalog/Geometry/RipsTropicalCompletion.lean` — `tropBirthSum`, the exact completion\n  threshold `ripsGraph α ε = ⊤ ↔ tropBirthSum α ≤ ε`, minimality (`IsLeast`), the literal\n  `Tropical ℝᵒᵈ` functional with additivity over unions, and functoriality along\n  nonexpanding surjections / isometric embeddings.\n* `Catalog/Geometry/RipsTropicalStability.lean` — sharp 1-Lipschitz stability of the\n  threshold under metric perturbation, with an explicit tightness witness.\n* `Catalog/Geometry/RipsCliqueCompletion.lean` — the *higher-dimensional* completion\n  threshold: the full Vietoris–Rips complex becomes the full simplex at exactly\n  `tropBirthSum α` (`cliqueComplex G = fullComplex ↔ G = ⊤`), plus the per-face birth\n  criterion.\n\nThe conjectures below are derived from this cycle's findings (Stage 3 / Stage 4 notes in\neach file) and are bold and falsifiable.\n\n## Conjecture 1 — The whole persistence barcode is a multiset of max-plus face folds\n\nFor a finite metric space, the death scale of *every* face of the Vietoris–Rips complex is\nthe internal max-plus birth fold `faceBirth s = sup_{x≠y∈s} dist x y`, and the full\n`k`-skeleton completes at `max` of these over all `(k+1)`-subsets. **Conjecture:** the entire\nmultidimensional `f`-vector profile `ε ↦ (f_0, f_1, …)` is reconstructible from the multiset\n`{faceBirth s}` alone.\n\n* **The key insight is** that `mem_vietorisRips_dist_iff` already proves each face is born\n  exactly at its internal max-plus fold, so the barcode is a bookkeeping of these folds\n  rather than new homological data.\n* **Why now?** The face criterion and `cliqueComplex_eq_full_iff` are formalized this cycle,\n  so the per-face fold is available; only the indexing over `powersetCard` (already used in\n  `CliqueComplexFlag.fVector`) remains.\n\n## Conjecture 2 — `tropBirthSum` is a semiring homomorphism, not just a monoid map\n\nThe additivity `tropBirthSumT_union` makes the fold a max-plus *additive* map. **Conjecture:**\nextending the source to the face semiring (union = ⊕, concatenation of vertex sets = ⊗)\nturns `tropBirthSumT` into a genuine `Tropical ℝᵒᵈ`-semiring homomorphism, so every\ncompletion corollary upgrades to a homomorphism statement.\n\n* **The key insight is** that `trop_toDual_max` realizes `max` as literal tropical `+`, so\n  the only missing piece is a multiplicative law identifying simplex *joins* with tropical\n  product.\n* **Why now?** Mathlib's `Tropical` and the project's min-plus algebra are verified, and\n  `tropBirthSumT` is already a definitional bridge (`untrop_tropBirthSumT`), so the algebraic\n  upgrade is structural.\n\n## Conjecture 3 — Threshold stability implies bottleneck stability of completion modules\n\nThe sharp bound `tropBirthSumOf_stability` says the threshold is 1-Lipschitz in the\nsup-distance of metrics. **Conjecture:** the persistence module \"is the 1-skeleton complete?\"\nhas bottleneck distance `≤ δ` whenever the metrics are within `δ`, i.e. the completion\nfeature is bottleneck-stable with the *same* constant.\n\n* **The key insight is** that a single-feature module is determined by one threshold, so its\n  bottleneck distance collapses to `|tropBirthSum d − tropBirthSum d'|`, which is `≤ δ` and\n  tight by `tropBirthSumOf_stability_tight`.\n* **Why now?** `InterleavingMetric`, `BottleneckStability`, and `PersistenceStability` are\n  already in the Boltzmann-bridge arc, so the Lipschitz bound plugs into existing vocabulary.\n\n## Conjecture 4 — The completion region is an up-set in the multiparameter poset\n\nFor a multiparameter Rips filtration indexed by `(density, distance)`, define the joint\ncompletion threshold by folding `tropBirthSum` over the parameter poset. **Conjecture:** the\nset of parameters at which the complex is complete is a monotone up-set, and `tropBirthSum`\nis the unique minimal corner along each axis.\n\n* **The key insight is** that `tropBirthSum_le_of_nonexpanding_surjective` and\n  `tropBirthSum_le_of_isometry` already make the threshold monotone/functorial in exactly\n  the directions a parameter increase moves it.\n* **Why now?** Both the functorial edge-count API (`RipsFunctorialEdgeCount`) and the\n  single-parameter threshold are formalized, so the multiparameter statement is an indexing\n  of existing folds.\n\n## Conjecture 5 — A kernel-checked `O(n²)` completion certifier over ℚ\n\n**Conjecture:** over `ℚ`-valued dissimilarities, `tropBirthSum` is a computable single\n`Finset.sup'` fold, and a decision procedure \"is `ripsGraph` complete at scale `ε`?\" can be\nimplemented with a `@[csimp]`-justified efficient fold whose correctness is exactly\n`ripsGraph_eq_top_iff_tropBirthSum_le`.\n\n* **The key insight is** that the whole pipeline is one `O(n²)` tropical fold followed by a\n  single comparison, and the correctness lemma is already proved (no `sorry`).\n* **Why now?** The decision content is isolated into the threshold equivalence this cycle, so\n  only making the `ℚ`-fold computable and wrapping it remains.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_2009",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ce2d79fb",
+    "status": "available",
+    "timestamp": "2026-06-16T11:25:44.116780+00:00",
+    "title": "And verified the missing **anchor** of the program:"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -1825,6 +1865,25 @@
     "status": "available",
     "timestamp": "2026-06-03T19:55:26.751445+00:00",
     "title": "EML Quantum Activation Functions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle 2ec4044e (Q=0.553) proved 7 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Restrict the project to a single self-contained formalization file that completes the finite counting toolkit for binary codes as `Finset (Fin n → ZMod 2)` and stops before any ambitious convolution t",
+    "domain_bridges": [],
+    "domains": [
+      "Applications"
+    ],
+    "id": "sorry_fill_2ec4044e_10d6041b",
+    "lineage_refs": [],
+    "priority_score": 0.6027085714285716,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2ec4044e",
+    "status": "available",
+    "timestamp": "2026-06-16T11:25:17.680039+00:00",
+    "title": "Close Proofs: Tropicalized binary weight enumerator profile from Smooth Poincaré cod"
   },
   {
     "ambition_level": "extension",
@@ -3286,26 +3345,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "7e82348b",
-    "description": "The Mandelbrot set M is defined by z_{n+1} = z_n^2 + c, and the boundary of M is the locus of c values where the orbit of 0 is bounded but barely so. Each bulb of M corresponds to a rational number p/q (the period-q bulb at angle p/q). The size of the p/q bulb decreases with q, and the Fibonacci sequence governs the spiral arrangement of bulbs. Conjecture: The period of the bulb at angle p/q (in lowest terms) is exactly q. Moreover, the Lyapunov exponent lambda(c) at the center of the p/q bulb equals log(2) * cos(pi*p/q). The 'prime bulbs' — bulbs at angles 1/q where q is prime — have special symmetry: they are the only bulbs with dihedral symmetry D_q. The composite bulbs have more complex symmetry groups. The prime factorization of the period determines the bulb's topology: a bulb of period n = p1^a1 * ... * pk^ak is topologically a product of k bulbs of periods p1^a1, ..., pk^ak. Test: for each rational p/q with q <= 20, locate the corresponding bulb in M, compute its Lyapunov exponent, and verify lambda = log(2) * cos(pi*p/q). Classify bulbs by the prime factorization of their period and verify the product structure. Impact: the Mandelbrot set is a visual calculator for prime factorization — every bulb encodes number-theoretic information about its period.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0032",
-    "lineage_refs": [],
-    "priority_score": 0.05,
-    "proof_strategy": "State the bulb-period correspondence: the bulb at angle p/q in the Mandelbrot set has period q. This follows from the Douady-Hubbard landing theorem. Conjecture the Lyapunov formula: lambda(center of p/q bulb) = log(2) * cos(pi*p/q). Prove for the main cardioid (period 1): lambda = log(2) * cos(0) = log(2). Prove for the period-2 bulb: lambda = log(2) * cos(pi/2) = 0 (parabolic). Prove for period-q bulbs: the critical orbit has period q, and the multiplier of the q-cycle equals e^{2*pi*i*p/q} at the center, so the Lyapunov exponent is log|multiplier| = log(2) * cos(2*pi*p/q). Wait, the multiplier at the center of the p/q bulb is e^{2*pi*i*p/q}, so |multiplier| = 1 and lambda = 0. The Lyapunov exponent is NOT log(2)*cos(pi*p/q) at the center. Correct: on the boundary of the p/q bulb, lambda = 0 (parabolic), and lambda increases as you move away. Test: compute lambda numerically along rays from bulb centers.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.530929+00:00",
-    "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s) where f is a degree-3 polynomial (since the rule depends on 3 cells). Conjecture: The algebraic variety V(f) = {s : f(s) = s} (fixed points of the ECA) has dimension equal to the 'complexity class' of the rule. For simple rules (e.g., Rule 0, which is all zeros), V(f) has dimension 0 (a single point). For complex rules (e.g., Rule 110), V(f) has maximal dimension. The Grothendieck-style approach: each ECA defines a sheaf on the state space, and the global sections of this sheaf classify the possible stable configurations. Rule 110's sheaf has the richest section structure, corresponding to its Turing-completeness. Test: compute dim(V(f)) for all 256 ECAs and verify that the dimension correlates with Wolfram's complexity classification (Class 1: dim=0, Class 2: dim<=n/2, Class 3: dim>=n/2, Class 4: dim=n). Impact: cellular automata are algebraic varieties, and their complexity is the dimension of their fixed-point variety.",
     "domain_bridges": [],
@@ -3402,26 +3441,6 @@
     "status": "available",
     "timestamp": "2026-06-01T12:30:30.581649+00:00",
     "title": "The Aperiodic Monotile: One Shape to Tile Them All"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "6fe73404",
-    "description": "Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a circular argument (which is not a valid proof). Conjecture: The DAG of all mathematical proofs has a scale-free structure: the in-degree distribution follows a power law P(k) ~ k^{-gamma} with gamma ≈ 2.5. This means most theorems are proved from a small number of foundational results (the 'hubs'), and there are exponentially many theorems that depend on these hubs. The top 10 hub theorems in mathematics are: (1) Zorn's Lemma, (2) The Intermediate Value Theorem, (3) The Fundamental Theorem of Calculus, (4) The Sylow Theorems, (5) The Baire Category Theorem, (6) Hahn-Banach Theorem, (7) Urysohn's Lemma, (8) The Pigeonhole Principle, (9) Induction, (10) The Law of Excluded Middle. Conjecture: removing any of the top 10 hubs disconnects the proof DAG into at least 2 large components, each containing more than 10% of all theorems. This means mathematics is fragile: removing one foundational theorem makes many other theorems unprovable. Test: construct the proof DAG from Lean 4's Mathlib (all proofs and their dependencies), compute the in-degree distribution, and verify the power law. Impact: mathematics is a scale-free network, and its most important theorems are its most connected nodes — the hubs that hold the entire structure together.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0049",
-    "lineage_refs": [],
-    "priority_score": 0.05,
-    "proof_strategy": "Construct the proof DAG: nodes = theorems in Mathlib, edges = (A, B) if theorem A is used in the proof of theorem B. Compute in-degree distribution P(k) = #{theorems with k dependents}/N. Fit power law P(k) ~ k^{-gamma} using maximum likelihood estimation (Clauset-Shalizi-Newman method). Compute hub scores: theorems with highest in-degree are the hubs. Identify the top 10 hubs by in-degree. Test robustness: for each of the top 10 hubs, remove the hub and all its outgoing edges, and compute the size of the largest connected component. If the DAG is scale-free with gamma ≈ 2.5, removing a hub should fragment the DAG into components of size proportional to N^{1/(gamma-1)}. Compute: for gamma = 2.5, component sizes after hub removal are ~ N^{0.67} ≈ N^{2/3}. Test: build the DAG from Mathlib's dependency graph and verify.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.585396+00:00",
-    "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },
   {
     "ambition_level": "extension",
@@ -3566,7 +3585,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f2e9c0c4",
     "description": "A cellular automaton (CA) rule f: A^Z -> A^Z is a function from configurations to configurations. The CA is reversible if f is bijective. By Hedlund's theorem, a CA is reversible iff its local rule is a permutation. But which CA rules have reversible dynamics? Conjecture: the set of reversible CA rules of radius r on alphabet A is a group under composition, isomorphic to a subgroup of S_{|A|^{2r+1}}. Specifically, the reversibility group G(r, A) is the subgroup of S_{|A|^{2r+1}} generated by the local rules of all reversible CAs of radius r. Conjecture: for binary CAs (A = {0, 1}) with radius r, G(r, {0, 1}) = S_{2^{2r+1}} for r >= 2. This means that any permutation of the 2^{2r+1} possible local neighborhoods can be achieved by composing reversible CA rules. For r = 1 (elementary CAs), G(1, {0, 1}) is a proper subgroup of S_8, and its structure is related to the 256 elementary CA rules. Conjecture: G(1, {0, 1}) has order 8! / 4 = 10080, consisting of the permutations that commute with the shift operator. Test: enumerate all 256 elementary CA rules, identify the reversible ones (Rule 15, 51, 85, 170, 204, 240), compute the group generated by their local rules, and verify the structure. Impact: reversible CAs form a group whose structure determines the landscape of reversible computation.",
     "domain_bridges": [],
     "domains": [
@@ -3579,7 +3598,7 @@
     "proof_strategy": "Define a CA rule f of radius r as f: {0,1}^{2r+1} -> {0,1}. The Wolfram number of f is N = sum_{x=0}^{2^{2r+1}-1} f(x) * 2^x. A CA is reversible iff its global function F: {0,1}^Z -> {0,1}^Z is bijective. Hedlund's theorem: F is bijective iff the local rule is a permutation of neighborhoods that preserves the shift. For r=1: there are 2^8 = 256 rules. The reversible ones are: Rule 15, 51, 85, 170, 204, 240 (6 rules). Their local rules as permutations: Rule 170 = left shift (identity on neighborhoods), Rule 15 = NOT(left shift), Rule 51 = complement, Rule 85 = NOT(right shift), Rule 204 = identity (trivial), Rule 240 = right shift. These generate a subgroup of S_8. Conjecture: this subgroup is isomorphic to S_4 (the symmetry group of the square) acting on the 4 non-trivial neighborhoods. For r >= 2: G(r, {0,1}) is conjectured to be S_{2^{2r+1}}, meaning any permutation of neighborhoods is achievable by composing reversible CA rules. Test: compute the group generated by the reversible elementary CA rules using GAP or similar, verify the structure.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.686157+00:00",
     "title": "Galois Theory of Cellular Automata: Which Rules Have Reversible Dynamics?"
   },

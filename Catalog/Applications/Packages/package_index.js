@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "ce2d79fb",
     "filename": "these_directions_continue_the_vietorisrips__tropic.json",
     "pkg_num": 169,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.46699999999999997,
     "title": "The Vietoris\u2013Rips Completion Threshold and its Tropical Reading"
   },
   {
@@ -5220,8 +5220,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "these_directions_continue_the_vietorisrips__tropic",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.46699999999999997,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "The Vietoris\u2013Rips Completion Threshold and its Tropical Reading"
     }

@@ -54,10 +54,14 @@ class TheoremExtractor:
         self.catalog_root = catalog_root
 
     def _extract_domain_from_path(self, rel_path: str) -> str:
-        """Infer catalog domain from a relative path like 'Catalog/Algebra/Foo.lean'."""
+        """Infer catalog domain from a relative path like 'Catalog/Algebra/Foo.lean'.
+
+        Handles temporary extraction prefixes such as 'abc123_aristotle/Catalog/...'.
+        """
         parts = Path(rel_path).parts
-        if len(parts) >= 2 and parts[0].lower() in ("catalog",):
-            return parts[1]
+        for i, part in enumerate(parts):
+            if part.lower() == "catalog" and i + 1 < len(parts):
+                return parts[i + 1]
         if parts:
             return parts[0]
         return "Unknown"

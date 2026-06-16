@@ -191,6 +191,7 @@ def _extract_theorem_metadata(
     telemetry: Telemetry,
 ) -> None:
     """Scan all .lean files in extracted dirs and store rich theorem metadata."""
+    import gc
     extractor = TheoremExtractor()
     all_records: List[Dict] = []
     for directory in (input_dir, output_dir):
@@ -227,6 +228,8 @@ def _extract_theorem_metadata(
             "[Backfill]   %s extracted theorem metadata for %s theorems",
             project_id[:8], len(all_records)
         )
+        del all_records
+        gc.collect()
 
 
 def _reprocess_existing(
@@ -237,6 +240,7 @@ def _reprocess_existing(
     domain_filter: Optional[str] = None,
 ) -> None:
     """Re-extract packages and theorem metadata from already-archived projects."""
+    import gc
     conn = am._connect()
     rows = conn.execute(
         "SELECT project_id FROM projects ORDER BY archived_at"
@@ -244,9 +248,14 @@ def _reprocess_existing(
     logging.info("[Backfill] Reprocessing %s existing projects", len(rows))
 
     extractor = TheoremExtractor()
-    for row in rows:
+    for idx, row in enumerate(rows, 1):
         project_id = row["project_id"]
         project_t0 = time.time()
+        if idx % 50 == 0:
+            gc.collect()
+            mem = _mem_mb()
+            if mem:
+                logging.info("[Backfill] Reprocessed %s/%s projects, mem=%sMB", idx, len(rows), mem)
 
         # Find output .lean and package files for this project
         file_rows = conn.execute(
