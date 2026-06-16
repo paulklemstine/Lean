@@ -1218,6 +1218,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Metric Filtration Rank Profiles as Tropical Valuation Objects\n\nDerived from the research cycle in\n`Catalog/Tropical/MetricFiltrationRankProfiles.lean` (foundation: `transEndo`,\n`rankEndo`, `rankIv`, the tropical sandwich `rankEndo_submult` /\n`rankEndo_sylvester`, `rankIv_mono_restrict`, `rankEndo_eventually_const`,\n`trop_rankEndo_submult`) and\n`Catalog/Tropical/MetricFiltrationRankProfilesFutureDirections.lean`\n(`finrank_diamond`, `rankIv_diamond`, `persistentRank_mono`,\n`persistentRank_ultrametric`, `rankEndo_submult_eq_of_inf_bot`,\n`finrank_range_stability`, `rankEndo_single_step_stability`).\n\nEach conjecture below is falsifiable and stated so it can be turned directly into\na Lean `theorem ... := by sorry` skeleton.\n\n---\n\n## D1 \u2014 M\u00f6bius inversion: the rank invariant is the cumulative transform of a nonnegative barcode\n\n**Conjecture.** Extend the rank invariant past the diagonal by the *bar-count*\nconvention `rkBar T i j = finrank (something counting bars with birth \u2264 i, death \u2265 j)`\n(which is **not** `0` for `i > j`). Then the box `mult T i j = rkBar(i,j) \u2212\nrkBar(i\u22121,j) \u2212 rkBar(i,j+1) + rkBar(i\u22121,j+1)` is `\u2265 0` for *all* `i, j`, and\n`rkBar` is recovered as the cumulative sum of `mult` over the interval poset\n(M\u00f6bius inversion). Equivalently, a pointwise-finite persistence module has a\nwell-defined barcode multiplicity function.\n\n**The key insight is** that our proved interior diamond `rankIv_diamond` already\nsupplies the supermodularity `rkBar(i,j) + rkBar(i\u22121,j+1) \u2265 rkBar(i\u22121,j) +\nrkBar(i,j+1)`; the *only* obstruction we found was the boundary, where the naive\n`rankIv = 0 for i > j` convention is wrong because the genuine invariant counts\nbars and stays positive across the diagonal.\n\n**Why now?** We have a clean, axiom-light proof of the interior diamond via\ntwo-term rank-nullity (`finrank_map_add_finrank_inf_ker`); the remaining work is\npurely the boundary bookkeeping of M\u00f6bius inversion on `\u2115 \u00d7 \u2115`, which Mathlib's\n`incidenceAlgebra` / `Finset` machinery now supports.\n\n---\n\n## D2 \u2014 The full equality locus of min-plus submultiplicativity (C4 iff)\n\n**Conjecture.** The tropical lax morphism `trop_rankEndo_submult` is a genuine\nsemiring homomorphism on the block `[i, i+k+l]`, i.e.\n`rankEndo T i (k+l) = min (rankEndo T i k) (rankEndo T (i+k) l)`, **iff** no rank\nis lost in the interior \u2014 precisely\n`ker (transEndo T (i+k) l) \u2293 range (transEndo T i k) = \u22a5`\non the side that realizes the minimum \u2014 and this locus is in bijection with the\nset of barcode death-times inside `[i, i+k+l]`.\n\n**The key insight is** that `rankEndo_submult_eq_of_inf_bot` already proves the\n*sufficient* direction (`\u22a5` intersection \u27f9 equality on the left endpoint); the\nconverse and the combinatorial identification with death-times is what upgrades\n\"lax\" to \"exact.\"\n\n**Why now?** The sufficient direction is done and isolates the exact submodule\n`ker \u2293 range` whose vanishing controls equality; turning it into an iff only\nrequires the rank-nullity identity in the non-vanishing case, already packaged in\n`finrank_map_add_finrank_inf_ker`.\n\n---\n\n## D3 \u2014 The rank profile is 1-Lipschitz in the tropical sup-metric (sharp C5)\n\n**Conjecture.** Equip rank profiles with the tropical (min-plus) sup-metric\n`d(R, R') = \u2a06 i k, |R i k \u2212 R' i k|`. Then `T \u21a6 rankEndo_T` is **1-Lipschitz with\nrespect to the number of step indices where `T` and `T'` differ**, measured by\n`\u2211 rank(T m \u2212 T' m)`: `d(rankEndo_T, rankEndo_T') \u2264 \u2211_m finrank (range (T m \u2212 T' m))`.\n\n**The key insight is** that the correct local modulus is `rank(T m \u2212 T' m)` and\n*not* `|rank(T m) \u2212 rank(T' m)|`: we proved (`finrank_range_stability`,\n`rankEndo_single_step_stability`) that a single altered step moves the profile by\nat most `rank(T m \u2212 T' m)`, and explicitly identified the literal \"\u00b11\" conjecture\nas **false** because two maps of nearby rank can differ arbitrarily as maps.\n\n**Why now?** The single-step bound is a theorem; the multi-step bound is a finite\ntelescoping of single-step changes (replace differing steps one at a time), and\nthe tropical sup-metric is just `\u2a06` of the per-`(i,k)` bound.\n\n---\n\n## D4 \u2014 Dependent-family lift to genuine persistence modules (C1)\n\n**Conjecture.** Replace the single ambient space `V` by a family `X : \u2115 \u2192 Type`\nwith step maps `step i : X i \u2192\u2097[K] X (i+1)`. With transitions built by\n`Nat.add`-recursion and codomain transport `Nat.add_assoc \u25b8 \u00b7`, all of\n`rankEndo_submult`, `rankEndo_sylvester` (with `finrank V` replaced by the\n*intermediate* `finrank (X (i+k))`), `rankIv_mono_restrict`, and `finrank_diamond`\nhold verbatim.\n\n**The key insight is** that every proof in the current development factors\nthrough three space-agnostic facts \u2014 `LinearMap.range_comp`, the restricted\nrank-nullity `finrank_map_add_finrank_inf_ker`, and `range_comp_le_range` \u2014 none\nof which uses that domain and codomain coincide; only the Sylvester `dim V` term\nreferences the ambient space, and it should become the intermediate dimension.\n\n**Why now?** Our single-space proofs are deliberately written through\n`transEndo_comp` and a single rank-nullity helper, so the dependent lift is a\ntransport exercise rather than a re-derivation; Lean's `\u25b8`/`Eq.mpr` plus\n`finrank`-invariance under `LinearEquiv` makes the bookkeeping tractable.\n\n---\n\n## D5 \u2014 Stabilization threshold = top barcode death-time (idempotency, C3)\n\n**Conjecture.** The least threshold `N(i)` from `rankEndo_eventually_const`\n(after which `rankEndo T i k = persistentRank T i`) equals the largest death-time\nof a bar born at or before `i`; and the two-variable persistent rank\n`R\u221e T i j = \u2a05 m, rankIv T i (j+m)` collapses to `persistentRank T i` for every\n`j \u2265 i`, making `R\u221e` a genuine ultrametric valuation with equality\n`R\u221e i k = min (R\u221e i j) (R\u221e j k)` exactly when `j \u2265 N(i)`.\n\n**The key insight is** that `persistentRank_mono` shows the stable rank is\nmonotone in the *starting* level, so `R\u221e` depends only on the source `i` \u2014 the\n\"min-plus idempotency\" is then the statement that the antitone profile has flat\ntail past `N(i)`, already witnessed by `rankEndo_eventually_const`.\n\n**Why now?** Both ingredients (`persistentRank_mono`, eventual constancy) are\nproved; pinning `N(i)` to a death-time only needs D1's barcode, closing the loop\nbetween the tropical (valuation) and combinatorial (barcode) pictures.\n",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_2010",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "a0dd96a5",
+    "status": "available",
+    "timestamp": "2026-06-16T12:52:38.049970+00:00",
+    "title": "Derived from the research cycle in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Computational Complexity as a Physical Law\n\nDerived from the Phase A cycle that produced\n`Catalog/Physics/ComplexityPhysicalLaw.lean` and\n`Catalog/Speculative/ExtendedChurchTuring.lean`. Both files glue the\n**Computation** domain (`Computation/EntropyBridge.lean`: reversible compressors and\nfinite source-coding bounds) to the **Physics** domain\n(`Physics/LocalHamiltonianQMA.lean`: certified energy lower bounds and the\nQMA promise gap). The cycle established two load-bearing facts:\n\n* a reversible `k`-bit recorder of a finite physical family obeys `|family| \u2264 2^(k+1)`\n  (Landauer memory floor), and\n* a certified NO-instance (ground energy `\u2265 b`) can never be straddled by a\n  YES-witness at any strictly lower threshold `a < b` (energetic, memory-free\n  impossibility).\n\nThe boundary discovered in Stage 3/4 \u2014 the constant is `2^(k+1)` not `2^k`, and the\ngap impossibility needs *strict* `a < b` \u2014 drives the conjectures below.\n\n---\n\n## Conjecture 1 \u2014 Reversible-memory capacity is exactly `2^(k+1)`, and this is tight.\nFor every `k`, there is a finite physical family of size exactly `2^(k+1)` recorded\nlosslessly by a reversible `k`-bit compressor, and no family of size `2^(k+1)+1` can be.\n- **The key insight is...** reversibility buys precisely one extra bit (the empty\n  codeword `[]` of length `0`), so the addressable code space is the lengths-`\u2264 k`\n  strings, whose count is `2^(k+1) \u2212 1`, giving the off-by-one already visible in\n  `landauer_memory_floor`.\n- **Why now?** `complexity_bound_implies_finite_entropy_bound` already proves the\n  upper half; the matching lower half (an explicit length-`\u2264 k` enumeration) is a\n  finite combinatorial construction well within reach of the current `Finset` toolbox.\n\n## Conjecture 2 \u2014 A polynomial energy-certificate ladder forbids a polynomial demon.\nIf a family of `k`-local Hamiltonians admits per-term `EnergyLB` certificates whose\ntotal grows like a fixed polynomial `p(n)` in the instance size, then any device that\nboth reversibly records instances in `O(log p(n))` bits **and** outputs YES-witnesses\nmust be inconsistent on the NO-certified sub-family.\n- **The key insight is...** `maxwell_demon_landauer_bound` already shows the two\n  domains constrain the *same* device; promoting `b` and `k` from constants to\n  polynomials in `n` turns the static bound into a genuine separation between\n  certification cost and witnessing power.\n- **Why now?** The `EnergyLB.mono` glue lemma makes summed certificates rescalable to\n  any threshold, so a polynomial family of thresholds is a direct generalization rather\n  than new infrastructure.\n\n## Conjecture 3 \u2014 Frustration is a quantitative memory tax.\nFor the frustrated pair `Hz, Hx` of `Physics/LocalHamiltonianQMA.lean`, the\nsuper-additive ground-energy gap (no common zero-energy state) implies a strictly\npositive *extra* number of bits any demon must spend to distinguish frustrated from\nunfrustrated instances, compared with the term-by-term minimum.\n- **The key insight is...** `frustration_no_common_ground_state` makes the\n  ground-energy strictly larger than `\u2211 \u03bb i`, and a strictly larger energy threshold\n  enlarges the NO-certified family, which by the Landauer floor `2^(k+1)` strictly\n  raises the required `k`.\n- **Why now?** Both ingredients \u2014 the frustration witness and the\n  `card \u2264 2^(k+1)` floor \u2014 are now formalized and live in the same import graph, so the\n  product statement is assemblable today.\n\n## Conjecture 4 \u2014 The Extended Church\u2013Turing encoding is functorial under simulation.\nThe injective `k`-bit encoding of `ect_encoding_iff` can be chosen to commute with any\ndeterministic step map: simulating one physical step costs at most one re-encoding and\nnever increases `k`.\n- **The key insight is...** `deterministic_evolution_no_new_states` shows deterministic\n  evolution is contractive on distinguishable states, so the entropy bound \u2014 and hence\n  the achievable code length `k` \u2014 is preserved along an orbit.\n- **Why now?** With the encoding *equivalence* (`ect_encoding_iff`) and the\n  data-processing contraction both proved, the only remaining step is to thread an\n  embedding through the composition, a `Function.Embedding` bookkeeping exercise.\n\n## Conjecture 5 \u2014 `P = NP` collapses the energy-certificate hierarchy.\nA complexity-theoretic `P = NP` hypothesis (efficient YES-witness production for the\nground-energy promise problem) is *equivalent*, under the bridge, to the existence of a\nreversible sub-`2^(k+1)`-memory demon that resolves arbitrarily large NO-certified\nfamilies \u2014 contradicting the Landauer floor.\n- **The key insight is...** the contrapositive reading of\n  `maxwell_demon_landauer_bound` already packages \"efficient witnessing of NO-instances\"\n  as a logical impossibility; turning the implication into an equivalence pins\n  `P = NP` to a single physical inequality.\n- **Why now?** The forward direction (demon \u21d2 contradiction) is proved; the converse\n  needs only a reduction encoding SAT-style instances as local Hamiltonians, which the\n  existing `energyLB_sum` certificate calculus is purpose-built to express.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2011",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "16e95997",
+    "status": "available",
+    "timestamp": "2026-06-16T12:53:09.336726+00:00",
+    "title": "Derived from the Phase A cycle that produced"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -1410,6 +1440,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "sorry_fill_a0dd96a5_00b573d8",
+    "priority_score": 0.5771458702064898,
+    "research_mode": "team",
+    "source_exp_id": "a0dd96a5",
+    "status": "available",
+    "timestamp": "2026-06-16T12:52:43.615426+00:00",
+    "title": "Close Proofs: These conjectures continue the research cycle begun in"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Cycle bfb62bb9 (Q=0.524) proved 22 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a minimal, self-contained core of the order-valuation program for truncated binary polynomials, avoiding any unverified functorial or uniqueness claims. Work in the concrete algebra `R_n := ",
     "domains": [
       "Novelty"
@@ -1497,7 +1541,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d79ba9e2",
     "description": "Formalize the class group action on isogeny graphs of elliptic curves. Prove that CSIDH is a one-way function assuming hardness of computing isogenies.",
     "domains": [
       "Cryptography",
@@ -1507,7 +1551,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.233759+00:00",
     "title": "Isogeny-Based Cryptography: CSI-FiSh"
   },
@@ -1826,7 +1870,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Riemann-Roch Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1ad32e9c",
     "description": "Characterize solutions to x\u2295y = z in the tropical semiring. Formalize tropical varieties and prove a Kapranov-type theorem for tropical Fermat curves.",
     "domains": [
       "Tropical",
@@ -1836,7 +1880,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.315054+00:00",
     "title": "Tropical Fermat's Last Theorem"
   },
@@ -2109,21 +2153,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:26.259292+00:00",
     "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
-  },
-  {
-    "consumed_by_exp_id": "ecc79db8",
-    "description": "Formalize Tononi's Integrated Information Theory (IIT) using tensor network states. Conjecture: The integrated information Phi of a tensor network state equals the minimal quantum mutual information across any bipartition. Test: compute Phi for MPS (matrix product states) with bond dimension 2 and verify it matches the Schmidt rank. Impact: connects consciousness theory to quantum information and tensor categories.",
-    "domains": [
-      "Physics",
-      "Computation"
-    ],
-    "id": "fd_0414",
-    "priority_score": 0.24999999999999992,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:26.423474+00:00",
-    "title": "Integrated Information via Tensor Networks"
   },
   {
     "consumed_by_exp_id": "",
@@ -2756,7 +2785,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0d42792c",
     "description": "A ReLU network f: R -> R with L layers of width w is a piecewise linear function with at most w^L pieces. By the universal approximation theorem, such networks can approximate any continuous function. But HOW WELL can they approximate specific constants? Conjecture: a ReLU network with L layers of width w can approximate pi to within epsilon using O(w * L * log(1/epsilon)) parameters. More precisely, there exists a ReLU network f with L = O(log(log(1/epsilon))) layers and w = O(log(1/epsilon)) width such that |f(1) - pi| < epsilon. This is because pi can be computed by the Leibniz formula pi/4 = 1 - 1/3 + 1/5 - ..., and a ReLU network can implement the partial sums. The number of terms needed is O(1/epsilon), and each term can be computed by a constant-depth ReLU subnetwork. The depth needed is O(log(1/epsilon)) for the sum and O(log(log(1/epsilon))) for the individual terms. Conjecture: the approximation rate for rational numbers by ReLU networks is O(1/(w^L)), matching the piecewise linear structure. For irrational numbers like pi, the rate is O(1/(w * L * 2^L)), which is slower but still exponential in depth. Test: construct ReLU networks that approximate pi, e, and sqrt(2) and measure the approximation error as a function of network size. Impact: ReLU networks approximate constants at a rate determined by their depth and width. Pi requires O(log(log(1/epsilon))) depth.",
     "domains": [
       "Novelty",
@@ -2766,7 +2795,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.755927+00:00",
     "title": "Diophantine Approximation on Neural Networks: How Well Can ReLU Approximate Pi?"
   },
@@ -3175,7 +3204,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "24a3af22",
     "description": "Every mathematical structure is a category, and every theorem is a natural transformation. Define the 'genome' of a mathematical theory as its category of models. Prove: two theories are Morita-equivalent iff their model categories are equivalent. Show: the 'mutation' of a theory (changing one axiom) corresponds to an adjunction between model categories. Conjecture: every 'evolutionary path' between theories can be decomposed into a sequence of adjunctions and quotients.",
     "domains": [
       "Novelty",
@@ -3185,7 +3214,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T23:40:36.662181+00:00",
     "title": "Speculative: Category Theory as the DNA of Mathematics"
   },
