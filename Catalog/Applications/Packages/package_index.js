@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "fbd73212",
     "filename": "eml_single_operator_church_turing_thesis.json",
     "pkg_num": 174,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7150400000000001,
     "title": "EML Single-Operator Church-Turing Thesis: One Operator to Compute Them All"
   },
   {
@@ -5372,8 +5372,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "eml_single_operator_church_turing_thesis",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7150400000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "EML Single-Operator Church-Turing Thesis: One Operator to Compute Them All"
     }

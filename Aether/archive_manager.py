@@ -584,9 +584,11 @@ class ArchiveManager:
         for table in ("projects", "files", "project_files", "theorems", "prompts", "packages"):
             row = conn.execute(f"SELECT COUNT(*) AS c FROM {table}").fetchone()
             stats[table] = row["c"]
-        size_bytes = sum(
-            f.stat().st_size for f in self.blobs_dir.rglob("*") if f.is_file()
-        )
+        # Use the files table instead of walking the blob tree. Walking 60k
+        # shards over a WSL2 9P mount (e.g. E:) can take minutes; the DB sum
+        # is instantaneous and uses the sizes recorded at store time.
+        row = conn.execute("SELECT COALESCE(SUM(size), 0) AS s FROM files").fetchone()
+        size_bytes = row["s"] if row else 0
         stats["blobs_size_bytes"] = size_bytes
         stats["blobs_size_mb"] = round(size_bytes / (1024 * 1024), 2)
         return stats

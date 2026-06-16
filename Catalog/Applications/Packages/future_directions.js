@@ -280,7 +280,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "K\u00e4hler-Einstein Metrics and K-Stability"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "14986cd2",
     "description": "Prove that Novikov's self-consistency principle follows from the Banach fixed-point theorem applied to the causal structure of spacetime. Formalize time-travel paradoxes as boundary value problems and prove existence of self-consistent solutions for polynomial causal maps.",
     "domains": [
       "Novelty",
@@ -290,7 +290,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.944657+00:00",
     "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
   },
@@ -1294,6 +1294,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 EML Special Functions (Gamma, Zeta, Hypergeometric)\n\nDerived from the verified results in `GammaEML.lean`, `ZetaEML.lean`, and\n`HypergeometricEML.lean`. Each conjecture is falsifiable in Lean against the\nexisting Mathlib special-function API.\n\n## 1. Singular-set cardinality is the EML/non-EML separator\n\n**Conjecture.** For the classical meromorphic special functions, \"EML-likeness\"\nis governed not by *whether* singularities exist but by the *cardinality and\narithmetic regularity* of the singular set: `\u0393` (singular set `{-n : n \u2208 \u2115}`,\ninfinite but arithmetic-progression-regular) and `\u03b6` (singular set `{1}`,\nfinite) are both meromorphic, but no entire reciprocal exists for `\u03b6` of the\n`\u0393`-type \"all-pole\" form.\n\n*The key insight is...* that `gamma_recip_entire` together with\n`zeta_singular_set_eq_singleton` shows the discriminating invariant is the zero\nlocus of the reciprocal germ, not the presence/absence of singularities \u2014 the\nmission's \"essential singularity\" framing for `\u03b6` is simply false.\n\n*Why now?* Mathlib now has `Meromorphic.Gamma`, `differentiable_one_div_Gamma`,\nand `differentiableAt_riemannZeta`, so the comparison is fully formalizable\nwithout re-deriving analytic continuation.\n\n## 2. Termination \u21d2 entirety, formalized as a decision procedure\n\n**Conjecture.** `\u2082F\u2081(a,b;c;z)` is entire (as a function of `z`) **iff** at least\none of `a,b` is a non-positive integer (the series terminates). The forward\ndirection is `hgCoeff_terminates`; the converse (non-termination forces a\ngenuine `z=1` singularity) is the open half.\n\n*The key insight is...* that `ascPochhammer_eval_neg_nat_eq_zero` makes\ntermination a purely algebraic, decidable condition on the numerator\nPochhammer, decoupled from convergence analysis.\n\n*Why now?* The Pochhammer-based coefficient definition (`hgCoeff`) reduces an\nanalytic dichotomy to a finite vanishing test that Lean's `ring`/`omega`\nmachinery can certify.\n\n## 3. The coefficient recurrence characterizes the Gauss operator's kernel\n\n**Conjecture.** A formal power series `\u2211 a\u2099 z\u207f` is annihilated by the Gauss\noperator `z(1-z)D\u00b2 + (c-(a+b+1)z)D - ab` **iff** its coefficients satisfy the\nrecurrence proved in `hgCoeff_recurrence`; hence the kernel of the Gauss\noperator inside `\u2102[[z]]` is at most 1-dimensional once `a\u2080` is fixed and\n`c \u2209 \u2124_{\u22640}`.\n\n*The key insight is...* that `hgCoeff_recurrence` is not merely *a* solution but\nthe *defining* two-term-to-one-term contraction, so uniqueness of the\nholomorphic solution is a corollary of recurrence uniqueness.\n\n*Why now?* With the recurrence verified denominator-free (`field_simp`+`ring`),\nthe uniqueness statement is a clean induction that needs no new analytic input.\n\n## 4. EML-chain realizability of contiguous closed forms\n\n**Conjecture.** Every Gauss-contiguous closed form of `\u2082F\u2081` that reduces to a\npower `(1-z)^{-a}`, a logarithm, or a product thereof is realizable as a finite\nEML chain (`Catalog/EML/KolmogorovArnoldEMLDeep.lean`), and the minimal chain\ndepth equals the number of independent transcendental factors.\n\n*The key insight is...* `hypergeometric_powerChain_repr` shows the prototypical\nclosed form `(1-z)^{-a}` is *exactly* the depth-2 power chain; depth should then\nbe an additive invariant over contiguous products.\n\n*Why now?* The catalog already proves `power_chain_eval`/`power_chain_depth`, so\ndepth lower bounds reduce to counting `exp`/`log` occurrences \u2014 a combinatorial,\nformalizable quantity.\n\n## 5. A reciprocal-entirety test for \"no algebraic singularities\"\n\n**Conjecture.** A meromorphic `f : \u2102 \u2192 \u2102` \"has no algebraic singularities\" in\nthe EML sense iff `1/f` extends to an entire function whose zero set is exactly\nthe pole set of `f` (as for `\u0393` via `gamma_recip_vanishes_at_poles`). This fails\nfor `\u03b6` (its reciprocal is *not* entire near `1` in the all-pole sense), giving a\nsharp algebraic separator.\n\n*The key insight is...* entirety of the reciprocal is a single global\n`Differentiable` statement, far more tractable in Lean than local branch-cut\nnon-existence, yet logically equivalent for meromorphic germs.\n\n*Why now?* `differentiable_one_div_Gamma` is the only nontrivial ingredient and\nis already in Mathlib; the conjecture turns a vague analytic slogan into a\ncheckable `Differentiable \u2102 (f\u207b\u00b9)` proposition.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2024",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c2c261ee",
+    "status": "available",
+    "timestamp": "2026-06-16T19:50:26.835955+00:00",
+    "title": "Derived from the verified results in `GammaEML.lean`, `ZetaEML.lean`, and"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 EML Single-Operator Church\u2013Turing Thesis\n\nThis cycle established, with fully verified Lean 4 proofs (0 sorries, standard\naxioms only), the **affirmative content** of the single-operator thesis:\n\n* `EML/SingleOperatorRepresentability.lean` \u2014 grammars + semantics for the\n  two-operator language `EMLExpr` (`exp`, `log`) and the single-operator language\n  `EMLOnlyExpr` (sole primitive `eml(x,y) = exp(x) \u2212 log(y)`).\n* `EML/SingleOperatorCompilation.lean` \u2014 bidirectional, semantics-preserving\n  compilation and the equivalence `EMLOnlyRepresentable f \u2194 EMLRepresentable f`,\n  with linear size bounds (forward `\u2264 5\u00b7size`).\n* `EML/SingleOperatorChurchTuring.lean` \u2014 function-algebra closure of the class\n  (`+, \u00d7, neg, \u2212, inv, exp, log, eml`), reverse size bound (`\u2264 4\u00b7size`), concrete\n  `sinh`/`cosh`/`pow`, and the omnibus `single_operator_church_turing`.\n* `EML/SingleOperatorActivations.lean` \u2014 finite sum/product closure, polynomial\n  completeness (`EMLOnlyRepresentable_mvPolynomial`), and representability of the\n  standard activations (sigmoid, softplus, tanh, SiLU).\n\nThe following conjectures are concrete, falsifiable targets for the next cycles.\n\n---\n\n## C1. Necessity / minimality of the single operator\n\nThe field-operations-only fragment (no `eml`) represents **exactly** the\nrational functions, and `exp` is not among them \u2014 so the transcendental primitive\nis genuinely necessary, not eliminable.\n\n> **Conjecture.** Define `FieldOnlyRepresentable` as the closure of constants and\n> projections under `+, \u00d7, neg, inv`. Then\n> `FieldOnlyRepresentable f \u2194 \u2203 p q : MvPolynomial (Fin n) \u211d, f = (eval \u00b7 p)/(eval \u00b7 q)`\n> (as total functions with junk-value `inv 0 = 0`), and\n> `\u00ac FieldOnlyRepresentable (fun x : Fin 1 \u2192 \u211d => Real.exp (x 0))`.\n\n*Attack.* The negative half follows from `exp` growing faster than any rational\nfunction (`Real.tendsto_exp_div_pow_atTop` / transcendence of `exp` over `\u211d(x)`).\n\n## C2. Tightness of the size bounds\n\nThe compilation overhead constants `5` (forward) and `4` (reverse) are optimal.\n\n> **Conjecture.** There is a family `e\u2096 : EMLExpr` of `log`-only expressions with\n> `(compileToEMLOnly e\u2096).size = 5\u00b7e\u2096.size \u2212 o(size)`, and dually a family of\n> `eml`-only expressions saturating `compileFromEMLOnly_size_bound`. Equivalently,\n> no compiler achieves constant `< 5` (resp. `< 4`) for all inputs.\n\n## C3. Domain-faithful (partial) single-operator thesis\n\nOur semantics is *total* (junk values `log x = 0` for `x \u2264 0`, `inv 0 = 0`). The\nsharper statement uses the **partial** `Option \u211d` semantics (cf. the source\ngrammar `UExpr`/`EMLExpr` with `eeval` in the archived `EML/Defs.lean`).\n\n> **Conjecture.** There is a compilation `UExpr \u2192 EMLExpr` (single primitive,\n> partial semantics) that is *domain-faithful*: `t.eeval x = e.eval x` for all\n> `x` **including the `none` (undefined) cases**, with the `eml` node guarded by\n> its positivity side-condition. The size blow-up remains linear.\n\n## C4. Stone\u2013Weierstrass universality of the single-operator class\n\nCombine `EML/StoneWeierstrassApprox.lean` with single-operator representability:\nthe single primitive is not just exactly-elementary but **approximation-universal**.\n\n> **Conjecture.** For every compact `K \u2286 \u211d\u207f` the single-operator representable\n> functions are dense in `C(K, \u211d)` (uniform norm). Concretely, the subalgebra\n> generated by `{x \u21a6 eml(\u27e8a,x\u27e9, 1) = exp(\u27e8a,x\u27e9) : a \u2208 \u211d\u207f}` separates points and\n> contains constants, hence is dense by `eml_topologicalClosure_eq_top_of_separatesPoints`.\n\n## C5. Differential-field closure of the single-operator class\n\nThe smooth single-operator functions form a differential field: closed under\n`d/dx`, with the derivative again single-operator representable.\n\n> **Conjecture.** If `f : \u211d \u2192 \u211d` is single-operator representable by an expression\n> whose evaluation is differentiable on an open `U`, then `deriv f` is\n> single-operator representable on `U`. The derivative of an `eml` node is\n> `exp(a)\u00b7a' \u2212 b'/b` (see `hasDerivAt_eml_composition`), which is itself an `eml`-\n> algebra term, so closure should follow by structural induction on the syntax.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2025",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "fbd73212",
+    "status": "available",
+    "timestamp": "2026-06-16T19:51:02.545064+00:00",
+    "title": "This cycle established, with fully verified Lean 4 proofs (0 sorries, standard"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -1335,21 +1365,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:28.156517+00:00",
     "title": "Learning with Errors: Hardness Reductions"
-  },
-  {
-    "consumed_by_exp_id": "fbd73212",
-    "description": "Formalize the conjecture that e^a * log(b) is a universal primitive for real computation. Conjecture: Every computable real function f: R^n -> R can be expressed as a finite composition of e^x, log(x), constants, and field operations. Test: prove this for the class of elementary functions (sin, cos, exp, log, polynomials) by showing each reduces to EML compositions. If true, this means a single EML neuron (exp+log) is computationally universal.",
-    "domains": [
-      "EML",
-      "Computation"
-    ],
-    "id": "fd_0486",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T21:01:45.470705+00:00",
-    "title": "EML Single Operator Church-Turing Thesis"
   },
   {
     "consumed_by_exp_id": "",
@@ -1677,7 +1692,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Matroid Theory: Bergman Fans and Tropical Linear Spaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1aac4615",
     "description": "Prove that the algebraic connectivity of a neural network's computation graph bounds its certified robustness radius. Formalize the connection between graph spectra and function Lipschitz constants.",
     "domains": [
       "MachineLearning",
@@ -1687,7 +1702,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:44.884438+00:00",
     "title": "Spectral Graph Theory Meets Network Robustness"
   },
@@ -1854,21 +1869,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:07.541008+00:00",
     "title": "Tropical Differential Equations: Power Series Solutions"
-  },
-  {
-    "consumed_by_exp_id": "c2c261ee",
-    "description": "Prove that the Gamma function Gamma(z) is a meromorphic EML function (it has no algebraic singularities). Show that the Riemann zeta function zeta(s) is not an EML function (it has essential singularities). Formalize the hypergeometric function _2F_1(a,b;c;z) and prove that it satisfies an EML differential equation (Gauss's hypergeometric equation).",
-    "domains": [
-      "EML",
-      "Algebra"
-    ],
-    "id": "fd_0554",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:08.127649+00:00",
-    "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
   },
   {
     "consumed_by_exp_id": "",
@@ -2576,7 +2576,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
   },
   {
-    "consumed_by_exp_id": "2a8bac13",
+    "consumed_by_exp_id": "",
     "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
     "domains": [
       "Novelty",
@@ -2586,7 +2586,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-06-01T12:30:30.557538+00:00",
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
   },
@@ -2966,7 +2966,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Mind vs G\u00f6del: Can Minds Outperform Algorithms?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b4a517d3",
     "description": "Prove that any Turing-complete system with self-modification capabilities has no general algorithm for predicting its own termination. Formalize the halting problem for programs that can rewrite their own code mid-execution and show this is strictly harder than the classical halting problem. Connect to the virus paradox and AI alignment.",
     "domains": [
       "Novelty",
@@ -2976,7 +2976,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.919138+00:00",
     "title": "Self-Modifying Code That Cannot Be Stopped"
   },
