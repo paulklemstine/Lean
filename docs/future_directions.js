@@ -501,7 +501,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fd51d61a",
     "description": "Cycle d6329d46 (Q=0.792) proved 22 theorems in Shared but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle e42393e4 (Q=0.792), which proved 42 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting.",
     "domains": [
       "Shared"
@@ -510,7 +510,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8418400000000001,
     "research_mode": "team",
     "source_exp_id": "d6329d46",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T10:39:16.784213+00:00",
     "title": "Close Proofs: Functor from finite linear codes to tropical valuation objects via wei"
   },
@@ -1276,6 +1276,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-16T17:28:59.501421+00:00",
     "title": "Derived from the verified results in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Mathematics as an Evolving Ecosystem\n\nDerived from the Phase A cycle that produced `Fitness.lean`,\n`CompetitiveExclusion.lean`, and `Evolution.lean`.  Each direction is a bold,\nfalsifiable conjecture about the fitness model\n`f(T) = connections(T) \u00b7 proofDensity(T) / axiomCount(T)`.\n\n---\n\n## 1. Selection pressure toward *primitive* (irreducible) theories\n\n**Conjecture.** Under any fitness-improving evolution, the long-run population is\ndominated by theories that are not Rankin\u2013Selberg-type products of smaller\ntheories; composite theories are an evolutionary dead end.\n\nThe key insight is that `selberg_product_fitness_subadditive` shows the conductor\n(axiomatic cost) *multiplies* under composition while the degree (connection\ncount) only *adds*, so `f(S\u2081 \u00d7 S\u2082) \u2264 f(S\u2081) + f(S\u2082)` with strict loss whenever both\nfactors are non-trivial \u2014 composition can never create fitness, only dilute it.\n\nWhy now? We already have the Selberg census `product` operation formalized and the\nsubadditivity inequality proved, so the next step (defining a primitivity\npredicate and proving products are strictly sub-apex) is directly within reach\nrather than speculative.\n\n---\n\n## 2. A carrying capacity for foundational theories\n\n**Conjecture.** For any finite niche space `N`, every ecosystem at equilibrium has\nat most `card N` theories, and this bound is *tight*: there exist equilibria\nrealizing exactly `card N` distinct foundational theories.\n\nThe key insight is that `niche_packing` already proves the upper bound\n`card E \u2264 card N` from injectivity alone; tightness would follow from exhibiting a\nsection of the niche map, turning the inequality into an exact carrying-capacity\nlaw for mathematics' foundational layer.\n\nWhy now? The pigeonhole half is done and axiom-checked; only the constructive\n(surjective-section) half remains, which is a finite combinatorial construction.\n\n---\n\n## 3. A phase transition in the value of new axioms\n\n**Conjecture.** Along a family of extensions `T \u2286 T\u208a` that add `a` axioms and gain\n`c` connections at proof density `d`, fitness increases **iff**\n`c\u00b7d\u00b7axioms(T) > connections(T)\u00b7proofDensity(T)\u00b7(axioms(T)+a)` \u2014 there is a sharp\nthreshold separating \"fertile\" axioms (large cardinals) from \"sterile\" ones.\n\nThe key insight is that `fitness_lt_iff_cross` is an *exact* characterization\n(an iff, not a one-sided bound), so the boundary case is a genuine equality\nhyperplane, and `zfc_lc_strictly_fitter` is one verified point strictly on the\nfertile side.\n\nWhy now? The cross-multiplication criterion is proven and reusable, so quantifying\nthe threshold for concrete extension families (ZFC + CH, ZFC + PD, ZFC + I0) is a\nmatter of plugging in trait estimates rather than new theory.\n\n---\n\n## 4. Open-endedness: no bounded \"final theory\"\n\n**Conjecture.** There is no theory of maximal fitness; equivalently, every\nfitness-improving lineage is cofinal in fitness, so mathematics has no\nfitness-saturating \"theory of everything\".\n\nThe key insight is that `evolution_escapes_finite` proves a fitness-improving\ntrajectory cannot be confined to any finite ecosystem, because the trajectory is\ninjective (`evolution_injective`) and \u2115 does not inject into a finite set \u2014\nunbounded ascent is forced, not assumed.\n\nWhy now? The injectivity and finite-escape theorems are already axiom-clean;\nupgrading \"escapes every finite set\" to \"fitness \u2192 \u221e\" only needs an\nArchimedean/cofinality argument over \u211a, which Mathlib supports directly.\n\n---\n\n## 5. Foundational monism under niche injectivity\n\n**Conjecture.** If the foundational ecosystem ever reaches a state where all\nfitnesses are distinct, then it has a unique apex theory, and that apex is a global\nattractor of fitness-improving dynamics.\n\nThe key insight is that `fitness_max_unique` already gives uniqueness of the\nfitness-maximizer under `Set.InjOn fitness`; combining it with the monotone,\nacyclic trajectory of `evolution_strictMono` suggests the apex is not merely unique\nbut dynamically selected.\n\nWhy now? Both ingredients \u2014 apex uniqueness and strictly monotone evolution \u2014 are\nproved in this cycle, so the attractor claim is the natural synthesis to test\nnext, e.g. by formalizing convergence of trajectories that stay within a finite\nequilibrium.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_2023",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "eef6f30f",
+    "status": "available",
+    "timestamp": "2026-06-16T18:05:28.852660+00:00",
+    "title": "Derived from the Phase A cycle that produced `Fitness.lean`,"
   },
   {
     "consumed_by_exp_id": "",
@@ -2441,7 +2456,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fb007c35",
     "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
     "domains": [
       "Novelty",
@@ -2451,7 +2466,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.495596+00:00",
     "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
   },
@@ -2481,7 +2496,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-01T12:30:30.499504+00:00",
     "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
@@ -3101,20 +3116,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Homological Algebra Connecting Algebra and Topology"
   },
   {
-    "consumed_by_exp_id": "eef6f30f",
-    "description": "Model mathematical theories as species in an ecosystem. Define a fitness function: f(theory) = (number of connections to other theories) * (proof density) / (axiom count). Conjecture: theories evolve toward the niche of maximum fitness, and the resulting ecosystem satisfies a mathematical analog of the competitive exclusion principle (no two theories occupy the same niche). Prove that ZFC + large cardinals has higher fitness than ZFC alone.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_0568",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T23:40:36.123707+00:00",
-    "title": "Speculative: Mathematics as an Evolving Ecosystem"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length \u2264 n. Prove that this ratio undergoes a sharp transition at some critical n_c (the G\u00f6del threshold). Predict: the distribution of theorem lengths follows a power law with exponent related to the Hausdorff dimension of proof space.",
     "domains": [
@@ -3145,7 +3146,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: Consciousness as Fixed Points of Recursive Type Theory"
   },
   {
-    "consumed_by_exp_id": "9f2f456d",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: the laws of physics are the fixed point of a computation that simulates itself. Formalize: define a universal physical simulator U that maps (initial_conditions, laws) \u2192 (next_state). The fixed point equation is U(L, L) = L, where L is the 'law of physics'. Prove: the solution exists (by the Kleene fixed point theorem). Show: the solution is unique up to computational equivalence. Predict: the fine structure constant \u03b1 satisfies \u03b1 = 1/(137.036...) because it's the simplest fixed point.",
     "domains": [
       "Novelty",
@@ -3155,7 +3156,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-06-03T23:40:36.486848+00:00",
     "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
