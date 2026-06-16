@@ -150,7 +150,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Whitehead Problem: Independence from ZFC"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3b102b1d",
     "description": "Building on cycle 3fd7a316 (Q=0.805), which proved 25 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: # FUTURE DIRECTIONS \u2014 Functorial Tropical Ultrametric from Pythagorean Lorentz Triples\n\nThis cycle produced `Catalog/Bridges/FunctorialTropicalPythagorean.lean` (0 sorries, only\nstandard axioms). It builds the canonical **tree ultrametric** `d` on the boundary\n`Addr = \u2115 \u2192 Fin 3` of the ternary Bergg",
     "domains": [
       "Probability"
@@ -159,7 +159,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.90536,
     "research_mode": "team",
     "source_exp_id": "3fd7a316",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T03:36:42.186330+00:00",
     "title": "Deepening: `Catalog/Bridges/FunctorialTropicalPythagorean.lean` (0 sorr"
   },
@@ -206,6 +206,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:25:12.343420+00:00",
     "title": "Baum-Connes Conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Building on cycle d6329d46 (Q=0.792), which proved 22 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Building on cycle e42393e4 (Q=0.792), which proved 42 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The key insight is that a binary linear code carries a genuinely new tropical v",
+    "domains": [
+      "Shared"
+    ],
+    "id": "push_d6329d46_0261f1a9",
+    "priority_score": 0.8918400000000001,
+    "research_mode": "team",
+    "source_exp_id": "d6329d46",
+    "status": "available",
+    "timestamp": "2026-06-16T10:39:16.248773+00:00",
+    "title": "Deepening: Functor from finite linear codes to tropical valuation objects via weight-thresh"
   },
   {
     "consumed_by_exp_id": "",
@@ -502,6 +516,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Cycle d6329d46 (Q=0.792) proved 22 theorems in Shared but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle e42393e4 (Q=0.792), which proved 42 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting.",
+    "domains": [
+      "Shared"
+    ],
+    "id": "sorry_fill_d6329d46_da24e39e",
+    "priority_score": 0.8418400000000001,
+    "research_mode": "team",
+    "source_exp_id": "d6329d46",
+    "status": "available",
+    "timestamp": "2026-06-16T10:39:16.784213+00:00",
+    "title": "Close Proofs: Functor from finite linear codes to tropical valuation objects via wei"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
     "domains": [
       "Novelty",
@@ -544,21 +572,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:29.664610+00:00",
     "title": "Logic-Physics Bridge: Consistency of Physical Theories"
-  },
-  {
-    "consumed_by_exp_id": "16e95997",
-    "description": "Conjecture that P != NP has a physical interpretation: the universe's computational capacity is bounded by the polynomial hierarchy. Formalize this: any physical process that runs in polynomial time can be simulated by a polynomial-time Turing machine (Extended Church-Turing thesis). Show that if P = NP, then the second law of thermodynamics would be violated because Maxwell's demon could be implemented efficiently.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0561",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:08.713166+00:00",
-    "title": "Speculative: Computational Complexity as Physical Law"
   },
   {
     "consumed_by_exp_id": "",
@@ -1112,6 +1125,51 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-01T12:30:30.728070+00:00",
     "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Species EGFs as a Tropical Valuation Profile Bridge\n\nFollow-up conjectures generated by the cycle that produced\n`Catalog/Bridges/SpeciesTropicalValuation.lean`.  That file established the dictionary\n\n* structural product of species \u21a6 tropical product of valuations (`tropVal_mul`, `tropVal_card_prodSpecies`),\n* disjoint sum \u21a6 tropical `min`-superadditivity (`tropVal_add_le`),\n* valuation = minimal structure size (`Species.order_EGF_eq_nat`, `Species.one_le_order_EGF_iff`),\n* differential calculus \u21a6 shift by `trop 1` (`Species.order_pointed`, `Species.tropVal_pointed`),\n* reconstruction into an ultrametric absolute value (`specAbs_mul`, `specAbs_add_le`).\n\nEach conjecture below is precise and testable (statable directly in Lean over `\u211a\u27e6X\u27e7` /\n`CombinatorialSpecies`), ordered roughly by increasing difficulty.\n\n---\n\n## C1 \u2014 Sharp ultrametric equality at distinct leading orders (TESTABLE, likely provable)\n\nThe proved law `tropVal_add_le` is an *inequality*; standard nonarchimedean theory predicts\n**equality whenever the two orders differ**:\n\n> **Conjecture.** For `f g : \u211a\u27e6X\u27e7`, if `f.order \u2260 g.order` then `(f + g).order = min f.order g.order`,\n> equivalently `tropVal (f + g) = tropVal f + tropVal g` (tropical `+ = min`).\n\nConsequence for species: the disjoint union of two species with distinct minimal structure\nsizes has minimal size the smaller of the two. This upgrades `tropVal` to an exact tropical\nsemiring valuation off the \"diagonal\" `f.order = g.order`.\n\n## C2 \u2014 Substitution / composition is tropically multiplicative (BOLD)\n\nSpecies composition `F \u2218 G` (`G` with no empty structure) has EGF the substitution\n`EGF(F\u2218G) = (EGF F) \u2218 (EGF G)`. We conjecture the valuation multiplies:\n\n> **Conjecture.** If `g : \u211a\u27e6X\u27e7` has `1 \u2264 g.order` (constant term `0`), then for every `f`,\n> `(PowerSeries.subst g f).order = f.order * g.order` (with the `\u2115\u221e` convention `n * \u22a4 = \u22a4` for `n \u2260 0`).\n> Hence for species, `Species.tropVal (F \u2218 G) = Species.tropVal F * Species.tropVal G` in the\n> tropical *power* sense \u2014 minimal structure size of a composite is the product of minimal sizes.\n\nThis would extend the bridge from the additive (`+`, `\u00d7`, `d/dX`) operators to the *plethystic*\noperator, the last of Joyal's four basic constructions.\n\n## C3 \u2014 The prime-indexed valuation profile (BOLD, cross-file)\n\nThe X-adic order is the `X`-place valuation. Each prime `p` gives another valuation\n`n \u21a6 v_p(F.coeffSeq n)` of the *integer* counting sequence, producing a **profile**\n`(v_X, (v_p)_p)` \u2014 a genuinely tropical (multi-place) object linking to\n`Algebra/Tropical_p_adic_Valuation_Bounds_and_Lifting_the_Exponent_for_Fibonacci_*`.\n\n> **Conjecture.** For the species of *sets* `E` (`coeffSeq \u2261 1`) every `v_p` profile is flat `0`,\n> while for the species of *cyclic orders* `C` (`coeffSeq n = (n-1)!` for `n \u2265 1`) the profile obeys\n> a Legendre/Lifting-the-Exponent law `v_p((n-1)!) = (n-1 - s_p(n-1))/(p-1)` (digit-sum `s_p`).\n> The X-adic place and the `p`-adic places jointly satisfy a product/sum formula across products\n> of species.\n\n## C4 \u2014 `specAbs` is a complete ultrametric and EGF is an isometric monoidal functor (BOLD)\n\n`specAbs` (proved multiplicative + strong-triangle) makes `\u211a\u27e6X\u27e7` an ultrametric.\n\n> **Conjecture.** `d(f,g) := specAbs (f - g)` is a complete ultrametric metric on `\u211a\u27e6X\u27e7`, and the\n> species EGF transform `Species \u2192 (\u211a\u27e6X\u27e7, d)` is an **isometric monoidal functor**: the species\n> distance `d\u209b(F,G) := 2^{-(least n with F.coeffSeq n \u2260 G.coeffSeq n)}` satisfies\n> `d\u209b(F,G) = d(EGF F, EGF G)`, and structural product is `1`-Lipschitz in each argument.\n\nThis is the concrete species-level realization of the `CategoricalTropicalUltrametric` slogan\n\"valuation reconstruction is a quantitative functor\".\n\n## C5 \u2014 The tropical spectrum of the derivative operator (base case PROVED; iterate open)\n\n`Species.order_pointed` shows pointing shifts valuation by `+1`. Dually, the base case below is now\n**proved** as `Species.order_derivative_succ`: differentiation lowers the valuation by exactly one\nonce the empty structure is absent. The iterated/spectral statement remains open.\n\n> **Proved (base case).** If `F.coeffSeq 0 = 0` (no empty structure), then\n> `F.EGF.order = F.derivative.EGF.order + 1`  (`Species.order_derivative_succ`).\n>\n> **Conjecture (iterate).** A species with minimal structure size `m` (i.e. `F.EGF.order = m`) satisfies\n> `F.derivative^[k].EGF.order = m - k` for all `k \u2264 m`, and `F.derivative^[m]` has a structure on\n> the empty set (`order = 0`). The integer `m` is thus the \"tropical spectral radius\" of `d/dX`\n> acting on `F` \u2014 the number of differentiations needed to expose a ground-level structure.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2003",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "14435cc3",
+    "status": "available",
+    "timestamp": "2026-06-16T10:37:42.559962+00:00",
+    "title": "Follow-up conjectures generated by the cycle that produced"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Cumulative weight thresholds & convolution of binary linear codes\n\nDerived from this research cycle, which added two `sorry`-free Lean files to\n`Catalog/Applications/SmoothPoincare/`:\n\n- `CumulativeWeightConvolution.lean` \u2014 the monotone threshold count\n  `wcount C t = #{c \u2208 C : wt c \u2264 t}`, its **supermultiplicative convolution bound**\n  `wcount C s \u00b7 wcount D r \u2264 wcount (C \u2295 D) (s+r)` (`wcount_append_ge`), the **exact\n  sliding-threshold convolution** `wcount_append`, and the strict Hamming gap\n  `225 < 227` (`hamming16_wcount_strict`).\n- `WeightDistributionConvolution.lean` \u2014 the weight distribution\n  `wexact C t = #{c \u2208 C : wt c = t}`, the **exact Cauchy convolution**\n  `wexact (C \u2295 D) t = \u2211_{s\u2264t} wexact C s \u00b7 wexact D (t\u2212s)` (`wexact_append`),\n  the CDF/PMF link `wcount = \u2211 wexact` (`wcount_eq_sum_wexact`), and the `E8\u2295E8`-shadow\n  reconstruction `1\u00b71 + 14\u00b714 + 1\u00b71 = 198` (`hamming16_wexact_convolution`).\n\nThis established the dictionary\n**product (cardinality) \u2283 Cauchy convolution (`wexact`) \u2283 prefix-convolution-inequality\n(`wcount`) \u2283 tropical-min hull (`twe`)**. The conjectures below push each layer.\n\n---\n\n## Conjecture 1 \u2014 Log-concavity of the threshold count is *not* universal, but holds for direct-sum powers\n**Statement.** For an arbitrary binary code `C`, the cumulative sequence `t \u21a6 wcount C t`\nneed not be log-concave; but for the `k`-fold direct sum `C^{\u2295k}` the *normalized*\ndistribution `wexact (C^{\u2295k})` becomes asymptotically log-concave (a discrete CLT for the\nweight under repeated concatenation).\n\n**The key insight is** that `wexact` is a Cauchy convolution monoid (`wexact_append`), so\n`wexact (C^{\u2295k})` is the `k`-fold self-convolution of a fixed finite nonnegative sequence \u2014\nexactly the setting where Newton/CLT-type log-concavity emerges, even when one copy fails it\n(the Hamming spectrum `1,0,0,0,14,0,0,0,1` is itself *not* log-concave, giving a clean\nfalsification target for the \"universal\" version).\n\n**Why now?** `wexact_append` and `sum_wexact_eq_card` already give the convolution algebra\nand its normalization in Lean; the only missing ingredient is a finite-support\nself-convolution log-concavity lemma, which is within reach of the current `Finset.sum`\nmachinery.\n\n---\n\n## Conjecture 2 \u2014 The strict gap in `wcount_append_ge` exactly counts cross-strata\n**Statement.** `wcount (C \u2295 D) (s+r) \u2212 wcount C s \u00b7 wcount D r =\n\u2211_{(a,b): wt a \u2264 s+r, wt b \u2264 s+r, \u00ac(wt a \u2264 s \u2227 wt b \u2264 r)} 1`, i.e. the deficit of the\ntropical bound is precisely the number of concatenations living *outside* the rectangle\n`{\u2264s}\u00d7{\u2264r}` but inside the simplex `{wt a + wt b \u2264 s+r}`.\n\n**The key insight is** that the supermultiplicative bound `wcount_append_ge` came from a\nrectangle-into-simplex injection; its failure to be onto is governed term-by-term by the\nexact convolution `wcount_append`, so the gap is a sum of honest cross-stratum counts (on\nHamming: the `(8,0)` and `(0,8)` blocks giving `227\u2212225 = 2`).\n\n**Why now?** Both the bound and the exact convolution are already proved `sorry`-free in the\nsame namespace; subtracting them is a finite `Finset` identity, and the Hamming instance\n`227 \u2212 225 = 2` is an immediate sanity check (`hamming16_wcount_strict`).\n\n---\n\n## Conjecture 3 \u2014 A MacWilliams-style threshold transform is convolution-diagonalizing\n**Statement.** There is an explicit linear \"threshold transform\" `T` (a triangular\nprefix-sum operator) under which `T(wexact C)` of a self-dual code is a *fixed point up to a\nbinomial weighting*, and `T` turns the Cauchy convolution `wexact_append` into pointwise\nmultiplication, mirroring how the Fourier/MacWilliams transform diagonalizes the weight\nenumerator product.\n\n**The key insight is** that `wcount_eq_sum_wexact` already exhibits the prefix-sum operator\nlinking PMF to CDF; promoting it to a full triangular transform should send the convolution\nmonoid `(wexact, \u2217)` to a pointwise-product algebra, the discrete shadow of\n`W_{C\u2295D} = W_C\u00b7W_D`.\n\n**Why now?** The convolution identity is formalized; the prefix-sum half of the transform is\n`wcount_eq_sum_wexact`. What remains is to characterize the transform's action on self-dual\nspectra, where the catalog already supplies `hamming_selfDual` and `appendCode_selfDual`.\n\n---\n\n## Conjecture 4 \u2014 Threshold count separates codes that the tropical hull `twe` cannot\n**Statement.** There exist two binary codes `C`, `C\u2032` of the same length with identical\ntropical enumerators `twe C = twe C\u2032` (same weight-hull) yet different cumulative counts\n`wcount C \u2260 wcount C\u2032`; consequently `wcount` is a *strictly finer* direct-sum invariant\nthan `twe`.\n\n**The key insight is** that `twe` only sees the convex hull of the weight spectrum (proved\nin `TropicalWeightEnumerator.hamming_twe`, where the minimum distance `4` is invisible),\nwhereas `wcount` records every interior stratum (`hamming_wcount_four = 15` exposes exactly\nthat erased weight-`4` jump). Two codes sharing hull endpoints but differing in an interior\nstratum realize the separation.\n\n**Why now?** The erasure phenomenon is already a theorem (`hamming_twe`), and the interior\nvisibility is already a theorem (`hamming_wcount_four`); the conjecture only asks to exhibit\nan explicit pair, a finite `native_decide`-checkable search over short codes.\n\n---\n\n## Conjecture 5 \u2014 Threshold supermultiplicativity yields a Singleton-type bound\n**Statement.** For any nonempty code `C \u2286 (ZMod 2)^n` with minimum distance `d`,\n`wcount C (d\u22121) = 1` and the supermultiplicative law forces, for the `k`-fold power,\n`wcount (C^{\u2295k}) (k(d\u22121)) = 1`, giving a *stable* lower estimate on the minimum distance of\niterated direct sums and a clean tropical proof that `minDist(C^{\u2295k}) = d`.\n\n**The key insight is** that `wcount C (d\u22121) = 1` (only the zero codeword) combined with\n`wcount_append_ge` propagates the \"only zero below threshold\" property multiplicatively, so\nthe minimum distance is *preserved* (not improved) under direct sum \u2014 recovering\n`TropicalWeightEnumerator.minDist_append`'s `min` law from the threshold side.\n\n**Why now?** `wcount_append_ge`, `wcount_zero`, and the catalog's `minDist`/`minDist_append`\nare all already in place; the bridge is a short induction on `k` over the already-formalized\nsupermultiplicative inequality.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2004",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d6329d46",
+    "status": "available",
+    "timestamp": "2026-06-16T10:39:10.495748+00:00",
+    "title": "Derived from this research cycle, which added two `sorry`-free Lean files to"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Korselt Criterion & Divisor-Lattice Tropical Flatness\n\nDerived from the cycle that produced `Shared/KorseltCarmichael.lean` and\n`Bridges/KorseltTropicalFlatness.lean`. In that cycle we proved:\n\n- `Korselt n \u2192 FermatProperty n` (Korselt's criterion forces the universal Fermat\n  congruence `a^(n-1) \u2261 1 [MOD n]`), via Fermat-little-theorem lifting and\n  squarefree recombination;\n- `Korselt n \u2194 Squarefree n \u2227 \u2200 p\u2223n, (p-1).factorization \u2264 (n-1).factorization`\n  (Korselt = pointwise domination of prime-exponent / valuation profiles);\n- `dvd_iff_factorization_le` (divisibility = valuation-profile domination = tropical\n  flatness);\n- the Berggren shear law `berggren_M\u2083'^k = !![1,2k;0,1]` and\n  `berggren_M3_pow_reduces_iff : (M\u2083'^k mod m = 1) \u2194 m \u2223 2k`.\n\nThe conjectures below extend these findings.\n\n---\n\n## Conjecture 1 \u2014 Korselt is *equivalent* to the Carmichael/Fermat property\n\n**Statement.** For composite `n \u2265 2`, `FermatProperty n \u2194 Korselt n`. We have proved\n`\u2190`; the open part is `\u2192` (composite Fermat \u27f9 squarefree and `(p-1)\u2223(n-1)`).\n\n*The key insight is* that the converse is a *local* extraction: pick a primitive root\n`g` mod each prime power `p^e \u2225 n`; the order of `g` is `\u03c6(p^e)`, and `FermatProperty`\nforces `\u03c6(p^e) \u2223 n-1`. If `e \u2265 2` then `p \u2223 \u03c6(p^e) \u2223 n-1` while `p \u2223 n`, contradicting\n`gcd(n,n-1)=1`; hence `n` is squarefree and `(p-1)\u2223(n-1)`. The whole argument is the\n*inverse* of the recombination lemma already formalized.\n\n**Why now?** The forward recombination engine (`dvd_of_squarefree_of_forall_prime_dvd`)\nand the local Fermat lemma (`pow_modEq_one_of_sub_one_dvd`) are already in the catalog,\nso only the primitive-root extraction (`ZMod.exists_primitiveRoot` / `IsCyclic` of\n`(ZMod p)\u02e3`) remains to be wired in.\n\n## Conjecture 2 \u2014 Every Carmichael number has at least three prime factors\n\n**Statement.** If `Korselt n` and `n` is composite, then `n.primeFactors.card \u2265 3`.\n\n*The key insight is* that tropical flatness is *obstructed* in low dimension: if\n`n = p\u00b7q` with `p < q` then `(q-1) \u2223 (n-1) = pq-1 = p(q-1) + (p-1)` forces `(q-1)\u2223(p-1)`,\nimpossible for `0 < p-1 < q-1`. So the valuation profile of `n-1` cannot dominate the\nprofile of the *largest* `q-1` with only two prime coordinates.\n\n**Why now?** This is a direct, fully arithmetic corollary of `korselt_iff_flat`: it needs\nonly the two-factor case analysis plus `omega`/divisibility, no new heavy machinery, and\nit sharpens the non-vacuousness already witnessed by `561, 1105, 1729`.\n\n## Conjecture 3 \u2014 Quantitative flatness defect and a Korselt certificate\n\n**Statement.** Define the *flatness defect*\n`\u03b4(n) = \u2211_{q prime} max(0, (max_{p\u2223n} v_q(p-1)) \u2212 v_q(n-1))`. Then `Korselt n` (for\nsquarefree `n`) holds iff `\u03b4(n) = 0`, and `\u03b4` is computable, giving a decision procedure\nthat avoids primality testing of `n` itself.\n\n*The key insight is* that `\u03b4` linearizes the lattice condition: divisibility becomes a\nsingle nonnegativity test on a finitely-supported valuation vector (the tropical/`max`\nstructure of `Bridges/CategoricalTropicalUltrametric.lean`), turning \"`(p-1)\u2223(n-1)` for\nall `p`\" into one scalar.\n\n**Why now?** `korselt_iff_flat` already expresses Korselt as `factorization \u2264`; packaging\nthe gap as a `Finsupp`-supported sum is a short step and connects directly to the\nexisting tropical valuation objects and `vdepth_sum_le` in `Computation/PadicValuationDepth.lean`.\n\n## Conjecture 4 \u2014 Berggren shear order equals the additive order of `2` mod `m`\n\n**Statement.** The order of the reduced Berggren shear `M\u2083' mod m` in `GL\u2082(ZMod m)` is\n`m / gcd(2,m)`, i.e. the least `k > 0` with `m \u2223 2k`.\n\n*The key insight is* that `berggren_M3_pow_reduces_iff` already isolates the *only*\nnontrivial coordinate (`2k`); the order is therefore governed by a one-dimensional\nadditive-order computation, the matrix analogue of the single divisibility test\n`(p-1)\u2223(n-1)` in Korselt's criterion.\n\n**Why now?** `berggren_M3_pow` and `berggren_M3_pow_reduces_iff` reduce the problem to\n`Nat`-level: `IsLeast {k | 0 < k \u2227 m \u2223 2k} (m / gcd 2 m)`, provable by `omega`-style\ndivisibility reasoning with no matrix theory left.\n\n## Conjecture 5 \u2014 Flat reduction preserves Pythagorean primitivity across all prime divisors\n\n**Statement.** For the Berggren generators acting on primitive triples, the reduction mod\n`n` preserves primitivity of the orbit simultaneously at every prime `p \u2223 n` exactly when\n`n` is squarefree with a flat valuation profile (a Korselt-type condition on the shear\nexponents arising along tree paths).\n\n*The key insight is* that both phenomena are the *same* simultaneous-domination event:\nthe Carmichael condition makes one exponent `n-1` annihilate every local order `p-1`, and\nflat Berggren reduction makes one path-length exponent annihilate the shear order at every\n`p \u2223 n`. The bridge file already exhibits both as instances of `dvd_iff_factorization_le`.\n\n**Why now?** With `berggren_M3_pow_reduces_iff` and `korselt_iff_flat` both formalized in\n`Bridges/KorseltTropicalFlatness.lean`, the remaining content is to package the\ngenerator-orbit reduction (using `BerggrenLorentz` Pythagorean preservation from\n`Algebra/BerggrenLorentz/Core.lean`) and quantify the simultaneity, completing the\nthree-domain Shared \u2194 Computation \u2194 Pythagorean bridge.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2005",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c3d42768",
+    "status": "available",
+    "timestamp": "2026-06-16T10:39:30.622454+00:00",
+    "title": "Derived from the cycle that produced `Shared/KorseltCarmichael.lean` and"
   },
   {
     "consumed_by_exp_id": "",
@@ -2250,7 +2308,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3f78e0f7",
     "description": "Deja vu \u2014 the feeling that you've experienced something before \u2014 is a fixed point in a dynamical system. Model cognitive state as a function f: S -> S mapping current brain state to next brain state. A deja vu is a state s such that f^n(s) = s for some n > 0 \u2014 a periodic point of the cognitive dynamical system. Conjecture: By Sharkovsky's theorem, the existence of a period-3 orbit in the cognitive dynamics (three distinct states that cycle) implies chaos in the sense of Li-Yorke, meaning there exist uncountably many cognitive trajectories that are neither periodic nor convergent. Moreover, the set of deja vu states (periodic points of f) is dense in the cognitive state space S if f is continuous and S is an interval. The frequency of deja vu (occurring in ~70% of people) corresponds to the natural density of periodic points in a typical chaotic map. Test: model cognitive dynamics as a logistic map f(x) = rx(1-x) on [0,1] with parameter r chosen to match empirical deja vu frequencies. For r = 3.83 (period-3 window), compute the density of periodic points and compare to the 70% lifetime incidence. Impact: deja vu is not a glitch \u2014 it's a mathematical inevitability of continuous cognitive dynamics. Any continuous cognitive map with a period-3 orbit MUST have deja vu.",
     "domains": [
       "Novelty",
@@ -2260,7 +2318,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.493320+00:00",
     "title": "The Mathematics of Deja Vu: Fixed Points in Consciousness and Cognition"
   },
@@ -2460,7 +2518,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Aperiodic Monotile: One Shape to Tile Them All"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6fe73404",
     "description": "Every mathematical proof is a directed acyclic graph (DAG): nodes are statements, edges are implications, and the acyclicity comes from the fact that you can't prove A from B and B from A without a circular argument (which is not a valid proof). Conjecture: The DAG of all mathematical proofs has a scale-free structure: the in-degree distribution follows a power law P(k) ~ k^{-gamma} with gamma \u2248 2.5. This means most theorems are proved from a small number of foundational results (the 'hubs'), and there are exponentially many theorems that depend on these hubs. The top 10 hub theorems in mathematics are: (1) Zorn's Lemma, (2) The Intermediate Value Theorem, (3) The Fundamental Theorem of Calculus, (4) The Sylow Theorems, (5) The Baire Category Theorem, (6) Hahn-Banach Theorem, (7) Urysohn's Lemma, (8) The Pigeonhole Principle, (9) Induction, (10) The Law of Excluded Middle. Conjecture: removing any of the top 10 hubs disconnects the proof DAG into at least 2 large components, each containing more than 10% of all theorems. This means mathematics is fragile: removing one foundational theorem makes many other theorems unprovable. Test: construct the proof DAG from Lean 4's Mathlib (all proofs and their dependencies), compute the in-degree distribution, and verify the power law. Impact: mathematics is a scale-free network, and its most important theorems are its most connected nodes \u2014 the hubs that hold the entire structure together.",
     "domains": [
       "Novelty",
@@ -2470,7 +2528,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.585396+00:00",
     "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
   },

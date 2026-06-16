@@ -14,6 +14,7 @@ Usage:
 import argparse
 import asyncio
 import datetime
+import hashlib
 import json
 import logging
 import os
@@ -30,6 +31,15 @@ sys.path.insert(0, str(Path(__file__).parent))
 from aristotlelib import Project, set_api_key
 import aristotlelib.api_request as api_request
 from archive_manager import ArchiveManager
+from archive_utils import (
+    get_api_key,
+    get_api_base_url,
+    stream_download,
+    set_max_memory_mb,
+    mem_mb as _mem_mb,
+    log_extra_context as _log_extra_context,
+)
+from theorem_extractor import TheoremExtractor
 
 
 def _now() -> str:
@@ -94,6 +104,8 @@ class Telemetry:
         self.output_download_failed = 0
         self.files_archived = 0
         self.theorems_extracted = 0
+        self.theorem_metadata_extracted = 0
+        self.packages_stored = 0
         self.summaries_printed = 0
         self.errors: List[Dict[str, Any]] = []
 
@@ -114,6 +126,7 @@ class Telemetry:
             f"failed={self.projects_failed} input_only={self.projects_input_only} "
             f"dl_in={self.inputs_downloaded} dl_out={self.outputs_downloaded} "
             f"files={self.files_archived} theorems={self.theorems_extracted} "
+            f"theorem_metadata={self.theorem_metadata_extracted} packages={self.packages_stored} "
             f"elapsed={_fmt_duration(elapsed)} rate={self.rate(self.projects_seen)}"
         )
 
@@ -127,41 +140,105 @@ class Telemetry:
         })
 
 
-async def get_api_key() -> str:
-    key = os.environ.get("ARISTOTLE_API_KEY", "")
-    if not key:
-        try:
-            import yaml
-            cfg_path = Path(__file__).parent / "config.yaml"
-            if cfg_path.exists():
-                cfg = yaml.safe_load(cfg_path.read_text())
-                key = cfg.get("aristotle", {}).get("api_key", "")
-                if key.startswith("${"):
-                    key = os.environ.get(key.strip("${}"), "")
-        except Exception:
-            pass
-    if not key:
-        raise RuntimeError("ARISTOTLE_API_KEY required")
-    return key
-
-
-def _mem_mb() -> Optional[float]:
-    try:
-        import psutil
-        proc = psutil.Process(os.getpid())
-        return round(proc.memory_info().rss / (1024 * 1024), 2)
-    except Exception:
+def _find_package_json(directory: Path) -> Optional[Path]:
+    """Locate a PACKAGE.json file in a project directory tree."""
+    if not directory.exists():
         return None
+    candidates = []
+    for src in directory.rglob("*.json"):
+        if not src.is_file():
+            continue
+        name = src.name.lower()
+        if name == "package.json" or name.endswith(".package.json"):
+            candidates.append(src)
+    # Prefer exact PACKAGE.json
+    for c in candidates:
+        if c.name == "PACKAGE.json":
+            return c
+    return candidates[0] if candidates else None
 
 
-def _log_extra_context() -> str:
-    mem = _mem_mb()
-    if mem is not None:
-        return f" mem={mem}MB"
-    return ""
+def _extract_packages(am: ArchiveManager, project_id: str, input_dir: Optional[Path], output_dir: Optional[Path], telemetry: Telemetry) -> None:
+    """Find and store PACKAGE.json files from a project's extracted dirs."""
+    found = []
+    for directory in (input_dir, output_dir):
+        if not directory or not directory.exists():
+            continue
+        pkg_path = _find_package_json(directory)
+        if pkg_path:
+            found.append(pkg_path)
+    for pkg_path in found:
+        try:
+            package_json = pkg_path.read_text(encoding="utf-8", errors="ignore")
+            # Basic JSON sanity check
+            json.loads(package_json)
+            am.store_package(project_id, package_json)
+            telemetry.packages_stored += 1
+            logging.info(
+                "[Backfill]   %s stored package %s (%s bytes)",
+                project_id[:8], pkg_path.name, len(package_json)
+            )
+        except Exception as e:
+            telemetry.add_error("store_package", project_id, e)
+            logging.warning("[Backfill]   %s failed to store package %s: %s", project_id[:8], pkg_path, e)
 
 
-async def backfill_from_api(am: ArchiveManager, max_pages: Optional[int], page_size: int, telemetry: Telemetry, summary_every: int = 25):
+def _extract_theorem_metadata(
+    am: ArchiveManager,
+    project_id: str,
+    input_dir: Optional[Path],
+    output_dir: Optional[Path],
+    telemetry: Telemetry,
+) -> None:
+    """Scan all .lean files in extracted dirs and store rich theorem metadata."""
+    extractor = TheoremExtractor()
+    all_records: List[Dict] = []
+    for directory in (input_dir, output_dir):
+        if not directory or not directory.exists():
+            continue
+        for lean_file in directory.rglob("*.lean"):
+            if not lean_file.is_file():
+                continue
+            rel = str(lean_file.relative_to(directory)).replace("\\", "/")
+            data = lean_file.read_bytes()
+            file_hash = hashlib.sha256(data).hexdigest()
+            records = extractor.extract_from_bytes(
+                data,
+                file_hash=file_hash,
+                file_path=rel,
+                project_id=project_id,
+            )
+            all_records.extend(extractor.records_to_db_rows(records))
+    if all_records:
+        conn = am._connect()
+        conn.executemany(
+            "INSERT OR IGNORE INTO theorems "
+            "(name, file_hash, project_id, domain, statement_text, full_statement, "
+            "proof_text, docstring, line_number, file_path, theorem_type, declaration_kind, "
+            "is_sorry, uses_sorry, is_complete, parameters, return_type, metadata_json) "
+            "VALUES (:name, :file_hash, :project_id, :domain, :statement_text, :full_statement, "
+            ":proof_text, :docstring, :line_number, :file_path, :theorem_type, :declaration_kind, "
+            ":is_sorry, :uses_sorry, :is_complete, :parameters, :return_type, :metadata_json)",
+            all_records,
+        )
+        conn.commit()
+        telemetry.theorem_metadata_extracted += len(all_records)
+        logging.info(
+            "[Backfill]   %s extracted theorem metadata for %s theorems",
+            project_id[:8], len(all_records)
+        )
+
+
+async def backfill_from_api(
+    am: ArchiveManager,
+    max_pages: Optional[int],
+    page_size: int,
+    telemetry: Telemetry,
+    summary_every: int = 25,
+    download_timeout: float = 600.0,
+    extract_packages: bool = True,
+    extract_theorem_metadata: bool = True,
+):
     """List projects via API and archive any not already in the catalog."""
     key = await get_api_key()
     set_api_key(key)
@@ -216,7 +293,11 @@ async def backfill_from_api(am: ArchiveManager, max_pages: Optional[int], page_s
                 )
 
             try:
-                manifest = await _archive_one_api(am, project, telemetry)
+                manifest = await _archive_one_api(
+                    am, project, telemetry, download_timeout,
+                    extract_packages=extract_packages,
+                    extract_theorem_metadata=extract_theorem_metadata,
+                )
                 telemetry.projects_archived += 1
                 telemetry.files_archived += len(manifest.input_files) + len(manifest.output_files)
                 telemetry.theorems_extracted += _count_theorems(am, project.project_id)
@@ -267,49 +348,76 @@ def _maybe_print_summary(telemetry: Telemetry, every: int):
         logging.info(telemetry.summary("PROGRESS"))
 
 
-async def _archive_one_api(am: ArchiveManager, project: Project, telemetry: Telemetry):
+async def _archive_one_api(
+    am: ArchiveManager,
+    project: Project,
+    telemetry: Telemetry,
+    download_timeout: float = 600.0,
+    extract_packages: bool = True,
+    extract_theorem_metadata: bool = True,
+):
     """Download input/output archives for one project and archive them."""
     tmpdir = Path(tempfile.mkdtemp(prefix=f"backfill_{project.project_id}_"))
     input_archive: Optional[Path] = None
     output_archive: Optional[Path] = None
+    input_dir: Optional[Path] = None
+    output_dir: Optional[Path] = None
     try:
-        async with api_request.AristotleRequestClient() as client:
-            # Input archive
-            dl_in_start = time.time()
+        key = await get_api_key()
+        base_url = get_api_base_url()
+
+        # Input archive
+        dl_in_start = time.time()
+        try:
+            input_archive = tmpdir / "input.tar.gz"
+            await stream_download(
+                f"{base_url}/project/{project.project_id}/input",
+                input_archive,
+                key,
+                timeout=download_timeout,
+            )
+            telemetry.inputs_downloaded += 1
+            logging.info(
+                "[Backfill]   %s input download: %s bytes in %.2fs",
+                project.project_id[:8], input_archive.stat().st_size, time.time() - dl_in_start
+            )
+        except Exception as e:
+            telemetry.input_download_failed += 1
+            input_archive = None
+            logging.warning(
+                "[Backfill]   %s input download failed: %s",
+                project.project_id[:8], e
+            )
+
+        # Output archive (agent result files); endpoint is /result, not /files
+        if project.has_files:
+            dl_out_start = time.time()
             try:
-                r = await client.get(f"/project/{project.project_id}/input")
-                input_archive = tmpdir / "input.tar.gz"
-                input_archive.write_bytes(r.content)
-                telemetry.inputs_downloaded += 1
+                output_archive = tmpdir / "output.tar.gz"
+                await stream_download(
+                    f"{base_url}/project/{project.project_id}/result",
+                    output_archive,
+                    key,
+                    timeout=download_timeout,
+                )
+                telemetry.outputs_downloaded += 1
                 logging.info(
-                    "[Backfill]   %s input download: %s bytes in %.2fs",
-                    project.project_id[:8], len(r.content), time.time() - dl_in_start
+                    "[Backfill]   %s output download: %s bytes in %.2fs",
+                    project.project_id[:8], output_archive.stat().st_size, time.time() - dl_out_start
                 )
             except Exception as e:
-                telemetry.input_download_failed += 1
+                telemetry.output_download_failed += 1
+                output_archive = None
                 logging.warning(
-                    "[Backfill]   %s input download failed: %s",
+                    "[Backfill]   %s output download failed: %s",
                     project.project_id[:8], e
                 )
 
-            # Output archive (agent result files); endpoint is /result, not /files
-            if project.has_files:
-                dl_out_start = time.time()
-                try:
-                    r = await client.get(f"/project/{project.project_id}/result")
-                    output_archive = tmpdir / "output.tar.gz"
-                    output_archive.write_bytes(r.content)
-                    telemetry.outputs_downloaded += 1
-                    logging.info(
-                        "[Backfill]   %s output download: %s bytes in %.2fs",
-                        project.project_id[:8], len(r.content), time.time() - dl_out_start
-                    )
-                except Exception as e:
-                    telemetry.output_download_failed += 1
-                    logging.warning(
-                        "[Backfill]   %s output download failed: %s",
-                        project.project_id[:8], e
-                    )
+        # Extract tarballs once so we can both archive and derive metadata.
+        if input_archive and input_archive.exists():
+            input_dir = am._extract_tar(input_archive)
+        if output_archive and output_archive.exists():
+            output_dir = am._extract_tar(output_archive)
 
         archive_start = time.time()
         manifest = am.archive_project(
@@ -318,16 +426,25 @@ async def _archive_one_api(am: ArchiveManager, project: Project, telemetry: Tele
             status=project.status.name if hasattr(project.status, "name") else str(project.status),
             created_at=project.created_at.isoformat() if hasattr(project.created_at, "isoformat") else str(project.created_at),
             last_updated=project.last_updated.isoformat() if hasattr(project.last_updated, "isoformat") else str(project.last_updated),
-            input_archive_path=input_archive,
-            output_archive_path=output_archive,
+            input_dir=input_dir,
+            output_dir=output_dir,
         )
         logging.info(
             "[Backfill]   %s archive_project took %.2fs",
             project.project_id[:8], time.time() - archive_start
         )
+
+        if extract_packages:
+            _extract_packages(am, project.project_id, input_dir, output_dir, telemetry)
+        if extract_theorem_metadata:
+            _extract_theorem_metadata(am, project.project_id, input_dir, output_dir, telemetry)
+
         return manifest
     finally:
         cleanup_start = time.time()
+        for d in (input_dir, output_dir):
+            if d:
+                shutil.rmtree(d, ignore_errors=True)
         shutil.rmtree(tmpdir, ignore_errors=True)
         logging.debug(
             "[Backfill]   %s temp cleanup took %.3fs",
@@ -335,7 +452,14 @@ async def _archive_one_api(am: ArchiveManager, project: Project, telemetry: Tele
         )
 
 
-def backfill_from_local_projects(am: ArchiveManager, projects_root: Path, telemetry: Telemetry, summary_every: int = 25):
+def backfill_from_local_projects(
+    am: ArchiveManager,
+    projects_root: Path,
+    telemetry: Telemetry,
+    summary_every: int = 25,
+    extract_packages: bool = True,
+    extract_theorem_metadata: bool = True,
+):
     """Archive from locally-cached project directories (input only)."""
     if not projects_root.exists():
         logging.info("[Backfill] Local projects dir not found: %s", projects_root)
@@ -370,6 +494,10 @@ def backfill_from_local_projects(am: ArchiveManager, projects_root: Path, teleme
             telemetry.projects_archived += 1
             telemetry.files_archived += len(manifest.input_files) + len(manifest.output_files)
             telemetry.theorems_extracted += _count_theorems(am, project_id)
+            if extract_packages:
+                _extract_packages(am, project_id, input_dir, output_dir, telemetry)
+            if extract_theorem_metadata:
+                _extract_theorem_metadata(am, project_id, input_dir, output_dir, telemetry)
             logging.info(
                 "[Backfill] %s/%s Archived local project %s in %.2fs "
                 "(output=%s, input_files=%s, output_files=%s)%s",
@@ -397,10 +525,25 @@ def main():
     parser.add_argument("--no-api", action="store_true", help="Skip API calls entirely")
     parser.add_argument("--log", default=None, help="Path to log file (in addition to stdout)")
     parser.add_argument("--summary-every", type=int, default=25, help="Emit a progress summary every N projects")
+    parser.add_argument("--max-memory-mb", type=int, default=6000,
+                        help="Cap process virtual memory (Linux/WSL) to avoid OOM-killing the VM (0=disable)")
+    parser.add_argument("--download-timeout", type=float, default=600,
+                        help="Seconds to wait while streaming a project archive")
+    parser.add_argument("--extract-packages", action="store_true", default=True,
+                        help="Store research PACKAGE.json files found in project output (default: on)")
+    parser.add_argument("--no-extract-packages", dest="extract_packages", action="store_false",
+                        help="Disable package extraction")
+    parser.add_argument("--extract-theorem-metadata", action="store_true", default=True,
+                        help="Extract rich theorem metadata (docstrings, statements, proofs) (default: on)")
+    parser.add_argument("--no-extract-theorem-metadata", dest="extract_theorem_metadata", action="store_false",
+                        help="Disable theorem metadata extraction")
+    parser.add_argument("--reprocess-existing", action="store_true",
+                        help="Re-scan already-archived projects for packages and theorem metadata")
     args = parser.parse_args()
 
     log_path = Path(args.log) if args.log else None
     _setup_logging(log_path)
+    set_max_memory_mb(args.max_memory_mb)
 
     telemetry = Telemetry()
     logging.info("[Backfill] Starting run at %s pid=%s", _now(), os.getpid())
@@ -411,10 +554,23 @@ def main():
     logging.info("[Backfill] Before stats: %s", json.dumps(before_stats, indent=2))
 
     try:
+        if args.reprocess_existing:
+            # TODO: implement reprocessing pass that scans archived manifests and
+            # extracts packages/theorem metadata without re-downloading.
+            logging.info("[Backfill] --reprocess-existing is not yet implemented; ignoring")
         if args.from_local_projects:
-            backfill_from_local_projects(am, Path(args.projects_root), telemetry, args.summary_every)
+            backfill_from_local_projects(
+                am, Path(args.projects_root), telemetry, args.summary_every,
+                extract_packages=args.extract_packages,
+                extract_theorem_metadata=args.extract_theorem_metadata,
+            )
         elif not args.no_api:
-            asyncio.run(backfill_from_api(am, args.max_pages, args.page_size, telemetry, args.summary_every))
+            asyncio.run(backfill_from_api(
+                am, args.max_pages, args.page_size, telemetry,
+                args.summary_every, args.download_timeout,
+                extract_packages=args.extract_packages,
+                extract_theorem_metadata=args.extract_theorem_metadata,
+            ))
     except Exception as e:
         telemetry.add_error("main", "", e)
         logging.exception("[Backfill] Fatal error in main loop: %s", e)

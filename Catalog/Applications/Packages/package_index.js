@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d6329d46",
     "filename": "deepening_functor_from_finite_linear_codes_to_trop.json",
     "pkg_num": 168,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7918400000000001,
     "title": "Deepening: Cumulative Weight Thresholds and the Tropical Convolution Law of Binary Linear Codes"
   },
   {
@@ -5191,8 +5191,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "deepening_functor_from_finite_linear_codes_to_trop",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7918400000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Deepening: Cumulative Weight Thresholds and the Tropical Convolution Law of Binary Linear Codes"
     }

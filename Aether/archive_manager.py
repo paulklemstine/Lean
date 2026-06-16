@@ -112,16 +112,30 @@ class ArchiveManager:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL,
                 file_hash TEXT NOT NULL,
+                project_id TEXT,
                 domain TEXT,
                 statement_text TEXT,
+                full_statement TEXT,
+                proof_text TEXT,
+                docstring TEXT,
+                line_number INTEGER,
+                file_path TEXT,
                 theorem_type TEXT,
+                declaration_kind TEXT,
                 is_sorry INTEGER DEFAULT 0,
+                uses_sorry INTEGER DEFAULT 0,
+                is_complete INTEGER DEFAULT 0,
+                parameters TEXT,
+                return_type TEXT,
+                metadata_json TEXT,
                 FOREIGN KEY (file_hash) REFERENCES files(hash),
+                FOREIGN KEY (project_id) REFERENCES projects(project_id),
                 UNIQUE(name, file_hash)
             );
             CREATE INDEX IF NOT EXISTS idx_theorems_name ON theorems(name);
             CREATE INDEX IF NOT EXISTS idx_theorems_hash ON theorems(file_hash);
             CREATE INDEX IF NOT EXISTS idx_theorems_domain ON theorems(domain);
+            CREATE INDEX IF NOT EXISTS idx_theorems_project ON theorems(project_id);
 
             CREATE TABLE IF NOT EXISTS prompts (
                 project_id TEXT PRIMARY KEY,
@@ -131,9 +145,53 @@ class ArchiveManager:
                 FOREIGN KEY (project_id) REFERENCES projects(project_id),
                 FOREIGN KEY (prompt_hash) REFERENCES files(hash)
             );
+
+            CREATE TABLE IF NOT EXISTS packages (
+                project_id TEXT PRIMARY KEY,
+                package_hash TEXT NOT NULL,
+                title TEXT,
+                domain TEXT,
+                description TEXT,
+                exp_id TEXT,
+                date TEXT,
+                key_results_json TEXT,
+                keywords_json TEXT,
+                lean_files_json TEXT,
+                article_hash TEXT,
+                research_paper_hash TEXT,
+                future_directions_hash TEXT,
+                json_payload TEXT NOT NULL,
+                FOREIGN KEY (project_id) REFERENCES projects(project_id),
+                FOREIGN KEY (package_hash) REFERENCES files(hash)
+            );
+            CREATE INDEX IF NOT EXISTS idx_packages_domain ON packages(domain);
             """
         )
+        self._migrate_theorems_columns()
         conn.commit()
+
+    def _migrate_theorems_columns(self) -> None:
+        """Add columns added after initial schema creation."""
+        conn = self._connect()
+        cursor = conn.execute("PRAGMA table_info(theorems)")
+        existing = {row["name"] for row in cursor.fetchall()}
+        new_columns = [
+            ("project_id", "TEXT"),
+            ("full_statement", "TEXT"),
+            ("proof_text", "TEXT"),
+            ("docstring", "TEXT"),
+            ("line_number", "INTEGER"),
+            ("file_path", "TEXT"),
+            ("declaration_kind", "TEXT"),
+            ("uses_sorry", "INTEGER DEFAULT 0"),
+            ("is_complete", "INTEGER DEFAULT 0"),
+            ("parameters", "TEXT"),
+            ("return_type", "TEXT"),
+            ("metadata_json", "TEXT"),
+        ]
+        for col, dtype in new_columns:
+            if col not in existing:
+                conn.execute(f"ALTER TABLE theorems ADD COLUMN {col} {dtype}")
 
     def _blob_path(self, file_hash: str) -> Path:
         """Map a SHA-256 hash to a 4-level sharded blob path."""
@@ -376,8 +434,12 @@ class ArchiveManager:
         if all_theorems:
             conn.executemany(
                 "INSERT OR IGNORE INTO theorems "
-                "(name, file_hash, domain, statement_text, theorem_type, is_sorry) "
-                "VALUES (:name, :file_hash, :domain, :statement_text, :theorem_type, :is_sorry)",
+                "(name, file_hash, project_id, domain, statement_text, full_statement, "
+                "proof_text, docstring, line_number, file_path, theorem_type, declaration_kind, "
+                "is_sorry, uses_sorry, is_complete, parameters, return_type, metadata_json) "
+                "VALUES (:name, :file_hash, :project_id, :domain, :statement_text, :full_statement, "
+                ":proof_text, :docstring, :line_number, :file_path, :theorem_type, :declaration_kind, "
+                ":is_sorry, :uses_sorry, :is_complete, :parameters, :return_type, :metadata_json)",
                 all_theorems,
             )
 
@@ -415,10 +477,89 @@ class ArchiveManager:
         ).fetchone()
         return row is not None
 
+    def store_package(
+        self,
+        project_id: str,
+        package_json: str,
+        article_hash: Optional[str] = None,
+        research_paper_hash: Optional[str] = None,
+        future_directions_hash: Optional[str] = None,
+    ) -> str:
+        """Store a research JSON package in CAS and the packages table.
+
+        Returns the SHA-256 hash of the canonical package JSON.
+        """
+        canonical = json.dumps(
+            json.loads(package_json),
+            indent=None,
+            ensure_ascii=False,
+            sort_keys=True,
+        )
+        package_hash = self.store_file(canonical.encode("utf-8"), content_type="application/json")
+        pkg = json.loads(canonical)
+
+        def _hash_field(field_name: str) -> Optional[str]:
+            value = pkg.get(field_name)
+            if isinstance(value, str) and len(value) > 0:
+                return self.store_file(value.encode("utf-8"), content_type="text/markdown")
+            return None
+
+        article_hash = article_hash or _hash_field("article")
+        research_paper_hash = research_paper_hash or _hash_field("research_paper")
+        future_directions_hash = future_directions_hash or _hash_field("future_directions")
+
+        conn = self._connect()
+        conn.execute(
+            "INSERT OR REPLACE INTO packages "
+            "(project_id, package_hash, title, domain, description, exp_id, date, "
+            "key_results_json, keywords_json, lean_files_json, article_hash, "
+            "research_paper_hash, future_directions_hash, json_payload) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            (
+                project_id,
+                package_hash,
+                pkg.get("title"),
+                pkg.get("domain"),
+                pkg.get("description"),
+                pkg.get("exp_id"),
+                pkg.get("date"),
+                json.dumps(pkg.get("key_results") or [], ensure_ascii=False),
+                json.dumps(pkg.get("keywords") or [], ensure_ascii=False),
+                json.dumps(pkg.get("lean_files") or [], ensure_ascii=False),
+                article_hash,
+                research_paper_hash,
+                future_directions_hash,
+                canonical,
+            ),
+        )
+        conn.commit()
+        return package_hash
+
+    def get_package(self, project_id: str) -> Optional[Dict]:
+        """Load a stored package by project_id."""
+        conn = self._connect()
+        row = conn.execute(
+            "SELECT json_payload FROM packages WHERE project_id=?", (project_id,)
+        ).fetchone()
+        if not row:
+            return None
+        try:
+            return json.loads(row["json_payload"])
+        except Exception:
+            return None
+
+    def get_project_theorems(self, project_id: str) -> List[Dict]:
+        """Return all theorem records associated with a project."""
+        conn = self._connect()
+        rows = conn.execute(
+            "SELECT * FROM theorems WHERE project_id=?", (project_id,)
+        ).fetchall()
+        return [dict(r) for r in rows]
+
     def get_stats(self) -> Dict:
         conn = self._connect()
         stats = {}
-        for table in ("projects", "files", "project_files", "theorems", "prompts"):
+        for table in ("projects", "files", "project_files", "theorems", "prompts", "packages"):
             row = conn.execute(f"SELECT COUNT(*) AS c FROM {table}").fetchone()
             stats[table] = row["c"]
         size_bytes = sum(
