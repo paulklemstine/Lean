@@ -1,92 +1,247 @@
-# What Happens When You Run a Computer Past Infinity?
+# Cellular Automata at the Ordinals: When Computation Refuses to Stop
 
-*A journey into cellular automata that compute beyond the limits of ordinary mathematics*
+## A grid that thinks forever
 
----
+Imagine an infinite row of light bulbs, stretching off to the horizon. Each
+bulb is either on or off. A simple rule governs them: at every tick of a
+universal clock, each bulb looks at itself and its two immediate neighbours,
+and decides whether to be on or off in the next instant. That is all. No
+central controller, no memory beyond the neighbourhood, no foresight. Just a
+local rule, applied everywhere at once, again and again.
 
-In 1970, the mathematician John Conway introduced the Game of Life, a simple grid of cells that flicker on and off according to basic rules. From those rules emerged something shocking: the game could simulate any computer ever built. Every calculation your laptop performs, every algorithm Google runs—all of it could, in principle, be reproduced by Conway's flickering cells.
+This is a **cellular automaton**, one of the most deceptively simple objects in
+all of science. Conway's *Game of Life* is one. The famous *Rule 110*, which
+turns out to be capable of running any computer program, is another. From these
+microscopic, purely local instructions, vast and intricate behaviour emerges:
+gliders that sail across the grid, factories that spawn them, logic gates,
+counters, even universal computers built entirely out of blinking cells.
 
-But what if we let the game run not just for millions of steps, but for *infinitely* many? And then kept going?
+But every cellular automaton in the textbooks shares a hidden assumption, so
+natural we rarely notice it: **time is the natural numbers**. Tick 0, tick 1,
+tick 2, and so on. The clock counts $0, 1, 2, 3, \dots$ and never reaches any
+kind of "end." If a pattern still hasn't settled down after a billion ticks,
+we simply wait for tick a-billion-and-one.
 
-This is not science fiction. It is a question that sits at the intersection of computer science, mathematical logic, and the theory of infinity—and new results are beginning to reveal just how deep the answer goes.
+This article is about what happens when we refuse to accept that limitation.
+What if we let the clock run *past* infinity?
 
-## The Ordinal Numbers: Counting Past Infinity
+## The clock that counts past infinity
 
-To understand computation beyond infinity, we first need to understand how mathematicians count past it. The key tool is **ordinal numbers**, discovered by Georg Cantor in the 1880s.
+In ordinary arithmetic, there is no number after "all the natural numbers." But
+mathematicians have a perfectly rigorous way to keep counting once the natural
+numbers run out. These are the **ordinal numbers**.
 
-Ordinary counting goes: 0, 1, 2, 3, and so on. After all the natural numbers comes the first infinite ordinal, called ω (omega). But ordinals don't stop there. After ω comes ω + 1, then ω + 2, and eventually ω + ω (also written ω · 2). Then ω · 3, ω · 4, and eventually ω · ω = ω². The tower keeps climbing: ω³, ω^ω, ω^(ω^ω), and far, far beyond.
+The ordinals begin in the familiar way:
 
-Each ordinal has a clear successor (just add one), but the interesting ones are the **limit ordinals**—ordinals that aren't the successor of anything. The number ω is the first: there's no "last natural number plus one" that equals ω. It's the limit of all finite numbers.
+$$0, \; 1, \; 2, \; 3, \; \dots$$
 
-And this is precisely where transfinite computation gets interesting.
+and then, crucially, they keep going. After *every* natural number comes a brand
+new number called $\omega$ ("omega"). It is not the largest natural number —
+there is no such thing — it is the first number that lies *beyond* all of them.
+And the ordinals do not stop there:
 
-## Cellular Automata Meet the Infinite
+$$\omega, \; \omega+1, \; \omega+2, \; \dots, \; \omega\cdot 2, \; \dots, \; \omega^2, \; \dots$$
 
-A cellular automaton is a row of cells, each in some state (say, on or off), that evolve according to a local rule. At each time step, every cell looks at its neighbors and updates itself. Rule 110, one of the 256 possible elementary rules, is famous: Matthew Cook proved in 2004 that it can simulate any Turing machine, making it a universal computer hiding in eight lines of a lookup table.
+There are two flavours of ordinal. A **successor** ordinal, like $5$ or
+$\omega+1$, is one that comes immediately after some other ordinal — you reach
+it by taking a single step. A **limit** ordinal, like $\omega$ or $\omega\cdot 2$
+or $\omega^2$, has *nothing* immediately before it. You cannot reach $\omega$ by
+adding one to anything; you can only reach it by *running through the entire
+infinite sequence that precedes it*.
 
-Normally, we run these automata for a finite number of steps. But mathematicians asked: what if we extend the time axis from natural numbers to ordinals?
+This distinction is the whole story. At a successor stage, a cellular automaton
+knows exactly what to do: apply the local rule once more. But what should it do
+at a *limit* stage? There is no "previous tick" to update from. The configuration
+at stage $\omega$ cannot be computed from the configuration "just before
+$\omega$," because there is no such configuration.
 
-The idea is seductively simple. At successor ordinals (like ω + 1, or ω · 5 + 3), we apply the rule as usual. But at limit ordinals (like ω, ω · 2, or ω²), something new happens: we need a **limit rule** that aggregates the entire preceding history into a new state.
+The answer — the idea at the heart of this work — is to define the limit stage
+not from a single predecessor, but from the **entire infinite history** that came
+before it.
 
-Two natural choices emerge:
+## Taking limits, cell by cell
 
-- **The eventual-value rule**: a cell is "on" at a limit ordinal if it was eventually always "on" in the preceding sequence. If a cell flickered on-off-on-off forever, it's declared "off."
-- **The limsup rule**: a cell is "on" if it was "on" cofinally—that is, if no matter how far along you look, you can always find it "on" again later.
+Here is the rule. Run the automaton through stages $0, 1, 2, \dots$ in the usual
+way. Each individual bulb traces out an infinite sequence of on/off values across
+these stages — its personal **history**. To decide what that bulb should be at
+the limit stage $\omega$, we look at its history and ask: *does it eventually
+settle down?*
 
-These two rules, though they sound similar, produce radically different computational behavior. And the difference tells us something profound about the nature of computation itself.
+If a bulb is on, off, on, off, on, off forever, it never settles, and the limit
+is genuinely ambiguous. But if a bulb is, say, off for a while and then turns on
+and *stays* on — off, off, off, on, on, on, on, $\dots$ — then there is an
+obvious value to assign at stage $\omega$: **on**. The bulb has made up its mind,
+and the limit stage simply records the decision.
 
-## The Stabilization Hierarchy
+We make this precise with a notion we call *eventual constancy below a stage*. A
+history $h$ is **eventually constant below $\lambda$ with value $v$** if there is
+some earlier stage $\beta$ (still below $\lambda$) past which the history is
+always equal to $v$:
 
-One of the central discoveries in this line of research is that different computations require different ordinals to complete. A computation that finds a fixed point in three steps has **stabilization ordinal** 3. One that needs infinitely many steps but then stabilizes at ω has stabilization ordinal ω. And some computations need ω², or ω^ω, or far larger ordinals before they settle down.
+> there exists $\beta < \lambda$ such that for every $\gamma$ with
+> $\beta \le \gamma < \lambda$, we have $h(\gamma) = v$.
 
-This creates a **hierarchy of computational complexity** measured not in time or space, but in ordinal height. It's a fundamentally new way to classify how hard a problem is.
+The first thing one must check is that this is not self-contradictory: a history
+cannot settle on two *different* answers. And indeed it cannot. If a history is
+eventually $u$ and also eventually $v$, then far enough along it must equal both
+$u$ and $v$ at the same stage — so $u = v$. This is our first rigorously
+established fact:
 
-Consider a simple example: the **successor counting function**, which maps n to min(n, B) for some bound B. This function stabilizes at exactly step B—not before, not after. It's a toy model, but it illustrates the principle: the stabilization ordinal is an intrinsic measure of computational difficulty.
+> **Uniqueness of limits.** If a coordinate's history is eventually constant
+> below $\lambda$ with value $u$, and also eventually constant with value $v$,
+> then $u = v$.
 
-For transfinite computations, the hierarchy extends far beyond the finite. An ordinal computation model that uses the eventual-value limit rule at limit ordinals achieves the same power as **Infinite Time Turing Machines** (ITTMs), introduced by Hamkins and Lewis in 2000. These machines can decide questions that no ordinary Turing machine can answer—they break through the Turing barrier.
+Now apply this cell by cell. Suppose that at a limit stage $\lambda$, *every*
+bulb's history has settled down. Then there is one and only one configuration of
+the whole grid whose value at each cell is that cell's eventual value. This is
+the **limit configuration**, and it is the genuinely new ingredient that lets a
+cellular automaton survive the passage through infinity:
 
-## Fixed Points and the Geometry of Convergence
+> **Limit stages exist and are unique.** If every cell's history is eventually
+> constant below the limit stage $\lambda$, then there is a *unique* whole-grid
+> configuration realizing all of those eventual values simultaneously.
 
-At the heart of transfinite computation lies a beautiful geometric structure: the relationship between fixed points and stabilization.
+This theorem is the foundation. It tells us that whenever the histories behave
+well — whenever every bulb eventually makes up its mind — the automaton can be
+continued past $\omega$, past $\omega\cdot 2$, in principle all the way up the
+ordinals, and there is never any ambiguity about what the next limit looks like.
 
-When a transfinite iteration stabilizes at some ordinal α, the value it reaches must be a fixed point of the transition function. This is not obvious—the proof requires showing that applying the transition one more time (at ordinal α + 1) must yield the same result, since the sequence is constant from α onward. But it's true, and it's a theorem we can prove with absolute certainty.
+## When every cell is guaranteed to settle
 
-The converse question is subtler: given a fixed point, what is the *fastest* transfinite path to reach it? This is where the theory connects to ordinal analysis and proof theory, areas that have been central to mathematical logic for a century.
+A skeptic will object: that is a big "if." Why should every bulb's history settle
+down? In general it need not — the blinking on/off/on/off bulb is a permanent
+counterexample. So the interesting question becomes: **which rules guarantee that
+the histories settle, so that the limit stage is always well-defined?**
 
-The **monotone iteration theorem** adds another layer. When the transition function is monotone (order-preserving) and the state space is a lattice, the transfinite iteration must converge—a transfinite generalization of the Kleene fixed-point theorem. The stabilization ordinal in this case is bounded by the order-theoretic height of the lattice, connecting computational complexity to algebraic structure.
+There is a beautiful and broad class of rules for which the answer is "always,"
+and the reason is a one-word idea: **monotonicity**.
 
-## The Non-Monotone Wilderness
+Call a rule **inflationary** if it can only ever turn bulbs *on*, never off.
+Formally, for every configuration $c$ and every cell $n$,
 
-Not all cellular automata are monotone, and Rule 110 is a prime example. Setting a cell from "off" to "on" can cause other cells to turn off—the dynamics are inherently non-monotone. This is precisely what makes Rule 110 computationally universal: monotone systems are too well-behaved to simulate arbitrary computation.
+$$c(n) \le (F\,c)(n),$$
 
-In the transfinite setting, non-monotonicity means that the limit rule becomes crucial. The same CA rule, paired with different limit rules, can produce wildly different stabilization ordinals—or no stabilization at all. This sensitivity to the limit rule is the transfinite analog of the sensitivity to initial conditions that characterizes chaos.
+where we order the two states by $\text{off} < \text{on}$. An inflationary rule
+is a ratchet: once a light comes on, it stays on.
 
-## Descent and Ascent: Two Sides of the Same Coin
+Now watch what happens to a single bulb across the stages $0, 1, 2, \dots$. Its
+history can only climb: it might be off for a while, but the moment it turns on it
+is on forever. A history that only ever climbs from off to on is what
+mathematicians call a **monotone** Boolean sequence, and such a sequence has the
+simplest possible long-term behaviour:
 
-There is a profound duality at work in transfinite computation: the **no-infinite-descent principle** (which says that ordinal-valued sequences cannot decrease forever) and the **stabilization principle** (which says that monotone sequences must eventually stabilize).
+> **Monotone Boolean sequences settle.** A sequence of on/off values that never
+> decreases is eventually constant: it is off for a finite stretch and then on
+> forever (or off the whole time).
 
-These are not just analogies—they are mathematical duals. A descending ordinal sequence must reach a minimum; an ascending ordinal sequence in a well-ordered set must reach a maximum. Together, they guarantee that certain transfinite processes must terminate, even though they run "past infinity."
+The proof is almost a tautology, which is exactly why it is so powerful: either
+the bulb turns on at some first stage $N$ — after which it is pinned at on — or it
+never turns on, in which case it is off forever. Either way, it settles.
 
-This duality connects transfinite cellular automata to deep areas of mathematics: ordinal analysis in proof theory, well-quasi-ordering theory in combinatorics, and termination analysis in computer science. The stabilization ordinal of a transfinite computation is, in a precise sense, a measure of the logical strength needed to prove that the computation terminates.
+Chain these facts together. An inflationary rule makes every history monotone;
+every monotone history settles; and when every history settles, the limit stage
+exists and is unique. We arrive at the central existence theorem:
 
-## Beyond Rule 110
+> **The $\omega$-limit exists.** For *any* inflationary rule $F$ and *any* starting
+> configuration, the cell-by-cell histories of the iterates
+> $c, \; F c, \; F^2 c, \; \dots$ are all eventually constant, so the $\omega$-stage
+> configuration exists and is unique.
 
-The theory extends far beyond any single rule. Any finite-state machine—any computer with bounded memory—can be encoded as a cellular automaton and then run transfinitely. The CA rule handles the successor steps; the limit rule handles the moments of infinity.
+This is not an empty abstraction. It applies to a concrete, recognizable
+automaton. Consider the **OR rule**: a cell turns on if it, or either of its
+neighbours, is on. In symbols,
 
-This means that the entire theory of Infinite Time Turing Machines, with its remarkable results about decidability and complexity, can be recast in the language of cellular automata. Problems that require ω steps to solve on an ITTM correspond to CAs that stabilize at ordinal ω. Problems requiring ω² steps correspond to CAs that need two "levels" of limit transitions.
+$$(\text{OR-step}\,c)(n) = c(n-1) \;\text{OR}\; c(n) \;\text{OR}\; c(n+1).$$
 
-The result is a unified framework where the discrete, local dynamics of cellular automata meet the infinite, global structure of ordinal arithmetic. It's a bridge between the concrete and the abstract, between computation and set theory.
+This rule models the spread of an unstoppable contagion across the row: switch on
+a single bulb, and the "on" region grows by one cell in each direction at every
+tick, advancing forever outward but never retreating. The OR rule is plainly
+inflationary — it never switches anything off — so our theorem applies verbatim:
 
-## What It All Means
+> **The OR automaton has a well-defined $\omega$-stage.** Running the OR rule from
+> any initial pattern, every cell eventually turns on (or stays off forever if no
+> "on" ever reaches it), and the limit configuration at stage $\omega$ exists and
+> is unique.
 
-Transfinite cellular automata are not just a mathematical curiosity. They illuminate the fundamental question: *what does it mean to compute?*
+For the OR rule the $\omega$-stage has a vivid meaning: a cell is on at stage
+$\omega$ exactly when it would *ever* be reached by the spreading contagion. The
+limit stage performs, in a single transfinite leap, a computation that no finite
+number of ordinary ticks could finish — it answers the question "will this cell
+ever light up?" for *all* cells at once.
 
-The Church-Turing thesis tells us that all reasonable notions of finite computation are equivalent. But beyond the finite, the landscape fractures. Different limit rules give different computational powers. Different ordinals measure genuinely different levels of difficulty. The simple, elegant framework of cellular automata—cells updating according to local rules—turns out to be rich enough to capture this entire hierarchy.
+## Why the leap past infinity matters
 
-We are still in the early stages of understanding this territory. The stabilization ordinals of specific CA rules with specific limit rules remain largely unexplored. The connection to physical processes—where infinite limits arise in thermodynamics, quantum field theory, and cosmology—is tantalizing but uncharted.
+This is where the story connects to one of the deepest themes in the theory of
+computation. An ordinary computer, in the mathematical idealization known as a
+Turing machine, can run for any finite number of steps. But there are perfectly
+well-posed questions it can never settle — most famously, *the halting problem*:
+will a given program eventually stop, or run forever? No finite computation can
+answer this in general, because to answer "no, it runs forever" you would have to
+watch infinitely many steps.
 
-What we do know is this: the humble cellular automaton, born from Conway's playful experiments half a century ago, has grown into a window onto the infinite. Through it, we glimpse a computational universe far vaster than Turing imagined—one where infinity is not the end of the story, but merely the first interesting chapter.
+In the 1990s, the logicians Joel David Hamkins and Andy Lewis proposed a daring
+fix: the **Infinite Time Turing Machine**. It is an ordinary machine, but it is
+allowed to run for transfinitely many steps. At limit stages, each memory cell is
+set according to the *limit* of its past values. With this extra power, the
+machine can simply run a program for $\omega$ steps and read off, at stage
+$\omega$, whether it ever halted. Questions hopelessly beyond ordinary computers
+become decidable. This is the realm of **super-Turing**, or **hypercomputation**.
 
----
+The transfinite cellular automaton is the same revolutionary idea, transplanted
+from the centralized, tape-and-head world of Turing machines into the radically
+decentralized world of cellular automata. The limit rule "each cell takes the
+limit of its history" is exactly the cellular analogue of the Infinite Time
+Turing Machine's limit rule for its tape cells. And the theorems above are the
+rigorous guarantee that this analogue is *coherent* — that the limit stages
+genuinely exist and are unambiguous whenever the dynamics is well-behaved.
 
-*The mathematics described in this article has been verified using computer-assisted proof techniques, ensuring that every theorem holds with absolute certainty. The research builds on foundational work by Georg Cantor (ordinal numbers, 1883), Joel David Hamkins and Andy Lewis (Infinite Time Turing Machines, 2000), and Matthew Cook (Rule 110 universality, 2004).*
+There is a striking tension lurking here, and it is worth naming. For a *nice*
+(inflationary) rule, the $\omega$-stage adds nothing truly new: every cell has
+already settled at some finite stage, so stage $\omega$ merely tallies the
+verdicts. The transfinite machinery quietly *collapses* back to ordinary
+computation. The genuinely super-Turing power lives at the boundary — in rules
+whose histories *never* settle on their own, where the limit rule must *impose* a
+verdict that no finite stage ever reached. The blinking on/off/on/off bulb is the
+seed of that power: a finite computer sees only endless oscillation, but a
+transfinite limit rule can be designed to read a definite answer out of it at
+stage $\omega$. Distinguishing these two regimes — when the leap past infinity is
+free, and when it is genuinely creative — is the frontier this work opens.
+
+## Climbing higher: $\omega$, $\omega\cdot 2$, and $\omega^2$
+
+Why stop at $\omega$? The limit-stage theorem is not special to $\omega$; it works
+at *any* limit ordinal. Once you have passed $\omega$, you keep applying the local
+rule — stages $\omega+1, \omega+2, \dots$ — until you reach the next limit,
+$\omega\cdot 2$, where you take limits again. Then onward to $\omega\cdot 3$, and
+so on through every $\omega\cdot k$, and finally to $\omega^2$, the limit of all of
+them.
+
+Each limit stage is a fresh opportunity to extract information that the stages
+below could not finish computing. Stacking these opportunities suggests a
+*hierarchy*: a computation that needs one transfinite leap, versus one that needs
+two, versus one that needs $k$. The conjecture motivating future work is that
+these levels are genuinely distinct — that there are automata whose answer first
+crystallizes only at stage $\omega\cdot k$ and not a moment sooner, so that
+running on the timeline $\omega^2$ is strictly more powerful than running on any
+$\omega\cdot k$. The ordinal $\omega^2$ would then sit at the top of an infinite
+tower of computational power, each floor built from a single trip past infinity.
+
+## The view from the top
+
+Strip away the formalism and a simple, almost philosophical, picture remains.
+Computation, we usually think, is something that happens *in time*: step follows
+step, and the answer arrives — if it arrives at all — after finitely many of them.
+The transfinite cellular automaton challenges that picture at its root. It says:
+let time itself be richer. Let it have *limit moments*, points reached not by one
+more step but by the accumulated weight of an entire infinite past. At those
+moments, ask not "what did the last step produce?" but "what did the whole history
+converge to?"
+
+The mathematics shows this can be done coherently. Whenever the histories settle —
+and for an enormous, natural class of rules they always do — the limit stages
+exist, they are unique, and the automaton glides through infinity without
+stumbling. A humble row of light bulbs, governed by nothing more than "look at
+your neighbours," can be made to compute not just for all time, but *beyond* it.
+
+And in that beyond lies the answer to questions that no finite machine, running on
+ordinary time, could ever resolve.
