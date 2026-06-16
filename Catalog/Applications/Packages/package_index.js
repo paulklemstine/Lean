@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c1948da4",
     "filename": "cellular_automata_at_the_ordinals_transfinite_comp.json",
     "pkg_num": 176,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6361600000000001,
     "title": "Cellular Automata at the Ordinals: Transfinite Computation"
   },
   {
@@ -5430,8 +5430,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "cellular_automata_at_the_ordinals_transfinite_comp",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6361600000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Cellular Automata at the Ordinals: Transfinite Computation"
     }
