@@ -1,215 +1,367 @@
-# Random Self-Reducibility and Security Composition for Isogeny-Based Cryptography
+# A Counting-Theoretic Proof of the Parity Theorem for Eulerian Trails in Finite Multigraphs with Loops
 
 ## Abstract
 
-We present a formal mathematical framework for analyzing the security of CSIDH and CSI-FiSh, two prominent isogeny-based post-quantum cryptographic schemes. Our main contributions are:
+We give a complete, self-contained development of the classical parity (degree)
+theory of Eulerian trails in finite undirected multigraphs that may contain
+loops and parallel edges. The entire theory is reduced to a single local
+identity at each vertex,
+$$\deg(v) + s(v) + e(v) = 2\,\mathrm{vis}(v),$$
+where $\deg(v)$ is the degree of $v$ (with loops counted twice), $s(v)$ and
+$e(v)$ are indicator quantities for $v$ being the start or end of the trail, and
+$\mathrm{vis}(v)$ is the number of times the trail's underlying walk visits $v$.
+The identity is established by elementary finite counting: by splitting the walk
+either at its head or its tail, the visit count is expressed in two complementary
+ways, and the degree is matched to consecutive-pair incidences through the edge
+permutation that defines the trail. From this identity we deduce, with only
+integer parity arithmetic, the three pillars of the classical theory: (i) any
+vertex of odd degree must be the start or the end of the trail; (ii) at most two
+vertices have odd degree; and (iii) if the trail is closed, every vertex has even
+degree. The treatment makes explicit the role of loops, of edge orientation, and
+of the bijective ("permutation") structure of an Eulerian trail, which are
+precisely the subtleties that informal treatments tend to elide. All results are
+phrased over finite index types and are constructive modulo classical logic.
 
-1. **Random Self-Reducibility of GAIP**: We prove that the Group Action Inverse Problem has worst-case = average-case hardness in any free transitive abelian group action, establishing the strongest possible hardness foundation for CSIDH.
+**Keywords:** Eulerian trail, Eulerian circuit, degree, parity, handshaking,
+multigraph, loop, graph theory, combinatorics.
 
-2. **Connector Transport Algebra**: We formalize the complete equivariance theory of connectors (the group elements linking pairs of curves), proving left-shift, right-shift, and transport invariance properties.
+**MSC 2020:** 05C45 (Eulerian and Hamiltonian graphs), 05C30 (enumeration in
+graph theory), 05C76 (graph operations and constructions).
 
-3. **t-Special Soundness**: We prove that CSI-FiSh with t parallel repetitions achieves t-special soundness, with the extraction of all t secret key components from two transcripts with differing challenges.
-
-4. **Signature Forgery Reduction**: We formally prove that any CSI-FiSh signature forgery yields a GAIP solution, completing the security reduction.
-
-5. **Subgroup Orbit Structure**: We prove that subgroup orbits in a free action have cardinality equal to the subgroup order, establishing the partition structure used in CSIDH parameter selection.
-
-All results are formally verified in Lean 4 with complete proofs (no axioms beyond propext, Classical.choice, and Quot.sound).
+---
 
 ## 1. Introduction
 
-### 1.1 Background
+The problem of the Seven Bridges of Königsberg, resolved by Euler in 1736, is
+usually cited as the origin of graph theory. Euler's abstraction — discard the
+geometry, retain only adjacency and the count of incident edges at each vertex —
+yields a remarkably clean criterion for the existence of a walk that traverses
+every edge exactly once. The *necessary* condition, which is the subject of the
+present paper, is a statement purely about **degree parity**: in a graph admitting
+an Eulerian trail, all but at most two vertices have even degree, and if the trail
+is closed then *all* vertices have even degree.
 
-CSIDH (Commutative Supersingular Isogeny Diffie-Hellman) [CLM+18] is a key exchange protocol based on the action of the ideal class group Cl(𝒪) on the set of supersingular elliptic curves over 𝔽_p with endomorphism ring isomorphic to 𝒪. The security relies on the hardness of the Group Action Inverse Problem (GAIP): given curves E₀ and E₁ = [𝔞]·E₀, find the ideal class [𝔞].
+While this result is elementary and ubiquitous, a fully rigorous treatment must
+confront several details that casual expositions gloss over:
 
-CSI-FiSh (Commutative Supersingular Isogeny-based Fiat-Shamir) [BKV19] is a signature scheme obtained by applying the Fiat-Shamir transform to the CSIDH identification protocol.
+1. **Loops.** A loop contributes two edge-ends to a single vertex. The standard
+   degree theory is only correct if loops are counted with multiplicity two; we
+   build this into the definition and verify that the counting goes through.
+2. **Parallel edges.** Multigraphs admit several distinct edges with identical
+   endpoints; the trail must use *each* such edge exactly once. We encode this
+   with a permutation of the edge set.
+3. **Orientation.** In an undirected graph an edge may be traversed in either
+   direction. The compatibility condition for a trail must therefore allow both
+   orientations at each step, and the counting argument must be insensitive to
+   the choice.
 
-### 1.2 Our Approach
+Our contribution is a development that isolates the combinatorial core of the
+theory into one **local parity identity** and derives every classical consequence
+from it by integer arithmetic. The identity is proved by three short counting
+lemmas, each of which is a transparent reindexing of a finite sum. The result is
+a treatment in which every step of the classical "handshake" argument is made
+literal and auditable.
 
-We work in an abstract algebraic setting: a finite group G acting freely and transitively on a finite set X. This abstraction captures the essential properties of the CSIDH class group action while avoiding the need to formalize the full theory of elliptic curves, isogenies, and class field theory.
+The paper is organized as follows. Section 2 fixes the combinatorial model.
+Section 3 defines the relevant counting functionals. Section 4 proves the three
+counting lemmas and assembles the local parity identity. Section 5 derives the
+classical structure theorems. Section 6 records algorithmic consequences and
+pseudocode. Section 7 discusses applications, and Section 8 lists open directions.
 
-Our formal framework consists of:
-- **CryptoGroupAction**: A structure (G, X, act) with act(1, x) = x and act(gh, x) = act(g, act(h, x)).
-- **FreeTrans**: A CryptoGroupAction with freeness (act(g, x) = x ⟹ g = 1) and transitivity (∀ x y, ∃ g, act(g, x) = y).
+---
 
-## 2. Core Definitions
+## 2. The combinatorial model
 
-### 2.1 Connector
+We work over finite index types throughout. Fix natural numbers $n_V$ (the number
+of vertices) and $n_E$ (the number of edges). Vertices are indexed by
+$\{0, 1, \dots, n_V - 1\}$ and edges by $\{0, 1, \dots, n_E - 1\}$.
 
-For a free transitive action, the **connector** from x to y is the unique group element g such that act(g, x) = y. We denote it connector(x, y).
+**Definition 2.1 (Multigraph).** A *finite undirected multigraph with loops* on
+$n_V$ vertices and $n_E$ edges is a pair of endpoint maps
+$$G = (\mathrm{endpt}_1, \mathrm{endpt}_2), \qquad
+\mathrm{endpt}_1, \mathrm{endpt}_2 : \{0,\dots,n_E-1\} \to \{0,\dots,n_V-1\}.$$
+For an edge $e$, its two endpoints are $\mathrm{endpt}_1(e)$ and
+$\mathrm{endpt}_2(e)$. The edge $e$ is a **loop** if
+$\mathrm{endpt}_1(e) = \mathrm{endpt}_2(e)$.
 
-**Properties:**
-- connector(x, x) = 1
-- connector(x, z) = connector(y, z) · connector(x, y) (composition)
-- connector(y, x) = connector(x, y)⁻¹ (inversion)
-- connector(x, act(g, x)) = g (recovery)
+This model permits parallel edges (distinct $e, e'$ with the same endpoint pair)
+and loops, and it treats edges as undirected by symmetrizing in the trail
+condition below.
 
-### 2.2 Smooth Isogeny Decomposition
+**Definition 2.2 (Degree).** The *degree* of a vertex $v$ is the number of
+edge-endpoint incidences equal to $v$, summed over both endpoint slots:
+$$\deg_G(v) \;=\; \bigl|\{\,e : \mathrm{endpt}_1(e) = v\,\}\bigr|
+\;+\; \bigl|\{\,e : \mathrm{endpt}_2(e) = v\,\}\bigr|.$$
+A loop at $v$ satisfies $\mathrm{endpt}_1(e) = \mathrm{endpt}_2(e) = v$ and is
+therefore counted in **both** terms, contributing $2$ to $\deg_G(v)$. This is the
+unique convention under which the handshaking identity below is valid.
 
-A **SmoothIsogenyDecomposition** of G with n generators consists of:
-- Generators l₁, ..., lₙ ∈ G (modeling small prime ideals)
-- Bounds B₁, ..., Bₙ ∈ ℕ (exponent bounds)
-- Spanning property: every g ∈ G can be written as ∏ lᵢ^{eᵢ} with |eᵢ| ≤ Bᵢ
+**Definition 2.3 (Eulerian trail).** An *Eulerian trail* on $G$ is a triple
+$T = (\mathrm{verts}, \pi, \mathrm{adj})$ consisting of:
 
-The **key space size** is ∏(2Bᵢ + 1).
+- a **walk** $\mathrm{verts} : \{0, 1, \dots, n_E\} \to \{0,\dots,n_V-1\}$, a
+  sequence of $n_E + 1$ vertices;
+- an **edge ordering** $\pi$, a *permutation* of the edge set $\{0,\dots,n_E-1\}$
+  (so each edge is used exactly once);
+- an **adjacency condition** $\mathrm{adj}$: for every step
+  $i \in \{0,\dots,n_E-1\}$, the edge $\pi(i)$ joins $\mathrm{verts}(i)$ to
+  $\mathrm{verts}(i+1)$ in one of the two orientations, i.e.
+  $$\bigl(\mathrm{endpt}_1(\pi(i)) = \mathrm{verts}(i) \wedge
+        \mathrm{endpt}_2(\pi(i)) = \mathrm{verts}(i{+}1)\bigr)$$
+  $$\vee\;\bigl(\mathrm{endpt}_1(\pi(i)) = \mathrm{verts}(i{+}1) \wedge
+        \mathrm{endpt}_2(\pi(i)) = \mathrm{verts}(i)\bigr).$$
 
-### 2.3 Class Group Decomposition
+The requirement that $\pi$ be a *permutation* (a bijection of the edge set) is the
+formal content of "traverses every edge exactly once." The disjunction in
+$\mathrm{adj}$ encodes undirectedness: an edge may be crossed from either
+endpoint.
 
-A **ClassGroupDecomposition** records the decomposition Cl(𝒪) ≅ ℤ/d₁ℤ × ⋯ × ℤ/dₖℤ with each dᵢ ≥ 2.
+**Definition 2.4 (Start, end, closed).** The **start** of $T$ is
+$\mathrm{start}(T) = \mathrm{verts}(0)$ and the **end** is
+$\mathrm{last}(T) = \mathrm{verts}(n_E)$. The trail is **closed** if
+$\mathrm{start}(T) = \mathrm{last}(T)$.
 
-## 3. Main Results
+---
 
-### 3.1 Random Self-Reducibility (Theorem 1)
+## 3. Counting functionals
 
-**Theorem (Rerandomization Lemma).** For a free transitive abelian group action and any r ∈ G:
+Fix an Eulerian trail $T$ on $G$ and a vertex $v$. We introduce five
+nonnegative-integer functionals, each an indicator sum over a finite index set.
+Throughout, $[\,P\,]$ denotes the Iverson bracket, equal to $1$ when $P$ holds and
+$0$ otherwise.
+
+**Definition 3.1.**
+$$
+\begin{aligned}
+\text{visit count:} &\quad \mathrm{vis}(v) = \sum_{j=0}^{n_E} [\,\mathrm{verts}(j) = v\,], \\
+\text{start indicator:} &\quad s(v) = [\,\mathrm{verts}(0) = v\,], \\
+\text{end indicator:} &\quad e(v) = [\,\mathrm{verts}(n_E) = v\,], \\
+\text{head-incidence count:} &\quad c(v) = \sum_{i=0}^{n_E-1} [\,\mathrm{verts}(i) = v\,], \\
+\text{tail-incidence count:} &\quad d(v) = \sum_{i=0}^{n_E-1} [\,\mathrm{verts}(i+1) = v\,].
+\end{aligned}
+$$
+Here $c(v)$ counts steps whose **first** (earlier) endpoint is $v$, and $d(v)$
+counts steps whose **second** (later) endpoint is $v$. The visit count ranges over
+all $n_E + 1$ walk positions; $c$ and $d$ range over the $n_E$ steps.
+
+These five quantities are linked by two elementary decompositions and one
+structural lemma, proved next.
+
+---
+
+## 4. The local parity identity
+
+**Lemma 4.1 (Split at the tail).** For every vertex $v$,
+$$\mathrm{vis}(v) = c(v) + e(v).$$
+
+*Proof sketch.* The sum defining $\mathrm{vis}(v)$ runs over positions
+$0, 1, \dots, n_E$. Separate the last position $n_E$ from the rest:
+$$\sum_{j=0}^{n_E} [\,\mathrm{verts}(j) = v\,]
+= \sum_{j=0}^{n_E - 1} [\,\mathrm{verts}(j) = v\,] + [\,\mathrm{verts}(n_E) = v\,].$$
+The first summand is exactly $c(v)$ (the first endpoints of all $n_E$ steps are
+the positions $0, \dots, n_E - 1$), and the second is $e(v)$. This is the
+"sum over `castSucc` plus the last term" decomposition of a sum over an index set
+of size $n_E + 1$. $\qquad\blacksquare$
+
+**Lemma 4.2 (Split at the head).** For every vertex $v$,
+$$\mathrm{vis}(v) = s(v) + d(v).$$
+
+*Proof sketch.* Separate the first position $0$ from the rest:
+$$\sum_{j=0}^{n_E} [\,\mathrm{verts}(j) = v\,]
+= [\,\mathrm{verts}(0) = v\,] + \sum_{j=1}^{n_E} [\,\mathrm{verts}(j) = v\,].$$
+The first summand is $s(v)$. Reindexing the remaining sum by $j = i + 1$ for
+$i = 0, \dots, n_E - 1$ shows it equals $d(v)$, the count of second endpoints. This
+is the "first term plus sum over `succ`" decomposition. $\qquad\blacksquare$
+
+**Lemma 4.3 (Degree equals incidence count).** For every vertex $v$,
+$$\deg_G(v) = c(v) + d(v).$$
+
+*Proof sketch.* This is the only step that uses the trail structure. Write the
+degree as a sum over edges,
+$$\deg_G(v) = \sum_{e} [\,\mathrm{endpt}_1(e) = v\,] + \sum_{e} [\,\mathrm{endpt}_2(e) = v\,].$$
+Because $\pi$ is a permutation of the edge set, we may reindex each sum by
+$e = \pi(i)$ without changing its value (a bijective change of variables on a
+finite sum):
+$$\deg_G(v) = \sum_{i} \Bigl([\,\mathrm{endpt}_1(\pi(i)) = v\,] + [\,\mathrm{endpt}_2(\pi(i)) = v\,]\Bigr).$$
+Now apply the adjacency condition $\mathrm{adj}(i)$ pointwise. In either
+orientation, the *unordered* pair of endpoints of $\pi(i)$ equals the pair
+$\{\mathrm{verts}(i), \mathrm{verts}(i+1)\}$; hence
+$$[\,\mathrm{endpt}_1(\pi(i)) = v\,] + [\,\mathrm{endpt}_2(\pi(i)) = v\,]
+= [\,\mathrm{verts}(i) = v\,] + [\,\mathrm{verts}(i+1) = v\,].$$
+Summing over $i$ gives $c(v) + d(v)$. The orientation disjunction is absorbed
+because addition of the two brackets is symmetric in the endpoints. $\qquad\blacksquare$
+
+**Theorem 4.4 (Local parity identity).** For every vertex $v$ of an Eulerian
+trail $T$,
+$$\boxed{\;\deg_G(v) + s(v) + e(v) = 2\,\mathrm{vis}(v).\;}$$
+
+*Proof.* Add Lemmas 4.1 and 4.2:
+$$2\,\mathrm{vis}(v) = (c(v) + e(v)) + (s(v) + d(v)) = (c(v) + d(v)) + s(v) + e(v).$$
+By Lemma 4.3, $c(v) + d(v) = \deg_G(v)$. Substituting yields the identity. The
+final step is pure integer arithmetic. $\qquad\blacksquare$
+
+**Remark 4.5.** Theorem 4.4 is a strict, exact equation — not an inequality or an
+asymptotic statement. Every loop, every parallel edge, and every orientation
+choice is accounted for with no correction terms beyond the two endpoint
+indicators. The right-hand side is manifestly even, which is the source of all
+parity consequences below.
+
+---
+
+## 5. Classical structure theorems
+
+**Theorem 5.1 (Odd degree forces an endpoint).** If $\deg_G(v)$ is odd, then
+$v = \mathrm{start}(T)$ or $v = \mathrm{last}(T)$.
+
+*Proof.* By Theorem 4.4, $\deg_G(v) + s(v) + e(v) = 2\,\mathrm{vis}(v)$ is even.
+If $\deg_G(v)$ is odd, then $s(v) + e(v)$ must be odd, so exactly one of the
+indicators $s(v), e(v)$ equals $1$. In particular at least one is $1$, i.e.
+$\mathrm{verts}(0) = v$ or $\mathrm{verts}(n_E) = v$, which says $v$ is the start
+or the end. $\qquad\blacksquare$
+
+**Theorem 5.2 (At most two odd-degree vertices).** The set
+$\{v : \deg_G(v)\text{ is odd}\}$ has at most two elements.
+
+*Proof.* By Theorem 5.1, every odd-degree vertex lies in the two-element set
+$\{\mathrm{start}(T), \mathrm{last}(T)\}$ (which has one element if the trail is
+closed). The cardinality of a subset of a set of size at most $2$ is at most $2$.
+$\qquad\blacksquare$
+
+**Theorem 5.3 (Closed trails have all-even degree).** If $T$ is closed
+($\mathrm{start}(T) = \mathrm{last}(T)$), then $\deg_G(v)$ is even for every
+vertex $v$.
+
+*Proof.* Fix $v$ and consider the indicators $s(v), e(v)$. Because
+$\mathrm{verts}(0) = \mathrm{verts}(n_E)$, the conditions
+"$\mathrm{verts}(0) = v$" and "$\mathrm{verts}(n_E) = v$" are equivalent, so
+$s(v) = e(v)$ and hence $s(v) + e(v) \in \{0, 2\}$ is even. By Theorem 4.4,
+$\deg_G(v) = 2\,\mathrm{vis}(v) - s(v) - e(v)$ is a difference of even numbers,
+hence even. $\qquad\blacksquare$
+
+**Corollary 5.4 (Euler's necessary criterion).** A finite multigraph with loops
+admits an Eulerian trail only if it has at most two vertices of odd degree, and
+admits a *closed* Eulerian trail only if it has no vertex of odd degree. In
+particular, the Seven Bridges of Königsberg graph — whose four landmasses all
+have odd degree — admits no Eulerian trail of any kind.
+
+*Proof.* Immediate from Theorems 5.2 and 5.3. The Königsberg multigraph has four
+odd-degree vertices, exceeding the maximum of two. $\qquad\blacksquare$
+
+**Remark 5.5 (On the role of the trail).** Theorems 5.1–5.3 are statements about
+the degree sequence of $G$, but their proofs *consume a trail $T$ as a witness*.
+The hypotheses are not vacuous: the existence of $T$ is exactly what licenses the
+permutation reindexing in Lemma 4.3 and the walk decompositions in Lemmas
+4.1–4.2. Without a trail there is no parity constraint at all (an arbitrary
+multigraph can have any number of odd-degree vertices).
+
+---
+
+## 6. Algorithmic consequences
+
+The theory above is not merely descriptive; it is the foundation of every
+practical algorithm for one-stroke traversal. We record the relevant procedures.
+
+**6.1 Degree and parity audit.** Given endpoint arrays, computing all degrees and
+the set of odd-degree vertices takes $O(n_E + n_V)$ time by a single pass that
+increments two counters per edge (counting loops twice automatically, since both
+endpoint slots equal the loop's vertex). By Theorem 5.2, if more than two odd
+vertices are found, no Eulerian trail exists and one may halt immediately.
+
+**6.2 Hierholzer's algorithm.** When the parity test passes (and the graph is
+connected on its non-isolated vertices), an actual Eulerian trail can be
+constructed in $O(n_E)$ time by Hierholzer's method: greedily extend a trail until
+it gets stuck (necessarily at the start vertex, by the parity identity applied
+locally), then splice in detours from any visited vertex with unused incident
+edges. The parity identity is the invariant that guarantees the greedy walk can
+only get stuck at an endpoint, which is what makes the splicing terminate.
+
+**6.3 Chinese Postman reduction.** If a graph fails the closed-trail test (it has
+$2k > 0$ odd vertices — always an even number, by a global handshake), the minimum
+extra traversal to make all degrees even is obtained by computing a
+minimum-weight perfect matching on the odd-degree vertices and duplicating the
+matched shortest paths. Theorem 5.2 localizes the "defect" exactly to the odd
+vertices, which is what reduces an optimization over walks to a matching problem.
+
+Pseudocode for the audit and parity certificate:
+
 ```
-connector(act(r, x₀), act(r, y)) = connector(x₀, y)
+function EULERIAN_PARITY_AUDIT(endpt1[0..E-1], endpt2[0..E-1], V):
+    deg <- array of V zeros
+    for e in 0..E-1:
+        deg[endpt1[e]] <- deg[endpt1[e]] + 1
+        deg[endpt2[e]] <- deg[endpt2[e]] + 1   # loop hits same index twice
+    odd <- { v : deg[v] is odd }
+    if |odd| = 0:  return ("closed trail possible", odd)
+    if |odd| = 2:  return ("open trail possible, endpoints = odd", odd)
+    return ("no Eulerian trail", odd)
 ```
 
-*Proof sketch.* By uniqueness of connectors, it suffices to show that connector(x₀, y) maps act(r, x₀) to act(r, y). We compute:
-```
-act(connector(x₀, y), act(r, x₀))
-  = act(connector(x₀, y) · r, x₀)           [by act_mul]
-  = act(r · connector(x₀, y), x₀)           [by commutativity]
-  = act(r, act(connector(x₀, y), x₀))       [by act_mul]
-  = act(r, y)                                 [by connector_spec]
-```
+---
 
-**Corollary (Worst-case = Average-case).** If inverter(y) solves GAIP for base x₁ (i.e., act(inverter(y), x₁) = y for all y), then for any base x₀:
-```
-inverter(y) · connector(x₁, x₀)⁻¹ = connector(x₀, y)
-```
+## 7. Applications
 
-This means any GAIP oracle for a single base point can be converted to a GAIP oracle for any base point.
+**Genome assembly.** De Bruijn graph approaches to shotgun sequencing reduce
+reconstruction to finding an Eulerian trail through a graph of $k$-mer overlaps.
+The parity criterion governs feasibility and informs error correction when the
+observed degree sequence violates the at-most-two-odd-vertices rule.
 
-### 3.2 Connector Transport (Theorem 2)
+**Route inspection (Chinese Postman).** Street-sweeping, snow-plowing, meter
+reading, and network link testing all seek a least-cost closed walk covering every
+edge. The even-degree characterization of closed trails (Theorem 5.3) is the
+optimality boundary: zero added cost iff all degrees are even.
 
-**Theorem (Left-shift).** connector(act(g, x), y) = connector(x, y) · g⁻¹.
+**Fabrication toolpaths.** Plotting, laser cutting, and certain additive
+manufacturing passes minimize wasted travel by approximating Eulerian traversals
+of the geometry's edge graph.
 
-**Theorem (Right-shift).** connector(x, act(g, y)) = g · connector(x, y).
+**Pedagogy and puzzles.** "Draw this figure without lifting your pen" is exactly
+the open-Eulerian-trail problem; the parity theorem gives the instant yes/no test.
 
-These properties completely characterize how the connector transforms under the group action. They are essential for security proofs, as they show how knowledge of the connector changes when the action is applied.
+---
 
-### 3.3 t-Special Soundness (Theorem 3)
+## 8. Discussion and future directions
 
-**Theorem.** Given two accepting transcripts for t parallel repetitions:
-- For each i: act(z₀ᵢ, x₀) = Rᵢ
-- For each i: act(z₁ᵢ, pkᵢ) = Rᵢ
+The development isolates a single load-bearing identity (Theorem 4.4) from which
+the entire necessary theory follows by arithmetic. Three directions extend the
+work naturally.
 
-The secret keys can be extracted: act(z₀ᵢ · z₁ᵢ⁻¹, x₀) = pkᵢ for all i.
+**D1 — Sufficiency and connectivity.** We have formalized the *necessary*
+parity conditions. The converse — that a connected multigraph with at most two
+odd-degree vertices *does* admit an Eulerian trail — requires a constructive
+argument (e.g. a formal Hierholzer correctness proof) plus a precise notion of
+connectivity on the non-isolated vertices. Pairing the present parity certificate
+with such a construction would yield a full iff-characterization.
 
-*Proof.* For each i:
-```
-act(z₀ᵢ · z₁ᵢ⁻¹, x₀)
-  = act(z₁ᵢ⁻¹ · z₀ᵢ, x₀)      [commutativity]
-  = act(z₁ᵢ⁻¹, act(z₀ᵢ, x₀))  [act_mul]
-  = act(z₁ᵢ⁻¹, Rᵢ)              [by h0]
-  = pkᵢ                           [by inverse of h1]
-```
+**D2 — Global handshake corollary.** The local identity summed over all vertices
+yields $\sum_v \deg_G(v) = 2 n_E$, whence the number of odd-degree vertices is
+always even. Formalizing this global handshaking lemma as an independent corollary
+and connecting it to Theorem 5.2 would round out the parity package.
 
-### 3.4 Forgery Implies GAIP (Theorem 4)
+**D3 — Directed Eulerian trails.** Replacing the orientation disjunction in
+Definition 2.3 with a fixed orientation yields the directed theory, where the
+relevant invariant is in-degree minus out-degree. The same head/tail splitting
+lemmas apply with signed counts, suggesting a unified treatment of the directed
+and undirected parity identities.
 
-**Theorem.** Given two valid CSI-FiSh signatures with the same commitments but different challenges at position i (one false, one true), the extraction z₀ᵢ · z₁ᵢ⁻¹ maps x₀ to pk.
+**D4 — Weighted and labeled refinements.** Carrying edge labels or weights through
+the counting functionals would let the identity serve as a bookkeeping backbone
+for the Chinese Postman matching reduction, formalizing the localization of
+traversal defect to odd-degree vertices.
 
-This completes the security reduction: any efficient signature forger yields an efficient GAIP solver.
+**D5 — Multiplicity-aware loop calculus.** The "loops count twice" convention is
+the linchpin. A refinement that tracks loops as a separate additive term
+$2 \cdot \mathrm{loops}(v)$ in the degree would make the contribution of self-edges
+fully explicit and ease generalizations to hypergraph incidence structures.
 
-### 3.5 Subgroup Orbit Structure (Theorem 5)
+---
 
-**Theorem.** For a subgroup H ≤ G acting on X via restriction, the orbit of any point x has exactly |H| elements.
+## 9. Conclusion
 
-*Proof.* The orbit map h ↦ act(h, x) from H to X is injective by freeness, so the image (a Finset) has cardinality equal to |H|.
-
-### 3.6 Class Number Lower Bound (Theorem 6)
-
-**Theorem.** If Cl(𝒪) ≅ ℤ/d₁ℤ × ⋯ × ℤ/dₖℤ with each dᵢ ≥ 2, then h ≥ 2ᵏ.
-
-### 3.7 Key Space Lower Bound (Theorem 7)
-
-**Theorem.** For a smooth isogeny decomposition with bounds B₁, ..., Bₙ, if Bᵢ ≥ B for all i, then the key space size is at least (2B + 1)ⁿ.
-
-## 4. Novel Definitions
-
-### 4.1 SmoothIsogenyDecomposition
-
-This structure captures the algebraic structure of CSIDH key generation: a set of generators (small prime ideals) with bounded exponents that span the entire class group. Unlike prior formalizations (e.g., IsogenyDegreeMap in [CSIFiShAdvanced]), this tracks the actual decomposition, not just the degree.
-
-### 4.2 ClassGroupDecomposition
-
-This encodes the structure theorem decomposition with the constraint that all cyclic factors have order ≥ 2, reflecting the fact that the class group of an imaginary quadratic order is never trivial.
-
-### 4.3 CSIFiShSignature
-
-This structure models a CSI-FiSh signature with t parallel repetitions, including commitments, responses, and challenge bits, along with the verification predicate.
-
-## 5. Algorithms
-
-### 5.1 CSIDH Key Exchange
-```
-KeyGen: s ← G; pk ← act(s, E₀); return (s, pk)
-SharedSecret(s, pk'): return act(s, pk')
-```
-Correctness: act(a, act(b, E₀)) = act(b, act(a, E₀)) by commutativity.
-
-### 5.2 CSI-FiSh Signing
-```
-Sign(s, m):
-  for i = 1..t: rᵢ ← G; Rᵢ ← act(rᵢ, E₀)
-  c ← H(m, R₁, ..., Rₜ)
-  for i = 1..t:
-    if cᵢ = 0: zᵢ ← rᵢ
-    if cᵢ = 1: zᵢ ← rᵢ · s⁻¹
-  return (R₁, ..., Rₜ, z₁, ..., zₜ)
-```
-
-### 5.3 GAIP Rerandomization
-```
-Rerandomize(E₀, E₁):
-  r ← G
-  return (act(r, E₀), act(r, E₁))
-```
-
-## 6. Testable Conjecture
-
-**Conjecture (Cayley Diameter).** For ℤ/nℤ with generators {±1}, the Cayley graph diameter is ⌊n/2⌋.
-
-**Test.** For each n ∈ {5, 7, 11, ..., 101}, verify via BFS that every element can be reached in ≤ ⌊n/2⌋ steps. Verified computationally for all tested values.
-
-**Significance.** If true, this gives a precise bound on the mixing time of random walks on the simplest isogeny graph model, with implications for the uniformity of CSIDH key distributions.
-
-## 7. Discussion
-
-### 7.1 Relationship to Prior Work
-
-Our formalization extends the existing catalog in several directions:
-- **CSIFiSh.lean** established the basic torsor structure and 2-special soundness.
-- **CSIFiShAdvanced.lean** introduced the IsogenyDegreeMap and multi-party CSIDH.
-- **CSIFiShDeep.lean** formalized group action morphisms and the decisional CSIDH problem.
-
-Our contributions add: (1) random self-reducibility (the deepest security property), (2) complete connector transport algebra, (3) t-special soundness (generalizing from 2), (4) the forgery→GAIP reduction, (5) subgroup orbit structure, and (6) key space analysis.
-
-### 7.2 Implications for CSIDH Security
-
-The random self-reducibility theorem is perhaps the most significant result, as it establishes that GAIP is as hard on average as it is in the worst case. This means:
-- There are no "weak keys" in CSIDH.
-- Security analysis can focus on average-case instances.
-- The assumption is robust against partial attacks.
-
-### 7.3 Limitations
-
-Our formalization works at the level of abstract group actions and does not require the full algebraic geometry of elliptic curves. This means our results apply to *any* free transitive abelian group action, not just the specific CSIDH action. While this generality is a strength, it also means we cannot capture aspects of CSIDH security that depend on the specific number-theoretic structure of the class group.
-
-## 8. Future Work
-
-1. Formalize the decisional CSIDH problem and prove that it reduces to computational GAIP.
-2. Prove properties of the isogeny graph expansion (Ramanujan-like bounds).
-3. Formalize the class group computation algorithm (used in CSIDH parameter generation).
-4. Extend to the SIDH/SIKE setting (non-commutative actions) and study what breaks.
-5. Explore connections to tropical cryptography via valuation-theoretic group actions.
-
-## References
-
-- [CLM+18] Castryck, Lange, Martindale, Panny, Renes. "CSIDH: An Efficient Post-Quantum Commutative Group Action." ASIACRYPT 2018.
-- [BKV19] Beullens, Kleinjung, Vercauteren. "CSI-FiSh: Efficient Isogeny based Signatures through Class Group Computations." ASIACRYPT 2019.
-- [CLMPR19] Castryck, Lange, Martindale, Panny, Renes. "CSIDH on the surface." PQCrypto 2020.
-- [Cou06] Couveignes. "Hard homogeneous spaces." 2006.
-- [RS06] Rostovtsev, Stolbunov. "Public-key cryptosystem based on isogenies." 2006.
+The parity theory of Eulerian trails, properly formalized over finite multigraphs
+with loops, rests on one exact local identity:
+$\deg(v) + s(v) + e(v) = 2\,\mathrm{vis}(v)$. Its proof is honest finite
+counting — two walk decompositions and one permutation reindexing — and from it
+the classical structure theorems (odd vertices are endpoints; at most two odd
+vertices; closed trails are all-even) follow by integer parity alone. Nearly three
+centuries after Königsberg, the necessary criterion is not only known but reduced
+to its irreducible combinatorial atom.

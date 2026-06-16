@@ -1,69 +1,233 @@
-# The Secret Symmetry That Could Save Encryption From Quantum Computers
+# The Bridges of Königsberg, Counted Exactly
 
-*How mathematicians are using the hidden structure of elliptic curves to build cryptography that even quantum computers can't crack*
+## A walk that started a science
 
----
+In the early eighteenth century, the citizens of Königsberg amused themselves
+with a puzzle. Their city straddled the river Pregel, which split around two
+islands and was crossed by seven bridges. The challenge sounded almost childish:
+take a stroll that crosses every bridge exactly once. People tried for years.
+Nobody succeeded — and nobody could say *why* it was impossible.
 
-In the summer of 2017, a group of cryptographers quietly released a paper that would ripple through the world of cybersecurity. Their creation, called CSIDH (pronounced "sea-side"), proposed a fundamentally new way to exchange secrets over the internet — one that would remain secure even against the terrifying power of quantum computers. But the mathematics behind it reaches back centuries, to one of the most beautiful ideas in all of algebra: the theory of group actions.
+In 1736 a young Leonhard Euler settled the matter, and in doing so accidentally
+founded an entire branch of mathematics. His insight was to throw away almost
+everything about the map. The shapes of the islands, the lengths of the bridges,
+the distances people walked — none of it mattered. What mattered was a single
+piece of bookkeeping at each landmass: *how many bridges touch it?*
 
-## The Quantum Threat
+That number is what we now call the **degree** of a vertex, and Euler's
+discovery was that the entire question of "can I walk every bridge exactly once?"
+is decided by the *parity* of these degrees — whether they are even or odd. The
+seven bridges of Königsberg were impossible because too many landmasses had an
+odd number of bridges. Once you see the world through degrees and parities, the
+answer is forced.
 
-Every time you check your bank balance, send a private message, or make an online purchase, your information is protected by encryption. And nearly all of today's encryption rests on a single mathematical assumption: that certain problems — like factoring enormous numbers into primes — are practically impossible for classical computers to solve.
+This article is about that idea, made completely precise and proved from the
+ground up by pure counting. We will state the modern theorem exactly, see why it
+is true, and watch a deceptively simple "handshake" of arithmetic do all the
+heavy lifting.
 
-But quantum computers don't play by classical rules. In 1994, Peter Shor showed that a sufficiently powerful quantum computer could factor any number in polynomial time, shattering the mathematical foundation of RSA, Diffie-Hellman, and elliptic curve cryptography. The race to find "post-quantum" alternatives has been one of the most urgent challenges in modern mathematics.
+## What is a graph, really?
 
-## Islands in a Sea of Curves
+Strip a map down to its essentials and you are left with two kinds of objects:
+**places** and **connections**. Mathematicians call the places *vertices* and
+the connections *edges*. A road map, a circuit board, a subway network, a
+molecule, a social network — all of them are graphs once you forget the
+irrelevant geometry and keep only "what is connected to what."
 
-The key idea behind CSIDH comes from the geometry of elliptic curves — smooth, doughnut-shaped objects defined by simple polynomial equations. Over a finite field (arithmetic modulo a prime number), these curves form a rich algebraic landscape. Among them, the *supersingular* curves stand out: they are rare, rigid, and possess an unusually rich internal structure.
+We want to be honest about one subtlety that Königsberg already forces on us.
+Real networks can have **two different bridges between the same pair of
+islands**, and they can have **a bridge that loops from a place back to
+itself**. So we work with what is called a *multigraph with loops*: between any
+two places there may be several edges, and an edge is even allowed to start and
+end at the same place.
 
-Imagine these supersingular curves as islands in a vast ocean. Between certain pairs of islands, there exist bridges called *isogenies* — special maps that preserve the algebraic structure of the curves. What makes this geography remarkable is that these bridges form a highly organized network. The pattern of connections is governed by a hidden symmetry group: the *ideal class group* of an imaginary quadratic number field.
+Concretely, fix a finite set of vertices and a finite set of edges. Each edge is
+described by its two *endpoints*. If an edge's two endpoints are the same vertex,
+that edge is a **loop**.
 
-This class group acts on the set of curves the way rotations act on the vertices of a polygon. Every element of the group slides every curve to a different curve, and crucially, this action is both *free* (no curve is fixed by any non-identity element) and *transitive* (you can get from any curve to any other). Mathematicians call such an action a *torsor* — a set that "looks like" the group but has no preferred origin.
+## The all-important count: degree
 
-## The Handshake Protocol
+The **degree** of a vertex is the number of edge-ends that touch it. The phrase
+"edge-ends" is doing precise work. Every edge has exactly two ends. An ordinary
+edge between two different vertices contributes one end to each of them. A loop,
+however, has *both* of its ends planted in the same vertex — so:
 
-CSIDH exploits this torsor structure for key exchange. Alice and Bob each choose a secret element of the class group. Alice applies her secret to a publicly known base curve to get her public curve, and Bob does the same. Then Alice applies her secret to Bob's public curve, and Bob applies his to Alice's. Because the class group is *abelian* (its elements commute), both arrive at the same shared curve — their shared secret.
+> **A loop adds 2 to the degree of its vertex, not 1.**
 
-The security rests on the *Group Action Inverse Problem* (GAIP): given two curves connected by an unknown class group element, find that element. This is believed to be hard even for quantum computers, because unlike factoring or discrete logarithms, GAIP has no known efficient quantum algorithm.
+This is not a stylistic choice; it is the only convention under which the
+theory works, and it is exactly how the formal development counts. The degree of
+a vertex `v` is the number of edges whose *first* endpoint is `v`, plus the
+number of edges whose *second* endpoint is `v`. A loop at `v` is counted in both
+tallies, so it shows up twice. Keep that picture — *every edge contributes
+exactly two units of degree, distributed among its endpoints* — and the rest of
+the story practically tells itself.
 
-## A Deeper Kind of Hardness
+## What is an Eulerian trail?
 
-One of the most striking properties of GAIP — and one that has now been formally proven — is its *random self-reducibility*. This means that the hardness of GAIP is uniform: if any instance of the problem is hard, then every instance is equally hard.
+An **Eulerian trail** is the formal version of "a walk that uses every bridge
+exactly once." It consists of three pieces of data:
 
-The proof relies on a beautiful observation. Given a GAIP instance — a pair of curves (E₀, E₁) connected by an unknown element s — one can "rerandomize" it by applying any group element r to both curves, obtaining a new instance (r·E₀, r·E₁). Because the group is abelian, the new instance has exactly the same solution s. This means that if you could solve GAIP on random instances, you could solve it on any specific instance by simply rerandomizing.
+1. **A walk**: a sequence of vertices `v₀, v₁, v₂, …, v_E`, one more vertex than
+   there are edges. You start at `v₀`, and after each step you are at the next
+   vertex in the list.
+2. **An ordering of the edges**: a rule that says which edge you cross on each
+   step, and crucially this ordering is a *permutation* — every edge appears
+   exactly once. That single requirement is what makes the trail *Eulerian*:
+   nothing is skipped, nothing is repeated.
+3. **A compatibility condition**: the edge you cross on step `i` must genuinely
+   connect the vertex you are standing on to the vertex you arrive at. Because
+   our graph is undirected, you are allowed to traverse an edge in either
+   orientation — from its first endpoint to its second, or the other way around.
 
-This property is rare and valuable in cryptography. It means that the average-case hardness of GAIP equals its worst-case hardness — a guarantee that most cryptographic assumptions lack. It's the difference between knowing that some lock is hard to pick versus knowing that every lock of this design is hard to pick.
+The first vertex `v₀` is the **start** of the trail; the last vertex `v_E` is the
+**end**. If they happen to coincide, the trail is **closed** — a single loop
+through the whole network that returns home.
 
-## From Identification to Signatures
+## The heart of the matter: a local counting identity
 
-CSIDH provides key exchange, but modern cryptography needs more: digital signatures. This is where CSI-FiSh enters the picture. CSI-FiSh transforms CSIDH's key exchange into a signature scheme through the *Fiat-Shamir transform*, a general technique that converts interactive identification protocols into non-interactive signatures.
+Here is the engine that drives everything. Pick any vertex `v` and ask three
+questions about the trail:
 
-The identification protocol works like a game. The prover (who knows the secret key) makes a random commitment, the verifier sends a random challenge bit, and the prover responds. The key security property is *special soundness*: from two valid transcripts with different challenges on the same commitment, anyone can extract the secret key. This means a cheating prover who doesn't know the secret can succeed with probability at most 1/2.
+- **How many times do you visit `v`?** Call this the *visit count*. It counts
+  every position in the walk `v₀, …, v_E` that happens to equal `v`.
+- **Is `v` the start?** Record `1` if yes, `0` if no.
+- **Is `v` the end?** Record `1` if yes, `0` if no.
 
-By running this protocol in parallel — say, 128 times — the cheating probability drops to 2⁻¹²⁸, providing 128-bit security. The signature consists of all 128 commitment-response pairs, with the challenges derived by hashing the message and commitments together.
+The central theorem says these numbers, together with the degree, satisfy a
+rigid equation:
 
-## The Architecture of Security
+> **Local Parity Identity.** For every vertex `v` of an Eulerian trail,
+> $$\deg(v) \;+\; [\,v \text{ is the start}\,] \;+\; [\,v \text{ is the end}\,]
+> \;=\; 2 \times (\text{number of visits to } v).$$
 
-The formal verification of these security properties reveals an elegant mathematical architecture. The connector between two curves — the class group element that maps one to the other — satisfies a remarkable algebra. Connectors compose like group elements, invert like inverses, and shift predictably when the action is applied. These connector laws form a complete algebraic toolkit for reasoning about CSIDH security reductions.
+Read it slowly, because it is beautiful. The right-hand side is *even* — it is
+two times something. So the left-hand side must be even too. The degree, plus a
+correction of `0`, `1`, or `2` for being an endpoint, always lands on an even
+number.
 
-For instance, the proof that signature forgery reduces to GAIP works by showing that two valid signatures with different challenge vectors on the same commitments yield the secret key through a simple algebraic extraction. This extraction uses nothing more than the group law and the freeness of the action — no number theory, no analysis, just pure algebra.
+Why is the identity true? Think about a single visit to `v` somewhere in the
+middle of the walk. To get there you crossed one edge (arriving), and to leave
+you cross another edge (departing). That middle visit therefore accounts for
+**two** edge-ends at `v`: one in, one out. Now the only visits that don't pair
+up this way are the very first step of the walk (you depart but never arrived)
+and the very last step (you arrived but never depart). The start contributes one
+unpaired edge-end; the end contributes one unpaired edge-end. Add the missing
+"phantom" half-steps back in — that is exactly the `[v is start]` and
+`[v is end]` corrections — and suddenly every visit contributes a clean two.
+The total number of edge-ends at `v` is the degree, so:
 
-## The Road Ahead
+$$\deg(v) + [\text{start}] + [\text{end}] = 2 \times (\text{visits}).$$
 
-CSIDH and CSI-FiSh represent one of the most promising approaches to post-quantum cryptography, but challenges remain. The class group computation needed for parameter selection is itself a hard problem, and the efficiency of CSIDH implementations depends on carefully chosen parameters. Recent work has explored the structure of the isogeny graph — the Cayley graph of the class group action — including its expansion properties and diameter.
+In the formal development this argument is split into three transparent counting
+lemmas that fit together by simple arithmetic:
 
-A tantalizing conjecture suggests that for the simplest model of the isogeny graph (the cyclic group ℤ/nℤ with generators ±1), the diameter is exactly ⌊n/2⌋. This has been verified computationally for many values of n, but a general proof remains elusive. Understanding the graph-theoretic properties of isogeny graphs is crucial for analyzing the mixing time of random walks, which in turn affects the security of certain isogeny-based protocols.
+- The visits to `v` can be tallied by looking at the *first* vertex of each step
+  plus a correction for the final vertex (splitting the walk at its tail).
+- The visits to `v` can equally be tallied by looking at the *second* vertex of
+  each step plus a correction for the initial vertex (splitting at its head).
+- The degree of `v` equals the number of steps whose first vertex is `v` plus
+  the number whose second vertex is `v` — and this is where the edge permutation
+  and the "either orientation" rule are used, matching each edge to the step that
+  crosses it.
 
-The decomposition of the class group into cyclic factors — guaranteed by the structure theorem for finite abelian groups — directly determines the key space of CSIDH. With k cyclic factors of orders d₁, ..., dₖ, the class number h = d₁ ··· dₖ satisfies h ≥ 2ᵏ. This exponential growth means that even a modest number of small prime ideals can generate a key space large enough for cryptographic security.
+Combine the three and the identity drops out by ordinary integer arithmetic.
+Notice what powered the whole thing: not geometry, not topology, just the
+discipline of counting each edge-end exactly once.
 
-## The Beauty of the Mathematics
+## Consequences that feel like magic
 
-What makes isogeny-based cryptography so compelling is not just its resistance to quantum attacks, but the depth and elegance of the mathematics it draws upon. The theory of class groups, developed by Gauss, Dedekind, and Hilbert over more than two centuries, finds a new application in the most modern of settings. The torsor structure, studied by algebraic geometers and number theorists, becomes the foundation for secure communication.
+From this one identity, the classical structure theorems follow almost
+immediately.
 
-The random self-reducibility of GAIP — the theorem that worst-case equals average-case — is a statement about the deep homogeneity of the isogeny landscape. It says that there are no "easy spots" in the space of GAIP instances, no lucky inputs that a clever algorithm might exploit. Every instance is as hard as every other, a uniformity of difficulty that speaks to the fundamental symmetry of the underlying mathematics.
+### Odd degree means you are an endpoint
 
-As the world prepares for the quantum computing era, the ancient mathematics of imaginary quadratic fields and ideal class groups stands ready to protect our digital future. The curves may be abstract, the groups may be invisible, but the security they provide is as real as a locked door.
+Suppose some vertex `v` has **odd** degree. The identity says
+`deg(v) + [start] + [end]` is even. An odd number can only become even if the
+endpoint corrections add an *odd* amount — that is, exactly one of `[start]` and
+`[end]` is `1`. In plain language:
 
----
+> **If a vertex has odd degree, it must be either the start or the end of the
+> trail.**
 
-*The research described in this article includes formal mathematical proofs of the random self-reducibility of GAIP, the t-special soundness of CSI-FiSh, and the equivalence between GAIP hardness and one-wayness of the CSIDH map, along with the first formalization of subgroup orbit structure in the isogeny setting.*
+There is simply nowhere else for an odd-degree vertex to hide. Every interior
+vertex of a walk gets its edge-ends paired up perfectly, forcing an even degree.
+Oddness is a privilege reserved for the two ends of the journey.
+
+### At most two odd vertices
+
+A trail has exactly one start and one end. Since every odd-degree vertex must be
+one of these two special places, we conclude:
+
+> **An Eulerian trail can exist only if at most two vertices have odd degree.**
+
+This is the precise reason Königsberg failed. All four of its landmasses had an
+odd number of bridges — four odd vertices, far more than the maximum of two. No
+amount of cleverness could ever have produced the walk; the parity bookkeeping
+forbids it.
+
+### Closed trails have all-even degrees
+
+Finally, suppose the trail is **closed**: it ends where it began, `start = end`.
+Then for *every* vertex, the two endpoint corrections either both fire (at the
+shared start/end vertex, adding `2`) or both stay silent (everywhere else, adding
+`0`). Either way the correction is even, so the degree itself must be even:
+
+> **In a closed Eulerian trail (a circuit returning home), every single vertex
+> has even degree.**
+
+This is the famous criterion for an Eulerian *circuit*: you can tour a network
+and return to your starting point, crossing every connection exactly once, only
+if every junction has an even number of connections. Mail carriers planning a
+route that retraces no street, machines drawing a figure without lifting the pen,
+DNA-sequencing algorithms stitching fragments into a genome — all of them live or
+die by this even-degree condition.
+
+## Why this still matters
+
+It would be a mistake to file Euler's idea away as a historical curiosity. The
+parity-of-degree principle is one of the most reused tools in all of discrete
+mathematics and computer science.
+
+- **Genome assembly.** Modern DNA sequencers produce millions of short, overlapping
+  fragments. Reconstructing the original genome is, at its core, the problem of
+  finding an Eulerian trail through a graph of overlaps. The even/odd degree
+  bookkeeping decides whether the reconstruction is even possible and guides the
+  algorithms that find it.
+
+- **The Chinese Postman Problem.** A postal worker wants to walk every street and
+  return to the depot using the least extra distance. If the street network
+  already has all-even degrees, an Eulerian circuit exists and there is no waste.
+  If not, the odd-degree vertices — and there are always an even number of them —
+  must be paired up and "fixed," and the parity theorem tells you exactly which
+  vertices need attention.
+
+- **Drawing and manufacturing.** The childhood puzzle of drawing a shape "in one
+  stroke without lifting your pencil" is precisely the Eulerian-trail question.
+  The same logic optimizes the path of a laser cutter or a 3D printer's nozzle.
+
+- **Network reliability and circuit design.** Whenever you need to traverse every
+  link of a system exactly once — for testing, for inspection, for signal
+  routing — the degrees of the nodes are the first thing to compute.
+
+What unites all of these is the same humble observation Euler made looking at a
+city map: forget the picture, count the connections, and check whether the counts
+are even or odd. The **handshake intuition** — that edge-ends always come in
+pairs except possibly at the two ends of a journey — is the whole secret.
+
+## The lesson of the count
+
+The deepest theorems are often the ones whose proofs are pure bookkeeping done
+without a single error. The parity identity
+`deg(v) + [start] + [end] = 2 × visits` is not deep because it is complicated; it
+is deep because it is *exactly right*, accounting for every loop, every
+orientation, and every endpoint with no fudge factors. From that one honest
+equation flows the complete classification of when a one-stroke walk exists:
+
+- odd-degree vertices are exactly the possible endpoints,
+- there can be at most two of them,
+- and a closed tour forces every degree to be even.
+
+Three hundred years after a riverside puzzle stumped a town, the answer is not
+just known — it is counted, exactly, with nothing left to chance. That is the
+quiet power of seeing the world as vertices, edges, and the eternal arithmetic of
+even and odd.
