@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d79ba9e2",
     "filename": "isogeny_based_cryptography_csi_fish.json",
     "pkg_num": 173,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.66144,
     "title": "The Parity Theorem for Eulerian Trails: A Counting-Theoretic Development"
   },
   {
@@ -5343,8 +5343,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "isogeny_based_cryptography_csi_fish",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.66144,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "The Parity Theorem for Eulerian Trails: A Counting-Theoretic Development"
     }
