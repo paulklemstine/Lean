@@ -720,7 +720,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 6: Axiomatization of Physics"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2d22ac65",
     "description": "Construct a simplicial complex from the citation graph of mathematical theorems: vertices are theorems, edges connect co-cited theorems, triangles connect tri-cited theorems, etc. Compute the persistent homology of this complex. Conjecture: H_1 reveals 'schools of mathematics' (connected research communities) and H_2 reveals 'paradigm shifts' (structural changes in the network). Prove: the Betti numbers grow as \u03b2_k \u2248 n^(k+1) where n is the number of theorems.",
     "domains": [
       "Novelty",
@@ -730,7 +730,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T23:40:36.748677+00:00",
     "title": "Speculative: Topological Data Analysis of Theorem Networks"
   },
@@ -1336,6 +1336,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-16T21:05:14.517268+00:00",
     "title": "These build directly on `BehavioralEquivalence.lean` and stay within precise, pr"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Periodic Table of Finite Groups\n\nDerived from the verified Lean results in\n`Catalog/Novelty/PeriodicTableOfGroups.lean` and\n`Catalog/Novelty/GroupIsotopes.lean`.\n\nThis cycle formalized the \"chemistry meets algebra\" analogy by pinning down a single\nconserved chemical charge \u2014 **solvability** \u2014 and proving its conservation laws\n(`chemistry_isInvariant`, `nobleGas_commutator_trivial`), its sharp failure on the\nsimple-group block (`transitionMetal_dichotomy`), the halogen reactivity law\n(`halogen_cayley`), and the order-120 prediction (`order120_transitionMetal`).\nOn the isotope side we proved valence is `1` for transition metals\n(`simpleGroup_valence_one`) and that prime-order species have no genuine isotopes\n(`isotope_collapse`).\n\nThe central *negative* discovery \u2014 that a finite group's order is **determined** by its\ncomposition factors, so the chemical notion of \"isotope\" (same factors, different mass) is\nvacuous \u2014 drives the conjectures below.\n\n---\n\n## Conjecture 1 \u2014 The composition-factor mass law (the \"no isotopes\" theorem)\n\n**Statement.** For every finite group `G` with composition series of factors\n`S\u2081, \u2026, S\u2096`, `Nat.card G = \u220f\u1d62 Nat.card S\u1d62`. Consequently any two finite groups with the\nsame multiset of composition factors have equal order.\n\n**The key insight is...** that the chemistry analogy breaks at exactly one place \u2014 atomic\nmass \u2014 and the break is a theorem, not an accident: in groups, \"atomic number\" (order) is a\n*function* of the composition formula, whereas in atoms `Z` and mass are independent. This\nupgrades the partial result `isotope_collapse` (prime-order case) to the full block.\n\n**Why now?** Mathlib has the abstract `JordanHolder` lattice machinery but no group-level\ncomposition-series cardinality lemma; `transitionMetal_dichotomy` already shows the\nprime-order shadow is fully formalizable, so the multiplicativity of order over factors is\nthe next reachable rung.\n\n---\n\n## Conjecture 2 \u2014 Valence stratifies the table\n\n**Statement.** Define `valence G = ({N | MinimalNormalSubgroup N}).ncard`. Then a finite\ngroup is *characteristically simple* (a direct power of a simple group) iff it has a unique\nminimal normal subgroup that is also its socle; and nilpotent groups satisfy\n`valence G = #{p : p \u2223 |G|}` (one minimal normal subgroup per prime, from the central\nSylow structure).\n\n**The key insight is...** that `simpleGroup_valence_one` is the first cell of a *column*:\nvalence counts the irreducible \"bonding sites\" (minimal normal subgroups), and for the\nnilpotent (\"noble-gas-like\") block this count is forced to equal the number of distinct\nprime divisors via centrality of Sylow subgroups.\n\n**Why now?** We already have the `MinimalNormalSubgroup` predicate and the simple-group\ncomputation; the nilpotent case only needs Mathlib's existing Sylow-center theory, making\nthe column-valence law immediately testable.\n\n---\n\n## Conjecture 3 \u2014 Solvability is the *unique* nontrivial monotone chemical charge\n\n**Statement.** Any group property `P` that is (i) an isomorphism invariant, (ii) closed\nunder subgroups, quotients, and finite products, and (iii) false on some finite group, must\nbe implied by non-solvability: `\u00acIsSolvable G \u2192 \u00acP G`. Equivalently, solvability is the\nfinest such \"downward-and-upward closed\" charge below the line `True`.\n\n**The key insight is...** that `chemistry_isInvariant` plus the Mathlib closure instances\n(`subgroup_solvable_of_solvable`, `solvable_quotient_of_solvable`, `solvable_prod`) make\nsolvability a *formation-class* charge; the conjecture says no strictly stronger\nformation-class charge separates finite groups, so solvability really is the periodic\ntable's fundamental conserved quantity.\n\n**Why now?** Every closure law the conjecture quantifies over is already an instance in\nMathlib's `Solvable.lean`, so the statement is a finite-combinatorial extremality claim over\nknown building blocks rather than new analysis.\n\n---\n\n## Conjecture 4 \u2014 The transition-metal threshold is exactly atomic number 60\n\n**Statement.** Every group of order `< 60` is solvable, and `A\u2085` (order 60) is the lightest\nnon-solvable group; hence the first \"transition metal\" sits at atomic number 60, and the\norder-120 species `S\u2085` is its lightest non-solvable *compound* (already verified in\n`order120_transitionMetal`).\n\n**The key insight is...** that `transitionMetal_dichotomy` says non-solvability requires a\nnonabelian simple composition factor, and the smallest nonabelian simple group has order 60;\nso the periodic table has a literal *metallicity threshold* with `A\u2085` as its hydrogen.\n\n**Why now?** `Equiv.Perm.fin_5_not_solvable` (used in `order120_transitionMetal`) gives the\nupper witness for free; the remaining content \u2014 solvability of all groups of order `< 60` \u2014\nis a finite Sylow/Burnside `p\u1d43q\u1d47` argument whose ingredients (`IsPGroup.isSolvable`,\nBurnside) are present or near-present in Mathlib.\n\n---\n\n## Conjecture 5 \u2014 Reactivity = generation is quantitative (sharp Cayley degree)\n\n**Statement.** Refine `halogen_cayley`: the minimal `n` with `G \u21aa S\u2099` (the \"reactivity\ndegree\" `\u03bc(G)`) satisfies `\u03bc(G) \u2264 |G|` with equality iff `G` is cyclic of prime power order\nor one of finitely many exceptions; in general `\u03bc(G)` is the minimal sum of prime-power\nindices of a covering family of core-free subgroups.\n\n**The key insight is...** that the halogen embedding into `S_{|G|}` is almost never optimal \u2014\n\"reactivity\" is graded by the *minimal faithful permutation degree*, turning the qualitative\nCayley reaction into a measurable valence-like spectrum across the table.\n\n**Why now?** `halogen_cayley` already produces the canonical (regular) embedding; the\nmachinery for cosets and core-free subgroups exists in Mathlib, so optimizing the degree is\na concrete next experiment rather than a foundational build.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2029",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "fb007c35",
+    "status": "available",
+    "timestamp": "2026-06-16T22:35:58.741131+00:00",
+    "title": "Derived from the verified Lean results in"
   },
   {
     "consumed_by_exp_id": "",
@@ -2469,21 +2484,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-01T12:30:30.492042+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
-  },
-  {
-    "consumed_by_exp_id": "fb007c35",
-    "description": "Mendeleev organized 63 elements into a periodic table that predicted undiscovered elements. Can we do the same for finite groups? Classify all finite groups of order <= 2000 (there are approximately 10^15 of them, so we need a structural organization). Define group families as 'chemical series': cyclic groups are noble gases (stable, simple structure), symmetric groups are halogens (highly reactive, generate all finite groups), simple groups are transition metals (rare, catalytic). Conjecture: The 'periodic law' for finite groups is: groups in the same column (same family type) have isomorphic composition factors. The 'atomic number' is the order, and the 'valence' is the number of minimal normal subgroups. Groups with the same composition factors but different orders are 'isotopes' \u2014 they share chemical properties (solubility = solvability, reactivity = generation capacity). Test: construct a periodic table of groups of order <= 100, organizing them by composition factors. Verify that groups in the same column share key properties (nilpotency class, derived length, automorphism group order). Predict the properties of undiscovered groups (e.g., order 120, composition factors {2,2,2,3,5}) before looking them up. Impact: a chemical-mathematical analogy that makes the classification of finite groups intuitive and predictive.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0012",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.495596+00:00",
-    "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
   },
   {
     "consumed_by_exp_id": "",
