@@ -1001,7 +1001,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "880250ea",
     "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) — expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look — the mathematical realization of a universe that is simultaneously expanding and contracting.",
     "domain_bridges": [],
     "domains": [
@@ -1014,7 +1014,7 @@
     "proof_strategy": "Define the split metric g = diag(1/cosh^2(y), cosh^2(x)) on R^2. Compute the Christoffel symbols: Gamma^1_{11} = tanh(y), Gamma^1_{12} = 0, Gamma^1_{22} = -sinh(x)cosh(x), Gamma^2_{11} = -tanh(y)*cosh^2(x)*cosh^2(y), Gamma^2_{12} = 0, Gamma^2_{22} = -sinh(x)cosh(x). Compute curvature: K = -sech^2(y) + sech^2(x). Verify: K = 0 on y = x and y = -x. K > 0 for |x| > |y| (elliptic). K < 0 for |y| > |x| (hyperbolic). Prove geodesic crossing: a geodesic that enters the elliptic region and then the hyperbolic region crosses the flat boundary at most twice (by convexity of the curvature sign along the geodesic). Compute split triangle area: integral of sqrt(det(g)) = integral of cosh(x)/cosh(y) over the triangle. Test: numerical verification for specific triangles.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.514276+00:00",
     "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
   },
@@ -2228,6 +2228,26 @@
     "status": "available",
     "timestamp": "2026-06-17T16:44:21.172809+00:00",
     "title": "(in `DecisionBoundaryVariety.lean` and"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — *Isomorphisms of Meaning: When Structures Collide*\n\nThis cycle established two anchor results (see `Catalog/Bridges/StructuralCollisions.lean`\nand `Catalog/Bridges/BooleanLogicField.lean`):\n\n* **A1.** A bare ring satisfying the single law `x*x = x` is *forced* to have\n  characteristic two and to be commutative, and its multiplication **is** the\n  greatest-lower-bound (meet) of the order `a ≤ b ↔ a*b = a`. (Algebra ⇒ Order.)\n* **A2.** Propositional logic `(Bool, xor, and)` **is** the field `ZMod 2`, via an explicit\n  `RingEquiv Bool (ZMod 2)`; `&&` is simultaneously the ring product and the order meet\n  (cross-linked to A1). (Logic ≅ Algebra.)\n\nThe following conjectures are concrete, falsifiable next targets for the same theme.\n\n---\n\n### C1. Symmetric difference is an 𝔽₂-vector space (Set ≅ Algebra)\nFor any type `α`, the powerset `Set α` with symmetric difference `△` as addition and\nintersection `∩` as multiplication is a *Boolean ring*: `s ∩ s = s`, `s △ s = ∅`, and the\norder induced by A1 is set inclusion with `s ⊓ t = s ∩ t`.\n**Testable form:** instantiate the A1 abstractions (`add_self`, `mul_comm'`, `mul_isGLB`)\nat `Set α`/`Finset α` and prove `StructuralCollisions.le s t ↔ s ⊆ t`, identifying the\nA1-meet with `∩`. Predicts every finite Boolean algebra is an 𝔽₂-module of dimension\n`= #atoms`.\n\n### C2. Stone-type rigidity of the collision\nThe isomorphism `Bool ≃+* ZMod 2` is the *unique* ring isomorphism, and more generally any\nring homomorphism `R → S` between Boolean rings is automatically a lattice homomorphism for\nthe A1-induced orders (`a ≤ b → f a ≤ f b`), and conversely a bounded-lattice hom of finite\nBoolean algebras is a ring hom.\n**Testable form:** prove `Subsingleton (Bool ≃+* ZMod 2)`, and prove\n`f (a*b) = f a * f b → (StructuralCollisions.le a b → StructuralCollisions.le (f a) (f b))`\nfor a `RingHom` between Boolean rings.\n\n### C3. Idempotence is the *exact* boundary of the collapse\nThe forced-commutativity phenomenon (A1) is special to the exponent law `x^2 = x`.\n**Conjecture:** for each fixed `n ≥ 2`, a ring with `∀ x, x^n = x` is commutative\n(Jacobson's theorem). The cases `n = 2` (done) and `n = 3` should be provable by elementary\nexpansion; general `n` is the deep target.\n**Testable form:** prove the `n = 3` case `(∀ x, x*x*x = x) → ∀ a b, a*b = b*a` from scratch\n(no Mathlib `Jacobson` import), then attempt `n = 4`.\n\n### C4. The order/algebra collision lifts to a categorical equivalence\nThe constructions of A1 should assemble into an equivalence of categories between *finite\nBoolean rings with ring homs* and *finite Boolean algebras with bounded-lattice homs*, with\nobject map `R ↦ (R, ≤_{a*b=a})` and inverse given by symmetric difference (C1).\n**Testable form:** build the two functors on objects + morphisms in Lean and prove the\nround-trips are identities on `Bool`, `ZMod 2`, and `Set (Fin n)`.\n\n### C5. A \"no-collision\" obstruction in characteristic ≠ 2\nThe collision in A1/A2 is a characteristic-two miracle. **Conjecture:** there is *no*\nnonzero ring `R` with `∀ x, x*x = x` and `(1 : R) + 1` a unit; equivalently, idempotence\nforbids odd characteristic.\n**Testable form:** prove `(∀ x : R, x*x = x) → (2 : R) = 0`, and deduce that a Boolean ring\nthat is also a field must be `ZMod 2` (so `Bool`), pinning A2 as the unique field-collision.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_2062",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "61934e8a",
+    "status": "available",
+    "timestamp": "2026-06-17T17:23:46.154534+00:00",
+    "title": "Two anchor results (see `Catalog/Bridges/StructuralCollis"
   },
   {
     "ambition_level": "extension",
@@ -4060,26 +4080,6 @@
     "status": "failed",
     "timestamp": "2026-06-01T12:30:30.834465+00:00",
     "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "61934e8a",
-    "description": "Prove that isomorphic mathematical structures can carry semantically different meanings that no formal system can distinguish. Formalize the concept of 'isomorphism of isomorphisms' and show that categorical equivalence preserves truth but not meaning. Connect to Hofstadter's Copycat architecture for analogical reasoning.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0098",
-    "lineage_refs": [],
-    "priority_score": 0.05,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.846057+00:00",
-    "title": "Isomorphisms of Meaning: When Structures Collide"
   },
   {
     "ambition_level": "extension",

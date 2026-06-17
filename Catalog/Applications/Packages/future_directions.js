@@ -747,7 +747,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "880250ea",
     "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) \u2014 expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look \u2014 the mathematical realization of a universe that is simultaneously expanding and contracting.",
     "domains": [
       "Novelty",
@@ -757,7 +757,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.514276+00:00",
     "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
   },
@@ -1666,6 +1666,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T16:44:21.172809+00:00",
     "title": "(in `DecisionBoundaryVariety.lean` and"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 *Isomorphisms of Meaning: When Structures Collide*\n\nThis cycle established two anchor results (see `Catalog/Bridges/StructuralCollisions.lean`\nand `Catalog/Bridges/BooleanLogicField.lean`):\n\n* **A1.** A bare ring satisfying the single law `x*x = x` is *forced* to have\n  characteristic two and to be commutative, and its multiplication **is** the\n  greatest-lower-bound (meet) of the order `a \u2264 b \u2194 a*b = a`. (Algebra \u21d2 Order.)\n* **A2.** Propositional logic `(Bool, xor, and)` **is** the field `ZMod 2`, via an explicit\n  `RingEquiv Bool (ZMod 2)`; `&&` is simultaneously the ring product and the order meet\n  (cross-linked to A1). (Logic \u2245 Algebra.)\n\nThe following conjectures are concrete, falsifiable next targets for the same theme.\n\n---\n\n### C1. Symmetric difference is an \ud835\udd3d\u2082-vector space (Set \u2245 Algebra)\nFor any type `\u03b1`, the powerset `Set \u03b1` with symmetric difference `\u25b3` as addition and\nintersection `\u2229` as multiplication is a *Boolean ring*: `s \u2229 s = s`, `s \u25b3 s = \u2205`, and the\norder induced by A1 is set inclusion with `s \u2293 t = s \u2229 t`.\n**Testable form:** instantiate the A1 abstractions (`add_self`, `mul_comm'`, `mul_isGLB`)\nat `Set \u03b1`/`Finset \u03b1` and prove `StructuralCollisions.le s t \u2194 s \u2286 t`, identifying the\nA1-meet with `\u2229`. Predicts every finite Boolean algebra is an \ud835\udd3d\u2082-module of dimension\n`= #atoms`.\n\n### C2. Stone-type rigidity of the collision\nThe isomorphism `Bool \u2243+* ZMod 2` is the *unique* ring isomorphism, and more generally any\nring homomorphism `R \u2192 S` between Boolean rings is automatically a lattice homomorphism for\nthe A1-induced orders (`a \u2264 b \u2192 f a \u2264 f b`), and conversely a bounded-lattice hom of finite\nBoolean algebras is a ring hom.\n**Testable form:** prove `Subsingleton (Bool \u2243+* ZMod 2)`, and prove\n`f (a*b) = f a * f b \u2192 (StructuralCollisions.le a b \u2192 StructuralCollisions.le (f a) (f b))`\nfor a `RingHom` between Boolean rings.\n\n### C3. Idempotence is the *exact* boundary of the collapse\nThe forced-commutativity phenomenon (A1) is special to the exponent law `x^2 = x`.\n**Conjecture:** for each fixed `n \u2265 2`, a ring with `\u2200 x, x^n = x` is commutative\n(Jacobson's theorem). The cases `n = 2` (done) and `n = 3` should be provable by elementary\nexpansion; general `n` is the deep target.\n**Testable form:** prove the `n = 3` case `(\u2200 x, x*x*x = x) \u2192 \u2200 a b, a*b = b*a` from scratch\n(no Mathlib `Jacobson` import), then attempt `n = 4`.\n\n### C4. The order/algebra collision lifts to a categorical equivalence\nThe constructions of A1 should assemble into an equivalence of categories between *finite\nBoolean rings with ring homs* and *finite Boolean algebras with bounded-lattice homs*, with\nobject map `R \u21a6 (R, \u2264_{a*b=a})` and inverse given by symmetric difference (C1).\n**Testable form:** build the two functors on objects + morphisms in Lean and prove the\nround-trips are identities on `Bool`, `ZMod 2`, and `Set (Fin n)`.\n\n### C5. A \"no-collision\" obstruction in characteristic \u2260 2\nThe collision in A1/A2 is a characteristic-two miracle. **Conjecture:** there is *no*\nnonzero ring `R` with `\u2200 x, x*x = x` and `(1 : R) + 1` a unit; equivalently, idempotence\nforbids odd characteristic.\n**Testable form:** prove `(\u2200 x : R, x*x = x) \u2192 (2 : R) = 0`, and deduce that a Boolean ring\nthat is also a field must be `ZMod 2` (so `Bool`), pinning A2 as the unique field-collision.\n",
+    "domains": [
+      "Algebra",
+      "Bridges"
+    ],
+    "id": "fd_2062",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "61934e8a",
+    "status": "available",
+    "timestamp": "2026-06-17T17:23:46.154534+00:00",
+    "title": "Two anchor results (see `Catalog/Bridges/StructuralCollis"
   },
   {
     "consumed_by_exp_id": "",
@@ -3038,21 +3053,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-01T12:30:30.834465+00:00",
     "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
-  },
-  {
-    "consumed_by_exp_id": "61934e8a",
-    "description": "Prove that isomorphic mathematical structures can carry semantically different meanings that no formal system can distinguish. Formalize the concept of 'isomorphism of isomorphisms' and show that categorical equivalence preserves truth but not meaning. Connect to Hofstadter's Copycat architecture for analogical reasoning.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0098",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.846057+00:00",
-    "title": "Isomorphisms of Meaning: When Structures Collide"
   },
   {
     "consumed_by_exp_id": "",
