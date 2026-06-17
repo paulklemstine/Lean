@@ -732,21 +732,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reconstruction Conjecture"
   },
   {
-    "consumed_by_exp_id": "bf4e21b7",
-    "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0011",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.494775+00:00",
-    "title": "Knots That Think: Cognition as Braiding in Category Theory"
-  },
-  {
     "consumed_by_exp_id": "880250ea",
     "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) \u2014 expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look \u2014 the mathematical realization of a universe that is simultaneously expanding and contracting.",
     "domains": [
@@ -820,6 +805,35 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:46.975605+00:00",
     "title": "Consciousness as Integrated Information: Mathematical Foundations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer k \u2265 2 and every \u03b5 > 0, there exist infinitely many n-vertex k-uniform uncrowded hypergraphs (girth \u2265 5) H with maximum degree \u0394 (where \u0394 \u2192 \u221e) such that \u03b1(H) \u2264 (1+\u03b5) \u00b7 n \u00b7 ((1/(k-1)) \u00b7 log(\u0394)/\u0394))^(1/(k-1)). This conjecture asserts that the shattering-threshold lower bound proven in this paper\u2014which achieves the constant (1/(k-1))^(1/(k-1))\u2014is asymptotically tight, meaning no larger leading constant is achievable for the class of uncrowded hypergraphs.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2066",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18048v1",
+    "status": "available",
+    "timestamp": "2026-06-17T22:31:12.228823+00:00",
+    "title": "Asymptotic Tightness of the Shattering Threshold for Uncrowded Hypergraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any tree graph, there exists a set of vertices that is simultaneously an isolating set and a packing (2-packing). An isolating set is a set S such that the subgraph induced by vertices outside the closed neighborhood of S has no edges. A packing is a set S such that the closed neighborhoods of the vertices in S are pairwise disjoint.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2067",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18172v1",
+    "status": "available",
+    "timestamp": "2026-06-17T22:32:18.782940+00:00",
+    "title": "Existence of Packing Isolating Sets in Trees"
   },
   {
     "consumed_by_exp_id": "",
@@ -1699,6 +1713,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Fermi Paradox as a Pigeonhole Principle\n\nDerived from the verified results in this cycle:\n\n* `FirstMoment.lean` \u2014 the first moment method over finite weighted spaces\n  (`exists_zero_of_expectation_lt_one`, `prob_zero_ge_one_sub_expectation`).\n* `DrakeBound.lean` \u2014 the conservative Drake inequality (`drake_expected_lt_one`,\n  `prod_le_pow_of_forall_le`) and its fusion with the pigeonhole\n  (`fermi_alone_under_conservative_drake`).\n* `Bridge.lean` \u2014 the cross-domain `fermi_resonant_listening_window`, combining\n  the Pythagorean averaging lemma with the Fibonacci strong-divisibility law.\n\nEach conjecture below is falsifiable and stated so it can be formalized next.\n\n---\n\n## C1. The empty-set lower bound is *tight* up to the integrality gap.\n\n**Conjecture.** For every finite weighted space with expectation `E < 1`, the\ntotal weight of the zero set satisfies `1 \u2212 E \u2264 w(Z) \u2264 1`, and the lower bound\n`1 \u2212 E` is attained exactly when the nonzero outcomes all equal `1` (a Bernoulli\nsupport).  Conversely, if `w(Z) = 1 \u2212 E` then `X` is `{0,1}`-valued on its\nsupport.\n\n*The key insight is...* that `prob_zero_ge_one_sub_expectation` only used\n`X i \u2265 1` on the complement, so equality forces `X i = 1` there \u2014 the slack in\nthe bound is exactly `\u2211_{X\u22652} w_i (X_i \u2212 1)`, a nonnegative \"over-counting\" term.\n\n**Why now?** We already proved the inequality in `prob_zero_ge_one_sub_expectation`;\ncharacterizing its equality case is the immediate next refinement and needs only\na careful `Finset.sum_eq_zero` argument on the slack term.\n\n---\n\n## C2. A \"second moment\" companion forces *non-empty* outcomes when `E > 1`.\n\n**Conjecture.** If `E = \u2211 w\u1d62 X\u1d62 > 1` and the variance is controlled\n(`\u2211 w\u1d62 X\u1d62\u00b2 \u2264 C\u00b7E\u00b2`), then `w({X \u2265 1}) \u2265 E\u00b2/(C\u00b7E\u00b2) = 1/C`: with civilizations\nexpected *and* not too clustered, contact is likely.\n\n*The key insight is...* that the first moment method is one half of a dichotomy;\nthe Paley\u2013Zygmund inequality is its mirror, turning `E > 1` into a positive\nprobability of a *non-empty* cosmos.\n\n**Why now?** Our `FirstMoment.lean` machinery (finite weighted sums in `\u211a`,\n`Finset.sum_le_sum`) is exactly the substrate needed for Cauchy\u2013Schwarz over a\n`Finset`, so the second-moment bound is a natural sequel rather than new theory.\n\n---\n\n## C3. The Drake bound is *dimension-robust*: hurdles, not values, decide it.\n\n**Conjecture.** For any list of independent hurdle probabilities each `\u2264 1/10`,\n`Nplanets \u2264 10\u00b9\u2070`, and at least `11` hurdles, the expected number of\ncivilizations is `< 1` \u2014 regardless of the precise per-hurdle values.\n\n*The key insight is...* that `prod_le_pow_of_forall_le` bounds the product by\n`(1/10)^(#hurdles)`, so the *count* of independent filters, not optimistic\ntuning of any single one, is what drives `E` below `1`.\n\n**Why now?** `prod_le_pow_of_forall_le` is already proved; combining it with\n`drake_expected_lt_one` via `pow_le_pow_right_of_le_one` closes the conjecture\nwith no new infrastructure.\n\n---\n\n## C4. Resonant listening times are *stable under window perturbation*.\n\n**Conjecture.** If two dense families `F`, `F'` over `U` differ in at most `k`\nwindows, then they share a resonant listening time whenever\n`8k < |F|` \u2014 the pigeonhole witness of `fermi_resonant_listening_window`\nsurvives small observational noise.\n\n*The key insight is...* that the averaging lemma's slack (`miss \u2264 |F|/4`) leaves\nroom: removing or adding `k` windows shifts the incidence count by `\u2264 k`, so the\n`3/4` majority is preserved while `8k < |F|`.\n\n**Why now?** `fermi_resonant_window_coverage` already exposes the `3\u00b7|F| \u2264\n4\u00b7hit` margin; a perturbation lemma is a direct `omega`-style consequence of that\ninequality plus `Finset.card_union_le`.\n\n---\n\n## C5. Fibonacci signal resonance yields a *shared detector frequency*.\n\n**Conjecture.** At the resonant time `a` of `fermi_resonant_listening_window`,\nif every active civilization's epoch is divisible by a common `d`, then `fib d`\ndivides the gcd of *all* their Fibonacci signals \u2014 a single divisor witnesses\nuniversal resonance.\n\n*The key insight is...* that `IsStrongDivSeq.dvd_gcd_index_iff` lifts pairwise\ndivisibility to the whole active family by induction on the window set, turning\nthe bridge's pointwise meet law into a global one.\n\n**Why now?** Both ingredients \u2014 the resonant witness and the meet law\n(`StrongDivSeq.IsStrongDivSeq.dvd_gcd_index_iff`) \u2014 are imported and proved in\n`Bridge.lean`; the global statement is a `Finset.induction` away.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2064",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "9ff40964",
+    "status": "available",
+    "timestamp": "2026-06-17T19:24:15.522105+00:00",
+    "title": "Derived from the verified results in this cycle:"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Hypergraph Ramsey Theory: Beyond Graphs\n\nThis cycle formalized, with zero `sorry`, a self-contained 2-color Ramsey theory\nfor `r`-uniform hypergraphs over the `Finset (Fin n) \u2192 Bool` coloring model:\n\n- **Structural laws** (`Defs.lean`): color symmetry, monotonicity in the vertex\n  count (via an embedding transport), monotonicity in clique size, and the\n  vacuous degenerate regime `k < r`.\n- **Probabilistic lower bound** (`LowerBound.lean`): the Erd\u0151s first-moment\n  argument `2\u00b7C(n,k) < 2^{C(k,r)} \u27f9 R_r(k,k) > n`, with concrete instances\n  `R_3(5,5) > 11` and `R_3(6,6) > 29`.\n- **Growth separation** (`Separation.lean`): the explicit floor\n  `R_3(k,k) > 2^m` whenever `k\u00b7m + 1 < C(k,3)` (giving `2^{\u03a9(k\u00b2)}`), the tower\n  function `tower 2 k = 2^{2^k}`, and the strict separation\n  `2^{k\u00b2} < 2^{2^k}` for `k \u2265 5`.\n\nThe findings below are derived directly from what survived (and what resisted)\nthe team loop.\n\n---\n\n## Conjecture 1 \u2014 The explicit floor is `2^{\u230a(C(k,3)\u22121)/k\u230b}`, and it is the best the first moment can give\n\n**Statement.** For every `k \u2265 3`, `R_3(k,k) > 2^{m_k}` where\n`m_k = \u230a(C(k,3) \u2212 2)/k\u230b`, and no first-moment argument over the uniform random\ncoloring yields any larger floor (the threshold `2\u00b7C(n,k) < 2^{C(k,3)}` is\nviolated for `n = 2^{m_k+1}` once `k` is large).\n\n**The key insight is** that the affordable exponent in `R3_exp_lower_bound` is\nbudgeted by `k\u00b7m + 1 < C(k,3)`, so `m` can grow only like `C(k,3)/k \u2248 k\u00b2/6` \u2014\nthe quadratic exponent is a *hard ceiling* of the first moment, not a loose\nconstant.\n\n**Why now?** `R3_exp_lower_bound` already isolates the budget inequality as a\nsingle hypothesis, so the optimization `max m s.t. k\u00b7m+1 < C(k,3)` is a finite,\nfully formal arithmetic problem \u2014 provable today by `omega`-style reasoning.\n\n---\n\n## Conjecture 2 \u2014 A formal stepping-up lemma closes the floor\u2013ceiling gap to a true double exponential\n\n**Statement.** There is a constant `c > 0` and a Lean-provable inequality\n`R_3(k+1,k+1) \u2264 2^{R_2(k,k)} + 1`, which composed with `R_2(k,k) \u2264 4^k` yields\n`R_3(k,k) \u2264 tower 2 (c\u00b7k) = 2^{2^{c\u00b7k}}`.\n\n**The key insight is** that `single_exp_lt_double_exp` already certifies\n`2^{k\u00b2} < tower 2 k`: the floor we proved lies *strictly inside* the conjectured\nceiling, so the open problem is precisely to raise the floor or lower the ceiling\nacross this verified gap.\n\n**Why now?** The `tower` function and its double-exponential identity\n`tower_two` are in place, so an Erd\u0151s\u2013Rado stepping-up formalization can be\nstated against a concrete, already-proved target rather than informal asymptotics.\n\n---\n\n## Conjecture 3 \u2014 Off-diagonal hypergraph Ramsey numbers are polynomially skew\n\n**Statement.** For fixed `r` and `l`, `R_r(k,l)` grows only polynomially in `k`\n(degree `\u2248 l \u2212 1`), in sharp contrast to the double-exponential diagonal \u2014 i.e.\n`R_3(k,l) = k^{\u0398(l)}` for fixed `l`.\n\n**The key insight is** that `hyperRamsey_color_symm` makes the two clique sizes\ninterchangeable, so the asymmetry must come entirely from the *smaller* side `l`\ncontrolling the C(k,r) edge budget; the counting bound degrades to a polynomial\nwhen one side is bounded.\n\n**Why now?** `hyperRamsey_counting_lower_bound` is already stated for the general\ndiagonal and `hyperRamsey_color_symm`/`hyperRamsey_mono_clique` give the\noff-diagonal scaffolding for free; only the asymmetric counting estimate remains.\n\n---\n\n## Conjecture 4 \u2014 The uniformity hierarchy is strict: each extra layer adds one exponential\n\n**Statement.** `R_{r+1}(k,k)` is bounded between `tower (r-1) (\u03a9(k))` and\n`tower (r-1) (O(k))`; equivalently, increasing the uniformity `r` by one raises\nthe tower height by exactly one for every `k` large enough.\n\n**The key insight is** that the tower height in `single_exp_lt_double_exp`\nalready encodes \"number of exponentials,\" so a strict hierarchy is the statement\nthat the height in the lower bound and upper bound agree level-by-level with `r`.\n\n**Why now?** `tower` is defined for arbitrary height and `R3_exp_lower_bound`\ngeneralizes verbatim to `R_r` (the proof only used `C(n,k) \u2264 n^k` and the\n`C(k,r)` budget), so the `r`-indexed hierarchy is one induction away.\n\n---\n\n## Conjecture 5 \u2014 Constructive (derandomized) colorings match the probabilistic floor\n\n**Statement.** There is an explicit, polynomial-time-describable family of\n2-colorings of the 3-subsets of `Fin (2^m)` (e.g. via a finite-field or\nbinary-string \"stepping-up\" construction) with no monochromatic\n`k`-clique whenever `k\u00b7m + 1 < C(k,3)` \u2014 matching `R3_exp_lower_bound`\nwithout invoking the averaging/pigeonhole step.\n\n**The key insight is** that the current proof is *existential* (pigeonhole over\nall `2^{C(n,r)}` colorings); the same floor should be witnessed by a *named*\ncoloring, turning an averaging argument into a verifiable construction.\n\n**Why now?** The model `Finset (Fin n) \u2192 Bool` is already computable, so a\ncandidate explicit coloring can be `#eval`-tested against small `k, m` before\nattempting the general proof \u2014 the experiment loop is immediately runnable.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2065",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "949d41e5",
+    "status": "available",
+    "timestamp": "2026-06-17T19:26:29.748902+00:00",
+    "title": "This cycle formalized, with zero `sorry`, a self-contained 2-color Ramsey theory"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -1862,7 +1906,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Renormalization of Reasoning: Phase Transitions in Theorem-Proving Complexity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2710f166",
     "description": "Conjecture: For any sufficiently expressive formal system with a fixed proof search procedure, there exists a scale-coarse-graining operator on proof states such that the induced renormalization flow has universality classes, and theorem families near critical fixed points exhibit polynomial-to-exponential transitions in provability complexity under small changes of axioms or heuristics. Test: Define coarse-grainings on proof-search trees for benchmark theorem families across multiple provers; measure whether rescaled search statistics collapse onto invariant flow curves and whether critical exponents predicting abrupt complexity transitions are stable across syntactic encodings. The conjecture is refuted if no encoding-robust fixed points, universality classes, or predictive critical exponents appear. Impact: This would enable a physics-style theory of theorem proving, identifying when tiny changes in representations or axiom sets trigger dramatic shifts in solvability, and could guide the design of provers, formal systems, and automated discovery pipelines.",
     "domains": [
       "Novelty",
@@ -1872,7 +1916,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-17T13:02:11.584379+00:00",
     "title": "Renormalization of Proofs: Phase Transitions in Automated Theorem Search"
   },
@@ -1891,7 +1935,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6e109ffd",
     "description": "Cycle 595ce011 (Q=0.612) proved 10 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a sharply scoped core of the order-`n` Sudoku constraint graph on `Cell n := Fin n \u00d7 Fin n \u00d7 Fin n \u00d7 Fin n`, avoiding ambitious spectral or chromatic-number machinery until the finite combin",
     "domains": [
       "Novelty"
@@ -1900,7 +1944,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.6622400000000002,
     "research_mode": "team",
     "source_exp_id": "595ce011",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-17T13:02:19.356643+00:00",
     "title": "Close Proofs: The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
   },
@@ -2051,7 +2095,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Idempotent Probability: Large Deviations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "50e9a2da",
     "description": "Prove neural network scaling laws from first principles. Derive power-law relationships between loss, model size, dataset size, and compute from the GP kernel spectrum.",
     "domains": [
       "MachineLearning",
@@ -2061,7 +2105,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.640557+00:00",
     "title": "Scaling Laws from Statistical Mechanics"
   },
@@ -2380,7 +2424,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Compactification of Moduli Spaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0d2b0b43",
     "description": "Prove that tropical curve counts equal classical Gromov-Witten invariants for toric surfaces. Formalize the correspondence theorem: each tropical curve lifts to a unique complex curve in the toric surface. Compute the tropical GW invariants for P^2.",
     "domains": [
       "Tropical",
@@ -2390,7 +2434,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:31.056465+00:00",
     "title": "Tropical Curve Counting: Gromov-Witten Invariants"
   },
@@ -2830,21 +2874,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
   {
-    "consumed_by_exp_id": "856aa6ac",
-    "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition \u2014 zeros on the critical line means the bulk geometry is stable against perturbations.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0013",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.496525+00:00",
-    "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conway's surreal numbers No form the largest totally ordered field, containing all real numbers, all ordinals, and all infinitesimals. But No is a proper class, not a set. What topology does it have? Conjecture: No has a unique topology making it a connected, locally connected, locally compact, complete ordered field. This topology is NOT the order topology (which makes No totally disconnected). Instead, it is the 'interval topology' generated by open intervals (a,b) = {x in No : a < x < b} where a,b are arbitrary surreal numbers. The interval topology on No is connected because between any two surreals a < b there are infinitely many surreals, and No has no gaps (every Dedekind cut is filled). Moreover, No is contractible in this topology \u2014 every surreal number can be continuously deformed to 0 via the homotopy H(x,t) = x * {t | 0} where {t | 0} is the surreal number between t and 0. Test: prove that No with the interval topology is connected. Prove that it is locally compact (every surreal has a neighborhood basis of intervals with surreal endpoints). Prove that No is contractible. Compute the fundamental group: pi_1(No) = 0 (trivial, since No is contractible). Impact: the largest ordered field has a natural topology that makes it contractible \u2014 every surreal number is connected to every other by a continuous path.",
     "domains": [
@@ -2903,21 +2932,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-01T12:30:30.557538+00:00",
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
-  },
-  {
-    "consumed_by_exp_id": "9ff40964",
-    "description": "The Fermi paradox asks: if intelligent life is common, where is everyone? The pigeonhole principle answers: if there are more pigeons than holes, at least one hole contains more than one pigeon. Apply this to the cosmos: there are approximately 10^22 stars in the observable universe (pigeons) and approximately 10^10 habitable-zone planets (holes). By the pigeonhole principle, at least one habitable planet contains at least 10^12 stars' worth of interest... wait, that's the wrong way around. Correct: there are ~10^10 habitable planets (pigeons) and ~4.5 billion years of time (holes). By the pigeonhole principle, at least one time period of one year contains at least 2 habitable planets developing intelligence. But we observe zero contacts. Conjecture: The resolution is that intelligent life is NOT common \u2014 the expected number of technological civilizations in the observable universe is less than 1. More precisely: if we model the Drake equation with honest probability estimates, P(technological civilization per habitable planet) < 10^{-10}, making the expected number of civilizations < 10^0 = 1. The Fermi paradox is not a paradox at all \u2014 it is the pigeonhole principle correctly predicting that with very few pigeons (civilizations) and very many holes (planets + time), most holes are empty. Test: compute the Drake equation with conservative estimates and verify that E[civilizations] < 1. Impact: we are alone because probability says so. The universe is mostly empty because that's what the math predicts.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0045",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.571054+00:00",
-    "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
   },
   {
     "consumed_by_exp_id": "",
@@ -3023,21 +3037,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-01T12:30:30.807837+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-  },
-  {
-    "consumed_by_exp_id": "949d41e5",
-    "description": "Ramsey's theorem for graphs states that R(k,l) = the minimum n such that any 2-coloring of the edges of K_n contains a red K_k or a blue K_l. For hypergraphs: R_r(k,l) = the minimum n such that any 2-coloring of the r-tuples of an n-set contains a red K_k^{(r)} or a blue K_l^{(r)}. The growth rate is an open problem: R_3(4,4) = 13 (known), R_3(5,5) is between 34 and 55, and R_3(k,k) is believed to grow like a double exponential 2^{c*k^2}. Conjecture: R_3(k,k) ~ 2^{2^{ck}} for some constant c > 0. This is a tower function (height 2 exponential). More precisely: the lower bound R_3(k,k) >= 2^{ck^2} (from the probabilistic method) and the upper bound R_3(k,k) <= 2^{2^{ck}} (from the stepping-up lemma). The gap is between a single exponential and a double exponential. Conjecture: the true growth rate is double exponential, and the upper bound is tight. This would mean that 3-uniform Ramsey numbers grow much faster than graph Ramsey numbers. Test: compute R_3(k,k) for k = 3, 4, 5, 6 by exhaustive search and verify the growth rate. Impact: 3-uniform Ramsey numbers are double exponential. Combinatorics at the hypergraph level is fundamentally harder than at the graph level.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0094",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.820858+00:00",
-    "title": "Hypergraph Ramsey Theory: Beyond Graphs"
   },
   {
     "consumed_by_exp_id": "",

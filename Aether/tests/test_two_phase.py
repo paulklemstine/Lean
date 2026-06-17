@@ -73,8 +73,8 @@ def test_phase_a_prompt_excludes_packaging(research_concept):
     # Skip actual API client init
     client = PiAgentClient.__new__(PiAgentClient)
     prompt = client._build_phase_a_lean_prompt(concept=research_concept)
-    # Should have the explicit Ticket header
-    assert "MATHEMATICAL RESEARCH MISSION" in prompt
+    # Default is now the v19 speculative scientific-method prompt
+    assert "Phase A Research Mission v19" in prompt
     # Should mention ARTICLE.md in constraints
     assert "ARTICLE.md" in prompt
     assert "RESEARCH_PAPER.md" in prompt
@@ -110,15 +110,43 @@ def test_phase_b_prompt_includes_phase_a_lean(research_concept):
     assert "PACKAGE.json" in prompt
 
 
+def test_phase_b_prompt_has_metadata_extraction_checklist(research_concept):
+    """Phase B prompt must instruct Aristotle to extract metadata from Lean."""
+    from pi_agent_client import PiAgentClient
+    client = PiAgentClient.__new__(PiAgentClient)
+    fake_lean = """
+    theorem novel_structure_invariant (n : Nat) : n + 0 = n := by simp
+    theorem main_result (x y : Nat) : x + y = y + x := Nat.add_comm x y
+    """
+    prompt = client._build_phase_b_package_prompt(
+        concept=research_concept,
+        phase_a_lean_content=fake_lean,
+    )
+    assert "PACKAGE.json Metadata Extraction" in prompt
+    assert "domain" in prompt
+    assert "key_results" in prompt
+    assert "keywords" in prompt
+    assert "PACKAGE.json Schema Checklist" in prompt
+    assert "date" in prompt
+    # Checklist must require non-empty fields
+    assert "title` is non-empty" in prompt
+    assert "domain` is exactly one of the allowed values" in prompt
+    assert "key_results` is a non-empty array" in prompt
+    assert "keywords` is a non-empty array" in prompt
+    # Numbering bug fixed: demo.py is item 4, PACKAGE.json is item 5
+    assert "4. **demo.py**" in prompt
+    assert "5. **PACKAGE.json**" in prompt
+
+
 def test_phase_a_prompt_size_reduced(research_concept):
     """Phase A prompt should be smaller than the legacy full prompt.
 
-    The default is v15.
+    The default is v19.
     Both are still smaller than the 12K A_full legacy prompt.
     """
     from pi_agent_client import PiAgentClient
     client = PiAgentClient.__new__(PiAgentClient)
-    phase_a_default = client._build_phase_a_lean_prompt(concept=research_concept)  # default = v15
+    phase_a_default = client._build_phase_a_lean_prompt(concept=research_concept)  # default = v19
     phase_a_v9 = client._build_phase_a_lean_prompt(concept=research_concept, prompt_version="v9")
     # Both versions should be substantially smaller than the 12K full prompt
     assert len(phase_a_default) < 12000, f"Default Phase A prompt too large: {len(phase_a_default)} chars"
@@ -135,7 +163,7 @@ def test_phase_a_routing(research_concept):
         concept=research_concept,
         phase="A_lean_only",
     )
-    assert "MATHEMATICAL RESEARCH MISSION" in prompt
+    assert "Phase A Research Mission v19" in prompt
 
 
 def test_phase_b_routing(research_concept):
@@ -155,7 +183,7 @@ def test_default_phase_is_a_lean_only(research_concept):
     from pi_agent_client import PiAgentClient
     client = PiAgentClient.__new__(PiAgentClient)
     prompt = client.write_aristotle_prompt(concept=research_concept)
-    assert "MATHEMATICAL RESEARCH MISSION" in prompt
+    assert "Phase A Research Mission v19" in prompt
 
 
 def test_legacy_a_full_routing(research_concept):

@@ -137,9 +137,12 @@ def test_select_phase_a_prompt_version_respects_weights():
     # Deterministic when only one candidate
     assert select_phase_a_prompt_version({"v15": 1.0}) == "v15"
     assert select_phase_a_prompt_version({"v16": 1.0}) == "v16"
-    # Falls back to v15 on empty / zero weights
-    assert select_phase_a_prompt_version({}) == "v15"
-    assert select_phase_a_prompt_version({"v16": 0.0}) == "v15"
+    # weights=None uses the configured A/B weights (currently v19 family)
+    version = select_phase_a_prompt_version()
+    assert version.startswith("v19")
+    # Empty / zero weights fall back to the stable baseline v19
+    assert select_phase_a_prompt_version({}) == "v19"
+    assert select_phase_a_prompt_version({"v16": 0.0}) == "v19"
 
 
 def test_write_aristotle_prompt_routes_v16(pi_client, research_concept):

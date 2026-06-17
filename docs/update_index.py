@@ -160,6 +160,11 @@ def update_index():
 
     json_files = sorted(f for f in glob.glob("*.json") if f not in ("index.json", "package.json", "lineage.json", "future_directions.json", "statement.json", "future_directions_snapshot.json"))
 
+    # IMPORTANT: The website displays every Phase B package that exists in this
+    # directory. Do NOT filter by quality_score, grade, or any other quality
+    # metric here. Quality gating happens upstream at the Phase A -> Phase B
+    # dispatch decision; once a package is created it must be discoverable.
+
     viz_dir = os.path.join(script_dir, "visualizations")
     os.makedirs(viz_dir, exist_ok=True)
 

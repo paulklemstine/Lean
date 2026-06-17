@@ -31,24 +31,34 @@ from research_memory import ResearchMemory
 # Phase A prompt version registry and default A/B weights.
 # New prompt variants are added here; the orchestrator samples from these weights.
 DEFAULT_PHASE_A_PROMPT_WEIGHTS: Dict[str, float] = {
-    "v15": 1.0,  # stable baseline
-    # "v16": 0.0,
-    # "v16a": 0.0,
-    # "v16b": 0.0,
+    "v19": 0.50,   # baseline: v12 speculative + v16 scientific-method rigor
+    "v19a": 0.15,  # baseline + 50/50 famous-subtask / cross-domain menu constraint
+    "v19b": 0.15,  # baseline + mandatory pre-proof computational stage
+    "v19c": 0.10,  # baseline + recursive abduction / thread continuation mandate
+    "v19d": 0.10,  # baseline + external signal awareness (arXiv/OEIS/LMFDB)
+}
+
+DEFAULT_PHASE_B_PROMPT_WEIGHTS: Dict[str, float] = {
+    "v1.1": 0.70,  # stable packaging prompt with metadata extraction checklist
+    "v2": 0.30,    # stricter packaging: LaTeX-first, theorem trace, narrative integrity
 }
 
 
-def select_phase_a_prompt_version(weights: Optional[Dict[str, float]] = None) -> str:
-    """Sample a Phase A prompt version from the configured weights.
+def _select_version_from_weights(
+    weights: Optional[Dict[str, float]],
+    default_weights: Dict[str, float],
+    baseline: str,
+) -> str:
+    """Sample a prompt version from configured weights.
 
-    If no weights are provided, returns the stable baseline (v15). If all
-    weights are zero, also falls back to v15.
+    If weights is None, uses the configured A/B weights. If an empty dict or
+    all-zero weights are supplied, falls back to the stable baseline.
     """
-    weights = weights or DEFAULT_PHASE_A_PROMPT_WEIGHTS
-    # Filter to known supported versions and positive weights
+    if weights is None:
+        weights = default_weights
     candidates = {v: w for v, w in weights.items() if w > 0}
     if not candidates:
-        return "v15"
+        return baseline
     total = sum(candidates.values())
     r = random.uniform(0, total)
     cumulative = 0.0
@@ -57,6 +67,26 @@ def select_phase_a_prompt_version(weights: Optional[Dict[str, float]] = None) ->
         if r <= cumulative:
             return version
     return list(candidates.keys())[-1]
+
+
+def select_phase_a_prompt_version(weights: Optional[Dict[str, float]] = None) -> str:
+    """Sample a Phase A prompt version from the configured weights.
+
+    If weights is None, uses the configured A/B weights in
+    DEFAULT_PHASE_A_PROMPT_WEIGHTS (currently v19 family). If an empty dict or
+    all-zero weights are supplied, falls back to the stable baseline v19.
+    """
+    return _select_version_from_weights(weights, DEFAULT_PHASE_A_PROMPT_WEIGHTS, "v19")
+
+
+def select_phase_b_prompt_version(weights: Optional[Dict[str, float]] = None) -> str:
+    """Sample a Phase B prompt version from the configured weights.
+
+    If weights is None, uses the configured A/B weights in
+    DEFAULT_PHASE_B_PROMPT_WEIGHTS (currently v1.1 / v2). If an empty dict or
+    all-zero weights are supplied, falls back to the stable baseline v1.1.
+    """
+    return _select_version_from_weights(weights, DEFAULT_PHASE_B_PROMPT_WEIGHTS, "v1.1")
 
 
 @dataclass
@@ -1913,6 +1943,212 @@ class PiAgentClient:
         return base + mode_extra
 
 
+    def _build_v19_baseline_depth_requirements(self) -> str:
+        """v19 baseline: v12 Speculative Specifier fused with v16 scientific-method loop."""
+        return textwrap.dedent("""\
+            ## v19 Research Core Methodology — Speculative Scientific-Method Loop
+
+            You are the Principal Investigator leading a speculative research team with four
+            roles: **Hypothesizer**, **Experimenter**, **Analyst**, and **Critic**. This engine
+            is configured for **Speculative Specifying (Bold Conjectures)**: target high-risk,
+            high-reward, grand-challenge level research while maintaining adversarial rigor.
+
+            ### Stage 1 — Hypothesize (team: Hypothesizer)
+            Brainstorm 5–7 falsifiable conjectures about the topic. At least three must be
+            bold, surprising, or grand-challenge level. Rank them by expected scientific
+            impact, not by ease of proof.
+
+            ### Stage 2 — Experiment (team: Experimenter)
+            For each conjecture, attempt to prove it in Lean 4 or disprove it with a concrete
+            counterexample. Prioritize the boldest conjectures first. If a proof is beyond
+            reach, prove the strongest lemma you can and mark the remaining step with exactly
+            one `sorry` that is clearly documented.
+
+            ### Stage 3 — Analyze (team: Analyst)
+            Summarize what survived, what failed, and **why** failures failed. Distinguish
+            "true but hard", "false", and "needs a different definition". Extract structural
+            patterns that could unify several observations.
+
+            ### Stage 4 — Critique / Adversarial Review (team: Critic)
+            Before finalizing, challenge every theorem:
+            - Is any theorem trivial (True, definitional equality, `native_decide`)?
+            - Does every main theorem have 0 sorries?
+            - Do the results genuinely extend the attached catalog files?
+            - Are there hidden assumptions or corner cases that break the claim?
+            If you find a weakness, fix it or replace the theorem with a guarded version and
+            explain the boundary.
+
+            ### Stage 5 — Synthesize (team: Principal Investigator)
+            Combine the verified results into clean, compiling Lean 4 files.
+            Write a `FUTURE_DIRECTIONS.md` that lists 3–5 **bold, testable** conjectures
+            derived from Stage 3 and Stage 4. Each conjecture must include a
+            "The key insight is..." sentence and a "Why now?" justification.
+
+            ### Perpetual Scientific Iteration (do not stop at first synthesis)
+            When the research team comes together with results, do not stop. Treat the
+            synthesized findings as the next problem statement and immediately run the full
+            scientific-method loop again: hypothesize, experiment, review, synthesize,
+            critique. Repeat this cycle continuously within the available context window,
+            refining, deepening, and cross-checking until forced to emit output. Use
+            Aristotle to its fullest.
+        """)
+
+
+    def _build_v19a_menu_constraint(self) -> str:
+        """v19a: 50/50 menu constraint on top of v19 baseline."""
+        return textwrap.dedent("""\
+
+            ### Menu Balance Constraint (v19a)
+            Half of your selected targets should be subtasks of famous open problems
+            (Millennium problems, Erdős conjectures, Collatz, Goldbach, P vs NP, long-standing
+            named conjectures). The other half should explicitly bridge two or more catalog
+            domains. For this cycle, declare which category your target serves and make the
+            entire proof align with that category.
+        """)
+
+
+    def _build_v19b_computational_stage(self) -> str:
+        """v19b: mandatory pre-proof computational stage on top of v19 baseline."""
+        return textwrap.dedent("""\
+
+            ### Pre-Proof Computational Experimentation Stage (v19b)
+            Before attempting a formal proof, produce a `ComputationalEvidence.md` section:
+            run small-case calculations, generate plots or tables, search OEIS / LMFDB, and
+            test conjectures computationally in Lean or Python. If the evidence contradicts
+            a conjecture, pivot or close the thread and report the contradiction. Only proceed
+            to formal proof once the computational landscape is understood.
+        """)
+
+
+    def _build_v19c_abduction_thread(self) -> str:
+        """v19c: recursive abduction / thread continuation mandate."""
+        return textwrap.dedent("""\
+
+            ### Recursive Abduction / Thread Continuation (v19c)
+            If prior-cycle context is provided, treat it as a live research thread: refine
+            the hypotheses from the previous cycle, attempt to close open conjectures, and
+            produce three concrete next-cycle sub-conjectures. If no prior context is
+            provided, still run a self-contained abductive loop: generate conjectures, test
+            them, and immediately spin off the most promising follow-up conjectures as
+            future directions.
+        """)
+
+
+    def _build_v19d_external_signal(self) -> str:
+        """v19d: external signal awareness (arXiv/OEIS/LMFDB)."""
+        return textwrap.dedent("""\
+
+            ### External Signal Awareness (v19d)
+            Incorporate recent external mathematical signals (arXiv abstracts, OEIS
+            sequences, LMFDB objects) that appear in the prompt context. Use them to choose
+            timely targets and to connect your theorems to current research activity. Cite,
+            in the Lab Notes, how a specific signal influenced your target or proof strategy.
+        """)
+
+
+    def _build_phase_a_v19_prompt(
+        self,
+        concept: ResearchConcept,
+        catalog_references: Optional[List[str]] = None,
+        catalog_context: str = "",
+        theorem_context: str = "",
+        prompt_version: str = "v19",
+    ) -> str:
+        """Phase A v19 family: speculative + scientific-method baseline with A/B extras."""
+        depth_requirements = self._build_v19_baseline_depth_requirements()
+        if prompt_version == "v19a":
+            depth_requirements += self._build_v19a_menu_constraint()
+        elif prompt_version == "v19b":
+            depth_requirements += self._build_v19b_computational_stage()
+        elif prompt_version == "v19c":
+            depth_requirements += self._build_v19c_abduction_thread()
+        elif prompt_version == "v19d":
+            depth_requirements += self._build_v19d_external_signal()
+
+        refs = catalog_references or concept.catalog_references or []
+        refs_section = ""
+        if refs:
+            refs_section = (
+                "### Attached Catalog References (read these first)\n"
+                + "\n".join(f"- `{r}`" for r in refs[:8])
+                + "\n"
+            )
+
+        catalog_section = ""
+        if catalog_context:
+            catalog_section = f"\n### Broader Catalog Context\n{catalog_context}\n"
+
+        theorem_section = ""
+        if theorem_context:
+            theorem_section = f"\n### Recent Discoveries in Catalog\n{theorem_context}\n"
+
+        anti_trivial_block = textwrap.dedent("""\
+            ### Anti-Trivial Guardrails (non-negotiable)
+            The following are NOT acceptable as main results:
+            - Theorems of the form `theorem name {X : Type*} [Inhabited X] : True := by trivial`.
+            - Definition-only theorems or definitional equalities proved by `rfl`.
+            - Results whose entire proof is `simp`, `norm_num`, `decide`, or `native_decide`.
+            - Wrapper types that rename existing definitions.
+            - Re-proving existing catalog theorems with minor notation changes.
+
+            Every main theorem must use at least one insight-bearing tactic or
+            technique such as `induction`, `by_contra`, `field_simp`, `ring_nf`,
+            `omega`, `linarith`, `rcases`, or a custom helper lemma.
+        """)
+
+        deliverables_block = textwrap.dedent("""\
+            ### Deliverables & Acceptance Criteria
+            1. **Lean 4 files** (2–4 files in the appropriate `Catalog/<domain>/` subtree).
+               - Main theorems must be fully proved (0 sorries).
+               - Each file must contain `-- !-- Lab Notes -- !--` blocks documenting
+                 the team loop: Hypothesis, Experiment, Analysis, Critique, Synthesis.
+            2. **FUTURE_DIRECTIONS.md** with 3–5 bold, falsifiable conjectures derived
+               from the cycle's findings. Each must have a "The key insight is..."
+               sentence and a "Why now?" justification.
+
+            ### Strictly Forbidden in Phase A
+            - `ARTICLE.md`, `RESEARCH_PAPER.md`, `demo.py`, HTML widgets, `PACKAGE.json`.
+            - Prose for human readers other than Lab Notes and FUTURE_DIRECTIONS.md.
+        """)
+
+        prompt = textwrap.dedent(f"""\
+            # Phase A Research Mission {prompt_version}: {concept.title}
+
+            ## Concept
+            **Domain**: {concept.domain}
+            **Research mode**: {concept.research_mode}
+            **Title**: {concept.title}
+            **Description**: {concept.concept_description}
+            **Mathematical framing**: {concept.mathematical_framing}
+
+            {refs_section}
+            {catalog_section}
+            {theorem_section}
+
+            {depth_requirements}
+
+            {anti_trivial_block}
+
+            {deliverables_block}
+
+            ## Self-Critique Checklist (perform before final output)
+            Review your candidate output and answer each item. If the answer is
+            unsatisfactory, revise the output before returning it.
+
+            - [ ] No theorem is trivial (True, Inhabited-only, native_decide-only, etc.).
+            - [ ] Every main theorem has 0 sorries.
+            - [ ] At least one theorem imports or uses results from the attached catalog.
+            - [ ] Lab Notes blocks contain real hypotheses, results, insights, and failure analysis.
+            - [ ] FUTURE_DIRECTIONS.md conjectures are derived from this cycle's findings.
+            - [ ] Every future direction includes a "The key insight is..." sentence and a "Why now?" justification.
+
+            ## Output Format Reminder
+            Return `.lean` files and `FUTURE_DIRECTIONS.md` only. Focus all compute
+            on the mathematics.
+        """)
+        return prompt
+
+
     def _build_assignment(self, concept: ResearchConcept) -> str:
         """Build a directive assignment section for Aristotle.
 
@@ -2033,6 +2269,7 @@ class PiAgentClient:
         phase_a_lean_content: Optional[str] = None,
         phase_a_lean_files: Optional[List[str]] = None,
         phase_a_future_directions: Optional[str] = None,
+        phase_b_prompt_version: Optional[str] = None,
     ) -> str:
         """Write an Aristotle prompt, routing by phase.
 
@@ -2041,7 +2278,7 @@ class PiAgentClient:
         Legacy ("A_full"): Both phases in one prompt (backward compat).
 
         The two-phase split is the new default. Phase A focuses on doing math;
-        Phase B (dispatched only on high-quality Phase A) packages it for humans.
+        Phase B packages it for humans whenever Phase A produces Lean output.
         """
         if phase == "B_package_only":
             return self._build_phase_b_package_prompt(
@@ -2049,6 +2286,7 @@ class PiAgentClient:
                 phase_a_lean_content=phase_a_lean_content or "",
                 phase_a_lean_files=phase_a_lean_files,
                 phase_a_future_directions=phase_a_future_directions,
+                prompt_version=phase_b_prompt_version,
             )
         if phase == "A_lean_only":
             return self._build_phase_a_lean_prompt(
@@ -2203,14 +2441,22 @@ class PiAgentClient:
         world-class, a separate Phase B prompt will be dispatched to package it.
         """
         if prompt_version is None:
-            prompt_version = "v15"
+            prompt_version = "v19"
         if prompt_version in ("v1", "v2", "v3", "v4", "v5", "v6", "v7"):
             raise ValueError(
-                f"{prompt_version} prompt is no longer supported — use v8 through v18. "
-                "v15 (PM Ticket Style) is the default."
+                f"{prompt_version} prompt is no longer supported — use v8 through v19 family. "
+                "v19 (Speculative Scientific-Method) is the default."
             )
         if prompt_version in ("v16", "v16a", "v16b", "v17", "v18"):
             return self._build_phase_a_v16_prompt(
+                concept=concept,
+                catalog_references=catalog_references,
+                catalog_context=catalog_context,
+                theorem_context=theorem_context,
+                prompt_version=prompt_version,
+            )
+        if prompt_version.startswith("v19"):
+            return self._build_phase_a_v19_prompt(
                 concept=concept,
                 catalog_references=catalog_references,
                 catalog_context=catalog_context,
@@ -2412,13 +2658,21 @@ Be precise, be deep, be world-class.
         phase_a_lean_content: str,
         phase_a_lean_files: Optional[List[str]] = None,
         phase_a_future_directions: Optional[str] = None,
+        prompt_version: Optional[str] = None,
     ) -> str:
         """Phase B: packaging only. Reads Phase A's Lean as input.
 
         The math is already done. This prompt's job is to communicate it
         to humans — article, paper, demo, widgets, PACKAGE.json. NO new
         Lean code should be produced.
+
+        Args:
+            prompt_version: "v1.1" (stable metadata checklist) or "v2"
+                (stricter LaTeX-first / theorem trace / narrative integrity).
+                Defaults to v1.1.
         """
+        if prompt_version is None:
+            prompt_version = "v1.1"
         # Strip FUTURE_DIRECTIONS blocks from Phase A Lean content —
         # Phase B packages the math, not the conjectures (those are
         # passed separately via phase_a_future_directions)
@@ -2462,14 +2716,14 @@ Be precise, be deep, be world-class.
                inline with its full mathematical statement and proof sketch. Do NOT
                use @file references or reference other files. A reader with only this
                paper must be able to follow every result from start to finish.
-            3. **RESEARCH_PAPER.tex** (NEW) — A clean, compilable LaTeX version of
+            3. **RESEARCH_PAPER.tex** — A clean, compilable LaTeX version of
                the paper that mirrors the content of RESEARCH_PAPER.md. Use standard
                amsmath/amsart or article class, define all theorems inline, and make
                it suitable for direct PDF compilation with `pdflatex`. This is the
                publishable artifact.
             4. **demo.py** — Numerical examples demonstrating the key results.
                Self-contained Python, type hints, all functions inlined.
-            4. **PACKAGE.json** — Single JSON bundling all of the above, with this schema:
+            5. **PACKAGE.json** — Single JSON bundling all of the above, with this schema:
 
             ```json
             {
@@ -2512,6 +2766,43 @@ Be precise, be deep, be world-class.
             `interactive_demos` fields MUST be arrays of objects with the
             exact structure shown above. Do NOT use placeholder strings like
             "MISSING" — either include real content or omit the field entirely.
+
+            ### PACKAGE.json Metadata Extraction (v1.1)
+            Derive the following fields directly from the Phase A Lean output above.
+            Do NOT invent values; every field must be traceable to the math.
+
+            - `title`: A clear, human-readable title based on the concept and main theorem.
+            - `domain`: Must be exactly one of:
+              Algebra|Applications|Bridges|Computation|Cryptography|EML|Geometry|Logic|MachineLearning|Novelty|Physics|Pythagorean|Shared|Tropical.
+              Use the concept domain above unless the math clearly belongs elsewhere.
+            - `description`: 1–2 sentences summarizing the main result and its significance.
+            - `authors`: `["Aristotle"]` unless the sources explicitly name other authors.
+            - `date`: Today's date in `YYYY-MM-DD` format.
+            - `key_results`: A list of 2–5 concrete results. Each entry MUST mirror an
+              actual theorem or lemma name from the Lean output (e.g.,
+              `pl_hodge_decomposition`, `regionBound_eq_two_pow`). Do NOT use
+              generic phrases like "Main theorem" or "Important lemma".
+            - `keywords`: 3–8 technical keywords actually appearing in the Lean output
+              (e.g., `ReLU`, `Hodge decomposition`, `piecewise linear`).
+
+            ### PACKAGE.json Schema Checklist (verify before output)
+            Before finalizing, confirm every item below:
+            - [ ] `title` is non-empty and human-readable.
+            - [ ] `domain` is exactly one of the allowed values listed above.
+            - [ ] `description` is 1–2 sentences and non-generic.
+            - [ ] `authors` is a non-empty array of strings.
+            - [ ] `date` is `YYYY-MM-DD`.
+            - [ ] `key_results` is a non-empty array of strings; each string maps to a
+                  theorem/lemma name in the Lean output.
+            - [ ] `keywords` is a non-empty array of strings.
+            - [ ] `article`, `research_paper`, `research_paper_tex`, and `demo` are
+                  populated with actual content (not filenames or placeholders).
+            - [ ] `demos`, `algorithms`, `visualizations`, and `interactive_demos` are
+                  arrays of objects with the required keys. Omit an array entirely if
+                  you have no real entry for it rather than leaving it empty or filled
+                  with placeholders.
+            - [ ] `future_directions` contains the Phase A future directions provided
+                  below, verbatim or lightly edited.
 
             ### DO NOT OUTPUT:
             - NO new `.lean` files
@@ -2569,12 +2860,59 @@ ARTICLE.md: write a popular-science narrative that makes the key idea accessible
 RESEARCH_PAPER.md: write the formal paper with abstract, definitions, results.
 demo.py: write numerical examples that demonstrate the results.
 PACKAGE.json: bundle everything into a single JSON with ALL fields populated.
+- Extract `title`, `domain`, `description`, `authors`, `date`, `key_results`, and
+  `keywords` directly from the Lean output and concept domain above.
+- Each `key_results` entry must correspond to an actual theorem/lemma name.
+- `domain` must be one of the allowed values exactly as listed.
 Make sure demos, algorithms, visualizations, and interactive_demos are arrays
 of objects (not placeholder strings). For each algorithm in the algorithms array, provide a clear, professional mathematical title in 'name' (do not use generic placeholders; this will be displayed as the header on the interactive site), a detailed explanation of its logic and complexity in 'description', formal step-by-step pseudocode in 'pseudocode', and clean type-hinted Python code in 'code'. For each Python demo in the demos array, provide a highly descriptive title in 'name', a comprehensive functional description in 'description', and the implementation code in 'code'. For each interactive HTML demo in interactive_demos, provide a beautiful title in 'title' and a detailed description in 'description'. Include future directions from Phase A in the future_directions field.
 
 Be vivid, be precise, be world-class. The math has already been done — now
 make it beautiful to read.
 """
+        # v2 stricter packaging mandate: LaTeX-first, theorem trace, narrative integrity,
+        # and demo quality.
+        v2_extra = ""
+        if prompt_version == "v2":
+            v2_extra = textwrap.dedent(r"""\
+
+            ### v2 Stricter Packaging Mandate
+            This package is being produced under the v2 prompt. Apply the following
+            additional requirements:
+
+            1. **LaTeX-first / arXiv-ready**: Treat `RESEARCH_PAPER.tex` as the
+               primary publishable artifact, not a mirror of the markdown. Use
+               `\documentclass{amsart}` or `\documentclass{article}` with `amsmath`,
+               `amsthm`, and `amssymb`. Define theorem environments inline (`\begin{theorem}`
+               ... `\end{theorem}`). A reader should be able to run `pdflatex` on the
+               file without manual fixes. Include a bibliography section if any external
+               references are mentioned (even though prose must be self-contained).
+
+            2. **Theorem trace / anti-hallucination**: Before writing any prose,
+               extract every theorem, lemma, and definition name from the Lean output
+               above. Produce a `THEOREM_TRACE.md` (internal) listing: the Lean name,
+               the mathematical statement, and where it appears in `ARTICLE.md` and
+               `RESEARCH_PAPER.md`. Do NOT invent theorems, do NOT paraphrase theorem
+               names into grander-sounding claims, and do NOT state results that are
+               not in the Lean output.
+
+            3. **Narrative integrity**: `ARTICLE.md` and `RESEARCH_PAPER.md` must tell
+               the same mathematical story. The article must state the main theorem in
+               plain language with a concrete example. The paper must give the full
+               formal statement. A mathematician reading only the paper should be able
+               to reconstruct the proof sketch from the inline statements.
+
+            4. **Demo quality**: Every `demos[]` entry must exercise the *main theorem*
+               numerically, not a trivial special case. Algorithm and demo names must
+               be descriptive (≥4 words, no generic placeholders like "Demo 1" or
+               "Algorithm"). If a demo cannot be built for the theorem, omit the array
+               rather than include a placeholder.
+            """)
+
+        prompt = prompt.replace(
+            "Be vivid, be precise, be world-class. The math has already been done — now\nmake it beautiful to read.",
+            f"{v2_extra}\n\nBe vivid, be precise, be world-class. The math has already been done — now\nmake it beautiful to read.",
+        )
         return prompt
 
     @staticmethod

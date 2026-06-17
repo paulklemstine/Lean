@@ -155,7 +155,7 @@ def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
             v = r.get("prompt_version", "unknown")
             by_ver.setdefault(v, []).append(r)
         lines = ["[A/B] Prompt version stats:"]
-        for v in ("v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15", "v16", "v16a", "v16b", "v17", "v18"):
+        for v in ("v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15", "v16", "v16a", "v16b", "v17", "v18", "v19", "v19a", "v19b", "v19c", "v19d"):
             rs = by_ver.get(v, [])
             if not rs:
                 continue
@@ -166,10 +166,10 @@ def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
             avg_dur = sum(durs) / len(durs) if durs else 0
             lines.append(f"  {v}: n={n:3d} avg_Q={avg_q:.3f} wc={wc}/{n} ({100*wc/n:.0f}%) avg_dur={avg_dur:.0f}min")
         # Last 20 only, to keep it fresh
-        recent = [r for r in records[-20:] if r.get("prompt_version") in ("v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15", "v16", "v16a", "v16b", "v17", "v18")]
+        recent = [r for r in records[-20:] if r.get("prompt_version") in ("v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15", "v16", "v16a", "v16b", "v17", "v18", "v19", "v19a", "v19b", "v19c", "v19d")]
         if recent:
             scores = {}
-            for v in ("v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15", "v16", "v16a", "v16b", "v17", "v18"):
+            for v in ("v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15", "v16", "v16a", "v16b", "v17", "v18", "v19", "v19a", "v19b", "v19c", "v19d"):
                 vrs = [r for r in recent if r.get("prompt_version") == v]
                 if vrs:
                     scores[v] = sum(r.get("quality_score", 0) for r in vrs) / len(vrs)
@@ -177,6 +177,24 @@ def _print_prompt_version_stats(extractor: "KnowledgeExtractor") -> None:
                 leader = max(scores, key=scores.get)
                 score_str = " ".join(f"{v}={q:.3f}" for v, q in scores.items())
                 lines.append(f"  Last 20: {score_str} -> {leader} leading")
+
+        # Phase B prompt version stats
+        by_pb = {}
+        for r in records:
+            v = r.get("phase_b_prompt_version", "unknown")
+            by_pb.setdefault(v, []).append(r)
+        pb_lines = []
+        for v in ("v1", "v1.1", "v2"):
+            rs = by_pb.get(v, [])
+            if not rs:
+                continue
+            n = len(rs)
+            avg_q = sum(r.get("quality_score", 0) for r in rs) / n
+            pb_lines.append(f"  {v}: n={n:3d} avg_Q={avg_q:.3f}")
+        if pb_lines:
+            lines.append("")
+            lines.append("[A/B] Phase B prompt version stats:")
+            lines.extend(pb_lines)
 
         # Phase A/B split stats
         try:
@@ -224,7 +242,7 @@ def _print_quality_metrics(extractor: "KnowledgeExtractor") -> None:
             by_ver.setdefault(v, []).append(r)
 
         lines = ["[Quality] Rolling metrics (last 30 cycles):"]
-        for v in ("v6", "v7", "v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15", "v16", "v16a", "v16b", "v17", "v18"):
+        for v in ("v6", "v7", "v8", "v9", "v10", "v11", "v12", "v13", "v14", "v15", "v16", "v16a", "v16b", "v17", "v18", "v19", "v19a", "v19b", "v19c", "v19d"):
             rs = by_ver.get(v, [])
             if not rs:
                 continue
@@ -514,6 +532,10 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         # Phase A was just evaluated. If the math is good enough, dispatch
         # Phase B to package it. Otherwise mark as A_only and integrate
         # the Lean files directly (no article/paper/widgets).
+        #
+        # Phase B packages that ARE created are always displayed on the website:
+        # the index builder (Catalog/Applications/Packages/update_index.py) and
+        # the frontend sidebar do NOT filter by quality_score.
         #
         # CRITICAL: If this is a Phase B completion, skip Phase B dispatch entirely.
         # Phase B already ran — we just need to integrate both Phase A (Lean) and

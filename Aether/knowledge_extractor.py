@@ -40,8 +40,14 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 import yaml
-
-from pi_agent_client import PiAgentClient, ResearchConcept, select_phase_a_prompt_version, DEFAULT_PHASE_A_PROMPT_WEIGHTS
+from pi_agent_client import (
+    PiAgentClient,
+    ResearchConcept,
+    select_phase_a_prompt_version,
+    DEFAULT_PHASE_A_PROMPT_WEIGHTS,
+    select_phase_b_prompt_version,
+    DEFAULT_PHASE_B_PROMPT_WEIGHTS,
+)
 from archive_manager import ArchiveManager
 from catalog_analyzer import CatalogAnalyzer
 from autoresearch_bridge import AutoresearchBridge
@@ -377,10 +383,23 @@ class KnowledgeExtractor:
             "quality_score": job.quality_score,
         }
 
+        # Select Phase B prompt version (A/B weights from config or env)
+        prompt_weights = DEFAULT_PHASE_B_PROMPT_WEIGHTS.copy()
+        config_weights = self.config.get("pi_agent", {}).get("phase_b_prompt_weights")
+        if config_weights and isinstance(config_weights, dict):
+            prompt_weights.update(config_weights)
+        env_weights = os.environ.get("AETHER_PHASE_B_PROMPT_WEIGHTS")
+        if env_weights:
+            try:
+                prompt_weights.update(json.loads(env_weights))
+            except Exception as e:
+                print(f"[Dispatch-B] Ignoring invalid AETHER_PHASE_B_PROMPT_WEIGHTS: {e}")
+        phase_b_version = select_phase_b_prompt_version(prompt_weights)
+        job.phase_b_prompt_version = phase_b_version
+        print(f"[Dispatch-B] Phase B prompt version: {phase_b_version}")
+
         # Build Phase B prompt with Phase A's Lean content as input
         job.phase = "B"
-        job.phase_b_prompt_version = "v1"
-
         phase_a_lean = job.result_lean or ""
         # Pass Phase A's Lean file paths so Phase B can @reference them
         phase_a_lean_file_paths = job.phase_a_result.get("lean_files", []) if job.phase_a_result else []
@@ -392,7 +411,9 @@ class KnowledgeExtractor:
             phase_a_lean_content=phase_a_lean,
             phase_a_lean_files=phase_a_lean_file_paths,
             phase_a_future_directions=phase_a_future_dirs,
+            phase_b_prompt_version=phase_b_version,
         )
+
         # Phase B does NOT need a fresh project_dir — reuse Phase A's
         # (the Lean files are already there as inputs)
         return job
@@ -3623,6 +3644,32 @@ Research mode: {concept.research_mode}
             norm_domain = normalize_domain(pkg.get("domain", "Novelty"))
             pkg["domain"] = norm_domain
             print(f"[Enrich] Domain normalized to: {norm_domain}")
+
+        # Backfill core metadata if still missing or empty after the prompt
+        if not pkg.get("title") and hasattr(job, 'concept') and job.concept:
+            pkg["title"] = job.concept.title
+            print(f"[Enrich] Title backfilled from concept")
+        if not pkg.get("description") and hasattr(job, 'concept') and job.concept:
+            pkg["description"] = f"Research package for {job.concept.title}."
+        if not pkg.get("authors"):
+            pkg["authors"] = ["Aristotle"]
+        if not pkg.get("date"):
+            pkg["date"] = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+        if not pkg.get("key_results") and hasattr(job, 'result_lean') and job.result_lean:
+            # Extract theorem/lemma names as a best-effort key_results list
+            _names = re.findall(r'(?:theorem|lemma)\s+([a-zA-Z_][a-zA-Z0-9_\']*)', job.result_lean)
+            if _names:
+                pkg["key_results"] = _names[:6]
+                print(f"[Enrich] key_results backfilled from Lean theorems")
+        if not pkg.get("keywords") and hasattr(job, 'concept') and job.concept:
+            # Derive keywords from concept title + domain
+            _title_words = re.findall(r'[a-zA-Z]+', job.concept.title)
+            _keywords = [w for w in _title_words if len(w) > 3][:5]
+            if job.concept.domain:
+                _keywords.insert(0, job.concept.domain)
+            if _keywords:
+                pkg["keywords"] = _keywords
+                print(f"[Enrich] keywords backfilled from concept")
 
         return json.dumps(pkg, ensure_ascii=False)
 
