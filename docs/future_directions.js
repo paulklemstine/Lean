@@ -1489,6 +1489,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 The Category Theory of Jokes (Punchlines as Universal Properties)\n\nCycle-1 outcome (`Catalog/Computation/JokeCategory.lean`): we modeled a *joke* as a\nfirst-surprise process whose **punchline** is the initial surprising moment (universal\nproperty), instantiated it as the **Fibonacci rank of apparition** `z(p)` (the punchline of the\n\"Fibonacci joke mod `p`\"), and proved \u2014 fully `sorry`-free and *hypothesis-free* \u2014 the\napparition duality `p \u2223 F n \u2194 z(p) \u2223 n`, the meet law, the coprime join law `z(mn) = lcm(z m, z n)`,\nthe squarefree/finite generalizations, and functoriality `m \u2223 n \u21d2 z(m) \u2223 z(n)`.\n\nThe following conjectures are precise and testable in Lean for follow-up cycles.\n\n## C1. Lucas-sequence universality of the punchline duality\nFor any nondegenerate Lucas sequence `U_n(P,Q)` (with `U_0 = 0`, `U_1 = 1`,\n`U_{n+2} = P U_{n+1} - Q U_n`) and any modulus `m` coprime to `Q`, the rank of apparition\n`z_U(m)` exists and satisfies `m \u2223 U_n \u2194 z_U(m) \u2223 n`, the meet law, and the coprime join law.\n**Test:** generalize `fibStep` to the companion-matrix shift on `ZMod m \u00d7 ZMod m` (invertible\niff `Q` is a unit), then re-run the duality argument verbatim. Predicted: every theorem in\n`JokeCategory.lean` lifts with `Q \u2208 (ZMod m)\u02e3`.\n\n## C2. The punchline is NOT a full lattice morphism (gcd law fails)\nWhile the coprime product maps to `lcm`, the conjecture `z(gcd m n) = gcd(z m, z n)` is FALSE in\ngeneral. **Test:** exhibit an explicit counterexample (search small `m, n` with\n`z(gcd m n) \u2260 gcd(z m, z n)`) and formalize the disproof. Predicted smallest witnesses come from\nprimes `p, q` with `z(p) = z(q)` but `p \u2260 q` (entry-point collisions), e.g. moduli sharing a\nPisano-period divisor. This sharpens \"the punchline is a join-morphism but only a lax\nmeet-morphism.\"\n\n## C3. Carmichael primitivity = surjectivity of the punchline functor\n`z(p) = n` exactly says `p` is a *primitive* prime divisor of `F_n` (the joke first lands at `n`).\nCarmichael's theorem \u27fa for every `n \u2209 {1,2,6,12}` the fiber `z\u207b\u00b9(n) \u2229 Primes` is nonempty.\n**Test (staged):** prove the *cyclotomic lower bound* `\u03a6_n(\u03c6, \u03c8) / gcd-corrections > 1` controls\nthe primitive part `primPart(n)` from `Catalog/Shared/CarmichaelProof.lean`, giving the infinite\ntail `n > 10000` and closing the standing `sorry` there. Predicted: the bound\n`|F_n| \u2265 \u03c6^{n-2}` together with a bound on the non-primitive part `\u220f_{d\u2223n, d<n} F_d` yields\n`primPart(n) > 1` for all `n` beyond an explicit threshold.\n\n## C4. Entropy / growth law of the punchline\nDefine the *punchline cost* `c(p) = z(p) / p`. Conjecture: `limsup_p c(p)` is finite and equals a\nconstant tied to the maximal Pisano period growth (`z(p) \u2264 2p` for primes `p`, with equality on a\ndensity-zero set). **Test:** formalize `z(p) \u2264 p + 1` for `p \u2261 \u00b11 (mod 5)` and `z(p) \u2223 p + 1` for\n`p \u2261 \u00b12 (mod 5)` via quadratic reciprocity for `\u221a5` in `ZMod p`. Predicted: the duality reduces\neach bound to the order of the golden ratio in `(ZMod p)\u02e3` or its quadratic extension.\n\n## C5. Initial/terminal objects in the genuine joke category\nPromote Part I to Mathlib `CategoryTheory`: define the thin category `Joke` whose objects are\nsurprise predicates and whose morphisms are \"refinements that preserve landing,\" and prove the\n*constant-true* joke is **terminal** and the *never-landing* joke is **initial**, with `punchline`\na functor to `(\u2115, \u2223)`. **Test:** show `fibEntry` extends to a functor preserving the coprime\nmonoidal product (`z(mn) = lcm` becomes a lax monoidal structure). Predicted: the coprime join\nlaw is exactly the monoidal-functor coherence square.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2045",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "63fd3989",
+    "status": "available",
+    "timestamp": "2026-06-17T06:53:13.089344+00:00",
+    "title": "Cycle-1 outcome (`Catalog/Computation/JokeCategory.lean`): we modeled a *joke* a"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2876,21 +2891,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
   },
   {
-    "consumed_by_exp_id": "77489d34",
-    "description": "The Riemann-Roch theorem for graphs (Baker-Norine, 2007) states that for a divisor D on a graph G, l(D) - l(K_G - D) = deg(D) + 1 - g(G) where l(D) is the rank of D, K_G is the canonical divisor, and g(G) is the genus (cyclomatic number). The chip-firing game is a combinatorial model: vertices hold chips, and 'firing' a vertex sends one chip along each incident edge. Conjecture: for the complete graph K_n, the canonical divisor K_{K_n} has rank (n-1)(n-2)/2 - 1, and the Riemann-Roch formula gives l(D) = deg(D) + 1 - (n-1)(n-2)/2 + l(K_{K_n} - D). For D = K_{K_n} (the canonical divisor itself): l(K_{K_n}) = (n-1)(n-2)/2 - 1 + 1 - (n-1)(n-2)/2 + l(0) = 0 + l(0). But l(0) = 0 (the empty divisor has rank 0). So l(K_{K_n}) = 0. Wait, this gives l(K_{K_n}) = 0, but the canonical divisor of K_n should have positive rank. Conjecture: the canonical divisor of K_n is K_{K_n} = sum_v (deg(v) - 1) * v = (n-2) * sum_v v, and l(K_{K_n}) = (n-1)(n-2)/2 - 1 (it achieves the genus minus 1). Test: compute the canonical divisor and verify the Riemann-Roch formula for K_n with n = 3, 4, 5, 6. Impact: chip-firing on complete graphs encodes the same information as the Riemann-Roch theorem on projective curves.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0085",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.761503+00:00",
-    "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
     "domains": [
@@ -2981,7 +2981,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Isomorphisms of Meaning: When Structures Collide"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "95c512f5",
     "description": "Formalize the Lucas-Penrose argument that human minds can see truths that formal systems cannot prove about themselves. Prove or disprove: there exists a computational system that can consistently recognize its own G\u00f6del sentences. Connect to Chaitin's incompleteness theorem and the Berry paradox.",
     "domains": [
       "Novelty",
@@ -2991,7 +2991,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.889380+00:00",
     "title": "Mind vs G\u00f6del: Can Minds Outperform Algorithms?"
   },
