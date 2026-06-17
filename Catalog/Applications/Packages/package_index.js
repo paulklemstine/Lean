@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "29ffc67c",
     "filename": "vampire_numbers_and_other_numerical_monsters_a_bes.json",
     "pkg_num": 178,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5227499999999999,
     "title": "Vampire Numbers and Other Numerical Monsters: A Verified Bestiary of Arithmetic Oddities"
   },
   {
@@ -5489,8 +5489,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "vampire_numbers_and_other_numerical_monsters_a_bes",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5227499999999999,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Vampire Numbers and Other Numerical Monsters: A Verified Bestiary of Arithmetic Oddities"
     }

@@ -1459,6 +1459,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Numerical Monsters Bestiary (Bridges domain)\n\nThis research cycle established a verified core for digit-combinatorial\n\"monsters\": vampire numbers (`Vampire.lean`), the narcissistic / Harshad /\nKaprekar families plus a narcissistic finiteness bound (`Bestiary.lean`), and\ncross-monster bridges (`CrossMonster.lean`). The following conjectures are bold,\nprecise, and falsifiable, intended to drive the next cycles.\n\n## C1. Sharp narcissistic finiteness bound (tighten 60 \u2192 39)\nWe proved `narcissistic_lt : IsNarcissistic n \u2192 n < 10^60`. The true maximal\nnarcissistic number is the 39-digit `115132219018763992565095597973971522401`.\n**Conjecture.** `IsNarcissistic n \u2192 n < 10^39`, and this is sharp (the bound is\nattained). *Testable*: strengthen `pow_ineq` to the sharp crossover index and add\na `native_decide` certificate that the 39-digit champion is narcissistic while no\n40-digit one exists by the length argument.\n\n## C2. Infinitude vs. finiteness dichotomy across families\nHarshad numbers are infinite (every power of ten is Harshad, digit sum `1`),\nwhereas narcissistic numbers are finite (C1). **Conjecture.** A digit-family\ndefined by `n = \u03a3 f(d\u1d62)` with `f` *bounded* (independent of digit count) is\ninfinite, while one with `f` depending on the digit count (like narcissistic) is\nfinite. *Testable*: formalize \"digit-additive family with bounded weights\" and\nprove an infinitude theorem covering Harshad and digit-sum-fixed-point families\nin one stroke.\n\n## C3. Vampire density and the multiplicative/additive bridge\nWe showed vampirism does **not** imply the Harshad property\n(`vampire_not_harshad_6880`). **Conjecture.** Infinitely many vampire numbers are\nHarshad numbers, and infinitely many are not; moreover the proportion of vampires\n\u2264 N that are Harshad tends to a constant strictly between 0 and 1. *Testable\nfirst step*: exhibit an explicit infinite family of vampires (e.g. of the shape\n`(10^k\u00b7a)(10^k\u00b7b)` patterns) and decide the Harshad property along it.\n\n## C4. Pseudovampires and prime-fang vampires\nOur `vampire_not_prime` shows every vampire is composite. Refine the factor\nstructure. **Conjecture.** There exist infinitely many vampire numbers both of\nwhose fangs are prime (\"prime vampire numbers\", e.g. `117067 = 167 \u00d7 701`), and\nthe smallest is `117067`. *Testable*: extend `IsVampire` with a `fangsPrime`\npredicate, certify `117067`, and prove minimality over the relevant range by the\nsame `isVampireB`-style executable bridge used for `least_vampire`.\n\n## C5. Kaprekar fixed points and the 6174 vortex (cross to dynamics)\nBeyond Kaprekar *numbers* lies the Kaprekar *routine* `K(n) = (desc digits) \u2212\n(asc digits)`. **Conjecture.** Every 4-digit number with at least two distinct\ndigits reaches the fixed point `6174` under iteration of `K` in at most `7`\nsteps, and `6174` is its unique nonzero fixed point. *Testable*: define `K` as an\nexecutable function, prove `K 6174 = 6174` and uniqueness by `native_decide` over\n4-digit inputs, then bound the iteration depth \u2014 a genuine bridge from static\ndigit predicates to discrete dynamics.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2041",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "29ffc67c",
+    "status": "available",
+    "timestamp": "2026-06-17T04:32:01.860131+00:00",
+    "title": "Verified core for digit-combinatorial"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2636,7 +2651,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
   },
   {
-    "consumed_by_exp_id": "0aa0f2df",
+    "consumed_by_exp_id": "",
     "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... \u2014 just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number \u2014 the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic \u2014 it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
     "domains": [
       "Novelty",
@@ -2646,7 +2661,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-06-01T12:30:30.505215+00:00",
     "title": "The Unreasonable Effectiveness of the Number 163"
   },
@@ -2769,21 +2784,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-01T12:30:30.617168+00:00",
     "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
-  },
-  {
-    "consumed_by_exp_id": "63fd3989",
-    "description": "Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors through an unexpected category. The humor of a joke is measured by its 'surprise': the distance between the expected punchline (the limit of the setup category) and the actual punchline. Conjecture: The funniest jokes are those where the setup category has a colimit that is far from the limit. Formally, if S is a setup with expected resolution lim(S) and the actual punchline P is a colimit colim(S'), then the humor H(J) = d(lim(S), colim(S')), where d is a metric on the category of punchlines. Puns have H close to 0 (the punchline is near the expected resolution). Absurdist humor has H large (the punchline is in a completely different category). The universal property of jokes: a joke J is universal if for any other joke J' with the same setup, there is a unique natural transformation J => J'. The funniest jokes are universal \u2014 they are the terminal objects in the category of jokes with a given setup. Test: formalize 100 jokes as category-theoretic objects and compute H(J) for each. Correlate with human funniness ratings. Impact: humor is a colimit. The funnier the joke, the further the punchline is from the expected limit of the setup.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0059",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.626049+00:00",
-    "title": "The Category Theory of Jokes: Universal Properties of Humor"
   },
   {
     "consumed_by_exp_id": "",
@@ -3026,7 +3026,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Retrocausal Mathematics: Where Effects Precede Causes"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "11262eec",
     "description": "Construct a consistent formal system where the Liar sentence, Berry's paradox, and Russell's paradox are all provable theorems rather than contradictions. Prove this requires rejecting classical logic in favor of a paraconsistent logic with a nontrivial inconsistency-tolerant truth predicate. Show this system proves its own soundness.",
     "domains": [
       "Novelty",
@@ -3036,12 +3036,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:31.006174+00:00",
     "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "667542f0",
     "description": "Construct an alternate number theory where primes are replaced by a random subset of N with density n/log n. Prove which theorems survive (Dirichlet, PNT) and which collapse (unique factorization). Determine whether RH holds almost surely in this counterfactual universe.",
     "domains": [
       "Novelty",
@@ -3051,7 +3051,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:31.018128+00:00",
     "title": "Counterfactual Number Theory: What If Primes Were Random?"
   },
