@@ -471,7 +471,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reverse Mathematics: Ramsey's Theorem"
   },
   {
-    "consumed_by_exp_id": "fd51d61a",
+    "consumed_by_exp_id": "",
     "description": "Cycle d6329d46 (Q=0.792) proved 22 theorems in Shared but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle e42393e4 (Q=0.792), which proved 42 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting.",
     "domains": [
       "Shared"
@@ -480,7 +480,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8418400000000001,
     "research_mode": "team",
     "source_exp_id": "d6329d46",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T10:39:16.784213+00:00",
     "title": "Close Proofs: Functor from finite linear codes to tropical valuation objects via wei"
   },
@@ -762,7 +762,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "21e49da9",
     "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
     "domains": [
       "Novelty",
@@ -772,7 +772,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:31.024124+00:00",
     "title": "Borges' Library of Babel: Combinatorics of Everything"
   },
@@ -1681,6 +1681,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T17:23:46.154534+00:00",
     "title": "Two anchor results (see `Catalog/Bridges/StructuralCollis"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Dreamtime Algebra (Aboriginal Kinship as Group Theory)\n\nCycle 1 established the Kariera 4-section system as the Klein four-group `V\u2084`,\nproved bilateral cross-cousin marriage and the parallel-cousin prohibition as\ndecidable group identities, separated the two order-8 Aranda subsection models\n(`(\u2124/2)\u00b3` vs `\u2124/4 \u00d7 \u2124/2`) by a non-isomorphism invariant, and built a tropical\n`(min,+)` metric on the section group. Below are bold, falsifiable conjectures for\nfollow-up cycles.\n\n## Conjecture 1 \u2014 Second-cross-cousin marriage in the long-matriline model\nIn the `\u2124/4 \u00d7 \u2124/2` Aranda model with matriline `m:(a,b)\u21a6(a+1,b)`, patriline\n`p:(a,b)\u21a6(a+2,b+1)`, and marriage `w:(a,b)\u21a6(a+2,b+1)` (to be pinned down), the\n**first** cross-cousin (MBD/FZD) does NOT land in ego's spouse subsection, whereas\nthe **second** cross-cousin (MMBDD) does. Formal target: define the descent maps\nexplicitly over `\u2124/4 \u00d7 \u2124/2` and prove `MMBDD ego = w ego` while `MBD ego \u2260 w ego`,\nrecovering the defining ethnographic shift from 4-section to 8-subsection systems.\nThis is testable by `decide` once the maps are fixed.\n\n## Conjecture 2 \u2014 Classification of admissible kinship algebras\nA finite abelian group `G` with three involutions/translations `(p,m,w)` satisfying\n`w = p\u2218m`, fixed-point-freeness, and a consistent child rule supports a coherent\n\"marry-cross / forbid-parallel\" law **iff** `G` is elementary abelian `(\u2124/2)^k`\nextended by at most one `\u2124/4` matriline factor. Conjecture: the only such groups of\norder \u2264 16 are `V\u2084`, `(\u2124/2)\u00b3`, `\u2124/4 \u00d7 \u2124/2`, and `(\u2124/2)\u2074`. Falsifiable by an\nexhaustive `decide`/`Decidable` search over small groups.\n\n## Conjecture 3 \u2014 Tropical Cayley metric equals graph distance\nThe discrete `tdist` of Cycle 1 is the 1-step marriage metric. Conjecture: the full\nword/Cayley metric `d_word` of the section group with generators `{p,m,w}` coincides\nwith the tropical `(min,+)` matrix power of the adjacency (weight-1) matrix `A`, i.e.\n`d_word(s,t) = (A^{\u2297(n-1)})_{s,t}` where `\u2297` is min-plus matrix multiplication and\n`n = |G|`. This bridges kinship distance directly to tropical linear algebra\n(`Tropical/Core`, `Tropical/IdempotentSemiring`). Testable for `V\u2084` and the order-8\nmodels by computing min-plus matrix powers and comparing to `addOrderOf`-based word\nlength.\n\n## Conjecture 4 \u2014 Moiety homomorphism characterizes section systems\nA finite kinship group admits a Kariera-style \"two patrimoieties\" structure iff it\nadmits a surjective homomorphism onto `\u2124/2` (the patrimoiety) under which marriage is\nthe non-trivial coset translation. Conjecture: the number of distinct moiety\nhomomorphisms `G \u2192+ \u2124/2` equals `2^k \u2212 1` where `2^k` is the 2-torsion rank of `G`,\ngiving a count of \"global dual organizations\" compatible with the marriage law.\nFalsifiable via `Fintype` enumeration of `G \u2192+ ZMod 2`.\n\n## Conjecture 5 \u2014 Idempotent-semiring reachability collapses generations\nEncode reachability between sections in the Boolean (idempotent) semiring\n`{0,1}`-matrix `R` where `R_{s,t}=1` iff `t` is reachable from `s` by one marriage or\ndescent step. Conjecture: `R` is idempotent under Boolean matrix multiplication after\nexactly `\u2308log\u2082|G|\u2309` steps (`R^{(k+1)} = R^{(k)}`), and this stabilization index equals\nthe diameter of the Cayley graph. This realizes the \"alternating-generations\" collapse\nof kinship as the idempotency fixpoint of a tropical/Boolean semiring operator,\ndirectly connecting to `Tropical/IdempotentSemiring/Defs.lean`. Testable by iterating\nBoolean matrix products to a fixpoint and comparing with the proven group diameter.\n",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_2063",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5bafdd72",
+    "status": "available",
+    "timestamp": "2026-06-17T18:43:02.993316+00:00",
+    "title": "Cycle 1 established the Kariera 4-section system as the Klein four-group `V\u2084`,"
   },
   {
     "consumed_by_exp_id": "",
@@ -3068,21 +3083,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-01T12:30:31.030197+00:00",
     "title": "Aleph-1 Surface: Geometry Between Dimensions"
-  },
-  {
-    "consumed_by_exp_id": "5bafdd72",
-    "description": "Formalize Australian Aboriginal kinship systems (section and subsection systems) as finite groups acting on person-sets. Prove that the 4-section system is isomorphic to Z2 x Z2 and the 8-subsection system to Z2 x Z2 x Z2. Show that marriage rules correspond to coset restrictions and that the entire system forms a consistent group-theoretic structure.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0134",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:31.067326+00:00",
-    "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
   },
   {
     "consumed_by_exp_id": "",
