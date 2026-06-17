@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "95c512f5",
     "filename": "mind_vs_gdel_can_minds_outperform_algorithms.json",
     "pkg_num": 188,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.57324,
     "title": "Mind vs Godel: Can Minds Outperform Algorithms?"
   },
   {
@@ -5779,8 +5779,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "mind_vs_gdel_can_minds_outperform_algorithms",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.57324,
+      "quality": "partial",
       "shape": "star_of_david",
       "title": "Mind vs Godel: Can Minds Outperform Algorithms?"
     }

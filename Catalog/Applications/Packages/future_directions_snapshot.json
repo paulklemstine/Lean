@@ -2073,6 +2073,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Retrocausal Mathematics: Where Effects Precede Causes\n\nDerived from this cycle's verified results in\n`Catalog/Logic/RetrocausalHeyting.lean` and `Catalog/Bridges/RetrocausalCPTBridge.lean`.\n\nThis cycle established three load-bearing facts:\n- **(TEM)** The temporal excluded middle `(a ∨ ¬a)ᶜᶜ = ⊤` holds in *every* Heyting\n  algebra (`temporal_excluded_middle`).\n- **(LEM↔DNE)** Rejecting the law of excluded middle is *equivalent* to rejecting\n  double-negation elimination (`lem_iff_dne`) — so any LEM-free logic is genuinely\n  intuitionistic.\n- **(CPT bridge)** An Osterwalder–Schrader time reflection `θ` (`θ ∘ θ = id`) composed\n  with negation is an order-reversing involution, making the QFT proposition algebra a\n  `RetrocausalHeyting` whose De Morgan laws are the abstract Logic lemmas\n  (`cpt_yields_retrocausal_logic`).\n\n---\n\n## Conjecture 1 — Retrocausal Glivenko transfer for sequent provability\nA formula `φ` is provable in a retrocausal (intuitionistic) sequent calculus equipped\nwith a time-reversal involution iff its CPT-double-negation `(φ ∨ ¬φ)ᶜᶜ`-closure is\nprovable classically, and the time-reversal acts as a provability-preserving De Morgan\nduality on the Lindenbaum–Tarski algebra.\n\n- **The key insight is...** that `temporal_excluded_middle` shows the *doubly negated*\n  excluded middle is a theorem rather than an axiom, so Glivenko's theorem should lift to\n  the retrocausal setting with the involution `rev` permuting the De Morgan dual pair.\n- **Why now?** We already have `lem_iff_dne` and `rev_sup`/`rev_inf` proved with 0\n  sorries; the Lindenbaum–Tarski algebra is a Heyting algebra, so the transfer is a\n  finite step from the present lemmas.\n\n## Conjecture 2 — Fixed points of CPT reversal are a Boolean subalgebra\nFor a reflection-positive QFT, the propositions fixed by the CPT connective\n`cptReversal R S = S` form a sublattice on which the law of excluded middle is restored,\ni.e. a maximal *classical* island inside the retrocausal logic.\n\n- **The key insight is...** that `cptReversal_involutive` gives a `ℤ/2` action whose\n  fixed-point set of an antitone involution is closed under the De Morgan-swapped\n  operations `rev_sup`/`rev_inf`, forcing self-duality and hence Boolean behaviour.\n- **Why now?** The involution and its De Morgan laws are already verified on `Set V`;\n  characterizing `{S : cptReversal R S = S}` only requires the fixed-point algebra of an\n  existing involution.\n\n## Conjecture 3 — LEM-failure is a strict obstruction to Boolean carriers\nEvery retrocausal Heyting algebra in which LEM fails at even one element is necessarily\nnon-Boolean, and conversely the `Fin (n+3)` chains give an infinite family of\nLEM-failing retrocausal algebras with strictly growing failure sets.\n\n- **The key insight is...** that `lem_fails_of_dne_fails` ties LEM failure to genuine\n  intuitionism (DNE failure), and the explicit `Fin 3` model (`retro_lem_fails`) already\n  realizes one failure point with a working time-reversal instance.\n- **Why now?** The `Fin 3` `RetrocausalHeyting` instance is already constructed; the\n  generalization to `Fin (n+3)` is a parametric replay of the same `fin_cases` proofs.\n\n## Conjecture 4 — Reflection positivity bounds the \"retrocausal defect\"\nFor a reflection-positive form `R`, the quantity measuring how far a proposition is from\nCPT-self-duality is controlled by the physical pairing `B (θ v) v ≥ 0`; positivity of the\nform bounds the size of the non-classical (LEM-violating) region of the induced logic.\n\n- **The key insight is...** that `cpt_yields_retrocausal_logic` already couples the\n  physics inequality `reflection_pos` with the logical involution in one statement;\n  promoting the conjunction to a quantitative inequality links OS positivity to logical\n  non-classicality.\n- **Why now?** Both halves (the inequality and the involution) are proved and live in the\n  same theorem; only a measure of \"defect\" must be defined to state the bound.\n\n## Conjecture 5 — Cryptographic one-way functions from retrocausal asymmetry\nThe order-asymmetry of a retrocausal involution (forward implications are *not* recoverable\nfrom backward ones unless the algebra is Boolean) yields a logical hardness gap that can\nseed a commitment scheme: committing in \"forward time\" and opening in \"reversed time\" is\nbinding precisely because LEM fails.\n\n- **The key insight is...** that `lem_iff_dne` makes non-recoverability of `aᶜᶜ ↦ a`\n  equivalent to LEM failure, so a non-Boolean retrocausal carrier provides an\n  *information-theoretic* (not merely computational) one-way asymmetry.\n- **Why now?** The equivalence and an explicit non-Boolean model are already formalized;\n  the Cryptography catalog (`Catalog/Cryptography/`) has the commitment/hardness scaffolding\n  to host the construction.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2050",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "c2929b61",
+    "status": "available",
+    "timestamp": "2026-06-17T10:23:46.814177+00:00",
+    "title": "Derived from this cycle's verified results in"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS — Mind vs Gödel: Can Minds Outperform Algorithms?\n\nThis cycle established (`Catalog/Logic/MindVersusGodel.lean`, 0 sorries) a four-layer,\nfully verified abstract account of the Lucas–Penrose question:\n\n- **Layer 1** — `lawvere_fixed_point` / `no_surjection_to_predicates`: the single\n  fixed-point fact underlying every diagonal argument.\n- **Layer 2** — `FormalSystem`, `GodelSentence`, `godel_true_unprovable`,\n  `godel_neg_unprovable`, `FormalSystem.consistent`: semantic incompleteness with\n  consistency derived as a theorem.\n- **Layer 3** — `mindSystem`, `mind_still_incomplete`, `ReflectionTower`,\n  `tower_strict_mono`, `tower_no_level_complete`, `tower_limit_complete`,\n  `mind_vs_godel_synthesis`: the ω-reflection ladder. A mind beats any *single*\n  algorithm by one rung but never the whole class.\n- **Layer 4** — `bool_diagonal`, `no_halting_decider`, `truth_undefinable`,\n  `mind_is_not_one_algorithm`: Gödel/Tarski/Turing unified as one Boolean diagonal.\n\nThe conjectures below are precise enough to be stated as Lean theorems and either\nproved or refuted in a follow-up cycle.\n\n## Conjecture 1 — Ordinal reflection strictly dominates ω-reflection\nReplace `ReflectionTower : ℕ → …` by a tower indexed by a countable ordinal notation\nsystem `O`. Conjecture: for every recursive ordinal α there is a sentence provable at\nlevel α+1 but at no level β ≤ α, and the union over all recursive ordinals is *still*\nincomplete (a fresh diagonal sentence escapes). **Falsifiable form:** exhibit a recursive\nordinal-indexed `Provable : O → S → Prop` with `tower_strict_mono` at every successor and\na global incompleteness witness; or prove no such strictly increasing recursive tower can\nhave an incompleteness witness at its supremum.\n\n## Conjecture 2 — Soundness is the exact currency of the mind's advantage\nIn `mindSystem` the mind gains the Gödel sentence *because it asserts soundness*. Conjecture:\nan algorithm granted an oracle for `Con(F)` (consistency of `F`) proves exactly the same new\nsentence, i.e. `mindProv F G ⊆ ProvFromConsistencyOracle F`. **Falsifiable form:** define a\n`FormalSystem` extension `F + Con(F)` and prove `G.g` is provable there, establishing that\nthe mind's \"extra truth\" is an *algorithmic* consequence of one consistency assumption — so\nthe advantage is relative, not absolute.\n\n## Conjecture 3 — No fixed point of the reflection operator is complete\nLet `R : FormalSystem → FormalSystem` be the reflective extension operator (Layer 3). Conjecture:\nif `F` admits a Gödel sentence and `R F ≅ F` (a fixed point of reflection), then `F` is\ninconsistent. I.e. the only \"self-reflectively closed\" sound systems are exactly the ones with\nno diagonal sentence (too weak to be interesting). **Falsifiable form:** prove\n`(∀ G, RF.Prov = F.Prov) → ¬ Nonempty (GodelSentence F)` for sound `F`, or build a sound,\ndiagonal-admitting fixed point as a counterexample.\n\n## Conjecture 4 — Quantitative diagonal gap\nGeneralize `bool_diagonal` from `Bool` to a finite valuation type `Fin k` with a\nfixed-point-free permutation `σ`. Conjecture: an evaluator `eval : α → α → Fin k` avoids the\nσ-diagonal on a set of \"rows\" of measure (counting) at most `1 − 1/k` — i.e. the diagonal\ndefeats a `1/k` fraction of any finite candidate table. **Falsifiable form:** for finite `α`,\nprove `#{ m | ∀ x, eval m x = σ (eval x x)} = 0` and, dually, bound how close a table can come.\n\n## Conjecture 5 — Bridge to `ProofSystemCollapse` / `ParadoxSelfSoundness`\nThe catalog's `ParadoxSelfSoundness` shows paraconsistent theories *can* prove their own\nsoundness by tolerating `B`-valued dialetheias. Conjecture: a `FormalSystem` whose truth\nvaluation is Belnap-four-valued (replacing `neg_true` by `BelnapVal.neg`) admits a Gödel\nsentence valued `B`, making `godel_true_unprovable` *vacuous* (the mind's \"seeing\" collapses).\n**Falsifiable form:** define `BelnapFormalSystem`, port `godel_true_unprovable`, and prove the\nfixed point is forced to `B`/`N` — formally connecting the Mind-vs-Gödel ladder to the\ninconsistency-tolerance spectrum and the `DiagonalSystem` of `ParadoxSelfSoundness`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_2051",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "95c512f5",
+    "status": "available",
+    "timestamp": "2026-06-17T10:24:13.497098+00:00",
+    "title": "(`Catalog/Logic/MindVersusGodel.lean`, 0 sorries) a four-"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -3585,7 +3625,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "46951c2e",
     "description": "Suppose we had an oracle that computes L(s, chi) for any L-function and any complex s in O(1) time. What theorems would follow? Conjecture: The L-function oracle implies (1) The Riemann Hypothesis (compute zeros directly), (2) The BSD conjecture (compute the order of vanishing at s=1), (3) The Sato-Tate conjecture (compute the distribution of a_p), (4) Langlands functoriality (compare L-functions on both sides of the functoriality lift), and (5) A polynomial-time algorithm for factoring (the L-function of an elliptic curve E over Z/nZ detects factors of n). But the oracle also implies IMPOSSIBILITY results: (6) P != NP (because NP-complete problems would reduce to L-function computations that the oracle solves in O(1), contradicting the time hierarchy theorem if P = NP). Wait — the oracle solves L-function computations in O(1), so if P = NP, then NP problems can be encoded as L-function computations and solved instantly, but the oracle's existence is an axiom, not a theorem. The correct statement: the L-function oracle collapses the polynomial hierarchy to L-function computations. Test: prove that the Riemann Hypothesis follows from the oracle. Prove that BSD follows. Prove that factoring is in P given the oracle. Impact: understanding what an L-function oracle implies tells us exactly how powerful L-functions are — and how far we are from proving things about them.",
     "domain_bridges": [],
     "domains": [
@@ -3598,7 +3638,7 @@
     "proof_strategy": "Define the L-oracle O(s, chi) = L(s, chi) for any L-function chi and complex s. RH: compute all zeros of zeta(s) by evaluating zeta(s) on a fine grid and checking sign changes — O(R^2) oracle calls for zeros up to height R. BSD: compute L(E, 1) and check if it's zero (rank >= 1) or compute the Taylor expansion around s=1 to get the order of vanishing. Sato-Tate: compute a_p(E) for all p up to N by evaluating L(s, E) at s = it for varying t, and extract a_p from the Euler product. Factoring: given n = pq, define E: y^2 = x^3 + ax + b over Z/nZ. The oracle computes L(s, E/nZ), which has different values for different factorizations. Binary search on a to find p. P != NP: if the oracle exists as a physical device, then L-function computations are O(1), but the oracle itself cannot solve NP problems unless P = NP.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.502441+00:00",
     "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
   },
@@ -3645,7 +3685,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "16b03c84",
     "description": "Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s) where f is a degree-3 polynomial (since the rule depends on 3 cells). Conjecture: The algebraic variety V(f) = {s : f(s) = s} (fixed points of the ECA) has dimension equal to the 'complexity class' of the rule. For simple rules (e.g., Rule 0, which is all zeros), V(f) has dimension 0 (a single point). For complex rules (e.g., Rule 110), V(f) has maximal dimension. The Grothendieck-style approach: each ECA defines a sheaf on the state space, and the global sections of this sheaf classify the possible stable configurations. Rule 110's sheaf has the richest section structure, corresponding to its Turing-completeness. Test: compute dim(V(f)) for all 256 ECAs and verify that the dimension correlates with Wolfram's complexity classification (Class 1: dim=0, Class 2: dim<=n/2, Class 3: dim>=n/2, Class 4: dim=n). Impact: cellular automata are algebraic varieties, and their complexity is the dimension of their fixed-point variety.",
     "domain_bridges": [],
     "domains": [
@@ -3658,7 +3698,7 @@
     "proof_strategy": "Encode ECA state as vector s in GF(2)^n. Rule r defines update f_r(s)_i = g(s_{i-1}, s_i, s_{i+1}) where g is the truth table of rule r, viewed as a polynomial over GF(2). For example, Rule 110: g(a,b,c) = a + b + ac + bc (mod 2). Fixed points satisfy f_r(s) = s, a system of n polynomial equations over GF(2). Compute dim(V(f_r)) using Groebner basis methods. For Rule 0: f_0(s) = 0, so V = {0}, dim = 0. For Rule 255: f_255(s) = 1+s, V = {1+s = s} = {1=0} = empty, dim = -1 (no fixed points). For Rule 110: f_110(s) = s + s_{i-1} + s_i + s_{i-1}*s_{i+1} + s_i*s_{i+1}, dim(V) = n - rank(Jacobian of f-s). Conjecture: dim(V(f_r)) correlates with Wolfram class. Test: compute dim(V(f_r)) for all 256 rules with n=20 and compare to Wolfram classification.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.536490+00:00",
     "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
   },
@@ -4005,26 +4045,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "95c512f5",
-    "description": "Formalize the Lucas-Penrose argument that human minds can see truths that formal systems cannot prove about themselves. Prove or disprove: there exists a computational system that can consistently recognize its own Gödel sentences. Connect to Chaitin's incompleteness theorem and the Berry paradox.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0105",
-    "lineage_refs": [],
-    "priority_score": 0.05,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.889380+00:00",
-    "title": "Mind vs Gödel: Can Minds Outperform Algorithms?"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "8e7ddb5d",
     "description": "Construct and classify finite projective planes where Desargues' theorem fails. Prove that such planes exist at every prime power order and that their collineation groups are strictly smaller than PGL. Formalize the connection to non-associative division algebras and Hall triple systems.",
     "domain_bridges": [],
@@ -4041,26 +4061,6 @@
     "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.925627+00:00",
     "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "c2929b61",
-    "description": "Formalize retrocausal mathematical structures where implications can flow backward in time. Prove that in a retrocausal Heyting algebra, the law of excluded middle fails but a temporal excluded middle holds. Connect to the CPT theorem in QFT and prove that any retrocausal logic must be intuitionistic.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0122",
-    "lineage_refs": [],
-    "priority_score": 0.05,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.994131+00:00",
-    "title": "Retrocausal Mathematics: Where Effects Precede Causes"
   },
   {
     "ambition_level": "extension",
