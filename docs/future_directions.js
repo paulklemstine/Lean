@@ -660,7 +660,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bourgain's Slicing Problem"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e98f715",
     "description": "Formalize transreal arithmetic (Anderson's system: R \u222a {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive transreal extension and which collapse.",
     "domains": [
       "Novelty",
@@ -670,7 +670,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.870934+00:00",
     "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
   },
@@ -1576,6 +1576,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T10:24:13.497098+00:00",
     "title": "(`Catalog/Logic/MindVersusGodel.lean`, 0 sorries) a four-"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Counterfactual Number Theory: What If Primes Were Random?\n\nThis cycle formalized the **Cram\u00e9r random model of the primes** as a genuine finite\nprobability space (a Bernoulli \"random sieve\" on a candidate window), and proved the\nfoundational expectation identities used as heuristics in cryptography:\n\n- `cramer_total_mass` / `cramer_weight_nonneg` \u2014 the sieve is a probability distribution;\n- `cramer_subset_indicator` \u2014 **independence**: `P(A \u2286 S) = \u220f_{i\u2208A} p i`;\n- `cramer_single`, `cramer_pair` \u2014 marginal and pairwise corollaries;\n- `cramer_expected_count` \u2014 expected random-prime count `= \u2211 p i` (model of `\u03c0(N) \u2248 Li(N)`);\n- `cramer_expected_pairs` / `cramer_expected_twin_count` \u2014 expected twin/`k`-tuple counts\n  (Hardy\u2013Littlewood heuristic skeleton).\n\nAll identities turned out to be **purely algebraic** in the weight family `p : \u03b9 \u2192 \u211d`;\npositivity (`0 \u2264 p \u2264 1`) is needed only to certify the distribution is genuine. The\nentire theory collapses onto `Finset.prod_add`. The conjectures below build on this base.\n\n## Conjecture 1 \u2014 Variance and second-moment concentration of the random prime count\nDefine `Var(|S|) = E[|S|\u00b2] \u2212 E[|S|]\u00b2` for the Cram\u00e9r sieve. Conjecture (and formalize):\n`Var(|S|) = \u2211_{i\u2208s} p i (1 \u2212 p i)`, exactly (independence kills cross terms). Corollary:\nunder `p n = 1/log n` on `Icc 2 N`, the standard deviation is `\u0398(\u221a(N/log N))`, so the\nrandom model concentrates: `|S| = (1+o(1)) \u2211 1/log n` almost surely. **Testable**: prove the\nexact variance identity via `cramer_pair` + `cramer_single`; it is a finite computation.\n\n## Conjecture 2 \u2014 Expected number of prime `k`-tuples (singular series skeleton)\nGeneralize `cramer_expected_twin_count` to arbitrary admissible offset patterns\n`H = {h_1,\u2026,h_k}`. Conjecture: the expected number of `n \u2208 [2,N]` with all of\n`n+h_1,\u2026,n+h_k` random-prime equals `\u2211_n \u220f_{j} p(n+h_j)`, and under Cram\u00e9r's `p`\nthis is asymptotic to `\u222b dt/(log t)^k`. **Testable**: the exact finite identity is a direct\niteration of `cramer_subset_indicator` with `A` of size `k`; the asymptotic is a separate\nanalytic lemma. Note the *deviation* of this from the true Hardy\u2013Littlewood constant\n`\ud835\udd16(H)` measures exactly how the genuine primes fail to be Cram\u00e9r-random.\n\n## Conjecture 3 \u2014 Maximal prime gap in the Cram\u00e9r model (Cram\u00e9r's conjecture, finite form)\nLet `G_N` be the largest gap between consecutive random primes in `[2,N]`. Conjecture:\n`E[G_N] = \u0398((log N)\u00b2)` and `P(G_N > c (log N)\u00b2) \u2192 0` for large `c`. **Testable first step**:\nformalize, for the sieve, the exact probability that a fixed window `[m, m+L]` contains\n*no* random prime: `\u220f_{n=m}^{m+L} (1 \u2212 p n)`, and prove the union-bound upper tail\n`P(\u2203 gap \u2265 L) \u2264 \u2211_m \u220f (1\u2212p n)`. This is provable now from the weight definition.\n\n## Conjecture 4 \u2014 Counterfactual divergence: where real primes beat the coin flips\nFormalize a quantitative \"non-randomness detector\". For residue classes mod `q`, the\nCram\u00e9r model predicts the random primes equidistribute with no bias, i.e.\n`E[#{n\u2208s : n \u2261 a (q), n random-prime}] = \u2211_{n\u2261a} p n`, *independent of `gcd(a,q)`*.\nConjecture: the genuine primes deviate from this by exactly the factor `q/\u03c6(q)` on the\ncoprime classes (and `0` otherwise). **Testable**: prove the model's class-count identity\n(immediate from `cramer_expected_count` restricted to an arithmetic-progression subset),\nthen state the divergence as a separate, falsifiable comparison theorem against `Nat.Prime`.\n\n## Conjecture 5 \u2014 Cryptographic key-generation success probability (Bernoulli sieve bound)\nRSA key generation samples until it hits a prime. Model: in a window of `L` candidates each\nprime with prob `p`, the probability of failing to find any prime is `\u220f (1 \u2212 p n)`.\nConjecture: with `p n = 1/log n`, `O(log N)` independent samples suffice to find a prime\nwith probability `\u2265 1 \u2212 \u03b5`, and formalize the explicit bound\n`P(failure in m samples) \u2264 (1 \u2212 p_min)^m`. **Testable**: provable now from\n`cramer_total_mass` and `cramer_weight_nonneg`; gives a verified, model-level justification\nfor the practical efficiency of probabilistic prime generation.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2052",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "667542f0",
+    "status": "available",
+    "timestamp": "2026-06-17T10:58:34.240179+00:00",
+    "title": "This cycle formalized the **Cram\u00e9r random model of the primes** as a genuine fin"
   },
   {
     "consumed_by_exp_id": "",
@@ -3039,21 +3054,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.925627+00:00",
     "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
-  },
-  {
-    "consumed_by_exp_id": "667542f0",
-    "description": "Construct an alternate number theory where primes are replaced by a random subset of N with density n/log n. Prove which theorems survive (Dirichlet, PNT) and which collapse (unique factorization). Determine whether RH holds almost surely in this counterfactual universe.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0126",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:31.018128+00:00",
-    "title": "Counterfactual Number Theory: What If Primes Were Random?"
   },
   {
     "consumed_by_exp_id": "",
