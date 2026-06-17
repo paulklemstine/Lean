@@ -837,6 +837,34 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any \u03b5 > 0, there exists a \u0394\u2080 such that for all \u0394 \u2265 \u0394\u2080, any 3-uniform uncrowded hypergraph (girth \u2265 5) on n vertices with maximum degree at most \u0394 contains an independent set of size at least (1 - \u03b5) * n * sqrt(log(\u0394) / (2\u0394)). This is the k=3 instantiation of the paper's main theorem that uncrowded hypergraphs attain the shattering threshold constant (1/(k-1))^(1/(k-1)).",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2069",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18048v1",
+    "status": "available",
+    "timestamp": "2026-06-17T23:47:21.704922+00:00",
+    "title": "Shattering Threshold for 3-Uniform Uncrowded Hypergraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any partial Latin square P of order n with k entries occupying at most n/4 rows and n/4 columns, the probability that a uniformly random Latin square of order n contains P is bounded between (c\u2081/n)^k and (c\u2082/n)^k for some absolute constants c\u2081, c\u2082 > 0. This is a specific instance of the paper's main theorem (Theorem 1.1) with \u03b1=1/4 and \u03b2=1/4, which satisfies the condition 2\u03b1+\u03b2 < 1.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2070",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18174v1",
+    "status": "available",
+    "timestamp": "2026-06-17T23:49:01.691458+00:00",
+    "title": "Probability Bounds for Partial Latin Squares with Bounded Dimensions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -1740,6 +1768,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T19:26:29.748902+00:00",
     "title": "This cycle formalized, with zero `sorry`, a self-contained 2-color Ramsey theory"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Prime Number Crossword\n\nThis cycle established the two boundary facts of the prime crossword in\n`Cryptography/PrimeGaps/`:\n\n* `exists_consecutive_composites` / `gaps_unbounded` \u2014 gaps are arbitrarily wide;\n* `gaps_unbounded_cofinal` \u2014 arbitrarily wide gaps occur arbitrarily far out;\n* `nextPrime_sub_le` \u2014 every gap above a prime `p` is at most `p` (Bertrand).\n\nBelow are falsifiable conjectures for the next cycle. Each is stated so that it\ncan be formalized directly as a Lean theorem about `PrimeGaps.nextPrime`.\n\n## C1. A quantitative Bertrand gap bound, sharpened\n**Conjecture.** For every prime `p \u2265 5`, `nextPrime p - p \u2264 p / 2`, and more\nstrongly the relative gap `(nextPrime p - p) / p \u2192 0`.\n*Formalization target:* prove `\u2200 p, p.Prime \u2192 5 \u2264 p \u2192 nextPrime p - p \u2264 p / 2`\nusing Nagura-type explicit estimates (prime in `(n, 6n/5]` for `n \u2265 25`).\n*Falsifiable:* a single prime with gap exceeding `p/2` refutes it.\n\n## C2. Average gap matches the logarithm (Prime Number Theorem flavor)\n**Conjecture.** The mean gap up to `x`, `x / \u03c0(x)`, grows like `log x`. A first\nformal milestone: `\u2200 x \u2265 2, \u03c0(x) \u2264 x` paired with a lower bound\n`\u03c0(x) \u2265 c \u00b7 x / log x`. *Target:* connect `nextPrime` iterates to `Nat.primeCounting`\nin Mathlib and prove `nextPrime p - p` has Ces\u00e0ro average `\u0398(log p)`.\n\n## C3. Maximal gap function is well defined and unbounded but slowly growing\n**Conjecture.** `G(x) := max { nextPrime p - p : p prime, p \u2264 x }` satisfies\n`G(x) \u2264 x` (immediate from Bertrand) and `G(x) \u2192 \u221e` (immediate from\n`gaps_unbounded_cofinal`), while conjecturally `G(x) = O((log x)^2)` (Cram\u00e9r).\n*Target:* formalize `G` as a `Finset.sup`, prove the two unconditional bounds,\nand state Cram\u00e9r's `O((log x)^2)` bound as an open hypothesis.\n\n## C4. Twin-gap dichotomy / Polignac\n**Conjecture (Polignac, open).** Every even number `2k` is a gap between\nconsecutive primes infinitely often: `\u2200 k \u2265 1, {p : nextPrime p - p = 2k}` is\ninfinite. *Target:* state precisely with `Set.Infinite`; as a tractable\nsub-result prove the *finite* version \u2014 for each `k` there is at least one prime\ngap of size `\u2265 2k` (already implied by `gaps_unbounded`) and search for explicit\nsmall-`k` witnesses via `native_decide`.\n\n## C5. Cryptographic safe-prime spacing\n**Conjecture.** Safe primes (`p` with `(p-1)/2` also prime) exhibit the same\ngap-unboundedness: `\u2200 N, \u2203 p, p` safe-prime `\u2227 nextSafePrime p - p \u2265 N`.\n*Target:* define `SafePrime` and `nextSafePrime`, then transport the factorial /\nbracketing construction. This directly models the cost of safe-prime search in\nDiffie\u2013Hellman parameter generation.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2068",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "21cfd7dd",
+    "status": "available",
+    "timestamp": "2026-06-17T23:11:17.377449+00:00",
+    "title": "Two boundary facts of the prime crossword in"
   },
   {
     "consumed_by_exp_id": "",
@@ -2904,21 +2947,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Unreasonable Effectiveness of the Number 163"
   },
   {
-    "consumed_by_exp_id": "21cfd7dd",
-    "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0030",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.525722+00:00",
-    "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The Langlands program connects Galois groups (shapes) to automorphic forms (colors). Think of it this way: a Galois group is the group of symmetries of a shape (like the rotational symmetries of a polygon). An automorphic form is a coloring that respects the shape's symmetries (like a coloring of the polygon's vertices that is invariant under rotation). The Langlands correspondence says: for every 'shape' (Galois representation), there is a matching 'color' (automorphic form) and vice versa. Conjecture: This correspondence is a bijection between irreducible representations of Gal(Q_bar/Q) and cuspidal automorphic representations of GL_n over Q. For n=1, this is class field theory (every abelian extension of Q corresponds to a Dirichlet character). For n=2, this is the modularity theorem (every elliptic curve over Q corresponds to a weight-2 cusp form). The toddler version: each shape has exactly one matching color, and each color has exactly one matching shape. Test: verify the correspondence for all degree-2 extensions of Q up to discriminant 1000. Verify that each quadratic field Q(sqrt(d)) corresponds to a Dirichlet character chi_d via the correspondence chi_d(p) = (d/p) (Legendre symbol). Impact: Langlands is just shape-color matching. Shapes and colors are two ways of seeing the same mathematical object.",
     "domains": [
@@ -3024,7 +3052,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "15e84b40",
     "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
     "domains": [
       "Novelty",
@@ -3034,7 +3062,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.807837+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
