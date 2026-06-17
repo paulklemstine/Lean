@@ -1444,6 +1444,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Tangled Hierarchies (GL-Kripke geometry of self-soundness)\n\nDerived from this cycle's findings in `Core.lean`, `SelfSoundness.lean`,\n`Examples.lean`. This cycle established, on finite transitive irreflexive\n(well-founded) Kripke geometries:\n\n* the *untangled* reflection schema `\u25a1S \u2192 S` collapses (`reflection_collapse`);\n* the *tangled* fixed-point principle `\u25a1(\u25a1S \u2192 S) \u2192 \u25a1S` (L\u00f6b) is always valid;\n* the consistency sentence is its **own** G\u00f6del fixed point `Con = \u00ac\u25a1Con`\n  (`consistency_is_godel_fixed_point`), giving a geometric G\u00f6del II\n  (`godel_second_incompleteness`).\n\nThe conjectures below are bold, falsifiable refinements.\n\n---\n\n## Conjecture 1 \u2014 Bounded Tangling (one diagonal, never a schema)\n\nA consistent GL geometry hosts a self-referential soundness predicate for the\n*single* target `\u22a5` (its consistency sentence), but no consistent geometry can\nhost a self-referential predicate `Sound` satisfying `Sound = \u00ac\u25a1Sound` together\nwith the *global* soundness schema `\u25a1S \u2192 S` restricted to any infinite,\nnontrivially-closed family of `S`.\n\n**The key insight is** that `reflection_collapse` forbids a sound schema while\n`canonicalSelfSound` provides exactly one diagonal sentence \u2014 tangling is real\nbut *measure-zero*: it never spreads from one fixed point to a whole hierarchy.\n\n**Why now?** We already have both the impossibility (`reflection_collapse`) and\nthe single witness (`canonicalSelfSound`) compiled in the same namespace; the\nconjecture is the precise frontier between them and is a finite combinatorial\nstatement amenable to the same well-founded induction used for L\u00f6b.\n\n---\n\n## Conjecture 2 \u2014 Rank-Graded Consistency Strength\n\nDefine the rank `\u03c1(w)` of a world as its height in the well-founded\naccessibility geometry (`wf_flip`). Then a world validates the `n`-fold iterated\nconsistency assertion `\u25a1\u207f Con` **iff** `\u03c1(w) \u2265 n`. In particular the maximal\nnumber of nested \"I am consistent\" assertions a world can carry is exactly its\nrank.\n\n**The key insight is** that each `\u25a1` step strips one level of the well-founded\ngeometry (the G\u00f6del-II step `\u25a1Con \u2192 \u25a1\u22a5` consumes one rank), so iterated\nprovability is literally a ruler measuring geometric depth.\n\n**Why now?** `godel_two_frame` already encodes the single-step descent; turning\nit into a rank function is the natural induction, and `wf_flip` supplies the\nrecursion principle out of the box.\n\n---\n\n## Conjecture 3 \u2014 Uniqueness of Tangled Fixed Points (de Jongh\u2013Sambin, frame form)\n\nEvery *box-modalized* set operator `\u03a6 : Set World \u2192 Set World` (one where\nmembership of `w` in `\u03a6 S` depends on `S` only through successors of `w`) has a\n**unique** fixed point on each GL geometry, and that fixed point is explicitly\ncomputable by well-founded recursion along `wf_flip`.\n\n**The key insight is** that the very well-foundedness that powers L\u00f6b's theorem\nalso makes the diagonal recursion well-defined and rigid: there is no room for a\nsecond solution because successors are strictly lower in the geometry.\n\n**Why now?** The consistency sentence is the special case `\u03a6 S = (\u25a1S)\u1d9c` already\nproven to be a fixed point; generalizing the explicit construction to all\nmodalized `\u03a6` reuses the identical `wf_flip` recursion.\n\n---\n\n## Conjecture 4 \u2014 Polymodal Tangling Is Strictly Worse\n\nOn a geometry carrying two transitive irreflexive relations `R\u2081, R\u2082` (two\nprovability operators `\u25a1\u2081, \u25a1\u2082`), the *joint* consistency sentence\n`Con\u2081\u2082 = (\u25a1\u2081\u22a5)\u1d9c \u2229 (\u25a1\u2082\u22a5)\u1d9c` is generally **not** a fixed point of either single\n\"not-provable\" operator; a genuine fixed point exists only for the relation that\ncontains the other. Hence relative interpretability is detectable purely from\nwhich single box can diagonalize the joint consistency sentence.\n\n**The key insight is** that G\u00f6del II (`godel_two_frame`) is relation-specific:\nseeing a `R\u2081`-dead-end is unrelated to seeing a `R\u2082`-dead-end, so tangling\nfragments across modalities and exposes their ordering.\n\n**Why now?** The catalog already gestures at polymodal GL (`Logic/PolymodalGL`);\nour `godel_two_frame` is stated for a single abstract `R`, so instantiating it\ntwice and comparing is immediate.\n\n---\n\n## Conjecture 5 \u2014 Self-Sound Frames Form a Reflective Subcategory\n\nFrame morphisms (bounded p-morphisms) between GL geometries lift to morphisms of\n`SelfSoundFrame`, and `canonicalSelfSound` is the right adjoint (coreflector)\nsending each geometry to its canonical self-referential soundness predicate;\nevery self-sound frame maps uniquely to a canonical one preserving `Con`.\n\n**The key insight is** that the consistency fixed point is *natural* \u2014 it is\ndefined uniformly as `(\u25a1\u22a5)\u1d9c` with no choices \u2014 so it must be functorial, and\nuniversality follows from uniqueness (Conjecture 3).\n\n**Why now?** `canonicalSelfSound` is already a total, choice-free construction in\n`SelfSoundness.lean`; only the morphism layer is missing, and the catalog's\n`Geometry/CategoricalTower` provides the categorical scaffolding to reuse.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2040",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1873f003",
+    "status": "available",
+    "timestamp": "2026-06-17T03:35:45.482730+00:00",
+    "title": "Derived from this cycle's findings in `Core.lean`, `SelfSoundness.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2711,7 +2726,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
   },
   {
-    "consumed_by_exp_id": "0e69ce58",
+    "consumed_by_exp_id": "",
     "description": "In 2023, Smith et al. discovered 'the hat' \u2014 a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities \u2014 they form a continuous family, and the hat is just one point on the spectrum.",
     "domains": [
       "Novelty",
@@ -2721,7 +2736,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "failed",
     "timestamp": "2026-06-01T12:30:30.581649+00:00",
     "title": "The Aperiodic Monotile: One Shape to Tile Them All"
   },
@@ -2756,7 +2771,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "63fd3989",
     "description": "Category theory studies objects and morphisms between them. A joke has a setup (an object) and a punchline (a morphism that subverts expectations). Define the category Joke where objects are setups and morphisms are punchlines. A joke J: S -> P is a morphism from setup S to punchline P that factors through an unexpected category. The humor of a joke is measured by its 'surprise': the distance between the expected punchline (the limit of the setup category) and the actual punchline. Conjecture: The funniest jokes are those where the setup category has a colimit that is far from the limit. Formally, if S is a setup with expected resolution lim(S) and the actual punchline P is a colimit colim(S'), then the humor H(J) = d(lim(S), colim(S')), where d is a metric on the category of punchlines. Puns have H close to 0 (the punchline is near the expected resolution). Absurdist humor has H large (the punchline is in a completely different category). The universal property of jokes: a joke J is universal if for any other joke J' with the same setup, there is a unique natural transformation J => J'. The funniest jokes are universal \u2014 they are the terminal objects in the category of jokes with a given setup. Test: formalize 100 jokes as category-theoretic objects and compute H(J) for each. Correlate with human funniness ratings. Impact: humor is a colimit. The funnier the joke, the further the punchline is from the expected limit of the setup.",
     "domains": [
       "Novelty",
@@ -2766,7 +2781,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.626049+00:00",
     "title": "The Category Theory of Jokes: Universal Properties of Humor"
   },
@@ -2966,21 +2981,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Isomorphisms of Meaning: When Structures Collide"
   },
   {
-    "consumed_by_exp_id": "1873f003",
-    "description": "Construct a formal proof system where the soundness predicate appears inside the system it validates. Prove that such tangled hierarchies are unavoidable in any system that can reason about its own consistency. Formalize using modal fixed-point logics and Kripke frames.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0099",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.852132+00:00",
-    "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the Lucas-Penrose argument that human minds can see truths that formal systems cannot prove about themselves. Prove or disprove: there exists a computational system that can consistently recognize its own G\u00f6del sentences. Connect to Chaitin's incompleteness theorem and the Berry paradox.",
     "domains": [
@@ -3131,7 +3131,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bridge: Homological Algebra Connecting Algebra and Topology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "728f60d4",
     "description": "Conjecture that major theorems (G\u00f6del's incompleteness, Fermat's Last Theorem, ABC conjecture) correspond to phase transitions in proof space. Define an order parameter: the ratio of provable to unprovable statements of length \u2264 n. Prove that this ratio undergoes a sharp transition at some critical n_c (the G\u00f6del threshold). Predict: the distribution of theorem lengths follows a power law with exponent related to the Hausdorff dimension of proof space.",
     "domains": [
       "Novelty",
@@ -3141,7 +3141,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T23:40:36.221954+00:00",
     "title": "Speculative: Theorems as Phase Transitions in Proof Space"
   },

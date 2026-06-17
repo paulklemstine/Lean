@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "1873f003",
     "filename": "tangled_hierarchies_proof_systems_that_reference_t.json",
     "pkg_num": 178,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4749530303030304,
     "title": "Flag Complexes and the Clique Recognition Theorem"
   },
   {
@@ -5489,8 +5489,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "tangled_hierarchies_proof_systems_that_reference_t",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4749530303030304,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "Flag Complexes and the Clique Recognition Theorem"
     }
