@@ -32,6 +32,7 @@ class ResearchThread:
     cycles: List[str] = field(default_factory=list)
     cycle_idents: List[List[str]] = field(default_factory=list)
     cycle_quality_scores: List[float] = field(default_factory=list)
+    cycle_concepts: List[str] = field(default_factory=list)
     last_progress_cycle: int = -1
     termination_reason: str = ""
     thread_context: str = ""
@@ -46,6 +47,7 @@ class ResearchThread:
             "cycles": self.cycles,
             "cycle_idents": self.cycle_idents,
             "cycle_quality_scores": self.cycle_quality_scores,
+            "cycle_concepts": self.cycle_concepts,
             "last_progress_cycle": self.last_progress_cycle,
             "termination_reason": self.termination_reason,
             "thread_context": self.thread_context,
@@ -109,7 +111,7 @@ class ResearchThreadManager:
         )
         return set(pattern.findall(lean_source))
 
-    def start_thread(self, root_direction_id: str, job_id: str) -> ResearchThread:
+    def start_thread(self, root_direction_id: str, job_id: str, concept_title: str = "") -> ResearchThread:
         """Create a new active thread rooted in the given future direction."""
         thread_id = f"th_{uuid.uuid4().hex[:8]}"
         now = datetime.now(timezone.utc).isoformat()
@@ -120,6 +122,7 @@ class ResearchThreadManager:
             cycles=[job_id],
             cycle_idents=[list(self._extract_idents(""))],
             cycle_quality_scores=[0.0],
+            cycle_concepts=[concept_title],
             last_progress_cycle=0,
             created_at=now,
             updated_at=now,
@@ -136,7 +139,8 @@ class ResearchThreadManager:
         return [t for t in self._threads.values() if t.status == "active"]
 
     def append_cycle(
-        self, thread_id: str, job_id: str, lean_source: str, quality_score: float = 0.0
+        self, thread_id: str, job_id: str, lean_source: str, quality_score: float = 0.0,
+        concept_title: str = "",
     ) -> bool:
         """Append a new cycle to a thread and evaluate progress.
 
@@ -154,10 +158,13 @@ class ResearchThreadManager:
             # Idempotent: update the already-recorded cycle (e.g., result now available).
             thread.cycle_idents[-1] = sorted(current_idents)
             thread.cycle_quality_scores[-1] = quality_score
+            if concept_title:
+                thread.cycle_concepts[-1] = concept_title
         else:
             thread.cycles.append(job_id)
             thread.cycle_idents.append(sorted(current_idents))
             thread.cycle_quality_scores.append(quality_score)
+            thread.cycle_concepts.append(concept_title)
 
         # Knowledge delta = any new identifier not seen in previous cycles
         previous_idents: Set[str] = set()

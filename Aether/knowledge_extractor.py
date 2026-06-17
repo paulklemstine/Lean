@@ -46,7 +46,7 @@ from archive_manager import ArchiveManager
 from catalog_analyzer import CatalogAnalyzer
 from autoresearch_bridge import AutoresearchBridge
 from research_memory import ResearchMemory
-from research_threads import ResearchThreadManager
+from research_threads import ResearchThreadManager, ResearchThread
 from specialized_critics import SpecializedCritic
 from research_context import ResearchContext
 from aristotle_loop import AristotleLoop
@@ -629,7 +629,7 @@ class KnowledgeExtractor:
                     # Thread is no longer active; treat this direction as ordinary.
                     best_dir.thread_id = ""
             else:
-                new_thread = self.thread_manager.start_thread(best_dir.id, job_id)
+                new_thread = self.thread_manager.start_thread(best_dir.id, job_id, concept_title=best_dir.title)
                 thread_id = new_thread.thread_id
                 cycle_index = 0
 
@@ -667,6 +667,13 @@ class KnowledgeExtractor:
                 recent_history=recent_history,
                 research_context=discoveries_prompt + quality_context,
                 inflight_concepts=inflight_concepts,
+            )
+
+        # For continuing threads, record the new cycle's concept title now.
+        # The Lean result will be backfilled by _update_thread_after_job.
+        if thread_id and cycle_index > 0:
+            self.thread_manager.append_cycle(
+                thread_id, job_id, "", concept_title=concept.title
             )
 
         if hasattr(self, 'locked_titles') and concept.title:
@@ -862,6 +869,12 @@ class KnowledgeExtractor:
             prompt_version=job.phase_a_prompt_version,
             phase=phase_arg,
         )
+
+        # For continuing research threads, append cumulative context.
+        if job.thread_id and job.cycle_index > 0:
+            thread_context = self._build_thread_context(job)
+            if thread_context:
+                base_prompt += "\n\n" + thread_context
         # AUGMENT the prompt to explicitly request ALL deliverables
         # For Phase A (lean_only), the prompt already excludes packaging —
         # the augmentation is skipped because the prompt is intentionally narrow.
@@ -967,6 +980,40 @@ Research mode: {concept.research_mode}
             augmented = base_prompt + deliverables_section
 
         return augmented
+
+    def _build_thread_context(self, job: ResearchJob) -> str:
+        """Build a cumulative context section for a continuing research thread."""
+        if not job.thread_id:
+            return ""
+        thread = self.thread_manager.get_thread(job.thread_id)
+        if not thread:
+            return ""
+
+        lines = [
+            "## Research Thread Context",
+            f"Thread: {thread.thread_id} | Cycle: {job.cycle_index}",
+            f"Root direction: {thread.root_direction_id}",
+            "",
+            "Previous cycles (do not repeat these results; build on them):",
+        ]
+        # Show cycles before the current one
+        for idx in range(min(job.cycle_index, len(thread.cycles))):
+            title = thread.cycle_concepts[idx] if idx < len(thread.cycle_concepts) else ""
+            score = thread.cycle_quality_scores[idx] if idx < len(thread.cycle_quality_scores) else 0.0
+            jid = thread.cycles[idx]
+            lines.append(f"  Cycle {idx}: {title} (job {jid[:8]}, Q={score:.2f})")
+            # Include a sample of identifiers proved in that cycle
+            idents = thread.cycle_idents[idx] if idx < len(thread.cycle_idents) else []
+            if idents:
+                lines.append(f"    New identifiers: {', '.join(idents[:10])}")
+
+        lines.append("")
+        lines.append(
+            "Your task is the next step of this research thread. "
+            "Advance the inquiry with a new theorem, lemma, definition, or counterexample. "
+            "If the previous cycles reveal an obstacle, pivot to a closely related but fresh angle."
+        )
+        return "\n".join(lines)
 
     def _build_project_dir(self, job: ResearchJob) -> Optional[Path]:
         """Build a project directory for Aristotle with the full Lean Catalog.
@@ -3847,8 +3894,10 @@ Research mode: {concept.research_mode}
             self._terminate_thread_for_job(job, "quality_rejected")
             return
 
+        concept_title = job.concept.title if job.concept else ""
         still_active = self.thread_manager.append_cycle(
-            thread.thread_id, job.job_id, job.result_lean or "", quality_score=job.quality_score
+            thread.thread_id, job.job_id, job.result_lean or "", quality_score=job.quality_score,
+            concept_title=concept_title,
         )
         if not still_active:
             self._terminate_thread_for_job(job, "stagnation")
@@ -3876,6 +3925,48 @@ Research mode: {concept.research_mode}
 
         # Otherwise the thread stays active; a follow-up direction was already
         # extracted with thread_id in _extract_future_directions.
+        if self.config.get("features", {}).get("enable_abduction_loop", False):
+            self._ensure_thread_followup(thread, job)
+
+    def _ensure_thread_followup(self, thread: ResearchThread, job: ResearchJob) -> None:
+        """If the thread has no pending follow-up direction, generate one from thread context."""
+        try:
+            from research_memory import FutureDirectionsManager, FutureDirection
+            fd_manager = FutureDirectionsManager(self.workspace)
+            has_followup = any(
+                d.thread_id == thread.thread_id and d.status == "available"
+                for d in fd_manager._directions
+            )
+            if has_followup:
+                return
+
+            system = (
+                "You are a mathematical research director. Given a research thread's history, "
+                "propose a single focused next direction. Respond with valid JSON only:\n"
+                "{\"title\": string, \"description\": string, \"proof_strategy\": string}."
+            )
+            context = self._build_thread_context(job)
+            raw = self.pi_agent._call_ollama(system, context, timeout=120)
+            import json as _json
+            data = _json.loads(raw)
+            if not isinstance(data, dict):
+                return
+            fd = FutureDirection(
+                id=fd_manager._next_id(),
+                title=str(data.get("title", "Thread follow-up"))[:200],
+                description=str(data.get("description", ""))[:3000],
+                source_exp_id=job.job_id,
+                source_path=str(job.project_dir) if job.project_dir else "abduction_followup",
+                domains=fd_manager._infer_domains(str(data.get("title", "")) + " " + str(data.get("description", ""))),
+                proof_strategy=str(data.get("proof_strategy", ""))[:1000],
+                depth_estimate=3,
+                priority_score=0.85,
+                thread_id=thread.thread_id,
+            )
+            fd_manager.add_direction(fd)
+            print(f"[Abduction] Generated follow-up direction {fd.id} for thread {thread.thread_id}")
+        except Exception as e:
+            print(f"[Abduction] Warning: could not generate thread follow-up: {e}")
 
     def _is_counterexample_result(self, job: ResearchJob) -> bool:
         """Heuristic: does the job output contain a counterexample or disproof?"""
