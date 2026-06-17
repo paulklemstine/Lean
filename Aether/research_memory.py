@@ -269,6 +269,8 @@ class FutureDirection:
     cleanup_review_count: int = 0                                  # number of times reviewed by Pi-Agent (kept each time)
     # --- Syntactic proof stubs ---
     lean_theorem_stub: str = ""                                    # tentative Lean 4 theorem stub for early syntax validation
+    # --- Multi-cycle research threads ---
+    thread_id: str = ""                                            # if set, this direction is a follow-up in a research thread
 
     def to_dict(self) -> dict:
         return {
@@ -301,6 +303,7 @@ class FutureDirection:
             "last_reviewed_at": self.last_reviewed_at,
             "cleanup_review_count": self.cleanup_review_count,
             "lean_theorem_stub": self.lean_theorem_stub,
+            "thread_id": self.thread_id,
         }
 
     @classmethod

@@ -1465,3 +1465,29 @@ Paragraph two: formalize a tropical lens rigidity theorem connecting min-plus al
         text = "1. **Tropical Eigenvalue Gap for Parity.** Prove that the eigenvalue gap of tropical transfer matrices yields super-polynomial circuit lower bounds for parity, using min-plus Perron-Frobenius theory and explicit combinatorial witnesses."
         added, _ = fd_manager.add_directions_from_text(text, "exp_good", "result_future_directions")
         assert added == 1
+
+
+class TestThreadLinkage:
+    def test_thread_id_field_defaults_empty(self, fd_manager):
+        d = FutureDirection(
+            id="thread_001",
+            title="Threaded direction",
+            description="A direction that belongs to a research thread.",
+            source_exp_id="exp_001",
+            source_path="test",
+        )
+        assert d.thread_id == ""
+
+    def test_thread_id_roundtrip(self, fd_manager):
+        d = FutureDirection(
+            id="thread_002",
+            title="Threaded direction",
+            description="A direction that belongs to a research thread.",
+            source_exp_id="exp_002",
+            source_path="test",
+            thread_id="th_deadbeef",
+        )
+        fd_manager.add_direction(d)
+        loaded = FutureDirectionsManager(fd_manager.workspace).get_direction_by_id("thread_002")
+        assert loaded is not None
+        assert loaded.thread_id == "th_deadbeef"

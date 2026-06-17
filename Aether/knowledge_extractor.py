@@ -46,6 +46,7 @@ from archive_manager import ArchiveManager
 from catalog_analyzer import CatalogAnalyzer
 from autoresearch_bridge import AutoresearchBridge
 from research_memory import ResearchMemory
+from research_threads import ResearchThreadManager
 from research_context import ResearchContext
 from aristotle_loop import AristotleLoop
 from output_organizer import OutputOrganizer, normalize_domain
@@ -99,6 +100,9 @@ class ResearchJob:
     retry_count: int = 0
     retry_of: Optional[str] = None
     retry_queued_time: float = 0.0
+    # Multi-cycle research threads
+    thread_id: Optional[str] = None
+    cycle_index: int = 0
 
 
 
@@ -162,6 +166,9 @@ class KnowledgeExtractor:
         )
 
         self.research_context = ResearchContext(self.workspace)
+
+        # Multi-cycle research thread manager
+        self.thread_manager = ResearchThreadManager(self.workspace)
 
         # Insight extractor: meta-feedback loop from Aether's own theorems
         from insight_extractor import InsightExtractor
@@ -602,10 +609,28 @@ class KnowledgeExtractor:
         if not best_dir:
             best_dir = fd_manager.select_direction_weighted(recent_domain_quality=recent_domain_quality, catalog_analyzer=self.catalog_analyzer, exclude_domains=exclude_domains, exclude_titles=inflight_concepts)
 
+        thread_id = None
+        cycle_index = 0
         if best_dir:
             fd_manager.mark_direction_consumed(best_dir.id, job_id)
             source_exp_ids = fd_manager.get_source_exp_ids_for(job_id)
             print(f"[Discover] Using future direction: {best_dir.title} (source={best_dir.source_exp_id})")
+
+            # Link to an active research thread, or start a new one.
+            if best_dir.thread_id:
+                existing_thread = self.thread_manager.get_thread(best_dir.thread_id)
+                if existing_thread and existing_thread.status == "active":
+                    thread_id = existing_thread.thread_id
+                    cycle_index = len(existing_thread.cycles)
+                    print(f"[Discover] Continuing thread {thread_id} (cycle {cycle_index})")
+                else:
+                    # Thread is no longer active; treat this direction as ordinary.
+                    best_dir.thread_id = ""
+            else:
+                new_thread = self.thread_manager.start_thread(best_dir.id, job_id)
+                thread_id = new_thread.thread_id
+                cycle_index = 0
+
             # Use the Aristotle loop's domain, not the direction's domains[0].
             # The direction provides the concept idea; the loop provides the domain target.
             # This prevents Pythagorean (56% of directions' domains[0]) from dominating dispatch.
@@ -654,6 +679,8 @@ class KnowledgeExtractor:
             concept=concept,
             prompt="",  # Will be filled in Phase 2
             source_exp_ids=source_exp_ids if source_exp_ids else None,
+            thread_id=thread_id,
+            cycle_index=cycle_index,
         )
 
     # ==================================================================
@@ -3703,6 +3730,7 @@ Research mode: {concept.research_mode}
                     fd_manager.mark_direction_failed(d.id)
                     print(f"[Tick] Direction {d.id} marked failed (no retry): {d.title[:50]}")
                     break
+            self._terminate_thread_for_job(job, "job_failed")
         except Exception as e:
             print(f"[Tick] Warning: could not mark direction failed: {e}")
 
@@ -3721,6 +3749,7 @@ Research mode: {concept.research_mode}
             fd_manager = FutureDirectionsManager(self.workspace)
             fd_manager.release_consumed_direction(job.job_id)
             print(f"[Tick] Released direction back to available for job {job.job_id[:8]}")
+            self._terminate_thread_for_job(job, "dispatch_released")
         except Exception as e:
             print(f"[Tick] Warning: could not release direction back to available: {e}")
 
@@ -3739,8 +3768,80 @@ Research mode: {concept.research_mode}
                     fd_manager.quarantine_direction(d.id, days=days)
                     print(f"[Quarantine] {d.id} for {days} days (Q={job.quality_score:.3f}): {d.title[:50]}")
                     break
+            self._terminate_thread_for_job(job, "quarantined")
         except Exception as e:
             print(f"[Quarantine] Warning: could not quarantine: {e}")
+
+    def _terminate_thread_for_job(self, job: ResearchJob, reason: str) -> None:
+        """Terminate the research thread associated with a job and fail its directions."""
+        if not job.thread_id:
+            return
+        thread = self.thread_manager.get_thread(job.thread_id)
+        if not thread or thread.status != "active":
+            return
+        self.thread_manager.terminate_thread(thread.thread_id, reason)
+        try:
+            from research_memory import FutureDirectionsManager
+            fd_manager = FutureDirectionsManager(self.workspace)
+            cycle_job_ids = set(thread.cycles)
+            marked = 0
+            for d in fd_manager._directions:
+                if d.status != "in_progress":
+                    continue
+                if d.thread_id == thread.thread_id or d.id == thread.root_direction_id or d.consumed_by_exp_id in cycle_job_ids:
+                    fd_manager.mark_direction_failed(d.id)
+                    marked += 1
+            if marked:
+                print(f"[Thread] {thread.thread_id}: marked {marked} in-progress direction(s) failed ({reason})")
+        except Exception as e:
+            print(f"[Thread] Warning: could not mark thread directions failed: {e}")
+
+    def _update_thread_after_job(self, job: ResearchJob) -> None:
+        """Update the research thread after a job finishes integrating.
+
+        Appends the cycle, checks for knowledge delta / stagnation, and terminates
+        threads whose jobs failed or were rejected.
+        """
+        if not job.thread_id:
+            return
+        thread = self.thread_manager.get_thread(job.thread_id)
+        if not thread or thread.status != "active":
+            return
+
+        # Failure/rejection kills the thread.
+        if job.status not in ("integrated", "completed", "B_dispatched"):
+            self._terminate_thread_for_job(job, f"job_status_{job.status}")
+            return
+        if job.status == "integrated" and job.quality_score < 0.15:
+            self._terminate_thread_for_job(job, "quality_rejected")
+            return
+
+        still_active = self.thread_manager.append_cycle(
+            thread.thread_id, job.job_id, job.result_lean or ""
+        )
+        if not still_active:
+            self._terminate_thread_for_job(job, "stagnation")
+            return
+
+        # Counterexample or strong disproof closes the thread as a positive result.
+        if self._is_counterexample_result(job):
+            self.thread_manager.complete_thread(thread.thread_id)
+            print(f"[Thread] {thread.thread_id} completed (counterexample/disproof)")
+            return
+
+        # Otherwise the thread stays active; a follow-up direction was already
+        # extracted with thread_id in _extract_future_directions.
+
+    def _is_counterexample_result(self, job: ResearchJob) -> bool:
+        """Heuristic: does the job output contain a counterexample or disproof?"""
+        text = (job.result_lean or "") + " " + (job.result_future_directions or "")
+        text_lower = text.lower()
+        if "counterexample" in text_lower or "disproof" in text_lower or "disproved" in text_lower:
+            return True
+        novelty = getattr(job, "theorem_novelty", None)
+        if novelty and novelty.get("disproof", 0) > 0:
+            return True
+        return False
 
     def _extract_future_directions(self, job: ResearchJob) -> None:
         """Extract future directions from Aristotle's output and mark the consumed direction completed."""
@@ -3833,6 +3934,7 @@ Research mode: {concept.research_mode}
                     domains=fd_manager._infer_domains(fd_text),
                     depth_estimate=3,
                     priority_score=0.75,
+                    thread_id=getattr(job, "thread_id", "") or "",
                 )
                 fd_manager.add_direction(fd)
                 fd_added = 1
@@ -3896,17 +3998,7 @@ Research mode: {concept.research_mode}
         if job.status not in ("completed",):
             print(f"[Cycle] Job {job.job_id} ended with status: {job.status}")
             # Directions are no longer retried. Mark the consumed direction failed.
-            if job.job_id:
-                try:
-                    from research_memory import FutureDirectionsManager
-                    fd_mgr = FutureDirectionsManager(self.workspace)
-                    for d in fd_mgr._directions:
-                        if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
-                            fd_mgr.mark_direction_failed(d.id)
-                            print(f"[Cycle] Direction {d.id} marked failed (no retry): {d.title[:50]}")
-                            break
-                except Exception as e:
-                    print(f"[Cycle] Warning: could not mark direction failed: {e}")
+            self._release_direction(job)
             return job
 
         # 4. EXTRACT
@@ -3942,6 +4034,9 @@ Research mode: {concept.research_mode}
 
         # 6b. EXTRACT FUTURE DIRECTIONS from Aristotle's output
         self._extract_future_directions(job)
+
+        # 6b. UPDATE RESEARCH THREAD: track knowledge delta / stagnation
+        self._update_thread_after_job(job)
 
         # 6c. INSIGHT EXTRACTION: scan new theorems for meta-insights
         # (guardrails, strategies, cost estimates for future cycles)
@@ -4116,6 +4211,7 @@ Research mode: {concept.research_mode}
                                     domains=fd_manager._infer_domains(fd_text),
                                     depth_estimate=3,
                                     priority_score=0.75,
+                                    thread_id=getattr(job, "thread_id", "") or "",
                                 )
                                 fd_manager.add_direction(fd)
                                 fd_added = 1
@@ -4134,6 +4230,9 @@ Research mode: {concept.research_mode}
                         except Exception as e:
                             print(f"[Continuous] Warning: Failed to extract future directions: {e}")
 
+                        # Update research thread for this job
+                        self._update_thread_after_job(job)
+
                     job = await self.cleanup_catalog_async(job)
                     self.commit(job)
 
@@ -4142,17 +4241,7 @@ Research mode: {concept.research_mode}
                 else:
                     self.failed_count += 1
                     # Directions are no longer retried. Mark consumed direction failed.
-                    if job.job_id:
-                        try:
-                            from research_memory import FutureDirectionsManager
-                            fd_mgr = FutureDirectionsManager(self.workspace)
-                            for d in fd_mgr._directions:
-                                if d.consumed_by_exp_id == job.job_id and d.status == "in_progress":
-                                    fd_mgr.mark_direction_failed(d.id)
-                                    print(f"[Continuous] Direction {d.id} marked failed (no retry): {d.title[:50]}")
-                                    break
-                        except Exception as e:
-                            print(f"[Continuous] Warning: could not mark direction failed: {e}")
+                    self._release_direction(job)
                     if job.project_id in self.inflight:
                         del self.inflight[job.project_id]
             
