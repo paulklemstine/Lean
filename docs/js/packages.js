@@ -533,15 +533,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const genBtn = document.createElement('button');
             genBtn.className = 'run-btn viz-generate-btn';
-            if (!window.Aether.pyodideInstance) {
-                genBtn.disabled = true;
-                genBtn.textContent = 'Loading Engine...';
-            } else if (!resolvedCode && item.code_file) {
-                genBtn.disabled = true;
-                genBtn.textContent = 'Loading Code...';
-            } else {
-                genBtn.textContent = 'Generate';
-            }
+            genBtn.textContent = 'Regenerate';
 
             btnGroup.appendChild(toggleBtn);
             btnGroup.appendChild(genBtn);
@@ -578,7 +570,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         editor.value = code;
                         resolvedCode = code;
                         genBtn.disabled = !code || !code.trim();
-                        genBtn.textContent = code ? 'Generate' : 'Code Unavailable';
+                        if (!code || !code.trim()) {
+                            genBtn.textContent = 'Code Unavailable';
+                        }
                         autoSizeEditor();
                     })
                     .catch(err => {
@@ -589,7 +583,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             editor.value = modCode;
                             resolvedCode = modCode;
                             genBtn.disabled = false;
-                            genBtn.textContent = 'Generate';
                             autoSizeEditor();
                         } else {
                             genBtn.disabled = true;
@@ -600,19 +593,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const outputContainer = document.createElement('div');
             outputContainer.className = 'gallery-img-container viz-output-container';
-            outputContainer.innerHTML = '<div class="viz-placeholder">Click Generate to create visualization</div>';
+            outputContainer.innerHTML = '<div class="viz-loading">Running visualization...</div>';
 
-            genBtn.addEventListener('click', () => {
+            const runViz = () => {
                 if (window.runVisualization) {
                     const codeToRun = editor.value;
-                    // Guard against filename-only code (not runnable Python)
                     if (!codeToRun || !codeToRun.trim() || isFilename(codeToRun.trim())) {
                         outputContainer.innerHTML = '<div class="viz-placeholder" style="color: var(--text-muted);">Source code not available for this visualization</div>';
                         return;
                     }
                     window.runVisualization(codeToRun, outputContainer, genBtn);
                 }
-            });
+            };
+
+            genBtn.addEventListener('click', runViz);
+
+            // Auto-run when Pyodide is ready; if already loaded, run immediately.
+            if (window.Aether.pyodideInstance) {
+                runViz();
+            } else {
+                window.Aether.pendingVisualizations = window.Aether.pendingVisualizations || [];
+                window.Aether.pendingVisualizations.push({
+                    code: editor.value,
+                    outputContainer,
+                    buttonEl: genBtn,
+                    __autoRun: runViz,
+                });
+            }
 
             card.appendChild(header);
             card.appendChild(desc);
