@@ -2193,6 +2193,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology\n\nThis cycle produced `Catalog/Logic/JigsawPuzzles.lean`, a self-contained, fully\nverified (0 `sorry`) theory of edge-matching jigsaw puzzles connected to the\nexisting complexity framework in `Catalog/Logic/PvsNPFoundations.lean`. It\ncovers: the ℤ/4 rotational symmetry of a piece (`rotate_order_four`,\n`rotate_bijective`), the discrete Euler/handshake identity for the board\n(`board_handshake`), the local matching constraint with monochromatic solvability\n(`monochromatic_solvable`), brute-force decidability over finite palettes\n(`solvable_decidable`), abstract NP membership of the solvability language\n(`puzzle_inNP`), NP closure under reductions / union / intersection\n(`inNP_of_reducible`, `inNP_union`, `inNP_inter`), and the hardness bridge\n(`inNP_of_hard`).\n\nThe following conjectures are precise, falsifiable targets for follow-up cycles.\n\n## Conjecture 1 (Karp reduction: 3-Partition ↪ edge matching)\nFormalize a many-one reduction `ManyOneReducible PARTITION_LANG (SolvableLang Color m n)`\nfor an explicitly constructed color alphabet and gadget pieces, where\n`PARTITION_LANG` is a Lean-formalized NP-hard partition/packing language. Combined\nwith the existing `puzzle_inNP` and the `inNP_of_hard` bridge, this would yield a\nmachine-checked statement that edge matching is NP-complete relative to that base\nlanguage. Testable milestone: prove the reduction's forward direction\n(`x ∈ PARTITION → Solvable`) via an explicit placement.\n\n## Conjecture 2 (1D puzzles are tractable — Eulerian path characterization)\nA single-row board (`m = 1`) is solvable **iff** the multiset of available pieces\nadmits an Eulerian-trail ordering of the \"color transition\" multigraph whose\nvertices are colors and whose edges are pieces `(west, east)`. Formalize this\nequivalence and conclude that 1-row solvability is decidable in polynomial time,\nin sharp contrast to the 2D case. The catalog identity `interiorAdj_single_row`\n(`= n - 1`) is the combinatorial seed: a row is a path with `n-1` constraints.\n\n## Conjecture 3 (Topological lower bound on color count)\nIf an `m × n` board with `m, n ≥ 2` has a **unique** valid placement up to the\ntrivial symmetry, then the number of distinct edge colors used is at least\n`interiorAdj m n / 2 + 1`. Intuition: uniqueness forces interior edges to be\n\"keyed\" distinctly enough to break the grid graph's automorphisms. A first\nformal step is to bound, for a fixed valid placement, the number of *alternative*\nplacements by the number of repeated interior colors.\n\n## Conjecture 4 (Certificate-complexity / counting hierarchy)\nDefine `#Solutions C m n` as the cardinality of `{P : Placement C m n // Valid P}`\n(finite by `solvable_decidable`). Conjecture: the map `(m, n) ↦ #Solutions` over a\nfixed `k`-color palette satisfies a transfer-matrix recurrence in `n` of order\nbounded by `k^k` (a \"puzzle transfer matrix\"). Formalizing the transfer matrix and\nproving the recurrence would place the counting version `#EDGE-MATCH` in `#P` and\ngive exact generating functions for fixed-height strips.\n\n## Conjecture 5 (Rotation-quotient and the dihedral upgrade)\nThe current model fixes orientations. Extend `rotate` (the ℤ/4 action,\n`rotate_order_four`) to the full dihedral action `D₄` by adding reflections, and\nconjecture that allowing free rotation of pieces strictly enlarges the solvable\nlanguage but preserves NP membership: `InNP (SolvableUpToRotation C m n) (Placement C m n × (Fin m → Fin n → ZMod 4))`.\nThe added `ZMod 4` component is the per-cell rotation certificate; proving the\nverifier remains decidable upgrades `puzzle_inNP` to the oriented-piece setting.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2060",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "cb56480f",
+    "status": "available",
+    "timestamp": "2026-06-17T16:38:09.039251+00:00",
+    "title": "`Catalog/Logic/JigsawPuzzles.lean`, a self-contained, fully"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries\n\nThis research cycle established (in `DecisionBoundaryVariety.lean` and\n`DecisionBoundaryVarietyAlgebra.lean`):\n\n- Polynomial networks compute multivariate polynomials whose **total degree** is bounded\n  by `d^L` (activation degree `d`, depth `L`) over degree-1 inputs.\n- Every polynomial classifier's decision boundary is *exactly* the affine algebraic set\n  `zeroLocus (Ideal.span {p})`; hence network boundaries are algebraic hypersurfaces of\n  degree `≤ d^L`.\n- The lattice of decision varieties is closed under **OR = product** (degrees add) and\n  **AND = real sum-of-squares** (factor-2 degree blow-up), both realizable by a single\n  neuron.\n\nThe following conjectures are precise and falsifiable targets for follow-up cycles.\n\n## Conjecture 1 (Degree separation / no-collapse)\nFor each `k ≥ 1` there is a polynomial classifier whose decision boundary is an algebraic\nhypersurface of total degree exactly `k` that is **not** equal to the zero locus of any\npolynomial of degree `< k`. Concretely: the unit sphere `∑ xᵢ² = 1` is not the decision\nboundary of any affine classifier. *Test:* prove that a nonconstant degree-`≤ 1`\npolynomial's real zero set is unbounded (it contains an affine line), while the sphere is\nbounded; conclude inequality of the two varieties. This upgrades the worked `circle`\nexample into a genuine expressivity lower bound, the algebraic analogue of the ReLU\ndepth/width separations in `ReLUDepthWidth`.\n\n## Conjecture 2 (Bézout bound on connected decision regions)\nA polynomial network of activation degree `d` and depth `L` over `ℝⁿ` partitions input\nspace into at most `O((d^L)^n)` connected sign-regions, with the count governed by the\ndegree `d^L` of the boundary polynomial (a real-algebraic, Milnor–Thom-style bound).\n*Test:* formalize the `n = 1` case first — a degree-`m` univariate polynomial has at most\n`m` real roots (`Polynomial.card_roots_le_degree`), hence at most `m + 1` sign regions —\nand bound `m ≤ d^L` via this cycle's degree theorem.\n\n## Conjecture 3 (Intersection is intrinsically real)\nOver `ℂ`, `p² + q²` factors as `(p + iq)(p − iq)`, so its zero locus is a **union**, not an\nintersection. Therefore the AND gate `V(p) ∩ V(q)` of two decision varieties is **not**\nrealizable as the zero locus of any single polynomial of the form `α·p² + β·q²` with\n`α, β ≠ 0` over an algebraically closed field, whereas it always is over `ℝ`.\n*Test:* prove `decisionBoundary (p² + q²) = V(p) ∪ V(q)` over `ℂ` and contrast with the\nreal result `decisionBoundary_sumSq_eq_inter`; this isolates ordered-field positivity as\nthe essential ingredient.\n\n## Conjecture 4 (Vanishing-ideal duality / minimal interpolating boundary)\nFor any finite labeled dataset `S ⊆ ℝⁿ`, the `MvPolynomial.vanishingIdeal` of `S` is\ngenerated by polynomials of total degree `≤ |S|`, and there is a polynomial network of\ndepth `L = ⌈log_d |S|⌉` whose decision boundary contains `S`. *Test:* establish the\nGalois-connection facts `zeroLocus (vanishingIdeal T) ⊇ T` and\n`vanishingIdeal (zeroLocus I) ⊇ I`, then bound generator degree via a Lagrange/Vandermonde\ninterpolation argument.\n\n## Conjecture 5 (Tropical limit of algebraic boundaries)\nAs a scaling parameter `t → ∞`, the algebraic decision boundary of the polynomial\nclassifier `∑ⱼ exp(t·aⱼ(x))` (Maslov/log-sum-exp dequantization) converges to the\n**tropical** decision boundary of the corresponding max-plus classifier studied in\n`MachineLearning.TropicalReLUBridge`. *Test:* formalize the `t → ∞` limit\n`(1/t)·log ∑ exp(t·aⱼ) → maxⱼ aⱼ` pointwise (already `LogSumExp` territory in the catalog)\nand show the zero-level sets converge in the Hausdorff metric on compacts. This would be a\ntrue *bridge* theorem unifying the algebraic (this cycle) and tropical (existing) accounts\nof decision boundaries.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2061",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "74e64b1f",
+    "status": "available",
+    "timestamp": "2026-06-17T16:44:21.172809+00:00",
+    "title": "(in `DecisionBoundaryVariety.lean` and"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -3704,7 +3744,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "856aa6ac",
     "description": "The AdS/CFT correspondence says that a gravitational theory in the bulk of anti-de Sitter space is equivalent to a conformal field theory on the boundary. What if prime numbers have a holographic dual? Define the prime hologram: for each prime p, define its 'boundary' as the ring Z/pZ and its 'bulk' as the p-adic field Q_p. Conjecture: The Riemann zeta function zeta(s) = prod_p (1 - p^{-s})^{-1} is the holographic partition function: the product over primes (boundary) encodes the same information as the completed zeta function Xi(s) (bulk). The functional equation Xi(s) = Xi(1-s) is the holographic duality: bulk physics at depth s equals boundary physics at depth 1-s. The prime counting function pi(x) ~ x/log(x) is the bulk volume, while the Chebyshev function theta(x) = sum_{p<=x} log(p) is the boundary area. The AdS/CFT dictionary: bulk gravity mode at depth s <-> boundary CFT operator of dimension 1-s. Test: verify that the pair correlation of zeta zeros matches GUE random matrices (bulk = quantum gravity in AdS, boundary = CFT random matrix ensemble). Compute the 'prime partition function' Z(beta) = prod_p (1 - e^{-beta log p})^{-1} and show it equals the bulk partition function. Impact: the Riemann Hypothesis is equivalent to a holographic stability condition — zeros on the critical line means the bulk geometry is stable against perturbations.",
     "domain_bridges": [],
     "domains": [
@@ -3717,7 +3757,7 @@
     "proof_strategy": "Define the prime partition function Z(beta) = prod_p (1 - e^{-beta log p})^{-1}. Prove Z(beta) = zeta(s) where beta = Re(s)/log(p) in the saddle-point approximation. Define the holographic dictionary: bulk field phi_s(x) in AdS_3 <-> boundary CFT operator O_{1-s}(y) on S^1. Prove the correspondence: phi_s <-> (1 - p^{-s})^{-1} for each prime p. The functional equation Xi(s) = Xi(1-s) is the holographic duality. Prove: if all zeros of Xi(s) are on Re(s) = 1/2, then the bulk AdS geometry is stable (no tachyonic modes). Conversely, an off-critical-line zero at s = 1/2 + epsilon corresponds to a tachyonic instability in the bulk. Test: compute Z(beta) numerically and verify convergence to zeta(s).",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.496525+00:00",
     "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
   },
@@ -3764,7 +3804,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "21cfd7dd",
     "description": "Prime gaps — the spaces between consecutive primes — are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable — given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random — they are a solvable crossword puzzle with deterministic rules.",
     "domain_bridges": [],
     "domains": [
@@ -3777,7 +3817,7 @@
     "proof_strategy": "Define the prime gap sequence g(n) = p(n+1) - p(n) for n >= 1. State the Hardy-Littlewood gap conjecture: P(g(n) = g | g(n-1) = g_{-1}, ...) = 2*C_2/g * (1/log(p(n))) * product_{q prime, q | g} (q-1)/(q-2) where C_2 = 0.66016... is the twin prime constant. Define forcing patterns: a sequence of gaps g_{-k}, ..., g_{-1} is forcing if P(g(0) = g | g_{-k}, ..., g_{-1}) > 0.99 for exactly one value of g. Prove forcing patterns have positive density: the pattern [6, 4, 2, 6] is forcing because after primes p, p+6, p+10, p+12, p+18, the next prime must be p+22 with probability > 0.95 (since p+20 is even, p+21 is divisible by 3 if p ≡ 1 mod 3, etc.). Compute conditional probabilities numerically for N = 10^8. Test: enumerate forcing patterns and compute their density.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.525722+00:00",
     "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
   },
@@ -3800,26 +3840,6 @@
     "status": "failed",
     "timestamp": "2026-06-01T12:30:30.557538+00:00",
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "cb56480f",
-    "description": "A jigsaw puzzle has N pieces, each with 4 edges. The 'signature' of a piece is the tuple (top, right, bottom, left) of edge types (flat, tab, blank). Two pieces fit together if their adjacent edges are complementary (tab meets blank). Conjecture: Solving a jigsaw puzzle is NP-complete. The reduction: given a 3-SAT formula with n variables and m clauses, construct a jigsaw puzzle with N = 2n + m + 2 pieces where the only valid assembly corresponds to a satisfying assignment. Variable pieces: each variable x_i has two pieces (TRUE and FALSE), one with a tab and one with a blank on the assignment edge. Only one can be placed (mutual exclusion via complementary edges). Clause pieces: each clause C_j is a piece that has three input edges (one per literal) and one output edge. The piece fits only if at least one input edge is connected to a TRUE literal piece. The top-left corner and bottom-right corner enforce the boundary. Test: construct the reduction explicitly for a small 3-SAT instance (e.g., (x1 OR x2 OR NOT x3) AND (NOT x1 OR x3)) and verify the puzzle has a solution iff the formula is satisfiable. Impact: jigsaw puzzles are NP-complete, so the satisfying snap you feel when completing a puzzle is literally the same as solving a hard computational problem.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0043",
-    "lineage_refs": [],
-    "priority_score": 0.05,
-    "proof_strategy": "Define jigsaw puzzle instance: N pieces, each with 4 edges from alphabet {tab, blank, flat}. Two pieces P and Q fit together on edge e if P.e and Q.e are complementary (tab meets blank). Assembly: a placement of all N pieces in a rectangular grid such that all adjacent edges are complementary. Reduction from 3-SAT: given phi = (l_11 OR l_12 OR l_13) AND ... AND (l_m1 OR l_m2 OR l_m3), construct puzzle with 2n + m + 2 pieces. For variable x_i: create piece V_i^T (TRUE, with tab on the assignment edge) and V_i^F (FALSE, with blank on the assignment edge). Only one can be placed because their assignment edges are complementary to the same slot. For clause C_j = (l_j1 OR l_j2 OR l_j3): create piece C_j with three input edges. C_j fits only if at least one input connects to a TRUE literal piece (tab meets blank) or a FALSE literal piece with negation (blank meets tab). Corner pieces enforce the rectangular boundary. The puzzle has a solution iff phi is satisfiable. This is a polynomial reduction, so jigsaw puzzles are NP-hard. NP membership: given a placement, verify all edges are complementary in O(N) time. Test: construct for phi = (x1 OR x2 OR NOT x3) AND (NOT x1 OR x3).",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.564171+00:00",
-    "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
   },
   {
     "ambition_level": "extension",
@@ -3920,26 +3940,6 @@
     "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.676713+00:00",
     "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "74e64b1f",
-    "description": "A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that best approximates f. Conjecture: for a ReLU network with L layers of widths (n, w_1, ..., w_L, 1), the decision boundary is a piecewise linear hypersurface with at most 2^L * prod w_i regions, and the degree of the best polynomial approximation is at most 2^L. More precisely, the decision boundary V(f) = {x : f(x) = 0} is a tropical hypersurface (a piecewise linear object that is the 'skeleton' of an algebraic variety). The tropical variety of the decision boundary has degree at most 2^L and at most prod_{i=1}^{L} (w_i choose 2) singularities. Conjecture: the VC dimension of a ReLU network with L layers and total width W is at most L * W * log(W), matching the known bound up to log factors. Test: train ReLU networks on synthetic data, extract decision boundaries, and verify they are tropical hypersurfaces with the predicted degree and singularity count. Impact: neural network decision boundaries are tropical varieties. The complexity of the network (L, W) determines the algebraic complexity of the boundary.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0073",
-    "lineage_refs": [],
-    "priority_score": 0.05,
-    "proof_strategy": "A ReLU network f: R^n -> R with L layers computes a piecewise linear function. The number of linear regions is at most prod_{i=1}^{L} sum_{j=0}^{min(n,w_i)} (w_i choose j) (Montufar et al., 2014). For wide networks (w_i >= n): this is at most prod_{i=1}^{L} 2^{w_i-1} = 2^{sum w_i - L}. The decision boundary B = {x : f(x) = 0} is a piecewise linear hypersurface. Each linear piece of f defines a halfspace, and B is the union of boundaries of these halfspaces. The algebraic approximation: by the Weierstrass approximation theorem, there exists a polynomial p of degree d such that ||f - p|| < epsilon. The variety V(p) = {x : p(x) = 0} approximates B. For piecewise linear f with K regions, the degree of p needed is d ~ K^{1/n} (by approximation theory). The tropical variety: V(f) is a tropical hypersurface defined by the tropical polynomial max_j(alpha_j + x . beta_j) where the max is over the linear pieces. The degree of this tropical polynomial is the number of different linear pieces, which is at most 2^L. The singularities of V(f) are points where 3+ linear pieces meet, and there are at most prod (w_i choose 2) such points. Test: train 2-layer and 3-layer ReLU networks on 2D synthetic data, extract the decision boundary, count linear regions and singularities, verify against the bounds.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.695662+00:00",
-    "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
   },
   {
     "ambition_level": "extension",
