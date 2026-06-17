@@ -271,6 +271,20 @@ class FutureDirection:
     lean_theorem_stub: str = ""                                    # tentative Lean 4 theorem stub for early syntax validation
     # --- Multi-cycle research threads ---
     thread_id: str = ""                                            # if set, this direction is a follow-up in a research thread
+    # --- 50/50 research menu categories ---
+    category: str = ""                                             # famous_subtask | cross_domain_bridge | abduction_followup
+
+    def get_category(self) -> str:
+        """Return explicit category if set, else infer from other fields."""
+        if self.category:
+            return self.category
+        if self.thread_id:
+            return "abduction_followup"
+        if self.domain_bridges:
+            return "cross_domain_bridge"
+        if self.ambition_level == "grand_challenge":
+            return "famous_subtask"
+        return ""
 
     def to_dict(self) -> dict:
         return {
@@ -304,6 +318,7 @@ class FutureDirection:
             "cleanup_review_count": self.cleanup_review_count,
             "lean_theorem_stub": self.lean_theorem_stub,
             "thread_id": self.thread_id,
+            "category": self.category,
         }
 
     @classmethod
@@ -324,6 +339,7 @@ class FutureDirectionsManager:
         self._cycle_syntheses: Dict[str, str] = {}  # exp_id -> synthesis text
         self._recent_domain_counts: Dict[str, int] = {}  # domain -> count in recent completions
         self._recent_theme_keywords: Dict[str, int] = {}  # keyword -> count in recent completions
+        self._selection_log: List[str] = []  # recent selected direction categories for 50/50 balancing
         self._load()
 
     def _next_id(self) -> str:
@@ -388,12 +404,16 @@ class FutureDirectionsManager:
                 
                 raw_keywords = data.get("recent_theme_keywords", {})
                 self._recent_theme_keywords = raw_keywords if isinstance(raw_keywords, dict) else {}
+
+                raw_selection_log = data.get("selection_log", [])
+                self._selection_log = raw_selection_log if isinstance(raw_selection_log, list) else []
         except Exception:
             self._directions = []
             self._pruned = []
             self._cycle_syntheses = {}
             self._recent_domain_counts = {}
             self._recent_theme_keywords = {}
+            self._selection_log = []
         self._dedup_ids()
 
         # Recover stale in_progress directions whose jobs no longer exist
@@ -492,6 +512,7 @@ class FutureDirectionsManager:
                 "cycle_syntheses": self._cycle_syntheses,
                 "recent_domain_counts": self._recent_domain_counts,
                 "recent_theme_keywords": self._recent_theme_keywords,
+                "selection_log": self._selection_log,
             }, indent=2, ensure_ascii=False, sort_keys=True),
             encoding="utf-8",
         )
@@ -996,23 +1017,63 @@ class FutureDirectionsManager:
                     # Boost: e.g. Cryptography at 1% → weight *= (1 + 0.10) = 1.10
                     scores[i] *= (1.0 + frac)
 
+        # 50/50 menu balancing: nudge selection toward the underrepresented category
+        for i, d in enumerate(available):
+            scores[i] *= self._category_balance_penalty(d.get_category())
+
         total = sum(scores)
         if total == 0:
             return random.choice(available)
         weights = [s / total for s in scores]
         return random.choices(available, weights=weights, k=1)[0]
 
+    def _record_selection_category(self, category: str) -> None:
+        """Record the category of a selected direction to balance the 50/50 menu."""
+        if not category:
+            return
+        self._selection_log.append(category)
+        if len(self._selection_log) > 20:
+            self._selection_log = self._selection_log[-20:]
+
+    def _category_balance_penalty(self, category: str) -> float:
+        """Return a weight multiplier to keep famous/cross-domain selections balanced.
+
+        Target ratio is 50/50 over the last 20 selections. Underrepresented
+        categories get a small boost; overrepresented categories get a small
+        penalty. Abduction follow-ups and uncategorized directions are exempt.
+        """
+        if not category or category == "abduction_followup":
+            return 1.0
+        tracked = {"famous_subtask", "cross_domain_bridge"}
+        if category not in tracked:
+            return 1.0
+        recent = self._selection_log[-20:]
+        if not recent:
+            return 1.0
+        total = sum(1 for c in recent if c in tracked)
+        if total == 0:
+            return 1.0
+        frac = sum(1 for c in recent if c == category) / total
+        if frac < 0.4:
+            return 1.2
+        if frac > 0.6:
+            return 0.8
+        return 1.0
+
     def mark_direction_consumed(self, direction_id: str, exp_id: str) -> None:
         """Mark a direction as in-progress when it's selected for research."""
         from datetime import datetime, timezone
         now_iso = datetime.now(timezone.utc).isoformat()
+        consumed_category = ""
         for d in self._directions:
             if d.id == direction_id:
                 d.status = "in_progress"
                 d.consumed_by_exp_id = exp_id
                 d.attempt_count = d.attempt_count + 1
                 d.last_attempt_time = now_iso
+                consumed_category = d.get_category()
                 break
+        self._record_selection_category(consumed_category)
         self._save()
 
     def get_source_exp_ids_for(self, exp_id: str) -> list:

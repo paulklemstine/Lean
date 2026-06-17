@@ -12,14 +12,33 @@ from research_memory import FutureDirection
 
 _ID = 0
 
+FAMOUS_PROBLEM_KEYWORDS = {
+    "goldbach", "riemann", "hadamard", "twin prime", "p vs np", "collatz",
+    "lychrel", "solitary", "happy end", "euler brick", "perfect cuboid",
+    "sums of three cubes", "odd perfect", "hodge", "yang-mills", "navier-stokes",
+    "birch", "swinnerton-dyer", "kronecker-weber", "schubert", "hilbert",
+    "legendre", "primes of the form", "lehmer", "euler-mascheroni",
+    "percolation", "abc conjecture", "invariant subspace", "frankl",
+    "erdős–strauss", "schanuel", "jacobian", "kakeya", "beal", "cramér",
+    "langlands", "jones", "sato-tate", "tate", "weil", "grothendieck",
+}
+
 def _sd(title, desc, domains, priority=0.85, proof_strategy="", source_path="seed:manual_v2"):
     global _ID
     _ID += 1
+    title_lower = title.lower()
+    desc_lower = desc.lower()
+    category = ""
+    if any(kw in title_lower or kw in desc_lower for kw in FAMOUS_PROBLEM_KEYWORDS):
+        category = "famous_subtask"
+    elif "bridge" in desc_lower or "bridges" in [d.lower() for d in domains]:
+        category = "cross_domain_bridge"
     return FutureDirection(
         id=f"seed_{_ID:03d}", title=title, description=desc,
         source_exp_id="seed", source_path=source_path,
         domains=domains, priority_score=priority,
         proof_strategy=proof_strategy,
+        category=category,
     )
 
 
