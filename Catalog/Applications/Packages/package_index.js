@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "343c2db7",
     "filename": "fractal_number_theory_hausdorff_dimension_of_prime.json",
     "pkg_num": 181,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5248201970443349,
     "title": "Fractal Number Theory: Hausdorff and Box-Counting Dimensions of the Logarithmic Prime Image"
   },
   {
@@ -5576,8 +5576,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "fractal_number_theory_hausdorff_dimension_of_prime",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5248201970443349,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Fractal Number Theory: Hausdorff and Box-Counting Dimensions of the Logarithmic Prime Image"
     }

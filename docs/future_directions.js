@@ -573,21 +573,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "343c2db7",
-    "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set \u2014 they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line \u2014 they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line \u2014 they are a fractal curve.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0050",
-    "priority_score": 0.83,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.589354+00:00",
-    "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The Riemann zeta function zeta(s) has non-trivial zeros at s = 1/2 + i*gamma_n on the critical line (assuming RH). These zeros encode deep arithmetic information. Conjecture: the zeros gamma_n are the spectrum of a self-adjoint operator on a Hilbert space, and this operator is the Casimir element of a quantum group G_q. Specifically, define the 'zeta quantum group' G_q as the q-deformation of SU(2) where q = e^{2*pi*i*gamma_1} (using the first zero gamma_1 ~ 14.13). The Casimir element C_q of G_q has eigenvalues that are quadratic functions of the representation labels, and the spectrum of C_q is {n(n+1) : n in N}. Conjecture: the Riemann zeros gamma_n are related to the spectrum of C_q by gamma_n = f(spectrum(C_q)) for some function f. If f is linear, this would mean the zeros are evenly spaced, which is false (the zeros have Poisson-like spacings). If f is logarithmic, gamma_n ~ pi*n/log(n) which matches the average spacing. Conjecture: the spectral statistics of C_q match the GUE random matrix statistics of the Riemann zeros (Montgomery's pair correlation conjecture). Test: compute the spectrum of C_q for G_q with q = e^{2*pi*i*gamma_1} and compare the spectral statistics with the Riemann zeros. Impact: the Riemann hypothesis is a representation-theoretic statement about quantum groups.",
     "domains": [
@@ -994,7 +979,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8c9d3809",
     "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
     "domains": [
       "Novelty",
@@ -1004,7 +989,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.77,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.512076+00:00",
     "title": "The Mathematics of Memes: Viral Information Topology"
   },
@@ -1489,6 +1474,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Non-Well-Founded Proofs in Geometry\n\nResearch theme: **\"Non-Well-Founded Proofs: Proofs That Reference Themselves\"**, domain **Geometry**.\n\nAcross two cycles we established the thesis that *self-reference / non-well-foundedness =\nself-similarity*, realized by two formal engines \u2014 **coinductive data** (`Stream'`, `corec`)\nand **contraction fixed points** (`x* = f x*`) \u2014 and unified the geometric series, the affine\nattractor, and the (golden / metallic) continued fractions as one phenomenon: *a quantity\nthat is the unique solution of its own equation*. All results live, fully verified, in\n`SelfSimilar.lean`.\n\n**Status of earlier conjectures (now closed):**\n- **C3 (bisimulation rigidity)** \u2014 PROVED (`selfSimilar_unique`): the self-similarity law\n  `map (\u00b7 * r) s = s.tail` with fixed head characterizes `geomStream a r` uniquely.\n- **C4 (metallic ratios)** \u2014 PROVED (`metallicRatio_sq`, `metallicRatio_selfReferential`,\n  `metallicGnomon_selfSimilar`, `metallicRatio_one`): the golden lemmas generalize to the\n  whole family `\u03c6_m = (m + \u221a(m\u00b2+4))/2`.\n- **C5 (similarity dimension)** \u2014 core PROVED (`simDim_spec`, `simDim_pos`): `D = log k/log(1/r)`\n  solves `k\u00b7r^D = 1` and is positive; *monotonicity remains open* (see D3 below).\n\nThe following are the bold, falsifiable conjectures for subsequent cycles.\n\n## Conjecture D1 \u2014 IFS attractor in \u211d\u207f via Banach (multidimensional self-reference)\nFor an affine contraction `f x = A x + b` on `EuclideanSpace \u211d (Fin n)` with operator norm\n`\u2016A\u2016 < 1`, there is a **unique** self-referential point `x* = f x*`, every orbit\n`f^[k] x\u2080 \u2192 x*`, and `\u2016f^[k] x\u2080 - x*\u2016 \u2264 \u2016A\u2016^k \u00b7 \u2016x\u2080 - x*\u2016`.\n*Test:* lift `affine_fixed`, `affine_fixed_unique`, `affine_iterate_error`,\n`affine_tendsto_fix` from `\u211d` to `\u211d\u207f`, ideally through Mathlib's `ContractingWith`/`edist`\nAPI. Falsified if no `\u211d\u207f` statement closes under just `\u2016A\u2016 < 1`.\n\n## Conjecture D2 \u2014 Coinductive geometric trees and self-similar measure\nDefine an infinite binary **coinductive tree** whose node at depth `d` carries scale `r^d`.\nConjecture: the depth-`d` level holds `2^d` copies of scale `r^d`, and the total-measure\nrecursion `M = 1 + 2 r \u00b7 M` has the self-referential closed form `M = 1/(1 - 2r)` for\n`2r < 1` \u2014 the tree analogue of `geometricSum_selfReferential`. *Test:* build the tree with\n`corec`, prove the level identity by induction and the measure equation by the fixed-point\nuniqueness pattern of `geometricSum_unique`.\n\n## Conjecture D3 \u2014 Monotonicity of the similarity dimension\nThe similarity dimension `simDim k r = log k / log(1/r)` is strictly increasing in `k`\n(for `0 < r < 1`) and strictly increasing in `r` on `(0,1)` (for `k \u2265 2`). Moreover it is the\n*unique* real solving `k\u00b7r^D = 1`. *Test:* prove both monotonicities and uniqueness of the\nexponent; falsified if either monotonicity reverses on any admissible `(k, r)`.\n\n## Conjecture D4 \u2014 Mixed-ratio IFS and the Moran equation\nFor a finite list of ratios `r\u2081,\u2026,r_k \u2208 (0,1)`, the similarity dimension is the unique `D`\nsolving the **self-referential Moran equation** `\u2211\u1d62 r\u1d62^D = 1`. Conjecture: the left side is\ncontinuous and strictly decreasing in `D`, equals `k > 1` at `D = 0` and `\u2192 0` as `D \u2192 \u221e`, so\na unique root exists, and it reduces to `simDim` when all `r\u1d62 = r`. *Test:* prove existence,\nuniqueness, and the uniform-ratio reduction via the intermediate value theorem + strict\nantitonicity.\n\n## Conjecture D5 \u2014 Banach contraction on the space of compact sets (Hutchinson attractor)\nThe IFS operator `F(K) = \u22c3\u1d62 f\u1d62(K)` on the complete metric space of nonempty compact subsets\nof `\u211d\u207f` under the **Hausdorff metric** is a contraction when each `f\u1d62` is, hence has a unique\nself-referential compact set `K* = F(K*)` \u2014 the genuine fractal attractor, the set-level\n`x* = f x*`. *Test:* assemble the Hausdorff-metric completeness + contraction estimate and\ninvoke Banach; falsified if the operator fails to contract under `max\u1d62 Lip(f\u1d62) < 1`.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2043",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "78c9ab60",
+    "status": "available",
+    "timestamp": "2026-06-17T05:40:43.553956+00:00",
+    "title": "Research theme: **\"Non-Well-Founded Proofs: Proofs That Reference Themselves\"**,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -1666,7 +1666,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6493a7ff",
     "description": "A periodic rhythm in music is a function f: Z -> {0, 1} that is periodic: f(n + p) = f(n) for some period p. The symmetry group of a rhythm with period p is a subgroup of Z/pZ. But music also has 2D patterns: a drum pattern is a function g: Z x Z -> {0, 1} (onset grid in time x pitch). The symmetry group of a drum pattern is a subgroup of Z x Z, which is a wallpaper group in 1D. In 2D, the wallpaper groups classify all possible symmetries of periodic patterns. There are exactly 17 wallpaper groups in 2D. Conjecture: the 17 wallpaper groups correspond to 17 fundamentally different types of rhythmic structure in music. Specifically: (1) p1: no symmetry (free rhythm), (2) p2: 2-fold rotational symmetry (call-and-response), (3) pm: mirror symmetry (palindrome), (4) pg: glide reflection (canon), (5) cm: mirror + glide (round), (6) pmm: double mirror (bilateral palindrome), (7) pmg: mirror + glide (inverted canon), (8) pgg: double glide (double canon), (9) cmm: double mirror + glide (round + palindrome), (10) p4: 4-fold rotation (4-bar cycle), (11) p4m: 4-fold + mirrors (variations on a theme), (12) p4g: 4-fold + glides (inverted variations), (13) p3: 3-fold rotation (3-bar blues), (14) p3m1: 3-fold + mirrors, (15) p31m: 3-fold + glides, (16) p6: 6-fold rotation (whole-tone scale symmetry), (17) p6m: 6-fold + mirrors (maximal symmetry, the 'perfect' rhythm). Test: classify 1000 drum patterns by their wallpaper group and verify the distribution matches musical practice. Impact: there are exactly 17 types of rhythm in music, classified by the wallpaper groups.",
     "domains": [
       "Novelty",
@@ -1676,7 +1676,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.68,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.681497+00:00",
     "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
   },
@@ -2574,21 +2574,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:30.651923+00:00",
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
-  },
-  {
-    "consumed_by_exp_id": "78c9ab60",
-    "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0000",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.486497+00:00",
-    "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
   {
     "consumed_by_exp_id": "",
