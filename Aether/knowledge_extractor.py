@@ -48,6 +48,8 @@ from autoresearch_bridge import AutoresearchBridge
 from research_memory import ResearchMemory
 from research_threads import ResearchThreadManager, ResearchThread
 from specialized_critics import SpecializedCritic
+from external_signal import ExternalSignalFeed
+from computational_stage import ComputationalStage
 from research_context import ResearchContext
 from aristotle_loop import AristotleLoop
 from output_organizer import OutputOrganizer, normalize_domain
@@ -171,6 +173,17 @@ class KnowledgeExtractor:
 
         # Multi-cycle research thread manager
         self.thread_manager = ResearchThreadManager(self.workspace)
+
+        # External signal feed: arXiv, OEIS, LMFDB
+        from research_memory import FutureDirectionsManager
+        self.external_signal = ExternalSignalFeed(
+            pi_agent=self.pi_agent,
+            fd_manager=FutureDirectionsManager(self.workspace),
+            workspace=self.workspace,
+        )
+
+        # Computational evidence stage: optional pre-proof Python experimentation
+        self.computational_stage = ComputationalStage(timeout=60)
 
         # Insight extractor: meta-feedback loop from Aether's own theorems
         from insight_extractor import InsightExtractor
@@ -875,6 +888,11 @@ class KnowledgeExtractor:
             thread_context = self._build_thread_context(job)
             if thread_context:
                 base_prompt += "\n\n" + thread_context
+
+        # Optional computational evidence stage
+        if self.config.get("features", {}).get("enable_computational_stage", False):
+            base_prompt = self.computational_stage.augment_prompt(base_prompt)
+
         # AUGMENT the prompt to explicitly request ALL deliverables
         # For Phase A (lean_only), the prompt already excludes packaging —
         # the augmentation is skipped because the prompt is intentionally narrow.
@@ -2905,6 +2923,19 @@ Research mode: {concept.research_mode}
             fd_manager._save()
 
         print(f"[Cleanup] Directions cleanup: removed {removed}, protected {skipped}, brainstormed {1 if added_new else 0}. Total available: {len([d for d in fd_manager._directions if d.status == 'available'])}")
+    def refresh_external_signals(self, domain: str = "", count_per_source: int = 2) -> int:
+        """Refresh external signal feed if the feature is enabled."""
+        if not self.config.get("features", {}).get("enable_external_signal", False):
+            return 0
+        try:
+            added = self.external_signal.refresh(domain=domain, count_per_source=count_per_source)
+            if added:
+                print(f"[ExternalSignal] Added {added} direction(s) from external feeds")
+            return added
+        except Exception as e:
+            print(f"[ExternalSignal] Warning: refresh failed: {e}")
+            return 0
+
     def _mine_structural_holes(self) -> None:
         """Find domain pairs with no edges in the knowledge graph and generate bridge directions.
 

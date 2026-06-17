@@ -975,6 +975,14 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                 extractor._release_direction(queued)
         extractor._save_inflight()
 
+    # 3b. Refresh external signal feed (arXiv/OEIS/LMFDB → FutureDirections)
+    try:
+        added_signals = extractor.refresh_external_signals(count_per_source=2)
+        if added_signals:
+            print(f"[Tick] External signal feed added {added_signals} direction(s)")
+    except Exception as e:
+        print(f"[Tick] External signal refresh failed: {e}")
+
     # 4. Dispatch new jobs up to max_inflight (with novelty track)
     current_inflight = extractor._count_inflight_dispatched()
     slots_available = max(0, max_inflight - current_inflight)
