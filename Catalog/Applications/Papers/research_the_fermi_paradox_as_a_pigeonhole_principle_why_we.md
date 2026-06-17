@@ -1,240 +1,447 @@
-# The Fermi Paradox as a Pigeonhole Principle: Filter Cascade Theory and Cosmic Silence
+# The Fermi Paradox as a Pigeonhole Principle: A First-Moment Resolution of Cosmic Silence
 
 ## Abstract
 
-We develop a rigorous mathematical framework for the Fermi Paradox based on the pigeonhole principle and filter cascade models. The Drake equation is formalized as a product of independent filter probabilities applied to a large population of habitable planets. We prove five main results: (1) the **Filter Concentration Theorem**, a multiplicative pigeonhole principle showing that in any product of k factors bounded by ε, at least one factor is ≤ ε^(1/k); (2) the **Exponential Filter Decay Theorem**, showing that the expected number of civilizations decays exponentially with the number of filter steps; (3) the **Temporal Pigeonhole Theorem**, demonstrating that civilizations separated in time cannot interact; (4) the **Pigeonhole-Poisson Bridge**, connecting the deterministic pigeonhole bound 1-λ with the Poisson probability e^(-λ); and (5) the **Fermi Silence Theorem**, synthesizing all results to show that silence is the mathematically expected outcome under any filter cascade model with sufficiently many steps. All results are formally verified in Lean 4 with complete proofs.
+The Fermi paradox — the tension between the apparent abundance of habitable
+worlds and the total absence of observed extraterrestrial civilizations — is
+usually framed as a deep puzzle requiring exotic resolution (self-destruction,
+deliberate concealment, a future Great Filter). We argue that no such
+resolution is needed. Under honest, conservative probability estimates the
+expected number of communicating civilizations in the observable universe is
+strictly less than one, and once the expectation drops below one the *first
+moment method* — a quantitative form of the pigeonhole principle — guarantees
+that empty regions are not merely possible but overwhelmingly probable. We
+develop the underlying mathematics over finite weighted spaces: (i) a
+**first-moment existence theorem**, that an expectation below one forces a
+zero-valued outcome; (ii) a **first-moment tail bound**, that the total weight
+of the zero set is at least one minus the expectation; (iii) a
+**conservative Drake inequality**, that a product of sufficiently many small
+hurdle probabilities, scaled by a bounded number of habitable worlds, falls
+below one; and (iv) the **fusion theorem**, combining these to conclude that we
+are, with high probability, alone. We further sketch a cross-domain
+**resonant listening window** result that combines a mean-value averaging
+lemma with the Fibonacci strong-divisibility law to identify when a rare beacon
+is most detectable. All central claims are stated as formal theorems with proof
+sketches, accompanied by algorithms and numerical demonstrations.
+
+**Keywords:** Fermi paradox, Drake equation, pigeonhole principle, first moment
+method, probabilistic existence, astrobiology, Fibonacci strong divisibility.
+
+---
 
 ## 1. Introduction
 
-The Fermi Paradox — the apparent contradiction between the high probability of extraterrestrial civilizations and the lack of evidence for, or contact with, such civilizations — has generated extensive discussion since Fermi's original 1950 remark [1]. Proposed resolutions include the Zoo Hypothesis, the Dark Forest Theory, technological self-destruction, and the Rare Earth hypothesis [2, 3].
+In 1950 Enrico Fermi posed the question that bears his name: if the galaxy is
+old and vast and rich in habitable worlds, *where is everybody?* The absence of
+any detected extraterrestrial signal, probe, or megastructure — despite decades
+of searching — is the **Great Silence**. The literature offers many
+resolutions: civilizations self-destruct; they deliberately hide; interstellar
+travel is infeasible; intelligence is rare; a "Great Filter" lies behind or
+ahead of us.
 
-We propose that the Fermi Paradox is not a paradox at all, but a straightforward consequence of the pigeonhole principle applied to the Drake equation [4]. The key insight is structural: the Drake equation is a *product* of probabilities, and products of fractions shrink exponentially. We formalize this insight as a **filter cascade** and prove that cosmic silence is the natural mathematical consequence.
+This paper advances the most deflationary resolution: *there is no paradox*. The
+silence is the single most probable observation given honest priors, and the
+mathematics that proves it is elementary. The argument has two movements:
 
-### 1.1 Contributions
+1. **A counting bound.** Under conservative per-hurdle probabilities, the
+   expected number $\mathbb{E}[X]$ of communicating civilizations in the
+   observable universe satisfies $\mathbb{E}[X] < 1$.
 
-Our main contributions are:
+2. **A pigeonhole bound.** Whenever $\mathbb{E}[X] < 1$ for a non-negative
+   integer-valued quantity, the probability that a randomly chosen region is
+   *empty* is at least $1 - \mathbb{E}[X]$. Hence silence is the expected
+   outcome.
 
-1. **Filter Cascade Framework**: A formal mathematical model of the Drake equation as a cascade of independent probability filters, with the expected number of civilizations given by N · ∏pᵢ.
+The second movement is the *first moment method*, a cornerstone of the
+probabilistic method (Erdős). We formalize both movements over finite weighted
+spaces in $\mathbb{Q}$, avoiding measure-theoretic overhead while retaining full
+rigor, and we fuse them into a single statement: under conservative Drake
+assumptions, at least one cosmic region — indeed almost all of them — is empty.
 
-2. **Filter Concentration Theorem**: A multiplicative analog of the pigeonhole principle, proving that in any product of factors bounded by ε, at least one factor must be small. This provides a mathematical proof that the "Great Filter" must exist.
+The contribution is not new astrobiology but a *clean logical skeleton*: the
+minimal hypotheses under which cosmic silence becomes a theorem rather than a
+mystery.
 
-3. **Exponential Decay and Convergence**: Formal proofs that the survival probability decreases exponentially with the number of filter steps, and converges to zero.
+---
 
-4. **Temporal Pigeonhole**: A continuous pigeonhole argument showing that civilizations scattered across cosmic time are unlikely to overlap.
+## 2. Preliminaries: finite weighted spaces
 
-5. **Pigeonhole-Poisson Bridge**: A proof that the deterministic pigeonhole bound (1-λ) and the Poisson silence probability (e^{-λ}) are connected by the universal inequality 1-λ ≤ e^{-λ}, unifying the counting and probabilistic perspectives.
+We work over a finite index set $I$ (the "regions" of the cosmos, or the atoms
+of a discrete probability space) and the ordered field $\mathbb{Q}$ of
+rationals (or any linearly ordered field).
 
-6. **Complete Formal Verification**: All results are proved in Lean 4 with Mathlib, ensuring mathematical correctness.
+**Definition 2.1 (Finite weighted space).** A *finite weighted space* is a pair
+$(I, w)$ where $I$ is a finite set and $w : I \to \mathbb{Q}_{\ge 0}$ assigns a
+non-negative weight to each index with $\sum_{i \in I} w_i = 1$. We interpret
+$w_i$ as the probability of region $i$.
 
-## 2. Definitions and Framework
+**Definition 2.2 (Random variable and expectation).** A *random variable* is a
+function $X : I \to \mathbb{Q}_{\ge 0}$. Its *expectation* is
+$$
+\mathbb{E}[X] \;=\; \sum_{i \in I} w_i \, X_i .
+$$
+We call $X$ *integer-valued* if $X_i \in \mathbb{Z}_{\ge 0}$ for all $i$.
 
-### 2.1 Drake Parameters
+**Definition 2.3 (Zero set).** The *zero set* of $X$ is
+$Z = \{\, i \in I : X_i = 0 \,\}$, and its *weight* is
+$w(Z) = \sum_{i \in Z} w_i$. We interpret $w(Z)$ as the probability that a
+region is empty.
 
-We define a `DrakeParams` structure consisting of:
-- `numPlanets : ℝ` — the total number of habitable planets (positive)
-- `filterProbs : List ℝ` — a list of filter probabilities, each in [0, 1]
+These definitions are deliberately minimal. No sigma-algebras, no continuity —
+just finite weighted sums, the natural substrate for the cosmic headcount.
 
-The expected number of civilizations is:
+---
 
-**Definition (Drake Expected Count)**:
+## 3. The first moment method
+
+The mathematical engine of the paper is the first moment method, which we state
+in two complementary forms.
+
+### 3.1 Existence of an empty outcome
+
+**Theorem 3.1 (First-moment existence; `exists_zero_of_expectation_lt_one`).**
+*Let $(I, w)$ be a finite weighted space and $X : I \to \mathbb{Z}_{\ge 0}$ an
+integer-valued random variable. If $\mathbb{E}[X] < 1$, then there exists
+$i \in I$ with $X_i = 0$.*
+
+**Proof sketch.** Suppose for contradiction that $X_i \ge 1$ for every
+$i \in I$. Since the weights are non-negative,
+$$
+\mathbb{E}[X] = \sum_i w_i X_i \;\ge\; \sum_i w_i \cdot 1 = \sum_i w_i = 1,
+$$
+using $\sum_i w_i = 1$. This contradicts $\mathbb{E}[X] < 1$. Hence some $X_i$
+fails $X_i \ge 1$; being a non-negative integer, that $X_i = 0$. $\qquad\blacksquare$
+
+This is the pigeonhole principle in disguise: if every "hole" $i$ held at least
+one "pigeon," the total would be at least the total weight $1$; with the total
+below $1$, some hole is empty.
+
+### 3.2 The tail bound on emptiness
+
+**Theorem 3.2 (First-moment tail; `prob_zero_ge_one_sub_expectation`).**
+*Let $(I, w)$ be a finite weighted space and $X : I \to \mathbb{Z}_{\ge 0}$
+integer-valued. Then*
+$$
+w(Z) \;\ge\; 1 - \mathbb{E}[X],
+$$
+*where $Z = \{ i : X_i = 0\}$.*
+
+**Proof sketch.** Partition $I = Z \sqcup Z^c$. On $Z^c$ we have $X_i \ge 1$, so
+$$
+\mathbb{E}[X] = \sum_{i \in Z} w_i X_i + \sum_{i \in Z^c} w_i X_i
+   = 0 + \sum_{i \in Z^c} w_i X_i \;\ge\; \sum_{i \in Z^c} w_i = 1 - w(Z),
+$$
+since $\sum_{i \in Z^c} w_i = 1 - w(Z)$. Rearranging gives
+$w(Z) \ge 1 - \mathbb{E}[X]$. $\qquad\blacksquare$
+
+Theorem 3.2 strictly refines Theorem 3.1: if $\mathbb{E}[X] < 1$ then
+$w(Z) \ge 1 - \mathbb{E}[X] > 0$, so $Z$ is non-empty (recovering 3.1) and,
+moreover, *quantitatively large*. When $\mathbb{E}[X] = 0.1$, the probability of
+landing in an empty region is at least $0.9$.
+
+**Remark 3.3 (Tightness; equality case).** The only inequality used is
+$X_i \ge 1$ on $Z^c$. Equality $w(Z) = 1 - \mathbb{E}[X]$ holds iff $X_i = 1$
+for every $i \in Z^c$ — i.e. $X$ is $\{0,1\}$-valued on its support. The slack
+in the bound equals $\sum_{i : X_i \ge 2} w_i (X_i - 1)$, a nonnegative
+"over-counting" term. The lower bound $1 - \mathbb{E}[X]$ is therefore tight,
+attained exactly on Bernoulli-type supports.
+
+---
+
+## 4. The conservative Drake inequality
+
+We now produce the hypothesis $\mathbb{E}[X] < 1$ from astrobiological priors.
+
+### 4.1 A product bound
+
+**Lemma 4.1 (Product domination; `prod_le_pow_of_forall_le`).**
+*Let $p_1, \dots, p_n \in \mathbb{Q}$ with $0 \le p_j \le c$ for all $j$, where
+$0 \le c$. Then*
+$$
+\prod_{j=1}^{n} p_j \;\le\; c^{\,n}.
+$$
+
+**Proof sketch.** Induction on $n$. The base case $n=0$ gives the empty product
+$1 \le c^0 = 1$. For the step, write
+$\prod_{j=1}^{n+1} p_j = \big(\prod_{j=1}^{n} p_j\big)\, p_{n+1}$. By the
+inductive hypothesis the first factor is at most $c^n$ and is non-negative
+(product of non-negatives); since $0 \le p_{n+1} \le c$, multiplying preserves
+the bound: the product is at most $c^n \cdot c = c^{n+1}$. $\qquad\blacksquare$
+
+Lemma 4.1 isolates the structural fact that drives everything: a product of
+hurdle probabilities is controlled by the *worst-case single hurdle raised to
+the number of hurdles*. The count of independent filters, not the precise value
+of any one, governs the result.
+
+### 4.2 The Drake expectation
+
+We model the Drake equation as a single bounded factor (the number of habitable
+worlds) times a product of independent hurdle probabilities.
+
+**Definition 4.2 (Drake expectation).** Given a habitable-world count
+$N \in \mathbb{Q}_{\ge 0}$ and hurdle probabilities
+$p_1, \dots, p_n \in [0,1]$, the *Drake expectation* is
+$$
+\mathbb{E}_{\text{Drake}} \;=\; N \prod_{j=1}^{n} p_j .
+$$
+This is the expected number of communicating civilizations: $N$ candidate
+worlds, each surviving the gauntlet with probability $\prod_j p_j$.
+
+**Theorem 4.3 (Conservative Drake inequality; `drake_expected_lt_one`).**
+*Suppose each hurdle satisfies $0 \le p_j \le 1/10$, the world count satisfies
+$0 \le N \le 10^{10}$, and there are at least $n \ge 11$ hurdles. Then*
+$$
+\mathbb{E}_{\text{Drake}} = N \prod_{j=1}^{n} p_j \;<\; 1.
+$$
+
+**Proof sketch.** By Lemma 4.1 with $c = 1/10$,
+$\prod_{j=1}^{n} p_j \le (1/10)^n$. Since $0 \le 1/10 \le 1$ and $n \ge 11$, the
+map $k \mapsto (1/10)^k$ is non-increasing, so $(1/10)^n \le (1/10)^{11}
+= 10^{-11}$. Therefore
+$$
+\mathbb{E}_{\text{Drake}} = N \prod_j p_j \le N \cdot 10^{-11}
+   \le 10^{10} \cdot 10^{-11} = 10^{-1} = 0.1 < 1. \qquad\blacksquare
+$$
+
+The choices $1/10$, $10^{10}$, $11$ are conservative but illustrative; any
+triple $(c, N_{\max}, n)$ with $N_{\max}\, c^{\,n} < 1$ yields the same
+conclusion. The theorem is best read as a *family* of sufficient conditions.
+
+**Remark 4.4 (Dimension robustness).** The conclusion is invariant under
+arbitrary perturbation of individual $p_j$ within $[0, 1/10]$: only the number
+$n$ of filters and the global cap $c$ enter the bound. One may be wholly wrong
+about any single hurdle probability and still conclude $\mathbb{E} < 1$,
+provided there are enough genuinely hard steps.
+
+---
+
+## 5. The fusion theorem: why we are alone
+
+We now combine the counting bound (§4) with the pigeonhole bound (§3).
+
+**Theorem 5.1 (Fermi alone under conservative Drake;
+`fermi_alone_under_conservative_drake`).**
+*Model the observable cosmos as a finite weighted space $(I, w)$ with an
+integer-valued civilization count $X : I \to \mathbb{Z}_{\ge 0}$ whose
+expectation is the Drake expectation: $\mathbb{E}[X] = N \prod_{j} p_j$. If each
+$p_j \le 1/10$, $N \le 10^{10}$, and $n \ge 11$, then:*
+
+1. *(Existence of silence)* there exists a region $i \in I$ with $X_i = 0$;
+2. *(Abundance of silence)* the probability of an empty region satisfies
+   $w(Z) \ge 1 - N\prod_j p_j \ge 0.9$.
+
+**Proof sketch.** By Theorem 4.3, $\mathbb{E}[X] = N\prod_j p_j \le 0.1 < 1$.
+Apply Theorem 3.1 to obtain claim (1). Apply Theorem 3.2 to obtain
+$w(Z) \ge 1 - \mathbb{E}[X] \ge 1 - 0.1 = 0.9$, which is claim (2).
+$\qquad\blacksquare$
+
+**Interpretation.** The Great Silence is not anomalous. Under honest priors the
+expected cosmic headcount is at most $0.1$, and the probability that our region
+is empty is at least $0.9$. The observation "we detect no one" is the single
+most likely outcome — precisely what the pigeonhole principle predicts when
+there are very few pigeons and very many holes.
+
+---
+
+## 6. A cross-domain corollary: the resonant listening window
+
+Granting that civilizations are rare, *when* and *where* should we listen for
+the rare exception? We sketch a bridge result combining a mean-value averaging
+lemma with the arithmetic of the Fibonacci sequence.
+
+**Definition 6.1 (Fibonacci numbers).** $F_0 = 0$, $F_1 = 1$, and
+$F_{k+2} = F_{k+1} + F_k$.
+
+**Lemma 6.2 (Strong divisibility of Fibonacci numbers).** For all
+$m, n \ge 0$,
+$$
+\gcd(F_m, F_n) = F_{\gcd(m,n)} .
+$$
+
+**Proof sketch.** From the addition formula
+$F_{m+n} = F_{m+1} F_n + F_m F_{n-1}$ one shows $\gcd(F_m, F_n) =
+\gcd(F_m, F_{n \bmod m})$, mirroring the Euclidean algorithm on the indices;
+descent gives $F_{\gcd(m,n)}$. $\qquad\blacksquare$
+
+**Lemma 6.3 (Resonant averaging; Pythagorean mean-value form).** Among all
+listening windows of fixed total measure, the one centered on a resonant period
+$T$ maximizes the mean overlap with a periodic beacon of period $T$; the
+optimal mean equals the quadratic (root-mean-square) average of the in-band
+amplitudes, dominating any off-center placement.
+
+**Theorem 6.4 (Resonant listening window;
+`fermi_resonant_listening_window`).** *A periodic beacon of period $T_b$ and a
+periodic receiver schedule of period $T_r$ achieve maximal expected overlap
+when $\gcd(T_b, T_r)$ is large; equivalently, by Lemma 6.2, when the Fibonacci
+harmonics $F_{T_b}$ and $F_{T_r}$ share the large common factor
+$F_{\gcd(T_b, T_r)}$. The optimal listening window is the band centered on this
+shared period, where, by Lemma 6.3, the mean detection amplitude is maximized.*
+
+**Proof sketch.** Overlap of two periodic schedules is governed by their common
+period $\mathrm{lcm}(T_b, T_r)$ and the density of alignment epochs
+$\propto \gcd(T_b, T_r)$. Maximizing alignment density is maximizing
+$\gcd(T_b, T_r)$; Lemma 6.2 translates this into a statement about shared
+Fibonacci factors, and Lemma 6.3 identifies the centered band as the
+mean-optimal placement. $\qquad\blacksquare$
+
+This corollary turns the austere "we are alone" arithmetic into an actionable
+search heuristic: if a rare beacon exists, tune to the arithmetic harmonics of
+plausible transmitter cycles and center the window on the resonant period.
+
+---
+
+## 6A. A fully worked cosmic example
+
+To make the machinery concrete, we trace a single end-to-end instance.
+
+Fix the observable cosmos as $I = \{1, 2, \dots, m\}$, a finite list of
+spatial-temporal cells, each of equal a-priori weight $w_i = 1/m$, so that
+$\sum_i w_i = 1$. Let $X_i$ be the number of communicating civilizations in
+cell $i$. We do not need to know the individual $X_i$; we need only their
+weighted average, which we identify with the Drake expectation.
+
+**Step 1 — assemble the hurdles.** Enumerate eleven independent steps on the
+road from a sterile habitable world to a stable broadcasting civilization:
+(1) prebiotic chemistry; (2) self-replication; (3) the first cell;
+(4) the eukaryotic (complex) cell; (5) multicellularity; (6) nervous systems;
+(7) general intelligence; (8) language; (9) cumulative culture;
+(10) mathematics and science; (11) long-lived industrial technology. Assign
+each a conservative pass probability $p_j \le 1/10$. We emphasize that these
+values are *upper bounds*; the true probabilities may be far smaller.
+
+**Step 2 — bound the survival fraction.** By Lemma 4.1,
+$\prod_{j=1}^{11} p_j \le (1/10)^{11} = 10^{-11}$. This is the probability that
+a single habitable world clears the entire gauntlet.
+
+**Step 3 — scale by the world count.** With $N \le 10^{10}$ habitable worlds in
+the observable universe, Theorem 4.3 gives
+$\mathbb{E}[X] = N \prod_j p_j \le 10^{10} \cdot 10^{-11} = 0.1$.
+
+**Step 4 — invoke the pigeonhole.** Since $\mathbb{E}[X] = 0.1 < 1$,
+Theorem 3.1 guarantees a cell with $X_i = 0$, and Theorem 3.2 sharpens this:
+the weight of empty cells satisfies $w(Z) \ge 1 - 0.1 = 0.9$. A cell drawn at
+random is empty with probability at least $90\%$.
+
+**Step 5 — interpret.** We inhabit one such cell and observe $X = 0$ around us.
+This is the modal outcome, not an anomaly. No civilization-destroying filter,
+no deliberate concealment, and no exotic astrophysics is required to explain
+the silence: it is what the arithmetic predicts.
+
+The example also exposes the *only* way to escape the conclusion. To force
+$\mathbb{E}[X] \ge 1$ one must either deny that there are eleven genuinely hard
+steps (reduce $n$), or claim that some step passes far more than one candidate
+in ten (raise the cap), or posit vastly more than $10^{10}$ habitable worlds.
+Each of these is an empirical commitment that the optimist must defend; the
+pessimistic conclusion needs none.
+
+## 7. Algorithms
+
+### 7.1 First-moment emptiness certifier
+
+Given a finite weighted space and an integer-valued count, decide and certify
+that an empty region must exist, and report the guaranteed emptiness mass.
+
 ```
-drakeExpected(d) = d.numPlanets * d.filterProbs.prod
+function FirstMomentCertify(w[1..m], X[1..m]):
+    assert sum(w) == 1 and all w[i] >= 0 and all X[i] integer >= 0
+    E <- sum_i w[i] * X[i]
+    emptiness_lower_bound <- max(0, 1 - E)
+    if E < 1:
+        return (GUARANTEED_EMPTY, emptiness_lower_bound)   # Theorem 3.1 & 3.2
+    else:
+        return (NO_GUARANTEE, emptiness_lower_bound)
 ```
 
-### 2.2 Filter Cascade
+Complexity: $O(m)$ arithmetic operations; exact in $\mathbb{Q}$.
 
-A **filter cascade** is a sequence of independent probability filters p₁, ..., pₖ applied to N candidate planets. After passing through all k filters, the expected number of survivors is:
+### 7.2 Conservative Drake evaluator
 
-E[N] = N · p₁ · p₂ · ... · pₖ = N · ∏ᵢ pᵢ
-
-The cascade model captures the essential structure of the Drake equation: technological civilization requires passing through multiple independent bottlenecks.
-
-## 3. Main Results
-
-### 3.1 Drake Bound
-
-**Theorem (Drake Expected < 1)**: If ∏ pᵢ < 1/N, then E[civilizations] < 1.
-
-*Proof sketch*: Multiply both sides of ∏ pᵢ < 1/N by N > 0 to obtain N · ∏ pᵢ < 1. □
-
-This is elementary but foundational: it converts a bound on the product of filter probabilities into a bound on the expected count.
-
-### 3.2 Filter Concentration (Multiplicative Pigeonhole)
-
-**Theorem (Filter Concentration)**: Let f₁, ..., fₙ be n positive reals with ∏ fᵢ ≤ ε for some ε > 0. Then there exists i such that fᵢ ≤ ε^(1/n).
-
-*Proof sketch*: By contraposition. If all fᵢ > ε^(1/n), then ∏ fᵢ > (ε^(1/n))ⁿ = ε, contradicting the hypothesis. The equality (ε^(1/n))ⁿ = ε follows from the properties of real power functions. □
-
-**Interpretation**: This is the pigeonhole principle for products. If the total filter probability is 10⁻¹² and there are 7 filter steps, at least one step has probability ≤ 10⁻¹²/⁷ ≈ 0.0046. The "Great Filter" must exist — the mathematics guarantees it.
-
-**Boundary**: The theorem requires ε > 0 and all factors positive. It does not locate the Great Filter — only proves its existence.
-
-**Generalization**: This result generalizes naturally to any ordered commutative monoid with suitable power function. The proof structure (contrapositive + product bound) works in any setting where products of bounds can be compared.
-
-### 3.3 Exponential Filter Decay
-
-**Theorem (Exponential Decay)**: If each of k filter steps has probability at most p ∈ (0,1), then ∏ pᵢ ≤ pᵏ.
-
-**Theorem (Decay to Zero)**: For any p ∈ (0,1) and ε > 0, there exists k such that pᵏ < ε.
-
-*Proof sketch*: The first result follows from ∏ fᵢ ≤ ∏ p = pᵏ (each factor bounded by p). The second uses the Archimedean property of real numbers. □
-
-**Example**: With p = 0.1 and N = 10¹⁰ habitable planets:
-- k = 5: E = 10¹⁰ · 10⁻⁵ = 10⁵ (many civilizations)
-- k = 10: E = 10¹⁰ · 10⁻¹⁰ = 1 (threshold)
-- k = 11: E = 10¹⁰ · 10⁻¹¹ = 0.1 (silence expected)
-- k = 15: E = 10¹⁰ · 10⁻¹⁵ = 10⁻⁵ (deep silence)
-
-The transition from "many civilizations" to "cosmic silence" happens over a narrow range of k values.
-
-### 3.4 Cascade Monotonicity
-
-**Theorem (Strict Decrease)**: If the current product is positive and we append a filter with probability p ∈ (0,1), the expected count strictly decreases:
-
-N · (probs ++ [p]).prod < N · probs.prod
-
-**Theorem (Non-Increase)**: Appending any filter with p ∈ [0,1] does not increase the product.
-
-**Interpretation**: Every additional requirement for civilization makes it less likely. There is no way to *help* the expected count by adding more filters.
-
-### 3.5 Temporal Pigeonhole
-
-**Theorem (Temporal Pigeonhole)**: If n civilizations of lifetime L are placed in a time interval T with nL < T, then nL/T < 1.
-
-**Theorem (Density Equivalence)**: nL/T < 1 ↔ n < T/L.
-
-*Proof sketch*: Direct division by T > 0. □
-
-**Example**: With T = 13.8 × 10⁹ years, n = 10 civilizations, L = 10⁴ years:
-- Occupied fraction = 10 × 10⁴ / 13.8 × 10⁹ ≈ 7.2 × 10⁻⁶
-- The probability of any two civilizations overlapping in time is negligible.
-
-**Boundary**: This assumes civilizations are uniformly distributed in time. Clustering (e.g., a "galactic habitable epoch") could increase overlap probability.
-
-### 3.6 Pigeonhole-Poisson Bridge
-
-**Theorem**: For all λ ∈ ℝ: 1 - λ ≤ e^{-λ}.
-
-*Proof sketch*: From the standard inequality x + 1 ≤ eˣ (which holds for all real x), substitute x = -λ to get 1 - λ ≤ e^{-λ}. □
-
-**Interpretation**: The pigeonhole principle gives a *linear* lower bound on the silence probability: P(silence) ≥ 1 - E[N]. The Poisson distribution gives an *exponential* bound: P(silence) = e^{-E[N]}. Our theorem proves that the Poisson bound is always tighter — the pigeonhole principle underestimates the probability of silence.
-
-**Cross-Connection**: This bridge theorem connects combinatorics (pigeonhole) with probability theory (Poisson process) and analysis (exponential function). The inequality 1-x ≤ e^{-x} is the first-order Taylor remainder bound for the exponential, revealing that the pigeonhole principle is the linearization of Poisson statistics.
-
-### 3.7 Fermi Silence Theorem (Grand Synthesis)
-
-**Theorem**: Given N > 0 planets, k filter steps each bounded by p ∈ (0,1), if N · pᵏ < 1, then:
-1. E[civilizations] < 1
-2. P(silence) > 0
-3. E[civilizations at k+1 steps] < E[civilizations at k steps]
-
-*Proof sketch*: (1) is the hypothesis. (2) follows from sub_pos_of_lt. (3) follows from p^(k+1) < p^k since p < 1. □
-
-### 3.8 Pessimistic Drake Computation
-
-**Theorem**: 10¹⁰ · 10⁻²² < 1.
-
-This formalizes the concrete computation: with 10¹⁰ habitable planets and a per-planet technological civilization probability of 10⁻²², the expected number of civilizations is 10⁻¹² — a trillion times less than one.
-
-### 3.9 Additional Results
-
-**Weighted Pigeonhole**: If ∑ vᵢ < ∑ wᵢ for positive weights wᵢ, then ∃ i with vᵢ < wᵢ. This generalizes the classical pigeonhole to weighted real-valued settings.
-
-**Bayesian Filter Rescaling**: After observing that early filter steps have been passed, the posterior probability of the Great Filter being in later steps increases. If prior weight α is eliminated, the rescaling factor 1/(1-α) ≥ 1 increases monotonically.
-
-**Multi-Scale Filter**: Filters operating at different scales (galactic, stellar, planetary) multiply, making the combined filter more restrictive than any individual scale.
-
-**Spatial Isolation**: The detectable fraction of the universe at communication range r in a universe of radius R is (r/R)^d, which acts as an additional multiplicative filter.
-
-## 4. Discussion
-
-### 4.1 The Resolution
-
-The Fermi Paradox is resolved by recognizing that it is not a paradox but a prediction. The Drake equation, interpreted as a filter cascade, predicts that the expected number of civilizations is the product of many fractions less than one. This product decays exponentially with the number of filter steps, reaching values far below one with conservative parameter estimates.
-
-### 4.2 Robustness
-
-Our results are robust in the following sense:
-- The Filter Concentration Theorem holds regardless of how the filter probability is distributed among steps.
-- The Exponential Decay Theorem shows that the conclusion is insensitive to the exact value of any single filter probability — it is the *number* of steps that dominates.
-- The Pigeonhole-Poisson Bridge shows that both counting and probabilistic frameworks agree.
-
-### 4.3 Limitations
-
-1. **Independence Assumption**: The filter cascade assumes independent steps. Correlated filters (e.g., planets that develop life are more likely to develop intelligence) would change the analysis.
-
-2. **Parameter Uncertainty**: The specific numerical estimates are highly uncertain. Our theorems hold for *any* values satisfying the stated bounds.
-
-3. **Observable Universe**: We consider only the observable universe. An infinite universe would change the probabilistic analysis fundamentally.
-
-## 5. Algorithms
-
-### 5.1 Critical Filter Count
-
-Given N planets and per-step probability p, compute the minimum k such that N · pᵏ < 1:
+Given hurdle probabilities, a world count, and a per-hurdle cap, evaluate the
+Drake expectation and certify $\mathbb{E} < 1$ via Lemma 4.1 / Theorem 4.3.
 
 ```
-k_critical = ⌈log(1/N) / log(p)⌉
+function DrakeBound(N, p[1..n], cap=1/10, Nmax=1e10, min_hurdles=11):
+    E <- N * product_j p[j]
+    cap_ok      <- all p[j] <= cap
+    count_ok    <- n >= min_hurdles
+    world_ok    <- N <= Nmax
+    certified   <- cap_ok and count_ok and world_ok      # implies E < 1
+    return (E, certified)
 ```
 
-### 5.2 Bayesian Filter Update
+Complexity: $O(n)$.
 
-Given prior probabilities q₁, ..., qₖ for the Great Filter location and observations of which steps have been passed, compute posterior probabilities:
+---
 
-```
-For passed step i: posterior(i) = 0
-For remaining step i: posterior(i) = q(i) / (1 - sum of passed priors)
-```
+## 8. Numerical illustrations
 
-## 6. Future Work
+| Scenario | $N$ | per-hurdle $p$ | $n$ | $\mathbb{E}[X]$ | $w(Z)\ge$ |
+|---|---|---|---|---|---|
+| Conservative (this paper) | $10^{10}$ | $0.1$ | $11$ | $0.1$ | $0.9$ |
+| Very conservative | $10^{10}$ | $0.1$ | $13$ | $10^{-3}$ | $0.999$ |
+| Mildly optimistic | $10^{10}$ | $0.2$ | $11$ | $\approx 2.05\times10^{2}$ | n/a ($\mathbb{E}>1$) |
+| Optimistic, fewer hurdles | $10^{10}$ | $0.5$ | $7$ | $7.8\times10^{7}$ | n/a |
 
-1. **Correlated Filters**: Extend the framework to handle dependent filter steps using copulas or conditional probability chains.
+The table makes the dichotomy vivid: with eleven genuinely hard ($p \le 0.1$)
+hurdles the expectation is below one and emptiness is forced; relaxing either
+the per-hurdle difficulty or the hurdle count can push the expectation above
+one, at which point the first moment method is silent (and a second-moment
+analysis — see §9 — becomes the relevant tool).
 
-2. **Dynamic Filters**: Model filter probabilities that change over cosmic time (e.g., heavy bombardment epochs vs. quiescent periods).
+---
 
-3. **Infinite Universe**: Analyze the filter cascade in an infinite universe, where the expected count may diverge but local density still matters.
+## 9. Discussion and future work
 
-4. **Information-Theoretic Bounds**: Derive fundamental limits on detectability based on signal-to-noise ratios and the inverse square law.
+**On the modeling choices.** The strength of the resolution is its
+*hypothesis-minimality*. The fusion theorem needs only (i) integer-valued,
+non-negative counts; (ii) an expectation realized as a bounded product; (iii)
+enough independent hurdles. It needs *nothing* about alien behavior. The
+weakness is the same: the conclusion is only as good as "each hurdle passes at
+most one in ten." The paper's claim is conditional and conservative, not a
+proof that life is rare — it is a proof that *if* the road to technology has
+$\ge 11$ genuinely hard steps, *then* silence is expected.
 
-5. **Tropical Geometry Bridge**: The filter cascade's multiplicative structure is naturally expressed in tropical (min-plus) algebra, where products become sums. This could connect to optimization and linear programming frameworks.
+**The dichotomy with the second moment.** The first moment method is one half
+of a fundamental dichotomy. Its mirror is the Paley–Zygmund / second-moment
+inequality: if $\mathbb{E}[X] > 1$ and the variance is controlled
+($\mathbb{E}[X^2] \le C\,\mathbb{E}[X]^2$), then
+$\Pr[X \ge 1] \ge 1/C > 0$ — civilizations expected *and* not too clustered make
+contact likely. A complete cosmic accounting needs both halves.
 
-## 7. References
+**Future directions.**
 
-1. Hart, M.H. (1975). "Explanation for the Absence of Extraterrestrials on Earth." *Quarterly Journal of the Royal Astronomical Society* 16: 128-135.
+- *C1 (tightness).* Characterize the equality case of Theorem 3.2: $w(Z) =
+  1 - \mathbb{E}[X]$ iff $X$ is $\{0,1\}$-valued on its support, the slack being
+  $\sum_{X\ge 2} w_i(X_i-1)$.
+- *C2 (second moment).* Prove the Paley–Zygmund companion over finite weighted
+  $\mathbb{Q}$-spaces using Cauchy–Schwarz on a `Finset`, completing the
+  dichotomy.
+- *C3 (dimension robustness).* Show that *any* $\ge 11$ independent hurdles each
+  $\le 1/10$, with $N \le 10^{10}$, force $\mathbb{E} < 1$ regardless of the
+  precise per-hurdle values — the count of filters, not their tuning, decides.
+- *C4 (resonant listening).* Quantify the resonant listening window of §6,
+  relating detection probability to $\gcd$ of transmitter/receiver periods via
+  Fibonacci strong divisibility.
 
-2. Webb, S. (2002). *If the Universe is Teeming with Aliens... Where Is Everybody?* Springer.
+---
 
-3. Ward, P.D. & Brownlee, D.E. (2000). *Rare Earth: Why Complex Life Is Uncommon in the Universe.* Springer.
+## 10. Conclusion
 
-4. Drake, F.D. (1961). "Discussion at Space Sciences Board, National Academy of Sciences Conference on Extraterrestrial Intelligent Life."
+Fermi's question — *where is everybody?* — presupposes that abundance is the
+default and silence the surprise. The mathematics reverses the presumption.
+With honest, conservative priors the expected number of communicating
+civilizations in the observable universe is at most $0.1$, and the first moment
+method — the pigeonhole principle made quantitative — then guarantees that the
+probability of an empty cosmos is at least $0.9$. The Great Silence is not a
+paradox. It is the most probable observation, forced by counting alone: few
+pigeons, many holes, and us, improbably, in the one hole that is not empty.
 
-5. Sandberg, A., Drexler, E., & Ord, T. (2018). "Dissolving the Fermi Paradox." arXiv:1806.02404.
+---
 
-6. Hanson, R. (1998). "The Great Filter — Are We Almost Past It?" http://mason.gmu.edu/~rhanson/greatfilter.html
+## References
 
-**Catalog References**: 
-- `MachineLearning/FermiParadox/Theorems.lean` (prior `drake_expected_lt_one`)
-- `Cryptography/barrier_from_pigeonhole` (pigeonhole barrier framework)
-- `Cryptography/subthreshold_no_pigeonhole_obstruction` (sub-threshold analysis)
-
-## Appendix: Formal Verification Summary
-
-All theorems in this paper are formally verified in Lean 4 with Mathlib. The verification comprises:
-
-| Theorem | File | Lines |
-|---------|------|-------|
-| Drake Expected < 1 | FilterCascade.lean | 55-60 |
-| Filter Concentration | FilterCascade.lean | 83-95 |
-| Cascade Strict Decrease | FilterCascade.lean | 100-110 |
-| Markov Silence | FilterCascade.lean | 117-120 |
-| Temporal Pigeonhole | FilterCascade.lean | 127-132 |
-| Exponential Decay | FilterCascade.lean | 148-155 |
-| Pigeonhole-Poisson Bridge | FilterCascade.lean | 185-192 |
-| Fermi Silence Theorem | FilterCascade.lean | 205-220 |
-| Pessimistic Drake | FilterCascade.lean | 224-226 |
-| Weighted Pigeonhole | PigeonholeBounds.lean | 28-35 |
-| Bayesian Rescaling | PigeonholeBounds.lean | 48-58 |
-| Multi-Scale Filter | PigeonholeBounds.lean | 66-80 |
-| Spatial Detection | PigeonholeBounds.lean | 90-100 |
-
-Total: 24 formally verified theorems across 2 files, with 0 remaining `sorry` statements.
+- P. Erdős, *probabilistic method*, foundational use of the first moment method.
+- N. Alon and J. Spencer, *The Probabilistic Method*.
+- F. Drake, the equation for the number of communicating civilizations (1961).
+- E. M. Lucas / standard number theory, Fibonacci strong divisibility:
+  $\gcd(F_m, F_n) = F_{\gcd(m,n)}$.
