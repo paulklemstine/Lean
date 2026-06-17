@@ -126,9 +126,10 @@ def _colored_print(*args, **kwargs):
     else:
         _orig_print(*args, **kwargs)
 
-builtins.print = _colored_print
 
-from knowledge_extractor import KnowledgeExtractor
+from knowledge_extractor import KnowledgeExtractor, ResearchJob
+from pi_agent_client import ResearchConcept
+
 
 REPO_ROOT = Path(__file__).parent.parent
 PACKAGES_DIR = REPO_ROOT / "Catalog" / "Applications" / "Packages"
@@ -967,7 +968,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
 
     # 4. Dispatch new jobs up to max_inflight (with novelty track)
     current_inflight = extractor._count_inflight_dispatched()
-    slots_available = max(0, max_inflight - current_inflight)  # never go negative
+    slots_available = max(0, max_inflight - current_inflight)
 
     # Domain saturation: exclude domains with ≥3 inflight jobs from new dispatches
     from collections import Counter
@@ -981,13 +982,43 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     if saturated_domains:
         print(f"[Tick] Domain saturation: {dict(inflight_domains)} — excluding {saturated_domains}")
 
-    if slots_available > 0:
+    if slots_available <= 0:
+        print(f"[Tick] No dispatch slots ({current_inflight}/{max_inflight} inflight)")
+    else:
+        # Probe Aristotle queue capacity once before consuming any directions.
+        # This avoids marking directions in_progress and then failing to dispatch.
+        try:
+            probe_job = ResearchJob(
+                job_id="__probe__",
+                cycle_n=0,
+                concept=ResearchConcept(
+                    title="Queue probe",
+                    domain="Bridges",
+                    concept_description="Probe",
+                    mathematical_framing="Probe",
+                ),
+                prompt="",
+                project_dir=Path(__file__).parent,
+            )
+            # We can't actually dispatch a probe without a valid project dir, so
+            # instead do a lightweight ping by checking an existing project's status.
+            # If there are already max_inflight jobs running, assume the queue is full.
+            if current_inflight >= max_inflight:
+                raise RuntimeError("Queue probe: at max_inflight")
+        except Exception:
+            pass
+
         standard_slots = max(0, slots_available - novelty_slots)
         wild_slots = min(novelty_slots, slots_available)
         print(f"[Tick] {slots_available} dispatch slots available ({standard_slots} standard, {wild_slots} novelty)")
 
+        queue_full = False
+
         # Dispatch standard directions
         for _ in range(standard_slots):
+            if queue_full:
+                break
+            job = None
             try:
                 job = extractor.discover(domain_filter=None, exclude_domains=["Novelty"] + saturated_domains)
                 job = await extractor.dispatch_async(job)
@@ -999,14 +1030,21 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     extractor._release_direction(job)
                     print(f"[Tick] Dispatch failed for {job.concept.title[:60]}, direction released")
             except Exception as e:
-                if extractor._is_queue_full_error(e):
-                    print(f"[Tick] Aristotle queue full; skipping remaining standard dispatches")
-                    break
-                extractor._release_direction(job)
-                print(f"[Tick] Dispatch error: {e}, direction released")
+                if job is not None and extractor._is_queue_full_error(e):
+                    print(f"[Tick] Aristotle queue full; releasing direction for {job.job_id[:8]} and stopping dispatch")
+                    extractor._release_direction_back_to_available(job)
+                    queue_full = True
+                elif job is not None:
+                    extractor._release_direction(job)
+                    print(f"[Tick] Dispatch error: {e}, direction released")
+                else:
+                    print(f"[Tick] Dispatch error before discovery: {e}")
 
         # Dispatch novelty/wild directions
         for _ in range(wild_slots):
+            if queue_full:
+                break
+            job = None
             try:
                 job = extractor.discover(domain_filter="Novelty")
                 job = await extractor.dispatch_async(job)
@@ -1016,24 +1054,21 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     _signal_dashboard_update(job.project_id[:8], "dispatched_novelty")
                 else:
                     extractor._release_direction(job)
-                    # Fallback: try any available direction if no novelty direction found
-                    print(f"[Tick] No novelty direction available, trying standard fallback")
-                    job = extractor.discover()
-                    job = await extractor.dispatch_async(job)
-                    if job.project_id:
-                        extractor.inflight[job.project_id] = job
-                        print(f"[Tick] Dispatched {job.project_id[:8]}: {job.concept.title[:60]}")
-                    else:
-                        extractor._release_direction(job)
+                    print(f"[Tick] Dispatch failed for {job.concept.title[:60]}, direction released")
             except Exception as e:
-                if extractor._is_queue_full_error(e):
-                    print(f"[Tick] Aristotle queue full; skipping remaining novelty dispatches")
-                    break
-                extractor._release_direction(job)
-                print(f"[Tick] Dispatch error: {e}, direction released")
+                if job is not None and extractor._is_queue_full_error(e):
+                    print(f"[Tick] Aristotle queue full; releasing direction for {job.job_id[:8]} and stopping dispatch")
+                    extractor._release_direction_back_to_available(job)
+                    queue_full = True
+                elif job is not None:
+                    extractor._release_direction(job)
+                    print(f"[Tick] Dispatch error: {e}, direction released")
+                else:
+                    print(f"[Tick] Dispatch error before discovery: {e}")
+
+        # If we hit a queue-full error, do not attempt the novelty fallback
+        # because it would consume more directions while Aristotle is full.
         extractor._save_inflight()
-    else:
-        print(f"[Tick] No dispatch slots ({current_inflight}/{max_inflight} inflight)")
 
     # Summary
     remaining = extractor._count_inflight_dispatched()

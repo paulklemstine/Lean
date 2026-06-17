@@ -1089,6 +1089,22 @@ class FutureDirectionsManager:
             if d.id == direction_id:
                 d.status = "available"
                 d.consumed_by_exp_id = ""
+        self._save()
+
+    def release_consumed_direction(self, exp_id: str) -> None:
+        """Release any direction marked in-progress by this exp_id back to available.
+
+        Used when a job was discovered but could not be dispatched (e.g., Aristotle
+        queue full), so the direction is not lost.
+        """
+        released = False
+        for d in self._directions:
+            if d.consumed_by_exp_id == exp_id and d.status == "in_progress":
+                d.status = "available"
+                d.consumed_by_exp_id = ""
+                released = True
+        if released:
+            self._save()
 
     def quarantine_direction(self, direction_id: str, days: int = 30) -> None:
         """Quarantine a direction: prevent dispatch for N days.

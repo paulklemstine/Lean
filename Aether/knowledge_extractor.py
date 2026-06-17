@@ -3693,6 +3693,24 @@ Research mode: {concept.research_mode}
         except Exception as e:
             print(f"[Tick] Warning: could not mark direction failed: {e}")
 
+    def _release_direction_back_to_available(self, job: ResearchJob) -> None:
+        """Release the direction consumed by this job back to the available pool.
+
+        Use this when the job could not be dispatched for operational reasons
+        (e.g., Aristotle queue full), not because the concept itself failed.
+        """
+        if not job.job_id:
+            return
+        if hasattr(self, 'locked_titles') and job.concept:
+            self.locked_titles.discard(job.concept.title)
+        try:
+            from research_memory import FutureDirectionsManager
+            fd_manager = FutureDirectionsManager(self.workspace)
+            fd_manager.release_consumed_direction(job.job_id)
+            print(f"[Tick] Released direction back to available for job {job.job_id[:8]}")
+        except Exception as e:
+            print(f"[Tick] Warning: could not release direction back to available: {e}")
+
     def _quarantine_direction_for_job(self, job: ResearchJob, days: int = 30) -> None:
         """Quarantine the direction consumed by this job after a low-quality cycle.
 
