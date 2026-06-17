@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "5884df3d",
     "filename": "phantom_topologies_spaces_that_change_when_you_loo.json",
     "pkg_num": 191,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.60834,
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
   {
@@ -5866,8 +5866,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "phantom_topologies_spaces_that_change_when_you_loo",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.60834,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Phantom Topologies: Spaces That Change When You Look at Them"
     }

@@ -367,21 +367,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sierpi\u0144ski Numbers: Covering Systems"
   },
   {
-    "consumed_by_exp_id": "5884df3d",
-    "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0005",
-    "priority_score": 0.85,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.491025+00:00",
-    "title": "Phantom Topologies: Spaces That Change When You Look at Them"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
     "domains": [
@@ -1474,21 +1459,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS \u2014 The Category Theory of Jokes (Punchlines as Universal Properties)\n\nCycle-1 outcome (`Catalog/Computation/JokeCategory.lean`): we modeled a *joke* as a\nfirst-surprise process whose **punchline** is the initial surprising moment (universal\nproperty), instantiated it as the **Fibonacci rank of apparition** `z(p)` (the punchline of the\n\"Fibonacci joke mod `p`\"), and proved \u2014 fully `sorry`-free and *hypothesis-free* \u2014 the\napparition duality `p \u2223 F n \u2194 z(p) \u2223 n`, the meet law, the coprime join law `z(mn) = lcm(z m, z n)`,\nthe squarefree/finite generalizations, and functoriality `m \u2223 n \u21d2 z(m) \u2223 z(n)`.\n\nThe following conjectures are precise and testable in Lean for follow-up cycles.\n\n## C1. Lucas-sequence universality of the punchline duality\nFor any nondegenerate Lucas sequence `U_n(P,Q)` (with `U_0 = 0`, `U_1 = 1`,\n`U_{n+2} = P U_{n+1} - Q U_n`) and any modulus `m` coprime to `Q`, the rank of apparition\n`z_U(m)` exists and satisfies `m \u2223 U_n \u2194 z_U(m) \u2223 n`, the meet law, and the coprime join law.\n**Test:** generalize `fibStep` to the companion-matrix shift on `ZMod m \u00d7 ZMod m` (invertible\niff `Q` is a unit), then re-run the duality argument verbatim. Predicted: every theorem in\n`JokeCategory.lean` lifts with `Q \u2208 (ZMod m)\u02e3`.\n\n## C2. The punchline is NOT a full lattice morphism (gcd law fails)\nWhile the coprime product maps to `lcm`, the conjecture `z(gcd m n) = gcd(z m, z n)` is FALSE in\ngeneral. **Test:** exhibit an explicit counterexample (search small `m, n` with\n`z(gcd m n) \u2260 gcd(z m, z n)`) and formalize the disproof. Predicted smallest witnesses come from\nprimes `p, q` with `z(p) = z(q)` but `p \u2260 q` (entry-point collisions), e.g. moduli sharing a\nPisano-period divisor. This sharpens \"the punchline is a join-morphism but only a lax\nmeet-morphism.\"\n\n## C3. Carmichael primitivity = surjectivity of the punchline functor\n`z(p) = n` exactly says `p` is a *primitive* prime divisor of `F_n` (the joke first lands at `n`).\nCarmichael's theorem \u27fa for every `n \u2209 {1,2,6,12}` the fiber `z\u207b\u00b9(n) \u2229 Primes` is nonempty.\n**Test (staged):** prove the *cyclotomic lower bound* `\u03a6_n(\u03c6, \u03c8) / gcd-corrections > 1` controls\nthe primitive part `primPart(n)` from `Catalog/Shared/CarmichaelProof.lean`, giving the infinite\ntail `n > 10000` and closing the standing `sorry` there. Predicted: the bound\n`|F_n| \u2265 \u03c6^{n-2}` together with a bound on the non-primitive part `\u220f_{d\u2223n, d<n} F_d` yields\n`primPart(n) > 1` for all `n` beyond an explicit threshold.\n\n## C4. Entropy / growth law of the punchline\nDefine the *punchline cost* `c(p) = z(p) / p`. Conjecture: `limsup_p c(p)` is finite and equals a\nconstant tied to the maximal Pisano period growth (`z(p) \u2264 2p` for primes `p`, with equality on a\ndensity-zero set). **Test:** formalize `z(p) \u2264 p + 1` for `p \u2261 \u00b11 (mod 5)` and `z(p) \u2223 p + 1` for\n`p \u2261 \u00b12 (mod 5)` via quadratic reciprocity for `\u221a5` in `ZMod p`. Predicted: the duality reduces\neach bound to the order of the golden ratio in `(ZMod p)\u02e3` or its quadratic extension.\n\n## C5. Initial/terminal objects in the genuine joke category\nPromote Part I to Mathlib `CategoryTheory`: define the thin category `Joke` whose objects are\nsurprise predicates and whose morphisms are \"refinements that preserve landing,\" and prove the\n*constant-true* joke is **terminal** and the *never-landing* joke is **initial**, with `punchline`\na functor to `(\u2115, \u2223)`. **Test:** show `fibEntry` extends to a functor preserving the coprime\nmonoidal product (`z(mn) = lcm` becomes a lax monoidal structure). Predicted: the coprime join\nlaw is exactly the monoidal-functor coherence square.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2045",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "63fd3989",
-    "status": "available",
-    "timestamp": "2026-06-17T06:53:13.089344+00:00",
-    "title": "Cycle-1 outcome (`Catalog/Computation/JokeCategory.lean`): we modeled a *joke* a"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Paradoxes as Theorems (Liar, Berry, Russell, Made Consistent)\n\nDerived from the cycle whose verified results live in\n`Catalog/Logic/ParaconsistentParadox.lean` (foundations) and\n`Catalog/Computation/ParadoxesAsTheorems.lean` (construction + necessity), and\nbuilding on `Catalog/Logic/ParadoxSelfSoundness.lean`.\n\nThis cycle established, with zero sorries, a single finite four-valued\nparaconsistent theory `paradoxModel` in which the Liar, Russell, and Berry\nparadoxes are simultaneously *designated theorems*, the theory is non-trivial and\nnon-explosive, and it certifies its own soundness; and it proved that a *sound*\nprovable Liar forces a genuine glut `B` (gaps `N` are insufficient).\n\nThe following conjectures are bold, falsifiable refinements.\n\n---\n\n## C1. Glut Minimality / Inconsistency Lower Bound\n\n**Conjecture.** Any sound paraconsistent theory that proves the Liar, a Russell\nsentence, and a Berry sentence as *syntactically distinct* designated theorems\nhas inconsistency degree at least 3, and 3 is attainable.\n\n**The key insight is** that `provable_liar_is_glut` upgrades each of the three\nself-referential paradoxes from \"non-classical\" (`B` or `N`) to \"glut\" (`B`)\nonce soundness and provability are imposed, so three distinct paradoxes must\ncontribute three distinct dialetheias \u2014 strengthening\n`two_paradoxes_force_degree_two` from 2 to 3.\n\n**Why now?** We already have the degree-\u22652 bound via `Finset.one_lt_card` and the\nglut-forcing lemma; the missing step is a Berry sentence that is *intrinsically*\na third glut rather than reusing a Liar fixed point, which the\n`berry_definability_bound` collision can be made to witness.\n\n---\n\n## C2. No Sound Paracomplete (Gap-Only) Theory Proves the Liar\n\n**Conjecture.** In any three-valued logic whose only non-classical value is a gap\n`N` (paracomplete, no glut), the Liar can never be a sound provable theorem; i.e.\nremoving `B` from `BelnapVal` makes `paradoxes_as_theorems` unsatisfiable.\n\n**The key insight is** that `provable_liar_is_glut` already closes the gap escape\nfor the four-valued case; the conjecture says this is not an artifact of the\nextra value `B` being available but a hard impossibility once `B` is deleted \u2014\nsoundness designates only `T`, and a Liar cannot be `T`.\n\n**Why now?** The proof template is the contrapositive of `provable_liar_is_glut`\ncombined with `classical_no_liar`; the only new ingredient is formalizing a\ngap-only sublogic `Fin 3` and showing its designated set is `{T}`.\n\n---\n\n## C3. Explosion is the Unique Obstruction to Consistency\n\n**Conjecture.** For a finite four-valued theory with at least one glut, the\ntheory is non-trivial (some sentence unprovable) **iff** it rejects explosion.\nEquivalently, `HasExplosion` is logically equivalent to triviality in the\npresence of a dialetheia.\n\n**The key insight is** that `explosion_collapses_paradoxModel` shows explosion \u21d2\ntriviality, and `paradoxModel_rejects_explosion` shows the converse direction in\none model; the conjecture promotes this to a biconditional characterization,\nlocating *all* of consistency in the failure of ex falso.\n\n**Why now?** Both implications already exist as separate theorems for the witness\nmodel; generalizing to \"any theory with a glut\" needs only the observation that a\nglut plus explosion designates everything, which is exactly\n`explosion_with_liar_trivializes`.\n\n---\n\n## C4. Self-Soundness is Impossible Without Gluts\n\n**Conjecture.** No consistent *classical or paracomplete* theory containing its\nown truth predicate can prove its own soundness (G\u00f6del/Tarski barrier), but every\nsufficiently expressive *paraconsistent* theory with a designated soundness\nsentence can \u2014 and the dividing line is precisely the availability of the glut\n`B`.\n\n**The key insight is** that `paradoxSelfSound_proves_own_soundness` evades the\nsecond-incompleteness barrier not by weakness but by tolerating the controlled\ncontradiction that makes the soundness sentence designated; the obstruction in\nclassical logic is exactly the explosion that gluts disarm.\n\n**Why now?** `SelfSoundTheory` and the concrete `paradoxSelfSound` give a working\npositive instance; the negative half can be formalized by transporting\n`classical_no_liar` to a self-referential soundness sentence.\n\n---\n\n## C5. Functoriality of Paradox Endomorphisms\n\n**Conjecture.** The Belnap endomorphisms fixing the glut and gap values\n(`ParadoxEndomorphism` in `ParadoxSelfSoundness`) act on the set of designated\nself-referential theorems, and this action preserves both provability and\ninconsistency degree; hence \"paradoxicality\" is an invariant of the endomorphism\nmonoid.\n\n**The key insight is** that `paradox_endo_preserves_fixed_point` shows these maps\nsend negation fixed points to negation fixed points, so they map Liars to Liars\nand gluts to gluts \u2014 turning the ad hoc paradox catalogue into the orbit of a\ngroup action.\n\n**Why now?** The endomorphism monoid (`ParadoxEndomorphism.comp`, `negEndomorphism`)\nis already defined and its fixed-point preservation proved; the next step is to\nlet it act on `ParaconsistentTheory` truth assignments and check `isSound`/\n`inconsistencyDegree` are invariants \u2014 a direct, mechanizable extension.\n",
     "domains": [
       "Logic",
@@ -1591,6 +1561,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T10:58:34.240179+00:00",
     "title": "This cycle formalized the **Cram\u00e9r random model of the primes** as a genuine fin"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Spectral Gap of Sudoku\n\nThese conjectures extend the formalization in `Catalog/Novelty/SudokuSpectralGap.lean`,\nwhich establishes (general order `n`): the Sudoku graph is `(3n\u00b2\u22122n\u22121)`-regular, its\nadjacency spectrum is confined to `[\u2212d, d]` with the all-ones Perron eigenvector at the\ntop, its chromatic number is exactly `n\u00b2`, and the partial-grid completion functor is\nantitone with a sharp SAT (nonempty)\u2192UNSAT (empty) dichotomy.\n\nEach item below is stated to be **falsifiable** and **formalizable** in Lean.\n\n## C1. Exact second eigenvalue and the spectral gap formula\n**Conjecture.** The Sudoku graph of order `n` is a graph with exactly four distinct\nadjacency eigenvalues, and its second-largest eigenvalue is `\u03bb\u2082 = 2n \u2212 1`, giving a\nspectral gap `d \u2212 \u03bb\u2082 = 3n\u00b2 \u2212 4n = n(3n\u22124)`. Equivalently, the gap grows quadratically in\n`n` so the normalized gap `(d \u2212 \u03bb\u2082)/d \u2192 1`.\n*Test:* compute the spectrum for `n = 2, 3, 4` by `decide`/`native_decide` on the\nadjacency matrix and check the count of distinct eigenvalues and the value of `\u03bb\u2082`.\n\n## C2. The Sudoku graph is strongly regular iff `n = ... `\n**Conjecture.** The order-`n` Sudoku graph is **not** strongly regular for any `n \u2265 2`\n(unlike its building blocks: rows/columns/boxes individually give complete graphs).\nPrecisely, the number of common neighbours of two adjacent cells is *not* constant across\nall adjacent pairs. *Test:* exhibit two adjacent pairs (same-box vs. same-row-different-box)\nwith different common-neighbour counts; formalize as a `\u2203`-counterexample to\n`G.IsSRGWith ...`.\n\n## C3. Phase-transition threshold for unique completion\n**Conjecture.** There is a sharp clue-count threshold `m(n)` such that a uniformly random\nclue set of size `< m(n)` almost never has a unique completion while one of size `> m(n)`\nalmost always does; and `m(n) = \u0398(n\u00b2)`. As a first formal milestone (deterministic):\n*any* clue set whose support meets every row, column, and box still need not pin the\nsolution, but a clue set equal to a full solution minus one cell always has a unique\ncompletion. *Test:* prove the deterministic milestone via `completions_antitone` plus the\nlocal cancellation already used in `sudokuColor_valid`.\n\n## C4. Hoffman bound is tight \u21d2 a fractional-relaxation rigidity\n**Conjecture.** Hoffman's lower bound `\u03c7 \u2265 1 \u2212 \u03bb_max/\u03bb_min` is *tight* for the Sudoku\ngraph, i.e. `1 \u2212 d/\u03bb_min = n\u00b2`, forcing `\u03bb_min = \u2212d/(n\u00b2\u22121)`. Combined with `C1` this\nover-determines the spectrum and should pin all four eigenvalues. *Test:* once `\u03bb_min` is\nformalized, verify `1 \u2212 d/\u03bb_min = n\u00b2` symbolically and cross-check against the spectra of\n`C1`.\n\n## C5. Tensor/Kronecker structure of the Sudoku operator\n**Conjecture.** The Sudoku adjacency operator decomposes as a sum of Kronecker products of\nall-ones and identity blocks: `A = (J\u2297I + I\u2297J + J\u2297J)_{rows,cols,boxes} \u2212 3\u00b7(I\u2297I) \u2212 ...`\nover the `Fin n \u00d7 Fin n \u00d7 Fin n \u00d7 Fin n` factorization, so its eigenvalues are explicit\ninteger combinations of `{n, 0}` eigenvalues of `J` and `I`. This would make `C1` and `C4`\ncorollaries of a single tensor-eigenvalue lemma. *Test:* formalize `A` as such a Kronecker\ncombination on `Cell n` and prove the eigenvalues factor accordingly; the all-ones\neigenvalue `d = 3n\u00b2\u22122n\u22121` should drop out as the `(n,n,n)` corner, matching\n`sudoku_top_eigenvalue`.\n",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2053",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "595ce011",
+    "status": "available",
+    "timestamp": "2026-06-17T13:01:57.718914+00:00",
+    "title": "These conjectures extend the formalization in `Catalog/Novelty/SudokuSpectralGap"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Phantom Topologies (Combinatorics)\n\nCycle-1/2 results live in `Catalog/Speculative/PhantomTopologies.lean`, where we proved that\non a finite carrier the topology is a *phantom* of its specialization preorder:\n\n- `topology_eq_of_specializes_iff` \u2014 a topology is determined by the bare `\u2933` relation;\n- `specPreorder_bijective` \u2014 `topology \u21a6 specialization preorder` is a **bijection**\n  `TopologicalSpace \u03b1 \u2243 Preorder \u03b1` (the classical \"finite spaces = preorders\");\n- `continuous_iff_specializes` \u2014 continuity *is* specialization-monotonicity (morphisms are\n  phantoms too);\n- `phantom_asymmetry` \u2014 the realized preorders are genuinely directional.\n\nThe conjectures below are bold, falsifiable next steps. Each comes with a concrete Lean target.\n\n---\n\n## C1. T0 rigidity: phantoms collapse exactly onto partial orders\n**Conjecture.** The observation map `specPreorder` restricts to a bijection between the\n`T0` topologies on a finite `\u03b1` and the **partial orders** on `\u03b1`.\n**Why plausible.** `specializationOrder` already upgrades the preorder to a partial order under\n`T0Space`; antisymmetry is exactly the `T0` (Kolmogorov) condition.\n**Lean target.**\n```\ntheorem specPreorder_T0_bijective [Finite \u03b1] :\n    Function.Bijective\n      (fun (t : {t : TopologicalSpace \u03b1 // @T0Space \u03b1 t}) => (specialization partial order))\n```\nA corollary would be a *counting* statement: `#{T0 topologies on Fin n} = #{partial orders on Fin n}`\n(OEIS A001035), complementing the full count A000798.\n\n## C2. Homeomorphism is an order-isomorphism of phantoms\n**Conjecture.** For finite spaces, `Homeomorph \u03b1 \u03b2` is in natural bijection with order-isomorphisms\nof their specialization preorders: `(\u03b1 \u2243\u209c \u03b2) \u2243 (Specialization \u03b1 \u2243o Specialization \u03b2)`.\n**Why plausible.** `continuous_iff_specializes` gives the arrow-level dictionary; a homeomorphism is\na continuous bijection with continuous inverse, i.e. a monotone bijection with monotone inverse.\n**Lean target.** Build the explicit `Equiv` and prove both round-trips; specialize to deduce that\ntwo finite spaces are homeomorphic iff their preorders are order-isomorphic.\n\n## C3. Connectivity is a phantom (combinatorial connectivity)\n**Conjecture.** A finite space is topologically connected **iff** its specialization preorder is\nconnected as a graph under the comparability relation `x \u2264 y \u2228 y \u2264 x` (zigzag-connected).\n**Why plausible.** In an Alexandrov space the minimal open set of `x` is its up-set; topological\ncomponents match equivalence classes of the reflexive\u2013symmetric\u2013transitive closure of `\u2264`.\n**Lean target.**\n```\ntheorem connected_iff_preorder_connected [Finite \u03b1] [TopologicalSpace \u03b1] :\n    ConnectedSpace \u03b1 \u2194 (\u2200 x y : \u03b1, Relation.ReflTransGen (fun a b => a \u2933 b \u2228 b \u2933 a) x y)\n```\n\n## C4. McCord/M\u00f6bius bridge: Euler characteristic = M\u00f6bius number\n**Conjecture.** For a finite `T0` space `X` with specialization poset `P`, the reduced Euler\ncharacteristic of the order complex `\u0394(P)` equals the M\u00f6bius number `\u03bc(P\u0302)` of `P` with adjoined\n`\u22a5`/`\u22a4` \u2014 a strict identity between a topological invariant and a purely combinatorial one.\n**Why plausible.** This is the finite-space shadow of McCord's weak-homotopy equivalence\n`|\u0394(P)| \u2243 X`; the alternating face count of `\u0394(P)` is the order-complex Euler characteristic, which\nPhilip Hall's theorem identifies with a M\u00f6bius value.\n**Lean target.** Define `orderComplex P` (chains of `P`), its Euler characteristic, and prove the\nidentity for the partial order produced by `specializationOrder`.\n\n## C5. Asymptotic dominance of asymmetric phantoms\n**Conjecture.** The fraction of topologies on `Fin n` that are `T0` (genuinely asymmetric phantoms,\ncf. `phantom_asymmetry`) tends to `1` as `n \u2192 \u221e`; equivalently `A000798(n) / A001035(n) \u2192 1`.\n**Why plausible.** A random preorder is asymptotically almost surely a partial order, since the\nnumber of nontrivial inseparability classes is negligible for large `n`.\n**Lean target.** A clean intermediate, fully finitary milestone: prove the *exact* small-case\ncounts agree with the phantom bijection, e.g. that there are exactly `4` topologies and `4`\npreorders on a 2-element type, and exactly `3` of them are `T0`, by transporting the count along\n`specPreorder_bijective`.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2055",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5884df3d",
+    "status": "available",
+    "timestamp": "2026-06-17T13:03:52.809560+00:00",
+    "title": "Cycle-1/2 results live in `Catalog/Speculative/PhantomTopologies.lean`, where we"
   },
   {
     "consumed_by_exp_id": "",
@@ -1758,6 +1758,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: For any sufficiently expressive formal system with a fixed proof search procedure, there exists a scale-coarse-graining operator on proof states such that the induced renormalization flow has universality classes, and theorem families near critical fixed points exhibit polynomial-to-exponential transitions in provability complexity under small changes of axioms or heuristics. Test: Define coarse-grainings on proof-search trees for benchmark theorem families across multiple provers; measure whether rescaled search statistics collapse onto invariant flow curves and whether critical exponents predicting abrupt complexity transitions are stable across syntactic encodings. The conjecture is refuted if no encoding-robust fixed points, universality classes, or predictive critical exponents appear. Impact: This would enable a physics-style theory of theorem proving, identifying when tiny changes in representations or axiom sets trigger dramatic shifts in solvability, and could guide the design of provers, formal systems, and automated discovery pipelines.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_2054",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-17T13:02:11.584379+00:00",
+    "title": "Renormalization of Proofs: Phase Transitions in Automated Theorem Search"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that 10 is a solitary number \u2014 no other integer shares its abundancy index \u03c3(n)/n. Formalize the theory of friendly numbers and abundancy, connecting to the distribution of divisor sums.",
     "domains": [
       "Algebra"
@@ -1769,6 +1784,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Cycle 595ce011 (Q=0.612) proved 10 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a sharply scoped core of the order-`n` Sudoku constraint graph on `Cell n := Fin n \u00d7 Fin n \u00d7 Fin n \u00d7 Fin n`, avoiding ambitious spectral or chromatic-number machinery until the finite combin",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_595ce011_e0b1bcd6",
+    "priority_score": 0.6622400000000002,
+    "research_mode": "team",
+    "source_exp_id": "595ce011",
+    "status": "available",
+    "timestamp": "2026-06-17T13:02:19.356643+00:00",
+    "title": "Close Proofs: The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
   },
   {
     "consumed_by_exp_id": "",
@@ -2801,7 +2830,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands for Toddlers: Galois Groups as Shapes, Automorphic Forms as Colors"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "cb56480f",
     "description": "A jigsaw puzzle has N pieces, each with 4 edges. The 'signature' of a piece is the tuple (top, right, bottom, left) of edge types (flat, tab, blank). Two pieces fit together if their adjacent edges are complementary (tab meets blank). Conjecture: Solving a jigsaw puzzle is NP-complete. The reduction: given a 3-SAT formula with n variables and m clauses, construct a jigsaw puzzle with N = 2n + m + 2 pieces where the only valid assembly corresponds to a satisfying assignment. Variable pieces: each variable x_i has two pieces (TRUE and FALSE), one with a tab and one with a blank on the assignment edge. Only one can be placed (mutual exclusion via complementary edges). Clause pieces: each clause C_j is a piece that has three input edges (one per literal) and one output edge. The piece fits only if at least one input edge is connected to a TRUE literal piece. The top-left corner and bottom-right corner enforce the boundary. Test: construct the reduction explicitly for a small 3-SAT instance (e.g., (x1 OR x2 OR NOT x3) AND (NOT x1 OR x3)) and verify the puzzle has a solution iff the formula is satisfiable. Impact: jigsaw puzzles are NP-complete, so the satisfying snap you feel when completing a puzzle is literally the same as solving a hard computational problem.",
     "domains": [
       "Novelty",
@@ -2811,7 +2840,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.564171+00:00",
     "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
   },
@@ -2906,7 +2935,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sperner's Lemma Implies Nash Equilibria: Combinatorial Fixed Points in Game Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "74e64b1f",
     "description": "A neural network with ReLU activation defines a piecewise linear function f: R^n -> R^m. The decision boundary of a binary classifier f: R^n -> R is the set {x : f(x) = 0}, which is a piecewise linear hypersurface. The algebraic variety of the decision boundary is the zero set of the polynomial that best approximates f. Conjecture: for a ReLU network with L layers of widths (n, w_1, ..., w_L, 1), the decision boundary is a piecewise linear hypersurface with at most 2^L * prod w_i regions, and the degree of the best polynomial approximation is at most 2^L. More precisely, the decision boundary V(f) = {x : f(x) = 0} is a tropical hypersurface (a piecewise linear object that is the 'skeleton' of an algebraic variety). The tropical variety of the decision boundary has degree at most 2^L and at most prod_{i=1}^{L} (w_i choose 2) singularities. Conjecture: the VC dimension of a ReLU network with L layers and total width W is at most L * W * log(W), matching the known bound up to log factors. Test: train ReLU networks on synthetic data, extract decision boundaries, and verify they are tropical hypersurfaces with the predicted degree and singularity count. Impact: neural network decision boundaries are tropical varieties. The complexity of the network (L, W) determines the algebraic complexity of the boundary.",
     "domains": [
       "Novelty",
@@ -2916,7 +2945,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.695662+00:00",
     "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
   },
@@ -2934,21 +2963,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-01T12:30:30.700907+00:00",
     "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
-  },
-  {
-    "consumed_by_exp_id": "595ce011",
-    "description": "A Sudoku puzzle is a constraint satisfaction problem on a 9x9 grid. The 'spectral gap' of a Sudoku puzzle is the gap between the two largest eigenvalues of the transition matrix of the Markov chain that randomly swaps two compatible entries. The spectral gap determines the mixing time: the number of swaps needed to generate a uniformly random solution. Conjecture: the spectral gap of a Sudoku puzzle undergoes a phase transition at the critical density d_c = 17/81 (the density of the minimal number of clues, 17, divided by 81). For puzzles with fewer than 17 clues, the spectral gap is large (the Markov chain mixes quickly, meaning there are many solutions). For puzzles with exactly 17 clues, the spectral gap is minimal (the chain mixes slowly, meaning solutions are hard to find). For puzzles with more than 30 clues, the spectral gap is zero (the chain is reducible, meaning the puzzle has a unique solution and no swaps are possible). Conjecture: the spectral gap lambda_1 - lambda_2 of the Sudoku Markov chain satisfies: lambda_1 - lambda_2 > epsilon for d < 17/81 (many solutions, fast mixing), lambda_1 - lambda_2 ~ 0 for d ~ 17/81 (critical point, slow mixing), and the chain is absorbing for d > 30/81 (unique solution, no mixing). Test: compute the spectral gap for Sudoku puzzles with varying numbers of clues and verify the phase transition. Impact: Sudoku has a spectral gap phase transition. The hardness of the puzzle is determined by the gap, not by the number of clues.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0083",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.750240+00:00",
-    "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
   },
   {
     "consumed_by_exp_id": "",
