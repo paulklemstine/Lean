@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# pre-commit hook: auto-increment version badge AND cache-bust query strings
+# Reads current version, bumps patch number, writes back, stages the files.
+# Also updates ?v=0.0.N on style.css and packages.js in index.html files.
+
+set -e
+
+VERSION_FILES=(
+    "Catalog/Applications/Packages/index.html"
+    "docs/index.html"
+)
+
+# Find the first file that has a version badge and read current version
+CURRENT_VERSION=""
+for f in "${VERSION_FILES[@]}"; do
+    if [ -f "$f" ]; then
+        CURRENT_VERSION=$(grep -oP 'id="version-badge">v\K[0-9]+\.[0-9]+\.[0-9]+' "$f" 2>/dev/null || true)
+        if [ -n "$CURRENT_VERSION" ]; then
+            break
+        fi
+    fi
+done
+
+if [ -z "$CURRENT_VERSION" ]; then
+    # No version found, start at 0.0.1
+    NEW_VERSION="0.0.1"
+else
+    # Bump the patch number (x.y.z -> x.y.(z+1))
+    IFS='.' read -r major minor patch <<< "$CURRENT_VERSION"
+    patch=$((patch + 1))
+    NEW_VERSION="${major}.${minor}.${patch}"
+fi
+
+# Update all version files
+for f in "${VERSION_FILES[@]}"; do
+    if [ -f "$f" ]; then
+        # Replace the version in the version-badge span
+        sed -i "s/id=\"version-badge\">v[0-9]\+\.[0-9]\+\.[0-9]\+</id=\"version-badge\">v${NEW_VERSION}</g" "$f"
+
+        # Update cache-bust query strings on CSS and JS files
+        sed -i "s/style\.css?v=[0-9]\+\.[0-9]\+\.[0-9]\+/style.css?v=${NEW_VERSION}/g" "$f"
+        sed -i "s/packages\.js?v=[0-9]\+\.[0-9]\+\.[0-9]\+/packages.js?v=${NEW_VERSION}/g" "$f"
+        sed -i "s/pyodide-runner\.js?v=[0-9]\+\.[0-9]\+\.[0-9]\+/pyodide-runner.js?v=${NEW_VERSION}/g" "$f" || true
+        sed -i "s/lightbox\.js?v=[0-9]\+\.[0-9]\+\.[0-9]\+/lightbox.js?v=${NEW_VERSION}/g" "$f" || true
+
+        git add "$f"
+    fi
+done
+
+echo "[pre-commit] Version bumped: v${CURRENT_VERSION:-0.0.0} → v${NEW_VERSION}"
+
+# Update the catalog-only branch (Catalog/ lean files only + README) automatically.
+# This is best-effort: a failure here should not block the main commit.
+(
+    set +e
+    REPO_ROOT="$(git rev-parse --show-toplevel)"
+    UPDATE_SCRIPT="$REPO_ROOT/Aether/.aether_workspace/update-catalog-branch.sh"
+    if [ -f "$UPDATE_SCRIPT" ]; then
+        "$UPDATE_SCRIPT" || echo "[pre-commit] catalog-lean update failed (non-fatal)"
+    fi
+)

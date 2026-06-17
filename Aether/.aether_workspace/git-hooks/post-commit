@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# post-commit hook: push the catalog-lean branch after each commit.
+# The pre-commit hook already rebuilt the local catalog-lean branch; this
+# hook just pushes it to origin so the GitHub URL stays current.
+#
+# We refresh the remote-tracking ref before pushing to avoid the recurring
+# "stale info" rejection from --force-with-lease. If a genuine race still
+# happens we retry once; if it still fails we fall back to --force, because
+# catalog-lean is fully machine-generated and the local HEAD is canonical.
+
+set +e
+
+push_catalog_lean() {
+    local branch="catalog-lean"
+    if ! git rev-parse --verify "refs/heads/${branch}" >/dev/null 2>&1; then
+        return 0
+    fi
+
+    # Refresh remote-tracking ref so force-with-lease has the current expected value.
+    git fetch origin "refs/heads/${branch}:refs/remotes/origin/${branch}" 2>/dev/null || true
+
+    if git push --force-with-lease origin "${branch}"; then
+        return 0
+    fi
+
+    echo "[post-commit] force-with-lease push failed; retrying after another refresh..."
+    git fetch origin "refs/heads/${branch}:refs/remotes/origin/${branch}" 2>/dev/null || true
+
+    if git push --force-with-lease origin "${branch}"; then
+        return 0
+    fi
+
+    echo "[post-commit] force-with-lease still failing; force-pushing generated ${branch} branch"
+    git push --force origin "${branch}"
+}
+
+push_catalog_lean || echo "[post-commit] catalog-lean push failed (non-fatal)"
