@@ -4,10 +4,18 @@ Aether is an autonomous research system that discovers, formalizes, and accumula
 
 ## Quick Start
 
+### Install the git hooks
+
+After cloning, install the tracked hooks so versioning, catalog-lean updates, and pushes happen automatically on every commit:
+
+```bash
+bash Aether/.aether_workspace/git-hooks/install-hooks.sh
+```
+
 ### Run the Research Loop
 
 ```bash
-cd Aether && python3 aether_tick.py --loop --ollama-cloud --max-inflight 9 --novelty-slots 2 --interval 1800 --serve --log .aether_workspace/aether.log
+cd Aether && python3 aether_tick.py --loop --ollama-cloud --max-inflight 9 --novelty-slots 3 --interval 1800 --serve --log .aether_workspace/aether.log
 ```
 
 This is the standard startup command. It runs continuously: each tick polls for completed jobs, integrates them, dispatches new ones, rebuilds the website (`update_index.py`), syncs to `docs/`, commits, and pushes to git. The `--serve` flag starts a local docs HTTP server at `http://localhost:8000`. The `--log` flag tees all output to a log file while still printing to the console.
@@ -15,7 +23,7 @@ This is the standard startup command. It runs continuously: each tick polls for 
 | Flag | Default | Description |
 |------|---------|-------------|
 | `--max-inflight N` | 9 | Max concurrent Aristotle jobs |
-| `--novelty-slots N` | 2 | Dispatch slots reserved for Novelty directions |
+| `--novelty-slots N` | 3 | Dispatch slots reserved for novelty/wild directions |
 | `--interval SECONDS` | 21600 | Sleep between ticks (21600 = 6h, 1800 = 30min) |
 | `--ollama-cloud` | off | Enable Ollama cloud backend |
 | `--loop` | off | Run continuously (single tick otherwise) |
@@ -30,7 +38,7 @@ cd Aether && python3 aether_tick.py --ollama-cloud
 
 ### View the Knowledge Graph
 
-Open `Catalog/Applications/Packages/index.html` in a browser, or visit the GitHub Pages deployment. The frontend supports light and dark themes with tabbed package views.
+Open `Catalog/Applications/Packages/index.html` in a browser, or visit the GitHub Pages deployment. The frontend supports light and dark themes with tabbed package views, interactive demos, auto-run visualizations, and a regenerate button for edited outputs.
 
 ## Architecture
 
@@ -43,6 +51,8 @@ FutureDirections  Lean 4 proofs    Article, Paper,     Catalog +
                   DIRECTIONS.md
 ```
 
+Aether is fully self-managing: it detects its own code changes via mtime watchdogs, restarts itself after `git pull`, maintains a long-term archive of every Aristotle project, and publishes both a lean-only branch (`catalog-lean`) and a GitHub Pages site from `docs/`.
+
 ### Two-Phase Research Pipeline
 
 **Phase A** — Formalization and Discovery:
@@ -53,43 +63,73 @@ FutureDirections  Lean 4 proofs    Article, Paper,     Catalog +
 **Phase B** — Packaging for Humans:
 - Takes Phase A results and produces a polished package: ARTICLE.md, RESEARCH_PAPER.md, interactive demos, visualizations, algorithms, and a structured PACKAGE.json
 - PACKAGE.json schema includes: `algorithms`, `visualizations`, `demos`, `interactive_demos` — all must be real implementations, never placeholder strings
+- Self-contained articles include the full Lean 4 proof source inline so packages can be read without external files
 - Phase B results are not subject to salvage mode (which only applies to Phase A)
 
 ### Cycle Flow
 
 1. **Discover** — `knowledge_extractor.discover()` pops a weighted-random future direction (with inverse-frequency domain balancing), builds a `ResearchConcept`, and creates a `ResearchJob`
 2. **Execute (Phase A)** — Aristotle produces Lean 4 proofs, articles, research papers, demos, and FUTURE_DIRECTIONS.md
-3. **Package (Phase B)** — Results are packaged for human consumption with full interactive content
-4. **Integrate** — `knowledge_extractor.run_single_cycle()` unpacks artifacts into the Catalog, extracts new future directions, and marks the consumed direction as completed
-5. **Repeat** — The next cycle picks up newly seeded directions
+3. **Adversarial Judge** — A separate judge scores the result for non-triviality, completeness, and novelty; low-scoring results are salvaged or discarded
+4. **Package (Phase B)** — Results are packaged for human consumption with full interactive content
+5. **Integrate** — `knowledge_extractor.run_single_cycle()` unpacks artifacts into the Catalog, extracts new future directions, and marks the consumed direction as completed
+6. **Repeat** — The next cycle picks up newly seeded directions
 
 ## Project Structure
 
 | Directory | Purpose |
 |-----------|---------|
 | `Aether/` | Core research pipeline — discovery, dispatch, evaluation, integration |
+| `Aether/.aether_workspace/` | Runtime state, logs, and tracked tooling (including git hooks and the archive DB) |
+| `Archive/` | Long-term content-addressable archive of all Aristotle projects (can be split across WSL and external drives) |
 | `Catalog/` | Published research packages (JSON + Lean) + web visualization |
 | `docs/` | GitHub Pages website (synced from `Catalog/Applications/Packages/`) |
 
 ## Key Files
 
+### Pipeline
+
 | File | Purpose |
 |------|---------|
 | `Aether/aether_tick.py` | Main pipeline entry point — loop mode, rebuild, commit, push; dispatches Phase A and Phase B |
-| `Aether/knowledge_extractor.py` | Orchestrates the full cycle: discover → Phase A → Phase B → integrate; salvage mode; future directions extraction |
+| `Aether/knowledge_extractor.py` | Orchestrates the full cycle: discover → Phase A → judge → Phase B → integrate; salvage mode; future directions extraction |
 | `Aether/pi_agent_client.py` | Builds research prompts for Phase A (`write_aristotle_prompt`) and Phase B (`_build_phase_b_package_prompt`) |
+| `Aether/quality_evaluator.py` | Adversarial judge / critic gate for Phase A results |
 | `Aether/research_memory.py` | Tracks future directions (available/in_progress/completed/pruned) with quality scoring and anti-repetition |
-| `Aether/lineage_extractor.py` | Builds knowledge graph (provenance edges) |
-| `Aether/catalog_analyzer.py` | Analyzes existing Catalog theorems for context |
-| `Aether/output_organizer.py` | Maps domain names to Catalog directories; `DOMAIN_DIRS` — valid domain list |
 | `Aether/aristotle_loop.py` | UCB-based domain selection, cross-domain synergy tracking |
-| `Aether/seed_directions.py` | 201 seed directions including 97 novelty-tagged directions |
+| `Aether/seed_directions.py` | Seed directions including novelty-tagged directions |
+| `Aether/git_automator.py` | Builds commits from the current pipeline state |
+
+### Archive and Analysis
+
+| File | Purpose |
+|------|---------|
 | `Aether/backfill_aristotle_archive.py` | One-shot backfill of all past Aristotle projects into the local archive |
-| `Aether/package_single_job.py` | Build or extract a research package for one Aristotle project |
-| `Aether/planning_guide.py` | Interactive questionnaire that emits backfill/package commands |
+| `Aether/archive_manager.py` | SQLite + blob archive manager with split-layout support |
 | `Aether/theorem_extractor.py` | Lean theorem parser used by the archive for rich metadata |
 | `Aether/archive_utils.py` | Shared streaming download / memory-cap helpers |
-| `Aether/backfill_aristotle_archive.py` | One-shot backfill of all past Aristotle projects into the local archive |
+| `Aether/package_single_job.py` | Build or extract a research package for one Aristotle project |
+| `Aether/planning_guide.py` | Interactive questionnaire that emits backfill/package commands |
+| `Aether/catalog_analyzer.py` | Analyzes existing Catalog theorems for context |
+| `Aether/lineage_extractor.py` | Builds knowledge graph (provenance edges) |
+| `Aether/catalog_pruner.py` | Actively shrinks the catalog by grouping similar packages and keeping the best ones |
+| `Aether/catalog_scorer.py` | Scores catalog packages for the quality dashboard |
+| `Aether/output_organizer.py` | Maps domain names to Catalog directories; `DOMAIN_DIRS` — valid domain list |
+
+### Git Hooks and Automation
+
+| File | Purpose |
+|------|---------|
+| `Aether/.aether_workspace/git-hooks/pre-commit` | Tracked hook: bumps version badges, cache-busts query strings, rebuilds `catalog-lean` |
+| `Aether/.aether_workspace/git-hooks/post-commit` | Tracked hook: pushes `catalog-lean` with stale-info guard (fetch, retry, then `--force`) |
+| `Aether/.aether_workspace/git-hooks/install-hooks.sh` | Copies the tracked hooks into `.git/hooks` after cloning or updates |
+| `Aether/.aether_workspace/update-catalog-branch.sh` | Rebuilds the lean-only `catalog-lean` branch on top of the current remote tip |
+
+### Frontend
+
+| File | Purpose |
+|------|---------|
+| `Catalog/Applications/Packages/index.html` | Web viewer for all research packages |
 | `Catalog/Applications/Packages/update_index.py` | Bundles packages into `packages_db.js`, adds quality scores |
 | `Catalog/Applications/Packages/js/packages.js` | Frontend rendering — tabbed views, interactive demos, light/dark themes |
 | `Catalog/Applications/Packages/style.css` | Frontend styling — fixed sidebar layout, gradient titles, responsive design |
@@ -101,6 +141,8 @@ The package viewer at `Catalog/Applications/Packages/index.html` provides:
 - **Light/Dark Themes** — Toggle between themes with CSS custom properties; light mode uses appropriate gradients and backgrounds
 - **Tabbed Package Views** — Lean 4 Proofs (with original file paths), Article, Paper, Future Directions, Interactive
 - **Interactive Tab** — Shows algorithms, visualizations, and demos from PACKAGE.json (with Array.isArray guards for robustness)
+- **Auto-run Demos** — Visualizations and interactive demos execute automatically when the tab opens
+- **Regenerate Button** — Edited visualizations/demos can be refreshed in place without reloading the page
 - **Fixed Sidebar Layout** — 320px fixed sidebar with natural-scrolling main content; responsive overlay on mobile
 - **Knowledge Graph** — Deep-space physics simulation with Möbius-Klein topology, N-body gravity, quality-driven node sizing
 
@@ -149,7 +191,7 @@ When Phase A produces Lean files with errors (e.g., `sorry` usage), `knowledge_e
 
 ### Valid Domains (DOMAIN_DIRS)
 
-`Algebra`, `Applications`, `Bridges`, `Computation`, `Cryptography`, `EML`, `Geometry`, `Logic`, `MachineLearning`, `Novelty`, `Physics`, `Pythagorean`, `Shared`, `Tropical`
+`Algebra`, `Applications`, `Bridges`, `Combinatorics`, `Computation`, `Cryptography`, `EML`, `Geometry`, `Logic`, `MachineLearning`, `Novelty`, `NumberTheory`, `Physics`, `Probability`, `Pythagorean`, `Shared`, `Tropical`
 
 Novelty is a first-class domain. Speculative is **not** a valid Catalog domain — sub-domains map to real domains via `normalize_domain()`.
 
@@ -165,18 +207,31 @@ Novelty is a first-class domain. Speculative is **not** a valid Catalog domain �
 
 ## Adversarial Judging
 
-Phase A results are evaluated by an adversarial judge that checks for:
+Phase A results are evaluated by an adversarial judge (`quality_evaluator.py`) that checks for:
 - Trivial proofs (commutativity, wrapper theorems, simp-only)
 - Missing definitions or insight
 - Shallow results that don't advance the research frontier
+- Lint-level correctness of generated artifacts
 
-Low-scoring results may be salvaged (best theorems extracted) rather than discarded entirely.
+The judge returns a numeric score and a verdict. Low-scoring results are either salvaged (best theorems extracted) or discarded; high-scoring results proceed to Phase B packaging.
 
 ## GitHub Pages
 
 The website is served from the `docs/` directory on the `master` branch (branch-based deployment, no Actions minutes). After each tick, `docs/` is synced from `Catalog/Applications/Packages/`.
 
 GitHub Pages settings: **Source → Deploy from a branch → master → /docs**
+
+## The `catalog-lean` Branch
+
+`catalog-lean` is a generated branch containing only the `.lean` files from `Catalog/` plus the root `README.md`. It gives GitHub and lean tools a clean, dependency-free view of all formalized theorems without build artifacts, HTML, JSON, or media.
+
+The branch is rebuilt automatically by the pre-commit hook and pushed by the post-commit hook. If `origin/catalog-lean` was updated elsewhere, the hooks fetch the remote tip before pushing, and fall back to `--force` only as a last resort for this fully machine-generated branch.
+
+To install or refresh the hooks:
+
+```bash
+bash Aether/.aether_workspace/git-hooks/install-hooks.sh
+```
 
 ## Logging
 
