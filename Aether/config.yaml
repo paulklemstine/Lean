@@ -1,15 +1,11 @@
-# AETHER v3 Configuration
-# Pi-Agent Centered Autonomous Math Research Engine
-
 pi_agent:
-  model: "openai-large"
-  ollama_base_url: "http://127.0.0.1:11434"
-  # ollama_model: "kimi-k2.6:cloud"  # Local Ollama model (auto-detected if not set)
+  model: openai-large
+  ollama_base_url: http://127.0.0.1:11434
   timeout: 600
   pollinations:
     enabled: true
-    api_key_file: "/home/raver1975/lean/Aether/.aether_workspace/pollinations_api_key"
-    api_key_env: "POLLINATIONS_API_KEY"
+    api_key_file: /home/raver1975/lean/Aether/.aether_workspace/pollinations_api_key
+    api_key_env: POLLINATIONS_API_KEY
     hourly_allowance: 0.4
     estimated_pollen_per_call: 0.008
     estimated_pollen_per_pi_execution: 0.05
@@ -25,308 +21,383 @@ pi_agent:
     output_chars_per_pollen: 125000
   ollama_cloud:
     enabled: false
-    api_key_env: "OLLAMA_API_KEY"
-    # api_key_file: "/home/raver1975/lean/Aether/.aether_workspace/ollama_cloud_api_key"
-    model: "glm-5.1:cloud"
-    base_url: "https://ollama.com"
+    api_key_env: OLLAMA_API_KEY
+    model: glm-5.1:cloud
+    base_url: https://ollama.com
     timeout: 300
   max_catalog_references: 5
   max_lines_per_reference: 60
   temperature: 0.85
   top_p: 0.92
   num_predict: 4096
-  # Phase A prompt A/B weights. v15 is the stable baseline. Weights are
-  # sampled per cycle. Keep the baseline majority so regressions are bounded.
   phase_a_prompt_weights:
-    v15: 0.50
-    v16: 0.20
-    v16a: 0.10
-    v16b: 0.10
+    v15: 0.5
+    v16: 0.2
+    v16a: 0.1
+    v16b: 0.1
     v17: 0.05
     v18: 0.05
   research_modes:
-    - prove
-    - formalize
-    - counterexample
-    - sorry_fill
-    - discover
-
+  - prove
+  - formalize
+  - counterexample
+  - sorry_fill
+  - discover
 aristotle:
-  api_base_url: "https://aristotle.harmonic.fun/api/v1"
-  api_key: "${ARISTOTLE_API_KEY}"
+  api_base_url: https://aristotle.harmonic.fun/api/v1
+  api_key: ${ARISTOTLE_API_KEY}
   timeout_seconds: 7200
   polling_interval_seconds: 30
   max_retries: 3
   retry_backoff_base: 2.0
   concurrent_jobs: 10
   demo_mode: false
-
 catalog:
-  root_dir: "../Catalog"
-  db_path: "../Tools/output/catalog.json"
-  build_dir: "../../CatalogBuild"
-  lean_version: "v4.28.0"
-  mathlib_version: "v4.28.0"
+  root_dir: ../Catalog
+  db_path: ../Tools/output/catalog.json
+  build_dir: ../../CatalogBuild
+  lean_version: v4.28.0
+  mathlib_version: v4.28.0
   shared_threshold: 5
-
 output_organizer:
-  papers_dir: "Applications/Papers"
-  demos_dir: "Applications/Demos"
-  visuals_dir: "Applications/Visuals"
-  articles_dir: "Applications/Articles"
-  raw_output_dir: "ResearchOutput"
-  speculative_dir: "Speculative/AutoResearch"
+  papers_dir: Applications/Papers
+  demos_dir: Applications/Demos
+  visuals_dir: Applications/Visuals
+  articles_dir: Applications/Articles
+  raw_output_dir: ResearchOutput
+  speculative_dir: Speculative/AutoResearch
   require_pi_agent_classification: true
   max_sorry_count_for_direct_placement: 0
-
 archive:
-  root_dir: "../Archive"
+  root_dir: ../Archive
   enabled: true
-
 autoresearch:
   enabled: true
-  metric_name: "concept_quality"
-  metric_unit: ""
-  direction: "higher"
+  metric_name: concept_quality
+  metric_unit: ''
+  direction: higher
   max_retries: 3
-
 research:
   arcs:
-    - id: "gravitational_factoring"
-      name: "Gravitational Factoring"
-      description: "Using geometric/spacetime structures for integer factorization"
-      seed_domains: ["Pythagorean", "Geometry", "Algebra"]
-      frontier: "Tropical analogues of gravitational lenses"
-      target_sorry_reduction: 5
-      difficulty: "phd"
-
-    - id: "quantum_pythagoras"
-      name: "Quantum Pythagoras"
-      description: "Formalizing quantum computing on Berggren tree structures"
-      seed_domains: ["Pythagorean", "Cryptography", "Computation"]
-      frontier: "QDF (Quantum Diophantine Factoring)"
-      target_sorry_reduction: 3
-      difficulty: "phd"
-
-    - id: "tropical_langlands"
-      name: "Tropical Langlands"
-      description: "Tropical geometry meets representation theory"
-      seed_domains: ["Tropical", "Algebra", "Bridges"]
-      frontier: "Tropical automorphic forms"
-      target_sorry_reduction: 2
-      difficulty: "master"
-
-    - id: "neural_proof_mining"
-      name: "Neural Proof Mining"
-      description: "ML-guided theorem discovery"
-      seed_domains: ["MachineLearning", "Logic", "Computation"]
-      frontier: "RSIL adaptive distillation"
-      target_sorry_reduction: 4
-      difficulty: "phd"
-
-    - id: "temporal_computation"
-      name: "Temporal Computation"
-      description: "Time-travel logic and reversible computation"
-      seed_domains: ["Logic", "Computation", "Speculative"]
-      frontier: "OISCC oracle hierarchies"
-      target_sorry_reduction: 3
-      difficulty: "phd"
-
-    - id: "eml_cosmology"
-      name: "EML Cosmology"
-      description: "Emergent meta-language as universe model"
-      seed_domains: ["EML", "Physics", "Bridges"]
-      frontier: "Self-pairing in curved spacetime"
-      target_sorry_reduction: 2
-      difficulty: "master"
-
-    - id: "cryptographic_gravity"
-      name: "Cryptographic Gravity"
-      description: "Post-quantum crypto via geometric invariants"
-      seed_domains: ["Cryptography", "Geometry", "Pythagorean"]
-      frontier: "Lattice reduction in Berggren trees"
-      target_sorry_reduction: 3
-      difficulty: "phd"
-
-    - id: "speculative_scifi"
-      name: "Speculative Sci-Fi Mathematics"
-      description: "Formalizing science-fictional mathematical concepts"
-      seed_domains: ["Speculative", "Physics", "MachineLearning"]
-      frontier: "Formal models of hyperspace and alien computation"
-      target_sorry_reduction: 10
-      difficulty: "open_problem"
-
-    # Research arcs derived from FUTURE_RESEARCH.md findings (v3 cycle results)
-    - id: "niven_integral_completion"
-      name: "Niven Integral Completion"
-      description: "Complete Niven's proof of irrationality via integration-by-parts recurrence lemma"
-      seed_domains: ["Bridges", "Algebra", "Pythagorean"]
-      frontier: "Integration-by-parts integrality lemma for Niven's method"
-      target_sorry_reduction: 3
-      difficulty: "phd"
-
-    - id: "carmichael_composite"
-      name: "Carmichael's Theorem Composite Case"
-      description: "Prove Fibonacci primitive divisor theorem for composite indices via lifting-the-exponent"
-      seed_domains: ["Pythagorean", "Algebra", "Cryptography"]
-      frontier: "Lifting-the-exponent lemma for Fibonacci primitive divisors"
-      target_sorry_reduction: 2
-      difficulty: "phd"
-
-    - id: "tropical_langlands_gl2"
-      name: "Tropical Langlands GL₂"
-      description: "Formalize tropical Hecke algebra for GL₂ and prove trace formula equality"
-      seed_domains: ["Tropical", "Algebra", "Bridges"]
-      frontier: "Tropical Hecke operators and Satake isomorphism for GL₂"
-      target_sorry_reduction: 4
-      difficulty: "open_problem"
-
-    - id: "tropical_neural_robustness"
-      name: "Tropical Neural Certified Robustness"
-      description: "Prove certified robustness bounds for neural networks via tropical degree"
-      seed_domains: ["MachineLearning", "Tropical", "Bridges"]
-      frontier: "Tropical degree as certified L-infinity robustness certificate"
-      target_sorry_reduction: 3
-      difficulty: "phd"
-
-    - id: "dilithium_security"
-      name: "CRYSTALS-Dilithium Security Reduction"
-      description: "Formalize the security reduction skeleton for CRYSTALS-Dilithium post-quantum scheme"
-      seed_domains: ["Cryptography", "Computation", "Physics"]
-      frontier: "Module-SIS to Dilithium security reduction"
-      target_sorry_reduction: 3
-      difficulty: "phd"
-
-    - id: "berggren_factoring_optimized"
-      name: "Optimized Berggren Factoring"
-      description: "Improve Berggren tree factoring with birthday-paradox collision detection"
-      seed_domains: ["Pythagorean", "Cryptography", "Computation"]
-      frontier: "Sub-exponential factoring via Berggren tree collision search"
-      target_sorry_reduction: 3
-      difficulty: "master"
-
-    - id: "eml_universal_approximation"
-      name: "EML Universal Approximation"
-      description: "Prove universal approximation theorem for EML neural networks"
-      seed_domains: ["MachineLearning", "Bridges", "EML"]
-      frontier: "EML network density and universal approximation via Stone-Weierstrass"
-      target_sorry_reduction: 2
-      difficulty: "master"
-
-    - id: "spb_cryptographic_protocol"
-      name: "SPB Cryptographic Protocol Security"
-      description: "Formalize security analysis of SPB-based Diffie-Hellman key exchange"
-      seed_domains: ["Cryptography", "Pythagorean", "Bridges"]
-      frontier: "Discrete logarithm hardness in SPB group structures"
-      target_sorry_reduction: 2
-      difficulty: "phd"
-
-    - id: "idempotent_optimization_deep"
-      name: "Deep Idempotent Optimization"
-      description: "Extend tropical semiring optimization to policy iteration and value iteration convergence"
-      seed_domains: ["Tropical", "MachineLearning", "Bridges"]
-      frontier: "Convergence guarantees for tropical policy iteration"
-      target_sorry_reduction: 3
-      difficulty: "phd"
-
-    # === VISIONARY ARCS: Paradigm-opening, science-fiction-level mathematics ===
-    - id: "tropical_information_theory"
-      name: "Tropical Information Theory"
-      description: "Found a new field: tropical information theory. Define tropical entropy, tropical mutual information, and prove a tropical data processing inequality."
-      seed_domains: ["Tropical", "Bridges", "MachineLearning"]
-      frontier: "Tropical Shannon theorem: tropical mutual information bounds the tropical channel capacity"
-      target_sorry_reduction: 5
-      difficulty: "open_problem"
-
-    - id: "pythagorean_quantum_advantage"
-      name: "Pythagorean Quantum Advantage"
-      description: "Prove that Berggren-based Pythagorean gate sets achieve provable quantum advantage for Hamiltonian simulation problems."
-      seed_domains: ["Pythagorean", "Physics", "Cryptography"]
-      frontier: "Berggren tree depth O(n log n) vs arbitrary gate depth Omega(n^2)"
-      target_sorry_reduction: 3
-      difficulty: "open_problem"
-
-    - id: "eml_thermodynamic_computation"
-      name: "EML Thermodynamic Computation"
-      description: "Prove that EML closures achieve universal computation with provable depth bounds related to Kolmogorov complexity. Connect EML to statistical mechanics."
-      seed_domains: ["EML", "MachineLearning", "Physics"]
-      frontier: "EML depth O(K(f)/epsilon) for epsilon-approximation of computable functions"
-      target_sorry_reduction: 3
-      difficulty: "open_problem"
-
-    - id: "tropical_cryptography"
-      name: "Tropical Cryptographic Primitives"
-      description: "Construct and verify one-way functions based on tropical matrix multiplication hardness. Connect to post-quantum security."
-      seed_domains: ["Cryptography", "Tropical", "Computation"]
-      frontier: "Tropical matrix inversion is as hard as integer factorization"
-      target_sorry_reduction: 4
-      difficulty: "phd"
-
-    - id: "berggren_spectral_theory"
-      name: "Berggren Spectral Theory"
-      description: "Prove that the Berggren tree generates a spectral decomposition of SL(2,Z). Define the Berggren zeta function and prove its functional equation."
-      seed_domains: ["Pythagorean", "Algebra", "Bridges"]
-      frontier: "Berggren eigenvalue distribution converges to the Plancherel measure of SL(2,R)"
-      target_sorry_reduction: 3
-      difficulty: "phd"
-
-    - id: "non_archimedean_probability"
-      name: "Non-Archimedean Probability Theory"
-      description: "Lay the algebraic foundation for probability theory over the tropical semiring. Prove a tropical law of large numbers and tropical central limit theorem."
-      seed_domains: ["Tropical", "Bridges", "Logic"]
-      frontier: "Tropical law of large numbers: P_trop(|S_n/n - mu| > epsilon) -> -infinity"
-      target_sorry_reduction: 4
-      difficulty: "open_problem"
-
-    - id: "tropical_neural_compiler"
-      name: "Tropical Neural Network Compiler"
-      description: "Construct a verified compiler from ReLU networks to tropical polynomial representations with certified Lipschitz bounds."
-      seed_domains: ["MachineLearning", "Tropical", "Computation"]
-      frontier: "Verified compiler: ReLU -> tropical polynomial with O(size(net)) compilation time"
-      target_sorry_reduction: 3
-      difficulty: "phd"
-
-    - id: "eml_phase_transition"
-      name: "EML-Tropical Phase Transition"
-      description: "Prove that the Maslov dequantization parameter epsilon is a thermodynamic temperature, and that epsilon -> 0 is a genuine phase transition in the mathematical physics sense."
-      seed_domains: ["EML", "Physics", "Tropical"]
-      frontier: "Specific heat C(epsilon) diverges at epsilon_c determined by spectral gap"
-      target_sorry_reduction: 3
-      difficulty: "phd"
-
-  difficulty_levels: ["undergraduate", "graduate", "phd", "master", "open_problem", "discover"]
-  arc_rotation: "round_robin"
+  - id: gravitational_factoring
+    name: Gravitational Factoring
+    description: Using geometric/spacetime structures for integer factorization
+    seed_domains:
+    - Pythagorean
+    - Geometry
+    - Algebra
+    frontier: Tropical analogues of gravitational lenses
+    target_sorry_reduction: 5
+    difficulty: phd
+  - id: quantum_pythagoras
+    name: Quantum Pythagoras
+    description: Formalizing quantum computing on Berggren tree structures
+    seed_domains:
+    - Pythagorean
+    - Cryptography
+    - Computation
+    frontier: QDF (Quantum Diophantine Factoring)
+    target_sorry_reduction: 3
+    difficulty: phd
+  - id: tropical_langlands
+    name: Tropical Langlands
+    description: Tropical geometry meets representation theory
+    seed_domains:
+    - Tropical
+    - Algebra
+    - Bridges
+    frontier: Tropical automorphic forms
+    target_sorry_reduction: 2
+    difficulty: master
+  - id: neural_proof_mining
+    name: Neural Proof Mining
+    description: ML-guided theorem discovery
+    seed_domains:
+    - MachineLearning
+    - Logic
+    - Computation
+    frontier: RSIL adaptive distillation
+    target_sorry_reduction: 4
+    difficulty: phd
+  - id: temporal_computation
+    name: Temporal Computation
+    description: Time-travel logic and reversible computation
+    seed_domains:
+    - Logic
+    - Computation
+    - Speculative
+    frontier: OISCC oracle hierarchies
+    target_sorry_reduction: 3
+    difficulty: phd
+  - id: eml_cosmology
+    name: EML Cosmology
+    description: Emergent meta-language as universe model
+    seed_domains:
+    - EML
+    - Physics
+    - Bridges
+    frontier: Self-pairing in curved spacetime
+    target_sorry_reduction: 2
+    difficulty: master
+  - id: cryptographic_gravity
+    name: Cryptographic Gravity
+    description: Post-quantum crypto via geometric invariants
+    seed_domains:
+    - Cryptography
+    - Geometry
+    - Pythagorean
+    frontier: Lattice reduction in Berggren trees
+    target_sorry_reduction: 3
+    difficulty: phd
+  - id: speculative_scifi
+    name: Speculative Sci-Fi Mathematics
+    description: Formalizing science-fictional mathematical concepts
+    seed_domains:
+    - Speculative
+    - Physics
+    - MachineLearning
+    frontier: Formal models of hyperspace and alien computation
+    target_sorry_reduction: 10
+    difficulty: open_problem
+  - id: niven_integral_completion
+    name: Niven Integral Completion
+    description: Complete Niven's proof of irrationality via integration-by-parts
+      recurrence lemma
+    seed_domains:
+    - Bridges
+    - Algebra
+    - Pythagorean
+    frontier: Integration-by-parts integrality lemma for Niven's method
+    target_sorry_reduction: 3
+    difficulty: phd
+  - id: carmichael_composite
+    name: Carmichael's Theorem Composite Case
+    description: Prove Fibonacci primitive divisor theorem for composite indices via
+      lifting-the-exponent
+    seed_domains:
+    - Pythagorean
+    - Algebra
+    - Cryptography
+    frontier: Lifting-the-exponent lemma for Fibonacci primitive divisors
+    target_sorry_reduction: 2
+    difficulty: phd
+  - id: tropical_langlands_gl2
+    name: Tropical Langlands GL₂
+    description: Formalize tropical Hecke algebra for GL₂ and prove trace formula
+      equality
+    seed_domains:
+    - Tropical
+    - Algebra
+    - Bridges
+    frontier: Tropical Hecke operators and Satake isomorphism for GL₂
+    target_sorry_reduction: 4
+    difficulty: open_problem
+  - id: tropical_neural_robustness
+    name: Tropical Neural Certified Robustness
+    description: Prove certified robustness bounds for neural networks via tropical
+      degree
+    seed_domains:
+    - MachineLearning
+    - Tropical
+    - Bridges
+    frontier: Tropical degree as certified L-infinity robustness certificate
+    target_sorry_reduction: 3
+    difficulty: phd
+  - id: dilithium_security
+    name: CRYSTALS-Dilithium Security Reduction
+    description: Formalize the security reduction skeleton for CRYSTALS-Dilithium
+      post-quantum scheme
+    seed_domains:
+    - Cryptography
+    - Computation
+    - Physics
+    frontier: Module-SIS to Dilithium security reduction
+    target_sorry_reduction: 3
+    difficulty: phd
+  - id: berggren_factoring_optimized
+    name: Optimized Berggren Factoring
+    description: Improve Berggren tree factoring with birthday-paradox collision detection
+    seed_domains:
+    - Pythagorean
+    - Cryptography
+    - Computation
+    frontier: Sub-exponential factoring via Berggren tree collision search
+    target_sorry_reduction: 3
+    difficulty: master
+  - id: eml_universal_approximation
+    name: EML Universal Approximation
+    description: Prove universal approximation theorem for EML neural networks
+    seed_domains:
+    - MachineLearning
+    - Bridges
+    - EML
+    frontier: EML network density and universal approximation via Stone-Weierstrass
+    target_sorry_reduction: 2
+    difficulty: master
+  - id: spb_cryptographic_protocol
+    name: SPB Cryptographic Protocol Security
+    description: Formalize security analysis of SPB-based Diffie-Hellman key exchange
+    seed_domains:
+    - Cryptography
+    - Pythagorean
+    - Bridges
+    frontier: Discrete logarithm hardness in SPB group structures
+    target_sorry_reduction: 2
+    difficulty: phd
+  - id: idempotent_optimization_deep
+    name: Deep Idempotent Optimization
+    description: Extend tropical semiring optimization to policy iteration and value
+      iteration convergence
+    seed_domains:
+    - Tropical
+    - MachineLearning
+    - Bridges
+    frontier: Convergence guarantees for tropical policy iteration
+    target_sorry_reduction: 3
+    difficulty: phd
+  - id: tropical_information_theory
+    name: Tropical Information Theory
+    description: 'Found a new field: tropical information theory. Define tropical
+      entropy, tropical mutual information, and prove a tropical data processing inequality.'
+    seed_domains:
+    - Tropical
+    - Bridges
+    - MachineLearning
+    frontier: 'Tropical Shannon theorem: tropical mutual information bounds the tropical
+      channel capacity'
+    target_sorry_reduction: 5
+    difficulty: open_problem
+  - id: pythagorean_quantum_advantage
+    name: Pythagorean Quantum Advantage
+    description: Prove that Berggren-based Pythagorean gate sets achieve provable
+      quantum advantage for Hamiltonian simulation problems.
+    seed_domains:
+    - Pythagorean
+    - Physics
+    - Cryptography
+    frontier: Berggren tree depth O(n log n) vs arbitrary gate depth Omega(n^2)
+    target_sorry_reduction: 3
+    difficulty: open_problem
+  - id: eml_thermodynamic_computation
+    name: EML Thermodynamic Computation
+    description: Prove that EML closures achieve universal computation with provable
+      depth bounds related to Kolmogorov complexity. Connect EML to statistical mechanics.
+    seed_domains:
+    - EML
+    - MachineLearning
+    - Physics
+    frontier: EML depth O(K(f)/epsilon) for epsilon-approximation of computable functions
+    target_sorry_reduction: 3
+    difficulty: open_problem
+  - id: tropical_cryptography
+    name: Tropical Cryptographic Primitives
+    description: Construct and verify one-way functions based on tropical matrix multiplication
+      hardness. Connect to post-quantum security.
+    seed_domains:
+    - Cryptography
+    - Tropical
+    - Computation
+    frontier: Tropical matrix inversion is as hard as integer factorization
+    target_sorry_reduction: 4
+    difficulty: phd
+  - id: berggren_spectral_theory
+    name: Berggren Spectral Theory
+    description: Prove that the Berggren tree generates a spectral decomposition of
+      SL(2,Z). Define the Berggren zeta function and prove its functional equation.
+    seed_domains:
+    - Pythagorean
+    - Algebra
+    - Bridges
+    frontier: Berggren eigenvalue distribution converges to the Plancherel measure
+      of SL(2,R)
+    target_sorry_reduction: 3
+    difficulty: phd
+  - id: non_archimedean_probability
+    name: Non-Archimedean Probability Theory
+    description: Lay the algebraic foundation for probability theory over the tropical
+      semiring. Prove a tropical law of large numbers and tropical central limit theorem.
+    seed_domains:
+    - Tropical
+    - Bridges
+    - Logic
+    frontier: 'Tropical law of large numbers: P_trop(|S_n/n - mu| > epsilon) -> -infinity'
+    target_sorry_reduction: 4
+    difficulty: open_problem
+  - id: tropical_neural_compiler
+    name: Tropical Neural Network Compiler
+    description: Construct a verified compiler from ReLU networks to tropical polynomial
+      representations with certified Lipschitz bounds.
+    seed_domains:
+    - MachineLearning
+    - Tropical
+    - Computation
+    frontier: 'Verified compiler: ReLU -> tropical polynomial with O(size(net)) compilation
+      time'
+    target_sorry_reduction: 3
+    difficulty: phd
+  - id: eml_phase_transition
+    name: EML-Tropical Phase Transition
+    description: Prove that the Maslov dequantization parameter epsilon is a thermodynamic
+      temperature, and that epsilon -> 0 is a genuine phase transition in the mathematical
+      physics sense.
+    seed_domains:
+    - EML
+    - Physics
+    - Tropical
+    frontier: Specific heat C(epsilon) diverges at epsilon_c determined by spectral
+      gap
+    target_sorry_reduction: 3
+    difficulty: phd
+  difficulty_levels:
+  - undergraduate
+  - graduate
+  - phd
+  - master
+  - open_problem
+  - discover
+  arc_rotation: round_robin
   max_concurrent_cycles: 10
   cycle_interval_seconds: 300
   max_retries_per_cycle: 3
-
 telemetry:
-  log_dir: "./logs"
-  experiment_registry: "./logs/experiments.jsonl"
-  benchmark_file: "./logs/benchmarks.json"
-  report_output: "./logs/telemetry_report.html"
+  log_dir: ./logs
+  experiment_registry: ./logs/experiments.jsonl
+  benchmark_file: ./logs/benchmarks.json
+  report_output: ./logs/telemetry_report.html
   metrics_interval_seconds: 60
-
 arxiv:
   enabled: true
   queries:
-    Pythagorean: 'cat:math.NT'
-    Tropical: 'cat:math.CO OR all:"tropical" OR all:"min-plus" OR all:"idempotent semiring"'
-    Cryptography: 'cat:cs.CR OR all:"post-quantum" OR all:"lattice-based"'
-    Algebra: 'cat:math.RA OR cat:math.AC OR all:"semiring" OR all:"group theory"'
-    EML: 'all:"exponential" AND all:"logarithmic" OR all:"softplus" OR all:"activation function"'
-    MachineLearning: 'cat:cs.LG OR all:"certified robustness" OR all:"neural network verification"'
-    Physics: 'cat:math-ph OR all:"Hamiltonian" OR all:"quantum field"'
-    Logic: 'cat:cs.LO OR all:"formal verification" OR all:"proof assistant" OR all:"dependent type"'
-    Computation: 'cat:cs.CC OR all:"computational complexity" OR all:"computability"'
-    Bridges: 'all:"interdisciplinary" OR all:"cross-domain" OR all:"bridge theorem" OR all:"connection between"'
-    Speculative: 'all:"speculative" OR all:"hypothetical" OR all:"conjecture" OR all:"open problem"'
-    Geometry: 'cat:math.AG OR cat:math.DG OR all:"manifold" OR all:"algebraic geometry" OR all:"topology"'
-    Novelty: 'all:"surprising" OR all:"unexpected" OR all:"counterexample" OR all:"paradox"'
-    NumberTheory: 'cat:math.NT OR all:"Diophantine" OR all:"arithmetic" OR all:"zeta function"'
+    Pythagorean: cat:math.NT
+    Tropical: cat:math.CO OR all:"tropical" OR all:"min-plus" OR all:"idempotent semiring"
+    Cryptography: cat:cs.CR OR all:"post-quantum" OR all:"lattice-based"
+    Algebra: cat:math.RA OR cat:math.AC OR all:"semiring" OR all:"group theory"
+    EML: all:"exponential" AND all:"logarithmic" OR all:"softplus" OR all:"activation
+      function"
+    MachineLearning: cat:cs.LG OR all:"certified robustness" OR all:"neural network
+      verification"
+    Physics: cat:math-ph OR all:"Hamiltonian" OR all:"quantum field"
+    Logic: cat:cs.LO OR all:"formal verification" OR all:"proof assistant" OR all:"dependent
+      type"
+    Computation: cat:cs.CC OR all:"computational complexity" OR all:"computability"
+    Bridges: all:"interdisciplinary" OR all:"cross-domain" OR all:"bridge theorem"
+      OR all:"connection between"
+    Speculative: all:"speculative" OR all:"hypothetical" OR all:"conjecture" OR all:"open
+      problem"
+    Geometry: cat:math.AG OR cat:math.DG OR all:"manifold" OR all:"algebraic geometry"
+      OR all:"topology"
+    Novelty: all:"surprising" OR all:"unexpected" OR all:"counterexample" OR all:"paradox"
+    NumberTheory: cat:math.NT OR all:"Diophantine" OR all:"arithmetic" OR all:"zeta
+      function"
   rate_limit_seconds: 3
   max_paper_chars: 40000
-
 git:
   auto_push: true
-  commit_template: "AETHER v3 cycle #{cycle}: {concept_title}"
+  commit_template: 'AETHER v3 cycle #{cycle}: {concept_title}'
+features:
+  enable_threads: true
+  enable_specialized_critics: true
+  enable_thread_promise_critic: true
+  enable_abduction_loop: true
+  enable_external_signal: true
+  enable_computational_stage: true
