@@ -1,295 +1,437 @@
-# Topological Data Analysis of Theorem Networks: Citation Simplicial Complexes and Persistent Homology
+# Belnap's FOUR as the Minimal Paraconsistent Bilattice: Paraconsistency and the Product Representation $\mathbf{FOUR} \cong \mathbf{2}\odot\mathbf{2}$
 
 ## Abstract
 
-We develop a rigorous framework for studying the topological structure of mathematical theorem networks through the lens of simplicial homology. Given a citation graph G = (V, E) of mathematical theorems, we construct the *co-citation simplicial complex* K(G), a clique complex whose k-simplices are sets of k+1 theorems pairwise sharing a common citing theorem. We prove several structural results: (1) the **Euler-Poincaré theorem** for chain complexes with explicit dimension tracking, establishing that the alternating sum of Betti numbers equals the alternating sum of face counts; (2) the **strong Morse inequalities**, showing that alternating partial sums of Betti numbers are bounded by those of face counts, with the difference equal to the boundary dimension; (3) **polynomial growth bounds** β_k ≤ C(n, k+1) for Betti numbers of co-citation complexes on n theorems; (4) **filtration monotonicity and persistent stability** for citation filtrations; (5) a **paradigm shift detection theorem** bounding the number of strict increases in homological rank by the total rank change; and (6) a **cyclomatic complexity bridge** connecting the first Betti number to the graph-theoretic cycle rank. All results are formalized in Lean 4 with machine-verified proofs.
+Belnap's four-valued logic FOUR is the canonical formal model of reasoning under
+information that may be simultaneously *incomplete* and *inconsistent*. Its carrier
+is the set $\{N, F, T, B\}$ of epistemic states — *told nothing*, *told false*,
+*told true*, *told both* — equipped with two distinct lattice orders, the **truth
+order** $\le_t$ and the **knowledge (information) order** $\le_k$, together with a
+**negation** $\neg$ and a **conflation** $-$. This paper establishes, with fully
+mechanized proofs, two structural facts that together characterize FOUR as the
+smallest non-trivial paraconsistent bilattice.
 
-**Keywords**: Topological data analysis, persistent homology, simplicial complex, Betti numbers, citation networks, Morse inequalities, Euler-Poincaré theorem
+First, we prove **paraconsistency**: with the designated set $D = \{T, B\}$, the
+contradiction premise "$a$ is designated and $\neg a$ is designated" is
+*satisfiable* in FOUR (witnessed by $B$), yet does *not* entail an arbitrary
+conclusion. We contrast this sharply with the classical two-valued algebra, whose
+contradiction premise is *unsatisfiable*, making the principle of explosion
+vacuously valid. This pinpoints paraconsistency as exactly the gap between a
+satisfiable contradiction and a valid explosion.
+
+Second, we prove the **product representation** $\mathbf{FOUR} \cong \mathbf{2}\odot\mathbf{2}$
+(Ginsberg). The map $v \mapsto (\text{evidence-for}, \text{evidence-against}) \in
+\mathbf{Bool}\times\mathbf{Bool}$ is a bijection under which the knowledge order is the
+product order, the truth order is the *twisted* product order (first coordinate up,
+second coordinate down), the knowledge meet/join are componentwise $\wedge/\vee$,
+the truth meet/join are componentwise with the second coordinate twisted, negation
+is the coordinate swap, and conflation is swap-then-negate. Consequently FOUR has
+exactly $2^2 = 4$ elements and is the bilattice over the smallest non-trivial
+lattice $\mathbf{2}$. We close with minimality: FOUR has cardinality four and its two
+orders are genuinely two-dimensional (neither refines the other).
 
 ---
 
 ## 1. Introduction
 
-The structure of mathematical knowledge has long been studied through the lens of citation analysis. Classical approaches focus on graph-theoretic properties: degree distributions, clustering coefficients, community detection, and centrality measures. While these capture important one-dimensional structure, they miss the higher-dimensional relationships that arise when multiple theorems are cited together.
+### 1.1 The problem with explosion
 
-We propose a topological approach that captures these higher-order interactions. The key construction is the **co-citation simplicial complex**: given a citation graph where vertices are theorems and directed edges represent citations, we form the undirected co-citation graph (connecting theorems that share a common citing theorem) and then take its clique complex. This produces a simplicial complex whose topological invariants — Betti numbers, Euler characteristic, persistent homology — reveal structural features invisible to graph-theoretic analysis.
+Classical propositional logic validates *ex contradictione quodlibet*
+(explosion): for all sentences $\varphi, \psi$,
+$$\{\varphi, \neg\varphi\} \models \psi.$$
+A single contradiction in the premises licenses *every* conclusion. For a
+consistent deductive theory this is harmless. For an information system that
+aggregates data from independent, fallible, possibly disagreeing sources, it is
+fatal: a single inconsistent record would render every query trivially "true,"
+destroying all useful inference.
 
-### 1.1 Contributions
+Belnap (1977) proposed a logic — "How a computer should think" — designed
+precisely for this setting. Rather than asking whether a sentence is *true*, one
+tracks two independent pieces of evidence: whether one has been *told it is true*
+and whether one has been *told it is false*. The four combinations form the
+carrier of FOUR.
 
-Our main contributions are:
+### 1.2 Contributions
 
-1. **Formalization of citation simplicial complexes** with explicit face counting and Betti number tracking (Section 3).
-2. **Strong Morse inequalities** proved via a telescoping argument on chain complex dimensions, with the Euler-Poincaré theorem as a corollary (Section 4).
-3. **Polynomial Betti growth bounds** β_k ≤ C(n, k+1) for co-citation complexes (Section 5).
-4. **Persistent stability** under citation graph perturbation (Section 6).
-5. **Paradigm shift detection** via monotone rank increases, with a rigorous count bound (Section 7).
-6. **Cyclomatic complexity bridge** connecting β₁ to the graph-theoretic cycle rank (Section 8).
+We give a self-contained, mechanically verified development of FOUR establishing:
 
-All results are formalized in Lean 4 with complete, machine-verified proofs building on Mathlib.
+1. **(§3) Designation monotonicity.** The truth order is exactly the FDE
+   entailment relation: $a \le_t b$ implies designation is preserved from $a$ to
+   $b$ (Theorem 3.1).
+2. **(§4) Paraconsistency.** The contradiction premise is satisfiable
+   (Theorem 4.1) but does not explode (Theorem 4.2); the classical algebra's
+   premise is unsatisfiable (Theorem 4.3) and explosion holds vacuously
+   (Theorem 4.4).
+3. **(§5) Product representation.** $\mathbf{FOUR} \cong \mathbf{Bool}\times\mathbf{Bool}$ as a
+   bilattice, with explicit transport of both orders (Theorem 5.2) and all
+   operations (Theorem 5.3).
+4. **(§6) Minimality and two-dimensionality.** $|\mathbf{FOUR}| = 4$
+   (Theorem 6.1) and the two orders are mutually irreducible (Theorem 6.2).
 
-### 1.2 Related Work
-
-**Topological Data Analysis**: The foundational theory of persistent homology was developed by Edelsbrunner, Letscher, and Zomorodian (2002) and Carlsson and Zomorodian (2005). The stability theorem for persistence diagrams is due to Cohen-Steiner, Edelsbrunner, and Harer (2007).
-
-**Citation Network Analysis**: Bibliometric analysis using simplicial complexes has been explored by Patania, Petri, and Vaccarino (2017) and Sizemore et al. (2018) in the context of collaboration networks.
-
-**Formalization**: Our work builds on the Lean 4 formalizations in the Aether Catalog, particularly `Bridges/PersistentProofHomology.lean` (proof complexes and Betti certification) and `Physics/PersistentHomologicalQEC2.lean` (persistent Betti bounds).
-
-### 1.3 Catalog References
-
-This work extends and deepens several existing verified results:
-
-- `betti_number_length_certification` (Bridges/PersistentProofHomology.lean): We generalize from single-proof complexes to inter-theorem citation complexes.
-- `PersistentBetti.persistent_le_betti` (Physics/PersistentHomologicalQEC2.lean): We strengthen with explicit chain complex dimension tracking and prove the strong Morse inequalities.
-- `isTree_iff_connected_and_edgecount` (Bridges/LocalCyclePressure.lean): We bridge to the cycle pressure framework via the β₁ = m - n + c formula.
-- `regular_graph_edges` (Algebra/IharaZeta.lean): Our face counting framework connects to regular graph edge counting.
-
----
-
-## 2. Preliminaries
-
-### 2.1 Abstract Simplicial Complexes
-
-An **abstract simplicial complex** K on a vertex set V is a collection of finite subsets (faces) of V that is closed under taking subsets. The **dimension** of a face σ is |σ| - 1. The **f-vector** (f₀, f₁, ..., f_d) records the number of faces of each dimension.
-
-### 2.2 Simplicial Homology
-
-For a simplicial complex K over a field F, the **k-th chain group** C_k is the F-vector space with basis the k-faces of K. The **boundary maps** ∂_k: C_k → C_{k-1} satisfy ∂² = 0. The **k-th homology** is H_k = ker(∂_k) / im(∂_{k+1}), and the **k-th Betti number** is β_k = dim H_k.
-
-### 2.3 Chain Complex Dimension Relations
-
-For a chain complex, the following fundamental relations hold:
-- **Rank-nullity**: dim(C_k) = dim(Z_k) + dim(B_{k-1}) for k > 0, where Z_k = ker(∂_k) and B_k = im(∂_{k+1}).
-- **Betti decomposition**: β_k + dim(B_k) = dim(Z_k).
-- **Base case**: dim(C_0) = dim(Z_0) (the boundary map ∂_0 is zero).
+Every result below is proved by finite case analysis over a four-element carrier,
+and each statement is decidable; the formal proofs are discharged by exhaustive
+checking.
 
 ---
 
-## 3. Citation Simplicial Complexes
+## 2. Definitions
 
-### 3.1 Citation Graph
+### 2.1 The carrier and its values
 
-**Definition 3.1** (Citation Graph). A citation graph G = (V, E) on n theorems is a directed graph where V = {0, ..., n-1} are theorems and (i, j) ∈ E means theorem i cites theorem j. We require irreflexivity: (i, i) ∉ E.
+**Definition 2.1 (Belnap values).** The carrier of FOUR is the four-element type
+$$\mathbf{FOUR} = \{\, N,\ F,\ T,\ B \,\},$$
+with the intended epistemic readings:
 
-### 3.2 Co-Citation Relation
+| value | reading | evidence for | evidence against |
+|:-----:|:--------|:------------:|:----------------:|
+| $N$ | told **N**othing (gap) | no | no |
+| $F$ | told **F**alse | no | yes |
+| $T$ | told **T**rue | yes | no |
+| $B$ | told **B**oth (glut) | yes | yes |
 
-**Definition 3.2** (Co-Citation). Theorems i and j are **co-cited** if there exists a theorem k that cites both: ∃k, (k,i) ∈ E ∧ (k,j) ∈ E.
+### 2.2 The two orders
 
-### 3.3 Co-Citation Complex
+**Definition 2.2 (Truth order $\le_t$).** The truth order ranks values by *how
+true* they are. Its Hasse diagram is the chain-with-diamond
+$$F \ \le_t\ N \ \le_t\ T, \qquad F \ \le_t\ B \ \le_t\ T,$$
+with $N$ and $B$ incomparable. Thus $F$ is the bottom, $T$ the top, and $N, B$ the
+two incomparable midpoints. Equipped with $\le_t$, FOUR is a lattice; its meet and
+join are the **truth conjunction** $\sqcap_t$ and **truth disjunction** $\sqcup_t$
+(the FDE/De Morgan operations).
 
-**Definition 3.3** (Co-Citation Complex). The co-citation complex K(G) is the clique complex of the co-citation graph: a set S ⊆ V is a face of K(G) if and only if every pair in S is co-cited.
+**Definition 2.3 (Knowledge order $\le_k$).** The knowledge (information) order
+ranks values by *how much one has been told*. Its Hasse diagram is the dual
+diamond
+$$N \ \le_k\ F \ \le_k\ B, \qquad N \ \le_k\ T \ \le_k\ B,$$
+with $F$ and $T$ incomparable. Thus $N$ is the bottom (no information), $B$ the top
+(maximal, contradictory information), and $F, T$ the two incomparable midpoints.
+Its meet and join are the **knowledge meet** $\otimes_k$ (consensus: keep only
+information both inputs agree on) and **knowledge join** $\oplus_k$ (gullible
+combination: accept all information from either input).
 
-**Property 3.4** (Face Bound). The number of k-faces satisfies f_k ≤ C(n, k+1), since each k-face corresponds to a (k+1)-element subset of n vertices.
+These two orders share the same carrier but are rotated $90^\circ$ relative to one
+another; the structure $(\mathbf{FOUR}, \le_t, \le_k)$ is the founding example of a
+**bilattice** (Ginsberg).
 
-### 3.4 Filtration
+### 2.3 The involutions
 
-**Definition 3.5** (Citation Filtration). The citation filtration is a family {K_t}_{t≥0} where K_t includes edge (i,j) only if the co-citation count exceeds threshold t. The key property is **monotonicity**: t₂ ≤ t₁ implies K_{t₁} ⊆ K_{t₂}.
+**Definition 2.4 (Negation $\neg$).** Negation reverses the truth order while
+preserving the knowledge order. On values:
+$$\neg T = F,\quad \neg F = T,\quad \neg N = N,\quad \neg B = B.$$
+It exchanges evidence-for with evidence-against. $N$ and $B$ are fixed points.
 
----
+**Definition 2.5 (Conflation $-$).** Conflation reverses the knowledge order while
+preserving the truth order:
+$$-N = B,\quad -B = N,\quad -T = T,\quad -F = F.$$
+$T$ and $F$ are its fixed points. Conflation is the knowledge-order dual of
+negation.
 
-## 4. Morse Inequalities and Euler-Poincaré Theorem
+### 2.4 Designation
 
-### 4.1 Chain Complex Data
+**Definition 2.6 (Designated values).** A value is **designated** (assertible)
+when there is evidence *for* the sentence, irrespective of evidence against:
+$$D = \{\, a : \mathbf{FOUR} \mid a = T \ \lor\ a = B \,\} = \{T, B\}.$$
+A valuation makes a sentence assertible exactly when its value lies in $D$.
+Designation is decidable.
 
-We axiomatize the chain complex by tracking dimensions explicitly:
+### 2.5 The classical comparison algebra
 
-```
-structure ChainComplexData where
-  dim : ℕ
-  chainDim : ℕ → ℕ        -- f_k
-  cycleDim : ℕ → ℕ        -- dim(Z_k)
-  boundaryDim : ℕ → ℕ     -- dim(B_k)
-  bettiNum : ℕ → ℕ        -- β_k
-  -- Axioms:
-  cycle_le_chain : ∀ k, cycleDim k ≤ chainDim k
-  boundary_le_cycle : ∀ k, boundaryDim k ≤ cycleDim k
-  betti_eq : ∀ k, bettiNum k + boundaryDim k = cycleDim k
-  rank_nullity : ∀ k, 0 < k → chainDim k = cycleDim k + boundaryDim (k - 1)
-  base_case : chainDim 0 = cycleDim 0
-  top_boundary : boundaryDim dim = 0
-```
-
-### 4.2 Key Lemmas
-
-**Lemma 4.1** (Chain-Betti Difference at k=0).
-```
-chainDim 0 - bettiNum 0 = boundaryDim 0
-```
-*Proof.* From base_case and betti_eq at k=0. ∎
-
-**Lemma 4.2** (Chain-Betti Difference at k>0).
-```
-chainDim k - bettiNum k = boundaryDim (k-1) + boundaryDim k
-```
-*Proof.* From rank_nullity and betti_eq at k. ∎
-
-### 4.3 Strong Morse Inequalities
-
-**Theorem 4.3** (Strong Morse Inequalities). For all k ≤ dim:
-```
-Σ_{i=0}^k (-1)^{k-i} β_i ≤ Σ_{i=0}^k (-1)^{k-i} f_i
-```
-
-*Proof sketch.* Define d_i = f_i - β_i. By Lemmas 4.1 and 4.2:
-- d_0 = b_0
-- d_i = b_{i-1} + b_i for i > 0
-
-The alternating sum Σ_{i=0}^k (-1)^{k-i} d_i telescopes: consecutive boundary terms cancel, leaving boundaryDim(k) ≥ 0. This is formalized as an inductive argument in Lean. ∎
-
-### 4.4 Euler-Poincaré Theorem
-
-**Theorem 4.4** (Euler-Poincaré). The alternating sum of Betti numbers equals the alternating sum of face counts:
-```
-Σ_{i=0}^{dim} (-1)^i β_i = Σ_{i=0}^{dim} (-1)^i f_i
-```
-
-*Proof sketch.* Apply the same telescoping as Theorem 4.3 at k = dim. The residual term is (-1)^dim · boundaryDim(dim) = 0 by top_boundary. ∎
+**Definition 2.7 (Two-valued algebra).** The classical algebra has carrier
+$\mathbf{Bool} = \{\mathit{true}, \mathit{false}\}$, negation $b \mapsto \neg b$ (Boolean
+complement), and the single designated value $\mathit{true}$.
 
 ---
 
-## 5. Betti Number Growth Bounds
+## 3. Designation respects the truth order
 
-**Theorem 5.1** (Polynomial Growth). For any chain complex with chainDim k ≤ C(n, k+1):
-```
-β_k ≤ C(n, k+1)
-```
+**Theorem 3.1 (Truth order is FDE entailment).** For all $a, b \in \mathbf{FOUR}$,
+$$a \le_t b \ \Longrightarrow\ (a \in D \Rightarrow b \in D).$$
 
-*Proof.* Immediate from weak Morse (β_k ≤ f_k) and the face bound. ∎
+*Statement in words.* Moving upward in the truth order can only turn a
+non-designated value designated, never the reverse; designation is upward-closed
+in $\le_t$.
 
-This confirms that Betti numbers grow at most polynomially: β_k = O(n^{k+1}), as conjectured in the research direction. The bound is tight for the complete co-citation graph.
+*Proof sketch.* The carrier is finite and $\le_t$ is decidable, so the claim is a
+finite conjunction over the $16$ ordered pairs $(a, b)$. The only designated
+values are $T$ and $B$. The relevant cases are those $a \in \{T, B\}$ with
+$a \le_t b$: from $T$ (the top) the only $b$ with $T \le_t b$ is $b = T$; from $B$
+the values $b$ with $B \le_t b$ are $B$ and $T$. In every such case $b \in D$. All
+other cases have a non-designated antecedent and are vacuous. $\square$
 
-**Remark 5.2.** The conjectured growth β_k ≈ n^{k+1} should be understood as an *upper envelope*. For sparse citation networks with average degree d, the actual growth depends on the density of co-citations. Our formal bound β_k ≤ C(n, k+1) provides the rigorous ceiling.
-
----
-
-## 6. Persistent Stability
-
-### 6.1 Persistence Module
-
-A persistence module M associates to each filtration level t a vector space V_t with rank rankAt(t), and to each pair (s,t) with t ≤ s a linear map with persistent rank persistRank(s,t).
-
-### 6.2 Stability Results
-
-**Theorem 6.1** (Persistence-Rank Bounds).
-```
-persistRank(s,t) ≤ min(rankAt(s), rankAt(t))
-```
-
-**Theorem 6.2** (Interleaving Stability). If M₁ is δ-interleaved with M₂:
-```
-M₁.persistRank(s,t) ≤ M₂.rankAt(t + δ) + δ
-```
-
-*Proof.* Chain the persistence bound with the interleaving condition. ∎
+This theorem certifies that $D = \{T, B\}$ is the correct ("at least true")
+designated set: it is exactly the up-set of $\le_t$ generated by $T$.
 
 ---
 
-## 7. Paradigm Shift Detection
+## 4. Paraconsistency (non-explosion)
 
-**Definition 7.1.** A *paradigm shift* at level t is a strict increase: rankAt(t) < rankAt(t+1).
+The defining feature of FOUR is that it tolerates contradictions without
+trivializing. We make this precise by four theorems that isolate *why*.
 
-**Theorem 7.1** (Paradigm Shift Count Bound). For a monotone persistence module:
-```
-#{shifts in [0,T)} ≤ rankAt(T+1) - rankAt(0)
-```
+**Theorem 4.1 (Contradiction premise is satisfiable).**
+$$\exists\, a \in \mathbf{FOUR}.\ \ a \in D \ \wedge\ \neg a \in D.$$
 
-*Proof sketch.* Each shift contributes at least 1 to the total rank increase. Since shifts form a subset of [0,T) where strict increases occur, and the sum of (rank(t+1) - rank(t)) over shifts is at most the total rank increase rank(T+1) - rank(0), the bound follows by telescoping. ∎
+*Proof sketch.* Take $a = B$. Then $B \in D$, and $\neg B = B \in D$. Witnessed by
+a single value; verified by computation. $\square$
 
----
+The glut value $B$ is designated *and* its negation $B$ is designated: a genuine,
+live contradiction exists inside the algebra.
 
-## 8. Cyclomatic Complexity Bridge
+**Theorem 4.2 (Paraconsistency / non-explosion).** FOUR is *not* explosive:
+$$\neg\,\Big(\ \forall\, a, q \in \mathbf{FOUR}.\ \ a \in D \ \wedge\ \neg a \in D \ \Rightarrow\ q \in D\ \Big).$$
 
-### 8.1 Graph Betti Number Formula
+*Proof sketch.* Instantiate the universally quantified $a$ at the witness $B$ from
+Theorem 4.1 (so the premises $B \in D$ and $\neg B = B \in D$ hold) and $q$ at $F$.
+Since $F \notin D$, the conclusion $q \in D$ fails. Hence the universal statement
+is false; explosion does not hold. By finiteness the negation is decidable and the
+counterexample $(a, q) = (B, F)$ is found by exhaustive search. $\square$
 
-**Theorem 8.1.** For a 1-dimensional co-citation complex (graph):
-```
-β₁ = f₁ - f₀ + β₀
-```
+**Theorem 4.3 (Classical contradiction premise is unsatisfiable).**
+$$\neg\,\exists\, b \in \mathbf{Bool}.\ \ b = \mathit{true} \ \wedge\ (\neg b) = \mathit{true}.$$
 
-*Proof.* From Euler-Poincaré at dim = 1. ∎
+*Proof sketch.* A two-case check: if $b = \mathit{true}$ then $\neg b = \mathit{false}
+\ne \mathit{true}$; if $b = \mathit{false}$ then $b \ne \mathit{true}$. No Boolean is
+designated together with its complement. $\square$
 
-### 8.2 Connected Network Complexity
+**Theorem 4.4 (Classical explosion holds vacuously).**
+$$\forall\, b, q \in \mathbf{Bool}.\ \ b = \mathit{true} \ \wedge\ (\neg b) = \mathit{true} \ \Rightarrow\ q = \mathit{true}.$$
 
-**Theorem 8.2.** For a connected citation graph:
-```
-β₁ = edges - vertices + 1
-```
+*Proof sketch.* The conjoined premise $b = \mathit{true} \wedge \neg b = \mathit{true}$
+is never satisfiable (Theorem 4.3), so the implication is vacuously true for every
+$q$. Verified by exhausting the four pairs $(b, q)$. $\square$
 
-This is precisely McCabe's cyclomatic complexity from software engineering.
+### 4.1 Discussion: where paraconsistency lives
 
-### 8.3 Bridge to Cycle Pressure
+Theorems 4.1–4.4 together expose the precise mechanism of paraconsistency. In the
+classical algebra explosion is *valid*, but only because its antecedent — the
+contradiction premise — is *unsatisfiable* (Theorem 4.3); the explosive
+implication is true for the trivial, vacuous reason (Theorem 4.4). Classical logic
+does not *resist* contradiction; it *forbids* it, and inherits an explosive rule
+it never needs to apply.
 
-**Theorem 8.3.** For a connected citation graph, β₁ > 0 if and only if the number of edges exceeds n - 1 (the graph has more edges than a spanning tree).
-
-This connects to the cycle pressure framework of `LocalCyclePressure.lean`: cycle pressure is positive if and only if the first Betti number is positive.
-
----
-
-## 9. PEGB Analysis
-
-### Theorem: Strong Morse Inequalities (Main Result)
-
-- **Proof**: Complete Lean 4 proof via inductive telescoping of chain-betti differences.
-- **Example**: For a citation complex with f = (10, 45, 120), the strong Morse inequalities constrain: β₀ ≤ 10, β₀ - β₁ ≤ 10 - 45 = -35, so β₁ ≥ β₀ + 35 ≥ 36.
-- **Generalization**: The proof works for any chain complex satisfying our axioms, not just simplicial homology. This extends to cellular homology, CW-complexes, and persistent homology modules.
-- **Boundary**: The inequalities become equalities when the chain complex is acyclic (all boundary maps are surjective). They break down for non-chain-complex data where rank-nullity fails.
-
-### Theorem: Euler-Poincaré
-
-- **Proof**: Corollary of the strong Morse telescoping at k = dim.
-- **Example**: A citation complex with 20 vertices, 190 edges, 1140 triangles has χ = 20 - 190 + 1140 = 970.
-- **Generalization**: Holds for any finite CW-complex. The natural next level is the Euler characteristic for infinite complexes via Euler-Poincaré series.
-- **Boundary**: Requires finiteness (bounded dimension). For infinite-dimensional complexes, the alternating sum may diverge.
-
-### Theorem: Polynomial Growth Bound
-
-- **Proof**: Composition of weak Morse and binomial face bound.
-- **Example**: For n = 100 theorems, β_2 ≤ C(100, 3) = 161,700.
-- **Generalization**: For d-regular co-citation graphs, tighter bounds using Turán-type results.
-- **Boundary**: The bound is achieved only for the complete co-citation graph; real networks are much sparser.
+FOUR makes the opposite choice. Its contradiction premise *is* satisfiable
+(Theorem 4.1) — the value $B$ realizes it — and precisely because the antecedent
+can be true, the implication has empirical content, and that content is *false*
+(Theorem 4.2). Paraconsistency is therefore exactly:
+$$\textbf{the gap between a \emph{satisfiable} contradiction premise and a \emph{valid} explosion.}$$
+This gap opens at one structural location: a value that is designated and whose
+negation is also designated. In FOUR that location is the fixed point $B$ of
+negation lying in $D$. In $\mathbf{Bool}$ no such fixed point exists, the gap snaps shut,
+and explosion rushes in. This also explains why the fourth value $N$ is *forced*:
+$N$ is the knowledge-order bottom dual to the top $B$ (Definition 2.3), and one
+cannot have the glut without its dual gap in a bilattice.
 
 ---
 
-## 10. Discussion and Future Work
+## 5. The product representation $\mathbf{FOUR} \cong \mathbf{2}\odot\mathbf{2}$
 
-Our formalization provides a rigorous foundation for applying topological data analysis to the structure of mathematical knowledge. The key insight is that the co-citation complex captures higher-order relationships invisible to graph-theoretic analysis, and its topological invariants are governed by the classical machinery of simplicial homology.
+We now realize FOUR as the bilattice product of the two-element lattice with
+itself. The two Boolean coordinates are, respectively, *evidence-for* and
+*evidence-against*.
 
-Several directions remain open:
-1. **Computational persistent homology** on real citation databases (arXiv, MathSciNet).
-2. **Spectral analysis** of the combinatorial Laplacian of citation complexes.
-3. **Information-theoretic bounds** on Betti numbers from citation entropy.
-4. **Dynamic persistent homology** tracking the evolution of mathematical knowledge over time.
+**Definition 5.1 (Representation map).** Define $\tau : \mathbf{FOUR} \to
+\mathbf{Bool}\times\mathbf{Bool}$ by
+$$\tau(N) = (\mathit{ff},\mathit{ff}),\quad \tau(F) = (\mathit{ff},\mathit{tt}),\quad \tau(T) = (\mathit{tt},\mathit{ff}),\quad \tau(B) = (\mathit{tt},\mathit{tt}),$$
+with inverse $\sigma : \mathbf{Bool}\times\mathbf{Bool} \to \mathbf{FOUR}$ given by
+$\sigma(\mathit{ff},\mathit{ff}) = N$, $\sigma(\mathit{ff},\mathit{tt}) = F$,
+$\sigma(\mathit{tt},\mathit{ff}) = T$, $\sigma(\mathit{tt},\mathit{tt}) = B$. Here the
+first coordinate records evidence-for and the second records evidence-against.
+
+**Theorem 5.1 (Bijection; cardinality).** $\sigma \circ \tau = \mathrm{id}_{\mathbf{FOUR}}$
+and $\tau \circ \sigma = \mathrm{id}_{\mathbf{Bool}\times\mathbf{Bool}}$. Hence $\tau$ is a
+bijection and $|\mathbf{FOUR}| = |\mathbf{Bool}\times\mathbf{Bool}| = 2^2 = 4$.
+
+*Proof sketch.* Both composites are the identity on a four- (resp. four-) element
+domain; check all four inputs in each direction. The two round-trip tables agree
+with the identity. $\square$
+
+This packages as an equivalence of types $e : \mathbf{FOUR} \simeq \mathbf{Bool}\times\mathbf{Bool}$
+with $e = \tau$ and $e^{-1} = \sigma$.
+
+**Theorem 5.2 (Transport of the two orders).** For all $a, b \in \mathbf{FOUR}$, writing
+$\tau(a) = (a_1, a_2)$ and $\tau(b) = (b_1, b_2)$:
+$$
+\begin{aligned}
+a \le_k b &\iff a_1 \le b_1 \ \wedge\ a_2 \le b_2 &&\text{(product order),}\\
+a \le_t b &\iff a_1 \le b_1 \ \wedge\ b_2 \le a_2 &&\text{(twisted product order).}
+\end{aligned}
+$$
+Here $\le$ on $\mathbf{Bool}$ is $\mathit{ff} \le \mathit{tt}$.
+
+*Proof sketch.* Each biconditional is a finite conjunction over the $16$ pairs
+$(a,b)$, decidable and checked exhaustively. The knowledge order is *monotone* in
+both coordinates: more evidence (for or against) means more information. The truth
+order is *monotone in evidence-for but antitone in evidence-against*: a value is
+"more true" when its for-evidence rises and its against-evidence falls. This
+antitone second coordinate is the *twist* that distinguishes the two orders. $\square$
+
+**Theorem 5.3 (Transport of all operations).** For all $a, b \in \mathbf{FOUR}$, with
+$\tau(a) = (a_1,a_2)$, $\tau(b) = (b_1,b_2)$:
+$$
+\begin{aligned}
+\tau(a \otimes_k b) &= (a_1 \wedge b_1,\ a_2 \wedge b_2), &\quad \text{(knowledge meet)}\\
+\tau(a \oplus_k b) &= (a_1 \vee b_1,\ a_2 \vee b_2), &\quad \text{(knowledge join)}\\
+\tau(a \sqcap_t b) &= (a_1 \wedge b_1,\ a_2 \vee b_2), &\quad \text{(truth meet)}\\
+\tau(a \sqcup_t b) &= (a_1 \vee b_1,\ a_2 \wedge b_2), &\quad \text{(truth join)}\\
+\tau(\neg a) &= (a_2,\ a_1), &\quad \text{(negation: swap)}\\
+\tau(-\,a) &= (\neg a_2,\ \neg a_1). &\quad \text{(conflation: swap-then-negate)}
+\end{aligned}
+$$
+Here $\wedge,\vee,\neg$ on the right are Boolean conjunction, disjunction, and
+complement.
+
+*Proof sketch.* For the binary operations, each identity is a conjunction over the
+$16$ pairs; for the unary involutions, over the $4$ values. All are decidable and
+checked exhaustively. Conceptually: the knowledge operations act *coordinatewise*
+(pooling for- and against-evidence independently); the truth operations act
+coordinatewise *with the second coordinate twisted* (truth-conjunction
+accumulates against-evidence by $\vee$, truth-disjunction discards it by $\wedge$);
+negation *swaps* the two evidence channels; and conflation is the composite
+swap-then-complement. These six identities are exactly the defining property of
+the product bilattice $\mathbf{2}\odot\mathbf{2}$. $\square$
+
+**Remark (a corrected guess).** A tempting but *false* guess is that conflation is
+"componentwise negation," $\tau(-a) = (\neg a_1, \neg a_2)$. The correct law is
+swap-then-negate, $\tau(-a) = (\neg a_2, \neg a_1)$. For instance $-N = B$ requires
+$\tau(-N) = (\mathit{tt},\mathit{tt})$, which the swap-then-negate formula yields from
+$\tau(N) = (\mathit{ff},\mathit{ff})$, while componentwise negation would also give
+$(\mathit{tt},\mathit{tt})$ here — the two formulas disagree precisely on the
+asymmetric values $T, F$, where $-T = T$ forces a swap. The exhaustive check guards
+against exactly this kind of table error.
+
+### 5.1 Discussion: why $2\odot2$ explains everything
+
+The product representation is not a coincidence; it is the *reason* FOUR has the
+shape it does. Asking two independent yes/no questions ("evidence for?",
+"evidence against?") is literally the construction of $\mathbf{Bool}\times\mathbf{Bool}$. The two
+orders are the two natural ways to compare pairs — the straight product order and
+the twisted one. The four values are the four pairs. The involutions are the two
+natural bit-symmetries (swap; swap-and-flip). Everything follows mechanically from
+"ask the truth question twice."
 
 ---
 
-## References
+## 6. Minimality and genuine two-dimensionality
 
-1. Edelsbrunner, H. and Harer, J. *Computational Topology: An Introduction*. American Mathematical Society, 2010.
-2. Carlsson, G. *Topology and Data*. Bulletin of the AMS, 46(2):255-308, 2009.
-3. Cohen-Steiner, D., Edelsbrunner, H., and Harer, J. *Stability of Persistence Diagrams*. Discrete & Computational Geometry, 37(1):103-120, 2007.
-4. Horak, D. and Jost, J. *Spectra of Combinatorial Laplace Operators on Simplicial Complexes*. Advances in Mathematics, 244:303-336, 2013.
-5. Patania, A., Petri, G., and Vaccarino, F. *The Shape of Collaborations*. EPJ Data Science, 6(1):18, 2017.
-6. McCabe, T.J. *A Complexity Measure*. IEEE Transactions on Software Engineering, SE-2(4):308-320, 1976.
+**Theorem 6.1 (Cardinality).** $|\mathbf{FOUR}| = 4$.
+
+*Proof sketch.* The carrier is the explicit four-element enumeration
+$\{N, F, T, B\}$; counting gives $4$. $\square$
+
+**Theorem 6.2 (Two orders are genuinely two-dimensional).**
+$$\big(\exists\, a, b.\ a \le_t b \ \wedge\ a \not\le_k b\big) \quad \wedge \quad \big(\exists\, a, b.\ a \le_k b \ \wedge\ a \not\le_t b\big).$$
+
+*Proof sketch.* Each order contains a strict relation absent from the other.
+For the first conjunct, take $a = F$, $b = T$: then $F \le_t T$ (F is the
+truth-bottom, T the truth-top) but $F \not\le_k T$ ($F$ and $T$ are
+knowledge-incomparable). For the second, take $a = N$, $b = T$: then $N \le_k T$
+($N$ is the knowledge-bottom) but $N \not\le_t T$ — indeed $N \le_t T$ *does* hold,
+so a cleaner witness is $a = N$, $b = F$: $N \le_k F$ holds while $N \le_t F$ fails
+($N$ and $F$ have $F \le_t N$, the reverse). Either way neither order refines the
+other; verified by exhaustive search over pairs. $\square$
+
+**Corollary 6.3 (Minimality).** FOUR is the *smallest* non-trivial paraconsistent
+bilattice. Paraconsistency requires a designated value $a$ with $\neg a$ also
+designated (a negation fixed point inside $D$); by the bilattice duality such a
+glut top $B$ forces a dual gap bottom $N$; and the two classical values $T, F$ are
+needed to recover ordinary reasoning on clean data. Hence at least four values are
+required, and by Theorem 5.1 FOUR attains the bound: it is the bilattice
+$\mathbf{2}\odot\mathbf{2}$ over the smallest non-trivial lattice $\mathbf{2}$.
 
 ---
 
-## Appendix: Lean 4 Formalization Summary
+## 7. Algorithms
 
-| Theorem | File | Status |
-|---------|------|--------|
-| Euler-Poincaré (FaceCountedComplex) | Defs.lean | ✓ Proved |
-| Graph β₁ formula | Defs.lean | ✓ Proved |
-| Network complexity formula | Defs.lean | ✓ Proved |
-| Clique complex face bound | Defs.lean | ✓ Proved |
-| Weak Morse inequality | Theorems.lean | ✓ Proved |
-| Strong Morse inequality | Theorems.lean | ✓ Proved |
-| Euler-Poincaré (ChainComplexData) | Theorems.lean | ✓ Proved |
-| Interleaving stability | Theorems.lean | ✓ Proved |
-| Paradigm shift bound | Theorems.lean | ✓ Proved |
-| Cycle pressure ↔ β₁ > 0 | Theorems.lean | ✓ Proved |
-| Connected cycle iff | Theorems.lean | ✓ Proved |
-| Polynomial growth bound | Theorems.lean | ✓ Proved |
-| Sparse Betti bound | Theorems.lean | ✓ Proved |
-| Persistent rank bounds | Theorems.lean | ✓ Proved |
+The structure of FOUR yields immediate, constant-time algorithms once values are
+encoded as bit-pairs $(\text{for}, \text{against})$.
 
-Total: 14 theorems, 0 sorries.
+**Algorithm 7.1 (Bit-pair evaluation of FOUR operations).** Encode each value as a
+pair of bits via $\tau$. Then every operation is a constant-time bitwise formula
+(Theorem 5.3): knowledge meet/join are coordinatewise AND/OR; truth meet/join are
+coordinatewise with the against-bit twisted; negation swaps the bits; conflation
+swaps and complements. Designation is `for-bit = 1`. Order tests are two Boolean
+comparisons (Theorem 5.2). This makes a full FDE/bilattice evaluator run in $O(1)$
+per node and $O(|\varphi|)$ per formula.
+
+**Algorithm 7.2 (Paraconsistent entailment check).** To decide whether a finite set
+$\Gamma$ of FOUR-valued premises entails a conclusion $\psi$ under designation
+($\Gamma \models_D \psi$), enumerate all valuations of the (finitely many) atoms
+into $\{N,F,T,B\}$; for each valuation where every premise in $\Gamma$ is
+designated, check that $\psi$ is designated. Because the contradiction premise is
+satisfiable but non-explosive (§4), this check does *not* collapse to triviality
+in the presence of inconsistent premises — exactly the desired paraconsistent
+behavior.
+
+---
+
+## 8. Applications
+
+- **Inconsistency-tolerant databases.** Records that merge conflicting sources can
+  carry the value $B$ ("told both") and $N$ ("told nothing") as first-class
+  states, so a single contradictory tuple does not make every query true.
+- **Multi-source/sensor fusion.** The knowledge join $\oplus_k$ models gullible
+  pooling (accept all reports), the knowledge meet $\otimes_k$ models consensus
+  (keep only agreed information); the truth operations evaluate logical queries
+  over the fused state.
+- **Logic programming with negation.** Bilattice-valued semantics (Fitting)
+  generalize the well-founded and stable semantics; FOUR is the base case.
+- **Trust and reputation systems.** Independent for/against evidence channels map
+  directly onto the two coordinates of $\mathbf{2}\odot\mathbf{2}$.
+
+---
+
+## 9. Related work
+
+FOUR originates with Belnap (1977) and Dunn's first-degree entailment (FDE).
+Ginsberg (1988) introduced bilattices and the product construction
+$\mathbf{L}_1 \odot \mathbf{L}_2$; Fitting developed bilattice semantics for logic
+programming. Arieli and Avron studied logical bilattices and reasoning with
+designated sets. The present development isolates, and mechanically certifies, the
+minimal-bilattice characterization and the explicit $\mathbf{2}\odot\mathbf{2}$ transport.
+
+---
+
+## 10. Discussion and future work
+
+The two results reinforce one moral: *truth and information are two independent
+dimensions, and contradiction is a state to be named rather than a catastrophe to
+be avoided.* The product representation shows this is not philosophy but algebra —
+FOUR is literally $\mathbf{Bool}^2$ with two compatible orders.
+
+Future directions (carried from the foundational research program):
+
+- **Degree-$k$ persistence collapse.** For convex value functions, sublevel sets
+  are contractible whenever nonempty, predicting that all reduced persistent
+  homology vanishes — a single $H_0$ bar.
+- **Hypersurfaces as carriers of topology.** Replace sublevel sets by the
+  non-differentiability locus; conjecture sub-additivity of the essential-monomial
+  count under $\oplus$ and multiplicativity-with-defect under $\otimes$.
+- **Persistence stability.** Lift pointwise Lipschitz stability of value functions
+  to barcode (bottleneck) stability in the coefficients.
+- **Newton-polytope ↔ persistence dictionary.** Identify the single $H_0$ birth
+  value with the tropical minimum, determined by the Newton polytope.
+
+For the bilattice line specifically, natural next steps are: extending the
+$\mathbf{2}\odot\mathbf{2}$ transport to the full equational theory of bilattices; proving
+interlacing laws relating $\le_t$ and $\le_k$; and generalizing the minimality
+argument to $\mathbf{L}\odot\mathbf{L}$ for arbitrary bounded lattices $\mathbf{L}$.
+
+---
+
+## Appendix A. Summary of formal results
+
+| # | Name | Statement |
+|---|------|-----------|
+| 3.1 | `tle_preserves_designated` | $a \le_t b \Rightarrow (a \in D \Rightarrow b \in D)$ |
+| 4.1 | `explosion_premise_satisfiable` | $\exists a.\ a\in D \wedge \neg a \in D$ |
+| 4.2 | `no_explosion` | $\neg\forall a,q.\ a\in D \wedge \neg a\in D \Rightarrow q\in D$ |
+| 4.3 | `bool_explosion_premise_unsatisfiable` | $\neg\exists b.\ b{=}\mathit{tt} \wedge \neg b{=}\mathit{tt}$ |
+| 4.4 | `bool_validates_explosion` | $\forall b,q.\ b{=}\mathit{tt}\wedge \neg b{=}\mathit{tt}\Rightarrow q{=}\mathit{tt}$ |
+| 5.1 | `belnap_iso_prod` / `equivProd` | $\sigma\tau=\mathrm{id},\ \tau\sigma=\mathrm{id}$ |
+| 5.2 | `orders_transport` | knowledge = product order; truth = twisted product order |
+| 5.3 | `operations_transport` | all six operations are coordinatewise Boolean |
+| 6.1 | `card_four` | $|\mathbf{FOUR}| = 4$ |
+| 6.2 | `orders_two_dimensional` | neither order refines the other |
+
+All statements are decidable over the four-element carrier and are established by
+exhaustive case analysis.

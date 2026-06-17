@@ -50,7 +50,7 @@ Affine evaluation respects convex combinations:
 `fᵢ(a•x + b•y) = a • fᵢ(x) + b • fᵢ(y)` when `a + b = 1`.
 -/
 theorem evalAffine_convex_combination (F : TropAffineFamily n m) (i : Fin m)
-    (x y : Fin n → ℝ) (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) (hab : a + b = 1) :
+    (x y : Fin n → ℝ) (a b : ℝ) (_ha : 0 ≤ a) (hb : 0 ≤ b) (hab : a + b = 1) :
     evalAffine F i (fun j => a * x j + b * y j) =
     a * evalAffine F i x + b * evalAffine F i y := by
       unfold evalAffine;
@@ -67,10 +67,9 @@ the catalog.
 theorem maxSublevelSet_convex (F : TropAffineFamily n m) (hm : 0 < m) (c : ℝ) :
     Convex ℝ (MaxSublevelSet F hm c) := by
       have h_convex : ∀ i : Fin m, Convex ℝ {x : Fin n → ℝ | evalAffine F i x ≤ c} := by
-        intro i;
-        intro x hx y hy a b ha hb hab;
+        intro i x hx y hy a b ha hb hab;
         convert Set.mem_setOf_eq.mpr ( show evalAffine F i ( fun j => a * x j + b * y j ) ≤ c from ?_ ) using 1;
-        convert Set.mem_setOf_eq.mp hx |> fun h => le_trans ( evalAffine_convex_combination F i x y a b ha hb hab ▸ add_le_add ( mul_le_mul_of_nonneg_left h ha ) ( mul_le_mul_of_nonneg_left hy.out hb ) ) _ using 1 ; ring;
+        convert Set.mem_setOf_eq.mp hx |> fun h => le_trans ( evalAffine_convex_combination F i x y a b ha hb hab ▸ add_le_add ( mul_le_mul_of_nonneg_left h ha ) ( mul_le_mul_of_nonneg_left hy.out hb ) ) _ using 1;
         cases le_total c 0 <;> nlinarith;
       convert convex_iInter fun i => h_convex i using 1;
       ext; simp [MaxSublevelSet, tropMaxVal]
@@ -90,7 +89,7 @@ theorem tropMax_sublevel_contractible (F : TropAffineFamily n m) (hm : 0 < m) (c
       · convert Convex.contractibleSpace _ _;
         any_goals exact maxSublevelSet_convex F hm c;
         all_goals try infer_instance;
-        · simp +decide [ h_empty, Set.ext_iff ];
+        · simp +decide [ h_empty ];
         · exact Set.nonempty_iff_ne_empty.mpr h_empty
 
 -- ============================================================================
@@ -140,7 +139,7 @@ theorem minSublevelSet_eq_iUnion_patches (F : TropAffineFamily n m) (hm : 0 < m)
     MinSublevelSet F hm c = ⋃ i : Fin m, HalfspacePatch F c i := by
       ext x;
       simp +decide [ MinSublevelSet, HalfspacePatch ];
-      simp +decide [ tropMinVal, Finset.inf'_le ]
+      simp +decide [ tropMinVal ]
 
 -- ============================================================================
 -- PART III: MONOTONICITY AND ABSTRACT SIMPLICIAL COMPLEX PROPERTIES
@@ -222,7 +221,7 @@ at most 2^(2^m) possible nerve configurations.
 -/
 theorem nerve_configurations_finite (m : ℕ) :
     ∀ (S : Finset (Finset (Fin m))), S.card ≤ 2 ^ m := by
-      exact fun S => le_trans ( Finset.card_le_univ _ ) ( by simp +decide [ Finset.card_univ ] )
+      exact fun S => le_trans ( Finset.card_le_univ _ ) ( by simp +decide )
 
 /-
 **Theorem 4 (Finite Barcode Complexity).**
@@ -264,7 +263,7 @@ theorem nerveVertexCount_eq_of_nerve_constant (F : TropAffineFamily n m)
     {c₁ c₂ : ℝ} (h : c₁ ≤ c₂)
     (hconst : PatchNerveFaces F c₁ = PatchNerveFaces F c₂) :
     nerveVertexCount F c₁ = nerveVertexCount F c₂ := by
-      refine' Finset.card_bij ( fun i hi => i ) _ _ _ <;> simp +decide [ nerveVertexCount ];
+      refine' Finset.card_bij ( fun i hi => i ) _ _ _ <;> simp +decide;
       · exact fun i hi => hi.mono ( halfspacePatch_mono F i h );
       · intro i hi; replace hconst := Set.ext_iff.mp hconst { i } ; simp_all +decide [ HalfspacePatch ] ;
         contrapose! hconst; simp_all +decide [ PatchNerveFaces ] ;

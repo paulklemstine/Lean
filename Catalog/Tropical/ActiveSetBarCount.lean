@@ -285,7 +285,7 @@ def IsAntichain {ι : Type*} (faces : Finset (Finset ι)) : Prop :=
 theorem antichain_card_le_pow (m : ℕ) (A : Finset (Finset (Fin m)))
     (_hA : IsAntichain A) :
     A.card ≤ 2 ^ m :=
-  Finset.card_le_univ A |>.trans (by simp [Finset.card_univ, Fintype.card_finset])
+  Finset.card_le_univ A |>.trans (by simp [Fintype.card_finset])
 
 /-! ## Part VIII: Falsifiable Conjectures -/
 
