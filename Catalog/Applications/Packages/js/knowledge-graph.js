@@ -2164,7 +2164,7 @@
         // Stop animation after a short warmup so it doesn't consume GPU/CPU
         // while the user is reading a research package and scrolling the page.
         // The static rendered frame remains visible and interactive.
-        const WARMUP_FRAMES = 600; // ~10 seconds at 60fps
+        const WARMUP_FRAMES = 60; // ~1 second at 60fps
         let warmupFrameCount = 0;
         const originalRender = render;
         render = function() {
