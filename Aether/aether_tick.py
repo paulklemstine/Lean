@@ -501,8 +501,10 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     quality_assessment=job.quality_assessment,
                 )
                 
-                # Dispatch the retry
-                job = await extractor.dispatch_retry_async(job, suggestion)
+                # Dispatch the retry, passing the current parallel limit so the retry
+                # is queued instead of overflowing Aristotle's queue.
+                current_max_inflight = max_inflight
+                job = await extractor.dispatch_retry_async(job, suggestion, max_inflight=current_max_inflight)
                 extractor._save_inflight()
                 continue
 
@@ -727,6 +729,22 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             del extractor.inflight[pid]
         print(f"[Tick] Cleaned up {len(stuck_keys)} stuck dispatched jobs (>2h, no progress)")
 
+    # Retry-queued jobs that have been stuck for too long are considered failed.
+    retry_stuck_keys = []
+    for pid, job in list(extractor.inflight.items()):
+        if job.status == "retry_queued":
+            queued_ts = getattr(job, 'retry_queued_time', None)
+            if queued_ts and (now - float(queued_ts)) > 3600:
+                retry_stuck_keys.append(pid)
+    if retry_stuck_keys:
+        for pid in retry_stuck_keys:
+            job = extractor.inflight[pid]
+            job.status = "failed"
+            job.error_message = "Retry-queued for >1h without dispatching"
+            extractor._release_direction(job)
+            del extractor.inflight[pid]
+        print(f"[Tick] Cleaned up {len(retry_stuck_keys)} retry-queued jobs stuck >1h")
+
 
     # ── Self-healing: auto-prune low-quality directions ──
     try:
@@ -919,16 +937,43 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             del extractor.inflight[pid]
             retry_count += 1
 
-    # 3. Dispatch new jobs up to max_inflight (with novelty track)
-    current_inflight = len([j for j in extractor.inflight.values()
-                           if j.status not in ("completed", "failed", "integrated", "rejected")])
+    # 3. Retry any queued retries first, before discovering new directions.
+    queued_retries = [j for j in extractor.inflight.values() if j.status == "retry_queued"]
+    for queued in queued_retries:
+        if extractor._count_inflight_dispatched() >= max_inflight:
+            print(f"[Tick] No capacity to drain queued retries ({extractor._count_inflight_dispatched()}/{max_inflight} inflight)")
+            break
+        try:
+            queued.status = "preparing"
+            project_id = await extractor._dispatch_to_aristotle(queued)
+            if queued.project_id and queued.project_id in extractor.inflight:
+                del extractor.inflight[queued.project_id]
+            queued.project_id = project_id
+            queued.status = "dispatched"
+            queued.dispatch_time = time.time()
+            extractor.inflight[project_id] = queued
+            print(f"[Tick] Dispatched queued retry {project_id[:8]}: {queued.concept.title[:60]}")
+        except Exception as e:
+            if extractor._is_queue_full_error(e):
+                print(f"[Tick] Aristotle queue still full; leaving retry {queued.job_id[:8]} queued")
+                queued.status = "retry_queued"
+                queued.project_id = None
+            else:
+                print(f"[Tick] Queued retry dispatch failed for {queued.job_id[:8]}: {e}")
+                queued.status = "failed"
+                queued.error_message = f"Queued retry dispatch failed: {e}"
+                extractor._release_direction(queued)
+        extractor._save_inflight()
+
+    # 4. Dispatch new jobs up to max_inflight (with novelty track)
+    current_inflight = extractor._count_inflight_dispatched()
     slots_available = max(0, max_inflight - current_inflight)  # never go negative
 
     # Domain saturation: exclude domains with ≥3 inflight jobs from new dispatches
     from collections import Counter
     inflight_domains = Counter()
     for j in extractor.inflight.values():
-        if j.status not in ("completed", "failed", "integrated", "rejected"):
+        if j.status not in ("completed", "failed", "integrated", "rejected", "retry_queued"):
             domain = getattr(j.concept, 'domain', '') if hasattr(j, 'concept') else ''
             if domain:
                 inflight_domains[domain] += 1
@@ -954,6 +999,9 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     extractor._release_direction(job)
                     print(f"[Tick] Dispatch failed for {job.concept.title[:60]}, direction released")
             except Exception as e:
+                if extractor._is_queue_full_error(e):
+                    print(f"[Tick] Aristotle queue full; skipping remaining standard dispatches")
+                    break
                 extractor._release_direction(job)
                 print(f"[Tick] Dispatch error: {e}, direction released")
 
@@ -978,6 +1026,9 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     else:
                         extractor._release_direction(job)
             except Exception as e:
+                if extractor._is_queue_full_error(e):
+                    print(f"[Tick] Aristotle queue full; skipping remaining novelty dispatches")
+                    break
                 extractor._release_direction(job)
                 print(f"[Tick] Dispatch error: {e}, direction released")
         extractor._save_inflight()
@@ -985,9 +1036,9 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         print(f"[Tick] No dispatch slots ({current_inflight}/{max_inflight} inflight)")
 
     # Summary
-    remaining = len([j for j in extractor.inflight.values()
-                    if j.status not in ("completed", "failed", "integrated", "rejected")])
-    print(f"[Tick] Done — {len(completed_jobs)} integrated, {remaining} still inflight")
+    remaining = extractor._count_inflight_dispatched()
+    queued_remaining = len([j for j in extractor.inflight.values() if j.status == "retry_queued"])
+    print(f"[Tick] Done — {len(completed_jobs)} integrated, {remaining} still inflight, {queued_remaining} retry-queued")
     _print_prompt_version_stats(extractor)
     _print_quality_metrics(extractor)
 

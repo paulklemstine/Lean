@@ -412,8 +412,21 @@ class KnowledgeExtractor:
             print(f"[Dispatch-B] FAILED: {e}")
         return job
 
-    async def dispatch_retry_async(self, job: "ResearchJob", retry_suggestion: Dict[str, Any]) -> "ResearchJob":
-        """Dispatch a proof repair retry to Aristotle asynchronously."""
+    def _count_inflight_dispatched(self) -> int:
+        """Count jobs currently occupying Aristotle slots."""
+        return len([
+            j for j in self.inflight.values()
+            if j.status not in ("completed", "failed", "integrated", "rejected", "retry_queued")
+        ])
+
+    async def dispatch_retry_async(self, job: "ResearchJob", retry_suggestion: Dict[str, Any], max_inflight: int = 9) -> "ResearchJob":
+        """Queue or dispatch a proof repair retry, respecting the parallel limit.
+
+        If Aristotle's queue is full or we are already at max_inflight, the job is
+        marked as `retry_queued` and left in `inflight`. The main dispatch loop
+        will retry it once a slot opens up, instead of immediately hammering the
+        Aristotle API and failing.
+        """
         old_project_id = job.project_id
 
         # Update concept and prompt with retry suggestions
@@ -437,6 +450,18 @@ class KnowledgeExtractor:
         # Write prompt.md for context
         (job.project_dir / "PROMPT.md").write_text(job.prompt)
 
+        # If there is no capacity, queue the retry instead of dispatching.
+        if self._count_inflight_dispatched() >= max_inflight:
+            print(f"[Retry-Dispatch] Queueing retry for {job.job_id[:8]}: at max_inflight ({self._count_inflight_dispatched()}/{max_inflight})")
+            job.status = "retry_queued"
+            job.retry_queued_time = time.time()
+            job.project_id = old_project_id  # keep old id placeholder; will dispatch from queued state
+            if old_project_id and old_project_id in self.inflight:
+                del self.inflight[old_project_id]
+            self.inflight[job.job_id] = job
+            self._save_inflight()
+            return job
+
         # Prepare dispatch
         job.status = "preparing"
 
@@ -451,16 +476,25 @@ class KnowledgeExtractor:
             self._save_inflight()
             print(f"[Retry-Dispatch] Aristotle project: {project_id} (Retry {job.retry_count} for job {job.job_id})")
         except Exception as e:
-            job.status = "failed"
-            job.error_message = f"Retry dispatch failed: {e}"
-            print(f"[Retry-Dispatch] FAILED: {e}")
+            if self._is_queue_full_error(e):
+                print(f"[Retry-Dispatch] Aristotle queue full for {job.job_id[:8]}; queuing retry")
+                job.status = "retry_queued"
+                job.retry_queued_time = time.time()
+                job.project_id = old_project_id
+                if old_project_id and old_project_id in self.inflight:
+                    del self.inflight[old_project_id]
+                self.inflight[job.job_id] = job
+                self._save_inflight()
+            else:
+                job.status = "failed"
+                job.error_message = f"Retry dispatch failed: {e}"
+                print(f"[Retry-Dispatch] FAILED: {e}")
 
         return job
 
-    def dispatch_retry(self, job: "ResearchJob", retry_suggestion: Dict[str, Any]) -> "ResearchJob":
+    def dispatch_retry(self, job: "ResearchJob", retry_suggestion: Dict[str, Any], max_inflight: int = 9) -> "ResearchJob":
         """Synchronous version of dispatch_retry_async."""
-        return asyncio.run(self.dispatch_retry_async(job, retry_suggestion))
-
+        return asyncio.run(self.dispatch_retry_async(job, retry_suggestion, max_inflight=max_inflight))
 
     # ==================================================================
     # Phase 1: DISCOVER — Pi decides what to research
@@ -971,12 +1005,24 @@ Research mode: {concept.research_mode}
 
         return dir_path
 
+
+    def _is_queue_full_error(self, error: Exception) -> bool:
+        """Return True if the error indicates Aristotle's queue is full."""
+        err_str = str(error).lower()
+        return any(kw in err_str for kw in [
+            "too many requests in progress",
+            "too many requests",
+            "rate limit",
+            "429",
+            "queue is full",
+        ])
+
     async def _dispatch_to_aristotle(self, job: ResearchJob, max_retries: int = 2) -> str:
         """Dispatch the job to Aristotle with retry on transient failures.
 
-        The aristotlelib SDK creates a fresh httpx.AsyncClient per request with
-        a 30s timeout — too short for uploading a project with 7000+ .lean files.
-        We temporarily raise the module-level default before calling create_from_directory.
+        Queue-full errors are reported immediately without burning retries,
+        so the caller can requeue the job and wait for capacity. Other transient
+        errors still retry with escalating backoff.
         """
         import aristotlelib.api_request as api_mod
         from aristotlelib import Project
@@ -996,21 +1042,12 @@ Research mode: {concept.research_mode}
                     return project.project_id
                 except Exception as e:
                     last_error = e
+                    if self._is_queue_full_error(e):
+                        # Don't burn retries or sleep here; let the caller requeue.
+                        raise
                     if attempt < max_retries:
-                        # Rate-limit errors get a much longer backoff (60s)
-                        # Other transient errors get the standard escalating backoff
-                        err_str = str(e).lower()
-                        is_rate_limit = (
-                            "too many requests" in err_str
-                            or "rate limit" in err_str
-                            or "429" in err_str
-                        )
-                        if is_rate_limit:
-                            wait = 60
-                            print(f"[Dispatch] Attempt {attempt+1}/{max_retries+1} RATE-LIMITED: {e}, retrying in {wait}s...")
-                        else:
-                            wait = 5 * (attempt + 1)
-                            print(f"[Dispatch] Attempt {attempt+1}/{max_retries+1} failed: {e}, retrying in {wait}s...")
+                        wait = 5 * (attempt + 1)
+                        print(f"[Dispatch] Attempt {attempt+1}/{max_retries+1} failed: {e}, retrying in {wait}s...")
                         await asyncio.sleep(wait)
         finally:
             api_mod.DEFAULT_TIMEOUT_SECONDS = original_timeout
@@ -3857,7 +3894,10 @@ Research mode: {concept.research_mode}
                 quality_assessment=job.quality_assessment,
             )
 
-            job = self.dispatch_retry(job, suggestion)
+            job = self.dispatch_retry(job, suggestion, max_inflight=self.config.get("autoresearch", {}).get("max_inflight", 3))
+            if job.status == "retry_queued":
+                print(f"[Cycle] Retry for {job.job_id[:8]} queued due to capacity; exiting synchronous retry loop")
+                break
             if job.project_id:
                 job = self._await_job(job)
                 job = self.extract(job)
@@ -3992,7 +4032,8 @@ Research mode: {concept.research_mode}
                                 quality_assessment=job.quality_assessment,
                             )
 
-                            job = await self.dispatch_retry_async(job, suggestion)
+                            current_max_inflight = max_inflight
+                            job = await self.dispatch_retry_async(job, suggestion, max_inflight=current_max_inflight)
                             self._save_inflight()
                             continue
 
