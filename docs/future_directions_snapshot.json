@@ -2133,6 +2133,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS — The L-Function Oracle (Probability)\n\nDerived from this cycle's verified Lean results:\n\n- `Probability/SatoTateMeasure.lean` — the Sato–Tate law is a probability measure\n  (`satoTate_total_mass = 1`) with verified `cos`-moments `(mean 0, second moment 1/4)`.\n- `Probability/FactoringOracle.lean` — a single-split oracle factors `n` in `≤ log₂ n`\n  calls (`SplitOracle.factor_bounded`), the burden concentrated in one `reduce` step.\n- `Probability/SelbergOracle.lean` — degree/conductor conservation along functoriality\n  towers (`nfold_degree`, `nfold_conductor`) plus an oracle⇒decidability collapse, built on\n  the catalog file `Shared.SelbergClassCensus`.\n\nThe central methodological lesson: the grandiose \"oracle implies RH/BSD/Langlands\" claims\nare, once formalised, either *tautological* (the oracle is asserted to output the answer) or\n*conditional on an explicit reduction*. The genuinely load-bearing mathematics is elsewhere —\nin the moments of the target measure, in the `log`-depth of the factoring recursion, and in\nthe conservation laws of the invariants. The conjectures below target that real content.\n\n---\n\n## Conjecture 1 — All Sato–Tate moments are the Catalan/central-binomial sequence\n\n**Statement.** For every `k`, the `2k`-th `cos`-moment under `μ_ST = (2/π) sin²θ dθ` equals\n`Catalan k / 4^k`, i.e. `∫₀^π cos^{2k}θ · (2/π) sin²θ dθ = C_k / 4^k` where\n`C_k = (2k choose k)/(k+1)`; all odd moments vanish.\n\n**The key insight is** that the Sato–Tate measure is exactly the spectral measure of the\n`SU(2)` Haar trace, so its even moments count noncrossing pairings — the Catalan numbers —\nwhich makes the whole moment sequence a *single closed-form arithmetic object* rather than a\nlist of unrelated integrals. This cycle verified the `k = 0, 1` cases (mass `1`, second\nmoment `1/4 = C_1/4`); the conjecture is the uniform generalisation.\n\n**Why now?** We already have the integral machinery (`integral_sin_pow`,\n`integral_sin_pow_mul_cos_pow_odd`) working end-to-end in Lean on this exact density, so the\ninductive recurrence `M_{k} ↦ M_{k+1}` is within reach with the tools just exercised.\n\n---\n\n## Conjecture 2 — The factoring reduction is depth-optimal, not just depth-bounded\n\n**Statement.** The `≤ log₂ n` bound in `SplitOracle.factor_bounded` is tight in the worst\ncase and tight on average: for `n = 2^m` every split oracle needs exactly `m` calls, and the\n*expected* number of calls over uniformly random `n ≤ N` is `Θ(log log N)` (Erdős–Kac shape:\nthe number of prime factors `Ω(n)` concentrates at `log log n`).\n\n**The key insight is** that the recursion tree of `factor_bounded` is precisely a binary tree\nwhose leaves are the prime factors *with multiplicity*, so the call count is `Ω(n) − 1`; the\ndeterministic bound is `log₂ n` but the *typical* value is governed by the Erdős–Kac law, a\ngenuinely probabilistic statement about the cost of the L-function oracle.\n\n**Why now?** The leaf-counting identity is already implicit in the verified proof\n(`length = Ω(n)`), so the deterministic optimality is a short additional lemma, and it sets up\nthe bridge to the catalog's number-theory files (`Applications/Fibonacci*`, Carmichael\nmaterial) where `Ω` of structured integers is studied.\n\n---\n\n## Conjecture 3 — Functoriality towers force a degree/conductor uncertainty bound\n\n**Statement.** For any `SelbergDatum S` with `S.degree ≥ 1` and `S.conductor ≥ 2`, the\n`n`-fold tower satisfies `(nfoldProduct S n).degree · log₂((nfoldProduct S n).conductor)`\ngrows like `n² · d · log₂ q`; equivalently the \"analytic complexity\"\n`degree × log-conductor` is *super-additive* along towers, never sub-additive.\n\n**The key insight is** that `nfold_degree` (linear) and `nfold_conductor` (exponential)\ncombine multiplicatively, so the analytic conductor — the quantity controlling the length of\nthe approximate functional equation, hence the true cost of evaluating the L-function —\n*explodes quadratically* along a tower. An O(1) oracle would have to be uniform across this\nexplosion, which is exactly why a literal oracle is implausible.\n\n**Why now?** Both growth laws are already proved in `SelbergOracle.lean`; multiplying them is\na one-step corollary, and it converts the vague \"oracles are too powerful\" intuition into a\nconcrete, falsifiable growth inequality on catalog `SelbergDatum`.\n\n---\n\n## Conjecture 4 — Oracle collapse is provably non-vacuous only with a length-bounded encoding\n\n**Statement.** The decidability collapse `reduction_collapses` upgrades to a *complexity*\nstatement iff the encoding `f : X → SelbergDatum` has polynomially bounded conductor: if\n`f x` has conductor `≤ poly(|x|)`, then `L` is decidable in time polynomial in the oracle\ncost; without such a bound the collapse is logically true but computationally empty.\n\n**The key insight is** that the only smuggled cost in \"reduce to one L-query\" is the *size of\nthe datum you hand the oracle*, measured by its conductor — Conjecture 3 shows this size can\nblow up, so the honest collapse theorem must carry a conductor budget as a hypothesis.\n\n**Why now?** `reduction_collapses` and `selberg_oracle_decidable` are already in place as the\nunconditional (decidability-only) skeleton; adding a conductor-budget field to the encoding is\na natural refinement that makes the \"polynomial hierarchy collapse\" claim precise and testable.\n\n---\n\n## Conjecture 5 — A second-moment certificate distinguishes CM from non-CM curves\n\n**Statement.** Define the empirical second `cos`-moment of the first `N` Frobenius angles of\nan elliptic curve `E/ℚ`. For non-CM curves it converges to `1/4` (the Sato–Tate value proved\nhere); for CM curves it converges to `1/2`. Hence a single converging moment statistic, output\nby the oracle, certifies the CM/non-CM dichotomy.\n\n**The key insight is** that the verified value `1/4` is the *fingerprint* of the full `SU(2)`\nSato–Tate measure, whereas the CM case is governed by a `U(1)` measure with second moment\n`1/2`; the gap `1/4 vs 1/2` is a clean, decidable separating observable rather than a full\nequidistribution statement.\n\n**Why now?** `satoTate_second_moment_cos = 1/4` is verified; the companion `U(1)` computation\n`∫₀^π cos²θ · (1/π) dθ = 1/2` is an even simpler interval integral, so the separating\ncertificate is one short lemma away and turns the abstract Sato–Tate dichotomy into a finite\nstatistical test.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2056",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "46951c2e",
+    "status": "available",
+    "timestamp": "2026-06-17T13:36:58.586987+00:00",
+    "title": "Derived from this cycle's verified Lean results:"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -3684,26 +3704,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "46951c2e",
-    "description": "Suppose we had an oracle that computes L(s, chi) for any L-function and any complex s in O(1) time. What theorems would follow? Conjecture: The L-function oracle implies (1) The Riemann Hypothesis (compute zeros directly), (2) The BSD conjecture (compute the order of vanishing at s=1), (3) The Sato-Tate conjecture (compute the distribution of a_p), (4) Langlands functoriality (compare L-functions on both sides of the functoriality lift), and (5) A polynomial-time algorithm for factoring (the L-function of an elliptic curve E over Z/nZ detects factors of n). But the oracle also implies IMPOSSIBILITY results: (6) P != NP (because NP-complete problems would reduce to L-function computations that the oracle solves in O(1), contradicting the time hierarchy theorem if P = NP). Wait — the oracle solves L-function computations in O(1), so if P = NP, then NP problems can be encoded as L-function computations and solved instantly, but the oracle's existence is an axiom, not a theorem. The correct statement: the L-function oracle collapses the polynomial hierarchy to L-function computations. Test: prove that the Riemann Hypothesis follows from the oracle. Prove that BSD follows. Prove that factoring is in P given the oracle. Impact: understanding what an L-function oracle implies tells us exactly how powerful L-functions are — and how far we are from proving things about them.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0018",
-    "lineage_refs": [],
-    "priority_score": 0.05,
-    "proof_strategy": "Define the L-oracle O(s, chi) = L(s, chi) for any L-function chi and complex s. RH: compute all zeros of zeta(s) by evaluating zeta(s) on a fine grid and checking sign changes — O(R^2) oracle calls for zeros up to height R. BSD: compute L(E, 1) and check if it's zero (rank >= 1) or compute the Taylor expansion around s=1 to get the order of vanishing. Sato-Tate: compute a_p(E) for all p up to N by evaluating L(s, E) at s = it for varying t, and extract a_p from the Euler product. Factoring: given n = pq, define E: y^2 = x^3 + ax + b over Z/nZ. The oracle computes L(s, E/nZ), which has different values for different factorizations. Binary search on a to find p. P != NP: if the oracle exists as a physical device, then L-function computations are O(1), but the oracle itself cannot solve NP problems unless P = NP.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.502441+00:00",
-    "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... — just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number — the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic — it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
     "domain_bridges": [],
@@ -4064,7 +4064,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "61934e8a",
     "description": "Prove that isomorphic mathematical structures can carry semantically different meanings that no formal system can distinguish. Formalize the concept of 'isomorphism of isomorphisms' and show that categorical equivalence preserves truth but not meaning. Connect to Hofstadter's Copycat architecture for analogical reasoning.",
     "domain_bridges": [],
     "domains": [
@@ -4077,7 +4077,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.846057+00:00",
     "title": "Isomorphisms of Meaning: When Structures Collide"
   },

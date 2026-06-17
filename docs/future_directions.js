@@ -1594,6 +1594,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 The L-Function Oracle (Probability)\n\nDerived from this cycle's verified Lean results:\n\n- `Probability/SatoTateMeasure.lean` \u2014 the Sato\u2013Tate law is a probability measure\n  (`satoTate_total_mass = 1`) with verified `cos`-moments `(mean 0, second moment 1/4)`.\n- `Probability/FactoringOracle.lean` \u2014 a single-split oracle factors `n` in `\u2264 log\u2082 n`\n  calls (`SplitOracle.factor_bounded`), the burden concentrated in one `reduce` step.\n- `Probability/SelbergOracle.lean` \u2014 degree/conductor conservation along functoriality\n  towers (`nfold_degree`, `nfold_conductor`) plus an oracle\u21d2decidability collapse, built on\n  the catalog file `Shared.SelbergClassCensus`.\n\nThe central methodological lesson: the grandiose \"oracle implies RH/BSD/Langlands\" claims\nare, once formalised, either *tautological* (the oracle is asserted to output the answer) or\n*conditional on an explicit reduction*. The genuinely load-bearing mathematics is elsewhere \u2014\nin the moments of the target measure, in the `log`-depth of the factoring recursion, and in\nthe conservation laws of the invariants. The conjectures below target that real content.\n\n---\n\n## Conjecture 1 \u2014 All Sato\u2013Tate moments are the Catalan/central-binomial sequence\n\n**Statement.** For every `k`, the `2k`-th `cos`-moment under `\u03bc_ST = (2/\u03c0) sin\u00b2\u03b8 d\u03b8` equals\n`Catalan k / 4^k`, i.e. `\u222b\u2080^\u03c0 cos^{2k}\u03b8 \u00b7 (2/\u03c0) sin\u00b2\u03b8 d\u03b8 = C_k / 4^k` where\n`C_k = (2k choose k)/(k+1)`; all odd moments vanish.\n\n**The key insight is** that the Sato\u2013Tate measure is exactly the spectral measure of the\n`SU(2)` Haar trace, so its even moments count noncrossing pairings \u2014 the Catalan numbers \u2014\nwhich makes the whole moment sequence a *single closed-form arithmetic object* rather than a\nlist of unrelated integrals. This cycle verified the `k = 0, 1` cases (mass `1`, second\nmoment `1/4 = C_1/4`); the conjecture is the uniform generalisation.\n\n**Why now?** We already have the integral machinery (`integral_sin_pow`,\n`integral_sin_pow_mul_cos_pow_odd`) working end-to-end in Lean on this exact density, so the\ninductive recurrence `M_{k} \u21a6 M_{k+1}` is within reach with the tools just exercised.\n\n---\n\n## Conjecture 2 \u2014 The factoring reduction is depth-optimal, not just depth-bounded\n\n**Statement.** The `\u2264 log\u2082 n` bound in `SplitOracle.factor_bounded` is tight in the worst\ncase and tight on average: for `n = 2^m` every split oracle needs exactly `m` calls, and the\n*expected* number of calls over uniformly random `n \u2264 N` is `\u0398(log log N)` (Erd\u0151s\u2013Kac shape:\nthe number of prime factors `\u03a9(n)` concentrates at `log log n`).\n\n**The key insight is** that the recursion tree of `factor_bounded` is precisely a binary tree\nwhose leaves are the prime factors *with multiplicity*, so the call count is `\u03a9(n) \u2212 1`; the\ndeterministic bound is `log\u2082 n` but the *typical* value is governed by the Erd\u0151s\u2013Kac law, a\ngenuinely probabilistic statement about the cost of the L-function oracle.\n\n**Why now?** The leaf-counting identity is already implicit in the verified proof\n(`length = \u03a9(n)`), so the deterministic optimality is a short additional lemma, and it sets up\nthe bridge to the catalog's number-theory files (`Applications/Fibonacci*`, Carmichael\nmaterial) where `\u03a9` of structured integers is studied.\n\n---\n\n## Conjecture 3 \u2014 Functoriality towers force a degree/conductor uncertainty bound\n\n**Statement.** For any `SelbergDatum S` with `S.degree \u2265 1` and `S.conductor \u2265 2`, the\n`n`-fold tower satisfies `(nfoldProduct S n).degree \u00b7 log\u2082((nfoldProduct S n).conductor)`\ngrows like `n\u00b2 \u00b7 d \u00b7 log\u2082 q`; equivalently the \"analytic complexity\"\n`degree \u00d7 log-conductor` is *super-additive* along towers, never sub-additive.\n\n**The key insight is** that `nfold_degree` (linear) and `nfold_conductor` (exponential)\ncombine multiplicatively, so the analytic conductor \u2014 the quantity controlling the length of\nthe approximate functional equation, hence the true cost of evaluating the L-function \u2014\n*explodes quadratically* along a tower. An O(1) oracle would have to be uniform across this\nexplosion, which is exactly why a literal oracle is implausible.\n\n**Why now?** Both growth laws are already proved in `SelbergOracle.lean`; multiplying them is\na one-step corollary, and it converts the vague \"oracles are too powerful\" intuition into a\nconcrete, falsifiable growth inequality on catalog `SelbergDatum`.\n\n---\n\n## Conjecture 4 \u2014 Oracle collapse is provably non-vacuous only with a length-bounded encoding\n\n**Statement.** The decidability collapse `reduction_collapses` upgrades to a *complexity*\nstatement iff the encoding `f : X \u2192 SelbergDatum` has polynomially bounded conductor: if\n`f x` has conductor `\u2264 poly(|x|)`, then `L` is decidable in time polynomial in the oracle\ncost; without such a bound the collapse is logically true but computationally empty.\n\n**The key insight is** that the only smuggled cost in \"reduce to one L-query\" is the *size of\nthe datum you hand the oracle*, measured by its conductor \u2014 Conjecture 3 shows this size can\nblow up, so the honest collapse theorem must carry a conductor budget as a hypothesis.\n\n**Why now?** `reduction_collapses` and `selberg_oracle_decidable` are already in place as the\nunconditional (decidability-only) skeleton; adding a conductor-budget field to the encoding is\na natural refinement that makes the \"polynomial hierarchy collapse\" claim precise and testable.\n\n---\n\n## Conjecture 5 \u2014 A second-moment certificate distinguishes CM from non-CM curves\n\n**Statement.** Define the empirical second `cos`-moment of the first `N` Frobenius angles of\nan elliptic curve `E/\u211a`. For non-CM curves it converges to `1/4` (the Sato\u2013Tate value proved\nhere); for CM curves it converges to `1/2`. Hence a single converging moment statistic, output\nby the oracle, certifies the CM/non-CM dichotomy.\n\n**The key insight is** that the verified value `1/4` is the *fingerprint* of the full `SU(2)`\nSato\u2013Tate measure, whereas the CM case is governed by a `U(1)` measure with second moment\n`1/2`; the gap `1/4 vs 1/2` is a clean, decidable separating observable rather than a full\nequidistribution statement.\n\n**Why now?** `satoTate_second_moment_cos = 1/4` is verified; the companion `U(1)` computation\n`\u222b\u2080^\u03c0 cos\u00b2\u03b8 \u00b7 (1/\u03c0) d\u03b8 = 1/2` is an even simpler interval integral, so the separating\ncertificate is one short lemma away and turns the abstract Sato\u2013Tate dichotomy into a finite\nstatistical test.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2056",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "46951c2e",
+    "status": "available",
+    "timestamp": "2026-06-17T13:36:58.586987+00:00",
+    "title": "Derived from this cycle's verified Lean results:"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2755,21 +2770,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Surreal Topology: What Topology Does the Field of Surreal Numbers Have?"
   },
   {
-    "consumed_by_exp_id": "46951c2e",
-    "description": "Suppose we had an oracle that computes L(s, chi) for any L-function and any complex s in O(1) time. What theorems would follow? Conjecture: The L-function oracle implies (1) The Riemann Hypothesis (compute zeros directly), (2) The BSD conjecture (compute the order of vanishing at s=1), (3) The Sato-Tate conjecture (compute the distribution of a_p), (4) Langlands functoriality (compare L-functions on both sides of the functoriality lift), and (5) A polynomial-time algorithm for factoring (the L-function of an elliptic curve E over Z/nZ detects factors of n). But the oracle also implies IMPOSSIBILITY results: (6) P != NP (because NP-complete problems would reduce to L-function computations that the oracle solves in O(1), contradicting the time hierarchy theorem if P = NP). Wait \u2014 the oracle solves L-function computations in O(1), so if P = NP, then NP problems can be encoded as L-function computations and solved instantly, but the oracle's existence is an axiom, not a theorem. The correct statement: the L-function oracle collapses the polynomial hierarchy to L-function computations. Test: prove that the Riemann Hypothesis follows from the oracle. Prove that BSD follows. Prove that factoring is in P given the oracle. Impact: understanding what an L-function oracle implies tells us exactly how powerful L-functions are \u2014 and how far we are from proving things about them.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0018",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.502441+00:00",
-    "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... \u2014 just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number \u2014 the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic \u2014 it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
     "domains": [
@@ -3040,7 +3040,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "61934e8a",
     "description": "Prove that isomorphic mathematical structures can carry semantically different meanings that no formal system can distinguish. Formalize the concept of 'isomorphism of isomorphisms' and show that categorical equivalence preserves truth but not meaning. Connect to Hofstadter's Copycat architecture for analogical reasoning.",
     "domains": [
       "Novelty",
@@ -3050,7 +3050,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.846057+00:00",
     "title": "Isomorphisms of Meaning: When Structures Collide"
   },
