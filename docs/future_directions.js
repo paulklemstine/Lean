@@ -1399,6 +1399,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Ramanujan-Style Intuition as Formalizable Meta-Reasoning\n\nDerived from this cycle's findings (`Core.lean`, `Halting.lean`,\n`FiniteBoundary.lean`, `JumpBridge.lean`). Each conjecture is bold, falsifiable,\nand stated so that a single Lean theorem (or counterexample) would settle it.\n\nThe central correction this cycle produced: **the mission's literal \"length \u2264 100\"\nframing is false** (`bounded_oracle_computable`) \u2014 every bounded family is decided\nby a computable lookup table, *even for a non-computable truth function*. The real\nobstruction is **sound + complete behaviour on an unbounded domain**\n(`no_computable_sound_complete_oracle`), and its structural home is the **oracle\njump hierarchy** (`JumpBridge.lean`). The conjectures below build on this.\n\n---\n\n## C1. Soundness forces *infinitely many* abstentions, not just one.\n**Statement.** Every computable, sound verdict oracle for the halting predicate\nanswers `unknown` on an infinite set of codes (not merely one).\n**The key insight is** that a single abstention can always be patched by a finite\ntable (`FiniteBoundary.bounded_oracle_computable`), so any *finitely-abstaining*\nsound computable oracle could be upgraded to a perfect one \u2014 contradicting\n`no_computable_sound_complete_oracle`; hence the abstention set must be infinite.\n**Why now?** We already have the perfect-oracle impossibility and the finite-table\nupgrade lemma in this cycle; combining them via a finiteness/pigeonhole argument is\nthe immediate next Lean step.\n\n## C2. High accuracy does **not** imply non-computability (accuracy is a red herring).\n**Statement.** There exists a non-computable truth function `\u03c4` and a *computable*\nverdict oracle whose committed answers are correct with asymptotic density `1`.\n**The key insight is** that the density of \"hard\" instances, not raw accuracy, is\nwhat computability controls; a non-computable set can have a computable density-1\napproximation, so the mission's \"\u2265 95% accuracy \u21d2 non-computable\" is unprovable as\nstated and should be *refuted* by an explicit construction.\n**Why now?** `Core.lean` shows diagonalization only forces *one* error per oracle,\nnever a positive error density \u2014 exactly the gap a density-1 computable approximant\nwould exploit. The tools (computable tables + a sparse non-computable set) are in hand.\n\n## C3. The \"intuitive leap\" is strictly stronger than any finite tower of leaps.\n**Statement.** For every `OracleJumpR` `J` and sound incomplete Ramanujan oracle,\nthe limit `\u22c3\u2099 (J.iter T\u2080 n).provable` strictly contains every finite level\n`(J.iter T\u2080 n).provable`, yet is still incomplete relative to truth.\n**The key insight is** that `truth_invariant` pins the model while\n`strict_hierarchy` (both used in `JumpBridge.lean`) make the provable sets a strict\n\u03c9-chain \u2014 so the union escapes every level but a fresh diagonal escapes the union.\n**Why now?** `JumpBridge.lean` already imports the strict-hierarchy and\ntruth-invariance machinery; the catalog's `limit_escape` is the missing lemma to\nwire in, making this a short composition.\n\n## C4. Identifying the leap with the *Turing* jump requires the arithmetical hierarchy.\n**Statement.** There is no order-embedding from the abstract `OracleJumpR` tower to\nthe Turing-degree jump tower `0, 0', 0'', \u2026` definable without naming a `\u03a3\u2070\u2081`\ntruth predicate; conversely, *with* such a predicate the embedding exists and is\nunique up to the first level.\n**The key insight is** that `OracleJumpR` is purely extensional (strict + truth\npreserving), whereas the Turing jump is intensional (it is the halting set of the\nprevious level); bridging them is exactly the content `Halting.lean` isolates via\n`ComputablePred.halting_problem`.\n**Why now?** This cycle produced both endpoints \u2014 an abstract jump tower\n(`JumpBridge.lean`) and a concrete halting non-computability witness\n(`Halting.lean`); the conjecture asks precisely for the morphism between them.\n\n## C5. \"Discovery without proof\" is formalizable as a sound oracle with unbounded verification delay.\n**Statement.** There is a computable, sound, *eventually complete* oracle for any\n`\u03a3\u2070\u2081` family \u2014 one that commits correctly to every true statement after a finite\n(but unbounded) delay \u2014 and no such oracle exists for a properly `\u03a0\u2070\u2081` family.\n**The key insight is** that Ramanujan's \"guess now, verify later\" matches semi-\ndecidability: enumerability gives eventual `true`-commitment, while the absence of\nco-enumerability is exactly what blocks completeness \u2014 the same asymmetry behind\n`no_computable_sound_complete_oracle`.\n**Why now?** The verdict/soundness/completeness vocabulary built in `Core.lean`\nplus Mathlib's `RePred`/`Partrec` API make the `\u03a3\u2070\u2081` (yes) vs `\u03a0\u2070\u2081` (no) split a\ndirect next formalization, turning the metaphor into a theorem.\n",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2034",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d1b34dda",
+    "status": "available",
+    "timestamp": "2026-06-17T00:58:45.832365+00:00",
+    "title": "Derived from this cycle's findings (`Core.lean`, `Halting.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -1530,6 +1545,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-16T16:54:32.770267+00:00",
     "title": "Spectral Universality of LLM Weight Matrices: Random-Matrix Phase Transitions in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any sufficiently expressive finitely presented formal system S (e.g. arithmetic-strength theorem proving with a fixed proof encoding), the graph G_n of derivable statements and minimal proof transformations up to proof length n exhibits a nontrivial renormalization-group fixed point: after coarse-graining proofs by local rewrite equivalence classes and rescaling path lengths by a system-dependent factor, the sequence of normalized graph Laplacian spectra converges as n -> infinity to a universal limiting measure depending only on the logical complexity class of S, not on syntactic presentation. Test: Construct proof-search graphs for multiple inequivalent presentations of the same theory and for theories of different strength; define explicit coarse-graining via proof normalization/rewrite neighborhoods; numerically compare spectral measures across scales. The conjecture is supported if presentations within the same complexity class flow to the same limiting spectrum and refuted if no stable scale-invariant spectrum appears or if the limit depends sensitively on encoding details. Impact: This would found a statistical physics of mathematics, yielding universality classes for theorem proving, new complexity invariants of formal systems, and principled ways to predict proof hardness and design more efficient automated reasoning heuristics.",
+    "domains": [
+      "Logic",
+      "Physics"
+    ],
+    "id": "fd_2035",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-17T01:06:18.568136+00:00",
+    "title": "Renormalization Fixed Points of Formal Proof Search"
   },
   {
     "consumed_by_exp_id": "",
@@ -2456,7 +2486,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "78c9ab60",
     "description": "G\u00f6del showed self-reference breaks completeness, but what if self-referential proofs are not paradoxes but VALID mathematical objects? Develop a proof theory where proofs can reference their own structure \u2014 a proof of theorem T can contain a subproof that assumes T as a hypothesis, forming a circular dependency that is resolved through a fixed-point construction. Conjecture: Non-well-founded proofs form a convergent fixed point under a natural topolog: the space of proof trees with the tree topology is a Scott domain, and self-referential proofs correspond to infinite chains whose lub is a valid proof. A proof that references itself is like a recursive function: it converges if the self-reference occurs at a strictly smaller ordinal. Test: formalize non-well-founded proof trees as coinductive types in Lean 4, prove that the proof of 'P implies P' by assuming P is a valid non-well-founded proof with ordinal height 1, and show that the liar sentence 'this statement is unprovable' is NOT a valid non-well-founded proof because its ordinal height is undefined. Impact: turns the liar paradox from a bug into a feature \u2014 self-referential proofs are a new class of mathematical object with their own consistency conditions.",
     "domains": [
       "Novelty",
@@ -2466,7 +2496,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.486497+00:00",
     "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
   },
@@ -3129,21 +3159,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-06-03T23:40:36.577793+00:00",
     "title": "Speculative: Proof Complexity and Thermodynamic Cost"
-  },
-  {
-    "consumed_by_exp_id": "d1b34dda",
-    "description": "Many of Ramanujan's identities were discovered without proof and later verified. Define a 'Ramanujan oracle' R that maps statements to {true, false, unknown} with accuracy \u2265 95% on number-theoretic statements of length \u2264 100. Prove: such an oracle cannot be computable (by a counting argument). Conjecture: the 'intuitive leap' in mathematical discovery corresponds to a specific non-computable operation related to the jump operator in computability theory.",
-    "domains": [
-      "Novelty",
-      "Pythagorean"
-    ],
-    "id": "fd_0576",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T23:40:36.838633+00:00",
-    "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
   },
   {
     "consumed_by_exp_id": "",
