@@ -732,7 +732,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reconstruction Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bf4e21b7",
     "description": "The brain's connectome is a braid: neurons fire in sequences that interleave like strands of a braid group. Formalize this: a cognitive process is an element of the braid group B_n where n is the number of brain regions. Two cognitive processes are equivalent if their braids are related by Reidemeister moves (cognitive equivalence). Conjecture: The Jones polynomial of a cognitive braid is invariant under cognitive equivalence and encodes the information content of the thought. A thought with Jones polynomial V(t) = 1 is a trivial thought (equivalent to no thinking). A thought with V(t) = -t^2 + t + 1 is a creative thought (it contains a trefoil knot \u2014 the simplest non-trivial braid). The information content of a thought is log(|V(e^{2pi i/3})|), which measures the quantum dimension of the braid. Test: compute the Jones polynomial of braids representing simple cognitive processes (linear reasoning: trivial braid, creative insight: trefoil, confused thinking: figure-eight knot) and verify that the quantum dimension correlates with subjective ratings of thought quality. Impact: thinking IS braiding. The topology of your thoughts determines their quality. Creative insights are literally knotted.",
     "domains": [
       "Novelty",
@@ -742,7 +742,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.81,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.494775+00:00",
     "title": "Knots That Think: Cognition as Braiding in Category Theory"
   },
@@ -1621,6 +1621,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T15:29:37.901778+00:00",
     "title": "Derived from this cycle's verified findings in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Cellular Automata as Algebraic Geometry over GF(2)\n\nThese conjectures are distilled from the v16a research cycle in\n`Computation/ECAFixedVariety.lean` and `Computation/ECALinearSubspace.lean`.\n\nThe cycle established two anchor facts:\n\n* **Refutation.** The Turing-complete Wolfram Rule 110 has a *single* fixed point\n  (the all-zero configuration) for every length `n \u2265 1`, hence fixed-point-variety\n  dimension `0` \u2014 the *minimum* among nonempty varieties \u2014 directly falsifying the\n  conjecture \"Turing-complete \u21d2 maximal fixed-point dimension\"\n  (`complexity_dimension_conjecture_false`).\n* **Structure.** For *linear* (additive) rules the fixed-point set is literally the\n  kernel of `step \u2212 id`, a `GF(2)`-subspace, so it always has `2^k` points\n  (`linearFixed_card_pow_two`); Rule 110 is provably nonlinear (`g110_not_linear`).\n\nThe fixed-point variety is therefore a real GF(2) scheme, but its dimension is the\n*wrong* complexity invariant. The directions below propose the right one.\n\n---\n\n## Direction 1 \u2014 Spacetime entropy, not fixed-point dimension, tracks complexity.\n\n**Conjecture.** Define the *spacetime subshift* `\u03a3_r` of rule `r` as the set of valid\nbi-infinite orbit diagrams, an SFT over the de Bruijn graph. Its topological entropy\n`h(\u03a3_r) = lim (1/n) log #(period-n columns)` separates Wolfram's classes:\n`h = 0` for Class 1/2, `h > 0` for Class 3, and Class 4 (e.g. Rule 110) sits exactly\nat the `h = 0` boundary while supporting unbounded transients.\n\n**The key insight is** that Turing-completeness lives in the *transient orbit\nstructure* (gliders, collisions), which the static fixed-point variety throws away;\nthe spacetime SFT retains it and its entropy is the genuine invariant.\n\n**Why now?** This cycle proved the fixed-point count of Rule 110 is constantly `1`,\nso any complexity invariant *must* be orbit-based, not equilibrium-based. The\ntransfer-matrix machinery for counting period-`n` configurations (`tr(T^n)`) is\nalready formalizable in Mathlib (`Matrix.trace`, `Matrix.pow`), giving an immediate\nattack route.\n\n## Direction 2 \u2014 Fixed-point count is `tr(T\u1d63\u207f)` for a 4\u00d74 GF(2)-transfer matrix.\n\n**Conjecture.** For every rule `r` there is an explicit `0/1` matrix `T_r` indexed by\n2-cell windows such that `Nat.card {s : Config n // isFixed (g r) s} = trace (T_r\u207f)`,\nand the asymptotic growth rate equals the Perron eigenvalue `\u03c1(T_r)`; the variety\n\"dimension\" is `log\u2082 \u03c1(T_r)`, a rule-intrinsic real number.\n\n**The key insight is** that the fixed-point set is a *subshift of finite type*, so its\ncardinality is governed by a transfer matrix exactly as in statistical mechanics \u2014\nturning a combinatorial count into linear algebra.\n\n**Why now?** We verified the pattern computationally (Rule 90: `1,1,4,1,1,4,\u2026`,\nperiod-3 because `\u03c1` has a cube-root-of-unity spectrum; Rule 204: `2^n` because\n`\u03c1 = 2`). Proving `#fix = tr(T\u207f)` for the five formalized rules is a finite, bounded\ntarget that would convert every numeric observation in the Lab Notes into a theorem.\n\n## Direction 3 \u2014 `3 \u2223 n \u21d4 Rule 90 has a nonzero fixed point`.\n\n**Conjecture.** The Rule 90 fixed-point subspace `linearFixed 1 0 1` over `Config n`\nhas dimension `> 0` if and only if `3 \u2223 n`; equivalently the circulant operator\n`x \u21a6 x_{i-1} + x_{i+1} \u2212 x_i` is singular over `GF(2)` exactly when `3 \u2223 n`. More\ngenerally the dimension equals `deg gcd(t\u00b2 + t + 1, t\u207f \u2212 1)` in `GF(2)[t]`.\n\n**The key insight is** that a linear ECA's fixed-point dimension is a *cyclotomic*\nquantity: it counts roots of the rule's characteristic polynomial among the `n`-th\nroots of unity, so number theory (orders mod small primes) governs the geometry.\n\n**Why now?** We proved a nonzero fixed point exists at `n = 3`\n(`rule90_nontrivial_fixed_three`) and `linearFixed_card_pow_two` already exposes the\ndimension as `finrank`. Mathlib's `Polynomial.cyclotomic` and circulant-matrix\nsupport make the gcd characterization directly reachable.\n\n## Direction 4 \u2014 Linearity is *decidable from the variety* up to the converse gap.\n\n**Conjecture.** A rule `r` is GF(2)-linear iff its fixed-point variety is closed under\naddition for *all* lengths `n` simultaneously; a single length can fail (the converse\ngap noted by the Critic: Rule 0 and Rule 110 both give count `1 = 2\u2070` yet only Rule 0\nis linear). Precisely: `(\u2200 n, IsSubmodule (fixed r n)) \u2194 r \u2208 {0,60,90,102,150,170,204,240,\u2026}`\n(the 8 additive rules and their reflections).\n\n**The key insight is** that linearity is a *global* property of the whole tower of\nvarieties `{V_n}`, not of any single `V_n` \u2014 closure-at-one-`n` is necessary but not\nsufficient, which is why our safe-direction lemma (`g110_not_linear`) certifies\nnonlinearity pointwise rather than from a single count.\n\n**Why now?** This cycle isolated the exact converse counterexample (count `1` is\nrealized by both a linear and a nonlinear rule), so the precise boundary is known and\nready to be formalized as an `Iff` over the finite catalogue of additive rules.\n\n## Direction 5 \u2014 Affine rules give *cosets*; the empty variety detects an inhomogeneity.\n\n**Conjecture.** A rule with affine ANF `f = \u2113(a,b,c) + 1` (a linear part plus the\nconstant `1`, e.g. Rule 51 `= b + 1`) has fixed-point variety either empty or a\n*coset* of `linearFixed \u2113`; it is empty exactly when `1 \u2209 image(\u2113 \u2212 id)`. Thus the\nempty variety (`rule51_not_isFixed`) is the GF(2) shadow of an unsolvable affine\nsystem, and `#fix \u2208 {0} \u222a {2^k}`.\n\n**The key insight is** that the constant term in the ANF turns the *kernel* (subspace)\ninto an *affine* solution set, so the dichotomy \"empty vs. power-of-two coset\" is the\nRouch\u00e9\u2013Capelli theorem over `GF(2)` applied to cellular automata.\n\n**Why now?** We already proved Rule 51's variety is empty for all `n`; recasting that\nas the inconsistency of an affine GF(2) system, via Mathlib's `LinearMap.range` and\ncoset API, would unify the linear (Direction 1\u20133) and degenerate cases under one\nsolvability criterion.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2059",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "16b03c84",
+    "status": "available",
+    "timestamp": "2026-06-17T16:03:35.875808+00:00",
+    "title": "These conjectures are distilled from the v16a research cycle in"
   },
   {
     "consumed_by_exp_id": "",
@@ -2813,21 +2828,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-01T12:30:30.525722+00:00",
     "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
-  },
-  {
-    "consumed_by_exp_id": "16b03c84",
-    "description": "Elementary cellular automata (ECAs) are the 256 rules that update a 1D binary array based on its 3-cell neighborhood. Rule 110 is Turing-complete. But ECAs can also be viewed as polynomial maps over GF(2): the state s = (s_0, s_1, ..., s_{n-1}) is a vector over GF(2), and the update rule is s -> f(s) where f is a degree-3 polynomial (since the rule depends on 3 cells). Conjecture: The algebraic variety V(f) = {s : f(s) = s} (fixed points of the ECA) has dimension equal to the 'complexity class' of the rule. For simple rules (e.g., Rule 0, which is all zeros), V(f) has dimension 0 (a single point). For complex rules (e.g., Rule 110), V(f) has maximal dimension. The Grothendieck-style approach: each ECA defines a sheaf on the state space, and the global sections of this sheaf classify the possible stable configurations. Rule 110's sheaf has the richest section structure, corresponding to its Turing-completeness. Test: compute dim(V(f)) for all 256 ECAs and verify that the dimension correlates with Wolfram's complexity classification (Class 1: dim=0, Class 2: dim<=n/2, Class 3: dim>=n/2, Class 4: dim=n). Impact: cellular automata are algebraic varieties, and their complexity is the dimension of their fixed-point variety.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0034",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.536490+00:00",
-    "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
   },
   {
     "consumed_by_exp_id": "",
