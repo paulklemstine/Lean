@@ -98,6 +98,7 @@ class ResearchJob:
     phase_b_skipped_reason: Optional[str] = None  # "low_quality" | "threshold_not_met" | "phase_a_failed"
     retry_count: int = 0
     retry_of: Optional[str] = None
+    retry_queued_time: float = 0.0
 
 
 
