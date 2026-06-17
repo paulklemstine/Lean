@@ -3848,11 +3848,25 @@ Research mode: {concept.research_mode}
             return
 
         still_active = self.thread_manager.append_cycle(
-            thread.thread_id, job.job_id, job.result_lean or ""
+            thread.thread_id, job.job_id, job.result_lean or "", quality_score=job.quality_score
         )
         if not still_active:
             self._terminate_thread_for_job(job, "stagnation")
             return
+
+        # Thread promise critic: on longer threads, ask whether the trajectory is worth continuing.
+        if len(thread.cycles) >= 2 and self.config.get("features", {}).get("enable_thread_promise_critic", False):
+            try:
+                from specialized_critics import ThreadPromiseCritic
+                promise_critic = ThreadPromiseCritic(self.pi_agent, timeout=180)
+                verdict = promise_critic.evaluate(thread)
+                print(f"[ThreadPromise] {thread.thread_id} score={verdict['promise_score']:.2f} "
+                      f"recommendation={verdict['recommendation']} rationale={verdict.get('rationale', '')[:120]}")
+                if verdict.get("recommendation") in ("terminate", "pivot"):
+                    self._terminate_thread_for_job(job, f"promise_{verdict['recommendation']}")
+                    return
+            except Exception as e:
+                print(f"[ThreadPromise] Warning: failed to evaluate thread: {e}")
 
         # Counterexample or strong disproof closes the thread as a positive result.
         if self._is_counterexample_result(job):
