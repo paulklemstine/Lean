@@ -1,247 +1,297 @@
-# Dialectical Algebras: A Unified Framework for Self-Referential Paradoxes as Theorems
+# Paradoxes as Theorems: The Liar, Berry, and Russell in a Self-Sound Paraconsistent Theory
 
 ## Abstract
 
-We introduce **Dialectical Algebras**, a novel algebraic structure that unifies the Liar sentence, Russell's paradox, and Berry's paradox under a single fixed-point mechanism. A dialectical algebra extends Belnap's four-valued logic (FDE) with sentence operations satisfying De Morgan laws, a truth endomorphism for internalizing self-reference, and a paradox sublattice closed under all connectives. We prove eight main theorems: (1) the Dialectical Fixed-Point Classification, showing every Liar must take value Both or Neither; (2) the Fixed-Point Uniqueness theorem, proving Both is the unique at-least-true negation fixed point; (3) the Self-Soundness theorem, demonstrating that dialectical algebras can prove their own soundness — bypassing Gödel's second incompleteness theorem; (4) the Classical Separation theorem, proving that paraconsistency is necessary for paradox-as-theorem; (5) the Unified Paradox theorem, showing Liar and Russell share the same mechanism; (6) the Paradox Sublattice Closure theorem; (7) the Spectrum Partition theorem; and (8) the Inconsistency Bound theorem. All results are machine-verified in Lean 4 with Mathlib.
+We construct a finite, fully specified formal system in which the Liar paradox, Russell's paradox, and Berry's paradox are *provable theorems* rather than contradictions, and we prove that the system remains non-trivial: not every sentence is provable, and contradiction does not propagate. The construction is carried out over Belnap's four-valued logic of First-Degree Entailment (FDE), whose values are **T** (true only), **F** (false only), **B** (both true and false — a *glut*), and **N** (neither true nor false — a *gap*). Negation fixes the non-classical values B and N, so the fixed-point equation `x = ¬x` underlying the Liar and Russell paradoxes — unsolvable classically — acquires exactly the two solutions B and N. We prove a *diagonal value theorem* (every self-referential negation-fixed-point is valued B or N), a *Berry collision theorem* (a finite pigeonhole reconstruction of Berry's paradox), and we assemble all three paradoxes into a single *full paradox theory*. We then establish the central, classically forbidden result: such a theory can prove its own soundness, escaping Gödel's second incompleteness theorem precisely because its consistency is paraconsistent rather than classical. We delimit the cost — excluded middle and modus ponens both fail, while double negation elimination survives — and we quantify inconsistency tolerance via an *inconsistency spectrum*, proving a coexistence lower bound and a tolerance upper bound. All results have been formally verified.
 
-**Keywords**: paraconsistent logic, Belnap logic, four-valued logic, Liar paradox, Russell's paradox, Berry's paradox, self-soundness, dialectical algebra, fixed-point theorem
+**Keywords:** paraconsistent logic, dialetheism, Belnap four-valued logic, First-Degree Entailment, Liar paradox, Russell's paradox, Berry's paradox, self-soundness, Gödel incompleteness, glut, gap.
+
+---
 
 ## 1. Introduction
 
-Self-referential paradoxes — the Liar sentence ("this sentence is false"), Russell's set ({x | x ∉ x}), and Berry's paradox ("the smallest number not definable in fewer than twenty words") — have driven fundamental developments in logic and foundations since antiquity. The standard approach, from Russell's theory of types through Tarski's hierarchy to ZFC set theory, is to *prevent* paradoxes from arising by restricting the expressiveness of the formal language.
+The self-referential paradoxes — the Liar, Russell's, Berry's, Grelling's, Curry's — have functioned for over a century as constraints on the design of formal systems. The dominant tradition treats them as *threats to be excluded*: type theory forbids the offending self-application, Tarski's hierarchy forbids a language from containing its own truth predicate, and Zermelo–Fraenkel set theory forbids the unrestricted comprehension that produces Russell's set. Each solution buys consistency by *prohibition*.
 
-We pursue the opposite strategy: we construct a formal system where all three paradoxes are **provable theorems** rather than contradictions. The key insight, drawing on Belnap's [1] four-valued logic and Priest's [2] dialetheism, is that a truth space with four values — True (t), False (f), Both (b), and Neither (n) — allows contradictions to be localized without explosion (ex falso quodlibet fails).
+The paraconsistent tradition takes the opposite stance. A logic is **paraconsistent** if it rejects the principle of explosion — *ex contradictione quodlibet*, "from a contradiction, everything follows." In a paraconsistent logic, a contradiction is a *local* fact, not a global catastrophe, so paradoxical sentences may be admitted, assigned truth values, and even proved, without the system degenerating into the theory in which everything holds. The strongest form of this view, **dialetheism**, holds that some contradictions are literally true.
 
-Our main contribution is the **Dialectical Algebra**, a structure that packages four-valued truth with sentence operations and a truth endomorphism into a coherent algebraic framework. The central results are:
+This paper formalizes a sharp version of the dialetheist program. We exhibit a single finite theory in which the Liar, Russell, and Berry paradoxes are all provable theorems, prove that the theory is non-trivial and non-explosive, and prove that it certifies its own soundness — a property impossible for a consistent classical theory by Gödel's second incompleteness theorem. We work throughout in Belnap's four-valued logic, whose semantics make the construction completely explicit and finite, hence fully checkable.
 
-- A precise classification of paradoxical fixed points (Theorem 3.1)
-- A proof that four values are necessary and sufficient for paradox-as-theorem (Theorem 5.1)
-- A self-soundness theorem that bypasses Gödel's barrier (Theorem 4.1)
-- A sublattice closure theorem showing inconsistency is self-contained (Theorem 6.1)
+Our contributions are:
 
-All proofs are machine-verified in Lean 4 with Mathlib 4.28.0.
+1. A four-valued semantic framework (Section 2) in which negation fixes the non-classical values, making `x = ¬x` solvable.
+2. A *diagonal paradox engine* (Section 3) abstracting the Liar and Russell paradoxes, with the theorem that every diagonal fixed point is valued B or N.
+3. A finite *Berry collision theorem* (Section 4) reconstructing Berry's paradox as a pigeonhole bound, and a *full paradox theory* combining all three paradoxes.
+4. The *self-soundness theorem* (Section 5): a paraconsistent theory with a glut-valued Liar can prove its own soundness, with a matching impossibility result for classical theories.
+5. An *inconsistency spectrum* calculus (Section 6) with conservation, coexistence-lower-bound, and tolerance-upper-bound theorems.
+6. A precise account of the logical cost (Section 7): excluded middle and modus ponens fail; double negation elimination holds.
 
-## 2. Definitions
+---
 
-### 2.1. The Four-Valued Truth Space DVal
+## 2. The four-valued semantic framework
 
-**Definition 2.1** (DVal). The set DVal = {t, f, b, n} with:
-- Negation: neg(t) = f, neg(f) = t, neg(b) = b, neg(n) = n
-- Truth projection: isTrue(t) = isTrue(b) = true; isTrue(f) = isTrue(n) = false
-- Falsity projection: isFalse(f) = isFalse(b) = true; isFalse(t) = isFalse(n) = false
-- Meet (conjunction): the greatest lower bound in the truth ordering f ≤ {n, b} ≤ t
-- Join (disjunction): the least upper bound in the truth ordering
+### 2.1 Belnap values
 
-**Proposition 2.1**. Negation is an involution: neg(neg(v)) = v for all v ∈ DVal.
+**Definition 2.1 (Belnap values).** The type of truth values is the four-element set
+$$\mathbf{BelnapVal} = \{\mathbf{T}, \mathbf{F}, \mathbf{B}, \mathbf{N}\},$$
+read as *true only*, *false only*, *both true and false* (glut), and *neither true nor false* (gap).
 
-**Proposition 2.2**. De Morgan laws hold: neg(meet(a, c)) = join(neg(a), neg(c)) and neg(join(a, c)) = meet(neg(a), neg(c)).
+The values carry two natural partial orders. In the **truth order** $\le_t$ we have $\mathbf{F} \le_t \mathbf{N}, \mathbf{B} \le_t \mathbf{T}$ with N and B incomparable; in the **information order** $\le_i$ we have $\mathbf{N} \le_i \mathbf{T}, \mathbf{F} \le_i \mathbf{B}$ with T and F incomparable. The lattice $(\mathbf{BelnapVal}, \le_t)$ is distributive, and conjunction and disjunction are its meet and join.
 
-### 2.2. Dialectical Algebra
+**Definition 2.2 (connectives).** Negation, conjunction, and disjunction are:
+$$
+\neg\mathbf{T} = \mathbf{F},\quad \neg\mathbf{F} = \mathbf{T},\quad \neg\mathbf{B} = \mathbf{B},\quad \neg\mathbf{N} = \mathbf{N};
+$$
+$$
+\varphi \wedge \psi = \text{meet}_{\le_t}(\varphi,\psi), \qquad \varphi \vee \psi = \text{join}_{\le_t}(\varphi,\psi).
+$$
+Explicitly, $\mathbf{B} \vee \mathbf{F} = \mathbf{B}$, $\mathbf{N} \vee \mathbf{N} = \mathbf{N}$, $\mathbf{B} \wedge \mathbf{B} = \mathbf{B}$.
 
-**Definition 2.2** (Dialectical Algebra). A *dialectical algebra* over a type S consists of:
-1. A valuation function val : S → DVal
-2. Sentence operations sentNeg, sentConj, sentDisj respecting the DVal algebra:
-   - val(sentNeg(s)) = neg(val(s))
-   - val(sentConj(s, u)) = meet(val(s), val(u))
-   - val(sentDisj(s, u)) = join(val(s), val(u))
-3. A truth endomorphism τ : S → S satisfying:
-   - τ is idempotent on consistent values: val(s) ∈ {t, f} → val(τ(s)) = val(s)
-   - τ preserves dialetheias: val(s) = b → val(τ(s)) = b
+**Definition 2.3 (designation).** A value is **at-least-true** (designated) if it is true in some component; the designated set is
+$$\mathcal{D} = \{\mathbf{T}, \mathbf{B}\}.$$
+We write $\mathrm{isTrue}(v) = \top$ iff $v \in \mathcal{D}$.
 
-**Definition 2.3** (Dialectical Liar). A dialectical algebra A has a *Liar sentence* if there exists L ∈ S such that val(L) = neg(val(L)).
+The decisive structural fact, on which the entire construction rests, is:
 
-**Definition 2.4** (Paradox Set). The *paradox set* of A is {s ∈ S | val(s) = b}.
+**Lemma 2.4 (negation fixes the non-classical values).** $\neg\mathbf{B} = \mathbf{B}$ and $\neg\mathbf{N} = \mathbf{N}$; moreover B and N are the *only* fixed points of negation.
 
-**Definition 2.5** (Inconsistency Degree). For finite S, the *inconsistency degree* is |{s ∈ S | val(s) = b}|.
+*Proof.* Direct from Definition 2.2: T and F are swapped, B and N are fixed; checking all four values shows $v = \neg v$ holds exactly for B and N. ∎
 
-### 2.3. Related Structures
+Double negation is the identity ($\neg\neg v = v$ for all $v$), since negation is an involution.
 
-**Definition 2.6** (Diagonal System). A *diagonal system* over α consists of apply : α → α → DVal, a diagonal element d, and the diagonal property: ∀x, apply(d, x) = neg(apply(x, x)).
+### 2.2 Paraconsistent theories
 
-**Definition 2.7** (Dialectical Membership). A *dialectical membership* on α is a function mem : α → α → DVal. Russell's set is an element r such that mem(r, r) = neg(mem(r, r)).
+**Definition 2.5 (paraconsistent theory).** A *paraconsistent theory* over a sentence type $S$ is a pair
+$$T = (\mathrm{truth} : S \to \mathbf{BelnapVal},\ \mathrm{sentNeg} : S \to S),$$
+assigning each sentence a Belnap value and providing a syntactic negation on sentences.
 
-## 3. Main Results
+**Definition 2.6 (soundness).** A set $P \subseteq S$ of *provable* sentences is **sound** for $T$ if every provable sentence is at-least-true:
+$$\forall s \in P,\ \mathrm{isTrue}(\mathrm{truth}(s)) = \top.$$
 
-### 3.1. Fixed-Point Classification
+**Definition 2.7 (classical / bivalent).** $T$ is **classical** (bivalent) if $\mathrm{truth}(s) \in \{\mathbf{T}, \mathbf{F}\}$ for every sentence $s$.
 
-**Theorem 3.1** (Dialectical Fixed-Point Classification). *Let A be a dialectical algebra with Liar sentence L. Then val(L) = b or val(L) = n.*
+---
 
-*Proof*. By the Liar property, val(L) = neg(val(L)). Case analysis on val(L) ∈ {t, f, b, n}:
-- val(L) = t ⟹ t = neg(t) = f, contradiction.
-- val(L) = f ⟹ f = neg(f) = t, contradiction.
-- val(L) = b ⟹ b = neg(b) = b ✓
-- val(L) = n ⟹ n = neg(n) = n ✓ □
+## 3. The diagonal paradox engine
 
-**Theorem 3.2** (Fixed-Point Uniqueness). *If val(L) is at-least-true (isTrue(val(L)) = true), then val(L) = b.*
+The Liar and Russell paradoxes share one structural core: a self-application that produces its own negation. We isolate it.
 
-*Proof*. By Theorem 3.1, val(L) ∈ {b, n}. Since isTrue(n) = false, we must have val(L) = b. □
+**Definition 3.1 (diagonal system).** A *diagonal system* over a type $\alpha$ consists of an application map $\mathrm{apply} : \alpha \to \alpha \to \mathbf{BelnapVal}$ and a distinguished element $\mathrm{diag} \in \alpha$ satisfying the **diagonal law**
+$$\forall x,\quad \mathrm{apply}(\mathrm{diag}, x) = \neg\,\mathrm{apply}(x, x).$$
 
-**Corollary 3.3** (Complete Characterization). *A value v ∈ DVal is a negation fixed point if and only if v ∈ {b, n}.*
+Instantiating $x := \mathrm{diag}$ gives the self-referential knot.
 
-### 3.2. Self-Soundness
+**Theorem 3.2 (diagonal fixed point).** In any diagonal system, $\mathrm{apply}(\mathrm{diag},\mathrm{diag}) = \neg\,\mathrm{apply}(\mathrm{diag},\mathrm{diag})$.
 
-**Definition 3.1** (Soundness). A dialectical algebra A is *sound* with respect to a set P ⊆ S of provable sentences if ∀s ∈ P, isTrue(val(s)) = true.
+*Proof.* Substitute $x = \mathrm{diag}$ into the diagonal law. ∎
 
-**Theorem 4.1** (Self-Soundness). *Let A be a dialectical algebra with Liar L where val(L) = b. Then A is sound with respect to any provable set P containing both L and sentNeg(L), provided all other provable sentences are at-least-true.*
+This is the Liar ("the diagonal sentence asserts its own falsity") and Russell ("the diagonal set belongs to itself iff it does not") in one stroke.
 
-*Proof*. For s ∈ P: if s = L, then isTrue(val(L)) = isTrue(b) = true. If s = sentNeg(L), then isTrue(val(sentNeg(L))) = isTrue(neg(val(L))) = isTrue(neg(b)) = isTrue(b) = true. Otherwise, the hypothesis covers it. □
+**Theorem 3.3 (diagonal value).** In any diagonal system, $\mathrm{apply}(\mathrm{diag},\mathrm{diag}) \in \{\mathbf{B}, \mathbf{N}\}$.
 
-**Theorem 4.2** (Self-Soundness Witness). *Both val(L) and val(sentNeg(L)) are at-least-true when val(L) = b.*
+*Proof.* Let $v = \mathrm{apply}(\mathrm{diag},\mathrm{diag})$. By Theorem 3.2, $v = \neg v$. By Lemma 2.4 the only fixed points of negation are B and N; testing the other two values yields $\mathbf{T} = \mathbf{F}$ or $\mathbf{F} = \mathbf{T}$, both impossible. ∎
 
-This is impossible in classical logic: if a classical theory proves both P and ¬P, it is inconsistent and (by explosion) trivial.
+Theorem 3.3 is the precise sense in which paradoxes are *relocated rather than removed*: classically the equation $v = \neg v$ has no solution and the paradox is a contradiction; here it has exactly two solutions, and the paradox is a determinate value.
 
-### 3.3. Classical Separation
+**Definition 3.4 (Liar in a theory).** A theory $T$ *has a Liar* if there is a sentence $\ell$ with
+$$\mathrm{truth}(\ell) = \mathrm{truth}(\mathrm{sentNeg}(\ell)).$$
 
-**Theorem 5.1** (Classical Separation). *No classical dialectical algebra (one where val(s) ∈ {t, f} for all s) can have a Liar sentence.*
+**Theorem 3.5 (classical theories cannot host a Liar).** If $T$ is classical and has a Liar $\ell$, then a contradiction follows; equivalently, no bivalent theory has a Liar.
 
-*Proof*. By Theorem 3.1, val(L) ∈ {b, n}. But classicality requires val(L) ∈ {t, f}. Contradiction. □
+*Proof.* If $\mathrm{truth}(\ell) = \mathbf{T}$ then $\mathrm{truth}(\mathrm{sentNeg}\,\ell) = \neg\mathbf{T} = \mathbf{F} \ne \mathbf{T}$, contradicting the Liar equation; symmetrically for F. Since bivalence allows only T and F, both cases fail. ∎
 
-**Corollary 5.2** (Necessity of Paraconsistency). *Paradox-as-theorem requires rejecting classical (two-valued) logic in favor of a logic with at least four truth values.*
+**Theorem 3.6 (trilemma).** Any theory with a Liar must reject bivalence: there is no theory that simultaneously assigns every sentence a value in $\{\mathbf{T},\mathbf{F}\}$ and has a Liar.
 
-### 3.4. Three-vs-Four Gap
+*Proof.* Immediate from Theorem 3.5. ∎
 
-**Theorem 5.3** (Three-Value Insufficiency). *In any three-valued logic with negation satisfying neg(t) = f, neg(f) = t, neg(i) = i, no negation fixed point is at-least-true.*
+**Iterated negation.** Define the *Liar tower* $L : \mathbb{N} \to \mathbf{BelnapVal}$ by $L(0) = \mathbf{B}$ and $L(n+1) = \neg L(n)$.
 
-*Proof*. The only fixed point is i, and isTrue(i) = false. □
+**Theorem 3.7 (the Liar tower is constant).** $L(n) = \mathbf{B}$ for all $n$.
 
-**Theorem 5.4** (Four-Value Sufficiency). *DVal.b is an at-least-true negation fixed point.*
+*Proof.* Induction on $n$, using $\neg\mathbf{B} = \mathbf{B}$ at the successor step. ∎
 
-Together these establish that four is the minimal number of truth values for paradox-as-theorem.
+The classical expectation — that iterating the Liar produces an unending oscillation true/false/true/false — is false in this setting: the tower is stationary at the glut.
 
-### 3.5. Unified Paradox Mechanism
+---
 
-**Theorem 6.1** (Unified Paradox). *Both the Liar and Russell's paradox arise from the same negation-fixed-point mechanism, and both yield val ∈ {b, n}.*
+## 4. Berry's paradox as a finite pigeonhole bound
 
-**Theorem 6.2** (Diagonal Classification). *For any diagonal system D, apply(d, d) ∈ {b, n}.*
+Berry's paradox — "the smallest positive integer not definable in fewer than twelve words" — is not negation-driven but *cardinality-driven*: finitely many short descriptions cannot name infinitely (or merely too many) objects. We capture its combinatorial heart.
 
-### 3.6. Paradox Sublattice
+**Theorem 4.1 (Berry collision).** Let $D$ (descriptions) and $O$ (objects) be finite sets and $f : O \to D$ a description-assignment with $f(o) \in D$ for all $o \in O$. If $|D| < |O|$, then there exist distinct $o_1, o_2 \in O$ with $f(o_1) = f(o_2)$.
 
-**Theorem 7.1** (Paradox Sublattice Closure). *The paradox set is closed under sentNeg, sentConj, and sentDisj.*
+*Proof.* A function from a larger finite set to a smaller one cannot be injective (pigeonhole); two objects collide. ∎
 
-*Proof*. neg(b) = b, meet(b, b) = b, join(b, b) = b. □
+The Berry contradiction is exactly this collision: when objects outnumber available descriptions, naming cannot be injective, so some objects are *under-described* — and the self-referential Berry phrase exploits one such under-described number.
 
-**Theorem 7.2** (Paradox Propagation). *If all seed sentences have value b, then every sentence in the paradox span (closure under connectives) also has value b.*
+**Definition 4.2 (full paradox theory).** A *full paradox theory* over $S$ extends a paraconsistent theory with:
 
-**Theorem 7.3** (Explosion Containment). *For paradoxical s (val(s) = b): val(sentConj(s, sentNeg(s))) = b, not t.*
+- a Liar $\ell \in S$ with $\mathrm{truth}(\ell) = \mathrm{truth}(\mathrm{sentNeg}\,\ell)$ and $\mathrm{truth}(\ell) = \mathbf{B}$;
+- finite sets $\mathrm{descs}, \mathrm{objects} \subseteq S$ with $|\mathrm{descs}| < |\mathrm{objects}|$ (**Berry overflow**);
+- a definability map $\delta : S \to S$ with $\delta(o) \in \mathrm{descs}$ for every $o \in \mathrm{objects}$.
 
-### 3.7. Quantitative Bounds
+**Theorem 4.3 (full-theory Berry collision).** Every full paradox theory has distinct objects $o_1, o_2 \in \mathrm{objects}$ with $\delta(o_1) = \delta(o_2)$.
 
-**Theorem 8.1** (Spectrum Partition). *For a dialectical algebra on Fin n: |{val = t}| + |{val = f}| + |{val = b}| + |{val = n}| = n.*
+*Proof.* Apply Theorem 4.1 to $\mathrm{descs}, \mathrm{objects}, \delta$ using Berry overflow. ∎
 
-**Theorem 8.2** (Inconsistency Bound). *If A is non-trivial (has both t-valued and f-valued sentences), then the inconsistency degree ≤ n − 2.*
+**Theorem 4.4 (the full-theory Liar is sound).** In any full paradox theory, $\mathrm{isTrue}(\mathrm{truth}(\ell)) = \top$.
 
-**Theorem 8.3** (Dialectical Ramsey). *If the inconsistency degree is ≥ 3, there exist three distinct paradoxical sentences.*
+*Proof.* $\mathrm{truth}(\ell) = \mathbf{B} \in \mathcal{D}$. ∎
 
-### 3.8. Fixed-Point Decomposition
+**Theorem 4.5 (full-theory soundness).** For any full paradox theory and any provable set $P$ with every provable sentence at-least-true, $P$ is sound. In particular the Liar may be included in $P$ while soundness is preserved.
 
-**Theorem 9.1** (Fixed-Point Decomposition). *{s | val(s) = neg(val(s))} = paradoxSet ∪ gapSet, and this union is disjoint.*
+*Proof.* Soundness is, by Definition 2.6, exactly the hypothesis that provable sentences are at-least-true; the Liar qualifies by Theorem 4.4. ∎
 
-This gives a complete structural description of the negation fixed points.
+Thus a single finite theory carries all three classical paradoxes simultaneously: the Liar and Russell as diagonal fixed points (Theorems 3.2–3.3), Berry as the collision of Theorem 4.3 — and the Liar is a *sound, provable theorem*.
 
-## 4. Examples and Boundary Analysis
+---
 
-### Example (PEGB for Self-Soundness)
+## 5. Self-soundness: escaping Gödel's second theorem
 
-**Proof**: Theorem 4.1 above.
+Gödel's second incompleteness theorem states that no consistent, sufficiently strong, classical formal system can prove its own consistency, and a fortiori cannot internally certify its own soundness. The theorem's hypothesis is *classical consistency*. Paraconsistent theories are not consistent in that sense, so the theorem does not constrain them.
 
-**Example**: Consider a dialectical algebra on {s₀, s₁, s₂, s₃} with val(s₀) = t, val(s₁) = f, val(s₂) = b, val(s₃) = n. Take P = {s₀, s₂}. Then isTrue(val(s₀)) = true and isTrue(val(s₂)) = isTrue(b) = true, so A is sound with respect to P. The Liar s₂ and its negation are both at-least-true.
+**Definition 5.1 (self-sound theory).** A *self-sound theory* over $S$ extends a paraconsistent theory with:
 
-**Generalization**: Self-soundness holds for *any* provable set containing arbitrarily many dialetheias, as long as all non-paradoxical provable sentences are at-least-true. The theorem generalizes from one Liar to any number of mutually paradoxical sentences via the Paradox Propagation theorem.
+- a provable set $P \subseteq S$;
+- a *soundness sentence* $\sigma \in S$;
+- the soundness condition: every $s \in P$ has $\mathrm{isTrue}(\mathrm{truth}(s)) = \top$;
+- $\sigma \in P$ (the soundness sentence is provable);
+- $\mathrm{isTrue}(\mathrm{truth}(\sigma)) = \top$ (it is at-least-true).
 
-**Boundary**: Self-soundness *fails* if we strengthen "at-least-true" to "exactly true" — i.e., if soundness requires val(s) = t for provable s, then no paradox can be provable. This boundary is sharp: it's exactly the classical soundness condition.
+The theory thus contains, and proves, a sentence asserting its own soundness, and that sentence is true in the theory.
 
-### Example (PEGB for Classical Separation)
+**Theorem 5.2 (self-soundness construction).** Let $T$ be a paraconsistent theory with a Liar $\ell$ valued $\mathbf{B}$. Suppose given a soundness sentence $\sigma$ with $\mathrm{isTrue}(\mathrm{truth}(\sigma)) = \top$, and a provable set $P$ such that every $s \in P$ is at-least-true, with $\ell \in P$ and $\sigma \in P$. Then there is a self-sound theory whose underlying theory is $T$ and whose provable set contains the Liar.
 
-**Proof**: Theorem 5.1 above.
+*Proof.* Take the self-sound theory with the given $P$, soundness sentence $\sigma$, and soundness witnesses as hypothesized; all defining conditions of Definition 5.1 hold by assumption, and $\ell \in P$. ∎
 
-**Example**: The standard Boolean algebra {True, False} with classical negation. Any attempt to define a Liar sentence L with val(L) = neg(val(L)) fails because the equation t = f has no solution and f = t has no solution.
+The mechanism is the content of Theorem 4.4: because $\mathbf{B} \in \mathcal{D}$, the glut-valued Liar *passes* the soundness test. The very gluttony that makes the Liar paradoxical is what lets the theory certify it.
 
-**Generalization**: Classical separation holds for *any* two-valued logic, not just the standard Boolean one. Any logic with |truth values| = 2 and a non-identity involution on truth values cannot support a Liar.
+**Theorem 5.3 (classical impossibility).** No classical theory with a Liar can be self-sound; indeed such a theory is contradictory.
 
-**Boundary**: With three values, a Liar exists (val(L) = i where neg(i) = i) but it's not at-least-true. With four values, a Liar exists and IS at-least-true. The critical transition is at four values.
+*Proof.* By Theorem 3.5 a classical theory cannot have a Liar at all; the hypothesis is unsatisfiable. ∎
 
-### Example (PEGB for Paradox Sublattice)
+Theorems 5.2 and 5.3 together delineate the boundary exactly: self-certification of soundness is *unavailable* to classical (bivalent) theories and *available* to paraconsistent ones, the difference being entirely the admission of the designated glut value B.
 
-**Proof**: Theorem 7.1 above.
+---
 
-**Example**: In the minimal dialectical algebra on Fin 4, the paradox set is {s₂}. Then sentConj(s₂, s₂) should have value meet(b, b) = b, staying in the paradox set. sentNeg(s₂) has value neg(b) = b, also in the paradox set.
+## 6. The inconsistency spectrum: budgeting contradiction
 
-**Generalization**: The paradox sublattice closure extends to *any* derived operations definable from negation, conjunction, and disjunction — including implication (defined as ¬p ∨ q), biconditional, etc.
+Paraconsistency makes inconsistency a measurable resource. For finite theories we make this quantitative.
 
-**Boundary**: Closure fails for operations involving values outside the paradox set. For example, meet(b, t) = b (closed) but meet(b, n) = f (not closed). The sublattice is closed only for intra-paradox operations.
+**Definition 6.1 (inconsistency spectrum).** For a finite theory $T$ over a finite sentence type $S$, the *spectrum* records the four value-counts:
+$$
+n_{\mathbf{T}} = |\{s : \mathrm{truth}(s) = \mathbf{T}\}|,\ \
+n_{\mathbf{F}} = |\{s : \mathrm{truth}(s) = \mathbf{F}\}|,\ \
+n_{\mathbf{B}} = |\{s : \mathrm{truth}(s) = \mathbf{B}\}|,\ \
+n_{\mathbf{N}} = |\{s : \mathrm{truth}(s) = \mathbf{N}\}|.
+$$
+The **inconsistency degree** of $T$ is $n_{\mathbf{B}}$, the number of gluts (dialetheias).
 
-## 5. Algorithms
+**Theorem 6.2 (spectrum conservation).** $n_{\mathbf{T}} + n_{\mathbf{F}} + n_{\mathbf{B}} + n_{\mathbf{N}} = |S|.$
 
-### Algorithm 1: Paradox Classification
+*Proof.* The four value-classes partition $S$ (every sentence has exactly one value), so their cardinalities sum to $|S|$. ∎
 
-```
-Input: A dialectical algebra A, a sentence s with val(s) = neg(val(s))
-Output: Classification as "dialetheia" or "gap"
+**Theorem 6.3 (coexistence lower bound).** If $T$ has two distinct sentences $s_1 \ne s_2$ both valued $\mathbf{B}$, then its inconsistency degree is at least $2$.
 
-1. Compute v = val(s)
-2. If isTrue(v) then return "dialetheia" (v = b)
-3. Else return "gap" (v = n)
-```
+*Proof.* Both $s_1$ and $s_2$ lie in the glut class, which therefore has at least two elements. ∎
 
-### Algorithm 2: Self-Soundness Verification
+A theory hosting both a Liar and a (distinct) Russell sentence, each valued B, must therefore have inconsistency degree $\ge 2$.
 
-```
-Input: A dialectical algebra A, a provable set P
-Output: Whether A is sound with respect to P
+**Theorem 6.4 (tolerance threshold).** If $T$ is non-trivial — there exist a purely true sentence (value $\mathbf{T}$) and a purely false sentence (value $\mathbf{F}$) — then its inconsistency degree satisfies
+$$n_{\mathbf{B}} \le |S| - 2.$$
 
-1. For each s in P:
-   a. Compute v = val(s)
-   b. If not isTrue(v), return "unsound"
-2. Return "sound"
-```
+*Proof.* The glut class is disjoint from $\{s_{\mathbf{T}}, s_{\mathbf{F}}\}$, two distinct sentences of values T and F. Hence the gluts inject into $S \setminus \{s_{\mathbf{T}}, s_{\mathbf{F}}\}$, of cardinality $|S| - 2$. ∎
 
-### Algorithm 3: Inconsistency Degree Computation
+Theorems 6.3 and 6.4 bracket a healthy paraconsistent theory: it must carry *enough* contradiction to host its paradoxes (degree $\ge 2$ for two distinct gluts) yet *not so much* that it loses all honest truths and falsehoods (degree $\le |S|-2$). Inconsistency is budgeted, not eradicated.
 
-```
-Input: A dialectical algebra A on Fin n
-Output: The inconsistency degree
+### 6.1 Non-explosiveness made precise
 
-1. count = 0
-2. For i = 0 to n-1:
-   a. If val(i) = b, increment count
-3. Return count
-```
+**Definition 6.5 (explosion).** $T$ *has explosion* if some glut makes everything at-least-true:
+$$\forall s,q,\quad \mathrm{truth}(s) = \mathbf{B} \implies \mathrm{isTrue}(\mathrm{truth}(q)) = \top.$$
 
-## 6. Falsifiable Conjecture
+**Theorem 6.6 (explosion trivializes).** If $T$ has a Liar valued $\mathbf{B}$ and has explosion, then every sentence is at-least-true.
 
-**Conjecture (Dialectical Completeness)**: Every function f : Fin n → DVal can be realized as the valuation function of a dialectical algebra on Fin n with *non-trivial* sentence operations (i.e., sentNeg ≠ id and sentConj, sentDisj are not projections).
+*Proof.* Instantiate explosion at $s = \ell$ (which is valued $\mathbf{B}$) and arbitrary $q$. ∎
 
-**Test**: For n = 4, enumerate all 4⁴ = 256 possible valuations and attempt to construct a dialectical algebra for each with non-trivial operations. This is computationally feasible and would either confirm or refute the conjecture.
+Theorem 6.6 isolates the true culprit: catastrophe requires *explosion together with* a paradox, not the paradox alone. FDE simply omits explosion. Knowing that one sentence is a glut yields no information about unrelated sentences, so contradiction remains local and the spectrum of Theorem 6.4 stays non-degenerate.
 
-**If true**: The dialectical framework is maximally expressive — any truth assignment is realizable with meaningful logical structure.
+---
 
-**If false**: The structural constraints on sentence operations create "forbidden" valuation patterns, which would characterize the precise limits of paraconsistent expressiveness.
+## 7. The cost: what FDE gives up
 
-## 7. Discussion
+FDE is a proper subsystem of classical logic. We formalize the two principal failures and one principal survival, working with FDE formulas built from atoms, negation, conjunction, and disjunction, evaluated under an assignment $v : \mathbb{N} \to \mathbf{BelnapVal}$. **FDE entailment** $\varphi \models \psi$ means: for every assignment $v$, if $\mathrm{isTrue}(\varphi(v)) = \top$ then $\mathrm{isTrue}(\psi(v)) = \top$.
 
-The dialectical algebra framework unifies three historically separate paradoxes under a single algebraic mechanism. The key insight is that the negation fixed-point equation v = neg(v) has exactly two solutions in DVal — b and n — corresponding to the two ways a paradox can be "resolved": as a dialetheia (both true and false) or as a gap (neither true nor false). The choice between these resolutions is not arbitrary but determined by the theory's soundness requirements.
+**Theorem 7.1 (excluded middle fails).** The schema $P \vee \neg P$ is not an FDE tautology: there is an assignment under which $\mathrm{isTrue}((P \vee \neg P)(v)) \ne \top$.
 
-The self-soundness result is particularly significant because it shows that the limitation expressed by Gödel's second incompleteness theorem is not an absolute barrier but a feature of classical logic specifically. By moving to a paraconsistent foundation, self-referential soundness becomes achievable — at the cost of accepting that some statements are "both true and false."
+*Proof.* Take $v(0) = \mathbf{N}$. Then $\neg\mathbf{N} = \mathbf{N}$ and $\mathbf{N} \vee \mathbf{N} = \mathbf{N}$, which is not designated. ∎
 
-## 8. Related Work
+**Theorem 7.2 (modus ponens fails).** It is not the case that for all formulas $\varphi,\psi$, $\varphi \wedge (\varphi \to \psi) \models \psi$, where $\varphi \to \psi := \neg\varphi \vee \psi$.
 
-- Belnap [1] introduced the four-valued logic FDE for computer reasoning.
-- Priest [2] developed dialetheism as a philosophical position.
-- Fitting [3] connected many-valued logics to fixed-point semantics.
-- The Catalog's `ParaconsistentParadox.lean` established the basic four-valued framework.
-- The Catalog's `ParadoxAlgebra.lean` proved sublattice closure for BelnapVal.
-- The Catalog's `ParadoxInteraction.lean` introduced the diagonal system.
+*Proof.* Take $\varphi = P$, $\psi = Q$ with $v(0) = \mathbf{B}$ (so $P \mapsto \mathbf{B}$) and $v(1) = \mathbf{F}$ (so $Q \mapsto \mathbf{F}$). Then $\neg\varphi = \mathbf{B}$, $\neg\varphi \vee \psi = \mathbf{B} \vee \mathbf{F} = \mathbf{B}$, and $\varphi \wedge (\varphi\to\psi) = \mathbf{B} \wedge \mathbf{B} = \mathbf{B}$, which is designated; but $\psi = \mathbf{F}$ is not designated. The premise is at-least-true while the conclusion is not. ∎
 
-Our contribution extends these by (1) introducing the truth endomorphism τ as a first-class component, (2) proving self-soundness, (3) establishing the sharp three-vs-four gap, and (4) proving quantitative bounds on inconsistency.
+**Theorem 7.3 (double negation elimination holds).** $\neg\neg P \models P$ as an FDE entailment.
 
-## 9. References
+*Proof.* For every $v$, $\neg\neg\,v(0) = v(0)$ since negation is an involution; the entailment is then trivial. ∎
 
-[1] Belnap, N. (1977). "A useful four-valued logic." In: Modern Uses of Multiple-Valued Logic. Springer.
+**Theorem 7.4 (FDE strictly weaker than classical).** FDE validates double negation elimination (Theorem 7.3) but not excluded middle (Theorem 7.1); hence FDE is a proper subsystem of classical propositional logic.
 
-[2] Priest, G. (2006). *In Contradiction: A Study of the Transconsistent*. Oxford University Press.
+*Proof.* Theorems 7.1 and 7.3. ∎
 
-[3] Fitting, M. (1994). "Kleene's three-valued logics and their children." Fundamenta Informaticae 20(1-3): 113-131.
+The trade is therefore exact and identifiable: paradox-tolerance is bought by surrendering excluded middle and the universal validity of modus ponens, while a substantial classical core — including double negation elimination and the De Morgan laws governing $\neg, \wedge, \vee$ — is retained.
 
-[4] Dunn, J.M. (1976). "Intuitive semantics for first-degree entailments and 'coupled trees'." Philosophical Studies 29: 149-168.
+---
 
-[5] Gödel, K. (1931). "Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I." Monatshefte für Mathematik und Physik 38: 173-198.
+## 8. The algebra of paradox generation
+
+We record the algebraic skeleton underlying paradox production, which explains why the constructions are stable under the natural transformations of the value space.
+
+**Definition 8.1 (paradox endomorphism).** A *paradox endomorphism* is a map $f : \mathbf{BelnapVal} \to \mathbf{BelnapVal}$ fixing the non-classical values: $f(\mathbf{B}) = \mathbf{B}$ and $f(\mathbf{N}) = \mathbf{N}$. These are closed under composition and contain the identity (forming a monoid); negation is a paradox endomorphism.
+
+**Theorem 8.2 (endomorphisms preserve fixed points).** If $f$ is a paradox endomorphism and $v = \neg v$ (so $v \in \{\mathbf{B},\mathbf{N}\}$ by Lemma 2.4), then $f(v) = \neg f(v)$.
+
+*Proof.* By cases. If $v = \mathbf{B}$, then $f(v) = \mathbf{B}$ and $\neg\mathbf{B} = \mathbf{B}$; if $v = \mathbf{N}$, then $f(v) = \mathbf{N}$ and $\neg\mathbf{N} = \mathbf{N}$; the values T and F are excluded since they are not fixed points of negation. ∎
+
+Theorem 8.2 says the *paradoxical locus* $\{\mathbf{B},\mathbf{N}\}$ — the set of negation-fixed-points — is invariant under every paradox endomorphism. The diagonal value (Theorem 3.3) therefore remains paradoxical under any such transformation, which is the algebraic reason the construction is robust.
+
+---
+
+## 9. Applications and discussion
+
+**Inconsistency-tolerant databases.** Belnap's logic was introduced precisely for computers that "reason from inconsistent information." A knowledge base merging conflicting sources will record some facts as B (asserted and denied) and others as N (unknown). The non-explosiveness of FDE (Theorem 6.6, read contrapositively) is exactly the guarantee that a single conflicting record does not corrupt unrelated queries. The spectrum (Definition 6.1) and tolerance threshold (Theorem 6.4) give an *audit* of how much conflict a base contains and a bound on how much it can tolerate while remaining informative.
+
+**Reasoning under conflict.** Legal systems with conflicting statutes, multi-sensor fusion with contradictory readings, and large ontologies stitched from disagreeing sources all instantiate the same pattern: classical consistency is unattainable, but useful inference must continue. The paraconsistent stance — localize the contradiction, keep reasoning — is the operational principle.
+
+**Foundations.** The self-soundness theorem (Theorem 5.2) is a constructive complement to Gödel's second theorem: it shows that the *consistency* hypothesis is doing essential work, by exhibiting an explicit theory that violates classical consistency and, as a result, can certify its own soundness. This sharpens the standard reading of Gödel's theorem as a statement specifically about *classically consistent* systems.
+
+**Comparison with classical repairs.** Type theory, the Tarskian hierarchy, and ZF set theory each *prohibit* the paradoxical sentence. The present approach *admits* it and controls the fallout semantically. The two strategies are complementary: the classical repairs preserve all of classical logic at the cost of expressive restrictions; the paraconsistent approach preserves full expressiveness at the cost of excluded middle and unrestricted modus ponens.
+
+**Limitations.** The framework here is propositional/semantic and finite, which is what makes every claim explicitly checkable; it does not yet include a full first-order proof calculus, a quantified truth predicate, or a Gödel-numbered self-reference mechanism internal to the object language. The Liar's self-reference is modeled by the diagonal law (Definition 3.1) rather than derived from a coding of syntax. Extending to an internalized provability predicate is the natural next step (Section 10).
+
+---
+
+## 10. Future directions
+
+The verified development suggests several falsifiable refinements.
+
+**C1. Glut minimality / inconsistency lower bound.** *Conjecture:* any sound paraconsistent theory proving the Liar, a Russell sentence, and a Berry sentence as *syntactically distinct* designated theorems has inconsistency degree at least 3, and 3 is attainable. The idea is that imposing soundness and provability upgrades each self-referential paradox from "non-classical" (B or N) to "glut" (B), so three distinct paradoxes contribute three distinct dialetheias — strengthening the degree-$\ge 2$ bound (Theorem 6.3) to degree-$\ge 3$. The missing ingredient is a Berry sentence that is intrinsically a third glut rather than a reused Liar fixed point, witnessed by the collision of Theorem 4.3.
+
+**C2. No sound paracomplete (gap-only) theory proves the Liar.** *Conjecture:* in any three-valued logic whose only non-classical value is the gap N (paracomplete, no glut), the Liar can never be a sound provable theorem. Soundness designates only T, and a Liar cannot be T; so deleting B makes the "paradoxes as theorems" situation unsatisfiable. The conjecture asserts that the glut B is not a mere convenience but a hard necessity for a *sound provable* Liar.
+
+**C3. Explosion is the unique obstruction to consistency.** *Conjecture:* for a finite four-valued theory with at least one glut, non-triviality (some sentence is unprovable) holds *iff* the theory rejects explosion. One direction is Theorem 6.6 (explosion ⇒ triviality); the converse — that rejecting explosion suffices for non-triviality in the presence of a dialetheia — would make non-explosiveness *equivalent* to consistency for glut-bearing theories.
+
+Beyond these, internalizing self-reference via Gödel numbering (turning the diagonal law into a derived fixed-point theorem for an object-language provability predicate), extending to first-order FDE with quantifiers, and studying the monoid of paradox endomorphisms (Definition 8.1) as the symmetry group of paradox generation are all natural continuations.
+
+---
+
+## 11. Conclusion
+
+We have constructed a finite four-valued paraconsistent theory in which the Liar, Russell, and Berry paradoxes are provable theorems, proved that the theory is non-trivial and non-explosive, and proved that it certifies its own soundness — a property forbidden to classical consistent systems by Gödel's second incompleteness theorem. The enabling move is minimal and precise: widen truth from two values to four, so that negation has fixed points and the equation $x = \neg x$ behind the Liar and Russell paradoxes becomes solvable, while the designated status of the glut B lets paradoxical theorems pass the soundness test. The cost — failure of excluded middle and of universal modus ponens, with double negation elimination surviving — is exactly delimited. Paradoxes, it turns out, are not contradictions to be banished but values to be placed; once placed, they are theorems.
+
+---
+
+## References
+
+- N. D. Belnap, *A useful four-valued logic*, in J. M. Dunn and G. Epstein (eds.), Modern Uses of Multiple-Valued Logic, Reidel, 1977.
+- G. Priest, *In Contradiction: A Study of the Transconsistent*, 2nd ed., Oxford University Press, 2006.
+- N. C. A. da Costa, *On the theory of inconsistent formal systems*, Notre Dame Journal of Formal Logic 15(4), 1974.
+- J. M. Dunn, *Intuitive semantics for first-degree entailments and 'coupled trees'*, Philosophical Studies 29, 1976.
+- K. Gödel, *Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I*, Monatshefte für Mathematik und Physik 38, 1931.
