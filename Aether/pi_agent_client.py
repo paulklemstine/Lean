@@ -439,8 +439,7 @@ class PiAgentClient:
                 {"role": "system", "content": system},
                 {"role": "user", "content": user}
             ],
-            "temperature": 0.85,
-            "top_p": 0.92
+            "temperature": 0.85
         }
         input_chars = len(system) + len(user)
 
@@ -634,7 +633,6 @@ class PiAgentClient:
                     {"role": "user", "content": user}
                 ],
                 "temperature": 0.85,
-                "top_p": 0.92,
             }
 
             try:
@@ -706,7 +704,6 @@ class PiAgentClient:
                 {"role": "user", "content": user}
             ],
             "temperature": 0.85,
-            "top_p": 0.92,
         }
 
         try:
