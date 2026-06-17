@@ -547,8 +547,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const genBtn = document.createElement('button');
             genBtn.className = 'run-btn viz-generate-btn';
             genBtn.textContent = 'Generate';
-            // Disable until Pyodide is ready; re-enable globally in initPyodide.
-            genBtn.disabled = true;
 
             btnGroup.appendChild(toggleBtn);
             btnGroup.appendChild(genBtn);
