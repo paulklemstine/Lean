@@ -2347,6 +2347,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Prime Number Crossword\n\nThis cycle established the two boundary facts of the prime crossword in\n`Cryptography/PrimeGaps/`:\n\n* `exists_consecutive_composites` / `gaps_unbounded` — gaps are arbitrarily wide;\n* `gaps_unbounded_cofinal` — arbitrarily wide gaps occur arbitrarily far out;\n* `nextPrime_sub_le` — every gap above a prime `p` is at most `p` (Bertrand).\n\nBelow are falsifiable conjectures for the next cycle. Each is stated so that it\ncan be formalized directly as a Lean theorem about `PrimeGaps.nextPrime`.\n\n## C1. A quantitative Bertrand gap bound, sharpened\n**Conjecture.** For every prime `p ≥ 5`, `nextPrime p - p ≤ p / 2`, and more\nstrongly the relative gap `(nextPrime p - p) / p → 0`.\n*Formalization target:* prove `∀ p, p.Prime → 5 ≤ p → nextPrime p - p ≤ p / 2`\nusing Nagura-type explicit estimates (prime in `(n, 6n/5]` for `n ≥ 25`).\n*Falsifiable:* a single prime with gap exceeding `p/2` refutes it.\n\n## C2. Average gap matches the logarithm (Prime Number Theorem flavor)\n**Conjecture.** The mean gap up to `x`, `x / π(x)`, grows like `log x`. A first\nformal milestone: `∀ x ≥ 2, π(x) ≤ x` paired with a lower bound\n`π(x) ≥ c · x / log x`. *Target:* connect `nextPrime` iterates to `Nat.primeCounting`\nin Mathlib and prove `nextPrime p - p` has Cesàro average `Θ(log p)`.\n\n## C3. Maximal gap function is well defined and unbounded but slowly growing\n**Conjecture.** `G(x) := max { nextPrime p - p : p prime, p ≤ x }` satisfies\n`G(x) ≤ x` (immediate from Bertrand) and `G(x) → ∞` (immediate from\n`gaps_unbounded_cofinal`), while conjecturally `G(x) = O((log x)^2)` (Cramér).\n*Target:* formalize `G` as a `Finset.sup`, prove the two unconditional bounds,\nand state Cramér's `O((log x)^2)` bound as an open hypothesis.\n\n## C4. Twin-gap dichotomy / Polignac\n**Conjecture (Polignac, open).** Every even number `2k` is a gap between\nconsecutive primes infinitely often: `∀ k ≥ 1, {p : nextPrime p - p = 2k}` is\ninfinite. *Target:* state precisely with `Set.Infinite`; as a tractable\nsub-result prove the *finite* version — for each `k` there is at least one prime\ngap of size `≥ 2k` (already implied by `gaps_unbounded`) and search for explicit\nsmall-`k` witnesses via `native_decide`.\n\n## C5. Cryptographic safe-prime spacing\n**Conjecture.** Safe primes (`p` with `(p-1)/2` also prime) exhibit the same\ngap-unboundedness: `∀ N, ∃ p, p` safe-prime `∧ nextSafePrime p - p ≥ N`.\n*Target:* define `SafePrime` and `nextSafePrime`, then transport the factorial /\nbracketing construction. This directly models the cost of safe-prime search in\nDiffie–Hellman parameter generation.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2068",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "21cfd7dd",
+    "status": "available",
+    "timestamp": "2026-06-17T23:11:17.377449+00:00",
+    "title": "Two boundary facts of the prime crossword in"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -3894,26 +3914,6 @@
     "status": "failed",
     "timestamp": "2026-06-01T12:30:30.505215+00:00",
     "title": "The Unreasonable Effectiveness of the Number 163"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "21cfd7dd",
-    "description": "Prime gaps — the spaces between consecutive primes — are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable — given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random — they are a solvable crossword puzzle with deterministic rules.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0030",
-    "lineage_refs": [],
-    "priority_score": 0.05,
-    "proof_strategy": "Define the prime gap sequence g(n) = p(n+1) - p(n) for n >= 1. State the Hardy-Littlewood gap conjecture: P(g(n) = g | g(n-1) = g_{-1}, ...) = 2*C_2/g * (1/log(p(n))) * product_{q prime, q | g} (q-1)/(q-2) where C_2 = 0.66016... is the twin prime constant. Define forcing patterns: a sequence of gaps g_{-k}, ..., g_{-1} is forcing if P(g(0) = g | g_{-k}, ..., g_{-1}) > 0.99 for exactly one value of g. Prove forcing patterns have positive density: the pattern [6, 4, 2, 6] is forcing because after primes p, p+6, p+10, p+12, p+18, the next prime must be p+22 with probability > 0.95 (since p+20 is even, p+21 is divisible by 3 if p ≡ 1 mod 3, etc.). Compute conditional probabilities numerically for N = 10^8. Test: enumerate forcing patterns and compute their density.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.525722+00:00",
-    "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
   },
   {
     "ambition_level": "extension",
