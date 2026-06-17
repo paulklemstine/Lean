@@ -398,10 +398,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         outputContainer.innerHTML = '<div class="viz-loading">Installing packages...</div>';
 
-        let stdout = "";
-        window.Aether.pyodideInstance.setStdout({ batched: (msg) => { stdout += msg + "\n"; } });
-        window.Aether.pyodideInstance.setStderr({ batched: (msg) => { stdout += msg + "\n"; } });
-
         try {
             // Handle local module imports (algorithms, demo, etc.) by inlining their code
             let processedCode = code;
@@ -482,8 +478,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             );
 
-            // Auto-detect and load all packages from the code imports
-            // Build the full wrapped code first so loadPackagesFromImports can scan it
+            // Build the wrapped code so the final expression returns the rendered output.
+            // Returning the value avoids relying on the global stdout capture, which is
+            // racy when several visualizations/demos auto-run concurrently on load.
             let fullCode;
             if (isPlotly) {
                 fullCode = `
@@ -495,10 +492,9 @@ ${processedCode}
 _viz_figs_ = [obj for obj in globals().values() if isinstance(obj, go.Figure)]
 if _viz_figs_:
     fig = _viz_figs_[-1]
-    _html_out = pio.to_html(fig, full_html=False, include_plotlyjs='cdn')
-    print("VIZHTML:" + _html_out)
+    pio.to_html(fig, full_html=False, include_plotlyjs='cdn')
 else:
-    print("VIZERROR:No plotly Figure object found. Assign your figure to a variable named 'fig'.")
+    raise RuntimeError("No plotly Figure object found. Assign your figure to a variable named 'fig'.")
 `;
             } else {
                 fullCode = `
@@ -508,30 +504,27 @@ import matplotlib.pyplot as plt
 import io
 import base64
 
-# Override plt.savefig to be a no-op so visualization scripts that call
-# plt.savefig(filename) don't try to write to the virtual filesystem
+# Override plt.savefig and plt.close during user code so calls like
+# plt.savefig('file.png') don't write to the virtual filesystem and
+# plt.close() doesn't destroy the figure before we can capture it.
 _orig_savefig = plt.savefig
+_orig_close = plt.close
 def _viz_savefig(*args, **kwargs):
     pass
-plt.savefig = _viz_savefig
-
-# Override plt.close to be a no-op so figures survive for capture
-_orig_close = plt.close
 def _viz_close(*args, **kwargs):
     pass
+plt.savefig = _viz_savefig
 plt.close = _viz_close
 
 ${processedCode}
 
-# Restore and capture via buffer
-plt.close = _orig_close
+# Restore originals and capture the current figure
 plt.savefig = _orig_savefig
+plt.close = _orig_close
 buf = io.BytesIO()
 plt.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='white')
 buf.seek(0)
-img_data = base64.b64encode(buf.read()).decode('utf-8')
-plt.close('all')
-print("VIZIMG:" + img_data)
+base64.b64encode(buf.read()).decode('utf-8')
 `;
             }
 
@@ -544,10 +537,11 @@ print("VIZIMG:" + img_data)
             outputContainer.innerHTML = '<div class="viz-loading">Running visualization...</div>';
 
             // Run the wrapped code, retrying on missing module errors
+            let result;
             let attempts = 0;
             while (attempts < 3) {
                 try {
-                    await window.Aether.pyodideInstance.runPythonAsync(fullCode);
+                    result = await window.Aether.pyodideInstance.runPythonAsync(fullCode);
                     break;
                 } catch (runErr) {
                     const match = runErr.toString().match(/ModuleNotFoundError.*module '(\w+)'/);
@@ -569,9 +563,15 @@ print("VIZIMG:" + img_data)
                 }
             }
 
-            // Parse output for VIZIMG: or VIZHTML: markers
-            if (stdout.includes('VIZIMG:')) {
-                const imgData = stdout.substring(stdout.indexOf('VIZIMG:') + 7).trim();
+            // result is either a base64 PNG string (matplotlib) or plotly HTML
+            if (isPlotly) {
+                // Remove any non-HTML lines before the plotly div, just in case
+                const htmlData = String(result || '');
+                const plotlyStart = htmlData.indexOf('<div');
+                const cleanHtml = plotlyStart >= 0 ? htmlData.substring(plotlyStart) : htmlData;
+                outputContainer.innerHTML = cleanHtml;
+            } else {
+                const imgData = String(result || '');
                 const img = document.createElement('img');
                 img.src = 'data:image/png;base64,' + imgData;
                 img.style.cssText = 'width: 100%; border-radius: 8px; cursor: pointer; display: block;';
@@ -594,21 +594,9 @@ print("VIZIMG:" + img_data)
                 });
                 outputContainer.innerHTML = '';
                 outputContainer.appendChild(img);
-            } else if (stdout.includes('VIZHTML:')) {
-                const htmlData = stdout.substring(stdout.indexOf('VIZHTML:') + 8);
-                // Remove any non-HTML lines before the plotly div
-                const plotlyStart = htmlData.indexOf('<div');
-                const cleanHtml = plotlyStart >= 0 ? htmlData.substring(plotlyStart) : htmlData;
-                outputContainer.innerHTML = cleanHtml;
-            } else if (stdout.includes('VIZERROR:')) {
-                const errMsg = stdout.substring(stdout.indexOf('VIZERROR:') + 10).split('\n')[0];
-                outputContainer.innerHTML = `<div class="code-output error">${errMsg}</div>`;
-            } else {
-                // Fallback: show text output
-                outputContainer.innerHTML = `<pre class="code-output">${stdout || 'Done. (No visualization output)'}</pre>`;
             }
         } catch (err) {
-            outputContainer.innerHTML = `<pre class="code-output error">${stdout}\n${err.toString()}</pre>`;
+            outputContainer.innerHTML = `<pre class="code-output error">${err.toString()}</pre>`;
         } finally {
             if (buttonEl) {
                 buttonEl.disabled = false;
