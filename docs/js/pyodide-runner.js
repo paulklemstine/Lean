@@ -284,6 +284,20 @@ document.addEventListener('DOMContentLoaded', () => {
             if (result !== undefined && result !== null) {
                 stdout += result + "\n";
             }
+
+            // Many Aristotle demos define `def main()` guarded by `if __name__ == "__main__":`,
+            // which does not execute under Pyodide's runPythonAsync. Detect that pattern and
+            // append an explicit main() call so the demo actually produces output.
+            const hasMain = /\bdef main\s*\(/.test(editor.value);
+            const hasGuard = /if\s+__name__\s*==\s*['"]__main__['"]/.test(editor.value);
+            if (hasMain && hasGuard) {
+                try {
+                    await window.Aether.pyodideInstance.runPythonAsync("main()");
+                } catch (mainErr) {
+                    stdout += "\n" + mainErr.toString();
+                }
+            }
+
             output.textContent = stdout || "Done. (No output)";
         } catch (err) {
             output.classList.add('error');
