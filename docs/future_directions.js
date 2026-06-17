@@ -1038,7 +1038,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Erd\u0151s\u2013Straus Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6fb69121",
     "description": "The Hodge conjecture states that every rational cohomology class on a projective variety is a rational linear combination of algebraic cycles. For a ReLU neural network f: R^n -> R, the decision surface V(f) = {x : f(x) = 0} is a piecewise linear hypersurface. Conjecture: every rational homology class in H_{n-2}(V(f), Q) is represented by an algebraic cycle (a subvariety of V(f) of codimension 1). Since V(f) is piecewise linear, its homology groups are finitely generated and every cycle is a formal sum of linear pieces. Each linear piece is an algebraic cycle (a hyperplane section). Conjecture: the piecewise linear Hodge conjecture holds \u2014 every homology class in V(f) is a sum of hyperplane sections. This is TRUE for piecewise linear varieties because every face of a polyhedron is cut out by a linear equation. The deeper conjecture: for a ReLU network with L layers and widths (n, w_1, ..., w_L, 1), the Hodge numbers h^{p,q}(V(f)) satisfy h^{p,q} <= (w_1 choose p) * (w_L choose q) * prod_{i=2}^{L-1} w_i. Test: compute H_{n-2}(V(f)) for small ReLU networks and verify that every class is represented by hyperplane sections. Impact: the Hodge conjecture is trivially true for neural network decision surfaces. The non-trivial content is the BOUND on Hodge numbers.",
     "domains": [
       "Novelty",
@@ -1048,7 +1048,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.76,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.728070+00:00",
     "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
@@ -1366,6 +1366,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-16T23:48:48.355410+00:00",
     "title": "Derived from the research cycle formalized in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Unstoppable Self-Maps (Geometry)\n\nFollow-up conjectures for the theme *\"Self-modifying code that cannot be stopped\"*,\nbased on `Geometry/Unstoppable.lean` (the **drift criterion** for aperiodicity and\nits finite-state converse). Each is stated to be directly formalizable and\nfalsifiable in Lean 4 / Mathlib.\n\n## Conjecture 1 \u2014 Drift criterion is complete on the line\n**Statement.** Let `f : \u211d \u2192 \u211d` be continuous and monotone. Then `f` is\n`Unstoppable` (no periodic points) **iff** it admits a continuous drift coordinate,\nequivalently iff `f x \u2260 x` for all `x` and `f x - x` has constant sign. More\nsharply: a fixed-point-free continuous `f : \u211d \u2192 \u211d` is unstoppable, and conversely\nany continuous self-map of `\u211d` with a fixed point halts there.\n**Test.** Formalize `Unstoppable f \u2194 \u2200 x, f x \u2260 x` for continuous `f : \u211d \u2192 \u211d`\nusing the intermediate value theorem on `f^[n] x - x`.\n**Falsifier.** A continuous fixed-point-free `f : \u211d \u2192 \u211d` with a genuine periodic\norbit (would refute; conjecture predicts none exist).\n\n## Conjecture 2 \u2014 Quantitative escape rate from drift\n**Statement.** If `\u03c6 (f x) = \u03c6 x + c` with `c > 0` and `\u03c6` is `K`-Lipschitz for a\nmetric `d`, then `d (f^[n] x, x) \u2265 (|c|/K) \u00b7 n`; hence the orbit is a\n*quasi-isometric* embedding of `\u2115` and escapes every bounded set in finite time.\n**Test.** Prove `dist (f^[n] x) x \u2265 (c / K) * n` from `phi_iterate` and the\nLipschitz bound `|\u03c6 a - \u03c6 b| \u2264 K \u00b7 dist a b`.\n**Falsifier.** A drifting `f` with Lipschitz `\u03c6` whose orbit stays bounded.\n\n## Conjecture 3 \u2014 Group-theoretic dichotomy for affine maps\n**Statement.** An invertible affine map `f x = A x + b` of a finite-dimensional\nreal inner-product space is `Unstoppable` **iff** `b` is not in the range of\n`A - I` (i.e. the affine fixed-point equation `(A - I) x = -b` has no solution).\nWhen `A = I` this recovers `translate_unstoppable`; when `A` is a rotation with\n`1 \u2209 spectrum A`, the map always has a fixed point and halts.\n**Test.** Formalize `Unstoppable f \u2194 (-b) \u2209 Set.range (A - 1)` for `f x = A x + b`.\n**Falsifier.** An affine map with `(A-I)` surjective yet unstoppable, or with a\nfixed point yet unstoppable.\n\n## Conjecture 4 \u2014 Subexponential orbit growth forces a periodic point\n**Statement.** (Compactness/recurrence converse.) If `X` is a compact metric\nspace and `f : X \u2192 X` is continuous, then `f` is **not** `Unstoppable`: every\ncontinuous self-map of a nonempty compact metric space has a recurrent \u2014 in the\ntopological sense, almost-periodic \u2014 orbit, and on finite-dimensional compacta a\ngenuine periodic point in many cases. Minimal testable core: a continuous self-map\nof `[0,1]` (or `S\u00b9` with rational rotation number) always halts.\n**Test.** Prove `\u00ac Unstoppable f` for continuous `f : Set.Icc (0:\u211d) 1 \u2192 ...`\nvia Brouwer fixed point, strengthening `not_unstoppable_of_finite` from finite to\ncompact.\n**Falsifier.** A continuous fixed-point/periodic-point-free self-map of a compact\ninterval (Brouwer forbids it).\n\n## Conjecture 5 \u2014 Cocycle drift and unstoppable group actions\n**Statement.** A free action is the group-level analogue of unstoppability. If a\ngroup `G` acts on `X` and admits a nonzero homomorphism-twisted cocycle\n`\u03c6 : X \u2192 \u211d` with `\u03c6 (g \u2022 x) = \u03c6 x + \u03c7(g)` for a nontrivial character `\u03c7`, then\nevery `g` with `\u03c7(g) \u2260 0` acts without periodic points. Conjecture: for\n`G = \u2124` this is *equivalent* to the drift criterion, and the set of unstoppable\ngenerators is exactly `{g : \u03c7(g) \u2260 0}`.\n**Test.** Generalize `unstoppable_of_drift` to a `\u03c7`-twisted cocycle and recover\n`unstoppable_iterate_of_drift` as the `\u03c7(g) = c` special case.\n**Falsifier.** A cocycle action with `\u03c7(g) \u2260 0` admitting a periodic point.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2032",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b4a517d3",
+    "status": "available",
+    "timestamp": "2026-06-17T00:29:20.027992+00:00",
+    "title": "Follow-up conjectures for the theme *\"Self-modifying code that cannot be stopped"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Topology of Argumentation: Why Debates Have Holes\n\nThis cycle established a formal core for abstract argumentation frameworks (AFs) in\n`Catalog/Novelty/ArgumentationTopology.lean`:\n\n- the **lattice / fixed-point backbone** (`charF_mono`, `grounded`, `grounded_fixed`,\n  `grounded_least`) \u2014 the canonical \"skeleton\" of a debate via Knaster\u2013Tarski;\n- the **Dung hierarchy** `stable \u27f9 complete \u27f9 admissible` (`stable_admissible`,\n  `stable_complete`, `admissible_empty`);\n- the two fundamental **holes** \u2014 the odd cycle `cyc3` and the self-loop `loop1` \u2014 versus\n  the resolvable even cycle `cyc2`, with a `Finset \u2194 Set` bridge (`hole_cyc3`,\n  `hole_loop1`, `resolvable_cyc2`, `hole_cyc3_set`);\n- the structural insight that **holes require asymmetry**: every finite *symmetric,\n  irreflexive* debate is resolvable (`symmetric_irreflexive_resolvable`).\n\nThe following conjectures are bold, precise, and testable in subsequent cycles.\n\n## C1 \u2014 The Parity Theorem for directed cycles\nFor the directed `n`-cycle `cyc n : Fin n \u2192 Fin n \u2192 Prop := fun i j => j = i + 1`,\na stable extension exists **iff `n` is even** (`n \u2265 2`):\n```\ntheorem cyc_resolvable_iff_even (n : \u2115) (hn : 2 \u2264 n) :\n    Resolvable (cyc n) \u2194 Even n\n```\nWe verified `n = 2` (resolvable) and `n = 3` (hole). The conjecture promotes \"the odd hole\"\nfrom an example to a theorem: parity of a directed cycle is *the* topological invariant\ngoverning resolvability. Likely proof: stable extensions of `cyc n` are exactly the\nalternating independent sets, which exist iff `n` is even.\n\n## C2 \u2014 Grounded extension is always complete (and conflict-free)\nThe least fixed point `grounded r` should itself be a genuine extension:\n```\ntheorem grounded_complete (r : A \u2192 A \u2192 Prop) : Complete r (grounded r)\ntheorem grounded_conflictFree (r : A \u2192 A \u2192 Prop) : ConflictFree r (grounded r)\n```\nThis would show every debate has a canonical (possibly empty) \"forced core\" that is a real\nposition, even when no stable extension exists \u2014 i.e. the skeleton survives even in holed\ndebates. The expected proof uses `OrderHom.lfp` induction (`lfp_induction`) with\nconflict-freeness as the invariant; the subtlety is that conflict-freeness is not\nobviously preserved by `charF`, so an auxiliary invariant (admissibility of the iterates)\nis likely needed.\n\n## C3 \u2014 Euler-characteristic / Betti obstruction (the homological hole count)\nMake the topology literal. Associate to a finite AF `r` the directed graph and a chain\ncomplex whose first Betti number `b\u2081` counts independent directed cycles. Conjecture: a\nfinite AF with `b\u2081 = 0` (a \"forest of attacks\") is always resolvable, and more strongly the\n*number of distinct holes* (maximal sub-debates with no stable extension) is bounded by a\nfunction of `b\u2081`:\n```\ndef b1 (r : Fin n \u2192 Fin n \u2192 Prop) : \u2115 := ...   -- cycle rank of the attack digraph\ntheorem acyclic_resolvable (r : Fin n \u2192 Fin n \u2192 Prop) [DecidableRel r]\n    (h : b1 r = 0) : Resolvable r\n```\nThis is the sharpest sense of \"why debates have holes\": holes are detected by first\nhomology of the attack complex. A natural first milestone: prove that an attack relation\nthat is a strict partial order (well-founded, acyclic) always has a stable extension equal\nto its grounded extension.\n\n## C4 \u2014 Stability gap = obstruction class\nDefine the *stability gap* of a debate as the minimal number of arguments that must be\ndeleted to make it resolvable. Conjecture: for symmetric+irreflexive AFs the gap is `0`\n(C-confirmed direction), and for a directed `n`-cycle the gap is exactly `1` when `n` is\nodd. More generally the gap equals the minimum number of vertices meeting every \"odd\nattack cycle\", an argumentation analogue of the odd-cycle transversal / `\u03c7`-boundedness\nphenomenon.\n\n## C5 \u2014 Continuity / sheaf gluing of local debates\nTreat a large debate as glued from overlapping sub-debates (a cover). Conjecture: if every\nmember of a cover is resolvable and the resolutions agree on overlaps (a *cocycle*\ncondition), then the global debate is resolvable; the obstruction to gluing lives in an\n`H\u00b9` of the nerve of the cover. This would turn \"debates have holes\" into a genuine\nsheaf-cohomological statement and connect the Novelty catalog to the persistent-homology\nand sheaf entries in the Tropical catalog.\n",
+    "domains": [
+      "Logic",
+      "Geometry"
+    ],
+    "id": "fd_2033",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5f9a16a6",
+    "status": "available",
+    "timestamp": "2026-06-17T00:30:52.789495+00:00",
+    "title": "Formal core for abstract argumentation frameworks (AFs)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2456,21 +2486,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
   {
-    "consumed_by_exp_id": "29ffc67c",
-    "description": "A vampire number is a composite number v with an even number of digits that can be factizedd as v = x * y where x and y together have the same digits as v. The smallest is 1260 = 21 * 60. But vampire numbers are just the beginning. Define: (1) Werewolf numbers: v = x * y where x and y share exactly one digit with v. (2) Ghost numbers: v = x * y where v has NO digits in common with x or y. (3) Zombie numbers: v = x * y where x and y are both prime (these violate the definition but exist \u2014 125460 = 204 * 615 = 246 * 510, where both factorizations involve a prime and a composite). Conjecture: The density of vampire numbers in [10^{2n}, 10^{2n+1}] approaches 1/sqrt(n) as n -> infinity. Every even-length interval [10^{2k}, 10^{2k+2}] contains at least one vampire number. Ghost numbers have density 0 \u2014 they become vanishingly rare as the number of digits increases. Test: enumerate all vampire, werewolf, ghost, and zombie numbers up to 10^8. Prove the density conjecture by counting valid digit permutations. Impact: a playful but genuine number theory of arithmetic creatures \u2014 combinatorial digit problems that are easy to state but may be as hard as factoring.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0006",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.491505+00:00",
-    "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
@@ -2771,21 +2786,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
   },
   {
-    "consumed_by_exp_id": "5f9a16a6",
-    "description": "An argumentation framework AF = (A, R) consists of a set of arguments A and an attack relation R subset A x A. The preferred extensions of AF are the maximal admissible sets (subsets S of A that defend themselves against all attacks and are maximal with this property). Conjecture: the preferred extensions of AF form a simplicial complex K(AF) on the vertex set A. The homology groups H_n(K(AF)) measure the 'holes' in the argumentation structure. H_0 measures the number of connected components (independent debate threads). H_1 measures circular arguments (cycles where each argument attacks the next, and the last attacks the first). H_2 measures 'spheres' of arguments (3D cycles where arguments form a spherical shell). Conjecture: for any argumentation framework, the Euler characteristic chi(K(AF)) = |A| - |R| + sum_{n>=2} (-1)^n * dim(H_n) equals |preferred extensions| - |grounded extension size|. This connects the topology of the argument to its semantics. Test: construct K(AF) for 100 argumentation frameworks from debate transcripts, compute homology groups, and verify the Euler characteristic formula. Impact: arguments have topology. Circular arguments are 1-holes, and 3D argument spheres are 2-holes. The shape of a debate is a topological invariant.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0081",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.739014+00:00",
-    "title": "The Topology of Argumentation: Why Debates Have Holes"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "A Sudoku puzzle is a constraint satisfaction problem on a 9x9 grid. The 'spectral gap' of a Sudoku puzzle is the gap between the two largest eigenvalues of the transition matrix of the Markov chain that randomly swaps two compatible entries. The spectral gap determines the mixing time: the number of swaps needed to generate a uniformly random solution. Conjecture: the spectral gap of a Sudoku puzzle undergoes a phase transition at the critical density d_c = 17/81 (the density of the minimal number of clues, 17, divided by 81). For puzzles with fewer than 17 clues, the spectral gap is large (the Markov chain mixes quickly, meaning there are many solutions). For puzzles with exactly 17 clues, the spectral gap is minimal (the chain mixes slowly, meaning solutions are hard to find). For puzzles with more than 30 clues, the spectral gap is zero (the chain is reducible, meaning the puzzle has a unique solution and no swaps are possible). Conjecture: the spectral gap lambda_1 - lambda_2 of the Sudoku Markov chain satisfies: lambda_1 - lambda_2 > epsilon for d < 17/81 (many solutions, fast mixing), lambda_1 - lambda_2 ~ 0 for d ~ 17/81 (critical point, slow mixing), and the chain is absorbing for d > 30/81 (unique solution, no mixing). Test: compute the spectral gap for Sudoku puzzles with varying numbers of clues and verify the phase transition. Impact: Sudoku has a spectral gap phase transition. The hardness of the puzzle is determined by the gap, not by the number of clues.",
     "domains": [
@@ -3041,7 +3041,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Infinite Games Against Death: Immortality Strategies"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "1cfdf3f4",
     "description": "Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms a higher category.",
     "domains": [
       "Novelty",
@@ -3051,7 +3051,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:31.092242+00:00",
     "title": "Causal Loops in Category Theory: When Composition Loops Back"
   },
