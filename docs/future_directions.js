@@ -1519,6 +1519,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Chip-Firing, Divisors, and Graph Riemann\u2013Roch\n\nThese conjectures are derived from the verified results in\n`Tropical/ChipFiring/{Defs,Theorems,CompleteGraph,Rank}.lean`. Each is falsifiable in Lean\non top of the divisor backbone already formalized (`LinEquiv`, `Winnable`, `divisorDegree`,\n`canonicalDivisor`, `genus`, `RankGe`, `BNrank`).\n\nThis cycle's findings that seed them:\n- `canonicalDivisor_degree`: `deg K_G = 2g \u2212 2` for every finite graph (handshake lemma).\n- `two_genus_complete`/`canonical_complete_coeff`: for `K_n`, `g = (n\u22121)(n\u22122)/2` and every\n  vertex of `K` carries exactly `n \u2212 3` chips \u2014 correcting the mission's \"`n \u2212 2`\" claim.\n- `rr_canonical_prediction`: the RR right-hand side at `D = K` collapses to `g \u2212 1`.\n- `BNrank_zero` / `BNrank_neg_degree`: the boundary values `l(0) = 0` and `l(D) = \u22121` for\n  `deg D < 0`, which resolve the apparent paradox `l(K_{K_3}) = 0 = g(K_3) \u2212 1`.\n\n---\n\n## Conjecture 1 \u2014 Riemann inequality `l(D) \u2265 deg D \u2212 g`\n**Statement.** For every divisor `D` on a finite connected graph `G`,\n`BNrank G D \u2265 divisorDegree D \u2212 genus G`. Equivalently, every divisor of degree `\u2265 g` is\nwinnable.\n\n**The key insight is** that winnability is governed by Dhar's burning algorithm: a\n`q`-reduced representative exists in every linear equivalence class, and its `q`-coefficient\nis `\u2265 0` exactly when `deg D \u2265 g`. This converts a global rank statement into a local,\nalgorithmic non-negativity check that the `Winnable` predicate already exposes.\n\n**Why now?** We have `Winnable`, `LinEquiv` (an `Equivalence`), and the degree obstruction\n`winnable_degree_nonneg` proved. The only missing primitive is the reduced-divisor normal\nform; building it on the existing `lap` Laplacian closes the \"Riemann half\" without any new\nfoundational layer.\n\n---\n\n## Conjecture 2 \u2014 Full Baker\u2013Norine duality `l(D) \u2212 l(K\u2212D) = deg D + 1 \u2212 g`\n**Statement.** For every divisor `D`, `BNrank G D \u2212 BNrank G (canonicalDivisor G - D)\n= divisorDegree D + 1 \u2212 genus G`.\n\n**The key insight is** that the symmetric \"rank of `D`\" and \"rank of `K \u2212 D`\" are dual\nunder the involution `E \u21a6 K \u2212 E` on the set of non-winnable-witness divisors; the\nBaker\u2013Norine proof reduces the equality to a counting bound on maximal non-special\ndivisors. Our `canonicalDivisor_degree` already supplies the `deg K = 2g \u2212 2` term that\nmakes the two sides numerically consistent at `D = K` (`rr_canonical_prediction`).\n\n**Why now?** The `BNrank` definition with `RankGe` downward-closed (`rankGe_antitone`) gives\na well-defined integer rank; combined with Conjecture 1 the duality becomes a finite\ncombinatorial bookkeeping argument rather than an analytic one.\n\n---\n\n## Conjecture 3 \u2014 The canonical rank of `K_n` is exactly `g \u2212 1`\n**Statement.** `BNrank (Kn n) (canonicalDivisor (Kn n)) = genus (Kn n) - 1`\nfor all `n \u2265 1`, i.e. `l(K_{K_n}) = (n\u22121)(n\u22122)/2 \u2212 1`.\n\n**The key insight is** that on the complete graph every effective divisor of degree `\u2264 g\u22121`\nis \"spread thin enough\" that subtracting it from the uniform canonical divisor `(n\u22123)` per\nvertex still leaves a winnable position, while degree `g` witnesses fail by the degree\nobstruction \u2014 so the maximal `k` in `RankGe` is precisely `g \u2212 1`.\n\n**Why now?** We have already computed both `deg K = n(n\u22123)` and `g = (n\u22121)(n\u22122)/2`, and\nproved `l(0) = 0`. Conjecture 3 is exactly the `D = K` instance of Conjecture 2, so it is\nthe natural first stress-test: it must equal `g \u2212 1`, and any deviation immediately\nfalsifies the duality.\n\n---\n\n## Conjecture 4 \u2014 Gonality of `K_n` equals `n \u2212 1`\n**Statement.** The minimal degree of a winnable divisor of positive rank on `K_n` is\n`n \u2212 1`; i.e. the smallest `d` with a degree-`d` divisor `D` such that `BNrank (Kn n) D \u2265 1`\nis `d = n \u2212 1`.\n\n**The key insight is** that a rank-`1` divisor must dominate, up to firing, the\n\"all-but-one-vertex\" configuration, and on the totally symmetric `K_n` the cheapest such\nconfiguration places one chip on each of `n \u2212 1` vertices \u2014 directly tying gonality to the\nclique number.\n\n**Why now?** `RankGe G D 1` is already definable and the single-vertex divisors\n`singleVertexDivisor` used in `Rank.lean` give ready-made witnesses; the lower bound reuses\n`winnable_degree_nonneg`, so both directions sit on existing infrastructure.\n\n---\n\n## Conjecture 5 \u2014 Degree is a *complete* invariant for winnability on `K_n` above genus\n**Statement.** For `K_n`, two divisors `D, E` with `deg D = deg E \u2265 g` are *both* winnable;\nmoreover for `deg D \u2265 g` winnability depends only on the degree (never on placement).\n\n**The key insight is** that `K_n`'s automorphism group is the full symmetric group `S_n`, so\nthe orbit of any sufficiently large divisor under chip-firing + symmetry saturates all\nplacements; placement-independence is the combinatorial shadow of \"all line bundles of\ndegree \u2265 g on a curve are base-point free\".\n\n**Why now?** Linear equivalence is already proved to be an `Equivalence` and degree is a\nclass invariant (`linEquiv_degree`); the conjecture is a sharp, easily-falsifiable\nstrengthening (a single placement-dependent counterexample at degree `g` would kill it),\nmaking it an ideal adversarial probe for Conjecture 1.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2047",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "77489d34",
+    "status": "available",
+    "timestamp": "2026-06-17T08:42:13.092052+00:00",
+    "title": "These conjectures are derived from the verified results in"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -2801,21 +2816,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
   {
-    "consumed_by_exp_id": "3b11aa65",
-    "description": "The sequence of primes 2, 3, 5, 7, 11, 13, ... defines a point cloud in R where the n-th prime p_n is at position p_n on the real line. The gaps between primes create a topological structure. Define the persistent homology of the prime point cloud as the Rips filtration R_epsilon = {p_n : |p_m - p_n| <= epsilon}. As epsilon increases, more primes are connected, and the topology changes. Conjecture: The persistent H_0 (connected components) of the prime point cloud has the same barcode as a Poisson point process with intensity 1/log(x). Specifically, the bar lengths in H_0 follow an exponential distribution with mean equal to the average prime gap (which is approximately log(x) by the prime number theorem). The persistent H_1 (1-dimensional holes) of the prime point cloud appears at scale epsilon ~ log(x)^2, corresponding to prime pairs (p, p+2k) where 2k is a specific even gap. The longest H_1 bar corresponds to the twin prime conjecture: it persists from epsilon = 2 (the twin prime scale) to epsilon = infinity. Test: compute persistent homology of the primes up to 10^6 using Rips filtration and compare with the Poisson point process prediction. Verify that H_0 bar lengths are exponentially distributed with mean log(x). Impact: primes have topology \u2014 their gaps create persistent homology that encodes the twin prime conjecture and other arithmetic properties.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0057",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.617168+00:00",
-    "title": "Persistent Homology of Prime Numbers: The Topology of Arithmetic"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Anyon braiding in topological quantum computing gives unitary matrices from the braid group B_n. The Jones representation rho_k: B_n -> U((k-1)(n-1)+1) at root of unity e^{2*pi*i/k} is conjectured to be universal for quantum computation when k >= 3 and n >= 4. Conjecture: the set of all braids in B_4 under the Jones representation at k=5 generates a dense subgroup of SU(3). More precisely, the image rho_5(B_4) is an infinite subgroup of SU(3) that is not contained in any proper closed subgroup. This means that topological quantum computing with Fibonacci anyons (k=5) is universal: any unitary in SU(3) can be approximated to arbitrary precision by braiding 4 anyons. The key: the Jones representation at k=5 gives 3x3 matrices, and the braid generators sigma_1, sigma_2, sigma_3 generate a dense subgroup of SU(3). Test: compute the Jones representation at k=5 for B_4, verify that sigma_1 * sigma_2 * sigma_3 has infinite order, and check that the group generated by sigma_1, sigma_2, sigma_3 is dense in SU(3) by the Solovay-Kitaev theorem. Impact: braiding anyons is universal for quantum computation. The braid group B_4 at k=5 is a quantum gate set.",
     "domains": [
@@ -3026,7 +3026,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c2929b61",
     "description": "Formalize retrocausal mathematical structures where implications can flow backward in time. Prove that in a retrocausal Heyting algebra, the law of excluded middle fails but a temporal excluded middle holds. Connect to the CPT theorem in QFT and prove that any retrocausal logic must be intuitionistic.",
     "domains": [
       "Novelty",
@@ -3036,7 +3036,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.994131+00:00",
     "title": "Retrocausal Mathematics: Where Effects Precede Causes"
   },
