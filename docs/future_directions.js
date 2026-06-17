@@ -367,7 +367,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sierpi\u0144ski Numbers: Covering Systems"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5884df3d",
     "description": "What if the topology of a space depended on who is observing it? Define a phantom topology on a set X as a function T: O -> Top(X) that assigns to each observer o a topology T(o) on X. Two observers o1, o2 agree on an open set U if U is open in both T(o1) and T(o2). The phantom number of (X, T) is the minimum number of observers needed to determine the topology: if U is open in every T(o) that contains a point x, then U is a neighborhood of x in the 'real' topology. Conjecture: Every second-countable space (X, tau) admits a phantom representation with at most 2 observers (the real topology is the intersection of two phantom topologies). Moreover, every non-metrizable space requires at least 3 observers. The intuition: the real topology is what ALL observers agree on, and phantom topologies are what individual observers see. Like quantum mechanics, measurement changes the topology. Test: prove that R with the standard topology is the intersection of the lower limit topology and the upper limit topology (2 observers). Prove that the Zariski topology on R^2 requires at least 3 observers. Impact: a new notion of topology where the space itself depends on the observer \u2014 the mathematical formalization of 'reality depends on the observer'.",
     "domains": [
       "Novelty",
@@ -377,7 +377,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.491025+00:00",
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
   },
@@ -979,21 +979,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 13: 7th-Degree Equations via 2-Variable Functions"
   },
   {
-    "consumed_by_exp_id": "8c9d3809",
-    "description": "A meme is a unit of cultural information that replicates through human minds. Model meme propagation as a sheaf over the social network graph: each node is a person, each edge is a communication channel, and the meme is a section of the sheaf that must satisfy consistency conditions at each node. Define meme fitness as the sheaf cohomology group H^1(G, M) where G is the social network and M is the meme sheaf. A meme with H^1 = 0 is universally transmissible (it has no consistency barriers \u2014 anyone can understand it). A meme with H^1 of dimension d requires d 'interpretation steps' to cross between communities. Conjecture: The most viral memes have H^1(G, M) = 0 but H^0(G, M) of maximal dimension \u2014 they spread everywhere AND mean different things to different communities. The dimension of H^0 counts the number of distinct interpretations. A meme that means the same thing to everyone has dim(H^0) = 1 and dim(H^1) = 0. A meme that means different things to different communities has dim(H^0) > 1 and dim(H^1) = 0. A meme that CANNOT spread between communities has H^1 > 0. Test: model Twitter/X retweet networks as graphs G with 1000 nodes, assign meme sheaves based on community structure, compute H^0 and H^1, and correlate with actual virality data. Impact: meme virality is a topological property \u2014 it's not about content quality but about the sheaf cohomology of the social network.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0024",
-    "priority_score": 0.77,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.512076+00:00",
-    "title": "The Mathematics of Memes: Viral Information Topology"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prove that for every integer n \u2265 2, the fraction 4/n can be written as a sum of three unit fractions. Formalize computational verification and parametric families of solutions.",
     "domains": [
@@ -1531,6 +1516,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T08:42:13.092052+00:00",
     "title": "These conjectures are derived from the verified results in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Viral Information Topology\n\nThis research cycle (cold start, Logic domain) formalized memetic/viral spread as\na forward-chaining **consequence operator** and established its order-theoretic,\nlogical, and topological structure.\n\n## Results established this cycle\n\n- `Core.lean` \u2014 viral closure = least fixed point of the monotone spread\n  operator; it is a closure operator (extensive/monotone/idempotent); the\n  viral-closed sets form a **Moore family** (`isViralClosed_iInter`,\n  `closure_eq_iInter`); and the **viral path theorem** `derivable_iff_mem_closure`\n  identifies the lattice-theoretic closure with inductive logical derivability.\n- `Thresholds.lean` \u2014 concrete experiments: a total cascade on `\u2115`\n  (`line_closure_univ`); failure of the Kuratowski axioms `cl \u2205 = \u2205`\n  (`closure_empty_ne_empty`) and finite additivity (`kuratowski_additivity_fails`);\n  and **viral compactness** (`viral_compactness`) for finite-premise contagions.\n- `GraphContagion.lean` \u2014 the **topological dichotomy**: a *simple* (single-premise,\n  graph-reachability) contagion satisfies all four Kuratowski axioms\n  (`simple_isKuratowski`). Hence viral spread is topological **iff** it is pairwise;\n  synergy (premises of size \u2265 2) is the exact obstruction.\n\n## Conjectures for follow-up cycles\n\n### C1 \u2014 Alexandrov correspondence (topology \u21c4 preorder)\nFor a simple contagion `C`, the viral closure is an Alexandrov topological closure;\nconjecture that it coincides with the closure of the **reachability preorder** of\nthe underlying digraph `a \u2192 c` (edges = rules), and that virally-closed sets are\nexactly the down-sets (or up-sets) of that preorder. Testable: define the preorder\n`ReachLE C` as the reflexive-transitive closure of the edge relation and prove\n`closure C S = {v | \u2203 s \u2208 S, ReachLE C s v}` and a lattice isomorphism between\nviral-closed sets and the order ideals.\n\n### C2 \u2014 Synergy arity hierarchy is strict\nDefine `arity(C) = sup` of premise sizes. Conjecture a strict expressive\nhierarchy: for each `k \u2265 2` there is a contagion of arity `k` whose closure\noperator is **not** realizable by any contagion of arity `< k` on the same\ncarrier (measured by the lattice of closed sets). `kuratowski_additivity_fails`\nis the `k = 2 \u2260 1` base case. Testable via a \"`k`-threshold\" gadget on `Fin (k+1)`.\n\n### C3 \u2014 Viral compactness characterizes finitary contagions\nWe proved finite premises \u21d2 compactness. Conjecture the **converse / sharpness**:\nif a contagion has a rule with an infinite premise that is \"irredundant\", then\ncompactness fails \u2014 there is a seed `S` and agent `v` with `v \u2208 cl S` but\n`v \u2209 cl S\u2080` for every finite `S\u2080 \u2286 S`. This would make `viral_compactness`\nan exact characterization of finitary spread, mirroring logical compactness.\n\n### C4 \u2014 Galois / antitone duality with \"firewalls\"\nDefine a **firewall** as a set `F` such that removing `F` makes a target `t`\nunreachable from a seed `S` (`t \u2209 cl_{C\u2216F} S`). Conjecture a Galois connection /\nmin-cut\u2013max-flow duality between minimal firewalls and the family of derivation\n\"paths\" (transmission chains) to `t`, generalizing Menger's theorem from simple\ngraphs (C1) to hypergraph contagions. Testable first on simple contagions where\nit should reduce to classical vertex-cut duality.\n\n### C5 \u2014 Monotone speed-up and fixed-point iteration depth\nDefine the **viral depth** `d(C,S,v)` as the least `n` with `v \u2208 (spreadHom C S)^[n] \u2205`\n(the derivation-tree height). Conjecture: on a finite carrier of size `N`, the lfp\nis reached in `\u2264 N` iterations (`closure C S = (spreadHom C S)^[N] \u2205`), and depth\nequals the longest transmission chain. Testable via `OrderHom.lfp` iteration bounds\nand the `Derivable` height; connects \"viral reach time\" to chain length.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2048",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8c9d3809",
+    "status": "available",
+    "timestamp": "2026-06-17T09:17:22.315956+00:00",
+    "title": "This research cycle (cold start, Logic domain) formalized memetic/viral spread a"
   },
   {
     "consumed_by_exp_id": "",
