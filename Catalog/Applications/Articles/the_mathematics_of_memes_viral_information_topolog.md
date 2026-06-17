@@ -1,77 +1,205 @@
-# Why Some Ideas Go Viral: The Hidden Geometry of Information
+# The Mathematics of Memes: How Ideas Catch Fire
 
-*A new mathematical framework reveals that a meme's viral potential is determined not by its content, but by the topology of the network it travels through.*
+There is a moment, familiar to anyone who has spent time online, when a joke,
+a phrase, a song fragment, or a piece of advice stops being something *one
+person* knows and becomes something *everyone* knows. A meme tips. One day it
+is an inside joke between three friends; a week later your aunt is sending it to
+you with a row of crying-laughing emoji. What changed? Not the meme. The meme
+is exactly the same bundle of pixels and words it always was. What changed is
+the **structure of who-knew-what** — and, crucially, the **rules** by which
+knowing spreads from one mind to the next.
 
----
+This article is about a precise, surprisingly beautiful way to capture that
+spreading. It turns out that "an idea catching fire" is not a vague metaphor but
+a piece of honest mathematics — the same mathematics that governs how a logical
+proof unfolds, how a rumor saturates a town, and how a single infected cell can
+eventually claim an entire body. The punchline is this: **the final reach of a
+contagion can be computed in two completely different-looking ways, and the two
+always agree.** One way looks from the outside, like a satellite watching a
+wildfire's perimeter. The other looks from the inside, like a detective
+reconstructing exactly how each spark jumped to the next tree. That these two
+pictures coincide is the heart of the matter, and it is the theorem we will
+build toward.
 
-In 2012, the "Gangnam Style" music video became the first YouTube clip to surpass one billion views. Around the same time, equally catchy songs with similar production values vanished into obscurity. What made the difference? Marketing? Luck? Cultural timing?
+## Two stories about the same fire
 
-A surprising answer is emerging from an unexpected corner of mathematics: **algebraic topology**, the study of shapes and spaces through abstract algebra. New research suggests that viral spread is fundamentally a *geometric* phenomenon — it depends on the shape of the social network, not just the quality of the content.
+Imagine a social network — a vast graph of people, with edges where two people
+can talk. Now drop a meme onto a small group of "seeds": the originators, the
+people who get it first. From there, the meme spreads. But — and this is the
+key modeling choice — it does **not** spread along single edges by default. It
+spreads by **rules**.
 
-## The Meme as a Mathematical Object
+A rule is a little contract. It says: *if all of these people already have the
+idea, then this other person gets it too.* Sometimes a rule has a single
+premise — "if Alice has it, Bob gets it" — the classic person-to-person
+transmission. But the interesting rules have *several* premises at once: "if
+both your skeptical coworker **and** your trend-setting cousin have shared it,
+**then** you finally cave and share it too." This is **synergy** — the
+phenomenon where you need to hear something from more than one source before you
+believe it, repost it, or even understand it. Anyone who has watched a piece of
+slang require two or three independent sightings before it "clicks" has felt
+synergy directly.
 
-Think of a social network as a web of nodes (people) connected by edges (communication channels — follows, friendships, group memberships). When a meme travels along an edge, something subtle happens: its meaning can shift. A political cartoon shared ironically in one community might be taken at face value in another. A technical joke among programmers becomes incomprehensible when forwarded to a family group chat.
+So we have a **contagion**: a collection of these rules, each pairing a finite
+set of premises with a single conclusion. And we have a seed set. The question
+that organizes everything is: **who, in the end, gets the meme?**
 
-Mathematicians have a precise way to describe this phenomenon: a **sheaf**. Originally developed in the 1940s by Jean Leray while he was a prisoner of war, sheaves were designed to track how local data — measurements, functions, observations — fit together into a global picture. They became a cornerstone of modern algebraic geometry, powering breakthroughs from the proof of the Weil conjectures to string theory.
+### Story one: the view from outside
 
-Now, sheaves are finding a new application: modeling how information transforms as it propagates through networks.
+The first way to answer is austere and global. Call a set of people **closed**
+if it is *self-consistent under spreading*: it contains all the seeds, and
+whenever a rule's premises are all inside the set, the rule's conclusion is too.
+A closed set is a possible "final state of the world" — a configuration where
+nothing further can happen, because every rule that *could* fire has *already*
+fired.
 
-## Two Numbers That Predict Virality
+There are many closed sets. The set of *everyone* is always closed (nothing can
+spread beyond the whole population). Smaller closed sets exist too, as long as
+they are internally consistent. Now here is the elegant move: take the
+**intersection of all of them**. The people who belong to *every* closed set are
+exactly the people who *cannot avoid* getting the meme — there is no
+self-consistent world in which the seeds spread and these people stay
+uninfected. We call this intersection the **closure** of the seed set. It is the
+smallest closed set, the tightest possible final perimeter of the fire, defined
+without ever simulating a single step of spreading.
 
-The sheaf framework produces two numbers that characterize any meme on any network:
+### Story two: the view from inside
 
-**H⁰ (the polysemy number)**: This counts how many genuinely different interpretations the meme can support while remaining internally consistent. A meme with H⁰ = 1 means the same thing to everyone. A meme with H⁰ = 5 supports five independent interpretations — it's a kind of Rorschach test, meaning different things to different communities.
+The second way is intimate and constructive. We say a person is **derivable**
+if you can tell a finite *story* of how they got the meme. The story has exactly
+two kinds of sentences:
 
-**H¹ (the barrier number)**: This counts the number of independent "walls" the meme must cross to propagate between communities. Each barrier represents a consistency condition the meme fails to satisfy — a translation gap, a cultural reference that doesn't survive the crossing.
+- *"They were a seed."* (They had it from the start.)
+- *"There was a rule whose every premise was already derivable, and they were
+  its conclusion."* (They got it because the right combination of others got it
+  first.)
 
-The key discovery: **the most viral memes have H¹ = 0 and H⁰ as large as possible**. They spread everywhere (no barriers) AND mean different things to different communities (maximum polysemy). They are culturally ambiguous in precisely the right way.
+A person is derivable precisely when such a finite justification exists — a
+genealogy of the idea reaching them, branch by branch, back to the original
+seeds. This is the detective's reconstruction: not "who is unavoidably caught in
+the perimeter," but "here is the actual chain of sparks that reached you."
 
-## The Euler Characteristic: A Topological Constraint
+## The theorem: the perimeter equals the genealogy
 
-These two numbers aren't independent. They are bound together by a fundamental formula from topology:
+These two definitions look nothing alike. One is an intersection over a possibly
+enormous, even infinite, family of abstract "consistent worlds." The other is an
+inductive bottom-up construction of explicit transmission chains. One is
+top-down and non-constructive; the other is bottom-up and utterly concrete. Yet:
 
-> **H⁰ − H¹ = |V| − |E|**
+> **Main Theorem (Closure = Derivability).** *For any contagion and any seed
+> set, a person belongs to the closure if and only if they are derivable.* In
+> symbols, with `closure C S` the intersection of all closed supersets of the
+> seeds `S` under the rule-set `C`, and `Derivable C S v` the existence of a
+> finite transmission story for person `v`,
+>
+> `closure C S = { v : Derivable C S v }`.
 
-where |V| is the number of people in the network and |E| is the number of connections between them. This is the **Euler characteristic** — the same formula that tells you a soccer ball always has exactly 12 pentagons, or that any map can be colored with four colors.
+In plain words: **the outside view and the inside view of who gets the meme are
+exactly the same set of people.** Everyone caught in the global perimeter has a
+concrete story of how they were reached, and everyone with a story is caught in
+the perimeter. There is no one who is "logically doomed to be infected" but for
+whom no actual chain of transmission exists, and there is no one reachable by a
+chain who somehow escapes the abstract perimeter.
 
-The formula creates a trade-off. In a dense network (many connections), the Euler characteristic is highly negative, which means you can't have high H⁰ without also having high H¹. Dense connections constrain interpretation diversity. Conversely, in a sparse network, H⁰ can be large even with H¹ = 0 — but sparse networks don't propagate well in the first place.
+This is not obvious, and proving it requires meeting in the middle from both
+directions.
 
-The "sweet spot" for virality is a network with just enough connections for propagation but not so many that interpretive diversity is crushed.
+## How the two halves meet
 
-## The Propagation Sheaf: A New Mathematical Object
+The proof splits into two inclusions, and each one is a small gem.
 
-The research introduces a new mathematical structure called the **propagation sheaf**. Unlike the classical constant sheaf (which assumes perfect information transmission), the propagation sheaf assigns a *weight* to each connection, modeling how faithfully information is transmitted.
+**Derivable people are inside the perimeter (soundness).** Take any closed set
+of the world — any self-consistent final configuration. We show every derivable
+person is in it, by walking up their transmission story. The seeds are in the
+set because closed sets contain the seeds. And at each rule-application step, the
+rule's premises were derivable, so (by induction) already in the set; since the
+set is closed, the conclusion is dragged in too. Walk the story to its end and
+the person lands inside. Because this holds for *every* closed set, the person is
+in the intersection — the closure. This is the formal echo of a homely truth: if
+there is a real chain of transmission, no consistent accounting of the spread can
+leave you out.
 
-A weight of 1 means perfect transmission. A weight of 0 means the channel is blocked. Intermediate values model partial distortion — the receiver gets a transformed version of the message.
+**Perimeter people are derivable (completeness).** This direction is subtler,
+and it hinges on a single sharp observation: *the set of all derivable people is
+itself closed.* It obviously contains the seeds (a seed has a one-line story).
+And it is stable under the rules: if a rule's premises are all derivable, then by
+the very definition of derivability, so is its conclusion. So the derivable set
+is one of the closed sets being intersected to form the closure. But the closure
+is *contained in every* closed set — that is what "intersection" buys you. In
+particular, the closure is contained in the derivable set. So everyone in the
+perimeter is derivable. The fire cannot reach further than the genealogy allows.
 
-This leads to the **virality index**: a single number that combines polysemy and barrier-freedom. The research proves that this index satisfies a sharp upper bound:
+Underneath both halves sits a humble workhorse: the **one-step operator** that
+takes a current set of infected people and adds everyone whose rule-premises are
+already present. This operator is **monotone** — feed it a bigger input and you
+get a bigger output, never smaller. Monotonicity is the quiet engine that makes
+closures behave; it is why "the smallest consistent world" exists at all, and
+why the two stories can be made to agree.
 
-> **V(S) ≤ |V| × (|E| + 1)**
+## Why this is the right model — and where it bites
 
-Equality is achieved only in the degenerate case of an edgeless graph — isolated individuals with no connections. In practice, the viral sweet spot occurs when the network is tree-like (H¹ = 0) but well-connected enough that communities can each develop their own interpretation (H⁰ > 1).
+The framework is deliberately minimal, and its minimalism is what lets it say
+sharp things. Three consequences stand out.
 
-## What This Means for Understanding Culture
+**Total cascades are real.** With the right rules, the closure of a tiny seed
+can be *everyone*. A single rule that says "if person `n` has it, person `n+1`
+gets it," seeded at person zero, eventually claims the entire infinite line. This
+is the mathematical skeleton of the genuine viral event — finite spark,
+unbounded blaze.
 
-The implications go beyond memes. Any unit of cultural information — a scientific idea, a political narrative, a religious practice, a fashion trend — propagates through social networks subject to the same topological constraints.
+**Compactness: the infinite is always reachable through the finite.** When every
+rule has only finitely many premises — which is the realistic case, since no real
+act of persuasion waits on infinitely many prior endorsements — the model has a
+profound finiteness property. If a person ends up infected, then they were
+already infected by some **finite** portion of the seeds. Nothing depends on the
+infinite totality all at once; every infection has a finite cause. This is the
+exact analog of the compactness theorem in logic, and it is why we can reason
+about enormous (even infinite) networks by examining finite witnesses.
 
-Consider scientific paradigm shifts. A new theory (say, quantum mechanics in the 1920s) must propagate through a network of physicists, each embedded in their own community with its own interpretive framework. The theory "goes viral" not when everyone understands it the same way, but when each community finds a version compatible with their existing knowledge. The Copenhagen school, the Bohmian pilot wave theorists, and the many-worlds advocates all "shared" quantum mechanics while interpreting it differently. In sheaf-theoretic terms: H⁰ > 1 (multiple interpretations) and H¹ = 0 (no barriers to transmission).
+**Synergy is the real obstruction to "smooth" spreading.** Here is perhaps the
+most striking structural fact. When all rules are single-premise — pure
+person-to-person transmission, no synergy — the closure behaves like the
+**closure operator of a topology**, in the precise classical sense (the
+Kuratowski axioms). Spreading is then a genuinely *geometric*, *topological*
+phenomenon: it has a notion of "boundary," it distributes nicely over unions, it
+is as well-behaved as the closure of a shape in space. But the moment you allow
+**synergy** — rules with two or more premises — this topological good behavior
+*breaks*, and breaks in an identifiable way. The clean distributive law over
+unions fails: the meme that needs two independent endorsements can reach a person
+from the *union* of two groups while reaching them from *neither group alone*.
+Two half-fires that each fizzle can, when combined, ignite.
 
-Contrast this with highly technical results that resist popularization — say, the proof of the Poincaré conjecture. Here H¹ > 0: there are genuine barriers (background knowledge, mathematical training) that prevent the idea from crossing into non-specialist communities.
+That dichotomy — **single-premise spreading is topological; synergistic
+spreading is not** — is a clean answer to a question people usually only gesture
+at. It says precisely *why* viral phenomena driven by social reinforcement feel
+qualitatively different from simple word-of-mouth: they live outside the
+comfortable world of topology, in the richer and wilder world of genuine logical
+consequence. Synergy is exactly the ingredient that lifts contagion from
+geometry into logic.
 
-## The Shape of Networks Matters More Than Content
+## The bigger picture: spreading *is* proving
 
-Perhaps the most counterintuitive finding is this: **the same meme can be viral on one network and dead on another, purely because of the network's topology**. The Euler characteristic is a property of the network, not the meme. A brilliantly crafted message will fail on a network whose topology creates too many barriers, while a mediocre meme can go viral on a network with the right topological structure.
+Step back and the deepest resonance comes into focus. The "transmission story"
+of a meme — seeds, then conclusions justified by premises — is *literally* the
+shape of a mathematical proof. The seeds are axioms. The rules are inference
+rules. A person getting the meme is a theorem getting proved. The closure is the
+set of all consequences of the axioms under the rules. And our main theorem —
+that the global, intersection-based closure equals the inductive, story-based
+derivability — is, in this light, the statement that **the things that are *true*
+in every consistent world are exactly the things you can *prove***.
 
-This suggests that the explosive growth of viral content in the social media age may be less about content creation tools and more about **network architecture**. Platforms that create tree-like community structures (low H¹) while preserving interpretive diversity (high H⁰) are topologically optimized for virality — whether they intended it or not.
+This is a soundness-and-completeness theorem in disguise. It is one of the load-
+bearing pillars under logic, under database theory (where these rules are called
+Horn clauses and the closure computes which facts a knowledge base entails),
+under the semantics of programming languages, and — yes — under the spread of
+ideas through a crowd. The same skeleton holds up all of them.
 
-## Looking Forward
-
-The mathematical framework opens several doors. One tantalizing direction involves the **sheaf Laplacian** — a matrix built from the coboundary map whose eigenvalues encode community structure. Spectral analysis of this Laplacian could reveal hidden community boundaries and predict where memes will stall or mutate.
-
-Another direction connects to **persistent homology**, a technique from topological data analysis. As a meme propagates, the "active subgraph" (the portion of the network that has seen the meme) grows over time. Tracking how H⁰ and H¹ change during this growth could reveal phase transitions — critical moments when a meme breaks through a barrier and enters a new community.
-
-The mathematics of information topology is still young, but its message is already clear: the shape of the network is the message. Marshall McLuhan would have been pleased.
-
----
-
-*The results described here have been formally verified using machine-checked mathematical proofs, ensuring their correctness to the highest standard of mathematical rigor.*
+So the next time a meme takes over your feed, you can entertain a slightly
+vertiginous thought. The reason it reached you is not, at bottom, about how funny
+it was. It is about the *shape of the network* and the *logic of the rules* by
+which belief propagates through it. There is a smallest consistent world in which
+the seeds spread, and you are in it — which means there is a finite chain of
+real, particular people who passed it along until it arrived at you. The
+perimeter of the fire and the genealogy of the spark are the same thing. The
+meme didn't just happen to reach you. In a perfectly rigorous sense, it was
+*derivable* that it would.
