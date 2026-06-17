@@ -1,314 +1,244 @@
-# Convergence Domain Theory for Non-Well-Founded Proofs
+# Non-Well-Founded Proofs as Self-Similarity: A Fixed-Point Theory of Safe Self-Reference
+
+**Domain:** Geometry (self-similar structures, contraction dynamics) with applications to proof theory.
+
+---
 
 ## Abstract
 
-We develop a formal mathematical theory of **non-well-founded proofs** — proof trees that may contain circular references to their own conclusions. The central innovation is a **Proof Convergence Domain**: a complete lattice equipped with a contractive deduction operator and a consistency metric that quantifies the circularity cost of self-reference. We prove that (1) contractive deduction operators have unique fixed points, establishing that convergent self-referential proofs are unambiguous; (2) valid proof trees have consistency metric strictly less than 1, with the liar sentence exactly at the boundary; (3) every valid self-referential proof admits a well-founded kernel that preserves the target proposition; (4) self-reference provides unbounded proof compression; and (5) proof heights form a tropical semiring. All results are machine-verified in Lean 4 with Mathlib.
+We develop a unified theory in which *self-reference, when it is valid, is self-similarity*. Classical logic treats self-referential statements with suspicion: the liar sentence and Gödel's diagonal lemma show that uncontrolled self-reference breaks completeness and consistency. We propose a sharp dividing criterion — **contraction** — that separates self-referential definitions which name a unique object from those which name nothing. A self-referential equation $x = f(x)$ has a unique solution exactly when $f$ shrinks distances by a constant factor below one; the same condition governs which self-similar geometric objects are well-defined and which recursive (proof) definitions converge.
 
-**Keywords**: non-well-founded proofs, fixed-point theory, consistency metric, tropical semirings, proof compression, self-referential logic
+We realize this thesis through two formal engines: **contraction fixed points** ($x^\star = f(x^\star)$) and **coinductive data** (infinite streams characterized up to bisimulation). We unify five phenomena under a single principle — *a quantity that is the unique solution of its own equation*: (i) the infinite geometric series $S = a + rS$; (ii) the coinductive geometric stream whose tail is a scaled copy of itself; (iii) the affine attractor $f(x) = cx + b$ with geometric convergence rate; (iv) the metallic ratios $\varphi_m^2 = m\varphi_m + 1$ with their gnomon self-similarity; and (v) the similarity dimension $D = \log k/\log(1/r)$ as the solution of $k r^D = 1$. We then transport the criterion to proof theory: the self-referential proof of $P \Rightarrow P$ is a *valid* non-well-founded proof of finite height, while the liar sentence is *invalid* precisely because its height functional $h \mapsto h+1$ is non-contractive and admits no fixed point. The paradox becomes a boundary case rather than a flaw.
+
+All quantitative claims below are stated as theorems with proof sketches.
 
 ---
 
 ## 1. Introduction
 
-Self-reference has been a central concern in mathematical logic since Gödel's incompleteness theorems [1]. The standard approach treats self-reference as inherently problematic — circular reasoning is forbidden, and the liar paradox is taken as evidence that unrestricted self-reference leads to inconsistency.
+### 1.1 The problem of self-reference
 
-We propose an alternative perspective: self-referential proofs form a well-defined mathematical structure with precise convergence conditions. Our approach is inspired by three independent lines of work:
+Self-reference is the engine behind the deepest negative results of twentieth-century logic. The liar sentence, *"this statement is false,"* has no stable truth value; Gödel's first incompleteness theorem constructs a sentence asserting its own unprovability; Russell's paradox exhibits a set that contains itself iff it does not. The orthodox response is *well-foundedness*: every legitimate definition and proof must bottom out in a finite descending chain, forbidding circular dependency.
 
-1. **Non-well-founded set theory** (Aczel 1988): sets that contain themselves as members, axiomatized via an anti-foundation axiom.
-2. **Banach's fixed-point theorem**: contractive maps on complete metric spaces have unique fixed points, computed by iteration.
-3. **Tropical geometry**: the semiring (ℝ ∪ {∞}, min, +) captures optimization problems in algebraic form.
+Yet mathematics is replete with self-referential objects that are entirely well-behaved. The golden ratio is defined by $\varphi = 1 + 1/\varphi$. A geometric series equals its first term plus a scaled copy of itself. A fractal is, by construction, made of smaller copies of itself. None of these is paradoxical. The aim of this paper is to explain *why*, with a single criterion, and to use that criterion to rehabilitate a controlled class of self-referential proofs.
 
-We unify these ideas into a single framework where self-referential proofs are fixed points of contractive operators on a lattice of proof approximations, with proof heights forming a tropical semiring.
+### 1.2 Thesis
 
-### 1.1 Summary of Results
+> **A self-referential definition $x = f(x)$ is valid — names exactly one object — if and only if its defining operator $f$ is a contraction. Valid self-reference is self-similarity, and the unique named object is the contraction's fixed point.**
 
-| Result | Statement | Significance |
-|--------|-----------|-------------|
-| Unique Fixed Point | Contractive deduction operators have at most one fixed point | Self-referential proofs are unambiguous |
-| Consistency Metric Bound | Valid proofs have CM < 1; liar has CM = 1 | Quantitative boundary between valid/invalid self-reference |
-| Stratification Theorem | Every valid NWF proof has a valid well-founded kernel | Self-reference is eliminable (at a cost) |
-| Unbounded Compression | For all d, there exists a depth-d proof whose kernel has depth 0 | Self-reference provides genuine proof compression |
-| Tropical Distributivity | Proof heights satisfy the tropical semiring axioms | Connection to optimization theory |
+The "if" direction is the Banach fixed-point principle; the "only if" direction is exhibited by the family of non-contractive failures ($r = 1$ geometric series, the liar sentence) where existence or uniqueness collapses. The contribution of this paper is to (a) make the principle uniform across numbers, infinite streams, plane figures, and fractal dimension, and (b) transport it to a theory of non-well-founded proofs with a concrete validity test.
 
----
+### 1.3 Two formal engines
 
-## 2. Definitions
+- **Contraction fixed points.** A map $f$ on a complete metric space with Lipschitz constant $L < 1$ has a unique fixed point reached by iteration at geometric rate. This handles numbers, points, and finite-dimensional self-reference.
+- **Coinduction.** Infinite objects (streams, trees) are characterized not by how they are built from below but by their *observations* (head/tail). Bisimulation supplies a uniqueness principle for self-referential infinite structures.
 
-### 2.1 Non-Well-Founded Proof Trees
-
-**Definition 2.1** (NWFTree). A *non-well-founded proof tree* is an element of the inductive type:
-```
-NWFTree ::= ax(p) | mp(f, a, p, q) | selfRef(p, inner) | bot
-```
-where `p, q` are proposition identifiers and `f, a, inner` are proof trees.
-
-- `ax(p)`: an axiom proving proposition p
-- `mp(f, a, p, q)`: modus ponens — f proves p → q, a proves p, yielding q
-- `selfRef(p, inner)`: self-referential proof of p that uses inner (which may assume p)
-- `bot`: undefined/invalid proof
-
-**Definition 2.2** (Validity). A proof tree is *valid* if:
-- `ax(p)` is always valid
-- `mp(f, a, p, q)` is valid if f targets p, a has a defined target, and both are valid
-- `selfRef(p, inner)` is valid if inner targets p and is valid
-- `bot` is never valid
-
-**Definition 2.3** (Structural Depth). The depth of a proof tree counts the maximum nesting:
-```
-depth(ax(p)) = 0
-depth(mp(f,a,p,q)) = 1 + max(depth(f), depth(a))
-depth(selfRef(p,t)) = 1 + depth(t)
-depth(bot) = 0
-```
-
-### 2.2 The Consistency Metric
-
-**Definition 2.4** (Consistency Metric). The consistency metric CM : NWFTree → [0, 1] is defined recursively:
-```
-CM(ax(p))        = 0
-CM(mp(f,a,p,q))  = max(CM(f), CM(a))
-CM(selfRef(p,t)) = (1 + CM(t)) / 2
-CM(bot)           = 1
-```
-
-The key property of this definition is that selfRef maps the interval [0, 1) to [1/2, 1), providing a quantitative measure of circularity that strictly increases with each layer of self-reference but never exceeds 1 for valid proofs.
-
-### 2.3 Proof Convergence Domain
-
-**Definition 2.5** (Proof Convergence Domain). A *Proof Convergence Domain* over a complete lattice (L, ≤) consists of:
-1. A monotone function `deduct : L → L` (the deduction operator)
-2. A metric `dist : L × L → ℝ≥0` satisfying the axioms of a metric
-3. A contraction factor `c ∈ (0, 1)` such that `dist(deduct(x), deduct(y)) ≤ c · dist(x, y)` for all x, y
-
-### 2.4 Well-Founded Kernel
-
-**Definition 2.6** (Well-Founded Kernel). The *well-founded kernel* wfKernel : NWFTree → NWFTree replaces every selfRef(p, inner) with ax(p):
-```
-wfKernel(ax(p))        = ax(p)
-wfKernel(mp(f,a,p,q))  = mp(wfKernel(f), wfKernel(a), p, q)
-wfKernel(selfRef(p,t)) = ax(p)
-wfKernel(bot)           = bot
-```
-
-### 2.5 Tropical Proof Heights
-
-**Definition 2.7** (Tropical Proof Height). The type TPH = WithTop ℕ equipped with:
-- Tropical addition: `a ⊕ b = min(a, b)` (choose shorter proof)
-- Tropical multiplication: `a ⊗ b = a + b` (compose proofs)
-- Additive identity: `0_trop = ⊤` (no proof exists)
-- Multiplicative identity: `1_trop = 0` (axiom)
-
-### 2.6 k-Convergence
-
-**Definition 2.8** (k-Convergent). A proof tree t is *k-convergent* if its self-reference depth is at most k and it is valid. 0-convergent proofs are exactly the valid well-founded proofs.
+The two engines are dual faces of the same idea — "the object is determined by its own unfolding" — and we use whichever is sharper for each phenomenon.
 
 ---
 
-## 3. Main Results
+## 2. Preliminaries and definitions
 
-### 3.1 Unique Fixed Point Theorem
+Throughout, $\mathbb{R}$ carries its usual metric. We write $f^{(k)}$ for the $k$-fold composition of $f$ with itself, with $f^{(0)} = \mathrm{id}$.
 
-**Theorem 3.1** (Unique Fixed Point). Let D be a Proof Convergence Domain. If x and y are fixed points of D.deduct (i.e., deduct(x) = x and deduct(y) = y), then x = y.
+**Definition 2.1 (Contraction).** A map $f : \mathbb{R} \to \mathbb{R}$ is a *contraction with factor $L$* if $0 \le L < 1$ and $|f(x) - f(y)| \le L\,|x - y|$ for all $x, y$.
 
-*Proof sketch*. Since deduct(x) = x and deduct(y) = y:
-```
-dist(x, y) = dist(deduct(x), deduct(y)) ≤ c · dist(x, y)
-```
-where c < 1. This implies (1 - c) · dist(x, y) ≤ 0, so dist(x, y) ≤ 0, hence dist(x, y) = 0, hence x = y. □
+**Definition 2.2 (Self-referential value / fixed point).** A point $x^\star$ is a *fixed point* of $f$ if $x^\star = f(x^\star)$. We read the equation $x = f(x)$ as a *self-referential definition* of $x$.
 
-**Corollary 3.2** (Geometric Convergence). The Kleene iterates deduct^n(⊥) satisfy:
-```
-dist(deduct^(n+1)(⊥), deduct^(n+2)(⊥)) ≤ c^(n+1) · dist(⊥, deduct(⊥))
-```
+**Definition 2.3 (Geometric value).** For $a, r \in \mathbb{R}$ with $r \ne 1$, the *geometric value* is
+$$\mathrm{geomVal}(a, r) := \frac{a}{1 - r}.$$
+For $|r| < 1$ this is the sum of the convergent series $\sum_{n \ge 0} a r^n$.
 
-### 3.2 Consistency Metric Characterization
+**Definition 2.4 (Geometric stream).** The *geometric stream* $G_{a,r}$ is the infinite sequence with entries $G_{a,r}(n) = a\,r^n$. It is generated coinductively by the rule
+$$\mathrm{head}(G_{a,r}) = a, \qquad \mathrm{tail}(G_{a,r}) = G_{a r,\, r}.$$
+We write $\mathrm{scale}_r(s)$ for the stream obtained by multiplying every entry of $s$ by $r$.
 
-**Theorem 3.3** (Consistency Metric Bounds). For all proof trees t:
-1. 0 ≤ CM(t) ≤ 1
-2. CM(t) = 0 iff t is an axiom or a pure modus ponens tree of axioms
-3. CM(t) = 1 iff t contains a path to bot through selfRef nodes
+**Definition 2.5 (Affine map).** For $c, b \in \mathbb{R}$, the *affine map* is $A_{c,b}(x) = c\,x + b$. It is a contraction with factor $|c|$ when $|c| < 1$.
 
-**Theorem 3.4** (Valid Proofs Have CM < 1). If t is a valid proof tree, then CM(t) < 1.
+**Definition 2.6 (Metallic ratio).** For an integer $m \ge 1$, the *$m$-th metallic ratio* is
+$$\varphi_m := \frac{m + \sqrt{m^2 + 4}}{2}.$$
+($\varphi_1$ is the golden ratio, $\varphi_2 = 1+\sqrt2$ the silver ratio, $\varphi_3$ the bronze ratio.)
 
-*Proof sketch*. Induction on t. The key case is selfRef(p, inner): if inner is valid with CM(inner) < 1 by induction, then CM(selfRef(p, inner)) = (1 + CM(inner))/2 < (1 + 1)/2 = 1. The bot case is vacuous since bot is never valid. □
+**Definition 2.7 (Similarity dimension).** For a count $k \ge 1$ and ratio $r$ with $0 < r < 1$, the *similarity dimension* is
+$$\mathrm{simDim}(k, r) := \frac{\log k}{\log(1/r)}.$$
 
-**Example 3.5**. The identity proof selfRef(p, ax(p)) has CM = 1/2. The liar sentence selfRef(p, bot) has CM = 1.
-
-### 3.3 Stratification Theorem
-
-**Theorem 3.6** (Stratification). For any valid proof tree t:
-1. wfKernel(t) is valid
-2. wfKernel(t) has no self-referential nodes
-3. wfKernel(t).target = t.target
-4. depth(wfKernel(t)) ≤ depth(t)
-
-*Proof sketch*. By structural induction. The key case is selfRef(p, inner): wfKernel replaces it with ax(p), which is trivially valid and targets p. For mp, the target-preservation follows from the fact that wfKernel preserves targets (proved separately). □
-
-### 3.4 Unbounded Compression
-
-**Theorem 3.7** (Unbounded Compression). For every natural number d, there exists a valid proof tree of depth d whose well-founded kernel has depth 0.
-
-*Proof*. Define nestedSR(p, 0) = ax(p) and nestedSR(p, n+1) = selfRef(p, nestedSR(p, n)). Then:
-- nestedSR(p, n) is valid for all n (by induction: the target is always some p)
-- depth(nestedSR(p, n)) = n
-- depth(wfKernel(nestedSR(p, n))) = 0 (since wfKernel collapses to ax(p))
-
-The compression ratio is n : 0, which is unbounded. □
-
-### 3.5 Tropical Semiring Structure
-
-**Theorem 3.8** (Tropical Semiring Laws). The tropical proof height operations satisfy:
-1. (TPH, ⊕, ⊤) is a commutative monoid
-2. (TPH, ⊗, 0) is a commutative monoid
-3. ⊗ distributes over ⊕: a ⊗ (b ⊕ c) = (a ⊗ b) ⊕ (a ⊗ c)
-4. ⊤ annihilates: ⊤ ⊗ a = ⊤
-
-*Proof*. Direct verification using properties of min and addition on WithTop ℕ. □
-
-### 3.6 Convergence Stratification
-
-**Theorem 3.9** (k-Convergence Characterization). 
-1. 0-convergent proofs are exactly the valid proofs with no self-reference.
-2. k-convergence is monotone: if t is j-convergent and j ≤ k, then t is k-convergent.
-3. The identity proof is 1-convergent but not 0-convergent.
+**Definition 2.8 (Bisimulation of streams).** Two streams $s, t$ are *bisimilar* if there is a relation $\mathcal{R}$ with $s \mathrel{\mathcal{R}} t$ such that whenever $u \mathrel{\mathcal{R}} v$, we have $\mathrm{head}(u) = \mathrm{head}(v)$ and $\mathrm{tail}(u) \mathrel{\mathcal{R}} \mathrm{tail}(v)$. The coinduction principle states that bisimilar streams are equal.
 
 ---
 
-## 4. PEGB Analysis
+## 3. Main results
 
-### 4.1 Unique Fixed Point (Theorem 3.1)
+We group the results by engine, then transport them to proof theory in §6.
 
-**P (Proof)**: Machine-verified in Lean 4 as `ProofConvergenceDomain.unique_fixed_point`.
+### 3.1 The geometric series is a self-referential value
 
-**E (Example)**: Consider the complete lattice [0, 1] with deduction operator f(x) = x/2. This is contractive with factor 1/2. The unique fixed point is 0, which represents the proof that "starting from any assumption, repeated deduction converges to the trivial proof."
+**Theorem 3.1 (Self-consistency of the geometric value).** *For $r \ne 1$, the geometric value $S = \mathrm{geomVal}(a, r)$ satisfies its own defining equation*
+$$S = a + r\,S.$$
 
-**G (Generalization)**: The result generalizes to any complete metric space (not just complete lattices) — this is Banach's fixed-point theorem. The lattice structure provides additional monotonicity guarantees but is not essential for uniqueness.
+*Proof sketch.* Substitute $S = a/(1-r)$: $a + r \cdot \frac{a}{1-r} = \frac{a(1-r) + ra}{1-r} = \frac{a}{1-r} = S$. $\qquad\blacksquare$
 
-**B (Boundary)**: The contraction factor must be *strictly* less than 1. With factor = 1, the identity function has every element as a fixed point — self-reference becomes ambiguous. The boundary case c = 1 is precisely where paradoxes live.
+**Theorem 3.2 (Uniqueness of the self-referential value).** *If $r \ne 1$ and $x = a + r\,x$, then $x = \mathrm{geomVal}(a,r) = \dfrac{a}{1-r}$.*
 
-### 4.2 Consistency Metric (Theorem 3.4)
+*Proof sketch.* From $x = a + rx$ we get $x(1 - r) = a$; since $r \ne 1$, divide by $1 - r$. Uniqueness needs only $r \ne 1$; the *interpretation as a convergent sum* needs $|r| < 1$. $\qquad\blacksquare$
 
-**P**: Machine-verified as `consistencyMetric_valid_lt_one`.
+**Remark 3.3 (The boundary case is the paradox in miniature).** At $r = 1$ the equation $x = a + x$ forces $a = 0$; it is then satisfied by *every* $x$ (total ambiguity) and otherwise by *none* (contradiction). The loss of contraction destroys uniqueness exactly as the liar sentence destroys a stable truth value (§6).
 
-**E**: Identity proof: CM = 1/2. Nested selfRef(p, selfRef(p, ax(p))): CM = (1 + 1/2)/2 = 3/4. Each layer of self-reference brings CM closer to 1 but never reaches it.
+### 3.2 The geometric stream is self-similar and unique
 
-**G**: The consistency metric could be parameterized by a weight function w : NWFTree → ℝ, giving CM(selfRef(p,t)) = (w(t) + CM(t)) / (1 + w(t)). Our choice w = 1 is the simplest; other choices could capture different notions of "circularity cost."
+**Theorem 3.4 (Self-similarity law).** *The geometric stream satisfies*
+$$\mathrm{scale}_r\bigl(G_{a,r}\bigr) = \mathrm{tail}\bigl(G_{a,r}\bigr).$$
+*That is, scaling the whole stream by $r$ yields its own tail.*
 
-**B**: The liar sentence selfRef(p, bot) has CM = 1, sitting exactly on the boundary. This is the *unique* minimal invalid self-referential proof: any deeper nesting would exceed 1, which is impossible since CM ≤ 1 always.
+*Proof sketch.* Compare entry $n$ of both sides: $\mathrm{scale}_r(G_{a,r})(n) = r \cdot a r^n = a r^{n+1}$, while $\mathrm{tail}(G_{a,r})(n) = G_{a,r}(n+1) = a r^{n+1}$. Equal for all $n$. $\qquad\blacksquare$
 
-### 4.3 Stratification Theorem (Theorem 3.6)
+**Theorem 3.5 (Bisimulation rigidity / uniqueness).** *Let $s$ be any stream with $\mathrm{head}(s) = a$ and $\mathrm{scale}_r(s) = \mathrm{tail}(s)$. Then $s = G_{a,r}$.*
 
-**P**: Machine-verified as `wfKernel_valid`, `wfKernel_no_sr`, `wfKernel_target`, `wfKernel_depth_le`.
+*Proof sketch.* The hypothesis $\mathrm{tail}(s) = \mathrm{scale}_r(s)$ says $s$ obeys exactly the coinductive generator of $G_{a,r}$: its head is $a$ and its tail is the "scale-by-$r$, restart with head $ar$" stream. Define $\mathcal{R} = \{(s', G_{a',r}) : \mathrm{head}(s') = a',\ \mathrm{tail}(s') = \mathrm{scale}_r(s')\}$. One checks heads agree ($a'$) and tails are again related (with head $a' r$). By coinduction (Definition 2.8), $s = G_{a,r}$. $\qquad\blacksquare$
 
-**E**: wfKernel(selfRef(p, mp(ax(p), ax(q), p, q))) = ax(p). The complex self-referential structure collapses to a single axiom.
+This is the infinite-object analogue of Theorem 3.2: the self-referential *law* "my tail is a scaled copy of me" determines the object completely. Self-reference does not under-specify; it pins down a unique element.
 
-**G**: The wfKernel operation can be generalized to a *k-kernel* that strips only self-references at depth > k, providing a family of approximations between the full proof and its well-founded skeleton.
+### 3.3 The affine attractor: convergence with explicit rate
 
-**B**: wfKernel does not preserve all semantic content — it replaces self-referential subproofs with axioms, which may not be sound in the ambient proof system. The kernel is structurally valid but semantically weaker.
+**Theorem 3.6 (Existence and value of the fixed point).** *If $|c| < 1$, then $x^\star = \dfrac{b}{1 - c}$ satisfies $A_{c,b}(x^\star) = x^\star$.*
 
-### 4.4 Unbounded Compression (Theorem 3.7)
+*Proof sketch.* $A_{c,b}(x^\star) = c \cdot \frac{b}{1-c} + b = \frac{cb + b(1-c)}{1-c} = \frac{b}{1-c} = x^\star$. (This is Theorem 3.1 with $a = b$, $r = c$.) $\qquad\blacksquare$
 
-**P**: Machine-verified as `unbounded_compression`.
+**Theorem 3.7 (Uniqueness of the fixed point).** *If $|c| < 1$ and $A_{c,b}(x) = x$, then $x = \dfrac{b}{1-c}$.* (Immediate from Theorem 3.2.)
 
-**E**: nestedSR(p, 5) has depth 5 but wfKernel depth 0. The ratio is 5:0.
+**Theorem 3.8 (Geometric error contraction).** *For all $x_0$ and all $k \ge 0$,*
+$$\bigl|\,A_{c,b}^{(k)}(x_0) - x^\star\,\bigr| \;\le\; |c|^k\,\bigl|x_0 - x^\star\bigr|.$$
 
-**G**: More complex self-referential structures (not just nesting) could achieve even richer compression. In particular, mutual self-reference between multiple propositions could compress multi-dimensional proof structures.
+*Proof sketch.* Induction on $k$. Base $k=0$ trivial. For the step, since $x^\star$ is fixed, $A_{c,b}^{(k+1)}(x_0) - x^\star = A_{c,b}(A^{(k)}_{c,b}(x_0)) - A_{c,b}(x^\star) = c\,(A^{(k)}_{c,b}(x_0) - x^\star)$; take absolute values and apply the inductive bound. $\qquad\blacksquare$
 
-**B**: Compression is only in structural depth, not in semantic complexity. The axiom ax(p) that the kernel produces requires p to be independently justified. Self-reference doesn't create information from nothing — it compresses its representation.
+**Theorem 3.9 (Convergence of every orbit).** *If $|c| < 1$, then $A_{c,b}^{(k)}(x_0) \to x^\star$ as $k \to \infty$, for every starting point $x_0$.*
 
----
+*Proof sketch.* By Theorem 3.8 the error is bounded by $|c|^k |x_0 - x^\star|$, and $|c|^k \to 0$ since $|c| < 1$; squeeze. $\qquad\blacksquare$
 
-## 5. Falsifiable Conjecture
+Theorems 3.6–3.9 constitute the one-dimensional Banach fixed-point theorem made fully quantitative. The contraction factor $|c|$ is simultaneously the existence guarantee, the uniqueness guarantee, and the convergence rate — the three faces of "the loop shrinks."
 
-**Conjecture 5.1** (Self-Reference Elimination Preserves Provability). For every proof system S and every proposition p provable via a valid k-convergent NWF proof (k > 0), p is also provable via a 0-convergent proof in S, possibly with greater depth.
+### 3.4 Metallic ratios: a dynasty of self-referential numbers
 
-**Test**: Construct a proof system S with a proposition p that has a valid 1-convergent proof but no valid 0-convergent proof. This would require a proposition whose only proof essentially involves self-reference — i.e., the axiom base is insufficient to prove p without circular reasoning.
+**Theorem 3.10 (Defining quadratic).** *For every integer $m \ge 1$,*
+$$\varphi_m^2 = m\,\varphi_m + 1.$$
 
-**Prediction**: Such a system exists (making the conjecture false). Consider a system where the only axiom is "p → p" (expressed as a self-referential proof), with no independent axiom for p. The wfKernel reduces to ax(p), but p may not be independently axiomatizable.
+*Proof sketch.* With $\varphi_m = \frac{m + \sqrt{m^2+4}}{2}$, compute $\varphi_m^2 - m\varphi_m = \varphi_m(\varphi_m - m) = \frac{m+\sqrt{m^2+4}}{2}\cdot\frac{-m+\sqrt{m^2+4}}{2} = \frac{(m^2+4) - m^2}{4} = 1$. $\qquad\blacksquare$
 
----
+**Theorem 3.11 (Self-referential continued-fraction form).** *For $m \ge 1$, $\varphi_m > 0$ and*
+$$\varphi_m = m + \frac{1}{\varphi_m}.$$
 
-## 6. Cross-Domain Connections
+*Proof sketch.* Divide Theorem 3.10 by $\varphi_m$ (positive, hence nonzero). This exhibits $\varphi_m$ as the fixed point of the self-map $g(x) = m + 1/x$, the closed form of the infinite continued fraction $[m; m, m, \dots]$. $\qquad\blacksquare$
 
-### 6.1 Connection to Catalog Results
+**Theorem 3.12 (Golden specialization).** *$\varphi_1 = \dfrac{1 + \sqrt5}{2}$, the golden ratio.* (Set $m=1$ in Definition 2.6.)
 
-Our work connects to several existing catalog results:
+**Theorem 3.13 (Gnomon self-similarity).** *A rectangle with side ratio $\varphi_m : 1$, after removal of $m$ unit squares from the long side, leaves a rectangle with the same ratio $\varphi_m : 1$.*
 
-1. **`direct_self_reference_paradox`** (MachineLearning/GazingPool.lean): Proves that P ↔ ¬P implies False. Our consistency metric provides a *quantitative* version: self-referential statements with CM = 1 are paradoxical, while those with CM < 1 are valid.
+*Proof sketch.* The long-to-short ratio is $\varphi_m$. Removing $m$ squares of side $1$ leaves a $1 \times (\varphi_m - m)$ rectangle; its ratio of long to short side is $1/(\varphi_m - m)$. By Theorem 3.11, $\varphi_m - m = 1/\varphi_m$, so $1/(\varphi_m - m) = \varphi_m$. The shape reproduces itself at scale $1/\varphi_m$. $\qquad\blacksquare$
 
-2. **`fixed_point_unique_under_theory_separation`** (Bridges/ProofStoneCechDynamics.lean): Our unique fixed point theorem specializes to the same result when the theory separation condition implies contractivity.
+Theorem 3.13 is the planar incarnation of self-similarity: a geometric figure satisfying "I contain a scaled copy of myself," with the scale dictated by the same self-referential equation that defines $\varphi_m$.
 
-3. **`self_reasoning_fixed_point`** (Tropical/TropicalSelfReasoning.lean): Our tropical semiring structure on proof heights extends this work by providing algebraic operations on proof heights.
+### 3.5 Similarity dimension: the exponent that balances the loop
 
-### 6.2 Connection to Tropical Mathematics
+**Theorem 3.14 (Defining balance equation).** *For $k \ge 1$ and $0 < r < 1$, $D = \mathrm{simDim}(k, r)$ satisfies*
+$$k \cdot r^{D} = 1.$$
 
-The proof height semiring (WithTop ℕ, min, +) is a *tropical semiring* — the same algebraic structure that appears in tropical geometry, optimization, and phylogenetics. This connection suggests that:
+*Proof sketch.* $r^D = r^{\log k / \log(1/r)} = \exp\!\big(\tfrac{\log k}{\log(1/r)}\log r\big) = \exp\!\big(\tfrac{\log k}{\log(1/r)}\cdot(-\log(1/r))\big) = \exp(-\log k) = 1/k$. Hence $k r^D = 1$. $\qquad\blacksquare$
 
-1. **Proof search as tropical optimization**: Finding the shortest proof is a tropical linear programming problem.
-2. **Proof varieties**: The set of achievable proof height vectors forms a tropical variety.
-3. **Tropical Gröbner bases**: The ideal theory of proof heights could yield canonical forms for proof systems.
+**Theorem 3.15 (Positivity).** *For $k \ge 2$ and $0 < r < 1$, $\mathrm{simDim}(k, r) > 0$.*
 
----
+*Proof sketch.* $\log k > 0$ (as $k \ge 2$) and $\log(1/r) > 0$ (as $0 < r < 1$); the quotient is positive. $\qquad\blacksquare$
 
-## 7. Algorithms
-
-### 7.1 Consistency Metric Computation
-
-```python
-def consistency_metric(tree):
-    if tree.type == 'axiom': return 0.0
-    elif tree.type == 'mp':
-        return max(consistency_metric(tree.left), consistency_metric(tree.right))
-    elif tree.type == 'selfRef':
-        return (1 + consistency_metric(tree.inner)) / 2
-    elif tree.type == 'bot': return 1.0
-```
-
-Time complexity: O(n) where n is the number of nodes.
-
-### 7.2 Well-Founded Kernel Extraction
-
-```python
-def wf_kernel(tree):
-    if tree.type == 'axiom': return tree
-    elif tree.type == 'mp':
-        return MP(wf_kernel(tree.left), wf_kernel(tree.right), tree.p, tree.q)
-    elif tree.type == 'selfRef': return Axiom(tree.p)
-    elif tree.type == 'bot': return tree
-```
-
-Time complexity: O(n) where n is the number of nodes. The kernel is always smaller or equal in size.
+The dimension is the unique exponent making $k$ copies at scale $r$ reassemble into one whole — once more, a quantity defined as the solution of its own consistency equation. The classical examples ($D = 1$ for $k=2, r=1/2$; the Koch curve $D = \log 4/\log 3$) are instances.
 
 ---
 
-## 8. Discussion and Future Work
+## 4. The unifying principle
 
-### 8.1 Limitations
+The five theorem-clusters above are not independent tricks. Each instantiates the same schema:
 
-1. Our NWFTree type is an *inductive* type, not coinductive. True non-well-founded structures (infinite proof trees) would require coinductive types, which are more complex to work with in Lean 4.
+| Phenomenon | Self-referential equation | Unique solution | Engine |
+|---|---|---|---|
+| Geometric series | $S = a + rS$ | $a/(1-r)$ | contraction |
+| Geometric stream | $\mathrm{tail}(s) = \mathrm{scale}_r(s)$, $\mathrm{head}=a$ | $G_{a,r}$ | coinduction |
+| Affine attractor | $x = cx + b$ | $b/(1-c)$ | contraction |
+| Metallic ratio | $x = m + 1/x$ | $\varphi_m$ | contraction |
+| Similarity dimension | $k\,r^{D} = 1$ | $\log k/\log(1/r)$ | contraction |
 
-2. The consistency metric is a syntactic measure. A deeper semantic version would require modeling the ambient logic and its interpretation.
-
-3. The connection to tropical geometry is algebraic but not yet geometric — we establish the semiring structure but not the associated tropical varieties.
-
-### 8.2 Open Problems
-
-1. **Semantic consistency**: Does there exist a proof system where a valid NWF proof proves a proposition that has no classical proof?
-
-2. **Complexity-theoretic bounds**: Is there a relationship between the minimum self-reference depth of a proof and the computational complexity of the proved statement?
-
-3. **Coinductive extension**: Can the framework be extended to infinite proof trees using coinductive types, and if so, what is the analog of the consistency metric for infinite trees?
+In every row the object is *defined by referencing itself*, and in every row the reference is **guarded** — the loop strictly shrinks (the contraction factor is $|r|, |c|, 1/\varphi_m < 1$; the dimension equation is strictly monotone in $D$). Guardedness yields existence *and* uniqueness. This is the geometric content of "valid self-reference is self-similarity."
 
 ---
 
-## 9. References
+## 5. Algorithms
 
-[1] K. Gödel, "Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I," *Monatshefte für Mathematik und Physik*, vol. 38, pp. 173–198, 1931.
+The contraction principle is not merely an existence statement; it is a computational method. We record two algorithms used to realize and certify the results numerically (full code in the accompanying demonstration files).
 
-[2] P. Aczel, *Non-Well-Founded Sets*, CSLI Lecture Notes, 1988.
+**Algorithm A — Banach iteration for self-referential values.**
+*Input:* a contraction factor $c$ with $|c| < 1$, offset $b$, start $x_0$, tolerance $\varepsilon$.
+*Output:* an approximation of $x^\star = b/(1-c)$ certified to within $\varepsilon$.
+*Method:* iterate $x_{k+1} = c x_k + b$; by Theorem 3.8 the error after $k$ steps is $\le |c|^k|x_0 - x^\star|$, so a stopping index $k \ge \log(\varepsilon/|x_0-x^\star|)/\log|c|$ guarantees the tolerance. Complexity: $O(\log(1/\varepsilon)/\log(1/|c|))$ arithmetic operations.
 
-[3] S. Banach, "Sur les opérations dans les ensembles abstraits et leur application aux équations intégrales," *Fundamenta Mathematicae*, vol. 3, pp. 133–181, 1922.
+**Algorithm B — Continued-fraction evaluation of metallic ratios.**
+*Input:* integer $m \ge 1$, depth $N$.
+*Output:* the depth-$N$ truncation of $[m; m, m, \dots]$ approximating $\varphi_m$.
+*Method:* fold the self-map $g(x) = m + 1/x$ from a seed; by contraction near $\varphi_m$ (the derivative $|g'(\varphi_m)| = 1/\varphi_m^2 < 1$) the truncations converge geometrically. The error after $N$ folds shrinks by a factor $\approx \varphi_m^{-2}$ per step.
 
-[4] D. Maclagan and B. Sturmfels, *Introduction to Tropical Geometry*, Graduate Studies in Mathematics, AMS, 2015.
+---
 
-[5] A. Tarski, "A lattice-theoretical fixpoint theorem and its applications," *Pacific Journal of Mathematics*, vol. 5, pp. 285–309, 1955.
+## 6. Transport to proof theory: non-well-founded proofs
+
+We now apply the criterion to self-referential *proofs*. Model a (possibly non-well-founded) proof as a structure that may contain a sub-derivation referencing its own conclusion. Assign each such structure an **ordinal height**, the least ordinal bounding the lengths of its dependency chains, defined as the fixed point of the height functional induced by its sub-derivation structure.
+
+**Principle 6.1 (Validity criterion).** *A self-referential proof is valid iff its height functional is a contraction on the ordinals — i.e., admits a (least) fixed point. Equivalently, each unfolding of the self-reference must occur at a strictly smaller ordinal (guardedness).*
+
+**Proposition 6.2 (The proof of $P \Rightarrow P$ is a valid non-well-founded proof of height $1$).** Consider the derivation: *to prove $P \Rightarrow P$, assume $P$; the subgoal $P$ is then discharged immediately by the assumption.* The dependency loop closes in one step; its height functional is $h \mapsto 1$ (constant, hence contractive), with fixed point $h = 1$. The proof is valid with ordinal height $1$.
+
+*Justification.* This is the proof-theoretic image of Theorem 3.1 in the degenerate guarded case: a self-reference that is resolved after a single, strictly-decreasing step. Formally it is a corecursive/coinductive derivation whose unique solution exists by the same bisimulation/fixed-point reasoning as Theorem 3.5. $\qquad\blacksquare$
+
+**Proposition 6.3 (The liar sentence is not a valid non-well-founded proof).** Let $L$ assert its own unprovability. A purported derivation of $L$ must, by the content of $L$, reference a derivation of $L$ of the *same* size; the induced height functional is $h \mapsto h + 1$. The equation $h = h + 1$ has no ordinal solution; the functional is non-contractive (the loop does not shrink), so no fixed point — hence no well-defined height — exists.
+
+*Justification.* This is the proof-theoretic image of Remark 3.3 (the $r = 1$ geometric series) and of $A_{c,b}$ with $c = 1$: loss of the contraction factor destroys the fixed point. The liar is therefore not a logical defect but the canonical *non-guarded* loop — the boundary that delimits the valid region. $\qquad\blacksquare$
+
+**Consequence.** Self-referential proofs form a class of mathematical objects stratified by Principle 6.1: the guarded ones are valid (and, by the uniqueness theorems, determine their conclusions unambiguously), while the unguarded ones — the liar, Russell's predicate, the Gödel diagonal in its naive reading — are exactly the non-contractive failures. The paradoxes are not exceptions to be excised; they are the precise complement of the convergent loops.
+
+---
+
+## 7. Applications
+
+- **Iterative numerics.** Algorithm A is the abstract template for fixed-point solvers (Newton-type schemes, value iteration in dynamic programming, Picard iteration for ODEs). The error bound of Theorem 3.8 is the convergence certificate.
+- **Fractal geometry and compression.** Theorem 3.13 and the similarity dimension (§3.5) underlie iterated function systems: a fractal is the unique fixed point of a contraction on the space of compact sets, and fractal image compression stores the contraction rather than the image.
+- **Design and aesthetics.** The metallic ratios (§3.4) govern self-similar tilings, rectangle subdivisions, and continued-fraction approximation quality (the golden ratio being the "most irrational" number).
+- **Programming language semantics.** Coinduction (Theorem 3.5) is the foundation for reasoning about infinite data and non-terminating processes; guarded recursion (Principle 6.1) is the type-theoretic guarantee that a corecursive definition is productive.
+
+---
+
+## 8. Discussion
+
+The contribution is conceptual rather than a single hard theorem: a *criterion* (contraction/guardedness) that simultaneously explains (i) why certain self-referential numbers, streams, shapes, and dimensions are well-defined, and (ii) why certain self-referential proofs are valid while the paradoxes are not. The two engines — contraction fixed points and coinduction — are complementary: the former is sharpest for finite-dimensional, quantitative statements (with explicit convergence rates), the latter for infinite objects (with bisimulation uniqueness). Their agreement on the geometric series / geometric stream pair (Theorems 3.2 and 3.5) is the technical evidence that "self-reference = self-similarity" is a single phenomenon rather than an analogy.
+
+A limitation is that the proof-theoretic transport (§6) is presented at the level of a validity *criterion* keyed to ordinal-height fixed points; a fully general calculus of non-well-founded proofs (cut-elimination, normalization) is left open. The geometric core, by contrast, is complete and quantitative.
+
+---
+
+## 9. Future directions
+
+*(Carried forward verbatim, lightly edited, from the upstream research program.)*
+
+**Theme.** Across two cycles we established the thesis that *self-reference / non-well-foundedness = self-similarity*, realized by two formal engines — coinductive data and contraction fixed points — and unified the geometric series, the affine attractor, and the (golden / metallic) continued fractions as one phenomenon: *a quantity that is the unique solution of its own equation.*
+
+**Closed conjectures.**
+- *Bisimulation rigidity* — proved: the self-similarity law "tail equals scaling by $r$" with fixed head characterizes the geometric stream uniquely.
+- *Metallic ratios* — proved: the golden lemmas generalize to the whole family $\varphi_m = (m + \sqrt{m^2+4})/2$ (defining quadratic, continued-fraction form, gnomon self-similarity, golden specialization).
+- *Similarity dimension* — core proved: $D = \log k/\log(1/r)$ solves $k r^D = 1$ and is positive; monotonicity remains open (D3 below).
+
+**Conjecture D1 — IFS attractor in $\mathbb{R}^n$ via Banach.** For an affine contraction $f(x) = Ax + b$ on $\mathbb{R}^n$ with operator norm $\|A\| < 1$, there is a unique self-referential point $x^\star = f(x^\star)$, every orbit $f^{(k)}(x_0) \to x^\star$, and $\|f^{(k)}(x_0) - x^\star\| \le \|A\|^k \|x_0 - x^\star\|$. *Test:* lift the one-dimensional affine theorems to $\mathbb{R}^n$ through the contraction/edist API. Falsified if no $\mathbb{R}^n$ statement closes under just $\|A\| < 1$.
+
+**Conjecture D2 — Coinductive geometric trees and self-similar measure.** Define an infinite binary coinductive tree whose node at depth $d$ carries scale $r^d$. Conjecture: the depth-$d$ level holds $2^d$ copies of scale $r^d$, and the total-measure recursion $M = 1 + 2rM$ has the self-referential closed form $M = 1/(1 - 2r)$ for $2r < 1$ — the tree analogue of the geometric-series self-reference. *Test:* build the tree corecursively, prove the level identity by induction and the measure equation by fixed-point uniqueness.
+
+**Conjecture D3 — Monotonicity of the similarity dimension.** $\mathrm{simDim}(k, r) = \log k/\log(1/r)$ is strictly increasing in $k$ (for $0 < r < 1$) and strictly increasing in $r$ on $(0,1)$ (for $k \ge 2$); moreover it is the unique real solving $k r^D = 1$. *Test:* prove both monotonicities and exponent uniqueness; falsified if either monotonicity reverses on any admissible $(k, r)$.
+
+**Conjecture D4 — Mixed-ratio IFS and the Moran equation.** For a finite list of ratios $r_1, \dots, r_k \in (0,1)$, the similarity dimension is the unique $D$ solving the Moran equation $\sum_{i=1}^k r_i^{D} = 1$, generalizing the single-ratio balance $k r^D = 1$.
+
+---
+
+## 10. Conclusion
+
+We have argued, with theorems, that the right way to think about self-reference is geometric: a self-referential definition names a unique object exactly when its loop contracts, and the named object is then a self-similar fixed point. This single criterion organizes the geometric series, infinite self-similar streams, affine attractors, the metallic ratios, and fractal dimension, and it draws a precise line through proof theory — validating the self-referential proof of $P \Rightarrow P$ while diagnosing the liar sentence as the canonical non-contractive loop. The paradox is not a wall but a boundary: on one side, the hall of mirrors converges to a single point; on the other, it runs forever. Knowing how to measure the difference turns self-reference from a hazard into a tool.
