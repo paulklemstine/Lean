@@ -546,7 +546,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const genBtn = document.createElement('button');
             genBtn.className = 'run-btn viz-generate-btn';
-            genBtn.textContent = 'Regenerate';
+            genBtn.textContent = 'Generate';
 
             btnGroup.appendChild(toggleBtn);
             btnGroup.appendChild(genBtn);
@@ -606,7 +606,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const outputContainer = document.createElement('div');
             outputContainer.className = 'gallery-img-container viz-output-container';
-            outputContainer.innerHTML = '<div class="viz-loading">Running visualization...</div>';
+            outputContainer.innerHTML = '<div class="viz-placeholder" style="color: var(--text-muted); padding: 12px 0;">Click Generate to render the visualization</div>';
 
             const runViz = () => {
                 if (window.runVisualization) {
@@ -620,19 +620,6 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             genBtn.addEventListener('click', runViz);
-
-            // Auto-run when Pyodide is ready; if already loaded, run immediately.
-            if (window.Aether.pyodideInstance) {
-                runViz();
-            } else {
-                window.Aether.pendingVisualizations = window.Aether.pendingVisualizations || [];
-                window.Aether.pendingVisualizations.push({
-                    code: editor.value,
-                    outputContainer,
-                    buttonEl: genBtn,
-                    __autoRun: runViz,
-                });
-            }
 
             card.appendChild(header);
             card.appendChild(desc);

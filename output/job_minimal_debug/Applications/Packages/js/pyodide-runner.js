@@ -16,25 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.textContent = 'Run Code';
             });
 
-            // Auto-run any pending visualizations
-            if (window.Aether.pendingVisualizations) {
-                for (const viz of window.Aether.pendingVisualizations) {
-                    if (viz.__autoRun) {
-                        viz.__autoRun();
-                    } else {
-                        window.runVisualization(viz.code, viz.outputContainer, viz.buttonEl);
-                    }
-                }
-                window.Aether.pendingVisualizations = [];
-            }
-
-            // Auto-run any pending interactive demos
-            if (window.Aether.pendingInteractiveDemos) {
-                for (const demo of window.Aether.pendingInteractiveDemos) {
-                    window.runDemo(demo.runBtn, demo.editor, demo.output);
-                }
-                window.Aether.pendingInteractiveDemos = [];
-            }
         } catch (err) {
             console.error("Failed to load Pyodide:", err);
         }
@@ -378,13 +359,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.appendChild(output);
                 container.appendChild(card);
 
-                // Auto-run once Pyodide is ready; queue if still loading.
-                if (window.Aether.pyodideInstance) {
-                    window.runDemo(runBtn, editor, output);
-                } else {
-                    window.Aether.pendingInteractiveDemos = window.Aether.pendingInteractiveDemos || [];
-                    window.Aether.pendingInteractiveDemos.push({ runBtn, editor, output });
-                }
+                // Demos are manual-only now; the Run Code button triggers execution.
             });
         } else {
             container.innerHTML = '<p style="color:var(--text-muted)">No interactive demos provided.</p>';
@@ -396,10 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Auto-runs on page load. Auto-detects library and captures output.
     window.runVisualization = async function(code, outputContainer, buttonEl) {
         if (!window.Aether.pyodideInstance) {
-            // Queue for auto-run once Pyodide finishes loading
-            window.Aether.pendingVisualizations = window.Aether.pendingVisualizations || [];
-            window.Aether.pendingVisualizations.push({ code, outputContainer, buttonEl });
-            outputContainer.innerHTML = '<div class="viz-loading">Waiting for Pyodide...</div>';
+            outputContainer.innerHTML = '<div class="viz-placeholder" style="color: var(--text-muted);">Engine still loading — click the button again in a moment.</div>';
             return;
         }
 
