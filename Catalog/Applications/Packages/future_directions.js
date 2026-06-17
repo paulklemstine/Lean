@@ -1474,6 +1474,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Causal Loops in Category Theory\n\nFollow-up conjectures arising from `CausalLoops.lean` (Cycle 0 + Cycle 1).\nAll results in that file are fully proved (0 sorries, standard axioms only).\nEach direction below is stated to be **falsifiable** and **formalizable** in Lean 4 / Mathlib.\n\n## Summary of what is established\n\n- **Static loops collapse.** In a `Preorder` of events, `CausallyLooped a b := a \u2264 b \u2227 b \u2264 a`\n  is an equivalence relation, definitionally equal to `AntisymmRel (\u00b7 \u2264 \u00b7)`; quotienting\n  produces an acyclic (`PartialOrder`) causal structure, with loops being exactly the\n  fibers of the collapse map.\n- **Dynamic loops are self-consistent.** Every endomorphism of a finite nonempty type has a\n  periodic point (`novikov_self_consistency`). The grandfather process `not` has no fixed\n  point but is consistent at period 2. Idempotent loops always have a genuine fixed point;\n  reversible (bijective) loops are globally periodic.\n- **Composition loops back.** In any finite monoid / `End X` with finite hom, powers of any\n  element repeat, and some positive power is idempotent.\n\n---\n\n## Conjecture 1 \u2014 Minimal consistent period is bounded by the state count\n\n**Claim.** For a finite type `\u03b1` with `Nat.card \u03b1 = N` and any `e : \u03b1 \u2192 \u03b1`, there exists a\nself-consistent history of *minimal* positive period `p` with `1 \u2264 p \u2264 N`. Moreover the set of\nattainable minimal periods is exactly the set of cycle lengths of the eventual permutation of\n`e` on its periodic core. Formalize via `Function.minimalPeriod` and `Function.IsPeriodicPt`,\nproving `Function.minimalPeriod e x \u2264 Nat.card \u03b1` for any periodic point `x`.\n\n**Why bold/testable.** It upgrades \"a consistent history exists\" to a sharp quantitative bound,\ngiving a *spectrum of allowed periods* for a CTC of a given state-space size.\n\n## Conjecture 2 \u2014 The periodic core is the universal terminal sub-loop\n\n**Claim.** For finite `\u03b1` and `e : \u03b1 \u2192 \u03b1`, the periodic points `periodicPts e` form an\n`e`-invariant subset on which `e` restricts to a bijection (a disjoint union of cycles), and\nthis restricted system is the **terminal object** among all `(S, e|S)` with `e '' S \u2286 S` on\nwhich `e` is bijective. Categorically: the eventual image `\u22c2\u2099 e\u207f '' \u03b1` is the maximal\nreversible sub-loop. Formalize the eventual image `\u22c2 n, Set.range e^[n]` and prove `e` maps it\nbijectively onto itself.\n\n**Why bold/testable.** It identifies a canonical \"physical sector\" of a causal loop \u2014 the part\nthat is genuinely reversible \u2014 and characterizes it by a universal property.\n\n## Conjecture 3 \u2014 Loop collapse is functorial (Preorder \u2964 PartialOrder, left adjoint)\n\n**Claim.** The collapse `\u03b1 \u21a6 Antisymmetrization \u03b1 (\u00b7 \u2264 \u00b7)` extends to a functor from the\ncategory of preorders (causal structures) and monotone maps to the category of partial orders\n(acyclic causal structures), and it is **left adjoint** to the inclusion. I.e. paradox-removal\nis the universal acyclic approximation of a causal order. Formalize using Mathlib's\n`Preorder`/`PartialOrder` bundled categories and `Antisymmetrization`'s functorial action\n(`Preorder_to_PartialOrder`), proving the adjunction unit/counit laws.\n\n**Why bold/testable.** Turns the ad hoc \"collapse\" into a precise universal construction; the\nadjunction is either provable or refutable by exhibiting a counterexample to the universal map.\n\n## Conjecture 4 \u2014 Consistency amplitude: counting self-consistent histories\n\n**Claim.** For finite `\u03b1` and `e : \u03b1 \u2192 \u03b1`, the number of fixed points of `e^[n]` equals the\nnumber of length-`n` closed orbits weighted by divisors:\n`Fintype.card (Function.fixedPoints e^[n]) = \u2211 d \u2223 n, d \u00b7 (#cycles of length d)`. In\nparticular the \"consistency partition function\" `Z(n) := card (fixedPoints e^[n])` is\nmultiplicative-structured and strictly positive for all `n` divisible by `lcm` of the cycle\nlengths. This is the categorical analogue of a CTC path integral over self-consistent\nhistories.\n\n**Why bold/testable.** A concrete combinatorial identity (M\u00f6bius/divisor sum over cycle\nlengths) that can be proved in Mathlib and checked against `decide` on small `e`.\n\n## Conjecture 5 \u2014 Idempotent stabilization rate (Suschkewitsch threshold)\n\n**Claim.** For a finite monoid `M` with `Nat.card M = N`, every element `a` reaches an\nidempotent power within exponent `\u2264 N`: there is `1 \u2264 n \u2264 N` with `IsIdempotentElem (a^n)`,\nand more sharply `a^(N!)` is idempotent for every `a`. Equivalently, the \"index + period\" of\nevery element is `\u2264 N`. Formalize by bounding the pigeonhole indices `i < j \u2264 N` in\n`composition_loops_back_monoid` and strengthening `idempotent_power_of_finite` to an explicit\nbound.\n\n**Why bold/testable.** Converts the existence statement `idempotent_power_of_finite` into an\neffective bound \u2014 a measurable \"thermalization time\" for a categorical loop process; refutable\nby any monoid whose elements need exponent `> N`.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2042",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "1cfdf3f4",
+    "status": "available",
+    "timestamp": "2026-06-17T05:04:17.422084+00:00",
+    "title": "Follow-up conjectures arising from `CausalLoops.lean` (Cycle 0 + Cycle 1)."
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3056,7 +3071,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Counterfactual Number Theory: What If Primes Were Random?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3beb3930",
     "description": "Construct a surface whose Hausdorff dimension is exactly aleph-1 (assuming CH). Prove that such a surface cannot be embedded in any finite-dimensional Euclidean space but can be embedded in the Hilbert cube. Formalize transfinite-dimensional manifolds and prove they have no finite triangulation.",
     "domains": [
       "Novelty",
@@ -3066,7 +3081,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:31.030197+00:00",
     "title": "Aleph-1 Surface: Geometry Between Dimensions"
   },
@@ -3099,21 +3114,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-01T12:30:31.073799+00:00",
     "title": "Infinite Games Against Death: Immortality Strategies"
-  },
-  {
-    "consumed_by_exp_id": "1cfdf3f4",
-    "description": "Construct a category where composition is not associative but satisfies a controlled failure: (f circ g) circ h and f circ (g circ h) are naturally isomorphic but not equal. Prove that such almost-categories are exactly the bicategories and that every coherent loop-tolerant algebraic structure forms a higher category.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0138",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:31.092242+00:00",
-    "title": "Causal Loops in Category Theory: When Composition Loops Back"
   },
   {
     "consumed_by_exp_id": "",
