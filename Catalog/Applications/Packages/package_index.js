@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6fb69121",
     "filename": "the_hodge_conjecture_for_neural_networks_algebraic.json",
     "pkg_num": 182,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5415809756097562,
     "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
   },
   {
@@ -5605,8 +5605,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "the_hodge_conjecture_for_neural_networks_algebraic",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5415809756097562,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
     }
