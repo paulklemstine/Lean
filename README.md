@@ -430,6 +430,16 @@ cd Aether && python3 planning_guide.py
 
 It detects RAM, suggests a `--max-memory-mb` cap, asks whether to reprocess the existing archive, and writes the plan to `.aether_workspace/run_plan.sh`.
 
+### Quality improvement questionnaire
+
+`Aether/quality_plan_questionnaire.html` is an interactive browser questionnaire for prioritizing improvements to Aether's scientific process. Answer sliders and checkboxes about pain points, proof quality, discovery strategy, and implementation appetite, then click **Generate Plan** to produce a Markdown action plan with quick wins, major projects, and a prioritized action list.
+
+```bash
+cd Aether && python3 quality_plan_questionnaire.py
+```
+
+The launcher starts a local server at `http://127.0.0.1:8765` and opens the questionnaire in your default browser. The generated plan can be copied as Markdown or downloaded as `aether_quality_plan_YYYY-MM-DD.md`.
+
 ### Querying the archived theorem database
 
 Once the backfill has run, you can inspect the deduplicated theorem index:
