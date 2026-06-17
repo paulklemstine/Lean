@@ -705,21 +705,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Hilbert 6: Axiomatization of Physics"
   },
   {
-    "consumed_by_exp_id": "2d22ac65",
-    "description": "Construct a simplicial complex from the citation graph of mathematical theorems: vertices are theorems, edges connect co-cited theorems, triangles connect tri-cited theorems, etc. Compute the persistent homology of this complex. Conjecture: H_1 reveals 'schools of mathematics' (connected research communities) and H_2 reveals 'paradigm shifts' (structural changes in the network). Prove: the Betti numbers grow as \u03b2_k \u2248 n^(k+1) where n is the number of theorems.",
-    "domains": [
-      "Novelty",
-      "MachineLearning"
-    ],
-    "id": "fd_0575",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T23:40:36.748677+00:00",
-    "title": "Speculative: Topological Data Analysis of Theorem Networks"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Solve the happy end problem for arbitrary n: determine the minimum number of points in general position in the plane that guarantee a convex n-gon. Formalize the Erd\u0151s\u2013Szekeres theorem and improve known bounds.",
     "domains": [
@@ -1444,6 +1429,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Tropical Persistent Topology\n\nResearch cycle: *Topological Data Analysis of Theorem Networks* (Domain: Tropical).\nFoundation laid in `Catalog/Tropical/Persistence/SublevelFiltration.lean`:\ntropical polynomials are convex, their sublevel filtrations have a single-bar\ndegree-0 persistence, and the tropical semiring operations `\u2295 = max`, `\u2297 = +`\nact on value functions and on the filtration in a controlled way.\n\nBelow are bold, **testable** conjectures for follow-up cycles. Each is stated so\nthat it can be formalized as a Lean theorem (or refuted by a Lean\ncounterexample).\n\n## C1 \u2014 Degree-`k` persistence collapse (k \u2265 1)\n**Conjecture.** For every tropical polynomial `p : TropPoly n` and every threshold\n`c`, the sublevel set `sublevel p c` is contractible whenever it is nonempty;\nhence *all* reduced persistent homology vanishes and the full persistence diagram\nis the single H\u2080 bar already established.\n*Test.* Strengthen `convex_sublevel` to `Contractible`/`StarConvex` (a convex set\nin `\u211d\u207f` is contractible). Formalize via `Convex.contractibleSpace` or by\nexhibiting a star-center. Falsifiable: produce a `p`, `c` with disconnected or\nholey sublevel set (impossible if convexity is unconditional \u2014 so the conjecture\npredicts no such example exists).\n\n## C2 \u2014 Tropical hypersurfaces are the true carriers of topology\n**Conjecture.** Replace the *sublevel* set by the **tropical hypersurface**\n(the non-differentiability locus `V(p) = { x | the max in p.toFun x is attained\n\u2265 twice }`). Then the filtration of `\u211d\u207f \\ V(p)` by connected components is\ngoverned by `card p.\u03b9`: the number of top-dimensional regions equals the number\nof monomials that are \"essential\" (achieve the max somewhere), and this count is\n*sub-additive* under `\u2295` and *multiplicative-with-defect* under `\u2297`.\n*Test.* Define `essential p = { i | \u2203 x, p.toFun x = monomial (coeff i) (slope i) x }`\nand prove `essential (tropAdd p q) \u2286 image essential p \u222a image essential q`.\n\n## C3 \u2014 Persistence stability for tropical polynomials  *(pointwise core: PROVED)*\n**Status.** The pointwise, dimension-free part is established as `toFun_stable`\nin `SublevelFiltration.lean`: `|p.toFun x \u2212 (p.recoeff a').toFun x| \u2264\n\u2a06\u1d62 |coeff\u1d62 \u2212 a'\u1d62|`, uniformly in `x`, with the generic `sup'`-Lipschitz lemma\n`abs_sup'_sub_sup'_le`.\n**Remaining conjecture.** Lift this to *barcode* stability: the degree-0 birth\nvalue `b(p)` (see C4) is `1`-Lipschitz in the coefficients, and more generally the\nbottleneck distance of persistence diagrams is bounded by the sup-distance of\ncoefficients.\n*Test.* Combine `toFun_stable` with the existence of a minimizer (C4) to bound\n`|b(p) \u2212 b(q)|`. Falsifiable by any coefficient perturbation producing a\nbirth-value jump exceeding the perturbation.\n\n## C4 \u2014 Newton-polytope \u2194 persistence dictionary\n**Conjecture.** The birth value `b(p) = inf { c | sublevel p c \u2260 \u2205 }` of the\nsingle H\u2080 bar equals the value of the tropical polynomial at the *tropical\nminimum*, and is determined entirely by the lower hull of the lifted Newton\npolytope `{ (slope i, coeff i) }`. In particular `b(tropMul p q) = b(p) + b(q)`\nand `b(tropAdd p q) = min (b(p)) (b(q))` whenever the relevant infima are\nattained (e.g. all slopes nonzero / coercive case).\n*Test.* Introduce a coercivity hypothesis guaranteeing attainment, prove\nexistence of a global minimizer (`IsCompact` sublevel sets), then the additive\nand min laws for `b` follow from `toFun_tropMul` and `toFun_tropAdd`.\n\n## C5 \u2014 Theorem-network functoriality (the meta-TDA layer)\n**Conjecture.** Assigning to each tropical polynomial its persistence barcode is\n*functorial* over the tropical semiring: there is a barcode-valued semiring\nhomomorphism sending `\u2295` to barcode-min and `\u2297` to barcode-sum, extending the\ncatalog's `TropicalSemiringHom`. Formally, the assignment\n`p \u21a6 b(p) \u2208 (\u211d, min, +)` is a semiring homomorphism into the tropical semiring\nitself \u2014 i.e. tropical persistence is a *self-map of the tropical line*.\n*Test.* Once C4 supplies `b`, prove `b` is a `min`-`+` homomorphism, closing the\nloop with `Tropical/NeuralNetworks/TropicalSemiringHom.lean`. Falsifiable if any\n`p, q` violate `b(p \u2295 q) = min (b p) (b q)`.\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_2038",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "2d22ac65",
+    "status": "available",
+    "timestamp": "2026-06-17T02:02:13.252327+00:00",
+    "title": "Research cycle: *Topological Data Analysis of Theorem Networks* (Domain: Tropica"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -1590,6 +1590,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T01:06:18.568136+00:00",
     "title": "Renormalization Fixed Points of Formal Proof Search"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For broad families of formal proof systems and parameterized theorem ensembles (e.g. random k-SAT, bounded-depth arithmetic identities, and finite combinatorial statements), there exists a renormalization-group flow on proof instances such that proof complexity classes correspond to universality classes, with a measurable critical point where typical shortest-proof length changes from polynomial to exponential scaling under coarse-graining. Test: Define explicit coarse-graining operators on proof instances/formulas, compute induced flows numerically and analytically, and check whether distinct theorem ensembles collapse onto the same critical exponents for proof-length growth and solver runtime near the transition; the conjecture is refuted if no stable scale-invariant quantities or universality across ensembles appear. Impact: This would enable a statistical-physics theory of mathematical difficulty, predict when conjectures are likely to be tractable in given proof systems, and guide the design of automated theorem provers by targeting critical structure rather than worst-case syntax.",
+    "domains": [
+      "Logic",
+      "Physics"
+    ],
+    "id": "fd_2039",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-17T02:02:28.457322+00:00",
+    "title": "Renormalization of Reasoning: Phase Transitions in Theorem-Proving Complexity"
   },
   {
     "consumed_by_exp_id": "",
@@ -2606,7 +2621,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0aa0f2df",
     "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... \u2014 just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number \u2014 the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic \u2014 it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
     "domains": [
       "Novelty",
@@ -2616,7 +2631,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.505215+00:00",
     "title": "The Unreasonable Effectiveness of the Number 163"
   },

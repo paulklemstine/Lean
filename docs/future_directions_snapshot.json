@@ -944,26 +944,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2d22ac65",
-    "description": "Construct a simplicial complex from the citation graph of mathematical theorems: vertices are theorems, edges connect co-cited theorems, triangles connect tri-cited theorems, etc. Compute the persistent homology of this complex. Conjecture: H_1 reveals 'schools of mathematics' (connected research communities) and H_2 reveals 'paradigm shifts' (structural changes in the network). Prove: the Betti numbers grow as β_k ≈ n^(k+1) where n is the number of theorems.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "MachineLearning"
-    ],
-    "id": "fd_0575",
-    "lineage_refs": [],
-    "priority_score": 0.82,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T23:40:36.748677+00:00",
-    "title": "Speculative: Topological Data Analysis of Theorem Networks"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Solve the happy end problem for arbitrary n: determine the minimum number of points in general position in the plane that guarantee a convex n-gon. Formalize the Erdős–Szekeres theorem and improve known bounds.",
     "domain_bridges": [],
@@ -1933,6 +1913,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS — Tropical Persistent Topology\n\nResearch cycle: *Topological Data Analysis of Theorem Networks* (Domain: Tropical).\nFoundation laid in `Catalog/Tropical/Persistence/SublevelFiltration.lean`:\ntropical polynomials are convex, their sublevel filtrations have a single-bar\ndegree-0 persistence, and the tropical semiring operations `⊕ = max`, `⊗ = +`\nact on value functions and on the filtration in a controlled way.\n\nBelow are bold, **testable** conjectures for follow-up cycles. Each is stated so\nthat it can be formalized as a Lean theorem (or refuted by a Lean\ncounterexample).\n\n## C1 — Degree-`k` persistence collapse (k ≥ 1)\n**Conjecture.** For every tropical polynomial `p : TropPoly n` and every threshold\n`c`, the sublevel set `sublevel p c` is contractible whenever it is nonempty;\nhence *all* reduced persistent homology vanishes and the full persistence diagram\nis the single H₀ bar already established.\n*Test.* Strengthen `convex_sublevel` to `Contractible`/`StarConvex` (a convex set\nin `ℝⁿ` is contractible). Formalize via `Convex.contractibleSpace` or by\nexhibiting a star-center. Falsifiable: produce a `p`, `c` with disconnected or\nholey sublevel set (impossible if convexity is unconditional — so the conjecture\npredicts no such example exists).\n\n## C2 — Tropical hypersurfaces are the true carriers of topology\n**Conjecture.** Replace the *sublevel* set by the **tropical hypersurface**\n(the non-differentiability locus `V(p) = { x | the max in p.toFun x is attained\n≥ twice }`). Then the filtration of `ℝⁿ \\ V(p)` by connected components is\ngoverned by `card p.ι`: the number of top-dimensional regions equals the number\nof monomials that are \"essential\" (achieve the max somewhere), and this count is\n*sub-additive* under `⊕` and *multiplicative-with-defect* under `⊗`.\n*Test.* Define `essential p = { i | ∃ x, p.toFun x = monomial (coeff i) (slope i) x }`\nand prove `essential (tropAdd p q) ⊆ image essential p ∪ image essential q`.\n\n## C3 — Persistence stability for tropical polynomials  *(pointwise core: PROVED)*\n**Status.** The pointwise, dimension-free part is established as `toFun_stable`\nin `SublevelFiltration.lean`: `|p.toFun x − (p.recoeff a').toFun x| ≤\n⨆ᵢ |coeffᵢ − a'ᵢ|`, uniformly in `x`, with the generic `sup'`-Lipschitz lemma\n`abs_sup'_sub_sup'_le`.\n**Remaining conjecture.** Lift this to *barcode* stability: the degree-0 birth\nvalue `b(p)` (see C4) is `1`-Lipschitz in the coefficients, and more generally the\nbottleneck distance of persistence diagrams is bounded by the sup-distance of\ncoefficients.\n*Test.* Combine `toFun_stable` with the existence of a minimizer (C4) to bound\n`|b(p) − b(q)|`. Falsifiable by any coefficient perturbation producing a\nbirth-value jump exceeding the perturbation.\n\n## C4 — Newton-polytope ↔ persistence dictionary\n**Conjecture.** The birth value `b(p) = inf { c | sublevel p c ≠ ∅ }` of the\nsingle H₀ bar equals the value of the tropical polynomial at the *tropical\nminimum*, and is determined entirely by the lower hull of the lifted Newton\npolytope `{ (slope i, coeff i) }`. In particular `b(tropMul p q) = b(p) + b(q)`\nand `b(tropAdd p q) = min (b(p)) (b(q))` whenever the relevant infima are\nattained (e.g. all slopes nonzero / coercive case).\n*Test.* Introduce a coercivity hypothesis guaranteeing attainment, prove\nexistence of a global minimizer (`IsCompact` sublevel sets), then the additive\nand min laws for `b` follow from `toFun_tropMul` and `toFun_tropAdd`.\n\n## C5 — Theorem-network functoriality (the meta-TDA layer)\n**Conjecture.** Assigning to each tropical polynomial its persistence barcode is\n*functorial* over the tropical semiring: there is a barcode-valued semiring\nhomomorphism sending `⊕` to barcode-min and `⊗` to barcode-sum, extending the\ncatalog's `TropicalSemiringHom`. Formally, the assignment\n`p ↦ b(p) ∈ (ℝ, min, +)` is a semiring homomorphism into the tropical semiring\nitself — i.e. tropical persistence is a *self-map of the tropical line*.\n*Test.* Once C4 supplies `b`, prove `b` is a `min`-`+` homomorphism, closing the\nloop with `Tropical/NeuralNetworks/TropicalSemiringHom.lean`. Falsifiable if any\n`p, q` violate `b(p ⊕ q) = min (b p) (b q)`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_2038",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "2d22ac65",
+    "status": "available",
+    "timestamp": "2026-06-17T02:02:13.252327+00:00",
+    "title": "Research cycle: *Topological Data Analysis of Theorem Networks* (Domain: Tropica"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -2127,6 +2127,26 @@
     "status": "available",
     "timestamp": "2026-06-17T01:06:18.568136+00:00",
     "title": "Renormalization Fixed Points of Formal Proof Search"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For broad families of formal proof systems and parameterized theorem ensembles (e.g. random k-SAT, bounded-depth arithmetic identities, and finite combinatorial statements), there exists a renormalization-group flow on proof instances such that proof complexity classes correspond to universality classes, with a measurable critical point where typical shortest-proof length changes from polynomial to exponential scaling under coarse-graining. Test: Define explicit coarse-graining operators on proof instances/formulas, compute induced flows numerically and analytically, and check whether distinct theorem ensembles collapse onto the same critical exponents for proof-length growth and solver runtime near the transition; the conjecture is refuted if no stable scale-invariant quantities or universality across ensembles appear. Impact: This would enable a statistical-physics theory of mathematical difficulty, predict when conjectures are likely to be tractable in given proof systems, and guide the design of automated theorem provers by targeting critical structure rather than worst-case syntax.",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Physics"
+    ],
+    "id": "fd_2039",
+    "lineage_refs": [],
+    "priority_score": 0.7,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-17T02:02:28.457322+00:00",
+    "title": "Renormalization of Reasoning: Phase Transitions in Theorem-Proving Complexity"
   },
   {
     "ambition_level": "extension",
@@ -3485,7 +3505,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0aa0f2df",
     "description": "Ramanujan's constant e^{pi*sqrt(163)} is remarkably close to an integer: it equals 262537412640768743.99999999999925... — just 7.5 * 10^{-13} away from 262537412640768744. This is not a coincidence: 163 is the largest Heegner number, and the near-integer property follows from the j-function and the fact that Q(sqrt(-163)) has class number 1. But 163 appears EVERYWHERE: it is prime, it is the smallest p such that Q(sqrt(-p)) has class number 1 and p > 2, it is a Chen prime, a lucky prime, a strongly prime, and the 38th prime. Conjecture: 163 is the unique integer n such that e^{pi*sqrt(n)} is within 10^{-6} of an integer. More generally, the Heegner numbers (1, 2, 3, 7, 11, 19, 43, 67, 163) are exactly the n for which Q(sqrt(-n)) has class number 1, and e^{pi*sqrt(n)} is near-integer for each. The 'magic' of 163 is that it is the LAST Heegner number — the final class number 1 imaginary quadratic field. Test: prove that e^{pi*sqrt(n)} is within 10^{-6} of an integer only for Heegner numbers. Compute e^{pi*sqrt(67)} and e^{pi*sqrt(43)} and verify near-integer behavior. Prove that 163 is the largest Heegner number (Stark-Heegner theorem). Impact: 163 is not magic — it is the climax of a deep theorem in algebraic number theory. The near-integer property of e^{pi*sqrt(163)} is the shadow of the class number 1 condition.",
     "domain_bridges": [],
     "domains": [
@@ -3498,7 +3518,7 @@
     "proof_strategy": "State the Stark-Heegner theorem: the imaginary quadratic fields Q(sqrt(-d)) with class number 1 are exactly d = 1, 2, 3, 7, 11, 19, 43, 67, 163. Prove e^{pi*sqrt(d)} is near-integer for each Heegner number: by the j-function expansion, j((1+sqrt(-d))/2) is an algebraic integer, and e^{pi*sqrt(d)} = (j/1728 + ... )^{1/3} * 12. For d = 163, j((1+sqrt(-163))/2) = -640320^3, so e^{pi*sqrt(163)} = 640320^3 + 744 - error. Prove uniqueness: for non-Heegner d, the class number h(-d) >= 2, so j((1+sqrt(-d))/2) has degree h(-d) >= 2 over Q, and e^{pi*sqrt(d)} is not near-integer. Test: compute e^{pi*sqrt(d)} for d = 1,2,3,7,11,19,43,67,163 and verify near-integer behavior. Compute for d = 5,6,10,14 to verify non-near-integer behavior.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.505215+00:00",
     "title": "The Unreasonable Effectiveness of the Number 163"
   },
