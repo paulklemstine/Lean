@@ -573,7 +573,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Self-Avoiding Walk: Connective Constant"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "343c2db7",
     "description": "The primes have density 0 in the integers, but what is the Hausdorff dimension of the set of primes viewed as a subset of R? Define the 'prime fractal' P as the set of primes with the metric d(p,q) = |1/log(p) - 1/log(q)|. This metric stretches out the primes so that the twin primes are close together and the large primes are spread out. Conjecture: The Hausdorff dimension dim_H(P, d) = 1. The primes with this metric are essentially a 1-dimensional set \u2014 they fill out a line when viewed through the logarithmic lens. This is because the prime number theorem pi(x) ~ x/log(x) means that in the d-metric, the 'length' of the primes up to x is sum_{p <= x} d(p, p+1) ~ sum_{p <= x} 1/(p*log(p)) ~ log(log(x)), which diverges. So the primes are 'long enough' to be 1-dimensional. But the Hausdorff dimension might be > 1 if the primes have fractal structure at small scales. In fact, dim_H(P, d) > 1 would mean the primes are more than a line \u2014 they have 'wrinkles' that fill more space. The twin prime conjecture predicts that there are infinitely many pairs of primes at d-distance ~ 1/(p*log(p)), creating a fractal dust that increases the dimension. Conjecture: dim_H(P, d) = 1 + epsilon where epsilon depends on the density of twin primes. If the twin prime conjecture is true, epsilon > 0. Test: estimate dim_H(P, d) by box-counting for primes up to 10^12 and verify it is close to 1 (or slightly above). Impact: the primes are a fractal with dimension 1 + epsilon, where epsilon measures the abundance of twin primes. If twin primes are infinite, the primes are more than a line \u2014 they are a fractal curve.",
     "domains": [
       "Novelty",
@@ -583,7 +583,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.589354+00:00",
     "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
   },
@@ -1411,6 +1411,36 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T00:58:45.832365+00:00",
     "title": "Derived from this cycle's findings (`Core.lean`, `Halting.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Gravity from Information: Spacetime as a Quantum Error-Correcting Code\n\nThis research cycle built a fully verified, manifold-free combinatorial core of\nthe holographic principle in `Catalog/Geometry/HolographicCode/`:\n\n* `AreaEntropy.lean` \u2014 the discrete Ryu\u2013Takayanagi **area functional**\n  `cut w A = \u2211_{u\u2208A, v\u2209A} w u v`, with purity (`cut_compl`), subadditivity,\n  **strong subadditivity** (`cut_submodular`), and Araki\u2013Lieb (`cut_arakiLieb`).\n* `Monogamy.lean` \u2014 the key finding `cut_tripartite_eq`: the bare boundary cut\n  has **identically vanishing tripartite information** (`I\u2083 \u2261 0`), so it\n  saturates Monogamy of Mutual Information (`cut_monogamy`).\n* `MutualInformation.lean` \u2014 the information dictionary: `mutualInfo` and\n  `condMutualInfo` defined from geometry, with nonnegativity = subadditivity /\n  strong subadditivity (`mutualInfo_nonneg`, `condMutualInfo_nonneg`).\n\nThe single sharpest discovery is that **the fixed boundary cut is too rigid**:\nit makes `I\u2083 = 0` exactly, whereas genuine holographic states have `I\u2083 < 0`.\nThe quantum-information content of geometry therefore lives in the *minimization*\nover bulk surfaces \u2014 the entanglement-wedge / min-cut prescription. The\nconjectures below are organized around closing that gap.\n\n---\n\n## Conjecture 1 (Strict Monogamy needs the min-cut). \n\nDefine the **min-cut RT entropy** on a weighted graph with a distinguished\nboundary `\u2202 \u2286 V`:\n`minCut w A = \u2a05 { cut w X | X \u2286 V, X \u2229 \u2202 = A }` (surfaces homologous to `A`).\nThen `minCut` still satisfies subadditivity and strong subadditivity, **and** its\ntripartite information is genuinely nonpositive:\n`minCut(A)+minCut(B)+minCut(C) \u2212 minCut(A\u222aB) \u2212 minCut(B\u222aC) \u2212 minCut(A\u222aC) + minCut(A\u222aB\u222aC) \u2264 0`,\nwith *strict* inequality for some graph (a witness already exists on the\n\"triangle of bulk legs\" graph). **Testable:** the strictness is exactly the\nphenomenon absent from our `cut_tripartite_eq`.\n\n## Conjecture 2 (Full holographic entropy cone). \n\nFor `minCut` of Conjecture 1, *all* facet inequalities of the known holographic\nentropy cone hold \u2014 in particular the 5-party HHM/cyclic inequalities that are\nstrictly stronger than MMI. Conversely, the *bare* `cut` satisfies every\ninequality that is a consequence of submodularity **and saturates exactly those\nthat are linear combinations of `I\u2083 = 0`-type identities**. Goal: classify which\nfacets the fixed cut saturates versus which require minimization.\n\n## Conjecture 3 (Complementary recovery / QEC duality). \n\nModel a holographic code by a bulk vertex set and a boundary `\u2202`, with a bulk\n\"operator\" localized at a vertex `p`. Define `A` *recovers* `p` iff `p` lies on\nthe `A`-side of every minimum cut `minCut w A`. Conjecture: for a pure global\nstate (symmetric `w`), **exactly one** of `A`, `A\u1d9c` recovers `p`\n(complementary recovery), and the set of recovering regions is an up-set closed\nunder the min-cut \"entanglement wedge.\" This is the discrete Knill\u2013Laflamme /\noperator-algebra QEC statement, and should follow from submodular uncrossing of\nminimum cuts.\n\n## Conjecture 4 (Discrete area law \u21d2 continuum RT). \n\nFor a sequence of graphs `G_n` discretizing a Riemannian surface with edge\nweights `w_n` approximating the metric, the rescaled cut entropies\n`(1/n) \u00b7 cut w_n A_n` **\u0393-converge** to the geometric area\n`\u222b_{\u2202A} ds` of the minimal surface bounding `A`. This would derive the continuum\nRyu\u2013Takayanagi area law as a scaling limit of the verified combinatorial\ninequalities, with the entropy inequalities passing to the limit by lower\nsemicontinuity.\n\n## Conjecture 5 (Cut distance and the Singleton bound). \n\nThe functional `dist(A,B) = cut w (A \u25b3 B)` (symmetric difference) is a\npseudometric on regions, and for a code defined by the min-cut, the code\n**distance** `d` (minimum weight of an undetectable boundary perturbation) and\nthe number `k` of protected bulk degrees of freedom obey a discrete\n**quantum-Singleton-type bound** `k \u2264 |\u2202| \u2212 2(d \u2212 1)` expressible purely via\n`minCut`. Saturation should characterize \"perfect-tensor\" / maximally\nholographic graphs (the HaPPY pentagon tiling).\n",
+    "domains": [
+      "Geometry",
+      "Algebra"
+    ],
+    "id": "fd_2036",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "ed805c6d",
+    "status": "available",
+    "timestamp": "2026-06-17T01:40:31.338348+00:00",
+    "title": "Fully verified, manifold-free combinatorial core of"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Proof Complexity and Thermodynamic Cost\n\nDerived from the Stage 3 / Stage 4 findings of\n`ThermodynamicCost.lean` and `LandauerBridge.lean`.  Each conjecture is bold,\nfalsifiable, and tied to a concrete formalization target in this subtree.\n\n## Recap of this cycle's verified findings\n\n* `cost_mono` / `cost_strictMono`: thermodynamic cost is (strictly) monotone in\n  Kolmogorov complexity, **not** in raw proof length (the literal \"shorter \u21d2\n  cheaper\" reading is false \u2014 a long proof can be highly compressible).\n* `exists_incompressible` + `cost_exceeds_any_bound`: a pigeonhole Chaitin bound\n  forces incompressible proofs whose cost beats any finite threshold.\n* `majority_high_complexity`: at least half of all length-`n` proofs are nearly\n  incompressible, so the **average** cost is `\u0398(n)` \u2014 refuting the brief's\n  `\u0398(2^n)`, which actually measures the **total** cost over all `2^n` proofs.\n* `freeEnergy_landauer_gap`: the finite-temperature free energy of a statistical\n  system sits exactly a Landauer term `cost(1/\u03b2) b = b\u00b7T\u00b7ln 2` (for `2^b`\n  configurations) below the tropical (zero-temperature) ground energy.\n\n---\n\n## Conjecture 1 \u2014 Total cost is `\u0398(n \u00b7 2^n)`, average cost is `\u0398(n)`\n\nOver a surjective decoder, `2^(n-1)\u00b7(n-1) \u2264 \u03a3_{|x|=n} K D x \u2264 (n + c)\u00b72^n` for an\nabsolute constant `c` (the upper bound needs an *efficient* decoder, e.g. one that\ncopies its input verbatim with a one-bit flag).\n\n* **The key insight is** that the `\u0398(2^n)` in the original brief conflates the\n  *count* of statements with their *average* description length; separating the\n  two yields a total of `\u0398(n\u00b72^n)` and an average of `\u0398(n)`.\n* **Why now?** `majority_high_complexity` already gives the load-bearing lower\n  half; the matching upper bound only needs a concrete \"identity-with-flag\"\n  decoder, which is a finite, mechanical construction in the present framework.\n\n## Conjecture 2 \u2014 Cost is sharply concentrated (a thermodynamic Azuma bound)\n\nFor a surjective decoder the fraction of length-`n` proofs with\n`|K D x \u2212 n| > t` decays like `2^{-t}`; hence cost concentrates within an\n`O(T)`-width band around `n\u00b7T\u00b7ln 2`.\n\n* **The key insight is** that incompressibility is not just typical but\n  *exponentially* typical: only `2^{n-t}` proofs admit a program shorter than\n  `n \u2212 t`.\n* **Why now?** The counting machinery `Bshort_card`, `Bexact_card`, and the image\n  bound in `exists_incompressible` generalise verbatim from \"shorter than `n`\" to\n  \"shorter than `n \u2212 t`\", so the tail bound is one parametrised counting lemma\n  away.\n\n## Conjecture 3 \u2014 A genuine (computable-bound) Chaitin obstruction\n\nThere is no total computable `f : \u2115 \u2192 \u2115` with `K D x \u2264 f x.length` for every `x`\nunder a *universal* decoder `D`; consequently no computable function bounds\nthermodynamic cost as a function of statement length.\n\n* **The key insight is** that the bound-free `cost_exceeds_any_bound` becomes a\n  true Chaitin theorem once `D` is upgraded from \"surjective\" to \"universal\"\n  (simulates every other decoder up to an additive constant).\n* **Why now?** Mathlib's `Nat.Partrec` / `Computable` hierarchy supplies a usable\n  model of computation; the only new ingredient is an invariance theorem\n  `K_universal x \u2264 K_D x + c_D`, which the surjective-decoder API here is designed\n  to slot into.\n\n## Conjecture 4 \u2014 Landauer sandwich is asymptotically tight\n\nFor fixed Hamiltonian and `#\u03a9 = 2^b`, `classicalFreeEnergy H \u03b2` converges to the\ntropical ground energy as `\u03b2 \u2192 \u221e`, and the gap is `\u0398(b\u00b7T)` whenever the ground\nstate is non-degenerate; degeneracy `g` shrinks the gap to `(b \u2212 log\u2082 g)\u00b7T\u00b7ln 2`.\n\n* **The key insight is** that the Landauer cost of a computation is the entropy of\n  its *forgotten* configurations, so ground-state degeneracy is a free,\n  reversible resource that lowers the thermodynamic floor.\n* **Why now?** `freeEnergy_le_ground` and `ground_sub_le_freeEnergy` already\n  bracket the gap; refining the upper sum bound from `#\u03a9` to the degeneracy count\n  reuses the catalog's `tropicalDegeneracyAbsorption` directly.\n\n## Conjecture 5 \u2014 Cost super-additivity across independent lemmas\n\nIf a proof `\u03c0` decomposes as independent sub-proofs `\u03c0\u2081, \u03c0\u2082` (disjoint program\nsupports), then `cost(\u03c0) \u2265 cost(\u03c0\u2081) + cost(\u03c0\u2082) \u2212 O(T)`; complexity is\nsub-additive but the *erasure* cost of recombination is the `O(T)` defect.\n\n* **The key insight is** that the Landauer overhead of *merging* two proofs is the\n  mutual information they share \u2014 exactly the catalog's tropical\n  `tprof_add_le` ultrametric defect translated into thermodynamic units.\n* **Why now?** The generic `cost T : \u2115 \u2192 \u211d` here is linear, so super-additivity\n  reduces to a complexity inequality `K(\u03c0) + O(1) \u2265 K(\u03c0\u2081) + K(\u03c0\u2082)` over a\n  prefix-free decoder \u2014 a finite combinatorial statement provable with the\n  current `descLengths` API.\n",
+    "domains": [
+      "Algebra",
+      "Physics"
+    ],
+    "id": "fd_2037",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "702894c4",
+    "status": "available",
+    "timestamp": "2026-06-17T01:44:32.980272+00:00",
+    "title": "Derived from the Stage 3 / Stage 4 findings of"
   },
   {
     "consumed_by_exp_id": "",
@@ -2591,21 +2621,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Unreasonable Effectiveness of the Number 163"
   },
   {
-    "consumed_by_exp_id": "ed805c6d",
-    "description": "Einstein showed that gravity is the curvature of spacetime. But WHY does spacetime curve? Conjecture: Spacetime IS a quantum error-correcting code, and gravity IS the syndrome of that code. The code is a [[n,k,d]] stabilizer code where n = number of Planck areas on a spatial slice, k = number of logical qubits (which equals the Bekenstein-Hawking entropy S = A/4G in natural units), and d = code distance (which equals the minimal geodesic length through the bulk). The key identity: S(A) = Area(gamma_A) / (4G) is EXACTLY the quantum Singleton bound n - k <= 2(d-1) rearranged as k = n - 2d + 2 = A/(4G) when n = A/l_P^2 and d = L/(2l_P). This means the Bekenstein-Hawking entropy formula is a quantum coding theorem, and the holographic principle is a coding constraint. Test: for AdS_3 with boundary CFT_2, the code is a [[n, k, d]] = [[L/l_P, S, L/(2l_P)]] code. Verify that the Singleton bound n - k <= 2(d-1) becomes L/l_P - S <= L/l_P - 1, which simplifies to S >= 1 (trivially true). The NON-TRIVIAL content is that the Ryu-Takayanagi formula S = A/(4G) is the exact quantum information identity. Impact: spacetime is not curved by matter \u2014 spacetime IS a code, and matter IS a syndrome. Gravity is not a force; it's error correction.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_0023",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.510412+00:00",
-    "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Prime gaps \u2014 the spaces between consecutive primes \u2014 are like empty cells in a crossword puzzle. The gaps are 1, 2, 2, 4, 2, 4, 2, 4, 6, 2, 6, 4, 2, 4, 6, 6, 2, 6, 4, 2, ... (OEIS A001223). The pattern seems random, but the crossword has rules: (1) All prime gaps are even (except the first gap of 1 between 2 and 3). (2) A gap g can only appear at position n if n+g is prime and all of n+1, n+2, ..., n+g-1 are composite. (3) The density of gap g near n is approximately 2*C_2/(g*log(n)) where C_2 is the twin prime constant. Conjecture: The prime gap crossword is uniquely solvable \u2014 given the pattern of gaps up to N, the next prime is determined with probability 1 - O(1/log(N)). More precisely, the conditional probability that the next prime after p is p + g, given all primes up to p, is approximately 2*C_2/g * (1/log(p)) * product_{q prime, q | g} (q-1)/(q-2). This is the Hardy-Littlewood conjecture for prime gaps. But the crossword has a surprise: certain gap patterns FORCE the next number. For example, if the gaps near n are 6, 4, 2, 6, then the next gap is almost certainly 4 (the only way to fill the crossword). Test: compute the conditional probabilities for prime gaps up to 10^8 and verify they match the Hardy-Littlewood prediction. Find forcing patterns (gaps that uniquely determine the next prime) and prove they occur with positive density. Impact: prime gaps are not random \u2014 they are a solvable crossword puzzle with deterministic rules.",
     "domains": [
@@ -2681,7 +2696,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0e69ce58",
     "description": "In 2023, Smith et al. discovered 'the hat' \u2014 a single tile shape that tiles the plane but only aperiodically (no periodic tiling exists). This solved the aperiodic monotile problem. But deeper questions remain: How many distinct aperiodic monotiles exist? Conjecture: The set of aperiodic monotiles forms a 1-parameter family (the 'hat spectrum') parameterized by a continuous parameter t in [0,1] where t=0 gives the hat, t=1 gives the turtle (a known variant), and intermediate values give intermediate shapes. The key property: each shape in the hat spectrum tiles the plane aperiodically, and no two shapes in the spectrum admit a common periodic tiling. The boundary of the hat spectrum is the curve in R^2 that separates the region of aperiodic monotiles from the region of periodic tiles. This boundary is a piecewise-smooth curve determined by the constraint that the tile must enforce a hierarchical substitution rule. Test: parameterize the hat spectrum by interpolating between the hat and turtle, compute the substitution rule for each t, and verify that the substitution rule enforces aperiodicity for all t in [0,1]. Impact: aperiodic monotiles are not isolated curiosities \u2014 they form a continuous family, and the hat is just one point on the spectrum.",
     "domains": [
       "Novelty",
@@ -2691,7 +2706,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.581649+00:00",
     "title": "The Aperiodic Monotile: One Shape to Tile Them All"
   },
@@ -3144,21 +3159,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-03T23:40:36.486848+00:00",
     "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
-  },
-  {
-    "consumed_by_exp_id": "702894c4",
-    "description": "Every proof has a thermodynamic cost proportional to its Kolmogorov complexity. Define: cost(\u03c0) = K(\u03c0) * T * ln(2), where K is Kolmogorov complexity and T is temperature. Prove: shorter proofs have lower cost. Conjecture: there exist statements whose shortest proof has cost exceeding any computable bound (proof-theoretic analog of Chaitin's theorem). Show: the average cost of proving a random true statement of length n is \u0398(2^n).",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0573",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T23:40:36.577793+00:00",
-    "title": "Speculative: Proof Complexity and Thermodynamic Cost"
   },
   {
     "consumed_by_exp_id": "",
