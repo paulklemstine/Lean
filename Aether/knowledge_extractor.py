@@ -1056,10 +1056,13 @@ Research mode: {concept.research_mode}
                 phase_a_files = job.phase_a_result.get("lean_files", [])
             for fpath in phase_a_files:
                 p = Path(fpath)
+                if not p.is_absolute():
+                    # integrated_paths are relative to repo root (e.g., "Catalog/Algebra/Foo.lean")
+                    p = self.catalog_root.parent / p
                 if p.exists():
                     files_to_copy.append(p)
             print(f"[Project] Phase B detected: pruning workspace to {len(files_to_copy)} files from Phase A")
-            
+
             # Fallback if no files resolved
             if not files_to_copy:
                 print("[Project] Warning: Phase B has no files in phase_a_result['lean_files']. Falling back to full catalog.")

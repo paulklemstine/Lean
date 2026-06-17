@@ -427,3 +427,13 @@ def test_phase_b_pruned_workspace(temp_workspace, research_job):
         assert dir_b is not None
         assert (dir_b / "Catalog" / "Algebra" / "Matrix.lean").exists()
         assert not (dir_b / "Catalog" / "Geometry" / "Stereo.lean").exists()
+
+        # 3. Regression: integrated_paths are relative to repo root, not absolute
+        research_job.phase = "B"
+        research_job.phase_a_result = {
+            "lean_files": ["Catalog/Algebra/Matrix.lean"]
+        }
+        dir_c = extractor._build_project_dir(research_job)
+        assert dir_c is not None
+        assert (dir_c / "Catalog" / "Algebra" / "Matrix.lean").exists()
+        assert not (dir_c / "Catalog" / "Geometry" / "Stereo.lean").exists()

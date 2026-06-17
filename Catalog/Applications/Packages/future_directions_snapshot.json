@@ -630,7 +630,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "fd51d61a",
+    "consumed_by_exp_id": "",
     "description": "Cycle d6329d46 (Q=0.792) proved 22 theorems in Shared but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle e42393e4 (Q=0.792), which proved 42 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting.",
     "domain_bridges": [],
     "domains": [
@@ -642,7 +642,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "d6329d46",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T10:39:16.784213+00:00",
     "title": "Close Proofs: Functor from finite linear codes to tropical valuation objects via wei"
   },
@@ -2248,6 +2248,26 @@
     "status": "available",
     "timestamp": "2026-06-17T17:23:46.154534+00:00",
     "title": "Two anchor results (see `Catalog/Bridges/StructuralCollis"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Dreamtime Algebra (Aboriginal Kinship as Group Theory)\n\nCycle 1 established the Kariera 4-section system as the Klein four-group `V₄`,\nproved bilateral cross-cousin marriage and the parallel-cousin prohibition as\ndecidable group identities, separated the two order-8 Aranda subsection models\n(`(ℤ/2)³` vs `ℤ/4 × ℤ/2`) by a non-isomorphism invariant, and built a tropical\n`(min,+)` metric on the section group. Below are bold, falsifiable conjectures for\nfollow-up cycles.\n\n## Conjecture 1 — Second-cross-cousin marriage in the long-matriline model\nIn the `ℤ/4 × ℤ/2` Aranda model with matriline `m:(a,b)↦(a+1,b)`, patriline\n`p:(a,b)↦(a+2,b+1)`, and marriage `w:(a,b)↦(a+2,b+1)` (to be pinned down), the\n**first** cross-cousin (MBD/FZD) does NOT land in ego's spouse subsection, whereas\nthe **second** cross-cousin (MMBDD) does. Formal target: define the descent maps\nexplicitly over `ℤ/4 × ℤ/2` and prove `MMBDD ego = w ego` while `MBD ego ≠ w ego`,\nrecovering the defining ethnographic shift from 4-section to 8-subsection systems.\nThis is testable by `decide` once the maps are fixed.\n\n## Conjecture 2 — Classification of admissible kinship algebras\nA finite abelian group `G` with three involutions/translations `(p,m,w)` satisfying\n`w = p∘m`, fixed-point-freeness, and a consistent child rule supports a coherent\n\"marry-cross / forbid-parallel\" law **iff** `G` is elementary abelian `(ℤ/2)^k`\nextended by at most one `ℤ/4` matriline factor. Conjecture: the only such groups of\norder ≤ 16 are `V₄`, `(ℤ/2)³`, `ℤ/4 × ℤ/2`, and `(ℤ/2)⁴`. Falsifiable by an\nexhaustive `decide`/`Decidable` search over small groups.\n\n## Conjecture 3 — Tropical Cayley metric equals graph distance\nThe discrete `tdist` of Cycle 1 is the 1-step marriage metric. Conjecture: the full\nword/Cayley metric `d_word` of the section group with generators `{p,m,w}` coincides\nwith the tropical `(min,+)` matrix power of the adjacency (weight-1) matrix `A`, i.e.\n`d_word(s,t) = (A^{⊗(n-1)})_{s,t}` where `⊗` is min-plus matrix multiplication and\n`n = |G|`. This bridges kinship distance directly to tropical linear algebra\n(`Tropical/Core`, `Tropical/IdempotentSemiring`). Testable for `V₄` and the order-8\nmodels by computing min-plus matrix powers and comparing to `addOrderOf`-based word\nlength.\n\n## Conjecture 4 — Moiety homomorphism characterizes section systems\nA finite kinship group admits a Kariera-style \"two patrimoieties\" structure iff it\nadmits a surjective homomorphism onto `ℤ/2` (the patrimoiety) under which marriage is\nthe non-trivial coset translation. Conjecture: the number of distinct moiety\nhomomorphisms `G →+ ℤ/2` equals `2^k − 1` where `2^k` is the 2-torsion rank of `G`,\ngiving a count of \"global dual organizations\" compatible with the marriage law.\nFalsifiable via `Fintype` enumeration of `G →+ ZMod 2`.\n\n## Conjecture 5 — Idempotent-semiring reachability collapses generations\nEncode reachability between sections in the Boolean (idempotent) semiring\n`{0,1}`-matrix `R` where `R_{s,t}=1` iff `t` is reachable from `s` by one marriage or\ndescent step. Conjecture: `R` is idempotent under Boolean matrix multiplication after\nexactly `⌈log₂|G|⌉` steps (`R^{(k+1)} = R^{(k)}`), and this stabilization index equals\nthe diameter of the Cayley graph. This realizes the \"alternating-generations\" collapse\nof kinship as the idempotency fixpoint of a tropical/Boolean semiring operator,\ndirectly connecting to `Tropical/IdempotentSemiring/Defs.lean`. Testable by iterating\nBoolean matrix products to a fixpoint and comparing with the proven group diameter.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_2063",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "5bafdd72",
+    "status": "available",
+    "timestamp": "2026-06-17T18:43:02.993316+00:00",
+    "title": "Cycle 1 established the Kariera 4-section system as the Klein four-group `V₄`,"
   },
   {
     "ambition_level": "extension",
@@ -4100,26 +4120,6 @@
     "status": "failed",
     "timestamp": "2026-06-01T12:30:31.030197+00:00",
     "title": "Aleph-1 Surface: Geometry Between Dimensions"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "5bafdd72",
-    "description": "Formalize Australian Aboriginal kinship systems (section and subsection systems) as finite groups acting on person-sets. Prove that the 4-section system is isomorphic to Z2 x Z2 and the 8-subsection system to Z2 x Z2 x Z2. Show that marriage rules correspond to coset restrictions and that the entire system forms a consistent group-theoretic structure.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0134",
-    "lineage_refs": [],
-    "priority_score": 0.05,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:31.067326+00:00",
-    "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
   },
   {
     "ambition_level": "extension",
