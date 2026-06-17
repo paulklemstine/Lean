@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aether Quality Improvement Planner</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d1117;
+            --panel: #161b22;
+            --panel-hover: #1f242c;
+            --border: #30363d;
+            --text: #e6edf3;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --accent-dim: rgba(88, 166, 255, 0.15);
+            --success: #3fb950;
+            --warning: #d29922;
+            --danger: #f85149;
+            --purple: #a371f7;
+            --pink: #f778ba;
+            --cyan: #39c5cf;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 32px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.4rem;
+            margin: 0 0 12px;
+            background: linear-gradient(90deg, var(--accent), var(--purple), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .progress-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg);
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 24px;
+        }
+
+        .progress-track {
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--purple));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            text-align: right;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 6px;
+        }
+
+        .section {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .section:hover {
+            border-color: var(--accent);
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.35rem;
+            margin: 0 0 8px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--accent-dim);
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            margin: 0 0 24px;
+            font-size: 0.95rem;
+        }
+
+        .question {
+            margin-bottom: 24px;
+        }
+
+        .question-label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .question-help {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 6px;
+            -webkit-appearance: none;
+            background: var(--border);
+            border-radius: 3px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            border: 2px solid var(--bg);
+            box-shadow: 0 0 10px rgba(88, 166, 255, 0.4);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            border: 2px solid var(--bg);
+            box-shadow: 0 0 10px rgba(88, 166, 255, 0.4);
+        }
+
+        .slider-value {
+            min-width: 48px;
+            text-align: center;
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        .checkbox-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 14px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .checkbox-card:hover {
+            border-color: var(--accent);
+            background: var(--panel-hover);
+        }
+
+        .checkbox-card.selected {
+            border-color: var(--accent);
+            background: var(--accent-dim);
+        }
+
+        .checkbox-card input {
+            margin-top: 3px;
+            accent-color: var(--accent);
+        }
+
+        .checkbox-text {
+            font-size: 0.92rem;
+        }
+
+        .checkbox-title {
+            font-weight: 500;
+            color: var(--text);
+            display: block;
+        }
+
+        .checkbox-desc {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            display: block;
+            margin-top: 3px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 14px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-size: 0.95rem;
+            resize: vertical;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .button-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        button {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #0d1117;
+        }
+
+        .btn-primary:hover {
+            background: #79b8ff;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--panel);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--panel-hover);
+            border-color: var(--accent);
+        }
+
+        #plan-output {
+            display: none;
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            margin-top: 32px;
+        }
+
+        #plan-output.visible {
+            display: block;
+        }
+
+        .plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .plan-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .plan-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .plan-actions button {
+            padding: 8px 16px;
+            font-size: 0.85rem;
+        }
+
+        .priority-item {
+            display: flex;
+            gap: 16px;
+            padding: 18px;
+            margin-bottom: 14px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .priority-rank {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--accent-dim);
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .priority-content {
+            flex: 1;
+        }
+
+        .priority-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin: 0 0 6px;
+        }
+
+        .priority-meta {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-weight: 600;
+        }
+
+        .badge-impact-high { background: rgba(63, 185, 80, 0.15); color: var(--success); }
+        .badge-impact-med { background: rgba(210, 153, 34, 0.15); color: var(--warning); }
+        .badge-effort-high { background: rgba(248, 81, 73, 0.15); color: var(--danger); }
+        .badge-effort-med { background: rgba(210, 153, 34, 0.15); color: var(--warning); }
+        .badge-effort-low { background: rgba(63, 185, 80, 0.15); color: var(--success); }
+
+        .priority-desc {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .matrix {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin: 24px 0;
+        }
+
+        .matrix-cell {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+            min-height: 120px;
+        }
+
+        .matrix-cell h4 {
+            margin: 0 0 8px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .matrix-item {
+            font-size: 0.8rem;
+            color: var(--text);
+            margin-bottom: 6px;
+            padding: 4px 8px;
+            background: var(--panel);
+            border-radius: 6px;
+        }
+
+        pre {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 600px) {
+            .checkbox-grid {
+                grid-template-columns: 1fr;
+            }
+            .matrix {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="container">
+            <div class="progress-track">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-text" id="progress-text">0% complete</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Aether Quality Improvement Planner</h1>
+            <p class="subtitle">
+                Answer these questions about your priorities, pain points, and appetite for change.
+                We'll generate a prioritized action plan for making Aristotle produce deeper, more consequential mathematics.
+            </p>
+        </header>
+
+        <form id="planner-form">
+            <!-- Section 1: Current State -->
+            <div class="section" data-section="1">
+                <h2 class="section-title"><span class="section-number">1</span> Current Pain Points</h2>
+                <p class="section-desc">What's frustrating you most about Aether's output right now?</p>
+
+                <div class="question">
+                    <label class="question-label">Rate the severity of each issue (1 = not a problem, 10 = critical)</label>
+                    <p class="question-help">Move sliders based on what you've observed in recent packages.</p>
+
+                    <div class="slider-row">
+                        <span style="min-width:180px">Shallow / trivial results</span>
+                        <input type="range" name="shallow" min="1" max="10" value="7" data-slider>
+                        <span class="slider-value">7</span>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="slider-row">
+                        <span style="min-width:180px">High sorry / broken proofs</span>
+                        <input type="range" name="sorries" min="1" max="10" value="6" data-slider>
+                        <span class="slider-value">6</span>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="slider-row">
+                        <span style="min-width:180px">Rediscovers known results</span>
+                        <input type="range" name="rediscovery" min="1" max="10" value="7" data-slider>
+                        <span class="slider-value">7</span>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="slider-row">
+                        <span style="min-width:180px">Wastes slots / queue overload</span>
+                        <input type="range" name="queue_waste" min="1" max="10" value="8" data-slider>
+                        <span class="slider-value">8</span>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="slider-row">
+                        <span style="min-width:180px">Packages feel disconnected</span>
+                        <input type="range" name="disconnected" min="1" max="10" value="5" data-slider>
+                        <span class="slider-value">5</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Direction Quality -->
+            <div class="section" data-section="2">
+                <h2 class="section-title"><span class="section-number">2</span> Question Quality</h2>
+                <p class="section-desc">Better questions lead to better proofs. Which strategies do you want to invest in?</p>
+
+                <div class="checkbox-grid">
+                    <label class="checkbox-card">
+                        <input type="checkbox" name="strategy" value="open_problems">
+                        <span class="checkbox-text">
+                            <span class="checkbox-title">Curated open problem list</span>
+                            <span class="checkbox-desc">Seed from Millennium Problems, Erdős conjectures, named targets</span>
+                        </span>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" name="strategy" value="computational_evidence">
+                        <span class="checkbox-text">
+                            <span class="checkbox-title">Computational evidence gate</span>
+                            <span class="checkbox-desc">Test conjectures numerically before allowing a proof attempt</span>
+                        </span>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" name="strategy" value="conjecture_tournament">
+                        <span class="checkbox-text">
+                            <span class="checkbox-title">Conjecture tournament</span>
+                            <span class="checkbox-desc">Generate many conjectures, score them, dispatch only the best</span>
+                        </span>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" name="strategy" value="deep_threads">
+                        <span class="checkbox-text">
+                            <span class="checkbox-title">Deep research threads</span>
+                            <span class="checkbox-desc">Follow promising partial results instead of returning to random pool</span>
+                        </span>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" name="strategy" value="arxiv_oeis">
+                        <span class="checkbox-text">
+                            <span class="checkbox-title">External signal feed</span>
+                            <span class="checkbox-desc">Pull from arXiv, OEIS, LMFDB, open problem trackers</span>
+                        </span>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" name="strategy" value="bridge_first">
+                        <span class="checkbox-text">
+                            <span class="checkbox-title">Bridge-first selection</span>
+                            <span class="checkbox-desc">Reserve slots for cross-domain analogies and unifications</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Section 3: Proof Quality -->
+            <div class="section" data-section="3">
+                <h2 class="section-title"><span class="section-number">3</span> Proof & Verification Quality</h2>
+                <p class="section-desc">How should we harden the actual Lean output?</p>
+
+                <div class="checkbox-grid">
+                    <label class="checkbox-card">
+                        <input type="checkbox" name="proof" value="correctness_critic">
+                        <span class="checkbox-text">
+                            <span class="checkbox-title">Correctness critic</span>
+                            <span class="checkbox-desc">Run lake build, detect sorry, type errors, invalid imports</span>
+                        </span>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" name="proof" value="depth_critic">
+                        <span class="checkbox-text">
+                            <span class="checkbox-title">Depth / novelty critics</span>
+                            <span class="checkbox-desc">Flag wrapper theorems, rediscoveries, and trivial restatements</span>
+                        </span>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" name="proof" value="critic_debate">
+                        <span class="checkbox-text">
+                            <span class="checkbox-title">Critic debate</span>
+                            <span class="checkbox-desc">Multiple critics argue; third model decides promotion</span>
+                        </span>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" name="proof" value="tree_of_thoughts">
+                        <span class="checkbox-text">
+                            <span class="checkbox-title">Tree-of-thoughts proofs</span>
+                            <span class="checkbox-desc">Generate multiple proof sketches, keep the best</span>
+                        </span>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" name="proof" value="tactic_search">
+                        <span class="checkbox-text">
+                            <span class="checkbox-title">Tactic-level search</span>
+                            <span class="checkbox-desc">Integrate ReProver/LeanDojo when top-down sketch fails</span>
+                        </span>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" name="proof" value="proof_minimizer">
+                        <span class="checkbox-text">
+                            <span class="checkbox-title">Proof minimization</span>
+                            <span class="checkbox-desc">Remove unused lemmas and redundant tactics automatically</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Section 4: Scientific Process -->
+            <div class="section" data-section="4">
+                <h2 class="section-title"><span class="section-number">4</span> Scientific Discovery Engine</h2>
+                <p class="section-desc">Should Aristotle behave more like an experimental mathematician?</p>
+
+                <div class="checkbox-grid">
+                    <label class="checkbox-card">
+                        <input type="checkbox" name="science" value="experiment_stage">
+                        <span class="checkbox-text">
+                            <span class="checkbox-title">Mandatory experiment stage</span>
+                            <span class="checkbox-desc">Compute examples, search OEIS, test small cases before proof</span>
+                        </span>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" name="science" value="abduction_loop">
+                        <span class="checkbox-text">
+                            <span class="checkbox-title">Abduction / deduction loop</span>
+                            <span class="checkbox-desc">Propose conjecture → prove → refine on failure → repeat</span>
+                        </span>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" name="science" value="counterexample_hunt">
+                        <span class="checkbox-text">
+                            <span class="checkbox-title">Counterexample hunting</span>
+                            <span class="checkbox-desc">Auto-test universal claims with Sage/SymPy before accepting</span>
+                        </span>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" name="science" value="mathlib_rag">
+                        <span class="checkbox-text">
+                            <span class="checkbox-title">Mathlib RAG</span>
+                            <span class="checkbox-desc">Embed Mathlib and retrieve relevant theorems for each problem</span>
+                        </span>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" name="science" value="analogical_retrieval">
+                        <span class="checkbox-text">
+                            <span class="checkbox-title">Analogical retrieval</span>
+                            <span class="checkbox-desc">Find structurally similar theorems and adapt proof strategies</span>
+                        </span>
+                    </label>
+                    <label class="checkbox-card">
+                        <input type="checkbox" name="science" value="lemma_recommendation">
+                        <span class="checkbox-text">
+                            <span class="checkbox-title">Lemma recommendation</span>
+                            <span class="checkbox-desc">Suggest missing helper lemmas from catalog/Mathlib</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Section 5: Appetite for Change -->
+            <div class="section" data-section="5">
+                <h2 class="section-title"><span class="section-number">5</span> Implementation Appetite</h2>
+                <p class="section-desc">How aggressive vs. incremental should the next phase be?</p>
+
+                <div class="question">
+                    <label class="question-label">How much engineering bandwidth do you have right now?</label>
+                    <div class="slider-row">
+                        <span style="min-width:80px">Low</span>
+                        <input type="range" name="bandwidth" min="1" max="10" value="5" data-slider>
+                        <span style="min-width:80px;text-align:right">High</span>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Are you willing to slow throughput temporarily for deeper results?</label>
+                    <div class="slider-row">
+                        <span style="min-width:80px">No</span>
+                        <input type="range" name="slow_for_depth" min="1" max="10" value="6" data-slider>
+                        <span style="min-width:80px;text-align:right">Yes</span>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">How important is connecting to famous open problems vs. building general capability?</label>
+                    <div class="slider-row">
+                        <span style="min-width:80px">General</span>
+                        <input type="range" name="famous_focus" min="1" max="10" value="7" data-slider>
+                        <span style="min-width:80px;text-align:right">Famous</span>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <label class="question-label">Any specific mathematical targets or fields you want to prioritize?</label>
+                    <p class="question-help">Optional. Examples: "number theory", "algebraic geometry", "ML formalization", "IMO problems".</p>
+                    <textarea name="targets" placeholder="Enter specific targets or leave blank for general improvement..."></textarea>
+                </div>
+            </div>
+
+            <div class="button-row">
+                <button type="button" class="btn-primary" onclick="generatePlan()">Generate Plan</button>
+                <button type="button" class="btn-secondary" onclick="resetForm()">Reset</button>
+            </div>
+        </form>
+
+        <div id="plan-output">
+            <div class="plan-header">
+                <h2 class="plan-title">Your Prioritized Quality Plan</h2>
+                <div class="plan-actions">
+                    <button class="btn-secondary" onclick="copyPlan()">Copy Markdown</button>
+                    <button class="btn-secondary" onclick="downloadPlan()">Download</button>
+                </div>
+            </div>
+
+            <div class="matrix">
+                <div class="matrix-cell">
+                    <h4>Quick Wins (low effort, high impact)</h4>
+                    <div id="quick-wins"></div>
+                </div>
+                <div class="matrix-cell">
+                    <h4>Major Projects (high effort, high impact)</h4>
+                    <div id="major-projects"></div>
+                </div>
+                <div class="matrix-cell">
+                    <h4>Deprioritized / Later</h4>
+                    <div id="later"></div>
+                </div>
+            </div>
+
+            <h3>Prioritized Action List</h3>
+            <div id="priority-list"></div>
+
+            <h3>Full Markdown Plan</h3>
+            <pre id="plan-markdown"></pre>
+        </div>
+    </div>
+
+    <script>
+        // Item library with impact, effort, and category metadata
+        const ITEMS = {
+            open_problems: {
+                title: "Curated open problem list",
+                desc: "Maintain a seed list of named targets (Millennium Problems, Erdős conjectures, IMO/Putnam open problems) and dispatch decomposed sub-problems.",
+                impact: "high", effort: "low", category: "question"
+            },
+            computational_evidence: {
+                title: "Computational evidence gate",
+                desc: "Before any proof attempt, run Python/SageMath to generate examples, search OEIS, and kill computationally false conjectures.",
+                impact: "high", effort: "medium", category: "question"
+            },
+            conjecture_tournament: {
+                title: "Conjecture tournament",
+                desc: "Generate ~20 candidate conjectures per cycle, score by evidence/difficulty/novelty/catalog fit, dispatch only top 2–3.",
+                impact: "high", effort: "medium", category: "question"
+            },
+            deep_threads: {
+                title: "Deep research threads",
+                desc: "When a cycle produces a promising partial result, spawn focused follow-ups instead of returning to the random direction pool.",
+                impact: "high", effort: "medium", category: "question"
+            },
+            arxiv_oeis: {
+                title: "External signal feed",
+                desc: "Integrate arXiv abstracts, OEIS, LMFDB, and open-problem trackers into the direction pool.",
+                impact: "medium", effort: "medium", category: "question"
+            },
+            bridge_first: {
+                title: "Bridge-first selection",
+                desc: "Reserve slots for cross-domain directions and forced analogies between existing clusters.",
+                impact: "high", effort: "low", category: "question"
+            },
+            correctness_critic: {
+                title: "Correctness critic",
+                desc: "Gate every package on lake build success, zero sorry, valid imports, and no type errors.",
+                impact: "high", effort: "low", category: "proof"
+            },
+            depth_critic: {
+                title: "Depth / novelty critics",
+                desc: "Add specialized critics that flag wrapper theorems, rediscoveries, and simp-only proofs.",
+                impact: "high", effort: "medium", category: "proof"
+            },
+            critic_debate: {
+                title: "Critic debate",
+                desc: "Run multiple critics in an adversarial panel; promote to Phase B only on consensus.",
+                impact: "medium", effort: "medium", category: "proof"
+            },
+            tree_of_thoughts: {
+                title: "Tree-of-thoughts proofs",
+                desc: "Generate multiple proof sketches, attempt each independently, keep the one that type-checks and is most elegant.",
+                impact: "medium", effort: "medium", category: "proof"
+            },
+            tactic_search: {
+                title: "Tactic-level search",
+                desc: "Integrate ReProver/LeanDojo to search proofs tactic-by-tactic when Aristotle's sketch fails.",
+                impact: "high", effort: "high", category: "proof"
+            },
+            proof_minimizer: {
+                title: "Proof minimization",
+                desc: "Auto-remove unused lemmas, redundant tactics, and sorry-ridden files after a proof succeeds.",
+                impact: "medium", effort: "low", category: "proof"
+            },
+            experiment_stage: {
+                title: "Mandatory experiment stage",
+                desc: "Require computational evidence generation before any formal proof attempt.",
+                impact: "high", effort: "medium", category: "science"
+            },
+            abduction_loop: {
+                title: "Abduction / deduction loop",
+                desc: "Propose → prove → refine on failure → repeat until a true, provable theorem is found.",
+                impact: "high", effort: "high", category: "science"
+            },
+            counterexample_hunt: {
+                title: "Counterexample hunting",
+                desc: "Auto-test universal claims with Sage/SymPy; reject false claims and generate revised conjectures.",
+                impact: "high", effort: "medium", category: "science"
+            },
+            mathlib_rag: {
+                title: "Mathlib RAG",
+                desc: "Embed Mathlib theorems/definitions and retrieve the most relevant results for each problem.",
+                impact: "high", effort: "high", category: "science"
+            },
+            analogical_retrieval: {
+                title: "Analogical retrieval",
+                desc: "Find structurally similar theorems in catalog/Mathlib and adapt proof strategies.",
+                impact: "medium", effort: "medium", category: "science"
+            },
+            lemma_recommendation: {
+                title: "Lemma recommendation",
+                desc: "Suggest missing helper lemmas from catalog/Mathlib after partial proofs.",
+                impact: "medium", effort: "medium", category: "science"
+            }
+        };
+
+        // Initialize sliders
+        document.querySelectorAll('input[data-slider]').forEach(slider => {
+            const valueEl = slider.parentElement.querySelector('.slider-value');
+            if (valueEl) {
+                slider.addEventListener('input', () => {
+                    valueEl.textContent = slider.value;
+                    updateProgress();
+                });
+            }
+        });
+
+        // Initialize checkbox cards
+        document.querySelectorAll('.checkbox-card').forEach(card => {
+            const input = card.querySelector('input[type="checkbox"]');
+            card.addEventListener('click', (e) => {
+                if (e.target !== input) {
+                    input.checked = !input.checked;
+                }
+                card.classList.toggle('selected', input.checked);
+                updateProgress();
+            });
+            input.addEventListener('change', () => {
+                card.classList.toggle('selected', input.checked);
+            });
+        });
+
+        function updateProgress() {
+            const sections = document.querySelectorAll('.section');
+            let answered = 0;
+            let total = 0;
+
+            sections.forEach(section => {
+                total += 1;
+                const sliders = section.querySelectorAll('input[data-slider]');
+                const checks = section.querySelectorAll('input[type="checkbox"]');
+                const textareas = section.querySelectorAll('textarea');
+
+                let hasAnswer = false;
+                if (sliders.length > 0) hasAnswer = true;
+                if (checks.length > 0 && Array.from(checks).some(c => c.checked)) hasAnswer = true;
+                if (textareas.length > 0 && Array.from(textareas).some(t => t.value.trim())) hasAnswer = true;
+
+                if (hasAnswer) answered += 1;
+            });
+
+            const pct = Math.round((answered / total) * 100);
+            document.getElementById('progress-fill').style.width = pct + '%';
+            document.getElementById('progress-text').textContent = pct + '% complete';
+        }
+
+        function getSlider(name, defaultValue = 5) {
+            const el = document.querySelector(`input[name="${name}"]`);
+            return el ? parseInt(el.value) : defaultValue;
+        }
+
+        function getCheckedValues(name) {
+            return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value);
+        }
+
+        function generatePlan() {
+            const pain = {
+                shallow: getSlider('shallow', 7),
+                sorries: getSlider('sorries', 6),
+                rediscovery: getSlider('rediscovery', 7),
+                queue_waste: getSlider('queue_waste', 8),
+                disconnected: getSlider('disconnected', 5)
+            };
+
+            const strategies = getCheckedValues('strategy');
+            const proofs = getCheckedValues('proof');
+            const science = getCheckedValues('science');
+            const selected = new Set([...strategies, ...proofs, ...science]);
+
+            const bandwidth = getSlider('bandwidth', 5);
+            const slowForDepth = getSlider('slow_for_depth', 6);
+            const famousFocus = getSlider('famous_focus', 7);
+            const targets = document.querySelector('textarea[name="targets"]').value.trim();
+
+            // Score each selected item
+            const scored = Array.from(selected).map(key => {
+                const item = ITEMS[key];
+                let score = 0;
+
+                // Base from impact/effort
+                if (item.impact === 'high') score += 30;
+                else score += 15;
+                if (item.effort === 'low') score += 10;
+                else if (item.effort === 'medium') score += 5;
+
+                // Pain point alignment
+                if (item.category === 'question') {
+                    score += pain.shallow * 1.5;
+                    score += pain.rediscovery * 1.2;
+                    score += pain.disconnected;
+                    score += famousFocus * 1.5;
+                }
+                if (item.category === 'proof') {
+                    score += pain.sorries * 2;
+                    score += pain.shallow * 1.5;
+                }
+                if (item.category === 'science') {
+                    score += pain.rediscovery * 1.5;
+                    score += pain.shallow * 1.5;
+                    score += slowForDepth * 1.5;
+                }
+
+                // Bandwidth/effort adjustment
+                if (bandwidth < 4 && item.effort === 'high') score -= 25;
+                if (bandwidth > 7 && item.effort === 'low') score += 5;
+                if (slowForDepth < 4 && item.effort === 'high') score -= 15;
+
+                return { key, ...item, score };
+            }).sort((a, b) => b.score - a.score);
+
+            // Categorize into matrix
+            const quickWins = scored.filter(i => i.effort === 'low' && i.impact === 'high');
+            const majorProjects = scored.filter(i => i.effort === 'high' && i.impact === 'high');
+            const later = scored.filter(i => !quickWins.includes(i) && !majorProjects.includes(i));
+
+            renderMatrix('quick-wins', quickWins.slice(0, 6));
+            renderMatrix('major-projects', majorProjects.slice(0, 6));
+            renderMatrix('later', later.slice(0, 6));
+
+            // Build priority list
+            const topItems = scored.slice(0, 7);
+            const listEl = document.getElementById('priority-list');
+            listEl.innerHTML = topItems.map((item, idx) => `
+                <div class="priority-item" style="border-left-color: ${getRankColor(idx)}">
+                    <div class="priority-rank">${idx + 1}</div>
+                    <div class="priority-content">
+                        <h4 class="priority-title">${item.title}</h4>
+                        <div class="priority-meta">
+                            <span class="badge badge-impact-${item.impact === 'high' ? 'high' : 'med'}">Impact: ${item.impact}</span>
+                            <span class="badge badge-effort-${item.effort}">Effort: ${item.effort}</span>
+                            <span class="badge badge-effort-${item.effort === 'low' ? 'low' : (item.effort === 'medium' ? 'med' : 'high')}">Score: ${Math.round(item.score)}</span>
+                        </div>
+                        <p class="priority-desc">${item.desc}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            // Build markdown
+            const markdown = buildMarkdown(scored, pain, bandwidth, slowForDepth, famousFocus, targets);
+            document.getElementById('plan-markdown').textContent = markdown;
+
+            // Show output
+            document.getElementById('plan-output').classList.add('visible');
+            document.getElementById('plan-output').scrollIntoView({ behavior: 'smooth' });
+
+            window._currentPlan = markdown;
+        }
+
+        function getRankColor(idx) {
+            const colors = ['#58a6ff', '#a371f7', '#f778ba', '#d29922', '#3fb950', '#39c5cf', '#8b949e'];
+            return colors[idx] || colors[colors.length - 1];
+        }
+
+        function renderMatrix(containerId, items) {
+            const el = document.getElementById(containerId);
+            if (items.length === 0) {
+                el.innerHTML = '<div class="matrix-item">None selected</div>';
+                return;
+            }
+            el.innerHTML = items.map(i => `<div class="matrix-item">${i.title}</div>`).join('');
+        }
+
+        function buildMarkdown(items, pain, bandwidth, slowForDepth, famousFocus, targets) {
+            const top = items.slice(0, 7);
+            const quick = items.filter(i => i.effort === 'low' && i.impact === 'high');
+            const major = items.filter(i => i.effort === 'high' && i.impact === 'high');
+
+            let md = `# Aether Quality Improvement Plan\n\n`;
+            md += `Generated from interactive questionnaire on ${new Date().toISOString().split('T')[0]}.\n\n`;
+
+            md += `## Context\n\n`;
+            md += `- **Pain severity**: shallow/trivial=${pain.shallow}, sorries=${pain.sorries}, rediscovery=${pain.rediscovery}, queue waste=${pain.queue_waste}, disconnected=${pain.disconnected}\n`;
+            md += `- **Engineering bandwidth**: ${bandwidth}/10\n`;
+            md += `- **Willing to slow throughput for depth**: ${slowForDepth}/10\n`;
+            md += `- **Focus on famous open problems vs general capability**: ${famousFocus}/10\n`;
+            if (targets) md += `- **Specific targets**: ${targets}\n`;
+            md += `\n`;
+
+            md += `## Top Priorities (execute in order)\n\n`;
+            top.forEach((item, idx) => {
+                md += `${idx + 1}. **${item.title}** (impact=${item.impact}, effort=${item.effort}, score=${Math.round(item.score)})\n`;
+                md += `   - ${item.desc}\n`;
+            });
+            md += `\n`;
+
+            md += `## Quick Wins\n\n`;
+            quick.forEach(i => md += `- **${i.title}**: ${i.desc}\n`);
+            if (quick.length === 0) md += `_(No quick wins selected.)_\n`;
+            md += `\n`;
+
+            md += `## Major Projects\n\n`;
+            major.forEach(i => md += `- **${i.title}**: ${i.desc}\n`);
+            if (major.length === 0) md += `_(No major projects selected.)_\n`;
+            md += `\n`;
+
+            md += `## Recommended First 3 Concrete Actions\n\n`;
+            const firstThree = top.slice(0, 3);
+            firstThree.forEach((item, idx) => {
+                md += `${idx + 1}. **${item.title}**\n`;
+                md += `   - ${item.desc}\n`;
+                md += `   - Why now: aligns with reported pain points and chosen appetite for change.\n`;
+            });
+            md += `\n`;
+
+            md += `## Notes\n\n`;
+            md += `- Items marked as "high effort" should be broken into smaller milestones.\n`;
+            md += `- Re-run this planner after the first batch is implemented; priorities will shift.\n`;
+            md += `- Consider pairing each high-impact item with a correctness/demonstration test before declaring it done.\n`;
+
+            return md;
+        }
+
+        function copyPlan() {
+            const md = window._currentPlan || document.getElementById('plan-markdown').textContent;
+            navigator.clipboard.writeText(md).then(() => {
+                alert('Plan copied to clipboard as Markdown.');
+            });
+        }
+
+        function downloadPlan() {
+            const md = window._currentPlan || document.getElementById('plan-markdown').textContent;
+            const blob = new Blob([md], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `aether_quality_plan_${new Date().toISOString().split('T')[0]}.md`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function resetForm() {
+            document.getElementById('planner-form').reset();
+            document.querySelectorAll('.checkbox-card').forEach(c => c.classList.remove('selected'));
+            document.querySelectorAll('.slider-value').forEach(el => {
+                const slider = el.parentElement.querySelector('input[data-slider]');
+                if (slider) el.textContent = slider.value;
+            });
+            document.getElementById('plan-output').classList.remove('visible');
+            updateProgress();
+        }
+
+        updateProgress();
+    </script>
+</body>
+</html>
