@@ -645,21 +645,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bourgain's Slicing Problem"
   },
   {
-    "consumed_by_exp_id": "8e98f715",
-    "description": "Formalize transreal arithmetic (Anderson's system: R \u222a {Phi, +inf, -inf} with Phi = 0/0). Prove the ring axioms fail but a wheel structure emerges. Determine which theorems of real analysis survive transreal extension and which collapse.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0102",
-    "priority_score": 0.82,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.870934+00:00",
-    "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
     "domains": [
@@ -1621,6 +1606,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T14:16:00.949333+00:00",
     "title": "Dictionary **CSS code = homology of an `F\u2082`-chain"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Transreal Arithmetic & the Wheel Collapse\n\nDerived from this cycle's verified findings in\n`Catalog/Algebra/Transreal/{Basic,RingFails,Wheel,TropicalBridge}.lean`.\n\nCycle summary (what is now machine-checked, 0 sorries):\n\n* `(\ud835\udd4b, +, 0)` and `(\ud835\udd4b, \u00b7, 1)` are commutative monoids; `\u03a6` is absorbing.\n* `\ud835\udd4b` is **not** a ring: `+\u221e` has no additive inverse (`no_add_inverse_pinf`),\n  distributivity fails (`distrib_fails`), `+\u221e` has no multiplicative inverse\n  (`mul_inverse_axiom_fails`).\n* `\ud835\udd4b` is **not** a Carlstr\u00f6m wheel: the involution `//x = x` fails at `-\u221e`\n  (`recip_recip_ninf`) and the reciprocal is not multiplicative\n  (`recip_mul_fails`).  Both failures are caused by the *two-signed* infinity.\n* The projective collapse `\u00b1\u221e \u21a6 \u221e` gives `\u2119 = \u211d \u222a {\u221e, \u22a5}`, a genuine wheel:\n  involution (`precip_precip`), reciprocal homomorphism (`precip_pmul`),\n  modified distributivity (`wheel_distrib`), and `wheel_W7`, `wheel_W9` all hold.\n\n---\n\n## Conjecture 1 \u2014 The wheel obstruction is *exactly* the sign congruence\n\n**Statement.** Let `~` be the smallest congruence on `\ud835\udd4b` (w.r.t. `+`, `\u00b7`, `/`)\nmaking the reciprocal an involution. Then `\ud835\udd4b/~ \u2245 \u2119`, and `~` identifies precisely\n`+\u221e` with `-\u221e` (fixing every other point). In particular `\u2119` is the *initial*\nwheel quotient of the transreals.\n\n**The key insight is** that the only law-breaking in `\ud835\udd4b` is sign-blindness of\n`/0 = +\u221e`, so quotienting by the single relation `+\u221e ~ -\u221e` must repair *all* wheel\naxioms simultaneously \u2014 no further identifications are needed or allowed.\n\n**Why now?** Both `\ud835\udd4b` (`Basic.lean`) and `\u2119` (`Wheel.lean`) are formalized with\ntheir full operation tables, so the quotient map and its universal property can be\nbuilt and verified directly rather than argued on paper.\n\n---\n\n## Conjecture 2 \u2014 Only two wheel axioms fail for the transreals\n\n**Statement.** Equip `\ud835\udd4b` with its (two-signed) operations. Then the commutative\nmonoid laws, `\u22a5`-absorption, modified distributivity (`(x+y)z + 0z = xz + yz`),\nand the `0\u00b7y`-correction laws hold verbatim; the *only* wheel axioms that fail are\nthe reciprocal involution and the reciprocal homomorphism.\n\n**The key insight is** that every wheel axiom not mentioning `/` is sign-agnostic,\nso it cannot detect the `+\u221e / -\u221e` distinction; only the two reciprocal laws probe\nthe sign of `1/0`.\n\n**Why now?** We already have `TReal.mul_assoc'`, `add_assoc'`, and the absorbing\nlemmas; the remaining `+`/`\u00b7`-only wheel axioms are within reach of the same\ncase-bash automation, making this a concrete, finite verification target.\n\n---\n\n## Conjecture 3 \u2014 A transreal survives iff it lives in the cancellation-free fragment\n\n**Statement.** A first-order identity over `(+, \u00b7, 0, 1)` that is a theorem of `\u211d`\nremains true for **all** transreal substitutions if and only if it is derivable\nwithout additive or multiplicative cancellation (equivalently, provable in the\ntheory of commutative semirings minus distributivity-with-subtraction).\n\n**The key insight is** that the transreal failures are all instances of lost\ninvertibility (`\u221e + x \u2260 0`, `\u221e\u00b7(1/\u221e) \u2260 1`); an identity transports to `\ud835\udd4b` exactly\nwhen its proof never inverts an element that can become `\u00b1\u221e` or `0\u00b7\u221e`.\n\n**Why now?** `RingFails.lean` pins the exact obstructions to invertibility, giving\na precise syntactic boundary to test: instrument candidate `\u211d`-identities and check\ntransreal survival against cancellation-usage in their proofs.\n\n---\n\n## Conjecture 4 \u2014 `\ud835\udd4b` differs from Mathlib's `EReal` at a single point\n\n**Statement.** There is an injection `\u211d \u222a {\u00b1\u221e} \u21aa \ud835\udd4b` under which transreal `+` and\n`\u00b7` agree with `EReal` addition and multiplication **except** at the indeterminate\n`(+\u221e) + (-\u221e)`: `EReal` returns `-\u221e` (its `\u22a5`-wins convention) while `\ud835\udd4b` returns\n`\u03a6`. This single discrepancy is exactly what costs `EReal` its associativity-with-a\ntwo-sided identity that `\ud835\udd4b` trades for totality-with-`\u03a6`.\n\n**The key insight is** that both systems totalize `\u00b1\u221e` arithmetic, but `EReal`\nmakes an *arbitrary* choice at `\u221e - \u221e` whereas `\ud835\udd4b` introduces a *new* value `\u03a6`;\ncomparing them isolates the price of each design decision.\n\n**Why now?** `EReal` is fully developed in Mathlib and `\ud835\udd4b` is now formalized here,\nso the comparison map and the exact-disagreement-locus theorem can be stated and\nchecked immediately, turning a folklore remark into a verified statement.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2058",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8e98f715",
+    "status": "available",
+    "timestamp": "2026-06-17T15:29:37.901778+00:00",
+    "title": "Derived from this cycle's verified findings in"
   },
   {
     "consumed_by_exp_id": "",
@@ -3070,7 +3070,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Aleph-1 Surface: Geometry Between Dimensions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5bafdd72",
     "description": "Formalize Australian Aboriginal kinship systems (section and subsection systems) as finite groups acting on person-sets. Prove that the 4-section system is isomorphic to Z2 x Z2 and the 8-subsection system to Z2 x Z2 x Z2. Show that marriage rules correspond to coset restrictions and that the entire system forms a consistent group-theoretic structure.",
     "domains": [
       "Novelty",
@@ -3080,7 +3080,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:31.067326+00:00",
     "title": "Aboriginal Kinship as Group Theory: Dreamtime Algebra"
   },
