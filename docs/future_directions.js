@@ -1534,6 +1534,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Crystallographic Groups and Music: The Wallpaper Groups of Rhythm\n\nThis cycle established a self-contained theory of the **symmetry groups of cyclic\nrhythms** via the dihedral action of `DihedralGroup n` on `Finset (ZMod n)`\n(beat positions), proved in:\n\n* `Catalog/Computation/RhythmWallpaperGroups.lean`\n  - `card_symmetryGroup_dvd` \u2014 Lagrange: `|symmetryGroup S| \u2223 2n`.\n  - `card_rotationPeriods_dvd` \u2014 rhythmic crystallographic restriction: `|rotationPeriods S| \u2223 n`.\n  - `rotationPeriods_realizable` \u2014 every divisor `d \u2223 n` is realised as a rotation-symmetry order.\n* `Catalog/Computation/RhythmScaleSymmetry.lean`\n  - `card_transpositions_mul_card_rotPeriods` \u2014 orbit\u2013stabiliser: `#transpositions \u00b7 #periods = n`.\n  - `decide`-verified symmetry orders of the whole-tone (6), augmented (3),\n    octatonic (4), diatonic (1), and chromatic (12) pitch-class sets in `ZMod 12`.\n\nThe following conjectures are precise, falsifiable, and computationally testable\nfor small `n` (via `decide`) before any general proof attempt.\n\n---\n\n## Conjecture 1 (Full dihedral realisability)\n**Every subgroup `H \u2264 DihedralGroup n` is the symmetry group of some rhythm.**\nThat is, `\u2200 H : Subgroup (DihedralGroup n), \u2203 S : Finset (ZMod n), symmetryGroup n S = H`.\nThis strengthens `rotationPeriods_realizable` (which only realises the *rotation*\norders) to the full dihedral lattice, including reflection (palindromic) symmetry.\n*Test*: enumerate subgroups of `DihedralGroup n` for `n \u2264 8` and search for a\nrealising `S` by `decide`. *Risk*: small `n` may have unrealisable subgroups\n(e.g. a lone reflection with no compatible rotation), in which case the corrected\nconjecture characterises the realisable ones as exactly the stabiliser-closed\nsubgroups.\n\n## Conjecture 2 (M\u00f6bius enumeration of rhythmic crystal classes)\n**The number of rhythms in `ZMod n` whose rotation-period group has order exactly\n`d` (for `d \u2223 n`) is `\u2211_{e \u2223 (n/d)} \u03bc(e) \u00b7 2^{(n/d)/e \u00b7 ... }`** \u2014 i.e. a clean\nM\u00f6bius-inversion / necklace-counting formula governs the distribution of symmetry\norders. Concretely, with `A\u2099(d)` = #{S : rotPeriodsFinset n S |>.card = d}, conjecture\n`\u2211_{d \u2223 n} A\u2099(d) = 2\u207f` (trivial) **and** that `A\u2099(d)` is given by M\u00f6bius inversion\nof `d \u21a6 2^{n/d}`. *Test*: tabulate `A\u2099(d)` by brute force (`decide`) for `n \u2264 12`\nand fit against the M\u00f6bius formula.\n\n## Conjecture 3 (Two-dimensional polyrhythms and the genuine 17 wallpaper groups)\n**Define rhythms on the torus `ZMod m \u00d7 ZMod n` with the full planar\ncrystallographic action (translations, the rotation `(x,y) \u21a6 (-x,-y)`, and the\nreflections), and conjecture that exactly the toroidal quotients of the 17\nwallpaper groups arise as symmetry groups.** This is the literal realisation of\nthe project title: 1D rhythm gave dihedral (frieze-like) symmetry; the 2D\npolyrhythmic grid should expose wallpaper-group structure. *Test*: build the\n`MulAction` of the relevant point group on `Finset (ZMod m \u00d7 ZMod n)` and\nclassify stabilisers for small `m, n` by `decide`.\n\n## Conjecture 4 (Euclidean / maximally even rhythms)\n**The Euclidean rhythm `E(k, n)` (the maximally even distribution of `k` onsets in\n`n` beats, \u00e0 la Bjorklund) has rotation-period group of order exactly `gcd(k, n)`.**\nEquivalently it has `n / gcd(k,n)` distinct transpositions. *Test*: implement\n`E(k,n)` as a `Finset (ZMod n)` and check `rotPeriodsFinset n (E k n) |>.card = Nat.gcd k n`\nby `decide` for all `k \u2264 n \u2264 16`. A proof would connect our orbit\u2013stabiliser law\nto the three-distance/Steinhaus theorem.\n\n## Conjecture 5 (Spectral characterisation of rhythmic symmetry)\n**A rhythm `S \u2286 ZMod n` has rotation-period group of order `d` (with `d \u2223 n`) iff\nits discrete Fourier transform `\u015c` (the indicator's DFT over `ZMod n`) is supported\non the subgroup of multiples of `n/d`.** This recasts the crystallographic\nrestriction as a frequency-support statement (a Computation-domain bridge to the\nnumber-theoretic transform / `Polynomial (ZMod n)` evaluation). *Test*: for\n`n \u2264 12`, compute supports of `\u015c` and compare with `rotPeriodsFinset` by `decide`\nover `\u211a`-valued or root-of-unity DFTs.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2049",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6493a7ff",
+    "status": "available",
+    "timestamp": "2026-06-17T09:50:51.074776+00:00",
+    "title": "Self-contained theory of the **symmetry groups of cycli"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -1709,21 +1724,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
-  },
-  {
-    "consumed_by_exp_id": "6493a7ff",
-    "description": "A periodic rhythm in music is a function f: Z -> {0, 1} that is periodic: f(n + p) = f(n) for some period p. The symmetry group of a rhythm with period p is a subgroup of Z/pZ. But music also has 2D patterns: a drum pattern is a function g: Z x Z -> {0, 1} (onset grid in time x pitch). The symmetry group of a drum pattern is a subgroup of Z x Z, which is a wallpaper group in 1D. In 2D, the wallpaper groups classify all possible symmetries of periodic patterns. There are exactly 17 wallpaper groups in 2D. Conjecture: the 17 wallpaper groups correspond to 17 fundamentally different types of rhythmic structure in music. Specifically: (1) p1: no symmetry (free rhythm), (2) p2: 2-fold rotational symmetry (call-and-response), (3) pm: mirror symmetry (palindrome), (4) pg: glide reflection (canon), (5) cm: mirror + glide (round), (6) pmm: double mirror (bilateral palindrome), (7) pmg: mirror + glide (inverted canon), (8) pgg: double glide (double canon), (9) cmm: double mirror + glide (round + palindrome), (10) p4: 4-fold rotation (4-bar cycle), (11) p4m: 4-fold + mirrors (variations on a theme), (12) p4g: 4-fold + glides (inverted variations), (13) p3: 3-fold rotation (3-bar blues), (14) p3m1: 3-fold + mirrors, (15) p31m: 3-fold + glides, (16) p6: 6-fold rotation (whole-tone scale symmetry), (17) p6m: 6-fold + mirrors (maximal symmetry, the 'perfect' rhythm). Test: classify 1000 drum patterns by their wallpaper group and verify the distribution matches musical practice. Impact: there are exactly 17 types of rhythm in music, classified by the wallpaper groups.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0070",
-    "priority_score": 0.68,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.681497+00:00",
-    "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
   },
   {
     "consumed_by_exp_id": "",
@@ -3011,7 +3011,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Mind vs G\u00f6del: Can Minds Outperform Algorithms?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e7ddb5d",
     "description": "Construct and classify finite projective planes where Desargues' theorem fails. Prove that such planes exist at every prime power order and that their collineation groups are strictly smaller than PGL. Formalize the connection to non-associative division algebras and Hall triple systems.",
     "domains": [
       "Novelty",
@@ -3021,7 +3021,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.925627+00:00",
     "title": "Non-Desarguesian Worlds: Geometry Without Desargues"
   },

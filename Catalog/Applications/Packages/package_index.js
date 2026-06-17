@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6493a7ff",
     "filename": "crystallographic_groups_and_music_the_17_wallpaper.json",
     "pkg_num": 186,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5668,
     "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
   },
   {
@@ -5721,8 +5721,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "crystallographic_groups_and_music_the_17_wallpaper",
       "primary_domain": "Computation",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5668,
+      "quality": "partial",
       "shape": "cube",
       "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
     }
