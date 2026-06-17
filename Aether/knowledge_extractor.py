@@ -47,6 +47,7 @@ from catalog_analyzer import CatalogAnalyzer
 from autoresearch_bridge import AutoresearchBridge
 from research_memory import ResearchMemory
 from research_threads import ResearchThreadManager
+from specialized_critics import SpecializedCritic
 from research_context import ResearchContext
 from aristotle_loop import AristotleLoop
 from output_organizer import OutputOrganizer, normalize_domain
@@ -80,6 +81,7 @@ class ResearchJob:
     quality_score: float = 0.0
     quality_assessment: Optional[Dict] = None
     quality_detail: Optional[Any] = None  # 8-axis QualityScore from quality_evaluator
+    specialized_critic_scores: Optional[Dict[str, Any]] = None  # 4-axis critic scores
     sorry_count: int = 0
     theorem_count: int = 0
     theorem_novelty: Optional[Dict[str, int]] = None  # new/strengthening/duplicate/disproof/unknown counts
@@ -1833,6 +1835,35 @@ Research mode: {concept.research_mode}
         if job.project_id and job.project_id in self.inflight:
             self.inflight[job.project_id] = job
             self._save_inflight()
+
+        # Optional specialized critics (feature-flagged; default off).
+        if self.config.get("features", {}).get("enable_specialized_critics", False):
+            try:
+                critic = SpecializedCritic(self.pi_agent, timeout=120)
+                scores = critic.evaluate(
+                    lean_source=compact_lean,
+                    concept_title=job.concept.title if job.concept else "",
+                    concept_description=job.concept.concept_description if job.concept else "",
+                    existing_titles=existing_titles,
+                )
+                job.specialized_critic_scores = {
+                    "correctness": scores.correctness,
+                    "novelty": scores.novelty,
+                    "depth": scores.depth,
+                    "presentation": scores.presentation,
+                    "rationale": scores.rationale,
+                    "aggregate": scores.aggregate(),
+                }
+                # Blend with existing heuristic/structural score so the pipeline
+                # still benefits from local signal, but specialized critics dominate.
+                aggregate = scores.aggregate()
+                if aggregate > 0:
+                    job.quality_score = 0.3 * job.quality_score + 0.7 * aggregate
+                print(f"[SpecializedCritics] correctness={scores.correctness:.2f} novelty={scores.novelty:.2f} "
+                      f"depth={scores.depth:.2f} presentation={scores.presentation:.2f} "
+                      f"aggregate={aggregate:.2f} final_q={job.quality_score:.3f}")
+            except Exception as e:
+                print(f"[SpecializedCritics] Warning: failed to run: {e}")
 
         return job
 
