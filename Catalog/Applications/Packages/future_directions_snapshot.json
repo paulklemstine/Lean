@@ -3598,7 +3598,7 @@
     "proof_strategy": "Define A(1) = A(2) = 1, A(n+1) = smallest positive integer not equal to A(n) + A(n-1). Prove by strong induction: A(n) >= floor(n^2/4). Base: A(1)=1 >= 0, A(2)=1 >= 1. Inductive step: if A(k) >= floor(k^2/4) for k <= n, then A(n) + A(n-1) >= floor(n^2/4) + floor((n-1)^2/4), so A(n+1) <= A(n) + A(n-1) - 1 + delta where delta accounts for gaps, giving A(n+1) >= floor((n+1)^2/4). Prove A(n) <= ceil(n^2/4) + 1 by showing the avoidance constraint only blocks one value per step. Test: compute A(n) for n=1..10^6 and verify A(n)/n^2 -> 1/4.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-01T12:30:30.492042+00:00",
     "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
   },
@@ -4038,7 +4038,7 @@
     "proof_strategy": "Define the Poincare threshold: epsilon_star(X) = inf{epsilon > 0 : H_*(VR_epsilon(X)) has the same Betti numbers as S^d}. For X sampled uniformly from S^d: H_0(VR_epsilon) = Z for all epsilon > 0 (X is connected). H_d(VR_epsilon) = Z for epsilon >= epsilon_d (the d-th Betti number appears when epsilon is large enough to connect all d-simplices). The intermediate Betti numbers: H_k(VR_epsilon) = 0 for 0 < k < d and epsilon < epsilon_d. So epsilon_star = the smallest epsilon such that H_d(VR_epsilon) = Z. For n points uniformly sampled from S^d with radius 1: the pairwise distances are approximately 2*sin(theta/2) where theta ~ Uniform(0, pi) (for d=1, S^1). The minimum spanning tree has length ~ n^{1-1/d}. The Rips complex at scale epsilon connects points within distance epsilon. The threshold for H_d to appear is epsilon ~ n^{-1/d} (the covering radius of S^d by n points). Conjecture: epsilon_star(X) = C * n^{-1/d} for some constant C depending only on d. For d=1: epsilon_star ~ n^{-1} (S^1 needs n points with spacing 2*pi/n). For d=2: epsilon_star ~ n^{-1/2} (S^2 needs n points with spacing ~n^{-1/2}). Proof: the covering radius of S^d by n uniformly random points is approximately r_n = C_d * (log(n)/n)^{1/d} with high probability. The Vietoris-Rips complex at scale epsilon captures H_d when epsilon ~ 2 * r_n. So epsilon_star ~ (log(n)/n)^{1/d}. Test: sample n points from S^d for d=1,2,3 and n=100..10000, compute VR_epsilon for varying epsilon, find epsilon_star, fit epsilon_star ~ C * (log(n)/n)^{1/d}.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "failed",
     "timestamp": "2026-06-01T12:30:30.834465+00:00",
     "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
   },

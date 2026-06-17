@@ -52,7 +52,8 @@
     "phase_a_quality_score": null,
     "phase_b_skipped_reason": null,
     "retry_count": 0,
-    "retry_of": null
+    "retry_of": null,
+    "retry_queued_time": 0.0
   },
   "b432ed51-388e-446b-a4a2-8b88d579161f": {
     "job_id": "595ce011",
@@ -141,7 +142,8 @@
     "phase_a_quality_score": null,
     "phase_b_skipped_reason": null,
     "retry_count": 3,
-    "retry_of": "595ce011"
+    "retry_of": "595ce011",
+    "retry_queued_time": 0.0
   },
   "432253b9-5283-400c-b489-387a20186bf4": {
     "job_id": "ab2bf6f4",
@@ -230,7 +232,8 @@
     "phase_a_quality_score": null,
     "phase_b_skipped_reason": null,
     "retry_count": 2,
-    "retry_of": "ab2bf6f4"
+    "retry_of": "ab2bf6f4",
+    "retry_queued_time": 0.0
   },
   "dfd5ab1b-b808-4f1e-b8f0-5549d3cc7418": {
     "job_id": "8e98f715",
@@ -285,7 +288,8 @@
     "phase_a_quality_score": null,
     "phase_b_skipped_reason": null,
     "retry_count": 0,
-    "retry_of": null
+    "retry_of": null,
+    "retry_queued_time": 0.0
   },
   "398c3a54-44b6-46ba-a0cc-bc4cd4cb52cd": {
     "job_id": "16b03c84",
@@ -375,7 +379,8 @@
     "phase_a_quality_score": null,
     "phase_b_skipped_reason": null,
     "retry_count": 1,
-    "retry_of": "16b03c84"
+    "retry_of": "16b03c84",
+    "retry_queued_time": 0.0
   },
   "65712dd6": {
     "job_id": "65712dd6",
@@ -430,7 +435,8 @@
     "phase_a_quality_score": null,
     "phase_b_skipped_reason": null,
     "retry_count": 0,
-    "retry_of": null
+    "retry_of": null,
+    "retry_queued_time": 0.0
   },
   "8d70b2b8-5150-4e31-b71d-b0f708395d06": {
     "job_id": "46951c2e",
@@ -522,7 +528,8 @@
     "phase_a_quality_score": null,
     "phase_b_skipped_reason": null,
     "retry_count": 1,
-    "retry_of": "46951c2e"
+    "retry_of": "46951c2e",
+    "retry_queued_time": 0.0
   },
   "5884df3d": {
     "job_id": "5884df3d",

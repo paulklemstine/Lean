@@ -276,7 +276,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
@@ -289,7 +289,7 @@
         "Algebra"
       ],
       "id": "fd_0007",
-      "last_attempt_time": "2026-06-06T09:29:58.575009+00:00",
+      "last_attempt_time": "2026-06-17T11:53:40.110116+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -302,7 +302,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "failed",
       "timestamp": "2026-06-01T12:30:30.492042+00:00",
       "title": "The Anti-Fibonacci Sequence: Numbers That Avoid the Golden Ratio at All Costs"
     },
@@ -3302,7 +3302,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
@@ -3315,7 +3315,7 @@
         "Geometry"
       ],
       "id": "fd_0096",
-      "last_attempt_time": "2026-06-08T23:20:18.520694+00:00",
+      "last_attempt_time": "2026-06-17T11:53:44.544621+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -3328,7 +3328,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "failed",
       "timestamp": "2026-06-01T12:30:30.834465+00:00",
       "title": "The Poincare Conjecture for Data: Manifold Detection via Persistent Homology"
     },
