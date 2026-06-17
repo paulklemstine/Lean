@@ -2153,6 +2153,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — CSS Codes as Cohomology\n\nThis cycle established the dictionary **CSS code = homology of an `F₂`-chain\ncomplex** (`Core.lean`), *refuted* the hypercube conjecture for the 1-skeleton\ncycle code (`CubeCode.lean`), and anchored the refutation with a fully explicit\n`[[4,1]]` code on `C₄ = Q₂` (`RingCode.lean`). The surviving topological\ninvariant is the cyclomatic number `β₁(Q_n) = (n−2)·2^{n-1} + 1`, which equals\n`1` **only** at `n = 2`. The directions below grow out of exactly those findings.\n\n---\n\n## Conjecture 1 — The cube becomes a `[[·,1,·]]` code only after filling 2-cells\n\nFor the *cubical* complex `Q_n` (vertices, edges **and** square 2-faces), the\nhomological code has `k = dim H₁(Q_n; F₂) = 0` for `n ≥ 2` (the cube is simply\nconnected), so to recover a single logical qubit one must quotient/identify\nfaces into a closed surface. Concretely: there is a surface `Σ` obtained from\n`Q_n`'s 2-skeleton with `dim H₁(Σ; F₂) = 1` and code distance equal to the\ngirth `4`, **not** `2^{n/2}`.\n\n- **The key insight is** that the mission's \"1 qubit\" claim silently assumes a\n  *surface* (2-complex) where 2-cells kill all but one homology class, while the\n  literal `Z₁/B₁` cycle code on the 1-skeleton has `B₁ = 0` and therefore\n  over-encodes by the full cyclomatic number `(n−2)2^{n-1}+1`.\n- **Why now?** `CubeCode.numLogical_graphCode` already isolates the `d₂ = 0`\n  (no-2-cell) case; adding a nonzero `d₂` for the square faces is a direct,\n  mechanical extension of the same `Core` dimension formula, so the surface vs.\n  graph dichotomy is immediately testable in the existing framework.\n\n## Conjecture 2 — Homological distance is governed by Hamming weight, and the cube saturates only the trivial Singleton bound\n\nDefine the code distance `d` as the minimum `hammingWeight` (already imported\nfrom the catalog's `vecSupport`) over nonzero homology representatives. Then for\nthe `C₄` code `d = 4`, and every cube 1-skeleton code has `d = girth = 4`,\ngiving `k + d = β₁ + 4`, which violates the quantum Singleton bound\n`k + 2d ≤ n + 2` for large `n` — i.e. the 1-skeleton codes are **bad** codes,\nthe opposite of the conjecture's \"achieves the Singleton bound\" claim.\n\n- **The key insight is** that distance is a *minimum-weight* invariant of the\n  cohomology class, so the catalog's `vecSupport_card_pos_of_ne_zero` is the\n  exact primitive needed, and the constant girth `4` forces asymptotically\n  vanishing relative distance `d/n → 0`.\n- **Why now?** `RingCode.ker_boundary` shows the homology class explicitly as a\n  single weight-4 vector; computing `hammingWeight` of a kernel basis is already\n  `decide`-feasible at small `n`, so the Singleton-violation can be certified\n  before any general theory is built.\n\n## Conjecture 3 — `β₁(Q_n) = 1 ⇔ n = 2` is the only finite-qubit cube; tori are the right family\n\nReplacing `Q_n` by the discrete torus `(C_m)^{×2}` (product of two `m`-cycles)\nas a 2-complex yields `dim H₁ = 2` (the toric code) with distance `m`, the\ngenuine `[[2m², 2, m]]` family. Conjecture: among all \"graph-cube-like\" 1-complexes,\n`β₁ = 1` characterizes `C₄` uniquely, and the *only* way to keep `k` bounded\nwhile growing `n` is to add 2-cells (move to a surface).\n\n- **The key insight is** that `cube_one_qubit_iff` pins `k = 1` to `n = 2` for\n  the cube, so bounded-`k` code families must come from *surfaces of fixed\n  genus*, not from growing graphs — exactly the toric-code construction.\n- **Why now?** The closed form `cyclomatic_closed_form` makes the `k`-growth\n  exact, so contrasting it against the constant `k = 2` of a torus 2-complex is a\n  clean, fully arithmetic comparison reusing the present `cyclomatic` machinery.\n\n## Conjecture 4 — Euler characteristic is the universal qubit budget\n\nFor any bounded `F₂`-chain complex `0 → Cₖ → ⋯ → C₀ → 0`, the alternating sum of\nhomology dimensions equals the alternating sum of chain dimensions\n(`∑ (−1)ⁱ dim Hᵢ = ∑ (−1)ⁱ dim Cᵢ = χ`). Hence the *total* logical-qubit budget\nacross all degrees of a chain-complex code is the topological Euler\ncharacteristic, a single integer invariant.\n\n- **The key insight is** that `Core.finrank_homology` already expresses one\n  homology dimension as a difference of ranks; iterating rank–nullity up the\n  complex telescopes into `χ`, so \"qubits = Euler characteristic\" is a\n  rank–nullity identity, not new analysis.\n- **Why now?** `Core` proves the single-spot case with `finrank_quotient_add_finrank`;\n  the multi-degree version is the same lemma applied inductively, well within the\n  subagent's reach.\n\n## Conjecture 5 — Every classical `[n,k]` `F₂` code is the degree-0 homology of a length-1 complex, making CSS ↔ classical functorial\n\nFor a parity-check map `H : F₂ⁿ → F₂^r`, the length-1 complex `F₂ⁿ →H F₂^r` has\n`H₀ = coker H` and `H₁ = ker H = ` the classical code, with `dim H₁ = n − rank H`.\nConjecture: the assignment `(C₁, C₂) ↦ (chain complex)` and back is an\nequivalence of categories between CSS codes and bounded `F₂`-chain complexes up\nto chain homotopy.\n\n- **The key insight is** that `numLogical_eq_css` is precisely the object-level\n  half of this equivalence (`k = n − rank H_Z − rank H_X`); promoting it to a\n  functor only requires tracking chain maps, which Mathlib's `HomologicalComplex`\n  already supports.\n- **Why now?** With the dimension dictionary proved and the cube/`C₄` examples in\n  hand, the remaining work is purely categorical bookkeeping on top of existing\n  `Core` definitions — no new hard analytic input is needed.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Pythagorean"
+    ],
+    "id": "fd_2057",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "ab2bf6f4",
+    "status": "available",
+    "timestamp": "2026-06-17T14:16:00.949333+00:00",
+    "title": "Dictionary **CSS code = homology of an `F₂`-chain"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -3804,7 +3824,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9ff40964",
     "description": "The Fermi paradox asks: if intelligent life is common, where is everyone? The pigeonhole principle answers: if there are more pigeons than holes, at least one hole contains more than one pigeon. Apply this to the cosmos: there are approximately 10^22 stars in the observable universe (pigeons) and approximately 10^10 habitable-zone planets (holes). By the pigeonhole principle, at least one habitable planet contains at least 10^12 stars' worth of interest... wait, that's the wrong way around. Correct: there are ~10^10 habitable planets (pigeons) and ~4.5 billion years of time (holes). By the pigeonhole principle, at least one time period of one year contains at least 2 habitable planets developing intelligence. But we observe zero contacts. Conjecture: The resolution is that intelligent life is NOT common — the expected number of technological civilizations in the observable universe is less than 1. More precisely: if we model the Drake equation with honest probability estimates, P(technological civilization per habitable planet) < 10^{-10}, making the expected number of civilizations < 10^0 = 1. The Fermi paradox is not a paradox at all — it is the pigeonhole principle correctly predicting that with very few pigeons (civilizations) and very many holes (planets + time), most holes are empty. Test: compute the Drake equation with conservative estimates and verify that E[civilizations] < 1. Impact: we are alone because probability says so. The universe is mostly empty because that's what the math predicts.",
     "domain_bridges": [],
     "domains": [
@@ -3817,7 +3837,7 @@
     "proof_strategy": "State the Drake equation: N = R* * f_p * n_e * f_l * f_i * f_c * L, where R* = rate of star formation (~1.5-3/yr), f_p = fraction with planets (~0.5-1), n_e = habitable planets per star (~0.01-0.4), f_l = fraction developing life (~0.01-1), f_i = fraction developing intelligence (~0.01-0.5), f_c = fraction developing technology (~0.01-0.5), L = longevity of civilization (~100-10^9 yr). Pessimistic estimate: N = 1.5 * 0.5 * 0.01 * 0.01 * 0.01 * 0.01 * 100 = 7.5 * 10^{-7} << 1. Optimistic estimate: N = 3 * 1 * 0.4 * 1 * 0.5 * 0.5 * 10^9 = 3 * 10^8 >> 1. The key parameter is f_l * f_i * f_c which spans 10 orders of magnitude. The Rare Earth hypothesis (f_l * f_i * f_c ~ 10^{-12}) gives N < 1, resolving the paradox. Pigeonhole: if N < 1, the expected number of civilizations is less than 1, so with probability > 0.5, we are the only one. Test: compute P(N >= 2) for various Drake parameter distributions and verify P(N >= 2) < 0.5 for conservative estimates.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.571054+00:00",
     "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
   },
@@ -3880,26 +3900,6 @@
     "status": "available",
     "timestamp": "2026-06-01T12:30:30.643460+00:00",
     "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "ab2bf6f4",
-    "description": "The Calderbank-Shor-Steane (CSS) quantum error-correcting codes are constructed from classical linear codes C_1, C_2 with C_2 perp subset C_1. The CSS code encodes dim(C_1) - dim(C_2) logical qubits. This is exactly the definition of a cohomology group: H^1(C_1, C_2) = C_1 / C_2. Conjecture: every CSS code is equivalent to a cohomology computation on a simplicial complex, and vice versa. Specifically, given a simplicial complex K, the CSS code with C_1 = Z_1(K, F_2) (1-cycles) and C_2 = B_1(K, F_2) (1-boundaries) encodes dim(H_1(K, F_2)) logical qubits with distance d = min(length of shortest non-trivial cycle, length of shortest non-trivial cocycle). This is the homological quantum error-correcting code HQECC(K). The distance d equals the systole of K (the length of the shortest non-contractible cycle). Conjecture: for the hypercube Q_n (n-dimensional cube graph), the HQECC encodes 1 qubit with distance d = 2^{n/2} (achieving the quantum Singleton bound). Test: construct HQECC for Q_4, Q_6, Q_8 and verify the parameters. Impact: quantum error correction is cohomology. Every simplicial complex gives a quantum code, and the code parameters are topological invariants.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0065",
-    "lineage_refs": [],
-    "priority_score": 0.05,
-    "proof_strategy": "Define the CSS construction: given F_2-linear codes C_2 perp subset C_1 subset F_2^n, the CSS code is the subspace spanned by {|v + C_2> : v in C_1}. This encodes k = dim(C_1/C_2) = dim(H^1) logical qubits. Define HQECC(K): for a simplicial complex K, let C_1 = Z_1(K, F_2) (1-cycles mod F_2) and C_2 = B_1(K, F_2) (1-boundaries). Then H_1(K, F_2) = Z_1/B_1 is the first homology. The CSS code with these C_1, C_2 encodes dim(H_1) qubits. Distance: d_X = min weight of non-trivial cycle in Z_1 \\ B_1, d_Z = min weight of non-trivial cocycle. The code distance d = min(d_X, d_Z). For hypercube Q_n: H_1(Q_n, F_2) = F_2^{n choose 2} (since Q_n has n choose 2 independent 1-cycles). Wait, that's for n >= 3. Actually Q_n is bipartite, so H_1 has dimension (n choose 2). The systole of Q_n is 4 (the shortest cycle). So d = min(4, something). Need to compute d_Z: the shortest non-trivial cocycle. For Q_n, d_Z = 2^{n/2} by the MacWilliams identity. Test: construct CSS codes from simplicial complexes, compute parameters [[n, k, d]].",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.657673+00:00",
-    "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
   },
   {
     "ambition_level": "extension",
@@ -4004,7 +4004,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "949d41e5",
     "description": "Ramsey's theorem for graphs states that R(k,l) = the minimum n such that any 2-coloring of the edges of K_n contains a red K_k or a blue K_l. For hypergraphs: R_r(k,l) = the minimum n such that any 2-coloring of the r-tuples of an n-set contains a red K_k^{(r)} or a blue K_l^{(r)}. The growth rate is an open problem: R_3(4,4) = 13 (known), R_3(5,5) is between 34 and 55, and R_3(k,k) is believed to grow like a double exponential 2^{c*k^2}. Conjecture: R_3(k,k) ~ 2^{2^{ck}} for some constant c > 0. This is a tower function (height 2 exponential). More precisely: the lower bound R_3(k,k) >= 2^{ck^2} (from the probabilistic method) and the upper bound R_3(k,k) <= 2^{2^{ck}} (from the stepping-up lemma). The gap is between a single exponential and a double exponential. Conjecture: the true growth rate is double exponential, and the upper bound is tight. This would mean that 3-uniform Ramsey numbers grow much faster than graph Ramsey numbers. Test: compute R_3(k,k) for k = 3, 4, 5, 6 by exhaustive search and verify the growth rate. Impact: 3-uniform Ramsey numbers are double exponential. Combinatorics at the hypergraph level is fundamentally harder than at the graph level.",
     "domain_bridges": [],
     "domains": [
@@ -4017,7 +4017,7 @@
     "proof_strategy": "3-uniform Ramsey number R_3(k,k): minimum n such that any red/blue coloring of the 3-element subsets of [n] contains a monochromatic set of size k. Known values: R_3(3,3) = 13 (proved), R_3(4,4) is between 34 and 55 (current bounds). Lower bound (probabilistic method): R_3(k,k) >= 2^{ck^2} for some constant c. Proof: color each 3-set randomly. P(monochromatic K_k^{(3)}) < 2 * C(n,k) * 2^{-C(k,3)}. This is < 1 when n < 2^{k^2/6}. So R_3(k,k) > 2^{k^2/6}. Upper bound (stepping-up lemma): if R_3(k,k) = n, then R_3(2k, 2k) <= 2^{2n}. This gives R_3(k,k) <= 2^{2^{ck}}. Conjecture: R_3(k,k) ~ 2^{2^{ck}} (double exponential). The stepping-up lemma shows that if R_3(k,k) is at least n, then R_3(2k,2k) is at most 2^{2n}. Starting from R_3(3,3) = 13: R_3(6,6) <= 2^{26} = 2^{2^{4.7}}. Starting from R_3(4,4) >= 34: R_3(8,8) <= 2^{68} = 2^{2^{6.1}}. The pattern: R_3(2^j, 2^j) <= 2^{2^{cj}} for some constant c. Taking k = 2^j: R_3(k,k) <= 2^{2^{c*log(k)}} = 2^{k^{c'}} which is single exponential, not double exponential. Wait, the correct analysis: the stepping-up lemma gives R_3(k+1, k+1) >= 2^{R_3(k,k) - 1}. So R_3(4,4) >= 2^{R_3(3,3) - 1} = 2^{12} = 4096. But R_3(4,4) is known to be between 34 and 55, so the stepping-up lemma gives a very weak lower bound. The correct conjecture: R_3(k,k) is at least 2^{2^{ck}} for large k. Test: enumerate all 2-colorings of the 3-sets of [n] for n = 4, 5, 6, ..., find the maximum k such that there exists a coloring with no monochromatic K_k^{(3)}.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.820858+00:00",
     "title": "Hypergraph Ramsey Theory: Beyond Graphs"
   },
