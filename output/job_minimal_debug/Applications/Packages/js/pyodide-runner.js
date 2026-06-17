@@ -19,9 +19,21 @@ document.addEventListener('DOMContentLoaded', () => {
             // Auto-run any pending visualizations
             if (window.Aether.pendingVisualizations) {
                 for (const viz of window.Aether.pendingVisualizations) {
-                    window.runVisualization(viz.code, viz.outputContainer, viz.buttonEl);
+                    if (viz.__autoRun) {
+                        viz.__autoRun();
+                    } else {
+                        window.runVisualization(viz.code, viz.outputContainer, viz.buttonEl);
+                    }
                 }
                 window.Aether.pendingVisualizations = [];
+            }
+
+            // Auto-run any pending interactive demos
+            if (window.Aether.pendingInteractiveDemos) {
+                for (const demo of window.Aether.pendingInteractiveDemos) {
+                    window.runDemo(demo.runBtn, demo.editor, demo.output);
+                }
+                window.Aether.pendingInteractiveDemos = [];
             }
         } catch (err) {
             console.error("Failed to load Pyodide:", err);
@@ -31,6 +43,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Start loading Pyodide immediately
     initPyodide();
+
+    function extractFutureImports(code) {
+        const lines = code.split('\n');
+        const futureLines = [];
+        const cleanedLines = [];
+        for (const line of lines) {
+            if (/^\s*from\s+__future__\s+import\b/.test(line)) {
+                futureLines.push(line);
+            } else {
+                cleanedLines.push(line);
+            }
+        }
+        return {
+            futureImports: futureLines.join('\n'),
+            cleanedCode: cleanedLines.join('\n')
+        };
+    }
 
     function buildLocalModuleCode(code, pkgData) {
         const knownLocalModules = ['algorithms', 'demo'];
@@ -196,6 +225,74 @@ document.addEventListener('DOMContentLoaded', () => {
         return stubs;
     }
 
+    // Global demo runner used by click handlers and by the Pyodide init auto-run queue.
+    window.runDemo = async (runBtn, editor, output) => {
+        if (!window.Aether.pyodideInstance) return;
+
+        output.classList.remove('hidden');
+        output.classList.remove('error');
+        output.textContent = 'Preparing environment...';
+        runBtn.disabled = true;
+
+        let stdout = "";
+        window.Aether.pyodideInstance.setStdout({ batched: (msg) => { stdout += msg + "\n"; } });
+        window.Aether.pyodideInstance.setStderr({ batched: (msg) => { stdout += msg + "\n"; } });
+
+        try {
+            let codeToRun = editor.value;
+
+            const localModuleRe = /^(from|import)\s+(algorithms|demo)\b/m;
+            if (localModuleRe.test(codeToRun)) {
+                const moduleCode = buildLocalModuleCode(codeToRun, window.Aether.currentPackage);
+                const localMods = ['algorithms', 'demo'];
+                const lines = codeToRun.split('\n');
+                const filtered = [];
+                let inLocalImport = false;
+                for (const line of lines) {
+                    if (inLocalImport) {
+                        if (line.includes(')')) {
+                            inLocalImport = false;
+                        }
+                        continue;
+                    }
+                    const trimmed = line.trim();
+                    let skip = false;
+                    for (const mod of localMods) {
+                        if (trimmed.startsWith('from ' + mod + ' import ') || trimmed.startsWith('import ' + mod)) {
+                            skip = true;
+                            if (trimmed.includes('(') && !trimmed.includes(')')) {
+                                inLocalImport = true;
+                            }
+                            break;
+                        }
+                    }
+                    if (!skip) {
+                        filtered.push(line);
+                    }
+                }
+                codeToRun = moduleCode + '\n' + filtered.join('\n');
+            }
+
+            const { futureImports, cleanedCode } = extractFutureImports(codeToRun);
+            codeToRun = futureImports ? futureImports + '\n' + cleanedCode : cleanedCode;
+
+            await window.Aether.pyodideInstance.loadPackagesFromImports(codeToRun);
+
+            output.textContent = 'Running...';
+
+            const result = await window.Aether.pyodideInstance.runPythonAsync(codeToRun);
+            if (result !== undefined && result !== null) {
+                stdout += result + "\n";
+            }
+            output.textContent = stdout || "Done. (No output)";
+        } catch (err) {
+            output.classList.add('error');
+            output.textContent = stdout + "\n" + err.toString();
+        } finally {
+            runBtn.disabled = false;
+        }
+    };
+
     window.renderInteractiveDemos = function(containerId, items) {
         const container = document.getElementById(containerId);
         container.innerHTML = '';
@@ -213,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 title.textContent = item.name || 'Interactive Python Demo';
 
                 const btnGroup = document.createElement('div');
-                btnGroup.style.cssText = 'display: flex; gap: 8px; align-items: center;';
+                btnGroup.className = 'code-header-buttons';
 
                 const toggleBtn = document.createElement('button');
                 toggleBtn.className = 'source-toggle';
@@ -260,74 +357,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 const output = document.createElement('pre');
                 output.className = 'code-output hidden';
 
-                runBtn.addEventListener('click', async () => {
-                    if (!window.Aether.pyodideInstance) return;
-
-                    output.classList.remove('hidden');
-                    output.classList.remove('error');
-                    output.textContent = 'Preparing environment...';
-                    runBtn.disabled = true;
-
-                    let stdout = "";
-                    window.Aether.pyodideInstance.setStdout({ batched: (msg) => { stdout += msg + "\n"; } });
-                    window.Aether.pyodideInstance.setStderr({ batched: (msg) => { stdout += msg + "\n"; } });
-
-                    try {
-                        let codeToRun = editor.value;
-
-                        const localModuleRe = /^(from|import)\s+(algorithms|demo)\b/m;
-                        if (localModuleRe.test(codeToRun)) {
-                            const moduleCode = buildLocalModuleCode(codeToRun, window.Aether.currentPackage);
-                            const localMods = ['algorithms', 'demo'];
-                            const lines = codeToRun.split('\n');
-                            const filtered = [];
-                            let inLocalImport = false;
-                            for (const line of lines) {
-                                if (inLocalImport) {
-                                    if (line.includes(')')) {
-                                        inLocalImport = false;
-                                    }
-                                    continue;
-                                }
-                                const trimmed = line.trim();
-                                let skip = false;
-                                for (const mod of localMods) {
-                                    if (trimmed.startsWith('from ' + mod + ' import ') || trimmed.startsWith('import ' + mod)) {
-                                        skip = true;
-                                        if (trimmed.includes('(') && !trimmed.includes(')')) {
-                                            inLocalImport = true;
-                                        }
-                                        break;
-                                    }
-                                }
-                                if (!skip) {
-                                    filtered.push(line);
-                                }
-                            }
-                            codeToRun = moduleCode + '\n' + filtered.join('\n');
-                        }
-
-                        await window.Aether.pyodideInstance.loadPackagesFromImports(codeToRun);
-
-                        output.textContent = 'Running...';
-
-                        const result = await window.Aether.pyodideInstance.runPythonAsync(codeToRun);
-                        if (result !== undefined && result !== null) {
-                            stdout += result + "\n";
-                        }
-                        output.textContent = stdout || "Done. (No output)";
-                    } catch (err) {
-                        output.classList.add('error');
-                        output.textContent = stdout + "\n" + err.toString();
-                    } finally {
-                        runBtn.disabled = false;
-                    }
-                });
+                runBtn.addEventListener('click', () => window.runDemo(runBtn, editor, output));
 
                 card.appendChild(header);
                 card.appendChild(editor);
                 card.appendChild(output);
                 container.appendChild(card);
+
+                // Auto-run once Pyodide is ready; queue if still loading.
+                if (window.Aether.pyodideInstance) {
+                    window.runDemo(runBtn, editor, output);
+                } else {
+                    window.Aether.pendingInteractiveDemos = window.Aether.pendingInteractiveDemos || [];
+                    window.Aether.pendingInteractiveDemos.push({ runBtn, editor, output });
+                }
             });
         } else {
             container.innerHTML = '<p style="color:var(--text-muted)">No interactive demos provided.</p>';
@@ -491,6 +534,9 @@ plt.close('all')
 print("VIZIMG:" + img_data)
 `;
             }
+
+            const { futureImports, cleanedCode } = extractFutureImports(fullCode);
+            fullCode = futureImports ? futureImports + '\n' + cleanedCode : cleanedCode;
 
             // Load all packages detected from imports (numpy, scipy, pandas, etc.)
             await window.Aether.pyodideInstance.loadPackagesFromImports(fullCode);

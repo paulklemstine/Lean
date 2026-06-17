@@ -225,76 +225,77 @@ document.addEventListener('DOMContentLoaded', () => {
         return stubs;
     }
 
+    // Global demo runner used by click handlers and by the Pyodide init auto-run queue.
+    window.runDemo = async (runBtn, editor, output) => {
+        if (!window.Aether.pyodideInstance) return;
+
+        output.classList.remove('hidden');
+        output.classList.remove('error');
+        output.textContent = 'Preparing environment...';
+        runBtn.disabled = true;
+
+        let stdout = "";
+        window.Aether.pyodideInstance.setStdout({ batched: (msg) => { stdout += msg + "\n"; } });
+        window.Aether.pyodideInstance.setStderr({ batched: (msg) => { stdout += msg + "\n"; } });
+
+        try {
+            let codeToRun = editor.value;
+
+            const localModuleRe = /^(from|import)\s+(algorithms|demo)\b/m;
+            if (localModuleRe.test(codeToRun)) {
+                const moduleCode = buildLocalModuleCode(codeToRun, window.Aether.currentPackage);
+                const localMods = ['algorithms', 'demo'];
+                const lines = codeToRun.split('\n');
+                const filtered = [];
+                let inLocalImport = false;
+                for (const line of lines) {
+                    if (inLocalImport) {
+                        if (line.includes(')')) {
+                            inLocalImport = false;
+                        }
+                        continue;
+                    }
+                    const trimmed = line.trim();
+                    let skip = false;
+                    for (const mod of localMods) {
+                        if (trimmed.startsWith('from ' + mod + ' import ') || trimmed.startsWith('import ' + mod)) {
+                            skip = true;
+                            if (trimmed.includes('(') && !trimmed.includes(')')) {
+                                inLocalImport = true;
+                            }
+                            break;
+                        }
+                    }
+                    if (!skip) {
+                        filtered.push(line);
+                    }
+                }
+                codeToRun = moduleCode + '\n' + filtered.join('\n');
+            }
+
+            const { futureImports, cleanedCode } = extractFutureImports(codeToRun);
+            codeToRun = futureImports ? futureImports + '\n' + cleanedCode : cleanedCode;
+
+            await window.Aether.pyodideInstance.loadPackagesFromImports(codeToRun);
+
+            output.textContent = 'Running...';
+
+            const result = await window.Aether.pyodideInstance.runPythonAsync(codeToRun);
+            if (result !== undefined && result !== null) {
+                stdout += result + "\n";
+            }
+            output.textContent = stdout || "Done. (No output)";
+        } catch (err) {
+            output.classList.add('error');
+            output.textContent = stdout + "\n" + err.toString();
+        } finally {
+            runBtn.disabled = false;
+        }
+    };
+
     window.renderInteractiveDemos = function(containerId, items) {
         const container = document.getElementById(containerId);
         container.innerHTML = '';
-
-        const runDemo = async (runBtn, editor, output) => {
-            if (!window.Aether.pyodideInstance) return;
-
-            output.classList.remove('hidden');
-            output.classList.remove('error');
-            output.textContent = 'Preparing environment...';
-            runBtn.disabled = true;
-
-            let stdout = "";
-            window.Aether.pyodideInstance.setStdout({ batched: (msg) => { stdout += msg + "\n"; } });
-            window.Aether.pyodideInstance.setStderr({ batched: (msg) => { stdout += msg + "\n"; } });
-
-            try {
-                let codeToRun = editor.value;
-
-                const localModuleRe = /^(from|import)\s+(algorithms|demo)\b/m;
-                if (localModuleRe.test(codeToRun)) {
-                    const moduleCode = buildLocalModuleCode(codeToRun, window.Aether.currentPackage);
-                    const localMods = ['algorithms', 'demo'];
-                    const lines = codeToRun.split('\n');
-                    const filtered = [];
-                    let inLocalImport = false;
-                    for (const line of lines) {
-                        if (inLocalImport) {
-                            if (line.includes(')')) {
-                                inLocalImport = false;
-                            }
-                            continue;
-                        }
-                        const trimmed = line.trim();
-                        let skip = false;
-                        for (const mod of localMods) {
-                            if (trimmed.startsWith('from ' + mod + ' import ') || trimmed.startsWith('import ' + mod)) {
-                                skip = true;
-                                if (trimmed.includes('(') && !trimmed.includes(')')) {
-                                    inLocalImport = true;
-                                }
-                                break;
-                            }
-                        }
-                        if (!skip) {
-                            filtered.push(line);
-                        }
-                    }
-                    codeToRun = moduleCode + '\n' + filtered.join('\n');
-                }
-
-                const { futureImports, cleanedCode } = extractFutureImports(codeToRun);
-                codeToRun = futureImports ? futureImports + '\n' + cleanedCode : cleanedCode;
-
-                await window.Aether.pyodideInstance.loadPackagesFromImports(codeToRun);
-
-                output.textContent = 'Running...';
-
-                const result = await window.Aether.pyodideInstance.runPythonAsync(codeToRun);
-                if (result !== undefined && result !== null) {
-                    stdout += result + "\n";
-                }
-                output.textContent = stdout || "Done. (No output)";
-            } catch (err) {
-                output.classList.add('error');
-                output.textContent = stdout + "\n" + err.toString();
-            } finally {
-                runBtn.disabled = false;
-            }
-        };
 
         if (items && items.length > 0) {
             items.forEach(item => {
