@@ -17,6 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!window.Aether.currentPackage || window.Aether.currentPackageFilename !== filename) {
                 if (window.loadPackage) window.loadPackage(filename);
             }
+        } else {
+            // No hash: return to welcome screen so back/forward works like normal
+            // page navigation.
+            if (window.showWelcome) window.showWelcome();
         }
     });
 
@@ -46,12 +50,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Show the welcome screen and clear the package hash.
+    window.showWelcome = function() {
+        welcomeScreen.classList.remove('hidden');
+        packageView.classList.add('hidden');
+        const titleEl = document.getElementById('pkg-title');
+        if (titleEl) titleEl.textContent = '';
+        window.Aether.currentPackage = null;
+        window.Aether.currentPackageFilename = null;
+    };
+
     window.loadPackage = async function(filename) {
-        // Update URL hash so the package has a shareable link
+        // Update URL hash via pushState so each package is a real history entry.
         const newHash = '#pkg=' + encodeURIComponent(filename);
         if (window.location.hash !== newHash) {
-            // Use replaceState to avoid creating a history entry for every click
-            history.replaceState(null, '', newHash);
+            history.pushState(null, '', newHash);
         }
 
         // Check cache first

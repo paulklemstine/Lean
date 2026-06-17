@@ -2160,4 +2160,32 @@
             animating = true;
             requestAnimationFrame(render);
         }
+
+        // Stop animation after a short warmup so it doesn't consume GPU/CPU
+        // while the user is reading a research package and scrolling the page.
+        // The static rendered frame remains visible and interactive.
+        const WARMUP_FRAMES = 600; // ~10 seconds at 60fps
+        let warmupFrameCount = 0;
+        const originalRender = render;
+        render = function() {
+            if (!animating) return;
+            warmupFrameCount++;
+            if (warmupFrameCount >= WARMUP_FRAMES && welcomeScreen.classList.contains('hidden')) {
+                animating = false;
+                return;
+            }
+            originalRender();
+        };
+
+        // Re-enable animation briefly when returning to the welcome screen
+        // so the graph is alive again.
+        const restartObserver = new MutationObserver(() => {
+            if (!welcomeScreen.classList.contains('hidden')) {
+                animating = true;
+                warmupFrameCount = 0;
+                resize();
+                requestAnimationFrame(render);
+            }
+        });
+        restartObserver.observe(welcomeScreen, { attributes: true, attributeFilter: ['class'] });
     })();

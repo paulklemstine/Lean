@@ -17,6 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!window.Aether.currentPackage || window.Aether.currentPackageFilename !== filename) {
                 if (window.loadPackage) window.loadPackage(filename);
             }
+        } else {
+            // No hash: return to welcome screen so back/forward works like normal
+            // page navigation.
+            if (window.showWelcome) window.showWelcome();
         }
     });
 
@@ -46,12 +50,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Show the welcome screen and clear the package hash.
+    window.showWelcome = function() {
+        welcomeScreen.classList.remove('hidden');
+        packageView.classList.add('hidden');
+        const titleEl = document.getElementById('pkg-title');
+        if (titleEl) titleEl.textContent = '';
+        window.Aether.currentPackage = null;
+        window.Aether.currentPackageFilename = null;
+    };
+
     window.loadPackage = async function(filename) {
-        // Update URL hash so the package has a shareable link
+        // Update URL hash via pushState so each package is a real history entry.
         const newHash = '#pkg=' + encodeURIComponent(filename);
         if (window.location.hash !== newHash) {
-            // Use replaceState to avoid creating a history entry for every click
-            history.replaceState(null, '', newHash);
+            history.pushState(null, '', newHash);
         }
 
         // Check cache first
@@ -192,11 +205,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const visualizations = Array.isArray(data.visualizations) ? data.visualizations : [];
         renderVisualizations('content-visualizations', visualizations);
 
-        // Algorithms: use 'code' field (some older packages have 'pseudocode' too)
+        // Algorithms: render both pseudocode and Python source implementations
         const algorithms = Array.isArray(data.algorithms) ? data.algorithms : [];
-        const algoField = algorithms.some(a => a.pseudocode && a.pseudocode.trim())
-            ? 'pseudocode' : 'code';
-        renderCodeBlocks('content-algorithms', algorithms, algoField);
+        renderCodeBlocks('content-algorithms', algorithms);
         if (window.renderInteractiveDemos) {
             const demos = Array.isArray(data.demos) ? data.demos : [];
             window.renderInteractiveDemos('content-demos', demos);
@@ -291,14 +302,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     const header = document.createElement('div');
                     header.className = 'code-header';
-                    header.style.cssText = 'display: flex; justify-content: space-between; align-items: center;';
 
                     const nameSpan = document.createElement('span');
                     nameSpan.className = 'code-title';
                     nameSpan.textContent = file.name;
 
                     const headerRight = document.createElement('div');
-                    headerRight.style.cssText = 'display: flex; gap: 12px; align-items: center;';
+                    headerRight.className = 'code-header-buttons';
 
                     const meta = document.createElement('span');
                     meta.style.cssText = 'color: var(--text-muted); font-size: 0.85em;';
@@ -517,7 +527,7 @@ document.addEventListener('DOMContentLoaded', () => {
             title.textContent = item.name || `Visualization ${idx + 1}`;
 
             const btnGroup = document.createElement('div');
-            btnGroup.style.cssText = 'display: flex; gap: 8px; align-items: center;';
+            btnGroup.className = 'code-header-buttons';
 
             const toggleBtn = document.createElement('button');
             toggleBtn.className = 'source-toggle';
@@ -536,15 +546,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const genBtn = document.createElement('button');
             genBtn.className = 'run-btn viz-generate-btn';
-            if (!window.Aether.pyodideInstance) {
-                genBtn.disabled = true;
-                genBtn.textContent = 'Loading Engine...';
-            } else if (!resolvedCode && item.code_file) {
-                genBtn.disabled = true;
-                genBtn.textContent = 'Loading Code...';
-            } else {
-                genBtn.textContent = 'Generate';
-            }
+            genBtn.textContent = 'Regenerate';
 
             btnGroup.appendChild(toggleBtn);
             btnGroup.appendChild(genBtn);
@@ -581,7 +583,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         editor.value = code;
                         resolvedCode = code;
                         genBtn.disabled = !code || !code.trim();
-                        genBtn.textContent = code ? 'Generate' : 'Code Unavailable';
+                        if (!code || !code.trim()) {
+                            genBtn.textContent = 'Code Unavailable';
+                        }
                         autoSizeEditor();
                     })
                     .catch(err => {
@@ -592,7 +596,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             editor.value = modCode;
                             resolvedCode = modCode;
                             genBtn.disabled = false;
-                            genBtn.textContent = 'Generate';
                             autoSizeEditor();
                         } else {
                             genBtn.disabled = true;
@@ -602,21 +605,34 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const outputContainer = document.createElement('div');
-            outputContainer.className = 'gallery-img-container';
-            outputContainer.style.cssText = 'min-height: 100px; display: flex; align-items: center; justify-content: center; background: var(--bg-elevated); border-radius: 8px; margin-top: 8px;';
-            outputContainer.innerHTML = '<div class="viz-placeholder">Click Generate to create visualization</div>';
+            outputContainer.className = 'gallery-img-container viz-output-container';
+            outputContainer.innerHTML = '<div class="viz-loading">Running visualization...</div>';
 
-            genBtn.addEventListener('click', () => {
+            const runViz = () => {
                 if (window.runVisualization) {
                     const codeToRun = editor.value;
-                    // Guard against filename-only code (not runnable Python)
                     if (!codeToRun || !codeToRun.trim() || isFilename(codeToRun.trim())) {
                         outputContainer.innerHTML = '<div class="viz-placeholder" style="color: var(--text-muted);">Source code not available for this visualization</div>';
                         return;
                     }
                     window.runVisualization(codeToRun, outputContainer, genBtn);
                 }
-            });
+            };
+
+            genBtn.addEventListener('click', runViz);
+
+            // Auto-run when Pyodide is ready; if already loaded, run immediately.
+            if (window.Aether.pyodideInstance) {
+                runViz();
+            } else {
+                window.Aether.pendingVisualizations = window.Aether.pendingVisualizations || [];
+                window.Aether.pendingVisualizations.push({
+                    code: editor.value,
+                    outputContainer,
+                    buttonEl: genBtn,
+                    __autoRun: runViz,
+                });
+            }
 
             card.appendChild(header);
             card.appendChild(desc);
@@ -736,7 +752,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     srcdoc = demoHtml.replace('</html>', autoSizer + '</html>');
                 }
             } else {
-                srcdoc = `<!DOCTYPE html><html><head><style>body{margin:0;padding:16px;font-family:system-ui,sans-serif;color:#222}</style></head><body>${demoHtml}${autoSizer}</body></html>`;
+                srcdoc = `<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><style>body{margin:0;padding:16px;font-family:system-ui,sans-serif;color:#222}</style></head><body>${demoHtml}${autoSizer}</body></html>`;
             }
 
             const iframe = document.createElement('iframe');
@@ -754,7 +770,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function renderCodeBlocks(containerId, items, codeField) {
+    function renderCodeBlocks(containerId, items) {
         const container = document.getElementById(containerId);
         container.innerHTML = '';
 
@@ -765,18 +781,96 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             return true;
         });
+
         if (validItems.length > 0) {
-            validItems.forEach(item => {
+            validItems.forEach((item, idx) => {
                 const card = document.createElement('div');
                 card.className = 'code-card';
+                card.style.cssText = 'margin-bottom: 24px; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; background: var(--bg-card); display: flex; flex-direction: column;';
+                
+                // Explanations/Description
+                let explanationHtml = '';
+                const desc = (item.description || item.explanation || '').replace(/\\n/g, '\n');
+                if (desc.trim()) {
+                    explanationHtml = `<div class="algo-explanation" style="padding: 16px; border-bottom: 1px solid var(--border-color); color: var(--text-main); font-size: 0.95rem; line-height: 1.6; background: var(--bg-main); white-space: pre-line;">${marked.parse(desc)}</div>`;
+                }
+
+                // Check what code fields we have
+                const pseudocode = (item.pseudocode || '').replace(/\\n/g, '\n');
+                const code = (item.code || '').replace(/\\n/g, '\n');
+
+                let tabsHtml = '';
+                let blocksHtml = '';
+
+                if (pseudocode && code) {
+                    // Show tabs to switch between Pseudocode and Python Code
+                    tabsHtml = `
+                        <div class="algo-tabs" style="display: flex; background: var(--bg-elevated); border-bottom: 1px solid var(--border-color); padding: 0 16px;">
+                            <button class="algo-tab-btn active" data-target="pseudocode-${idx}" style="background: none; border: none; padding: 12px 16px; color: var(--text-main); border-bottom: 2px solid var(--primary-color, #7c3aed); font-weight: 600; cursor: pointer; font-size: 0.85rem;">Pseudocode</button>
+                            <button class="algo-tab-btn" data-target="python-${idx}" style="background: none; border: none; padding: 12px 16px; color: var(--text-muted); cursor: pointer; font-size: 0.85rem;">Python Code</button>
+                        </div>
+                    `;
+                    blocksHtml = `
+                        <div class="algo-blocks">
+                            <div id="pseudocode-${idx}" class="algo-block-content">
+                                <pre style="margin:0; border-radius:0; border:none;"><code class="language-text">${window.escapeHtml(pseudocode)}</code></pre>
+                            </div>
+                            <div id="python-${idx}" class="algo-block-content" style="display: none;">
+                                <pre style="margin:0; border-radius:0; border:none;"><code class="language-python">${window.escapeHtml(code)}</code></pre>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    const content = pseudocode || code || '';
+                    const langClass = pseudocode ? 'language-text' : 'language-python';
+                    blocksHtml = `
+                        <div class="algo-blocks">
+                            <pre style="margin:0; border-radius:0; border:none;"><code class="${langClass}">${window.escapeHtml(content)}</code></pre>
+                        </div>
+                    `;
+                }
+
                 card.innerHTML = `
-                    <div class="code-header">
-                        <span class="code-title">${item.name || 'Untitled'}</span>
+                    <div class="code-header" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--bg-elevated); border-bottom: 1px solid var(--border-color);">
+                        <span class="code-title" style="font-weight: 600; color: var(--text-main); font-size: 1rem;">${item.name || 'Untitled Algorithm'}</span>
                     </div>
-                    <pre><code>${window.escapeHtml(item[codeField] || '')}</code></pre>
+                    ${explanationHtml}
+                    ${tabsHtml}
+                    ${blocksHtml}
                 `;
+
+                // Add tab event listeners if we have tabs
+                if (pseudocode && code) {
+                    const tabBtns = card.querySelectorAll('.algo-tab-btn');
+                    tabBtns.forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            // Deactivate all tabs in this card
+                            tabBtns.forEach(b => {
+                                b.classList.remove('active');
+                                b.style.color = 'var(--text-muted)';
+                                b.style.borderBottom = 'none';
+                            });
+                            // Activate clicked tab
+                            btn.classList.add('active');
+                            btn.style.color = 'var(--text-main)';
+                            btn.style.borderBottom = '2px solid var(--primary-color, #7c3aed)';
+
+                            // Toggle content block
+                            const targetId = btn.getAttribute('data-target');
+                            card.querySelectorAll('.algo-block-content').forEach(block => {
+                                block.style.display = block.id === targetId ? 'block' : 'none';
+                            });
+                        });
+                    });
+                }
+
                 container.appendChild(card);
             });
+
+            // Syntax highlight if Prism is available
+            if (window.Prism) {
+                container.querySelectorAll('code').forEach(el => Prism.highlightElement(el));
+            }
         } else {
             container.innerHTML = '<p style="color:var(--text-muted)">No data provided for this section.</p>';
         }
