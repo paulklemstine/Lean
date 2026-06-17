@@ -703,6 +703,15 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             except Exception as e:
                 print(f"[🌟] Breakthrough tagging failed: {e}")
 
+    # Convert dispatch_queued jobs to retry_queued so they survive pruning and
+    # can be retried in the next tick when Aristotle has capacity.
+    for pid, job in list(extractor.inflight.items()):
+        if job.status == "dispatch_queued":
+            job.status = "retry_queued"
+            job.retry_queued_time = time.time()
+            print(f"[Tick] Converted dispatch-queued job {job.job_id[:8]} to retry-queued")
+    extractor._save_inflight()
+
     # Prune completed/failed/integrated/rejected jobs from inflight to prevent unbounded growth
     stale_keys = [pid for pid, j in extractor.inflight.items()
                   if j.status in ("completed", "failed", "integrated", "rejected")]
@@ -1030,9 +1039,12 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     extractor._release_direction(job)
                     print(f"[Tick] Dispatch failed for {job.concept.title[:60]}, direction released")
             except Exception as e:
-                if job is not None and extractor._is_queue_full_error(e):
+                if job is not None and (extractor._is_queue_full_error(e) or job.status == "dispatch_queued"):
                     print(f"[Tick] Aristotle queue full; releasing direction for {job.job_id[:8]} and stopping dispatch")
                     extractor._release_direction_back_to_available(job)
+                    job.status = "retry_queued"
+                    job.retry_queued_time = time.time()
+                    extractor.inflight[job.job_id] = job
                     queue_full = True
                 elif job is not None:
                     extractor._release_direction(job)
@@ -1052,13 +1064,23 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                     extractor.inflight[job.project_id] = job
                     print(f"[Tick] Dispatched [NOVELTY] {job.project_id[:8]}: {job.concept.title[:60]}")
                     _signal_dashboard_update(job.project_id[:8], "dispatched_novelty")
+                elif job.status == "dispatch_queued":
+                    print(f"[Tick] Aristotle queue full; releasing direction for {job.job_id[:8]} and stopping dispatch")
+                    extractor._release_direction_back_to_available(job)
+                    job.status = "retry_queued"
+                    job.retry_queued_time = time.time()
+                    extractor.inflight[job.job_id] = job
+                    queue_full = True
                 else:
                     extractor._release_direction(job)
                     print(f"[Tick] Dispatch failed for {job.concept.title[:60]}, direction released")
             except Exception as e:
-                if job is not None and extractor._is_queue_full_error(e):
+                if job is not None and (extractor._is_queue_full_error(e) or job.status == "dispatch_queued"):
                     print(f"[Tick] Aristotle queue full; releasing direction for {job.job_id[:8]} and stopping dispatch")
                     extractor._release_direction_back_to_available(job)
+                    job.status = "retry_queued"
+                    job.retry_queued_time = time.time()
+                    extractor.inflight[job.job_id] = job
                     queue_full = True
                 elif job is not None:
                     extractor._release_direction(job)

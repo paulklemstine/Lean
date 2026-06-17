@@ -712,12 +712,17 @@ class KnowledgeExtractor:
                 print(f"[Dispatch] FAILED: {e}")
         except Exception as e:
             self.inflight.pop(job.job_id, None)
-            if hasattr(self, 'locked_titles') and job.concept:
-                self.locked_titles.discard(job.concept.title)
             self._save_inflight()
-            job.status = "failed"
-            job.error_message = f"Dispatch failed: {e}"
-            print(f"[Dispatch] FAILED: {e}")
+            if self._is_queue_full_error(e):
+                job.status = "dispatch_queued"
+                job.error_message = f"Queue full: {e}"
+                print(f"[Dispatch] QUEUE FULL: {e}")
+            else:
+                if hasattr(self, 'locked_titles') and job.concept:
+                    self.locked_titles.discard(job.concept.title)
+                job.status = "failed"
+                job.error_message = f"Dispatch failed: {e}"
+                print(f"[Dispatch] FAILED: {e}")
 
         return job
 
@@ -762,12 +767,19 @@ class KnowledgeExtractor:
                 pass  # Don't break dispatch on log errors
         except Exception as e:
             self.inflight.pop(job.job_id, None)
-            if hasattr(self, 'locked_titles') and job.concept:
-                self.locked_titles.discard(job.concept.title)
             self._save_inflight()
-            job.status = "failed"
-            job.error_message = f"Dispatch failed: {e}"
-            print(f"[Dispatch] FAILED: {e}")
+            if self._is_queue_full_error(e):
+                # Leave the job in a recoverable state so the caller can release
+                # the direction back to available and retry later.
+                job.status = "dispatch_queued"
+                job.error_message = f"Queue full: {e}"
+                print(f"[Dispatch] QUEUE FULL: {e}")
+            else:
+                if hasattr(self, 'locked_titles') and job.concept:
+                    self.locked_titles.discard(job.concept.title)
+                job.status = "failed"
+                job.error_message = f"Dispatch failed: {e}"
+                print(f"[Dispatch] FAILED: {e}")
 
         return job
 
