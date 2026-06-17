@@ -1,268 +1,474 @@
-# Tangled Hierarchies: Proof Systems That Reference Their Own Soundness
+# Flag Complexes and the Clique Recognition Theorem
+
+*A formal treatment of the equivalence between flag complexes and clique
+complexes of simple graphs*
+
+---
 
 ## Abstract
 
-We formalize provability logic (GL) in Lean 4 using Kripke semantics and establish a suite of structural theorems about self-referential proof systems. Starting from the foundational GL frame machinery — modal formulas, forcing relations, and the semantic versions of Löb's theorem and Gödel's second incompleteness theorem — we deepen the theory in three directions: (1) a precise tangling dichotomy showing that every sound world with successors has unprovable soundness formulas, (2) a bridge theorem establishing that GL frames are exactly well-founded strict partial orders, and (3) closure properties including disjoint union preservation and sub-frame closure. All results are machine-verified with no axioms beyond `propext`, `Classical.choice`, and `Quot.sound`.
+The clique complex (equivalently, the Vietoris–Rips complex) of a simple graph
+is the abstract simplicial complex whose faces are the finite cliques of the
+graph. A simplicial complex is called *flag* (or a *clique complex* in the
+abstract) when every finite vertex set whose pairs are all edges of the complex's
+1-skeleton is itself a face — that is, when the complex withholds no simplex that
+its 1-skeleton permits. We give a self-contained development of the basic theory
+of flag complexes and prove the central structural results: (A) the clique
+complex of any simple graph is flag; (B) the 1-skeleton of a clique complex
+recovers exactly the edges of the original graph; and the converse direction (D)
+that any flag complex equals the clique complex of its own 1-skeleton.
+Combining these yields the **Recognition Theorem** (E): an abstract simplicial
+complex is flag if and only if it equals the clique complex of its own
+1-skeleton. The development is fully formalized and machine-checked; here we
+present the mathematics, the definitions, complete proof sketches, the
+underlying algorithms for working with clique complexes computationally, and a
+discussion of applications to topological data analysis, distributed sensing,
+and geometric group theory.
 
-**Keywords**: provability logic, Kripke semantics, Löb's theorem, incompleteness, tangled hierarchy, GL frames, well-founded orders
+**Keywords:** flag complex, clique complex, Vietoris–Rips complex, abstract
+simplicial complex, 1-skeleton, simple graph, simplicial topology.
+
+**MSC 2020:** 05E45 (Combinatorial aspects of simplicial complexes), 05C69
+(cliques), 55U10 (simplicial sets and complexes), 57Q05 (PL-topology).
 
 ---
 
 ## 1. Introduction
 
-Gödel's incompleteness theorems (1931) established fundamental limits on what formal systems can prove about themselves. The second incompleteness theorem, in particular, shows that any consistent, sufficiently strong system cannot prove its own consistency. Löb's theorem (1955) provides a precise characterization: in Peano Arithmetic, if □(□φ → φ) is provable, then □φ is provable — where □ denotes the provability predicate.
+There is a fundamental and recurring move in modern mathematics: replace a
+*discrete* object — a graph — with a *geometric* one — a simplicial complex —
+so that the tools of topology become available. The cleanest such bridge is the
+**clique complex** (also called the **flag complex** or, in the metric setting,
+the **Vietoris–Rips complex**): fill in a simplex on a set of vertices exactly
+when those vertices are pairwise adjacent. This single construction underlies
+topological data analysis, the geometry of CAT(0) cube complexes, the study of
+right-angled Artin and Coxeter groups, and the homotopy theory of independence
+and matching complexes.
 
-Solovay's completeness theorem (1976) established that the modal logic GL (Gödel-Löb logic) exactly captures the behavior of the provability predicate in PA. The Kripke semantics for GL uses frames (W, R) where R is transitive and converse well-founded — the so-called **GL frames**.
+A complex built this way has a striking property: it is determined entirely by
+its 1-skeleton. No information lives above the edges; every higher face is forced
+by the edges below it. Complexes with this property are exactly the *flag*
+complexes. The purpose of this paper is to make that statement precise and to
+prove the full equivalence in both directions, working entirely from first
+principles over an arbitrary (possibly infinite) vertex type.
 
-In this work, we formalize GL frames, their semantics, and key structural theorems in Lean 4, extending the foundational results from the Aether Catalog (`Catalog/Logic/TangledHierarchies.lean`). Our contributions include:
-
-1. A complete formal development of GL frame semantics with 12+ verified theorems
-2. The **tangling dichotomy theorem**: a sound world either is terminal (proving everything vacuously) or has unprovable soundness formulas — with no middle ground
-3. An **order-theoretic bridge**: GL frames are exactly well-founded strict partial orders
-4. **Closure properties**: GL frames are closed under disjoint union
-5. A **concrete example**: a three-world GL frame illustrating the hierarchy
-
-### Catalog References
-
-This work extends:
-- `Catalog/Logic/TangledHierarchies.lean`: foundational GL frame development
-- `fixed_point_construction_bound` (`Bridges/EMLClosureCore.lean`): fixed-point analysis
-- `tangling_dichotomy` (`Catalog/Logic/TangledHierarchies.lean`): original dichotomy result
-- `random_point_soundness_bound` (`Algebra/RootBound.lean`): soundness bounds
+The contribution is twofold. Mathematically, we isolate the minimal hypotheses
+under which the flag/clique equivalence holds and present clean proofs.
+Foundationally, every definition and theorem below has been formalized and
+verified in a proof assistant, so the results are stated with the exactness that
+formalization demands — in particular, careful attention to finiteness,
+distinctness of vertices, and the precise membership conditions for faces.
 
 ---
 
 ## 2. Definitions
 
-### 2.1 Modal Formulas
+Throughout, `α` is an arbitrary type of *vertices*, with decidable equality
+where required for the constructions. We work with `Finset α`, the type of finite
+subsets of `α`, and `Set (Finset α)`, sets of such finite subsets.
 
-**Definition 2.1** (Modal Formula). The language of modal formulas over a set α of propositional variables is generated by:
-```
-φ ::= p | ⊥ | φ → ψ | □φ
-```
-where p ∈ α. We define abbreviations:
-- ¬φ := φ → ⊥
-- ⊤ := ¬⊥
-- ◇φ := ¬□¬φ
-- Con := ¬□⊥ (consistency)
-- □ⁿφ := □□···□φ (n-fold box)
+### 2.1 Abstract simplicial complexes
 
-**Definition 2.2** (Iterated Consistency). The iterated consistency hierarchy:
-- Con⁰ := ⊤
-- Conⁿ⁺¹ := ¬□¬Conⁿ
+**Definition 2.1 (Abstract simplicial complex).** An *abstract simplicial
+complex* (ASC) on `α` is a set `faces ⊆ Finset α` of finite vertex sets,
+called *faces*, satisfying:
 
-### 2.2 GL Frames
+1. **Downward closure.** For every `s ∈ faces` and every `t ⊆ s`, we have
+   `t ∈ faces`.
+2. **Singleton presence.** For every vertex `a`, if `a` belongs to some face
+   `s ∈ faces`, then the singleton `{a} ∈ faces`.
 
-**Definition 2.3** (GL Frame). A GL frame is a tuple (W, R) where:
-- W is a type (the set of worlds)
-- R : W → W → Prop is the accessibility relation
-- R is transitive: R(u,v) ∧ R(v,w) → R(u,w)
-- R is converse well-founded: WellFounded(Function.swap R)
+The first axiom is the structural heart of the definition: a face cannot exist
+without all of its sub-faces. The second is a normalization convention ensuring
+the vertex set of the complex is itself recorded as 0-dimensional faces; it
+follows in fact from downward closure (since `{a} ⊆ s`) but is stated explicitly
+for convenience. The *dimension* of a face `s` is `|s| − 1`.
 
-**Definition 2.4** (Forcing). Given a GL frame M = (W,R), a valuation V : α → W → Prop, and a world w ∈ W:
-- w ⊩ p iff V(p)(w)
-- w ⊩ ⊥ iff False
-- w ⊩ φ → ψ iff (w ⊩ φ) → (w ⊩ ψ)
-- w ⊩ □φ iff ∀v, R(w,v) → v ⊩ φ
+Note that the empty set is a face of any nonempty complex (it is a subset of any
+face), and a complex may be empty.
 
-**Definition 2.5** (World Soundness). A world w is sound if for all valuations V and formulas φ, w ⊩ □φ → φ.
+### 2.2 The 1-skeleton
 
-**Definition 2.6** (Tangled System). A tangled system consists of a GL frame M, a distinguished world std ∈ M.W, and a proof that std is sound.
+**Definition 2.2 (1-skeleton).** The *1-skeleton* of an ASC `K`, written
+`oneSkel K`, is the simple graph on vertex type `α` in which distinct vertices
+`a` and `b` are adjacent precisely when the pair `{a, b}` is a face of `K`:
 
-### 2.3 R-Depth and Sub-frames
+> `(oneSkel K).Adj a b ⟺ a ≠ b ∧ {a, b} ∈ K.faces`.
 
-**Definition 2.7** (R-depth). The R-depth of a world w, defined by well-founded recursion:
-- rdepth(w) = 0 if w has no R-successors
-- rdepth(w) = 1 + rdepth(choose(∃v, R(w,v))) otherwise
+This is a genuine simple graph: the adjacency relation is
 
-**Definition 2.8** (Sub-frame). For a world w in GL frame M, the sub-frame M.subframe(w) has worlds {v : M.W | R(w,v)} with the restricted R.
+- **symmetric**, because `{a, b} = {b, a}` as finite sets, and
+- **irreflexive**, because the defining condition requires `a ≠ b`.
+
+Formally, `oneSkel K` is obtained as the symmetric–irreflexive closure
+(`fromRel`) of the relation `a ↦ b ↦ {a, b} ∈ K.faces`. The characterization
+above (denoted `oneSkel_adj`) is the working interface to the definition.
+
+### 2.3 The clique complex of a graph
+
+**Definition 2.3 (Clique complex).** Let `G` be a simple graph on `α`. Its
+*clique complex* `cliqueComplex G` is the ASC whose faces are the finite cliques
+of `G`:
+
+> `s ∈ (cliqueComplex G).faces ⟺ (s is finite) ∧ (∀ a, b ∈ s, a ≠ b → G.Adj a b)`.
+
+Here a *clique* is a vertex set all of whose distinct pairs are adjacent. (The
+finiteness clause is automatic for `s : Finset α`, but is recorded as part of
+the membership predicate so that the definition reads correctly when faces are
+viewed inside `Set (Finset α)`.)
+
+**Proposition 2.4.** `cliqueComplex G` is a well-defined abstract simplicial
+complex.
+
+*Proof.* Downward closure: if `s` is a clique and `t ⊆ s`, then any distinct
+pair in `t` is a distinct pair in `s`, hence adjacent; so `t` is a clique.
+Singleton presence: a singleton `{a}` is vacuously a clique (it contains no
+distinct pair), so it is always a face. ∎
+
+### 2.4 The flag property
+
+**Definition 2.5 (Flag complex).** An ASC `K` is *flag*, written `IsFlag K`,
+when every finite vertex set whose distinct pairs are all edges of the
+1-skeleton is itself a face:
+
+> `IsFlag K ⟺ ∀ s : Finset α, (∀ a, b ∈ s, a ≠ b → (oneSkel K).Adj a b) → s ∈ K.faces`.
+
+Intuitively, a flag complex never contains a "hollow" simplex: if the entire
+edge-boundary of a potential simplex is present in the 1-skeleton, the simplex
+itself must be filled in. Flagness is precisely the assertion that *the complex
+contains every clique of its own 1-skeleton*.
 
 ---
 
 ## 3. Main Results
 
-### 3.1 GL Frame Irreflexivity
+We now state and prove the structural theorems. The labels (A)–(E) match the
+formalized statements.
 
-**Theorem 3.1** (gl_irrefl). For any GL frame M and world w: ¬R(w,w).
+### 3.1 Clique complexes are flag
 
-*Proof sketch*: A self-loop w R w contradicts converse well-foundedness. Formally, WellFounded.has_min applied to {w} produces a minimal element, which cannot have w as a predecessor — but w R w provides exactly that contradiction. □
+**Theorem A (`cliqueComplex_isFlag`).** For every simple graph `G`, the complex
+`cliqueComplex G` is flag.
 
-**Corollary 3.2** (gl_asymm). For any GL frame M: R(w,v) → ¬R(v,w).
+*Proof sketch.* Let `s` be a finite vertex set all of whose distinct pairs are
+edges of `oneSkel (cliqueComplex G)`. We must show `s` is a face, i.e. a clique
+of `G`. Fix distinct `a, b ∈ s`. By hypothesis `(oneSkel (cliqueComplex G)).Adj a b`,
+which by `oneSkel_adj` means `a ≠ b` and `{a, b} ∈ (cliqueComplex G).faces`.
+But membership of `{a, b}` in the clique complex means exactly that its two
+distinct elements `a, b` are adjacent in `G`. Hence `G.Adj a b`. Since `a, b`
+were arbitrary distinct elements of `s`, the set `s` is a clique of `G`, so
+`s ∈ (cliqueComplex G).faces`. ∎
 
-*Proof*: If R(w,v) and R(v,w), then by transitivity R(w,w), contradicting Theorem 3.1. □
+The proof is short precisely because the flag property and the clique-complex
+membership condition are, at the level of pairs, the *same* condition relayed
+through the 1-skeleton. This is the structural reason flagness is automatic for
+clique complexes.
 
-### 3.2 Löb's Theorem (Semantic Version)
+### 3.2 The 1-skeleton recovers the edges
 
-**Theorem 3.3** (loeb_semantic). In any GL frame M with valuation V, for any formula φ and world w: if w ⊩ □(□φ → φ), then w ⊩ □φ.
+**Theorem B (`clique_pair_iff`).** For distinct vertices `a ≠ b` and any graph
+`G`,
 
-*Proof sketch*: We prove ∀v, R(w,v) → v ⊩ φ by well-founded induction on the converse of R. Given v with R(w,v), the inductive hypothesis gives ∀u, R(v,u) → u ⊩ φ (since R(w,u) by transitivity). Thus v ⊩ □φ, and the hypothesis w ⊩ □(□φ → φ) applied to v gives v ⊩ □φ → φ, hence v ⊩ φ. □
+> `{a, b} ∈ (cliqueComplex G).faces ⟺ G.Adj a b`.
 
-**Corollary 3.4** (loeb_valid). The Löb formula □(□φ → φ) → □φ is valid in every GL frame.
+*Proof sketch.* (⇒) If `{a, b}` is a face, its distinct elements `a, b` are
+adjacent by the clique condition. (⇐) If `G.Adj a b`, then the only distinct
+pairs in `{a, b}` are `(a, b)` and `(b, a)`, both adjacent (using symmetry of
+`G`), so `{a, b}` is a clique, hence a face. ∎
 
-### 3.3 Second Incompleteness Theorem
+**Corollary 3.1.** The 1-skeleton of `cliqueComplex G` is `G` itself (as an
+adjacency relation): `(oneSkel (cliqueComplex G)).Adj a b ⟺ G.Adj a b`. Indeed,
+by `oneSkel_adj` the left side is `a ≠ b ∧ {a,b} ∈ (cliqueComplex G).faces`,
+which by Theorem B equals `a ≠ b ∧ G.Adj a b`, and this is just `G.Adj a b`
+since adjacency already forces `a ≠ b`.
 
-**Theorem 3.5** (second_incompleteness_semantic). If w ⊩ □⊥ → ⊥ (soundness for ⊥) and w ⊭ ⊥ (consistency), then w ⊭ □(□⊥ → ⊥).
+Theorem B is the fidelity guarantee: the clique-complex construction neither
+invents nor destroys edges, so the round trip *graph → complex → 1-skeleton*
+returns the original graph.
 
-*Proof*: Suppose w ⊩ □(□⊥ → ⊥). By Löb's theorem (with φ = ⊥), w ⊩ □⊥. By soundness, w ⊩ ⊥, contradicting consistency. □
+### 3.3 A note on singletons
 
-### 3.4 The Tangling Dichotomy
+**Theorem C (`IsFlag.singleton_mem`).** For any flag complex `K` and any vertex
+`a` with `{a} ∈ K.faces`, the flag property imposes no further constraint on
+`{a}`.
 
-**Theorem 3.6** (tangling_dichotomy_ext). If w is sound, then either:
-1. ¬∃v, R(w,v) (w is terminal), or
-2. ∃V, ∃φ, ¬(w ⊩ □(□φ → φ)) (w has an unprovable soundness formula).
+*Remark.* This statement is recorded as a formal triviality (its conclusion is
+`True`). Its content is conceptual: singletons are always faces — both in any
+ASC by the singleton-presence axiom and in any clique complex vacuously — so the
+flag condition, which constrains higher faces via their pairs, says nothing new
+at dimension 0. We include it to make explicit that flagness is a condition on
+edges and above, never on vertices.
 
-*Proof sketch*: If (1) fails, choose V = λ_ _ ↦ False and φ = ⊥. Then w ⊩ □⊥ → ⊥ by soundness, and w ⊭ ⊥ trivially. By the second incompleteness theorem, w ⊭ □(□⊥ → ⊥), giving (2). □
+### 3.4 Flag complexes are clique complexes of their skeletons
 
-**Significance**: This result sharpens the original tangling dichotomy from the Catalog. It shows that the tangling phenomenon is not merely a possibility but an inevitability: every sound world with genuine proof-theoretic power has blind spots about its own soundness.
+**Theorem D (`IsFlag.eq_cliqueComplex`).** If `K` is a flag complex, then
 
-### 3.5 The Order-Theoretic Bridge
+> `K.faces = (cliqueComplex (oneSkel K)).faces`.
 
-**Theorem 3.7** (gl_frame_is_strict_order). Every GL frame (W, R) satisfies IsStrictOrder W R.
+*Proof sketch.* We prove the two inclusions of the set equality, fixing an
+arbitrary finite vertex set `s`.
 
-*Proof*: Irreflexivity follows from Theorem 3.1; transitivity is given. □
+*(⊆) Every face is a clique of the skeleton.* Suppose `s ∈ K.faces`. We must
+show `s` is a clique of `oneSkel K`. Fix distinct `a, b ∈ s`. The pair
+`{a, b}` is a subset of `s`, so by downward closure `{a, b} ∈ K.faces`. With
+`a ≠ b`, the characterization `oneSkel_adj` gives `(oneSkel K).Adj a b`. Hence
+all distinct pairs of `s` are skeleton-edges, i.e. `s` is a clique of
+`oneSkel K`, i.e. `s ∈ (cliqueComplex (oneSkel K)).faces`.
 
-**Significance**: This establishes a precise bridge between provability logic and order theory. GL frames are exactly the well-founded strict partial orders. This means:
-- The theory of well-quasi-orders is applicable to provability hierarchies
-- Ordinal analysis of proof systems corresponds to depth analysis of GL frames
-- The Knaster-Tarski fixed-point theorem has a modal-logical interpretation
+*(⊇) Every clique of the skeleton is a face.* Suppose `s` is a clique of
+`oneSkel K`, i.e. all its distinct pairs are skeleton-edges. This is verbatim
+the antecedent of the flag property for `s`. Since `K` is flag, we conclude
+`s ∈ K.faces`. ∎
 
-### 3.6 Disjoint Union Closure
+The forward inclusion uses *downward closure* (faces contain their edge-pairs);
+the backward inclusion uses *flagness* (cliques are filled). The two complex
+axioms and the flag property together close the loop exactly.
 
-**Theorem 3.8** (GLFrame.disjointUnion). If M₁ and M₂ are GL frames, then M₁ ⊕ M₂ (disjoint union with no cross-edges) is a GL frame.
+### 3.5 The Recognition Theorem
 
-*Proof*: Transitivity holds component-wise. Well-foundedness follows by structural induction on the sum type, applying each component's well-foundedness. □
+**Theorem E (`isFlag_iff_eq_cliqueComplex`).** An abstract simplicial complex
+`K` is flag if and only if it equals the clique complex of its own 1-skeleton:
 
-**Corollary 3.9** (disjointUnion_irrefl). The disjoint union preserves irreflexivity.
+> `IsFlag K ⟺ K.faces = (cliqueComplex (oneSkel K)).faces`.
 
-### 3.7 Concrete Example
+*Proof sketch.* (⇒) This is exactly Theorem D. (⇐) Suppose
+`K.faces = (cliqueComplex (oneSkel K)).faces`. To show `K` is flag, take a
+finite `s` all of whose distinct pairs are edges of `oneSkel K`; we must show
+`s ∈ K.faces`. Rewriting through the hypothesis, it suffices to show
+`s ∈ (cliqueComplex (oneSkel K)).faces`, which by Theorem A
+(`cliqueComplex_isFlag` applied to the graph `oneSkel K`) holds provided all
+distinct pairs of `s` are edges of `oneSkel (cliqueComplex (oneSkel K))`. A
+short lemma (`oneSkel_congr`: complexes with equal face sets have equal
+1-skeletons) shows that, under our hypothesis, this latter 1-skeleton coincides
+with `oneSkel K`, so the pair condition transfers directly from the assumption
+on `s`. Hence `s ∈ K.faces` and `K` is flag. ∎
 
-**Theorem 3.10**. Define threeWorldGLFrame with W = Fin 3, R(i,j) ↔ i < j. Then:
-1. This is a valid GL frame.
-2. World 2 satisfies □φ for all φ (vacuous provability).
-3. World 0 cannot prove its own consistency (under any consistent valuation).
+**Auxiliary Lemma (`oneSkel_congr`).** If `K₁.faces = K₂.faces` then
+`oneSkel K₁ = oneSkel K₂`. *Proof.* The adjacency relation of the 1-skeleton
+depends on the face set only through the predicate `{a,b} ∈ faces`; equal face
+sets give equal predicates, hence equal graphs. ∎
 
-### 3.8 PEGB Analysis
-
-#### Löb's Theorem (Theorem 3.3)
-
-- **P** (Proof): Complete Lean 4 proof using well-founded induction on converse R, via WellFounded.has_min to find a minimal counterexample.
-- **E** (Example): In the three-world frame, suppose w₀ ⊩ □(□⊥ → ⊥). Then for w₁ (a successor of w₀), we need w₁ ⊩ ⊥. By induction, w₂ (terminal) satisfies □⊥ vacuously, so w₁ ⊩ □⊥ → ⊥ gives w₁ ⊩ ⊥ from w₁ ⊩ □⊥. Then w₁ ⊩ □⊥ because w₂ ⊩ ⊥ (from the chain). This cascade forces w₀ ⊩ □⊥.
-- **G** (Generalization): Löb's theorem generalizes from PA to any GL frame, and from single formulas to schemas. The next level up would be polymodal Löb theorems for systems with multiple provability predicates (e.g., GLP logic).
-- **B** (Boundary): Löb's theorem fails in frames that are not converse well-founded (e.g., infinite ascending chains allow self-sustaining "provability" without truth).
-
-#### Tangling Dichotomy (Theorem 3.6)
-
-- **P**: Complete proof via case analysis and the second incompleteness theorem.
-- **E**: In the three-world frame, world 0 is in case (2) — it has successors and cannot prove □(□⊥ → ⊥). World 2 (terminal) is in case (1).
-- **G**: Extends to the iterated consistency hierarchy: at each level n, the same dichotomy holds for Con^n.
-- **B**: The dichotomy requires full soundness (∀V, ∀φ). If soundness is restricted to specific formulas, the dichotomy may not hold — a world could be "partially sound" without the full tangling constraint.
-
-#### Order-Theoretic Bridge (Theorem 3.7)
-
-- **P**: Direct application of irreflexivity and transitivity.
-- **E**: The three-world frame with R(i,j) ↔ i < j is manifestly a well-founded strict order on Fin 3.
-- **G**: The converse direction also holds: every well-founded strict partial order is a GL frame. This extends to well-partial-orders and gives connections to Kruskal's tree theorem and ordinal analysis.
-- **B**: The bridge breaks for non-well-founded orders. Adding infinite ascending chains creates frames for logics weaker than GL (e.g., K4, which is transitive but not converse well-founded).
-
----
-
-## 4. Algorithms
-
-### 4.1 GL Frame Verification
-
-Given a finite relation R on n elements, verify that (W, R) is a GL frame:
-
-```
-Algorithm: VerifyGLFrame(R)
-Input: Relation R on {0, ..., n-1}
-Output: True iff (W, R) is a GL frame
-
-1. Check irreflexivity: ∀i, ¬R(i,i)
-2. Check transitivity: ∀i,j,k, R(i,j) ∧ R(j,k) → R(i,k)
-3. Check acyclicity (equivalent to converse well-foundedness for finite sets):
-   Compute topological sort. If cycle found, return False.
-4. Return True.
-```
-
-Complexity: O(n³) for transitivity check, O(n + |R|) for acyclicity.
-
-### 4.2 Tangling Depth Computation
-
-```
-Algorithm: ComputeTanglingDepth(M, w)
-Input: GL frame M, world w
-Output: Tangling depth of w
-
-1. If w has no R-successors, return 0
-2. Return 1 + max{ComputeTanglingDepth(M, v) : R(w,v)}
-```
-
-### 4.3 Model Checking for GL Formulas
-
-```
-Algorithm: ModelCheck(M, V, w, φ)
-Input: Finite GL frame M, valuation V, world w, formula φ
-Output: True iff w ⊩ φ
-
-1. Match φ:
-   - var(p): return V(p)(w)
-   - bot: return False
-   - imp(ψ₁, ψ₂): return ¬ModelCheck(M,V,w,ψ₁) ∨ ModelCheck(M,V,w,ψ₂)
-   - box(ψ): return ∀v with R(w,v), ModelCheck(M,V,v,ψ)
-```
+Theorem E is the conceptual summit: *flagness is precisely self-recovery from the
+1-skeleton.* The property "I am rebuilt by filling the cliques of my own edges"
+is not merely sufficient for being a clique complex — it is the exact
+characterization.
 
 ---
 
-## 5. Discussion
+## 4. The Round-Trip Picture
 
-### 5.1 Relationship to Existing Work
+The five theorems organize into two adjoint-flavored maps between graphs and
+complexes:
 
-Our formalization builds on and extends the Catalog entry `Catalog/Logic/TangledHierarchies.lean`, which established the basic GL frame machinery. The key extensions are:
+- **Skeleton:** `K ↦ oneSkel K`, sending a complex to its underlying graph.
+- **Fill:** `G ↦ cliqueComplex G`, sending a graph to its clique complex.
 
-1. **Structural sharpening**: The tangling dichotomy (Theorem 3.6) is a strictly stronger result than the original `tangling_dichotomy` in the Catalog, providing a cleaner partition into exactly two cases.
+The results pin down both composites:
 
-2. **Cross-domain bridge**: The order-theoretic characterization (Theorem 3.7) connects provability logic to a vast body of work in order theory, including well-quasi-order theory, ordinal analysis, and the Knaster-Tarski fixed-point theorem.
+1. **Fill then Skeleton is the identity on graphs.** For any `G`,
+   `oneSkel (cliqueComplex G) = G` (Corollary 3.1, from Theorem B). Filling
+   cliques and then reading off edges returns the original graph exactly.
 
-3. **Compositionality**: The disjoint union closure (Theorem 3.8) shows that GL frames form a well-behaved class under basic set-theoretic operations.
+2. **Skeleton then Fill is the identity on flag complexes, and only on them.**
+   For any complex `K`, `cliqueComplex (oneSkel K) = K` *iff* `K` is flag
+   (Theorem E). On non-flag complexes the composite strictly enlarges the
+   complex by filling in the hollow simplices it was missing.
 
-### 5.2 Connections to the Catalog
-
-- **Fixed-point construction** (`fixed_point_construction_bound`): The de Jongh-Sambin fixed-point theorem for GL connects to the fixed-point analysis in the Catalog. Our GL frame semantics provides the precise setting where these fixed points live.
-
-- **Soundness bounds** (`random_point_soundness_bound`): The soundness concept in our work parallels the probabilistic soundness bounds in algebraic settings. Both address the question: "how reliable is a verification procedure?"
-
-- **Consistency hierarchies** (`second_incompleteness_analog`): The iterated consistency results directly extend the incompleteness analogs in the machine learning domain.
-
-### 5.3 Limitations
-
-Our formalization covers the semantic (Kripke frame) side of GL rather than the syntactic (Hilbert system) side. Solovay's completeness theorem, which connects the two, is not formalized here due to its complexity (it requires the arithmetized completeness theorem and careful coding of provability predicates).
-
----
-
-## 6. Future Work
-
-1. **Polymodal extensions**: Extend to GLP (Japaridze's polymodal provability logic) with multiple provability operators □₀, □₁, □₂, ... corresponding to iterated consistency.
-
-2. **Solovay's completeness**: Formalize the connection between GL validity and arithmetical soundness.
-
-3. **Fixed-point theorem**: Formalize the de Jongh-Sambin fixed-point theorem for GL, connecting to the Catalog's fixed-point constructions.
-
-4. **Ordinal analysis**: Connect the tangling depth to ordinal assignments, bridging to proof-theoretic ordinal analysis.
+Thus the clique-complex construction embeds the category of simple graphs into
+the category of abstract simplicial complexes as exactly the *flag subcategory*,
+with the 1-skeleton functor as a one-sided inverse that becomes a genuine inverse
+precisely on flag complexes. Flag complexes are, up to this equivalence, *the
+same data as graphs*.
 
 ---
 
-## 7. References
+## 5. Algorithms
 
-1. Gödel, K. (1931). "Über formal unentscheidbare Sätze der Principia Mathematica und verwandter Systeme I." *Monatshefte für Mathematik und Physik*, 38(1), 173-198.
+Although the theory is stated over arbitrary (possibly infinite) vertex types,
+all the constructions are effective on finite graphs and complexes. We record
+the core algorithms; full type-hinted implementations accompany this paper.
 
-2. Löb, M.H. (1955). "Solution of a Problem of Leon Henkin." *The Journal of Symbolic Logic*, 20(2), 115-118.
+### 5.1 Clique-complex enumeration
 
-3. Solovay, R.M. (1976). "Provability interpretations of modal logic." *Israel Journal of Mathematics*, 25, 287-304.
+To materialize `cliqueComplex G` for a finite graph `G`, enumerate all cliques.
+A clean recursive scheme is a Bron–Kerbosch-style traversal, or, for full
+enumeration of *all* faces (not just maximal cliques), a subset-growing search:
 
-4. Boolos, G. (1993). *The Logic of Provability*. Cambridge University Press.
+```
+function ALL_CLIQUES(G = (V, E)):
+    faces ← { ∅ }
+    for each clique C already found, in increasing size:
+        for each vertex v adjacent to every member of C with v ∉ C:
+            add C ∪ {v} to faces
+    return faces
+```
 
-5. Kripke, S.A. (1963). "Semantical analysis of modal logic I: Normal modal propositional calculi." *Zeitschrift für Mathematische Logik und Grundlagen der Mathematik*, 9, 67-96.
+The number of faces can be exponential in |V| (a complete graph on n vertices
+has 2ⁿ faces), which is intrinsic: the clique complex of `Kₙ` is the full
+(n−1)-simplex with all 2ⁿ subsets as faces. Enumeration is therefore output-
+sensitive; the cost is proportional to the (possibly large) size of the complex.
 
-6. de Jongh, D.H.J. & Sambin, G. (1976). "On the proof theory of the modal logic G." *Technical Report*, University of Amsterdam.
+### 5.2 Flagness testing
 
-7. Japaridze, G.K. (1988). "The polymodal logic of provability." *Intensional Logics and Logical Structure of Theories*, 16-48.
+To test whether a given finite complex `K` is flag, one verifies the single
+"missing simplex" condition: for every vertex set `s` whose pairs are all edges
+of `oneSkel K`, check `s ∈ K.faces`. Equivalently, by Theorem E, compute
+`cliqueComplex (oneSkel K)` and test set equality with `K.faces`. Since `K ⊆
+cliqueComplex (oneSkel K)` always holds (Theorem D's ⊆ direction needs only
+downward closure), flagness reduces to checking the reverse inclusion: every
+clique of the 1-skeleton is a face of `K`.
+
+```
+function IS_FLAG(K):
+    G ← ONE_SKELETON(K)
+    for each clique C of G:
+        if C ∉ K.faces:
+            return False          # hollow simplex found
+    return True
+```
+
+The witness returned on failure — a clique of the skeleton that is not a face —
+is exactly a *hollow simplex*, the minimal certificate that `K` is not flag.
+
+### 5.3 1-skeleton extraction
+
+Extracting `oneSkel K` is immediate: scan the size-2 faces.
+
+```
+function ONE_SKELETON(K):
+    V ← { a : {a} ∈ K.faces }
+    E ← { {a, b} : {a, b} ∈ K.faces ∧ a ≠ b }
+    return (V, E)
+```
+
+---
+
+## 6. Applications
+
+### 6.1 Topological data analysis
+
+Given a finite metric space (a point cloud) and a scale `ε`, the *Vietoris–Rips
+complex* `Rips(X, ε)` is the clique complex of the graph connecting points
+within distance `ε`. Theorem A guarantees `Rips(X, ε)` is flag, and Theorem E
+guarantees it is *fully determined by its edges*. This is the theoretical
+license for the central efficiency of TDA pipelines: persistence software stores
+and updates only the proximity graph, reconstructing higher simplices on demand,
+with the certainty that no homological information is lost. The monotonicity
+`Rips(X, ε) ⊆ Rips(X, ε')` for `ε ≤ ε'` — the basis of *persistent homology* —
+is likewise a statement about the underlying graphs propagated upward by
+flagness.
+
+### 6.2 Distributed sensing and coverage
+
+In a sensor network each node knows only its communication neighbors — purely
+1-skeletal, local data. Whether the network covers a region without holes is a
+*global* topological question about the associated complex. Flagness is what
+makes the global question answerable from local data: because the coverage
+complex is the clique complex of the communication graph, its global topology is
+implied by the edges every node already knows, enabling decentralized hole-
+detection protocols.
+
+### 6.3 Geometric group theory
+
+Flag complexes are the natural domain of several rigidity phenomena. Gromov's
+link condition characterizes CAT(0) cube complexes via flagness of vertex links;
+right-angled Artin groups and Coxeter groups are encoded by flag complexes
+(their *defining* / *nerve* complexes); and Davis complexes are built so that
+local flag conditions force global non-positive curvature. In each case the
+operative principle is the one made precise here: a combinatorial condition on
+edges (flagness) determines the entire high-dimensional object and its geometry.
+
+### 6.4 Independence and other induced complexes
+
+The independence complex of a graph `G` is the clique complex of its complement;
+neighborhood, matching, and Hom complexes are likewise clique complexes of
+auxiliary graphs. Theorem E says all of these are recognizable purely by the
+flag test, and that their entire face structure is recoverable from a single
+graph — a uniform organizing principle across an otherwise scattered zoo of
+constructions.
+
+---
+
+## 7. Discussion
+
+The mathematics here is elementary in the best sense: the proofs are short, but
+they pin down an equivalence that is invoked constantly and rarely stated with
+full precision. Three points deserve emphasis.
+
+First, **the hypotheses are minimal**. The vertex type is arbitrary; nothing is
+assumed finite except individual faces (which are finite by definition of
+`Finset`). The results therefore apply to clique complexes of infinite graphs,
+where they remain true verbatim. The only structural inputs are downward closure
+and the elementary symmetric/irreflexive nature of the 1-skeleton.
+
+Second, **flagness is a dimension-1 condition with dimension-∞ consequences**.
+The defining clause of `IsFlag` quantifies only over pairs (via the 1-skeleton),
+yet it controls faces of every dimension. This "locality at the edges" is exactly
+what makes flag complexes computationally and conceptually tractable: an object
+of unbounded dimension is specified by a quadratic amount of data.
+
+Third, **the equivalence is sharp**. Theorem E is an "if and only if"; non-flag
+complexes genuinely exist (the boundary of a triangle — three edges, no filled
+2-face — is the smallest example, where the skeleton is a 3-cycle whose clique
+complex *would* fill the triangle). The hollow simplex is the precise obstruction,
+and the recognition test detects it.
+
+A subtle formalization point worth recording: the singleton-presence axiom in
+Definition 2.1 is logically redundant given downward closure, yet keeping it
+explicit clarifies that the vertex set is part of the data and streamlines the
+proof that `cliqueComplex G` is a valid ASC. Theorem C exists to make the
+conceptual status of singletons unambiguous.
+
+---
+
+## 8. Future Directions
+
+The present results characterize *which* complexes are flag. Several natural
+extensions build directly on the formalized core.
+
+**1. Homotopy and homology invariance through the skeleton.** Theorem E says a
+flag complex is determined by its graph as a *set of faces*. The natural next
+target is to formalize that its *homotopy type* and *simplicial homology* are
+therefore computable from the graph alone, recovering, e.g., that the clique
+complex of a graph with no induced cycles of length ≥ 4 is collapsible. This
+turns the structural recognition theorem into a computational topology engine.
+
+**2. Functoriality and the flag–graph equivalence.** Promote the round-trip of
+Section 4 to a formal equivalence of categories between simple graphs (with
+graph homomorphisms) and flag complexes (with simplicial maps). The expected
+statement: `cliqueComplex` and `oneSkel` form an adjoint pair restricting to an
+equivalence on the flag subcategory. This would let theorems about graphs
+transfer mechanically to flag complexes and back.
+
+**3. Quantitative flagness and the hollow-simplex spectrum.** For a non-flag
+complex, measure *how far* it is from flag by the dimensions and number of its
+hollow simplices (cliques of the skeleton that fail to be faces). Conjecture: the
+minimal hollow simplices form a well-structured obstruction set whose generating
+function is a meaningful invariant, refining the binary flag test of Section 5.2
+into a graded measure.
+
+**4. Persistent flag filtrations.** Formalize the Vietoris–Rips filtration
+`ε ↦ Rips(X, ε)` and prove, from Theorem A, that the entire filtration is a
+sequence of flag complexes determined by a single edge-length function. The
+target is a verified persistence theorem: the persistence module of a Rips
+filtration is computable from the weighted 1-skeleton, with stability under
+perturbation of the metric.
+
+**5. Local flagness and curvature.** Capture Gromov's link condition formally:
+a cube/simplicial complex is locally CAT(0) iff all vertex links are flag.
+Building on the present `IsFlag` predicate, this would connect the combinatorial
+recognition theorem to global geometric (non-positive curvature) consequences,
+the engine behind much of geometric group theory.
+
+---
+
+## 9. Conclusion
+
+We have given a complete, self-contained account of the equivalence between flag
+complexes and clique complexes. The clique complex of any graph is flag and
+faithfully records its edges (Theorems A, B); conversely a complex is flag
+exactly when it is the clique complex of its own 1-skeleton (Theorems D, E).
+Together these results identify flag complexes with simple graphs and explain,
+at the level of definitions, why a one-dimensional skeleton can dictate an
+arbitrarily high-dimensional shape. The skeleton, for a flag complex, remembers
+everything.
