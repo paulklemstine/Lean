@@ -13,7 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             document.querySelectorAll('.run-btn').forEach(btn => {
                 btn.disabled = false;
-                btn.textContent = 'Run Code';
+                // Preserve the text of visualization Generate buttons; only
+                // interactive Python demos use 'Run Code'.
+                if (!btn.classList.contains('viz-generate-btn')) {
+                    btn.textContent = 'Run Code';
+                }
             });
 
         } catch (err) {
