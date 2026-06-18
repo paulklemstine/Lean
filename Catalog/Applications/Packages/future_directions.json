@@ -967,7 +967,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-01T12:30:30.514276+00:00",
       "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
@@ -1876,11 +1876,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "5230ead3",
       "depth_estimate": 3,
       "description": "In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnumber villagers. Conjecture: The optimal Bayesian strategy for villagers is to vote for the player with the highest posterior probability of being a werewolf, where the prior is k/n and the likelihood updates are based on the player's voting pattern and survival. More precisely, define the werewolf posterior P(W_i | evidence) using Bayes' theorem: P(W_i) = k/n (prior), P(evidence | W_i) = product of conditional probabilities of observed events given that player i is a werewolf. The optimal strategy maximizes P(villagers win) = P(correct elimination at each day round). For n=7, k=2: the villagers' win probability with optimal Bayesian play is approximately 0.36 (known from game theory). Conjecture: For general n and k, the villagers' win probability is approximately C * (1 - k/(n-k))^2 where C is a constant depending on the information structure. Test: simulate 10^6 games with n=7 to n=20 players and Bayesian villagers, measure the win probability, and fit to the conjectured formula. Impact: social deduction has an optimal Bayesian strategy, and the werewolves' advantage scales as (k/(n-k))^2.",
       "domain_bridges": [],
@@ -1890,7 +1890,7 @@
         "Computation"
       ],
       "id": "fd_0051",
-      "last_attempt_time": "2026-06-07T13:10:11.858634+00:00",
+      "last_attempt_time": "2026-06-18T00:40:13.361181+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -1903,7 +1903,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-01T12:30:30.593085+00:00",
       "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
@@ -3352,11 +3352,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "15e84b40",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
       "domain_bridges": [],
@@ -3366,7 +3366,7 @@
         "Algebra"
       ],
       "id": "fd_0092",
-      "last_attempt_time": "2026-06-17T23:49:07.404605+00:00",
+      "last_attempt_time": "2026-06-07T13:43:10.185560+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -3379,7 +3379,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-01T12:30:30.807837+00:00",
       "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
@@ -3460,11 +3460,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "d6f5cc61",
       "depth_estimate": 3,
       "description": "A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distribution on G. Conjecture: for the Cayley graph Cay(G, S) where G is a finite group and S is a symmetric generating set, the quantum walk mixes in O(sqrt(|G|) * log(|G|)) steps, which is quadratically faster than the classical random walk (which takes O(|G|^2) steps for the spectral gap to kick in). The mixing time is determined by the spectral gap of U: tau_mix ~ 1/gap where gap = 1 - |lambda_2| and lambda_2 is the second-largest eigenvalue of U. Conjecture: for Cay(G, S) with S = the set of transpositions in S_n, the spectral gap of U is Omega(1/n), giving a mixing time of O(n * log(n)). This matches the known classical mixing time of O(n * log(n)) for the random transposition walk on S_n. The quantum advantage comes from the quadratically faster convergence of the probability distribution, not from the spectral gap. Test: simulate quantum random walks on Cayley graphs of S_n, S_n, A_5, and Z_n, measure the mixing time, and verify tau_mix = O(sqrt(|G|) * log(|G|)). Impact: quantum random walks mix quadratically faster than classical random walks on Cayley graphs. The quadratic speedup is universal.",
       "domain_bridges": [],
@@ -3474,7 +3474,7 @@
         "Algebra"
       ],
       "id": "fd_0095",
-      "last_attempt_time": "2026-06-05T20:32:18.215477+00:00",
+      "last_attempt_time": "2026-06-18T00:40:17.594920+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -3487,7 +3487,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-01T12:30:30.827686+00:00",
       "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
@@ -4639,7 +4639,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-01T12:30:31.024124+00:00",
       "title": "Borges' Library of Babel: Combinatorics of Everything"
@@ -32952,6 +32952,47 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "math.NT",
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "For any integer n > 2, the zero-sum constant s_1(n) equals 2n + 1, where s_1(n) is defined as the least positive integer k such that any sequence of k integers not divisible by n contains an n-subset whose sum is divisible by n but not by n^2.",
+      "domain_bridges": [
+        "Number Theory",
+        "Combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2070",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem s_1_eq_two_n_plus_one (n : ℕ) (hn : n > 2) : s_1 n = 2 * n + 1 := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the definition of s_1(n) as the minimal k satisfying the subset sum divisibility condition. Prove the lower bound s_1(n) >= 2n+1 by exhibiting a specific sequence of 2n integers (e.g., n-1 copies of 1 and n-1 copies of -1) that lacks the required property. Prove the upper bound s_1(n) <= 2n+1 by showing that any sequence of 2n+1 integers not divisible by n must contain an n-subset with a sum having p-adic valuation exactly 1 for at least one prime p dividing n, leveraging extensions of the Erdős-Ginzburg-Ziv theorem or Chevalley-Warning type arguments.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.18234v1",
+      "source_path": "http://arxiv.org/abs/2606.18234v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-18T00:38:46.409376+00:00",
+      "title": "Exact Formula for Zero-Sum Invariant s_1(n)"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "Universal probability bounds for partial Latin squares"
       ],
       "category": "cross_domain_bridge",
@@ -32967,7 +33008,7 @@
       "domains": [
         "Computation"
       ],
-      "id": "fd_2070",
+      "id": "fd_2071",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem prob_bounds_partial_latin_sq_quarter :\n    ∃ (c₁ c₂ : ℝ) (h₁ : 0 < c₁) (h₂ : 0 < c₂),\n    ∀ (n : ℕ) (hn : 4 ≤ n) (P : PartialLatinSquare n) (k : ℕ) (hP : P.card = k)\n      (hR : P.numRows ≤ n / 4) (hC : P.numCols ≤ n / 4),\n      (c₁ / (n : ℝ))^k ≤ (randomLatinSquare n).prob (fun L => P ⊆ L) ∧\n      (randomLatinSquare n).prob (fun L => P ⊆ L) ≤ (c₂ / (n : ℝ))^k := by\n  sorry",
@@ -32985,6 +33026,50 @@
       "thread_id": "",
       "timestamp": "2026-06-17T23:49:01.691458+00:00",
       "title": "Probability Bounds for Partial Latin Squares with Bounded Dimensions"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "independence number",
+        "hypergraph",
+        "locally sparse",
+        "average degree"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "The paper establishes an average-degree lower bound on the independence number of uncrowded uniform hypergraphs (those without Berge 2, 3, or 4-cycles). Since Verstraete and Wilson previously extended the maximum-degree bound from uncrowded to locally sparse hypergraphs (those without Berge 2 or 3-cycles), this conjecture proposes that the average-degree bound similarly extends to the broader class of locally sparse uniform hypergraphs.",
+      "domain_bridges": [
+        "Probability Theory",
+        "Graph Theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2072",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Data.Real.Basic\n\ntheorem avg_degree_independence_locally_sparse\n    (r : ℕ) (hr : r ≥ 2) (η : ℝ) (hη : η > 0) :\n    ∃ d_ : ℝ, ∀ (d : ℝ) (hd : d ≥ d_),\n    ∀ (V : Type) [Fintype V] [DecidableEq V]\n    (G : Finset (Finset V))\n    (h_uniform : ∀ e ∈ G, e.card = r + 1)\n    (h_no_C2 : ∀ e₁ ∈ G, ∀ e₂ ∈ G, e₁ ≠ e₂ → (e₁ ∩ e₂).card < 2)\n    (h_no_C3 : True) -- Placeholder for the absence of Berge 3-cycles\n    (h_avg_deg : ((r + 1 : ℝ) * G.card) / (Fintype.card V) ≥ d),\n    ∃ (I : Finset V), (∀ e ∈ G, ¬ I ⊆ e) ∧\n      (I.card : ℝ) ≥ (1 - η) * (r : ℝ)^(-(1 : ℝ) / (r : ℝ)) * (((Real.log d) / d)^((1 : ℝ) / (r : ℝ))) * (Fintype.card V) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Adapt the trace nibble method and cleaning procedure from the paper to eliminate the dependency on the absence of Berge 4-cycles. This might involve a refined degree profile analysis or a modified cleaning phase that can control lower-order degrees without relying on the C4 restriction.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.18171v1",
+      "source_path": "http://arxiv.org/abs/2606.18171v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-18T00:40:07.506039+00:00",
+      "title": "Average-Degree Bound for Locally Sparse Uniform Hypergraphs"
     },
     {
       "ambition_level": "extension",

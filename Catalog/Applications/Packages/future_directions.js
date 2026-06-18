@@ -732,36 +732,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reconstruction Conjecture"
   },
   {
-    "consumed_by_exp_id": "880250ea",
-    "description": "Euclid's parallel postulate says parallel lines never meet. Hyperbolic geometry says they can diverge. Elliptic geometry says they converge. But what about a geometry where parallel lines BOTH converge AND diverge? Define a Split Geometry on R^2 where the parallel postulate is direction-dependent: lines parallel to the x-axis diverge (hyperbolic behavior) while lines parallel to the y-axis converge (elliptic behavior). The metric is ds^2 = dx^2/cosh^2(y) + dy^2 * cosh^2(x) \u2014 expanding in x and contracting in y. Conjecture: Split Geometry is a consistent Riemannian geometry with curvature K(x,y) = -sech^2(y) + sech^2(x) that changes sign across the diagonals. The geometry has a 'phase boundary' along the lines y = x and y = -x where K = 0 (flat). In the region |x| > |y|, K > 0 (elliptic) and in the region |y| > |x|, K < 0 (hyperbolic). The geodesics in split geometry are piecewise combinations of exponential curves (in hyperbolic regions) and trigonometric curves (in elliptic regions). Test: compute the Christoffel symbols and curvature tensor for the split metric. Prove that geodesics cross the phase boundary at most twice. Compute the area of a split triangle with one vertex in each region. Impact: a geometry where the curvature of space depends on which direction you look \u2014 the mathematical realization of a universe that is simultaneously expanding and contracting.",
-    "domains": [
-      "Novelty",
-      "Geometry"
-    ],
-    "id": "fd_0025",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.514276+00:00",
-    "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
-  },
-  {
-    "consumed_by_exp_id": "21e49da9",
-    "description": "Compute the topological type of the Library of Babel: a space of all possible 410-page books. Prove that it is connected, totally disconnected under the Hamming metric, and has covering dimension 0. Determine the Kolmogorov complexity of a random book and prove that almost all books are incompressible.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0127",
-    "priority_score": 0.81,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:31.024124+00:00",
-    "title": "Borges' Library of Babel: Combinatorics of Everything"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Huang proved the sensitivity conjecture. Extend: prove tighter bounds on degree-sensitivity relationship of Boolean functions. Formalize the spectral approach via signed adjacency matrices.",
     "domains": [
@@ -851,17 +821,45 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any integer n > 2, the zero-sum constant s_1(n) equals 2n + 1, where s_1(n) is defined as the least positive integer k such that any sequence of k integers not divisible by n contains an n-subset whose sum is divisible by n but not by n^2.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2070",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18234v1",
+    "status": "available",
+    "timestamp": "2026-06-18T00:38:46.409376+00:00",
+    "title": "Exact Formula for Zero-Sum Invariant s_1(n)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any partial Latin square P of order n with k entries occupying at most n/4 rows and n/4 columns, the probability that a uniformly random Latin square of order n contains P is bounded between (c\u2081/n)^k and (c\u2082/n)^k for some absolute constants c\u2081, c\u2082 > 0. This is a specific instance of the paper's main theorem (Theorem 1.1) with \u03b1=1/4 and \u03b2=1/4, which satisfies the condition 2\u03b1+\u03b2 < 1.",
     "domains": [
       "Computation"
     ],
-    "id": "fd_2070",
+    "id": "fd_2071",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18174v1",
     "status": "available",
     "timestamp": "2026-06-17T23:49:01.691458+00:00",
     "title": "Probability Bounds for Partial Latin Squares with Bounded Dimensions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper establishes an average-degree lower bound on the independence number of uncrowded uniform hypergraphs (those without Berge 2, 3, or 4-cycles). Since Verstraete and Wilson previously extended the maximum-degree bound from uncrowded to locally sparse hypergraphs (those without Berge 2 or 3-cycles), this conjecture proposes that the average-degree bound similarly extends to the broader class of locally sparse uniform hypergraphs.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2072",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18171v1",
+    "status": "available",
+    "timestamp": "2026-06-18T00:40:07.506039+00:00",
+    "title": "Average-Degree Bound for Locally Sparse Uniform Hypergraphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -2977,7 +2975,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Aperiodic Monotile: One Shape to Tile Them All"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5230ead3",
     "description": "In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnumber villagers. Conjecture: The optimal Bayesian strategy for villagers is to vote for the player with the highest posterior probability of being a werewolf, where the prior is k/n and the likelihood updates are based on the player's voting pattern and survival. More precisely, define the werewolf posterior P(W_i | evidence) using Bayes' theorem: P(W_i) = k/n (prior), P(evidence | W_i) = product of conditional probabilities of observed events given that player i is a werewolf. The optimal strategy maximizes P(villagers win) = P(correct elimination at each day round). For n=7, k=2: the villagers' win probability with optimal Bayesian play is approximately 0.36 (known from game theory). Conjecture: For general n and k, the villagers' win probability is approximately C * (1 - k/(n-k))^2 where C is a constant depending on the information structure. Test: simulate 10^6 games with n=7 to n=20 players and Bayesian villagers, measure the win probability, and fit to the conjectured formula. Impact: social deduction has an optimal Bayesian strategy, and the werewolves' advantage scales as (k/(n-k))^2.",
     "domains": [
       "Novelty",
@@ -2987,7 +2985,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.593085+00:00",
     "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
   },
@@ -3052,7 +3050,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
   {
-    "consumed_by_exp_id": "15e84b40",
+    "consumed_by_exp_id": "",
     "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
     "domains": [
       "Novelty",
@@ -3062,12 +3060,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.807837+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d6f5cc61",
     "description": "A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distribution on G. Conjecture: for the Cayley graph Cay(G, S) where G is a finite group and S is a symmetric generating set, the quantum walk mixes in O(sqrt(|G|) * log(|G|)) steps, which is quadratically faster than the classical random walk (which takes O(|G|^2) steps for the spectral gap to kick in). The mixing time is determined by the spectral gap of U: tau_mix ~ 1/gap where gap = 1 - |lambda_2| and lambda_2 is the second-largest eigenvalue of U. Conjecture: for Cay(G, S) with S = the set of transpositions in S_n, the spectral gap of U is Omega(1/n), giving a mixing time of O(n * log(n)). This matches the known classical mixing time of O(n * log(n)) for the random transposition walk on S_n. The quantum advantage comes from the quadratically faster convergence of the probability distribution, not from the spectral gap. Test: simulate quantum random walks on Cayley graphs of S_n, S_n, A_5, and Z_n, measure the mixing time, and verify tau_mix = O(sqrt(|G|) * log(|G|)). Impact: quantum random walks mix quadratically faster than classical random walks on Cayley graphs. The quadratic speedup is universal.",
     "domains": [
       "Novelty",
@@ -3077,7 +3075,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.827686+00:00",
     "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
