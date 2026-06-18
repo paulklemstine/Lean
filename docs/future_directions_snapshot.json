@@ -1197,6 +1197,64 @@
     "title": "Average-Degree Bound for Locally Sparse Uniform Hypergraphs"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:MT-TSP-MO",
+      "Reif1979_PSPACE_mover",
+      "SafraSchwartz1993_TSP_inapproximability"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The feasibility version of the Moving-Target Traveling Salesman Problem with Moving Obstacles (MT-TSP-MO) is PSPACE-hard. Specifically, given a set of targets each moving along a straight line with constant rational velocity and having an associated time window, and a set of obstacles each moving along a straight line with constant rational velocity, determining whether there exists a continuous trajectory from a static depot that visits all targets within their time windows while avoiding all obstacles is PSPACE-hard. This holds even when the number of obstacles is polynomial in the number of targets. The conjecture bridges the known PSPACE-hardness of motion planning with moving obstacles (Reif 1979) and the NP-hardness of TSP variants with time windows, establishing that MT-TSP-MO inherits the hardest aspects of both subproblems.",
+    "domain_bridges": [
+      "motion_planning_complexity",
+      "TSP_time_windows",
+      "PSPACE_vs_NP_hierarchy",
+      "mixed_integer_conic_programming_relaxation"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2075",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Reduce from a known PSPACE-hard problem (e.g., the mover problem or quantified Boolean formula satisfiability). Encode QBF variables as target-visiting order choices and QBF quantifier alternations as obstacle configurations that force specific visitation sequences. The key insight is that moving obstacles can encode adversarial choices corresponding to universal quantifiers, while the agent's path choices correspond to existential quantifiers. Construct polynomial-size instances where feasibility of the MT-TSP-MO tour corresponds exactly to the truth of the QBF formula, leveraging the continuous time dimension to simulate the game tree of alternating quantifiers.",
+    "research_mode": "team",
+    "source_exp_id": "2606.18730v1",
+    "status": "available",
+    "timestamp": "2026-06-18T03:07:25.571014+00:00",
+    "title": "PSPACE-Hardness of MT-TSP-MO Feasibility with Linearly Moving Obstacles"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.DS",
+      "math.NT",
+      "math.SP"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Every Zariski-dense geometrically finite thin subgroup Γ of an arithmetic lattice in SO(n,1) with positive critical exponent δ_Γ > 0 admits a uniform spectral gap over its congruence covers: there exists η = η(n, δ_Γ) > 0 such that for all square-free q ≥ 1, the Laplace–Beltrami operator on (Γ ∩ Γ₀(q))\\ℍⁿ has no eigenvalues in ((n−1)²/4 − η, (n−1)²/4). This extends Bourgain–Gamburd–Sarnak (δ_Γ > 1/2, n = 2) and the present paper's result (δ_Γ ∈ (1/2, n−2] with cusps, n ≥ 3) to the full range δ_Γ > 0, and would imply that the affine sieve for Γ-orbits saturates at a finite level regardless of δ_Γ.",
+    "domain_bridges": [
+      "Expander graphs and superstrong approximation",
+      "Patterson–Sullivan measure theory",
+      "Affine sieve",
+      "Representation theory of semisimple Lie groups"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2075",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Extend the Bourgain–Gamburd–Sarnak expansion machinery to δ_Γ ≤ 1/2 by developing an effective counting theory for return trajectory subgroups without the δ_Γ > 1/2 condition that guarantees non-local integrability of the Patterson–Sullivan measure. The key obstacle is that for δ_Γ ≤ 1/2, the Bowen–Margulis–Sullivan measure on the frame bundle no longer controls the spectral projector near the base of the continuous spectrum. A potential approach replaces the δ_Γ > 1/2 condition with a combinatorial thickness criterion on the return trajectory subgroups, leveraging their Zariski density (established in the present paper) together with a refined L²-flattening lemma adapted to the small-critical-exponent regime.",
+    "research_mode": "team",
+    "source_exp_id": "2606.18674v1",
+    "status": "available",
+    "timestamp": "2026-06-18T03:09:27.688863+00:00",
+    "title": "Uniform Spectral Gap for Thin Subgroups at Arbitrary Critical Exponent"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
@@ -2431,26 +2489,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions — The Spectral Gap of Sudoku\n\nDerived from this cycle's findings on the order-`n` Sudoku constraint graph\n`sudokuGraph n` (file `Computation/SudokuConstraintGraph.lean`). This cycle\nestablished the extremal triple `(α, ω, |V|) = (n², n², n⁴)` together with the\n**tightness identity** `|V| = α · ω`, the degree `3n²−2n−1`, the chromatic\nnumber `n²`, and the explicit mixed coloring. The conjectures below build on\nexactly those verified facts.\n\n---\n\n## Conjecture 1 — Adjacency spectrum and a closed-form spectral gap\n\n`sudokuGraph n` is regular of degree `d = 3n²−2n−1`; conjecturally its adjacency\nmatrix has only a *constant* number of distinct eigenvalues, with the\nsecond-largest eigenvalue `λ₂ = n²−2n−1` and least eigenvalue `λ_min = −n²`,\ngiving spectral gap `d − λ₂ = 2n²`.\n\n**The key insight is...** that the Sudoku graph is the edge-union of three\n`(n²−1)`-regular \"rook-type\" graphs sharing a common eigenbasis (tensor products\nof `Fin n`-characters), so its spectrum decomposes additively and the Hoffman\nbound `α ≤ |V| · (−λ_min)/(d − λ_min)` should be *tight* — which is forced by the\nalready-proved identity `α = n²` and `|V| = α·ω`.\n\n**Why now?** We have just pinned `α = ω = n²` and `|V| = n⁴` exactly, so the\nHoffman ratio bound has a known equality case; matching it to an explicit\neigenvalue computation is now a finite linear-algebra task rather than an open\nestimate.\n\n---\n\n## Conjecture 2 — The Sudoku graph is perfect (strong perfect graph test)\n\nFor every `n`, `sudokuGraph n` is a **perfect graph**: `χ(H) = ω(H)` for every\ninduced subgraph `H`.\n\n**The key insight is...** that we already proved `χ = ω = n²` for the whole\ngraph via a coloring whose color classes are maximum independent sets; perfection\nwould say this `χ = ω` coincidence is hereditary, which is plausible because the\ngraph is a union of complete-multipartite \"line-graph-like\" constraints with no\ninduced odd holes/antiholes of length ≥ 5.\n\n**Why now?** The clique number, chromatic number, and an explicit optimal\ncoloring are all formalized, so the Strong Perfect Graph Theorem's hypotheses\n(no odd holes/antiholes) can be attacked directly on the concrete adjacency\n`sudokuGraph_adj_iff` for small `n` and then generalized.\n\n---\n\n## Conjecture 3 — Fractional relaxation gap is exactly zero\n\nThe fractional chromatic number equals the integral one:\n`χ_f(sudokuGraph n) = χ(sudokuGraph n) = n²`, and dually the fractional clique\ncover and Lovász `ϑ` all collapse to `n²`.\n\n**The key insight is...** that `|V| = α · ω` with `α = |V|/ω` is precisely the\nvertex-transitive equality case in which `α · χ_f = |V|`; combined with the\nexplicit balanced coloring (every color class has size exactly `α = n²`), the\nfractional and integral chromatic numbers must agree.\n\n**Why now?** This cycle produced a *balanced* optimal coloring (color classes of\nequal size `n²`), which is exactly the certificate needed to squeeze `χ_f`\nbetween `|V|/α = n²` and `χ = n²`.\n\n---\n\n## Conjecture 4 — Box constraints are spectrally redundant above a threshold\n\nLet `rookGraph n` be the Latin-square (row+column only) constraint graph. Then\nfor all `n ≥ 2`, adding box edges strictly raises the degree (by `(n−1)²`) yet\nleaves the independence number unchanged: `α(sudokuGraph n) = α(rookGraph n) =\nn²`.\n\n**The key insight is...** that a maximum independent set of the rook graph (a\npermutation-matrix support / Latin transversal) is automatically box-independent\nonce chosen from a proper Sudoku coloring, so the box constraints remove no\nextremal independent sets — the slack we hunted for in the evidence file does not\nexist.\n\n**Why now?** The degree decomposition `3n²−2n−1 = 2(n²−1) + (n−1)²` is already\nformalized in `SudokuPhaseTransition.lean`, and `α = n²` is now proved for the\nfull Sudoku graph; comparing it to the rook graph's independence number is a\nsingle additional lemma.\n\n---\n\n## Conjecture 5 — Quantitative phase-transition / spectral-gap bridge\n\nThe constraint-interaction strength `σ(n) = 2(n+1)/(3n+1)` (from\n`SudokuPhaseTransition.lean`) controls the normalized spectral gap: as `n → ∞`,\n`(d − λ₂)/d → 2/3 = lim (1 − σ(n)) · something`, tying the statistical-physics\n\"interaction strength\" to the algebraic spectral gap.\n\n**The key insight is...** that both `σ(n)` and the conjectured gap `2n²` are\nrational functions of `n` with the *same* leading behaviour, so the\n\"phase-transition window width\" `1/n²` and the spectral gap `2n²` satisfy\n`(window width) · (spectral gap) = 2`, a dimensionless invariant.\n\n**Why now?** The interaction strength, window width `1/n²`, and degree are all\nformalized with exact rational identities; Conjecture 1's spectral gap is the\nonly missing factor, after which the bridge is a closed-form algebraic check.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2075",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "6e109ffd",
-    "status": "available",
-    "timestamp": "2026-06-18T02:09:14.247624+00:00",
-    "title": "Derived from this cycle's findings on the order-`n` Sudoku constraint graph"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -2609,7 +2647,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5ddac85b",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: For sufficiently capable transformer language models trained on next-token prediction, there exists a scale-dependent phase transition in the empirical singular-value spectra of specific learned weight matrices (especially attention output and MLP projection layers) such that models exhibiting strong multi-step reasoning have renormalized spectral statistics converging to a non-Wigner universality class with stable critical exponents, while weaker models remain in a Marchenko-Pastur-like regime. Test: Train model families across parameter scales, data curricula, and architectures; measure layerwise spectra, finite-size scaling, and critical exponents; then test whether emergence of reasoning benchmarks correlates sharply with the predicted spectral transition and whether interventions that shift spectra across the critical point causally improve or degrade reasoning. Refutation occurs if no reproducible universality class or phase boundary appears, or if spectral transition fails to predict reasoning emergence better than naive scale measures. Impact: This would provide a quantitative order parameter for emergent cognition in neural networks, connect deep learning to statistical physics and random matrix theory, and enable principled architecture/search methods that target reasoning-critical phases rather than brute-force scaling.",
     "domain_bridges": [],
     "domains": [
@@ -2622,7 +2660,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T16:54:32.770267+00:00",
     "title": "Spectral Universality of LLM Weight Matrices: Random-Matrix Phase Transitions in"
   },
@@ -2728,26 +2766,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Conjecture: For generic geometrically local quantum circuits on n qudits with bounded-depth nearest-neighbor gates, the weighted out-of-time-order correlator matrix C_{ij}(t) uniquely determines the circuit's causal light-cone graph up to graph isomorphism and time reversal, with probability tending to 1 as n grows. Test: Generate ensembles of random local circuits on different interaction graphs, compute C_{ij}(t) over polynomially many times, and check whether non-isomorphic causal graphs ever produce indistinguishable spectra and eigenspaces; a single infinite family of counterexamples with identical correlator data refutes the conjecture. Impact: Enables reconstruction of hidden spacetime adjacency from quantum dynamics, giving a testable bridge between quantum information scrambling, emergent geometry, and inverse problems in many-body physics.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_2076",
-    "lineage_refs": [],
-    "priority_score": 0.7,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "available",
-    "timestamp": "2026-06-18T02:09:43.018537+00:00",
-    "title": "Causal Spectral Rigidity of Quantum Circuits"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that 10 is a solitary number — no other integer shares its abundancy index σ(n)/n. Formalize the theory of friendly numbers and abundancy, connecting to the distribution of divisor sums.",
     "domain_bridges": [],
     "domains": [
@@ -2762,6 +2780,25 @@
     "status": "available",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "6e109ffd",
+    "description": "Cycle 595ce011 (Q=0.612) proved 10 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a sharply scoped core of the order-`n` Sudoku constraint graph on `Cell n := Fin n × Fin n × Fin n × Fin n`, avoiding ambitious spectral or chromatic-number machinery until the finite combin",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_595ce011_e0b1bcd6",
+    "lineage_refs": [],
+    "priority_score": 0.6622400000000002,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "595ce011",
+    "status": "in_progress",
+    "timestamp": "2026-06-17T13:02:19.356643+00:00",
+    "title": "Close Proofs: The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
   },
   {
     "ambition_level": "extension",
