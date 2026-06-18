@@ -164,7 +164,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "BSD Conjecture: Rank Computability"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6c118cd3",
     "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
     "domains": [
       "Logic",
@@ -175,7 +175,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.92,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432809+00:00",
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
@@ -1033,7 +1033,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Functor from finite linear codes to tropical valuation objects via wei"
   },
   {
-    "consumed_by_exp_id": "616d8eb2",
+    "consumed_by_exp_id": "",
     "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
     "domains": [
       "Novelty",
@@ -1043,7 +1043,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.958310+00:00",
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
@@ -1330,7 +1330,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Convex Geometry: Brunn-Minkowski Theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f4bdff2b",
     "description": "Formalize chromatic polynomials and prove deletion-contraction. Prove the four-color theorem is equivalent to \u03c7(G) \u2264 4 for all planar G. Formalize Brooks' theorem: \u03c7(G) \u2264 \u0394(G) unless G is complete or an odd cycle. Prove the chromatic polynomial is T-positive for claw-free graphs.",
     "domains": [
       "Combinatorics",
@@ -1340,7 +1340,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432739+00:00",
     "title": "Graph Coloring: Chromatic Polynomial Theory"
   },
@@ -1448,7 +1448,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reconstruction Conjecture"
   },
   {
-    "consumed_by_exp_id": "ddabac1a",
+    "consumed_by_exp_id": "",
     "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
     "domains": [
       "NumberTheory",
@@ -1458,7 +1458,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -1714,12 +1714,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let P be any fixed finite partial Latin square pattern with k entries, encoded as a finite set of triples (row, column, symbol) of natural numbers satisfying the partial Latin condition: no two distinct entries agree in both row and column, row and symbol, or column and symbol. For each n large enough to contain all coordinates of P, view P as a partial Latin square of order n. Conjecture: if L is chosen uniformly from all Latin squares of order n, then Pr[L contains P] * n^k tends to 1 as n tends to infinity.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2079",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18174v1",
+    "status": "available",
+    "timestamp": "2026-06-18T14:02:50.731479+00:00",
+    "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every nonzero ideal I of the Gaussian integers \u2124[i], the rank-2 Euclidean lattice obtained by applying the canonical embedding a+bi \u21a6 (a,b) to I is well-rounded: its shortest nonzero vectors span \u211d\u00b2. Equivalently, if I = (\u03b1), then the shortest vectors are precisely the unit multiples \u00b1\u03b1 and \u00b1i\u03b1 under the embedding, giving two linearly independent equal-length minimal vectors.",
     "domains": [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2079",
+    "id": "fd_2080",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18920v1",
@@ -1734,13 +1749,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2080",
+    "id": "fd_2081",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18674v1",
     "status": "available",
     "timestamp": "2026-06-18T11:03:59.022678+00:00",
     "title": "Orbifold version of the uniform congruence spectral gap for geometrically finite thin subgroups of SO(n,1)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let K = \ud835\udd3d_{p^n} with p odd, regarded as an \ud835\udd3d_p-vector space, and let W \u2264 K be an \ud835\udd3d_p-linear subspace of dimension e. Write its subspace polynomial as P_W(X) = \u220f_{w \u2208 W} (X - w) = \u2211_{i=0}^e c_i X^{p^i}. Define the reversed Frobenius-twisted linearized polynomial F_W(X) = \u2211_{i=0}^e c_i^{p^{-i}} X^{p^{e-i}}, where p^{-i} denotes the inverse Frobenius power on K. Conjecture: the image of the \ud835\udd3d_p-linear map x \u21a6 F_W(x) is exactly the trace-orthogonal complement W^\u22a5 = { z \u2208 K | Tr_{K/\ud835\udd3d_p}(z w) = 0 for all w \u2208 W }. This is a finite-field linear algebra statement underlying the paper\u2019s adjoint-factorization construction and avoids formalizing algebraic curves.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2082",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18577v1",
+    "status": "available",
+    "timestamp": "2026-06-18T14:04:25.050589+00:00",
+    "title": "Image of the reversed subspace polynomial is the trace-orthogonal complement"
   },
   {
     "consumed_by_exp_id": "",
@@ -1814,7 +1844,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f6a45eec",
     "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Analysis",
@@ -1824,7 +1854,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -2943,7 +2973,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4b92e748",
     "description": "Cycle bfb62bb9 (Q=0.524) proved 22 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a minimal, self-contained core of the order-valuation program for truncated binary polynomials, avoiding any unverified functorial or uniqueness claims. Work in the concrete algebra `R_n := ",
     "domains": [
       "Novelty"
@@ -2952,7 +2982,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5736521220159152,
     "research_mode": "team",
     "source_exp_id": "bfb62bb9",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T10:49:09.086340+00:00",
     "title": "Close Proofs: These conjectures extend `Catalog/Bridges/CodeThresholdValuation.lean`"
   },
@@ -3150,7 +3180,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
-    "consumed_by_exp_id": "b46cc9cf",
+    "consumed_by_exp_id": "",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domains": [
       "EML",
@@ -3160,7 +3190,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:47.125386+00:00",
     "title": "EML Universal Approximation: Density of EML Functions"
   },
@@ -3540,7 +3570,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-Archimedean Probability via Surreal Numbers"
   },
   {
-    "consumed_by_exp_id": "2b9ab43b",
+    "consumed_by_exp_id": "",
     "description": "Inspired by the AdS/CFT correspondence, formalize a mathematical holographic principle: a theorem about n-dimensional structures (the bulk) has a dual (shorter) proof in (n-1)-dimensional boundary terms. Conjecture: Every proof by induction on a well-founded order of rank n has an equivalent proof by coinduction on the n-1 boundary. Test: find a concrete theorem (e.g., finite Ramsey) and show its inductive proof in R^n maps to a coinductive proof on S^{n-1}. Impact: a new holographic proof theory connecting algebraic topology to proof complexity.",
     "domains": [
       "Physics",
@@ -3550,7 +3580,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:26.259292+00:00",
     "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
   },
@@ -3765,7 +3795,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3afa2680",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -3775,7 +3805,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.490561+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
@@ -3915,7 +3945,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
   {
-    "consumed_by_exp_id": "82b8f05a",
+    "consumed_by_exp_id": "",
     "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
     "domains": [
       "Novelty",
@@ -3925,7 +3955,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.807837+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
