@@ -2338,35 +2338,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "Mathlib.NumberTheory.Zsqrtd.GaussianInt",
-      "Mathlib.RingTheory.Ideal.Basic",
-      "Mathlib.Analysis.InnerProductSpace.PiL2",
-      "Mathlib.LinearAlgebra.Span.Defs"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "For every nonzero ideal I of the Gaussian integers ℤ[i], the rank-2 Euclidean lattice obtained by applying the canonical embedding a+bi ↦ (a,b) to I is well-rounded: its shortest nonzero vectors span ℝ². Equivalently, if I = (α), then the shortest vectors are precisely the unit multiples ±α and ±iα under the embedding, giving two linearly independent equal-length minimal vectors.",
-    "domain_bridges": [
-      "canonical embedding of number-field ideals as Euclidean lattices",
-      "well-rounded lattices from algebraic integer ideals",
-      "multiplicative norm in ℤ[i] versus Euclidean vector norm"
-    ],
-    "domains": [
-      "Algebra",
-      "Cryptography"
-    ],
-    "id": "fd_2077",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Use that Gaussian integers form a Euclidean domain, hence every nonzero ideal is principal, say I = (α). Under the canonical embedding ℤ[i] → ℝ², multiplication by α is a rotation-scaling similarity of the square lattice ℤ². For any nonzero β ∈ ℤ[i], the squared Euclidean norm of αβ is normSq(α) * normSq(β), and normSq(β) ≥ 1, with equality exactly for the units ±1, ±i. Therefore the minimal vectors of the embedded ideal are the images of ±α and ±iα. The vectors α and iα are orthogonal and nonzero, hence span ℝ², proving well-roundedness.",
-    "research_mode": "team",
-    "source_exp_id": "2606.18920v1",
-    "status": "available",
-    "timestamp": "2026-06-18T08:03:43.657853+00:00",
-    "title": "Nonzero Gaussian integer ideal lattices are well-rounded"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "Mathlib/Combinatorics/SimpleGraph/Clique",
       "Mathlib/Combinatorics/SimpleGraph/Basic",
       "Mathlib/MeasureTheory/Measure/ProbabilityMeasure",
@@ -2391,39 +2362,6 @@
     "status": "available",
     "timestamp": "2026-06-18T11:02:58.622655+00:00",
     "title": "Initial-condition universality of the clique-number exponent in preferential attachment with edge steps"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Selberg's 3/16 theorem",
-      "Bourgain-Gamburd-Sarnak expansion machine",
-      "Mohammadi-Oh and Oh-Winter uniform exponential mixing for thin groups",
-      "Selberg lemma: finitely generated linear groups have torsion-free finite-index subgroups",
-      "Lean mathlib: GroupTheory.Subgroup.Basic",
-      "Lean mathlib: Topology.Algebra.Group",
-      "Lean mathlib: MeasureTheory.Measure.MeasureSpace"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "Conjecture: Let n >= 3 and let Γ be a geometrically finite, discrete, Zariski-dense thin subgroup of an arithmetic lattice Γ0 < SO(n,1)^∘ with critical exponent δ_Γ > 1/2. The uniform congruence spectral gap theorem for the congruence covers of Γ\\H^n remains true without assuming that Γ is torsion-free. Equivalently, after excluding finitely many primes, there is ε > 0 such that every square-free congruence cover has no new complementary-series spectrum with parameter in (δ_Γ - ε, δ_Γ). This is falsifiable by producing a geometrically finite arithmetic thin orbifold subgroup with δ_Γ > 1/2 whose congruence covers have new spectrum accumulating at δ_Γ.",
-    "domain_bridges": [
-      "geometrically finite hyperbolic orbifolds ↔ finite-index torsion-free manifold covers",
-      "critical exponent invariance ↔ finite-index subgroup growth equivalence",
-      "uniform spectral gap ↔ uniform exponential mixing of frame flow",
-      "thin arithmetic groups ↔ congruence expansion and superstrong approximation"
-    ],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2078",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Use Selberg's lemma to choose a torsion-free finite-index normal subgroup Γ' ≤ Γ. Geometric finiteness, Zariski density, arithmetic containment, thinness, and the critical exponent condition δ_{Γ'} = δ_Γ are preserved under finite index. Apply the torsion-free theorem of the paper to Γ'. Compare congruence covers of Γ and Γ' after enlarging the finite set of excluded primes; the Γ-orbifold spectrum embeds as the finite deck-invariant part of the Γ'-manifold spectrum. Therefore any sequence of new complementary-series eigenvalues for Γ accumulating at δ_Γ would give such a sequence for Γ', contradicting the theorem for Γ'.",
-    "research_mode": "team",
-    "source_exp_id": "2606.18674v1",
-    "status": "available",
-    "timestamp": "2026-06-18T11:03:59.022678+00:00",
-    "title": "Orbifold version of the uniform congruence spectral gap for geometrically finite thin subgroups of SO(n,1)"
   },
   {
     "ambition_level": "extension",
@@ -2457,38 +2395,6 @@
     "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "Mathlib.FieldTheory.Finite.Basic",
-      "Mathlib.FieldTheory.Finite.Trace",
-      "Mathlib.LinearAlgebra.FiniteDimensional",
-      "Mathlib.LinearAlgebra.Dual",
-      "Mathlib.Data.ZMod.Basic",
-      "Mathlib.RingTheory.Polynomial.Basic"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "Let K = 𝔽_{p^n} with p odd, regarded as an 𝔽_p-vector space, and let W ≤ K be an 𝔽_p-linear subspace of dimension e. Write its subspace polynomial as P_W(X) = ∏_{w ∈ W} (X - w) = ∑_{i=0}^e c_i X^{p^i}. Define the reversed Frobenius-twisted linearized polynomial F_W(X) = ∑_{i=0}^e c_i^{p^{-i}} X^{p^{e-i}}, where p^{-i} denotes the inverse Frobenius power on K. Conjecture: the image of the 𝔽_p-linear map x ↦ F_W(x) is exactly the trace-orthogonal complement W^⊥ = { z ∈ K | Tr_{K/𝔽_p}(z w) = 0 for all w ∈ W }. This is a finite-field linear algebra statement underlying the paper’s adjoint-factorization construction and avoids formalizing algebraic curves.",
-    "domain_bridges": [
-      "linearized polynomials ↔ finite-dimensional linear maps over ZMod p",
-      "subspace polynomials ↔ kernels of additive polynomial maps",
-      "field trace pairing ↔ adjoint linear maps",
-      "factorizations R + R* = F* ∘ aF ↔ radicals of quadratic forms controlling Artin-Schreier point counts"
-    ],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2079",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Formalize P_W as the monic additive polynomial with root set W. Show that the map induced by P_W has kernel W. Identify F_W as a Frobenius shift of the trace-adjoint of P_W. Use the finite-dimensional identity range(T†) = ker(T)^⊥ for a linear map T with respect to the nondegenerate trace pairing. Since Frobenius powers are automorphisms preserving dimensions and compatible with the coefficient twist in F_W, conclude range(F_W) = W^⊥.",
-    "research_mode": "team",
-    "source_exp_id": "2606.18577v1",
-    "status": "available",
-    "timestamp": "2026-06-18T14:04:25.050589+00:00",
-    "title": "Image of the reversed subspace polynomial is the trace-orthogonal complement"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Erdos-Ginzburg-Ziv theorem",
@@ -2520,6 +2426,128 @@
     "ambition_level": "extension",
     "catalog_references": [
       "Mathlib.Data.Finset.Card",
+      "Mathlib.Combinatorics.SimpleGraph.Basic",
+      "Mathlib.Analysis.SpecialFunctions.Log.Basic",
+      "Mathlib.Analysis.SpecialFunctions.Pow.Real"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer r ≥ 2 and every η > 0, there is a threshold d* such that every finite (r+1)-uniform hypergraph H with no Berge 2-cycle and no Berge 3-cycle, average degree d ≥ d*, and vertex set V satisfies α(H) ≥ (1 - η) * r^(-1/r) * (log d / d)^(1/r) * |V|. This conjectures that the paper's average-degree result for uncrowded hypergraphs remains true under the weaker local-sparsity condition, removing the assumption of no Berge 4-cycles.",
+    "domain_bridges": [
+      "hypergraph extremal theory to finite set systems in Lean",
+      "asymptotic average-degree bounds to quantified real inequalities",
+      "probabilistic nibble arguments to finite combinatorial existence theorems"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2081",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Adapt the paper's cleaning-plus-trace-nibble framework, but replace the use of Berge-4-cycle exclusion by a locally sparse codegree/triangle control lemma. First clean high r-degrees while preserving a positive fraction of vertices and the average-degree scale. Then run the trace nibble tracking all induced lower-layer maximum degrees. Prove that the binomial-type recurrence for the degree profile is unaffected, up to o(1), by the possible presence of Berge 4-cycles. The final accumulated selected set is independent and has the same leading constant r^(-1/r).",
+    "research_mode": "team",
+    "source_exp_id": "2606.18171v1",
+    "status": "available",
+    "timestamp": "2026-06-18T21:07:13.927171+00:00",
+    "title": "Average-degree Shearer bound for locally sparse uniform hypergraphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Mathlib.NumberTheory.Zsqrtd.GaussianInt",
+      "Mathlib.RingTheory.Ideal.Basic",
+      "Mathlib.Analysis.InnerProductSpace.PiL2",
+      "Mathlib.LinearAlgebra.Span.Defs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every nonzero ideal I of the Gaussian integers ℤ[i], the rank-2 Euclidean lattice obtained by applying the canonical embedding a+bi ↦ (a,b) to I is well-rounded: its shortest nonzero vectors span ℝ². Equivalently, if I = (α), then the shortest vectors are precisely the unit multiples ±α and ±iα under the embedding, giving two linearly independent equal-length minimal vectors.",
+    "domain_bridges": [
+      "canonical embedding of number-field ideals as Euclidean lattices",
+      "well-rounded lattices from algebraic integer ideals",
+      "multiplicative norm in ℤ[i] versus Euclidean vector norm"
+    ],
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_2082",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use that Gaussian integers form a Euclidean domain, hence every nonzero ideal is principal, say I = (α). Under the canonical embedding ℤ[i] → ℝ², multiplication by α is a rotation-scaling similarity of the square lattice ℤ². For any nonzero β ∈ ℤ[i], the squared Euclidean norm of αβ is normSq(α) * normSq(β), and normSq(β) ≥ 1, with equality exactly for the units ±1, ±i. Therefore the minimal vectors of the embedded ideal are the images of ±α and ±iα. The vectors α and iα are orthogonal and nonzero, hence span ℝ², proving well-roundedness.",
+    "research_mode": "team",
+    "source_exp_id": "2606.18920v1",
+    "status": "available",
+    "timestamp": "2026-06-18T08:03:43.657853+00:00",
+    "title": "Nonzero Gaussian integer ideal lattices are well-rounded"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Selberg's 3/16 theorem",
+      "Bourgain-Gamburd-Sarnak expansion machine",
+      "Mohammadi-Oh and Oh-Winter uniform exponential mixing for thin groups",
+      "Selberg lemma: finitely generated linear groups have torsion-free finite-index subgroups",
+      "Lean mathlib: GroupTheory.Subgroup.Basic",
+      "Lean mathlib: Topology.Algebra.Group",
+      "Lean mathlib: MeasureTheory.Measure.MeasureSpace"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let n >= 3 and let Γ be a geometrically finite, discrete, Zariski-dense thin subgroup of an arithmetic lattice Γ0 < SO(n,1)^∘ with critical exponent δ_Γ > 1/2. The uniform congruence spectral gap theorem for the congruence covers of Γ\\H^n remains true without assuming that Γ is torsion-free. Equivalently, after excluding finitely many primes, there is ε > 0 such that every square-free congruence cover has no new complementary-series spectrum with parameter in (δ_Γ - ε, δ_Γ). This is falsifiable by producing a geometrically finite arithmetic thin orbifold subgroup with δ_Γ > 1/2 whose congruence covers have new spectrum accumulating at δ_Γ.",
+    "domain_bridges": [
+      "geometrically finite hyperbolic orbifolds ↔ finite-index torsion-free manifold covers",
+      "critical exponent invariance ↔ finite-index subgroup growth equivalence",
+      "uniform spectral gap ↔ uniform exponential mixing of frame flow",
+      "thin arithmetic groups ↔ congruence expansion and superstrong approximation"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2083",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use Selberg's lemma to choose a torsion-free finite-index normal subgroup Γ' ≤ Γ. Geometric finiteness, Zariski density, arithmetic containment, thinness, and the critical exponent condition δ_{Γ'} = δ_Γ are preserved under finite index. Apply the torsion-free theorem of the paper to Γ'. Compare congruence covers of Γ and Γ' after enlarging the finite set of excluded primes; the Γ-orbifold spectrum embeds as the finite deck-invariant part of the Γ'-manifold spectrum. Therefore any sequence of new complementary-series eigenvalues for Γ accumulating at δ_Γ would give such a sequence for Γ', contradicting the theorem for Γ'.",
+    "research_mode": "team",
+    "source_exp_id": "2606.18674v1",
+    "status": "available",
+    "timestamp": "2026-06-18T11:03:59.022678+00:00",
+    "title": "Orbifold version of the uniform congruence spectral gap for geometrically finite thin subgroups of SO(n,1)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Mathlib.FieldTheory.Finite.Basic",
+      "Mathlib.FieldTheory.Finite.Trace",
+      "Mathlib.LinearAlgebra.FiniteDimensional",
+      "Mathlib.LinearAlgebra.Dual",
+      "Mathlib.Data.ZMod.Basic",
+      "Mathlib.RingTheory.Polynomial.Basic"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let K = 𝔽_{p^n} with p odd, regarded as an 𝔽_p-vector space, and let W ≤ K be an 𝔽_p-linear subspace of dimension e. Write its subspace polynomial as P_W(X) = ∏_{w ∈ W} (X - w) = ∑_{i=0}^e c_i X^{p^i}. Define the reversed Frobenius-twisted linearized polynomial F_W(X) = ∑_{i=0}^e c_i^{p^{-i}} X^{p^{e-i}}, where p^{-i} denotes the inverse Frobenius power on K. Conjecture: the image of the 𝔽_p-linear map x ↦ F_W(x) is exactly the trace-orthogonal complement W^⊥ = { z ∈ K | Tr_{K/𝔽_p}(z w) = 0 for all w ∈ W }. This is a finite-field linear algebra statement underlying the paper’s adjoint-factorization construction and avoids formalizing algebraic curves.",
+    "domain_bridges": [
+      "linearized polynomials ↔ finite-dimensional linear maps over ZMod p",
+      "subspace polynomials ↔ kernels of additive polynomial maps",
+      "field trace pairing ↔ adjoint linear maps",
+      "factorizations R + R* = F* ∘ aF ↔ radicals of quadratic forms controlling Artin-Schreier point counts"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2084",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize P_W as the monic additive polynomial with root set W. Show that the map induced by P_W has kernel W. Identify F_W as a Frobenius shift of the trace-adjoint of P_W. Use the finite-dimensional identity range(T†) = ker(T)^⊥ for a linear map T with respect to the nondegenerate trace pairing. Since Frobenius powers are automorphisms preserving dimensions and compatible with the coefficient twist in F_W, conclude range(F_W) = W^⊥.",
+    "research_mode": "team",
+    "source_exp_id": "2606.18577v1",
+    "status": "available",
+    "timestamp": "2026-06-18T14:04:25.050589+00:00",
+    "title": "Image of the reversed subspace polynomial is the trace-orthogonal complement"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Mathlib.Data.Finset.Card",
       "Mathlib.Data.Fintype.Basic",
       "Mathlib.Algebra.BigOperators.Fin",
       "Mathlib.Analysis.SpecialFunctions.Log.Basic",
@@ -2536,7 +2564,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2080",
+    "id": "fd_2085",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize finite k-uniform hypergraphs as finite set systems with predicates for independence, degree, average degree, and uncrowdedness. Prove or import the paper's maximum-degree shattering-threshold theorem. The main new combinatorial step would be an average-degree reduction preserving the leading constant: decompose or sparsify H into a large induced uncrowded subhypergraph whose effective maximum degree is asymptotically d while accounting for vertices removed into an independent reservoir. Then apply the maximum-degree theorem to the bounded-degree core and combine with the reservoir. In Lean, the conjecture itself only requires finite definitions plus Real.log and Real.rpow; the probabilistic proof can later be formalized through finite probability spaces or replaced by a certified deterministic existence argument.",
@@ -2545,6 +2573,34 @@
     "status": "available",
     "timestamp": "2026-06-18T16:05:12.158903+00:00",
     "title": "Average-degree shattering threshold for uncrowded uniform hypergraphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Mathlib.Combinatorics.SimpleGraph.Basic",
+      "Mathlib.Combinatorics.SimpleGraph.Connectivity",
+      "Mathlib.Data.Set.Finite",
+      "Mathlib.Data.Finset.Basic"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Every finite block graph has a vertex set S which is simultaneously a 2-packing and an isolating set. Equivalently, the closed neighborhoods of distinct vertices of S are pairwise disjoint, and every edge of the graph has at least one endpoint in the closed neighborhood of S.",
+    "domain_bridges": [
+      "Extends the paper's theorem that every tree has a packing isolating set from tree block-cut structure to clique-block structure.",
+      "Uses the block-cut tree representation of block graphs to transfer inductive arguments from trees to graphs whose blocks are cliques.",
+      "Relates 2-packings, isolating sets, and distance-2 domination through closed-neighborhood edge coverage."
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2086",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Induct on the number of blocks in the block-cut tree of the finite block graph. For a leaf block B attached at a cut vertex c, analyze whether c is already controlled by the inductive packing isolating set in the reduced block graph G - (B \\ {c}). If not, add a suitable non-cut vertex of B, or c itself when B is the only block, preserving pairwise disjointness of closed neighborhoods. Since B is a clique, covering one appropriate vertex's closed neighborhood covers all edges internal to B, and the leaf-block condition prevents unwanted interactions with previously chosen packing vertices.",
+    "research_mode": "team",
+    "source_exp_id": "2606.18172v1",
+    "status": "available",
+    "timestamp": "2026-06-18T21:08:20.524395+00:00",
+    "title": "Packing isolating sets exist in finite block graphs"
   },
   {
     "ambition_level": "extension",
@@ -3979,7 +4035,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "9afcaae7",
     "description": "Conjecture: For sufficiently capable transformer language models trained on next-token prediction, there exists a scale-dependent phase transition in the empirical singular-value spectra of specific learned weight matrices (especially attention output and MLP projection layers) such that models exhibiting strong multi-step reasoning have renormalized spectral statistics converging to a non-Wigner universality class with stable critical exponents, while weaker models remain in a Marchenko-Pastur-like regime. Test: Train model families across parameter scales, data curricula, and architectures; measure layerwise spectra, finite-size scaling, and critical exponents; then test whether emergence of reasoning benchmarks correlates sharply with the predicted spectral transition and whether interventions that shift spectra across the critical point causally improve or degrade reasoning. Refutation occurs if no reproducible universality class or phase boundary appears, or if spectral transition fails to predict reasoning emergence better than naive scale measures. Impact: This would provide a quantitative order parameter for emergent cognition in neural networks, connect deep learning to statistical physics and random matrix theory, and enable principled architecture/search methods that target reasoning-critical phases rather than brute-force scaling.",
     "domain_bridges": [],
     "domains": [
@@ -3992,7 +4048,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T16:54:32.770267+00:00",
     "title": "Spectral Universality of LLM Weight Matrices: Random-Matrix Phase Transitions in"
   },
@@ -4035,26 +4091,6 @@
     "status": "available",
     "timestamp": "2026-06-17T02:02:28.457322+00:00",
     "title": "Renormalization of Reasoning: Phase Transitions in Theorem-Proving Complexity"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "2710f166",
-    "description": "Conjecture: For any sufficiently expressive formal system with a fixed proof search procedure, there exists a scale-coarse-graining operator on proof states such that the induced renormalization flow has universality classes, and theorem families near critical fixed points exhibit polynomial-to-exponential transitions in provability complexity under small changes of axioms or heuristics. Test: Define coarse-grainings on proof-search trees for benchmark theorem families across multiple provers; measure whether rescaled search statistics collapse onto invariant flow curves and whether critical exponents predicting abrupt complexity transitions are stable across syntactic encodings. The conjecture is refuted if no encoding-robust fixed points, universality classes, or predictive critical exponents appear. Impact: This would enable a physics-style theory of theorem proving, identifying when tiny changes in representations or axiom sets trigger dramatic shifts in solvability, and could guide the design of provers, formal systems, and automated discovery pipelines.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_2054",
-    "lineage_refs": [],
-    "priority_score": 0.7,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-17T13:02:11.584379+00:00",
-    "title": "Renormalization of Proofs: Phase Transitions in Automated Theorem Search"
   },
   {
     "ambition_level": "extension",
@@ -4174,7 +4210,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3c627a3f",
     "description": "Cycle bfb62bb9 (Q=0.524) proved 22 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a minimal, self-contained core of the order-valuation program for truncated binary polynomials, avoiding any unverified functorial or uniqueness claims. Work in the concrete algebra `R_n := ",
     "domain_bridges": [],
     "domains": [
@@ -4186,7 +4222,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "bfb62bb9",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T10:49:09.086340+00:00",
     "title": "Close Proofs: These conjectures extend `Catalog/Bridges/CodeThresholdValuation.lean`"
   },
@@ -4308,26 +4344,6 @@
     "status": "available",
     "timestamp": "2026-06-03T19:55:28.479969+00:00",
     "title": "Idempotent Probability: Large Deviations"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "50e9a2da",
-    "description": "Prove neural network scaling laws from first principles. Derive power-law relationships between loss, model size, dataset size, and compute from the GP kernel spectrum.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "fd_0441",
-    "lineage_refs": [],
-    "priority_score": 0.5499999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:28.640557+00:00",
-    "title": "Scaling Laws from Statistical Mechanics"
   },
   {
     "ambition_level": "extension",
@@ -4751,26 +4767,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "0d2b0b43",
-    "description": "Prove that tropical curve counts equal classical Gromov-Witten invariants for toric surfaces. Formalize the correspondence theorem: each tropical curve lifts to a unique complex curve in the toric surface. Compute the tropical GW invariants for P^2.",
-    "domain_bridges": [],
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "id": "fd_0471",
-    "lineage_refs": [],
-    "priority_score": 0.3999999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:31.056465+00:00",
-    "title": "Tropical Curve Counting: Gromov-Witten Invariants"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Prove deep structural theorems about the Berggren tree of Pythagorean triples. Formalize the groupoid action on SL(3,Z), the prime distribution along hypotenuse lengths, and computational applications of the tree structure.",
     "domain_bridges": [],
@@ -4991,7 +4987,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "74320b24",
     "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
     "domain_bridges": [],
     "domains": [
@@ -5004,7 +5000,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.181414+00:00",
     "title": "Non-Archimedean Probability via Surreal Numbers"
   },
@@ -5031,7 +5027,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "edb2f51b",
     "description": "Formalize musical counterpoint rules (Fux's species counterpoint) as a category where objects are consonant intervals and morphisms are permitted voice leadings. Conjecture: The category of first-species counterpoint over a diatonic scale is equivalent to the thin category generated by a specific poset of 12 elements. Test: enumerate all valid first-species counterpoint motions and prove they form exactly this category. Impact: bridges music theory, order theory, and categorical logic.",
     "domain_bridges": [],
     "domains": [
@@ -5044,7 +5040,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.503715+00:00",
     "title": "Sonic Mathematics: Counterpoint as Category Theory"
   },
@@ -5431,26 +5427,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5230ead3",
-    "description": "In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnumber villagers. Conjecture: The optimal Bayesian strategy for villagers is to vote for the player with the highest posterior probability of being a werewolf, where the prior is k/n and the likelihood updates are based on the player's voting pattern and survival. More precisely, define the werewolf posterior P(W_i | evidence) using Bayes' theorem: P(W_i) = k/n (prior), P(evidence | W_i) = product of conditional probabilities of observed events given that player i is a werewolf. The optimal strategy maximizes P(villagers win) = P(correct elimination at each day round). For n=7, k=2: the villagers' win probability with optimal Bayesian play is approximately 0.36 (known from game theory). Conjecture: For general n and k, the villagers' win probability is approximately C * (1 - k/(n-k))^2 where C is a constant depending on the information structure. Test: simulate 10^6 games with n=7 to n=20 players and Bayesian villagers, measure the win probability, and fit to the conjectured formula. Impact: social deduction has an optimal Bayesian strategy, and the werewolves' advantage scales as (k/(n-k))^2.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0051",
-    "lineage_refs": [],
-    "priority_score": 0.05,
-    "proof_strategy": "Define the Bayesian villager strategy: at each day round, each villager computes P(W_i | evidence) for all players i, where evidence includes voting patterns and survival. Update rule: P(W_i | day_vote) proportional to P(day_vote | W_i) * P(W_i). Key likelihood: a werewolf votes to eliminate a villager with probability p_w (strategic) and a villager votes randomly with probability 1/(n-k) for each remaining player. P(villager votes for j | i is werewolf) = p_w * I(j is villager) / (n-k) + (1-p_w) * 1/(n-1). For n=7, k=2: compute optimal p_w by backward induction. The game tree has depth at most 5 (n-k rounds at most). Compute P(villagers win) by Monte Carlo simulation with 10^6 trials. For general n, k: the conjectured formula P(villagers win) = C * (1 - k/(n-k))^2 comes from the observation that each day round eliminates a werewolf with probability k/(n-1) * (1 + information_advantage), so the expected number of werewolves eliminated before all villagers die is (n-k) * k/(n-1) * C'. Simplify to get C * (1 - k/(n-k))^2. Test: verify for n=7 to n=20.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.593085+00:00",
-    "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Anyon braiding in topological quantum computing gives unitary matrices from the braid group B_n. The Jones representation rho_k: B_n -> U((k-1)(n-1)+1) at root of unity e^{2*pi*i/k} is conjectured to be universal for quantum computation when k >= 3 and n >= 4. Conjecture: the set of all braids in B_4 under the Jones representation at k=5 generates a dense subgroup of SU(3). More precisely, the image rho_5(B_4) is an infinite subgroup of SU(3) that is not contained in any proper closed subgroup. This means that topological quantum computing with Fibonacci anyons (k=5) is universal: any unitary in SU(3) can be approximated to arbitrary precision by braiding 4 anyons. The key: the Jones representation at k=5 gives 3x3 matrices, and the braid generators sigma_1, sigma_2, sigma_3 generate a dense subgroup of SU(3). Test: compute the Jones representation at k=5 for B_4, verify that sigma_1 * sigma_2 * sigma_3 has infinite order, and check that the group generated by sigma_1, sigma_2, sigma_3 is dense in SU(3) by the Solovay-Kitaev theorem. Impact: braiding anyons is universal for quantum computation. The braid group B_4 at k=5 is a quantum gate set.",
     "domain_bridges": [],
@@ -5547,26 +5523,6 @@
     "status": "available",
     "timestamp": "2026-06-01T12:30:30.807837+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "d6f5cc61",
-    "description": "A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distribution on G. Conjecture: for the Cayley graph Cay(G, S) where G is a finite group and S is a symmetric generating set, the quantum walk mixes in O(sqrt(|G|) * log(|G|)) steps, which is quadratically faster than the classical random walk (which takes O(|G|^2) steps for the spectral gap to kick in). The mixing time is determined by the spectral gap of U: tau_mix ~ 1/gap where gap = 1 - |lambda_2| and lambda_2 is the second-largest eigenvalue of U. Conjecture: for Cay(G, S) with S = the set of transpositions in S_n, the spectral gap of U is Omega(1/n), giving a mixing time of O(n * log(n)). This matches the known classical mixing time of O(n * log(n)) for the random transposition walk on S_n. The quantum advantage comes from the quadratically faster convergence of the probability distribution, not from the spectral gap. Test: simulate quantum random walks on Cayley graphs of S_n, S_n, A_5, and Z_n, measure the mixing time, and verify tau_mix = O(sqrt(|G|) * log(|G|)). Impact: quantum random walks mix quadratically faster than classical random walks on Cayley graphs. The quadratic speedup is universal.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0095",
-    "lineage_refs": [],
-    "priority_score": 0.05,
-    "proof_strategy": "Define quantum random walk on Cay(G, S): the state space is l^2(G), the unitary operator is U = sum_{s in S} |s><0| (or more precisely, U = DFT_G * V where V is the coin operator). The continuous-time walk: H = sum_{s in S} (|0><s| + |s><0|) (the adjacency matrix of Cay(G, S) as a Hamiltonian). The evolution: |psi(t)> = e^{-iHt}|psi(0)>. The probability of being at g at time t: P_t(g) = |<g|e^{-iHt}|0>|^2. The mixing time: tau_mix = min{t : max_g |P_t(g) - 1/|G|| < epsilon}. For the continuous-time walk on Cay(Z_n, {+1, -1}): H is the circulant matrix with eigenvalues lambda_k = 2*cos(2*pi*k/n). The spectral gap is |lambda_1 - lambda_0| = 2 - 2*cos(2*pi/n) ~ 4*pi^2/n^2 for large n. Mixing time: tau_mix ~ n^2/(4*pi^2) * log(n). Classical mixing time: tau_classical ~ n^2 * log(n). So the quantum walk has the SAME mixing time as the classical walk! The quadratic speedup conjecture is WRONG for the continuous-time walk. The correct statement: for the discrete-time coined walk, the quantum walk reaches a 'limiting distribution' (not uniform, but periodic) in O(sqrt(|G|)) steps. The quantum walk does NOT mix to uniform — it oscillates. The 'mixing' is in the sense of time-averaged distribution, which converges in O(sqrt(|G|)) steps. Test: simulate discrete-time quantum walk on Cay(Z_n, {+1, -1}) and Cay(S_n, transpositions), measure time-averaged distribution, verify convergence in O(sqrt(|G|)).",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.827686+00:00",
-    "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
     "ambition_level": "extension",

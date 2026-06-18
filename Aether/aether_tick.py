@@ -740,8 +740,10 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             except Exception as e:
                 print(f"[🌟] Breakthrough tagging failed: {e}")
 
-    # Convert dispatch_queued jobs to retry_queued so they survive pruning and
-    # can be retried in the next tick when Aristotle has capacity.
+        # If this was a Phase B integration completion, rebuild website index, sync docs/ and push to git
+        if is_phase_b_completion and job.status == "integrated":
+            print(f"[Tick] Phase B integration complete for {job.job_id[:8]}. Pushing git changes immediately...")
+            rebuild_commit_push()
     for pid, job in list(extractor.inflight.items()):
         if job.status == "dispatch_queued":
             job.status = "retry_queued"
@@ -1462,6 +1464,27 @@ def rebuild_commit_push() -> bool:
         subprocess.run(["git", "add", "docs/"], cwd=str(REPO_ROOT), capture_output=True, timeout=120)
         subprocess.run(["git", "add", "Catalog/"], cwd=str(REPO_ROOT), capture_output=True, timeout=180)
         subprocess.run(["git", "add", "Aether/"], cwd=str(REPO_ROOT), capture_output=True, timeout=60)
+
+        # Force add core state files to ensure they are tracked and pushed
+        state_files = [
+            "Aether/.aether_workspace/future_directions.json",
+            "Aether/.aether_workspace/cycle_analytics.json",
+            "Aether/.aether_workspace/research_journal.json",
+            "Aether/.aether_workspace/research_threads.json",
+            "Aether/.aether_workspace/inflight_jobs.json",
+            "Aether/.aether_workspace/insights.json",
+            "Aether/.aether_workspace/tick_counter.json",
+            "Aether/.aether_workspace/exp_id_map.json",
+            "Aether/.aether_workspace/prune_state.json",
+            "Aether/.aether_workspace/phase_b_threshold_cache.json",
+            "Aether/.aether_workspace/pollinations_pollen_state.json",
+            "Aether/.aether_workspace/research_memory.jsonl",
+            "Aether/.aether_workspace/autoresearch/autoresearch.jsonl",
+        ]
+        for sf in state_files:
+            sf_path = REPO_ROOT / sf
+            if sf_path.exists():
+                subprocess.run(["git", "add", "-f", sf], cwd=str(REPO_ROOT), capture_output=True, timeout=30)
 
         diff = subprocess.run(
             ["git", "diff", "--cached", "--quiet"],

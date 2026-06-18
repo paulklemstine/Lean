@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6c118cd3",
     "filename": "proof_automation_custom_lean_4_tactics.json",
     "pkg_num": 197,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4716,
     "title": "Strong Divisibility Sequences as Lattice Homomorphisms"
   },
   {
@@ -6041,8 +6041,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "proof_automation_custom_lean_4_tactics",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4716,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Strong Divisibility Sequences as Lattice Homomorphisms"
     }

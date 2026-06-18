@@ -1,0 +1,3985 @@
+{
+  "breakthroughs": [
+    {
+      "cycle_id": "6f1514f1",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Lattice Shape and Parametric Separation of the Poset of p-Degrees\n\n## Synthesis\n\nThis cycle pushed the order-theoretic core of the Cook–Reckhow program\n(`Catalog/Logic/ProofComple",
+      "quality_score": 0.70124,
+      "sorry_count": 1,
+      "theorem_count": 16,
+      "timestamp": "2026-06-13T23:54:37",
+      "title": "Close Proofs: Order-theoretic core of the Cook–Reckhow program built i"
+    },
+    {
+      "cycle_id": "126a3d45",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Pisano Period as a Group Order (Duality & Representation)\n\n## Synthesis\n\nThis cycle re-cast the **Pisano period** `π(m)` — the period of the Fibonacci\nsequence modulo `m` — n",
+      "quality_score": 0.7108000000000001,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-13T23:54:58",
+      "title": "Deepening: This cycle isolated the *entry point* (rank of apparition) `z(p) = ` least `k > "
+    },
+    {
+      "cycle_id": "7b63a6df",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Algebra of Combinatorial Species\n\n## Synthesis\n\nThe catalog file `Applications/CombinatorialSpecies.lean` built the exponential-generating-function\n(EGF) dictionary for Joyal",
+      "quality_score": 0.7581655172413794,
+      "sorry_count": 7,
+      "theorem_count": 203,
+      "timestamp": "2026-06-14T01:03:12",
+      "title": "Deepening: The file `Applications/CombinatorialSpecies.lean` originally established the exp"
+    },
+    {
+      "cycle_id": "d93eaf52",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Persistent-Homology Stability (Boltzmann Bridge IV)\n\n## Synthesis\n\n`Applications/BoltzmannBridge/BottleneckStability.lean` closes the catalog's\npersistent-homology arc. The earli",
+      "quality_score": 0.7654400000000001,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-14T03:18:42",
+      "title": "`Applications/BoltzmannBridge/BottleneckStability.lean` closes the catalog's"
+    },
+    {
+      "cycle_id": "72c0fc14",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Intersection Forms and the Smooth 4D Poincaré Frontier\n\n## Synthesis\n\nThe `SmoothPoincare` nucleus now contains three layers. `IntersectionForms.lean`\nfixes the algebraic vocabula",
+      "quality_score": 0.73968,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-14T03:19:02",
+      "title": "The file `IntersectionForms.lean` formalizes the algebraic core of four-dimensio"
+    },
+    {
+      "cycle_id": "a4cf656f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Hodge–Laplacian Message Passing, Second Cycle\n\n## Synthesis\n\nThis cycle pushed the *spectral depth threshold* program of\n`HodgeSpectralThreshold.lean` forward along two of its ow",
+      "quality_score": 0.7568800000000001,
+      "sorry_count": 3,
+      "theorem_count": 0,
+      "timestamp": "2026-06-14T05:56:16",
+      "title": "The file `Catalog/MachineLearning/HodgeSpectralThreshold.lean` extracts a rigoro"
+    },
+    {
+      "cycle_id": "4302919c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Path Spaces, h-Levels, and Contractibility as a Universal Property\n\n## Synthesis\n\nThis cycle pushed the catalog's synthetic homotopy module `Logic.HomotopyTypeTheory`\n(`HoTT.IsCo",
+      "quality_score": 0.726744433497537,
+      "sorry_count": 2,
+      "theorem_count": 203,
+      "timestamp": "2026-06-14T06:35:32",
+      "title": "This cycle was about *closing proofs* in the Fibonacci primitive-divisor program"
+    },
+    {
+      "cycle_id": "5af43ad7",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Hodge–Laplacian Message Passing, Third Cycle\n\n## Synthesis\n\nThis cycle closed two of the standing conjectures of the *spectral depth threshold* /\n*full Hodge decomposition* progr",
+      "quality_score": 0.7068800000000001,
+      "sorry_count": 3,
+      "theorem_count": 0,
+      "timestamp": "2026-06-14T07:10:00",
+      "title": "This cycle pushed the *spectral depth threshold* program of"
+    },
+    {
+      "cycle_id": "e955f9f8",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Boundedness and Density in the Order Type of the p-Degrees\n\n## Synthesis\n\nThe order-theoretic core of the Cook–Reckhow program in this catalog has, over successive\ncycles, been as",
+      "quality_score": 0.721521095890411,
+      "sorry_count": 7,
+      "theorem_count": 219,
+      "timestamp": "2026-06-14T07:43:41",
+      "title": "The order-theoretic core of the Cook–Reckhow program in this catalog has, over s"
+    },
+    {
+      "cycle_id": "87e9d710",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Hodge–Laplacian Message Passing, Fourth Cycle\n\n## Synthesis\n\nThis cycle promoted the *Hodge–Betti dimension count* of `HodgeBettiRank.lean` from a numerical\nequality to two genui",
+      "quality_score": 0.7047844776119403,
+      "sorry_count": 10,
+      "theorem_count": 335,
+      "timestamp": "2026-06-14T08:51:49",
+      "title": "This cycle closed two of the standing conjectures of the *spectral depth thresho"
+    },
+    {
+      "cycle_id": "73abb816",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Fibonacci apparition adjunction and the road to Carmichael's tail\n\n## Synthesis\n\nThis cycle stopped treating the rank of apparition `fibRank` as an ad-hoc arithmetic\ngadget a",
+      "quality_score": 0.7671145762711864,
+      "sorry_count": 9,
+      "theorem_count": 177,
+      "timestamp": "2026-06-14T08:52:15",
+      "title": "This cycle treated the rank of apparition `fibRank` not as an ad-hoc arithmetic"
+    },
+    {
+      "cycle_id": "de15e0b3",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Fibonacci Law of Apparition as an Arithmetic-Height / Tropical Duality\n\n## Synthesis\n\nThis cycle closed a concrete gap between two halves of the catalog that had only been\nli",
+      "quality_score": 0.7247030769230769,
+      "sorry_count": 1,
+      "theorem_count": 52,
+      "timestamp": "2026-06-14T09:26:05",
+      "title": "This cycle closed a concrete gap between two halves of the catalog that had only"
+    },
+    {
+      "cycle_id": "06bed695",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: The Full Order Type of the p-Degrees\n\n## Synthesis\n\nThe order-theoretic core of the Cook–Reckhow program in this catalog has, over successive\ncycles, been assembled from the simul",
+      "quality_score": 0.7543200000000001,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-06-14T10:01:46",
+      "title": "Close Proofs: The order-theoretic core of the Cook–Reckhow program in this catalog h"
+    },
+    {
+      "cycle_id": "9812538e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Rank of Apparition as a Lattice Morphism\n\n## Synthesis\n\nThe catalog's rank-of-apparition thread (`RankOfApparition.lean`,\n`UnifiedRankOfApparition.lean`) had distilled the \"L",
+      "quality_score": 0.74728,
+      "sorry_count": 2,
+      "theorem_count": 0,
+      "timestamp": "2026-06-14T11:02:59",
+      "title": "Close Proofs: This cycle closed a concrete gap between two halves of the catalog tha"
+    },
+    {
+      "cycle_id": "8e266d30",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Interleaving Metric Quotient (Boltzmann Bridge VI)\n\n## Synthesis\n\n`Applications/BoltzmannBridge/InterleavingQuotient.lean` discharges **Future\nDirection 1** of Boltzmann Brid",
+      "quality_score": 0.7527200000000001,
+      "sorry_count": 5,
+      "theorem_count": 0,
+      "timestamp": "2026-06-14T11:03:16",
+      "title": "`Applications/BoltzmannBridge/InterleavingQuotient.lean` discharges **Future"
+    },
+    {
+      "cycle_id": "5c6d3fa8",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Hodge–Laplacian Message Passing: the Convergence Cycle\n\n## Synthesis\n\nThe previous strands of this project pinned down two complementary pictures of\ncombinatorial Hodge theory on",
+      "quality_score": 0.7638400000000001,
+      "sorry_count": 4,
+      "theorem_count": 32,
+      "timestamp": "2026-06-14T12:10:40",
+      "title": "The previous cycle established the **spectral depth threshold** picture"
+    },
+    {
+      "cycle_id": "636bb98c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Boltzmann Bridge VII: the Interleaving Distance is a *Metric*\n\n## Synthesis\n\n`Applications/BoltzmannBridge/InterleavingClosure.lean` discharges **Future\nDirection 1** of Boltzman",
+      "quality_score": 0.7054400000000001,
+      "sorry_count": 14,
+      "theorem_count": 233,
+      "timestamp": "2026-06-14T12:45:06",
+      "title": "Close Proofs: `Applications/BoltzmannBridge/InterleavingQuotient.lean` discharges **"
+    },
+    {
+      "cycle_id": "6fec53b5",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — A Unified Primitive-Divisor Engine, Sixth Cycle\n\n## Synthesis\n\nThis cycle delivered `Catalog/Applications/StrongDivPrimitiveCriterion.lean`, a **self-contained,\n`sorry`-free** fi",
+      "quality_score": 0.77481,
+      "sorry_count": 2,
+      "theorem_count": 16,
+      "timestamp": "2026-06-14T13:20:03",
+      "title": "This cycle delivered `FibCarmichaelStructure.lean`, a **self-contained, `sorry`-"
+    },
+    {
+      "cycle_id": "6c2e238b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Fibonacci Rank of Apparition, Structure Cycle\n\n## Synthesis\n\nThis cycle delivered `Catalog/Novelty/FibCarmichaelStructure.lean`, a self-contained,\n`sorry`-free deepening of the e",
+      "quality_score": 0.8078933333333334,
+      "sorry_count": 2,
+      "theorem_count": 9,
+      "timestamp": "2026-06-14T15:03:18",
+      "title": "Deepening: This cycle delivered `FibCarmichaelStructure.lean`, a **self-contained, `sorry`-"
+    },
+    {
+      "cycle_id": "a7e4a8d3",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Rank-of-Apparition Engine, Seventh Cycle\n\n## Synthesis\n\nThis cycle delivered `Catalog/Applications/StrongDivPrimitiveCriterion.lean`, a self-contained,\n`sorry`-free upper flo",
+      "quality_score": 0.7199621052631578,
+      "sorry_count": 2,
+      "theorem_count": 19,
+      "timestamp": "2026-06-14T15:03:40",
+      "title": "Close Proofs: This cycle delivered `Catalog/Applications/StrongDivPrimitiveCriterion"
+    },
+    {
+      "cycle_id": "0914fa07",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Boltzmann Bridge IX: The Persistence Functor and the Representation Theorem\n\n## Synthesis\n\n`Catalog/Applications/BoltzmannBridge/InterleavingFunctor.lean` (Bridge IX)\ndischarges",
+      "quality_score": 0.7653149514563107,
+      "sorry_count": 8,
+      "theorem_count": 206,
+      "timestamp": "2026-06-14T15:42:20",
+      "title": "`Applications/BoltzmannBridge/InterleavingIsometry.lean` discharges **Future"
+    },
+    {
+      "cycle_id": "c73ec1f1",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Hodge–Laplacian Message Passing as a Discrete Heat Semigroup\n\n## Synthesis\n\nThis cycle closed the conceptual loop opened by the spectral-depth-threshold work\n(`Speculative.AutoRe",
+      "quality_score": 0.7388800000000001,
+      "sorry_count": 2,
+      "theorem_count": 4,
+      "timestamp": "2026-06-14T16:16:41",
+      "title": "Close Proofs: This cycle closes the conceptual loop opened by the two preceding cycl"
+    },
+    {
+      "cycle_id": "f164e37c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Hodge–Laplacian Message Passing, Seventh Cycle\n\n## Synthesis\n\nThis cycle carried the discrete Hodge program from its **operator-algebra / spectral** layer\n(sixth cycle: `HodgeSpe",
+      "quality_score": 0.7433942857142857,
+      "sorry_count": 2,
+      "theorem_count": 14,
+      "timestamp": "2026-06-14T16:16:58",
+      "title": "This cycle pushed the discrete Hodge program from its *geometric/decomposition* "
+    },
+    {
+      "cycle_id": "bc66959c",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Boltzmann Bridge IX: the Interleaving Metric is *Geodesic*\n\n## Synthesis\n\n`Applications/BoltzmannBridge/InterleavingGeodesic.lean` closes the\npersistence-stability arc's metric s",
+      "quality_score": 0.7748660869565218,
+      "sorry_count": 5,
+      "theorem_count": 69,
+      "timestamp": "2026-06-14T16:17:29",
+      "title": "`Applications/BoltzmannBridge/InterleavingGeodesic.lean` closes the"
+    },
+    {
+      "cycle_id": "d5286918",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Hodge–Laplacian Message Passing, Seventh Cycle\n\n## Synthesis\n\nThe sixth cycle (`Speculative/AutoResearch/HodgeMessagePassingEnergy.lean`) lifted the\nfifth cycle's *pointwise* con",
+      "quality_score": 0.7285881081081081,
+      "sorry_count": 14,
+      "theorem_count": 222,
+      "timestamp": "2026-06-14T16:51:16",
+      "title": "The fifth cycle established *pointwise* convergence of gradient message passing"
+    },
+    {
+      "cycle_id": "24067fd2",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Apparition–Order Bridge (Local-to-Global / Duality cycle)\n\n## Synthesis\n\nThis cycle delivered `Catalog/Bridges/ApparitionOrderBridge.lean`, a `sorry`-free file that\n**represe",
+      "quality_score": 0.7492381651376147,
+      "sorry_count": 16,
+      "theorem_count": 218,
+      "timestamp": "2026-06-14T16:51:36",
+      "title": "This cycle delivered `Catalog/Bridges/ApparitionOrderBridge.lean`, a self-contai"
+    },
+    {
+      "cycle_id": "47f4bb3f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Hodge–Laplacian Message Passing, Post Deep-Limit Cycle\n\n## Synthesis\n\nThis cycle (`HodgeDeepLimit.lean`) closed the loop from *\"the residual energy gets\nsmall\"* to *\"the network",
+      "quality_score": 0.7286333944954129,
+      "sorry_count": 14,
+      "theorem_count": 218,
+      "timestamp": "2026-06-14T16:51:59",
+      "title": "The previous cycles established two layers of the spectral-depth picture for"
+    },
+    {
+      "cycle_id": "79dd61d7",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Eckmann–Hilton Bridge (Homotopy & Path-Spaces cycle)\n\n## Synthesis\n\nThis cycle delivered `Catalog/Speculative/AutoResearch/EckmannHiltonMonoid.lean`, a\n`sorry`-free file that",
+      "quality_score": 0.7172923076923078,
+      "sorry_count": 2,
+      "theorem_count": 26,
+      "timestamp": "2026-06-14T18:01:16",
+      "title": "Close Proofs: This cycle delivered `Catalog/Bridges/ApparitionOrderBridge.lean`, a s"
+    },
+    {
+      "cycle_id": "d6769d5d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Boltzmann Bridge IX: Representation & Edge-Realization\n\n## Synthesis\n\n`Applications/BoltzmannBridge/InterleavingRepresentation.lean` (Bridge IX) takes\nthe metric theory of persis",
+      "quality_score": 0.74884,
+      "sorry_count": 2,
+      "theorem_count": 20,
+      "timestamp": "2026-06-14T18:34:31",
+      "title": "Deepening: `Applications/BoltzmannBridge/InterleavingIsometry.lean` discharges **Future"
+    },
+    {
+      "cycle_id": "5a4a0b2c",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Boltzmann Bridge X: The Path Space of Filtrations\n\n## Synthesis\n\nBridge IX (`InterleavingGeodesic.lean`) gave the persistence-stability arc its first\nexplicit *path of filtration",
+      "quality_score": 0.7868,
+      "sorry_count": 2,
+      "theorem_count": 30,
+      "timestamp": "2026-06-14T19:09:33",
+      "title": "Deepening: `Applications/BoltzmannBridge/InterleavingGeodesic.lean` closes the"
+    },
+    {
+      "cycle_id": "36dba103",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Boltzmann Bridge X: Primitive Divisors as a Strong-Divisibility Phenomenon\n\n## Synthesis\n\nThe Carmichael arc of this catalog set out to prove that every Fibonacci number `F(n)`\nw",
+      "quality_score": 0.7248000000000001,
+      "sorry_count": 3,
+      "theorem_count": 175,
+      "timestamp": "2026-06-14T21:35:45",
+      "title": "Close Proofs: The Boltzmann Bridge arc has, over several cycles, reduced the entire "
+    },
+    {
+      "cycle_id": "70f20089",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — The Fundamental Theorem of Identity Systems and Homotopy-Initial Families\n\n## Synthesis of this cycle\n\nThe catalog's synthetic-HoTT layer (`Catalog/Logic/HoTT/Foundations.lean`)",
+      "quality_score": 0.74211,
+      "sorry_count": 1,
+      "theorem_count": 24,
+      "timestamp": "2026-06-14T22:46:33",
+      "title": "Close Proofs: The catalog's synthetic-HoTT layer (`Catalog/Logic/HoTT/Foundations.le"
+    },
+    {
+      "cycle_id": "32c81afa",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Boltzmann Bridge XI: Convexity & Bicombing of Interleaving Geodesics\n\n## Synthesis\n\nThe persistence-stability arc of the catalog has climbed a ladder of structure: a\nrelational p",
+      "quality_score": 0.7607163636363636,
+      "sorry_count": 1,
+      "theorem_count": 22,
+      "timestamp": "2026-06-15T01:25:05",
+      "title": "The persistence-stability arc of the catalog climbed a ladder of structure: a"
+    },
+    {
+      "cycle_id": "51575ef7",
+      "domain": "Bridges",
+      "key_insight": "# FUTURE DIRECTIONS — Neural observation pseudometrics ↔ proof-spectrum congruence kernels\n\nThis cycle established the functor\n\n```\nbehaviorCongruence : AlgNeuralSystem R K α  ⟶  SRCong R\n```\n\nsending",
+      "quality_score": 0.794,
+      "sorry_count": 2,
+      "theorem_count": 68,
+      "timestamp": "2026-06-15T06:29:50",
+      "title": "Functorial comparison between neural observation pseudometrics and proof-spectrum congruence kernels"
+    },
+    {
+      "cycle_id": "a64f762c",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Functorial Lipschitz comparison: valuation depth ↔ tropical valuation objects\n\nThis cycle established that **valuation depth is the logarithmic shadow of the tropical\nLipschitz c",
+      "quality_score": 0.70472,
+      "sorry_count": 3,
+      "theorem_count": 6,
+      "timestamp": "2026-06-15T06:54:21",
+      "title": "Functorial Lipschitz comparison between valuation depth and tropical valuation objects"
+    },
+    {
+      "cycle_id": "b9cc2fac",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Categorical Tropical Rips Interleaving\n\nThis cycle established, in `Catalog/Bridges/CategoricalTropicalRipsInterleaving.lean`, a\nself-contained, fully-verified bridge between **c",
+      "quality_score": 0.7242,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-06-15T09:01:43",
+      "title": "(in `Catalog/Bridges/CategoricalTropicalRipsInterleaving."
+    },
+    {
+      "cycle_id": "afe8c8b6",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Neural Observation Pseudometrics ↔ Proof Spectra\n\nThese conjectures extend the bridge developed in\n`Catalog/Bridges/NeuralPseudometricProofSpectrumFunctor.lean` and its functoria",
+      "quality_score": 0.7216,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-06-15T10:38:08",
+      "title": "Close Proofs: Functorial comparison between neural observation pseudometrics and pro"
+    },
+    {
+      "cycle_id": "cb2c4d8f",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Categorical Tropical Rips Interleaving (Rank & Shift cycle)\n\nThis cycle added two fully-verified files (0 sorries) extending\n`Bridges.CategoricalTropicalRipsInterleaving`:\n\n- `Br",
+      "quality_score": 0.7260899999999999,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-06-15T10:38:36",
+      "title": "This cycle established, in `Catalog/Bridges/CategoricalTropicalRipsInterleaving."
+    },
+    {
+      "cycle_id": "2086db82",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — Intersection Form Classification via Self-Dual Code Direct Sums\n\nThis cycle added `CodeDirectSum.lean`: the direct sum (coordinate concatenation)\n`C ⊕c D` of binary codes, with c",
+      "quality_score": 0.70696,
+      "sorry_count": 1,
+      "theorem_count": 21,
+      "timestamp": "2026-06-15T11:51:06",
+      "title": "Intersection Form Classification Pipeline via Self-Dual Code Direct Sums"
+    },
+    {
+      "cycle_id": "999c0f6b",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Valuation-Depth → Tropical Functor\n\nDerived from the verified results in\n`Catalog/Bridges/ValuationDepthTropicalFunctor.lean` (foundations) and\n`Catalog/Bridges/ValuationDepthFol",
+      "quality_score": 0.7756000000000001,
+      "sorry_count": 1,
+      "theorem_count": 17,
+      "timestamp": "2026-06-16T01:42:32",
+      "title": "Follow-up conjectures arising from `Catalog/Bridges/ValuationDepthTropicalFuncto"
+    },
+    {
+      "cycle_id": "3fd7a316",
+      "domain": "Probability",
+      "key_insight": "# FUTURE DIRECTIONS — Functorial Tropical Ultrametric from Pythagorean Lorentz Triples\n\nThis cycle produced two compiling, `sorry`-free Lean files (standard axioms only):\n\n- `Catalog/Bridges/Functoria",
+      "quality_score": 0.8053600000000001,
+      "sorry_count": 0,
+      "theorem_count": 25,
+      "timestamp": "2026-06-16T03:36:41",
+      "title": "`Catalog/Bridges/FunctorialTropicalPythagorean.lean` (0 sorr"
+    },
+    {
+      "cycle_id": "6f9401e1",
+      "domain": "NumberTheory",
+      "key_insight": "# FUTURE DIRECTIONS — Valuation-Depth → Tropical Functor\n\nThis document collects bold, falsifiable conjectures arising from the deepening cycle\nrecorded in:\n\n* `Catalog/Bridges/ValuationDepthTropicalF",
+      "quality_score": 0.72651,
+      "sorry_count": 1,
+      "theorem_count": 17,
+      "timestamp": "2026-06-16T04:13:04",
+      "title": "Deepening: Follow-up conjectures arising from `Catalog/Bridges/ValuationDepthTropicalFuncto"
+    },
+    {
+      "cycle_id": "29017e68",
+      "domain": "Physics",
+      "key_insight": "# FUTURE_DIRECTIONS — Rips Filtrations ↔ Tropical Valuation Objects\n\nCycle output. This cycle formalized, in Lean 4 (0 sorries, only the standard\n`propext`/`Classical.choice`/`Quot.sound` axioms), the",
+      "quality_score": 0.7856000000000001,
+      "sorry_count": 0,
+      "theorem_count": 28,
+      "timestamp": "2026-06-16T04:49:38",
+      "title": "Follow-up conjectures arising from `Catalog/Bridges/RipsTropicalFunctor.lean`, w"
+    },
+    {
+      "cycle_id": "6ce4a7be",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Metric Filtration Rank Profiles as Tropical Valuation Objects\n\nThis research cycle established (file\n`Catalog/Bridges/MetricFiltrationTropicalProfile.lean`, all theorems verified",
+      "quality_score": 0.76292,
+      "sorry_count": 0,
+      "theorem_count": 39,
+      "timestamp": "2026-06-16T04:50:02",
+      "title": "Metric filtration rank profiles as tropical valuation objects"
+    },
+    {
+      "cycle_id": "c38e2bf9",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Tropical weight enumerator profiles for binary linear codes\n\nThis cycle introduced `TropicalWeightEnumerator.lean`, the **min-plus tropicalization**\nof the classical Hamming weigh",
+      "quality_score": 0.7101600000000001,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-06-16T07:28:43",
+      "title": "Tropical weight enumerator profiles for binary linear codes via Smooth Poincaré primitives"
+    },
+    {
+      "cycle_id": "e42393e4",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Weight-Threshold Profiles & the Codes → Tropical Valuation Functor\n\nThese conjectures extend `Catalog/Bridges/CodeThresholdValuation.lean`, which builds the\nfunctor `FinLinCodes",
+      "quality_score": 0.79224,
+      "sorry_count": 4,
+      "theorem_count": 42,
+      "timestamp": "2026-06-16T08:06:33",
+      "title": "Functor from finite linear codes to tropical valuation objects via weight-threshold profiles"
+    },
+    {
+      "cycle_id": "d6329d46",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Cumulative weight thresholds & convolution of binary linear codes\n\nDerived from this research cycle, which added two `sorry`-free Lean files to\n`Catalog/Applications/SmoothPoinca",
+      "quality_score": 0.7918400000000001,
+      "sorry_count": 2,
+      "theorem_count": 22,
+      "timestamp": "2026-06-16T10:39:15",
+      "title": "Deepening: Functor from finite linear codes to tropical valuation objects via weight-thresh"
+    },
+    {
+      "cycle_id": "3b102b1d",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Functorial Tropical–Pythagorean Bridge (Probability)\n\nThis cycle established a *normalization functor into the probability simplex*\nthat unifies three threads:\n\n* **Tropical**: `",
+      "quality_score": 0.7943200000000001,
+      "sorry_count": 0,
+      "theorem_count": 75,
+      "timestamp": "2026-06-16T13:28:06",
+      "title": "Deepening: `Catalog/Bridges/FunctorialTropicalPythagorean.lean` (0 sorr"
+    },
+    {
+      "cycle_id": "fbd73212",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — EML Single-Operator Church–Turing Thesis\n\nThis cycle established, with fully verified Lean 4 proofs (0 sorries, standard\naxioms only), the **affirmative content** of the single-o",
+      "quality_score": 0.7150400000000001,
+      "sorry_count": 0,
+      "theorem_count": 35,
+      "timestamp": "2026-06-16T19:51:14",
+      "title": "EML Single Operator Church-Turing Thesis"
+    },
+    {
+      "cycle_id": "1f4bbef7",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Automatic Sequences and the Zero-in-Sequence Problem\n\nThis cycle formalized the automata-theoretic core of the \"halting problem for\nautomatic sequences\": the zero-in-sequence pro",
+      "quality_score": 0.712,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-06-16T20:27:30",
+      "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
+    }
+  ],
+  "cycle_log": [
+    {
+      "cycle_id": "b8394462",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Fibonacci Entry-Point Theory and Carmichael's Primitive-Divisor Theorem\n\n## Synthesis\n\nThe catalog's Carmichael work (`Catalog/Speculative/AutoResearch/CarmichaelComposite.lean`,",
+      "quality_score": 0.4461099999999999,
+      "sorry_count": 2,
+      "theorem_count": 6,
+      "timestamp": "2026-06-14T19:09:53",
+      "title": "Close Proofs: Three earlier cycles built the spectral-depth picture of Hodge–Laplaci"
+    },
+    {
+      "cycle_id": "47be570a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Boltzmann Bridge X: The Persistence Geodesic is a Functorial, Self-Similar, Convexly-Stable Path Space\n\n## Synthesis\n\nThe Boltzmann Bridge arc reduced the metric theory of persis",
+      "quality_score": 0.5787153846153846,
+      "sorry_count": 5,
+      "theorem_count": 52,
+      "timestamp": "2026-06-14T19:38:42",
+      "title": "The Boltzmann Bridge arc has, over several cycles, reduced the entire metric the"
+    },
+    {
+      "cycle_id": "fee45688",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Boltzmann Bridge IX: Representation & Edge-Realization\n\n## Synthesis\n\n`Catalog/Applications/BoltzmannBridge/InterleavingRepresentation.lean` (Bridge IX)\ntakes the metric theory o",
+      "quality_score": 0.523115,
+      "sorry_count": 5,
+      "theorem_count": 48,
+      "timestamp": "2026-06-14T19:39:08",
+      "title": "`Applications/BoltzmannBridge/InterleavingRepresentation.lean` (Bridge IX) takes"
+    },
+    {
+      "cycle_id": "e4fa0e67",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Saturation of the Equivalence Calculus and Universal Transport\n\n## Synthesis\n\nThis cycle pushed the *representation/duality* program of the synthetic-HoTT foundation\n`Logic.Homot",
+      "quality_score": 0.5098981818181818,
+      "sorry_count": 2,
+      "theorem_count": 11,
+      "timestamp": "2026-06-14T19:39:38",
+      "title": "This cycle pushed the *representation/duality* program of the synthetic-HoTT"
+    },
+    {
+      "cycle_id": "2b2bf715",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Regular Representation of Eckmann–Hilton Algebra\n\n## Synthesis\n\nThis cycle pursued the **Duality & Representation** program on the catalog's\nEckmann–Hilton bridge. The previo",
+      "quality_score": 0.3922723308270677,
+      "sorry_count": 8,
+      "theorem_count": 84,
+      "timestamp": "2026-06-14T19:40:08",
+      "title": "Close Proofs: This cycle delivered `Catalog/Speculative/AutoResearch/EckmannHiltonMo"
+    },
+    {
+      "cycle_id": "cc67c014",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Boltzmann Bridge X: The Lattice of Filtrations and Order-Functoriality\n\n## Synthesis\n\n`Catalog/Applications/BoltzmannBridge/InterleavingLattice.lean` (Bridge X) fuses the\nthree s",
+      "quality_score": 0.4766809160305343,
+      "sorry_count": 22,
+      "theorem_count": 262,
+      "timestamp": "2026-06-14T19:48:08",
+      "title": "`Catalog/Applications/BoltzmannBridge/InterleavingFunctor.lean` (Bridge IX)"
+    },
+    {
+      "cycle_id": "601ab928",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Spectral Decomposition of the Pisano Period\n\n## Synthesis\n\nThe catalog's Fibonacci entry-point program had, by the previous cycle, two well-developed\nbut *disjoint* halves. O",
+      "quality_score": 0.4223894392069131,
+      "sorry_count": 17,
+      "theorem_count": 230,
+      "timestamp": "2026-06-14T20:04:49",
+      "title": "The catalog's Carmichael work (`Catalog/Speculative/AutoResearch/CarmichaelCompo"
+    },
+    {
+      "cycle_id": "e83936cd",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Hodge–Laplacian Message Passing as a Discrete Heat Semigroup\n\n## Synthesis\n\nThis cycle assembles the full **discrete-heat-semigroup dictionary** for the\ngradient message-passing",
+      "quality_score": 0.49090545454545453,
+      "sorry_count": 18,
+      "theorem_count": 220,
+      "timestamp": "2026-06-14T20:37:42",
+      "title": "This cycle closed the conceptual loop opened by the spectral-depth-threshold wor"
+    },
+    {
+      "cycle_id": "1c463510",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Hodge Spectral Duality, Seventh Cycle\n\n## Synthesis\n\nThis cycle closed a structural gap in the discrete-Hodge program and welded its two\nhistorically separate strands into one. T",
+      "quality_score": 0.49706666666666666,
+      "sorry_count": 19,
+      "theorem_count": 225,
+      "timestamp": "2026-06-14T20:38:08",
+      "title": "Close Proofs: The discrete-Hodge program has, over its earlier cycles, built the *ge"
+    },
+    {
+      "cycle_id": "5204dcbf",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — Boltzmann Bridge X: The Persistence Geodesic is a Functorial, Self-Similar, Convexly-Stable Path Space\n\n## Synthesis\n\nThe Boltzmann Bridge arc reduced the metric theory of persis",
+      "quality_score": 0.53295,
+      "sorry_count": 1,
+      "theorem_count": 9,
+      "timestamp": "2026-06-14T20:38:47",
+      "title": "The Boltzmann Bridge arc reduced the metric theory of persistence stability to a"
+    },
+    {
+      "cycle_id": "dae6a9b2",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — The Eckmann–Hilton Bridge (Objects, Morphisms, Products)\n\n## Synthesis\n\nThis cycle takes the catalog's single-carrier Eckmann–Hilton engine\n(`Geometry.HomotopyTypeTheory.EckmannH",
+      "quality_score": 0.5504199999999999,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-06-14T20:39:07",
+      "title": "The previous cycle pinned down the *object-level* content of the Eckmann–Hilton"
+    },
+    {
+      "cycle_id": "a3760248",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Proof-Complexity Phase Transition in Lean-Definable Rewriting Dynamics\n\n## Synthesis\n\nThis cycle attacked the conjecture of a *sharp proof-complexity phase transition* in a\nparam",
+      "quality_score": 0.35307452173913045,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-14T20:39:33",
+      "title": "Proof-Complexity Phase Transition in Lean-Definable Rewriting Dynamics"
+    },
+    {
+      "cycle_id": "75b4da8e",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Definable Ricci-Flow Renormalization Fixed Points in Simplicial Quantum Codes\n\n## Synthesis\n\nThis cycle turned the (informal) physics conjecture — *a coupled discrete Ricci-flow",
+      "quality_score": 0.5219054545454546,
+      "sorry_count": 2,
+      "theorem_count": 11,
+      "timestamp": "2026-06-14T21:01:48",
+      "title": "Definable Ricci-Flow Renormalization Fixed Points in Simplicial Quantum Error-Co"
+    },
+    {
+      "cycle_id": "60b0b842",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Spectral Gap Rigidity for Hodge Laplacians under Coarse-Graining\n\n## Synthesis\n\nThis cycle built the linear-algebraic skeleton of the conjecture *Spectral Gap\nRigidity for Hyperg",
+      "quality_score": 0.44761791485129226,
+      "sorry_count": 4,
+      "theorem_count": 173,
+      "timestamp": "2026-06-14T21:35:07",
+      "title": "Spectral Gap Rigidity for Hypergraph Hodge Laplacians Under Simplicial Coarse-Gr"
+    },
+    {
+      "cycle_id": "7eb7c87e",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Fundamental Theorem of Identity Systems\n\n## Synthesis of this cycle\n\nThe catalog's synthetic-HoTT layer (`Catalog/Logic/HoTT/Foundations.lean`) *defined*\nthe structure `HoTTF",
+      "quality_score": 0.6310311834319526,
+      "sorry_count": 3,
+      "theorem_count": 169,
+      "timestamp": "2026-06-14T21:35:24",
+      "title": "The catalog's synthetic-HoTT layer (`Catalog/Logic/HoTT/Foundations.lean`) *defi"
+    },
+    {
+      "cycle_id": "36dba103",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Boltzmann Bridge X: Primitive Divisors as a Strong-Divisibility Phenomenon\n\n## Synthesis\n\nThe Carmichael arc of this catalog set out to prove that every Fibonacci number `F(n)`\nw",
+      "quality_score": 0.7248000000000001,
+      "sorry_count": 3,
+      "theorem_count": 175,
+      "timestamp": "2026-06-14T21:35:45",
+      "title": "Close Proofs: The Boltzmann Bridge arc has, over several cycles, reduced the entire "
+    },
+    {
+      "cycle_id": "9fe725de",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Boltzmann Bridge XI: Self-Similar Dilations of the Persistence Geodesic Space\n\n## Synthesis\n\nThe Boltzmann Bridge arc reduced the metric theory of persistence stability to a\nsing",
+      "quality_score": 0.49574,
+      "sorry_count": 3,
+      "theorem_count": 180,
+      "timestamp": "2026-06-14T21:36:09",
+      "title": "Close Proofs: The Boltzmann Bridge arc reduced the metric theory of persistence stab"
+    },
+    {
+      "cycle_id": "0827184d",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Reading the Two Invariants of the Gauss-Sum Master Identity\n\n## Synthesis\n\nThe previous cycle distilled the entire arithmetic of doubly-even self-dual binary\ncodes into a single",
+      "quality_score": 0.47720761904761905,
+      "sorry_count": 6,
+      "theorem_count": 189,
+      "timestamp": "2026-06-14T21:36:31",
+      "title": "The `SmoothPoincare` family in `Catalog/Applications/SmoothPoincare/` builds the"
+    },
+    {
+      "cycle_id": "bea64f19",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Boltzmann Bridge X: Local-to-Global Gluing of Interleaving Geodesics\n\n## Synthesis\n\nBridge IX (`InterleavingGeodesic.lean`) turned the persistence-stability metric\ninto a *geodes",
+      "quality_score": 0.5005650793650793,
+      "sorry_count": 4,
+      "theorem_count": 189,
+      "timestamp": "2026-06-14T21:36:50",
+      "title": "Close Proofs: `Applications/BoltzmannBridge/InterleavingGeodesic.lean` closes the"
+    },
+    {
+      "cycle_id": "5bf359eb",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — The Local-to-Global Obstruction for Fibonacci Primitive Divisors\n\n## Synthesis\n\nThis cycle attacked the lone surviving `sorry` in the catalog's Carmichael\ndevelopment — the compo",
+      "quality_score": 0.5584189473684211,
+      "sorry_count": 9,
+      "theorem_count": 190,
+      "timestamp": "2026-06-14T22:10:21",
+      "title": "Close Proofs: `Applications/BoltzmannBridge/InterleavingRepresentation.lean` (Bridge"
+    },
+    {
+      "cycle_id": "977dbedb",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Proof-Complexity Phase Transition in Lean-Definable Rewriting Dynamics\n\n## Synthesis\n\nThis cycle attacked the conjecture of a *sharp proof-complexity phase transition* in a\nparam",
+      "quality_score": 0.5267885714285714,
+      "sorry_count": 4,
+      "theorem_count": 210,
+      "timestamp": "2026-06-14T22:10:45",
+      "title": "This cycle attacked the conjecture of a *sharp proof-complexity phase transition"
+    },
+    {
+      "cycle_id": "98b29bfc",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Noise-Stable Prime Spectrum in Definable Quantum Walks\n\n## Synthesis\n\nThe file `Catalog/Shared/NoiseStablePrimeSpectrum.lean` reduces the whole\n\"definable quantum walk\" program t",
+      "quality_score": 0.44809189021044976,
+      "sorry_count": 5,
+      "theorem_count": 214,
+      "timestamp": "2026-06-14T22:11:08",
+      "title": "Noise-Stable Prime Spectrum in Definable Quantum Walks"
+    },
+    {
+      "cycle_id": "1ef7d13b",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Spectral Gap Rigidity for Hodge Laplacians\n\n## Synthesis\n\nThis cycle built a self-contained, `sorry`-free local-to-global theory for abstract\nHodge Laplacians and its consequence",
+      "quality_score": 0.3632293438348146,
+      "sorry_count": 2,
+      "theorem_count": 38,
+      "timestamp": "2026-06-14T22:11:30",
+      "title": "Close Proofs: Spectral Gap Rigidity for Hypergraph Hodge Laplacians Under Simplicial"
+    },
+    {
+      "cycle_id": "646379f1",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Complexity Phase Structure of Additive Cellular Automata\n\n## Synthesis of this cycle\n\nWe set out to *adversarially* test the cryptographic conjecture that a minimal,\nexplicitly L",
+      "quality_score": 0.4289803986710964,
+      "sorry_count": 0,
+      "theorem_count": 40,
+      "timestamp": "2026-06-14T22:12:10",
+      "title": "Algorithmic Randomness Phase Transition in Lean-Definable Cellular Automata"
+    },
+    {
+      "cycle_id": "91967634",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — The Unified Primitive-Divisor Engine\n\n## Synthesis\n\nThis cycle took the catalog's two parallel threads — the Fibonacci-specific composite-case\nmachinery of `Shared.CarmichaelProo",
+      "quality_score": 0.42396336206896557,
+      "sorry_count": 1,
+      "theorem_count": 32,
+      "timestamp": "2026-06-14T22:45:55",
+      "title": "Close Proofs: The catalog's Carmichael work (`Catalog/Speculative/AutoResearch/Carmi"
+    },
+    {
+      "cycle_id": "2ca3f901",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Boltzmann Bridge X: Local-to-Global Gluing of Interleaving Geodesics\n\n## Synthesis\n\nBridge IX (`InterleavingGeodesic.lean`) turned the persistence-stability metric into\na *geodes",
+      "quality_score": 0.5287685714285715,
+      "sorry_count": 1,
+      "theorem_count": 28,
+      "timestamp": "2026-06-14T22:46:16",
+      "title": "Bridge IX (`InterleavingGeodesic.lean`) turned the persistence-stability metric"
+    },
+    {
+      "cycle_id": "70f20089",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — The Fundamental Theorem of Identity Systems and Homotopy-Initial Families\n\n## Synthesis of this cycle\n\nThe catalog's synthetic-HoTT layer (`Catalog/Logic/HoTT/Foundations.lean`)",
+      "quality_score": 0.74211,
+      "sorry_count": 1,
+      "theorem_count": 24,
+      "timestamp": "2026-06-14T22:46:33",
+      "title": "Close Proofs: The catalog's synthetic-HoTT layer (`Catalog/Logic/HoTT/Foundations.le"
+    },
+    {
+      "cycle_id": "797d0a4a",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Noise-Stable Prime Spectrum in Definable Quantum Walks\n\n## Synthesis\n\nThis cycle built a small but load-bearing bridge between three previously separate\ncatalog arcs: the **Fibon",
+      "quality_score": 0.5806184615384615,
+      "sorry_count": 3,
+      "theorem_count": 26,
+      "timestamp": "2026-06-14T22:47:12",
+      "title": "Close Proofs: Noise-Stable Prime Spectrum in Definable Quantum Walks"
+    },
+    {
+      "cycle_id": "65303b4b",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — The Discrete Heat Semigroup of Hodge Message Passing\n\n## Synthesis\n\nThis cycle closed the conceptual loop opened by the spectral-depth / message-passing\nwork in `Catalog/Speculat",
+      "quality_score": 0.57708,
+      "sorry_count": 3,
+      "theorem_count": 30,
+      "timestamp": "2026-06-14T22:47:38",
+      "title": "Close Proofs: This cycle closed the conceptual loop opened by the spectral-depth-thr"
+    },
+    {
+      "cycle_id": "33bcee64",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — The Rank Characterization of Primitive Divisors\n\n## Synthesis\n\nThis cycle closed the broken-import gap in the Carmichael arc (the historical module\n`Shared.CarmichaelHelper` is n",
+      "quality_score": 0.4553457142857143,
+      "sorry_count": 3,
+      "theorem_count": 28,
+      "timestamp": "2026-06-14T23:21:27",
+      "title": "Close Proofs: `Catalog/Applications/BoltzmannBridge/InterleavingFunctor.lean` (Bridg"
+    },
+    {
+      "cycle_id": "d787aa34",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Arithmetic Monodromy Rigidity in Definable Neural ODE Flows\n\n## Synthesis\n\nThe original conjecture asserted that the time-1 flow map of a polynomially\nparameterized neural ODE ca",
+      "quality_score": 0.38878735254059715,
+      "sorry_count": 4,
+      "theorem_count": 46,
+      "timestamp": "2026-06-14T23:21:59",
+      "title": "Arithmetic Monodromy Rigidity in Definable Neural ODE Flows"
+    },
+    {
+      "cycle_id": "13a80f4d",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Boltzmann Bridge XI: Functorial Transport and the Contractible Path Space\n\n## Synthesis\n\nBridge XI (`InterleavingPathFunctor.lean`) discharged the two purely *constructive*\nFutur",
+      "quality_score": 0.6571556692913385,
+      "sorry_count": 1,
+      "theorem_count": 127,
+      "timestamp": "2026-06-14T23:22:15",
+      "title": "Bridge IX (`InterleavingGeodesic.lean`) gave the persistence-stability arc its f"
+    },
+    {
+      "cycle_id": "44a857c6",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Gauss-Sum Bridge between Even Lattices and Binary Codes\n\n## Synthesis\n\nThe `SmoothPoincare` family in `Catalog/Applications/SmoothPoincare/` builds the\nsmooth/topological gal",
+      "quality_score": 0.39197488552751597,
+      "sorry_count": 3,
+      "theorem_count": 138,
+      "timestamp": "2026-06-14T23:22:39",
+      "title": "Close Proofs: The `SmoothPoincare` family in `Catalog/Applications/SmoothPoincare/` "
+    },
+    {
+      "cycle_id": "fda530b6",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Local-to-Global Structure of Fibonacci Apparition Ranks\n\n## Synthesis\n\nThis cycle read the Fibonacci **rank of apparition** (entry point) `z(p) = fibEntry p` through a\nsheaf-theo",
+      "quality_score": 0.39268079867656686,
+      "sorry_count": 2,
+      "theorem_count": 136,
+      "timestamp": "2026-06-14T23:23:00",
+      "title": "Close Proofs: This cycle attacked the conjecture of a *sharp proof-complexity phase "
+    },
+    {
+      "cycle_id": "2d177d42",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Boltzmann Bridge XI: Convexity & Bicombing of Interleaving Geodesics\n\n## Synthesis\n\nThe persistence-stability arc of the catalog climbed a ladder of structure: a\nrelational preor",
+      "quality_score": 0.40968710470035796,
+      "sorry_count": 1,
+      "theorem_count": 137,
+      "timestamp": "2026-06-14T23:23:20",
+      "title": "Close Proofs: Bridge IX (`InterleavingGeodesic.lean`) turned the persistence-stabili"
+    },
+    {
+      "cycle_id": "21cd4ba3",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Universal Transport for the Fibonacci Rank of Apparition\n\n## Synthesis\n\nThis cycle continued the *representation/duality* program built around the Fibonacci\nrank of apparition `z",
+      "quality_score": 0.48283591836734696,
+      "sorry_count": 1,
+      "theorem_count": 147,
+      "timestamp": "2026-06-14T23:23:42",
+      "title": "Close Proofs: This cycle pushed the *representation/duality* program of the syntheti"
+    },
+    {
+      "cycle_id": "6285d255",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Spectral Gap Rigidity for Hodge Laplacians under Coarse-Graining\n\n## Synthesis\n\nThis cycle built the linear-algebraic skeleton of the conjecture *Spectral Gap\nRigidity for Hyperg",
+      "quality_score": 0.3917361274509804,
+      "sorry_count": 4,
+      "theorem_count": 153,
+      "timestamp": "2026-06-14T23:56:46",
+      "title": "Linear-algebraic skeleton of the conjecture *Spectral Gap"
+    },
+    {
+      "cycle_id": "1ab7ab39",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Hodge Spectral Duality\n\n## Synthesis\n\nThe discrete-Hodge program already carried a *geometric/decomposition* layer (split\nDirichlet energy, the discrete Hodge theorem, image orth",
+      "quality_score": 0.51996,
+      "sorry_count": 1,
+      "theorem_count": 6,
+      "timestamp": "2026-06-14T23:57:20",
+      "title": "The discrete-Hodge program already carries a *geometric/decomposition* layer"
+    },
+    {
+      "cycle_id": "cf4c28ef",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Boltzmann Bridge XI: The Apparition Lattice\n\n## Synthesis\n\nThe Carmichael primitive-divisor arc had, until now, used the *rank of apparition*\n`α(p) = CarmHelper.entryPt p` (the l",
+      "quality_score": 0.48635999999999996,
+      "sorry_count": 1,
+      "theorem_count": 4,
+      "timestamp": "2026-06-15T00:02:43",
+      "title": "Close Proofs: Bridge IX (`InterleavingGeodesic.lean`) gave the persistence-stability"
+    },
+    {
+      "cycle_id": "179e2428",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Eckmann–Hilton Bridge (Objects, Morphisms, Products)\n\n## Synthesis\n\nThis cycle takes the catalog's single-carrier Eckmann–Hilton engine\n(`Geometry.HomotopyTypeTheory.Stratifi",
+      "quality_score": 0.5321499999999999,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-15T00:03:07",
+      "title": "This cycle takes the catalog's single-carrier Eckmann–Hilton engine"
+    },
+    {
+      "cycle_id": "2c181743",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Identity Systems II: After the Converse, Eliminator, and Mathlib Bridge\n\n## Synthesis of this cycle\n\nThe previous cycle proved the **Fundamental Theorem of Identity Systems**\n(`f",
+      "quality_score": 0.65692,
+      "sorry_count": 2,
+      "theorem_count": 2,
+      "timestamp": "2026-06-15T00:19:47",
+      "title": "The catalog's synthetic-HoTT layer (`Catalog/Logic/HoTT/Foundations.lean`) intro"
+    },
+    {
+      "cycle_id": "123e2af3",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Discrete Hodge Laplacian, Harmonic Space & Diffusion Message Passing\n\n## Synthesis\n\nThis cycle rebuilds the discrete Hodge program on a **self-contained Mathlib foundation**.\nThe",
+      "quality_score": 0.62783,
+      "sorry_count": 1,
+      "theorem_count": 6,
+      "timestamp": "2026-06-15T00:54:28",
+      "title": "This cycle rebuilt the discrete Hodge program on a **self-contained Mathlib foun"
+    },
+    {
+      "cycle_id": "32c81afa",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Boltzmann Bridge XI: Convexity & Bicombing of Interleaving Geodesics\n\n## Synthesis\n\nThe persistence-stability arc of the catalog has climbed a ladder of structure: a\nrelational p",
+      "quality_score": 0.7607163636363636,
+      "sorry_count": 1,
+      "theorem_count": 22,
+      "timestamp": "2026-06-15T01:25:05",
+      "title": "The persistence-stability arc of the catalog climbed a ladder of structure: a"
+    },
+    {
+      "cycle_id": "2509286d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Spectral Gap Rigidity for Hodge Laplacians\n\n## Synthesis\n\nThis cycle built a self-contained, `sorry`-free local-to-global theory for abstract\nHodge Laplacians and its consequence",
+      "quality_score": 0.4272732837662338,
+      "sorry_count": 1,
+      "theorem_count": 15,
+      "timestamp": "2026-06-15T01:56:25",
+      "title": "Self-contained, `sorry`-free local-to-global theory for abstr"
+    },
+    {
+      "cycle_id": "b3a33fd0",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Fibonacci entry points & primitive divisors\n\nThis cycle delivered `Algebra/FibEntryPointReciprocity.lean`: a fully verified (0-sorry)\n**sharpening of the classical entry-point bo",
+      "quality_score": 0.64699,
+      "sorry_count": 1,
+      "theorem_count": 22,
+      "timestamp": "2026-06-15T03:00:25",
+      "title": "Deepening: The persistence-stability arc of the catalog climbed a ladder of structure: a"
+    },
+    {
+      "cycle_id": "6feb33cc",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n## A Functorial Tropical Lower Bound for Rips Connectivity via Valuation-Depth Sublevel Graphs\n\nThis cycle established the core \"ultrametric collapse\" theorem in\n`Catalog/Bridges/T",
+      "quality_score": 0.6565799999999999,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-15T04:39:47",
+      "title": "A functorial tropical lower bound for Rips connectivity via valuation-depth sublevel graphs"
+    },
+    {
+      "cycle_id": "bba57b06",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Tropical–Ultrametric Stability of p-adic Valuation Depth\n\nThis cycle established that the p-adic valuation `valDepth p = padicValNat p` is\nsimultaneously a **tropical homomorphis",
+      "quality_score": 0.46840000000000004,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-15T05:11:32",
+      "title": "Tropical–Ultrametric Stability of p-adic Valuation Depth"
+    },
+    {
+      "cycle_id": "ae5b4beb",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Functorial Tropicalization of Valuation Depth\n\nFollow-up conjectures arising from `Bridges/TropicalValuationDepth.lean`, which builds the\n**max-plus** tropical valuation object `",
+      "quality_score": 0.4150240571428571,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-15T05:47:56",
+      "title": "Functorial tropicalization of valuation depth via tropical valuation objects"
+    },
+    {
+      "cycle_id": "10f0dba2",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Valuation-Depth Sublevel Filtrations ↔ Metric Rips Filtrations\n\nThese conjectures build on `Bridges/ValuationRipsBridge.lean`, which established that in a\nnon-archimedean (ultram",
+      "quality_score": 0.5159509090909091,
+      "sorry_count": 0,
+      "theorem_count": 25,
+      "timestamp": "2026-06-15T05:48:44",
+      "title": "Functorial comparison between valuation-depth sublevel filtrations and metric Rips filtrations"
+    },
+    {
+      "cycle_id": "51575ef7",
+      "domain": "Bridges",
+      "key_insight": "# FUTURE DIRECTIONS — Neural observation pseudometrics ↔ proof-spectrum congruence kernels\n\nThis cycle established the functor\n\n```\nbehaviorCongruence : AlgNeuralSystem R K α  ⟶  SRCong R\n```\n\nsending",
+      "quality_score": 0.794,
+      "sorry_count": 2,
+      "theorem_count": 68,
+      "timestamp": "2026-06-15T06:29:50",
+      "title": "Functorial comparison between neural observation pseudometrics and proof-spectrum congruence kernels"
+    },
+    {
+      "cycle_id": "88475cc5",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Categorical Tropicalization of Rips Filtrations and Interleaving Stability\n\nThis cycle established (in `Catalog/Bridges/CategoricalTropicalRipsInterleaving.lean`,\n0 sorries, axio",
+      "quality_score": 0.4963626414840705,
+      "sorry_count": 2,
+      "theorem_count": 78,
+      "timestamp": "2026-06-15T06:30:20",
+      "title": "Categorical Tropicalization of Rips Filtrations and Interleaving Stability"
+    },
+    {
+      "cycle_id": "a64f762c",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Functorial Lipschitz comparison: valuation depth ↔ tropical valuation objects\n\nThis cycle established that **valuation depth is the logarithmic shadow of the tropical\nLipschitz c",
+      "quality_score": 0.70472,
+      "sorry_count": 3,
+      "theorem_count": 6,
+      "timestamp": "2026-06-15T06:54:21",
+      "title": "Functorial Lipschitz comparison between valuation depth and tropical valuation objects"
+    },
+    {
+      "cycle_id": "a37014f1",
+      "domain": "Bridges",
+      "key_insight": "# FUTURE DIRECTIONS — Functorial Tropical Certificates for Berggren–Lorentz Lattice Reduction\n\nThis cycle established a **functorial tropical certificate** for the Berggren–Lorentz\nmonoid acting on Py",
+      "quality_score": 0.45555519710378123,
+      "sorry_count": 3,
+      "theorem_count": 20,
+      "timestamp": "2026-06-15T07:16:49",
+      "title": "Functorial tropical certificates for Berggren–Lorentz lattice reduction"
+    },
+    {
+      "cycle_id": "fcdeb4ae",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Berggren–Lorentz Certificates for Lattice Reduction\n\nThis cycle (see `LatticeReduction.lean`) lifted the single-generator facts of\n`Core.lean` to whole-word / whole-monoid statem",
+      "quality_score": 0.44584,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-15T07:17:50",
+      "title": "Berggren–Lorentz certificates for lattice reduction in Pythagorean cryptography"
+    },
+    {
+      "cycle_id": "d1ba4f5a",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Valuation ↔ Vietoris–Rips bridge\n\nFoundational results established in `Catalog/Bridges/ValuationRipsBridge.lean`:\nin an ultrametric (non-Archimedean valuation) space the Vietoris",
+      "quality_score": 0.57034,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-15T08:28:26",
+      "title": "These conjectures build on `Bridges/ValuationRipsBridge.lean`, which established"
+    },
+    {
+      "cycle_id": "b9cc2fac",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Categorical Tropical Rips Interleaving\n\nThis cycle established, in `Catalog/Bridges/CategoricalTropicalRipsInterleaving.lean`, a\nself-contained, fully-verified bridge between **c",
+      "quality_score": 0.7242,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-06-15T09:01:43",
+      "title": "(in `Catalog/Bridges/CategoricalTropicalRipsInterleaving."
+    },
+    {
+      "cycle_id": "8e322053",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions: Tropical Automorphic Forms on the Berggren Tree\n\nThis cycle established the basic dictionary\n\n> Berggren tree (primitive Pythagorean triples)  ⟷  tropical (max-plus) Hecke\n> eigen",
+      "quality_score": 0.4914663917525773,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-06-15T09:02:55",
+      "title": "Tropical Automorphic Forms on the Berggren Tree"
+    },
+    {
+      "cycle_id": "94b6b70d",
+      "domain": "Probability",
+      "key_insight": "# FUTURE DIRECTIONS — Discrete Hodge ↔ Probability\n\nThis cycle established a self-contained Mathlib foundation for the discrete Hodge\nprogram on finite weighted graphs and bridged it to the probabilit",
+      "quality_score": 0.3848171428571429,
+      "sorry_count": 1,
+      "theorem_count": 28,
+      "timestamp": "2026-06-15T09:03:16",
+      "title": "This cycle rebuilds the discrete Hodge program on a **self-contained Mathlib fou"
+    },
+    {
+      "cycle_id": "842c56ce",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — Functorial Lipschitz comparison: valuation depth ↔ tropical shadow\n\nThis cycle salvaged and completed the depth ↔ tropical-shadow bridge as three\nself-contained, sorry-free Lean",
+      "quality_score": 0.40856000000000003,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-15T09:20:07",
+      "title": "Close Proofs: Functorial Lipschitz comparison between valuation depth and tropical v"
+    },
+    {
+      "cycle_id": "b221d007",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Functorial Tropical Certificate for the Berggren–Lorentz Monoid\n\nThis cycle established a **functorial tropical (min-plus) growth certificate** for the\nBerggren monoid action on",
+      "quality_score": 0.4584708352941177,
+      "sorry_count": 1,
+      "theorem_count": 10,
+      "timestamp": "2026-06-15T09:56:06",
+      "title": "**functorial tropical certificate** for the Berggren–Lo"
+    },
+    {
+      "cycle_id": "9f700fd5",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Tropical Gravitational Lensing for Integer Factorization\n\nResearch cycle output: `Catalog/Pythagorean/TropicalLensingFactorization.lean`\n(11 theorems, fully verified, 0 sorries;",
+      "quality_score": 0.503482105263158,
+      "sorry_count": 2,
+      "theorem_count": 38,
+      "timestamp": "2026-06-15T10:03:01",
+      "title": "Tropical Gravitational Lensing for Integer Factorization"
+    },
+    {
+      "cycle_id": "afe8c8b6",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Neural Observation Pseudometrics ↔ Proof Spectra\n\nThese conjectures extend the bridge developed in\n`Catalog/Bridges/NeuralPseudometricProofSpectrumFunctor.lean` and its functoria",
+      "quality_score": 0.7216,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-06-15T10:38:08",
+      "title": "Close Proofs: Functorial comparison between neural observation pseudometrics and pro"
+    },
+    {
+      "cycle_id": "cb2c4d8f",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Categorical Tropical Rips Interleaving (Rank & Shift cycle)\n\nThis cycle added two fully-verified files (0 sorries) extending\n`Bridges.CategoricalTropicalRipsInterleaving`:\n\n- `Br",
+      "quality_score": 0.7260899999999999,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-06-15T10:38:36",
+      "title": "This cycle established, in `Catalog/Bridges/CategoricalTropicalRipsInterleaving."
+    },
+    {
+      "cycle_id": "3f92e6d5",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\nFollow-up conjectures arising from the *Deepening* cycle on the functorial comparison\nbetween neural observation pseudometrics and proof-spectrum congruences.\n\nRelevant files:\n- `",
+      "quality_score": 0.54944,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-15T11:16:16",
+      "title": "Deepening: Functorial comparison between neural observation pseudometrics and proof-spectru"
+    },
+    {
+      "cycle_id": "2086db82",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — Intersection Form Classification via Self-Dual Code Direct Sums\n\nThis cycle added `CodeDirectSum.lean`: the direct sum (coordinate concatenation)\n`C ⊕c D` of binary codes, with c",
+      "quality_score": 0.70696,
+      "sorry_count": 1,
+      "theorem_count": 21,
+      "timestamp": "2026-06-15T11:51:06",
+      "title": "Intersection Form Classification Pipeline via Self-Dual Code Direct Sums"
+    },
+    {
+      "cycle_id": "fbb47fde",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Species GF ↔ Tropical Valuation Profiles\n\nThis cycle established a **lax monoidal functor** from the generating-function algebra of\ncombinatorial species `(ℕ → K, +, ⋆)` (where `",
+      "quality_score": 0.5618,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-15T11:52:20",
+      "title": "Functorial bridge from combinatorial species generating functions to tropical valuation profiles"
+    },
+    {
+      "cycle_id": "02bb27d8",
+      "domain": "Novelty",
+      "key_insight": "# FUTURE DIRECTIONS — Discrete Hodge ↔ Probability (cycle v16a)\n\nThis cycle delivered a self-contained Mathlib foundation for the discrete Hodge\nprogram on finite weighted graphs and proved two of the",
+      "quality_score": 0.63,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-15T11:52:52",
+      "title": "Self-contained Mathlib foundation for the discrete Hodg"
+    },
+    {
+      "cycle_id": "635e706c",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Functorial Species → Tropical Valuation Profiles\n\nFollow-up conjectures arising from `Catalog/Bridges/SpeciesTropicalValuationProfiles.lean`,\nwhich established that the species (",
+      "quality_score": 0.5350663702359346,
+      "sorry_count": 0,
+      "theorem_count": 59,
+      "timestamp": "2026-06-15T12:27:40",
+      "title": "Functorial species-to-tropical valuation profiles via exponential generating functions"
+    },
+    {
+      "cycle_id": "049cc9b2",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\nThese directions extend the `ordEGF` bridge in\n`Catalog/Bridges/SpeciesTropicalValuation.lean` from a single order-only invariant toward\nricher tropical and valuation-theoretic se",
+      "quality_score": 0.5716955102040817,
+      "sorry_count": 1,
+      "theorem_count": 49,
+      "timestamp": "2026-06-15T12:27:58",
+      "title": "Functorial bridge from combinatorial species generating functions to tropical valuation profiles"
+    },
+    {
+      "cycle_id": "406af8f7",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Discrete Hodge Program\n\nThis cycle delivered, under `Catalog/Shared/DiscreteHodgeDecomposition.lean`, a\nself-contained Mathlib foundation for the **discrete Hodge decomposition**",
+      "quality_score": 0.5313228571428571,
+      "sorry_count": 2,
+      "theorem_count": 14,
+      "timestamp": "2026-06-15T12:28:59",
+      "title": "This cycle delivered a self-contained Mathlib foundation for the discrete Hodge"
+    },
+    {
+      "cycle_id": "2d95135b",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Combinatorial Species → Tropical Valuation Profiles\n\nThis cycle established the first concrete *Applications → Tropical* bridge: reading the\n`p`-adic valuation of the integer EGF",
+      "quality_score": 0.5327423529411766,
+      "sorry_count": 1,
+      "theorem_count": 52,
+      "timestamp": "2026-06-15T13:01:23",
+      "title": "Combinatorial species to tropical valuation profiles via coefficientwise valuation inequalities"
+    },
+    {
+      "cycle_id": "497e55b6",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Categorical Tropical Rips Interleaving (Sharpness, Quotient & Tightness cycle)\n\nThis cycle added **three fully-verified files (0 `sorry`s)** extending the\n`Bridges.CategoricalTro",
+      "quality_score": 0.44245955849889634,
+      "sorry_count": 1,
+      "theorem_count": 16,
+      "timestamp": "2026-06-15T13:39:19",
+      "title": "This cycle added two fully-verified files (0 sorries) extending"
+    },
+    {
+      "cycle_id": "4e6dc59b",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Korselt's Criterion & the Multiplicative-Order Bridge\n\nDerived from the v16b research cycle that produced\n`Catalog/Shared/KorseltCriterion.lean` and\n`Catalog/Cryptography/Korselt",
+      "quality_score": 0.67472,
+      "sorry_count": 0,
+      "theorem_count": 3,
+      "timestamp": "2026-06-15T13:41:59",
+      "title": "Korselt's Criterion Completion and Multiplicative Group Order Bridge to Cryptographic Pseudoprimalit"
+    },
+    {
+      "cycle_id": "c11e0165",
+      "domain": "Logic",
+      "key_insight": "# FUTURE DIRECTIONS — Fibonacci Primitive Divisors / Carmichael's Theorem\n\nThis cycle delivered `Catalog/Logic/FibonacciPrimitiveDivisorBounded.lean`, a\nself-contained, `sorry`-free verification of Ca",
+      "quality_score": 0.63873,
+      "sorry_count": 1,
+      "theorem_count": 12,
+      "timestamp": "2026-06-15T13:42:19",
+      "title": "These directions extend the `ordEGF` bridge in"
+    },
+    {
+      "cycle_id": "a72aaf71",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Self-dual codes ↔ smooth 4-manifold intersection forms\n\nThis cycle added `SelfDualCardinality.lean`, isolating the *evenness-free* structural\ninvariant of a binary self-dual code",
+      "quality_score": 0.6582600000000001,
+      "sorry_count": 0,
+      "theorem_count": 82,
+      "timestamp": "2026-06-15T14:01:11",
+      "title": "Self-dual code length enumerators as a bridge to smooth 4-manifold intersection-form pipelines"
+    },
+    {
+      "cycle_id": "44a1e17f",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Lax Monoidal Functors from the Generating-Function Algebra\n\nThis cycle established (in `Computation/GeneratingFunctionLaxMonoidal.lean`) that:\n\n- the **ordinary generating functi",
+      "quality_score": 0.3397905777777779,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-15T14:36:58",
+      "title": "**lax monoidal functor** from the generating-function a"
+    },
+    {
+      "cycle_id": "6ec4b34b",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Intersection Form Classification Pipeline via Self-Dual Code Direct Sum\n\nThis cycle established the **direct-sum functoriality** shared by integer\nintersection forms and binary s",
+      "quality_score": 0.5346971830985916,
+      "sorry_count": 0,
+      "theorem_count": 82,
+      "timestamp": "2026-06-15T14:37:37",
+      "title": "Close Proofs: Intersection Form Classification Pipeline via Self-Dual Code Direct Su"
+    },
+    {
+      "cycle_id": "561a2484",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions: Combinatorial species → tropical valuation profiles\n\nThis cycle established the **coefficientwise valuation bridge** in\n`Catalog/Tropical/SpeciesValuationProfile.lean`: the `p`-ad",
+      "quality_score": 0.49560000000000004,
+      "sorry_count": 2,
+      "theorem_count": 17,
+      "timestamp": "2026-06-15T15:03:08",
+      "title": "Close Proofs: Combinatorial species to tropical valuation profiles via coefficientwi"
+    },
+    {
+      "cycle_id": "aba81cd6",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Cryptography Cycle\n\nThis cycle added two fully-verified files (0 sorries) extending the\n`Catalog/Cryptography` directory:\n\n* `RSACorrectness.lean` — general (non-coprime) RSA cor",
+      "quality_score": 0.4824,
+      "sorry_count": 0,
+      "theorem_count": 3,
+      "timestamp": "2026-06-15T15:04:13",
+      "title": "Close Proofs: This cycle added two fully-verified files (0 sorries) extending"
+    },
+    {
+      "cycle_id": "cd281b27",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — Tropical Polynomials (Convexity Foundation)\n\nThis cycle delivered a self-contained Mathlib foundation for **general-degree tropical\n(max-plus) polynomials** in `Catalog/Tropical/",
+      "quality_score": 0.5016680172195493,
+      "sorry_count": 2,
+      "theorem_count": 134,
+      "timestamp": "2026-06-15T15:22:59",
+      "title": "Close Proofs: This cycle delivered a self-contained Mathlib foundation for the discr"
+    },
+    {
+      "cycle_id": "cd281b27",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — Tropical Polynomials (Convexity Foundation)\n\nThis cycle delivered a self-contained Mathlib foundation for **general-degree tropical\n(max-plus) polynomials** in `Catalog/Tropical/",
+      "quality_score": 0.5016680172195493,
+      "sorry_count": 2,
+      "theorem_count": 134,
+      "timestamp": "2026-06-15T15:43:56",
+      "title": "Close Proofs: This cycle delivered a self-contained Mathlib foundation for the discr"
+    },
+    {
+      "cycle_id": "a4d16ba9",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Species Generating Functions ↔ Probability Laws\n\nDerived from this cycle's findings in `Probability/SpeciesBoltzmannBridge.lean` and\n`Probability/SpeciesGeometricBridge.lean`, wh",
+      "quality_score": 0.52770625,
+      "sorry_count": 0,
+      "theorem_count": 125,
+      "timestamp": "2026-06-15T15:50:06",
+      "title": "Close Proofs: Functorial bridge from combinatorial species generating functions to t"
+    },
+    {
+      "cycle_id": "cd281b27",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — Tropical Polynomials (Convexity Foundation)\n\nThis cycle delivered a self-contained Mathlib foundation for **general-degree tropical\n(max-plus) polynomials** in `Catalog/Tropical/",
+      "quality_score": 0.4205751748251749,
+      "sorry_count": 0,
+      "theorem_count": 141,
+      "timestamp": "2026-06-15T15:53:38",
+      "title": "Close Proofs: This cycle delivered a self-contained Mathlib foundation for the discr"
+    },
+    {
+      "cycle_id": "a4d16ba9",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Species Generating Functions ↔ Probability Laws\n\nDerived from this cycle's findings in `Probability/SpeciesBoltzmannBridge.lean` and\n`Probability/SpeciesGeometricBridge.lean`, wh",
+      "quality_score": 0.5293251256281408,
+      "sorry_count": 0,
+      "theorem_count": 158,
+      "timestamp": "2026-06-15T16:05:46",
+      "title": "Close Proofs: Functorial bridge from combinatorial species generating functions to t"
+    },
+    {
+      "cycle_id": "cd281b27",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — Tropical Polynomials (Convexity Foundation)\n\nThis cycle delivered a self-contained Mathlib foundation for **general-degree tropical\n(max-plus) polynomials** in `Catalog/Tropical/",
+      "quality_score": 0.4802389261744967,
+      "sorry_count": 0,
+      "theorem_count": 157,
+      "timestamp": "2026-06-15T16:06:18",
+      "title": "Close Proofs: This cycle delivered a self-contained Mathlib foundation for the discr"
+    },
+    {
+      "cycle_id": "743f44e8",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\nThese directions all build on the order valuation `ordEGF` introduced in\n`Catalog/Bridges/SpeciesTropicalValuation.lean` and the species ↔ EGF dictionary of\n`Catalog/Applications/",
+      "quality_score": 0.5333042553191489,
+      "sorry_count": 0,
+      "theorem_count": 136,
+      "timestamp": "2026-06-15T16:10:15",
+      "title": "Close Proofs: These directions extend the `ordEGF` bridge in"
+    },
+    {
+      "cycle_id": "a4d16ba9",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Species Generating Functions ↔ Probability Laws\n\nDerived from this cycle's findings in `Probability/SpeciesBoltzmannBridge.lean` and\n`Probability/SpeciesGeometricBridge.lean`, wh",
+      "quality_score": 0.44327589652348276,
+      "sorry_count": 2,
+      "theorem_count": 319,
+      "timestamp": "2026-06-15T16:53:53",
+      "title": "Close Proofs: Functorial bridge from combinatorial species generating functions to t"
+    },
+    {
+      "cycle_id": "743f44e8",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\nThese directions all build on the order valuation `ordEGF` introduced in\n`Catalog/Bridges/SpeciesTropicalValuation.lean` and the species ↔ EGF dictionary of\n`Catalog/Applications/",
+      "quality_score": 0.4895859232492592,
+      "sorry_count": 0,
+      "theorem_count": 95,
+      "timestamp": "2026-06-15T16:59:42",
+      "title": "Close Proofs: These directions extend the `ordEGF` bridge in"
+    },
+    {
+      "cycle_id": "743f44e8",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\nThese directions all build on the order valuation `ordEGF` introduced in\n`Catalog/Bridges/SpeciesTropicalValuation.lean` and the species ↔ EGF dictionary of\n`Catalog/Applications/",
+      "quality_score": 0.48472759868421056,
+      "sorry_count": 0,
+      "theorem_count": 75,
+      "timestamp": "2026-06-15T17:00:41",
+      "title": "Close Proofs: These directions extend the `ordEGF` bridge in"
+    },
+    {
+      "cycle_id": "743f44e8",
+      "domain": "Cryptography",
+      "key_insight": "# Future directions\n\nThese directions all build on the order valuation `ordEGF` introduced in\n`Catalog/Bridges/SpeciesTropicalValuation.lean` and the species ↔ EGF dictionary of\n`Catalog/Applications/",
+      "quality_score": 0.4888015145005371,
+      "sorry_count": 0,
+      "theorem_count": 73,
+      "timestamp": "2026-06-15T17:03:35",
+      "title": "Close Proofs: These directions extend the `ordEGF` bridge in"
+    },
+    {
+      "cycle_id": "aba81cd6",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Cryptography Cycle\n\nThis cycle added two fully-verified files (0 sorries) extending the\n`Catalog/Cryptography` directory:\n\n* `RSACorrectness.lean` — general (non-coprime) RSA cor",
+      "quality_score": 0.47985712714776635,
+      "sorry_count": 0,
+      "theorem_count": 74,
+      "timestamp": "2026-06-15T17:04:59",
+      "title": "Close Proofs: This cycle added two fully-verified files (0 sorries) extending"
+    },
+    {
+      "cycle_id": "8a8b0554",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Primitive Divisors of Strong Divisibility Sequences\n\nThis cycle delivered `Catalog/Applications/StrongDivPrimitiveCertificate.lean`, which\nabstracts the Fibonacci-only Carmichael",
+      "quality_score": 0.5226563916796378,
+      "sorry_count": 0,
+      "theorem_count": 73,
+      "timestamp": "2026-06-15T17:05:40",
+      "title": "This cycle delivered `Catalog/Logic/FibonacciPrimitiveDivisorBounded.lean`, a"
+    },
+    {
+      "cycle_id": "561a2484",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions: Combinatorial species → tropical valuation profiles\n\nThis cycle established the **coefficientwise valuation bridge** in\n`Catalog/Tropical/SpeciesValuationProfile.lean`: the `p`-ad",
+      "quality_score": 0.4694702117647058,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-15T19:56:10",
+      "title": "Close Proofs: Combinatorial species to tropical valuation profiles via coefficientwi"
+    },
+    {
+      "cycle_id": "aba81cd6",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Cryptography Cycle\n\nThis cycle added two fully-verified files (0 sorries) extending the\n`Catalog/Cryptography` directory:\n\n* `RSACorrectness.lean` — general (non-coprime) RSA cor",
+      "quality_score": 0.55584,
+      "sorry_count": 0,
+      "theorem_count": 74,
+      "timestamp": "2026-06-15T19:56:38",
+      "title": "Close Proofs: This cycle added two fully-verified files (0 sorries) extending"
+    },
+    {
+      "cycle_id": "8a8b0554",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Primitive Divisors of Strong Divisibility Sequences\n\nThis cycle delivered `Catalog/Applications/StrongDivPrimitiveCertificate.lean`, which\nabstracts the Fibonacci-only Carmichael",
+      "quality_score": 0.49925585666293404,
+      "sorry_count": 0,
+      "theorem_count": 75,
+      "timestamp": "2026-06-15T19:58:06",
+      "title": "This cycle delivered `Catalog/Logic/FibonacciPrimitiveDivisorBounded.lean`, a"
+    },
+    {
+      "cycle_id": "afb009d7",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Zeckendorf / additive Fibonacci structure\n\nThis cycle formalized **Zeckendorf's theorem** from scratch against Mathlib\n(`Core.lean`, `Existence.lean`, `Uniqueness.lean`): every `",
+      "quality_score": 0.4646015145005371,
+      "sorry_count": 0,
+      "theorem_count": 75,
+      "timestamp": "2026-06-15T20:00:16",
+      "title": "This cycle added **three fully-verified files (0 `sorry`s)** extending the"
+    },
+    {
+      "cycle_id": "afb009d7",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Zeckendorf / additive Fibonacci structure\n\nThis cycle formalized **Zeckendorf's theorem** from scratch against Mathlib\n(`Core.lean`, `Existence.lean`, `Uniqueness.lean`): every `",
+      "quality_score": 0.34719999999999995,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-15T20:10:04",
+      "title": "This cycle added **three fully-verified files (0 `sorry`s)** extending the"
+    },
+    {
+      "cycle_id": "afb009d7",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Zeckendorf / additive Fibonacci structure\n\nThis cycle formalized **Zeckendorf's theorem** from scratch against Mathlib\n(`Core.lean`, `Existence.lean`, `Uniqueness.lean`): every `",
+      "quality_score": 0.5042399999999999,
+      "sorry_count": 0,
+      "theorem_count": 3,
+      "timestamp": "2026-06-15T20:11:32",
+      "title": "This cycle added **three fully-verified files (0 `sorry`s)** extending the"
+    },
+    {
+      "cycle_id": "87ef3294",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Tropical Geometry of ReLU Networks\n\nThis cycle added two fully-verified (0-sorry) Lean files extending the catalog's\ntropical-ReLU line:\n\n* `MachineLearning/TropicalRationalAlgeb",
+      "quality_score": 0.48797999999999997,
+      "sorry_count": 0,
+      "theorem_count": 3,
+      "timestamp": "2026-06-15T20:12:12",
+      "title": "This cycle added two fully-verified files (0 sorries) extending the"
+    },
+    {
+      "cycle_id": "79875292",
+      "domain": "NumberTheory",
+      "key_insight": "# FUTURE DIRECTIONS — Tropical p-adic Valuation Profile of Fibonacci Numbers\n\nCycle output: `Catalog/Speculative/AutoResearch/FibonacciValuationProfile.lean`\n(self-contained, 0 sorries, axioms ⊆ {prop",
+      "quality_score": 0.452064972972973,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-06-15T20:39:37",
+      "title": "Follow-up conjectures arising from `Catalog/Bridges/SpeciesTropicalValuationProf"
+    },
+    {
+      "cycle_id": "e5fe284a",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Korselt's Criterion & the Multiplicative-Order Bridge\n\nDerived from the research cycle that produced\n`Catalog/Shared/KorseltCriterion.lean` (the full Korselt **iff** and its\narbi",
+      "quality_score": 0.62032,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-15T20:39:59",
+      "title": "Derived from the v16b research cycle that produced"
+    },
+    {
+      "cycle_id": "316c08e5",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Rips Filtration ↔ Tropical Valuation Bridge\n\nThese conjectures extend `Catalog/Bridges/RipsTropicalProfile.lean`, which establishes that\nthe Vietoris–Rips metric filtration is re",
+      "quality_score": 0.49177388888888895,
+      "sorry_count": 0,
+      "theorem_count": 69,
+      "timestamp": "2026-06-16T00:21:31",
+      "title": "Bridge the Rips-graph metric filtration to tropical valuation objects via monotone edge-count profil"
+    },
+    {
+      "cycle_id": "892391de",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions: Functorial Tropical Valuation from Rips Edge-Count Filtrations\n\nThese conjectures extend the results formalized in\n`Bridges/RipsEdgeCountTropical.lean`, which bridges the Rips gra",
+      "quality_score": 0.497252,
+      "sorry_count": 0,
+      "theorem_count": 74,
+      "timestamp": "2026-06-16T00:24:52",
+      "title": "Functorial tropical valuation object from Rips graph edge-count filtrations"
+    },
+    {
+      "cycle_id": "a87fe3e9",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Tropical Valuation Profiles from p-adic Valuation Depth\n\nDerived from the two research cycles in\n`Bridges/PadicProfileTropical.lean` and `Bridges/PadicProfileTropicalInvariant.le",
+      "quality_score": 0.49789250000000007,
+      "sorry_count": 0,
+      "theorem_count": 73,
+      "timestamp": "2026-06-16T00:25:41",
+      "title": "Functorial tropical valuation object from p-adic valuation-depth profiles of finite sums"
+    },
+    {
+      "cycle_id": "9f426600",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Rips Graph Monotonicity as a Functor into Tropical Valuation Objects\n\nDerived from this cycle's findings in `Core.lean` and `Functoriality.lean`, which build the\nobject map (fini",
+      "quality_score": 0.5464257142857143,
+      "sorry_count": 0,
+      "theorem_count": 66,
+      "timestamp": "2026-06-16T00:26:15",
+      "title": "Rips graph monotonicity as a functor into tropical valuation objects"
+    },
+    {
+      "cycle_id": "096aa5b9",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\nFollow-up conjectures arising from `Catalog/Bridges/ValuationDepthTropicalFunctor.lean`\n(the 1-Lipschitz functor `depthTropObj`/`depthTropFunctor` from valuation-depth measures\n`D",
+      "quality_score": 0.5430773913043478,
+      "sorry_count": 0,
+      "theorem_count": 66,
+      "timestamp": "2026-06-16T00:27:15",
+      "title": "A 1-Lipschitz functor from valuation-depth measures to tropical valuation objects"
+    },
+    {
+      "cycle_id": "cfed7f6c",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Metric → Tropical Filtration → Ultrametric Bridge\n\nThese conjectures extend the results formalized in\n`Catalog/Bridges/RipsTropicalUltrametric.lean`, which builds the **subdomina",
+      "quality_score": 0.4422638461538462,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-06-16T01:01:06",
+      "title": "Functorial metric-to-tropical filtration from Rips graphs to ultrametric valuation objects"
+    },
+    {
+      "cycle_id": "b312114f",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Korselt's Criterion & the Multiplicative-Order Bridge\n\nDerived from the cycle that produced, in `Catalog/Cryptography/`:\n\n* `KorseltMultiplicativeOrder.lean`\n  * `exponent_units_",
+      "quality_score": 0.33112290909090913,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-16T01:01:30",
+      "title": "Derived from the research cycle that produced"
+    },
+    {
+      "cycle_id": "7db0844d",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Rips Filtrations ↔ Tropical Valuation Objects\n\nFollow-up conjectures arising from `Catalog/Bridges/RipsTropicalFunctor.lean`, which\nestablished:\n\n* a concrete max-plus model `tro",
+      "quality_score": 0.42713306086956526,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-16T01:01:53",
+      "title": "A functor from metric Rips filtrations to tropical valuation objects via simplex-count monotonicity"
+    },
+    {
+      "cycle_id": "90c4ce9a",
+      "domain": "Bridges",
+      "key_insight": "# FUTURE DIRECTIONS — Functorial Tropical Ultrametric from Pythagorean Lorentz Triples\n\nThis cycle produced `Catalog/Bridges/FunctorialTropicalPythagorean.lean` (0 sorries, only\nstandard axioms). It b",
+      "quality_score": 0.49903022994652413,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-06-16T01:39:59",
+      "title": "Functorial tropical ultrametric from Pythagorean Lorentz triples"
+    },
+    {
+      "cycle_id": "999c0f6b",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — Valuation-Depth → Tropical Functor\n\nDerived from the verified results in\n`Catalog/Bridges/ValuationDepthTropicalFunctor.lean` (foundations) and\n`Catalog/Bridges/ValuationDepthFol",
+      "quality_score": 0.7756000000000001,
+      "sorry_count": 1,
+      "theorem_count": 17,
+      "timestamp": "2026-06-16T01:42:32",
+      "title": "Follow-up conjectures arising from `Catalog/Bridges/ValuationDepthTropicalFuncto"
+    },
+    {
+      "cycle_id": "e72864d5",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Fibonacci ranks of apparition & primitive prime divisors\n\nThis cycle established a fully-formalized rank-of-apparition toolkit\n(`Catalog/Speculative/AutoResearch/FibonacciPrimiti",
+      "quality_score": 0.35638045714285715,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-06-16T02:59:07",
+      "title": "These conjectures extend the results formalized in"
+    },
+    {
+      "cycle_id": "3fd7a316",
+      "domain": "Probability",
+      "key_insight": "# FUTURE DIRECTIONS — Functorial Tropical Ultrametric from Pythagorean Lorentz Triples\n\nThis cycle produced two compiling, `sorry`-free Lean files (standard axioms only):\n\n- `Catalog/Bridges/Functoria",
+      "quality_score": 0.8053600000000001,
+      "sorry_count": 0,
+      "theorem_count": 25,
+      "timestamp": "2026-06-16T03:36:41",
+      "title": "`Catalog/Bridges/FunctorialTropicalPythagorean.lean` (0 sorr"
+    },
+    {
+      "cycle_id": "dc77da43",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Tropical Valuation Profiles of Rips Edge-Count Data\n\nDerived from the two research cycles in\n`RipsTropicalValuationProfile.lean` (cycle 1) and `RipsTropicalInterleaving.lean` (cy",
+      "quality_score": 0.49856,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-16T03:38:30",
+      "title": "A tropical valuation profile of finite metric filtrations from Rips edge-count data"
+    },
+    {
+      "cycle_id": "6f9401e1",
+      "domain": "NumberTheory",
+      "key_insight": "# FUTURE DIRECTIONS — Valuation-Depth → Tropical Functor\n\nThis document collects bold, falsifiable conjectures arising from the deepening cycle\nrecorded in:\n\n* `Catalog/Bridges/ValuationDepthTropicalF",
+      "quality_score": 0.72651,
+      "sorry_count": 1,
+      "theorem_count": 17,
+      "timestamp": "2026-06-16T04:13:04",
+      "title": "Deepening: Follow-up conjectures arising from `Catalog/Bridges/ValuationDepthTropicalFuncto"
+    },
+    {
+      "cycle_id": "d9dd0490",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Fibonacci rank of apparition & Pisano period\n\nThis cycle proved that the Fibonacci **rank of apparition** `z(p) = fibEntry p` is a full\nlattice homomorphism of `(ℕ, ∣)` (`fibEntr",
+      "quality_score": 0.6056199999999999,
+      "sorry_count": 0,
+      "theorem_count": 5,
+      "timestamp": "2026-06-16T04:13:35",
+      "title": "Derived from this cycle's findings in `Core.lean` and `Functoriality.lean`, whic"
+    },
+    {
+      "cycle_id": "b3f0c15e",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Monodromy Compression Principle for Neural PDE Solvers\n\nThis research cycle established the **Monodromy Compression Principle** in\n`Catalog/Physics/MonodromyCompression.lean`: th",
+      "quality_score": 0.5072000000000001,
+      "sorry_count": 0,
+      "theorem_count": 24,
+      "timestamp": "2026-06-16T04:48:32",
+      "title": "Monodromy Compression Principle for Neural PDE Solvers"
+    },
+    {
+      "cycle_id": "29017e68",
+      "domain": "Physics",
+      "key_insight": "# FUTURE_DIRECTIONS — Rips Filtrations ↔ Tropical Valuation Objects\n\nCycle output. This cycle formalized, in Lean 4 (0 sorries, only the standard\n`propext`/`Classical.choice`/`Quot.sound` axioms), the",
+      "quality_score": 0.7856000000000001,
+      "sorry_count": 0,
+      "theorem_count": 28,
+      "timestamp": "2026-06-16T04:49:38",
+      "title": "Follow-up conjectures arising from `Catalog/Bridges/RipsTropicalFunctor.lean`, w"
+    },
+    {
+      "cycle_id": "6ce4a7be",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Metric Filtration Rank Profiles as Tropical Valuation Objects\n\nThis research cycle established (file\n`Catalog/Bridges/MetricFiltrationTropicalProfile.lean`, all theorems verified",
+      "quality_score": 0.76292,
+      "sorry_count": 0,
+      "theorem_count": 39,
+      "timestamp": "2026-06-16T04:50:02",
+      "title": "Metric filtration rank profiles as tropical valuation objects"
+    },
+    {
+      "cycle_id": "e9b0b276",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Berggren Lattice Orbit Classification\n\nThis cycle established the **modular orbit classification** of the Berggren tree of\nprimitive Pythagorean triples (file `Catalog/Cryptograp",
+      "quality_score": 0.5321925795053004,
+      "sorry_count": 1,
+      "theorem_count": 166,
+      "timestamp": "2026-06-16T06:43:15",
+      "title": "Berggren Lattice Orbit Classification for Post-Quantum Key Exchange"
+    },
+    {
+      "cycle_id": "c38e2bf9",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Tropical weight enumerator profiles for binary linear codes\n\nThis cycle introduced `TropicalWeightEnumerator.lean`, the **min-plus tropicalization**\nof the classical Hamming weigh",
+      "quality_score": 0.7101600000000001,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-06-16T07:28:43",
+      "title": "Tropical weight enumerator profiles for binary linear codes via Smooth Poincaré primitives"
+    },
+    {
+      "cycle_id": "c8fdbde8",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Pisano period as a lattice morphism, and the entry-point cofactor\n\nThis cycle (files `Catalog/Logic/FibPisanoLattice.lean` and\n`Catalog/Logic/FibPisanoEntryCofactor.lean`) proved",
+      "quality_score": 0.4348039483870968,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-16T07:31:09",
+      "title": "That the Fibonacci **rank of apparition** `z(p) = fibEntry p`"
+    },
+    {
+      "cycle_id": "e42393e4",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Weight-Threshold Profiles & the Codes → Tropical Valuation Functor\n\nThese conjectures extend `Catalog/Bridges/CodeThresholdValuation.lean`, which builds the\nfunctor `FinLinCodes",
+      "quality_score": 0.79224,
+      "sorry_count": 4,
+      "theorem_count": 42,
+      "timestamp": "2026-06-16T08:06:33",
+      "title": "Functor from finite linear codes to tropical valuation objects via weight-threshold profiles"
+    },
+    {
+      "cycle_id": "a0671e28",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS\n\nFollow-up conjectures arising from\n`Catalog/Applications/EGFTropicalValuation.lean`\n(\"Exponential generating functions induce a tropical valuation profile via\ncoefficient-support",
+      "quality_score": 0.5303199999999999,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-16T08:07:07",
+      "title": "Exponential generating functions induce a tropical valuation profile via coefficient-support truncat"
+    },
+    {
+      "cycle_id": "5971ea29",
+      "domain": "MachineLearning",
+      "key_insight": "# FUTURE DIRECTIONS — Valuation-Depth → Tropical Functor (Cycle 3)\n\nThis document records the bold, falsifiable conjectures arising from the third deepening\ncycle, which **resolved** four of the previ",
+      "quality_score": 0.5840000000000001,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-06-16T08:07:33",
+      "title": "This document collects bold, falsifiable conjectures arising from the deepening "
+    },
+    {
+      "cycle_id": "841c1580",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions: the Rips ↔ Tropical Valuation Bridge\n\nThese directions continue the Vietoris–Rips ↔ tropical valuation program now\nanchored by `Catalog/Bridges/RipsTropicalCompletion.lean` (thres",
+      "quality_score": 0.4354,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-16T08:08:05",
+      "title": "Cycle output. This cycle formalized, in Lean 4 (0 sorries, only the standard"
+    },
+    {
+      "cycle_id": "835afc43",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions: Metric Filtration Rank Profiles as Tropical Valuation Objects\n\nThese conjectures continue the research cycle begun in\n`Catalog/Tropical/MetricFiltrationRankProfiles.lean`, which p",
+      "quality_score": 0.37346615000000005,
+      "sorry_count": 0,
+      "theorem_count": 25,
+      "timestamp": "2026-06-16T08:08:37",
+      "title": "Deepening: Metric filtration rank profiles as tropical valuation objects"
+    },
+    {
+      "cycle_id": "4c324de9",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions: Tropical weight enumerator profiles, cycle 2\n\nThis cycle added two `sorry`-free files on top of `TropicalWeightEnumerator.lean`:\n\n* **`TropicalHullRecovery.lean`** — realizes *Con",
+      "quality_score": 0.5844,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-06-16T09:57:45",
+      "title": "`TropicalWeightEnumerator.lean`, the **min-plus tropicaliz"
+    },
+    {
+      "cycle_id": "14435cc3",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — Species EGFs as a Tropical Valuation Profile Bridge\n\nFollow-up conjectures generated by the cycle that produced\n`Catalog/Bridges/SpeciesTropicalValuation.lean`.  That file establ",
+      "quality_score": 0.6017600000000001,
+      "sorry_count": 0,
+      "theorem_count": 33,
+      "timestamp": "2026-06-16T10:38:16",
+      "title": "Combinatorial species exponential generating functions as a tropical valuation profile bridge"
+    },
+    {
+      "cycle_id": "d6329d46",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Cumulative weight thresholds & convolution of binary linear codes\n\nDerived from this research cycle, which added two `sorry`-free Lean files to\n`Catalog/Applications/SmoothPoinca",
+      "quality_score": 0.7918400000000001,
+      "sorry_count": 2,
+      "theorem_count": 22,
+      "timestamp": "2026-06-16T10:39:15",
+      "title": "Deepening: Functor from finite linear codes to tropical valuation objects via weight-thresh"
+    },
+    {
+      "cycle_id": "c3d42768",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Korselt Criterion & Divisor-Lattice Tropical Flatness\n\nDerived from the cycle that produced `Shared/KorseltCarmichael.lean` and\n`Bridges/KorseltTropicalFlatness.lean`. In that cy",
+      "quality_score": 0.57488,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-16T10:39:41",
+      "title": "Korselt criterion completion and Carmichael divisor-lattice tropical flatness"
+    },
+    {
+      "cycle_id": "bfb62bb9",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Weight-Threshold Profiles & the Codes → Tropical Valuation Functor\n\nDerived from the research cycle recorded in\n`Catalog/Novelty/ThresholdDirectSum.lean`, `Catalog/Novelty/Thresh",
+      "quality_score": 0.5236521220159152,
+      "sorry_count": 1,
+      "theorem_count": 22,
+      "timestamp": "2026-06-16T10:49:08",
+      "title": "These conjectures extend `Catalog/Bridges/CodeThresholdValuation.lean`, which bu"
+    },
+    {
+      "cycle_id": "2ec4044e",
+      "domain": "Applications",
+      "key_insight": "# FUTURE DIRECTIONS — Tropicalized binary weight enumerator profiles\n\nFollow-up conjectures for the `SmoothPoincare` tropical-code thread. Each builds on the\nverified results in `TropicalWeightEnumera",
+      "quality_score": 0.5527085714285715,
+      "sorry_count": 1,
+      "theorem_count": 7,
+      "timestamp": "2026-06-16T11:25:17",
+      "title": "Tropicalized binary weight enumerator profile from Smooth Poincaré code primitives"
+    },
+    {
+      "cycle_id": "ce2d79fb",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Rips ↔ Tropical Valuation Bridge (cycle output)\n\nThis cycle built and verified the missing **anchor** of the program:\n\n* `Catalog/Geometry/RipsTropicalCompletion.lean` — `tropBir",
+      "quality_score": 0.46699999999999997,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-16T11:25:57",
+      "title": "These directions continue the Vietoris–Rips ↔ tropical valuation program now"
+    },
+    {
+      "cycle_id": "a0dd96a5",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Metric Filtration Rank Profiles as Tropical Valuation Objects\n\nDerived from the research cycle in\n`Catalog/Tropical/MetricFiltrationRankProfiles.lean` (foundation: `transEndo`,\n`",
+      "quality_score": 0.5271458702064897,
+      "sorry_count": 5,
+      "theorem_count": 50,
+      "timestamp": "2026-06-16T12:52:43",
+      "title": "These conjectures continue the research cycle begun in"
+    },
+    {
+      "cycle_id": "16e95997",
+      "domain": "Physics",
+      "key_insight": "# FUTURE DIRECTIONS — Computational Complexity as a Physical Law\n\nDerived from the Phase A cycle that produced\n`Catalog/Physics/ComplexityPhysicalLaw.lean` and\n`Catalog/Speculative/ExtendedChurchTurin",
+      "quality_score": 0.5482400000000001,
+      "sorry_count": 5,
+      "theorem_count": 51,
+      "timestamp": "2026-06-16T12:53:15",
+      "title": "Speculative: Computational Complexity as Physical Law"
+    },
+    {
+      "cycle_id": "3b102b1d",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Functorial Tropical–Pythagorean Bridge (Probability)\n\nThis cycle established a *normalization functor into the probability simplex*\nthat unifies three threads:\n\n* **Tropical**: `",
+      "quality_score": 0.7943200000000001,
+      "sorry_count": 0,
+      "theorem_count": 75,
+      "timestamp": "2026-06-16T13:28:06",
+      "title": "Deepening: `Catalog/Bridges/FunctorialTropicalPythagorean.lean` (0 sorr"
+    },
+    {
+      "cycle_id": "6fe73404",
+      "domain": "Applications",
+      "key_insight": "# Proofs as DAGs — Future Directions\n\nResearch cycle 1 established a self-contained, choice-light theory of the\n*directed acyclic* structure of mathematical dependency, centred on a single\nconstructiv",
+      "quality_score": 0.49388999999999994,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-16T15:03:40",
+      "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
+    },
+    {
+      "cycle_id": "7e82348b",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — Mandelbrot Quadratic Recurrence & Number Theory\n\nDerived from the research cycle that produced:\n\n- `Tropical/MandelbrotGleason.lean` — the Gleason polynomials `gₙ = g_{n-1}² + X`",
+      "quality_score": 0.44762947252747254,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-06-16T15:04:12",
+      "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
+    },
+    {
+      "cycle_id": "fba6400c",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Borsuk–Ulam ⇄ Arrow (Social Choice Is Topology)\n\nDerived from the cycle in `Computation/BorsukUlamArrow.lean` and\n`Computation/BorsukUlamArrowDichotomy.lean`. Each conjecture is",
+      "quality_score": 0.64064,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-16T15:41:16",
+      "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
+    },
+    {
+      "cycle_id": "ecc79db8",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Integrated Information via Tensor Networks\n\nThis research cycle established the dictionary\n\n> **IIT min-cut Φ  ≡  tensor-network min-cut entanglement capacity**\n> (under `weight",
+      "quality_score": 0.4986900000000001,
+      "sorry_count": 0,
+      "theorem_count": 34,
+      "timestamp": "2026-06-16T15:41:49",
+      "title": "Integrated Information via Tensor Networks"
+    },
+    {
+      "cycle_id": "1ad32e9c",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — Tropical Fermat's Last Theorem\n\nThis research cycle established the core dichotomy: the classical Fermat equation\n`aⁿ + bⁿ = cⁿ` has no nontrivial solutions for `n ≥ 3`, while it",
+      "quality_score": 0.4733421090909091,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-06-16T15:42:10",
+      "title": "Tropical Fermat's Last Theorem"
+    },
+    {
+      "cycle_id": "0d42792c",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — Diophantine Approximation on ReLU / Tropical Networks\n\nDerived from this cycle's findings in\n`Tropical/NeuralNetworks/DiophantineReLUPi.lean` and\n`Tropical/NeuralNetworks/ReLURep",
+      "quality_score": 0.5761099999999999,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-16T16:18:18",
+      "title": "Diophantine Approximation on Neural Networks: How Well Can ReLU Approximate Pi?"
+    },
+    {
+      "cycle_id": "e49c5ee1",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Information-Theoretic Limits of Proof Search\n\nThese conjectures extend `Catalog/Computation/ProofSearchLimits.lean`, which proves\nthat the set of theorems certifiable within a pr",
+      "quality_score": 0.48378234883720933,
+      "sorry_count": 0,
+      "theorem_count": 20,
+      "timestamp": "2026-06-16T16:54:39",
+      "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proof?"
+    },
+    {
+      "cycle_id": "d79ba9e2",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Isogeny-Based Cryptography (CSI-FiSh / CSIDH)\n\nConjectures below are stated to be *formalizable and testable* in Lean 4, building\ndirectly on `Catalog/Cryptography/CSIFiShClassGr",
+      "quality_score": 0.66144,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-16T16:55:32",
+      "title": "Isogeny-Based Cryptography: CSI-FiSh"
+    },
+    {
+      "cycle_id": "24a3af22",
+      "domain": "Tropical",
+      "key_insight": "# FUTURE DIRECTIONS — Category Theory as the DNA of Mathematics (Tropical cycle)\n\nDerived from the verified results in\n`Catalog/Tropical/ModelCategoryGenome.lean` and\n`Catalog/Tropical/TropicalResidua",
+      "quality_score": 0.606,
+      "sorry_count": 0,
+      "theorem_count": 30,
+      "timestamp": "2026-06-16T17:29:12",
+      "title": "Speculative: Category Theory as the DNA of Mathematics"
+    },
+    {
+      "cycle_id": "eef6f30f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Mathematics as an Evolving Ecosystem\n\nDerived from the Phase A cycle that produced `Fitness.lean`,\n`CompetitiveExclusion.lean`, and `Evolution.lean`.  Each direction is a bold,\nf",
+      "quality_score": 0.5167481481481482,
+      "sorry_count": 0,
+      "theorem_count": 35,
+      "timestamp": "2026-06-16T18:05:37",
+      "title": "Speculative: Mathematics as an Evolving Ecosystem"
+    },
+    {
+      "cycle_id": "c2c261ee",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — EML Special Functions (Gamma, Zeta, Hypergeometric)\n\nDerived from the verified results in `GammaEML.lean`, `ZetaEML.lean`, and\n`HypergeometricEML.lean`. Each conjecture is falsif",
+      "quality_score": 0.42100000000000004,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-16T19:50:37",
+      "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
+    },
+    {
+      "cycle_id": "fbd73212",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — EML Single-Operator Church–Turing Thesis\n\nThis cycle established, with fully verified Lean 4 proofs (0 sorries, standard\naxioms only), the **affirmative content** of the single-o",
+      "quality_score": 0.7150400000000001,
+      "sorry_count": 0,
+      "theorem_count": 35,
+      "timestamp": "2026-06-16T19:51:14",
+      "title": "EML Single Operator Church-Turing Thesis"
+    },
+    {
+      "cycle_id": "1f4bbef7",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Automatic Sequences and the Zero-in-Sequence Problem\n\nThis cycle formalized the automata-theoretic core of the \"halting problem for\nautomatic sequences\": the zero-in-sequence pro",
+      "quality_score": 0.712,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-06-16T20:27:30",
+      "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
+    },
+    {
+      "cycle_id": "c1948da4",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Cellular Automata at the Ordinals\n\nDerived from the verified results in\n`Catalog/Shared/TransfiniteCellularAutomata.lean` and\n`Catalog/Shared/TransfiniteCAGardenOrdinalBridge.lea",
+      "quality_score": 0.6361600000000001,
+      "sorry_count": 0,
+      "theorem_count": 23,
+      "timestamp": "2026-06-16T20:27:51",
+      "title": "Cellular Automata at the Ordinals: Transfinite Computation"
+    },
+    {
+      "cycle_id": "03edad6d",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Infinite-Dimensional Chess on the Hilbert Board\n\nThis cycle formalized the lone king vs. finite line-piece pursuit on the infinite\nboard `ℤ × ℤ` and established three pillars:\n\n1",
+      "quality_score": 0.5057485714285714,
+      "sorry_count": 0,
+      "theorem_count": 28,
+      "timestamp": "2026-06-16T20:28:46",
+      "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
+    },
+    {
+      "cycle_id": "8dbe2c7e",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\nThese build directly on `BehavioralEquivalence.lean` and stay within precise, provable\nmathematics — no metaphysical extensions.\n\n## 1. Dynamical / transition systems\n\nReplace the",
+      "quality_score": 0.4249618181818182,
+      "sorry_count": 0,
+      "theorem_count": 21,
+      "timestamp": "2026-06-16T21:05:29",
+      "title": "Zombies and Qualia: Mathematics of Subjective Experience"
+    },
+    {
+      "cycle_id": "fb007c35",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Periodic Table of Finite Groups\n\nDerived from the verified Lean results in\n`Catalog/Novelty/PeriodicTableOfGroups.lean` and\n`Catalog/Novelty/GroupIsotopes.lean`.\n\nThis cycle",
+      "quality_score": 0.48464,
+      "sorry_count": 0,
+      "theorem_count": 36,
+      "timestamp": "2026-06-16T22:36:06",
+      "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+    },
+    {
+      "cycle_id": "1aac4615",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Spectral Graph Theory Meets Network Robustness\n\nThis cycle established, fully in Lean 4 (0 sorries), a faithful bridge between the\ngraph Laplacian and network robustness in\n`Cata",
+      "quality_score": 0.4180994484848485,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-16T23:47:59",
+      "title": "Spectral Graph Theory Meets Network Robustness"
+    },
+    {
+      "cycle_id": "14986cd2",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Time-Travel Consistency as a Fixed-Point Theorem\n\nDerived from the research cycle formalized in\n`Catalog/Computation/NovikovConsistency.lean` and\n`Catalog/Computation/NovikovPoly",
+      "quality_score": 0.36975260000000004,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-16T23:49:05",
+      "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
+    },
+    {
+      "cycle_id": "b4a517d3",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Unstoppable Self-Maps (Geometry)\n\nFollow-up conjectures for the theme *\"Self-modifying code that cannot be stopped\"*,\nbased on `Geometry/Unstoppable.lean` (the **drift criterion*",
+      "quality_score": 0.42858307692307696,
+      "sorry_count": 0,
+      "theorem_count": 25,
+      "timestamp": "2026-06-17T00:29:31",
+      "title": "Self-Modifying Code That Cannot Be Stopped"
+    },
+    {
+      "cycle_id": "5f9a16a6",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Topology of Argumentation: Why Debates Have Holes\n\nThis cycle established a formal core for abstract argumentation frameworks (AFs) in\n`Catalog/Novelty/ArgumentationTopology.",
+      "quality_score": 0.40688965517241377,
+      "sorry_count": 0,
+      "theorem_count": 30,
+      "timestamp": "2026-06-17T00:31:01",
+      "title": "The Topology of Argumentation: Why Debates Have Holes"
+    },
+    {
+      "cycle_id": "d1b34dda",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Ramanujan-Style Intuition as Formalizable Meta-Reasoning\n\nDerived from this cycle's findings (`Core.lean`, `Halting.lean`,\n`FiniteBoundary.lean`, `JumpBridge.lean`). Each conject",
+      "quality_score": 0.46740400000000004,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-17T01:06:25",
+      "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
+    },
+    {
+      "cycle_id": "ed805c6d",
+      "domain": "Geometry",
+      "key_insight": "# FUTURE DIRECTIONS — Gravity from Information: Spacetime as a Quantum Error-Correcting Code\n\nThis research cycle built a fully verified, manifold-free combinatorial core of\nthe holographic principle",
+      "quality_score": 0.4728086269230769,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-17T01:40:36",
+      "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
+    },
+    {
+      "cycle_id": "702894c4",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Proof Complexity and Thermodynamic Cost\n\nDerived from the Stage 3 / Stage 4 findings of\n`ThermodynamicCost.lean` and `LandauerBridge.lean`.  Each conjecture is bold,\nfalsifiable,",
+      "quality_score": 0.4263405714285714,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-17T01:44:38",
+      "title": "Speculative: Proof Complexity and Thermodynamic Cost"
+    },
+    {
+      "cycle_id": "2d22ac65",
+      "domain": "Tropical",
+      "key_insight": "# FUTURE DIRECTIONS — Tropical Persistent Topology\n\nResearch cycle: *Topological Data Analysis of Theorem Networks* (Domain: Tropical).\nFoundation laid in `Catalog/Tropical/Persistence/SublevelFiltrat",
+      "quality_score": 0.5060211363636364,
+      "sorry_count": 0,
+      "theorem_count": 12,
+      "timestamp": "2026-06-17T02:02:36",
+      "title": "Speculative: Topological Data Analysis of Theorem Networks"
+    },
+    {
+      "cycle_id": "1873f003",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Tangled Hierarchies (GL-Kripke geometry of self-soundness)\n\nDerived from this cycle's findings in `Core.lean`, `SelfSoundness.lean`,\n`Examples.lean`. This cycle established, on f",
+      "quality_score": 0.4749530303030304,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-17T03:57:54",
+      "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+    },
+    {
+      "cycle_id": "29ffc67c",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Numerical Monsters Bestiary (Bridges domain)\n\nThis research cycle established a verified core for digit-combinatorial\n\"monsters\": vampire numbers (`Vampire.lean`), the narcissist",
+      "quality_score": 0.5227499999999999,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-17T04:32:30",
+      "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+    },
+    {
+      "cycle_id": "1cfdf3f4",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Causal Loops in Category Theory\n\nFollow-up conjectures arising from `CausalLoops.lean` (Cycle 0 + Cycle 1).\nAll results in that file are fully proved (0 sorries, standard axioms",
+      "quality_score": 0.6660400000000001,
+      "sorry_count": 0,
+      "theorem_count": 18,
+      "timestamp": "2026-06-17T05:04:36",
+      "title": "Causal Loops in Category Theory: When Composition Loops Back"
+    },
+    {
+      "cycle_id": "78c9ab60",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Non-Well-Founded Proofs in Geometry\n\nResearch theme: **\"Non-Well-Founded Proofs: Proofs That Reference Themselves\"**, domain **Geometry**.\n\nAcross two cycles we established the t",
+      "quality_score": 0.5606952380952381,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-17T05:41:11",
+      "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
+    },
+    {
+      "cycle_id": "343c2db7",
+      "domain": "NumberTheory",
+      "key_insight": "# FUTURE DIRECTIONS — Fractal Number Theory of the Logarithmic Prime Image\n\nDerived from this cycle's findings in\n`Catalog/NumberTheory/PrimeFractalLength.lean`,\n`Catalog/NumberTheory/PrimeFractalRect",
+      "quality_score": 0.5248201970443349,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-17T05:42:14",
+      "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
+    },
+    {
+      "cycle_id": "6fb69121",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — The Hodge Conjecture for Neural Networks\n\nDerived from the cycle in `NeuralHodgeConjecture.lean` and `NeuralHodgeCatalogLink.lean`,\nwhich proved:\n\n* `pl_hodge_decomposition` / `p",
+      "quality_score": 0.5415809756097562,
+      "sorry_count": 0,
+      "theorem_count": 4,
+      "timestamp": "2026-06-17T06:17:59",
+      "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
+    },
+    {
+      "cycle_id": "11262eec",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Paradoxes as Theorems (Liar, Berry, Russell, Made Consistent)\n\nDerived from the cycle whose verified results live in\n`Catalog/Logic/ParaconsistentParadox.lean` (foundations) and",
+      "quality_score": 0.5355679086538463,
+      "sorry_count": 0,
+      "theorem_count": 36,
+      "timestamp": "2026-06-17T07:31:29",
+      "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
+    },
+    {
+      "cycle_id": "728f60d4",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Theorems as Phase Transitions in Proof Space\n\nDerived from the verified results in\n`Logic/ProofSpacePhaseTransition.lean` and\n`Bridges/ProofSpacePythagoreanBridge.lean`.\n\nThis cy",
+      "quality_score": 0.4504,
+      "sorry_count": 0,
+      "theorem_count": 7,
+      "timestamp": "2026-06-17T08:08:42",
+      "title": "Speculative: Theorems as Phase Transitions in Proof Space"
+    },
+    {
+      "cycle_id": "77489d34",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — Chip-Firing, Divisors, and Graph Riemann–Roch\n\nThese conjectures are derived from the verified results in\n`Tropical/ChipFiring/{Defs,Theorems,CompleteGraph,Rank}.lean`. Each is f",
+      "quality_score": 0.5406000000000001,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-17T08:43:16",
+      "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
+    },
+    {
+      "cycle_id": "8c9d3809",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Viral Information Topology\n\nThis research cycle (cold start, Logic domain) formalized memetic/viral spread as\na forward-chaining **consequence operator** and established its orde",
+      "quality_score": 0.6462399999999999,
+      "sorry_count": 0,
+      "theorem_count": 35,
+      "timestamp": "2026-06-17T09:17:46",
+      "title": "The Mathematics of Memes: Viral Information Topology"
+    },
+    {
+      "cycle_id": "6493a7ff",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Crystallographic Groups and Music: The Wallpaper Groups of Rhythm\n\nThis cycle established a self-contained theory of the **symmetry groups of cyclic\nrhythms** via the dihedral ac",
+      "quality_score": 0.5668,
+      "sorry_count": 0,
+      "theorem_count": 43,
+      "timestamp": "2026-06-17T09:51:01",
+      "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
+    },
+    {
+      "cycle_id": "c2929b61",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Retrocausal Mathematics: Where Effects Precede Causes\n\nDerived from this cycle's verified results in\n`Catalog/Logic/RetrocausalHeyting.lean` and `Catalog/Bridges/RetrocausalCPTBr",
+      "quality_score": 0.5083935828877005,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-17T10:23:58",
+      "title": "Retrocausal Mathematics: Where Effects Precede Causes"
+    },
+    {
+      "cycle_id": "95c512f5",
+      "domain": "Logic",
+      "key_insight": "# FUTURE DIRECTIONS — Mind vs Gödel: Can Minds Outperform Algorithms?\n\nThis cycle established (`Catalog/Logic/MindVersusGodel.lean`, 0 sorries) a four-layer,\nfully verified abstract account of the Luc",
+      "quality_score": 0.57324,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-17T10:24:37",
+      "title": "Mind vs Gödel: Can Minds Outperform Algorithms?"
+    },
+    {
+      "cycle_id": "667542f0",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Counterfactual Number Theory: What If Primes Were Random?\n\nThis cycle formalized the **Cramér random model of the primes** as a genuine finite\nprobability space (a Bernoulli \"ran",
+      "quality_score": 0.5307999999999999,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-17T10:58:43",
+      "title": "Counterfactual Number Theory: What If Primes Were Random?"
+    },
+    {
+      "cycle_id": "595ce011",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — The Spectral Gap of Sudoku\n\nThese conjectures extend the formalization in `Catalog/Novelty/SudokuSpectralGap.lean`,\nwhich establishes (general order `n`): the Sudoku graph is `(3",
+      "quality_score": 0.6122400000000001,
+      "sorry_count": 1,
+      "theorem_count": 10,
+      "timestamp": "2026-06-17T13:02:19",
+      "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
+    },
+    {
+      "cycle_id": "5884df3d",
+      "domain": "Combinatorics",
+      "key_insight": "# FUTURE DIRECTIONS — Phantom Topologies (Combinatorics)\n\nCycle-1/2 results live in `Catalog/Speculative/PhantomTopologies.lean`, where we proved that\non a finite carrier the topology is a *phantom* o",
+      "quality_score": 0.60834,
+      "sorry_count": 1,
+      "theorem_count": 10,
+      "timestamp": "2026-06-17T13:04:26",
+      "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+    },
+    {
+      "cycle_id": "46951c2e",
+      "domain": "Probability",
+      "key_insight": "# FUTURE DIRECTIONS — The L-Function Oracle (Probability)\n\nDerived from this cycle's verified Lean results:\n\n- `Probability/SatoTateMeasure.lean` — the Sato–Tate law is a probability measure\n  (`satoT",
+      "quality_score": 0.36179759999999994,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-17T13:38:17",
+      "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
+    },
+    {
+      "cycle_id": "ab2bf6f4",
+      "domain": "Algebra",
+      "key_insight": "# Future Directions — CSS Codes as Cohomology\n\nThis cycle established the dictionary **CSS code = homology of an `F₂`-chain\ncomplex** (`Core.lean`), *refuted* the hypercube conjecture for the 1-skelet",
+      "quality_score": 0.5330519163763068,
+      "sorry_count": 0,
+      "theorem_count": 32,
+      "timestamp": "2026-06-17T14:16:07",
+      "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
+    },
+    {
+      "cycle_id": "8e98f715",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Transreal Arithmetic & the Wheel Collapse\n\nDerived from this cycle's verified findings in\n`Catalog/Algebra/Transreal/{Basic,RingFails,Wheel,TropicalBridge}.lean`.\n\nCycle summary",
+      "quality_score": 0.46684,
+      "sorry_count": 0,
+      "theorem_count": 41,
+      "timestamp": "2026-06-17T15:29:46",
+      "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
+    },
+    {
+      "cycle_id": "16b03c84",
+      "domain": "Combinatorics",
+      "key_insight": "# Future Directions — Cellular Automata as Algebraic Geometry over GF(2)\n\nThese conjectures are distilled from the v16a research cycle in\n`Computation/ECAFixedVariety.lean` and `Computation/ECALinearS",
+      "quality_score": 0.49697377834557654,
+      "sorry_count": 0,
+      "theorem_count": 29,
+      "timestamp": "2026-06-17T16:03:46",
+      "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+    },
+    {
+      "cycle_id": "cb56480f",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology\n\nThis cycle produced `Catalog/Logic/JigsawPuzzles.lean`, a self-contained, fully\nverified (0 `sorry`) theory of ed",
+      "quality_score": 0.4729431683168317,
+      "sorry_count": 0,
+      "theorem_count": 19,
+      "timestamp": "2026-06-17T16:38:19",
+      "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
+    },
+    {
+      "cycle_id": "74e64b1f",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries\n\nThis research cycle established (in `DecisionBoundaryVariety.lean` and\n`DecisionBoundaryVarietyAlgebra.le",
+      "quality_score": 0.43286675,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-17T16:45:03",
+      "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+    },
+    {
+      "cycle_id": "61934e8a",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — *Isomorphisms of Meaning: When Structures Collide*\n\nThis cycle established two anchor results (see `Catalog/Bridges/StructuralCollisions.lean`\nand `Catalog/Bridges/BooleanLogicFi",
+      "quality_score": 0.531269226006192,
+      "sorry_count": 0,
+      "theorem_count": 80,
+      "timestamp": "2026-06-17T17:23:55",
+      "title": "Isomorphisms of Meaning: When Structures Collide"
+    },
+    {
+      "cycle_id": "9ff40964",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — The Fermi Paradox as a Pigeonhole Principle\n\nDerived from the verified results in this cycle:\n\n* `FirstMoment.lean` — the first moment method over finite weighted spaces\n  (`exis",
+      "quality_score": 0.5532343961470463,
+      "sorry_count": 0,
+      "theorem_count": 79,
+      "timestamp": "2026-06-17T19:24:27",
+      "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
+    },
+    {
+      "cycle_id": "949d41e5",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Hypergraph Ramsey Theory: Beyond Graphs\n\nThis cycle formalized, with zero `sorry`, a self-contained 2-color Ramsey theory\nfor `r`-uniform hypergraphs over the `Finset (Fin n) → B",
+      "quality_score": 0.6052,
+      "sorry_count": 0,
+      "theorem_count": 15,
+      "timestamp": "2026-06-17T19:26:41",
+      "title": "Hypergraph Ramsey Theory: Beyond Graphs"
+    },
+    {
+      "cycle_id": "bf4e21b7",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Knots That Think: Cognition as Braiding\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\nresearch cycle. The cycle established three formally-verified",
+      "quality_score": 0.33194676,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-17T22:17:37",
+      "title": "Knots That Think: Cognition as Braiding in Category Theory"
+    },
+    {
+      "cycle_id": "856aa6ac",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Holographic Primes\n\nDerived from the research cycles formalized in\n`Catalog/NumberTheory/HolographicPrimes.lean` (cycle 1) and\n`Catalog/NumberTheory/HolographicStability.lean` (c",
+      "quality_score": 0.4037273333333333,
+      "sorry_count": 0,
+      "theorem_count": 3,
+      "timestamp": "2026-06-17T22:30:21",
+      "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
+    },
+    {
+      "cycle_id": "21cfd7dd",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — The Prime Number Crossword\n\nThis cycle established the two boundary facts of the prime crossword in\n`Cryptography/PrimeGaps/`:\n\n* `exists_consecutive_composites` / `gaps_unbounde",
+      "quality_score": 0.36289866666666665,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-17T23:11:24",
+      "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
+    },
+    {
+      "cycle_id": "880250ea",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Split Geometry (Impossible Geometries cycle)\n\nThis cycle studied the \"Split Geometry\" metric on `ℝ²`,\n`ds² = dx²/cosh²y + cosh²x·dy²`, and **refuted** the headline conjecture tha",
+      "quality_score": 0.40832662857142854,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-18T00:32:11",
+      "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+    },
+    {
+      "cycle_id": "6e109ffd",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — The Spectral Gap of Sudoku\n\nDerived from this cycle's findings on the order-`n` Sudoku constraint graph\n`sudokuGraph n` (file `Computation/SudokuConstraintGraph.lean`). This cycl",
+      "quality_score": 0.4288495652173913,
+      "sorry_count": 0,
+      "theorem_count": 0,
+      "timestamp": "2026-06-18T02:10:54",
+      "title": "Close Proofs: The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
+    },
+    {
+      "cycle_id": "2710f166",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThese are freeform, speculative research directions extending the finite proof-search coarse-graining model in `Catalog/Speculative/Renormalization/FinitePathCoarseGraining.lean`.",
+      "quality_score": 0.5415909090909091,
+      "sorry_count": 0,
+      "theorem_count": 36,
+      "timestamp": "2026-06-18T05:04:33",
+      "title": "Renormalization of Proofs: Phase Transitions in Automated Theorem Search"
+    },
+    {
+      "cycle_id": "50e9a2da",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\nThe formalization in `KernelTailBounds.lean` proves a deterministic scaling-law engine:\ngiven a two-sided polynomial tail bound on a loss sequence, every standard downstream\nconse",
+      "quality_score": 0.5529929095354524,
+      "sorry_count": 0,
+      "theorem_count": 62,
+      "timestamp": "2026-06-18T06:04:16",
+      "title": "Scaling Laws from Statistical Mechanics"
+    },
+    {
+      "cycle_id": "15e84b40",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions\n\nThe most immediate extension is to upgrade `PartialSection` from a flat index set to a genuine presheaf on a poset or a topological space, so that restriction is functorial and th",
+      "quality_score": 0.5413687224669603,
+      "sorry_count": 0,
+      "theorem_count": 109,
+      "timestamp": "2026-06-18T07:02:49",
+      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+    },
+    {
+      "cycle_id": "0d2b0b43",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions — Tropical Curve Counting / Gromov–Witten Invariants\n\nThis cycle established (in `Core.lean`, 0 sorries):\n\n* the balancing/determinant identity making tropical **vertex multiplicit",
+      "quality_score": 0.5115800000000001,
+      "sorry_count": 0,
+      "theorem_count": 128,
+      "timestamp": "2026-06-18T08:36:17",
+      "title": "Tropical Curve Counting: Gromov-Witten Invariants"
+    },
+    {
+      "cycle_id": "d6f5cc61",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Quantum Random Walks on Cayley Graphs\n\nFollow-up conjectures arising from this cycle. The cycle proved (in\n`Catalog/Computation/QuantumWalkCayleySpectrum.lean`) the exact charact",
+      "quality_score": 0.36854137254901964,
+      "sorry_count": 0,
+      "theorem_count": 186,
+      "timestamp": "2026-06-18T09:04:59",
+      "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
+    },
+    {
+      "cycle_id": "5ddac85b",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Spectral Universality of LLM Weight Matrices\n\nThis cycle established the deterministic algebraic skeleton of random-matrix\nphase transitions for weight matrices: the Marchenko–Pa",
+      "quality_score": 0.38904000000000005,
+      "sorry_count": 0,
+      "theorem_count": 11,
+      "timestamp": "2026-06-18T12:08:46",
+      "title": "Spectral Universality of LLM Weight Matrices: Random-Matrix Phase Transitions in"
+    },
+    {
+      "cycle_id": "f6a45eec",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions — Euler–Mascheroni constant\n\nDerived from the Stage 3/4 findings in `SeriesRepresentation.lean` and\n`Approximation.lean`. Each conjecture is falsifiable and ready for a next cycle.",
+      "quality_score": 0.4949979545454546,
+      "sorry_count": 0,
+      "theorem_count": 35,
+      "timestamp": "2026-06-18T17:05:47",
+      "title": "Euler-Mascheroni Constant: Irrationality Approaches"
+    },
+    {
+      "cycle_id": "6c118cd3",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Strong Divisibility Sequence Bridges\n\nThis cycle established the **lattice-theoretic** side of the strong-divisibility-sequence\n(`StrongDivSeq`) programme, complementing the exis",
+      "quality_score": 0.4716,
+      "sorry_count": 0,
+      "theorem_count": 58,
+      "timestamp": "2026-06-18T21:05:56",
+      "title": "Proof Automation: Custom Lean 4 Tactics"
+    }
+  ],
+  "key_theorems": [
+    {
+      "cycle_id": "5a4a0b2c",
+      "domain": "Applications",
+      "name": "lerp_lerp",
+      "quality": 0.7868
+    },
+    {
+      "cycle_id": "5a4a0b2c",
+      "domain": "Applications",
+      "name": "eInterleavingDist_lerp_betweenness",
+      "quality": 0.7868
+    },
+    {
+      "cycle_id": "36dba103",
+      "domain": "Combinatorics",
+      "name": "support_eq_multiples",
+      "quality": 0.7248000000000001
+    },
+    {
+      "cycle_id": "36dba103",
+      "domain": "Combinatorics",
+      "name": "pow_sub_one_dvd_iff_pow_eq_one",
+      "quality": 0.7248000000000001
+    },
+    {
+      "cycle_id": "36dba103",
+      "domain": "Combinatorics",
+      "name": "mersenne_entryPoint_eq_orderOf",
+      "quality": 0.7248000000000001
+    },
+    {
+      "cycle_id": "70f20089",
+      "domain": "MachineLearning",
+      "name": "says",
+      "quality": 0.74211
+    },
+    {
+      "cycle_id": "70f20089",
+      "domain": "MachineLearning",
+      "name": "promised",
+      "quality": 0.74211
+    },
+    {
+      "cycle_id": "70f20089",
+      "domain": "MachineLearning",
+      "name": "of",
+      "quality": 0.74211
+    },
+    {
+      "cycle_id": "32c81afa",
+      "domain": "Shared",
+      "name": "lerp_reverse",
+      "quality": 0.7607163636363636
+    },
+    {
+      "cycle_id": "32c81afa",
+      "domain": "Shared",
+      "name": "lerp_self",
+      "quality": 0.7607163636363636
+    },
+    {
+      "cycle_id": "32c81afa",
+      "domain": "Shared",
+      "name": "weightSupEDist_lerp_bicombing",
+      "quality": 0.7607163636363636
+    },
+    {
+      "cycle_id": "b9cc2fac",
+      "domain": "Geometry",
+      "name": "interleaved_refl",
+      "quality": 0.7242
+    },
+    {
+      "cycle_id": "b9cc2fac",
+      "domain": "Geometry",
+      "name": "Interleaved",
+      "quality": 0.7242
+    },
+    {
+      "cycle_id": "b9cc2fac",
+      "domain": "Geometry",
+      "name": "Interleaved",
+      "quality": 0.7242
+    },
+    {
+      "cycle_id": "afe8c8b6",
+      "domain": "Novelty",
+      "name": "ext",
+      "quality": 0.7216
+    },
+    {
+      "cycle_id": "afe8c8b6",
+      "domain": "Novelty",
+      "name": "id_toFun",
+      "quality": 0.7216
+    },
+    {
+      "cycle_id": "afe8c8b6",
+      "domain": "Novelty",
+      "name": "comp_toFun",
+      "quality": 0.7216
+    },
+    {
+      "cycle_id": "cb2c4d8f",
+      "domain": "Combinatorics",
+      "name": "rank_preserves_interleaving",
+      "quality": 0.7260899999999999
+    },
+    {
+      "cycle_id": "cb2c4d8f",
+      "domain": "Combinatorics",
+      "name": "rank_interleavingDist_le",
+      "quality": 0.7260899999999999
+    },
+    {
+      "cycle_id": "cb2c4d8f",
+      "domain": "Combinatorics",
+      "name": "rips_rank_stability",
+      "quality": 0.7260899999999999
+    },
+    {
+      "cycle_id": "2086db82",
+      "domain": "Applications",
+      "name": "leftPart_append",
+      "quality": 0.70696
+    },
+    {
+      "cycle_id": "2086db82",
+      "domain": "Applications",
+      "name": "rightPart_append",
+      "quality": 0.70696
+    },
+    {
+      "cycle_id": "2086db82",
+      "domain": "Applications",
+      "name": "append_leftPart_rightPart",
+      "quality": 0.70696
+    },
+    {
+      "cycle_id": "999c0f6b",
+      "domain": "Algebra",
+      "name": "lipschitz_constant_iff",
+      "quality": 0.7756000000000001
+    },
+    {
+      "cycle_id": "999c0f6b",
+      "domain": "Algebra",
+      "name": "unit_is_least_lipschitz_constant",
+      "quality": 0.7756000000000001
+    },
+    {
+      "cycle_id": "999c0f6b",
+      "domain": "Algebra",
+      "name": "height_balanced",
+      "quality": 0.7756000000000001
+    },
+    {
+      "cycle_id": "3fd7a316",
+      "domain": "Probability",
+      "name": "cons_zero",
+      "quality": 0.8053600000000001
+    },
+    {
+      "cycle_id": "3fd7a316",
+      "domain": "Probability",
+      "name": "cons_succ",
+      "quality": 0.8053600000000001
+    },
+    {
+      "cycle_id": "3fd7a316",
+      "domain": "Probability",
+      "name": "firstDiff_spec",
+      "quality": 0.8053600000000001
+    },
+    {
+      "cycle_id": "6f9401e1",
+      "domain": "NumberTheory",
+      "name": "is",
+      "quality": 0.72651
+    },
+    {
+      "cycle_id": "6f9401e1",
+      "domain": "NumberTheory",
+      "name": "numLeaves_le_two_pow_height",
+      "quality": 0.72651
+    },
+    {
+      "cycle_id": "29017e68",
+      "domain": "Physics",
+      "name": "IsRipsClique_mono",
+      "quality": 0.7856000000000001
+    },
+    {
+      "cycle_id": "29017e68",
+      "domain": "Physics",
+      "name": "exists_finset_card_mem_mem",
+      "quality": 0.7856000000000001
+    },
+    {
+      "cycle_id": "29017e68",
+      "domain": "Physics",
+      "name": "pairwise_iff_tropBirthSum_le",
+      "quality": 0.7856000000000001
+    },
+    {
+      "cycle_id": "6ce4a7be",
+      "domain": "Bridges",
+      "name": "ripsGraphOf_mono",
+      "quality": 0.76292
+    },
+    {
+      "cycle_id": "6ce4a7be",
+      "domain": "Bridges",
+      "name": "ConnAt",
+      "quality": 0.76292
+    },
+    {
+      "cycle_id": "6ce4a7be",
+      "domain": "Bridges",
+      "name": "ConnAt",
+      "quality": 0.76292
+    },
+    {
+      "cycle_id": "c38e2bf9",
+      "domain": "Applications",
+      "name": "twe_le_of_mem",
+      "quality": 0.7101600000000001
+    },
+    {
+      "cycle_id": "e42393e4",
+      "domain": "Bridges",
+      "name": "mem_support",
+      "quality": 0.79224
+    },
+    {
+      "cycle_id": "e42393e4",
+      "domain": "Bridges",
+      "name": "support_zero",
+      "quality": 0.79224
+    },
+    {
+      "cycle_id": "d6329d46",
+      "domain": "Shared",
+      "name": "wt_le_length",
+      "quality": 0.7918400000000001
+    },
+    {
+      "cycle_id": "3b102b1d",
+      "domain": "Probability",
+      "name": "softmax2_pos",
+      "quality": 0.7943200000000001
+    },
+    {
+      "cycle_id": "3b102b1d",
+      "domain": "Probability",
+      "name": "softmax2_lt_one",
+      "quality": 0.7943200000000001
+    },
+    {
+      "cycle_id": "3b102b1d",
+      "domain": "Probability",
+      "name": "softmax2_add_symm",
+      "quality": 0.7943200000000001
+    },
+    {
+      "cycle_id": "fbd73212",
+      "domain": "Applications",
+      "name": "EMLOnlyRepresentable_sum",
+      "quality": 0.7150400000000001
+    },
+    {
+      "cycle_id": "fbd73212",
+      "domain": "Applications",
+      "name": "EMLOnlyRepresentable_prod",
+      "quality": 0.7150400000000001
+    },
+    {
+      "cycle_id": "fbd73212",
+      "domain": "Applications",
+      "name": "EMLOnlyRepresentable_mvPolynomial",
+      "quality": 0.7150400000000001
+    },
+    {
+      "cycle_id": "1f4bbef7",
+      "domain": "MachineLearning",
+      "name": "run_nil",
+      "quality": 0.712
+    },
+    {
+      "cycle_id": "1f4bbef7",
+      "domain": "MachineLearning",
+      "name": "run_concat",
+      "quality": 0.712
+    },
+    {
+      "cycle_id": "1f4bbef7",
+      "domain": "MachineLearning",
+      "name": "eval_def",
+      "quality": 0.712
+    }
+  ],
+  "last_updated": "2026-06-18T21:05:56",
+  "open_questions": [
+    {
+      "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
+      "cycle_id": "2509286d",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-06-15T01:56:25"
+    },
+    {
+      "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
+      "cycle_id": "b3a33fd0",
+      "domain": "NumberTheory",
+      "sorry_count": 1,
+      "timestamp": "2026-06-15T03:00:25"
+    },
+    {
+      "context": "",
+      "cycle_id": "51575ef7",
+      "domain": "Bridges",
+      "sorry_count": 2,
+      "timestamp": "2026-06-15T06:29:50"
+    },
+    {
+      "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
+      "cycle_id": "88475cc5",
+      "domain": "Bridges",
+      "sorry_count": 2,
+      "timestamp": "2026-06-15T06:30:20"
+    },
+    {
+      "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
+      "cycle_id": "a64f762c",
+      "domain": "Bridges",
+      "sorry_count": 3,
+      "timestamp": "2026-06-15T06:54:21"
+    },
+    {
+      "context": "`sorry`-free and depending only on `propext`:; Result: All four confirmed and fully formalized (zero `sorry`). The converse; Result     : Confirmed, `sorry = 0`.  `interPowSys k` lies strictly between",
+      "cycle_id": "a37014f1",
+      "domain": "Bridges",
+      "sorry_count": 3,
+      "timestamp": "2026-06-15T07:16:49"
+    },
+    {
+      "context": "",
+      "cycle_id": "94b6b70d",
+      "domain": "Probability",
+      "sorry_count": 1,
+      "timestamp": "2026-06-15T09:03:16"
+    },
+    {
+      "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
+      "cycle_id": "b221d007",
+      "domain": "MachineLearning",
+      "sorry_count": 1,
+      "timestamp": "2026-06-15T09:56:06"
+    },
+    {
+      "context": "Result:  Formalised and proved sorry-free.  `mpStep_add`/`mpStep_smul` (linearity),; Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
+      "cycle_id": "9f700fd5",
+      "domain": "Pythagorean",
+      "sorry_count": 2,
+      "timestamp": "2026-06-15T10:03:01"
+    },
+    {
+      "context": "`appendCode_card`) proved `sorry`-free for arbitrary lengths; `hamming ⊕ hamming`",
+      "cycle_id": "2086db82",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-06-15T11:51:06"
+    },
+    {
+      "context": "",
+      "cycle_id": "049cc9b2",
+      "domain": "Bridges",
+      "sorry_count": 1,
+      "timestamp": "2026-06-15T12:27:58"
+    },
+    {
+      "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Experiment / outcome:  Formalised and proved sorry-free.  The orthogonality lemmas",
+      "cycle_id": "406af8f7",
+      "domain": "Shared",
+      "sorry_count": 2,
+      "timestamp": "2026-06-15T12:28:59"
+    },
+    {
+      "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
+      "cycle_id": "2d95135b",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-06-15T13:01:23"
+    },
+    {
+      "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path",
+      "cycle_id": "497e55b6",
+      "domain": "Computation",
+      "sorry_count": 1,
+      "timestamp": "2026-06-15T13:39:19"
+    },
+    {
+      "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on",
+      "cycle_id": "c11e0165",
+      "domain": "Logic",
+      "sorry_count": 1,
+      "timestamp": "2026-06-15T13:42:19"
+    },
+    {
+      "context": "declaration below is proved with zero `sorry`s.; Result:  Formalised and proved sorry-free.  `mpStep_add`/`mpStep_smul` (linearity),",
+      "cycle_id": "561a2484",
+      "domain": "Cryptography",
+      "sorry_count": 2,
+      "timestamp": "2026-06-15T15:03:08"
+    },
+    {
+      "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
+      "cycle_id": "cd281b27",
+      "domain": "Tropical",
+      "sorry_count": 2,
+      "timestamp": "2026-06-15T15:22:59"
+    },
+    {
+      "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
+      "cycle_id": "cd281b27",
+      "domain": "Tropical",
+      "sorry_count": 2,
+      "timestamp": "2026-06-15T15:43:56"
+    },
+    {
+      "context": "This file gives a **fully verified, `sorry`-free** proof of Carmichael's theorem on; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
+      "cycle_id": "a4d16ba9",
+      "domain": "Probability",
+      "sorry_count": 2,
+      "timestamp": "2026-06-15T16:53:53"
+    },
+    {
+      "context": "`Nat.clog_pow`, not `decide`; all main theorems use induction/omega and are 0-sorry; the",
+      "cycle_id": "999c0f6b",
+      "domain": "Algebra",
+      "sorry_count": 1,
+      "timestamp": "2026-06-16T01:42:32"
+    },
+    {
+      "context": "the two named witnesses), uses induction/omega/`clog` lemmas, and is 0-sorry; the",
+      "cycle_id": "6f9401e1",
+      "domain": "NumberTheory",
+      "sorry_count": 1,
+      "timestamp": "2026-06-16T04:13:04"
+    },
+    {
+      "context": "the two named witnesses), uses induction/omega/`clog` lemmas, and is 0-sorry; the",
+      "cycle_id": "e9b0b276",
+      "domain": "Cryptography",
+      "sorry_count": 1,
+      "timestamp": "2026-06-16T06:43:15"
+    },
+    {
+      "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
+      "cycle_id": "e42393e4",
+      "domain": "Bridges",
+      "sorry_count": 4,
+      "timestamp": "2026-06-16T08:06:33"
+    },
+    {
+      "context": "and the supermultiplicative `wcount_append_ge`.  All `sorry`-free.; (PMF normalizes to |C|). All `sorry`-free.",
+      "cycle_id": "d6329d46",
+      "domain": "Shared",
+      "sorry_count": 2,
+      "timestamp": "2026-06-16T10:39:15"
+    },
+    {
+      "context": "## Verified results (all `sorry`-free)",
+      "cycle_id": "bfb62bb9",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-06-16T10:49:08"
+    },
+    {
+      "context": "Main results (all `sorry`-free):",
+      "cycle_id": "2ec4044e",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-06-16T11:25:17"
+    },
+    {
+      "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
+      "cycle_id": "a0dd96a5",
+      "domain": "Combinatorics",
+      "sorry_count": 5,
+      "timestamp": "2026-06-16T12:52:43"
+    },
+    {
+      "context": "## Main results (all `sorry`-free); `CodeVal.toTrop` is a functor into the catalog's `TropObj`, all `sorry`-free.; Result: `tdist` is a `sorry`-free ultrametric — separated (`tdist_eq_zero_iff`),",
+      "cycle_id": "16e95997",
+      "domain": "Physics",
+      "sorry_count": 5,
+      "timestamp": "2026-06-16T12:53:15"
+    },
+    {
+      "context": "",
+      "cycle_id": "595ce011",
+      "domain": "Novelty",
+      "sorry_count": 1,
+      "timestamp": "2026-06-17T13:02:19"
+    },
+    {
+      "context": "",
+      "cycle_id": "5884df3d",
+      "domain": "Combinatorics",
+      "sorry_count": 1,
+      "timestamp": "2026-06-17T13:04:26"
+    }
+  ],
+  "research_threads": {
+    "Algebra": [
+      {
+        "cycle_id": "bf726cd6",
+        "quality": 0.42794696278511407,
+        "theorems": 1666,
+        "title": "Foundational analytic infrastructure for formalizing"
+      },
+      {
+        "cycle_id": "6622a58e",
+        "quality": 0.4570636363636364,
+        "theorems": 220,
+        "title": "The file `Geometry/ImpossibleParallels.lean` establishes a clean combinatorial"
+      },
+      {
+        "cycle_id": "c3eefde2",
+        "quality": 0.4324663043478261,
+        "theorems": 368,
+        "title": "Close Proofs: This cycle was a cold start on the clique-complex research thread:"
+      },
+      {
+        "cycle_id": "07f1a760",
+        "quality": 0.3397149217391304,
+        "theorems": 12,
+        "title": "The phantom number framework raises a natural classification question: what is t"
+      },
+      {
+        "cycle_id": "c8a4744f",
+        "quality": 0.55601,
+        "theorems": 8,
+        "title": "The file `Catalog/Geometry/BoltzmannBridge.lean` establishes a rigorous spine fo"
+      },
+      {
+        "cycle_id": "dd767b4e",
+        "quality": 0.6964,
+        "theorems": 16,
+        "title": "This cycle consolidated the *rank of apparition* (the Fibonacci entry point) int"
+      },
+      {
+        "cycle_id": "574dbade",
+        "quality": 0.48496,
+        "theorems": 194,
+        "title": "The Hodge filtration F^p on the complexification of a pure Hodge structure is th"
+      },
+      {
+        "cycle_id": "a3760248",
+        "quality": 0.35307452173913045,
+        "theorems": 11,
+        "title": "Proof-Complexity Phase Transition in Lean-Definable Rewriting Dynamics"
+      },
+      {
+        "cycle_id": "999c0f6b",
+        "quality": 0.7756000000000001,
+        "theorems": 17,
+        "title": "Follow-up conjectures arising from `Catalog/Bridges/ValuationDepthTropicalFuncto"
+      },
+      {
+        "cycle_id": "ab2bf6f4",
+        "quality": 0.5330519163763068,
+        "theorems": 32,
+        "title": "Quantum Error Correction from Homological Algebra: CSS Codes as Cohomology"
+      }
+    ],
+    "Applications": [
+      {
+        "cycle_id": "8a8b0554",
+        "quality": 0.49925585666293404,
+        "theorems": 75,
+        "title": "This cycle delivered `Catalog/Logic/FibonacciPrimitiveDivisorBounded.lean`, a"
+      },
+      {
+        "cycle_id": "dc77da43",
+        "quality": 0.49856,
+        "theorems": 4,
+        "title": "A tropical valuation profile of finite metric filtrations from Rips edge-count d"
+      },
+      {
+        "cycle_id": "c38e2bf9",
+        "quality": 0.7101600000000001,
+        "theorems": 7,
+        "title": "Tropical weight enumerator profiles for binary linear codes via Smooth Poincaré "
+      },
+      {
+        "cycle_id": "a0671e28",
+        "quality": 0.5303199999999999,
+        "theorems": 6,
+        "title": "Exponential generating functions induce a tropical valuation profile via coeffic"
+      },
+      {
+        "cycle_id": "14435cc3",
+        "quality": 0.6017600000000001,
+        "theorems": 33,
+        "title": "Combinatorial species exponential generating functions as a tropical valuation p"
+      },
+      {
+        "cycle_id": "2ec4044e",
+        "quality": 0.5527085714285715,
+        "theorems": 7,
+        "title": "Tropicalized binary weight enumerator profile from Smooth Poincaré code primitiv"
+      },
+      {
+        "cycle_id": "6fe73404",
+        "quality": 0.49388999999999994,
+        "theorems": 4,
+        "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
+      },
+      {
+        "cycle_id": "c2c261ee",
+        "quality": 0.42100000000000004,
+        "theorems": 4,
+        "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
+      },
+      {
+        "cycle_id": "fbd73212",
+        "quality": 0.7150400000000001,
+        "theorems": 35,
+        "title": "EML Single Operator Church-Turing Thesis"
+      },
+      {
+        "cycle_id": "9ff40964",
+        "quality": 0.5532343961470463,
+        "theorems": 79,
+        "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
+      }
+    ],
+    "Bridges": [
+      {
+        "cycle_id": "096aa5b9",
+        "quality": 0.5430773913043478,
+        "theorems": 66,
+        "title": "A 1-Lipschitz functor from valuation-depth measures to tropical valuation object"
+      },
+      {
+        "cycle_id": "cfed7f6c",
+        "quality": 0.4422638461538462,
+        "theorems": 23,
+        "title": "Functorial metric-to-tropical filtration from Rips graphs to ultrametric valuati"
+      },
+      {
+        "cycle_id": "7db0844d",
+        "quality": 0.42713306086956526,
+        "theorems": 11,
+        "title": "A functor from metric Rips filtrations to tropical valuation objects via simplex"
+      },
+      {
+        "cycle_id": "90c4ce9a",
+        "quality": 0.49903022994652413,
+        "theorems": 17,
+        "title": "Functorial tropical ultrametric from Pythagorean Lorentz triples"
+      },
+      {
+        "cycle_id": "6ce4a7be",
+        "quality": 0.76292,
+        "theorems": 39,
+        "title": "Metric filtration rank profiles as tropical valuation objects"
+      },
+      {
+        "cycle_id": "e42393e4",
+        "quality": 0.79224,
+        "theorems": 42,
+        "title": "Functor from finite linear codes to tropical valuation objects via weight-thresh"
+      },
+      {
+        "cycle_id": "29ffc67c",
+        "quality": 0.5227499999999999,
+        "theorems": 9,
+        "title": "Vampire Numbers and Other Numerical Monsters: A Bestiary of Arithmetic Oddities"
+      },
+      {
+        "cycle_id": "6fb69121",
+        "quality": 0.5415809756097562,
+        "theorems": 4,
+        "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
+      },
+      {
+        "cycle_id": "880250ea",
+        "quality": 0.40832662857142854,
+        "theorems": 11,
+        "title": "Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+      },
+      {
+        "cycle_id": "6c118cd3",
+        "quality": 0.4716,
+        "theorems": 58,
+        "title": "Proof Automation: Custom Lean 4 Tactics"
+      }
+    ],
+    "Combinatorics": [
+      {
+        "cycle_id": "36dba103",
+        "quality": 0.7248000000000001,
+        "theorems": 175,
+        "title": "Close Proofs: The Boltzmann Bridge arc has, over several cycles, reduced the ent"
+      },
+      {
+        "cycle_id": "bea64f19",
+        "quality": 0.5005650793650793,
+        "theorems": 189,
+        "title": "Close Proofs: `Applications/BoltzmannBridge/InterleavingGeodesic.lean` closes th"
+      },
+      {
+        "cycle_id": "cb2c4d8f",
+        "quality": 0.7260899999999999,
+        "theorems": 16,
+        "title": "This cycle established, in `Catalog/Bridges/CategoricalTropicalRipsInterleaving."
+      },
+      {
+        "cycle_id": "a0dd96a5",
+        "quality": 0.5271458702064897,
+        "theorems": 50,
+        "title": "These conjectures continue the research cycle begun in"
+      },
+      {
+        "cycle_id": "5884df3d",
+        "quality": 0.60834,
+        "theorems": 10,
+        "title": "Phantom Topologies: Spaces That Change When You Look at Them"
+      },
+      {
+        "cycle_id": "8e98f715",
+        "quality": 0.46684,
+        "theorems": 41,
+        "title": "Transreal Arithmetic: Computing Beyond Plus-Minus Infinity"
+      },
+      {
+        "cycle_id": "16b03c84",
+        "quality": 0.49697377834557654,
+        "theorems": 29,
+        "title": "Cellular Automata as Algebraic Geometry: Wolfram's Rules Meet Grothendieck"
+      }
+    ],
+    "Computation": [
+      {
+        "cycle_id": "e8431c0a",
+        "quality": 0.7680000000000001,
+        "theorems": 20,
+        "title": "Close Proofs: This cycle closed the single open `sorry` in `Bridges/ArrowCurvatu"
+      },
+      {
+        "cycle_id": "d787aa34",
+        "quality": 0.38878735254059715,
+        "theorems": 46,
+        "title": "Arithmetic Monodromy Rigidity in Definable Neural ODE Flows"
+      },
+      {
+        "cycle_id": "497e55b6",
+        "quality": 0.44245955849889634,
+        "theorems": 16,
+        "title": "This cycle added two fully-verified files (0 sorries) extending"
+      },
+      {
+        "cycle_id": "44a1e17f",
+        "quality": 0.3397905777777779,
+        "theorems": 0,
+        "title": "**lax monoidal functor** from the generating-function a"
+      },
+      {
+        "cycle_id": "b312114f",
+        "quality": 0.33112290909090913,
+        "theorems": 8,
+        "title": "Derived from the research cycle that produced"
+      },
+      {
+        "cycle_id": "fba6400c",
+        "quality": 0.64064,
+        "theorems": 15,
+        "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
+      },
+      {
+        "cycle_id": "e49c5ee1",
+        "quality": 0.48378234883720933,
+        "theorems": 20,
+        "title": "Information-Theoretic Limits of Proof Search: How Hard Is It to Find a Lean Proo"
+      },
+      {
+        "cycle_id": "14986cd2",
+        "quality": 0.36975260000000004,
+        "theorems": 9,
+        "title": "Time Travel Consistency: Novikov's Principle as a Fixed-Point Theorem"
+      },
+      {
+        "cycle_id": "11262eec",
+        "quality": 0.5355679086538463,
+        "theorems": 36,
+        "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
+      },
+      {
+        "cycle_id": "6493a7ff",
+        "quality": 0.5668,
+        "theorems": 43,
+        "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
+      }
+    ],
+    "Cryptography": [
+      {
+        "cycle_id": "561a2484",
+        "quality": 0.4694702117647058,
+        "theorems": 11,
+        "title": "Close Proofs: Combinatorial species to tropical valuation profiles via coefficie"
+      },
+      {
+        "cycle_id": "aba81cd6",
+        "quality": 0.55584,
+        "theorems": 74,
+        "title": "Close Proofs: This cycle added two fully-verified files (0 sorries) extending"
+      },
+      {
+        "cycle_id": "e9b0b276",
+        "quality": 0.5321925795053004,
+        "theorems": 166,
+        "title": "Berggren Lattice Orbit Classification for Post-Quantum Key Exchange"
+      },
+      {
+        "cycle_id": "d79ba9e2",
+        "quality": 0.66144,
+        "theorems": 11,
+        "title": "Isogeny-Based Cryptography: CSI-FiSh"
+      },
+      {
+        "cycle_id": "d1b34dda",
+        "quality": 0.46740400000000004,
+        "theorems": 14,
+        "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
+      },
+      {
+        "cycle_id": "c2929b61",
+        "quality": 0.5083935828877005,
+        "theorems": 0,
+        "title": "Retrocausal Mathematics: Where Effects Precede Causes"
+      },
+      {
+        "cycle_id": "667542f0",
+        "quality": 0.5307999999999999,
+        "theorems": 9,
+        "title": "Counterfactual Number Theory: What If Primes Were Random?"
+      },
+      {
+        "cycle_id": "21cfd7dd",
+        "quality": 0.36289866666666665,
+        "theorems": 0,
+        "title": "The Prime Number Crossword: Filling the Gaps in the Primes"
+      },
+      {
+        "cycle_id": "6e109ffd",
+        "quality": 0.4288495652173913,
+        "theorems": 0,
+        "title": "Close Proofs: The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
+      },
+      {
+        "cycle_id": "15e84b40",
+        "quality": 0.5413687224669603,
+        "theorems": 109,
+        "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+      }
+    ],
+    "Geometry": [
+      {
+        "cycle_id": "13a80f4d",
+        "quality": 0.6571556692913385,
+        "theorems": 127,
+        "title": "Bridge IX (`InterleavingGeodesic.lean`) gave the persistence-stability arc its f"
+      },
+      {
+        "cycle_id": "6285d255",
+        "quality": 0.3917361274509804,
+        "theorems": 153,
+        "title": "Linear-algebraic skeleton of the conjecture *Spectral Gap"
+      },
+      {
+        "cycle_id": "b9cc2fac",
+        "quality": 0.7242,
+        "theorems": 16,
+        "title": "(in `Catalog/Bridges/CategoricalTropicalRipsInterleaving."
+      },
+      {
+        "cycle_id": "3f92e6d5",
+        "quality": 0.54944,
+        "theorems": 9,
+        "title": "Deepening: Functorial comparison between neural observation pseudometrics and pr"
+      },
+      {
+        "cycle_id": "4c324de9",
+        "quality": 0.5844,
+        "theorems": 16,
+        "title": "`TropicalWeightEnumerator.lean`, the **min-plus tropicaliz"
+      },
+      {
+        "cycle_id": "ce2d79fb",
+        "quality": 0.46699999999999997,
+        "theorems": 4,
+        "title": "These directions continue the Vietoris–Rips ↔ tropical valuation program now"
+      },
+      {
+        "cycle_id": "b4a517d3",
+        "quality": 0.42858307692307696,
+        "theorems": 25,
+        "title": "Self-Modifying Code That Cannot Be Stopped"
+      },
+      {
+        "cycle_id": "ed805c6d",
+        "quality": 0.4728086269230769,
+        "theorems": 13,
+        "title": "Gravity from Information: Spacetime as a Quantum Error-Correcting Code"
+      },
+      {
+        "cycle_id": "1873f003",
+        "quality": 0.4749530303030304,
+        "theorems": 10,
+        "title": "Tangled Hierarchies: Proof Systems That Reference Their Own Soundness"
+      },
+      {
+        "cycle_id": "78c9ab60",
+        "quality": 0.5606952380952381,
+        "theorems": 10,
+        "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
+      }
+    ],
+    "Logic": [
+      {
+        "cycle_id": "48c32113",
+        "quality": 0.5296819875776397,
+        "theorems": 161,
+        "title": "Close Proofs: This cycle opened a constructive, finite-alphabet bridge between t"
+      },
+      {
+        "cycle_id": "dae6a9b2",
+        "quality": 0.5504199999999999,
+        "theorems": 17,
+        "title": "The previous cycle pinned down the *object-level* content of the Eckmann–Hilton"
+      },
+      {
+        "cycle_id": "c11e0165",
+        "quality": 0.63873,
+        "theorems": 12,
+        "title": "These directions extend the `ordEGF` bridge in"
+      },
+      {
+        "cycle_id": "6ec4b34b",
+        "quality": 0.5346971830985916,
+        "theorems": 82,
+        "title": "Close Proofs: Intersection Form Classification Pipeline via Self-Dual Code Direc"
+      },
+      {
+        "cycle_id": "c8fdbde8",
+        "quality": 0.4348039483870968,
+        "theorems": 10,
+        "title": "That the Fibonacci **rank of apparition** `z(p) = fibEntry p`"
+      },
+      {
+        "cycle_id": "03edad6d",
+        "quality": 0.5057485714285714,
+        "theorems": 28,
+        "title": "Infinite-Dimensional Chess: Winning on the Hilbert Board"
+      },
+      {
+        "cycle_id": "728f60d4",
+        "quality": 0.4504,
+        "theorems": 7,
+        "title": "Speculative: Theorems as Phase Transitions in Proof Space"
+      },
+      {
+        "cycle_id": "8c9d3809",
+        "quality": 0.6462399999999999,
+        "theorems": 35,
+        "title": "The Mathematics of Memes: Viral Information Topology"
+      },
+      {
+        "cycle_id": "95c512f5",
+        "quality": 0.57324,
+        "theorems": 0,
+        "title": "Mind vs Gödel: Can Minds Outperform Algorithms?"
+      },
+      {
+        "cycle_id": "cb56480f",
+        "quality": 0.4729431683168317,
+        "theorems": 19,
+        "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
+      }
+    ],
+    "MachineLearning": [
+      {
+        "cycle_id": "d1ba4f5a",
+        "quality": 0.57034,
+        "theorems": 11,
+        "title": "These conjectures build on `Bridges/ValuationRipsBridge.lean`, which established"
+      },
+      {
+        "cycle_id": "b221d007",
+        "quality": 0.4584708352941177,
+        "theorems": 10,
+        "title": "**functorial tropical certificate** for the Berggren–Lo"
+      },
+      {
+        "cycle_id": "87ef3294",
+        "quality": 0.48797999999999997,
+        "theorems": 3,
+        "title": "This cycle added two fully-verified files (0 sorries) extending the"
+      },
+      {
+        "cycle_id": "5971ea29",
+        "quality": 0.5840000000000001,
+        "theorems": 7,
+        "title": "This document collects bold, falsifiable conjectures arising from the deepening "
+      },
+      {
+        "cycle_id": "841c1580",
+        "quality": 0.4354,
+        "theorems": 8,
+        "title": "Cycle output. This cycle formalized, in Lean 4 (0 sorries, only the standard"
+      },
+      {
+        "cycle_id": "1f4bbef7",
+        "quality": 0.712,
+        "theorems": 23,
+        "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
+      },
+      {
+        "cycle_id": "8dbe2c7e",
+        "quality": 0.4249618181818182,
+        "theorems": 21,
+        "title": "Zombies and Qualia: Mathematics of Subjective Experience"
+      },
+      {
+        "cycle_id": "1aac4615",
+        "quality": 0.4180994484848485,
+        "theorems": 9,
+        "title": "Spectral Graph Theory Meets Network Robustness"
+      },
+      {
+        "cycle_id": "949d41e5",
+        "quality": 0.6052,
+        "theorems": 15,
+        "title": "Hypergraph Ramsey Theory: Beyond Graphs"
+      },
+      {
+        "cycle_id": "50e9a2da",
+        "quality": 0.5529929095354524,
+        "theorems": 62,
+        "title": "Scaling Laws from Statistical Mechanics"
+      }
+    ],
+    "Novelty": [
+      {
+        "cycle_id": "eef6f30f",
+        "quality": 0.5167481481481482,
+        "theorems": 35,
+        "title": "Speculative: Mathematics as an Evolving Ecosystem"
+      },
+      {
+        "cycle_id": "fb007c35",
+        "quality": 0.48464,
+        "theorems": 36,
+        "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
+      },
+      {
+        "cycle_id": "5f9a16a6",
+        "quality": 0.40688965517241377,
+        "theorems": 30,
+        "title": "The Topology of Argumentation: Why Debates Have Holes"
+      },
+      {
+        "cycle_id": "702894c4",
+        "quality": 0.4263405714285714,
+        "theorems": 4,
+        "title": "Speculative: Proof Complexity and Thermodynamic Cost"
+      },
+      {
+        "cycle_id": "595ce011",
+        "quality": 0.6122400000000001,
+        "theorems": 10,
+        "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
+      },
+      {
+        "cycle_id": "74e64b1f",
+        "quality": 0.43286675,
+        "theorems": 9,
+        "title": "Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries"
+      },
+      {
+        "cycle_id": "61934e8a",
+        "quality": 0.531269226006192,
+        "theorems": 80,
+        "title": "Isomorphisms of Meaning: When Structures Collide"
+      },
+      {
+        "cycle_id": "bf4e21b7",
+        "quality": 0.33194676,
+        "theorems": 6,
+        "title": "Knots That Think: Cognition as Braiding in Category Theory"
+      },
+      {
+        "cycle_id": "2710f166",
+        "quality": 0.5415909090909091,
+        "theorems": 36,
+        "title": "Renormalization of Proofs: Phase Transitions in Automated Theorem Search"
+      },
+      {
+        "cycle_id": "5ddac85b",
+        "quality": 0.38904000000000005,
+        "theorems": 11,
+        "title": "Spectral Universality of LLM Weight Matrices: Random-Matrix Phase Transitions in"
+      }
+    ],
+    "NumberTheory": [
+      {
+        "cycle_id": "b3a33fd0",
+        "quality": 0.64699,
+        "theorems": 22,
+        "title": "Deepening: The persistence-stability arc of the catalog climbed a ladder of stru"
+      },
+      {
+        "cycle_id": "afb009d7",
+        "quality": 0.4646015145005371,
+        "theorems": 75,
+        "title": "This cycle added **three fully-verified files (0 `sorry`s)** extending the"
+      },
+      {
+        "cycle_id": "afb009d7",
+        "quality": 0.34719999999999995,
+        "theorems": 0,
+        "title": "This cycle added **three fully-verified files (0 `sorry`s)** extending the"
+      },
+      {
+        "cycle_id": "afb009d7",
+        "quality": 0.5042399999999999,
+        "theorems": 3,
+        "title": "This cycle added **three fully-verified files (0 `sorry`s)** extending the"
+      },
+      {
+        "cycle_id": "79875292",
+        "quality": 0.452064972972973,
+        "theorems": 19,
+        "title": "Follow-up conjectures arising from `Catalog/Bridges/SpeciesTropicalValuationProf"
+      },
+      {
+        "cycle_id": "e72864d5",
+        "quality": 0.35638045714285715,
+        "theorems": 16,
+        "title": "These conjectures extend the results formalized in"
+      },
+      {
+        "cycle_id": "6f9401e1",
+        "quality": 0.72651,
+        "theorems": 17,
+        "title": "Deepening: Follow-up conjectures arising from `Catalog/Bridges/ValuationDepthTro"
+      },
+      {
+        "cycle_id": "343c2db7",
+        "quality": 0.5248201970443349,
+        "theorems": 4,
+        "title": "Fractal Number Theory: Hausdorff Dimension of Prime Distributions"
+      },
+      {
+        "cycle_id": "856aa6ac",
+        "quality": 0.4037273333333333,
+        "theorems": 3,
+        "title": "Holographic Primes: The Prime Number AdS/CFT Correspondence"
+      },
+      {
+        "cycle_id": "f6a45eec",
+        "quality": 0.4949979545454546,
+        "theorems": 35,
+        "title": "Euler-Mascheroni Constant: Irrationality Approaches"
+      }
+    ],
+    "Physics": [
+      {
+        "cycle_id": "d52959e6",
+        "quality": 0.4184573657024794,
+        "theorems": 31,
+        "title": "Quantum Topological Phase Computation"
+      },
+      {
+        "cycle_id": "227cafdb",
+        "quality": 0.4592650728862974,
+        "theorems": 343,
+        "title": "Close Proofs: The Boltzmann Bridge sub-catalog lifts 0-dimensional persistence i"
+      },
+      {
+        "cycle_id": "ddd74ee0",
+        "quality": 0.5933170967741935,
+        "theorems": 372,
+        "title": "The previous cycle distilled Fibonacci apparition theory down to a single **spin"
+      },
+      {
+        "cycle_id": "bd06a3da",
+        "quality": 0.34668586900056464,
+        "theorems": 385,
+        "title": "Riemann Hypothesis: Zero-Free Regions"
+      },
+      {
+        "cycle_id": "75b4da8e",
+        "quality": 0.5219054545454546,
+        "theorems": 11,
+        "title": "Definable Ricci-Flow Renormalization Fixed Points in Simplicial Quantum Error-Co"
+      },
+      {
+        "cycle_id": "b3f0c15e",
+        "quality": 0.5072000000000001,
+        "theorems": 24,
+        "title": "Monodromy Compression Principle for Neural PDE Solvers"
+      },
+      {
+        "cycle_id": "29017e68",
+        "quality": 0.7856000000000001,
+        "theorems": 28,
+        "title": "Follow-up conjectures arising from `Catalog/Bridges/RipsTropicalFunctor.lean`, w"
+      },
+      {
+        "cycle_id": "16e95997",
+        "quality": 0.5482400000000001,
+        "theorems": 51,
+        "title": "Speculative: Computational Complexity as Physical Law"
+      },
+      {
+        "cycle_id": "ecc79db8",
+        "quality": 0.4986900000000001,
+        "theorems": 34,
+        "title": "Integrated Information via Tensor Networks"
+      },
+      {
+        "cycle_id": "1cfdf3f4",
+        "quality": 0.6660400000000001,
+        "theorems": 18,
+        "title": "Causal Loops in Category Theory: When Composition Loops Back"
+      }
+    ],
+    "Probability": [
+      {
+        "cycle_id": "9fe725de",
+        "quality": 0.49574,
+        "theorems": 180,
+        "title": "Close Proofs: The Boltzmann Bridge arc reduced the metric theory of persistence "
+      },
+      {
+        "cycle_id": "94b6b70d",
+        "quality": 0.3848171428571429,
+        "theorems": 28,
+        "title": "This cycle rebuilds the discrete Hodge program on a **self-contained Mathlib fou"
+      },
+      {
+        "cycle_id": "a4d16ba9",
+        "quality": 0.52770625,
+        "theorems": 125,
+        "title": "Close Proofs: Functorial bridge from combinatorial species generating functions "
+      },
+      {
+        "cycle_id": "a4d16ba9",
+        "quality": 0.5293251256281408,
+        "theorems": 158,
+        "title": "Close Proofs: Functorial bridge from combinatorial species generating functions "
+      },
+      {
+        "cycle_id": "a4d16ba9",
+        "quality": 0.44327589652348276,
+        "theorems": 319,
+        "title": "Close Proofs: Functorial bridge from combinatorial species generating functions "
+      },
+      {
+        "cycle_id": "3fd7a316",
+        "quality": 0.8053600000000001,
+        "theorems": 25,
+        "title": "`Catalog/Bridges/FunctorialTropicalPythagorean.lean` (0 sorr"
+      },
+      {
+        "cycle_id": "3b102b1d",
+        "quality": 0.7943200000000001,
+        "theorems": 75,
+        "title": "Deepening: `Catalog/Bridges/FunctorialTropicalPythagorean.lean` (0 sorr"
+      },
+      {
+        "cycle_id": "46951c2e",
+        "quality": 0.36179759999999994,
+        "theorems": 6,
+        "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
+      }
+    ],
+    "Pythagorean": [
+      {
+        "cycle_id": "59c23f07",
+        "quality": 0.446075332998814,
+        "theorems": 452,
+        "title": "This cycle attacked the ordinal-analysis target \"construct an order-preserving"
+      },
+      {
+        "cycle_id": "85e56c16",
+        "quality": 0.4243189090909092,
+        "theorems": 114,
+        "title": "Close Proofs: This cycle attacked the ordinal-analysis target \"construct an orde"
+      },
+      {
+        "cycle_id": "a42ace1d",
+        "quality": 0.42720140370833815,
+        "theorems": 146,
+        "title": "The file `Catalog/Tropical/MultivariatePhaseTransition.lean` lifts the"
+      },
+      {
+        "cycle_id": "38c06554",
+        "quality": 0.4200221645663455,
+        "theorems": 48,
+        "title": "Close Proofs: The file `Catalog/Novelty/GilbertVarshamov.lean` closes the two-si"
+      },
+      {
+        "cycle_id": "faff02b9",
+        "quality": 0.42727189683908756,
+        "theorems": 463,
+        "title": "This cycle tested one structural hypothesis behind *self-referential type theory"
+      },
+      {
+        "cycle_id": "9b788018",
+        "quality": 0.7838083582089553,
+        "theorems": 134,
+        "title": "Close Proofs: Impossible Geometries: Where Parallel Lines Converge AND Diverge"
+      },
+      {
+        "cycle_id": "b6f0ca1b",
+        "quality": 0.4478055603581938,
+        "theorems": 169,
+        "title": "This cycle deepened the *entry-point* (rank-of-apparition) theory of Fibonacci"
+      },
+      {
+        "cycle_id": "0827184d",
+        "quality": 0.47720761904761905,
+        "theorems": 189,
+        "title": "The `SmoothPoincare` family in `Catalog/Applications/SmoothPoincare/` builds the"
+      },
+      {
+        "cycle_id": "977dbedb",
+        "quality": 0.5267885714285714,
+        "theorems": 210,
+        "title": "This cycle attacked the conjecture of a *sharp proof-complexity phase transition"
+      },
+      {
+        "cycle_id": "9f700fd5",
+        "quality": 0.503482105263158,
+        "theorems": 38,
+        "title": "Tropical Gravitational Lensing for Integer Factorization"
+      }
+    ],
+    "Shared": [
+      {
+        "cycle_id": "94ed24b3",
+        "quality": 0.74704,
+        "theorems": 3,
+        "title": "Close Proofs: 12 fully proved theorems (zero sorry) formalizing the algebr"
+      },
+      {
+        "cycle_id": "6854a3a7",
+        "quality": 0.648,
+        "theorems": 8,
+        "title": "Renormalization Fixed Points in Transformer In-Context Learning via p-adic Atten"
+      },
+      {
+        "cycle_id": "98b29bfc",
+        "quality": 0.44809189021044976,
+        "theorems": 214,
+        "title": "Noise-Stable Prime Spectrum in Definable Quantum Walks"
+      },
+      {
+        "cycle_id": "32c81afa",
+        "quality": 0.7607163636363636,
+        "theorems": 22,
+        "title": "The persistence-stability arc of the catalog climbed a ladder of structure: a"
+      },
+      {
+        "cycle_id": "406af8f7",
+        "quality": 0.5313228571428571,
+        "theorems": 14,
+        "title": "This cycle delivered a self-contained Mathlib foundation for the discrete Hodge"
+      },
+      {
+        "cycle_id": "4e6dc59b",
+        "quality": 0.67472,
+        "theorems": 3,
+        "title": "Korselt's Criterion Completion and Multiplicative Group Order Bridge to Cryptogr"
+      },
+      {
+        "cycle_id": "d6329d46",
+        "quality": 0.7918400000000001,
+        "theorems": 22,
+        "title": "Deepening: Functor from finite linear codes to tropical valuation objects via we"
+      },
+      {
+        "cycle_id": "c3d42768",
+        "quality": 0.57488,
+        "theorems": 11,
+        "title": "Korselt criterion completion and Carmichael divisor-lattice tropical flatness"
+      },
+      {
+        "cycle_id": "c1948da4",
+        "quality": 0.6361600000000001,
+        "theorems": 23,
+        "title": "Cellular Automata at the Ordinals: Transfinite Computation"
+      },
+      {
+        "cycle_id": "d6f5cc61",
+        "quality": 0.36854137254901964,
+        "theorems": 186,
+        "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
+      }
+    ],
+    "Tropical": [
+      {
+        "cycle_id": "cd281b27",
+        "quality": 0.5016680172195493,
+        "theorems": 134,
+        "title": "Close Proofs: This cycle delivered a self-contained Mathlib foundation for the d"
+      },
+      {
+        "cycle_id": "cd281b27",
+        "quality": 0.4205751748251749,
+        "theorems": 141,
+        "title": "Close Proofs: This cycle delivered a self-contained Mathlib foundation for the d"
+      },
+      {
+        "cycle_id": "cd281b27",
+        "quality": 0.4802389261744967,
+        "theorems": 157,
+        "title": "Close Proofs: This cycle delivered a self-contained Mathlib foundation for the d"
+      },
+      {
+        "cycle_id": "7e82348b",
+        "quality": 0.44762947252747254,
+        "theorems": 21,
+        "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
+      },
+      {
+        "cycle_id": "1ad32e9c",
+        "quality": 0.4733421090909091,
+        "theorems": 20,
+        "title": "Tropical Fermat's Last Theorem"
+      },
+      {
+        "cycle_id": "0d42792c",
+        "quality": 0.5761099999999999,
+        "theorems": 6,
+        "title": "Diophantine Approximation on Neural Networks: How Well Can ReLU Approximate Pi?"
+      },
+      {
+        "cycle_id": "24a3af22",
+        "quality": 0.606,
+        "theorems": 30,
+        "title": "Speculative: Category Theory as the DNA of Mathematics"
+      },
+      {
+        "cycle_id": "2d22ac65",
+        "quality": 0.5060211363636364,
+        "theorems": 12,
+        "title": "Speculative: Topological Data Analysis of Theorem Networks"
+      },
+      {
+        "cycle_id": "77489d34",
+        "quality": 0.5406000000000001,
+        "theorems": 0,
+        "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
+      },
+      {
+        "cycle_id": "0d2b0b43",
+        "quality": 0.5115800000000001,
+        "theorems": 128,
+        "title": "Tropical Curve Counting: Gromov-Witten Invariants"
+      }
+    ]
+  }
+}

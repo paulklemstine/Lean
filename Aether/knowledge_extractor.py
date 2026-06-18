@@ -3803,7 +3803,25 @@ Research mode: {concept.research_mode}
                         rel = abs_path.relative_to(self.catalog_root.parent)
                         paths_to_add.append(str(rel))
             # Always add workspace changes (future directions, memory)
-            paths_to_add.append(".aether_workspace/")
+            state_files = [
+                "Aether/.aether_workspace/future_directions.json",
+                "Aether/.aether_workspace/cycle_analytics.json",
+                "Aether/.aether_workspace/research_journal.json",
+                "Aether/.aether_workspace/research_threads.json",
+                "Aether/.aether_workspace/inflight_jobs.json",
+                "Aether/.aether_workspace/insights.json",
+                "Aether/.aether_workspace/tick_counter.json",
+                "Aether/.aether_workspace/exp_id_map.json",
+                "Aether/.aether_workspace/prune_state.json",
+                "Aether/.aether_workspace/phase_b_threshold_cache.json",
+                "Aether/.aether_workspace/pollinations_pollen_state.json",
+                "Aether/.aether_workspace/research_memory.jsonl",
+                "Aether/.aether_workspace/autoresearch/autoresearch.jsonl",
+            ]
+            for sf in state_files:
+                abs_sf = self.catalog_root.parent / sf
+                if abs_sf.exists():
+                    paths_to_add.append(sf)
             # Add packages index if it was regenerated
             pkg_index = self.catalog_root / "Applications" / "Packages" / "package_index.js"
             if pkg_index.exists():
