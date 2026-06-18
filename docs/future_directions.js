@@ -164,7 +164,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "BSD Conjecture: Rank Computability"
   },
   {
-    "consumed_by_exp_id": "6c118cd3",
+    "consumed_by_exp_id": "",
     "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
     "domains": [
       "Logic",
@@ -175,7 +175,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.92,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432809+00:00",
     "title": "Proof Automation: Custom Lean 4 Tactics"
   },
@@ -1330,7 +1330,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Convex Geometry: Brunn-Minkowski Theory"
   },
   {
-    "consumed_by_exp_id": "f4bdff2b",
+    "consumed_by_exp_id": "",
     "description": "Formalize chromatic polynomials and prove deletion-contraction. Prove the four-color theorem is equivalent to \u03c7(G) \u2264 4 for all planar G. Formalize Brooks' theorem: \u03c7(G) \u2264 \u0394(G) unless G is complete or an odd cycle. Prove the chromatic polynomial is T-positive for claw-free graphs.",
     "domains": [
       "Combinatorics",
@@ -1340,7 +1340,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.83,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432739+00:00",
     "title": "Graph Coloring: Chromatic Polynomial Theory"
   },
@@ -1700,6 +1700,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every nonzero ideal I of the Gaussian integers \u2124[i], the rank-2 Euclidean lattice obtained by applying the canonical embedding a+bi \u21a6 (a,b) to I is well-rounded: its shortest nonzero vectors span \u211d\u00b2. Equivalently, if I = (\u03b1), then the shortest vectors are precisely the unit multiples \u00b1\u03b1 and \u00b1i\u03b1 under the embedding, giving two linearly independent equal-length minimal vectors.",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_2077",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18920v1",
+    "status": "available",
+    "timestamp": "2026-06-18T08:03:43.657853+00:00",
+    "title": "Nonzero Gaussian integer ideal lattices are well-rounded"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For the preferential attachment random multigraph with edge steps and parameter p \u2208 (0,1), started from any fixed finite connected multigraph with positive total degree, the clique number has the same logarithmic growth exponent as in the one-loop initial condition: for every \u03b5 > 0, the probability that |log(\u03c9(G_t))/log(t) - (1-p)/(2-p)| > \u03b5 tends to 0 as t tends to infinity.",
     "domains": [
       "Computation"
@@ -1711,6 +1726,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T11:02:58.622655+00:00",
     "title": "Initial-condition universality of the clique-number exponent in preferential attachment with edge steps"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let n >= 3 and let \u0393 be a geometrically finite, discrete, Zariski-dense thin subgroup of an arithmetic lattice \u03930 < SO(n,1)^\u2218 with critical exponent \u03b4_\u0393 > 1/2. The uniform congruence spectral gap theorem for the congruence covers of \u0393\\H^n remains true without assuming that \u0393 is torsion-free. Equivalently, after excluding finitely many primes, there is \u03b5 > 0 such that every square-free congruence cover has no new complementary-series spectrum with parameter in (\u03b4_\u0393 - \u03b5, \u03b4_\u0393). This is falsifiable by producing a geometrically finite arithmetic thin orbifold subgroup with \u03b4_\u0393 > 1/2 whose congruence covers have new spectrum accumulating at \u03b4_\u0393.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2078",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18674v1",
+    "status": "available",
+    "timestamp": "2026-06-18T11:03:59.022678+00:00",
+    "title": "Orbifold version of the uniform congruence spectral gap for geometrically finite thin subgroups of SO(n,1)"
   },
   {
     "consumed_by_exp_id": "",
@@ -1729,48 +1759,46 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every nonzero ideal I of the Gaussian integers \u2124[i], the rank-2 Euclidean lattice obtained by applying the canonical embedding a+bi \u21a6 (a,b) to I is well-rounded: its shortest nonzero vectors span \u211d\u00b2. Equivalently, if I = (\u03b1), then the shortest vectors are precisely the unit multiples \u00b1\u03b1 and \u00b1i\u03b1 under the embedding, giving two linearly independent equal-length minimal vectors.",
-    "domains": [
-      "Algebra",
-      "Cryptography"
-    ],
-    "id": "fd_2080",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.18920v1",
-    "status": "available",
-    "timestamp": "2026-06-18T08:03:43.657853+00:00",
-    "title": "Nonzero Gaussian integer ideal lattices are well-rounded"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture: Let n >= 3 and let \u0393 be a geometrically finite, discrete, Zariski-dense thin subgroup of an arithmetic lattice \u03930 < SO(n,1)^\u2218 with critical exponent \u03b4_\u0393 > 1/2. The uniform congruence spectral gap theorem for the congruence covers of \u0393\\H^n remains true without assuming that \u0393 is torsion-free. Equivalently, after excluding finitely many primes, there is \u03b5 > 0 such that every square-free congruence cover has no new complementary-series spectrum with parameter in (\u03b4_\u0393 - \u03b5, \u03b4_\u0393). This is falsifiable by producing a geometrically finite arithmetic thin orbifold subgroup with \u03b4_\u0393 > 1/2 whose congruence covers have new spectrum accumulating at \u03b4_\u0393.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2081",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.18674v1",
-    "status": "available",
-    "timestamp": "2026-06-18T11:03:59.022678+00:00",
-    "title": "Orbifold version of the uniform congruence spectral gap for geometrically finite thin subgroups of SO(n,1)"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Let K = \ud835\udd3d_{p^n} with p odd, regarded as an \ud835\udd3d_p-vector space, and let W \u2264 K be an \ud835\udd3d_p-linear subspace of dimension e. Write its subspace polynomial as P_W(X) = \u220f_{w \u2208 W} (X - w) = \u2211_{i=0}^e c_i X^{p^i}. Define the reversed Frobenius-twisted linearized polynomial F_W(X) = \u2211_{i=0}^e c_i^{p^{-i}} X^{p^{e-i}}, where p^{-i} denotes the inverse Frobenius power on K. Conjecture: the image of the \ud835\udd3d_p-linear map x \u21a6 F_W(x) is exactly the trace-orthogonal complement W^\u22a5 = { z \u2208 K | Tr_{K/\ud835\udd3d_p}(z w) = 0 for all w \u2208 W }. This is a finite-field linear algebra statement underlying the paper\u2019s adjoint-factorization construction and avoids formalizing algebraic curves.",
     "domains": [
       "Algebra",
       "Geometry"
     ],
-    "id": "fd_2082",
+    "id": "fd_2079",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18577v1",
     "status": "available",
     "timestamp": "2026-06-18T14:04:25.050589+00:00",
     "title": "Image of the reversed subspace polynomial is the trace-orthogonal complement"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every odd prime p, every sequence of 2p+1 integers none divisible by p contains a subsequence of exactly p terms whose sum is divisible by p but not divisible by p^2. Equivalently, the prime case of the paper's constant satisfies s_1(p) <= 2p+1; combined with the known lower bound this gives s_1(p)=t_1(p)=2p+1 for odd primes.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2080",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18234v1",
+    "status": "available",
+    "timestamp": "2026-06-18T16:04:01.065424+00:00",
+    "title": "Sharp valuation-EGZ bound for odd primes"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer k \u2265 2 and every real \u03b5 with 0 < \u03b5 < 1, there is a threshold d0 such that every finite k-uniform uncrowded hypergraph H on n vertices with average degree at most d \u2265 d0 has an independent set of size at least (1 - \u03b5) n ((log d) / ((k - 1)d))^(1/(k - 1)). This extends the paper's maximum-degree theorem to the average-degree setting and is falsified by any sequence of uncrowded k-uniform hypergraphs of average degree d tending to infinity whose independence number falls below this asymptotic constant.",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2080",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18048v1",
+    "status": "available",
+    "timestamp": "2026-06-18T16:05:12.158903+00:00",
+    "title": "Average-degree shattering threshold for uncrowded uniform hypergraphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -1844,7 +1872,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Sendov's Conjecture"
   },
   {
-    "consumed_by_exp_id": "f6a45eec",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euler-Mascheroni constant \u03b3 = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Ap\u00e9ry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
     "domains": [
       "Analysis",
@@ -1854,7 +1882,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432611+00:00",
     "title": "Euler-Mascheroni Constant: Irrationality Approaches"
   },
@@ -2888,6 +2916,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Renormalization of Reasoning: Phase Transitions in Theorem-Proving Complexity"
   },
   {
+    "consumed_by_exp_id": "2710f166",
+    "description": "Conjecture: For any sufficiently expressive formal system with a fixed proof search procedure, there exists a scale-coarse-graining operator on proof states such that the induced renormalization flow has universality classes, and theorem families near critical fixed points exhibit polynomial-to-exponential transitions in provability complexity under small changes of axioms or heuristics. Test: Define coarse-grainings on proof-search trees for benchmark theorem families across multiple provers; measure whether rescaled search statistics collapse onto invariant flow curves and whether critical exponents predicting abrupt complexity transitions are stable across syntactic encodings. The conjecture is refuted if no encoding-robust fixed points, universality classes, or predictive critical exponents appear. Impact: This would enable a physics-style theory of theorem proving, identifying when tiny changes in representations or axiom sets trigger dramatic shifts in solvability, and could guide the design of provers, formal systems, and automated discovery pipelines.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_2054",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "in_progress",
+    "timestamp": "2026-06-17T13:02:11.584379+00:00",
+    "title": "Renormalization of Proofs: Phase Transitions in Automated Theorem Search"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
@@ -2973,7 +3016,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
   {
-    "consumed_by_exp_id": "4b92e748",
+    "consumed_by_exp_id": "",
     "description": "Cycle bfb62bb9 (Q=0.524) proved 22 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a minimal, self-contained core of the order-valuation program for truncated binary polynomials, avoiding any unverified functorial or uniqueness claims. Work in the concrete algebra `R_n := ",
     "domains": [
       "Novelty"
@@ -2982,7 +3025,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5736521220159152,
     "research_mode": "team",
     "source_exp_id": "bfb62bb9",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T10:49:09.086340+00:00",
     "title": "Close Proofs: These conjectures extend `Catalog/Bridges/CodeThresholdValuation.lean`"
   },
@@ -3074,6 +3117,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:28.479969+00:00",
     "title": "Idempotent Probability: Large Deviations"
+  },
+  {
+    "consumed_by_exp_id": "50e9a2da",
+    "description": "Prove neural network scaling laws from first principles. Derive power-law relationships between loss, model size, dataset size, and compute from the GP kernel spectrum.",
+    "domains": [
+      "MachineLearning",
+      "Physics"
+    ],
+    "id": "fd_0441",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T19:55:28.640557+00:00",
+    "title": "Scaling Laws from Statistical Mechanics"
   },
   {
     "consumed_by_exp_id": "",
@@ -3388,6 +3446,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:30.975644+00:00",
     "title": "Tropical Compactification of Moduli Spaces"
+  },
+  {
+    "consumed_by_exp_id": "0d2b0b43",
+    "description": "Prove that tropical curve counts equal classical Gromov-Witten invariants for toric surfaces. Formalize the correspondence theorem: each tropical curve lifts to a unique complex curve in the toric surface. Compute the tropical GW invariants for P^2.",
+    "domains": [
+      "Tropical",
+      "Algebra"
+    ],
+    "id": "fd_0471",
+    "priority_score": 0.3999999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T19:55:31.056465+00:00",
+    "title": "Tropical Curve Counting: Gromov-Witten Invariants"
   },
   {
     "consumed_by_exp_id": "",
@@ -3795,7 +3868,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
-    "consumed_by_exp_id": "3afa2680",
+    "consumed_by_exp_id": "",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -3805,7 +3878,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.490561+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
@@ -3885,6 +3958,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Aperiodic Monotile: One Shape to Tile Them All"
   },
   {
+    "consumed_by_exp_id": "5230ead3",
+    "description": "In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnumber villagers. Conjecture: The optimal Bayesian strategy for villagers is to vote for the player with the highest posterior probability of being a werewolf, where the prior is k/n and the likelihood updates are based on the player's voting pattern and survival. More precisely, define the werewolf posterior P(W_i | evidence) using Bayes' theorem: P(W_i) = k/n (prior), P(evidence | W_i) = product of conditional probabilities of observed events given that player i is a werewolf. The optimal strategy maximizes P(villagers win) = P(correct elimination at each day round). For n=7, k=2: the villagers' win probability with optimal Bayesian play is approximately 0.36 (known from game theory). Conjecture: For general n and k, the villagers' win probability is approximately C * (1 - k/(n-k))^2 where C is a constant depending on the information structure. Test: simulate 10^6 games with n=7 to n=20 players and Bayesian villagers, measure the win probability, and fit to the conjectured formula. Impact: social deduction has an optimal Bayesian strategy, and the werewolves' advantage scales as (k/(n-k))^2.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_0051",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-01T12:30:30.593085+00:00",
+    "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Anyon braiding in topological quantum computing gives unitary matrices from the braid group B_n. The Jones representation rho_k: B_n -> U((k-1)(n-1)+1) at root of unity e^{2*pi*i/k} is conjectured to be universal for quantum computation when k >= 3 and n >= 4. Conjecture: the set of all braids in B_4 under the Jones representation at k=5 generates a dense subgroup of SU(3). More precisely, the image rho_5(B_4) is an infinite subgroup of SU(3) that is not contained in any proper closed subgroup. This means that topological quantum computing with Fibonacci anyons (k=5) is universal: any unitary in SU(3) can be approximated to arbitrary precision by braiding 4 anyons. The key: the Jones representation at k=5 gives 3x3 matrices, and the braid generators sigma_1, sigma_2, sigma_3 generate a dense subgroup of SU(3). Test: compute the Jones representation at k=5 for B_4, verify that sigma_1 * sigma_2 * sigma_3 has infinite order, and check that the group generated by sigma_1, sigma_2, sigma_3 is dense in SU(3) by the Solovay-Kitaev theorem. Impact: braiding anyons is universal for quantum computation. The braid group B_4 at k=5 is a quantum gate set.",
     "domains": [
@@ -3958,6 +4046,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-01T12:30:30.807837+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+  },
+  {
+    "consumed_by_exp_id": "d6f5cc61",
+    "description": "A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distribution on G. Conjecture: for the Cayley graph Cay(G, S) where G is a finite group and S is a symmetric generating set, the quantum walk mixes in O(sqrt(|G|) * log(|G|)) steps, which is quadratically faster than the classical random walk (which takes O(|G|^2) steps for the spectral gap to kick in). The mixing time is determined by the spectral gap of U: tau_mix ~ 1/gap where gap = 1 - |lambda_2| and lambda_2 is the second-largest eigenvalue of U. Conjecture: for Cay(G, S) with S = the set of transpositions in S_n, the spectral gap of U is Omega(1/n), giving a mixing time of O(n * log(n)). This matches the known classical mixing time of O(n * log(n)) for the random transposition walk on S_n. The quantum advantage comes from the quadratically faster convergence of the probability distribution, not from the spectral gap. Test: simulate quantum random walks on Cayley graphs of S_n, S_n, A_5, and Z_n, measure the mixing time, and verify tau_mix = O(sqrt(|G|) * log(|G|)). Impact: quantum random walks mix quadratically faster than classical random walks on Cayley graphs. The quadratic speedup is universal.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0095",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-01T12:30:30.827686+00:00",
+    "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
     "consumed_by_exp_id": "",
