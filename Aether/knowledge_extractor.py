@@ -133,7 +133,15 @@ class KnowledgeExtractor:
         if not self.catalog_root.exists():
             self.catalog_root = (Path(__file__).parent.parent / "Catalog").resolve()
 
-        self.workspace = Path(self.config.get("workspace", ".aether_workspace")).resolve()
+        ws_config = self.config.get("workspace")
+        if ws_config:
+            self.workspace = Path(ws_config)
+            if not self.workspace.is_absolute():
+                self.workspace = (Path(__file__).parent / self.workspace).resolve()
+            else:
+                self.workspace = self.workspace.resolve()
+        else:
+            self.workspace = (Path(__file__).parent / ".aether_workspace").resolve()
         self.workspace.mkdir(parents=True, exist_ok=True)
 
         # Core subsystems

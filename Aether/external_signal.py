@@ -157,10 +157,17 @@ class ExternalSignalFeed:
             print(f"[ExternalSignal] OEIS fetch error: {e}")
         return directions[:count]
 
-    def _parse_oeis_results(self, data: dict) -> List[FutureDirection]:
+    def _parse_oeis_results(self, data: Any) -> List[FutureDirection]:
         directions: List[FutureDirection] = []
-        results = data.get("results", []) or []
+        if isinstance(data, list):
+            results = data
+        elif isinstance(data, dict):
+            results = data.get("results", []) or []
+        else:
+            results = []
         for r in results[:3]:
+            if not isinstance(r, dict):
+                continue
             name = r.get("name", "")
             seq_data = r.get("data", "")
             if not name or not seq_data:

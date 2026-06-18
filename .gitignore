@@ -14,19 +14,7 @@ __pycache__/
 *.pyc
 
 # Aether workspace — projects, archives, logs, caches, databases
-/Aether/.aether_workspace/projects/
-/Aether/.aether_workspace/archive*/
-/Aether/.aether_workspace/reasoning_logs/
-/Aether/.aether_workspace/pollinations_api_key
-/Aether/.aether_workspace/inflight_jobs.json
-/Aether/.aether_workspace/insights.json
-/Aether/.aether_workspace/*.json
-/Aether/.aether_workspace/last_*
-/Aether/.aether_workspace/*.log
-/Aether/.aether_workspace/*.sqlite
-/Aether/.aether_workspace/*.sqlite-journal
-/Aether/.aether_workspace/*.db
-/Aether/.aether_workspace/*.lock
+.aether_workspace/
 /Aether/*.log
 *.log
 /Aether/artifacts

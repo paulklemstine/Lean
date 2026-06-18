@@ -739,6 +739,14 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
                   if j.status in ("completed", "failed", "integrated", "rejected")]
     if stale_keys:
         for pid in stale_keys:
+            job = extractor.inflight[pid]
+            if job.project_dir and Path(job.project_dir).exists():
+                try:
+                    import shutil
+                    print(f"[Cleanup] Pruning stale project workspace: {job.project_dir}")
+                    shutil.rmtree(str(job.project_dir), ignore_errors=True)
+                except Exception as e:
+                    print(f"[Cleanup] Warning: failed to clean up stale project directory: {e}")
             del extractor.inflight[pid]
         print(f"[Tick] Pruned {len(stale_keys)} completed jobs from inflight")
 
@@ -758,6 +766,13 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         for pid in stuck_keys:
             job = extractor.inflight[pid]
             extractor._release_direction(job)
+            if job.project_dir and Path(job.project_dir).exists():
+                try:
+                    import shutil
+                    print(f"[Cleanup] Removing stuck project workspace: {job.project_dir}")
+                    shutil.rmtree(str(job.project_dir), ignore_errors=True)
+                except Exception as e:
+                    print(f"[Cleanup] Warning: failed to clean up stuck project directory: {e}")
             del extractor.inflight[pid]
         print(f"[Tick] Cleaned up {len(stuck_keys)} stuck dispatched jobs (>2h, no progress)")
 
@@ -774,6 +789,13 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             job.status = "failed"
             job.error_message = "Retry-queued for >1h without dispatching"
             extractor._release_direction(job)
+            if job.project_dir and Path(job.project_dir).exists():
+                try:
+                    import shutil
+                    print(f"[Cleanup] Removing stuck retry project workspace: {job.project_dir}")
+                    shutil.rmtree(str(job.project_dir), ignore_errors=True)
+                except Exception as e:
+                    print(f"[Cleanup] Warning: failed to clean up stuck retry project directory: {e}")
             del extractor.inflight[pid]
         print(f"[Tick] Cleaned up {len(retry_stuck_keys)} retry-queued jobs stuck >1h")
 
@@ -1421,7 +1443,6 @@ def rebuild_commit_push() -> bool:
         # Stage specific directories instead of -A. The repository can be large,
         # so give git generous timeouts (especially for docs/ and Catalog/).
         subprocess.run(["git", "add", "docs/"], cwd=str(REPO_ROOT), capture_output=True, timeout=120)
-        subprocess.run(["git", "add", ".aether_workspace/"], cwd=str(REPO_ROOT), capture_output=True, timeout=60)
         subprocess.run(["git", "add", "Catalog/"], cwd=str(REPO_ROOT), capture_output=True, timeout=180)
         subprocess.run(["git", "add", "Aether/"], cwd=str(REPO_ROOT), capture_output=True, timeout=60)
 
@@ -1589,6 +1610,7 @@ class TeeStream:
         self._file = file_handle
         self._original_stream = original_stream
         self._is_duplicate = False
+        self._at_line_start = True
         try:
             import os
             if hasattr(original_stream, "fileno") and hasattr(file_handle, "fileno"):
@@ -1600,11 +1622,24 @@ class TeeStream:
             pass
 
     def write(self, data):
+        if not data:
+            return
         import re as _re
+        from datetime import datetime
+
+        # Clean ansi codes
         clean_data = _re.sub(r'\033\[[0-9;]*m', '', data)
         if not self._is_duplicate:
-            self._file.write(clean_data)
+            # Process and prepend timestamps to each line written to the file
+            lines = clean_data.split('\n')
+            for i, line in enumerate(lines):
+                if (i > 0 or self._at_line_start) and (i < len(lines) - 1 or line):
+                    tstr = datetime.now().strftime("[%Y-%m-%d %H:%M:%S] ")
+                    lines[i] = tstr + line
+            self._at_line_start = clean_data.endswith('\n')
+            self._file.write('\n'.join(lines))
             self._file.flush()
+
         self._original_stream.write(data)
         self._original_stream.flush()
 
@@ -1660,13 +1695,14 @@ def main():
                         help="Tee all output to this log file (in addition to console)")
     args = parser.parse_args()
 
-    # Set up log file tee if requested
-    if args.log:
-        log_path = Path(args.log)
-        if not log_path.is_absolute():
-            log_path = Path(__file__).parent / log_path
-        tee = Tee(log_path)
-        print(f"[Tick] Logging all output to {log_path}")
+    # Set up log file tee (defaults to .aether_workspace/aether_daemon.log if not specified)
+    log_file_name = args.log or ".aether_workspace/aether_daemon.log"
+    log_path = Path(log_file_name)
+    if not log_path.is_absolute():
+        log_path = (Path(__file__).parent / log_path).resolve()
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    tee = Tee(log_path)
+    print(f"[Tick] Logging all output to {log_path}")
 
     # Build config
     if args.ollama_cloud:

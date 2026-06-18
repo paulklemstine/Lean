@@ -71,13 +71,24 @@ class TestOeisSignal:
         agent = FakePiAgent("")
         mgr = FutureDirectionsManager(tmp_path / "ws")
         feed = ExternalSignalFeed(agent, mgr)
-        sample = {
+        
+        # Test dict format with 'results'
+        sample_dict = {
             "results": [
-                {"name": "Prime numbers", "data": "2,3,5,7,11,13", "keyword": "nonn"}
+                {"name": "Prime numbers", "data": "2,3,5,7,11,13", "keyword": "nonn", "number": "40"}
             ]
         }
-        dirs = feed._parse_oeis_results(sample)
-        assert len(dirs) >= 0
+        dirs_dict = feed._parse_oeis_results(sample_dict)
+        assert len(dirs_dict) == 1
+        assert dirs_dict[0].title == "OEIS sequence: Prime numbers"
+        
+        # Test direct list format
+        sample_list = [
+            {"name": "Fibonacci numbers", "data": "1,1,2,3,5,8", "keyword": "nonn", "number": "45"}
+        ]
+        dirs_list = feed._parse_oeis_results(sample_list)
+        assert len(dirs_list) == 1
+        assert dirs_list[0].title == "OEIS sequence: Fibonacci numbers"
 
 
 class TestLmfdbSignal:
