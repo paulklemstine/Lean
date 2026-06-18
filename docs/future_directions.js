@@ -1033,7 +1033,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Functor from finite linear codes to tropical valuation objects via wei"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "616d8eb2",
     "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
     "domains": [
       "Novelty",
@@ -1043,7 +1043,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.958310+00:00",
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
@@ -1448,7 +1448,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Reconstruction Conjecture"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ddabac1a",
     "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
     "domains": [
       "NumberTheory",
@@ -1458,7 +1458,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432601+00:00",
     "title": "Collatz Stopping Times: Density Analysis"
   },
@@ -1700,18 +1700,47 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For the preferential attachment random multigraph with edge steps and parameter p \u2208 (0,1), started from any fixed finite connected multigraph with positive total degree, the clique number has the same logarithmic growth exponent as in the one-loop initial condition: for every \u03b5 > 0, the probability that |log(\u03c9(G_t))/log(t) - (1-p)/(2-p)| > \u03b5 tends to 0 as t tends to infinity.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2078",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18722v1",
+    "status": "available",
+    "timestamp": "2026-06-18T11:02:58.622655+00:00",
+    "title": "Initial-condition universality of the clique-number exponent in preferential attachment with edge steps"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every nonzero ideal I of the Gaussian integers \u2124[i], the rank-2 Euclidean lattice obtained by applying the canonical embedding a+bi \u21a6 (a,b) to I is well-rounded: its shortest nonzero vectors span \u211d\u00b2. Equivalently, if I = (\u03b1), then the shortest vectors are precisely the unit multiples \u00b1\u03b1 and \u00b1i\u03b1 under the embedding, giving two linearly independent equal-length minimal vectors.",
     "domains": [
       "Algebra",
       "Cryptography"
     ],
-    "id": "fd_2078",
+    "id": "fd_2079",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18920v1",
     "status": "available",
     "timestamp": "2026-06-18T08:03:43.657853+00:00",
     "title": "Nonzero Gaussian integer ideal lattices are well-rounded"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: Let n >= 3 and let \u0393 be a geometrically finite, discrete, Zariski-dense thin subgroup of an arithmetic lattice \u03930 < SO(n,1)^\u2218 with critical exponent \u03b4_\u0393 > 1/2. The uniform congruence spectral gap theorem for the congruence covers of \u0393\\H^n remains true without assuming that \u0393 is torsion-free. Equivalently, after excluding finitely many primes, there is \u03b5 > 0 such that every square-free congruence cover has no new complementary-series spectrum with parameter in (\u03b4_\u0393 - \u03b5, \u03b4_\u0393). This is falsifiable by producing a geometrically finite arithmetic thin orbifold subgroup with \u03b4_\u0393 > 1/2 whose congruence covers have new spectrum accumulating at \u03b4_\u0393.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2080",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18674v1",
+    "status": "available",
+    "timestamp": "2026-06-18T11:03:59.022678+00:00",
+    "title": "Orbifold version of the uniform congruence spectral gap for geometrically finite thin subgroups of SO(n,1)"
   },
   {
     "consumed_by_exp_id": "",
@@ -2200,7 +2229,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived from the research cycle formalized in"
   },
   {
-    "consumed_by_exp_id": "72f7ab23",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Unstoppable Self-Maps (Geometry)\n\nFollow-up conjectures for the theme *\"Self-modifying code that cannot be stopped\"*,\nbased on `Geometry/Unstoppable.lean` (the **drift criterion** for aperiodicity and\nits finite-state converse). Each is stated to be directly formalizable and\nfalsifiable in Lean 4 / Mathlib.\n\n## Conjecture 1 \u2014 Drift criterion is complete on the line\n**Statement.** Let `f : \u211d \u2192 \u211d` be continuous and monotone. Then `f` is\n`Unstoppable` (no periodic points) **iff** it admits a continuous drift coordinate,\nequivalently iff `f x \u2260 x` for all `x` and `f x - x` has constant sign. More\nsharply: a fixed-point-free continuous `f : \u211d \u2192 \u211d` is unstoppable, and conversely\nany continuous self-map of `\u211d` with a fixed point halts there.\n**Test.** Formalize `Unstoppable f \u2194 \u2200 x, f x \u2260 x` for continuous `f : \u211d \u2192 \u211d`\nusing the intermediate value theorem on `f^[n] x - x`.\n**Falsifier.** A continuous fixed-point-free `f : \u211d \u2192 \u211d` with a genuine periodic\norbit (would refute; conjecture predicts none exist).\n\n## Conjecture 2 \u2014 Quantitative escape rate from drift\n**Statement.** If `\u03c6 (f x) = \u03c6 x + c` with `c > 0` and `\u03c6` is `K`-Lipschitz for a\nmetric `d`, then `d (f^[n] x, x) \u2265 (|c|/K) \u00b7 n`; hence the orbit is a\n*quasi-isometric* embedding of `\u2115` and escapes every bounded set in finite time.\n**Test.** Prove `dist (f^[n] x) x \u2265 (c / K) * n` from `phi_iterate` and the\nLipschitz bound `|\u03c6 a - \u03c6 b| \u2264 K \u00b7 dist a b`.\n**Falsifier.** A drifting `f` with Lipschitz `\u03c6` whose orbit stays bounded.\n\n## Conjecture 3 \u2014 Group-theoretic dichotomy for affine maps\n**Statement.** An invertible affine map `f x = A x + b` of a finite-dimensional\nreal inner-product space is `Unstoppable` **iff** `b` is not in the range of\n`A - I` (i.e. the affine fixed-point equation `(A - I) x = -b` has no solution).\nWhen `A = I` this recovers `translate_unstoppable`; when `A` is a rotation with\n`1 \u2209 spectrum A`, the map always has a fixed point and halts.\n**Test.** Formalize `Unstoppable f \u2194 (-b) \u2209 Set.range (A - 1)` for `f x = A x + b`.\n**Falsifier.** An affine map with `(A-I)` surjective yet unstoppable, or with a\nfixed point yet unstoppable.\n\n## Conjecture 4 \u2014 Subexponential orbit growth forces a periodic point\n**Statement.** (Compactness/recurrence converse.) If `X` is a compact metric\nspace and `f : X \u2192 X` is continuous, then `f` is **not** `Unstoppable`: every\ncontinuous self-map of a nonempty compact metric space has a recurrent \u2014 in the\ntopological sense, almost-periodic \u2014 orbit, and on finite-dimensional compacta a\ngenuine periodic point in many cases. Minimal testable core: a continuous self-map\nof `[0,1]` (or `S\u00b9` with rational rotation number) always halts.\n**Test.** Prove `\u00ac Unstoppable f` for continuous `f : Set.Icc (0:\u211d) 1 \u2192 ...`\nvia Brouwer fixed point, strengthening `not_unstoppable_of_finite` from finite to\ncompact.\n**Falsifier.** A continuous fixed-point/periodic-point-free self-map of a compact\ninterval (Brouwer forbids it).\n\n## Conjecture 5 \u2014 Cocycle drift and unstoppable group actions\n**Statement.** A free action is the group-level analogue of unstoppability. If a\ngroup `G` acts on `X` and admits a nonzero homomorphism-twisted cocycle\n`\u03c6 : X \u2192 \u211d` with `\u03c6 (g \u2022 x) = \u03c6 x + \u03c7(g)` for a nontrivial character `\u03c7`, then\nevery `g` with `\u03c7(g) \u2260 0` acts without periodic points. Conjecture: for\n`G = \u2124` this is *equivalent* to the drift criterion, and the set of unstoppable\ngenerators is exactly `{g : \u03c7(g) \u2260 0}`.\n**Test.** Generalize `unstoppable_of_drift` to a `\u03c7`-twisted cocycle and recover\n`unstoppable_iterate_of_drift` as the `\u03c7(g) = c` special case.\n**Falsifier.** A cocycle action with `\u03c7(g) \u2260 0` admitting a periodic point.\n",
     "domains": [
       "Algebra",
@@ -2210,7 +2239,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "b4a517d3",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-17T00:29:20.027992+00:00",
     "title": "Follow-up conjectures for the theme *\"Self-modifying code that cannot be stopped"
   },
@@ -3121,7 +3150,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Diffusion Models as Stochastic Differential Equations"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b46cc9cf",
     "description": "Prove that the class of EML functions (compositions of exp, log, and field operations) is dense in C([0,1]^n) with respect to the uniform norm. Show that the approximation rate depends on the depth of the EML composition and derive explicit bounds for shallow networks.",
     "domains": [
       "EML",
@@ -3131,7 +3160,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:47.125386+00:00",
     "title": "EML Universal Approximation: Density of EML Functions"
   },
@@ -3331,22 +3360,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Compactification of Moduli Spaces"
   },
   {
-    "consumed_by_exp_id": "0d2b0b43",
-    "description": "Prove that tropical curve counts equal classical Gromov-Witten invariants for toric surfaces. Formalize the correspondence theorem: each tropical curve lifts to a unique complex curve in the toric surface. Compute the tropical GW invariants for P^2.",
-    "domains": [
-      "Tropical",
-      "Algebra"
-    ],
-    "id": "fd_0471",
-    "priority_score": 0.3999999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:31.056465+00:00",
-    "title": "Tropical Curve Counting: Gromov-Witten Invariants"
-  },
-  {
-    "consumed_by_exp_id": "a297d88b",
+    "consumed_by_exp_id": "",
     "description": "Prove deep structural theorems about the Berggren tree of Pythagorean triples. Formalize the groupoid action on SL(3,Z), the prime distribution along hypotenuse lengths, and computational applications of the tree structure.",
     "domains": [
       "Pythagorean",
@@ -3356,7 +3370,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T21:01:45.030710+00:00",
     "title": "Pythagorean Triple Group Structure"
   },
@@ -3526,7 +3540,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Non-Archimedean Probability via Surreal Numbers"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2b9ab43b",
     "description": "Inspired by the AdS/CFT correspondence, formalize a mathematical holographic principle: a theorem about n-dimensional structures (the bulk) has a dual (shorter) proof in (n-1)-dimensional boundary terms. Conjecture: Every proof by induction on a well-founded order of rank n has an equivalent proof by coinduction on the n-1 boundary. Test: find a concrete theorem (e.g., finite Ramsey) and show its inductive proof in R^n maps to a coinductive proof on S^{n-1}. Impact: a new holographic proof theory connecting algebraic topology to proof complexity.",
     "domains": [
       "Physics",
@@ -3536,7 +3550,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.259292+00:00",
     "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
   },
@@ -3841,7 +3855,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Aperiodic Monotile: One Shape to Tile Them All"
   },
   {
-    "consumed_by_exp_id": "fb1d7cfa",
+    "consumed_by_exp_id": "",
     "description": "Anyon braiding in topological quantum computing gives unitary matrices from the braid group B_n. The Jones representation rho_k: B_n -> U((k-1)(n-1)+1) at root of unity e^{2*pi*i/k} is conjectured to be universal for quantum computation when k >= 3 and n >= 4. Conjecture: the set of all braids in B_4 under the Jones representation at k=5 generates a dense subgroup of SU(3). More precisely, the image rho_5(B_4) is an infinite subgroup of SU(3) that is not contained in any proper closed subgroup. This means that topological quantum computing with Fibonacci anyons (k=5) is universal: any unitary in SU(3) can be approximated to arbitrary precision by braiding 4 anyons. The key: the Jones representation at k=5 gives 3x3 matrices, and the braid generators sigma_1, sigma_2, sigma_3 generate a dense subgroup of SU(3). Test: compute the Jones representation at k=5 for B_4, verify that sigma_1 * sigma_2 * sigma_3 has infinite order, and check that the group generated by sigma_1, sigma_2, sigma_3 is dense in SU(3) by the Solovay-Kitaev theorem. Impact: braiding anyons is universal for quantum computation. The braid group B_4 at k=5 is a quantum gate set.",
     "domains": [
       "Novelty",
@@ -3851,7 +3865,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.643460+00:00",
     "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
   },
@@ -3901,7 +3915,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
   {
-    "consumed_by_exp_id": "0a8baa9d",
+    "consumed_by_exp_id": "82b8f05a",
     "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
     "domains": [
       "Novelty",
@@ -3914,21 +3928,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.807837+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-  },
-  {
-    "consumed_by_exp_id": "d6f5cc61",
-    "description": "A quantum random walk on a group G is defined by a unitary operator U = sum_{g in S} |g><0| (where S is a generating set) acting on the Hilbert space l^2(G). The walk is periodic if U^k = I for some k, and mixing if the probability distribution P_n(g) = |<g|U^n|0>|^2 converges to the uniform distribution on G. Conjecture: for the Cayley graph Cay(G, S) where G is a finite group and S is a symmetric generating set, the quantum walk mixes in O(sqrt(|G|) * log(|G|)) steps, which is quadratically faster than the classical random walk (which takes O(|G|^2) steps for the spectral gap to kick in). The mixing time is determined by the spectral gap of U: tau_mix ~ 1/gap where gap = 1 - |lambda_2| and lambda_2 is the second-largest eigenvalue of U. Conjecture: for Cay(G, S) with S = the set of transpositions in S_n, the spectral gap of U is Omega(1/n), giving a mixing time of O(n * log(n)). This matches the known classical mixing time of O(n * log(n)) for the random transposition walk on S_n. The quantum advantage comes from the quadratically faster convergence of the probability distribution, not from the spectral gap. Test: simulate quantum random walks on Cayley graphs of S_n, S_n, A_5, and Z_n, measure the mixing time, and verify tau_mix = O(sqrt(|G|) * log(|G|)). Impact: quantum random walks mix quadratically faster than classical random walks on Cayley graphs. The quadratic speedup is universal.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0095",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.827686+00:00",
-    "title": "Quantum Random Walks on Cayley Graphs: Spectral Gaps and Mixing Times"
   },
   {
     "consumed_by_exp_id": "",

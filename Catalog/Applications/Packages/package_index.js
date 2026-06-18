@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0d2b0b43",
     "filename": "tropical_curve_counting_gromov_witten_invariants.json",
     "pkg_num": 196,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5115800000000001,
     "title": "Functional Equations of the Hodge--Deligne E-Polynomial: Mirror Symmetry and Serre Duality"
   },
   {
@@ -6012,8 +6012,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "tropical_curve_counting_gromov_witten_invariants",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5115800000000001,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Functional Equations of the Hodge--Deligne E-Polynomial: Mirror Symmetry and Serre Duality"
     }
