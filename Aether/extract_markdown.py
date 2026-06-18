@@ -18,6 +18,52 @@ def sanitize_filename(name):
 def get_blob_path(file_hash):
     return blobs_dir / file_hash[0:2] / file_hash[2:4] / file_hash
 
+def classify_file(basename, path):
+    name_lower = basename.lower()
+    path_lower = path.lower()
+    
+    # 1. Aristotle Summaries
+    if "aristotle_summary" in name_lower or "aristotle_summary" in path_lower:
+        return "aristotle_summaries"
+    # 2. Prompts
+    elif "prompt" in name_lower:
+        return "prompts"
+    # 3. READMEs
+    elif "readme" in name_lower:
+        return "readmes"
+    # 4. Future Research & Directions
+    elif (
+        "future_directions" in name_lower or 
+        "future_research" in name_lower or
+        "research_directions" in name_lower or 
+        "direction_" in name_lower or 
+        "short_term" in name_lower or 
+        "long_term" in name_lower
+    ):
+        return "future_directions"
+    # 5. Articles (Scientific American, ARTICLE.md, etc.)
+    elif (
+        "article" in name_lower or 
+        "scientific_american" in name_lower or 
+        "scientificamerican" in name_lower or 
+        "sciam" in name_lower
+    ):
+        return "articles"
+    # 6. Research Papers, Notes & Reports
+    elif (
+        "research" in name_lower or 
+        "paper" in name_lower or 
+        "report" in name_lower or 
+        "notes" in name_lower
+    ):
+        return "research_papers"
+    # 7. Discussions
+    elif "discussion" in name_lower:
+        return "discussions"
+    # 8. Other
+    else:
+        return "other"
+
 def copy_file(args):
     file_hash, representative_path, total_occurrences = args
     src_path = get_blob_path(file_hash)
@@ -31,7 +77,9 @@ def copy_file(args):
     clean_basename = sanitize_filename(basename)
     clean_name = f"{file_hash[:12]}_{clean_basename}"
     
-    subfolder = output_dir / clean_basename
+    # Classify file and determine correct bucket subdirectory
+    bucket_name = classify_file(clean_basename, representative_path)
+    subfolder = output_dir / bucket_name
     subfolder.mkdir(exist_ok=True)
     dst_path = subfolder / clean_name
     
