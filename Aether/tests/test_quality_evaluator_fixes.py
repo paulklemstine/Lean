@@ -135,6 +135,74 @@ class TestFullEvaluateWithResultFields:
         assert score.actionability > 0.1
 
 
+class TestAdversarialEvaluateDomains:
+    def test_adversarial_evaluate_no_agent_respects_domains(self, qe):
+        """Without pi_agent, adversarial_evaluate uses primary_score with domains."""
+        score = QualityScore(proof_depth=1.0, novelty=0.0)
+        unweighted = qe.adversarial_evaluate(
+            lean_source="",
+            primary_score=score,
+            domains=None,
+        )
+        weighted = qe.adversarial_evaluate(
+            lean_source="",
+            primary_score=score,
+            domains=["NumberTheory"],
+        )
+        assert weighted["primary_composite"] != unweighted["primary_composite"]
+        assert weighted["primary_composite"] == score.composite_with_domains(["NumberTheory"])
+
+    def test_adversarial_evaluate_with_agent_respects_domains(self, monkeypatch):
+        """With pi_agent, adversarial_evaluate, critic, and tiebreaker use domain-weighted composite."""
+        class MockPiAgent:
+            def _call_ollama(self, system: str, user: str, timeout=None) -> str:
+                # Return scores that yield different composites depending on domains
+                import json
+                return json.dumps({
+                    "proof_depth": 1.0,
+                    "novelty": 0.0,
+                    "cross_domain": 0.0,
+                    "artifact_richness": 0.0,
+                    "actionability": 0.0,
+                    "importance": 0.0,
+                    "usefulness": 0.0,
+                    "applications": 0.0,
+                    "catalog_anchoring": 0.0,
+                })
+            def _parse_json_response(self, raw: str):
+                import json
+                return json.loads(raw)
+
+        agent = MockPiAgent()
+        qe_with_agent = QualityEvaluator(pi_agent=agent)
+        primary = QualityScore(proof_depth=0.5, novelty=0.5)
+
+        # 1. Unweighted run
+        unweighted_res = qe_with_agent.adversarial_evaluate(
+            lean_source="theorem foo : True := trivial",
+            primary_score=primary,
+            domains=None,
+        )
+        # 2. Weighted run (with NumberTheory domain)
+        weighted_res = qe_with_agent.adversarial_evaluate(
+            lean_source="theorem foo : True := trivial",
+            primary_score=primary,
+            domains=["NumberTheory"],
+        )
+
+        # Verify that primary_composite is domain-weighted
+        assert unweighted_res["primary_composite"] == round(primary.composite_with_domains(None), 4)
+        assert weighted_res["primary_composite"] == round(primary.composite_with_domains(["NumberTheory"]), 4)
+        assert unweighted_res["primary_composite"] != weighted_res["primary_composite"]
+
+        # Verify that adversarial_composite is domain-weighted
+        # The mocked critic returns proof_depth=1.0, novelty=0.0.
+        critic_score = QualityScore(proof_depth=1.0)
+        assert unweighted_res["adversarial_composite"] == round(critic_score.composite_with_domains(None), 4)
+        assert weighted_res["adversarial_composite"] == round(critic_score.composite_with_domains(["NumberTheory"]), 4)
+        assert unweighted_res["adversarial_composite"] != weighted_res["adversarial_composite"]
+
+
 class TestResearchJobFilesIntegrated:
     def test_default_files_integrated(self):
         """New ResearchJob defaults files_integrated to 0."""

@@ -793,6 +793,7 @@ class QualityEvaluator:
         concept_description: str = "",
         primary_score: Optional[QualityScore] = None,
         disagreement_threshold: float = 0.2,
+        domains: Optional[list] = None,
     ) -> Dict[str, Any]:
         """Run an adversarial second opinion on quality, with tiebreaker if needed.
 
@@ -809,9 +810,10 @@ class QualityEvaluator:
           - delta: float — absolute difference between primary and adversarial
         """
         if not self.pi_agent:
+            p_comp = primary_score.composite_with_domains(domains) if primary_score else 0.5
             return {
-                "adjudicated_score": primary_score.composite if primary_score else 0.5,
-                "primary_composite": primary_score.composite if primary_score else 0.5,
+                "adjudicated_score": p_comp,
+                "primary_composite": p_comp,
                 "adversarial_composite": None,
                 "tiebreaker_composite": None,
                 "agreement": "no_pi_agent",
@@ -820,10 +822,10 @@ class QualityEvaluator:
 
         # Step 1: Run adversarial critic
         adversarial_result = self._run_adversarial_critic(
-            lean_source, concept_title, concept_description
+            lean_source, concept_title, concept_description, domains=domains
         )
         adversarial_composite = adversarial_result.get("composite", 0.5)
-        primary_composite = primary_score.composite if primary_score else 0.5
+        primary_composite = primary_score.composite_with_domains(domains) if primary_score else 0.5
         delta = abs(primary_composite - adversarial_composite)
 
         # Step 2: Check disagreement
@@ -842,7 +844,7 @@ class QualityEvaluator:
         # Step 3: Disagreement — call tiebreaker
         tiebreaker_result = self._run_tiebreaker(
             lean_source, concept_title, concept_description,
-            primary_composite, adversarial_composite,
+            primary_composite, adversarial_composite, domains=domains
         )
         tiebreaker_composite = tiebreaker_result.get("composite", 0.5)
 
@@ -874,8 +876,8 @@ class QualityEvaluator:
         }
 
     def _run_adversarial_critic(
-        self, lean_source: str, concept_title: str, concept_description: str
-    ) -> Dict[str, float]:
+        self, lean_source: str, concept_title: str, concept_description: str, domains: Optional[list] = None
+    ) -> Dict[str, Any]:
         """Run a skeptical second LLM evaluation as an adversarial judge.
 
         The critic is prompted to find flaws, overstatements, and triviality.
@@ -929,7 +931,7 @@ class QualityEvaluator:
                     applications=max(0, min(1, float(data.get("applications", 0.5)))),
                     catalog_anchoring=max(0, min(1, float(data.get("catalog_anchoring", 0.5)))),
                 )
-                return {"composite": qs.composite, "breakdown": qs.to_dict()}
+                return {"composite": qs.composite_with_domains(domains), "breakdown": qs.to_dict()}
         except Exception as e:
             print(f"[Adversarial] Critic evaluation failed: {e}")
 
@@ -937,8 +939,8 @@ class QualityEvaluator:
 
     def _run_tiebreaker(
         self, lean_source: str, concept_title: str, concept_description: str,
-        primary_score: float, adversarial_score: float,
-    ) -> Dict[str, float]:
+        primary_score: float, adversarial_score: float, domains: Optional[list] = None,
+    ) -> Dict[str, Any]:
         """Run a third LLM as a tiebreaker when primary and adversarial judges disagree.
 
         The tiebreaker sees both scores and is asked to independently evaluate
@@ -977,7 +979,7 @@ class QualityEvaluator:
                     applications=max(0, min(1, float(data.get("applications", 0.5)))),
                     catalog_anchoring=max(0, min(1, float(data.get("catalog_anchoring", 0.5)))),
                 )
-                return {"composite": qs.composite, "breakdown": qs.to_dict()}
+                return {"composite": qs.composite_with_domains(domains), "breakdown": qs.to_dict()}
         except Exception as e:
             print(f"[Adversarial] Tiebreaker failed: {e}")
 

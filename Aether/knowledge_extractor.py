@@ -1861,6 +1861,7 @@ Research mode: {concept.research_mode}
                         concept_description=job.concept.concept_description,
                         primary_score=qscore,
                         disagreement_threshold=0.2,
+                        domains=concept_domains,
                     )
                     adj_score = adversarial_result.get("adjudicated_score", composite)
                     agreement = adversarial_result.get("agreement", "unknown")
