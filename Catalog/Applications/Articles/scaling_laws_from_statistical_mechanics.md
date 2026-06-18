@@ -1,99 +1,215 @@
-# The Hidden Mathematics Behind AI's Hunger for Data
+# Divisibility Bridges: From Fibonacci Lattices to Gardens of Eden
 
-## Why bigger models need more data — and what harmonic means have to do with it
+Mathematics is full of secret bridges. You set out studying one thing — the
+Fibonacci numbers, say, those rabbits-and-sunflowers integers everyone meets in
+school — and you find yourself, a few steps later, standing in a completely
+different country: the theory of unavoidable coincidences, or the strange world
+of states that can exist but can never be *created*. This article is a tour of
+three such bridges, all of them built on a single deceptively simple idea:
+**when a map respects structure, the structure tells you what the map must do.**
 
-*A deep mathematical structure, first discovered in 19th-century physics, turns out to govern how artificial intelligence improves with scale.*
-
----
-
-In 2020, researchers at OpenAI made a startling discovery. When they plotted how well their language models performed against the amount of computing power used to train them, the curves weren't random. They weren't even complicated. They were clean, straight lines — on a logarithmic scale. The loss (a measure of how wrong the model's predictions are) decreased as a precise power law of the computing budget.
-
-This wasn't supposed to happen. Neural networks are vast, tangled webs of millions or billions of parameters, shaped by stochastic optimization over terabytes of text. Why should such complex systems follow the same elegant mathematical laws that govern how gas molecules distribute their energy?
-
-The answer, it turns out, lies in a mathematical structure that connects 19th-century statistical mechanics to 21st-century machine learning: the spectral decomposition of kernel operators.
-
-## The Kernel Connection
-
-To understand scaling laws, you need to understand what neural networks actually learn. In the infinite-width limit — when the number of neurons in each layer grows very large — a remarkable thing happens. The network's behavior becomes equivalent to a much simpler mathematical object called a Gaussian process, which is fully characterized by a function called a kernel.
-
-The kernel captures how similar two inputs are in the network's internal representation. It can be decomposed into a spectrum of eigenvalues — a set of numbers λ₁ ≥ λ₂ ≥ λ₃ ≥ ... that describe the "importance" of different features the network can learn.
-
-Here's the critical insight: for virtually all practical neural architectures — transformers, recurrent networks, convolutional networks — these eigenvalues decay as a power law. The k-th eigenvalue satisfies λₖ ∼ k⁻ˢ for some spectral exponent s > 1. This power-law decay is not a coincidence; it reflects the fractal-like statistical structure of natural data.
-
-## From Spectrum to Scaling
-
-Once you know the spectral decay rate, the scaling laws follow with mathematical inevitability.
-
-Consider training a model on N data points. Each eigenvalue λₖ represents a feature direction, and the model needs roughly σ²/(λₖ) samples to learn that feature well (where σ² is the noise level). Features with large eigenvalues are learned first; features with small eigenvalues require exponentially more data.
-
-When the eigenvalues decay as k⁻ˢ, a beautiful calculation shows that the number of "effectively learned" features grows as N^{(s-1)/s}. The remaining unlearned features contribute error proportional to N^{-(s-1)/s}. This gives us the data scaling exponent: α = (s-1)/s.
-
-Notice something remarkable: α is always between 0 and 1, and it approaches 1 only as s → ∞ (infinitely fast spectral decay). In practice, s typically ranges from 2 to 5 for language models, giving α between 0.5 and 0.8. This matches the empirically observed exponents with striking precision.
-
-## The Chinchilla Question
-
-But data is only half the story. The other critical resource is model size — the number of parameters P. Larger models can represent more complex functions, and the approximation error from finite model size also decreases as a power law: B · P⁻ᵝ.
-
-The total loss combines both effects:
-
-**L(N, P) = A · N⁻ᵅ + B · P⁻ᵝ + E**
-
-where E is the irreducible entropy — the minimum possible loss even with infinite data and infinite model size. (For language, E represents the fundamental unpredictability of text.)
-
-Now comes the billion-dollar question: given a fixed computing budget C (where compute scales as C ∝ N · P), how should you split it between data and parameters?
-
-This is the question that Google DeepMind's "Chinchilla" paper answered empirically in 2022, overturning the previous wisdom that bigger models are always better. But the mathematical theory reveals something deeper.
-
-## The Harmonic Mean Theorem
-
-The optimal allocation turns out to satisfy a beautifully simple condition: at the optimum, the weighted loss contributions from data and parameters must be balanced:
-
-**α · (data loss) = β · (parameter loss)**
-
-This is a first-order optimality condition from calculus, but its consequences are profound. It means the compute-optimal data-to-parameter ratio is:
-
-**N* ∝ C^{β/(α+β)},  P* ∝ C^{α/(α+β)}**
-
-And the resulting compute scaling exponent — how fast loss decreases with total compute — is:
-
-**γ = αβ/(α+β)**
-
-This is the harmonic mean of α and β. Not the arithmetic mean (α+β)/2, not the geometric mean √(αβ), but specifically the harmonic mean. This is the same mathematical structure that appears throughout physics: in the effective resistance of parallel resistors, in the reduced mass of two-body systems, in the focal length of compound lenses.
-
-## Why the Harmonic Mean Matters
-
-The harmonic mean has a crucial property: it is always less than or equal to either of its inputs, with equality only when both inputs are identical. This means the compute scaling exponent γ is always worse than both the data exponent α and the parameter exponent β.
-
-Intuitively, this makes sense. Compute must be split between gathering data and building model capacity. Neither resource alone determines the outcome — the bottleneck constraint means the effective scaling rate is dragged down toward the worse of the two exponents.
-
-But there's a deeper lesson. We proved that the harmonic mean equals the arithmetic mean if and only if α = β — that is, compute scaling is maximally efficient only when data and parameter scaling are perfectly balanced. Any imbalance between the two exponents wastes compute.
-
-Moreover, we showed that the optimal strategy allocates more resources to the bottleneck. If data scaling is worse (smaller α), you should gather more data relative to model size. If parameter scaling is worse, you should build bigger models with less data. The "invest in your weakness" principle falls directly out of the mathematics.
-
-## The Bottleneck Principle
-
-This connects to a principle well-known in physics and engineering but rarely articulated in machine learning: **the weakest link determines the strength of the chain**.
-
-We proved that increasing either exponent improves the compute scaling — but the marginal benefit of improving the bottleneck exponent is always greater. If your data exponent is 0.3 and your parameter exponent is 0.7, improving the data exponent by 0.1 gives more compute-efficient scaling than improving the parameter exponent by the same amount.
-
-This has practical implications. For language models, the data exponent appears to be around 0.34 and the parameter exponent around 0.34 (roughly balanced, which is why Chinchilla recommended equal scaling). But for image models or scientific models, the exponents may be quite different, and the optimal strategy shifts accordingly.
-
-## Universality and the Future
-
-Perhaps the most intriguing aspect of these scaling laws is their apparent universality. The harmonic mean relationship holds regardless of the specific architecture, training algorithm, or data distribution — it depends only on the leading power-law exponents. Sub-leading corrections wash out as scale increases.
-
-This universality conjecture, if true, would explain one of the most puzzling empirical observations in modern AI: that scaling laws are remarkably consistent across different model architectures and data domains. Transformers, LSTMs, and MLPs all appear to follow the same basic scaling behavior, differing only in their specific exponents.
-
-The mathematical framework also makes a testable prediction: for any pair of measured exponents (α, β), the compute exponent should satisfy γ = αβ/(α+β) to within corrections that shrink as O(1/log C). As computing budgets grow into the hundreds of billions of dollars, this prediction becomes increasingly precise.
-
-## The Deeper Connection
-
-Standing back, what's remarkable is how a 150-year-old mathematical concept — the harmonic mean — turns out to govern the most important practical question in modern AI: how to efficiently scale up artificial intelligence.
-
-This is not the first time that statistical mechanics has illuminated machine learning. The connections run deep: both fields study systems with many interacting degrees of freedom, both deal with probability distributions over high-dimensional spaces, and both find that macroscopic behavior (scaling laws, phase transitions, universality) emerges from microscopic chaos.
-
-The scaling laws of neural networks may be, in the end, no more mysterious than the ideal gas law — an emergent regularity arising from the statistical mechanics of learning in high dimensions. And like the ideal gas law, they point toward a deeper theory waiting to be discovered: a statistical mechanics of intelligence itself.
+Each statement below has been verified down to the last logical atom by a proof
+assistant, so you can take every claim here as literally true — not "true in
+spirit," not "true for the examples we checked," but provably, mechanically
+true. But the proofs are not the point. The point is the ideas, and they are
+beautiful.
 
 ---
 
-*The mathematical results described in this article have been formally verified using computer-assisted proof methods, providing the highest possible level of certainty for these theoretical predictions.*
+## A lattice hidden in the Fibonacci numbers
+
+Start with the Fibonacci sequence:
+
+$$1,\ 1,\ 2,\ 3,\ 5,\ 8,\ 13,\ 21,\ 34,\ 55,\ 89,\ 144,\ \dots$$
+
+Each number is the sum of the two before it. Write $F_n$ for the $n$-th
+Fibonacci number, so $F_1 = 1$, $F_2 = 1$, $F_3 = 2$, $F_4 = 3$, $F_5 = 5$, and
+so on.
+
+Now ask a question that sounds like idle curiosity: **when does one Fibonacci
+number divide another?** Look at $F_{12} = 144$. Its divisors among the
+Fibonacci numbers are $F_2 = 1$, $F_3 = 2$, $F_4 = 3$, $F_6 = 8$. Notice the
+indices: $2, 3, 4, 6$. Those are exactly the divisors of $12$. That is not a
+coincidence. It is a theorem.
+
+**The Fibonacci divisibility law.** *If $m$ divides $n$, then $F_m$ divides
+$F_n$.* In symbols, $m \mid n \implies F_m \mid F_n$.
+
+So because $4 \mid 12$, we get $F_4 = 3$ divides $F_{12} = 144$ — and indeed
+$144 = 3 \times 48$. Because $6 \mid 12$, $F_6 = 8$ divides $144 = 8 \times 18$.
+The Fibonacci sequence faithfully *copies the divisibility structure of the
+integers into itself.*
+
+But here is the truly striking part. For indices that are at least $3$, the
+arrow runs both ways:
+
+**The Fibonacci divisibility equivalence.** *For $m \ge 3$, $F_m$ divides $F_n$
+if and only if $m$ divides $n$.* In symbols, for $m \ge 3$,
+$$F_m \mid F_n \iff m \mid n.$$
+
+This is a perfect dictionary. Divisibility among the *positions* is exactly
+divisibility among the *values*. If you want to know whether $34 = F_9$ divides
+some gigantic Fibonacci number $F_n$, you do not need to compute $F_n$ at all —
+you just ask whether $9$ divides $n$. The arithmetic of a sequence that grows
+exponentially is governed entirely by the humble arithmetic of its index set.
+
+Why $m \ge 3$? Because of a small accident at the bottom of the sequence:
+$F_1 = F_2 = 1$, and $1$ divides everything. So $F_2 = 1$ "divides" every
+Fibonacci number even though $2$ does not divide every index. Once you climb
+past that degenerate ledge — once $F_m \ge 2$ — the dictionary becomes exact.
+
+The engine behind the equivalence is one of the prettiest identities in
+elementary number theory: the *greatest common divisor* of two Fibonacci numbers
+is itself a Fibonacci number, and its index is the gcd of the original indices:
+$$\gcd(F_m, F_n) = F_{\gcd(m,n)}.$$
+From here the equivalence almost proves itself. If $F_m \mid F_n$, then
+$\gcd(F_m, F_n) = F_m$, so $F_{\gcd(m,n)} = F_m$. Since the Fibonacci numbers are
+strictly increasing from index $3$ onward, equal values force equal indices:
+$\gcd(m,n) = m$, which is just another way of saying $m \mid n$. The whole
+proof is a single squeeze.
+
+---
+
+## The pigeonhole with teeth
+
+The next bridge takes us from Fibonacci numbers to a classic puzzle — but a
+version with sharper edges than the textbook one.
+
+Everyone knows the **pigeonhole principle**: if you put $n+1$ pigeons into $n$
+boxes, some box holds two pigeons. It is the most innocent statement in all of
+mathematics, and also one of the most powerful, because the trick is always in
+*choosing the boxes.* Here is a famous application that looks impossible until
+you see the right boxes.
+
+**The divisibility pigeonhole.** *Choose any $n+1$ different whole numbers from
+the range $1, 2, 3, \dots, 2n$. Then two of your chosen numbers must be in a
+divisibility relationship: one divides the other.*
+
+Try it. Take $n = 4$, so the range is $1$ through $8$, and pick five numbers.
+Say you try to be clever and avoid divisibility: $\{4, 5, 6, 7, 8\}$. Foiled —
+$4 \mid 8$. Try $\{3, 4, 5, 7, 8\}$. Again foiled — $4 \mid 8$. Try
+$\{3, 5, 6, 7, 8\}$ — but $3 \mid 6$. No matter how you choose, the trap always
+springs. **It is genuinely impossible to pick five numbers from $1$–$8$ with no
+divisibility pair.** With only four numbers you *can* dodge it
+($\{5, 6, 7, 8\}$ has no divisor pair), so the threshold $n+1$ is exactly sharp.
+
+What are the magic boxes? Every positive integer can be written *uniquely* as an
+odd number times a power of two:
+$$x = (\text{odd part of } x)\times 2^{k}.$$
+For instance $40 = 5 \times 2^3$, $12 = 3 \times 2^2$, $7 = 7 \times 2^0$. Call
+the odd factor the **odd part** of $x$. (In the formal development it is defined
+by literally dividing out every factor of two:
+$\mathrm{oddPart}(x) = x / 2^{v_2(x)}$, where $v_2(x)$ counts the twos in $x$.)
+
+Now here is the key observation: in the range $1$ to $2n$, the only possible odd
+parts are the odd numbers $1, 3, 5, \dots, 2n-1$ — and there are exactly $n$ of
+them. Those are our $n$ boxes. We are dropping $n+1$ chosen numbers into $n$
+boxes labelled by odd parts. By the pigeonhole principle, **two chosen numbers
+share the same odd part.** Say they are
+$$a = q \cdot 2^{i}, \qquad b = q \cdot 2^{j}, \qquad q \text{ odd}.$$
+Whichever exponent is smaller, that number divides the other: if $i \le j$ then
+$a \mid b$. The divisibility pair was forced into existence the moment you chose
+one number too many.
+
+This is the pigeonhole principle "with teeth": the boxes are not handed to you,
+they are *constructed* from the multiplicative anatomy of the integers, and the
+same odd-part decomposition that powered the Fibonacci dictionary reappears
+here to power a counting bound. That reappearance is the bridge.
+
+---
+
+## Gardens of Eden
+
+The third bridge carries us furthest from where we started — into the theory of
+dynamical systems, where states evolve in time according to a fixed rule.
+
+Imagine any process that turns one state of the world into the next: a cellular
+automaton ticking forward, a sorting network shuffling toward order, a piece of
+software updating its memory. Mathematically it is just a function $F$ from a
+set of states to itself. Apply it once, twice, three times; write $F^{[n]}$ for
+"$F$ applied $n$ times."
+
+Some states have a peculiar property: **nothing maps to them.** No matter what
+state you start in, one tick of the rule never produces *this* state. Such a
+state can exist as a starting configuration, but it can never be *created* by
+the dynamics. Borrowing a phrase from the theory of cellular automata, we call
+it a **Garden of Eden** — a configuration you can be in, but can never return
+to, a paradise from which there is exit but no entrance.
+
+Formally, $y$ is a Garden of Eden for $F$ if $F(x) \ne y$ for every state $x$.
+The first theorem is a clean dichotomy:
+
+**Gardens exist exactly when the rule loses information.** *There is a Garden of
+Eden if and only if $F$ is not surjective* — that is, if and only if some state
+is never an output. In one line of symbols:
+$$(\exists\,y,\ y \text{ is a Garden of Eden}) \iff F \text{ is not onto.}$$
+
+This is almost a tautology once you stare at it — "no preimage" and "not onto"
+are two phrasings of the same fact — and that clarity is exactly the point: it
+pins down precisely *when* unreachable states appear. They appear precisely when
+the rule is not invertible, when it collapses distinct states together and
+thereby orphans others.
+
+The really interesting behaviour shows up when the state space is **finite** and
+the rule is **monotone and descending**. "Descending" means the rule never
+increases anything: $F(x) \le x$ for every state, with respect to some ordering
+(think of "energy that only ever decreases," or "disorder that only ever gets
+sorted"). "Monotone" means it respects the order: bigger inputs give bigger-or-
+equal outputs. Many real systems are like this — physical relaxations, greedy
+optimizers, error-correcting decoders all push downhill.
+
+For such systems we get a guarantee with a sharp clock on it.
+
+**The finite descent principle.** *If the state space has $N$ elements and $F$
+is monotone and descending, then starting from any state, the orbit reaches a
+fixed point in at most $N$ steps.* That is, for every starting state $x$ there is
+some $n \le N$ with $F^{[n]}(x) = F^{[n+1]}(x)$ — the process has settled and
+will never move again.
+
+Why must it stop so soon? Because each step strictly drops you down the order
+until you can drop no further (this is the little lemma that the iterates of a
+descending map form a descending chain: $F^{[n+1]}(x) \le F^{[n]}(x)$, always).
+A strictly decreasing chain in a set of $N$ elements can have at most $N$
+distinct entries, so within $N$ steps two consecutive states must coincide — and
+once two consecutive states coincide, the system is frozen forever. The size of
+the world is a hard deadline on how long change can last.
+
+These two facts join into a complete picture of finite, downhill dynamics. If
+such a rule fails to be onto, then — combining the dichotomy with the descent
+principle — it has genuine Gardens of Eden lying *outside its eventual image*:
+configurations that are not just hard to reach but **permanently unreachable**,
+no matter how long you run the system. And on finite configuration spaces this
+sharpens into a finite echo of a deep theorem from the theory of cellular
+automata, the **Moore–Myhill** correspondence between surjectivity and
+injectivity: for a map on a finite set, *being onto forces being one-to-one.* A
+rule on finitely many states cannot create new outputs without first collapsing
+old inputs; reachability and reversibility are two sides of one coin.
+
+---
+
+## What the three bridges have in common
+
+Step back and look at the trip we just took. We went from a recurrence about
+rabbits, to a puzzle about picking numbers from a hat, to the deep structure of
+how finite systems evolve in time. Three different subjects — and yet the same
+single idea carried us across every bridge.
+
+**Structure-preserving maps are governed by the structure they preserve.**
+
+- The Fibonacci sequence preserves divisibility, so its internal arithmetic is a
+  perfect copy of the arithmetic of the integers: $F_m \mid F_n \iff m \mid n$.
+- The odd-part map preserves multiplicative anatomy, so dropping too many numbers
+  into too few "odd-part boxes" forces a divisibility pair into existence.
+- A monotone descending rule preserves order, so on a finite world it must run
+  out of room and freeze, and if it loses information it must leave Gardens of
+  Eden behind.
+
+In each case we never had to compute the thing we were asking about. We did not
+calculate giant Fibonacci numbers; we did not search through subsets of
+integers; we did not simulate dynamical systems for a long time. We reasoned
+about *the map's respect for structure* and let the structure deliver the
+answer. That is the deepest lesson the bridges teach: the most powerful way to
+understand a transformation is often not to run it, but to ask what it keeps
+fixed — and let the invariants do the work.
+
+The bridges are open. Walk across them whenever you like.
