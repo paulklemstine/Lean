@@ -1784,6 +1784,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 The Spectral Gap of Sudoku\n\nDerived from this cycle's findings on the order-`n` Sudoku constraint graph\n`sudokuGraph n` (file `Computation/SudokuConstraintGraph.lean`). This cycle\nestablished the extremal triple `(\u03b1, \u03c9, |V|) = (n\u00b2, n\u00b2, n\u2074)` together with the\n**tightness identity** `|V| = \u03b1 \u00b7 \u03c9`, the degree `3n\u00b2\u22122n\u22121`, the chromatic\nnumber `n\u00b2`, and the explicit mixed coloring. The conjectures below build on\nexactly those verified facts.\n\n---\n\n## Conjecture 1 \u2014 Adjacency spectrum and a closed-form spectral gap\n\n`sudokuGraph n` is regular of degree `d = 3n\u00b2\u22122n\u22121`; conjecturally its adjacency\nmatrix has only a *constant* number of distinct eigenvalues, with the\nsecond-largest eigenvalue `\u03bb\u2082 = n\u00b2\u22122n\u22121` and least eigenvalue `\u03bb_min = \u2212n\u00b2`,\ngiving spectral gap `d \u2212 \u03bb\u2082 = 2n\u00b2`.\n\n**The key insight is...** that the Sudoku graph is the edge-union of three\n`(n\u00b2\u22121)`-regular \"rook-type\" graphs sharing a common eigenbasis (tensor products\nof `Fin n`-characters), so its spectrum decomposes additively and the Hoffman\nbound `\u03b1 \u2264 |V| \u00b7 (\u2212\u03bb_min)/(d \u2212 \u03bb_min)` should be *tight* \u2014 which is forced by the\nalready-proved identity `\u03b1 = n\u00b2` and `|V| = \u03b1\u00b7\u03c9`.\n\n**Why now?** We have just pinned `\u03b1 = \u03c9 = n\u00b2` and `|V| = n\u2074` exactly, so the\nHoffman ratio bound has a known equality case; matching it to an explicit\neigenvalue computation is now a finite linear-algebra task rather than an open\nestimate.\n\n---\n\n## Conjecture 2 \u2014 The Sudoku graph is perfect (strong perfect graph test)\n\nFor every `n`, `sudokuGraph n` is a **perfect graph**: `\u03c7(H) = \u03c9(H)` for every\ninduced subgraph `H`.\n\n**The key insight is...** that we already proved `\u03c7 = \u03c9 = n\u00b2` for the whole\ngraph via a coloring whose color classes are maximum independent sets; perfection\nwould say this `\u03c7 = \u03c9` coincidence is hereditary, which is plausible because the\ngraph is a union of complete-multipartite \"line-graph-like\" constraints with no\ninduced odd holes/antiholes of length \u2265 5.\n\n**Why now?** The clique number, chromatic number, and an explicit optimal\ncoloring are all formalized, so the Strong Perfect Graph Theorem's hypotheses\n(no odd holes/antiholes) can be attacked directly on the concrete adjacency\n`sudokuGraph_adj_iff` for small `n` and then generalized.\n\n---\n\n## Conjecture 3 \u2014 Fractional relaxation gap is exactly zero\n\nThe fractional chromatic number equals the integral one:\n`\u03c7_f(sudokuGraph n) = \u03c7(sudokuGraph n) = n\u00b2`, and dually the fractional clique\ncover and Lov\u00e1sz `\u03d1` all collapse to `n\u00b2`.\n\n**The key insight is...** that `|V| = \u03b1 \u00b7 \u03c9` with `\u03b1 = |V|/\u03c9` is precisely the\nvertex-transitive equality case in which `\u03b1 \u00b7 \u03c7_f = |V|`; combined with the\nexplicit balanced coloring (every color class has size exactly `\u03b1 = n\u00b2`), the\nfractional and integral chromatic numbers must agree.\n\n**Why now?** This cycle produced a *balanced* optimal coloring (color classes of\nequal size `n\u00b2`), which is exactly the certificate needed to squeeze `\u03c7_f`\nbetween `|V|/\u03b1 = n\u00b2` and `\u03c7 = n\u00b2`.\n\n---\n\n## Conjecture 4 \u2014 Box constraints are spectrally redundant above a threshold\n\nLet `rookGraph n` be the Latin-square (row+column only) constraint graph. Then\nfor all `n \u2265 2`, adding box edges strictly raises the degree (by `(n\u22121)\u00b2`) yet\nleaves the independence number unchanged: `\u03b1(sudokuGraph n) = \u03b1(rookGraph n) =\nn\u00b2`.\n\n**The key insight is...** that a maximum independent set of the rook graph (a\npermutation-matrix support / Latin transversal) is automatically box-independent\nonce chosen from a proper Sudoku coloring, so the box constraints remove no\nextremal independent sets \u2014 the slack we hunted for in the evidence file does not\nexist.\n\n**Why now?** The degree decomposition `3n\u00b2\u22122n\u22121 = 2(n\u00b2\u22121) + (n\u22121)\u00b2` is already\nformalized in `SudokuPhaseTransition.lean`, and `\u03b1 = n\u00b2` is now proved for the\nfull Sudoku graph; comparing it to the rook graph's independence number is a\nsingle additional lemma.\n\n---\n\n## Conjecture 5 \u2014 Quantitative phase-transition / spectral-gap bridge\n\nThe constraint-interaction strength `\u03c3(n) = 2(n+1)/(3n+1)` (from\n`SudokuPhaseTransition.lean`) controls the normalized spectral gap: as `n \u2192 \u221e`,\n`(d \u2212 \u03bb\u2082)/d \u2192 2/3 = lim (1 \u2212 \u03c3(n)) \u00b7 something`, tying the statistical-physics\n\"interaction strength\" to the algebraic spectral gap.\n\n**The key insight is...** that both `\u03c3(n)` and the conjectured gap `2n\u00b2` are\nrational functions of `n` with the *same* leading behaviour, so the\n\"phase-transition window width\" `1/n\u00b2` and the spectral gap `2n\u00b2` satisfy\n`(window width) \u00b7 (spectral gap) = 2`, a dimensionless invariant.\n\n**Why now?** The interaction strength, window width `1/n\u00b2`, and degree are all\nformalized with exact rational identities; Conjecture 1's spectral gap is the\nonly missing factor, after which the bridge is a closed-form algebraic check.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2075",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6e109ffd",
+    "status": "available",
+    "timestamp": "2026-06-18T02:09:14.247624+00:00",
+    "title": "Derived from this cycle's findings on the order-`n` Sudoku constraint graph"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -1902,7 +1917,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral Universality of Neural Tangent Kernels on Moduli Spaces"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5ddac85b",
     "description": "Conjecture: For sufficiently capable transformer language models trained on next-token prediction, there exists a scale-dependent phase transition in the empirical singular-value spectra of specific learned weight matrices (especially attention output and MLP projection layers) such that models exhibiting strong multi-step reasoning have renormalized spectral statistics converging to a non-Wigner universality class with stable critical exponents, while weaker models remain in a Marchenko-Pastur-like regime. Test: Train model families across parameter scales, data curricula, and architectures; measure layerwise spectra, finite-size scaling, and critical exponents; then test whether emergence of reasoning benchmarks correlates sharply with the predicted spectral transition and whether interventions that shift spectra across the critical point causally improve or degrade reasoning. Refutation occurs if no reproducible universality class or phase boundary appears, or if spectral transition fails to predict reasoning emergence better than naive scale measures. Impact: This would provide a quantitative order parameter for emergent cognition in neural networks, connect deep learning to statistical physics and random matrix theory, and enable principled architecture/search methods that target reasoning-critical phases rather than brute-force scaling.",
     "domains": [
       "Algebra",
@@ -1912,7 +1927,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T16:54:32.770267+00:00",
     "title": "Spectral Universality of LLM Weight Matrices: Random-Matrix Phase Transitions in"
   },
@@ -1981,13 +1996,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Geometry"
     ],
-    "id": "fd_2073",
+    "id": "fd_2074",
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "oeis:212351",
     "status": "available",
     "timestamp": "2026-06-18T01:05:26.622694+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For generic geometrically local quantum circuits on n qudits with bounded-depth nearest-neighbor gates, the weighted out-of-time-order correlator matrix C_{ij}(t) uniquely determines the circuit's causal light-cone graph up to graph isomorphism and time reversal, with probability tending to 1 as n grows. Test: Generate ensembles of random local circuits on different interaction graphs, compute C_{ij}(t) over polynomially many times, and check whether non-isomorphic causal graphs ever produce indistinguishable spectra and eigenspaces; a single infinite family of counterexamples with identical correlator data refutes the conjecture. Impact: Enables reconstruction of hidden spacetime adjacency from quantum dynamics, giving a testable bridge between quantum information scrambling, emergent geometry, and inverse problems in many-body physics.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_2076",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-18T02:09:43.018537+00:00",
+    "title": "Causal Spectral Rigidity of Quantum Circuits"
   },
   {
     "consumed_by_exp_id": "",
@@ -2002,20 +2032,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
-  },
-  {
-    "consumed_by_exp_id": "6e109ffd",
-    "description": "Cycle 595ce011 (Q=0.612) proved 10 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a sharply scoped core of the order-`n` Sudoku constraint graph on `Cell n := Fin n \u00d7 Fin n \u00d7 Fin n \u00d7 Fin n`, avoiding ambitious spectral or chromatic-number machinery until the finite combin",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_595ce011_e0b1bcd6",
-    "priority_score": 0.6622400000000002,
-    "research_mode": "team",
-    "source_exp_id": "595ce011",
-    "status": "in_progress",
-    "timestamp": "2026-06-17T13:02:19.356643+00:00",
-    "title": "Close Proofs: The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
   },
   {
     "consumed_by_exp_id": "",
