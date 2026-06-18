@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-18T01:04:53.521907+00:00",
+  "last_updated": "2026-06-18T01:09:00.154889+00:00",
   "records": [
     {
       "adversarial_agreement": "tiebreak",
@@ -82194,6 +82194,48 @@
       "theorem_novelty_strengthening": 0,
       "timestamp": "2026-06-18T01:04:53.181199+00:00",
       "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+    },
+    {
+      "adversarial_agreement": "tiebreak",
+      "adversarial_delta": 0.5455,
+      "barrier_count": 0,
+      "bridge_count": 0,
+      "cycle_n": 4,
+      "domain": "Cryptography",
+      "duration_seconds": -128.86932110786438,
+      "end_time": 1781744754.1470327,
+      "files_integrated": 0,
+      "job_id": "6e109ffd",
+      "outcome_quality": 0.0,
+      "phase": "A",
+      "phase_a_prompt_version": "v19",
+      "phase_b_skipped": false,
+      "prompt_version": "v19",
+      "quality_breakdown": {
+        "actionability": 0.5,
+        "applications": 0.71,
+        "artifact_richness": 0.5,
+        "catalog_anchoring": 0.8,
+        "composite": 0.718,
+        "cross_domain": 0.85,
+        "grade": "world_class",
+        "importance": 0.7309,
+        "novelty": 0.95,
+        "proof_depth": 0.6369,
+        "usefulness": 0.7435
+      },
+      "quality_score": 0.48720620091324207,
+      "sorry_count": 0,
+      "sorry_density": 0.0,
+      "start_time": 1781744883.0163538,
+      "strategy_count": 0,
+      "theorem_count": 10,
+      "theorem_novelty_disproof": 0,
+      "theorem_novelty_duplicate": 0,
+      "theorem_novelty_new": 0,
+      "theorem_novelty_strengthening": 0,
+      "timestamp": "2026-06-18T01:08:59.754870+00:00",
+      "title": "Close Proofs: The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
     }
   ]
 }
