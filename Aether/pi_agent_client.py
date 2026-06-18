@@ -403,10 +403,8 @@ class PiAgentClient:
             time.sleep(max(60, sleep_until - time.time()))
             # Try a quick check — if pollen is back, break early
             try:
-                check = self.client.get("https://pollinations.ai/api/v1/pollen_status",
-                                       headers={"Authorization": f"Bearer {self.pollen_gate.api_key}"},
-                                       timeout=10)
-                if check.status_code == 200:
+                bal = self.pollen_gate._get_remote_balance(force=True)
+                if bal is not None and bal > self.pollen_gate.config.min_balance:
                     print("[Pi-Agent] Pollen restored early!")
                     break
             except Exception:
@@ -498,10 +496,8 @@ class PiAgentClient:
                         time.sleep(max(60, sleep_until - time.time()))
                         # Try a quick check — if pollen is back, break early
                         try:
-                            check = self.client.get("https://pollinations.ai/api/v1/pollen_status",
-                                                    headers={"Authorization": f"Bearer {self.pollen_gate.api_key}"},
-                                                    timeout=10)
-                            if check.status_code == 200:
+                            bal = self.pollen_gate._get_remote_balance(force=True)
+                            if bal is not None and bal > self.pollen_gate.config.min_balance:
                                 print(f"[Pi-Agent] Pollen restored early!")
                                 break
                         except Exception:

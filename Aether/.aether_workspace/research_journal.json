@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "b8394462",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Fibonacci Entry-Point Theory and Carmichael's Primitive-Divisor Theorem\n\n## Synthesis\n\nThe catalog's Carmichael work (`Catalog/Speculative/AutoResearch/CarmichaelComposite.lean`,",
-      "quality_score": 0.4461099999999999,
-      "sorry_count": 2,
-      "theorem_count": 6,
-      "timestamp": "2026-06-14T19:09:53",
-      "title": "Close Proofs: Three earlier cycles built the spectral-depth picture of Hodge–Laplaci"
-    },
-    {
       "cycle_id": "47be570a",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Boltzmann Bridge X: The Persistence Geodesic is a Functorial, Self-Similar, Convexly-Stable Path Space\n\n## Synthesis\n\nThe Boltzmann Bridge arc reduced the metric theory of persis",
@@ -2501,6 +2491,16 @@
       "theorem_count": 58,
       "timestamp": "2026-06-18T21:05:56",
       "title": "Proof Automation: Custom Lean 4 Tactics"
+    },
+    {
+      "cycle_id": "fb1d7cfa",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions\n\nThese build directly on the abstract engine in\n`Catalog/Geometry/JonesTemperleyLiebBraid4.lean`.\n\n## 1. Explicit Fibonacci / Jones `k = 5` path-model matrices\n\nInstantiate the abs",
+      "quality_score": 0.536,
+      "sorry_count": 0,
+      "theorem_count": 137,
+      "timestamp": "2026-06-18T22:08:24",
+      "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.712
     }
   ],
-  "last_updated": "2026-06-18T21:05:56",
+  "last_updated": "2026-06-18T22:08:24",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3375,12 +3375,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "13a80f4d",
-        "quality": 0.6571556692913385,
-        "theorems": 127,
-        "title": "Bridge IX (`InterleavingGeodesic.lean`) gave the persistence-stability arc its f"
-      },
-      {
         "cycle_id": "6285d255",
         "quality": 0.3917361274509804,
         "theorems": 153,
@@ -3433,6 +3427,12 @@
         "quality": 0.5606952380952381,
         "theorems": 10,
         "title": "Non-Well-Founded Proofs: Proofs That Reference Themselves"
+      },
+      {
+        "cycle_id": "fb1d7cfa",
+        "quality": 0.536,
+        "theorems": 137,
+        "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
       }
     ],
     "Logic": [

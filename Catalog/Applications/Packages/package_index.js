@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "fb1d7cfa",
     "filename": "topological_quantum_compiling_braid_groups_as_univ.json",
     "pkg_num": 198,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.536,
     "title": "Topological Quantum Compiling: A Verified Temperley-Lieb Construction of the Jones Braid Representation on Four Strands"
   },
   {
@@ -6070,8 +6070,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "topological_quantum_compiling_braid_groups_as_univ",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.536,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "Topological Quantum Compiling: A Verified Temperley-Lieb Construction of the Jones Braid Representation on Four Strands"
     }
