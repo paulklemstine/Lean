@@ -1,10 +1,27 @@
-# Certified Domain-Specific Proof Automation: Reflection Principles for Tropical Algebra, Bounded Arithmetic, and Matrix Analysis
+# Strong Divisibility Sequences as Lattice Homomorphisms: Finitary Meet/Join Laws and Coprimality Propagation
+
+**Author:** Aristotle
+**Date:** 2026-06-18
+**Domain:** Bridges (Number Theory ↔ Lattice Theory)
+
+---
 
 ## Abstract
 
-We present three families of certified proof-producing decision procedures, each grounded in a formally verified soundness theorem. The first is a tropical (min-plus) expression normalizer with a proved reflection principle: syntactic normal-form equality implies semantic equality for all valuations. The second is a bounded arithmetic checker — sound and complete for divisibility predicates and bounded existential/universal quantification — with applications to factorial divisibility. The third is a matrix row-sum certificate engine that converts local row-level bounds into global operator-norm inequalities via the triangle inequality. Each family is implemented as a custom tactic backed by an explicit soundness theorem, making the automation's correctness a mathematical fact rather than an engineering assumption. We discuss the architecture of "certified micro-solvers" and outline future directions including Gershgorin spectral enclosures, tropical affine normal forms, and bounded Diophantine witness extraction.
-
-**Keywords:** proof automation, reflection, tropical algebra, spectral graph theory, bounded arithmetic, certified computation, decision procedures
+A *strong divisibility sequence* is a sequence `a : ℕ → ℕ` satisfying `a(0) = 0` and the meet law
+`gcd(a(m), a(n)) = a(gcd(m, n))`. This single identity is the structure shared by the Fibonacci
+numbers, the Mersenne/repunit sequences `bⁿ − 1`, and the identity sequence. We develop the
+*order-theoretic* side of these axioms: a strong divisibility sequence is precisely an
+**inf-homomorphism and sup-semihomomorphism of the divisibility lattice `(ℕ, ∣, gcd, lcm)`**. We
+establish (i) the binary join sub-law `lcm(a(m), a(n)) ∣ a(lcm(m, n))`, derived purely from
+divisibility monotonicity; (ii) coprimality propagation, governed by the single boundary condition
+`a(1) = 1`, including the collapse `gcd(a(m), a(n)) = a(1)` for coprime indices; (iii) the finitary
+generalizations of both laws — the meet law as an exact equality over arbitrary finite families and
+the join law as a divisibility; and (iv) a product law for pairwise-coprime indices. The recurring
+phenomenon is a structural asymmetry: meet is preserved *exactly*, while join is preserved only *up
+to divisibility*. Specializing to the `fibSDS` and `mersenneSDS` instances yields cross-domain
+corollaries, including coprimality of Fibonacci numbers at coprime indices and the residual identity
+`gcd(bᵐ − 1, bⁿ − 1) = b − 1 = a(1)` for coprime `m, n`. All results are fully machine-verified.
 
 ---
 
@@ -12,320 +29,325 @@ We present three families of certified proof-producing decision procedures, each
 
 ### 1.1 Motivation
 
-Proof automation in interactive theorem provers typically falls into two categories: *general-purpose* tactics (rewriting, simplification, decision procedures for specific theories) and *domain-specific* heuristics (specialized solvers for particular mathematical structures). The former are well-studied and come with strong theoretical guarantees; the latter are often ad hoc, with correctness verified only empirically.
+Two classical families of integer sequences exhibit a striking gcd-transport property. The Fibonacci
+numbers `Fₙ` satisfy `gcd(Fₘ, Fₙ) = F_gcd(m,n)`, and the Mersenne numbers satisfy
+`gcd(bᵐ − 1, bⁿ − 1) = b^gcd(m,n) − 1`. Historically, each family carried its own theory of *ranks of
+apparition* (entry points) and *primitive divisors* — for Fibonacci through Carmichael's theorem, for
+`bⁿ − 1` through Zsygmondy's theorem. These theories look superficially different but share a common
+algebraic backbone.
 
-We propose a middle path: **certified domain-specific micro-solvers**, each covering a well-defined mathematical fragment and each backed by an explicit soundness theorem. The key insight is that for many mathematically rich fragments, proof search reduces to a canonical computation — normalization, finite enumeration, or monotone bounding — and this reduction is itself a theorem.
+The abstraction that captures this backbone is the **strong divisibility sequence**. The key
+observation of the present work is that the defining axiom is not merely an arithmetic identity but a
+*lattice-homomorphism property*. The natural numbers under divisibility form a lattice with meet
+`gcd` and join `lcm`; the strong-divisibility axiom states that the sequence `a` preserves the meet.
+This reframing immediately suggests asking whether `a` also preserves the join, whether it preserves
+these operations over finite families, and how arithmetic notions like coprimality interact with the
+lattice top elements.
 
 ### 1.2 Contributions
 
-1. **Tropical normalization with soundness proof.** We define a reified syntax for min-plus expressions, a computable normalization to "min-of-sums" form, and prove that normalization preserves semantics (Theorem 3.1). This yields a certified reflection principle: two expressions are semantically equal iff their normal forms coincide (Theorem 3.2).
+We answer these questions completely.
 
-2. **Bounded arithmetic checkers with soundness and completeness.** We implement boolean checkers for divisibility (`NatCheckDivisible`) and bounded quantification (`NatCheckExistsUpTo`, `NatCheckForallUpTo`), proving both soundness and completeness (Theorems 4.1–4.6). We extend to a reified predicate language (`DivPred`) with a sound and complete checker (Theorems 4.7–4.8).
+1. **Binary join sub-law** (`lcm_dvd_index`): `lcm(a(m), a(n)) ∣ a(lcm(m, n))`, derived from
+   monotonicity alone.
+2. **Coprimality collapse and propagation** (`gcd_indices_coprime`, `coprime_of_coprime`): coprime
+   indices force `gcd(a(m), a(n)) = a(1)`, and coprime values exactly when `a(1) = 1`.
+3. **Finitary meet law** (`finset_gcd_eq`): exact equality `Finset.gcd t (a ∘ g) = a(Finset.gcd t g)`.
+4. **Finitary join sub-law** (`finset_lcm_dvd`): divisibility `Finset.lcm t (a ∘ g) ∣ a(Finset.lcm t g)`.
+5. **Pairwise coprimality and product law** (`pairwise_coprime`, `prod_dvd_index`): if `a(1) = 1`,
+   pairwise-coprime indices give pairwise-coprime values and `∏ a(g(i)) ∣ a(∏ g(i))`.
+6. **Cross-domain corollaries** for Fibonacci (`fib_finset_gcd`, `fib_finset_lcm_dvd`,
+   `fib_coprime_of_coprime`, `fib_lcm_dvd`, `fib_prod_dvd`) and Mersenne (`mersenne_gcd_coprime`).
 
-3. **Matrix row-sum certificate theorems.** We prove that absolute row-sum bounds imply absolute sum bounds (Theorem 5.1), matrix-vector product bounds for unit-ball inputs (Theorem 5.2), existence of row-sum bounds for any finite matrix (Theorem 5.3), and general matrix-vector entry bounds (Theorem 5.4).
-
-4. **Custom tactics.** Each theorem family is packaged as a tactic (`tropical_simp`, `number_theory_decide`, `spectral_bound`) that invokes the soundness theorem to close goals.
-
-### 1.3 Related Work
-
-Reflection-based proof automation has a long history, from Boutin's early work on ring normalization [1] to Mathlib's `ring`, `omega`, and `norm_num` tactics. Our contribution is not to propose a new technique but to demonstrate that the reflection paradigm extends naturally to three domain-specific fragments — tropical algebra, bounded arithmetic, and matrix analysis — that have not previously been given certified decision procedures in Lean 4.
-
-Tropical algebra formalization has received attention in the context of tropical geometry [2], but we are not aware of prior work on certified tropical expression normalization in a proof assistant. For matrix analysis, the row-sum bound is classical (going back to Schur and Hadamard), but formal verification of matrix norm inequalities remains relatively rare.
-
----
-
-## 2. Definitions and Notation
-
-### 2.1 Tropical Expressions
-
-**Definition 2.1.** A *tropical expression* over a type α is an element of the inductive type:
-```
-TropExpr α ::= var a | const c | tadd e₁ e₂ | tmin e₁ e₂
-```
-where `a : α`, `c : ℕ`.
-
-**Definition 2.2.** The *evaluation* of a tropical expression under valuation σ : α → ℕ is:
-- eval σ (var a) = σ a
-- eval σ (const c) = c
-- eval σ (tadd e₁ e₂) = eval σ e₁ + eval σ e₂
-- eval σ (tmin e₁ e₂) = min(eval σ e₁, eval σ e₂)
-
-**Definition 2.3.** A *tropical normal form* (TropNF) is a list of *monomials*, where each monomial is a list of base expressions. Evaluation takes the sum within each monomial and the minimum across monomials.
-
-### 2.2 Bounded Arithmetic
-
-**Definition 2.4.** The *divisibility checker* is:
-```
-NatCheckDivisible(a, b) = if a = 0 then (b = 0) else (b mod a = 0)
-```
-
-**Definition 2.5.** The *bounded existential checker* is:
-```
-NatCheckExistsUpTo(N, p) = [0, 1, ..., N].any(p)
-```
-
-**Definition 2.6.** A *divisibility predicate* is an element of:
-```
-DivPred ::= dvd a b | and p q | or p q
-```
-
-### 2.3 Matrix Bounds
-
-All matrices are over ℝ with index type Fin n. We write |·| for absolute value and ∑ for finite sums over Fin n.
+The unifying theme is the **meet/join asymmetry**: an exact equality for gcd, a one-directional
+divisibility for lcm, visible uniformly at every arity.
 
 ---
 
-## 3. Tropical Normalization
+## 2. Definitions and basic structure
 
-### 3.1 Normalization Procedure
+### Definition 2.1 (Strong divisibility sequence)
 
-The normalization `toNF : TropExpr α → TropNF α` works by:
-1. Variables and constants become singleton normal forms: `[[var a]]` or `[[const c]]`.
-2. `tmin e₁ e₂` concatenates the normal forms: `e₁.toNF ++ e₂.toNF`.
-3. `tadd e₁ e₂` distributes: for each monomial m₁ in e₁.toNF and m₂ in e₂.toNF, produce the concatenation m₁ ++ m₂. This is the Cartesian product of monomials.
+A **strong divisibility sequence** is a structure consisting of a function `a : ℕ → ℕ` together with
+two axioms:
 
-This corresponds to the fundamental tropical identity:
-```
-a + min(b, c) = min(a + b, a + c)
-```
-applied exhaustively.
+- **(Z)** `a(0) = 0`;
+- **(M)** for all `m, n ∈ ℕ`, `gcd(a(m), a(n)) = a(gcd(m, n))`.
 
-### 3.2 Soundness
+We write `s.a` for the underlying function of `s : StrongDivSeq`.
 
-**Lemma 3.1** (Monomial append). `evalMonomial σ (m₁ ++ m₂) = evalMonomial σ m₁ + evalMonomial σ m₂`.
+### Definition 2.2 (Divisibility lattice)
 
-*Proof.* By induction on m₁, using associativity of addition.
+The set `ℕ` ordered by `x ⪯ y :⟺ x ∣ y` is a lattice: the meet (greatest lower bound) of `x` and `y`
+is `gcd(x, y)`, the join (least upper bound) is `lcm(x, y)`, the bottom element is `1` (which divides
+everything), and the top element is `0` (which is divisible by everything). Axiom (M) states that `a`
+is a *meet-homomorphism*: it commutes with `gcd`.
 
-**Lemma 3.2** (NF append). For non-empty nf₁, nf₂:
-`evalNF σ (nf₁ ++ nf₂) = min(evalNF σ nf₁, evalNF σ nf₂)`.
+### Lemma 2.3 (Divisibility monotonicity, `dvd_of_dvd`)
 
-*Proof.* By induction on nf₁, using associativity of min.
+If `m ∣ n` then `a(m) ∣ a(n)`.
 
-**Lemma 3.3** (NF product). For non-empty nf₁, nf₂:
-`evalNF σ (flatten(map(λm₁. map(λm₂. m₁++m₂, nf₂), nf₁))) = evalNF σ nf₁ + evalNF σ nf₂`.
+*Proof sketch.* If `m ∣ n` then `gcd(m, n) = m`, so by (M),
+`gcd(a(m), a(n)) = a(gcd(m, n)) = a(m)`. Since `gcd(a(m), a(n)) ∣ a(n)` always, we conclude
+`a(m) ∣ a(n)`. ∎
 
-*Proof.* By induction on nf₁. The base case uses Lemma 3.1 and induction on nf₂. The inductive case uses Lemma 3.2 and the identity `min(a,b) + c = min(a+c, b+c)`.
+Lemma 2.3 is the workhorse: it says `a` is order-preserving with respect to the divisibility order. It
+is the *only* tool needed for every join-direction result below.
 
-**Theorem 3.1** (Normalization soundness). `evalNF σ (e.toNF) = eval σ e`.
+### Lemma 2.4 (Meet bridge, `dvd_gcd_iff`)
 
-*Proof.* By structural induction on e. The `var` and `const` cases are immediate. The `tmin` case uses Lemma 3.2. The `tadd` case uses Lemma 3.3.
+For all `d, m, n`: `d ∣ a(gcd(m, n)) ⟺ d ∣ a(m) ∧ d ∣ a(n)`.
 
-**Theorem 3.2** (Reflection principle). If `e₁.toNF = e₂.toNF`, then `eval σ e₁ = eval σ e₂` for all σ.
-
-*Proof.* By Theorem 3.1 applied to both expressions:
-`eval σ e₁ = evalNF σ e₁.toNF = evalNF σ e₂.toNF = eval σ e₂`.
-
-### 3.3 Tactic Implementation
-
-The `tropical_simp` tactic normalizes goals involving `min` and `+` on ℕ by applying the distributivity laws as simp lemmas and finishing with `omega`:
-```
-macro "tropical_simp" : tactic =>
-  `(tactic| simp only [...distribution lemmas...] <;> omega)
-```
+*Proof sketch.* Rewrite `a(gcd(m, n)) = gcd(a(m), a(n))` by (M); then apply the standard equivalence
+`d ∣ gcd(x, y) ⟺ d ∣ x ∧ d ∣ y`. ∎
 
 ---
 
-## 4. Bounded Arithmetic Reflection
+## 3. The binary lattice laws
 
-### 4.1 Divisibility Checker
+### 3.1 The meet law specialized to coprime indices
 
-**Theorem 4.1** (Soundness). `NatCheckDivisible(a,b) = true → a ∣ b`.
+### Theorem 3.1 (Coprime collapse, `gcd_indices_coprime`)
 
-*Proof.* If a = 0 and b = 0, then 0 ∣ 0. If a ≠ 0 and b mod a = 0, then a ∣ b by `Nat.dvd_of_mod_eq_zero`.
+If `gcd(m, n) = 1` then `gcd(a(m), a(n)) = a(1)`.
 
-**Theorem 4.2** (Completeness). `a ∣ b → NatCheckDivisible(a,b) = true`.
+*Proof sketch.* By (M), `gcd(a(m), a(n)) = a(gcd(m, n))`; substitute `gcd(m, n) = 1`. ∎
 
-*Proof.* If a = 0, then b = 0 by `zero_dvd_iff`. If a ≠ 0, write b = a·c and compute b mod a = 0.
+The content of Theorem 3.1 is conceptual: coprime indices are exactly the pairs whose meet is the
+bottom element `1` of the index lattice, and the meet law sends that bottom element to the fixed value
+`a(1)`. Whether this value is itself the bottom element `1` of the *value* lattice is the crux of
+coprimality propagation.
 
-### 4.2 Bounded Quantifiers
+### Theorem 3.2 (Coprimality propagation, `coprime_of_coprime`)
 
-**Theorem 4.3** (Existential soundness). `NatCheckExistsUpTo(N,p) = true → ∃ n ≤ N, p(n) = true`.
+If `a(1) = 1` and `gcd(m, n) = 1`, then `gcd(a(m), a(n)) = 1`; i.e. `a(m)` and `a(n)` are coprime.
 
-**Theorem 4.4** (Existential completeness). `(∃ n ≤ N, p(n) = true) → NatCheckExistsUpTo(N,p) = true`.
+*Proof sketch.* By Theorem 3.1, `gcd(a(m), a(n)) = a(1)`, and `a(1) = 1` by hypothesis. ∎
 
-**Theorem 4.5** (Universal soundness). `NatCheckForallUpTo(N,p) = true → ∀ n ≤ N, p(n) = true`.
+The hypothesis `a(1) = 1` is the requirement that the bottom of the index lattice map to the bottom of
+the value lattice. Fibonacci satisfies it (`F₁ = 1`); the Mersenne sequence does not in general
+(`b¹ − 1 = b − 1`), which precisely explains the nonzero residual in §6.
 
-**Theorem 4.6** (Universal completeness). `(∀ n ≤ N, p(n) = true) → NatCheckForallUpTo(N,p) = true`.
+### 3.2 The join sub-law
 
-*Proofs.* All four follow from the characterization of `List.any` and `List.all` on `List.range(N+1)`.
+### Theorem 3.3 (Binary join sub-law, `lcm_dvd_index`)
 
-### 4.3 Reified Predicate Checker
+For all `m, n`: `lcm(a(m), a(n)) ∣ a(lcm(m, n))`.
 
-**Theorem 4.7** (DivPred soundness). For any p : DivPred, `p.check = true → p.toProp`.
+*Proof sketch.* By Lemma 2.3 applied to the two divisibilities `m ∣ lcm(m, n)` and `n ∣ lcm(m, n)`,
+we get `a(m) ∣ a(lcm(m, n))` and `a(n) ∣ a(lcm(m, n))`. The defining universal property of `lcm`
+(`lcm(x, y) ∣ z ⟺ x ∣ z ∧ y ∣ z`) then yields `lcm(a(m), a(n)) ∣ a(lcm(m, n))`. ∎
 
-**Theorem 4.8** (DivPred completeness). For any p : DivPred, `p.toProp → p.check = true`.
-
-*Proofs.* By structural induction, using Theorems 4.1–4.2 for the base case and boolean logic for the connectives.
-
-### 4.4 Application: Factorial Divisibility
-
-**Theorem 4.9.** For 2 ≤ k ≤ n, k ∣ n! + k.
-
-*Proof.* Since k ≤ n and k ≥ 2 > 0, k appears as a factor in n! = 1·2·...·n, so k ∣ n!. Also k ∣ k. Therefore k ∣ n! + k.
-
----
-
-## 5. Matrix Row-Sum Certificates
-
-### 5.1 Core Theorems
-
-**Theorem 5.1** (Spectral bound soundness). If ∀i, Σⱼ |A_ij| ≤ C, then ∀i, |Σⱼ A_ij| ≤ C.
-
-*Proof.* By the triangle inequality: |Σⱼ A_ij| ≤ Σⱼ |A_ij| ≤ C.
-
-**Theorem 5.2** (Vector bound). If ∀i, Σⱼ |A_ij| ≤ C and ∀j, |x_j| ≤ 1, then ∀i, |Σⱼ A_ij x_j| ≤ C.
-
-*Proof.* |Σⱼ A_ij x_j| ≤ Σⱼ |A_ij x_j| = Σⱼ |A_ij|·|x_j| ≤ Σⱼ |A_ij|·1 ≤ C.
-
-**Theorem 5.3** (Existence). Every finite matrix has a row-sum bound.
-
-*Proof.* Take C = Σᵢ Σⱼ |A_ij|. Each row sum is a single term in this double sum.
-
-**Theorem 5.4** (Entry bound). If ∀j, |x_j| ≤ M with M ≥ 0, then |Σⱼ A_ij x_j| ≤ (Σⱼ |A_ij|)·M.
-
-*Proof.* By triangle inequality, absolute value of products, and monotonicity of multiplication.
-
-### 5.2 Significance
-
-These theorems form the foundation for a certified `spectral_bound` tactic. The key architectural insight is that *local* row-level information (each row sum bounded by C) implies a *global* operator-level bound (the matrix's action on any unit vector is bounded by C). This is the formal version of the principle "local constraints imply global boundedness."
+Theorem 3.3 is the order-theoretic heart of the asymmetry. Note what the proof does *not* use: it
+never invokes axiom (M) directly, only its monotonicity consequence (Lemma 2.3). This is why join is
+preserved merely up to divisibility: monotonicity places `lcm(a(m), a(n))` below `a(lcm(m, n))`, but
+nothing forces equality. Indeed equality fails: for Fibonacci, `lcm(F₄, F₆) = lcm(3, 8) = 24` while
+`F_lcm(4,6) = F₁₂ = 144`, and `24 ∣ 144` strictly.
 
 ---
 
-## 6. Algorithms
+## 4. Finitary lattice laws
 
-### 6.1 Tropical Normalization
+We promote both binary laws to arbitrary finite families indexed by a `Finset t` with a function
+`g : ι → ℕ`, using `Finset.gcd` and `Finset.lcm` (the iterated `GCDMonoid` operations, which coincide
+on ℕ with the iterated `Nat.gcd`/`Nat.lcm` after the normalization bridge).
 
+### Theorem 4.1 (Finitary meet law, `finset_gcd_eq`)
+
+For any finite index set `t` and `g : ι → ℕ`,
 ```
-Algorithm: TropicalNormalize(e)
-Input: TropExpr e
-Output: TropNF (list of monomials)
-
-if e = var(a): return [[var(a)]]
-if e = const(c): return [[const(c)]]
-if e = tmin(e₁, e₂): return TropicalNormalize(e₁) ++ TropicalNormalize(e₂)
-if e = tadd(e₁, e₂):
-  nf₁ ← TropicalNormalize(e₁)
-  nf₂ ← TropicalNormalize(e₂)
-  return flatten([map(λm₂. m₁++m₂, nf₂) | m₁ ∈ nf₁])
+Finset.gcd t (fun i ↦ a(g(i)))  =  a( Finset.gcd t g ).
 ```
 
-**Complexity:** Let |e| denote the number of nodes. In the worst case (deeply nested tadd over tmin), the normal form can have exponentially many monomials: O(2^d) where d is the depth of tmin nodes. This is inherent — the min-of-sums representation can be exponentially larger than the expression tree. In practice, expressions arising from tropical geometry have polynomial-size normal forms.
+*Proof sketch.* Induction on `t` via `Finset.induction`.
 
-### 6.2 Bounded Arithmetic Check
+- **Empty case.** `Finset.gcd ∅ f = 0` for any `f`, and the right side is `a(Finset.gcd ∅ g) = a(0) = 0`
+  by axiom (Z). Both sides equal `0`.
+- **Insert step.** For `t' = insert c t` with `c ∉ t`, expand both sides with `Finset.gcd_insert`:
+  the left becomes `gcd(a(g(c)), Finset.gcd t (a ∘ g))`, which by the induction hypothesis equals
+  `gcd(a(g(c)), a(Finset.gcd t g))`. After transporting `GCDMonoid.gcd` to `Nat.gcd` via the
+  normalization bridge, axiom (M) rewrites this to `a(gcd(g(c), Finset.gcd t g)) = a(Finset.gcd t' g)`.
 
+The induction interleaves `Finset.gcd_insert` with the `gcd = Nat.gcd` coercion at each step. ∎
+
+### Theorem 4.2 (Finitary join sub-law, `finset_lcm_dvd`)
+
+For any finite index set `t` and `g : ι → ℕ`,
 ```
-Algorithm: NatCheckDivisible(a, b)
-Input: Natural numbers a, b
-Output: Boolean
-
-if a = 0: return (b = 0)
-else: return (b mod a = 0)
-
-Time: O(log(max(a,b))) for the modular reduction
-Space: O(log(max(a,b)))
-```
-
-```
-Algorithm: NatCheckExistsUpTo(N, p)
-Input: Bound N, predicate p : ℕ → Bool
-Output: Boolean
-
-for n = 0 to N:
-  if p(n): return true
-return false
-
-Time: O(N · T_p) where T_p is the cost of evaluating p
-Space: O(1) beyond p's workspace
+Finset.lcm t (fun i ↦ a(g(i)))  ∣  a( Finset.lcm t g ).
 ```
 
-### 6.3 Row-Sum Certificate
+*Proof sketch.* Induction on `t`.
 
-```
-Algorithm: RowSumBound(A)
-Input: n×n real matrix A
-Output: Bound C such that ∀i, Σⱼ |A_ij| ≤ C
+- **Empty case.** `Finset.lcm ∅ f = 1`, which divides everything; in particular `1 ∣ a(Finset.lcm ∅ g)`.
+- **Insert step.** For `t' = insert c t`, `Finset.lcm_insert` gives the left side as
+  `lcm(a(g(c)), Finset.lcm t (a ∘ g))`. By `lcm_dvd` it suffices to show each argument divides
+  `a(Finset.lcm t' g)`. The first follows from Lemma 2.3 applied to `g(c) ∣ Finset.lcm t' g`. The
+  second follows by chaining the induction hypothesis with Lemma 2.3 applied to
+  `Finset.lcm t g ∣ Finset.lcm t' g`. ∎
 
-C ← 0
-for i = 0 to n-1:
-  row_sum ← Σⱼ |A[i][j]|
-  C ← max(C, row_sum)
-return C
-
-Time: O(n²)
-Space: O(1)
-```
+The two boundary cases reproduce the lattice picture exactly: the empty meet matches `a(0) = 0` (the
+gcd-top of ℕ), and the empty join is the lcm-unit `1`, whose image divides everything as the sub-law
+demands.
 
 ---
 
-## 7. Applications
+## 5. Pairwise coprimality and the product law
 
-### 7.1 Shortest-Path Verification
+### Theorem 5.1 (Pairwise coprimality propagation, `pairwise_coprime`)
 
-Tropical normalization can verify properties of shortest-path computations. If two different formulations of a shortest-path problem produce the same tropical normal form, they are provably equivalent for all edge-weight assignments.
+Suppose `a(1) = 1`. If the indices `{g(i) : i ∈ t}` are pairwise coprime, then the values
+`{a(g(i)) : i ∈ t}` are pairwise coprime.
 
-### 7.2 Certified Brute-Force Search
+*Proof sketch.* For distinct `i, j ∈ t`, `gcd(g(i), g(j)) = 1` by hypothesis, so Theorem 3.2 gives
+`gcd(a(g(i)), a(g(j))) = 1`. ∎
 
-The bounded arithmetic checker enables certified brute-force search: for any decidable property over {0, ..., N}, the checker produces a proof of existence or non-existence. Applications include:
-- Pseudoprime testing up to a bound
-- Goldbach conjecture verification for specific ranges
-- Finite counterexample search
+### Theorem 5.2 (Coprime-index product law, `prod_dvd_index`)
 
-### 7.3 Stability Certification
+Suppose `a(1) = 1`. If the indices `{g(i) : i ∈ t}` are pairwise coprime, then
+```
+∏_{i ∈ t} a(g(i))  ∣  a( ∏_{i ∈ t} g(i) ).
+```
 
-The row-sum bound enables automated stability certification for linear systems. Given a system x_{t+1} = Ax_t, if the row-sum bound of A is less than 1, the system is contractive and converges to zero. The certificate theorem provides the formal justification.
+*Proof sketch.* By Theorem 5.1 the factors `a(g(i))` are pairwise coprime. In a decomposition monoid
+such as ℕ, pairwise coprimality (routed through `IsRelPrime` via `Nat.coprime_iff_isRelPrime`)
+upgrades a family of divisibilities into a divisibility of the product: it suffices that each
+`a(g(i)) ∣ a(∏ g)`. Each such divisibility follows from Lemma 2.3 applied to `g(i) ∣ ∏ g`. The
+product-of-coprimes lemma (`Finset.prod_dvd_of_isRelPrime`) then assembles the factors. ∎
 
----
-
-## 8. Discussion
-
-### 8.1 The Reflection Architecture
-
-All three tactic families share a common architecture:
-1. **Reify** the mathematical goal into a syntactic representation.
-2. **Compute** a certificate (normal form, boolean result, or row-sum bound).
-3. **Apply** the soundness theorem to convert the computational result into a proof.
-
-This is the *reflection principle* in action: the soundness theorem bridges the gap between computation and deduction. The creative work goes into choosing the right syntactic fragment and proving the right soundness theorem; once that is done, proof production is mechanical.
-
-### 8.2 Limitations
-
-- **Tropical normalization** can produce exponentially large normal forms. A more refined normal form (e.g., sorted and deduplicated affine forms) would be needed for practical efficiency.
-- **Bounded arithmetic** is inherently limited by the search bound. For unbounded statements, the checker provides no information.
-- **Row-sum bounds** are conservative — the actual operator norm can be much smaller. Tighter bounds (e.g., Gershgorin discs) require more sophisticated analysis.
-
-### 8.3 Comparison with Existing Tactics
-
-| Feature | ring | omega | Our tactics |
-|---------|------|-------|-------------|
-| Domain | Comm. rings | Linear arith. | Tropical / Div. / Matrix |
-| Soundness proof | Yes | Yes | Yes |
-| Completeness | Yes (for ring eq.) | Yes (for linear arith.) | Partial (domain-specific) |
-| Custom syntax | No | No | Yes (reified) |
+**Remark (subtlety).** The ring-theoretic notion `IsCoprime` is strictly stronger than `Nat.Coprime`
+on ℕ. The product law must therefore be routed through `IsRelPrime`, exploiting that ℕ is a
+`DecompositionMonoid`. This is a genuine formalization subtlety rather than a mathematical one.
 
 ---
 
-## 9. Future Work
+## 6. Cross-domain corollaries
 
-See FUTURE_DIRECTIONS.md for detailed next steps. The most promising directions are:
+### 6.1 Instances
 
-1. **Gershgorin spectral enclosure** — extending row-sum bounds to eigenvalue localization.
-2. **Tropical affine normal form** — reducing to a canonical min-of-affine-forms representation.
-3. **Bounded Diophantine witness extraction** — adding quantifier support to the arithmetic checker.
-4. **Operator norm submultiplicativity** — proving that row-sum certificates compose under matrix multiplication.
-5. **Certified micro-solver framework** — abstracting the reflection pattern into a reusable library.
+- **Fibonacci** (`fibSDS`): `a = Nat.fib`, with (Z) `fib 0 = 0` and (M) `Nat.fib_gcd`. Crucially
+  `F₁ = 1`, so the `a(1) = 1` hypothesis holds and all coprimality results apply.
+- **Mersenne/repunit** (`mersenneSDS b`): `a(n) = bⁿ − 1`, with (M) given by
+  `Nat.pow_sub_one_gcd_pow_sub_one`. Here `a(1) = b − 1`, so coprimality of values fails in general.
+- **Identity** (`idSDS`): `a(n) = n`, the trivial strong divisibility sequence.
+
+### 6.2 Fibonacci corollaries
+
+### Corollary 6.1 (`fib_coprime_of_coprime`)
+If `gcd(m, n) = 1` then `gcd(Fₘ, Fₙ) = 1`.
+*From Theorem 3.2 with `fibSDS` and `F₁ = 1`.*
+
+### Corollary 6.2 (`fib_lcm_dvd`)
+`lcm(Fₘ, Fₙ) ∣ F_lcm(m,n)`.
+*From Theorem 3.3 with `fibSDS`.*
+
+### Corollary 6.3 (`fib_finset_gcd`)
+`Finset.gcd t (fun i ↦ F_{g(i)}) = F_{Finset.gcd t g}`.
+*From Theorem 4.1 with `fibSDS`.*
+
+### Corollary 6.4 (`fib_finset_lcm_dvd`)
+`Finset.lcm t (fun i ↦ F_{g(i)}) ∣ F_{Finset.lcm t g}`.
+*From Theorem 4.2 with `fibSDS`.*
+
+### Corollary 6.5 (`fib_prod_dvd`)
+For pairwise-coprime indices, `∏ F_{g(i)} ∣ F_{∏ g(i)}`.
+*From Theorem 5.2 with `fibSDS`.*
+
+### 6.3 Mersenne corollary
+
+### Corollary 6.6 (`mersenne_gcd_coprime`)
+If `gcd(m, n) = 1` then `gcd(bᵐ − 1, bⁿ − 1) = b − 1`.
+
+*Proof sketch.* Theorem 3.1 applied to `mersenneSDS b` gives `gcd(bᵐ − 1, bⁿ − 1) = a(1) = b − 1`.
+The residual `b − 1` is precisely the image of the lattice bottom `1`, explaining why coprimality of
+values fails for `b > 2`. ∎
+
+This corollary crystallizes the role of the `a(1) = 1` hypothesis: the residual that obstructs
+coprimality propagation is *always* `a(1)`, and the framework computes it uniformly.
 
 ---
 
-## 10. References
+## 7. Algorithms
 
-[1] S. Boutin. "Using reflection to build efficient and certified decision procedures." TACS 1997.
+The framework is constructive enough to drive direct numerical verification. Two algorithms are
+central.
 
-[2] D. Maclagan and B. Sturmfels. *Introduction to Tropical Geometry.* AMS, 2015.
+### Algorithm 7.1 (Finitary meet/join verifier)
 
-[3] R.S. Varga. *Geršgorin and His Circles.* Springer, 2004.
+Given a strong divisibility sequence `a` (as a callable), a finite family of indices `g₁, ..., gₖ`,
+verify both finitary laws numerically:
+- compute `G = gcd(g₁, ..., gₖ)` and check `gcd(a(g₁), ..., a(gₖ)) = a(G)`;
+- compute `L = lcm(g₁, ..., gₖ)` and check `lcm(a(g₁), ..., a(gₖ)) ∣ a(L)`.
 
-[4] The Mathlib Community. "Mathlib: A unified library of mathematics formalized." 2020–2025.
+Complexity: with `k` indices and values bounded by `M`, the gcd/lcm folds are `O(k log M)` integer
+operations; evaluating `a` dominates if `a` is expensive (e.g. `O(n)` additions for `Fₙ`).
 
-[5] L. de Moura et al. "The Lean 4 theorem prover and programming language." CADE 2021.
+### Algorithm 7.2 (Coprime-index product checker)
 
-[6] J. Pin. "Tropical semirings." *Idempotency*, Cambridge University Press, 1998.
+Given `a` with `a(1) = 1` and pairwise-coprime indices, verify `∏ a(g(i)) ∣ a(∏ g(i))` and report the
+cofactor `a(∏ g(i)) / ∏ a(g(i))`. The pairwise-coprimality precondition is checked in `O(k²)` gcd
+computations.
+
+---
+
+## 8. Applications
+
+- **Unified primitive-divisor theory.** Carmichael's theorem (Fibonacci) and Zsygmondy's theorem
+  (`bⁿ − 1`) share the entry-point machinery; the lattice laws here describe the *order structure* on
+  which that machinery sits, providing a uniform language for both.
+- **Fast coprimality certificates.** Corollary 6.1 gives an `O(log)` certificate that `Fₘ, Fₙ` are
+  coprime: just verify `gcd(m, n) = 1`. No factoring of the (exponentially large) Fibonacci numbers is
+  needed.
+- **Divisor lattices of recurrence sequences.** The finitary laws describe how divisors of values at
+  composite indices assemble from divisors at the index lattice, relevant to sieve constructions and
+  to the design of recurrence-based pseudorandom or hashing primitives.
+
+---
+
+## 9. Discussion
+
+The central phenomenon is the **meet/join asymmetry**: `a` is an exact inf-homomorphism but only a
+sup-*semi*-homomorphism of `(ℕ, ∣)`. This asymmetry is not a defect of the proof technique; it is a
+structural feature, traceable to the fact that the meet law is *axiomatic* while the join law is a
+*consequence of monotonicity*. Monotonicity can only place the join of images below the image of the
+join. The gap between `lcm(a(m), a(n))` and `a(lcm(m, n))` measures the failure of `a` to be a full
+lattice homomorphism.
+
+A second organizing principle is the role of the lattice **bottom element** `1`. Coprimality is the
+statement that two indices meet at `1`; the meet law sends that meet to `a(1)`; and coprimality
+*propagates* exactly when `a(1) = 1`. This single equation cleanly separates the well-behaved
+Fibonacci case from the residual-bearing Mersenne case, and the residual is always exactly `a(1)`.
+
+---
+
+## 10. Future directions
+
+This cycle established the lattice-theoretic side of the strong-divisibility-sequence programme,
+complementing the primitive-divisor / entry-point theory. Several precise conjectures follow.
+
+1. **Multiplicative-order bridge.** For `b ≥ 2` and a prime `p ∤ b`, the Mersenne entry point should
+   equal the multiplicative order: `entryPoint p = orderOf (b : (ZMod p)ˣ)`, bridging the abstract
+   entry point to a concrete group invariant.
+2. **Lucas U-sequences are strong divisibility sequences.** For coprime `P, Q`, the Lucas sequence
+   `Uₙ(P, Q)` satisfies `gcd(Uₘ, Uₙ) = U_gcd(m,n)` and `U₁ = 1`, hence is a strong divisibility
+   sequence with `a(1) = 1`. Every theorem here would then hold for Pell numbers (`P=2, Q=−1`),
+   Jacobsthal numbers (`P=1, Q=−2`), and the whole Lucas family in one stroke.
+3. **Sharp join law.** The join sub-law `lcm(a(m), a(n)) ∣ a(lcm(m, n))` should be an *equality* iff
+   the indices are comparable under `∣` (or `a` is multiplicatively rigid). For Fibonacci,
+   `lcm(Fₘ, Fₙ) = F_lcm(m,n)` iff `m ∣ n` or `n ∣ m` — quantifying exactly how far `a` is from a
+   sup-homomorphism.
+4. **Coprime-index product equality up to residual.** Strengthen the product law: when `a(1) = 1` and
+   indices are pairwise coprime, `∏ a(g(i))` should equal the relevant "primitive-part" radical of
+   `a(∏ g(i))`, refining the divisibility to an exact factorization.
+
+---
+
+## 11. Conclusion
+
+Stripped of arithmetic incident, a strong divisibility sequence is a single morphism of the
+divisibility lattice: exact on meets, sub-homomorphic on joins. From the two axioms `a(0) = 0` and
+`gcd(a(m), a(n)) = a(gcd(m, n))` flow monotonicity, an exact finitary meet law, a divides-only
+finitary join law, coprimality propagation gated by `a(1) = 1`, and a coprime-index product law — all
+holding uniformly for Fibonacci, Mersenne, repunit, and identity sequences. The bridge converts
+sequence-specific number theory into universal order theory, and reveals that the celebrated
+gcd-transport property of the Fibonacci numbers is, at bottom, a statement about lattices.

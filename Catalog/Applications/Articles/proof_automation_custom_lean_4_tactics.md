@@ -1,83 +1,231 @@
-# When Machines Learn to Check Their Own Math
+# The Hidden Lattice Inside Fibonacci
 
-## The Calculator That Proves Itself Right
+## One rule that ties number theory to the algebra of order
 
-Imagine a calculator that not only gives you the answer but also hands you an airtight mathematical argument for why the answer is correct — every time, for any problem in its domain. Not a confidence interval. Not "probably right." A *proof*.
+Take the Fibonacci numbers — that famous parade where each term is the sum of the two before it:
 
-This is not science fiction. A new line of research has produced exactly such calculators for three different corners of mathematics: tropical algebra (the mathematics of shortest paths and optimization), number theory (the ancient study of divisibility and primes), and linear algebra (the backbone of everything from Google searches to quantum physics). Each calculator comes with a mathematical certificate — a theorem proving that its outputs are always correct.
+```
+0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
+```
 
-The breakthrough is not the calculations themselves. Computers have been doing arithmetic since the 1940s. The breakthrough is proving, once and for all, that a *class* of computations is mathematically sound. It is the difference between checking one bridge's load capacity and proving that every bridge built to a certain blueprint will hold.
+Most people meet them through rabbits, sunflowers, or the golden ratio. But there is a quieter,
+stranger fact about Fibonacci numbers, one that has fascinated number theorists for over a century.
+It concerns **greatest common divisors**.
 
-## Three Domains, One Idea
+Pick two positions in the sequence, say the 12th and the 8th. The greatest common divisor of those
+two Fibonacci numbers turns out to be the Fibonacci number whose position is the greatest common
+divisor of 12 and 8. In symbols:
 
-### The Shortest-Path Calculator
+```
+gcd(F₁₂, F₈) = gcd(144, 21) = 3 = F₄ = F_gcd(12, 8).
+```
 
-Consider the problem of finding the shortest route between two cities in a road network. The mathematics behind this — called *tropical algebra* — replaces ordinary addition with minimum (picking the shorter route) and ordinary multiplication with addition (concatenating route lengths). In this strange arithmetic, "2 + 3 = 2" because the minimum of 2 and 3 is 2, while "2 × 3 = 5" because you add the lengths.
+This is not a coincidence of small numbers. It is a theorem: **for all m and n,**
 
-Tropical algebra sounds like a mathematical curiosity, but it quietly runs some of the most important algorithms in the world. Every time your GPS finds the fastest route, every time a chip designer optimizes a circuit's timing, every time an operations researcher schedules airline crews — tropical algebra is working behind the scenes.
+```
+gcd(Fₘ, Fₙ) = F_gcd(m, n).
+```
 
-The new work formalizes a *normalizer* for tropical expressions. Think of it as a canonical simplifier: no matter how complex or tangled a tropical formula looks, the normalizer reduces it to a standard "minimum of sums" form. The key theorem proves that this normalization is *sound* — it never changes the meaning of the expression. Two expressions that look completely different but compute the same function will always normalize to the same thing.
+The Fibonacci sequence *transports* greatest common divisors. The operation "take the gcd" on the
+inside (of the indices) matches "take the gcd" on the outside (of the values). The same magic
+appears in a completely different setting: the **Mersenne numbers** `bⁿ − 1` (think of 1, 3, 7, 15,
+31 for `b = 2`). There too, `gcd(bᵐ − 1, bⁿ − 1) = b^gcd(m, n) − 1`.
 
-Why does this matter? Because it turns *proof search into computation*. Instead of searching through an infinite space of possible proofs that two tropical expressions are equal, you simply normalize both and check whether the results match. If they do, the soundness theorem *guarantees* equality. No further argument needed.
+What do Fibonacci numbers and `2ⁿ − 1` have in common? Almost nothing on the surface — one is built
+from a golden-ratio recurrence, the other from raw exponentiation. The answer this work makes
+precise is: **they obey the same single rule**, and that rule alone forces a rich, predictable
+structure. The structure is not really about numbers at all. It is about *order* — about lattices.
 
-The fundamental identity that makes this work is beautifully simple: in tropical arithmetic, "multiplication distributes over addition" — or in standard terms, `a + min(b, c) = min(a+b, a+c)`. By applying this rule exhaustively, any tropical expression expands into a minimum of sums, which is the canonical form. The normalizer is, in essence, a formalization of the insight that tropical polynomials correspond to piecewise-linear functions.
+---
 
-### The Divisibility Oracle
+## What is a strong divisibility sequence?
 
-Number theory is the oldest branch of mathematics, and one of its most fundamental questions is: does one number divide another? Is 7 a factor of 5,047? Is 13 a factor of the number you get by multiplying all integers from 1 to 20?
+Let us name the rule. A sequence of natural numbers `a(0), a(1), a(2), ...` is a **strong
+divisibility sequence** if it satisfies just two axioms:
 
-The new work builds a certified divisibility checker — a boolean function that returns "yes" or "no" and comes with two guarantees: if it says "yes," then the divisibility truly holds (*soundness*), and if the divisibility truly holds, it will say "yes" (*completeness*). These two properties together mean the checker is a perfect oracle for divisibility questions.
+1. **It starts at zero:** `a(0) = 0`.
+2. **It transports gcd:** `gcd(a(m), a(n)) = a(gcd(m, n))` for every pair of indices `m` and `n`.
 
-But the work goes further. It also builds a certified bounded search engine: given a property and a range of numbers, it finds a witness satisfying the property (if one exists) and certifies its correctness. This is the mathematical equivalent of a detective who not only finds the suspect but also produces an ironclad proof of guilt.
+That's the whole definition. Fibonacci is one. Each Mersenne sequence `bⁿ − 1` is one. The trivial
+sequence `a(n) = n` is one (gcd of indices is literally gcd of values). And — this is the punchline —
+*everything* you can prove from those two axioms holds for **all** of them at once.
 
-The punchline comes when these tools are combined. Consider the theorem that for any k between 2 and n, the number k divides n! + k (where n! = 1 × 2 × 3 × ... × n is the factorial). This is because k divides n! (since k appears as one of the factors in the product) and k obviously divides itself, so k divides their sum. The certified checker confirms this computationally, and the soundness theorem promotes the computation to a proof.
+The deepest theme of this work is that this innocent gcd rule is secretly a statement about a famous
+algebraic object: the **divisibility lattice**.
 
-This may sound like a small thing, but it represents a profound shift. Instead of constructing a proof from scratch for each specific instance, you verify a *schema* once and then generate proofs for an infinite family of statements by computation. It is the difference between hand-sewing each shirt and building a sewing machine that you prove works correctly.
+---
 
-### The Matrix Bound Engine
+## A detour: the lattice of divisibility
 
-Linear algebra — the study of matrices and linear transformations — is arguably the most practically important branch of mathematics. Machine learning, quantum mechanics, structural engineering, economics, signal processing — all of these run on matrices.
+Forget sequences for a moment. Look at the natural numbers, but reorder them. Instead of the usual
+"less than" order, say that `x ≤ y` whenever **x divides y**. Under this order:
 
-A central question in linear algebra is: how much can a matrix amplify a vector? If you multiply a matrix A by a vector x, how big can the result be? The answer is captured by the matrix's *operator norm*, and bounding it is critical for everything from proving that an algorithm converges to certifying that a bridge won't collapse under wind loads.
+- `2 ≤ 6` (because 2 divides 6), but 2 and 5 are incomparable (neither divides the other).
+- The **meet** (greatest lower bound) of two numbers is their **greatest common divisor**, `gcd`.
+- The **join** (least upper bound) of two numbers is their **least common multiple**, `lcm`.
+- The number `1` is the bottom (it divides everything); `0` is the top (everything divides 0).
 
-The new work proves that you can bound a matrix's amplification factor by simply summing the absolute values in each row and taking the maximum. This is the classical *row-sum bound*, and it has been known for over a century. But what's new is the *certified* version: a theorem that says if you've verified the row sums are all at most C, then the matrix's action on any unit vector is bounded by C.
+This is a *lattice*: a set with a well-behaved meet and join. The divisibility lattice is one of the
+most beautiful structures in elementary mathematics, because it converts arithmetic (factoring) into
+geometry (order).
 
-The certificate theorem also extends to matrix-vector products: if every entry of your input vector is at most 1 in absolute value, then every entry of the output vector is bounded by the row-sum bound. This chains the triangle inequality through finite sums in a way that's completely mechanical — once you have the row sums, the global bound follows automatically.
+Now reread the strong-divisibility axiom with lattice eyes. The rule
 
-## The Deeper Pattern
+```
+gcd(a(m), a(n)) = a(gcd(m, n))
+```
 
-What connects these three results is not the specific mathematics — tropical algebra, number theory, and linear algebra are quite different subjects. What connects them is the *architecture of certainty*.
+says exactly: **the map `a` carries the meet of the indices to the meet of the values.** In the
+language of order theory, `a` is a **meet-homomorphism** (an "inf-homomorphism") of the divisibility
+lattice. The gcd rule that looked like an arithmetic curiosity is really a structure-preservation
+law.
 
-In each case, the researchers identified a mathematical fragment where proof search can be replaced by computation:
+This raises an irresistible question. The lattice has *two* operations, meet and join. We know `a`
+preserves meet. **Does it preserve join?** Does `a` carry the least common multiple of the indices to
+the least common multiple of the values?
 
-- **Tropical algebra:** Proving equality reduces to normalization and comparison.
-- **Number theory:** Proving divisibility reduces to modular arithmetic and bounded search.
-- **Linear algebra:** Proving norm bounds reduces to row-sum computation and the triangle inequality.
+---
 
-Each of these reductions is itself a theorem — a *meta-theorem* about the structure of proofs in that domain. The normalizer doesn't just simplify expressions; it embodies a proof that *all* tropical equalities can be decided by normalization. The divisibility checker doesn't just test specific numbers; it embodies a proof that *all* divisibility questions have computable answers. The row-sum bound doesn't just work for one matrix; it embodies a proof that *every* matrix's action is controlled by its local structure.
+## The asymmetry: meet is exact, join only divides
 
-This is a genuinely new way to think about mathematical proof. Traditional proofs are artisanal — each one crafted for a specific theorem. These certified calculators are *industrial* — they produce proofs at scale, with quality guaranteed by a single foundational theorem.
+Here the story turns subtle, and beautiful. Test it on Fibonacci. Take indices 4 and 6:
 
-## Why This Matters Beyond Mathematics
+```
+lcm(F₄, F₆) = lcm(3, 8) = 24,   but   F_lcm(4,6) = F₁₂ = 144.
+```
 
-The implications reach far beyond pure mathematics.
+These are *not* equal. So `a` does **not** preserve join exactly. But notice: 24 **divides** 144.
+The image of the lcm is always at least as divisible. This is no accident. The work proves, for every
+strong divisibility sequence, the **join sub-law**:
 
-**For software verification:** Critical systems — aircraft autopilots, medical devices, financial trading algorithms — need mathematical guarantees about their behavior. Certified calculators can automatically generate these guarantees for problems in their domain.
+```
+lcm(a(m), a(n))  divides  a(lcm(m, n)).
+```
 
-**For artificial intelligence:** Neural networks with ReLU activation functions compute piecewise-linear functions — exactly the functions described by tropical algebra. A certified tropical normalizer could, in principle, verify properties of neural networks by reducing them to canonical form and checking conditions computationally.
+In lattice language: `a` is only a **join-sub-homomorphism**. The join of the images sits *below*
+(divides) the image of the join. So a strong divisibility sequence is a lopsided creature: it
+preserves meet **on the nose**, but join only **up to divisibility**. This asymmetry — exact for gcd,
+mere divisibility for lcm — is the central structural insight of the whole programme.
 
-**For scientific computing:** Every time a physicist runs a numerical simulation, they worry about whether their approximation is close enough to reality. Certified matrix bounds can automatically verify convergence conditions and error bounds, turning numerical guesswork into mathematical certainty.
+Why the asymmetry? The meet law is *given* to us as an axiom. The join law, by contrast, has to be
+*derived*, and the only tool available is **monotonicity**: if `m` divides `n`, then `a(m)` divides
+`a(n)`. (This itself follows from the gcd axiom: if `m | n` then `gcd(m,n) = m`, so
+`gcd(a(m), a(n)) = a(m)`, meaning `a(m)` divides `a(n)`.) Monotonicity is enough to push the lcm of
+the images underneath the image of the lcm — but not enough to make them equal.
 
-**For education:** These results reveal hidden structure in mathematics. The fact that tropical proof search reduces to normalization exposes a deep connection between algebra and geometry (tropical expressions correspond to piecewise-linear convex functions). The fact that divisibility checking is both sound and complete illustrates the power — and limits — of decidability in number theory.
+---
 
-## The Road Ahead
+## From pairs to crowds: the finitary laws
 
-The current work covers three domains, but the architecture is general. Any mathematical fragment where proof search can be reduced to computation — where checking is easier than finding — is a candidate for a certified calculator. Boolean satisfiability, polynomial identity testing, linear programming feasibility, finite group membership — all of these could, in principle, be given the same treatment.
+Pairs are nice, but mathematicians want *families*. What if you take not two indices but a whole
+finite collection `g(i)` for `i` ranging over some index set? Does the picture survive?
 
-The most tantalizing target is *spectral* theory — the study of eigenvalues. The row-sum bounds already gesture in this direction: they bound how much a matrix can stretch vectors, which constrains where eigenvalues can live. The next step is Gershgorin's circle theorem, which pins down eigenvalue locations to specific discs in the complex plane. A certified Gershgorin calculator would be transformative for control theory, quantum chemistry, and network science.
+It does, and cleanly. By induction, the two laws lift to arbitrary finite families:
 
-But perhaps the most profound implication is philosophical. For centuries, mathematicians have thought of proof and computation as fundamentally different activities. Proof is creative, unpredictable, requiring insight and ingenuity. Computation is mechanical, predictable, requiring only patience and precision.
+- **Finitary meet law (exact):**
+  ```
+  gcd over i of a(g(i))  =  a( gcd over i of g(i) ).
+  ```
+  Computing the gcd of a whole bag of values `a(g(i))` is the same as feeding the gcd of all the
+  indices through `a`. Exactly equal.
 
-These certified calculators dissolve that boundary. They show that for carefully chosen mathematical domains, proof *is* computation — and computation comes with a mathematical guarantee of correctness. The creative insight goes not into individual proofs, but into identifying the right domains and proving the right meta-theorems. Once that foundation is laid, proofs flow like water downhill: inevitable, effortless, and certain.
+- **Finitary join sub-law (divides):**
+  ```
+  lcm over i of a(g(i))  divides  a( lcm over i of g(i) ).
+  ```
+  The lcm of the values always divides the value at the lcm of the indices.
 
-The age of artisanal proof is not ending. But the age of industrial proof has begun.
+The base cases are quietly poetic. For the empty family, the gcd is `0` (the lattice top under gcd
+on ℕ, here matched by `a(0) = 0`), and the lcm is `1` — whose image `a(1)` then divides everything,
+exactly as the sub-law demands. The two boundary values `a(0) = 0` and `a(1)` are precisely the
+hinges on which the whole induction swings.
+
+---
+
+## Coprimality and a tale of two top elements
+
+Here is where the framework starts to *predict* things you might never have guessed.
+
+Two numbers are **coprime** if their gcd is 1 — they share no prime factors. Suppose two indices `m`
+and `n` are coprime. What is `gcd(a(m), a(n))`? The meet law answers instantly:
+
+```
+gcd(a(m), a(n)) = a(gcd(m, n)) = a(1).
+```
+
+The gcd of the values collapses to a single fixed number: `a(1)`, the value of the sequence at the
+index 1. So whether coprime indices give coprime *values* hinges entirely on **one number**:
+**is `a(1) = 1`?**
+
+- For Fibonacci, `F₁ = 1`. So coprime indices give coprime Fibonacci numbers:
+  `gcd(F₇, F₁₀) = gcd(13, 55) = 1`. The index 1, the "top" of the index lattice, maps to the value
+  1, the "top" of the value lattice. Coprimality propagates perfectly.
+
+- For Mersenne, `b¹ − 1 = b − 1`, which is *not* 1 (unless `b = 2`). So coprime indices do **not**
+  give coprime values; instead, `gcd(bᵐ − 1, bⁿ − 1) = b − 1` for coprime `m, n`. The leftover
+  `b − 1` is exactly `a(1)`. The framework doesn't just tolerate this discrepancy — it *explains*
+  it. The residual is always the image of the top element.
+
+This is the kind of unification that makes the abstraction worth it. A single condition, `a(1) = 1`,
+governs whether coprimality survives the sequence, and it does so for Fibonacci, Mersenne, and every
+other strong divisibility sequence simultaneously.
+
+The coprimality story scales up too. If `a(1) = 1` and a finite family of indices is **pairwise
+coprime** (every two of them coprime), then the corresponding values are pairwise coprime as well.
+And pairwise-coprime values whose gcds are all 1 multiply nicely: their product divides the value at
+the product of the indices,
+
+```
+product over i of a(g(i))  divides  a( product over i of g(i) ),
+```
+
+a clean "product law" that, for Fibonacci with `a(1) = 1`, recovers classical facts about products
+of Fibonacci numbers at coprime indices.
+
+---
+
+## Why this matters
+
+It is tempting to file all this under "cute identities about Fibonacci numbers." That would miss the
+point entirely. The real content is a change of *perspective*:
+
+**Number-theoretic facts about specific sequences are shadows of order-theoretic facts about a single
+abstract map.**
+
+Once you see that Fibonacci, Mersenne, repunits, and the identity sequence are all the *same kind of
+object* — a meet-homomorphism and join-sub-homomorphism of the divisibility lattice — you stop
+proving the same theorem over and over for each sequence. You prove it once, abstractly, and harvest
+every instance for free. The "primitive divisor" theory that took mathematicians decades to build for
+Fibonacci numbers, and separately for Mersenne numbers (the famous Zsygmondy theory), turns out to
+rest on the *two axioms* and nothing else.
+
+This is the essence of a **bridge**: a single structural idea standing between two fields. On one
+bank, classical number theory with its gcds, lcms, and primitive divisors. On the other, order theory
+with its lattices, meets, joins, and homomorphisms. The strong divisibility sequence is the bridge,
+and walking across it converts hard, sequence-specific arithmetic into easy, universal algebra.
+
+There is also a lesson in *asymmetry*. We are trained to expect symmetry in mathematics — if meet is
+preserved, surely join is too. But here the structure is genuinely lopsided: exact for one operation,
+mere divisibility for the other. Recognizing and *quantifying* such asymmetries is often where the
+real mathematics lives. The gap between `lcm(a(m), a(n))` and `a(lcm(m, n))` is not a flaw in the
+theory; it *is* the theory. It measures precisely how far a strong divisibility sequence falls short
+of being a perfect lattice homomorphism — and for Fibonacci, that gap closes exactly when one index
+divides the other.
+
+---
+
+## The takeaway
+
+Strip away the rabbits and the golden ratio, and the Fibonacci sequence reveals a skeleton made of
+pure order. The same skeleton holds up `2ⁿ − 1`, `bⁿ − 1`, and the humble counting numbers. That
+skeleton is the divisibility lattice, and the rule that animates it is a single line:
+
+```
+gcd(a(m), a(n)) = a(gcd(m, n)).
+```
+
+From that one line flow monotonicity, the exact finitary meet law, the divides-only join law,
+coprimality propagation governed by the lone number `a(1)`, and product laws for coprime indices —
+all at once, for an entire family of famous sequences. It is a small miracle of mathematical economy:
+two axioms, a whole theory, and a bridge between two worlds that looked, until you found the right
+vantage point, completely unrelated.
