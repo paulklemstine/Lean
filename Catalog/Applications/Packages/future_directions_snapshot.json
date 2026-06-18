@@ -1244,7 +1244,7 @@
       "Pythagorean",
       "Geometry"
     ],
-    "id": "fd_2075",
+    "id": "fd_2076",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Extend the Bourgain–Gamburd–Sarnak expansion machinery to δ_Γ ≤ 1/2 by developing an effective counting theory for return trajectory subgroups without the δ_Γ > 1/2 condition that guarantees non-local integrability of the Patterson–Sullivan measure. The key obstacle is that for δ_Γ ≤ 1/2, the Bowen–Margulis–Sullivan measure on the frame bundle no longer controls the spectral projector near the base of the continuous spectrum. A potential approach replaces the δ_Γ > 1/2 condition with a combinatorial thickness criterion on the return trajectory subgroups, leveraging their Zariski density (established in the present paper) together with a refined L²-flattening lemma adapted to the small-critical-exponent regime.",
@@ -2780,25 +2780,6 @@
     "status": "available",
     "timestamp": "2026-06-08T19:24:57.516415+00:00",
     "title": "10 is a Solitary Number"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "6e109ffd",
-    "description": "Cycle 595ce011 (Q=0.612) proved 10 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a sharply scoped core of the order-`n` Sudoku constraint graph on `Cell n := Fin n × Fin n × Fin n × Fin n`, avoiding ambitious spectral or chromatic-number machinery until the finite combin",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_595ce011_e0b1bcd6",
-    "lineage_refs": [],
-    "priority_score": 0.6622400000000002,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "595ce011",
-    "status": "in_progress",
-    "timestamp": "2026-06-17T13:02:19.356643+00:00",
-    "title": "Close Proofs: The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
   },
   {
     "ambition_level": "extension",

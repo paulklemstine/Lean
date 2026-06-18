@@ -461,6 +461,21 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             print(f"[Tick] Skipping {job.job_id[:8]} (status={job.status})")
             continue
 
+        # Check if another retry of this job has already dispatched Phase B or completed.
+        # This prevents duplicate/stale retries from overwriting/aborting active Phase B.
+        if job.phase == "A":
+            already_dispatched_b = False
+            for active_job in extractor.inflight.values():
+                if active_job.job_id == job.job_id and active_job.phase in ("B", "B_dispatched", "complete"):
+                    already_dispatched_b = True
+                    break
+            if already_dispatched_b:
+                print(f"[Tick] Skipping stale Phase A completed retry {job.job_id[:8]} since Phase B is already active/complete for this job.")
+                if job.project_id and job.project_id in extractor.inflight:
+                    del extractor.inflight[job.project_id]
+                    extractor._save_inflight()
+                continue
+
         # If this is a Phase B completion, preserve Phase A's Lean files
         # so integrate_async doesn't think we have no math.
         is_phase_b_completion = (job.phase == "B" or job.phase == "B_dispatched")
@@ -1002,6 +1017,8 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
             project_id = await extractor._dispatch_to_aristotle(queued)
             if queued.project_id and queued.project_id in extractor.inflight:
                 del extractor.inflight[queued.project_id]
+            if queued.job_id in extractor.inflight:
+                del extractor.inflight[queued.job_id]
             queued.project_id = project_id
             queued.status = "dispatched"
             queued.dispatch_time = time.time()
