@@ -43,6 +43,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n ≤ 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "seed_327",
+    "lineage_refs": [],
+    "priority_score": 0.95,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432569+00:00",
+    "title": "Goldbach Verification Framework"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domain_bridges": [],
     "domains": [
@@ -82,6 +102,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Formalize the classical zero-free region of the Riemann zeta function: ζ(s) ≠ 0 for Re(s) > 1 - c/log(|Im(s)|+2). Prove the Riemann-von Mangoldt formula N(T) ~ T/(2π) log(T/(2πe)). Formalize the connection between zero-free regions and prime counting error bounds.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Analysis"
+    ],
+    "id": "seed_329",
+    "lineage_refs": [],
+    "priority_score": 0.94,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432599+00:00",
+    "title": "Riemann Zeta: Zero-Free Regions and Density Estimates"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that there are infinitely many pairs of primes differing by 2. Formalize Zhang's bounded gaps result and Maynard-Tao improvements. Explore connections to the Hardy-Littlewood conjecture and sieve theory.",
     "domain_bridges": [],
     "domains": [
@@ -96,6 +136,45 @@
     "status": "available",
     "timestamp": "2026-06-08T19:24:56.613461+00:00",
     "title": "Twin Prime Conjecture"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Maynard-Tao sieve in Lean 4 and prove that lim inf(p_{n+1} - p_n) ≤ 246. Construct the GPY sieve weight optimization as a variational problem. Prove the key lemma on the level of distribution of primes in arithmetic progressions.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "seed_328",
+    "lineage_refs": [],
+    "priority_score": 0.93,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432595+00:00",
+    "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
+    "domain_bridges": [],
+    "domains": [
+      "Analysis",
+      "Physics"
+    ],
+    "id": "seed_342",
+    "lineage_refs": [],
+    "priority_score": 0.93,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432645+00:00",
+    "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
   {
     "ambition_level": "extension",
@@ -135,6 +214,27 @@
     "status": "available",
     "timestamp": "2026-06-08T19:25:08.281573+00:00",
     "title": "BSD Conjecture: Rank Computability"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Computation",
+      "Bridges"
+    ],
+    "id": "seed_379",
+    "lineage_refs": [],
+    "priority_score": 0.92,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432809+00:00",
+    "title": "Proof Automation: Custom Lean 4 Tactics"
   },
   {
     "ambition_level": "extension",
@@ -200,6 +300,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Formalize the fundamental theorem of Galois theory in Lean 4. Prove the Abel-Ruffini theorem: the general quintic is not solvable by radicals. Construct explicit Galois groups for specific polynomials and prove solvability criteria via the derived series.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_337",
+    "lineage_refs": [],
+    "priority_score": 0.91,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432615+00:00",
+    "title": "Galois Theory: Solvability of Polynomials"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize global class field theory as the GL(1) case of Langlands. Prove the Artin reciprocity law. Construct the adèle ring and idèle class group. Prove that 1-dimensional Galois representations correspond to Hecke characters.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "NumberTheory",
+      "Bridges"
+    ],
+    "id": "seed_375",
+    "lineage_refs": [],
+    "priority_score": 0.91,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432799+00:00",
+    "title": "Langlands Correspondence: GL(1) Case"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
     "domain_bridges": [],
     "domains": [
@@ -254,6 +394,47 @@
     "status": "available",
     "timestamp": "2026-06-08T19:25:12.343420+00:00",
     "title": "Baum-Connes Conjecture"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the ABC conjecture statement and prove its major consequences: Fermat's Last Theorem for large exponents, Roth's theorem strengthening, the Szpiro conjecture for elliptic curves. Construct the radical rad(n) function framework in Lean 4.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "seed_336",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432613+00:00",
+    "title": "ABC Conjecture: Consequences and Partial Results"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize Noether's theorem in Lean 4: every continuous symmetry of the action yields a conserved quantity. Prove energy conservation from time-translation, momentum from space-translation, angular momentum from rotational symmetry. Apply to Kepler problem.",
+    "domain_bridges": [],
+    "domains": [
+      "Physics",
+      "Algebra",
+      "Analysis"
+    ],
+    "id": "seed_363",
+    "lineage_refs": [],
+    "priority_score": 0.9,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432772+00:00",
+    "title": "Noether's Theorem: Symmetries and Conservation Laws"
   },
   {
     "ambition_level": "extension",
@@ -317,6 +498,27 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
+    "domain_bridges": [],
+    "domains": [
+      "Cryptography",
+      "Algebra",
+      "Computation"
+    ],
+    "id": "seed_370",
+    "lineage_refs": [],
+    "priority_score": 0.89,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432791+00:00",
+    "title": "Lattice Cryptography: LWE Hardness"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that no odd perfect numbers exist. Formalize known constraints: must exceed 10^1500, have at least 101 prime factors, satisfy Euler's form p^a * m^2. Connect to the structure of multiplicative functions.",
     "domain_bridges": [],
     "domains": [
@@ -375,6 +577,107 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Formalize the Miller-Rabin primality test in Lean 4 and prove its error bounds. Formalize the AKS deterministic primality test and prove correctness: PRIMES ∈ P. Construct efficient modular arithmetic tactics for Lean.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "id": "seed_334",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432609+00:00",
+    "title": "Primality Testing: Miller-Rabin and AKS Formalization"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Compute and formalize π_n(S^m) for small n, m. Prove π_3(S^2) ≅ ℤ via the Hopf fibration. Construct the Hopf invariant and prove it detects the generator. Formalize the long exact sequence of a fibration.",
+    "domain_bridges": [],
+    "domains": [
+      "Topology",
+      "Algebra"
+    ],
+    "id": "seed_350",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432680+00:00",
+    "title": "Homotopy Groups of Spheres: Low-Dimensional"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the hydrogen atom Hamiltonian in Lean 4. Prove the spectrum is {-1/n² : n ∈ ℕ+} ∪ [0,∞). Construct the spherical harmonics as eigenfunctions of the angular momentum operator. Prove the selection rules for transitions.",
+    "domain_bridges": [],
+    "domains": [
+      "Physics",
+      "Analysis"
+    ],
+    "id": "seed_362",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432770+00:00",
+    "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the group law on elliptic curves over finite fields in Lean 4. Prove associativity via the chord-tangent construction. Implement and verify point multiplication. Prove Hasse's bound: |#E(F_p) - p - 1| ≤ 2√p.",
+    "domain_bridges": [],
+    "domains": [
+      "Cryptography",
+      "Algebra",
+      "NumberTheory"
+    ],
+    "id": "seed_371",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432792+00:00",
+    "title": "Elliptic Curve Arithmetic: Group Law Formalization"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize classic algorithms with full correctness proofs in Lean 4: binary search (with loop invariants), Dijkstra's shortest path (with graph formalization), and FFT (with number-theoretic transform). Prove complexity bounds.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "seed_380",
+    "lineage_refs": [],
+    "priority_score": 0.88,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432811+00:00",
+    "title": "Formal Verification of Algorithms"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that for every positive integer n, there exists a prime between n² and (n+1)². Formalize known partial results on prime gaps and connect to the Cramér model of primes.",
     "domain_bridges": [],
     "domains": [
@@ -408,6 +711,108 @@
     "status": "available",
     "timestamp": "2026-06-08T19:25:12.120491+00:00",
     "title": "Novikov Conjecture"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index σ(n)/n framework.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory"
+    ],
+    "id": "seed_331",
+    "lineage_refs": [],
+    "priority_score": 0.87,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432603+00:00",
+    "title": "Perfect Numbers: Structure of Even Perfects"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the spectral theorem for bounded self-adjoint operators on Hilbert spaces. Prove the min-max theorem for eigenvalues. Construct the functional calculus and prove the spectral mapping theorem. Apply to quantum mechanical observables.",
+    "domain_bridges": [],
+    "domains": [
+      "Analysis",
+      "Physics",
+      "Algebra"
+    ],
+    "id": "seed_344",
+    "lineage_refs": [],
+    "priority_score": 0.87,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432652+00:00",
+    "title": "Spectral Theory: Self-Adjoint Operators"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "seed_357",
+    "lineage_refs": [],
+    "priority_score": 0.87,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432748+00:00",
+    "title": "Circuit Complexity: Monotone Lower Bounds"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+√2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
+    "domain_bridges": [],
+    "domains": [
+      "Physics",
+      "Probability",
+      "Analysis"
+    ],
+    "id": "seed_364",
+    "lineage_refs": [],
+    "priority_score": 0.87,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432774+00:00",
+    "title": "Statistical Mechanics: Ising Model Phase Transition"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Yoneda lemma in Lean 4 with concrete applications. Prove that representable functors determine objects up to isomorphism. Formalize adjunctions and prove the general adjoint functor theorem. Apply to free-forgetful adjunctions.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Logic",
+      "Bridges"
+    ],
+    "id": "seed_376",
+    "lineage_refs": [],
+    "priority_score": 0.87,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432801+00:00",
+    "title": "Categorical Foundations: Yoneda and Adjunctions"
   },
   {
     "ambition_level": "extension",
@@ -487,6 +892,168 @@
     "status": "available",
     "timestamp": "2026-06-08T19:25:09.067494+00:00",
     "title": "Sierpiński Numbers: Covering Systems"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize at least three distinct proofs of quadratic reciprocity in Lean 4: Gauss's original (via Gauss sums), Eisenstein's (via lattice point counting), and a modern proof via class field theory. Prove the supplementary laws for (-1/p) and (2/p).",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Algebra"
+    ],
+    "id": "seed_333",
+    "lineage_refs": [],
+    "priority_score": 0.86,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432607+00:00",
+    "title": "Quadratic Reciprocity: Five Proofs Formalized"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize Ext and Tor functors in Lean 4. Prove the long exact sequence in cohomology. Construct projective and injective resolutions for concrete modules. Prove the universal coefficient theorem for homology.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Topology"
+    ],
+    "id": "seed_339",
+    "lineage_refs": [],
+    "priority_score": 0.86,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432630+00:00",
+    "title": "Homological Algebra: Derived Functors"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Euler characteristic for CW complexes. Prove the Gauss-Bonnet theorem for compact surfaces: ∫ K dA = 2πχ(M). Prove the Poincaré-Hopf index theorem. Apply to classify surfaces by genus.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Topology"
+    ],
+    "id": "seed_349",
+    "lineage_refs": [],
+    "priority_score": 0.86,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432672+00:00",
+    "title": "Euler Characteristic and Gauss-Bonnet"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize Turán's theorem: ex(n, K_r) = (1-1/(r-1))n²/2. Prove the Kruskal-Katona theorem. Formalize Szemerédi's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "seed_356",
+    "lineage_refs": [],
+    "priority_score": 0.86,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432745+00:00",
+    "title": "Extremal Graph Theory: Turán and Szemerédi"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize cubical type theory primitives in Lean 4. Construct the interval type and path types. Prove function extensionality and the univalence axiom. Implement higher inductive types: circles, torus, suspension.",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Topology",
+      "Algebra"
+    ],
+    "id": "seed_360",
+    "lineage_refs": [],
+    "priority_score": 0.86,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432767+00:00",
+    "title": "Type Theory: Cubical Type Theory Foundations"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
+    "domain_bridges": [],
+    "domains": [
+      "Physics",
+      "Algebra",
+      "Computation"
+    ],
+    "id": "seed_365",
+    "lineage_refs": [],
+    "priority_score": 0.86,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432775+00:00",
+    "title": "Quantum Information: No-Cloning and Teleportation"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the universal approximation theorem for ReLU networks. Prove depth-width tradeoffs: width-bounded networks of depth d can approximate functions that require exponential width at depth d-1. Construct explicit approximation rates for Sobolev functions.",
+    "domain_bridges": [],
+    "domains": [
+      "MachineLearning",
+      "Analysis"
+    ],
+    "id": "seed_366",
+    "lineage_refs": [],
+    "priority_score": 0.86,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432777+00:00",
+    "title": "Universal Approximation: Quantitative Bounds"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
+    "domain_bridges": [],
+    "domains": [
+      "Tropical",
+      "Algebra",
+      "Combinatorics"
+    ],
+    "id": "seed_373",
+    "lineage_refs": [],
+    "priority_score": 0.86,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432796+00:00",
+    "title": "Tropical Curves and Chip-Firing Games"
   },
   {
     "ambition_level": "extension",
@@ -631,6 +1198,167 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Formalize the representation theory of finite groups. Compute and verify character tables for S_3, S_4, S_5. Prove Burnside's theorem (groups of order p^a q^b are solvable). Formalize Maschke's theorem and Schur's lemma.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "seed_338",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432625+00:00",
+    "title": "Representation Theory: Character Tables of S_n"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize three fundamental fixed point theorems in Lean 4. Prove Brouwer via Sperner's lemma, Banach via the contraction mapping iteration, and Schauder via Brouwer + compactness. Apply to existence proofs for ODEs and integral equations.",
+    "domain_bridges": [],
+    "domains": [
+      "Analysis",
+      "Topology"
+    ],
+    "id": "seed_345",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432654+00:00",
+    "title": "Fixed Point Theorems: Brouwer, Banach, Schauder"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Jones polynomial via the Kauffman bracket. Prove invariance under Reidemeister moves. Compute Jones polynomials for the trefoil, figure-eight, and torus knots. Prove that the Jones polynomial detects the unknot for alternating knots.",
+    "domain_bridges": [],
+    "domains": [
+      "Topology",
+      "Algebra"
+    ],
+    "id": "seed_348",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432668+00:00",
+    "title": "Knot Invariants: Jones Polynomial Formalization"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics"
+    ],
+    "id": "seed_352",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432688+00:00",
+    "title": "Ramsey Theory: Bounds and Constructions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Logic"
+    ],
+    "id": "seed_358",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432755+00:00",
+    "title": "Proof Complexity: Resolution and Cutting Planes"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Kantorovich optimal transport problem. Prove existence of optimal transport maps (Brenier's theorem for quadratic cost). Formalize Wasserstein distances and prove the Wasserstein GAN convergence properties.",
+    "domain_bridges": [],
+    "domains": [
+      "MachineLearning",
+      "Analysis",
+      "Geometry"
+    ],
+    "id": "seed_369",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432786+00:00",
+    "title": "Optimal Transport and Wasserstein Distances"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
+    "domain_bridges": [],
+    "domains": [
+      "Cryptography",
+      "Logic",
+      "Computation"
+    ],
+    "id": "seed_372",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432794+00:00",
+    "title": "Zero-Knowledge Proofs: Schnorr Protocol"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize BCH and Reed-Solomon codes over finite fields. Prove the BCH bound on minimum distance. Construct the Berlekamp-Massey decoding algorithm and prove correctness. Apply to concrete error-correction scenarios.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation",
+      "Cryptography"
+    ],
+    "id": "seed_378",
+    "lineage_refs": [],
+    "priority_score": 0.85,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432807+00:00",
+    "title": "Algebraic Coding Theory: BCH and Reed-Solomon"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Cycle d6329d46 (Q=0.792) proved 22 theorems in Shared but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle e42393e4 (Q=0.792), which proved 42 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting.",
     "domain_bridges": [],
     "domains": [
@@ -743,6 +1471,128 @@
     "status": "available",
     "timestamp": "2026-06-08T19:25:12.561612+00:00",
     "title": "Self-Avoiding Walk: Connective Constant"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the theory of continued fractions in Lean 4: convergents, best rational approximations, Hurwitz's theorem (|α - p/q| < 1/(√5 q²) for infinitely many p/q). Prove Liouville's theorem on transcendental numbers via Diophantine approximation bounds.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Analysis"
+    ],
+    "id": "seed_332",
+    "lineage_refs": [],
+    "priority_score": 0.84,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432605+00:00",
+    "title": "Continued Fractions and Diophantine Approximation"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Prove the invariant subspace theorem for compact operators on Hilbert spaces (Aronszajn-Smith). Formalize Lomonosov's theorem: operators commuting with a nonzero compact operator have invariant subspaces. Explore the Enflo-Read counterexample structure.",
+    "domain_bridges": [],
+    "domains": [
+      "Analysis",
+      "Algebra"
+    ],
+    "id": "seed_343",
+    "lineage_refs": [],
+    "priority_score": 0.84,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432648+00:00",
+    "title": "Invariant Subspace Problem: Special Cases"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Prove that Besicovitch sets in R^2 have Hausdorff dimension 2 (Davies's theorem). Formalize the Wolff bound in R^3: dimension ≥ 5/2. Connect to restriction estimates for the Fourier transform and to additive combinatorics via the Katz-Tao framework.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Analysis"
+    ],
+    "id": "seed_347",
+    "lineage_refs": [],
+    "priority_score": 0.84,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432660+00:00",
+    "title": "Kakeya Conjecture: Known Cases and Bounds"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the Böhm tree for undecidability of equivalence.",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Computation"
+    ],
+    "id": "seed_361",
+    "lineage_refs": [],
+    "priority_score": 0.84,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432769+00:00",
+    "title": "Lambda Calculus: Church-Rosser and Normalization"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the PAC-Bayes framework in Lean 4. Prove the Catoni bound and McAllester bound. Apply to neural networks via Gaussian perturbation priors. Prove that PAC-Bayes bounds are asymptotically tight for linear classifiers.",
+    "domain_bridges": [],
+    "domains": [
+      "MachineLearning",
+      "Probability",
+      "Computation"
+    ],
+    "id": "seed_367",
+    "lineage_refs": [],
+    "priority_score": 0.84,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432779+00:00",
+    "title": "PAC-Bayes Generalization Bounds"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Fisher information metric on parametric statistical models. Prove the Cramér-Rao bound as a geometric statement. Construct the alpha-connections and prove the dually flat structure. Apply to exponential families.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Probability",
+      "Bridges"
+    ],
+    "id": "seed_377",
+    "lineage_refs": [],
+    "priority_score": 0.84,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432802+00:00",
+    "title": "Information Geometry: Fisher Metric on Statistical Models"
   },
   {
     "ambition_level": "extension",
@@ -865,6 +1715,107 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Prove the Jacobian conjecture for polynomial maps of degree 2 in all dimensions. Formalize the reduction to degree 3 (Drużkowski's theorem). Construct explicit counterexample candidates and verify they fail. Prove the conjecture implies the Dixmier conjecture.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "seed_340",
+    "lineage_refs": [],
+    "priority_score": 0.83,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432638+00:00",
+    "title": "Jacobian Conjecture: Degree 2 and 3 Cases"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the discrete Fourier transform as representation theory of cyclic groups. Prove Parseval's theorem and the convolution theorem. Extend to arbitrary finite abelian groups. Prove the uncertainty principle: supp(f) · supp(f̂) ≥ |G|.",
+    "domain_bridges": [],
+    "domains": [
+      "Analysis",
+      "Algebra"
+    ],
+    "id": "seed_346",
+    "lineage_refs": [],
+    "priority_score": 0.83,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432657+00:00",
+    "title": "Fourier Analysis on Finite Groups"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Brunn-Minkowski inequality: vol(A+B)^{1/n} ≥ vol(A)^{1/n} + vol(B)^{1/n}. Prove the isoperimetric inequality as a consequence. Formalize support functions and the Minkowski sum. Prove the Alexandrov-Fenchel inequality.",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Analysis"
+    ],
+    "id": "seed_351",
+    "lineage_refs": [],
+    "priority_score": 0.83,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432684+00:00",
+    "title": "Convex Geometry: Brunn-Minkowski Theory"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize chromatic polynomials and prove deletion-contraction. Prove the four-color theorem is equivalent to χ(G) ≤ 4 for all planar G. Formalize Brooks' theorem: χ(G) ≤ Δ(G) unless G is complete or an odd cycle. Prove the chromatic polynomial is T-positive for claw-free graphs.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "seed_354",
+    "lineage_refs": [],
+    "priority_score": 0.83,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432739+00:00",
+    "title": "Graph Coloring: Chromatic Polynomial Theory"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the self-attention mechanism as a kernel method. Prove that softmax attention is a universal approximator of sequence-to-sequence functions. Analyze the rank of attention matrices and prove the attention sink phenomenon for large context.",
+    "domain_bridges": [],
+    "domains": [
+      "MachineLearning",
+      "Algebra",
+      "Analysis"
+    ],
+    "id": "seed_368",
+    "lineage_refs": [],
+    "priority_score": 0.83,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432784+00:00",
+    "title": "Attention Mechanisms: Mathematical Properties"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
     "domain_bridges": [],
     "domains": [
@@ -977,6 +1928,108 @@
     "status": "available",
     "timestamp": "2026-06-08T19:25:10.494305+00:00",
     "title": "Reconstruction Conjecture"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
+    "domain_bridges": [],
+    "domains": [
+      "NumberTheory",
+      "Computation"
+    ],
+    "id": "seed_330",
+    "lineage_refs": [],
+    "priority_score": 0.82,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432601+00:00",
+    "title": "Collatz Stopping Times: Density Analysis"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize quaternion algebras and their classification over number fields. Prove the isomorphism between unit quaternions and SO(3). Construct the Cayley-Dickson construction and prove properties of octonions. Apply to gimbal lock avoidance in 3D rotation.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry",
+      "Bridges"
+    ],
+    "id": "seed_341",
+    "lineage_refs": [],
+    "priority_score": 0.82,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432642+00:00",
+    "title": "Quaternion Algebras and Rotations"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Probability"
+    ],
+    "id": "seed_355",
+    "lineage_refs": [],
+    "priority_score": 0.82,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432742+00:00",
+    "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize key results of Bishop's constructive analysis in Lean 4. Prove the constructive intermediate value theorem (with explicit modulus). Construct computable real numbers and prove completeness. Compare with classical results.",
+    "domain_bridges": [],
+    "domains": [
+      "Logic",
+      "Analysis"
+    ],
+    "id": "seed_359",
+    "lineage_refs": [],
+    "priority_score": 0.82,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432759+00:00",
+    "title": "Constructive Mathematics: Bishop's Analysis"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
+    "domain_bridges": [],
+    "domains": [
+      "Tropical",
+      "Computation",
+      "Geometry"
+    ],
+    "id": "seed_374",
+    "lineage_refs": [],
+    "priority_score": 0.82,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432797+00:00",
+    "title": "Tropical Convexity and Linear Programming"
   },
   {
     "ambition_level": "extension",
@@ -1256,6 +2309,63 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Mathlib.Order.RelClasses",
+      "Mathlib.Order.Antichain",
+      "Mathlib.Combinatorics.SimpleGraph.Basic",
+      "Mathlib.Data.Fintype.Basic"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every natural number k, the directed binary structure consisting of the strict order relation of any finite poset of width at most k has twin-width at most 2*k+1. Equivalently, every finite poset whose largest antichain has size at most k admits a contraction sequence in which every intermediate part has at most 2*k+1 red out-/in-neighborhood types induced by the strict order relation.",
+    "domain_bridges": [
+      "bounded-width posets ↔ oriented graphs with bounded independence number",
+      "Dilworth chain decompositions ↔ twin-width contraction sequences",
+      "finite model theory monadic dependence ↔ structural graph parameters"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2077",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use Dilworth's theorem to partition the finite poset into at most k chains. Construct a contraction sequence by repeatedly merging adjacent intervals inside the chains. At every stage, each contracted block is an interval in one chain. For any other chain, transitivity of the partial order implies that the set of blocks comparable to a fixed interval changes only at two boundary positions, so each block has at most two red-neighbor contributions per chain, plus a bounded contribution from its own chain. This should yield a uniform red-degree bound of 2*k+1. The Lean formalization would first define twin-width for finite binary relations via contraction trees/partitions, then formalize the interval-chain invariant and the red-degree estimate.",
+    "research_mode": "team",
+    "source_exp_id": "2606.18934v1",
+    "status": "available",
+    "timestamp": "2026-06-18T08:02:38.169523+00:00",
+    "title": "Linear twin-width bound for finite posets of bounded width"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Mathlib.NumberTheory.Zsqrtd.GaussianInt",
+      "Mathlib.RingTheory.Ideal.Basic",
+      "Mathlib.Analysis.InnerProductSpace.PiL2",
+      "Mathlib.LinearAlgebra.Span.Defs"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every nonzero ideal I of the Gaussian integers ℤ[i], the rank-2 Euclidean lattice obtained by applying the canonical embedding a+bi ↦ (a,b) to I is well-rounded: its shortest nonzero vectors span ℝ². Equivalently, if I = (α), then the shortest vectors are precisely the unit multiples ±α and ±iα under the embedding, giving two linearly independent equal-length minimal vectors.",
+    "domain_bridges": [
+      "canonical embedding of number-field ideals as Euclidean lattices",
+      "well-rounded lattices from algebraic integer ideals",
+      "multiplicative norm in ℤ[i] versus Euclidean vector norm"
+    ],
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_2078",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use that Gaussian integers form a Euclidean domain, hence every nonzero ideal is principal, say I = (α). Under the canonical embedding ℤ[i] → ℝ², multiplication by α is a rotation-scaling similarity of the square lattice ℤ². For any nonzero β ∈ ℤ[i], the squared Euclidean norm of αβ is normSq(α) * normSq(β), and normSq(β) ≥ 1, with equality exactly for the units ±1, ±i. Therefore the minimal vectors of the embedded ideal are the images of ±α and ±iα. The vectors α and iα are orthogonal and nonzero, hence span ℝ², proving well-roundedness.",
+    "research_mode": "team",
+    "source_exp_id": "2606.18920v1",
+    "status": "available",
+    "timestamp": "2026-06-18T08:03:43.657853+00:00",
+    "title": "Nonzero Gaussian integer ideal lattices are well-rounded"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
@@ -1349,6 +2459,46 @@
     "status": "available",
     "timestamp": "2026-06-08T19:25:11.463002+00:00",
     "title": "Sendov's Conjecture"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize the Euler-Mascheroni constant γ = lim(H_n - ln n). Prove key integral representations and series accelerations. Establish Apéry-like sequences that provide good rational approximations. Explore connections to the Stieltjes constants.",
+    "domain_bridges": [],
+    "domains": [
+      "Analysis",
+      "NumberTheory"
+    ],
+    "id": "seed_335",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432611+00:00",
+    "title": "Euler-Mascheroni Constant: Irrationality Approaches"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Formalize Frankl's conjecture and prove it for families of size ≤ 50 (Bošnjak-Marković). Prove the conjecture for families with a 3-element universe. Formalize the lattice-theoretic reformulation and Reimer's entropy approach.",
+    "domain_bridges": [],
+    "domains": [
+      "Combinatorics",
+      "Algebra"
+    ],
+    "id": "seed_353",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "",
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432728+00:00",
+    "title": "Frankl's Union-Closed Conjecture: Partial Results"
   },
   {
     "ambition_level": "extension",
@@ -1868,7 +3018,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "72f7ab23",
     "description": "# Future Directions — Unstoppable Self-Maps (Geometry)\n\nFollow-up conjectures for the theme *\"Self-modifying code that cannot be stopped\"*,\nbased on `Geometry/Unstoppable.lean` (the **drift criterion** for aperiodicity and\nits finite-state converse). Each is stated to be directly formalizable and\nfalsifiable in Lean 4 / Mathlib.\n\n## Conjecture 1 — Drift criterion is complete on the line\n**Statement.** Let `f : ℝ → ℝ` be continuous and monotone. Then `f` is\n`Unstoppable` (no periodic points) **iff** it admits a continuous drift coordinate,\nequivalently iff `f x ≠ x` for all `x` and `f x - x` has constant sign. More\nsharply: a fixed-point-free continuous `f : ℝ → ℝ` is unstoppable, and conversely\nany continuous self-map of `ℝ` with a fixed point halts there.\n**Test.** Formalize `Unstoppable f ↔ ∀ x, f x ≠ x` for continuous `f : ℝ → ℝ`\nusing the intermediate value theorem on `f^[n] x - x`.\n**Falsifier.** A continuous fixed-point-free `f : ℝ → ℝ` with a genuine periodic\norbit (would refute; conjecture predicts none exist).\n\n## Conjecture 2 — Quantitative escape rate from drift\n**Statement.** If `φ (f x) = φ x + c` with `c > 0` and `φ` is `K`-Lipschitz for a\nmetric `d`, then `d (f^[n] x, x) ≥ (|c|/K) · n`; hence the orbit is a\n*quasi-isometric* embedding of `ℕ` and escapes every bounded set in finite time.\n**Test.** Prove `dist (f^[n] x) x ≥ (c / K) * n` from `phi_iterate` and the\nLipschitz bound `|φ a - φ b| ≤ K · dist a b`.\n**Falsifier.** A drifting `f` with Lipschitz `φ` whose orbit stays bounded.\n\n## Conjecture 3 — Group-theoretic dichotomy for affine maps\n**Statement.** An invertible affine map `f x = A x + b` of a finite-dimensional\nreal inner-product space is `Unstoppable` **iff** `b` is not in the range of\n`A - I` (i.e. the affine fixed-point equation `(A - I) x = -b` has no solution).\nWhen `A = I` this recovers `translate_unstoppable`; when `A` is a rotation with\n`1 ∉ spectrum A`, the map always has a fixed point and halts.\n**Test.** Formalize `Unstoppable f ↔ (-b) ∉ Set.range (A - 1)` for `f x = A x + b`.\n**Falsifier.** An affine map with `(A-I)` surjective yet unstoppable, or with a\nfixed point yet unstoppable.\n\n## Conjecture 4 — Subexponential orbit growth forces a periodic point\n**Statement.** (Compactness/recurrence converse.) If `X` is a compact metric\nspace and `f : X → X` is continuous, then `f` is **not** `Unstoppable`: every\ncontinuous self-map of a nonempty compact metric space has a recurrent — in the\ntopological sense, almost-periodic — orbit, and on finite-dimensional compacta a\ngenuine periodic point in many cases. Minimal testable core: a continuous self-map\nof `[0,1]` (or `S¹` with rational rotation number) always halts.\n**Test.** Prove `¬ Unstoppable f` for continuous `f : Set.Icc (0:ℝ) 1 → ...`\nvia Brouwer fixed point, strengthening `not_unstoppable_of_finite` from finite to\ncompact.\n**Falsifier.** A continuous fixed-point/periodic-point-free self-map of a compact\ninterval (Brouwer forbids it).\n\n## Conjecture 5 — Cocycle drift and unstoppable group actions\n**Statement.** A free action is the group-level analogue of unstoppability. If a\ngroup `G` acts on `X` and admits a nonzero homomorphism-twisted cocycle\n`φ : X → ℝ` with `φ (g • x) = φ x + χ(g)` for a nontrivial character `χ`, then\nevery `g` with `χ(g) ≠ 0` acts without periodic points. Conjecture: for\n`G = ℤ` this is *equivalent* to the drift criterion, and the set of unstoppable\ngenerators is exactly `{g : χ(g) ≠ 0}`.\n**Test.** Generalize `unstoppable_of_drift` to a `χ`-twisted cocycle and recover\n`unstoppable_iterate_of_drift` as the `χ(g) = c` special case.\n**Falsifier.** A cocycle action with `χ(g) ≠ 0` admitting a periodic point.\n",
     "domain_bridges": [],
     "domains": [
@@ -1881,7 +3031,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "b4a517d3",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-17T00:29:20.027992+00:00",
     "title": "Follow-up conjectures for the theme *\"Self-modifying code that cannot be stopped"
   },
@@ -2707,26 +3857,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "2710f166",
-    "description": "Conjecture: For any sufficiently expressive formal system with a fixed proof search procedure, there exists a scale-coarse-graining operator on proof states such that the induced renormalization flow has universality classes, and theorem families near critical fixed points exhibit polynomial-to-exponential transitions in provability complexity under small changes of axioms or heuristics. Test: Define coarse-grainings on proof-search trees for benchmark theorem families across multiple provers; measure whether rescaled search statistics collapse onto invariant flow curves and whether critical exponents predicting abrupt complexity transitions are stable across syntactic encodings. The conjecture is refuted if no encoding-robust fixed points, universality classes, or predictive critical exponents appear. Impact: This would enable a physics-style theory of theorem proving, identifying when tiny changes in representations or axiom sets trigger dramatic shifts in solvability, and could guide the design of provers, formal systems, and automated discovery pipelines.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_2054",
-    "lineage_refs": [],
-    "priority_score": 0.7,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-17T13:02:11.584379+00:00",
-    "title": "Renormalization of Proofs: Phase Transitions in Automated Theorem Search"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Investigate the sequence \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order. with terms 127,343,736,1285,2187,2502,2592,2737,3125,3685,3864,3972,4096,6455,11264,11664,12850,13825,14641,155. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domain_bridges": [],
@@ -2976,26 +4106,6 @@
     "status": "available",
     "timestamp": "2026-06-03T19:55:28.479969+00:00",
     "title": "Idempotent Probability: Large Deviations"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "50e9a2da",
-    "description": "Prove neural network scaling laws from first principles. Derive power-law relationships between loss, model size, dataset size, and compute from the GP kernel spectrum.",
-    "domain_bridges": [],
-    "domains": [
-      "MachineLearning",
-      "Physics"
-    ],
-    "id": "fd_0441",
-    "lineage_refs": [],
-    "priority_score": 0.5499999999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:28.640557+00:00",
-    "title": "Scaling Laws from Statistical Mechanics"
   },
   {
     "ambition_level": "extension",
@@ -3439,7 +4549,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a297d88b",
     "description": "Prove deep structural theorems about the Berggren tree of Pythagorean triples. Formalize the groupoid action on SL(3,Z), the prime distribution along hypotenuse lengths, and computational applications of the tree structure.",
     "domain_bridges": [],
     "domains": [
@@ -3452,7 +4562,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.030710+00:00",
     "title": "Pythagorean Triple Group Structure"
   },
@@ -4099,27 +5209,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5230ead3",
-    "description": "In the game Werewolf (Mafia), n players include k werewolves and n-k villagers. Each night, the werewolves eliminate one villager. Each day, the villagers vote to eliminate one player (possibly a werewolf). The villagers win if all werewolves are eliminated; the werewolves win if they equal or outnumber villagers. Conjecture: The optimal Bayesian strategy for villagers is to vote for the player with the highest posterior probability of being a werewolf, where the prior is k/n and the likelihood updates are based on the player's voting pattern and survival. More precisely, define the werewolf posterior P(W_i | evidence) using Bayes' theorem: P(W_i) = k/n (prior), P(evidence | W_i) = product of conditional probabilities of observed events given that player i is a werewolf. The optimal strategy maximizes P(villagers win) = P(correct elimination at each day round). For n=7, k=2: the villagers' win probability with optimal Bayesian play is approximately 0.36 (known from game theory). Conjecture: For general n and k, the villagers' win probability is approximately C * (1 - k/(n-k))^2 where C is a constant depending on the information structure. Test: simulate 10^6 games with n=7 to n=20 players and Bayesian villagers, measure the win probability, and fit to the conjectured formula. Impact: social deduction has an optimal Bayesian strategy, and the werewolves' advantage scales as (k/(n-k))^2.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_0051",
-    "lineage_refs": [],
-    "priority_score": 0.05,
-    "proof_strategy": "Define the Bayesian villager strategy: at each day round, each villager computes P(W_i | evidence) for all players i, where evidence includes voting patterns and survival. Update rule: P(W_i | day_vote) proportional to P(day_vote | W_i) * P(W_i). Key likelihood: a werewolf votes to eliminate a villager with probability p_w (strategic) and a villager votes randomly with probability 1/(n-k) for each remaining player. P(villager votes for j | i is werewolf) = p_w * I(j is villager) / (n-k) + (1-p_w) * 1/(n-1). For n=7, k=2: compute optimal p_w by backward induction. The game tree has depth at most 5 (n-k rounds at most). Compute P(villagers win) by Monte Carlo simulation with 10^6 trials. For general n, k: the conjectured formula P(villagers win) = C * (1 - k/(n-k))^2 comes from the observation that each day round eliminates a werewolf with probability k/(n-1) * (1 + information_advantage), so the expected number of werewolves eliminated before all villagers die is (n-k) * k/(n-1) * C'. Simplify to get C * (1 - k/(n-k))^2. Test: verify for n=7 to n=20.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.593085+00:00",
-    "title": "Bayesian Werewolf: Optimal Strategy for Social Deduction Games"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fb1d7cfa",
     "description": "Anyon braiding in topological quantum computing gives unitary matrices from the braid group B_n. The Jones representation rho_k: B_n -> U((k-1)(n-1)+1) at root of unity e^{2*pi*i/k} is conjectured to be universal for quantum computation when k >= 3 and n >= 4. Conjecture: the set of all braids in B_4 under the Jones representation at k=5 generates a dense subgroup of SU(3). More precisely, the image rho_5(B_4) is an infinite subgroup of SU(3) that is not contained in any proper closed subgroup. This means that topological quantum computing with Fibonacci anyons (k=5) is universal: any unitary in SU(3) can be approximated to arbitrary precision by braiding 4 anyons. The key: the Jones representation at k=5 gives 3x3 matrices, and the braid generators sigma_1, sigma_2, sigma_3 generate a dense subgroup of SU(3). Test: compute the Jones representation at k=5 for B_4, verify that sigma_1 * sigma_2 * sigma_3 has infinite order, and check that the group generated by sigma_1, sigma_2, sigma_3 is dense in SU(3) by the Solovay-Kitaev theorem. Impact: braiding anyons is universal for quantum computation. The braid group B_4 at k=5 is a quantum gate set.",
     "domain_bridges": [],
     "domains": [
@@ -4132,7 +5222,7 @@
     "proof_strategy": "Define the braid group B_n = <sigma_1, ..., sigma_{n-1} | sigma_i * sigma_j = sigma_j * sigma_i for |i-j| > 1, sigma_i * sigma_{i+1} * sigma_i = sigma_{i+1} * sigma_i * sigma_{i+1}>. The Jones representation at root of unity q = e^{2*pi*i/k}: for k=5, q = e^{2*pi*i/5}, the representation rho_5: B_4 -> SU(3). Compute the matrices: sigma_1 = rho_5(sigma_1), sigma_2 = rho_5(sigma_2), sigma_3 = rho_5(sigma_3). These are 3x3 unitary matrices. Verify: (1) sigma_i * sigma_j = sigma_j * sigma_i for |i-j| > 1, (2) sigma_i * sigma_{i+1} * sigma_i = sigma_{i+1} * sigma_i * sigma_{i+1}. Check density: compute sigma_1 * sigma_2 * sigma_3 and verify it has infinite order (the trace is not a root of unity). Apply the Solovay-Kitaev theorem: if the group generated by sigma_1, sigma_2, sigma_3 contains a non-commuting pair and is infinite, then it is dense in SU(3). Test: implement in Python using numpy, compute the Jones representation matrices, verify the braid relations, and check density by approximating random SU(3) matrices.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.643460+00:00",
     "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
   },
@@ -4199,7 +5289,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0a8baa9d",
     "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
     "domain_bridges": [],
     "domains": [
@@ -4212,7 +5302,7 @@
     "proof_strategy": "Define the data sheaf: for a database with n features and m observations, the base space is the poset P of feature subsets (ordered by inclusion). The sheaf F assigns to each feature subset S the set of complete observations on features S. The restriction maps F(S) -> F(T) for T subset S project out the features in S\\T. The sheaf condition: for any cover {S_i} of S, the following is an equalizer: F(S) -> prod_i F(S_i) ==> prod_{i,j} F(S_i cap S_j). This means: a global section exists iff local sections agree on overlaps. P(sheaf) = P(all overlapping constraints are consistent) = prod_{overlaps} P(consistent | missing) = prod_{overlaps} (1-r)^2 = (1-r)^{2*C(n,2)} for pairwise overlaps. More precisely: there are C(n,2) overlapping pairs of features. Each pair requires consistency of the two partial sections. P(consistent pair) = (1-r)^2 (both features present) + r^2 * P(consistent by chance) + 2*r*(1-r) * P(consistent partial). For random data: P(consistent by chance) ~ 1/k where k is the number of values. So P(sheaf) ~ (1 - r + r/k)^{C(n,2)}. For n > 10 and r < 0.5: P(sheaf) > (1-r)^{C(n,2)} > 0 if r < 1 - C(n,2)^{-1/n}. Sheaf imputation: find the global section s that minimizes ||s - data||^2 subject to s in H^0(F). This is a constrained optimization problem. Test: generate synthetic data from a known distribution, introduce MCAR missing values, compare imputation methods.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.807837+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },

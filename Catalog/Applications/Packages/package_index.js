@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "15e84b40",
     "filename": "sheaf_theoretic_data_integration_when_databases_fo.json",
     "pkg_num": 195,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5413687224669603,
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
   {
@@ -5983,8 +5983,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "sheaf_theoretic_data_integration_when_databases_fo",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5413687224669603,
+      "quality": "partial",
       "shape": "dodecahedron",
       "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
     }
