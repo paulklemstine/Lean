@@ -33031,7 +33031,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "math.CO",
         "independence number",
@@ -33041,7 +33041,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "7f1e65fe",
       "depth_estimate": 3,
       "description": "The paper establishes an average-degree lower bound on the independence number of uncrowded uniform hypergraphs (those without Berge 2, 3, or 4-cycles). Since Verstraete and Wilson previously extended the maximum-degree bound from uncrowded to locally sparse hypergraphs (those without Berge 2 or 3-cycles), this conjecture proposes that the average-degree bound similarly extends to the broader class of locally sparse uniform hypergraphs.",
       "domain_bridges": [
@@ -33053,7 +33053,7 @@
         "Pythagorean"
       ],
       "id": "fd_2072",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-19T07:55:47.613409+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Real.Basic\n\ntheorem avg_degree_independence_locally_sparse\n    (r : ℕ) (hr : r ≥ 2) (η : ℝ) (hη : η > 0) :\n    ∃ d_ : ℝ, ∀ (d : ℝ) (hd : d ≥ d_),\n    ∀ (V : Type) [Fintype V] [DecidableEq V]\n    (G : Finset (Finset V))\n    (h_uniform : ∀ e ∈ G, e.card = r + 1)\n    (h_no_C2 : ∀ e₁ ∈ G, ∀ e₂ ∈ G, e₁ ≠ e₂ → (e₁ ∩ e₂).card < 2)\n    (h_no_C3 : True) -- Placeholder for the absence of Berge 3-cycles\n    (h_avg_deg : ((r + 1 : ℝ) * G.card) / (Fintype.card V) ≥ d),\n    ∃ (I : Finset V), (∀ e ∈ G, ¬ I ⊆ e) ∧\n      (I.card : ℝ) ≥ (1 - η) * (r : ℝ)^(-(1 : ℝ) / (r : ℝ)) * (((Real.log d) / d)^((1 : ℝ) / (r : ℝ))) * (Fintype.card V) := by\n  sorry",
       "lineage_refs": [],
@@ -33066,7 +33066,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.18171v1",
       "source_path": "http://arxiv.org/abs/2606.18171v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T00:40:07.506039+00:00",
       "title": "Average-Degree Bound for Locally Sparse Uniform Hypergraphs"
@@ -33959,6 +33959,48 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "16T25",
+        "17B60",
+        "17B50"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Conjecture: Let 𝔽 be a field of characteristic p>0, λ∈𝔽, and (𝔤,[−,−],R,λ) a restricted Rota-Baxter Lie algebra over 𝔽. Then there exists a restricted Rota-Baxter associative algebra (A,R_A,λ) over 𝔽 such that 𝔤 is isomorphic to a Lie subalgebra of the commutator Lie algebra A^− and the restriction of R_A to 𝔤 equals R.",
+      "domain_bridges": [
+        "math.CO"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2093",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem embedding_restricted_rb_lie_algebra {R : Type*} [Field R] [Fact (CharP R p)] (λ : R) (g : LieAlgebra R) [RestrictedLieAlgebra g] (Rop : g → g) [RBaxterLieAlgebra g λ Rop] :\n  ∃ (A : Type*) [AssociativeAlgebra R A] [RestrictedRBaxterAssociativeAlgebra A λ RA] (i : LieAlgebraHom g (A⁻)) (h : Function.Injective i) (hR : ∀ x : g, RA (i x) = i (Rop x)) := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Use the PBW theorem for restricted Lie algebras to embed 𝔤 into its restricted enveloping algebra u(𝔤), which is an associative algebra. Define a Rota-Baxter operator on u(𝔤) by extending R via the splitting property and verifying the axioms of weight λ. Show that u(𝔤) equipped with this operator becomes a restricted Rota-Baxter associative algebra. Finally, consider the commutator Lie algebra u(𝔤)^−; the canonical embedding of 𝔤 into u(𝔤) induces an embedding into u(𝔤)^− preserving the Rota-Baxter structure.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.19244v1",
+      "source_path": "http://arxiv.org/abs/2606.19244v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-19T07:55:41.287590+00:00",
+      "title": "Embedding of restricted Rota-Baxter Lie algebras into commutator Lie algebras of restricted Rota-Baxter associative algebras"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "OEIS A099009",
         "Schwartz and Thakur's formulation",
         "Thakur's framework"
@@ -33976,7 +34018,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2093",
+      "id": "fd_2094",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem four_digit_kaprekar_cycle_length (B : odd_prime) [H : B > 5] : cycle_length B = (B - 1) // 2 ↔ (order_of_2 B) = (B - 1) // 2",
@@ -34021,7 +34063,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2094",
+      "id": "fd_2095",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem dallard_planar_induced_minor_conjecture\n  (d : ℕ) (hd : 0 < d) {W : Type*} [Fintype W]\n  (H : SimpleGraph W) (hH : H.Planar) :\n  ∃ B : ℕ, ∀ {V : Type*} [Fintype V] (G : SimpleGraph V),\n    G.InducedMinorFree H →\n    G.InducedSubgraphFree (SimpleGraph.K1d d) →\n      G.TreeIndependenceNumber ≤ B := by\n  sorry",
@@ -34064,7 +34106,7 @@
         "Algebra",
         "Computation"
       ],
-      "id": "fd_2095",
+      "id": "fd_2096",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "A slightly adapted version of the normal approximation in the origin localization lemmas, tailored to uniform random selections in finite settings.",
@@ -34113,7 +34155,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2096",
+      "id": "fd_2097",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cm_points_equidistribute_product (r : ℕ) (hr : 2 ≤ r) (curves : Fin r → ShimuraCurve) (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (hsplit : ∀ n, p.SplitsIn (CMField n) ∧ q.SplitsIn (CMField n)) (strict_seq : StrictSequence ...) : WeakConvergence (GaloisOrbitMeasure (z_seq : ℕ → Product (Fin r → ShimuraCurve))) (HaarMeasure (Product (Fin r → ShimuraCurve))) := by sorry",
@@ -34131,42 +34173,6 @@
       "thread_id": "",
       "timestamp": "2026-06-19T07:11:19.175046+00:00",
       "title": "Equidistribution of Galois orbits of CM points on products of non‑isomorphic Shimura curves"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "# Future Directions — Kakeya: Known Cases and Bounds\n\nDerived from this cycle's findings (the combinatorial \"bush\" engine\n`card_biUnion_lower`, the sharp planar finite-field bound\n`finite_field_kakeya_2d`, and the tropical incidence bridge\n`tropical_arrangement_vertex_bound`).\n\n## 1. Higher-dimensional finite-field Kakeya via the polynomial method (Dvir)\n\n**Conjecture.** A Kakeya set `S ⊆ K^n` over a finite field with `|K| = q`\n(containing a line in every direction) satisfies `|S| ≥ c_n · q^n`.\n\nThe key insight is... that the bush/inclusion–exclusion engine proven here is the\n`n = 2` shadow of Dvir's polynomial method: in higher dimensions one replaces\n\"two lines meet in ≤ 1 point\" by \"a degree-`< q` polynomial vanishing on a\nKakeya set vanishes identically\", a single algebraic incidence fact, exactly as\n`card_biUnion_lower` abstracts the single geometric input.\n\nWhy now? `Combinatorial.lean` already isolates the incidence hypothesis as a\nstandalone parameter; formalizing Dvir's vanishing lemma over `MvPolynomial`\n(present in Mathlib) plugs straight into that interface.\n\n## 2. The constant in the planar bound is `(q+1)/(2q)`, and it is monotone\n\n**Conjecture.** Among all planar finite-field Kakeya sets, the minimum\nsize is *exactly* `q(q+1)/2`, and the normalized density `(q+1)/(2q)` is strictly\ndecreasing in `q` with limit `1/2`.\n\nThe key insight is... that the origin pencil `Lₘ = {(t, m·t)}` realizes equality\n(see `ComputationalEvidence.md`), so the lower bound is the true minimum; the\ndensity limit `1/2` is the discrete fingerprint of \"Hausdorff dimension 2\".\n\nWhy now? Sharpness is already verified computationally; formalizing the matching\n*upper* construction (an explicit `S` of size `q(q+1)/2`) closes the gap to an\nexact min-cardinality theorem.\n\n## 3. Tropical Kakeya: an arrangement of `n` generic tropical lines has `≥ n(n+1)/2 − C(n,2)` vertices\n\n**Conjecture.** A generic arrangement of `n` degree-1 tropical lines in the\nplane, with each pair meeting in exactly one stable vertex, has exactly\n`C(n,2)` vertices, and any sub-incidence-bounded family obeys the bush bound of\n`tropical_arrangement_vertex_bound`.\n\nThe key insight is... that the tropical–classical correspondence\n(`tropical_classical_correspondence`) supplies precisely the `≤ 1`-intersection\naxiom of the Kakeya engine, so tropical curve counting and Kakeya incidence\ncounting are the *same* Bonferroni principle (see `TropicalBridge.lean`).\n\nWhy now? The bridge theorem is already proved; only the genericity-implies-\nexactly-one-vertex step remains, and the tropical machinery for it lives in\n`Tropical.TropicalLineCounting`.\n\n## 4. Wolff's `5/2` bound in `ℝ³` via a discrete `2`-plane incidence engine\n\n**Conjecture.** A finite-field Kakeya set in `K^3` satisfies `|S| ≥ c · q^{5/2}`,\nprovable from a bounded-incidence statement for *planes* rather than lines.\n\nThe key insight is... that Wolff's hairbrush argument is, combinatorially, a\ntwo-level bush: lines bunch into planes, and the engine `card_biUnion_lower`\napplied twice (once at the line level, once at the plane level) should yield the\n`5/2` exponent without any analysis.\n\nWhy now? With the single-level engine formalized and parameterized purely by an\nincidence bound, the iterated/two-level version is a natural next module.\n\n## 5. Katz–Tao additive-combinatorial reformulation\n\n**Conjecture.** The planar bound `q(q+1)/2` is equivalent to a sum–difference\ninequality `|A + A| · |A − A| ≥ c |A|^{3}` for the slope/intercept data of the\nline family.\n\nThe key insight is... that the pairwise-intersection count `C(q,2)` subtracted in\n`card_biUnion_lower` is literally a count of additive coincidences\n`m·t + b = m'·t + b'`, so the bush bound *is* a sum-set estimate in disguise.\n\nWhy now? The proof of `finite_field_kakeya_2d` already exposes the equation\n`(m − m')·x = b' − b` as the unique additive coincidence per pair; recasting the\ncounting as an additive-energy bound is a direct rewriting.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Algebra",
-        "Geometry"
-      ],
-      "id": "fd_2097",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "b53ecc44",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/b53ecc44",
-      "status": "available",
-      "thread_id": "th_159af3d9",
-      "timestamp": "2026-06-19T07:50:32.021143+00:00",
-      "title": "Derived from this cycle's findings (the combinatorial \"bush\" engine"
     },
     {
       "ambition_level": "extension",
@@ -93684,5 +93690,7 @@
     "whether": 50,
     "zombies": 3
   },
-  "selection_log": []
+  "selection_log": [
+    "cross_domain_bridge"
+  ]
 }
