@@ -34,20 +34,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle be5e0ab8 (Q=0.890), which proved 35 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Jones\u2013Temperley\u2013Lieb representation of the braid group B_n in Lean, proving that the map sending each Artin generator \u03c3_i to the Jones operator jonesOp A X_i satisfies the braid relations, provides a faithful representation for generic parameter A, and connects to the Markov trace yiel",
-    "domains": [
-      "Computation"
-    ],
-    "id": "push_be5e0ab8_4ee19012",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "be5e0ab8",
-    "status": "available",
-    "timestamp": "2026-06-19T10:37:36.402838+00:00",
-    "title": "Deepening: Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n \u2264 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
     "domains": [
       "NumberTheory",
@@ -1048,6 +1034,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0116",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.958310+00:00",
+    "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
     "domains": [
       "Bridges",
@@ -1989,11 +1990,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every odd prime base B > 5, the length of the longest terminal cycle in the four-digit Kaprekar routine equals (B-1)/2 if and only if the multiplicative order of 2 modulo B is (B-1)/2.",
+    "description": "The conjecture asserts there are precisely 57 nonnegative integer solutions (a, b, x) satisfying the inequality.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_2098",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18500v1",
+    "status": "available",
+    "timestamp": "2026-06-19T10:40:58.134181+00:00",
+    "title": "Exact Number of Solutions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every odd prime base B > 5, the length of the longest terminal cycle in the four-digit Kaprekar routine equals (B-1)/2 if and only if the multiplicative order of 2 modulo B is (B-1)/2.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2099",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
@@ -2007,7 +2022,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2099",
+    "id": "fd_2100",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
@@ -2022,7 +2037,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2100",
+    "id": "fd_2101",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19677v1",
@@ -2037,7 +2052,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2101",
+    "id": "fd_2102",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19933v1",
@@ -2052,7 +2067,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2102",
+    "id": "fd_2103",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19573v1",
@@ -2066,7 +2081,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2103",
+    "id": "fd_2104",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19006v1",
@@ -2081,7 +2096,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2104",
+    "id": "fd_2105",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18956v1",
@@ -3039,36 +3054,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T23:11:17.377449+00:00",
     "title": "Two boundary facts of the prime crossword in"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Anti-Gravity Mathematics\n\nThis cycle formalized dependency DAGs of a formal library, the **gravitational\nweight** `weight b = #{a : a depends on b}`, and the **anti-gravity** predicate\n(high weight, short proof).  We proved the structural laws that survive scrutiny\n(monotonicity, conservation, above-average foundation), exhibited a guaranteed\nanti-gravity theorem (the *fan*), and **refuted** the conjectured universal \"10%\nlaw\" with an explicit counterexample (the *discrete* library has fraction 0,\nwhile the *chain* pushes the fraction to `k/(k+1) \u2192 1`).  The conjectures below\nare derived directly from those findings.\n\n---\n\n## Conjecture 1 \u2014 Weight is a graded invariant: `weight` strictly drops along every dependency edge, so it induces a height function bounding the longest proof-dependency chain.\n\nIn any finite dependency DAG, the longest chain `t\u2080 \u227a t\u2081 \u227a \u22ef \u227a t\u2098` has length\n`m \u2264 weight t\u2080`, and more strongly `weight t\u1d62 \u2265 m - i`.\n\n* **The key insight is** that `DepDAG.weight_lt_of_dep` (proved this cycle) makes\n  `weight` strictly decreasing along the order, so it is an order-reversing\n  grading; a strictly monotone `\u2115`-valued function on a chain bounds the chain's\n  length, turning the *global* quantity \"number of dependents\" into a *local*\n  certificate of proof depth.\n* **Why now?** We already have the strict-monotonicity lemma and the conservation\n  identity in machine-checked form; the remaining step (chain-length bound) is a\n  finite induction over the order that the framework now supports directly.\n\n## Conjecture 2 \u2014 The anti-gravity fraction is threshold-determined, not library-determined: for the *family* of all DAGs on `n` nodes, the expected fraction with weight `\u2265 \u03c4` is `\u0398(1)` only when `\u03c4 = \u0398(1)`, and decays whenever `\u03c4 \u2192 \u221e`.\n\nThe \"10% law\" is meaningless without fixing the threshold; the right statement is\na phase transition in `\u03c4`.\n\n* **The key insight is** that our three examples already span the whole interval\n  `[0,1)` of fractions (discrete \u2192 0, chain \u2192 1, fan \u2192 `1/(n+2)`), so the fraction\n  cannot be a library invariant \u2014 it is governed by the relationship between the\n  threshold `\u03c4` and the weight *distribution*, which is what should be studied.\n* **Why now?** With `chain_antigravity_card` giving an exact count `= k`, the\n  framework can express and test fraction-vs-threshold statements concretely, and\n  random-DAG weight distributions are within reach of `Finset` counting.\n\n## Conjecture 3 \u2014 Conservation forces a \"heavy tail\": in any DAG with `D` dependency pairs on `n` nodes, at least one theorem has weight `\u2265 D/n`, and if `D \u2265 n` then a *positive fraction* of theorems are anti-gravity at threshold 1.\n\n* **The key insight is** that `DepDAG.sum_weight_eq` turns total weight into the\n  exact pair-count `D`, so the pigeonhole/averaging bound `exists_weight_ge_average`\n  (already proved) upgrades to a *counting* statement: dense dependency (`D \u2265 n`)\n  cannot be spread so thinly that everyone has weight 0.\n* **Why now?** Both ingredients \u2014 the conservation identity and the\n  above-average existence lemma \u2014 are formalized this cycle; combining them is a\n  short counting argument rather than new theory.\n\n## Conjecture 4 \u2014 Foundational catalog theorems are detectable purely from the dependency graph: the genuinely foundational results (irrationality of `e`, FTA, \u2026) are exactly the strict maxima of `weight`.\n\n* **The key insight is** that in `CatalogBridge.lean` the abstract law\n  `weight_lt_of_dep` *alone* (no proof-content analysis) singled out the\n  irrationality-of-`e` node as strictly heaviest; \"foundationality\" is therefore a\n  graph-theoretic, not a semantic, property.\n* **Why now?** Real Lean libraries expose their dependency graph via\n  `importGraph`/`#print axioms`; the framework here gives the exact invariant\n  (`weight`) to compute on that graph, so the conjecture is empirically testable\n  on Mathlib today.\n\n## Conjecture 5 \u2014 Anti-gravity is not closed under composition: gluing two libraries each rich in anti-gravity theorems can destroy almost all of them.\n\n* **The key insight is** that weight is computed *relative to the ambient DAG*, so\n  embedding the chain (fraction `\u21921`) as the bottom of a larger fan can collapse\n  most of its anti-gravity nodes' relative threshold \u2014 anti-gravity is a global,\n  non-local property and hence not monotone under disjoint union or sequential\n  composition of libraries.\n* **Why now?** The `DepDAG` structure makes library composition (disjoint sum,\n  ordinal sum) a definable operation, so the failure of closure can be stated and\n  checked with the counting lemmas already available.\n",
-    "domains": [
-      "Logic",
-      "Algebra"
-    ],
-    "id": "fd_2105",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "be5e0ab8",
-    "status": "available",
-    "timestamp": "2026-06-19T10:36:25.186902+00:00",
-    "title": "This cycle formalized dependency DAGs of a formal library, the **gravitational"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS \u2014 Combinatorics of the Universal Library\n\nDerived from this cycle's findings in `Counting.lean` and `Diagonal.lean`. Each conjecture\nis bold, falsifiable, and stated so it could be formalized next.\n\n## C1. Windowed-occurrence law (sharpening `prob_match`)\n\n**Conjecture.** For a fixed word `T` of length `m \u2264 L` over a `b`-symbol alphabet, the number\nof volumes in which `T` occurs as a contiguous substring at *some* position satisfies the\ninclusion\u2013exclusion bound\n`(L-m+1)\u00b7b^{L-m} - \\binom{L-m+1}{2}\u00b7b^{L-2m+overlap} \u2264 #occur \u2264 (L-m+1)\u00b7b^{L-m}`,\nand the lower order term is governed by the autocorrelation (overlap) polynomial of `T`.\n\n- **The key insight is** that the spurious linear `|T|` factor in the informal conjecture is\n  exactly the window count `L-m+1` from a union bound, and its *correction* is the classical\n  Guibas\u2013Odlyzko correlation polynomial \u2014 so \"meaning density\" is a string-autocorrelation\n  invariant, not a single scalar.\n- **Why now?** `card_agree_on` already gives the exact fixed-position count `b^{L-m}`; the\n  only missing ingredient is summing over windows with inclusion\u2013exclusion, which Mathlib's\n  `Finset` machinery now supports directly.\n\n## C2. The catalog is strictly super-linear (entropy lower bound)\n\n**Conjecture.** Any distributed catalog that stores, for every volume, a decodable address\nrequires `N \u2265 b^L` volumes \u2014 a factor `L\u00b7log\u2082 b` *more* than the informal `b^L/(L\u00b7log\u2082 b)`.\n\n- **The key insight is** that \"one volume-reference per entry\" (threshold `b^L/L`, proved as\n  `distributed_catalog_iff`) is not the same as \"raw-bit encoding\": each reference itself\n  costs `L\u00b7log\u2082 b` bits, so the bit-faithful threshold multiplies back up to `b^L`.\n- **Why now?** `distributed_catalog_iff` pins the entry-count threshold exactly; promoting it\n  to a bit-level Kraft-inequality statement is a clean next step using\n  `Function.Embedding`/cardinality lemmas already in scope.\n\n## C3. de Bruijn existence at every order (mini-Library realizability)\n\n**Conjecture.** For all `b \u2265 1, n \u2265 1` a de Bruijn sequence `B(b,n)` exists, i.e. the window\nmap of `Diagonal.lean` is realizable as a bijection of length `b^n`; in particular the\nmini-Library `B(4,16)` of length `4^16` is constructible in time polynomial in its length.\n\n- **The key insight is** that existence is exactly an Eulerian circuit in the de Bruijn graph\n  on `b^{n-1}` vertices, which is balanced and connected \u2014 so a constructive greedy/Hierholzer\n  argument yields the catalog, complementing the *necessity* `isDeBruijn_length` proved here.\n- **Why now?** We have already isolated the bijective `window`/`IsDeBruijn` interface and the\n  forced-length theorem; only the Eulerian-circuit existence half remains, and Mathlib's graph\n  theory now has enough connectivity API to attempt it.\n\n## C4. Phase transition in \"probability of a valid proof\"\n\n**Conjecture.** Fix a proof system. The probability that a random Borges volume contains a\n*syntactically valid* proof of a theorem of Kolmogorov complexity `k` is `\u0398(b^{-k})` up to a\npolynomial-in-`L` factor, and exhibits a sharp threshold: for `k > L\u00b7log_b 2` the expected\ncount drops below 1, so almost no volume helps.\n\n- **The key insight is** that \"validity\" is a prefix-free language, so the count of valid\n  carriers is controlled by Kraft's inequality applied to the proof grammar \u2014 turning the\n  vague `|T|\u00b7b^{-k}` into a precise first-moment threshold, exactly the method the catalog's\n  `RamseyFirstMoment` file uses for hypergraph colorings.\n- **Why now?** `card_bitbook_match` already bridges our counting to the catalog's first-moment\n  lemma `card_filter_eq_const`; reusing that expectation machinery for a proof-grammar\n  indicator is the natural cross-domain extension.\n\n## C5. Self-reference is impossible at every scale (uniform diagonal)\n\n**Conjecture.** There is no family of \"indexing\" maps `idx_L : Volume b L \u2192 Fin L` that is\ninjective for infinitely many `L`; equivalently the gap `b^L - L \u2192 \u221e`, so the Library's\n\"un-cataloguability within one volume\" worsens monotonically.\n\n- **The key insight is** that `no_position_addressing` is not a one-off pigeonhole but a\n  *uniform* asymptotic: `b^L - L` grows super-exponentially, so no clever encoding ever\n  catches up \u2014 the diagonal obstruction is structural, not incidental.\n- **Why now?** `library_size_exceeds_length` gives the per-`L` strict inequality; upgrading to\n  a monotone divergence `b^L - L` is a short induction that immediately rules out any uniform\n  self-catalog scheme.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2106",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "a2755e7b",
-    "status": "available",
-    "timestamp": "2026-06-19T10:38:49.270223+00:00",
-    "title": "Derived from this cycle's findings in `Counting.lean` and `Diagonal.lean`. Each "
   },
   {
     "consumed_by_exp_id": "",
@@ -4083,7 +4068,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "78320320",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -4093,7 +4078,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.490561+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
@@ -4338,7 +4323,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a449aa2a",
     "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
     "domains": [
       "Novelty",
@@ -4348,7 +4333,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T23:40:36.923091+00:00",
     "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
   }

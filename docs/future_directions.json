@@ -184,11 +184,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "78320320",
       "depth_estimate": 3,
       "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
       "domain_bridges": [],
@@ -198,7 +198,7 @@
         "Algebra"
       ],
       "id": "fd_0004",
-      "last_attempt_time": "2026-06-08T02:10:46.952695+00:00",
+      "last_attempt_time": "2026-06-19T10:41:03.519159+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -211,7 +211,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-01T12:30:30.490561+00:00",
       "title": "The Library of Babel: Combinatorics of the Universal Library"
@@ -2532,7 +2532,7 @@
       "depth_estimate": 3,
       "description": "Sperner's lemma states that any proper coloring of a triangulated simplex with n+1 colors has at least one fully colored simplex. This is a combinatorial analog of Brouwer's fixed point theorem. Nash's theorem states that every finite game has a mixed strategy Nash equilibrium, proved using Kakutani's fixed point theorem. Conjecture: Sperner's lemma directly implies Nash's theorem. Specifically, given an n-player game with strategies S_1, ..., S_n, construct the n-simplex Delta = Delta(S_1 x ... x S_n) of mixed strategy profiles. Define a Sperner coloring of Delta by: color vertex v with color i if player i's best response to v is strategy i. By Sperner's lemma, there exists a fully colored simplex. The center of this simplex is an approximate Nash equilibrium (each player is approximately best-responding). Taking the limit as the triangulation gets finer gives an exact Nash equilibrium. Conjecture: this construction gives a constructive proof of Nash's theorem that yields a triangulation-based algorithm for finding Nash equilibria with complexity O(N^{n}) where N is the total number of pure strategies. Test: implement the Sperner-based algorithm for 2-player games and verify it finds all Nash equilibria. Impact: Nash equilibria are combinatorial fixed points. Sperner's lemma is the fundamental theorem of game theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.04999999999999999,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Novelty",
         "Computation"
@@ -4216,11 +4216,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "e88eb144",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
       "domain_bridges": [],
@@ -4230,11 +4230,11 @@
         "Logic"
       ],
       "id": "fd_0116",
-      "last_attempt_time": "2026-06-19T10:14:40.845783+00:00",
+      "last_attempt_time": "2026-06-09T07:44:29.461868+00:00",
       "last_reviewed_at": "2026-06-16T16:55:25.165652+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
-      "outcome_quality": 0.8895200000000001,
+      "outcome_quality": 0.0,
       "priority_score": 0.84,
       "proof_strategy": "",
       "prune_reason": "",
@@ -4243,7 +4243,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-01T12:30:30.958310+00:00",
       "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
@@ -10631,7 +10631,7 @@
       "depth_estimate": 3,
       "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -1.0,
       "domains": [
         "Logic",
         "Computation"
@@ -11603,7 +11603,7 @@
       "depth_estimate": 3,
       "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Cryptography",
         "Computation"
@@ -11747,7 +11747,7 @@
       "depth_estimate": 3,
       "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.55,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Tropical",
         "Computation"
@@ -12143,7 +12143,7 @@
       "depth_estimate": 3,
       "description": "Formalize Joyal's combinatorial species as endofunctors on the category of finite sets. Prove that the exponential generating function of a species equals its analytic functor. Bridge enumerative combinatorics to category theory and analytic combinatorics.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -1.0,
       "domains": [
         "Bridges",
         "Computation"
@@ -12683,7 +12683,7 @@
       "depth_estimate": 3,
       "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.35,
+      "domain_quality_penalty": -0.44999999999999996,
       "domains": [
         "Physics",
         "Computation"
@@ -12755,7 +12755,7 @@
       "depth_estimate": 3,
       "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.35,
+      "domain_quality_penalty": -0.44999999999999996,
       "domains": [
         "Physics",
         "Computation"
@@ -12971,7 +12971,7 @@
       "depth_estimate": 3,
       "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Tropical",
         "Computation"
@@ -13295,7 +13295,7 @@
       "depth_estimate": 3,
       "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.04999999999999999,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Computation",
         "Speculative"
@@ -13366,7 +13366,7 @@
       "depth_estimate": 3,
       "description": "Explore number representation systems that are not base-N: factorial number system, Zeckendorf representation, balanced ternary with negative digits, and genuinely novel systems. Conjecture: There exists a number representation system with O(log* n) digit count (iterated logarithm) using recursive bases. Test: construct the tower-base representation and prove every natural number has a unique representation. Impact: if true, this gives sub-logarithmic number representations with implications for compression and coding theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.04999999999999999,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Computation"
@@ -14122,7 +14122,7 @@
       "depth_estimate": 3,
       "description": "Formalize Tononi's Integrated Information Theory (IIT) as a rigorous mathematical framework. Prove that the maximum integrated information Phi of a system is the minimum information partition. Show that Phi is NP-hard to compute and construct polynomial-time approximations.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Computation",
         "Logic"
@@ -15022,7 +15022,7 @@
       "depth_estimate": 3,
       "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP ⊆ PCP(poly, 1)).",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -1.0,
       "domains": [
         "Cryptography",
         "Logic"
@@ -15058,7 +15058,7 @@
       "depth_estimate": 3,
       "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Cryptography",
         "Computation"
@@ -15202,7 +15202,7 @@
       "depth_estimate": 3,
       "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Cryptography",
         "Computation"
@@ -15310,7 +15310,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Tropical",
         "Computation"
@@ -15454,7 +15454,7 @@
       "depth_estimate": 3,
       "description": "Formalize ODEs of the form y' = R(x,y) where R is an EML function. Prove the differential Galois theory for EML equations: the Galois group is an EML group. Show that the Kovacic algorithm decides if a second-order linear EML ODE has EML solutions. Prove that Airy's equation y'' = xy has no EML solutions.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.04999999999999999,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "EML",
         "Computation"
@@ -15598,7 +15598,7 @@
       "depth_estimate": 3,
       "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.55,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "MachineLearning",
         "Computation"
@@ -16272,11 +16272,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "a449aa2a",
       "depth_estimate": 3,
       "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
       "domain_bridges": [],
@@ -16286,7 +16286,7 @@
         "Logic"
       ],
       "id": "fd_0577",
-      "last_attempt_time": "2026-06-07T17:45:05.945345+00:00",
+      "last_attempt_time": "2026-06-19T10:41:07.177947+00:00",
       "last_reviewed_at": "2026-06-16T16:55:25.165652+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16299,7 +16299,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T23:40:36.923091+00:00",
       "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
@@ -30813,7 +30813,7 @@
       "depth_estimate": 3,
       "description": "# FUTURE DIRECTIONS — Computational Complexity as a Physical Law\n\nDerived from the Phase A cycle that produced\n`Catalog/Physics/ComplexityPhysicalLaw.lean` and\n`Catalog/Speculative/ExtendedChurchTuring.lean`. Both files glue the\n**Computation** domain (`Computation/EntropyBridge.lean`: reversible compressors and\nfinite source-coding bounds) to the **Physics** domain\n(`Physics/LocalHamiltonianQMA.lean`: certified energy lower bounds and the\nQMA promise gap). The cycle established two load-bearing facts:\n\n* a reversible `k`-bit recorder of a finite physical family obeys `|family| ≤ 2^(k+1)`\n  (Landauer memory floor), and\n* a certified NO-instance (ground energy `≥ b`) can never be straddled by a\n  YES-witness at any strictly lower threshold `a < b` (energetic, memory-free\n  impossibility).\n\nThe boundary discovered in Stage 3/4 — the constant is `2^(k+1)` not `2^k`, and the\ngap impossibility needs *strict* `a < b` — drives the conjectures below.\n\n---\n\n## Conjecture 1 — Reversible-memory capacity is exactly `2^(k+1)`, and this is tight.\nFor every `k`, there is a finite physical family of size exactly `2^(k+1)` recorded\nlosslessly by a reversible `k`-bit compressor, and no family of size `2^(k+1)+1` can be.\n- **The key insight is...** reversibility buys precisely one extra bit (the empty\n  codeword `[]` of length `0`), so the addressable code space is the lengths-`≤ k`\n  strings, whose count is `2^(k+1) − 1`, giving the off-by-one already visible in\n  `landauer_memory_floor`.\n- **Why now?** `complexity_bound_implies_finite_entropy_bound` already proves the\n  upper half; the matching lower half (an explicit length-`≤ k` enumeration) is a\n  finite combinatorial construction well within reach of the current `Finset` toolbox.\n\n## Conjecture 2 — A polynomial energy-certificate ladder forbids a polynomial demon.\nIf a family of `k`-local Hamiltonians admits per-term `EnergyLB` certificates whose\ntotal grows like a fixed polynomial `p(n)` in the instance size, then any device that\nboth reversibly records instances in `O(log p(n))` bits **and** outputs YES-witnesses\nmust be inconsistent on the NO-certified sub-family.\n- **The key insight is...** `maxwell_demon_landauer_bound` already shows the two\n  domains constrain the *same* device; promoting `b` and `k` from constants to\n  polynomials in `n` turns the static bound into a genuine separation between\n  certification cost and witnessing power.\n- **Why now?** The `EnergyLB.mono` glue lemma makes summed certificates rescalable to\n  any threshold, so a polynomial family of thresholds is a direct generalization rather\n  than new infrastructure.\n\n## Conjecture 3 — Frustration is a quantitative memory tax.\nFor the frustrated pair `Hz, Hx` of `Physics/LocalHamiltonianQMA.lean`, the\nsuper-additive ground-energy gap (no common zero-energy state) implies a strictly\npositive *extra* number of bits any demon must spend to distinguish frustrated from\nunfrustrated instances, compared with the term-by-term minimum.\n- **The key insight is...** `frustration_no_common_ground_state` makes the\n  ground-energy strictly larger than `∑ λ i`, and a strictly larger energy threshold\n  enlarges the NO-certified family, which by the Landauer floor `2^(k+1)` strictly\n  raises the required `k`.\n- **Why now?** Both ingredients — the frustration witness and the\n  `card ≤ 2^(k+1)` floor — are now formalized and live in the same import graph, so the\n  product statement is assemblable today.\n\n## Conjecture 4 — The Extended Church–Turing encoding is functorial under simulation.\nThe injective `k`-bit encoding of `ect_encoding_iff` can be chosen to commute with any\ndeterministic step map: simulating one physical step costs at most one re-encoding and\nnever increases `k`.\n- **The key insight is...** `deterministic_evolution_no_new_states` shows deterministic\n  evolution is contractive on distinguishable states, so the entropy bound — and hence\n  the achievable code length `k` — is preserved along an orbit.\n- **Why now?** With the encoding *equivalence* (`ect_encoding_iff`) and the\n  data-processing contraction both proved, the only remaining step is to thread an\n  embedding through the composition, a `Function.Embedding` bookkeeping exercise.\n\n## Conjecture 5 — `P = NP` collapses the energy-certificate hierarchy.\nA complexity-theoretic `P = NP` hypothesis (efficient YES-witness production for the\nground-energy promise problem) is *equivalent*, under the bridge, to the existence of a\nreversible sub-`2^(k+1)`-memory demon that resolves arbitrarily large NO-certified\nfamilies — contradicting the Landauer floor.\n- **The key insight is...** the contrapositive reading of\n  `maxwell_demon_landauer_bound` already packages \"efficient witnessing of NO-instances\"\n  as a logical impossibility; turning the implication into an equivalence pins\n  `P = NP` to a single physical inequality.\n- **Why now?** The forward direction (demon ⇒ contradiction) is proved; the converse\n  needs only a reduction encoding SAT-style instances as local Hamiltonians, which the\n  existing `energyLB_sum` certificate calculus is purpose-built to express.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.04999999999999999,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Computation"
@@ -31173,7 +31173,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Isogeny-Based Cryptography (CSI-FiSh / CSIDH)\n\nConjectures below are stated to be *formalizable and testable* in Lean 4, building\ndirectly on `Catalog/Cryptography/CSIFiShClassGroup.lean` (torsor model of the\nclass-group action) and `Catalog/Cryptography/CSIFiShAdvanced.lean`.\n\n## C1 — Exact Cayley diameter (RESOLVED this cycle; next: general generating sets)\n`zmod_cayley_diameter_exact` now proves the diameter of `ZMod n` with `{±1}` is\n*exactly* `⌊n/2⌋` (`IsLeast`). **Next conjecture**: for the generating set\n`{±1, ±g}` with `g` a unit of order `m`, the diameter is\n`Θ(n / m + m)`, minimized near `g ≈ √n` giving diameter `Θ(√n)` — the\nquantitative bridge to the `√`-step structure exploited by Kuperberg-style\nattacks. Test: BFS over `n ∈ {16,25,36,49}`, `g = round(√n)`.\n\n## C2 — Self-reducibility ⇒ uniform extractor advantage\nStrengthen `gaip_self_reducible`: an oracle solving GAIP on a *positive fraction*\n`ε` of instances `(g +ᵥ x₀, ·)` can be amplified, via random shifts, to solve a\n*fixed worst-case* instance with success probability `≥ ε`. Conjecture: in the\nfinite torsor model the success set under random shift `g` has measure exactly\n`ε` (shift-invariance of `connector`), giving a clean worst-case ↔ average-case\nequivalence `gaip_worst_avg`.\n\n## C3 — k-special soundness ⇒ negligible cheating mass\nGeneralize `multi_round_extract`: for `t` parallel rounds with binary challenges,\na prover lacking the secret can satisfy at most one challenge per round, so the\nset of acceptable transcripts has relative size `≤ 2^{-t}` of all `2^t` challenge\nstrings. Conjecture and formalize `csifish_soundness_error t = 2^(-t)` as a\ncounting statement over `Fin t → Bool`.\n\n## C4 — Torsor = unique simply-transitive model (rigidity)\nConjecture: any two free transitive `G`-actions on a finite `X` are isomorphic as\n`G`-sets, and the isomorphism is unique up to the choice of base point. I.e. the\ncatalog's abstract `FreeTrans G X` is **categorically equivalent** to the\n`AddTorsor` instance. Formalize `FreeTrans.equivTorsor` and prove the\nkey-space/curve-space `card` equality (`card_key_eq_card_curve`) is forced.\n\n## C5 — Commutativity is necessary for non-interactive key agreement\nConjecture: `csidh_correct` (order independence of two parties) holds for a free\ntransitive action **iff** the acting group is abelian. Test the forward direction\nis `add_comm`; conjecture the converse: if `a +ᵥ (b +ᵥ x₀) = b +ᵥ (a +ᵥ x₀)` for\nall `a b` and one base point `x₀` in a free transitive action, then `G` is\ncommutative. Formalize as `csidh_correct_iff_abelian`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.04999999999999999,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Computation"
@@ -31425,7 +31425,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThese build directly on `BehavioralEquivalence.lean` and stay within precise, provable\nmathematics — no metaphysical extensions.\n\n## 1. Dynamical / transition systems\n\nReplace the static `behavior : S → B` with a labelled transition system\n`step : S → A → S` together with an output `out : S → B`, and define **behavioral equivalence as\nbisimilarity** (or trace/observational equivalence). Re-prove the supervenience/factorization\ncharacterization at the level of observable trajectories, and relate the quotient model to the\nstandard minimal-automaton / Nerode-congruence construction. Target theorem: a supervening\nrepresentation descends to the bisimulation quotient, and for finite automata the count of\nsupervening representations is `|R|` raised to the number of Nerode classes.\n\n## 2. Probabilistic / noisy observation and statistical identifiability\n\nGeneralize `behavior` to a Markov kernel `S → Measure B` (or `repr` to `S → Measure R`). The\ndeterministic notion \"behavior determines representation\" becomes statistical **identifiability**\nof the latent representation from the observable distribution. Formalize identifiability as\ninjectivity of the induced map on distributions and connect non-identifiability witnesses to\nthe existence of distinct latent models with identical observable law — the exact obstruction\nstudied for latent-variable and hidden-Markov models.\n\n## 3. Quantitative non-identifiability and metric structure\n\nEquip `B` and `R` with (pseudo)metrics and replace exact equality by approximate behavioral\nequivalence. Define a modulus measuring how much representation can vary over an\nε-behavioral ball, and prove Lipschitz-type \"approximate supervenience\" results: bounded\nbehavioral distinguishability implies bounded representational ambiguity only under explicit\nregularity hypotheses. This quantifies the gap between behavior and representation.\n\n## 4. Functorial / categorical packaging\n\nTreat `System S B R` morphisms (state maps commuting with `behavior` and `repr`) as a category\nand show the quotient-by-behavioral-equivalence is a functor / reflective construction. Express\n`supervenes_iff_factors` as a universal property of the behavioral image, and study how\nbehavior-preserving twins form a fiber over a fixed behavior map. This yields reusable\ninfrastructure for composing systems compositionally.\n\n## 5. Counting refinements and enumeration algorithms\n\nStrengthen `card_supervening_repr` into a fully explicit enumeration: a computable function that,\ngiven a behavior table and a choice of values on the image, returns every supervening\nrepresentation, with a proof that it is a bijection onto the supervening set. Add counts for\nbehavior-preserving twins, for non-identifiable systems, and for the number of distinct\nobservable behaviors realizable by a fixed family of representation maps — all over `Fintype`\nstate spaces with `decide`-checkable small instances.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.04999999999999999,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Algebra",
         "Computation"
@@ -31641,7 +31641,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Ramanujan-Style Intuition as Formalizable Meta-Reasoning\n\nDerived from this cycle's findings (`Core.lean`, `Halting.lean`,\n`FiniteBoundary.lean`, `JumpBridge.lean`). Each conjecture is bold, falsifiable,\nand stated so that a single Lean theorem (or counterexample) would settle it.\n\nThe central correction this cycle produced: **the mission's literal \"length ≤ 100\"\nframing is false** (`bounded_oracle_computable`) — every bounded family is decided\nby a computable lookup table, *even for a non-computable truth function*. The real\nobstruction is **sound + complete behaviour on an unbounded domain**\n(`no_computable_sound_complete_oracle`), and its structural home is the **oracle\njump hierarchy** (`JumpBridge.lean`). The conjectures below build on this.\n\n---\n\n## C1. Soundness forces *infinitely many* abstentions, not just one.\n**Statement.** Every computable, sound verdict oracle for the halting predicate\nanswers `unknown` on an infinite set of codes (not merely one).\n**The key insight is** that a single abstention can always be patched by a finite\ntable (`FiniteBoundary.bounded_oracle_computable`), so any *finitely-abstaining*\nsound computable oracle could be upgraded to a perfect one — contradicting\n`no_computable_sound_complete_oracle`; hence the abstention set must be infinite.\n**Why now?** We already have the perfect-oracle impossibility and the finite-table\nupgrade lemma in this cycle; combining them via a finiteness/pigeonhole argument is\nthe immediate next Lean step.\n\n## C2. High accuracy does **not** imply non-computability (accuracy is a red herring).\n**Statement.** There exists a non-computable truth function `τ` and a *computable*\nverdict oracle whose committed answers are correct with asymptotic density `1`.\n**The key insight is** that the density of \"hard\" instances, not raw accuracy, is\nwhat computability controls; a non-computable set can have a computable density-1\napproximation, so the mission's \"≥ 95% accuracy ⇒ non-computable\" is unprovable as\nstated and should be *refuted* by an explicit construction.\n**Why now?** `Core.lean` shows diagonalization only forces *one* error per oracle,\nnever a positive error density — exactly the gap a density-1 computable approximant\nwould exploit. The tools (computable tables + a sparse non-computable set) are in hand.\n\n## C3. The \"intuitive leap\" is strictly stronger than any finite tower of leaps.\n**Statement.** For every `OracleJumpR` `J` and sound incomplete Ramanujan oracle,\nthe limit `⋃ₙ (J.iter T₀ n).provable` strictly contains every finite level\n`(J.iter T₀ n).provable`, yet is still incomplete relative to truth.\n**The key insight is** that `truth_invariant` pins the model while\n`strict_hierarchy` (both used in `JumpBridge.lean`) make the provable sets a strict\nω-chain — so the union escapes every level but a fresh diagonal escapes the union.\n**Why now?** `JumpBridge.lean` already imports the strict-hierarchy and\ntruth-invariance machinery; the catalog's `limit_escape` is the missing lemma to\nwire in, making this a short composition.\n\n## C4. Identifying the leap with the *Turing* jump requires the arithmetical hierarchy.\n**Statement.** There is no order-embedding from the abstract `OracleJumpR` tower to\nthe Turing-degree jump tower `0, 0', 0'', …` definable without naming a `Σ⁰₁`\ntruth predicate; conversely, *with* such a predicate the embedding exists and is\nunique up to the first level.\n**The key insight is** that `OracleJumpR` is purely extensional (strict + truth\npreserving), whereas the Turing jump is intensional (it is the halting set of the\nprevious level); bridging them is exactly the content `Halting.lean` isolates via\n`ComputablePred.halting_problem`.\n**Why now?** This cycle produced both endpoints — an abstract jump tower\n(`JumpBridge.lean`) and a concrete halting non-computability witness\n(`Halting.lean`); the conjecture asks precisely for the morphism between them.\n\n## C5. \"Discovery without proof\" is formalizable as a sound oracle with unbounded verification delay.\n**Statement.** There is a computable, sound, *eventually complete* oracle for any\n`Σ⁰₁` family — one that commits correctly to every true statement after a finite\n(but unbounded) delay — and no such oracle exists for a properly `Π⁰₁` family.\n**The key insight is** that Ramanujan's \"guess now, verify later\" matches semi-\ndecidability: enumerability gives eventual `true`-commitment, while the absence of\nco-enumerability is exactly what blocks completeness — the same asymmetry behind\n`no_computable_sound_complete_oracle`.\n**Why now?** The verdict/soundness/completeness vocabulary built in `Core.lean`\nplus Mathlib's `RePred`/`Partrec` API make the `Σ⁰₁` (yes) vs `Π⁰₁` (no) split a\ndirect next formalization, turning the metaphor into a theorem.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.04999999999999999,
+      "domain_quality_penalty": -0.15,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -32325,7 +32325,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — The Spectral Gap of Sudoku\n\nThese conjectures extend the formalization in `Catalog/Novelty/SudokuSpectralGap.lean`,\nwhich establishes (general order `n`): the Sudoku graph is `(3n²−2n−1)`-regular, its\nadjacency spectrum is confined to `[−d, d]` with the all-ones Perron eigenvector at the\ntop, its chromatic number is exactly `n²`, and the partial-grid completion functor is\nantitone with a sharp SAT (nonempty)→UNSAT (empty) dichotomy.\n\nEach item below is stated to be **falsifiable** and **formalizable** in Lean.\n\n## C1. Exact second eigenvalue and the spectral gap formula\n**Conjecture.** The Sudoku graph of order `n` is a graph with exactly four distinct\nadjacency eigenvalues, and its second-largest eigenvalue is `λ₂ = 2n − 1`, giving a\nspectral gap `d − λ₂ = 3n² − 4n = n(3n−4)`. Equivalently, the gap grows quadratically in\n`n` so the normalized gap `(d − λ₂)/d → 1`.\n*Test:* compute the spectrum for `n = 2, 3, 4` by `decide`/`native_decide` on the\nadjacency matrix and check the count of distinct eigenvalues and the value of `λ₂`.\n\n## C2. The Sudoku graph is strongly regular iff `n = ... `\n**Conjecture.** The order-`n` Sudoku graph is **not** strongly regular for any `n ≥ 2`\n(unlike its building blocks: rows/columns/boxes individually give complete graphs).\nPrecisely, the number of common neighbours of two adjacent cells is *not* constant across\nall adjacent pairs. *Test:* exhibit two adjacent pairs (same-box vs. same-row-different-box)\nwith different common-neighbour counts; formalize as a `∃`-counterexample to\n`G.IsSRGWith ...`.\n\n## C3. Phase-transition threshold for unique completion\n**Conjecture.** There is a sharp clue-count threshold `m(n)` such that a uniformly random\nclue set of size `< m(n)` almost never has a unique completion while one of size `> m(n)`\nalmost always does; and `m(n) = Θ(n²)`. As a first formal milestone (deterministic):\n*any* clue set whose support meets every row, column, and box still need not pin the\nsolution, but a clue set equal to a full solution minus one cell always has a unique\ncompletion. *Test:* prove the deterministic milestone via `completions_antitone` plus the\nlocal cancellation already used in `sudokuColor_valid`.\n\n## C4. Hoffman bound is tight ⇒ a fractional-relaxation rigidity\n**Conjecture.** Hoffman's lower bound `χ ≥ 1 − λ_max/λ_min` is *tight* for the Sudoku\ngraph, i.e. `1 − d/λ_min = n²`, forcing `λ_min = −d/(n²−1)`. Combined with `C1` this\nover-determines the spectrum and should pin all four eigenvalues. *Test:* once `λ_min` is\nformalized, verify `1 − d/λ_min = n²` symbolically and cross-check against the spectra of\n`C1`.\n\n## C5. Tensor/Kronecker structure of the Sudoku operator\n**Conjecture.** The Sudoku adjacency operator decomposes as a sum of Kronecker products of\nall-ones and identity blocks: `A = (J⊗I + I⊗J + J⊗J)_{rows,cols,boxes} − 3·(I⊗I) − ...`\nover the `Fin n × Fin n × Fin n × Fin n` factorization, so its eigenvalues are explicit\ninteger combinations of `{n, 0}` eigenvalues of `J` and `I`. This would make `C1` and `C4`\ncorollaries of a single tensor-eigenvalue lemma. *Test:* formalize `A` as such a Kronecker\ncombination on `Cell n` and prove the eigenvalues factor accordingly; the all-ones\neigenvalue `d = 3n²−2n−1` should drop out as the `(n,n,n)` corner, matching\n`sudoku_top_eigenvalue`.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -32433,7 +32433,7 @@
       "depth_estimate": 3,
       "description": "# FUTURE DIRECTIONS — The L-Function Oracle (Probability)\n\nDerived from this cycle's verified Lean results:\n\n- `Probability/SatoTateMeasure.lean` — the Sato–Tate law is a probability measure\n  (`satoTate_total_mass = 1`) with verified `cos`-moments `(mean 0, second moment 1/4)`.\n- `Probability/FactoringOracle.lean` — a single-split oracle factors `n` in `≤ log₂ n`\n  calls (`SplitOracle.factor_bounded`), the burden concentrated in one `reduce` step.\n- `Probability/SelbergOracle.lean` — degree/conductor conservation along functoriality\n  towers (`nfold_degree`, `nfold_conductor`) plus an oracle⇒decidability collapse, built on\n  the catalog file `Shared.SelbergClassCensus`.\n\nThe central methodological lesson: the grandiose \"oracle implies RH/BSD/Langlands\" claims\nare, once formalised, either *tautological* (the oracle is asserted to output the answer) or\n*conditional on an explicit reduction*. The genuinely load-bearing mathematics is elsewhere —\nin the moments of the target measure, in the `log`-depth of the factoring recursion, and in\nthe conservation laws of the invariants. The conjectures below target that real content.\n\n---\n\n## Conjecture 1 — All Sato–Tate moments are the Catalan/central-binomial sequence\n\n**Statement.** For every `k`, the `2k`-th `cos`-moment under `μ_ST = (2/π) sin²θ dθ` equals\n`Catalan k / 4^k`, i.e. `∫₀^π cos^{2k}θ · (2/π) sin²θ dθ = C_k / 4^k` where\n`C_k = (2k choose k)/(k+1)`; all odd moments vanish.\n\n**The key insight is** that the Sato–Tate measure is exactly the spectral measure of the\n`SU(2)` Haar trace, so its even moments count noncrossing pairings — the Catalan numbers —\nwhich makes the whole moment sequence a *single closed-form arithmetic object* rather than a\nlist of unrelated integrals. This cycle verified the `k = 0, 1` cases (mass `1`, second\nmoment `1/4 = C_1/4`); the conjecture is the uniform generalisation.\n\n**Why now?** We already have the integral machinery (`integral_sin_pow`,\n`integral_sin_pow_mul_cos_pow_odd`) working end-to-end in Lean on this exact density, so the\ninductive recurrence `M_{k} ↦ M_{k+1}` is within reach with the tools just exercised.\n\n---\n\n## Conjecture 2 — The factoring reduction is depth-optimal, not just depth-bounded\n\n**Statement.** The `≤ log₂ n` bound in `SplitOracle.factor_bounded` is tight in the worst\ncase and tight on average: for `n = 2^m` every split oracle needs exactly `m` calls, and the\n*expected* number of calls over uniformly random `n ≤ N` is `Θ(log log N)` (Erdős–Kac shape:\nthe number of prime factors `Ω(n)` concentrates at `log log n`).\n\n**The key insight is** that the recursion tree of `factor_bounded` is precisely a binary tree\nwhose leaves are the prime factors *with multiplicity*, so the call count is `Ω(n) − 1`; the\ndeterministic bound is `log₂ n` but the *typical* value is governed by the Erdős–Kac law, a\ngenuinely probabilistic statement about the cost of the L-function oracle.\n\n**Why now?** The leaf-counting identity is already implicit in the verified proof\n(`length = Ω(n)`), so the deterministic optimality is a short additional lemma, and it sets up\nthe bridge to the catalog's number-theory files (`Applications/Fibonacci*`, Carmichael\nmaterial) where `Ω` of structured integers is studied.\n\n---\n\n## Conjecture 3 — Functoriality towers force a degree/conductor uncertainty bound\n\n**Statement.** For any `SelbergDatum S` with `S.degree ≥ 1` and `S.conductor ≥ 2`, the\n`n`-fold tower satisfies `(nfoldProduct S n).degree · log₂((nfoldProduct S n).conductor)`\ngrows like `n² · d · log₂ q`; equivalently the \"analytic complexity\"\n`degree × log-conductor` is *super-additive* along towers, never sub-additive.\n\n**The key insight is** that `nfold_degree` (linear) and `nfold_conductor` (exponential)\ncombine multiplicatively, so the analytic conductor — the quantity controlling the length of\nthe approximate functional equation, hence the true cost of evaluating the L-function —\n*explodes quadratically* along a tower. An O(1) oracle would have to be uniform across this\nexplosion, which is exactly why a literal oracle is implausible.\n\n**Why now?** Both growth laws are already proved in `SelbergOracle.lean`; multiplying them is\na one-step corollary, and it converts the vague \"oracles are too powerful\" intuition into a\nconcrete, falsifiable growth inequality on catalog `SelbergDatum`.\n\n---\n\n## Conjecture 4 — Oracle collapse is provably non-vacuous only with a length-bounded encoding\n\n**Statement.** The decidability collapse `reduction_collapses` upgrades to a *complexity*\nstatement iff the encoding `f : X → SelbergDatum` has polynomially bounded conductor: if\n`f x` has conductor `≤ poly(|x|)`, then `L` is decidable in time polynomial in the oracle\ncost; without such a bound the collapse is logically true but computationally empty.\n\n**The key insight is** that the only smuggled cost in \"reduce to one L-query\" is the *size of\nthe datum you hand the oracle*, measured by its conductor — Conjecture 3 shows this size can\nblow up, so the honest collapse theorem must carry a conductor budget as a hypothesis.\n\n**Why now?** `reduction_collapses` and `selberg_oracle_decidable` are already in place as the\nunconditional (decidability-only) skeleton; adding a conductor-budget field to the encoding is\na natural refinement that makes the \"polynomial hierarchy collapse\" claim precise and testable.\n\n---\n\n## Conjecture 5 — A second-moment certificate distinguishes CM from non-CM curves\n\n**Statement.** Define the empirical second `cos`-moment of the first `N` Frobenius angles of\nan elliptic curve `E/ℚ`. For non-CM curves it converges to `1/4` (the Sato–Tate value proved\nhere); for CM curves it converges to `1/2`. Hence a single converging moment statistic, output\nby the oracle, certifies the CM/non-CM dichotomy.\n\n**The key insight is** that the verified value `1/4` is the *fingerprint* of the full `SU(2)`\nSato–Tate measure, whereas the CM case is governed by a `U(1)` measure with second moment\n`1/2`; the gap `1/4 vs 1/2` is a clean, decidable separating observable rather than a full\nequidistribution statement.\n\n**Why now?** `satoTate_second_moment_cos = 1/4` is verified; the companion `U(1)` computation\n`∫₀^π cos²θ · (1/π) dθ = 1/2` is an even simpler interval integral, so the separating\ncertificate is one short lemma away and turns the abstract Sato–Tate dichotomy into a finite\nstatistical test.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Computation"
@@ -32577,7 +32577,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology\n\nThis cycle produced `Catalog/Logic/JigsawPuzzles.lean`, a self-contained, fully\nverified (0 `sorry`) theory of edge-matching jigsaw puzzles connected to the\nexisting complexity framework in `Catalog/Logic/PvsNPFoundations.lean`. It\ncovers: the ℤ/4 rotational symmetry of a piece (`rotate_order_four`,\n`rotate_bijective`), the discrete Euler/handshake identity for the board\n(`board_handshake`), the local matching constraint with monochromatic solvability\n(`monochromatic_solvable`), brute-force decidability over finite palettes\n(`solvable_decidable`), abstract NP membership of the solvability language\n(`puzzle_inNP`), NP closure under reductions / union / intersection\n(`inNP_of_reducible`, `inNP_union`, `inNP_inter`), and the hardness bridge\n(`inNP_of_hard`).\n\nThe following conjectures are precise, falsifiable targets for follow-up cycles.\n\n## Conjecture 1 (Karp reduction: 3-Partition ↪ edge matching)\nFormalize a many-one reduction `ManyOneReducible PARTITION_LANG (SolvableLang Color m n)`\nfor an explicitly constructed color alphabet and gadget pieces, where\n`PARTITION_LANG` is a Lean-formalized NP-hard partition/packing language. Combined\nwith the existing `puzzle_inNP` and the `inNP_of_hard` bridge, this would yield a\nmachine-checked statement that edge matching is NP-complete relative to that base\nlanguage. Testable milestone: prove the reduction's forward direction\n(`x ∈ PARTITION → Solvable`) via an explicit placement.\n\n## Conjecture 2 (1D puzzles are tractable — Eulerian path characterization)\nA single-row board (`m = 1`) is solvable **iff** the multiset of available pieces\nadmits an Eulerian-trail ordering of the \"color transition\" multigraph whose\nvertices are colors and whose edges are pieces `(west, east)`. Formalize this\nequivalence and conclude that 1-row solvability is decidable in polynomial time,\nin sharp contrast to the 2D case. The catalog identity `interiorAdj_single_row`\n(`= n - 1`) is the combinatorial seed: a row is a path with `n-1` constraints.\n\n## Conjecture 3 (Topological lower bound on color count)\nIf an `m × n` board with `m, n ≥ 2` has a **unique** valid placement up to the\ntrivial symmetry, then the number of distinct edge colors used is at least\n`interiorAdj m n / 2 + 1`. Intuition: uniqueness forces interior edges to be\n\"keyed\" distinctly enough to break the grid graph's automorphisms. A first\nformal step is to bound, for a fixed valid placement, the number of *alternative*\nplacements by the number of repeated interior colors.\n\n## Conjecture 4 (Certificate-complexity / counting hierarchy)\nDefine `#Solutions C m n` as the cardinality of `{P : Placement C m n // Valid P}`\n(finite by `solvable_decidable`). Conjecture: the map `(m, n) ↦ #Solutions` over a\nfixed `k`-color palette satisfies a transfer-matrix recurrence in `n` of order\nbounded by `k^k` (a \"puzzle transfer matrix\"). Formalizing the transfer matrix and\nproving the recurrence would place the counting version `#EDGE-MATCH` in `#P` and\ngive exact generating functions for fixed-height strips.\n\n## Conjecture 5 (Rotation-quotient and the dihedral upgrade)\nThe current model fixes orientations. Extend `rotate` (the ℤ/4 action,\n`rotate_order_four`) to the full dihedral action `D₄` by adding reflections, and\nconjecture that allowing free rotation of pieces strictly enlarges the solvable\nlanguage but preserves NP membership: `InNP (SolvableUpToRotation C m n) (Placement C m n × (Fin m → Fin n → ZMod 4))`.\nThe added `ZMod 4` component is the per-cell rotation certificate; proving the\nverifier remains decidable upgrades `puzzle_inNP` to the oriented-piece setting.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Computation"
@@ -33004,7 +33004,7 @@
         "math.PR",
         "math.CO"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Computation"
       ],
@@ -33296,7 +33296,7 @@
         "multigraph simplification to SimpleGraph clique number",
         "asymptotic probability convergence to real-analysis limits"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Computation"
       ],
@@ -33342,7 +33342,7 @@
         "Probability: uniform probability over a finite type of Latin squares",
         "Asymptotic analysis: convergence of real-valued sequences indexed by n"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -34157,6 +34157,41 @@
       "title": "Triviality of Modular Form Coefficients"
     },
     {
+      "ambition_level": "minimal",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": "The problem's original context",
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "The conjecture asserts there are precisely 57 nonnegative integer solutions (a, b, x) satisfying the inequality.",
+      "domain_bridges": "Diophantine inequalities",
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2098",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "The count equals 57.",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Direct enumeration verification",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.18500v1",
+      "source_path": "http://arxiv.org/abs/2606.18500v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-19T10:40:58.134181+00:00",
+      "title": "Exact Number of Solutions"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -34179,7 +34214,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2098",
+      "id": "fd_2099",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem four_digit_kaprekar_cycle_length (B : odd_prime) [H : B > 5] : cycle_length B = (B - 1) // 2 ↔ (order_of_2 B) = (B - 1) // 2",
@@ -34224,7 +34259,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2099",
+      "id": "fd_2100",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem dallard_planar_induced_minor_conjecture\n  (d : ℕ) (hd : 0 < d) {W : Type*} [Fintype W]\n  (H : SimpleGraph W) (hH : H.Planar) :\n  ∃ B : ℕ, ∀ {V : Type*} [Fintype V] (G : SimpleGraph V),\n    G.InducedMinorFree H →\n    G.InducedSubgraphFree (SimpleGraph.K1d d) →\n      G.TreeIndependenceNumber ≤ B := by\n  sorry",
@@ -34262,12 +34297,12 @@
         "Combinatorial Mathematics",
         "Algebraic Geometry"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Computation"
       ],
-      "id": "fd_2100",
+      "id": "fd_2101",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "A slightly adapted version of the normal approximation in the origin localization lemmas, tailored to uniform random selections in finite settings.",
@@ -34316,7 +34351,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2101",
+      "id": "fd_2102",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cm_points_equidistribute_product (r : ℕ) (hr : 2 ≤ r) (curves : Fin r → ShimuraCurve) (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (hsplit : ∀ n, p.SplitsIn (CMField n) ∧ q.SplitsIn (CMField n)) (strict_seq : StrictSequence ...) : WeakConvergence (GaloisOrbitMeasure (z_seq : ℕ → Product (Fin r → ShimuraCurve))) (HaarMeasure (Product (Fin r → ShimuraCurve))) := by sorry",
@@ -34361,7 +34396,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2102",
+      "id": "fd_2103",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem embracing_distance_equals_graph_distance {M : OrientedMatroid} {e : M.E} {B B' : Basis M} (hB : B.is_e_embracing e) (hB' : B'.is_e_embracing e) : d_e B B' = d_G (C B e) (C B' e) := by sorry",
@@ -34402,7 +34437,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2103",
+      "id": "fd_2104",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem tree_graph_complete_intersection (Γ : Graph) : I_Γ.is_complete_intersection := ... (requires Γ.is_tree)",
@@ -34439,12 +34474,12 @@
         "random permutations",
         "game theory"
       ],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Computation",
         "Pythagorean"
       ],
-      "id": "fd_2104",
+      "id": "fd_2105",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem q_game_win_probability (n q : ℕ) [hpq : 0 < q] : P(n, q) = (1/n) + (1/n) * ∑ k ∈ Range(q+1, n), P(n - k, q)} ∧ P(0, q) = 0",
@@ -34462,78 +34497,6 @@
       "thread_id": "",
       "timestamp": "2026-06-19T10:14:34.984628+00:00",
       "title": "Recurrence for the Winning Probability in the Generalized Game"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "# Future Directions — Anti-Gravity Mathematics\n\nThis cycle formalized dependency DAGs of a formal library, the **gravitational\nweight** `weight b = #{a : a depends on b}`, and the **anti-gravity** predicate\n(high weight, short proof).  We proved the structural laws that survive scrutiny\n(monotonicity, conservation, above-average foundation), exhibited a guaranteed\nanti-gravity theorem (the *fan*), and **refuted** the conjectured universal \"10%\nlaw\" with an explicit counterexample (the *discrete* library has fraction 0,\nwhile the *chain* pushes the fraction to `k/(k+1) → 1`).  The conjectures below\nare derived directly from those findings.\n\n---\n\n## Conjecture 1 — Weight is a graded invariant: `weight` strictly drops along every dependency edge, so it induces a height function bounding the longest proof-dependency chain.\n\nIn any finite dependency DAG, the longest chain `t₀ ≺ t₁ ≺ ⋯ ≺ tₘ` has length\n`m ≤ weight t₀`, and more strongly `weight tᵢ ≥ m - i`.\n\n* **The key insight is** that `DepDAG.weight_lt_of_dep` (proved this cycle) makes\n  `weight` strictly decreasing along the order, so it is an order-reversing\n  grading; a strictly monotone `ℕ`-valued function on a chain bounds the chain's\n  length, turning the *global* quantity \"number of dependents\" into a *local*\n  certificate of proof depth.\n* **Why now?** We already have the strict-monotonicity lemma and the conservation\n  identity in machine-checked form; the remaining step (chain-length bound) is a\n  finite induction over the order that the framework now supports directly.\n\n## Conjecture 2 — The anti-gravity fraction is threshold-determined, not library-determined: for the *family* of all DAGs on `n` nodes, the expected fraction with weight `≥ τ` is `Θ(1)` only when `τ = Θ(1)`, and decays whenever `τ → ∞`.\n\nThe \"10% law\" is meaningless without fixing the threshold; the right statement is\na phase transition in `τ`.\n\n* **The key insight is** that our three examples already span the whole interval\n  `[0,1)` of fractions (discrete → 0, chain → 1, fan → `1/(n+2)`), so the fraction\n  cannot be a library invariant — it is governed by the relationship between the\n  threshold `τ` and the weight *distribution*, which is what should be studied.\n* **Why now?** With `chain_antigravity_card` giving an exact count `= k`, the\n  framework can express and test fraction-vs-threshold statements concretely, and\n  random-DAG weight distributions are within reach of `Finset` counting.\n\n## Conjecture 3 — Conservation forces a \"heavy tail\": in any DAG with `D` dependency pairs on `n` nodes, at least one theorem has weight `≥ D/n`, and if `D ≥ n` then a *positive fraction* of theorems are anti-gravity at threshold 1.\n\n* **The key insight is** that `DepDAG.sum_weight_eq` turns total weight into the\n  exact pair-count `D`, so the pigeonhole/averaging bound `exists_weight_ge_average`\n  (already proved) upgrades to a *counting* statement: dense dependency (`D ≥ n`)\n  cannot be spread so thinly that everyone has weight 0.\n* **Why now?** Both ingredients — the conservation identity and the\n  above-average existence lemma — are formalized this cycle; combining them is a\n  short counting argument rather than new theory.\n\n## Conjecture 4 — Foundational catalog theorems are detectable purely from the dependency graph: the genuinely foundational results (irrationality of `e`, FTA, …) are exactly the strict maxima of `weight`.\n\n* **The key insight is** that in `CatalogBridge.lean` the abstract law\n  `weight_lt_of_dep` *alone* (no proof-content analysis) singled out the\n  irrationality-of-`e` node as strictly heaviest; \"foundationality\" is therefore a\n  graph-theoretic, not a semantic, property.\n* **Why now?** Real Lean libraries expose their dependency graph via\n  `importGraph`/`#print axioms`; the framework here gives the exact invariant\n  (`weight`) to compute on that graph, so the conjecture is empirically testable\n  on Mathlib today.\n\n## Conjecture 5 — Anti-gravity is not closed under composition: gluing two libraries each rich in anti-gravity theorems can destroy almost all of them.\n\n* **The key insight is** that weight is computed *relative to the ambient DAG*, so\n  embedding the chain (fraction `→1`) as the bottom of a larger fan can collapse\n  most of its anti-gravity nodes' relative threshold — anti-gravity is a global,\n  non-local property and hence not monotone under disjoint union or sequential\n  composition of libraries.\n* **Why now?** The `DepDAG` structure makes library composition (disjoint sum,\n  ordinal sum) a definable operation, so the failure of closure can be stated and\n  checked with the counting lemmas already available.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Logic",
-        "Algebra"
-      ],
-      "id": "fd_2105",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "be5e0ab8",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/be5e0ab8_retry3",
-      "status": "available",
-      "thread_id": "th_2c23f344",
-      "timestamp": "2026-06-19T10:36:25.186902+00:00",
-      "title": "This cycle formalized dependency DAGs of a formal library, the **gravitational"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "# FUTURE DIRECTIONS — Combinatorics of the Universal Library\n\nDerived from this cycle's findings in `Counting.lean` and `Diagonal.lean`. Each conjecture\nis bold, falsifiable, and stated so it could be formalized next.\n\n## C1. Windowed-occurrence law (sharpening `prob_match`)\n\n**Conjecture.** For a fixed word `T` of length `m ≤ L` over a `b`-symbol alphabet, the number\nof volumes in which `T` occurs as a contiguous substring at *some* position satisfies the\ninclusion–exclusion bound\n`(L-m+1)·b^{L-m} - \\binom{L-m+1}{2}·b^{L-2m+overlap} ≤ #occur ≤ (L-m+1)·b^{L-m}`,\nand the lower order term is governed by the autocorrelation (overlap) polynomial of `T`.\n\n- **The key insight is** that the spurious linear `|T|` factor in the informal conjecture is\n  exactly the window count `L-m+1` from a union bound, and its *correction* is the classical\n  Guibas–Odlyzko correlation polynomial — so \"meaning density\" is a string-autocorrelation\n  invariant, not a single scalar.\n- **Why now?** `card_agree_on` already gives the exact fixed-position count `b^{L-m}`; the\n  only missing ingredient is summing over windows with inclusion–exclusion, which Mathlib's\n  `Finset` machinery now supports directly.\n\n## C2. The catalog is strictly super-linear (entropy lower bound)\n\n**Conjecture.** Any distributed catalog that stores, for every volume, a decodable address\nrequires `N ≥ b^L` volumes — a factor `L·log₂ b` *more* than the informal `b^L/(L·log₂ b)`.\n\n- **The key insight is** that \"one volume-reference per entry\" (threshold `b^L/L`, proved as\n  `distributed_catalog_iff`) is not the same as \"raw-bit encoding\": each reference itself\n  costs `L·log₂ b` bits, so the bit-faithful threshold multiplies back up to `b^L`.\n- **Why now?** `distributed_catalog_iff` pins the entry-count threshold exactly; promoting it\n  to a bit-level Kraft-inequality statement is a clean next step using\n  `Function.Embedding`/cardinality lemmas already in scope.\n\n## C3. de Bruijn existence at every order (mini-Library realizability)\n\n**Conjecture.** For all `b ≥ 1, n ≥ 1` a de Bruijn sequence `B(b,n)` exists, i.e. the window\nmap of `Diagonal.lean` is realizable as a bijection of length `b^n`; in particular the\nmini-Library `B(4,16)` of length `4^16` is constructible in time polynomial in its length.\n\n- **The key insight is** that existence is exactly an Eulerian circuit in the de Bruijn graph\n  on `b^{n-1}` vertices, which is balanced and connected — so a constructive greedy/Hierholzer\n  argument yields the catalog, complementing the *necessity* `isDeBruijn_length` proved here.\n- **Why now?** We have already isolated the bijective `window`/`IsDeBruijn` interface and the\n  forced-length theorem; only the Eulerian-circuit existence half remains, and Mathlib's graph\n  theory now has enough connectivity API to attempt it.\n\n## C4. Phase transition in \"probability of a valid proof\"\n\n**Conjecture.** Fix a proof system. The probability that a random Borges volume contains a\n*syntactically valid* proof of a theorem of Kolmogorov complexity `k` is `Θ(b^{-k})` up to a\npolynomial-in-`L` factor, and exhibits a sharp threshold: for `k > L·log_b 2` the expected\ncount drops below 1, so almost no volume helps.\n\n- **The key insight is** that \"validity\" is a prefix-free language, so the count of valid\n  carriers is controlled by Kraft's inequality applied to the proof grammar — turning the\n  vague `|T|·b^{-k}` into a precise first-moment threshold, exactly the method the catalog's\n  `RamseyFirstMoment` file uses for hypergraph colorings.\n- **Why now?** `card_bitbook_match` already bridges our counting to the catalog's first-moment\n  lemma `card_filter_eq_const`; reusing that expectation machinery for a proof-grammar\n  indicator is the natural cross-domain extension.\n\n## C5. Self-reference is impossible at every scale (uniform diagonal)\n\n**Conjecture.** There is no family of \"indexing\" maps `idx_L : Volume b L → Fin L` that is\ninjective for infinitely many `L`; equivalently the gap `b^L - L → ∞`, so the Library's\n\"un-cataloguability within one volume\" worsens monotonically.\n\n- **The key insight is** that `no_position_addressing` is not a one-off pigeonhole but a\n  *uniform* asymptotic: `b^L - L` grows super-exponentially, so no clever encoding ever\n  catches up — the diagonal obstruction is structural, not incidental.\n- **Why now?** `library_size_exceeds_length` gives the per-`L` strict inequality; upgrading to\n  a monotone divergence `b^L - L` is a short induction that immediately rules out any uniform\n  self-catalog scheme.\n",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Algebra",
-        "Computation"
-      ],
-      "id": "fd_2106",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.75,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "a2755e7b",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/a2755e7b_retry2",
-      "status": "available",
-      "thread_id": "th_1ce6ebba",
-      "timestamp": "2026-06-19T10:38:49.270223+00:00",
-      "title": "Derived from this cycle's findings in `Counting.lean` and `Diagonal.lean`. Each "
     },
     {
       "ambition_level": "extension",
@@ -35449,41 +35412,6 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "Building on cycle be5e0ab8 (Q=0.890), which proved 35 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Jones–Temperley–Lieb representation of the braid group B_n in Lean, proving that the map sending each Artin generator σ_i to the Jones operator jonesOp A X_i satisfies the braid relations, provides a faithful representation for generic parameter A, and connects to the Markov trace yiel",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Computation"
-      ],
-      "id": "push_be5e0ab8_4ee19012",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.95,
-      "proof_strategy": "",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "be5e0ab8",
-      "source_path": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-19T10:37:36.402838+00:00",
-      "title": "Deepening: Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
       "category": "",
@@ -36053,7 +35981,7 @@
       "depth_estimate": 3,
       "description": "Prove that the 3n+1 iteration eventually reaches 1 for all positive integers. Formalize partial results on density of convergent integers, stopping times, and connections to ergodic theory and p-adic dynamics.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Algebra",
         "Computation"
@@ -37608,7 +37536,7 @@
       "depth_estimate": 3,
       "description": "Prove that 78557 is the smallest Sierpiński number. Formalize the theory of covering systems and their relationship to Chinese Remainder Theorem configurations.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Algebra",
         "Computation"
@@ -37785,7 +37713,7 @@
       "depth_estimate": 3,
       "description": "Huang proved the sensitivity conjecture. Extend: prove tighter bounds on degree-sensitivity relationship of Boolean functions. Formalize the spectral approach via signed adjacency matrices.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Computation",
         "Algebra"
@@ -37927,7 +37855,7 @@
       "depth_estimate": 3,
       "description": "Resolve Kaplansky's conjectures on group rings: no zero divisors, no idempotents other than 0/1, and no nontrivial units in K[G] for torsion-free G.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Algebra",
         "Computation"
@@ -38177,7 +38105,7 @@
       "depth_estimate": 3,
       "description": "Prove that the connective constant for the self-avoiding walk on Z² equals (2+√2)/2 or determine its exact value. Formalize the Hara-Slade result and Nienhuis's conjecture.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Computation",
         "Algebra"
@@ -38213,7 +38141,7 @@
       "depth_estimate": 3,
       "description": "Prove that π, e, √2, or any fundamental constant is normal. Formalize the connection to equidistribution and algebraic independence.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Algebra",
         "Computation"
@@ -38249,7 +38177,7 @@
       "depth_estimate": 3,
       "description": "Prove edge universality for random matrix ensembles beyond Gaussian cases. Formalize Tracy-Widom distribution convergence and the Airy kernel.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.75,
       "domains": [
         "Computation",
         "Algebra"
@@ -38285,7 +38213,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Razborov-Rudich natural proofs barrier: circuit lower bound proofs using 'natural' properties cannot separate P from NP unless pseudorandom generators don't exist. Explore algebrization.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Computation",
         "Logic"
@@ -38464,7 +38392,7 @@
       "depth_estimate": 3,
       "description": "Classify RT²₂ in the reverse mathematics hierarchy: prove it's strictly between ACA₀ and WKL₀ over RCA₀. Formalize Seetapun's theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Logic",
         "Computation"
@@ -38858,7 +38786,7 @@
       "depth_estimate": 3,
       "description": "Prove that the set of positive integers with finite Collatz stopping time has density 1. Formalize the Terras density result and the Krasikov-Lagarias bound. Construct the 3-adic analysis of the Collatz map and prove local convergence properties.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "NumberTheory",
         "Computation"
@@ -39001,7 +38929,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Miller-Rabin primality test in Lean 4 and prove its error bounds. Formalize the AKS deterministic primality test and prove correctness: PRIMES ∈ P. Construct efficient modular arithmetic tactics for Lean.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "NumberTheory",
         "Computation"
@@ -39827,7 +39755,7 @@
       "depth_estimate": 3,
       "description": "Formalize Boolean circuit complexity. Prove Razborov's lower bound: monotone circuits for CLIQUE require exponential size. Formalize the approximation method. Prove the Karchmer-Wigderson connection between circuit depth and communication complexity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Computation",
         "Logic"
@@ -39863,7 +39791,7 @@
       "depth_estimate": 3,
       "description": "Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Computation",
         "Logic"
@@ -39972,7 +39900,7 @@
       "depth_estimate": 3,
       "description": "Formalize the untyped lambda calculus. Prove the Church-Rosser theorem (confluence). Formalize the simply-typed lambda calculus and prove strong normalization. Construct the Böhm tree for undecidability of equivalence.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Logic",
         "Computation"
@@ -40118,7 +40046,7 @@
       "depth_estimate": 3,
       "description": "Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Physics",
         "Algebra",
@@ -40191,7 +40119,7 @@
       "depth_estimate": 3,
       "description": "Formalize the PAC-Bayes framework in Lean 4. Prove the Catoni bound and McAllester bound. Apply to neural networks via Gaussian perturbation priors. Prove that PAC-Bayes bounds are asymptotically tight for linear classifiers.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "MachineLearning",
         "Probability",
@@ -40302,7 +40230,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Cryptography",
         "Algebra",
@@ -40376,7 +40304,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Cryptography",
         "Logic",
@@ -40450,7 +40378,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Tropical",
         "Computation",
@@ -40598,7 +40526,7 @@
       "depth_estimate": 3,
       "description": "Formalize BCH and Reed-Solomon codes over finite fields. Prove the BCH bound on minimum distance. Construct the Berlekamp-Massey decoding algorithm and prove correctness. Apply to concrete error-correction scenarios.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Algebra",
         "Computation",
@@ -40635,7 +40563,7 @@
       "depth_estimate": 3,
       "description": "Develop custom Lean 4 tactics for common proof patterns in the Catalog: a tropical_simp tactic for min-plus simplification, a number_theory_decide for small cases, and a spectral_bound for eigenvalue estimates. Prove each tactic is sound.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Logic",
         "Computation",
@@ -40672,7 +40600,7 @@
       "depth_estimate": 3,
       "description": "Formalize classic algorithms with full correctness proofs in Lean 4: binary search (with loop invariants), Dijkstra's shortest path (with graph formalization), and FFT (with number-theoretic transform). Prove complexity bounds.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.0,
       "domains": [
         "Computation",
         "Logic"
@@ -93975,9 +93903,9 @@
     "Cryptography": 26,
     "EML": 2,
     "Geometry": 167,
-    "Logic": 117,
+    "Logic": 116,
     "MachineLearning": 37,
-    "Novelty": 200,
+    "Novelty": 199,
     "Physics": 45,
     "Probability": 1,
     "Pythagorean": 111,
@@ -94020,7 +93948,7 @@
     "first": 325,
     "first-order": 19,
     "formal": 133,
-    "formalize": 223,
+    "formalize": 222,
     "framework": 103,
     "function": 204,
     "functions": 99,
@@ -94078,7 +94006,7 @@
     "theories": 33,
     "theory": 349,
     "tononi's": 3,
-    "topological": 92,
+    "topological": 91,
     "topology": 64,
     "transcendence": 3,
     "tropical": 113,
