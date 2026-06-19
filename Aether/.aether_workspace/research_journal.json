@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "36dba103",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Boltzmann Bridge X: Primitive Divisors as a Strong-Divisibility Phenomenon\n\n## Synthesis\n\nThe Carmichael arc of this catalog set out to prove that every Fibonacci number `F(n)`\nw",
-      "quality_score": 0.7248000000000001,
-      "sorry_count": 3,
-      "theorem_count": 175,
-      "timestamp": "2026-06-14T21:35:45",
-      "title": "Close Proofs: The Boltzmann Bridge arc has, over several cycles, reduced the entire "
-    },
-    {
       "cycle_id": "9fe725de",
       "domain": "Probability",
       "key_insight": "# Future Directions — Boltzmann Bridge XI: Self-Similar Dilations of the Persistence Geodesic Space\n\n## Synthesis\n\nThe Boltzmann Bridge arc reduced the metric theory of persistence stability to a\nsing",
@@ -2501,6 +2491,16 @@
       "theorem_count": 33,
       "timestamp": "2026-06-19T11:48:11",
       "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+    },
+    {
+      "cycle_id": "7f1e65fe",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions\n\nThese directions continue naturally from the deterministic deletion lemma proved\nin `Catalog/Bridges/LocallySparseHypergraphDegree.lean`. Each is phrased so that\nthe deletion lemm",
+      "quality_score": 0.476594,
+      "sorry_count": 0,
+      "theorem_count": 41,
+      "timestamp": "2026-06-19T12:18:18",
+      "title": "Average-Degree Bound for Locally Sparse Uniform Hypergraphs"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7144
     }
   ],
-  "last_updated": "2026-06-19T11:48:11",
+  "last_updated": "2026-06-19T12:18:18",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "cfed7f6c",
-        "quality": 0.4422638461538462,
-        "theorems": 23,
-        "title": "Functorial metric-to-tropical filtration from Rips graphs to ultrametric valuati"
-      },
-      {
         "cycle_id": "7db0844d",
         "quality": 0.42713306086956526,
         "theorems": 11,
@@ -3203,6 +3197,12 @@
         "quality": 0.3998539157894737,
         "theorems": 17,
         "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+      },
+      {
+        "cycle_id": "7f1e65fe",
+        "quality": 0.476594,
+        "theorems": 41,
+        "title": "Average-Degree Bound for Locally Sparse Uniform Hypergraphs"
       }
     ],
     "Combinatorics": [

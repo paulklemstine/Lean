@@ -3086,6 +3086,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThese directions continue naturally from the deterministic deletion lemma proved\nin `Catalog/Bridges/LocallySparseHypergraphDegree.lean`. Each is phrased so that\nthe deletion lemma is reused as the deterministic core, with new work layered on\ntop.\n\n## 1. Bernoulli first-moment bound\n\nFormalize the random vertex-sampling step: include each vertex independently with\nprobability `p`, obtain a random subset `S`, and bound the expected independent-set\nsize below by `E[|S|] - E[|containedEdges E S|]` using the deletion lemma\npointwise and linearity of expectation.\n\nThe key insight is that the deletion lemma already holds for *every* outcome `S`,\nso the expectation of its conclusion is obtained for free by linearity, and no new\ncombinatorics is needed \u2014 only the probabilistic bookkeeping of `E[|S|]` and\n`E[|containedEdges E S|]`.\n\n**Why now?** The deterministic lemma is proved, type-checks, and exposes exactly\nthe two cardinalities (`S.card` and `(containedEdges E S).card`) whose expectations\nthe first-moment bound needs; the probabilistic layer can be added without\ntouching the combinatorial core.\n\n## 2. Uniform hypergraph average-degree bound\n\nSpecialize the first-moment bound to `r`-uniform hypergraphs (`Uniform E r`),\nwhere an edge survives sampling with probability exactly `p^r`. Optimize `p` to\nderive an independent set of size `\u03a9(|V| / d^{1/(r-1)})` in terms of the average\ndegree `d`.\n\nThe key insight is that uniformity collapses the edge-survival probability to the\nsingle quantity `p^r`, turning the expected count of contained edges into a clean\nclosed form that can be optimized over `p` by elementary calculus on naturals or\nreals.\n\n**Why now?** `Uniform E r` is already defined in the file, and the deletion lemma\nplus a first-moment bound are exactly the two ingredients this classical estimate\ncombines; the remaining work is a self-contained optimization.\n\n## 3. Formal Berge-cycle definitions and basic theory\n\nDevelop the theory around the existing `Linear E` and `BergeThreeCycle E`\ndefinitions: prove that `Linear E` is equivalent to the absence of Berge\n2-cycles, and establish counting lemmas for codegrees (numbers of edges through a\nfixed pair of vertices) under these constraints.\n\nThe key insight is that linearity bounds pairwise edge intersections by one, which\ndirectly controls the codegree and hence the variance of the contained-edge count\n\u2014 the quantity that second-moment refinements of the deletion lemma depend on.\n\n**Why now?** The definitions `Linear` and `BergeThreeCycle` are in place and\ntype-check, so the supporting combinatorial lemmas can be stated and proved\nimmediately, giving the vocabulary needed for the sparsity refinements below.\n\n## 4. Second-moment / locally sparse refinement\n\nUse linearity (no Berge 2-cycles) and forbidden Berge 3-cycles to bound the\nvariance of `|containedEdges E S|`, then upgrade the first-moment independent-set\nbound to the improved locally sparse bound `\u03a9((|V|/d^{1/(r-1)}) \u00b7 (log d)^{1/(r-1)})`\nfamiliar from the Ajtai\u2013Koml\u00f3s\u2013Pintz\u2013Spencer\u2013Szemer\u00e9di circle of results.\n\nThe key insight is that local sparsity caps the number of edges sharing two\nvertices, which suppresses the dependencies between edge-survival events and\nmakes a second-moment (or alteration) argument quantitatively beat the naive\nfirst moment.\n\n**Why now?** This is the precise next quantitative milestone after the\nfirst-moment bound, and both its hypotheses (`Linear`, `BergeThreeCycle`) and its\ndeterministic engine (the deletion lemma) already exist in the development.\n\n## 5. From independence number to average-degree conjecture\n\nAssemble the refined bounds into a statement about the average degree of locally\nsparse hypergraphs, isolating the precise remaining gap toward the full locally\nsparse average-degree conjecture and recording it as an explicit `sorry`-free\ntarget statement (proved or left as a clearly marked open `theorem ... := by\nsorry` only at the very top level).\n\nThe key insight is that an independence-number lower bound and an average-degree\nupper bound are dual faces of the same extremal estimate, so packaging the proved\nbounds correctly turns the conjecture into a single clean inequality between two\nalready-formalized quantities.\n\n**Why now?** With the deterministic lemma, first- and second-moment bounds, and\nBerge-cycle vocabulary all in place, the final step is organizational \u2014 stating the\nconjecture faithfully against existing definitions \u2014 which keeps the formalization\nhonest about exactly what remains open.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2108",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "7f1e65fe",
+    "status": "available",
+    "timestamp": "2026-06-19T12:17:32.083123+00:00",
+    "title": "These directions continue naturally from the deterministic deletion lemma proved"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4245,21 +4260,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-01T12:30:30.782446+00:00",
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-  },
-  {
-    "consumed_by_exp_id": "6495e602",
-    "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0092",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.807837+00:00",
-    "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
   {
     "consumed_by_exp_id": "",
