@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "6f1514f1",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Lattice Shape and Parametric Separation of the Poset of p-Degrees\n\n## Synthesis\n\nThis cycle pushed the order-theoretic core of the Cook–Reckhow program\n(`Catalog/Logic/ProofComple",
-      "quality_score": 0.70124,
-      "sorry_count": 1,
-      "theorem_count": 16,
-      "timestamp": "2026-06-13T23:54:37",
-      "title": "Close Proofs: Order-theoretic core of the Cook–Reckhow program built i"
-    },
-    {
       "cycle_id": "126a3d45",
       "domain": "Applications",
       "key_insight": "# Future Directions — The Pisano Period as a Group Order (Duality & Representation)\n\n## Synthesis\n\nThis cycle re-cast the **Pisano period** `π(m)` — the period of the Fibonacci\nsequence modulo `m` — n",
@@ -499,19 +489,19 @@
       "theorem_count": 23,
       "timestamp": "2026-06-16T20:27:30",
       "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
+    },
+    {
+      "cycle_id": "c9ad0581",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\n## 1. From eigenvectors to arbitrary secret vectors\n\nThe current boundary analysis assumes the secret vector is an exact tropical\neigenvector of the public matrix. Real protocols",
+      "quality_score": 0.829866,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-19T09:36:53",
+      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "e83936cd",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Hodge–Laplacian Message Passing as a Discrete Heat Semigroup\n\n## Synthesis\n\nThis cycle assembles the full **discrete-heat-semigroup dictionary** for the\ngradient message-passing",
-      "quality_score": 0.49090545454545453,
-      "sorry_count": 18,
-      "theorem_count": 220,
-      "timestamp": "2026-06-14T20:37:42",
-      "title": "This cycle closed the conceptual loop opened by the spectral-depth-threshold wor"
-    },
     {
       "cycle_id": "1c463510",
       "domain": "Applications",
@@ -2501,27 +2491,19 @@
       "theorem_count": 70,
       "timestamp": "2026-06-19T08:21:16",
       "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+    },
+    {
+      "cycle_id": "c9ad0581",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions\n\n## 1. From eigenvectors to arbitrary secret vectors\n\nThe current boundary analysis assumes the secret vector is an exact tropical\neigenvector of the public matrix. Real protocols",
+      "quality_score": 0.829866,
+      "sorry_count": 0,
+      "theorem_count": 14,
+      "timestamp": "2026-06-19T09:36:53",
+      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "5a4a0b2c",
-      "domain": "Applications",
-      "name": "lerp_lerp",
-      "quality": 0.7868
-    },
-    {
-      "cycle_id": "5a4a0b2c",
-      "domain": "Applications",
-      "name": "eInterleavingDist_lerp_betweenness",
-      "quality": 0.7868
-    },
-    {
-      "cycle_id": "36dba103",
-      "domain": "Combinatorics",
-      "name": "support_eq_multiples",
-      "quality": 0.7248000000000001
-    },
     {
       "cycle_id": "36dba103",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "MachineLearning",
       "name": "eval_def",
       "quality": 0.712
+    },
+    {
+      "cycle_id": "c9ad0581",
+      "domain": "MachineLearning",
+      "name": "tropResidual_eq_eigenvalue",
+      "quality": 0.829866
+    },
+    {
+      "cycle_id": "c9ad0581",
+      "domain": "MachineLearning",
+      "name": "tropResidual_const",
+      "quality": 0.829866
+    },
+    {
+      "cycle_id": "c9ad0581",
+      "domain": "MachineLearning",
+      "name": "tropical_eigenvalue_unique",
+      "quality": 0.829866
     }
   ],
-  "last_updated": "2026-06-19T08:21:16",
+  "last_updated": "2026-06-19T09:36:53",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3499,12 +3499,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "d1ba4f5a",
-        "quality": 0.57034,
-        "theorems": 11,
-        "title": "These conjectures build on `Bridges/ValuationRipsBridge.lean`, which established"
-      },
-      {
         "cycle_id": "b221d007",
         "quality": 0.4584708352941177,
         "theorems": 10,
@@ -3557,6 +3551,12 @@
         "quality": 0.5529929095354524,
         "theorems": 62,
         "title": "Scaling Laws from Statistical Mechanics"
+      },
+      {
+        "cycle_id": "c9ad0581",
+        "quality": 0.829866,
+        "theorems": 14,
+        "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
       }
     ],
     "Novelty": [

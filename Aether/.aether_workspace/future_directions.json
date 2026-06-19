@@ -10343,7 +10343,7 @@
       "depth_estimate": 3,
       "description": "Formalize neural network architectures as morphisms in a monoidal category. Prove that ResNet skip connections are categorical products, attention is a natural transformation, and architecture search is optimization in a functor category.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "MachineLearning",
         "Algebra"
@@ -10379,7 +10379,7 @@
       "depth_estimate": 3,
       "description": "Prove that vanishing first sheaf cohomology on neural network weight spaces implies certified L-infinity perturbation radius. Construct explicit sheaf structures on decision boundaries whose stalk cohomology detects adversarial vulnerability.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "MachineLearning",
         "Algebra"
@@ -13151,7 +13151,7 @@
       "depth_estimate": 3,
       "description": "Prove that Exponential-Multiplicative-Logarithmic closures are universal approximators with provable complexity bounds. Show that minimum EML depth for ε-approximation is O(K(f)/ε), connecting to Kolmogorov complexity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "EML",
         "MachineLearning"
@@ -13978,7 +13978,7 @@
       "depth_estimate": 3,
       "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.5,
+      "domain_quality_penalty": -0.4,
       "domains": [
         "MachineLearning",
         "Physics"
@@ -15598,7 +15598,7 @@
       "depth_estimate": 3,
       "description": "Prove that depth-L ReLU networks of width (n+4) can approximate any continuous function on [-1,1]^n to epsilon accuracy. Show that the required width grows as O(epsilon^{-1/n}) for shallow networks but only O(log(1/epsilon)) for deep networks. Formalize the depth separation theorem: there exist functions representable by depth-L+1 networks of polynomial size that require exponential size in depth L.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.55,
       "domains": [
         "MachineLearning",
         "Computation"
@@ -15634,7 +15634,7 @@
       "depth_estimate": 3,
       "description": "Formalize Rademacher complexity for hypothesis classes. Prove that the Rademacher complexity of a neural network with L layers and spectral norm bound C is O(C * sqrt(L) / sqrt(n)). Derive PAC-Bayes generalization bounds. Show that weight normalization reduces the Rademacher complexity and thus improves generalization.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "MachineLearning",
         "Logic"
@@ -30669,7 +30669,7 @@
       "depth_estimate": 3,
       "description": "Conjecture: For any finite-type moduli space M of algebraic curves or polarized varieties equipped with its natural orbifold metric, there exists a family of width-increasing geometric neural networks whose neural tangent kernels converge, after explicit metric normalization, to a universal operator determined by the Laplace-Beltrami spectrum of M, and this limiting kernel predicts generalization error solely from low-lying spectral data. Test: Construct such networks on sampled points from moduli spaces of low genus curves, K3 surfaces, or abelian varieties; compute empirical neural tangent kernels as width grows; compare their spectra and learning curves against the conjectured Laplace-Beltrami-derived limit. Confirmation requires convergence across architectures and tasks to the same spectral law and error predictor; refutation occurs if limiting kernels depend essentially on architecture details or fail to correlate with geometric spectral invariants. Impact: This would connect deep learning universality to arithmetic geometry, provide a principled theory of learning on highly singular geometric parameter spaces, and enable geometry-aware model design using moduli-space spectra.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Algebra",
         "MachineLearning"
@@ -35357,6 +35357,41 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Building on cycle c9ad0581 (Q=0.830), which proved 14 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Tropical Eigenvalue Attack: Security analysis of matrix-based min-plus encryption protocols using tropical linear algebra. Develop rigorous formalizations of tropical eigenvalue properties, eigenvector indistinguishability under λ=0, and boundary eigenvalue behavior with explicit tropical subtractio",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "MachineLearning"
+      ],
+      "id": "push_c9ad0581_06d431cc",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.929866,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "c9ad0581",
+      "source_path": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-19T09:36:53.420182+00:00",
+      "title": "Deepening: Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
       "category": "",
@@ -39923,7 +39958,7 @@
       "depth_estimate": 3,
       "description": "Formalize the universal approximation theorem for ReLU networks. Prove depth-width tradeoffs: width-bounded networks of depth d can approximate functions that require exponential width at depth d-1. Construct explicit approximation rates for Sobolev functions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning",
         "Analysis"
@@ -39959,7 +39994,7 @@
       "depth_estimate": 3,
       "description": "Formalize the PAC-Bayes framework in Lean 4. Prove the Catoni bound and McAllester bound. Apply to neural networks via Gaussian perturbation priors. Prove that PAC-Bayes bounds are asymptotically tight for linear classifiers.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning",
         "Probability",
@@ -39996,7 +40031,7 @@
       "depth_estimate": 3,
       "description": "Formalize the self-attention mechanism as a kernel method. Prove that softmax attention is a universal approximator of sequence-to-sequence functions. Analyze the rank of attention matrices and prove the attention sink phenomenon for large context.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning",
         "Algebra",
@@ -40033,7 +40068,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Kantorovich optimal transport problem. Prove existence of optimal transport maps (Brenier's theorem for quadratic cost). Formalize Wasserstein distances and prove the Wasserstein GAN convergence properties.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning",
         "Analysis",
