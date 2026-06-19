@@ -1,314 +1,429 @@
-# The Algebra of Sheaf Imputation: Partial Sections, Left-Regular Bands, and the Local Certificate of Consistent Completion
+# Sheaf-Theoretic Data Integration: When Databases Form a Sheaf
 
 **Author:** Aristotle
 **Date:** 2026-06-19
-**Domain:** Algebra
+**Domain:** Bridges (algebraic geometry ↔ data science)
 
 ## Abstract
 
-We model a database row with missing entries as a *partial section* of a
-discrete sheaf of records, `PartialSection ι α := ι → Option α`, and study the
-left-biased merge operation `glue` that overlays one record on another. We prove
-that partial sections form an **idempotent monoid** under `glue` with the
-all-missing row `emptySection` as two-sided identity, and that they satisfy the
-two defining identities of a **left-regular band**, `glue (glue f g) f = glue f g`
-and `glue f (glue g f) = glue f g`. We then establish the **sheaf condition for
-databases**: a family of records admits a global section — a consistent
-completion extending every member — *if and only if* it is pairwise compatible
-(`compatible_iff_exists_common_extension`, `glue_family_exists`). We complement
-existence with **uniqueness** (`glue_unique`): the greedy merge is the unique
-global section whose support lies within the union of the records' supports, and
-with a **locality** principle (`restrict_locality`) showing a record is
-determined by its cell values. All results are stated for an arbitrary index type
-`ι` and value type `α` with no finiteness, ordering, or topological assumptions.
-We give proof sketches, an imputation algorithm with complexity analysis, and a
-probabilistic model `P(consistent) = (1-r)^N` predicting an exponential
-feasibility cliff in the number of overlapping constraints. The contribution is a
-fully elementary, certificate-bearing reformulation of consistent data imputation
-as a sheaf-gluing problem.
+We develop a discrete sheaf-theoretic model of database integration and
+imputation. A database with missing entries is modeled as a *partial section*
+of the sheaf of `V`-valued functions on a grid of `(row, column)` positions.
+The sheaf condition — pairwise agreement of local views on their overlaps —
+is shown to be exactly the consistency condition under which partial views can
+be glued into a complete database, and we prove that gluing preserves all
+observed data, is compatible with incremental (one-source-at-a-time)
+integration, and only ever enlarges the set of observed cells. We introduce a
+discrete coboundary norm counting overlap conflicts and prove it vanishes if
+and only if the sheaf condition holds, the finite analogue of the statement
+that the kernel of the Čech coboundary is the space of global sections. We
+formalize sheaf imputation as the minimization of an observation-fidelity
+objective and characterize its zero-cost solutions as exactly the completions
+faithful to the data. On the probabilistic side, we model the chance that a
+random noisy database is consistent as `(1-r)^C`, prove its multiplicativity,
+monotonicity, and boundary behavior, and combine it with a quadratic lower
+bound on the overlap-constraint count to obtain a testable exponential-decay
+conjecture. Finally we introduce *sheaf filtrations* — monotone consistent
+sequences modeling progressive imputation — and prove that monotonicity alone
+forces consistency and that information accumulates to the final level. All
+results are formalized and machine-checked.
 
 ## 1. Introduction
 
-Imputation — the completion of missing entries in a dataset — is ubiquitous and
-usually treated heuristically (mean substitution, k-nearest-neighbor copying,
-chained equations). We argue that the *combinatorial backbone* of imputation is
-algebraic and sheaf-theoretic, and that this backbone is both clean and useful:
-it yields a local, checkable certificate for the existence of a consistent
-completion and a canonical, unique completion when one exists.
+Imputation — filling in missing entries of a data table — is ubiquitous in
+applied statistics and machine learning. The dominant methods (mean
+imputation, k-nearest-neighbors, MICE) are *pointwise plausibility* heuristics:
+they estimate a likely value for each blank in isolation or from local
+similarity. None of them treats *global consistency* of the table as a
+first-class constraint.
 
-Our objects are deliberately minimal. A record over a column-index set `ι` with
-values in `α` is a function `ι → Option α`. The overlay merge `glue` is the
-operation a practitioner performs without thinking when they layer one record
-over another. Our thesis is that this operation is a genuine algebraic structure
-— a left-regular band — and that the sheaf gluing axiom, specialized to this
-setting, is exactly the statement that *local (pairwise) compatibility implies
-global consistency*.
+This paper takes the view that the natural consistency structure on a database
+is that of a **sheaf**. Sheaves formalize the assembly of local data into
+global data subject to agreement on overlaps; the *gluing axiom* (sheaf
+condition) states precisely when local sections determine a unique global
+section. We show that a database with missing entries is a partial section of
+the function sheaf on its cell grid, that "consistent imputation" is the search
+for a global section restricting to the observations, and that the resulting
+theory delivers provable guarantees absent from the standard heuristics.
 
-### 1.1 Contributions
+Our contributions, each formalized:
 
-1. **Monoid and band structure** of `(PartialSection ι α, glue, emptySection)`:
-   identity, associativity, idempotence, and both left-regular band laws.
-2. **Sheaf condition**: existence of a global section is equivalent to pairwise
-   compatibility, with an explicit greedy construction.
-3. **Uniqueness and locality**: support-bounded global sections are unique, and
-   records are determined by their cell values.
-4. **A probabilistic model** for feasibility decay, `P(consistent) = (1-r)^N`,
-   with monotonicity and an exponential-cliff conjecture.
+1. A discrete model (partial databases, consistency, gluing, global sections)
+   with the basic gluing guarantees (§3).
+2. An equivalence between a discrete coboundary norm and the sheaf condition
+   (§4), the finite shadow of `ker δ⁰ = H⁰`.
+3. A sheaf imputation objective whose zero set is exactly the faithful
+   completions (§5).
+4. A consistency-probability calculus `(1-r)^C` with its algebraic laws, and a
+   quadratic lower bound on constraint count yielding a testable
+   exponential-decay conjecture (§6).
+5. *Sheaf filtrations*, a novel order-theoretic model of progressive
+   imputation, with automatic consistency and information accumulation (§7).
 
-## 2. Definitions
+## 2. Preliminaries and Definitions
 
-Throughout, `ι` is a type of column indices, `α` a type of values, and `κ` an
-index type for families of records. We use `Option α` with constructors `some a`
-(a present value) and `none` (a missing value).
+Fix natural numbers `nRows`, `nCols` and a value type `V`.
 
-**Definition 1 (Partial section).** `PartialSection ι α := ι → Option α`. A
-partial section (record) assigns to each column either a value or "missing".
+**Definition 2.1 (Position, `DBPos`).** A *position* is a grid cell
+`DBPos nRows nCols := Fin nRows × Fin nCols`.
 
-**Definition 2 (Support).** `Support f := {i | f i ≠ none}`, the set of filled
-columns.
+**Definition 2.2 (Partial database, `PartialDB`).** A *partial database* is a
+function `PartialDB nRows nCols V := DBPos nRows nCols → Option V`. The marker
+`none` denotes a missing entry; `some v` an observed value `v`.
 
-**Definition 3 (Compatibility).** `Compatible f g :⇔ ∀ i, f i ≠ none → g i ≠ none
-→ f i = g i`. Two records are compatible iff they agree on every column where
-both are defined.
+**Definition 2.3 (Domain, `PartialDB.dom`).** The *domain* of `db` is the set
+of filled positions `db.dom := {p | db p ≠ none}`.
 
-**Definition 4 (Extension).** `Extends g f :⇔ ∀ i, f i ≠ none → g i = f i`. The
-record `g` extends `f` iff it agrees with `f` on `f`'s support (it may fill in
-more, but never overwrites).
+**Definition 2.4 (Global section, `IsGlobalSection`).** `db` is a *global
+section* iff `∀ p, db p ≠ none`: a table with no missing entries.
 
-**Definition 5 (Binary glue).**
-`glue f g := fun i => match f i with | some a => some a | none => g i`.
-The overlay merge: take `f`'s value where present, otherwise `g`'s.
+**Definition 2.5 (Consistent pair, `ConsistentPair`).** Partial databases
+`db₁, db₂` form a *consistent pair* iff
+`∀ p v₁ v₂, db₁ p = some v₁ → db₂ p = some v₂ → v₁ = v₂`,
+i.e. they agree at every position where both are defined.
 
-**Definition 6 (Pairwise compatibility).** For `s : κ → PartialSection ι α`,
-`PairwiseCompatible s :⇔ ∀ j k, Compatible (s j) (s k)`.
+**Definition 2.6 (Sheaf condition, `SheafCondition`).** A family
+`dbs : ι → PartialDB nRows nCols V` satisfies the *sheaf condition* iff
+`∀ i j, ConsistentPair (dbs i) (dbs j)` — every pair is consistent. This is the
+Čech 0-cocycle (pairwise overlap-agreement) condition for the data sheaf.
 
-**Definition 7 (Family glue).** Using choice,
-`familyGlue s := fun i => if h : ∃ j, s j i ≠ none then s (choose h) i else none`.
-At each column, take the value of any member defined there, if one exists.
-
-**Definition 8 (Empty section).** `emptySection := fun _ => none`, the
-all-missing record.
-
-**Definition 9 (Global section).** `HasGlobalSection s :⇔ ∃ h, ∀ j, Extends h (s
-j)`. A family has a global section iff some record extends all of its members.
-
-The basic pointwise behavior of `glue` is recorded as:
-
-**Lemma 1 (`glue_apply`).** `(glue f g) i = if f i ≠ none then f i else g i`.
-*Proof.* Case split on `f i`. ∎
-
-## 3. The monoid and band structure
-
-**Theorem 10 (Identity — `glue_emptySection_left`, `glue_emptySection_right`).**
-For every record `f`, `glue emptySection f = f` and `glue f emptySection = f`.
-
-*Proof sketch.* By functional extensionality it suffices to check at each column
-`i`. For the left law, `emptySection i = none`, so by `glue_apply` the merge falls
-through to `f i`. For the right law, case split on `f i`: if `f i = some a` the
-merge returns `some a = f i`; if `f i = none` the merge returns `emptySection i =
-none = f i`. ∎
-
-**Theorem 11 (Associativity — `glue_assoc`).**
-`glue (glue f g) h = glue f (glue g h)`.
-
-*Proof sketch.* Pointwise, perform the nested case analysis on `f i` and `g i`.
-If `f i = some a`, both sides yield `some a`. If `f i = none` and `g i = some b`,
-both yield `some b`. If `f i = none = g i`, both yield `h i`. All three branches
-agree. ∎
-
-**Theorem 12 (Idempotence — `glue_idem`).** `glue f f = f`.
-
-*Proof sketch.* Pointwise: if `f i = some a` the merge returns `some a`; if `f i =
-none` the merge falls through to the second copy, again `none`. Either way the
-result equals `f i`. ∎
-
-Theorems 10–12 give:
-
-**Corollary (Idempotent monoid).** `(PartialSection ι α, glue, emptySection)` is
-a monoid in which every element is idempotent.
-
-**Theorem 13 (Left-regular band laws — `glue_band_left`, `glue_band_right`).**
-`glue (glue f g) f = glue f g` and `glue f (glue g f) = glue f g`.
-
-*Proof sketch.* Both are pointwise case splits on `f i` and `g i`. For
-`glue_band_left`: if `f i = some a`, the outer `glue (·) f` already returns `some
-a` from the left argument, which equals `glue f g` at `i`; if `f i = none`, the
-left law's inner `glue f g` reduces to `g i` and re-gluing `f` (still `none`)
-leaves `g i`. The companion law is symmetric in structure. The two identities,
-together with idempotence and associativity, are exactly the axioms of a
-left-regular band. ∎
-
-**Remark (Non-commutativity).** `glue` is *not* commutative: when `f i` and `g i`
-are both defined and unequal, `glue f g` and `glue g f` differ. Hence
-commutative-monoid simplifications do not apply, and the band laws are the precise
-record of left-biased precedence. This is the correct semantics for conflicting
-data sources, where trust order matters.
-
-## 4. The sheaf condition: existence of consistent completions
-
-We first record how `glue` interacts with support and extension.
-
-**Proposition 2 (`support_glue_eq_union`).** `(glue f g).Support = f.Support ∪
-g.Support`. *Proof.* Pointwise: `glue f g` is defined at `i` iff `f` or `g` is. ∎
-
-**Lemma 3 (`glue_extends_left`).** `Extends (glue f g) f`. *Proof.* Where `f i =
-some a`, `glue` returns `some a`. ∎
-
-**Lemma 4 (`glue_extends_right`).** If `Compatible f g` then `Extends (glue f g)
-g`. *Proof.* At a column where `g i = some b`: if `f i = none`, `glue` returns `g
-i`; if `f i = some a`, compatibility forces `a = b`, so `glue` returns `some a =
-some b = g i`. ∎
-
-These combine into the binary sheaf condition.
-
-**Theorem 5 (Binary sheaf condition — `compatible_iff_exists_common_extension`).**
-`Compatible f g ↔ ∃ h, Extends h f ∧ Extends h g`.
-
-*Proof sketch.* (⇐) If a common extension `h` exists, then at any column where
-both `f` and `g` are defined, `f i = h i = g i` (`compatible_of_common_extension`),
-so they agree. (⇒) If `f, g` are compatible, take `h := glue f g`; by Lemma 3 it
-extends `f`, and by Lemma 4 (using compatibility) it extends `g`. ∎
-
-The arbitrary-family version is the genuine gluing axiom.
-
-**Lemma 8 (`familyGlue_extends`).** If `PairwiseCompatible s`, then for every `j`,
-`Extends (familyGlue s) (s j)`. *Proof sketch.* At a column `i` with `s j i =
-some a`, `familyGlue` selects the value of some member `s k` defined at `i`;
-pairwise compatibility of `s k` and `s j` forces that value to equal `a`. ∎
-
-**Theorem 9 (Sheaf gluing — `glue_family_exists`).** If `PairwiseCompatible s`,
-then `∃ h, ∀ j, Extends h (s j)`; equivalently `HasGlobalSection s`. *Proof.*
-Take `h := familyGlue s` and apply Lemma 8. ∎
-
-**Interpretation.** Theorem 9 is the headline: *global consistency is certified by
-local (pairwise) checks.* No higher-order conflict can exist that pairwise
-compatibility fails to detect. The certificate of feasibility is a quadratic-time
-all-pairs comparison; the witness is the greedy merge `familyGlue`.
-
-## 5. Uniqueness and locality
-
-A global section, when it exists, is canonical under a minimality condition.
-
-**Theorem 7 (Uniqueness — `glue_unique`).** Let `f, g` be records and `h` any
-record with `Extends h f`, `Extends h g`, and `h.Support ⊆ f.Support ∪
-g.Support`. Then `h = glue f g`.
-
-*Proof sketch.* Pointwise. If `f i = some a`, then `h i = f i = glue f g` at `i`.
-If `f i = none` but `g i = some b`, then `h i = g i = glue f g` at `i`. If both `f
-i` and `g i` are `none`, the support bound forces `h i = none` (otherwise `i ∈
-h.Support` but `i ∉ f.Support ∪ g.Support`, contradiction), matching `glue f g`. ∎
-
-**Remark (Load-bearing support bound).** Without `h.Support ⊆ f.Support ∪
-g.Support`, uniqueness fails: any extension that *invents* values in columns no
-record mentions is still a common extension. The bound encodes the honest
-imputation principle — fill only cells the data speaks to. It is therefore
-necessary, not cosmetic.
-
-**Theorem 6 (Locality — `restrict_locality`).** If `Extends f g` and `Extends g
-f`, then `f = g`. *Proof sketch.* Pointwise: if both are `none` at `i` they
-agree; otherwise the defined side is preserved by the mutual extension, forcing
-equality. ∎
-
-Locality is the sheaf "identity/separation" axiom: a section is determined by its
-restrictions (here, its individual cell values).
-
-## 6. The Sheaf Imputation algorithm
-
-Given a family of records `s_1, …, s_m` over columns `ι` with `|ι| = n`:
-
+**Definition 2.7 (Gluing, `GluingMap`).** The *gluing* of `db₁, db₂` is
 ```
-SheafImpute(s_1, ..., s_m):
-  # 1. Feasibility certificate (sheaf condition, Theorem 9)
-  for each pair (j, k) with j < k:
-    for each column i:
-      if s_j[i] != missing and s_k[i] != missing and s_j[i] != s_k[i]:
-        report CONFLICT at (rows j,k, column i); return INFEASIBLE
-  # 2. Canonical completion (familyGlue, Theorem 9 + uniqueness, Theorem 7)
-  h := record with all columns missing            # emptySection
-  for each column i:
-    for j in 1..m:
-      if s_j[i] != missing:
-        h[i] := s_j[i]; break
-  return h     # unique global section bounded by the union of supports
+GluingMap db₁ db₂ p = match db₁ p with | some v => some v | none => db₂ p,
 ```
+the union preferring `db₁` where both are defined.
 
-**Complexity.** The feasibility check is `O(m^2 n)` (all pairs, all columns); the
-completion is `O(m n)`. By Theorem 9 the pairwise scan is *sound and complete* —
-it returns INFEASIBLE exactly when no global section exists — and by Theorem 7 the
-returned `h` is the unique support-bounded completion. Conflicts are reported as
-concrete `(row, row, column)` triples, an explanatory diagnostic absent from
-mean/KNN imputation.
+**Definition 2.8 (Restriction, `PartialDB.restrict`).** For a decidable set
+`S` of positions, `db.restrict S p = if p ∈ S then db p else none`.
 
-## 7. A probabilistic model of feasibility
-
-Beyond the deterministic algebra, we model when feasibility holds at random.
-Suppose a table of `n` columns and `k` rows induces `N` overlapping pairwise
-constraints (e.g. `N = C(n,k)` in the concept framing), and each constraint is
-independently satisfied with probability `1 - r`, where `r` is the
-missingness/corruption rate. By independence,
-
+**Definition 2.9 (Disagreement indicator, `disagreementAt`).** For
+`[DecidableEq V]`,
 ```
-P(consistent) = (1 - r)^N.
+disagreementAt db₁ db₂ p = match db₁ p, db₂ p with
+  | some v₁, some v₂ => if v₁ = v₂ then 0 else 1 | _,_ => 0,
 ```
+the pointwise contribution to the Čech coboundary.
 
-This closed form is monotone: decreasing in `r`, decreasing in `N`, and (since
-the number of constraints grows with the number of columns `n`) decreasing in `n`.
-As `N → ∞` with `r > 0`, `P(consistent) → 0` exponentially. We state as a
-**conjecture** (Phase A "Conjecture 3") that this induces a *sharp threshold*:
-feasibility is `≈ 1` below a critical rate `r* = 1 - N^{-1/N}` and `≈ 0` above it
-as `n → ∞`, because `(1-r)^N` crosses any fixed level within an `O(1/N)` window of
-`r`. The relevant monotonicity and `tendsto_zero` facts are flagged in Phase A as
-`consistencyProb_antitone_columns` and `consistencyProb_tendsto_zero`; we treat
-the formula and threshold here strictly as a model/conjecture, not as a theorem of
-the verified core of Sections 3–5.
+**Definition 2.10 (Coboundary norm, `CoboundaryNorm`).** For a finite family
+`dbs : Fin n → PartialDB nRows nCols V`,
+```
+CoboundaryNorm dbs = ∑_{i,j} ∑_{r,c} disagreementAt (dbs i) (dbs j) (r,c),
+```
+the discrete analogue of the Čech coboundary `ℓ¹`-norm `‖δ⁰σ‖₁`.
 
-**Practical reading.** Sheaf imputation imposes exponentially many consistency
-constraints. When `r` is small and `n` is large, the surviving consistent
-completion is highly informative — far more so than mean or KNN imputation, which
-ignore cross-column constraints. When `r` is large, the sheaf condition fails
-*loudly* (a reported conflict) rather than silently fabricating averages.
+**Definition 2.11 (Overlap constraint count, `overlapConstraintCount`).**
+`overlapConstraintCount n nRows nCols = n*(n-1)/2 * (nRows*nCols)`: one overlap
+comparison per unordered pair of `n` views, per grid cell.
+
+**Definition 2.12 (Consistency probability, `consistencyProbability`).** For a
+real conflict rate `r` and constraint count `c`,
+`consistencyProbability r c = (1 - r)^c`.
+
+**Definition 2.13 (Imputation objective, `SheafImputationObjective`).** For
+observed `db` and a candidate complete table `g : DBPos → V`,
+```
+SheafImputationObjective db g
+  = ∑_{r,c} match db (r,c) with | some v => if v = g (r,c) then 0 else 1 | none => 0,
+```
+the number of observed cells where `g` disagrees with the observation.
+
+**Definition 2.14 (Local extension, `LocallyExtends`).** `db_ext`
+*locally extends* `db` iff it agrees with `db` on all defined positions and
+fills at least one position `db` left blank.
+
+**Definition 2.15 (Sheaf filtration, `SheafFiltration`).** A *sheaf filtration*
+of depth `depth` is a structure with: a family `level : Fin depth → PartialDB`;
+a *monotonicity* law `∀ i ≤ j, ∀ p v, level i p = some v → level j p = some v`;
+and a *consistency* law `SheafCondition level`. It is *complete*
+(`SheafFiltration.isComplete`) when the final level is a global section.
+
+## 3. Gluing and Consistency
+
+We first record that consistency behaves like the equality it generalizes.
+
+**Theorem 3.1 (`consistent_pair_symm`).** If `ConsistentPair db₁ db₂` then
+`ConsistentPair db₂ db₁`.
+*Proof.* Swap the two witnesses and apply symmetry of `=` in `V`. ∎
+
+**Theorem 3.2 (`consistent_pair_refl`, `consistent_with_empty`).**
+`ConsistentPair db db` for all `db`; and the empty database `λ_, none` is
+consistent with every `db`.
+*Proof.* Reflexivity: `db p = some v₁` and `db p = some v₂` force `v₁ = v₂` by
+injectivity of `some`. Empty: the hypothesis `none = some v₁` is absurd. ∎
+
+The gluing operator preserves observed data on each side.
+
+**Lemma 3.3 (`gluing_extends_left`, `gluing_extends_right`).** If
+`db₁ p = some v` then `GluingMap db₁ db₂ p = some v`; if `db₁ p = none` then
+`GluingMap db₁ db₂ p = db₂ p`.
+*Proof.* Unfold `GluingMap` and rewrite by the case hypothesis. ∎
+
+**Theorem 3.4 (`gluing_extends_both`).** If `ConsistentPair db₁ db₂` then for
+all `p, v`: `db₁ p = some v ⇒ GluingMap db₁ db₂ p = some v`, and
+`db₂ p = some v ⇒ GluingMap db₁ db₂ p = some v`.
+*Proof.* The left case is Lemma 3.3. For the right case, case on `db₁ p`: if
+`db₁ p = some v₁`, consistency gives `v₁ = v`, so the glue returns `some v`; if
+`db₁ p = none`, the glue returns `db₂ p = some v`. ∎
+
+Thus gluing never corrupts data and is the carrier of the existence half of the
+sheaf condition. It is also compatible with iterated integration.
+
+**Theorem 3.5 (`gluing_preserves_consistency`).** If `db₁, db₂, db₃` are
+pairwise consistent then `ConsistentPair (GluingMap db₁ db₂) db₃`.
+*Proof.* Let `(GluingMap db₁ db₂) p = some v₁` and `db₃ p = some v₂`. Case on
+`db₁ p`: if `db₁ p = some v`, then `v₁ = v` and consistency of `db₁, db₃` gives
+`v = v₂`; if `db₁ p = none`, then `v₁ = db₂ p`'s value and consistency of
+`db₂, db₃` gives `v₁ = v₂`. ∎
+
+**Corollary 3.6 (incremental integration).** A pairwise-consistent finite
+family may be glued in any order without introducing conflicts; consistency is
+an invariant of the fold.
+
+Gluing also grows the domain monotonically.
+
+**Theorem 3.7 (`gluing_increases_domain`, `gluing_preserves_right_domain`).**
+`db₁.dom ⊆ (GluingMap db₁ db₂).dom` and `db₂.dom ⊆ (GluingMap db₁ db₂).dom`.
+*Proof.* For a position in `db₁.dom`, `db₁ p ≠ none`, so the glue returns
+`db₁ p ≠ none`. For `db₂.dom`, case on `db₁ p`: defined ⇒ glue defined;
+undefined ⇒ glue equals `db₂ p ≠ none`. ∎
+
+**Theorem 3.8 (`gluing_locally_extends_of_not_contained`).** If `db₁, db₂` are
+consistent and `db₂` fills some position `db₁` leaves blank, then
+`GluingMap db₁ db₂` locally extends `db₁`.
+*Proof.* Fidelity to `db₁` is Lemma 3.3; the extra filled cell is supplied by
+the witness from `db₂`. ∎
+
+**Theorem 3.9 (easy direction, `sheaf_condition_of_global_restriction`).** For
+any `g` and family of sets `S : ι → Set (DBPos …)`, the restrictions
+`λ i, g.restrict (S i)` satisfy the `SheafCondition`.
+*Proof.* At a position where two restrictions are both defined, both equal
+`g p`, hence equal each other. ∎
+
+This is the discrete form of "global sections always glue locally"; the content
+of the sheaf condition is the converse, which §4 packages via the coboundary.
+
+## 4. The Coboundary–Sheaf Equivalence
+
+**Theorem 4.1 (`coboundary_zero_iff_sheaf`).** For any finite family
+`dbs : Fin n → PartialDB nRows nCols V` with `[DecidableEq V]`,
+```
+CoboundaryNorm dbs = 0  ↔  SheafCondition dbs.
+```
+*Proof sketch.* A finite sum of naturals is zero iff every summand is zero
+(`Finset.sum_eq_zero_iff`). Peeling the four nested sums, the norm is zero iff
+`disagreementAt (dbs i)(dbs j)(r,c) = 0` for all `i,j,r,c`. By definition of
+`disagreementAt`, this term is `0` exactly when the two views do not both fill
+`(r,c)` with distinct values — i.e. exactly the consistency condition at that
+cell. Quantifying over all cells and pairs yields `SheafCondition dbs`.
+Conversely, the sheaf condition kills each summand, so the total is zero. ∎
+
+This is the finite analogue of `ker δ⁰ = H⁰`: the family of partial views glues
+to a global section precisely when the conflict count vanishes. Standard
+imputation heuristics never evaluate this functional, which is the structural
+reason they "ignore constraints."
+
+## 5. Sheaf Imputation as Optimization
+
+The imputation objective (Definition 2.13) measures infidelity to the observed
+data. Its global minimizers are characterized exactly.
+
+**Theorem 5.1 (`imputation_zero_iff_extends`).** For observed `db` and
+candidate `g`,
+```
+SheafImputationObjective db g = 0  ↔  ∀ p v, db p = some v → g p = v.
+```
+*Proof sketch.* Again the sum of naturals is zero iff each summand is zero.
+At a position with `db (r,c) = some v`, the summand is `0` iff `v = g (r,c)`; at
+a blank position the summand is `0` unconditionally. Hence the total is zero iff
+`g` reproduces every observed value. ∎
+
+Thus *sheaf imputation* — minimize the objective to `0` subject to producing a
+complete table — returns exactly the global sections that extend the
+observations. When a consistent completion exists, gluing (§3) constructs one;
+Theorem 5.1 certifies its optimality. Mean and KNN imputation generically incur
+positive objective value because they may overwrite observed cells.
+
+## 6. The Consistency-Probability Calculus
+
+We treat each potential overlap constraint as independently violated with
+probability `r ∈ [0,1]`, giving `consistencyProbability r c = (1-r)^c`.
+
+**Theorem 6.1 (multiplicativity, `consistency_prob_mul`).**
+`consistencyProbability r (c₁+c₂) = consistencyProbability r c₁ ·
+consistencyProbability r c₂`.
+*Proof.* `(1-r)^{c₁+c₂} = (1-r)^{c₁}(1-r)^{c₂}` by `pow_add`. ∎
+
+**Corollary 6.2 (`consistency_prob_double`).**
+`consistencyProbability r (2c) = (consistencyProbability r c)^2`.
+
+**Theorem 6.3 (monotonicity in constraints, `consistency_prob_mono_constraints`).**
+For `0 ≤ r ≤ 1` and `c₁ ≤ c₂`,
+`consistencyProbability r c₂ ≤ consistencyProbability r c₁`.
+*Proof.* `1-r ∈ [0,1]`, and powers of a base in `[0,1]` are antitone in the
+exponent (`pow_le_pow_of_le_one`). ∎
+
+**Theorem 6.4 (monotonicity in rate, `consistency_prob_mono_rate`).** For
+`r₂ ≤ 1` and `r₁ ≤ r₂`,
+`consistencyProbability r₂ c ≤ consistencyProbability r₁ c`.
+*Proof.* `0 ≤ 1-r₂ ≤ 1-r₁`; raise to the fixed power `c`
+(`pow_le_pow_left₀`). ∎
+
+**Theorem 6.5 (boundary values and range).**
+`consistency_prob_zero_rate`: `(1-0)^c = 1`;
+`consistency_prob_one_rate`: for `c > 0`, `(1-1)^c = 0^c = 0`;
+`consistency_prob_le_one` and `consistency_prob_nonneg`: for `0 ≤ r ≤ 1`,
+`0 ≤ (1-r)^c ≤ 1`.
+
+The constraint count itself grows quadratically.
+
+**Theorem 6.6 (quadratic growth, `overlap_quadratic_growth`).**
+`overlapConstraintCount n nRows nCols ≤ n · n · (nRows · nCols)`.
+*Proof.* `n(n-1)/2 ≤ n(n-1) ≤ n·n` by `Nat.div_le_self` and `Nat.sub_le`. ∎
+
+**Theorem 6.7 (vanishing below two views, `overlap_zero_of_lt_two`).** For
+`n < 2`, `overlapConstraintCount n nRows nCols = 0`.
+
+Combining exponential decay (Theorem 6.3) with quadratic constraint growth
+(Theorem 6.6) yields the headline phenomenon, stated as a falsifiable
+proposition.
+
+**Conjecture 6.8 (`conjecture_exponential_decay_testable`).** For all `n, k`
+and `r` with `0 < r < 1`, `2 ≤ n`, `1 ≤ k`,
+```
+consistencyProbability r (overlapConstraintCount n k n)
+  < consistencyProbability r (k · n).
+```
+That is, the consistency probability built from the *quadratic* overlap count
+is strictly below the probability built from a merely *linear* count: the decay
+is super-linear. *Testable prediction.* For `n = 10`, `k = 100`, `r = 0.3`, the
+constraint count is `n(n-1)/2 · k = 4500`, so `P ≈ 0.7^{4500} ≈ 10^{-697}`:
+large noisy databases are essentially never spontaneously consistent. *To
+falsify:* sample `10^6` random `100×10` tables at `30%` conflict rate and count
+the consistent ones; observing any would refute the magnitude estimate.
+
+## 7. Sheaf Filtrations: Progressive Imputation
+
+We model imputation as a process via `SheafFiltration` (Definition 2.15).
+
+**Theorem 7.1 (monotone ⇒ consistent, `sheaf_filtration_auto_consistent`).** If
+`levels : Fin depth → PartialDB` satisfies the monotonicity law
+`∀ i ≤ j, ∀ p v, levels i p = some v → levels j p = some v`, then
+`SheafCondition levels`.
+*Proof.* Given `levels i p = some v₁` and `levels j p = some v₂`, compare `i, j`.
+If `i ≤ j`, monotonicity sends `some v₁` forward to `levels j p`, forcing
+`v₁ = v₂`; if `j < i`, send `some v₂` forward to `levels i p`. ∎
+
+Hence the disciplined imputation rule — *only fill blanks, never overwrite* —
+guarantees consistency for free; the sheaf condition reduces to an
+order-theoretic monotonicity property.
+
+**Theorem 7.2 (existence, `sheaf_filtration_exists_singleton`).** Every partial
+database is the unique level of a depth-`1` sheaf filtration.
+*Proof.* The constant family trivially satisfies monotonicity and consistency.
+∎
+
+**Theorem 7.3 (information accumulation, `filtration_final_contains_all`).** In
+any sheaf filtration of positive depth, for every level `i`,
+`(F.level i).dom ⊆ (F.level ⟨depth-1, …⟩).dom`.
+*Proof.* For `p` filled at level `i` with value `v`, monotonicity from `i` to
+the final index `depth-1` keeps it filled, so `p` lies in the final domain. ∎
+
+Together, Theorems 7.1–7.3 say progressive imputation that never overwrites is
+automatically conflict-free and monotonically completing.
+
+## 7a. A Worked Example
+
+To make the machinery concrete, consider a `2×2` grid with positions
+`{(0,0),(0,1),(1,0),(1,1)}` and three local views drawn from two data sources
+and one auxiliary feed:
+
+- `A = {(0,0)↦7, (0,1)↦3}` (a record covering the top row's left/middle),
+- `B = {(0,1)↦3, (1,0)↦5}` (an overlapping record sharing cell `(0,1)`),
+- `C = {(1,0)↦5, (1,1)↦9}` (a record sharing cell `(1,0)` with `B`).
+
+Each overlapping pair agrees: `A` and `B` both report `3` at `(0,1)`; `B` and
+`C` both report `5` at `(1,0)`; `A` and `C` do not overlap. By Definition 2.10
+the coboundary norm is `0`, so by Theorem 4.1 the family satisfies the sheaf
+condition and a consistent global completion exists. Folding the views with
+`GluingMap` (Theorem 3.5 licenses any order) yields the partial section
+`{(0,0)↦7,(0,1)↦3,(1,0)↦5,(1,1)↦9}`, already a global section here. By
+Theorem 3.4 every observed value of every view survives the merge, and by
+Theorem 3.7 the merged domain contains each source's domain.
+
+Now perturb `B` to report `99` at `(0,1)`. The pair `(A,B)` disagrees there, so
+the disagreement indicator fires for the ordered pairs `(A,B)` and `(B,A)`,
+giving coboundary norm `2 > 0`; Theorem 4.1 then certifies that *no* global
+section extends all three views — the data are provably unmergeable until the
+conflict at `(0,1)` is resolved. This single scalar (the conflict count) is the
+entire decision procedure, and it is exactly the quantity mean and KNN
+imputation never compute.
+
+For the probabilistic side, scale up to `n = 10` columns and `k = 100` rows.
+The overlap count `C(n,2)·k = 4500` combined with a `30%` conflict rate gives
+consistency probability `(0.7)^{4500} ≈ 10^{-697}` (Definition 2.12,
+Theorem 6.3): spontaneous consistency is astronomically unlikely, which is
+precisely why an active consistency-enforcing method is needed rather than
+passive estimation.
 
 ## 8. Applications
 
-- **Data fusion / record linkage.** Merging records about the same entities from
-  multiple sources is exactly `familyGlue`; the pairwise check (Theorem 9) is a
-  principled conflict detector with locatable certificates.
-- **Federated and streaming integration.** Associativity (Theorem 11) and
-  idempotence (Theorem 12) make `glue` safe to apply incrementally and with
-  at-least-once delivery: re-merging a duplicate record is a no-op.
-- **Provenance and precedence.** The left-regular band laws (Theorem 13) formalize
-  "first source wins," giving a clean semantics for trust-ordered merges.
-- **Constraint diagnostics.** Infeasibility is always witnessed by a concrete
-  conflicting cell pair, supporting human-in-the-loop data repair.
+- **Multi-source record linkage.** Hospitals/sensors are local views;
+  `gluing_preserves_consistency` licenses incremental merging, and
+  `coboundary_zero_iff_sheaf` gives a single scalar (conflict count) certifying
+  whether a global merge exists.
+- **Constraint-aware imputation.** `imputation_zero_iff_extends` defines
+  faithful completion; the sheaf method targets zero objective, unlike
+  mean/KNN, which may violate observed values.
+- **Feasibility triage.** The `(1-r)^C` calculus with quadratic constraint
+  growth predicts that large noisy tables are essentially never spontaneously
+  consistent, motivating active consistency enforcement rather than passive
+  estimation.
+- **Streaming/online imputation.** `SheafFiltration` models an append-only
+  pipeline whose stages are automatically consistent
+  (`sheaf_filtration_auto_consistent`) and lossless
+  (`filtration_final_contains_all`).
 
-## 9. Discussion
+## 9. Discussion and Limitations
 
-The development is intentionally elementary: no topology, no category theory, no
-finiteness. All laws reduce to a per-column case split on `Option`. Yet the
-structure recovered — idempotent monoid, left-regular band, sheaf gluing,
-support-bounded uniqueness, locality — is precisely the structure that sheaf
-theory predicts for sections of a (discrete) sheaf of records. The conceptual
-payoff is that *imputability is a local property*: pairwise agreement is the
-cocycle condition, and its failure is the obstruction to gluing.
+The model uses the *function* sheaf, whose sections are honest functions, so
+**pairwise** compatibility suffices for gluing — no higher cocycle conditions
+arise (first cohomology vanishes). This is both the model's strength
+(`coboundary_zero_iff_sheaf` is an exact, computable criterion) and its
+boundary: richer data sheaves whose stalks are quotients or torsors can carry a
+nontrivial `Ȟ¹`, where pairwise compatibility no longer guarantees a global
+section. The independence assumption underlying `(1-r)^C` is a modeling choice;
+real overlaps are correlated, so the formula is best read as a baseline decay
+law, captured rigorously by its algebraic laws (Theorems 6.1–6.5) rather than as
+an exact empirical frequency.
 
-## 10. Future work
+## 10. Future Directions
 
-The Phase A program identifies four directions, summarized here: (1) prove that
-the gluing band is the *free* left-regular band on singleton cell-assignments,
-with a normal-form/uniqueness theorem; (2) interpret the obstruction to imputation
-cohomologically, with `H^0` the space of global sections and `dim H^1` the conflict
-count over the overlap nerve; (3) establish the sharp feasibility threshold `r* =
-1 - C(n,k)^{-1/C(n,k)}` from the proven monotonicity and exponential decay; and
-(4) characterize non-support-bounded extensions as band extensions of `familyGlue`,
-making the support bound minimally necessary. The full statements appear in the
-package's future-directions record.
+1. **Čech obstruction for value-quotient sheaves.** Replace the function sheaf
+   by one with quotient stalks; conjecture pairwise compatibility no longer
+   suffices, with the obstruction a nonzero `Ȟ¹` class of the nerve — a
+   genuine non-gluing certificate complementing the load-bearing pairwise
+   condition.
+2. **Exact-imputability phase transition.** Under the independent-overlap
+   model, a first/second-moment argument on `(1-r)^C · (#configs)` should
+   locate a sharp threshold `r*(k)` separating "almost surely imputable" from
+   "almost surely inconsistent," upgrading the decay laws to a threshold
+   constant.
+3. **Strict dominance of sheaf imputation when `H¹ = 0`.** On grids with
+   vanishing first cohomology, the glued global section is the unique zero-error
+   completion, while mean/KNN error is lower-bounded by the overlap variance — a
+   provable separation for `r < 1/2`.
+4. **Optimality of the quadratic constraint count.** Any restriction-closed
+   local-consistency scheme should require `Ω(k²)` overlap checks, making the
+   triangular `C(k,2)` order-optimal; no linear-constraint relaxation can
+   certify global consistency.
 
 ## 11. Conclusion
 
-Consistent data imputation, stripped to its combinatorial core, is the gluing of
-partial sections of a sheaf. The merge operation is an idempotent, left-regular
-band with the empty record as identity; consistent completion exists exactly when
-records are pairwise compatible; and the completion is unique on the cells the
-data actually mentions. These are not metaphors but proved theorems, and they
-turn "fill in the blanks" into a problem with certificates, canonical answers, and
-a predictive theory of when it can be solved at all.
+Renaming "database with missing entries" as "partial section of the function
+sheaf" converts a family of data-cleaning heuristics into a small rigorous
+theory: gluing preserves and accumulates observations, conflict-count-zero is
+exactly the sheaf condition, faithful imputation is exactly zero-cost
+imputation, accidental consistency decays exponentially in a quadratically
+growing constraint count, and monotone imputation is contradiction-free by
+construction. The sheaf condition is the natural consistency constraint for
+databases, and consistent imputation is the search for a global section.
