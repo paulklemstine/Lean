@@ -64,19 +64,6 @@ jobs:
       - name: Write Pollinations key file
         run: echo "${{ secrets.POLLINATIONS_API_KEY }}" > Aether/.aether_workspace/pollinations_api_key
 
-      - name: Debug secrets
-        run: |
-          if [ -z "${{ secrets.OPENROUTER_API_KEY }}" ]; then
-            echo "=== OPENROUTER_API_KEY is EMPTY in secrets! ==="
-          else
-            echo "=== OPENROUTER_API_KEY is set in secrets! ==="
-          fi
-          if [ -z "${{ secrets.POLLINATIONS_API_KEY }}" ]; then
-            echo "=== POLLINATIONS_API_KEY is EMPTY in secrets! ==="
-          else
-            echo "=== POLLINATIONS_API_KEY is set in secrets! ==="
-          fi
-
       - name: Run Aether tick
         env:
           ARISTOTLE_API_KEY: ${{ secrets.ARISTOTLE_API_KEY }}
