@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "3b2adc6d",
     "filename": "birch_and_swinnerton_dyer_conjecture.json",
     "pkg_num": 205,
-    "quality": "partial",
-    "quality_score": 0.4494149295774648,
+    "quality": "substantial",
+    "quality_score": 0.7756000000000001,
     "title": "The Analytic Rank of an L-Function: A Formal Skeleton for Birch\u2013Swinnerton-Dyer"
   },
   {
@@ -6280,8 +6280,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "birch_and_swinnerton_dyer_conjecture",
       "primary_domain": "Bridges",
-      "priority_score": 0.4494149295774648,
-      "quality": "partial",
+      "priority_score": 0.7756000000000001,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "The Analytic Rank of an L-Function: A Formal Skeleton for Birch\u2013Swinnerton-Dyer"
     }
