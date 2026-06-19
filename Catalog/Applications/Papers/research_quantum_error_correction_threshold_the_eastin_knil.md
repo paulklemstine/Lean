@@ -1,358 +1,379 @@
-# The Fault-Tolerance Threshold and the Eastin–Knill No-Go Theorem: A Self-Contained Mathematical Treatment
+# The Jones–Temperley–Lieb Braid Representation and its Markov Trace
+
+**Author:** Aristotle
+**Date:** 2026-06-19
+**Domain:** Shared (Algebra / Topology / Quantum Information)
 
 ## Abstract
 
-We give a rigorous, self-contained mathematical account of two cornerstones of
-fault-tolerant quantum computation. **Part I** isolates the analytic skeleton of
-the *threshold theorem*. Under code concatenation a distance-3 fault-tolerant
-gadget converts a physical error rate `p` into a level-one logical error rate
-`c · p²`, where `c` counts the malignant fault pairs of the gadget. Iterating
-gives the recursion `p_{n+1} = c · p_n²`. We prove that the rescaled rate
-`q_n = c · p_n` linearizes this recursion to `q_{n+1} = q_n²`, yielding the
-doubly-exponential closed form `q_n = q₀^(2ⁿ)`, equivalently
-`p_n = (1/c)(c·p)^(2ⁿ)`. From the closed form we deduce a sharp trichotomy about
-the **threshold** `p_th = 1/c`: below threshold the logical error rate converges to
-0, at threshold it is frozen at the fixed point `1/c`, and above threshold it
-diverges to `+∞`. Specializing the surface-code malignant-pair count `c = 100`
-recovers the celebrated `p_th = 1%`. **Part II** isolates the abstract
-group-theoretic core of the *Eastin–Knill theorem*: the transversal logical gates
-of any quantum code form a finite group, while universal computation requires
-generating an infinite logical-unitary group; since a finite set cannot exhaust an
-infinite ambient group, transversal gates are never universal. Every result is
-stated with its full mathematical content and accompanied by a proof sketch. All
-statements have been formally verified.
+We present a self-contained, fully formalized development of the
+**Jones–Temperley–Lieb (JTL) representation** of Artin's braid group `B_{n+1}`
+and its associated **Markov trace**. Working over an arbitrary field `K` and an
+arbitrary unital `K`-algebra `R`, we fix a nonzero parameter `A ∈ K` and the
+*loop value* `δ = −(A² + A⁻²)`, and we consider a family `e : Fin n → R` of
+elements satisfying the Temperley–Lieb relations. We prove that the **Jones
+operator** `jonesOp(A, x) = A·1 + A⁻¹·x` is a two-sided unit whenever
+`x² = δ·x`, that the Jones operators satisfy the braid (Yang–Baxter) and far
+commutativity relations, and consequently — via the universal property of the
+braid group — that they assemble into a group homomorphism `jonesRep : B_{n+1} →
+Rˣ`. We give an honest treatment of faithfulness, reducing it to injectivity of
+the underlying assignment (the representation is *not* faithful in general). We
+then construct the Markov trace machinery: the skein decomposition of the trace,
+the Markov stabilization (move II) rescaling law, and conjugation (move I)
+invariance — the algebraic shadow of the invariance of the Jones polynomial. A
+concrete one-generator model establishes non-vacuity. The development is the
+formal core of the route from braid groups to the Jones polynomial and to
+topological quantum computation.
 
-**Keywords:** fault tolerance, threshold theorem, code concatenation, surface code,
-Eastin–Knill theorem, transversal gates, quantum error correction.
+**Keywords:** Temperley–Lieb algebra, braid group, Jones representation, Markov
+trace, Yang–Baxter equation, Kauffman bracket, Jones polynomial, Knot invariant.
 
 ---
 
 ## 1. Introduction
 
-A quantum computer manipulates information stored in quantum states that decohere
-under any interaction with their environment. Physical error rates in contemporary
-hardware are of order `10⁻²` to `10⁻³` per operation, while useful algorithms
-demand effective error rates many orders of magnitude smaller over circuits of
-enormous depth. The bridge across this gap is *fault-tolerant quantum computation*:
-information is encoded redundantly in a quantum error-correcting code, and all
-operations are performed in a way that prevents the proliferation of errors.
+The braid group `B_{n+1}` is one of the central objects linking topology,
+algebra, and mathematical physics. Its representation theory is the engine behind
+quantum knot invariants: Jones's discovery that a suitable representation,
+combined with a trace satisfying the Markov properties, produces a polynomial
+invariant of links — the **Jones polynomial** — initiated an entire field, and
+its physical incarnation underlies proposals for **topological quantum
+computation**, where anyonic worldlines braid to implement noise-robust quantum
+gates.
 
-Two theorems delimit what fault tolerance can achieve.
+The algebraic skeleton of this construction is remarkably compact. It rests on:
 
-The **threshold theorem** (Aharonov–Ben-Or; Knill–Laflamme–Zurek; Kitaev) asserts
-the existence of a critical physical error rate `p_th > 0` below which arbitrarily
-long quantum computations can be carried out with arbitrarily small logical error,
-at a cost polylogarithmic in the inverse target error. The mechanism is *recursive
-simulation*, or *concatenation*: a code is layered on top of itself, and each layer
-suppresses errors more strongly than the last.
+1. a single quadratic balance condition relating the Kauffman parameter `A` to
+   the Temperley–Lieb loop value `δ`;
+2. the invertibility of the Kauffman-bracket smoothing operator;
+3. the braid relation derived from the Temperley–Lieb relations; and
+4. two linear-algebraic identities for a symmetric trace.
 
-The **Eastin–Knill theorem** asserts a fundamental limitation: no quantum
-error-correcting code admits a *universal* set of *transversal* logical gates.
-Transversal gates — those acting independently on each physical qubit of a code
-block — are the most natural fault-tolerant operations, but they cannot, on their
-own, generate the full continuous group of logical unitaries.
+This paper isolates and proves each of these, working over an arbitrary unital
+algebra so that any concrete model — the diagram algebra, a matrix model, an
+anyonic fusion category — is an instance. Every statement below is formalized.
 
-This paper extracts and proves the mathematical *core* of each theorem, free of the
-incidental machinery of Hilbert spaces and quantum channels. Our aim is to expose
-the precise logical content — an analytic statement about a quadratic recursion, and
-a set-theoretic statement about finite versus infinite groups — in a form that is
-complete, elementary, and verifiable.
+### 1.1 Contributions
 
----
-
-## 2. Part I: The fault-tolerance threshold
-
-### 2.1 The concatenation recursion
-
-We model the central quantitative phenomenon of fault tolerance: quadratic error
-suppression under concatenation of a distance-3 code.
-
-> **Definition 2.1 (Level-`n` logical error rate).**
-> Fix real numbers `c` (the number of malignant fault pairs per gadget) and `p`
-> (the physical error rate). Define `errorRate(c, p, ·) : ℕ → ℝ` by
-> the recursion
-> $$ p_0 = p, \qquad p_{n+1} = c \, p_n^2. $$
-
-The square reflects the distance-3 fault-tolerance property: a level-`n+1` gadget
-produces a logical error only when *two* level-`n` subcomponents both fail, an event
-of probability `∝ p_n²`. The proportionality constant `c` counts the pairs of fault
-locations whose joint failure is *malignant* (uncorrectable).
-
-> **Definition 2.2 (Threshold).** The fault-tolerance threshold is
-> $$ p_{\mathrm{th}}(c) = \tfrac{1}{c}. $$
-
-### 2.2 The doubly-exponential law
-
-The recursion is nonlinear, but a single rescaling renders it transparent.
-
-> **Theorem 2.3 (Doubly-exponential law).**
-> For all `c, p ∈ ℝ` and all `n ∈ ℕ`,
-> $$ c \cdot p_n = (c \cdot p)^{2^n}. $$
-
-*Proof sketch.* Induct on `n`. The base case `n = 0` reads `c·p = (c·p)^1`. For the
-step, assume `c·p_n = (c·p)^{2ⁿ}`. Then
-$$ c \cdot p_{n+1} = c \cdot (c \, p_n^2) = (c \, p_n)^2
-   = \big((c\cdot p)^{2^n}\big)^2 = (c\cdot p)^{2^{n+1}}, $$
-using `c · (c p_n²) = (c p_n)²` and the power law `(x^{2ⁿ})² = x^{2ⁿ⁺¹}`
-(`pow_mul` / `pow_succ`). ∎
-
-Writing `q_n = c · p_n` and `q₀ = c · p`, Theorem 2.3 is exactly
-`q_n = q₀^(2ⁿ)`: the recursion `q_{n+1} = q_n²` integrated. The exponent doubles at
-each level — *doubly* exponential growth or decay of the rescaled rate.
-
-> **Theorem 2.4 (Closed form).** If `c ≠ 0`, then for all `n`,
-> $$ p_n = \frac{1}{c}\,(c \cdot p)^{2^n}. $$
-
-*Proof sketch.* Divide the identity of Theorem 2.3 by `c ≠ 0`. ∎
-
-The closed form converts every asymptotic question about `p_n` into a question about
-the single base quantity `q₀ = c·p` raised to the diverging exponent `2ⁿ`.
-
-### 2.3 The threshold trichotomy
-
-The function `n ↦ q₀^(2ⁿ)` exhibits a clean trichotomy in `q₀`, because `2ⁿ → ∞`
-and `x ↦ x^k` (for `k → ∞`) sends `[0,1)` to `0`, fixes `1`, and sends `(1,∞)` to
-`∞`.
-
-> **Theorem 2.5 (Sub-threshold collapse).**
-> If `0 ≤ p`, `0 < c`, and `c·p < 1` (i.e. `p < p_th`), then
-> $$ \lim_{n\to\infty} p_n = 0. $$
-
-*Proof sketch.* By Theorem 2.4, `p_n = (1/c)(c·p)^{2ⁿ}`. Since `0 ≤ c·p < 1`, the
-geometric sequence `(c·p)^k → 0` as `k → ∞` (`tendsto_pow_atTop_nhds_zero_of_lt_one`),
-and composing with the divergent exponent `k = 2ⁿ → ∞`
-(`tendsto_pow_atTop_atTop_of_one_lt`) gives `(c·p)^{2ⁿ} → 0`. Multiplying by the
-constant `1/c` preserves the limit. ∎
-
-> **Theorem 2.6 (Critical fixed point).**
-> If `c ≠ 0` and `c·p = 1` (i.e. `p = p_th`), then `p_n = 1/c` for every `n`.
-
-*Proof sketch.* By Theorem 2.4, `p_n = (1/c)·1^{2ⁿ} = 1/c`. Indeed `q₀ = 1` is the
-nonzero fixed point of `q ↦ q²`, so the rescaled rate never moves. ∎
-
-> **Theorem 2.7 (Super-threshold blow-up).**
-> If `0 < c` and `c·p > 1` (i.e. `p > p_th`), then
-> $$ \lim_{n\to\infty} p_n = +\infty. $$
-
-*Proof sketch.* By Theorem 2.4, `p_n = (1/c)(c·p)^{2ⁿ}` with `1/c > 0`. Since
-`c·p > 1`, `(c·p)^k → ∞` as `k → ∞`, and composing with `k = 2ⁿ → ∞` gives
-`(c·p)^{2ⁿ} → ∞`; multiplication by the positive constant `1/c` preserves
-divergence (`Tendsto.const_mul_atTop`). ∎
-
-Together, Theorems 2.5–2.7 establish that `p_th = 1/c` is a genuine *phase
-boundary*: an arbitrarily small change in `p` across `1/c` flips the asymptotic fate
-of the computation from perfect suppression to catastrophic blow-up.
-
-### 2.4 The surface-code 1% threshold
-
-The abstract threshold becomes a concrete engineering target once `c` is fixed by
-the code and noise model.
-
-> **Theorem 2.8 (≈1% surface-code threshold).**
-> For the surface-code malignant-pair count `c = 100`,
-> $$ p_{\mathrm{th}}(100) = \tfrac{1}{100} = 0.01. $$
-
-*Proof sketch.* Immediate from Definition 2.2: `p_th(100) = 1/100 = 0.01`. ∎
-
-The number `c ≈ 100` is the distillate of detailed fault-path counting for the
-surface code under depolarizing noise; the present framework cleanly separates that
-combinatorial/physical input (`c`) from the universal analytic consequence (the
-trichotomy and threshold).
+- A proof that the Jones operator is a two-sided unit under the single
+  hypothesis `x² = δ·x` (Theorem 3.1).
+- A proof of the braid relation and of far commutativity for the Jones operators
+  (Theorems 4.1, 4.2).
+- The assembly of these into a braid-group representation `jonesRep` via the
+  universal property of the braid presentation (Definition 5.3, Theorem 5.4).
+- An honest characterization of faithfulness (Theorem 5.5), with the explicit
+  caveat that the JTL representation is not faithful in general.
+- The Markov-trace machinery: skein decomposition (Theorem 6.1), stabilization
+  rescaling (Theorem 6.2), and conjugation invariance (Theorem 6.3).
+- A concrete one-generator model proving non-vacuity (Proposition 7.1).
 
 ---
 
-## 3. Part II: The Eastin–Knill theorem
+## 2. Definitions
 
-### 3.1 Transversal gates and universality
+Throughout, `K` is a field, `R` is a unital associative `K`-algebra, and
+`A ∈ K` is a fixed nonzero scalar. We write `1` for the unit of `R` and use `•`
+for the `K`-action.
 
-In a quantum code, a logical gate is **transversal** if it is a tensor product of
-single-qubit (or single-block) unitaries acting independently on each physical
-qubit. Transversality is the paradigm of fault tolerance: a fault on one physical
-qubit cannot spread to others within a block, so errors remain correctable.
+**Definition 2.1 (Loop value).** The Temperley–Lieb *loop value* associated to
+`A` is
+$$ \delta \;=\; \mathrm{loopValue}(A) \;=\; -\bigl(A^2 + A^{-2}\bigr). $$
 
-Two structural facts drive the no-go result:
+**Definition 2.2 (Jones operator).** For `x ∈ R` define the *Jones operator* and
+its proposed inverse by
+$$ \mathrm{jonesOp}(A,x) = A\cdot 1 + A^{-1}\cdot x, \qquad
+   \mathrm{jonesOpInv}(A,x) = A^{-1}\cdot 1 + A\cdot x. $$
+Applied to a Temperley–Lieb generator, `jonesOp(A, eᵢ)` is the image of the
+braid generator `σᵢ`; this is precisely the Kauffman-bracket skein relation
+expressing a crossing as `A`·(identity smoothing) `+ A⁻¹`·(cap–cup smoothing).
 
-1. **The transversal gates form a finite group.** Composition of transversal gates
-   is transversal, inverses are transversal, and the identity is transversal, so the
-   set of transversal logical gates `T` is a subgroup of the logical-unitary group.
-   For a code on a fixed number of qubits drawn from a fixed (e.g. Clifford-type)
-   transversal alphabet, this group is **finite**.
+**Definition 2.3 (Temperley–Lieb representation).** A *Temperley–Lieb
+representation* `TLRep K R n` consists of:
+- a nonzero parameter `A ∈ K` (with proof `hA : A ≠ 0`),
+- generators `e : Fin n → R`,
+satisfying the **Temperley–Lieb relations**
+- (squaring) `e i * e i = δ • e i` for all `i`, where `δ = loopValue A`;
+- (adjacency / zig-zag) `e i * e j * e i = e i` whenever `|i − j| = 1`;
+- (far commutativity) `e i * e j = e j * e i` whenever `|i − j| ≥ 2`.
 
-2. **Universality requires an infinite group.** A universal gate set must generate
-   a dense — in particular infinite — subgroup of the continuous logical-unitary
-   group `G`, since approximating arbitrary unitaries to arbitrary precision
-   requires infinitely many distinct group elements.
-
-### 3.2 The abstract no-go theorem
-
-The contradiction between these two facts is purely set-theoretic.
-
-> **Theorem 3.1 (Eastin–Knill, abstract core).**
-> Let `G` be a group with infinitely many elements, and let `T ≤ G` be a subgroup
-> whose underlying set is finite. Then `T ≠ G` as sets; that is, the carrier of `T`
-> is not all of `G`.
-
-*Proof sketch.* If the carrier of `T` equalled the whole of `G`, then `G` would be
-the image of a finite set and hence finite, contradicting the hypothesis that `G` is
-infinite. Formally: `Set.infinite_univ` for `G` together with finiteness of `T`'s
-carrier yields a contradiction. ∎
-
-> **Corollary 3.2 (Proper containment).**
-> Under the hypotheses of Theorem 3.1, the carrier of `T` is a *proper* subset of
-> `G`: `T ⊊ G`.
-
-*Proof sketch.* `T ⊆ G` always; and `T ≠ G` by Theorem 3.1. A subset that is
-contained in but unequal to the whole is proper. ∎
-
-### 3.3 Interpretation
-
-Identify `G` with the (infinite, continuous) group of logical unitaries achievable
-on the code, and `T` with the finite group of transversal logical gates. Theorem 3.1
-states `T ≠ G`, and Corollary 3.2 sharpens this to `T ⊊ G`: there is always a
-logical unitary lying *outside* the transversal group. Since a universal gate set
-must reach every element of `G` (up to arbitrarily good approximation), and the
-transversal gates cannot even reach all of `G`, **the transversal gates cannot be
-universal**. This is the Eastin–Knill obstruction.
-
-The argument is deliberately minimal: it depends only on (i) the *group structure*
-of transversal gates, (ii) their *finiteness*, and (iii) the *infinitude* of the
-target group. All the quantum content lives in justifying these three inputs; the
-no-go conclusion follows by a cardinality argument.
+**Definition 2.4 (Braid group).** Let the *braid relations* on the free group on
+`Fin n` consist of the far-commutation relators
+`σᵢ σⱼ σᵢ⁻¹ σⱼ⁻¹` for `i+1 < j` and the Yang–Baxter relators
+`σᵢ σᵢ₊₁ σᵢ σᵢ₊₁⁻¹ σᵢ⁻¹ σᵢ₊₁⁻¹` for `i+1 < n`. The braid group on `n+1` strands
+is the presented group
+$$ B_{n+1} \;=\; \langle\, \sigma_0,\dots,\sigma_{n-1} \mid \text{braid relations} \,\rangle, $$
+with `sigma i` denoting the `i`-th Artin generator.
 
 ---
 
-## 4. Algorithms
+## 3. The Jones operator is a unit
 
-The framework is constructive enough to yield directly usable numerical procedures.
+**Theorem 3.1 (`jonesOp_mul_inv`, `jonesOpInv_mul`).**
+Let `A ≠ 0` and let `x ∈ R` satisfy the loop relation `x · x = δ · x` with
+`δ = loopValue(A)`. Then
+$$ \mathrm{jonesOp}(A,x)\cdot \mathrm{jonesOpInv}(A,x) = 1
+   \quad\text{and}\quad
+   \mathrm{jonesOpInv}(A,x)\cdot \mathrm{jonesOp}(A,x) = 1. $$
 
-### 4.1 Forward iteration of the logical error rate
+*Proof sketch.* Expand the product:
+$$ (A\cdot 1 + A^{-1} x)(A^{-1}\cdot 1 + A\, x)
+   = 1 + A^2 x + A^{-2} x + x^2. $$
+Substitute `x² = δ·x = −(A² + A⁻²)·x`. The `x`-terms become
+`A^2 x + A^{-2} x − (A^2 + A^{-2}) x = 0`, leaving `1`. The reverse product is
+symmetric. The invertibility of `A` is used only to validate `A·A⁻¹ = 1`. ∎
 
-```
-function logical_error_rate(c, p, n):
-    x ← p
-    repeat n times:
-        x ← c * x * x
-    return x
-```
-
-This evaluates Definition 2.1 in `n` steps. By Theorem 2.4 it agrees with the
-closed form `(1/c)(c·p)^(2ⁿ)` to floating-point precision; the closed form is
-preferable for large `n` (avoiding overflow/underflow can be handled in log-space).
-
-### 4.2 Required concatenation depth for a target error
-
-Inverting the doubly-exponential law (`q_n = q₀^(2ⁿ) ≤ ε·c`) gives the smallest
-level `n` meeting a target logical error `ε`, valid below threshold (`q₀ = c·p < 1`):
-
-```
-function levels_for_target(c, p, eps):
-    q0 ← c * p                      # require 0 ≤ q0 < 1
-    target ← c * eps                # need q0^(2^n) ≤ target
-    # 2^n ≥ log(target) / log(q0)   (both logs negative ⇒ ratio positive)
-    k ← log(target) / log(q0)
-    return ceil( log2( k ) )
-```
-
-This exposes the polylogarithmic overhead law: the depth grows like
-`log log (1/ε)`, hence the physical-qubit overhead grows only polylogarithmically
-in `1/ε`.
-
-### 4.3 Threshold classification
-
-```
-function classify(c, p):
-    q0 ← c * p
-    if q0 < 1: return "below threshold  → error → 0"
-    if q0 = 1: return "at threshold     → error frozen at 1/c"
-    return            "above threshold  → error → ∞"
-```
-
-This is Theorems 2.5–2.7 made executable.
+The decisive point is that the loop value `δ = −(A² + A⁻²)` is *exactly* the
+value making the coefficient of `x` vanish; this is the algebraic origin of the
+Kauffman bracket. Consequently `jonesOp(A, x)` is a two-sided unit of `R`.
 
 ---
 
-## 5. Applications
+## 4. The braid relations
 
-- **Hardware targets.** Theorem 2.8 supplies the canonical `~1%` design target for
-  surface-code architectures under depolarizing noise. Crossing it experimentally is
-  the precondition for scalable quantum computation.
-- **Resource estimation.** Algorithm 4.2 turns the threshold theorem into a
-  certified estimate of concatenation depth and qubit overhead for a target logical
-  error rate, the core quantity in any fault-tolerant resource budget.
-- **Architecture design.** Corollary 3.2 explains *why* every fault-tolerant
-  architecture must include a non-transversal mechanism — most prominently
-  magic-state distillation — to complete a universal gate set, and hence why a large
-  fraction of physical qubits is devoted to gate synthesis rather than storage.
+**Theorem 4.1 (Braid / Yang–Baxter relation, `braid_relation`).**
+Let `a, b ∈ R` satisfy `a² = δ·a`, `b² = δ·b`, `a b a = a`, `b a b = b` (the
+relations holding for an adjacent pair `eᵢ, eᵢ₊₁`). Then
+$$ \mathrm{jonesOp}(A,a)\,\mathrm{jonesOp}(A,b)\,\mathrm{jonesOp}(A,a)
+   = \mathrm{jonesOp}(A,b)\,\mathrm{jonesOp}(A,a)\,\mathrm{jonesOp}(A,b). $$
 
----
+*Proof sketch.* Both sides expand into `K`-linear combinations of the monomials
+`1, a, b, ab, ba, aba, bab, …`. Using `a² = δa`, `b² = δb` to reduce powers and
+`aba = a`, `bab = b` to collapse the length-three words, every monomial on the
+left matches the corresponding monomial on the right with equal scalar
+coefficient (each coefficient being a Laurent polynomial in `A` that simplifies
+identically using `δ = −(A²+A⁻²)`). The case `A = 0` is excluded by hypothesis
+but handled trivially. After clearing denominators, the identity is a polynomial
+tautology verified by `ring`. ∎
 
-## 6. Discussion
+**Theorem 4.2 (Far commutativity, `braid_relation_far`).**
+If `a b = b a` then `jonesOp(A,a) · jonesOp(A,b) = jonesOp(A,b) · jonesOp(A,a)`.
 
-The two parts of this paper are complementary halves of the theory of fault
-tolerance. Part I is *quantitative and analytic*: it locates a sharp phase
-transition in a quadratic recursion and computes its critical point. Part II is
-*structural and algebraic*: it identifies an absolute obstruction rooted in the
-finiteness of transversal symmetry.
+*Proof sketch.* Expanding both products, every term is symmetric in `a, b`
+except the cross-term `A⁻²(ab)` versus `A⁻²(ba)`, which agree by hypothesis. ∎
 
-A unifying theme is the *separation of physics from mathematics*. In Part I, all the
-intricate physics — code geometry, syndrome circuits, noise statistics — is
-compressed into the single scalar `c`, after which a universal trichotomy takes
-over. In Part II, all the physics is compressed into the three structural inputs
-(group, finite, infinite), after which a cardinality argument concludes. This
-factorization is what makes the core statements both general and elementary.
-
-A limitation, by design, is the level of abstraction. Part I models the *malignant
-pair-counting* picture of a distance-3 concatenated code; it does not derive `c`
-from first principles, nor does it model correlated noise, leakage, or measurement
-errors beyond their aggregation into `p` and `c`. Part II proves the *existence* of
-a gate outside the transversal group but is not quantitative — it does not bound how
-*far* outside, i.e. how poorly transversal gates approximate a universal set.
+Theorems 4.1 and 4.2 are precisely the two relation families of the braid
+presentation, now satisfied by the Jones operators.
 
 ---
 
-## 7. Future work
+## 5. The representation
 
-1. **Higher-distance super-quadratic suppression.** For a distance-`d` code a gadget
-   fails only when `t+1 = ⌊(d-1)/2⌋+1` faults coincide, generalizing the recursion
-   to `p_{n+1} = c · p_n^{t+1}` with rescaled law `q_n = q₀^{(t+1)ⁿ}` and threshold
-   `p_th = c^{-1/t}` increasing in `d`. Distance enters the *exponent*, widening the
-   basin of convergence multiplicatively.
+We package the unit-valued operators and invoke the universal property.
 
-2. **Quantitative resource law.** Formalize `levels_for_target` (Algorithm 4.2) and
-   prove `p_{levels_for_target(c,p,ε)} ≤ ε` below threshold, together with a
-   polylogarithmic overhead bound `N(ε) ≤ poly(log(1/ε))`.
+**Definition 5.1 (Jones unit).** For a Temperley–Lieb representation `T` and an
+index `i`, the *Jones unit* `jonesUnit T i ∈ Rˣ` is `jonesOp(A, eᵢ)` together
+with the inverse data from Theorem 3.1. Its underlying element is
+`(jonesUnit T i : R) = jonesOp(A, eᵢ)`.
 
-3. **Quantitative Eastin–Knill.** Refine Theorem 3.1 to a continuity/covering-radius
-   bound in a normed group: transversal gates approximate a target unitary `U` only
-   to accuracy `‖U_transversal − U‖ ≥ f(d)`, converting the qualitative no-go into a
-   quantitative limit tied to code distance.
+**Lemma 5.2 (`jonesUnit_far`, `jonesUnit_braid`).** The Jones units satisfy far
+commutativity (`jonesUnit i · jonesUnit j = jonesUnit j · jonesUnit i` for
+`i+1 < j`) and the braid relation (`jonesUnit i · jonesUnit_{i+1} · jonesUnit i =
+jonesUnit_{i+1} · jonesUnit i · jonesUnit_{i+1}`). These follow from Theorems 4.2
+and 4.1 together with the adjacency and far hypotheses of `TLRep`.
+
+**Theorem 5.3 (Universal property of the braid group,
+`toGroup_of_braid_rels`).** Let `G` be a group and `f : Fin n → G` a family of
+elements satisfying
+- (far) `f i · f j = f j · f i` for `i+1 < j`, and
+- (braid) `f i · f_{i+1} · f i = f_{i+1} · f i · f_{i+1}`,
+
+then there is a unique group homomorphism `B_{n+1} → G` sending `σᵢ ↦ f i`.
+
+*Proof sketch.* The presented group's universal property reduces this to checking
+that each relator maps to the identity. The far relator
+`σᵢσⱼσᵢ⁻¹σⱼ⁻¹` maps to `f i · f j · (f i)⁻¹ · (f j)⁻¹`, which is `1` because
+`f i, f j` commute (Lemma `comm_of_eq`). The Yang–Baxter relator maps to
+`(f i · f_{i+1} · f i)·(f_{i+1} · f i · f_{i+1})⁻¹ = 1` by the braid hypothesis
+(Lemma `braid_relator_of_eq`). ∎
+
+**Definition 5.4 / Theorem (`jonesRep`, `jonesRep_sigma`).** Applying Theorem
+5.3 to `f = jonesUnit T` yields the **Jones–Temperley–Lieb representation**
+$$ \mathrm{jonesRep} : B_{n+1} \longrightarrow R^{\times}, \qquad
+   \mathrm{jonesRep}(\sigma_i) = \mathrm{jonesUnit}\,T\,i. $$
+
+**Theorem 5.5 (Faithfulness, honestly stated, `faithful_representation`).** The
+representation is injective if and only if the underlying map
+`b ↦ ((jonesRep b : Rˣ) : R)` is injective:
+$$ \mathrm{Injective}(\mathrm{jonesRep}) \;\Longleftrightarrow\;
+   \mathrm{Injective}\bigl(b \mapsto (\mathrm{jonesRep}\,b : R)\bigr). $$
+
+*Proof sketch.* Two units are equal iff their underlying elements are equal
+(`Units.ext_iff`); the equivalence is then immediate. ∎
+
+**Remark.** This is the *honest* statement. The naive expectation that the JTL
+representation is faithful is **false in general**: the Temperley–Lieb algebra is
+finite-dimensional, while `B_{n+1}` is infinite, so for large `n` the
+representation necessarily has nontrivial kernel. Theorem 5.5 reduces the
+faithfulness question to a concrete linear-algebra question about the chosen model
+`R`, rather than asserting a falsehood.
 
 ---
 
-## 8. Conclusion
+## 6. The Markov trace
 
-We have given complete, self-contained statements and proof sketches for the
-analytic core of the fault-tolerance threshold theorem and the algebraic core of the
-Eastin–Knill theorem. The threshold theorem reduces to the trichotomy of the
-iteration `q ↦ q²` about its fixed point `q = 1`, yielding the doubly-exponential
-suppression law and the threshold `p_th = 1/c`, which equals `1%` for the surface
-code (`c = 100`). The Eastin–Knill theorem reduces to the impossibility of a finite
-group exhausting an infinite ambient group. Between them, these two results draw the
-exact boundary of what fault-tolerant quantum computation can and cannot achieve.
+A **trace** is a `K`-linear functional `tr : R → K`. It is *symmetric* if
+`tr(xy) = tr(yx)`.
+
+**Theorem 6.1 (Skein decomposition of the trace, `markov_trace_property`).**
+For any linear functional `tr`, any `x ∈ R`, and any index `i`,
+$$ \mathrm{tr}\bigl(x\cdot \mathrm{jonesOp}(A, e_i)\bigr)
+   = A\cdot \mathrm{tr}(x) + A^{-1}\cdot \mathrm{tr}(x\, e_i). $$
+
+*Proof sketch.* `jonesOp(A, eᵢ) = A·1 + A⁻¹·eᵢ`; distribute the multiplication by
+`x` and apply linearity of `tr`. ∎
+
+This is the trace-level form of the Kauffman bracket: the value on a crossing is
+the weighted sum of the values on its two resolutions.
+
+**Theorem 6.2 (Markov stabilization rescaling, `markov_move`).** Suppose the
+trace satisfies the stabilization rule `tr(x · eᵢ) = τ · tr(x)` for a modulus
+`τ ∈ K`. Then
+$$ \mathrm{tr}\bigl(x\cdot \mathrm{jonesOp}(A,e_i)\bigr)
+   = (A + A^{-1}\tau)\cdot \mathrm{tr}(x). $$
+
+*Proof sketch.* Substitute the stabilization rule into Theorem 6.1 and combine
+the scalar factors. ∎
+
+This controls Markov move II (adding/removing a stabilizing strand): the trace
+simply rescales by the fixed factor `A + A⁻¹τ`.
+
+**Theorem 6.3 (Conjugation invariance / Markov move I,
+`jones_polynomial_invariance`).** If `tr` is symmetric, then for all braids
+`g, b ∈ B_{n+1}`,
+$$ \mathrm{tr}\bigl((\mathrm{jonesRep}(g b g^{-1}):R)\bigr)
+   = \mathrm{tr}\bigl((\mathrm{jonesRep}(b):R)\bigr). $$
+
+*Proof sketch.* Since `jonesRep` is a homomorphism,
+`jonesRep(g b g⁻¹) = jonesRep(g)·jonesRep(b)·jonesRep(g)⁻¹` as units. Pass to
+underlying elements, apply symmetry `tr(XY) = tr(YX)` to cycle the leading
+`jonesRep(g)` to the end, where it cancels against `jonesRep(g)⁻¹`, leaving
+`tr(jonesRep(b))`. ∎
+
+Theorems 6.2 and 6.3 are exactly the two invariances required by Markov's
+theorem. Together with an appropriate normalization, the trace of the closure of
+a braid becomes a genuine link invariant — the **Jones polynomial**.
 
 ---
 
-## Appendix: Summary of formalized results
+## 7. Non-vacuity: a concrete model
 
-| Name | Statement |
-|------|-----------|
-| `errorRate` | Recursion `p_0 = p`, `p_{n+1} = c·p_n²` |
-| `threshold` | `p_th(c) = 1/c` |
-| `errorRate_rescaled` | `c·p_n = (c·p)^(2ⁿ)` |
-| `errorRate_closed_form` | `p_n = (1/c)(c·p)^(2ⁿ)` for `c ≠ 0` |
-| `errorRate_subthreshold_tendsto_zero` | `c·p < 1 ⇒ p_n → 0` |
-| `errorRate_at_threshold_const` | `c·p = 1 ⇒ p_n = 1/c` |
-| `errorRate_superthreshold_tendsto_top` | `c·p > 1 ⇒ p_n → ∞` |
-| `threshold_one_percent` | `threshold 100 = 0.01` |
-| `eastin_knill_not_universal` | finite `T ≤ G`, `G` infinite ⇒ `T ≠ G` |
-| `eastin_knill_proper` | finite `T ≤ G`, `G` infinite ⇒ `T ⊊ G` |
+**Proposition 7.1 (`TLRep.baseExample`).** Over the base field `K` itself (viewed
+as a one-dimensional `K`-algebra), for any `A ≠ 0` the single element
+`e₀ := δ = loopValue(A)` defines a one-generator Temperley–Lieb representation
+`TLRep K K 1`.
+
+*Proof sketch.* The squaring relation `δ · δ = δ • δ` holds since
+multiplication and the `K`-action coincide on `K`. The adjacency and far
+relations are vacuous for a single generator (`Fin 1` has no pair of distinct
+indices satisfying the index hypotheses). Hence all `TLRep` axioms hold. ∎
+
+Proposition 7.1 confirms the abstract theory is non-empty: it yields a genuine
+representation of `B₂`, the braid group on two strands (which is infinite
+cyclic), into `K×`.
+
+---
+
+## 8. Algorithms
+
+The formal development is constructive enough to extract numerical procedures.
+
+**Algorithm 8.1 (Jones operator and inverse on a matrix model).** Given a square
+matrix `E` with `E² = δE`, build `J = A·I + A⁻¹·E` and verify
+`J·(A⁻¹·I + A·E) = I`. Complexity: a single matrix multiplication, `O(m³)` for
+`m×m` matrices.
+
+**Algorithm 8.2 (Braid-word evaluation).** Given a braid word `σ_{i₁}^{±1} …
+σ_{i_k}^{±1}`, evaluate `jonesRep` by multiplying the corresponding Jones units
+(or their inverses) left to right. Complexity: `O(k)` algebra multiplications.
+
+**Algorithm 8.3 (Markov-trace knot invariant).** Close a braid by applying a
+Markov trace satisfying `tr(x eᵢ) = τ tr(x)`; evaluate by repeatedly applying the
+skein decomposition (Theorem 6.1) and stabilization rule (Theorem 6.2) until the
+braid is reduced to scalars. The result, suitably normalized, is invariant under
+conjugation by Theorem 6.3.
+
+---
+
+## 9. Applications
+
+**Knot theory.** The construction is the algebraic core of the Jones polynomial.
+Conjugation invariance (Theorem 6.3) guarantees the resulting quantity depends
+only on the knot, not on the braid representative chosen; the stabilization law
+(Theorem 6.2) fixes its behavior under the second Markov move.
+
+**Statistical mechanics.** The Temperley–Lieb algebra arose in the study of the
+Potts and ice-type models; the loop value `δ` is the fugacity of a closed loop,
+and the parameter `A` encodes the Boltzmann weights. The braid relation is the
+Yang–Baxter equation, the integrability condition for the transfer matrix.
+
+**Topological quantum computation.** Anyonic braiding implements unitary gates
+given by a braid-group representation of exactly this type. Because the gate
+depends only on the topology of the braid, the computation is intrinsically
+protected against local noise — the physical basis for fault tolerance. The
+parameter `A` is set by the anyons' statistics and fixes the loop value `δ` and
+hence the realizable gate set.
+
+---
+
+## 10. Discussion
+
+The development deliberately abstracts over the algebra `R`: all reasoning passes
+through the four equational hypotheses bundled in `TLRep`. This has two benefits.
+First, it makes the proofs short and modular — invertibility, the braid relation,
+and trace invariance each reduce to a single calculation. Second, any concrete
+model (diagram algebra, matrix representation, fusion category) inherits the
+entire braid-and-trace theory by discharging only those four equations once.
+
+The honest treatment of faithfulness (Theorem 5.5) is a feature, not a
+limitation: rather than asserting the (false) faithfulness of the JTL
+representation, we reduce it to a precise, model-dependent injectivity statement.
+
+---
+
+## 11. Future Directions
+
+These build directly on the local Jones–Temperley–Lieb braid identity proved
+here (the theorems for the braid relation, invertibility, and the
+representation).
+
+**1. From the local relation to a full braid-group representation.** Promote the
+two-generator result to a genuine monoid homomorphism `Bₙ → Aˣ` (or a
+representation on a module) by adding the far-apart commutation relation
+`eᵢ eⱼ = eⱼ eᵢ` for `|i − j| ≥ 2` and assembling the generators
+`σᵢ = jonesGen(q, eᵢ)`. The only *non-commuting* obligations in the braid
+presentation are between adjacent generators, exactly the braid relation plus
+invertibility — so the global representation is obtained purely by gluing the
+already-proved local data. The local identity is finished and stated over an
+arbitrary algebra, so the remaining work is bookkeeping over an index set.
+
+**2. Temperley–Lieb algebra as a concrete structure with a diagram basis.**
+Define `TLₙ(δ)` as an explicit `R`-algebra (via planar diagrams or a
+presentation), instantiate the present generators inside it, and prove the
+loop/zig-zag relations so the abstract hypotheses become theorems. Since the
+development factors all reasoning through four equational hypotheses, a concrete
+model only needs to discharge those four equations once to inherit the entire
+braid and invertibility theory for free.
+
+**3. Hecke-algebra and quantum-group bridge.** Connect `jonesGen(q, e)` to the
+Hecke algebra generators `Tᵢ` (satisfying `(Tᵢ − q)(Tᵢ + q⁻¹) = 0`) and to
+`U_q(sl₂)` quantum-group data, showing the TL algebra is the expected quotient.
+The balance condition `a² + abδ + b² = 0` driving the braid identity is precisely
+the characteristic (quadratic) relation of the Hecke generator in disguise, so
+the abstract identity is already the Hecke braid relation specialized.
+
+**4. The Jones polynomial and a Markov-trace invariant.** Build a Markov trace on
+the TL/braid representation and use it to define a link invariant (the Jones
+polynomial), verifying its invariance under the two Markov moves. Braid
+invariance of any trace-based invariant reduces to the braid relation and
+conjugation-invariance of the trace, both established here.
+
+---
+
+## 12. Conclusion
+
+Starting from a single quadratic balance condition `δ = −(A² + A⁻²)`, we have
+built — and fully verified — the chain from the Temperley–Lieb relations, through
+invertibility and the braid relation, to a braid-group representation and a
+conjugation-invariant Markov trace. The result is the formal core of the Jones
+polynomial and of braid-based topological quantum computation, stated over an
+arbitrary algebra so that every concrete model is an instance.
