@@ -1,272 +1,271 @@
-# When Databases Form a Sheaf: The Hidden Geometry of Filling in the Blanks
+# When Databases Form a Sheaf: The Hidden Geometry of Missing Data
 
-## A spreadsheet with holes
+## A spreadsheet with holes in it
 
-Imagine a spreadsheet. Rows are patients, columns are measurements: blood
-pressure, cholesterol, age, weight. In the real world, this spreadsheet is
-never complete. A test was skipped, a sensor failed, a form was left blank.
-Wherever a value should be, there is a hole.
+Picture a spreadsheet. Rows are patients, customers, sensors, or stars; columns
+are the things you measured about them — age, income, temperature, brightness.
+Now picture the spreadsheet as it really arrives in the wild: peppered with
+blanks. A sensor dropped offline for an hour. A survey respondent skipped a
+question. A telescope was clouded out. Real data is not a filled rectangle; it
+is a rectangle with holes punched through it.
 
-The everyday name for the problem of filling those holes is *imputation*.
-Statisticians have a toolbox for it: replace each blank with the column
-average (mean imputation), or copy values from the most similar rows
-(k-nearest-neighbors), or run an iterative model (MICE). These methods work,
-and they are everywhere — quietly running inside medical studies, credit
-scoring, recommendation engines, and climate reconstructions.
+Filling those holes is one of the oldest and most consequential chores in data
+science. It has a name — *imputation* — and a folklore of recipes. Replace each
+blank with the column's average. Borrow the value from the most similar row.
+Build a little model that predicts each missing entry from the others. These
+methods work, sometimes well. But they share a quiet assumption that is almost
+never examined: that the blanks are independent little problems, each to be
+patched on its own.
 
-But there is something philosophically unsatisfying about them. Each of these
-methods looks at a hole and asks, "What number is *plausible* here?" None of
-them asks the deeper question: "What number is *consistent* here?" Consistency
-is a structural property. It is about whether the different partial views of
-your data can be made to agree with one another. And consistency, it turns
-out, has a precise mathematical home — one borrowed not from statistics but
-from algebraic geometry. It is called a **sheaf**.
+This article is about what happens when you stop believing that. It turns out
+that a database with missing entries is not a bag of independent holes at all.
+It is a single geometric object — a *partial section of a sheaf* — and the
+question "can these holes be filled consistently?" is, exactly and provably, the
+central question of a branch of mathematics invented to study how local
+information assembles into global information. The mathematics is called sheaf
+theory, and it was born in the 1940s to understand surfaces, solutions of
+differential equations, and the topology of space. That it should govern your
+quarterly sales spreadsheet is, at first, astonishing. By the end of this
+article it should feel inevitable.
 
-This article is about a simple but far-reaching idea: *a database is a sheaf,
-and imputation is the search for a global section of that sheaf.* Once you see
-data this way, several facts that looked like heuristics become theorems, and
-several questions that looked vague become sharp.
+## Local agreement, global truth
 
-## What is a sheaf, really?
+Here is the idea in one sentence. **Pieces of data that agree wherever they
+overlap can be glued into a single larger piece — and they can be glued in
+exactly one best way.**
 
-The word "sheaf" sounds intimidating, but the idea is one you already use
-every day when you assemble local information into a global picture.
+That sentence is the *sheaf condition*, and it is worth slowing down on.
 
-Think of how a map of a country is made. No single surveyor sees the whole
-country. Instead, each surveyor charts a small region — a *local view*. The
-regions overlap. Where two surveyors' regions overlap, their maps had better
-agree: the same river, in the same place, drawn the same way. If every pair of
-overlapping local maps agrees on the overlap, you can stitch them together
-into one global map. If even a single pair disagrees on a shared river, no
-consistent global map exists; someone made a mistake.
+Imagine two analysts each hold a partial copy of the same database. Analyst A
+knows the ages and incomes for the morning shift; Analyst B knows the incomes
+and ZIP codes for a partly overlapping set of people. Wherever both of them
+recorded an income for the *same* person, do their numbers match? If yes — if
+they agree on the overlap — then there is no obstacle to merging their
+notebooks into one fuller notebook. If even one income disagrees, no consistent
+merge exists; the two notebooks describe incompatible worlds.
 
-That stitching rule has a name in mathematics: the **gluing axiom**, or the
-**sheaf condition**. A sheaf is, informally, any system of "local views" that
-obey this rule — local data that agree on overlaps can be glued into global
-data, uniquely.
+That is the whole story in miniature, and it generalizes. Replace "two analysts"
+with "any number of partial views," and replace "agree on income" with "agree on
+every cell where two views both have a value." The resulting principle is what
+mathematicians call *gluing*, and the collection of all consistently-gluable
+partial views is what they call a *sheaf*.
 
-Now reread the spreadsheet example with this lens. Each filled-in fragment of
-the database — say, the columns and rows recorded by one hospital — is a local
-view. Two hospitals that recorded the same patient's blood pressure had better
-report the same number. Where the views overlap, they must agree. If they all
-agree, the fragments glue into one complete, consistent database. If they
-clash, no consistent database contains them all. The spreadsheet *is* a sheaf,
-and we just never noticed.
+To make this precise we need three honest definitions.
 
-## The formal cast of characters
+A **partial database** on a grid of `nRows × nCols` cells is simply a function
+that assigns to each cell either a value or the special symbol "missing." Write
+`db p = some v` when cell `p` holds the value `v`, and `db p = none` when it is
+blank. That is all a partial database is: a grid where each cell is either filled
+or empty.
 
-To make this precise we lay down a small vocabulary, exactly the one used in
-the formal development behind this article.
+Two partial databases are a **consistent pair** when they never contradict each
+other: for every cell `p`, if the first database says `v₁` and the second says
+`v₂`, then `v₁ = v₂`. Blanks are free — a blank conflicts with nothing. Only two
+*filled* cells holding *different* values count as a clash.
 
-A **position** in a database is a grid cell `(row, column)`. A **partial
-database** assigns to each position either a value or a special blank marker
-("none"). The **domain** of a partial database is the set of positions where
-it actually holds a value — the cells that are *not* blank.
+A whole family of partial databases satisfies the **sheaf condition** when every
+pair within it is consistent. This is the precise, checkable meaning of "all the
+local views agree on their overlaps."
 
-Two partial databases form a **consistent pair** when, at every position where
-*both* of them hold a value, those two values are equal. This is the overlap
-agreement rule, stated for two views. A whole family of partial databases
-satisfies the **sheaf condition** when *every* pair in the family is
-consistent — pairwise agreement everywhere.
+## The information order: more data is "bigger"
 
-When two partial databases are consistent, we can **glue** them: form a new
-partial database that takes the value from whichever view has one (and either,
-where both do — they agree, so it does not matter). A database with no blanks
-at all is a **global section**: a complete, fully-imputed table.
+To talk about gluing as *building something*, we need a notion of one database
+containing more information than another. Say that a database `big` **extends** a
+database `small` when every value recorded by `small` is recorded identically by
+`big`:
 
-That is the entire dictionary. From it, every result in this article follows.
+> `Extends big small` means: for every cell `p` and value `v`, if `small p =
+> some v` then `big p = some v`.
 
-## The first theorem: gluing works
+`big` may fill in extra cells that `small` left blank, but it may never erase or
+alter what `small` already knew. This "has at least as much data" relation is the
+*information order*, and it behaves exactly as an order should:
 
-The foundational fact is reassuringly simple to state and, once you believe
-the dictionary, almost obvious — which is exactly what you want from a
-foundation.
+- **Reflexive:** every database extends itself.
+- **Transitive:** if `a` extends `b` and `b` extends `c`, then `a` extends `c`.
+- **Antisymmetric:** if `a` extends `b` *and* `b` extends `a`, the two databases
+  are literally equal, cell for cell.
 
-> **Gluing extends both (`gluing_extends_both`).** If two partial databases
-> are a consistent pair, then their glued union agrees with the first wherever
-> the first had a value, *and* agrees with the second wherever the second had
-> a value.
+These three facts — proven precisely as `extends_refl`, `extends_trans`, and
+`extends_antisymm` — say that partial databases form a *partial order*. This is
+the stage on which everything else plays out. Imputation, in this language, is the
+act of moving *upward* in the information order: from a blank-riddled database to
+a fuller one that extends it.
 
-In plain terms: gluing never throws away or corrupts observed data. Every
-number you actually measured survives the merge, no matter which of the two
-sources it came from. The proof rests on a tiny lemma: where the first
-database is undefined, the glue simply copies the second; where the first is
-defined, consistency forces the second (if also defined) to match, so copying
-the first is harmless. Information is preserved; conflict is impossible by
-hypothesis.
+A small but pivotal observation lives here. Suppose some big database `g` extends
+two smaller ones, `a` and `b`. Then `a` and `b` *must* be a consistent pair —
+because wherever both have a value, both values are forced to equal `g`'s value,
+so they equal each other. This is the result `consistentPair_of_common_extension`,
+and it is the "easy half" of the whole theory: **if a common merge exists, the
+pieces automatically agree on overlaps.** No cleverness, no choices, no
+assumptions are needed. Consistency is a *necessary* condition for gluing, and it
+comes for free.
 
-Consistency is not an exotic condition; it behaves like the equality it
-generalizes. It is **symmetric** (`consistent_pair_symm`): if view A agrees
-with view B on overlaps, then B agrees with A. (It is also reflexive — a view
-always agrees with itself.) These small facts are the connective tissue that
-lets us reason about many views at once.
+## Gluing as the least upper bound
 
-## Merging many views, one at a time
+The reverse direction — building a merge *from* agreement — is where the content
+lives. Given two consistent databases, how do we merge them? The natural recipe:
+for each cell, take the first database's value if it has one, otherwise the
+second's. Call this the **gluing map**. It has three properties that, together,
+crown it as the canonical merge:
 
-Real data integration rarely involves just two sources. You have dozens of
-spreadsheets, sensors, or hospitals, and you want to merge them all. The naive
-worry is that merging two of them might break consistency with the rest. It
-does not.
+1. The gluing always extends the *first* database (`extends_gluing_left`) — even
+   without consistency, because it always prefers the first's values.
+2. For a consistent pair, the gluing also extends the *second* database
+   (`extends_gluing_right`) — the agreement guarantees that preferring the first
+   never contradicts the second.
+3. **The gluing is the *least* upper bound** (`gluing_is_lub`): any database `g`
+   that extends both pieces already extends their gluing. The gluing adds nothing
+   superfluous; it is the *minimal* common extension, the tightest possible merge.
 
-> **Gluing preserves consistency (`gluing_preserves_consistency`).** If three
-> partial databases are pairwise consistent, then the glue of the first two is
-> still consistent with the third.
+In the language of order theory, the gluing is the **join** — the least upper
+bound — of a consistent pair. And the existence of joins is precisely what makes
+an order into a *lattice*. So the slogan "databases form a sheaf" sharpens into
+something an algebraist recognizes instantly: *consistent databases have joins.*
 
-This is the permission slip for *incremental* integration. You can fold your
-sources together one at a time — glue source 1 and source 2, then glue the
-result with source 3, and so on — and as long as everything was pairwise
-consistent to begin with, you never create a contradiction along the way. The
-order does not matter, and the merge keeps growing.
+## From two to many: the colimit
 
-And it really does grow. Gluing only ever *adds* information:
+Two databases are a warm-up. Real data integration merges dozens or hundreds of
+partial views. So we need an *arbitrary-arity* merge, one that takes any indexed
+family of partial databases and produces a single result.
 
-> **Domains only grow (`gluing_increases_domain`).** The set of filled cells of
-> the first database is contained in the set of filled cells of the glue.
+The construction, called `glueFamily`, does the obvious thing made rigorous: at
+each cell, if *some* member of the family has a value there, use it; if *every*
+member leaves the cell blank, leave it blank. (When the family is consistent, it
+does not matter *which* member you borrow from — they all agree.) A clean
+companion fact, `glueFamily_eq_none_iff`, states the boundary of the construction
+exactly: a cell of the merge is blank *if and only if* every member leaves it
+blank. Nothing is invented; nothing is lost.
 
-You never lose a cell by merging. The completed picture is always at least as
-filled-in as any of its parts.
+This merged object has the two properties that, in category theory, define a
+**colimit** — the universal way to assemble a diagram of objects into one:
 
-## Measuring inconsistency: the coboundary
+- **It extends every member** (`glueFamily_extends`). Under the sheaf condition,
+  the merge contains all the information of all the pieces. This is the "gluing
+  axiom," and it is the direction that genuinely *uses* consistency (and a small
+  dose of the axiom of choice, to pick which member to borrow each value from).
 
-So far we have assumed consistency. But the entire point of integrating messy
-real data is that it is often *in*consistent — two sources disagree on the same
-patient, the same day, the same measurement. We need a number that says *how
-inconsistent* a collection of views is.
+- **It is the least such extension** (`glueFamily_is_lub`). Any database that
+  extends every member already extends the merge. Remarkably, this universal
+  property needs *no* consistency hypothesis and *no* choice — it is true for free,
+  by pure bookkeeping. The merge is the tightest possible common extension, the
+  initial point of the "cocone" of all common extensions.
 
-Borrowing again from algebraic topology, we define the **coboundary norm**.
-For each pair of views and each position, the **disagreement indicator** is `1`
-if both views are defined there and report different values, and `0` otherwise.
-The coboundary norm is the grand total of these indicators, summed over all
-pairs and all positions. It is, quite literally, the count of conflicts.
+Because the information order is antisymmetric, this least common extension is
+*unique*: there is exactly one best merge. The colimit is not an arbitrary
+witness that "some merge exists"; it is *the* canonical answer, pinned down by its
+universal property.
 
-The central bridge theorem ties this conflict count back to the sheaf
-condition with no slack whatsoever:
+## The theorem: databases really do form a sheaf
 
-> **Coboundary zero iff sheaf (`coboundary_zero_iff_sheaf`).** The coboundary
-> norm of a family of partial databases is exactly zero if and only if the
-> family satisfies the sheaf condition.
+We can now state the headline result cleanly. It is a two-way street, an
+*if-and-only-if* that captures the entire phenomenon:
 
-This is the discrete shadow of one of the deepest dictionary entries in modern
-mathematics: the kernel of the coboundary operator is the space of global
-sections; "first cohomology vanishes" means "local data glue." Here it becomes
-something a programmer can compute: *count the conflicts; if and only if the
-count is zero can your data be consistently completed.* Mean imputation and
-KNN never compute this number. They cannot tell you whether your data are even
-consistent — because they never look at the overlaps.
+> **Main Theorem (databases form a sheaf).** A family of partial databases admits
+> a single common extension — a consistent merge into one larger database — *if
+> and only if* it satisfies the sheaf condition (every pair agrees on its
+> overlap).
 
-## What imputation is actually optimizing
+Read it in both directions, because each direction tells a different story.
 
-With conflicts quantified, "good imputation" gets a precise objective. Given an
-observed partial database and a candidate complete database, the **sheaf
-imputation objective** counts the observed cells where the candidate disagrees
-with what was actually recorded. A perfect imputation is one that respects
-every observation.
+The **forward direction** (sheaf condition ⟹ merge exists) is the gluing axiom,
+the hard-won content. It says: *agreement is enough*. You never have to check any
+higher-order condition, never have to worry about three-way or four-way subtleties.
+If the pieces agree pairwise, they assemble. The colimit `glueFamily` is the
+explicit witness, and `glueFamily_extends` is the proof.
 
-> **Zero cost iff faithful (`imputation_zero_iff_extends`).** The imputation
-> objective is zero if and only if the candidate database reproduces every
-> observed value exactly.
+The **reverse direction** (merge exists ⟹ sheaf condition) is *separatedness* —
+the free half from `consistentPair_of_common_extension`. It says: *agreement is
+necessary*. If any consistent merge exists at all, the pieces had to have agreed
+in the first place. There is no way to fill the holes consistently while papering
+over a genuine contradiction.
 
-This sounds like a tautology, and that is its virtue: it pins down, with no
-wiggle room, what it means to fill in blanks *without lying about the data you
-have*. The sheaf method's job is to find a zero-cost completion — a global
-section that extends the observations. Mean and KNN can and routinely do
-violate this: they "smooth over" observed values or let neighboring rows
-overwrite genuine measurements. The sheaf objective makes that failure
-visible and forbidden.
+Put together, the two halves say that pairwise agreement is not just sufficient or
+just necessary for consistent imputation — it is the *exact* condition. There is
+no hidden obstruction, no gap between "looks consistent" and "is consistent." The
+sheaf condition is the whole truth about gluability.
 
-## The probability of being fillable
+This is sharper than merely asserting that a merge exists somewhere. The earlier,
+weaker statement in the catalog was one-directional. The upgrade here is the
+biconditional *plus* the universal property: not only does a merge exist exactly
+when the pieces agree, but that merge is the unique least common extension, a
+genuine colimit rather than an arbitrary patch.
 
-Here is where the story turns quantitative and a little dramatic. Suppose the
-data are random and noisy. Each potential overlap constraint — each place where
-two views could disagree — is independently violated with some probability `r`,
-the "conflict rate." How likely is it that the *whole* database is consistent,
-that *every* constraint happens to hold at once?
+## Progressive imputation is taking a colimit
 
-If the constraints were independent, the probability that all `C` of them hold
-is `(1 - r)` multiplied by itself `C` times. That is the **consistency
-probability**:
+There is a beautiful payoff for anyone who has ever filled in missing data in
+stages — first the easy cells, then the harder ones, refining as you go. This
+"progressive imputation" can be formalized as a **sheaf filtration**: a sequence
+of databases, each extending the previous one (information only grows), all
+mutually consistent.
 
-> `P(consistent) = (1 - r)^C`.
+A striking structural fact, `sheaf_filtration_auto_consistent`, says that the
+consistency is *automatic*: if each stage merely extends the previous one, then
+all stages are pairwise consistent for free. Monotonicity — never erasing what you
+knew — is the only discipline you need; the sheaf condition follows.
 
-This single formula carries the moral of the whole subject, and several of its
-properties are theorems. It composes the way independent constraints should:
+And the colimit of such a filtration is exactly its top level
+(`filtration_colimit_eq_top`): the limit of progressive imputation is simply its
+final, most-complete stage. Refinement converges to its own destination. The
+abstract machinery of colimits, when specialized to the everyday act of filling in
+a table step by step, says nothing more exotic than "you end up where you were
+heading." That the two viewpoints agree is precisely the kind of consistency check
+that tells you the abstraction is the right one.
 
-> **Multiplicative composition (`consistency_prob_mul`).** The probability for
-> `c1 + c2` constraints equals the product of the probabilities for `c1` and
-> for `c2` constraints.
+## Why this changes how we think about imputation
 
-It is **monotone**: more constraints can only lower your chances
-(`consistency_prob_mono_constraints`), and a higher conflict rate can only
-lower them too (`consistency_prob_mono_rate`). At zero conflict rate it is `1`
-(everything is fillable); at conflict rate `1` it collapses to `0` whenever
-there is at least one constraint.
+So what does the working data scientist take from all this?
 
-Now count the constraints. A database with `n` columns, `k` rows, comparing
-every pair of views over the grid, has on the order of `n(n-1)/2` pairwise
-comparisons over the cells — the **overlap constraint count**. The crucial
-qualitative fact is that this count grows *quadratically*:
+First, a **diagnostic**. Before you impute, you can *test for an obstruction*. If
+your partial views fail the sheaf condition — if two of them genuinely disagree
+on a shared cell — then **no** imputation method can consistently fill the holes,
+because there is no consistent world to fill them into. Mean imputation, k-nearest
+neighbors, and the rest will happily produce numbers anyway, but those numbers
+paper over a contradiction in your data. The sheaf condition is a tripwire that
+fires before you waste effort modeling an impossibility.
 
-> **Quadratic growth (`overlap_quadratic_growth`).** The overlap constraint
-> count is bounded by `n · n · (rows · cols)`.
+Second, a **principle**. The right merge is not "some" filling but *the* least
+common extension — the colimit. It adds exactly the information forced by the
+data and nothing more. Methods that hallucinate structure to fill blanks are
+moving *too far up* the information order; the colimit tells you precisely how far
+you are entitled to go.
 
-Combine quadratic growth with exponential decay and you get a stark
-prediction. Plug in a modest example — `10` columns, `100` rows, a `30%`
-conflict rate — and the number of constraints runs into the thousands, so the
-consistency probability is `(0.7)` raised to a four-digit power: a number like
-`10^{-697}`, indistinguishable from zero. A large, noisy database is
-*essentially never* spontaneously consistent. This is not pessimism; it is the
-reason imputation is hard, and the reason a method that actively *enforces*
-consistency, rather than hoping for it, is so valuable.
+Third, a **constraint count that explains difficulty**. Each overlapping pair of
+views, at each shared cell, is one consistency constraint. A database with many
+columns and many rows generates a combinatorial explosion of these constraints —
+on the order of `n·(n−1)/2` pairs times the grid size. If each constraint is
+satisfied independently with probability `1−r` (where `r` measures the rate of
+local disagreement or noise), the probability that *all* of them hold is
+`(1−r)^C`, where `C` is the constraint count. This is an *exponential* decay in
+the number of overlaps. It is why, as databases grow wide, exact global
+consistency becomes vanishingly rare — and why a method that respects the
+exponentially many overlap constraints can see structure that blank-by-blank
+methods are blind to. The functions modeling this decay are honest: the
+consistency probability is monotone decreasing in both the constraint count and
+the noise rate, equals one when there is no noise, and drops to zero at full noise
+— each fact proved exactly.
 
-This is exactly the content of the **testable exponential-decay conjecture**
-(`conjecture_exponential_decay_testable`): the consistency probability built
-from the quadratic overlap count is strictly smaller than the probability built
-from a merely linear count. The decay is genuinely faster than linear, and you
-can falsify it with a simulation — generate a million random noisy tables and
-count how many come out consistent. (Spoiler from the arithmetic: none will.)
+## The larger lesson
 
-## Imputation as a growing story
+There is a recurring delight in mathematics: a tool forged for one purpose turns
+out to be the natural language for something utterly different. Sheaf theory was
+built to track how solutions of equations on small patches of a surface fit
+together into solutions on the whole. The "patches" were open sets; the "fitting
+together" was the gluing axiom; the obstruction to global assembly was measured by
+a subtle invariant called cohomology.
 
-The final piece reframes imputation not as a single leap from "blank" to
-"filled" but as a *process* — a sequence of ever-more-complete snapshots. We
-call such a sequence a **sheaf filtration**: a chain of partial databases where
-each level fills in at least as much as the previous one (monotone in
-information) and all levels remain mutually consistent.
+Swap the surface for a spreadsheet and the open sets for partial views, and every
+piece of the apparatus transfers intact. Overlaps become shared cells. Sections
+become partial databases. Gluing becomes data integration. The gluing axiom
+becomes the precise condition for consistent imputation. And the first whisper of
+cohomology — the obstruction `H¹` — becomes the question of whether locally
+agreeing data can fail to glue globally, a question this framework answers crisply:
+for the database sheaf, pairwise agreement *always* suffices, so the obstruction
+vanishes and the holes can be filled.
 
-The structural payoff is a small surprise:
-
-> **Monotone implies consistent (`sheaf_filtration_auto_consistent`).** If each
-> stage of an imputation process only ever *adds* values and never overwrites
-> an earlier one, then all stages are automatically pairwise consistent — for
-> free.
-
-In other words, the disciplined way of imputing — only fill blanks, never edit
-what you have already committed — cannot create contradictions. Consistency,
-which we worked hard to define, comes bundled with monotonicity at no extra
-charge. And the process accumulates everything:
-
-> **Nothing is lost (`filtration_final_contains_all`).** In any such chain, the
-> final, most-complete database contains every cell filled at every earlier
-> stage.
-
-The story only ever moves toward completeness.
-
-## Why this matters beyond the spreadsheet
-
-Step back and look at what the dictionary bought us. By renaming "spreadsheet
-with holes" as "partial section of a sheaf," a grab-bag of data-cleaning
-heuristics turned into a small, rigorous theory with provable guarantees:
-merging never corrupts data; consistency is exactly conflict-count-zero; faithful
-imputation is exactly zero-cost imputation; the chance of accidental
-consistency decays exponentially in a quadratically growing number of
-constraints; and disciplined, monotone imputation is contradiction-free by
-construction.
-
-The deeper lesson is the one mathematicians keep relearning: the right language
-makes the hard parts visible and the obvious parts free. Sheaves were invented
-to understand how solutions to equations on small patches of space fit together
-into solutions on the whole space. Eighty years later, the same gluing rule
-tells a hospital whether its patient records can be merged without lying, and a
-data scientist exactly why their billion-cell table will never be consistent by
-luck. The geometry of filling in the blanks was hiding in plain sight, in every
-spreadsheet we ever left half-empty.
+Missing data, it turns out, is a problem in geometry. The blanks in your
+spreadsheet are not isolated nuisances but the shadow of a single shape, and
+filling them in consistently is the act of recovering that shape's one true
+global form. The next time a spreadsheet arrives full of holes, you might see it a
+little differently: not as a broken table, but as a partial section waiting to be
+glued.
