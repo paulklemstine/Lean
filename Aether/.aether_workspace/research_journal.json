@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "126a3d45",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Pisano Period as a Group Order (Duality & Representation)\n\n## Synthesis\n\nThis cycle re-cast the **Pisano period** `π(m)` — the period of the Fibonacci\nsequence modulo `m` — n",
-      "quality_score": 0.7108000000000001,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-13T23:54:58",
-      "title": "Deepening: This cycle isolated the *entry point* (rank of apparition) `z(p) = ` least `k > "
-    },
-    {
       "cycle_id": "7b63a6df",
       "domain": "Applications",
       "key_insight": "# Future Directions — The Algebra of Combinatorial Species\n\n## Synthesis\n\nThe catalog file `Applications/CombinatorialSpecies.lean` built the exponential-generating-function\n(EGF) dictionary for Joyal",
@@ -499,19 +489,19 @@
       "theorem_count": 14,
       "timestamp": "2026-06-19T09:36:53",
       "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+    },
+    {
+      "cycle_id": "be5e0ab8",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Anti-Gravity Mathematics\n\nThis cycle formalized dependency DAGs of a formal library, the **gravitational\nweight** `weight b = #{a : a depends on b}`, and the **anti-gravity** pre",
+      "quality_score": 0.8895200000000001,
+      "sorry_count": 0,
+      "theorem_count": 35,
+      "timestamp": "2026-06-19T10:37:36",
+      "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "dae6a9b2",
-      "domain": "Logic",
-      "key_insight": "# Future Directions — The Eckmann–Hilton Bridge (Objects, Morphisms, Products)\n\n## Synthesis\n\nThis cycle takes the catalog's single-carrier Eckmann–Hilton engine\n(`Geometry.HomotopyTypeTheory.EckmannH",
-      "quality_score": 0.5504199999999999,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-06-14T20:39:07",
-      "title": "The previous cycle pinned down the *object-level* content of the Eckmann–Hilton"
-    },
     {
       "cycle_id": "a3760248",
       "domain": "Algebra",
@@ -2501,21 +2491,19 @@
       "theorem_count": 34,
       "timestamp": "2026-06-19T10:10:48",
       "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+    },
+    {
+      "cycle_id": "be5e0ab8",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Anti-Gravity Mathematics\n\nThis cycle formalized dependency DAGs of a formal library, the **gravitational\nweight** `weight b = #{a : a depends on b}`, and the **anti-gravity** pre",
+      "quality_score": 0.8895200000000001,
+      "sorry_count": 0,
+      "theorem_count": 35,
+      "timestamp": "2026-06-19T10:37:36",
+      "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "36dba103",
-      "domain": "Combinatorics",
-      "name": "pow_sub_one_dvd_iff_pow_eq_one",
-      "quality": 0.7248000000000001
-    },
-    {
-      "cycle_id": "36dba103",
-      "domain": "Combinatorics",
-      "name": "mersenne_entryPoint_eq_orderOf",
-      "quality": 0.7248000000000001
-    },
     {
       "cycle_id": "70f20089",
       "domain": "MachineLearning",
@@ -2803,9 +2791,21 @@
       "domain": "MachineLearning",
       "name": "tropical_eigenvalue_unique",
       "quality": 0.829866
+    },
+    {
+      "cycle_id": "be5e0ab8",
+      "domain": "Computation",
+      "name": "comm_of_eq",
+      "quality": 0.8895200000000001
+    },
+    {
+      "cycle_id": "be5e0ab8",
+      "domain": "Computation",
+      "name": "braid_relator_of_eq",
+      "quality": 0.8895200000000001
     }
   ],
-  "last_updated": "2026-06-19T10:10:48",
+  "last_updated": "2026-06-19T10:37:36",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3251,12 +3251,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "e8431c0a",
-        "quality": 0.7680000000000001,
-        "theorems": 20,
-        "title": "Close Proofs: This cycle closed the single open `sorry` in `Bridges/ArrowCurvatu"
-      },
-      {
         "cycle_id": "d787aa34",
         "quality": 0.38878735254059715,
         "theorems": 46,
@@ -3309,6 +3303,12 @@
         "quality": 0.5668,
         "theorems": 43,
         "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
+      },
+      {
+        "cycle_id": "be5e0ab8",
+        "quality": 0.8895200000000001,
+        "theorems": 35,
+        "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
       }
     ],
     "Cryptography": [

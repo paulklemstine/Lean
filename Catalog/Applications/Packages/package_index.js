@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "be5e0ab8",
     "filename": "speculative_anti_gravity_mathematics__theorems_tha.json",
     "pkg_num": 201,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.8895200000000001,
     "title": "Anti-Gravity Mathematics: Theorem Weight in Dependency DAGs"
   },
   {
@@ -6157,8 +6157,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "speculative_anti_gravity_mathematics__theorems_tha",
       "primary_domain": "Computation",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.8895200000000001,
+      "quality": "substantial",
       "shape": "cube",
       "title": "Anti-Gravity Mathematics: Theorem Weight in Dependency DAGs"
     }

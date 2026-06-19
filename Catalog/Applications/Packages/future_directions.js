@@ -34,6 +34,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle be5e0ab8 (Q=0.890), which proved 35 theorems in Computation. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Jones\u2013Temperley\u2013Lieb representation of the braid group B_n in Lean, proving that the map sending each Artin generator \u03c3_i to the Jones operator jonesOp A X_i satisfies the braid relations, provides a faithful representation for generic parameter A, and connects to the Markov trace yiel",
+    "domains": [
+      "Computation"
+    ],
+    "id": "push_be5e0ab8_4ee19012",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "be5e0ab8",
+    "status": "available",
+    "timestamp": "2026-06-19T10:37:36.402838+00:00",
+    "title": "Deepening: Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n \u2264 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
     "domains": [
       "NumberTheory",
@@ -1031,21 +1045,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-16T10:39:16.784213+00:00",
     "title": "Close Proofs: Functor from finite linear codes to tropical valuation objects via wei"
-  },
-  {
-    "consumed_by_exp_id": "e88eb144",
-    "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0116",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.958310+00:00",
-    "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
   {
     "consumed_by_exp_id": "",
@@ -3040,6 +3039,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T23:11:17.377449+00:00",
     "title": "Two boundary facts of the prime crossword in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Anti-Gravity Mathematics\n\nThis cycle formalized dependency DAGs of a formal library, the **gravitational\nweight** `weight b = #{a : a depends on b}`, and the **anti-gravity** predicate\n(high weight, short proof).  We proved the structural laws that survive scrutiny\n(monotonicity, conservation, above-average foundation), exhibited a guaranteed\nanti-gravity theorem (the *fan*), and **refuted** the conjectured universal \"10%\nlaw\" with an explicit counterexample (the *discrete* library has fraction 0,\nwhile the *chain* pushes the fraction to `k/(k+1) \u2192 1`).  The conjectures below\nare derived directly from those findings.\n\n---\n\n## Conjecture 1 \u2014 Weight is a graded invariant: `weight` strictly drops along every dependency edge, so it induces a height function bounding the longest proof-dependency chain.\n\nIn any finite dependency DAG, the longest chain `t\u2080 \u227a t\u2081 \u227a \u22ef \u227a t\u2098` has length\n`m \u2264 weight t\u2080`, and more strongly `weight t\u1d62 \u2265 m - i`.\n\n* **The key insight is** that `DepDAG.weight_lt_of_dep` (proved this cycle) makes\n  `weight` strictly decreasing along the order, so it is an order-reversing\n  grading; a strictly monotone `\u2115`-valued function on a chain bounds the chain's\n  length, turning the *global* quantity \"number of dependents\" into a *local*\n  certificate of proof depth.\n* **Why now?** We already have the strict-monotonicity lemma and the conservation\n  identity in machine-checked form; the remaining step (chain-length bound) is a\n  finite induction over the order that the framework now supports directly.\n\n## Conjecture 2 \u2014 The anti-gravity fraction is threshold-determined, not library-determined: for the *family* of all DAGs on `n` nodes, the expected fraction with weight `\u2265 \u03c4` is `\u0398(1)` only when `\u03c4 = \u0398(1)`, and decays whenever `\u03c4 \u2192 \u221e`.\n\nThe \"10% law\" is meaningless without fixing the threshold; the right statement is\na phase transition in `\u03c4`.\n\n* **The key insight is** that our three examples already span the whole interval\n  `[0,1)` of fractions (discrete \u2192 0, chain \u2192 1, fan \u2192 `1/(n+2)`), so the fraction\n  cannot be a library invariant \u2014 it is governed by the relationship between the\n  threshold `\u03c4` and the weight *distribution*, which is what should be studied.\n* **Why now?** With `chain_antigravity_card` giving an exact count `= k`, the\n  framework can express and test fraction-vs-threshold statements concretely, and\n  random-DAG weight distributions are within reach of `Finset` counting.\n\n## Conjecture 3 \u2014 Conservation forces a \"heavy tail\": in any DAG with `D` dependency pairs on `n` nodes, at least one theorem has weight `\u2265 D/n`, and if `D \u2265 n` then a *positive fraction* of theorems are anti-gravity at threshold 1.\n\n* **The key insight is** that `DepDAG.sum_weight_eq` turns total weight into the\n  exact pair-count `D`, so the pigeonhole/averaging bound `exists_weight_ge_average`\n  (already proved) upgrades to a *counting* statement: dense dependency (`D \u2265 n`)\n  cannot be spread so thinly that everyone has weight 0.\n* **Why now?** Both ingredients \u2014 the conservation identity and the\n  above-average existence lemma \u2014 are formalized this cycle; combining them is a\n  short counting argument rather than new theory.\n\n## Conjecture 4 \u2014 Foundational catalog theorems are detectable purely from the dependency graph: the genuinely foundational results (irrationality of `e`, FTA, \u2026) are exactly the strict maxima of `weight`.\n\n* **The key insight is** that in `CatalogBridge.lean` the abstract law\n  `weight_lt_of_dep` *alone* (no proof-content analysis) singled out the\n  irrationality-of-`e` node as strictly heaviest; \"foundationality\" is therefore a\n  graph-theoretic, not a semantic, property.\n* **Why now?** Real Lean libraries expose their dependency graph via\n  `importGraph`/`#print axioms`; the framework here gives the exact invariant\n  (`weight`) to compute on that graph, so the conjecture is empirically testable\n  on Mathlib today.\n\n## Conjecture 5 \u2014 Anti-gravity is not closed under composition: gluing two libraries each rich in anti-gravity theorems can destroy almost all of them.\n\n* **The key insight is** that weight is computed *relative to the ambient DAG*, so\n  embedding the chain (fraction `\u21921`) as the bottom of a larger fan can collapse\n  most of its anti-gravity nodes' relative threshold \u2014 anti-gravity is a global,\n  non-local property and hence not monotone under disjoint union or sequential\n  composition of libraries.\n* **Why now?** The `DepDAG` structure makes library composition (disjoint sum,\n  ordinal sum) a definable operation, so the failure of closure can be stated and\n  checked with the counting lemmas already available.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_2105",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "be5e0ab8",
+    "status": "available",
+    "timestamp": "2026-06-19T10:36:25.186902+00:00",
+    "title": "This cycle formalized dependency DAGs of a formal library, the **gravitational"
   },
   {
     "consumed_by_exp_id": "",
