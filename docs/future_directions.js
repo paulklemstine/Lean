@@ -2004,11 +2004,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The conjecture asserts that the algorithm runs in O(n^3) time for all instance sizes.",
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_2099",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18730v1",
+    "status": "available",
+    "timestamp": "2026-06-19T11:12:43.328427+00:00",
+    "title": "Time Complexity Claim"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every odd prime base B > 5, the length of the longest terminal cycle in the four-digit Kaprekar routine equals (B-1)/2 if and only if the multiplicative order of 2 modulo B is (B-1)/2.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2099",
+    "id": "fd_2100",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
@@ -2022,7 +2037,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2100",
+    "id": "fd_2101",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
@@ -2037,7 +2052,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2101",
+    "id": "fd_2102",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19677v1",
@@ -2052,7 +2067,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2102",
+    "id": "fd_2103",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19933v1",
@@ -2067,7 +2082,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2103",
+    "id": "fd_2104",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19573v1",
@@ -2081,7 +2096,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2104",
+    "id": "fd_2105",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19006v1",
@@ -2096,7 +2111,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2105",
+    "id": "fd_2106",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18956v1",
@@ -3054,21 +3069,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T23:11:17.377449+00:00",
     "title": "Two boundary facts of the prime crossword in"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Tropical Cryptography after Eigenvalue Additivity\n\nDerived from this cycle's findings (`Catalog/Tropical/TropicalMatrixPower.lean`,\n`Catalog/Tropical/TropicalDiscreteLog.lean`): tropical eigenvalues form a homomorphism\n`\u03bb(A^{\u2297m}) = m\u00b7\u03bb(A)`, which breaks the tropical discrete logarithm problem (TDLP) in\nclosed form off the boundary `\u03bb = 0`.\n\n## Conjecture 1 \u2014 Eigenvalue channel is *complete* for the TDLP\nFor a random tropical matrix `A` of size `n \u2265 10` with finite entries, the public power\n`B = A^{\u2297m}` always determines `m` exactly via `m = \u03bb(B)/\u03bb(A)`, except on a measure-zero\nset where `\u03bb(A) = 0`.\n- **The key insight is** that the tropical eigenvalue is a ring homomorphism from\n  (tropical exponentiation, `\u2297`) to (ordinary multiplication by the exponent), so the\n  one secret scalar `m` is linearly exposed \u2014 exactly the structure a one-way function\n  must lack.\n- **Why now?** We have formalized eigenvalue additivity and a closed-form recovery; the\n  remaining step is a genericity statement (almost-everywhere `\u03bb(A) \u2260 0`), which Mathlib's\n  measure-theory and the existing `WeightedDigraph` boundary results make tractable.\n\n## Conjecture 2 \u2014 Boundary `\u03bb = 0` is the *only* refuge, and it is degenerate\nAny tropical DH variant whose security survives must force every public matrix to have\nspectral value `0` (a tropical fixed point); but then `eigenzero_no_leak` plus\n`tdlp_boundary_no_leak` show the public power equals the input up to a global shift,\ncollapsing the key space.\n- **The key insight is** that the same homomorphism that leaks `m` when `\u03bb \u2260 0` makes the\n  scheme *trivial* when `\u03bb = 0`: additivity reads `m\u00b70 = 0`, so the power map is the\n  identity on the eigen-orbit.\n- **Why now?** Both halves are already formal \u2014 additivity here, no-leak in\n  `Tropical.EigenzeroNoLeak` \u2014 so the dichotomy \"either leaky or trivial\" can be stated\n  as a single theorem next cycle.\n\n## Conjecture 3 \u2014 Multi-eigenvalue (Perron) attacks tighten the bound\nWhen `A` has several tropical eigenvalues (one per critical cycle of its digraph), each\nyields an independent linear equation in `m`; the system is consistent and over-determined,\ngiving an error-correcting recovery of `m` even under bounded entry noise.\n- **The key insight is** that the critical-cycle spectrum of a tropical matrix is a\n  *vector* of homomorphic readouts of the same exponent, so redundancy makes the attack\n  robust rather than fragile.\n- **Why now?** `tropMatVecMul_iterate_eigen` already produces one linear readout; extending\n  it across the cycle-eigenvalues of `WeightedDigraph` is a finite combinatorial step.\n\n## Conjecture 4 \u2014 Non-power protocols inherit the weakness\nAny protocol whose public transcript is a tropical-linear image of a secret integer (e.g.\n`A^{\u2297m} \u2297 C`, semidirect-product tropical schemes) leaks that integer through the same\neigenvalue homomorphism applied to the dominant tropical block.\n- **The key insight is** that tropical-linearity (equivariance under the additive shift,\n  `tropMatVecMul_shift`) is preserved by composition, so the eigenvalue functional passes\n  through any tropical-affine wrapper.\n- **Why now?** Equivariance is already a lemma; composing it with `eigenvalue_additivity`\n  is the natural next theorem and would generalize the break beyond plain powers.\n\n## Conjecture 5 \u2014 Power-commutativity forbids hardness amplification\nBecause `(A^a)^b = (A^b)^a = A^{\u2297(ab)}` unconditionally (`tropMatPow_comm`), no\n\"nested-exponent\" tropical scheme can be harder than a single-exponent one: the exponent\ngroup is the commutative monoid `(\u2115, +)`, whose discrete log is trivial.\n- **The key insight is** that DH correctness and DH insecurity share a root cause \u2014 the\n  abelian exponent law \u2014 so the property that makes the protocol *work* is the property\n  that makes it *breakable*.\n- **Why now?** `tropMatPow_comm` is proved; formalizing the exponent monoid map\n  `m \u21a6 A^{\u2297m}` as a monoid homomorphism would make the no-amplification claim a one-line\n  corollary.\n",
-    "domains": [
-      "Algebra",
-      "Cryptography"
-    ],
-    "id": "fd_2106",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "0abb7f10",
-    "status": "available",
-    "timestamp": "2026-06-19T11:11:00.672511+00:00",
-    "title": "Derived from this cycle's findings (`Catalog/Tropical/TropicalMatrixPower.lean`,"
   },
   {
     "consumed_by_exp_id": "",
@@ -4084,6 +4084,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0004",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.490561+00:00",
+    "title": "The Library of Babel: Combinatorics of the Universal Library"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely \u2014 the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence \u2014 instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domains": [
       "Novelty",
@@ -4203,7 +4218,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b3d82bf4",
     "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
     "domains": [
       "Novelty",
@@ -4213,7 +4228,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.782446+00:00",
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
@@ -4323,7 +4338,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
   {
-    "consumed_by_exp_id": "a449aa2a",
+    "consumed_by_exp_id": "",
     "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
     "domains": [
       "Novelty",
@@ -4333,7 +4348,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T23:40:36.923091+00:00",
     "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
   }
