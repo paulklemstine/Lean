@@ -1,81 +1,230 @@
-# The Algebra of Impossible Subtraction: How Tropical Mathematics Could Secure the Quantum Future
+# The Silent Arithmetic: How "Min-Plus" Algebra Hides — and Sometimes Reveals — a Secret
 
-## A number system without negatives might be the last line of defense against quantum computers
+## A different way to add and multiply
 
-*By the Harmonic Research Team*
+Imagine a world where arithmetic has been quietly rewired. Instead of adding two
+numbers, you keep the **smaller** of them. Instead of multiplying, you **add**.
+In this world the number 3 "times" 5 is 8, and 3 "plus" 5 is 3. It sounds like a
+joke, but mathematicians take it seriously enough to give it a name: the
+**tropical** (or **min-plus**) semiring. The word "tropical" is a tribute to the
+Brazilian mathematician Imre Simon, who pioneered the subject; there is nothing
+hot about it beyond the name.
 
----
+Why on earth would anyone replace honest addition and multiplication with `min`
+and `+`? Because this strange arithmetic is the native language of the *shortest
+path*. If `A(i,k)` is the length of a road from city `i` to city `k`, and `v(k)`
+is the cost of finishing your journey from `k`, then the cheapest way to start at
+`i` is
 
-In the early 1960s, a Brazilian mathematician named Imre Simon discovered something peculiar. He was studying a number system where "addition" meant taking the minimum of two numbers, and "multiplication" meant ordinary addition. The number 5 "plus" 3 equaled 3. The number 7 "times" 2 equaled 9. It was mathematics through a funhouse mirror — familiar operations twisted into alien shapes.
+> the **minimum**, over all first stops `k`, of `A(i,k) + v(k)`.
 
-Simon called it the *tropical semiring*, reportedly named after the climate of Brazil. For decades, tropical mathematics was a curiosity — beautiful but seemingly impractical, the kind of thing that decorates the margins of algebraic geometry textbooks. Researchers proved elegant theorems about tropical curves and tropical varieties, marveling at how these strange objects mimicked their classical counterparts while defying intuition.
+That single expression — a minimum of sums — is exactly tropical
+matrix–vector multiplication. Highway planners, internet routers, and
+scheduling algorithms all secretly compute in the tropical semiring. In this
+article we write `A ⊗ v` for this operation, where
 
-Then the quantum computer arrived, and everything changed.
+> **(A ⊗ v)ᵢ = minₖ ( A(i,k) + v(k) ).**
 
-## The Subtraction Problem
+Multiplying two matrices works the same way: `(A ⊗ B)(i,j) = minₖ (A(i,k) +
+B(k,j))`, which finds the cheapest two-hop route from `i` to `j`.
 
-Modern cryptography — the invisible armor protecting every bank transaction, every encrypted message, every digital signature — rests on a simple principle: some mathematical operations are easy to do but hard to undo. Multiplying two large prime numbers takes milliseconds; finding those primes from their product could take centuries. This asymmetry is the foundation of RSA, the most widely deployed encryption system in history.
+## The dream of tropical cryptography
 
-But RSA's security depends on a deep structural fact: the integers form a *ring*. You can add, subtract, multiply, and (sometimes) divide. This rich algebraic structure is both RSA's strength and its Achilles' heel. Peter Shor showed in 1994 that a quantum computer could exploit this ring structure — specifically, the ability to subtract and find periodicity — to factor large numbers in polynomial time.
+Here is the seductive idea that motivates everything below. Ordinary
+cryptography — the padlock on your bank's website — rests on arithmetic that is
+*easy in one direction and hard to reverse*. Multiplying two large primes is
+quick; factoring their product back apart is, as far as we know, hopeless for a
+classical computer. But quantum computers threaten exactly this kind of problem,
+and the world is hunting for **post-quantum** alternatives whose hardness does
+not melt away on a quantum machine.
 
-Every major post-quantum cryptography proposal since then has tried to find new "hard problems" in different algebraic structures. Lattice-based cryptography uses high-dimensional geometry. Code-based cryptography uses error-correcting codes. Multivariate cryptography uses systems of polynomial equations. But they all share a common feature: they operate in structures where subtraction is possible.
+Tropical arithmetic is a tempting candidate. Computing `A ⊗ B` is fast: just
+`n³` additions and comparisons. Going *backwards* — recovering the factors `A`
+and `B` from their tropical product — is genuinely murky, because the product
+forgets information. In fact one can prove that **infinitely many different pairs
+of matrices share the same tropical product**: for any target `C` there are
+matrices `A, B, A', B'` with `A ⊗ B = C` and `A' ⊗ B' = C` but `A ≠ A'`. The
+forward map is many-to-one, so naive inversion is doomed. This is precisely the
+flavor a cryptographer wants from a "one-way function."
 
-What if subtraction itself were the vulnerability?
+The proposal that follows from this is a tropical version of the famous
+Diffie–Hellman key exchange. Pick a public matrix `A`. Alice secretly raises it
+to a tropical power `a` (multiply `A` by itself `a` times, tropically) and
+publishes `A⊗ᵃ`. Bob does the same with a secret `b` and publishes `A⊗ᵇ`. Each
+can then form the shared key `A⊗ᵃᵇ`. An eavesdropper who sees `A`, `A⊗ᵃ`, and
+`A⊗ᵇ` must recover a secret exponent — the **tropical discrete logarithm
+problem** — which is conjectured to be hard.
 
-## A World Without Negatives
+## The crack in the wall: eigenvalues
 
-In the tropical semiring, there are no negative numbers — not because we've decided to ignore them, but because the algebraic structure makes them *mathematically impossible*. This is not a design choice; it is a theorem.
+Every beautiful cryptographic dream needs a stress test, and the natural attack
+on the tropical discrete logarithm runs through **eigenvalues**.
 
-Here is why. In tropical arithmetic, "addition" is the minimum operation: a ⊕ b = min(a, b). The "zero" element — the identity for addition — is infinity (∞), because min(a, ∞) = a for any a. Now, for a number to have an additive inverse -a, we would need min(a, -a) = ∞. But the minimum of two finite numbers is always finite. So no finite number has an inverse.
+In ordinary linear algebra, an eigenvector `v` of a matrix `A` is a special
+direction that the matrix merely stretches: `A v = λ v`, where the number `λ` is
+the eigenvalue. Tropical algebra has its own version. A pair `(λ, v)` is a
+**tropical eigenpair** of `A` when applying the matrix simply adds the same
+constant `λ` to every coordinate of `v`:
 
-This is not a bug. It is a feature — and potentially the most important feature in post-quantum cryptography.
+> **(A ⊗ v)ᵢ = vᵢ + λ for every i.**
 
-When Shor's algorithm attacks RSA, it exploits the ability to compute differences and find periodic structures. When lattice attacks reduce lattice problems, they use the vector space structure that comes from having additive inverses. But in the tropical world, these attacks have no purchase. There is nothing to subtract, no periodicity to find, no linear algebra to exploit.
+Here `λ` plays the role of a per-step "drift." And crucially, tropical
+eigenvalues are *additive under powers*: the eigenvalue of `A⊗ᵏ` is exactly `k`
+times the eigenvalue of `A`. If you can read off `λ(A⊗ᵏ)` and you know `λ(A)`,
+you simply divide:
 
-## Matrices That Remember Shortest Paths
+> **k = λ(A⊗ᵏ) / λ(A).**
 
-The real power of tropical mathematics emerges when you build matrices. A tropical matrix A acts on vectors by the rule: (A ⊗ v)_i = min_j(A_{ij} + v_j). If you think of A as a weighted directed graph, where A_{ij} is the weight of the edge from node j to node i, then tropical matrix-vector multiplication computes the shortest one-hop path from any node to node i.
+The secret exponent falls out in one step. The eavesdropper wins — *provided the
+eigenvalue is not zero.* The entire security of the scheme balances on the
+knife-edge value `λ = 0`. Understanding that boundary, rigorously, is the heart
+of the mathematics we present here.
 
-This connection to shortest paths is not merely an analogy — it is an exact correspondence. The k-th tropical power A^⊗k computes the shortest k-hop paths. The tropical Kleene star A* = I ⊕ A ⊕ A² ⊕ ... computes all-pairs shortest paths with no hop limit. This is precisely the Floyd-Warshall algorithm, rewritten as linear algebra over the tropical semiring.
+## Measuring the leak: the tropical residual
 
-Now consider the following cryptographic protocol. Alice and Bob agree on a public tropical matrix G. Alice chooses a secret integer a and computes G^⊗a (the a-th tropical power). Bob chooses a secret integer b and computes G^⊗b. They exchange these public values. Alice computes (G^⊗b)^⊗a = G^⊗(ba), and Bob computes (G^⊗a)^⊗b = G^⊗(ab). Since ab = ba, they arrive at the same shared secret.
+To talk precisely about what an attacker can *measure*, we need an honest notion
+of subtraction. Tropical algebra famously has none — there is no number you can
+"min" with 5 to undo it. But there is one place where ordinary subtraction
+carries real meaning: the **residual**. Given a matrix `A` and a vector `v`,
+define, coordinate by coordinate,
 
-This is the tropical Diffie-Hellman key exchange, and its correctness follows from a beautiful algebraic fact: all powers of a single tropical matrix commute, even though tropical matrix multiplication is not commutative in general. The cyclic submonoid generated by any matrix is always abelian.
+> **tropResidual(A, v)ᵢ = (A ⊗ v)ᵢ − vᵢ.**
 
-## The Stagnation Phenomenon
+This is the gap between where the tropical map sends coordinate `i` and where
+that coordinate started. It is exactly the signal a side-channel attacker might
+hope to read off a running tropical computation. And it has a clean meaning.
 
-But does this actually provide security? The answer is subtle and reveals a deep structural phenomenon that we call *power stagnation*.
+**Result 1 (the residual *is* the eigenvalue).** If `(λ, v)` is a tropical
+eigenpair of `A`, then the residual equals `λ` at *every single coordinate*:
+`tropResidual(A, v)ᵢ = λ` for all `i`. (In the formal development this is the
+theorem `tropResidual_eq_eigenvalue`.)
 
-Consider a tropical matrix with bounded entries — say, all entries between 0 and 100. As you take higher and higher powers, the entries can only decrease (because each power takes the minimum over more paths). Eventually, the entries cannot decrease further — they hit a floor determined by the shortest cycles in the corresponding graph.
+This is wonderful and dangerous at once. Wonderful, because it confirms the
+attack: the eigenvalue is sitting in plain sight, identical in every coordinate,
+ready to be averaged out of noisy measurements. Dangerous for the same reason.
+An immediate consequence is that **the eigenvalue is uniquely determined by the
+eigenvector**: if both `(λ, v)` and `(μ, v)` are eigenpairs of the same `A` with
+the same `v`, then `λ = μ` (the theorem `tropical_eigenvalue_unique`). There is
+no ambiguity for the attacker to hide behind — except at the boundary.
 
-We proved a precise version of this: if A^k = A^(k+1) for any k, then A^m = A^k for ALL m ≥ k. Once tropical powers stagnate, they never change again. This is not a gradual convergence — it is an exact equality, a sudden crystallization of the matrix into its permanent form.
+## The boundary theorem: why zero is special
 
-This stagnation has profound implications for security. If the stagnation index k₀ is small (say, less than 2^128), then an attacker can simply compute powers until stagnation and determine the secret exponent by binary search. Security requires that the orbit — the set {G, G², G³, ...} — remain large within the security parameter range.
+So when is `λ = 0`? First, a clean characterization.
 
-## Diagonal Vulnerability and the Eigenvalue Attack
+**Result 2 (zero means "fixed").** A pair `(0, v)` is a tropical eigenpair of `A`
+exactly when `v` is a **fixed point** of the tropical map — that is, `A ⊗ v = v`,
+unchanged in every coordinate (`eigenzero_iff_fixed`). Zero drift means the
+vector simply stands still under repeated application of `A`. In fact, applying
+`A` any number of times `k` leaves it exactly where it was: `A⊗ᵏ ⊗ v = v`
+(`eigenzero_iterate`).
 
-Perhaps the most surprising result of our investigation concerns diagonal matrices. For a diagonal tropical matrix D with entries d₁, d₂, ..., d_n, the k-th power is simply the diagonal matrix with entries k·d₁, k·d₂, ..., k·d_n (using ordinary multiplication, since tropical "multiplication" is ordinary addition).
+Now the punchline, the result that gives this package its name.
 
-This means that for diagonal matrices, the tropical discrete logarithm problem is trivially solvable: given D and D^k, simply read any non-infinity diagonal entry d_i and its powered version k·d_i, then compute k = (k·d_i) / d_i.
+**Main Result (eigenzero_no_leak).** *At the boundary eigenvalue `λ = 0`, the
+tropical residual vanishes identically.* For a fixed-point eigenvector `v`,
 
-Even more concerning: conjugation doesn't help. We proved that (P·D·P⁻¹)^k = P·D^k·P⁻¹ — changing the basis does not hide the power structure. Any attack on the diagonal case transfers to the conjugated case.
+> **tropResidual(A, v)ᵢ = 0 for every coordinate i.**
 
-This means that secure tropical cryptography must use matrices that are genuinely far from diagonal — matrices whose tropical eigenstructure is complex enough to resist spectral attacks.
+The residual signal — the very quantity an eavesdropper measures to extract the
+eigenvalue — is flat zero. It carries **no positional information** about the
+secret vector `v` whatsoever. The attack that worked so beautifully when `λ ≠ 0`
+collapses to reading off a column of zeros. This is the formal statement of the
+intuition that `λ = 0` is the secure regime: there, the eigenvalue channel is
+silent.
 
-## The Geometry of Security
+Why should `λ = 0` be a *natural* place to land, rather than a contrived corner?
+Because of the geometry of graphs.
 
-What makes tropical cryptography fascinating is not just what it prohibits (subtraction, periodicity-based attacks) but what it enables: a direct geometric interpretation of security.
+**Result 3 (the boundary theorem).** Consider a weighted directed graph with two
+mild, realistic properties: all edge weights are non-negative (distances are not
+negative), and every vertex has a zero-weight self-loop (staying put costs
+nothing). For such a graph, *every* tropical eigenvalue satisfies
 
-The tropical Kleene prefix sum K_m = I ⊕ A ⊕ A² ⊕ ... ⊕ A^m is monotone decreasing — each additional term can only improve (decrease) entries. This monotonicity creates a natural "security landscape" where the hardness of the discrete log problem corresponds to the geometric complexity of the shortest-path structure in the underlying graph.
+> **λ ≤ 0.**
 
-We also established that the tropical semiring has the structure of a complete lattice — tropical addition is exactly the lattice meet (greatest lower bound). This connects tropical cryptography to order theory and opens the door to security proofs based on lattice-theoretic arguments, even though tropical cryptography is explicitly *not* lattice-based in the sense of lattice-based cryptography like NTRU or Kyber.
+This is the theorem `digraph_eigenvalue_nonpos`, and its proof is almost a
+one-liner once you have the residual: the zero self-loop guarantees that `(A ⊗
+v)ᵢ ≤ vᵢ` (you can always "stay home"), so the residual is never positive
+(`digraph_residual_nonpos`), and the residual equals the eigenvalue. The
+spectrum of any such graph lives entirely at or below zero, with `λ = 0` as its
+ceiling — the tropical analogue of a bound on the spectral radius.
 
-## The Road Ahead
+And that ceiling is genuinely reached.
 
-Tropical cryptography is not ready for deployment. The parameter space needs extensive analysis, the stagnation phenomenon needs sharper bounds, and resistance to quantum algorithms beyond Grover's search needs rigorous proof. But the mathematical foundations are remarkably clean: a complete semiring with no additive inverses, efficient evaluation via repeated squaring, and a rich geometric structure that provides multiple avenues for security analysis.
+**Result 4 (the ceiling is attained).** Every *constant* vector — say `v = (c, c,
+…, c)` — is a tropical eigenvector of such a graph, with eigenvalue exactly `0`
+(`digraph_eigenzero_const`). Constant vectors stand perfectly still: from any
+city, the cheapest move is the free self-loop, so nothing changes.
 
-What excites researchers most is the novelty of the hardness assumption. Lattice-based, code-based, and multivariate cryptography all share structural similarities with problems that have been studied for decades. Tropical matrix problems come from a different mathematical universe entirely — a universe where the fundamental operation is optimization rather than arithmetic, where paths matter more than products, and where the absence of subtraction is not a limitation but a shield.
+Put these together and a clear picture emerges. Graph-based tropical systems
+naturally accumulate eigenvectors at the `λ = 0` boundary, and precisely there
+the eigenvalue side-channel goes dark. The dangerous, easily-attacked regime is
+`λ < 0`, where the drift is measurable; the boundary `λ = 0` is the one place the
+leak shuts off.
 
-In a world racing to build quantum computers capable of breaking today's encryption, we need as many mathematically distinct security foundations as possible. The tropical semiring — born from a Brazilian mathematician's curiosity about a strange number system — may turn out to be exactly the kind of alien mathematics we need.
+## Why a global shift makes the secret slippery
 
-After all, sometimes the strongest defense is built not from what you can do, but from what you cannot.
+There is one more structural fact that sharpens the security story. Tropical maps
+are **equivariant under a global shift**: if you add the same constant `c` to
+every coordinate of `v`, the output simply shifts by `c` too — `A ⊗ (v + c) = (A
+⊗ v) + c`. (This is `tropMatVecMul_shift`, the tropical version of "scaling the
+input scales the output.")
+
+The consequence is that an eigenvector is never pinned down to a single vector;
+it is only ever determined *up to a global offset*. The whole sliding family `v,
+v+1, v+2, …` behaves identically. At the boundary `λ = 0` this combines with the
+no-leak theorem to make any two boundary eigenvectors — and any shifted copies of
+them — produce the *identical* (zero) residual signature. An adversary measuring
+residuals cannot tell them apart. The accompanying formal development pushes this
+all the way to the min-plus hash function, showing that the hash of a boundary
+eigenvector leaks **at most** the single global offset constant and nothing about
+the secret's shape.
+
+## A concrete miniature
+
+Let's make this tangible with a tiny three-city example. Put the weight matrix
+
+```
+        to A   to B   to C
+from A    0      2      5
+from B    3      0      4
+from C    6      1      0
+```
+
+Notice the zeros down the diagonal: free self-loops, as required. All other
+weights are positive. Now take the constant vector `v = (7, 7, 7)`.
+
+Apply the tropical map. For city A:
+`(A ⊗ v)_A = min(0+7, 2+7, 5+7) = min(7, 9, 12) = 7`.
+For city B: `min(3+7, 0+7, 4+7) = min(10, 7, 11) = 7`.
+For city C: `min(6+7, 1+7, 0+7) = min(13, 8, 7) = 7`.
+
+The output is `(7, 7, 7)` — unchanged. So `(0, v)` is an eigenpair, the residual
+is `(7−7, 7−7, 7−7) = (0, 0, 0)`, and the eigenvalue `λ = 0` is invisible in the
+signal. Exactly as the theorems predict. Try instead a *non-constant* vector and
+you will generally find a strictly negative residual that betrays a negative
+eigenvalue — the leaky regime.
+
+## What it all means
+
+The story this mathematics tells is not "tropical cryptography is broken" nor
+"tropical cryptography is safe." It is something more useful: a precise map of
+*where the danger lives*. The eigenvalue attack — divide the powered eigenvalue
+by the base eigenvalue to recover the secret exponent — is devastatingly
+effective whenever the eigenvalue is nonzero. The single point that defeats it is
+the boundary `λ = 0`, and there the leak provably vanishes. Because real
+graph-based constructions pile up eigenvectors at exactly that boundary, the
+boundary is not an exotic special case but the natural design target.
+
+For a would-be designer of post-quantum tropical schemes, the lesson is sharp:
+**engineer your secrets to live at the zero-eigenvalue boundary**, where the
+eigenvalue channel is silent — and understand that silence on that channel is
+*necessary* but not by itself *sufficient* for security. The harder questions —
+whether some other channel leaks, whether distinguishing exponents at the
+boundary can be reduced to an independently hard problem like tropical matrix
+factorization — are exactly where this line of research goes next.
+
+It is a small, beautiful instance of a recurring theme in mathematics: the most
+interesting behavior almost always happens at the boundary. Here the boundary is
+the value zero, the silence is a column of zeros, and the secret — for once —
+keeps its shape.

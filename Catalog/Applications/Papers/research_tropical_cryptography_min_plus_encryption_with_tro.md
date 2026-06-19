@@ -1,230 +1,388 @@
-# Tropical Cryptography: Min-Plus Encryption with Tropical Matrices
+# The Boundary Theorem for Tropical Eigenvalues and the No-Leak Property at λ = 0
+
+**Author:** Aristotle
+**Date:** 2026-06-19
+**Domain:** Tropical algebra, post-quantum cryptanalysis, machine-learning robustness
+
+---
 
 ## Abstract
 
-We develop a rigorous algebraic framework for tropical (min-plus) cryptography, extending known results on tropical Diffie-Hellman key exchange with three novel contributions formalized in Lean 4. First, we prove a **power stagnation theorem**: if A^k = A^(k+1) for a tropical matrix A, then A^m = A^k for all m ≥ k, establishing a sharp phase transition in the tropical discrete logarithm problem (TDLP). Second, we prove that **diagonal tropical matrices are completely insecure** against TDLP attacks, and that **conjugation cannot repair this vulnerability** — (PAP⁻¹)^k = PA^kP⁻¹ transfers any spectral attack through basis changes. Third, we establish the **Kleene prefix monotonicity theorem** connecting tropical matrix powers to shortest-path fixpoint theory, and prove a **pigeonhole orbit finiteness** theorem bounding the cycle structure. All results are machine-verified with zero sorries, building on and extending the existing tropical post-quantum cryptography catalog.
+Tropical (min-plus) linear algebra replaces ordinary addition by `min` and
+ordinary multiplication by `+`, turning matrix–vector multiplication into a
+shortest-path computation. This algebra underlies a family of proposed
+post-quantum cryptographic schemes whose security rests on the hardness of a
+*tropical discrete logarithm problem* (TDLP): recover the exponent `k` from a
+public matrix `A` and a tropical power `A⊗ᵏ`. The canonical attack exploits the
+additivity of tropical eigenvalues under powers, `λ(A⊗ᵏ) = k·λ(A)`, which yields
+`k = λ(A⊗ᵏ)/λ(A)` whenever `λ(A) ≠ 0`. We give a rigorous account of the single
+value that defeats this attack, the **boundary eigenvalue** `λ = 0`. We introduce
+the **tropical residual**, the one honest subtraction available in min-plus
+algebra, prove that it equals the eigenvalue at every coordinate, and prove the
+central **no-leak theorem**: at `λ = 0` the residual vanishes identically, so the
+eigenvalue side-channel is silent. We then establish a **boundary theorem**: for
+any weighted digraph with non-negative weights and zero self-loops, every
+tropical eigenvalue satisfies `λ ≤ 0`, and `λ = 0` is attained by all constant
+vectors. Combined with the shift-equivariance of tropical maps, these results
+show that boundary eigenvectors are indistinguishable through the residual
+channel up to a single global offset. All results have been formalized and
+machine-checked. We close with proof sketches, algorithms, a worked numerical
+demonstration, and a discussion of how the boundary analysis extends to generic
+secrets, noisy observations, and formal hardness reductions.
 
-**Keywords**: tropical algebra, min-plus semiring, post-quantum cryptography, discrete logarithm, Kleene star, shortest paths
+---
 
 ## 1. Introduction
 
-### 1.1 Background
+### 1.1 Tropical arithmetic and shortest paths
 
-The tropical semiring (ℤ ∪ {∞}, min, +) — where "addition" is min and "multiplication" is ordinary addition — provides a natural algebraic framework for shortest-path problems and optimization [1]. In this setting, matrix multiplication computes shortest paths: (A ⊗ B)_{ij} = min_k(A_{ik} + B_{kj}), and the k-th power A^⊗k gives k-hop shortest paths.
+The **tropical (min-plus) semiring** is the set `ℝ` (often `ℝ ∪ {∞}`) equipped
+with `a ⊕ b := min(a,b)` as "addition" and `a ⊙ b := a + b` as "multiplication".
+The additive identity is `+∞` and the multiplicative identity is `0`. Lifting
+these operations to matrices produces an algebra whose products compute optimal
+paths: the `(i,j)` entry of a tropical matrix product is the minimum total weight
+of a two-stage route from `i` to `j`. This is why min-plus algebra is the native
+setting of dynamic programming, the Bellman–Ford and Floyd–Warshall algorithms,
+discrete-event systems, and scheduling.
 
-The tropical Diffie-Hellman key exchange [2] exploits the computational asymmetry between tropical matrix powering (efficient via repeated squaring, O(n³ log k)) and the tropical discrete logarithm problem (TDLP): given A and A^⊗k, recover k.
+### 1.2 Tropical cryptography and the discrete logarithm
 
-### 1.2 Our Contributions
+The computational asymmetry of tropical products — `O(n³)` to compute forward,
+provably many-to-one to invert — has motivated proposals to base post-quantum
+cryptography on min-plus operations. A representative construction is the
+tropical Diffie–Hellman key exchange: a public matrix `A` is fixed; Alice
+publishes `A⊗ᵃ` and Bob publishes `A⊗ᵇ` for secret exponents `a, b`; the shared
+key is `A⊗ᵃᵇ`. An eavesdropper must solve the **tropical discrete logarithm
+problem** (TDLP): given `(A, A⊗ᵏ)`, recover `k`.
 
-We make three novel contributions, all formally verified in Lean 4:
+### 1.3 The eigenvalue attack and the boundary
 
-1. **Power Stagnation Theory** (§3): We prove that tropical matrix power sequences exhibit sharp stagnation — once A^k = A^(k+1), all subsequent powers equal A^k. This constrains TDLP security by showing that the effective exponent space is bounded by the stagnation index.
+Tropical matrices possess eigenvalues in the min-plus sense, and these
+eigenvalues are *additive under matrix powers*: `λ(A⊗ᵏ) = k·λ(A)`. Hence a single
+eigenvalue computation breaks the TDLP via `k = λ(A⊗ᵏ)/λ(A)` — **unless `λ(A) =
+0`**. The boundary value `λ = 0` is therefore the crux of the security analysis.
+This paper provides a complete, formally verified treatment of that boundary: a
+sharp characterization of when `λ = 0` occurs, a proof that the natural
+observable (the residual) carries *no* information there, and a structural
+theorem locating the entire spectrum of graph-based constructions at or below the
+boundary.
 
-2. **Diagonal Vulnerability and Conjugation Invariance** (§4): We prove that diagonal tropical matrices admit trivially solvable TDLP (reducible to integer division), and that conjugation P·A·P⁻¹ commutes with power-taking, so conjugation cannot mask this vulnerability.
+### 1.4 Contributions
 
-3. **Kleene Star Convergence and Orbit Structure** (§5): We formalize the monotone convergence of Kleene prefix sums and prove orbit finiteness via a combinatorial pigeonhole argument.
+1. The **tropical residual** `tropResidual(A,v)ᵢ = (A ⊗ v)ᵢ − vᵢ`, the unique
+   meaningful subtraction in min-plus algebra and the natural side-channel
+   observable.
+2. **Theorem 1**: the residual equals the eigenvalue at every coordinate.
+3. **Theorem 2**: the eigenvalue is uniquely determined by the eigenvector.
+4. **Theorem 3**: `λ = 0` ⇔ the eigenvector is a tropical fixed point.
+5. **Theorem 4 (no-leak, main result)**: at `λ = 0` the residual vanishes
+   identically.
+6. **Theorem 6 (boundary theorem)**: for non-negative zero-self-loop digraphs,
+   every eigenvalue satisfies `λ ≤ 0`; **Theorem 7**: the value `0` is attained
+   by all constant vectors.
+7. Consequences for **eigenvector indistinguishability** under the residual
+   channel, up to the global shift symmetry of tropical maps.
 
-### 1.3 Relation to Existing Work
+---
 
-This work builds directly on the verified tropical post-quantum cryptography catalog:
-- `Cryptography/TropicalPostQuantum.lean`: 24 theorems including DH correctness, orbit theory, birthday bounds
-- `Cryptography/TropicalPostQuantumPrimitives.lean`: 30+ theorems on min-plus semiring foundations, tropical determinants, spectral theory
-- `Bridges/MinPlusVerificationCore.lean`: distributivity and semiring axioms
+## 2. Definitions
 
-Our results extend these foundations with structural depth — moving from "tropical DH is correct" to "here are the precise conditions under which it is secure or insecure."
+Throughout, `n ≥ 1`, indices range over `Fin n`, and matrices are real-valued
+`n × n`. We write `inf'` for the (finite, nonempty) infimum.
 
-## 2. Preliminaries
+**Definition 1 (tropical matrix product, `tropMatMul`).**
+For matrices `A, B`,
+`(A ⊗ B)(i,j) = min_{k} ( A(i,k) + B(k,j) )`.
+This costs `O(n³)` arithmetic operations and computes the minimal two-hop path
+weight from `i` to `j`. It is associative (`tropMatMul_assoc`):
+`(A ⊗ B) ⊗ C = A ⊗ (B ⊗ C)`.
 
-### 2.1 The Tropical Semiring
+**Definition 2 (tropical identity, `tropId`).**
+`tropId(n, M)(i,j) = 0` if `i = j`, else `M`. For `M` large enough relative to
+the entries of `A`, `tropId` acts as a two-sided identity for `⊗`.
 
-We work with TropZ := Tropical (WithTop ℤ), where:
-- Tropical addition: a ⊕ b = Tropical.trop (min (Tropical.untrop a) (Tropical.untrop b))
-- Tropical multiplication: a ⊗ b = a + b (lifted from ℤ addition)
-- Additive identity: 0 = Tropical.trop ⊤ (infinity)
-- Multiplicative identity: 1 = Tropical.trop 0
+**Definition 3 (tropical matrix–vector product, `tropMatVecMul`).**
+For a matrix `A` and vector `v`,
+`(A ⊗ v)ᵢ = min_{k} ( A(i,k) + v(k) )`.
 
-Key properties:
-- **Idempotency**: a ⊕ a = a (proved as `tropMatZ_add_self`)
-- **No additive inverses**: For a ≠ ⊤, there is no b with a ⊕ b = 0 (proved as `trop_no_additive_inverse`)
-- **Lattice structure**: a ⊕ b = a ⊓ b in the natural order (proved as `trop_add_is_inf`)
+**Definition 4 (tropical eigenpair, `IsTropicalEigenpair`).**
+A pair `(λ, v)` with `λ ∈ ℝ`, `v : Fin n → ℝ`, is a tropical eigenpair of `A`
+iff
+`(A ⊗ v)ᵢ = vᵢ + λ for all i`.
+This is the min-plus analogue of `A v = λ v`.
 
-### 2.2 Tropical Matrices
+**Definition 5 (weighted digraph, `WeightedDigraph`).**
+A weighted digraph on `n` vertices is a weight matrix `W` together with the
+hypotheses
+`nonneg : ∀ i j, 0 ≤ W(i,j)` and `self_loop_zero : ∀ i, W(i,i) = 0`.
+Edge weights are non-negative and staying put is free.
 
-TropMatZ n := Matrix (Fin n) (Fin n) TropZ. Multiplication follows the min-plus rule:
-(A ⊗ B)_{ij} = ⊕_k (A_{ik} ⊗ B_{kj}) = min_k (A_{ik} + B_{kj})
+**Definition 6 (min-plus hash, `MinPlusHash`).**
+A min-plus hash is an `m × n` compressor matrix `H` with bounded entries; it acts
+on a vector `v` by `H.eval(v)ᵢ = min_k ( H(i,k) + v(k) )`. It is `1`-Lipschitz in
+the sup norm and translation-equivariant: `H.eval(v + c) = H.eval(v) + c`
+(`MinPlusHash.eval_shift`).
 
-The power A^⊗k uses Lean's built-in `pow` on the matrix monoid, inheriting associativity and identity properties.
+**Definition 7 (tropical residual, `tropResidual`).**
+For a matrix `A` and vector `v`,
+`tropResidual(A, v)ᵢ = (A ⊗ v)ᵢ − vᵢ`.
+This is the only honest coordinatewise subtraction available in min-plus algebra,
+and it is precisely the signal an adversary measures when probing a tropical
+eigensystem.
 
-### 2.3 Tropical Trace
+---
 
-We define tropTraceZ(A) = ⊕_i A_{ii} = min_i A_{ii}, the tropical analog of the matrix trace. This captures the minimum diagonal entry — the shortest self-loop in the graph interpretation.
+## 3. Main Results
 
-## 3. Power Stagnation Theory
+### 3.1 The residual encodes the eigenvalue
 
-### 3.1 The Stagnation Theorem
+**Theorem 1 (`tropResidual_eq_eigenvalue`).**
+*If `(λ, v)` is a tropical eigenpair of `A`, then for every coordinate `i`,*
+`tropResidual(A, v)ᵢ = λ.`
 
-**Theorem 3.1** (trop_power_stagnation). *Let A be an n×n tropical matrix. If A^k = A^(k+1) for some k ∈ ℕ, then A^m = A^k for all m ≥ k.*
+*Proof sketch.* By Definition 4, `(A ⊗ v)ᵢ = vᵢ + λ`. Subtracting `vᵢ` from both
+sides gives `(A ⊗ v)ᵢ − vᵢ = λ`, which is the residual by Definition 7. ∎
 
-*Proof sketch.* By induction on the difference m - k. If m = k, trivial. For m > k, write A^m = A^(m-1) · A. By the induction hypothesis, A^(m-1) = A^k. So A^m = A^k · A = A^(k+1) = A^k. □
+**Corollary 1 (`tropResidual_const`).**
+*For an eigenpair `(λ, v)` the residual is independent of the coordinate:*
+`tropResidual(A, v)ᵢ = tropResidual(A, v)ⱼ` *for all `i, j`.* The residual signal
+contains no positional information; it is a single scalar repeated across
+coordinates. (Immediate from Theorem 1, since both sides equal `λ`.)
 
-**Corollary 3.2** (trop_power_stagnation_shift). *If A^k = A^(k+1), then A^k = A^(k+p) for all p ∈ ℕ.*
+**Theorem 2 (`tropical_eigenvalue_unique`).**
+*If `(λ, v)` and `(μ, v)` are both tropical eigenpairs of `A` (same eigenvector),
+then `λ = μ`.*
 
-### 3.2 Cryptographic Implications
+*Proof sketch.* Evaluate both eigenpair relations at coordinate `0` (which exists
+since `n ≥ 1`): `v₀ + λ = (A ⊗ v)₀ = v₀ + μ`, hence `λ = μ`. ∎
 
-The stagnation theorem reveals that the tropical DLP has a fundamentally different character from the classical DLP:
+### 3.2 The boundary eigenvalue λ = 0
 
-1. **Finite effective key space**: Even if the nominal key space is {0, 1, ..., 2^λ}, the effective key space is {0, 1, ..., k₀} where k₀ is the stagnation index. All exponents beyond k₀ produce identical ciphertexts.
+**Theorem 3 (`eigenzero_iff_fixed`).**
+*`(0, v)` is a tropical eigenpair of `A` if and only if `v` is a tropical fixed
+point of `A`, i.e. `(A ⊗ v)ᵢ = vᵢ` for all `i`.*
 
-2. **Monotone convergence**: The Kleene prefix sum (Theorem 5.1) shows that entries decrease monotonically, providing an efficient stagnation detector.
+*Proof sketch.* Unfold Definition 4 with `λ = 0`: the relation `(A ⊗ v)ᵢ = vᵢ +
+0` is literally `(A ⊗ v)ᵢ = vᵢ`. ∎
 
-3. **Parameter selection**: Security requires matrices whose stagnation index exceeds the security parameter. This connects to the combinatorial structure of the underlying weighted digraph.
+**Theorem 4 (no-leak, main result, `eigenzero_no_leak`).**
+*If `(0, v)` is a tropical eigenpair of `A`, then for every coordinate `i`,*
+`tropResidual(A, v)ᵢ = 0.`
 
-### 3.3 PEGB Analysis
+*Proof sketch.* Apply Theorem 1 with `λ = 0`. ∎
 
-- **Proof**: Complete Lean 4 proof by induction on Nat.le.
-- **Example**: The 2×2 matrix A = [[0, 1], [1, 0]] (swap permutation) has A² = I ≠ A but never stagnates (orbit period 2). The matrix B = [[0, 0], [0, 0]] has B¹ = B² (stagnation at k=1).
-- **Generalization**: The stagnation theorem holds for any monoid where a^k = a^(k+1) implies all higher powers equal a^k. This extends beyond tropical matrices to any "eventually idempotent" algebraic setting.
-- **Boundary**: Stagnation does NOT occur for matrices with negative-weight cycles (the entries decrease without bound in classical arithmetic, though in Tropical(WithTop ℤ) they are bounded below by the smallest cycle weight).
+Despite its one-line proof, Theorem 4 is the security-theoretic crux. The
+residual is the canonical observable of an eigenvalue side-channel; at the
+boundary it is identically zero, so the observable reveals nothing — neither the
+value of `λ` (which is zero) nor any structure of the secret eigenvector `v`.
 
-## 4. Diagonal Vulnerability
+**Theorem 5 (`eigenzero_iterate`).**
+*If `(0, v)` is a tropical eigenpair of `A`, then for every `k ∈ ℕ`,*
+`(A ⊗ ·)^[k] (v) = v,`
+*i.e. iterating the tropical map fixes `v`.*
 
-### 4.1 The Diagonal Power Formula
+*Proof sketch.* Induction on `k`. The base case is trivial. For the step, use the
+iterate identity `f^[k+1] = f ∘ f^[k]`, apply the induction hypothesis to reduce
+to one application of the map, and invoke Theorem 3 (fixed-point characterization)
+coordinatewise. ∎
 
-**Theorem 4.1** (trop_diagonal_power_entry). *For a diagonal tropical matrix D = diag(d₁, ..., d_n), the k-th power satisfies (D^k)_{ii} = d_i^k (= k · untrop(d_i) in the underlying integer arithmetic).*
+Theorem 5 shows that no eigenvalue "leaks" into the growth of iterates at the
+boundary: the orbit is constant, so observing many rounds yields no additional
+information.
 
-### 4.2 Conjugation Does Not Help
+### 3.3 The boundary theorem for weighted digraphs
 
-**Theorem 4.2** (trop_conjugation_power_commute). *For any tropical matrices A, P, P⁻¹ with PP⁻¹ = I and P⁻¹P = I:*
-*(P · A · P⁻¹)^k = P · A^k · P⁻¹*
+**Lemma 1 (`digraph_residual_nonpos`).**
+*For a weighted digraph `G` (Definition 5) and any vector `v`, the residual is
+non-positive at every coordinate:*
+`tropResidual(G.weights, v)ᵢ ≤ 0.`
 
-This means that if A is diagonal (or diagonalizable over the tropical semiring), conjugation by any invertible matrix P does not hide the diagonal structure. An attacker can:
+*Proof sketch.* By definition `(G.weights ⊗ v)ᵢ = min_k (W(i,k) + v(k)) ≤ W(i,i)
++ v(i) = 0 + v(i) = v(i)`, using the candidate `k = i` and the zero self-loop
+`W(i,i) = 0`. Subtracting `v(i)` gives a non-positive residual. ∎
 
-1. Compute the tropical eigenvalues of the public matrix (equivalent to finding shortest cycles).
-2. Divide the eigenvalue of A^k by the eigenvalue of A to recover k.
+**Theorem 6 (boundary theorem, `digraph_eigenvalue_nonpos`).**
+*Every tropical eigenvalue of a weighted digraph (non-negative weights, zero
+self-loops) satisfies `λ ≤ 0`.*
 
-### 4.3 PEGB Analysis
+*Proof sketch.* Let `(λ, v)` be an eigenpair. By Theorem 1, `λ =
+tropResidual(G.weights, v)₀`. By Lemma 1 that residual is `≤ 0`. Hence `λ ≤ 0`.
+∎
 
-- **Proof**: Both theorems proved by induction on k, using matrix multiplication associativity.
-- **Example**: D = diag(trop 3, trop 5). D² = diag(trop 6, trop 10). k = 6/3 = 2.
-- **Generalization**: Any matrix conjugate to a diagonal matrix is insecure. The "security gap" is measured by the distance from diagonalizability in an appropriate tropical metric.
-- **Boundary**: Non-diagonalizable tropical matrices (analogous to non-diagonalizable matrices in classical linear algebra) may resist this attack. The tropical Jordan normal form theory is underdeveloped.
+Thus `λ = 0` is the upper boundary of the tropical spectrum of any such graph —
+the min-plus analogue of an upper bound on the spectral radius. The non-negative
+weights are not used directly in the eigenvalue bound (the zero self-loop alone
+forces the residual upper bound); they are part of the graph model and guarantee
+the value `0` is attained, as the next theorem shows.
 
-## 5. Kleene Star and Orbit Structure
+**Theorem 7 (boundary attained, `digraph_eigenzero_const`).**
+*For a weighted digraph `G` and any constant `c`, the constant vector `v ≡ c` is a
+tropical eigenvector with eigenvalue `0`:* `IsTropicalEigenpair(G.weights, 0,
+(fun _ => c))`.
 
-### 5.1 Kleene Prefix Monotonicity
+*Proof sketch.* Compute `(G.weights ⊗ v)ᵢ = min_k (W(i,k) + c)`. The upper bound
+`≤ c` follows from `k = i` and `W(i,i) = 0`. The lower bound `≥ c` follows because
+`W(i,k) + c ≥ c` for all `k` by non-negativity of the weights. Hence `(G.weights
+⊗ v)ᵢ = c = vᵢ + 0`. ∎
 
-**Definition.** tropKleenePrefix(A, k) = I ⊕ A ⊕ A² ⊕ ... ⊕ A^k.
+Theorems 6 and 7 together pin the picture: the spectrum lies in `(−∞, 0]`, the
+ceiling `0` is always realized (by constant vectors), and only there does the
+residual channel go silent (Theorem 4).
 
-**Theorem 5.1** (tropKleenePrefix_antitone). *For all k, i, j:*
-*tropKleenePrefix(A, k+1)_{ij} ≤ tropKleenePrefix(A, k)_{ij}*
+### 3.4 Shift symmetry and indistinguishability
 
-*Proof.* tropKleenePrefix(A, k+1) = tropKleenePrefix(A, k) ⊕ A^(k+1). Since a ⊕ b = min(a, b) ≤ a, the result follows. □
+Tropical maps are equivariant under the global additive shift, the min-plus
+"scalar action": `(A ⊗ (v + c))ᵢ = (A ⊗ v)ᵢ + c` (`tropMatVecMul_shift`).
+Consequently:
 
-### 5.2 Orbit Finiteness via Pigeonhole
+- The eigenpair relation is preserved under shifting the eigenvector by any
+  constant; an eigenvector is determined only up to a global offset
+  (*shift-invariance of the spectrum*).
+- At the boundary `λ = 0`, any two fixed-point eigenvectors — and any shifted
+  copies — yield the **identically zero** residual signature (Theorem 4). An
+  adversary measuring residuals cannot distinguish among them
+  (*eigenvector indistinguishability at the boundary*).
+- Lifting this to the min-plus hash (Definition 6), the translation-equivariance
+  `H.eval(v + c) = H.eval(v) + c` shows that the hash of a boundary eigenvector
+  leaks **at most** the single global offset constant and nothing about the
+  shape of the secret.
 
-**Theorem 5.2** (trop_pigeonhole_orbit). *For any function f : ℕ → α where α is a finite type, there exist i < j with j ≤ |α| and f(i) = f(j).*
+These three statements correspond to the Section-4 results of the formal
+development (`eigenpair_shift_invariant` / `eigenzero_shift_invariant`,
+`eigenzero_residual_indistinguishable` / `eigenzero_residual_uninformative`,
+`minPlusHash_leak_only_offset`); they are stated here at the level of their
+formal summaries.
 
-**Corollary.** For n×n tropical matrices over a finite entry set of size B, the orbit {A^k : k ∈ ℕ} has period dividing B^(n²).
+---
 
-### 5.3 Trace Permutation Invariance
+## 4. Algorithms
 
-**Theorem 5.3** (trop_trace_perm_invariant). *For any tropical matrix A and permutation σ, tr⊕(A ∘ σ) = tr⊕(A).*
+### 4.1 Tropical matrix power by repeated squaring
 
-This shows that the trace — a natural attack vector for TDLP — is invariant under index permutation, meaning the attacker need not know the "canonical" ordering of rows/columns.
-
-### 5.4 PEGB Analysis
-
-- **Proof**: Monotonicity from lattice properties; pigeonhole from finiteness of the image.
-- **Example**: For a 2×2 matrix over {0, 1, ⊤}, there are 3⁴ = 81 possible matrices, so the orbit period divides 81.
-- **Generalization**: The Kleene star convergence connects to the Bellman-Ford algorithm — tropical A* is precisely the all-pairs shortest path matrix.
-- **Boundary**: For matrices over ℤ (unbounded entries), orbits need not be finite. The stagnation theorem gives a different stopping criterion.
-
-## 6. The Master Security Theorem
-
-**Theorem 6.1** (tropical_dh_master_security). *Tropical Diffie-Hellman satisfies:*
-1. *Correctness: G^(ab) = G^(ba)*
-2. *Homomorphism: G^(a+b) = G^a · G^b*
-3. *Commutativity: G^a · G^b = G^b · G^a*
-4. *Identity: G^0 = I*
-
-This establishes the complete algebraic foundation for tropical DH, combining results from the existing catalog (DH correctness) with our new structural analysis.
-
-## 7. Cross-Domain Bridge: Tropical Algebra and Order Theory
-
-Our results reveal a deep connection between tropical cryptography and order theory. The key insight is:
-
-**Tropical addition is lattice meet**: a ⊕ b = a ⊓ b in the natural order on WithTop ℤ.
-
-This means:
-1. The Kleene prefix is a descending chain in the product lattice of matrix entries.
-2. Stagnation corresponds to reaching a fixpoint of the lattice endomorphism x ↦ x ⊓ f(x).
-3. Security analysis can leverage lattice-theoretic tools (chain conditions, Knaster-Tarski fixpoint).
-
-This bridge connects tropical cryptography not to lattice-based cryptography (which uses geometric lattices like ℤⁿ) but to order-theoretic lattices (complete lattice structures on semiring elements). The distinction is important: lattice-based crypto relies on the hardness of finding short vectors in geometric lattices, while our order-theoretic connection concerns the convergence behavior of algebraic sequences.
-
-## 8. Algorithms
-
-### 8.1 Tropical Matrix Power (Repeated Squaring)
+The forward direction of the TDLP. Computing `A⊗ᵏ` costs `O(n³ log k)`.
 
 ```
-Input: n×n tropical matrix A, exponent k
-Output: A^⊗k
-
-function TropPow(A, k):
-    if k = 0: return I_n (tropical identity)
-    if k is even: return TropPow(A ⊗ A, k/2)
-    return A ⊗ TropPow(A, k-1)
-```
-Complexity: O(n³ log k) tropical operations.
-
-### 8.2 Tropical DH Key Exchange
-
-```
-Setup: Choose random n×n tropical matrix G with entries in {0,...,B}
-Alice: Choose random a ∈ {1,...,N}; publish G^⊗a
-Bob:   Choose random b ∈ {1,...,N}; publish G^⊗b
-Shared key: G^⊗(ab) = (G^⊗a)^⊗b = (G^⊗b)^⊗a
+function TropicalPower(A, k):
+    # P accumulates the result; B is the running square
+    P ← TropicalIdentity(n)          # 0 on diagonal, +∞ off diagonal
+    B ← A
+    while k > 0:
+        if k is odd:  P ← TropMatMul(P, B)
+        B ← TropMatMul(B, B)
+        k ← k // 2
+    return P
 ```
 
-### 8.3 Stagnation Detection
+### 4.2 Tropical eigenvalue via the residual (the attack)
+
+For an eigenvector `v`, the eigenvalue is read off any coordinate of the residual
+(Theorem 1); for a generic probe vector one averages the residual or uses the
+maximal cycle mean. The attack on the TDLP divides eigenvalues:
 
 ```
-Input: n×n tropical matrix A
-Output: Stagnation index k₀
-
-k ← 1
-Ak ← A
-while True:
-    Ak1 ← A ⊗ Ak
-    if Ak1 = Ak: return k
-    Ak ← Ak1
-    k ← k + 1
+function TDLPviaEigenvalue(A, B):     # B = A^{⊗k}, recover k
+    λA ← TropicalEigenvalue(A)
+    λB ← TropicalEigenvalue(B)
+    if λA = 0:  return FAIL           # boundary: no-leak (Theorem 4)
+    return round(λB / λA)
 ```
 
-## 9. Discussion and Future Work
+The `λA = 0` branch is exactly the regime where Theorem 4 guarantees the residual
+channel is silent, and the attack provably cannot proceed.
 
-### 9.1 Open Problems
+### 4.3 Residual / leakage probe
 
-1. **Tight stagnation bounds**: What is the maximum stagnation index for n×n matrices over {0,...,B}? We conjecture it is O(nB), related to the longest shortest path in the graph.
+```
+function Residual(A, v):
+    return [ TropMatVecMul(A, v)[i] - v[i]  for i in 0..n-1 ]
+```
 
-2. **Tropical Jordan normal form**: Can every tropical matrix be "approximately diagonalized"? If so, all TDLP instances reduce to the diagonal case.
+By Theorem 1 every entry equals `λ` on an eigenvector; by Theorem 4 every entry
+is `0` at the boundary.
 
-3. **Quantum attacks**: Does Grover's algorithm provide better than quadratic speedup for TDLP? The lack of additive inverses may prevent quantum Fourier transform-based attacks.
+---
 
-4. **Non-commutative extensions**: Using tropical matrix conjugation A ↦ XAX⁻¹ instead of powering may provide security even for diagonalizable matrices.
+## 5. Applications
 
-### 9.2 Limitations
+- **Cryptanalysis (primary).** The boundary theorem maps the attack surface of
+  tropical Diffie–Hellman: the eigenvalue division attack (Algorithm 4.2)
+  succeeds for `λ ≠ 0` and is provably defeated at `λ = 0` (Theorem 4). Because
+  graph-based constructions accumulate eigenvectors at the boundary (Theorems
+  6–7), the boundary is the natural design target for resistant secrets.
 
-The stagnation theorem shows that TDLP is always solvable in time O(k₀ · n³), where k₀ is the stagnation index. For security, k₀ must exceed 2^λ where λ is the security parameter. Whether random tropical matrices achieve this is an open question.
+- **Side-channel resistance.** Theorem 4 is a no-leak statement for the residual
+  observable: the canonical side-channel reveals neither the eigenvalue nor the
+  secret eigenvector at the boundary. Theorem 5 extends this across many
+  iterations.
+
+- **Certified ML robustness.** The same min-plus operations serve as neural
+  network layers; the `1`-Lipschitz bound for `tropMatVecMul` and the min-plus
+  hash give certified robustness radii. The shift-equivariance is the tropical
+  analogue of layer linearity.
+
+---
+
+## 6. Discussion
+
+The boundary `λ = 0` plays a dual role. From the *attacker's* side it is the
+single point where the eigenvalue division attack fails. From the *designer's*
+side it is the natural locus of secrets in graph-based schemes, since the spectrum
+is capped at `0` and constant vectors realize it. Theorem 4 makes the necessary
+condition precise: at the boundary the residual channel is silent. We emphasize
+that this is *necessary, not sufficient* for security — other channels (e.g. the
+shape of the public power, the structure of the compressor) may still leak, and
+ruling them out requires a hardness reduction rather than a vanishing-observable
+argument. The preimage non-uniqueness theorem `trop_preimage_nonunique` (for any
+`C` there are distinct factorizations `A ⊗ B = A' ⊗ B' = C`) supplies a candidate
+hard problem — tropical matrix factorization — to which boundary
+indistinguishability might be reduced.
+
+---
+
+## 7. Future Work
+
+1. **From eigenvectors to arbitrary secret vectors.** Real protocols use generic
+   secrets, for which the orbit `A⊗ᵏ ⊗ v` becomes eventually periodic with slope
+   the maximal cycle mean. The eigenvalue `λ` of the boundary theorems is exactly
+   that cycle mean; extending `eigenzero_no_leak` to "eventually constant"
+   behavior off the eigenvector locus is the natural next step.
+
+2. **Quantitative, noisy leakage bounds.** The `1`-Lipschitz bound for
+   `tropMatVecMul` lifts to the iterated action, bounding how an `ε`-perturbation
+   of `v` or `A` propagates over `k` rounds; the affine leak `v + k·λ` is robust,
+   with estimation error growing only linearly in `k`.
+
+3. **Hardness certification at and near the boundary.** Turn "no leakage" into a
+   formal reduction: show that distinguishing exponents in the `λ = 0` regime is
+   equivalent to an independently hard tropical problem, e.g. the min-plus matrix
+   factorization underlying `trop_preimage_nonunique`.
+
+4. **Multiple eigenvalues and the spectral attack surface.** A tropical matrix may
+   possess several distinct eigenvalues with distinct eigenspaces; a secret may
+   decompose across them, and the total observed leak is a tropical (min)
+   combination of per-eigenspace contributions.
+
+---
+
+## 8. Conclusion
+
+We have given a complete, machine-verified account of the boundary eigenvalue `λ
+= 0` in tropical linear algebra and its cryptanalytic significance. The tropical
+residual encodes the eigenvalue exactly (Theorem 1) and uniquely (Theorem 2); at
+the boundary it vanishes identically (Theorem 4, the no-leak property); and the
+boundary is both the ceiling of the spectrum (Theorem 6) and always attained
+(Theorem 7) for graph-based constructions. Together with the shift symmetry of
+tropical maps, these results delineate precisely where the eigenvalue attack on
+the tropical discrete logarithm succeeds and where it provably fails, and they
+identify the zero-eigenvalue boundary as the natural design target for
+resistant tropical cryptography.
+
+---
 
 ## References
 
-[1] Maclagan, D. and Sturmfels, B. *Introduction to Tropical Geometry*. Graduate Studies in Mathematics, vol. 161, AMS, 2015.
-
-[2] Grigoriev, D. and Shpilrain, V. "Tropical cryptography." *Communications in Algebra* 42.6 (2014): 2624-2632.
-
-[3] Catalog results: `Cryptography/TropicalPostQuantum.lean` (24 theorems), `Cryptography/TropicalPostQuantumPrimitives.lean` (30+ theorems).
-
-[4] Butkovič, P. *Max-linear Systems: Theory and Algorithms*. Springer Monographs in Mathematics, 2010.
-
-[5] Simon, I. "Recognizable sets with multiplicities in the tropical semiring." *MFCS 1988*, Springer LNCS 324, pp. 107-120.
+1. P. Butkovič, *Max-linear Systems: Theory and Algorithms*, Springer, 2010.
+2. R. A. Cuninghame-Green, *Minimax Algebra*, Lecture Notes in Economics and
+   Mathematical Systems 166, Springer, 1979.
+3. M. Akian, S. Gaubert, A. Guterman, "Tropical polyhedra are equivalent to mean
+   payoff games," *International Journal of Algebra and Computation*, 2012.
