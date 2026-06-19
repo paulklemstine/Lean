@@ -2251,6 +2251,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any odd base B > 3, the length of the longest nonconstant terminal cycle of the Kaprekar map is at most (B-1)/2. Furthermore, this upper bound is achieved if and only if B is prime and the multiplicative order of 2 modulo B equals (B-1)/2.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2115",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20439v1",
+    "status": "available",
+    "timestamp": "2026-06-19T16:34:55.128748+00:00",
+    "title": "Maximum Cycle Length in Kaprekar Maps for Odd Bases"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that the \u03a9(r^-3) lower bound achieved in the paper is optimal up to constants, specifically that there exists a universal constant c > 0 such that for every r \u2265 2 and n \u2265 4r^2, any n-vertex r-graph where every (r+1)-set spans exactly 0 or 2 edges has at most c\u00b7r^-3\u00b7(n choose r) edges. This would prove that the polynomial improvement from 2^(1-r) to r^-3 is tight in terms of the r-dependence, establishing the true order of magnitude for this extremal problem.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2115",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20367v1",
+    "status": "available",
+    "timestamp": "2026-06-19T16:38:40.143734+00:00",
+    "title": "Optimality of the r^-3 density bound for (r+1)-sets spanning 0 or 2 edges"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
