@@ -1033,21 +1033,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Functor from finite linear codes to tropical valuation objects via wei"
   },
   {
-    "consumed_by_exp_id": "d1e35069",
-    "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0116",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.958310+00:00",
-    "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
     "domains": [
@@ -3228,6 +3213,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Library of Babel: Combinatorics of the Universal Library\n\nThis cycle added, in `Algebra/LibraryOfBabelProbability.lean`, a probabilistic\n**lower** bound on substring occurrence (complementing the existing union upper\nbound), the exact block-independence count, a coincidence-probability formula,\nand a \"Borges completeness\" limit theorem (any fixed text almost surely appears\nin a long enough random volume). Below are testable conjectures for follow-up.\n\n## Conjecture 1 \u2014 Two-sided sandwich and sharp asymptotics\nFor fixed `b \u2265 2`, `k \u2265 1` and pattern `p`, the existing bounds give\n`1 - (1 - b^{-k})^{\u230aL/k\u230b} \u2264 P_L(contains p) \u2264 (L-k+1)\u00b7b^{-k}`.\n**Conjecture:** `P_L(contains p) = 1 - exp(-(L-k+1) b^{-k}) + o(1)` in the regime\n`L b^{-k} \u2192 \u03bb` (a Poisson/Chen\u2013Stein limit for the number of occurrences).\n*Testable:* prove `expectedOccurrences \u2192 \u03bb` already follows from\n`expected_substring_count`; the next milestone is a total-variation bound between\nthe occurrence count and `Poisson \u03bb` via the Chen\u2013Stein method on the dependency\ngraph of overlapping windows.\n\n## Conjecture 2 \u2014 Variance and a second-moment lower bound\nDefine `V_L(p) = Var(occurrenceCount p)`. **Conjecture:**\n`V_L(p) = (L-k+1) b^{-k}(1 - b^{-k}) + 2\u00b7\u03a3_{1\u2264d<k} (overlap correlation term)`,\nwhere the overlap terms are governed by the autocorrelation (border/period\nstructure) of `p`. Consequence (Paley\u2013Zygmund): a lower bound on `P(contains p)`\nexpressed purely via the mean and variance, valid for *all* `L` (not just via\ndisjoint blocks). *Testable:* formalize `occurrenceCount` second moment as a\ndouble sum over position pairs and evaluate the covariance of `OccursAt i`,\n`OccursAt j` as a function of `|i-j|`.\n\n## Conjecture 3 \u2014 Pattern autocorrelation governs clustering\nPatterns with nontrivial self-overlap (e.g. `aa\u2026a`) cluster their occurrences,\ninflating the variance relative to overlap-free patterns. **Conjecture:** among\nall length-`k` patterns the overlap-free (\"bifix-free\") patterns minimize\n`Var(occurrenceCount)` and maximize `P(contains)` for every `L`. *Testable:*\nintroduce a `correlationPolynomial` of a pattern and prove monotonicity of the\nvariance in its coefficients; verify on `b=2, k=3` exhaustively.\n\n## Conjecture 4 \u2014 Coupon-collector for the whole library\nLet `T` be the number of i.i.d. uniform volumes drawn until *every* one of the\n`b^L` volumes has appeared at least once. **Conjecture:**\n`E[T] = b^L \u00b7 H_{b^L}` (harmonic-number coupon collector) and\n`T / (b^L log b^L) \u2192 1` in probability. *Testable:* this is the classical coupon\ncollector specialized to `N = b^L`; formalize `E[T] = N\u00b7H_N` and the\nconcentration `P(|T - N log N| > \u03b5N log N) \u2192 0`.\n\n## Conjecture 5 \u2014 Distinct k-grams in a single volume\nLet `D_L = #{distinct length-k substrings occurring in a random volume of length\nL}`. **Conjecture:** for fixed `k`, `E[D_L] = b^k (1 - (1 - b^{-k})^{L-k+1}) +\ncorrection`, and `D_L / b^k \u2192 1` once `L \u226b k b^k` (a single sufficiently long\nvolume already realizes the entire k-gram alphabet). *Testable:* `E[D_L]` is a\nsum over the `b^k` patterns of `P(contains pattern)`; combine the union upper\nbound and the aligned-block lower bound proved this cycle to sandwich `E[D_L]`\nand drive it to `b^k`.\n",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2122",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "225644b1",
+    "status": "available",
+    "timestamp": "2026-06-19T19:02:43.179697+00:00",
+    "title": "This cycle added, in `Algebra/LibraryOfBabelProbability.lean`, a probabilistic"
   },
   {
     "consumed_by_exp_id": "",

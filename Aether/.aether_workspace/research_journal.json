@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "91967634",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — The Unified Primitive-Divisor Engine\n\n## Synthesis\n\nThis cycle took the catalog's two parallel threads — the Fibonacci-specific composite-case\nmachinery of `Shared.CarmichaelProo",
-      "quality_score": 0.42396336206896557,
-      "sorry_count": 1,
-      "theorem_count": 32,
-      "timestamp": "2026-06-14T22:45:55",
-      "title": "Close Proofs: The catalog's Carmichael work (`Catalog/Speculative/AutoResearch/Carmi"
-    },
-    {
       "cycle_id": "2ca3f901",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Boltzmann Bridge X: Local-to-Global Gluing of Interleaving Geodesics\n\n## Synthesis\n\nBridge IX (`InterleavingGeodesic.lean`) turned the persistence-stability metric into\na *geodes",
@@ -2501,6 +2491,16 @@
       "theorem_count": 112,
       "timestamp": "2026-06-19T17:11:41",
       "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+    },
+    {
+      "cycle_id": "225644b1",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Library of Babel: Combinatorics of the Universal Library\n\nThis cycle added, in `Algebra/LibraryOfBabelProbability.lean`, a probabilistic\n**lower** bound on substring occurrence (",
+      "quality_score": 0.44512863813229575,
+      "sorry_count": 0,
+      "theorem_count": 57,
+      "timestamp": "2026-06-19T19:05:34",
+      "title": "The Library of Babel: Combinatorics of the Universal Library"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8166
     }
   ],
-  "last_updated": "2026-06-19T17:11:41",
+  "last_updated": "2026-06-19T19:05:34",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3753,12 +3753,6 @@
     ],
     "Probability": [
       {
-        "cycle_id": "9fe725de",
-        "quality": 0.49574,
-        "theorems": 180,
-        "title": "Close Proofs: The Boltzmann Bridge arc reduced the metric theory of persistence "
-      },
-      {
         "cycle_id": "94b6b70d",
         "quality": 0.3848171428571429,
         "theorems": 28,
@@ -3811,6 +3805,12 @@
         "quality": 0.5233429030396415,
         "theorems": 112,
         "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+      },
+      {
+        "cycle_id": "225644b1",
+        "quality": 0.44512863813229575,
+        "theorems": 57,
+        "title": "The Library of Babel: Combinatorics of the Universal Library"
       }
     ],
     "Pythagorean": [
