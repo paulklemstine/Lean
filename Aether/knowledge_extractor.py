@@ -176,6 +176,7 @@ class KnowledgeExtractor:
             ollama_base_url=pi_cfg.get("ollama_base_url"),
             ollama_model=pi_cfg.get("ollama_model"),
             ollama_cloud=pi_cfg.get("ollama_cloud", {}),
+            openrouter=pi_cfg.get("openrouter", {}),
         )
 
         self.output_organizer = OutputOrganizer(

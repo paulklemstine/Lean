@@ -296,6 +296,7 @@ class PiAgentClient:
         ollama_base_url: Optional[str] = None,
         ollama_model: Optional[str] = None,
         ollama_cloud: Optional[Dict[str, Any]] = None,
+        openrouter: Optional[Dict[str, Any]] = None,
     ):
         self.model = model
         self.memory = memory
@@ -336,6 +337,36 @@ class PiAgentClient:
         self.ollama_cloud_model: str = _ocr.get("model", "gpt-oss:120b-cloud")
         self.ollama_cloud_base_url: str = _ocr.get("base_url", "https://ollama.com").rstrip("/")
         self.ollama_cloud_timeout: int = int(_ocr.get("timeout", 300))
+
+        # OpenRouter fallback configuration
+        _or = openrouter or {}
+        self.openrouter_enabled: bool = bool(_or.get("enabled", True))
+        _or_api_key_env = _or.get("api_key_env", "OPENROUTER_API_KEY")
+        self.openrouter_api_key: str = os.getenv(_or_api_key_env, "")
+        if not self.openrouter_api_key:
+            _or_api_key_file = _or.get("api_key_file", "")
+            if _or_api_key_file:
+                try:
+                    self.openrouter_api_key = Path(_or_api_key_file).read_text().strip()
+                    print(f"[Pi-Agent] Loaded OpenRouter API key from {_or_api_key_file}")
+                except Exception:
+                    pass
+        if not self.openrouter_api_key:
+            # Try .env file in Aether directory
+            _dotenv = Path(__file__).parent / ".env"
+            if _dotenv.exists():
+                try:
+                    for line in _dotenv.read_text().splitlines():
+                        line = line.strip()
+                        if line.startswith(f"{_or_api_key_env}=") and not line.startswith("#"):
+                            self.openrouter_api_key = line.split("=", 1)[1].strip().strip("\"'")
+                            break
+                except Exception:
+                    pass
+        self.openrouter_model: str = _or.get("model", "google/gemini-2.5-flash")
+        self.openrouter_base_url: str = _or.get("base_url", "https://openrouter.ai/api/v1").rstrip("/")
+        self.openrouter_timeout: int = int(_or.get("timeout", 300))
+
         # Use max timeout for client connection, use per-request timeouts for operations
         self.client = httpx.Client(timeout=httpx.Timeout(connect=30.0, read=300.0, write=30.0, pool=30.0))
         default_state_path = Path(__file__).parent / ".aether_workspace" / "pollinations_pollen_state.json"
@@ -355,13 +386,15 @@ class PiAgentClient:
             self.catalog_analyzer = CatalogAnalyzer(self.catalog_root)
 
     def _call_ollama(self, system: str, user: str, timeout: Optional[int] = None) -> str:
-        """Dispatch LLM call through 2-tier fallback chain with pollen-reset retry.
+        """Dispatch LLM call through 3-tier fallback chain with pollen-reset retry.
 
         Tier 1: Pollinations (cloud, free, pollen-limited, resets hourly)
         Tier 2: Ollama Cloud (paid, requires OLLAMA_API_KEY)
+        Tier 3: OpenRouter (paid, requires OPENROUTER_API_KEY)
 
-        If both tiers fail (Pollinations out of pollen, Ollama out of credits),
-        waits for Pollinations pollen reset (top of hour) and retries Tier 1.
+        If all tiers fail (Pollinations out of pollen, Ollama Cloud out of usage limit,
+        and OpenRouter fails/disabled), waits for Pollinations pollen reset (top of hour)
+        and retries Tier 1.
 
         When use_ollama=True, skip directly to local Ollama (for dev/testing).
         """
@@ -369,8 +402,7 @@ class PiAgentClient:
         if self.use_ollama:
             return self._call_ollama_local(system, user, timeout=timeout)
 
-        # Tier 1: Pollinations — skip wait on depletion so we can try
-        # Ollama Cloud first; we'll wait for pollen reset if Ollama also fails
+        # Tier 1: Pollinations — skip wait on depletion so we can try fallbacks first
         result = self._call_pollinations(system, user, timeout=timeout,
                                          skip_wait_on_depletion=True)
 
@@ -390,7 +422,19 @@ class PiAgentClient:
         else:
             print("[Pi-Agent] Ollama Cloud not enabled")
 
-        # Both tiers failed — wait for Pollinations pollen reset and retry
+        # Tier 3: OpenRouter (only if enabled and configured)
+        if self.openrouter_enabled and self.openrouter_api_key:
+            print(f"[Pi-Agent] Ollama Cloud/Pollinations failed, falling back to OpenRouter")
+            or_result = self._call_openrouter(system, user, timeout=timeout)
+            if not or_result.startswith(("[OPENROUTER_ERROR", "[OPENROUTER_TIMEOUT")):
+                return or_result
+            print(f"[Pi-Agent] OpenRouter also failed ({or_result[:80]})")
+        elif self.openrouter_enabled and not self.openrouter_api_key:
+            print("[Pi-Agent] OpenRouter enabled but no API key set")
+        else:
+            print("[Pi-Agent] OpenRouter not enabled")
+
+        # All tiers failed — wait for Pollinations pollen reset and retry
         print("[Pi-Agent] All API tiers failed. Waiting for Pollinations pollen reset...")
 
         wait_until = self.pollen_gate._next_hour_reset(time.time())
@@ -726,6 +770,56 @@ class PiAgentClient:
                 err_msg += f" - {e.response.text}"
             print(f"[Pi-Agent] ← Ollama Cloud exception: {type(e).__name__}: {err_msg}")
             return f"[OLLAMA_CLOUD_ERROR: {err_msg}]"
+
+    def _call_openrouter(self, system: str, user: str, timeout: Optional[int] = None) -> str:
+        """Call OpenRouter API as a fallback when other tiers fail."""
+        if not self.openrouter_enabled or not self.openrouter_api_key:
+            return "[OPENROUTER_ERROR: OpenRouter not configured or API key missing]"
+
+        request_timeout = timeout or self.openrouter_timeout
+        model = self.openrouter_model
+        url = f"{self.openrouter_base_url}/chat/completions"
+        print(f"[Pi-Agent] → calling OpenRouter (model={model}, timeout={request_timeout}s)")
+
+        headers = {
+            "Authorization": f"Bearer {self.openrouter_api_key}",
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://github.com/paulklemstine/Lean",
+            "X-Title": "Aether Research",
+        }
+        payload = {
+            "model": model,
+            "messages": [
+                {"role": "system", "content": system},
+                {"role": "user", "content": user}
+            ],
+            "temperature": 0.85,
+        }
+
+        try:
+            response = self.client.post(
+                url,
+                headers=headers,
+                json=payload,
+                timeout=request_timeout,
+            )
+            response.raise_for_status()
+            data = response.json()
+            content = data["choices"][0]["message"]["content"]
+
+            response_preview = content[:500].replace('\n', ' ')
+            print(f"[Pi-Agent] ← OpenRouter response ({len(content)} chars)")
+            print(f"[Pi-Agent]   {response_preview}...")
+            return content
+        except httpx.TimeoutException:
+            print(f"[Pi-Agent] ← OpenRouter TIMEOUT after {request_timeout}s")
+            return f"[OPENROUTER_TIMEOUT: Request timed out after {request_timeout}s]"
+        except Exception as e:
+            err_msg = str(e)
+            if hasattr(e, 'response') and e.response:
+                err_msg += f" - {e.response.text}"
+            print(f"[Pi-Agent] ← OpenRouter exception: {type(e).__name__}: {err_msg}")
+            return f"[OPENROUTER_ERROR: {err_msg}]"
 
     def wait_for_pollinations_pollen(
         self,

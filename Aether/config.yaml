@@ -25,6 +25,10 @@ pi_agent:
     model: glm-5.1:cloud
     base_url: https://ollama.com
     timeout: 300
+  openrouter:
+    enabled: true
+    model: google/gemini-2.5-flash
+    timeout: 300
   max_catalog_references: 5
   max_lines_per_reference: 60
   temperature: 0.85

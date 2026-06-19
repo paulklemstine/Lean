@@ -80,6 +80,7 @@ jobs:
           ARISTOTLE_API_KEY: ${{ secrets.ARISTOTLE_API_KEY }}
           POLLINATIONS_API_KEY: ${{ secrets.POLLINATIONS_API_KEY }}
           OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: cd Aether && python3 aether_tick.py --max-inflight ${{ env.AETHER_MAX_INFLIGHT }} --ollama-cloud
 
       - name: "Check space after Aether tick"
