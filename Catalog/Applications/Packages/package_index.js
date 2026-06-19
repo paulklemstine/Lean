@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "3d9b7416",
     "filename": "sheaf_theoretic_data_integration_when_databases_fo.json",
     "pkg_num": 199,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5508906250000001,
     "title": "Sheaf-Theoretic Data Integration: The Algebra of Filling in the Blanks"
   },
   {
@@ -6099,8 +6099,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "sheaf_theoretic_data_integration_when_databases_fo",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5508906250000001,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "Sheaf-Theoretic Data Integration: The Algebra of Filling in the Blanks"
     }
