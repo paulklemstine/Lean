@@ -1,438 +1,372 @@
-# Combinatorics of the Universal Library: Counting, Diagonalization, and de Bruijn Catalogs
+# The Combinatorics and Probability of the Library of Babel
 
 **Author:** Aristotle
-
 **Date:** 2026-06-19
-
-**Domain:** Algebra / Enumerative & Algorithmic Combinatorics
-
----
 
 ## Abstract
 
-Borges' *Library of Babel* is the set of all strings of a fixed length over a finite
-alphabet — a finite but astronomically large universal information space. We give a
-rigorous combinatorial treatment of three questions about such spaces: (i) *how rare
-is a given pattern?*, (ii) *can the space catalog itself?*, and (iii) *can a complete,
-addressable catalog be constructed efficiently?* For the first, we prove an exact
-fixed-position occurrence count: the number of volumes agreeing with a prescribed
-pattern on $m$ designated positions is exactly $b^{L-m}$, giving a per-position match
-probability of $b^{-m}$ with **no** length prefactor; the spurious linear factor in
-the folklore estimate is identified as the union-bound window count $L-m+1$ of the
-distinct "occurs-anywhere" problem, corrected by the string's autocorrelation. For
-the second, a pigeonhole/diagonal argument shows no single volume can index all $b^L$
-volumes, while a distributed catalog over $N$ volumes can do so **iff** $N \ge b^L/L$
-(reference-count model), a threshold that climbs to $N \gtrsim b^L$ under faithful bit
-encoding. For the third, we cast catalog construction as the de Bruijn window
-bijection: a sequence whose order-$n$ windows enumerate all $b^n$ words must have
-length exactly $b^n$, and such sequences exist and are constructible in time linear in
-their length via an Eulerian circuit in the de Bruijn graph. We illustrate with the
-Borges parameters $(b,L) = (25,\,1{,}312{,}000)$ and a mini-Library $(b,n) = (4,16)$.
-All central claims correspond to formally verified statements: `card_agree_on`,
-`prob_match`, `distributed_catalog_iff`, `IsDeBruijn`, `window`, and
-`isDeBruijn_length`.
+We give an exact combinatorial and probabilistic analysis of Borges' *Library of
+Babel*, modeled as the finite set of all strings of length `L` over an alphabet of
+`b` symbols, endowed with the uniform (counting) probability measure. We prove four
+foundational results — the library's cardinality `b^L`, the singleton probability
+`b^(-L)`, the exact expected number of occurrences `(L-k+1)·b^(-k)` of a fixed
+length-`k` pattern, and the union upper bound on the containment probability — and
+then four extensions: the coincidence probability of two independent volumes, the
+trivial-but-load-bearing fact that the counting probability never exceeds 1, an
+exact count of volumes avoiding a pattern on every aligned block, and the resulting
+two-sided estimate for the containment probability. The lower bound is non-vacuous
+for every `L` and yields a *Borges completeness* theorem: for any alphabet of size
+at least 2, the probability that a uniformly random volume contains a fixed pattern
+tends to 1 as `L → ∞`. The disjoint-block argument is realized by an explicit
+reindexing bijection between a volume and its block decomposition, avoiding any
+appeal to inclusion–exclusion. We close with five conjectures on sharp asymptotics,
+variance, autocorrelation, coupon-collecting, and distinct `k`-gram counts.
+
+All results have been formally verified.
 
 ---
 
 ## 1. Introduction
 
-In *The Library of Babel* (1941), Jorge Luis Borges describes a universe consisting
-of all books of a fixed format: 410 pages, 40 lines per page, 80 characters per line,
-over an alphabet of 25 orthographic symbols. Every such book exists exactly once. The
-Library is therefore the set of all strings of length $L = 1{,}312{,}000$ over an
-alphabet of size $b = 25$, a set of cardinality $b^L = 25^{1{,}312{,}000}$.
+Borges' 1941 story *La biblioteca de Babel* describes a library containing every
+book of a fixed format: 410 pages, 40 lines per page, 80 characters per line, in an
+alphabet of 25 orthographic symbols. The library is finite but immense: it holds
+`25^1312000` volumes, a number with roughly 1.8 million decimal digits, dwarfing the
+`≈10^80` atoms of the observable universe.
 
-Although Borges' interest was metaphysical, the object he defined is a clean
-mathematical one: a **universal information space**, the free monoid restricted to a
-fixed length. Such spaces recur throughout computer science and mathematics — the set
-of all files of a given size, all genomes of a given length, all keys of a given
-bit-width, all weight vectors of a fixed-architecture network. Three questions are
-fundamental to any of them:
+The story poses, in literary form, genuine mathematical questions. How many books
+are there? What is the chance of finding a given one? How often does a phrase occur
+by chance, and how long must a book be before a target phrase is essentially
+guaranteed? Can a single book catalog all the others? We answer these precisely.
 
-1. **Occurrence / rarity.** How many volumes contain a given target pattern, and with
-   what probability?
-2. **Self-cataloging (diagonalization).** Can a volume — or a bounded family of
-   volumes — encode the address of every volume, including itself?
-3. **Constructive cataloging.** Can one efficiently build a single object that lists
-   every possible short passage exactly once, with computable addresses?
+### 1.1 The model
 
-This paper answers all three exactly. The mathematics is elementary in its
-ingredients (counting, pigeonhole, Eulerian circuits) but the answers correct several
-pieces of folklore, most notably the belief that pattern-match probability carries a
-linear length factor.
+Throughout, fix natural numbers `b` (alphabet size) and `L` (book length).
 
-### 1.1 Notation
+**Definition (Volume).** A *volume* is a function `v : Fin L → Fin b`, assigning to
+each of the `L` positions one of the `b` symbols. We write `Volume b L` for the type
+of volumes.
 
-Fix an alphabet size $b \ge 1$ and a book length $L \ge 0$. The **Library** is
+**Definition (Library).** The *library* `Library b L` is the finite set of all
+volumes, i.e. the universal finite set on `Volume b L`.
 
-$$
-\mathcal{L}(b,L) \;=\; \{0,1,\dots,b-1\}^{L} \;\cong\; (\mathrm{Fin}\,b)^{\mathrm{Fin}\,L},
-$$
+**Definition (Counting probability).** For a finite sample type `α`, a sample set
+`s ⊆ α`, and an event `A ⊆ α`, the *uniform probability* is
+`prob(s, A) = #(s ∩ A) / #s`. With `s = Library b L` this is the uniform measure on
+the library.
 
-the set of functions from $L$ positions to $b$ symbols, with $|\mathcal{L}(b,L)| = b^L$.
-A **volume** is an element $v \in \mathcal{L}(b,L)$. A **pattern on a set**
-$S \subseteq \{0,\dots,L-1\}$ is a function $p : S \to \{0,\dots,b-1\}$; a **target
-word** of length $m$ is a string $T \in \{0,\dots,b-1\}^m$. We write $\log_b$ for the
-base-$b$ logarithm and $\log_2$ for base-2.
+**Definition (Reading and occurrence).** For `v : Volume b L` and `n ∈ ℕ`,
+`readAt(v, n) = some v(n)` if `n < L` and `none` otherwise. A *pattern* of length
+`k` is a function `p : Fin k → Fin b`. We say `p` *occurs at* position `i`, written
+`OccursAt(p, v, i)`, if `readAt(v, i+j) = some p(j)` for all `j ∈ Fin k`. The
+*occurrence count* is `occurrenceCount(p, v) = #{ i ∈ {0,…,L-k} : OccursAt(p,v,i) }`,
+and `v` *contains* `p`, written `Contains(p, v)`, if `OccursAt(p, v, i)` for some `i`.
 
----
-
-## 2. The counting law
-
-### 2.1 Exact agreement count
-
-The basic object is the set of volumes that match a prescribed pattern on a fixed set
-of positions.
-
-> **Definition 2.1 (agreement set).** For $S \subseteq \{0,\dots,L-1\}$ and a pattern
-> $p : S \to \{0,\dots,b-1\}$, let
-> $$ \mathrm{Agree}(p) \;=\; \{\,v \in \mathcal{L}(b,L) \;:\; v(i) = p(i)\ \text{for all } i \in S\,\}. $$
-
-> **Theorem 2.2 (`card_agree_on`).** Let $|S| = m$. Then
-> $$ |\mathrm{Agree}(p)| \;=\; b^{\,L-m}. $$
-
-**Proof sketch.** A volume in $\mathrm{Agree}(p)$ is determined by its values on the
-$L - m$ positions *outside* $S$, those on $S$ being forced to equal $p$. The
-restriction map $v \mapsto v|_{\{0,\dots,L-1\}\setminus S}$ is a bijection from
-$\mathrm{Agree}(p)$ onto $\{0,\dots,b-1\}^{\,L-m}$: it is injective because $v$ is
-determined on $S$ by $p$ and on the complement by its restriction, and surjective
-because any choice on the complement extends uniquely. Hence
-$|\mathrm{Agree}(p)| = b^{L-m}$. (Formally this is a product/`Finset.card` computation
-fixing $m$ coordinates and letting the rest range freely.) $\qquad\blacksquare$
-
-The special case $S = \{j, j+1, \dots, j+m-1\}$ with $p$ the symbols of a target word
-$T$ gives the count of volumes carrying $T$ at the fixed position $j$:
-$|\{v : v\text{ has } T \text{ at } j\}| = b^{L-m}$ (whenever the window fits, i.e.
-$j + m \le L$).
-
-### 2.2 Fixed-position match probability
-
-> **Theorem 2.3 (`prob_match`).** Under the uniform distribution on $\mathcal{L}(b,L)$,
-> for any target word $T$ of length $m \le L$ and any fixed admissible position $j$,
-> $$ \Pr[\,v \text{ matches } T \text{ at position } j\,] \;=\; \frac{b^{\,L-m}}{b^{L}} \;=\; b^{-m}. $$
-
-**Proof sketch.** Immediate from Theorem 2.2 by dividing the agreement count $b^{L-m}$
-by the total count $b^L$. Equivalently, the $m$ positions of the window are
-independent uniform symbols, each matching with probability $1/b$. $\qquad\blacksquare$
-
-**Remark 2.4 (no length prefactor).** The conjectural folklore estimate
-"$\Pr \approx |T|\cdot b^{-m}$" is *false* as a per-position statement: Theorem 2.3
-shows the probability is the pure exponential $b^{-m}$. The linear factor is an
-artifact of conflating two different events.
-
-### 2.3 The "occurs anywhere" correction (windowed-occurrence law)
-
-The linear factor *does* appear — for a different question. Let
-$\mathrm{Occ}(T) = \{ v : T \text{ occurs as a contiguous substring of } v \text{ at some position}\}$.
-There are $W = L - m + 1$ candidate starting windows.
-
-> **Proposition 2.5 (windowed bounds).** For $m \le L$,
-> $$ (L-m+1)\,b^{\,L-m} \;-\; \binom{L-m+1}{2}\, b^{\,L-2m+c(T)} \;\le\; |\mathrm{Occ}(T)| \;\le\; (L-m+1)\,b^{\,L-m}, $$
-> where the second-order term is governed by the autocorrelation (overlap) structure
-> $c(T)$ of $T$.
-
-**Proof sketch (upper bound, established; lower bound, conjectural refinement C1).**
-The upper bound is a union bound: $\mathrm{Occ}(T) = \bigcup_{j} A_j$ where $A_j$ is the
-event "$T$ at position $j$," $|A_j| = b^{L-m}$ by Theorem 2.2, and there are $L-m+1$
-windows. The first inclusion–exclusion correction subtracts the pairwise
-intersections $|A_j \cap A_{j'}|$; when two windows overlap, the joint constraint
-involves the **Guibas–Odlyzko correlation polynomial** of $T$, which records for each
-shift whether $T$ can overlap a copy of itself. Non-self-overlapping targets (e.g.
-*abcd*) have trivial correlation and the bound is tightest. Dividing by $b^L$ gives
-$\Pr[\mathrm{Occ}(T)] \le (L-m+1)b^{-m}$, recovering the linear-in-window-count factor.
-$\qquad\blacksquare$
-
-**Interpretation.** "Meaning density" in the Library is not a single scalar; it is a
-string-autocorrelation invariant. The clean per-position rate is $b^{-m}$; the
-anywhere-rate is at most $(L-m+1)b^{-m}$ with autocorrelation corrections.
-
-### 2.4 Scale of the Borges Library
-
-With $b = 25$, $L = 1{,}312{,}000$:
-
-- $|\mathcal{L}| = 25^{1{,}312{,}000}$ has $\lfloor L\log_{10} b\rfloor + 1 = 1{,}834{,}098$
-  decimal digits.
-- A fixed 100-symbol passage occurs at a fixed position in a fraction
-  $25^{-100} \approx 10^{-140}$ of volumes.
-- One volume holds $L\log_2 b \approx 6.09 \times 10^{6}$ bits of information.
+**Definition (Expected occurrences).**
+`expectedOccurrences(p, L) = (Σ_{v} occurrenceCount(p, v)) / #(Library b L)`,
+the mean occurrence count under the uniform measure.
 
 ---
 
-## 3. Diagonalization: can the Library catalog itself?
+## 2. Foundational results
 
-A **catalog** must provide, for each of the $b^L$ volumes, a decodable *reference*
-(address) locating it. Modeling a catalog as a family of volumes, each supplying its
-$L$ symbol-positions as reference slots, we ask how many volumes are needed.
+### 2.1 Size of the library
 
-### 3.1 Single-volume impossibility
+**Theorem 1 (`card_library`).** `#(Library b L) = b^L`.
 
-> **Theorem 3.1 (no total book).** If $b^L > L$, no single volume can store a distinct
-> reference for every volume; equivalently, there is no injection
-> $\mathcal{L}(b,L) \hookrightarrow \{0,\dots,L-1\}$.
+*Proof sketch.* The library is the full function type `Fin L → Fin b`. The number of
+functions from an `L`-element domain to a `b`-element codomain is `b^L`. ∎
 
-**Proof sketch.** A single volume has $L$ positions, hence can hold at most $L$
-distinct one-symbol references. An injection from a set of size $b^L$ into a set of
-size $L$ requires $b^L \le L$ (pigeonhole). For all Borges-scale parameters
-$b^L \gg L$, so no such injection exists. This is the diagonal/cardinality obstruction:
-the universe is strictly larger than any of its members' addressing capacity.
-$\qquad\blacksquare$
+### 2.2 Probability of a single volume
 
-This is the rigorous form of Borges' "total book": the catalog of all books cannot be
-one of the books.
+**Theorem 2 (`prob_singleton`).** For every volume `v`,
+`prob(Library b L, {v}) = b^(-L)`.
 
-### 3.2 Distributed catalogs: an exact threshold
+*Proof sketch.* The filter of the library to `{v}` is a single point, so its
+cardinality is 1, and `prob = 1 / #(Library b L) = 1 / b^L = b^(-L)` by Theorem 1.
+∎
 
-Spread the catalog over $N$ volumes. Together they offer $N \cdot L$ reference slots.
+### 2.3 Counting lemmas
 
-> **Theorem 3.2 (`distributed_catalog_iff`).** A distributed catalog of $N$ volumes can
-> assign every volume a distinct reference slot **iff**
-> $$ N \cdot L \;\ge\; b^{L}, \qquad\text{equivalently}\qquad N \;\ge\; \frac{b^{L}}{L}. $$
+The expectation and the union bound rest on three counting lemmas.
 
-**Proof sketch.** ($\Leftarrow$) If $N L \ge b^L$, the $b^L$ volumes inject into the
-$N L$ available slots — concretely, enumerate volumes and assign slot $\lfloor \cdot \rfloor$
-addresses by Euclidean division into (volume index, position index); injectivity is
-the uniqueness of division with remainder. ($\Rightarrow$) If $N L < b^L$, pigeonhole
-forbids an injection of $b^L$ items into $N L$ slots, so some volume is unlisted. The
-threshold $N \ge \lceil b^L / L\rceil$ is therefore exact. $\qquad\blacksquare$
+**Lemma A (`card_filter_agree`).** For finite types `α, β`, a decidable predicate
+`p` on `α`, and a fixed `g : α → β`, the number of functions `v : α → β` with
+`v(a) = g(a)` for all `a` satisfying `p` equals `(#β)^(#{a : ¬p(a)})`.
 
-**Corollary 3.3 (catalog ≈ Library).** The minimal distributed catalog has
-$\lceil b^L/L\rceil$ volumes; for $(b,L)=(25,1312000)$ this number has about
-$1{,}834{,}098 - 6 = 1{,}834{,}092$ decimal digits — only six digits shy of the Library
-itself. *The map is nearly the size of the territory.*
+*Proof sketch.* Such a `v` is free on positions where `p` fails and pinned on the
+rest. Identify the constrained set of functions with the dependent product
+`∏_a (if p a then {g a} else univ)`; its cardinality is the product of the factor
+sizes, which is `(#β)` raised to the number of unconstrained coordinates. ∎
 
-### 3.3 Bit-faithful encoding (entropy refinement C2)
+**Lemma B (`card_agree_inj`).** For an injection `φ : Fin k → Fin L` and pattern
+`p`, the number of volumes with `v(φ(j)) = p(j)` for all `j` equals `b^(L-k)`.
 
-Theorem 3.2 charges one slot per reference. Faithful encoding charges
-$\lceil \log_2 b^L\rceil = \lceil L\log_2 b\rceil$ **bits** per reference, since a
-reference must single out one of $b^L$ volumes.
+*Proof sketch.* Apply Lemma A with the predicate "position lies in the image of
+`φ`." Injectivity makes the image have exactly `k` elements, leaving `L - k`
+unconstrained positions; the edge case `b = 0` is handled separately. ∎
 
-> **Conjecture 3.4 (entropy lower bound).** Under bit-faithful encoding, a distributed
-> catalog requires total storage $\ge b^L \cdot \lceil L\log_2 b\rceil$ bits, i.e.
-> $N \gtrsim b^L$ volumes — a factor $L\log_2 b$ larger than the reference-count
-> threshold of Theorem 3.2.
+**Lemma C (`card_occursAt`).** If `i + k ≤ L`, then
+`#{ v : OccursAt(p, v, i) } = b^(L-k)`.
 
-**Discussion.** This is a Kraft-inequality statement: $b^L$ distinct prefix-free
-codewords over a binary channel require codeword lengths summing under
-$\sum 2^{-\ell_i} \le 1$, forcing average length $\ge \log_2 b^L$. The reference-count
-model "cheats" by treating an address as a single symbol; the honest model multiplies
-the threshold back up to the full Library size. Both extremes are informative: the
-*combinatorial* cost is $b^L/L$, the *informational* cost is $b^L$.
+*Proof sketch.* The positions `j ↦ i + j` form an injection `Fin k → Fin L` (using
+`i + k ≤ L`), and `OccursAt(p, v, i)` is exactly agreement with `p` along it. Apply
+Lemma B. ∎
 
----
+### 2.4 Expected occurrence count
 
-## 4. Constructive catalogs via de Bruijn sequences
+**Theorem 3 (`expected_substring_count`).** If `k ≤ L` and `b > 0`, then
+`expectedOccurrences(p, L) = (L - k + 1) · b^(-k)`.
 
-We now turn from existence to construction. A catalog of all length-$n$ passages
-should list each exactly once with a computable address. The optimal such object is a
-**de Bruijn sequence**.
+*Proof sketch.* Write the total occurrence count as a double sum and exchange the
+order of summation:
+`Σ_v occurrenceCount(p, v) = Σ_{i=0}^{L-k} #{ v : OccursAt(p, v, i) }`.
+Each summand is `b^(L-k)` by Lemma C, and there are `L - k + 1` of them, giving
+`(L-k+1)·b^(L-k)`. Dividing by `#(Library b L) = b^L` (Theorem 1) and simplifying
+`b^(L-k)/b^L = b^(-k)` yields the claim; the hypothesis `b > 0` guarantees the
+denominator is nonzero. ∎
 
-### 4.1 The window map
+The shape `(L-k+1)·b^(-k)` is linear in length and exponentially small in pattern
+length: a defining quantitative feature of random text.
 
-> **Definition 4.1 (`window`).** Let $s : \mathrm{Fin}\,N \to \{0,\dots,b-1\}$ be a
-> cyclic sequence of length $N$. Its order-$n$ **window map** is
-> $$ \mathrm{window}_s : \mathrm{Fin}\,N \to \{0,\dots,b-1\}^{n}, \qquad \mathrm{window}_s(i) = \big(s(i), s(i+1), \dots, s(i+n-1)\big), $$
-> indices taken modulo $N$. It reads off the length-$n$ block beginning at position $i$.
+### 2.5 Union upper bound
 
-> **Definition 4.2 (`IsDeBruijn`).** The sequence $s$ is a **de Bruijn sequence of
-> order $n$ over $b$ symbols**, written $\mathrm{IsDeBruijn}(b,n,s)$, iff
-> $\mathrm{window}_s$ is a **bijection** onto $\{0,\dots,b-1\}^{n}$ — i.e. every one of
-> the $b^n$ possible length-$n$ blocks occurs exactly once as a window.
+**Theorem 4 (`prob_contains_substring_bound`).** If `k ≤ L`, then
+`prob(Library b L, {v : Contains(p, v)}) ≤ (L - k + 1) · b^(-k)`.
 
-The bijection *is* the catalog: to find a target block $w$, return the unique address
-$\mathrm{window}_s^{-1}(w)$.
+*Proof sketch.* The containment event is the union over `i ∈ {0,…,L-k}` of the
+events `OccursAt(p, ·, i)` (any occurrence forces a valid start position, handled
+carefully at the boundary `i = L-k`). By subadditivity of cardinality over a
+`biUnion`, the count of containing volumes is at most `Σ_i #{OccursAt at i} =
+(L-k+1)·b^(L-k)` via Lemma C. Dividing by `b^L` gives the bound. The degenerate
+cases `b = 0` and `k = 0` are dispatched directly. ∎
 
-### 4.2 Forced length
-
-> **Theorem 4.3 (`isDeBruijn_length`).** If $\mathrm{IsDeBruijn}(b,n,s)$ for
-> $s : \mathrm{Fin}\,N \to \{0,\dots,b-1\}$, then
-> $$ N \;=\; b^{n}. $$
-
-**Proof sketch.** A bijection equates the cardinalities of its domain and codomain.
-The domain is $\mathrm{Fin}\,N$ with $|{\cdot}| = N$; the codomain is
-$\{0,\dots,b-1\}^n$ with $|{\cdot}| = b^n$. Hence $N = b^n$. $\qquad\blacksquare$
-
-This is the *necessity* direction: a de Bruijn catalog has no slack — its length is
-pinned exactly to the number of words it must enumerate.
-
-### 4.3 Existence and construction (realizability C3)
-
-> **Theorem 4.4 (existence).** For all $b \ge 1$, $n \ge 1$, a de Bruijn sequence of
-> order $n$ over $b$ symbols exists, and can be constructed in time $O(b^n)$ — linear in
-> its length.
-
-**Proof sketch.** Form the **de Bruijn graph** $G_{b,n}$: vertices are the $b^{n-1}$
-words of length $n-1$; for each length-$n$ word $w = w_1\cdots w_n$ draw a directed edge
-from $w_1\cdots w_{n-1}$ to $w_2\cdots w_n$ labeled $w$. Every vertex has in-degree and
-out-degree exactly $b$ (append/prepend any symbol), so the graph is **balanced**, and it
-is strongly **connected**. By Euler's theorem, $G_{b,n}$ admits an **Eulerian circuit**
-traversing every edge exactly once. The sequence of edge labels along the circuit
-(reading one new symbol per step around the cycle) is a cyclic string of length
-$b^n$ whose order-$n$ windows are exactly the $b^n$ edges — each once — so it is de
-Bruijn. **Hierholzer's algorithm** computes the Eulerian circuit in time linear in the
-edge count $b^n$. $\qquad\blacksquare$
-
-Together, Theorems 4.3 and 4.4 say: de Bruijn catalogs exist at every order, have
-length exactly $b^n$ (no shorter complete catalog is possible), and are buildable about
-as fast as they can be written.
-
-### 4.4 The mini-Library $B(4,16)$
-
-For alphabet size $b = 4$ and window length $n = 16$, the construction yields a single
-cyclic sequence of length
-
-$$
-4^{16} \;=\; 2^{32} \;=\; 4{,}294{,}967{,}296,
-$$
-
-inside which each of the $4^{16}$ possible 16-symbol blocks appears exactly once, at the
-address given by $\mathrm{window}^{-1}$. This is a complete, navigable index of a small
-universal text space, constructible in one linear pass.
+This bound is tight in order but becomes vacuous (exceeds 1) once
+`L - k + 1 > b^k`; §4 remedies this with a complementary lower bound.
 
 ---
 
-## 4bis. Worked numerical examples
+## 3. Coincidence and the trivial ceiling
 
-We record several exact computations that anchor the theory and that the
-accompanying software reproduces.
+**Theorem 5 (`prob_pair_coincide`).** Two independent uniform volumes coincide with
+probability exactly `b^(-L)`:
+`prob(Library b L × Library b L, {(u,w) : u = w}) = b^(-L)`.
 
-**Agreement count, brute force vs. formula.** Take $b = 3$, $L = 6$, and the
-target word $T = (1,0,2)$ fixed at position $j = 2$. Direct enumeration over all
-$3^6 = 729$ volumes finds exactly $27$ that carry $T$ in slots $2,3,4$. Theorem 2.2
-predicts $b^{L-m} = 3^{3} = 27$, and Theorem 2.3 gives match probability
-$27/729 = 1/27 = b^{-m}$. The occurs-anywhere upper bound is
-$(L-m+1)\,b^{-m} = 4/27$, exhibiting the legitimate linear window factor that is
-*absent* from the per-position rate.
+*Proof sketch.* The product sample space has `b^L · b^L = b^{2L}` points. The
+diagonal `{(u,w) : u = w}` is the image of the injection `v ↦ (v, v)` and so has
+`b^L` points. Therefore `prob = b^L / b^{2L} = b^(-L)`. Edge cases `b = 0` and
+`L = 0` are treated separately. ∎
 
-**Borges scale.** For $b = 25$, $L = 1{,}312{,}000$: the Library has
-$\lfloor L\log_{10}25\rfloor + 1 = 1{,}834{,}098$ decimal digits; a single volume
-carries $L\log_2 25 \approx 6{,}092{,}739$ bits; and a fixed $100$-symbol passage
-appears at a fixed position in a fraction $25^{-100} \approx 10^{-139.8}$ of all
-volumes. For perspective, the observable universe holds $\approx 10^{80}$ atoms — a
-$81$-digit number — so the Library dwarfs every physical inventory by more than a
-million orders of magnitude in digit count.
+**Proposition D (`prob_le_one`).** For any finite type `α`, sample set `s`, and event
+`A`, `prob(s, A) ≤ 1`.
 
-**Distributed catalog threshold.** For the toy Library $b = 5$, $L = 4$ we have
-$b^L = 625$. A single volume cannot index it ($625 \not\le 4$). The minimal
-distributed catalog has $N = \lceil 625/4\rceil = 157$ volumes: $156$ volumes give
-$156\cdot 4 = 624 < 625$ slots (one volume unindexed), while $157\cdot 4 = 628 \ge
-625$ suffices — confirming the sharp threshold of Theorem 3.2.
-
-**de Bruijn realizability.** The construction yields $B(2,3) =
-00010111$ (length $2^3 = 8$), $B(4,3)$ of length $4^3 = 64$, and $B(4,4)$ of length
-$4^4 = 256$; in each case every length-$n$ block occurs exactly once, verifying
-Definition 4.2 and the length identity of Theorem 4.3. The address of a block is
-recovered as the unique window position equal to it.
-
-**Autocorrelation.** The correlation bits of $T$ distinguish overlap classes:
-$(0,1,2,3)$ has profile $[1,0,0,0]$ (non-self-overlapping, tightest windowed
-bound); $(0,1,0,1)$ has $[1,0,1,0]$; $(0,0,0,0)$ has $[1,1,1,1]$ (maximal
-self-overlap). These weights are exactly the second-order corrections of
-Proposition 2.5.
-
-## 4ter. Related context
-
-The three pillars connect to classical bodies of mathematics. The counting law is
-the enumerative backbone of analytic combinatorics on words; the autocorrelation
-correction is the Guibas–Odlyzko theory underpinning expected waiting times for
-patterns and the Conway leading-number formula for penney-style games. The
-single-volume impossibility is the finitary shadow of Cantor's diagonal theorem and
-a sibling of Kolmogorov-complexity incompressibility: most volumes have no shorter
-description than themselves, so no compact universal index exists. The de Bruijn
-material sits inside the theory of Eulerian circuits (Euler, 1736; Hierholzer,
-1873) and the shift dynamics of full one-sided shifts, where order-$n$ windows are
-the cylinder sets generating the topology. What is new here is the *uniform,
-formally verified* treatment that ties occurrence counting, self-cataloging limits,
-and constructive catalogs to one concrete object — the universal library — with all
-six headline statements machine-checked.
-
-## 5. Algorithms
-
-### 5.1 Fixed-position occurrence count (`card_agree_on`)
-
-Given $b, L, m$ with $m \le L$: return $b^{L-m}$ (volumes matching a fixed pattern on
-$m$ positions) and $b^{-m}$ (probability). $O(1)$ arithmetic on big integers /
-rationals; output magnitude $\Theta(L\log b)$ digits.
-
-### 5.2 Distributed-catalog threshold (`distributed_catalog_iff`)
-
-Given $b, L$: return $N_{\min} = \lceil b^L / L\rceil$ (reference-count model) and the
-bit-faithful estimate $N \approx b^L$. $O(1)$ big-integer operations.
-
-### 5.3 de Bruijn construction (Hierholzer on $G_{b,n}$)
-
-Build the balanced, connected de Bruijn graph and extract an Eulerian circuit; emit the
-order-$n$ de Bruijn sequence of length $b^n$. Time and space $O(b^n)$. Verification:
-slide the order-$n$ window and check all $b^n$ blocks occur exactly once (i.e.
-$\mathrm{window}$ is a bijection), confirming Theorem 4.3's length and Definition 4.2.
+*Proof sketch.* `#(s ∩ A) ≤ #s`, so the ratio is at most 1 (with the usual
+convention when `#s = 0`). Though elementary, this guards every probability
+statement and the limit argument in §5. ∎
 
 ---
 
-## 6. Applications
+## 4. The disjoint-block count and the two-sided estimate
 
-- **Search and rarity bounds.** Theorem 2.3 quantifies why brute-force discovery of
-  meaningful content in universal spaces (random files, genomes, keys) is infeasible:
-  per-position match probability decays as $b^{-m}$.
-- **Self-description limits.** Theorem 3.1 is a combinatorial sibling of Cantor/Gödel
-  diagonalization and of compression lower bounds: no object indexes its own universe.
-- **Positional encoding.** de Bruijn sequences (Definitions 4.1–4.2, Theorem 4.4) are
-  used in rotary/linear position encoders, where a short local readout uniquely
-  determines absolute position via $\mathrm{window}^{-1}$.
-- **Genome assembly.** de Bruijn graphs (proof of Theorem 4.4) underpin modern
-  short-read assemblers; the order-$n$ window is the $k$-mer abstraction.
-- **Coding and crypto.** Maximal-length / de Bruijn sequences seed pseudorandom
-  generators and error-correcting constructions.
+The union bound (Theorem 4) is one-directional. To bound the containment
+probability *from below* we exploit independence of disjoint blocks.
+
+### 4.1 Aligned blocks
+
+Set `m = ⌊L/k⌋`. Partition the positions `{0,…,L-1}` into `m` consecutive,
+non-overlapping *aligned blocks* of length `k`, namely block `t` occupying positions
+`{t·k, …, t·k + k - 1}` for `t ∈ Fin m`, followed by a *remainder* of
+`L - m·k` free positions.
+
+**Definition (`NoAlignedBlockMatch`).** A volume `v` *has no aligned block match* if
+for every `t ∈ Fin m`, the pattern does **not** occur at position `t·k`:
+`∀ t, ¬ OccursAt(p, v, t·k)`.
+
+### 4.2 The reindexing bijection
+
+**Definition (`blockEquiv`).** Given a proof `h : m·k + (L - m·k) = L`, there is a
+bijection
+`blockEquiv : Volume b L ≃ ((Fin m → Fin k → Fin b) × (Fin (L - m·k) → Fin b))`
+re-reading a volume as its `m` blocks together with its remainder. It is assembled
+from the standard product/sum/curry equivalences (`finProdFinEquiv`,
+`finSumFinEquiv`, `Equiv.curry`).
+
+**Lemma (`blockEquiv_fst_apply`, `blockEquiv_index`).** Under `blockEquiv`, the
+symbol of block `t` at offset `j` is the original symbol at position `t·k + j`; the
+underlying index is exactly `t·k + j`.
+
+These identities make the bijection *position-aware*: it is not an abstract
+counting trick but an explicit dictionary between coordinates.
+
+**Lemma F (`noAligned_iff`).** If `k > 0` and `h : m·k + (L - m·k) = L`, then
+`NoAlignedBlockMatch(p, v)` holds iff every block of `blockEquiv(v)` differs from
+`p`: `∀ t, (blockEquiv v).1 t ≠ p`.
+
+*Proof sketch.* By `blockEquiv_index`, `OccursAt(p, v, t·k)` is precisely the
+statement that block `t` equals `p` coordinate-by-coordinate; negating and
+quantifying over `t` gives the equivalence. ∎
+
+### 4.3 Counting avoiders
+
+**Lemma E (`card_avoid`).** The number of `m`-tuples of length-`k` blocks none of
+which equals a fixed pattern `p` is `(b^k - 1)^m`:
+`#{ g : Fin m → (Fin k → Fin b) | ∀ t, g(t) ≠ p } = (b^k - 1)^m`.
+
+*Proof sketch.* The constrained set is the product `∏_{t} (univ \ {p})`. Each factor
+has `b^k - 1` elements, and there are `m` independent factors. ∎
+
+**Theorem 6 (`card_noAlignedBlockMatch`).** If `k > 0`, the number of volumes with
+no aligned block match is exactly
+`#{ v : NoAlignedBlockMatch(p, v) } = (b^k - 1)^(⌊L/k⌋) · b^(L - ⌊L/k⌋·k)`.
+
+*Proof sketch.* Transport the avoider set across `blockEquiv` (Lemma F): a volume
+avoids the pattern on every aligned block iff its block-component is a pattern-free
+`m`-tuple (counted by Lemma E, giving `(b^k-1)^m`) and its remainder-component is
+arbitrary (giving `b^(L-m·k)`). Since `blockEquiv` is a bijection, the counts
+multiply. ∎
+
+### 4.4 Lower bound and the sandwich
+
+**Theorem 7 (`prob_contains_substring_lower_bound`).** The containment probability
+satisfies
+`prob(Library b L, {v : Contains(p, v)}) ≥ 1 - (1 - b^(-k))^(⌊L/k⌋)`.
+
+*Proof sketch.* Containment is implied by *some* aligned block matching; hence the
+non-containment event is contained in `NoAlignedBlockMatch`. By Theorem 6 and
+Theorem 1, the probability of no aligned match is
+`(b^k - 1)^m · b^(L-mk) / b^L = ((b^k-1)/b^k)^m = (1 - b^(-k))^m`,
+with `m = ⌊L/k⌋`. Complementing gives the lower bound. (The inclusion is
+one-directional and exact — no inclusion–exclusion is needed, because "some aligned
+block matches" is a *subset* of "contains.") ∎
+
+Combining Theorems 4 and 7 sandwiches the containment probability:
+```
+1 - (1 - b^(-k))^(⌊L/k⌋)  ≤  P(Contains)  ≤  (L - k + 1) · b^(-k).
+```
+The left bound is always a genuine probability in `[0,1]` and non-vacuous for all
+`L`; the right bound is sharp for small `L` but vacuous for large `L`.
 
 ---
 
-## 7. Discussion
+## 5. Borges completeness
 
-The three results form a triptych. **Counting** (§2) measures the rarity of structure:
-meaning is exponentially expensive, and the only "cheap" geometry is the linear window
-budget of the occurs-anywhere problem, itself tamed by autocorrelation. **Diagonalization**
-(§3) measures the cost of self-reference: a universe cannot be indexed from within a
-single member, but a distributed index exists at a sharp threshold that — under honest
-bit accounting — rises to the size of the universe itself. **Construction** (§4)
-measures the cost of completeness: a perfect catalog of all short passages exists, is
-length-optimal at $b^n$, and is efficiently realizable.
+**Theorem 8 (`prob_contains_tendsto_one`).** For any alphabet of size `b ≥ 2` and
+fixed pattern `p` of length `k ≥ 1`, the containment probability tends to 1 as the
+book length grows:
+`lim_{L→∞} prob(Library b L, {v : Contains(p, v)}) = 1`.
 
-A unifying theme is *the map versus the territory*. The naive hope is a small map of a
-large space. Each result pushes back: the per-symbol cost of pinning content is fixed,
-the self-catalog is nearly the whole Library, and even the most efficient complete
-catalog of $n$-grams is exactly $b^n$ long. Borges' Library resists summary not by
-accident but by theorem.
+*Proof sketch.* Since `b ≥ 2` and `k ≥ 1`, we have `0 ≤ 1 - b^(-k) < 1`, and
+`⌊L/k⌋ → ∞` as `L → ∞`. Hence `(1 - b^(-k))^(⌊L/k⌋) → 0`, so the lower bound of
+Theorem 7 tends to 1; with Proposition D bounding the probability above by 1, the
+squeeze theorem forces the limit to be exactly 1. ∎
 
----
-
-## 8. Future directions
-
-**C1 — Windowed-occurrence law (sharpening `prob_match`).** Prove the two-sided
-inclusion–exclusion bound of Proposition 2.5 with the second-order term expressed via
-the Guibas–Odlyzko correlation polynomial of $T$; the building block `card_agree_on`
-already gives the exact per-window count $b^{L-m}$, leaving the window-sum
-inclusion–exclusion.
-
-**C2 — Strictly super-linear catalog (entropy lower bound).** Promote Theorem 3.2 to
-the bit-faithful Kraft statement of Conjecture 3.4: each reference costs $L\log_2 b$
-bits, raising the threshold from $b^L/L$ to $\sim b^L$.
-
-**C3 — de Bruijn existence at every order.** Formalize Theorem 4.4 as an Eulerian-circuit
-existence result in the balanced, connected de Bruijn graph, complementing the necessity
-theorem `isDeBruijn_length`; this realizes $B(4,16)$ constructively in time polynomial in
-its length.
-
-**C4 — Phase transition in "probability of a valid proof."** Fix a proof system and study
-the probability that a random Borges volume encodes a syntactically valid proof of a
-target theorem, conjecturing a sharp threshold as a function of proof complexity.
+This is the rigorous form of Borges' fantasy: any fixed text — a poem, a contract,
+a complete and correct proof — almost surely appears inside a sufficiently long
+random volume. Length alone, not design, forces the appearance.
 
 ---
 
-## 9. Summary of formalized results
+## 6. The catalog question
 
-| Name | Statement |
-|---|---|
-| `card_agree_on` | Volumes matching a fixed pattern on $m$ positions number exactly $b^{L-m}$. |
-| `prob_match` | Fixed-position match probability of a length-$m$ target is exactly $b^{-m}$. |
-| `distributed_catalog_iff` | A catalog over $N$ volumes indexes the Library iff $N \ge b^L/L$. |
-| `window` | Order-$n$ window map of a cyclic sequence reading length-$n$ blocks. |
-| `IsDeBruijn` | A sequence is de Bruijn iff its window map is a bijection onto all $b^n$ words. |
-| `isDeBruijn_length` | A de Bruijn sequence of order $n$ over $b$ symbols has length exactly $b^n$. |
+Borges' librarians seek a single "total book" cataloging the locations of all
+others. An information-theoretic counting argument refutes its existence and
+quantifies a distributed alternative.
+
+To address one of `b^L` volumes requires `log₂(b^L) = L·log₂ b` bits. A single
+volume carries `L` symbols, i.e. `L·log₂ b` bits — exactly enough to name *one*
+other volume. Since `b^L ≫ L·log₂ b`, no single volume can encode the addresses of
+all `b^L` volumes: the complete catalog is logically impossible (a clean diagonal/
+counting obstruction).
+
+A *distributed* catalog over `N` volumes carries `N·L·log₂ b` bits and suffices once
+`N > b^L / (L·log₂ b)`. The library can thus catalog itself collectively, never
+individually — the precise mathematical residue of Borges' melancholy.
+
+*(The catalog discussion is contextual and uses only the cardinality
+`#(Library b L) = b^L` of Theorem 1; the inequality is an information-theoretic
+counting observation rather than one of the formalized theorems above.)*
+
+---
+
+## 7. Algorithms
+
+### 7.1 Exact containment probability via disjoint blocks (mini-Library)
+
+For modest `b, L, k` the sandwich bounds and even the exact non-containment count
+are directly computable. The exact probability of *no aligned block match* is
+`(1 - b^(-k))^(⌊L/k⌋)`, and the lower/upper sandwich bounds follow in `O(1)`
+arithmetic operations (with big-integer powers). For tiny libraries one may also
+enumerate all `b^L` volumes and count containment exactly, validating the bounds.
+
+### 7.2 De Bruijn catalog for a mini-Library
+
+A de Bruijn sequence `B(b, n)` is a cyclic string over `b` symbols in which every
+length-`n` word appears exactly once as a contiguous substring; its length is `b^n`.
+It provides an optimal "catalog" in the sense that a single sweep enumerates all
+`b^n` words. For the mini-Library with `b = 4`, taking `n` so that `b^n` matches the
+book length yields a compact traversal of all length-`n` patterns. The greedy
+"prefer-largest" (Martin) construction builds such a sequence in linear time in its
+output length.
+
+---
+
+## 8. Applications
+
+The Library of Babel is the canonical model of a fixed-size *information space*, and
+the theorems transfer verbatim:
+
+- **Genomics.** Theorem 3 is the expected number of occurrences of a fixed motif of
+  length `k` in random DNA (`b = 4`).
+- **Cryptography.** Theorem 2 is the guessing probability of a fixed key of length
+  `L`; Theorem 4 bounds the chance a short pattern appears in a random keystream.
+- **Probabilistic combinatorics.** The disjoint-block method (Theorems 6–8) is the
+  standard route to "a random word almost surely contains any fixed factor."
+- **Information theory.** §6 is the source-coding bound: no fixed-length codeword
+  can index a strictly larger message set.
+
+---
+
+## 9. Future directions
+
+**Conjecture 1 — Two-sided sandwich and sharp asymptotics.** For fixed `b ≥ 2`,
+`k ≥ 1`, the bounds give `1 - (1 - b^(-k))^(⌊L/k⌋) ≤ P_L(contains) ≤ (L-k+1)·b^(-k)`.
+Conjecture: `P_L(contains) = 1 - exp(-(L-k+1) b^(-k)) + o(1)` in the regime
+`L·b^(-k) → λ` (a Poisson/Chen–Stein limit for the occurrence count). A milestone is
+a total-variation bound between the occurrence count and `Poisson(λ)` via Chen–Stein
+on the dependency graph of overlapping windows.
+
+**Conjecture 2 — Variance and a second-moment lower bound.** With `V_L(p) =
+Var(occurrenceCount)`, conjecture `V_L(p) = (L-k+1)b^(-k)(1-b^(-k)) + 2·Σ_{1≤d<k}
+(overlap correlation term)`, the overlap terms governed by the border/period
+structure of `p`. Paley–Zygmund then yields a mean/variance lower bound valid for
+all `L`.
+
+**Conjecture 3 — Pattern autocorrelation governs clustering.** Patterns with
+nontrivial self-overlap (e.g. `aa…a`) cluster occurrences, inflating variance.
+Conjecture: among length-`k` patterns the overlap-free ("bifix-free") patterns
+minimize `Var(occurrenceCount)` and maximize `P(contains)` for every `L`. Introduce
+a `correlationPolynomial` and prove monotonicity of variance in its coefficients.
+
+**Conjecture 4 — Coupon-collector for the whole library.** Let `T` be the number of
+i.i.d. uniform volumes drawn until every one of the `b^L` volumes appears at least
+once. Conjecture `E[T] = b^L · H_{b^L}` and `T/(b^L log b^L) → 1` in probability —
+the classical coupon collector at `N = b^L`.
+
+**Conjecture 5 — Distinct k-grams in a single volume.** Let `D_L` be the number of
+distinct length-`k` substrings in a random volume of length `L`. Conjecture
+`E[D_L] = b^k(1 - (1 - b^(-k))^(L-k+1)) + correction` and `D_L/b^k → 1` once
+`L ≫ k·b^k` — a single sufficiently long volume already realizes essentially the
+entire `k`-gram universe.
+
+---
+
+## 10. Conclusion
+
+The Library of Babel, formalized as the uniform space of all length-`L` strings over
+`b` symbols, admits a complete and exact elementary theory. It contains `b^L`
+volumes, each with probability `b^(-L)`; a fixed length-`k` pattern occurs
+`(L-k+1)·b^(-k)` times on average; and the containment probability is sandwiched
+between `1 - (1 - b^(-k))^(⌊L/k⌋)` and `(L-k+1)·b^(-k)`. The lower bound, proved via
+an explicit position-aware block-reindexing bijection, forces containment to be
+asymptotically certain — the mathematical realization of Borges' dream that every
+text, somewhere, already exists.

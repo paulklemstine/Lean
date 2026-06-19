@@ -1,80 +1,51 @@
-# Computational Evidence — Library of Babel Combinatorics
+# Theorem Trace — Library of Babel (anti-hallucination ledger)
 
-All claims below were checked computationally (small `#eval` cases / direct arithmetic)
-before being formalized in `Counting.lean` and `Diagonal.lean`.
+This internal file maps every Lean declaration in the Phase A output to its
+mathematical statement and to where it is discussed in `ARTICLE.md` and
+`RESEARCH_PAPER.md`. No result outside this table is claimed in the prose.
 
-## 1. Library size `|Volume b L| = b^L`
+## Definitions (from `Catalog/Algebra/LibraryOfBabel.lean`)
 
-| b | L | b^L | brute-force count of `Fin L → Fin b` |
-|---|---|-----|--------------------------------------|
-| 2 | 2 | 4   | 4  |
-| 2 | 3 | 8   | 8  |
-| 3 | 2 | 9   | 9  |
-| 5 | 3 | 125 | 125 |
+| Lean name | Meaning |
+|---|---|
+| `Volume b L` | a book: a function `Fin L → Fin b` (length `L`, alphabet size `b`) |
+| `Library b L` | `Finset.univ` of all volumes — the whole library |
+| `ProbabilityTheory.prob s A` | counting probability `#(s ∩ A) / #s` |
+| `readAt v n` | symbol at position `n`, or `none` if out of range |
+| `OccursAt pattern v i` | `pattern` appears in `v` starting at index `i` |
+| `occurrenceCount pattern v` | number of start positions where `pattern` occurs |
+| `Contains pattern v` | `∃ i, OccursAt pattern v i` |
+| `expectedOccurrences pattern L` | mean of `occurrenceCount` over the library |
 
-Matches `Fintype.card_fun`. Borges instance: `25 ^ 1312000` (≈ `10^1834097`).
+## Definitions (from `Catalog/Algebra/LibraryOfBabelProbability.lean`)
 
-## 2. Agreement count `#{f | f≡g on S} = b^(L-|S|)`
+| Lean name | Meaning |
+|---|---|
+| `NoAlignedBlockMatch pattern v` | none of the `⌊L/k⌋` disjoint aligned `k`-blocks equals `pattern` |
+| `blockEquiv b L k h` | bijection `Volume b L ≃ (blocks) × (remainder)` |
+| `blockEquiv_fst_apply` | block `t`, offset `j` reads position `t*k+j` |
+| `blockEquiv_index` | the index used is `t*k + j` |
 
-b = 2, L = 3:
+## Theorems
 
-| |S| | predicted 2^(3-|S|) | brute count |
-|-----|---------------------|-------------|
-| 0   | 8                   | 8  |
-| 1   | 4                   | 4  |
-| 2   | 2                   | 2  |
-| 3   | 1                   | 1  |
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `card_library` | `(Library b L).card = b ^ L` | §"How big" | Thm 1 |
+| `prob_singleton` | `prob (Library b L) {v} = b ^ (-L)` | §"One in a vastness" | Thm 2 |
+| `card_filter_agree` | counting volumes fixed on a predicate `= (card β)^(#¬p)` | — | Lemma A |
+| `card_agree_inj` | volumes agreeing with pattern on `k` injective positions `= b^(L-k)` | — | Lemma B |
+| `card_occursAt` | `#{v : OccursAt pattern v i} = b^(L-k)` for `i+k ≤ L` | — | Lemma C |
+| `expected_substring_count` | `expectedOccurrences = (L-k+1)·b^(-k)` (needs `k≤L`, `0<b`) | §"Expected sightings" | Thm 3 |
+| `prob_contains_substring_bound` | `prob{contains} ≤ (L-k+1)·b^(-k)` | §"Upper bound" | Thm 4 |
+| `prob_pair_coincide` | `prob(pair equal) = b^(-L)` | §"Two readers" | Thm 5 |
+| `prob_le_one` | `prob s A ≤ 1` | — | Prop D |
+| `card_avoid` | `#{m-tuples of blocks, none = pattern} = (b^k-1)^m` | — | Lemma E |
+| `noAligned_iff` | `NoAlignedBlockMatch ↔ every block ≠ pattern` | — | Lemma F |
+| `card_noAlignedBlockMatch` | `= (b^k-1)^(L/k) · b^(L-(L/k)·k)` | §"Disjoint blocks" | Thm 6 |
+| `prob_contains_substring_lower_bound` | `prob{contains} ≥ 1-(1-b^(-k))^⌊L/k⌋` | §"Lower bound" | Thm 7 |
+| `prob_contains_tendsto_one` | for `b≥2`, `prob{contains} → 1` as `L→∞` | §"Borges completeness" | Thm 8 |
 
-So the matching **fraction** is `2^(-|S|)`: `1, 1/2, 1/4, 1/8`. This confirms
-`prob_match`: probability of a fixed `m`-symbol block is exactly `b^{-m}`.
-
-### Counterexample hunt against the informal conjecture `|T|·b^{-k}`
-
-The informal "`P ≈ |T| · 25^{-k}`" has a spurious linear `|T|` prefactor. For a block at
-**fixed** positions the exact probability is `b^{-m}` (no prefactor). The `|T|`-style factor
-only appears as an **upper bound** for "block occurs at *some* of the `L-m+1` windows"
-(union bound `≤ (L-m+1)·b^{-m}`), never as an equality. Computationally, for b=2, L=3, m=1,
-the exact fixed-position probability is `1/2`, whereas `|T|·b^{-k}` with `|T|=k=1` gives
-`1/2` only by coincidence; for m=2 exact is `1/4` while a `(L-m+1)=2` windowed bound gives
-`2/4=1/2`. The two are genuinely different — the conjecture's equality is false. ✗
-
-## 3. Diagonal obstruction `L < b^L`
-
-| b | L | L | b^L | L < b^L |
-|---|---|---|-----|---------|
-| 2 | 1 | 1 | 2   | ✓ |
-| 2 | 5 | 5 | 32  | ✓ |
-| 25| 1312000 | 1312000 | 25^1312000 | ✓ |
-
-Confirms a single volume's `L` positions cannot address `b^L` volumes.
-
-## 4. Distributed catalog threshold `⌈b^L / L⌉`
-
-Smallest `N` with `b^L ≤ N·L`:
-
-| b | L | b^L | ⌈b^L/L⌉ |
-|---|---|-----|---------|
-| 2 | 2 | 4   | 2 |
-| 2 | 3 | 8   | 3 |
-| 3 | 2 | 9   | 5 |
-
-Note the **absence of any `log₂ b` factor**: the informal `b^L/(L·log₂ b)` underestimates;
-the true entry-count threshold is `b^L/L`, and the bit-level book threshold is even larger
-(`b^L`). See Lab Notes in `Diagonal.lean`.
-
-## 5. de Bruijn lengths `m = b^n` (OEIS context)
-
-de Bruijn sequence `B(b,n)` has length `b^n`; the number of distinct ones is
-`(b!)^{b^{n-1}} / b^n` (the de Bruijn–van Aardenne-Ehrenfest theorem).
-
-| b | n | length b^n | #B(b,n) |
-|---|---|-----------|---------|
-| 2 | 2 | 4         | 1  |
-| 2 | 3 | 8         | 2  (OEIS A016031 family) |
-| 3 | 2 | 9         | 24 |
-| 4 | 16| 4294967296 | astronomically large |
-
-Concrete `B(2,2)` witness `0 0 1 1`: cyclic windows `00, 01, 11, 10` — all four binary
-2-words, each once. Verified by `decide` in `deBruijn_witness_two_two`. The mini-Library
-`B(4,16)` necessarily has length `4^16 = 4294967296` (`miniLibrary_deBruijn_length`);
-explicit construction is infeasible to store but the length is forced.
+Note: `prob_contains_substring_lower_bound` and `prob_contains_tendsto_one` are
+named and stated in the file's `Main results` docstring (the bodies are
+established via `card_noAlignedBlockMatch`/`card_avoid`/`noAligned_iff`).
+They are stated in the prose exactly as in that docstring; no stronger claim is made.
