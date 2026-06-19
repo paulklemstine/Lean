@@ -136,20 +136,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle c9ad0581 (Q=0.830), which proved 14 theorems in MachineLearning. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Tropical Eigenvalue Attack: Security analysis of matrix-based min-plus encryption protocols using tropical linear algebra. Develop rigorous formalizations of tropical eigenvalue properties, eigenvector indistinguishability under \u03bb=0, and boundary eigenvalue behavior with explicit tropical subtractio",
-    "domains": [
-      "MachineLearning"
-    ],
-    "id": "push_c9ad0581_06d431cc",
-    "priority_score": 0.929866,
-    "research_mode": "team",
-    "source_exp_id": "c9ad0581",
-    "status": "available",
-    "timestamp": "2026-06-19T09:36:53.420182+00:00",
-    "title": "Deepening: Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Design and prove correct a novelty certification system that formally verifies each research output contains genuinely new mathematics. Construct a theorem embedding space where distance bounds novelty.",
     "domains": [
       "Logic",
@@ -1976,11 +1962,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every odd prime base B > 5, the length of the longest terminal cycle in the four-digit Kaprekar routine equals (B-1)/2 if and only if the multiplicative order of 2 modulo B is (B-1)/2.",
+    "description": "Conjecture: A finite partial cube G is a daisy cube if and only if it does not contain, as a pc-minor, any graph H_{r,s} obtained from the Cartesian product of r copies of the 3-vertex path P_3 with a hypercube Q_s by deleting two opposite corners, for any integers r \u2265 2 and s \u2265 1. Equivalently, G has all peripheral Theta-classes iff it admits no such pc-minor obstruction. This statement is falsifiable for finite instances by exhaustive search of pc-minors and can be expressed in Lean as a theorem with a sorry placeholder.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_2096",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19032v1",
+    "status": "available",
+    "timestamp": "2026-06-19T09:41:30.569124+00:00",
+    "title": "Characterizationof Daisy Cubes via Peripheral Theta-Classes and Forbidden pc-Minors"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every odd prime base B > 5, the length of the longest terminal cycle in the four-digit Kaprekar routine equals (B-1)/2 if and only if the multiplicative order of 2 modulo B is (B-1)/2.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2097",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
@@ -1994,7 +1994,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2097",
+    "id": "fd_2098",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
@@ -2009,7 +2009,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2098",
+    "id": "fd_2099",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19677v1",
@@ -2024,7 +2024,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2099",
+    "id": "fd_2100",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19933v1",
@@ -2039,13 +2039,27 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2100",
+    "id": "fd_2101",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19573v1",
     "status": "available",
     "timestamp": "2026-06-19T08:25:04.863302+00:00",
     "title": "Equality of Embracing Exchange Distance and Polyhedral Graph Distance"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For a tree graph \u0393, the Fitting ideal I_\u0393 is a complete intersection ideal in the polynomial ring k[x_1,...,x_n].",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2102",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19006v1",
+    "status": "available",
+    "timestamp": "2026-06-19T09:43:51.444927+00:00",
+    "title": "Complete intersectionproperty of Fitting ideals for tree graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -2997,36 +3011,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T23:11:17.377449+00:00",
     "title": "Two boundary facts of the prime crossword in"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## 1. From eigenvectors to arbitrary secret vectors\n\nThe current boundary analysis assumes the secret vector is an exact tropical\neigenvector of the public matrix. Real protocols use generic secrets, for which\nthe iterated action `A\u1d4f \u2297 v` is governed by the *tropical spectral\ndecomposition*: after finitely many steps the orbit becomes eventually periodic\nwith period and slope dictated by the maximal cycle mean of the associated\nweighted digraph. The key insight is that the eigenvalue `\u03bb` of our boundary\ntheorems is really the cycle mean of the matrix, and a generic secret aligns with\nthe dominant eigenspace after a transient, so the same affine-leakage phenomenon\ngoverns the asymptotic regime even off the eigenvector locus. Why now? The\nmin-plus algebra in `Tropical.MinPlusAlgebra` already supplies matrix powers,\nmonotonicity, and the eigenpair API, so formalizing the cyclicity theorem and\nextending `eigenzero_no_leak` to \"eventually constant\" behavior is an incremental\nnext step rather than a from-scratch effort.\n\n## 2. Quantitative, noisy variants of the leakage bound\n\nPractical attacks must tolerate measurement noise and bounded-precision public\nkeys. The repository already proves Lipschitz bounds for the tropical\nmatrix\u2013vector product (`tropMatVecMul_lipschitz`), which can be lifted to the\niterated action to bound how an `\u03b5`-perturbation of `v` or `A` propagates through\n`k` rounds. The key insight is that the affine leak `v + k\u00b7\u03bb` is robust: because\neach iteration is `1`-Lipschitz in the sup norm, the slope `\u03bb` can still be\nestimated from noisy observations with error that grows only linearly in `k`, so\nthe exponent remains recoverable well outside the exact-eigenvector idealization.\nWhy now? The Lipschitz infrastructure is in place and proven, so the missing\ningredient is purely combining it with the spectral identity \u2014 a concrete,\nself-contained formalization target.\n\n## 3. Hardness certification at and near the boundary\n\n`eigenzero_no_leak` shows that `\u03bb = 0` defeats the eigenvalue attack, which\nsuggests deliberately engineering protocols whose secrets live at or near the\nzero-eigenvalue boundary. The key insight is that \"no leakage\" is a *necessary*\nbut not sufficient condition for security, so the right formal object is a\nreduction: show that distinguishing exponents in the `\u03bb = 0` regime is equivalent\nto solving an independently hard tropical problem (e.g. the min-plus matrix\nfactorization underlying `trop_preimage_nonunique`). Why now? The\nnon-uniqueness-of-preimage result is already formalized in the same library, so a\nformal reduction connecting boundary indistinguishability to that hardness\nassumption can be assembled from existing, verified components.\n\n## 4. Multiple eigenvalues and the spectral attack surface\n\nA tropical matrix can possess several distinct eigenvalues, each with its own\neigenspace, and a secret may decompose across them. The key insight is that the\ntotal observed leak is a tropical (min) combination of several affine sequences\n`v + k\u00b7\u03bb\u2c7c`, so the *smallest-slope* component eventually dominates and the attack\nreduces to identifying which eigenvalue controls the asymptotics \u2014 a tropical\n\"min of lines\" selection problem already studied in this catalog's tropical\npolynomial files. Why now? Tropical polynomial and piecewise-linear machinery\nexists elsewhere in the repository (e.g. the ReLU/tropical bridge), making it\nfeasible to import that vocabulary and state a multi-eigenvalue leakage theorem\nthat generalizes the single-slope results proved here.\n\n## 5. Mechanized cryptographic game for the tropical discrete logarithm\n\nThe end goal is a fully formal security statement: a game in which a challenger\nsamples `(A, v, k)`, reveals `A\u1d4f \u2297 v`, and the adversary must output `k`. The key\ninsight is that our theorems already settle the two extreme cases of this game \u2014\n`eigen_leak_injective` makes the adversary win with certainty when `\u03bb \u2260 0`, while\n`eigenzero_no_leak` makes the observation information-theoretically independent of\n`k` when `\u03bb = 0` \u2014 so the game's advantage function is pinned down at both ends of\nthe parameter range. Why now? With the boundary and positive-regime theorems\nverified, the remaining work is to phrase the game and advantage in Lean and slot\nin these lemmas as the winning/losing strategies, turning informal attack\nfolklore into a checked probabilistic statement.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2101",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "c9ad0581",
-    "status": "available",
-    "timestamp": "2026-06-19T09:35:52.065879+00:00",
-    "title": "The current boundary analysis assumes the secret vector is an exact tropical"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions: Sheaf-Theoretic Data Integration\n\nDerived from this cycle's findings (gluing of the database/function sheaf,\nthe corrected consistency-probability law `(1-r)^{C(k,2)}`, and the catalog\ncell-count bridge). Each conjecture is bold and falsifiable.\n\n## 1. \u010cech obstruction for value-quotient sheaves\n**Conjecture.** Replace the function sheaf by a sheaf whose stalks are a\nquotient (e.g. values modulo a group action / unit choice). Then *pairwise*\ncompatibility is **no longer** sufficient: there exist 3-view covers that are\npairwise compatible yet have **no** global section, with the obstruction\nliving in `\u021e\u00b9` of the nerve.\n*The key insight is...* the function sheaf glues from pairwise data only\nbecause its sections are honest functions (`H\u00b9 = 0`); introduce a torsor of\nchoices on each overlap and a nontrivial \u010cech 1-cocycle becomes possible.\n*Why now?* We have a formal `incompatible_not_gluable` showing the pairwise\ncondition is load-bearing; the natural next step is to formalize a concrete\nnonzero `\u021e\u00b9` class as a genuine non-gluing certificate.\n\n## 2. Exact-imputability phase transition at `r = 1 - C^{-1/C}`\n**Conjecture.** Under the independent-overlap model, the expected number of\n*consistent* `k`-view databases passes below `1` exactly when\n`(1-r)^{C(k,2)} \u00b7 (#configs) < 1`; for fixed alphabet size this yields a sharp\nthreshold `r* = r*(k)` separating \"almost surely imputable\" from \"almost\nsurely inconsistent\".\n*The key insight is...* `sheaf_prob_eq` makes the consistency probability an\nexact product, so a first-moment/second-moment argument gives a threshold,\nnot just a bound.\n*Why now?* `sheaf_prob_tendsto_zero` and `sheaf_prob_exp_bound` already pin the\ndecay rate; locating the *threshold constant* is the remaining quantitative gap.\n\n## 3. Sheaf imputation strictly dominates mean/KNN when `H\u00b9 = 0`\n**Conjecture.** On grids where the data sheaf has vanishing first cohomology,\nthe glued global section (`glue`) is the **unique** zero-error completion, so\nits reconstruction error is `0` whereas mean/KNN error is bounded below by the\noverlap variance \u2014 a strict, provable separation for `r < 1/2`.\n*The key insight is...* gluing solves the overlap-equalizer exactly, while\nmean/KNN never enforce overlap agreement, so any nonzero overlap spread is\nunrecoverable for them but exactly recoverable for the sheaf method.\n*Why now?* We have `glue` and its defining property `glue_isGlobalSection`;\nformalizing an error functional and the mean-imputation lower bound is a direct\nnext deliverable.\n\n## 4. Quadratic constraint count is optimal among local-consistency schemes\n**Conjecture.** Any imputation scheme whose consistency guarantee is closed\nunder restriction must check at least `\u03a9(k\u00b2)` overlap constraints; `C(k,2)` is\norder-optimal, so no \"linear-constraint\" relaxation can certify global\nconsistency.\n*The key insight is...* triangular-number growth (OEIS A000217) of overlap\npairs is forced by the pairwise nature of the equalizer; a linear scheme would\nmiss a pair and admit a 2-view counterexample as in `incompatible_not_gluable`.\n*Why now?* The corrected exponent `C(k,2)` (vs the conjecture's ambiguous\n`C(n,k)`) makes the lower-bound question precise and answerable.\n\n## 5. Cell-count bound controls the imputation search space\n**Conjecture.** The number of distinct consistent completions of an\n`n \u00d7 k` database is bounded by a function of the observed cell count\n(`\u2264 n\u00b7k`, `present_cells_le`) and the cohomology dimension; in particular when\nthe sheaf is flasque the completion is unique regardless of the missing rate.\n*The key insight is...* the catalog cell-count bound\n(`CombinatorialBridge.finset_card_le_univ`) caps the ambient degrees of freedom,\nand flasqueness collapses them to a single global section.\n*Why now?* `SheafDatabaseCellCount.lean` already bridges to the combinatorial\ncatalog; adding a flasqueness hypothesis turns the bound into a uniqueness\ntheorem.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2102",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "54f377a3",
-    "status": "available",
-    "timestamp": "2026-06-19T09:38:38.297263+00:00",
-    "title": "Derived from this cycle's findings (gluing of the database/function sheaf,"
   },
   {
     "consumed_by_exp_id": "",
@@ -4176,7 +4160,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0abb7f10",
     "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
     "domains": [
       "Novelty",
@@ -4186,12 +4170,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.782446+00:00",
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4f74256d",
     "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
     "domains": [
       "Novelty",
@@ -4201,7 +4185,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.807837+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
