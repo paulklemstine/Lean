@@ -942,7 +942,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "972d4c89",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domains": [
       "Combinatorics"
@@ -951,7 +951,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -2310,18 +2310,47 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer d \u2265 10 there exist at least two pairwise non\u2011isomorphic line arrangements A and A' in \u2113\u00b2 such that they have the same intersection lattice L(A) \u2248 L(A'), the same minimal degree of a Jacobian relation mdr(A) = mdr(A'), and the same Hilbert function of their Milnor algebras M(A) and M(A'). Moreover, the minimal graded free resolutions of M(A) and M(A') are not isomorphic, so (A, A') is a Ziegler pair that does not satisfy condition (SPEC) (i.e., it is not a constant\u2011lattice specialization). The number of such inequivalent pairs is expected to grow without bound as d increases, indicating an abundance of non\u2011special Ziegler pairs beyond the known examples for d = 9 and d = 10.",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_2123",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20421v1",
+    "status": "available",
+    "timestamp": "2026-06-19T21:51:23.134667+00:00",
+    "title": "Abundance of non\u2011special Ziegler pairs for all degrees \u2265 10"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every finite-dimensional vector space E over a finite field F and every rank r with 0 <= r <= dim E, the map sending a sparse-paving q-matroid M of rank r on E to its set of r-dimensional circuit-hyperplanes is a bijection onto the stable sets of the q-Johnson graph J_q(E,r), whose vertices are r-dimensional subspaces and whose edges join pairs with intersection dimension r-1. Equivalently, a set S of r-subspaces defines a sparse-paving q-matroid precisely when any two distinct members of S intersect in dimension at most r-2.",
     "domains": [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2123",
+    "id": "fd_2124",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20348v1",
     "status": "available",
     "timestamp": "2026-06-19T20:04:48.178198+00:00",
     "title": "Sparse-paving q-matroids are exactly stable sets in the q-Johnson graph"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer r\u22652 there exists a constant C>0 such that for all sufficiently large n the maximum number of edges in an n\u2011vertex r\u2011uniform hypergraph in which each (r+1)-set spans exactly 0 or 2 edges is at least C\u00b7n^r / r\u00b3, and no such hypergraph can have more than C'\u00b7n^r / r\u00b2 edges. Equivalently, the Tur\u00e1n density \u03c0(H^r_3)=\u0398(1/r\u00b3).",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2125",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20367v1",
+    "status": "available",
+    "timestamp": "2026-06-19T21:56:09.924073+00:00",
+    "title": "Conjecture: Tur\u00e1n density of the 3\u2011edge r\u2011graph is \u0398(1/r\u00b3)"
   },
   {
     "consumed_by_exp_id": "",
@@ -4272,7 +4301,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
-    "consumed_by_exp_id": "37233c11",
+    "consumed_by_exp_id": "",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -4282,7 +4311,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.490561+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
@@ -4407,7 +4436,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
   },
   {
-    "consumed_by_exp_id": "c50363b9",
+    "consumed_by_exp_id": "",
     "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
     "domains": [
       "Novelty",
@@ -4417,12 +4446,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.782446+00:00",
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b1a86b30",
     "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
     "domains": [
       "Novelty",
@@ -4432,7 +4461,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.807837+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
