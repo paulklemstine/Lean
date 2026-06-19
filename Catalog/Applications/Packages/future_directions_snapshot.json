@@ -1515,7 +1515,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "b53ecc44",
+    "consumed_by_exp_id": "",
     "description": "Prove that Besicovitch sets in R^2 have Hausdorff dimension 2 (Davies's theorem). Formalize the Wolff bound in R^3: dimension ≥ 5/2. Connect to restriction estimates for the Fourier transform and to additive combinatorics via the Katz-Tao framework.",
     "domain_bridges": [],
     "domains": [
@@ -1528,7 +1528,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432660+00:00",
     "title": "Kakeya Conjecture: Known Cases and Bounds"
   },
@@ -2686,6 +2686,32 @@
     "title": "The dyadic solenoid's Fraisse category has the approximate Ramsey property"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "OEIS A099009",
+      "Schwartz and Thakur's formulation",
+      "Thakur's framework"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every odd prime base B > 5, the length of the longest terminal cycle in the four-digit Kaprekar routine equals (B-1)/2 if and only if the multiplicative order of 2 modulo B is (B-1)/2.",
+    "domain_bridges": [
+      "Modular arithmetic",
+      "Dynamical systems in finite fields"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2089",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize the convergence to the triangular region T_B, then analyze the projective doubling conjugacy to derive cycle lengths using Lean's arithmetic and group theory capabilities.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20439v1",
+    "status": "available",
+    "timestamp": "2026-06-19T05:14:33.661749+00:00",
+    "title": "Terminal Cycle Length in Four-Digit Kaprekar Dynamics Equals (B-1)/2 for Prime Bases"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Balogh–Lemons–Palmer 2021",
@@ -2716,6 +2742,35 @@
     "title": "Arbitrarily small positive codegree Turán density for pairs of k-graphs"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.CO",
+      "Dallard--Milanič--Štorgel conjecture on tree-independence number",
+      "Tree-independence number of K_{1,d}-free graph classes",
+      "Hajebi--Spirkl characterization of finite forbidden induced-subgraph classes with bounded tree-independence number"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer d >= 1 and every finite planar graph H, there exists a natural number B(d,H) such that every finite simple graph G that is K_{1,d}-free and has no induced minor isomorphic to H satisfies alpha-tw(G) <= B(d,H). A counterexample would be an infinite family of K_{1,d}-free graphs excluding H as an induced minor whose tree-independence numbers are unbounded.",
+    "domain_bridges": [
+      "tree-independence number and tree decompositions with bounded independence in bags",
+      "induced minors and induced-subgraph preservation under deletions and contractions",
+      "star-free graphs and bounded local neighborhood independence",
+      "planar excluded induced minors and structural decomposition obstructions"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2090",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formalize finite simple graphs, induced minors, K_{1,d}-freeness, planarity, and tree-independence number in Lean. Prove auxiliary lemmas showing that unbounded tree-independence in a K_{1,d}-free induced-minor-closed class forces arbitrarily large planar induced-minor obstructions. Then use induction on the size or block structure of the excluded planar graph H to extract a uniform bound B(d,H).",
+    "research_mode": "team",
+    "source_exp_id": "2606.20256v1",
+    "status": "available",
+    "timestamp": "2026-06-19T06:18:53.730025+00:00",
+    "title": "Bounded tree-independence for K_{1,d}-free graphs excluding a planar induced minor"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "HK2017",
@@ -2744,61 +2799,6 @@
     "title": "Canonical structure of large cross-intersecting families"
   },
   {
-    "ambition_level": "extension",
-    "catalog_references": [
-      "OEIS A099009",
-      "Schwartz and Thakur's formulation",
-      "Thakur's framework"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "For every odd prime base B > 5, the length of the longest terminal cycle in the four-digit Kaprekar routine equals (B-1)/2 if and only if the multiplicative order of 2 modulo B is (B-1)/2.",
-    "domain_bridges": [
-      "Modular arithmetic",
-      "Dynamical systems in finite fields"
-    ],
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2092",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Formalize the convergence to the triangular region T_B, then analyze the projective doubling conjugacy to derive cycle lengths using Lean's arithmetic and group theory capabilities.",
-    "research_mode": "team",
-    "source_exp_id": "2606.20439v1",
-    "status": "available",
-    "timestamp": "2026-06-19T05:14:33.661749+00:00",
-    "title": "Terminal Cycle Length in Four-Digit Kaprekar Dynamics Equals (B-1)/2 for Prime Bases"
-  },
-  {
-    "ambition_level": "grand_challenge",
-    "catalog_references": [
-      "math.CO",
-      "Dallard--Milanič--Štorgel conjecture on tree-independence number",
-      "Tree-independence number of K_{1,d}-free graph classes",
-      "Hajebi--Spirkl characterization of finite forbidden induced-subgraph classes with bounded tree-independence number"
-    ],
-    "consumed_by_exp_id": "",
-    "description": "For every integer d >= 1 and every finite planar graph H, there exists a natural number B(d,H) such that every finite simple graph G that is K_{1,d}-free and has no induced minor isomorphic to H satisfies alpha-tw(G) <= B(d,H). A counterexample would be an infinite family of K_{1,d}-free graphs excluding H as an induced minor whose tree-independence numbers are unbounded.",
-    "domain_bridges": [
-      "tree-independence number and tree decompositions with bounded independence in bags",
-      "induced minors and induced-subgraph preservation under deletions and contractions",
-      "star-free graphs and bounded local neighborhood independence",
-      "planar excluded induced minors and structural decomposition obstructions"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2093",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Formalize finite simple graphs, induced minors, K_{1,d}-freeness, planarity, and tree-independence number in Lean. Prove auxiliary lemmas showing that unbounded tree-independence in a K_{1,d}-free induced-minor-closed class forces arbitrarily large planar induced-minor obstructions. Then use induction on the size or block structure of the excluded planar graph H to extract a uniform bound B(d,H).",
-    "research_mode": "team",
-    "source_exp_id": "2606.20256v1",
-    "status": "available",
-    "timestamp": "2026-06-19T06:18:53.730025+00:00",
-    "title": "Bounded tree-independence for K_{1,d}-free graphs excluding a planar induced minor"
-  },
-  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "“the main threshold\" for piercing quadratic hypersurfaces",
@@ -2815,7 +2815,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2094",
+    "id": "fd_2091",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formulate via uniform distribution over polynomial systems and apply probabilistic estimates using Herglotz-type inequalities.",
@@ -2824,6 +2824,69 @@
     "status": "available",
     "timestamp": "2026-06-19T06:52:44.622331+00:00",
     "title": "Randomly piercing algebraic sets and its implications"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Ehrhart polynomial",
+      "Ehrhart--Macdonald reciprocity",
+      "summatory Ehrhart polynomial",
+      "finite calculus",
+      "convex lattice polytope"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For a d-dimensional convex lattice polytope P, define S_0(P,t) to be its Ehrhart polynomial and define the r-fold summatory Ehrhart polynomial recursively by S_{r+1}(P,t)=sum_{i=0}^{t-1} S_r(P,i). Define the relative-interior analogue by S_0(P^circ,t)=E(P^circ,t) and S_{r+1}(P^circ,t)=sum_{i=1}^{t-1} S_r(P^circ,i). The conjecture is that for every integer r >= 0 and every positive integer t, the polynomial extensions satisfy S_r(P^circ,t)=(-1)^(d+r) S_r(P,r-t). The paper proves the case r=1; r=0 is classical Ehrhart--Macdonald reciprocity.",
+    "domain_bridges": [
+      "Discrete antiderivatives of integer-valued polynomials",
+      "Generating functions of lattice-point enumerators",
+      "Formal polynomial identities over Q in Lean 4"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2092",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Prove by induction on r. The base case r=0 is Ehrhart--Macdonald reciprocity. For the induction step, use the discrete-antiderivative characterization: S_{r+1}(P,x+1)-S_{r+1}(P,x)=S_r(P,x) and S_{r+1}(P,0)=0. Similarly, the interior summatory polynomial vanishes at t=1 and has forward difference S_r(P^circ,t). Substitute the induction hypothesis S_r(P^circ,t)=(-1)^(d+r) S_r(P,r-t), then verify that the polynomial (-1)^(d+r+1) S_{r+1}(P,r+1-t) has the same forward difference and same initial value as S_{r+1}(P^circ,t). Polynomial extensionality over Q then gives the identity.",
+    "research_mode": "team",
+    "source_exp_id": "2606.19577v1",
+    "status": "available",
+    "timestamp": "2026-06-19T07:10:46.914439+00:00",
+    "title": "Iterated summatory Ehrhart--Macdonald reciprocity"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Aka–Luethi–Michel–Wieser (2022)",
+      "Edixhoven (2005)",
+      "Yafaev (2008)",
+      "André–Oort (1999)",
+      "Blomer–Brumley–Khayutin (2020)"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any integers r≥2 and any collection of r pairwise non‑isomorphic Shimura curves, any sequence of CM points with a common CM field and two distinct primes splitting in each field, if the points are strict (no proper special subvariety contains infinitely many of them), then the Galois orbits of the sequence become equidistributed in the product with respect to the Haar measure as the discriminants tend to infinity.",
+    "domain_bridges": [
+      "Equidistribution theorems",
+      "André–Oort conjecture",
+      "CM points",
+      "Shimura curves",
+      "Ergodic theory",
+      "Linnik splitting condition"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2092",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply the adelic toral‑packet equidistribution theorem of Aka–Luethi–Michel–Wieser to the product space, show that the only positive‑dimensional special subvarieties are CM‑fibers, and deduce weak convergence of Galois orbit measures to Haar measure; the argument is unconditional under the given splitting hypothesis.",
+    "research_mode": "team",
+    "source_exp_id": "2606.19933v1",
+    "status": "available",
+    "timestamp": "2026-06-19T07:11:19.175046+00:00",
+    "title": "Equidistribution of Galois orbits of CM points on products of non‑isomorphic Shimura curves"
   },
   {
     "ambition_level": "extension",
@@ -4258,6 +4321,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "9afcaae7",
+    "description": "Conjecture: For sufficiently capable transformer language models trained on next-token prediction, there exists a scale-dependent phase transition in the empirical singular-value spectra of specific learned weight matrices (especially attention output and MLP projection layers) such that models exhibiting strong multi-step reasoning have renormalized spectral statistics converging to a non-Wigner universality class with stable critical exponents, while weaker models remain in a Marchenko-Pastur-like regime. Test: Train model families across parameter scales, data curricula, and architectures; measure layerwise spectra, finite-size scaling, and critical exponents; then test whether emergence of reasoning benchmarks correlates sharply with the predicted spectral transition and whether interventions that shift spectra across the critical point causally improve or degrade reasoning. Refutation occurs if no reproducible universality class or phase boundary appears, or if spectral transition fails to predict reasoning emergence better than naive scale measures. Impact: This would provide a quantitative order parameter for emergent cognition in neural networks, connect deep learning to statistical physics and random matrix theory, and enable principled architecture/search methods that target reasoning-critical phases rather than brute-force scaling.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Novelty"
+    ],
+    "id": "fd_2020",
+    "lineage_refs": [],
+    "priority_score": 0.7,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "in_progress",
+    "timestamp": "2026-06-16T16:54:32.770267+00:00",
+    "title": "Spectral Universality of LLM Weight Matrices: Random-Matrix Phase Transitions in"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Conjecture: For any sufficiently expressive finitely presented formal system S (e.g. arithmetic-strength theorem proving with a fixed proof encoding), the graph G_n of derivable statements and minimal proof transformations up to proof length n exhibits a nontrivial renormalization-group fixed point: after coarse-graining proofs by local rewrite equivalence classes and rescaling path lengths by a system-dependent factor, the sequence of normalized graph Laplacian spectra converges as n -> infinity to a universal limiting measure depending only on the logical complexity class of S, not on syntactic presentation. Test: Construct proof-search graphs for multiple inequivalent presentations of the same theory and for theories of different strength; define explicit coarse-graining via proof normalization/rewrite neighborhoods; numerically compare spectral measures across scales. The conjecture is supported if presentations within the same complexity class flow to the same limiting spectrum and refuted if no stable scale-invariant spectrum appears or if the limit depends sensitively on encoding details. Impact: This would found a statistical physics of mathematics, yielding universality classes for theorem proving, new complexity invariants of formal systems, and principled ways to predict proof hardness and design more efficient automated reasoning heuristics.",
     "domain_bridges": [],
@@ -4409,6 +4492,25 @@
     "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "3c627a3f",
+    "description": "Cycle bfb62bb9 (Q=0.524) proved 22 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a minimal, self-contained core of the order-valuation program for truncated binary polynomials, avoiding any unverified functorial or uniqueness claims. Work in the concrete algebra `R_n := ",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty"
+    ],
+    "id": "sorry_fill_bfb62bb9_34e4a38a",
+    "lineage_refs": [],
+    "priority_score": 0.5736521220159152,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "bfb62bb9",
+    "status": "in_progress",
+    "timestamp": "2026-06-16T10:49:09.086340+00:00",
+    "title": "Close Proofs: These conjectures extend `Catalog/Bridges/CodeThresholdValuation.lean`"
   },
   {
     "ambition_level": "extension",
@@ -5171,6 +5273,26 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
+    "consumed_by_exp_id": "74320b24",
+    "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Speculative"
+    ],
+    "id": "fd_0411",
+    "lineage_refs": [],
+    "priority_score": 0.24999999999999992,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T19:55:26.181414+00:00",
+    "title": "Non-Archimedean Probability via Surreal Numbers"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Inspired by the AdS/CFT correspondence, formalize a mathematical holographic principle: a theorem about n-dimensional structures (the bulk) has a dual (shorter) proof in (n-1)-dimensional boundary terms. Conjecture: Every proof by induction on a well-founded order of rank n has an equivalent proof by coinduction on the n-1 boundary. Test: find a concrete theorem (e.g., finite Ramsey) and show its inductive proof in R^n maps to a coinductive proof on S^{n-1}. Impact: a new holographic proof theory connecting algebraic topology to proof complexity.",
     "domain_bridges": [],
@@ -5187,6 +5309,26 @@
     "status": "available",
     "timestamp": "2026-06-03T19:55:26.259292+00:00",
     "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "edb2f51b",
+    "description": "Formalize musical counterpoint rules (Fux's species counterpoint) as a category where objects are consonant intervals and morphisms are permitted voice leadings. Conjecture: The category of first-species counterpoint over a diatonic scale is equivalent to the thin category generated by a specific poset of 12 elements. Test: enumerate all valid first-species counterpoint motions and prove they form exactly this category. Impact: bridges music theory, order theory, and categorical logic.",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Speculative"
+    ],
+    "id": "fd_0415",
+    "lineage_refs": [],
+    "priority_score": 0.24999999999999992,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T19:55:26.503715+00:00",
+    "title": "Sonic Mathematics: Counterpoint as Category Theory"
   },
   {
     "ambition_level": "extension",
@@ -5231,7 +5373,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "60ec8c30",
+    "consumed_by_exp_id": "",
     "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
     "domain_bridges": [],
     "domains": [
@@ -5244,7 +5386,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:30.732241+00:00",
     "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
   },
