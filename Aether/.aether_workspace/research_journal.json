@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "75b4da8e",
-      "domain": "Physics",
-      "key_insight": "# Future Directions — Definable Ricci-Flow Renormalization Fixed Points in Simplicial Quantum Codes\n\n## Synthesis\n\nThis cycle turned the (informal) physics conjecture — *a coupled discrete Ricci-flow",
-      "quality_score": 0.5219054545454546,
-      "sorry_count": 2,
-      "theorem_count": 11,
-      "timestamp": "2026-06-14T21:01:48",
-      "title": "Definable Ricci-Flow Renormalization Fixed Points in Simplicial Quantum Error-Co"
-    },
-    {
       "cycle_id": "60b0b842",
       "domain": "Applications",
       "key_insight": "# Future Directions — Spectral Gap Rigidity for Hodge Laplacians under Coarse-Graining\n\n## Synthesis\n\nThis cycle built the linear-algebraic skeleton of the conjecture *Spectral Gap\nRigidity for Hyperg",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-06-19T10:39:43",
       "title": "The Library of Babel: Combinatorics of the Universal Library"
+    },
+    {
+      "cycle_id": "0abb7f10",
+      "domain": "Logic",
+      "key_insight": "# Future Directions — Tropical Cryptography after Eigenvalue Additivity\n\nDerived from this cycle's findings (`Catalog/Tropical/TropicalMatrixPower.lean`,\n`Catalog/Tropical/TropicalDiscreteLog.lean`):",
+      "quality_score": 0.614,
+      "sorry_count": 0,
+      "theorem_count": 157,
+      "timestamp": "2026-06-19T11:11:18",
+      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8895200000000001
     }
   ],
-  "last_updated": "2026-06-19T10:39:43",
+  "last_updated": "2026-06-19T11:11:18",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3437,12 +3437,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "48c32113",
-        "quality": 0.5296819875776397,
-        "theorems": 161,
-        "title": "Close Proofs: This cycle opened a constructive, finite-alphabet bridge between t"
-      },
-      {
         "cycle_id": "dae6a9b2",
         "quality": 0.5504199999999999,
         "theorems": 17,
@@ -3495,6 +3489,12 @@
         "quality": 0.4729431683168317,
         "theorems": 19,
         "title": "The Mathematics of Jigsaw Puzzles: NP-Completeness and Topology"
+      },
+      {
+        "cycle_id": "0abb7f10",
+        "quality": 0.614,
+        "theorems": 157,
+        "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
       }
     ],
     "MachineLearning": [

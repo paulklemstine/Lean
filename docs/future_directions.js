@@ -3057,6 +3057,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Tropical Cryptography after Eigenvalue Additivity\n\nDerived from this cycle's findings (`Catalog/Tropical/TropicalMatrixPower.lean`,\n`Catalog/Tropical/TropicalDiscreteLog.lean`): tropical eigenvalues form a homomorphism\n`\u03bb(A^{\u2297m}) = m\u00b7\u03bb(A)`, which breaks the tropical discrete logarithm problem (TDLP) in\nclosed form off the boundary `\u03bb = 0`.\n\n## Conjecture 1 \u2014 Eigenvalue channel is *complete* for the TDLP\nFor a random tropical matrix `A` of size `n \u2265 10` with finite entries, the public power\n`B = A^{\u2297m}` always determines `m` exactly via `m = \u03bb(B)/\u03bb(A)`, except on a measure-zero\nset where `\u03bb(A) = 0`.\n- **The key insight is** that the tropical eigenvalue is a ring homomorphism from\n  (tropical exponentiation, `\u2297`) to (ordinary multiplication by the exponent), so the\n  one secret scalar `m` is linearly exposed \u2014 exactly the structure a one-way function\n  must lack.\n- **Why now?** We have formalized eigenvalue additivity and a closed-form recovery; the\n  remaining step is a genericity statement (almost-everywhere `\u03bb(A) \u2260 0`), which Mathlib's\n  measure-theory and the existing `WeightedDigraph` boundary results make tractable.\n\n## Conjecture 2 \u2014 Boundary `\u03bb = 0` is the *only* refuge, and it is degenerate\nAny tropical DH variant whose security survives must force every public matrix to have\nspectral value `0` (a tropical fixed point); but then `eigenzero_no_leak` plus\n`tdlp_boundary_no_leak` show the public power equals the input up to a global shift,\ncollapsing the key space.\n- **The key insight is** that the same homomorphism that leaks `m` when `\u03bb \u2260 0` makes the\n  scheme *trivial* when `\u03bb = 0`: additivity reads `m\u00b70 = 0`, so the power map is the\n  identity on the eigen-orbit.\n- **Why now?** Both halves are already formal \u2014 additivity here, no-leak in\n  `Tropical.EigenzeroNoLeak` \u2014 so the dichotomy \"either leaky or trivial\" can be stated\n  as a single theorem next cycle.\n\n## Conjecture 3 \u2014 Multi-eigenvalue (Perron) attacks tighten the bound\nWhen `A` has several tropical eigenvalues (one per critical cycle of its digraph), each\nyields an independent linear equation in `m`; the system is consistent and over-determined,\ngiving an error-correcting recovery of `m` even under bounded entry noise.\n- **The key insight is** that the critical-cycle spectrum of a tropical matrix is a\n  *vector* of homomorphic readouts of the same exponent, so redundancy makes the attack\n  robust rather than fragile.\n- **Why now?** `tropMatVecMul_iterate_eigen` already produces one linear readout; extending\n  it across the cycle-eigenvalues of `WeightedDigraph` is a finite combinatorial step.\n\n## Conjecture 4 \u2014 Non-power protocols inherit the weakness\nAny protocol whose public transcript is a tropical-linear image of a secret integer (e.g.\n`A^{\u2297m} \u2297 C`, semidirect-product tropical schemes) leaks that integer through the same\neigenvalue homomorphism applied to the dominant tropical block.\n- **The key insight is** that tropical-linearity (equivariance under the additive shift,\n  `tropMatVecMul_shift`) is preserved by composition, so the eigenvalue functional passes\n  through any tropical-affine wrapper.\n- **Why now?** Equivariance is already a lemma; composing it with `eigenvalue_additivity`\n  is the natural next theorem and would generalize the break beyond plain powers.\n\n## Conjecture 5 \u2014 Power-commutativity forbids hardness amplification\nBecause `(A^a)^b = (A^b)^a = A^{\u2297(ab)}` unconditionally (`tropMatPow_comm`), no\n\"nested-exponent\" tropical scheme can be harder than a single-exponent one: the exponent\ngroup is the commutative monoid `(\u2115, +)`, whose discrete log is trivial.\n- **The key insight is** that DH correctness and DH insecurity share a root cause \u2014 the\n  abelian exponent law \u2014 so the property that makes the protocol *work* is the property\n  that makes it *breakable*.\n- **Why now?** `tropMatPow_comm` is proved; formalizing the exponent monoid map\n  `m \u21a6 A^{\u2297m}` as a monoid homomorphism would make the no-amplification claim a one-line\n  corollary.\n",
+    "domains": [
+      "Algebra",
+      "Cryptography"
+    ],
+    "id": "fd_2106",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0abb7f10",
+    "status": "available",
+    "timestamp": "2026-06-19T11:11:00.672511+00:00",
+    "title": "Derived from this cycle's findings (`Catalog/Tropical/TropicalMatrixPower.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4066,21 +4081,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:30.651923+00:00",
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
-  },
-  {
-    "consumed_by_exp_id": "78320320",
-    "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0004",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.490561+00:00",
-    "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
   {
     "consumed_by_exp_id": "",

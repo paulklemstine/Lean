@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0abb7f10",
     "filename": "tropical_cryptography_min_plus_encryption_with_tro.json",
     "pkg_num": 202,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.614,
     "title": "Tropical Cryptography: Breaking the Tropical Discrete Logarithm by Eigenvalue Additivity"
   },
   {
@@ -6186,8 +6186,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "tropical_cryptography_min_plus_encryption_with_tro",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.614,
+      "quality": "partial",
       "shape": "star_of_david",
       "title": "Tropical Cryptography: Breaking the Tropical Discrete Logarithm by Eigenvalue Additivity"
     }
