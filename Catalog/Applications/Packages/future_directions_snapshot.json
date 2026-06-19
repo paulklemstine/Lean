@@ -1377,7 +1377,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "f6bee4de",
+    "consumed_by_exp_id": "",
     "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
     "domain_bridges": [],
     "domains": [
@@ -1390,7 +1390,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.958310+00:00",
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
@@ -1515,7 +1515,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b53ecc44",
     "description": "Prove that Besicovitch sets in R^2 have Hausdorff dimension 2 (Davies's theorem). Formalize the Wolff bound in R^3: dimension ≥ 5/2. Connect to restriction estimates for the Fourier transform and to additive combinatorics via the Katz-Tao framework.",
     "domain_bridges": [],
     "domains": [
@@ -1528,7 +1528,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432660+00:00",
     "title": "Kakeya Conjecture: Known Cases and Bounds"
   },
@@ -2718,6 +2718,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "HK2017",
+      "HP2024",
+      "KZ2018"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that any pair of cross-intersecting families of k-subsets of [n] with diversity at least binomial(n-u-1, n-k-1) and total size exceeding (1-1/(k+1))*binomial(n,k) must be isomorphic to one of the known extremal constructions: either a full star pair, a product of a Hilton–Milner family with a star, or a maximal cross‑intersecting extension of such a pair.",
+    "domain_bridges": [
+      "extremal combinatorics",
+      "shifting techniques",
+      "set systems"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2091",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the S_{U,V}^{Q}-shift to iteratively transform the pair into a canonical form while preserving diversity, then classify the possible terminal configurations and show they match the proposed constructions.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20085v1",
+    "status": "available",
+    "timestamp": "2026-06-19T06:52:16.169001+00:00",
+    "title": "Canonical structure of large cross-intersecting families"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "OEIS A099009",
       "Schwartz and Thakur's formulation",
       "Thakur's framework"
@@ -2731,7 +2759,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2091",
+    "id": "fd_2092",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the convergence to the triangular region T_B, then analyze the projective doubling conjugacy to derive cycle lengths using Lean's arithmetic and group theory capabilities.",
@@ -2760,7 +2788,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2092",
+    "id": "fd_2093",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize finite simple graphs, induced minors, K_{1,d}-freeness, planarity, and tree-independence number in Lean. Prove auxiliary lemmas showing that unbounded tree-independence in a K_{1,d}-free induced-minor-closed class forces arbitrarily large planar induced-minor obstructions. Then use induction on the size or block structure of the excluded planar graph H to extract a uniform bound B(d,H).",
@@ -2769,6 +2797,33 @@
     "status": "available",
     "timestamp": "2026-06-19T06:18:53.730025+00:00",
     "title": "Bounded tree-independence for K_{1,d}-free graphs excluding a planar induced minor"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "“the main threshold\" for piercing quadratic hypersurfaces",
+      "random sampling and intersection theory in finite fields"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This paper investigates the asymptotic probability that random points in finite fields intersect sufficiently complex algebraic sets, with applications to extremal combinatorics and geometric probability.",
+    "domain_bridges": [
+      "Number Theory",
+      "Combinatorial Mathematics",
+      "Algebraic Geometry"
+    ],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2094",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formulate via uniform distribution over polynomial systems and apply probabilistic estimates using Herglotz-type inequalities.",
+    "research_mode": "team",
+    "source_exp_id": "2606.19677v1",
+    "status": "available",
+    "timestamp": "2026-06-19T06:52:44.622331+00:00",
+    "title": "Randomly piercing algebraic sets and its implications"
   },
   {
     "ambition_level": "extension",
@@ -4045,46 +4100,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThese build on `Catalog/Physics/JonesBraidNonabelianCertificate.lean`, which\ncertifies that the Jones map transports (non-)commutativity of Temperley–Lieb\ngenerators exactly. Each direction below states the load-bearing idea and why it\nis timely.\n\n## 1. From a non-abelianity certificate to a non-abelian *group* image\n\nOur equivalence is a statement about a single pair of operators. The natural next\nstep is to lift it to the subgroup of `Aˣ` generated by the Jones images of a\nfamily of Temperley–Lieb generators, and to characterize when that subgroup is\nnonabelian in terms of the generator algebra. The key insight is that\ncommutativity of the whole braid image group is controlled pairwise, so the\nlocal certificate `jonesOp_commute_iff` should globalize to a clean criterion on\nthe generated subgroup without re-deriving any analysis. Why now? Mathlib already\nhas the group-theoretic infrastructure (`Subgroup`, `closure`, commutator\nsubgroups), so the lift is a matter of assembling existing pieces around a\nfinished local lemma rather than building theory from scratch.\n\n## 2. The full Temperley–Lieb algebra with the loop parameter `δ`\n\nThe catalog file `JonesTemperleyLiebBraid4` already encodes the relations\n`X² = δ • X`, `XYX = X`, and the loop value `δ = -(A² + A⁻²)`. A future\ncontribution should connect those relations to the commutator identity, deriving\nthe braid relation and its consequences directly from a presented\nTemperley–Lieb algebra `TL_n(δ)`. The key insight is that the commutator\nidentity is *parameter-free*, so it cleanly separates the universal algebraic\ncontent from the `δ`-dependent representation theory, letting each be formalized\nindependently. Why now? The relevant relations are already stated and proved in\nthe catalog, so the missing step is only to package them as an abstract algebra\npresentation, which current Mathlib quotient-algebra tooling supports.\n\n## 3. Spectral and unitarity refinements toward (eventual) density\n\nDensity theorems require not just non-commutativity but control of spectra and a\nunitary structure (a `*`-algebra over `ℂ` with positive-definite form). A\nworthwhile direction is to add hypotheses making `A` a finite-dimensional\n`C*`-algebra and to compute eigenvalues of `jonesOp u X` from those of `X`,\nsince `jonesOp u X` is an affine function of `X`. The key insight is that the\naffine form `u • 1 + u⁻¹ • X` makes the spectrum of the Jones operator a\nliteral affine image of the spectrum of the generator, so eigenvalue data\ntransports as transparently as commutativity does. Why now? Mathlib's spectral\ntheory for normal operators and finite-dimensional inner-product spaces has\nmatured enough to state and prove such transport lemmas concretely.\n\n## 4. Explicit Fibonacci-parameter representations over cyclotomic fields\n\nTo approach the genuine Fibonacci anyon model one must specialize the parameter\nto a root of unity and work over a cyclotomic field. A future file should\ninstantiate `jonesOp` at `u` a primitive `10`th root of unity and exhibit the\n`2`-dimensional Fibonacci braid matrices, verifying non-commutativity via the\npresent equivalence. The key insight is that the golden-ratio data of the\nFibonacci model is entirely captured by a single algebraic unit, so the abstract\nunit-parametrized operator specializes to the physical gate with no new\nmachinery. Why now? Mathlib's `IsPrimitiveRoot` and cyclotomic-field development\nmakes it feasible to compute with these roots of unity inside a verified setting.\n\n## 5. A verified non-commutativity oracle for braid-circuit compilers\n\nThe equivalence reduces \"do these two Jones gates commute?\" to \"do these two\ngenerators commute?\", which is decidable in concrete matrix models. A practical\ndirection is to wrap this into a reusable, certified decision procedure usable as\na commutation oracle inside a braid-circuit scheduler. The key insight is that\ncommutation queries about complicated gate expressions can be discharged by a\nsingle check on the underlying generators, collapsing an expensive operator\ncomputation into a cheap one. Why now? Interest in verified quantum compilation\nis growing rapidly, and a small, axiom-clean, fully proved kernel like this one\nis exactly the kind of trustworthy primitive such toolchains need.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Physics"
-    ],
-    "id": "fd_2093",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "f53b6be3",
-    "status": "available",
-    "timestamp": "2026-06-19T06:46:51.567919+00:00",
-    "title": "These build on `Catalog/Physics/JonesBraidNonabelianCertificate.lean`, which"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Non-Archimedean Probability via Surreal Numbers\n\nDerived from this cycle's findings (files `SurrealInfinitesimalField.lean`,\n`SurrealProbability.lean`):\n\n* the carrier `K = Lex (ℝ⟦ℚ⟧)` is a non-Archimedean ordered field with a positive\n  infinitesimal `eps` smaller than every positive rational (`K_nonArchimedean`);\n* a finitely-additive `K`-valued measure on elementary subsets of `[0,1]` gives every\n  point positive infinitesimal mass while the whole space has mass exactly `1`\n  (`infinitesimal_probability_reconciliation`);\n* the apparent paradox dissolves because the natural domain is the *finite-union*\n  Boolean algebra, on which `[0,1]` is not a disjoint union of points\n  (`finite_atoms_lt_one`).\n\nThe following conjectures are bold, falsifiable, and testable in Lean 4.\n\n## C1. Inclusion–exclusion and a Carathéodory-style extension for the elementary algebra\n\n**Conjecture.** `emeasure` extends from disjoint joins to a finitely additive measure\non the full Boolean algebra of elementary sets (finite unions/intersections/\ncomplements of intervals modified at finitely many points), satisfying the two-set\ninclusion–exclusion law `μ(E₁ ∪ E₂) + μ(E₁ ∩ E₂) = μ E₁ + μ E₂` and monotonicity for\nthe induced subset order.\n\n*The key insight is...* additivity already proven for *disjoint* joins\n(`emeasure_join_disjoint`) upgrades to general unions once the continuous content `ℚ`\nand the atom multiset obey inclusion–exclusion separately, because the two summands of\n`emeasure` live in independent graded pieces of `K` (order-0 reals vs. order-1\ninfinitesimals).\n\n*Why now?* The disjoint case and the no-go theorem are formalized; the remaining step\nis a finite Boolean-algebra bookkeeping argument with no new analytic input.\n\n## C2. Conditional probability divides infinitesimals: a non-Archimedean Bayes rule\n\n**Conjecture.** For elementary sets with `emeasure B ≠ 0`, the conditional measure\n`μ(A ∣ B) := emeasure (A ∩ B) / emeasure B` is well-defined in `K`, lies in `[0,1]`,\nand conditioning on a single point `{x}` (mass `eps`) yields a genuine probability\n*even though `emeasure {x}` is infinitesimal* — recovering finite ratios such as\n`μ({x} ∣ {x,y}) = 1/2` that classical real-valued measures render `0/0`.\n\n*The key insight is...* division by the infinitesimal `eps` is legal because `K` is a\n*field*, so ratios of order-1 quantities collapse to order-0 reals; conditioning on a\nnull (in the real sense) event becomes meaningful in the surreal extension.\n\n*Why now?* `K` is already a field with a constructed infinitesimal and exact ratio\narithmetic; the conjecture only needs `field_simp`/`leadingCoeff` order computations of\nthe kind already used in `nat_mul_eps_lt_one`.\n\n## C3. A standard-part retraction `K → ℝ` recovers Lebesgue measure\n\n**Conjecture.** The order-0 coefficient map `st : K → ℝ`, `st x = (ofLex x).coeff 0`,\nis an ordered-ring retraction that sends `emeasure` of every elementary set to its\nclassical Lebesgue measure (`st (emeasure ⟨c, A⟩) = c`), so the surreal measure is a\n*conservative refinement* of the real one: it adds infinitesimal detail at points\nwithout disturbing lengths.\n\n*The key insight is...* the continuous and atomic parts of `emeasure` sit in different\nHahn-series exponents, so taking the order-0 coefficient annihilates all point masses\n(`|A|·eps` has exponent `1`) while preserving content.\n\n*Why now?* The exponent-grading lemmas (`leadingCoeff_add_eq_left`, `coeff` of\n`single`) used throughout this cycle are exactly what is needed to prove `st` is\nadditive and order-preserving.\n\n## C4. Infinite atom families and a non-Archimedean \"countable additivity\" boundary\n\n**Conjecture.** Finite additivity does **not** extend to countable disjoint unions of\npoints: there is no element of `K` equal to the supremum of the partial sums\n`n ↦ n·eps`, and any attempted countably-additive extension assigning each point `eps`\nforces a contradiction with `emeasure_univ = 1`. Equivalently, `K` is not Dedekind- /\nsequentially-complete in the relevant sense.\n\n*The key insight is...* `{n·eps : n ∈ ℕ}` is bounded above by `1` yet has no least\nupper bound in `K` (any candidate `s` satisfies `s - eps` is still an upper bound),\nformalizing precisely *why* the conjecture must stay finitely additive.\n\n*Why now?* `nat_mul_eps_lt_one` already exhibits the bounded increasing family; the\nmissing piece is a short `by_contra` on the supremum, well within reach.\n\n## C5. Faithfulness: an order-embedding into Conway's surreals `No`\n\n**Conjecture.** There is an injective ordered-field homomorphism\n`Lex (ℝ⟦ℚ⟧) ↪ Surreal` sending `eps` to the surreal `ω^{-1}`, so every theorem of this\ncycle is literally a statement about Conway's surreal numbers, not merely an analogue.\n\n*The key insight is...* the surreal \"normal form\" (Conway's `ω`-power / sign-sequence\nrepresentation) realizes real-coefficient, rational-exponent Hahn series as honest\nsurreals; building the embedding turns the proxy carrier into the real object.\n\n*Why now?* Mathlib now has both `Surreal` and a rich `HahnSeries` order API\n(`leadingCoeff_pos_iff`, archimedean-class machinery in `HahnSeries.Lex`); the\nembedding is the natural bridge connecting the two and would retroactively upgrade the\nentire construction to \"via surreal numbers\" in the strictest sense.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2094",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "74320b24",
-    "status": "available",
-    "timestamp": "2026-06-19T06:51:16.971690+00:00",
-    "title": "Derived from this cycle's findings (files `SurrealInfinitesimalField.lean`,"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -5216,7 +5231,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "60ec8c30",
     "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
     "domain_bridges": [],
     "domains": [
@@ -5229,7 +5244,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:30.732241+00:00",
     "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
   },
@@ -5432,6 +5447,26 @@
     "status": "available",
     "timestamp": "2026-06-03T19:55:30.651923+00:00",
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0004",
+    "lineage_refs": [],
+    "priority_score": 0.05,
+    "proof_strategy": "Define B = {0,...,24}^{1312000} as the Library. Compute |B| = 25^{1312000}. Define the meaning probability P(T) = sum_{b in B: b contains proof of T} 1/|B|. Prove P(T) >= |T| * 25^{-k(T)} where k(T) is the Kolmogorov complexity of T. Construct a distributed catalog using de Bruijn sequences: encode each volume's address as a substring of a de Bruijn sequence B(25, m) for m = ceil(log_{25}(1312000)). Prove the catalog requires N >= 25^{1312000} / (1312000 * log_{25}(2)) volumes. Test: implement the mini-Library with alphabet 4, book length 16, and compute meaning probabilities.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.490561+00:00",
+    "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
   {
     "ambition_level": "extension",
