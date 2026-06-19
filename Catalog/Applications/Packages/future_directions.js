@@ -3072,6 +3072,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Sheaf-Theoretic Data Integration\n\nFollow-up conjectures arising from `Computation/SheafDatabaseColimit.lean`\n(the information-order / colimit layer), to be attacked in subsequent cycles.\nEach is stated to be **precise and testable** in Lean.\n\n## Conjecture 1 \u2014 `Extends` is a `CompleteSemilatticeInf` / bounded structure\n\nThe information order `Extends` on `PartialDB nRows nCols V` has a least element\n(the empty database) and arbitrary **meets**: for any family the cell-wise\n\"value on which all defined members agree, else `none`\" is the greatest lower\nbound. Conjecture: `(PartialDB nRows nCols V, Extends)` is a complete\nmeet-semilattice with bottom, and `glueFamily` is the join *restricted to the\nconsistent sublattice*. Joins do **not** exist in general (inconsistent pairs\nhave no upper bound), so the structure is a *conditionally complete* lattice.\n**Testable form:** define `Order.le := fun a b => Extends b a`, register the\ninstance, and prove `sInf`/`sSup`-on-consistent characterizations.\n\n## Conjecture 2 \u2014 \u010cech H\u00b9 obstruction vanishes for the database sheaf\n\nDefine a genuine alternating \u010cech complex `C\u2070 \u2192 C\u00b9 \u2192 C\u00b2` for a finite cover of\nthe cell-grid valued in an abelian group `G`, with `\u03b4\u2070` the difference of\nrestrictions. Conjecture: for the database (function) sheaf every 1-cocycle is a\ncoboundary, i.e. **H\u00b9 = 0**, and the obstruction to gluing a pairwise-consistent\nfamily is *exactly* the class `[\u03b4\u2070\u03c3] \u2208 H\u00b9`, which is always trivial. This would\nupgrade the catalog's slogan \"H\u00b9 vanishing\" (currently informal in\n`SheafDataIntegration.lean`) to a theorem, and explain *why* pairwise\nconsistency suffices (no higher cocycle conditions).\n\n## Conjecture 3 \u2014 Gluing complexity is governed by the nerve's connectivity\n\nBuild the **consistency (nerve) graph** on `Fin k` with an edge `i ~ j` iff\n`ConsistentPair (dbs i) (dbs j)` and the domains overlap. Conjecture: a family\nglues into a global section iff (a) it is pairwise consistent and (b) the union\nof domains is the full grid; moreover the *number of independent merge steps*\nneeded equals `k \u2212 (number of connected components of the overlap graph)`. This\nties `glueFamily` to a spanning-forest construction and gives an explicit\n`O(k\u00b7nRows\u00b7nCols)` gluing algorithm whose correctness is a Lean theorem.\n\n## Conjecture 4 \u2014 Monotone-imputation colimits commute with restriction\n\nFor a `SheafFiltration F` and any cell-subset `S`, restricting the colimit\nequals the colimit of the restrictions:\n`(glueFamily F.level).restrict S = glueFamily (fun i => (F.level i).restrict S)`.\nConjecture: this naturality holds for *all* covers (not just filtrations),\nmaking `glueFamily` a natural transformation `lim \u2218 restrict \u21d2 restrict \u2218 lim`.\n**Testable form:** state the equality of `PartialDB` functions and prove by\n`funext` + cell analysis; the filtration case `filtration_colimit_eq_top` is a\ncorollary.\n\n## Conjecture 5 \u2014 Sharp consistency-probability threshold from the order layer\n\nCombine the order/colimit layer with `Bridges/SheafImputationProbability.lean`:\nfor a random family of `k` sub-views with per-overlap conflict rate `r`, the\nprobability that `glueFamily` is a **global section** (fully reconstructs the\ndatabase) exhibits a sharp threshold in `r` as `k \u2192 \u221e`. Conjecture: there is a\ncritical `r*(coverage)` such that below it `P(global section) \u2192 1` and above it\n`\u2192 0`, with the threshold determined by the grid coverage probability times the\nsuper-exponential consistency decay `(1\u2212r)^{C(k,2)}`. This unifies the\norder-theoretic existence theorem with the probabilistic decay results.\n",
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_2107",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "4f74256d",
+    "status": "available",
+    "timestamp": "2026-06-19T11:37:46.775584+00:00",
+    "title": "Follow-up conjectures arising from `Computation/SheafDatabaseColimit.lean`"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4216,21 +4231,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-01T12:30:30.700907+00:00",
     "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
-  },
-  {
-    "consumed_by_exp_id": "b3d82bf4",
-    "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0088",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.782446+00:00",
-    "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
   {
     "consumed_by_exp_id": "",

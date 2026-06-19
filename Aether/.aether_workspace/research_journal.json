@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "60b0b842",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Spectral Gap Rigidity for Hodge Laplacians under Coarse-Graining\n\n## Synthesis\n\nThis cycle built the linear-algebraic skeleton of the conjecture *Spectral Gap\nRigidity for Hyperg",
-      "quality_score": 0.44761791485129226,
-      "sorry_count": 4,
-      "theorem_count": 173,
-      "timestamp": "2026-06-14T21:35:07",
-      "title": "Spectral Gap Rigidity for Hypergraph Hodge Laplacians Under Simplicial Coarse-Gr"
-    },
-    {
       "cycle_id": "7eb7c87e",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Fundamental Theorem of Identity Systems\n\n## Synthesis of this cycle\n\nThe catalog's synthetic-HoTT layer (`Catalog/Logic/HoTT/Foundations.lean`) *defined*\nthe structure `HoTTF",
@@ -2501,6 +2491,16 @@
       "theorem_count": 157,
       "timestamp": "2026-06-19T11:11:18",
       "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+    },
+    {
+      "cycle_id": "4f74256d",
+      "domain": "Computation",
+      "key_insight": "# Future Directions — Sheaf-Theoretic Data Integration\n\nFollow-up conjectures arising from `Computation/SheafDatabaseColimit.lean`\n(the information-order / colimit layer), to be attacked in subsequent",
+      "quality_score": 0.4968983018867924,
+      "sorry_count": 0,
+      "theorem_count": 178,
+      "timestamp": "2026-06-19T11:38:06",
+      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8895200000000001
     }
   ],
-  "last_updated": "2026-06-19T11:11:18",
+  "last_updated": "2026-06-19T11:38:06",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3251,12 +3251,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "d787aa34",
-        "quality": 0.38878735254059715,
-        "theorems": 46,
-        "title": "Arithmetic Monodromy Rigidity in Definable Neural ODE Flows"
-      },
-      {
         "cycle_id": "497e55b6",
         "quality": 0.44245955849889634,
         "theorems": 16,
@@ -3309,6 +3303,12 @@
         "quality": 0.8895200000000001,
         "theorems": 35,
         "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
+      },
+      {
+        "cycle_id": "4f74256d",
+        "quality": 0.4968983018867924,
+        "theorems": 178,
+        "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
       }
     ],
     "Cryptography": [
