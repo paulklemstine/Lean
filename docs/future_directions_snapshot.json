@@ -240,25 +240,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 6495e602 (Q=0.817), which proved 139 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the sheaf-theoretic structure of databases with missing entries and prove the probabilistic consistency formula P(sheaf) = (1-r)^{C(n,k)} under explicit independence assumptions. Define: (1) A database as a matrix of optional values where each row represents an observation and each column ",
-    "domain_bridges": [],
-    "domains": [
-      "Probability"
-    ],
-    "id": "push_6495e602_4c39abde",
-    "lineage_refs": [],
-    "priority_score": 0.9166,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "6495e602",
-    "status": "available",
-    "timestamp": "2026-06-19T15:17:55.162990+00:00",
-    "title": "Deepening: Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
     "domain_bridges": [],
     "domains": [
@@ -3036,6 +3017,27 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "arXiv:2102.04521"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The conjecture asserts that the ratio of determinant to cofactor simplifies to a combination of trace terms and Laplacian contributions, verified for arbitrary subsets S.",
+    "domain_bridges": "none",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2103",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Formal algebraic verification",
+    "research_mode": "team",
+    "source_exp_id": "2606.18061v1",
+    "status": "available",
+    "timestamp": "2026-06-19T15:27:52.946265+00:00",
+    "title": "Equality of Resistance Ratios"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "OEIS A099009",
       "Schwartz and Thakur's formulation",
       "Thakur's framework"
@@ -3049,7 +3051,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2103",
+    "id": "fd_2104",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the convergence to the triangular region T_B, then analyze the projective doubling conjugacy to derive cycle lengths using Lean's arithmetic and group theory capabilities.",
@@ -3078,7 +3080,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2104",
+    "id": "fd_2105",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize finite simple graphs, induced minors, K_{1,d}-freeness, planarity, and tree-independence number in Lean. Prove auxiliary lemmas showing that unbounded tree-independence in a K_{1,d}-free induced-minor-closed class forces arbitrarily large planar induced-minor obstructions. Then use induction on the size or block structure of the excluded planar graph H to extract a uniform bound B(d,H).",
@@ -3105,7 +3107,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2105",
+    "id": "fd_2106",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formulate via uniform distribution over polynomial systems and apply probabilistic estimates using Herglotz-type inequalities.",
@@ -3138,7 +3140,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2106",
+    "id": "fd_2107",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the adelic toral‑packet equidistribution theorem of Aka–Luethi–Michel–Wieser to the product space, show that the only positive‑dimensional special subvarieties are CM‑fibers, and deduce weak convergence of Galois orbit measures to Haar measure; the argument is unconditional under the given splitting hypothesis.",
@@ -3167,7 +3169,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2107",
+    "id": "fd_2108",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Investigate the structure of the map from e-embracing bases to e-positive circuits. Use the fact that the map is r-Lipschitz and non-contractive. Attempt to show that any path in the polyhedron graph can be lifted to a path of embracing bases of the same length. Consider using topological methods or shellability arguments.",
@@ -3192,7 +3194,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2108",
+    "id": "fd_2109",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit Koszul resolutions for tree graphs and verify monomial complete intersection property via Lean 4's algebraic tools",
@@ -3218,7 +3220,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2109",
+    "id": "fd_2110",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the recurrence relation in Lean using the coupling between the game and permutation cycles. Prove the recurrence by induction on n, using the uniformity of the first cycle length and the recursive structure of permutations.",
@@ -3227,6 +3229,34 @@
     "status": "available",
     "timestamp": "2026-06-19T10:14:34.984628+00:00",
     "title": "Recurrence for the Winning Probability in the Generalized Game"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "MR2476775",
+      "zbMATH05122852",
+      "zbMATH07213288"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the exponential growth rate γ of unlabelled cubic planar graphs is equal to the reciprocal of the radius of convergence of their ordinary generating function G(z), and that the number of such graphs on n vertices satisfies an asymptotic formula of the form C · γ^n · n^(-5/2) for some computable constant C > 0. This conjecture arises from the interplay between generating series analysis and probabilistic symmetry considerations outlined in the paper.",
+    "domain_bridges": [
+      "Analytic combinatorics (math.CO)",
+      "Graph enumeration (math.CO)",
+      "Probability theory (math.PR)"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2111",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish the ordinary generating function G(z) via structural decompositions, apply singularity analysis to identify the dominant singularity at z = 1/γ, and use probabilistic local limit theorems to control the influence of small symmetric subgraphs on the asymptotic enumeration.",
+    "research_mode": "team",
+    "source_exp_id": "2606.17992v1",
+    "status": "available",
+    "timestamp": "2026-06-19T15:37:10.822708+00:00",
+    "title": "Asymptotic Growth Constant for Unlabelled Cubic Planar Graphs"
   },
   {
     "ambition_level": "extension",
@@ -4498,46 +4528,6 @@
     "status": "available",
     "timestamp": "2026-06-17T23:11:17.377449+00:00",
     "title": "Two boundary facts of the prime crossword in"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Sheaf-Theoretic Data Integration\n\nDerived from the verified results in `MachineLearning.SheafDatabaseProbability`\nand `MachineLearning.SheafImputationBounds` (product law `P(sheaf) = (1-r)^N`,\nexponential collapse, exact failure `1 - (1-r)^N`, Bernoulli/union envelope, and\nthe Čech path-independence bridge).\n\n## FD1 — Correlated constraints break the clean exponent\n**Conjecture.** Drop independence. If the overlap constraint events are\npositively associated (FKG/association), then `P(sheaf) ≥ (1-r)^N`; if negatively\nassociated, `P(sheaf) ≤ (1-r)^N`. The exponent `N` only counts *independent*\ndegrees of freedom; the effective exponent is the number of independent\nconstraints, not the raw `C(n,k)`.\n**The key insight is...** that the headline `(1-r)^{C(n,k)}` is an\nindependence-saturated extreme, and real databases interpolate between the two\nassociation regimes through their correlation structure.\n**Why now?** We have already isolated independence as the single load-bearing\nhypothesis (`iIndepSet` in `sheaf_consistency_prob_eq_pow`), so the next step —\nreplacing it with association inequalities (`MeasureTheory`/FKG in Mathlib) — is\na direct, well-posed extension.\n\n## FD2 — The H¹ obstruction is the only thing that can fail\n**Conjecture.** The sheaf condition fails **iff** the Čech `H¹` class of the\noverlap discrepancy cochain is nonzero; equivalently, `P(sheaf)` equals the\nprobability that a random 1-cochain is a coboundary.\n**The key insight is...** that gluing is automatic once the cocycle (triangle)\nlaw holds — exactly what `imputation_path_independent` proves — so the entire\nprobabilistic obstruction lives in `H¹`, turning imputation into a cohomology\ncomputation.\n**Why now?** The deterministic half (coboundary ⇒ cocycle ⇒ path independence)\nis already formalized via `MachineLearning.CechComplex`; pairing it with a random\ncochain model closes the loop between probability and cohomology.\n\n## FD3 — Sharp phase transition at the constraint budget `N·r = 1`\n**Conjecture.** As `n → ∞` with `N·r → λ` fixed, `P(sheaf) → e^{-λ}`, giving a\nsharp threshold: consistent imputation is likely for `N·r < 1` and unlikely for\n`N·r > 1`.\n**The key insight is...** that the two verified bounds `1 - N·r ≤ (1-r)^N`\n(`sheaf_consistency_ge_linear`) and `1 - (1-r)^N ≤ N·r` (`sheaf_failure_le_linear`)\npinch the probability around the Poisson limit `e^{-N·r}`.\n**Why now?** Both linear envelopes are already theorems; only the\n`(1 - λ/N)^N → e^{-λ}` limit (standard in Mathlib's `Real.exp` API) remains to\nupgrade them into a phase-transition statement.\n\n## FD4 — Sheaf imputation dominates mean/KNN exactly when `N·r` is small\n**Conjecture.** Under a linear ground-truth model, the expected imputation error\nof \"closest global section\" is `O(N·r·σ²)`, strictly below mean/KNN whenever\n`N·r < 1` and feature count `n > 10`, because the cocycle constraints remove\n`N - rank` degrees of freedom that other methods ignore.\n**The key insight is...** that the constraint budget `N·r` controlling\n`P(sheaf)` is the *same* quantity controlling residual error — consistency and\naccuracy share one parameter.\n**Why now?** The probabilistic budget `N·r` is now a proven, named quantity;\nattaching a least-squares error functional to the global-section projection makes\nthe performance claim Lean-formalizable rather than purely empirical.\n\n## FD5 — Higher sheaf conditions and `d² = 0` rigidity\n**Conjecture.** Imposing triple-overlap (2-cocycle) consistency multiplies the\nconstraint count and drives `P(sheaf)` to `(1-r)^{C(n,2)+C(n,3)}`, but the\n`δ¹∘δ⁰ = 0` identity makes a positive fraction of these constraints redundant,\nso the *effective* exponent grows strictly slower than the raw count.\n**The key insight is...** that `coboundary_composition_zero` (d²=0) is precisely a\nlinear-dependence statement among constraints, capping the achievable exponent.\n**Why now?** `MachineLearning.CechComplex` already supplies `δ⁰, δ¹` and `d²=0`;\ncounting the rank of the coboundary maps converts redundancy into an explicit\ncorrection to the exponent.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2110",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "6495e602",
-    "status": "available",
-    "timestamp": "2026-06-19T15:16:22.710241+00:00",
-    "title": "Derived from the verified results in `MachineLearning.SheafDatabaseProbability`"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS — Anti-Gravity Mathematics\n\nDerived from this cycle's findings in `Catalog/NumberTheory/AntiGravity.lean` (the\nweight/proof-length tension) and `Catalog/NumberTheory/AntiGravityTropicalBridge.lean`\n(the tropical rank ✕ weight uncertainty relation).\n\n## Cycle summary (Analyst)\n\n* **Survived:** the exponential tension `support N d ≤ N / 2^Ω(d)` (`support_le_div_two_pow`),\n  its sharpness at `d = 2` (`tension_sharp`), primes-are-anti-gravity\n  (`prime_isAntiGravity`), unboundedness of anti-gravity weight\n  (`antiGravity_weight_unbounded`), and the cross-domain uncertainty law\n  (`rank_weight_uncertainty`).\n* **Reframed:** the informal \"density\" / \"10% of theorems are anti-gravity\" claim is not\n  literally provable as stated (it depends on an unspecified topology and on PNT-scale\n  density). We replaced it by the rigorous *unboundedness/abundance* statement, which is the\n  honest formal core, and flagged the literal density form as Conjecture C1 below.\n* **Failure analysis:** any attempt to define \"proof length\" so that *composite* numbers stay\n  short collapses the tension theorem; the exponential decay is forced precisely because every\n  nontrivial factor is `≥ 2`. The metaphor only has teeth with `Ω` (or `ω`) as the cost.\n\n## Conjecture C1 — Quantitative anti-gravity density\n\nFor the prime-counting weight, the fraction of `d ∈ [1,N]` with `proofCost d ≤ 1` is\n`(1 + π(N))/N ~ 1/ln N → 0`, **not** a constant 10%. But weighted by gravitational weight,\n`∑_{d ≤ N, Ω(d) ≤ 1} ⌊N/d⌋ / ∑_{d ≤ N} ⌊N/d⌋ → c` for an explicit constant `c ∈ (0,1)`.\n\n* The key insight is that \"density of anti-gravity theorems\" must be measured in the\n  *weight measure* (dependents), not the counting measure — heavy short-proof theorems\n  dominate the dependency mass even though they are rare by count.\n* Why now? The formal weight model `support N d = ⌊N/d⌋` and `proofCost = Ω` are now in Lean\n  (this cycle), so the ratio is a concrete, machine-checkable limit rather than a metaphor.\n\n## Conjecture C2 — Sharp tension classifies the saturators\n\n`support N d = N / 2^(proofCost d)` holds **iff** `d` is a power of `2` with `d ∣` the relevant\n`N`-block; equivalently, equality in `support_le_div_two_pow` forces every prime factor of `d`\nto be the minimal prime `2`.\n\n* The key insight is that the inequality `2^Ω(d) ≤ d` is tight exactly on `{2^k}`, so the\n  geometric \"anti-gravity extremals\" are the binary powers — the deepest pure-binary theorems.\n* Why now? `two_pow_proofCost_le` isolates the single inequality whose equality case is the\n  whole classification; only its tightness analysis remains.\n\n## Conjecture C3 — Tropical uncertainty is an equality on primes mod the residue\n\nFor prime `p ≤ N`, `tropFactorRank (encodeDiag p) · support N p = N − (N mod p)`, and the\nslack `N mod p < p` is **minimized over all theorems of weight `support N p`** by `p` itself.\n\n* The key insight is that the tropical rank coordinate and the number-theoretic weight\n  coordinate are *conjugate* (`rank · weight ≈ N`); anti-gravity primes are the near-isometries\n  of this conjugation, saturating the uncertainty relation up to `N mod p`.\n* Why now? `antiGravity_prime_bridge` already proves the exact identity\n  `rank · weight + N mod p = N`; the open part is the *extremality* of the residue.\n\n## Conjecture C4 — `ω`-cost refinement and a Carmichael bridge\n\nReplacing `Ω` by `ω` (distinct prime factors) yields `support N d ≤ N / rad(d)` where\n`rad` is the radical; squarefree numbers become the anti-gravity extremals, linking to the\nsquarefree/pairwise-coprime recombination used in the catalog's Fibonacci–Carmichael files.\n\n* The key insight is that the anti-gravity tension is the divisor-lattice shadow of the\n  squarefree/Korselt structure: short proofs ⇔ small radical ⇔ few apparition obstructions.\n* Why now? With the weight model formalized, the same `Nat.prod_primeFactorsList` engine that\n  drives `two_pow_proofCost_le` ports directly to `rad`, giving a uniform `ω`-version.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2111",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "a449aa2a",
-    "status": "available",
-    "timestamp": "2026-06-19T15:22:04.347696+00:00",
-    "title": "Derived from this cycle's findings in `Catalog/NumberTheory/AntiGravity.lean` (t"
   },
   {
     "ambition_level": "extension",
@@ -5895,6 +5885,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0004",
+    "lineage_refs": [],
+    "priority_score": 0.05,
+    "proof_strategy": "Define B = {0,...,24}^{1312000} as the Library. Compute |B| = 25^{1312000}. Define the meaning probability P(T) = sum_{b in B: b contains proof of T} 1/|B|. Prove P(T) >= |T| * 25^{-k(T)} where k(T) is the Kolmogorov complexity of T. Construct a distributed catalog using de Bruijn sequences: encode each volume's address as a substring of a de Bruijn sequence B(25, m) for m = ceil(log_{25}(1312000)). Prove the catalog requires N >= 25^{1312000} / (1312000 * log_{25}(2)) volumes. Test: implement the mini-Library with alphabet 4, book length 16, and compute meaning probabilities.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.490561+00:00",
+    "title": "The Library of Babel: Combinatorics of the Universal Library"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "The Fibonacci sequence is defined by F(n+1) = F(n) + F(n-1) and converges to the golden ratio. Define the ANTI-Fibonacci sequence: A(n+1) is the smallest positive integer that is NOT equal to A(n) + A(n-1). The sequence begins 1, 1, 2, 4, 7, 11, 16, ... (each term avoids being the sum of the two previous terms). Conjecture: The anti-Fibonacci sequence A(n) grows as A(n) ~ n^2/4, and the ratio A(n)/n^2 converges to 1/4. More precisely, A(n) = floor(n^2/4) + O(1). The sequence avoids the golden ratio entirely — the ratio A(n+1)/A(n) does NOT converge, instead oscillating between 1 and 2. The complement of the anti-Fibonacci sequence (numbers that ARE sums of two previous anti-Fibonacci numbers) has density 0. Test: compute A(n) for n up to 10^6 and verify A(n)/n^2 approaches 1/4. Prove A(n) = floor(n^2/4) + O(1) by induction. Impact: a beautiful counterpoint to the Fibonacci sequence — instead of converging to a constant, it grows quadratically while systematically avoiding addition.",
     "domain_bridges": [],
     "domains": [
@@ -6055,6 +6065,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Cryptography"
+    ],
+    "id": "fd_0088",
+    "lineage_refs": [],
+    "priority_score": 0.05,
+    "proof_strategy": "Define tropical arithmetic: a oplus b = min(a, b), a otimes b = a + b. Tropical matrix multiplication: (A otimes B)_{ij} = min_k (A_{ik} + B_{kj}). Tropical matrix power: A^{otimes k} = A otimes A otimes ... otimes A (k times). This is equivalent to the k-th power in the min-plus semiring, which is also the all-pairs shortest path matrix for k steps. Tropical eigenvalue: lambda is a tropical eigenvalue of A if there exists v != infinity such that min_j (A_{ij} + v_j) = lambda + v_i for all i. The tropical eigenvalue exists and is unique for irreducible matrices (by the tropical Perron-Frobenius theorem). Key exchange: Alice and Bob agree on a public tropical matrix A. Alice picks a secret a and computes A^{otimes a}. Bob picks a secret b and computes A^{otimes b}. They exchange, and both compute the shared key (A^{otimes a})^{otimes b} = A^{otimes ab} = (A^{otimes b})^{otimes a}. Security: Eve sees A, A^{otimes a}, A^{otimes b} and needs to compute A^{otimes ab}. The tropical eigenvalue gives: lambda(A^{otimes a}) = a * lambda(A), so a = lambda(A^{otimes a}) / lambda(A). This breaks the key exchange! Unless we hide the eigenvalue. Defense: add noise to the matrix before computing the power. A^{otimes k} + noise (in the tropical sense) changes the eigenvalue unpredictably. Conjecture: with noise, the TDLP is hard for n >= 10. Test: implement noisy tropical DH, measure key generation time, attempt to break with eigenvalue attack.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.782446+00:00",
+    "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "ead94fbc",
     "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
     "domain_bridges": [],
     "domains": [
@@ -6067,7 +6097,7 @@
     "proof_strategy": "Define the data sheaf: for a database with n features and m observations, the base space is the poset P of feature subsets (ordered by inclusion). The sheaf F assigns to each feature subset S the set of complete observations on features S. The restriction maps F(S) -> F(T) for T subset S project out the features in S\\T. The sheaf condition: for any cover {S_i} of S, the following is an equalizer: F(S) -> prod_i F(S_i) ==> prod_{i,j} F(S_i cap S_j). This means: a global section exists iff local sections agree on overlaps. P(sheaf) = P(all overlapping constraints are consistent) = prod_{overlaps} P(consistent | missing) = prod_{overlaps} (1-r)^2 = (1-r)^{2*C(n,2)} for pairwise overlaps. More precisely: there are C(n,2) overlapping pairs of features. Each pair requires consistency of the two partial sections. P(consistent pair) = (1-r)^2 (both features present) + r^2 * P(consistent by chance) + 2*r*(1-r) * P(consistent partial). For random data: P(consistent by chance) ~ 1/k where k is the number of values. So P(sheaf) ~ (1 - r + r/k)^{C(n,2)}. For n > 10 and r < 0.5: P(sheaf) > (1-r)^{C(n,2)} > 0 if r < 1 - C(n,2)^{-1/n}. Sheaf imputation: find the global section s that minimizes ||s - data||^2 subject to s in H^0(F). This is a constrained optimization problem. Test: generate synthetic data from a known distribution, introduce MCAR missing values, compare imputation methods.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.807837+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
@@ -6194,7 +6224,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bf1e3b75",
     "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
     "domain_bridges": [],
     "domains": [
@@ -6207,7 +6237,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T23:40:36.923091+00:00",
     "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
   }
