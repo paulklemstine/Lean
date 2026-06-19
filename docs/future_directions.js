@@ -48,7 +48,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Goldbach Verification Framework"
   },
   {
-    "consumed_by_exp_id": "3b2adc6d",
+    "consumed_by_exp_id": "",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domains": [
       "Algebra"
@@ -57,7 +57,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -1031,6 +1031,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-16T10:39:16.784213+00:00",
     "title": "Close Proofs: Functor from finite linear codes to tropical valuation objects via wei"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0116",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.958310+00:00",
+    "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
   {
     "consumed_by_exp_id": "",
@@ -2032,11 +2047,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The coefficients a_n in the q-expansion f(q) = \u03a3_{n\u22650} a_n q^n satisfy the recurrence (n+3) a_{n+3} = (3n+4) a_{n+2} - (3n+1) a_{n+1} + n a_n for all n \u2265 0, with initial values a_0 = 1, a_1 = 0, a_2 = 1.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2102",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18110v1",
+    "status": "available",
+    "timestamp": "2026-06-19T14:51:27.250427+00:00",
+    "title": "Linear recurrence for coefficients of Ramanujan's third order mock theta function f(q)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every odd prime base B > 5, the length of the longest terminal cycle in the four-digit Kaprekar routine equals (B-1)/2 if and only if the multiplicative order of 2 modulo B is (B-1)/2.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2102",
+    "id": "fd_2103",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
@@ -2050,7 +2079,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2103",
+    "id": "fd_2104",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
@@ -2065,7 +2094,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2104",
+    "id": "fd_2105",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19677v1",
@@ -2080,7 +2109,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2105",
+    "id": "fd_2106",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19933v1",
@@ -2095,7 +2124,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2106",
+    "id": "fd_2107",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19573v1",
@@ -2109,7 +2138,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2107",
+    "id": "fd_2108",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19006v1",
@@ -2124,7 +2153,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2108",
+    "id": "fd_2109",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18956v1",
@@ -3082,21 +3111,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T23:11:17.377449+00:00",
     "title": "Two boundary facts of the prime crossword in"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS \u2014 Tropical Cryptography: Multiple Homomorphic Shadows of the Exponent\n\nDerived from this cycle's findings in `TropicalMagnitudeLeak.lean` and\n`TropicalGminSuperadditive.lean` (and building on `TropicalDiscreteLog.lean`,\n`EigenzeroNoLeak.lean`). The cycle established **two independent exponent-leak channels**\nfor the tropical discrete logarithm / tropical Diffie\u2013Hellman scheme:\n\n1. **Spectral channel** (prior work): `\u03bb(A^{\u2297(k+1)}) = (k+1)\u00b7\u03bb(A)` \u2014 exact recovery when a\n   nonzero-eigenvalue eigenvector exists.\n2. **Magnitude channel** (this cycle): `(k+1)\u00b7amin \u2264 (A^{\u2297(k+1)})_{ij} \u2264 (k+1)\u00b7amax` \u2014\n   unconditional interval recovery from a *single* public entry, with global-min\n   superadditivity giving a monotone exponent witness whose growth rate is the minimum\n   cycle mean.\n\nBoth channels go silent at the **same degenerate value `0`** (`\u03bb = 0`; the zero matrix),\nsuggesting a unifying \"degeneracy = the only possible security\" principle.\n\n---\n\n## Conjecture 1 \u2014 The interval channel always pins `k` to a bounded list\n\n**Statement.** For any tropical matrix with entries in a positive band `[amin, amax]` with\n`amax/amin < R`, the integer exponent `k+1` recovered from a single public entry via\n`tdlp_exponent_interval` lies in an interval containing at most `\u2308(R-1)(k+1)\u2309 + 1`\nintegers; in particular, for fixed `R` and a known order of magnitude of `k`, only\n`O(k)` candidates survive, each testable in `O(n\u00b3 log k)`. Hence TDLP on positive-band\nmatrices is solvable in time polynomial in `k` and `n` with **no spectral data**.\n\n**The key insight is** that the multiplicative spread `amax/amin`, not the matrix\ndimension `n`, controls the residual ambiguity of the exponent \u2014 security cannot come from\nlarge `n`, only from a large additive spread of entries.\n\n**Why now?** The entrywise sandwich `tropMatPow_entry_sandwich` is already formalized and\nsound; the remaining step is a counting lemma over `\u2124 \u2229 [x/amax, x/amin]`, well within\nreach of `Int.floor`/`Int.ceil` API in Mathlib.\n\n## Conjecture 2 \u2014 Fekete limit: `gmin(A^{\u2297m})/m` converges to the minimum cycle mean\n\n**Statement.** For every tropical matrix `A`, the normalized global minimum\n`gmin(A^{\u2297m})/(m+1)` converges as `m \u2192 \u221e`, and the limit equals the minimum cycle mean\n`min_C (weight(C)/length(C))` over directed cycles `C` of the weighted digraph of `A`.\n\n**The key insight is** that `gmin_tropMatPow_superadd` is *exactly* the hypothesis of\nFekete's subadditive lemma (applied to `-gmin`), so convergence is automatic; identifying\nthe limit with the cycle mean is the tropical Perron\u2013Frobenius / Cuninghame-Green theorem.\n\n**Why now?** Superadditivity is already proved (0 axioms). Mathlib has\n`Subadditive.tendsto_lim`; the only new content is the digraph-cycle identification,\nwhich connects directly to the existing `WeightedDigraph` structure in `MinPlusAlgebra.lean`.\n\n## Conjecture 3 \u2014 The two channels coincide generically (`\u03bb = minimum cycle mean`)\n\n**Statement.** For a strongly connected (irreducible) tropical matrix, the unique tropical\neigenvalue `\u03bb(A)` of `TropicalDiscreteLog` equals the magnitude growth rate\n`lim gmin(A^{\u2297m})/m` of `TropicalGminSuperadditive`. Consequently the spectral and\nmagnitude attacks return the *same* secret exponent, and either suffices.\n\n**The key insight is** that both linear functionals are shadows of one object \u2014 the\nminimum cycle mean \u2014 so a defense that blinds one channel (e.g. forcing `\u03bb = 0`)\nnecessarily collapses the other (`gmin` growth rate `\u2192 0`), leaving no room for security.\n\n**Why now?** With both channels formalized in the same file family over the same\n`tropMatPow`, the equality is a bridge theorem whose two sides are already defined; the\nproof reduces to irreducibility + the boundary theorem `digraph_eigenvalue_nonpos`.\n\n## Conjecture 4 \u2014 No additive blinding defends the magnitude channel\n\n**Statement.** Adding a public scalar mask (the tropical scalar action `A \u21a6 A + c\u00b7J`,\n`J` the all-ones matrix) shifts every entry of `A^{\u2297(k+1)}` by exactly `(k+1)\u00b7c`, hence\nshifts the recovered interval by a *publicly known* amount and provides **zero** additional\nhardness. More generally, any per-row/per-column potential gauge `A_{ij} \u21a6 A_{ij}+p_i-q_j`\nleaves the recovered exponent invariant.\n\n**The key insight is** that the magnitude leak is *gauge-covariant*: it transforms\npredictably under exactly the symmetries (`tropMatVecMul_shift`, additive separability of\n`MinPlusRankOne`) that a designer would reach for to hide structure.\n\n**Why now?** `tropMatVecMul_shift` and the rank-1 additive-separability theory are already\nin the catalog; the conjecture is a direct equivariance computation on `tropMatPow`.\n\n## Conjecture 5 \u2014 Security requires super-linear entry growth, which tropical powers forbid\n\n**Statement.** A keyed family `k \u21a6 A^{\u2297(k+1)}` is a one-way function only if some public\nobservable grows super-linearly in `k`. But `tropMatPow_entry_sandwich` proves every entry\ngrows **exactly linearly** (trapped between two lines). Therefore *no* min-plus matrix\npower family is one-way: the exponent is always recoverable to within an additive `O(1)`\nfraction, uniformly in the secret.\n\n**The key insight is** that one-wayness needs an information bottleneck, but tropical\nexponentiation is `1`-Lipschitz *and* linearly homogeneous, so it preserves rather than\ndestroys the exponent's magnitude \u2014 the precise opposite of what a one-way function does.\n\n**Why now?** The Lipschitz bounds (`tropMatMul_combined_lipschitz`) and the linear sandwich\nare both formalized; combining them into a no-go theorem for tropical one-wayness is the\nnatural capstone and would settle the headline conjecture of the mission in the negative.\n",
-    "domains": [
-      "Cryptography",
-      "Algebra"
-    ],
-    "id": "fd_2109",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "b3d82bf4",
-    "status": "available",
-    "timestamp": "2026-06-19T14:41:39.717280+00:00",
-    "title": "Derived from this cycle's findings in `TropicalMagnitudeLeak.lean` and"
   },
   {
     "consumed_by_exp_id": "",
@@ -4111,7 +4125,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "225644b1",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -4121,7 +4135,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.490561+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
@@ -4246,7 +4260,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4b892cf9",
     "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
     "domains": [
       "Novelty",
@@ -4256,7 +4270,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.782446+00:00",
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
