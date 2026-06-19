@@ -2882,6 +2882,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Non-Archimedean Probability via Surreal Numbers\n\nDerived from this cycle's findings (files `SurrealInfinitesimalField.lean`,\n`SurrealProbability.lean`):\n\n* the carrier `K = Lex (\u211d\u27e6\u211a\u27e7)` is a non-Archimedean ordered field with a positive\n  infinitesimal `eps` smaller than every positive rational (`K_nonArchimedean`);\n* a finitely-additive `K`-valued measure on elementary subsets of `[0,1]` gives every\n  point positive infinitesimal mass while the whole space has mass exactly `1`\n  (`infinitesimal_probability_reconciliation`);\n* the apparent paradox dissolves because the natural domain is the *finite-union*\n  Boolean algebra, on which `[0,1]` is not a disjoint union of points\n  (`finite_atoms_lt_one`).\n\nThe following conjectures are bold, falsifiable, and testable in Lean 4.\n\n## C1. Inclusion\u2013exclusion and a Carath\u00e9odory-style extension for the elementary algebra\n\n**Conjecture.** `emeasure` extends from disjoint joins to a finitely additive measure\non the full Boolean algebra of elementary sets (finite unions/intersections/\ncomplements of intervals modified at finitely many points), satisfying the two-set\ninclusion\u2013exclusion law `\u03bc(E\u2081 \u222a E\u2082) + \u03bc(E\u2081 \u2229 E\u2082) = \u03bc E\u2081 + \u03bc E\u2082` and monotonicity for\nthe induced subset order.\n\n*The key insight is...* additivity already proven for *disjoint* joins\n(`emeasure_join_disjoint`) upgrades to general unions once the continuous content `\u211a`\nand the atom multiset obey inclusion\u2013exclusion separately, because the two summands of\n`emeasure` live in independent graded pieces of `K` (order-0 reals vs. order-1\ninfinitesimals).\n\n*Why now?* The disjoint case and the no-go theorem are formalized; the remaining step\nis a finite Boolean-algebra bookkeeping argument with no new analytic input.\n\n## C2. Conditional probability divides infinitesimals: a non-Archimedean Bayes rule\n\n**Conjecture.** For elementary sets with `emeasure B \u2260 0`, the conditional measure\n`\u03bc(A \u2223 B) := emeasure (A \u2229 B) / emeasure B` is well-defined in `K`, lies in `[0,1]`,\nand conditioning on a single point `{x}` (mass `eps`) yields a genuine probability\n*even though `emeasure {x}` is infinitesimal* \u2014 recovering finite ratios such as\n`\u03bc({x} \u2223 {x,y}) = 1/2` that classical real-valued measures render `0/0`.\n\n*The key insight is...* division by the infinitesimal `eps` is legal because `K` is a\n*field*, so ratios of order-1 quantities collapse to order-0 reals; conditioning on a\nnull (in the real sense) event becomes meaningful in the surreal extension.\n\n*Why now?* `K` is already a field with a constructed infinitesimal and exact ratio\narithmetic; the conjecture only needs `field_simp`/`leadingCoeff` order computations of\nthe kind already used in `nat_mul_eps_lt_one`.\n\n## C3. A standard-part retraction `K \u2192 \u211d` recovers Lebesgue measure\n\n**Conjecture.** The order-0 coefficient map `st : K \u2192 \u211d`, `st x = (ofLex x).coeff 0`,\nis an ordered-ring retraction that sends `emeasure` of every elementary set to its\nclassical Lebesgue measure (`st (emeasure \u27e8c, A\u27e9) = c`), so the surreal measure is a\n*conservative refinement* of the real one: it adds infinitesimal detail at points\nwithout disturbing lengths.\n\n*The key insight is...* the continuous and atomic parts of `emeasure` sit in different\nHahn-series exponents, so taking the order-0 coefficient annihilates all point masses\n(`|A|\u00b7eps` has exponent `1`) while preserving content.\n\n*Why now?* The exponent-grading lemmas (`leadingCoeff_add_eq_left`, `coeff` of\n`single`) used throughout this cycle are exactly what is needed to prove `st` is\nadditive and order-preserving.\n\n## C4. Infinite atom families and a non-Archimedean \"countable additivity\" boundary\n\n**Conjecture.** Finite additivity does **not** extend to countable disjoint unions of\npoints: there is no element of `K` equal to the supremum of the partial sums\n`n \u21a6 n\u00b7eps`, and any attempted countably-additive extension assigning each point `eps`\nforces a contradiction with `emeasure_univ = 1`. Equivalently, `K` is not Dedekind- /\nsequentially-complete in the relevant sense.\n\n*The key insight is...* `{n\u00b7eps : n \u2208 \u2115}` is bounded above by `1` yet has no least\nupper bound in `K` (any candidate `s` satisfies `s - eps` is still an upper bound),\nformalizing precisely *why* the conjecture must stay finitely additive.\n\n*Why now?* `nat_mul_eps_lt_one` already exhibits the bounded increasing family; the\nmissing piece is a short `by_contra` on the supremum, well within reach.\n\n## C5. Faithfulness: an order-embedding into Conway's surreals `No`\n\n**Conjecture.** There is an injective ordered-field homomorphism\n`Lex (\u211d\u27e6\u211a\u27e7) \u21aa Surreal` sending `eps` to the surreal `\u03c9^{-1}`, so every theorem of this\ncycle is literally a statement about Conway's surreal numbers, not merely an analogue.\n\n*The key insight is...* the surreal \"normal form\" (Conway's `\u03c9`-power / sign-sequence\nrepresentation) realizes real-coefficient, rational-exponent Hahn series as honest\nsurreals; building the embedding turns the proxy carrier into the real object.\n\n*Why now?* Mathlib now has both `Surreal` and a rich `HahnSeries` order API\n(`leadingCoeff_pos_iff`, archimedean-class machinery in `HahnSeries.Lex`); the\nembedding is the natural bridge connecting the two and would retroactively upgrade the\nentire construction to \"via surreal numbers\" in the strictest sense.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2094",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "74320b24",
+    "status": "available",
+    "timestamp": "2026-06-19T06:51:16.971690+00:00",
+    "title": "Derived from this cycle's findings (files `SurrealInfinitesimalField.lean`,"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3681,21 +3696,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:24.924994+00:00",
     "title": "Navier-Stokes Existence and Smoothness"
-  },
-  {
-    "consumed_by_exp_id": "74320b24",
-    "description": "Develop a probability theory on Conway's surreal numbers where infinitesimal probabilities are well-defined. Conjecture: There exists a surreal-valued probability measure on [0,1] that assigns non-zero infinitesimal probability to each point but still integrates to 1. Test: construct the measure and verify additivity for finite unions. If true, this opens a new foundation for probability with infinitesimals, connecting to nonstandard analysis and surreal game theory.",
-    "domains": [
-      "Algebra",
-      "Speculative"
-    ],
-    "id": "fd_0411",
-    "priority_score": 0.24999999999999992,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:26.181414+00:00",
-    "title": "Non-Archimedean Probability via Surreal Numbers"
   },
   {
     "consumed_by_exp_id": "",
