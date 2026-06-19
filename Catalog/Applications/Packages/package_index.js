@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "e88eb144",
     "filename": "dream_logic_non_monotone_reasoning_where_contradic.json",
     "pkg_num": 203,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7144,
     "title": "Dream Logic: Coexisting Contradictions in Four-Valued Paraconsistency and Their Topological Models"
   },
   {
@@ -6222,8 +6222,8 @@ window.PACKAGE_GRAPH = {
       "hue": 112,
       "id": "dream_logic_non_monotone_reasoning_where_contradic",
       "primary_domain": "Logic",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7144,
+      "quality": "substantial",
       "shape": "star_of_david",
       "title": "Dream Logic: Coexisting Contradictions in Four-Valued Paraconsistency and Their Topological Models"
     }

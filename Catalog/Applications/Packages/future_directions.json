@@ -192,7 +192,7 @@
       "depth_estimate": 3,
       "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Algebra"
@@ -34577,6 +34577,42 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "# Future Directions — Dream Logic: Paraconsistency, Topology, and Coexisting Contradictions\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle. The three Lean files established:\n\n- `Logic/DreamLogic/Belnap.lean` — Belnap's four-valued logic `FOUR`, with\n  `explosion_fails`, `lnc_can_fail`, `lem_can_fail`, and the uniqueness results\n  `glut_iff` (only `both` is a glut) and `gap_iff` (only `neither` is a gap).\n- `Geometry/DreamLogic/Topology.lean` — the closed-set co-Heyting model:\n  `contradiction A = frontier A` for closed `A`, `lnc_holds_iff_clopen`, and\n  `connected_forces_paraconsistency`.\n- `Logic/DreamLogic/Bridge.lean` — the cross-domain identity\n  *topological frontier point = Belnap glut value `both`*\n  (`val_both_iff_frontier`, `glut_iff_contradiction`, `dream_object_real_is_glut`).\n\nThe key empirical insight of the cycle: the briefing's phrase \"open sets not\nclosed under arbitrary union\" is literally false for any topology; the *correct*\ndual reading is \"closed sets need not be open\", and paraconsistency lives exactly\nin the gap between closed and clopen. This reframing drives the conjectures below.\n\n---\n\n## Conjecture 1 — The clopen algebra is the largest classical sublogic.\nFor a topological space `X`, the Boolean algebra of clopen sets is the *unique\nmaximal* subfamily of closed sets on which `contradiction A = ∅` for every\nmember, and the four-valued valuation `val` collapses to two values exactly there.\n- **The key insight is** that classical (explosive) reasoning is recovered\n  precisely on the clopen sets — the connected components' indicator algebra — so\n  \"how classical\" a space is is measured by `card (clopen X)`.\n- **Why now?** We have `lnc_holds_iff_clopen` and `designated_iff_mem` already\n  formalized; the maximality claim is a finite combinatorial step on top of them,\n  testable first on finite spaces and `ℝⁿ`.\n\n## Conjecture 2 — Frontier dimension grades the \"severity\" of a contradiction.\nOrder dialetheic closed sets by the topological dimension of their frontier.\nThen in `ℝⁿ` the conjunction `conj`-glut content of a closed set is a monotone\nfunction of `dim (frontier A)`, and the empty-frontier (clopen) case is the bottom.\n- **The key insight is** that not all coexisting contradictions are equal: a\n  point-frontier dialetheia (`[0,1]`, frontier `{0,1}`) is \"smaller\" than a\n  hypersurface-frontier dialetheia (a closed ball, frontier a sphere).\n- **Why now?** `contradiction_eq_frontier` reduces the question to Mathlib's\n  developing dimension theory of `frontier`; the `n = 1` base case is already\n  computable from `frontier_Icc`.\n\n## Conjecture 3 — Belief retraction = passing to the interior; revision = closure.\nModel non-monotone update on `FOUR`-valuations by the two idempotent operators\n`A ↦ interior A` (retraction: kills gluts) and `A ↦ closure A` (revision: may\ncreate gluts). Conjecture: every finite sequence of retract/revise operations\nstabilizes (reaches a regular open or regular closed fixed point) in ≤ 2 steps —\na topological Kuratowski-style bound.\n- **The key insight is** that non-monotone reasoning (AGM-style retraction) is the\n  *dynamics* of the closure/interior pair, and gluts are exactly the points lost\n  under `interior`.\n- **Why now?** Mathlib has `interior_interior`, `closure_closure`, and the\n  Kuratowski 14-set machinery; combined with `val_both_iff_frontier` this becomes\n  a concrete, falsifiable fixed-point statement.\n\n## Conjecture 4 — `FOUR` is the De Morgan-algebra hom-image of every closed-set model.\nThe pointwise valuation `val : Set X → X → Belnap` extends to a De Morgan algebra\nhomomorphism from the closed sets of `X` onto a subalgebra of `FOUR`, and the\nhomomorphism is *surjective onto `{true,false,both}`* iff `X` is connected with a\nproper nonempty closed subset.\n- **The key insight is** that `connected_forces_paraconsistency` is really a\n  surjectivity statement: connectedness is exactly what guarantees the glut value\n  `both` is hit, making `FOUR` (minus the gap) the canonical image.\n- **Why now?** The De Morgan lemmas (`demorgan_conj`, `neg_neg`) and the bridge\n  faithfulness lemma `designated_iff_mem` are in place; only the homomorphism\n  packaging remains.\n\n## Conjecture 5 — Gaps need a *second* set: the `neither` value is bitopological.\nA single closed set realizes only `{true,false,both}`. Conjecture: the full\nfour-valued `FOUR` (including `neither`) is realized exactly by *bitopological*\nspaces — a pair `(τ₁, τ₂)` of topologies — where `neither` marks points outside\nboth closures, so that paracomplete *and* paraconsistent reasoning coexist.\n- **The key insight is** that gluts (`both`) and gaps (`neither`) are dual and\n  require dual data: one closure operator for contradictions, a second for gaps.\n- **Why now?** Mathlib now supports multiple `TopologicalSpace` instances via\n  type synonyms; the bridge already isolates `neither` as the missing fourth\n  value, making the bitopological extension the natural next formalization.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "id": "fd_2108",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "e88eb144",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/e88eb144",
+      "status": "available",
+      "thread_id": "th_8347bb7a",
+      "timestamp": "2026-06-19T11:47:38.306815+00:00",
+      "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
       "category": "",
@@ -39652,7 +39688,7 @@
       "depth_estimate": 3,
       "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics"
       ],
@@ -39687,7 +39723,7 @@
       "depth_estimate": 3,
       "description": "Formalize Frankl's conjecture and prove it for families of size ≤ 50 (Bošnjak-Marković). Prove the conjecture for families with a 3-element universe. Formalize the lattice-theoretic reformulation and Reimer's entropy approach.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Algebra"
@@ -39723,7 +39759,7 @@
       "depth_estimate": 3,
       "description": "Formalize chromatic polynomials and prove deletion-contraction. Prove the four-color theorem is equivalent to χ(G) ≤ 4 for all planar G. Formalize Brooks' theorem: χ(G) ≤ Δ(G) unless G is complete or an odd cycle. Prove the chromatic polynomial is T-positive for claw-free graphs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Algebra"
@@ -39759,7 +39795,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Probability"
@@ -39795,7 +39831,7 @@
       "depth_estimate": 3,
       "description": "Formalize Turán's theorem: ex(n, K_r) = (1-1/(r-1))n²/2. Prove the Kruskal-Katona theorem. Formalize Szemerédi's regularity lemma and prove the triangle removal lemma. Apply to prove Roth's theorem on 3-APs.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics"
       ],
@@ -40416,7 +40452,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Algebra",
@@ -47536,7 +47572,7 @@
       "depth_estimate": 3,
       "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (ℕ → V →ₗ[K] V) → ℕ → ℕ → V →ₗ[K] V`",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics"
       ],
