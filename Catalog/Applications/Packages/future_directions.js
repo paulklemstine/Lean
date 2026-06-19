@@ -1033,7 +1033,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Functor from finite linear codes to tropical valuation objects via wei"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "e88eb144",
     "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
     "domains": [
       "Novelty",
@@ -1043,7 +1043,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.958310+00:00",
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
@@ -1976,11 +1976,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every odd prime base B > 5, the length of the longest terminal cycle in the four-digit Kaprekar routine equals (B-1)/2 if and only if the multiplicative order of 2 modulo B is (B-1)/2.",
+    "description": "The coefficients of the constructed modular form truncate to zero modulo any prime \u2113.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_2097",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19008v1",
+    "status": "available",
+    "timestamp": "2026-06-19T10:11:48.398941+00:00",
+    "title": "Triviality of Modular Form Coefficients"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every odd prime base B > 5, the length of the longest terminal cycle in the four-digit Kaprekar routine equals (B-1)/2 if and only if the multiplicative order of 2 modulo B is (B-1)/2.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2098",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
@@ -1994,7 +2008,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2098",
+    "id": "fd_2099",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
@@ -2009,7 +2023,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2099",
+    "id": "fd_2100",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19677v1",
@@ -2024,7 +2038,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2100",
+    "id": "fd_2101",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19933v1",
@@ -2039,7 +2053,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2101",
+    "id": "fd_2102",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19573v1",
@@ -2053,13 +2067,28 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2102",
+    "id": "fd_2103",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19006v1",
     "status": "available",
     "timestamp": "2026-06-19T09:43:51.444927+00:00",
     "title": "Complete intersectionproperty of Fitting ideals for tree graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every positive integer q and natural number n, let P(n,q) denote the probability that the Random player wins the q-game. We conjecture that P(n,q) satisfies the recurrence relation: P(n,q) = 1/n + (1/n) * \u03a3_{k=q+1}^n P(n\u2212k, q), with base case P(0,q) = 0. This recurrence captures the probabilistic structure of the game coupled to random permutations' cycle decompositions.",
+    "domains": [
+      "Computation",
+      "Pythagorean"
+    ],
+    "id": "fd_2104",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18956v1",
+    "status": "available",
+    "timestamp": "2026-06-19T10:14:34.984628+00:00",
+    "title": "Recurrence for the Winning Probability in the Generalized Game"
   },
   {
     "consumed_by_exp_id": "",
@@ -4160,7 +4189,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
   },
   {
-    "consumed_by_exp_id": "0abb7f10",
+    "consumed_by_exp_id": "",
     "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
     "domains": [
       "Novelty",
@@ -4170,12 +4199,12 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.782446+00:00",
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
   {
-    "consumed_by_exp_id": "4f74256d",
+    "consumed_by_exp_id": "",
     "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
     "domains": [
       "Novelty",
@@ -4185,7 +4214,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.807837+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
