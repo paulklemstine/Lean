@@ -1,53 +1,59 @@
-# Computational Evidence — Sheaf-Theoretic Data Integration
+# THEOREM TRACE (internal anti-hallucination ledger)
 
-Concept: a database with missing entries is a partial section of a sheaf; the sheaf
-(gluing) condition governs consistent imputation, with
-`P(sheaf) = (1 - r)^N`, where `r` is the missing rate and `N` the number of
-independent overlapping consistency constraints (the concept proposes `N = C(n,k)`).
+Every name below is taken verbatim from the Phase A Lean output:
+`Catalog/Shared/PartialSectionGluing.lean` (fully proven) and the Phase A file
+`Catalog/Algebra/SheafImputationAlgebra.lean` (which `import`s and extends it).
+No theorem is stated in ARTICLE.md / RESEARCH_PAPER.md that is absent here.
 
-## 1. Small-case calculation of the probability law
+## Core definitions (PartialSectionGluing.lean)
 
-For each of `N` independent cells, "present" has probability `1 - r`; the sheaf
-condition holds iff all `N` are present, so the conjunction has probability the
-product `(1 - r)^N`. Concretely (taking `N = C(n, 2)`, the number of column pairs):
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `PartialSection` | `PartialSection ι α := ι → Option α` | "a row with holes" | Def. 1 |
+| `Support` | `{i | f i ≠ none}` | "the filled cells" | Def. 2 |
+| `Compatible` | `∀ i, f i ≠ none → g i ≠ none → f i = g i` | "agree where both filled" | Def. 3 |
+| `Extends` | `∀ i, f i ≠ none → g i = f i` | "a completion of" | Def. 4 |
+| `glue` | take `f i` if defined else `g i` | "overlay / merge" | Def. 5 |
+| `PairwiseCompatible` | `∀ j k, Compatible (s j) (s k)` | "every pair agrees" | Def. 6 |
+| `familyGlue` | choice-based merge of a whole family | "merge of all rows" | Def. 7 |
 
-| n  | C(n,2) | r=0.1      | r=0.3      | r=0.5      |
-|----|--------|------------|------------|------------|
-| 5  | 10     | 0.348678   | 0.028248   | 0.000977   |
-| 10 | 45     | 0.008728   | ~3.0e-7    | ~2.8e-14   |
-| 15 | 105    | 0.000016   | ~2.5e-16   | ~2.5e-32   |
+## Algebra file extra definitions (SheafImputationAlgebra.lean)
 
-(Values computed in Lean with `Float`; the exact symbolic statement is
-`SheafProb.sheafProb_choose_eq`.)
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `emptySection` | `fun _ => none` | "the empty row" | Def. 8 |
+| `HasGlobalSection` | `∃ h, ∀ j, Extends h (s j)` | "consistent fill-in exists" | Def. 9 |
 
-**Observation.** For fixed `r > 0`, the probability collapses *exponentially* as the
-number of columns (hence `C(n,2)`) grows — matching the conjecture "the probability
-of consistent imputation drops exponentially with the number of overlapping
-constraints." This is the content of `SheafProb.sheafProb_antitone`,
-`SheafProb.sheafProb_strict_anti`, and `SheafProb.sheafProb_tendsto_zero`.
+## Theorems (PartialSectionGluing.lean — all fully proven)
 
-## 2. Independence / multiplicativity check
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `glue_apply` | `(glue f g) i = if f i ≠ none then f i else g i` | implicit | Lem. 1 |
+| `support_glue_eq_union` | `(glue f g).Support = f.Support ∪ g.Support` | "merging unions the cells" | Prop. 2 |
+| `glue_extends_left` | `Extends (glue f g) f` | "merge keeps f" | Lem. 3 |
+| `glue_extends_right` | `Compatible f g → Extends (glue f g) g` | "and keeps g if compatible" | Lem. 4 |
+| `compatible_iff_exists_common_extension` | `Compatible f g ↔ ∃ h, Extends h f ∧ Extends h g` | **main (pairwise)** | Thm. 5 |
+| `restrict_locality` | `Extends f g → Extends g f → f = g` | "locality axiom" | Thm. 6 |
+| `glue_unique` | unique global section bounded by support union | **uniqueness** | Thm. 7 |
+| `familyGlue_extends` | `PairwiseCompatible s → ∀ j, Extends (familyGlue s) (s j)` | "merge completes all" | Lem. 8 |
+| `glue_family_exists` | `PairwiseCompatible s → ∃ h, ∀ j, Extends h (s j)` | **main (family)** | Thm. 9 |
 
-`(1-r)^{N+M} = (1-r)^N · (1-r)^M`: combining two disjoint constraint sets multiplies
-the probabilities, confirming the "independent constraints" model. Formalized as
-`SheafProb.sheafProb_mul`.
+## Theorems (SheafImputationAlgebra.lean — Phase A)
 
-## 3. Counterexample hunt for the gluing model
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `glue_emptySection_left` | `glue emptySection f = f` | "empty row is unit" | Thm. 10 |
+| `glue_emptySection_right` | `glue f emptySection = f` | "empty row is unit" | Thm. 10 |
+| `glue_assoc` | `glue (glue f g) h = glue f (glue g h)` | "merging is associative" | Thm. 11 |
+| `glue_idem` | `glue f f = f` | "merging twice = once" | Thm. 12 |
+| `glue_band_left` | `glue (glue f g) f = glue f g` | "left-regular band law" | Thm. 13 |
+| `glue_band_right` | `glue f (glue g f) = glue f g` | "left-regular band law" | Thm. 13 |
 
-The partial-section model `ι → Option α` was tested for:
-* Existence of a gluing of compatible fragments — holds (`glue_extends_left/right`).
-* Necessity of the overlap (compatibility) condition — *incompatible* fragments have
-  **no** common extension. Example: `f 0 = some 0`, `g 0 = some 1` are incompatible
-  and provably admit no common extension (`no_glue_of_incompatible`). This rules out
-  the trivial reading "every pair of fragments glues."
-* Uniqueness once support is the union of domains (`glue_unique`).
+## Conjectural / modeling content (NOT proven in shown Lean)
 
-No counterexamples to the formalized claims were found; the conjecture's qualitative
-predictions (exponential decay, necessity of overlap agreement) are reproduced.
-
-## 4. Sequence note
-
-`C(n,2) = 0,1,3,6,10,15,21,28,36,45,...` is OEIS A000217 (triangular numbers); the
-exponents in the probability law are therefore the triangular numbers when `k = 2`.
-No new integer sequence arises from the probability values themselves (they are
-transcendental for generic `r`).
+- `P(sheaf) = (1-r)^{C(n,k)}` and the names
+  `consistencyProb_antitone_columns`, `consistencyProb_tendsto_zero`
+  are referenced in Phase A future directions for a probability file that is
+  NOT part of the shown Lean output. These are presented strictly as a
+  **probabilistic model / conjecture** and confined to the "model" and
+  "future work" sections — never asserted as proven theorems.
