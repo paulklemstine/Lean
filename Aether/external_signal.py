@@ -53,10 +53,6 @@ class ExternalSignalFeed:
             added += self._add_directions(self.fetch_oeis_directions(count=count_per_source))
         except Exception as e:
             print(f"[ExternalSignal] OEIS refresh failed: {e}")
-        try:
-            added += self._add_directions(self.fetch_lmfdb_directions(count=count_per_source))
-        except Exception as e:
-            print(f"[ExternalSignal] LMFDB refresh failed: {e}")
         return added
 
     def _add_directions(self, directions: List[FutureDirection]) -> int:
@@ -187,55 +183,6 @@ class ExternalSignalFeed:
                 domains=domains,
                 depth_estimate=2,
                 priority_score=0.70,
-                category="cross_domain_bridge",
-                timestamp=datetime.now(timezone.utc).isoformat(),
-            ))
-        return directions
-
-    # ── LMFDB ──
-
-    def fetch_lmfdb_directions(self, count: int = 2) -> List[FutureDirection]:
-        """Fetch interesting LMFDB objects and turn them into directions."""
-        directions: List[FutureDirection] = []
-        endpoints = [
-            "https://www.lmfdb.org/EllipticCurve/Q/?download=1&limit=3",
-        ]
-        for url in endpoints:
-            try:
-                data = self._fetch_json(url, timeout=30)
-                if not data:
-                    continue
-                parsed = self._parse_lmfdb_results(data)
-                directions.extend(parsed)
-                if len(directions) >= count:
-                    break
-            except Exception as e:
-                print(f"[ExternalSignal] LMFDB fetch error ({url}): {e}")
-        return directions[:count]
-
-    def _parse_lmfdb_results(self, data) -> List[FutureDirection]:
-        directions: List[FutureDirection] = []
-        items = data if isinstance(data, list) else data.get("data", [])
-        for r in items[:3]:
-            label = r.get("label", "") or r.get("lmfdb_label", "")
-            conductor = r.get("conductor", "")
-            if not label:
-                continue
-            title = f"LMFDB object {label}"
-            description = (
-                f"Formalize properties of the LMFDB object with label {label} "
-                f"(conductor {conductor}). Prove a computable invariant or verify a listed property in Lean 4."
-            )
-            domains = self.fd_manager._infer_domains(title + " " + description)
-            directions.append(FutureDirection(
-                id=self.fd_manager._next_id(),
-                title=title[:200],
-                description=description[:3000],
-                source_exp_id=f"lmfdb:{label}",
-                source_path="https://www.lmfdb.org/",
-                domains=domains,
-                depth_estimate=3,
-                priority_score=0.72,
                 category="cross_domain_bridge",
                 timestamp=datetime.now(timezone.utc).isoformat(),
             ))

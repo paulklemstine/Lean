@@ -855,15 +855,17 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
     except Exception as e:
         print(f"[Prune] Catalog curation failed: {e}")
 
+    terminal_jobs = [j for j in completed_jobs if j.phase in ("complete", "A_only") or j.status in ("failed", "rejected")]
+
     # ── Cycle analytics: record per-cycle metrics ──
     try:
         from cycle_analytics import CycleAnalytics
         ca = CycleAnalytics(extractor.workspace)
-        for job in completed_jobs:
+        for job in terminal_jobs:
             ca.record_cycle(job, insight_extractor=getattr(extractor, 'insight_extractor', None))
-        if completed_jobs:
+        if terminal_jobs:
             ca._save()
-            print(f"[Analytics] Recorded {len(completed_jobs)} cycle(s), total={len(ca.records)}")
+            print(f"[Analytics] Recorded {len(terminal_jobs)} cycle(s), total={len(ca.records)}")
     except Exception as e:
         print(f"[Analytics] Cycle recording failed: {e}")
 
@@ -874,7 +876,7 @@ async def _tick_impl(extractor: KnowledgeExtractor, max_inflight: int, novelty_s
         breakthroughs = ca.get_breakthroughs(threshold=0.8)
         if breakthroughs:
             # Only notify about new breakthroughs from this tick
-            this_tick_ids = {j.job_id for j in completed_jobs}
+            this_tick_ids = {j.job_id for j in terminal_jobs}
             new_bt = [b for b in breakthroughs if b.job_id in this_tick_ids]
             for bt in new_bt:
                 print(f"[🌟 BREAKTHROUGH] Q={bt.quality_score:.3f} domain={bt.domain or '?'} "

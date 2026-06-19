@@ -89,13 +89,3 @@ class TestOeisSignal:
         dirs_list = feed._parse_oeis_results(sample_list)
         assert len(dirs_list) == 1
         assert dirs_list[0].title == "OEIS sequence: Fibonacci numbers"
-
-
-class TestLmfdbSignal:
-    def test_parse_lmfdb_response(self, tmp_path):
-        agent = FakePiAgent("")
-        mgr = FutureDirectionsManager(tmp_path / "ws")
-        feed = ExternalSignalFeed(agent, mgr)
-        sample = [{"label": "11.a1", "conductor": 11}]
-        dirs = feed._parse_lmfdb_results(sample)
-        assert len(dirs) >= 0

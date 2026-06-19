@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "1ef7d13b",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Spectral Gap Rigidity for Hodge Laplacians\n\n## Synthesis\n\nThis cycle built a self-contained, `sorry`-free local-to-global theory for abstract\nHodge Laplacians and its consequence",
-      "quality_score": 0.3632293438348146,
-      "sorry_count": 2,
-      "theorem_count": 38,
-      "timestamp": "2026-06-14T22:11:30",
-      "title": "Close Proofs: Spectral Gap Rigidity for Hypergraph Hodge Laplacians Under Simplicial"
-    },
-    {
       "cycle_id": "646379f1",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Complexity Phase Structure of Additive Cellular Automata\n\n## Synthesis of this cycle\n\nWe set out to *adversarially* test the cryptographic conjecture that a minimal,\nexplicitly L",
@@ -2501,6 +2491,16 @@
       "theorem_count": 10,
       "timestamp": "2026-06-19T15:57:54",
       "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+    },
+    {
+      "cycle_id": "3b2adc6d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — BSD Research Cycle\n\nDerived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle.\nEach conjecture is falsifiable in Lean and extends the three modules\n`LocalF",
+      "quality_score": 0.4494149295774648,
+      "sorry_count": 0,
+      "theorem_count": 78,
+      "timestamp": "2026-06-19T16:03:49",
+      "title": "Birch and Swinnerton-Dyer Conjecture"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8166
     }
   ],
-  "last_updated": "2026-06-19T15:57:54",
+  "last_updated": "2026-06-19T16:03:49",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "dc77da43",
-        "quality": 0.49856,
-        "theorems": 4,
-        "title": "A tropical valuation profile of finite metric filtrations from Rips edge-count d"
-      },
-      {
         "cycle_id": "c38e2bf9",
         "quality": 0.7101600000000001,
         "theorems": 7,
@@ -3141,6 +3135,12 @@
         "quality": 0.481562,
         "theorems": 10,
         "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+      },
+      {
+        "cycle_id": "3b2adc6d",
+        "quality": 0.4494149295774648,
+        "theorems": 78,
+        "title": "Birch and Swinnerton-Dyer Conjecture"
       }
     ],
     "Bridges": [

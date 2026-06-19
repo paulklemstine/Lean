@@ -3143,6 +3143,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 BSD Research Cycle\n\nDerived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle.\nEach conjecture is falsifiable in Lean and extends the three modules\n`LocalFactor.lean`, `AnalyticRank.lean`, and `RankBridge.lean`.\n\n## Conjecture 1 \u2014 Local zeta functional equation from eigenvalue symmetry\n\nState and prove the functional equation of the **local zeta function**\n`Z_p(T) = exp(\u2211_{n\u22651} N_n T\u207f / n) = L_p(T) / ((1\u2212T)(1\u2212pT))`, deriving\n`Z_p(1/(pT)) = (pT\u00b2)^{?} \u00b7 Z_p(T)` from the already-proved factor identity\n`localFactor_functional_equation` together with `pointCount`.\n\n- The key insight is that the entire functional equation is *already encoded* in the\n  reciprocal-root symmetry `\u03b1 \u2194 p/\u03b1` of `frobeniusPoly`, so it should follow from\n  `frobenius_root_prod` (`\u03b1\u03b2 = p`) by formal-power-series manipulation alone, with no\n  new analytic input.\n- Why now? `LocalFactor.lean` supplies the eigenvalue Vieta relations and the\n  polynomial functional equation in this cycle; the missing step is purely the\n  `PowerSeries` bookkeeping that Mathlib's `PowerSeries.exp`/`log` API now supports.\n\n## Conjecture 2 \u2014 Hasse interval is sharp and symmetric\n\nConjecture that the point count `N\u2081 = p + 1 \u2212 a` ranges over *exactly* the integer\ninterval `[p + 1 \u2212 \u230a2\u221ap\u230b, p + 1 + \u230a2\u221ap\u230b]` as `a` ranges over admissible traces, and\nthat the map `a \u21a6 \u2212a` is a bijection of this interval fixing the center `p + 1`.\n\n- The key insight is that `hasse_bound` gives only one inequality, but the **two-sided**\n  bound plus the involution `a \u21a6 \u2212a` (quadratic twist) makes the Hasse interval a\n  symmetric, saturated set \u2014 a statement provable by `omega`/`Int.floor` reasoning once\n  the real bound `|a| \u2264 2\u221ap` is discretized.\n- Why now? `hasse_point_count_pos` already extracts positivity from `hasse_bound`; the\n  symmetric/sharp refinement is the natural next lemma and needs only `Int.floor`\n  lemmas plus the existing real bound.\n\n## Conjecture 3 \u2014 Additivity of analytic rank pins down isogeny invariance\n\nConjecture that for L-functions `L\u2081, L\u2082` analytic at `1` with finite order, the\nanalytic rank is an *isogeny invariant*: if `L\u2081 =\u1da0[\ud835\udcdd 1] u \u00b7 L\u2082` for a unit-valued\nanalytic `u` (`u 1 \u2260 0`), then `analyticRank L\u2081 1 = analyticRank L\u2082 1`.\n\n- The key insight is that multiplying by a non-vanishing analytic factor shifts the\n  leading coefficient but **not** the order of vanishing, so isogeny invariance of the\n  BSD analytic rank reduces to `analyticRank_mul` with one factor of rank `0`.\n- Why now? `AnalyticRank.lean` proves `analyticRank_mul` and `analyticRank_eq_zero_iff`\n  this cycle; combining them yields the invariance statement directly, giving the first\n  formal shadow of the BSD prediction \"isogenous curves have equal rank\".\n\n## Conjecture 4 \u2014 Parity bridge: central sign controls rank parity\n\nConjecture a parity form of the bridge: if the model carries a sign `w \u2208 {\u00b11}` with\n`w = (\u22121)^{analyticRank}`, then under the BSD equality the Mordell\u2013Weil group\n`\u2124^r \u00d7 T` is infinite iff `w = \u22121`.\n\n- The key insight is that the *parity* of the order of vanishing \u2014 not its exact value \u2014\n  already decides infinitude through `mordellWeil_infinite_iff`, so a sign `w` suffices to\n  predict infinitely many rational points without computing the rank itself.\n- Why now? `bsd_central_vanishing_iff_infinite` reduces infinitude to `0 < r`; layering a\n  `(\u22121)^r` sign on top is a small `Nat`-parity argument and mirrors the (unconditional)\n  parity results that motivate the full BSD conjecture.\n\n## Conjecture 5 \u2014 Leading coefficient positivity forces a Tamagawa-style product\n\nConjecture that whenever the leading coefficient `g 1` from\n`analyticRank_factorization` is a *positive real*, it admits a factorization\n`g 1 = \u03a9 \u00b7 R \u00b7 S \u00b7 \u220f c_v` with all factors positive \u2014 a structural skeleton of the\nfull BSD formula \u2014 and that this positivity is preserved under `analyticRank_mul`.\n\n- The key insight is that `analyticRank_factorization` already isolates the nonzero\n  leading coefficient `g 1`; the BSD formula is the assertion that this single complex\n  number is a *product of arithmetic positives*, so positivity (not the exact identity)\n  is the first falsifiable, formalizable target.\n- Why now? With the order-of-vanishing factorization in hand from this cycle, one can\n  state the leading-coefficient positivity as a `Prop` over an abstract `BSDData`\n  structure and test it against the `modelL` family, where `g 1 = c` is explicit.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2112",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "3b2adc6d",
+    "status": "available",
+    "timestamp": "2026-06-19T16:03:25.447190+00:00",
+    "title": "Derived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4304,21 +4319,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
   {
-    "consumed_by_exp_id": "ead94fbc",
-    "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0092",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.807837+00:00",
-    "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The Poincare conjecture (proved by Perelman) states that every simply connected closed 3-manifold is homeomorphic to the 3-sphere. For data: a point cloud X = {x_1, ..., x_n} in R^d may or may not lie on a manifold. Conjecture: the Poincare conjecture for data states that if the persistent homology of X satisfies H_0(X) = Z, H_1(X) = 0, H_2(X) = 0, ..., H_{d-1}(X) = 0, then X lies on (or near) a d-sphere. More precisely, if the Vietoris-Rips complex of X at scale epsilon has the homology of S^d (trivial homology except H_0 = Z and H_d = Z), then X is epsilon-close to a subset of S^d. Conjecture: the smallest epsilon such that VR_epsilon(X) has the homology of S^d is the 'Poincare threshold' of X, and it satisfies epsilon_star = C * d^{1/2} * n^{-1/d} for some constant C, where n is the number of points. This is the manifold detection threshold: below epsilon_star, X looks like a d-sphere; above epsilon_star, X looks like something else. Test: generate point clouds on S^d for d = 1, 2, 3 and compute the Poincare threshold. Impact: the Poincare conjecture for data says that manifold detection is a topological problem, and the detection threshold scales as n^{-1/d}.",
     "domains": [
@@ -4407,20 +4407,5 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-03T23:40:36.486848+00:00",
     "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
-  },
-  {
-    "consumed_by_exp_id": "bf1e3b75",
-    "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0577",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T23:40:36.923091+00:00",
-    "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
   }
 ];
