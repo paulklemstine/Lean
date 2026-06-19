@@ -1,253 +1,434 @@
-# Anti-Gravity Mathematics: The Proof Leverage Lattice and Density Bounds on Keystone Theorems
+# Anti-Gravity Mathematics: A Combinatorial Theory of Theorem Weight in Dependency DAGs
+
+**Author:** Aristotle
+**Date:** 2026-06-19
+**Domain:** Computation
+
+---
 
 ## Abstract
 
-We introduce the **Proof Leverage Lattice** (PLL), a novel mathematical structure that formalizes the relationship between theorem dependency structure and proof complexity. A PLL is a finite directed acyclic graph augmented with proof length data, where the *gravitational weight* of a vertex counts its reachable descendants and the *anti-gravity index* measures the ratio of weight to proof complexity. We establish several rigorous results: (1) the **Weight Universe Bound** (weight ≤ |V|), (2) the **Pigeonhole Leverage Theorem** (existence of a vertex achieving the average weight), (3) the **Anti-Gravity Density Bound** (the anti-gravity set is nonempty whenever the knowledge leverage ratio exceeds the threshold), (4) a **Markov-type bound** on high-weight vertices, (5) **spectral monotonicity** of anti-gravity sets, and (6) the **irreflexivity of leverage dominance**. All results are formalized and verified in Lean 4 with Mathlib. We present computational experiments on simulated theorem dependency graphs and discuss implications for the structure of mathematical knowledge.
-
-**Keywords**: proof complexity, theorem dependency graphs, anti-gravity theorems, Proof Leverage Lattice, formal verification, knowledge architecture
+We develop a rigorous combinatorial theory of how "importance" is distributed
+across a formal body of mathematics. Modeling a library as a finite directed
+acyclic graph (DAG) of theorems ordered by dependency, we define the
+**gravitational weight** of a theorem as the number of other theorems that depend
+on it, and we call a theorem **anti-gravity** when it combines high weight with a
+short proof. We prove three exact structural laws. (1) *Monotonicity*
+(`weight_lt_of_dep`): weight is strictly order-reversing along the dependency
+order, so it is a graded invariant ranking the library by depth. (2)
+*Conservation* (`sum_weight_eq`): the total weight summed over all theorems equals
+the number of dependency pairs, a handshaking identity. (3) *Above-average
+foundation* (`exists_weight_ge_average`): by pigeonhole, some theorem attains at
+least the average weight, so heavy foundational theorems are forced. We then turn
+to the existence and density of anti-gravity theorems. We exhibit a guaranteed
+construction, the **fan**, whose hub has arbitrarily high weight and a constant
+proof length. Finally, we **refute** the conjectured universal "10% law": the
+anti-gravity fraction is not a library invariant. The **discrete** library
+(no dependencies) realizes fraction `0`, while the **chain** library realizes
+fraction `k/(k+1) → 1`, with an exact count `chain_antigravity_card`. We close
+with three sharpened conjectures — a chain-length bound from monotonicity, a
+threshold phase transition replacing the false 10% law, and a heavy-tail
+consequence of conservation.
 
 ---
 
 ## 1. Introduction
 
-Mathematical knowledge has a natural graph structure: theorems depend on lemmas, which depend on definitions and axioms. This dependency structure has been studied informally since at least Hilbert's *Grundlagen der Geometrie* (1899), but rigorous mathematical analysis of the structure itself — viewing it as a mathematical object worthy of study — has been limited.
+A persistent intuition holds that the significance of a mathematical result and
+the difficulty of proving it should rise together: the more a theorem matters, the
+harder it ought to be. Yet practicing mathematicians know counterexamples
+abound. Short, near-trivial results — the triangle inequality, the union bound,
+`0 · x = 0`, the change-of-variables formula — are invoked everywhere while
+costing almost nothing to establish. They are the load-bearing stones of the
+edifice: they support enormous superstructure while weighing little themselves.
 
-We propose that the dependency graph of a mathematical theory, augmented with proof complexity data, is a rich mathematical object with non-trivial structural properties. We call this object a **Proof Leverage Lattice** (PLL) and develop its basic theory.
+We name such results **anti-gravity theorems** and ask three questions:
 
-The central concept is the **anti-gravity theorem**: a result whose *gravitational weight* (number of downstream dependencies) vastly exceeds its *proof complexity* (number of derivation steps). We prove that such theorems must exist in any sufficiently connected mathematical system, establish density bounds, and characterize the spectrum of anti-gravity indices.
+1. Can the dual notions of "how much a theorem supports" and "how much it costs"
+   be made precise and quantitative?
+2. What structural laws govern the distribution of support across a library?
+3. Are anti-gravity theorems rare, common, or — as conjectured — a fixed
+   universal fraction (the "10% law")?
 
-### 1.1 Related Work
+We answer all three. Support is captured by **gravitational weight**, a purely
+combinatorial count on the dependency DAG. We prove three exact laws governing its
+distribution. And we settle the density question in the negative: the anti-gravity
+fraction depends entirely on the *shape* of the dependency graph and ranges across
+the whole interval `[0,1)`, so no universal constant — least of all 10% — can
+exist.
 
-Our work connects to several strands of research:
-
-- **Proof complexity theory**: The study of proof length and proof systems (Cook-Reckhow, 1979; Razborov, 2003) focuses on worst-case complexity. Our framework instead studies the *distribution* of proof complexity relative to influence.
-
-- **Network science**: The notion of node centrality (betweenness, PageRank) in directed graphs is well-studied. Our anti-gravity index is a novel centrality measure that incorporates both structural position (weight) and intrinsic cost (proof length).
-
-- **Spectral graph theory**: The gravitational spectrum is analogous to the eigenvalue spectrum of a graph Laplacian, but defined combinatorially via reachability.
-
-- **Proof-theoretic ordinals**: The ordinal analysis of formal systems measures their "strength." Our weight measure is a finite, computable analog.
-
-### 1.2 Contributions
-
-1. **Definition**: The Proof Leverage Lattice (PLL), a novel mathematical structure combining directed graph reachability with proof complexity data.
-
-2. **Existence**: The Pigeonhole Leverage Theorem (Theorem 3) guarantees the existence of a vertex achieving at least the average weight.
-
-3. **Density**: The Anti-Gravity Density Bound (Theorem 5) shows that anti-gravity vertices are nonempty whenever the knowledge leverage ratio exceeds the threshold.
-
-4. **Spectrum**: We introduce the gravitational spectrum and prove its monotonicity properties.
-
-5. **Formalization**: All results are fully formalized in Lean 4 with Mathlib, providing the highest level of mathematical certainty.
+Throughout, a "library" is an abstract finite dependency graph; the theory is
+agnostic to the underlying mathematics and applies verbatim to the internal
+dependency record of any proof assistant.
 
 ---
 
 ## 2. Definitions
 
-### 2.1 Directed Graphs
+We fix a finite set `V` of *theorems* (the vertices) and a binary relation `≺` on
+`V` read as **"depends on"**: `a ≺ b` means the proof of `a` uses `b`.
 
-**Definition 2.1** (DGraph). A *directed graph* on a finite type V is a pair G = (V, adj) where adj : V → V → Prop is a decidable binary relation.
+### Definition 2.1 (Dependency DAG)
 
-**Definition 2.2** (Forward Reachability Ball). For a directed graph G, a set S ⊆ V, and k ∈ ℕ, the *forward reachability ball* FwdBall(G, S, k) is defined inductively:
-- FwdBall(G, S, 0) = S
-- FwdBall(G, S, k+1) = FwdBall(G, S, k) ∪ OutNeighborSet(G, FwdBall(G, S, k))
+A **dependency DAG** on a finite vertex set `V` is the relation `≺` together with
+its transitive closure, required to be a strict partial order: `≺` is
 
-**Definition 2.3** (Reachable Set). The *reachable set* of a vertex v is ReachableSet(G, v) = FwdBall(G, {v}, |V|).
+- **irreflexive**: never `a ≺ a` (no theorem proves itself), and
+- **transitive**: `a ≺ b` and `b ≺ c` imply `a ≺ c` (if your proof uses `a`, and
+  `a` uses `b`, you ultimately use `b`).
 
-### 2.2 The Proof Leverage Lattice
+Irreflexivity plus transitivity is exactly the acyclicity of the graph. We write
+`a ≺ b` for the dependency order on the transitive closure, so that `a ≺ b` means
+"`a` (transitively) depends on `b`."
 
-**Definition 2.4** (Proof Leverage Lattice). A *Proof Leverage Lattice* (PLL) over a finite type V is a triple P = (G, π, hπ) where:
-- G is a directed graph on V
-- π : V → ℕ is the *proof length* function
-- hπ : ∀ v, 0 < π(v) ensures all proof lengths are positive
+### Definition 2.2 (Gravitational weight)
 
-**Definition 2.5** (Gravitational Weight). The *gravitational weight* of a vertex v in a PLL P is:
-  weight(P, v) = |ReachableSet(G, v)|
+For `b ∈ V`, the **gravitational weight** is the number of theorems depending
+on `b`:
 
-**Definition 2.6** (Anti-Gravity Index). A vertex v is *τ-anti-gravity* if weight(P, v) ≥ τ · π(v).
+> `weight(b) = | { a ∈ V : a ≺ b } |.`
 
-**Definition 2.7** (Anti-Gravity Set). AG(P, τ) = {v ∈ V : weight(P, v) ≥ τ · π(v)}.
+Equivalently, `weight(b)` is the in-degree of `b` in the transitive closure
+(counting all transitive dependents, not only immediate ones). Foundational
+theorems — used pervasively — have large weight; terminal "leaf" applications have
+weight `0`.
 
-**Definition 2.8** (Knowledge Leverage Ratio). The *knowledge leverage ratio* of a PLL P is:
-  KLR(P) = totalWeight(P) / totalProofLength(P)
+### Definition 2.3 (Proof length)
 
-**Definition 2.9** (Leverage Dominance). Vertex u *leverage-dominates* vertex v if:
-  weight(P, u) · π(v) > weight(P, v) · π(u)
+Each theorem `b` carries a **proof length** `len(b) ∈ ℕ`, an abstract cost
+parameter (e.g. number of proof steps, term size, or tactic count). The theory
+uses only that `len` is a nonnegative integer attached to each vertex.
 
-This avoids division in ℕ while capturing the ordering of anti-gravity indices.
+### Definition 2.4 (Anti-gravity theorem)
 
-**Definition 2.10** (Gravitational Spectrum). The *gravitational spectrum* of P is the sorted multiset of anti-gravity indices {weight(v)/π(v) : v ∈ V}.
+Fix a **weight threshold** `τ ∈ ℕ` and a **length budget** `ℓ ∈ ℕ`. A theorem `b`
+is **anti-gravity** (at parameters `τ, ℓ`) when it is simultaneously heavy and
+cheap:
 
----
+> `antiGravity(τ, ℓ, b)  :⇔  weight(b) ≥ τ  ∧  len(b) ≤ ℓ.`
 
-## 3. Main Results
+The **anti-gravity fraction** of a library with `n = |V|` theorems is
 
-### 3.1 Weight Bounds
+> `ρ(τ, ℓ) = | { b ∈ V : antiGravity(τ, ℓ, b) } | / n.`
 
-**Theorem 3.1** (Weight Universe Bound). For any PLL P and vertex v:
-  weight(P, v) ≤ |V|
+### Definition 2.5 (Dependency pair count)
 
-*Proof sketch.* The reachable set is a subset of V, so its cardinality is bounded by |V|. □
+The **number of dependency pairs** is
 
-**Theorem 3.2** (Total Weight Quadratic Bound). totalWeight(P) ≤ |V|².
+> `D = | { (a, b) ∈ V × V : a ≺ b } |,`
 
-*Proof sketch.* Sum the bound from Theorem 3.1 over all vertices. □
-
-**Theorem 3.3** (Weight Positivity). For any PLL P and vertex v: weight(P, v) ≥ 1.
-
-*Proof sketch.* Every vertex is in its own reachable set (by induction on the FwdBall definition), so the reachable set is nonempty. □
-
-**Theorem 3.4** (Total Weight Lower Bound). totalWeight(P) ≥ |V|.
-
-*Proof sketch.* Sum weight positivity over all vertices. □
-
-### 3.2 The Pigeonhole Leverage Theorem
-
-**Theorem 3.5** (Pigeonhole Leverage Theorem). For any nonempty PLL P, there exists a vertex v such that:
-  weight(P, v) · |V| ≥ totalWeight(P)
-
-*Proof sketch.* By contradiction: if weight(v) · |V| < totalWeight(P) for all v, then summing over all v gives totalWeight(P) · |V| < |V| · totalWeight(P), a contradiction. □
-
-*Discussion.* This theorem is the discrete pigeonhole principle applied to the weight distribution. It guarantees that at least one vertex achieves at least the average weight. Combined with proof length bounds, it provides the fundamental existence guarantee for anti-gravity theorems.
-
-### 3.3 The Markov Bound
-
-**Theorem 3.6** (Markov Bound on High-Weight Vertices). For any PLL P and threshold w:
-  |{v : weight(P, v) ≥ w}| · w ≤ totalWeight(P)
-
-*Proof sketch.* The left side is at most Σ_{v: weight≥w} weight(v), which is at most Σ_{v ∈ V} weight(v) = totalWeight(P). □
-
-*Discussion.* This is a counting argument analogous to Markov's inequality in probability. It establishes that high-weight vertices are necessarily rare, creating a tension with the existence guarantee of Theorem 3.5.
-
-### 3.4 The Anti-Gravity Density Bound
-
-**Theorem 3.7** (Anti-Gravity Density Bound). For any nonempty PLL P and threshold τ, if totalWeight(P) ≥ τ · totalProofLength(P), then AG(P, τ) is nonempty.
-
-*Proof sketch.* Contrapositive: if AG(P, τ) is empty, then for all v, weight(P, v) < τ · π(v). Summing: totalWeight(P) < τ · totalProofLength(P), contradicting the hypothesis. □
-
-*Discussion.* This is the key existence theorem. It shows that anti-gravity vertices emerge whenever the knowledge leverage ratio KLR(P) exceeds the threshold τ. In growing mathematical systems, KLR tends to increase as downstream dependencies accumulate, predicting the emergence of increasingly extreme anti-gravity theorems.
-
-**Corollary 3.8** (Conservation of Anti-Gravity). If totalWeight(P) ≥ totalProofLength(P), then AG(P, 1) is nonempty.
-
-### 3.5 Spectral Properties
-
-**Theorem 3.9** (Spectral Monotonicity). For τ₁ ≤ τ₂: AG(P, τ₂) ⊆ AG(P, τ₁).
-
-*Proof sketch.* If weight(v) ≥ τ₂ · π(v) and τ₁ ≤ τ₂, then weight(v) ≥ τ₁ · π(v). □
-
-**Theorem 3.10** (Universal Anti-Gravity at Threshold 0). AG(P, 0) = V.
-
-*Proof sketch.* 0 · π(v) = 0 ≤ weight(v) for all v. □
-
-**Theorem 3.11** (Leverage Dominance Irreflexivity). No vertex leverage-dominates itself.
-
-*Proof sketch.* Leverage dominance requires strict inequality, which fails for equal terms. □
+the number of edges of the transitive closure — the total amount of "leaning" in
+the library.
 
 ---
 
-## 4. The PEGB Analysis
+## 3. Structural laws
 
-### 4.1 Pigeonhole Leverage Theorem (Theorem 3.5)
+The three results in this section are exact and hold for *every* finite dependency
+DAG.
 
-- **P**roof: Complete Lean 4 proof using contradiction and `Finset.sum_lt_sum_of_nonempty`.
-- **E**xample: In a star graph with 1 hub and 19 leaves, the hub has weight 20 and proof length 1, giving anti-gravity index 20. The average weight is (20 + 19·1)/20 = 1.95, and indeed 20 · 20 = 400 ≥ 39 = totalWeight.
-- **G**eneralization: The theorem extends to weighted versions where each vertex contributes a non-negative real value instead of unit weight.
-- **B**oundary: The theorem requires V to be nonempty (disproved for V = ∅). For singleton V = {v}, weight(v) = 1 and the bound is tight.
+### 3.1 Monotonicity: weight flows downhill
 
-### 4.2 Anti-Gravity Density Bound (Theorem 3.7)
+#### Theorem 3.1 (`weight_lt_of_dep`)
 
-- **P**roof: Contrapositive argument summing strict inequalities over all vertices.
-- **E**xample: In a chain of 10 vertices with proof lengths all equal to 1, totalWeight = 55 (sum 1+2+...+10) and totalProofLength = 10. KLR = 5.5, so AG(5) is guaranteed nonempty. Indeed, vertex 0 has weight 10 ≥ 5·1.
-- **G**eneralization: Extends to real-valued weights with τ ∈ ℝ₊.
-- **B**oundary: When KLR < τ, the anti-gravity set *can* be empty. Example: chain with proof_length[i] = i+1, giving totalWeight = 55, totalProofLength = 55, KLR = 1. AG(2) can be empty if all weights < 2·proofLength.
+*If `a ≺ b` then `weight(a) < weight(b)`.*
 
-### 4.3 Markov Bound (Theorem 3.6)
+**Proof sketch.** Consider the dependent sets `A = { x : x ≺ a }` and
+`B = { x : x ≺ b }`. If `x ≺ a` then, since `a ≺ b`, transitivity (Definition 2.1)
+gives `x ≺ b`; hence `A ⊆ B`. Moreover `a ∈ B` because `a ≺ b`, while `a ∉ A`
+because `≺` is irreflexive (`a ⊀ a`). Thus `A ⊊ B` is a strict subset, and for
+finite sets `|A| < |B|`, i.e. `weight(a) < weight(b)`. ∎
 
-- **P**roof: Counting argument via subset summation.
-- **E**xample: In a star graph with 20 vertices and total weight 39, the Markov bound at w=10 gives |{v: weight≥10}| ≤ 3 (since 39/10 = 3.9). Indeed only the hub has weight ≥ 10.
-- **G**eneralization: Extends to any non-negative function on a finite set.
-- **B**oundary: The bound is tight for uniform weights: if all weights equal w, then |{v: weight≥w}| · w = n·w = totalWeight.
+**Interpretation.** Weight is *strictly order-reversing*: it decreases as one
+climbs the dependency order toward applications and increases as one descends
+toward foundations. Consequently weight is a **graded invariant** — a height
+function on the DAG. It linearly orders the library by depth with no human
+judgment required: the most foundational results are exactly the heaviest.
 
-### 4.4 Spectral Monotonicity (Theorem 3.9)
+A corollary used repeatedly: along any dependency chain
+`t₀ ≺ t₁ ≺ ⋯ ≺ tₘ`, weight is strictly increasing, so the weights are `m + 1`
+distinct natural numbers.
 
-- **P**roof: Direct implication from monotonicity of multiplication.
-- **E**xample: In a 100-vertex random DAG, |AG(0)| = 100, |AG(1)| = 47, |AG(2)| = 23, |AG(5)| = 8, |AG(10)| = 3. The sequence is strictly decreasing.
-- **G**eneralization: The filtration AG(0) ⊇ AG(1) ⊇ AG(2) ⊇ ... defines a "resolution" of the PLL analogous to persistence filtrations in topological data analysis.
-- **B**oundary: The chain stabilizes: for τ > max_v(weight(v)/proofLength(v)), AG(τ) = ∅.
+### 3.2 Conservation: total weight equals total dependency
 
-### 4.5 Weight Positivity (Theorem 3.3)
+#### Theorem 3.2 (`sum_weight_eq`)
 
-- **P**roof: Self-membership in the reachable set.
-- **E**xample: An isolated vertex with no edges has weight 1 (itself).
-- **G**eneralization: In a graph with minimum out-degree d, weight ≥ d+1.
-- **B**oundary: Weight = 1 is tight for isolated vertices. Weight = |V| is tight for vertices that can reach everything.
+*The total weight equals the number of dependency pairs:*
 
----
+> `Σ_{b ∈ V} weight(b) = D.`
 
-## 5. Computational Experiments
+**Proof sketch.** Expand the left-hand side using Definition 2.2 and exchange the
+order of summation (Fubini for finite indicator sums):
 
-We implemented the PLL framework in Python and analyzed simulated theorem dependency graphs with three configurations:
+```
+  Σ_b weight(b) = Σ_b | { a : a ≺ b } |
+               = Σ_b Σ_a [a ≺ b]
+               = | { (a,b) : a ≺ b } |
+               = D,
+```
 
-1. **Linear chain** (n=20): Proof lengths grow linearly. The source vertex is maximally anti-gravity (weight n, proof length 1).
+where `[·]` is the 0/1 indicator. Each dependency pair `(a,b)` contributes exactly
+`+1`, to the weight of its second coordinate `b`. ∎
 
-2. **Star graph** (n=20): One hub with proof length 1, 19 leaves with proof length 5. The hub has weight 20, anti-gravity index 20.
+**Interpretation.** This is the handshaking lemma for dependency: every act of one
+theorem leaning on another adds one unit of weight to the supported theorem and to
+nothing else. Total weight is therefore a *conserved* quantity, equal on the nose
+to the raw count of dependencies. A library's aggregate "importance mass" is
+neither more nor less than its number of dependency pairs.
 
-3. **Simulated Mathlib** (n=100): Power-law proof lengths, preferential attachment. Approximately 20% of vertices are 2-anti-gravity.
+### 3.3 Above-average foundation: heavy theorems are forced
 
-4. **Two-level hierarchy** (n=50): 5 axioms (proof length 1) and 45 theorems. All axioms are anti-gravity keystones.
+#### Theorem 3.3 (`exists_weight_ge_average`)
 
-Key findings:
-- The Pigeonhole Leverage Theorem is verified in all cases.
-- The Markov bound is tight to within a factor of 2 on average.
-- Anti-gravity sets at threshold τ=2 contain 15-25% of vertices in hierarchical graphs.
-- The gravitational spectrum follows a heavy-tailed distribution in preferential attachment models.
+*If `V` is nonempty with `n = |V|`, there exists `b ∈ V` with*
 
----
+> `weight(b) ≥ D / n,`
 
-## 6. Falsifiable Conjecture
+*i.e. some theorem attains at least the average weight.*
 
-**Conjecture 6.1** (10% Anti-Gravity Prediction). In any formal mathematical library L with |L| ≥ 100, at least 10% of theorems are 2-anti-gravity (weight ≥ 2 · proof_length).
+**Proof sketch.** By Theorem 3.2 the mean weight is
+`(1/n) Σ_b weight(b) = D/n`. No finite multiset of reals can have every element
+strictly below its mean; equivalently, if every `weight(b) < D/n` then summing
+gives `Σ weight(b) < n · (D/n) = D`, contradicting Theorem 3.2. Hence some `b`
+satisfies `weight(b) ≥ D/n`. ∎
 
-**Computational test**: Extract the dependency graph and proof lengths from Mathlib (≈ 200,000 theorems). Compute anti-gravity indices for all theorems. Check whether the 2-anti-gravity fraction exceeds 10%.
-
-**Current evidence**: Our simulated experiments on 100-500 vertex random DAGs with realistic parameters show the 2-anti-gravity fraction ranging from 12% to 28%.
-
----
-
-## 7. Cross-Connections
-
-### 7.1 Connection to Spectral Renormalization
-
-The `proof_length_lower_bound` theorem in the Catalog's `SpectralRenormalization` module establishes that vertex expansion in derivation graphs bounds proof length from below. This is dual to our result: where spectral renormalization gives *lower bounds* on proof length from expansion, our anti-gravity framework gives *upper bounds* on the number of high-weight vertices from total weight. Together, they characterize the joint distribution of weight and proof length.
-
-### 7.2 Connection to Tropical Proof Complexity
-
-The `tropical_proof_length_conjecture_special_case` in the Catalog establishes bounds on proof complexity in tropical semirings. The PLL framework generalizes this: tropical semirings provide a specific algebraic setting, while PLLs work over arbitrary DAGs.
+**Interpretation.** Interconnection concentrates. As soon as a library has
+appreciable dependency density — in particular `D ≥ n`, i.e. at least as many
+dependency pairs as theorems — there is *necessarily* a theorem of weight `≥ 1`,
+and more generally of weight `≥ D/n`. Foundational, load-bearing theorems are not
+a matter of taste or historical accident; they are a counting-theoretic
+inevitability.
 
 ---
 
-## 8. Discussion and Future Work
+## 4. Existence of anti-gravity theorems: the fan
 
-The Proof Leverage Lattice provides a rigorous foundation for studying the architecture of mathematical knowledge. Several directions remain open:
+We now combine high weight with short proof.
 
-1. **Spectral convergence**: Does the gravitational spectrum converge to a universal distribution in random DAG models?
+### Construction 4.1 (The fan `F_n`)
 
-2. **Critical threshold**: Is there a phase transition in the anti-gravity fraction as a function of graph density?
+Let `F_n` have vertices `{ r, a₁, …, a_n }` (so `|V| = n + 1`). Set the only
+dependencies to be `aᵢ ≺ r` for each `i` (every leaf depends on the single root
+`r`), with the transitive closure adding nothing new. Assign proof lengths
+`len(r) = c` for a small constant `c` and `len(aᵢ)` arbitrary.
 
-3. **Categorical generalization**: Can the PLL be extended to a functor between the category of directed graphs and the category of lattices?
+#### Proposition 4.2 (The fan guarantees anti-gravity)
 
-4. **Algorithmic applications**: Can anti-gravity analysis guide automated theorem proving by identifying high-leverage lemmas to target?
+*In `F_n`, `weight(r) = n`. Hence for any threshold `τ ≤ n` and any budget
+`ℓ ≥ c`, the root `r` is anti-gravity.*
 
-5. **Persistence theory**: The filtration AG(0) ⊇ AG(1) ⊇ ... resembles a persistence module. What topological features does its persistence diagram reveal?
+**Proof sketch.** The set `{ a : a ≺ r }` is exactly `{ a₁, …, a_n }`, so
+`weight(r) = n ≥ τ`. By construction `len(r) = c ≤ ℓ`. Both clauses of
+Definition 2.4 hold for `r`. ∎
+
+**Interpretation.** The fan is a *machine* for anti-gravity: by enlarging `n` the
+hub's weight grows without bound while its proof length stays fixed. Anti-gravity
+theorems therefore always *can* be produced; existence is never in doubt. The
+substantive question is **density**, treated next — and there the naive
+conjecture fails.
 
 ---
 
-## References
+## 5. Refutation of the 10% law
 
-1. Cook, S. A., & Reckhow, R. A. (1979). The relative efficiency of propositional proof systems. *Journal of Symbolic Logic*, 44(1), 36-50.
+A natural conjecture (the original prediction of this investigation) asserts a
+**universal anti-gravity fraction**: that in any formal library roughly `10%` of
+theorems are anti-gravity, independent of the library. We refute it by exhibiting
+two libraries whose fractions bracket the entire admissible range.
 
-2. Razborov, A. A. (2003). Proof complexity of pigeonhole principles. In *Developments in Language Theory* (pp. 100-116). Springer.
+### 5.1 The discrete library: fraction 0
 
-3. Newman, M. E. J. (2003). The structure and function of complex networks. *SIAM Review*, 45(2), 167-256.
+### Construction 5.1 (Discrete library `Dₙ`)
 
-4. Barabási, A. L., & Albert, R. (1999). Emergence of scaling in random networks. *Science*, 286(5439), 509-512.
+`Dₙ` has `n` vertices and *no* dependencies: `a ≺ b` never holds.
+
+#### Proposition 5.2 (Discrete fraction is zero)
+
+*In `Dₙ`, `weight(b) = 0` for all `b`. Hence for any threshold `τ ≥ 1` (any
+nontrivial requirement of "high" weight), no theorem is anti-gravity, and
+`ρ(τ, ℓ) = 0`.*
+
+**Proof sketch.** With no dependency pairs, `{ a : a ≺ b } = ∅`, so every weight
+is `0`. For `τ ≥ 1` the clause `weight(b) ≥ τ` fails for all `b`. ∎
+
+This already contradicts any universal *positive* lower bound, in particular
+`10%`.
+
+### 5.2 The chain: fraction `k/(k+1) → 1`
+
+### Construction 5.3 (Chain library `Cₖ`)
+
+`Cₖ` has vertices `t₀, t₁, …, tₖ` (so `|V| = k + 1`) with the linear order
+`t₀ ≺ t₁ ≺ ⋯ ≺ tₖ` (and its transitive closure). Assign every vertex a constant
+short proof length `len(tᵢ) = c`.
+
+#### Lemma 5.4 (Weights along the chain)
+
+*In `Cₖ`, `weight(tⱼ) = j` for each `0 ≤ j ≤ k`.*
+
+**Proof sketch.** The dependents of `tⱼ` are exactly `{ t₀, …, t_{j-1} }`, the `j`
+vertices below it in the chain (by transitivity each lower index depends on
+`tⱼ`), giving `weight(tⱼ) = j`. ∎
+
+#### Theorem 5.5 (`chain_antigravity_card`)
+
+*Fix threshold `τ = 1` and any budget `ℓ ≥ c`. In `Cₖ` the number of anti-gravity
+theorems is exactly*
+
+> `| { j : antiGravity(1, ℓ, tⱼ) } | = k,`
+
+*namely `t₁, …, tₖ` (all but the top of the chain `t₀`). Consequently the
+anti-gravity fraction is*
+
+> `ρ(1, ℓ) = k / (k + 1) → 1  as  k → ∞.`
+
+**Proof sketch.** Every proof length is `c ≤ ℓ`, so the length clause holds for all
+`k + 1` vertices. By Lemma 5.4, `weight(tⱼ) ≥ 1` exactly when `j ≥ 1`, which holds
+for `t₁, …, tₖ` — that is `k` vertices — and fails only for `t₀` (weight `0`).
+Hence the count is `k`, and dividing by `|V| = k + 1` gives `k/(k+1)`, which tends
+to `1`. ∎
+
+### 5.3 Conclusion of the refutation
+
+The discrete library forces the anti-gravity fraction to `0` (Proposition 5.2),
+while the chain drives it arbitrarily close to `1` (Theorem 5.5); the fan
+(Section 4) realizes intermediate values such as `1/(n+2)`. Therefore:
+
+> **The anti-gravity fraction is not a library invariant. No universal constant —
+> in particular not `10%` — can describe it.** The fraction is determined by the
+> *shape* of the dependency DAG and the chosen threshold, and ranges over the whole
+> interval `[0, 1)`.
+
+Refuting the clean conjecture is itself the result: it tells us precisely what
+*kind* of statement could be true instead — one parameterized by a threshold, not
+a constant (Section 6).
+
+---
+
+## 6. A worked example
+
+To make the abstract laws concrete, consider a small but non-trivial library `L`
+with five theorems:
+
+- `base` — a foundational lemma, proof length `1`;
+- `midA`, `midB` — two intermediate results, each depending on `base`, proof
+  lengths `5` and `4`;
+- `top` — a capstone depending on both `midA` and `midB` (hence transitively on
+  `base`), proof length `12`;
+- `isolated` — an unrelated fact with no dependencies, proof length `2`.
+
+The transitive closure of the depends-on relation is
+
+```
+  midA  ≺ base
+  midB  ≺ base
+  top   ≺ midA,  top ≺ midB,  top ≺ base   (the last by transitivity)
+```
+
+so the dependent sets are `{a : a ≺ base} = {midA, midB, top}`,
+`{a : a ≺ midA} = {top}`, `{a : a ≺ midB} = {top}`, and `∅` for both `top` and
+`isolated`. Reading off Definition 2.2:
+
+| theorem    | weight | proof length |
+|------------|:------:|:------------:|
+| `base`     |   3    |      1       |
+| `midA`     |   1    |      5       |
+| `midB`     |   1    |      4       |
+| `top`      |   0    |     12       |
+| `isolated` |   0    |      2       |
+
+We verify each law directly.
+
+- **Monotonicity** (Theorem 3.1). Every dependency edge increases weight:
+  `weight(midA) = 1 < 3 = weight(base)`, `weight(top) = 0 < 1 = weight(midA)`,
+  and `weight(top) = 0 < 3 = weight(base)`. The heaviest theorem `base` is exactly
+  the most foundational, and the lightest, `top`, is the most derived — the weight
+  ranking recovers the intuitive hierarchy with no human input.
+- **Conservation** (Theorem 3.2). The number of dependency pairs is
+  `D = 3 + 1 + 1 = 5` (the closure has five edges), and the sum of weights is
+  `3 + 1 + 1 + 0 + 0 = 5`. They agree exactly.
+- **Above-average foundation** (Theorem 3.3). The average weight is
+  `D/n = 5/5 = 1`, and `base` (weight `3`) and the two mid-level results (weight
+  `1`) all meet or exceed it; the law is witnessed by `base`.
+
+Note also that `base` is the unique **anti-gravity** theorem of `L` at, say,
+threshold `τ = 2` and budget `ℓ = 3`: it alone is both heavy (`weight = 3 ≥ 2`)
+and cheap (`len = 1 ≤ 3`). The isolated fact is cheap but not heavy; `top` is
+neither. This five-node library already exhibits the entire phenomenology — a
+single load-bearing stone carrying weight far above its proof cost, surrounded by
+derived results that cost more yet support nothing.
+
+---
+
+## 7. Discussion and future work
+
+The three structural laws survive scrutiny and reframe the subject. Monotonicity
+makes weight a height function; conservation pins total weight to total
+dependency; the averaging bound forces heavy foundations. What collapses is the
+density conjecture, and its collapse points to the right replacement questions.
+
+### Conjecture 7.1 (Weight is a graded invariant bounding chain length)
+
+In any finite dependency DAG, the longest chain `t₀ ≺ t₁ ≺ ⋯ ≺ tₘ` satisfies
+`m ≤ weight(t₀)`, and more strongly `weight(tᵢ) ≥ m − i`.
+
+*Rationale.* Theorem 3.1 makes `weight` strictly decreasing along the chain (from
+the heavy bottom `t₀` to the light top `tₘ`); a strictly monotone `ℕ`-valued
+function on a chain of length `m` forces a spread of at least `m`. This converts
+the *global* quantity "number of dependents" into a *local* certificate of proof
+depth. The remaining step is a finite induction over the order, directly supported
+by the framework that proved Theorems 3.1–3.3.
+
+### Conjecture 7.2 (Threshold-determined fraction; phase transition)
+
+The anti-gravity fraction is governed by the *threshold*, not the library. For the
+family of all DAGs on `n` nodes, the expected fraction with `weight ≥ τ` is
+`Θ(1)` only when `τ = Θ(1)`, and decays whenever `τ → ∞`.
+
+*Rationale.* Sections 4–5 already realize fractions spanning `[0, 1)` (discrete
+`→ 0`, chain `→ 1`, fan `1/(n+2)`), so the fraction cannot be an invariant. The
+correct object is the dependence of the fraction on `τ` and on the weight
+*distribution*, i.e. a phase transition in `τ`. With `chain_antigravity_card`
+(Theorem 5.5) giving exact counts, fraction-vs-threshold statements are concrete
+and testable, and random-DAG weight distributions are within reach of finite
+counting.
+
+### Conjecture 7.3 (Conservation forces a heavy tail)
+
+In any DAG with `D` dependency pairs on `n` nodes, some theorem has weight
+`≥ D/n`; and if `D ≥ n` then a *positive fraction* of theorems are anti-gravity at
+threshold `1`.
+
+*Rationale.* Theorem 3.2 turns total weight into the exact pair-count `D`, so the
+averaging bound `exists_weight_ge_average` (Theorem 3.3) upgrades from "someone is
+heavy" to a counting statement: dense dependency (`D ≥ n`) cannot be spread so
+thinly that everyone has weight `0`, forcing a nonvanishing load-bearing
+population.
+
+### Applications
+
+The framework applies directly to the dependency record of any proof assistant or
+mathematical corpus. Concrete uses include: ranking lemmas by computed weight to
+prioritize maintenance of high-impact foundations; using the monotonicity
+height-function to estimate proof depth without unfolding proofs; auditing a
+library's anti-gravity profile *as a function of threshold* (per Conjecture 7.2)
+rather than chasing a nonexistent universal constant; and using the conservation
+identity as a sanity check on extracted dependency graphs (total weight must equal
+edge count exactly).
+
+---
+
+## 8. Conclusion
+
+We have given a precise combinatorial account of how mathematical "importance"
+distributes across a library. Gravitational weight — the count of dependents —
+obeys three exact laws: it flows strictly downhill along dependency
+(`weight_lt_of_dep`), it is conserved with total equal to the dependency-pair
+count (`sum_weight_eq`), and it forces an above-average load-bearer
+(`exists_weight_ge_average`). Anti-gravity theorems — heavy yet cheap — always
+exist by the fan construction. But their prevalence obeys no universal law: the
+discrete library yields fraction `0` and the chain yields `k/(k+1) → 1`
+(`chain_antigravity_card`), refuting the conjectured `10%` rule and replacing it
+with a threshold-parameterized question. The quiet, load-bearing stones of
+mathematics are real and forced to exist — but they sit wherever the architecture
+of dependency places its weight, not in any fixed proportion.

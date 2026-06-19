@@ -1,67 +1,233 @@
-# The Hidden Keystones: How "Anti-Gravity Theorems" Hold Mathematics Together
+# The Theorems That Hold Up the Sky
 
-*Some mathematical results punch far above their weight. A new theory explains why — and predicts where to find them.*
+## Why some ideas carry the weight of a thousand others — and yet take only a line to prove
 
----
+Imagine the whole of mathematics as a vast cathedral. Up in the vaults are the
+showpieces: the deep theorems, the famous conjectures, the results that win
+prizes. They are spectacular, and they are heavy — their proofs run for hundreds
+of pages. But a cathedral is not held up by its ceiling frescoes. It is held up
+by a handful of load-bearing stones near the floor, modest blocks that almost no
+visitor ever looks at, each one quietly carrying the weight of everything above
+it.
 
-In 1637, Pierre de Fermat scribbled a note in the margin of his copy of Diophantus's *Arithmetica*. The note would become the most famous unsolved problem in mathematics for over 350 years. But what made Fermat's Last Theorem so important wasn't just the difficulty of proving it — it was the sheer number of other mathematical discoveries that grew from attempts to solve it. Algebraic number theory, modular forms, elliptic curves: entire branches of mathematics sprang into existence because mathematicians kept pushing against this one stubborn statement.
+This article is about those stones. In mathematics they have a curious double
+life: they are *foundational* — almost everything rests on them — and yet they
+are *cheap* — their proofs are short, sometimes a single line. We will call them
+**anti-gravity theorems**, because they seem to defy a natural intuition. We
+expect that the more a result matters, the harder it should be to prove. The
+anti-gravity theorems break that expectation. They support an enormous amount of
+structure while weighing almost nothing themselves.
 
-Fermat's Last Theorem is what we might call a "high-weight" theorem — one that connects to, and is required by, an enormous number of other results. But here's the paradox: Andrew Wiles's eventual proof, while deep and ingenious, occupies a remarkably compact space in the architecture of modern mathematics. The proof draws on a specific and elegant chain of ideas. The *influence* of the theorem vastly exceeds the *complexity* of its proof.
-
-This paradox turns out to be universal. A new mathematical framework called the **Proof Leverage Lattice** reveals that every sufficiently rich mathematical theory contains what we call "anti-gravity theorems" — results that exert disproportionate gravitational pull on the rest of mathematics relative to their proof complexity. Like keystones in an arch, they hold up far more than their size would suggest.
-
-## The Weight of a Theorem
-
-To understand anti-gravity, we first need to understand gravitational weight. Imagine the entire body of mathematical knowledge as a vast network. Each theorem is a node, and each logical dependency is a directed edge. The Pythagorean theorem connects to trigonometry, which connects to calculus, which connects to differential equations, which connects to physics, engineering, and beyond.
-
-The **gravitational weight** of a theorem is simply the count of all other theorems it can reach through this dependency network. A foundational result like the axiom of choice has enormous weight — remove it, and vast swathes of mathematics collapse. A specialized lemma about a particular class of functions might have weight 1: only the paper it was published in depends on it.
-
-But weight alone doesn't tell the whole story. Some high-weight theorems are genuinely difficult — their proofs require hundreds of pages and years of effort. Others, however, achieve their enormous influence through astonishingly compact arguments. The **anti-gravity index** captures this: it's the ratio of a theorem's weight to its proof complexity.
-
-A theorem with weight 1000 and proof length 5 has an anti-gravity index of 200. A theorem with weight 1000 and proof length 500 has an index of 2. The first is an "anti-gravity theorem" — it defies the natural expectation that influence should be proportional to effort.
-
-## The Pigeonhole Leverage Theorem
-
-The first surprising result is that anti-gravity theorems aren't just occasional curiosities — they're **guaranteed to exist** in any mathematical system. The Pigeonhole Leverage Theorem establishes this rigorously.
-
-Here's the intuition. Consider any collection of n theorems with their dependencies forming a directed acyclic graph. The total weight — the sum of all individual weights — is at least n (since every theorem can reach at least itself). By the pigeonhole principle, at least one theorem must have weight at least equal to the average. If the average weight is high relative to the average proof length, that theorem must be anti-gravity.
-
-More precisely: if the total weight of all theorems exceeds τ times the total proof length (for any threshold τ), then at least one theorem must be τ-anti-gravity. This isn't a probabilistic statement — it's a mathematical certainty.
-
-The implications are striking. In a typical mathematical library, the total weight grows much faster than the total proof length as the library expands. Each new theorem adds weight to every theorem it depends on, creating a compounding effect. But proof lengths are bounded — you can only make a proof so long before it becomes impractical. This means that as mathematics grows, the leverage ratio increases, and anti-gravity theorems become not just possible but inevitable.
-
-## The Gravitational Spectrum
-
-Perhaps the most elegant aspect of the theory is the **gravitational spectrum** — the sorted sequence of all anti-gravity indices in a mathematical system. Think of it as a fingerprint of the system's information architecture.
-
-The spectrum reveals deep structural properties. In a "flat" system where every theorem has roughly the same weight and proof length, the spectrum is narrow — clustered around a single value. In a "hierarchical" system with a few foundational results supporting a vast superstructure, the spectrum is wide, with a few extreme values at the top and a long tail of modest ones.
-
-The spectrum satisfies a beautiful monotonicity property: as you raise the anti-gravity threshold, the set of qualifying theorems shrinks. At threshold 0, every theorem qualifies. At threshold 1, you need weight at least equal to proof length. At threshold 10, you need weight at least ten times the proof length. The chain of anti-gravity sets forms a decreasing filtration — a nested sequence that peels away layers of the mathematical structure, revealing the most leveraged results at each level.
-
-## The Markov Bound: Where Anti-Gravity Lives
-
-How many anti-gravity theorems can there be? A Markov-inequality-type bound provides the answer: the number of vertices with weight at least w, multiplied by w, cannot exceed the total weight. This means high-weight theorems are necessarily rare — you can't have too many of them.
-
-This creates a tension. Anti-gravity theorems must exist (by the Pigeonhole Leverage Theorem), but they can't be too numerous (by the Markov Bound). The anti-gravity theorems occupy a sweet spot: they are the rare keystones whose removal would cause disproportionate damage to the mathematical edifice.
-
-Computational experiments on simulated mathematical libraries suggest that roughly 15-25% of theorems are "2-anti-gravity" (weight at least twice their proof length) in typical hierarchical systems. This aligns with an empirical prediction: in any formal mathematical library, approximately 10-20% of the theorems are keystones that hold up far more than their fair share of the structure.
-
-## Implications: The Topology of Knowledge
-
-The theory of anti-gravity theorems opens unexpected connections to other fields. In network science, anti-gravity nodes correspond to "high-betweenness, low-degree" vertices — nodes that are critical bridges despite having few direct connections. In information theory, anti-gravity theorems are the most "compressible" units of knowledge — they encode the most information per bit of proof.
-
-There's even a connection to the philosophy of mathematics. Why do mathematicians prize elegance? Perhaps because elegant proofs — short proofs of influential results — are literally anti-gravity. They provide maximum leverage with minimum complexity. The aesthetic preference for elegance may be a deep evolutionary adaptation: mathematicians who focus on anti-gravity results produce more downstream mathematics per unit of effort.
-
-The theory also suggests practical applications for how we organize and teach mathematics. If you can identify the anti-gravity theorems in a curriculum, you've found the most efficient entry points — the results that unlock the most subsequent material with the least prerequisite knowledge. Every teacher knows intuitively that some theorems are "worth more" than others; the Proof Leverage Lattice gives this intuition mathematical precision.
-
-## What Comes Next
-
-The current results are just the beginning. Several tantalizing questions remain open. Does the gravitational spectrum converge to a universal distribution as the mathematical system grows? Is there a "critical threshold" τ* above which anti-gravity theorems become extremely rare? Can we characterize the topological properties of the anti-gravity set — is it connected, or fragmented?
-
-Most ambitiously: can we use the anti-gravity framework to *discover* new mathematics? If we can predict which regions of the theorem space are likely to contain undiscovered anti-gravity results, we might be able to direct mathematical research more efficiently. Instead of exploring randomly, we could look for compact proofs in areas where the dependency structure suggests high weight.
-
-Mathematics has always been built by individuals following their curiosity. But the theory of anti-gravity suggests that this process isn't random — it's guided by deep structural forces that make certain theorems inevitable keystones. The arch of mathematical knowledge doesn't just happen to have keystones. It *must* have them. And now we can prove it.
+The surprise of this story is not just that such theorems exist. It is that, once
+you make the idea precise, you can *prove things about them* — clean, exact laws
+governing how mathematical weight is distributed across a body of knowledge. And
+it is that one of the most tempting guesses about them — a tidy "10% law" — turns
+out to be flatly false, and provably so.
 
 ---
 
-*This research establishes the foundations of anti-gravity mathematics through rigorous proofs verified at the highest standard of mathematical certainty. The Proof Leverage Lattice, introduced as a novel mathematical structure, provides the first formal framework for understanding why some theorems matter more than others.*
+## Weighing a theorem
+
+To do any of this we first need a way to put a theorem on a scale.
+
+Picture a formal library — a collection of theorems, where each theorem is
+proved using some of the others. Draw an arrow from theorem `a` to theorem `b`
+whenever `a`'s proof *uses* `b`. Because you can never (on pain of circular
+reasoning) use a result to prove itself, these arrows never form a loop. The
+picture is a **directed acyclic graph** — a DAG. This is the dependency graph of
+mathematics, and every formal library, every textbook, every proof assistant's
+internal record is exactly such a graph.
+
+Now we can define weight. The **gravitational weight** of a theorem `b` is the
+number of *other* theorems that depend on it:
+
+> **weight(b) = the number of theorems `a` such that `a` depends on `b`.**
+
+A lemma used in one place has weight 1. A workhorse used a hundred times has
+weight 100. The commutative law, the triangle inequality, the fact that zero
+times anything is zero — these have astronomical weight. They are the
+load-bearing stones.
+
+This single definition already behaves beautifully, and its good behavior is the
+first thing we can prove rigorously.
+
+---
+
+## Law 1: Weight flows downhill
+
+Here is the first structural law, which in the formal development is the theorem
+called **`weight_lt_of_dep`**:
+
+> **If theorem `a` depends on theorem `b`, then weight(a) < weight(b).**
+
+In words: *dependency strictly increases weight.* The thing you lean on is always
+heavier than you.
+
+Why is it true? Suppose `a` depends on `b`. Then anything that depends on `a`
+also, transitively, depends on `b` — if your proof uses `a`, and `a`'s proof uses
+`b`, then your proof ultimately rests on `b` too. So every theorem counted in
+weight(a) is also counted in weight(b). But there is at least one extra theorem
+in `b`'s count that is not in `a`'s: namely `a` itself. So `b` carries strictly
+more than `a`. The inequality is strict, every single time.
+
+This has a lovely consequence. Weight is not just a number; it is a *ruler for
+depth*. Because weight strictly decreases as you climb up the dependency ladder
+(toward the flashy theorems) and strictly increases as you descend (toward the
+foundations), it ranks the entire library by how deep a result sits. The
+foundational stones automatically float to the top of the weight ranking. You
+never have to *decide* what is fundamental — the arithmetic of dependency decides
+for you.
+
+---
+
+## Law 2: Nothing is created, nothing is destroyed
+
+The second law is a conservation principle, formalized as **`sum_weight_eq`**.
+Add up the weights of *every* theorem in the library. What do you get?
+
+> **The sum of all weights equals the total number of dependency pairs in the
+> library.**
+
+This is the mathematician's version of the handshaking lemma. Every time one
+theorem leans on another, that single act of leaning contributes exactly `+1` to
+exactly one theorem's weight — the one being leaned on. So the grand total of all
+weight in the cathedral is simply the total number of "leanings." Nothing leaks.
+Weight is a conserved quantity, perfectly accounted for by the bare count of
+dependencies.
+
+This turns a vague, global feeling — "this field has a lot of interconnection" —
+into a hard number. The amount of total weight in a library *is* the amount of
+dependency in it. They are the same quantity, viewed from two angles.
+
+---
+
+## Law 3: Somebody always carries more than their share
+
+Conservation has teeth. Once you know the total weight equals the total number of
+dependency pairs, a counting argument — the pigeonhole principle — forces an
+unavoidable conclusion, formalized as **`exists_weight_ge_average`**:
+
+> **In any library, some theorem has weight at least the average.**
+
+If there are `n` theorems and `D` dependency pairs, the average weight is `D/n`,
+and at least one theorem must meet or beat it. You cannot build a body of
+mathematics in which every result is equally, modestly important. Interconnection
+*concentrates*. The moment you have any appreciable density of dependency — say,
+more dependency pairs than theorems — somebody is carrying a genuinely heavy load.
+There is always a load-bearing stone.
+
+This is the precise sense in which foundational theorems are not an accident or a
+matter of taste. They are *forced* by the arithmetic of how proofs connect.
+
+---
+
+## The fan: a guaranteed anti-gravity theorem
+
+So far we have talked about weight. The other half of "anti-gravity" is the
+*short proof*. A theorem is **anti-gravity** if it combines the two: high weight
+(many dependents) and low proof length (cheap to establish).
+
+> **A theorem is anti-gravity if its weight is at least some threshold τ while its
+> proof length is at most some small bound ℓ.**
+
+Do such theorems have to exist? It is easy to build one on purpose. Consider the
+**fan**: a single root theorem `r`, and `n` separate theorems each of which uses
+`r` and nothing else. Picture a hub with `n` spokes. The root's weight is exactly
+`n` — every spoke depends on it — so by making `n` large we make `r` as heavy as
+we like. Yet `r` itself sits at the bottom with a one-line proof. The fan is a
+machine for manufacturing anti-gravity: arbitrarily high weight, fixed tiny cost.
+
+The fan shows anti-gravity theorems are not exotic. You can always arrange for
+one. But arranging for one is different from claiming they are *common*. That
+distinction is where the story takes its sharpest turn.
+
+---
+
+## The 10% law that wasn't
+
+A seductive conjecture hangs over this whole subject: that anti-gravity theorems
+make up some fixed, universal fraction of any mathematical library — the
+prediction was a clean **10%**. It would be wonderful if true. It would mean
+mathematics has a kind of constant "load-bearing density," a fingerprint shared
+across algebra, geometry, logic, everything.
+
+It is false. And we can prove it is false, twice over, from opposite directions.
+
+**The discrete library.** Take a collection of theorems with *no* dependencies at
+all — a pile of unrelated facts, no arrows. Every weight is zero. Nothing meets
+any positive threshold. The fraction of anti-gravity theorems is exactly **0%**.
+So much for a universal floor.
+
+**The chain.** Now go to the other extreme. Take a single tower:
+`t₀` depends on `t₁` depends on `t₂` … all the way up to `tₖ`, each result
+standing on the one below. This is a library of `k + 1` theorems. By Law 1, weight
+climbs steadily as you descend the tower, and a precise count — the theorem
+**`chain_antigravity_card`** — shows that exactly `k` of the `k + 1` theorems clear
+the anti-gravity bar. The fraction is `k / (k + 1)`. As the tower grows tall, that
+fraction climbs toward **100%**.
+
+So the anti-gravity fraction is not a constant of nature. It is not 10%, and it is
+not anything else fixed. The discrete library pins it at 0; the chain drives it to
+1; and everything in between is achievable. The fraction is a property of *the
+shape of the library*, not of mathematics itself. The tidy universal law
+dissolves on contact with two of the simplest examples imaginable.
+
+This is, in its own way, the most valuable result of the whole investigation.
+Refuting a clean conjecture is not a failure; it is information. It tells us
+exactly what kind of statement *could* be true instead.
+
+---
+
+## What survives, and what comes next
+
+Strip away the conjecture that didn't hold, and look at what remains standing.
+Three exact laws:
+
+- **Weight flows downhill** (`weight_lt_of_dep`): every dependency strictly
+  increases the weight of the thing depended upon, so weight ranks the whole
+  library by depth.
+- **Weight is conserved** (`sum_weight_eq`): total weight equals total
+  dependency, exactly.
+- **Someone always carries the load** (`exists_weight_ge_average`): the average is
+  always attained, so heavy foundational theorems are mathematically forced.
+
+And one constructive guarantee — the **fan** — showing that anti-gravity theorems
+can always be produced, together with the twin counterexamples that kill the 10%
+law.
+
+These results reframe the original question. Instead of asking "what fraction of
+theorems are anti-gravity?" (a question with no universal answer), we should ask
+how the fraction depends on a *threshold*. Because the three examples already span
+the entire range from 0 to 1, the right object of study is not a magic constant
+but a **phase transition**: as you raise the weight threshold, the fraction of
+theorems that still qualify must fall off, and the interesting science is in *how*
+it falls off and *where* the transition sits.
+
+There is more to chase. Law 1 says weight is a strictly decreasing ruler, which
+suggests it should *bound the length of the longest dependency chain* — the
+deepest result can be no deeper than the weight of the stone it ultimately rests
+on. And Law 2's conservation principle hints at a "heavy tail": if a library has
+at least as many dependency pairs as theorems, then not only does *someone* carry
+an above-average load, but a *positive fraction* of the library must be
+load-bearing. These are the natural next theorems, and the framework that proved
+the first three is already shaped to reach them.
+
+---
+
+## The quiet stones
+
+Step back from the formalism and the picture is human. Every field has its
+unsung load-bearing results — the change-of-variables formula, the snake lemma,
+the union bound — that no one frames on a wall but that everything quietly rests
+on. We tend to celebrate the heavy theorems at the top of the cathedral, the ones
+whose proofs are feats of endurance. But the anti-gravity stones are arguably more
+remarkable: they do the most work for the least effort. A single line of proof,
+holding up the sky.
+
+What this investigation gives us is a way to *see* them — to weigh a theorem by
+its dependents, to watch weight flow downhill and pool at the foundations, and to
+prove that those foundations must exist. The grand conjecture, that they always
+make up a tidy 10%, turned out to be a mirage. But the deeper truth is sturdier
+and more interesting: the load-bearing stones are not a fixed fraction of the
+building. They are wherever the architecture decides to put its weight — and the
+architecture, we can now prove, always puts it somewhere.
