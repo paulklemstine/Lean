@@ -1033,7 +1033,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Functor from finite linear codes to tropical valuation objects via wei"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f6bee4de",
     "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
     "domains": [
       "Novelty",
@@ -1043,7 +1043,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.958310+00:00",
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
@@ -1874,17 +1874,45 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "For every odd prime base B > 5, the length of the longest terminal cycle in the four-digit Kaprekar routine equals (B-1)/2 if and only if the multiplicative order of 2 modulo B is (B-1)/2.",
+    "description": "Conjecture that for every integer k \u2265 3 and every rational \u03b5 > 0 there exist two k\u2011uniform hypergraphs F\u2081, F\u2082 such that the positive codegree Tur\u00e1n density \u03b3\u207a(F\u2081, F\u2082) is positive but satisfies \u03b3\u207a(F\u2081, F\u2082) < \u03b5\u00b7min{\u03b3\u207a(F\u2081), \u03b3\u207a(F\u2082)}.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_2090",
     "priority_score": 0.8,
     "research_mode": "team",
+    "source_exp_id": "2606.20494v1",
+    "status": "available",
+    "timestamp": "2026-06-19T06:17:42.153700+00:00",
+    "title": "Arbitrarily small positive codegree Tur\u00e1n density for pairs of k-graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every odd prime base B > 5, the length of the longest terminal cycle in the four-digit Kaprekar routine equals (B-1)/2 if and only if the multiplicative order of 2 modulo B is (B-1)/2.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2091",
+    "priority_score": 0.8,
+    "research_mode": "team",
     "source_exp_id": "2606.20439v1",
     "status": "available",
     "timestamp": "2026-06-19T05:14:33.661749+00:00",
     "title": "Terminal Cycle Length in Four-Digit Kaprekar Dynamics Equals (B-1)/2 for Prime Bases"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every integer d >= 1 and every finite planar graph H, there exists a natural number B(d,H) such that every finite simple graph G that is K_{1,d}-free and has no induced minor isomorphic to H satisfies alpha-tw(G) <= B(d,H). A counterexample would be an infinite family of K_{1,d}-free graphs excluding H as an induced minor whose tree-independence numbers are unbounded.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2092",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20256v1",
+    "status": "available",
+    "timestamp": "2026-06-19T06:18:53.730025+00:00",
+    "title": "Bounded tree-independence for K_{1,d}-free graphs excluding a planar induced minor"
   },
   {
     "consumed_by_exp_id": "",
@@ -2957,21 +2985,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Spectral Universality of Neural Tangent Kernels on Moduli Spaces"
   },
   {
-    "consumed_by_exp_id": "9afcaae7",
-    "description": "Conjecture: For sufficiently capable transformer language models trained on next-token prediction, there exists a scale-dependent phase transition in the empirical singular-value spectra of specific learned weight matrices (especially attention output and MLP projection layers) such that models exhibiting strong multi-step reasoning have renormalized spectral statistics converging to a non-Wigner universality class with stable critical exponents, while weaker models remain in a Marchenko-Pastur-like regime. Test: Train model families across parameter scales, data curricula, and architectures; measure layerwise spectra, finite-size scaling, and critical exponents; then test whether emergence of reasoning benchmarks correlates sharply with the predicted spectral transition and whether interventions that shift spectra across the critical point causally improve or degrade reasoning. Refutation occurs if no reproducible universality class or phase boundary appears, or if spectral transition fails to predict reasoning emergence better than naive scale measures. Impact: This would provide a quantitative order parameter for emergent cognition in neural networks, connect deep learning to statistical physics and random matrix theory, and enable principled architecture/search methods that target reasoning-critical phases rather than brute-force scaling.",
-    "domains": [
-      "Algebra",
-      "Novelty"
-    ],
-    "id": "fd_2020",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-16T16:54:32.770267+00:00",
-    "title": "Spectral Universality of LLM Weight Matrices: Random-Matrix Phase Transitions in"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture: For any sufficiently expressive finitely presented formal system S (e.g. arithmetic-strength theorem proving with a fixed proof encoding), the graph G_n of derivable statements and minimal proof transformations up to proof length n exhibits a nontrivial renormalization-group fixed point: after coarse-graining proofs by local rewrite equivalence classes and rescaling path lengths by a system-dependent factor, the sequence of normalized graph Laplacian spectra converges as n -> infinity to a universal limiting measure depending only on the logical complexity class of S, not on syntactic presentation. Test: Construct proof-search graphs for multiple inequivalent presentations of the same theory and for theories of different strength; define explicit coarse-graining via proof normalization/rewrite neighborhoods; numerically compare spectral measures across scales. The conjecture is supported if presentations within the same complexity class flow to the same limiting spectrum and refuted if no stable scale-invariant spectrum appears or if the limit depends sensitively on encoding details. Impact: This would found a statistical physics of mathematics, yielding universality classes for theorem proving, new complexity invariants of formal systems, and principled ways to predict proof hardness and design more efficient automated reasoning heuristics.",
     "domains": [
@@ -3085,20 +3098,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
-  },
-  {
-    "consumed_by_exp_id": "3c627a3f",
-    "description": "Cycle bfb62bb9 (Q=0.524) proved 22 theorems in Novelty but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize a minimal, self-contained core of the order-valuation program for truncated binary polynomials, avoiding any unverified functorial or uniqueness claims. Work in the concrete algebra `R_n := ",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "sorry_fill_bfb62bb9_34e4a38a",
-    "priority_score": 0.5736521220159152,
-    "research_mode": "team",
-    "source_exp_id": "bfb62bb9",
-    "status": "in_progress",
-    "timestamp": "2026-06-16T10:49:09.086340+00:00",
-    "title": "Close Proofs: These conjectures extend `Catalog/Bridges/CodeThresholdValuation.lean`"
   },
   {
     "consumed_by_exp_id": "",
@@ -3699,21 +3698,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Holographic Mathematics: Bulk-Boundary Proof Duality"
   },
   {
-    "consumed_by_exp_id": "edb2f51b",
-    "description": "Formalize musical counterpoint rules (Fux's species counterpoint) as a category where objects are consonant intervals and morphisms are permitted voice leadings. Conjecture: The category of first-species counterpoint over a diatonic scale is equivalent to the thin category generated by a specific poset of 12 elements. Test: enumerate all valid first-species counterpoint motions and prove they form exactly this category. Impact: bridges music theory, order theory, and categorical logic.",
-    "domains": [
-      "Algebra",
-      "Speculative"
-    ],
-    "id": "fd_0415",
-    "priority_score": 0.24999999999999992,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T19:55:26.503715+00:00",
-    "title": "Sonic Mathematics: Counterpoint as Category Theory"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
     "domains": [
@@ -3909,7 +3893,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a2755e7b",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -3919,7 +3903,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.490561+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
@@ -4059,7 +4043,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
   {
-    "consumed_by_exp_id": "3d9b7416",
+    "consumed_by_exp_id": "",
     "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
     "domains": [
       "Novelty",
@@ -4069,7 +4053,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.807837+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
