@@ -2221,6 +2221,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let B_n be the Birkhoff polytope, the convex hull in R^(n x n) of all n x n permutation matrices. Conjecture: B_n satisfies the clique-face property, meaning every clique in the 1-skeleton of B_n is exactly the vertex set of a face, if and only if n <= 2.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2114",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20430v1",
+    "status": "available",
+    "timestamp": "2026-06-19T16:12:43.783179+00:00",
+    "title": "Birkhoff polytopes have the clique-face property only in dimensions n <= 2"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "If a projective Fraisse category associated with a continuum F has the approximate Ramsey property, then there exists a ultrafilter on the Fraisse category that witnesses extreme amenability of Homeo(F) by satisfying partition relations for all finite graphs.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2114",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-19T16:15:19.069232+00:00",
+    "title": "Existence of an ultrafilter witness for extreme amenability"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",

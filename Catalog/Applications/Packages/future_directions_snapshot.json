@@ -3311,6 +3311,64 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Birkhoff-von Neumann theorem",
+      "1-skeleton of a convex polytope",
+      "clique-face property from the paper",
+      "Mathlib.Geometry.Convex.Basic",
+      "Mathlib.Combinatorics.SimpleGraph.Basic",
+      "Mathlib.Data.Matrix.Basic"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let B_n be the Birkhoff polytope, the convex hull in R^(n x n) of all n x n permutation matrices. Conjecture: B_n satisfies the clique-face property, meaning every clique in the 1-skeleton of B_n is exactly the vertex set of a face, if and only if n <= 2.",
+    "domain_bridges": [
+      "permutation matrices to vertices of transportation polytopes",
+      "polytope skeletons to Cayley-type graphs on symmetric groups",
+      "clique-face obstructions to quadratic generation of toric ideals"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2114",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "For n <= 2, B_n is respectively a point or a segment, so the clique-face property is immediate. For n = 3, two permutation vertices are adjacent exactly when their quotient permutation has a single nontrivial cycle; every nonidentity element of S_3 has this property, so the 1-skeleton of B_3 is complete on six vertices. However B_3 is 4-dimensional and its facets are given by equations x_ij = 0, each containing only four permutation vertices, so a five-vertex clique is not the vertex set of any face. Thus B_3 fails the property. For n >= 3, B_n contains a face isomorphic to B_3 by fixing n-3 rows and columns to the corresponding identity entries. Since the clique-face property passes to faces, B_n also fails it.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20430v1",
+    "status": "available",
+    "timestamp": "2026-06-19T16:12:43.783179+00:00",
+    "title": "Birkhoff polytopes have the clique-face property only in dimensions n <= 2"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "approximate Ramsey property",
+      "extreme amenability",
+      "ultrafilters in combinatorics"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "If a projective Fraisse category associated with a continuum F has the approximate Ramsey property, then there exists a ultrafilter on the Fraisse category that witnesses extreme amenability of Homeo(F) by satisfying partition relations for all finite graphs.",
+    "domain_bridges": [
+      "combinatorial set theory",
+      "group dynamics"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2114",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a ultrafilter in the Fraisse category that uniformly satisfies the conditions required for extreme amenability, leveraging the approximate Ramsey property to enforce uniformity across all finite graphs.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-19T16:15:19.069232+00:00",
+    "title": "Existence of an ultrafilter witness for extreme amenability"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
