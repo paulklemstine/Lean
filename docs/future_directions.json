@@ -184,11 +184,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "78320320",
       "depth_estimate": 3,
       "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
       "domain_bridges": [],
@@ -198,7 +198,7 @@
         "Algebra"
       ],
       "id": "fd_0004",
-      "last_attempt_time": "2026-06-08T02:10:46.952695+00:00",
+      "last_attempt_time": "2026-06-19T10:41:03.519159+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -211,7 +211,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-01T12:30:30.490561+00:00",
       "title": "The Library of Babel: Combinatorics of the Universal Library"
@@ -3212,7 +3212,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "b3d82bf4",
+      "consumed_by_exp_id": "54e6618c",
       "depth_estimate": 3,
       "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
       "domain_bridges": [],
@@ -3222,7 +3222,7 @@
         "Cryptography"
       ],
       "id": "fd_0088",
-      "last_attempt_time": "2026-06-19T11:12:48.292372+00:00",
+      "last_attempt_time": "2026-06-19T11:21:10.579112+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16272,11 +16272,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "a449aa2a",
       "depth_estimate": 3,
       "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
       "domain_bridges": [],
@@ -16286,7 +16286,7 @@
         "Logic"
       ],
       "id": "fd_0577",
-      "last_attempt_time": "2026-06-07T17:45:05.945345+00:00",
+      "last_attempt_time": "2026-06-19T10:41:07.177947+00:00",
       "last_reviewed_at": "2026-06-16T16:55:25.165652+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -16299,7 +16299,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T23:40:36.923091+00:00",
       "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
@@ -34192,45 +34192,6 @@
       "title": "Exact Number of Solutions"
     },
     {
-      "ambition_level": "grand_challenge",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "Two-Phase Bilevel Search",
-        "Moving-Target TSP"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "The conjecture asserts that the algorithm runs in O(n^3) time for all instance sizes.",
-      "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Computation",
-        "Pythagorean"
-      ],
-      "id": "fd_2099",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "P(n) ≤ k * n^3 for constant k",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.8,
-      "proof_strategy": "Direct mathematical proof",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.18730v1",
-      "source_path": "http://arxiv.org/abs/2606.18730v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-19T11:12:43.328427+00:00",
-      "title": "Time Complexity Claim"
-    },
-    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -34253,7 +34214,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2100",
+      "id": "fd_2099",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem four_digit_kaprekar_cycle_length (B : odd_prime) [H : B > 5] : cycle_length B = (B - 1) // 2 ↔ (order_of_2 B) = (B - 1) // 2",
@@ -34298,7 +34259,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2101",
+      "id": "fd_2100",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem dallard_planar_induced_minor_conjecture\n  (d : ℕ) (hd : 0 < d) {W : Type*} [Fintype W]\n  (H : SimpleGraph W) (hH : H.Planar) :\n  ∃ B : ℕ, ∀ {V : Type*} [Fintype V] (G : SimpleGraph V),\n    G.InducedMinorFree H →\n    G.InducedSubgraphFree (SimpleGraph.K1d d) →\n      G.TreeIndependenceNumber ≤ B := by\n  sorry",
@@ -34341,7 +34302,7 @@
         "Algebra",
         "Computation"
       ],
-      "id": "fd_2102",
+      "id": "fd_2101",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "A slightly adapted version of the normal approximation in the origin localization lemmas, tailored to uniform random selections in finite settings.",
@@ -34390,7 +34351,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2103",
+      "id": "fd_2102",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cm_points_equidistribute_product (r : ℕ) (hr : 2 ≤ r) (curves : Fin r → ShimuraCurve) (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (hsplit : ∀ n, p.SplitsIn (CMField n) ∧ q.SplitsIn (CMField n)) (strict_seq : StrictSequence ...) : WeakConvergence (GaloisOrbitMeasure (z_seq : ℕ → Product (Fin r → ShimuraCurve))) (HaarMeasure (Product (Fin r → ShimuraCurve))) := by sorry",
@@ -34435,7 +34396,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2104",
+      "id": "fd_2103",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem embracing_distance_equals_graph_distance {M : OrientedMatroid} {e : M.E} {B B' : Basis M} (hB : B.is_e_embracing e) (hB' : B'.is_e_embracing e) : d_e B B' = d_G (C B e) (C B' e) := by sorry",
@@ -34476,7 +34437,7 @@
       "domains": [
         "Algebra"
       ],
-      "id": "fd_2105",
+      "id": "fd_2104",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "Theorem tree_graph_complete_intersection (Γ : Graph) : I_Γ.is_complete_intersection := ... (requires Γ.is_tree)",
@@ -34518,7 +34479,7 @@
         "Computation",
         "Pythagorean"
       ],
-      "id": "fd_2106",
+      "id": "fd_2105",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem q_game_win_probability (n q : ℕ) [hpq : 0 < q] : P(n, q) = (1/n) + (1/n) * ∑ k ∈ Range(q+1, n), P(n - k, q)} ∧ P(0, q) = 0",
@@ -34536,6 +34497,92 @@
       "thread_id": "",
       "timestamp": "2026-06-19T10:14:34.984628+00:00",
       "title": "Recurrence for the Winning Probability in the Generalized Game"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "math.AC"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Conjecture: Every lattice polytope whose toric ideal is generated by quadratic binomials satisfies the clique-face property, i.e., every clique of its 1-skeleton is the vertex set of a face of the polytope. This generalizes the proven implication under a mild edge condition and proposes a stronger combinatorial-geometric link, which can be falsified by exhibiting a counterexample.",
+      "domain_bridges": [
+        "Discrete geometry",
+        "Algebraic combinatorics",
+        "Computational algebra"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2106",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem conjecture_quadratic_generation_implies_clique_face (P : LatticePolytope) (h : QuadraticGeneration (toricIdeal P)) : HasCliqueFaceProperty P := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Attempt to disprove by exhaustive search over small (0,1)-polytopes; use computer algebra to check quadratic generation of toric ideals and verify whether all cliques correspond to faces.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20430v1",
+      "source_path": "http://arxiv.org/abs/2606.20430v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-19T11:20:52.561144+00:00",
+      "title": "Clique-face property for lattice polytopes with quadratically generated toric ideals"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "pestov_book",
+        "kpt",
+        "irwin_solecki"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "For any projective Fraisse category 𝔽 whose limit ℱ has a dense automorphism group Φ(Aut(𝔽)) in the homeomorphism group of a continuum F, if 𝔽 satisfies the approximate Ramsey property then the dense subgroup Φ(Aut(𝔽)) of Homeo(F) is extremely amenable.",
+      "domain_bridges": [
+        "combinatorial_topology",
+        "model_theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "id": "fd_2107",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem approx_ramsey_implies_extreme_amenable {𝔽 : ProjectiveFraisseCategory} (h : ApproximateRamsey 𝔽) : ExtremelyAmenable (AutGroup 𝔽) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "combinatorial_characterization_via_ultrafilters",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20407v1",
+      "source_path": "http://arxiv.org/abs/2606.20407v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-19T11:21:05.950745+00:00",
+      "title": "Approximate Ramsey Property Implies Extreme Amenability of Homeomorphism Groups"
     },
     {
       "ambition_level": "extension",
