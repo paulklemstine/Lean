@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "bf1e3b75",
     "filename": "speculative_anti_gravity_mathematics__theorems_tha.json",
     "pkg_num": 201,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.49552432432432436,
     "title": "Anti-Gravity Mathematics: An Integer Model of Cheap, Load-Bearing Theorems"
   },
   {
@@ -6148,8 +6148,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "speculative_anti_gravity_mathematics__theorems_tha",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.49552432432432436,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Anti-Gravity Mathematics: An Integer Model of Cheap, Load-Bearing Theorems"
     }

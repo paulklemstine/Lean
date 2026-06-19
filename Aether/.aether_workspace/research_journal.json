@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "797d0a4a",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Noise-Stable Prime Spectrum in Definable Quantum Walks\n\n## Synthesis\n\nThis cycle built a small but load-bearing bridge between three previously separate\ncatalog arcs: the **Fibon",
-      "quality_score": 0.5806184615384615,
-      "sorry_count": 3,
-      "theorem_count": 26,
-      "timestamp": "2026-06-14T22:47:12",
-      "title": "Close Proofs: Noise-Stable Prime Spectrum in Definable Quantum Walks"
-    },
-    {
       "cycle_id": "65303b4b",
       "domain": "Bridges",
       "key_insight": "# Future Directions — The Discrete Heat Semigroup of Hodge Message Passing\n\n## Synthesis\n\nThis cycle closed the conceptual loop opened by the spectral-depth / message-passing\nwork in `Catalog/Speculat",
@@ -2501,6 +2491,16 @@
       "theorem_count": 93,
       "timestamp": "2026-06-19T21:19:06",
       "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+    },
+    {
+      "cycle_id": "bf1e3b75",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\n## Weighted and multiplicity-aware dependencies\n\nThe present calculus treats `depends u t` as a Boolean: a theorem either relies\non another or it does not. A natural and immediate",
+      "quality_score": 0.49552432432432436,
+      "sorry_count": 0,
+      "theorem_count": 93,
+      "timestamp": "2026-06-19T23:06:25",
+      "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8166
     }
   ],
-  "last_updated": "2026-06-19T21:19:06",
+  "last_updated": "2026-06-19T23:06:25",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "a0671e28",
-        "quality": 0.5303199999999999,
-        "theorems": 6,
-        "title": "Exponential generating functions induce a tropical valuation profile via coeffic"
-      },
-      {
         "cycle_id": "14435cc3",
         "quality": 0.6017600000000001,
         "theorems": 33,
@@ -3141,6 +3135,12 @@
         "quality": 0.45100000000000007,
         "theorems": 93,
         "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+      },
+      {
+        "cycle_id": "bf1e3b75",
+        "quality": 0.49552432432432436,
+        "theorems": 93,
+        "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
       }
     ],
     "Bridges": [
