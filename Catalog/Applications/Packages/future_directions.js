@@ -1034,6 +1034,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0116",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.958310+00:00",
+    "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
     "domains": [
       "Bridges",
@@ -2280,6 +2295,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every finite K5-free simple graph G on n vertices, assign weight 1/2 to every edge contained in a triangle and weight 1 to every other edge. Then G has a bipartition whose monochromatic edge-weight is at most n^2/16. Equivalently, deleting edges of total such weight at most n^2/16 always makes G bipartite. The balanced complete 4-partite graph shows that the constant 1/16 would be best possible.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2122",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20397v1",
+    "status": "available",
+    "timestamp": "2026-06-19T20:03:57.336500+00:00",
+    "title": "Weighted K5-free max-cut conjecture with triangle-discounted edges"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For every finite-dimensional vector space E over a finite field F and every rank r with 0 <= r <= dim E, the map sending a sparse-paving q-matroid M of rank r on E to its set of r-dimensional circuit-hyperplanes is a bijection onto the stable sets of the q-Johnson graph J_q(E,r), whose vertices are r-dimensional subspaces and whose edges join pairs with intersection dimension r-1. Equivalently, a set S of r-subspaces defines a sparse-paving q-matroid precisely when any two distinct members of S intersect in dimension at most r-2.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2123",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20348v1",
+    "status": "available",
+    "timestamp": "2026-06-19T20:04:48.178198+00:00",
+    "title": "Sparse-paving q-matroids are exactly stable sets in the q-Johnson graph"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -3216,21 +3261,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Library of Babel: Combinatorics of the Universal Library\n\nThis cycle added, in `Algebra/LibraryOfBabelProbability.lean`, a probabilistic\n**lower** bound on substring occurrence (complementing the existing union upper\nbound), the exact block-independence count, a coincidence-probability formula,\nand a \"Borges completeness\" limit theorem (any fixed text almost surely appears\nin a long enough random volume). Below are testable conjectures for follow-up.\n\n## Conjecture 1 \u2014 Two-sided sandwich and sharp asymptotics\nFor fixed `b \u2265 2`, `k \u2265 1` and pattern `p`, the existing bounds give\n`1 - (1 - b^{-k})^{\u230aL/k\u230b} \u2264 P_L(contains p) \u2264 (L-k+1)\u00b7b^{-k}`.\n**Conjecture:** `P_L(contains p) = 1 - exp(-(L-k+1) b^{-k}) + o(1)` in the regime\n`L b^{-k} \u2192 \u03bb` (a Poisson/Chen\u2013Stein limit for the number of occurrences).\n*Testable:* prove `expectedOccurrences \u2192 \u03bb` already follows from\n`expected_substring_count`; the next milestone is a total-variation bound between\nthe occurrence count and `Poisson \u03bb` via the Chen\u2013Stein method on the dependency\ngraph of overlapping windows.\n\n## Conjecture 2 \u2014 Variance and a second-moment lower bound\nDefine `V_L(p) = Var(occurrenceCount p)`. **Conjecture:**\n`V_L(p) = (L-k+1) b^{-k}(1 - b^{-k}) + 2\u00b7\u03a3_{1\u2264d<k} (overlap correlation term)`,\nwhere the overlap terms are governed by the autocorrelation (border/period\nstructure) of `p`. Consequence (Paley\u2013Zygmund): a lower bound on `P(contains p)`\nexpressed purely via the mean and variance, valid for *all* `L` (not just via\ndisjoint blocks). *Testable:* formalize `occurrenceCount` second moment as a\ndouble sum over position pairs and evaluate the covariance of `OccursAt i`,\n`OccursAt j` as a function of `|i-j|`.\n\n## Conjecture 3 \u2014 Pattern autocorrelation governs clustering\nPatterns with nontrivial self-overlap (e.g. `aa\u2026a`) cluster their occurrences,\ninflating the variance relative to overlap-free patterns. **Conjecture:** among\nall length-`k` patterns the overlap-free (\"bifix-free\") patterns minimize\n`Var(occurrenceCount)` and maximize `P(contains)` for every `L`. *Testable:*\nintroduce a `correlationPolynomial` of a pattern and prove monotonicity of the\nvariance in its coefficients; verify on `b=2, k=3` exhaustively.\n\n## Conjecture 4 \u2014 Coupon-collector for the whole library\nLet `T` be the number of i.i.d. uniform volumes drawn until *every* one of the\n`b^L` volumes has appeared at least once. **Conjecture:**\n`E[T] = b^L \u00b7 H_{b^L}` (harmonic-number coupon collector) and\n`T / (b^L log b^L) \u2192 1` in probability. *Testable:* this is the classical coupon\ncollector specialized to `N = b^L`; formalize `E[T] = N\u00b7H_N` and the\nconcentration `P(|T - N log N| > \u03b5N log N) \u2192 0`.\n\n## Conjecture 5 \u2014 Distinct k-grams in a single volume\nLet `D_L = #{distinct length-k substrings occurring in a random volume of length\nL}`. **Conjecture:** for fixed `k`, `E[D_L] = b^k (1 - (1 - b^{-k})^{L-k+1}) +\ncorrection`, and `D_L / b^k \u2192 1` once `L \u226b k b^k` (a single sufficiently long\nvolume already realizes the entire k-gram alphabet). *Testable:* `E[D_L]` is a\nsum over the `b^k` patterns of `P(contains pattern)`; combine the union upper\nbound and the aligned-block lower bound proved this cycle to sandwich `E[D_L]`\nand drive it to `b^k`.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2122",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "225644b1",
-    "status": "available",
-    "timestamp": "2026-06-19T19:02:43.179697+00:00",
-    "title": "This cycle added, in `Algebra/LibraryOfBabelProbability.lean`, a probabilistic"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3244,7 +3274,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "4906ce6b",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
     "domains": [
       "Novelty",
@@ -3254,7 +3284,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7158260869565218,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
@@ -4242,7 +4272,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "37233c11",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -4252,7 +4282,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.490561+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
@@ -4377,7 +4407,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
   },
   {
-    "consumed_by_exp_id": "17a89be9",
+    "consumed_by_exp_id": "c50363b9",
     "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
     "domains": [
       "Novelty",
