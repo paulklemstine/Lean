@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "f53b6be3",
     "filename": "topological_quantum_compiling_braid_groups_as_univ.json",
     "pkg_num": 198,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6543599999999999,
     "title": "Topological Quantum Compiling: A Non-Abelianity Certificate for Jones Braid Operators"
   },
   {
@@ -6070,8 +6070,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "topological_quantum_compiling_braid_groups_as_univ",
       "primary_domain": "Physics",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6543599999999999,
+      "quality": "partial",
       "shape": "diamond",
       "title": "Topological Quantum Compiling: A Non-Abelianity Certificate for Jones Braid Operators"
     }
