@@ -4216,11 +4216,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "875a328b",
       "depth_estimate": 3,
       "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
       "domain_bridges": [],
@@ -4230,7 +4230,7 @@
         "Logic"
       ],
       "id": "fd_0116",
-      "last_attempt_time": "2026-06-09T07:44:29.461868+00:00",
+      "last_attempt_time": "2026-06-19T05:58:12.222832+00:00",
       "last_reviewed_at": "2026-06-16T16:55:25.165652+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -4243,7 +4243,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-01T12:30:30.958310+00:00",
       "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
@@ -10902,7 +10902,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:26.503715+00:00",
       "title": "Sonic Mathematics: Counterpoint as Category Theory"
@@ -31156,7 +31156,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "in_progress",
+      "status": "completed",
       "thread_id": "",
       "timestamp": "2026-06-16T16:54:32.770267+00:00",
       "title": "Spectral Universality of LLM Weight Matrices: Random-Matrix Phase Transitions in"
@@ -33858,6 +33858,93 @@
       "thread_id": "",
       "timestamp": "2026-06-19T05:14:33.661749+00:00",
       "title": "Terminal Cycle Length in Four-Digit Kaprekar Dynamics Equals (B-1)/2 for Prime Bases"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "pestov_book",
+        "kpt"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "If the homeomorphism group of a continuum F is extremely amenable (i.e., satisfies the approximate Ramsey property of its projective Fraisse category), then its universal minimal flow is metrizable.",
+      "domain_bridges": [
+        "Mathematical Logic",
+        "Combinatorics"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "id": "fd_2091",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "universal_minimal_flow_metrizable : every F : Continuum, G : Homeo(F), if approximate_ramsey_property_of_F then is_metrizable(universal_minimal_flow G) := ... ",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Construct a projective Fraisse category with approximate Ramsey property and analyze the structure of its limit to demonstrate that the corresponding group action must preserve metrizability, leveraging existing characterizations of extreme amenability and Fraisse category properties.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20407v1",
+      "source_path": "http://arxiv.org/abs/2606.20407v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-19T05:52:14.123217+00:00",
+      "title": "Metrizability of Universal Minimal Flows for Extreme Amenable Homeomorphism Groups"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.AG",
+        "math.AC",
+        "math.CO"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "For every integer d ≥ 9, there exist two line arrangements of degree d in the complex projective plane with isomorphic intersection lattices but different graded Betti numbers of the minimal free resolution of their Milnor algebras (i.e., they form a Ziegler pair).",
+      "domain_bridges": [
+        "intersection lattice",
+        "Milnor algebra",
+        "graded Betti numbers",
+        "Jacobian syzygies"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Geometry"
+      ],
+      "id": "fd_2092",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem Ziegler_pair_exists {d : ℕ} (hd : 9 ≤ d) : ∃ (A B : LineArrangement ℂ d), IntersectionLattice A = IntersectionLattice B ∧ ¬ (GradedBettiNumbers (MilnorAlgebra A) = GradedBettiNumbers (MilnorAlgebra B)) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Proceed by induction on d. The base case d=9 is given by the classical Ziegler pair (known to satisfy (SPEC)). For the inductive step, given a Ziegler pair (A_d, B_d) of degree d with the same intersection lattice, construct a pair of degree d+1 by adding a generic line through a point of multiplicity two in the lattice, ensuring that the intersection lattice remains unchanged up to isomorphism and that the Milnor algebras acquire a predictable shift in their graded Betti numbers, which can be computed via the addition-restriction lemma for hyperplane arrangements. This preserves the non‑equality of the Betti numbers while preserving the lattice. Alternatively, one can use the fact that the moduli space of arrangements with a fixed lattice has positive dimension for d≥9, allowing a continuous deformation that changes the graded free resolution while keeping the lattice and the Hilbert function constant; the resulting endpoints give the desired pair.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20421v1",
+      "source_path": "http://arxiv.org/abs/2606.20421v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-19T05:58:07.510951+00:00",
+      "title": "Existence of Ziegler pairs for all line arrangement degrees at least nine"
     },
     {
       "ambition_level": "extension",
