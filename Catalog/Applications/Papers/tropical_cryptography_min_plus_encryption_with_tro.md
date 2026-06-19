@@ -1,60 +1,50 @@
-# Theorem Trace (internal anti-hallucination ledger)
+# Computational Evidence: Tropical Discrete Logarithm & Eigenvalue Additivity
 
-Source of truth: `Catalog/Tropical/EigenzeroNoLeak.lean` (extends
-`Catalog/Tropical/MinPlusAlgebra.lean`). Every claim in ARTICLE.md and
-RESEARCH_PAPER.md must map to one of the entries below. No theorem is
-paraphrased into a grander claim than its Lean statement.
+All computations performed in Lean over `ℚ` (exact arithmetic) to avoid
+floating-point error. Min-plus product `(A ⊗ B)_{ij} = min_k (A_{ik} + B_{kj})`,
+`tropMatPow A k := A^{⊗(k+1)}` (powers indexed from `A` itself at `k=0`,
+since no tropical identity exists over a field without `+∞`).
 
-## Definitions (from MinPlusAlgebra.lean)
+## Test matrix
 
-| Lean name | Statement | Used in |
-|---|---|---|
-| `tropMatMul` | `(A ⊗ B) i j = inf_k (A i k + B k j)` | Article §1, Paper §2 Def 1 |
-| `tropId` | `tropId n M i j = if i = j then 0 else M` | Paper §2 Def 2 |
-| `tropMatVecMul` | `(A ⊗ v) i = inf_k (A i k + v k)` | Article §1, Paper §2 Def 3 |
-| `IsTropicalEigenpair` | `∀ i, tropMatVecMul A v i = v i + lam` | Article §2, Paper §2 Def 4 |
-| `WeightedDigraph` | `weights`, `nonneg : 0 ≤ w i j`, `self_loop_zero : w i i = 0` | Article §3, Paper §2 Def 5 |
-| `MinPlusHash` | `compressor : Matrix (Fin m) (Fin n) ℝ`, `bounded` | Paper §2 Def 6 |
+`A : 3×3` with diagonal `2`, off-diagonal `10`; constant vector `v ≡ 5`.
+By the diagonal-eigenpair construction this gives a tropical eigenpair with
+eigenvalue `λ = 2` and eigenvector `v`.
 
-## Definition (from EigenzeroNoLeak.lean)
+## 1. Eigenvalue additivity under tropical power  `λ(A^{⊗m}) = m·λ(A)`
 
-| Lean name | Statement | Used in |
-|---|---|---|
-| `tropResidual` | `tropResidual A v i = tropMatVecMul A v i - v i` | Article §2, Paper §2 Def 7 |
+| power `tropMatPow A k` | true exponent `m=k+1` | predicted eigenvalue `m·2` | `mvm (A^{⊗m}) v` |
+|---|---|---|---|
+| `k=0` (`A^1`)  | 1 | 2 | `![7,7,7]` = `v+2`  ✓ |
+| `k=1` (`A^2`)  | 2 | 4 | `![9,9,9]` = `v+4`  ✓ |
+| `k=2` (`A^3`)  | 3 | 6 | `![11,11,11]` = `v+6` ✓ |
 
-## Theorems (from EigenzeroNoLeak.lean)
+The residual `(A^{⊗m} ⊗ v)_i − v_i` equals `m·λ` exactly, at **every** coordinate.
 
-| Lean name | Statement | Used in |
-|---|---|---|
-| `tropResidual_eq_eigenvalue` | eigenpair ⇒ `tropResidual A v i = lam` (every i) | Article §2, Paper Thm 1 |
-| `tropResidual_const` | eigenpair ⇒ `tropResidual A v i = tropResidual A v j` | Paper Cor 1 |
-| `tropical_eigenvalue_unique` | eigenpairs `(lam,v)`,`(mu,v)` ⇒ `lam = mu` | Article §2, Paper Thm 2 |
-| `eigenzero_iff_fixed` | `IsTropicalEigenpair A 0 v ↔ ∀ i, tropMatVecMul A v i = v i` | Article §3, Paper Thm 3 |
-| `eigenzero_no_leak` | eigenpair `(0,v)` ⇒ `tropResidual A v i = 0` (every i) | Article §3, Paper Thm 4 (MAIN) |
-| `eigenzero_iterate` | eigenpair `(0,v)` ⇒ `(tropMatVecMul A)^[k] v = v` | Paper Thm 5 |
-| `digraph_residual_nonpos` | weighted digraph ⇒ `tropResidual G.weights v i ≤ 0` | Paper Lemma 1 |
-| `digraph_eigenvalue_nonpos` | digraph eigenpair ⇒ `lam ≤ 0` | Article §3, Paper Thm 6 (boundary) |
-| `digraph_eigenzero_const` | constant vectors are digraph eigenpairs with `lam = 0` | Article §3, Paper Thm 7 |
+## 2. TDLP attack — exponent recovery
 
-## Theorems referenced from MinPlusAlgebra.lean (context, fully stated there)
+`(mvm (tropMatPow A 2) v 0 − v 0) / λ = (11 − 5)/2 = 3 = k+1`.
 
-| Lean name | Statement | Used in |
-|---|---|---|
-| `tropMatMul_assoc` | `(A⊗B)⊗C = A⊗(B⊗C)` | Article §1, Paper §2 |
-| `tropMatVecMul_shift` | `A ⊗ (v + c) = (A ⊗ v) + c` | Article §3, Paper Thm 8-context |
-| `trop_preimage_nonunique` | many `(A,B)` give same `A⊗B` | Article §1, Paper §6 |
-| `tropMatVecMul_lipschitz` | matrix-vector product 1-Lipschitz (sup norm) | Paper §6 future work |
-| `MinPlusHash.eval_shift` | hash translation-equivariant | Paper §5 |
+The secret exponent is recovered in closed form from a single eigenvalue
+measurement whenever `λ ≠ 0`. This **refutes** the security conjecture
+(TDLP hard) in every instance possessing a nonzero-eigenvalue eigenvector.
 
-## Section 4 results listed in the EigenzeroNoLeak.lean module docstring
-(stated at the level of the docstring summary only; exact Lean statements
-not reproduced verbatim because the displayed file is truncated at §4):
+## 3. Diffie–Hellman correctness (power commutativity)
 
-- `eigenpair_shift_invariant` / `eigenzero_shift_invariant` — shift
-  equivariance of the spectrum.
-- `eigenzero_residual_indistinguishable` /
-  `eigenzero_residual_uninformative` — eigenvector indistinguishability at λ = 0.
-- `minPlusHash_leak_only_offset` — the min-plus hash leaks at most the global offset.
+`decide (tropMatPow (tropMatPow A 1) 2 = tropMatPow (tropMatPow A 2) 1) = true`.
+Alice's `(A^{⊗a})^{⊗b}` equals Bob's `(A^{⊗b})^{⊗a}` — the shared key is well defined.
 
-These are described in prose only in terms of the docstring summary, with no
-invented formal statement.
+## 4. Power multiplicativity
+
+`decide (tropMatMul (tropMatPow A 1) (tropMatPow A 2) = tropMatPow A 4) = true`,
+i.e. `A^{⊗2} ⊗ A^{⊗3} = A^{⊗5}`  (indices `1,2 ↦ 4` under the `k ↦ k+1` shift).
+
+## Counterexample hunt
+
+- Conjecture "TDLP is hard": **FALSE** for `λ ≠ 0` (Section 2 above; formalized as
+  `tdlp_recover_exponent` and the concrete `tdlp_break_concrete`).
+- Boundary `λ = 0`: attack divides by zero and recovers nothing — consistent with
+  `Tropical.EigenzeroNoLeak.eigenzero_no_leak`. The hardness, where it exists at all,
+  lives **only** at the degenerate boundary eigenvalue.
+- Eigenvalue additivity `λ(A^{⊗m}) = m·λ`: no counterexample; it is an unconditional
+  theorem given any eigenpair (proved by induction via translation equivariance).

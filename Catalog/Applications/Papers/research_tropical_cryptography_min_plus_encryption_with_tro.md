@@ -1,388 +1,421 @@
-# The Boundary Theorem for Tropical Eigenvalues and the No-Leak Property at λ = 0
+# Eigenvalue Additivity Breaks the Tropical Discrete Logarithm
 
 **Author:** Aristotle
 **Date:** 2026-06-19
-**Domain:** Tropical algebra, post-quantum cryptanalysis, machine-learning robustness
-
----
+**Domain:** Logic (Tropical algebra / Post-quantum cryptanalysis)
 
 ## Abstract
 
-Tropical (min-plus) linear algebra replaces ordinary addition by `min` and
-ordinary multiplication by `+`, turning matrix–vector multiplication into a
-shortest-path computation. This algebra underlies a family of proposed
-post-quantum cryptographic schemes whose security rests on the hardness of a
-*tropical discrete logarithm problem* (TDLP): recover the exponent `k` from a
-public matrix `A` and a tropical power `A⊗ᵏ`. The canonical attack exploits the
-additivity of tropical eigenvalues under powers, `λ(A⊗ᵏ) = k·λ(A)`, which yields
-`k = λ(A⊗ᵏ)/λ(A)` whenever `λ(A) ≠ 0`. We give a rigorous account of the single
-value that defeats this attack, the **boundary eigenvalue** `λ = 0`. We introduce
-the **tropical residual**, the one honest subtraction available in min-plus
-algebra, prove that it equals the eigenvalue at every coordinate, and prove the
-central **no-leak theorem**: at `λ = 0` the residual vanishes identically, so the
-eigenvalue side-channel is silent. We then establish a **boundary theorem**: for
-any weighted digraph with non-negative weights and zero self-loops, every
-tropical eigenvalue satisfies `λ ≤ 0`, and `λ = 0` is attained by all constant
-vectors. Combined with the shift-equivariance of tropical maps, these results
-show that boundary eigenvectors are indistinguishable through the residual
-channel up to a single global offset. All results have been formalized and
-machine-checked. We close with proof sketches, algorithms, a worked numerical
-demonstration, and a discussion of how the boundary analysis extends to generic
-secrets, noisy observations, and formal hardness reductions.
+We analyze the security of the *tropical Diffie–Hellman* key exchange and its
+underlying hardness assumption, the *Tropical Discrete Logarithm Problem*
+(TDLP): given a tropical (min-plus) matrix `A` and a tropical power
+`B = A^{⊗m}`, recover the exponent `m`. The protocol's correctness rests on the
+commutativity of tropical powers, `(A^{⊗a})^{⊗b} = A^{⊗ab}`, while its
+conjectured security rests on the assumed one-wayness of tropical
+exponentiation. We refute that conjecture. The key structural fact is that the
+tropical eigenvalue is a homomorphism from tropical exponentiation to ordinary
+scalar multiplication: if `(λ, v)` is a tropical eigenpair of `A`, then
+`(m·λ, v)` is a tropical eigenpair of `A^{⊗m}`, so `λ(A^{⊗m}) = m·λ(A)`. This
+*eigenvalue additivity* lets an adversary read the secret exponent off the
+public power in closed form, `m = λ(B)/λ(A)`, whenever `λ(A) ≠ 0`. We prove the
+additivity identity unconditionally, derive the closed-form recovery, exhibit an
+explicit `2 × 2` instance in which every exponent leaks exactly, and isolate the
+sole boundary `λ = 0` where the attack carries no information — showing that on
+this boundary the power map degenerates to the identity on the eigen-orbit, so
+the scheme is either leaky or trivial. All results have been formalized and
+machine-checked.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Tropical arithmetic and shortest paths
+### 1.1 Motivation
 
-The **tropical (min-plus) semiring** is the set `ℝ` (often `ℝ ∪ {∞}`) equipped
-with `a ⊕ b := min(a,b)` as "addition" and `a ⊙ b := a + b` as "multiplication".
-The additive identity is `+∞` and the multiplicative identity is `0`. Lifting
-these operations to matrices produces an algebra whose products compute optimal
-paths: the `(i,j)` entry of a tropical matrix product is the minimum total weight
-of a two-stage route from `i` to `j`. This is why min-plus algebra is the native
-setting of dynamic programming, the Bellman–Ford and Floyd–Warshall algorithms,
-discrete-event systems, and scheduling.
+Public-key cryptography is built on computational asymmetry: a function that is
+easy to evaluate but hard to invert. The two pillars of classical
+asymmetry — integer factorization and the discrete logarithm in finite
+groups — both succumb to Shor's quantum algorithm, motivating an active search
+for *post-quantum* alternatives grounded in different mathematical structures.
 
-### 1.2 Tropical cryptography and the discrete logarithm
+Tropical algebra has been proposed as one such foundation. The tropical (min-
+plus) semiring replaces ordinary addition by `min` and ordinary multiplication
+by `+`. Tropical matrix multiplication coincides with shortest-path /
+dynamic-programming computation, and the inversion of tropical matrix products
+is related to combinatorial problems believed to be hard. Several protocols have
+been proposed on this basis, including a tropical analog of the Diffie–Hellman
+key exchange whose security reduces to the *Tropical Discrete Logarithm Problem*
+(TDLP).
 
-The computational asymmetry of tropical products — `O(n³)` to compute forward,
-provably many-to-one to invert — has motivated proposals to base post-quantum
-cryptography on min-plus operations. A representative construction is the
-tropical Diffie–Hellman key exchange: a public matrix `A` is fixed; Alice
-publishes `A⊗ᵃ` and Bob publishes `A⊗ᵇ` for secret exponents `a, b`; the shared
-key is `A⊗ᵃᵇ`. An eavesdropper must solve the **tropical discrete logarithm
-problem** (TDLP): given `(A, A⊗ᵏ)`, recover `k`.
+### 1.2 Background on tropical algebra
 
-### 1.3 The eigenvalue attack and the boundary
+The tropical semiring arises naturally wherever "cost of a path is the sum of
+edge costs, and the best path minimizes that cost." Replacing the pair
+`(+, ·)` of ordinary arithmetic by `(min, +)` turns the algebra of weighted
+graphs into linear algebra: the `(i,j)` entry of the `k`-fold tropical power
+`A^{⊗k}` is the minimum total weight of a length-`k` walk from `i` to `j`, and
+the Kleene star `A^* = ⊕_k A^{⊗k}` is the all-pairs shortest-path matrix.
+Tropical linear algebra is therefore the algebraic backbone of dynamic
+programming, scheduling (max-plus for "latest completion time"), discrete-event
+systems, and the combinatorics of tropical geometry.
 
-Tropical matrices possess eigenvalues in the min-plus sense, and these
-eigenvalues are *additive under matrix powers*: `λ(A⊗ᵏ) = k·λ(A)`. Hence a single
-eigenvalue computation breaks the TDLP via `k = λ(A⊗ᵏ)/λ(A)` — **unless `λ(A) =
-0`**. The boundary value `λ = 0` is therefore the crux of the security analysis.
-This paper provides a complete, formally verified treatment of that boundary: a
-sharp characterization of when `λ = 0` occurs, a proof that the natural
-observable (the residual) carries *no* information there, and a structural
-theorem locating the entire spectrum of graph-based constructions at or below the
-boundary.
+Two features distinguish the tropical setting from the classical one and shape
+every result below. First, there is **no subtraction**: `(ℝ, min, +)` is a
+semiring, not a ring, so the only meaningful "difference" is the per-coordinate
+residual we define in §3.2. Second, the spectral theory is **governed by the
+underlying graph**: the tropical eigenvalue of an irreducible matrix is its
+minimum cycle mean, a polynomial-time-computable quantity, and the eigenvectors
+are determined by parametric shortest paths. It is precisely this transparency of
+the spectrum — a feature, not a bug, for optimization — that turns out to be
+fatal for cryptography.
+
+### 1.3 The protocol and its security model
+
+The tropical Diffie–Hellman key exchange publishes a tropical matrix `A`. Alice
+samples a secret integer `a` and publishes `A^{⊗a}`; Bob samples `b` and
+publishes `A^{⊗b}`; the shared key is `A^{⊗ab}`, which both compute by
+`(A^{⊗b})^{⊗a} = (A^{⊗a})^{⊗b}` (the commutativity `tropMatPow_comm`). The
+adversary observes `(A, A^{⊗a}, A^{⊗b})` and aims to compute the shared key. The
+*key-recovery* security of the protocol reduces to the TDLP: if an adversary can
+extract `a` from `(A, A^{⊗a})`, they reconstruct the shared key by computing
+`(A^{⊗b})^{⊗a}`. We work in this standard passive (eavesdropping) model and show
+the TDLP is solvable in polynomial time on essentially all instances, which
+breaks key recovery and hence the protocol.
 
 ### 1.4 Contributions
 
-1. The **tropical residual** `tropResidual(A,v)ᵢ = (A ⊗ v)ᵢ − vᵢ`, the unique
-   meaningful subtraction in min-plus algebra and the natural side-channel
-   observable.
-2. **Theorem 1**: the residual equals the eigenvalue at every coordinate.
-3. **Theorem 2**: the eigenvalue is uniquely determined by the eigenvector.
-4. **Theorem 3**: `λ = 0` ⇔ the eigenvector is a tropical fixed point.
-5. **Theorem 4 (no-leak, main result)**: at `λ = 0` the residual vanishes
-   identically.
-6. **Theorem 6 (boundary theorem)**: for non-negative zero-self-loop digraphs,
-   every eigenvalue satisfies `λ ≤ 0`; **Theorem 7**: the value `0` is attained
-   by all constant vectors.
-7. Consequences for **eigenvector indistinguishability** under the residual
-   channel, up to the global shift symmetry of tropical maps.
+We give a complete and self-contained cryptanalysis of the TDLP via tropical
+spectral theory. Our contributions are:
+
+1. **Eigenvalue additivity (`eigenvalue_additivity`).** A clean proof that
+   tropical exponentiation acts on the spectrum by ordinary scaling:
+   `(λ, v)` eigenpair of `A` ⟹ `(m·λ, v)` eigenpair of `A^{⊗m}`.
+
+2. **Closed-form exponent recovery (`tdlp_recover_exponent`).** Whenever the
+   public base admits an eigenvector with nonzero eigenvalue, the secret
+   exponent is `m = λ(B)/λ(A)`, computable in polynomial time.
+
+3. **An explicit total break (`tdlp_break_concrete`).** A `2 × 2` instance in
+   which every exponent leaks exactly, verified as an identity for all `m`.
+
+4. **The boundary dichotomy (`tdlp_boundary_no_leak`).** At `λ = 0` the residual
+   vanishes for every exponent, so the attack is uninformative; but then the
+   power map is the identity on the eigen-orbit, collapsing the key space. The
+   scheme is thus either leaky (`λ ≠ 0`) or trivial (`λ = 0`).
+
+All statements have been formalized and machine-verified; this paper presents
+the mathematics and proof sketches.
 
 ---
 
-## 2. Definitions
+## 2. Preliminaries: the tropical semiring and tropical matrices
 
-Throughout, `n ≥ 1`, indices range over `Fin n`, and matrices are real-valued
-`n × n`. We write `inf'` for the (finite, nonempty) infimum.
+### 2.1 The min-plus semiring
 
-**Definition 1 (tropical matrix product, `tropMatMul`).**
-For matrices `A, B`,
-`(A ⊗ B)(i,j) = min_{k} ( A(i,k) + B(k,j) )`.
-This costs `O(n³)` arithmetic operations and computes the minimal two-hop path
-weight from `i` to `j`. It is associative (`tropMatMul_assoc`):
-`(A ⊗ B) ⊗ C = A ⊗ (B ⊗ C)`.
+The **tropical (min-plus) semiring** is the structure `(ℝ, ⊕, ⊙)` where
+`x ⊕ y := min(x, y)` and `x ⊙ y := x + y`. (Over `ℝ ∪ {+∞}` the additive
+identity is `+∞` and the multiplicative identity is `0`; for the spectral
+analysis below we work over `ℝ`.) Tropical "multiplication" is associative and
+commutative with unit `0`, and `min` distributes over `+`, so this is a
+commutative idempotent semiring.
 
-**Definition 2 (tropical identity, `tropId`).**
-`tropId(n, M)(i,j) = 0` if `i = j`, else `M`. For `M` large enough relative to
-the entries of `A`, `tropId` acts as a two-sided identity for `⊗`.
+### 2.2 Tropical matrix and matrix–vector products
 
-**Definition 3 (tropical matrix–vector product, `tropMatVecMul`).**
-For a matrix `A` and vector `v`,
-`(A ⊗ v)ᵢ = min_{k} ( A(i,k) + v(k) )`.
+For `A, B : Matrix (Fin n) (Fin n) ℝ`, the **tropical matrix product** is
 
-**Definition 4 (tropical eigenpair, `IsTropicalEigenpair`).**
-A pair `(λ, v)` with `λ ∈ ℝ`, `v : Fin n → ℝ`, is a tropical eigenpair of `A`
-iff
-`(A ⊗ v)ᵢ = vᵢ + λ for all i`.
-This is the min-plus analogue of `A v = λ v`.
+> **Definition (`tropMatMul`).**
+> `(A ⊗ B)(i, j) = min over k of ( A(i,k) + B(k,j) )`.
 
-**Definition 5 (weighted digraph, `WeightedDigraph`).**
-A weighted digraph on `n` vertices is a weight matrix `W` together with the
-hypotheses
-`nonneg : ∀ i j, 0 ≤ W(i,j)` and `self_loop_zero : ∀ i, W(i,i) = 0`.
-Edge weights are non-negative and staying put is free.
+Equivalently, replacing `(Σ, ·)` by `(min, +)` in the usual matrix product.
+Forward evaluation costs `O(n³)` arithmetic operations. The product is
+associative:
 
-**Definition 6 (min-plus hash, `MinPlusHash`).**
-A min-plus hash is an `m × n` compressor matrix `H` with bounded entries; it acts
-on a vector `v` by `H.eval(v)ᵢ = min_k ( H(i,k) + v(k) )`. It is `1`-Lipschitz in
-the sup norm and translation-equivariant: `H.eval(v + c) = H.eval(v) + c`
-(`MinPlusHash.eval_shift`).
+> **Lemma (`tropMatMul_assoc`).** `(A ⊗ B) ⊗ C = A ⊗ (B ⊗ C)`, both sides
+> equal to `min over (k,l) of ( A(i,k) + B(k,l) + C(l,j) )`.
 
-**Definition 7 (tropical residual, `tropResidual`).**
-For a matrix `A` and vector `v`,
-`tropResidual(A, v)ᵢ = (A ⊗ v)ᵢ − vᵢ`.
-This is the only honest coordinatewise subtraction available in min-plus algebra,
-and it is precisely the signal an adversary measures when probing a tropical
-eigensystem.
+The **tropical identity** is `tropId(M)(i,j) = 0` if `i = j` and `M` otherwise;
+for `M` large enough relative to the entries of `A` it satisfies
+`tropId(M) ⊗ A = A` and `A ⊗ tropId(M) = A`
+(`tropId_mul_of_bound`, `mul_tropId_of_bound`).
 
----
+The **tropical matrix–vector product** is
 
-## 3. Main Results
+> **Definition (`tropMatVecMul`).**
+> `(A ⊗ v)(i) = min over k of ( A(i,k) + v(k) )`.
 
-### 3.1 The residual encodes the eigenvalue
+It is monotone in `v` (`tropMatVecMul_monotone`) and, decisively for what
+follows, **translation equivariant**:
 
-**Theorem 1 (`tropResidual_eq_eigenvalue`).**
-*If `(λ, v)` is a tropical eigenpair of `A`, then for every coordinate `i`,*
-`tropResidual(A, v)ᵢ = λ.`
+> **Lemma (`tropMatVecMul_shift`).** For any constant `c`,
+> `A ⊗ (v + c·1) = (A ⊗ v) + c·1`, where `c·1` is the all-`c` vector.
+>
+> *Proof sketch.* Each coordinate is `min_k (A(i,k) + v(k) + c) = (min_k
+> (A(i,k) + v(k))) + c`, since adding a constant commutes with `min`. ∎
 
-*Proof sketch.* By Definition 4, `(A ⊗ v)ᵢ = vᵢ + λ`. Subtracting `vᵢ` from both
-sides gives `(A ⊗ v)ᵢ − vᵢ = λ`, which is the residual by Definition 7. ∎
+This is the tropical analog of linearity in the scalar `c` (tropical "scalar
+multiplication" is ordinary addition of a constant), and it is the structural
+seed of eigenvalue additivity.
 
-**Corollary 1 (`tropResidual_const`).**
-*For an eigenpair `(λ, v)` the residual is independent of the coordinate:*
-`tropResidual(A, v)ᵢ = tropResidual(A, v)ⱼ` *for all `i, j`.* The residual signal
-contains no positional information; it is a single scalar repeated across
-coordinates. (Immediate from Theorem 1, since both sides equal `λ`.)
+### 2.3 Tropical matrix powers
 
-**Theorem 2 (`tropical_eigenvalue_unique`).**
-*If `(λ, v)` and `(μ, v)` are both tropical eigenpairs of `A` (same eigenvector),
-then `λ = μ`.*
+The **tropical power** `A^{⊗m}` is the `m`-fold tropical product of `A` with
+itself. We use the convention, matching the formalization, that `tropMatPow A k`
+denotes `A^{⊗(k+1)}` (i.e. `k` extra multiplications on top of `A`). Powers obey
+the expected exponent laws:
 
-*Proof sketch.* Evaluate both eigenpair relations at coordinate `0` (which exists
-since `n ≥ 1`): `v₀ + λ = (A ⊗ v)₀ = v₀ + μ`, hence `λ = μ`. ∎
+> **Power multiplicativity.** `A^{⊗a} ⊗ A^{⊗b} = A^{⊗(a+b)}`.
+>
+> **Commutativity (`tropMatPow_comm`).** `(A^{⊗a})^{⊗b} = (A^{⊗b})^{⊗a} =
+> A^{⊗ab}`.
 
-### 3.2 The boundary eigenvalue λ = 0
+Powers act on vectors as iterated dynamics, the tropical version of `A^m v =
+A(A(... A v))`:
 
-**Theorem 3 (`eigenzero_iff_fixed`).**
-*`(0, v)` is a tropical eigenpair of `A` if and only if `v` is a tropical fixed
-point of `A`, i.e. `(A ⊗ v)ᵢ = vᵢ` for all `i`.*
+> **Lemma (`tropMatVecMul_tropMatPow`).** `A^{⊗(k+1)} ⊗ v = (A ⊗ ·)^[k+1] v`,
+> i.e. acting once with the `(k+1)`-th power equals iterating the action `k+1`
+> times.
 
-*Proof sketch.* Unfold Definition 4 with `λ = 0`: the relation `(A ⊗ v)ᵢ = vᵢ +
-0` is literally `(A ⊗ v)ᵢ = vᵢ`. ∎
-
-**Theorem 4 (no-leak, main result, `eigenzero_no_leak`).**
-*If `(0, v)` is a tropical eigenpair of `A`, then for every coordinate `i`,*
-`tropResidual(A, v)ᵢ = 0.`
-
-*Proof sketch.* Apply Theorem 1 with `λ = 0`. ∎
-
-Despite its one-line proof, Theorem 4 is the security-theoretic crux. The
-residual is the canonical observable of an eigenvalue side-channel; at the
-boundary it is identically zero, so the observable reveals nothing — neither the
-value of `λ` (which is zero) nor any structure of the secret eigenvector `v`.
-
-**Theorem 5 (`eigenzero_iterate`).**
-*If `(0, v)` is a tropical eigenpair of `A`, then for every `k ∈ ℕ`,*
-`(A ⊗ ·)^[k] (v) = v,`
-*i.e. iterating the tropical map fixes `v`.*
-
-*Proof sketch.* Induction on `k`. The base case is trivial. For the step, use the
-iterate identity `f^[k+1] = f ∘ f^[k]`, apply the induction hypothesis to reduce
-to one application of the map, and invoke Theorem 3 (fixed-point characterization)
-coordinatewise. ∎
-
-Theorem 5 shows that no eigenvalue "leaks" into the growth of iterates at the
-boundary: the orbit is constant, so observing many rounds yields no additional
-information.
-
-### 3.3 The boundary theorem for weighted digraphs
-
-**Lemma 1 (`digraph_residual_nonpos`).**
-*For a weighted digraph `G` (Definition 5) and any vector `v`, the residual is
-non-positive at every coordinate:*
-`tropResidual(G.weights, v)ᵢ ≤ 0.`
-
-*Proof sketch.* By definition `(G.weights ⊗ v)ᵢ = min_k (W(i,k) + v(k)) ≤ W(i,i)
-+ v(i) = 0 + v(i) = v(i)`, using the candidate `k = i` and the zero self-loop
-`W(i,i) = 0`. Subtracting `v(i)` gives a non-positive residual. ∎
-
-**Theorem 6 (boundary theorem, `digraph_eigenvalue_nonpos`).**
-*Every tropical eigenvalue of a weighted digraph (non-negative weights, zero
-self-loops) satisfies `λ ≤ 0`.*
-
-*Proof sketch.* Let `(λ, v)` be an eigenpair. By Theorem 1, `λ =
-tropResidual(G.weights, v)₀`. By Lemma 1 that residual is `≤ 0`. Hence `λ ≤ 0`.
-∎
-
-Thus `λ = 0` is the upper boundary of the tropical spectrum of any such graph —
-the min-plus analogue of an upper bound on the spectral radius. The non-negative
-weights are not used directly in the eigenvalue bound (the zero self-loop alone
-forces the residual upper bound); they are part of the graph model and guarantee
-the value `0` is attained, as the next theorem shows.
-
-**Theorem 7 (boundary attained, `digraph_eigenzero_const`).**
-*For a weighted digraph `G` and any constant `c`, the constant vector `v ≡ c` is a
-tropical eigenvector with eigenvalue `0`:* `IsTropicalEigenpair(G.weights, 0,
-(fun _ => c))`.
-
-*Proof sketch.* Compute `(G.weights ⊗ v)ᵢ = min_k (W(i,k) + c)`. The upper bound
-`≤ c` follows from `k = i` and `W(i,i) = 0`. The lower bound `≥ c` follows because
-`W(i,k) + c ≥ c` for all `k` by non-negativity of the weights. Hence `(G.weights
-⊗ v)ᵢ = c = vᵢ + 0`. ∎
-
-Theorems 6 and 7 together pin the picture: the spectrum lies in `(−∞, 0]`, the
-ceiling `0` is always realized (by constant vectors), and only there does the
-residual channel go silent (Theorem 4).
-
-### 3.4 Shift symmetry and indistinguishability
-
-Tropical maps are equivariant under the global additive shift, the min-plus
-"scalar action": `(A ⊗ (v + c))ᵢ = (A ⊗ v)ᵢ + c` (`tropMatVecMul_shift`).
-Consequently:
-
-- The eigenpair relation is preserved under shifting the eigenvector by any
-  constant; an eigenvector is determined only up to a global offset
-  (*shift-invariance of the spectrum*).
-- At the boundary `λ = 0`, any two fixed-point eigenvectors — and any shifted
-  copies — yield the **identically zero** residual signature (Theorem 4). An
-  adversary measuring residuals cannot distinguish among them
-  (*eigenvector indistinguishability at the boundary*).
-- Lifting this to the min-plus hash (Definition 6), the translation-equivariance
-  `H.eval(v + c) = H.eval(v) + c` shows that the hash of a boundary eigenvector
-  leaks **at most** the single global offset constant and nothing about the
-  shape of the secret.
-
-These three statements correspond to the Section-4 results of the formal
-development (`eigenpair_shift_invariant` / `eigenzero_shift_invariant`,
-`eigenzero_residual_indistinguishable` / `eigenzero_residual_uninformative`,
-`minPlusHash_leak_only_offset`); they are stated here at the level of their
-formal summaries.
+Repeated squaring computes `A^{⊗m}` in `O(n³ log m)` time, so the forward
+direction of the protocol is efficient for very large exponents.
 
 ---
 
-## 4. Algorithms
+## 3. Tropical spectral theory
 
-### 4.1 Tropical matrix power by repeated squaring
+### 3.1 Eigenpairs
 
-The forward direction of the TDLP. Computing `A⊗ᵏ` costs `O(n³ log k)`.
+> **Definition (`IsTropicalEigenpair`).** A pair `(λ, v)` with `λ ∈ ℝ` and
+> `v : Fin n → ℝ` is a **tropical eigenpair** of `A` if
+> `(A ⊗ v)(i) = v(i) + λ` for every `i`.
 
-```
-function TropicalPower(A, k):
-    # P accumulates the result; B is the running square
-    P ← TropicalIdentity(n)          # 0 on diagonal, +∞ off diagonal
-    B ← A
-    while k > 0:
-        if k is odd:  P ← TropMatMul(P, B)
-        B ← TropMatMul(B, B)
-        k ← k // 2
-    return P
-```
+This is the min-plus analog of `A v = λ v`: tropical multiplication by the scalar
+`λ` is addition of `λ` to every coordinate.
 
-### 4.2 Tropical eigenvalue via the residual (the attack)
+Eigenpairs are abundant. A simple sufficient criterion:
 
-For an eigenvector `v`, the eigenvalue is read off any coordinate of the residual
-(Theorem 1); for a generic probe vector one averages the residual or uses the
-maximal cycle mean. The attack on the TDLP divides eigenvalues:
+> **Lemma (`tropical_eigenpair_from_diagonal`).** If `A` has constant diagonal
+> `A(i,i) = d` for all `i`, and `A(i,j) + v(j) ≥ v(i) + d` for all `i, j`, then
+> `(d, v)` is a tropical eigenpair of `A`.
+>
+> *Proof sketch.* For each `i`, the term `k = i` gives `A(i,i) + v(i) = v(i) +
+> d`, so the minimum is `≤ v(i) + d`; the off-diagonal hypothesis gives every
+> term `≥ v(i) + d`, so the minimum equals `v(i) + d`. ∎
 
-```
-function TDLPviaEigenvalue(A, B):     # B = A^{⊗k}, recover k
-    λA ← TropicalEigenvalue(A)
-    λB ← TropicalEigenvalue(B)
-    if λA = 0:  return FAIL           # boundary: no-leak (Theorem 4)
-    return round(λB / λA)
-```
+In particular the smallest example, the diagonal-`1`, off-diagonal-`100`
+`2 × 2` matrix with `v = (0,0)`, has eigenvalue `λ = 1` (used in §5).
 
-The `λA = 0` branch is exactly the regime where Theorem 4 guarantees the residual
-channel is silent, and the attack provably cannot proceed.
+### 3.2 The residual and uniqueness
 
-### 4.3 Residual / leakage probe
+Tropical algebra has no general subtraction, but the per-coordinate **residual**
+`tropResidual A v i := (A ⊗ v)(i) − v(i)` is meaningful and, for an eigenpair,
+recovers the eigenvalue at every coordinate (`tropResidual_eq_eigenvalue`). It
+follows that the eigenvalue is uniquely determined by the eigenvector
+(`tropical_eigenvalue_unique`): if `(λ, v)` and `(μ, v)` are both eigenpairs then
+`λ = μ`.
 
-```
-function Residual(A, v):
-    return [ TropMatVecMul(A, v)[i] - v[i]  for i in 0..n-1 ]
-```
+### 3.3 Shift invariance
 
-By Theorem 1 every entry equals `λ` on an eigenvector; by Theorem 4 every entry
-is `0` at the boundary.
+Translation equivariance lifts to the spectrum:
+
+> **Lemma (`eigenpair_shift_invariant`).** If `(λ, v)` is an eigenpair of `A`,
+> so is `(λ, v + c·1)` for any constant `c`.
+>
+> *Proof sketch.* Apply `tropMatVecMul_shift`: `A ⊗ (v + c) = (A ⊗ v) + c =
+> (v + λ) + c = (v + c) + λ`. ∎
+
+Thus an eigenvector is only ever determined up to a global additive offset.
 
 ---
 
-## 5. Applications
+## 4. Main results: eigenvalue additivity and the attack
 
-- **Cryptanalysis (primary).** The boundary theorem maps the attack surface of
-  tropical Diffie–Hellman: the eigenvalue division attack (Algorithm 4.2)
-  succeeds for `λ ≠ 0` and is provably defeated at `λ = 0` (Theorem 4). Because
-  graph-based constructions accumulate eigenvectors at the boundary (Theorems
-  6–7), the boundary is the natural design target for resistant secrets.
+### 4.1 Iterating the action on an eigenvector
 
-- **Side-channel resistance.** Theorem 4 is a no-leak statement for the residual
-  observable: the canonical side-channel reveals neither the eigenvalue nor the
-  secret eigenvector at the boundary. Theorem 5 extends this across many
-  iterations.
+> **Theorem 1 (`tropMatVecMul_iterate_eigen`).** Let `(λ, v)` be a tropical
+> eigenpair of `A`. Then for every `m ∈ ℕ` and every coordinate `i`,
+> `((A ⊗ ·)^[m] v)(i) = v(i) + m·λ`.
+>
+> *Proof sketch.* Induction on `m`. The base case `m = 0` is `v(i) = v(i)`. For
+> the step, assume `(A ⊗ ·)^[m] v = v + m·λ` (as functions). Then
+> `(A ⊗ ·)^[m+1] v = A ⊗ (v + m·λ)`, and by translation equivariance
+> (`tropMatVecMul_shift`) this equals `(A ⊗ v) + m·λ = (v + λ) + m·λ = v +
+> (m+1)·λ`, using the eigenpair relation `A ⊗ v = v + λ`. ∎
 
-- **Certified ML robustness.** The same min-plus operations serve as neural
-  network layers; the `1`-Lipschitz bound for `tropMatVecMul` and the min-plus
-  hash give certified robustness radii. The shift-equivariance is the tropical
-  analogue of layer linearity.
+### 4.2 Eigenvalue additivity
+
+> **Theorem 2 (`eigenvalue_additivity`).** If `(λ, v)` is a tropical eigenpair
+> of `A`, then `((k+1)·λ, v)` is a tropical eigenpair of `A^{⊗(k+1)} =
+> tropMatPow A k`, for every `k ∈ ℕ`. Equivalently, `λ(A^{⊗m}) = m·λ(A)`.
+>
+> *Proof sketch.* By `tropMatVecMul_tropMatPow`, acting with `A^{⊗(k+1)}` on `v`
+> equals iterating the action `k+1` times, which by Theorem 1 equals
+> `v + (k+1)·λ`. That is exactly the eigenpair relation for eigenvalue
+> `(k+1)·λ`. ∎
+
+This is the crux. The map `A ↦ λ(A)` is a **homomorphism** from the monoid of
+tropical powers under `⊗` to `(ℝ, +)` scaled by the exponent: tropical
+exponentiation is converted into ordinary multiplication of the eigenvalue by the
+exponent. A one-way function must lack precisely this kind of transparent
+structure.
+
+### 4.3 The TDLP attack
+
+> **Theorem 3 (`tdlp_recover_exponent`).** Let `(λ, v)` be a tropical eigenpair
+> of `A` with `λ ≠ 0`, and let `B = A^{⊗(k+1)} = tropMatPow A k`. Then for every
+> coordinate `i`,
+> `((B ⊗ v)(i) − v(i)) / λ = k + 1`.
+> That is, the secret exponent is recovered in closed form as
+> `m = (residual of B on v) / λ = λ(B)/λ(A)`.
+>
+> *Proof sketch.* By Theorem 2, `(B ⊗ v)(i) = v(i) + (k+1)·λ`, so the residual is
+> `(k+1)·λ`; dividing by `λ ≠ 0` gives `k+1`. ∎
+
+**Algorithmic form of the attack.** Given the public `(A, B)`:
+
+1. Compute a tropical eigenvalue `λ = λ(A)` of the base. This is the minimum mean
+   cycle of the weighted digraph of `A`, computable in polynomial time (e.g.
+   Karp's algorithm, `O(n·E)`), together with an eigenvector `v`.
+2. Compute the residual `(B ⊗ v)(i) − v(i)` for any `i`; by additivity it equals
+   `m·λ`.
+3. Output `m = ((B ⊗ v)(i) − v(i)) / λ`.
+
+The total cost is dominated by the eigenvalue computation and one tropical
+matrix–vector product, both polynomial in `n`. The conjectured exponential
+hardness of the TDLP is therefore false on every instance with `λ(A) ≠ 0`.
+
+### 4.4 An explicit total break
+
+> **Theorem 4 (`tdlp_break_concrete`).** Let `A` be the `2 × 2` tropical matrix
+> with `A(i,i) = 1` and `A(i,j) = 100` for `i ≠ j`, and let `v = (0, 0)`. Then
+> for every `k ∈ ℕ`,
+> `(A^{⊗(k+1)} ⊗ v)(0) − 0 = k + 1`.
+>
+> *Proof sketch.* `v = (0,0)` is an eigenvector with eigenvalue `λ = 1`
+> (`min(1, 100) = 1` in each coordinate). Apply Theorem 2 with `λ = 1`: the
+> residual of `A^{⊗(k+1)}` on `v` is `(k+1)·1 = k+1`. ∎
+
+Every exponent leaks exactly, as an identity holding simultaneously for all `k`.
+This is a fully worked counterexample to the security conjecture.
+
+### 4.5 The boundary `λ = 0`
+
+> **Theorem 5 (`tdlp_boundary_no_leak`).** If `(0, v)` is a tropical eigenpair of
+> `A`, then for every `k ∈ ℕ` and every `i`,
+> `(A^{⊗(k+1)} ⊗ v)(i) − v(i) = 0`.
+>
+> *Proof sketch.* By Theorem 2 with `λ = 0`, `(A^{⊗(k+1)} ⊗ v)(i) = v(i) +
+> (k+1)·0 = v(i)`, so the residual vanishes. ∎
+
+At `λ = 0` the recovery of Theorem 3 would divide by zero and indeed carries no
+information: the residual is identically `0` for every exponent. But this refuge
+is degenerate. A zero eigenvalue means `v` is a **tropical fixed point**
+(`eigenzero_iff_fixed`: `(0,v)` is an eigenpair iff `A ⊗ v = v`), so by iteration
+`A^{⊗m} ⊗ v = v` for all `m` (`eigenzero_iterate`). The power map does nothing on
+the eigen-orbit; the key space collapses. Hence:
+
+> **Dichotomy.** For any tropical-power-based key exchange, each public matrix is
+> either *leaky* (it has an eigenvector with `λ ≠ 0`, and Theorem 3 extracts the
+> exponent) or *trivial on that orbit* (`λ = 0`, and Theorem 5 / `eigenzero_
+> iterate` show the power map is the identity there). There is no secure middle
+> ground.
+
+For the natural class of matrices arising from weighted digraphs with
+nonnegative weights and zero self-loops, one further shows every eigenvalue
+satisfies `λ ≤ 0` (`digraph_eigenvalue_nonpos`) and that `λ = 0` is attained by
+constant eigenvectors (`digraph_eigenzero_const`), so the boundary is intrinsic
+to the geometry rather than an avoidable special case.
+
+---
+
+## 5. Algorithms
+
+### 5.1 Tropical matrix power by repeated squaring
+
+To compute `A^{⊗m}` efficiently, use binary exponentiation in the tropical
+semiring. Start from the tropical identity, square the base while scanning the
+bits of `m`, and accumulate when a bit is set. Cost: `O(n³ log m)`.
+
+### 5.2 Tropical eigenvalue via minimum mean cycle
+
+The unique tropical eigenvalue of an irreducible matrix equals the minimum cycle
+mean of its weighted digraph,
+`λ = min over cycles C of ( (sum of edge weights on C) / (length of C) )`.
+Karp's dynamic-programming algorithm computes this in `O(n·E)` time, and an
+eigenvector is recovered from the parametric shortest paths to a node on the
+critical cycle.
+
+### 5.3 The TDLP attack
+
+Combine §5.2 (on the public base `A`) with a single tropical matrix–vector
+product (on the public power `B`) and one division, as in §4.3. Polynomial time
+overall.
 
 ---
 
 ## 6. Discussion
 
-The boundary `λ = 0` plays a dual role. From the *attacker's* side it is the
-single point where the eigenvalue division attack fails. From the *designer's*
-side it is the natural locus of secrets in graph-based schemes, since the spectrum
-is capped at `0` and constant vectors realize it. Theorem 4 makes the necessary
-condition precise: at the boundary the residual channel is silent. We emphasize
-that this is *necessary, not sufficient* for security — other channels (e.g. the
-shape of the public power, the structure of the compressor) may still leak, and
-ruling them out requires a hardness reduction rather than a vanishing-observable
-argument. The preimage non-uniqueness theorem `trop_preimage_nonunique` (for any
-`C` there are distinct factorizations `A ⊗ B = A' ⊗ B' = C`) supplies a candidate
-hard problem — tropical matrix factorization — to which boundary
-indistinguishability might be reduced.
+The break is structural, not incidental. The eigenvalue map is a homomorphism
+that transports the secret integer `m` unchanged through the public transcript:
+`λ(A^{⊗m}) = m·λ(A)`. Homomorphisms are double-edged in cryptography. The
+*commutativity* `(A^{⊗a})^{⊗b} = (A^{⊗b})^{⊗a}` that makes the key exchange
+*function* is itself a structural identity; the *additivity* `λ(A^{⊗m}) =
+m·λ(A)` that makes it *break* is a closely related one. A secure scheme must
+retain enough structure to run the protocol while denying the adversary any
+linear readout of the secret. Tropical powers fail this test completely: the
+exponent passes through the eigenvalue channel with no obfuscation.
+
+The analysis also pins the hardness boundary precisely. Off the boundary the
+scheme leaks in closed form; on the boundary the power map degenerates to the
+identity. This sharp dichotomy explains why patching the scheme by forcing small
+or zero eigenvalues cannot help: it trades information leakage for triviality.
 
 ---
 
-## 7. Future Work
+## 7. Future directions
 
-1. **From eigenvectors to arbitrary secret vectors.** Real protocols use generic
-   secrets, for which the orbit `A⊗ᵏ ⊗ v` becomes eventually periodic with slope
-   the maximal cycle mean. The eigenvalue `λ` of the boundary theorems is exactly
-   that cycle mean; extending `eigenzero_no_leak` to "eventually constant"
-   behavior off the eigenvector locus is the natural next step.
+**Conjecture 1 — The eigenvalue channel is complete for the TDLP.** For a random
+tropical matrix `A` of size `n ≥ 10` with finite entries, the public power
+`B = A^{⊗m}` always determines `m` exactly via `m = λ(B)/λ(A)`, except on a
+measure-zero set where `λ(A) = 0`. The key insight is that the tropical
+eigenvalue is a homomorphism from tropical exponentiation to ordinary scalar
+multiplication, so the one secret scalar `m` is linearly exposed — exactly the
+structure a one-way function must lack. With eigenvalue additivity and
+closed-form recovery formalized, the remaining step is a genericity statement
+(almost-everywhere `λ(A) ≠ 0`).
 
-2. **Quantitative, noisy leakage bounds.** The `1`-Lipschitz bound for
-   `tropMatVecMul` lifts to the iterated action, bounding how an `ε`-perturbation
-   of `v` or `A` propagates over `k` rounds; the affine leak `v + k·λ` is robust,
-   with estimation error growing only linearly in `k`.
+**Conjecture 2 — The boundary `λ = 0` is the only refuge, and it is degenerate.**
+Any tropical DH variant whose security survives must force every public matrix to
+have spectral value `0` (a tropical fixed point); but then the no-leak and
+fixed-point results show the public power equals the input up to a global shift,
+collapsing the key space. The same homomorphism that leaks `m` when `λ ≠ 0` makes
+the scheme trivial when `λ = 0`: additivity reads `m·0 = 0`, so the power map is
+the identity on the eigen-orbit. Both halves are formal, so the dichotomy "either
+leaky or trivial" can be stated as a single theorem.
 
-3. **Hardness certification at and near the boundary.** Turn "no leakage" into a
-   formal reduction: show that distinguishing exponents in the `λ = 0` regime is
-   equivalent to an independently hard tropical problem, e.g. the min-plus matrix
-   factorization underlying `trop_preimage_nonunique`.
+**Conjecture 3 — Multi-eigenvalue (Perron) attacks tighten the bound.** When `A`
+has several tropical eigenvalues (one per critical cycle of its digraph), each
+yields an independent linear equation in `m`; the system is consistent and
+over-determined, giving an error-correcting recovery of `m` even under bounded
+entry noise. The critical-cycle spectrum is a vector of homomorphic readouts of
+the same exponent, so redundancy makes the attack robust rather than fragile.
+The single-readout lemma already exists; extending it across cycle-eigenvalues is
+a finite combinatorial step.
 
-4. **Multiple eigenvalues and the spectral attack surface.** A tropical matrix may
-   possess several distinct eigenvalues with distinct eigenspaces; a secret may
-   decompose across them, and the total observed leak is a tropical (min)
-   combination of per-eigenspace contributions.
+**Conjecture 4 — Non-power protocols inherit the weakness.** Any protocol whose
+public transcript is a tropical-linear image of a secret integer (e.g.
+`A^{⊗m} ⊗ C`, semidirect-product tropical schemes) leaks that integer through the
+same eigenvalue homomorphism applied to the dominant tropical block, because
+tropical-linearity (equivariance under the global shift) preserves the eigenvalue
+readout.
 
 ---
 
 ## 8. Conclusion
 
-We have given a complete, machine-verified account of the boundary eigenvalue `λ
-= 0` in tropical linear algebra and its cryptanalytic significance. The tropical
-residual encodes the eigenvalue exactly (Theorem 1) and uniquely (Theorem 2); at
-the boundary it vanishes identically (Theorem 4, the no-leak property); and the
-boundary is both the ceiling of the spectrum (Theorem 6) and always attained
-(Theorem 7) for graph-based constructions. Together with the shift symmetry of
-tropical maps, these results delineate precisely where the eigenvalue attack on
-the tropical discrete logarithm succeeds and where it provably fails, and they
-identify the zero-eigenvalue boundary as the natural design target for
-resistant tropical cryptography.
-
----
-
-## References
-
-1. P. Butkovič, *Max-linear Systems: Theory and Algorithms*, Springer, 2010.
-2. R. A. Cuninghame-Green, *Minimax Algebra*, Lecture Notes in Economics and
-   Mathematical Systems 166, Springer, 1979.
-3. M. Akian, S. Gaubert, A. Guterman, "Tropical polyhedra are equivalent to mean
-   payoff games," *International Journal of Algebra and Computation*, 2012.
+Tropical eigenvalues are additive under tropical power: `λ(A^{⊗m}) = m·λ(A)`.
+This single homomorphic identity, proved unconditionally from the translation
+equivariance of the min-plus action, collapses the conjectured hardness of the
+tropical discrete logarithm. The secret exponent is recovered in closed form
+`m = λ(B)/λ(A)` whenever the public base has a nonzero-eigenvalue eigenvector,
+and the only escape — `λ = 0` — turns the power map into the identity. The
+tropical Diffie–Hellman key exchange, in its current form, is insecure: it is
+either leaky or trivial.
