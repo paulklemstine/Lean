@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "b3d82bf4",
     "filename": "tropical_cryptography_min_plus_encryption_with_tro.json",
     "pkg_num": 204,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.74352,
     "title": "Tropical Cryptography: Global-Min Superadditivity as a Monotone Exponent Witness"
   },
   {
@@ -6251,8 +6251,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "tropical_cryptography_min_plus_encryption_with_tro",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.74352,
+      "quality": "substantial",
       "shape": "dodecahedron",
       "title": "Tropical Cryptography: Global-Min Superadditivity as a Monotone Exponent Witness"
     }

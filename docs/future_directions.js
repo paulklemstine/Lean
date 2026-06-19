@@ -1033,21 +1033,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Functor from finite linear codes to tropical valuation objects via wei"
   },
   {
-    "consumed_by_exp_id": "6bd9e95d",
-    "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0116",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.958310+00:00",
-    "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
     "domains": [
@@ -3097,6 +3082,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T23:11:17.377449+00:00",
     "title": "Two boundary facts of the prime crossword in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Tropical Cryptography: Multiple Homomorphic Shadows of the Exponent\n\nDerived from this cycle's findings in `TropicalMagnitudeLeak.lean` and\n`TropicalGminSuperadditive.lean` (and building on `TropicalDiscreteLog.lean`,\n`EigenzeroNoLeak.lean`). The cycle established **two independent exponent-leak channels**\nfor the tropical discrete logarithm / tropical Diffie\u2013Hellman scheme:\n\n1. **Spectral channel** (prior work): `\u03bb(A^{\u2297(k+1)}) = (k+1)\u00b7\u03bb(A)` \u2014 exact recovery when a\n   nonzero-eigenvalue eigenvector exists.\n2. **Magnitude channel** (this cycle): `(k+1)\u00b7amin \u2264 (A^{\u2297(k+1)})_{ij} \u2264 (k+1)\u00b7amax` \u2014\n   unconditional interval recovery from a *single* public entry, with global-min\n   superadditivity giving a monotone exponent witness whose growth rate is the minimum\n   cycle mean.\n\nBoth channels go silent at the **same degenerate value `0`** (`\u03bb = 0`; the zero matrix),\nsuggesting a unifying \"degeneracy = the only possible security\" principle.\n\n---\n\n## Conjecture 1 \u2014 The interval channel always pins `k` to a bounded list\n\n**Statement.** For any tropical matrix with entries in a positive band `[amin, amax]` with\n`amax/amin < R`, the integer exponent `k+1` recovered from a single public entry via\n`tdlp_exponent_interval` lies in an interval containing at most `\u2308(R-1)(k+1)\u2309 + 1`\nintegers; in particular, for fixed `R` and a known order of magnitude of `k`, only\n`O(k)` candidates survive, each testable in `O(n\u00b3 log k)`. Hence TDLP on positive-band\nmatrices is solvable in time polynomial in `k` and `n` with **no spectral data**.\n\n**The key insight is** that the multiplicative spread `amax/amin`, not the matrix\ndimension `n`, controls the residual ambiguity of the exponent \u2014 security cannot come from\nlarge `n`, only from a large additive spread of entries.\n\n**Why now?** The entrywise sandwich `tropMatPow_entry_sandwich` is already formalized and\nsound; the remaining step is a counting lemma over `\u2124 \u2229 [x/amax, x/amin]`, well within\nreach of `Int.floor`/`Int.ceil` API in Mathlib.\n\n## Conjecture 2 \u2014 Fekete limit: `gmin(A^{\u2297m})/m` converges to the minimum cycle mean\n\n**Statement.** For every tropical matrix `A`, the normalized global minimum\n`gmin(A^{\u2297m})/(m+1)` converges as `m \u2192 \u221e`, and the limit equals the minimum cycle mean\n`min_C (weight(C)/length(C))` over directed cycles `C` of the weighted digraph of `A`.\n\n**The key insight is** that `gmin_tropMatPow_superadd` is *exactly* the hypothesis of\nFekete's subadditive lemma (applied to `-gmin`), so convergence is automatic; identifying\nthe limit with the cycle mean is the tropical Perron\u2013Frobenius / Cuninghame-Green theorem.\n\n**Why now?** Superadditivity is already proved (0 axioms). Mathlib has\n`Subadditive.tendsto_lim`; the only new content is the digraph-cycle identification,\nwhich connects directly to the existing `WeightedDigraph` structure in `MinPlusAlgebra.lean`.\n\n## Conjecture 3 \u2014 The two channels coincide generically (`\u03bb = minimum cycle mean`)\n\n**Statement.** For a strongly connected (irreducible) tropical matrix, the unique tropical\neigenvalue `\u03bb(A)` of `TropicalDiscreteLog` equals the magnitude growth rate\n`lim gmin(A^{\u2297m})/m` of `TropicalGminSuperadditive`. Consequently the spectral and\nmagnitude attacks return the *same* secret exponent, and either suffices.\n\n**The key insight is** that both linear functionals are shadows of one object \u2014 the\nminimum cycle mean \u2014 so a defense that blinds one channel (e.g. forcing `\u03bb = 0`)\nnecessarily collapses the other (`gmin` growth rate `\u2192 0`), leaving no room for security.\n\n**Why now?** With both channels formalized in the same file family over the same\n`tropMatPow`, the equality is a bridge theorem whose two sides are already defined; the\nproof reduces to irreducibility + the boundary theorem `digraph_eigenvalue_nonpos`.\n\n## Conjecture 4 \u2014 No additive blinding defends the magnitude channel\n\n**Statement.** Adding a public scalar mask (the tropical scalar action `A \u21a6 A + c\u00b7J`,\n`J` the all-ones matrix) shifts every entry of `A^{\u2297(k+1)}` by exactly `(k+1)\u00b7c`, hence\nshifts the recovered interval by a *publicly known* amount and provides **zero** additional\nhardness. More generally, any per-row/per-column potential gauge `A_{ij} \u21a6 A_{ij}+p_i-q_j`\nleaves the recovered exponent invariant.\n\n**The key insight is** that the magnitude leak is *gauge-covariant*: it transforms\npredictably under exactly the symmetries (`tropMatVecMul_shift`, additive separability of\n`MinPlusRankOne`) that a designer would reach for to hide structure.\n\n**Why now?** `tropMatVecMul_shift` and the rank-1 additive-separability theory are already\nin the catalog; the conjecture is a direct equivariance computation on `tropMatPow`.\n\n## Conjecture 5 \u2014 Security requires super-linear entry growth, which tropical powers forbid\n\n**Statement.** A keyed family `k \u21a6 A^{\u2297(k+1)}` is a one-way function only if some public\nobservable grows super-linearly in `k`. But `tropMatPow_entry_sandwich` proves every entry\ngrows **exactly linearly** (trapped between two lines). Therefore *no* min-plus matrix\npower family is one-way: the exponent is always recoverable to within an additive `O(1)`\nfraction, uniformly in the secret.\n\n**The key insight is** that one-wayness needs an information bottleneck, but tropical\nexponentiation is `1`-Lipschitz *and* linearly homogeneous, so it preserves rather than\ndestroys the exponent's magnitude \u2014 the precise opposite of what a one-way function does.\n\n**Why now?** The Lipschitz bounds (`tropMatMul_combined_lipschitz`) and the linear sandwich\nare both formalized; combining them into a no-go theorem for tropical one-wayness is the\nnatural capstone and would settle the headline conjecture of the mission in the negative.\n",
+    "domains": [
+      "Cryptography",
+      "Algebra"
+    ],
+    "id": "fd_2109",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "b3d82bf4",
+    "status": "available",
+    "timestamp": "2026-06-19T14:41:39.717280+00:00",
+    "title": "Derived from this cycle's findings in `TropicalMagnitudeLeak.lean` and"
   },
   {
     "consumed_by_exp_id": "",

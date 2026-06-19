@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "d93eaf52",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Persistent-Homology Stability (Boltzmann Bridge IV)\n\n## Synthesis\n\n`Applications/BoltzmannBridge/BottleneckStability.lean` closes the catalog's\npersistent-homology arc. The earli",
-      "quality_score": 0.7654400000000001,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-14T03:18:42",
-      "title": "`Applications/BoltzmannBridge/BottleneckStability.lean` closes the catalog's"
-    },
-    {
       "cycle_id": "72c0fc14",
       "domain": "Applications",
       "key_insight": "# Future Directions: Intersection Forms and the Smooth 4D Poincaré Frontier\n\n## Synthesis\n\nThe `SmoothPoincare` nucleus now contains three layers. `IntersectionForms.lean`\nfixes the algebraic vocabula",
@@ -499,19 +489,19 @@
       "theorem_count": 33,
       "timestamp": "2026-06-19T11:48:11",
       "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+    },
+    {
+      "cycle_id": "b3d82bf4",
+      "domain": "Cryptography",
+      "key_insight": "# FUTURE DIRECTIONS — Tropical Cryptography: Multiple Homomorphic Shadows of the Exponent\n\nDerived from this cycle's findings in `TropicalMagnitudeLeak.lean` and\n`TropicalGminSuperadditive.lean` (and",
+      "quality_score": 0.74352,
+      "sorry_count": 0,
+      "theorem_count": 69,
+      "timestamp": "2026-06-19T14:41:57",
+      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "0827184d",
-      "domain": "Pythagorean",
-      "key_insight": "# Future Directions — Reading the Two Invariants of the Gauss-Sum Master Identity\n\n## Synthesis\n\nThe previous cycle distilled the entire arithmetic of doubly-even self-dual binary\ncodes into a single",
-      "quality_score": 0.47720761904761905,
-      "sorry_count": 6,
-      "theorem_count": 189,
-      "timestamp": "2026-06-14T21:36:31",
-      "title": "The `SmoothPoincare` family in `Catalog/Applications/SmoothPoincare/` builds the"
-    },
     {
       "cycle_id": "bea64f19",
       "domain": "Combinatorics",
@@ -2501,27 +2491,19 @@
       "theorem_count": 39,
       "timestamp": "2026-06-19T13:20:44",
       "title": "Quantum Error Correction Threshold: The Eastin-Knill Theorem"
+    },
+    {
+      "cycle_id": "b3d82bf4",
+      "domain": "Cryptography",
+      "key_insight": "# FUTURE DIRECTIONS — Tropical Cryptography: Multiple Homomorphic Shadows of the Exponent\n\nDerived from this cycle's findings in `TropicalMagnitudeLeak.lean` and\n`TropicalGminSuperadditive.lean` (and",
+      "quality_score": 0.74352,
+      "sorry_count": 0,
+      "theorem_count": 69,
+      "timestamp": "2026-06-19T14:41:57",
+      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "32c81afa",
-      "domain": "Shared",
-      "name": "lerp_reverse",
-      "quality": 0.7607163636363636
-    },
-    {
-      "cycle_id": "32c81afa",
-      "domain": "Shared",
-      "name": "lerp_self",
-      "quality": 0.7607163636363636
-    },
-    {
-      "cycle_id": "32c81afa",
-      "domain": "Shared",
-      "name": "weightSupEDist_lerp_bicombing",
-      "quality": 0.7607163636363636
-    },
     {
       "cycle_id": "b9cc2fac",
       "domain": "Geometry",
@@ -2803,9 +2785,27 @@
       "domain": "Combinatorics",
       "name": "lnc_holds_iff_clopen",
       "quality": 0.7144
+    },
+    {
+      "cycle_id": "b3d82bf4",
+      "domain": "Cryptography",
+      "name": "this",
+      "quality": 0.74352
+    },
+    {
+      "cycle_id": "b3d82bf4",
+      "domain": "Cryptography",
+      "name": "gmin_le",
+      "quality": 0.74352
+    },
+    {
+      "cycle_id": "b3d82bf4",
+      "domain": "Cryptography",
+      "name": "le_gmin",
+      "quality": 0.74352
     }
   ],
-  "last_updated": "2026-06-19T13:20:44",
+  "last_updated": "2026-06-19T14:41:57",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3319,12 +3319,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "561a2484",
-        "quality": 0.4694702117647058,
-        "theorems": 11,
-        "title": "Close Proofs: Combinatorial species to tropical valuation profiles via coefficie"
-      },
-      {
         "cycle_id": "aba81cd6",
         "quality": 0.55584,
         "theorems": 74,
@@ -3377,6 +3371,12 @@
         "quality": 0.5413687224669603,
         "theorems": 109,
         "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+      },
+      {
+        "cycle_id": "b3d82bf4",
+        "quality": 0.74352,
+        "theorems": 69,
+        "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
       }
     ],
     "Geometry": [

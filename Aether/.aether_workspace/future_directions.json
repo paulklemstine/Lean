@@ -3216,7 +3216,7 @@
       "depth_estimate": 3,
       "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Cryptography"
@@ -11351,7 +11351,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem — given (a, f(a,n)), find n — requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -11603,7 +11603,7 @@
       "depth_estimate": 3,
       "description": "Formalize the hardness reduction from worst-case lattice problems (GapSVP, SIVP) to the Learning with Errors problem with specific parameters.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Cryptography",
         "Computation"
@@ -12359,7 +12359,7 @@
       "depth_estimate": 3,
       "description": "Construct and prove correct a zero-knowledge proof system for graph 3-colorability. Prove completeness, soundness, and zero-knowledge. Formalize the simulation paradigm and show that the simulator produces indistinguishable transcripts.",
       "domain_bridges": [],
-      "domain_quality_penalty": -1.0,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Cryptography",
         "Logic"
@@ -12539,7 +12539,7 @@
       "depth_estimate": 3,
       "description": "Prove tight upper bounds on the differential probability of an S-box. Formalize the wide-trail strategy used in AES: prove that the minimum number of active S-boxes in 4 rounds of AES is 25. Connect to the branch number of the MixColumns matrix.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -15022,7 +15022,7 @@
       "depth_estimate": 3,
       "description": "Formalize the definition of zero-knowledge proofs (interactive and non-interactive). Prove that graph 3-colorability has a zero-knowledge proof. Implement a simplified zk-SNARK circuit in Lean 4 and prove soundness. Bridge: connect to the PCP theorem (NP ⊆ PCP(poly, 1)).",
       "domain_bridges": [],
-      "domain_quality_penalty": -1.0,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Cryptography",
         "Logic"
@@ -15058,7 +15058,7 @@
       "depth_estimate": 3,
       "description": "Prove that if one-way functions exist, then collision-resistant hash functions exist. Formalize the Merkle-Damgard construction and prove it preserves collision resistance. Show that SHA-256's compression function can be modeled as a random oracle under the indifferentiability framework.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Cryptography",
         "Computation"
@@ -15094,7 +15094,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Weil pairing on an elliptic curve and prove its bilinearity. Show that the BLS signature scheme is existentially unforgeable under the computational Diffie-Hellman assumption in the pairing group. Prove that the pairing allows short aggregate signatures.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -15130,7 +15130,7 @@
       "depth_estimate": 3,
       "description": "Prove that Shamir's secret sharing scheme is information-theoretically secure: any t-1 shares reveal zero information about the secret. Formalize Feldman's verifiable secret sharing and prove that cheating dealers are caught. Show that the reconstruction threshold equals the degree of the polynomial plus one.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -15166,7 +15166,7 @@
       "depth_estimate": 3,
       "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.6,
+      "domain_quality_penalty": -0.5,
       "domains": [
         "Cryptography",
         "Physics"
@@ -15202,7 +15202,7 @@
       "depth_estimate": 3,
       "description": "Formalize the McEliece cryptosystem based on Goppa codes. Prove that decoding a random linear code is NP-hard (Berlekamp-McEliece-Tilborg). Show that distinguishing a Goppa code generator matrix from random is as hard as decoding. Compute parameters for 256-bit post-quantum security.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Cryptography",
         "Computation"
@@ -33475,7 +33475,7 @@
         "well-rounded lattices from algebraic integer ideals",
         "multiplicative norm in ℤ[i] versus Euclidean vector norm"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Cryptography"
@@ -34630,7 +34630,7 @@
       "depth_estimate": 3,
       "description": "# FUTURE DIRECTIONS — Tropical Cryptography: Multiple Homomorphic Shadows of the Exponent\n\nDerived from this cycle's findings in `TropicalMagnitudeLeak.lean` and\n`TropicalGminSuperadditive.lean` (and building on `TropicalDiscreteLog.lean`,\n`EigenzeroNoLeak.lean`). The cycle established **two independent exponent-leak channels**\nfor the tropical discrete logarithm / tropical Diffie–Hellman scheme:\n\n1. **Spectral channel** (prior work): `λ(A^{⊗(k+1)}) = (k+1)·λ(A)` — exact recovery when a\n   nonzero-eigenvalue eigenvector exists.\n2. **Magnitude channel** (this cycle): `(k+1)·amin ≤ (A^{⊗(k+1)})_{ij} ≤ (k+1)·amax` —\n   unconditional interval recovery from a *single* public entry, with global-min\n   superadditivity giving a monotone exponent witness whose growth rate is the minimum\n   cycle mean.\n\nBoth channels go silent at the **same degenerate value `0`** (`λ = 0`; the zero matrix),\nsuggesting a unifying \"degeneracy = the only possible security\" principle.\n\n---\n\n## Conjecture 1 — The interval channel always pins `k` to a bounded list\n\n**Statement.** For any tropical matrix with entries in a positive band `[amin, amax]` with\n`amax/amin < R`, the integer exponent `k+1` recovered from a single public entry via\n`tdlp_exponent_interval` lies in an interval containing at most `⌈(R-1)(k+1)⌉ + 1`\nintegers; in particular, for fixed `R` and a known order of magnitude of `k`, only\n`O(k)` candidates survive, each testable in `O(n³ log k)`. Hence TDLP on positive-band\nmatrices is solvable in time polynomial in `k` and `n` with **no spectral data**.\n\n**The key insight is** that the multiplicative spread `amax/amin`, not the matrix\ndimension `n`, controls the residual ambiguity of the exponent — security cannot come from\nlarge `n`, only from a large additive spread of entries.\n\n**Why now?** The entrywise sandwich `tropMatPow_entry_sandwich` is already formalized and\nsound; the remaining step is a counting lemma over `ℤ ∩ [x/amax, x/amin]`, well within\nreach of `Int.floor`/`Int.ceil` API in Mathlib.\n\n## Conjecture 2 — Fekete limit: `gmin(A^{⊗m})/m` converges to the minimum cycle mean\n\n**Statement.** For every tropical matrix `A`, the normalized global minimum\n`gmin(A^{⊗m})/(m+1)` converges as `m → ∞`, and the limit equals the minimum cycle mean\n`min_C (weight(C)/length(C))` over directed cycles `C` of the weighted digraph of `A`.\n\n**The key insight is** that `gmin_tropMatPow_superadd` is *exactly* the hypothesis of\nFekete's subadditive lemma (applied to `-gmin`), so convergence is automatic; identifying\nthe limit with the cycle mean is the tropical Perron–Frobenius / Cuninghame-Green theorem.\n\n**Why now?** Superadditivity is already proved (0 axioms). Mathlib has\n`Subadditive.tendsto_lim`; the only new content is the digraph-cycle identification,\nwhich connects directly to the existing `WeightedDigraph` structure in `MinPlusAlgebra.lean`.\n\n## Conjecture 3 — The two channels coincide generically (`λ = minimum cycle mean`)\n\n**Statement.** For a strongly connected (irreducible) tropical matrix, the unique tropical\neigenvalue `λ(A)` of `TropicalDiscreteLog` equals the magnitude growth rate\n`lim gmin(A^{⊗m})/m` of `TropicalGminSuperadditive`. Consequently the spectral and\nmagnitude attacks return the *same* secret exponent, and either suffices.\n\n**The key insight is** that both linear functionals are shadows of one object — the\nminimum cycle mean — so a defense that blinds one channel (e.g. forcing `λ = 0`)\nnecessarily collapses the other (`gmin` growth rate `→ 0`), leaving no room for security.\n\n**Why now?** With both channels formalized in the same file family over the same\n`tropMatPow`, the equality is a bridge theorem whose two sides are already defined; the\nproof reduces to irreducibility + the boundary theorem `digraph_eigenvalue_nonpos`.\n\n## Conjecture 4 — No additive blinding defends the magnitude channel\n\n**Statement.** Adding a public scalar mask (the tropical scalar action `A ↦ A + c·J`,\n`J` the all-ones matrix) shifts every entry of `A^{⊗(k+1)}` by exactly `(k+1)·c`, hence\nshifts the recovered interval by a *publicly known* amount and provides **zero** additional\nhardness. More generally, any per-row/per-column potential gauge `A_{ij} ↦ A_{ij}+p_i-q_j`\nleaves the recovered exponent invariant.\n\n**The key insight is** that the magnitude leak is *gauge-covariant*: it transforms\npredictably under exactly the symmetries (`tropMatVecMul_shift`, additive separability of\n`MinPlusRankOne`) that a designer would reach for to hide structure.\n\n**Why now?** `tropMatVecMul_shift` and the rank-1 additive-separability theory are already\nin the catalog; the conjecture is a direct equivariance computation on `tropMatPow`.\n\n## Conjecture 5 — Security requires super-linear entry growth, which tropical powers forbid\n\n**Statement.** A keyed family `k ↦ A^{⊗(k+1)}` is a one-way function only if some public\nobservable grows super-linearly in `k`. But `tropMatPow_entry_sandwich` proves every entry\ngrows **exactly linearly** (trapped between two lines). Therefore *no* min-plus matrix\npower family is one-way: the exponent is always recoverable to within an additive `O(1)`\nfraction, uniformly in the secret.\n\n**The key insight is** that one-wayness needs an information bottleneck, but tropical\nexponentiation is `1`-Lipschitz *and* linearly homogeneous, so it preserves rather than\ndestroys the exponent's magnitude — the precise opposite of what a one-way function does.\n\n**Why now?** The Lipschitz bounds (`tropMatMul_combined_lipschitz`) and the linear sandwich\nare both formalized; combining them into a no-go theorem for tropical one-wayness is the\nnatural capstone and would settle the headline conjecture of the mission in the negative.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Algebra"
@@ -40386,7 +40386,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Algebra",
@@ -40423,7 +40423,7 @@
       "depth_estimate": 3,
       "description": "Formalize the group law on elliptic curves over finite fields in Lean 4. Prove associativity via the chord-tangent construction. Implement and verify point multiplication. Prove Hasse's bound: |#E(F_p) - p - 1| ≤ 2√p.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Algebra",
@@ -40460,7 +40460,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Schnorr identification protocol in Lean 4. Prove completeness, soundness, and honest-verifier zero-knowledge. Formalize the Fiat-Shamir heuristic for non-interactive proofs. Prove security in the random oracle model.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Cryptography",
         "Logic",
@@ -40682,7 +40682,7 @@
       "depth_estimate": 3,
       "description": "Formalize BCH and Reed-Solomon codes over finite fields. Prove the BCH bound on minimum distance. Construct the Berlekamp-Massey decoding algorithm and prove correctness. Apply to concrete error-correction scenarios.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Computation",
