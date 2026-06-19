@@ -3352,11 +3352,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "54f377a3",
       "depth_estimate": 3,
       "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
       "domain_bridges": [],
@@ -3366,7 +3366,7 @@
         "Algebra"
       ],
       "id": "fd_0092",
-      "last_attempt_time": "2026-06-07T13:43:10.185560+00:00",
+      "last_attempt_time": "2026-06-19T08:25:15.118004+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -3379,7 +3379,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-01T12:30:30.807837+00:00",
       "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
@@ -4216,11 +4216,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "26902e54",
       "depth_estimate": 3,
       "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
       "domain_bridges": [],
@@ -4230,7 +4230,7 @@
         "Logic"
       ],
       "id": "fd_0116",
-      "last_attempt_time": "2026-06-09T07:44:29.461868+00:00",
+      "last_attempt_time": "2026-06-19T08:25:11.184807+00:00",
       "last_reviewed_at": "2026-06-16T16:55:25.165652+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -4243,7 +4243,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-01T12:30:30.958310+00:00",
       "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
@@ -33031,7 +33031,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [
         "math.CO",
         "independence number",
@@ -33041,7 +33041,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "7f1e65fe",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "The paper establishes an average-degree lower bound on the independence number of uncrowded uniform hypergraphs (those without Berge 2, 3, or 4-cycles). Since Verstraete and Wilson previously extended the maximum-degree bound from uncrowded to locally sparse hypergraphs (those without Berge 2 or 3-cycles), this conjecture proposes that the average-degree bound similarly extends to the broader class of locally sparse uniform hypergraphs.",
       "domain_bridges": [
@@ -33053,11 +33053,11 @@
         "Pythagorean"
       ],
       "id": "fd_2072",
-      "last_attempt_time": "2026-06-19T07:55:47.613409+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Real.Basic\n\ntheorem avg_degree_independence_locally_sparse\n    (r : ℕ) (hr : r ≥ 2) (η : ℝ) (hη : η > 0) :\n    ∃ d_ : ℝ, ∀ (d : ℝ) (hd : d ≥ d_),\n    ∀ (V : Type) [Fintype V] [DecidableEq V]\n    (G : Finset (Finset V))\n    (h_uniform : ∀ e ∈ G, e.card = r + 1)\n    (h_no_C2 : ∀ e₁ ∈ G, ∀ e₂ ∈ G, e₁ ≠ e₂ → (e₁ ∩ e₂).card < 2)\n    (h_no_C3 : True) -- Placeholder for the absence of Berge 3-cycles\n    (h_avg_deg : ((r + 1 : ℝ) * G.card) / (Fintype.card V) ≥ d),\n    ∃ (I : Finset V), (∀ e ∈ G, ¬ I ⊆ e) ∧\n      (I.card : ℝ) ≥ (1 - η) * (r : ℝ)^(-(1 : ℝ) / (r : ℝ)) * (((Real.log d) / d)^((1 : ℝ) / (r : ℝ))) * (Fintype.card V) := by\n  sorry",
       "lineage_refs": [],
-      "outcome_quality": 0.5508906250000001,
+      "outcome_quality": 0.0,
       "priority_score": 0.8,
       "proof_strategy": "Adapt the trace nibble method and cleaning procedure from the paper to eliminate the dependency on the absence of Berge 4-cycles. This might involve a refined degree profile analysis or a modified cleaning phase that can control lower-order degrees without relying on the C4 restriction.",
       "prune_reason": "",
@@ -33066,7 +33066,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.18171v1",
       "source_path": "http://arxiv.org/abs/2606.18171v1",
-      "status": "completed",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T00:40:07.506039+00:00",
       "title": "Average-Degree Bound for Locally Sparse Uniform Hypergraphs"
@@ -33996,6 +33996,47 @@
       "title": "Embedding of restricted Rota-Baxter Lie algebras into commutator Lie algebras of restricted Rota-Baxter associative algebras"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "JLY, 'On the Zarankiewicz problem for affine plane configurations', J Math.Schweizeracz., 2015.'"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "This conjecture proposes a precise asymptotic threshold for the maximum number of copies of a fixed bipartite graph $K_{s,t}$ in a Turán graph $K_{a,b}$, advancing the understanding of explicit Turán number constraints via geometric point-set arguments.",
+      "domain_bridges": [
+        "extremal graph theory",
+        "finite geometry"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Geometry"
+      ],
+      "id": "fd_2094",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "Interpretation of Zarankiewicz-type identities via point-set methods",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Direct combinatorial construction augmented by finite-field point analysis",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.19217v1",
+      "source_path": "http://arxiv.org/abs/2606.19217v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-19T08:21:49.299986+00:00",
+      "title": "Explicit bounds on Turán numbers for structured graph families"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -34018,7 +34059,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2094",
+      "id": "fd_2095",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem four_digit_kaprekar_cycle_length (B : odd_prime) [H : B > 5] : cycle_length B = (B - 1) // 2 ↔ (order_of_2 B) = (B - 1) // 2",
@@ -34063,7 +34104,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2095",
+      "id": "fd_2096",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem dallard_planar_induced_minor_conjecture\n  (d : ℕ) (hd : 0 < d) {W : Type*} [Fintype W]\n  (H : SimpleGraph W) (hH : H.Planar) :\n  ∃ B : ℕ, ∀ {V : Type*} [Fintype V] (G : SimpleGraph V),\n    G.InducedMinorFree H →\n    G.InducedSubgraphFree (SimpleGraph.K1d d) →\n      G.TreeIndependenceNumber ≤ B := by\n  sorry",
@@ -34106,7 +34147,7 @@
         "Algebra",
         "Computation"
       ],
-      "id": "fd_2096",
+      "id": "fd_2097",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "A slightly adapted version of the normal approximation in the origin localization lemmas, tailored to uniform random selections in finite settings.",
@@ -34155,7 +34196,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2097",
+      "id": "fd_2098",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem cm_points_equidistribute_product (r : ℕ) (hr : 2 ≤ r) (curves : Fin r → ShimuraCurve) (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (hsplit : ∀ n, p.SplitsIn (CMField n) ∧ q.SplitsIn (CMField n)) (strict_seq : StrictSequence ...) : WeakConvergence (GaloisOrbitMeasure (z_seq : ℕ → Product (Fin r → ShimuraCurve))) (HaarMeasure (Product (Fin r → ShimuraCurve))) := by sorry",
@@ -34175,40 +34216,49 @@
       "title": "Equidistribution of Galois orbits of CM points on products of non‑isomorphic Shimura curves"
     },
     {
-      "ambition_level": "extension",
+      "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
       "attempt_count": 0,
-      "catalog_references": [],
-      "category": "",
+      "catalog_references": [
+        "BN25",
+        "KW67",
+        "Tod80",
+        "BLSWZ99"
+      ],
+      "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
       "consumed_by_exp_id": "",
       "depth_estimate": 3,
-      "description": "# Future Directions — Sheaf-Theoretic Data Integration\n\nDerived from this cycle's findings in `Catalog/Algebra/SheafImputationAlgebra.lean`\n(gluing is an idempotent monoid / band; sheaf condition ⇔ pairwise compatibility;\nunique support-bounded global section) and `SheafImputationProbability.lean`\n(`P(sheaf) = (1-r)^N`, antitone in `N`, `r`, and `n` via `C(n,k)`, with\nexponential decay to 0).\n\n## Conjecture 1 — The gluing band is a *left-regular* band, hence has a free model on rows\nWe proved `glue f f = f`, `glue (glue f g) f = glue f g`, and `glue f (glue g f)\n= glue f g`. Conjecture: `(PartialSection ι α, glue, emptySection)` is exactly the\nleft-regular band freely generated by the singleton rows `single i a`, and every\npartial section factors uniquely as an ordered glue of singletons.\n- **The key insight is** that left-biased merging is *order-recording*: the result\n  remembers \"who wrote each cell first\", which is precisely the universal property\n  of a free left-regular band on the cell-assignments.\n- **Why now?** The six algebraic laws are already formalized; the remaining step is\n  a normal-form/uniqueness argument that Mathlib's `FreeMonoid`/quotient machinery\n  can now support directly.\n\n## Conjecture 2 — Sheaf cohomology `H¹` is the obstruction to imputation, and `dim H¹` counts conflicts\nWe showed a family has a global section **iff** it is pairwise compatible. Conjecture:\nwhen compatibility fails, the minimal number of cell-edits needed to make the family\ngluable equals the rank of a Čech `H¹` of the overlap nerve, and `H⁰` is the space of\nglobal sections.\n- **The key insight is** that imputability is not just local consistency but a\n  *cohomological* condition: pairwise compatibility is the cocycle condition, and the\n  failure to glue is a nonzero cohomology class measuring exactly the conflict count.\n- **Why now?** The existence⇔compatibility equivalence pins `H⁰`; the natural next\n  object is the coboundary map whose cokernel is the proven obstruction.\n\n## Conjecture 3 — `P(sheaf) = (1-r)^{C(n,k)}` is the *sharp* threshold for feasible imputation\nWe proved exponential decay `(1-r)^N → 0` and `N`-/`n`-antitonicity. Conjecture: with\n`N = C(n,k)` independent constraints, the imputation success probability undergoes a\nsharp phase transition at `r* = 1 - C(n,k)^{-1/C(n,k)}`, i.e. feasibility is `≈1`\nbelow `r*` and `≈0` above it as `n → ∞`.\n- **The key insight is** that the *number* of constraints, not their individual\n  difficulty, drives a first-moment threshold: `(1-r)^{C(n,k)}` crosses any fixed\n  level within an `O(1/C(n,k))` window of `r`, giving an abrupt cliff.\n- **Why now?** The closed form and its monotonicity are proven; locating the crossing\n  point is an elementary `log`/`exp` asymptotic that builds directly on\n  `consistencyProb_antitone_columns` and `consistencyProb_tendsto_zero`.\n\n## Conjecture 4 — Support-bounded uniqueness fails *minimally*: every non-bounded extension is a band extension of `familyGlue`\nWe proved the support-bounded global section is unique. Conjecture: any global section\n`h` (without the support bound) satisfies `h = glue (familyGlue s) h`, so the lattice\nof all consistent imputations is exactly the up-set of `familyGlue s` in the glue order.\n- **The key insight is** that `familyGlue s` is the *least* consistent fill-in, and the\n  support bound is precisely the predicate \"add no information beyond the data\" — every\n  other solution is obtained by gluing extra cells on top.\n- **Why now?** `familyGlue_unique` already isolates the minimal solution; the order\n  structure (`Extends` as a partial order with `glue` as join on compatible elements)\n  is in hand to state and prove the lattice description.\n\n## Conjecture 5 — Mean/KNN imputation is the metric projection that *ignores* the band structure\nConjecture: in a metric `α`, mean and KNN imputation equal the nearest-point projection\nonto the affine hull of observed rows, whereas sheaf imputation projects onto the\nband-closed global-section set; the two coincide iff the data is already pairwise\ncompatible, and otherwise sheaf imputation has strictly smaller worst-case error when\n`r < 1/2` and `n` large.\n- **The key insight is** that classical imputers optimize a single global objective\n  while sheaf imputation enforces `C(n,k)` local consistency constraints simultaneously,\n  so their gap is exactly the cohomological obstruction of Conjecture 2.\n- **Why now?** With the sheaf side fully formalized (existence, uniqueness, probability),\n  the comparison reduces to a projection-geometry statement that Mathlib's inner-product\n  and convexity libraries can now express.\n",
-      "domain_bridges": [],
+      "description": "Conjecture that for any oriented matroid, the e-embracing exchange distance between two e-embracing bases equals the graph distance between their corresponding e-positive fundamental circuits in the oriented matroid polyhedron P_{M^*,e}. This would strengthen Theorem 1.3 which only proves inequality and equality for uniform oriented matroids.",
+      "domain_bridges": [
+        "Polyhedral Geometry",
+        "Matroid Theory",
+        "Combinatorial Optimization"
+      ],
       "domain_quality_penalty": 0.0,
       "domains": [
-        "Geometry",
+        "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2098",
+      "id": "fd_2099",
       "last_attempt_time": "",
       "last_reviewed_at": "",
-      "lean_theorem_stub": "",
+      "lean_theorem_stub": "theorem embracing_distance_equals_graph_distance {M : OrientedMatroid} {e : M.E} {B B' : Basis M} (hB : B.is_e_embracing e) (hB' : B'.is_e_embracing e) : d_e B B' = d_G (C B e) (C B' e) := by sorry",
       "lineage_refs": [],
       "outcome_quality": 0.0,
-      "priority_score": 0.75,
-      "proof_strategy": "",
+      "priority_score": 0.8,
+      "proof_strategy": "Investigate the structure of the map from e-embracing bases to e-positive circuits. Use the fact that the map is r-Lipschitz and non-contractive. Attempt to show that any path in the polyhedron graph can be lifted to a path of embracing bases of the same length. Consider using topological methods or shellability arguments.",
       "prune_reason": "",
       "pruned_at": "",
       "quarantined_until": "",
       "research_mode": "team",
-      "source_exp_id": "3d9b7416",
-      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/3d9b7416_retry1",
+      "source_exp_id": "2606.19573v1",
+      "source_path": "http://arxiv.org/abs/2606.19573v1",
       "status": "available",
-      "thread_id": "th_f9efef5e",
-      "timestamp": "2026-06-19T08:20:13.257741+00:00",
-      "title": "Derived from this cycle's findings in `Catalog/Algebra/SheafImputationAlgebra.le"
+      "thread_id": "",
+      "timestamp": "2026-06-19T08:25:04.863302+00:00",
+      "title": "Equality of Embracing Exchange Distance and Polyhedral Graph Distance"
     },
     {
       "ambition_level": "extension",
@@ -93620,7 +93670,7 @@
     "Novelty": 199,
     "Physics": 45,
     "Probability": 1,
-    "Pythagorean": 112,
+    "Pythagorean": 111,
     "Shared": 6,
     "Tropical": 33
   },
@@ -93638,7 +93688,7 @@
     "compute": 99,
     "computed": 42,
     "condition": 100,
-    "conjecture": 407,
+    "conjecture": 406,
     "connection": 56,
     "constant": 143,
     "construct": 81,
@@ -93679,7 +93729,7 @@
     "normally": 2,
     "novelty": 139,
     "now?**": 143,
-    "number": 178,
+    "number": 177,
     "o(1/log": 2,
     "original": 353,
     "parameter": 57,
@@ -93726,7 +93776,5 @@
     "whether": 50,
     "zombies": 3
   },
-  "selection_log": [
-    "cross_domain_bridge"
-  ]
+  "selection_log": []
 }

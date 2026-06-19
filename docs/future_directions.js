@@ -1033,7 +1033,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Functor from finite linear codes to tropical valuation objects via wei"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "26902e54",
     "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
     "domains": [
       "Novelty",
@@ -1043,7 +1043,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.958310+00:00",
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
@@ -1642,6 +1642,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The paper establishes an average-degree lower bound on the independence number of uncrowded uniform hypergraphs (those without Berge 2, 3, or 4-cycles). Since Verstraete and Wilson previously extended the maximum-degree bound from uncrowded to locally sparse hypergraphs (those without Berge 2 or 3-cycles), this conjecture proposes that the average-degree bound similarly extends to the broader class of locally sparse uniform hypergraphs.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2072",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18171v1",
+    "status": "available",
+    "timestamp": "2026-06-18T00:40:07.506039+00:00",
+    "title": "Average-Degree Bound for Locally Sparse Uniform Hypergraphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The feasibility version of the Moving-Target Traveling Salesman Problem with Moving Obstacles (MT-TSP-MO) is PSPACE-hard. Specifically, given a set of targets each moving along a straight line with constant rational velocity and having an associated time window, and a set of obstacles each moving along a straight line with constant rational velocity, determining whether there exists a continuous trajectory from a static depot that visits all targets within their time windows while avoiding all obstacles is PSPACE-hard. This holds even when the number of obstacles is polynomial in the number of targets. The conjecture bridges the known PSPACE-hardness of motion planning with moving obstacles (Reif 1979) and the NP-hardness of TSP variants with time windows, establishing that MT-TSP-MO inherits the hardest aspects of both subproblems.",
     "domains": [
       "Pythagorean",
@@ -1919,11 +1933,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "This conjecture proposes a precise asymptotic threshold for the maximum number of copies of a fixed bipartite graph $K_{s,t}$ in a Tur\u00e1n graph $K_{a,b}$, advancing the understanding of explicit Tur\u00e1n number constraints via geometric point-set arguments.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2094",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19217v1",
+    "status": "available",
+    "timestamp": "2026-06-19T08:21:49.299986+00:00",
+    "title": "Explicit bounds on Tur\u00e1n numbers for structured graph families"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every odd prime base B > 5, the length of the longest terminal cycle in the four-digit Kaprekar routine equals (B-1)/2 if and only if the multiplicative order of 2 modulo B is (B-1)/2.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2094",
+    "id": "fd_2095",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
@@ -1937,7 +1966,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2095",
+    "id": "fd_2096",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
@@ -1952,7 +1981,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2096",
+    "id": "fd_2097",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19677v1",
@@ -1967,13 +1996,28 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2097",
+    "id": "fd_2098",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19933v1",
     "status": "available",
     "timestamp": "2026-06-19T07:11:19.175046+00:00",
     "title": "Equidistribution of Galois orbits of CM points on products of non\u2011isomorphic Shimura curves"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for any oriented matroid, the e-embracing exchange distance between two e-embracing bases equals the graph distance between their corresponding e-positive fundamental circuits in the oriented matroid polyhedron P_{M^*,e}. This would strengthen Theorem 1.3 which only proves inequality and equality for uniform oriented matroids.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2099",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19573v1",
+    "status": "available",
+    "timestamp": "2026-06-19T08:25:04.863302+00:00",
+    "title": "Equality of Embracing Exchange Distance and Polyhedral Graph Distance"
   },
   {
     "consumed_by_exp_id": "",
@@ -2925,21 +2969,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T23:11:17.377449+00:00",
     "title": "Two boundary facts of the prime crossword in"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Sheaf-Theoretic Data Integration\n\nDerived from this cycle's findings in `Catalog/Algebra/SheafImputationAlgebra.lean`\n(gluing is an idempotent monoid / band; sheaf condition \u21d4 pairwise compatibility;\nunique support-bounded global section) and `SheafImputationProbability.lean`\n(`P(sheaf) = (1-r)^N`, antitone in `N`, `r`, and `n` via `C(n,k)`, with\nexponential decay to 0).\n\n## Conjecture 1 \u2014 The gluing band is a *left-regular* band, hence has a free model on rows\nWe proved `glue f f = f`, `glue (glue f g) f = glue f g`, and `glue f (glue g f)\n= glue f g`. Conjecture: `(PartialSection \u03b9 \u03b1, glue, emptySection)` is exactly the\nleft-regular band freely generated by the singleton rows `single i a`, and every\npartial section factors uniquely as an ordered glue of singletons.\n- **The key insight is** that left-biased merging is *order-recording*: the result\n  remembers \"who wrote each cell first\", which is precisely the universal property\n  of a free left-regular band on the cell-assignments.\n- **Why now?** The six algebraic laws are already formalized; the remaining step is\n  a normal-form/uniqueness argument that Mathlib's `FreeMonoid`/quotient machinery\n  can now support directly.\n\n## Conjecture 2 \u2014 Sheaf cohomology `H\u00b9` is the obstruction to imputation, and `dim H\u00b9` counts conflicts\nWe showed a family has a global section **iff** it is pairwise compatible. Conjecture:\nwhen compatibility fails, the minimal number of cell-edits needed to make the family\ngluable equals the rank of a \u010cech `H\u00b9` of the overlap nerve, and `H\u2070` is the space of\nglobal sections.\n- **The key insight is** that imputability is not just local consistency but a\n  *cohomological* condition: pairwise compatibility is the cocycle condition, and the\n  failure to glue is a nonzero cohomology class measuring exactly the conflict count.\n- **Why now?** The existence\u21d4compatibility equivalence pins `H\u2070`; the natural next\n  object is the coboundary map whose cokernel is the proven obstruction.\n\n## Conjecture 3 \u2014 `P(sheaf) = (1-r)^{C(n,k)}` is the *sharp* threshold for feasible imputation\nWe proved exponential decay `(1-r)^N \u2192 0` and `N`-/`n`-antitonicity. Conjecture: with\n`N = C(n,k)` independent constraints, the imputation success probability undergoes a\nsharp phase transition at `r* = 1 - C(n,k)^{-1/C(n,k)}`, i.e. feasibility is `\u22481`\nbelow `r*` and `\u22480` above it as `n \u2192 \u221e`.\n- **The key insight is** that the *number* of constraints, not their individual\n  difficulty, drives a first-moment threshold: `(1-r)^{C(n,k)}` crosses any fixed\n  level within an `O(1/C(n,k))` window of `r`, giving an abrupt cliff.\n- **Why now?** The closed form and its monotonicity are proven; locating the crossing\n  point is an elementary `log`/`exp` asymptotic that builds directly on\n  `consistencyProb_antitone_columns` and `consistencyProb_tendsto_zero`.\n\n## Conjecture 4 \u2014 Support-bounded uniqueness fails *minimally*: every non-bounded extension is a band extension of `familyGlue`\nWe proved the support-bounded global section is unique. Conjecture: any global section\n`h` (without the support bound) satisfies `h = glue (familyGlue s) h`, so the lattice\nof all consistent imputations is exactly the up-set of `familyGlue s` in the glue order.\n- **The key insight is** that `familyGlue s` is the *least* consistent fill-in, and the\n  support bound is precisely the predicate \"add no information beyond the data\" \u2014 every\n  other solution is obtained by gluing extra cells on top.\n- **Why now?** `familyGlue_unique` already isolates the minimal solution; the order\n  structure (`Extends` as a partial order with `glue` as join on compatible elements)\n  is in hand to state and prove the lattice description.\n\n## Conjecture 5 \u2014 Mean/KNN imputation is the metric projection that *ignores* the band structure\nConjecture: in a metric `\u03b1`, mean and KNN imputation equal the nearest-point projection\nonto the affine hull of observed rows, whereas sheaf imputation projects onto the\nband-closed global-section set; the two coincide iff the data is already pairwise\ncompatible, and otherwise sheaf imputation has strictly smaller worst-case error when\n`r < 1/2` and `n` large.\n- **The key insight is** that classical imputers optimize a single global objective\n  while sheaf imputation enforces `C(n,k)` local consistency constraints simultaneously,\n  so their gap is exactly the cohomological obstruction of Conjecture 2.\n- **Why now?** With the sheaf side fully formalized (existence, uniqueness, probability),\n  the comparison reduces to a projection-geometry statement that Mathlib's inner-product\n  and convexity libraries can now express.\n",
-    "domains": [
-      "Geometry",
-      "Algebra"
-    ],
-    "id": "fd_2098",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "3d9b7416",
-    "status": "available",
-    "timestamp": "2026-06-19T08:20:13.257741+00:00",
-    "title": "Derived from this cycle's findings in `Catalog/Algebra/SheafImputationAlgebra.le"
   },
   {
     "consumed_by_exp_id": "",
@@ -4104,7 +4133,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "54f377a3",
     "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
     "domains": [
       "Novelty",
@@ -4114,7 +4143,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.807837+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
