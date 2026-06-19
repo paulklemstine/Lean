@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a4cf656f",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Hodge–Laplacian Message Passing, Second Cycle\n\n## Synthesis\n\nThis cycle pushed the *spectral depth threshold* program of\n`HodgeSpectralThreshold.lean` forward along two of its ow",
-      "quality_score": 0.7568800000000001,
-      "sorry_count": 3,
-      "theorem_count": 0,
-      "timestamp": "2026-06-14T05:56:16",
-      "title": "The file `Catalog/MachineLearning/HodgeSpectralThreshold.lean` extracts a rigoro"
-    },
-    {
       "cycle_id": "4302919c",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Path Spaces, h-Levels, and Contractibility as a Universal Property\n\n## Synthesis\n\nThis cycle pushed the catalog's synthetic homotopy module `Logic.HomotopyTypeTheory`\n(`HoTT.IsCo",
@@ -499,19 +489,19 @@
       "theorem_count": 139,
       "timestamp": "2026-06-19T15:17:54",
       "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+    },
+    {
+      "cycle_id": "3b2adc6d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — BSD Research Cycle\n\nDerived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle.\nEach conjecture is falsifiable in Lean and extends the three modules\n`LocalF",
+      "quality_score": 0.7756000000000001,
+      "sorry_count": 0,
+      "theorem_count": 78,
+      "timestamp": "2026-06-19T15:59:51",
+      "title": "Birch and Swinnerton-Dyer Conjecture"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "98b29bfc",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Noise-Stable Prime Spectrum in Definable Quantum Walks\n\n## Synthesis\n\nThe file `Catalog/Shared/NoiseStablePrimeSpectrum.lean` reduces the whole\n\"definable quantum walk\" program t",
-      "quality_score": 0.44809189021044976,
-      "sorry_count": 5,
-      "theorem_count": 214,
-      "timestamp": "2026-06-14T22:11:08",
-      "title": "Noise-Stable Prime Spectrum in Definable Quantum Walks"
-    },
     {
       "cycle_id": "1ef7d13b",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 62,
       "timestamp": "2026-06-19T15:23:44",
       "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
+    },
+    {
+      "cycle_id": "3b2adc6d",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — BSD Research Cycle\n\nDerived from the Stage 3 (Analyze) and Stage 4 (Critique) findings of this cycle.\nEach conjecture is falsifiable in Lean and extends the three modules\n`LocalF",
+      "quality_score": 0.7756000000000001,
+      "sorry_count": 0,
+      "theorem_count": 78,
+      "timestamp": "2026-06-19T15:59:51",
+      "title": "Birch and Swinnerton-Dyer Conjecture"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "afe8c8b6",
-      "domain": "Novelty",
-      "name": "ext",
-      "quality": 0.7216
-    },
-    {
-      "cycle_id": "afe8c8b6",
-      "domain": "Novelty",
-      "name": "id_toFun",
-      "quality": 0.7216
-    },
-    {
-      "cycle_id": "afe8c8b6",
-      "domain": "Novelty",
-      "name": "comp_toFun",
-      "quality": 0.7216
-    },
     {
       "cycle_id": "cb2c4d8f",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "sheaf_condition",
       "quality": 0.8166
+    },
+    {
+      "cycle_id": "3b2adc6d",
+      "domain": "Applications",
+      "name": "analyticRank_eq_zero_iff",
+      "quality": 0.7756000000000001
+    },
+    {
+      "cycle_id": "3b2adc6d",
+      "domain": "Applications",
+      "name": "analyticRank_pos_iff",
+      "quality": 0.7756000000000001
+    },
+    {
+      "cycle_id": "3b2adc6d",
+      "domain": "Applications",
+      "name": "analyticRank_factorization",
+      "quality": 0.7756000000000001
     }
   ],
-  "last_updated": "2026-06-19T15:23:44",
+  "last_updated": "2026-06-19T15:59:51",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "8a8b0554",
-        "quality": 0.49925585666293404,
-        "theorems": 75,
-        "title": "This cycle delivered `Catalog/Logic/FibonacciPrimitiveDivisorBounded.lean`, a"
-      },
-      {
         "cycle_id": "dc77da43",
         "quality": 0.49856,
         "theorems": 4,
@@ -3141,6 +3135,12 @@
         "quality": 0.5532343961470463,
         "theorems": 79,
         "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
+      },
+      {
+        "cycle_id": "3b2adc6d",
+        "quality": 0.7756000000000001,
+        "theorems": 78,
+        "title": "Birch and Swinnerton-Dyer Conjecture"
       }
     ],
     "Bridges": [

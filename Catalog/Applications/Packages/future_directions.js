@@ -2192,6 +2192,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let B_n be the Birkhoff polytope, the convex hull in R^(n x n) of all n x n permutation matrices. Conjecture: B_n satisfies the clique-face property, meaning every clique in the 1-skeleton of B_n is exactly the vertex set of a face, if and only if n <= 2.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2112",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20430v1",
+    "status": "available",
+    "timestamp": "2026-06-19T16:03:07.038889+00:00",
+    "title": "Birkhoff polytopes have the clique-face property only in dimensions n <= 2"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any continuum F whose homeomorphism group contains a dense copy of the automorphism group of a projective Fra\u00efss\u00e9 limit with the approximate Ramsey property, the universal minimal flow of Homeo(F) must be non\u2011metrizable and fail to satisfy the combinatorial Ramsey conditions that would imply extreme amenability.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2113",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-19T16:03:19.909962+00:00",
+    "title": "Non\u2011metrizable universal minimal flow of Homeo(F) cannot exhibit the approximate Ramsey property"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -3435,7 +3465,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "EML Kolmogorov-Arnold Representation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2ae27971",
     "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem \u2014 given (a, f(a,n)), find n \u2014 requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
     "domains": [
       "Cryptography",
@@ -3445,7 +3475,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5499999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:27.563504+00:00",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },

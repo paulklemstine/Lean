@@ -1,302 +1,327 @@
-# Tropical-Analytic Duality for Elliptic L-Functions: A Rigorous Framework
+# The Analytic Rank of an L-Function: A Formal Skeleton for Birch–Swinnerton-Dyer
+
+**Author:** Aristotle
+**Date:** 2026-06-19
+**Domain:** Applications (Number Theory / Arithmetic Geometry)
 
 ## Abstract
 
-We develop a rigorous framework for **tropical-analytic duality** in the context of the Birch-Swinnerton-Dyer conjecture. We introduce the `TropicalLData` structure — a novel formalization of the tropical (min-plus) analogue of an elliptic L-function — and prove 19 theorems establishing its fundamental properties. Key results include: (1) the **tropical order equals tropical rank** bridge theorem, connecting our framework to the catalog's `tropical_order_eq_rank`; (2) a **free energy bound** relating the tropical regulator to a statistical mechanical partition function; (3) **invariance theorems** for the tropical order under shifts, scaling, and support agreement; (4) **transpose invariance** of the tropical regulator; and (5) **self-consistency and linearity** of the tropical BSD ratio. All theorems are proved with complete mathematical rigor in Lean 4 with Mathlib, using only the standard axioms (propext, Classical.choice, Quot.sound). We formulate a testable conjecture predicting that tropical orders match analytic ranks for all elliptic curves, and provide computational evidence via the Cremona database.
+The Birch and Swinnerton-Dyer (BSD) conjecture predicts that the algebraic rank of
+an elliptic curve $E/\mathbb{Q}$ — the rank $r$ of its finitely generated
+Mordell–Weil group $E(\mathbb{Q}) \cong \mathbb{Z}^r \times T$ — equals the
+*analytic rank*, the order of vanishing at $s = 1$ of the Hasse–Weil L-function
+$L(E,s)$. It further predicts the exact leading Taylor coefficient of $L$ at $s=1$
+in terms of the real period $\Omega_E$, the regulator $\operatorname{Reg}_E$, the
+order of the Tate–Shafarevich group $\#\Sha(E)$, the Tamagawa numbers $c_p$, and
+the torsion order. This paper isolates and rigorously establishes the *analytic*
+half of the rank statement. We define the analytic rank as the natural-number order
+of vanishing $\operatorname{ord}_{s_0} L$, and prove four structural theorems that
+any reasonable theory of L-function rank must satisfy: (1) **rank-zero detection**,
+$\operatorname{rank}_{\mathrm{an}} = 0 \iff L(s_0) \ne 0$; (2) its contrapositive,
+**positive-rank detection**; (3) the **leading-term factorization** exhibiting the
+nonzero leading coefficient predicted by the full BSD formula; and (4)
+**additivity** of analytic rank under products, the rank-level shadow of the Artin
+formalism. We certify non-vacuity by constructing, for each $r \in \mathbb{N}$, an
+explicit model L-function of analytic rank exactly $r$. On the local side we record
+the algebraic reformulation of Hasse's bound: a Frobenius eigenvalue lies on the
+circle $|z| = \sqrt p$ iff $a^2 \le 4p$. All results have been formally verified.
+
+---
 
 ## 1. Introduction
 
-### 1.1 Motivation
+### 1.1 The two ranks
 
-The Birch-Swinnerton-Dyer conjecture asserts that for an elliptic curve E/ℚ, the algebraic rank (the rank of the Mordell-Weil group E(ℚ)) equals the analytic rank (the order of vanishing of L(E,s) at s=1). Additionally, the leading coefficient of the Taylor expansion of L(E,s) at s=1 is predicted to satisfy a precise formula involving the regulator, the order of the Tate-Shafarevich group, Tamagawa numbers, and the torsion subgroup order.
+Let $E/\mathbb{Q}$ be an elliptic curve, given in Weierstrass form by
+$y^2 = x^3 + ax + b$ with $4a^3 + 27b^2 \ne 0$. Its set of rational points
+$E(\mathbb{Q})$ carries an abelian group law (the chord–tangent construction). By
+the **Mordell–Weil theorem**, this group is finitely generated:
+$$ E(\mathbb{Q}) \;\cong\; \mathbb{Z}^r \times T, $$
+where $T = E(\mathbb{Q})_{\mathrm{tors}}$ is finite and $r \ge 0$ is the **algebraic
+rank**. The rank measures the number of independent rational points of infinite
+order; it is finite but not effectively computable by any known unconditional
+algorithm.
 
-Tropical geometry provides a combinatorial shadow of algebraic geometry by replacing the field operations (×, +) with the tropical semiring operations (min, +). This tropicalization preserves essential structural features while rendering them amenable to combinatorial and computational methods.
+To each prime $p$ of good reduction associate the **trace of Frobenius**
+$$ a_p = p + 1 - \#E(\mathbb{F}_p), $$
+and form the **Hasse–Weil L-function** as the Euler product
+$$ L(E, s) = \prod_{p \text{ good}} \big(1 - a_p p^{-s} + p^{1 - 2s}\big)^{-1} \cdot \prod_{p \text{ bad}} (\text{local factor}), \qquad \Re(s) > 3/2, $$
+which (by modularity, Wiles et al.) continues analytically to all of $\mathbb{C}$.
+The **analytic rank** is the order of vanishing at the central point:
+$$ \operatorname{rank}_{\mathrm{an}}(E) := \operatorname{ord}_{s=1} L(E, s). $$
 
-### 1.2 Prior Work
+### 1.2 The conjecture
 
-The catalog theorem `tropical_order_eq_rank` (in `Catalog/Algebra/TropicalBSDEquality.lean`) establishes that, under a compatibility hypothesis, the tropical order of vanishing of a min-plus L-series equals the tropical rank of its generating family. This is the tropical analogue of "analytic rank = algebraic rank." Our work extends this foundation by:
+> **Conjecture (BSD, rank form).** $\operatorname{ord}_{s=1} L(E,s) = r$.
 
-1. Packaging tropical L-function data into a coherent structure (`TropicalLData`)
-2. Proving robust invariance properties
-3. Connecting the tropical regulator to statistical mechanics
-4. Defining and analyzing the tropical BSD ratio
-5. Formulating testable predictions
+> **Conjecture (BSD, strong form).** Writing $r$ for the common rank,
+> $$ \lim_{s\to 1} \frac{L(E,s)}{(s-1)^r} = \frac{\Omega_E \cdot \operatorname{Reg}_E \cdot \#\Sha(E) \cdot \prod_p c_p}{(\#E(\mathbb{Q})_{\mathrm{tors}})^2}. $$
 
-### 1.3 Contributions
+The known unconditional results are partial: by Gross–Zagier and Kolyvagin, if the
+analytic rank is $0$ or $1$ then it equals the algebraic rank, and $\Sha$ is finite
+in those cases. The general statement, and the finiteness of $\Sha$, remain open and
+constitute one of the Clay Millennium Prize Problems.
 
-Our main contributions are:
+### 1.3 Contribution and scope
 
-- **TropicalLData** (Definition): A novel structure encapsulating the coefficient function, weight function, support, and positivity constraints of a tropical L-series. This does not exist in the catalog and provides the foundation for all subsequent results.
+We do not resolve BSD. Instead we give a **formally verified analytic skeleton**:
+the precise, unconditional structural properties that the order-of-vanishing
+invariant satisfies, decoupled from the (open) identification with the algebraic
+rank. These are the statements on which any proof of BSD's rank equality must
+ultimately rest, and which a formalization of the full conjecture would import as
+lemmas. We work with an abstract analytic function $L : \mathbb{C} \to \mathbb{C}$
+and a central point $s_0 \in \mathbb{C}$ (take $s_0 = 1$ for BSD), using the order
+of vanishing as the organizing invariant.
 
-- **Free Energy Bound** (Theorem): `(-1/β) · log Z(β) ≤ tropicalRegulator R`, establishing the tropical regulator as the zero-temperature limit of a statistical mechanical partition function.
+---
 
-- **Scaling Invariance** (Theorem): The tropical order is invariant under simultaneous positive scaling of coefficients and weights, proved using the monotonicity of the minimum under positive scaling and the `Real.sInf_smul_of_nonneg` lemma.
+## 2. Definitions
 
-- **Transpose Invariance** (Theorem): `tropReg(Rᵀ) = tropReg(R)`, using the bijection σ ↦ σ⁻¹ on the permutation group.
+Throughout, "analytic at $s_0$" means complex-analytic (holomorphic) in a
+neighborhood of $s_0$. For an analytic function the **order of vanishing**
+$\operatorname{ord}_{s_0} L \in \mathbb{N} \cup \{\infty\}$ is the largest $n$ such
+that $(s - s_0)^{-n} L(s)$ remains analytic and nonzero at $s_0$; it equals $\infty$
+exactly when $L$ vanishes identically near $s_0$. Mathlib models this as
+`analyticOrderAt L s₀`, valued in $\mathbb{N}_\infty = \mathbb{N} \cup \{\infty\}$.
 
-- **Tropical BSD Ratio** (Definition and Theorems): Self-consistency, linearity, and preservation under scaling.
+**Definition 2.1 (Analytic rank).**
+$$ \operatorname{analyticRank}(L, s_0) := \big(\operatorname{ord}_{s_0} L\big)_{\mathbb{N}} \in \mathbb{N}, $$
+the truncation to $\mathbb{N}$ of the order of vanishing (so $\infty \mapsto 0$ under
+truncation, which is why finiteness hypotheses appear below). For the BSD L-function
+one takes $s_0 = 1$.
 
-## 2. Definitions and Notation
+**Definition 2.2 (Finiteness / non-degeneracy).** We say $L$ is *non-degenerate at
+$s_0$* if $\operatorname{ord}_{s_0} L \ne \infty$, i.e. $L$ is not identically zero
+in any neighborhood of $s_0$. This is the formal counterpart of the
+analytic-continuation hypothesis: BSD's L-function is non-degenerate because it is a
+nonzero entire function.
 
-### 2.1 The Tropical Semiring
+**Definition 2.3 (Model L-function).** For $r \in \mathbb{N}$ and $c \in \mathbb{C}$,
+$$ \operatorname{modelL}(r, c)(s) := (s - 1)^r \cdot c. $$
+This is the simplest entire function with prescribed order of vanishing at $s_0 = 1$.
 
-We work over (ℝ, min, +), the **tropical semiring** (also called the min-plus algebra). For a finite set S ⊂ ℕ, a coefficient function a : ℕ → ℝ, and a weight function w : ℕ → ℝ, the **tropical L-series** at parameter s is:
+**Definition 2.4 (Local factor and Frobenius).** At a prime $p$ of good reduction,
+the local L-factor is the reciprocal of
+$$ L_p(T) = 1 - a_p T + p T^2, $$
+whose reciprocal roots $\alpha, \beta$ — the roots of the **Frobenius
+characteristic polynomial** $X^2 - a_p X + p$ — are the *Frobenius eigenvalues*.
+By Vieta, $\alpha + \beta = a_p$ and $\alpha\beta = p$.
 
-$$L^{\mathrm{trop}}(s) = \min_{n \in S} (a(n) + s \cdot w(n))$$
-
-### 2.2 Active Set and Tropical Order
-
-**Definition (Active Set).** For parameter s ∈ ℝ:
-$$\mathrm{Active}(s) = \{n \in S : a(n) + s \cdot w(n) = L^{\mathrm{trop}}(s)\}$$
-
-**Definition (Tropical Order).** The tropical order of vanishing at s=1 is:
-$$\mathrm{ord}^{\mathrm{trop}} = |\mathrm{Active}(1)| - 1$$
-
-This counts the "multiplicity" of the minimum — how many directions achieve the minimum simultaneously.
-
-### 2.3 Tropical Regulator
-
-**Definition.** For an n×n matrix R, the tropical regulator (tropical permanent) is:
-$$\mathrm{TropReg}(R) = \min_{\sigma \in S_n} \sum_{i=1}^n R_{i,\sigma(i)}$$
-
-This is the optimal value of the assignment problem on R.
-
-### 2.4 TropicalLData Structure
-
-**Definition (Novel).** A `TropicalLData` consists of:
-- A coefficient function `coeff : ℕ → ℝ` (modeling p-adic valuations of L-function coefficients)
-- A weight function `weight : ℕ → ℝ` (modeling the tropical variable)
-- A finite support `support : Finset ℕ` with `support.Nonempty`
-- Positivity: `∀ n ∈ support, 0 ≤ coeff n` and `∀ n ∈ support, 0 ≤ weight n`
-
-### 2.5 Tropical BSD Ratio
-
-**Definition (Novel).** A `TropicalBSDRatio` consists of the six tropical invariants:
-- `leadingCoeff` (tropical leading coefficient of L)
-- `regulator` (tropical regulator)
-- `shaOrder` (log |Sha|)
-- `tamagawa` (sum of log c_p)
-- `torsion` (log |E_tors|)
-- `period` (log Ω)
-
-The **defect** is:
-$$\delta = \text{leadingCoeff} - (\text{period} + \text{regulator} + \text{sha} + \text{tamagawa} - 2 \cdot \text{torsion})$$
-
-BSD predicts δ = 0.
+---
 
 ## 3. Main Results
 
-### 3.1 Invariance Theorems
+### 3.1 Rank-zero and positive-rank detection
 
-**Theorem (Coefficient Shift Invariance).** For any c ∈ ℝ:
-$$\mathrm{Active}_{a+c, w}(s) = \mathrm{Active}_{a, w}(s)$$
+**Theorem 3.1 (`analyticRank_eq_zero_iff`, rank-zero detection).**
+Let $L$ be analytic at $s_0$ and non-degenerate at $s_0$. Then
+$$ \operatorname{analyticRank}(L, s_0) = 0 \iff L(s_0) \ne 0. $$
 
-*Proof sketch.* The minimum of {a(n) + c + s·w(n)} over S equals c + min{a(n) + s·w(n)}, so the argmin set is unchanged. The formal proof uses extensionality on the filter condition and the interaction of constants with `Finset.inf'`.
+*Proof sketch.* By definition the rank is the $\mathbb{N}$-truncation of
+$\operatorname{ord}_{s_0} L$. Truncation gives $0$ either when the order is genuinely
+$0$ or when it is $\infty$; the non-degeneracy hypothesis excludes the latter, so
+rank $0$ is equivalent to $\operatorname{ord}_{s_0} L = 0$. A standard
+characterization (`analyticOrderAt_eq_zero`) states that, for a function analytic at
+$s_0$, the order of vanishing is $0$ iff $L(s_0) \ne 0$. Combining the two gives the
+equivalence. $\square$
 
-**Theorem (Weight Shift Invariance).** For any c ∈ ℝ:
-$$\mathrm{Active}_{a, w+c}(1) = \mathrm{Active}_{a, w}(1)$$
+**Theorem 3.2 (`analyticRank_pos_iff`, positive-rank detection).**
+Under the same hypotheses,
+$$ \operatorname{analyticRank}(L, s_0) \ge 1 \iff L(s_0) = 0. $$
 
-*Proof sketch.* At s=1, (w(n)+c)·1 = w(n) + c, so a(n) + (w(n)+c) = (a(n) + w(n)) + c, which is again a constant shift. The formal proof uses `csInf` properties and careful manipulation of the image set.
+*Proof sketch.* The rank is a natural number, so being positive is the negation of
+being zero. Apply Theorem 3.1 and negate both sides: $L(s_0) \ne 0$ becomes
+$L(s_0) = 0$. $\square$
 
-**Theorem (Positive Scaling Invariance).** For c > 0:
-$$\mathrm{ord}^{\mathrm{trop}}_{ca, cw} = \mathrm{ord}^{\mathrm{trop}}_{a, w}$$
+These two theorems formalize the most-cited consequence of BSD: for the
+elliptic-curve L-function, $L(E,1) \ne 0$ corresponds to algebraic rank $0$ (finitely
+many rational points), while $L(E,1) = 0$ corresponds to positive rank (infinitely
+many rational points). The detection statements are unconditional facts about the
+analytic side; BSD is the (open) assertion that the analytic rank so detected equals
+the algebraic rank.
 
-*Proof sketch.* Since c·a(n) + c·w(n) = c·(a(n)+w(n)) and c > 0, the argmin of c·f equals the argmin of f. Uses `Real.sInf_smul_of_nonneg`.
+### 3.2 Leading-term factorization
 
-**Theorem (Stabilization).** If a₁(n) = a₂(n) for all n ∈ S, then:
-$$\mathrm{ord}^{\mathrm{trop}}_{a_1, w} = \mathrm{ord}^{\mathrm{trop}}_{a_2, w}$$
+**Theorem 3.3 (`analyticRank_factorization`).**
+Let $L$ be analytic and non-degenerate at $s_0$, with $r = \operatorname{analyticRank}(L, s_0)$.
+Then there exists an analytic function $g$ with $g(s_0) \ne 0$ such that, in a
+neighborhood of $s_0$,
+$$ L(s) = (s - s_0)^r \cdot g(s). $$
 
-*Proof sketch.* The inf' and filter conditions depend only on values at support elements.
+*Proof sketch.* This is the defining universal property of the order of vanishing.
+Mathlib's `AnalyticAt.analyticOrderNatAt_eq_iff` states, for a function analytic and
+of finite order at $s_0$, that the order equals $n$ iff such a factorization with
+$g(s_0)\ne 0$ exists. Instantiating $n = r$ (which holds by definition) extracts the
+witness $g$. $\square$
 
-### 3.2 Tropical Regulator Properties
+The value $g(s_0)$ is exactly the **leading Taylor coefficient**
+$\lim_{s\to s_0}(s-s_0)^{-r}L(s)$. For the BSD L-function with $s_0 = 1$, this
+coefficient is precisely the quantity the strong BSD formula evaluates:
+$$ g(1) = \frac{\Omega_E \cdot \operatorname{Reg}_E \cdot \#\Sha(E) \cdot \prod_p c_p}{(\#E(\mathbb{Q})_{\mathrm{tors}})^2}. $$
+Theorem 3.3 guarantees, unconditionally, that such a finite nonzero leading
+coefficient *exists* whenever $L$ is non-degenerate; the strong conjecture is the
+arithmetic *evaluation* of it.
 
-**Theorem (Nonnegativity).** If R_{i,j} ≥ 0 for all i,j, then TropReg(R) ≥ 0.
+### 3.3 Additivity under products
 
-**Theorem (Trace Bound).** TropReg(R) ≤ Tr(R) = ∑ᵢ R_{i,i}.
+**Theorem 3.4 (`analyticRank_mul`, additivity).**
+Let $f, g$ be analytic and non-degenerate at $s_0$. Then
+$$ \operatorname{analyticRank}(f \cdot g, s_0) = \operatorname{analyticRank}(f, s_0) + \operatorname{analyticRank}(g, s_0). $$
 
-*Proof.* The identity permutation gives sum = trace, and inf' ≤ every element.
+*Proof sketch.* Orders of vanishing add under multiplication of analytic functions:
+if $f = (s-s_0)^m f_1$ and $g = (s-s_0)^n g_1$ with $f_1(s_0), g_1(s_0) \ne 0$, then
+$fg = (s-s_0)^{m+n} f_1 g_1$ with $(f_1 g_1)(s_0) \ne 0$. In $\mathbb{N}_\infty$ this
+is `analyticOrderAt_mul`; truncating to $\mathbb{N}$ requires both orders finite,
+supplied by the non-degeneracy hypotheses, giving the natural-number identity
+`analyticOrderNatAt_mul`. $\square$
 
-**Theorem (Transpose Invariance).** TropReg(Rᵀ) = TropReg(R).
+Additivity is the rank-level form of the **Artin / Rankin–Selberg formalism**: when
+an abelian variety decomposes (up to isogeny) into a product, its L-function
+factors, and analytic ranks add. It underlies the strategy of reducing a curve's
+analytic rank to those of simpler isogeny factors. Combined with Theorem 3.1 it
+yields **isogeny invariance** of the analytic rank: multiplying $L$ by a
+non-vanishing analytic unit $u$ (with $u(s_0)\ne 0$, hence $\operatorname{rank} u = 0$)
+leaves the analytic rank unchanged — the analytic shadow of the BSD prediction that
+isogenous curves share a rank (see Future Directions, Conjecture 3).
 
-*Proof sketch.* The bijection σ ↦ σ⁻¹ on S_n satisfies ∑ᵢ Rᵀ(i, σ(i)) = ∑ᵢ R(σ(i), i) = ∑ⱼ R(j, σ⁻¹(j)). So inf_σ ∑ Rᵀ(i,σ(i)) = inf_τ ∑ R(j,τ(j)).
+### 3.4 Non-vacuity: every rank is realized
 
-**Theorem (Constant Matrix).** TropReg(c·J) = n·c where J is the all-ones matrix and n = dim.
+**Lemma 3.5 (`modelL_analyticAt`).** For all $r \in \mathbb{N}$, $c \in \mathbb{C}$,
+the model $\operatorname{modelL}(r,c)$ is analytic everywhere, in particular at
+$s_0 = 1$.
 
-### 3.3 Statistical Mechanics Bridge
+*Proof sketch.* $(s-1)^r$ is a polynomial (analytic as a product of $r$ copies of
+the analytic function $s \mapsto s-1$), and the constant $c$ is analytic; the product
+of analytic functions is analytic. $\square$
 
-**Definition (Partition Function).**
-$$Z(\beta) = \sum_{\sigma \in S_n} \exp\left(-\beta \sum_i R_{i,\sigma(i)}\right)$$
+**Theorem 3.6 (`modelL_analyticRank`, realizability).** For all $r \in \mathbb{N}$
+and $c \ne 0$,
+$$ \operatorname{analyticRank}(\operatorname{modelL}(r,c), 1) = r. $$
 
-**Theorem (Positivity).** Z(β) > 0 for all β.
+*Proof sketch.* By Lemma 3.5 the model is analytic at $1$. The factorization
+$\operatorname{modelL}(r,c)(s) = (s-1)^r \cdot c$ exhibits exactly the form of
+Theorem 3.3 with $g \equiv c$ and $g(1) = c \ne 0$, so the order of vanishing is the
+natural number $r$ (`analyticOrderAt_eq_natCast`). Truncating $r$ to $\mathbb{N}$
+returns $r$. $\square$
 
-*Proof.* Each summand exp(·) > 0, and the sum is over the nonempty set S_n.
+**Corollary 3.7 (`modelL_central_value`).** For $c \ne 0$,
+$$ \operatorname{modelL}(r,c)(1) = 0 \iff r \ge 1. $$
 
-**Theorem (Free Energy Bound).** For β > 0:
-$$\frac{-1}{\beta} \log Z(\beta) \leq \mathrm{TropReg}(R)$$
+*Proof sketch.* At $s = 1$ the factor $(s-1)^r$ becomes $0^r$, which is $0$ for
+$r \ge 1$ and $1$ for $r = 0$; multiplying by $c \ne 0$, the value is $0$ iff
+$r \ge 1$. $\square$
 
-*Proof sketch.* Let m = TropReg(R). There exists σ₀ with ∑ᵢ R(i,σ₀(i)) = m. Then Z(β) ≥ exp(-β·m) (single term). So log Z ≥ -β·m. Dividing by -β < 0: (-1/β)·log Z ≤ m.
+Theorem 3.6 shows the analytic-rank invariant is **surjective onto $\mathbb{N}$**:
+it is not secretly constant or trivial. Corollary 3.7 is the positive-rank
+detection theorem (3.2) made fully explicit on this family.
 
-*Significance.* This establishes that the tropical regulator is the **ground state energy** of a statistical mechanical system. The partition function Z(β) is the "softened" version, and as β → ∞ (zero temperature), the free energy converges to the ground state energy from below.
+### 3.5 The local side: Hasse's bound, algebraically
 
-### 3.4 Tropical BSD Ratio
+**Theorem 3.8 (Hasse bound, eigenvalue form).** Let $p$ be prime and $a \in \mathbb{Z}$.
+A root $z \in \mathbb{C}$ of the Frobenius polynomial $X^2 - aX + p$ lies on the
+circle of radius $\sqrt p$, i.e. $|z| = \sqrt p$, if and only if
+$$ a^2 \le 4p. $$
 
-**Theorem (Self-consistency).** The zero data (all invariants = 0) satisfies BSD: δ = 0.
+*Proof sketch.* The roots are $z = \tfrac{a \pm \sqrt{a^2 - 4p}}{2}$. If
+$a^2 \le 4p$, the discriminant is $\le 0$, the roots are complex conjugates, and
+$|z|^2 = z\bar z = \alpha\beta = p$ by Vieta, so $|z| = \sqrt p$. Conversely, if
+$|z| = \sqrt p$ then $z\bar z = p = \alpha\beta$ forces $\bar z = \beta$, so the
+roots are conjugate, the discriminant $a^2 - 4p$ is $\le 0$, hence $a^2 \le 4p$.
+$\square$
 
-**Theorem (Linearity of Defect).** defect(c·r) = c · defect(r) for any scalar c.
+This is the algebraic core of the **Riemann Hypothesis for elliptic curves over
+finite fields** (Hasse's theorem $|a_p| \le 2\sqrt p$): the analytic statement
+"eigenvalues on the circle $\sqrt p$" is equivalent to a one-line integer
+inequality. The reciprocal-root symmetry $\alpha \leftrightarrow p/\alpha$ encodes
+the functional equation of the local zeta function $Z_p(T) = L_p(T)/((1-T)(1-pT))$,
+and the point count expands as
+$\#E(\mathbb{F}_p) = p + 1 - a = (1-\alpha)(1-\beta)$, seeding the global Euler
+product.
 
-**Theorem (BSD Preservation Under Scaling).** If r.holds (δ=0), then (c·r).holds for any c.
-
-*Proof.* By linearity: defect(c·r) = c · defect(r) = c · 0 = 0.
-
-### 3.5 Bridge Theorem
-
-**Theorem (Tropical Order = Rank via LData).** If L.activeSet.card = m+1, then L.tropicalOrder = m = tropicalRank(gens).
-
-*Proof.* By definition: order = card - 1 = (m+1) - 1 = m, and rank = m.
-
-This connects our `TropicalLData` framework to the catalog's `tropical_order_eq_rank`: any TropicalLData with a compatible generating family satisfies the tropical BSD equality.
-
-### 3.6 Order Bounds
-
-**Theorem.** L.tropicalOrder ≤ |L.support| - 1.
-
-**Theorem.** L.tropicalOrder = 0 ↔ |L.activeSet| = 1.
-
-### 3.7 Functional Equation
-
-**Theorem (Symmetry at s=1).** If the tropical functional equation holds with correction = 0, then the minimum at s=1 equals the minimum at s=2-1=1 (tautologically, but establishing the framework for non-trivial corrections).
+---
 
 ## 4. Algorithms
 
-### 4.1 Tropical Order Computation
+The structural theorems translate into concrete computational procedures, which the
+companion `demo.py` realizes.
 
-**Input:** Coefficient function a, weight function w, support S.
-**Output:** Tropical order of vanishing at s=1.
+**Algorithm A — Analytic rank by series truncation.** Given a Taylor expansion of
+$L$ at $s_0$ (coefficients $a_0, a_1, \dots$), the analytic rank is the index of the
+first nonzero coefficient: $\operatorname{rank} = \min\{ n : a_n \ne 0 \}$. This
+operationalizes Theorem 3.3 (the leading term is $a_r(s-s_0)^r$) and Theorem 3.1
+(rank $0 \iff a_0 = L(s_0) \ne 0$). Complexity: $O(N)$ in the number of coefficients
+examined, with a tolerance for floating-point zero-detection.
 
-```
-Algorithm TropicalOrder(a, w, S):
-  m ← min{a(n) + w(n) : n ∈ S}
-  A ← {n ∈ S : a(n) + w(n) = m}
-  return |A| - 1
-```
+**Algorithm B — Trace of Frobenius and Hasse verification.** For a curve
+$y^2 = x^3 + ax + b$ over $\mathbb{F}_p$, count affine points by evaluating the
+Legendre symbol of $x^3+ax+b$ for each $x \in \mathbb{F}_p$, add the point at
+infinity, set $a_p = p + 1 - \#E(\mathbb{F}_p)$, and check $a_p^2 \le 4p$
+(Theorem 3.8). Complexity: $O(p \log p)$ per prime.
 
-**Complexity:** O(|S|) time, O(1) space.
+**Algorithm C — Local factor and Euler product.** Form $L_p(T) = 1 - a_p T + pT^2$,
+factor it to obtain Frobenius eigenvalues $\alpha,\beta$, verify $|\alpha|=|\beta|=\sqrt p$
+and $\alpha\beta = p$, and accumulate the partial Euler product
+$\prod_{p \le X} L_p(p^{-s})^{-1}$ as a numerical approximation to $L(E,s)$.
 
-### 4.2 Tropical Regulator Computation
+---
 
-**Input:** n×n matrix R.
-**Output:** TropReg(R) = min_σ ∑ᵢ R(i,σ(i)).
+## 5. Applications
 
-```
-Algorithm TropicalRegulator(R):
-  return HungarianAlgorithm(R)  // Optimal assignment
-```
+- **Rank-zero curves and finiteness.** Theorem 3.1 gives the analytic criterion
+  $L(E,1)\ne 0$ that (via Kolyvagin) certifies algebraic rank $0$ and hence finitely
+  many rational points — useful in Diophantine problems and descent.
+- **Congruent number problem.** Whether $n$ is the area of a rational right triangle
+  is equivalent to positive rank of $y^2 = x^3 - n^2 x$; Theorem 3.2 provides the
+  analytic test $L(E_n, 1) = 0$.
+- **Cryptographic curve selection.** Hasse's bound (Theorem 3.8) constrains group
+  orders $\#E(\mathbb{F}_p) = p+1-a_p \in [p+1-2\sqrt p,\ p+1+2\sqrt p]$, the
+  backbone of elliptic-curve cryptography parameter choices.
+- **Isogeny classes.** Additivity (Theorem 3.4) and its invariance corollary justify
+  reducing rank computations across an isogeny class to a single representative.
 
-**Complexity:** O(n³) time via the Hungarian algorithm.
-
-### 4.3 Partition Function Computation
-
-**Input:** n×n matrix R, inverse temperature β.
-**Output:** Z(β) = ∑_σ exp(-β · ∑ᵢ R(i,σ(i))).
-
-```
-Algorithm PartitionFunction(R, β):
-  // Use Ryser's formula for the permanent with modified entries
-  B[i][j] ← exp(-β · R[i][j])
-  return Permanent(B)  // via inclusion-exclusion
-```
-
-**Complexity:** O(2ⁿ · n) time via Ryser's formula.
-
-## 5. Computational Experiments
-
-### 5.1 Tropical Order vs. Analytic Rank
-
-We tested the **Tropical BSD Precision Conjecture** on elliptic curves from the Cremona database.
-
-For each curve E with conductor N < 200, we:
-1. Computed a_p for primes p < 50
-2. Set coeff(p) = v_p(a_p) (p-adic valuation), weight(p) = log(p)
-3. Computed the tropical order
-4. Compared with the known analytic rank
-
-| Curve | Conductor | Analytic Rank | Tropical Order | Match? |
-|-------|-----------|---------------|----------------|--------|
-| 11a1  | 11        | 0             | 0              | ✓      |
-| 37a1  | 37        | 1             | 1              | ✓      |
-| 43a1  | 43        | 1             | 1              | ✓      |
-| 389a1 | 389       | 2             | 2              | ✓      |
-
-(See `demo.py` for the full computation.)
-
-### 5.2 Free Energy Convergence
-
-For the 2×2 matrix R = [[1, 2], [3, 0]], TropReg = min(1+0, 2+3) = 1.
-
-| β    | Z(β)    | F(β)   | TropReg |
-|------|---------|--------|---------|
-| 0.1  | 1.869   | 6.27   | 1       |
-| 1.0  | 0.554   | 0.590  | 1       |
-| 5.0  | 0.0075  | 0.977  | 1       |
-| 10.0 | 5.6e-5  | 0.981  | 1       |
-| 50.0 | 1.9e-22 | 1.000  | 1       |
-
-The free energy F(β) converges to TropReg from below, confirming the free energy bound.
+---
 
 ## 6. Discussion
 
-### 6.1 Significance
+The results here cleanly separate the *analytic structure* of BSD from its *open
+arithmetic content*. Theorems 3.1–3.4 are unconditional theorems about analytic
+functions; they are exactly the lemmas a complete formalization of BSD would invoke
+on the analytic side. What remains open is the bridge: identifying the analytic rank
+defined here (Definition 2.1) with the algebraic Mordell–Weil rank, and evaluating
+the leading coefficient $g(1)$ of Theorem 3.3 by the strong BSD formula. The
+non-vacuity results (Theorems 3.5–3.7) guard against a subtle failure mode of
+formalization — a definition that is technically well-typed but secretly constant —
+by exhibiting the invariant's surjectivity onto $\mathbb{N}$.
 
-The tropical-analytic duality framework provides:
+A delicate point is the finiteness (non-degeneracy) hypothesis. The
+$\mathbb{N}$-valued rank truncates $\infty$ to $0$, so without non-degeneracy the
+equivalence "rank $0 \iff L(s_0)\ne 0$" would fail (a function identically zero near
+$s_0$ has order $\infty$, truncated rank $0$, yet $L(s_0) = 0$). The hypothesis is
+the formal shadow of the analytic-continuation input to BSD: the L-function is a
+genuine nonzero entire function, hence non-degenerate.
 
-1. **Computational access**: Tropical orders are computable in polynomial time, while analytic ranks require exponential-time complex analysis.
-
-2. **Structural insight**: The connection to statistical mechanics (via the partition function) reveals that BSD invariants have a thermodynamic interpretation.
-
-3. **Falsifiable predictions**: The Tropical BSD Precision Conjecture provides a concrete, testable hypothesis.
-
-### 6.2 Limitations
-
-1. The bridge between tropical and classical orders remains conjectural. The compatibility hypothesis in `tropical_order_eq_rank` encodes the desired equality rather than deriving it.
-
-2. The tropical functional equation framework is established but the non-trivial implications (parity constraints on the order) require further development.
-
-3. The partition function analysis is one-directional: we have the upper bound but not matching lower bounds with explicit convergence rates.
-
-### 6.3 Relationship to Known Results
-
-The tropical order computation is reminiscent of the **Newton polygon** method for computing p-adic valuations of roots. Indeed, the active set at parameter s is exactly the set of vertices of the lower convex hull of the points {(w(n), a(n))} that are visible from slope -s.
-
-The free energy bound is a special case of the **Gibbs variational principle** from statistical mechanics. The novelty is applying it in the context of BSD invariants.
+---
 
 ## 7. Future Work
 
-See `FUTURE_DIRECTIONS.md` for detailed research directions. The most promising near-term extensions are:
+See the Future Directions section of the package for the full list. In brief:
+(1) derive the local zeta functional equation $Z_p(1/(pT)) = (\text{power}) \cdot Z_p(T)$
+purely from eigenvalue symmetry $\alpha\leftrightarrow p/\alpha$; (2) prove the Hasse
+interval $[p+1-\lfloor 2\sqrt p\rfloor,\ p+1+\lfloor 2\sqrt p\rfloor]$ is symmetric
+and saturated under the quadratic twist $a\mapsto -a$; (3) upgrade additivity
+(Theorem 3.4) to full isogeny invariance of the analytic rank; (4) formulate the
+parity bridge linking the central sign $w = (-1)^{\operatorname{rank}}$ to the parity
+of the Mordell–Weil rank.
 
-1. **Effective stabilization bounds**: Prove that the tropical order computed from the first N primes equals the true tropical order for N ≥ f(conductor), with an explicit bound f.
-
-2. **Phase transition analysis**: Characterize the non-analytic points of the free energy F(β) and relate them to the rank.
-
-3. **Isogeny invariance**: Prove that the tropical BSD defect is invariant under isogeny.
+---
 
 ## 8. Conclusion
 
-We have established a rigorous mathematical framework for tropical-analytic duality in the context of BSD, proved 19 theorems with complete formal verification, and formulated testable predictions. The framework connects three mathematical domains — tropical geometry, arithmetic geometry, and statistical mechanics — through the unifying concept of the tropical regulator as a ground state energy. All results are verified in Lean 4 with Mathlib.
-
-## References
-
-1. Birch, B.J. and Swinnerton-Dyer, H.P.F. "Notes on Elliptic Curves II." J. Reine Angew. Math. 218 (1965), 79–108.
-
-2. Mikhalkin, G. "Tropical Geometry and its Applications." Proceedings of the ICM (2006).
-
-3. Itenberg, I., Mikhalkin, G., and Shustin, E. "Tropical Algebraic Geometry." Oberwolfach Seminars, Vol. 35 (2007).
-
-4. Maclagan, D. and Sturmfels, B. "Introduction to Tropical Geometry." Graduate Studies in Mathematics, Vol. 161 (2015).
-
-5. Silverman, J.H. "The Arithmetic of Elliptic Curves." Graduate Texts in Mathematics, Vol. 106 (2009).
-
-6. Cremona, J.E. "Algorithms for Modular Elliptic Curves." Cambridge University Press (1997).
-
-7. Kuhn, H.W. "The Hungarian Method for the Assignment Problem." Naval Research Logistics Quarterly 2 (1955), 83–97.
-
-8. Gross, B. and Zagier, D. "Heegner Points and Derivatives of L-Series." Inventiones Mathematicae 84 (1986), 225–320.
+We have given a formally verified analytic skeleton for the Birch and
+Swinnerton-Dyer conjecture: a clean definition of analytic rank as the order of
+vanishing of an L-function at its central point, and four structural theorems —
+rank-zero detection, positive-rank detection, leading-term factorization, and
+additivity — together with an explicit realizability family certifying that the
+invariant is genuinely surjective, and the algebraic reformulation of Hasse's bound
+on the local side. These are the load-bearing analytic facts on which a complete
+resolution of BSD must rest.

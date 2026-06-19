@@ -3260,6 +3260,65 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Birkhoff-von Neumann theorem",
+      "1-skeleton of a convex polytope",
+      "clique-face property from the paper",
+      "Mathlib.Geometry.Convex.Basic",
+      "Mathlib.Combinatorics.SimpleGraph.Basic",
+      "Mathlib.Data.Matrix.Basic"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let B_n be the Birkhoff polytope, the convex hull in R^(n x n) of all n x n permutation matrices. Conjecture: B_n satisfies the clique-face property, meaning every clique in the 1-skeleton of B_n is exactly the vertex set of a face, if and only if n <= 2.",
+    "domain_bridges": [
+      "permutation matrices to vertices of transportation polytopes",
+      "polytope skeletons to Cayley-type graphs on symmetric groups",
+      "clique-face obstructions to quadratic generation of toric ideals"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2112",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "For n <= 2, B_n is respectively a point or a segment, so the clique-face property is immediate. For n = 3, two permutation vertices are adjacent exactly when their quotient permutation has a single nontrivial cycle; every nonidentity element of S_3 has this property, so the 1-skeleton of B_3 is complete on six vertices. However B_3 is 4-dimensional and its facets are given by equations x_ij = 0, each containing only four permutation vertices, so a five-vertex clique is not the vertex set of any face. Thus B_3 fails the property. For n >= 3, B_n contains a face isomorphic to B_3 by fixing n-3 rows and columns to the corresponding identity entries. Since the clique-face property passes to faces, B_n also fails it.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20430v1",
+    "status": "available",
+    "timestamp": "2026-06-19T16:03:07.038889+00:00",
+    "title": "Birkhoff polytopes have the clique-face property only in dimensions n <= 2"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "math.LO",
+      "math.CO",
+      "math.DS"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any continuum F whose homeomorphism group contains a dense copy of the automorphism group of a projective Fraïssé limit with the approximate Ramsey property, the universal minimal flow of Homeo(F) must be non‑metrizable and fail to satisfy the combinatorial Ramsey conditions that would imply extreme amenability.",
+    "domain_bridges": [
+      "extreme_amenability",
+      "projective_Fraisse_limits",
+      "universal_minimal_flow"
+    ],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2113",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use a diagonalisation forcing construction to produce a finite substructure of the Fraïssé limit that violates the approximate Ramsey condition, thereby contradicting the hypothesis that the induced homeomorphism group would yield an extremely amenable universal minimal flow.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-19T16:03:19.909962+00:00",
+    "title": "Non‑metrizable universal minimal flow of Homeo(F) cannot exhibit the approximate Ramsey property"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
@@ -4925,7 +4984,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2ae27971",
     "description": "The key insight is that the Collatz map T(n) = n/2 if n even, 3n+1 if n odd, appears to be a one-way function: easy to compute forward (polynomial time), intractable to invert (finding a preimage requires exponential search). Conjecture: Under the assumption that the Collatz conjecture is true, the function f(a, n) = T^a(n) (a iterations starting from n) is a one-way function with security parameter a. The inversion problem — given (a, f(a,n)), find n — requires O(2^{a/log(a)}) steps. Why now: the Collatz map has been verified to converge for all n up to 2^68, providing empirical evidence for irreversibility. Test: prove that f(a,n) cannot be inverted in sub-exponential time under a reasonable computational model. Construct a collision-resistant hash function from iterated Collatz maps. Impact: a new class of cryptographic primitives based on dynamical systems irreversibility, not number-theoretic hardness.",
     "domain_bridges": [],
     "domains": [
@@ -4938,7 +4997,7 @@
     "proof_strategy": "Define Collatz hash H_k(x) = T^k(x) mod 2^256. Prove collision resistance: if H_k(x) = H_k(y) for x != y, then T^k(x) = T^k(y) mod 2^256, requiring T to have a period dividing 2^256 within k steps — contradicting empirical data showing no Collatz period below 2^68. Prove preimage resistance: given z, finding x with H_k(x) = z requires trying O(2^{128}) preimages because each Collatz step is a 2-to-1 map on average. Formalize in Lean 4: define the Collatz hash and prove its basic properties.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:27.563504+00:00",
     "title": "Cryptography from the Collatz Conjecture: One-Way Functions from Iterated Maps"
   },
