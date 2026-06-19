@@ -360,9 +360,26 @@
     "result_research_paper": null,
     "result_algorithms": null,
     "result_json_package": null,
-    "quality_score": 0.0,
-    "quality_assessment": null,
-    "quality_detail": null,
+    "quality_score": 0.68764,
+    "quality_assessment": {
+      "quality": "substantial",
+      "should_retry": false,
+      "retry_strategy": "none",
+      "confidence": 0.9,
+      "analysis": "The proof leverages deeper connections between topology, algebra, and number theory, connecting fiber group representations to Fibonacci sequences and roots of unity. It demonstrates genuine mathematical insight beyond computation, aligning with substantial criteria."
+    },
+    "quality_detail": {
+      "proof_depth": 0.8432121212121212,
+      "novelty": 0.9500000000000001,
+      "cross_domain": 0.7,
+      "artifact_richness": 0.5,
+      "actionability": 0.5,
+      "importance": 0.8752484848484848,
+      "usefulness": 0.7716060606060606,
+      "applications": 0.62,
+      "catalog_anchoring": 0.5,
+      "pegb_compliance": 0.75
+    },
     "specialized_critic_scores": null,
     "sorry_count": 0,
     "theorem_count": 17,
@@ -379,7 +396,15 @@
     "source_exp_ids": [
       "seed"
     ],
-    "adversarial_result": null,
+    "adversarial_result": {
+      "adjudicated_score": 0.6133,
+      "primary_composite": 0.7344,
+      "adversarial_composite": 0.25,
+      "tiebreaker_composite": 0.4922,
+      "agreement": "tiebreak",
+      "winner": "primary",
+      "delta": 0.4844
+    },
     "prompt_version": "v19b",
     "phase": "A",
     "phase_a_result": null,

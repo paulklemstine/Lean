@@ -135,7 +135,7 @@ def test_openrouter_free_model_fallback_on_429():
         "choices": [
             {
                 "message": {
-                    "content": "Succeeded on fallback Qwen free model"
+                    "content": "Succeeded on fallback free router model"
                 }
             }
         ]
@@ -143,7 +143,7 @@ def test_openrouter_free_model_fallback_on_429():
 
     with patch.object(client.client, "post", side_effect=[response_429, response_200]) as mock_post:
         result = client._call_openrouter("sys_msg", "user_msg")
-        assert result == "Succeeded on fallback Qwen free model"
+        assert result == "Succeeded on fallback free router model"
         
         # Verify that it tried the primary model first and then the fallback
         assert mock_post.call_count == 2
@@ -152,5 +152,5 @@ def test_openrouter_free_model_fallback_on_429():
         assert first_call_kwargs["json"]["model"] == "meta-llama/llama-3.3-70b-instruct:free"
         
         second_call_kwargs = mock_post.call_args_list[1][1]
-        assert second_call_kwargs["json"]["model"] == "qwen/qwen-2.5-coder-32b-instruct:free"
+        assert second_call_kwargs["json"]["model"] == "openrouter/free"
 
