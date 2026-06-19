@@ -814,30 +814,59 @@ class PiAgentClient:
                 "temperature": 0.85,
             }
 
-            try:
-                response = self.client.post(
-                    url,
-                    headers=headers,
-                    json=payload,
-                    timeout=request_timeout,
-                )
-                response.raise_for_status()
-                data = response.json()
-                content = data["choices"][0]["message"]["content"]
-
-                response_preview = content[:500].replace('\n', ' ')
-                print(f"[Pi-Agent] ← OpenRouter response ({len(content)} chars, model={model})")
-                print(f"[Pi-Agent]   {response_preview}...")
-                return content
-            except httpx.TimeoutException:
-                print(f"[Pi-Agent] ← OpenRouter TIMEOUT with model={model} after {request_timeout}s")
-                last_error = f"[OPENROUTER_TIMEOUT: Request timed out after {request_timeout}s]"
-            except Exception as e:
-                err_msg = str(e)
-                if hasattr(e, 'response') and e.response:
-                    err_msg += f" - {e.response.text}"
-                print(f"[Pi-Agent] ← OpenRouter exception with model={model}: {type(e).__name__}: {err_msg}")
-                last_error = f"[OPENROUTER_ERROR: {err_msg}]"
+            max_retries = 3
+            for attempt in range(max_retries):
+                try:
+                    response = self.client.post(
+                        url,
+                        headers=headers,
+                        json=payload,
+                        timeout=request_timeout,
+                    )
+                    response.raise_for_status()
+                    data = response.json()
+                    content = data["choices"][0]["message"]["content"]
+    
+                    response_preview = content[:500].replace('\n', ' ')
+                    print(f"[Pi-Agent] ← OpenRouter response ({len(content)} chars, model={model})")
+                    print(f"[Pi-Agent]   {response_preview}...")
+                    return content
+                except httpx.TimeoutException:
+                    print(f"[Pi-Agent] ← OpenRouter TIMEOUT with model={model} after {request_timeout}s")
+                    last_error = f"[OPENROUTER_TIMEOUT: Request timed out after {request_timeout}s]"
+                    break
+                except httpx.HTTPStatusError as e:
+                    if e.response.status_code == 429:
+                        retry_after = 5
+                        try:
+                            if 'Retry-After' in e.response.headers:
+                                retry_after = float(e.response.headers['Retry-After'])
+                            else:
+                                err_data = e.response.json()
+                                if 'error' in err_data and 'metadata' in err_data['error']:
+                                    retry_after = float(err_data['error']['metadata'].get('retry_after_seconds', 5))
+                        except Exception:
+                            pass
+                        print(f"[Pi-Agent] ← OpenRouter rate limited (429) on model={model}. Waiting {retry_after}s (attempt {attempt+1}/{max_retries})")
+                        time.sleep(retry_after + 0.5)
+                        if attempt < max_retries - 1:
+                            continue
+                        last_error = f"[OPENROUTER_ERROR: Rate limited after {max_retries} retries]"
+                        break
+                    
+                    err_msg = str(e)
+                    if hasattr(e, 'response') and e.response:
+                        err_msg += f" - {e.response.text}"
+                    print(f"[Pi-Agent] ← OpenRouter exception with model={model}: {type(e).__name__}: {err_msg}")
+                    last_error = f"[OPENROUTER_ERROR: {err_msg}]"
+                    break
+                except Exception as e:
+                    err_msg = str(e)
+                    if hasattr(e, 'response') and e.response:
+                        err_msg += f" - {e.response.text}"
+                    print(f"[Pi-Agent] ← OpenRouter exception with model={model}: {type(e).__name__}: {err_msg}")
+                    last_error = f"[OPENROUTER_ERROR: {err_msg}]"
+                    break
 
         return last_error
 

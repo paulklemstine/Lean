@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "646379f1",
-      "domain": "Cryptography",
-      "key_insight": "# Future Directions — Complexity Phase Structure of Additive Cellular Automata\n\n## Synthesis of this cycle\n\nWe set out to *adversarially* test the cryptographic conjecture that a minimal,\nexplicitly L",
-      "quality_score": 0.4289803986710964,
-      "sorry_count": 0,
-      "theorem_count": 40,
-      "timestamp": "2026-06-14T22:12:10",
-      "title": "Algorithmic Randomness Phase Transition in Lean-Definable Cellular Automata"
-    },
-    {
       "cycle_id": "91967634",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — The Unified Primitive-Divisor Engine\n\n## Synthesis\n\nThis cycle took the catalog's two parallel threads — the Fibonacci-specific composite-case\nmachinery of `Shared.CarmichaelProo",
@@ -2501,6 +2491,16 @@
       "theorem_count": 78,
       "timestamp": "2026-06-19T16:03:49",
       "title": "Birch and Swinnerton-Dyer Conjecture"
+    },
+    {
+      "cycle_id": "6bd9e95d",
+      "domain": "Probability",
+      "key_insight": "# Future Directions\n\nThese build on the formalization in `Catalog/Logic/BelnapRetractable.lean`.\n\n## 1. From values to a syntactic formula language with valuations\n\nThe present consequence relation is",
+      "quality_score": 0.5233429030396415,
+      "sorry_count": 0,
+      "theorem_count": 112,
+      "timestamp": "2026-06-19T17:11:41",
+      "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8166
     }
   ],
-  "last_updated": "2026-06-19T16:03:49",
+  "last_updated": "2026-06-19T17:11:41",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3805,6 +3805,12 @@
         "quality": 0.8166,
         "theorems": 139,
         "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+      },
+      {
+        "cycle_id": "6bd9e95d",
+        "quality": 0.5233429030396415,
+        "theorems": 112,
+        "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
       }
     ],
     "Pythagorean": [

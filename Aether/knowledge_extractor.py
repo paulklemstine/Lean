@@ -2708,6 +2708,15 @@ Research mode: {concept.research_mode}
                     timeout=120
                 )
             
+            dedup_packages_script = Path(__file__).parent / "dedup_packages.py"
+            if dedup_packages_script.exists():
+                await asyncio.to_thread(
+                    subprocess.run,
+                    ["python3", str(dedup_packages_script)],
+                    capture_output=True,
+                    timeout=120
+                )
+            
             # 2. Semantic cleanup was handled during the integration step
             if job.concept.domain:
                 print(f"[Cleanup] Semantic cleanup was handled during the integration step.")
@@ -3711,6 +3720,15 @@ Research mode: {concept.research_mode}
                     capture_output=True,
                     timeout=120
                 )
+
+            dedup_packages_script = Path(__file__).parent / "dedup_packages.py"
+            if dedup_packages_script.exists():
+                subprocess.run(
+                    ["python3", str(dedup_packages_script)],
+                    capture_output=True,
+                    timeout=120
+                )
+
         except Exception as e:
             print(f"[Cleanup] Warning: {e}")
 
