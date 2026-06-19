@@ -1377,7 +1377,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1e35069",
     "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
     "domain_bridges": [],
     "domains": [
@@ -1390,7 +1390,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.958310+00:00",
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
@@ -3427,6 +3427,33 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Irwin-Solecki projective Fraisse categories",
+      "Kechris-Pestov-Todorcevic Ramsey property for Polish groups"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the projective Fraisse category of finite linear orders with the standard morphisms does NOT have the approximate Ramsey property, implying that its automorphism group (the infinite symmetric group) is NOT extremely amenable. This provides a concrete, falsifiable target for formalization in Lean 4, leveraging known results about the infinite symmetric group.",
+    "domain_bridges": [
+      "combinatorics",
+      "topological dynamics",
+      "model theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2121",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Construct a counterexample structure in the category of finite linear orders that violates the approximate Ramsey condition, leveraging the non-amenability of the infinite symmetric group. Use Lean's finite set libraries to formalize the category and the combinatorial properties.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-19T18:13:04.539694+00:00",
+    "title": "Approximate Ramsey Property for Finite Linear Orders Implies Extreme Amenability"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
@@ -4698,7 +4725,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4906ce6b",
     "description": "Conjecture: The entanglement‑complexity scaling law of a uniformly random rank‑k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network’s holographic geometry approximates a smooth (d+1)‑dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse‑graining. Test: Generate large‑scale random tensor networks on high‑performance clusters, compute their entanglement spectra and bulk geometry via the quantum error‑correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein’s equations from complexity theory, guide quantum gravity model selection, and inspire complexity‑optimal quantum error‑correcting codes.",
     "domain_bridges": [],
     "domains": [
@@ -4711,7 +4738,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
   },

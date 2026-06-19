@@ -8,7 +8,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "5d803a6e",
     "filename": "bridge_category_theory_as_universal_language_for_m.json",
-    "pkg_num": 206,
+    "pkg_num": 200,
     "quality": "unrated",
     "quality_score": null,
     "title": "Bridge: The Subobject Lattice of a Topos \u2014 Double Negation as a Nucleus"
@@ -18,27 +18,17 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "3b2adc6d",
     "filename": "birch_and_swinnerton_dyer_conjecture.json",
-    "pkg_num": 205,
+    "pkg_num": 199,
     "quality": "substantial",
     "quality_score": 0.7756000000000001,
     "title": "The Analytic Rank of an L-Function: A Formal Skeleton for Birch\u2013Swinnerton-Dyer"
-  },
-  {
-    "date": "2026-06-19T15:19:58Z",
-    "domain": "Bridges",
-    "exp_id": "a449aa2a",
-    "filename": "speculative_anti_gravity_mathematics__theorems_tha.json",
-    "pkg_num": 204,
-    "quality": "partial",
-    "quality_score": 0.39323663366336636,
-    "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
   {
     "date": "2026-06-19T15:16:15Z",
     "domain": "Computation",
     "exp_id": "6495e602",
     "filename": "sheaf_theoretic_data_integration_when_databases_fo.json",
-    "pkg_num": 203,
+    "pkg_num": 198,
     "quality": "substantial",
     "quality_score": 0.8166,
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
@@ -48,7 +38,7 @@ window.PACKAGE_INDEX = [
     "domain": "Cryptography",
     "exp_id": "b3d82bf4",
     "filename": "tropical_cryptography_min_plus_encryption_with_tro.json",
-    "pkg_num": 202,
+    "pkg_num": 197,
     "quality": "substantial",
     "quality_score": 0.74352,
     "title": "Tropical Cryptography: Global-Min Superadditivity as a Monotone Exponent Witness"
@@ -58,7 +48,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "60ec8c30",
     "filename": "close_proofs_this_cycle_replaced_the_softmax_score.json",
-    "pkg_num": 201,
+    "pkg_num": 196,
     "quality": "partial",
     "quality_score": 0.48337107438016536,
     "title": "The Shadow Spectrum: A Tropical Spectral Langlands Correspondence for Finite Residuated Semimodules"
@@ -68,7 +58,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "7f1e65fe",
     "filename": "average_degree_bound_for_locally_sparse_uniform_hy.json",
-    "pkg_num": 200,
+    "pkg_num": 195,
     "quality": "partial",
     "quality_score": 0.476594,
     "title": "Representative-Vertex Deletion: An Average-Degree Independence Bound for Hypergraphs"
@@ -78,7 +68,7 @@ window.PACKAGE_INDEX = [
     "domain": "Logic",
     "exp_id": "e88eb144",
     "filename": "dream_logic_non_monotone_reasoning_where_contradic.json",
-    "pkg_num": 199,
+    "pkg_num": 194,
     "quality": "substantial",
     "quality_score": 0.7144,
     "title": "Dream Logic: Coexisting Contradictions in Four-Valued Paraconsistency and Their Topological Models"
@@ -88,7 +78,7 @@ window.PACKAGE_INDEX = [
     "domain": "Algebra",
     "exp_id": "a2755e7b",
     "filename": "the_library_of_babel_combinatorics_of_the_universa.json",
-    "pkg_num": 198,
+    "pkg_num": 193,
     "quality": "partial",
     "quality_score": 0.5554623188405797,
     "title": "The Library of Babel: Combinatorics of the Universal Library"
@@ -98,7 +88,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "74320b24",
     "filename": "non_archimedean_probability_via_surreal_numbers.json",
-    "pkg_num": 197,
+    "pkg_num": 192,
     "quality": "partial",
     "quality_score": 0.6584800000000001,
     "title": "Non-Archimedean Probability: A Finite Infinitesimal Measure Model"
@@ -108,7 +98,7 @@ window.PACKAGE_INDEX = [
     "domain": "Physics",
     "exp_id": "f53b6be3",
     "filename": "topological_quantum_compiling_braid_groups_as_univ.json",
-    "pkg_num": 196,
+    "pkg_num": 191,
     "quality": "partial",
     "quality_score": 0.6543599999999999,
     "title": "Topological Quantum Compiling: A Non-Abelianity Certificate for Jones Braid Operators"
@@ -118,7 +108,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "6c118cd3",
     "filename": "proof_automation_custom_lean_4_tactics.json",
-    "pkg_num": 195,
+    "pkg_num": 190,
     "quality": "partial",
     "quality_score": 0.4716,
     "title": "Strong Divisibility Sequences as Lattice Homomorphisms"
@@ -128,7 +118,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "0d2b0b43",
     "filename": "tropical_curve_counting_gromov_witten_invariants.json",
-    "pkg_num": 194,
+    "pkg_num": 189,
     "quality": "partial",
     "quality_score": 0.5115800000000001,
     "title": "Functional Equations of the Hodge--Deligne E-Polynomial: Mirror Symmetry and Serre Duality"
@@ -138,7 +128,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "50e9a2da",
     "filename": "scaling_laws_from_statistical_mechanics.json",
-    "pkg_num": 193,
+    "pkg_num": 188,
     "quality": "partial",
     "quality_score": 0.5529929095354524,
     "title": "Divisibility Bridges: Fibonacci Lattices, a Sharp Divisibility Pigeonhole, and a Finite Garden-of-Eden Principle"
@@ -148,7 +138,7 @@ window.PACKAGE_INDEX = [
     "domain": "Computation",
     "exp_id": "2710f166",
     "filename": "crystallographic_groups_and_music_the_17_wallpaper.json",
-    "pkg_num": 192,
+    "pkg_num": 187,
     "quality": "partial",
     "quality_score": 0.5415909090909091,
     "title": "Crystallographic Groups and Music: The 17 Wallpaper Groups of Rhythm"
@@ -158,7 +148,7 @@ window.PACKAGE_INDEX = [
     "domain": "MachineLearning",
     "exp_id": "949d41e5",
     "filename": "hypergraph_ramsey_theory_beyond_graphs.json",
-    "pkg_num": 191,
+    "pkg_num": 186,
     "quality": "partial",
     "quality_score": 0.6052,
     "title": "Hypergraph Ramsey Theory: Beyond Graphs"
@@ -168,7 +158,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "9ff40964",
     "filename": "the_fermi_paradox_as_a_pigeonhole_principle_why_we.json",
-    "pkg_num": 190,
+    "pkg_num": 185,
     "quality": "partial",
     "quality_score": 0.5532343961470463,
     "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
@@ -178,7 +168,7 @@ window.PACKAGE_INDEX = [
     "domain": "Combinatorics",
     "exp_id": "5884df3d",
     "filename": "phantom_topologies_spaces_that_change_when_you_loo.json",
-    "pkg_num": 189,
+    "pkg_num": 184,
     "quality": "partial",
     "quality_score": 0.60834,
     "title": "Phantom Topologies: Spaces That Change When You Look at Them"
@@ -188,7 +178,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "595ce011",
     "filename": "the_spectral_gap_of_sudoku_when_puzzles_become_pha.json",
-    "pkg_num": 188,
+    "pkg_num": 183,
     "quality": "partial",
     "quality_score": 0.6122400000000001,
     "title": "The Spectral Gap of Sudoku: When Puzzles Become Phase Transitions"
@@ -198,7 +188,7 @@ window.PACKAGE_INDEX = [
     "domain": "Cryptography",
     "exp_id": "667542f0",
     "filename": "counterfactual_number_theory_what_if_primes_were_r.json",
-    "pkg_num": 187,
+    "pkg_num": 182,
     "quality": "partial",
     "quality_score": 0.5307999999999999,
     "title": "Counterfactual Number Theory: What If Primes Were Random?"
@@ -208,7 +198,7 @@ window.PACKAGE_INDEX = [
     "domain": "Logic",
     "exp_id": "95c512f5",
     "filename": "mind_vs_gdel_can_minds_outperform_algorithms.json",
-    "pkg_num": 186,
+    "pkg_num": 181,
     "quality": "partial",
     "quality_score": 0.57324,
     "title": "Mind vs Godel: Can Minds Outperform Algorithms?"
@@ -218,7 +208,7 @@ window.PACKAGE_INDEX = [
     "domain": "Cryptography",
     "exp_id": "c2929b61",
     "filename": "retrocausal_mathematics_where_effects_precede_caus.json",
-    "pkg_num": 185,
+    "pkg_num": 180,
     "quality": "partial",
     "quality_score": 0.5083935828877005,
     "title": "Retrocausal Mathematics: Where Effects Precede Causes"
@@ -228,7 +218,7 @@ window.PACKAGE_INDEX = [
     "domain": "Logic",
     "exp_id": "8c9d3809",
     "filename": "the_mathematics_of_memes_viral_information_topolog.json",
-    "pkg_num": 184,
+    "pkg_num": 179,
     "quality": "partial",
     "quality_score": 0.6462399999999999,
     "title": "The Mathematics of Memes: Viral Information Topology"
@@ -238,7 +228,7 @@ window.PACKAGE_INDEX = [
     "domain": "Tropical",
     "exp_id": "77489d34",
     "filename": "the_riemann_roch_theorem_for_graphs_chip_firing_an.json",
-    "pkg_num": 183,
+    "pkg_num": 178,
     "quality": "partial",
     "quality_score": 0.5406000000000001,
     "title": "The Riemann-Roch Theorem for Graphs: Chip-Firing and the Canonical Divisor"
@@ -248,7 +238,7 @@ window.PACKAGE_INDEX = [
     "domain": "Computation",
     "exp_id": "11262eec",
     "filename": "paradoxes_as_theorems_liar_berry_and_russell_made_.json",
-    "pkg_num": 182,
+    "pkg_num": 177,
     "quality": "partial",
     "quality_score": 0.5355679086538463,
     "title": "Paradoxes as Theorems: Liar, Berry, and Russell Made Consistent"
@@ -258,7 +248,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "6fb69121",
     "filename": "the_hodge_conjecture_for_neural_networks_algebraic.json",
-    "pkg_num": 181,
+    "pkg_num": 176,
     "quality": "partial",
     "quality_score": 0.5415809756097562,
     "title": "The Hodge Conjecture for Neural Networks: Algebraic Cycles in Decision Surfaces"
@@ -268,7 +258,7 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "343c2db7",
     "filename": "fractal_number_theory_hausdorff_dimension_of_prime.json",
-    "pkg_num": 180,
+    "pkg_num": 175,
     "quality": "partial",
     "quality_score": 0.5248201970443349,
     "title": "Fractal Number Theory: Hausdorff and Box-Counting Dimensions of the Logarithmic Prime Image"
@@ -278,7 +268,7 @@ window.PACKAGE_INDEX = [
     "domain": "Geometry",
     "exp_id": "78c9ab60",
     "filename": "non_well_founded_proofs_proofs_that_reference_them.json",
-    "pkg_num": 179,
+    "pkg_num": 174,
     "quality": "partial",
     "quality_score": 0.5606952380952381,
     "title": "Non-Well-Founded Proofs: Self-Reference as Self-Similarity"
@@ -288,7 +278,7 @@ window.PACKAGE_INDEX = [
     "domain": "Physics",
     "exp_id": "1cfdf3f4",
     "filename": "causal_loops_in_category_theory_when_composition_l.json",
-    "pkg_num": 178,
+    "pkg_num": 173,
     "quality": "partial",
     "quality_score": 0.6660400000000001,
     "title": "Causal Loops in Category Theory: When Composition Loops Back"
@@ -298,7 +288,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "29ffc67c",
     "filename": "vampire_numbers_and_other_numerical_monsters_a_bes.json",
-    "pkg_num": 177,
+    "pkg_num": 172,
     "quality": "partial",
     "quality_score": 0.5227499999999999,
     "title": "Vampire Numbers and Other Numerical Monsters: A Verified Bestiary of Arithmetic Oddities"
@@ -308,7 +298,7 @@ window.PACKAGE_INDEX = [
     "domain": "Geometry",
     "exp_id": "1873f003",
     "filename": "tangled_hierarchies_proof_systems_that_reference_t.json",
-    "pkg_num": 176,
+    "pkg_num": 171,
     "quality": "partial",
     "quality_score": 0.4749530303030304,
     "title": "Flag Complexes and the Clique Recognition Theorem"
@@ -318,7 +308,7 @@ window.PACKAGE_INDEX = [
     "domain": "Shared",
     "exp_id": "c1948da4",
     "filename": "cellular_automata_at_the_ordinals_transfinite_comp.json",
-    "pkg_num": 175,
+    "pkg_num": 170,
     "quality": "partial",
     "quality_score": 0.6361600000000001,
     "title": "Cellular Automata at the Ordinals: Transfinite Computation"
@@ -328,7 +318,7 @@ window.PACKAGE_INDEX = [
     "domain": "MachineLearning",
     "exp_id": "1f4bbef7",
     "filename": "automatic_sequences_and_the_halting_problem_when_i.json",
-    "pkg_num": 174,
+    "pkg_num": 169,
     "quality": "substantial",
     "quality_score": 0.712,
     "title": "Automatic Sequences and the Halting Problem: When Is a Sequence Computable?"
@@ -338,27 +328,17 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "fbd73212",
     "filename": "eml_single_operator_church_turing_thesis.json",
-    "pkg_num": 173,
+    "pkg_num": 168,
     "quality": "substantial",
     "quality_score": 0.7150400000000001,
     "title": "EML Single-Operator Church-Turing Thesis: One Operator to Compute Them All"
-  },
-  {
-    "date": "2026-06-16T16:55:11Z",
-    "domain": "Geometry",
-    "exp_id": "d79ba9e2",
-    "filename": "isogeny_based_cryptography_csi_fish.json",
-    "pkg_num": 172,
-    "quality": "partial",
-    "quality_score": 0.66144,
-    "title": "The Parity Theorem for Eulerian Trails: A Counting-Theoretic Development"
   },
   {
     "date": "2026-06-16T16:18:02Z",
     "domain": "Bridges",
     "exp_id": "0d42792c",
     "filename": "diophantine_approximation_on_neural_networks_how_w.json",
-    "pkg_num": 171,
+    "pkg_num": 167,
     "quality": "partial",
     "quality_score": 0.5761099999999999,
     "title": "The Parity Theorem for Eulerian Trails: Why You Can't Cross Every Bridge Once"
@@ -368,7 +348,7 @@ window.PACKAGE_INDEX = [
     "domain": "Computation",
     "exp_id": "fba6400c",
     "filename": "the_borsuk_ulam_theorem_implies_arrows_impossibili.json",
-    "pkg_num": 170,
+    "pkg_num": 166,
     "quality": "partial",
     "quality_score": 0.64064,
     "title": "The Borsuk-Ulam Theorem Implies Arrow's Impossibility: Social Choice Is Topology"
@@ -378,7 +358,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "3b102b1d",
     "filename": "deepening_catalogbridgesfunctorialtropicalpythagor.json",
-    "pkg_num": 169,
+    "pkg_num": 165,
     "quality": "substantial",
     "quality_score": 0.7943200000000001,
     "title": "A Functorial Tropical\u2013Pythagorean Bridge: Softmax as the Normalization Functor onto the Probability Simplex"
@@ -388,7 +368,7 @@ window.PACKAGE_INDEX = [
     "domain": "Geometry",
     "exp_id": "ce2d79fb",
     "filename": "these_directions_continue_the_vietorisrips__tropic.json",
-    "pkg_num": 168,
+    "pkg_num": 164,
     "quality": "partial",
     "quality_score": 0.46699999999999997,
     "title": "The Vietoris\u2013Rips Completion Threshold and its Tropical Reading"
@@ -398,7 +378,7 @@ window.PACKAGE_INDEX = [
     "domain": "Shared",
     "exp_id": "d6329d46",
     "filename": "deepening_functor_from_finite_linear_codes_to_trop.json",
-    "pkg_num": 167,
+    "pkg_num": 163,
     "quality": "substantial",
     "quality_score": 0.7918400000000001,
     "title": "Deepening: Cumulative Weight Thresholds and the Tropical Convolution Law of Binary Linear Codes"
@@ -408,7 +388,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "14435cc3",
     "filename": "combinatorial_species_exponential_generating_funct.json",
-    "pkg_num": 166,
+    "pkg_num": 162,
     "quality": "partial",
     "quality_score": 0.6017600000000001,
     "title": "Combinatorial Species EGFs as a Tropical Valuation Profile Bridge"
@@ -418,7 +398,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "e42393e4",
     "filename": "functor_from_finite_linear_codes_to_tropical_valua.json",
-    "pkg_num": 165,
+    "pkg_num": 161,
     "quality": "substantial",
     "quality_score": 0.79224,
     "title": "From Error-Correcting Codes to Tropical Geometry: The Weight-Threshold Profile Functor"
@@ -428,7 +408,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "c38e2bf9",
     "filename": "tropical_weight_enumerator_profiles_for_binary_lin.json",
-    "pkg_num": 164,
+    "pkg_num": 160,
     "quality": "substantial",
     "quality_score": 0.7101600000000001,
     "title": "Tropical Weight Enumerator Profiles for Binary Linear Codes"
@@ -438,7 +418,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "6ce4a7be",
     "filename": "metric_filtration_rank_profiles_as_tropical_valuat.json",
-    "pkg_num": 163,
+    "pkg_num": 159,
     "quality": "substantial",
     "quality_score": 0.76292,
     "title": "Metric Filtration Rank Profiles as Tropical Valuation Objects"
@@ -448,7 +428,7 @@ window.PACKAGE_INDEX = [
     "domain": "Physics",
     "exp_id": "29017e68",
     "filename": "follow_up_conjectures_arising_from_catalogbridgesr.json",
-    "pkg_num": 162,
+    "pkg_num": 158,
     "quality": "substantial",
     "quality_score": 0.7856000000000001,
     "title": "A Tropical Threshold for Vietoris\u2013Rips Completeness: One Scalar Governs Every Dimension"
@@ -458,27 +438,17 @@ window.PACKAGE_INDEX = [
     "domain": "Novelty",
     "exp_id": "d9dd0490",
     "filename": "derived_from_this_cycles_findings_in_corelean_and_.json",
-    "pkg_num": 161,
+    "pkg_num": 157,
     "quality": "partial",
     "quality_score": 0.6056199999999999,
     "title": "The Edge-Count Profile of Vietoris\u2013Rips Filtrations: A Monotone, Functorial Invariant of Finite Metric Spaces"
-  },
-  {
-    "date": "2026-06-16T04:12:53Z",
-    "domain": "Bridges",
-    "exp_id": "6f9401e1",
-    "filename": "deepening_follow_up_conjectures_arising_from_catal.json",
-    "pkg_num": 160,
-    "quality": "substantial",
-    "quality_score": 0.72651,
-    "title": "Height Is the Only Cost: Valuation-Depth, Tropical Geometry, and the Combinatorics of Reassociation"
   },
   {
     "date": "2026-06-16T03:36:32Z",
     "domain": "Bridges",
     "exp_id": "3fd7a316",
     "filename": "catalogbridgesfunctorialtropicalpythagoreanlean_0_.json",
-    "pkg_num": 159,
+    "pkg_num": 156,
     "quality": "substantial",
     "quality_score": 0.8053600000000001,
     "title": "A Functorial Tropical Ultrametric on the Boundary of the Berggren Tree"
@@ -488,7 +458,7 @@ window.PACKAGE_INDEX = [
     "domain": "Algebra",
     "exp_id": "999c0f6b",
     "filename": "follow_up_conjectures_arising_from_catalogbridgesv.json",
-    "pkg_num": 158,
+    "pkg_num": 155,
     "quality": "substantial",
     "quality_score": 0.7756000000000001,
     "title": "The Only Cost Is Height: A Unit-Cost Ultrametric Functor from Valuation Depth to Tropical Trees"
@@ -498,7 +468,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "096aa5b9",
     "filename": "a_1_lipschitz_functor_from_valuation_depth_measure.json",
-    "pkg_num": 157,
+    "pkg_num": 154,
     "quality": "partial",
     "quality_score": 0.5430773913043478,
     "title": "The One-Step Tax: A 1-Lipschitz Functor from Valuation-Depth Measures to Tropical Valuation Objects"
@@ -508,7 +478,7 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "9f426600",
     "filename": "rips_graph_monotonicity_as_a_functor_into_tropical.json",
-    "pkg_num": 156,
+    "pkg_num": 153,
     "quality": "partial",
     "quality_score": 0.5464257142857143,
     "title": "Rips Graph Monotonicity as a Functor into Tropical Valuation Objects"
@@ -518,27 +488,17 @@ window.PACKAGE_INDEX = [
     "domain": "Bridges",
     "exp_id": "e5fe284a",
     "filename": "derived_from_the_v16b_research_cycle_that_produced.json",
-    "pkg_num": 155,
+    "pkg_num": 152,
     "quality": "partial",
     "quality_score": 0.62032,
     "title": "The Korselt Units Bridge: From Fermat Pseudoprimality to Per-Prime Order Divisibility"
-  },
-  {
-    "date": "2026-06-15T20:10:48Z",
-    "domain": "Bridges",
-    "exp_id": "afb009d7",
-    "filename": "this_cycle_added_three_fully_verified_files_0_sorr.json",
-    "pkg_num": 154,
-    "quality": "partial",
-    "quality_score": 0.5042399999999999,
-    "title": "Categorical Tropical Rips: Relabeling Invariance and Quotient Transport"
   },
   {
     "date": "2026-06-15T19:57:54Z",
     "domain": "Applications",
     "exp_id": "8a8b0554",
     "filename": "this_cycle_delivered_cataloglogicfibonacciprimitiv.json",
-    "pkg_num": 153,
+    "pkg_num": 151,
     "quality": "partial",
     "quality_score": 0.49925585666293404,
     "title": "Primitive Prime Divisors of Fibonacci Numbers: Entry Points, Lifting-the-Exponent, and Carmichael's Theorem"
@@ -548,7 +508,7 @@ window.PACKAGE_INDEX = [
     "domain": "Applications",
     "exp_id": "a72aaf71",
     "filename": "self_dual_code_length_enumerators_as_a_bridge_to_s.json",
-    "pkg_num": 152,
+    "pkg_num": 150,
     "quality": "partial",
     "quality_score": 0.6582600000000001,
     "title": "Self-Dual Codes as a Bridge to Smooth 4-Manifold Intersection Forms"
@@ -558,7 +518,7 @@ window.PACKAGE_INDEX = [
     "domain": "Logic",
     "exp_id": "c11e0165",
     "filename": "these_directions_extend_the_ordegf_bridge_in.json",
-    "pkg_num": 151,
+    "pkg_num": 149,
     "quality": "unrated",
     "quality_score": null,
     "title": "Carmichael's Fibonacci Primitive Divisor Theorem: A Verified Bounded Proof"
@@ -568,30 +528,10 @@ window.PACKAGE_INDEX = [
     "domain": "Shared",
     "exp_id": "4e6dc59b",
     "filename": "korselts_criterion_completion_and_multiplicative_g.json",
-    "pkg_num": 150,
-    "quality": "unrated",
-    "quality_score": null,
-    "title": "Korselt's Criterion Completion and the Multiplicative Group-Order Bridge to Cryptographic Pseudoprimality"
-  },
-  {
-    "date": "2026-06-15T12:27:47Z",
-    "domain": "Bridges",
-    "exp_id": "049cc9b2",
-    "filename": "functorial_bridge_from_combinatorial_species_gener.json",
-    "pkg_num": 149,
-    "quality": "unrated",
-    "quality_score": null,
-    "title": "The Markov Basis of the Two-Way Independence Model: 2x2 Swaps Connect Every Fiber"
-  },
-  {
-    "date": "2026-06-15T11:52:44Z",
-    "domain": "Algebra",
-    "exp_id": "02bb27d8",
-    "filename": "self_contained_mathlib_foundation_for_the_discrete.json",
     "pkg_num": 148,
     "quality": "unrated",
     "quality_score": null,
-    "title": "The Markov Basis of the Two-Way Independence Model"
+    "title": "Korselt's Criterion Completion and the Multiplicative Group-Order Bridge to Cryptographic Pseudoprimality"
   },
   {
     "date": "2026-06-15T11:50:47Z",
@@ -2653,14 +2593,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "The Thermodynamic Proof System: Landauer & Bennett Principles as Theorems of Finite Information Theory"
   },
-  "deepening_follow_up_conjectures_arising_from_catal.json": {
-    "domain": "Bridges",
-    "exp_id": "6f9401e1",
-    "source_exp_ids": [
-      "999c0f6b"
-    ],
-    "title": "Height Is the Only Cost: Valuation-Depth, Tropical Geometry, and the Combinatorics of Reassociation"
-  },
   "deepening_functor_from_finite_linear_codes_to_trop.json": {
     "domain": "Shared",
     "exp_id": "d6329d46",
@@ -2803,7 +2735,8 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Algebra",
     "exp_id": "999c0f6b",
     "source_exp_ids": [
-      "096aa5b9"
+      "096aa5b9",
+      "999c0f6b"
     ],
     "title": "The Only Cost Is Height: A Unit-Cost Ultrametric Functor from Valuation Depth to Tropical Trees"
   },
@@ -2828,12 +2761,6 @@ window.PACKAGE_DB_INDEX = {
     "exp_id": "e42393e4",
     "source_exp_ids": [],
     "title": "From Error-Correcting Codes to Tropical Geometry: The Weight-Threshold Profile Functor"
-  },
-  "functorial_bridge_from_combinatorial_species_gener.json": {
-    "domain": "Bridges",
-    "exp_id": "049cc9b2",
-    "source_exp_ids": [],
-    "title": "The Markov Basis of the Two-Way Independence Model: 2x2 Swaps Connect Every Fiber"
   },
   "functorial_comparison_between_neural_observation_p.json": {
     "domain": "Bridges",
@@ -2870,14 +2797,6 @@ window.PACKAGE_DB_INDEX = {
       "seed"
     ],
     "title": "Inverse Stereographic Persistence: Topological Data Analysis on Spheres"
-  },
-  "isogeny_based_cryptography_csi_fish.json": {
-    "domain": "Geometry",
-    "exp_id": "d79ba9e2",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "The Parity Theorem for Eulerian Trails: A Counting-Theoretic Development"
   },
   "korselts_criterion_completion_and_multiplicative_g.json": {
     "domain": "Shared",
@@ -3064,14 +2983,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Divisibility Bridges: Fibonacci Lattices, a Sharp Divisibility Pigeonhole, and a Finite Garden-of-Eden Principle"
   },
-  "self_contained_mathlib_foundation_for_the_discrete.json": {
-    "domain": "Algebra",
-    "exp_id": "02bb27d8",
-    "source_exp_ids": [
-      "94b6b70d"
-    ],
-    "title": "The Markov Basis of the Two-Way Independence Model"
-  },
   "self_contained_sorry_free_lean_4_formalization_of_.json": {
     "domain": "Novelty",
     "exp_id": "ff5654a7",
@@ -3089,14 +3000,6 @@ window.PACKAGE_DB_INDEX = {
   "sheaf_theoretic_data_integration_when_databases_fo.json": {
     "domain": "Computation",
     "exp_id": "6495e602",
-    "source_exp_ids": [
-      "seed"
-    ],
-    "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
-  },
-  "speculative_anti_gravity_mathematics__theorems_tha.json": {
-    "domain": "Bridges",
-    "exp_id": "a449aa2a",
     "source_exp_ids": [
       "seed"
     ],
@@ -3426,14 +3329,6 @@ window.PACKAGE_DB_INDEX = {
     ],
     "title": "Carmichael's Fibonacci Primitive Divisor Theorem: A Verified Bounded Proof"
   },
-  "this_cycle_added_three_fully_verified_files_0_sorr.json": {
-    "domain": "Bridges",
-    "exp_id": "afb009d7",
-    "source_exp_ids": [
-      "497e55b6"
-    ],
-    "title": "Categorical Tropical Rips: Relabeling Invariance and Quotient Transport"
-  },
   "this_cycle_closed_the_single_open_sorry_in_bridges.json": {
     "domain": "Applications",
     "exp_id": "c86fcece",
@@ -3478,6 +3373,7 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Bridges",
     "exp_id": "cb2c4d8f",
     "source_exp_ids": [
+      "497e55b6",
       "b9cc2fac"
     ],
     "title": "Categorical Tropical Rips Interleaving: Interleaving Distance as Tropical Algebra"
@@ -3619,7 +3515,8 @@ window.PACKAGE_DB_INDEX = {
     "domain": "Probability",
     "exp_id": "94b6b70d",
     "source_exp_ids": [
-      "123e2af3"
+      "123e2af3",
+      "94b6b70d"
     ],
     "title": "The Markov Basis of the Two-Way Independence Model"
   },
@@ -5737,8 +5634,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "this_cycle_added_three_fully_verified_files_0_sorr",
       "primary_domain": "Bridges",
-      "priority_score": 0.5042399999999999,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Categorical Tropical Rips: Relabeling Invariance and Quotient Transport"
     },
@@ -5803,8 +5700,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "deepening_follow_up_conjectures_arising_from_catal",
       "primary_domain": "Bridges",
-      "priority_score": 0.72651,
-      "quality": "substantial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Height Is the Only Cost: Valuation-Depth, Tropical Geometry, and the Combinatorics of Reassociation"
     },
@@ -5935,8 +5832,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "isogeny_based_cryptography_csi_fish",
       "primary_domain": "Geometry",
-      "priority_score": 0.66144,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "hexagonal_prism",
       "title": "The Parity Theorem for Eulerian Trails: A Counting-Theoretic Development"
     },
@@ -6287,8 +6184,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "speculative_anti_gravity_mathematics__theorems_tha",
       "primary_domain": "Bridges",
-      "priority_score": 0.39323663366336636,
-      "quality": "partial",
+      "priority_score": null,
+      "quality": "unrated",
       "shape": "icosahedron",
       "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
     },

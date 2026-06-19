@@ -1033,7 +1033,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Functor from finite linear codes to tropical valuation objects via wei"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1e35069",
     "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
     "domains": [
       "Novelty",
@@ -1043,7 +1043,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.958310+00:00",
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
@@ -2236,21 +2236,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "If a projective Fraisse category associated with a continuum F has the approximate Ramsey property, then there exists a ultrafilter on the Fraisse category that witnesses extreme amenability of Homeo(F) by satisfying partition relations for all finite graphs.",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2114",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20407v1",
-    "status": "available",
-    "timestamp": "2026-06-19T16:15:19.069232+00:00",
-    "title": "Existence of an ultrafilter witness for extreme amenability"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "For any odd base B > 3, the length of the longest nonconstant terminal cycle of the Kaprekar map is at most (B-1)/2. Furthermore, this upper bound is achieved if and only if B is prime and the multiplicative order of 2 modulo B equals (B-1)/2.",
     "domains": [
       "Pythagorean"
@@ -2265,18 +2250,48 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "If a projective Fraisse category associated with a continuum F has the approximate Ramsey property, then there exists a ultrafilter on the Fraisse category that witnesses extreme amenability of Homeo(F) by satisfying partition relations for all finite graphs.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2116",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-19T16:15:19.069232+00:00",
+    "title": "Existence of an ultrafilter witness for extreme amenability"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Conjecture that the \u03a9(r^-3) lower bound achieved in the paper is optimal up to constants, specifically that there exists a universal constant c > 0 such that for every r \u2265 2 and n \u2265 4r^2, any n-vertex r-graph where every (r+1)-set spans exactly 0 or 2 edges has at most c\u00b7r^-3\u00b7(n choose r) edges. This would prove that the polynomial improvement from 2^(1-r) to r^-3 is tight in terms of the r-dependence, establishing the true order of magnitude for this extremal problem.",
     "domains": [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2115",
+    "id": "fd_2117",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20367v1",
     "status": "available",
     "timestamp": "2026-06-19T16:38:40.143734+00:00",
     "title": "Optimality of the r^-3 density bound for (r+1)-sets spanning 0 or 2 edges"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the projective Fraisse category of finite linear orders with the standard morphisms does NOT have the approximate Ramsey property, implying that its automorphism group (the infinite symmetric group) is NOT extremely amenable. This provides a concrete, falsifiable target for formalization in Lean 4, leveraging known results about the infinite symmetric group.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2121",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-19T18:13:04.539694+00:00",
+    "title": "Approximate Ramsey Property for Finite Linear Orders Implies Extreme Amenability"
   },
   {
     "consumed_by_exp_id": "",
@@ -3141,21 +3156,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Algebraic Geometry of Neural Networks: Varieties of Decision Boundaries\n\nThis research cycle established (in `DecisionBoundaryVariety.lean` and\n`DecisionBoundaryVarietyAlgebra.lean`):\n\n- Polynomial networks compute multivariate polynomials whose **total degree** is bounded\n  by `d^L` (activation degree `d`, depth `L`) over degree-1 inputs.\n- Every polynomial classifier's decision boundary is *exactly* the affine algebraic set\n  `zeroLocus (Ideal.span {p})`; hence network boundaries are algebraic hypersurfaces of\n  degree `\u2264 d^L`.\n- The lattice of decision varieties is closed under **OR = product** (degrees add) and\n  **AND = real sum-of-squares** (factor-2 degree blow-up), both realizable by a single\n  neuron.\n\nThe following conjectures are precise and falsifiable targets for follow-up cycles.\n\n## Conjecture 1 (Degree separation / no-collapse)\nFor each `k \u2265 1` there is a polynomial classifier whose decision boundary is an algebraic\nhypersurface of total degree exactly `k` that is **not** equal to the zero locus of any\npolynomial of degree `< k`. Concretely: the unit sphere `\u2211 x\u1d62\u00b2 = 1` is not the decision\nboundary of any affine classifier. *Test:* prove that a nonconstant degree-`\u2264 1`\npolynomial's real zero set is unbounded (it contains an affine line), while the sphere is\nbounded; conclude inequality of the two varieties. This upgrades the worked `circle`\nexample into a genuine expressivity lower bound, the algebraic analogue of the ReLU\ndepth/width separations in `ReLUDepthWidth`.\n\n## Conjecture 2 (B\u00e9zout bound on connected decision regions)\nA polynomial network of activation degree `d` and depth `L` over `\u211d\u207f` partitions input\nspace into at most `O((d^L)^n)` connected sign-regions, with the count governed by the\ndegree `d^L` of the boundary polynomial (a real-algebraic, Milnor\u2013Thom-style bound).\n*Test:* formalize the `n = 1` case first \u2014 a degree-`m` univariate polynomial has at most\n`m` real roots (`Polynomial.card_roots_le_degree`), hence at most `m + 1` sign regions \u2014\nand bound `m \u2264 d^L` via this cycle's degree theorem.\n\n## Conjecture 3 (Intersection is intrinsically real)\nOver `\u2102`, `p\u00b2 + q\u00b2` factors as `(p + iq)(p \u2212 iq)`, so its zero locus is a **union**, not an\nintersection. Therefore the AND gate `V(p) \u2229 V(q)` of two decision varieties is **not**\nrealizable as the zero locus of any single polynomial of the form `\u03b1\u00b7p\u00b2 + \u03b2\u00b7q\u00b2` with\n`\u03b1, \u03b2 \u2260 0` over an algebraically closed field, whereas it always is over `\u211d`.\n*Test:* prove `decisionBoundary (p\u00b2 + q\u00b2) = V(p) \u222a V(q)` over `\u2102` and contrast with the\nreal result `decisionBoundary_sumSq_eq_inter`; this isolates ordered-field positivity as\nthe essential ingredient.\n\n## Conjecture 4 (Vanishing-ideal duality / minimal interpolating boundary)\nFor any finite labeled dataset `S \u2286 \u211d\u207f`, the `MvPolynomial.vanishingIdeal` of `S` is\ngenerated by polynomials of total degree `\u2264 |S|`, and there is a polynomial network of\ndepth `L = \u2308log_d |S|\u2309` whose decision boundary contains `S`. *Test:* establish the\nGalois-connection facts `zeroLocus (vanishingIdeal T) \u2287 T` and\n`vanishingIdeal (zeroLocus I) \u2287 I`, then bound generator degree via a Lagrange/Vandermonde\ninterpolation argument.\n\n## Conjecture 5 (Tropical limit of algebraic boundaries)\nAs a scaling parameter `t \u2192 \u221e`, the algebraic decision boundary of the polynomial\nclassifier `\u2211\u2c7c exp(t\u00b7a\u2c7c(x))` (Maslov/log-sum-exp dequantization) converges to the\n**tropical** decision boundary of the corresponding max-plus classifier studied in\n`MachineLearning.TropicalReLUBridge`. *Test:* formalize the `t \u2192 \u221e` limit\n`(1/t)\u00b7log \u2211 exp(t\u00b7a\u2c7c) \u2192 max\u2c7c a\u2c7c` pointwise (already `LogSumExp` territory in the catalog)\nand show the zero-level sets converge in the Hausdorff metric on compacts. This would be a\ntrue *bridge* theorem unifying the algebraic (this cycle) and tropical (existing) accounts\nof decision boundaries.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2061",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "74e64b1f",
-    "status": "available",
-    "timestamp": "2026-06-17T16:44:21.172809+00:00",
-    "title": "(in `DecisionBoundaryVariety.lean` and"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 *Isomorphisms of Meaning: When Structures Collide*\n\nThis cycle established two anchor results (see `Catalog/Bridges/StructuralCollisions.lean`\nand `Catalog/Bridges/BooleanLogicField.lean`):\n\n* **A1.** A bare ring satisfying the single law `x*x = x` is *forced* to have\n  characteristic two and to be commutative, and its multiplication **is** the\n  greatest-lower-bound (meet) of the order `a \u2264 b \u2194 a*b = a`. (Algebra \u21d2 Order.)\n* **A2.** Propositional logic `(Bool, xor, and)` **is** the field `ZMod 2`, via an explicit\n  `RingEquiv Bool (ZMod 2)`; `&&` is simultaneously the ring product and the order meet\n  (cross-linked to A1). (Logic \u2245 Algebra.)\n\nThe following conjectures are concrete, falsifiable next targets for the same theme.\n\n---\n\n### C1. Symmetric difference is an \ud835\udd3d\u2082-vector space (Set \u2245 Algebra)\nFor any type `\u03b1`, the powerset `Set \u03b1` with symmetric difference `\u25b3` as addition and\nintersection `\u2229` as multiplication is a *Boolean ring*: `s \u2229 s = s`, `s \u25b3 s = \u2205`, and the\norder induced by A1 is set inclusion with `s \u2293 t = s \u2229 t`.\n**Testable form:** instantiate the A1 abstractions (`add_self`, `mul_comm'`, `mul_isGLB`)\nat `Set \u03b1`/`Finset \u03b1` and prove `StructuralCollisions.le s t \u2194 s \u2286 t`, identifying the\nA1-meet with `\u2229`. Predicts every finite Boolean algebra is an \ud835\udd3d\u2082-module of dimension\n`= #atoms`.\n\n### C2. Stone-type rigidity of the collision\nThe isomorphism `Bool \u2243+* ZMod 2` is the *unique* ring isomorphism, and more generally any\nring homomorphism `R \u2192 S` between Boolean rings is automatically a lattice homomorphism for\nthe A1-induced orders (`a \u2264 b \u2192 f a \u2264 f b`), and conversely a bounded-lattice hom of finite\nBoolean algebras is a ring hom.\n**Testable form:** prove `Subsingleton (Bool \u2243+* ZMod 2)`, and prove\n`f (a*b) = f a * f b \u2192 (StructuralCollisions.le a b \u2192 StructuralCollisions.le (f a) (f b))`\nfor a `RingHom` between Boolean rings.\n\n### C3. Idempotence is the *exact* boundary of the collapse\nThe forced-commutativity phenomenon (A1) is special to the exponent law `x^2 = x`.\n**Conjecture:** for each fixed `n \u2265 2`, a ring with `\u2200 x, x^n = x` is commutative\n(Jacobson's theorem). The cases `n = 2` (done) and `n = 3` should be provable by elementary\nexpansion; general `n` is the deep target.\n**Testable form:** prove the `n = 3` case `(\u2200 x, x*x*x = x) \u2192 \u2200 a b, a*b = b*a` from scratch\n(no Mathlib `Jacobson` import), then attempt `n = 4`.\n\n### C4. The order/algebra collision lifts to a categorical equivalence\nThe constructions of A1 should assemble into an equivalence of categories between *finite\nBoolean rings with ring homs* and *finite Boolean algebras with bounded-lattice homs*, with\nobject map `R \u21a6 (R, \u2264_{a*b=a})` and inverse given by symmetric difference (C1).\n**Testable form:** build the two functors on objects + morphisms in Lean and prove the\nround-trips are identities on `Bool`, `ZMod 2`, and `Set (Fin n)`.\n\n### C5. A \"no-collision\" obstruction in characteristic \u2260 2\nThe collision in A1/A2 is a characteristic-two miracle. **Conjecture:** there is *no*\nnonzero ring `R` with `\u2200 x, x*x = x` and `(1 : R) + 1` a unit; equivalently, idempotence\nforbids odd characteristic.\n**Testable form:** prove `(\u2200 x : R, x*x = x) \u2192 (2 : R) = 0`, and deduce that a Boolean ring\nthat is also a field must be `ZMod 2` (so `Bool`), pinning A2 as the unique field-collision.\n",
     "domains": [
       "Algebra",
@@ -3168,21 +3168,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T17:23:46.154534+00:00",
     "title": "Two anchor results (see `Catalog/Bridges/StructuralCollis"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Dreamtime Algebra (Aboriginal Kinship as Group Theory)\n\nCycle 1 established the Kariera 4-section system as the Klein four-group `V\u2084`,\nproved bilateral cross-cousin marriage and the parallel-cousin prohibition as\ndecidable group identities, separated the two order-8 Aranda subsection models\n(`(\u2124/2)\u00b3` vs `\u2124/4 \u00d7 \u2124/2`) by a non-isomorphism invariant, and built a tropical\n`(min,+)` metric on the section group. Below are bold, falsifiable conjectures for\nfollow-up cycles.\n\n## Conjecture 1 \u2014 Second-cross-cousin marriage in the long-matriline model\nIn the `\u2124/4 \u00d7 \u2124/2` Aranda model with matriline `m:(a,b)\u21a6(a+1,b)`, patriline\n`p:(a,b)\u21a6(a+2,b+1)`, and marriage `w:(a,b)\u21a6(a+2,b+1)` (to be pinned down), the\n**first** cross-cousin (MBD/FZD) does NOT land in ego's spouse subsection, whereas\nthe **second** cross-cousin (MMBDD) does. Formal target: define the descent maps\nexplicitly over `\u2124/4 \u00d7 \u2124/2` and prove `MMBDD ego = w ego` while `MBD ego \u2260 w ego`,\nrecovering the defining ethnographic shift from 4-section to 8-subsection systems.\nThis is testable by `decide` once the maps are fixed.\n\n## Conjecture 2 \u2014 Classification of admissible kinship algebras\nA finite abelian group `G` with three involutions/translations `(p,m,w)` satisfying\n`w = p\u2218m`, fixed-point-freeness, and a consistent child rule supports a coherent\n\"marry-cross / forbid-parallel\" law **iff** `G` is elementary abelian `(\u2124/2)^k`\nextended by at most one `\u2124/4` matriline factor. Conjecture: the only such groups of\norder \u2264 16 are `V\u2084`, `(\u2124/2)\u00b3`, `\u2124/4 \u00d7 \u2124/2`, and `(\u2124/2)\u2074`. Falsifiable by an\nexhaustive `decide`/`Decidable` search over small groups.\n\n## Conjecture 3 \u2014 Tropical Cayley metric equals graph distance\nThe discrete `tdist` of Cycle 1 is the 1-step marriage metric. Conjecture: the full\nword/Cayley metric `d_word` of the section group with generators `{p,m,w}` coincides\nwith the tropical `(min,+)` matrix power of the adjacency (weight-1) matrix `A`, i.e.\n`d_word(s,t) = (A^{\u2297(n-1)})_{s,t}` where `\u2297` is min-plus matrix multiplication and\n`n = |G|`. This bridges kinship distance directly to tropical linear algebra\n(`Tropical/Core`, `Tropical/IdempotentSemiring`). Testable for `V\u2084` and the order-8\nmodels by computing min-plus matrix powers and comparing to `addOrderOf`-based word\nlength.\n\n## Conjecture 4 \u2014 Moiety homomorphism characterizes section systems\nA finite kinship group admits a Kariera-style \"two patrimoieties\" structure iff it\nadmits a surjective homomorphism onto `\u2124/2` (the patrimoiety) under which marriage is\nthe non-trivial coset translation. Conjecture: the number of distinct moiety\nhomomorphisms `G \u2192+ \u2124/2` equals `2^k \u2212 1` where `2^k` is the 2-torsion rank of `G`,\ngiving a count of \"global dual organizations\" compatible with the marriage law.\nFalsifiable via `Fintype` enumeration of `G \u2192+ ZMod 2`.\n\n## Conjecture 5 \u2014 Idempotent-semiring reachability collapses generations\nEncode reachability between sections in the Boolean (idempotent) semiring\n`{0,1}`-matrix `R` where `R_{s,t}=1` iff `t` is reachable from `s` by one marriage or\ndescent step. Conjecture: `R` is idempotent under Boolean matrix multiplication after\nexactly `\u2308log\u2082|G|\u2309` steps (`R^{(k+1)} = R^{(k)}`), and this stabilization index equals\nthe diameter of the Cayley graph. This realizes the \"alternating-generations\" collapse\nof kinship as the idempotency fixpoint of a tropical/Boolean semiring operator,\ndirectly connecting to `Tropical/IdempotentSemiring/Defs.lean`. Testable by iterating\nBoolean matrix products to a fixpoint and comparing with the proven group diameter.\n",
-    "domains": [
-      "Algebra",
-      "Tropical"
-    ],
-    "id": "fd_2063",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "5bafdd72",
-    "status": "available",
-    "timestamp": "2026-06-17T18:43:02.993316+00:00",
-    "title": "Cycle 1 established the Kariera 4-section system as the Klein four-group `V\u2084`,"
   },
   {
     "consumed_by_exp_id": "",
@@ -3231,6 +3216,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Category Theory as a Universal Language (Bridge cycle)\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle. Each conjecture is bold, falsifiable, and Lean-checkable.\n\n## FD-1. The regular subobjects of a topos form a Boolean algebra.\n\n**Conjecture.** For every `Order.Frame \u03b1`, the fixed points of the double-negation\nnucleus (`{a | ToposDoubleNegationLattice.IsRegular a}`) carry a\n`BooleanAlgebra` structure whose meet is `\u2293`, whose top/bottom are `\u22a4`/`\u22a5`, and\nwhose complement is `a\u1d9c`, with join given by `a \u2294' b := (a\u1d9c \u2293 b\u1d9c)\u1d9c`.\n\nThe key insight is... that meet-preservation (`dneg_inf`) plus idempotence make\n`dneg` a *nucleus*, and the sheafification `a \u21a6 a\u1d9c\u1d9c` collapses intuitionistic\nlogic to classical logic exactly on its fixed points \u2014 Booleanness is forced, not\nassumed.\n\nWhy now? We already proved closure under `\u2293` (`isRegular_inf`) and the bounds\n(`isRegular_bot/top`); only the (de Morgan) join and complement laws remain, all\nexpressible with the same `compl`/`himp` API verified in this cycle.\n\n## FD-2. The Yoneda iso-corollary upgrades to an equivalence of groupoids.\n\n**Conjecture.** The map `X \u21a6 yoneda.obj X` induces an equivalence between the core\ngroupoid of `C` and the full subcategory of representable presheaves, and\n`iso_iff_representable_iso` is its object-level shadow.\n\nThe key insight is... that full faithfulness (the single fact powering\n`isoPreimage` and `endEquiv`) is exactly the data of an equivalence onto the\nessential image, so the `Nonempty (\u00b7 \u2245 \u00b7)` biconditional is the \u03c0\u2080 of a deeper\ncategorical equivalence.\n\nWhy now? `Yoneda.fullyFaithful` is in scope and `endEquiv_comp`/`endEquiv_one`\nalready show the hom-level functoriality; the essential-image construction is the\nonly missing ingredient.\n\n## FD-3. `dneg` is the unique non-trivial Lawvere\u2013Tierney topology on a chain.\n\n**Conjecture.** On a totally ordered frame (a chain) `\u03b1`, every nucleus\n`j : \u03b1 \u2192 \u03b1` (monotone, extensive, idempotent, meet-preserving) other than the\nidentity equals the double-negation nucleus `dneg` collapsed onto `{\u22a5, \u22a4}`; i.e.\nchains admit only the trivial and the double-negation topologies.\n\nThe key insight is... that on a chain `a\u1d9c` is `\u22a4` for `a = \u22a5` and `\u22a5` otherwise,\nso `dneg` is the indicator of \"`> \u22a5`\", and any idempotent extensive monotone\nself-map respecting `\u2293` is pinned by its values at the two bounds proved regular\nhere (`dneg_bot`, `dneg_top`).\n\nWhy now? The nucleus axioms are all formalized in this file; the chain case is a\nfinite/order-induction argument (`omega`/`rcases` on comparisons) well within\nreach.\n\n## FD-4. Knaster\u2013Tarski computes sheafification of any nucleus, not just `dneg`.\n\n**Conjecture.** For an arbitrary nucleus `j` on a frame, the least fixed point\n`sInf (KnasterTarskiBridge.preFixed j)` above an element `a`, i.e.\n`sInf {x | a \u2264 x \u2227 j x \u2264 x}`, equals `j a`, exhibiting sheafification as the\nKnaster\u2013Tarski least-fixed-point closure relative to `a`.\n\nThe key insight is... that a nucleus is precisely a meet-preserving closure\noperator, so its image is the set of fixed points, and the catalog's\n`knaster_tarski` already delivers those fixed points constructively \u2014 we proved\nthe `a = \u22a5` and `a = \u22a4` extremes (`lfp_dneg_eq_bot`, `gfp_dneg_eq_top`).\n\nWhy now? The bridge between `dneg` and `KnasterTarskiBridge` is already wired\n(`dneg_knaster_tarski`); generalizing from `dneg` to an abstract nucleus reuses\nthe identical fixed-point lemmas.\n\n## FD-5. The frame of opens detects regularity geometrically.\n\n**Conjecture.** For `Opens X`, `IsRegular U \u2194 U = interior (closure U)`, and the\nregular opens are exactly the complemented elements of the Heyting algebra\n`Opens X`; hence `X` is extremally disconnected iff every open is regular.\n\nThe key insight is... that `U\u1d9c\u1d9c` in `Opens X` is interior-of-closure, so\n`dneg`-fixed points are the classical *regular open sets*, linking the abstract\nnucleus to a checkable point-set condition.\n\nWhy now? `opens_dneg_inf` and `opens_isRegular_*` already specialize the nucleus\nto `Opens X`; identifying `dneg` with interior\u2218closure is a single Mathlib lemma\naway and turns regularity into a topological invariant.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2120",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5d803a6e",
+    "status": "available",
+    "timestamp": "2026-06-19T17:15:33.749896+00:00",
+    "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3242,6 +3242,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
+  },
+  {
+    "consumed_by_exp_id": "4906ce6b",
+    "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_2119",
+    "priority_score": 0.7158260869565218,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "in_progress",
+    "timestamp": "2026-06-19T17:11:08.928185+00:00",
+    "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
   {
     "consumed_by_exp_id": "",
@@ -3925,21 +3940,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:47.634604+00:00",
     "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
-  },
-  {
-    "consumed_by_exp_id": "5d803a6e",
-    "description": "Formalize the Yoneda lemma as a bridge connecting any mathematical structure to its representable functors. Prove that the Yoneda embedding is fully faithful. Show how this bridges algebra (modules = additive functors), topology (sheaves = local functors), and logic (toposes = categorical semantics). Prove that every Grothendieck topos is a bounded lattice with a universal property.",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "id": "fd_0527",
-    "priority_score": 0.3999999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:05.876172+00:00",
-    "title": "Bridge: Category Theory as Universal Language for Mathematics"
   },
   {
     "consumed_by_exp_id": "",

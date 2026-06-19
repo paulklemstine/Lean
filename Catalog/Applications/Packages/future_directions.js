@@ -1033,7 +1033,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Functor from finite linear codes to tropical valuation objects via wei"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d1e35069",
     "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
     "domains": [
       "Novelty",
@@ -1043,7 +1043,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.958310+00:00",
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
@@ -2280,6 +2280,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "We conjecture that the projective Fraisse category of finite linear orders with the standard morphisms does NOT have the approximate Ramsey property, implying that its automorphism group (the infinite symmetric group) is NOT extremely amenable. This provides a concrete, falsifiable target for formalization in Lean 4, leveraging known results about the infinite symmetric group.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2121",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-19T18:13:04.539694+00:00",
+    "title": "Approximate Ramsey Property for Finite Linear Orders Implies Extreme Amenability"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -3201,6 +3216,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Category Theory as a Universal Language (Bridge cycle)\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle. Each conjecture is bold, falsifiable, and Lean-checkable.\n\n## FD-1. The regular subobjects of a topos form a Boolean algebra.\n\n**Conjecture.** For every `Order.Frame \u03b1`, the fixed points of the double-negation\nnucleus (`{a | ToposDoubleNegationLattice.IsRegular a}`) carry a\n`BooleanAlgebra` structure whose meet is `\u2293`, whose top/bottom are `\u22a4`/`\u22a5`, and\nwhose complement is `a\u1d9c`, with join given by `a \u2294' b := (a\u1d9c \u2293 b\u1d9c)\u1d9c`.\n\nThe key insight is... that meet-preservation (`dneg_inf`) plus idempotence make\n`dneg` a *nucleus*, and the sheafification `a \u21a6 a\u1d9c\u1d9c` collapses intuitionistic\nlogic to classical logic exactly on its fixed points \u2014 Booleanness is forced, not\nassumed.\n\nWhy now? We already proved closure under `\u2293` (`isRegular_inf`) and the bounds\n(`isRegular_bot/top`); only the (de Morgan) join and complement laws remain, all\nexpressible with the same `compl`/`himp` API verified in this cycle.\n\n## FD-2. The Yoneda iso-corollary upgrades to an equivalence of groupoids.\n\n**Conjecture.** The map `X \u21a6 yoneda.obj X` induces an equivalence between the core\ngroupoid of `C` and the full subcategory of representable presheaves, and\n`iso_iff_representable_iso` is its object-level shadow.\n\nThe key insight is... that full faithfulness (the single fact powering\n`isoPreimage` and `endEquiv`) is exactly the data of an equivalence onto the\nessential image, so the `Nonempty (\u00b7 \u2245 \u00b7)` biconditional is the \u03c0\u2080 of a deeper\ncategorical equivalence.\n\nWhy now? `Yoneda.fullyFaithful` is in scope and `endEquiv_comp`/`endEquiv_one`\nalready show the hom-level functoriality; the essential-image construction is the\nonly missing ingredient.\n\n## FD-3. `dneg` is the unique non-trivial Lawvere\u2013Tierney topology on a chain.\n\n**Conjecture.** On a totally ordered frame (a chain) `\u03b1`, every nucleus\n`j : \u03b1 \u2192 \u03b1` (monotone, extensive, idempotent, meet-preserving) other than the\nidentity equals the double-negation nucleus `dneg` collapsed onto `{\u22a5, \u22a4}`; i.e.\nchains admit only the trivial and the double-negation topologies.\n\nThe key insight is... that on a chain `a\u1d9c` is `\u22a4` for `a = \u22a5` and `\u22a5` otherwise,\nso `dneg` is the indicator of \"`> \u22a5`\", and any idempotent extensive monotone\nself-map respecting `\u2293` is pinned by its values at the two bounds proved regular\nhere (`dneg_bot`, `dneg_top`).\n\nWhy now? The nucleus axioms are all formalized in this file; the chain case is a\nfinite/order-induction argument (`omega`/`rcases` on comparisons) well within\nreach.\n\n## FD-4. Knaster\u2013Tarski computes sheafification of any nucleus, not just `dneg`.\n\n**Conjecture.** For an arbitrary nucleus `j` on a frame, the least fixed point\n`sInf (KnasterTarskiBridge.preFixed j)` above an element `a`, i.e.\n`sInf {x | a \u2264 x \u2227 j x \u2264 x}`, equals `j a`, exhibiting sheafification as the\nKnaster\u2013Tarski least-fixed-point closure relative to `a`.\n\nThe key insight is... that a nucleus is precisely a meet-preserving closure\noperator, so its image is the set of fixed points, and the catalog's\n`knaster_tarski` already delivers those fixed points constructively \u2014 we proved\nthe `a = \u22a5` and `a = \u22a4` extremes (`lfp_dneg_eq_bot`, `gfp_dneg_eq_top`).\n\nWhy now? The bridge between `dneg` and `KnasterTarskiBridge` is already wired\n(`dneg_knaster_tarski`); generalizing from `dneg` to an abstract nucleus reuses\nthe identical fixed-point lemmas.\n\n## FD-5. The frame of opens detects regularity geometrically.\n\n**Conjecture.** For `Opens X`, `IsRegular U \u2194 U = interior (closure U)`, and the\nregular opens are exactly the complemented elements of the Heyting algebra\n`Opens X`; hence `X` is extremally disconnected iff every open is regular.\n\nThe key insight is... that `U\u1d9c\u1d9c` in `Opens X` is interior-of-closure, so\n`dneg`-fixed points are the classical *regular open sets*, linking the abstract\nnucleus to a checkable point-set condition.\n\nWhy now? `opens_dneg_inf` and `opens_isRegular_*` already specialize the nucleus\nto `Opens X`; identifying `dneg` with interior\u2218closure is a single Mathlib lemma\naway and turns regularity into a topological invariant.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2120",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5d803a6e",
+    "status": "available",
+    "timestamp": "2026-06-19T17:15:33.749896+00:00",
+    "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3214,7 +3244,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4906ce6b",
     "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
     "domains": [
       "Novelty",
@@ -3224,7 +3254,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7158260869565218,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
@@ -3910,21 +3940,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T21:01:47.634604+00:00",
     "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
-  },
-  {
-    "consumed_by_exp_id": "5d803a6e",
-    "description": "Formalize the Yoneda lemma as a bridge connecting any mathematical structure to its representable functors. Prove that the Yoneda embedding is fully faithful. Show how this bridges algebra (modules = additive functors), topology (sheaves = local functors), and logic (toposes = categorical semantics). Prove that every Grothendieck topos is a bounded lattice with a universal property.",
-    "domains": [
-      "Bridges",
-      "Algebra"
-    ],
-    "id": "fd_0527",
-    "priority_score": 0.3999999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:05.876172+00:00",
-    "title": "Bridge: Category Theory as Universal Language for Mathematics"
   },
   {
     "consumed_by_exp_id": "",
