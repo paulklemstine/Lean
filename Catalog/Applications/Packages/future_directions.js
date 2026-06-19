@@ -48,7 +48,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Goldbach Verification Framework"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3b2adc6d",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domains": [
       "Algebra"
@@ -57,7 +57,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.94,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -1033,7 +1033,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Functor from finite linear codes to tropical valuation objects via wei"
   },
   {
-    "consumed_by_exp_id": "5d621cd6",
+    "consumed_by_exp_id": "6bd9e95d",
     "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
     "domains": [
       "Novelty",
@@ -1479,7 +1479,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quaternion Algebras and Rotations"
   },
   {
-    "consumed_by_exp_id": "89bf180f",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erd\u0151s-R\u00e9nyi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domains": [
       "Combinatorics",
@@ -1489,7 +1489,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.82,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erd\u0151s-R\u00e9nyi Threshold Phenomena"
   },
@@ -2033,11 +2033,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "An interval hypergraphic polytope \u0394_I is simple if and only if no point of [n] is contained in three or more hyperedges of I.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2101",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18376v1",
+    "status": "available",
+    "timestamp": "2026-06-19T14:14:35.088047+00:00",
+    "title": "Simplicity criterion for interval hypergraphic polytopes via point multiplicity"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every odd prime base B > 5, the length of the longest terminal cycle in the four-digit Kaprekar routine equals (B-1)/2 if and only if the multiplicative order of 2 modulo B is (B-1)/2.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2101",
+    "id": "fd_2102",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
@@ -2051,7 +2065,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2102",
+    "id": "fd_2103",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
@@ -2066,7 +2080,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2103",
+    "id": "fd_2104",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19677v1",
@@ -2081,7 +2095,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2104",
+    "id": "fd_2105",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19933v1",
@@ -2096,7 +2110,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2105",
+    "id": "fd_2106",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19573v1",
@@ -2110,7 +2124,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2106",
+    "id": "fd_2107",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19006v1",
@@ -2125,7 +2139,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2107",
+    "id": "fd_2108",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18956v1",
@@ -3083,36 +3097,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T23:11:17.377449+00:00",
     "title": "Two boundary facts of the prime crossword in"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThese directions continue naturally from the deterministic deletion lemma proved\nin `Catalog/Bridges/LocallySparseHypergraphDegree.lean`. Each is phrased so that\nthe deletion lemma is reused as the deterministic core, with new work layered on\ntop.\n\n## 1. Bernoulli first-moment bound\n\nFormalize the random vertex-sampling step: include each vertex independently with\nprobability `p`, obtain a random subset `S`, and bound the expected independent-set\nsize below by `E[|S|] - E[|containedEdges E S|]` using the deletion lemma\npointwise and linearity of expectation.\n\nThe key insight is that the deletion lemma already holds for *every* outcome `S`,\nso the expectation of its conclusion is obtained for free by linearity, and no new\ncombinatorics is needed \u2014 only the probabilistic bookkeeping of `E[|S|]` and\n`E[|containedEdges E S|]`.\n\n**Why now?** The deterministic lemma is proved, type-checks, and exposes exactly\nthe two cardinalities (`S.card` and `(containedEdges E S).card`) whose expectations\nthe first-moment bound needs; the probabilistic layer can be added without\ntouching the combinatorial core.\n\n## 2. Uniform hypergraph average-degree bound\n\nSpecialize the first-moment bound to `r`-uniform hypergraphs (`Uniform E r`),\nwhere an edge survives sampling with probability exactly `p^r`. Optimize `p` to\nderive an independent set of size `\u03a9(|V| / d^{1/(r-1)})` in terms of the average\ndegree `d`.\n\nThe key insight is that uniformity collapses the edge-survival probability to the\nsingle quantity `p^r`, turning the expected count of contained edges into a clean\nclosed form that can be optimized over `p` by elementary calculus on naturals or\nreals.\n\n**Why now?** `Uniform E r` is already defined in the file, and the deletion lemma\nplus a first-moment bound are exactly the two ingredients this classical estimate\ncombines; the remaining work is a self-contained optimization.\n\n## 3. Formal Berge-cycle definitions and basic theory\n\nDevelop the theory around the existing `Linear E` and `BergeThreeCycle E`\ndefinitions: prove that `Linear E` is equivalent to the absence of Berge\n2-cycles, and establish counting lemmas for codegrees (numbers of edges through a\nfixed pair of vertices) under these constraints.\n\nThe key insight is that linearity bounds pairwise edge intersections by one, which\ndirectly controls the codegree and hence the variance of the contained-edge count\n\u2014 the quantity that second-moment refinements of the deletion lemma depend on.\n\n**Why now?** The definitions `Linear` and `BergeThreeCycle` are in place and\ntype-check, so the supporting combinatorial lemmas can be stated and proved\nimmediately, giving the vocabulary needed for the sparsity refinements below.\n\n## 4. Second-moment / locally sparse refinement\n\nUse linearity (no Berge 2-cycles) and forbidden Berge 3-cycles to bound the\nvariance of `|containedEdges E S|`, then upgrade the first-moment independent-set\nbound to the improved locally sparse bound `\u03a9((|V|/d^{1/(r-1)}) \u00b7 (log d)^{1/(r-1)})`\nfamiliar from the Ajtai\u2013Koml\u00f3s\u2013Pintz\u2013Spencer\u2013Szemer\u00e9di circle of results.\n\nThe key insight is that local sparsity caps the number of edges sharing two\nvertices, which suppresses the dependencies between edge-survival events and\nmakes a second-moment (or alteration) argument quantitatively beat the naive\nfirst moment.\n\n**Why now?** This is the precise next quantitative milestone after the\nfirst-moment bound, and both its hypotheses (`Linear`, `BergeThreeCycle`) and its\ndeterministic engine (the deletion lemma) already exist in the development.\n\n## 5. From independence number to average-degree conjecture\n\nAssemble the refined bounds into a statement about the average degree of locally\nsparse hypergraphs, isolating the precise remaining gap toward the full locally\nsparse average-degree conjecture and recording it as an explicit `sorry`-free\ntarget statement (proved or left as a clearly marked open `theorem ... := by\nsorry` only at the very top level).\n\nThe key insight is that an independence-number lower bound and an average-degree\nupper bound are dual faces of the same extremal estimate, so packaging the proved\nbounds correctly turns the conjecture into a single clean inequality between two\nalready-formalized quantities.\n\n**Why now?** With the deterministic lemma, first- and second-moment bounds, and\nBerge-cycle vocabulary all in place, the final step is organizational \u2014 stating the\nconjecture faithfully against existing definitions \u2014 which keeps the formalization\nhonest about exactly what remains open.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2108",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "7f1e65fe",
-    "status": "available",
-    "timestamp": "2026-06-19T12:17:32.083123+00:00",
-    "title": "These directions continue naturally from the deterministic deletion lemma proved"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThese build directly on the local Jones\u2013Temperley\u2013Lieb braid identity proved in\n`TL_Braid_Local.lean` (the theorems `tl_triple_normal_form`,\n`tl_braid_general`, `tl_inverse_general`, `jonesGen_braid`,\n`jonesGen_mul_jonesGenInv`, `jonesGenInv_mul_jonesGen`, `jonesGen_isUnit`).\n\n## 1. From the local relation to a full braid-group representation\n\nPromote the two-generator result to a genuine monoid homomorphism\n`B_n \u2192 A\u02e3` (or a representation on a module) by adding the far-apart\ncommutation relation `e_i e_j = e_j e_i` for `|i \u2212 j| \u2265 2` and assembling the\ngenerators `\u03c3_i = jonesGen q e_i`. The key insight is that the only\n*non-commuting* obligations in the braid presentation are between adjacent\ngenerators, and those are exactly `jonesGen_braid` plus invertibility \u2014 so the\nglobal representation is obtained purely by gluing the already-proved local data.\n**Why now?** The local identity is finished, axiom-clean, and stated over an\narbitrary `R`-algebra, so the remaining work is bookkeeping over an index set\nrather than new algebra, making this the immediately reachable next milestone.\n\n## 2. Temperley\u2013Lieb algebra as a concrete structure with a diagram basis\n\nDefine `TL_n(\u03b4)` as an explicit `R`-algebra (e.g. via planar diagrams or a\npresentation) and instantiate the present generators inside it, then prove the\nloop/zig-zag relations hold so that the abstract hypotheses become theorems.\nThe key insight is that our development already factors all reasoning through\nfour equational hypotheses, so a concrete model only needs to *discharge those\nfour equations once* to inherit the entire braid and invertibility theory for\nfree. **Why now?** Mathlib has matured matrix-, monoid-, and free-algebra\ninfrastructure, and our hypothesis-driven phrasing means a diagram or matrix\nmodel can be plugged in without touching any of the existing proofs.\n\n## 3. Hecke-algebra and quantum-group bridge\n\nConnect `jonesGen q e` to the Hecke algebra generators `T_i` (satisfying\n`(T_i \u2212 q)(T_i + q\u207b\u00b9) = 0`) and to `U_q(sl_2)` quantum-group data, showing the\nTL algebra is the expected quotient. The key insight is that the balance\ncondition `a\u00b2 + a b d + b\u00b2 = 0` driving `tl_braid_general` is precisely the\ncharacteristic (quadratic) relation of the Hecke generator in disguise, so our\nabstract identity is already the Hecke braid relation specialized. **Why now?**\nWith the quadratic-relation viewpoint isolated and proved, the translation to the\nHecke presentation is a short algebraic dictionary rather than a fresh proof\neffort, and it unlocks the rich representation theory needed for Jones\npolynomials.\n\n## 4. The Jones polynomial and a Markov-trace invariant\n\nBuild a Markov trace on the TL/braid representation and use it to define a\nlink invariant (the Jones polynomial), verifying its invariance under the two\nMarkov moves. The key insight is that braid invariance of any trace-based\ninvariant reduces to the braid relation and conjugation-invariance of the\ntrace, the first of which is already supplied by `jonesGen_braid`. **Why now?**\nThe braid generators and their explicit inverses (`jonesGen_isUnit`) are in\nhand, so trace and Markov-move reasoning can proceed immediately on top of a\nverified, invertible generating set.\n\n## 5. Toward transversal gates and the Eastin\u2013Knill obstruction\n\nModel anyonic/transversal logical gates as elements of the braid-generated unit\ngroup and study which logical operations are reachable, as a formal stepping\nstone toward the Eastin\u2013Knill no-go landscape for transversal universality. The\nkey insight is that the set of fault-tolerant braiding gates is exactly the\nsubgroup of `A\u02e3` generated by the `jonesGen q e_i`, so characterizing its image\nis the formal counterpart of asking which gates a topological code admits\ntransversally. **Why now?** Quantum-information formalization is an active and\nfast-moving target, and having a sound, axiom-clean algebraic foundation for the\nbraiding gates lets future QEC work focus on the genuinely quantum content\n(codes, distance, fault tolerance) instead of re-deriving the underlying braid\nalgebra.\n",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_2109",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "60ec8c30",
-    "status": "available",
-    "timestamp": "2026-06-19T13:20:17.927241+00:00",
-    "title": "These build directly on the local Jones\u2013Temperley\u2013Lieb braid identity proved in"
   },
   {
     "consumed_by_exp_id": "",
@@ -4275,6 +4259,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-01T12:30:30.782446+00:00",
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0092",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.807837+00:00",
+    "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
   {
     "consumed_by_exp_id": "",

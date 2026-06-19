@@ -62,7 +62,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "3b2adc6d",
     "description": "Prove that the rank of an elliptic curve equals the order of vanishing of its L-function at s=1. Formalize the BSD formula including the regulator, Tate-Shafarevich group, and Tamagawa numbers.",
     "domain_bridges": [],
     "domains": [
@@ -74,7 +74,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:24:59.227937+00:00",
     "title": "Birch and Swinnerton-Dyer Conjecture"
   },
@@ -1377,7 +1377,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "5d621cd6",
+    "consumed_by_exp_id": "6bd9e95d",
     "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
     "domain_bridges": [],
     "domains": [
@@ -1973,7 +1973,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "89bf180f",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
     "domain_bridges": [],
     "domains": [
@@ -1986,7 +1986,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432742+00:00",
     "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
   },
@@ -2966,6 +2966,30 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO: Interval hypergraphic polytopes (or deformed associahedra), Tamari interval posets, and weeping willows"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "An interval hypergraphic polytope Δ_I is simple if and only if no point of [n] is contained in three or more hyperedges of I.",
+    "domain_bridges": [
+      "Polyhedral geometry",
+      "Poset theory"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2101",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the known characterization of simplicity of hypergraphic polytopes via acyclic orientations and the fact that interval hypergraphs satisfy the Helly property; show that a vertex fails to be simple exactly when there exists a point covered by ≥3 hyperedges, which creates a non-simple vertex in the Minkowski sum.",
+    "research_mode": "team",
+    "source_exp_id": "2606.18376v1",
+    "status": "available",
+    "timestamp": "2026-06-19T14:14:35.088047+00:00",
+    "title": "Simplicity criterion for interval hypergraphic polytopes via point multiplicity"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "OEIS A099009",
       "Schwartz and Thakur's formulation",
       "Thakur's framework"
@@ -2979,7 +3003,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2101",
+    "id": "fd_2102",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the convergence to the triangular region T_B, then analyze the projective doubling conjugacy to derive cycle lengths using Lean's arithmetic and group theory capabilities.",
@@ -3008,7 +3032,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2102",
+    "id": "fd_2103",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize finite simple graphs, induced minors, K_{1,d}-freeness, planarity, and tree-independence number in Lean. Prove auxiliary lemmas showing that unbounded tree-independence in a K_{1,d}-free induced-minor-closed class forces arbitrarily large planar induced-minor obstructions. Then use induction on the size or block structure of the excluded planar graph H to extract a uniform bound B(d,H).",
@@ -3035,7 +3059,7 @@
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2103",
+    "id": "fd_2104",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formulate via uniform distribution over polynomial systems and apply probabilistic estimates using Herglotz-type inequalities.",
@@ -3068,7 +3092,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2104",
+    "id": "fd_2105",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the adelic toral‑packet equidistribution theorem of Aka–Luethi–Michel–Wieser to the product space, show that the only positive‑dimensional special subvarieties are CM‑fibers, and deduce weak convergence of Galois orbit measures to Haar measure; the argument is unconditional under the given splitting hypothesis.",
@@ -3097,7 +3121,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2105",
+    "id": "fd_2106",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Investigate the structure of the map from e-embracing bases to e-positive circuits. Use the fact that the map is r-Lipschitz and non-contractive. Attempt to show that any path in the polyhedron graph can be lifted to a path of embracing bases of the same length. Consider using topological methods or shellability arguments.",
@@ -3122,7 +3146,7 @@
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2106",
+    "id": "fd_2107",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct explicit Koszul resolutions for tree graphs and verify monomial complete intersection property via Lean 4's algebraic tools",
@@ -3148,7 +3172,7 @@
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2107",
+    "id": "fd_2108",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Formalize the recurrence relation in Lean using the coupling between the game and permutation cycles. Prove the recurrence by induction on n, using the uniformity of the first cycle length and the recursive structure of permutations.",
@@ -4428,46 +4452,6 @@
     "status": "available",
     "timestamp": "2026-06-17T23:11:17.377449+00:00",
     "title": "Two boundary facts of the prime crossword in"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThese directions continue naturally from the deterministic deletion lemma proved\nin `Catalog/Bridges/LocallySparseHypergraphDegree.lean`. Each is phrased so that\nthe deletion lemma is reused as the deterministic core, with new work layered on\ntop.\n\n## 1. Bernoulli first-moment bound\n\nFormalize the random vertex-sampling step: include each vertex independently with\nprobability `p`, obtain a random subset `S`, and bound the expected independent-set\nsize below by `E[|S|] - E[|containedEdges E S|]` using the deletion lemma\npointwise and linearity of expectation.\n\nThe key insight is that the deletion lemma already holds for *every* outcome `S`,\nso the expectation of its conclusion is obtained for free by linearity, and no new\ncombinatorics is needed — only the probabilistic bookkeeping of `E[|S|]` and\n`E[|containedEdges E S|]`.\n\n**Why now?** The deterministic lemma is proved, type-checks, and exposes exactly\nthe two cardinalities (`S.card` and `(containedEdges E S).card`) whose expectations\nthe first-moment bound needs; the probabilistic layer can be added without\ntouching the combinatorial core.\n\n## 2. Uniform hypergraph average-degree bound\n\nSpecialize the first-moment bound to `r`-uniform hypergraphs (`Uniform E r`),\nwhere an edge survives sampling with probability exactly `p^r`. Optimize `p` to\nderive an independent set of size `Ω(|V| / d^{1/(r-1)})` in terms of the average\ndegree `d`.\n\nThe key insight is that uniformity collapses the edge-survival probability to the\nsingle quantity `p^r`, turning the expected count of contained edges into a clean\nclosed form that can be optimized over `p` by elementary calculus on naturals or\nreals.\n\n**Why now?** `Uniform E r` is already defined in the file, and the deletion lemma\nplus a first-moment bound are exactly the two ingredients this classical estimate\ncombines; the remaining work is a self-contained optimization.\n\n## 3. Formal Berge-cycle definitions and basic theory\n\nDevelop the theory around the existing `Linear E` and `BergeThreeCycle E`\ndefinitions: prove that `Linear E` is equivalent to the absence of Berge\n2-cycles, and establish counting lemmas for codegrees (numbers of edges through a\nfixed pair of vertices) under these constraints.\n\nThe key insight is that linearity bounds pairwise edge intersections by one, which\ndirectly controls the codegree and hence the variance of the contained-edge count\n— the quantity that second-moment refinements of the deletion lemma depend on.\n\n**Why now?** The definitions `Linear` and `BergeThreeCycle` are in place and\ntype-check, so the supporting combinatorial lemmas can be stated and proved\nimmediately, giving the vocabulary needed for the sparsity refinements below.\n\n## 4. Second-moment / locally sparse refinement\n\nUse linearity (no Berge 2-cycles) and forbidden Berge 3-cycles to bound the\nvariance of `|containedEdges E S|`, then upgrade the first-moment independent-set\nbound to the improved locally sparse bound `Ω((|V|/d^{1/(r-1)}) · (log d)^{1/(r-1)})`\nfamiliar from the Ajtai–Komlós–Pintz–Spencer–Szemerédi circle of results.\n\nThe key insight is that local sparsity caps the number of edges sharing two\nvertices, which suppresses the dependencies between edge-survival events and\nmakes a second-moment (or alteration) argument quantitatively beat the naive\nfirst moment.\n\n**Why now?** This is the precise next quantitative milestone after the\nfirst-moment bound, and both its hypotheses (`Linear`, `BergeThreeCycle`) and its\ndeterministic engine (the deletion lemma) already exist in the development.\n\n## 5. From independence number to average-degree conjecture\n\nAssemble the refined bounds into a statement about the average degree of locally\nsparse hypergraphs, isolating the precise remaining gap toward the full locally\nsparse average-degree conjecture and recording it as an explicit `sorry`-free\ntarget statement (proved or left as a clearly marked open `theorem ... := by\nsorry` only at the very top level).\n\nThe key insight is that an independence-number lower bound and an average-degree\nupper bound are dual faces of the same extremal estimate, so packaging the proved\nbounds correctly turns the conjecture into a single clean inequality between two\nalready-formalized quantities.\n\n**Why now?** With the deterministic lemma, first- and second-moment bounds, and\nBerge-cycle vocabulary all in place, the final step is organizational — stating the\nconjecture faithfully against existing definitions — which keeps the formalization\nhonest about exactly what remains open.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2108",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "7f1e65fe",
-    "status": "available",
-    "timestamp": "2026-06-19T12:17:32.083123+00:00",
-    "title": "These directions continue naturally from the deterministic deletion lemma proved"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThese build directly on the local Jones–Temperley–Lieb braid identity proved in\n`TL_Braid_Local.lean` (the theorems `tl_triple_normal_form`,\n`tl_braid_general`, `tl_inverse_general`, `jonesGen_braid`,\n`jonesGen_mul_jonesGenInv`, `jonesGenInv_mul_jonesGen`, `jonesGen_isUnit`).\n\n## 1. From the local relation to a full braid-group representation\n\nPromote the two-generator result to a genuine monoid homomorphism\n`B_n → Aˣ` (or a representation on a module) by adding the far-apart\ncommutation relation `e_i e_j = e_j e_i` for `|i − j| ≥ 2` and assembling the\ngenerators `σ_i = jonesGen q e_i`. The key insight is that the only\n*non-commuting* obligations in the braid presentation are between adjacent\ngenerators, and those are exactly `jonesGen_braid` plus invertibility — so the\nglobal representation is obtained purely by gluing the already-proved local data.\n**Why now?** The local identity is finished, axiom-clean, and stated over an\narbitrary `R`-algebra, so the remaining work is bookkeeping over an index set\nrather than new algebra, making this the immediately reachable next milestone.\n\n## 2. Temperley–Lieb algebra as a concrete structure with a diagram basis\n\nDefine `TL_n(δ)` as an explicit `R`-algebra (e.g. via planar diagrams or a\npresentation) and instantiate the present generators inside it, then prove the\nloop/zig-zag relations hold so that the abstract hypotheses become theorems.\nThe key insight is that our development already factors all reasoning through\nfour equational hypotheses, so a concrete model only needs to *discharge those\nfour equations once* to inherit the entire braid and invertibility theory for\nfree. **Why now?** Mathlib has matured matrix-, monoid-, and free-algebra\ninfrastructure, and our hypothesis-driven phrasing means a diagram or matrix\nmodel can be plugged in without touching any of the existing proofs.\n\n## 3. Hecke-algebra and quantum-group bridge\n\nConnect `jonesGen q e` to the Hecke algebra generators `T_i` (satisfying\n`(T_i − q)(T_i + q⁻¹) = 0`) and to `U_q(sl_2)` quantum-group data, showing the\nTL algebra is the expected quotient. The key insight is that the balance\ncondition `a² + a b d + b² = 0` driving `tl_braid_general` is precisely the\ncharacteristic (quadratic) relation of the Hecke generator in disguise, so our\nabstract identity is already the Hecke braid relation specialized. **Why now?**\nWith the quadratic-relation viewpoint isolated and proved, the translation to the\nHecke presentation is a short algebraic dictionary rather than a fresh proof\neffort, and it unlocks the rich representation theory needed for Jones\npolynomials.\n\n## 4. The Jones polynomial and a Markov-trace invariant\n\nBuild a Markov trace on the TL/braid representation and use it to define a\nlink invariant (the Jones polynomial), verifying its invariance under the two\nMarkov moves. The key insight is that braid invariance of any trace-based\ninvariant reduces to the braid relation and conjugation-invariance of the\ntrace, the first of which is already supplied by `jonesGen_braid`. **Why now?**\nThe braid generators and their explicit inverses (`jonesGen_isUnit`) are in\nhand, so trace and Markov-move reasoning can proceed immediately on top of a\nverified, invertible generating set.\n\n## 5. Toward transversal gates and the Eastin–Knill obstruction\n\nModel anyonic/transversal logical gates as elements of the braid-generated unit\ngroup and study which logical operations are reachable, as a formal stepping\nstone toward the Eastin–Knill no-go landscape for transversal universality. The\nkey insight is that the set of fault-tolerant braiding gates is exactly the\nsubgroup of `Aˣ` generated by the `jonesGen q e_i`, so characterizing its image\nis the formal counterpart of asking which gates a topological code admits\ntransversally. **Why now?** Quantum-information formalization is an active and\nfast-moving target, and having a sound, axiom-clean algebraic foundation for the\nbraiding gates lets future QEC work focus on the genuinely quantum content\n(codes, distance, fault tolerance) instead of re-deriving the underlying braid\nalgebra.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_2109",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "60ec8c30",
-    "status": "available",
-    "timestamp": "2026-06-19T13:20:17.927241+00:00",
-    "title": "These build directly on the local Jones–Temperley–Lieb braid identity proved in"
   },
   {
     "ambition_level": "extension",
@@ -6020,6 +6004,26 @@
     "status": "available",
     "timestamp": "2026-06-01T12:30:30.782446+00:00",
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0092",
+    "lineage_refs": [],
+    "priority_score": 0.05,
+    "proof_strategy": "Define the data sheaf: for a database with n features and m observations, the base space is the poset P of feature subsets (ordered by inclusion). The sheaf F assigns to each feature subset S the set of complete observations on features S. The restriction maps F(S) -> F(T) for T subset S project out the features in S\\T. The sheaf condition: for any cover {S_i} of S, the following is an equalizer: F(S) -> prod_i F(S_i) ==> prod_{i,j} F(S_i cap S_j). This means: a global section exists iff local sections agree on overlaps. P(sheaf) = P(all overlapping constraints are consistent) = prod_{overlaps} P(consistent | missing) = prod_{overlaps} (1-r)^2 = (1-r)^{2*C(n,2)} for pairwise overlaps. More precisely: there are C(n,2) overlapping pairs of features. Each pair requires consistency of the two partial sections. P(consistent pair) = (1-r)^2 (both features present) + r^2 * P(consistent by chance) + 2*r*(1-r) * P(consistent partial). For random data: P(consistent by chance) ~ 1/k where k is the number of values. So P(sheaf) ~ (1 - r + r/k)^{C(n,2)}. For n > 10 and r < 0.5: P(sheaf) > (1-r)^{C(n,2)} > 0 if r < 1 - C(n,2)^{-1/n}. Sheaf imputation: find the global section s that minimizes ||s - data||^2 subject to s in H^0(F). This is a constrained optimization problem. Test: generate synthetic data from a known distribution, introduce MCAR missing values, compare imputation methods.",
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.807837+00:00",
+    "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
   {
     "ambition_level": "extension",
