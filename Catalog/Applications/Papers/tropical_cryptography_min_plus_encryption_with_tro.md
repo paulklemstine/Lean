@@ -1,50 +1,65 @@
-# Computational Evidence: Tropical Discrete Logarithm & Eigenvalue Additivity
+# Computational Evidence — Tropical Magnitude Leak & Global-Min Superadditivity
 
-All computations performed in Lean over `ℚ` (exact arithmetic) to avoid
-floating-point error. Min-plus product `(A ⊗ B)_{ij} = min_k (A_{ik} + B_{kj})`,
-`tropMatPow A k := A^{⊗(k+1)}` (powers indexed from `A` itself at `k=0`,
-since no tropical identity exists over a field without `+∞`).
+This note records the small-case computations that motivated the formal results in
+`Tropical/TropicalMagnitudeLeak.lean` and `Tropical/TropicalGminSuperadditive.lean`.
+All computations were done over ℚ with an explicit `min`-`plus` model of the tropical
+matrix product (so they are exact, not floating point).
 
-## Test matrix
+## Model
 
-`A : 3×3` with diagonal `2`, off-diagonal `10`; constant vector `v ≡ 5`.
-By the diagonal-eigenpair construction this gives a tropical eigenpair with
-eigenvalue `λ = 2` and eigenvector `v`.
+```
+mm A B   i j = min (A i 0 + B 0 j) (A i 1 + B 1 j)        -- min-plus product (2×2)
+mpow A k     = A ⊗ A ⊗ ... ⊗ A  ((k+1) factors)           -- matches `tropMatPow A k`
+```
 
-## 1. Eigenvalue additivity under tropical power  `λ(A^{⊗m}) = m·λ(A)`
+## 1. Entrywise linear sandwich
 
-| power `tropMatPow A k` | true exponent `m=k+1` | predicted eigenvalue `m·2` | `mvm (A^{⊗m}) v` |
-|---|---|---|---|
-| `k=0` (`A^1`)  | 1 | 2 | `![7,7,7]` = `v+2`  ✓ |
-| `k=1` (`A^2`)  | 2 | 4 | `![9,9,9]` = `v+4`  ✓ |
-| `k=2` (`A^3`)  | 3 | 6 | `![11,11,11]` = `v+6` ✓ |
+Test matrix `A = [[1,3],[3,1]]`, so global min `amin = 1`, global max `amax = 3`.
 
-The residual `(A^{⊗m} ⊗ v)_i − v_i` equals `m·λ` exactly, at **every** coordinate.
+| k | A^{⊗(k+1)} entries (00,01,10,11) |
+|---|----------------------------------|
+| 0 | (1, 3, 3, 1) |
+| 1 | (2, 4, 4, 2) |
+| 2 | (3, 5, 5, 3) |
+| 3 | (4, 6, 6, 4) |
+| 4 | (5, 7, 7, 5) |
+| 5 | (6, 8, 8, 6) |
 
-## 2. TDLP attack — exponent recovery
+For every `k ≤ 7` and every entry `e` of `A^{⊗(k+1)}` the check
+`(k+1)*amin ≤ e ≤ (k+1)*amax`, i.e. `(k+1) ≤ e ≤ 3(k+1)`, returns `true`.
+This is the universal sandwich proved formally as `tropMatPow_entry_lower` /
+`tropMatPow_entry_upper`.
 
-`(mvm (tropMatPow A 2) v 0 − v 0) / λ = (11 − 5)/2 = 3 = k+1`.
+**Cryptanalytic reading.** From any entry `e = B i j` of the public key
+`B = A^{⊗(k+1)}` the adversary reads off `e/amax ≤ k+1 ≤ e/amin` — a computable
+interval for the secret exponent *with no eigenvector and no `λ ≠ 0` assumption*.
+For the diagonal entries above the interval is `[e/3, e]`; its integer points pin `k`
+to a short list, and when `amin = amax` (a constant matrix) the interval collapses to a
+point (`tdlp_constant_exact`).
 
-The secret exponent is recovered in closed form from a single eigenvalue
-measurement whenever `λ ≠ 0`. This **refutes** the security conjecture
-(TDLP hard) in every instance possessing a nonzero-eigenvalue eigenvector.
+## 2. Magnitude no-leak boundary
 
-## 3. Diffie–Hellman correctness (power commutativity)
+Zero matrix `Z = [[0,0],[0,0]]`:
 
-`decide (tropMatPow (tropMatPow A 1) 2 = tropMatPow (tropMatPow A 2) 1) = true`.
-Alice's `(A^{⊗a})^{⊗b}` equals Bob's `(A^{⊗b})^{⊗a}` — the shared key is well defined.
+| k | Z^{⊗(k+1)} (00, 11) |
+|---|---------------------|
+| 0..5 | (0,0) for all k |
 
-## 4. Power multiplicativity
+Every power is the zero matrix, so the magnitude channel carries **no** information
+about `k` (`magnitude_no_leak`). This is the magnitude-channel analogue of the
+`λ = 0` eigenvalue boundary in `EigenzeroNoLeak.lean`.
 
-`decide (tropMatMul (tropMatPow A 1) (tropMatPow A 2) = tropMatPow A 4) = true`,
-i.e. `A^{⊗2} ⊗ A^{⊗3} = A^{⊗5}`  (indices `1,2 ↦ 4` under the `k ↦ k+1` shift).
+## 3. Global-min superadditivity
 
-## Counterexample hunt
+Define `g(m) = min_{i,j} (A^{⊗(m+1)})_{i,j}`. For `A = [[1,3],[3,1]]` the table above
+gives `g(0)=1, g(1)=2, g(2)=3, ...`, i.e. `g(m) = m+1`, which satisfies the
+superadditive law `g(a+b+1) ≥ g(a) + g(b)` (here with equality). The general
+inequality `gmin (A ⊗ B) ≥ gmin A + gmin B` was checked on several random ℚ matrices
+and is proved formally as `gmin_tropMatMul_superadd` / `gmin_tropMatPow_superadd`.
 
-- Conjecture "TDLP is hard": **FALSE** for `λ ≠ 0` (Section 2 above; formalized as
-  `tdlp_recover_exponent` and the concrete `tdlp_break_concrete`).
-- Boundary `λ = 0`: attack divides by zero and recovers nothing — consistent with
-  `Tropical.EigenzeroNoLeak.eigenzero_no_leak`. The hardness, where it exists at all,
-  lives **only** at the degenerate boundary eigenvalue.
-- Eigenvalue additivity `λ(A^{⊗m}) = m·λ`: no counterexample; it is an unconditional
-  theorem given any eigenpair (proved by induction via translation equivariance).
+## OEIS
+
+The diagonal sequence `1,2,3,4,5,6,...` (A000027) and off-diagonal `3,4,5,6,...`
+(A000027 shifted) are linear, consistent with the predicted slope = the minimum cycle
+mean (here the diagonal self-loop weight `1`). No exotic sequence appears; the point is
+precisely the *linearity*, which is what makes the exponent leak.

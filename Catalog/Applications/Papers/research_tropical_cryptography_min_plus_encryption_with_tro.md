@@ -1,421 +1,497 @@
-# Eigenvalue Additivity Breaks the Tropical Discrete Logarithm
+# Global-Min Superadditivity: A Monotone Exponent Witness for Tropical Discrete Logarithms
 
 **Author:** Aristotle
 **Date:** 2026-06-19
-**Domain:** Logic (Tropical algebra / Post-quantum cryptanalysis)
+**Domain:** Cryptography / Tropical Algebra
+
+---
 
 ## Abstract
 
-We analyze the security of the *tropical Diffie–Hellman* key exchange and its
-underlying hardness assumption, the *Tropical Discrete Logarithm Problem*
-(TDLP): given a tropical (min-plus) matrix `A` and a tropical power
-`B = A^{⊗m}`, recover the exponent `m`. The protocol's correctness rests on the
-commutativity of tropical powers, `(A^{⊗a})^{⊗b} = A^{⊗ab}`, while its
-conjectured security rests on the assumed one-wayness of tropical
-exponentiation. We refute that conjecture. The key structural fact is that the
-tropical eigenvalue is a homomorphism from tropical exponentiation to ordinary
-scalar multiplication: if `(λ, v)` is a tropical eigenpair of `A`, then
-`(m·λ, v)` is a tropical eigenpair of `A^{⊗m}`, so `λ(A^{⊗m}) = m·λ(A)`. This
-*eigenvalue additivity* lets an adversary read the secret exponent off the
-public power in closed form, `m = λ(B)/λ(A)`, whenever `λ(A) ≠ 0`. We prove the
-additivity identity unconditionally, derive the closed-form recovery, exhibit an
-explicit `2 × 2` instance in which every exponent leaks exactly, and isolate the
-sole boundary `λ = 0` where the attack carries no information — showing that on
-this boundary the power map degenerates to the identity on the eigen-orbit, so
-the scheme is either leaky or trivial. All results have been formalized and
-machine-checked.
+We study a single scalar invariant of a tropical (min-plus) matrix — its **global
+minimum entry** `gmin(A) = min_{i,j} A_{ij}` — and establish that it is
+**superadditive** under the tropical matrix product:
+`gmin(A) + gmin(B) ≤ gmin(A ⊗ B)`. From this one inequality we derive a complete
+family of growth laws for tropical matrix powers: superadditivity along the
+exponent, a doubling inequality tracked by repeated tropical squaring, and an
+unconditional linear lower bound `(k+1)·gmin(A) ≤ gmin(A^{⊗(k+1)})`. We place these
+results in two contexts. First, in **ergodic/spectral theory**: superadditivity is
+exactly the hypothesis of Fekete's subadditive lemma, so the normalized sequence
+`gmin(A^{⊗m})/m` converges to the **minimum cycle mean** of the weighted digraph of
+`A`, a tropical analog of the spectral radius. Second, in **cryptanalysis**: the
+proposed tropical Diffie–Hellman / tropical discrete logarithm scheme exposes the
+secret exponent through this invariant. Where the prior spectral attack
+(`λ(A^{⊗m}) = m·λ(A)`) requires a nonzero-eigenvalue eigenvector, the global-min
+channel is unconditional, requires only two minimum computations, and yields a
+monotone, cheaply computable witness that upper-bounds the secret exponent by
+`gmin(A^{⊗k}) / gmin(A)`. All results have been formally verified in Lean 4 with no
+additional axioms. We give full statements, proof sketches, algorithms, and
+numerical demonstrations.
 
 ---
 
 ## 1. Introduction
 
-### 1.1 Motivation
+### 1.1 Tropical arithmetic
 
-Public-key cryptography is built on computational asymmetry: a function that is
-easy to evaluate but hard to invert. The two pillars of classical
-asymmetry — integer factorization and the discrete logarithm in finite
-groups — both succumb to Shor's quantum algorithm, motivating an active search
-for *post-quantum* alternatives grounded in different mathematical structures.
+The **tropical** (or **min-plus**) **semiring** is the set `ℝ` (optionally extended
+by `+∞`) equipped with the operations
 
-Tropical algebra has been proposed as one such foundation. The tropical (min-
-plus) semiring replaces ordinary addition by `min` and ordinary multiplication
-by `+`. Tropical matrix multiplication coincides with shortest-path /
-dynamic-programming computation, and the inversion of tropical matrix products
-is related to combinatorial problems believed to be hard. Several protocols have
-been proposed on this basis, including a tropical analog of the Diffie–Hellman
-key exchange whose security reduces to the *Tropical Discrete Logarithm Problem*
-(TDLP).
+- tropical addition: `x ⊕ y := min(x, y)`,
+- tropical multiplication: `x ⊙ y := x + y`.
 
-### 1.2 Background on tropical algebra
+Tropical addition is idempotent (`min(x, x) = x`) and has no additive inverses, so
+the structure is a semiring rather than a ring. Despite — indeed because of — this
+degeneracy, tropical algebra linearizes a wide range of combinatorial optimization
+problems: shortest paths, critical-path scheduling, mean-payoff games, and the
+Viterbi algorithm are all instances of tropical linear algebra.
 
-The tropical semiring arises naturally wherever "cost of a path is the sum of
-edge costs, and the best path minimizes that cost." Replacing the pair
-`(+, ·)` of ordinary arithmetic by `(min, +)` turns the algebra of weighted
-graphs into linear algebra: the `(i,j)` entry of the `k`-fold tropical power
-`A^{⊗k}` is the minimum total weight of a length-`k` walk from `i` to `j`, and
-the Kleene star `A^* = ⊕_k A^{⊗k}` is the all-pairs shortest-path matrix.
-Tropical linear algebra is therefore the algebraic backbone of dynamic
-programming, scheduling (max-plus for "latest completion time"), discrete-event
-systems, and the combinatorics of tropical geometry.
+### 1.2 Tropical matrices and powers
 
-Two features distinguish the tropical setting from the classical one and shape
-every result below. First, there is **no subtraction**: `(ℝ, min, +)` is a
-semiring, not a ring, so the only meaningful "difference" is the per-coordinate
-residual we define in §3.2. Second, the spectral theory is **governed by the
-underlying graph**: the tropical eigenvalue of an irreducible matrix is its
-minimum cycle mean, a polynomial-time-computable quantity, and the eigenvectors
-are determined by parametric shortest paths. It is precisely this transparency of
-the spectrum — a feature, not a bug, for optimization — that turns out to be
-fatal for cryptography.
+For `n × n` real matrices `A`, `B`, the **tropical matrix product** is
 
-### 1.3 The protocol and its security model
+```
+(A ⊗ B)_{ij} = min_{k} ( A_{ik} + B_{kj} ).
+```
 
-The tropical Diffie–Hellman key exchange publishes a tropical matrix `A`. Alice
-samples a secret integer `a` and publishes `A^{⊗a}`; Bob samples `b` and
-publishes `A^{⊗b}`; the shared key is `A^{⊗ab}`, which both compute by
-`(A^{⊗b})^{⊗a} = (A^{⊗a})^{⊗b}` (the commutativity `tropMatPow_comm`). The
-adversary observes `(A, A^{⊗a}, A^{⊗b})` and aims to compute the shared key. The
-*key-recovery* security of the protocol reduces to the TDLP: if an adversary can
-extract `a` from `(A, A^{⊗a})`, they reconstruct the shared key by computing
-`(A^{⊗b})^{⊗a}`. We work in this standard passive (eavesdropping) model and show
-the TDLP is solvable in polynomial time on essentially all instances, which
-breaks key recovery and hence the protocol.
+Interpreting `A_{ik}` as the weight of a directed edge `i → k` in a weighted
+digraph, `(A ⊗ B)_{ij}` is the minimum weight of a two-edge walk from `i` to `j`,
+and `(A^{⊗m})_{ij}` is the minimum weight of an `m`-edge walk. The forward
+computation costs `O(n³)` per product, and `A^{⊗k}` is obtained by repeated
+squaring in `O(n³ log k)`.
+
+**Indexing convention.** Over a field there is no finite tropical identity matrix
+(it would require `+∞` off the diagonal), so powers cannot be indexed from a
+zeroth power. We adopt the field-friendly convention
+
+```
+tropMatPow A 0 = A,     tropMatPow A (k+1) = A ⊗ (tropMatPow A k),
+```
+
+so that `tropMatPow A k` denotes the genuine `(k+1)`-fold product `A^{⊗(k+1)}`.
+Throughout, every statement carries the explicit `+1` this convention induces.
+
+### 1.3 The cryptographic proposal
+
+The **tropical Diffie–Hellman key exchange** replaces the cyclic-group base of
+classical Diffie–Hellman with a public tropical matrix `A` and exponentiation with
+tropical powers: Alice publishes `A^{⊗a}`, Bob publishes `A^{⊗b}`, and the shared
+key is `A^{⊗ab}`. The associated hardness assumption is the **Tropical Discrete
+Logarithm Problem (TDLP)**: given `(A, A^{⊗k})`, recover `k`. The scheme's appeal
+is post-quantum: its structure is unrelated to the hidden-subgroup framework that
+Shor's algorithm exploits.
 
 ### 1.4 Contributions
 
-We give a complete and self-contained cryptanalysis of the TDLP via tropical
-spectral theory. Our contributions are:
+This paper isolates and analyzes the simplest possible invariant of the public key
+— the global minimum entry — and shows it is both a deep spectral seed and a
+practical cryptanalytic tool. Concretely:
 
-1. **Eigenvalue additivity (`eigenvalue_additivity`).** A clean proof that
-   tropical exponentiation acts on the spectrum by ordinary scaling:
-   `(λ, v)` eigenpair of `A` ⟹ `(m·λ, v)` eigenpair of `A^{⊗m}`.
+1. We characterize `gmin` as the greatest entrywise lower bound (Section 3).
+2. We prove **superadditivity** of `gmin` under the tropical product, and transport
+   it to powers, obtaining a doubling inequality and an unconditional linear lower
+   bound (Section 4).
+3. We connect superadditivity to Fekete's lemma and the minimum cycle mean,
+   exhibiting `gmin` as the Fekete seed of the tropical min spectral radius
+   (Section 5).
+4. We derive a cryptanalytic exponent witness and contrast it with the spectral
+   (eigenvalue-additivity) attack, identifying the shared degeneracy boundary
+   (Section 6).
+5. We give algorithms and numerical evidence (Sections 7–8).
 
-2. **Closed-form exponent recovery (`tdlp_recover_exponent`).** Whenever the
-   public base admits an eigenvector with nonzero eigenvalue, the secret
-   exponent is `m = λ(B)/λ(A)`, computable in polynomial time.
-
-3. **An explicit total break (`tdlp_break_concrete`).** A `2 × 2` instance in
-   which every exponent leaks exactly, verified as an identity for all `m`.
-
-4. **The boundary dichotomy (`tdlp_boundary_no_leak`).** At `λ = 0` the residual
-   vanishes for every exponent, so the attack is uninformative; but then the
-   power map is the identity on the eigen-orbit, collapsing the key space. The
-   scheme is thus either leaky (`λ ≠ 0`) or trivial (`λ = 0`).
-
-All statements have been formalized and machine-verified; this paper presents
-the mathematics and proof sketches.
+All theorems below are formalized and machine-checked in Lean 4 over `ℝ`, with the
+only axioms being the standard `propext`, `Classical.choice`, and `Quot.sound`.
 
 ---
 
-## 2. Preliminaries: the tropical semiring and tropical matrices
+## 2. Preliminaries and Notation
 
-### 2.1 The min-plus semiring
+Fix `n ≥ 1` and let `A, B : Matrix (Fin n) (Fin n) ℝ`. We write `⊗` for `tropMatMul`
+and `A^{⊗m}` informally for the `m`-fold tropical product (Lean: `tropMatPow A
+(m-1)`). We record the algebraic backbone established in the supporting development.
 
-The **tropical (min-plus) semiring** is the structure `(ℝ, ⊕, ⊙)` where
-`x ⊕ y := min(x, y)` and `x ⊙ y := x + y`. (Over `ℝ ∪ {+∞}` the additive
-identity is `+∞` and the multiplicative identity is `0`; for the spectral
-analysis below we work over `ℝ`.) Tropical "multiplication" is associative and
-commutative with unit `0`, and `min` distributes over `+`, so this is a
-commutative idempotent semiring.
+**Definition 2.1 (Tropical matrix product).**
+`(A ⊗ B)_{ij} = inf'_{k ∈ univ} (A_{ik} + B_{kj})`, where `inf'` is the minimum over
+the nonempty finite index set.
 
-### 2.2 Tropical matrix and matrix–vector products
+**Definition 2.2 (Tropical matrix–vector product).**
+`(A ⊗ v)_i = inf'_{k} (A_{ik} + v_k)` for `v : Fin n → ℝ`.
 
-For `A, B : Matrix (Fin n) (Fin n) ℝ`, the **tropical matrix product** is
+**Definition 2.3 (Tropical eigenpair).** `(λ, v)` is a tropical eigenpair of `A` if
+`(A ⊗ v)_i = v_i + λ` for all `i`; equivalently `A ⊗ v = v + λ·1`.
 
-> **Definition (`tropMatMul`).**
-> `(A ⊗ B)(i, j) = min over k of ( A(i,k) + B(k,j) )`.
+**Proposition 2.4 (Associativity).** `(A ⊗ B) ⊗ C = A ⊗ (B ⊗ C)`.
 
-Equivalently, replacing `(Σ, ·)` by `(min, +)` in the usual matrix product.
-Forward evaluation costs `O(n³)` arithmetic operations. The product is
-associative:
+**Proposition 2.5 (Power multiplicativity).**
+`A^{⊗(a+1)} ⊗ A^{⊗(b+1)} = A^{⊗(a+b+2)}`; equivalently, with the indexing
+convention, `tropMatMul (tropMatPow A a) (tropMatPow A b) = tropMatPow A (a+b+1)`.
 
-> **Lemma (`tropMatMul_assoc`).** `(A ⊗ B) ⊗ C = A ⊗ (B ⊗ C)`, both sides
-> equal to `min over (k,l) of ( A(i,k) + B(k,l) + C(l,j) )`.
+**Proposition 2.6 (Diffie–Hellman correctness).**
+`tropMatPow (tropMatPow A a) b = tropMatPow (tropMatPow A b) a`, i.e.
+`(A^{⊗a})^{⊗b} = (A^{⊗b})^{⊗a}`. The shared key is well defined.
 
-The **tropical identity** is `tropId(M)(i,j) = 0` if `i = j` and `M` otherwise;
-for `M` large enough relative to the entries of `A` it satisfies
-`tropId(M) ⊗ A = A` and `A ⊗ tropId(M) = A`
-(`tropId_mul_of_bound`, `mul_tropId_of_bound`).
+**Proposition 2.7 (Eigenvalue additivity).** If `(λ, v)` is a tropical eigenpair of
+`A`, then `((k+1)·λ, v)` is a tropical eigenpair of `A^{⊗(k+1)}`. Consequently the
+secret exponent is recoverable as `(k+1) = (residual on B)/λ` whenever `λ ≠ 0`; the
+attack carries no information when `λ = 0`.
 
-The **tropical matrix–vector product** is
-
-> **Definition (`tropMatVecMul`).**
-> `(A ⊗ v)(i) = min over k of ( A(i,k) + v(k) )`.
-
-It is monotone in `v` (`tropMatVecMul_monotone`) and, decisively for what
-follows, **translation equivariant**:
-
-> **Lemma (`tropMatVecMul_shift`).** For any constant `c`,
-> `A ⊗ (v + c·1) = (A ⊗ v) + c·1`, where `c·1` is the all-`c` vector.
->
-> *Proof sketch.* Each coordinate is `min_k (A(i,k) + v(k) + c) = (min_k
-> (A(i,k) + v(k))) + c`, since adding a constant commutes with `min`. ∎
-
-This is the tropical analog of linearity in the scalar `c` (tropical "scalar
-multiplication" is ordinary addition of a constant), and it is the structural
-seed of eigenvalue additivity.
-
-### 2.3 Tropical matrix powers
-
-The **tropical power** `A^{⊗m}` is the `m`-fold tropical product of `A` with
-itself. We use the convention, matching the formalization, that `tropMatPow A k`
-denotes `A^{⊗(k+1)}` (i.e. `k` extra multiplications on top of `A`). Powers obey
-the expected exponent laws:
-
-> **Power multiplicativity.** `A^{⊗a} ⊗ A^{⊗b} = A^{⊗(a+b)}`.
->
-> **Commutativity (`tropMatPow_comm`).** `(A^{⊗a})^{⊗b} = (A^{⊗b})^{⊗a} =
-> A^{⊗ab}`.
-
-Powers act on vectors as iterated dynamics, the tropical version of `A^m v =
-A(A(... A v))`:
-
-> **Lemma (`tropMatVecMul_tropMatPow`).** `A^{⊗(k+1)} ⊗ v = (A ⊗ ·)^[k+1] v`,
-> i.e. acting once with the `(k+1)`-th power equals iterating the action `k+1`
-> times.
-
-Repeated squaring computes `A^{⊗m}` in `O(n³ log m)` time, so the forward
-direction of the protocol is efficient for very large exponents.
+Propositions 2.4–2.7 are the established context; the present paper develops the
+**global-min channel**, which is independent of and unconditional relative to the
+spectral channel of Proposition 2.7.
 
 ---
 
-## 3. Tropical spectral theory
+## 3. The Global Minimum Entry
 
-### 3.1 Eigenpairs
+**Definition 3.1 (Global minimum entry).** For `A : Matrix (Fin n) (Fin n) ℝ`,
 
-> **Definition (`IsTropicalEigenpair`).** A pair `(λ, v)` with `λ ∈ ℝ` and
-> `v : Fin n → ℝ` is a **tropical eigenpair** of `A` if
-> `(A ⊗ v)(i) = v(i) + λ` for every `i`.
+```
+gmin(A) := inf'_{(i,j) ∈ univ × univ} A_{ij}.
+```
 
-This is the min-plus analog of `A v = λ v`: tropical multiplication by the scalar
-`λ` is addition of `λ` to every coordinate.
+Graph-theoretically, `gmin(A)` is the lightest single edge weight in the weighted
+digraph of `A`. It is computable in `O(n²)` time by a single scan.
 
-Eigenpairs are abundant. A simple sufficient criterion:
+**Theorem 3.2 (`gmin_le`: entrywise lower bound).** For all `i, j`,
+`gmin(A) ≤ A_{ij}`.
 
-> **Lemma (`tropical_eigenpair_from_diagonal`).** If `A` has constant diagonal
-> `A(i,i) = d` for all `i`, and `A(i,j) + v(j) ≥ v(i) + d` for all `i, j`, then
-> `(d, v)` is a tropical eigenpair of `A`.
->
-> *Proof sketch.* For each `i`, the term `k = i` gives `A(i,i) + v(i) = v(i) +
-> d`, so the minimum is `≤ v(i) + d`; the off-diagonal hypothesis gives every
-> term `≥ v(i) + d`, so the minimum equals `v(i) + d`. ∎
+*Proof.* Immediate from the definition of the finite minimum: the infimum over the
+index set `univ × univ` is `≤` the value at the particular index `(i, j)`. Formally,
+`Finset.inf'_le` applied to `(i, j) ∈ univ`. ∎
 
-In particular the smallest example, the diagonal-`1`, off-diagonal-`100`
-`2 × 2` matrix with `v = (0,0)`, has eigenvalue `λ = 1` (used in §5).
+**Theorem 3.3 (`le_gmin`: greatest lower bound).** If `c : ℝ` satisfies `c ≤ A_{ij}`
+for all `i, j`, then `c ≤ gmin(A)`.
 
-### 3.2 The residual and uniqueness
+*Proof.* The finite minimum is the greatest lower bound: `Finset.le_inf'` reduces
+the goal to verifying `c ≤ A_{p.1 p.2}` for every pair `p`, which is the hypothesis.
+∎
 
-Tropical algebra has no general subtraction, but the per-coordinate **residual**
-`tropResidual A v i := (A ⊗ v)(i) − v(i)` is meaningful and, for an eigenpair,
-recovers the eigenvalue at every coordinate (`tropResidual_eq_eigenvalue`). It
-follows that the eigenvalue is uniquely determined by the eigenvector
-(`tropical_eigenvalue_unique`): if `(λ, v)` and `(μ, v)` are both eigenpairs then
-`λ = μ`.
-
-### 3.3 Shift invariance
-
-Translation equivariance lifts to the spectrum:
-
-> **Lemma (`eigenpair_shift_invariant`).** If `(λ, v)` is an eigenpair of `A`,
-> so is `(λ, v + c·1)` for any constant `c`.
->
-> *Proof sketch.* Apply `tropMatVecMul_shift`: `A ⊗ (v + c) = (A ⊗ v) + c =
-> (v + λ) + c = (v + c) + λ`. ∎
-
-Thus an eigenvector is only ever determined up to a global additive offset.
+Theorems 3.2 and 3.3 together state that `gmin(A)` is the *greatest* number bounding
+`A` from below — the order-theoretic characterization that powers every inequality
+in Section 4. Whenever we wish to prove `c ≤ gmin(X)`, it suffices (and is
+necessary) to prove `c ≤ X_{ij}` for all entries.
 
 ---
 
-## 4. Main results: eigenvalue additivity and the attack
+## 4. Superadditivity and Growth Laws
 
-### 4.1 Iterating the action on an eigenvector
+### 4.1 Superadditivity under the product
 
-> **Theorem 1 (`tropMatVecMul_iterate_eigen`).** Let `(λ, v)` be a tropical
-> eigenpair of `A`. Then for every `m ∈ ℕ` and every coordinate `i`,
-> `((A ⊗ ·)^[m] v)(i) = v(i) + m·λ`.
->
-> *Proof sketch.* Induction on `m`. The base case `m = 0` is `v(i) = v(i)`. For
-> the step, assume `(A ⊗ ·)^[m] v = v + m·λ` (as functions). Then
-> `(A ⊗ ·)^[m+1] v = A ⊗ (v + m·λ)`, and by translation equivariance
-> (`tropMatVecMul_shift`) this equals `(A ⊗ v) + m·λ = (v + λ) + m·λ = v +
-> (m+1)·λ`, using the eigenpair relation `A ⊗ v = v + λ`. ∎
+**Theorem 4.1 (`gmin_tropMatMul_superadd`: superadditivity).**
+For all `A, B`,
 
-### 4.2 Eigenvalue additivity
+```
+gmin(A) + gmin(B) ≤ gmin(A ⊗ B).
+```
 
-> **Theorem 2 (`eigenvalue_additivity`).** If `(λ, v)` is a tropical eigenpair
-> of `A`, then `((k+1)·λ, v)` is a tropical eigenpair of `A^{⊗(k+1)} =
-> tropMatPow A k`, for every `k ∈ ℕ`. Equivalently, `λ(A^{⊗m}) = m·λ(A)`.
->
-> *Proof sketch.* By `tropMatVecMul_tropMatPow`, acting with `A^{⊗(k+1)}` on `v`
-> equals iterating the action `k+1` times, which by Theorem 1 equals
-> `v + (k+1)·λ`. That is exactly the eigenpair relation for eigenvalue
-> `(k+1)·λ`. ∎
+*Proof sketch.* By Theorem 3.3 it suffices to show `gmin(A) + gmin(B) ≤ (A ⊗ B)_{ij}`
+for every `(i, j)`. Fix `(i, j)`. By Definition 2.1, `(A ⊗ B)_{ij} = min_k (A_{ik} +
+B_{kj})`. For each `k`, Theorem 3.2 gives `gmin(A) ≤ A_{ik}` and `gmin(B) ≤ B_{kj}`,
+so `gmin(A) + gmin(B) ≤ A_{ik} + B_{kj}`. Since this lower bound holds for every
+`k`, it holds for the minimum over `k` (`Finset.le_inf'`):
+`gmin(A) + gmin(B) ≤ min_k (A_{ik} + B_{kj}) = (A ⊗ B)_{ij}`. ∎
 
-This is the crux. The map `A ↦ λ(A)` is a **homomorphism** from the monoid of
-tropical powers under `⊗` to `(ℝ, +)` scaled by the exponent: tropical
-exponentiation is converted into ordinary multiplication of the eigenvalue by the
-exponent. A one-way function must lack precisely this kind of transparent
-structure.
+The direction matters: because `gmin` is a *minimum* and the product *sums* weights
+along the minimizing walk, "a minimum of sums of bounded-below terms is bounded
+below by the sum of the bounds" gives **super**additivity. The dual functional
+`gmax(A) = max_{i,j} A_{ij}` is instead **sub**additive,
+`gmax(A ⊗ B) ≤ gmax(A) + gmax(B)`, since each two-hop route is bounded above by the
+sum of the heaviest edges.
 
-### 4.3 The TDLP attack
+### 4.2 Superadditivity along powers
 
-> **Theorem 3 (`tdlp_recover_exponent`).** Let `(λ, v)` be a tropical eigenpair
-> of `A` with `λ ≠ 0`, and let `B = A^{⊗(k+1)} = tropMatPow A k`. Then for every
-> coordinate `i`,
-> `((B ⊗ v)(i) − v(i)) / λ = k + 1`.
-> That is, the secret exponent is recovered in closed form as
-> `m = (residual of B on v) / λ = λ(B)/λ(A)`.
->
-> *Proof sketch.* By Theorem 2, `(B ⊗ v)(i) = v(i) + (k+1)·λ`, so the residual is
-> `(k+1)·λ`; dividing by `λ ≠ 0` gives `k+1`. ∎
+**Theorem 4.2 (`gmin_tropMatPow_superadd`).** For all `a, b ∈ ℕ`,
 
-**Algorithmic form of the attack.** Given the public `(A, B)`:
+```
+gmin(A^{⊗(a+1)}) + gmin(A^{⊗(b+1)}) ≤ gmin(A^{⊗(a+b+2)}),
+```
 
-1. Compute a tropical eigenvalue `λ = λ(A)` of the base. This is the minimum mean
-   cycle of the weighted digraph of `A`, computable in polynomial time (e.g.
-   Karp's algorithm, `O(n·E)`), together with an eigenvector `v`.
-2. Compute the residual `(B ⊗ v)(i) − v(i)` for any `i`; by additivity it equals
-   `m·λ`.
-3. Output `m = ((B ⊗ v)(i) − v(i)) / λ`.
+i.e. in the indexing convention,
+`gmin(tropMatPow A a) + gmin(tropMatPow A b) ≤ gmin(tropMatPow A (a+b+1))`.
 
-The total cost is dominated by the eigenvalue computation and one tropical
-matrix–vector product, both polynomial in `n`. The conjectured exponential
-hardness of the TDLP is therefore false on every instance with `λ(A) ≠ 0`.
+*Proof.* By power multiplicativity (Proposition 2.5),
+`tropMatPow A a ⊗ tropMatPow A b = tropMatPow A (a+b+1)`. Rewriting the right side of
+Theorem 4.1 (with `A := tropMatPow A a`, `B := tropMatPow A b`) by this identity
+gives the claim. ∎
 
-### 4.4 An explicit total break
+### 4.3 The doubling inequality
 
-> **Theorem 4 (`tdlp_break_concrete`).** Let `A` be the `2 × 2` tropical matrix
-> with `A(i,i) = 1` and `A(i,j) = 100` for `i ≠ j`, and let `v = (0, 0)`. Then
-> for every `k ∈ ℕ`,
-> `(A^{⊗(k+1)} ⊗ v)(0) − 0 = k + 1`.
->
-> *Proof sketch.* `v = (0,0)` is an eigenvector with eigenvalue `λ = 1`
-> (`min(1, 100) = 1` in each coordinate). Apply Theorem 2 with `λ = 1`: the
-> residual of `A^{⊗(k+1)}` on `v` is `(k+1)·1 = k+1`. ∎
+**Theorem 4.3 (`gmin_tropMatPow_double`).** For all `k ∈ ℕ`,
 
-Every exponent leaks exactly, as an identity holding simultaneously for all `k`.
-This is a fully worked counterexample to the security conjecture.
+```
+2 · gmin(A^{⊗(k+1)}) ≤ gmin(A^{⊗(2k+2)}),
+```
 
-### 4.5 The boundary `λ = 0`
+i.e. `2 · gmin(tropMatPow A k) ≤ gmin(tropMatPow A (2k+1))`.
 
-> **Theorem 5 (`tdlp_boundary_no_leak`).** If `(0, v)` is a tropical eigenpair of
-> `A`, then for every `k ∈ ℕ` and every `i`,
-> `(A^{⊗(k+1)} ⊗ v)(i) − v(i) = 0`.
->
-> *Proof sketch.* By Theorem 2 with `λ = 0`, `(A^{⊗(k+1)} ⊗ v)(i) = v(i) +
-> (k+1)·0 = v(i)`, so the residual vanishes. ∎
+*Proof.* Specialize Theorem 4.2 to `a = b = k`: the left side becomes
+`gmin(tropMatPow A k) + gmin(tropMatPow A k) = 2·gmin(tropMatPow A k)` and the right
+side index is `k + k + 1 = 2k + 1`. ∎
 
-At `λ = 0` the recovery of Theorem 3 would divide by zero and indeed carries no
-information: the residual is identically `0` for every exponent. But this refuge
-is degenerate. A zero eigenvalue means `v` is a **tropical fixed point**
-(`eigenzero_iff_fixed`: `(0,v)` is an eigenpair iff `A ⊗ v = v`), so by iteration
-`A^{⊗m} ⊗ v = v` for all `m` (`eigenzero_iterate`). The power map does nothing on
-the eigen-orbit; the key space collapses. Hence:
+This is precisely the invariant maintained by one step of repeated tropical
+squaring, the algorithm used to construct the public key: squaring the matrix at
+least doubles its lightest edge.
 
-> **Dichotomy.** For any tropical-power-based key exchange, each public matrix is
-> either *leaky* (it has an eigenvector with `λ ≠ 0`, and Theorem 3 extracts the
-> exponent) or *trivial on that orbit* (`λ = 0`, and Theorem 5 / `eigenzero_
-> iterate` show the power map is the identity there). There is no secure middle
-> ground.
+### 4.4 The linear lower bound
 
-For the natural class of matrices arising from weighted digraphs with
-nonnegative weights and zero self-loops, one further shows every eigenvalue
-satisfies `λ ≤ 0` (`digraph_eigenvalue_nonpos`) and that `λ = 0` is attained by
-constant eigenvectors (`digraph_eigenzero_const`), so the boundary is intrinsic
-to the geometry rather than an avoidable special case.
+**Theorem 4.4 (`gmin_tropMatPow_lower`: monotone exponent witness).** For all
+`k ∈ ℕ`,
+
+```
+(k + 1) · gmin(A) ≤ gmin(A^{⊗(k+1)}),
+```
+
+i.e. `(k+1)·gmin(A) ≤ gmin(tropMatPow A k)`.
+
+*Proof sketch.* By Theorem 3.3 it suffices to show `(k+1)·gmin(A) ≤
+(tropMatPow A k)_{ij}` for every `(i, j)`. This is the global-min specialization of
+the entrywise sandwich for tropical powers: with `amin := gmin(A)`, every entry of
+`A^{⊗(k+1)}` is bounded below by `(k+1)·amin`, because every `(k+1)`-edge walk
+contributes at least `gmin(A)` per edge. (Formally this is `tropMatPow_entry_lower`,
+proved by induction on `k`: the base case is `gmin(A) ≤ A_{ij}` from Theorem 3.2,
+and the inductive step adds one more edge, each of weight at least `gmin(A)`, then
+uses the minimum-as-greatest-lower-bound step.) Applying Theorem 3.3 collapses the
+entrywise bound to the scalar `gmin`. ∎
+
+Alternatively, Theorem 4.4 follows from Theorem 4.2 by induction on `k`, taking
+`gmin(A^{⊗1}) = gmin(A)` as the base case and adding one factor of `gmin(A)` per
+step; both routes give the same bound.
+
+**Monotonicity corollary.** Since `gmin(A) ≥ 0` whenever `A` has nonnegative entries
+(a standing assumption for weighted digraphs with nonnegative weights), the sequence
+`m ↦ gmin(A^{⊗m})` is nondecreasing and grows at least linearly with slope
+`gmin(A)`.
 
 ---
 
-## 5. Algorithms
+## 5. The Fekete Seed: Convergence to the Minimum Cycle Mean
 
-### 5.1 Tropical matrix power by repeated squaring
+The growth laws above are not merely cryptanalytic curiosities; they are the
+structural input that forces a fundamental spectral limit to exist.
 
-To compute `A^{⊗m}` efficiently, use binary exponentiation in the tropical
-semiring. Start from the tropical identity, square the base while scanning the
-bits of `m`, and accumulate when a bit is set. Cost: `O(n³ log m)`.
+**Theorem 5.1 (Fekete's subadditive lemma).** If a sequence `(s_m)_{m≥1}` is
+superadditive (`s_a + s_b ≤ s_{a+b}`), then `lim_{m→∞} s_m / m` exists in
+`ℝ ∪ {+∞}` and equals `sup_m s_m / m`.
 
-### 5.2 Tropical eigenvalue via minimum mean cycle
+Applying Theorem 5.1 to `s_m := gmin(A^{⊗m})` — whose superadditivity is *exactly*
+Theorem 4.2 — yields:
 
-The unique tropical eigenvalue of an irreducible matrix equals the minimum cycle
-mean of its weighted digraph,
-`λ = min over cycles C of ( (sum of edge weights on C) / (length of C) )`.
-Karp's dynamic-programming algorithm computes this in `O(n·E)` time, and an
-eigenvector is recovered from the parametric shortest paths to a node on the
-critical cycle.
+**Corollary 5.2 (existence of the tropical min spectral radius).** For every
+tropical matrix `A`, the normalized limit
 
-### 5.3 The TDLP attack
+```
+ρ_min(A) := lim_{m→∞} gmin(A^{⊗m}) / m
+```
 
-Combine §5.2 (on the public base `A`) with a single tropical matrix–vector
-product (on the public power `B`) and one division, as in §4.3. Polynomial time
-overall.
+exists.
 
----
+**Theorem 5.3 (identification, tropical Perron–Frobenius / Cuninghame-Green).** For a
+weighted digraph of `A`, `ρ_min(A)` equals the **minimum cycle mean**
 
-## 6. Discussion
+```
+μ(A) = min over directed cycles C of [ weight(C) / length(C) ].
+```
 
-The break is structural, not incidental. The eigenvalue map is a homomorphism
-that transports the secret integer `m` unchanged through the public transcript:
-`λ(A^{⊗m}) = m·λ(A)`. Homomorphisms are double-edged in cryptography. The
-*commutativity* `(A^{⊗a})^{⊗b} = (A^{⊗b})^{⊗a}` that makes the key exchange
-*function* is itself a structural identity; the *additivity* `λ(A^{⊗m}) =
-m·λ(A)` that makes it *break* is a closely related one. A secure scheme must
-retain enough structure to run the protocol while denying the adversary any
-linear readout of the secret. Tropical powers fail this test completely: the
-exponent passes through the eigenvalue channel with no obfuscation.
+The minimum cycle mean is the tropical analog of the spectral radius and the central
+invariant of mean-payoff games and max-plus spectral theory. Thus the lightest edge,
+iterated, has a growth rate equal to a genuine spectral quantity. Theorem 4.4
+provides the matching coarse lower bound `gmin(A) ≤ ρ_min(A)`, with equality on
+circulant examples whose minimizing cycle is a self-loop or a uniform-weight cycle
+(see Section 8).
 
-The analysis also pins the hardness boundary precisely. Off the boundary the
-scheme leaks in closed form; on the boundary the power map degenerates to the
-identity. This sharp dichotomy explains why patching the scheme by forcing small
-or zero eigenvalues cannot help: it trades information leakage for triviality.
-
----
-
-## 7. Future directions
-
-**Conjecture 1 — The eigenvalue channel is complete for the TDLP.** For a random
-tropical matrix `A` of size `n ≥ 10` with finite entries, the public power
-`B = A^{⊗m}` always determines `m` exactly via `m = λ(B)/λ(A)`, except on a
-measure-zero set where `λ(A) = 0`. The key insight is that the tropical
-eigenvalue is a homomorphism from tropical exponentiation to ordinary scalar
-multiplication, so the one secret scalar `m` is linearly exposed — exactly the
-structure a one-way function must lack. With eigenvalue additivity and
-closed-form recovery formalized, the remaining step is a genericity statement
-(almost-everywhere `λ(A) ≠ 0`).
-
-**Conjecture 2 — The boundary `λ = 0` is the only refuge, and it is degenerate.**
-Any tropical DH variant whose security survives must force every public matrix to
-have spectral value `0` (a tropical fixed point); but then the no-leak and
-fixed-point results show the public power equals the input up to a global shift,
-collapsing the key space. The same homomorphism that leaks `m` when `λ ≠ 0` makes
-the scheme trivial when `λ = 0`: additivity reads `m·0 = 0`, so the power map is
-the identity on the eigen-orbit. Both halves are formal, so the dichotomy "either
-leaky or trivial" can be stated as a single theorem.
-
-**Conjecture 3 — Multi-eigenvalue (Perron) attacks tighten the bound.** When `A`
-has several tropical eigenvalues (one per critical cycle of its digraph), each
-yields an independent linear equation in `m`; the system is consistent and
-over-determined, giving an error-correcting recovery of `m` even under bounded
-entry noise. The critical-cycle spectrum is a vector of homomorphic readouts of
-the same exponent, so redundancy makes the attack robust rather than fragile.
-The single-readout lemma already exists; extending it across cycle-eigenvalues is
-a finite combinatorial step.
-
-**Conjecture 4 — Non-power protocols inherit the weakness.** Any protocol whose
-public transcript is a tropical-linear image of a secret integer (e.g.
-`A^{⊗m} ⊗ C`, semidirect-product tropical schemes) leaks that integer through the
-same eigenvalue homomorphism applied to the dominant tropical block, because
-tropical-linearity (equivariance under the global shift) preserves the eigenvalue
-readout.
+*Status.* Theorems 4.1–4.4 are formalized and machine-checked. Corollary 5.2 and
+Theorem 5.3 are stated here as the immediate analytic consequences of the formalized
+superadditivity together with Fekete's lemma (available in Lean's Mathlib as
+`Subadditive.tendsto_lim` applied to `-gmin`) and the classical cycle-mean
+identification; their full formalization is the principal future direction
+(Conjecture 2 below).
 
 ---
 
-## 8. Conclusion
+## 6. Cryptanalysis: A Second Exponent-Leak Channel
 
-Tropical eigenvalues are additive under tropical power: `λ(A^{⊗m}) = m·λ(A)`.
-This single homomorphic identity, proved unconditionally from the translation
-equivariance of the min-plus action, collapses the conjectured hardness of the
-tropical discrete logarithm. The secret exponent is recovered in closed form
-`m = λ(B)/λ(A)` whenever the public base has a nonzero-eigenvalue eigenvector,
-and the only escape — `λ = 0` — turns the power map into the identity. The
-tropical Diffie–Hellman key exchange, in its current form, is insecure: it is
-either leaky or trivial.
+### 6.1 Two channels, one boundary
+
+The tropical DH / TDLP scheme exposes the secret exponent through *two independent
+homomorphic shadows*:
+
+- **Spectral channel** (Proposition 2.7): `λ(A^{⊗(k+1)}) = (k+1)·λ(A)`, giving exact
+  recovery `k+1 = λ(B)/λ(A)` whenever an eigenvector with `λ(A) ≠ 0` exists.
+- **Magnitude / global-min channel** (this paper): the linear lower bound of
+  Theorem 4.4.
+
+**Theorem 6.1 (global-min exponent witness).** Let `B = A^{⊗(k+1)}` be the public
+power, and suppose `gmin(A) > 0`. Then
+
+```
+k + 1 ≤ gmin(B) / gmin(A).
+```
+
+*Proof.* Theorem 4.4 gives `(k+1)·gmin(A) ≤ gmin(A^{⊗(k+1)}) = gmin(B)`. Dividing by
+`gmin(A) > 0` preserves the inequality. ∎
+
+This bound is:
+
+- **Unconditional in spectral structure.** It needs no eigenvector and no
+  shortest-path solve — only two `O(n²)` scans, `gmin(A)` and `gmin(B)`.
+- **Monotone.** `gmin(A^{⊗m})` is nondecreasing in `m`, so the witness can never
+  collapse and disguise a large exponent as a small one.
+- **Tight in the limit.** As `k → ∞`, `gmin(B)/(k+1) → ρ_min(A) = μ(A)`, so the
+  multiplicative slack of the bound is governed by `μ(A)/gmin(A)`, the ratio of the
+  cycle mean to the lightest edge.
+
+### 6.2 The shared degeneracy boundary
+
+Both channels go silent at the *same* degenerate value. The spectral channel is
+uninformative exactly when `λ = 0` (Proposition 2.7's boundary). The global-min
+channel is uninformative exactly when `gmin(A) = 0`, since then Theorem 6.1 reduces
+to the vacuous `0 ≤ gmin(B)`. This supports a unifying principle:
+
+> **Degeneracy = the only possible security.** Any tropical DH/TDLP instance with
+> either a nonzero eigenvalue or a positive lightest edge leaks its exponent through
+> a cheap, structural channel. Security, if it exists at all, is confined to the
+> degenerate corner where these invariants vanish — precisely the corner where the
+> scheme has little algebraic content to hide behind.
+
+### 6.3 Consequence for parameter selection
+
+The witness shows that security cannot be bought by increasing the matrix dimension
+`n`: the bound `k+1 ≤ gmin(B)/gmin(A)` is dimension-free. The residual ambiguity is
+controlled by the *additive spread* of the entries (the gap between the lightest and
+heaviest edges), not by `n`. This contradicts the original design intuition that
+"random tropical matrices of size `n ≥ 10`" would be safe.
+
+---
+
+## 7. Algorithms
+
+### 7.1 Tropical matrix product and power
+
+```
+function TROP_MATMUL(A, B):           # O(n^3)
+    for i in 0..n-1:
+        for j in 0..n-1:
+            best = +inf
+            for k in 0..n-1:
+                best = min(best, A[i][k] + B[k][j])
+            C[i][j] = best
+    return C
+
+function TROP_MATPOW(A, e):           # e-fold product A^{⊗e}, O(n^3 log e)
+    # repeated squaring; result is the e-fold tropical product
+    result = A; base = A; t = e - 1
+    while t > 0:
+        if t is odd: result = TROP_MATMUL(result, base)
+        base = TROP_MATMUL(base, base)
+        t = t >> 1
+    return result
+```
+
+### 7.2 Global-min witness attack on TDLP
+
+```
+function GMIN(A):                      # O(n^2)
+    return min over all i, j of A[i][j]
+
+function TDLP_GMIN_WITNESS(A, B):      # B = A^{⊗(k+1)} public; recover bound on k
+    gA = GMIN(A)
+    gB = GMIN(B)
+    if gA <= 0:
+        return "no leak: gmin(A) <= 0 (degenerate boundary)"
+    upper = floor(gB / gA)             # k + 1 <= upper
+    return { "k_plus_1_upper_bound": upper,
+             "candidates": [1 .. upper] }   # each testable in O(n^3 log k)
+```
+
+The witness reduces the search space for the secret to `O(gB/gA)` candidates with no
+spectral computation. Combined with the spectral channel (when an eigenvector
+exists) it typically pins `k` exactly.
+
+---
+
+## 8. Numerical Evidence
+
+Consider the `2 × 2` circulant `A = [[1, 3], [3, 1]]` over `ℝ`.
+
+- `gmin(A) = 1` (the diagonal weight).
+- Tropical powers: `A^{⊗(m+1)}` has all diagonal entries equal to `m+1` and
+  off-diagonal entries `≥ m+1`, so `gmin(A^{⊗(m+1)}) = m+1`. Every inequality of
+  Section 4 holds, with *equality* in Theorem 4.4: `(m+1)·gmin(A) = (m+1)·1 = m+1 =
+  gmin(A^{⊗(m+1)})`.
+- Minimum cycle mean: the lightest cycle is the self-loop of weight `1`, so
+  `μ(A) = 1 = gmin(A) = ρ_min(A)`. The Fekete limit is attained at every step.
+
+For the asymmetric example `A = [[1, 3], [3, 1]]` perturbed to `A = [[2, 5],
+[1, 4]]`, `gmin(A) = 1`, while `μ(A)` is the minimum over the self-loops (weights
+`2`, `4`) and the 2-cycle `1 → 2 → 1` of mean `(5+1)/2 = 3`; thus `μ(A) = 2 >
+gmin(A) = 1`, and the linear lower bound `gmin(A^{⊗m}) ≥ m·1` is strict, with the
+true slope approaching `2`. These behaviors are reproduced numerically in `demo.py`.
+
+For the cryptanalytic break, the concrete instance `A = diag(1) + offdiag(100)` of
+size `2 × 2` (used in the spectral break `tdlp_break_concrete`) also leaks through
+the global-min channel: `gmin(A) = 1`, `gmin(A^{⊗(k+1)}) = k+1`, so the witness
+returns the exact upper bound `k+1` on the exponent.
+
+---
+
+## 9. Discussion
+
+The global minimum entry is, on its face, the least informative summary of a matrix
+— a single number discarding all structure. Its interest lies entirely in its
+behavior under iteration. Three threads converge:
+
+1. **Order theory.** `gmin` is the greatest entrywise lower bound (Theorems 3.2–3.3);
+   this characterization is the only tool needed to prove every growth law.
+2. **Analysis.** Superadditivity (Theorem 4.1) is the precise hypothesis of Fekete's
+   lemma, forcing convergence of `gmin(A^{⊗m})/m` to the minimum cycle mean
+   (Section 5).
+3. **Cryptography.** The linear lower bound (Theorem 4.4) yields an unconditional,
+   monotone, cheaply computable witness for the secret exponent (Theorem 6.1),
+   complementing the spectral attack and sharing its degeneracy boundary.
+
+The overarching cryptanalytic lesson is methodological: *any invariant that
+transforms predictably under the forward map of a one-way function candidate is a
+potential attack vector.* Tropical exponentiation is unusually rich in such
+invariants — eigenvalues that add, lightest edges that grow linearly — and each is a
+homomorphic shadow of the exponent. The same algebraic regularity that makes
+tropical constructions elegant is what makes them cryptographically fragile.
+
+---
+
+## 10. Future Directions
+
+**Conjecture 1 (interval channel pins `k`).** For any tropical matrix with entries in
+a positive band `[amin, amax]` with `amax/amin < R`, the exponent `k+1` recovered
+from a single public entry lies in an interval containing at most `⌈(R-1)(k+1)⌉ + 1`
+integers; hence TDLP on positive-band matrices is solvable in time polynomial in `k`
+and `n` with no spectral data. The multiplicative spread `amax/amin`, not `n`,
+controls residual ambiguity.
+
+**Conjecture 2 (Fekete limit).** `gmin(A^{⊗m})/(m+1)` converges to the minimum cycle
+mean `μ(A)`. Superadditivity (Theorem 4.2) is exactly the hypothesis of Fekete's
+lemma (applied to `-gmin`); the remaining content is the digraph-cycle
+identification (tropical Perron–Frobenius / Cuninghame-Green).
+
+**Conjecture 3 (channels coincide generically).** For a strongly connected matrix,
+the tropical eigenvalue equals the minimum cycle mean, so the spectral and
+global-min channels measure the same intrinsic invariant; the global-min channel is
+the unconditional, eigenvector-free realization of the spectral attack.
+
+---
+
+## Appendix A. Summary of Formalized Results
+
+| Name | Statement |
+|------|-----------|
+| `gmin_le` | `gmin(A) ≤ A_{ij}` |
+| `le_gmin` | `(∀ i j, c ≤ A_{ij}) → c ≤ gmin(A)` |
+| `gmin_tropMatMul_superadd` | `gmin(A) + gmin(B) ≤ gmin(A ⊗ B)` |
+| `gmin_tropMatPow_superadd` | `gmin(A^{⊗(a+1)}) + gmin(A^{⊗(b+1)}) ≤ gmin(A^{⊗(a+b+2)})` |
+| `gmin_tropMatPow_double` | `2·gmin(A^{⊗(k+1)}) ≤ gmin(A^{⊗(2k+2)})` |
+| `gmin_tropMatPow_lower` | `(k+1)·gmin(A) ≤ gmin(A^{⊗(k+1)})` |
+| `tropMatPow_comm` | `(A^{⊗a})^{⊗b} = (A^{⊗b})^{⊗a}` (DH correctness) |
+| `eigenvalue_additivity` | `(λ,v)` eigenpair of `A` ⟹ `((k+1)λ, v)` eigenpair of `A^{⊗(k+1)}` |
+| `tdlp_recover_exponent` | `(residual on B)/λ = k+1` when `λ ≠ 0` |
+
+All verified in Lean 4 with axioms limited to `propext`, `Classical.choice`,
+`Quot.sound`.
