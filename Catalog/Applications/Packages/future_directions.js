@@ -942,7 +942,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Knot Invariants: Jones Polynomial Formalization"
   },
   {
-    "consumed_by_exp_id": "972d4c89",
+    "consumed_by_exp_id": "",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erd\u0151s-Szekeres bound R(s,t) \u2264 C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domains": [
       "Combinatorics"
@@ -951,7 +951,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.85,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -2325,12 +2325,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that for every integer k\u22653 there exist two k-uniform hypergraphs F1 and F2 such that 0<\u03b3\u207a(F1,F2)<\u00bd\u00b7min{\u03b3\u207a(F1),\u03b3\u207a(F2)}.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2124",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20494v1",
+    "status": "available",
+    "timestamp": "2026-06-19T23:10:37.707045+00:00",
+    "title": "Strong quantitative non-principality for positive codegree Tur\u00e1n density"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every finite-dimensional vector space E over a finite field F and every rank r with 0 <= r <= dim E, the map sending a sparse-paving q-matroid M of rank r on E to its set of r-dimensional circuit-hyperplanes is a bijection onto the stable sets of the q-Johnson graph J_q(E,r), whose vertices are r-dimensional subspaces and whose edges join pairs with intersection dimension r-1. Equivalently, a set S of r-subspaces defines a sparse-paving q-matroid precisely when any two distinct members of S intersect in dimension at most r-2.",
     "domains": [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2124",
+    "id": "fd_2125",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20348v1",
@@ -2344,13 +2358,27 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2125",
+    "id": "fd_2126",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20367v1",
     "status": "available",
     "timestamp": "2026-06-19T21:56:09.924073+00:00",
     "title": "Conjecture: Tur\u00e1n density of the 3\u2011edge r\u2011graph is \u0398(1/r\u00b3)"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Formalize the structural characterization of large cross-intersecting families (F, G) where F \u2286 {[n] choose k} and G \u2286 {[n] choose l}. Specifically, prove that for n sufficiently large relative to k and l, if the diversity \u03b3(F) + \u03b3(G) exceeds a specific threshold, then the pair (F, G) must be contained in a specific class of maximal cross-intersecting extensions derived from the S_{U,V}^{Q}-shift operation, extending the Kupavskii-Zakharov stability framework to the cross-intersecting setting.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2127",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20085v1",
+    "status": "available",
+    "timestamp": "2026-06-19T23:14:39.273894+00:00",
+    "title": "Cross-Intersecting Stability via Diversity and S_{U,V}^{Q}-Shifting"
   },
   {
     "consumed_by_exp_id": "",
@@ -3287,21 +3315,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## Weighted and multiplicity-aware dependencies\n\nThe present calculus treats `depends u t` as a Boolean: a theorem either relies\non another or it does not. A natural and immediate generalization replaces this\nrelation with a weight function `w : \u03b1 \u2192 \u03b1 \u2192 Nat`, recording how *many times* `u`\ninvokes `t`, or how *critically* it does so, and redefines `weight L t` as a sum\nof incoming weights rather than a raw in-degree. The key insight is that all of\nthe averaging machinery \u2014 `totalWeight_le_of_all_light` and the\n`antigravity_pigeonhole` consequence \u2014 is really a statement about sums of\nbounded naturals, so it survives the move from cardinalities to weighted sums\nalmost verbatim, with `Finset.sum_le_sum` doing the same work. **Why now?**\nBecause the finite, executable scaffolding is already in place and verified;\nupgrading the edge type is a localized change that immediately yields strictly\nmore expressive existence theorems without re-litigating the core combinatorics.\n\n## Transitive load instead of direct in-degree\n\nDirect in-degree undercounts a theorem's true importance: a lemma may be cited by\nfew results yet underpin enormous reachability cones through them. The next step\nis to define a *transitive* weight, the cardinality of `{u | Reaches L u t}`, and\nto develop the corresponding anti-gravity notion against this stronger measure.\nThe key insight is that the reflexive-transitive closure `Reaches`, which we\nalready use for dependency density, is exactly the object that turns local edges\ninto global load, so the density layer and the weight layer of the calculus are\ntwo views of the same closure and can be unified. **Why now?** Reachability is\nalready formalized via `Relation.ReflTransGen` and the `DepDense` API, so the\ntransitive theory can be built directly atop existing lemmas like\n`DepDense_mono` rather than from scratch.\n\n## Algorithmic extraction from real Lean import graphs\n\nEvery construct in this development is computable: weights, short sets, and\n`antiGravityCandidates` are `Finset.filter` expressions. This opens the door to\nrunning the calculus on the actual dependency graph of Mathlib or another large\nformal library, extracting the empirically anti-gravity theorems and comparing\nthem against human intuition about \"foundational\" lemmas. The key insight is that\nthe decidability witness `decidableDepends` carried by every `FiniteLibrary` is\nprecisely what makes the candidate set executable, so the formal model and a\npractical analysis tool are the same artifact rather than two parallel\nimplementations to keep in sync. **Why now?** Tooling such as `importGraph`\nalready exposes Lean dependency data, so the missing piece was a verified\nsemantics for \"cheap and load-bearing\", which this calculus now supplies.\n\n## Extremal bounds for dependency-dense anti-gravity sets\n\nThe star library shows a single anti-gravity theorem can be dependency-dense, but\nreal libraries have many roots. A rich extremal question asks for the *minimum*\nsize of a dependency-dense set drawn entirely from anti-gravity candidates, and\nfor graph conditions under which such a small dense core must exist. The key\ninsight is that dependency density is a covering condition on the reachability\npreorder, so the minimum dense set is a basis of sink components and its size is\ngoverned by the number of terminal strongly-connected components, linking the\nproblem to classical condensation-graph theory. **Why now?** With monotonicity\n(`DepDense_mono`) and the pigeonhole existence theorem already proven, the\nextremal layer can be phrased as optimization over objects the calculus can\nalready certify, making both upper and lower bounds tractable to formalize.\n\n## Probabilistic and growth models of library evolution\n\nFinally, libraries are not static: theorems and dependencies accrue over time,\nand the weight distribution drifts. A promising direction is to study random or\npreferential-attachment models of `FiniteLibrary` growth and to ask how the\nanti-gravity threshold and the size of the dense core scale with the number of\ntheorems. The key insight is that the pigeonhole bound relates an *aggregate*\nstatistic (total short-theorem weight) to a *structural* guarantee (existence of\nan anti-gravity theorem), so any growth model that controls the aggregate\nautomatically controls the emergence of foundational theorems. **Why now?** The\ndeterministic existence principle is settled and machine-checked, so it can serve\nas the deterministic backbone of a probabilistic theory, letting future work\nfocus on the distribution of the aggregate rather than re-deriving the\ncombinatorial core.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2126",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "bf1e3b75",
-    "status": "available",
-    "timestamp": "2026-06-19T23:04:09.811591+00:00",
-    "title": "The present calculus treats `depends u t` as a Boolean: a theorem either relies"
   },
   {
     "consumed_by_exp_id": "",
@@ -4466,7 +4479,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
   {
-    "consumed_by_exp_id": "b1a86b30",
+    "consumed_by_exp_id": "",
     "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
     "domains": [
       "Novelty",
@@ -4476,7 +4489,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.807837+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
@@ -4571,7 +4584,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0c649dc0",
     "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
     "domains": [
       "Novelty",
@@ -4581,7 +4594,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T23:40:36.923091+00:00",
     "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
   }
