@@ -3352,11 +3352,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "54f377a3",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
       "domain_bridges": [],
@@ -3366,7 +3366,7 @@
         "Algebra"
       ],
       "id": "fd_0092",
-      "last_attempt_time": "2026-06-19T08:25:15.118004+00:00",
+      "last_attempt_time": "2026-06-07T13:43:10.185560+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -3379,7 +3379,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-01T12:30:30.807837+00:00",
       "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
@@ -4216,11 +4216,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "26902e54",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
       "domain_bridges": [],
@@ -4230,7 +4230,7 @@
         "Logic"
       ],
       "id": "fd_0116",
-      "last_attempt_time": "2026-06-19T08:25:11.184807+00:00",
+      "last_attempt_time": "2026-06-09T07:44:29.461868+00:00",
       "last_reviewed_at": "2026-06-16T16:55:25.165652+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -4243,7 +4243,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-01T12:30:30.958310+00:00",
       "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
@@ -10758,7 +10758,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:26.181414+00:00",
       "title": "Non-Archimedean Probability via Surreal Numbers"
@@ -10902,7 +10902,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:26.503715+00:00",
       "title": "Sonic Mathematics: Counterpoint as Category Theory"
@@ -31156,7 +31156,7 @@
       "research_mode": "team",
       "source_exp_id": "pi_brainstorm",
       "source_path": "brainstorm",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-16T16:54:32.770267+00:00",
       "title": "Spectral Universality of LLM Weight Matrices: Random-Matrix Phase Transitions in"
@@ -33818,6 +33818,48 @@
       "title": "The dyadic solenoid's Fraisse category has the approximate Ramsey property"
     },
     {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "OEIS A099009",
+        "Schwartz and Thakur's formulation",
+        "Thakur's framework"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "For every odd prime base B > 5, the length of the longest terminal cycle in the four-digit Kaprekar routine equals (B-1)/2 if and only if the multiplicative order of 2 modulo B is (B-1)/2.",
+      "domain_bridges": [
+        "Modular arithmetic",
+        "Dynamical systems in finite fields"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2089",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem four_digit_kaprekar_cycle_length (B : odd_prime) [H : B > 5] : cycle_length B = (B - 1) // 2 ↔ (order_of_2 B) = (B - 1) // 2",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize the convergence to the triangular region T_B, then analyze the projective doubling conjugacy to derive cycle lengths using Lean's arithmetic and group theory capabilities.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20439v1",
+      "source_path": "http://arxiv.org/abs/2606.20439v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-19T05:14:33.661749+00:00",
+      "title": "Terminal Cycle Length in Four-Digit Kaprekar Dynamics Equals (B-1)/2 for Prime Bases"
+    },
+    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -33864,6 +33906,51 @@
       "title": "Arbitrarily small positive codegree Turán density for pairs of k-graphs"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "math.CO",
+        "Dallard--Milanič--Štorgel conjecture on tree-independence number",
+        "Tree-independence number of K_{1,d}-free graph classes",
+        "Hajebi--Spirkl characterization of finite forbidden induced-subgraph classes with bounded tree-independence number"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "For every integer d >= 1 and every finite planar graph H, there exists a natural number B(d,H) such that every finite simple graph G that is K_{1,d}-free and has no induced minor isomorphic to H satisfies alpha-tw(G) <= B(d,H). A counterexample would be an infinite family of K_{1,d}-free graphs excluding H as an induced minor whose tree-independence numbers are unbounded.",
+      "domain_bridges": [
+        "tree-independence number and tree decompositions with bounded independence in bags",
+        "induced minors and induced-subgraph preservation under deletions and contractions",
+        "star-free graphs and bounded local neighborhood independence",
+        "planar excluded induced minors and structural decomposition obstructions"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Bridges"
+      ],
+      "id": "fd_2090",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem dallard_planar_induced_minor_conjecture\n  (d : ℕ) (hd : 0 < d) {W : Type*} [Fintype W]\n  (H : SimpleGraph W) (hH : H.Planar) :\n  ∃ B : ℕ, ∀ {V : Type*} [Fintype V] (G : SimpleGraph V),\n    G.InducedMinorFree H →\n    G.InducedSubgraphFree (SimpleGraph.K1d d) →\n      G.TreeIndependenceNumber ≤ B := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Formalize finite simple graphs, induced minors, K_{1,d}-freeness, planarity, and tree-independence number in Lean. Prove auxiliary lemmas showing that unbounded tree-independence in a K_{1,d}-free induced-minor-closed class forces arbitrarily large planar induced-minor obstructions. Then use induction on the size or block structure of the excluded planar graph H to extract a uniform bound B(d,H).",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20256v1",
+      "source_path": "http://arxiv.org/abs/2606.20256v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-19T06:18:53.730025+00:00",
+      "title": "Bounded tree-independence for K_{1,d}-free graphs excluding a planar induced minor"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -33906,6 +33993,49 @@
       "thread_id": "",
       "timestamp": "2026-06-19T06:52:16.169001+00:00",
       "title": "Canonical structure of large cross-intersecting families"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "“the main threshold\" for piercing quadratic hypersurfaces",
+        "random sampling and intersection theory in finite fields"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "This paper investigates the asymptotic probability that random points in finite fields intersect sufficiently complex algebraic sets, with applications to extremal combinatorics and geometric probability.",
+      "domain_bridges": [
+        "Number Theory",
+        "Combinatorial Mathematics",
+        "Algebraic Geometry"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Computation"
+      ],
+      "id": "fd_2091",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "A slightly adapted version of the normal approximation in the origin localization lemmas, tailored to uniform random selections in finite settings.",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Formulate via uniform distribution over polynomial systems and apply probabilistic estimates using Herglotz-type inequalities.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.19677v1",
+      "source_path": "http://arxiv.org/abs/2606.19677v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-19T06:52:44.622331+00:00",
+      "title": "Randomly piercing algebraic sets and its implications"
     },
     {
       "ambition_level": "extension",
@@ -33952,6 +34082,55 @@
       "thread_id": "",
       "timestamp": "2026-06-19T07:10:46.914439+00:00",
       "title": "Iterated summatory Ehrhart--Macdonald reciprocity"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Aka–Luethi–Michel–Wieser (2022)",
+        "Edixhoven (2005)",
+        "Yafaev (2008)",
+        "André–Oort (1999)",
+        "Blomer–Brumley–Khayutin (2020)"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Conjecture that for any integers r≥2 and any collection of r pairwise non‑isomorphic Shimura curves, any sequence of CM points with a common CM field and two distinct primes splitting in each field, if the points are strict (no proper special subvariety contains infinitely many of them), then the Galois orbits of the sequence become equidistributed in the product with respect to the Haar measure as the discriminants tend to infinity.",
+      "domain_bridges": [
+        "Equidistribution theorems",
+        "André–Oort conjecture",
+        "CM points",
+        "Shimura curves",
+        "Ergodic theory",
+        "Linnik splitting condition"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Pythagorean"
+      ],
+      "id": "fd_2092",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem cm_points_equidistribute_product (r : ℕ) (hr : 2 ≤ r) (curves : Fin r → ShimuraCurve) (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (hsplit : ∀ n, p.SplitsIn (CMField n) ∧ q.SplitsIn (CMField n)) (strict_seq : StrictSequence ...) : WeakConvergence (GaloisOrbitMeasure (z_seq : ℕ → Product (Fin r → ShimuraCurve))) (HaarMeasure (Product (Fin r → ShimuraCurve))) := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Apply the adelic toral‑packet equidistribution theorem of Aka–Luethi–Michel–Wieser to the product space, show that the only positive‑dimensional special subvarieties are CM‑fibers, and deduce weak convergence of Galois orbit measures to Haar measure; the argument is unconditional under the given splitting hypothesis.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.19933v1",
+      "source_path": "http://arxiv.org/abs/2606.19933v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-19T07:11:19.175046+00:00",
+      "title": "Equidistribution of Galois orbits of CM points on products of non‑isomorphic Shimura curves"
     },
     {
       "ambition_level": "extension",
@@ -34037,185 +34216,6 @@
       "title": "Explicit bounds on Turán numbers for structured graph families"
     },
     {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "OEIS A099009",
-        "Schwartz and Thakur's formulation",
-        "Thakur's framework"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "For every odd prime base B > 5, the length of the longest terminal cycle in the four-digit Kaprekar routine equals (B-1)/2 if and only if the multiplicative order of 2 modulo B is (B-1)/2.",
-      "domain_bridges": [
-        "Modular arithmetic",
-        "Dynamical systems in finite fields"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Pythagorean"
-      ],
-      "id": "fd_2095",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "theorem four_digit_kaprekar_cycle_length (B : odd_prime) [H : B > 5] : cycle_length B = (B - 1) // 2 ↔ (order_of_2 B) = (B - 1) // 2",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.8,
-      "proof_strategy": "Formalize the convergence to the triangular region T_B, then analyze the projective doubling conjugacy to derive cycle lengths using Lean's arithmetic and group theory capabilities.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.20439v1",
-      "source_path": "http://arxiv.org/abs/2606.20439v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-19T05:14:33.661749+00:00",
-      "title": "Terminal Cycle Length in Four-Digit Kaprekar Dynamics Equals (B-1)/2 for Prime Bases"
-    },
-    {
-      "ambition_level": "grand_challenge",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "math.CO",
-        "Dallard--Milanič--Štorgel conjecture on tree-independence number",
-        "Tree-independence number of K_{1,d}-free graph classes",
-        "Hajebi--Spirkl characterization of finite forbidden induced-subgraph classes with bounded tree-independence number"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "For every integer d >= 1 and every finite planar graph H, there exists a natural number B(d,H) such that every finite simple graph G that is K_{1,d}-free and has no induced minor isomorphic to H satisfies alpha-tw(G) <= B(d,H). A counterexample would be an infinite family of K_{1,d}-free graphs excluding H as an induced minor whose tree-independence numbers are unbounded.",
-      "domain_bridges": [
-        "tree-independence number and tree decompositions with bounded independence in bags",
-        "induced minors and induced-subgraph preservation under deletions and contractions",
-        "star-free graphs and bounded local neighborhood independence",
-        "planar excluded induced minors and structural decomposition obstructions"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Bridges"
-      ],
-      "id": "fd_2096",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "theorem dallard_planar_induced_minor_conjecture\n  (d : ℕ) (hd : 0 < d) {W : Type*} [Fintype W]\n  (H : SimpleGraph W) (hH : H.Planar) :\n  ∃ B : ℕ, ∀ {V : Type*} [Fintype V] (G : SimpleGraph V),\n    G.InducedMinorFree H →\n    G.InducedSubgraphFree (SimpleGraph.K1d d) →\n      G.TreeIndependenceNumber ≤ B := by\n  sorry",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.8,
-      "proof_strategy": "Formalize finite simple graphs, induced minors, K_{1,d}-freeness, planarity, and tree-independence number in Lean. Prove auxiliary lemmas showing that unbounded tree-independence in a K_{1,d}-free induced-minor-closed class forces arbitrarily large planar induced-minor obstructions. Then use induction on the size or block structure of the excluded planar graph H to extract a uniform bound B(d,H).",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.20256v1",
-      "source_path": "http://arxiv.org/abs/2606.20256v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-19T06:18:53.730025+00:00",
-      "title": "Bounded tree-independence for K_{1,d}-free graphs excluding a planar induced minor"
-    },
-    {
-      "ambition_level": "grand_challenge",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "“the main threshold\" for piercing quadratic hypersurfaces",
-        "random sampling and intersection theory in finite fields"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "This paper investigates the asymptotic probability that random points in finite fields intersect sufficiently complex algebraic sets, with applications to extremal combinatorics and geometric probability.",
-      "domain_bridges": [
-        "Number Theory",
-        "Combinatorial Mathematics",
-        "Algebraic Geometry"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Algebra",
-        "Computation"
-      ],
-      "id": "fd_2097",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "A slightly adapted version of the normal approximation in the origin localization lemmas, tailored to uniform random selections in finite settings.",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.8,
-      "proof_strategy": "Formulate via uniform distribution over polynomial systems and apply probabilistic estimates using Herglotz-type inequalities.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.19677v1",
-      "source_path": "http://arxiv.org/abs/2606.19677v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-19T06:52:44.622331+00:00",
-      "title": "Randomly piercing algebraic sets and its implications"
-    },
-    {
-      "ambition_level": "extension",
-      "arc_id": "",
-      "arc_position": 0,
-      "attempt_count": 0,
-      "catalog_references": [
-        "Aka–Luethi–Michel–Wieser (2022)",
-        "Edixhoven (2005)",
-        "Yafaev (2008)",
-        "André–Oort (1999)",
-        "Blomer–Brumley–Khayutin (2020)"
-      ],
-      "category": "cross_domain_bridge",
-      "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
-      "depth_estimate": 3,
-      "description": "Conjecture that for any integers r≥2 and any collection of r pairwise non‑isomorphic Shimura curves, any sequence of CM points with a common CM field and two distinct primes splitting in each field, if the points are strict (no proper special subvariety contains infinitely many of them), then the Galois orbits of the sequence become equidistributed in the product with respect to the Haar measure as the discriminants tend to infinity.",
-      "domain_bridges": [
-        "Equidistribution theorems",
-        "André–Oort conjecture",
-        "CM points",
-        "Shimura curves",
-        "Ergodic theory",
-        "Linnik splitting condition"
-      ],
-      "domain_quality_penalty": 0.0,
-      "domains": [
-        "Algebra",
-        "Pythagorean"
-      ],
-      "id": "fd_2098",
-      "last_attempt_time": "",
-      "last_reviewed_at": "",
-      "lean_theorem_stub": "theorem cm_points_equidistribute_product (r : ℕ) (hr : 2 ≤ r) (curves : Fin r → ShimuraCurve) (p q : ℕ) (hp : Nat.Prime p) (hq : Nat.Prime q) (hsplit : ∀ n, p.SplitsIn (CMField n) ∧ q.SplitsIn (CMField n)) (strict_seq : StrictSequence ...) : WeakConvergence (GaloisOrbitMeasure (z_seq : ℕ → Product (Fin r → ShimuraCurve))) (HaarMeasure (Product (Fin r → ShimuraCurve))) := by sorry",
-      "lineage_refs": [],
-      "outcome_quality": 0.0,
-      "priority_score": 0.8,
-      "proof_strategy": "Apply the adelic toral‑packet equidistribution theorem of Aka–Luethi–Michel–Wieser to the product space, show that the only positive‑dimensional special subvarieties are CM‑fibers, and deduce weak convergence of Galois orbit measures to Haar measure; the argument is unconditional under the given splitting hypothesis.",
-      "prune_reason": "",
-      "pruned_at": "",
-      "quarantined_until": "",
-      "research_mode": "team",
-      "source_exp_id": "2606.19933v1",
-      "source_path": "http://arxiv.org/abs/2606.19933v1",
-      "status": "available",
-      "thread_id": "",
-      "timestamp": "2026-06-19T07:11:19.175046+00:00",
-      "title": "Equidistribution of Galois orbits of CM points on products of non‑isomorphic Shimura curves"
-    },
-    {
       "ambition_level": "grand_challenge",
       "arc_id": "",
       "arc_position": 0,
@@ -34241,7 +34241,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2099",
+      "id": "fd_2094",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem embracing_distance_equals_graph_distance {M : OrientedMatroid} {e : M.E} {B B' : Basis M} (hB : B.is_e_embracing e) (hB' : B'.is_e_embracing e) : d_e B B' = d_G (C B e) (C B' e) := by sorry",
@@ -34259,6 +34259,48 @@
       "thread_id": "",
       "timestamp": "2026-06-19T08:25:04.863302+00:00",
       "title": "Equality of Embracing Exchange Distance and Polyhedral Graph Distance"
+    },
+    {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "arXiv:1508.07268",
+        "arXiv:2105.12345"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Conjecture that for any (possibly infinite) graph G, the median-width of G coincides with its clique number.",
+      "domain_bridges": [
+        "graph_minors",
+        "cube_complexes",
+        "geometric_group_theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2095",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem median_width_eq_clique_number (G : Graph) : medianWidth G = cliqueNumber G := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Attempt a proof by induction on separator systems and use Sageev–Roller duality to show uniqueness; if a counterexample is found, construct a minimal graph violating the equality.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.19473v1",
+      "source_path": "http://arxiv.org/abs/2606.19473v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-19T08:51:33.691085+00:00",
+      "title": "Median-width equals clique number for all graphs"
     },
     {
       "ambition_level": "extension",
@@ -48256,7 +48298,7 @@
       "research_mode": "team",
       "source_exp_id": "bfb62bb9",
       "source_path": "These conjectures extend `Catalog/Bridges/CodeThresholdValuation.lean`, which bu",
-      "status": "completed",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-16T10:49:09.086340+00:00",
       "title": "Close Proofs: These conjectures extend `Catalog/Bridges/CodeThresholdValuation.lean`"
