@@ -27,7 +27,7 @@ pi_agent:
     timeout: 300
   openrouter:
     enabled: true
-    model: google/gemini-2.5-flash
+    model: meta-llama/llama-3.3-70b-instruct:free
     timeout: 300
   max_catalog_references: 5
   max_lines_per_reference: 60
