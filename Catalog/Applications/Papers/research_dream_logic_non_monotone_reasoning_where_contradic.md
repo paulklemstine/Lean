@@ -1,289 +1,455 @@
-# Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist
+# Dream Logic: Coexisting Contradictions in Four-Valued Paraconsistency and Their Topological Models
+
+**Author:** Aristotle
+
+**Date:** 2026-06-19
+
+**Domain:** Logic (Paraconsistency, Topology, Non-monotone reasoning)
+
+---
 
 ## Abstract
 
-We present a machine-verified formalization of paraconsistent reasoning through Belnap's four-valued logic (FOUR) and its connection to non-topological pre-topological spaces we call *dream spaces*. We establish that FOUR forms a bounded distributive lattice under the truth ordering (Theorem 1), prove that explosion — the classical principle that a contradiction entails every statement — fails in FOUR (Theorem 2), characterize paraconsistency as equivalent to the existence of designated gluts (Theorem 3), and construct a concrete non-topological dream space on the natural numbers (Theorem 4). The Belnap negation is shown to be a De Morgan involution, yielding a full De Morgan algebra. These results formalize the precise algebraic conditions under which contradiction-tolerant reasoning is possible and connect them to topological deficiencies that model incomplete or dream-like spatial reasoning. All results are verified by exhaustive case analysis over finitely many truth values.
+We present a fully formalized account of *paraconsistent* reasoning — logic in
+which a contradiction is a contained, local phenomenon rather than a global
+catastrophe — and we exhibit its precise topological semantics. On the algebraic
+side we formalize Belnap's four-valued logic `FOUR` (the logic of First-Degree
+Entailment), whose values are `true`, `false`, `both` (a *glut*: information
+asserting a proposition and its negation), and `neither` (a *gap*: no
+information either way). We prove that the Law of Non-Contradiction can fail
+(`lnc_can_fail`), that the Law of Excluded Middle can fail (`lem_can_fail`), and
+— the defining feature of paraconsistency — that *ex contradictione quodlibet*
+("explosion") fails (`explosion_fails`): an accepted contradiction does not
+entail an arbitrary proposition. We characterize the two impossible objects
+exactly: `both` is the unique glut (`glut_iff`) and `neither` is the unique gap
+(`gap_iff`), and we certify the contrast with classical logic
+(`classical_no_glut`, `classical_explosion`).
+
+On the geometric side we develop the closed-set co-Heyting model. Defining
+paraconsistent negation as the closure of the complement, `pneg A := closure
+Aᶜ`, and the contradiction set as `contradiction A := A ∩ pneg A`, we prove that
+for a closed set the contradiction set is exactly the topological frontier
+(`contradiction_eq_frontier`), that the Law of Non-Contradiction holds for a
+closed set iff that set is *clopen* (`lnc_holds_iff_clopen`), and that on a
+preconnected space every proper nonempty closed set carries a nonempty
+contradiction set (`connected_forces_paraconsistency`). A concrete dialetheia is
+exhibited in `ℝ`: the point `0` is a coexisting contradiction of `[0,1]`
+(`dream_object_real`). These two developments are linked by the dictionary
+identifying a topological frontier point with the Belnap glut value `both`.
 
 ---
 
 ## 1. Introduction
 
-Classical propositional logic rests on two pillars: *bivalence* (every proposition is true or false) and *explosion* (from a contradiction, everything follows). While these principles produce a mathematically elegant system, they are ill-suited to domains where information is incomplete, contradictory, or both — including database systems with conflicting records, multi-sensor fusion in autonomous agents, and the cognitive phenomenon of dreaming.
+Classical logic is governed by two principles inherited from Aristotle. The
+**Law of Non-Contradiction (LNC)** forbids any proposition from being both true
+and false. The **principle of explosion**, *ex contradictione quodlibet* (ECQ),
+states that from a contradiction every proposition follows: `P, ¬P ⊢ Q` for
+arbitrary `Q`. ECQ makes classical logic *brittle* with respect to inconsistency:
+a single accepted contradiction trivializes the entire theory.
 
-Belnap (1977) proposed a four-valued logic, sometimes called FOUR or FDE (First-Degree Entailment), that relaxes bivalence by introducing two additional truth values: **B** (both true and false) and **N** (neither true nor false). The resulting system preserves most algebraic properties of classical logic — distributivity, De Morgan duality, involutive negation — while allowing contradictions to be localized rather than explosive.
+Real reasoning — scientific theories during periods of anomaly, large knowledge
+bases merged from conflicting sources, legal and ethical deliberation, and the
+phenomenology of dreams — routinely tolerates local inconsistency without
+collapsing into triviality. *Paraconsistent* logics formalize this: they are
+logics in which ECQ fails, so that contradictions can be quarantined. *Dialetheic*
+positions go further and accept that some contradictions are *true*; the
+true-and-false propositions are called **dialetheias**, or, in our metaphor,
+*impossible objects* — objects that coexist with their own negation.
 
-In parallel, the notion of a topological space provides the standard mathematical framework for reasoning about "nearness" and continuity. A topology on a set X is a collection of subsets (called open) satisfying: (i) ∅ and X are open, (ii) arbitrary unions of open sets are open, and (iii) finite intersections of open sets are open. Weakening axiom (ii) to closure under finite unions only produces what we call a *dream space* — a pre-topological structure that can model reasoning systems with local but not global coherence.
+This paper formalizes two complementary faces of paraconsistency and proves they
+are aspects of a single phenomenon:
 
-This paper presents formal proofs of four main results connecting these ideas:
+1. **An algebraic semantics** — Belnap's four-valued logic `FOUR`, the canonical
+   matrix for First-Degree Entailment (FDE). Here gluts and gaps are first-class
+   truth values, and the failure of LNC, LEM, and ECQ are exact, provable facts.
 
-1. **Theorem 1** (`instDistribLattice`): Belnap's FOUR is a bounded distributive lattice under the truth ordering.
-2. **Theorem 2** (`explosion_fails`): Explosion fails in FOUR — there exist p, q such that p ∧ ¬p is designated but q is not.
-3. **Theorem 3** (`paraconsistency_iff_glut`): Explosion failure is equivalent to the existence of a designated glut.
-4. **Theorem 4** (`nat_finite_is_nonTopological`): The finite-or-universal dream space on ℕ is not a topology.
+2. **A topological semantics** — the co-Heyting (Brouwerian) algebra of closed
+   sets of a topological space, where paraconsistent negation is closure of the
+   complement, and where the dialetheias are precisely the boundary points of
+   shapes.
 
-All proofs are verified by exhaustive computation over the four truth values, with the dream space result following from an explicit counterexample (the even numbers).
+The bridge between them is the central conceptual payoff: a *topological frontier
+point is a Belnap glut*. All results below are mechanically verified.
+
+### 1.1 Note on the guiding slogan
+
+The informal brief that motivated this work spoke of "topological spaces where
+open sets are not closed under arbitrary union." Taken literally this is false:
+the axioms of a topology *require* open sets to be closed under arbitrary union.
+A central methodological finding of the project is that the correct dual reading
+is **"closed sets need not be open"** — and that paraconsistency lives exactly in
+the gap between *closed* and *clopen*. Theorem `lnc_holds_iff_clopen` makes this
+precise.
 
 ---
 
-## 2. Definitions
+## 2. The four-valued logic `FOUR`
 
-### 2.1 Belnap's Four-Valued Logic
+### 2.1 Definitions
 
-**Definition 2.1** (Truth Values). The set FOUR = {F, N, B, T} consists of four truth values:
-- **F** (false only): the proposition is rejected and not supported.
-- **N** (neither): no information is available.
-- **B** (both): the proposition is both supported and rejected.
-- **T** (true only): the proposition is supported and not rejected.
+**Definition 2.1 (Truth values).** Let `FOUR = {true, false, both, neither}`.
+The four values answer the question *what does our information say about a
+proposition?*
 
-**Definition 2.2** (Truth Ordering). The truth ordering ≤_t on FOUR is defined by the Hasse diagram:
+- `true`: information establishes it holds (and nothing contradicts);
+- `false`: information establishes it fails;
+- `both`: a **glut** — information asserts it holds *and* asserts it fails;
+- `neither`: a **gap** — no information either way.
+
+**Definition 2.2 (Truth order).** `FOUR` is partially ordered by *information
+truth-content*, with `false` least, `true` greatest, and `both`, `neither`
+incomparable in the middle (the "diamond"):
 
 ```
-        T
-       / \
-      N   B
-       \ /
-        F
+            true
+           /    \
+        both    neither
+           \    /
+           false
 ```
 
-where F ≤_t N, F ≤_t B, N ≤_t T, B ≤_t T, and N, B are incomparable. Formally, a ≤_t b if and only if tmeet(a, b) = a, where tmeet is the lattice meet operation.
+**Definition 2.3 (Connectives).**
+- **Conjunction** `conj x y` is the lattice meet (greatest lower bound) in the
+  diamond order.
+- **Disjunction** `disj x y` is the lattice join (least upper bound).
+- **Negation** `neg` is the order-reversing involution that swaps `true ↔ false`
+  and fixes both impossible objects: `neg both = both`, `neg neither = neither`.
 
-**Definition 2.3** (Lattice Operations). The meet (conjunction) and join (disjunction) under the truth ordering are:
+Explicitly, negation is given by
 
-| tmeet | F | N | B | T |      | tjoin | F | N | B | T |
-|-------|---|---|---|---|      |-------|---|---|---|---|
-| **F** | F | F | F | F |      | **F** | F | N | B | T |
-| **N** | F | N | F | N |      | **N** | N | N | T | T |
-| **B** | F | F | B | B |      | **B** | B | T | B | T |
-| **T** | F | N | B | T |      | **T** | T | T | T | T |
+| `x`       | `neg x`   |
+|-----------|-----------|
+| `true`    | `false`   |
+| `false`   | `true`    |
+| `both`    | `both`    |
+| `neither` | `neither` |
 
-**Definition 2.4** (Negation). Belnap negation bneg : FOUR → FOUR is defined by:
-- bneg(T) = F, bneg(F) = T, bneg(B) = B, bneg(N) = N.
+and conjunction/disjunction by the meet/join tables of the diamond. For example
+`conj both false = false`, `conj both true = both`, `disj neither false =
+neither`, `disj neither true = true`.
 
-**Definition 2.5** (Designation). A truth value a ∈ FOUR is *designated* if a = T or a = B. The set of designated values D = {T, B} represents the values accepted as "at least partially true."
+**Definition 2.4 (Designation).** A value is **designated** (asserted, believed)
+iff it carries at least a grain of truth:
 
-**Definition 2.6** (Glut and Gap). A value a is a *glut* if both a and bneg(a) are designated. A value a is a *gap* if neither a nor bneg(a) is designated.
+> `designated x  :⟺  x = true ∨ x = both`.
 
-### 2.2 Dream Spaces
+Designation is the consequence relation's notion of "holding": an inference is
+valid when designated premises force a designated conclusion.
 
-**Definition 2.7** (Dream Space). A *dream space* on a set X is a collection τ ⊆ 𝒫(X) satisfying:
-1. ∅ ∈ τ and X ∈ τ.
-2. If U, V ∈ τ then U ∩ V ∈ τ (closure under finite intersection).
-3. If U, V ∈ τ then U ∪ V ∈ τ (closure under *finite* union).
+### 2.2 Glut and gap, made exact
 
-A dream space is a topology if and only if it is additionally closed under *arbitrary* unions.
+**Definition 2.5 (Glut, gap).**
+- `x` is a **glut** iff `designated (conj x (neg x))` — its conjunction with its
+  own negation is asserted (a *coexisting contradiction*).
+- `x` is a **gap** iff `¬ designated (disj x (neg x))` — its disjunction with its
+  own negation fails to be asserted (excluded middle fails at `x`).
 
-**Definition 2.8** (Finite-or-Universal Dream Space). On the set ℕ, define:
-- dreamOpen(S) iff S is finite or S = ℕ.
+**Theorem 2.6 (`glut_iff`).** `x` is a glut iff `x = both`.
 
----
+*Proof sketch.* Finite case analysis over the four values. For `true`:
+`conj true (neg true) = conj true false = false`, undesignated. For `false`:
+symmetric, value `false`. For `neither`: `conj neither neither = neither`,
+undesignated. For `both`: `conj both (neg both) = conj both both = both`,
+designated. Hence `both` is the only glut. ∎
 
-## 3. Main Results
+**Theorem 2.7 (`gap_iff`).** `x` is a gap iff `x = neither`.
 
-### 3.1 Theorem 1: FOUR Is a Bounded Distributive Lattice
+*Proof sketch.* Dual case analysis. `disj true (neg true) = true` and `disj false
+(neg false) = true` are designated; `disj both both = both` is designated; only
+`disj neither neither = neither` is undesignated. ∎
 
-**Theorem 3.1** (`Belnap.instDistribLattice`, `BoundedOrder Belnap`).
-*Under the truth ordering, FOUR is a bounded distributive lattice with bottom element F and top element T.*
+### 2.3 Failure of the classical laws
 
-*Proof sketch.* Each lattice axiom — reflexivity, transitivity, and antisymmetry of ≤_t; the meet and join properties; and the distributive law — is verified by exhaustive case analysis over all 4 (or 4² or 4³) combinations of truth values. For example, distributivity requires checking that for all a, b, c ∈ FOUR:
+**Theorem 2.8 (`lnc_can_fail`).** There exists `x` with `designated (conj x (neg
+x))`; equivalently, the Law of Non-Contradiction fails in `FOUR`.
 
-a ∨ (b ∧ c) = (a ∨ b) ∧ (a ∨ c)
+*Proof sketch.* Witness `x = both`; `conj both (neg both) = both` is designated.
+This is the existential extract of Theorem 2.6. ∎
 
-This amounts to 64 cases, each verified by direct computation. The bounds F ≤_t a ≤_t T hold for all a ∈ FOUR by four direct checks each. ∎
+**Theorem 2.9 (`lem_can_fail`).** There exists `x` with `¬ designated (disj x
+(neg x))`; the Law of Excluded Middle fails.
 
-*Significance.* This establishes that Belnap's logic has the same core algebraic structure as classical propositional logic (which is also a bounded distributive lattice over {F, T}). The additional values N and B enrich the lattice without compromising its algebraic properties.
+*Proof sketch.* Witness `x = neither`; `disj neither (neg neither) = neither` is
+undesignated. This is the existential extract of Theorem 2.7. ∎
 
-### 3.2 De Morgan Algebra Structure
+**Theorem 2.10 (`explosion_fails`, paraconsistency).** There exist values `p, q`
+such that `p` is an accepted contradiction (both `p` and `neg p` are designated)
+yet `q` is *not* designated. Hence the inference schema "from `p` and `¬p`,
+conclude `q`" is invalid: ECQ fails.
 
-**Theorem 3.2** (`bneg_bneg`, `bneg_tmeet`, `bneg_tjoin`, `bneg_antitone`).
-*Belnap negation is a De Morgan involution: it is involutive (bneg ∘ bneg = id), satisfies both De Morgan laws, and reverses the truth ordering.*
+*Proof sketch.* Take `p = both` and `q = false`. Then `p` and `neg p = both` are
+both designated, so the premises of explosion hold; but `q = false` is
+undesignated, so the conclusion fails. The accepted contradiction at `both` does
+not propagate to the unrelated `false`. ∎
 
-*Proof sketch.* Each property is verified by exhaustive case analysis:
-- Involution: bneg(bneg(a)) = a for all a ∈ FOUR (4 cases).
-- De Morgan I: bneg(tmeet(a,b)) = tjoin(bneg(a), bneg(b)) for all a, b (16 cases).
-- De Morgan II: bneg(tjoin(a,b)) = tmeet(bneg(a), bneg(b)) for all a, b (16 cases).
-- Antitone: if a ≤_t b then bneg(b) ≤_t bneg(a) (16 cases with hypothesis filtering). ∎
+Theorem 2.10 is the defining property: `FOUR` *tolerates* contradiction. Together
+with Theorem 2.9, `FOUR` is simultaneously **paraconsistent** (tolerates gluts)
+and **paracomplete** (tolerates gaps).
 
-*Significance.* Together with Theorem 3.1, this shows that (FOUR, tmeet, tjoin, bneg) is a De Morgan algebra — the canonical algebraic structure underlying relevance logic and related paraconsistent systems.
+### 2.4 Classical contrast
 
-### 3.3 Theorem 2: Explosion Fails
+To certify that these failures are features of `FOUR` rather than artifacts of
+the ambient metalogic, we record the Boolean facts.
 
-**Theorem 3.3** (`Belnap.explosion_fails`).
-*There exist p, q ∈ FOUR such that designated(tmeet(p, bneg(p))) holds but designated(q) does not.*
+**Theorem 2.11 (`classical_no_glut`).** In the two-valued Boolean algebra (with
+ordinary `∧`, `¬`, and `designated b := b = true`), no value is a glut:
+`b ∧ ¬b` is never designated.
 
-*Proof sketch.* Take p = B and q = F. Then:
-- bneg(B) = B, so tmeet(B, bneg(B)) = tmeet(B, B) = B.
-- B is designated (B ∈ {T, B}), so designated(tmeet(p, bneg(p))) holds.
-- F is not designated (F ∉ {T, B}), so ¬designated(q) holds. ∎
+**Theorem 2.12 (`classical_explosion`).** In the Boolean algebra, ECQ holds: if
+`b` and `¬b` are both designated then every `c` is designated (vacuously, since
+the premise is unsatisfiable).
 
-**Theorem 3.4** (`Belnap.classical_no_contradiction`).
-*In the classical fragment {T, F}, contradictions are never designated: for p ∈ {T, F}, ¬designated(tmeet(p, bneg(p))).*
-
-*Proof sketch.* If p = T then tmeet(T, F) = F, which is not designated. If p = F then tmeet(F, T) = F, which is not designated. ∎
-
-*Significance.* Theorem 3.3 demonstrates that FOUR is *paraconsistent*: it tolerates contradiction without explosion. Theorem 3.4 shows that this tolerance arises specifically from the non-classical values — the classical fragment remains explosion-proof because contradictions are impossible in it.
-
-### 3.4 Designation Closure Properties
-
-**Theorem 3.5** (`designated_closed_tmeet`, `designated_closed_tjoin`).
-*The designated set D = {T, B} is closed under both tmeet and tjoin.*
-
-*Proof sketch.* By case analysis on the four combinations (T,T), (T,B), (B,T), (B,B):
-- tmeet: T∧T=T, T∧B=B, B∧T=B, B∧B=B — all in D.
-- tjoin: T∨T=T, T∨B=T, B∨T=T, B∨B=B — all in D. ∎
-
-*Significance.* D forms a sub-semilattice under both operations. This means that designated reasoning is compositionally closed: combining designated premises through conjunction or disjunction always yields a designated conclusion. The logical system does not "leak" non-designated values through valid inferences from designated premises.
-
-### 3.5 Glut and Gap Characterization
-
-**Theorem 3.6** (`glut_iff_B`, `gap_iff_N`).
-*B is the unique glut in FOUR and N is the unique gap.*
-
-*Proof sketch.* A value a is a glut iff a ∈ D and bneg(a) ∈ D. Checking all four values: only B satisfies bneg(B) = B ∈ D. Similarly, a is a gap iff a ∉ D and bneg(a) ∉ D; only N satisfies bneg(N) = N ∉ D. ∎
-
-### 3.6 Theorem 3: Paraconsistency Characterization
-
-**Theorem 3.7** (`Belnap.paraconsistency_iff_glut`).
-*Explosion failure in FOUR is equivalent to the existence of a designated glut:*
-
-(∃ p q, designated(p ∧ ¬p) ∧ ¬designated(q)) ↔ (∃ a, isGlut(a))
-
-*Proof sketch.*
-(⇒) If designated(tmeet(p, bneg(p))) holds, then by case analysis on p, we must have p = B (since for T and F the meet with the negation yields F, which is not designated). Then both p = B and bneg(p) = B are designated, so p is a glut.
-
-(⇐) If a is a glut, then designated(a) and designated(bneg(a)) both hold. Since tmeet(a, bneg(a)) can be computed by cases and a glut must be B (by Theorem 3.6), we get tmeet(B, B) = B which is designated. Taking q = F gives ¬designated(F), completing the witness. ∎
-
-*Significance.* This is the central characterization theorem. It reduces the metalogical property of paraconsistency — a statement about what *cannot be derived* in the logic — to a purely algebraic condition about the existence of a specific kind of element in the truth-value algebra. This provides a clean criterion for designing paraconsistent logics: introduce a designated glut, and explosion fails; remove all designated gluts, and classical behavior is restored.
-
-### 3.7 Theorem 4: A Non-Topological Dream Space
-
-**Theorem 3.8** (`DreamSpace.nat_finite_is_nonTopological`).
-*The finite-or-universal dream space on ℕ is not a topology.*
-
-*Proof sketch.* The collection {S ⊆ ℕ : S is finite or S = ℕ} satisfies the dream space axioms:
-- ∅ is finite, hence open. ℕ = ℕ, hence open.
-- If S, T are open: if either is ℕ then S ∩ T equals the other (open); if both are finite, S ∩ T is finite (open). Similarly for S ∪ T.
-
-However, consider the family of singletons {{2n} : n ∈ ℕ}. Each {2n} is finite, hence open. But their union is the set of even numbers, which is infinite and not equal to ℕ, hence not open. The collection is not closed under arbitrary unions and therefore is not a topology. ∎
-
-*Significance.* This provides a concrete mathematical model for "dream-like" spatial reasoning: a system that correctly processes finite collections of observations but cannot assemble them into certain global conclusions. The even numbers are "locally visible" (each even number is in an open set) but "globally invisible" (the set of all even numbers is not open).
+The difference between Theorems 2.10–2.11 quantifies precisely what is gained by
+moving from two to four values: the existence of a satisfiable, designated,
+non-explosive contradiction.
 
 ---
 
-## 4. The Bridge: Algebraic Paraconsistency and Topological Deficiency
+## 3. The topological model of paraconsistency
 
-The two main constructions — Belnap's FOUR and dream spaces — share a common structural pattern. Both are obtained by weakening a single axiom of a classical system:
+The Tarski–McKinsey duality models *intuitionistic* logic in the Heyting algebra
+of **open** sets of a topological space, with intuitionistic negation `¬A :=
+interior(Aᶜ)`. The order-theoretic dual replaces open with **closed** sets,
+yielding a *co-Heyting* (Brouwerian) algebra, the natural home of paraconsistent
+negation.
 
-| Classical System | Weakened Axiom | Result |
-|---|---|---|
-| Boolean algebra (classical logic) | Bivalence (a ∨ ¬a = ⊤) | De Morgan algebra (Belnap logic) |
-| Topological space | Closure under arbitrary unions | Dream space |
+Throughout, `X` is a topological space, `Aᶜ` is the set complement, `closure`,
+`interior`, and `frontier` are the standard operators, and `frontier A = closure
+A ∩ closure Aᶜ`.
 
-In both cases, the weakening introduces the possibility of *local coherence without global coherence*:
+### 3.1 Definitions
 
-- In FOUR, each individual inference step respects the lattice structure, but the global reasoning system tolerates states (gluts) that classical logic would reject.
-- In a dream space, each finite collection of open sets behaves topologically, but the global structure permits configurations (infinite unions that are not open) that topology would forbid.
+**Definition 3.1 (Paraconsistent negation).** For `A ⊆ X`,
 
-This parallel suggests a deeper categorical connection: functors from the category of De Morgan algebras to the category of dream spaces that preserve the relevant "defect" structures. We leave the formal development of this bridge to future work.
+> `pneg A := closure Aᶜ`.
+
+Unlike intuitionistic negation (interior of the complement), `pneg` adds the
+boundary back on, keeping us inside the algebra of closed sets when `A` is
+closed.
+
+**Definition 3.2 (Contradiction set).** For `A ⊆ X`,
+
+> `contradiction A := A ∩ pneg A = A ∩ closure Aᶜ`.
+
+A point of `contradiction A` lies in `A` and is simultaneously a limit of points
+outside `A`: a topological dialetheia, an *impossible object* that is both "in"
+and "out."
+
+### 3.2 Contradiction equals frontier
+
+**Theorem 3.3 (`contradiction_eq_frontier`).** If `A` is closed, then
+
+> `contradiction A = frontier A`.
+
+*Proof sketch.* By definition `frontier A = closure A ∩ closure Aᶜ`. For closed
+`A`, `closure A = A`, so `frontier A = A ∩ closure Aᶜ`. The right-hand side is
+exactly `A ∩ pneg A = contradiction A`. (Formally: rewrite `pneg` via `closure`
+of the complement, use `IsClosed.frontier_eq`, and simplify the set-difference
+form `frontier A = A \ interior A`.) ∎
+
+This identity is the semantic core: for closed beliefs, *coexisting
+contradictions are exactly boundary points.*
+
+### 3.3 Non-contradiction characterizes clopen sets
+
+**Theorem 3.4 (`lnc_holds_iff_clopen`).** For closed `A`,
+
+> `contradiction A = ∅  ⟺  A is clopen`.
+
+*Proof sketch.* By Theorem 3.3, `contradiction A = ∅` iff `frontier A = ∅`. A
+standard topological fact (`isClopen_iff_frontier_eq_empty`) states that a set is
+clopen iff its frontier is empty. Compose. ∎
+
+**Corollary 3.5 (`not_clopen_contradiction`).** A closed set that is not clopen
+has a nonempty contradiction set.
+
+*Proof sketch.* Contrapositive of the forward direction of Theorem 3.4: if
+`contradiction A` were empty, `A` would be clopen. ∎
+
+Theorem 3.4 is the precise, true form of the guiding slogan. Classical
+(non-contradictory) behavior for a closed set occurs *exactly* on the clopen
+sets; genuine paraconsistency appears precisely where a closed set fails to be
+open.
+
+### 3.4 A concrete impossible object in `ℝ`
+
+**Theorem 3.6 (`dream_object_real`).** In `ℝ`, `0 ∈ contradiction([0,1])`.
+
+*Proof sketch.* `[0,1]` is closed (`isClosed_Icc`), so by Theorem 3.3 its
+contradiction set is `frontier [0,1] = {0,1}` (`frontier_Icc`, using `0 ≤ 1`).
+Then `0 ∈ {0,1}`. ∎
+
+**Corollary 3.7 (`contradiction_nonempty_real`).** `contradiction([0,1])` is
+nonempty in `ℝ`.
+
+The point `0` belongs to `[0,1]` and is a limit of negative reals outside it; it
+is a genuine dialetheia realized on the number line.
+
+### 3.5 Connectedness forces paraconsistency
+
+**Theorem 3.8 (`connected_forces_paraconsistency`).** Let `X` be a preconnected
+space and `A ⊆ X` closed with `A` nonempty and `Aᶜ` nonempty (i.e. `A` is a
+*proper, nontrivial* belief). Then `contradiction A` is nonempty.
+
+*Proof sketch.* By Corollary 3.5 it suffices to show `A` is not clopen. Suppose
+it were. In a preconnected space the only clopen sets are `∅` and `X`
+(`isClopen_iff`). If `A = ∅` this contradicts `A` nonempty; if `A = X` then `Aᶜ =
+∅`, contradicting `Aᶜ` nonempty. Hence `A` is not clopen, and `contradiction A`
+is nonempty. ∎
+
+**Interpretation.** On a connected space, the only contradiction-free closed
+beliefs are the two trivial ones (believe nothing, believe everything). *Every*
+proper belief is dialetheic. Connectedness — geometric unity — *forces* dream
+logic. The hypotheses `A.Nonempty` and `Aᶜ.Nonempty` are load-bearing: without
+properness the frontier may be empty (e.g. `A = X`).
 
 ---
 
-## 5. Applications
+## 4. The bridge: frontier points are gluts
 
-### 5.1 Inconsistency-Tolerant Databases
+The four-valued and topological semantics are two presentations of one structure.
+Given a closed set `A`, define a pointwise valuation `val_A : X → FOUR` recording
+membership in `A` and in `pneg A`:
 
-In database systems, merging records from multiple sources frequently produces contradictions. A patient may be listed as both "alive" and "deceased" in different subsystems. Under classical logic, any query on such a database would return every possible answer. Under Belnap valuations, the patient's status is assigned the value B, queries about *other* patients proceed normally, and the contradiction is quarantined.
+- in `A` only ⟶ `true`;
+- in `pneg A` only ⟶ `false`;
+- in both ⟶ `both`;
+- in neither ⟶ `neither`.
 
-### 5.2 Multi-Agent Belief Fusion
+Because `A` is closed and `pneg A = closure Aᶜ`, every point lies in `A ∪ pneg A`
+(their union is all of `X`), so the value `neither` cannot occur for closed `A`;
+the available values are `true`, `false`, and `both`.
 
-When autonomous agents with different sensors report conflicting observations — one camera detects an obstacle, another does not — a paraconsistent reasoning engine can assign B to the obstacle proposition and continue planning, rather than entering an inconsistent state that blocks all inference.
+**Bridge principle (`val_both_iff_frontier`).** `val_A x = both` iff `x ∈
+frontier A`. Combined with Theorem 3.3 (`glut_iff_contradiction`): a point
+receives the Belnap glut value `both` precisely when it is a coexisting
+contradiction of `A`. The concrete witness of Theorem 3.6 is then a literal glut
+(`dream_object_real_is_glut`): the valuation of `[0,1]` assigns `both` to the
+point `0`.
 
-### 5.3 Dream Cognition Modeling
-
-The dream space construction provides a formal model for the spatial reasoning characteristic of dreams: locally coherent (individual scenes make sense) but globally incoherent (the overall geography is impossible). This connects to theories of dream cognition that emphasize the role of weakened prefrontal control in allowing contradictory spatial representations to coexist.
+This identifies the *unique glut value* of Theorem 2.6 with the *boundary points*
+of Theorem 3.3 — algebra and geometry naming the same impossible object.
 
 ---
 
-## 6. Related Work
+## 5. Algorithms
 
-Belnap's original formulation appears in *A Useful Four-Valued Logic* (1977), where the logic is motivated by "computer told" reasoning — how a computer should handle contradictory inputs from different sources. The algebraic treatment as a bilattice was developed by Ginsberg (1988) and Fitting (1991), who showed that FOUR carries two lattice orderings (truth and knowledge) and that the interaction between them governs non-monotonic reasoning.
+The finite, decidable core of `FOUR` makes the logic directly computable. We
+record the central procedures (full Python in the accompanying demo and package).
 
-The connection between paraconsistent logics and topology has been explored by several authors. Mortensen (1995) studied topological models of paraconsistent mathematics. More recently, the framework of neighborhood semantics (Pacuit, 2017) provides a general topological perspective on non-normal modal logics that overlaps with our dream space construction.
+### 5.1 Truth-table evaluation of `FOUR`
 
-The specific construction of pre-topological spaces that fail closure under arbitrary unions appears in the general topology literature (Čech, 1966) under the name "closure spaces" or "pretopological spaces." Our dream space terminology emphasizes the cognitive interpretation.
+Encode each value by its pair of *bits of evidence* `(t, f)` where `t` = "asserted
+true" and `f` = "asserted false":
+
+- `true  = (1,0)`, `false = (0,1)`, `both = (1,1)`, `neither = (0,0)`.
+
+Then, remarkably, the connectives are *bitwise*:
+
+- `conj`: take the componentwise behavior of the diamond meet, which reduces to
+  `t = t1 ∧ t2`, `f = f1 ∨ f2`;
+- `disj`: `t = t1 ∨ t2`, `f = f1 ∧ f2`;
+- `neg`: swap the bits, `(t,f) ↦ (f,t)`;
+- `designated (t,f) := (t = 1)`.
+
+This representation (the "Belnap bilattice" coordinates) makes evaluation `O(1)`
+per connective and an `n`-variable formula computable over all `4ⁿ` assignments
+in `O(4ⁿ · |formula|)`.
+
+### 5.2 Paraconsistency checker (countermodel search)
+
+Given a candidate entailment "premises ⊢ conclusion," search all `4ⁿ`
+assignments for one making every premise designated and the conclusion
+undesignated. If found, the entailment is *invalid* and the assignment is an
+explicit countermodel. Applied to `P, ¬P ⊢ Q`, this returns the countermodel
+`P = both, Q = false`, mechanizing Theorem 2.10.
+
+### 5.3 Contradiction set via frontier
+
+For the topological side over a discretized domain, approximate `contradiction A
+= frontier A` by flagging grid points of `A` that have a neighbor outside `A`.
+This realizes Theorem 3.3 numerically and recovers `{0,1}` for `[0,1]`.
+
+---
+
+## 6. Applications
+
+- **Inconsistency-tolerant databases and knowledge fusion.** Merging conflicting
+  sources yields gluts; `FOUR` lets queries return useful answers about the
+  consistent part without explosion (Theorem 2.10).
+- **Belief revision and non-monotone update.** Gaps (`neither`) model retracted
+  or suspended beliefs; the interior/closure operators of the topological model
+  give idempotent *retraction* and *revision* operators (see Future Directions).
+- **Region connection and spatial reasoning.** Theorem 3.3 ties qualitative
+  spatial calculi (boundaries, contact) to a logical semantics, and Theorem 3.8
+  explains why genuinely connected regions cannot be described
+  contradiction-free.
+- **Robust automated reasoning.** A paraconsistent core prevents a single faulty
+  axiom from trivializing a large derived theory.
 
 ---
 
 ## 7. Discussion
 
-### 7.1 Why "Dream" Logic?
+The two semantics illuminate each other. The algebraic `FOUR` makes the *logical*
+content sharp: LNC and LEM fail at exactly one value each, and explosion fails
+because designation does not propagate through an isolated glut. The topological
+model makes the *structural* content sharp: dialetheias are boundaries, classical
+behavior is clopen-ness, and connectedness forces contradiction. The bridge
+(`val_both_iff_frontier`) shows these are not analogies but coordinates on one
+object.
 
-The term is not merely metaphorical. The formal properties of our constructions align with empirical observations about dream cognition:
+A philosophical reading of Theorem 3.8 is worth emphasizing. Intuition suggests
+that a perfectly coherent, seamless world should be the one most free of
+contradiction. The mathematics says the reverse: it is precisely the *connected*
+(seamless) worlds in which every nontrivial belief is dialetheic. To avoid all
+impossible objects, a space must already be disconnected into clopen pieces.
 
-1. **Local consistency**: Individual dream scenes are internally coherent, just as finite subcollections of a dream space behave topologically.
-2. **Global inconsistency**: The overall dream narrative violates physical and logical constraints, just as infinite unions in a dream space may fail to be open.
-3. **Contradiction tolerance**: Dreamers accept impossible objects without distress, just as Belnap logic designates contradictory values without explosion.
-4. **Non-monotonicity**: Dream beliefs can be retracted (a character changes identity mid-scene), paralleling the non-monotone consequence relation of paraconsistent logics.
-
-### 7.2 The Diamond vs. the Chain
-
-A notable structural feature of FOUR is that it is a *non-chain* lattice: the elements N and B are incomparable under ≤_t. This incomparability is essential. Any bounded distributive lattice on four elements where all elements are comparable (i.e., a total order) would be the chain F < N < B < T (or some relabeling), in which negation could not simultaneously be involutive, order-reversing, and identity on both middle elements. The diamond shape — with its two incomparable middle elements — is the *minimal* lattice structure that supports both gluts and gaps.
-
-This observation connects to the broader theory of De Morgan algebras. Every De Morgan algebra has a "center" consisting of elements fixed by negation; in FOUR, this center is {B, N}. The paraconsistency of FOUR depends on the center intersecting the designated set, while the "gappy" behavior depends on the center intersecting the non-designated set.
-
-### 7.3 Relationship to Other Paraconsistent Systems
-
-Belnap's FOUR is not the only paraconsistent logic. Priest's LP (Logic of Paradox) uses three values {T, B, F} with designated set {T, B} — it has a glut but no gap. Kleene's K3 uses three values {T, N, F} with designated set {T} — it has a gap but no glut, and is therefore *not* paraconsistent (it is paracomplete instead). Our Theorem 3.7 (`paraconsistency_iff_glut`) makes this taxonomy precise: LP is paraconsistent because B is a designated glut; K3 is not paraconsistent because it has no designated glut.
-
-The general pattern suggests a classification theorem: a finite De Morgan algebra is paraconsistent if and only if its center intersects the designated filter. This is a natural generalization of our result that merits further investigation.
-
-### 7.4 Computational Aspects
-
-All proofs in our formalization proceed by exhaustive case analysis over finitely many truth values. While this proof strategy is complete for the specific four-element algebra, it does not scale to parameterized families of many-valued logics. A more algebraic proof strategy — using universal properties of De Morgan algebras and filter theory — would be more informative and would generalize to infinite-valued settings.
-
-The decision procedure implicit in our approach has complexity O(4^k) for checking a property quantified over k variables, which is feasible for the small number of variables in our theorems (at most 3). For verification of logical consequence in FOUR with n propositional variables, the complexity is O(4^n), which is exponential but still finite — a marked contrast with the undecidability of first-order paraconsistent logics.
-
-### 7.5 Dream Spaces and Convergence
-
-The dream space construction raises interesting questions about convergence. In a topology, a sequence converges to a point x if every open neighborhood of x contains a tail of the sequence. In a dream space, the same definition applies, but the weaker open-set structure can produce different convergence behavior. In the finite-or-universal dream space on ℕ, the sequence 0, 2, 4, 6, ... has no convergent subsequence (since the set of even numbers is not open), yet each term is contained in an open set. This "phantom convergence" — where individual terms are locally visible but the limit is globally invisible — provides a precise mathematical model for the dream experience of following a narrative that never quite arrives at its destination.
-
-### 7.6 Limitations
-
-Our formalization treats FOUR as a propositional logic. Extension to first-order or modal paraconsistent logics would require significantly more infrastructure, including careful treatment of quantifier rules in the presence of truth-value gaps and gluts. The dream space construction is similarly limited to a single concrete example; a general theory of dream spaces (including morphisms, products, and compactness analogues) remains to be developed.
-
-The bridge between paraconsistent logic and dream spaces in this paper is primarily conceptual. A more formal categorical correspondence — perhaps through Stone-type duality theorems adapted to De Morgan algebras and dream spaces — would strengthen the connection from analogy to theorem.
+A methodological lesson: the original slogan ("open sets not closed under
+arbitrary union") was literally false, and locating its correct content
+("closed need not be clopen") was itself a result of the investigation —
+crystallized in `lnc_holds_iff_clopen`.
 
 ---
 
-## 8. Future Work
+## 8. Future directions
 
-Several natural extensions present themselves:
+**Conjecture 1 — The clopen algebra is the largest classical sublogic.** For a
+space `X`, the Boolean algebra of clopen sets is the unique maximal subfamily of
+closed sets on which `contradiction A = ∅` for every member, and the four-valued
+valuation collapses to two values exactly there. Classical reasoning is recovered
+precisely on the clopen sets, so "how classical" a space is can be measured by
+the cardinality of its clopen algebra. Building on `lnc_holds_iff_clopen`, the
+maximality claim is a finite combinatorial step, testable on finite spaces and
+`ℝⁿ`.
 
-1. **Bilattice homomorphisms**: Formalizing the knowledge ordering on FOUR and characterizing which bilattice morphisms preserve paraconsistency.
-2. **Dream space completion**: Computing the topological completion of dream spaces and measuring the "topological defect" — the cardinality gap between a dream space and its completion.
-3. **Paraconsistent valuations as dream points**: Establishing a formal correspondence where Belnap valuations on a propositional language form a dream space, with non-topological points corresponding to valuations assigning B to infinitely many variables.
-4. **Graded paraconsistency**: Defining quantitative measures of how paraconsistent a logic is, based on the proportion or structure of its designated gluts.
+**Conjecture 2 — Frontier dimension grades the severity of a contradiction.**
+Order dialetheic closed sets by the topological dimension of their frontier. In
+`ℝⁿ`, the glut content of a closed set should be a monotone function of `dim
+(frontier A)`, with the clopen (empty-frontier) case at the bottom. A
+point-frontier dialetheia (`[0,1]`, frontier `{0,1}`) is "smaller" than a
+hypersurface-frontier dialetheia (a closed ball, frontier a sphere). Via
+`contradiction_eq_frontier` this reduces to dimension theory of frontiers; the
+`n = 1` base case is computable from `frontier_Icc`.
+
+**Conjecture 3 — Belief retraction = interior; revision = closure.** Model
+non-monotone update on `FOUR`-valuations by the idempotent operators `A ↦
+interior A` (retraction: kills gluts) and `A ↦ closure A` (revision: may create
+gluts). Conjecture: every finite sequence of retract/revise operations stabilizes
+(reaches a regular open or regular closed set).
 
 ---
 
-## 9. References
+## 9. Conclusion
 
-1. Belnap, N.D. (1977). A useful four-valued logic. In *Modern Uses of Multiple-Valued Logic* (pp. 5–37). Reidel.
-2. Fitting, M. (1991). Bilattices and the semantics of logic programming. *Journal of Logic Programming*, 11(2), 91–116.
-3. Ginsberg, M.L. (1988). Multivalued logics: A uniform approach to reasoning in artificial intelligence. *Computational Intelligence*, 4(3), 265–316.
-4. Mortensen, C. (1995). *Inconsistent Mathematics*. Kluwer Academic Publishers.
-5. Pacuit, E. (2017). *Neighborhood Semantics for Modal Logic*. Springer.
-6. Čech, E. (1966). *Topological Spaces*. Wiley.
-
----
-
-## Appendix: File References
-
-All formal proofs are contained in `Bridges/DreamLogic.lean`. Key declarations:
-
-- **Theorem 1**: `Belnap.instDistribLattice` — bounded distributive lattice structure
-- **Theorem 2**: `Belnap.explosion_fails` — paraconsistency witness
-- **Theorem 3**: `Belnap.paraconsistency_iff_glut` — characterization of explosion failure
-- **Theorem 4**: `DreamSpace.nat_finite_is_nonTopological` — non-topological dream space
-- **De Morgan laws**: `Belnap.bneg_tmeet`, `Belnap.bneg_tjoin`
-- **Glut/gap characterization**: `Belnap.glut_iff_B`, `Belnap.gap_iff_N`
-- **Designation closure**: `Belnap.designated_closed_tmeet`, `Belnap.designated_closed_tjoin`
+We have formalized paraconsistent "dream logic" in two registers and proved them
+to coincide. Belnap's `FOUR` hosts accepted contradictions without explosion
+(`explosion_fails`), with `both` the unique glut (`glut_iff`) and `neither` the
+unique gap (`gap_iff`). The closed-set topological model identifies coexisting
+contradictions with boundaries (`contradiction_eq_frontier`), classical behavior
+with clopen-ness (`lnc_holds_iff_clopen`), and proves that connectedness forces
+paraconsistency (`connected_forces_paraconsistency`), with `0 ∈ [0,1]` a concrete
+dialetheia (`dream_object_real`). Contradiction, handled with the right algebra,
+is just another truth value; handled with the right geometry, just an edge; and
+in any connected world, it is the unavoidable price of belief.
