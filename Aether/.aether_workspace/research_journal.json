@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "2ca3f901",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Boltzmann Bridge X: Local-to-Global Gluing of Interleaving Geodesics\n\n## Synthesis\n\nBridge IX (`InterleavingGeodesic.lean`) turned the persistence-stability metric into\na *geodes",
-      "quality_score": 0.5287685714285715,
-      "sorry_count": 1,
-      "theorem_count": 28,
-      "timestamp": "2026-06-14T22:46:16",
-      "title": "Bridge IX (`InterleavingGeodesic.lean`) turned the persistence-stability metric"
-    },
-    {
       "cycle_id": "70f20089",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — The Fundamental Theorem of Identity Systems and Homotopy-Initial Families\n\n## Synthesis of this cycle\n\nThe catalog's synthetic-HoTT layer (`Catalog/Logic/HoTT/Foundations.lean`)",
@@ -2501,6 +2491,16 @@
       "theorem_count": 57,
       "timestamp": "2026-06-19T19:05:34",
       "title": "The Library of Babel: Combinatorics of the Universal Library"
+    },
+    {
+      "cycle_id": "89bf180f",
+      "domain": "NumberTheory",
+      "key_insight": "# Future Directions\n\nThe file `Catalog/Combinatorics/ErdosRenyi.lean` establishes the exact, finite\nalgebraic foundation of `G(n, p)`: the Bernoulli product factorization, the edge\ncount `n(n-1)/2`, a",
+      "quality_score": 0.4910402434782609,
+      "sorry_count": 1,
+      "theorem_count": 115,
+      "timestamp": "2026-06-19T21:06:36",
+      "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.8166
     }
   ],
-  "last_updated": "2026-06-19T19:05:34",
+  "last_updated": "2026-06-19T21:06:36",
   "open_questions": [
-    {
-      "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
-      "cycle_id": "2509286d",
-      "domain": "Applications",
-      "sorry_count": 1,
-      "timestamp": "2026-06-15T01:56:25"
-    },
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
       "cycle_id": "b3a33fd0",
@@ -3016,6 +3009,13 @@
       "domain": "Combinatorics",
       "sorry_count": 1,
       "timestamp": "2026-06-17T13:04:26"
+    },
+    {
+      "context": "This file develops a small but complete and `sorry`-free combinatorial foundation",
+      "cycle_id": "89bf180f",
+      "domain": "NumberTheory",
+      "sorry_count": 1,
+      "timestamp": "2026-06-19T21:06:36"
     }
   ],
   "research_threads": {
@@ -3630,12 +3630,6 @@
     "NumberTheory": [
       {
         "cycle_id": "afb009d7",
-        "quality": 0.4646015145005371,
-        "theorems": 75,
-        "title": "This cycle added **three fully-verified files (0 `sorry`s)** extending the"
-      },
-      {
-        "cycle_id": "afb009d7",
         "quality": 0.34719999999999995,
         "theorems": 0,
         "title": "This cycle added **three fully-verified files (0 `sorry`s)** extending the"
@@ -3687,6 +3681,12 @@
         "quality": 0.39323663366336636,
         "theorems": 62,
         "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
+      },
+      {
+        "cycle_id": "89bf180f",
+        "quality": 0.4910402434782609,
+        "theorems": 115,
+        "title": "Random Graphs: Erdős-Rényi Threshold Phenomena"
       }
     ],
     "Physics": [
