@@ -772,14 +772,29 @@ class PiAgentClient:
             return f"[OLLAMA_CLOUD_ERROR: {err_msg}]"
 
     def _call_openrouter(self, system: str, user: str, timeout: Optional[int] = None) -> str:
-        """Call OpenRouter API as a fallback when other tiers fail."""
+        """Call OpenRouter API as a fallback when other tiers fail.
+
+        If the primary model is a free model and fails, automatically falls back
+        to alternative free models (Qwen, Llama, or general free router) to handle
+        transient provider rate limits (429).
+        """
         if not self.openrouter_enabled or not self.openrouter_api_key:
             return "[OPENROUTER_ERROR: OpenRouter not configured or API key missing]"
 
         request_timeout = timeout or self.openrouter_timeout
-        model = self.openrouter_model
+        primary_model = self.openrouter_model
         url = f"{self.openrouter_base_url}/chat/completions"
-        print(f"[Pi-Agent] → calling OpenRouter (model={model}, timeout={request_timeout}s)")
+
+        models_to_try = [primary_model]
+        if primary_model.endswith(":free"):
+            fallbacks = [
+                "meta-llama/llama-3.3-70b-instruct:free",
+                "qwen/qwen-2.5-coder-32b-instruct:free",
+                "openrouter/free"
+            ]
+            for f in fallbacks:
+                if f not in models_to_try:
+                    models_to_try.append(f)
 
         headers = {
             "Authorization": f"Bearer {self.openrouter_api_key}",
@@ -787,39 +802,45 @@ class PiAgentClient:
             "HTTP-Referer": "https://github.com/paulklemstine/Lean",
             "X-Title": "Aether Research",
         }
-        payload = {
-            "model": model,
-            "messages": [
-                {"role": "system", "content": system},
-                {"role": "user", "content": user}
-            ],
-            "temperature": 0.85,
-        }
 
-        try:
-            response = self.client.post(
-                url,
-                headers=headers,
-                json=payload,
-                timeout=request_timeout,
-            )
-            response.raise_for_status()
-            data = response.json()
-            content = data["choices"][0]["message"]["content"]
+        last_error = ""
+        for model in models_to_try:
+            print(f"[Pi-Agent] → calling OpenRouter (model={model}, timeout={request_timeout}s)")
+            payload = {
+                "model": model,
+                "messages": [
+                    {"role": "system", "content": system},
+                    {"role": "user", "content": user}
+                ],
+                "temperature": 0.85,
+            }
 
-            response_preview = content[:500].replace('\n', ' ')
-            print(f"[Pi-Agent] ← OpenRouter response ({len(content)} chars)")
-            print(f"[Pi-Agent]   {response_preview}...")
-            return content
-        except httpx.TimeoutException:
-            print(f"[Pi-Agent] ← OpenRouter TIMEOUT after {request_timeout}s")
-            return f"[OPENROUTER_TIMEOUT: Request timed out after {request_timeout}s]"
-        except Exception as e:
-            err_msg = str(e)
-            if hasattr(e, 'response') and e.response:
-                err_msg += f" - {e.response.text}"
-            print(f"[Pi-Agent] ← OpenRouter exception: {type(e).__name__}: {err_msg}")
-            return f"[OPENROUTER_ERROR: {err_msg}]"
+            try:
+                response = self.client.post(
+                    url,
+                    headers=headers,
+                    json=payload,
+                    timeout=request_timeout,
+                )
+                response.raise_for_status()
+                data = response.json()
+                content = data["choices"][0]["message"]["content"]
+
+                response_preview = content[:500].replace('\n', ' ')
+                print(f"[Pi-Agent] ← OpenRouter response ({len(content)} chars, model={model})")
+                print(f"[Pi-Agent]   {response_preview}...")
+                return content
+            except httpx.TimeoutException:
+                print(f"[Pi-Agent] ← OpenRouter TIMEOUT with model={model} after {request_timeout}s")
+                last_error = f"[OPENROUTER_TIMEOUT: Request timed out after {request_timeout}s]"
+            except Exception as e:
+                err_msg = str(e)
+                if hasattr(e, 'response') and e.response:
+                    err_msg += f" - {e.response.text}"
+                print(f"[Pi-Agent] ← OpenRouter exception with model={model}: {type(e).__name__}: {err_msg}")
+                last_error = f"[OPENROUTER_ERROR: {err_msg}]"
+
+        return last_error
 
     def wait_for_pollinations_pollen(
         self,

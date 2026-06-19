@@ -104,3 +104,53 @@ def test_openrouter_api_call_formatting():
             {"role": "user", "content": "user_msg"}
         ]
         assert kwargs["timeout"] == 150
+
+
+def test_openrouter_free_model_fallback_on_429():
+    client = PiAgentClient(
+        use_ollama=False,
+        openrouter={
+            "enabled": True,
+            "model": "meta-llama/llama-3.3-70b-instruct:free",
+            "base_url": "https://openrouter.ai/api/v1",
+            "timeout": 120
+        }
+    )
+    client.openrouter_api_key = "test_api_key"
+
+    # Set up mock responses: first one fails with 429, second succeeds
+    response_429 = MagicMock(spec=httpx.Response)
+    response_429.status_code = 429
+    response_429.text = "Rate Limit Exceeded"
+    # Make raise_for_status raise an HTTPStatusError for the 429 response
+    response_429.raise_for_status.side_effect = httpx.HTTPStatusError(
+        message="429 Too Many Requests",
+        request=MagicMock(),
+        response=response_429
+    )
+
+    response_200 = MagicMock(spec=httpx.Response)
+    response_200.status_code = 200
+    response_200.json.return_value = {
+        "choices": [
+            {
+                "message": {
+                    "content": "Succeeded on fallback Qwen free model"
+                }
+            }
+        ]
+    }
+
+    with patch.object(client.client, "post", side_effect=[response_429, response_200]) as mock_post:
+        result = client._call_openrouter("sys_msg", "user_msg")
+        assert result == "Succeeded on fallback Qwen free model"
+        
+        # Verify that it tried the primary model first and then the fallback
+        assert mock_post.call_count == 2
+        
+        first_call_kwargs = mock_post.call_args_list[0][1]
+        assert first_call_kwargs["json"]["model"] == "meta-llama/llama-3.3-70b-instruct:free"
+        
+        second_call_kwargs = mock_post.call_args_list[1][1]
+        assert second_call_kwargs["json"]["model"] == "qwen/qwen-2.5-coder-32b-instruct:free"
+
