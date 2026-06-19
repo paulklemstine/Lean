@@ -1,233 +1,249 @@
-# The Theorems That Hold Up the Sky
+# When Databases Become Geometry: The Hidden Sheaf Inside Your Missing Data
 
-## Why some ideas carry the weight of a thousand others — and yet take only a line to prove
+Every organization that has ever stored information eventually meets the same
+quiet adversary: the blank cell. A customer record without a phone number. A
+sensor reading dropped during a network hiccup. A medical chart with the weight
+recorded but the height missing. Spreadsheets and databases are riddled with
+holes, and the everyday craft of *filling them in* — statisticians call it
+**imputation** — is one of the most consequential, least glamorous tasks in all
+of data science. Get it wrong, and your forecasts wobble, your models hallucinate,
+your dashboards lie.
 
-Imagine the whole of mathematics as a vast cathedral. Up in the vaults are the
-showpieces: the deep theorems, the famous conjectures, the results that win
-prizes. They are spectacular, and they are heavy — their proofs run for hundreds
-of pages. But a cathedral is not held up by its ceiling frescoes. It is held up
-by a handful of load-bearing stones near the floor, modest blocks that almost no
-visitor ever looks at, each one quietly carrying the weight of everything above
-it.
+The usual recipes are familiar and a little crude. Replace a missing value with
+the column average. Copy it from the nearest neighbor. Train a model to predict
+the gap. These methods are useful, but they share a curious blind spot: **they
+never check whether the pieces of your data actually agree with one another.**
+They fill holes one at a time, locally, without asking the global question that a
+careful human would ask first — *are these partial views even consistent?*
 
-This article is about those stones. In mathematics they have a curious double
-life: they are *foundational* — almost everything rests on them — and yet they
-are *cheap* — their proofs are short, sometimes a single line. We will call them
-**anti-gravity theorems**, because they seem to defy a natural intuition. We
-expect that the more a result matters, the harder it should be to prove. The
-anti-gravity theorems break that expectation. They support an enormous amount of
-structure while weighing almost nothing themselves.
+It turns out that this question has a precise, beautiful answer, and the answer
+comes from an unexpected corner of pure mathematics: the theory of **sheaves**,
+a language invented in the 1940s to study how local information on a geometric
+space can be stitched into global information. The same machinery that tells an
+algebraic geometer when local solutions to an equation patch together into a
+global one tells a data engineer exactly when a collection of partial databases
+can be merged into one complete, contradiction-free table — and when it cannot.
 
-The surprise of this story is not just that such theorems exist. It is that, once
-you make the idea precise, you can *prove things about them* — clean, exact laws
-governing how mathematical weight is distributed across a body of knowledge. And
-it is that one of the most tempting guesses about them — a tidy "10% law" — turns
-out to be flatly false, and provably so.
+This article tells the story of that bridge, and of a handful of theorems that
+make it rigorous.
 
----
+## The shape of a database
 
-## Weighing a theorem
+Start with the most innocent object imaginable: a table with rows and columns.
+Picture a grid with `nRows` rows and `nCols` columns. Each cell sits at a
+position — a pair `(row, column)` — and either holds a value or is empty.
 
-To do any of this we first need a way to put a theorem on a scale.
+We capture this formally with a single idea. A **partial database** is a function
+that takes a grid position and returns *either* a value *or* the special symbol
+`none` meaning "missing":
 
-Picture a formal library — a collection of theorems, where each theorem is
-proved using some of the others. Draw an arrow from theorem `a` to theorem `b`
-whenever `a`'s proof *uses* `b`. Because you can never (on pain of circular
-reasoning) use a result to prove itself, these arrows never form a loop. The
-picture is a **directed acyclic graph** — a DAG. This is the dependency graph of
-mathematics, and every formal library, every textbook, every proof assistant's
-internal record is exactly such a graph.
+> **Definition (Partial database).** Over a value type `V`, a partial database on
+> an `nRows × nCols` grid is a function `db` from positions to `Option V`. A
+> position `p` is *observed* when `db p` is some value, and *missing* when
+> `db p = none`. The **domain** of `db` is the set of observed positions.
 
-Now we can define weight. The **gravitational weight** of a theorem `b` is the
-number of *other* theorems that depend on it:
+This little `Option` — value or nothing — is the entire conceptual move. A
+complete table with no holes is called a **global section**: a partial database
+where *every* position is observed. Imputation, in this language, is the search
+for a global section that is faithful to what we already know.
 
-> **weight(b) = the number of theorems `a` such that `a` depends on `b`.**
+## The crucial question: do the pieces agree?
 
-A lemma used in one place has weight 1. A workhorse used a hundred times has
-weight 100. The commutative law, the triangle inequality, the fact that zero
-times anything is zero — these have astronomical weight. They are the
-load-bearing stones.
+Real data rarely arrives as one tidy table. It arrives as fragments: one system
+exports customer names and emails, another exports emails and purchase histories,
+a third exports purchase histories and shipping addresses. Each fragment is a
+partial database. They *overlap* — two of them might both record the same
+customer's email — and on those overlaps they had better tell the same story.
 
-This single definition already behaves beautifully, and its good behavior is the
-first thing we can prove rigorously.
+This is the heart of the matter. We say two partial databases are **consistent**
+when they never contradict each other where both have an opinion:
 
----
+> **Definition (Consistent pair).** Two partial databases `db1` and `db2` are
+> *consistent* if, for every position `p`, whenever `db1` reports value `v1` at
+> `p` and `db2` reports value `v2` at `p`, we have `v1 = v2`.
 
-## Law 1: Weight flows downhill
+Notice what this definition does *not* require: it says nothing about positions
+where only one of the two has data. Disagreement is only possible — and only
+forbidden — on the overlap. A family of many partial databases satisfies the
+**sheaf condition** when *every* pair in the family is consistent.
 
-Here is the first structural law, which in the formal development is the theorem
-called **`weight_lt_of_dep`**:
+Three small but reassuring facts fall out immediately, and each was verified
+formally:
 
-> **If theorem `a` depends on theorem `b`, then weight(a) < weight(b).**
+- **Consistency is symmetric** (`consistent_pair_symm`): if `db1` agrees with
+  `db2`, then `db2` agrees with `db1`. Agreement is a two-way street.
+- **Consistency is reflexive** (`consistent_pair_refl`): every database agrees
+  with itself.
+- **Everything is consistent with emptiness** (`consistent_with_empty`): a table
+  full of holes contradicts nothing, because it never offers a competing value.
 
-In words: *dependency strictly increases weight.* The thing you lean on is always
-heavier than you.
+These feel obvious — and that is exactly the point. A good formal foundation
+should make the obvious things provably obvious, so that the surprising things
+can be trusted.
 
-Why is it true? Suppose `a` depends on `b`. Then anything that depends on `a`
-also, transitively, depends on `b` — if your proof uses `a`, and `a`'s proof uses
-`b`, then your proof ultimately rests on `b` too. So every theorem counted in
-weight(a) is also counted in weight(b). But there is at least one extra theorem
-in `b`'s count that is not in `a`'s: namely `a` itself. So `b` carries strictly
-more than `a`. The inequality is strict, every single time.
+## Gluing: assembling the whole from the parts
 
-This has a lovely consequence. Weight is not just a number; it is a *ruler for
-depth*. Because weight strictly decreases as you climb up the dependency ladder
-(toward the flashy theorems) and strictly increases as you descend (toward the
-foundations), it ranks the entire library by how deep a result sits. The
-foundational stones automatically float to the top of the weight ranking. You
-never have to *decide* what is fundamental — the arithmetic of dependency decides
-for you.
+Once we know two partial databases agree on their overlap, we want to *merge*
+them. The merge operation — sheaf theorists call it **gluing** — is defined by
+preferring the first database wherever it has a value and falling back to the
+second otherwise:
 
----
+> **Definition (Gluing).** The gluing of `db1` and `db2` is the partial database
+> that, at each position, returns `db1`'s value if it has one, and otherwise
+> returns `db2`'s value.
 
-## Law 2: Nothing is created, nothing is destroyed
+The definition looks asymmetric — it favors `db1` — and you might worry that the
+merged table secretly depends on which database we listed first. Here is where
+consistency earns its keep. The central structural theorem says that when the
+two databases are consistent, the gluing faithfully **extends both of them**:
 
-The second law is a conservation principle, formalized as **`sum_weight_eq`**.
-Add up the weights of *every* theorem in the library. What do you get?
+> **Theorem (Gluing extends both, `gluing_extends_both`).** If `db1` and `db2`
+> are consistent, then every value recorded by `db1` survives in the gluing, and
+> every value recorded by `db2` survives in the gluing.
 
-> **The sum of all weights equals the total number of dependency pairs in the
-> library.**
+The first half is easy — the gluing was *built* to prefer `db1`. The second half
+is the miracle: even though the gluing prefers `db1`, none of `db2`'s information
+is lost, *because wherever both spoke they said the same thing.* Consistency is
+precisely the hypothesis that makes the asymmetric construction behave
+symmetrically. This is the discrete shadow of the sheaf-theoretic gluing axiom:
+**compatible local data can always be assembled into a larger, faithful whole.**
 
-This is the mathematician's version of the handshaking lemma. Every time one
-theorem leans on another, that single act of leaning contributes exactly `+1` to
-exactly one theorem's weight — the one being leaned on. So the grand total of all
-weight in the cathedral is simply the total number of "leanings." Nothing leaks.
-Weight is a conserved quantity, perfectly accounted for by the bare count of
-dependencies.
+Gluing also behaves well in chains. If three databases are pairwise consistent,
+then gluing the first two yields something still consistent with the third
+(`gluing_preserves_consistency`). This is what lets you integrate a hundred data
+sources by absorbing them one at a time, never having to redo earlier work — the
+algorithmic backbone of incremental data integration.
 
-This turns a vague, global feeling — "this field has a lot of interconnection" —
-into a hard number. The amount of total weight in a library *is* the amount of
-dependency in it. They are the same quantity, viewed from two angles.
+## Measuring inconsistency: the coboundary
 
----
+So far, consistency has been a yes-or-no property. But in the real world we want
+a *dial*, not a switch — a number that says *how badly* a collection of databases
+disagrees, so we can track it, minimize it, and report it.
 
-## Law 3: Somebody always carries more than their share
+That number is the **coboundary norm**. At each position, for each pair of
+databases, we record a single bit: `1` if both are defined and disagree, `0`
+otherwise. Summing these bits over all pairs and all positions gives a total
+disagreement count:
 
-Conservation has teeth. Once you know the total weight equals the total number of
-dependency pairs, a counting argument — the pigeonhole principle — forces an
-unavoidable conclusion, formalized as **`exists_weight_ge_average`**:
+> **Definition (Coboundary norm).** For a family of `n` partial databases, the
+> coboundary norm is the total number of (pair, position) combinations at which
+> the two databases are both observed and contradict each other.
 
-> **In any library, some theorem has weight at least the average.**
+The name is borrowed deliberately. In algebraic topology, the *coboundary
+operator* measures the failure of local data to be globally consistent, and its
+kernel — the things it sends to zero — is exactly the space of genuinely global
+objects. The same drama plays out here, and it is captured by what is arguably
+the keystone theorem of the whole development:
 
-If there are `n` theorems and `D` dependency pairs, the average weight is `D/n`,
-and at least one theorem must meet or beat it. You cannot build a body of
-mathematics in which every result is equally, modestly important. Interconnection
-*concentrates*. The moment you have any appreciable density of dependency — say,
-more dependency pairs than theorems — somebody is carrying a genuinely heavy load.
-There is always a load-bearing stone.
+> **Theorem (Coboundary vanishes iff sheaf condition, `coboundary_zero_iff_sheaf`).**
+> The coboundary norm of a family of partial databases equals zero if and only
+> if the family satisfies the sheaf condition.
 
-This is the precise sense in which foundational theorems are not an accident or a
-matter of taste. They are *forced* by the arithmetic of how proofs connect.
+Read it slowly, because it unifies two worlds. On the left is an *algebraic*
+statement — a single number is zero. On the right is a *geometric* statement —
+the local pieces glue. The theorem says they are the same fact wearing two
+costumes. This is the discrete, finite, fully verified analogue of the classical
+slogan that the kernel of the coboundary is the space of global sections.
+Inconsistency is not a vague unease about messy data; it is a measurable
+quantity, and it vanishes exactly when geometry permits a clean merge.
 
----
+## Imputation as optimization
 
-## The fan: a guaranteed anti-gravity theorem
+Now we can finally say what good imputation *means*. Given an observed partial
+database, a candidate complete table should agree with everything we actually
+saw. Score a candidate by counting the observed cells it gets wrong:
 
-So far we have talked about weight. The other half of "anti-gravity" is the
-*short proof*. A theorem is **anti-gravity** if it combines the two: high weight
-(many dependents) and low proof length (cheap to establish).
+> **Definition (Imputation objective).** For an observed partial database and a
+> candidate complete table, the objective is the number of observed positions
+> where the candidate's value differs from the observed value.
 
-> **A theorem is anti-gravity if its weight is at least some threshold τ while its
-> proof length is at most some small bound ℓ.**
+The optimum is unambiguous, and again it was proved formally:
 
-Do such theorems have to exist? It is easy to build one on purpose. Consider the
-**fan**: a single root theorem `r`, and `n` separate theorems each of which uses
-`r` and nothing else. Picture a hub with `n` spokes. The root's weight is exactly
-`n` — every spoke depends on it — so by making `n` large we make `r` as heavy as
-we like. Yet `r` itself sits at the bottom with a one-line proof. The fan is a
-machine for manufacturing anti-gravity: arbitrarily high weight, fixed tiny cost.
+> **Theorem (Zero cost iff faithful extension, `imputation_zero_iff_extends`).**
+> The imputation objective is zero if and only if the candidate agrees with the
+> observed value at every observed position.
 
-The fan shows anti-gravity theorems are not exotic. You can always arrange for
-one. But arranging for one is different from claiming they are *common*. That
-distinction is where the story takes its sharpest turn.
+A perfect imputation, then, is exactly a global section that *extends* the
+observed data — it invents values for the holes while never overwriting a single
+thing you knew. This reframes a fuzzy engineering task as a crisp optimization
+problem with a characterized optimum, and it explains in one line why average-
+and neighbor-based methods can score badly: they make no promise to preserve the
+overlaps that the objective actually measures.
 
----
+## Why consistency gets harder as data grows
 
-## The 10% law that wasn't
+There is a sobering corollary hiding in all of this. The number of overlap
+constraints a dataset must satisfy grows with its size. With `n` feature-subsets
+there is one agreement constraint per *pair* — that is `n(n-1)/2` of them — and
+each pair imposes constraints across the whole grid. The constraint count grows
+**quadratically** in the number of sources (`overlap_quadratic_growth`).
 
-A seductive conjecture hangs over this whole subject: that anti-gravity theorems
-make up some fixed, universal fraction of any mathematical library — the
-prediction was a clean **10%**. It would be wonderful if true. It would mean
-mathematics has a kind of constant "load-bearing density," a fingerprint shared
-across algebra, geometry, logic, everything.
+Now suppose each individual constraint has some small independent chance `r` of
+being violated by noise. Then the probability that *all* constraints hold at once
+behaves like `(1 - r)` raised to the power of the constraint count:
 
-It is false. And we can prove it is false, twice over, from opposite directions.
+> **Definition (Consistency probability).** With per-constraint disagreement rate
+> `r` and `C` constraints, the probability that everything is consistent is
+> `(1 - r)^C`.
 
-**The discrete library.** Take a collection of theorems with *no* dependencies at
-all — a pile of unrelated facts, no arrows. Every weight is zero. Nothing meets
-any positive threshold. The fraction of anti-gravity theorems is exactly **0%**.
-So much for a universal floor.
+This quantity has exactly the properties intuition demands, each one proved: it
+*falls* as you add constraints (`consistency_prob_mono_constraints`), it *falls*
+as the noise rate rises (`consistency_prob_mono_rate`), it equals `1` when there
+is no noise (`consistency_prob_zero_rate`), and it collapses to `0` under total
+noise (`consistency_prob_one_rate`). It even *composes multiplicatively*: bolting
+together two independent constraint sets multiplies their probabilities
+(`consistency_prob_mul`), which is the precise reason the decay is exponential
+rather than gentle.
 
-**The chain.** Now go to the other extreme. Take a single tower:
-`t₀` depends on `t₁` depends on `t₂` … all the way up to `tₖ`, each result
-standing on the one below. This is a library of `k + 1` theorems. By Law 1, weight
-climbs steadily as you descend the tower, and a precise count — the theorem
-**`chain_antigravity_card`** — shows that exactly `k` of the `k + 1` theorems clear
-the anti-gravity bar. The fraction is `k / (k + 1)`. As the tower grows tall, that
-fraction climbs toward **100%**.
+The numbers are bracing. For a modest table of 10 columns and 100 rows with a
+30% disagreement rate, the constraint count runs into the thousands, and the
+probability of perfect, accidental consistency is something like `10` to the
+*negative seven-hundredth* power — indistinguishable from zero. The lesson is not
+despair but design: large-scale data integration cannot rely on luck. It must
+*actively enforce* consistency, source by source, exactly the way the gluing
+theorems prescribe.
 
-So the anti-gravity fraction is not a constant of nature. It is not 10%, and it is
-not anything else fixed. The discrete library pins it at 0; the chain drives it to
-1; and everything in between is achievable. The fraction is a property of *the
-shape of the library*, not of mathematics itself. The tidy universal law
-dissolves on contact with two of the simplest examples imaginable.
+## Imputation as a growing crystal: the sheaf filtration
 
-This is, in its own way, the most valuable result of the whole investigation.
-Refuting a clean conjecture is not a failure; it is information. It tells us
-exactly what kind of statement *could* be true instead.
+The final idea is the most novel. Real imputation is rarely a single leap from
+"full of holes" to "complete." It is a *process*: we fill in the easy, certain
+values first, then use them to justify filling in more, and so on. To model this,
+we borrow another tool from homological algebra — the **filtration**, a sequence
+of structures that grow into one another.
 
----
+> **Definition (Sheaf filtration).** A sheaf filtration of depth `d` is a sequence
+> of `d` partial databases such that (i) each level *extends* the previous one —
+> a value, once filled, is never erased or changed — and (ii) all levels are
+> pairwise consistent.
 
-## What survives, and what comes next
+The growth condition turns out to do remarkable structural work. We proved that
+**monotonicity implies consistency for free**:
 
-Strip away the conjecture that didn't hold, and look at what remains standing.
-Three exact laws:
+> **Theorem (Monotone filtrations are automatically consistent,
+> `sheaf_filtration_auto_consistent`).** If every level of a sequence extends the
+> previous one, then the whole family automatically satisfies the sheaf
+> condition.
 
-- **Weight flows downhill** (`weight_lt_of_dep`): every dependency strictly
-  increases the weight of the thing depended upon, so weight ranks the whole
-  library by depth.
-- **Weight is conserved** (`sum_weight_eq`): total weight equals total
-  dependency, exactly.
-- **Someone always carries the load** (`exists_weight_ge_average`): the average is
-  always attained, so heavy foundational theorems are mathematically forced.
+In other words, if your imputation pipeline only ever *adds* information and never
+overwrites, you can never introduce a contradiction. Consistency is not an extra
+checkpoint to police; it is a *guarantee baked into a disciplined process.* And
+because information only accumulates, the final level of any filtration contains
+the domains of all earlier levels (`filtration_final_contains_all`) — nothing is
+ever lost on the way to completion. Even a single fragment forms a (trivial)
+filtration of depth one (`sheaf_filtration_exists_singleton`), giving an
+inductive base from which richer filtrations can be built.
 
-And one constructive guarantee — the **fan** — showing that anti-gravity theorems
-can always be produced, together with the twin counterexamples that kill the 10%
-law.
+## The bridge, in one sentence
 
-These results reframe the original question. Instead of asking "what fraction of
-theorems are anti-gravity?" (a question with no universal answer), we should ask
-how the fraction depends on a *threshold*. Because the three examples already span
-the entire range from 0 to 1, the right object of study is not a magic constant
-but a **phase transition**: as you raise the weight threshold, the fraction of
-theorems that still qualify must fall off, and the interesting science is in *how*
-it falls off and *where* the transition sits.
+Strip away the vocabulary and here is what we have learned. **A database with
+missing values is a partial section of a sheaf; consistent imputation is gluing;
+inconsistency is a coboundary; and a disciplined, monotone imputation process is a
+filtration that cannot contradict itself.** The abstractions that Jean Leray
+invented in a prisoner-of-war camp to understand the topology of continuous
+spaces turn out to describe, with uncanny precision, the very concrete problem of
+merging your spreadsheets without lying.
 
-There is more to chase. Law 1 says weight is a strictly decreasing ruler, which
-suggests it should *bound the length of the longest dependency chain* — the
-deepest result can be no deeper than the weight of the stone it ultimately rests
-on. And Law 2's conservation principle hints at a "heavy tail": if a library has
-at least as many dependency pairs as theorems, then not only does *someone* carry
-an above-average load, but a *positive fraction* of the library must be
-load-bearing. These are the natural next theorems, and the framework that proved
-the first three is already shaped to reach them.
-
----
-
-## The quiet stones
-
-Step back from the formalism and the picture is human. Every field has its
-unsung load-bearing results — the change-of-variables formula, the snake lemma,
-the union bound — that no one frames on a wall but that everything quietly rests
-on. We tend to celebrate the heavy theorems at the top of the cathedral, the ones
-whose proofs are feats of endurance. But the anti-gravity stones are arguably more
-remarkable: they do the most work for the least effort. A single line of proof,
-holding up the sky.
-
-What this investigation gives us is a way to *see* them — to weigh a theorem by
-its dependents, to watch weight flow downhill and pool at the foundations, and to
-prove that those foundations must exist. The grand conjecture, that they always
-make up a tidy 10%, turned out to be a mirage. But the deeper truth is sturdier
-and more interesting: the load-bearing stones are not a fixed fraction of the
-building. They are wherever the architecture decides to put its weight — and the
-architecture, we can now prove, always puts it somewhere.
+That is the recurring delight of mathematics: a structure built for one purpose,
+pursued for its own elegance, waiting decades to reveal that it was secretly about
+something you needed all along. The blank cell in your database is not just an
+absence. It is an invitation to geometry.
