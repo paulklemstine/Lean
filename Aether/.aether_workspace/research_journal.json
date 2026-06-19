@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "72c0fc14",
-      "domain": "Applications",
-      "key_insight": "# Future Directions: Intersection Forms and the Smooth 4D Poincaré Frontier\n\n## Synthesis\n\nThe `SmoothPoincare` nucleus now contains three layers. `IntersectionForms.lean`\nfixes the algebraic vocabula",
-      "quality_score": 0.73968,
-      "sorry_count": 0,
-      "theorem_count": 4,
-      "timestamp": "2026-06-14T03:19:02",
-      "title": "The file `IntersectionForms.lean` formalizes the algebraic core of four-dimensio"
-    },
-    {
       "cycle_id": "a4cf656f",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Hodge–Laplacian Message Passing, Second Cycle\n\n## Synthesis\n\nThis cycle pushed the *spectral depth threshold* program of\n`HodgeSpectralThreshold.lean` forward along two of its ow",
@@ -499,19 +489,19 @@
       "theorem_count": 69,
       "timestamp": "2026-06-19T14:41:57",
       "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+    },
+    {
+      "cycle_id": "6495e602",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Sheaf-Theoretic Data Integration\n\nDerived from the verified results in `MachineLearning.SheafDatabaseProbability`\nand `MachineLearning.SheafImputationBounds` (product law `P(shea",
+      "quality_score": 0.8166,
+      "sorry_count": 0,
+      "theorem_count": 139,
+      "timestamp": "2026-06-19T15:17:54",
+      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "5bf359eb",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — The Local-to-Global Obstruction for Fibonacci Primitive Divisors\n\n## Synthesis\n\nThis cycle attacked the lone surviving `sorry` in the catalog's Carmichael\ndevelopment — the compo",
-      "quality_score": 0.5584189473684211,
-      "sorry_count": 9,
-      "theorem_count": 190,
-      "timestamp": "2026-06-14T22:10:21",
-      "title": "Close Proofs: `Applications/BoltzmannBridge/InterleavingRepresentation.lean` (Bridge"
-    },
     {
       "cycle_id": "977dbedb",
       "domain": "Pythagorean",
@@ -2501,27 +2491,19 @@
       "theorem_count": 82,
       "timestamp": "2026-06-19T14:45:55",
       "title": "The Library of Babel: Combinatorics of the Universal Library"
+    },
+    {
+      "cycle_id": "6495e602",
+      "domain": "Probability",
+      "key_insight": "# Future Directions — Sheaf-Theoretic Data Integration\n\nDerived from the verified results in `MachineLearning.SheafDatabaseProbability`\nand `MachineLearning.SheafImputationBounds` (product law `P(shea",
+      "quality_score": 0.8166,
+      "sorry_count": 0,
+      "theorem_count": 139,
+      "timestamp": "2026-06-19T15:17:54",
+      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "b9cc2fac",
-      "domain": "Geometry",
-      "name": "interleaved_refl",
-      "quality": 0.7242
-    },
-    {
-      "cycle_id": "b9cc2fac",
-      "domain": "Geometry",
-      "name": "Interleaved",
-      "quality": 0.7242
-    },
-    {
-      "cycle_id": "b9cc2fac",
-      "domain": "Geometry",
-      "name": "Interleaved",
-      "quality": 0.7242
-    },
     {
       "cycle_id": "afe8c8b6",
       "domain": "Novelty",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "le_gmin",
       "quality": 0.74352
+    },
+    {
+      "cycle_id": "6495e602",
+      "domain": "Probability",
+      "name": "is",
+      "quality": 0.8166
+    },
+    {
+      "cycle_id": "6495e602",
+      "domain": "Probability",
+      "name": "is",
+      "quality": 0.8166
+    },
+    {
+      "cycle_id": "6495e602",
+      "domain": "Probability",
+      "name": "sheaf_condition",
+      "quality": 0.8166
     }
   ],
-  "last_updated": "2026-06-19T14:45:55",
+  "last_updated": "2026-06-19T15:17:54",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3799,6 +3799,12 @@
         "quality": 0.36179759999999994,
         "theorems": 6,
         "title": "The L-Function Oracle: What If We Could Compute L-Functions Instantly?"
+      },
+      {
+        "cycle_id": "6495e602",
+        "quality": 0.8166,
+        "theorems": 139,
+        "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
       }
     ],
     "Pythagorean": [

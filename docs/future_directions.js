@@ -181,6 +181,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 6495e602 (Q=0.817), which proved 139 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the sheaf-theoretic structure of databases with missing entries and prove the probabilistic consistency formula P(sheaf) = (1-r)^{C(n,k)} under explicit independence assumptions. Define: (1) A database as a matrix of optional values where each row represents an observation and each column ",
+    "domains": [
+      "Probability"
+    ],
+    "id": "push_6495e602_4c39abde",
+    "priority_score": 0.9166,
+    "research_mode": "team",
+    "source_exp_id": "6495e602",
+    "status": "available",
+    "timestamp": "2026-06-19T15:17:55.162990+00:00",
+    "title": "Deepening: Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize a research system as a dependent type where the type of the next cycle depends on outcomes of previous cycles. Prove that reflective self-improvement converges.",
     "domains": [
       "Logic",
@@ -3114,6 +3128,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Sheaf-Theoretic Data Integration\n\nDerived from the verified results in `MachineLearning.SheafDatabaseProbability`\nand `MachineLearning.SheafImputationBounds` (product law `P(sheaf) = (1-r)^N`,\nexponential collapse, exact failure `1 - (1-r)^N`, Bernoulli/union envelope, and\nthe \u010cech path-independence bridge).\n\n## FD1 \u2014 Correlated constraints break the clean exponent\n**Conjecture.** Drop independence. If the overlap constraint events are\npositively associated (FKG/association), then `P(sheaf) \u2265 (1-r)^N`; if negatively\nassociated, `P(sheaf) \u2264 (1-r)^N`. The exponent `N` only counts *independent*\ndegrees of freedom; the effective exponent is the number of independent\nconstraints, not the raw `C(n,k)`.\n**The key insight is...** that the headline `(1-r)^{C(n,k)}` is an\nindependence-saturated extreme, and real databases interpolate between the two\nassociation regimes through their correlation structure.\n**Why now?** We have already isolated independence as the single load-bearing\nhypothesis (`iIndepSet` in `sheaf_consistency_prob_eq_pow`), so the next step \u2014\nreplacing it with association inequalities (`MeasureTheory`/FKG in Mathlib) \u2014 is\na direct, well-posed extension.\n\n## FD2 \u2014 The H\u00b9 obstruction is the only thing that can fail\n**Conjecture.** The sheaf condition fails **iff** the \u010cech `H\u00b9` class of the\noverlap discrepancy cochain is nonzero; equivalently, `P(sheaf)` equals the\nprobability that a random 1-cochain is a coboundary.\n**The key insight is...** that gluing is automatic once the cocycle (triangle)\nlaw holds \u2014 exactly what `imputation_path_independent` proves \u2014 so the entire\nprobabilistic obstruction lives in `H\u00b9`, turning imputation into a cohomology\ncomputation.\n**Why now?** The deterministic half (coboundary \u21d2 cocycle \u21d2 path independence)\nis already formalized via `MachineLearning.CechComplex`; pairing it with a random\ncochain model closes the loop between probability and cohomology.\n\n## FD3 \u2014 Sharp phase transition at the constraint budget `N\u00b7r = 1`\n**Conjecture.** As `n \u2192 \u221e` with `N\u00b7r \u2192 \u03bb` fixed, `P(sheaf) \u2192 e^{-\u03bb}`, giving a\nsharp threshold: consistent imputation is likely for `N\u00b7r < 1` and unlikely for\n`N\u00b7r > 1`.\n**The key insight is...** that the two verified bounds `1 - N\u00b7r \u2264 (1-r)^N`\n(`sheaf_consistency_ge_linear`) and `1 - (1-r)^N \u2264 N\u00b7r` (`sheaf_failure_le_linear`)\npinch the probability around the Poisson limit `e^{-N\u00b7r}`.\n**Why now?** Both linear envelopes are already theorems; only the\n`(1 - \u03bb/N)^N \u2192 e^{-\u03bb}` limit (standard in Mathlib's `Real.exp` API) remains to\nupgrade them into a phase-transition statement.\n\n## FD4 \u2014 Sheaf imputation dominates mean/KNN exactly when `N\u00b7r` is small\n**Conjecture.** Under a linear ground-truth model, the expected imputation error\nof \"closest global section\" is `O(N\u00b7r\u00b7\u03c3\u00b2)`, strictly below mean/KNN whenever\n`N\u00b7r < 1` and feature count `n > 10`, because the cocycle constraints remove\n`N - rank` degrees of freedom that other methods ignore.\n**The key insight is...** that the constraint budget `N\u00b7r` controlling\n`P(sheaf)` is the *same* quantity controlling residual error \u2014 consistency and\naccuracy share one parameter.\n**Why now?** The probabilistic budget `N\u00b7r` is now a proven, named quantity;\nattaching a least-squares error functional to the global-section projection makes\nthe performance claim Lean-formalizable rather than purely empirical.\n\n## FD5 \u2014 Higher sheaf conditions and `d\u00b2 = 0` rigidity\n**Conjecture.** Imposing triple-overlap (2-cocycle) consistency multiplies the\nconstraint count and drives `P(sheaf)` to `(1-r)^{C(n,2)+C(n,3)}`, but the\n`\u03b4\u00b9\u2218\u03b4\u2070 = 0` identity makes a positive fraction of these constraints redundant,\nso the *effective* exponent grows strictly slower than the raw count.\n**The key insight is...** that `coboundary_composition_zero` (d\u00b2=0) is precisely a\nlinear-dependence statement among constraints, capping the achievable exponent.\n**Why now?** `MachineLearning.CechComplex` already supplies `\u03b4\u2070, \u03b4\u00b9` and `d\u00b2=0`;\ncounting the rank of the coboundary maps converts redundancy into an explicit\ncorrection to the exponent.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2110",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6495e602",
+    "status": "available",
+    "timestamp": "2026-06-19T15:16:22.710241+00:00",
+    "title": "Derived from the verified results in `MachineLearning.SheafDatabaseProbability`"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4123,21 +4152,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:30.651923+00:00",
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
-  },
-  {
-    "consumed_by_exp_id": "225644b1",
-    "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0004",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.490561+00:00",
-    "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
   {
     "consumed_by_exp_id": "",

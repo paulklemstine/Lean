@@ -11747,7 +11747,7 @@
       "depth_estimate": 3,
       "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.55,
       "domains": [
         "Tropical",
         "Computation"
@@ -30849,7 +30849,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Functorial Tropical–Pythagorean Bridge (Probability)\n\nThis cycle established a *normalization functor into the probability simplex*\nthat unifies three threads:\n\n* **Tropical**: `lse2`, `softmax2`, and the general `softmax`, with the Maslov\n  dequantization sandwich `max ≤ lse2 ≤ max + log 2`.\n* **Probability**: two-point (Bernoulli) laws, `bernVar`, and the cumulant\n  identities `deriv lse2 = softmax2` (mean) and `deriv² lse2 = bernVar ∘ softmax2`\n  (variance = tropical curvature).\n* **Pythagorean**: the map `(a,b,c) ↦ ((a/c)², (b/c)²)` lands in the simplex,\n  is dilation-invariant, equals the softmax image of log-squared coordinates,\n  and yields the Pythagorean probability identity `(p−q)² + 4·Var = 1`.\n\nThe conjectures below are precise, falsifiable targets for the next cycle. Each\nis stated so it can be dropped into Lean as a `theorem … := by sorry` and\nattacked directly.\n\n## Conjecture 1 (n-point tropical Hessian = covariance)\nThe general softmax `softmax w` is the gradient of the n-point free energy\n`lse w := log ∑ⱼ exp (w j)`, and the Hessian of `lse` is the covariance matrix of\nthe Gibbs law:\n```\n∂²/∂wᵢ∂wⱼ lse w = (if i = j then softmax w i · (1 - softmax w i)\n                    else - softmax w i · softmax w j).\n```\n**Test.** Prove `deriv (fun t => lse (Function.update w i t)) (w i) = softmax w i`\nand the diagonal/off-diagonal second-derivative formulas. Expected: the diagonal\nspecializes to `bernVar (softmax w i)`, generalizing `deriv2_lse2_eq_bernVar`.\n\n## Conjecture 2 (Pythagorean parametrization of the full simplex)\nEvery interior Bernoulli law arises from a *real* Pythagorean relation: for all\n`p ∈ (0,1)` there exist `a,b,c > 0` with `a² + b² = c²`, `(a/c)² = p`. Concretely\n`a = √p·c`, `b = √(1−p)·c`. Moreover the induced standard deviation satisfies\n`σ = |ab|/c² = √(p(1−p))`, so **the Bernoulli standard deviation is exactly half\nthe normalized area `2ab/c²` of the right triangle**.\n**Test.** Prove surjectivity of `p ↦` Pythagorean triple and the identity\n`2 * Real.sqrt (bernVar p) = 2*a*b/c^2` for the canonical triple. Falsifiable:\nthe area-to-σ proportionality constant is conjectured to be exactly `2`.\n\n## Conjecture 3 (Maslov interpolation is monotone and contracts to max)\nDefine the temperature-scaled functional `lseT h a b := h · log(exp(a/h)+exp(b/h))`\nfor `h > 0`. Then `h ↦ lseT h a b` is monotone non-decreasing, `lseT h a b → max a b`\nas `h → 0⁺`, and the *Gibbs entropy gap* `lseT h a b − max a b ∈ [0, h·log 2]`.\n**Test.** Prove the sandwich `max a b ≤ lseT h a b ≤ max a b + h·log 2` (rescale\nthe proved `lse2` sandwich) and the limit `Filter.Tendsto (fun h => lseT h a b)\n(nhdsWithin 0 (Set.Ioi 0)) (nhds (max a b))`. This is the quantitative\ndequantization underlying the whole bridge.\n\n## Conjecture 4 (Pythagorean identity is the χ² / information projection at 2 points)\nFor the Pythagorean-induced law `p = (a/c)²`, the polarization leg `p − q` equals\nthe (signed) χ²-type discrepancy from the uniform law `(½,½)`:\n`(p − ½)² + (q − ½)² = ½·(p − q)² = ½·(1 − 4·Var)`. Hence **maximal Bernoulli\nvariance ⇔ minimal χ²-distance to uniform ⇔ the degenerate right triangle\n`a = b`**, i.e. the isoceles Pythagorean triple `(1,1,√2)`.\n**Test.** Prove the χ² identity and that `Var` is maximized exactly when\n`(a/c)² = (b/c)²`, characterizing the optimizer as the isoceles triple. Connect\nto a genuine `Real.rpow`-based Rényi/Tsallis entropy and show the leg `p−q`\ncontrols a one-parameter family of divergences from uniform.\n\n## Conjecture 5 (Functorial naturality square)\nThe two functors into the simplex commute with their symmetries: softmax\nintertwines the additive `ℝ`-shift action on log-coordinates with the trivial\naction on the simplex, and the Pythagorean functor intertwines the multiplicative\n`ℝˣ`-dilation action on triples with the trivial action. Conjecture: there is a\n*natural transformation* `log∘(·)² : (Pythagorean triples / dilation) ⟹\n(log-coordinates / shift)` making the triangle\n`softmax ∘ (log ∘ sq) = pythProb` commute as functors, not merely pointwise.\n**Test.** Formalize both as actions (`AddAction ℝ` and `MulAction ℝˣ`) on the\nrespective domains, define the quotients, and prove the induced maps to the\nsimplex are well-defined and equal. The pointwise version is already proved\n(`pyth_eq_softmax2`); the goal is to upgrade it to an equivariant/quotient\nstatement.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Bridges"
@@ -33004,7 +33004,7 @@
         "math.PR",
         "math.CO"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation"
       ],
@@ -33342,7 +33342,7 @@
         "Probability: uniform probability over a finite type of Latin squares",
         "Asymptotic analysis: convergence of real-valued sequences indexed by n"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Pythagorean",
         "Computation"
@@ -34637,7 +34637,7 @@
         "random permutations",
         "game theory"
       ],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Computation",
         "Pythagorean"
@@ -34673,7 +34673,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Sheaf-Theoretic Data Integration\n\nDerived from the verified results in `MachineLearning.SheafDatabaseProbability`\nand `MachineLearning.SheafImputationBounds` (product law `P(sheaf) = (1-r)^N`,\nexponential collapse, exact failure `1 - (1-r)^N`, Bernoulli/union envelope, and\nthe Čech path-independence bridge).\n\n## FD1 — Correlated constraints break the clean exponent\n**Conjecture.** Drop independence. If the overlap constraint events are\npositively associated (FKG/association), then `P(sheaf) ≥ (1-r)^N`; if negatively\nassociated, `P(sheaf) ≤ (1-r)^N`. The exponent `N` only counts *independent*\ndegrees of freedom; the effective exponent is the number of independent\nconstraints, not the raw `C(n,k)`.\n**The key insight is...** that the headline `(1-r)^{C(n,k)}` is an\nindependence-saturated extreme, and real databases interpolate between the two\nassociation regimes through their correlation structure.\n**Why now?** We have already isolated independence as the single load-bearing\nhypothesis (`iIndepSet` in `sheaf_consistency_prob_eq_pow`), so the next step —\nreplacing it with association inequalities (`MeasureTheory`/FKG in Mathlib) — is\na direct, well-posed extension.\n\n## FD2 — The H¹ obstruction is the only thing that can fail\n**Conjecture.** The sheaf condition fails **iff** the Čech `H¹` class of the\noverlap discrepancy cochain is nonzero; equivalently, `P(sheaf)` equals the\nprobability that a random 1-cochain is a coboundary.\n**The key insight is...** that gluing is automatic once the cocycle (triangle)\nlaw holds — exactly what `imputation_path_independent` proves — so the entire\nprobabilistic obstruction lives in `H¹`, turning imputation into a cohomology\ncomputation.\n**Why now?** The deterministic half (coboundary ⇒ cocycle ⇒ path independence)\nis already formalized via `MachineLearning.CechComplex`; pairing it with a random\ncochain model closes the loop between probability and cohomology.\n\n## FD3 — Sharp phase transition at the constraint budget `N·r = 1`\n**Conjecture.** As `n → ∞` with `N·r → λ` fixed, `P(sheaf) → e^{-λ}`, giving a\nsharp threshold: consistent imputation is likely for `N·r < 1` and unlikely for\n`N·r > 1`.\n**The key insight is...** that the two verified bounds `1 - N·r ≤ (1-r)^N`\n(`sheaf_consistency_ge_linear`) and `1 - (1-r)^N ≤ N·r` (`sheaf_failure_le_linear`)\npinch the probability around the Poisson limit `e^{-N·r}`.\n**Why now?** Both linear envelopes are already theorems; only the\n`(1 - λ/N)^N → e^{-λ}` limit (standard in Mathlib's `Real.exp` API) remains to\nupgrade them into a phase-transition statement.\n\n## FD4 — Sheaf imputation dominates mean/KNN exactly when `N·r` is small\n**Conjecture.** Under a linear ground-truth model, the expected imputation error\nof \"closest global section\" is `O(N·r·σ²)`, strictly below mean/KNN whenever\n`N·r < 1` and feature count `n > 10`, because the cocycle constraints remove\n`N - rank` degrees of freedom that other methods ignore.\n**The key insight is...** that the constraint budget `N·r` controlling\n`P(sheaf)` is the *same* quantity controlling residual error — consistency and\naccuracy share one parameter.\n**Why now?** The probabilistic budget `N·r` is now a proven, named quantity;\nattaching a least-squares error functional to the global-section projection makes\nthe performance claim Lean-formalizable rather than purely empirical.\n\n## FD5 — Higher sheaf conditions and `d² = 0` rigidity\n**Conjecture.** Imposing triple-overlap (2-cocycle) consistency multiplies the\nconstraint count and drives `P(sheaf)` to `(1-r)^{C(n,2)+C(n,3)}`, but the\n`δ¹∘δ⁰ = 0` identity makes a positive fraction of these constraints redundant,\nso the *effective* exponent grows strictly slower than the raw count.\n**The key insight is...** that `coboundary_composition_zero` (d²=0) is precisely a\nlinear-dependence statement among constraints, capping the achievable exponent.\n**Why now?** `MachineLearning.CechComplex` already supplies `δ⁰, δ¹` and `d²=0`;\ncounting the rank of the coboundary maps converts redundancy into an explicit\ncorrection to the exponent.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Geometry"
@@ -35151,6 +35151,41 @@
       "thread_id": "",
       "timestamp": "2026-06-14T12:10:40.597037+00:00",
       "title": "Deepening: The previous cycle established the **spectral depth threshold** picture"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Building on cycle 6495e602 (Q=0.817), which proved 139 theorems in Probability. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the sheaf-theoretic structure of databases with missing entries and prove the probabilistic consistency formula P(sheaf) = (1-r)^{C(n,k)} under explicit independence assumptions. Define: (1) A database as a matrix of optional values where each row represents an observation and each column ",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Probability"
+      ],
+      "id": "push_6495e602_4c39abde",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.9166,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "6495e602",
+      "source_path": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-19T15:17:55.162990+00:00",
+      "title": "Deepening: Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
     },
     {
       "ambition_level": "extension",
@@ -36286,7 +36321,7 @@
       "depth_estimate": 3,
       "description": "Find a formula for the probability that two elements chosen uniformly at random generate the symmetric group S_n. Formalize known asymptotic results and connect to the theory of random permutations.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.35,
+      "domain_quality_penalty": -0.24999999999999997,
       "domains": [
         "Algebra"
       ],
@@ -39883,7 +39918,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Erdős-Rényi random graph model G(n,p). Prove the sharp threshold for connectivity at p = ln(n)/n. Prove the phase transition for giant components at p = 1/n. Formalize the second moment method for subgraph counting.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Combinatorics",
         "Probability"
@@ -40208,7 +40243,7 @@
       "depth_estimate": 3,
       "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+√2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics",
         "Probability",
@@ -40318,7 +40353,7 @@
       "depth_estimate": 3,
       "description": "Formalize the PAC-Bayes framework in Lean 4. Prove the Catoni bound and McAllester bound. Apply to neural networks via Gaussian perturbation priors. Prove that PAC-Bayes bounds are asymptotically tight for linear classifiers.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "MachineLearning",
         "Probability",
@@ -40688,7 +40723,7 @@
       "depth_estimate": 3,
       "description": "Formalize the Fisher information metric on parametric statistical models. Prove the Cramér-Rao bound as a geometric statement. Construct the alpha-connections and prove the dually flat structure. Apply to exponential families.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Geometry",
         "Probability",
