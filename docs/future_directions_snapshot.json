@@ -4523,6 +4523,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS — Anti-Gravity Mathematics\n\nDerived from this cycle's findings in `Catalog/NumberTheory/AntiGravity.lean` (the\nweight/proof-length tension) and `Catalog/NumberTheory/AntiGravityTropicalBridge.lean`\n(the tropical rank ✕ weight uncertainty relation).\n\n## Cycle summary (Analyst)\n\n* **Survived:** the exponential tension `support N d ≤ N / 2^Ω(d)` (`support_le_div_two_pow`),\n  its sharpness at `d = 2` (`tension_sharp`), primes-are-anti-gravity\n  (`prime_isAntiGravity`), unboundedness of anti-gravity weight\n  (`antiGravity_weight_unbounded`), and the cross-domain uncertainty law\n  (`rank_weight_uncertainty`).\n* **Reframed:** the informal \"density\" / \"10% of theorems are anti-gravity\" claim is not\n  literally provable as stated (it depends on an unspecified topology and on PNT-scale\n  density). We replaced it by the rigorous *unboundedness/abundance* statement, which is the\n  honest formal core, and flagged the literal density form as Conjecture C1 below.\n* **Failure analysis:** any attempt to define \"proof length\" so that *composite* numbers stay\n  short collapses the tension theorem; the exponential decay is forced precisely because every\n  nontrivial factor is `≥ 2`. The metaphor only has teeth with `Ω` (or `ω`) as the cost.\n\n## Conjecture C1 — Quantitative anti-gravity density\n\nFor the prime-counting weight, the fraction of `d ∈ [1,N]` with `proofCost d ≤ 1` is\n`(1 + π(N))/N ~ 1/ln N → 0`, **not** a constant 10%. But weighted by gravitational weight,\n`∑_{d ≤ N, Ω(d) ≤ 1} ⌊N/d⌋ / ∑_{d ≤ N} ⌊N/d⌋ → c` for an explicit constant `c ∈ (0,1)`.\n\n* The key insight is that \"density of anti-gravity theorems\" must be measured in the\n  *weight measure* (dependents), not the counting measure — heavy short-proof theorems\n  dominate the dependency mass even though they are rare by count.\n* Why now? The formal weight model `support N d = ⌊N/d⌋` and `proofCost = Ω` are now in Lean\n  (this cycle), so the ratio is a concrete, machine-checkable limit rather than a metaphor.\n\n## Conjecture C2 — Sharp tension classifies the saturators\n\n`support N d = N / 2^(proofCost d)` holds **iff** `d` is a power of `2` with `d ∣` the relevant\n`N`-block; equivalently, equality in `support_le_div_two_pow` forces every prime factor of `d`\nto be the minimal prime `2`.\n\n* The key insight is that the inequality `2^Ω(d) ≤ d` is tight exactly on `{2^k}`, so the\n  geometric \"anti-gravity extremals\" are the binary powers — the deepest pure-binary theorems.\n* Why now? `two_pow_proofCost_le` isolates the single inequality whose equality case is the\n  whole classification; only its tightness analysis remains.\n\n## Conjecture C3 — Tropical uncertainty is an equality on primes mod the residue\n\nFor prime `p ≤ N`, `tropFactorRank (encodeDiag p) · support N p = N − (N mod p)`, and the\nslack `N mod p < p` is **minimized over all theorems of weight `support N p`** by `p` itself.\n\n* The key insight is that the tropical rank coordinate and the number-theoretic weight\n  coordinate are *conjugate* (`rank · weight ≈ N`); anti-gravity primes are the near-isometries\n  of this conjugation, saturating the uncertainty relation up to `N mod p`.\n* Why now? `antiGravity_prime_bridge` already proves the exact identity\n  `rank · weight + N mod p = N`; the open part is the *extremality* of the residue.\n\n## Conjecture C4 — `ω`-cost refinement and a Carmichael bridge\n\nReplacing `Ω` by `ω` (distinct prime factors) yields `support N d ≤ N / rad(d)` where\n`rad` is the radical; squarefree numbers become the anti-gravity extremals, linking to the\nsquarefree/pairwise-coprime recombination used in the catalog's Fibonacci–Carmichael files.\n\n* The key insight is that the anti-gravity tension is the divisor-lattice shadow of the\n  squarefree/Korselt structure: short proofs ⇔ small radical ⇔ few apparition obstructions.\n* Why now? With the weight model formalized, the same `Nat.prod_primeFactorsList` engine that\n  drives `two_pow_proofCost_le` ports directly to `rad`, giving a uniform `ω`-version.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2111",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a449aa2a",
+    "status": "available",
+    "timestamp": "2026-06-19T15:22:04.347696+00:00",
+    "title": "Derived from this cycle's findings in `Catalog/NumberTheory/AntiGravity.lean` (t"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -6030,26 +6050,6 @@
     "status": "failed",
     "timestamp": "2026-06-01T12:30:30.700907+00:00",
     "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "4b892cf9",
-    "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0088",
-    "lineage_refs": [],
-    "priority_score": 0.05,
-    "proof_strategy": "Define tropical arithmetic: a oplus b = min(a, b), a otimes b = a + b. Tropical matrix multiplication: (A otimes B)_{ij} = min_k (A_{ik} + B_{kj}). Tropical matrix power: A^{otimes k} = A otimes A otimes ... otimes A (k times). This is equivalent to the k-th power in the min-plus semiring, which is also the all-pairs shortest path matrix for k steps. Tropical eigenvalue: lambda is a tropical eigenvalue of A if there exists v != infinity such that min_j (A_{ij} + v_j) = lambda + v_i for all i. The tropical eigenvalue exists and is unique for irreducible matrices (by the tropical Perron-Frobenius theorem). Key exchange: Alice and Bob agree on a public tropical matrix A. Alice picks a secret a and computes A^{otimes a}. Bob picks a secret b and computes A^{otimes b}. They exchange, and both compute the shared key (A^{otimes a})^{otimes b} = A^{otimes ab} = (A^{otimes b})^{otimes a}. Security: Eve sees A, A^{otimes a}, A^{otimes b} and needs to compute A^{otimes ab}. The tropical eigenvalue gives: lambda(A^{otimes a}) = a * lambda(A), so a = lambda(A^{otimes a}) / lambda(A). This breaks the key exchange! Unless we hide the eigenvalue. Defense: add noise to the matrix before computing the power. A^{otimes k} + noise (in the tropical sense) changes the eigenvalue unpredictably. Conjecture: with noise, the TDLP is hard for n >= 10. Test: implement noisy tropical DH, measure key generation time, attempt to break with eigenvalue attack.",
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.782446+00:00",
-    "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
   {
     "ambition_level": "extension",

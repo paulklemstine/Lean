@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "a449aa2a",
     "filename": "speculative_anti_gravity_mathematics__theorems_tha.json",
     "pkg_num": 204,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.39323663366336636,
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
   {
@@ -6251,8 +6251,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "speculative_anti_gravity_mathematics__theorems_tha",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.39323663366336636,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
     }
