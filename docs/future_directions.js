@@ -1033,7 +1033,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Functor from finite linear codes to tropical valuation objects via wei"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5d621cd6",
     "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
     "domains": [
       "Novelty",
@@ -1043,7 +1043,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.84,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.958310+00:00",
     "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
@@ -2019,11 +2019,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every 6-regular (4,1)-graph has at least 30 vertices, providing a lower bound that could be combined with structural results to potentially prove that no such graph exists, thereby resolving Dirac's k=4 problem.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2100",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18462v1",
+    "status": "available",
+    "timestamp": "2026-06-19T11:49:14.147518+00:00",
+    "title": "Non-existence of 6-regular (4,1)-graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For every odd prime base B > 5, the length of the longest terminal cycle in the four-digit Kaprekar routine equals (B-1)/2 if and only if the multiplicative order of 2 modulo B is (B-1)/2.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2100",
+    "id": "fd_2101",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
@@ -2037,7 +2051,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2101",
+    "id": "fd_2102",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
@@ -2052,7 +2066,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Computation"
     ],
-    "id": "fd_2102",
+    "id": "fd_2103",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19677v1",
@@ -2067,7 +2081,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2103",
+    "id": "fd_2104",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19933v1",
@@ -2082,7 +2096,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2104",
+    "id": "fd_2105",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19573v1",
@@ -2096,7 +2110,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Algebra"
     ],
-    "id": "fd_2105",
+    "id": "fd_2106",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19006v1",
@@ -2111,7 +2125,7 @@ window.FUTURE_DIRECTIONS = [
       "Computation",
       "Pythagorean"
     ],
-    "id": "fd_2106",
+    "id": "fd_2107",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18956v1",
@@ -3069,36 +3083,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-17T23:11:17.377449+00:00",
     "title": "Two boundary facts of the prime crossword in"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Sheaf-Theoretic Data Integration\n\nFollow-up conjectures arising from `Computation/SheafDatabaseColimit.lean`\n(the information-order / colimit layer), to be attacked in subsequent cycles.\nEach is stated to be **precise and testable** in Lean.\n\n## Conjecture 1 \u2014 `Extends` is a `CompleteSemilatticeInf` / bounded structure\n\nThe information order `Extends` on `PartialDB nRows nCols V` has a least element\n(the empty database) and arbitrary **meets**: for any family the cell-wise\n\"value on which all defined members agree, else `none`\" is the greatest lower\nbound. Conjecture: `(PartialDB nRows nCols V, Extends)` is a complete\nmeet-semilattice with bottom, and `glueFamily` is the join *restricted to the\nconsistent sublattice*. Joins do **not** exist in general (inconsistent pairs\nhave no upper bound), so the structure is a *conditionally complete* lattice.\n**Testable form:** define `Order.le := fun a b => Extends b a`, register the\ninstance, and prove `sInf`/`sSup`-on-consistent characterizations.\n\n## Conjecture 2 \u2014 \u010cech H\u00b9 obstruction vanishes for the database sheaf\n\nDefine a genuine alternating \u010cech complex `C\u2070 \u2192 C\u00b9 \u2192 C\u00b2` for a finite cover of\nthe cell-grid valued in an abelian group `G`, with `\u03b4\u2070` the difference of\nrestrictions. Conjecture: for the database (function) sheaf every 1-cocycle is a\ncoboundary, i.e. **H\u00b9 = 0**, and the obstruction to gluing a pairwise-consistent\nfamily is *exactly* the class `[\u03b4\u2070\u03c3] \u2208 H\u00b9`, which is always trivial. This would\nupgrade the catalog's slogan \"H\u00b9 vanishing\" (currently informal in\n`SheafDataIntegration.lean`) to a theorem, and explain *why* pairwise\nconsistency suffices (no higher cocycle conditions).\n\n## Conjecture 3 \u2014 Gluing complexity is governed by the nerve's connectivity\n\nBuild the **consistency (nerve) graph** on `Fin k` with an edge `i ~ j` iff\n`ConsistentPair (dbs i) (dbs j)` and the domains overlap. Conjecture: a family\nglues into a global section iff (a) it is pairwise consistent and (b) the union\nof domains is the full grid; moreover the *number of independent merge steps*\nneeded equals `k \u2212 (number of connected components of the overlap graph)`. This\nties `glueFamily` to a spanning-forest construction and gives an explicit\n`O(k\u00b7nRows\u00b7nCols)` gluing algorithm whose correctness is a Lean theorem.\n\n## Conjecture 4 \u2014 Monotone-imputation colimits commute with restriction\n\nFor a `SheafFiltration F` and any cell-subset `S`, restricting the colimit\nequals the colimit of the restrictions:\n`(glueFamily F.level).restrict S = glueFamily (fun i => (F.level i).restrict S)`.\nConjecture: this naturality holds for *all* covers (not just filtrations),\nmaking `glueFamily` a natural transformation `lim \u2218 restrict \u21d2 restrict \u2218 lim`.\n**Testable form:** state the equality of `PartialDB` functions and prove by\n`funext` + cell analysis; the filtration case `filtration_colimit_eq_top` is a\ncorollary.\n\n## Conjecture 5 \u2014 Sharp consistency-probability threshold from the order layer\n\nCombine the order/colimit layer with `Bridges/SheafImputationProbability.lean`:\nfor a random family of `k` sub-views with per-overlap conflict rate `r`, the\nprobability that `glueFamily` is a **global section** (fully reconstructs the\ndatabase) exhibits a sharp threshold in `r` as `k \u2192 \u221e`. Conjecture: there is a\ncritical `r*(coverage)` such that below it `P(global section) \u2192 1` and above it\n`\u2192 0`, with the threshold determined by the grid coverage probability times the\nsuper-exponential consistency decay `(1\u2212r)^{C(k,2)}`. This unifies the\norder-theoretic existence theorem with the probabilistic decay results.\n",
-    "domains": [
-      "Computation",
-      "Pythagorean"
-    ],
-    "id": "fd_2107",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "4f74256d",
-    "status": "available",
-    "timestamp": "2026-06-19T11:37:46.775584+00:00",
-    "title": "Follow-up conjectures arising from `Computation/SheafDatabaseColimit.lean`"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Dream Logic: Paraconsistency, Topology, and Coexisting Contradictions\n\nDerived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this\ncycle. The three Lean files established:\n\n- `Logic/DreamLogic/Belnap.lean` \u2014 Belnap's four-valued logic `FOUR`, with\n  `explosion_fails`, `lnc_can_fail`, `lem_can_fail`, and the uniqueness results\n  `glut_iff` (only `both` is a glut) and `gap_iff` (only `neither` is a gap).\n- `Geometry/DreamLogic/Topology.lean` \u2014 the closed-set co-Heyting model:\n  `contradiction A = frontier A` for closed `A`, `lnc_holds_iff_clopen`, and\n  `connected_forces_paraconsistency`.\n- `Logic/DreamLogic/Bridge.lean` \u2014 the cross-domain identity\n  *topological frontier point = Belnap glut value `both`*\n  (`val_both_iff_frontier`, `glut_iff_contradiction`, `dream_object_real_is_glut`).\n\nThe key empirical insight of the cycle: the briefing's phrase \"open sets not\nclosed under arbitrary union\" is literally false for any topology; the *correct*\ndual reading is \"closed sets need not be open\", and paraconsistency lives exactly\nin the gap between closed and clopen. This reframing drives the conjectures below.\n\n---\n\n## Conjecture 1 \u2014 The clopen algebra is the largest classical sublogic.\nFor a topological space `X`, the Boolean algebra of clopen sets is the *unique\nmaximal* subfamily of closed sets on which `contradiction A = \u2205` for every\nmember, and the four-valued valuation `val` collapses to two values exactly there.\n- **The key insight is** that classical (explosive) reasoning is recovered\n  precisely on the clopen sets \u2014 the connected components' indicator algebra \u2014 so\n  \"how classical\" a space is is measured by `card (clopen X)`.\n- **Why now?** We have `lnc_holds_iff_clopen` and `designated_iff_mem` already\n  formalized; the maximality claim is a finite combinatorial step on top of them,\n  testable first on finite spaces and `\u211d\u207f`.\n\n## Conjecture 2 \u2014 Frontier dimension grades the \"severity\" of a contradiction.\nOrder dialetheic closed sets by the topological dimension of their frontier.\nThen in `\u211d\u207f` the conjunction `conj`-glut content of a closed set is a monotone\nfunction of `dim (frontier A)`, and the empty-frontier (clopen) case is the bottom.\n- **The key insight is** that not all coexisting contradictions are equal: a\n  point-frontier dialetheia (`[0,1]`, frontier `{0,1}`) is \"smaller\" than a\n  hypersurface-frontier dialetheia (a closed ball, frontier a sphere).\n- **Why now?** `contradiction_eq_frontier` reduces the question to Mathlib's\n  developing dimension theory of `frontier`; the `n = 1` base case is already\n  computable from `frontier_Icc`.\n\n## Conjecture 3 \u2014 Belief retraction = passing to the interior; revision = closure.\nModel non-monotone update on `FOUR`-valuations by the two idempotent operators\n`A \u21a6 interior A` (retraction: kills gluts) and `A \u21a6 closure A` (revision: may\ncreate gluts). Conjecture: every finite sequence of retract/revise operations\nstabilizes (reaches a regular open or regular closed fixed point) in \u2264 2 steps \u2014\na topological Kuratowski-style bound.\n- **The key insight is** that non-monotone reasoning (AGM-style retraction) is the\n  *dynamics* of the closure/interior pair, and gluts are exactly the points lost\n  under `interior`.\n- **Why now?** Mathlib has `interior_interior`, `closure_closure`, and the\n  Kuratowski 14-set machinery; combined with `val_both_iff_frontier` this becomes\n  a concrete, falsifiable fixed-point statement.\n\n## Conjecture 4 \u2014 `FOUR` is the De Morgan-algebra hom-image of every closed-set model.\nThe pointwise valuation `val : Set X \u2192 X \u2192 Belnap` extends to a De Morgan algebra\nhomomorphism from the closed sets of `X` onto a subalgebra of `FOUR`, and the\nhomomorphism is *surjective onto `{true,false,both}`* iff `X` is connected with a\nproper nonempty closed subset.\n- **The key insight is** that `connected_forces_paraconsistency` is really a\n  surjectivity statement: connectedness is exactly what guarantees the glut value\n  `both` is hit, making `FOUR` (minus the gap) the canonical image.\n- **Why now?** The De Morgan lemmas (`demorgan_conj`, `neg_neg`) and the bridge\n  faithfulness lemma `designated_iff_mem` are in place; only the homomorphism\n  packaging remains.\n\n## Conjecture 5 \u2014 Gaps need a *second* set: the `neither` value is bitopological.\nA single closed set realizes only `{true,false,both}`. Conjecture: the full\nfour-valued `FOUR` (including `neither`) is realized exactly by *bitopological*\nspaces \u2014 a pair `(\u03c4\u2081, \u03c4\u2082)` of topologies \u2014 where `neither` marks points outside\nboth closures, so that paracomplete *and* paraconsistent reasoning coexist.\n- **The key insight is** that gluts (`both`) and gaps (`neither`) are dual and\n  require dual data: one closure operator for contradictions, a second for gaps.\n- **Why now?** Mathlib now supports multiple `TopologicalSpace` instances via\n  type synonyms; the bridge already isolates `neither` as the missing fourth\n  value, making the bitopological extension the natural next formalization.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2108",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "e88eb144",
-    "status": "available",
-    "timestamp": "2026-06-19T11:47:38.306815+00:00",
-    "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
   },
   {
     "consumed_by_exp_id": "",
@@ -4249,6 +4233,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
+    "domains": [
+      "Novelty",
+      "Cryptography"
+    ],
+    "id": "fd_0088",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.782446+00:00",
+    "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+  },
+  {
+    "consumed_by_exp_id": "6495e602",
     "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
     "domains": [
       "Novelty",
@@ -4258,7 +4257,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.807837+00:00",
     "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
