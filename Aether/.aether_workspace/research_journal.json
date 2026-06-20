@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "88475cc5",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Categorical Tropicalization of Rips Filtrations and Interleaving Stability\n\nThis cycle established (in `Catalog/Bridges/CategoricalTropicalRipsInterleaving.lean`,\n0 sorries, axio",
-      "quality_score": 0.4963626414840705,
-      "sorry_count": 2,
-      "theorem_count": 78,
-      "timestamp": "2026-06-15T06:30:20",
-      "title": "Categorical Tropicalization of Rips Filtrations and Interleaving Stability"
-    },
-    {
       "cycle_id": "a64f762c",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Functorial Lipschitz comparison: valuation depth ↔ tropical valuation objects\n\nThis cycle established that **valuation depth is the logarithmic shadow of the tropical\nLipschitz c",
@@ -2501,6 +2491,16 @@
       "theorem_count": 60,
       "timestamp": "2026-06-20T14:32:24",
       "title": "Linear recurrence for coefficients of Ramanujan's third order mock theta function f(q)"
+    },
+    {
+      "cycle_id": "ebc08ab7",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — Tropical Differential Equations: Power Series Solutions\n\nThe current cycle established, in `Core.lean`, the support-level intertwining of\ndifferentiation (`support_derivative_eq_",
+      "quality_score": 0.4770719626168225,
+      "sorry_count": 0,
+      "theorem_count": 90,
+      "timestamp": "2026-06-20T15:13:29",
+      "title": "Tropical Differential Equations: Power Series Solutions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8075699999999999
     }
   ],
-  "last_updated": "2026-06-20T14:32:24",
+  "last_updated": "2026-06-20T15:13:29",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3821,12 +3821,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "85e56c16",
-        "quality": 0.4243189090909092,
-        "theorems": 114,
-        "title": "Close Proofs: This cycle attacked the ordinal-analysis target \"construct an orde"
-      },
-      {
         "cycle_id": "a42ace1d",
         "quality": 0.42720140370833815,
         "theorems": 146,
@@ -3879,6 +3873,12 @@
         "quality": 0.345538,
         "theorems": 8,
         "title": "Spectral Universality of LLM Weight Matrices: Random-Matrix Phase Transitions in"
+      },
+      {
+        "cycle_id": "ebc08ab7",
+        "quality": 0.4770719626168225,
+        "theorems": 90,
+        "title": "Tropical Differential Equations: Power Series Solutions"
       }
     ],
     "Shared": [
