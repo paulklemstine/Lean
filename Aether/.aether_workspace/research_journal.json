@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "3f92e6d5",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions\n\nFollow-up conjectures arising from the *Deepening* cycle on the functorial comparison\nbetween neural observation pseudometrics and proof-spectrum congruences.\n\nRelevant files:\n- `",
-      "quality_score": 0.54944,
-      "sorry_count": 0,
-      "theorem_count": 9,
-      "timestamp": "2026-06-15T11:16:16",
-      "title": "Deepening: Functorial comparison between neural observation pseudometrics and proof-spectru"
-    },
-    {
       "cycle_id": "2086db82",
       "domain": "Applications",
       "key_insight": "# FUTURE DIRECTIONS — Intersection Form Classification via Self-Dual Code Direct Sums\n\nThis cycle added `CodeDirectSum.lean`: the direct sum (coordinate concatenation)\n`C ⊕c D` of binary codes, with c",
@@ -2501,6 +2491,16 @@
       "theorem_count": 393,
       "timestamp": "2026-06-20T22:45:08",
       "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
+    },
+    {
+      "cycle_id": "bf991533",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Navier–Stokes Regularity (scalar a priori program)\n\nThis research cycle formalized the scalar differential-inequality core of\nNavier–Stokes regularity theory (`Core.lean`) and it",
+      "quality_score": 0.5450164281345566,
+      "sorry_count": 0,
+      "theorem_count": 469,
+      "timestamp": "2026-06-20T22:49:16",
+      "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8075699999999999
     }
   ],
-  "last_updated": "2026-06-20T22:45:08",
+  "last_updated": "2026-06-20T22:49:16",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3511,12 +3511,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "87ef3294",
-        "quality": 0.48797999999999997,
-        "theorems": 3,
-        "title": "This cycle added two fully-verified files (0 sorries) extending the"
-      },
-      {
         "cycle_id": "5971ea29",
         "quality": 0.5840000000000001,
         "theorems": 7,
@@ -3569,6 +3563,12 @@
         "quality": 0.6604548751733703,
         "theorems": 393,
         "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
+      },
+      {
+        "cycle_id": "bf991533",
+        "quality": 0.5450164281345566,
+        "theorems": 469,
+        "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
       }
     ],
     "Novelty": [
