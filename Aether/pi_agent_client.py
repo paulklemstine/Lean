@@ -825,7 +825,16 @@ class PiAgentClient:
                     )
                     response.raise_for_status()
                     data = response.json()
-                    content = data["choices"][0]["message"]["content"]
+                    
+                    if data and "error" in data:
+                        err_msg = data["error"].get("message", str(data["error"])) if isinstance(data["error"], dict) else str(data["error"])
+                        raise Exception(f"OpenRouter returned 200 OK with error: {err_msg}")
+                        
+                    if not data or not data.get("choices"):
+                        raise Exception(f"OpenRouter returned empty or invalid choices. Data: {data}")
+                        
+                    message_obj = data["choices"][0].get("message") or {}
+                    content = message_obj.get("content") or ""
     
                     response_preview = content[:500].replace('\n', ' ')
                     print(f"[Pi-Agent] ← OpenRouter response ({len(content)} chars, model={model})")
@@ -844,9 +853,8 @@ class PiAgentClient:
                                 retry_after = float(e.response.headers['Retry-After'])
                             else:
                                 err_data = e.response.json()
-                                if 'error' in err_data:
-                                    if 'message' in err_data['error']:
-                                        err_msg_text = err_data['error']['message']
+                                if err_data and isinstance(err_data.get('error'), dict):
+                                    err_msg_text = str(err_data['error'].get('message', ''))
                                     if 'metadata' in err_data['error']:
                                         retry_after = float(err_data['error']['metadata'].get('retry_after_seconds', 5))
                         except Exception:
