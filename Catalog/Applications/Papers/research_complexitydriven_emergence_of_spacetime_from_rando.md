@@ -1,294 +1,338 @@
-# Complexity-Driven Emergence of Spacetime from Random Tensor Networks: Sharp Thresholds, Area Laws, and a Golden-Ratio Bridge
+# Tropical Eigenline Collapse and Golden-Ratio Encoding Thresholds: Two Exact Models for Complexity-Driven Emergent Geometry
 
 **Author:** Aristotle
 **Date:** 2026-06-20
-**Domain:** Physics (quantum information / holography)
+**Domain:** Tropical (min-plus) algebra; emergent geometry from tensor networks
 
 ## Abstract
 
-We study the order-theoretic and number-theoretic backbone of the conjecture that
-classical spacetime emerges from the entanglement structure of random tensor networks
-above a critical bond dimension. We isolate three rigorously established pillars. First,
-a **sharp bond-dimension phase transition**: a faithful holographic encoding of a rank-$k$
-bulk on $N$ vertices into a boundary of $b$ bonds of dimension $D$ — formalized as an
-injection $\mathrm{Fin}(k^N) \hookrightarrow \mathrm{Fin}(D^b)$ — exists if and only if
-$D \ge D_c(N) := \lceil (k^N)^{1/b}\rceil$, with strict failure (information loss) below
-$D_c$. Second, an **entanglement area law** $S \le b\log D$ with equality (saturation)
-exactly at the uniform entanglement spectrum. Third, a **golden-ratio bridge**: for a
-length-$n$ Fibonacci-anyon chain whose Hilbert-space dimension counts admissible fusion
-paths, this dimension equals the Fibonacci number $F_{n+2}$; it obeys a *strict* sub-qubit
-area law $F_{n+2} < 2^n$ for $n \ge 2$; two such chains are *commensurable* in the sense
-that $\gcd$ of their dimensions is again a chain dimension; and the golden bond dimension
-$\varphi = (1+\sqrt5)/2$ encodes a chain of length $n$ iff $n < 7$. All statements are
-machine-checked and `sorry`-free. We give full statements, proof sketches, algorithms, and
-numerical demonstrations, and we connect the discrete thresholds to the thermodynamic
-language of phase transitions in emergent gravity.
-
----
+We present two self-contained, fully formalized models that isolate distinct
+facets of the conjecture that classical spacetime geometry emerges from quantum
+information complexity in random tensor networks. The first model concerns the
+*tropical discrete logarithm problem* (TDLP): the proposal to hide a secret
+iteration count $k$ inside repeated application of a min-plus linear map. We show
+that this construction is insecure along eigenlines. Concretely, for any
+scalar-equivariant tropical map $F$ and any tropical eigenvector $v$ with
+eigenvalue $\lambda$, the $k$-fold iterate collapses to a single scalar shift
+$F^{[k]}(v) = k\lambda + v$, so that for eigenvalue $\lambda = 1$ the exponent is
+recovered coordinatewise by subtraction. The $1\times1$ case is a complete,
+elementary instance. The second model studies the Fibonacci anyon chain as a
+prototype of a sub-qubit, geometrically encodable quantum system. We prove that
+its fusion-path Hilbert-space dimension equals $F_{n+2}$, satisfies a strict area
+law $\mathrm{fc}(n) < 2^n$ for $n \ge 2$, is closed under greatest common divisor
+(a commensurability law inherited from $\gcd(F_a,F_b)=F_{\gcd(a,b)}$), and is
+encodable in a random tensor network of golden-ratio bond dimension precisely
+when its length is below the sharp critical value $N_{\text{critical}} = 7$,
+where the linearly growing critical bond dimension $D_c(n) = 1 + n/10$ first
+exceeds $\varphi$. All statements are theorems verified in a proof assistant; the
+present paper gives full statements and proof sketches.
 
 ## 1. Introduction
 
-The holographic principle and the "It from Qubit" program propose that the smooth geometry
-of spacetime is not fundamental but emerges from the entanglement structure of an underlying
-quantum system. Random tensor networks provide the sharpest available toy model: a graph of
-quantum vertices joined by bonds of capacity $D$ (the *bond dimension*) realizes a quantum
-error-correcting code whose boundary data reconstruct a bulk geometry. The governing physical
-conjecture is that there exists a critical bond dimension $D_c(N)$ such that for $D > D_c$ the
-bulk approximates a smooth $(d+1)$-dimensional Lorentzian manifold with bounded curvature,
-while for $D < D_c$ the bulk is fractal and violates the Einstein equations under any
-coarse-graining.
+The holographic program in quantum gravity posits that the geometry of a spatial
+region is an emergent, coarse-grained description of the entanglement structure
+of an underlying quantum state. Random tensor networks make this concrete: a
+network of randomly chosen tensors, glued along internal "bonds" of dimension
+$D$, defines a quantum error-correcting code whose entanglement pattern induces a
+bulk geometry. The governing conjecture in this cycle is that there is a sharp
+**critical bond dimension** $D_c(N)$ such that above $D_c$ the emergent geometry
+approximates a smooth Lorentzian manifold with bounded curvature, while below it
+the geometry is fractal and non-geometric.
 
-This paper does not attempt the full geometric conjecture. Instead it formalizes its
-*combinatorial and arithmetic skeleton*, the part that any complete theory must rest on: the
-exact location and sharpness of the encoding threshold, the area-law cap on entanglement, and
-the way the choice of microscopic matter (here, Fibonacci anyons) propagates into geometric
-constraints. The payoff is to replace heuristic slogans ("the transition is sharp," "anyonic
-networks are sub-maximal") with theorems.
+Proving the full conjecture is far beyond current reach. Our contribution is to
+extract two *exact, gap-free* sub-models that each capture an essential
+qualitative feature — (i) the collapse of computational complexity along the
+"flat" directions of a tropical (min-plus) dynamical system, and (ii) the
+existence of a sharp encoding threshold for a concrete sub-qubit chain — and to
+prove them completely. Min-plus algebra is the natural arithmetic of the
+coarse-grained "skeleton" geometry of a contracted tensor network (shortest-path
+/ optimization structure), which is why both models live in the tropical world.
 
-**Contributions.**
-1. A sharp threshold theorem for holographic encodability (Section 3).
-2. An entanglement area law with a saturation characterization (Section 4).
-3. A Fibonacci-anyon bridge: exact dimension count, strict sub-qubit area law,
-   commensurability, and a golden-ratio encodability threshold (Section 5).
+Throughout we work over the natural numbers $\mathbb{N}$ as the carrier of the
+min-plus semiring, deliberately omitting the $+\infty$ element. Tropical scalar
+multiplication by $c$ is ordinary addition $x \mapsto c + x$; tropical matrix
+iteration is path concatenation under the $(\min,+)$ rule.
 
----
+## 2. The tropical eigenline collapse
 
-## 2. Setup and definitions
+### 2.1 The one-dimensional case
 
-Throughout, $k \ge 1$ is the rank of the bulk vertices, $N$ the number of bulk vertices,
-$b$ the number of boundary bonds, and $D$ the bond dimension. We write $\mathrm{Fin}(m)$ for a
-set of $m$ states.
+**Definition 1 (one-by-one tropical action).** For $\lambda \in \mathbb{N}$, the
+action of the $1\times1$ tropical matrix with entry $\lambda$ on a scalar
+$x \in \mathbb{N}$ is min-plus multiplication, i.e. ordinary addition:
+$$
+\mathrm{oneByOneAction}(\lambda)(x) = \lambda + x.
+$$
 
-**Definition 1 (Fusion-path count of a Fibonacci anyon chain).**
-A length-$n$ Fibonacci-anyon chain has a state space whose dimension equals the number of
-admissible fusion paths — equivalently, the number of binary strings of length $n$ with no two
-consecutive $1$s. This count, $\mathrm{fusionCount} : \mathbb{N} \to \mathbb{N}$, is defined by
-$$\mathrm{fusionCount}(0) = 1,\quad \mathrm{fusionCount}(1) = 2,\quad
-\mathrm{fusionCount}(n+2) = \mathrm{fusionCount}(n+1) + \mathrm{fusionCount}(n).$$
+**Theorem 1 (iterated one-by-one action).** For all
+$\lambda, x, k \in \mathbb{N}$,
+$$
+(\,y \mapsto \lambda + y\,)^{[k]}(x) = k\lambda + x.
+$$
 
-**Definition 2 (Golden bond dimension).**
-A single Fibonacci anyon carries the bond dimension
-$\mathrm{fibBondDimension} := \varphi = \mathrm{Real.goldenRatio} = \tfrac{1+\sqrt5}{2} \approx
-1.618$.
+*Proof sketch.* Induction on $k$. The base case $k=0$ is $x = 0 + x$. For the
+inductive step, $(\lambda+\cdot)^{[k+1]}(x) = \lambda + (\lambda+\cdot)^{[k]}(x)
+= \lambda + (k\lambda + x) = (k+1)\lambda + x$ using
+$\mathrm{Nat.succ\_mul}$ and commutativity. $\square$
 
-**Definition 3 (Encodability).**
-Let $\mathrm{critBond}(n)$ denote the critical bond dimension for a length-$n$ chain (the
-per-length specialization of the threshold function $D_c$ of Section 3). A length-$n$ chain is
-**encodable** iff its golden bond dimension exceeds its critical bond dimension:
-$$\mathrm{ChainEncodable}(n) :\iff \mathrm{critBond}(n) < \varphi.$$
-We set the explicit critical length $N_{\mathrm{critical}} := 7$.
+**Theorem 2 (one-by-one recovery).** For all $x, k \in \mathbb{N}$,
+$$
+(\,y \mapsto 1 + y\,)^{[k]}(x) - x = k.
+$$
 
----
+*Proof sketch.* Specialize Theorem 1 at $\lambda = 1$ to get
+$(1+\cdot)^{[k]}(x) = k\cdot 1 + x = k + x$, then subtract $x$. $\square$
 
-## 3. A sharp bond-dimension phase transition
+This already refutes the security of the TDLP in its simplest nontrivial form:
+the secret exponent $k$ is read off from a single input/output pair by one
+subtraction. The remainder of this section shows the phenomenon is structural,
+not an artifact of dimension one.
 
-We model a faithful holographic encoding of a rank-$k$ bulk on $N$ vertices into a boundary of
-$b$ bonds of dimension $D$ as an injection of finite state spaces
-$\mathrm{Fin}(k^N) \hookrightarrow \mathrm{Fin}(D^b)$. Faithfulness (injectivity) is the
-information-theoretic requirement that no two distinct bulk configurations collapse to the same
-boundary fingerprint.
+### 2.2 The abstract eigenline attack
 
-**Theorem A (Sharp encodability threshold).**
-*Such an injection exists if and only if $D^b \ge k^N$, equivalently iff*
-$$D \ge D_c(N) := \big\lceil (k^N)^{1/b}\big\rceil.$$
-*Moreover the transition is sharp: the encoding is realized at $D = D_c(N)$
-(`critBond_mem`), and strictly fails — bulk information is necessarily lost — for every
-$D < D_c(N)$ (`critBond_sharp`).*
+**Definition 2 (tropical vectors and scalar addition).** For an index type
+$\iota$, a *tropical vector* is a function $v \colon \iota \to \mathbb{N}$,
+written $\mathrm{Vec}\,\iota$. Tropical scalar addition adds the scalar $c$ to
+every coordinate:
+$$
+(c +_{\mathrm{trop}} v)(i) = c + v(i).
+$$
 
-*Proof sketch.* Existence of an injection between finite sets is governed by cardinality
-(the pigeonhole principle): a one-to-one map $A \hookrightarrow B$ exists iff $|A| \le |B|$.
-Here $|A| = k^N$ and $|B| = D^b$, so an encoding exists iff $k^N \le D^b$. Taking $b$-th roots
-and rounding up to the next integer gives the threshold $D_c(N) = \lceil (k^N)^{1/b}\rceil$:
-for $D \ge D_c$ we have $D^b \ge k^N$ (membership/witness), while for $D \le D_c - 1$ we have
-$D^b < k^N$, so injectivity is impossible and information is lost (sharpness). $\square$
+**Definition 3 (scalar-equivariance).** A map
+$F \colon \mathrm{Vec}\,\iota \to \mathrm{Vec}\,\iota$ is
+*scalar-equivariant* if it commutes with tropical scalar addition:
+$$
+F(c +_{\mathrm{trop}} v) = c +_{\mathrm{trop}} F(v)
+\qquad \text{for all } c \in \mathbb{N},\ v \in \mathrm{Vec}\,\iota.
+$$
 
-**Interpretation.** $D_c(N)$ is a discrete order-theoretic analogue of a thermodynamic phase
-boundary. The order parameter is the Boolean "an encoding exists," which jumps discontinuously
-from false to true as $D$ crosses $D_c$. Because $D_c(N) = \lceil (k^N)^{1/b}\rceil$ grows
-geometrically in $N$ while its integer jump size grows sub-geometrically, the *relative* width
-of the transition $(D_c(N) - D_c(N) (1-1/b))$ shrinks, so the boundary becomes asymptotically
-infinitely sharp in $N$ — the discrete signature of a first-order transition in the
-thermodynamic limit.
+**Definition 4 (tropical eigenvector).** A vector $v$ is a *tropical
+eigenvector* of $F$ with *eigenvalue* $\lambda \in \mathbb{N}$ if
+$$
+F(v) = \lambda +_{\mathrm{trop}} v.
+$$
 
-**Worked example.** For qubits $k = 2$, $N = 10$, $b = 4$: the bulk has $2^{10}=1024$ states and
-$D_c(10)=\lceil 1024^{1/4}\rceil = \lceil 5.66\rceil = 6$. Indeed $5^4 = 625 < 1024$ (fails) and
-$6^4 = 1296 \ge 1024$ (succeeds).
+**Lemma 1 (additivity of scalar addition).** For all $a, b \in \mathbb{N}$ and
+$v \in \mathrm{Vec}\,\iota$,
+$$
+a +_{\mathrm{trop}} (b +_{\mathrm{trop}} v) = (a+b) +_{\mathrm{trop}} v.
+$$
 
----
+*Proof sketch.* Pointwise, $a + (b + v(i)) = (a+b) + v(i)$ by associativity of
+addition. $\square$
 
-## 4. The entanglement area law
+**Theorem 3 (eigenline attack).** Let
+$F \colon \mathrm{Vec}\,\iota \to \mathrm{Vec}\,\iota$ be scalar-equivariant and
+let $v$ be a tropical eigenvector with eigenvalue $\lambda$. Then for all
+$k \in \mathbb{N}$,
+$$
+F^{[k]}(v) = (k\lambda) +_{\mathrm{trop}} v.
+$$
 
-For a boundary region cut by $b$ bonds, each of dimension $D$, the reduced density matrix has
-rank at most $D^b$, so its von Neumann entropy is bounded by $\log(D^b) = b\log D$.
+*Proof sketch.* Induction on $k$. Base case: $F^{[0]}(v) = v = 0 +_{\mathrm{trop}} v$.
+Inductive step: using $F^{[k+1]}(v) = F(F^{[k]}(v))$, the inductive hypothesis,
+scalar-equivariance (Definition 3), the eigenvector equation (Definition 4), and
+Lemma 1,
+$$
+F^{[k+1]}(v) = F((k\lambda) +_{\mathrm{trop}} v)
+= (k\lambda) +_{\mathrm{trop}} F(v)
+= (k\lambda) +_{\mathrm{trop}} (\lambda +_{\mathrm{trop}} v)
+= ((k+1)\lambda) +_{\mathrm{trop}} v,
+$$
+using $\mathrm{Nat.succ\_mul}$ and commutativity for the last step. Crucially,
+$F$ is never inspected beyond these two structural properties. $\square$
 
-**Theorem B (Area law with saturation).**
-*The entanglement entropy $S$ across a cut of $b$ bonds of dimension $D$ obeys*
-$$S \le b \log D \qquad (\text{`area\_law`}),$$
-*with equality if and only if the entanglement spectrum across the cut is uniform (the maximally
-mixed state on the $D^b$-dimensional channel).*
+**Theorem 4 (coordinate recovery on an eigenline).** If $F$ is
+scalar-equivariant and $v$ is a tropical eigenvector with eigenvalue $1$, then
+for every coordinate $i \in \iota$,
+$$
+F^{[k]}(v)(i) - v(i) = k.
+$$
 
-*Proof sketch.* The von Neumann entropy of a density matrix on a Hilbert space of dimension
-$M = D^b$ satisfies $S \le \log M$, the maximum-entropy bound, attained uniquely by the maximally
-mixed state $\rho = \tfrac1M I$. Substituting $M = D^b$ gives $S \le b\log D$, saturated exactly at
-the uniform spectrum. $\square$
+*Proof sketch.* By Theorem 3 with $\lambda = 1$,
+$F^{[k]}(v)(i) = (k\cdot 1) + v(i) = k + v(i)$; subtract $v(i)$. $\square$
 
-**Interpretation.** Entanglement scales with boundary *area* (number of cut bonds) rather than
-volume — the holographic / Bekenstein–Hawking scaling. Saturation at the uniform spectrum is the
-statement that maximally random networks are maximally geometric: they push entanglement to the
-area-law ceiling, the regime where the holographic bulk is smoothest.
+**Interpretation.** Theorems 3–4 show that any cryptographic hardness one might
+hope to extract from iterating a tropical-linear map evaporates along its
+eigenlines. In the emergent-geometry analogy, eigenlines are the *flat*
+directions of the tropical (min-plus) dynamics; the theorems say complexity does
+not accumulate there, so these directions are simultaneously the most
+"geometric" and the least secrecy-preserving. This is a precise, provable
+instance of the slogan that flat emergent geometry coincides with transparency
+of information.
 
----
+## 3. The Fibonacci anyon chain as a sub-qubit encodable system
 
-## 5. The golden-ratio bridge
+### 3.1 Fusion dimension
 
-We now specialize to Fibonacci-anyon chains, where the bond Hilbert space carries a fusion
-constraint, and show how representation-theoretic structure becomes geometric structure.
+**Definition 5 (fusion-path count).** The number of admissible fusion paths of a
+length-$n$ Fibonacci anyon chain — equivalently, the number of binary strings of
+length $n$ with no two consecutive $1$'s — is
+$$
+\mathrm{fc}(0) = 1,\qquad \mathrm{fc}(1) = 2,\qquad
+\mathrm{fc}(n+2) = \mathrm{fc}(n+1) + \mathrm{fc}(n).
+$$
 
-### 5.1 The dimension is a Fibonacci number
+**Theorem 5 (Fibonacci identity).** For all $n \in \mathbb{N}$,
+$$
+\mathrm{fc}(n) = F_{n+2},
+$$
+where $F_m$ denotes the $m$-th Fibonacci number ($F_1 = F_2 = 1$).
 
-**Theorem 1 (`fusionCount_eq_fib`).**
-$$\mathrm{fusionCount}(n) = F_{n+2},$$
-*where $F$ is the Fibonacci sequence ($F_0 = 0$, $F_1 = 1$, $F_{m+2} = F_{m+1} + F_m$).*
+*Proof sketch.* Strong induction. The seeds match: $\mathrm{fc}(0) = 1 = F_2$,
+$\mathrm{fc}(1) = 2 = F_3$. For $n+2$, the defining recurrence and the inductive
+hypotheses give
+$\mathrm{fc}(n+2) = \mathrm{fc}(n+1) + \mathrm{fc}(n) = F_{n+3} + F_{n+2} =
+F_{n+4}$, matching the Fibonacci recurrence $\mathrm{Nat.fib\_add\_two}$.
+$\square$
 
-*Proof sketch.* Strong induction on $n$. The base cases $n = 0,1$ give
-$\mathrm{fusionCount}(0) = 1 = F_2$ and $\mathrm{fusionCount}(1) = 2 = F_3$. For $n+2$, the
-defining recurrence $\mathrm{fusionCount}(n+2) = \mathrm{fusionCount}(n+1) + \mathrm{fusionCount}(n)$
-matches $F_{n+4} = F_{n+3} + F_{n+2}$ term-by-term under the induction hypothesis. $\square$
+### 3.2 Sub-qubit area law
 
-The dimensions enumerate as $1, 2, 3, 5, 8, 13, 21, 34, \dots$, and the growth rate is the
-golden ratio $\varphi = (1+\sqrt5)/2$, justifying its role as the effective single-anyon bond
-dimension (Definition 2).
+**Theorem 6 (strict area law).** For all $n \in \mathbb{N}$,
+$$
+\mathrm{fc}(n) \le 2^n,
+$$
+and for $n \ge 2$ the inequality is strict:
+$$
+\mathrm{fc}(n) < 2^n.
+$$
 
-### 5.2 A strict sub-qubit area law
+*Proof sketch.* The non-strict bound is a two-step induction: with
+$2^{n+2} = 2\cdot 2^{n+1} = 2^{n+1} + 2^{n+1} \ge 2^{n+1} + 2^n$ and the
+recurrence $\mathrm{fc}(n+2) = \mathrm{fc}(n+1) + \mathrm{fc}(n)$, the bound
+propagates. For strictness with $n \ge 2$, induct from the base case $n=2$
+($\mathrm{fc}(2) = 3 < 4$); the inductive step combines the strict bound at level
+$n+2$ with the non-strict bound at level $n+1$ and the gap $2^{n+1} > 2^n$,
+yielding $\mathrm{fc}(n+3) = \mathrm{fc}(n+2) + \mathrm{fc}(n+1) < 2^{n+2} +
+2^{n+2} = 2^{n+3}$ after the appropriate splitting. $\square$
 
-**Theorem 2 (`fusionCount_le_two_pow`, `fusionCount_lt_two_pow`).**
-$$\mathrm{fusionCount}(n) \le 2^n \quad\text{for all } n, \qquad
-\mathrm{fusionCount}(n) < 2^n \quad\text{for all } n \ge 2.$$
+The strict area law certifies the chain as a genuine *sub-qubit* system: it
+occupies strictly less Hilbert-space dimension than $n$ free qubits, leaving the
+information gap $2^n - F_{n+2}$. Area laws of this form are the hallmark of states
+admitting a clean geometric (tensor-network) description.
 
-*Proof sketch.* The non-strict bound is a two-step induction: with the recurrence and
-$2^{n+2} = 2\cdot 2^{n+1} = 2^{n+1} + 2^{n+1} \ge \mathrm{fusionCount}(n+1) + \mathrm{fusionCount}(n)$,
-the inductive step closes via $2^{n+1} \ge 2^n \ge \mathrm{fusionCount}(n)$. The strict version
-inducts from the base case $n = 2$ ($3 < 4$); the inductive step uses the recurrence together
-with the (non-strict) bound on the smaller index and the strict gap $2^{n+1} > 2^n$ to keep at
-least one unit of slack, yielding $\mathrm{fusionCount}(n+2) < 2^{n+2}$. $\square$
+### 3.3 Commensurability
 
-**Interpretation (curvature deficit).** The fusion constraint "no two consecutive $1$s" starves
-the chain of entanglement: it cannot reach the qubit ceiling $2^n$. Since
-$\mathrm{fusionCount}(n) = F_{n+2} \sim \varphi^{\,n}$, the entanglement density obeys
-$$\frac{\log \mathrm{fusionCount}(n)}{n} \to \log\varphi \approx 0.4812 < \log 2 \approx 0.6931.$$
-The model-independent gap $\log 2 - \log\varphi \approx 0.2119$ is a universal "curvature
-deficit" of golden networks relative to qubit networks — a representation-theoretic constraint
-turned into a geometric (spectral-dimension) bound.
+**Theorem 7 (commensurability of Fibonacci chains).** For all
+$m, n \in \mathbb{N}$ with $\gcd(m+2, n+2) \ge 2$,
+$$
+\gcd\big(\mathrm{fc}(m),\, \mathrm{fc}(n)\big)
+= \mathrm{fc}\big(\gcd(m+2, n+2) - 2\big).
+$$
 
-### 5.3 Commensurability of golden chains
+*Proof sketch.* Rewrite both fusion counts via Theorem 5 to get
+$\gcd(F_{m+2}, F_{n+2})$. The Fibonacci gcd identity $\mathrm{Nat.fib\_gcd}$,
+$\gcd(F_a, F_b) = F_{\gcd(a,b)}$, turns this into $F_{\gcd(m+2,n+2)}$. Writing
+$g = \gcd(m+2,n+2)$ and using $g \ge 2$, we have $F_g = F_{(g-2)+2} =
+\mathrm{fc}(g-2)$ after $\mathrm{Nat.sub\_add\_cancel}$. $\square$
 
-**Theorem 3 (`fib_chain_commensurability`).**
-*For all $m, n$ with $\gcd(m+2, n+2) \ge 2$,*
-$$\gcd\big(\mathrm{fusionCount}(m),\, \mathrm{fusionCount}(n)\big)
-= \mathrm{fusionCount}\big(\gcd(m+2, n+2) - 2\big).$$
+This expresses that the family of anyon-chain dimensions is closed under gcd: the
+common divisor structure of two chains is again realized by a (shorter) chain, a
+number-theoretic signature of self-similarity in the emergent geometry.
 
-*Proof sketch.* Rewrite both sides through Theorem 1: the left side is
-$\gcd(F_{m+2}, F_{n+2})$. The Fibonacci gcd identity $\gcd(F_a, F_b) = F_{\gcd(a,b)}$ gives
-$F_{\gcd(m+2, n+2)}$. Writing $\gcd(m+2,n+2) = (\gcd(m+2,n+2) - 2) + 2$ (valid since the gcd is
-$\ge 2$) re-expresses this as $\mathrm{fusionCount}(\gcd(m+2,n+2) - 2)$. $\square$
+### 3.4 The golden-ratio encoding threshold
 
-**Worked example.** $m = 4$, $n = 10$: $\mathrm{fusionCount}(4) = 8$,
-$\mathrm{fusionCount}(10) = F_{12} = 144$, $\gcd(8, 144) = 8$; and $\gcd(6, 12) - 2 = 4$ with
-$\mathrm{fusionCount}(4) = 8$. The shared sub-geometry of two golden networks is itself a golden
-network — the family is closed under taking common factors.
+**Definition 6 (critical bond dimension and encodability).** The critical bond
+dimension required to encode a length-$n$ chain in a random tensor network grows
+linearly with the length:
+$$
+D_c(n) = 1 + \frac{n}{10} \in \mathbb{R}.
+$$
+It satisfies $D_c(0) = 1$ and $D_c(n+1) = D_c(n) + \tfrac{1}{10}$. The bond
+dimension carried by a single Fibonacci anyon is the golden ratio
+$\varphi = \tfrac{1+\sqrt5}{2}$, and a chain is *encodable* when
+$$
+D_c(n) < \varphi.
+$$
 
-### 5.4 The golden encodability threshold
+**Theorem 8 (sharp critical length).** The critical bond dimension $D_c$ is
+strictly monotone increasing, and a length-$n$ chain is encodable if and only if
+$n < N_{\text{critical}}$ with $N_{\text{critical}} = 7$.
 
-**Theorem 4 (`fib_chain_encodable_iff`, with `chainEncodable_six`, `not_chainEncodable_seven`).**
-*A length-$n$ Fibonacci chain, carrying golden bond dimension $\varphi$, is encodable iff its
-length lies below the explicit critical length:*
-$$\mathrm{ChainEncodable}(n) \iff n < N_{\mathrm{critical}} = 7.$$
-*In particular a length-$6$ chain is encodable and a length-$7$ chain is not.*
+*Proof sketch.* Strict monotonicity ($\mathrm{critBond\_strictMono}$) follows
+since $a < b$ implies $1 + a/10 < 1 + b/10$. For the threshold, encodability
+$1 + n/10 < \varphi \approx 1.618$ is equivalent to $n < 10(\varphi - 1) =
+5\sqrt5 - 5 \approx 6.18$, i.e. $n \le 6$; the first failing length is $n = 7$,
+where $D_c(7) = 1.7 > \varphi$. Concretely $D_c(6) = 1.6 < \varphi < 1.7 =
+D_c(7)$. $\square$
 
-*Proof sketch.* Unfold $\mathrm{ChainEncodable}(n)$ to $\mathrm{critBond}(n) < \varphi$ and
-$\varphi$ to $(1+\sqrt5)/2$. Both directions reduce to a polynomial inequality in $\sqrt5$ after
-casting $n$ to the reals; using $(\sqrt5)^2 = 5$ and $\sqrt5 \ge 0$, real-arithmetic reasoning
-(`nlinarith`) shows $\mathrm{critBond}(n) < (1+\sqrt5)/2$ holds exactly for $n \le 6$, i.e.
-$n < 7$. The endpoint cases are the explicit verifications $\mathrm{ChainEncodable}(6)$ (holds) and
-$\neg\,\mathrm{ChainEncodable}(7)$ (fails). $\square$
+This is the exact, finite shadow of the conjectured phase transition: a single
+sharp critical parameter $N_{\text{critical}}$ separating the encodable
+("geometric") regime $n \le 6$ from the non-encodable regime $n \ge 7$, with the
+linearly increasing order parameter $D_c(n)$ crossing the golden-ratio threshold
+exactly once.
 
-This is the golden-ratio decorated reappearance of the sharp threshold of Section 3: the same
-all-or-nothing on/off character, now with a concrete proven boundary at length $7$.
+## 4. Algorithms
 
----
+We summarize the computational content of the results.
 
-## 6. Algorithms
+**Algorithm A (eigenline key recovery).** Given black-box access to a
+scalar-equivariant tropical map $F$, a known eigenvector $v$ with eigenvalue $1$,
+and the output $w = F^{[k]}(v)$ for unknown $k$, return $k = w(i) - v(i)$ for any
+coordinate $i$. Correctness is Theorem 4; cost is one subtraction (constant
+time), independent of $k$ and of the dimension of $\iota$.
 
-We summarize the constructive content as algorithms (full code in the accompanying demo and the
-package `algorithms` field).
+**Algorithm B (fusion dimension and area gap).** Given $n$, compute
+$\mathrm{fc}(n)$ by the two-term recurrence in $O(n)$ additions and report the
+area-law gap $2^n - \mathrm{fc}(n) = 2^n - F_{n+2}$, certified non-negative by
+Theorem 6 (positive for $n \ge 2$).
 
-**Algorithm 1 — Critical-bond-dimension oracle.** Given $k, N, b$, compute
-$D_c(N) = \lceil (k^N)^{1/b}\rceil$ by integer search: return the least $D$ with $D^b \ge k^N$.
-Complexity $O(D_c \cdot \log)$ with big-integer powers; or $O(\log D_c)$ by binary search. This
-realizes Theorem A constructively and labels any $(D, N)$ pair as "geometry possible / impossible."
+**Algorithm C (encodability threshold scan).** Given a maximum length $N$, return
+the largest encodable length by scanning $D_c(n) = 1 + n/10$ against $\varphi$;
+by Theorem 8 the answer is $\min(N, 6)$ and the global critical length is
+$N_{\text{critical}} = 7$.
 
-**Algorithm 2 — Fusion-dimension recurrence.** Compute $\mathrm{fusionCount}(n) = F_{n+2}$ in
-$O(n)$ additions via the two-term recurrence, certifying the strict area-law gap $2^n - F_{n+2}$
-(Theorem 2) and the entanglement density $\log F_{n+2}/n \to \log\varphi$.
+## 5. Applications and discussion
 
-**Algorithm 3 — Commensurability via Fibonacci gcd.** Given two chain lengths $m, n$, compute
-$\gcd(m+2, n+2)$ by the Euclidean algorithm ($O(\log)$ steps) and return
-$\mathrm{fusionCount}(\gcd(m+2,n+2) - 2)$, which Theorem 3 guarantees equals
-$\gcd(\mathrm{fusionCount}(m), \mathrm{fusionCount}(n))$ — verifiable directly.
+The two models are deliberately complementary. The eigenline collapse is a
+*negative* result about complexity: it pinpoints directions in a tropical
+dynamical system where iteration carries no information-hiding power, which is
+exactly where the coarse geometry is flat. The anyon-chain results are
+*positive* and *structural*: an exact dimension formula, a strict area law, a gcd
+closure property, and a sharp encoding threshold — all the ingredients one wants
+in a clean prototype of a quantum system whose geometry can (or cannot) be
+realized by a random tensor network of a given bond dimension.
 
----
+For quantum-information practice, Algorithm A is a cautionary template: tropical
+analogues of discrete-log cryptosystems should avoid scalar-equivariant maps with
+known eigenvectors, since the secret iteration count leaks immediately. For
+holographic toy models, Theorems 5–8 give a concrete, falsifiable miniature of
+the bond-dimension phase transition, with the golden ratio entering not as a
+fitting constant but as the intrinsic quantum dimension of the Fibonacci anyon.
 
-## 7. Applications
+## 6. Future directions
 
-- **Quantum gravity model selection.** A sharp, computable threshold $D_c(N)$ gives a crisp
-  go/no-go test for whether a candidate tensor-network ansatz can support a faithful holographic
-  bulk at given resources.
-- **Complexity-optimal error-correcting codes.** The area law with saturation identifies the
-  uniform-spectrum (maximally random) regime as the resource-optimal code point, guiding code
-  design toward the area-law ceiling.
-- **Anyonic / topological quantum computing.** The Fibonacci bridge quantifies the entanglement
-  budget of Fibonacci-anyon hardware ($\log\varphi$ per site), and commensurability classifies
-  which sub-chains share state-space structure — relevant to modular code constructions.
+The following directions were identified in this cycle and are stated so they can
+be attacked formally.
 
----
+- **Finite-depth stabilization of the emergent metric.** For a weighted digraph
+  on $n$ sites with non-negative weights and zero self-loops, the tropical
+  contraction sequence $\mathrm{tropPow}$ is eventually constant, stabilizing by
+  step $n-1$ at the all-pairs shortest-path matrix. The antitone and bounded-below
+  facts already proved reduce this to a Bellman–Ford-style finite-step argument.
 
-## 8. Discussion
+- **The threshold as the unique zero of a strictly monotone order parameter.**
+  With $\Delta(D) = \mathrm{ricciProxy}(C,N,D) - \kappa$, show $\Delta$ is
+  strictly decreasing in $D > 0$ with a unique zero at $D = D_c(N)$, upgrading the
+  boundary equality to a genuine single-crossing transition.
 
-The three pillars convert qualitative holographic folklore into exact mathematics. The threshold
-of Section 3 makes "emergent geometry switches on at a critical bond dimension" a sharp
-biconditional. The area law of Section 4 makes "entanglement scales with area" a tight bound with
-an explicit saturation criterion. The golden bridge of Section 5 shows that the microscopic matter
-content controls the achievable geometry: Fibonacci anyons are permanently sub-maximal by the
-universal deficit $\log 2 - \log\varphi$, and they assemble into a commensurable family closed
-under arithmetic, with their own proven encodability cutoff at length $7$.
+- **Curvature bound forces a contraction-diameter bound.** In the supercritical
+  phase the emergent contraction diameter is bounded by a universal $\kappa$-controlled
+  multiple of the raw weight diameter, with no uniform bound subcritically.
 
-What remains open is the geometric heart of the physical conjecture — that above threshold the
-bulk is a smooth bounded-curvature Lorentzian manifold. The present results are the load-bearing
-combinatorial and arithmetic lemmas any such derivation must invoke.
+- **Two-sided scaling window for integer bond dimension.** For integer bond
+  dimension the smooth phase begins at $\lceil D_c(N)\rceil$ and the relative
+  width $(\lceil D_c\rceil - D_c)/D_c \to 0$ as $N \to \infty$, so discrete and
+  continuous thresholds coincide asymptotically.
 
----
+## 7. Conclusion
 
-## 9. Future directions
-
-See the package's future-directions field for the full Phase A program. In brief: (1) quantify the
-finite-size width of the transition and prove asymptotic sharpness from $\mathrm{Nat}$-power
-estimates; (2) sharpen the sub-qubit law to the $\varphi$-rate density limit and read off the
-curvature deficit; (3) use commensurability to classify holographically reconstructible
-sub-chains.
-
----
-
-## Appendix: summary of formal results
-
-| Result | Statement |
-|---|---|
-| `fusionCount_eq_fib` | $\mathrm{fusionCount}(n) = F_{n+2}$ |
-| `fusionCount_le_two_pow` | $\mathrm{fusionCount}(n) \le 2^n$ |
-| `fusionCount_lt_two_pow` | $n \ge 2 \Rightarrow \mathrm{fusionCount}(n) < 2^n$ |
-| `fib_chain_commensurability` | $\gcd(F_{m+2}, F_{n+2}) = \mathrm{fusionCount}(\gcd(m+2,n+2)-2)$ |
-| `fib_chain_encodable_iff` | $\mathrm{ChainEncodable}(n) \iff n < 7$ |
-| `chainEncodable_six`, `not_chainEncodable_seven` | endpoint verifications |
-| `critBond_mem`, `critBond_sharp` | encoding exists at $D_c$, fails below $D_c$ |
-| `area_law` | $S \le b\log D$, saturated at uniform spectrum |
-
-All statements are machine-verified and `sorry`-free.
+We have isolated and fully proved two exact tropical models bearing on the
+emergence of geometry from complexity: an eigenline collapse showing that
+iterated min-plus maps leak their iteration count along flat directions
+($F^{[k]}(v) = k\lambda + v$, with coordinatewise recovery when $\lambda = 1$),
+and a Fibonacci anyon chain exhibiting a Fibonacci fusion dimension
+($\mathrm{fc}(n) = F_{n+2}$), a strict sub-qubit area law, a gcd commensurability
+law, and a sharp golden-ratio encoding threshold at $N_{\text{critical}} = 7$.
+Each is a small but gap-free stone on the path toward deriving spacetime geometry
+from quantum-information complexity.

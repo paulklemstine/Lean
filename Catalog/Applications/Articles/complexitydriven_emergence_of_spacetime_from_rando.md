@@ -1,219 +1,269 @@
-# When Spacetime Has to Choose: Phase Transitions, Golden Networks, and the Arithmetic of Emergent Geometry
+# When Geometry Forgets Its Secrets: Complexity, Tropical Algebra, and the Shape of Space
 
-## A universe woven from threads
+## A universe stitched from numbers
 
-Imagine you could pull spacetime apart the way you unravel a sweater, tugging until
-you found the single thread it was knitted from. For a long time physicists assumed
-that thread would be something *geometric* — a tiny line element, a quantum of area,
-a fundamental length. But over the last decade a stranger idea has taken hold: the
-thread might not be geometric at all. It might be **information**. More precisely, it
-might be *entanglement* — the quiet, invisible correlation that ties the parts of a
-quantum system together.
+Imagine that the fabric of space is not a smooth sheet handed to us at the
+beginning of time, but something *woven* — knot by knot, thread by thread —
+out of pure information. In this picture a region of the universe is a vast
+network of interconnected quantum components, and the distances, curvatures,
+and even the notion of "nearby" emerge from how strongly those components are
+entangled. This is the central dream of a research program that tries to derive
+Einstein's geometry from quantum information.
 
-The slogan for this idea, coined by physicists working on the holographic principle,
-is blunt: **"It from Qubit."** Geometry — distance, curvature, the smooth fabric of
-Einstein's relativity — is not put in by hand. It *emerges* from how a vast collection
-of quantum bits are entangled with one another. Pull the entanglement apart, and the
-geometry comes apart with it.
+It is a beautiful dream, and a notoriously slippery one. To make progress we
+need *toy universes* simple enough to reason about exactly, yet rich enough to
+exhibit the phenomenon we care about: a sharp moment where a tangle of
+information suddenly behaves like smooth space. This article tells the story of
+two such toy universes, both living in the strange and elegant world of
+**tropical algebra**, and both yielding clean, provable statements about how
+complexity, geometry, and secrecy interact.
 
-The most concrete laboratory for this idea is a mathematical object called a **random
-tensor network**. Picture a graph — vertices connected by edges. On each vertex sits a
-small quantum object; along each edge runs a "bond" that can carry a certain amount of
-quantum information, measured by a number called the **bond dimension** $D$. A bond of
-dimension $D$ is like a wire that can transmit $\log D$ bits' worth of quantum
-correlation. Wire the vertices together with random quantum gates and something
-remarkable happens: the network starts to behave like a *hologram*. The information
-living on its boundary reconstructs a geometry living in its interior — a "bulk." When
-the wires are fat enough, that bulk looks smooth, like a curved spacetime. When the
-wires are too thin, the bulk shatters into something fractal and pathological, a
-geometry that no amount of coarse-graining can iron flat.
+The two stories share a punchline that sounds almost paradoxical: *on the
+special directions where geometry is simplest, complexity collapses entirely.*
+What looks like an impenetrable, repeatedly scrambled computation turns out, on
+these directions, to leak its deepest secret in a single subtraction.
 
-This article is about a precise, fully machine-checked piece of that story. It does not
-settle the grand physical conjecture — that smooth Einsteinian spacetime emerges above
-a critical bond dimension and dissolves below it. Instead it nails down the *skeleton*
-of the conjecture: the exact arithmetic of **when a holographic encoding can exist at
-all**, an information-theoretic **area law** that caps how much a network can entangle,
-and a beautiful number-theoretic surprise hiding inside a special class of networks
-built from the most famous irrational number in mathematics — the **golden ratio**.
+## The tropical world: where plus becomes min, and times becomes plus
 
-## The first lesson: encoding is all-or-nothing
+Everything below takes place in the **min-plus** or **tropical** semiring. The
+rules are disarmingly simple. You take ordinary numbers, but you redefine the
+two arithmetic operations:
 
-Start with the most basic question you can ask of a holographic code. You have a "bulk"
-worth of quantum information you want to protect and reconstruct. Concretely, suppose
-your bulk lives on $N$ vertices, each carrying a quantum object of rank $k$, so the bulk
-has $k^N$ possible states. You want to faithfully record those states on a boundary made
-of $b$ bonds, each of dimension $D$, giving $D^b$ possible boundary states. A faithful
-holographic encoding is an *injection*
+- "Addition" becomes taking the **minimum**: $a \oplus b = \min(a, b)$.
+- "Multiplication" becomes ordinary **addition**: $a \otimes b = a + b$.
 
-$$\mathrm{Fin}(k^N) \hookrightarrow \mathrm{Fin}(D^b),$$
+This sounds like a party trick, but it is the natural arithmetic of *shortest
+paths*, of *optimization*, and — crucially for us — of the coarse "skeleton"
+geometry that a tensor network leaves behind when you zoom out. In the tropical
+world, multiplying a vector by a scalar $\lambda$ means adding $\lambda$ to
+every coordinate, and iterating a linear map means concatenating paths and
+keeping the cheapest one.
 
-a one-to-one map that loses no information — every bulk state gets its own distinct
-boundary fingerprint.
+We will deliberately work with plain natural numbers, sidestepping the usual
+tropical bookkeeping around "infinity." That keeps every statement concrete and
+every proof airtight.
 
-When does such a map exist? The answer is almost insultingly simple, and that simplicity
-is the point: you can fit $k^N$ pigeons into $D^b$ holes exactly when there are at least
-as many holes as pigeons, i.e. when $D^b \ge k^N$. Solving for the bond dimension, an
-encoding exists **if and only if**
+## Story one: the collapse of a tropical secret
 
-$$D \ge D_c(N) := \left\lceil \big(k^N\big)^{1/b} \right\rceil.$$
+### A would-be cryptosystem
 
-That ceiling, $D_c(N)$, is the **critical bond dimension**. Below it, no encoding exists;
-information is irretrievably lost. At it or above it, a perfect encoding appears. There is
-no gradual fade, no partial credit. The transition is *sharp* — a clean, all-or-nothing
-jump from "geometry impossible" to "geometry possible." In the formalization this is two
-companion facts: a witness that the encoding genuinely exists at $D = D_c$, and a proof
-that it strictly fails for every $D < D_c$.
+Many cryptographic schemes hide a secret integer $k$ — your private key — inside
+a computation that is easy to run forward and (supposedly) hard to reverse. The
+classic example is the *discrete logarithm*: multiply a fixed base by itself $k$
+times, publish the result, and dare anyone to recover $k$.
 
-A worked example makes it vivid. Take qubits ($k = 2$), a bulk of $N = 10$ of them, and a
-boundary of $b = 4$ bonds. The bulk has $2^{10} = 1024$ states. We need $D^4 \ge 1024$.
-Try $D = 5$: $5^4 = 625 < 1024$ — not enough, information is lost. Try $D = 6$:
-$6^4 = 1296 \ge 1024$ — it fits, and a faithful hologram exists. So $D_c(10) = 6$, and the
-geometry "switches on" precisely as the bond dimension crosses $6$.
+It is tempting to build the same idea in the tropical world, where
+"multiplication" is iterated application of a min-plus matrix. Call it the
+**Tropical Discrete Logarithm Problem (TDLP)**: hide $k$ by applying a fixed
+tropical-linear map $F$ exactly $k$ times to a starting vector, then challenge
+the world to find $k$ from the input/output pair.
 
-This is the discrete, order-theoretic shadow of a thermodynamic phase transition. In
-statistical physics a sharp phase boundary — water freezing to ice — is where a system's
-character changes discontinuously. Here the "character" is whether a smooth bulk can be
-encoded at all, and the control knob is the bond dimension. The lesson: **emergent
-geometry has a threshold, and the threshold is exact.**
+Does it work? Our first result says: *catastrophically not*, at least on the
+directions that matter most.
 
-## The second lesson: you cannot entangle more than your wires allow
+### The one-dimensional collapse
 
-A sharp threshold for *existence* is only half the story. The deeper physical content of
-holography is the **area law**: the amount of entanglement between a region and its
-surroundings is proportional not to the region's *volume* but to its *boundary area*.
-This is exactly the scaling obeyed by the entropy of a black hole — the Bekenstein–Hawking
-formula — and it is the single most important clue that gravity is secretly about
-information.
+Start with the smallest possible case. A $1\times 1$ tropical matrix with entry
+$\lambda$ acts on a single number $x$ by min-plus multiplication — that is, by
+ordinary addition:
+$$
+\text{(one step)}\colon\quad x \longmapsto \lambda + x.
+$$
+What happens if we apply this step $k$ times? Each step adds $\lambda$, so after
+$k$ steps we have simply added $\lambda$ exactly $k$ times. The exact statement,
+proven by a clean induction, is:
+$$
+\underbrace{(\lambda + \cdot)\circ\cdots\circ(\lambda + \cdot)}_{k \text{ times}}(x)
+\;=\; k\lambda + x.
+$$
+There is no scrambling, no mixing — just a linear ramp. Now suppose the system
+designer chose $\lambda = 1$ (the tropical analogue of a "generator"). Then the
+output is exactly $k + x$, and the secret falls out instantly:
+$$
+\text{output} - \text{input} \;=\; (k + x) - x \;=\; k.
+$$
+A single subtraction recovers the private key. The "hard problem" was never
+hard. This is the content of the theorem we informally call *one-by-one
+recovery*: for all natural numbers $x$ and $k$,
+$$
+(1 + \cdot)^{[k]}(x) - x = k.
+$$
 
-In a tensor network the "area" of a region is just the number of bonds you have to cut to
-isolate it, and each bond of dimension $D$ can carry at most $\log D$ units of
-entanglement entropy. So if a boundary consists of $b$ bonds, the entanglement entropy
-$S$ it can support is capped by
+### Why this generalizes: eigenlines
 
-$$S \le b \cdot \log D.$$
+A skeptic might say: "Fine, your $1\times 1$ matrix is trivial. Surely a big,
+complicated tropical map $F$ on many coordinates is safe?" The surprising answer
+is that the collapse is not about size at all. It is about *direction*.
 
-This is the area law in its barest, most honest form: entropy bounded by (number of bonds)
-$\times$ (capacity per bond). And the bound is **tight**. It is *saturated* — achieved with
-equality — exactly when the entanglement spectrum is uniform, i.e. when every channel
-through the cut is maximally and equally entangled. A maximally random network is, in this
-precise sense, the most geometric network there is: it pushes entanglement right up to the
-area-law ceiling, which is exactly the regime in which the holographic bulk looks smoothest.
+The key concept is **scalar-equivariance**. A map $F$ is scalar-equivariant if
+it commutes with the tropical scaling operation — if adding a constant $c$ to
+every coordinate before applying $F$ gives the same result as applying $F$ and
+then adding $c$:
+$$
+F(c + v) = c + F(v) \quad\text{for every constant } c \text{ and vector } v.
+$$
+This is an utterly natural property; essentially every "honest" tropical-linear
+map has it, because min-plus matrix multiplication distributes over a global
+shift.
 
-## The third lesson: golden networks live below the ceiling — forever
+Next, a vector $v$ is a **tropical eigenvector** of $F$ with **eigenvalue**
+$\lambda$ if applying $F$ to $v$ just shifts it by the constant $\lambda$:
+$$
+F(v) = \lambda + v.
+$$
+The set of multiples of such a $v$ is an *eigenline* — a special direction in
+which $F$ acts as nothing more than a uniform shift.
 
-Now for the surprise. The area law says entanglement is *at most* $b\log D$. But what if
-the building blocks of your network are not ordinary qubits, with their freewheeling
-$2^n$-dimensional state spaces, but exotic particles whose very combinatorics forbid them
-from filling that space? Then the network is permanently parked *below* the area-law
-ceiling — and the size of the gap turns out to be a universal constant of nature for that
-kind of matter.
+Here is the general theorem. If $F$ is scalar-equivariant and $v$ is one of its
+eigenvectors with eigenvalue $\lambda$, then *no matter how intricate $F$ is*,
+iterating it $k$ times on $v$ collapses to a single scalar shift:
+$$
+F^{[k]}(v) = k\lambda + v.
+$$
+The proof is a short induction that bounces between the eigenvector equation and
+scalar-equivariance, and never needs to know anything else about $F$. The map
+could be a billion-by-billion tangle; on its eigenline it is a metronome.
 
-The cleanest example uses **Fibonacci anyons**. Anyons are quasiparticles that live in two
-dimensions and obey "fusion rules" — recipes for what happens when you bring two of them
-together. Fibonacci anyons are the simplest non-trivial kind, and they are a darling of
-quantum-computing research because braiding them around one another performs robust,
-error-resistant quantum gates. Their fusion rule has a single, severe constraint, which we
-can model with a binary string: think of a chain of $n$ anyons as a string of $0$s and
-$1$s, where a $1$ marks a "fusion event," and the rule forbids **two consecutive $1$s**.
+And once again, if the eigenvalue is $\lambda = 1$, the secret is laid bare in
+every coordinate at once. Picking any coordinate $i$,
+$$
+F^{[k]}(v)_i - v_i = k.
+$$
+This is the *eigenline attack*: the TDLP offers no security whenever the
+attacker can find an eigenvector, because complexity simply does not accumulate
+along eigenlines. The lesson for our spacetime story is sharp and a little
+poetic — **the directions where the emergent geometry is flattest are exactly
+the directions where information stops hiding.**
 
-How many distinct admissible chains of length $n$ are there? Call this count
-$\mathrm{fusionCount}(n)$; it is precisely the dimension of the chain's quantum state space —
-the number of independent ways the anyons can fuse. Counting binary strings with no two
-adjacent $1$s is a classic puzzle, and the answer obeys a recurrence: a length-$(n+2)$
-string is either a valid length-$(n+1)$ string with a safe symbol appended, or a valid
-length-$n$ string with a constrained tail. Formally,
+## Story two: anyon chains and the birth of a smooth dimension
 
-$$\mathrm{fusionCount}(0) = 1, \quad \mathrm{fusionCount}(1) = 2, \quad
-\mathrm{fusionCount}(n+2) = \mathrm{fusionCount}(n+1) + \mathrm{fusionCount}(n).$$
+The second toy universe is built from **anyons** — exotic quasiparticles that
+live in two-dimensional materials and that physicists hope to braid into
+fault-tolerant quantum computers. The most famous species is the **Fibonacci
+anyon**, and it earns its name in a way that turns out to be exactly the right
+bridge to tensor-network geometry.
 
-That is the Fibonacci recurrence! And indeed the first machine-checked theorem says the
-dimension *is* a Fibonacci number — exactly,
+### Counting the ways the world can fuse
 
-$$\boxed{\;\mathrm{fusionCount}(n) = F_{n+2}\;}$$
+Line up $n$ Fibonacci anyons in a chain. Quantum mechanically, the chain does
+not have one state but a whole Hilbert space, and the dimension of that space —
+the number of independent quantum configurations — equals the number of
+*admissible fusion paths*. Concretely, this is the number of binary strings of
+length $n$ that contain **no two consecutive 1's** (a "1" marks where two
+neighbours fuse nontrivially, and physics forbids two such fusions in a row).
 
-where $F$ is the usual Fibonacci sequence $0,1,1,2,3,5,8,13,21,\dots$. The chain dimensions
-march out as $1, 2, 3, 5, 8, 13, 21, 34, \dots$ — Fibonacci numbers, one for every length.
-The golden ratio $\varphi = (1+\sqrt5)/2 \approx 1.618$, which governs how fast Fibonacci
-numbers grow, is therefore the *effective bond dimension* of a single Fibonacci anyon.
+Call this count $\mathrm{fc}(n)$. It obeys the most famous recurrence in
+mathematics. A length-$(n{+}2)$ admissible string either ends in a "0" (and the
+first $n{+}1$ symbols are any admissible string) or ends in "01" (and the first
+$n$ symbols are any admissible string). Hence
+$$
+\mathrm{fc}(n+2) = \mathrm{fc}(n+1) + \mathrm{fc}(n),
+\qquad \mathrm{fc}(0)=1,\ \mathrm{fc}(1)=2.
+$$
+That is the Fibonacci recurrence, and a clean strong induction confirms the
+exact identity
+$$
+\mathrm{fc}(n) = F_{n+2},
+$$
+where $F_m$ is the ordinary Fibonacci number ($F_1=F_2=1, F_3=2, F_4=3,\dots$).
+So a chain of $5$ anyons has $\mathrm{fc}(5) = F_7 = 13$ quantum states; a chain
+of $6$ has $F_8 = 21$.
 
-Now compare to a chain of ordinary qubits, whose state space has the full dimension $2^n$.
-The second theorem is a **sub-qubit area law**: the Fibonacci chain is always at most as big
-as the qubit chain,
+### A sub-qubit area law
 
-$$\mathrm{fusionCount}(n) \le 2^n,$$
+Now compare this to the "naive" expectation. If each anyon were an ordinary
+qubit, a chain of $n$ of them would have $2^n$ states. The fusion rule forbids
+many of those configurations, so the true count is smaller. We can prove this
+exactly: for every length $n$,
+$$
+\mathrm{fc}(n) \le 2^n,
+$$
+and the inequality is **strict** as soon as $n \ge 2$:
+$$
+\mathrm{fc}(n) < 2^n \qquad (n \ge 2).
+$$
+Physicists call statements of this shape *area laws*: the amount of quantum
+information a region can hold grows slower than the naive "volume" count $2^n$.
+Area laws are the fingerprint of states that have a clean geometric description
+— precisely the states from which smooth space can emerge. Here we get a
+quantitative, provable version: the Fibonacci chain is a genuine *sub-qubit*
+system, leaving a definite information gap $2^n - F_{n+2}$ that grows with the
+chain.
 
-and — crucially — the inequality is **strict for every chain of length $n \ge 2$**:
+### Hidden harmony: commensurability
 
-$$\mathrm{fusionCount}(n) < 2^n \quad \text{for all } n \ge 2.$$
+There is a deeper, almost musical structure hiding in these dimensions.
+Fibonacci numbers famously satisfy $\gcd(F_a, F_b) = F_{\gcd(a,b)}$ — the
+greatest common divisor of two Fibonacci numbers is itself a Fibonacci number.
+Translated to our fusion dimensions, this becomes a **commensurability law**:
+the greatest common divisor of two chains' Hilbert-space dimensions is again the
+dimension of some chain. Precisely, whenever $\gcd(m+2, n+2) \ge 2$,
+$$
+\gcd\big(\mathrm{fc}(m),\, \mathrm{fc}(n)\big)
+\;=\; \mathrm{fc}\big(\gcd(m+2,\,n+2) - 2\big).
+$$
+Two chains of length $4$ and $6$, for example, have dimensions $F_6 = 8$ and
+$F_8 = 21$; their gcd is $1 = F_2 = \mathrm{fc}(0)$, matching
+$\gcd(6,8) - 2 = 0$. This means the family of anyon chains is *harmonically
+closed*: their dimensions share common factors only in ways that point back to
+smaller members of the same family. It is the number-theoretic shadow of a
+self-similar geometry.
 
-Check it: at $n=2$, $3 < 4$; at $n=3$, $5 < 8$; at $n=4$, $8 < 16$; at $n=10$, the gap is
-already $144$ versus $1024$. The fusion constraint — "no two consecutive $1$s" — physically
-*starves* the network of entanglement. It can never reach the qubit ceiling. And because
-$F_{n+2}$ grows like $\varphi^n$ while $2^n$ grows like $2^n$, the entanglement density
-settles at
+### The threshold: when can a network actually hold the chain?
 
-$$\frac{\log \mathrm{fusionCount}(n)}{n} \;\longrightarrow\; \log \varphi \approx 0.481
-\;<\; \log 2 \approx 0.693.$$
+Finally, the bridge to emergent spacetime. To *encode* a quantum system in a
+random tensor network, the network's **bond dimension** $D$ — the size of the
+internal "wires" connecting its tensors — must be large enough. We model the
+demand realistically: longer chains need fatter wires. The **critical bond
+dimension** grows linearly with length,
+$$
+D_c(n) = 1 + \frac{n}{10},
+$$
+and one checks immediately that it is strictly increasing in $n$.
 
-The difference, $\log 2 - \log\varphi \approx 0.212$, is a fixed, model-independent
-**"curvature deficit"** — a universal gauge of how much less geometry a golden network can
-support compared to a qubit network. The arithmetic of the golden ratio is literally
-setting a geometric speed limit.
+A single Fibonacci anyon carries a very particular bond dimension: the
+**golden ratio** itself,
+$$
+\varphi = \frac{1+\sqrt 5}{2} \approx 1.618.
+$$
+(This is no coincidence — the quantum dimension of a Fibonacci anyon literally
+*is* $\varphi$.) We say a chain is **encodable** when the golden-ratio bond
+dimension clears the threshold:
+$$
+D_c(n) < \varphi.
+$$
+Solving $1 + n/10 < 1.618$ gives $n < 6.18$, so the chain is encodable exactly
+when its length is at most $6$. There is a sharp critical length:
+$$
+N_{\text{critical}} = 7,
+$$
+the first length at which $D_c(n) = 1.7$ overshoots the golden ratio and the
+network can no longer hold the chain. Below the threshold, the golden-ratio
+wires are wide enough and the chain's geometry is faithfully realized; at and
+above it, the encoding breaks. This is, in miniature, exactly the phase
+transition the grand conjecture predicts: a sharp critical parameter separating
+a "smooth, geometric" regime from a "cannot-be-realized" regime.
 
-## The fourth lesson: networks made of golden threads are *commensurable*
+## Two stories, one moral
 
-Here is where the number theory becomes genuinely beautiful. Fibonacci numbers obey one of
-the most elegant identities in all of mathematics: the greatest common divisor of two
-Fibonacci numbers is itself a Fibonacci number, indexed by the gcd of their positions —
-$\gcd(F_a, F_b) = F_{\gcd(a,b)}$. Translated to anyon chains, this becomes a statement
-about how two chains *share structure*. The third theorem says that the gcd of two chain
-dimensions is again a chain dimension:
+What unites the collapsing tropical secret and the golden-ratio anyon chain?
+Both are studies of **how complexity organizes itself into geometry**, and both
+identify a *threshold* or *special direction* where the behavior changes
+qualitatively and provably.
 
-$$\gcd\big(\mathrm{fusionCount}(m),\, \mathrm{fusionCount}(n)\big)
-= \mathrm{fusionCount}\big(\gcd(m+2,\,n+2) - 2\big),$$
+- In the eigenline story, complexity refuses to accumulate along the flat
+  directions of a tropical map; iterating $k$ times is indistinguishable from a
+  single shift $k\lambda$, and when $\lambda = 1$ the hidden exponent $k$ is
+  recovered by subtraction. Flatness equals transparency.
 
-valid whenever $\gcd(m+2, n+2) \ge 2$. For example, a length-$4$ chain (dimension $8$) and a
-length-$10$ chain (dimension $144$) have $\gcd(8,144) = 8$ — and $8$ is exactly the dimension
-of the chain whose index is $\gcd(6,12) - 2 = 4$. The shared "sub-geometry" of two golden
-networks is *itself a golden network*. The pieces fit; the family is closed under taking
-common factors. This is what physicists mean by **commensurability**, and here it is an exact
-arithmetic fact rather than an approximation.
+- In the anyon story, the dimension of quantum reality grows like Fibonacci
+  numbers, stays strictly below the naive qubit count (an exact area law), is
+  harmonically closed under gcd, and can be faithfully encoded by a
+  golden-ratio tensor network exactly up to a sharp critical length $7$.
 
-## The fifth lesson: even golden networks have a threshold
-
-Finally, the two threads — phase transitions and golden ratios — are tied together. Recall
-the first lesson: a length-$n$ chain can be holographically encoded only if its bond
-dimension clears the critical value $D_c$ for that length. A single Fibonacci anyon carries
-bond dimension $\varphi \approx 1.618$. So we can ask: **how long a golden chain can the
-golden ratio actually encode?**
-
-Define a chain to be *encodable* when its critical bond dimension is strictly below $\varphi$.
-The final theorem pins the threshold exactly:
-
-$$\text{a length-}n\text{ Fibonacci chain is encodable} \iff n < 7.$$
-
-A length-$6$ chain just makes it; a length-$7$ chain does not. The number $7$ is not a
-guess or a numerical fit — it is a proven, sharp boundary, complete with explicit
-verifications that length $6$ works and length $7$ fails. The same all-or-nothing character
-we saw in the abstract pigeonhole threshold reappears here, now decorated with $\sqrt5$ and
-the golden ratio.
-
-## Why this matters
-
-None of these results, on its own, derives Einstein's equations from quantum complexity.
-That remains a grand and open conjecture. What these results *do* is lay down the load-bearing
-beams of the argument with total rigor:
-
-- **Emergent geometry has a sharp on/off switch** (the critical bond dimension), and that
-  switch is governed by exact, countable arithmetic — not approximation.
-- **Entanglement obeys an area law with a tight ceiling**, saturated precisely by the most
-  random, most geometric networks.
-- **The microscopic matter you build from controls the geometry you get**: golden networks
-  sit permanently below the ceiling by a universal deficit, and they assemble into a
-  commensurable family closed under arithmetic.
-
-Each of these is the kind of statement that, in the physical conjecture, has always been
-waved at heuristically — "the transition is sharp," "the area law holds," "anyonic networks
-are sub-maximal." Here they are theorems. They convert slogans into structure, and structure
-is what a real theory of emergent spacetime will have to be built from. The thread that
-spacetime is knitted from may be information; if so, these are some of the exact knots.
+Neither toy universe is the real one. But each captures, in a form simple enough
+to prove without a single gap, one face of the deep idea that *space is what
+complexity looks like when you zoom out* — and that there are precise thresholds
+governing when that emergence succeeds. The dream of deriving geometry from
+information is still a dream. These results are two small, solid stones laid on
+the path toward it: not metaphors, but theorems.

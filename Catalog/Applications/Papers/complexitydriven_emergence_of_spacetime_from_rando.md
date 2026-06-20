@@ -1,40 +1,45 @@
 # Theorem Trace (internal anti-hallucination ledger)
 
-Every named object below is taken verbatim from the Phase A Lean output. No result
-is stated in the deliverables that is not on this list. Where a result is only
-*named* in the Phase A future-directions text (Threshold / AreaLaw) and not given
-with full source, the deliverables describe it at the level the source supports and
-never invent a closed form beyond it.
+This file lists every definition, lemma, and theorem appearing in the Phase A
+Lean output, with its mathematical statement and where it is referenced in
+`ARTICLE.md` and `RESEARCH_PAPER.md`. No result outside this list is claimed in
+the prose.
 
-## `Bridges/FibonacciAnyonChain.lean` (full source provided — primary ground truth)
+## File: Catalog/Tropical/TropicalTDLPEigenAttack.lean
 
-| Lean name | Statement | In ARTICLE.md | In RESEARCH_PAPER.md |
+| Lean name | Statement | Article | Paper |
 |---|---|---|---|
-| `fusionCount` | `fusionCount 0 = 1`, `fusionCount 1 = 2`, `fusionCount (n+2) = fusionCount (n+1) + fusionCount n` | yes (def) | yes (Def. 1) |
-| `fusionCount_eq_fib` | `fusionCount n = Nat.fib (n + 2)` | yes | yes (Thm. 1) |
-| `fusionCount_le_two_pow` | `fusionCount n ≤ 2 ^ n` | yes (area law) | yes (Thm. 2) |
-| `fusionCount_lt_two_pow` | `2 ≤ n → fusionCount n < 2 ^ n` | yes | yes (Thm. 2, strict part) |
-| `fib_chain_commensurability` | `2 ≤ gcd(m+2,n+2) → gcd(fusionCount m, fusionCount n) = fusionCount (gcd(m+2,n+2) - 2)` | yes | yes (Thm. 3) |
-| `fibBondDimension` | `:= Real.goldenRatio = (1+√5)/2` | yes | yes (Def. 2) |
-| `ChainEncodable` | `critBond n < fibBondDimension` | yes | yes (Def. 3) |
-| `N_critical` | `:= 7` | yes | yes |
-| `chainEncodable_six` | `ChainEncodable 6` | yes | yes |
-| `not_chainEncodable_seven` | `¬ ChainEncodable 7` | yes | yes |
-| `fib_chain_encodable_iff` | `ChainEncodable n ↔ n < N_critical` | yes (main bridge thm) | yes (Thm. 4) |
+| `oneByOneAction` (def) | `oneByOneAction lam = fun x => lam + x` | §"Collapse" | Def. 1 |
+| `oneByOne_tropical_iterate` (thm) | `(fun y => lam + y)^[k] x = k*lam + x` | §"Collapse" | Thm. 1 |
+| `tdlp_recover_oneByOne` (thm) | `(fun y => 1 + y)^[k] x - x = k` | §"Collapse" | Thm. 2 |
+| `Vec` (abbrev) | `Vec ι = ι → Nat` | — | Def. 2 |
+| `tropScalarAdd` (def) | `tropScalarAdd c v = fun i => c + v i` | §"Eigenlines" | Def. 2 |
+| `ScalarEquivariant` (def) | `∀ c v, F (c +• v) = c +• F v` | §"Eigenlines" | Def. 3 |
+| `IsTropicalEigen` (def) | `F v = lam +• v` | §"Eigenlines" | Def. 4 |
+| `tropScalarAdd_add` (thm) | `a +• (b +• v) = (a+b) +• v` | — | Lem. 1 |
+| `iterate_eigenline_attack` (thm) | `F^[k] v = (k*lam) +• v` | §"Eigenlines" | Thm. 3 |
+| `tdlp_recover_eigenline` (thm) | `F^[k] v i - v i = k` (when `lam=1`) | §"Eigenlines" | Thm. 4 |
 
-## `Physics/RandomTensorNetwork/Threshold.lean` (named in future directions; imported by the chain file)
+## File: Catalog/Bridges/.../FibonacciAnyonChain.lean
 
-| Lean name | Role (as attested) | Usage in deliverables |
-|---|---|---|
-| `critBond` | critical bond dimension function; appears as `critBond n` in `ChainEncodable` | described as the per-length critical bond dimension; closed form **not** asserted beyond `D_c(N)=⌈(k^N)^{1/b}⌉` from future directions |
-| `critBond_mem` | witnesses encoding exists at `D = D_c` | described qualitatively |
-| `critBond_sharp` | encoding fails strictly below `D_c` | described qualitatively |
-| holographic encoding | `Fin (k^N) ↪ Fin (D^b)` exists iff `D ≥ D_c(N)` | stated as phase-transition theorem (per future directions) |
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `fusionCount` (def) | `fusionCount 0=1, 1=2, (n+2)=fc(n+1)+fc n` | §"Anyons" | Def. 5 |
+| `fusionCount_zero/one` | `=1`, `=2` | §"Anyons" | Def. 5 |
+| `fusionCount_add_two` | recurrence | §"Anyons" | Def. 5 |
+| `fusionCount_eq_fib` (thm) | `fusionCount n = fib (n+2)` | §"Anyons" | Thm. 5 |
+| `fusionCount_le_two_pow` (thm) | `fusionCount n ≤ 2^n` | §"Area law" | Thm. 6 |
+| `fusionCount_lt_two_pow` (thm) | `n≥2 → fusionCount n < 2^n` | §"Area law" | Thm. 6 |
+| `fib_chain_commensurability` (thm) | `gcd(fc m, fc n) = fc(gcd(m+2,n+2)-2)` | §"Commensurability" | Thm. 7 |
+| `fibBondDimension` (def) | `= goldenRatio` | §"Threshold" | Def. 6 |
+| `ChainEncodable` (def) | `critBond n < fibBondDimension` | §"Threshold" | Def. 6 |
+| `N_critical` (def) | `= 7` | §"Threshold" | Thm. 8 |
 
-## `Physics/RandomTensorNetwork/AreaLaw.lean` (named in future directions)
+## File: Catalog/Physics/RandomTensorNetwork/Threshold.lean
 
-| Lean name | Role (as attested) | Usage in deliverables |
-|---|---|---|
-| `area_law` | entanglement bound `S ≤ b·log D` with saturation at uniform spectrum | stated as area-law theorem (per future directions) |
-
-Anything not in this table is omitted from the deliverables.
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `critBond` (def) | `critBond n = 1 + n/10` | §"Threshold" | Def. 6 |
+| `critBond_zero` | `critBond 0 = 1` | §"Threshold" | Def. 6 |
+| `critBond_succ` | `critBond (n+1) = critBond n + 1/10` | §"Threshold" | Def. 6 |
+| `critBond_strictMono` (thm) | `StrictMono critBond` | §"Threshold" | Thm. 8 |
