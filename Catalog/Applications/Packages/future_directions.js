@@ -2643,11 +2643,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let M(n) be the maximum, over all finite pairwise coprime sets A \u2286 {1,\u2026,n\u22121}, of \u2211_{a\u2208A} 1/(n\u2212a). Conjecture: there is an absolute real constant C such that for every n \u2265 2, M(n) \u2264 \u2211_{p<n, p prime} 1/p + C. This is the pointwise uniform form of Erd\u0151s's question studied in the paper, strengthened from the paper's average-order and almost-all results to all n.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2148",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.17955v1",
+    "status": "available",
+    "timestamp": "2026-06-20T23:03:21.735671+00:00",
+    "title": "Uniform Erd\u0151s Bound for the Shifted Pairwise-Coprime Extremal Function"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let S_N(x)=sum_{i=1}^N x^i. For primes p<q with pq | m and n^2 >= (p-1)(q-1)+1, the conjecture says the cyclotomic transfer P=S_{m^2}/Phi_{pq}, Q=S_{n^2} Phi_{pq} is a nonstandard square-sided pair of sizes m^2 and n^2. Equivalently, the quotient and product have nonnegative integer coefficients, P(1)=m^2, Q(1)=n^2, and P Q=S_{m^2}S_{n^2}. A counterexample would be any admissible p,q,m,n for which one of these two explicit polynomials has a negative coefficient.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2148",
+    "id": "fd_2149",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -2661,7 +2676,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2149",
+    "id": "fd_2150",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
@@ -2676,7 +2691,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2150",
+    "id": "fd_2151",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20085v1",
@@ -2690,7 +2705,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2151",
+    "id": "fd_2152",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19863v1",
@@ -2705,7 +2720,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2152",
+    "id": "fd_2153",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19796v1",
@@ -2720,7 +2735,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2153",
+    "id": "fd_2154",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19573v1",
@@ -2735,7 +2750,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2154",
+    "id": "fd_2155",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19500v1",
@@ -2750,7 +2765,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2155",
+    "id": "fd_2156",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19008v1",
@@ -2765,13 +2780,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2156",
+    "id": "fd_2157",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18500v1",
     "status": "available",
     "timestamp": "2026-06-20T17:22:17.670732+00:00",
     "title": "Exact Solution Count Confinement"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let a_n be the number of isomorphism classes of finite simple connected planar 3-regular graphs with n vertices. The conjecture is that a_{2m+1}=0 for every m, and that there exist real constants C>0 and gamma>1 such that a_{2m} / (C (2m)^(-7/2) gamma^(2m)) tends to 1 as m tends to infinity. This isolates the main enumerative shape of the paper in a Lean-formalizable form without committing to the paper-specific numerical values of C and gamma.",
+    "domains": [
+      "Pythagorean",
+      "Geometry"
+    ],
+    "id": "fd_2158",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.17992v1",
+    "status": "available",
+    "timestamp": "2026-06-20T23:04:12.150157+00:00",
+    "title": "Universal n^{-7/2} asymptotic for unlabelled connected cubic planar graphs"
   },
   {
     "consumed_by_exp_id": "",
@@ -3711,66 +3741,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThese directions build on the verified core in\n`Catalog/MachineLearning/UniversalApproximation/QuantitativeBoundsCore.lean`,\nwhich establishes that the width-`2n` ramp-difference ReLU network reproduces the\nuniform-grid piecewise-linear interpolant exactly and approximates any\n`L`-Lipschitz target on `[0,1]` with error `L/n`.\n\n## 1. Formalize the sharp `L/(2n)` and `C\u00b2` rates\n\nThe current bound `L/n` is deliberately loose. The key insight is that the error\nof piecewise-linear interpolation on a cell is governed by the *modulus of\ncontinuity at the cell scale*, so for an `L`-Lipschitz function the worst-case\ndeviation is `L/(2n)` (attained at the cell midpoint), and for a `C\u00b2` function\nwith `|f''| \u2264 M` it is `M/(8n\u00b2)`; both follow from bounding `f` between the\ninterpolant and a quadratic on each cell. This refinement reuses the existing\n`reluInterpNet_eq_on_cell` exactness identity and only replaces the analytic step\n`interp_error_le`. Why now? The exact-representation lemma is already proved and\naxiom-clean, so the remaining work is a localized one-cell estimate rather than a\nnew construction, making the sharp constant a low-risk, high-value next target.\n\n## 2. Lift to `[0,1]^d` with tensor-product / simplicial interpolants\n\nA genuinely multivariate theorem is the natural sequel. The key insight is that\nthe one-dimensional ramp difference is the `d = 1` case of a \"partition-of-unity\"\nbasis, and continuous piecewise-linear interpolation on a triangulated cube can be\nassembled from compositions and sums of ReLU ramps, so the width scales like the\nnumber of simplices `O(n^d)` while the error stays `O(L/n)` in the Lipschitz\nnorm. The reusable scaffolding \u2014 grid arithmetic, ramp regimes, cellwise exactness\n\u2014 transfers cellwise to product grids. Why now? Mathlib's growing support for\n`EuclideanSpace`, `Finset` products, and convexity makes the bookkeeping for\nproduct grids tractable today, whereas a few years ago the multivariate convex-\ncombination machinery would have had to be built from scratch.\n\n## 3. Verified end-to-end training-free certificates for tabulated functions\n\nMany practical pipelines approximate a *sampled* function known only at grid\nnodes. The key insight is that the network coefficients `cellSlope f n k` depend\non `f` only through its values at the grid nodes `k/n`, so a certified\napproximation can be emitted directly from a finite table of samples together with\na Lipschitz certificate, yielding a machine-checked error bound without any\noptimization loop. This makes the construction a *compiler* from data plus a\nregularity witness to a network with a proof. Why now? Formal-methods interest in\nverified ML artifacts and certified surrogates is surging, and the present file\nalready produces the exact coefficients, so wrapping them in a checkable\ncertificate is an incremental but timely step.\n\n## 4. Connect to depth: verified deep ReLU sawtooth compression\n\nA central theme in expressivity theory is that depth buys exponential efficiency\nfor oscillatory targets. The key insight is that the depth-`L` composition of the\nsingle \"sawtooth\" map realizes `2^L` linear pieces with only `O(L)` neurons, so\ncomposing the verified ramp primitive with itself should yield a formally checked\nexponential separation between deep and shallow ReLU networks on functions like\n`x \u21a6 dist(x, \u2124/2^L)`. The ramp lemmas proved here are exactly the primitives whose\ncompositions generate the sawtooth. Why now? Depth\u2013width separations are a focal\npoint of theoretical deep learning, yet essentially none are machine-checked;\nthe verified ramp building blocks here lower the barrier to a first formal\nseparation result.\n\n## 5. Probabilistic / generalization wrappers over the deterministic core\n\nFinally, the deterministic uniform bound can anchor statistical guarantees.\nThe key insight is that a uniform `L/n` approximation error composes additively with\nan estimation error to yield a bias\u2013variance decomposition, so the verified\napproximation term can be plugged into a Rademacher-complexity or PAC-style\ngeneralization bound to certify the full risk of the constructed estimator. The\n`MachineLearning` catalog already contains PAC-Bayes and complexity scaffolding to\nbuild on. Why now? With the approximation side now formally settled, pairing it\nwith the existing verified generalization toolkit closes the loop from\nexpressivity to learning theory in a single checked artifact.\n",
-    "domains": [
-      "Algebra",
-      "MachineLearning"
-    ],
-    "id": "fd_2157",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "b4d505d3",
-    "status": "available",
-    "timestamp": "2026-06-20T22:36:15.594244+00:00",
-    "title": "These directions build on the verified core in"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nDerived from this cycle's verified results in `RTPhaseTransition.lean`,\n`BondDimensionThreshold.lean`, and `MultiSurfaceStability.lean`. Each conjecture\nis falsifiable in Lean and motivated by a concrete finding above.\n\n## C1. Tropical-variety location of all holographic phase transitions\n**Conjecture.** For a random tensor network with finitely many candidate RT\nsurfaces of affine area, the set of region-size parameters at which the\nentanglement entropy is non-differentiable equals exactly the corner locus\n(tropical variety) of the min-plus form `inf'\u1d62 area\u1d62`, and at each corner the\nstrict concave defect is `logD \u00b7 (\u0394slope) \u00b7 t / 2 + o(t)`.\n*The key insight is* that `strict_kink` already pins the defect of a *two*-surface\ncrossing to the exact value `logD\u00b7(s\u2082\u2212s\u2081)\u00b7t/2`, so the multi-surface case should\ndecompose into a finite union of such transversal corners \u2014 a piecewise-linear\n(tropical) curve whose vertices are the phase transitions.\n*Why now?* We have both the exact two-surface corner formula and the multi-surface\n`inf'` entropy with its proved stability, so the only missing step is a\ncombinatorial argument over the finite surface family \u2014 squarely in reach.\n\n## C2. A bond-dimension gap law: `D_c` scales like `exp(budget(N)/area)`\n**Conjecture.** The critical bond dimension satisfies\n`D_c(N) = \u2308exp(budget(N)/area)\u2309` up to an additive constant, and the \"fractal\nwindow\" `{D : D < D_c}` is nonempty exactly when `budget(N) > area\u00b7log 2`.\n*The key insight is* that `critical_bond_dimension` produces `D_c` as `Nat.find`\nof an upward-closed predicate driven solely by monotonicity and unboundedness of\n`area\u00b7log D`; the same monotone control should yield a *tight* closed form, not\njust existence.\n*Why now?* `capacity_eventually` already exhibits the explicit witness\n`\u230aexp(budget/area)\u230b+1`; turning this upper bound into a two-sided estimate needs\nonly a matching lower bound from `log` strict monotonicity.\n\n## C3. Lipschitz robustness \u27f9 bounded coarse-grained curvature\n**Conjecture.** Any random tensor network whose min-cut entropy is `logD`-Lipschitz\nin surface-area perturbations (as proved in `mEntropy_stability`) has a\ncoarse-grained curvature proxy bounded by a universal multiple of `logD`,\nwhereas networks violating the Lipschitz bound admit unbounded spectral\ndimension fluctuation.\n*The key insight is* that the tropical sup\u2013inf inequality controlling entropy\nperturbations is the *same* inequality that bounds discrete second differences;\ncurvature is a second difference of the area functional.\n*Why now?* We possess the exact Lipschitz constant (`logD`) and the concavity of\nentropy (`entropy_concave`); composing them gives a discrete Bochner-type bound\nwithout any new analytic machinery.\n\n## C4. Concavity (strong subadditivity) survives surface proliferation\n**Conjecture.** The multi-surface entropy `x \u21a6 logD \u00b7 inf'\u1d62 (area\u1d62 x)` with each\n`area\u1d62` affine in `x` is globally concave for *every* finite surface family, and\nits number of phase transitions is exactly one less than the number of surfaces\nthat are ever minimal.\n*The key insight is* that `entropy_concave` proves concavity for two surfaces via\n`ConcaveOn.inf`; an `inf'` over a finite family is an iterated `\u2293`, so concavity\nshould be preserved, and each \"active\" surface contributes exactly one corner.\n*Why now?* `ConcaveOn.inf` is closed under finite infima and our `mEntropy`\nalready uses `Finset.inf'`; the induction over the family is mechanical.\n\n## C5. Sharp-threshold universality across capacity functionals\n**Conjecture.** Replacing `area\u00b7log D` by any strictly increasing, unbounded\ncapacity functional `cap(D)` preserves the existence of a sharp critical bond\ndimension, and the *transition is first-order* (a jump in the smoothness order\nparameter) iff `cap` has a jump, otherwise it is continuous-but-sharp.\n*The key insight is* that `sharp_threshold_exists` is stated for an arbitrary\nupward-closed predicate, so it already abstracts away the specific form of the\ncapacity; the physics-independent core is purely order-theoretic.\n*Why now?* The general lemma is proved and reusable verbatim; only the\nclassification of jump vs. continuous transitions remains, which is a monotone\nreal-analysis exercise.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2158",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "4a5dda39",
-    "status": "available",
-    "timestamp": "2026-06-20T22:43:49.589064+00:00",
-    "title": "Derived from this cycle's verified results in `RTPhaseTransition.lean`,"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Navier\u2013Stokes Regularity (scalar a priori program)\n\nThis research cycle formalized the scalar differential-inequality core of\nNavier\u2013Stokes regularity theory (`Core.lean`) and its integrated dissipation-budget\nconsequences (`Estimates.lean`): 2D enstrophy monotonicity and global boundedness,\nPoincar\u00e9 energy decay with convergence to zero, the sharp 3D supercritical blow-up\nrate, conditional and unconditional 3D small-data results, and finite total\ndissipation via the FTC. All 11 theorems are fully proved (0 sorries) and depend\nonly on the standard axioms.\n\nBelow are bold, falsifiable conjectures for the next cycles. Each is stated so it\ncan be formalized as a Lean theorem (or refuted by a counterexample search).\n\n## Conjecture 1 \u2014 Beale\u2013Kato\u2013Majda continuation (scalar form)\n\nIf `Z : \u211d\u22650 \u2192 \u211d` satisfies `Z' \u2264 C Z\u00b3` and the integral\n`\u222b\u2080\u1d40 Z(t) dt < \u221e` for some `T`, then `Z` is bounded on `[0,T]` (no blow-up before\n`T`). **Testable claim:** the \"log-improvement\" version, replacing `Z\u00b3` by\n`Z\u00b7(Z\u00b2\u00b7log(e+Z\u00b2))` in the inequality, still yields a finite-time bound governed by\n`\u222b Z log(e+Z)`. Prove the scalar BKM bound and a strict separation showing the\nlog-version admits strictly longer guaranteed lifetime than the pure-cubic version.\n\n## Conjecture 2 \u2014 Ladyzhenskaya\u2013Prodi\u2013Serrin scalar threshold\n\nConsider `Z' \u2264 -aZ + C\u00b7N(t)\u00b7Z` where `N(t) \u2265 0` is a forcing profile (the scalar\nshadow of a Serrin-type norm `\u2016u\u2016_{L^p_t L^q_x}`). **Conjecture:** `Z` is globally\nbounded **iff** `limsup_{T\u2192\u221e} (1/T)\u222b\u2080\u1d40 (C\u00b7N \u2212 a)\u207a dt \u2264 0`. The boundary case\n(time-average exactly critical) is the sharp threshold; verify by a parametric\nfamily and locate the transition.\n\n## Conjecture 3 \u2014 Two-mode Galerkin invariant region\n\nFor the 2-variable system `x' = -\u03bdx + xy`, `y' = -\u03bdy - x\u00b2` (a minimal Galerkin\ntruncation preserving the energy-conserving nonlinearity `x\u00b7xy + y\u00b7(-x\u00b2) \u2192 0`),\n**conjecture:** the disk `x\u00b2 + y\u00b2 \u2264 R\u00b2` is forward-invariant for every `R \u2265 0`, and\n`x\u00b2 + y\u00b2` decays to `0` exponentially at rate `2\u03bd`. This is a genuinely 2D-nonlinear\n(not purely scalar) test of the energy-cascade-neutrality mechanism; prove\ninvariance and the decay rate, and show the nonlinear terms contribute exactly zero\nto `d/dt(x\u00b2+y\u00b2)`.\n\n## Conjecture 4 \u2014 Enstrophy budget \u21d2 vanishing dissipation along a subsequence\n\nFrom the finite budget `\u222b\u2080^\u221e G < \u221e` (the `BddAbove` result, upgraded to convergence\nunder continuity), **conjecture:** there is a time sequence `t\u2099 \u2192 \u221e` with\n`G(t\u2099) \u2192 0`. **Sharper, falsifiable form:** if additionally `G` is uniformly\ncontinuous, then `G(t) \u2192 0` (not merely along a subsequence). Formalize via the\nintegral-test / Barbalat's lemma; test the uniform-continuity hypothesis is needed\nby exhibiting an integrable `G` with tall thin spikes where `G(t) \u219b 0`.\n\n## Conjecture 5 \u2014 Critical decay rate is exactly the Poincar\u00e9 constant\n\nFor the linear-dominated regime `E' = -2\u03bdF`, `F \u2265 \u03bb\u2081 E` (Poincar\u00e9), **conjecture:**\nthe optimal (largest) exponential decay rate is `c = 2\u03bd\u03bb\u2081`, achieved iff the data is\na first Poincar\u00e9 eigenfunction, and **strictly** smaller otherwise. Formalize the\nupper bound `E(t) \u2264 E\u2080e^{-2\u03bd\u03bb\u2081t}` (a special case already in `Core`) together with a\nmatching lower bound `E(t) \u2265 E\u2080e^{-2\u03bd\u03bb_max t}` under a spectral gap, pinning the\ndecay rate between the extreme eigenvalues \u2014 a quantitative two-sided refinement of\n`energy_exponential_decay` / `energy_tendsto_zero`.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2159",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "bf991533",
-    "status": "available",
-    "timestamp": "2026-06-20T22:48:49.778785+00:00",
-    "title": "This research cycle formalized the scalar differential-inequality core of"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThe current development (`LibraryOfBabel.lean`) covers only the pure finite\ncombinatorics of the Library of Babel: counting volumes, indexing them with a\nuniversal catalog, and assigning a uniform counting probability. The following\nconcrete directions would extend it toward the richer, semantically loaded\nquestions that animate Borges' story, while staying within reach of a Mathlib-based\nformalization.\n\n## 1. A meaningfulness predicate and the density of meaningful books\n\nIntroduce a decidable predicate `Meaningful : Volume n \u2192 Prop` (for instance, the\nimage of an injective encoding of well-formed strings of some fixed grammar) and\nstudy the fraction `(Finset.filter Meaningful Finset.univ).card / 25 ^ n`. The key\ninsight is that *meaningfulness is a sparse property*: the number of grammatically\nvalid strings grows like `c ^ n` for some base `c` strictly smaller than `25`, so\nthe counting probability of hitting a meaningful book decays geometrically and can\nbe bounded explicitly in `\u211a`. Why now? Because the singleton and `countingProb`\nmachinery already in place generalizes verbatim from `{target}` to an arbitrary\n`Finset`, so the only genuinely new ingredient is the predicate itself, making this\nthe lowest-friction next step that still produces a quantitatively interesting\ntheorem.\n\n## 2. The self-referential catalog book\n\nFormalize the observation that the catalogue of the library \u2014 being a finite\nstring over the same alphabet \u2014 is itself (a concatenation of) volumes in the\nlibrary. Concretely, encode `universalCatalog n` as data and exhibit a length and\nan explicit `Volume m` realizing it. The key insight is that finiteness forces\nself-reference: any total indexing function on a finite alphabetic universe is\nexpressible within that same universe once `m` is large enough, turning Borges'\nparadoxical \"book that catalogs all books\" into a constructive existence statement.\nWhy now? Because `universalCatalog` is already proven to be a bijection with\nverified encode/decode laws, so the remaining work is a serialization argument\nrather than any new combinatorics, and it directly addresses one of the story's\ncentral images.\n\n## 3. Hamming geometry and the nearest meaningful neighbor\n\nEquip `Volume n` with the Hamming metric (number of positions at which two books\ndiffer) and study balls, distances, and the question of how far a random book is\nfrom the nearest meaningful one. The key insight is that the Hamming metric makes\n`Volume n` a finite metric space whose ball sizes are exact sums of binomial\ncoefficients, so questions about \"how much would you have to edit a random book to\nmake it meaningful\" become precise counting statements amenable to Mathlib's\n`Nat.choose` API. Why now? Because the alphabet and volume types are already finite\n`Fintype`s, adding the metric is a self-contained layer that immediately unlocks\ncovering and packing bounds without disturbing any existing proof.\n\n## 4. From counting probability to a genuine `PMF`\n\nUpgrade `countingProb` from an ad-hoc rational ratio to the uniform `PMF`\n(probability mass function) on `Volume n` from Mathlib's probability library, and\nre-derive `countingProb_singleton` as the statement that each book has mass\n`1 / 25 ^ n`. The key insight is that the finite uniform distribution is already\npackaged in Mathlib as `PMF.uniformOfFintype`, so the rational ratios computed here\nare literally the values of a bona fide probability measure, letting later results\nquote independence, expectation, and concentration lemmas off the shelf. Why now?\nBecause doing this early, before more theory accumulates, fixes the \"right\" measure-\ntheoretic interface and prevents a later, more painful refactor away from raw `\u211a`\narithmetic.\n\n## 5. Asymptotics and information content of a Babel book\n\nState and prove the information-theoretic content of the library: a uniformly\nrandom book of length `n` carries exactly `n * log 25` nats (or `n * log\u2082 25`\nbits) of entropy, and bound `25 ^ 1312000` between explicit powers of ten to make\nits scale legible. The key insight is that the exact closed form `card_volume`\nconverts entropy and digit-count questions into elementary logarithm inequalities,\nso the heavy lifting is just monotonicity of `Real.log` and `Nat.log`, not\nprobability theory. Why now? Because the exact cardinality is already proven, and\nquantifying *how unimaginably large* the library is \u2014 the rhetorical core of\nBorges' essay \u2014 is precisely the kind of statement that benefits most from a\nmachine-checked bound rather than a hand-waved estimate.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2160",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "f832cbd3",
-    "status": "available",
-    "timestamp": "2026-06-20T22:51:51.195941+00:00",
-    "title": "The current development (`LibraryOfBabel.lean`) covers only the pure finite"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3784,7 +3754,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0dfaccbd",
     "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
     "domains": [
       "Novelty",
@@ -3794,7 +3764,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7158260869565218,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
@@ -4527,7 +4497,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Tropical Linear Algebra: Eigenvalues and Determinants"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "7a341625",
     "description": "Prove Conway's Game of Life is Turing complete via a direct constructive embedding. Formalize cellular automata in Lean 4 and establish complexity bounds on the simulation overhead.",
     "domains": [
       "Computation",
@@ -4537,7 +4507,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3699999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.254223+00:00",
     "title": "Game of Life Universality"
   },
@@ -4662,7 +4632,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Consciousness as Integrated Information"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ddafecee",
     "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
     "domains": [
       "Speculative",
@@ -4672,7 +4642,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.24999999999999992,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.177474+00:00",
     "title": "Alien Mathematics: Non-Standard Arithmetic"
   },
@@ -4782,7 +4752,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "97399ed6",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -4792,7 +4762,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.490561+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
