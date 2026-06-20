@@ -2116,7 +2116,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bounded tree-independence for K_{1,d}-free graphs excluding a planar induced minor"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "6d018212",
     "description": "This paper investigates the asymptotic probability that random points in finite fields intersect sufficiently complex algebraic sets, with applications to extremal combinatorics and geometric probability.",
     "domains": [
       "Algebra",
@@ -2126,7 +2126,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19677v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T06:52:44.622331+00:00",
     "title": "Randomly piercing algebraic sets and its implications"
   },
@@ -2394,6 +2394,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-20T02:12:56.856031+00:00",
     "title": "Approximate Ramsey Property for the Pseudo-Arc's Projective Fraisse Category"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that the approximate Ramsey property of a projective Fra\u00efss\u00e9 category implies that the dense image of its automorphism group in a homeomorphism group of a continuum is extremely amenable. This establishes a formal link between combinatorial Ramsey-theoretic properties and topological amenability in the study of homeomorphism groups of continua.",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2129",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-20T02:28:25.339989+00:00",
+    "title": "Ramsey Theory in Projective Fra\u00efss\u00e9 Limits Implies Extreme Amenability of Homeomorphism Groups of Continua"
   },
   {
     "consumed_by_exp_id": "",
@@ -3333,21 +3348,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThese are freeform directions extending the tropical TDLP eigenline\ncounterexample formalized in\n[`Catalog/Tropical/TropicalTDLPEigenAttack.lean`](Catalog/Tropical/TropicalTDLPEigenAttack.lean).\n\n## 1. Full tropical semiring with infinities\n\nReformulate the toy model over the genuine tropical semiring `WithTop \u2115` (or\n`Tropical (WithTop \u211d)` from Mathlib), where `+\u221e` is the additive identity and\n`min` the addition, and re-prove the eigenline attack there. The key insight is\nthat the eigenline collapse depends only on min-plus *homogeneity*, so the proof\nshould survive the move to `WithTop` once truncated subtraction is replaced by an\norder-theoretic difference. Why now? Mathlib already ships a `Tropical` type and\nits semiring instances, so the supporting algebra exists today and the gap is\npurely a matter of porting the homogeneity argument across the carrier change.\n\n## 2. Genuine `n\u00d7n` min-plus matrices and tropical eigenvalues\n\nLift the abstract `ScalarEquivariant` hypothesis to concrete min-plus matrix\nmultiplication on `Fin n \u2192 \u2115`, and connect `IsTropicalEigen` to the tropical\neigenvalue given by the maximum cycle mean of the underlying weighted digraph.\nThe key insight is that every irreducible tropical matrix has an eigenvector\nwhose support is a critical cycle, so the \"accidental eigenline\" risk is generic\nrather than exceptional. Why now? Max-plus spectral theory (Karp's algorithm,\ncritical graphs) is classical and finitely computable, making it ideal for a\n`decide`/`native_decide`-backed Lean treatment that ties the abstract theorem to\nexplicit matrices.\n\n## 3. Quantifying residual hardness off the eigenline\n\nStudy iterates of tropical maps seeded *away* from any eigenline and measure how\nquickly the orbit aligns with the dominant eigenvector (the cyclicity /\ntransient length of max-plus dynamics). The key insight is that max-plus systems\nbecome eventually periodic with a linear regime, so even \"off-eigenline\" seeds\nleak `k` after a bounded transient, sharpening the counterexample into a generic\nattack. Why now? The cyclicity theorem for irreducible max-plus matrices gives\nexplicit transient bounds, so a formal statement quantifying the leak is within\nreach of current tooling.\n\n## 4. Adversary models and a formal security game\n\nEncode the TDLP as a formal interactive game (challenger samples `k`, publishes\n`(\u03bb, x, F^[k] x)`; adversary outputs a guess) and prove a Lean theorem that the\nsubtraction adversary wins with probability `1`. The key insight is that turning\nthe algebraic identity into a probability-`1` win condition makes \"this scheme is\nbroken\" a single quantified statement rather than an informal observation. Why\nnow? Mathlib's probability and `PMF` machinery is mature enough to express simple\ncryptographic games, so the bridge from algebra to a game-based break is\ntractable.\n\n## 5. Design criteria for non-linearizable tropical schemes\n\nUse the counterexample to derive *positive* design constraints: characterize\nfamilies of tropical maps whose iteration is provably not affine in `k` on any\ninvariant set, e.g. by injecting min/max branching that breaks scalar\nequivariance. The key insight is that the attack is exactly an obstruction\ntheorem \u2014 security requires failing `ScalarEquivariant` in an essential way \u2014 so\nits negation is a checklist for designers. Why now? With the obstruction now\nformalized, the natural next step of formalizing its converse (sufficient\nconditions for resistance) is well-posed and immediately actionable.\n",
-    "domains": [
-      "Algebra",
-      "Tropical"
-    ],
-    "id": "fd_2129",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "c50363b9",
-    "status": "available",
-    "timestamp": "2026-06-20T02:24:22.006603+00:00",
-    "title": "These are freeform directions extending the tropical TDLP eigenline"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3361,7 +3361,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a04133c4",
     "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
     "domains": [
       "Novelty",
@@ -3371,7 +3371,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7158260869565218,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
@@ -3537,20 +3537,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T01:05:26.622694+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture: The long exact sequences and connecting homomorphisms in spectral sequence theory can systematically identify causal relationships in multivariate time series by tracking how correlations evolve across different scales of temporal aggregation. Specifically, the differentials in a spectral sequence constructed from filtered time series data will reveal non-trivial causal edges that are invisible to standard Granger causality tests. Test: Apply the spectral sequence construction to synthetic time series with known causal structure (e.g., VAR processes with latent confounders) and compare the identified causal edges from differentials with ground truth. Impact: This would enable discovery of hidden causal mechanisms in complex dynamical systems (climate, neuroscience, economics) where traditional methods fail due to non-linearities and latent variables.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_2130",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "available",
-    "timestamp": "2026-06-20T02:26:05.148675+00:00",
-    "title": "Causal Inference via Spectral Sequences: Homological Methods for Time Series Ana"
   },
   {
     "consumed_by_exp_id": "",
@@ -4508,7 +4494,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5e9b4daa",
     "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
     "domains": [
       "Novelty",
@@ -4518,9 +4504,24 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.782446+00:00",
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+  },
+  {
+    "consumed_by_exp_id": "35a8dda5",
+    "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0092",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-01T12:30:30.807837+00:00",
+    "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
   {
     "consumed_by_exp_id": "",
