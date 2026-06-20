@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "977d0362",
     "filename": "fixed_partial_latin_patterns_occur_with_asymptotic.json",
     "pkg_num": 213,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5126619770114944,
     "title": "Exact One-Cell Uniformity for Finite Latin Squares"
   },
   {
@@ -6512,8 +6512,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "fixed_partial_latin_patterns_occur_with_asymptotic",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5126619770114944,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Exact One-Cell Uniformity for Finite Latin Squares"
     }

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "94b6b70d",
-      "domain": "Probability",
-      "key_insight": "# FUTURE DIRECTIONS — Discrete Hodge ↔ Probability\n\nThis cycle established a self-contained Mathlib foundation for the discrete Hodge\nprogram on finite weighted graphs and bridged it to the probabilit",
-      "quality_score": 0.3848171428571429,
-      "sorry_count": 1,
-      "theorem_count": 28,
-      "timestamp": "2026-06-15T09:03:16",
-      "title": "This cycle rebuilds the discrete Hodge program on a **self-contained Mathlib fou"
-    },
-    {
       "cycle_id": "842c56ce",
       "domain": "Novelty",
       "key_insight": "# FUTURE DIRECTIONS — Functorial Lipschitz comparison: valuation depth ↔ tropical shadow\n\nThis cycle salvaged and completed the depth ↔ tropical-shadow bridge as three\nself-contained, sorry-free Lean",
@@ -2501,6 +2491,16 @@
       "theorem_count": 17,
       "timestamp": "2026-06-20T19:33:18",
       "title": "Formalizing Graph Linear Notation in Lean 4"
+    },
+    {
+      "cycle_id": "977d0362",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThese build directly on the exact one-cell uniformity theorem formalized in\n`Catalog/Combinatorics/LatinSquare/CellUniform.lean`. Each direction states a\nsingle guiding insight an",
+      "quality_score": 0.5126619770114944,
+      "sorry_count": 0,
+      "theorem_count": 17,
+      "timestamp": "2026-06-20T19:47:51",
+      "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8075699999999999
     }
   ],
-  "last_updated": "2026-06-20T19:33:18",
+  "last_updated": "2026-06-20T19:47:51",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "6fe73404",
-        "quality": 0.49388999999999994,
-        "theorems": 4,
-        "title": "Proofs as DAGs: The Directed Acyclic Graph Structure of Mathematics"
-      },
-      {
         "cycle_id": "c2c261ee",
         "quality": 0.42100000000000004,
         "theorems": 4,
@@ -3141,6 +3135,12 @@
         "quality": 0.654,
         "theorems": 22,
         "title": "The Library of Babel: Combinatorics of the Universal Library"
+      },
+      {
+        "cycle_id": "977d0362",
+        "quality": 0.5126619770114944,
+        "theorems": 17,
+        "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
       }
     ],
     "Bridges": [
