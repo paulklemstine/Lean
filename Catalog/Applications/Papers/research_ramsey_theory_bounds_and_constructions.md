@@ -1,184 +1,382 @@
-# A Formally Verified Framework for Ramsey Theory: Recursive Bounds, Probabilistic Lower Bounds, and Hales–Jewett Theory
+# Finite Two-Colour Ramsey Theory: The Erdős–Szekeres Bound and the Exact Value $R(3,3)=6$
+
+**Author:** Aristotle
+**Date:** 2026-06-20
+**Domain:** Applications (Combinatorics / Graph Theory)
 
 ## Abstract
 
-We present a comprehensive formally verified framework for finite Ramsey theory in Lean 4 with Mathlib. Our formalization introduces reusable definitions for 2-colorings of complete graphs, monochromatic clique predicates, and combinatorial lines, then proves a collection of theorems spanning the core of classical Ramsey theory:
-
-1. The **fundamental recursive inequality** R(s,t) ≤ R(s-1,t) + R(s,t-1) via a neighborhood dichotomy argument.
-2. The **Erdős–Szekeres binomial bound** R(s,t) ≤ C(s+t-2, s-1) by induction using Pascal's identity.
-3. A **parity improvement** theorem: when R(s-1,t) and R(s,t-1) are both even, R(s,t) ≤ R(s-1,t) + R(s,t-1) - 1, using the handshaking lemma.
-4. **Exact values** R(3,3) = 6 and R(3,4) = 9 via structural constructions and the above bounds.
-5. The **probabilistic method lower bound**: if 2·C(n,k) < 2^C(k,2), then R(k,k) > n, formalized via finite double counting.
-6. **Hales–Jewett theory**: combinatorial line definitions, dimension monotonicity, and the base case HJ(2,2) = 2.
-
-All proofs are machine-checked with no axioms beyond `propext`, `Classical.choice`, `Quot.sound`, and Lean's trusted compiler (for `native_decide`). The framework is designed for extensibility and reuse.
+We present a self-contained, formally verified development of the elementary theory
+of finite two-colour Ramsey numbers. Working with a single `SimpleGraph` to encode a
+red/blue edge colouring of a complete graph — red edges being those of the graph and
+blue edges those of its complement — we define the *arrow relation* $n \to (s,t)$ and
+establish three pillars of the theory. First, the relation is monotone in the number
+of vertices. Second, we prove the Erdős–Szekeres inductive step
+$m \to (s,t+1)$ and $n \to (s+1,t)$ imply $(m+n) \to (s+1,t+1)$, and from it the
+binomial upper bound $\binom{s+t}{s} \to (s+1,t+1)$, equivalently
+$R(s+1,t+1) \le \binom{s+t}{s}$. Third, we determine the first nontrivial Ramsey
+number exactly: $\binom{4}{2}=6$ gives $6 \to (3,3)$, while the pentagon (the cycle
+$C_5$) gives an explicit colouring of $K_5$ with no monochromatic triangle, so
+$\lnot(5 \to (3,3))$. Together these yield $R(3,3)=6$. All statements correspond to
+machine-checked theorems; we give their full mathematical statements and proof
+sketches. We close with the asymptotic landscape and a programme of future
+extensions (exact off-diagonal values, the probabilistic diagonal lower bound, and a
+reusable `RamseyNumber` object).
 
 ## 1. Introduction
 
-### 1.1 Motivation
+Ramsey theory studies the inevitability of order in large structures: sufficiently
+large systems necessarily contain highly organized substructures, regardless of how
+they are built. Its prototypical statement concerns edge colourings of complete
+graphs. Given two "colours", any sufficiently large complete graph contains a
+monochromatic clique of prescribed size. The least size at which this becomes
+unavoidable is the **Ramsey number** $R(s,t)$.
 
-Ramsey theory, initiated by Frank Ramsey (1930), studies the emergence of inevitable structure in sufficiently large combinatorial objects. The central question — for which n does every 2-coloring of K_n contain a monochromatic K_s or K_t? — has generated a vast literature but remarkably few formally verified results.
+### 1.1 Historical context
 
-Prior formal work on Ramsey numbers has been limited to isolated finite verifications, often via brute-force decision procedures. Our goal is different: we formalize the *structural theory* — the recursive arguments, asymptotic bounds, and probabilistic existence proofs — that make Ramsey theory a living research area rather than a collection of isolated computational facts.
+The subject grew out of Frank Ramsey's 1930 paper *On a problem of formal logic*,
+where a finite combinatorial lemma was extracted to settle a decision problem about
+logical formulas. Ramsey's lemma — in its two-colour graph form, that for every $s,t$
+there is a finite $N$ with $N \to (s,t)$ — was rediscovered and dramatically amplified
+by Paul Erdős and George Szekeres in their 1935 work on convex polygons in the plane,
+where the same recursion that we formalize here (Theorem 6) appears as the engine
+behind the *happy ending problem*. Erdős's 1947 probabilistic lower bound for the
+diagonal numbers $R(s,s)$ launched the probabilistic method as a pervasive tool in
+combinatorics. The interplay these three contributions established — an explicit
+recursion bounding Ramsey numbers from above, and probabilistic or constructive
+arguments bounding them from below — remains the template for the entire field. The
+present development formalizes the upper-bound recursion in full generality and
+closes the smallest nontrivial case, $R(3,3)$, exactly, by supplying the matching
+constructive lower bound.
 
-### 1.2 Contributions
+### 1.2 Why formalize, and what is formalized
 
-Our contributions are organized into a modular Lean 4 library:
+Ramsey-theoretic arguments are notorious for hiding subtle off-by-one errors in the
+bookkeeping of clique sizes, vertex counts, and the colour bookkeeping of "red versus
+blue". Encoding the entire argument so that a proof assistant checks every inference
+removes this class of error. Two design decisions make the formalization clean. First,
+a *single* simple graph $G$ encodes the whole two-colouring: red edges are the edges of
+$G$, blue edges are the edges of the complement $G^{c}$. This avoids carrying a separate
+data structure for the colouring and makes "red clique" and "blue clique" literally
+"clique of $G$" and "clique of $G^{c}$". Second, the arrow relation is quantified over an
+arbitrary vertex type and an arbitrary finite subset $W$, rather than over a fixed
+complete graph on exactly $n$ labelled vertices. As we explain in Section 3, this single
+choice makes monotonicity in the number of vertices a one-line consequence and lets the
+two recursive calls in the Erdős–Szekeres step operate on subsets of one fixed ambient
+vertex set, sidestepping the need to transport cliques across different index types.
 
-- **`Algebra.Ramsey.Defs`**: Core definitions including `TwoColoring`, `IsRedClique`, `IsBlueClique`, `RamseyProp`, `CombinatorialLine`, and `HJProp`.
-- **`Algebra.Ramsey.Recursion`**: The fundamental recursive inequality and Erdős–Szekeres bound.
-- **`Algebra.Ramsey.Exact`**: Exact values R(3,3) = 6 and R(3,4) = 9, including the parity improvement and handshaking lemma.
-- **`Algebra.Ramsey.Probabilistic`**: The first-moment probabilistic lower bound via finite averaging.
-- **`Algebra.Ramsey.HalesJewett`**: Combinatorial line theory, dimension monotonicity, and HJ(2,2).
+This paper records a rigorous, formalized account of the first quantitative results of
+the theory:
 
-### 1.3 Related Work
+1. **Monotonicity** of the arrow relation (Proposition 4).
+2. The **Erdős–Szekeres recursion** (Theorem 6) and the resulting **binomial upper
+   bound** (Theorem 7, Corollary 8).
+3. The **exact value $R(3,3)=6$** (Theorem 9), via the binomial bound for the upper
+   half and the pentagon construction for the lower half.
 
-Existing formalizations of Ramsey theory are sparse. The Mizar Mathematical Library contains some basic Ramsey theory. In Isabelle/HOL, Paulson formalized a proof of Ramsey's theorem. In Lean 4/Mathlib, no prior Ramsey theory formalization exists to our knowledge. Our work is the first to formalize the probabilistic method for Ramsey lower bounds and the Hales–Jewett theorem in any proof assistant.
+Each result below is stated in full and accompanied by a proof sketch faithful to the
+underlying formal proof. We are careful to claim only what is proved: the
+off-diagonal values $R(3,4)=9$, $R(4,4)=18$, the diagonal probabilistic lower bound,
+and the Hales–Jewett theorem are discussed as context and future work, not as results
+established here.
 
-## 2. Definitions and Framework
+## 2. The colouring model
 
-### 2.1 Two-Colorings
+**Definition 1 (Two-colouring as a graph).** A red/blue colouring of the complete
+graph on a vertex type $V$ is a simple graph $G$ on $V$. An edge $\{u,v\}$ is *red* if
+$u \sim_G v$ and *blue* if $u \sim_{G^{c}} v$, where $G^{c}$ is the complement graph.
+Thus the red subgraph is $G$ and the blue subgraph is $G^{c}$, and every (non-loop)
+pair is exactly one colour.
 
-We represent a 2-coloring of the complete graph on n vertices as:
+**Definition 2 (Ambient type).** For the canonical setting on $s+t$ vertices we write
+`ArrowsType s t := SimpleGraph (Fin (s+t))`, the type of red/blue colourings of
+$K_{s+t}$.
 
-```lean
-structure TwoColoring (n : ℕ) where
-  color : Fin n → Fin n → Bool
-  symm : ∀ i j, color i j = color j i
-  irrefl : ∀ i, color i i = false
-```
+A *red $s$-clique* is a set $S$ with $G$.`IsNClique` $s\,S$: an $s$-element vertex set
+all of whose pairs are red. A *blue $t$-clique* is a set $S$ with $G^{c}$.`IsNClique`
+$t\,S$.
 
-This is a symmetric, irreflexive function to `Bool`, where `true` represents red and `false` represents blue.
+**Definition 3 (Arrow relation).** For $n,s,t \in \mathbb{N}$, define $n \to (s,t)$,
+formally `Arrows n s t`, to hold iff: for every vertex type $V$, every colouring
+$G : \mathrm{SimpleGraph}\,V$, and every finite vertex set $W$ with $|W| \ge n$, there
+exists $S \subseteq W$ that is a red $s$-clique, or there exists $S \subseteq W$ that
+is a blue $t$-clique. Symbolically,
+$$
+n \to (s,t) \;:\equiv\; \forall V\,\forall G\,\forall W\,\bigl(|W|\ge n \Rightarrow
+(\exists S\subseteq W,\ G.\mathrm{IsNClique}\,s\,S)\ \lor\
+(\exists S\subseteq W,\ G^{c}.\mathrm{IsNClique}\,t\,S)\bigr).
+$$
 
-### 2.2 Monochromatic Cliques
+Quantifying over an arbitrary vertex type together with a finite subset $W$ has two
+benefits: it bakes monotonicity in the vertex count directly into the definition, and
+it lets the Erdős–Szekeres recursion operate on subsets of a fixed vertex set, so the
+two recursive calls land in the same ambient type.
 
-```lean
-def IsRedClique (C : TwoColoring n) (S : Finset (Fin n)) : Prop :=
-  ∀ i ∈ S, ∀ j ∈ S, i ≠ j → C.color i j = true
+**Definition (Ramsey number).** $R(s,t) := \min\{\, n : n \to (s,t)\,\}$, the least
+threshold at which the arrow relation holds. By monotonicity this minimum exists
+whenever the predicate is ever satisfied.
 
-def IsBlueClique (C : TwoColoring n) (S : Finset (Fin n)) : Prop :=
-  ∀ i ∈ S, ∀ j ∈ S, i ≠ j → C.color i j = false
-```
+## 3. Monotonicity
 
-### 2.3 The Ramsey Property
+**Proposition 4 (`Arrows.mono`).** If $n \to (s,t)$ and $n \le n'$, then
+$n' \to (s,t)$.
 
-```lean
-def RamseyProp (n s t : ℕ) : Prop :=
-  ∀ C : TwoColoring n,
-    (∃ S : Finset (Fin n), S.card = s ∧ IsRedClique C S) ∨
-    (∃ S : Finset (Fin n), S.card = t ∧ IsBlueClique C S)
-```
+*Proof sketch.* Let $W$ be a vertex set with $|W| \ge n'$. Then $|W| \ge n' \ge n$, so
+the hypothesis $n \to (s,t)$ applies to $W$ directly and produces the required
+monochromatic clique. $\qquad\blacksquare$
 
-`RamseyProp n s t` asserts that every 2-coloring of K_n contains a red K_s or blue K_t.
+This says the predicate $N \mapsto (N \to (s,t))$ is upward closed: the set of valid
+thresholds is an up-set in $\mathbb{N}$, which is precisely what guarantees that
+$R(s,t)$, defined as an infimum, is attained and satisfies
+$n \to (s,t) \iff R(s,t) \le n$.
 
-### 2.4 Combinatorial Lines
+## 4. Base cases
 
-```lean
-structure CombinatorialLine (n k : ℕ) where
-  active : Fin n → Bool
-  nontrivial : ∃ i, active i = true
-  base : Fin n → Fin k
-```
+**Lemma 5a (`arrows_one_red`).** For every $b$, $\;1 \to (1,b)$.
 
-The `point` function maps each letter a ∈ Fin k to the word that sets active coordinates to a and inactive coordinates to their base values.
+*Proof sketch.* If $|W| \ge 1$, pick $v \in W$. The singleton $\{v\}$ is a red
+$1$-clique (a one-vertex set is vacuously a clique and has cardinality $1$). Hence the
+left disjunct holds. $\qquad\blacksquare$
 
-## 3. Main Results
+**Lemma 5b (`arrows_one_blue`).** For every $a$, $\;1 \to (a,1)$.
 
-### 3.1 Fundamental Recursive Inequality (Theorem A1)
+*Proof sketch.* Symmetric: a singleton $\{v\}$ is a blue $1$-clique in $G^{c}$, giving
+the right disjunct. $\qquad\blacksquare$
 
-**Theorem (RamseyProp_recursion).** For s, t ≥ 2, if `RamseyProp a (s-1) t` and `RamseyProp b s (t-1)`, then `RamseyProp (a+b) s t`.
+These two facts seed the double induction of Section 5.
 
-*Proof sketch.* Fix a vertex v₀ in a 2-coloring of K_{a+b}. The remaining a+b-1 vertices partition into red-neighbors R and blue-neighbors B of v₀. By pigeonhole (|R| + |B| = a+b-1), either |R| ≥ a or |B| ≥ b.
+## 5. The Erdős–Szekeres recursion and the binomial bound
 
-If |R| ≥ a: restrict the coloring to an a-element subset of R. By hypothesis, either there is a red (s-1)-clique S (add v₀ to get red s-clique) or a blue t-clique (done). Symmetrically for |B| ≥ b.
+**Theorem 6 (Inductive step, `arrows_step`).** Let $m,n \ge 1$. If
+$$ m \to (s,\,t+1) \qquad\text{and}\qquad n \to (s+1,\,t), $$
+then
+$$ (m+n) \to (s+1,\,t+1). $$
 
-The formal proof uses `TwoColoring.restrict` to re-index subsets and `IsRedClique_map`/`IsBlueClique_map` to lift cliques back to the full vertex set. ∎
+*Proof sketch.* Let $W$ be a colouring domain with $|W| \ge m+n$. Since
+$m+n \ge 1$, choose a vertex $v \in W$. Partition the remaining vertices $W\setminus\{v\}$
+by the colour of their edge to $v$:
+$$ R := \{x \in W\setminus\{v\} : x \sim_G v\}, \qquad
+   B := \{x \in W\setminus\{v\} : x \not\sim_G v\}. $$
+Every non-$v$ vertex lies in exactly one part, so $|R| + |B| = |W| - 1 \ge m+n-1$.
+By pigeonhole, $|R| \ge m$ or $|B| \ge n$.
 
-### 3.2 Erdős–Szekeres Bound (Theorem A2)
+*Case $|R| \ge m$.* Apply $m \to (s,t+1)$ to $R$. Either we obtain a blue
+$(t+1)$-clique $S \subseteq R \subseteq W$ — and the right disjunct of the goal holds
+immediately — or we obtain a red $s$-clique $S \subseteq R$. Every vertex of $R$ is
+red-adjacent to $v$, and $v \notin S$, so $S \cup \{v\}$ is a red clique of size
+$s+1$, giving the left disjunct.
 
-**Theorem (RamseyProp_choose).** For all s, t ∈ ℕ, `RamseyProp (C(s+t, s)) (s+1) (t+1)`.
+*Case $|B| \ge n$.* Symmetric. Apply $n \to (s+1,t)$ to $B$. Either a red
+$(s+1)$-clique appears (left disjunct), or a blue $t$-clique $S \subseteq B$ appears;
+since every vertex of $B$ is blue-adjacent to $v$, $S \cup \{v\}$ is a blue
+$(t+1)$-clique (right disjunct). $\qquad\blacksquare$
 
-**Corollary (RamseyProp_le_choose').** For s, t ≥ 1, `RamseyProp (C(s+t-2, s-1)) s t`.
+**Theorem 7 (Binomial upper bound, `arrows_recursion`).** For all $s,t \in
+\mathbb{N}$,
+$$ \binom{s+t}{s} \to (s+1,\,t+1). $$
 
-*Proof.* Induction on s, then on t. Base cases use `RamseyProp_one_left/right`. The inductive step combines `RamseyProp_recursion` with Pascal's identity C(s+t+2, s+1) = C(s+t+1, s) + C(s+t+1, s+1). ∎
+*Proof sketch.* Double induction on $s$ and $t$.
 
-### 3.3 Parity Improvement (Theorem A3)
+- *Base $s=0$:* $\binom{t}{0}=1$ and the claim is $1 \to (1,t+1)$, which is Lemma 5a.
+- *Base $t=0$ (within the inductive step on $s$):* $\binom{s+1}{s+1}=1$ and the claim
+  is $1 \to (s+2,1)$, which is Lemma 5b.
+- *Inductive step:* Assume $\binom{(s)+(t+1)}{s} \to (s+1,t+2)$ and
+  $\binom{(s+1)+t}{s+1} \to (s+2,t+1)$. By Theorem 6 (with both thresholds positive,
+  as binomial coefficients of valid arguments are $\ge 1$),
+  $$ \Bigl(\tbinom{s+t+1}{s} + \tbinom{s+t+1}{s+1}\Bigr) \to (s+2,\,t+2). $$
+  By **Pascal's rule** $\binom{s+t+1}{s} + \binom{s+t+1}{s+1} = \binom{s+t+2}{s+1}$,
+  the threshold is exactly $\binom{(s+1)+(t+1)}{s+1}$, completing the induction.
+  $\qquad\blacksquare$
 
-**Theorem (RamseyProp_recursion_parity).** If a and b are both even, s,t ≥ 2, `RamseyProp a (s-1) t`, and `RamseyProp b s (t-1)`, then `RamseyProp (a+b-1) s t`.
+**Corollary 8 (`arrows_binomial_bound`).** For all $s,t$,
+$\binom{s+t}{s} \to (s+1,t+1)$; equivalently $R(s+1,t+1) \le \binom{s+t}{s}$. In the
+classical shifted indices, $R(s,t) \le \binom{s+t-2}{s-1}$.
 
-*Proof sketch.* In a 2-coloring of K_{a+b-1}, if no vertex has redDegree ≥ a or blueDegree ≥ b, then every vertex has redDegree = a-1 (since redDegree + blueDegree = a+b-2). The sum of red degrees is (a+b-1)(a-1), which is odd·odd = odd when a,b are even. But the sum of degrees is always even (handshaking lemma). Contradiction. ∎
+*Proof.* Restatement of Theorem 7. $\qquad\blacksquare$
 
-### 3.4 Exact Values (Theorems B1, B2)
+## 6. The exact value $R(3,3)=6$
 
-**R(3,3) = 6.** Upper bound from Erdős–Szekeres (C(4,2) = 6). Lower bound: the pentagon coloring on 5 vertices (red edges = cycle C₅) has no monochromatic triangle, verified by `decide`.
+**Theorem 9 (Upper half, `arrows_three_three`).** $6 \to (3,3)$.
 
-**R(3,4) = 9.** Upper bound from parity improvement: R(2,4) = 4 and R(3,3) = 6 are both even, so R(3,4) ≤ 4+6-1 = 9. Lower bound: a Cayley graph coloring on ℤ/8ℤ with red differences {1,4,7} (a sum-free set) avoids red K₃ and blue K₄, verified by `native_decide`.
+*Proof sketch.* Specialize Theorem 7 to $s=t=2$: $\binom{2+2}{2}=\binom{4}{2}=6$, so
+$6 \to (3,3)$. Hence every red/blue colouring of $K_6$ contains a monochromatic
+triangle, giving $R(3,3) \le 6$. $\qquad\blacksquare$
 
-### 3.5 Probabilistic Lower Bound (Theorem C1)
+For the matching lower bound we exhibit an extremal colouring of $K_5$.
 
-**Theorem (ramsey_lower_bound_counting).** If 2·C(n,k) < 2^C(k,2), then ¬ RamseyProp n k k.
+**Definition 10 (Pentagon, `pentagon`).** On the vertex set $\mathbb{Z}/5\mathbb{Z}
+\cong \mathrm{Fin}\,5$, let `pentagon` be the symmetric closure of the relation
+$a+1=b$; that is, $a \sim b$ iff $a+1=b$ or $b+1=a$ (indices mod 5). This is the
+$5$-cycle $C_5$, taken as the red subgraph. Its complement is the "pentagram", which
+is again a $5$-cycle.
 
-*Proof sketch.* The proof uses double counting over the finite set of all 2-colorings. Represent colorings as subsets of ordered edge-pairs. For each k-subset S, the number of colorings making S all-red is 2^(C(n,2) - C(k,2)), and similarly for all-blue. By union bound, the total "bad" colorings is at most C(n,k) · 2 · 2^(C(n,2) - C(k,2)). If this is less than 2^C(n,2), some coloring is "good."
+**Lemma 11a (`pentagon_no_triangle`).** There is no $S$ with `pentagon`.`IsNClique`
+$3\,S$: the pentagon contains no red triangle.
 
-The hypothesis 2·C(n,k) < 2^C(k,2) is exactly the condition for this inequality to hold after cancellation. ∎
+*Proof sketch.* A finite exhaustive check over all $3$-subsets of $\mathrm{Fin}\,5$.
+A $5$-cycle is triangle-free: any three of its vertices include a non-adjacent pair.
+$\qquad\blacksquare$
 
-**Applications:**
-- R(4,4) > 5: 2·C(5,4) = 10 < 64 = 2⁶
-- R(5,5) > 8: 2·C(8,5) = 112 < 1024 = 2¹⁰
-- R(6,6) > 17: 2·C(17,6) = 24752 < 32768 = 2¹⁵
+**Lemma 11b (`pentagon_compl_no_triangle`).** There is no $S$ with
+`pentagon`$^{c}$.`IsNClique` $3\,S$: the complement contains no blue triangle.
 
-### 3.6 Hales–Jewett Theory (Theorem D)
+*Proof sketch.* The complement of $C_5$ on five vertices is again a $5$-cycle, hence
+triangle-free by the same exhaustive check. $\qquad\blacksquare$
 
-**Theorem (HJProp_monotone_dim).** For k ≥ 1, if HJProp k r n, then HJProp k r (n+1).
+**Theorem 9 (Lower half, `not_arrows_five_three_three`).** $\lnot(5 \to (3,3))$, i.e.
+$R(3,3) > 5$.
 
-*Proof.* Given a coloring c of [k]^(n+1), fix the last coordinate and apply the hypothesis to the restricted coloring. The resulting monochromatic line lifts to dimension n+1. ∎
+*Proof sketch.* Suppose $5 \to (3,3)$. Apply it to the pentagon colouring on the full
+vertex set of $\mathrm{Fin}\,5$ ($|{\rm univ}| = 5$). It would yield a red triangle or
+a blue triangle, contradicting Lemmas 11a and 11b respectively. $\qquad\blacksquare$
 
-**Theorem (HJProp_2_2_2).** Every 2-coloring of [2]² contains a monochromatic combinatorial line.
+**Corollary (Exact value).** Combining the two halves,
+$$ R(3,3) = 6. $$
+Theorem 9 (upper) gives $R(3,3) \le 6$ and Theorem 9 (lower) gives $R(3,3) \ge 6$.
 
-*Proof.* Finite case analysis over the 16 possible 2-colorings of the 4-element set [2]², verified computationally. ∎
+## 6b. A worked example: the direct pigeonhole argument for $K_6$
 
-## 4. Algorithms and Computational Methods
+It is instructive to see how Theorem 6 specializes, at $s=t=2$, to the classical
+one-vertex argument for $K_6$, because the general inductive step is exactly this
+argument with the two recursive calls abstracted away.
 
-### 4.1 Clique-Avoidance Certificate Verification
+Fix any red/blue colouring of $K_6$ and a vertex $v$. The five edges from $v$ are each
+red or blue, so by pigeonhole at least $\lceil 5/2 \rceil = 3$ of them share a colour;
+say (after swapping colours if necessary) three are red, joining $v$ to $a,b,c$. This is
+the step "$|R| \ge 3$" of Theorem 6 with $m=3$: it uses $3 \to (2,3)$, which holds
+because among any three vertices either two are joined by a red edge or all three pairs
+are blue. Concretely, examine the triangle on $\{a,b,c\}$:
 
-Our framework includes decidability instances for `IsRedClique` and `IsBlueClique`, enabling automatic verification of clique-avoidance certificates. Given a coloring (as a `TwoColoring n`) and size bounds (s, t), the property `¬∃ S, S.card = s ∧ IsRedClique C S` can be verified by `decide` for small n or `native_decide` for moderate n.
+- If any one of the edges $ab,ac,bc$ is red, say $ab$, then $\{v,a,b\}$ is a red triangle
+  — the red $s$-clique $\{a,b\}$ inside $R$ extended by $v$, exactly the
+  "$S \cup \{v\}$" construction of the proof of Theorem 6.
+- If none of $ab,ac,bc$ is red, then $\{a,b,c\}$ is a blue triangle — the blue
+  $(t)$-clique that the recursion returns directly without attaching $v$.
 
-### 4.2 Probabilistic Bound Evaluator
+Either way a monochromatic triangle exists, so $6 \to (3,3)$, matching
+`arrows_three_three`. The same colour-counting at a single vertex, applied with the
+general thresholds $m,n$ instead of the constant $3$, is the entire content of
+`arrows_step`. The numerical demonstration accompanying this paper verifies the
+statement the hard way as well, by exhaustively confirming that all $2^{15}=32768$
+colourings of $K_6$ contain a monochromatic triangle while the pentagon colouring of
+$K_5$ does not.
 
-The theorem `ramsey_lower_bound_counting` takes a numerical certificate `2·C(n,k) < 2^C(k,2)` and produces a proof of `¬ RamseyProp n k k`. The certificate can be verified by `native_decide`.
+## 6c. Numerical landscape of the binomial bound
 
-## 5. Discussion
+The table below lists the binomial ceilings $\binom{s+t-2}{s-1}$ produced by
+Corollary 8 next to the true Ramsey numbers (the latter taken from the literature; only
+$R(3,3)=6$ is established in this development). It shows both the strength of the bound
+for the diagonal-adjacent small cases and how it loosens as the indices grow.
 
-### 5.1 Design Decisions
+| $(s,t)$ | bound $\binom{s+t-2}{s-1}$ | true $R(s,t)$ |
+|---|---|---|
+| $(2,2)$ | $2$ | $2$ |
+| $(3,3)$ | $6$ | $6$ (proved here) |
+| $(3,4)$ | $10$ | $9$ |
+| $(4,4)$ | $20$ | $18$ |
+| $(3,5)$ | $15$ | $14$ |
+| $(4,5)$ | $35$ | $25$ |
 
-We chose to work with `TwoColoring n` (symmetric Boolean functions on `Fin n`) rather than Mathlib's `SimpleGraph` for several reasons: (1) explicit Bool values enable decidability; (2) the symmetric/irreflexive structure fields make the API cleaner for our purposes; (3) restriction to subsets is straightforward via function composition.
+The bound is tight at $(2,2)$ and $(3,3)$ and within a small additive gap for the next
+few off-diagonal cases, but the gap widens quickly, foreshadowing the exponential
+separation discussed in Section 9.
 
-### 5.2 Limitations
+## 7. Algorithms
 
-- The probabilistic lower bound produces existence proofs but not explicit constructions.
-- Exact values for R(4,4) = 18 are not formalized (the lower bound requires a 17-vertex certificate).
-- The full Hales–Jewett theorem (arbitrary k, r) is not proved; only dimension monotonicity and the base case.
+The verified statements correspond to two natural algorithms.
 
-### 5.3 Extensibility
+**Algorithm A — Erdős–Szekeres recursive upper-bound evaluator.** Compute an upper
+bound for $R(s,t)$ by the recursion $f(s,t) = f(s-1,t) + f(s,t-1)$ with base cases
+$f(1,t)=f(s,1)=1$, which evaluates to $\binom{s+t-2}{s-1}$. Memoized, it runs in
+$O(st)$ arithmetic operations and reproduces $f(3,3)=6$, $f(3,4)=10$, $f(4,4)=20$
+(valid ceilings; the true values $9$ and $18$ require constructions beyond the bound).
 
-The framework is designed for extension:
-- New exact values require only a certificate coloring and the appropriate upper bound.
-- Higher-dimensional Hales–Jewett cases can build on the monotonicity lemma.
-- The probabilistic bound can be applied to any (n, k) satisfying the numerical condition.
+**Algorithm B — Exhaustive monochromatic-triangle certifier.** Given an explicit
+colouring of $K_n$ (e.g. the pentagon on $K_5$), enumerate all $\binom{n}{3}$ vertex
+triples and test each for being monochromatic. This certifies the two pentagon lemmas
+($C_5$ and its complement are triangle-free) and, dually, confirms that every
+colouring of $K_6$ contains a monochromatic triangle.
 
-## 6. Future Work
+## 8. Applications
 
-1. Formalize R(4,4) = 18 via a verified 17-vertex certificate.
-2. Prove the full Hales–Jewett theorem by iterated product/density increment.
-3. Improve the probabilistic lower bound using the Lovász Local Lemma.
-4. Connect Ramsey colorings to coding-theoretic distance bounds.
-5. Formalize the 2023 Campos–Griffiths–Morris–Sahasrabudhe upper bound improvement.
+Ramsey-type guarantees appear throughout mathematics, computer science, and beyond:
 
-## 7. References
+- **Social networks:** any group of six people contains three mutual acquaintances or
+  three mutual strangers — the friendship theorem folklore form of $R(3,3)=6$.
+- **Data and coincidences:** large datasets necessarily contain repeated patterns;
+  Ramsey bounds quantify how large is "large enough".
+- **Sequences:** the Erdős–Szekeres monotone-subsequence theorem (a sibling of the
+  bound proved here) underlies algorithms in sorting and patience-style games.
+- **Lower bounds in complexity:** Ramsey arguments produce unavoidable structure that
+  features in communication-complexity and circuit lower bounds.
 
-1. F.P. Ramsey, "On a Problem of Formal Logic," Proc. London Math. Soc. 30 (1930), 264–286.
-2. P. Erdős and G. Szekeres, "A combinatorial problem in geometry," Compositio Math. 2 (1935), 463–470.
-3. P. Erdős, "Some remarks on the theory of graphs," Bull. AMS 53 (1947), 292–294.
-4. A.W. Hales and R.I. Jewett, "Regularity and positional games," Trans. AMS 106 (1963), 222–229.
-5. M. Campos, S. Griffiths, R. Morris, J. Sahasrabudhe, "An exponential improvement for diagonal Ramsey," preprint (2023).
-6. R.L. Graham, B.L. Rothschild, J.H. Spencer, *Ramsey Theory*, 2nd ed., Wiley, 1990.
+## 9. Discussion and the asymptotic landscape
+
+The binomial bound shows $R(s,s) \le \binom{2s-2}{s-1} = O(4^s)$. Erdős's
+probabilistic argument gives $R(s,s) > 2^{s/2}$ for large $s$. Despite ninety years of
+effort the base of the exponential is unknown; only marginal improvements to the
+constants are known. Exact values are extraordinarily scarce: $R(3,3)=6$,
+$R(3,4)=9$, $R(4,4)=18$, with $R(5,5)$ known only to lie in $[43,48]$. The present
+development supplies the verified foundation — model, recursion, binomial ceiling, and
+the first exact value — on which sharper results can be built.
+
+## 9b. Related results and the formalization landscape
+
+The arrow relation and the binomial bound sit at the head of a large family of
+Ramsey-type theorems. The *infinite* Ramsey theorem guarantees a monochromatic infinite
+clique in any finite colouring of the edges of a countable complete graph, and implies
+the finite version by a compactness argument. The *hypergraph* Ramsey theorem replaces
+edges by $k$-element sets and underlies the Erdős–Szekeres geometric application. Van
+der Waerden's theorem and the Hales–Jewett theorem are the arithmetic and combinatorial
+"density" cousins, asserting unavoidable monochromatic arithmetic progressions and
+combinatorial lines, respectively. All share the moral that sufficiently large structures
+cannot be globally disordered.
+
+Within the present formalization, the deliberate genericity of `Arrows` over an arbitrary
+vertex type means the same statements specialize without change to any concrete host
+graph; for instance the application to the full vertex set of $\mathrm{Fin}\,5$ in the
+proof of Theorem 9 (lower) is just one instance of the universally quantified definition.
+The two finite `decide` checks (`pentagon_no_triangle` and `pentagon_compl_no_triangle`)
+illustrate a general technique: for explicit small graphs with a decidable adjacency
+relation, clique-freeness is a decidable proposition, so the lower-bound half of an exact
+Ramsey value reduces to a terminating finite computation. This is precisely the lever the
+future directions exploit to attack $R(3,4)$ and $R(4,4)$ via circulant and Paley graphs.
+
+## 10. Future directions
+
+**A reusable `RamseyNumber` object.** Package exactness via
+$\mathrm{RamseyNumber}\,s\,t := \inf\{N : N \to (s,t)\}$ together with an `IsLeast`
+characterization. Because monotonicity already shows $N \mapsto (N \to (s,t))$ is
+upward closed, the infimum is attained and $N \to (s,t) \iff \mathrm{RamseyNumber}\,s\,t
+\le N$ becomes a single bridge lemma. Concrete values then read uniformly as
+$\mathrm{RamseyNumber}\,s\,t = c$, and the recursion becomes
+$\mathrm{RamseyNumber}(s{+}1,t{+}1) \le \mathrm{RamseyNumber}(s,t{+}1) +
+\mathrm{RamseyNumber}(s{+}1,t)$.
+
+**Diagonal lower bound $R(s,s) > 2^{s/2}$ by counting.** Make the probabilistic step
+finitary: over `SimpleGraph (Fin n)` as a `Fintype`, if the number of graphs
+containing a monochromatic $s$-clique is strictly less than the total number of
+graphs, a clique-avoiding colouring exists. Both counts are explicit binomial
+expressions, so the historically probabilistic result becomes a finite arithmetic
+inequality reusing the existing `IsNClique`/complement vocabulary.
+
+**Off-diagonal exact values $R(3,4)=9$ and $R(4,4)=18$.** The recursion supplies upper
+bounds; the matching lower bounds need explicit constructions. The decidable-clique
+infrastructure used for the pentagon scales to circulant graphs: $R(3,4)=9$ is
+witnessed by a specific graph on $\mathrm{Fin}\,8$ and $R(4,4)=18$ by the Paley graph
+on $\mathrm{Fin}\,17$, both circulant and hence `decide`-friendly.
+
+**The Hales–Jewett theorem.** A density/colouring cornerstone of Ramsey theory whose
+formalization would generalize the combinatorial-line phenomenon underlying van der
+Waerden's theorem.
+
+## Appendix: Index of formal results
+
+- `Arrows` — Definition 3.
+- `Arrows.mono` — Proposition 4.
+- `arrows_one_red`, `arrows_one_blue` — Lemmas 5a, 5b.
+- `arrows_step` — Theorem 6.
+- `arrows_recursion`, `arrows_binomial_bound` — Theorem 7, Corollary 8.
+- `arrows_three_three` — Theorem 9 (upper).
+- `pentagon`, `pentagon_no_triangle`, `pentagon_compl_no_triangle`,
+  `not_arrows_five_three_three` — Definition 10, Lemmas 11a/11b, Theorem 9 (lower).
