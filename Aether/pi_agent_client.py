@@ -2863,6 +2863,9 @@ Be precise, be deep, be world-class.
                references.** State every theorem, result, and definition inline —
                do NOT use @file references or point to other files. A reader with
                only this article must understand every result without looking elsewhere.
+               **CRITICAL MATH FORMATTING:** You MUST wrap all inline math in single `$`
+               delimiters (e.g., `$x^2+y^2=z^2$`) and block math in double `$$`. Never
+               leave math expressions un-delimited in Markdown, or it will break rendering.
             2. **RESEARCH_PAPER.md** — In-depth research paper (3000-8000 words).
                Abstract, definitions, main results (with proof sketches — NOT
                full Lean), algorithms, applications, discussion, future work.
@@ -2871,6 +2874,9 @@ Be precise, be deep, be world-class.
                inline with its full mathematical statement and proof sketch. Do NOT
                use @file references or reference other files. A reader with only this
                paper must be able to follow every result from start to finish.
+               **CRITICAL MATH FORMATTING:** You MUST wrap all inline math in single `$`
+               delimiters (e.g., `$x^2+y^2=z^2$`) and block math in double `$$`. Never
+               leave math expressions un-delimited in Markdown, or it will break rendering.
             3. **RESEARCH_PAPER.tex** — A clean, compilable LaTeX version of
                the paper that mirrors the content of RESEARCH_PAPER.md. Use standard
                amsmath/amsart or article class, define all theorems inline, and make
