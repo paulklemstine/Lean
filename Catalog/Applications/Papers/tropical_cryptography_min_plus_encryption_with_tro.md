@@ -1,30 +1,58 @@
-# Theorem Trace (internal anti-hallucination ledger)
+# Computational Evidence — Tropical Discrete Logarithm (min-plus) eigenvalue attack
 
-Source of truth: `Catalog/Tropical/TropicalTDLPEigenAttack.lean`
-(namespace `Catalog.Tropical.TropicalTDLPEigenAttack`).
+All numbers below were produced by a self-contained min-plus computation over `ℚ`
+(verified in Lean; reproduced here). The formal theorems live in
+`Catalog/Tropical/TropicalDiscreteLog.lean` and
+`Catalog/Bridges/TropicalStrongDivisibilityDLog.lean`.
 
-Every claim in ARTICLE.md and RESEARCH_PAPER.md must map to one of the entries below.
-No theorem may be renamed into a grander claim; no result outside this list may be stated.
+## Setup
 
-## Definitions
+Tropical (min-plus) matrix–vector action `(A ⊗ v)_i = min_j (A_{ij} + v_j)`, with
 
-| Lean name | Kind | Mathematical statement | Article | Paper |
-|---|---|---|---|---|
-| `oneByOneAction` | def | `oneByOneAction lam x = lam + x` (action of 1×1 tropical matrix) | "the one-box machine" | Def. 3.1 |
-| `Vec` | abbrev | `Vec ι := ι → Nat` (tropical vector) | "a list of numbers" | Def. 4.1 |
-| `tropScalarAdd` | def | `tropScalarAdd c v = fun i => c + v i` (tropical scalar action) | "turning the dial by c" | Def. 4.2 |
-| `ScalarEquivariant` | def | `∀ c v, F (tropScalarAdd c v) = tropScalarAdd c (F v)` | "the machine respects the dial" | Def. 4.3 |
-| `IsTropicalEigen` | def | `F v = tropScalarAdd lam v` | "an eigenline / fixed direction" | Def. 4.4 |
+```
+A = [[3, 5],
+     [5, 3]]          (constant diagonal c = 3)
+v = (0, 1)            (tropical eigenvector)
+```
 
-## Theorems
+`(c, v) = (3, (0,1))` is a tropical eigenpair: `A ⊗ v = v + 3`, verified
+`A ⊗ v = (3, 4) = v + 3`.
 
-| Lean name | Statement | Article | Paper |
-|---|---|---|---|
-| `oneByOne_tropical_iterate` | `(fun y => lam + y)^[k] x = k * lam + x` | "k turns add k·λ" | Thm. 3.2 |
-| `tdlp_recover_oneByOne` | `(fun y => 1 + y)^[k] x - x = k` | "one subtraction reveals k" | Thm. 3.3 |
-| `tropScalarAdd_add` | `tropScalarAdd a (tropScalarAdd b v) = tropScalarAdd (a+b) v` | (implicit) | Lem. 4.5 |
-| `iterate_eigenline_attack` | `F^[k] v = tropScalarAdd (k * lam) v` | "the eigenline attack" | Thm. 4.6 |
-| `tdlp_recover_eigenline` | `F^[k] v i - v i = k` (when `lam = 1`) | "one coordinate, one subtraction" | Thm. 4.7 |
+## 1. Eigenvalue additivity under powers  (`tropMatPow_eigenpair`)
 
-All statements are over `Nat` (min-plus carrier without `+∞`); subtraction is truncated `Nat` subtraction,
-which is exact here because the output dominates the input.
+The residual `(A^{⊗t} ⊗ v)_i − v_i` measured after `t` applications, at both coordinates:
+
+| genuine power `t` | residual coord 0 | residual coord 1 | predicted `t·c` |
+|-------------------|------------------|------------------|-----------------|
+| 1                 | 3                | 3                | 3               |
+| 2                 | 6                | 6                | 6               |
+| 3                 | 9                | 9                | 9               |
+| 5                 | 15               | 15              | 15              |
+
+The residual is **constant across coordinates** and equals `t·c` exactly — this is the
+leak that breaks the TDLP: `k = residual/c − 1`.
+
+## 2. Strong divisibility leak  (`tdlp_divisibility_leak`, `tropical_eigenvalue_gcd`)
+
+The leaked eigenvalue sequence is `t ↦ c·t`. For `c = 3`:
+
+```
+gcd( eig(4), eig(6) ) = gcd(12, 18) = 6 = 3 · gcd(4,6) = eig(gcd(4,6)).
+```
+
+So the public eigenvalues form a *strong divisibility sequence*: their divisibility
+lattice mirrors the divisibility lattice of the exponents.
+
+## 3. Counterexample hunt — the boundary `c = 0`
+
+For `c = 0` (the boundary eigenvalue of `Tropical/EigenzeroNoLeak.lean`) the sequence is
+identically `0`, every value divides every other, and **no** exponent information leaks.
+This is the precise complement of the broken regime: the `↔` in `tdlp_divisibility_leak`
+genuinely requires `0 < c`. No counterexample to the guarded statements was found.
+
+## OEIS
+
+The eigenvalue sequence `t ↦ c·t` is the multiples-of-`c` sequence (e.g. `c=1` is
+A000027, the identity sequence, which is also the `idSDS` of
+`Bridges/StrongDivisibilitySequences.lean`). The strong divisibility property of `c·t`
+is `Nat.gcd_mul_left`.

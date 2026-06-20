@@ -1,207 +1,208 @@
-# The Cipher That Broke Itself: A Cautionary Tale from Tropical Arithmetic
+# The Secret That Counts Itself: How a "Tropical" Cipher Gives Away Its Own Key
 
-## A new arithmetic for a nervous age
+Imagine a lock whose tumblers are made of shortest paths through a map of cities,
+where every product is a sum and every sum is a minimum. For a few years, a small
+but enthusiastic corner of cryptography believed that locks like this might be the
+key to surviving the quantum era. They are built from **tropical arithmetic** — a
+strange and beautiful algebra in which addition is replaced by "take the smaller of
+two numbers," and multiplication is replaced by ordinary addition. The hope was
+audacious: that this exotic algebra could hide secrets in a way that no quantum
+computer could unravel.
 
-Every few years, the world of cryptography gets a scare. The encryption that
-guards our bank transfers, messages, and state secrets rests almost entirely on
-a handful of "hard" mathematical problems — factoring enormous numbers, or
-finding hidden exponents inside cyclic groups. These problems are hard for the
-computers we have today. But a sufficiently large *quantum* computer would crush
-them in an afternoon. So the search is on for **post-quantum cryptography**: new
-hard problems, built on exotic algebra, that even a quantum machine cannot
-shortcut.
+This is the story of why one of those locks quietly leaks its key — and how the
+leak turns out to be far more total than anyone first suspected. The secret
+exponent does not merely slip out. The public data broadcasts the *entire
+arithmetic structure* of the secret, like a sealed envelope that helpfully prints
+all the factors of the number inside it on the outside.
 
-One of the most seductive candidates comes from a strange and beautiful corner
-of mathematics called **tropical arithmetic**. It is, at first glance, almost a
-prank. You take the arithmetic you learned as a child and rewrite two rules:
+## A new pair of glasses for arithmetic
 
-- Wherever you used to **add**, now take the **minimum**.
-- Wherever you used to **multiply**, now **add**.
+Start with the rules. In ordinary arithmetic we have two operations, $+$ and
+$\times$. Tropical (or **min-plus**) arithmetic keeps the symbols but swaps their
+meaning:
 
-So in the tropical world, "2 + 3" is no longer 5 — it is `min(2, 3) = 2`. And
-"2 × 3" is no longer 6 — it is `2 + 3 = 5`. This sounds like a typo, but it is a
-perfectly consistent algebra (mathematicians call it the *min-plus semiring*),
-and it shows up everywhere: in scheduling trains, in computing shortest paths
-through a network, in the geometry of evolutionary trees, and in optimization.
-The name "tropical" is a tribute to the Brazilian mathematician Imre Simon, with
-no deeper meaning — it just stuck.
+$$a \oplus b = \min(a, b), \qquad a \otimes b = a + b.$$
 
-Because tropical arithmetic looks so unfamiliar, it is tempting to believe it
-hides good cryptographic secrets. The intuition goes: ordinary multiplication is
-the engine of classical cryptography, so let's swap in *tropical* multiplication
-and build a brand-new lock that quantum computers have never been trained to
-pick. Several proposals did exactly this. This article is about why one natural
-version of that idea **defeats itself** — and how that failure can be turned
-into a precise, machine-checkable theorem.
+So "tropical multiplication" is just regular addition, and "tropical addition" is
+choosing the minimum. It looks like a typo, but it is a fully consistent algebra,
+and it shows up everywhere shortest paths and scheduling and optimization live.
 
-## The lock: a tropical discrete logarithm
+Here is the punchline that makes it interesting: the tropical product of two
+matrices is exactly the recipe for combining distance tables. If $A$ and $B$ are
+$n \times n$ matrices, their tropical product is
 
-Classical cryptography loves a particular kind of asymmetry: an operation that
-is easy to *do* but hard to *undo*. The flagship example is the **discrete
-logarithm**. Pick a number `g`. Computing `g` raised to a secret power `k` is
-fast, even when `k` is astronomically large, because you can square repeatedly.
-But going backward — being handed `g` and `g^k` and asked to find `k` — is
-believed to be enormously hard. That asymmetry is what lets two strangers, Alice
-and Bob, agree on a shared secret over a public channel (the famous
-Diffie–Hellman key exchange).
+$$(A \otimes B)_{ij} = \min_{k}\,\big(A_{ik} + B_{kj}\big).$$
 
-The tropical proposal copies this blueprint. Instead of numbers, you use
-**tropical matrices** — grids of integers that multiply using min-and-plus. You
-fix a public matrix `A`, and the "power" `A` raised to the `k`-th tropical power,
-written `A^(⊗k)`, is the matrix you get by tropically multiplying `A` by itself
-`k` times. Computing it is fast: repeated tropical squaring does the job in time
-proportional to `log k`. The hope is that recovering the secret exponent `k`
-from the pair `(A, A^(⊗k))` is hard. Call this the **Tropical Discrete
-Logarithm Problem (TDLP)**. If it were truly hard, you could build a tropical
-Diffie–Hellman: Alice publishes `A^(⊗a)`, Bob publishes `A^(⊗b)`, and they both
-compute the shared key `A^(⊗ab)`.
+Read that slowly. It says: to get from $i$ to $j$, try every intermediate stop $k$,
+add the cost $A_{ik}$ of getting to $k$ to the cost $B_{kj}$ of leaving $k$, and
+keep the cheapest route. This is the **all-pairs shortest path** computation in
+disguise. Computing it forward is easy — about $n^3$ operations. Running it
+*backward* — recovering $A$ from the product — is the kind of tangled inverse
+problem that cryptographers love, because easy-one-way, hard-the-other-way is the
+raw material of every cipher.
 
-It is a lovely picture. And it has a crack running right through it.
+## Building a lock out of powers
 
-## Eigenvalues: the secret leaks through
+To build a key-exchange protocol you need a one-way *staircase*, not just a
+one-way step. So fix a tropical matrix $A$ and multiply it by itself, tropically,
+again and again. Write the result as a **tropical power**. In the formal
+development this is indexed so that $A^{\otimes 1} = A$ and each step prepends one
+more factor:
 
-Here is the crack. Tropical matrices, like ordinary ones, have **eigenvalues**.
-In the tropical world an eigenvalue `λ` is a number such that, for some special
-vector `v` (an *eigenvector*), applying the matrix to `v` does nothing more than
-add `λ` to every coordinate. The vector keeps its shape; it just slides uniformly
-upward by `λ`. The set of all multiples of such a `v` is its **eigenline** — a
-direction the matrix preserves.
+$$A^{\otimes (k+1)} = A \otimes A^{\otimes k}.$$
 
-Now watch what happens to eigenvalues under powers. If applying `A` once adds
-`λ`, then applying it `k` times adds `λ` exactly `k` times — that is, `k·λ`. In
-symbols, the eigenvalue of `A^(⊗k)` is simply `k` times the eigenvalue of `A`.
-And *that* is a disaster for the would-be cipher, because it means:
+So $A^{\otimes t}$ is the $t$-fold tropical product of $A$ with itself. Crucially,
+you can compute $A^{\otimes t}$ in about $n^3 \log t$ operations by *repeated
+squaring* — the same trick that lets your phone compute enormous powers for RSA in
+the blink of an eye. Doubling the exponent costs only one extra matrix multiply.
 
-> k = (eigenvalue of A^(⊗k)) ÷ (eigenvalue of A).
+These powers obey exactly the laws you would want from exponents. Multiplying two
+powers of the same matrix adds their exponents,
 
-The secret exponent is not hidden at all. It is sitting in plain sight as a
-ratio of eigenvalues, and tropical eigenvalues can be computed quickly — they
-are the "maximum cycle mean" of an associated network, found with classical
-shortest-path-style algorithms. The one-way function is, on its eigenline, a
-two-way street.
+$$A^{\otimes a} \otimes A^{\otimes b} = A^{\otimes (a+b)},$$
 
-## Stripping the idea to its bones
+and raising a power to a power multiplies them,
 
-To see *why* the leak is unavoidable, it helps to shrink the problem until
-nothing can hide. Consider the smallest possible tropical matrix: a single box
-holding one number `λ`. Applying it to a one-number vector `x` is just tropical
-multiplication — that is, ordinary addition:
+$$\big(A^{\otimes a}\big)^{\otimes b} = A^{\otimes (ab)}.$$
 
-> the one-box machine sends `x` to `λ + x`.
+That second law is the heart of a **Diffie–Hellman key exchange**, the protocol
+that lets two strangers agree on a shared secret over an open line. Alice picks a
+secret exponent $a$ and publishes $A^{\otimes a}$. Bob picks a secret $b$ and
+publishes $A^{\otimes b}$. Each then raises the *other's* matrix to their own
+secret. Because the exponents multiply the same way regardless of order,
 
-What does running the machine `k` times do? Each pass adds `λ`, so after `k`
-passes you have added `k·λ`:
+$$\big(A^{\otimes a}\big)^{\otimes b} = A^{\otimes (ab)} = \big(A^{\otimes b}\big)^{\otimes a},$$
 
-> **Result 1 (the iterate formula).** Running the one-box machine `k` times sends
-> `x` to `k·λ + x`.
+both of them arrive at the identical shared key $A^{\otimes (ab)}$. An eavesdropper
+sees $A$, $A^{\otimes a}$, and $A^{\otimes b}$ — but to reconstruct $A^{\otimes
+(ab)}$ they would seemingly need one of the secret exponents. Finding $k$ from $A$
+and $A^{\otimes k}$ is the **Tropical Discrete Logarithm Problem (TDLP)**, and the
+whole edifice rests on it being hard.
 
-This is the entire engine of the supposed cipher, laid bare. The "encryption" is
-nothing but *adding a multiple of `λ`*. And addition has an inverse: subtraction.
-Suppose the public eigenvalue is `λ = 1` (the simplest non-trivial case). Then
-the machine run `k` times sends `x` to `k + x`, and an attacker who sees the
-input `x` and the output simply subtracts:
+It is not.
 
-> **Result 2 (instant recovery).** When `λ = 1`, the secret exponent is exactly
-> `output − input = k`.
+## The eigenvalue that keeps a tally
 
-No guessing, no search, no quantum computer. One subtraction. The lock springs
-open in a single step.
+Every tropical matrix has a hidden number attached to it: its **tropical
+eigenvalue**. In ordinary linear algebra, an eigenvector $v$ is a direction that a
+matrix merely stretches: $Av = \lambda v$. The tropical analogue replaces stretch
+with shift. A vector $v$ is a tropical eigenvector with eigenvalue $\lambda$ when
+applying the matrix simply adds the same constant $\lambda$ to every coordinate:
 
-## It was never about the matrix
+$$(A \otimes v)_i = \min_k\big(A_{ik} + v_k\big) = v_i + \lambda \quad \text{for every } i.$$
 
-A skeptic might object: surely a *big* tropical matrix, with all its tangled
-min-plus interactions, is safer than a single box? The surprising answer is no —
-not if you happen to be looking along an eigenline. And the reason is a property
-shared by *every* sensible tropical-linear map, no matter how large or
-complicated.
+Geometrically, $\lambda$ is the *minimum average cost of a cycle* in the network
+$A$ describes — the cheapest loop you can run forever. It is an intrinsic
+fingerprint of the matrix.
 
-That property is **scalar equivariance**. It says the machine "respects the
-dial": if you turn the dial by adding a constant `c` to every coordinate of your
-vector *before* feeding it in, the output is exactly what you'd get by running
-the machine first and adding `c` afterward. Tropical matrix multiplication always
-has this property, because min-plus multiplication distributes over the uniform
-shift. In plain terms: a uniform raise of the input causes the same uniform
-raise of the output.
+Now define the quantity an eavesdropper can actually *measure*. Given a published
+matrix and a known reference vector $v$, look at how much the matrix shifts each
+coordinate. We call this the **residual**:
 
-Combine scalar equivariance with an eigenvector — a vector `v` the machine
-merely shifts by `λ` — and the whole apparatus collapses to the one-box case.
-Here is the clean statement, proved in full generality:
+$$\mathrm{res}(A, v)_i = (A \otimes v)_i - v_i.$$
 
-> **Result 3 (the eigenline attack).** Let `F` be *any* scalar-equivariant
-> tropical map, and let `v` be an eigenvector with eigenvalue `λ`. Then running
-> `F` exactly `k` times on `v` adds `k·λ` to every coordinate of `v` — and
-> nothing else. The internal structure of `F` is completely irrelevant.
+For a genuine eigenpair this residual is exactly $\lambda$, identically, in every
+coordinate. No averaging, no statistics, no noise: read off any single entry and
+you have the eigenvalue on the nose.
 
-The matrix can be `10 × 10` or `1000 × 1000`, dense or sparse, random or
-hand-crafted. The moment your starting vector lies on an eigenline, the iterated
-map forgets everything except the scalar `k·λ`. So the recovery is just as easy
-as before:
+Here is where the lock springs open. Watch what the eigenvalue does as you climb
+the staircase of powers. The defining property of an eigenvector is that the matrix
+shifts it by $\lambda$ — so applying the matrix $t$ times shifts it by $\lambda$
+exactly $t$ times. In residual language, the central cryptanalytic fact is:
 
-> **Result 4 (coordinate recovery).** When the eigenvalue is `λ = 1`, the secret
-> `k` is read off from *any single coordinate*: subtract that coordinate of the
-> input from the same coordinate of the output, and you have `k`.
+$$\mathrm{res}\big(A^{\otimes t}, v\big)_i = t\,\lambda \quad \text{for every coordinate } i.$$
 
-One coordinate. One subtraction. The size of the matrix buys you nothing.
+**The tropical eigenvalue is additive under powering.** The public matrix
+$A^{\otimes t}$ doesn't just contain a faint shadow of the secret exponent $t$ — it
+broadcasts $t\lambda$ at *every single coordinate*, a number that grows in perfect
+lockstep with the secret. If you know $\lambda = \lambda(A)$ (which you do, because
+$A$ is public), recovering the secret is a single division:
 
-## Why this matters
+$$t = \frac{\mathrm{res}\big(A^{\otimes t}, v\big)_i}{\lambda}.$$
 
-It would be easy to read this as a purely negative story — another cryptographic
-proposal that didn't survive contact with mathematics. But there are three
-reasons it is worth telling.
+The "discrete logarithm" that was supposed to be hard collapses into grade-school
+arithmetic. There is exactly one escape hatch: if $\lambda = 0$, then the residual
+is identically zero no matter what $t$ is, and the side channel goes silent. But a
+zero eigenvalue means the network has a free cycle — a loop you can traverse at no
+cost — which is a fragile, non-generic condition. For a randomly built tropical
+matrix it essentially never happens. The lock is open for almost every key.
 
-**First, it is a clean demonstration of a deep principle: homogeneity is the
-enemy of secrecy.** The tropical cipher fails not because of some subtle bug but
-because its core operation is *linear* in the tropical sense. Linear operations
-have eigenvalues, eigenvalues add up under iteration, and additive structure is
-trivially invertible. Any cryptographic scheme whose secret operation is too
-"linear" — in any algebra, tropical or otherwise — is leaking its secret through
-its spectrum. The tropical case just makes the leak vivid because the arithmetic
-is so stark.
+## The leak is worse than a stolen key
 
-**Second, the failure points toward what a *good* tropical scheme would need.**
-If linearity is fatal, security must come from controlled *non*-linearity: maps
-that do **not** respect the dial, vectors that avoid eigenlines, or operations
-that mix tropical and classical arithmetic so that no single eigenvalue governs
-the dynamics. The counterexample is a design specification written in the
-negative — a fence marking exactly where not to build.
+You might think that recovering the secret exponent is the end of the story — the
+worst that can happen. It isn't. The deeper discovery in this work is that the
+public data leaks not just the *value* of the secret, but its entire **divisibility
+structure**.
 
-**Third, the argument is not a hand-wave.** Every result above has been written
-down as a formal mathematical statement and verified down to the last step, with
-no appeal to intuition or "it is easy to see." The iterate formula, the instant
-recovery, the general eigenline collapse, and the coordinate recovery are all
-theorems in the strict sense — checked by a machine that accepts no gaps. When a
-cryptosystem is broken, you want certainty that it is broken, and that is exactly
-what a formal proof delivers.
+To see this, freeze the matrix and stare only at the leaked numbers. As the secret
+exponent $t$ ranges over $1, 2, 3, \dots$, the leaked eigenvalue traces out the
+sequence
 
-## A worked example
+$$t \;\longmapsto\; c \cdot t, \qquad \text{where } c = \lambda(A).$$
 
-Let's make it concrete. Take the one-box machine with `λ = 1`, and suppose Alice's
-secret exponent is `k = 7`, applied to a starting value `x = 4`.
+Call this the **tropical eigenvalue sequence**. It is the simplest possible
+sequence — a constant times the index — and that simplicity is precisely the
+weapon. This sequence has a remarkable property shared by famous sequences like the
+Fibonacci numbers and the Mersenne numbers: it is a **strong divisibility
+sequence**. That means two things hold together: the sequence vanishes at index
+$0$, and the greatest common divisor of two terms is the term at the greatest
+common divisor of the indices:
 
-Running the machine seven times: `4 → 5 → 6 → 7 → 8 → 9 → 10 → 11`. The output is
-`11`, which is indeed `7·1 + 4 = 11`, exactly as Result 1 predicts. An
-eavesdropper who sees the public input `4` and the transmitted output `11`
-computes `11 − 4 = 7` and instantly knows Alice's secret. That is Result 2 in
-action.
+$$\gcd\big(c\cdot m,\; c\cdot n\big) = c \cdot \gcd(m, n).$$
 
-Now scale up. Take a `3 × 3` tropical matrix and a vector `v` that happens to be
-one of its eigenvectors with eigenvalue `1`, say `v = (0, 5, 2)`. Apply the
-matrix seven times. By Result 3 the output must be `(0+7, 5+7, 2+7) = (7, 12, 9)`
-— each coordinate raised by `k·λ = 7`, no matter what the nine entries of the
-matrix were. The attacker looks at the first coordinate alone: `7 − 0 = 7`. Done.
-That is Result 4. The other eight numbers in the matrix never mattered.
+That single identity is a powerhouse. It implies that one secret exponent divides
+another **if and only if** the corresponding leaked eigenvalues divide each other.
+Formally, for any positive eigenvalue $c$,
 
-## The moral
+$$(m+1) \mid (k+1) \quad\Longleftrightarrow\quad c(m+1) \mid c(k+1).$$
 
-Tropical arithmetic is genuinely promising terrain for new mathematics, and the
-broader hunt for post-quantum cryptography is real and urgent. But novelty is not
-the same as security. An unfamiliar algebra can *look* like a fortress while
-being, structurally, a screen door. The min-plus discrete logarithm, in its most
-natural form, is exactly such a screen door: its secret slides out through the
-eigenvalues, and on an eigenline a single subtraction is all it takes.
+Translate that out of symbols. Suppose an eavesdropper has watched several past
+sessions and harvested their public matrices and leaked eigenvalues. They can now
+read off statements like "Tuesday's secret divides Friday's secret" or "this key
+is a prime number of steps long" — purely from the public transcript, without ever
+recovering the raw exponents. The envelope doesn't just leak the number inside; it
+prints the number's complete factorization lattice on the outside. A side channel
+that was supposed to be, at worst, a single number, turns out to expose an entire
+web of arithmetic relationships.
 
-The lesson generalizes far beyond the tropics. Whenever someone proposes hiding a
-secret inside the repeated application of an operation, the first question to ask
-is: *what does this operation do to its eigenvectors?* If iteration only scales
-them, the secret is the scale factor — and you have built a lock whose key is
-written on the front door.
+## Nesting doesn't help
+
+A natural last-ditch defense is to make the problem harder by *nesting*: raise $A$
+to a secret power, then raise the result to another secret power, hoping the
+compounded difficulty foils the attacker. The shared key in the Diffie–Hellman
+exchange is exactly such a nested object. But the eigenvalue arithmetic follows
+along obediently. With Alice's exponent $a$ and Bob's exponent $b$, the shared
+key's eigenvalue satisfies a clean factorization in terms of the *public*
+eigenvalues alone:
+
+$$c \cdot \lambda(\text{shared}) = \lambda(\text{Alice's public}) \cdot \lambda(\text{Bob's public}).$$
+
+Every quantity on the right is visible to the eavesdropper. The shared secret's
+fingerprint is computable from public data, so nesting multiplies a public
+invariant rather than hiding a private one. There is no hardness amplification to
+be had: the multiplicative shadow of the additive eigenvalue law tracks every move.
+
+## What the wreckage teaches
+
+It is tempting to read this as a purely negative result — another candidate
+post-quantum cipher consigned to the scrapheap. That is the headline, and it is
+true: tropical Diffie–Hellman, in this matrix-power form, is broken for essentially
+every key, and broken *thoroughly*. But the more durable lesson is a positive one
+about how to *audit* cryptography.
+
+The fatal flaw was not a clever attack; it was a structural inevitability. The
+public transcript was a strong divisibility sequence in the secret, and **any**
+scheme whose transcript is a strong divisibility sequence cannot hide the secret's
+divisibility lattice. That gives designers a sharp, reusable question to ask of any
+new proposal: *Is my public transcript, viewed as a function of the secret, a
+strong divisibility sequence?* If the answer is yes, the scheme leaks — no
+simulation, no statistics, just algebra. The same framework that unifies the
+Fibonacci and Mersenne sequences now doubles as a security litmus test.
+
+Tropical arithmetic remains genuinely beautiful and genuinely useful, from
+scheduling theory to the geometry of optimization. What this episode shows is that
+beauty is not security. A cipher's safety lives in the structure it *fails* to
+expose, and min-plus powering exposes too much: an eigenvalue that faithfully
+counts the secret, coordinate by coordinate, and a sequence so well-behaved that
+its arithmetic is an open book. Sometimes the most dangerous thing a secret can do
+is keep a perfect tally of itself.
