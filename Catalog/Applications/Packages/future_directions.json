@@ -188,7 +188,7 @@
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "47b46667",
+      "consumed_by_exp_id": "6b3462b3",
       "depth_estimate": 3,
       "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
       "domain_bridges": [],
@@ -198,7 +198,7 @@
         "Algebra"
       ],
       "id": "fd_0004",
-      "last_attempt_time": "2026-06-20T11:14:00.995281+00:00",
+      "last_attempt_time": "2026-06-20T12:03:20.227717+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -11883,11 +11883,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "00fd88ec",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
       "domain_bridges": [],
@@ -11897,7 +11897,7 @@
         "Geometry"
       ],
       "id": "fd_0443",
-      "last_attempt_time": "2026-06-20T11:14:05.181259+00:00",
+      "last_attempt_time": "2026-06-11T01:10:01.562727+00:00",
       "last_reviewed_at": "2026-06-09T13:04:00.554364+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -11910,7 +11910,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:auto-rebalance-wave6",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-03T19:55:28.798593+00:00",
       "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
@@ -30841,11 +30841,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "d9e56a6a",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "# Future Directions — Functorial Tropical–Pythagorean Bridge (Probability)\n\nThis cycle established a *normalization functor into the probability simplex*\nthat unifies three threads:\n\n* **Tropical**: `lse2`, `softmax2`, and the general `softmax`, with the Maslov\n  dequantization sandwich `max ≤ lse2 ≤ max + log 2`.\n* **Probability**: two-point (Bernoulli) laws, `bernVar`, and the cumulant\n  identities `deriv lse2 = softmax2` (mean) and `deriv² lse2 = bernVar ∘ softmax2`\n  (variance = tropical curvature).\n* **Pythagorean**: the map `(a,b,c) ↦ ((a/c)², (b/c)²)` lands in the simplex,\n  is dilation-invariant, equals the softmax image of log-squared coordinates,\n  and yields the Pythagorean probability identity `(p−q)² + 4·Var = 1`.\n\nThe conjectures below are precise, falsifiable targets for the next cycle. Each\nis stated so it can be dropped into Lean as a `theorem … := by sorry` and\nattacked directly.\n\n## Conjecture 1 (n-point tropical Hessian = covariance)\nThe general softmax `softmax w` is the gradient of the n-point free energy\n`lse w := log ∑ⱼ exp (w j)`, and the Hessian of `lse` is the covariance matrix of\nthe Gibbs law:\n```\n∂²/∂wᵢ∂wⱼ lse w = (if i = j then softmax w i · (1 - softmax w i)\n                    else - softmax w i · softmax w j).\n```\n**Test.** Prove `deriv (fun t => lse (Function.update w i t)) (w i) = softmax w i`\nand the diagonal/off-diagonal second-derivative formulas. Expected: the diagonal\nspecializes to `bernVar (softmax w i)`, generalizing `deriv2_lse2_eq_bernVar`.\n\n## Conjecture 2 (Pythagorean parametrization of the full simplex)\nEvery interior Bernoulli law arises from a *real* Pythagorean relation: for all\n`p ∈ (0,1)` there exist `a,b,c > 0` with `a² + b² = c²`, `(a/c)² = p`. Concretely\n`a = √p·c`, `b = √(1−p)·c`. Moreover the induced standard deviation satisfies\n`σ = |ab|/c² = √(p(1−p))`, so **the Bernoulli standard deviation is exactly half\nthe normalized area `2ab/c²` of the right triangle**.\n**Test.** Prove surjectivity of `p ↦` Pythagorean triple and the identity\n`2 * Real.sqrt (bernVar p) = 2*a*b/c^2` for the canonical triple. Falsifiable:\nthe area-to-σ proportionality constant is conjectured to be exactly `2`.\n\n## Conjecture 3 (Maslov interpolation is monotone and contracts to max)\nDefine the temperature-scaled functional `lseT h a b := h · log(exp(a/h)+exp(b/h))`\nfor `h > 0`. Then `h ↦ lseT h a b` is monotone non-decreasing, `lseT h a b → max a b`\nas `h → 0⁺`, and the *Gibbs entropy gap* `lseT h a b − max a b ∈ [0, h·log 2]`.\n**Test.** Prove the sandwich `max a b ≤ lseT h a b ≤ max a b + h·log 2` (rescale\nthe proved `lse2` sandwich) and the limit `Filter.Tendsto (fun h => lseT h a b)\n(nhdsWithin 0 (Set.Ioi 0)) (nhds (max a b))`. This is the quantitative\ndequantization underlying the whole bridge.\n\n## Conjecture 4 (Pythagorean identity is the χ² / information projection at 2 points)\nFor the Pythagorean-induced law `p = (a/c)²`, the polarization leg `p − q` equals\nthe (signed) χ²-type discrepancy from the uniform law `(½,½)`:\n`(p − ½)² + (q − ½)² = ½·(p − q)² = ½·(1 − 4·Var)`. Hence **maximal Bernoulli\nvariance ⇔ minimal χ²-distance to uniform ⇔ the degenerate right triangle\n`a = b`**, i.e. the isoceles Pythagorean triple `(1,1,√2)`.\n**Test.** Prove the χ² identity and that `Var` is maximized exactly when\n`(a/c)² = (b/c)²`, characterizing the optimizer as the isoceles triple. Connect\nto a genuine `Real.rpow`-based Rényi/Tsallis entropy and show the leg `p−q`\ncontrols a one-parameter family of divergences from uniform.\n\n## Conjecture 5 (Functorial naturality square)\nThe two functors into the simplex commute with their symmetries: softmax\nintertwines the additive `ℝ`-shift action on log-coordinates with the trivial\naction on the simplex, and the Pythagorean functor intertwines the multiplicative\n`ℝˣ`-dilation action on triples with the trivial action. Conjecture: there is a\n*natural transformation* `log∘(·)² : (Pythagorean triples / dilation) ⟹\n(log-coordinates / shift)` making the triangle\n`softmax ∘ (log ∘ sq) = pythProb` commute as functors, not merely pointwise.\n**Test.** Formalize both as actions (`AddAction ℝ` and `MulAction ℝˣ`) on the\nrespective domains, define the quotients, and prove the induced maps to the\nsimplex are well-defined and equal. The pointwise version is already proved\n(`pyth_eq_softmax2`); the goal is to upgrade it to an equivariant/quotient\nstatement.\n",
       "domain_bridges": [],
@@ -30855,7 +30855,7 @@
         "Bridges"
       ],
       "id": "fd_2012",
-      "last_attempt_time": "2026-06-20T11:13:55.477326+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-17T02:02:23.255375+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -30868,7 +30868,7 @@
       "research_mode": "team",
       "source_exp_id": "3b102b1d",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/3b102b1d",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-16T13:27:48.242946+00:00",
       "title": "*normalization functor into the probability simplex*"
@@ -35867,6 +35867,50 @@
       "arc_position": 0,
       "attempt_count": 0,
       "catalog_references": [
+        "Alon-Shikhelman generalized Turán numbers",
+        "Kővári-Sós-Turán theorem",
+        "Janzer-Longbrake-Yepremyan theorem for ex(n,K_{a,b},K_{3,t})",
+        "Finite-field incidence constructions for bipartite Turán problems"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "For all integers a,b,t with 3 < a ≤ b, b ≥ 6, and t ≥ b+1, the generalized Turán number satisfies ex(n,K_{a,b},K_{3,t}) = Θ(n^3). Equivalently, there exist positive constants c,C and N, depending only on a,b,t, such that for every n ≥ N, c n^3 ≤ ex(n,K_{a,b},K_{3,t}) ≤ C n^3. The paper proves this for t ≥ 2 max{3, ceil(b/2)}+1, which equals b+1 for even b ≥ 6 but is b+2 for odd b ≥ 7; the conjecture asserts that the necessary threshold b+1 is also sufficient in the odd case.",
+      "domain_bridges": [
+        "Extremal graph theory ↔ finite-field incidence geometry",
+        "Complete bipartite subgraph counting ↔ controlled intersections of algebraic plane sections",
+        "Asymptotic combinatorics ↔ formalized finite graph enumeration"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2138",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\nimport Mathlib.Data.Real.Basic\n\n/- `genTuranBip n a b s t` denotes ex(n, K_{a,b}, K_{s,t}),\n   the maximum number of unlabeled copies of K_{a,b} in an n-vertex\n   K_{s,t}-free simple graph. -/\nconstant genTuranBip : ℕ → ℕ → ℕ → ℕ → ℕ → ℕ\n\n/-- Conjectural sharp threshold: for `3 < a ≤ b`, `b ≥ 6`, and `t ≥ b+1`,\n    the generalized Turán number `ex(n,K_{a,b},K_{3,t})` has cubic growth. -/\ntheorem conjecture_K3t_threshold_b_plus_one\n    (a b t : ℕ)\n    (ha : 3 < a) (hab : a ≤ b) (hb : 6 ≤ b) (ht : b + 1 ≤ t) :\n    ∃ c C : ℝ, ∃ N : ℕ,\n      0 < c ∧ 0 < C ∧\n      ∀ n : ℕ, N ≤ n →\n        c * (n : ℝ)^3 ≤ (genTuranBip n a b 3 t : ℝ) ∧\n        (genTuranBip n a b 3 t : ℝ) ≤ C * (n : ℝ)^3 := by\n  sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "The upper bound O(n^3) should follow from the standard counting argument for the regime 3<a≤b<t. The main task is the lower bound when b is odd and t=b+1. One possible route is to refine the finite-field point-hyperplane incidence construction from the paper so that every triple of vertices has fewer than b+1 common neighbors, while still producing Ω(q^9) copies of K_{a,b} on Θ(q^3) vertices. Geometrically, this amounts to replacing the paper's line-and-conic plane-section bound of b+1 in the odd case by a sharp bound of b, perhaps by deleting or perturbing one residue class of the explicit point set without destroying the abundance of coplanar b-subsets.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.19217v1",
+      "source_path": "http://arxiv.org/abs/2606.19217v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-20T12:03:02.988518+00:00",
+      "title": "Necessary threshold for cubic generalized Turán growth against K_{3,t}"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
         "math.CO",
         "05A15",
         "11C08",
@@ -35886,7 +35930,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2138",
+      "id": "fd_2139",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem pq_cyclotomic_transfer_square_sided_pair (p q m n : Nat) (hp : Nat.Prime p) (hq : Nat.Prime q) (hpq : p < q) (hm : 1 < m) (hn : 1 < n) (hmn : m ≠ n) (hdiv : p * q ∣ m) (hlarge : (p - 1) * (q - 1) + 1 ≤ n ^ 2) : ∃ P Q : Polynomial Nat, P.eval 0 = 0 ∧ Q.eval 0 = 0 ∧ P.eval 1 = m ^ 2 ∧ Q.eval 1 = n ^ 2 ∧ P * Q = (∑ i in Finset.Icc 1 (m ^ 2), (Polynomial.X : Polynomial Nat) ^ i) * (∑ i in Finset.Icc 1 (n ^ 2), (Polynomial.X : Polynomial Nat) ^ i) ∧ ¬ (P = (∑ i in Finset.Icc 1 (m ^ 2), (Polynomial.X : Polynomial Nat) ^ i) ∧ Q = (∑ i in Finset.Icc 1 (n ^ 2), (Polynomial.X : Polynomial Nat) ^ i)) := by sorry",
@@ -35929,7 +35973,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2139",
+      "id": "fd_2140",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bounded_alpha_tw (d : ℕ) (hd : 1 ≤ d) (H : Graph ℕ) (hplanar : IsPlanar H) : ∀ (G : Graph ℕ), IsK1dFree G → ¬ IsInducedMinor H G → BoundedAlphaTw G",
@@ -35972,7 +36016,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2140",
+      "id": "fd_2141",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem unique_extremal_cross_intersecting\n  {n k ℓ u v : ℕ} (hn : n > k + ℓ) (hu : u ≤ n - k - 1) (hv : v ≤ n - ℓ - 1)\n  (hdivA : (γ 𝒜) ≥ Nat.choose (n - u - 1) (k - 1))\n  (hdivB : (γ ℬ) ≥ Nat.choose (n - v - 1) (ℓ - 1))\n  (hcross : ∀ A ∈ 𝒜, ∀ B ∈ ℬ, (A ∩ B).Nonempty) :\n  (𝒜.card * ℬ.card = max_product n k ℓ u v) ∧\n  (∃ σ : Equiv.Perm (Fin n),\n     (σ • 𝒜) = canonical_family_A n k u ∧ (σ • ℬ) = canonical_family_B n ℓ v) :=\nby\n  sorry",
@@ -36009,7 +36053,7 @@
       "domains": [
         "Bridges"
       ],
-      "id": "fd_2141",
+      "id": "fd_2142",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "n_k > e^{(log²k)/(20 log log k)}",
@@ -36052,7 +36096,7 @@
         "Pythagorean",
         "Algebra"
       ],
-      "id": "fd_2142",
+      "id": "fd_2143",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem pre_k_injective_on_S_smooth {S : Finset Prime} (h : ↑S ∣ k) : Injective (pre_k : Partition → Multiset ℕ) := by -- informal proof outline: ... end",
@@ -36070,6 +36114,49 @@
       "thread_id": "",
       "timestamp": "2026-06-20T10:28:24.249630+00:00",
       "title": "Injectivity of pre_k on S‑smooth partitions"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Bérczi and Nádor (2025) Conjecture 1.2",
+        "Klee and Walkup (1967) Hirsch conjecture"
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Conjecture: For any oriented matroid of rank r, any element e∈E, and any two e‑embracing bases B and B′, the e‑embracing distance d_e(B,B′) equals the graph distance d_{G(P_{M^*,e})}(C(B,e),C(B′,e)) in the 1‑skeleton of the oriented matroid polyhedron P_{M^*,e}.",
+      "domain_bridges": [
+        "oriented matroid polyhedron",
+        "graph distance in polyhedron skeleton",
+        "exchange distance in bases"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean",
+        "Algebra"
+      ],
+      "id": "fd_2144",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem embracing_distance_eq_polygon_distance {r : ℕ} (M : OrientedMatroid r) (e : E) (B B' : Basis r) (hB : eEmbracing B) (hB' : eEmbracing B') : eDistance B B' = graphDistance (fundamentalCircuit M e B) (fundamentalCircuit M e B') := by sorry",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Attempt to prove the equality by showing a non‑contractive, r‑Lipschitz mapping between e‑embracing bases and their e‑positive fundamental circuits, or find a counterexample violating the equality.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.19573v1",
+      "source_path": "http://arxiv.org/abs/2606.19573v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-20T12:03:14.894829+00:00",
+      "title": "Equality of e‑embracing distance and polyhedron graph distance"
     },
     {
       "ambition_level": "extension",

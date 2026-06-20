@@ -3857,6 +3857,34 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Alon-Shikhelman generalized Turán numbers",
+      "Kővári-Sós-Turán theorem",
+      "Janzer-Longbrake-Yepremyan theorem for ex(n,K_{a,b},K_{3,t})",
+      "Finite-field incidence constructions for bipartite Turán problems"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For all integers a,b,t with 3 < a ≤ b, b ≥ 6, and t ≥ b+1, the generalized Turán number satisfies ex(n,K_{a,b},K_{3,t}) = Θ(n^3). Equivalently, there exist positive constants c,C and N, depending only on a,b,t, such that for every n ≥ N, c n^3 ≤ ex(n,K_{a,b},K_{3,t}) ≤ C n^3. The paper proves this for t ≥ 2 max{3, ceil(b/2)}+1, which equals b+1 for even b ≥ 6 but is b+2 for odd b ≥ 7; the conjecture asserts that the necessary threshold b+1 is also sufficient in the odd case.",
+    "domain_bridges": [
+      "Extremal graph theory ↔ finite-field incidence geometry",
+      "Complete bipartite subgraph counting ↔ controlled intersections of algebraic plane sections",
+      "Asymptotic combinatorics ↔ formalized finite graph enumeration"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2138",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The upper bound O(n^3) should follow from the standard counting argument for the regime 3<a≤b<t. The main task is the lower bound when b is odd and t=b+1. One possible route is to refine the finite-field point-hyperplane incidence construction from the paper so that every triple of vertices has fewer than b+1 common neighbors, while still producing Ω(q^9) copies of K_{a,b} on Θ(q^3) vertices. Geometrically, this amounts to replacing the paper's line-and-conic plane-section bound of b+1 in the odd case by a sharp bound of b, perhaps by deleting or perturbing one residue class of the explicit point set without destroying the abundance of coplanar b-subsets.",
+    "research_mode": "team",
+    "source_exp_id": "2606.19217v1",
+    "status": "available",
+    "timestamp": "2026-06-20T12:03:02.988518+00:00",
+    "title": "Necessary threshold for cubic generalized Turán growth against K_{3,t}"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "05A15",
       "11C08",
@@ -3872,7 +3900,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2138",
+    "id": "fd_2139",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use S_N=x(x^N-1)/(x-1)=x prod_{d|N,d>1} Phi_d. Since pq | m, Phi_{pq} divides S_{m^2}; write S_{m^2}/Phi_{pq}=x(1+x^{pq}+...+x^{m^2-pq})(1+...+x^{p-1})(1+...+x^{q-1}), which is visibly nonnegative. For S_{n^2}Phi_{pq}, prove a prefix-sum bound for coefficients of Phi_{pq}: its partial sums up to degree (p-1)(q-1) are 0 or 1, so convolution with a length n^2 block of ones is nonnegative when n^2 >= (p-1)(q-1)+1. Then verify evaluations at 1 and the product identity.",
@@ -3899,7 +3927,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2139",
+    "id": "fd_2140",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the excluded minor structure theorem to bound the independence number within each bag of a tree decomposition, using the K_{1,d}-free condition to limit local density, and combine with planar minor restrictions to obtain a uniform constant C(d, H).",
@@ -3926,7 +3954,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2140",
+    "id": "fd_2141",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalise families of k‑sets as finsets of finsets in Lean. 2. Prove basic lemmas about degree, diversity and cross‑intersection. 3. Implement the S_{U,V}^Q‑shift operator and show it preserves cross‑intersection and does not decrease diversity. 4. Adapt the shifting argument of Frankl‑Kupavskii to obtain a canonical shifted extremal pair. 5. Use compression to show any extremal pair must be isomorphic to the canonical one, relying on counting lemmas for binomial coefficients. 6. Derive the product bound and the uniqueness statement via a combinatorial optimisation argument formalised with Lean's `linarith`/`norm_num` tactics.",
@@ -3947,7 +3975,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2141",
+    "id": "fd_2142",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "sieve-theoretic analysis",
@@ -3974,7 +4002,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2142",
+    "id": "fd_2143",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Develop a reconstruction algorithm for partitions from pre_k(λ) using the unique factorization property of S‑smooth numbers. Show that the elementary symmetric sums determine the multiset of parts uniquely by iteratively solving for the largest part via a polynomial equation whose roots are S‑smooth numbers, then induct on the number of parts. This requires establishing that the set of S‑smooth numbers is closed under multiplication and that the elementary symmetric function e_k is strictly monotone in each argument when restricted to this set.",
@@ -3983,6 +4011,33 @@
     "status": "available",
     "timestamp": "2026-06-20T10:28:24.249630+00:00",
     "title": "Injectivity of pre_k on S‑smooth partitions"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Bérczi and Nádor (2025) Conjecture 1.2",
+      "Klee and Walkup (1967) Hirsch conjecture"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any oriented matroid of rank r, any element e∈E, and any two e‑embracing bases B and B′, the e‑embracing distance d_e(B,B′) equals the graph distance d_{G(P_{M^*,e})}(C(B,e),C(B′,e)) in the 1‑skeleton of the oriented matroid polyhedron P_{M^*,e}.",
+    "domain_bridges": [
+      "oriented matroid polyhedron",
+      "graph distance in polyhedron skeleton",
+      "exchange distance in bases"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2144",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Attempt to prove the equality by showing a non‑contractive, r‑Lipschitz mapping between e‑embracing bases and their e‑positive fundamental circuits, or find a counterexample violating the equality.",
+    "research_mode": "team",
+    "source_exp_id": "2606.19573v1",
+    "status": "available",
+    "timestamp": "2026-06-20T12:03:14.894829+00:00",
+    "title": "Equality of e‑embracing distance and polyhedron graph distance"
   },
   {
     "ambition_level": "extension",
@@ -4298,7 +4353,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "d9e56a6a",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions — Functorial Tropical–Pythagorean Bridge (Probability)\n\nThis cycle established a *normalization functor into the probability simplex*\nthat unifies three threads:\n\n* **Tropical**: `lse2`, `softmax2`, and the general `softmax`, with the Maslov\n  dequantization sandwich `max ≤ lse2 ≤ max + log 2`.\n* **Probability**: two-point (Bernoulli) laws, `bernVar`, and the cumulant\n  identities `deriv lse2 = softmax2` (mean) and `deriv² lse2 = bernVar ∘ softmax2`\n  (variance = tropical curvature).\n* **Pythagorean**: the map `(a,b,c) ↦ ((a/c)², (b/c)²)` lands in the simplex,\n  is dilation-invariant, equals the softmax image of log-squared coordinates,\n  and yields the Pythagorean probability identity `(p−q)² + 4·Var = 1`.\n\nThe conjectures below are precise, falsifiable targets for the next cycle. Each\nis stated so it can be dropped into Lean as a `theorem … := by sorry` and\nattacked directly.\n\n## Conjecture 1 (n-point tropical Hessian = covariance)\nThe general softmax `softmax w` is the gradient of the n-point free energy\n`lse w := log ∑ⱼ exp (w j)`, and the Hessian of `lse` is the covariance matrix of\nthe Gibbs law:\n```\n∂²/∂wᵢ∂wⱼ lse w = (if i = j then softmax w i · (1 - softmax w i)\n                    else - softmax w i · softmax w j).\n```\n**Test.** Prove `deriv (fun t => lse (Function.update w i t)) (w i) = softmax w i`\nand the diagonal/off-diagonal second-derivative formulas. Expected: the diagonal\nspecializes to `bernVar (softmax w i)`, generalizing `deriv2_lse2_eq_bernVar`.\n\n## Conjecture 2 (Pythagorean parametrization of the full simplex)\nEvery interior Bernoulli law arises from a *real* Pythagorean relation: for all\n`p ∈ (0,1)` there exist `a,b,c > 0` with `a² + b² = c²`, `(a/c)² = p`. Concretely\n`a = √p·c`, `b = √(1−p)·c`. Moreover the induced standard deviation satisfies\n`σ = |ab|/c² = √(p(1−p))`, so **the Bernoulli standard deviation is exactly half\nthe normalized area `2ab/c²` of the right triangle**.\n**Test.** Prove surjectivity of `p ↦` Pythagorean triple and the identity\n`2 * Real.sqrt (bernVar p) = 2*a*b/c^2` for the canonical triple. Falsifiable:\nthe area-to-σ proportionality constant is conjectured to be exactly `2`.\n\n## Conjecture 3 (Maslov interpolation is monotone and contracts to max)\nDefine the temperature-scaled functional `lseT h a b := h · log(exp(a/h)+exp(b/h))`\nfor `h > 0`. Then `h ↦ lseT h a b` is monotone non-decreasing, `lseT h a b → max a b`\nas `h → 0⁺`, and the *Gibbs entropy gap* `lseT h a b − max a b ∈ [0, h·log 2]`.\n**Test.** Prove the sandwich `max a b ≤ lseT h a b ≤ max a b + h·log 2` (rescale\nthe proved `lse2` sandwich) and the limit `Filter.Tendsto (fun h => lseT h a b)\n(nhdsWithin 0 (Set.Ioi 0)) (nhds (max a b))`. This is the quantitative\ndequantization underlying the whole bridge.\n\n## Conjecture 4 (Pythagorean identity is the χ² / information projection at 2 points)\nFor the Pythagorean-induced law `p = (a/c)²`, the polarization leg `p − q` equals\nthe (signed) χ²-type discrepancy from the uniform law `(½,½)`:\n`(p − ½)² + (q − ½)² = ½·(p − q)² = ½·(1 − 4·Var)`. Hence **maximal Bernoulli\nvariance ⇔ minimal χ²-distance to uniform ⇔ the degenerate right triangle\n`a = b`**, i.e. the isoceles Pythagorean triple `(1,1,√2)`.\n**Test.** Prove the χ² identity and that `Var` is maximized exactly when\n`(a/c)² = (b/c)²`, characterizing the optimizer as the isoceles triple. Connect\nto a genuine `Real.rpow`-based Rényi/Tsallis entropy and show the leg `p−q`\ncontrols a one-parameter family of divergences from uniform.\n\n## Conjecture 5 (Functorial naturality square)\nThe two functors into the simplex commute with their symmetries: softmax\nintertwines the additive `ℝ`-shift action on log-coordinates with the trivial\naction on the simplex, and the Pythagorean functor intertwines the multiplicative\n`ℝˣ`-dilation action on triples with the trivial action. Conjecture: there is a\n*natural transformation* `log∘(·)² : (Pythagorean triples / dilation) ⟹\n(log-coordinates / shift)` making the triangle\n`softmax ∘ (log ∘ sq) = pythProb` commute as functors, not merely pointwise.\n**Test.** Formalize both as actions (`AddAction ℝ` and `MulAction ℝˣ`) on the\nrespective domains, define the quotients, and prove the induced maps to the\nsimplex are well-defined and equal. The pointwise version is already proved\n(`pyth_eq_softmax2`); the goal is to upgrade it to an equivariant/quotient\nstatement.\n",
     "domain_bridges": [],
     "domains": [
@@ -4311,7 +4366,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "3b102b1d",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T13:27:48.242946+00:00",
     "title": "*normalization functor into the probability simplex*"
   },
@@ -6050,7 +6105,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "00fd88ec",
+    "consumed_by_exp_id": "",
     "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
     "domain_bridges": [],
     "domains": [
@@ -6063,7 +6118,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.798593+00:00",
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
   },
@@ -6590,7 +6645,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "47b46667",
+    "consumed_by_exp_id": "6b3462b3",
     "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
     "domain_bridges": [],
     "domains": [

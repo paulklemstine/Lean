@@ -2500,11 +2500,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Let S_N(x)=sum_{i=1}^N x^i. For primes p<q with pq | m and n^2 >= (p-1)(q-1)+1, the conjecture says the cyclotomic transfer P=S_{m^2}/Phi_{pq}, Q=S_{n^2} Phi_{pq} is a nonstandard square-sided pair of sizes m^2 and n^2. Equivalently, the quotient and product have nonnegative integer coefficients, P(1)=m^2, Q(1)=n^2, and P Q=S_{m^2}S_{n^2}. A counterexample would be any admissible p,q,m,n for which one of these two explicit polynomials has a negative coefficient.",
+    "description": "For all integers a,b,t with 3 < a \u2264 b, b \u2265 6, and t \u2265 b+1, the generalized Tur\u00e1n number satisfies ex(n,K_{a,b},K_{3,t}) = \u0398(n^3). Equivalently, there exist positive constants c,C and N, depending only on a,b,t, such that for every n \u2265 N, c n^3 \u2264 ex(n,K_{a,b},K_{3,t}) \u2264 C n^3. The paper proves this for t \u2265 2 max{3, ceil(b/2)}+1, which equals b+1 for even b \u2265 6 but is b+2 for odd b \u2265 7; the conjecture asserts that the necessary threshold b+1 is also sufficient in the odd case.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_2138",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19217v1",
+    "status": "available",
+    "timestamp": "2026-06-20T12:03:02.988518+00:00",
+    "title": "Necessary threshold for cubic generalized Tur\u00e1n growth against K_{3,t}"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let S_N(x)=sum_{i=1}^N x^i. For primes p<q with pq | m and n^2 >= (p-1)(q-1)+1, the conjecture says the cyclotomic transfer P=S_{m^2}/Phi_{pq}, Q=S_{n^2} Phi_{pq} is a nonstandard square-sided pair of sizes m^2 and n^2. Equivalently, the quotient and product have nonnegative integer coefficients, P(1)=m^2, Q(1)=n^2, and P Q=S_{m^2}S_{n^2}. A counterexample would be any admissible p,q,m,n for which one of these two explicit polynomials has a negative coefficient.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2139",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -2518,7 +2532,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2139",
+    "id": "fd_2140",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
@@ -2533,7 +2547,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2140",
+    "id": "fd_2141",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20085v1",
@@ -2547,7 +2561,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2141",
+    "id": "fd_2142",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19863v1",
@@ -2562,13 +2576,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2142",
+    "id": "fd_2143",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19796v1",
     "status": "available",
     "timestamp": "2026-06-20T10:28:24.249630+00:00",
     "title": "Injectivity of pre_k on S\u2011smooth partitions"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any oriented matroid of rank r, any element e\u2208E, and any two e\u2011embracing bases B and B\u2032, the e\u2011embracing distance d_e(B,B\u2032) equals the graph distance d_{G(P_{M^*,e})}(C(B,e),C(B\u2032,e)) in the 1\u2011skeleton of the oriented matroid polyhedron P_{M^*,e}.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2144",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19573v1",
+    "status": "available",
+    "timestamp": "2026-06-20T12:03:14.894829+00:00",
+    "title": "Equality of e\u2011embracing distance and polyhedron graph distance"
   },
   {
     "consumed_by_exp_id": "",
@@ -2802,7 +2831,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived from the Phase A cycle that produced"
   },
   {
-    "consumed_by_exp_id": "d9e56a6a",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Functorial Tropical\u2013Pythagorean Bridge (Probability)\n\nThis cycle established a *normalization functor into the probability simplex*\nthat unifies three threads:\n\n* **Tropical**: `lse2`, `softmax2`, and the general `softmax`, with the Maslov\n  dequantization sandwich `max \u2264 lse2 \u2264 max + log 2`.\n* **Probability**: two-point (Bernoulli) laws, `bernVar`, and the cumulant\n  identities `deriv lse2 = softmax2` (mean) and `deriv\u00b2 lse2 = bernVar \u2218 softmax2`\n  (variance = tropical curvature).\n* **Pythagorean**: the map `(a,b,c) \u21a6 ((a/c)\u00b2, (b/c)\u00b2)` lands in the simplex,\n  is dilation-invariant, equals the softmax image of log-squared coordinates,\n  and yields the Pythagorean probability identity `(p\u2212q)\u00b2 + 4\u00b7Var = 1`.\n\nThe conjectures below are precise, falsifiable targets for the next cycle. Each\nis stated so it can be dropped into Lean as a `theorem \u2026 := by sorry` and\nattacked directly.\n\n## Conjecture 1 (n-point tropical Hessian = covariance)\nThe general softmax `softmax w` is the gradient of the n-point free energy\n`lse w := log \u2211\u2c7c exp (w j)`, and the Hessian of `lse` is the covariance matrix of\nthe Gibbs law:\n```\n\u2202\u00b2/\u2202w\u1d62\u2202w\u2c7c lse w = (if i = j then softmax w i \u00b7 (1 - softmax w i)\n                    else - softmax w i \u00b7 softmax w j).\n```\n**Test.** Prove `deriv (fun t => lse (Function.update w i t)) (w i) = softmax w i`\nand the diagonal/off-diagonal second-derivative formulas. Expected: the diagonal\nspecializes to `bernVar (softmax w i)`, generalizing `deriv2_lse2_eq_bernVar`.\n\n## Conjecture 2 (Pythagorean parametrization of the full simplex)\nEvery interior Bernoulli law arises from a *real* Pythagorean relation: for all\n`p \u2208 (0,1)` there exist `a,b,c > 0` with `a\u00b2 + b\u00b2 = c\u00b2`, `(a/c)\u00b2 = p`. Concretely\n`a = \u221ap\u00b7c`, `b = \u221a(1\u2212p)\u00b7c`. Moreover the induced standard deviation satisfies\n`\u03c3 = |ab|/c\u00b2 = \u221a(p(1\u2212p))`, so **the Bernoulli standard deviation is exactly half\nthe normalized area `2ab/c\u00b2` of the right triangle**.\n**Test.** Prove surjectivity of `p \u21a6` Pythagorean triple and the identity\n`2 * Real.sqrt (bernVar p) = 2*a*b/c^2` for the canonical triple. Falsifiable:\nthe area-to-\u03c3 proportionality constant is conjectured to be exactly `2`.\n\n## Conjecture 3 (Maslov interpolation is monotone and contracts to max)\nDefine the temperature-scaled functional `lseT h a b := h \u00b7 log(exp(a/h)+exp(b/h))`\nfor `h > 0`. Then `h \u21a6 lseT h a b` is monotone non-decreasing, `lseT h a b \u2192 max a b`\nas `h \u2192 0\u207a`, and the *Gibbs entropy gap* `lseT h a b \u2212 max a b \u2208 [0, h\u00b7log 2]`.\n**Test.** Prove the sandwich `max a b \u2264 lseT h a b \u2264 max a b + h\u00b7log 2` (rescale\nthe proved `lse2` sandwich) and the limit `Filter.Tendsto (fun h => lseT h a b)\n(nhdsWithin 0 (Set.Ioi 0)) (nhds (max a b))`. This is the quantitative\ndequantization underlying the whole bridge.\n\n## Conjecture 4 (Pythagorean identity is the \u03c7\u00b2 / information projection at 2 points)\nFor the Pythagorean-induced law `p = (a/c)\u00b2`, the polarization leg `p \u2212 q` equals\nthe (signed) \u03c7\u00b2-type discrepancy from the uniform law `(\u00bd,\u00bd)`:\n`(p \u2212 \u00bd)\u00b2 + (q \u2212 \u00bd)\u00b2 = \u00bd\u00b7(p \u2212 q)\u00b2 = \u00bd\u00b7(1 \u2212 4\u00b7Var)`. Hence **maximal Bernoulli\nvariance \u21d4 minimal \u03c7\u00b2-distance to uniform \u21d4 the degenerate right triangle\n`a = b`**, i.e. the isoceles Pythagorean triple `(1,1,\u221a2)`.\n**Test.** Prove the \u03c7\u00b2 identity and that `Var` is maximized exactly when\n`(a/c)\u00b2 = (b/c)\u00b2`, characterizing the optimizer as the isoceles triple. Connect\nto a genuine `Real.rpow`-based R\u00e9nyi/Tsallis entropy and show the leg `p\u2212q`\ncontrols a one-parameter family of divergences from uniform.\n\n## Conjecture 5 (Functorial naturality square)\nThe two functors into the simplex commute with their symmetries: softmax\nintertwines the additive `\u211d`-shift action on log-coordinates with the trivial\naction on the simplex, and the Pythagorean functor intertwines the multiplicative\n`\u211d\u02e3`-dilation action on triples with the trivial action. Conjecture: there is a\n*natural transformation* `log\u2218(\u00b7)\u00b2 : (Pythagorean triples / dilation) \u27f9\n(log-coordinates / shift)` making the triangle\n`softmax \u2218 (log \u2218 sq) = pythProb` commute as functors, not merely pointwise.\n**Test.** Formalize both as actions (`AddAction \u211d` and `MulAction \u211d\u02e3`) on the\nrespective domains, define the quotients, and prove the induced maps to the\nsimplex are well-defined and equal. The pointwise version is already proved\n(`pyth_eq_softmax2`); the goal is to upgrade it to an equivariant/quotient\nstatement.\n",
     "domains": [
       "Tropical",
@@ -2812,7 +2841,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "3b102b1d",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T13:27:48.242946+00:00",
     "title": "*normalization functor into the probability simplex*"
   },
@@ -4114,7 +4143,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands for GL\u2082 over Q"
   },
   {
-    "consumed_by_exp_id": "00fd88ec",
+    "consumed_by_exp_id": "",
     "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
     "domains": [
       "Bridges",
@@ -4124,7 +4153,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-03T19:55:28.798593+00:00",
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
   },
@@ -4519,7 +4548,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
-    "consumed_by_exp_id": "47b46667",
+    "consumed_by_exp_id": "6b3462b3",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
