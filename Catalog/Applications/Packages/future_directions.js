@@ -2031,7 +2031,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Simplicity criterion for interval hypergraphic polytopes via point multiplicity"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d94e79ee",
     "description": "The coefficients a_n in the q-expansion f(q) = \u03a3_{n\u22650} a_n q^n satisfy the recurrence (n+3) a_{n+3} = (3n+4) a_{n+2} - (3n+1) a_{n+1} + n a_n for all n \u2265 0, with initial values a_0 = 1, a_1 = 0, a_2 = 1.",
     "domains": [
       "Bridges"
@@ -2040,7 +2040,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18110v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T14:51:27.250427+00:00",
     "title": "Linear recurrence for coefficients of Ramanujan's third order mock theta function f(q)"
   },
@@ -2514,11 +2514,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For any graph G, any two minimal median decompositions of G (i.e., median decompositions whose underlying median graph has the smallest possible number of vertices) are isomorphic via a graph isomorphism that respects the decomposition bags. This formalises the \"uniquely minimal\" claim in the paper and provides a concrete, falsifiable statement that can be encoded in Lean.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2139",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19473v1",
+    "status": "available",
+    "timestamp": "2026-06-20T12:54:39.746194+00:00",
+    "title": "Uniqueness of Minimal Median Decompositions for Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let S_N(x)=sum_{i=1}^N x^i. For primes p<q with pq | m and n^2 >= (p-1)(q-1)+1, the conjecture says the cyclotomic transfer P=S_{m^2}/Phi_{pq}, Q=S_{n^2} Phi_{pq} is a nonstandard square-sided pair of sizes m^2 and n^2. Equivalently, the quotient and product have nonnegative integer coefficients, P(1)=m^2, Q(1)=n^2, and P Q=S_{m^2}S_{n^2}. A counterexample would be any admissible p,q,m,n for which one of these two explicit polynomials has a negative coefficient.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2139",
+    "id": "fd_2140",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -2532,7 +2546,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2140",
+    "id": "fd_2141",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
@@ -2547,7 +2561,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2141",
+    "id": "fd_2142",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20085v1",
@@ -2561,7 +2575,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2142",
+    "id": "fd_2143",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19863v1",
@@ -2576,7 +2590,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2143",
+    "id": "fd_2144",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19796v1",
@@ -2591,13 +2605,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2144",
+    "id": "fd_2145",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19573v1",
     "status": "available",
     "timestamp": "2026-06-20T12:03:14.894829+00:00",
     "title": "Equality of e\u2011embracing distance and polyhedron graph distance"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any finite multiset M of natural numbers, let S_M be the set of all distinct permutations of M. Define tc(w) as the number of terminal closers (right\u2011to\u2011left minima) of w, i.e., indices i such that w_j > w_i for all j > i. Define cp(w) as the number of cyclic points of w, i.e., vertices i in [|M|] that lie on a directed cycle of the functional digraph i \u2192 w_i. The conjecture states that the total sum of tc(w) over w\u2208S_M equals the total sum of cp(w) over w\u2208S_M.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2146",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19500v1",
+    "status": "available",
+    "timestamp": "2026-06-20T12:56:08.085469+00:00",
+    "title": "Equidistribution of Terminal Closers and Cyclic Points in Multiset Permutations"
   },
   {
     "consumed_by_exp_id": "",
@@ -4548,7 +4577,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
-    "consumed_by_exp_id": "6b3462b3",
+    "consumed_by_exp_id": "",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -4558,7 +4587,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.490561+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },

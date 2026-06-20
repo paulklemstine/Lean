@@ -2974,7 +2974,7 @@
       "math.NT/0707.0092",
       "math.NT/1502.03068"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d94e79ee",
     "description": "The coefficients a_n in the q-expansion f(q) = Σ_{n≥0} a_n q^n satisfy the recurrence (n+3) a_{n+3} = (3n+4) a_{n+2} - (3n+1) a_{n+1} + n a_n for all n ≥ 0, with initial values a_0 = 1, a_1 = 0, a_2 = 1.",
     "domain_bridges": [
       "modular forms",
@@ -2990,7 +2990,7 @@
     "proof_strategy": "Use the vector-valued Rankin-Cohen bracket of the completed mock theta series f̂ and its shadow ψ_f, apply the holomorphic projection operator to obtain a modular form of weight 2. Expand both sides as q-series, compare coefficients, and deduce the recurrence. The vanishing of certain vector-valued cusp form spaces ensures the projected form is a linear combination of Eisenstein series, whose coefficients are explicit.",
     "research_mode": "team",
     "source_exp_id": "2606.18110v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T14:51:27.250427+00:00",
     "title": "Linear recurrence for coefficients of Ramanujan's third order mock theta function f(q)"
   },
@@ -3885,6 +3885,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.CO/2305.01234",
+      "Lean4 Mathlib: combinatorics/simple_graph",
+      "Lean4 Mathlib: order/median"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any graph G, any two minimal median decompositions of G (i.e., median decompositions whose underlying median graph has the smallest possible number of vertices) are isomorphic via a graph isomorphism that respects the decomposition bags. This formalises the \"uniquely minimal\" claim in the paper and provides a concrete, falsifiable statement that can be encoded in Lean.",
+    "domain_bridges": [
+      "order theory (median algebras)",
+      "geometric group theory (Sageev–Roller duality)",
+      "algorithmic graph theory (decompositions)"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2139",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define a median decomposition as a structure (M, bag) where M is a median graph and bag : V(M) → set V(G) satisfying the usual covering, edge‑separation, and connectedness conditions. Show existence of a minimal decomposition by taking a decomposition with minimal |V(M)| (using well‑foundedness of nat). Prove that if D₁ and D₂ are minimal then there exists a bijection f : V(M₁) ≃ V(M₂) such that for every v ∈ V(M₁), bag₁ v = bag₂ (f v). The proof proceeds by: (1) constructing the Sageev dual median graph Σ(G, Σ) from the given separation system Σ of G; (2) showing any minimal median decomposition is isomorphic to the canonical Sageev construction (the \"uniquely minimal\" theorem in the paper); (3) using the universal property of the Sageev construction to build the required isomorphism. Lean implementation will reuse existing definitions of simple graphs, median graphs, and will formalise the universal property as a morphism of median graphs preserving bags.",
+    "research_mode": "team",
+    "source_exp_id": "2606.19473v1",
+    "status": "available",
+    "timestamp": "2026-06-20T12:54:39.746194+00:00",
+    "title": "Uniqueness of Minimal Median Decompositions for Graphs"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "05A15",
       "11C08",
@@ -3900,7 +3927,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2139",
+    "id": "fd_2140",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use S_N=x(x^N-1)/(x-1)=x prod_{d|N,d>1} Phi_d. Since pq | m, Phi_{pq} divides S_{m^2}; write S_{m^2}/Phi_{pq}=x(1+x^{pq}+...+x^{m^2-pq})(1+...+x^{p-1})(1+...+x^{q-1}), which is visibly nonnegative. For S_{n^2}Phi_{pq}, prove a prefix-sum bound for coefficients of Phi_{pq}: its partial sums up to degree (p-1)(q-1) are 0 or 1, so convolution with a length n^2 block of ones is nonnegative when n^2 >= (p-1)(q-1)+1. Then verify evaluations at 1 and the product identity.",
@@ -3927,7 +3954,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2140",
+    "id": "fd_2141",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the excluded minor structure theorem to bound the independence number within each bag of a tree decomposition, using the K_{1,d}-free condition to limit local density, and combine with planar minor restrictions to obtain a uniform constant C(d, H).",
@@ -3954,7 +3981,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2141",
+    "id": "fd_2142",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalise families of k‑sets as finsets of finsets in Lean. 2. Prove basic lemmas about degree, diversity and cross‑intersection. 3. Implement the S_{U,V}^Q‑shift operator and show it preserves cross‑intersection and does not decrease diversity. 4. Adapt the shifting argument of Frankl‑Kupavskii to obtain a canonical shifted extremal pair. 5. Use compression to show any extremal pair must be isomorphic to the canonical one, relying on counting lemmas for binomial coefficients. 6. Derive the product bound and the uniqueness statement via a combinatorial optimisation argument formalised with Lean's `linarith`/`norm_num` tactics.",
@@ -3975,7 +4002,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2142",
+    "id": "fd_2143",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "sieve-theoretic analysis",
@@ -4002,7 +4029,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2143",
+    "id": "fd_2144",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Develop a reconstruction algorithm for partitions from pre_k(λ) using the unique factorization property of S‑smooth numbers. Show that the elementary symmetric sums determine the multiset of parts uniquely by iteratively solving for the largest part via a polynomial equation whose roots are S‑smooth numbers, then induct on the number of parts. This requires establishing that the set of S‑smooth numbers is closed under multiplication and that the elementary symmetric function e_k is strictly monotone in each argument when restricted to this set.",
@@ -4029,7 +4056,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2144",
+    "id": "fd_2145",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Attempt to prove the equality by showing a non‑contractive, r‑Lipschitz mapping between e‑embracing bases and their e‑positive fundamental circuits, or find a counterexample violating the equality.",
@@ -4038,6 +4065,36 @@
     "status": "available",
     "timestamp": "2026-06-20T12:03:14.894829+00:00",
     "title": "Equality of e‑embracing distance and polyhedron graph distance"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "multiset permutations",
+      "functional digraph",
+      "right-to-left minima",
+      "cyclic points",
+      "augmented cycle index"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For any finite multiset M of natural numbers, let S_M be the set of all distinct permutations of M. Define tc(w) as the number of terminal closers (right‑to‑left minima) of w, i.e., indices i such that w_j > w_i for all j > i. Define cp(w) as the number of cyclic points of w, i.e., vertices i in [|M|] that lie on a directed cycle of the functional digraph i → w_i. The conjecture states that the total sum of tc(w) over w∈S_M equals the total sum of cp(w) over w∈S_M.",
+    "domain_bridges": [
+      "algebraic combinatorics",
+      "symmetric functions",
+      "enumerative combinatorics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2146",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the augmented cycle index Z_{S_M} and its expression in terms of power‑sum symmetric functions. Specialize the symmetric functions to extract the statistics tc and cp via appropriate scalar products. Show that the resulting generating functions coincide by applying Lemma lm:partition and the symmetry of the power‑sum basis, yielding an identity that implies equality of the total sums. A sign‑reversing involution on pairs (w, i) where i is either a terminal closer or a cyclic point can also be constructed to give a bijective proof.",
+    "research_mode": "team",
+    "source_exp_id": "2606.19500v1",
+    "status": "available",
+    "timestamp": "2026-06-20T12:56:08.085469+00:00",
+    "title": "Equidistribution of Terminal Closers and Cyclic Points in Multiset Permutations"
   },
   {
     "ambition_level": "extension",
@@ -6645,7 +6702,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "6b3462b3",
+    "consumed_by_exp_id": "",
     "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
     "domain_bridges": [],
     "domains": [
@@ -6658,7 +6715,7 @@
     "proof_strategy": "Define B = {0,...,24}^{1312000} as the Library. Compute |B| = 25^{1312000}. Define the meaning probability P(T) = sum_{b in B: b contains proof of T} 1/|B|. Prove P(T) >= |T| * 25^{-k(T)} where k(T) is the Kolmogorov complexity of T. Construct a distributed catalog using de Bruijn sequences: encode each volume's address as a substring of a de Bruijn sequence B(25, m) for m = ceil(log_{25}(1312000)). Prove the catalog requires N >= 25^{1312000} / (1312000 * log_{25}(2)) volumes. Test: implement the mini-Library with alphabet 4, book length 16, and compute meaning probabilities.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.490561+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
