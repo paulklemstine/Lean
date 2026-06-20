@@ -1,49 +1,118 @@
 import Mathlib
 
-namespace AntiGravity
+/-!
+# Dream Logic II — Topological Models of Paraconsistency
 
-/-- The support of `N` with respect to a divisor `d` is `N / d`. -/
-def support (N d : ℕ) : ℕ := N / d
+The Tarski–McKinsey duality models *intuitionistic* logic by the **open** sets of
+a topological space (a Heyting algebra).  Dually, the **closed** sets carry a
+*co-Heyting* (Brouwerian) algebra, which is the natural home of **paraconsistent**
+negation: instead of "interior of the complement", one uses
 
-/-- The proof cost of `d` is the number of prime factors (with multiplicity). -/
-def proofCost (d : ℕ) : ℕ := d.primeFactorsList.length
+  `pneg A := closure Aᶜ`   (the closure of the complement).
 
-@[simp] theorem support_eq_div (N d : ℕ) : support N d = N / d := rfl
+A point may then lie in `A` *and* in `pneg A` simultaneously — a topological
+"impossible object".  The set of such points is the **contradiction set**
+`contradiction A := A ∩ pneg A`.
 
-/-- For a list of naturals all at least `2`, `2 ^ length ≤ prod`. -/
-lemma two_pow_length_le_prod_of_forall_two_le (l : List ℕ)
-    (h : ∀ x ∈ l, 2 ≤ x) : 2 ^ l.length ≤ l.prod := by
-  induction l with
-  | nil => simp
-  | cons x xs ih =>
-    have hx : 2 ≤ x := h x (List.mem_cons_self)
-    have htail : ∀ y ∈ xs, 2 ≤ y := fun y hy => h y (List.mem_cons_of_mem x hy)
-    have hih := ih htail
-    simp only [List.length_cons, List.prod_cons, pow_succ]
-    calc 2 ^ xs.length * 2 ≤ xs.prod * x := by
-            apply Nat.mul_le_mul hih hx
-      _ = x * xs.prod := by ring
-  
-/-- The central Ω-bound: `2 ^ proofCost d ≤ d`. -/
-theorem two_pow_proofCost_le {d : ℕ} (hd : 0 < d) : 2 ^ proofCost d ≤ d := by
-  unfold proofCost
-  have h : ∀ x ∈ d.primeFactorsList, 2 ≤ x := by
-    intro x hx
-    exact (Nat.prime_of_mem_primeFactorsList hx).two_le
-  have hle := two_pow_length_le_prod_of_forall_two_le d.primeFactorsList h
-  rwa [Nat.prod_primeFactorsList hd.ne'] at hle
+## Main results
 
-/-- Denominator-antitonicity for natural division. -/
-lemma div_le_div_of_le_right {N a b : ℕ} (ha : 0 < a) (hab : a ≤ b) :
-    N / b ≤ N / a := by
-  apply Nat.le_div_iff_mul_le ha |>.2
-  calc N / b * a ≤ N / b * b := Nat.mul_le_mul_left _ hab
-    _ ≤ N := Nat.div_mul_le_self N b
+* `contradiction_eq_frontier` — for a closed set the contradiction set is exactly
+  the topological **frontier** (boundary).  Frontier points are the dialetheias.
+* `lnc_holds_iff_clopen` — the Law of Non-Contradiction holds for `A`
+  (`contradiction A = ∅`) **iff** `A` is *clopen*.  Equivalently, the logic is
+  classical exactly on the clopen sets; genuine paraconsistency appears precisely
+  where closed sets are not also open — i.e. where the closed sets fail to be
+  closed under the operations that would make them open (the "open sets not
+  closed under arbitrary union/complement" phenomenon of the brief).
+* `dream_object_real` / `contradiction_nonempty_real` — a *concrete* impossible
+  object: in `ℝ`, the point `0` lies in `[0,1]` and in the closure of its
+  complement; the interval is closed but not clopen, so its contradiction set
+  (its frontier `{0,1}`) is nonempty.
+* `connected_forces_paraconsistency` — on a (pre)connected space *any* proper
+  nonempty closed set has a nonempty contradiction set: connectedness *forces*
+  dream logic.
 
-/-- The anti-gravity support trade-off. -/
-theorem support_le_div_two_pow {N d : ℕ} (hd : 0 < d) :
-    support N d ≤ N / 2 ^ proofCost d := by
-  unfold support
-  exact div_le_div_of_le_right (pow_pos (by norm_num) _) (two_pow_proofCost_le hd)
+-- !-- Lab Notes -- !--
+Hypothesis (Stage 1): "Paraconsistent negation = closure-of-complement; the only
+  sets obeying classical Non-Contradiction are the clopen ones."  Surprising
+  corollary: on a connected space *every* nontrivial belief is dialetheic.
+Experiment (Stage 2): Identified `contradiction A` with `frontier A` for closed
+  `A` via `closure_compl` + `IsClosed.frontier_eq`, then used
+  `isClopen_iff_frontier_eq_empty`.  Concrete witness `[0,1] ⊆ ℝ`.
+Analysis (Stage 3): Survived.  Initial wording of the brief ("open sets not
+  closed under arbitrary union") is literally false for a topology; the correct
+  dual reading is "closed sets need not be open", captured by clopen-ness.  This
+  is the "needs a different definition" insight of the cycle.
+Critique (Stage 4): Guarded the connectedness theorem with `Aᶜ.Nonempty` and
+  `A.Nonempty`; without properness the frontier can be empty (whole space), so
+  the hypotheses are load-bearing, not decoration.
+Synthesis (Stage 5): `contradiction`/`pneg` are the topological semantics whose
+  pointwise truth value (true/false/both) is the four-valued logic of the Logic
+  domain — see `Logic/DreamLogic/Bridge.lean`.
+-/
 
-end AntiGravity
+open Set Topology
+
+namespace DreamTopo
+
+variable {X : Type*} [TopologicalSpace X]
+
+/-- Paraconsistent ("co-Heyting") negation on subsets: closure of the complement. -/
+def pneg (A : Set X) : Set X := closure Aᶜ
+
+/-- The **contradiction set** of `A`: points lying in both `A` and its
+paraconsistent negation — the topological dialetheias / impossible objects. -/
+def contradiction (A : Set X) : Set X := A ∩ pneg A
+
+/-- For a **closed** set, the contradiction set is exactly the frontier (boundary). -/
+theorem contradiction_eq_frontier {A : Set X} (h : IsClosed A) :
+    contradiction A = frontier A := by
+  unfold contradiction pneg
+  rw [closure_compl, h.frontier_eq]
+  ext x; simp [Set.diff_eq]
+
+/-- **Non-Contradiction holds iff clopen.**  For a closed set `A`, the Law of
+Non-Contradiction holds (`contradiction A = ∅`) precisely when `A` is clopen.
+Paraconsistency is exactly the failure of closed sets to be open. -/
+theorem lnc_holds_iff_clopen {A : Set X} (h : IsClosed A) :
+    contradiction A = ∅ ↔ IsClopen A := by
+  rw [contradiction_eq_frontier h, isClopen_iff_frontier_eq_empty]
+
+/-- Contrapositive form: a closed set that is *not* clopen carries a genuine
+(nonempty) contradiction — a dream object. -/
+theorem not_clopen_contradiction {A : Set X} (h : IsClosed A)
+    (hnc : ¬ IsClopen A) : (contradiction A).Nonempty := by
+  rw [Set.nonempty_iff_ne_empty]
+  intro he
+  exact hnc ((lnc_holds_iff_clopen h).1 he)
+
+/-! ### A concrete impossible object in `ℝ` -/
+
+/-- The point `0` lies in `[0,1]` **and** in the closure of its complement:
+a concrete dialetheia. -/
+theorem dream_object_real :
+    (0 : ℝ) ∈ contradiction (Set.Icc (0 : ℝ) 1) := by
+  have h : IsClosed (Set.Icc (0 : ℝ) 1) := isClosed_Icc
+  rw [contradiction_eq_frontier h, frontier_Icc (by norm_num : (0 : ℝ) ≤ 1)]
+  simp
+
+/-- The contradiction set of `[0,1] ⊆ ℝ` is nonempty: dream logic is realized. -/
+theorem contradiction_nonempty_real :
+    (contradiction (Set.Icc (0 : ℝ) 1)).Nonempty :=
+  ⟨0, dream_object_real⟩
+
+/-! ### Connectedness forces paraconsistency -/
+
+/-- **Connectedness forces dream logic.**  On a preconnected space, *every*
+proper nonempty closed set has a nonempty contradiction set: one cannot hold a
+non-trivial belief without admitting an impossible object. -/
+theorem connected_forces_paraconsistency [PreconnectedSpace X]
+    {A : Set X} (hcl : IsClosed A) (hne : A.Nonempty) (hproper : Aᶜ.Nonempty) :
+    (contradiction A).Nonempty := by
+  apply not_clopen_contradiction hcl
+  intro hclopen
+  rcases (isClopen_iff.1 hclopen) with h | h
+  · exact hne.ne_empty h
+  · exact hproper.ne_empty (by rw [← compl_univ, h])
+
+end DreamTopo
