@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "b3a33fd0",
-      "domain": "NumberTheory",
-      "key_insight": "# Future Directions — Fibonacci entry points & primitive divisors\n\nThis cycle delivered `Algebra/FibEntryPointReciprocity.lean`: a fully verified (0-sorry)\n**sharpening of the classical entry-point bo",
-      "quality_score": 0.64699,
-      "sorry_count": 1,
-      "theorem_count": 22,
-      "timestamp": "2026-06-15T03:00:25",
-      "title": "Deepening: The persistence-stability arc of the catalog climbed a ladder of structure: a"
-    },
-    {
       "cycle_id": "6feb33cc",
       "domain": "Bridges",
       "key_insight": "# Future Directions\n## A Functorial Tropical Lower Bound for Rips Connectivity via Valuation-Depth Sublevel Graphs\n\nThis cycle established the core \"ultrametric collapse\" theorem in\n`Catalog/Bridges/T",
@@ -2501,6 +2491,16 @@
       "theorem_count": 351,
       "timestamp": "2026-06-20T11:07:38",
       "title": "Ramsey Theory: Bounds and Constructions"
+    },
+    {
+      "cycle_id": "722e1f4a",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nFive research directions building directly on the formal finite-library combinatorics in\n`LibraryOfBabel.lean`. Each is freeform but anchored to a concrete next theorem.\n\n## 1. Ex",
+      "quality_score": 0.654,
+      "sorry_count": 1,
+      "theorem_count": 22,
+      "timestamp": "2026-06-20T11:10:43",
+      "title": "The Library of Babel: Combinatorics of the Universal Library"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.8075699999999999
     }
   ],
-  "last_updated": "2026-06-20T11:07:38",
+  "last_updated": "2026-06-20T11:10:43",
   "open_questions": [
-    {
-      "context": "",
-      "cycle_id": "51575ef7",
-      "domain": "Bridges",
-      "sorry_count": 2,
-      "timestamp": "2026-06-15T06:29:50"
-    },
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
       "cycle_id": "88475cc5",
@@ -3016,6 +3009,13 @@
       "domain": "Geometry",
       "sorry_count": 1,
       "timestamp": "2026-06-20T11:07:38"
+    },
+    {
+      "context": "",
+      "cycle_id": "722e1f4a",
+      "domain": "Applications",
+      "sorry_count": 1,
+      "timestamp": "2026-06-20T11:10:43"
     }
   ],
   "research_threads": {
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "2ec4044e",
-        "quality": 0.5527085714285715,
-        "theorems": 7,
-        "title": "Tropicalized binary weight enumerator profile from Smooth Poincaré code primitiv"
-      },
-      {
         "cycle_id": "6fe73404",
         "quality": 0.49388999999999994,
         "theorems": 4,
@@ -3141,6 +3135,12 @@
         "quality": 0.8524,
         "theorems": 103,
         "title": "Ramsey Theory: Bounds and Constructions"
+      },
+      {
+        "cycle_id": "722e1f4a",
+        "quality": 0.654,
+        "theorems": 22,
+        "title": "The Library of Babel: Combinatorics of the Universal Library"
       }
     ],
     "Bridges": [

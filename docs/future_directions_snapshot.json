@@ -5231,6 +5231,46 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — Probabilistic Ramsey Lower Bounds\n\nDerived from this cycle's findings (the exact first-moment identity `sum_badCount`, the\nthreshold `exists_good_coloring`, the exponential bound `ramsey_diagonal_lower_bound`, and the\nSimpleGraph bridge `exists_clique_free_graph`).\n\n## Conjecture 1 — The deletion method improves the constant to `R(s,s) > (1/e)·s·2^{s/2}`\n**Statement.** Strengthen `exists_good_coloring`: if `C(n,s)·2^{1−C(s,2)} ≤ n/2` then there is\na colouring of `K_n` with `< n/2` monochromatic `s`-cliques; deleting one vertex from each\nremoves them all, yielding a clique-free colouring of `K_{n/2}`. This gives the classical\n`R(s,s) > (1+o(1))·(s/e)·2^{s/2}`, a factor `~s` better than `two_choose_lt`.\n**The key insight is...** the first-moment *count* `badCount` is not just a yes/no threshold —\nits exact value `∑_χ badCount = C(n,s)·2^{C(n,2)−C(s,2)+1}` lets us bound the *average* number\nof bad cliques and delete them, converting \"few bad cliques on average\" into \"a colouring with\nprovably zero bad cliques on a slightly smaller vertex set\".\n**Why now?** The exact identity `sum_badCount` is already proved; the deletion step only needs\nan averaging `∃ χ, badCount χ ≤ E[badCount]` plus a vertex-removal lemma on `Edge2`, both\nelementary refinements of code already in `Counting.lean`.\n\n## Conjecture 2 — Off-diagonal first moment yields `R(3,t) > c·(t/ln t)^{3/2}` is **not**\nreachable by the plain first moment, but `R(3,t) > c·t^{3/2}/(ln t)` is.\n**Statement.** Specialising the identity to `s = 3` and an asymmetric red/blue bias\n`p ≠ 1/2` gives `R(3,t) > n` whenever `C(n,3)p^3 + C(n,t)(1−p)^{C(t,2)} < 1`. Optimising `p`\nyields a polynomial lower bound `R(3,t) = Ω(t^{3/2}/ln t)`; the plain unbiased count\n(`p = 1/2`) provably cannot beat `Ω(t)`.\n**The key insight is...** monochromatic-probability is a *product over edges*, so a biased coin\ntrades a cheap red triangle probability `p^3` against an expensive blue `t`-clique probability\n`(1−p)^{C(t,2)}`; the unbiased identity in `Counting.lean` is the `p = 1/2` slice of a\none-parameter family.\n**Why now?** `card_filter_const_on` already counts colourings constant on an index set; the\nonly new ingredient is a *weighted* count `p^{|E|}`, i.e. replacing `Bool` counting by a\nrational weight — a direct generalisation of the existing finite-counting lemmas.\n\n## Conjecture 3 — The first-moment threshold is monotone but never tight: `bestN(s) < R(s,s)`\nstrictly for all `s ≥ 3`.\n**Statement.** Let `bestN(s)` be the largest `n` with `2·C(n,s) < 2^{C(s,2)}` (the §1 table:\n3, 6, 11, 17, 27, …). Conjecture `bestN(s) + 1 < R(s,s)` for every `s ≥ 3`, i.e. the plain\nfirst moment is *strictly* suboptimal at every diagonal value, with gap → ∞.\n**The key insight is...** the first moment ignores correlations between overlapping cliques;\ntwo `s`-cliques sharing `s−1` vertices are highly correlated, so the true number of bad\ncolourings is far below the union bound, leaving room above `bestN(s)`.\n**Why now?** `bestN(s)` is now an exactly computable Lean function (see `ComputationalEvidence.md`),\nso the conjecture is finitely checkable for each `s` and its asymptotic gap is provable from\n`two_choose_lt` versus the known `R(s,s) ≥ Ω(s·2^{s/2})`.\n\n## Conjecture 4 — A Lovász-Local-Lemma colouring beats the first moment by an exponential\nfactor in the *number of vertices it certifies* at fixed failure budget.\n**Statement.** Replacing the union bound by the symmetric LLL (`e·p·(D+1) ≤ 1`, with\n`p = 2^{1−C(s,2)}` and dependency degree `D = C(n,2)C(n−2,s−2)`) certifies a clique-free\ncolouring for `n` a constant factor larger than `bestN(s)`, and crucially gives an\n*algorithmic* (Moser–Tardos) construction.\n**The key insight is...** the bad events \"clique `S` is monochromatic\" are mutually\nindependent of all cliques sharing no edge with `S`; this sparse dependency structure is\nexactly what the LLL exploits and what the first moment throws away.\n**Why now?** The bad-event family `{MonoClique χ S}` and its incidence structure are already\nformalised in `Counting.lean`; an LLL lemma over a finite probability space (uniform\n`GColoring`) is a self-contained addition that reuses `edgesOf` for the dependency graph.\n\n## Conjecture 5 — The SimpleGraph bridge extends to a *self-complementary* witness for even `m`.\n**Statement.** For `m` even, the colouring produced by `ramsey_diagonal_lower_bound` can be\nchosen so that `graphOfColoring χ ≅ (graphOfColoring χ)ᶜ`, i.e. a single self-complementary\ngraph on `2^m` vertices simultaneously witnesses the absence of both a `2m`-clique and a\n`2m`-independent set (a \"Ramsey graph\" in the strict sense, like the Paley graphs).\n**The key insight is...** symmetry between the two colour classes is free in the unbiased\nfirst moment (`badCount` counts red and blue cliques identically), so the existence proof\nalready treats `G` and `Gᶜ` symmetrically — `mono_of_isClique` and `mono_of_isClique_compl`\nare mirror images.\n**Why now?** `exists_clique_free_graph` already yields a graph with the two-sided property;\nupgrading existence to a self-complementary witness needs only an averaging over the\ncolour-swap involution on `GColoring`, an involution already implicit in `colorEdge_symm`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2143",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "bcf3395e",
+    "status": "available",
+    "timestamp": "2026-06-20T11:06:26.824716+00:00",
+    "title": "Derived from this cycle's findings (the exact first-moment identity `sum_badCoun"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nFive research directions building directly on the formal finite-library combinatorics in\n`LibraryOfBabel.lean`. Each is freeform but anchored to a concrete next theorem.\n\n## 1. Exact multi-window inclusion–exclusion\n\nThe file proves `card_window`: the number of books containing a fixed pattern at a fixed\noffset is `k^(left+right)`. The natural next step is the count of books matching *several*\npatterns at several fixed (possibly overlapping) offsets simultaneously, and ultimately\nthe count of books containing a pattern *somewhere*. The key insight is that overlapping\nwindow constraints do not multiply independently — their joint count is governed by the\noverlap (autocorrelation) structure of the patterns, so the right tool is a formal\ninclusion–exclusion over the lattice of position constraints, where incompatible overlaps\ncontribute zero. **Why now?** The single-window cylinder equivalence is already explicit\nand machine-checked here, giving exactly the atomic events that inclusion–exclusion\ncombines; formalizing the general principle is now an assembly problem rather than a\nfoundational one.\n\n## 2. Hamming sphere and ball enumeration\n\nWe establish the radius-zero sphere has cardinality `1` and isolate the conjectured\ngeneral formula `Nat.choose n d * (k - 1)^d` as an open problem. The direction is to prove\nthis formula and then sum it to obtain closed Hamming-ball counts. The key insight is that\na book at distance exactly `d` from a center is determined by *two independent choices* — a\n`d`-element subset of positions to corrupt, and an injection-free relabeling picking one of\nthe `k - 1` alternative letters at each corrupted position — so the sphere is in explicit\nbijection with `{S : Finset (Fin n) // S.card = d} × (S → Fin (k-1))`. **Why now?** The\ndisagreement-set definition of `hammingDist` used here already presents the sphere as a\nsubtype indexed by exactly that disagreement set, so the bijection target is essentially\nread off the existing definition, and the binomial-theorem cross-check\n`(1 + (k-1))^n = k^n` is available from `card_book`.\n\n## 3. Finite automata for meaningful-text predicates\n\n`meaningfulCount` counts books satisfying any decidable predicate but treats the predicate\nas a black box. The direction is to instantiate it with linguistically meaningful\npredicates expressed as recognition by a finite automaton (a regular language of\n\"well-formed\" strings). The key insight is that when the predicate is a regular language,\n`meaningfulCount` becomes a transfer-matrix (path-counting) computation: the number of\naccepted length-`n` strings is an entry of the `n`-th power of the automaton's transition\nmatrix, turning the vague \"probability of meaning\" into an exact, computable spectral\nquantity. **Why now?** The file already reframes probability as the finite ratio\n`meaningfulProb = (count, k^n)`, so plugging in an automaton-defined predicate slots\ndirectly into an interface that exists and is proved sound (`meaningfulCount_le`,\n`meaningfulProb_den`), and Mathlib's developing automata/regular-language library makes the\ntransfer-matrix step tractable.\n\n## 4. Computable proof-search predicates over finite books\n\nA sharp replacement for informal proof-complexity probability claims is to fix a formal\nproof system with a *decidable* proof checker and let the predicate `P b` mean \"`b`\nencodes a valid proof of a fixed target statement.\" The direction is to compute, or bound,\n`meaningfulCount P` — the exact number of length-`n` proof-bearing books — as a function of\n`n`. The key insight is that decidability of proof checking makes `P` a legitimate instance\nof the `meaningfulCount` scheme with no probabilistic hand-waving, so \"the chance a random\nbook proves the theorem\" becomes the determined rational `meaningfulProb P`. **Why now?**\nThe decidable-predicate counting interface is already in place and axiom-clean here, and\nLean itself supplies concrete decidable proof checkers, so the model can be instantiated\ninside the same framework without new foundations.\n\n## 5. From counts to computable density and asymptotics\n\nThe cylinder theorems give exact numerators (`k^r`, `k^(left+right)`) over the exact\ndenominator `k^n`, i.e. exact rational densities. The direction is to develop the\nasymptotic behavior of such densities and counts as the book length `n → ∞`, e.g. the\ndensity of books containing a fixed passage, or the growth rate of meaningful/proof-bearing\nbooks. The key insight is that because each density is an exact ratio of explicit\nexponentials rather than an estimate, its limit and rate are extractable rigorously by\nelementary real-analytic limits rather than probabilistic approximation. **Why now?** All\nthe underlying counts are already closed-form and proved in this file, so the asymptotic\nlayer is a self-contained analytic addition that needs no further combinatorial input.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Computation",
+      "Algebra"
+    ],
+    "id": "fd_2144",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "722e1f4a",
+    "status": "available",
+    "timestamp": "2026-06-20T11:09:25.746391+00:00",
+    "title": "Five research directions building directly on the formal finite-library combinat"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -5249,22 +5289,21 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "fdab34f3",
-    "description": "Conjecture: The entanglement‑complexity scaling law of a uniformly random rank‑k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network’s holographic geometry approximates a smooth (d+1)‑dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse‑graining. Test: Generate large‑scale random tensor networks on high‑performance clusters, compute their entanglement spectra and bulk geometry via the quantum error‑correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein’s equations from complexity theory, guide quantum gravity model selection, and inspire complexity‑optimal quantum error‑correcting codes.",
+    "consumed_by_exp_id": "",
+    "description": "Cycle 722e1f4a (Q=0.654) proved 22 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the finite combinatorics of Borges' Library of Babel: define the set of all books of length n over a k-symbol alphabet, prove exact cardinalities of the whole library and cylinder sets (give",
     "domain_bridges": [],
     "domains": [
-      "Novelty",
-      "Computation"
+      "Applications"
     ],
-    "id": "fd_2119",
+    "id": "sorry_fill_722e1f4a_9dcd9681",
     "lineage_refs": [],
-    "priority_score": 0.7158260869565218,
+    "priority_score": 0.7040000000000001,
     "proof_strategy": "",
     "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-19T17:11:08.928185+00:00",
-    "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
+    "source_exp_id": "722e1f4a",
+    "status": "available",
+    "timestamp": "2026-06-20T11:10:43.756571+00:00",
+    "title": "Close Proofs: The Library of Babel: Combinatorics of the Universal Library"
   },
   {
     "ambition_level": "extension",
@@ -5978,6 +6017,25 @@
     "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Cycle bcf3395e (Q=0.454) proved 351 theorems in Geometry but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Complete the probabilistic method formalization for diagonal Ramsey numbers using exact finite counting. Focus on proving the main theorems: card_Edge2, card_GColoring, card_edgesOf, card_mono_fixed_s",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry"
+    ],
+    "id": "sorry_fill_bcf3395e_8bcb9d83",
+    "lineage_refs": [],
+    "priority_score": 0.5037146432932148,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "bcf3395e",
+    "status": "available",
+    "timestamp": "2026-06-20T11:07:38.792856+00:00",
+    "title": "Close Proofs: Ramsey Theory: Bounds and Constructions"
   },
   {
     "ambition_level": "extension",
