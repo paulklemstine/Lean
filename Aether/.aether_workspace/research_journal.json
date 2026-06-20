@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "4302919c",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Path Spaces, h-Levels, and Contractibility as a Universal Property\n\n## Synthesis\n\nThis cycle pushed the catalog's synthetic homotopy module `Logic.HomotopyTypeTheory`\n(`HoTT.IsCo",
-      "quality_score": 0.726744433497537,
-      "sorry_count": 2,
-      "theorem_count": 203,
-      "timestamp": "2026-06-14T06:35:32",
-      "title": "This cycle was about *closing proofs* in the Fibonacci primitive-divisor program"
-    },
-    {
       "cycle_id": "5af43ad7",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Hodge–Laplacian Message Passing, Third Cycle\n\n## Synthesis\n\nThis cycle closed two of the standing conjectures of the *spectral depth threshold* /\n*full Hodge decomposition* progr",
@@ -499,19 +489,19 @@
       "theorem_count": 60,
       "timestamp": "2026-06-20T02:27:16",
       "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+    },
+    {
+      "cycle_id": "35a8dda5",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Sheaf-Theoretic Data Integration\n\nCycle 1 established that databases (records over a key space) form a genuine **sheaf**:\nthe presheaf `U ↦ (records on U)` satisfies separation a",
+      "quality_score": 0.74408,
+      "sorry_count": 0,
+      "theorem_count": 89,
+      "timestamp": "2026-06-20T04:59:56",
+      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "d787aa34",
-      "domain": "Computation",
-      "key_insight": "# Future Directions — Arithmetic Monodromy Rigidity in Definable Neural ODE Flows\n\n## Synthesis\n\nThe original conjecture asserted that the time-1 flow map of a polynomially\nparameterized neural ODE ca",
-      "quality_score": 0.38878735254059715,
-      "sorry_count": 4,
-      "theorem_count": 46,
-      "timestamp": "2026-06-14T23:21:59",
-      "title": "Arithmetic Monodromy Rigidity in Definable Neural ODE Flows"
-    },
     {
       "cycle_id": "13a80f4d",
       "domain": "Geometry",
@@ -2501,27 +2491,19 @@
       "theorem_count": 60,
       "timestamp": "2026-06-20T02:27:16",
       "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+    },
+    {
+      "cycle_id": "35a8dda5",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Sheaf-Theoretic Data Integration\n\nCycle 1 established that databases (records over a key space) form a genuine **sheaf**:\nthe presheaf `U ↦ (records on U)` satisfies separation a",
+      "quality_score": 0.74408,
+      "sorry_count": 0,
+      "theorem_count": 89,
+      "timestamp": "2026-06-20T04:59:56",
+      "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "cb2c4d8f",
-      "domain": "Combinatorics",
-      "name": "rank_preserves_interleaving",
-      "quality": 0.7260899999999999
-    },
-    {
-      "cycle_id": "cb2c4d8f",
-      "domain": "Combinatorics",
-      "name": "rank_interleavingDist_le",
-      "quality": 0.7260899999999999
-    },
-    {
-      "cycle_id": "cb2c4d8f",
-      "domain": "Combinatorics",
-      "name": "rips_rank_stability",
-      "quality": 0.7260899999999999
-    },
     {
       "cycle_id": "2086db82",
       "domain": "Applications",
@@ -2803,9 +2785,27 @@
       "domain": "Tropical",
       "name": "tropScalarAdd_add",
       "quality": 0.723184
+    },
+    {
+      "cycle_id": "35a8dda5",
+      "domain": "Cryptography",
+      "name": "restrict_self",
+      "quality": 0.74408
+    },
+    {
+      "cycle_id": "35a8dda5",
+      "domain": "Cryptography",
+      "name": "restrict_restrict",
+      "quality": 0.74408
+    },
+    {
+      "cycle_id": "35a8dda5",
+      "domain": "Cryptography",
+      "name": "glue_eq_of_locally_eq",
+      "quality": 0.74408
     }
   ],
-  "last_updated": "2026-06-20T02:27:16",
+  "last_updated": "2026-06-20T04:59:56",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3319,12 +3319,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "e9b0b276",
-        "quality": 0.5321925795053004,
-        "theorems": 166,
-        "title": "Berggren Lattice Orbit Classification for Post-Quantum Key Exchange"
-      },
-      {
         "cycle_id": "d79ba9e2",
         "quality": 0.66144,
         "theorems": 11,
@@ -3377,6 +3371,12 @@
         "quality": 0.5258320497819382,
         "theorems": 82,
         "title": "The Library of Babel: Combinatorics of the Universal Library"
+      },
+      {
+        "cycle_id": "35a8dda5",
+        "quality": 0.74408,
+        "theorems": 89,
+        "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
       }
     ],
     "Geometry": [

@@ -3363,6 +3363,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Sheaf-Theoretic Data Integration\n\nCycle 1 established that databases (records over a key space) form a genuine **sheaf**:\nthe presheaf `U \u21a6 (records on U)` satisfies separation and gluing, and *integrability is\nexactly overlap-consistency* (`exists_glue_iff_consistent`). On the schema-graph side, the\nconsistent integrations of a sheaf form the submodule `globalSections`, equal to `H0` for\nthe constant sheaf, with rigidity over connected schemas.\n\nThe conjectures below are precise and falsifiable; each is intended to become a Lean file\nunder `Catalog/Cryptography/` in a follow-up cycle.\n\n## Conjecture 1 \u2014 Cohomological obstruction to integration (H\u00b9 vanishing)\nDefine cellular `1`-cochains and a coboundary `\u03b4\u2070 : C\u2070(G,F) \u2192 C\u00b9(G,F)` for a graph sheaf\n`F`. Conjecture: a globally consistent integration extending a prescribed family of\nedge-agreements exists **iff** the associated class in `H\u00b9(G,F) = ker \u03b4\u00b9 / im \u03b4\u2070` vanishes.\nFor the constant sheaf on a graph with first Betti number `b\u2081`, `dim H\u00b9 = b\u2081`.\n*Falsifiable:* exhibit a cycle graph `C\u2099` with an edge-twist whose `H\u00b9` class is nonzero and\nshow no global section restricts to it; conversely show acyclic schemas always integrate.\n\n## Conjecture 2 \u2014 Unique integration \u21d4 acyclic schema (information-flow rigidity)\nFor the constant sheaf with values in a nontrivial ring `R`, the evaluation-at-a-vertex map\n`globalSections \u2192 R` is bijective for **every** choice of base vertex iff `G` is a tree\n(connected and acyclic). `globalSections_eval_injective_of_connected` proves injectivity for\nconnected `G`; the conjecture is that surjectivity + injectivity simultaneously characterize\ntrees among connected graphs once non-identity comparison maps (gauge) are allowed.\n*Falsifiable:* on `C\u2083` with a nontrivial automorphism gauge, integration should fail to be\nsurjective.\n\n## Conjecture 3 \u2014 Finite gluing suffices (compactness of consistency)\nFor the database sheaf over an arbitrary key space, a family `r : \u2200 i, Record (S i)` is\noverlap-consistent iff every *pair* `{i, j}` is consistent on `S i \u2229 S j`. Equivalently,\npairwise consistency implies global consistency (the \u010cech `0`/`1` condition collapses).\nThis upgrades `exists_unique_merge_two` from two tables to arbitrary covers.\n*Falsifiable:* search for a cover and a pairwise-consistent-but-not-jointly-consistent\nfamily; the conjecture predicts none exists for the sheaf of plain records (but predicts\ncounterexamples once stalks carry nontrivial transition maps \u2014 that boundary is the test).\n\n## Conjecture 4 \u2014 Privacy/leakage bound via global sections (cryptographic bridge)\nModel a secret-sharing scheme as a graph sheaf where stalks are share spaces and edges are\nreconstruction constraints. Conjecture: an unauthorized coalition `T \u2286 V` learns nothing\nabout the secret iff the restriction map `globalSections(F) \u2192 \u220f_{v \u2208 T} Stalk v` is **not\ninjective on the secret coordinate**, i.e. the secret lies outside the image of the\n`T`-localized coboundary. This recasts perfect privacy as a sheaf-cohomology surjectivity\nstatement and connects `globalSections` to access structures.\n*Falsifiable:* for `(2,3)`-threshold sharing on the triangle schema, verify that every\nsingle-vertex restriction is non-injective on secrets but every two-vertex restriction is\ninjective.\n\n## Conjecture 5 \u2014 Functoriality and Mayer\u2013Vietoris for schema merges\nThe assignment `G \u21a6 globalSections(F)` extends to a contravariant functor on schema\nmorphisms (refining `H0_antitone`), and for a schema covered by two subgraphs `G = G\u2080 \u222a G\u2081`\nthere is an exact Mayer\u2013Vietoris sequence\n`0 \u2192 globalSections(G) \u2192 globalSections(G\u2080) \u2295 globalSections(G\u2081) \u2192 globalSections(G\u2080 \u2229 G\u2081)`.\n*Falsifiable:* compute both sides for a 4-cycle split into two paths; non-exactness at the\nmiddle term would refute it.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2131",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "35a8dda5",
+    "status": "available",
+    "timestamp": "2026-06-20T04:53:30.786860+00:00",
+    "title": "Cycle 1 established that databases (records over a key space) form a genuine **s"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3389,6 +3404,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any consistent formal system F extending PA, the function mapping a statement \u03c6 (independent of F) to the length of its shortest proof in F+Con(F) grows faster than any F-provably total computable function of the Kolmogorov complexity K(\u03c6). Test: Use automated theorem provers (e.g., Lean with tactical search) to enumerate proofs for families of independent statements (e.g., Paris-Harrington variants, Goodstein sequences, hydra games) parameterized by complexity. Measure the empirical scaling of minimal proof length vs. K(\u03c6) estimated via compression. Refutation: If proof length scales polynomially or as a provably total function in F. Impact: Establishes a fundamental 'complexity barrier' for mathematical discovery, linking proof theory, algorithmic information theory, and Wolfram's computational irreducibility; implies inherent limits on AI-assisted theorem proving for independent statements.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_2132",
+    "priority_score": 0.7157272727272728,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-20T04:58:31.995279+00:00",
+    "title": "Computational Irreducibility in Proof Search: The Complexity Barrier for Indepen"
   },
   {
     "consumed_by_exp_id": "",
@@ -3538,20 +3567,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T01:05:26.622326+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "fd_2074",
-    "priority_score": 0.7,
-    "research_mode": "team",
-    "source_exp_id": "oeis:212351",
-    "status": "available",
-    "timestamp": "2026-06-18T01:05:26.622694+00:00",
-    "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
     "consumed_by_exp_id": "",
@@ -4522,21 +4537,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.782446+00:00",
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-  },
-  {
-    "consumed_by_exp_id": "35a8dda5",
-    "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0092",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.807837+00:00",
-    "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
   {
     "consumed_by_exp_id": "",
