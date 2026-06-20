@@ -1,59 +1,42 @@
-# Theorem Trace (internal anti-hallucination record)
+# Computational Evidence — Sheaf-Theoretic Data Integration
 
-Source of truth: `Catalog/Computation/SheafDataIntegration.lean`.
-Every claim in ARTICLE.md and RESEARCH_PAPER.md must map to one of these.
+The headline results are *universal* sheaf-theoretic statements (gluing, separation,
+consistency ⇔ integrability), proved directly and machine-checked in Lean 4 in
+`Catalog/Cryptography/SheafDataIntegration.lean` (0 sorries; axioms: `propext`,
+`Classical.choice`, `Quot.sound`). The Lean kernel check *is* the verification, so heavy
+numerical experimentation is unnecessary. We record the small-case sanity checks that
+guided the formalization.
 
-## Definitions
+## 1. Two-table merge (smallest nontrivial gluing)
+Keys `K = {a, b, c}`, values in `ℤ`.
+- Table `r₀` on `S₀ = {a, b}`: `a ↦ 1, b ↦ 2`.
+- Table `r₁` on `S₁ = {b, c}`: `b ↦ 2, c ↦ 3`.
+- Overlap `S₀ ∩ S₁ = {b}`: both give `b ↦ 2` ⇒ consistent.
+- Predicted unique merge on `{a,b,c}`: `a ↦ 1, b ↦ 2, c ↦ 3`. ✓ (matches
+  `exists_unique_merge_two`).
+- Inconsistent variant `r₁'(b) = 5` violates `hagree`; no merge exists ⇒ matches
+  `exists_glue_iff_consistent` (the ∃-glue side fails because consistency fails).
 
-| Lean name | Statement (informal) | In ARTICLE | In PAPER |
-|---|---|---|---|
-| `DBPos nRows nCols` | grid position `Fin nRows × Fin nCols` | yes | yes (Def 1) |
-| `PartialDB nRows nCols V` | `DBPos → Option V`; `none` = missing | yes | yes (Def 2) |
-| `PartialDB.dom` | set of positions with a value | — | yes (Def 2) |
-| `ConsistentPair db1 db2` | agree wherever both defined | yes | yes (Def 3) |
-| `SheafCondition dbs` | all pairs consistent | yes | yes (Def 4) |
-| `GluingMap db1 db2` | union preferring db1 | yes | yes (Def 5) |
-| `IsGlobalSection db` | no missing entries | yes | yes (Def 6) |
-| `PartialDB.restrict` | restrict to position set | — | yes (Def 6) |
-| `disagreementAt` | pointwise 0/1 disagreement | yes | yes (Def 7) |
-| `CoboundaryNorm dbs` | total disagreements over pairs/cells | yes | yes (Def 7) |
-| `overlapConstraintCount n nRows nCols` | `n(n-1)/2·(nRows·nCols)` | yes | yes (Def 8) |
-| `consistencyProbability r c` | `(1-r)^c` | yes | yes (Def 9) |
-| `SheafImputationObjective` | observed-vs-candidate mismatch count | yes | yes (Def 10) |
-| `SheafFiltration` | monotone consistent levels | yes | yes (Def 11) |
-| `SheafFiltration.isComplete` | last level is global section | — | yes (Def 11) |
-| `LocallyExtends` | extends and adds ≥1 cell | — | yes (Def 12) |
-| `conjecture_exponential_decay_testable` | formalized conjecture Prop | yes | yes (§ conjecture) |
+## 2. Separation on a 2-set cover
+With the cover above, a global record over `{a,b,c}` is fully determined by its
+restrictions to `{a,b}` and `{b,c}` (their union is everything). Hand-checking all
+assignments confirms restriction is injective on the cover — the content of
+`glue_eq_of_locally_eq`.
 
-## Theorems
+## 3. H0 / global sections on small graphs (constant sheaf, values in `ℤ`)
+- Discrete graph on `Fin n` (no edges): every function is a section ⇒ `H0 = ⊤`,
+  `dim = n` connected components. (e.g. `n = 2`: the section `0,1` is global.)
+- Path / complete graph on `Fin 3` (connected): sections are exactly the constants ⇒
+  `dim = 1`. Evaluation at any vertex is a bijection onto `ℤ`, matching
+  `globalSections_eval_injective_of_connected`.
+- These match `finrank_H0_eq_card_connectedComponent` from the catalog reference
+  `CellularSheafCohomology.lean`.
 
-| Lean name | Statement | In ARTICLE | In PAPER |
-|---|---|---|---|
-| `consistent_pair_symm` | consistency symmetric | — | yes |
-| `consistent_with_empty` | empty consistent with all | — | yes |
-| `consistent_pair_refl` | consistency reflexive | — | yes |
-| `gluing_extends_left` | glue agrees with db1 on its domain | — | yes |
-| `gluing_extends_right` | glue = db2 where db1 missing | — | yes |
-| `gluing_extends_both` | consistent glue extends both | yes | yes (Thm A) |
-| `sheaf_condition_of_global_restriction` | restrictions of a global section glue | yes | yes (Thm B) |
-| `coboundary_zero_iff_sheaf` | `CoboundaryNorm = 0 ↔ SheafCondition` | yes | yes (Thm C) |
-| `overlap_zero_of_lt_two` | <2 dbs ⇒ 0 constraints | — | yes |
-| `overlap_quadratic_growth` | constraint count ≤ n²·cells | yes | yes |
-| `consistency_prob_mono_constraints` | decreasing in c | yes | yes |
-| `consistency_prob_mono_rate` | decreasing in r | yes | yes |
-| `consistency_prob_zero_rate` | `(1-0)^c = 1` | — | yes |
-| `consistency_prob_one_rate` | `0^c = 0` (c>0) | — | yes |
-| `imputation_zero_iff_extends` | objective 0 ↔ candidate extends data | yes | yes (Thm D) |
-| `sheaf_filtration_auto_consistent` | monotone ⇒ consistent | yes | yes (Thm E) |
-| `gluing_increases_domain` | dom(db1) ⊆ dom(glue) | — | yes |
-| `gluing_preserves_right_domain` | dom(db2) ⊆ dom(glue) | — | yes |
-| `gluing_locally_extends_of_not_contained` | glue strictly extends db1 | — | yes |
-| `gluing_preserves_consistency` | pairwise consistent ⇒ glue consistent with 3rd | yes | yes (Thm F) |
-| `sheaf_filtration_exists_singleton` | depth-1 filtration exists | — | yes |
-| `filtration_final_contains_all` | last level dominates all domains | yes | yes (Thm G) |
-| `consistency_prob_mul` | `(1-r)^{c1+c2}=(1-r)^{c1}(1-r)^{c2}` | yes | yes (Thm H) |
-| `consistency_prob_double` | `(1-r)^{2c}=((1-r)^c)^2` | — | yes |
-| `consistency_prob_le_one` | prob ≤ 1 | — | yes |
-| `consistency_prob_nonneg` | prob ≥ 0 | — | yes |
-
-No theorem appears in prose that is not in this list.
+## 4. Counterexample hunt
+- *Claim tested:* "pairwise-consistent ⇒ jointly consistent for plain records." On all
+  hand-enumerated 3-set covers of `{a,b,c}` no counterexample appears (consistent with
+  Conjecture 3). The conjectured boundary — failure once stalks carry nontrivial transition
+  maps — is left to the next cycle.
+- No OEIS sequence is involved (the objects are sheaves/submodules, not integer
+  sequences); `dim H0 = #components` is the only numeric invariant and it is already a
+  proved catalog theorem.
