@@ -2412,17 +2412,45 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Let S_N(x)=sum_{i=1}^N x^i. For primes p<q with pq | m and n^2 >= (p-1)(q-1)+1, the conjecture says the cyclotomic transfer P=S_{m^2}/Phi_{pq}, Q=S_{n^2} Phi_{pq} is a nonstandard square-sided pair of sizes m^2 and n^2. Equivalently, the quotient and product have nonnegative integer coefficients, P(1)=m^2, Q(1)=n^2, and P Q=S_{m^2}S_{n^2}. A counterexample would be any admissible p,q,m,n for which one of these two explicit polynomials has a negative coefficient.",
+    "description": "For prime bases p>5, the paper reduces the longest terminal cycle length of the four-digit Kaprekar map to the least positive m such that 2^m \u2261 \u00b11 mod p. Conjecture: there are infinitely many primes p>5 for which this least m is exactly (p-1)/2, equivalently the Kaprekar map in base p has a terminal cycle attaining the universal upper bound (p-1)/2.",
     "domains": [
       "Pythagorean"
     ],
     "id": "fd_2132",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2606.20311v1",
+    "source_exp_id": "2606.20439v1",
     "status": "available",
+    "timestamp": "2026-06-20T06:55:45.344564+00:00",
+    "title": "Infinitely many prime bases with maximal four-digit Kaprekar cycles"
+  },
+  {
+    "consumed_by_exp_id": "7b66a66e",
+    "description": "Let S_N(x)=sum_{i=1}^N x^i. For primes p<q with pq | m and n^2 >= (p-1)(q-1)+1, the conjecture says the cyclotomic transfer P=S_{m^2}/Phi_{pq}, Q=S_{n^2} Phi_{pq} is a nonstandard square-sided pair of sizes m^2 and n^2. Equivalently, the quotient and product have nonnegative integer coefficients, P(1)=m^2, Q(1)=n^2, and P Q=S_{m^2}S_{n^2}. A counterexample would be any admissible p,q,m,n for which one of these two explicit polynomials has a negative coefficient.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2133",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "in_progress",
     "timestamp": "2026-06-20T06:09:07.372057+00:00",
     "title": "Semiprime cyclotomic transfer for square-sided dice"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every integer d \u2265 1 and every planar graph H, there exists a constant C = C(d, H) such that any graph G that is K_{1,d}-free and does not contain H as an induced minor satisfies \u03b1\u2011tw(G) \u2264 C, i.e., the class of K_{1,d}-free graphs without H as an induced minor has bounded tree\u2011independence number.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2134",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20256v1",
+    "status": "available",
+    "timestamp": "2026-06-20T06:56:11.390123+00:00",
+    "title": "Bounded tree-independence in K_{1,d}-free graphs excluding a planar minor"
   },
   {
     "consumed_by_exp_id": "",
@@ -3362,21 +3390,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\n## 1. Discharging `hSZ` from a formalised Schwartz\u2013Zippel bound\n\nThe polynomial consumers currently take the cross-multiplied size estimate `hSZ`\nas a hypothesis. The natural next step is a corollary that *produces* `hSZ` from a\nMathlib-grade Schwartz\u2013Zippel theorem bounding the number of zeros of a nonzero\nmultivariate polynomial of total degree `d` by `d * |K|^{n-1}`.\nThe key insight is that the abstract transducer never needs the analytic estimate\nin divided form, so the entire interface between the two layers is a single\nnatural-number inequality that can be filled in by whatever zero-counting theorem\nbecomes available. Why now? Mathlib's polynomial and finite-field libraries have matured\nto the point where a clean multivariate zero-count is within reach, and wiring it\nto a finished, axiom-clean covering bound turns that analytic work into an\nimmediate lower-bound theorem rather than an isolated lemma.\n\n## 2. Weighted and fractional covers\n\nThe present statement counts cover members with multiplicity one. A weighted\ngeneralisation would assign each member a positive weight and conclude a lower\nbound on the total weight, capturing fractional covering and LP-relaxation\narguments. The key insight is that the proof's only structural step \u2014 bounding\n`|\u03a9|` by a sum over the index set \u2014 is already a weighted statement in disguise,\nso replacing the constant summand by a per-index weight changes nothing in the\ncancellation argument. Why now? Fractional covering bounds are the standard\ncurrency of modern combinatorial lower bounds, and exposing a weighted variant of\nthis transducer makes it directly usable by that literature without re-deriving\nthe union step.\n\n## 3. Sharper cancellation under coprimality and rounding\n\nThe final step cancels a positive factor with `Nat.le_of_mul_le_mul_right`, which\nis lossless. When `q` and `d` carry arithmetic structure (e.g. `q` prime, or\n`d | |\u03a9|`), one can often improve `q \u2264 k*d` to a strict or ceiling-rounded bound\n`k \u2265 \u2308q/d\u2309`. The key insight is that the multiplicative inequality\n`q*|\u03a9| \u2264 (k*d)*|\u03a9|` retains more information than its cancelled form, so a\nrounding lemma applied before cancellation recovers integrality gains for free.\nWhy now? Integer covering lower bounds are routinely off by the rounding term, and\na reusable ceiling-aware variant would let downstream applications quote the\ntight constant instead of a floor.\n\n## 4. The dual packing upper bound\n\nCovering lower bounds have a packing dual: if disjoint sets each have size at\nleast `d * |\u03a9| / q`, then at most `k` of them fit. The key insight is that the\nsame subadditivity-of-cardinality skeleton runs in reverse for disjoint families,\nwhere `Finset.card_biUnion` (the *equality* for pairwise-disjoint sets) replaces\nthe inequality `card_biUnion_le`. Why now? Stating packing and covering as two\nfaces of one finite-union lemma would consolidate a recurring pattern across the\ncatalog's combinatorial bridges and reduce duplicated boilerplate in future\nfiles.\n\n## 5. A measure-theoretic transport for infinite ground sets\n\nMany density arguments live over infinite probability spaces rather than finite\ntypes, with `|A|/|\u03a9|` replaced by a measure `\u03bc(A)`. The key insight is that the\nfinite proof is already written in cross-multiplied, division-free form, so it\ntransports almost verbatim to a measure-theoretic statement once cardinalities\nbecome measures and the cancellation step becomes division by `\u03bc(\u03a9) > 0`.\nWhy now? Mathlib's measure theory and probability layers are robust enough to host\nthe continuous analogue, and providing both the finite and measured versions\nbehind one informal interface would let users pick the setting their problem\ndemands without re-proving the covering inequality.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2133",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "6d018212",
-    "status": "available",
-    "timestamp": "2026-06-20T06:50:01.546970+00:00",
-    "title": "The polynomial consumers currently take the cross-multiplied size estimate `hSZ`"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3390,7 +3403,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "a04133c4",
+    "consumed_by_exp_id": "acb790ee",
     "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
     "domains": [
       "Novelty",
@@ -4388,7 +4401,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
-    "consumed_by_exp_id": "722e1f4a",
+    "consumed_by_exp_id": "",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -4398,7 +4411,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-01T12:30:30.490561+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
