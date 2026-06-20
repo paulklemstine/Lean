@@ -34,20 +34,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle 972d4c89 (Q=0.852), which proved 103 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Complete a verified Lean 4 formalization of finite two\u2011colour Ramsey theory. The project focuses on defining the Arrow predicate for SimpleGraph complements, proving its basic properties (clique transfer, colour symmetry, cardinal monotonicity), deriving the Erd\u0151s\u2013Szekeres recursion and the binomial",
-    "domains": [
-      "Applications"
-    ],
-    "id": "push_972d4c89_bd38c501",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "972d4c89",
-    "status": "available",
-    "timestamp": "2026-06-20T05:09:26.602013+00:00",
-    "title": "Deepening: Ramsey Theory: Bounds and Constructions"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n \u2264 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
     "domains": [
       "NumberTheory",
@@ -342,20 +328,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T03:56:25.432772+00:00",
     "title": "Noether's Theorem: Symmetries and Conservation Laws"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Building on cycle 5e9b4daa (Q=0.794), which proved 103 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue i",
-    "domains": [
-      "Cryptography"
-    ],
-    "id": "push_5e9b4daa_a525eaf0",
-    "priority_score": 0.89384,
-    "research_mode": "team",
-    "source_exp_id": "5e9b4daa",
-    "status": "available",
-    "timestamp": "2026-06-20T05:05:54.263767+00:00",
-    "title": "Deepening: Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
   {
     "consumed_by_exp_id": "",
@@ -2440,6 +2412,35 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer d \u2265 9, there exist two line arrangements of d lines in the complex projective plane with isomorphic intersection lattices, identical Hilbert functions of their Milnor algebras, identical minimal degree of a Jacobian relation, but distinct graded Betti numbers of the minimal free resolutions of their Milnor algebras (i.e., a Ziegler pair satisfying conditions (HF) and (MDR)).",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2131",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20421v1",
+    "status": "available",
+    "timestamp": "2026-06-20T06:03:40.471568+00:00",
+    "title": "Existence of Ziegler pairs for all degrees at least nine"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let S_N(x)=sum_{i=1}^N x^i. For primes p<q with pq | m and n^2 >= (p-1)(q-1)+1, the conjecture says the cyclotomic transfer P=S_{m^2}/Phi_{pq}, Q=S_{n^2} Phi_{pq} is a nonstandard square-sided pair of sizes m^2 and n^2. Equivalently, the quotient and product have nonnegative integer coefficients, P(1)=m^2, Q(1)=n^2, and P Q=S_{m^2}S_{n^2}. A counterexample would be any admissible p,q,m,n for which one of these two explicit polynomials has a negative coefficient.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2132",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-20T06:09:07.372057+00:00",
+    "title": "Semiprime cyclotomic transfer for square-sided dice"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -3090,7 +3091,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived from the cycle in `NeuralHodgeConjecture.lean` and `NeuralHodgeCatalogLi"
   },
   {
-    "consumed_by_exp_id": "8e353e57",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 Paradoxes as Theorems (Liar, Berry, Russell, Made Consistent)\n\nDerived from the cycle whose verified results live in\n`Catalog/Logic/ParaconsistentParadox.lean` (foundations) and\n`Catalog/Computation/ParadoxesAsTheorems.lean` (construction + necessity), and\nbuilding on `Catalog/Logic/ParadoxSelfSoundness.lean`.\n\nThis cycle established, with zero sorries, a single finite four-valued\nparaconsistent theory `paradoxModel` in which the Liar, Russell, and Berry\nparadoxes are simultaneously *designated theorems*, the theory is non-trivial and\nnon-explosive, and it certifies its own soundness; and it proved that a *sound*\nprovable Liar forces a genuine glut `B` (gaps `N` are insufficient).\n\nThe following conjectures are bold, falsifiable refinements.\n\n---\n\n## C1. Glut Minimality / Inconsistency Lower Bound\n\n**Conjecture.** Any sound paraconsistent theory that proves the Liar, a Russell\nsentence, and a Berry sentence as *syntactically distinct* designated theorems\nhas inconsistency degree at least 3, and 3 is attainable.\n\n**The key insight is** that `provable_liar_is_glut` upgrades each of the three\nself-referential paradoxes from \"non-classical\" (`B` or `N`) to \"glut\" (`B`)\nonce soundness and provability are imposed, so three distinct paradoxes must\ncontribute three distinct dialetheias \u2014 strengthening\n`two_paradoxes_force_degree_two` from 2 to 3.\n\n**Why now?** We already have the degree-\u22652 bound via `Finset.one_lt_card` and the\nglut-forcing lemma; the missing step is a Berry sentence that is *intrinsically*\na third glut rather than reusing a Liar fixed point, which the\n`berry_definability_bound` collision can be made to witness.\n\n---\n\n## C2. No Sound Paracomplete (Gap-Only) Theory Proves the Liar\n\n**Conjecture.** In any three-valued logic whose only non-classical value is a gap\n`N` (paracomplete, no glut), the Liar can never be a sound provable theorem; i.e.\nremoving `B` from `BelnapVal` makes `paradoxes_as_theorems` unsatisfiable.\n\n**The key insight is** that `provable_liar_is_glut` already closes the gap escape\nfor the four-valued case; the conjecture says this is not an artifact of the\nextra value `B` being available but a hard impossibility once `B` is deleted \u2014\nsoundness designates only `T`, and a Liar cannot be `T`.\n\n**Why now?** The proof template is the contrapositive of `provable_liar_is_glut`\ncombined with `classical_no_liar`; the only new ingredient is formalizing a\ngap-only sublogic `Fin 3` and showing its designated set is `{T}`.\n\n---\n\n## C3. Explosion is the Unique Obstruction to Consistency\n\n**Conjecture.** For a finite four-valued theory with at least one glut, the\ntheory is non-trivial (some sentence unprovable) **iff** it rejects explosion.\nEquivalently, `HasExplosion` is logically equivalent to triviality in the\npresence of a dialetheia.\n\n**The key insight is** that `explosion_collapses_paradoxModel` shows explosion \u21d2\ntriviality, and `paradoxModel_rejects_explosion` shows the converse direction in\none model; the conjecture promotes this to a biconditional characterization,\nlocating *all* of consistency in the failure of ex falso.\n\n**Why now?** Both implications already exist as separate theorems for the witness\nmodel; generalizing to \"any theory with a glut\" needs only the observation that a\nglut plus explosion designates everything, which is exactly\n`explosion_with_liar_trivializes`.\n\n---\n\n## C4. Self-Soundness is Impossible Without Gluts\n\n**Conjecture.** No consistent *classical or paracomplete* theory containing its\nown truth predicate can prove its own soundness (G\u00f6del/Tarski barrier), but every\nsufficiently expressive *paraconsistent* theory with a designated soundness\nsentence can \u2014 and the dividing line is precisely the availability of the glut\n`B`.\n\n**The key insight is** that `paradoxSelfSound_proves_own_soundness` evades the\nsecond-incompleteness barrier not by weakness but by tolerating the controlled\ncontradiction that makes the soundness sentence designated; the obstruction in\nclassical logic is exactly the explosion that gluts disarm.\n\n**Why now?** `SelfSoundTheory` and the concrete `paradoxSelfSound` give a working\npositive instance; the negative half can be formalized by transporting\n`classical_no_liar` to a self-referential soundness sentence.\n\n---\n\n## C5. Functoriality of Paradox Endomorphisms\n\n**Conjecture.** The Belnap endomorphisms fixing the glut and gap values\n(`ParadoxEndomorphism` in `ParadoxSelfSoundness`) act on the set of designated\nself-referential theorems, and this action preserves both provability and\ninconsistency degree; hence \"paradoxicality\" is an invariant of the endomorphism\nmonoid.\n\n**The key insight is** that `paradox_endo_preserves_fixed_point` shows these maps\nsend negation fixed points to negation fixed points, so they map Liars to Liars\nand gluts to gluts \u2014 turning the ad hoc paradox catalogue into the orbit of a\ngroup action.\n\n**Why now?** The endomorphism monoid (`ParadoxEndomorphism.comp`, `negEndomorphism`)\nis already defined and its fixed-point preservation proved; the next step is to\nlet it act on `ParaconsistentTheory` truth assignments and check `isSound`/\n`inconsistencyDegree` are invariants \u2014 a direct, mechanizable extension.\n",
     "domains": [
       "Logic",
@@ -3100,7 +3101,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "11262eec",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-17T07:30:20.164987+00:00",
     "title": "Derived from the cycle whose verified results live in"
   },
@@ -3376,66 +3377,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Sheaf-Theoretic Data Integration\n\nCycle 1 established that databases (records over a key space) form a genuine **sheaf**:\nthe presheaf `U \u21a6 (records on U)` satisfies separation and gluing, and *integrability is\nexactly overlap-consistency* (`exists_glue_iff_consistent`). On the schema-graph side, the\nconsistent integrations of a sheaf form the submodule `globalSections`, equal to `H0` for\nthe constant sheaf, with rigidity over connected schemas.\n\nThe conjectures below are precise and falsifiable; each is intended to become a Lean file\nunder `Catalog/Cryptography/` in a follow-up cycle.\n\n## Conjecture 1 \u2014 Cohomological obstruction to integration (H\u00b9 vanishing)\nDefine cellular `1`-cochains and a coboundary `\u03b4\u2070 : C\u2070(G,F) \u2192 C\u00b9(G,F)` for a graph sheaf\n`F`. Conjecture: a globally consistent integration extending a prescribed family of\nedge-agreements exists **iff** the associated class in `H\u00b9(G,F) = ker \u03b4\u00b9 / im \u03b4\u2070` vanishes.\nFor the constant sheaf on a graph with first Betti number `b\u2081`, `dim H\u00b9 = b\u2081`.\n*Falsifiable:* exhibit a cycle graph `C\u2099` with an edge-twist whose `H\u00b9` class is nonzero and\nshow no global section restricts to it; conversely show acyclic schemas always integrate.\n\n## Conjecture 2 \u2014 Unique integration \u21d4 acyclic schema (information-flow rigidity)\nFor the constant sheaf with values in a nontrivial ring `R`, the evaluation-at-a-vertex map\n`globalSections \u2192 R` is bijective for **every** choice of base vertex iff `G` is a tree\n(connected and acyclic). `globalSections_eval_injective_of_connected` proves injectivity for\nconnected `G`; the conjecture is that surjectivity + injectivity simultaneously characterize\ntrees among connected graphs once non-identity comparison maps (gauge) are allowed.\n*Falsifiable:* on `C\u2083` with a nontrivial automorphism gauge, integration should fail to be\nsurjective.\n\n## Conjecture 3 \u2014 Finite gluing suffices (compactness of consistency)\nFor the database sheaf over an arbitrary key space, a family `r : \u2200 i, Record (S i)` is\noverlap-consistent iff every *pair* `{i, j}` is consistent on `S i \u2229 S j`. Equivalently,\npairwise consistency implies global consistency (the \u010cech `0`/`1` condition collapses).\nThis upgrades `exists_unique_merge_two` from two tables to arbitrary covers.\n*Falsifiable:* search for a cover and a pairwise-consistent-but-not-jointly-consistent\nfamily; the conjecture predicts none exists for the sheaf of plain records (but predicts\ncounterexamples once stalks carry nontrivial transition maps \u2014 that boundary is the test).\n\n## Conjecture 4 \u2014 Privacy/leakage bound via global sections (cryptographic bridge)\nModel a secret-sharing scheme as a graph sheaf where stalks are share spaces and edges are\nreconstruction constraints. Conjecture: an unauthorized coalition `T \u2286 V` learns nothing\nabout the secret iff the restriction map `globalSections(F) \u2192 \u220f_{v \u2208 T} Stalk v` is **not\ninjective on the secret coordinate**, i.e. the secret lies outside the image of the\n`T`-localized coboundary. This recasts perfect privacy as a sheaf-cohomology surjectivity\nstatement and connects `globalSections` to access structures.\n*Falsifiable:* for `(2,3)`-threshold sharing on the triangle schema, verify that every\nsingle-vertex restriction is non-injective on secrets but every two-vertex restriction is\ninjective.\n\n## Conjecture 5 \u2014 Functoriality and Mayer\u2013Vietoris for schema merges\nThe assignment `G \u21a6 globalSections(F)` extends to a contravariant functor on schema\nmorphisms (refining `H0_antitone`), and for a schema covered by two subgraphs `G = G\u2080 \u222a G\u2081`\nthere is an exact Mayer\u2013Vietoris sequence\n`0 \u2192 globalSections(G) \u2192 globalSections(G\u2080) \u2295 globalSections(G\u2081) \u2192 globalSections(G\u2080 \u2229 G\u2081)`.\n*Falsifiable:* compute both sides for a 4-cycle split into two paths; non-exactness at the\nmiddle term would refute it.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2131",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "35a8dda5",
-    "status": "available",
-    "timestamp": "2026-06-20T04:53:30.786860+00:00",
-    "title": "Cycle 1 established that databases (records over a key space) form a genuine **s"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThe development in `Catalog/Applications/RamseyBounds/` proves the Erd\u0151s\u2013Szekeres\nrecursion, the binomial upper bound, and the exact value `R(3,3) = 6`.  The following\ndirections build directly on that API.\n\n## 1. A reusable `RamseyNumber` definition with `IsLeast`\n\nRight now exactness is packaged as the concrete pair `Arrows 6 3 3 \u2227 \u00ac Arrows 5 3 3`.\nA cleaner long-term object is `RamseyNumber s t := sInf {N | Arrows N s t}` together with\nthe order-theoretic fact that it is the least such `N`.  The key insight is that\n`arrowsType_card_mono` already guarantees the predicate `fun N => Arrows N s t` is upward\nclosed in `N`, so the infimum is automatically attained and `Arrows N s t \u2194 RamseyNumber s t \u2264 N`\nbecomes a single lemma rather than a case-by-case argument.  Once that bridge lemma exists,\nevery concrete value (`R(3,3) = 6`, and later `R(s,t)`) is stated uniformly as\n`RamseyNumber s t = c`, and the recursion turns into the clean inequality\n`RamseyNumber (s+1) (t+1) \u2264 RamseyNumber s (t+1) + RamseyNumber (s+1) t`.  Why now? The\nmonotonicity and recursion lemmas needed to make the infimum well-behaved are already\nproved and sorry-free, so this is pure repackaging with no new mathematical content at\nrisk, and it immediately makes the next two directions easier to state.\n\n## 2. The diagonal lower bound `R(s,s) > 2^(s/2)` by a counting argument\n\nThe pentagon gives `R(3,3) > 5` by an explicit construction; the natural generalisation is\nErd\u0151s's probabilistic lower bound `R(s,s) > 2^(s/2)`.  The key insight is that the\nprobabilistic step can be made fully finitary and `decide`-free by a counting argument over\n`SimpleGraph (Fin n)` as a `Fintype`: if the number of graphs containing a monochromatic\n`s`-clique is strictly smaller than the total number of graphs, a triangle-free colouring\nmust exist, and both counts are explicit binomial expressions.  This reuses exactly the\n`IsNClique`/complement vocabulary already in `Core.lean`, only adding a cardinality estimate\non the set of \"bad\" graphs.  Why now? Mathlib's `Fintype` and `Finset.card` machinery,\ncombined with the clique-counting predicates already defined here, make the union-bound\ninequality a finite arithmetic fact, so the historically \"probabilistic\" result can be\nobtained without introducing any measure theory.\n\n## 3. Off-diagonal small values `R(3,4) = 9` and `R(4,4) = 18`\n\nThe recursion and binomial bound give upper bounds for all off-diagonal numbers, but the\nexact small values require matching constructions.  The key insight is that the same\ndecidable-clique infrastructure used for the pentagon scales to explicit circulant graphs:\n`R(3,4) = 9` is witnessed by a specific graph on `Fin 8` and `R(4,4) = 18` by the Paley\ngraph on `Fin 17`, both of which are circulant and hence have a `decide`-friendly adjacency\nrelation.  The upper bounds `Arrows 9 3 4` and `Arrows 18 4 4` already follow from\n`arrows_recursion` together with `R(3,3)` and `R(2,k)` base data.  Why now? The lower-bound\nhalf is the only missing ingredient, and it is structurally identical to\n`pentagon_no_triangle` \u2014 a finite reflection over `Finset (Fin n)` \u2014 so the proof technique\nis known to work and only the explicit circulant connection sets need to be encoded.\n\n## 4. Multicolour Ramsey numbers via an indexed arrow predicate\n\nTwo colours is just the case `k = 2`.  The key insight is that the whole API generalises by\nreplacing the pair `(G, G\u1d9c)` with an edge-colouring `c : Sym2 (Fin n) \u2192 Fin k` and asking\nfor a colour `i` with a monochromatic `s i`-clique; the comap/transfer lemmas\n(`isNClique_comap_map`, `arrowsType_card_mono`) are colour-agnostic and port almost verbatim,\nbecause they never use the specific two-colour structure beyond \"a clique in one colour\nclass\".  This would yield the multicolour recursion\n`R(s_1,\u2026,s_k) \u2264 \u03a3_i R(s_1,\u2026,s_i - 1,\u2026,s_k)` and, in particular, a verified bound for\n`R(3,3,3) \u2264 17`.  Why now? The current two-colour proofs already isolate the colour\ndependence into a handful of named lemmas, so the refactor to an indexed family is a\nmechanical generalisation rather than a redesign, and it opens the door to the well-studied\nmulticolour regime with minimal new infrastructure.\n\n## 5. Connecting the arrow predicate to Mathlib's hypergraph Ramsey API\n\nThis catalogue already contains hypergraph-Ramsey material elsewhere, and Mathlib has its\nown `Ramsey`-flavoured combinatorics.  The key insight is that `ArrowsType V s t` is the\ngraph (2-uniform) shadow of the general hypergraph statement, so providing the explicit\nequivalence between \"monochromatic clique in a 2-colouring\" and the existing colouring/clique\npredicates would let the binomial bound proved here serve as the base case of an\ninduction on uniformity.  Why now? Establishing this dictionary while the two-colour\ndevelopment is small and self-contained avoids duplicated definitions later, and it ensures\nthat the `R(3,3) = 6` result can be cited directly by any downstream hypergraph development\ninstead of being re-derived.\n",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_2135",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "972d4c89",
-    "status": "available",
-    "timestamp": "2026-06-20T05:07:33.737360+00:00",
-    "title": "The development in `Catalog/Applications/RamseyBounds/` proves the Erd\u0151s\u2013Szekere"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Anti-Gravity Mathematics in Cryptographic Dependency Graphs\n\nDerived from this cycle's findings (see the Lab Notes in\n`AntiGravityWeight.lean` and `AntiGravityDensity.lean`). This cycle established a\n*conservation law* for gravitational weight (`antiGravity_mass_bound`:\n`\u03b8 \u00b7 #antigravity \u2264 \u2211 w`) and showed the \"10% density\" folklore is\nregime-dependent \u2014 `\u2264 1/n` in a star library (`star_scarcity`) but `\u2265 1/2` in a\ntotal-order library (`totalOrder_density`), with the cryptographic hardness\nhierarchy as an exact witness (`owf_maximal_weight`).\n\n---\n\n## Conjecture 1 \u2014 The mass-density law: density is `\u0398(mass / (n \u00b7 \u03b8))`\nA formal library with `n` results, total dependency mass `M = \u2211 w`, and weight\nthreshold `\u03b8 = c\u00b7n` has anti-gravity fraction `\u0398(M / (c\u00b7n\u00b2))`, and this is tight\nin both directions (the Markov upper bound and a matching construction).\n\n- **The key insight is** that gravitational weight is a *conserved budget*:\n  the mass `M` is split among at most `M/\u03b8` heavy results, so density is forced\n  to track `M/(n\u00b7\u03b8)` rather than being a universal constant like 10%.\n- **Why now?** This cycle already proved the upper half (`antiGravity_mass_bound`)\n  and exhibited the extreme constructions; only the matching `\u03a9` bound for the\n  intermediate `M = \u0398(n^{1+\u03b1})` regime remains, which is a direct generalisation\n  of `totalOrder_count`.\n\n## Conjecture 2 \u2014 Real Mathlib's anti-gravity fraction is `\u2248 10%` because `M = \u0398(n\u00b2)`\nEmpirically measuring the Mathlib/`Catalog` import-and-use graph, the fraction of\ndeclarations with above-median dependent count and below-median proof length is\nwithin `[5%, 15%]`, and this is *explained* by the graph having near-quadratic\ntotal weight (a scale-free / preferential-attachment dependency structure).\n\n- **The key insight is** that the \"10%\" prediction is secretly a claim about the\n  *exponent* of the dependency-mass growth: only `M = \u0398(n\u00b2)` yields a constant\n  positive fraction, matching `totalOrder_density`.\n- **Why now?** Lean's `importGraph` tooling (already a dependency of this project)\n  exposes the full transitive-dependent relation, so the abstract `w : Fin n \u2192 \u2115`\n  of `AntiGravityWeight` can be populated with real data and checked against\n  `antiGravity_mass_bound`.\n\n## Conjecture 3 \u2014 Foundational hardness assumptions are exactly the weight-maximisers\nIn any cryptographic reduction DAG, a primitive is a *minimal computational\nassumption* (no strictly weaker primitive implies the same scheme set) if and\nonly if it is a local maximum of `levelWeight`. The one-way function is the\nglobal maximiser, as proved here for the 4-level chain.\n\n- **The key insight is** that `owf_maximal_weight` is not special to the 4-level\n  chain: weight-maximality is the order-theoretic shadow of being a bottom\n  element of the reduction preorder.\n- **Why now?** `Cryptography.HardnessHierarchy` already encodes the preorder via\n  `rank`; extending `levelWeight` to an arbitrary finite `CryptoReduction` DAG\n  (also in that file) makes the iff statement formalisable immediately.\n\n## Conjecture 4 \u2014 Anti-gravity is preserved under reduction composition with bounded loss\nIf `A` is anti-gravity (high weight, short proof) and `B` reduces to `A` with a\nconstant-length reduction, then `B` inherits weight `\u2265 weight(A) \u2212 O(1)` while\nkeeping a short proof; hence anti-gravity propagates \"downward\" along cheap\nreductions and clusters near foundational assumptions.\n\n- **The key insight is** that weight is monotone along the dependency order, so\n  cheap reductions transport the anti-gravity property with only additive loss \u2014\n  the discrete analogue of a potential decreasing slowly along short paths.\n- **Why now?** `Cryptography.HardnessHierarchy.reduction_compose_loss` already\n  quantifies multiplicative reduction loss; pairing it with `exists_heavy` gives\n  the weight-transport lemma needed to close this.\n\n## Conjecture 5 \u2014 A \"no free lunch\" lower bound: short proofs cap achievable weight\nThere is a library-independent function `f` such that any result provable in `\u2264 L`\nproof steps from a fixed axiom set has gravitational weight `\u2264 f(L)` *in that\nlibrary's own future*: you cannot be cheaply provable and unboundedly depended-on\nunless the library itself grows. Formally, weight is bounded by the number of\ndistinct statements expressible within the proof-length budget.\n\n- **The key insight is** that a short proof can only *reference* finitely many\n  prior results, dualising `antiGravity_mass_bound`: cheap proofs bound the\n  *out-degree*, while mass bounds the *in-degree* of the dependency graph.\n- **Why now?** The decidable proof-cost model `c : Fin n \u2192 \u2115` of\n  `AntiGravityWeight` is already in place; adding an explicit\n  \"references \u2264 c i prior nodes\" edge relation turns this into a finite counting\n  statement amenable to the same `Finset.card_nsmul_le_sum` machinery.\n",
-    "domains": [
-      "Logic",
-      "Algebra"
-    ],
-    "id": "fd_2137",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "0c649dc0",
-    "status": "available",
-    "timestamp": "2026-06-20T05:12:27.687402+00:00",
-    "title": "Derived from this cycle's findings (see the Lab Notes in"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nBuilding on the formalized information bilattice of Belnap `FOUR` and the theorem\nthat default (dream-like) reasoning is non-topological, we propose the following\nresearch directions. Each is original, self-contained, and could be pursued as a\nfollow-up formalization.\n\n## 1. Non-monotone consequence as a closure structure\n\nWe proved that the default-generated family `{\u2205, defaultTrue, defaultFalse, univ}`\nfails closure under binary union, hence is not a topology. The natural next step\nis to formalize what structure it *is*: a defeasible acceptance operator whose\nbehaviour is captured by Tarski-style closure axioms minus monotonicity. The key\ninsight is that retractability is not a defect to be repaired but the defining\nalgebraic signature of defeasible reasoning, so the right ambient category is not\n`Top` but the category of *non-monotone closure operators* on the bilattice, where\nthe obstruction is concentrated at the glut value `both`. Formalizing this would\ngive a clean home for default logic that explains, rather than hides, the failure\nof union-closure. Why now? Because we already have a fully verified four-element\nmodel in Lean to anchor the abstract axioms, so the general definitions can be\nvalidated against a concrete case at every step instead of being checked only on\npaper.\n\n## 2. Product bilattices and a closure-vs-triviality dichotomy\n\nBelnap `FOUR` is the bilattice `2 \u2299 2`; the same evidence-bit construction works\nfor `L \u2299 L` over any bounded lattice `L`, with defaults defined by \"no refuting\nevidence.\" The key insight is that the single point obstructing union-closure in\n`FOUR` is the top glut, and in `L \u2299 L` the analogous obstruction is the whole\ndiagonal of \"fully conflicted\" values, suggesting a sharp dichotomy: the default\nfamily is union-closed if and only if `L` is trivial. Proving this in Lean would\nturn our one-off four-value theorem into a structural classification, showing that\nnon-topologicality of defaults is generic rather than an artifact of the smallest\nexample. Why now? Mathlib's bounded-lattice and product-order libraries are mature\nenough to express `L \u2299 L` and its orders directly, so the generalization is a\nmatter of careful abstraction rather than building infrastructure from scratch.\n\n## 3. Bridging the two Alexandrov topologies through negation\n\n`FOUR` carries two orders \u2014 knowledge and truth \u2014 and our negation `neg` is\nmonotone for knowledge while being an anti-automorphism of truth. Each order\ninduces its own Alexandrov topology, and a full bilattice-topological dictionary\nshould describe how `neg`, `tconj`, and `tdisj` act as continuous or co-continuous\nmaps between them. The key insight is that interlacing (which we proved as\n`tconj_kmono` and `tdisj_kmono`) is exactly the statement that the truth\noperations are continuous for the information topology, so the bilattice axioms can\nbe re-read as a list of continuity requirements linking the two spaces. Carrying\nthis out would recast bilattice theory as a small fragment of bitopological\ndynamics. Why now? The interlacing lemmas are already formalized here, so the\ncontinuity statements are immediate corollaries waiting to be packaged, making this\nan unusually low-friction entry point into bitopology.\n\n## 4. Quantitative dream logic over the unit interval\n\nReplacing the Boolean evidence bits `(hasTrueEvidence, hasFalseEvidence)` by real\ndegrees in `[0,1] \u00d7 [0,1]` yields a fuzzy information bilattice in which defaults\naccept `p` when the refuting degree is below a threshold. The key insight is that\nthe discrete failure of upward closure becomes a measurable, threshold-dependent\nboundary phenomenon, so \"non-topological\" sharpens into a precise statement about\nthe positive measure of the set where a default flips. Formalizing this would\nconnect defeasible reasoning to measure theory and give a graded account of how\nfragile a given default is. Why now? Mathlib's real-analysis and measure-theory\nstacks make the continuous version tractable, and the discrete theorem proved here\nprovides the exact limiting case to test the quantitative statements against.\n\n## 5. Default reasoning as the obstruction to a sheaf of beliefs\n\nStable, monotone propositions glue along information growth and so behave like\nsections of a sheaf over the knowledge order; defaults, being retractable, fail to\nglue. The key insight is that the precise failure we formalized \u2014 `defaultTrue`\nand `defaultFalse` agreeing on `neither` yet disagreeing once evidence arrives \u2014\nis exactly a failure of the gluing axiom, so defeasibility can be measured by a\nfirst cohomology group of the belief presheaf. Developing this would give a\ncohomological invariant that counts, in a principled way, how much a reasoning\nsystem depends on non-monotone defaults. Why now? With the monotone/non-monotone\nsplit already proved at the object level, the presheaf and its restriction maps can\nbe defined concretely on the four-element base, letting the cohomological machinery\nbe introduced incrementally on a verified foundation.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2139",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "38689f4d",
-    "status": "available",
-    "timestamp": "2026-06-20T05:58:10.070895+00:00",
-    "title": "Building on the formalized information bilattice of Belnap `FOUR` and the theore"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3462,50 +3403,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture: For any deep ReLU network trained with standard stochastic gradient descent on a fixed dataset, the persistent homology of the gradient vector field (computed from activation patterns) is non\u2011increasing\u2014i.e., no new topological cycles appear\u2014in any later training epoch compared to earlier epochs. Test: Train a network, compute PH of its gradients at regular checkpoints (e.g., every 500 steps); if any checkpoint shows a strictly larger PH signature (more cycles or higher Betti numbers) than a previous checkpoint, the conjecture is falsified.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_2134",
-    "priority_score": 0.7158260869565218,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "available",
-    "timestamp": "2026-06-20T05:03:56.298889+00:00",
-    "title": "Topological Gradient Flow in Deep Learning: Monotonic Persistence of Activation "
-  },
-  {
-    "consumed_by_exp_id": "443cc80d",
-    "description": "Conjecture: The large\u2011scale geometry of a (3+1)\u2011dimensional quantum gravity spacetime can be reconstructed uniquely (up to diffeomorphism) from the categorical entanglement renormalization flow of a suitably chosen random tensor network state on a discrete lattice, and the resulting emergent metric satisfies Einstein\u2019s equations with a computable effective stress tensor derived from the network\u2019s higher\u2011category symmetries. Test: Construct explicit random tensor network ensembles on 4\u2011regular hypercubic lattices, equip the tensors with a fusion 2\u2011category symmetry, and implement a categorical multi\u2011scale entanglement renormalization algorithm (cMERA). Compute the induced discrete metric via the quantum information metric (Bures distance) on coarse\u2011grained states. Verify numerically that the discrete Ricci curvature derived from this metric converges, in the continuum limit, to solutions of the Einstein field equations (e.g., Schwarzschild or cosmological FLRW metrics) within statistical error. Refutation occurs if, after exhaustive scaling analysis, the emergent metric fails to satisfy Einstein\u2019s equations for any choice of network parameters or categorical symmetry. Impact: Provides a concrete, testable bridge between quantum information, higher\u2011category theory, and general relativity, offering a computational laboratory for quantum gravity, a new derivation of spacetime dynamics from entanglement, and a framework for generating analytically tractable quantum gravity toy models.",
-    "domains": [
-      "Novelty",
-      "Physics"
-    ],
-    "id": "fd_2138",
-    "priority_score": 0.7158260869565218,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-20T05:13:19.309309+00:00",
-    "title": "Tensor Network Holography for Quantum Gravity with Categorical Entanglement Reno"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture: For any consistent formal system F extending PA, the function mapping a statement \u03c6 (independent of F) to the length of its shortest proof in F+Con(F) grows faster than any F-provably total computable function of the Kolmogorov complexity K(\u03c6). Test: Use automated theorem provers (e.g., Lean with tactical search) to enumerate proofs for families of independent statements (e.g., Paris-Harrington variants, Goodstein sequences, hydra games) parameterized by complexity. Measure the empirical scaling of minimal proof length vs. K(\u03c6) estimated via compression. Refutation: If proof length scales polynomially or as a provably total function in F. Impact: Establishes a fundamental 'complexity barrier' for mathematical discovery, linking proof theory, algorithmic information theory, and Wolfram's computational irreducibility; implies inherent limits on AI-assisted theorem proving for independent statements.",
-    "domains": [
-      "Novelty"
-    ],
-    "id": "fd_2132",
-    "priority_score": 0.7157272727272728,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "available",
-    "timestamp": "2026-06-20T04:58:31.995279+00:00",
-    "title": "Computational Irreducibility in Proof Search: The Complexity Barrier for Indepen"
   },
   {
     "consumed_by_exp_id": "",
@@ -3657,18 +3554,18 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "5eb69ea3",
-    "description": "Conjecture: The generalization error of a neural network can be bounded by topological invariants of its weight space, such as persistent homology or cohomology groups, which vary with model complexity and data structure. This can be tested by training networks on synthetic datasets with known topological features and comparing their generalization performance against computed topological bounds.",
+    "consumed_by_exp_id": "",
+    "description": "Investigate the sequence Maximal number of \"good\" manifolds in an n-nice polytope. with terms 6,8,12,24,40,80,128,256,512,1024,2048,4096,8192,16384,32768,65536,131072,262144,524288,1048576,20971. Find a closed form, recurrence, or asymptotic and formalize it in Lean 4.",
     "domains": [
-      "Novelty"
+      "Geometry"
     ],
-    "id": "fd_2136",
+    "id": "fd_2074",
     "priority_score": 0.7,
     "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-20T05:08:58.897447+00:00",
-    "title": "Topological Generalization Bounds for Deep Learning"
+    "source_exp_id": "oeis:212351",
+    "status": "available",
+    "timestamp": "2026-06-18T01:05:26.622694+00:00",
+    "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
   },
   {
     "consumed_by_exp_id": "",
@@ -3714,7 +3611,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Tropicalized binary weight enumerator profile from Smooth Poincar\u00e9 cod"
   },
   {
-    "consumed_by_exp_id": "df051b46",
+    "consumed_by_exp_id": "",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -3723,7 +3620,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
@@ -4491,7 +4388,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "722e1f4a",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -4501,7 +4398,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.490561+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
