@@ -856,7 +856,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0f4e6c03",
     "description": "Formalize core HoTT results in Lean 4: the univalence axiom, higher inductive types, and the fundamental theorem of identity types. Prove that HoTT provides a constructive foundation for mathematics.",
     "domain_bridges": [],
     "domains": [
@@ -869,7 +869,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:03.446924+00:00",
     "title": "Homotopy Type Theory Foundations"
   },
@@ -4052,6 +4052,36 @@
     "title": "Column‑alternating balanced Dyck paths conjecture"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:cs.RO",
+      "arXiv:cs.AI",
+      "arXiv:math.CO",
+      "arXiv:math.OC"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For bounded-horizon MT-TSP-MO instances with piecewise Lipschitz target and obstacle trajectories, if near-optimal continuous trajectories can be chosen with positive uniform clearance from all moving obstacles, then the TPBS algorithm run on grids whose mesh size tends to zero returns feasible solutions whose costs converge to the true MT-TSP-MO optimum. This is falsifiable: a single instance satisfying the clearance-regularity assumptions for which TPBS either fails to return a feasible solution or returns only solutions with cost bounded away from optimality at arbitrarily fine grid resolutions would refute it.",
+    "domain_bridges": [
+      "metric geometry and Lipschitz trajectory approximation",
+      "finite-grid search completeness",
+      "mixed-integer conic programming and collision-avoidance certificates",
+      "formal verification of robotics planning algorithms"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2145",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Define a clearance-regular MT-TSP-MO instance and a mesh norm for TPBS grids. Prove that any positive-clearance feasible trajectory can be uniformly approximated by a grid path using compactness and Lipschitz bounds. Show that the TPBS segment-feasibility oracle accepts the approximating grid edges, and that the upper-level search enumerates the corresponding target order and time-window path. Combine this with the inner-clearance assumption to obtain epsilon-optimal feasible solutions as the mesh size goes to zero. In Lean, formalize the metric-space approximation, finite-grid search, and option-valued TPBS return type.",
+    "research_mode": "team",
+    "source_exp_id": "2606.18730v1",
+    "status": "available",
+    "timestamp": "2026-06-20T19:50:32.009261+00:00",
+    "title": "Asymptotic completeness and near-optimality of TPBS for clearance-regular MT-TSP-MO instances"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
@@ -4069,7 +4099,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2145",
+    "id": "fd_2146",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use S_N=x(x^N-1)/(x-1)=x prod_{d|N,d>1} Phi_d. Since pq | m, Phi_{pq} divides S_{m^2}; write S_{m^2}/Phi_{pq}=x(1+x^{pq}+...+x^{m^2-pq})(1+...+x^{p-1})(1+...+x^{q-1}), which is visibly nonnegative. For S_{n^2}Phi_{pq}, prove a prefix-sum bound for coefficients of Phi_{pq}: its partial sums up to degree (p-1)(q-1) are 0 or 1, so convolution with a length n^2 block of ones is nonnegative when n^2 >= (p-1)(q-1)+1. Then verify evaluations at 1 and the product identity.",
@@ -4078,6 +4108,33 @@
     "status": "available",
     "timestamp": "2026-06-20T06:09:07.372057+00:00",
     "title": "Semiprime cyclotomic transfer for square-sided dice"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Dallard, Milanič, Štorgel 2024 – Conjecture on bounded tree‑independence",
+      "Hajebi & Spirkl 2026 – Characterization of bounded α‑tw by excluded families",
+      "Yolov 2018 – Definition and properties of tree‑independence number"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every integer d ≥ 1 and every planar graph H, there exists a constant C = C(d, H) such that any graph G that is K_{1,d}-free and does not contain H as an induced minor satisfies α‑tw(G) ≤ C, i.e., the class of K_{1,d}-free graphs without H as an induced minor has bounded tree‑independence number.",
+    "domain_bridges": [
+      "Excluded minor theory",
+      "Induced subgraph restrictions",
+      "Parameterized graph width"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2147",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Apply the excluded minor structure theorem to bound the independence number within each bag of a tree decomposition, using the K_{1,d}-free condition to limit local density, and combine with planar minor restrictions to obtain a uniform constant C(d, H).",
+    "research_mode": "team",
+    "source_exp_id": "2606.20256v1",
+    "status": "available",
+    "timestamp": "2026-06-20T06:56:11.390123+00:00",
+    "title": "Bounded tree-independence in K_{1,d}-free graphs excluding a planar minor"
   },
   {
     "ambition_level": "extension",
@@ -4096,7 +4153,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2147",
+    "id": "fd_2148",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalise families of k‑sets as finsets of finsets in Lean. 2. Prove basic lemmas about degree, diversity and cross‑intersection. 3. Implement the S_{U,V}^Q‑shift operator and show it preserves cross‑intersection and does not decrease diversity. 4. Adapt the shifting argument of Frankl‑Kupavskii to obtain a canonical shifted extremal pair. 5. Use compression to show any extremal pair must be isomorphic to the canonical one, relying on counting lemmas for binomial coefficients. 6. Derive the product bound and the uniqueness statement via a combinatorial optimisation argument formalised with Lean's `linarith`/`norm_num` tactics.",
@@ -4117,7 +4174,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2148",
+    "id": "fd_2149",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "sieve-theoretic analysis",
@@ -4144,7 +4201,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2149",
+    "id": "fd_2150",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Develop a reconstruction algorithm for partitions from pre_k(λ) using the unique factorization property of S‑smooth numbers. Show that the elementary symmetric sums determine the multiset of parts uniquely by iteratively solving for the largest part via a polynomial equation whose roots are S‑smooth numbers, then induct on the number of parts. This requires establishing that the set of S‑smooth numbers is closed under multiplication and that the elementary symmetric function e_k is strictly monotone in each argument when restricted to this set.",
@@ -4171,7 +4228,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2150",
+    "id": "fd_2151",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Attempt to prove the equality by showing a non‑contractive, r‑Lipschitz mapping between e‑embracing bases and their e‑positive fundamental circuits, or find a counterexample violating the equality.",
@@ -4201,7 +4258,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2151",
+    "id": "fd_2152",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the augmented cycle index Z_{S_M} and its expression in terms of power‑sum symmetric functions. Specialize the symmetric functions to extract the statistics tc and cp via appropriate scalar products. Show that the resulting generating functions coincide by applying Lemma lm:partition and the symmetry of the power‑sum basis, yielding an identity that implies equality of the total sums. A sign‑reversing involution on pairs (w, i) where i is either a terminal closer or a cyclic point can also be constructed to give a bijective proof.",
@@ -4229,7 +4286,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2152",
+    "id": "fd_2153",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct the explicit modular form f ∈ M_4(SL(2,Z)) using the Rankin-Cohen bracket on the eta-quotient (η(5τ)/η(τ))^5, compute its first several Fourier coefficients, and verify they match the pattern a(5n+4) ≡ 0 (mod 5) for the partition function.",
@@ -4249,7 +4306,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2153",
+    "id": "fd_2154",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct enumeration under bounded exponents",
@@ -5514,46 +5571,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions — Graph Linear Notation\n\nDerived from the Stage 3/4 findings of this cycle (the encoding `code` is\ninjective, the `sup` over relabelings is attained, and `gln G = gln H ↔ G ≃g H`).\n\n## Conjecture 1 — The image of `gln` enumerates A000088\n**Claim (falsifiable):** For every `N`, the number of distinct values taken by\n`gln` over `SimpleGraph (Fin N)` equals `A000088(N)` (graphs up to isomorphism):\n1, 1, 2, 4, 11, 34, 156, ...\n**The key insight is** that completeness (`gln_eq_iff_iso`) turns the fiber\nstructure of `gln` into a bijection between its image and the set of isomorphism\nclasses, so counting notations *is* counting graphs.\n**Why now?** With `gln_eq_iff_iso` formalized, the only missing step is a\n`Fintype.card`-level computation of `(Finset.univ.image gln).card`, which is now\na finite, decidable statement rather than a conjecture about an undefined object.\n\n## Conjecture 2 — Order-faithful canonical labelings exist but are not unique\n**Claim (falsifiable):** The maximizing *graph* `canon G` is unique, yet the set\nof maximizing *permutations* has cardinality exactly `|Aut(G)|` (the automorphism\ngroup order) for every `G`.\n**The key insight is** that the maximizing permutations form a coset of the\nautomorphism group: if `σ`, `τ` both maximize then `σ ∘ τ⁻¹` fixes the canonical\nmatrix, i.e. is an automorphism.\n**Why now?** `isCanonForm_unique` already pins down the canonical graph; pairing\nit with Mathlib's `SimpleGraph.Aut` makes the orbit–stabilizer count a concrete\ngroup-action lemma.\n\n## Conjecture 3 — Notation is monotone under edge addition only up to relabeling\n**Claim (falsifiable):** Adding an edge to `G` can *decrease* `gln` (because the\nmaximizing ordering may change), but never below `gln G` once both graphs are put\nin canonical form; formally `code (canon G) ≤ code (canon (G ⊔ singleEdge))` fails\nin general while `gln` restricted to a fixed ordering is monotone.\n**The key insight is** that maximization over orderings breaks naive monotonicity:\nthe bit an edge contributes depends on where the optimizer places its endpoints.\n**Why now?** The separation between per-ordering `code` (monotone) and the\nmaximized `gln` (not monotone) is exactly the structure isolated by\n`gln_comap_perm`, so the boundary can be probed with explicit 4-vertex examples.\n\n## Conjecture 4 — A probabilistic concentration of notations\n**Claim (falsifiable):** For the Erdős–Rényi model `G(n, 1/2)`, the normalized\nnotation `log₂(gln G) / n²` concentrates around `1/2` with fluctuations `o(1)` in\nprobability, reflecting that roughly half the `n²` ordered cells are set in the\nmaximizing ordering.\n**The key insight is** that `code` is a sum of `2^(idx)` over set cells, so its\nlogarithm is governed by the *highest* set bit, i.e. the largest index the\noptimizer can occupy with an edge — a max-type extremal quantity.\n**Why now?** This connects the deterministic invariant to the project's stated\n*Probability* domain; with `code` and `gln` formalized, the highest-set-bit\nanalysis becomes a clean extremal statement amenable to Mathlib's probability\nand `Finset.sup` API.\n\n## Conjecture 5 — Linear notation distinguishes cospectral graphs\n**Claim (falsifiable):** There exist non-isomorphic cospectral graphs (same\nadjacency spectrum) whose linear notations differ; hence `gln` is a *strictly\nstronger* invariant than the characteristic polynomial.\n**The key insight is** that `gln` is a *complete* invariant (`gln_eq_iff_iso`),\nwhereas the spectrum is not — so any cospectral non-isomorphic pair (e.g. the\nclassic 6-vertex Schwenk pair) is automatically separated by `gln`.\n**Why now?** Completeness is proved, so this reduces to exhibiting one cospectral\npair and `decide`-checking their distinct notations — a finite verification.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2154",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "47c79c52",
-    "status": "available",
-    "timestamp": "2026-06-20T19:32:17.779309+00:00",
-    "title": "Derived from the Stage 3/4 findings of this cycle (the encoding `code` is"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThese build directly on the exact one-cell uniformity theorem formalized in\n`Catalog/Combinatorics/LatinSquare/CellUniform.lean`. Each direction states a\nsingle guiding insight and a justification for pursuing it now.\n\n## 1. From one cell to a fixed pattern in a single row\n\nExtend exact uniformity from one prescribed cell to a partial assignment of `k`\ndistinct symbols across `k` distinct cells **within one row** of the square.\n\nThe key insight is that a partial injection between a set of `k` cells and a set\nof `k` symbols always extends to a full symbol permutation `π ∈ Equiv.Perm (Fin n)`\n(this is the extension-of-partial-bijections principle), so the existing\n`permAct` action can carry any admissible one-row pattern to any other of the\nsame shape, forcing all such pattern-fibers to be equinumerous and giving an\nexact count `n · (n−1) ⋯ (n−k+1)` in the denominator.\n\n**Why now?** The `permAct` action, its axiom-preservation lemmas, and the\nfiber-counting scaffolding (`fiberEquiv`, `card_fiber_eq`,\n`Equiv.sigmaFiberEquiv` + `Fintype.card_sigma`) are already in place and reusable\nverbatim; only the \"extend a partial bijection to a permutation\" lemma is new,\nand Mathlib already supports the relevant `Equiv`/`Finset` machinery, so the\nmarginal formalization cost is low.\n\n## 2. Exact uniformity for isotopism orbits of small partial patterns\n\nClassify and count partial patterns of size `k = 2, 3` up to the full isotopism\ngroup (row permutations × column permutations × symbol permutations), and prove\nexact uniformity *within* each isotopism orbit.\n\nThe key insight is that exact uniformity is governed by the orbit structure of\nthe symmetry group acting on patterns: two patterns in the same isotopism orbit\nhave equinumerous fibers by transport along the group element connecting them, so\nthe counting problem reduces to enumerating orbit representatives rather than\nindividual patterns.\n\n**Why now?** The one-cell theorem is precisely the case where the symbol\nsubgroup already acts transitively, so it serves as the verified base case and a\ntemplate; generalizing the action in the Lean file from symbols alone to the\nproduct group is a natural next structural step, and small `k` keeps the orbit\nenumeration finite and `decide`-checkable.\n\n## 3. A reusable finite-fiber equidistribution lemma for group actions\n\nAbstract the pattern of this development into a standalone lemma: if a finite\ngroup `G` acts on a finite type `X`, a map `f : X → Y` is `G`-equivariant for a\ntransitive `G`-action on `Y`, then all fibers of `f` are equinumerous and\n`card X = card Y · card (fiber)`.\n\nThe key insight is that the entire argument here — swap-induced fiber bijection,\nsigma decomposition, constant-sum collapse — is a special case of equivariance\nplus transitivity, and isolating it removes the Latin-square specifics so the\nsame lemma discharges cells, rows, and orbits uniformly.\n\n**Why now?** The concrete proof already exists and verifies, so it can be\nrefactored into the abstract lemma with confidence that the special case\ntype-checks against it; Mathlib's `MulAction`, `MulAction.orbit`, and\n`Fintype.card` API make the general statement expressible immediately, turning a\none-off proof into shared infrastructure for all the directions above.\n\n## 4. Bridging exact finite symmetry to asymptotic `n^{-k}` local limits\n\nConnect the exact finite identities (probability exactly `1/n` for one cell,\nexactly `1/(n)_k` for `k`-cell row patterns) to the conjectured asymptotic local\nlimit, where a fixed bounded pattern occurs with probability `~ n^{-k}` as\n`n → ∞`.\n\nThe key insight is that the exact symmetry-forced counts provide the leading-order\nterm for free, so the asymptotic problem reduces to bounding the lower-order\ncorrection coming from interactions between cells that are *not* related by a\nsingle symmetry, isolating exactly where genuine analysis (rather than group\naction) is required.\n\n**Why now?** With the exact `k = 1` case verified and the `k`-cell row case\nwithin reach (Direction 1), the exact contributions are pinned down rigorously;\nthis makes it the right moment to set up the asymptotic statement on a solid\nfinite-combinatorial foundation rather than estimating the main term and the\nerror term simultaneously.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2155",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "977d0362",
-    "status": "available",
-    "timestamp": "2026-06-20T19:46:29.380254+00:00",
-    "title": "These build directly on the exact one-cell uniformity theorem formalized in"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -6725,7 +6742,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f370d5ee",
     "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
     "domain_bridges": [],
     "domains": [
@@ -6738,7 +6755,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T21:01:45.101987+00:00",
     "title": "Consciousness as Integrated Information"
   },
@@ -6905,7 +6922,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f832cbd3",
     "description": "Borges' Library of Babel contains every possible 410-page book — approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog — a single volume that encodes the location of every other volume — and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces — every possible text exists, but finding meaning requires a guide.",
     "domain_bridges": [],
     "domains": [
@@ -6918,7 +6935,7 @@
     "proof_strategy": "Define B = {0,...,24}^{1312000} as the Library. Compute |B| = 25^{1312000}. Define the meaning probability P(T) = sum_{b in B: b contains proof of T} 1/|B|. Prove P(T) >= |T| * 25^{-k(T)} where k(T) is the Kolmogorov complexity of T. Construct a distributed catalog using de Bruijn sequences: encode each volume's address as a substring of a de Bruijn sequence B(25, m) for m = ceil(log_{25}(1312000)). Prove the catalog requires N >= 25^{1312000} / (1312000 * log_{25}(2)) volumes. Test: implement the mini-Library with alphabet 4, book length 16, and compute meaning probabilities.",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.490561+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
