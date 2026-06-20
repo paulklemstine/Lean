@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "2c181743",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Identity Systems II: After the Converse, Eliminator, and Mathlib Bridge\n\n## Synthesis of this cycle\n\nThe previous cycle proved the **Fundamental Theorem of Identity Systems**\n(`f",
-      "quality_score": 0.65692,
-      "sorry_count": 2,
-      "theorem_count": 2,
-      "timestamp": "2026-06-15T00:19:47",
-      "title": "The catalog's synthetic-HoTT layer (`Catalog/Logic/HoTT/Foundations.lean`) intro"
-    },
-    {
       "cycle_id": "123e2af3",
       "domain": "Applications",
       "key_insight": "# Future Directions — Discrete Hodge Laplacian, Harmonic Space & Diffusion Message Passing\n\n## Synthesis\n\nThis cycle rebuilds the discrete Hodge program on a **self-contained Mathlib foundation**.\nThe",
@@ -2501,6 +2491,16 @@
       "theorem_count": 6,
       "timestamp": "2026-06-20T09:34:34",
       "title": "Tensor Network Holography for Quantum Gravity with Categorical Entanglement Reno"
+    },
+    {
+      "cycle_id": "7b66a66e",
+      "domain": "NumberTheory",
+      "key_insight": "# Future directions\n\nThese follow-ups build directly on the verified base case in\n`NumberTheory/Phi6SquareDiceBaseCase.lean` (`p = 2, q = 3, m = 6, n = 2`). Each is a\nconcrete, attainable next step ra",
+      "quality_score": 0.4596814054054055,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-20T10:18:59",
+      "title": "Semiprime cyclotomic transfer for square-sided dice"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.7460199999999999
     }
   ],
-  "last_updated": "2026-06-20T09:34:34",
+  "last_updated": "2026-06-20T10:18:59",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3635,12 +3635,6 @@
     ],
     "NumberTheory": [
       {
-        "cycle_id": "afb009d7",
-        "quality": 0.5042399999999999,
-        "theorems": 3,
-        "title": "This cycle added **three fully-verified files (0 `sorry`s)** extending the"
-      },
-      {
         "cycle_id": "79875292",
         "quality": 0.452064972972973,
         "theorems": 19,
@@ -3693,6 +3687,12 @@
         "quality": 0.40854,
         "theorems": 2,
         "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+      },
+      {
+        "cycle_id": "7b66a66e",
+        "quality": 0.4596814054054055,
+        "theorems": 6,
+        "title": "Semiprime cyclotomic transfer for square-sided dice"
       }
     ],
     "Physics": [

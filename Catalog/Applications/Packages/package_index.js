@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "7b66a66e",
     "filename": "semiprime_cyclotomic_transfer_for_square_sided_dic.json",
     "pkg_num": 206,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.4596814054054055,
     "title": "Semiprime Cyclotomic Transfer for Square-Sided Dice: The Verified \u03a6\u2086 Base Case"
   },
   {
@@ -6301,8 +6301,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "semiprime_cyclotomic_transfer_for_square_sided_dic",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.4596814054054055,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "Semiprime Cyclotomic Transfer for Square-Sided Dice: The Verified \u03a6\u2086 Base Case"
     }
