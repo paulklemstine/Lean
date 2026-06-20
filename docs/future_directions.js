@@ -3390,6 +3390,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Transition Endomorphisms (`transEndo`)\n\nThis cycle introduced `transEndo f i j` (the ordered composition of an endomorphism\nstream `f : \u2115 \u2192 V \u2192\u2097[K] V` over the window `[i, j)`), proved a Chapman\u2013Kolmogorov\nconcatenation law `transEndo_comp`, and derived that the transition-rank sequence is\nantitone and eventually constant (`rankSeq_antitone`, `rankSeq_eventually_const`).\nThe following conjectures are derived from these findings.\n\n## Conjecture 1 \u2014 Sharp eventual-rank floor equals the generalized image\nFor a constant stream `fun _ => g` over a finite-dimensional `V`, the eventually\nconstant value of `rankSeq (fun _ => g) 0` equals `finrank K (\u2a05 n, range (g ^ n))`,\nthe dimension of the generalized (Fitting) image.\n\n*The key insight is...* that `transEndo_const` identifies the constant-stream\ntransition map with the monoid power `g ^ (j-i)`, so the antitone rank sequence is\nexactly the descending chain of iterate-image dimensions whose limit is the Fitting\ncomponent.\n\n*Why now?* We already have `transEndo_const` and `rank_pow_succ_le`; the only missing\ningredient is the Mathlib `Module.End` Fitting-decomposition API, which is in place\nfor finite-dimensional spaces.\n\n## Conjecture 2 \u2014 Stabilization happens by index `finrank K V`\nFor every stream `f` over a finite-dimensional `V`, the window-from-`0` rank sequence\nsatisfies `rankSeq f 0 m = rankSeq f 0 (finrank K V)` for all `m \u2265 finrank K V`; i.e.\nthe stabilization index is bounded by the dimension.\n\n*The key insight is...* that a strictly decreasing step of an `\u2115`-valued sequence\nbounded by `finrank K V` can occur at most `finrank K V` times, so the antitone\nsequence proved in `rankSeq_eventually_const` must flatten within `finrank K V` steps.\n\n*Why now?* `rankSeq_le_finrank` already supplies the uniform bound; turning the\nabstract `antitone_nat_eventually_const` into a quantitative bound is a finite\ncounting argument.\n\n## Conjecture 3 \u2014 Sub-window rank superadditivity (Frobenius/Sylvester lower bound)\nFor `i \u2264 j \u2264 k` over a finite-dimensional `V`,\n`rankSeq f i k \u2265 rankSeq f i j + rankSeq f j k - finrank K V`.\n\n*The key insight is...* that the concatenation law `transEndo_comp` lets the classical\nSylvester rank inequality apply factor-by-factor to the composite transition map,\ngiving a lower bound to complement the upper bound `rank_transEndo_antitone`.\n\n*Why now?* The concatenation law is proved; pairing it with Mathlib's\n`LinearMap.rank` kernel/range exact sequence yields the lower bound without a bespoke\nSylvester proof.\n\n## Conjecture 4 \u2014 Invertible streams preserve rank exactly\nIf every `f n` is a linear automorphism (`(f n).rank = finrank K V`), then\n`rankSeq f i j = finrank K V` for all `i \u2264 j`; conversely, if some `rankSeq f i (i+1)`\ndrops below `finrank K V`, the eventual rank floor is strictly smaller.\n\n*The key insight is...* that rank loss in a composite can only come from a non-injective\nfactor, so the antitone sequence is constant exactly when no factor is rank-deficient.\n\n*Why now?* `rank_transEndo_succ_le` already isolates the per-step rank change; detecting\nthe first deficient factor is a decidable search given the finite bound from\n`rankSeq_le_finrank`.\n",
+    "domains": [
+      "Algebra",
+      "Logic"
+    ],
+    "id": "fd_2135",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "df051b46",
+    "status": "available",
+    "timestamp": "2026-06-20T07:34:01.307245+00:00",
+    "title": "`transEndo f i j` (the ordered composition of an endomorph"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3401,21 +3416,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
-  },
-  {
-    "consumed_by_exp_id": "acb790ee",
-    "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_2119",
-    "priority_score": 0.7158260869565218,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-19T17:11:08.928185+00:00",
-    "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
   {
     "consumed_by_exp_id": "",

@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "df051b46",
     "filename": "close_proofs_these_conjectures_continue_the_resear.json",
     "pkg_num": 204,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.8183600000000001,
     "title": "Transition Endomorphisms: A Chapman\u2013Kolmogorov Law and the Stabilization of Transition Rank"
   },
   {
@@ -6235,8 +6235,8 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "close_proofs_these_conjectures_continue_the_resear",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.8183600000000001,
+      "quality": "substantial",
       "shape": "tetrahedron",
       "title": "Transition Endomorphisms: A Chapman\u2013Kolmogorov Law and the Stabilization of Transition Rank"
     }
