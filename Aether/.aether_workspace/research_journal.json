@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "b221d007",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Functorial Tropical Certificate for the Berggren–Lorentz Monoid\n\nThis cycle established a **functorial tropical (min-plus) growth certificate** for the\nBerggren monoid action on",
-      "quality_score": 0.4584708352941177,
-      "sorry_count": 1,
-      "theorem_count": 10,
-      "timestamp": "2026-06-15T09:56:06",
-      "title": "**functorial tropical certificate** for the Berggren–Lo"
-    },
-    {
       "cycle_id": "9f700fd5",
       "domain": "Pythagorean",
       "key_insight": "# Future Directions — Tropical Gravitational Lensing for Integer Factorization\n\nResearch cycle output: `Catalog/Pythagorean/TropicalLensingFactorization.lean`\n(11 theorems, fully verified, 0 sorries;",
@@ -2501,6 +2491,16 @@
       "theorem_count": 9,
       "timestamp": "2026-06-20T20:27:01",
       "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
+    },
+    {
+      "cycle_id": "0d8fceb6",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Winning Probability in the Generalized q-Game\n\nThis cycle formalized the conjectured recurrence for `P(n,q)` (probability the Random player wins\nthe q-game), proved its base data",
+      "quality_score": 0.6901600000000001,
+      "sorry_count": 0,
+      "theorem_count": 104,
+      "timestamp": "2026-06-20T20:29:23",
+      "title": "Recurrence for the Winning Probability in the Generalized Game"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8075699999999999
     }
   ],
-  "last_updated": "2026-06-20T20:27:01",
+  "last_updated": "2026-06-20T20:29:23",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "fbd73212",
-        "quality": 0.7150400000000001,
-        "theorems": 35,
-        "title": "EML Single Operator Church-Turing Thesis"
-      },
-      {
         "cycle_id": "9ff40964",
         "quality": 0.5532343961470463,
         "theorems": 79,
@@ -3141,6 +3135,12 @@
         "quality": 0.453335,
         "theorems": 9,
         "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
+      },
+      {
+        "cycle_id": "0d8fceb6",
+        "quality": 0.6901600000000001,
+        "theorems": 104,
+        "title": "Recurrence for the Winning Probability in the Generalized Game"
       }
     ],
     "Bridges": [

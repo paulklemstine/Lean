@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0d8fceb6",
     "filename": "complexitydriven_emergence_of_spacetime_from_rando.json",
     "pkg_num": 213,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.6901600000000001,
     "title": "Complexity-Driven Emergence of Geometry: Tropical Eigenline Collapse and Golden-Ratio Encoding Thresholds"
   },
   {
@@ -6513,8 +6513,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "complexitydriven_emergence_of_spacetime_from_rando",
       "primary_domain": "Tropical",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.6901600000000001,
+      "quality": "partial",
       "shape": "star",
       "title": "Complexity-Driven Emergence of Geometry: Tropical Eigenline Collapse and Golden-Ratio Encoding Thresholds"
     }
