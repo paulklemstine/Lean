@@ -120,7 +120,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Twin Prime Gaps: Zhang-Maynard Formalization"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bf991533",
     "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
     "domains": [
       "Analysis",
@@ -130,7 +130,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.93,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432645+00:00",
     "title": "Navier-Stokes: 2D Regularity and Partial 3D Results"
   },
@@ -642,7 +642,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Primes of the Form n\u00b2+1"
   },
   {
-    "consumed_by_exp_id": "0f4e6c03",
+    "consumed_by_exp_id": "",
     "description": "Formalize core HoTT results in Lean 4: the univalence axiom, higher inductive types, and the fundamental theorem of identity types. Prove that HoTT provides a constructive foundation for mathematics.",
     "domains": [
       "Logic",
@@ -652,7 +652,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-08T19:25:03.446924+00:00",
     "title": "Homotopy Type Theory Foundations"
   },
@@ -2615,11 +2615,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every 6-regular (4,1)-graph is super-6-edge-connected, i.e., every 6-edge-cut is the edge star of a single vertex. This extends Theorem B, which proves this only for graphs on at most 29 vertices, to all possible sizes. A counterexample would be a 6-regular (4,1)-graph containing a nontrivial 6-edge-cut (both shores have size \u2265 15 by Theorem B).",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2146",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18462v1",
+    "status": "available",
+    "timestamp": "2026-06-20T20:35:59.704821+00:00",
+    "title": "Super-6-edge-connectivity of all 6-regular (4,1)-graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let S_N(x)=sum_{i=1}^N x^i. For primes p<q with pq | m and n^2 >= (p-1)(q-1)+1, the conjecture says the cyclotomic transfer P=S_{m^2}/Phi_{pq}, Q=S_{n^2} Phi_{pq} is a nonstandard square-sided pair of sizes m^2 and n^2. Equivalently, the quotient and product have nonnegative integer coefficients, P(1)=m^2, Q(1)=n^2, and P Q=S_{m^2}S_{n^2}. A counterexample would be any admissible p,q,m,n for which one of these two explicit polynomials has a negative coefficient.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2146",
+    "id": "fd_2147",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -2633,7 +2647,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2147",
+    "id": "fd_2148",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
@@ -2648,7 +2662,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2148",
+    "id": "fd_2149",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20085v1",
@@ -2662,7 +2676,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2149",
+    "id": "fd_2150",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19863v1",
@@ -2677,7 +2691,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2150",
+    "id": "fd_2151",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19796v1",
@@ -2692,7 +2706,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2151",
+    "id": "fd_2152",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19573v1",
@@ -2707,7 +2721,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2152",
+    "id": "fd_2153",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19500v1",
@@ -2722,7 +2736,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2153",
+    "id": "fd_2154",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19008v1",
@@ -2737,7 +2751,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2154",
+    "id": "fd_2155",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18500v1",
@@ -3683,36 +3697,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThese directions build on the deterministic min-cut curvature proxy formalized in\n`Catalog/Speculative/TensorNetworkCurvatureThreshold.lean`. Each is a self-contained\nresearch program; none of them is claimed to be solved here.\n\n## 1. From min-cut axiom to genuine weighted-graph min-cuts\n\nThe current `TensorNetwork` structure axiomatizes `mincut : Finset V \u2192 \u211d` with only a\nnonnegativity assumption. A natural next step is to *derive* `mincut` from an underlying\nedge-weighted graph by an actual minimization over cut surfaces, and to prove that the\nderived function is submodular and symmetric under complementation. The key insight is\nthat the antisymmetry lemma `cutDefect_compl` we proved abstractly is exactly the\nidentity that a genuine graph min-cut must satisfy, so it becomes a *consistency check*\non any concrete construction rather than a free assumption. **Why now?** Mathlib's\ncombinatorics library now has mature `SimpleGraph`, `Finset`, and flow/cut scaffolding,\nso a verified max-flow/min-cut bridge is finally within reach without building graph\ntheory from scratch.\n\n## 2. Lifting the deterministic threshold to a probabilistic phase transition\n\nThe deliberately deterministic proxy here is the inner layer of what is, in physics, a\nprobabilistic statement about random tensors. The obvious program is to introduce a\ngenuine probability space over tensor entries, define the entanglement entropy as a\nrandom variable, and prove a concentration result showing it is close to\n`mincut * log D` with high probability \u2014 at which point the sharp threshold\n`bond_dimension_threshold` transfers verbatim to the random model. The key insight is\nthat once concentration controls `cutDefect`, the entire qualitative phase structure is\nalready determined by the deterministic equivalence we proved, so the probabilistic work\nreduces to a single tail bound rather than a bespoke transition analysis. **Why now?**\nMathlib's measure-theory and probability stack (independence, `MeasureTheory`, Chernoff/\nHoeffding-style bounds) has matured enough to host a real concentration argument, making\nthe lift feasible rather than aspirational.\n\n## 3. Quantitative geometry of the Ricci proxy\n\nWe treated `ricciProxy` as a scalar in one cut at a time, but the family\n`X \u21a6 ricciProxy tn X D` over all cuts is a discrete curvature field on the Boolean\nlattice of regions. A promising direction is to study its aggregate behavior \u2014 sums,\nextremal cuts, and discrete analogues of curvature bounds \u2014 and to relate sign patterns\nof `cutDefect` across nested regions to monotonicity of entropy. The key insight is that\nthe strict sign-sensitive monotonicity results (`ricciProxy_lt_of_pos`,\n`ricciProxy_lt_of_neg`) already give a clean trichotomy per cut, so a global theory only\nneeds to organize these local signs coherently across the lattice. **Why now?** Discrete\nRicci-curvature notions (Ollivier, Forman) are an active research area, and a verified\ndeterministic proxy gives a rare fully-formal anchor against which these informal\nnotions can be compared.\n\n## 4. Integer bond dimensions and the arithmetic of the critical threshold\n\nThe threshold `D_c = exp(cutDefect / \u03b5)` is stated over the reals, but physical bond\ndimensions are positive integers. A worthwhile direction is to formalize the integer\nrestriction: characterize the least integer bond dimension `\u2308D_c\u2309`-style quantity that\nmakes a network admissible, and study how it jumps as `\u03b5` varies. The key insight is\nthat the real-valued equivalence we proved is already sharp, so the integer problem is a\npure rounding/ceiling analysis layered on top of an exact threshold rather than a fresh\ninequality chase. **Why now?** With the exact real threshold machine-checked, the\nremaining arithmetic is exactly the kind of `Nat`/`Int`/`Real` interface reasoning that\ncurrent Lean automation (`omega`, `Nat.ceil`/`Int.ceil` API) handles well.\n\n## 5. Multi-region and conditional curvature proxies\n\nThe present file analyzes a single cut against its complement. Holographically, the\nricher information lives in *conditional* and *mutual* quantities across several regions\n(e.g. tripartite arrangements probing monogamy of mutual information). The direction is\nto define multi-region defects and corresponding proxies, and to ask which inequalities\n(subadditivity, strong subadditivity, monogamy) the deterministic proxy satisfies. The\nkey insight is that all such inequalities are, in the RT regime, statements about the\nmin-cut function alone, so they can be attacked deterministically using the same\nsubmodularity that we deliberately left unused in the single-region theory. **Why now?**\nThe holographic entropy-cone program has produced a concrete, finite list of candidate\ninequalities to verify, giving this direction a precise and immediately actionable\ntarget list.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2155",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "808095a3",
-    "status": "available",
-    "timestamp": "2026-06-20T20:26:28.640282+00:00",
-    "title": "These directions build on the deterministic min-cut curvature proxy formalized i"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Winning Probability in the Generalized q-Game\n\nThis cycle formalized the conjectured recurrence for `P(n,q)` (probability the Random player wins\nthe q-game), proved its base data and small-`n` closed form, and certified that `P(\u00b7,q)` is a\ngenuine probability (`0 \u2264 P(n,q) \u2264 1` for `q \u2265 1`). The exact-rational evaluator also surfaced a\nstriking numerical pattern. The following conjectures are derived directly from those findings and\nare stated to be falsifiable.\n\n## Conjecture 1 \u2014 Exponential limit for `q = 1`\n`P(n,1) \u2192 1 \u2212 e^{-1}` as `n \u2192 \u221e`.\n\n- The key insight is that the forward recurrence `n\u00b7P(n,1) = 1 + \u03a3_{j=0}^{n-2} P(j,1)` is a\n  discrete renewal equation whose kernel is the uniform cycle-length law of a random permutation,\n  and renewal/derangement asymptotics produce the constant `1 \u2212 1/e`.\n- Why now? The exact-rational evaluator gives `P(80,1) \u2248 0.632121`, matching `1 \u2212 e^{-1}` to six\n  digits, so the constant is pinned down empirically and only the limit proof remains.\n\n## Conjecture 2 \u2014 General `q` limit is a partial exponential sum\nFor each fixed `q \u2265 1`, `P(n,q)` converges as `n \u2192 \u221e` to a limit `L_q`, with `L_1 = 1 \u2212 e^{-1}`\nand `L_q` strictly decreasing in `q` toward `0`.\n\n- The key insight is that increasing `q` deletes the `q` shortest \"immediate-win\" cycle lengths\n  from the renewal kernel, shrinking the limit monotonically; the limits should be expressible via\n  incomplete-Gamma / truncated exponential series.\n- Why now? Measured limits `L_1 \u2248 0.632, L_2 \u2248 0.478, L_3 \u2248 0.391, L_4 \u2248 0.333` are already\n  monotone decreasing, giving a concrete falsifiable ladder to match against a closed form.\n\n## Conjecture 3 \u2014 Monotonicity in `q`\nFor all `n` and all `q`, `P(n, q+1) \u2264 P(n, q)`.\n\n- The key insight is that enlarging `q` strictly enlarges the index range of the negative-feedback\n  forward sum, so the normalized probability can only decrease; a coupling/induction on `n` with\n  the proved bounds `P_nonneg`/`P_le_one` should close it.\n- Why now? The proved building blocks (`P_succ`, `P_nonneg`, `P_le_one`) are exactly the\n  ingredients an induction needs, and the data table (`P(4,1)=5/8 > P(4,2)=1/2 > P(4,3)=1/4`) shows\n  no counterexample.\n\n## Conjecture 4 \u2014 Rational denominators divide `lcm(1..n)`\nFor every `q` and `n`, the reduced denominator of `P(n,q)` divides `lcm(1, 2, \u2026, n)`.\n\n- The key insight is that each application of the recurrence divides only by an integer `\u2264 n`, so\n  by induction the denominator never acquires a prime power exceeding what `lcm(1..n)` already\n  contains.\n- Why now? The recurrence is now a verified Lean definition over `\u211a`, so this is a clean\n  `decide`-checkable finite claim for small `n` and an induction target for the general case.\n\n## Conjecture 5 \u2014 Tail concentration / second-moment bound\nThe sequence `n \u21a6 P(n,q)` has bounded variation: `\u03a3_{n} |P(n+1,q) \u2212 P(n,q)| < \u221e` for fixed `q`.\n\n- The key insight is that the forward recurrence is a contraction in the discrete-derivative norm\n  once `n > q`, because each new term is a `1/n`-weighted average of previously bounded values.\n- Why now? With `P` confirmed to live in `[0,1]`, summable fluctuations is the natural next\n  quantitative step toward the limit conjectures 1\u20132, and partial sums are directly computable from\n  the existing `\u211a` evaluator.\n",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_2156",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "0d8fceb6",
-    "status": "available",
-    "timestamp": "2026-06-20T20:28:46.877437+00:00",
-    "title": "This cycle formalized the conjectured recurrence for `P(n,q)` (probability the R"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3726,7 +3710,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "4a5dda39",
     "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
     "domains": [
       "Novelty",
@@ -3736,7 +3720,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7158260869565218,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
@@ -3918,7 +3902,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "10 is a Solitary Number"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "568da95c",
     "description": "Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers SU(2). Impact: opens quantum-classical neural network bridges.",
     "domains": [
       "EML",
@@ -3928,7 +3912,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.6299999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:26.751445+00:00",
     "title": "EML Quantum Activation Functions"
   },
@@ -4590,6 +4574,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize integrated information theory (IIT) in Lean 4. Define Phi as a measure on causal structures, prove its key properties (composition, exclusion), and explore connections to category theory and complexity.",
+    "domains": [
+      "Speculative",
+      "Logic"
+    ],
+    "id": "fd_0481",
+    "priority_score": 0.24999999999999992,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T21:01:45.101987+00:00",
+    "title": "Consciousness as Integrated Information"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Explore what theorems hold in non-standard models of arithmetic. Formalize ultrapower constructions, transfer principles, and prove which classical theorems survive in non-Archimedean settings.",
     "domains": [
       "Speculative",
@@ -4707,6 +4706,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T19:55:30.651923+00:00",
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0004",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-01T12:30:30.490561+00:00",
+    "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
   {
     "consumed_by_exp_id": "",
