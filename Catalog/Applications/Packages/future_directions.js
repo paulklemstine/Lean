@@ -763,7 +763,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Information: No-Cloning and Teleportation"
   },
   {
-    "consumed_by_exp_id": "b4d505d3",
+    "consumed_by_exp_id": "",
     "description": "Formalize the universal approximation theorem for ReLU networks. Prove depth-width tradeoffs: width-bounded networks of depth d can approximate functions that require exponential width at depth d-1. Construct explicit approximation rates for Sobolev functions.",
     "domains": [
       "MachineLearning",
@@ -773,7 +773,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432777+00:00",
     "title": "Universal Approximation: Quantitative Bounds"
   },
@@ -1031,6 +1031,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-16T10:39:16.784213+00:00",
     "title": "Close Proofs: Functor from finite linear codes to tropical valuation objects via wei"
+  },
+  {
+    "consumed_by_exp_id": "38689f4d",
+    "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0116",
+    "priority_score": 0.84,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-01T12:30:30.958310+00:00",
+    "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
   },
   {
     "consumed_by_exp_id": "",
@@ -2101,6 +2116,21 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bounded tree-independence for K_{1,d}-free graphs excluding a planar induced minor"
   },
   {
+    "consumed_by_exp_id": "6d018212",
+    "description": "This paper investigates the asymptotic probability that random points in finite fields intersect sufficiently complex algebraic sets, with applications to extremal combinatorics and geometric probability.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2107",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19677v1",
+    "status": "in_progress",
+    "timestamp": "2026-06-19T06:52:44.622331+00:00",
+    "title": "Randomly piercing algebraic sets and its implications"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "Conjecture that for any integers r\u22652 and any collection of r pairwise non\u2011isomorphic Shimura curves, any sequence of CM points with a common CM field and two distinct primes splitting in each field, if the points are strict (no proper special subvariety contains infinitely many of them), then the Galois orbits of the sequence become equidistributed in the product with respect to the Haar measure as the discriminants tend to infinity.",
     "domains": [
@@ -2145,7 +2175,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complete intersectionproperty of Fitting ideals for tree graphs"
   },
   {
-    "consumed_by_exp_id": "0d8fceb6",
+    "consumed_by_exp_id": "",
     "description": "For every positive integer q and natural number n, let P(n,q) denote the probability that the Random player wins the q-game. We conjecture that P(n,q) satisfies the recurrence relation: P(n,q) = 1/n + (1/n) * \u03a3_{k=q+1}^n P(n\u2212k, q), with base case P(0,q) = 0. This recurrence captures the probabilistic structure of the game coupled to random permutations' cycle decompositions.",
     "domains": [
       "Computation",
@@ -2155,7 +2185,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18956v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-19T10:14:34.984628+00:00",
     "title": "Recurrence for the Winning Probability in the Generalized Game"
   },
@@ -2412,6 +2442,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let S_N(x)=sum_{i=1}^N x^i. For primes p<q with pq | m and n^2 >= (p-1)(q-1)+1, the conjecture says the cyclotomic transfer P=S_{m^2}/Phi_{pq}, Q=S_{n^2} Phi_{pq} is a nonstandard square-sided pair of sizes m^2 and n^2. Equivalently, the quotient and product have nonnegative integer coefficients, P(1)=m^2, Q(1)=n^2, and P Q=S_{m^2}S_{n^2}. A counterexample would be any admissible p,q,m,n for which one of these two explicit polynomials has a negative coefficient.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2131",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-20T06:09:07.372057+00:00",
+    "title": "Semiprime cyclotomic transfer for square-sided dice"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For prime bases p>5, the paper reduces the longest terminal cycle length of the four-digit Kaprekar map to the least positive m such that 2^m \u2261 \u00b11 mod p. Conjecture: there are infinitely many primes p>5 for which this least m is exactly (p-1)/2, equivalently the Kaprekar map in base p has a terminal cycle attaining the universal upper bound (p-1)/2.",
     "domains": [
       "Pythagorean"
@@ -2423,6 +2467,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-20T06:55:45.344564+00:00",
     "title": "Infinitely many prime bases with maximal four-digit Kaprekar cycles"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For every integer d \u2265 1 and every planar graph H, there exists a constant C = C(d, H) such that any graph G that is K_{1,d}-free and does not contain H as an induced minor satisfies \u03b1\u2011tw(G) \u2264 C, i.e., the class of K_{1,d}-free graphs without H as an induced minor has bounded tree\u2011independence number.",
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2132",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20256v1",
+    "status": "available",
+    "timestamp": "2026-06-20T06:56:11.390123+00:00",
+    "title": "Bounded tree-independence in K_{1,d}-free graphs excluding a planar minor"
   },
   {
     "consumed_by_exp_id": "",
@@ -2438,6 +2496,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-20T07:49:00.400599+00:00",
     "title": "Arboreal Maximality for Twisted Carlitz Polynomials over Function Fields"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Let \ud835\udc9c\u2286[n] choose k and \u212c\u2286[n] choose \u2113 be a cross\u2011intersecting pair (every A\u2208\ud835\udc9c meets every B\u2208\u212c). Define the diversity \u03b3(\ud835\udc9c)=|\ud835\udc9c|\u2011\u0394(\ud835\udc9c) where \u0394(\ud835\udc9c) is the maximum degree of \ud835\udc9c, and analogously \u03b3(\u212c). For n\u226bk,\u2113, suppose \u03b3(\ud835\udc9c)\u2265{n\u2011u\u20111 \\\\choose k\u20111} and \u03b3(\u212c)\u2265{n\u2011v\u20111 \\\\choose \u2113\u20111} for some integers u,v with u+v\u2264n\u2011k\u2011\u2113. The conjecture states that the only families attaining the maximal possible product |\ud835\udc9c|\u00b7|\u212c| under these diversity constraints are the \"canonical\" constructions obtained by taking a full star on a common element together with the unique maximal extensions described by the S_{U,V}^Q\u2011shift. This gives a sharp structural characterisation extending the Frankl\u2011Kupavskii\u2011Zakharov theorem to the cross\u2011intersecting setting.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2133",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20085v1",
+    "status": "available",
+    "timestamp": "2026-06-20T07:49:31.344472+00:00",
+    "title": "Uniqueness of extremal large cross\u2011intersecting families via diversity"
   },
   {
     "consumed_by_exp_id": "",
@@ -2470,6 +2543,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Proposes that n_k surpasses an exponential growth threshold, confirming asymptotic properties untested yet.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2135",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19863v1",
+    "status": "available",
+    "timestamp": "2026-06-20T09:40:46.679825+00:00",
+    "title": "n_k Exceeds Exponential Bound"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For all n \u2265 0, the number of (4,0)-colored Frobenius partitions of weight n equals twice the sum of Lin-Liu minimal excludants over all 4-partitions of n, i.e., \u03c8_{4,0}(n) = 2\u03c3_{mex,4}(n). This conjecture extends the proven identities \u03c8_{2,0}(n) = 2\u03c3_{mex,2}(n) and \u03c8_{2,1}(n) = 2\u03c3_{mex,2}(n) - E_2(n) to the four-colored case.",
     "domains": [
       "Pythagorean",
@@ -2482,6 +2569,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-20T10:27:31.374184+00:00",
     "title": "Generalized two-colored Frobenius identities to four-colored case"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for any finite set S of primes with |S| \u2265 k, the elementary symmetric partition function pre_k is injective on the set of integer partitions whose parts are S\u2011smooth (i.e., each part\u2019s prime factors lie in S). This generalizes the proven result for m\u2011ary partitions (S = {m}) to arbitrary finite prime sets.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2136",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19796v1",
+    "status": "available",
+    "timestamp": "2026-06-20T10:28:24.249630+00:00",
+    "title": "Injectivity of pre_k on S\u2011smooth partitions"
   },
   {
     "consumed_by_exp_id": "",
@@ -2514,6 +2616,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture: For any oriented matroid of rank r, any element e\u2208E, and any two e\u2011embracing bases B and B\u2032, the e\u2011embracing distance d_e(B,B\u2032) equals the graph distance d_{G(P_{M^*,e})}(C(B,e),C(B\u2032,e)) in the 1\u2011skeleton of the oriented matroid polyhedron P_{M^*,e}.",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2138",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19573v1",
+    "status": "available",
+    "timestamp": "2026-06-20T12:03:14.894829+00:00",
+    "title": "Equality of e\u2011embracing distance and polyhedron graph distance"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For any graph G, any two minimal median decompositions of G (i.e., median decompositions whose underlying median graph has the smallest possible number of vertices) are isomorphic via a graph isomorphism that respects the decomposition bags. This formalises the \"uniquely minimal\" claim in the paper and provides a concrete, falsifiable statement that can be encoded in Lean.",
     "domains": [
       "Bridges"
@@ -2525,6 +2642,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-20T12:54:39.746194+00:00",
     "title": "Uniqueness of Minimal Median Decompositions for Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "For any finite multiset M of natural numbers, let S_M be the set of all distinct permutations of M. Define tc(w) as the number of terminal closers (right\u2011to\u2011left minima) of w, i.e., indices i such that w_j > w_i for all j > i. Define cp(w) as the number of cyclic points of w, i.e., vertices i in [|M|] that lie on a directed cycle of the functional digraph i \u2192 w_i. The conjecture states that the total sum of tc(w) over w\u2208S_M equals the total sum of cp(w) over w\u2208S_M.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2139",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19500v1",
+    "status": "available",
+    "timestamp": "2026-06-20T12:56:08.085469+00:00",
+    "title": "Equidistribution of Terminal Closers and Cyclic Points in Multiset Permutations"
   },
   {
     "consumed_by_exp_id": "",
@@ -2556,6 +2688,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The paper constructs explicit modular forms to establish Ramanujan-type congruences. We conjecture that for the partition function p(n), the explicit construction using the Rankin-Cohen bracket yields a modular form of weight 4 on SL(2,Z) whose Fourier expansion explicitly demonstrates that p(5n+4) \u2261 0 (mod 5) for all n \u2265 0. Specifically, let f(\u03c4) be the explicit modular form constructed via the bracket operator satisfying f(\u03c4) \u2261 (\u03b7(5\u03c4)/\u03b7(\u03c4))^5 (mod 5) in M_4(SL(2,Z)). Then the Fourier coefficients of f(\u03c4) should provide a direct proof that p(5n+4) \u2261 0 (mod 5).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2141",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19008v1",
+    "status": "available",
+    "timestamp": "2026-06-20T15:33:31.323729+00:00",
+    "title": "Verification of Ramanujan's modulo 5 congruence via explicit modular form construction"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "For the q-game on n elements, where the deterministic player removes q elements per turn and the random player wins iff the first cycle of length at most q in canonical order is a fixed point, the probability that the random player wins approaches 1/q as n tends to infinity for any fixed positive integer q.",
     "domains": [
       "Computation"
@@ -2570,120 +2717,33 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Let S_N(x)=sum_{i=1}^N x^i. For primes p<q with pq | m and n^2 >= (p-1)(q-1)+1, the conjecture says the cyclotomic transfer P=S_{m^2}/Phi_{pq}, Q=S_{n^2} Phi_{pq} is a nonstandard square-sided pair of sizes m^2 and n^2. Equivalently, the quotient and product have nonnegative integer coefficients, P(1)=m^2, Q(1)=n^2, and P Q=S_{m^2}S_{n^2}. A counterexample would be any admissible p,q,m,n for which one of these two explicit polynomials has a negative coefficient.",
+    "description": "This conjecture relates the modular height of a Shimura variety to the logarithmic derivative of its Hecke L-function, quantifying how arithmetic intersection data control the height structure via comparison with derivative estimates.",
     "domains": [
-      "Pythagorean"
+      "Pythagorean",
+      "Algebra"
     ],
     "id": "fd_2143",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2606.20311v1",
+    "source_exp_id": "2606.18579v1",
     "status": "available",
-    "timestamp": "2026-06-20T06:09:07.372057+00:00",
-    "title": "Semiprime cyclotomic transfer for square-sided dice"
+    "timestamp": "2026-06-20T17:21:57.064265+00:00",
+    "title": "Modular heights of units and Shimura varieties over CM fields"
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Conjecture: For every integer d \u2265 1 and every planar graph H, there exists a constant C = C(d, H) such that any graph G that is K_{1,d}-free and does not contain H as an induced minor satisfies \u03b1\u2011tw(G) \u2264 C, i.e., the class of K_{1,d}-free graphs without H as an induced minor has bounded tree\u2011independence number.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2144",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20256v1",
-    "status": "available",
-    "timestamp": "2026-06-20T06:56:11.390123+00:00",
-    "title": "Bounded tree-independence in K_{1,d}-free graphs excluding a planar minor"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Let \ud835\udc9c\u2286[n] choose k and \u212c\u2286[n] choose \u2113 be a cross\u2011intersecting pair (every A\u2208\ud835\udc9c meets every B\u2208\u212c). Define the diversity \u03b3(\ud835\udc9c)=|\ud835\udc9c|\u2011\u0394(\ud835\udc9c) where \u0394(\ud835\udc9c) is the maximum degree of \ud835\udc9c, and analogously \u03b3(\u212c). For n\u226bk,\u2113, suppose \u03b3(\ud835\udc9c)\u2265{n\u2011u\u20111 \\\\choose k\u20111} and \u03b3(\u212c)\u2265{n\u2011v\u20111 \\\\choose \u2113\u20111} for some integers u,v with u+v\u2264n\u2011k\u2011\u2113. The conjecture states that the only families attaining the maximal possible product |\ud835\udc9c|\u00b7|\u212c| under these diversity constraints are the \"canonical\" constructions obtained by taking a full star on a common element together with the unique maximal extensions described by the S_{U,V}^Q\u2011shift. This gives a sharp structural characterisation extending the Frankl\u2011Kupavskii\u2011Zakharov theorem to the cross\u2011intersecting setting.",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2145",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20085v1",
-    "status": "available",
-    "timestamp": "2026-06-20T07:49:31.344472+00:00",
-    "title": "Uniqueness of extremal large cross\u2011intersecting families via diversity"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Proposes that n_k surpasses an exponential growth threshold, confirming asymptotic properties untested yet.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2146",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.19863v1",
-    "status": "available",
-    "timestamp": "2026-06-20T09:40:46.679825+00:00",
-    "title": "n_k Exceeds Exponential Bound"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "We conjecture that for any finite set S of primes with |S| \u2265 k, the elementary symmetric partition function pre_k is injective on the set of integer partitions whose parts are S\u2011smooth (i.e., each part\u2019s prime factors lie in S). This generalizes the proven result for m\u2011ary partitions (S = {m}) to arbitrary finite prime sets.",
+    "description": "The paper asserts precisely 57 nonnegative integer solutions (a, b, x) satisfy the inequality, confined by Diophantine approximation constraints.",
     "domains": [
       "Pythagorean",
-      "Algebra"
+      "MachineLearning"
     ],
-    "id": "fd_2147",
+    "id": "fd_2143",
     "priority_score": 0.8,
     "research_mode": "team",
-    "source_exp_id": "2606.19796v1",
+    "source_exp_id": "2606.18500v1",
     "status": "available",
-    "timestamp": "2026-06-20T10:28:24.249630+00:00",
-    "title": "Injectivity of pre_k on S\u2011smooth partitions"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Conjecture: For any oriented matroid of rank r, any element e\u2208E, and any two e\u2011embracing bases B and B\u2032, the e\u2011embracing distance d_e(B,B\u2032) equals the graph distance d_{G(P_{M^*,e})}(C(B,e),C(B\u2032,e)) in the 1\u2011skeleton of the oriented matroid polyhedron P_{M^*,e}.",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2148",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.19573v1",
-    "status": "available",
-    "timestamp": "2026-06-20T12:03:14.894829+00:00",
-    "title": "Equality of e\u2011embracing distance and polyhedron graph distance"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "For any finite multiset M of natural numbers, let S_M be the set of all distinct permutations of M. Define tc(w) as the number of terminal closers (right\u2011to\u2011left minima) of w, i.e., indices i such that w_j > w_i for all j > i. Define cp(w) as the number of cyclic points of w, i.e., vertices i in [|M|] that lie on a directed cycle of the functional digraph i \u2192 w_i. The conjecture states that the total sum of tc(w) over w\u2208S_M equals the total sum of cp(w) over w\u2208S_M.",
-    "domains": [
-      "Pythagorean",
-      "Computation"
-    ],
-    "id": "fd_2149",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.19500v1",
-    "status": "available",
-    "timestamp": "2026-06-20T12:56:08.085469+00:00",
-    "title": "Equidistribution of Terminal Closers and Cyclic Points in Multiset Permutations"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "The paper constructs explicit modular forms to establish Ramanujan-type congruences. We conjecture that for the partition function p(n), the explicit construction using the Rankin-Cohen bracket yields a modular form of weight 4 on SL(2,Z) whose Fourier expansion explicitly demonstrates that p(5n+4) \u2261 0 (mod 5) for all n \u2265 0. Specifically, let f(\u03c4) be the explicit modular form constructed via the bracket operator satisfying f(\u03c4) \u2261 (\u03b7(5\u03c4)/\u03b7(\u03c4))^5 (mod 5) in M_4(SL(2,Z)). Then the Fourier coefficients of f(\u03c4) should provide a direct proof that p(5n+4) \u2261 0 (mod 5).",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2150",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.19008v1",
-    "status": "available",
-    "timestamp": "2026-06-20T15:33:31.323729+00:00",
-    "title": "Verification of Ramanujan's modulo 5 congruence via explicit modular form construction"
+    "timestamp": "2026-06-20T17:22:17.670732+00:00",
+    "title": "Exact Solution Count Confinement"
   },
   {
     "consumed_by_exp_id": "",
@@ -3636,7 +3696,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "a04133c4",
     "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
     "domains": [
       "Novelty",
@@ -3646,7 +3706,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7158260869565218,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
@@ -4769,6 +4829,36 @@ window.FUTURE_DIRECTIONS = [
     "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
   },
   {
+    "consumed_by_exp_id": "5e9b4daa",
+    "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
+    "domains": [
+      "Novelty",
+      "Cryptography"
+    ],
+    "id": "fd_0088",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-01T12:30:30.782446+00:00",
+    "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+  },
+  {
+    "consumed_by_exp_id": "35a8dda5",
+    "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
+    "domains": [
+      "Novelty",
+      "Algebra"
+    ],
+    "id": "fd_0092",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-01T12:30:30.807837+00:00",
+    "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+  },
+  {
     "consumed_by_exp_id": "",
     "description": "The Poincare conjecture (proved by Perelman) states that every simply connected closed 3-manifold is homeomorphic to the 3-sphere. For data: a point cloud X = {x_1, ..., x_n} in R^d may or may not lie on a manifold. Conjecture: the Poincare conjecture for data states that if the persistent homology of X satisfies H_0(X) = Z, H_1(X) = 0, H_2(X) = 0, ..., H_{d-1}(X) = 0, then X lies on (or near) a d-sphere. More precisely, if the Vietoris-Rips complex of X at scale epsilon has the homology of S^d (trivial homology except H_0 = Z and H_d = Z), then X is epsilon-close to a subset of S^d. Conjecture: the smallest epsilon such that VR_epsilon(X) has the homology of S^d is the 'Poincare threshold' of X, and it satisfies epsilon_star = C * d^{1/2} * n^{-1/d} for some constant C, where n is the number of points. This is the manifold detection threshold: below epsilon_star, X looks like a d-sphere; above epsilon_star, X looks like something else. Test: generate point clouds on S^d for d = 1, 2, 3 and compute the Poincare threshold. Impact: the Poincare conjecture for data says that manifold detection is a topological problem, and the detection threshold scales as n^{-1/d}.",
     "domains": [
@@ -4857,5 +4947,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-03T23:40:36.486848+00:00",
     "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
+  },
+  {
+    "consumed_by_exp_id": "0c649dc0",
+    "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
+    "domains": [
+      "Novelty",
+      "Logic"
+    ],
+    "id": "fd_0577",
+    "priority_score": 0.05,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "in_progress",
+    "timestamp": "2026-06-03T23:40:36.923091+00:00",
+    "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
   }
 ];
