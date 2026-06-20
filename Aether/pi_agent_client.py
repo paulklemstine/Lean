@@ -838,16 +838,27 @@ class PiAgentClient:
                 except httpx.HTTPStatusError as e:
                     if e.response.status_code == 429:
                         retry_after = 5
+                        err_msg_text = ""
                         try:
                             if 'Retry-After' in e.response.headers:
                                 retry_after = float(e.response.headers['Retry-After'])
                             else:
                                 err_data = e.response.json()
-                                if 'error' in err_data and 'metadata' in err_data['error']:
-                                    retry_after = float(err_data['error']['metadata'].get('retry_after_seconds', 5))
+                                if 'error' in err_data:
+                                    if 'message' in err_data['error']:
+                                        err_msg_text = err_data['error']['message']
+                                    if 'metadata' in err_data['error']:
+                                        retry_after = float(err_data['error']['metadata'].get('retry_after_seconds', 5))
                         except Exception:
-                            pass
-                        print(f"[Pi-Agent] ← OpenRouter rate limited (429) on model={model}. Waiting {retry_after}s (attempt {attempt+1}/{max_retries})")
+                            err_msg_text = getattr(e.response, "text", "")
+                            
+                        print(f"[Pi-Agent] ← OpenRouter rate limited (429) on model={model}. Message: {err_msg_text}. Waiting {retry_after}s (attempt {attempt+1}/{max_retries})")
+                        
+                        if retry_after > 120 or "limit reached" in err_msg_text.lower() or "free tier" in err_msg_text.lower() or "limit" in err_msg_text.lower():
+                            print(f"[Pi-Agent] ← OpenRouter hard rate limit detected. Aborting retries.")
+                            last_error = f"[OPENROUTER_ERROR: Rate limited (hard limit). {err_msg_text}]"
+                            break
+                            
                         time.sleep(retry_after + 0.5)
                         if attempt < max_retries - 1:
                             continue
