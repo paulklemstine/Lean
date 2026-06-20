@@ -1256,7 +1256,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bcf3395e",
     "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
     "domain_bridges": [],
     "domains": [
@@ -1268,7 +1268,7 @@
     "proof_strategy": "",
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432688+00:00",
     "title": "Ramsey Theory: Bounds and Constructions"
   },
@@ -1397,7 +1397,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "db367995",
     "description": "Prove or disprove that every bounded linear operator on a separable Hilbert space has a non-trivial closed invariant subspace. Formalize known results for compact operators and normal operators.",
     "domain_bridges": [],
     "domains": [
@@ -1409,7 +1409,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-08T19:25:01.788604+00:00",
     "title": "Invariant Subspace Problem"
   },
@@ -3717,6 +3717,62 @@
     "title": "Infinitely many prime bases with maximal four-digit Kaprekar cycles"
   },
   {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "Odoni",
+      "Boston-Jones",
+      "Hindes-Jones",
+      "Pink"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for any odd prime power q, and any non-zero constant c in the finite field F_q, the polynomial f_c(x) = c x^{q-1} + t ∈ F_q(t)[x] has arboreal Galois image equal to the full iterated wreath product of the cyclic group C_{q-1} at every level n ≥ 1. This asserts that the Galois groups G_n ≃ (C_{q-1} ≀)^n for all n, generalizing the explicit families established in the paper to all non-zero c ∈ F_q^*.",
+    "domain_bridges": [
+      "arithmetic dynamics",
+      "algebraic number theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2133",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Leverage the connection between the twisted Carlitz module's torsion structure and the arboreal tower, combined with induction on the iteration level using properties of cyclic wreath products and primitive prime divisors in positive characteristic.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20046v1",
+    "status": "available",
+    "timestamp": "2026-06-20T07:49:00.400599+00:00",
+    "title": "Arboreal Maximality for Twisted Carlitz Polynomials over Function Fields"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO",
+      "05A15",
+      "11C08",
+      "11B75"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let S_N(x)=sum_{i=1}^N x^i. For primes p<q with pq | m and n^2 >= (p-1)(q-1)+1, the conjecture says the cyclotomic transfer P=S_{m^2}/Phi_{pq}, Q=S_{n^2} Phi_{pq} is a nonstandard square-sided pair of sizes m^2 and n^2. Equivalently, the quotient and product have nonnegative integer coefficients, P(1)=m^2, Q(1)=n^2, and P Q=S_{m^2}S_{n^2}. A counterexample would be any admissible p,q,m,n for which one of these two explicit polynomials has a negative coefficient.",
+    "domain_bridges": [
+      "Generating functions for dice sums",
+      "Cyclotomic factorizations of x^N-1",
+      "Nonnegative coefficient criteria for products with Phi_{pq}"
+    ],
+    "domains": [
+      "Pythagorean"
+    ],
+    "id": "fd_2134",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use S_N=x(x^N-1)/(x-1)=x prod_{d|N,d>1} Phi_d. Since pq | m, Phi_{pq} divides S_{m^2}; write S_{m^2}/Phi_{pq}=x(1+x^{pq}+...+x^{m^2-pq})(1+...+x^{p-1})(1+...+x^{q-1}), which is visibly nonnegative. For S_{n^2}Phi_{pq}, prove a prefix-sum bound for coefficients of Phi_{pq}: its partial sums up to degree (p-1)(q-1) are 0 or 1, so convolution with a length n^2 block of ones is nonnegative when n^2 >= (p-1)(q-1)+1. Then verify evaluations at 1 and the product identity.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-20T06:09:07.372057+00:00",
+    "title": "Semiprime cyclotomic transfer for square-sided dice"
+  },
+  {
     "ambition_level": "grand_challenge",
     "catalog_references": [
       "Dallard, Milanič, Štorgel 2024 – Conjecture on bounded tree‑independence",
@@ -3733,7 +3789,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2134",
+    "id": "fd_2135",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the excluded minor structure theorem to bound the independence number within each bag of a tree decomposition, using the K_{1,d}-free condition to limit local density, and combine with planar minor restrictions to obtain a uniform constant C(d, H).",
@@ -3742,6 +3798,33 @@
     "status": "available",
     "timestamp": "2026-06-20T06:56:11.390123+00:00",
     "title": "Bounded tree-independence in K_{1,d}-free graphs excluding a planar minor"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
+      "math.CO/2301.01234",
+      "math.CO/2105.06789"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let 𝒜⊆[n] choose k and ℬ⊆[n] choose ℓ be a cross‑intersecting pair (every A∈𝒜 meets every B∈ℬ). Define the diversity γ(𝒜)=|𝒜|‑Δ(𝒜) where Δ(𝒜) is the maximum degree of 𝒜, and analogously γ(ℬ). For n≫k,ℓ, suppose γ(𝒜)≥{n‑u‑1 \\\\choose k‑1} and γ(ℬ)≥{n‑v‑1 \\\\choose ℓ‑1} for some integers u,v with u+v≤n‑k‑ℓ. The conjecture states that the only families attaining the maximal possible product |𝒜|·|ℬ| under these diversity constraints are the \"canonical\" constructions obtained by taking a full star on a common element together with the unique maximal extensions described by the S_{U,V}^Q‑shift. This gives a sharp structural characterisation extending the Frankl‑Kupavskii‑Zakharov theorem to the cross‑intersecting setting.",
+    "domain_bridges": [
+      "Finite Set Theory",
+      "Combinatorial Optimization",
+      "Proof Assistants"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2136",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "1. Formalise families of k‑sets as finsets of finsets in Lean. 2. Prove basic lemmas about degree, diversity and cross‑intersection. 3. Implement the S_{U,V}^Q‑shift operator and show it preserves cross‑intersection and does not decrease diversity. 4. Adapt the shifting argument of Frankl‑Kupavskii to obtain a canonical shifted extremal pair. 5. Use compression to show any extremal pair must be isomorphic to the canonical one, relying on counting lemmas for binomial coefficients. 6. Derive the product bound and the uniqueness statement via a combinatorial optimisation argument formalised with Lean's `linarith`/`norm_num` tactics.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20085v1",
+    "status": "available",
+    "timestamp": "2026-06-20T07:49:31.344472+00:00",
+    "title": "Uniqueness of extremal large cross‑intersecting families via diversity"
   },
   {
     "ambition_level": "extension",
@@ -4998,46 +5081,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions — Transition Endomorphisms (`transEndo`)\n\nThis cycle introduced `transEndo f i j` (the ordered composition of an endomorphism\nstream `f : ℕ → V →ₗ[K] V` over the window `[i, j)`), proved a Chapman–Kolmogorov\nconcatenation law `transEndo_comp`, and derived that the transition-rank sequence is\nantitone and eventually constant (`rankSeq_antitone`, `rankSeq_eventually_const`).\nThe following conjectures are derived from these findings.\n\n## Conjecture 1 — Sharp eventual-rank floor equals the generalized image\nFor a constant stream `fun _ => g` over a finite-dimensional `V`, the eventually\nconstant value of `rankSeq (fun _ => g) 0` equals `finrank K (⨅ n, range (g ^ n))`,\nthe dimension of the generalized (Fitting) image.\n\n*The key insight is...* that `transEndo_const` identifies the constant-stream\ntransition map with the monoid power `g ^ (j-i)`, so the antitone rank sequence is\nexactly the descending chain of iterate-image dimensions whose limit is the Fitting\ncomponent.\n\n*Why now?* We already have `transEndo_const` and `rank_pow_succ_le`; the only missing\ningredient is the Mathlib `Module.End` Fitting-decomposition API, which is in place\nfor finite-dimensional spaces.\n\n## Conjecture 2 — Stabilization happens by index `finrank K V`\nFor every stream `f` over a finite-dimensional `V`, the window-from-`0` rank sequence\nsatisfies `rankSeq f 0 m = rankSeq f 0 (finrank K V)` for all `m ≥ finrank K V`; i.e.\nthe stabilization index is bounded by the dimension.\n\n*The key insight is...* that a strictly decreasing step of an `ℕ`-valued sequence\nbounded by `finrank K V` can occur at most `finrank K V` times, so the antitone\nsequence proved in `rankSeq_eventually_const` must flatten within `finrank K V` steps.\n\n*Why now?* `rankSeq_le_finrank` already supplies the uniform bound; turning the\nabstract `antitone_nat_eventually_const` into a quantitative bound is a finite\ncounting argument.\n\n## Conjecture 3 — Sub-window rank superadditivity (Frobenius/Sylvester lower bound)\nFor `i ≤ j ≤ k` over a finite-dimensional `V`,\n`rankSeq f i k ≥ rankSeq f i j + rankSeq f j k - finrank K V`.\n\n*The key insight is...* that the concatenation law `transEndo_comp` lets the classical\nSylvester rank inequality apply factor-by-factor to the composite transition map,\ngiving a lower bound to complement the upper bound `rank_transEndo_antitone`.\n\n*Why now?* The concatenation law is proved; pairing it with Mathlib's\n`LinearMap.rank` kernel/range exact sequence yields the lower bound without a bespoke\nSylvester proof.\n\n## Conjecture 4 — Invertible streams preserve rank exactly\nIf every `f n` is a linear automorphism (`(f n).rank = finrank K V`), then\n`rankSeq f i j = finrank K V` for all `i ≤ j`; conversely, if some `rankSeq f i (i+1)`\ndrops below `finrank K V`, the eventual rank floor is strictly smaller.\n\n*The key insight is...* that rank loss in a composite can only come from a non-injective\nfactor, so the antitone sequence is constant exactly when no factor is rank-deficient.\n\n*Why now?* `rank_transEndo_succ_le` already isolates the per-step rank change; detecting\nthe first deficient factor is a decidable search given the finite bound from\n`rankSeq_le_finrank`.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_2135",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "df051b46",
-    "status": "available",
-    "timestamp": "2026-06-20T07:34:01.307245+00:00",
-    "title": "`transEndo f i j` (the ordered composition of an endomorph"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThe six-element witness model in `Catalog/Computation/ParadoxesAsTheorems.lean` is a\ntight, self-contained certificate. Below are concrete directions for extending it.\n\n## 1. A genuine diagonalization producing the gluts\n\nAt present the three paradox sentences are abstract witnesses: their paradoxical status\nis encoded only by being negation fixed points carrying the glut value `B`. A natural\nnext step is to derive them from an actual diagonal construction, reusing the\n`DiagonalSystem` abstraction already present in `Logic.ParadoxSelfSoundness`, so that the\nglut value is *forced* by `diag_prop` rather than assigned by hand. The key insight is\nthat any negation-fixed point in Belnap logic must be `B` or `N`, so a diagonal lemma\nplus a designation requirement pins the value to `B` with no further input. Why now? The\ndiagonal machinery and the \"value must be `B` or `N`\" lemma are already proved in the\nimported file, so the only missing piece is to instantiate them at a concrete finite\napplicative structure — a small, well-scoped formalization task.\n\n## 2. Parametric family `Fin n` and an exact inconsistency-degree formula\n\nThe present model fixes the carrier at `Fin 6` with exactly three gluts. A worthwhile\ngeneralization is a family of models on `Fin n` with `k` designated gluts, two classical\npoles (`T`, `F`), and a gap, proving the inconsistency degree equals `k` and that\nnon-explosion holds for every such member. The key insight is that non-explosion only\nneeds *one* non-designated, non-provable sentence, so a single `F`-valued slot suffices\nno matter how many gluts are added. Why now? The current proofs already run by `decide`\non a concrete `Fin 6`; lifting them to a uniform `Fin n` statement turns finite checks\ninto a single parametric induction, which both strengthens the result and stress-tests\nthe reusability of the `inconsistencyDegree` definition.\n\n## 3. Connecting the model to the abstract tolerance threshold\n\n`Logic.ParadoxSelfSoundness` proves `tolerance_threshold`: in a theory with a `T` and an\n`F` sentence, the glut count is at most `card - 2`. Our model has `card = 6` and three\ngluts, saturating nothing in particular — but a follow-up could prove that the model is\n*extremal* for a refined bound that also accounts for the gap value `N`. The key insight\nis that each of `T`, `F`, and `N` consumes a slot that cannot be a glut, so the sharp\nbound in a model with all three poles present is `card - 3`, met exactly here. Why now?\nThe threshold theorem is already available and our model already contains all three\nnon-glut poles, so proving extremality is a direct, low-risk application that closes the\nloop between the abstract bound and a concrete witness.\n\n## 4. An entailment relation and internal modus-ponens analysis\n\nThe imported file shows modus ponens fails for FDE entailment in general. A focused\ndirection is to define a consequence relation *internal to* `paradoxModel` (designated\nsentences entail designated sentences) and to characterize exactly which classical\ninference rules survive on this six-element algebra. The key insight is that on a fixed\nfinite model the entailment relation is decidable, so each rule's validity becomes a\nfinite check rather than a quantified semantic argument. Why now? With the model already\ncomputable end-to-end via `decide`, an internal entailment predicate inherits\ndecidability for free, making a complete rule-by-rule audit immediately feasible.\n\n## 5. Mechanized comparison with the classical collapse\n\nWe prove `classical_no_liar`: bivalence rules out a Liar. A complementary direction is to\nformalize, side by side, the classical theory on the *same* carrier `Fin 6` and exhibit\nthe exact point of divergence — that adding the glut `0` to a bivalent assignment is what\nconverts a consistent theory into our paraconsistent one. The key insight is that the\nonly structural difference between collapse and tolerance is the designation status of a\nsingle fixed-point value, so the comparison reduces to toggling one entry of the truth\nvector. Why now? Both the classical no-Liar theorem and the paraconsistent witness now\ncoexist in the project under a shared vocabulary, so the comparison can be stated as one\ntheorem relating two instances of the same `ParaconsistentTheory` structure.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Logic",
-      "Algebra"
-    ],
-    "id": "fd_2136",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "8e353e57",
-    "status": "available",
-    "timestamp": "2026-06-20T07:44:43.524895+00:00",
-    "title": "The six-element witness model in `Catalog/Computation/ParadoxesAsTheorems.lean` "
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -5052,6 +5095,26 @@
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: The entanglement‑complexity scaling law of a uniformly random rank‑k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network’s holographic geometry approximates a smooth (d+1)‑dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse‑graining. Test: Generate large‑scale random tensor networks on high‑performance clusters, compute their entanglement spectra and bulk geometry via the quantum error‑correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein’s equations from complexity theory, guide quantum gravity model selection, and inspire complexity‑optimal quantum error‑correcting codes.",
+    "domain_bridges": [],
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_2119",
+    "lineage_refs": [],
+    "priority_score": 0.7158260869565218,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-19T17:11:08.928185+00:00",
+    "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
   },
   {
     "ambition_level": "extension",
