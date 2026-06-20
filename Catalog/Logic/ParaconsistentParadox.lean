@@ -1,118 +1,148 @@
 import Mathlib
 
 /-!
-# Dream Logic II — Topological Models of Paraconsistency
+# Paraconsistent Paradox Theories — Belnap-Valued Foundations
 
-The Tarski–McKinsey duality models *intuitionistic* logic by the **open** sets of
-a topological space (a Heyting algebra).  Dually, the **closed** sets carry a
-*co-Heyting* (Brouwerian) algebra, which is the natural home of **paraconsistent**
-negation: instead of "interior of the complement", one uses
+This file develops the small amount of paraconsistent-logic infrastructure used by
+`Logic.ParadoxSelfSoundness` and `Computation.ParadoxesAsTheorems`.
 
-  `pneg A := closure Aᶜ`   (the closure of the complement).
+The core object is `BelnapVal`, the four-valued truth set of Belnap–Dunn logic
+(First Degree Entailment):
 
-A point may then lie in `A` *and* in `pneg A` simultaneously — a topological
-"impossible object".  The set of such points is the **contradiction set**
-`contradiction A := A ∩ pneg A`.
+* `T` — true only,
+* `F` — false only,
+* `B` — *both* (a glut / dialetheia: asserted and denied),
+* `N` — *neither* (a gap).
 
-## Main results
+A value is **designated** (`isTrue = true`) exactly when it is `T` or `B`.  Negation
+swaps `T`/`F` and fixes the two "impossible" values `B` and `N`.  Conjunction and
+disjunction are meet and join in the truth order `F ≤ B,N ≤ T` (the diamond lattice).
 
-* `contradiction_eq_frontier` — for a closed set the contradiction set is exactly
-  the topological **frontier** (boundary).  Frontier points are the dialetheias.
-* `lnc_holds_iff_clopen` — the Law of Non-Contradiction holds for `A`
-  (`contradiction A = ∅`) **iff** `A` is *clopen*.  Equivalently, the logic is
-  classical exactly on the clopen sets; genuine paraconsistency appears precisely
-  where closed sets are not also open — i.e. where the closed sets fail to be
-  closed under the operations that would make them open (the "open sets not
-  closed under arbitrary union/complement" phenomenon of the brief).
-* `dream_object_real` / `contradiction_nonempty_real` — a *concrete* impossible
-  object: in `ℝ`, the point `0` lies in `[0,1]` and in the closure of its
-  complement; the interval is closed but not clopen, so its contradiction set
-  (its frontier `{0,1}`) is nonempty.
-* `connected_forces_paraconsistency` — on a (pre)connected space *any* proper
-  nonempty closed set has a nonempty contradiction set: connectedness *forces*
-  dream logic.
-
--- !-- Lab Notes -- !--
-Hypothesis (Stage 1): "Paraconsistent negation = closure-of-complement; the only
-  sets obeying classical Non-Contradiction are the clopen ones."  Surprising
-  corollary: on a connected space *every* nontrivial belief is dialetheic.
-Experiment (Stage 2): Identified `contradiction A` with `frontier A` for closed
-  `A` via `closure_compl` + `IsClosed.frontier_eq`, then used
-  `isClopen_iff_frontier_eq_empty`.  Concrete witness `[0,1] ⊆ ℝ`.
-Analysis (Stage 3): Survived.  Initial wording of the brief ("open sets not
-  closed under arbitrary union") is literally false for a topology; the correct
-  dual reading is "closed sets need not be open", captured by clopen-ness.  This
-  is the "needs a different definition" insight of the cycle.
-Critique (Stage 4): Guarded the connectedness theorem with `Aᶜ.Nonempty` and
-  `A.Nonempty`; without properness the frontier can be empty (whole space), so
-  the hypotheses are load-bearing, not decoration.
-Synthesis (Stage 5): `contradiction`/`pneg` are the topological semantics whose
-  pointwise truth value (true/false/both) is the four-valued logic of the Logic
-  domain — see `Logic/DreamLogic/Bridge.lean`.
+A `ParaconsistentTheory` over a sentence type `S` assigns each sentence a Belnap value
+together with a syntactic negation operation.  We record the basic notions of
+soundness, inconsistency degree, the Liar fixed point, classicality, and the FDE
+formula algebra.
 -/
 
-open Set Topology
+/-- Belnap's four truth values (FDE / `FOUR`). -/
+inductive BelnapVal
+  | T
+  | F
+  | B
+  | N
+  deriving DecidableEq, Repr, Fintype
 
-namespace DreamTopo
+namespace BelnapVal
 
-variable {X : Type*} [TopologicalSpace X]
+/-- Belnap negation: swaps `T`/`F`, fixes the impossible values `B` and `N`. -/
+def neg : BelnapVal → BelnapVal
+  | T => F
+  | F => T
+  | B => B
+  | N => N
 
-/-- Paraconsistent ("co-Heyting") negation on subsets: closure of the complement. -/
-def pneg (A : Set X) : Set X := closure Aᶜ
+/-- A value is *designated* (at-least-true / asserted) iff it is `T` or `B`. -/
+def isTrue : BelnapVal → Bool
+  | T => true
+  | F => false
+  | B => true
+  | N => false
 
-/-- The **contradiction set** of `A`: points lying in both `A` and its
-paraconsistent negation — the topological dialetheias / impossible objects. -/
-def contradiction (A : Set X) : Set X := A ∩ pneg A
+/-- Disjunction = join in the truth order `F ≤ B,N ≤ T`, with `B ⊔ N = T`. -/
+def disj : BelnapVal → BelnapVal → BelnapVal
+  | T, _ => T
+  | _, T => T
+  | F, x => x
+  | x, F => x
+  | B, B => B
+  | N, N => N
+  | B, N => T
+  | N, B => T
 
-/-- For a **closed** set, the contradiction set is exactly the frontier (boundary). -/
-theorem contradiction_eq_frontier {A : Set X} (h : IsClosed A) :
-    contradiction A = frontier A := by
-  unfold contradiction pneg
-  rw [closure_compl, h.frontier_eq]
-  ext x; simp [Set.diff_eq]
+/-- Conjunction = meet in the truth order `F ≤ B,N ≤ T`, with `B ⊓ N = F`. -/
+def conj : BelnapVal → BelnapVal → BelnapVal
+  | F, _ => F
+  | _, F => F
+  | T, x => x
+  | x, T => x
+  | B, B => B
+  | N, N => N
+  | B, N => F
+  | N, B => F
 
-/-- **Non-Contradiction holds iff clopen.**  For a closed set `A`, the Law of
-Non-Contradiction holds (`contradiction A = ∅`) precisely when `A` is clopen.
-Paraconsistency is exactly the failure of closed sets to be open. -/
-theorem lnc_holds_iff_clopen {A : Set X} (h : IsClosed A) :
-    contradiction A = ∅ ↔ IsClopen A := by
-  rw [contradiction_eq_frontier h, isClopen_iff_frontier_eq_empty]
+@[simp] theorem neg_neg (v : BelnapVal) : v.neg.neg = v := by cases v <;> rfl
 
-/-- Contrapositive form: a closed set that is *not* clopen carries a genuine
-(nonempty) contradiction — a dream object. -/
-theorem not_clopen_contradiction {A : Set X} (h : IsClosed A)
-    (hnc : ¬ IsClopen A) : (contradiction A).Nonempty := by
-  rw [Set.nonempty_iff_ne_empty]
-  intro he
-  exact hnc ((lnc_holds_iff_clopen h).1 he)
+@[simp] theorem neg_both : B.neg = B := rfl
 
-/-! ### A concrete impossible object in `ℝ` -/
+@[simp] theorem neg_neither : N.neg = N := rfl
 
-/-- The point `0` lies in `[0,1]` **and** in the closure of its complement:
-a concrete dialetheia. -/
-theorem dream_object_real :
-    (0 : ℝ) ∈ contradiction (Set.Icc (0 : ℝ) 1) := by
-  have h : IsClosed (Set.Icc (0 : ℝ) 1) := isClosed_Icc
-  rw [contradiction_eq_frontier h, frontier_Icc (by norm_num : (0 : ℝ) ≤ 1)]
-  simp
+end BelnapVal
 
-/-- The contradiction set of `[0,1] ⊆ ℝ` is nonempty: dream logic is realized. -/
-theorem contradiction_nonempty_real :
-    (contradiction (Set.Icc (0 : ℝ) 1)).Nonempty :=
-  ⟨0, dream_object_real⟩
+/-- A paraconsistent theory over a sentence type `S`: every sentence receives a
+Belnap truth value, and there is a syntactic negation on sentences. -/
+structure ParaconsistentTheory (S : Type*) where
+  /-- The Belnap truth value assigned to each sentence. -/
+  truth : S → BelnapVal
+  /-- Syntactic negation of a sentence. -/
+  sentNeg : S → S
 
-/-! ### Connectedness forces paraconsistency -/
+namespace ParaconsistentTheory
 
-/-- **Connectedness forces dream logic.**  On a preconnected space, *every*
-proper nonempty closed set has a nonempty contradiction set: one cannot hold a
-non-trivial belief without admitting an impossible object. -/
-theorem connected_forces_paraconsistency [PreconnectedSpace X]
-    {A : Set X} (hcl : IsClosed A) (hne : A.Nonempty) (hproper : Aᶜ.Nonempty) :
-    (contradiction A).Nonempty := by
-  apply not_clopen_contradiction hcl
-  intro hclopen
-  rcases (isClopen_iff.1 hclopen) with h | h
-  · exact hne.ne_empty h
-  · exact hproper.ne_empty (by rw [← compl_univ, h])
+variable {S : Type*}
 
-end DreamTopo
+/-- A set of provable sentences is *sound* when every provable sentence is
+at-least-true (designated). -/
+def isSound (T : ParaconsistentTheory S) (provable : Set S) : Prop :=
+  ∀ s ∈ provable, (T.truth s).isTrue = true
+
+end ParaconsistentTheory
+
+/-- The inconsistency degree of a finite theory: the number of glut (`B`) sentences. -/
+def inconsistencyDegree {S : Type*} [Fintype S] [DecidableEq S]
+    (T : ParaconsistentTheory S) : ℕ :=
+  (Finset.univ.filter (fun s => T.truth s = BelnapVal.B)).card
+
+/-- A Liar sentence: a sentence whose truth value is a fixed point of negation
+(forced to be `B` or `N`). -/
+structure HasLiar {S : Type*} (T : ParaconsistentTheory S) where
+  /-- The Liar sentence. -/
+  liar : S
+  /-- The Liar is a negation fixed point: it has the same value as its own negation. -/
+  liar_fixed : T.truth liar = (T.truth liar).neg
+
+/-- A theory is *classical* (bivalent) when every sentence is exactly `T` or `F`. -/
+def IsClassical {S : Type*} (T : ParaconsistentTheory S) : Prop :=
+  ∀ s, T.truth s = BelnapVal.T ∨ T.truth s = BelnapVal.F
+
+/-- **No Liar in a classical theory**: bivalence is incompatible with a negation
+fixed point, since `neg` has no fixed point among `{T, F}`. -/
+theorem classical_no_liar {S : Type*} (T : ParaconsistentTheory S)
+    (h : ∀ s, T.truth s = BelnapVal.T ∨ T.truth s = BelnapVal.F)
+    (hL : HasLiar T) : False := by
+  have hf := hL.liar_fixed
+  rcases h hL.liar with hv | hv <;> rw [hv] at hf <;> simp [BelnapVal.neg] at hf
+
+/-- **Berry-style pigeonhole bound**: if there are more objects than descriptions and
+every object maps to a description, two distinct objects share a description. -/
+theorem berry_definability_bound {S : Type*} [DecidableEq S]
+    (descs objects : Finset S) (definability : S → S)
+    (defn_range : ∀ o ∈ objects, definability o ∈ descs)
+    (overflow : descs.card < objects.card) :
+    ∃ o₁ ∈ objects, ∃ o₂ ∈ objects, o₁ ≠ o₂ ∧ definability o₁ = definability o₂ :=
+  Finset.exists_ne_map_eq_of_card_lt_of_maps_to overflow defn_range
+
+/-! ## FDE formula algebra -/
+
+/-- Formulas of First Degree Entailment over countably many atoms. -/
+inductive FDEFormula
+  | atom (n : ℕ)
+  | neg (φ : FDEFormula)
+  | disj (φ ψ : FDEFormula)
+  | conj (φ ψ : FDEFormula)
+
+/-- Belnap-valued evaluation of an FDE formula under a valuation `v`. -/
+def FDEFormula.eval (v : ℕ → BelnapVal) : FDEFormula → BelnapVal
+  | .atom n => v n
+  | .neg φ => (φ.eval v).neg
+  | .disj φ ψ => (φ.eval v).disj (ψ.eval v)
+  | .conj φ ψ => (φ.eval v).conj (ψ.eval v)
