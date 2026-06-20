@@ -2485,11 +2485,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every finite-dimensional restricted Rota-Baxter Lie algebra (g,T) of weight \u03ba over a field of characteristic p that admits an intrinsic graph subalgebra characterization satisfies T\u2218T = \u03ba\u00b7id_g as endomorphisms of g.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2137",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19244v1",
+    "status": "available",
+    "timestamp": "2026-06-20T11:13:50.511359+00:00",
+    "title": "Conjecture on Idempotent Up to Scalar Property of Restricted Rota-Baxter Operators"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let S_N(x)=sum_{i=1}^N x^i. For primes p<q with pq | m and n^2 >= (p-1)(q-1)+1, the conjecture says the cyclotomic transfer P=S_{m^2}/Phi_{pq}, Q=S_{n^2} Phi_{pq} is a nonstandard square-sided pair of sizes m^2 and n^2. Equivalently, the quotient and product have nonnegative integer coefficients, P(1)=m^2, Q(1)=n^2, and P Q=S_{m^2}S_{n^2}. A counterexample would be any admissible p,q,m,n for which one of these two explicit polynomials has a negative coefficient.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2137",
+    "id": "fd_2138",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -2503,7 +2518,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2138",
+    "id": "fd_2139",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
@@ -2518,7 +2533,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2139",
+    "id": "fd_2140",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20085v1",
@@ -2532,7 +2547,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2140",
+    "id": "fd_2141",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19863v1",
@@ -2547,7 +2562,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2141",
+    "id": "fd_2142",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19796v1",
@@ -2787,7 +2802,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived from the Phase A cycle that produced"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "d9e56a6a",
     "description": "# Future Directions \u2014 Functorial Tropical\u2013Pythagorean Bridge (Probability)\n\nThis cycle established a *normalization functor into the probability simplex*\nthat unifies three threads:\n\n* **Tropical**: `lse2`, `softmax2`, and the general `softmax`, with the Maslov\n  dequantization sandwich `max \u2264 lse2 \u2264 max + log 2`.\n* **Probability**: two-point (Bernoulli) laws, `bernVar`, and the cumulant\n  identities `deriv lse2 = softmax2` (mean) and `deriv\u00b2 lse2 = bernVar \u2218 softmax2`\n  (variance = tropical curvature).\n* **Pythagorean**: the map `(a,b,c) \u21a6 ((a/c)\u00b2, (b/c)\u00b2)` lands in the simplex,\n  is dilation-invariant, equals the softmax image of log-squared coordinates,\n  and yields the Pythagorean probability identity `(p\u2212q)\u00b2 + 4\u00b7Var = 1`.\n\nThe conjectures below are precise, falsifiable targets for the next cycle. Each\nis stated so it can be dropped into Lean as a `theorem \u2026 := by sorry` and\nattacked directly.\n\n## Conjecture 1 (n-point tropical Hessian = covariance)\nThe general softmax `softmax w` is the gradient of the n-point free energy\n`lse w := log \u2211\u2c7c exp (w j)`, and the Hessian of `lse` is the covariance matrix of\nthe Gibbs law:\n```\n\u2202\u00b2/\u2202w\u1d62\u2202w\u2c7c lse w = (if i = j then softmax w i \u00b7 (1 - softmax w i)\n                    else - softmax w i \u00b7 softmax w j).\n```\n**Test.** Prove `deriv (fun t => lse (Function.update w i t)) (w i) = softmax w i`\nand the diagonal/off-diagonal second-derivative formulas. Expected: the diagonal\nspecializes to `bernVar (softmax w i)`, generalizing `deriv2_lse2_eq_bernVar`.\n\n## Conjecture 2 (Pythagorean parametrization of the full simplex)\nEvery interior Bernoulli law arises from a *real* Pythagorean relation: for all\n`p \u2208 (0,1)` there exist `a,b,c > 0` with `a\u00b2 + b\u00b2 = c\u00b2`, `(a/c)\u00b2 = p`. Concretely\n`a = \u221ap\u00b7c`, `b = \u221a(1\u2212p)\u00b7c`. Moreover the induced standard deviation satisfies\n`\u03c3 = |ab|/c\u00b2 = \u221a(p(1\u2212p))`, so **the Bernoulli standard deviation is exactly half\nthe normalized area `2ab/c\u00b2` of the right triangle**.\n**Test.** Prove surjectivity of `p \u21a6` Pythagorean triple and the identity\n`2 * Real.sqrt (bernVar p) = 2*a*b/c^2` for the canonical triple. Falsifiable:\nthe area-to-\u03c3 proportionality constant is conjectured to be exactly `2`.\n\n## Conjecture 3 (Maslov interpolation is monotone and contracts to max)\nDefine the temperature-scaled functional `lseT h a b := h \u00b7 log(exp(a/h)+exp(b/h))`\nfor `h > 0`. Then `h \u21a6 lseT h a b` is monotone non-decreasing, `lseT h a b \u2192 max a b`\nas `h \u2192 0\u207a`, and the *Gibbs entropy gap* `lseT h a b \u2212 max a b \u2208 [0, h\u00b7log 2]`.\n**Test.** Prove the sandwich `max a b \u2264 lseT h a b \u2264 max a b + h\u00b7log 2` (rescale\nthe proved `lse2` sandwich) and the limit `Filter.Tendsto (fun h => lseT h a b)\n(nhdsWithin 0 (Set.Ioi 0)) (nhds (max a b))`. This is the quantitative\ndequantization underlying the whole bridge.\n\n## Conjecture 4 (Pythagorean identity is the \u03c7\u00b2 / information projection at 2 points)\nFor the Pythagorean-induced law `p = (a/c)\u00b2`, the polarization leg `p \u2212 q` equals\nthe (signed) \u03c7\u00b2-type discrepancy from the uniform law `(\u00bd,\u00bd)`:\n`(p \u2212 \u00bd)\u00b2 + (q \u2212 \u00bd)\u00b2 = \u00bd\u00b7(p \u2212 q)\u00b2 = \u00bd\u00b7(1 \u2212 4\u00b7Var)`. Hence **maximal Bernoulli\nvariance \u21d4 minimal \u03c7\u00b2-distance to uniform \u21d4 the degenerate right triangle\n`a = b`**, i.e. the isoceles Pythagorean triple `(1,1,\u221a2)`.\n**Test.** Prove the \u03c7\u00b2 identity and that `Var` is maximized exactly when\n`(a/c)\u00b2 = (b/c)\u00b2`, characterizing the optimizer as the isoceles triple. Connect\nto a genuine `Real.rpow`-based R\u00e9nyi/Tsallis entropy and show the leg `p\u2212q`\ncontrols a one-parameter family of divergences from uniform.\n\n## Conjecture 5 (Functorial naturality square)\nThe two functors into the simplex commute with their symmetries: softmax\nintertwines the additive `\u211d`-shift action on log-coordinates with the trivial\naction on the simplex, and the Pythagorean functor intertwines the multiplicative\n`\u211d\u02e3`-dilation action on triples with the trivial action. Conjecture: there is a\n*natural transformation* `log\u2218(\u00b7)\u00b2 : (Pythagorean triples / dilation) \u27f9\n(log-coordinates / shift)` making the triangle\n`softmax \u2218 (log \u2218 sq) = pythProb` commute as functors, not merely pointwise.\n**Test.** Formalize both as actions (`AddAction \u211d` and `MulAction \u211d\u02e3`) on the\nrespective domains, define the quotients, and prove the induced maps to the\nsimplex are well-defined and equal. The pointwise version is already proved\n(`pyth_eq_softmax2`); the goal is to upgrade it to an equivariant/quotient\nstatement.\n",
     "domains": [
       "Tropical",
@@ -2797,7 +2812,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "3b102b1d",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T13:27:48.242946+00:00",
     "title": "*normalization functor into the probability simplex*"
   },
@@ -3493,51 +3508,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# FUTURE DIRECTIONS \u2014 Topological Generalization Bounds for Deep Learning\n\nDerived from the v19a research cycle that produced `Bounds.lean` and\n`CohomologyCapacity.lean`. Both deliverables serve the **cross-domain bridge**\ncategory (Algebra / Algebraic Topology \u2194 Machine Learning generalization theory).\n\nThis cycle established four facts about a McAllester-style bound whose complexity\nterm is the first Betti number `b\u2081` of weight space:\n- monotonicity in `b\u2081` (`topoGenBound_mono_betti`),\n- the exact gap formula (`topoGenBound_gap_eq`),\n- consistency `\u2192 empRisk` at rate `\u0398(\u221a((log n)/n))` (`topoGenBound_tendsto_empRisk`),\n- the bridge `H\u00b9 = 0 \u21d2` tightest bound (`cochain_bound_tight_on_total`,\n  `cohComplexity_cocycle_total`), routed through the catalog's\n  `cocycle_eq_coboundary_on_total`.\n\nThe conjectures below extend those findings.\n\n---\n\n## Conjecture 1 \u2014 Higher-Betti additivity of the topological penalty\n\nFor a complexity term aggregating *all* Betti numbers,\n`topoComplexity_full = log(1 + \u03a3_k w_k b_k)` with weights `w_k > 0`, the resulting\nbound is jointly monotone in every `b_k` and still consistent at the same\n`\u0398(\u221a((log n)/n))` rate.\n\n- **The key insight is...** that consistency in `Bounds.lean` depended only on the\n  complexity term being a *constant in n*; any finite topological summary inherits\n  the decay, so the entire Betti vector \u2014 not just `b\u2081` \u2014 can be charged into the\n  penalty without breaking the statistical rate.\n- **Why now?** The single-Betti case is fully formalized and the limit proof is\n  modular in the constant; generalizing the constant to a Betti-weighted sum is a\n  direct next formal step.\n\n## Conjecture 2 \u2014 Strict monotonicity and a separation gap\n\nThe topological bound is *strictly* increasing in `b\u2081`: for `b1 < b2` and `1 < n`,\n`topoGenBound empRisk b1 n \u03b4 < topoGenBound empRisk b2 n \u03b4`, with an explicit\npositive gap `\u221a(...) \u2212 \u221a(...) \u2265 c(n,\u03b4)\u00b7(log(1+b2) \u2212 log(1+b1))`.\n\n- **The key insight is...** that `log` is strictly monotone and `\u221a` is strictly\n  monotone on positives, so the non-strict chain in `topoGenBound_mono_betti` can\n  be upgraded to a quantitative separation by concavity (mean-value) bounds on \u221a.\n- **Why now?** We already proved the non-strict version and isolated the positive\n  denominator `2(n\u22121)`; the strict refinement reuses exactly that infrastructure.\n\n## Conjecture 3 \u2014 Acyclicity is the unique minimizer\n\nAmong all weight-space complexes on `m > 0` covers, the bound is minimized\n*exactly* by the cohomologically trivial ones (`H\u00b9 = 0`), and this minimum is\nattained on the total space.\n\n- **The key insight is...** that `cohComplexity` is `0` iff the cochain is a\n  coboundary, and `total_space_acyclic` shows the total space realizes this; so\n  \"flat/acyclic generalizes best\" becomes an iff, not just an inequality.\n- **Why now?** `cohComplexity_cocycle_total` proves one direction; the converse\n  (nonzero capacity \u21d2 strictly larger bound) follows from Conjecture 2's strict\n  monotonicity, which is itself within reach.\n\n## Conjecture 4 \u2014 Persistent-homology stability of the bound\n\nReplacing `b\u2081` by a persistence-stable surrogate (total persistence of the `H\u2081`\nbarcode under the bottleneck distance), the induced bound is `1`-Lipschitz in the\nweight perturbation: `|bound(W) \u2212 bound(W')| \u2264 C \u00b7 d_bottleneck(Dgm W, Dgm W')`.\n\n- **The key insight is...** that the catalog's bottleneck-stability machinery\n  (`BoltzmannBridge`) already controls barcode distance, so composing it with the\n  `\u221a`/`log` Lipschitz estimates used here yields a perturbation-robust bound.\n- **Why now?** The `\u221a`-penalty's local Lipschitz behavior is exactly the term we\n  controlled for consistency, and a stable topological summary is the natural\n  input to make the bound robust to SGD noise.\n\n## Conjecture 5 \u2014 Depth-indexed Betti growth governs the bound's tightness\n\nIf network depth `d` grows the first Betti number of the realized weight-space\nnerve at most polynomially, `b\u2081(d) \u2264 P(d)`, then for samples `n = \u03c9(P(d) log P(d))`\nthe topological bound stays consistent uniformly in `d`.\n\n- **The key insight is...** that the penalty depends on `b\u2081` only through\n  `log(1+b\u2081)`, so polynomial Betti growth costs only `O(log d)` in the numerator,\n  which the linear-in-`n` denominator absorbs.\n- **Why now?** The catalog already studies depth/width separations\n  (`DepthHierarchy`, `ReLUDepthWidth`); pairing their cycle-count growth estimates\n  with this cycle's consistency theorem makes the uniform-in-depth claim testable.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2142",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "5eb69ea3",
-    "status": "available",
-    "timestamp": "2026-06-20T11:03:18.479469+00:00",
-    "title": "Derived from the v19a research cycle that produced `Bounds.lean` and"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Probabilistic Ramsey Lower Bounds\n\nDerived from this cycle's findings (the exact first-moment identity `sum_badCount`, the\nthreshold `exists_good_coloring`, the exponential bound `ramsey_diagonal_lower_bound`, and the\nSimpleGraph bridge `exists_clique_free_graph`).\n\n## Conjecture 1 \u2014 The deletion method improves the constant to `R(s,s) > (1/e)\u00b7s\u00b72^{s/2}`\n**Statement.** Strengthen `exists_good_coloring`: if `C(n,s)\u00b72^{1\u2212C(s,2)} \u2264 n/2` then there is\na colouring of `K_n` with `< n/2` monochromatic `s`-cliques; deleting one vertex from each\nremoves them all, yielding a clique-free colouring of `K_{n/2}`. This gives the classical\n`R(s,s) > (1+o(1))\u00b7(s/e)\u00b72^{s/2}`, a factor `~s` better than `two_choose_lt`.\n**The key insight is...** the first-moment *count* `badCount` is not just a yes/no threshold \u2014\nits exact value `\u2211_\u03c7 badCount = C(n,s)\u00b72^{C(n,2)\u2212C(s,2)+1}` lets us bound the *average* number\nof bad cliques and delete them, converting \"few bad cliques on average\" into \"a colouring with\nprovably zero bad cliques on a slightly smaller vertex set\".\n**Why now?** The exact identity `sum_badCount` is already proved; the deletion step only needs\nan averaging `\u2203 \u03c7, badCount \u03c7 \u2264 E[badCount]` plus a vertex-removal lemma on `Edge2`, both\nelementary refinements of code already in `Counting.lean`.\n\n## Conjecture 2 \u2014 Off-diagonal first moment yields `R(3,t) > c\u00b7(t/ln t)^{3/2}` is **not**\nreachable by the plain first moment, but `R(3,t) > c\u00b7t^{3/2}/(ln t)` is.\n**Statement.** Specialising the identity to `s = 3` and an asymmetric red/blue bias\n`p \u2260 1/2` gives `R(3,t) > n` whenever `C(n,3)p^3 + C(n,t)(1\u2212p)^{C(t,2)} < 1`. Optimising `p`\nyields a polynomial lower bound `R(3,t) = \u03a9(t^{3/2}/ln t)`; the plain unbiased count\n(`p = 1/2`) provably cannot beat `\u03a9(t)`.\n**The key insight is...** monochromatic-probability is a *product over edges*, so a biased coin\ntrades a cheap red triangle probability `p^3` against an expensive blue `t`-clique probability\n`(1\u2212p)^{C(t,2)}`; the unbiased identity in `Counting.lean` is the `p = 1/2` slice of a\none-parameter family.\n**Why now?** `card_filter_const_on` already counts colourings constant on an index set; the\nonly new ingredient is a *weighted* count `p^{|E|}`, i.e. replacing `Bool` counting by a\nrational weight \u2014 a direct generalisation of the existing finite-counting lemmas.\n\n## Conjecture 3 \u2014 The first-moment threshold is monotone but never tight: `bestN(s) < R(s,s)`\nstrictly for all `s \u2265 3`.\n**Statement.** Let `bestN(s)` be the largest `n` with `2\u00b7C(n,s) < 2^{C(s,2)}` (the \u00a71 table:\n3, 6, 11, 17, 27, \u2026). Conjecture `bestN(s) + 1 < R(s,s)` for every `s \u2265 3`, i.e. the plain\nfirst moment is *strictly* suboptimal at every diagonal value, with gap \u2192 \u221e.\n**The key insight is...** the first moment ignores correlations between overlapping cliques;\ntwo `s`-cliques sharing `s\u22121` vertices are highly correlated, so the true number of bad\ncolourings is far below the union bound, leaving room above `bestN(s)`.\n**Why now?** `bestN(s)` is now an exactly computable Lean function (see `ComputationalEvidence.md`),\nso the conjecture is finitely checkable for each `s` and its asymptotic gap is provable from\n`two_choose_lt` versus the known `R(s,s) \u2265 \u03a9(s\u00b72^{s/2})`.\n\n## Conjecture 4 \u2014 A Lov\u00e1sz-Local-Lemma colouring beats the first moment by an exponential\nfactor in the *number of vertices it certifies* at fixed failure budget.\n**Statement.** Replacing the union bound by the symmetric LLL (`e\u00b7p\u00b7(D+1) \u2264 1`, with\n`p = 2^{1\u2212C(s,2)}` and dependency degree `D = C(n,2)C(n\u22122,s\u22122)`) certifies a clique-free\ncolouring for `n` a constant factor larger than `bestN(s)`, and crucially gives an\n*algorithmic* (Moser\u2013Tardos) construction.\n**The key insight is...** the bad events \"clique `S` is monochromatic\" are mutually\nindependent of all cliques sharing no edge with `S`; this sparse dependency structure is\nexactly what the LLL exploits and what the first moment throws away.\n**Why now?** The bad-event family `{MonoClique \u03c7 S}` and its incidence structure are already\nformalised in `Counting.lean`; an LLL lemma over a finite probability space (uniform\n`GColoring`) is a self-contained addition that reuses `edgesOf` for the dependency graph.\n\n## Conjecture 5 \u2014 The SimpleGraph bridge extends to a *self-complementary* witness for even `m`.\n**Statement.** For `m` even, the colouring produced by `ramsey_diagonal_lower_bound` can be\nchosen so that `graphOfColoring \u03c7 \u2245 (graphOfColoring \u03c7)\u1d9c`, i.e. a single self-complementary\ngraph on `2^m` vertices simultaneously witnesses the absence of both a `2m`-clique and a\n`2m`-independent set (a \"Ramsey graph\" in the strict sense, like the Paley graphs).\n**The key insight is...** symmetry between the two colour classes is free in the unbiased\nfirst moment (`badCount` counts red and blue cliques identically), so the existence proof\nalready treats `G` and `G\u1d9c` symmetrically \u2014 `mono_of_isClique` and `mono_of_isClique_compl`\nare mirror images.\n**Why now?** `exists_clique_free_graph` already yields a graph with the two-sided property;\nupgrading existence to a self-complementary witness needs only an averaging over the\ncolour-swap involution on `GColoring`, an involution already implicit in `colorEdge_symm`.\n",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2143",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "bcf3395e",
-    "status": "available",
-    "timestamp": "2026-06-20T11:06:26.824716+00:00",
-    "title": "Derived from this cycle's findings (the exact first-moment identity `sum_badCoun"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nFive research directions building directly on the formal finite-library combinatorics in\n`LibraryOfBabel.lean`. Each is freeform but anchored to a concrete next theorem.\n\n## 1. Exact multi-window inclusion\u2013exclusion\n\nThe file proves `card_window`: the number of books containing a fixed pattern at a fixed\noffset is `k^(left+right)`. The natural next step is the count of books matching *several*\npatterns at several fixed (possibly overlapping) offsets simultaneously, and ultimately\nthe count of books containing a pattern *somewhere*. The key insight is that overlapping\nwindow constraints do not multiply independently \u2014 their joint count is governed by the\noverlap (autocorrelation) structure of the patterns, so the right tool is a formal\ninclusion\u2013exclusion over the lattice of position constraints, where incompatible overlaps\ncontribute zero. **Why now?** The single-window cylinder equivalence is already explicit\nand machine-checked here, giving exactly the atomic events that inclusion\u2013exclusion\ncombines; formalizing the general principle is now an assembly problem rather than a\nfoundational one.\n\n## 2. Hamming sphere and ball enumeration\n\nWe establish the radius-zero sphere has cardinality `1` and isolate the conjectured\ngeneral formula `Nat.choose n d * (k - 1)^d` as an open problem. The direction is to prove\nthis formula and then sum it to obtain closed Hamming-ball counts. The key insight is that\na book at distance exactly `d` from a center is determined by *two independent choices* \u2014 a\n`d`-element subset of positions to corrupt, and an injection-free relabeling picking one of\nthe `k - 1` alternative letters at each corrupted position \u2014 so the sphere is in explicit\nbijection with `{S : Finset (Fin n) // S.card = d} \u00d7 (S \u2192 Fin (k-1))`. **Why now?** The\ndisagreement-set definition of `hammingDist` used here already presents the sphere as a\nsubtype indexed by exactly that disagreement set, so the bijection target is essentially\nread off the existing definition, and the binomial-theorem cross-check\n`(1 + (k-1))^n = k^n` is available from `card_book`.\n\n## 3. Finite automata for meaningful-text predicates\n\n`meaningfulCount` counts books satisfying any decidable predicate but treats the predicate\nas a black box. The direction is to instantiate it with linguistically meaningful\npredicates expressed as recognition by a finite automaton (a regular language of\n\"well-formed\" strings). The key insight is that when the predicate is a regular language,\n`meaningfulCount` becomes a transfer-matrix (path-counting) computation: the number of\naccepted length-`n` strings is an entry of the `n`-th power of the automaton's transition\nmatrix, turning the vague \"probability of meaning\" into an exact, computable spectral\nquantity. **Why now?** The file already reframes probability as the finite ratio\n`meaningfulProb = (count, k^n)`, so plugging in an automaton-defined predicate slots\ndirectly into an interface that exists and is proved sound (`meaningfulCount_le`,\n`meaningfulProb_den`), and Mathlib's developing automata/regular-language library makes the\ntransfer-matrix step tractable.\n\n## 4. Computable proof-search predicates over finite books\n\nA sharp replacement for informal proof-complexity probability claims is to fix a formal\nproof system with a *decidable* proof checker and let the predicate `P b` mean \"`b`\nencodes a valid proof of a fixed target statement.\" The direction is to compute, or bound,\n`meaningfulCount P` \u2014 the exact number of length-`n` proof-bearing books \u2014 as a function of\n`n`. The key insight is that decidability of proof checking makes `P` a legitimate instance\nof the `meaningfulCount` scheme with no probabilistic hand-waving, so \"the chance a random\nbook proves the theorem\" becomes the determined rational `meaningfulProb P`. **Why now?**\nThe decidable-predicate counting interface is already in place and axiom-clean here, and\nLean itself supplies concrete decidable proof checkers, so the model can be instantiated\ninside the same framework without new foundations.\n\n## 5. From counts to computable density and asymptotics\n\nThe cylinder theorems give exact numerators (`k^r`, `k^(left+right)`) over the exact\ndenominator `k^n`, i.e. exact rational densities. The direction is to develop the\nasymptotic behavior of such densities and counts as the book length `n \u2192 \u221e`, e.g. the\ndensity of books containing a fixed passage, or the growth rate of meaningful/proof-bearing\nbooks. The key insight is that because each density is an exact ratio of explicit\nexponentials rather than an estimate, its limit and rate are extractable rigorously by\nelementary real-analytic limits rather than probabilistic approximation. **Why now?** All\nthe underlying counts are already closed-form and proved in this file, so the asymptotic\nlayer is a self-contained analytic addition that needs no further combinatorial input.\n",
-    "domains": [
-      "Computation",
-      "Algebra"
-    ],
-    "id": "fd_2144",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "722e1f4a",
-    "status": "available",
-    "timestamp": "2026-06-20T11:09:25.746391+00:00",
-    "title": "Five research directions building directly on the formal finite-library combinat"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3552,17 +3522,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Cycle 722e1f4a (Q=0.654) proved 22 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Formalize the finite combinatorics of Borges' Library of Babel: define the set of all books of length n over a k-symbol alphabet, prove exact cardinalities of the whole library and cylinder sets (give",
+    "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
     "domains": [
-      "Applications"
+      "Novelty",
+      "Computation"
     ],
-    "id": "sorry_fill_722e1f4a_9dcd9681",
-    "priority_score": 0.7040000000000001,
+    "id": "fd_2119",
+    "priority_score": 0.7158260869565218,
     "research_mode": "team",
-    "source_exp_id": "722e1f4a",
+    "source_exp_id": "pi_brainstorm",
     "status": "available",
-    "timestamp": "2026-06-20T11:10:43.756571+00:00",
-    "title": "Close Proofs: The Library of Babel: Combinatorics of the Universal Library"
+    "timestamp": "2026-06-19T17:11:08.928185+00:00",
+    "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
   {
     "consumed_by_exp_id": "",
@@ -4069,6 +4040,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
+    "domains": [
+      "Tropical",
+      "Computation"
+    ],
+    "id": "fd_0547",
+    "priority_score": 0.5499999999999999,
+    "research_mode": "team",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-03T22:10:07.541008+00:00",
+    "title": "Tropical Differential Equations: Power Series Solutions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the attention mechanism A(Q,K,V) = softmax(QK^T / sqrt(d_k)) V. Prove that permutation-equivariant attention is a universal approximator of permutation-equivariant functions. Show that the attention kernel K(x,y) = exp(q(x)^T k(y) / sqrt(d)) defines a reproducing kernel Hilbert space. Prove that multi-head attention increases the rank of the attention matrix.",
     "domains": [
       "MachineLearning",
@@ -4096,20 +4082,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:07.956863+00:00",
     "title": "EML Transseries: Asymptotic Expansions Beyond Power Series"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "Cycle bcf3395e (Q=0.454) proved 351 theorems in Geometry but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Complete the probabilistic method formalization for diagonal Ramsey numbers using exact finite counting. Focus on proving the main theorems: card_Edge2, card_GColoring, card_edgesOf, card_mono_fixed_s",
-    "domains": [
-      "Geometry"
-    ],
-    "id": "sorry_fill_bcf3395e_8bcb9d83",
-    "priority_score": 0.5037146432932148,
-    "research_mode": "team",
-    "source_exp_id": "bcf3395e",
-    "status": "available",
-    "timestamp": "2026-06-20T11:07:38.792856+00:00",
-    "title": "Close Proofs: Ramsey Theory: Bounds and Constructions"
   },
   {
     "consumed_by_exp_id": "",
@@ -4142,7 +4114,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Langlands for GL\u2082 over Q"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "00fd88ec",
     "description": "Prove arithmetic mirror symmetry: the number of rational curves on X equals the rank of the Picard group of its mirror Y. Formalize the SYZ picture and modularity of CY zeta functions.",
     "domains": [
       "Bridges",
@@ -4152,7 +4124,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T19:55:28.798593+00:00",
     "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
   },
@@ -4547,7 +4519,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Chaos and the Three-Body Problem: Lyapunov Exponent Bounds"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "47b46667",
     "description": "Borges' Library of Babel contains every possible 410-page book \u2014 approximately 25^{1312000} volumes. The library is finite but vast beyond comprehension. Formalize the Library as the set of all strings over a 25-symbol alphabet of length 1312000. Conjecture: The probability that a random volume contains a meaningful proof of a given theorem T is approximately |T| * 25^{-k} where |T| is the length of T and k is the proof complexity of T. Moreover, the Library contains a universal catalog \u2014 a single volume that encodes the location of every other volume \u2014 and this catalog can be found in polynomial time using a variant of the de Bruijn sequence construction. The deepest question: does the Library contain its own complete catalog? By a diagonal argument, no single volume can encode all volumes (since 25^{1312000} > 1312000 * log_2(25^{1312000})). But a DISTRIBUTED catalog spanning N volumes can encode the entire Library if N > 25^{1312000} / (1312000 * log_2(25)). Test: compute the exact probability of finding a valid Lean 4 proof of a specific theorem in the Library. Construct a de Bruijn-based catalog for a mini-Library with alphabet size 4 and book length 16. Impact: the mathematics of universal information spaces \u2014 every possible text exists, but finding meaning requires a guide.",
     "domains": [
       "Novelty",
@@ -4557,7 +4529,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.05,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-01T12:30:30.490561+00:00",
     "title": "The Library of Babel: Combinatorics of the Universal Library"
   },
