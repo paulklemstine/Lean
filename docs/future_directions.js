@@ -3333,6 +3333,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThese are freeform directions extending the tropical TDLP eigenline\ncounterexample formalized in\n[`Catalog/Tropical/TropicalTDLPEigenAttack.lean`](Catalog/Tropical/TropicalTDLPEigenAttack.lean).\n\n## 1. Full tropical semiring with infinities\n\nReformulate the toy model over the genuine tropical semiring `WithTop \u2115` (or\n`Tropical (WithTop \u211d)` from Mathlib), where `+\u221e` is the additive identity and\n`min` the addition, and re-prove the eigenline attack there. The key insight is\nthat the eigenline collapse depends only on min-plus *homogeneity*, so the proof\nshould survive the move to `WithTop` once truncated subtraction is replaced by an\norder-theoretic difference. Why now? Mathlib already ships a `Tropical` type and\nits semiring instances, so the supporting algebra exists today and the gap is\npurely a matter of porting the homogeneity argument across the carrier change.\n\n## 2. Genuine `n\u00d7n` min-plus matrices and tropical eigenvalues\n\nLift the abstract `ScalarEquivariant` hypothesis to concrete min-plus matrix\nmultiplication on `Fin n \u2192 \u2115`, and connect `IsTropicalEigen` to the tropical\neigenvalue given by the maximum cycle mean of the underlying weighted digraph.\nThe key insight is that every irreducible tropical matrix has an eigenvector\nwhose support is a critical cycle, so the \"accidental eigenline\" risk is generic\nrather than exceptional. Why now? Max-plus spectral theory (Karp's algorithm,\ncritical graphs) is classical and finitely computable, making it ideal for a\n`decide`/`native_decide`-backed Lean treatment that ties the abstract theorem to\nexplicit matrices.\n\n## 3. Quantifying residual hardness off the eigenline\n\nStudy iterates of tropical maps seeded *away* from any eigenline and measure how\nquickly the orbit aligns with the dominant eigenvector (the cyclicity /\ntransient length of max-plus dynamics). The key insight is that max-plus systems\nbecome eventually periodic with a linear regime, so even \"off-eigenline\" seeds\nleak `k` after a bounded transient, sharpening the counterexample into a generic\nattack. Why now? The cyclicity theorem for irreducible max-plus matrices gives\nexplicit transient bounds, so a formal statement quantifying the leak is within\nreach of current tooling.\n\n## 4. Adversary models and a formal security game\n\nEncode the TDLP as a formal interactive game (challenger samples `k`, publishes\n`(\u03bb, x, F^[k] x)`; adversary outputs a guess) and prove a Lean theorem that the\nsubtraction adversary wins with probability `1`. The key insight is that turning\nthe algebraic identity into a probability-`1` win condition makes \"this scheme is\nbroken\" a single quantified statement rather than an informal observation. Why\nnow? Mathlib's probability and `PMF` machinery is mature enough to express simple\ncryptographic games, so the bridge from algebra to a game-based break is\ntractable.\n\n## 5. Design criteria for non-linearizable tropical schemes\n\nUse the counterexample to derive *positive* design constraints: characterize\nfamilies of tropical maps whose iteration is provably not affine in `k` on any\ninvariant set, e.g. by injecting min/max branching that breaks scalar\nequivariance. The key insight is that the attack is exactly an obstruction\ntheorem \u2014 security requires failing `ScalarEquivariant` in an essential way \u2014 so\nits negation is a checklist for designers. Why now? With the obstruction now\nformalized, the natural next step of formalizing its converse (sufficient\nconditions for resistance) is well-posed and immediately actionable.\n",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_2129",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c50363b9",
+    "status": "available",
+    "timestamp": "2026-06-20T02:24:22.006603+00:00",
+    "title": "These are freeform directions extending the tropical TDLP eigenline"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3522,6 +3537,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T01:05:26.622694+00:00",
     "title": "OEIS sequence: Maximal number of \"good\" manifolds in an n-nice polytope."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: The long exact sequences and connecting homomorphisms in spectral sequence theory can systematically identify causal relationships in multivariate time series by tracking how correlations evolve across different scales of temporal aggregation. Specifically, the differentials in a spectral sequence constructed from filtered time series data will reveal non-trivial causal edges that are invisible to standard Granger causality tests. Test: Apply the spectral sequence construction to synthetic time series with known causal structure (e.g., VAR processes with latent confounders) and compare the identified causal edges from differentials with ground truth. Impact: This would enable discovery of hidden causal mechanisms in complex dynamical systems (climate, neuroscience, economics) where traditional methods fail due to non-linearities and latent variables.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_2130",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-20T02:26:05.148675+00:00",
+    "title": "Causal Inference via Spectral Sequences: Homological Methods for Time Series Ana"
   },
   {
     "consumed_by_exp_id": "",
@@ -4492,21 +4521,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-01T12:30:30.782446+00:00",
     "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
-  },
-  {
-    "consumed_by_exp_id": "35a8dda5",
-    "description": "A database with missing entries is a partial section of a sheaf. The sheaf condition (gluing) says that if two partial sections agree on their overlap, they can be glued into a global section. Conjecture: the probability that a random database with missing rate r satisfies the sheaf condition (i.e., can be consistently filled in) is P(sheaf) = (1-r)^{C(n,k)} where n is the number of columns, k is the number of rows, and C(n,k) is the number of overlapping constraints. This means: for a database with n columns and k rows, the probability of consistent imputation drops exponentially with the number of overlapping constraints. The sheaf imputation method: fill in missing values by finding the closest global section of the data sheaf. This is equivalent to solving a constrained optimization problem where the constraints are the sheaf condition on every overlapping pair of feature subsets. Conjecture: sheaf imputation outperforms mean imputation and KNN imputation when the missing rate r < 0.5 and the number of features n > 10, because the sheaf condition provides exponentially many consistency constraints that other methods ignore. Test: generate synthetic databases with known ground truth, introduce missing values at rate r, compare sheaf imputation with mean, KNN, and MICE. Impact: data imputation is a sheaf cohomology problem. The sheaf condition is the natural consistency constraint for databases.",
-    "domains": [
-      "Novelty",
-      "Algebra"
-    ],
-    "id": "fd_0092",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.807837+00:00",
-    "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
   },
   {
     "consumed_by_exp_id": "",

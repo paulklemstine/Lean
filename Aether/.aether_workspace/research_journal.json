@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "a4cf656f",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Hodge–Laplacian Message Passing, Second Cycle\n\n## Synthesis\n\nThis cycle pushed the *spectral depth threshold* program of\n`HodgeSpectralThreshold.lean` forward along two of its ow",
-      "quality_score": 0.7568800000000001,
-      "sorry_count": 3,
-      "theorem_count": 0,
-      "timestamp": "2026-06-14T05:56:16",
-      "title": "The file `Catalog/MachineLearning/HodgeSpectralThreshold.lean` extracts a rigoro"
-    },
-    {
       "cycle_id": "4302919c",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Path Spaces, h-Levels, and Contractibility as a Universal Property\n\n## Synthesis\n\nThis cycle pushed the catalog's synthetic homotopy module `Logic.HomotopyTypeTheory`\n(`HoTT.IsCo",
@@ -499,19 +489,19 @@
       "theorem_count": 139,
       "timestamp": "2026-06-19T15:17:54",
       "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+    },
+    {
+      "cycle_id": "c50363b9",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\nThese are freeform directions extending the tropical TDLP eigenline\ncounterexample formalized in\n[`Catalog/Tropical/TropicalTDLPEigenAttack.lean`](Catalog/Tropical/TropicalTDLPEig",
+      "quality_score": 0.723184,
+      "sorry_count": 0,
+      "theorem_count": 60,
+      "timestamp": "2026-06-20T02:27:16",
+      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "33bcee64",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — The Rank Characterization of Primitive Divisors\n\n## Synthesis\n\nThis cycle closed the broken-import gap in the Carmichael arc (the historical module\n`Shared.CarmichaelHelper` is n",
-      "quality_score": 0.4553457142857143,
-      "sorry_count": 3,
-      "theorem_count": 28,
-      "timestamp": "2026-06-14T23:21:27",
-      "title": "Close Proofs: `Catalog/Applications/BoltzmannBridge/InterleavingFunctor.lean` (Bridg"
-    },
     {
       "cycle_id": "d787aa34",
       "domain": "Computation",
@@ -2501,27 +2491,19 @@
       "theorem_count": 2,
       "timestamp": "2026-06-20T02:02:54",
       "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+    },
+    {
+      "cycle_id": "c50363b9",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions\n\nThese are freeform directions extending the tropical TDLP eigenline\ncounterexample formalized in\n[`Catalog/Tropical/TropicalTDLPEigenAttack.lean`](Catalog/Tropical/TropicalTDLPEig",
+      "quality_score": 0.723184,
+      "sorry_count": 0,
+      "theorem_count": 60,
+      "timestamp": "2026-06-20T02:27:16",
+      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "afe8c8b6",
-      "domain": "Novelty",
-      "name": "ext",
-      "quality": 0.7216
-    },
-    {
-      "cycle_id": "afe8c8b6",
-      "domain": "Novelty",
-      "name": "id_toFun",
-      "quality": 0.7216
-    },
-    {
-      "cycle_id": "afe8c8b6",
-      "domain": "Novelty",
-      "name": "comp_toFun",
-      "quality": 0.7216
-    },
     {
       "cycle_id": "cb2c4d8f",
       "domain": "Combinatorics",
@@ -2803,9 +2785,27 @@
       "domain": "Probability",
       "name": "sheaf_condition",
       "quality": 0.8166
+    },
+    {
+      "cycle_id": "c50363b9",
+      "domain": "Tropical",
+      "name": "oneByOne_tropical_iterate",
+      "quality": 0.723184
+    },
+    {
+      "cycle_id": "c50363b9",
+      "domain": "Tropical",
+      "name": "tdlp_recover_oneByOne",
+      "quality": 0.723184
+    },
+    {
+      "cycle_id": "c50363b9",
+      "domain": "Tropical",
+      "name": "tropScalarAdd_add",
+      "quality": 0.723184
     }
   ],
-  "last_updated": "2026-06-20T02:02:54",
+  "last_updated": "2026-06-20T02:27:16",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3940,12 +3940,6 @@
     "Tropical": [
       {
         "cycle_id": "cd281b27",
-        "quality": 0.4205751748251749,
-        "theorems": 141,
-        "title": "Close Proofs: This cycle delivered a self-contained Mathlib foundation for the d"
-      },
-      {
-        "cycle_id": "cd281b27",
         "quality": 0.4802389261744967,
         "theorems": 157,
         "title": "Close Proofs: This cycle delivered a self-contained Mathlib foundation for the d"
@@ -3997,6 +3991,12 @@
         "quality": 0.43941381818181824,
         "theorems": 18,
         "title": "Kakeya Conjecture: Known Cases and Bounds"
+      },
+      {
+        "cycle_id": "c50363b9",
+        "quality": 0.723184,
+        "theorems": 60,
+        "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
       }
     ]
   }

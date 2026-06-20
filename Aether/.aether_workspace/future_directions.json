@@ -3216,7 +3216,7 @@
       "depth_estimate": 3,
       "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Novelty",
         "Cryptography"
@@ -10451,7 +10451,7 @@
       "depth_estimate": 3,
       "description": "Prove the tropical Riemann-Roch theorem: for a tropical curve of genus g and a divisor D of degree d, the tropical rank r(D) satisfies r(D) - r(K-D) = d - g + 1. Formalize chip-firing and Baker-Norine theory.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Algebra"
@@ -11747,7 +11747,7 @@
       "depth_estimate": 3,
       "description": "Develop a large deviation principle for max-plus probability measures. Prove that max-plus random walks satisfy an LDP with rate function given by the Legendre-Fenchel transform.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.65,
+      "domain_quality_penalty": -0.55,
       "domains": [
         "Tropical",
         "Computation"
@@ -12863,7 +12863,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropical compactification of the moduli space of curves M_g is a toric variety whose boundary divisors correspond to tropical curves. Formalize the connection between the Deligne-Mumford compactification and the tropical moduli space.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Tropical",
         "Geometry"
@@ -12971,7 +12971,7 @@
       "depth_estimate": 3,
       "description": "Prove that the Bergman fan of a matroid M equals the tropical linear space of the matroid's circuit ideal. Formalize the connection between matroid connectivity and the topology of the Bergman fan. Show that nested matroids give tropical linear subspaces.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Tropical",
         "Computation"
@@ -14914,7 +14914,7 @@
       "depth_estimate": 3,
       "description": "Prove that the tropicalization of a variety V over a non-Archimedean field is the limit of V as the valuation goes to infinity. Bridge: the tropical fundamental theorem states that the tropicalization of V equals the corner locus of the tropical polynomial. Show that tropical intersection numbers equal classical intersection numbers (tropical Bezout).",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.8,
+      "domain_quality_penalty": -0.7000000000000001,
       "domains": [
         "Bridges",
         "Tropical"
@@ -15238,7 +15238,7 @@
       "depth_estimate": 3,
       "description": "Formalize the tropical semiring (R ∪ {-∞}, max, +). Prove that tropical matrix multiplication is associative and that the tropical determinant equals the weight of the maximum-weight permutation. Show that tropical eigenvalues are roots of the characteristic polynomial in the tropical sense. Prove the tropical Perron-Frobenius theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Tropical",
         "Algebra"
@@ -15310,7 +15310,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.75,
+      "domain_quality_penalty": -0.65,
       "domains": [
         "Tropical",
         "Computation"
@@ -15418,7 +15418,7 @@
       "depth_estimate": 3,
       "description": "Define tropical schemes as semiring schemes over the tropical semiring. Prove that the tropical scheme associated to a tropical polynomial is the corner locus. Show that the structure sheaf of a tropical scheme satisfies the tropical gluing axiom. Connect to the Grothendieck scheme-theoretic approach to tropical geometry.",
       "domain_bridges": [],
-      "domain_quality_penalty": -1.0,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Tropical",
         "Algebra"
@@ -30705,7 +30705,7 @@
       "depth_estimate": 3,
       "description": "# FUTURE DIRECTIONS — Tropicalized binary weight enumerator profiles\n\nFollow-up conjectures for the `SmoothPoincare` tropical-code thread. Each builds on the\nverified results in `TropicalWeightEnumerator.lean` (cycles 1–2: `twe`, `twePlus`,\nadditivity, `minDist` min-law, Hamming closed forms) and `TropicalProfile.lean`\n(cycles 3–4: the covering-radius collapse `twe = min(0, maxWt·t)`, the recovery theorem\n`twe (C.erase 0) = minDist·t`, the universal self-duality `twe+twePlus = n·t` for\nself-complementary codes). All conjectures are stated to be falsifiable by either a\n`native_decide` computation on a concrete code or a general `le_antisymm`-style proof.\n\n---\n\n## Conjecture 1 (Replication power law) — *strong, likely provable*\n\nLet `C^{⊕k}` denote the `k`-fold direct sum (coordinate concatenation) of a code\n`C ⊆ (ZMod 2)ⁿ`, a code of length `k·n`. Then for every `k` and every real `t`,\n```\ntwe (C^{⊕k}) t = k · twe C t,     twePlus (C^{⊕k}) t = k · twePlus C t,\nmaxWt (C^{⊕k}) = k · maxWt C,     minDist (C^{⊕k}) = minDist C.\n```\n*Basis*: proved for `k = 2` on Hamming (`hamming16_twe`, `hamming16_minDist`) and the\nsingle-step laws `twe_append`, `twePlus_append`, `maxWt_append`, `minDist_append`.\n*Test*: induction on `k` using the cycle-3 append laws; the only obstacle is the `Fin`\nre-association `Fin ((k·n)+n) ≃ Fin (k·n + n)`, soluble with `Fin.append` /\n`finCongr`. Falsifiable: any failure of `maxWt (C^{⊕k}) = k·maxWt C` on a small code.\n\n## Conjecture 2 (Tropical profile rigidity / inverse problem) — *bold*\n\nTwo codes `C, D` both containing `0` have *identical full-code tropical profiles*\n(`twe C = twe D` and `twePlus C = twePlus D` as functions of `t`) **iff**\n`maxWt C = maxWt D`. Consequently the pair `(twe, twePlus)` on the *full* code is a\ncomplete invariant of the single number `maxWt`, and is *blind* to everything else\n(length, dimension, minimum distance, the entire interior weight spectrum).\n*Basis*: the collapse theorems `twe_eq_min_zero_maxWt`, `twePlus_eq_max_zero_maxWt`\nmake this immediate in one direction; the converse is `min(0,at)=min(0,bt) ∀t ⟹ a=b`.\n*Test*: a short real-analysis lemma (evaluate at `t = -1`). Falsifiable by exhibiting\ntwo `0`-containing codes with equal `maxWt` but different `twe` — the conjecture\npredicts this is impossible.\n\n## Conjecture 3 (Punctured profile reconstructs the convex hull) — *bold, central*\n\nFor a code `C` containing `0`, define the **doubly-punctured** enumerator on\n`C.erase 0 \\ {maxWt-attaining words}`. Iterating the puncture-and-recover operation of\n`twe_erase_eq_minDist_mul` peels off the weight spectrum from both ends, and the full\nordered sequence of distinct slopes obtained equals exactly the **vertices of the lower\nconvex hull** of the weight-multiset `{wt c : c ∈ C}`. Equivalently: the tropical\nenumerator family `{ twe(C minus its current extreme words) }` is a complete encoding of\nthe Newton polygon of the weight spectrum.\n*Basis*: cycle-2 \"information loss\" insight + `twe_erase_eq_minDist_mul` (the `minDist`\nslope) + the `maxWt` slope. *Test*: define `slopes C := image wt C` and prove the\nrecovered slopes are precisely its convex-hull vertices; verify on Hamming that the\nrecovered slopes are `{0,4,8}` with hull `{0,8}` and the punctured slope `4`.\nFalsifiable on any code whose interior weight is a hull vertex.\n\n## Conjecture 4 (Tropical Singleton / Gleason envelope) — *speculative, high-value*\n\nFor every binary doubly-even self-dual code of length `n` (length `8 ∣ n` by\n`GleasonLength.doublyEven_selfDual_length_div_eight`), the tropical \"gap\" between the\ncovering radius and packing radius obeys\n```\nmaxWt C + minDist C ≤ n + 4,\n```\nwith equality for the extended Hamming `[8,4,4]` code (`8 + 4 = 8 + 4`). More boldly,\n`minDist C ≤ 4·⌊n/24⌋ + 4` (the tropical shadow of the Mallows–Sloane bound), and the\nextremal codes are exactly those whose tropical profile pair `(twe, twe∘erase)` has\nslope set `{0, 4·⌊n/24⌋+4, n}`.\n*Basis*: Hamming endpoints `maxWt = 8`, `minDist = 4`, `n = 8`; `selfDual_even_weight`\nforces even weights. *Test*: prove the additive bound from `wt_add_overlap` and\nself-orthogonality; check `native_decide` on the `[24,12,8]` Golay code if encodable.\nFalsifiable by any doubly-even self-dual code violating `maxWt + minDist ≤ n + 4`.\n\n## Conjecture 5 (Tropical MacWilliams duality) — *speculative, deepest*\n\nDefine the **dual-code tropical enumerator** `twe (C⊥) t`. Conjecture a tropical\nMacWilliams relation: for every linear code `C ⊆ (ZMod 2)ⁿ` and every `t ≤ 0`,\n```\ntwe (C⊥) t = (n · t) − maxWt C · t  =  (n − maxWt C) · t,\n```\ni.e. the covering radius of `C` controls the minimum distance of `C⊥` through\n`minDist(C⊥) = n − maxWt C` whenever `0 ∈ C` (a tropicalized \"dual distance =\nco-covering radius\"). For self-dual `C` this degenerates to the fixed point\n`maxWt C = n − minDist(C)`, predicting `maxWt hamming = 8 − 4 = 4`? — **NB this last\nnumerical check fails for Hamming (`maxWt = 8 ≠ 4`), so the precise constant is part of\nwhat must be discovered**; the robust, testable core is the *linear-in-`t`* form of\n`twe(C⊥)` for `t ≤ 0` and its dependence only on a single dual invariant.\n*Basis*: classical MacWilliams `W_{C⊥} = |C|⁻¹ W_C(x+y, x−y)`, whose tropicalization\nturns the Hadamard transform into an inf-convolution. *Test*: formalize the tropical\n(inf-plus) MacWilliams transform and verify additivity under direct sum mirrors\n`twe_append`. Falsifiable: compute `twe(hamming⊥) = twe(hamming)` (self-dual) and check\nagainst the conjectured linear form.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Pythagorean"
@@ -30849,7 +30849,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Functorial Tropical–Pythagorean Bridge (Probability)\n\nThis cycle established a *normalization functor into the probability simplex*\nthat unifies three threads:\n\n* **Tropical**: `lse2`, `softmax2`, and the general `softmax`, with the Maslov\n  dequantization sandwich `max ≤ lse2 ≤ max + log 2`.\n* **Probability**: two-point (Bernoulli) laws, `bernVar`, and the cumulant\n  identities `deriv lse2 = softmax2` (mean) and `deriv² lse2 = bernVar ∘ softmax2`\n  (variance = tropical curvature).\n* **Pythagorean**: the map `(a,b,c) ↦ ((a/c)², (b/c)²)` lands in the simplex,\n  is dilation-invariant, equals the softmax image of log-squared coordinates,\n  and yields the Pythagorean probability identity `(p−q)² + 4·Var = 1`.\n\nThe conjectures below are precise, falsifiable targets for the next cycle. Each\nis stated so it can be dropped into Lean as a `theorem … := by sorry` and\nattacked directly.\n\n## Conjecture 1 (n-point tropical Hessian = covariance)\nThe general softmax `softmax w` is the gradient of the n-point free energy\n`lse w := log ∑ⱼ exp (w j)`, and the Hessian of `lse` is the covariance matrix of\nthe Gibbs law:\n```\n∂²/∂wᵢ∂wⱼ lse w = (if i = j then softmax w i · (1 - softmax w i)\n                    else - softmax w i · softmax w j).\n```\n**Test.** Prove `deriv (fun t => lse (Function.update w i t)) (w i) = softmax w i`\nand the diagonal/off-diagonal second-derivative formulas. Expected: the diagonal\nspecializes to `bernVar (softmax w i)`, generalizing `deriv2_lse2_eq_bernVar`.\n\n## Conjecture 2 (Pythagorean parametrization of the full simplex)\nEvery interior Bernoulli law arises from a *real* Pythagorean relation: for all\n`p ∈ (0,1)` there exist `a,b,c > 0` with `a² + b² = c²`, `(a/c)² = p`. Concretely\n`a = √p·c`, `b = √(1−p)·c`. Moreover the induced standard deviation satisfies\n`σ = |ab|/c² = √(p(1−p))`, so **the Bernoulli standard deviation is exactly half\nthe normalized area `2ab/c²` of the right triangle**.\n**Test.** Prove surjectivity of `p ↦` Pythagorean triple and the identity\n`2 * Real.sqrt (bernVar p) = 2*a*b/c^2` for the canonical triple. Falsifiable:\nthe area-to-σ proportionality constant is conjectured to be exactly `2`.\n\n## Conjecture 3 (Maslov interpolation is monotone and contracts to max)\nDefine the temperature-scaled functional `lseT h a b := h · log(exp(a/h)+exp(b/h))`\nfor `h > 0`. Then `h ↦ lseT h a b` is monotone non-decreasing, `lseT h a b → max a b`\nas `h → 0⁺`, and the *Gibbs entropy gap* `lseT h a b − max a b ∈ [0, h·log 2]`.\n**Test.** Prove the sandwich `max a b ≤ lseT h a b ≤ max a b + h·log 2` (rescale\nthe proved `lse2` sandwich) and the limit `Filter.Tendsto (fun h => lseT h a b)\n(nhdsWithin 0 (Set.Ioi 0)) (nhds (max a b))`. This is the quantitative\ndequantization underlying the whole bridge.\n\n## Conjecture 4 (Pythagorean identity is the χ² / information projection at 2 points)\nFor the Pythagorean-induced law `p = (a/c)²`, the polarization leg `p − q` equals\nthe (signed) χ²-type discrepancy from the uniform law `(½,½)`:\n`(p − ½)² + (q − ½)² = ½·(p − q)² = ½·(1 − 4·Var)`. Hence **maximal Bernoulli\nvariance ⇔ minimal χ²-distance to uniform ⇔ the degenerate right triangle\n`a = b`**, i.e. the isoceles Pythagorean triple `(1,1,√2)`.\n**Test.** Prove the χ² identity and that `Var` is maximized exactly when\n`(a/c)² = (b/c)²`, characterizing the optimizer as the isoceles triple. Connect\nto a genuine `Real.rpow`-based Rényi/Tsallis entropy and show the leg `p−q`\ncontrols a one-parameter family of divergences from uniform.\n\n## Conjecture 5 (Functorial naturality square)\nThe two functors into the simplex commute with their symmetries: softmax\nintertwines the additive `ℝ`-shift action on log-coordinates with the trivial\naction on the simplex, and the Pythagorean functor intertwines the multiplicative\n`ℝˣ`-dilation action on triples with the trivial action. Conjecture: there is a\n*natural transformation* `log∘(·)² : (Pythagorean triples / dilation) ⟹\n(log-coordinates / shift)` making the triangle\n`softmax ∘ (log ∘ sq) = pythProb` commute as functors, not merely pointwise.\n**Test.** Formalize both as actions (`AddAction ℝ` and `MulAction ℝˣ`) on the\nrespective domains, define the quotients, and prove the induced maps to the\nsimplex are well-defined and equal. The pointwise version is already proved\n(`pyth_eq_softmax2`); the goal is to upgrade it to an equivariant/quotient\nstatement.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Tropical",
         "Bridges"
@@ -31029,7 +31029,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Tropical Fermat's Last Theorem\n\nThis research cycle established the core dichotomy: the classical Fermat equation\n`aⁿ + bⁿ = cⁿ` has no nontrivial solutions for `n ≥ 3`, while its tropical analogue\n`max(n•a, n•b) = n•c` is **always** uniquely solvable (by `c = max a b`). The engine is the\nmonotonicity of `x ↦ n•x`, which makes it commute with `max`/`min`. We formalized the\nmax-plus and min-plus identities, existence, uniqueness, classification, a multivariable\n(`Finset.sup'`) generalization, the tropical Fermat curve, and a faithful embedding into\nMathlib's genuine `Tropical ℝ` semiring (all in `Core.lean`, 0 sorries).\n\nBelow are bold, precise, testable conjectures for follow-up cycles.\n\n## C1. Tropical Fermat over arbitrary scalar exponents (semimodules)\n**Conjecture.** Replace the natural-number exponent `n` by a scalar `r` from an ordered\nsemiring acting on an ordered module `M`. Then for `r > 0`, `max (r • a) (r • b) = r • max a b`\nholds and the solution `c = max a b` is unique; for `r = 0` it degenerates (every `c` works);\nfor `r < 0` (when defined) the identity flips to `min`. \n*Test:* formalize `r : ℝ≥0` acting on `ℝ` via `smul`, prove the trichotomy, and identify the\nexact `OrderedSMul`/`PosSMulStrictMono` hypotheses that make uniqueness hold.\n\n## C2. Tropical Fermat hypersurfaces are always nonempty and balanced\n**Conjecture.** For every `n ≥ 1` and every number of variables `k ≥ 2`, the tropical\nFermat hypersurface `corner-locus of  max_i (n•xᵢ) ⊕ 0` is a nonempty, pure-dimensional,\nbalanced polyhedral complex whose vertex is the origin, with exactly `k+1` top-dimensional\nrays/cells through it. We proved the `k = 2` skeleton (symmetry, origin vertex, diagonal\nray). *Test:* generalize `OnFermatCurve` to `k` variables via `Finset`, prove nonemptiness\nand the \"attained at least twice somewhere\" balancing condition for all `k`.\n\n## C3. Stable-range / quantitative gap version\n**Conjecture.** Define an `ε`-approximate tropical Fermat solution by\n`|max (n•a) (n•b) − n•c| ≤ ε`. Then `c` is forced into the interval\n`[max a b − ε/n, max a b + ε/n]`; in particular as `n → ∞` the approximate solution set\ncollapses to the exact one at rate `Θ(1/n)`. *Test:* prove the two-sided bound and the\ncollapse rate; connect to the `TropicalEquivalenceInvariance` gap-stability results already\nin the catalog.\n\n## C4. Bridge: classical FLT ⇒ tropical degeneration is \"lossy\"\n**Conjecture (cross-domain bridge).** The non-Archimedean valuation/tropicalization map\n`val : ℝ₊ → ℝ`, `val(t) = log t`, sends classical near-solutions of `aⁿ + bⁿ = cⁿ` to exact\ntropical solutions, and the *failure* of classical FLT is exactly the statement that the\nfiber of `val` over a tropical solution `(a,b,max a b)` contains no genuine classical triple\nfor `n ≥ 3`. *Test:* formalize the valuation-degeneration square commuting up to the\n\"dequantization\" `max(x,y) = lim_{T→0} T·log(e^{x/T}+e^{y/T})`, proving the log-sum-exp\nlimit (`Real.logSumExp`-style) converges to `max`, giving a rigorous classical→tropical\nlimit theorem.\n\n## C5. Tropical Catalan / Beal analogue\n**Conjecture.** The tropical Beal equation `max (m•a) (n•b) = k•c` with mixed exponents is\nsolvable for **all** `m,n,k ≥ 1` (unlike the classical Beal conjecture), and admits a clean\nparametric description of its full solution set: `c` is determined as a max of the two\n\"rescaled\" terms `(m/k)•a` and `(n/k)•b`. *Test:* state and prove over `ℝ`, classify the\nsolution variety, and contrast with the still-open classical Beal conjecture.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Pythagorean"
@@ -31209,7 +31209,7 @@
       "depth_estimate": 3,
       "description": "# FUTURE DIRECTIONS — Category Theory as the DNA of Mathematics (Tropical cycle)\n\nDerived from the verified results in\n`Catalog/Tropical/ModelCategoryGenome.lean` and\n`Catalog/Tropical/TropicalResiduationMutation.lean`.\n\nIn this cycle we proved (0 sorries):\n- *Genome equivalence* (`MoritaEquiv` = equivalence of model categories) is an equivalence\n  relation; *mutation* (`IsMutation` = an adjunction of model categories) is a preorder;\n  every genome equivalence is a mutation (`morita_to_mutation`); existence of terminal/initial\n  models is a genome invariant.\n- The tropical (min-plus) semiring supplies the two archetypal mutations: the *reversible*\n  residuation `(a + ·) ⊣ (· - a)` and the *irreversible* clamp `Iic c ↪ ℝ ⊣ (min · c)`,\n  certifying that `morita_to_mutation` is a **strict** inclusion.\n\nThe following conjectures are the natural, falsifiable next steps.\n\n---\n\n## Conjecture 1 — Evolutionary paths need quotients, not just adjunctions\n**Statement.** There exist genomes `C`, `D` connected by a \"reachability\" relation\n(zig-zag of axiom changes) for which **no** single adjunction `C → D` exists, but a finite\ncomposite of adjunctions *and* reflective localizations (categorical quotients) does.\nFormally: the preorder generated by `IsMutation` is strictly coarser than the one generated by\n`IsMutation` together with `CategoryTheory.Localization`.\n\n**The key insight is** that `mutation_trans` already proves adjunctions compose, so the *only*\nway the program's full \"adjunctions **and** quotients\" conjecture can be non-trivial is if\nquotients are not themselves adjunctions on the nose — reflective localizations are adjunctions\nbut Gabriel–Zisman localizations in general are not.\n\n**Why now?** We have an isolated, fully-proved `IsMutation` preorder; adding\n`CategoryTheory.Localization` (already in Mathlib) lets us test the strictness directly,\nwithout rebuilding any foundations.\n\n---\n\n## Conjecture 2 — Reversible mutation ⟺ group-like algebra, irreversible ⟺ idempotent\n**Statement.** A tropical-style mutation `(a ⋆ ·) ⊣ residual` on an ordered algebraic\nstructure is reversible (a genome equivalence) **iff** the operation `⋆` is cancellative\n(group-like); it is strictly irreversible **iff** `⋆` is idempotent/absorbing.\n\n**The key insight is** that `tropRes_reversible` succeeded for `+` precisely because `ℝ` is a\ngroup under `+`, while `tropClamp_irreversible` failed to be reversible precisely because `min`\nis idempotent — the reversibility of a mutation is a *shadow of the invertibility of the\nunderlying operation*.\n\n**Why now?** Both halves are already witnessed concretely in this cycle (`+` vs `min`); the\nconjecture asks only to abstract the two proofs to an ordered-monoid hypothesis, which Mathlib's\n`OrderedAddCommGroup` / `CanonicallyOrderedAddCommMonoid` hierarchy supports today.\n\n---\n\n## Conjecture 3 — Genome invariants are exactly the limit/colimit-definable properties\n**Statement.** A property `P` of theories is a genome invariant (preserved by every\n`MoritaEquiv`) **iff** `P` is expressible purely in terms of existence of (co)limits of some\nfixed shape. Terminal- and initial-model existence (`morita_preserves_terminal/initial`) are the\nshape-`∅` cases.\n\n**The key insight is** that equivalences of categories preserve all limits and colimits, so\n*every* (co)limit-definable property is automatically invariant; the open and surprising half is\nthe converse — that nothing else is invariant.\n\n**Why now?** We have the base cases proved via `IsTerminal.isTerminalObj` /\n`IsInitial.isInitialObj`; Mathlib's `Equivalence` API (`preservesLimits`,\n`preservesColimits`) gives the forward direction for arbitrary shapes immediately, so the\nresearch effort can focus entirely on the converse.\n\n---\n\n## Conjecture 4 — The \"genome distance\" between theories is a metric induced by adjunction length\n**Statement.** Define `d(C, D)` as the minimal length of an evolutionary path (composite of\nmutations/quotients) from `C` to `D`, and `∞` if none exists. Then `d` is an extended\npseudometric on genomes, and `d(C, D) = 0` ⟺ `MoritaEquiv C D`.\n\n**The key insight is** that `mutation_refl` gives the zero-length self-path and `mutation_trans`\ngives the triangle inequality directly — the categorical algebra we proved is *already* the\naxioms of a pseudometric in disguise.\n\n**Why now?** The preorder structure (`mutation_refl`, `mutation_trans`) is in hand; turning a\npreorder with composition-length into an `EDist`/`PseudoEMetricSpace` is a packaging exercise\non top of this cycle's theorems.\n\n---\n\n## Conjecture 5 — Every finite tropical mutation factors as (reversible shift) ∘ (clamp)\n**Statement.** Any monotone Galois connection on `(ℝ, ≤)` arising from min-plus data factors,\nup to order isomorphism, as a residuation shift followed by a clamp onto a sub-interval — i.e.\nthe two archetypes of this cycle generate *all* tropical mutations.\n\n**The key insight is** that residuation contributes the invertible (translation) part and\nclamping contributes the information-collapsing (closure) part, and a Galois connection on a\nlinear order is determined by its image plus a translation.\n\n**Why now?** We have proved both generators exist and are non-isomorphic in behaviour\n(`tropResMutation` vs `tropClampMutation`); the factorisation conjecture is the precise sense in\nwhich they are a *generating set* for the tropical mutation monoid, and it is checkable on the\nconcrete order `(ℝ, ≤)` we already use.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Tropical"
@@ -35479,7 +35479,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThese are freeform directions extending the tropical TDLP eigenline\ncounterexample formalized in\n[`Catalog/Tropical/TropicalTDLPEigenAttack.lean`](Catalog/Tropical/TropicalTDLPEigenAttack.lean).\n\n## 1. Full tropical semiring with infinities\n\nReformulate the toy model over the genuine tropical semiring `WithTop ℕ` (or\n`Tropical (WithTop ℝ)` from Mathlib), where `+∞` is the additive identity and\n`min` the addition, and re-prove the eigenline attack there. The key insight is\nthat the eigenline collapse depends only on min-plus *homogeneity*, so the proof\nshould survive the move to `WithTop` once truncated subtraction is replaced by an\norder-theoretic difference. Why now? Mathlib already ships a `Tropical` type and\nits semiring instances, so the supporting algebra exists today and the gap is\npurely a matter of porting the homogeneity argument across the carrier change.\n\n## 2. Genuine `n×n` min-plus matrices and tropical eigenvalues\n\nLift the abstract `ScalarEquivariant` hypothesis to concrete min-plus matrix\nmultiplication on `Fin n → ℕ`, and connect `IsTropicalEigen` to the tropical\neigenvalue given by the maximum cycle mean of the underlying weighted digraph.\nThe key insight is that every irreducible tropical matrix has an eigenvector\nwhose support is a critical cycle, so the \"accidental eigenline\" risk is generic\nrather than exceptional. Why now? Max-plus spectral theory (Karp's algorithm,\ncritical graphs) is classical and finitely computable, making it ideal for a\n`decide`/`native_decide`-backed Lean treatment that ties the abstract theorem to\nexplicit matrices.\n\n## 3. Quantifying residual hardness off the eigenline\n\nStudy iterates of tropical maps seeded *away* from any eigenline and measure how\nquickly the orbit aligns with the dominant eigenvector (the cyclicity /\ntransient length of max-plus dynamics). The key insight is that max-plus systems\nbecome eventually periodic with a linear regime, so even \"off-eigenline\" seeds\nleak `k` after a bounded transient, sharpening the counterexample into a generic\nattack. Why now? The cyclicity theorem for irreducible max-plus matrices gives\nexplicit transient bounds, so a formal statement quantifying the leak is within\nreach of current tooling.\n\n## 4. Adversary models and a formal security game\n\nEncode the TDLP as a formal interactive game (challenger samples `k`, publishes\n`(λ, x, F^[k] x)`; adversary outputs a guess) and prove a Lean theorem that the\nsubtraction adversary wins with probability `1`. The key insight is that turning\nthe algebraic identity into a probability-`1` win condition makes \"this scheme is\nbroken\" a single quantified statement rather than an informal observation. Why\nnow? Mathlib's probability and `PMF` machinery is mature enough to express simple\ncryptographic games, so the bridge from algebra to a game-based break is\ntractable.\n\n## 5. Design criteria for non-linearizable tropical schemes\n\nUse the counterexample to derive *positive* design constraints: characterize\nfamilies of tropical maps whose iteration is provably not affine in `k` on any\ninvariant set, e.g. by injecting min/max branching that breaks scalar\nequivariance. The key insight is that the attack is exactly an obstruction\ntheorem — security requires failing `ScalarEquivariant` in an essential way — so\nits negation is a checklist for designers. Why now? With the obstruction now\nformalized, the natural next step of formalizing its converse (sufficient\nconditions for resistance) is well-posed and immediately actionable.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Tropical"
@@ -36600,7 +36600,7 @@
       "depth_estimate": 3,
       "description": "Building on cycle d6329d46 (Q=0.792), which proved 22 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Building on cycle e42393e4 (Q=0.792), which proved 42 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The key insight is that a binary linear code carries a genuinely new tropical v",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Shared"
       ],
@@ -41381,7 +41381,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical curves as metric graphs. Prove the tropical Riemann-Roch theorem via chip-firing: r(D) - r(K-D) = deg(D) - g + 1. Construct explicit divisor classes on complete graphs and prove Baker-Norine's theorem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Algebra",
@@ -41418,7 +41418,7 @@
       "depth_estimate": 3,
       "description": "Formalize tropical convex sets and tropical polytopes. Prove the tropical analogue of the Minkowski-Weyl theorem. Show that tropical linear programming is solvable in polynomial time. Connect to mean payoff games.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Tropical",
         "Computation",
@@ -43951,7 +43951,7 @@
       "depth_estimate": 3,
       "description": "Cycle 2ec4044e (Q=0.553) proved 7 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Restrict the project to a single self-contained formalization file that completes the finite counting toolkit for binary codes as `Finset (Fin n → ZMod 2)` and stops before any ambitious convolution t",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Applications"
       ],
@@ -50811,7 +50811,7 @@
       "depth_estimate": 3,
       "description": "Cycle d6329d46 (Q=0.792) proved 22 theorems in Shared but left 2 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Building on cycle e42393e4 (Q=0.792), which proved 42 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Shared"
       ],
