@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "842c56ce",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — Functorial Lipschitz comparison: valuation depth ↔ tropical shadow\n\nThis cycle salvaged and completed the depth ↔ tropical-shadow bridge as three\nself-contained, sorry-free Lean",
-      "quality_score": 0.40856000000000003,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-15T09:20:07",
-      "title": "Close Proofs: Functorial Lipschitz comparison between valuation depth and tropical v"
-    },
-    {
       "cycle_id": "b221d007",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — Functorial Tropical Certificate for the Berggren–Lorentz Monoid\n\nThis cycle established a **functorial tropical (min-plus) growth certificate** for the\nBerggren monoid action on",
@@ -2501,6 +2491,16 @@
       "theorem_count": 17,
       "timestamp": "2026-06-20T19:47:51",
       "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
+    },
+    {
+      "cycle_id": "808095a3",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThese directions build on the deterministic min-cut curvature proxy formalized in\n`Catalog/Speculative/TensorNetworkCurvatureThreshold.lean`. Each is a self-contained\nresearch pro",
+      "quality_score": 0.453335,
+      "sorry_count": 0,
+      "theorem_count": 9,
+      "timestamp": "2026-06-20T20:27:01",
+      "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8075699999999999
     }
   ],
-  "last_updated": "2026-06-20T19:47:51",
+  "last_updated": "2026-06-20T20:27:01",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "c2c261ee",
-        "quality": 0.42100000000000004,
-        "theorems": 4,
-        "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
-      },
-      {
         "cycle_id": "fbd73212",
         "quality": 0.7150400000000001,
         "theorems": 35,
@@ -3141,6 +3135,12 @@
         "quality": 0.5126619770114944,
         "theorems": 17,
         "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
+      },
+      {
+        "cycle_id": "808095a3",
+        "quality": 0.453335,
+        "theorems": 9,
+        "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
       }
     ],
     "Bridges": [
