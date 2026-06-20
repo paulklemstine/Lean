@@ -1061,21 +1061,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Functor from finite linear codes to tropical valuation objects via wei"
   },
   {
-    "consumed_by_exp_id": "38689f4d",
-    "description": "Formalize a logic where contradictions do not explode and beliefs can be retracted. Prove that paraconsistent logics can model dream-like reasoning where impossible objects coexist. Show that such logics correspond to topological spaces where open sets are not closed under arbitrary union.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0116",
-    "priority_score": 0.84,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.958310+00:00",
-    "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
     "domains": [
@@ -3433,6 +3418,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-20T05:12:27.687402+00:00",
     "title": "Derived from this cycle's findings (see the Lab Notes in"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nBuilding on the formalized information bilattice of Belnap `FOUR` and the theorem\nthat default (dream-like) reasoning is non-topological, we propose the following\nresearch directions. Each is original, self-contained, and could be pursued as a\nfollow-up formalization.\n\n## 1. Non-monotone consequence as a closure structure\n\nWe proved that the default-generated family `{\u2205, defaultTrue, defaultFalse, univ}`\nfails closure under binary union, hence is not a topology. The natural next step\nis to formalize what structure it *is*: a defeasible acceptance operator whose\nbehaviour is captured by Tarski-style closure axioms minus monotonicity. The key\ninsight is that retractability is not a defect to be repaired but the defining\nalgebraic signature of defeasible reasoning, so the right ambient category is not\n`Top` but the category of *non-monotone closure operators* on the bilattice, where\nthe obstruction is concentrated at the glut value `both`. Formalizing this would\ngive a clean home for default logic that explains, rather than hides, the failure\nof union-closure. Why now? Because we already have a fully verified four-element\nmodel in Lean to anchor the abstract axioms, so the general definitions can be\nvalidated against a concrete case at every step instead of being checked only on\npaper.\n\n## 2. Product bilattices and a closure-vs-triviality dichotomy\n\nBelnap `FOUR` is the bilattice `2 \u2299 2`; the same evidence-bit construction works\nfor `L \u2299 L` over any bounded lattice `L`, with defaults defined by \"no refuting\nevidence.\" The key insight is that the single point obstructing union-closure in\n`FOUR` is the top glut, and in `L \u2299 L` the analogous obstruction is the whole\ndiagonal of \"fully conflicted\" values, suggesting a sharp dichotomy: the default\nfamily is union-closed if and only if `L` is trivial. Proving this in Lean would\nturn our one-off four-value theorem into a structural classification, showing that\nnon-topologicality of defaults is generic rather than an artifact of the smallest\nexample. Why now? Mathlib's bounded-lattice and product-order libraries are mature\nenough to express `L \u2299 L` and its orders directly, so the generalization is a\nmatter of careful abstraction rather than building infrastructure from scratch.\n\n## 3. Bridging the two Alexandrov topologies through negation\n\n`FOUR` carries two orders \u2014 knowledge and truth \u2014 and our negation `neg` is\nmonotone for knowledge while being an anti-automorphism of truth. Each order\ninduces its own Alexandrov topology, and a full bilattice-topological dictionary\nshould describe how `neg`, `tconj`, and `tdisj` act as continuous or co-continuous\nmaps between them. The key insight is that interlacing (which we proved as\n`tconj_kmono` and `tdisj_kmono`) is exactly the statement that the truth\noperations are continuous for the information topology, so the bilattice axioms can\nbe re-read as a list of continuity requirements linking the two spaces. Carrying\nthis out would recast bilattice theory as a small fragment of bitopological\ndynamics. Why now? The interlacing lemmas are already formalized here, so the\ncontinuity statements are immediate corollaries waiting to be packaged, making this\nan unusually low-friction entry point into bitopology.\n\n## 4. Quantitative dream logic over the unit interval\n\nReplacing the Boolean evidence bits `(hasTrueEvidence, hasFalseEvidence)` by real\ndegrees in `[0,1] \u00d7 [0,1]` yields a fuzzy information bilattice in which defaults\naccept `p` when the refuting degree is below a threshold. The key insight is that\nthe discrete failure of upward closure becomes a measurable, threshold-dependent\nboundary phenomenon, so \"non-topological\" sharpens into a precise statement about\nthe positive measure of the set where a default flips. Formalizing this would\nconnect defeasible reasoning to measure theory and give a graded account of how\nfragile a given default is. Why now? Mathlib's real-analysis and measure-theory\nstacks make the continuous version tractable, and the discrete theorem proved here\nprovides the exact limiting case to test the quantitative statements against.\n\n## 5. Default reasoning as the obstruction to a sheaf of beliefs\n\nStable, monotone propositions glue along information growth and so behave like\nsections of a sheaf over the knowledge order; defaults, being retractable, fail to\nglue. The key insight is that the precise failure we formalized \u2014 `defaultTrue`\nand `defaultFalse` agreeing on `neither` yet disagreeing once evidence arrives \u2014\nis exactly a failure of the gluing axiom, so defeasibility can be measured by a\nfirst cohomology group of the belief presheaf. Developing this would give a\ncohomological invariant that counts, in a principled way, how much a reasoning\nsystem depends on non-monotone defaults. Why now? With the monotone/non-monotone\nsplit already proved at the object level, the presheaf and its restriction maps can\nbe defined concretely on the four-element base, letting the cohomological machinery\nbe introduced incrementally on a verified foundation.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2139",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "38689f4d",
+    "status": "available",
+    "timestamp": "2026-06-20T05:58:10.070895+00:00",
+    "title": "Building on the formalized information bilattice of Belnap `FOUR` and the theore"
   },
   {
     "consumed_by_exp_id": "",

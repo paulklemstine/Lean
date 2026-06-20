@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "38689f4d",
     "filename": "close_proofs_this_cycle_replaced_the_softmax_score.json",
     "pkg_num": 202,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5154196374622356,
     "title": "The Shadow Spectrum: A Tropical Spectral Langlands Correspondence for Finite Residuated Semimodules"
   },
   {
@@ -6177,8 +6177,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "close_proofs_this_cycle_replaced_the_softmax_score",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5154196374622356,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "The Shadow Spectrum: A Tropical Spectral Langlands Correspondence for Finite Residuated Semimodules"
     }
