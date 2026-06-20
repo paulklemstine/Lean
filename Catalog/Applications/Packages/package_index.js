@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "972d4c89",
     "filename": "ramsey_theory_bounds_and_constructions.json",
     "pkg_num": 202,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.8524,
     "title": "Ramsey Theory: The Erd\u0151s\u2013Szekeres Bound and the Exact Value R(3,3)=6"
   },
   {
@@ -6177,8 +6177,8 @@ window.PACKAGE_GRAPH = {
       "hue": 91,
       "id": "ramsey_theory_bounds_and_constructions",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.8524,
+      "quality": "substantial",
       "shape": "icosahedron",
       "title": "Ramsey Theory: The Erd\u0151s\u2013Szekeres Bound and the Exact Value R(3,3)=6"
     }

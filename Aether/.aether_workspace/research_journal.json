@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "e955f9f8",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: Boundedness and Density in the Order Type of the p-Degrees\n\n## Synthesis\n\nThe order-theoretic core of the Cook–Reckhow program in this catalog has, over successive\ncycles, been as",
-      "quality_score": 0.721521095890411,
-      "sorry_count": 7,
-      "theorem_count": 219,
-      "timestamp": "2026-06-14T07:43:41",
-      "title": "The order-theoretic core of the Cook–Reckhow program in this catalog has, over s"
-    },
-    {
       "cycle_id": "87e9d710",
       "domain": "Applications",
       "key_insight": "# Future Directions — Hodge–Laplacian Message Passing, Fourth Cycle\n\n## Synthesis\n\nThis cycle promoted the *Hodge–Betti dimension count* of `HodgeBettiRank.lean` from a numerical\nequality to two genui",
@@ -499,19 +489,19 @@
       "theorem_count": 103,
       "timestamp": "2026-06-20T05:05:53",
       "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+    },
+    {
+      "cycle_id": "972d4c89",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThe development in `Catalog/Applications/RamseyBounds/` proves the Erdős–Szekeres\nrecursion, the binomial upper bound, and the exact value `R(3,3) = 6`.  The following\ndirections",
+      "quality_score": 0.8524,
+      "sorry_count": 0,
+      "theorem_count": 103,
+      "timestamp": "2026-06-20T05:09:26",
+      "title": "Ramsey Theory: Bounds and Constructions"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "44a857c6",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Gauss-Sum Bridge between Even Lattices and Binary Codes\n\n## Synthesis\n\nThe `SmoothPoincare` family in `Catalog/Applications/SmoothPoincare/` builds the\nsmooth/topological gal",
-      "quality_score": 0.39197488552751597,
-      "sorry_count": 3,
-      "theorem_count": 138,
-      "timestamp": "2026-06-14T23:22:39",
-      "title": "Close Proofs: The `SmoothPoincare` family in `Catalog/Applications/SmoothPoincare/` "
-    },
     {
       "cycle_id": "fda530b6",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 103,
       "timestamp": "2026-06-20T05:05:53",
       "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+    },
+    {
+      "cycle_id": "972d4c89",
+      "domain": "Applications",
+      "key_insight": "# Future Directions\n\nThe development in `Catalog/Applications/RamseyBounds/` proves the Erdős–Szekeres\nrecursion, the binomial upper bound, and the exact value `R(3,3) = 6`.  The following\ndirections",
+      "quality_score": 0.8524,
+      "sorry_count": 0,
+      "theorem_count": 103,
+      "timestamp": "2026-06-20T05:09:26",
+      "title": "Ramsey Theory: Bounds and Constructions"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "999c0f6b",
-      "domain": "Algebra",
-      "name": "lipschitz_constant_iff",
-      "quality": 0.7756000000000001
-    },
-    {
-      "cycle_id": "999c0f6b",
-      "domain": "Algebra",
-      "name": "unit_is_least_lipschitz_constant",
-      "quality": 0.7756000000000001
-    },
-    {
-      "cycle_id": "999c0f6b",
-      "domain": "Algebra",
-      "name": "height_balanced",
-      "quality": 0.7756000000000001
-    },
     {
       "cycle_id": "3fd7a316",
       "domain": "Probability",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "that",
       "quality": 0.79384
+    },
+    {
+      "cycle_id": "972d4c89",
+      "domain": "Applications",
+      "name": "Arrows",
+      "quality": 0.8524
+    },
+    {
+      "cycle_id": "972d4c89",
+      "domain": "Applications",
+      "name": "arrows_step",
+      "quality": 0.8524
+    },
+    {
+      "cycle_id": "972d4c89",
+      "domain": "Applications",
+      "name": "arrows_one_red",
+      "quality": 0.8524
     }
   ],
-  "last_updated": "2026-06-20T05:05:53",
+  "last_updated": "2026-06-20T05:09:26",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "14435cc3",
-        "quality": 0.6017600000000001,
-        "theorems": 33,
-        "title": "Combinatorial species exponential generating functions as a tropical valuation p"
-      },
-      {
         "cycle_id": "2ec4044e",
         "quality": 0.5527085714285715,
         "theorems": 7,
@@ -3141,6 +3135,12 @@
         "quality": 0.49552432432432436,
         "theorems": 93,
         "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
+      },
+      {
+        "cycle_id": "972d4c89",
+        "quality": 0.8524,
+        "theorems": 103,
+        "title": "Ramsey Theory: Bounds and Constructions"
       }
     ],
     "Bridges": [

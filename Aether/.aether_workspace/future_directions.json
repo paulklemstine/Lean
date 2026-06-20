@@ -35710,7 +35710,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions\n\nThe development in `Catalog/Applications/RamseyBounds/` proves the Erdős–Szekeres\nrecursion, the binomial upper bound, and the exact value `R(3,3) = 6`.  The following\ndirections build directly on that API.\n\n## 1. A reusable `RamseyNumber` definition with `IsLeast`\n\nRight now exactness is packaged as the concrete pair `Arrows 6 3 3 ∧ ¬ Arrows 5 3 3`.\nA cleaner long-term object is `RamseyNumber s t := sInf {N | Arrows N s t}` together with\nthe order-theoretic fact that it is the least such `N`.  The key insight is that\n`arrowsType_card_mono` already guarantees the predicate `fun N => Arrows N s t` is upward\nclosed in `N`, so the infimum is automatically attained and `Arrows N s t ↔ RamseyNumber s t ≤ N`\nbecomes a single lemma rather than a case-by-case argument.  Once that bridge lemma exists,\nevery concrete value (`R(3,3) = 6`, and later `R(s,t)`) is stated uniformly as\n`RamseyNumber s t = c`, and the recursion turns into the clean inequality\n`RamseyNumber (s+1) (t+1) ≤ RamseyNumber s (t+1) + RamseyNumber (s+1) t`.  Why now? The\nmonotonicity and recursion lemmas needed to make the infimum well-behaved are already\nproved and sorry-free, so this is pure repackaging with no new mathematical content at\nrisk, and it immediately makes the next two directions easier to state.\n\n## 2. The diagonal lower bound `R(s,s) > 2^(s/2)` by a counting argument\n\nThe pentagon gives `R(3,3) > 5` by an explicit construction; the natural generalisation is\nErdős's probabilistic lower bound `R(s,s) > 2^(s/2)`.  The key insight is that the\nprobabilistic step can be made fully finitary and `decide`-free by a counting argument over\n`SimpleGraph (Fin n)` as a `Fintype`: if the number of graphs containing a monochromatic\n`s`-clique is strictly smaller than the total number of graphs, a triangle-free colouring\nmust exist, and both counts are explicit binomial expressions.  This reuses exactly the\n`IsNClique`/complement vocabulary already in `Core.lean`, only adding a cardinality estimate\non the set of \"bad\" graphs.  Why now? Mathlib's `Fintype` and `Finset.card` machinery,\ncombined with the clique-counting predicates already defined here, make the union-bound\ninequality a finite arithmetic fact, so the historically \"probabilistic\" result can be\nobtained without introducing any measure theory.\n\n## 3. Off-diagonal small values `R(3,4) = 9` and `R(4,4) = 18`\n\nThe recursion and binomial bound give upper bounds for all off-diagonal numbers, but the\nexact small values require matching constructions.  The key insight is that the same\ndecidable-clique infrastructure used for the pentagon scales to explicit circulant graphs:\n`R(3,4) = 9` is witnessed by a specific graph on `Fin 8` and `R(4,4) = 18` by the Paley\ngraph on `Fin 17`, both of which are circulant and hence have a `decide`-friendly adjacency\nrelation.  The upper bounds `Arrows 9 3 4` and `Arrows 18 4 4` already follow from\n`arrows_recursion` together with `R(3,3)` and `R(2,k)` base data.  Why now? The lower-bound\nhalf is the only missing ingredient, and it is structurally identical to\n`pentagon_no_triangle` — a finite reflection over `Finset (Fin n)` — so the proof technique\nis known to work and only the explicit circulant connection sets need to be encoded.\n\n## 4. Multicolour Ramsey numbers via an indexed arrow predicate\n\nTwo colours is just the case `k = 2`.  The key insight is that the whole API generalises by\nreplacing the pair `(G, Gᶜ)` with an edge-colouring `c : Sym2 (Fin n) → Fin k` and asking\nfor a colour `i` with a monochromatic `s i`-clique; the comap/transfer lemmas\n(`isNClique_comap_map`, `arrowsType_card_mono`) are colour-agnostic and port almost verbatim,\nbecause they never use the specific two-colour structure beyond \"a clique in one colour\nclass\".  This would yield the multicolour recursion\n`R(s_1,…,s_k) ≤ Σ_i R(s_1,…,s_i - 1,…,s_k)` and, in particular, a verified bound for\n`R(3,3,3) ≤ 17`.  Why now? The current two-colour proofs already isolate the colour\ndependence into a handful of named lemmas, so the refactor to an indexed family is a\nmechanical generalisation rather than a redesign, and it opens the door to the well-studied\nmulticolour regime with minimal new infrastructure.\n\n## 5. Connecting the arrow predicate to Mathlib's hypergraph Ramsey API\n\nThis catalogue already contains hypergraph-Ramsey material elsewhere, and Mathlib has its\nown `Ramsey`-flavoured combinatorics.  The key insight is that `ArrowsType V s t` is the\ngraph (2-uniform) shadow of the general hypergraph statement, so providing the explicit\nequivalence between \"monochromatic clique in a 2-colouring\" and the existing colouring/clique\npredicates would let the binomial bound proved here serve as the base case of an\ninduction on uniformity.  Why now? Establishing this dictionary while the two-colour\ndevelopment is small and self-contained avoids duplicated definitions later, and it ensures\nthat the `R(3,3) = 6` result can be cited directly by any downstream hypergraph development\ninstead of being re-derived.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Logic"
@@ -36538,6 +36538,41 @@
       "thread_id": "",
       "timestamp": "2026-06-11T06:39:35.329358+00:00",
       "title": "Deepening: Information-Geometric Bridge: Fisher Metric on Statistical Manifolds"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Building on cycle 972d4c89 (Q=0.852), which proved 103 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Complete a verified Lean 4 formalization of finite two‑colour Ramsey theory. The project focuses on defining the Arrow predicate for SimpleGraph complements, proving its basic properties (clique transfer, colour symmetry, cardinal monotonicity), deriving the Erdős–Szekeres recursion and the binomial",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Applications"
+      ],
+      "id": "push_972d4c89_bd38c501",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.95,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "972d4c89",
+      "source_path": "Ramsey Theory: Bounds and Constructions",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-20T05:09:26.602013+00:00",
+      "title": "Deepening: Ramsey Theory: Bounds and Constructions"
     },
     {
       "ambition_level": "extension",
@@ -44217,7 +44252,7 @@
       "depth_estimate": 3,
       "description": "Cycle 2ec4044e (Q=0.553) proved 7 theorems in Applications but left 1 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Restrict the project to a single self-contained formalization file that completes the finite counting toolkit for binary codes as `Finset (Fin n → ZMod 2)` and stops before any ambitious convolution t",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.1,
+      "domain_quality_penalty": 0.2,
       "domains": [
         "Applications"
       ],

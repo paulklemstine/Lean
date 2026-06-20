@@ -34,6 +34,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 972d4c89 (Q=0.852), which proved 103 theorems in Applications. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Complete a verified Lean 4 formalization of finite two\u2011colour Ramsey theory. The project focuses on defining the Arrow predicate for SimpleGraph complements, proving its basic properties (clique transfer, colour symmetry, cardinal monotonicity), deriving the Erd\u0151s\u2013Szekeres recursion and the binomial",
+    "domains": [
+      "Applications"
+    ],
+    "id": "push_972d4c89_bd38c501",
+    "priority_score": 0.95,
+    "research_mode": "team",
+    "source_exp_id": "972d4c89",
+    "status": "available",
+    "timestamp": "2026-06-20T05:09:26.602013+00:00",
+    "title": "Deepening: Ramsey Theory: Bounds and Constructions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n \u2264 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
     "domains": [
       "NumberTheory",
@@ -3392,18 +3406,18 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Tropical Cryptography (min-plus eigenvalue cryptanalysis)\n\nDerived from this cycle's findings in `Catalog/Tropical/TropicalDiscreteLog.lean`\n(eigenvalue additivity / TDLP break) and\n`Catalog/Bridges/TropicalStrongDivisibilityDLog.lean` (the eigenvalue sequence is a\n`StrongDivSeq`). Each conjecture is falsifiable.\n\n## C1. The eigenvalue-leak dichotomy is exhaustive\n**Conjecture.** For every finite tropical matrix `A` over `\u211d` with a tropical eigenpair\n`(\u03bb, v)`, the tropical Diffie\u2013Hellman / TDLP scheme built on `A` is broken in\npolynomial time iff `\u03bb \u2260 0`; when `\u03bb = 0` the residual side channel leaks nothing.\n**The key insight is** that the residual `(A^{\u2297(k+1)} \u2297 v)_i \u2212 v_i` equals `(k+1)\u03bb` at\n*every* coordinate, so it is informative exactly when `\u03bb \u2260 0` and identically zero when\n`\u03bb = 0` (`tdlp_recover` vs. `eigenzero_no_leak`).\n**Why now?** Both halves are already formalized as a clean `\u03bb \u2260 0` / `\u03bb = 0` split; what\nremains is to prove no *other* attack-free regime exists, i.e. that `\u03bb = 0` is the unique\nsecure eigenvalue.\n\n## C2. Strong divisibility forces full lattice exposure\n**Conjecture.** Any key-exchange whose public transcript is a strong divisibility\nsequence in the secret exponent leaks the entire divisibility lattice of that exponent,\nand is therefore not exponent-hiding.\n**The key insight is** that `tropEigSeq c` instantiates `StrongDivSeq`, so\n`(m+1) \u2223 (k+1) \u2194 eig(m+1) \u2223 eig(k+1)` (`tdlp_divisibility_leak`): the adversary recovers\ndivisibility relations directly, not just the value.\n**Why now?** The catalog already unifies Fibonacci, Mersenne and identity sequences under\n`StrongDivSeq`; placing tropical eigenvalues in the same frame makes \"is the transcript a\nstrong divisibility sequence?\" a reusable *security audit* for proposed schemes.\n\n## C3. Multiplicative shadow obstructs hardness amplification\n**Conjecture.** Iterating the tropical power (nesting `A^{\u2297a}` then `^{\u2297b}`) cannot\namplify TDLP hardness, because the shared-key eigenvalue factorizes as\n`c \u00b7 eig(shared) = eig(public_a) \u00b7 eig(public_b)` (`tdlp_dh_eigenvalue_product`).\n**The key insight is** that the additive eigenvalue law has a multiplicative shadow on\nthe genuine exponents `(a+1)(b+1)`, so nesting only multiplies a *public* invariant.\n**Why now?** With `tropMatPow_tropMatPow` and `dh_shared_residual` formalized, the\nshared-key eigenvalue is computable from public data alone \u2014 a concrete obstruction to\nany \"tropical hardness amplification\" proposal.\n\n## C4. Generic random tropical matrices have nonzero principal eigenvalue\n**Conjecture.** For a random integer tropical matrix of size `n \u2265 2` with i.i.d. entries\nin `{0,\u2026,M}` and zero self-loops, the maximal tropical eigenvalue (max cycle mean) is\n`0` only on a measure-zero / vanishing-probability set; hence C1 makes the scheme broken\nwith overwhelming probability.\n**The key insight is** that `\u03bb = 0` requires a zero-weight cycle, and with strictly\npositive off-diagonal weights the only zero cycles are self-loops, which the eigenvalue\nattack already neutralizes.\n**Why now?** `digraph_eigenvalue_nonpos`/`digraph_eigenzero_const` already pin the\nboundary at `\u03bb = 0` via constant eigenvectors; quantifying how rarely *non-constant*\neigenvectors hit `\u03bb = 0` turns the qualitative dichotomy into a probabilistic break.\n\n## C5. The eigenvalue gcd law detects key reuse across sessions\n**Conjecture.** Given two transcripts `A^{\u2297(k+1)}` and `A^{\u2297(m+1)}` sharing the\neigenvector `v`, the integer `gcd(eig(k+1), eig(m+1)) = c\u00b7gcd(k+1,m+1)`\n(`tropical_eigenvalue_gcd`) reveals `gcd` of the two secret exponents, a cross-session\ncorrelation no secure scheme should expose.\n**The key insight is** that the strong divisibility identity turns two independent public\nkeys into a single recoverable arithmetic relation between their secrets.\n**Why now?** The gcd identity is already proved for `tropEigSeq`; extending it to a\n*meet-in-the-middle* attack on multi-session tropical DH is the natural next experiment.\n",
+    "description": "# Future Directions\n\nThe development in `Catalog/Applications/RamseyBounds/` proves the Erd\u0151s\u2013Szekeres\nrecursion, the binomial upper bound, and the exact value `R(3,3) = 6`.  The following\ndirections build directly on that API.\n\n## 1. A reusable `RamseyNumber` definition with `IsLeast`\n\nRight now exactness is packaged as the concrete pair `Arrows 6 3 3 \u2227 \u00ac Arrows 5 3 3`.\nA cleaner long-term object is `RamseyNumber s t := sInf {N | Arrows N s t}` together with\nthe order-theoretic fact that it is the least such `N`.  The key insight is that\n`arrowsType_card_mono` already guarantees the predicate `fun N => Arrows N s t` is upward\nclosed in `N`, so the infimum is automatically attained and `Arrows N s t \u2194 RamseyNumber s t \u2264 N`\nbecomes a single lemma rather than a case-by-case argument.  Once that bridge lemma exists,\nevery concrete value (`R(3,3) = 6`, and later `R(s,t)`) is stated uniformly as\n`RamseyNumber s t = c`, and the recursion turns into the clean inequality\n`RamseyNumber (s+1) (t+1) \u2264 RamseyNumber s (t+1) + RamseyNumber (s+1) t`.  Why now? The\nmonotonicity and recursion lemmas needed to make the infimum well-behaved are already\nproved and sorry-free, so this is pure repackaging with no new mathematical content at\nrisk, and it immediately makes the next two directions easier to state.\n\n## 2. The diagonal lower bound `R(s,s) > 2^(s/2)` by a counting argument\n\nThe pentagon gives `R(3,3) > 5` by an explicit construction; the natural generalisation is\nErd\u0151s's probabilistic lower bound `R(s,s) > 2^(s/2)`.  The key insight is that the\nprobabilistic step can be made fully finitary and `decide`-free by a counting argument over\n`SimpleGraph (Fin n)` as a `Fintype`: if the number of graphs containing a monochromatic\n`s`-clique is strictly smaller than the total number of graphs, a triangle-free colouring\nmust exist, and both counts are explicit binomial expressions.  This reuses exactly the\n`IsNClique`/complement vocabulary already in `Core.lean`, only adding a cardinality estimate\non the set of \"bad\" graphs.  Why now? Mathlib's `Fintype` and `Finset.card` machinery,\ncombined with the clique-counting predicates already defined here, make the union-bound\ninequality a finite arithmetic fact, so the historically \"probabilistic\" result can be\nobtained without introducing any measure theory.\n\n## 3. Off-diagonal small values `R(3,4) = 9` and `R(4,4) = 18`\n\nThe recursion and binomial bound give upper bounds for all off-diagonal numbers, but the\nexact small values require matching constructions.  The key insight is that the same\ndecidable-clique infrastructure used for the pentagon scales to explicit circulant graphs:\n`R(3,4) = 9` is witnessed by a specific graph on `Fin 8` and `R(4,4) = 18` by the Paley\ngraph on `Fin 17`, both of which are circulant and hence have a `decide`-friendly adjacency\nrelation.  The upper bounds `Arrows 9 3 4` and `Arrows 18 4 4` already follow from\n`arrows_recursion` together with `R(3,3)` and `R(2,k)` base data.  Why now? The lower-bound\nhalf is the only missing ingredient, and it is structurally identical to\n`pentagon_no_triangle` \u2014 a finite reflection over `Finset (Fin n)` \u2014 so the proof technique\nis known to work and only the explicit circulant connection sets need to be encoded.\n\n## 4. Multicolour Ramsey numbers via an indexed arrow predicate\n\nTwo colours is just the case `k = 2`.  The key insight is that the whole API generalises by\nreplacing the pair `(G, G\u1d9c)` with an edge-colouring `c : Sym2 (Fin n) \u2192 Fin k` and asking\nfor a colour `i` with a monochromatic `s i`-clique; the comap/transfer lemmas\n(`isNClique_comap_map`, `arrowsType_card_mono`) are colour-agnostic and port almost verbatim,\nbecause they never use the specific two-colour structure beyond \"a clique in one colour\nclass\".  This would yield the multicolour recursion\n`R(s_1,\u2026,s_k) \u2264 \u03a3_i R(s_1,\u2026,s_i - 1,\u2026,s_k)` and, in particular, a verified bound for\n`R(3,3,3) \u2264 17`.  Why now? The current two-colour proofs already isolate the colour\ndependence into a handful of named lemmas, so the refactor to an indexed family is a\nmechanical generalisation rather than a redesign, and it opens the door to the well-studied\nmulticolour regime with minimal new infrastructure.\n\n## 5. Connecting the arrow predicate to Mathlib's hypergraph Ramsey API\n\nThis catalogue already contains hypergraph-Ramsey material elsewhere, and Mathlib has its\nown `Ramsey`-flavoured combinatorics.  The key insight is that `ArrowsType V s t` is the\ngraph (2-uniform) shadow of the general hypergraph statement, so providing the explicit\nequivalence between \"monochromatic clique in a 2-colouring\" and the existing colouring/clique\npredicates would let the binomial bound proved here serve as the base case of an\ninduction on uniformity.  Why now? Establishing this dictionary while the two-colour\ndevelopment is small and self-contained avoids duplicated definitions later, and it ensures\nthat the `R(3,3) = 6` result can be cited directly by any downstream hypergraph development\ninstead of being re-derived.\n",
     "domains": [
-      "Pythagorean",
-      "Algebra"
+      "Algebra",
+      "Logic"
     ],
-    "id": "fd_2133",
+    "id": "fd_2135",
     "priority_score": 0.75,
     "research_mode": "team",
-    "source_exp_id": "5e9b4daa",
+    "source_exp_id": "972d4c89",
     "status": "available",
-    "timestamp": "2026-06-20T05:03:30.483816+00:00",
-    "title": "Derived from this cycle's findings in `Catalog/Tropical/TropicalDiscreteLog.lean"
+    "timestamp": "2026-06-20T05:07:33.737360+00:00",
+    "title": "The development in `Catalog/Applications/RamseyBounds/` proves the Erd\u0151s\u2013Szekere"
   },
   {
     "consumed_by_exp_id": "",
@@ -3611,6 +3625,20 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-18T01:05:26.622326+00:00",
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: The generalization error of a neural network can be bounded by topological invariants of its weight space, such as persistent homology or cohomology groups, which vary with model complexity and data structure. This can be tested by training networks on synthetic datasets with known topological features and comparing their generalization performance against computed topological bounds.",
+    "domains": [
+      "Novelty"
+    ],
+    "id": "fd_2136",
+    "priority_score": 0.7,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-20T05:08:58.897447+00:00",
+    "title": "Topological Generalization Bounds for Deep Learning"
   },
   {
     "consumed_by_exp_id": "",
