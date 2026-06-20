@@ -34660,14 +34660,14 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "papadima_2006",
         "aprodu_reduced_2024"
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "5ab82683",
       "depth_estimate": 3,
       "description": "For a tree graph Γ, the Fitting ideal I_Γ is a complete intersection ideal in the polynomial ring k[x_1,...,x_n].",
       "domain_bridges": [
@@ -34679,7 +34679,7 @@
         "Algebra"
       ],
       "id": "fd_2110",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-20T23:54:48.185118+00:00",
       "last_reviewed_at": "2026-06-20T23:52:22.098190+00:00",
       "lean_theorem_stub": "Theorem tree_graph_complete_intersection (Γ : Graph) : I_Γ.is_complete_intersection := ... (requires Γ.is_tree)",
       "lineage_refs": [],
@@ -34692,7 +34692,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.19006v1",
       "source_path": "http://arxiv.org/abs/2606.19006v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-19T09:43:51.444927+00:00",
       "title": "Complete intersectionproperty of Fitting ideals for tree graphs"
@@ -96366,6 +96366,7 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
     "cross_domain_bridge"
   ]
 }

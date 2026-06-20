@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "fbb47fde",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Species GF ↔ Tropical Valuation Profiles\n\nThis cycle established a **lax monoidal functor** from the generating-function algebra of\ncombinatorial species `(ℕ → K, +, ⋆)` (where `",
-      "quality_score": 0.5618,
-      "sorry_count": 0,
-      "theorem_count": 6,
-      "timestamp": "2026-06-15T11:52:20",
-      "title": "Functorial bridge from combinatorial species generating functions to tropical valuation profiles"
-    },
-    {
       "cycle_id": "02bb27d8",
       "domain": "Novelty",
       "key_insight": "# FUTURE DIRECTIONS — Discrete Hodge ↔ Probability (cycle v16a)\n\nThis cycle delivered a self-contained Mathlib foundation for the discrete Hodge\nprogram on finite weighted graphs and proved two of the",
@@ -2501,6 +2491,16 @@
       "theorem_count": 469,
       "timestamp": "2026-06-20T22:52:53",
       "title": "The Library of Babel: Combinatorics of the Universal Library"
+    },
+    {
+      "cycle_id": "568da95c",
+      "domain": "Applications",
+      "key_insight": "# Future Directions: Quantum EML Single-Qubit Activations\n\nThese directions extend the verified Euler-activation core in\n`EML/QuantumActivation.lean`. Each is independent and self-contained.\n\n## 1. Fr",
+      "quality_score": 0.4444041217391304,
+      "sorry_count": 0,
+      "theorem_count": 13,
+      "timestamp": "2026-06-20T23:53:46",
+      "title": "EML Quantum Activation Functions"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8075699999999999
     }
   ],
-  "last_updated": "2026-06-20T22:52:53",
+  "last_updated": "2026-06-20T23:53:46",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "9ff40964",
-        "quality": 0.5532343961470463,
-        "theorems": 79,
-        "title": "The Fermi Paradox as a Pigeonhole Principle: Why We Are Alone"
-      },
-      {
         "cycle_id": "4b892cf9",
         "quality": 0.481562,
         "theorems": 10,
@@ -3141,6 +3135,12 @@
         "quality": 0.6901600000000001,
         "theorems": 104,
         "title": "Recurrence for the Winning Probability in the Generalized Game"
+      },
+      {
+        "cycle_id": "568da95c",
+        "quality": 0.4444041217391304,
+        "theorems": 13,
+        "title": "EML Quantum Activation Functions"
       }
     ],
     "Bridges": [
