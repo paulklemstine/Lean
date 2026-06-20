@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "d1ba4f5a",
-      "domain": "MachineLearning",
-      "key_insight": "# Future Directions — Valuation ↔ Vietoris–Rips bridge\n\nFoundational results established in `Catalog/Bridges/ValuationRipsBridge.lean`:\nin an ultrametric (non-Archimedean valuation) space the Vietoris",
-      "quality_score": 0.57034,
-      "sorry_count": 0,
-      "theorem_count": 11,
-      "timestamp": "2026-06-15T08:28:26",
-      "title": "These conjectures build on `Bridges/ValuationRipsBridge.lean`, which established"
-    },
-    {
       "cycle_id": "b9cc2fac",
       "domain": "Geometry",
       "key_insight": "# Future Directions — Categorical Tropical Rips Interleaving\n\nThis cycle established, in `Catalog/Bridges/CategoricalTropicalRipsInterleaving.lean`, a\nself-contained, fully-verified bridge between **c",
@@ -2501,6 +2491,16 @@
       "theorem_count": 33,
       "timestamp": "2026-06-20T16:15:09",
       "title": "Necessary threshold for cubic generalized Turán growth against K_{3,t}"
+    },
+    {
+      "cycle_id": "656b45a0",
+      "domain": "Pythagorean",
+      "key_insight": "# Future Directions — The Prime Number Crossword (next cycle)\n\nThis cycle established, with zero `sorry`s, the unconditional skeleton of the prime\ncrossword in `Catalog/Cryptography/PrimeGaps/`:\n\n* `B",
+      "quality_score": 0.46081729863543053,
+      "sorry_count": 0,
+      "theorem_count": 33,
+      "timestamp": "2026-06-20T18:22:51",
+      "title": "Two boundary facts of the prime crossword in"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8075699999999999
     }
   ],
-  "last_updated": "2026-06-20T16:15:09",
+  "last_updated": "2026-06-20T18:22:51",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3821,12 +3821,6 @@
     ],
     "Pythagorean": [
       {
-        "cycle_id": "38c06554",
-        "quality": 0.4200221645663455,
-        "theorems": 48,
-        "title": "Close Proofs: The file `Catalog/Novelty/GilbertVarshamov.lean` closes the two-si"
-      },
-      {
         "cycle_id": "faff02b9",
         "quality": 0.42727189683908756,
         "theorems": 463,
@@ -3879,6 +3873,12 @@
         "quality": 0.4604252747252747,
         "theorems": 177,
         "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
+      },
+      {
+        "cycle_id": "656b45a0",
+        "quality": 0.46081729863543053,
+        "theorems": 33,
+        "title": "Two boundary facts of the prime crossword in"
       }
     ],
     "Shared": [
