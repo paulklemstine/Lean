@@ -1,65 +1,30 @@
-# Computational Evidence — Tropical Magnitude Leak & Global-Min Superadditivity
+# Theorem Trace (internal anti-hallucination ledger)
 
-This note records the small-case computations that motivated the formal results in
-`Tropical/TropicalMagnitudeLeak.lean` and `Tropical/TropicalGminSuperadditive.lean`.
-All computations were done over ℚ with an explicit `min`-`plus` model of the tropical
-matrix product (so they are exact, not floating point).
+Source of truth: `Catalog/Tropical/TropicalTDLPEigenAttack.lean`
+(namespace `Catalog.Tropical.TropicalTDLPEigenAttack`).
 
-## Model
+Every claim in ARTICLE.md and RESEARCH_PAPER.md must map to one of the entries below.
+No theorem may be renamed into a grander claim; no result outside this list may be stated.
 
-```
-mm A B   i j = min (A i 0 + B 0 j) (A i 1 + B 1 j)        -- min-plus product (2×2)
-mpow A k     = A ⊗ A ⊗ ... ⊗ A  ((k+1) factors)           -- matches `tropMatPow A k`
-```
+## Definitions
 
-## 1. Entrywise linear sandwich
+| Lean name | Kind | Mathematical statement | Article | Paper |
+|---|---|---|---|---|
+| `oneByOneAction` | def | `oneByOneAction lam x = lam + x` (action of 1×1 tropical matrix) | "the one-box machine" | Def. 3.1 |
+| `Vec` | abbrev | `Vec ι := ι → Nat` (tropical vector) | "a list of numbers" | Def. 4.1 |
+| `tropScalarAdd` | def | `tropScalarAdd c v = fun i => c + v i` (tropical scalar action) | "turning the dial by c" | Def. 4.2 |
+| `ScalarEquivariant` | def | `∀ c v, F (tropScalarAdd c v) = tropScalarAdd c (F v)` | "the machine respects the dial" | Def. 4.3 |
+| `IsTropicalEigen` | def | `F v = tropScalarAdd lam v` | "an eigenline / fixed direction" | Def. 4.4 |
 
-Test matrix `A = [[1,3],[3,1]]`, so global min `amin = 1`, global max `amax = 3`.
+## Theorems
 
-| k | A^{⊗(k+1)} entries (00,01,10,11) |
-|---|----------------------------------|
-| 0 | (1, 3, 3, 1) |
-| 1 | (2, 4, 4, 2) |
-| 2 | (3, 5, 5, 3) |
-| 3 | (4, 6, 6, 4) |
-| 4 | (5, 7, 7, 5) |
-| 5 | (6, 8, 8, 6) |
+| Lean name | Statement | Article | Paper |
+|---|---|---|---|
+| `oneByOne_tropical_iterate` | `(fun y => lam + y)^[k] x = k * lam + x` | "k turns add k·λ" | Thm. 3.2 |
+| `tdlp_recover_oneByOne` | `(fun y => 1 + y)^[k] x - x = k` | "one subtraction reveals k" | Thm. 3.3 |
+| `tropScalarAdd_add` | `tropScalarAdd a (tropScalarAdd b v) = tropScalarAdd (a+b) v` | (implicit) | Lem. 4.5 |
+| `iterate_eigenline_attack` | `F^[k] v = tropScalarAdd (k * lam) v` | "the eigenline attack" | Thm. 4.6 |
+| `tdlp_recover_eigenline` | `F^[k] v i - v i = k` (when `lam = 1`) | "one coordinate, one subtraction" | Thm. 4.7 |
 
-For every `k ≤ 7` and every entry `e` of `A^{⊗(k+1)}` the check
-`(k+1)*amin ≤ e ≤ (k+1)*amax`, i.e. `(k+1) ≤ e ≤ 3(k+1)`, returns `true`.
-This is the universal sandwich proved formally as `tropMatPow_entry_lower` /
-`tropMatPow_entry_upper`.
-
-**Cryptanalytic reading.** From any entry `e = B i j` of the public key
-`B = A^{⊗(k+1)}` the adversary reads off `e/amax ≤ k+1 ≤ e/amin` — a computable
-interval for the secret exponent *with no eigenvector and no `λ ≠ 0` assumption*.
-For the diagonal entries above the interval is `[e/3, e]`; its integer points pin `k`
-to a short list, and when `amin = amax` (a constant matrix) the interval collapses to a
-point (`tdlp_constant_exact`).
-
-## 2. Magnitude no-leak boundary
-
-Zero matrix `Z = [[0,0],[0,0]]`:
-
-| k | Z^{⊗(k+1)} (00, 11) |
-|---|---------------------|
-| 0..5 | (0,0) for all k |
-
-Every power is the zero matrix, so the magnitude channel carries **no** information
-about `k` (`magnitude_no_leak`). This is the magnitude-channel analogue of the
-`λ = 0` eigenvalue boundary in `EigenzeroNoLeak.lean`.
-
-## 3. Global-min superadditivity
-
-Define `g(m) = min_{i,j} (A^{⊗(m+1)})_{i,j}`. For `A = [[1,3],[3,1]]` the table above
-gives `g(0)=1, g(1)=2, g(2)=3, ...`, i.e. `g(m) = m+1`, which satisfies the
-superadditive law `g(a+b+1) ≥ g(a) + g(b)` (here with equality). The general
-inequality `gmin (A ⊗ B) ≥ gmin A + gmin B` was checked on several random ℚ matrices
-and is proved formally as `gmin_tropMatMul_superadd` / `gmin_tropMatPow_superadd`.
-
-## OEIS
-
-The diagonal sequence `1,2,3,4,5,6,...` (A000027) and off-diagonal `3,4,5,6,...`
-(A000027 shifted) are linear, consistent with the predicted slope = the minimum cycle
-mean (here the diagonal self-loop weight `1`). No exotic sequence appears; the point is
-precisely the *linearity*, which is what makes the exponent leak.
+All statements are over `Nat` (min-plus carrier without `+∞`); subtraction is truncated `Nat` subtraction,
+which is exact here because the output dominates the input.

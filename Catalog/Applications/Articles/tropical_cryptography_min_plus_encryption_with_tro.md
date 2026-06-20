@@ -1,236 +1,207 @@
-# The Fingerprint That Won't Wash Off: How a Single Number Betrays a Tropical Secret
+# The Cipher That Broke Itself: A Cautionary Tale from Tropical Arithmetic
 
-## A new kind of arithmetic
+## A new arithmetic for a nervous age
 
-Imagine you rewrote the rules of arithmetic so that *adding* two numbers means
-keeping the **smaller** of the two, and *multiplying* them means **adding** them in
-the ordinary sense. At first this sounds like a child's game, or a typo in a
-textbook. But it is a real and powerful mathematical world called the **tropical
-semiring** — sometimes the *min-plus algebra* — and it has quietly become one of
-the most fertile meeting points between optimization, geometry, and computer
-science.
+Every few years, the world of cryptography gets a scare. The encryption that
+guards our bank transfers, messages, and state secrets rests almost entirely on
+a handful of "hard" mathematical problems — factoring enormous numbers, or
+finding hidden exponents inside cyclic groups. These problems are hard for the
+computers we have today. But a sufficiently large *quantum* computer would crush
+them in an afternoon. So the search is on for **post-quantum cryptography**: new
+hard problems, built on exotic algebra, that even a quantum machine cannot
+shortcut.
 
-In the tropical world:
+One of the most seductive candidates comes from a strange and beautiful corner
+of mathematics called **tropical arithmetic**. It is, at first glance, almost a
+prank. You take the arithmetic you learned as a child and rewrite two rules:
 
-- "two plus three" is **2** (the minimum of 2 and 3),
-- "two times three" is **5** (the ordinary sum 2 + 3).
+- Wherever you used to **add**, now take the **minimum**.
+- Wherever you used to **multiply**, now **add**.
 
-Why bother? Because an astonishing number of real problems are secretly tropical.
-The cheapest route through a road network, the critical path in a project
-schedule, the longest delay through a digital circuit, the most likely sequence in
-a hidden Markov model — all of these are *linear algebra problems in disguise*,
-once you agree to read "+" as "take the minimum" and "×" as "add the costs."
+So in the tropical world, "2 + 3" is no longer 5 — it is `min(2, 3) = 2`. And
+"2 × 3" is no longer 6 — it is `2 + 3 = 5`. This sounds like a typo, but it is a
+perfectly consistent algebra (mathematicians call it the *min-plus semiring*),
+and it shows up everywhere: in scheduling trains, in computing shortest paths
+through a network, in the geometry of evolutionary trees, and in optimization.
+The name "tropical" is a tribute to the Brazilian mathematician Imre Simon, with
+no deeper meaning — it just stuck.
 
-This article is about one elegant idea inside that world: a single, cheaply
-computed number — the **global minimum entry** of a matrix — and the surprising
-way it grows. That growth turns out to be the heartbeat of a deep object called
-the *minimum cycle mean*, and it also has teeth: it can be used to claw back a
-secret hidden inside a proposed post-quantum encryption scheme.
+Because tropical arithmetic looks so unfamiliar, it is tempting to believe it
+hides good cryptographic secrets. The intuition goes: ordinary multiplication is
+the engine of classical cryptography, so let's swap in *tropical* multiplication
+and build a brand-new lock that quantum computers have never been trained to
+pick. Several proposals did exactly this. This article is about why one natural
+version of that idea **defeats itself** — and how that failure can be turned
+into a precise, machine-checkable theorem.
 
-## Matrices that compute shortest paths
+## The lock: a tropical discrete logarithm
 
-In ordinary linear algebra, an *n × n* matrix is a grid of numbers, and matrix
-multiplication combines two grids by a familiar dance of "multiply and sum."
-Tropical matrices look identical — a grid of numbers — but they multiply by the
-tropical rules. If `A` and `B` are tropical matrices, their tropical product
-`A ⊗ B` is defined entry by entry as
+Classical cryptography loves a particular kind of asymmetry: an operation that
+is easy to *do* but hard to *undo*. The flagship example is the **discrete
+logarithm**. Pick a number `g`. Computing `g` raised to a secret power `k` is
+fast, even when `k` is astronomically large, because you can square repeatedly.
+But going backward — being handed `g` and `g^k` and asked to find `k` — is
+believed to be enormously hard. That asymmetry is what lets two strangers, Alice
+and Bob, agree on a shared secret over a public channel (the famous
+Diffie–Hellman key exchange).
 
-```
-(A ⊗ B)(i, j) = min over all k of [ A(i, k) + B(k, j) ].
-```
+The tropical proposal copies this blueprint. Instead of numbers, you use
+**tropical matrices** — grids of integers that multiply using min-and-plus. You
+fix a public matrix `A`, and the "power" `A` raised to the `k`-th tropical power,
+written `A^(⊗k)`, is the matrix you get by tropically multiplying `A` by itself
+`k` times. Computing it is fast: repeated tropical squaring does the job in time
+proportional to `log k`. The hope is that recovering the secret exponent `k`
+from the pair `(A, A^(⊗k))` is hard. Call this the **Tropical Discrete
+Logarithm Problem (TDLP)**. If it were truly hard, you could build a tropical
+Diffie–Hellman: Alice publishes `A^(⊗a)`, Bob publishes `A^(⊗b)`, and they both
+compute the shared key `A^(⊗ab)`.
 
-Read this slowly. The entry `A(i, k)` is the cost of stepping from node `i` to
-node `k`; `B(k, j)` is the cost of stepping from `k` to `j`. Their sum is the cost
-of the two-step route `i → k → j`. The `min over all k` picks the cheapest such
-route. So **tropical matrix multiplication computes shortest two-hop paths**, and
-raising a matrix to a tropical power computes shortest paths of ever-increasing
-length. This is exactly the engine inside the classical Floyd–Warshall and
-Bellman–Ford shortest-path algorithms.
+It is a lovely picture. And it has a crack running right through it.
 
-A *tropical power* `A^{⊗m}` is just `A` tropically multiplied by itself `m` times.
-Computing it is fast: by repeated squaring, you can reach the `k`-th power in about
-`O(n³ log k)` arithmetic operations — the same trick that lets you compute `g^k`
-quickly in ordinary modular arithmetic.
+## Eigenvalues: the secret leaks through
 
-## A dream of tropical cryptography
+Here is the crack. Tropical matrices, like ordinary ones, have **eigenvalues**.
+In the tropical world an eigenvalue `λ` is a number such that, for some special
+vector `v` (an *eigenvector*), applying the matrix to `v` does nothing more than
+add `λ` to every coordinate. The vector keeps its shape; it just slides uniformly
+upward by `λ`. The set of all multiples of such a `v` is its **eigenline** — a
+direction the matrix preserves.
 
-That speed asymmetry — easy to raise to a power, seemingly hard to undo — is the
-seed of a tempting idea. In classical cryptography, the **Diffie–Hellman key
-exchange** lets two strangers, Alice and Bob, agree on a shared secret over a
-public channel. They fix a public base `g`. Alice picks a secret number `a` and
-publishes `g^a`; Bob picks a secret `b` and publishes `g^b`. Each then raises the
-other's value to their own secret, and because `(g^a)^b = (g^b)^a = g^{ab}`, they
-arrive at the same shared key — while an eavesdropper, who sees only `g`, `g^a`,
-and `g^b`, is stuck with the *discrete logarithm problem*: recover `a` from `g^a`.
+Now watch what happens to eigenvalues under powers. If applying `A` once adds
+`λ`, then applying it `k` times adds `λ` exactly `k` times — that is, `k·λ`. In
+symbols, the eigenvalue of `A^(⊗k)` is simply `k` times the eigenvalue of `A`.
+And *that* is a disaster for the would-be cipher, because it means:
 
-The tropical proposal replaces the base `g` with a tropical matrix `A`, and
-exponentiation with tropical powers. Alice publishes `A^{⊗a}`, Bob publishes
-`A^{⊗b}`, and the shared key is `A^{⊗ab}`. The scheme is *correct* — both parties
-really do compute the same matrix — because tropical exponents add and multiply
-just like ordinary ones. We made this precise and machine-checked it: for any
-tropical matrix `A` and any exponents `a` and `b`,
+> k = (eigenvalue of A^(⊗k)) ÷ (eigenvalue of A).
 
-> **Diffie–Hellman correctness.** `(A^{⊗a})^{⊗b} = (A^{⊗b})^{⊗a}`.
+The secret exponent is not hidden at all. It is sitting in plain sight as a
+ratio of eigenvalues, and tropical eigenvalues can be computed quickly — they
+are the "maximum cycle mean" of an associated network, found with classical
+shortest-path-style algorithms. The one-way function is, on its eigenline, a
+two-way street.
 
-The hope was that the matching problem — recover the secret exponent `k` from the
-public pair `(A, A^{⊗k})`, the **Tropical Discrete Logarithm Problem (TDLP)** —
-would be hard, and would even resist quantum computers, since it has nothing to do
-with the number-theoretic structure that quantum algorithms exploit.
+## Stripping the idea to its bones
 
-## The cracks appear
+To see *why* the leak is unavoidable, it helps to shrink the problem until
+nothing can hide. Consider the smallest possible tropical matrix: a single box
+holding one number `λ`. Applying it to a one-number vector `x` is just tropical
+multiplication — that is, ordinary addition:
 
-That hope, it turns out, leaks. The first leak is spectral. Tropical matrices have
-*eigenvalues* in a min-plus sense: a number `λ` is a tropical eigenvalue of `A` if
-there is a vector `v` with `A ⊗ v = v + λ` (every coordinate shifts by the same
-amount `λ`). The catch is that **tropical eigenvalues are additive under powers**:
+> the one-box machine sends `x` to `λ + x`.
 
-> **Eigenvalue additivity.** If `λ` is a tropical eigenvalue of `A`, then `m·λ` is
-> a tropical eigenvalue of `A^{⊗m}`.
+What does running the machine `k` times do? Each pass adds `λ`, so after `k`
+passes you have added `k·λ`:
 
-So an eavesdropper who can measure the eigenvalue of the public power `B = A^{⊗m}`
-simply divides: `m = λ(B) / λ(A)` — and the secret falls out in closed form,
-provided `λ(A) ≠ 0`. The "hard" discrete logarithm is, on most instances, not hard
-at all.
+> **Result 1 (the iterate formula).** Running the one-box machine `k` times sends
+> `x` to `k·λ + x`.
 
-But eigenvalues require finding an eigenvector, and that machinery only works when
-the eigenvalue is nonzero. Is there a *cheaper*, more robust leak — one that needs
-no eigenvector, no shortest-path computation, just a glance at the public matrix?
+This is the entire engine of the supposed cipher, laid bare. The "encryption" is
+nothing but *adding a multiple of `λ`*. And addition has an inverse: subtraction.
+Suppose the public eigenvalue is `λ = 1` (the simplest non-trivial case). Then
+the machine run `k` times sends `x` to `k + x`, and an attacker who sees the
+input `x` and the output simply subtracts:
 
-There is. And it is the subject of this article.
+> **Result 2 (instant recovery).** When `λ = 1`, the secret exponent is exactly
+> `output − input = k`.
 
-## The lightest edge
+No guessing, no search, no quantum computer. One subtraction. The lock springs
+open in a single step.
 
-Define the **global minimum entry** of a tropical matrix `A`:
+## It was never about the matrix
 
-```
-gmin(A) = the smallest number anywhere in the grid A.
-```
+A skeptic might object: surely a *big* tropical matrix, with all its tangled
+min-plus interactions, is safer than a single box? The surprising answer is no —
+not if you happen to be looking along an eigenline. And the reason is a property
+shared by *every* sensible tropical-linear map, no matter how large or
+complicated.
 
-In the road-network picture, `gmin(A)` is simply the weight of the single
-*lightest edge* — the cheapest one-step move available anywhere in the graph. It
-costs almost nothing to compute: one pass over the `n²` entries. It is the bluntest
-possible summary of a matrix. And yet it carries a secret.
+That property is **scalar equivariance**. It says the machine "respects the
+dial": if you turn the dial by adding a constant `c` to every coordinate of your
+vector *before* feeding it in, the output is exactly what you'd get by running
+the machine first and adding `c` afterward. Tropical matrix multiplication always
+has this property, because min-plus multiplication distributes over the uniform
+shift. In plain terms: a uniform raise of the input causes the same uniform
+raise of the output.
 
-Two simple but foundational facts pin down exactly what `gmin` is:
+Combine scalar equivariance with an eigenvector — a vector `v` the machine
+merely shifts by `λ` — and the whole apparatus collapses to the one-box case.
+Here is the clean statement, proved in full generality:
 
-> **It is a lower bound.** `gmin(A) ≤ A(i, j)` for every entry — by definition, the
-> minimum is no larger than anything.
+> **Result 3 (the eigenline attack).** Let `F` be *any* scalar-equivariant
+> tropical map, and let `v` be an eigenvector with eigenvalue `λ`. Then running
+> `F` exactly `k` times on `v` adds `k·λ` to every coordinate of `v` — and
+> nothing else. The internal structure of `F` is completely irrelevant.
 
-> **It is the greatest lower bound.** If some number `c` is `≤` every entry of `A`,
-> then `c ≤ gmin(A)`.
+The matrix can be `10 × 10` or `1000 × 1000`, dense or sparse, random or
+hand-crafted. The moment your starting vector lies on an eigenline, the iterated
+map forgets everything except the scalar `k·λ`. So the recovery is just as easy
+as before:
 
-Together these say `gmin(A)` is the *tightest* number that sits below the whole
-matrix. Nothing larger works; `gmin` itself does. This characterization — minimum
-as the greatest lower bound — is the lever for everything that follows.
+> **Result 4 (coordinate recovery).** When the eigenvalue is `λ = 1`, the secret
+> `k` is read off from *any single coordinate*: subtract that coordinate of the
+> input from the same coordinate of the output, and you have `k`.
 
-## The surprise: minimums that add up
+One coordinate. One subtraction. The size of the matrix buys you nothing.
 
-Here is the heart of the matter. What happens to the lightest edge when you
-tropically multiply two matrices? You might guess that minimums shrink under
-combination — that the cheapest route in `A ⊗ B` should be *at most* the cheapest
-edges of `A` and `B`. The truth runs the other way:
+## Why this matters
 
-> **Superadditivity of the lightest edge.**
-> `gmin(A) + gmin(B) ≤ gmin(A ⊗ B).`
+It would be easy to read this as a purely negative story — another cryptographic
+proposal that didn't survive contact with mathematics. But there are three
+reasons it is worth telling.
 
-The lightest edge of the *product* is at least the **sum** of the lightest edges
-of the factors. Why? Every entry of `A ⊗ B` is a minimum over routes `i → k → j`,
-and every such route has cost `A(i, k) + B(k, j)`. But `A(i, k)` is at least
-`gmin(A)`, and `B(k, j)` is at least `gmin(B)`. So *every* route costs at least
-`gmin(A) + gmin(B)` — and a minimum over things that are all at least `X` is itself
-at least `X`. The lightest two-hop route cannot undercut the sum of the two
-lightest single hops, because each hop must pay its own floor.
+**First, it is a clean demonstration of a deep principle: homogeneity is the
+enemy of secrecy.** The tropical cipher fails not because of some subtle bug but
+because its core operation is *linear* in the tropical sense. Linear operations
+have eigenvalues, eigenvalues add up under iteration, and additive structure is
+trivially invertible. Any cryptographic scheme whose secret operation is too
+"linear" — in any algebra, tropical or otherwise — is leaking its secret through
+its spectrum. The tropical case just makes the leak vivid because the arithmetic
+is so stark.
 
-This single inequality is, to a mathematician's ear, a fanfare. Superadditivity is
-*precisely* the hypothesis of a classical result called **Fekete's lemma**, which
-guarantees that a superadditive sequence, divided by its index, settles down to a
-limit. The lightest edge of a matrix's growing powers — normalized by the exponent
-— *converges*. And the value it converges to has a name: the **minimum cycle
-mean** of the graph, the smallest possible average edge-weight around any closed
-loop. This number is the tropical analog of a spectral radius, the slow,
-unbreakable drumbeat that governs the long-run behavior of the whole system. The
-humble lightest edge is the seed from which that deep invariant grows.
+**Second, the failure points toward what a *good* tropical scheme would need.**
+If linearity is fatal, security must come from controlled *non*-linearity: maps
+that do **not** respect the dial, vectors that avoid eigenlines, or operations
+that mix tropical and classical arithmetic so that no single eigenvalue governs
+the dynamics. The counterexample is a design specification written in the
+negative — a fence marking exactly where not to build.
 
-## Climbing with the exponent
+**Third, the argument is not a hand-wave.** Every result above has been written
+down as a formal mathematical statement and verified down to the last step, with
+no appeal to intuition or "it is easy to see." The iterate formula, the instant
+recovery, the general eigenline collapse, and the coordinate recovery are all
+theorems in the strict sense — checked by a machine that accepts no gaps. When a
+cryptosystem is broken, you want certainty that it is broken, and that is exactly
+what a formal proof delivers.
 
-Superadditivity does not stay still; it propagates up the ladder of powers.
-Because powers of the same matrix combine by adding exponents, the lightest edge
-inherits the inequality:
+## A worked example
 
-> **Superadditivity along powers.**
-> `gmin(A^{⊗a}) + gmin(A^{⊗b}) ≤ gmin(A^{⊗(a+b)}).`
+Let's make it concrete. Take the one-box machine with `λ = 1`, and suppose Alice's
+secret exponent is `k = 7`, applied to a starting value `x = 4`.
 
-Specialize this to `a = b` and you get the inequality that a computer literally
-tracks every time it doubles an exponent by squaring:
+Running the machine seven times: `4 → 5 → 6 → 7 → 8 → 9 → 10 → 11`. The output is
+`11`, which is indeed `7·1 + 4 = 11`, exactly as Result 1 predicts. An
+eavesdropper who sees the public input `4` and the transmitted output `11`
+computes `11 − 4 = 7` and instantly knows Alice's secret. That is Result 2 in
+action.
 
-> **Doubling inequality.**
-> `2 · gmin(A^{⊗k}) ≤ gmin(A^{⊗2k}).`
+Now scale up. Take a `3 × 3` tropical matrix and a vector `v` that happens to be
+one of its eigenvectors with eigenvalue `1`, say `v = (0, 5, 2)`. Apply the
+matrix seven times. By Result 3 the output must be `(0+7, 5+7, 2+7) = (7, 12, 9)`
+— each coordinate raised by `k·λ = 7`, no matter what the nine entries of the
+matrix were. The attacker looks at the first coordinate alone: `7 − 0 = 7`. Done.
+That is Result 4. The other eight numbers in the matrix never mattered.
 
-Each squaring step at least **doubles** the lightest edge. The fingerprint grows
-in lockstep with the very algorithm that builds the public key. And chaining the
-inequality from the bottom gives the cleanest statement of all:
+## The moral
 
-> **Linear lower bound.**
-> `(k + 1) · gmin(A) ≤ gmin(A^{⊗(k+1)}).`
+Tropical arithmetic is genuinely promising terrain for new mathematics, and the
+broader hunt for post-quantum cryptography is real and urgent. But novelty is not
+the same as security. An unfamiliar algebra can *look* like a fortress while
+being, structurally, a screen door. The min-plus discrete logarithm, in its most
+natural form, is exactly such a screen door: its secret slides out through the
+eigenvalues, and on an eigenline a single subtraction is all it takes.
 
-The lightest edge of the public power grows **at least linearly** in the secret
-exponent. Plot `gmin(A^{⊗m})` against `m` and you cannot help but climb a ramp
-whose slope is bounded below by `gmin(A)` and, in the limit, equals the minimum
-cycle mean.
-
-## Why a cryptographer should worry
-
-Now return to the spy watching the public channel. She sees the base `A` and the
-public power `B = A^{⊗m}`, and wants the secret `m`. She does not need to find an
-eigenvector. She does not need to run a shortest-path algorithm. She computes two
-minimums — `gmin(A)` and `gmin(B)` — in a single sweep each, and the linear lower
-bound immediately hands her a ceiling on the secret:
-
-```
-m ≤ gmin(B) / gmin(A)   (whenever gmin(A) > 0).
-```
-
-The secret exponent cannot hide above this line. Worse for the scheme's designer:
-the fingerprint is **monotone** — it only grows as the exponent grows, so it can
-never accidentally collapse back down and disguise a large secret as a small one.
-And it is *unconditional*: it holds for **every** tropical matrix, with no
-assumption about eigenvalues, eigenvectors, or genericity. Where the spectral
-attack needed `λ(A) ≠ 0`, this coarse companion needs nothing but a positive
-lightest edge.
-
-The two attacks even fail in the same place. The spectral channel goes silent when
-`λ = 0`; the magnitude channel goes silent when `gmin(A) = 0`. The only refuge for
-security is degeneracy — the trivial corner of the parameter space — which is
-exactly the wrong place to build a cipher. Strength here cannot come from making
-the matrix bigger (more nodes, larger `n`); it can only come from the *spread* of
-the entries, and even then the lightest edge keeps leaking a linear shadow of the
-secret.
-
-## The bigger picture
-
-What makes this story satisfying is how a single, almost trivial-looking quantity
-braids together three different worlds.
-
-- **In optimization and graph theory,** `gmin` is the lightest edge, and its
-  growth rate is the minimum cycle mean — the quantity that drives mean-payoff
-  games, project scheduling, and the long-run cost of cyclic processes.
-- **In analysis,** its superadditivity is the exact hypothesis of Fekete's lemma,
-  one of the most quietly useful convergence theorems in all of mathematics, and
-  the reason the normalized sequence has a limit at all.
-- **In cryptography,** it is a fingerprint of a secret exponent that cannot be
-  washed off — a monotone, unconditional witness that bounds the very quantity a
-  cipher is trying to hide.
-
-There is a moral here that goes beyond tropical algebra. The dream of
-cryptography is to build functions that are easy to compute forward and impossible
-to run backward. But every invariant that behaves *predictably* under the forward
-operation is a potential crack — a structural regularity the attacker can exploit.
-Tropical exponentiation is rich with such regularities: eigenvalues that add, and
-now lightest edges that grow linearly. The same algebraic beauty that makes a
-construction elegant is often what makes it breakable.
-
-The lightest edge of a matrix seems like the least interesting number you could
-write down about it. It turns out to be a thread that, when pulled, unravels a
-secret and reveals a spectral invariant at the same time. That is the quiet
-delight of tropical mathematics: rewrite "plus" as "minimum," and the most
-ordinary objects start to whisper.
+The lesson generalizes far beyond the tropics. Whenever someone proposes hiding a
+secret inside the repeated application of an operation, the first question to ask
+is: *what does this operation do to its eigenvectors?* If iteration only scales
+them, the secret is the scale factor — and you have built a lock whose key is
+written on the front door.
