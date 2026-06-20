@@ -862,7 +862,12 @@ class PiAgentClient:
                             
                         print(f"[Pi-Agent] ← OpenRouter rate limited (429) on model={model}. Message: {err_msg_text}. Waiting {retry_after}s (attempt {attempt+1}/{max_retries})")
                         
-                        if retry_after > 120 or "limit reached" in err_msg_text.lower() or "free tier" in err_msg_text.lower() or "limit" in err_msg_text.lower():
+                        if "free" in model.lower():
+                            print(f"[Pi-Agent] ← OpenRouter free model rate limited. Skipping retries.")
+                            last_error = f"[OPENROUTER_ERROR: Rate limited (free model skipped). {err_msg_text}]"
+                            break
+
+                        if retry_after > 120 or "limit reached" in err_msg_text.lower() or "limit" in err_msg_text.lower():
                             print(f"[Pi-Agent] ← OpenRouter hard rate limit detected. Aborting retries.")
                             last_error = f"[OPENROUTER_ERROR: Rate limited (hard limit). {err_msg_text}]"
                             break
