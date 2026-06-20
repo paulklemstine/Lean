@@ -2175,21 +2175,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Growth Constant for Unlabelled Cubic Planar Graphs"
   },
   {
-    "consumed_by_exp_id": "47c79c52",
-    "description": "To formalize the concept of graph linear notation as a complete graph invariant in Lean 4, we propose defining it as the maximum binary encoding of adjacency matrices across all vertex orderings. This encoding uniquely represents a graph up to isomorphism by capturing its structure through lexicographic maximization.",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2113",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.19393v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-19T16:09:08.325435+00:00",
-    "title": "Formalizing Graph Linear Notation in Lean 4"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Let B_n be the Birkhoff polytope, the convex hull in R^(n x n) of all n x n permutation matrices. Conjecture: B_n satisfies the clique-face property, meaning every clique in the 1-skeleton of B_n is exactly the vertex set of a face, if and only if n <= 2.",
     "domains": [
@@ -3606,6 +3591,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions: Tropical Linear Algebra vs. Discrete-Logarithm Security\n\nThese directions build on the verified results in\n[`Cryptography/TropicalDiscreteLog.lean`](Cryptography/TropicalDiscreteLog.lean) and the\ncompanion brief [`RESEARCH_PAPER.md`](RESEARCH_PAPER.md), which prove that tropical\nexponentiation is affine in the exponent and hence not one-way for the scalar, diagonal,\nand constant (rank-one) families.\n\nEach direction below is stated with a single **key insight** and a **Why now?**\njustification, and is framed so that the deliverable is a *certified algorithm or\ncomputational pipeline*, not merely a paper proof.\n\n---\n\n## Direction 1 \u2014 A certified inverter from the max-plus cyclicity theorem\n\n**Goal.** Formalize the cyclicity theorem `A^\u2299(n+\u03c3) = (\u03c3\u00b7\u03bb) \u2299 A^\u2299n` (for `n \u2265 t\u2080`,\nirreducible `A`, tropical eigenvalue `\u03bb`, cyclicity `\u03c3`) and extract a verified\npolynomial-time procedure that recovers the secret exponent from `A^\u2299n` for *arbitrary\nirreducible* tropical bases \u2014 generalizing the scalar/diagonal/constant breaks already\nproved.\n\n**The key insight is** that the secret exponent need never be searched for: after a short,\nexplicitly bounded transient, every entry of `A^\u2299n` grows with the *same* slope `\u03bb`, so two\nprobed powers pin down `\u03bb` and a single affine equation returns `n` (mod `\u03c3`).\n\n**Why now?** The base cases (scalar, diagonal, constant) are already machine-verified here,\ngiving the exact lemma shapes (`T_pow`, `Jconst_pow`, idempotent `const_sum`) that the\ninductive cyclicity proof reuses; and Mathlib's matrix-semiring and `WithTop` infrastructure\nnow make the transient/cyclicity bookkeeping tractable in a way it was not a few years ago.\n\n---\n\n## Direction 2 \u2014 Formalizing the Kotov\u2013Ushakov attack on tropical polynomial key exchange\n\n**Goal.** Move from pure powers to the actual Grigoriev\u2013Shpilrain protocol, whose public\nvalues are tropical *polynomials* of two commuting tropical matrices, and produce a\ncertified implementation of the Kotov\u2013Ushakov / Rudy\u2013Monico recovery attack with a verified\nsuccess condition.\n\n**The key insight is** that the attacker never needs the private polynomial itself \u2014 the\ncommuting-generators structure forces the shared key into a low-dimensional affine family of\ncandidate tropical expressions, which a verified search enumerates and checks.\n\n**Why now?** The verified tropical-semiring layer in this project (finite-scalar arithmetic\n`T_mul`, affine powering `T_pow`, idempotent collapse) supplies exactly the algebraic\nprimitives the attack manipulates, so the remaining work is the (now well-isolated)\ncombinatorial search rather than re-deriving tropical algebra from scratch.\n\n---\n\n## Direction 3 \u2014 A formal impossibility theorem: idempotency forbids DL-style one-wayness\n\n**Goal.** Prove (or sharply delimit) the conjecture that *no* monomial construction over an\nidempotent semiring can yield a one-way exponentiation map, turning the accumulating\ncase-by-case breaks into a single structural no-go theorem with a constructive inverter.\n\n**The key insight is** that idempotency (`x \u2295 x = x`) annihilates the multiplicity that\nclassical groups rely on to scramble orbits, leaving every power-orbit an affine ray whose\nslope is computable from a bounded number of probes.\n\n**Why now?** This project already isolates idempotency as the precise culprit (the lemmas\n`nsmul_idem` and `const_sum` are where the coupling collapses), so the impossibility\nstatement can be formulated against a clean, verified abstraction of \"idempotent\nsemiring + monomial forward map\" rather than against any one ad-hoc scheme.\n\n---\n\n## Direction 4 \u2014 An automated, certifying parameter-audit tool for tropical schemes\n\n**Goal.** Build a verified decision procedure that, given a candidate tropical base (and\noptional protocol metadata), returns either a *recovered exponent with a proof* or a\n*machine-checked certificate of structural weakness* (e.g. \"diagonalizable\", \"irreducible\nwith cyclicity \u03c3\", \"rank-one\"), usable as a drop-in audit gate before any tropical scheme is\ndeployed.\n\n**The key insight is** that the cryptanalysis can be made *self-certifying*: rather than\ntrusting an external attack script, the tool emits a Lean term whose type is exactly the\nstatement \"this instance is broken,\" so a positive audit is a proof and a negative audit is\nan explicit, checkable obstruction.\n\n**Why now?** The pipelines in this file (`recoverScalar`, `recoverDiag`, `recoverConst`) are\nalready *executable and proved correct*, demonstrated by `native_decide` runs; packaging\nthem behind a uniform interface that emits certificates is an engineering step on top of an\nexisting verified core.\n\n---\n\n## Direction 5 \u2014 Searching for a non-affine idempotent forward map (the survival question)\n\n**Goal.** Systematically explore idempotent and semiring-like structures (min-plus on\nnon-totally-ordered carriers, tropical with truncation/quantization, supertropical and\nsymmetrized semirings) for a forward map that is provably *non-affine* in the secret, using\nverified computation to refute or support candidate hardness, and to extract a counterexample\ninverter whenever affinity sneaks back in.\n\n**The key insight is** that the only escape from the attack is to break affinity *without*\nreintroducing a field's multiplicative scrambling \u2014 a narrow target that a verified\nexploratory search can map out far more reliably than hand analysis.\n\n**Why now?** The same `#eval`/`native_decide` machinery used here to *confirm* breaks can be\nrepurposed to *falsify* hardness candidates cheaply, so a structured computational sweep \u2014\neach candidate either broken by a certified inverter or flagged for deeper study \u2014 is\nimmediately actionable on top of the present infrastructure.\n",
+    "domains": [
+      "Algebra",
+      "Tropical"
+    ],
+    "id": "fd_2150",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "d9e56a6a",
+    "status": "available",
+    "timestamp": "2026-06-20T16:09:45.868645+00:00",
+    "title": "These directions build on the verified results in"
   },
   {
     "consumed_by_exp_id": "",

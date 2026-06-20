@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d9e56a6a",
     "filename": "normalization_functor_into_the_probability_simplex.json",
     "pkg_num": 210,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5512728045325779,
     "title": "The Arithmetic of the Infinite Library: Exact Combinatorics and Probability of the Library of Babel"
   },
   {
@@ -6424,8 +6424,8 @@ window.PACKAGE_GRAPH = {
       "hue": 92,
       "id": "normalization_functor_into_the_probability_simplex",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5512728045325779,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "The Arithmetic of the Infinite Library: Exact Combinatorics and Probability of the Library of Babel"
     }

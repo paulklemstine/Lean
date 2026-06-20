@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "a37014f1",
-      "domain": "Bridges",
-      "key_insight": "# FUTURE DIRECTIONS — Functorial Tropical Certificates for Berggren–Lorentz Lattice Reduction\n\nThis cycle established a **functorial tropical certificate** for the Berggren–Lorentz\nmonoid acting on Py",
-      "quality_score": 0.45555519710378123,
-      "sorry_count": 3,
-      "theorem_count": 20,
-      "timestamp": "2026-06-15T07:16:49",
-      "title": "Functorial tropical certificates for Berggren–Lorentz lattice reduction"
-    },
-    {
       "cycle_id": "fcdeb4ae",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Berggren–Lorentz Certificates for Lattice Reduction\n\nThis cycle (see `LatticeReduction.lean`) lifted the single-generator facts of\n`Core.lean` to whole-word / whole-monoid statem",
@@ -2501,6 +2491,16 @@
       "theorem_count": 177,
       "timestamp": "2026-06-20T15:21:04",
       "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
+    },
+    {
+      "cycle_id": "d9e56a6a",
+      "domain": "Tropical",
+      "key_insight": "# Future Directions: Tropical Linear Algebra vs. Discrete-Logarithm Security\n\nThese directions build on the verified results in\n[`Cryptography/TropicalDiscreteLog.lean`](Cryptography/TropicalDiscreteL",
+      "quality_score": 0.5512728045325779,
+      "sorry_count": 0,
+      "theorem_count": 33,
+      "timestamp": "2026-06-20T16:12:33",
+      "title": "*normalization functor into the probability simplex*"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8075699999999999
     }
   ],
-  "last_updated": "2026-06-20T15:21:04",
+  "last_updated": "2026-06-20T16:12:33",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3945,12 +3945,6 @@
     ],
     "Tropical": [
       {
-        "cycle_id": "7e82348b",
-        "quality": 0.44762947252747254,
-        "theorems": 21,
-        "title": "The Mandelbrot Set's Secret Number Theory: Quadratic Recurrence and Primality"
-      },
-      {
         "cycle_id": "1ad32e9c",
         "quality": 0.4733421090909091,
         "theorems": 20,
@@ -4003,6 +3997,12 @@
         "quality": 0.4961724137931035,
         "theorems": 21,
         "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
+      },
+      {
+        "cycle_id": "d9e56a6a",
+        "quality": 0.5512728045325779,
+        "theorems": 33,
+        "title": "*normalization functor into the probability simplex*"
       }
     ]
   }
