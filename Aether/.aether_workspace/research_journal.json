@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "51575ef7",
-      "domain": "Bridges",
-      "key_insight": "# FUTURE DIRECTIONS — Neural observation pseudometrics ↔ proof-spectrum congruence kernels\n\nThis cycle established the functor\n\n```\nbehaviorCongruence : AlgNeuralSystem R K α  ⟶  SRCong R\n```\n\nsending",
-      "quality_score": 0.794,
-      "sorry_count": 2,
-      "theorem_count": 68,
-      "timestamp": "2026-06-15T06:29:50",
-      "title": "Functorial comparison between neural observation pseudometrics and proof-spectrum congruence kernels"
-    },
-    {
       "cycle_id": "88475cc5",
       "domain": "Bridges",
       "key_insight": "# Future Directions — Categorical Tropicalization of Rips Filtrations and Interleaving Stability\n\nThis cycle established (in `Catalog/Bridges/CategoricalTropicalRipsInterleaving.lean`,\n0 sorries, axio",
@@ -2501,6 +2491,16 @@
       "theorem_count": 28,
       "timestamp": "2026-06-20T14:20:11",
       "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
+    },
+    {
+      "cycle_id": "d94e79ee",
+      "domain": "Bridges",
+      "key_insight": "# Future Directions — Mock theta f(q), recurrences, and non-holonomy\n\nDerived from this cycle's findings: the claimed P-recurrence for the coefficients of\nRamanujan's third order mock theta function `",
+      "quality_score": 0.68624,
+      "sorry_count": 0,
+      "theorem_count": 60,
+      "timestamp": "2026-06-20T14:32:24",
+      "title": "Linear recurrence for coefficients of Ramanujan's third order mock theta function f(q)"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8075699999999999
     }
   ],
-  "last_updated": "2026-06-20T14:20:11",
+  "last_updated": "2026-06-20T14:32:24",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3145,12 +3145,6 @@
     ],
     "Bridges": [
       {
-        "cycle_id": "7db0844d",
-        "quality": 0.42713306086956526,
-        "theorems": 11,
-        "title": "A functor from metric Rips filtrations to tropical valuation objects via simplex"
-      },
-      {
         "cycle_id": "90c4ce9a",
         "quality": 0.49903022994652413,
         "theorems": 17,
@@ -3203,6 +3197,12 @@
         "quality": 0.476594,
         "theorems": 41,
         "title": "Average-Degree Bound for Locally Sparse Uniform Hypergraphs"
+      },
+      {
+        "cycle_id": "d94e79ee",
+        "quality": 0.68624,
+        "theorems": 60,
+        "title": "Linear recurrence for coefficients of Ramanujan's third order mock theta functio"
       }
     ],
     "Combinatorics": [

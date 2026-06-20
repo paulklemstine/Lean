@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "d94e79ee",
     "filename": "linear_recurrence_for_coefficients_of_ramanujans_t.json",
     "pkg_num": 209,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.68624,
     "title": "Linear Recurrence for Coefficients of Ramanujan's Third Order Mock Theta Function f(q): A Disproof"
   },
   {
@@ -6388,8 +6388,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "linear_recurrence_for_coefficients_of_ramanujans_t",
       "primary_domain": "Bridges",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.68624,
+      "quality": "partial",
       "shape": "icosahedron",
       "title": "Linear Recurrence for Coefficients of Ramanujan's Third Order Mock Theta Function f(q): A Disproof"
     }
