@@ -4027,6 +4027,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "Sul05"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Conjecture that for every positive integer n, the number of Dyck paths of semilength n that are black‑white balanced under the column‑alternating coloring equals the Narayana number N(n,⌊n/2⌋+1).",
+    "domain_bridges": [
+      "Catalan Numbers",
+      "Narayana Numbers",
+      "Dyck Paths",
+      "Enumerative Combinatorics"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2144",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Bijective proof using up‑step parity and the reflection principle, analogous to the chessboard case.",
+    "research_mode": "team",
+    "source_exp_id": "2606.18754v1",
+    "status": "available",
+    "timestamp": "2026-06-20T18:39:07.780258+00:00",
+    "title": "Column‑alternating balanced Dyck paths conjecture"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "05A15",
       "11C08",
@@ -4042,7 +4069,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2144",
+    "id": "fd_2145",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use S_N=x(x^N-1)/(x-1)=x prod_{d|N,d>1} Phi_d. Since pq | m, Phi_{pq} divides S_{m^2}; write S_{m^2}/Phi_{pq}=x(1+x^{pq}+...+x^{m^2-pq})(1+...+x^{p-1})(1+...+x^{q-1}), which is visibly nonnegative. For S_{n^2}Phi_{pq}, prove a prefix-sum bound for coefficients of Phi_{pq}: its partial sums up to degree (p-1)(q-1) are 0 or 1, so convolution with a length n^2 block of ones is nonnegative when n^2 >= (p-1)(q-1)+1. Then verify evaluations at 1 and the product identity.",
@@ -4059,7 +4086,7 @@
       "Hajebi & Spirkl 2026 – Characterization of bounded α‑tw by excluded families",
       "Yolov 2018 – Definition and properties of tree‑independence number"
     ],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2683755a",
     "description": "Conjecture: For every integer d ≥ 1 and every planar graph H, there exists a constant C = C(d, H) such that any graph G that is K_{1,d}-free and does not contain H as an induced minor satisfies α‑tw(G) ≤ C, i.e., the class of K_{1,d}-free graphs without H as an induced minor has bounded tree‑independence number.",
     "domain_bridges": [
       "Excluded minor theory",
@@ -4069,13 +4096,13 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2145",
+    "id": "fd_2146",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the excluded minor structure theorem to bound the independence number within each bag of a tree decomposition, using the K_{1,d}-free condition to limit local density, and combine with planar minor restrictions to obtain a uniform constant C(d, H).",
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-20T06:56:11.390123+00:00",
     "title": "Bounded tree-independence in K_{1,d}-free graphs excluding a planar minor"
   },
@@ -4096,7 +4123,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2146",
+    "id": "fd_2147",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalise families of k‑sets as finsets of finsets in Lean. 2. Prove basic lemmas about degree, diversity and cross‑intersection. 3. Implement the S_{U,V}^Q‑shift operator and show it preserves cross‑intersection and does not decrease diversity. 4. Adapt the shifting argument of Frankl‑Kupavskii to obtain a canonical shifted extremal pair. 5. Use compression to show any extremal pair must be isomorphic to the canonical one, relying on counting lemmas for binomial coefficients. 6. Derive the product bound and the uniqueness statement via a combinatorial optimisation argument formalised with Lean's `linarith`/`norm_num` tactics.",
@@ -4117,7 +4144,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2147",
+    "id": "fd_2148",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "sieve-theoretic analysis",
@@ -4144,7 +4171,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2148",
+    "id": "fd_2149",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Develop a reconstruction algorithm for partitions from pre_k(λ) using the unique factorization property of S‑smooth numbers. Show that the elementary symmetric sums determine the multiset of parts uniquely by iteratively solving for the largest part via a polynomial equation whose roots are S‑smooth numbers, then induct on the number of parts. This requires establishing that the set of S‑smooth numbers is closed under multiplication and that the elementary symmetric function e_k is strictly monotone in each argument when restricted to this set.",
@@ -4171,7 +4198,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2149",
+    "id": "fd_2150",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Attempt to prove the equality by showing a non‑contractive, r‑Lipschitz mapping between e‑embracing bases and their e‑positive fundamental circuits, or find a counterexample violating the equality.",
@@ -4201,7 +4228,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2150",
+    "id": "fd_2151",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the augmented cycle index Z_{S_M} and its expression in terms of power‑sum symmetric functions. Specialize the symmetric functions to extract the statistics tc and cp via appropriate scalar products. Show that the resulting generating functions coincide by applying Lemma lm:partition and the symmetry of the power‑sum basis, yielding an identity that implies equality of the total sums. A sign‑reversing involution on pairs (w, i) where i is either a terminal closer or a cyclic point can also be constructed to give a bijective proof.",
@@ -4229,7 +4256,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2151",
+    "id": "fd_2152",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Construct the explicit modular form f ∈ M_4(SL(2,Z)) using the Rankin-Cohen bracket on the eta-quotient (η(5τ)/η(τ))^5, compute its first several Fourier coefficients, and verify they match the pattern a(5n+4) ≡ 0 (mod 5) for the partition function.",
@@ -4249,7 +4276,7 @@
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2152",
+    "id": "fd_2153",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Direct enumeration under bounded exponents",
@@ -5509,26 +5536,6 @@
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — The Prime Number Crossword (next cycle)\n\nThis cycle established, with zero `sorry`s, the unconditional skeleton of the prime\ncrossword in `Catalog/Cryptography/PrimeGaps/`:\n\n* `Boundary.lean` — `nextPrime`, the factorial run `exists_consecutive_composites(_ge)`,\n  the two boundary facts `gaps_unbounded` / `gaps_unbounded_cofinal`, the Bertrand bound\n  `nextPrime_sub_le`, the maximal-gap function `maximalGap` with `maximalGap_le`,\n  `maximalGap_unbounded`, `maximalGap_mono`, and the infinitary Polignac result\n  `polignac_infinite`.\n* `AverageGap.lean` — the bridge `nextPrime_nth_prime` to `Nat.nth Nat.Prime`, the\n  telescoping mean-gap identity `sum_gaps_eq`, and the counting milestone\n  `primeCounting_le` (`π(x) ≤ x`).\n\nThe following conjectures are the natural next falsifiable targets.\n\n## D1. Sharpened Bertrand: `nextPrime p - p ≤ p / 2` for `p ≥ 5`\n**Conjecture.** `∀ p, p.Prime → 5 ≤ p → nextPrime p - p ≤ p / 2`, and more strongly the\nrelative gap `(nextPrime p - p) / p → 0`.\n- **The key insight is** that `nextPrime_sub_le` already reduces the whole question to a\n  single explicit \"prime in `(n, c·n]`\" estimate: replacing Bertrand's `c = 2` by a\n  Nagura-type `c = 6/5` (valid for `n ≥ 25`) immediately upgrades the bound from `p` to\n  `p/5`, a fortiori `p/2`, with the only new ingredient being a finite check below 25.\n- **Why now?** The reduction `nextPrime p ≤ c·p ⇒ gap ≤ (c-1)p` is already isolated in\n  `nextPrime_sub_le`; the cycle showed the gap machinery is robust, so the bottleneck is\n  exactly one explicit interval-of-primes lemma, which is a self-contained number-theory\n  task rather than a redesign.\n- **Falsifiable:** a single prime `p ≥ 5` with `nextPrime p - p > p/2` refutes it.\n\n## D2. Mean gap matches the logarithm (full C2 / PNT flavor)\n**Conjecture.** `(nth Prime n - 2) / n ~ log (nth Prime n)`; equivalently the Cesàro\naverage of `nextPrime p_k - p_k` is `Θ(log p_n)`.\n- **The key insight is** that `sum_gaps_eq` already collapses the *entire* average-gap\n  question to the asymptotics of a single quantity, `nth Prime n` (the `n`-th prime): the\n  mean gap is *exactly* `(p_n - 2)/n`, so \"mean gap `~ log x`\" is *equivalent* to\n  `p_n ~ n log n`, i.e. to the prime number theorem.\n- **Why now?** The telescoping identity removes all combinatorial noise, leaving a clean\n  equivalence to `p_n ~ n log n`; pairing the proven upper bound `π(x) ≤ x` with a\n  Chebyshev lower bound `π(x) ≥ c·x/log x` is the minimal additional analytic input.\n- **Falsifiable:** any constant `c` for which `|(p_n-2)/n - log p_n|` fails to be\n  `o(log p_n)` along a subsequence refutes it.\n\n## D3. Cramér growth of the maximal gap: `maximalGap x = O((log x)^2)`\n**Conjecture.** There is `C` with `maximalGap x ≤ C·(log x)^2` for all large `x`.\n- **The key insight is** that `maximalGap_le` (`G ≤ x`) and `maximalGap_unbounded`\n  (`G → ∞`) already pin `G` between a trivial linear ceiling and `∞`; Cramér's heuristic\n  predicts the truth is polylogarithmic, an enormous gap from the proven `≤ x`.\n- **Why now?** `maximalGap` is now a concrete `Finset.sup` with a monotonicity lemma, so\n  any future explicit gap bound (e.g. from D1) plugs directly into `maximalGap_le` to\n  lower the ceiling from `x` toward `√x`, `x^{0.6}`, ... tracking the literature.\n- **Falsifiable:** an `x` with `maximalGap x > C·(log x)^2` for every fixed `C` (a\n  super-polylog gap) refutes the bound for that `C`.\n\n## D4. Exact Polignac: every even `2k` is a gap infinitely often\n**Conjecture (open).** `∀ k ≥ 1, {p | p.Prime ∧ nextPrime p - p = 2k}.Infinite`.\n- **The key insight is** that `polignac_infinite` already proves the `≥ 2k` version is\n  infinite; the open content is *exactly* the step from `≥ 2k` to `= 2k`, i.e. forbidding\n  the gap from always overshooting — a sieve/admissibility statement, not a size statement.\n- **Why now?** The cycle cleanly separated the unconditional \"large gaps recur\" fact from\n  the conditional \"this *specific* gap recurs\" fact; with `nextPrime_nth_prime` tying gaps\n  to consecutive primes, the `k = 1` case is precisely the twin-prime conjecture, situating\n  the problem against current sieve technology (bounded-gaps results give the first nonempty\n  `2k`).\n- **Falsifiable:** a `k` and a bound `B` with only finitely many primes of gap `= 2k`\n  refutes it.\n\n## D5. Safe-prime spacing (Diffie–Hellman parameter cost)\n**Conjecture.** With `SafePrime p := p.Prime ∧ ((p-1)/2).Prime`, safe primes are infinite\nand their gaps are unbounded: `∀ N, ∃ p, SafePrime p ∧ (nextSafePrime p - p) ≥ N`.\n- **The key insight is** that the factorial run used for `gaps_unbounded` transports\n  verbatim *once* the index set is infinite; the only missing hypothesis is the (open)\n  infinitude of safe primes, without which `nextSafePrime` is not even total.\n- **Why now?** The cycle's `gaps_unbounded_cofinal` is parametric in \"which primes we\n  enumerate\"; abstracting it over an arbitrary infinite predicate `P` would let safe\n  primes, Sophie Germain primes, and ordinary primes all reuse one proof, isolating the\n  single open input (infinitude of `P`).\n- **Falsifiable:** proven false if safe primes are finite (which would itself be a major\n  surprise); otherwise the gap-unboundedness follows from the abstracted construction.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2153",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "656b45a0",
-    "status": "available",
-    "timestamp": "2026-06-20T18:22:07.968182+00:00",
-    "title": "This cycle established, with zero `sorry`s, the unconditional skeleton of the pr"
   },
   {
     "ambition_level": "extension",

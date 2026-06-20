@@ -2585,11 +2585,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that for every positive integer n, the number of Dyck paths of semilength n that are black\u2011white balanced under the column\u2011alternating coloring equals the Narayana number N(n,\u230an/2\u230b+1).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2144",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18754v1",
+    "status": "available",
+    "timestamp": "2026-06-20T18:39:07.780258+00:00",
+    "title": "Column\u2011alternating balanced Dyck paths conjecture"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let S_N(x)=sum_{i=1}^N x^i. For primes p<q with pq | m and n^2 >= (p-1)(q-1)+1, the conjecture says the cyclotomic transfer P=S_{m^2}/Phi_{pq}, Q=S_{n^2} Phi_{pq} is a nonstandard square-sided pair of sizes m^2 and n^2. Equivalently, the quotient and product have nonnegative integer coefficients, P(1)=m^2, Q(1)=n^2, and P Q=S_{m^2}S_{n^2}. A counterexample would be any admissible p,q,m,n for which one of these two explicit polynomials has a negative coefficient.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2144",
+    "id": "fd_2145",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -2598,16 +2613,16 @@ window.FUTURE_DIRECTIONS = [
     "title": "Semiprime cyclotomic transfer for square-sided dice"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "2683755a",
     "description": "Conjecture: For every integer d \u2265 1 and every planar graph H, there exists a constant C = C(d, H) such that any graph G that is K_{1,d}-free and does not contain H as an induced minor satisfies \u03b1\u2011tw(G) \u2264 C, i.e., the class of K_{1,d}-free graphs without H as an induced minor has bounded tree\u2011independence number.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2145",
+    "id": "fd_2146",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-20T06:56:11.390123+00:00",
     "title": "Bounded tree-independence in K_{1,d}-free graphs excluding a planar minor"
   },
@@ -2618,7 +2633,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2146",
+    "id": "fd_2147",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20085v1",
@@ -2632,7 +2647,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2147",
+    "id": "fd_2148",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19863v1",
@@ -2647,7 +2662,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2148",
+    "id": "fd_2149",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19796v1",
@@ -2662,7 +2677,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2149",
+    "id": "fd_2150",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19573v1",
@@ -2677,7 +2692,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2150",
+    "id": "fd_2151",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19500v1",
@@ -2692,7 +2707,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2151",
+    "id": "fd_2152",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19008v1",
@@ -2707,7 +2722,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "MachineLearning"
     ],
-    "id": "fd_2152",
+    "id": "fd_2153",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18500v1",
@@ -3650,21 +3665,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 The Prime Number Crossword (next cycle)\n\nThis cycle established, with zero `sorry`s, the unconditional skeleton of the prime\ncrossword in `Catalog/Cryptography/PrimeGaps/`:\n\n* `Boundary.lean` \u2014 `nextPrime`, the factorial run `exists_consecutive_composites(_ge)`,\n  the two boundary facts `gaps_unbounded` / `gaps_unbounded_cofinal`, the Bertrand bound\n  `nextPrime_sub_le`, the maximal-gap function `maximalGap` with `maximalGap_le`,\n  `maximalGap_unbounded`, `maximalGap_mono`, and the infinitary Polignac result\n  `polignac_infinite`.\n* `AverageGap.lean` \u2014 the bridge `nextPrime_nth_prime` to `Nat.nth Nat.Prime`, the\n  telescoping mean-gap identity `sum_gaps_eq`, and the counting milestone\n  `primeCounting_le` (`\u03c0(x) \u2264 x`).\n\nThe following conjectures are the natural next falsifiable targets.\n\n## D1. Sharpened Bertrand: `nextPrime p - p \u2264 p / 2` for `p \u2265 5`\n**Conjecture.** `\u2200 p, p.Prime \u2192 5 \u2264 p \u2192 nextPrime p - p \u2264 p / 2`, and more strongly the\nrelative gap `(nextPrime p - p) / p \u2192 0`.\n- **The key insight is** that `nextPrime_sub_le` already reduces the whole question to a\n  single explicit \"prime in `(n, c\u00b7n]`\" estimate: replacing Bertrand's `c = 2` by a\n  Nagura-type `c = 6/5` (valid for `n \u2265 25`) immediately upgrades the bound from `p` to\n  `p/5`, a fortiori `p/2`, with the only new ingredient being a finite check below 25.\n- **Why now?** The reduction `nextPrime p \u2264 c\u00b7p \u21d2 gap \u2264 (c-1)p` is already isolated in\n  `nextPrime_sub_le`; the cycle showed the gap machinery is robust, so the bottleneck is\n  exactly one explicit interval-of-primes lemma, which is a self-contained number-theory\n  task rather than a redesign.\n- **Falsifiable:** a single prime `p \u2265 5` with `nextPrime p - p > p/2` refutes it.\n\n## D2. Mean gap matches the logarithm (full C2 / PNT flavor)\n**Conjecture.** `(nth Prime n - 2) / n ~ log (nth Prime n)`; equivalently the Ces\u00e0ro\naverage of `nextPrime p_k - p_k` is `\u0398(log p_n)`.\n- **The key insight is** that `sum_gaps_eq` already collapses the *entire* average-gap\n  question to the asymptotics of a single quantity, `nth Prime n` (the `n`-th prime): the\n  mean gap is *exactly* `(p_n - 2)/n`, so \"mean gap `~ log x`\" is *equivalent* to\n  `p_n ~ n log n`, i.e. to the prime number theorem.\n- **Why now?** The telescoping identity removes all combinatorial noise, leaving a clean\n  equivalence to `p_n ~ n log n`; pairing the proven upper bound `\u03c0(x) \u2264 x` with a\n  Chebyshev lower bound `\u03c0(x) \u2265 c\u00b7x/log x` is the minimal additional analytic input.\n- **Falsifiable:** any constant `c` for which `|(p_n-2)/n - log p_n|` fails to be\n  `o(log p_n)` along a subsequence refutes it.\n\n## D3. Cram\u00e9r growth of the maximal gap: `maximalGap x = O((log x)^2)`\n**Conjecture.** There is `C` with `maximalGap x \u2264 C\u00b7(log x)^2` for all large `x`.\n- **The key insight is** that `maximalGap_le` (`G \u2264 x`) and `maximalGap_unbounded`\n  (`G \u2192 \u221e`) already pin `G` between a trivial linear ceiling and `\u221e`; Cram\u00e9r's heuristic\n  predicts the truth is polylogarithmic, an enormous gap from the proven `\u2264 x`.\n- **Why now?** `maximalGap` is now a concrete `Finset.sup` with a monotonicity lemma, so\n  any future explicit gap bound (e.g. from D1) plugs directly into `maximalGap_le` to\n  lower the ceiling from `x` toward `\u221ax`, `x^{0.6}`, ... tracking the literature.\n- **Falsifiable:** an `x` with `maximalGap x > C\u00b7(log x)^2` for every fixed `C` (a\n  super-polylog gap) refutes the bound for that `C`.\n\n## D4. Exact Polignac: every even `2k` is a gap infinitely often\n**Conjecture (open).** `\u2200 k \u2265 1, {p | p.Prime \u2227 nextPrime p - p = 2k}.Infinite`.\n- **The key insight is** that `polignac_infinite` already proves the `\u2265 2k` version is\n  infinite; the open content is *exactly* the step from `\u2265 2k` to `= 2k`, i.e. forbidding\n  the gap from always overshooting \u2014 a sieve/admissibility statement, not a size statement.\n- **Why now?** The cycle cleanly separated the unconditional \"large gaps recur\" fact from\n  the conditional \"this *specific* gap recurs\" fact; with `nextPrime_nth_prime` tying gaps\n  to consecutive primes, the `k = 1` case is precisely the twin-prime conjecture, situating\n  the problem against current sieve technology (bounded-gaps results give the first nonempty\n  `2k`).\n- **Falsifiable:** a `k` and a bound `B` with only finitely many primes of gap `= 2k`\n  refutes it.\n\n## D5. Safe-prime spacing (Diffie\u2013Hellman parameter cost)\n**Conjecture.** With `SafePrime p := p.Prime \u2227 ((p-1)/2).Prime`, safe primes are infinite\nand their gaps are unbounded: `\u2200 N, \u2203 p, SafePrime p \u2227 (nextSafePrime p - p) \u2265 N`.\n- **The key insight is** that the factorial run used for `gaps_unbounded` transports\n  verbatim *once* the index set is infinite; the only missing hypothesis is the (open)\n  infinitude of safe primes, without which `nextSafePrime` is not even total.\n- **Why now?** The cycle's `gaps_unbounded_cofinal` is parametric in \"which primes we\n  enumerate\"; abstracting it over an arbitrary infinite predicate `P` would let safe\n  primes, Sophie Germain primes, and ordinary primes all reuse one proof, isolating the\n  single open input (infinitude of `P`).\n- **Falsifiable:** proven false if safe primes are finite (which would itself be a major\n  surprise); otherwise the gap-unboundedness follows from the abstracted construction.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2153",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "656b45a0",
-    "status": "available",
-    "timestamp": "2026-06-20T18:22:07.968182+00:00",
-    "title": "This cycle established, with zero `sorry`s, the unconditional skeleton of the pr"
   },
   {
     "consumed_by_exp_id": "",
