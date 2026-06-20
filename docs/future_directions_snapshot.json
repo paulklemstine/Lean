@@ -2970,33 +2970,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
-      "math.NT/0305267",
-      "math.NT/0707.0092",
-      "math.NT/1502.03068"
-    ],
-    "consumed_by_exp_id": "d94e79ee",
-    "description": "The coefficients a_n in the q-expansion f(q) = Σ_{n≥0} a_n q^n satisfy the recurrence (n+3) a_{n+3} = (3n+4) a_{n+2} - (3n+1) a_{n+1} + n a_n for all n ≥ 0, with initial values a_0 = 1, a_1 = 0, a_2 = 1.",
-    "domain_bridges": [
-      "modular forms",
-      "q-series",
-      "holomorphic projection"
-    ],
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2102",
-    "lineage_refs": [],
-    "priority_score": 0.8,
-    "proof_strategy": "Use the vector-valued Rankin-Cohen bracket of the completed mock theta series f̂ and its shadow ψ_f, apply the holomorphic projection operator to obtain a modular form of weight 2. Expand both sides as q-series, compare coefficients, and deduce the recurrence. The vanishing of certain vector-valued cusp form spaces ensures the projected form is a linear combination of Eisenstein series, whose coefficients are explicit.",
-    "research_mode": "team",
-    "source_exp_id": "2606.18110v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-19T14:51:27.250427+00:00",
-    "title": "Linear recurrence for coefficients of Ramanujan's third order mock theta function f(q)"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [
       "arXiv:2102.04521"
     ],
     "consumed_by_exp_id": "",
@@ -5346,6 +5319,26 @@
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nDerived from this cycle's findings in `Catalog/Tropical/TensorNetworkContraction.lean`\nand `Catalog/Tropical/ComplexityThreshold.lean`. Each conjecture is bold, falsifiable,\nand stated so it can be attacked formally in Lean.\n\n## Conjecture 1 — Finite-depth stabilisation of the emergent metric\n\nFor a `WeightedDigraph` on `n` sites with non-negative weights and zero self-loops, the\ncontraction sequence `tropPow G.weights k` is *eventually constant*: there exists\n`k₀ ≤ n - 1` with `tropPow G.weights k = tropPow G.weights k₀` for all `k ≥ k₀`, and the\nlimit is the all-pairs shortest-path matrix.\n\n- **The key insight is** that we already proved the sequence is antitone and bounded below\n  (`tropPow_antitone`, `tropPow_nonneg`), so over the finitely many sites it cannot strictly\n  decrease forever — the missing step is that no shortest walk needs more than `n-1` bonds.\n- **Why now?** The semigroup law `tropPow_add` gives exactly the path-concatenation\n  algebra needed for the Bellman–Ford stabilisation argument; with monotonicity in hand,\n  the finite-step convergence is the natural next theorem.\n\n## Conjecture 2 — The threshold is the unique zero of a strictly monotone order parameter\n\nDefine the order parameter `Δ(D) = ricciProxy C N D − κ`. Then for `C, N, κ > 0`, `Δ` is\nstrictly decreasing on `D > 0`, has a unique zero at `D = D_c(N)`, and the \"smooth phase\"\nis exactly the super-level set `{D : Δ(D) ≤ 0}`.\n\n- **The key insight is** that `smooth_iff` already pins the phase boundary to a single\n  equality `D = D_c`; promoting it to strict monotonicity of `Δ` turns the boundary into a\n  genuine second-order-free (continuous, single-crossing) transition.\n- **Why now?** `subcritical_rough` (strict below) and `supercritical_smooth` (≤ above)\n  bracket the crossing from both sides, so the strict-monotonicity upgrade is immediate\n  from `div` monotonicity lemmas.\n\n## Conjecture 3 — Curvature bound forces a contraction-diameter bound\n\nIn the supercritical phase (`D ≥ D_c(N)`) the emergent contraction diameter\n`max_{i,j} tropPow G.weights (n-1) i j` is bounded by a universal multiple of the raw\nweight diameter, with the multiple controlled by `κ`; in the subcritical phase no such\nuniform bound exists.\n\n- **The key insight is** that `emergent_geometry_smooth` already couples the curvature\n  bound to the entrywise bound `tropPow ≤ weights`; quantifying the *diameter* turns this\n  qualitative coupling into a sharp geometric estimate.\n- **Why now?** With both the contraction bounds and the threshold characterisation proved\n  in this cycle, the only new ingredient is a `Finset.sup'` aggregation over site pairs.\n\n## Conjecture 4 — Two-sided scaling window for integer bond dimension\n\nFor integer bond dimension, the smooth phase begins at `⌈D_c(N)⌉₊` and the relative width\nof the transition window `(⌈D_c⌉₊ − D_c)/D_c → 0` as `N → ∞`; i.e. the discrete and\ncontinuous thresholds coincide asymptotically.\n\n- **The key insight is** that `smooth_iff_nat_ceil` localises the discrete jump to a single\n  integer, and `criticalD_scaling` shows `D_c ∝ N`, so the rounding gap is `O(1/N)` relative\n  to `D_c`.\n- **Why now?** Both ingredients (`Nat.ceil` localisation and the linear scaling law) are\n  theorems from this cycle; the asymptotic statement is a clean limit argument on top.\n\n## Conjecture 5 — Tropical Ryu–Takayanagi monotonicity\n\nThe min-cut value of a tropical tensor network (the tropical analogue of the entanglement\nentropy via the Ryu–Takayanagi formula) is monotone non-increasing under refining the\ncontraction depth and is sub-additive across region unions — a tropical entropy inequality.\n\n- **The key insight is** that the contraction triangle inequality `tropPow_triangle` is the\n  region-concatenation half of strong sub-additivity; the cut-value formulation lifts it\n  from point pairs to boundary regions.\n- **Why now?** The metric layer (`tropPow` with triangle + monotonicity) is now formal, so\n  the entropy/cut layer can be built directly on top of it without re-deriving the geometry.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2147",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "fdab34f3",
+    "status": "available",
+    "timestamp": "2026-06-20T13:41:43.245341+00:00",
+    "title": "Derived from this cycle's findings in `Catalog/Tropical/TensorNetworkContraction"
   },
   {
     "ambition_level": "extension",

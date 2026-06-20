@@ -2031,20 +2031,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Simplicity criterion for interval hypergraphic polytopes via point multiplicity"
   },
   {
-    "consumed_by_exp_id": "d94e79ee",
-    "description": "The coefficients a_n in the q-expansion f(q) = \u03a3_{n\u22650} a_n q^n satisfy the recurrence (n+3) a_{n+3} = (3n+4) a_{n+2} - (3n+1) a_{n+1} + n a_n for all n \u2265 0, with initial values a_0 = 1, a_1 = 0, a_2 = 1.",
-    "domains": [
-      "Bridges"
-    ],
-    "id": "fd_2102",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.18110v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-19T14:51:27.250427+00:00",
-    "title": "Linear recurrence for coefficients of Ramanujan's third order mock theta function f(q)"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "The conjecture asserts that the ratio of determinant to cofactor simplifies to a combination of trace terms and Laplacian contributions, verified for arbitrary subsets S.",
     "domains": [
@@ -3563,6 +3549,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nDerived from this cycle's findings in `Catalog/Tropical/TensorNetworkContraction.lean`\nand `Catalog/Tropical/ComplexityThreshold.lean`. Each conjecture is bold, falsifiable,\nand stated so it can be attacked formally in Lean.\n\n## Conjecture 1 \u2014 Finite-depth stabilisation of the emergent metric\n\nFor a `WeightedDigraph` on `n` sites with non-negative weights and zero self-loops, the\ncontraction sequence `tropPow G.weights k` is *eventually constant*: there exists\n`k\u2080 \u2264 n - 1` with `tropPow G.weights k = tropPow G.weights k\u2080` for all `k \u2265 k\u2080`, and the\nlimit is the all-pairs shortest-path matrix.\n\n- **The key insight is** that we already proved the sequence is antitone and bounded below\n  (`tropPow_antitone`, `tropPow_nonneg`), so over the finitely many sites it cannot strictly\n  decrease forever \u2014 the missing step is that no shortest walk needs more than `n-1` bonds.\n- **Why now?** The semigroup law `tropPow_add` gives exactly the path-concatenation\n  algebra needed for the Bellman\u2013Ford stabilisation argument; with monotonicity in hand,\n  the finite-step convergence is the natural next theorem.\n\n## Conjecture 2 \u2014 The threshold is the unique zero of a strictly monotone order parameter\n\nDefine the order parameter `\u0394(D) = ricciProxy C N D \u2212 \u03ba`. Then for `C, N, \u03ba > 0`, `\u0394` is\nstrictly decreasing on `D > 0`, has a unique zero at `D = D_c(N)`, and the \"smooth phase\"\nis exactly the super-level set `{D : \u0394(D) \u2264 0}`.\n\n- **The key insight is** that `smooth_iff` already pins the phase boundary to a single\n  equality `D = D_c`; promoting it to strict monotonicity of `\u0394` turns the boundary into a\n  genuine second-order-free (continuous, single-crossing) transition.\n- **Why now?** `subcritical_rough` (strict below) and `supercritical_smooth` (\u2264 above)\n  bracket the crossing from both sides, so the strict-monotonicity upgrade is immediate\n  from `div` monotonicity lemmas.\n\n## Conjecture 3 \u2014 Curvature bound forces a contraction-diameter bound\n\nIn the supercritical phase (`D \u2265 D_c(N)`) the emergent contraction diameter\n`max_{i,j} tropPow G.weights (n-1) i j` is bounded by a universal multiple of the raw\nweight diameter, with the multiple controlled by `\u03ba`; in the subcritical phase no such\nuniform bound exists.\n\n- **The key insight is** that `emergent_geometry_smooth` already couples the curvature\n  bound to the entrywise bound `tropPow \u2264 weights`; quantifying the *diameter* turns this\n  qualitative coupling into a sharp geometric estimate.\n- **Why now?** With both the contraction bounds and the threshold characterisation proved\n  in this cycle, the only new ingredient is a `Finset.sup'` aggregation over site pairs.\n\n## Conjecture 4 \u2014 Two-sided scaling window for integer bond dimension\n\nFor integer bond dimension, the smooth phase begins at `\u2308D_c(N)\u2309\u208a` and the relative width\nof the transition window `(\u2308D_c\u2309\u208a \u2212 D_c)/D_c \u2192 0` as `N \u2192 \u221e`; i.e. the discrete and\ncontinuous thresholds coincide asymptotically.\n\n- **The key insight is** that `smooth_iff_nat_ceil` localises the discrete jump to a single\n  integer, and `criticalD_scaling` shows `D_c \u221d N`, so the rounding gap is `O(1/N)` relative\n  to `D_c`.\n- **Why now?** Both ingredients (`Nat.ceil` localisation and the linear scaling law) are\n  theorems from this cycle; the asymptotic statement is a clean limit argument on top.\n\n## Conjecture 5 \u2014 Tropical Ryu\u2013Takayanagi monotonicity\n\nThe min-cut value of a tropical tensor network (the tropical analogue of the entanglement\nentropy via the Ryu\u2013Takayanagi formula) is monotone non-increasing under refining the\ncontraction depth and is sub-additive across region unions \u2014 a tropical entropy inequality.\n\n- **The key insight is** that the contraction triangle inequality `tropPow_triangle` is the\n  region-concatenation half of strong sub-additivity; the cut-value formulation lifts it\n  from point pairs to boundary regions.\n- **Why now?** The metric layer (`tropPow` with triangle + monotonicity) is now formal, so\n  the entropy/cut layer can be built directly on top of it without re-deriving the geometry.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2147",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "fdab34f3",
+    "status": "available",
+    "timestamp": "2026-06-20T13:41:43.245341+00:00",
+    "title": "Derived from this cycle's findings in `Catalog/Tropical/TensorNetworkContraction"
   },
   {
     "consumed_by_exp_id": "",
