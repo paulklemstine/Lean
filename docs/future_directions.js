@@ -2613,20 +2613,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Semiprime cyclotomic transfer for square-sided dice"
   },
   {
-    "consumed_by_exp_id": "2683755a",
-    "description": "Conjecture: For every integer d \u2265 1 and every planar graph H, there exists a constant C = C(d, H) such that any graph G that is K_{1,d}-free and does not contain H as an induced minor satisfies \u03b1\u2011tw(G) \u2264 C, i.e., the class of K_{1,d}-free graphs without H as an induced minor has bounded tree\u2011independence number.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2146",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20256v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-20T06:56:11.390123+00:00",
-    "title": "Bounded tree-independence in K_{1,d}-free graphs excluding a planar minor"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Let \ud835\udc9c\u2286[n] choose k and \u212c\u2286[n] choose \u2113 be a cross\u2011intersecting pair (every A\u2208\ud835\udc9c meets every B\u2208\u212c). Define the diversity \u03b3(\ud835\udc9c)=|\ud835\udc9c|\u2011\u0394(\ud835\udc9c) where \u0394(\ud835\udc9c) is the maximum degree of \ud835\udc9c, and analogously \u03b3(\u212c). For n\u226bk,\u2113, suppose \u03b3(\ud835\udc9c)\u2265{n\u2011u\u20111 \\\\choose k\u20111} and \u03b3(\u212c)\u2265{n\u2011v\u20111 \\\\choose \u2113\u20111} for some integers u,v with u+v\u2264n\u2011k\u2011\u2113. The conjecture states that the only families attaining the maximal possible product |\ud835\udc9c|\u00b7|\u212c| under these diversity constraints are the \"canonical\" constructions obtained by taking a full star on a common element together with the unique maximal extensions described by the S_{U,V}^Q\u2011shift. This gives a sharp structural characterisation extending the Frankl\u2011Kupavskii\u2011Zakharov theorem to the cross\u2011intersecting setting.",
     "domains": [
