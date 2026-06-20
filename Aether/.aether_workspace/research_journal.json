@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "afe8c8b6",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Neural Observation Pseudometrics ↔ Proof Spectra\n\nThese conjectures extend the bridge developed in\n`Catalog/Bridges/NeuralPseudometricProofSpectrumFunctor.lean` and its functoria",
-      "quality_score": 0.7216,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-06-15T10:38:08",
-      "title": "Close Proofs: Functorial comparison between neural observation pseudometrics and pro"
-    },
-    {
       "cycle_id": "cb2c4d8f",
       "domain": "Combinatorics",
       "key_insight": "# Future Directions — Categorical Tropical Rips Interleaving (Rank & Shift cycle)\n\nThis cycle added two fully-verified files (0 sorries) extending\n`Bridges.CategoricalTropicalRipsInterleaving`:\n\n- `Br",
@@ -2501,6 +2491,16 @@
       "theorem_count": 112,
       "timestamp": "2026-06-20T20:32:59",
       "title": "Homotopy Type Theory Foundations"
+    },
+    {
+      "cycle_id": "b4d505d3",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions\n\nThese directions build on the verified core in\n`Catalog/MachineLearning/UniversalApproximation/QuantitativeBoundsCore.lean`,\nwhich establishes that the width-`2n` ramp-difference",
+      "quality_score": 0.5528152173913043,
+      "sorry_count": 0,
+      "theorem_count": 205,
+      "timestamp": "2026-06-20T22:38:11",
+      "title": "Universal Approximation: Quantitative Bounds"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8075699999999999
     }
   ],
-  "last_updated": "2026-06-20T20:32:59",
+  "last_updated": "2026-06-20T22:38:11",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3573,12 +3573,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "61934e8a",
-        "quality": 0.531269226006192,
-        "theorems": 80,
-        "title": "Isomorphisms of Meaning: When Structures Collide"
-      },
-      {
         "cycle_id": "bf4e21b7",
         "quality": 0.33194676,
         "theorems": 6,
@@ -3631,6 +3625,12 @@
         "quality": 0.5147914097421203,
         "theorems": 112,
         "title": "Homotopy Type Theory Foundations"
+      },
+      {
+        "cycle_id": "b4d505d3",
+        "quality": 0.5528152173913043,
+        "theorems": 205,
+        "title": "Universal Approximation: Quantitative Bounds"
       }
     ],
     "NumberTheory": [
