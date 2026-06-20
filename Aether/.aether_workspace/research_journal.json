@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "cf4c28ef",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Boltzmann Bridge XI: The Apparition Lattice\n\n## Synthesis\n\nThe Carmichael primitive-divisor arc had, until now, used the *rank of apparition*\n`α(p) = CarmHelper.entryPt p` (the l",
-      "quality_score": 0.48635999999999996,
-      "sorry_count": 1,
-      "theorem_count": 4,
-      "timestamp": "2026-06-15T00:02:43",
-      "title": "Close Proofs: Bridge IX (`InterleavingGeodesic.lean`) gave the persistence-stability"
-    },
-    {
       "cycle_id": "179e2428",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Eckmann–Hilton Bridge (Objects, Morphisms, Products)\n\n## Synthesis\n\nThis cycle takes the catalog's single-carrier Eckmann–Hilton engine\n(`Geometry.HomotopyTypeTheory.Stratifi",
@@ -2501,6 +2491,16 @@
       "theorem_count": 3,
       "timestamp": "2026-06-20T07:47:58",
       "title": "Derived from the cycle whose verified results live in"
+    },
+    {
+      "cycle_id": "db367995",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — Invariant Subspace Problem\n\nDerived from this cycle's findings in `InvariantSubspaceCore.lean` (finite-dimensional\nexistence + commutant invariance) and `InvariantSubspaceSelfAdj",
+      "quality_score": 0.42152284276729557,
+      "sorry_count": 0,
+      "theorem_count": 10,
+      "timestamp": "2026-06-20T08:42:42",
+      "title": "Invariant Subspace Problem"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8524
     }
   ],
-  "last_updated": "2026-06-20T07:47:58",
+  "last_updated": "2026-06-20T08:42:42",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3573,12 +3573,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "fb007c35",
-        "quality": 0.48464,
-        "theorems": 36,
-        "title": "The Periodic Table of Finite Groups: Chemistry Meets Algebra"
-      },
-      {
         "cycle_id": "5f9a16a6",
         "quality": 0.40688965517241377,
         "theorems": 30,
@@ -3631,6 +3625,12 @@
         "quality": 0.6584800000000001,
         "theorems": 13,
         "title": "Non-Archimedean Probability via Surreal Numbers"
+      },
+      {
+        "cycle_id": "db367995",
+        "quality": 0.42152284276729557,
+        "theorems": 10,
+        "title": "Invariant Subspace Problem"
       }
     ],
     "NumberTheory": [

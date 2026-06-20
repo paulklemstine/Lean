@@ -35688,6 +35688,47 @@
       "title": "Arboreal Maximality for Twisted Carlitz Polynomials over Function Fields"
     },
     {
+      "ambition_level": "grand_challenge",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [
+        "Thang Pang Ern and Malcolm Tan Jun Xi, \"On the asymptotic density of the ordered pairs $(a,b)$ of positive integers such that $\\gcd(ab,a+b)=\\gcd(a,b)$\", arXiv:2025.xxxxx [math.NT]."
+      ],
+      "category": "cross_domain_bridge",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Conjecture that the number of ordered pairs $(a,b)$ of positive integers with $a,b\\le x$ and $\\gcd(ab,a+b)=\\gcd(a,b)$ satisfies\n$$\\sum_{\\substack{a,b\\le x \\ \\gcd(ab,a+b)=\\gcd(a,b)}} 1 = C\\,x^{2}+O\\bigl(x(\\log x)^{3}\\bigr),$$\nwhere $C=\\displaystyle\\prod_{p}\\left(1-\\frac{1}{p^{2}(p+1)}\\right)\\approx 0.881513$ is the quadratic class number constant.",
+      "domain_bridges": [
+        "Analytic number theory",
+        "Multiplicative functions",
+        "Probabilistic number theory"
+      ],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Pythagorean"
+      ],
+      "id": "fd_2134",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "theorem density_one_error (x : ℕ) :\n  (∑ a in Finset.range 1 x, ∑ b in Finset.range 1 x, if Nat.gcd (a * b) (a + b) = Nat.gcd a b then 1 else 0)\n    = (C : ℝ) * (x : ℝ)^2 + O ( (x : ℝ) * (Real.log (x : ℝ))^3 )\nwhere C = ∏ p : ℕ, (1 - (1 : ℝ) / ( (p : ℝ)^2 * (p + 1 : ℝ) ) ).",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.8,
+      "proof_strategy": "Apply Dirichlet series techniques to the generating function of $(\\mu*h)(n)$ with $h(m)=\\mathbf{1}_{m=1}$, control the error term via contour integration, and exploit the known bound $R_{\\beta}(x)\\ll x^{1+\\beta}(\\log x)^{2}$ for $0<\\beta<1$ to sharpen the exponent from $4$ to $3$ in the logarithmic factor.",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "2606.20057v1",
+      "source_path": "http://arxiv.org/abs/2606.20057v1",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-20T08:45:29.951214+00:00",
+      "title": "Improved error term for the density of pairs with $f(a,b)=1$"
+    },
+    {
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
@@ -35712,7 +35753,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2134",
+      "id": "fd_2135",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem pq_cyclotomic_transfer_square_sided_pair (p q m n : Nat) (hp : Nat.Prime p) (hq : Nat.Prime q) (hpq : p < q) (hm : 1 < m) (hn : 1 < n) (hmn : m ≠ n) (hdiv : p * q ∣ m) (hlarge : (p - 1) * (q - 1) + 1 ≤ n ^ 2) : ∃ P Q : Polynomial Nat, P.eval 0 = 0 ∧ Q.eval 0 = 0 ∧ P.eval 1 = m ^ 2 ∧ Q.eval 1 = n ^ 2 ∧ P * Q = (∑ i in Finset.Icc 1 (m ^ 2), (Polynomial.X : Polynomial Nat) ^ i) * (∑ i in Finset.Icc 1 (n ^ 2), (Polynomial.X : Polynomial Nat) ^ i) ∧ ¬ (P = (∑ i in Finset.Icc 1 (m ^ 2), (Polynomial.X : Polynomial Nat) ^ i) ∧ Q = (∑ i in Finset.Icc 1 (n ^ 2), (Polynomial.X : Polynomial Nat) ^ i)) := by sorry",
@@ -35755,7 +35796,7 @@
       "domains": [
         "Pythagorean"
       ],
-      "id": "fd_2135",
+      "id": "fd_2136",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem bounded_alpha_tw (d : ℕ) (hd : 1 ≤ d) (H : Graph ℕ) (hplanar : IsPlanar H) : ∀ (G : Graph ℕ), IsK1dFree G → ¬ IsInducedMinor H G → BoundedAlphaTw G",
@@ -35798,7 +35839,7 @@
         "Algebra",
         "Pythagorean"
       ],
-      "id": "fd_2136",
+      "id": "fd_2137",
       "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "theorem unique_extremal_cross_intersecting\n  {n k ℓ u v : ℕ} (hn : n > k + ℓ) (hu : u ≤ n - k - 1) (hv : v ≤ n - ℓ - 1)\n  (hdivA : (γ 𝒜) ≥ Nat.choose (n - u - 1) (k - 1))\n  (hdivB : (γ ℬ) ≥ Nat.choose (n - v - 1) (ℓ - 1))\n  (hcross : ∀ A ∈ 𝒜, ∀ B ∈ ℬ, (A ∩ B).Nonempty) :\n  (𝒜.card * ℬ.card = max_product n k ℓ u v) ∧\n  (∃ σ : Equiv.Perm (Fin n),\n     (σ • 𝒜) = canonical_family_A n k u ∧ (σ • ℬ) = canonical_family_B n ℓ v) :=\nby\n  sorry",
@@ -37997,11 +38038,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 2,
-      "consumed_by_exp_id": "db367995",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "Prove or disprove that every bounded linear operator on a separable Hilbert space has a non-trivial closed invariant subspace. Formalize known results for compact operators and normal operators.",
       "domain_bridges": [],
@@ -38010,7 +38051,7 @@
         "Algebra"
       ],
       "id": "seed_030",
-      "last_attempt_time": "2026-06-20T07:49:37.324135+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "2026-06-16T16:54:16.014019+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -38023,7 +38064,7 @@
       "research_mode": "team",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v2",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-08T19:25:01.788604+00:00",
       "title": "Invariant Subspace Problem"
@@ -40888,11 +40929,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 1,
+      "attempt_count": 0,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "bcf3395e",
+      "consumed_by_exp_id": "",
       "depth_estimate": 3,
       "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
       "domain_bridges": [],
@@ -40901,7 +40942,7 @@
         "Combinatorics"
       ],
       "id": "seed_352",
-      "last_attempt_time": "2026-06-20T07:49:41.413054+00:00",
+      "last_attempt_time": "",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -40914,7 +40955,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "in_progress",
+      "status": "available",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432688+00:00",
       "title": "Ramsey Theory: Bounds and Constructions"
@@ -41247,11 +41288,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "831891b4",
       "depth_estimate": 3,
       "description": "Formalize the hydrogen atom Hamiltonian in Lean 4. Prove the spectrum is {-1/n² : n ∈ ℕ+} ∪ [0,∞). Construct the spherical harmonics as eigenfunctions of the angular momentum operator. Prove the selection rules for transitions.",
       "domain_bridges": [],
@@ -41261,7 +41302,7 @@
         "Analysis"
       ],
       "id": "seed_362",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-20T08:46:54.305662+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -41274,7 +41315,7 @@
       "research_mode": "prove",
       "source_exp_id": "seed",
       "source_path": "seed:manual_v5",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T03:56:25.432770+00:00",
       "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
