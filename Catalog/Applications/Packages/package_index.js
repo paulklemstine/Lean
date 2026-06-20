@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "6d018212",
     "filename": "randomly_piercing_algebraic_sets_and_its_implicati.json",
     "pkg_num": 203,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5091087694974004,
     "title": "Finite-State Output Machines: Reachability, Decidability, and the Limits of Automatic Sequences"
   },
   {
@@ -6206,8 +6206,8 @@ window.PACKAGE_GRAPH = {
       "hue": 95,
       "id": "randomly_piercing_algebraic_sets_and_its_implicati",
       "primary_domain": "Computation",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5091087694974004,
+      "quality": "partial",
       "shape": "cube",
       "title": "Finite-State Output Machines: Reachability, Decidability, and the Limits of Automatic Sequences"
     }

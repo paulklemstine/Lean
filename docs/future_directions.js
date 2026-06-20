@@ -2101,21 +2101,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Bounded tree-independence for K_{1,d}-free graphs excluding a planar induced minor"
   },
   {
-    "consumed_by_exp_id": "6d018212",
-    "description": "This paper investigates the asymptotic probability that random points in finite fields intersect sufficiently complex algebraic sets, with applications to extremal combinatorics and geometric probability.",
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2107",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.19677v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-19T06:52:44.622331+00:00",
-    "title": "Randomly piercing algebraic sets and its implications"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture that for any integers r\u22652 and any collection of r pairwise non\u2011isomorphic Shimura curves, any sequence of CM points with a common CM field and two distinct primes splitting in each field, if the points are strict (no proper special subvariety contains infinitely many of them), then the Galois orbits of the sequence become equidistributed in the product with respect to the Haar measure as the discriminants tend to infinity.",
     "domains": [
@@ -3374,6 +3359,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\n## 1. Discharging `hSZ` from a formalised Schwartz\u2013Zippel bound\n\nThe polynomial consumers currently take the cross-multiplied size estimate `hSZ`\nas a hypothesis. The natural next step is a corollary that *produces* `hSZ` from a\nMathlib-grade Schwartz\u2013Zippel theorem bounding the number of zeros of a nonzero\nmultivariate polynomial of total degree `d` by `d * |K|^{n-1}`.\nThe key insight is that the abstract transducer never needs the analytic estimate\nin divided form, so the entire interface between the two layers is a single\nnatural-number inequality that can be filled in by whatever zero-counting theorem\nbecomes available. Why now? Mathlib's polynomial and finite-field libraries have matured\nto the point where a clean multivariate zero-count is within reach, and wiring it\nto a finished, axiom-clean covering bound turns that analytic work into an\nimmediate lower-bound theorem rather than an isolated lemma.\n\n## 2. Weighted and fractional covers\n\nThe present statement counts cover members with multiplicity one. A weighted\ngeneralisation would assign each member a positive weight and conclude a lower\nbound on the total weight, capturing fractional covering and LP-relaxation\narguments. The key insight is that the proof's only structural step \u2014 bounding\n`|\u03a9|` by a sum over the index set \u2014 is already a weighted statement in disguise,\nso replacing the constant summand by a per-index weight changes nothing in the\ncancellation argument. Why now? Fractional covering bounds are the standard\ncurrency of modern combinatorial lower bounds, and exposing a weighted variant of\nthis transducer makes it directly usable by that literature without re-deriving\nthe union step.\n\n## 3. Sharper cancellation under coprimality and rounding\n\nThe final step cancels a positive factor with `Nat.le_of_mul_le_mul_right`, which\nis lossless. When `q` and `d` carry arithmetic structure (e.g. `q` prime, or\n`d | |\u03a9|`), one can often improve `q \u2264 k*d` to a strict or ceiling-rounded bound\n`k \u2265 \u2308q/d\u2309`. The key insight is that the multiplicative inequality\n`q*|\u03a9| \u2264 (k*d)*|\u03a9|` retains more information than its cancelled form, so a\nrounding lemma applied before cancellation recovers integrality gains for free.\nWhy now? Integer covering lower bounds are routinely off by the rounding term, and\na reusable ceiling-aware variant would let downstream applications quote the\ntight constant instead of a floor.\n\n## 4. The dual packing upper bound\n\nCovering lower bounds have a packing dual: if disjoint sets each have size at\nleast `d * |\u03a9| / q`, then at most `k` of them fit. The key insight is that the\nsame subadditivity-of-cardinality skeleton runs in reverse for disjoint families,\nwhere `Finset.card_biUnion` (the *equality* for pairwise-disjoint sets) replaces\nthe inequality `card_biUnion_le`. Why now? Stating packing and covering as two\nfaces of one finite-union lemma would consolidate a recurring pattern across the\ncatalog's combinatorial bridges and reduce duplicated boilerplate in future\nfiles.\n\n## 5. A measure-theoretic transport for infinite ground sets\n\nMany density arguments live over infinite probability spaces rather than finite\ntypes, with `|A|/|\u03a9|` replaced by a measure `\u03bc(A)`. The key insight is that the\nfinite proof is already written in cross-multiplied, division-free form, so it\ntransports almost verbatim to a measure-theoretic statement once cardinalities\nbecome measures and the cancellation step becomes division by `\u03bc(\u03a9) > 0`.\nWhy now? Mathlib's measure theory and probability layers are robust enough to host\nthe continuous analogue, and providing both the finite and measured versions\nbehind one informal interface would let users pick the setting their problem\ndemands without re-proving the covering inequality.\n",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2133",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "6d018212",
+    "status": "available",
+    "timestamp": "2026-06-20T06:50:01.546970+00:00",
+    "title": "The polynomial consumers currently take the cross-multiplied size estimate `hSZ`"
   },
   {
     "consumed_by_exp_id": "",

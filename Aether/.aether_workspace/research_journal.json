@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "21cd4ba3",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Universal Transport for the Fibonacci Rank of Apparition\n\n## Synthesis\n\nThis cycle continued the *representation/duality* program built around the Fibonacci\nrank of apparition `z",
-      "quality_score": 0.48283591836734696,
-      "sorry_count": 1,
-      "theorem_count": 147,
-      "timestamp": "2026-06-14T23:23:42",
-      "title": "Close Proofs: This cycle pushed the *representation/duality* program of the syntheti"
-    },
-    {
       "cycle_id": "6285d255",
       "domain": "Geometry",
       "key_insight": "# Future Directions — Spectral Gap Rigidity for Hodge Laplacians under Coarse-Graining\n\n## Synthesis\n\nThis cycle built the linear-algebraic skeleton of the conjecture *Spectral Gap\nRigidity for Hyperg",
@@ -2501,6 +2491,16 @@
       "theorem_count": 257,
       "timestamp": "2026-06-20T05:58:24",
       "title": "Dream Logic: Non-Monotone Reasoning Where Contradictions Coexist"
+    },
+    {
+      "cycle_id": "6d018212",
+      "domain": "Computation",
+      "key_insight": "# Future Directions\n\n## 1. Discharging `hSZ` from a formalised Schwartz–Zippel bound\n\nThe polynomial consumers currently take the cross-multiplied size estimate `hSZ`\nas a hypothesis. The natural next",
+      "quality_score": 0.5091087694974004,
+      "sorry_count": 0,
+      "theorem_count": 222,
+      "timestamp": "2026-06-20T06:50:26",
+      "title": "Randomly piercing algebraic sets and its implications"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8524
     }
   ],
-  "last_updated": "2026-06-20T05:58:24",
+  "last_updated": "2026-06-20T06:50:26",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3257,12 +3257,6 @@
     ],
     "Computation": [
       {
-        "cycle_id": "497e55b6",
-        "quality": 0.44245955849889634,
-        "theorems": 16,
-        "title": "This cycle added two fully-verified files (0 sorries) extending"
-      },
-      {
         "cycle_id": "44a1e17f",
         "quality": 0.3397905777777779,
         "theorems": 0,
@@ -3315,6 +3309,12 @@
         "quality": 0.4968983018867924,
         "theorems": 178,
         "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+      },
+      {
+        "cycle_id": "6d018212",
+        "quality": 0.5091087694974004,
+        "theorems": 222,
+        "title": "Randomly piercing algebraic sets and its implications"
       }
     ],
     "Cryptography": [
