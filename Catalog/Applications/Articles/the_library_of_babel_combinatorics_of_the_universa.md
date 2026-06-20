@@ -1,222 +1,93 @@
 # The Library of Babel, Counted Exactly
 
-*Borges imagined a library containing every possible book. Here is what the
-mathematics says about searching it.*
+## A library that contains everything
 
-## A universe made of pages
+In 1941, Jorge Luis Borges imagined a library so complete that it left nothing out. Its hexagonal galleries stretched in every direction, and on their shelves stood every book that could ever be written — not the good ones, not the famous ones, but *all* of them. Every novel, every refutation of every novel, every grocery list, every biography of every person who never lived, every page of pure gibberish. Somewhere in the Library of Babel sits the true history of your life, and next to it ten thousand near-copies with a single wrong date.
 
-In 1941 Jorge Luis Borges published a short story about a library so large it
-might as well be the universe. Its hexagonal galleries stretch in every
-direction, filled with identical-looking volumes. Each volume has the same
-length, written in the same small alphabet, and — crucially — the library
-contains *every possible book* of that length. Every novel ever written and
-every novel that never will be. The true history of your life, and ten thousand
-false ones. A perfect proof of every theorem, and a flawed one on the very next
-shelf. Somewhere there is a book that is nothing but the letter "a" repeated from
-cover to cover.
+Borges fixed the format precisely. Each book has $410$ pages, each page $40$ lines, each line $80$ characters, drawn from an alphabet of $25$ symbols. That makes $410 \times 40 \times 80 = 1{,}312{,}000$ characters per volume, and the number of distinct volumes is
 
-The story is usually read as a parable about meaning, infinity, and despair. But
-underneath the parable is something a mathematician can pin down completely. The
-Library of Babel is not infinite. It is *finite* — staggeringly, incomprehensibly
-finite — and because it is finite, we can count it. We can compute the exact
-probability of stumbling on the book you want. We can ask how a single book could
-serve as a catalog to all the others, and prove precisely why no such catalog can
-exist. And we can prove the strangest fact of all: that a long enough random book
-is *almost certain* to contain any text you name.
+$$25^{1312000}.$$
 
-This article is about those calculations. Every claim below is a theorem that has
-been checked down to the last symbol.
+This is a finite number. It is also one of the most violently large finite numbers ever to appear in literature — far more than the number of atoms in the observable universe, which is a mere $10^{80}$ or so. The Library is complete, finite, and physically impossible. And that tension — *everything exists, yet nothing can be found* — is the engine of Borges' story.
 
-## The model: a book is a function
+What follows is an attempt to take Borges at his word and treat the Library as a genuine mathematical object: a finite probability space. Once you do, the haunting questions of the story turn into questions you can actually answer with numbers. How likely is a random book to contain a particular sentence? How many copies of a given paragraph should you expect to stumble across? What does it really cost to "find meaning" in a sea of noise? The answers are clean, exact, and — once you see them — strangely consoling.
 
-To do the mathematics, we strip a book down to its essentials. Fix an **alphabet**
-of `b` symbols and a **length** `L`. A *volume* is then just a choice of one symbol
-for each of the `L` positions — formally, a function from the positions
-`{0, 1, …, L-1}` to the symbols `{0, 1, …, b-1}`. The **Library** is the collection
-of *all* such functions.
+## From shelves to functions
 
-Borges' own library used 25 orthographic symbols (22 letters plus the comma,
-period, and space) and books of exactly 410 pages, 40 lines, 80 characters — that
-is, `L = 1,312,000` symbols. To keep examples concrete, we will also use a
-"mini-Library" with `b = 4` symbols and books of length `L = 16`, small enough to
-fit on a laptop yet large enough to show the same phenomena.
+To count anything, we first need to say precisely what a book *is*. Strip away the paper and the hexagons. A volume of length $L$ over an alphabet of $b$ symbols is nothing more than a rule that assigns, to each of the $L$ positions, one of the $b$ symbols. In mathematical language, a volume is a function
 
-## How big is the library?
+$$v : \{0, 1, \dots, L-1\} \to \{0, 1, \dots, b-1\}.$$
 
-The first theorem is the one Borges himself essentially states. Because each of
-the `L` positions can independently be any of the `b` symbols, the number of
-distinct volumes is `b` multiplied by itself `L` times:
+The **Library** is then simply the collection of *all* such functions. Borges' particular library is the case $b = 25$, $L = 1312000$, but nothing in the mathematics cares about those specific numbers; the same reasoning works for an alphabet of $2$ symbols and books of length $3$, which you can check by hand.
 
-> **The library has exactly `b^L` volumes.**
+The very first fact is the one Borges asserts and never proves:
 
-For the mini-Library that is `4^16 = 4,294,967,296` — about four billion books,
-already too many to print. For Borges' library it is `25^1312000`, a number with
-roughly 1.8 million digits. To grasp the scale: the observable universe holds
-something like `10^80` atoms, a number with 81 digits. The Library of Babel
-dwarfs the physical universe not by a factor, but by more than a *million orders
-of magnitude*. And yet — it is finite. You could, in principle, number every book.
+> **The Library has exactly $b^L$ volumes.**
 
-## One book in a vastness
+The argument is the oldest trick in combinatorics. Build a book one position at a time. The first position can be any of $b$ symbols; so can the second, independently; and so on through all $L$ positions. Multiply the independent choices and you get $b \times b \times \cdots \times b = b^L$. For Borges' constants this is the $25^{1312000}$ that opens the story. The point is not the size — it is that the size is *exactly* a power, with no fudge factor, no approximation, no "roughly." The Library is a perfectly regular object.
 
-If you reach blind into the shelves and pull out a single volume, what is the
-chance you grabbed a *particular* book you had in mind — say, this article,
-encoded into the alphabet?
+## Every book is equally unlikely
 
-> **Every individual volume has probability exactly `b^(-L)`.**
+Now we add chance. Imagine reaching blindly into the Library and pulling out a single volume, with no volume favored over any other. This is the **uniform distribution**: each of the $b^L$ books is equally probable. The probability of any one particular book — say, the one you are reading right now, transcribed letter for letter — is therefore
 
-That is one divided by `b^L`: one chance in the total number of books, as fairness
-demands. For the mini-Library, the odds of guessing a specific 16-symbol book are
-1 in 4.29 billion. For Borges' library the probability is `25^(-1312000)`, a
-decimal that begins with more than 1.8 million zeros before the first nonzero
-digit. This is the precise mathematical form of the librarians' despair in the
-story: the book you want certainly exists, and you will certainly never find it by
-chance.
+$$\frac{1}{b^L} = b^{-L}.$$
 
-## Two readers, one book
+For Borges' library that is $25^{-1312000}$, a number so close to zero that writing out its decimal expansion would itself fill a fair stretch of the Library. This is the precise sense in which any *specific* book is a miracle: not impossible, just overwhelmed. And note the democracy of it. The collected works of Shakespeare and a book consisting solely of the letter "M" repeated $1{,}312{,}000$ times are *exactly* as probable. The Library has no taste. Meaning is something we bring to it, not something it contains in greater concentration anywhere.
 
-A cousin of that fact concerns coincidence. Suppose two readers, in galleries
-light-years apart, each pull a random volume. What is the chance they are holding
-*the same* book?
+## The real question: how often does a phrase appear?
 
-> **Two independent uniform volumes coincide with probability exactly `b^(-L)`.**
+Single books are too rare to be interesting. The lived experience of the Library is different: you are not hunting for one exact volume, you are scanning for a *phrase* — a recognizable fragment of sense embedded anywhere inside a book. "O time thy pyramids." A valid theorem. Your own name. So the sharp question becomes: **if I fix a short pattern, how many times should I expect it to appear inside a random volume?**
 
-It is the same minuscule number as before — and for a clean reason. The first
-reader's book can be anything; the second reader must then match it exactly,
-position by position, which happens with probability `b^(-L)`. Two strangers in
-the Library of Babel are as unlikely to share a book as you are to name the one
-book in your hand in advance.
+Here is where the counting becomes genuinely beautiful. Fix a pattern of length $k$ — a specific string of $k$ symbols. A book of length $L$ has $L - k + 1$ places where a length-$k$ window can begin: starting at position $0$, at position $1$, and so on until the window's tail reaches the last character. At each such starting position, the pattern either matches or it doesn't.
 
-## Expected sightings of a phrase
+What is the chance of a match at one fixed position? The $k$ characters in that window must all agree with the pattern, and each character independently has probability $1/b$ of being the right symbol. So a single window matches with probability $b^{-k}$ — and, crucially, this probability does not depend on *where* the window sits.
 
-Single books are hopeless, but *phrases* are another matter. Fix a target
-**pattern** of length `k` — a word, a sentence, a snippet of code. A random
-volume of length `L` has `L - k + 1` possible starting positions where that
-pattern could begin. At each position, the `k` symbols match the pattern with
-probability `b^(-k)` (each of the `k` symbols must line up, independently). Adding
-up the chances at every position gives the central counting result of this work:
+Now comes the one idea that makes expectation so powerful: **linearity**. The expected total number of matches is just the sum, over all $L - k + 1$ windows, of the probability that each individual window matches. Linearity of expectation works even though the windows overlap and are tangled together in complicated ways — we never need them to be independent. Adding up identical terms gives the central formula of this work:
 
-> **The expected number of occurrences of a fixed length-`k` pattern in a random
-> volume is exactly `(L - k + 1) · b^(-k)`.**
+$$\mathbb{E}[\text{number of occurrences of the pattern}] = (L - k + 1)\, b^{-k}.$$
 
-This is an *exact* equality, not an approximation, and it holds for every alphabet
-size, every book length, and every pattern (provided the pattern fits inside the
-book and the alphabet is nonempty). It is the engine behind everything that
-follows. Notice its shape: it grows linearly in the book length `L` and shrinks
-exponentially in the pattern length `k`. A short phrase in a long book is expected
-to appear many times; a long phrase in a short book, essentially never.
+Let that sink in. The expected count of a phrase is the number of slots it could occupy, discounted by the rarity $b^{-k}$ of filling any one slot correctly. It is the kind of formula that feels obvious *after* you see it and impossible *before*.
 
-Plug in numbers. In the mini-Library (`b = 4`, `L = 16`), a specific 3-symbol
-pattern is expected to appear `(16 - 3 + 1)·4^(-3) = 14/64 ≈ 0.219` times — most
-books don't contain it, but roughly one in five does. Now consider Borges'
-library and the pattern "the". With `b = 25`, `k = 3`, `L = 1,312,000`, the
-expected number of occurrences is about `1,311,998 / 25^3 ≈ 84` — every Babel
-book contains the string "the" dozens of times, purely by chance.
+A worked example makes it vivid. Take an English-sized alphabet, $b = 26$, and ask for the four-letter word "MATH", so $k = 4$, in a book the size of a long novel, say $L = 1{,}000{,}000$ characters. Then the expected number of appearances is
 
-## The pessimist's bound
+$$(1000000 - 4 + 1)\cdot 26^{-4} = 999997 \times \frac{1}{456976} \approx 2.19.$$
 
-The expected count tells you the *average* number of sightings, but a librarian
-wants the probability of *at least one*. Here the average gives a clean upper
-limit. If something happens 0.219 times on average, it certainly cannot happen
-with probability more than 0.219. This is the **union bound**:
+So a million-character random book contains, on average, *about two* copies of "MATH" — not zero, not a thousand, but two. The Library is not as empty of meaning as it first appears; short fragments of sense are everywhere. It is only the *long* coherent stretches that vanish into the $b^{-k}$ abyss as $k$ grows.
 
-> **The probability that a random volume contains a fixed length-`k` pattern is at
-> most `(L - k + 1) · b^(-k)`.**
+## The price of meaning grows exponentially
 
-This bound is honest but pessimistic. When the book is long the right-hand side
-can exceed 1 and become useless — it tells you "the probability is at most 84,"
-which is true but vacuous. To find meaning in the library we need a bound that
-pushes from *below*, guaranteeing the pattern *is* there.
+That last remark is the moral of the whole subject, and the formula states it exactly. The expected number of occurrences carries the factor $b^{-k}$. Every additional symbol you demand of your pattern divides the expected count by $b$. Ask for a $5$-letter word instead of a $4$-letter one and matches become $26$ times rarer; ask for a sentence and they become astronomically rarer; ask for a coherent page and you have left the realm of any conceivable search.
 
-## Disjoint blocks: a guarantee from below
+This is the mathematical heart of Borges' despair. The Library contains every truth, but truth is *long*, and length is punished exponentially. The librarians of the story wander for generations precisely because the thing they seek — a single meaningful book — has a length $k$ so large that $(L-k+1)\,b^{-k}$ is, for all practical purposes, zero.
 
-The trick is to stop letting occurrences overlap. Carve the book into
-`m = ⌊L/k⌋` consecutive, non-overlapping blocks, each exactly `k` symbols long
-(with a short leftover at the end). Because the blocks share no positions, their
-contents are *statistically independent* — like independent dice rolls. Each block
-fails to equal the pattern with probability `1 - b^(-k)`. For *all* `m` blocks to
-miss, all these independent failures must occur, giving probability
-`(1 - b^(-k))^m`.
+## An honest ceiling on finding a phrase at all
 
-Making this rigorous required counting, exactly, how many books avoid the pattern
-on every aligned block. The answer is beautiful in its cleanliness:
+The expectation tells you the average number of copies, but a wanderer cares about something slightly different: the probability that a phrase appears *at least once* in a book. That is harder, because the events "the phrase appears at position $i$" overlap and interfere. But there is a clean and rigorous *upper bound*, and it follows from a principle as old as counting itself: the chance that *something* in a list happens is never more than the sum of the chances of each item. (If you double-count the overlaps, you can only overshoot.) This is the **union bound**, and applied here it gives
 
-> **The number of volumes in which no aligned block matches the pattern is exactly
-> `(b^k - 1)^(⌊L/k⌋) · b^(L - ⌊L/k⌋·k)`.**
+$$\mathbb{P}[\text{the pattern appears somewhere}] \;\le\; (L - k + 1)\, b^{-k}.$$
 
-Each of the `⌊L/k⌋` blocks may be any of the `b^k - 1` non-matching strings, and
-the `L - ⌊L/k⌋·k` leftover symbols are unconstrained. The proof builds an explicit
-dictionary — a bijection — that re-reads any book as a list of its blocks plus its
-remainder, sending block number `t` at offset `j` to the original position
-`t·k + j`. Once you can translate cleanly between "a book" and "a list of blocks,"
-the count is just multiplication.
+The same expression that counted the *average* number of occurrences also *caps* the probability of *any* occurrence. When the average number of copies is small, the chance of even one copy is at most that small number — so a phrase you expect to see $0.001$ times will appear with probability at most one in a thousand. The bound is honest in the other direction too: when the right-hand side exceeds $1$ it tells you nothing new, exactly as it should, because a probability can never exceed $1$ and the bound politely declines to claim otherwise.
 
-Dividing by the total `b^L` and subtracting from one turns this exact count into
-the lower bound we wanted:
+## The edge cases that keep the theory honest
 
-> **The probability that a random volume contains a fixed length-`k` pattern is at
-> least `1 - (1 - b^(-k))^(⌊L/k⌋)`.**
+A theory that only works for "nice" inputs is a theory waiting to embarrass you. Part of the work here is making sure every degenerate case behaves.
 
-Unlike the pessimist's bound, this one is always a genuine probability between 0
-and 1, and it is never vacuous.
+What if the alphabet is *empty*, $b = 0$? Then there are no symbols, no books can be written (for $L > 0$ there is literally no way to fill the first position), and the Library is empty: $0^L = 0$. The probability formulas, which divide by the size of the Library, gracefully refuse to assert anything about an empty world — which is why the expectation result quietly requires at least one symbol, $b \ge 1$.
 
-## Borges completeness: the library keeps its promise
+What if the alphabet has *exactly one* symbol, $b = 1$? Then there is only one possible book — a monotonous string of the lone symbol — and indeed $1^L = 1$. The Library collapses to a single shelf.
 
-Now let the book length `L` grow without limit, keeping the alphabet (at least two
-symbols) and the pattern fixed. The number of disjoint blocks `⌊L/k⌋` grows too,
-and `(1 - b^(-k))^(⌊L/k⌋)` — a number slightly below 1 raised to an ever larger
-power — collapses toward zero. The lower bound therefore climbs toward 1:
+What if the pattern has *length zero*, $k = 0$? The empty pattern matches everywhere, trivially, and the formulas reflect that with $b^{0} = 1$. And the boundary case $k = L$, a pattern as long as the entire book, leaves exactly $L - k + 1 = 1$ possible position, as it must.
 
-> **For any alphabet of at least two symbols, the probability that a random volume
-> contains a fixed pattern tends to 1 as the book length tends to infinity.**
+None of these are afterthoughts. They are the stress tests that distinguish a slogan from a theorem. The results stated above hold in every one of these corners.
 
-This is the rigorous heart of Borges' fantasy. Any text you can name — a sonnet,
-a contract, a complete and correct proof of a theorem — is *almost certain* to
-appear inside a sufficiently long random book. Not because the library was
-designed to contain it, but because length alone forces it. Give a monkey enough
-pages and the collected works of Shakespeare become not merely possible but
-overwhelmingly likely.
+## What the Library teaches
 
-The two bounds together — the union bound from above and the disjoint-block bound
-from below — sandwich the truth:
+Borges' Library is usually read as a parable of futility: total information, zero usable knowledge. The counting tells a subtler story.
 
-```
-1 - (1 - b^(-k))^(⌊L/k⌋)   ≤   P(book contains the pattern)   ≤   (L - k + 1)·b^(-k).
-```
+First, the Library is *not* mysterious. It is a finite set of size exactly $b^L$, with a uniform distribution in which every book has probability exactly $b^{-L}$. There is no fog here, only a very large, very regular object.
 
-The left side guarantees that meaning eventually appears; the right side reminds
-us how rare any *specific* meaning is at any fixed scale.
+Second, meaning is not absent — it is *priced*. Short patterns are abundant; the expected number of copies of a $k$-symbol phrase is precisely $(L-k+1)\,b^{-k}$. You will trip over four-letter words. The catastrophe is reserved for *long* coherence, where the exponential $b^{-k}$ crushes the linear count of available positions.
 
-## Could one book catalog them all?
+Third, and most practically, the union bound $(L-k+1)\,b^{-k}$ gives a usable guarantee: it tells you, before you ever start searching, how unlikely you are to find what you seek. In that sense the mathematics *is* the catalog Borges' librarians lacked — not a map to the one true book, but an exact accounting of the odds against it.
 
-Borges' librarians dream of a single "total book," a catalog indexing every
-volume's location. Can it exist? A counting argument settles it instantly. To name
-one of `b^L` books you need about `log₂(b^L) = L·log₂ b` bits of information. A
-single book holds only `L` symbols, i.e. `L·log₂ b` bits — *exactly enough to name
-one other book, not all of them.* Since `b^L` is astronomically larger than the
-`L·log₂ b` bits a single volume can carry, no one book can encode the addresses of
-all the rest. The catalog is logically impossible.
-
-But split the work across many books and it becomes possible. A *distributed*
-catalog spanning `N` volumes carries `N·L·log₂ b` bits, and once
-`N > b^L / (L·log₂ b)` that is enough to index the entire library. The dream is
-not impossible — only un-completable by any single volume, which is, fittingly,
-the exact shape of Borges' melancholy.
-
-## Why count the uncountable-feeling?
-
-The Library of Babel is more than a literary curiosity. It is the purest possible
-model of an **information space**: the set of all messages of a given size. Every
-hard drive, every genome of fixed length, every fixed-size cryptographic key, every
-neural-network weight file lives inside its own Library of Babel. The theorems here
-are statements about those spaces too. The expected-count formula is the
-mathematics of how often a motif appears in random DNA. The union bound is the
-back-of-the-envelope calculation a cryptographer uses to argue a key is hard to
-guess. The disjoint-block argument is a workhorse of probabilistic combinatorics,
-used to prove that random structures almost surely contain whatever substructure
-you ask for.
-
-Borges gave us a haunting image: infinite meaning, infinitely diluted. The
-mathematics gives us the exact dilution. Every possible text exists. Finding the
-one you want, at any fixed scale, is essentially impossible — and yet, paradoxically,
-make the books long enough and *everything* becomes inevitable. The library always
-keeps its promise. It simply never tells you which shelf.
+Every possible text already exists. What the counting provides is the one thing the Library itself withholds: a precise, finite, honest measure of how hard meaning is to find. And that, it turns out, is something you can write down in a single line.

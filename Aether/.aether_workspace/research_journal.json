@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "2509286d",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Spectral Gap Rigidity for Hodge Laplacians\n\n## Synthesis\n\nThis cycle built a self-contained, `sorry`-free local-to-global theory for abstract\nHodge Laplacians and its consequence",
-      "quality_score": 0.4272732837662338,
-      "sorry_count": 1,
-      "theorem_count": 15,
-      "timestamp": "2026-06-15T01:56:25",
-      "title": "Self-contained, `sorry`-free local-to-global theory for abstr"
-    },
-    {
       "cycle_id": "b3a33fd0",
       "domain": "NumberTheory",
       "key_insight": "# Future Directions — Fibonacci entry points & primitive divisors\n\nThis cycle delivered `Algebra/FibEntryPointReciprocity.lean`: a fully verified (0-sorry)\n**sharpening of the classical entry-point bo",
@@ -2501,6 +2491,16 @@
       "theorem_count": 339,
       "timestamp": "2026-06-20T11:03:53",
       "title": "Topological Generalization Bounds for Deep Learning"
+    },
+    {
+      "cycle_id": "bcf3395e",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Probabilistic Ramsey Lower Bounds\n\nDerived from this cycle's findings (the exact first-moment identity `sum_badCount`, the\nthreshold `exists_good_coloring`, the exponential bound",
+      "quality_score": 0.4537146432932148,
+      "sorry_count": 1,
+      "theorem_count": 351,
+      "timestamp": "2026-06-20T11:07:38",
+      "title": "Ramsey Theory: Bounds and Constructions"
     }
   ],
   "key_theorems": [
@@ -2805,15 +2805,8 @@
       "quality": 0.8075699999999999
     }
   ],
-  "last_updated": "2026-06-20T11:03:53",
+  "last_updated": "2026-06-20T11:07:38",
   "open_questions": [
-    {
-      "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
-      "cycle_id": "b3a33fd0",
-      "domain": "NumberTheory",
-      "sorry_count": 1,
-      "timestamp": "2026-06-15T03:00:25"
-    },
     {
       "context": "",
       "cycle_id": "51575ef7",
@@ -3016,6 +3009,13 @@
       "domain": "NumberTheory",
       "sorry_count": 1,
       "timestamp": "2026-06-19T21:06:36"
+    },
+    {
+      "context": "preserved.  All compiled with no `sorry`.",
+      "cycle_id": "bcf3395e",
+      "domain": "Geometry",
+      "sorry_count": 1,
+      "timestamp": "2026-06-20T11:07:38"
     }
   ],
   "research_threads": {
@@ -3387,12 +3387,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "3f92e6d5",
-        "quality": 0.54944,
-        "theorems": 9,
-        "title": "Deepening: Functorial comparison between neural observation pseudometrics and pr"
-      },
-      {
         "cycle_id": "4c324de9",
         "quality": 0.5844,
         "theorems": 16,
@@ -3445,6 +3439,12 @@
         "quality": 0.7460199999999999,
         "theorems": 6,
         "title": "Tensor Network Holography for Quantum Gravity with Categorical Entanglement Reno"
+      },
+      {
+        "cycle_id": "bcf3395e",
+        "quality": 0.4537146432932148,
+        "theorems": 351,
+        "title": "Ramsey Theory: Bounds and Constructions"
       }
     ],
     "Logic": [
