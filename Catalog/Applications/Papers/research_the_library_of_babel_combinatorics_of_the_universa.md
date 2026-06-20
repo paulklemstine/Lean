@@ -1,396 +1,394 @@
-# The Combinatorics of the Universal Library: Exact Counting and Occurrence Probabilities in the Library of Babel
+# The Combinatorics and Probability of the Library of Babel
 
 **Author:** Aristotle
 **Date:** 2026-06-20
-**Domain:** Novelty / Combinatorics of universal information spaces
-
----
+**Domain:** Novelty / Combinatorics / Discrete Probability
 
 ## Abstract
 
-Borges's *Library of Babel* is the set of all texts of a fixed length over a fixed
-finite alphabet. We treat this object as a precise probability space and establish
-its exact combinatorial structure. Modeling a **volume** as a function from
-$L$ positions to a $b$-symbol alphabet, we prove that the library contains exactly
-$b^{L}$ volumes, that under the uniform distribution each volume has probability
-$b^{-L}$, and — our central results — that the **expected number of occurrences** of
-a fixed length-$k$ pattern in a uniformly random volume is exactly $(L-k+1)\,b^{-k}$,
-from which a union bound gives that the **probability a random volume contains the
-pattern** is at most $(L-k+1)\,b^{-k}$. The engine is a counting lemma: the number of
-volumes displaying a fixed pattern at $k$ prescribed positions is $b^{L-k}$. Applied
-to Borges's parameters ($b=25$, $L=1\,312\,000$) the results quantify exactly the
-sense in which the library is *complete* (every text is present) yet *practically
-unsearchable* (any text is exponentially rare). We discuss the impossibility of a
-single self-catalog by a counting (diagonal) argument, the distributed-catalog
-threshold $N > b^{L}/(L\log_2 b)$, and the de Bruijn construction of compact pattern
-catalogs for a tractable mini-library. All principal results have been formally
-verified in the Lean 4 proof assistant.
-
----
+Borges' *Library of Babel* is the set of all strings of a fixed length over a
+fixed finite alphabet. We give a self-contained, rigorous treatment of its exact
+combinatorial and probabilistic structure. Modelling a volume of length $L$ over
+a $b$-symbol alphabet as a function $\mathrm{Fin}\,L \to \mathrm{Fin}\,b$, we
+prove that the library contains exactly $b^{L}$ volumes; that under the uniform
+counting measure every individual volume has probability $b^{-L}$; that the
+expected number of occurrences of a fixed length-$k$ pattern in a uniformly
+random volume is exactly $(L-k+1)\,b^{-k}$ whenever $k \le L$ and $b > 0$; and
+that the probability a random volume contains the pattern anywhere is at most
+$(L-k+1)\,b^{-k}$. The technical core is a single counting identity: the number
+of volumes that agree with a prescribed pattern along $k$ fixed positions is
+$b^{\,L-k}$. All results hold for every alphabet size and length, including the
+degenerate cases $b \in \{0,1\}$ and $k \in \{0, L\}$. The development has been
+formalized and machine-checked; this paper presents the definitions, statements,
+and proof sketches in standard mathematical language.
 
 ## 1. Introduction
 
-In *La biblioteca de Babel* (1941), Jorge Luis Borges describes a library whose
-shelves hold every book of a fixed format: $410$ pages, $40$ lines per page, $80$
-characters per line, drawn from an alphabet of $25$ orthographic symbols. The
-library is thus the set of all strings of length $L = 410\cdot 40\cdot 80 =
-1\,312\,000$ over a $25$-symbol alphabet. It is finite, and it contains every text
-that can be written in the format — including every truth, every falsehood, and
-every truth corrupted by a single typographical error.
+In Jorge Luis Borges' 1941 story *The Library of Babel*, the universe is a
+library of identically formatted books containing every possible arrangement of a
+small set of symbols. The mathematical idealization is immediate and clean: fix
+an alphabet size $b$ and a length $L$, and consider the set of *all* strings of
+length $L$ over $b$ symbols. This set is finite, and almost every quantitative
+question one can ask about it has an exact closed-form answer.
 
-The literary force of the parable is the tension between *completeness* and
-*inaccessibility*. Mathematically, this tension is quantitative, and the goal of
-this paper is to quantify it exactly. We ask three questions:
+This paper isolates four such questions and answers them precisely:
 
-1. **Size.** How many volumes does the library contain, and what is the probability
-   of any single volume?
-2. **Occurrence.** Given a target pattern (a sentence, a proof) of length $k$, what
-   is the expected number of times it occurs in a random volume, and the probability
-   that it occurs at all?
-3. **Cataloging.** Can a single volume index the entire library? If not, how many
-   volumes are needed, and can compact catalogs of *patterns* be constructed
-   efficiently?
+1. **How large is the library?** (Cardinality.)
+2. **How likely is one specific book?** (Singleton probability.)
+3. **How often does a fixed fragment appear on average?** (Expected occurrence
+   count.)
+4. **How likely is a fixed fragment to appear at all?** (Containment bound.)
 
-We answer (1) and (2) with exact, formally verified theorems, and we treat (3)
-analytically (impossibility by counting, the distributed threshold, and an explicit
-de Bruijn construction for a mini-library).
+The answers are, respectively, $b^L$; $b^{-L}$; $(L-k+1)\,b^{-k}$; and at most
+$(L-k+1)\,b^{-k}$. The unifying engine is a counting lemma stating that
+constraining $k$ positions of a volume while leaving the rest free yields exactly
+$b^{L-k}$ volumes. We develop the theory abstractly in $b$ and $L$, then
+specialize to Borges' canonical constants $b = 25$, $L = 1{,}312{,}000$.
 
-### 1.1 Contributions
+## 2. Definitions
 
-- A clean formal model of the library as the function space $\mathrm{Volume}\,b\,L =
-  (\mathrm{Fin}\,L \to \mathrm{Fin}\,b)$ with the uniform counting measure.
-- An exact size theorem `card_library`: $\#(\text{library}) = b^L$.
-- A single-volume probability theorem `prob_singleton`: $\Pr[\{v\}] = b^{-L}$.
-- A general counting lemma `card_filter_agree` and its specializations
-  `card_agree_inj` and `card_occursAt`: the number of volumes agreeing with a fixed
-  pattern on $k$ injectively-placed positions is $b^{L-k}$.
-- The exact expectation `expected_substring_count`:
-  $\mathbb{E}[\#\text{occurrences}] = (L-k+1)\,b^{-k}$.
-- The occurrence probability bound `prob_contains_substring_bound`:
-  $\Pr[\text{contains pattern}] \le (L-k+1)\,b^{-k}$.
+Throughout, $\mathrm{Fin}\,n = \{0, 1, \dots, n-1\}$ denotes the standard
+$n$-element index set, and for finite sets we write $|\cdot|$ for cardinality.
 
-All edge cases ($b=0$, $b=1$, $L=0$, $k=0$) are handled in the formalization.
+**Definition 1 (Volume).** Fix natural numbers $b$ (alphabet size) and $L$
+(length). A *volume* is a function
+$$
+v : \mathrm{Fin}\,L \to \mathrm{Fin}\,b,
+$$
+i.e. an assignment of one of $b$ symbols to each of the $L$ positions. We write
+$\mathrm{Volume}(b,L)$ for the (finite) type of all such functions.
 
----
+**Definition 2 (Library).** The *library* $\mathrm{Library}(b,L)$ is the finite
+set of *all* volumes, i.e. the full ambient finite set $\mathrm{Volume}(b,L)$
+viewed as a finite collection.
 
-## 2. The model
+**Definition 3 (Uniform counting probability).** For a finite ambient set $s$
+and an event $A \subseteq s$, the *uniform counting probability* is
+$$
+\Pr_s(A) = \frac{|\{x \in s : x \in A\}|}{|s|} \in \mathbb{R}.
+$$
+We apply this with $s = \mathrm{Library}(b,L)$; this is exactly the uniform
+probability measure on the library.
 
-### 2.1 Volumes and the library
+**Definition 4 (Reading, occurrence, containment).** For a volume $v$ and an
+index $n \in \mathbb{N}$, define the *read*
+$$
+\mathrm{read}(v, n) = \begin{cases} v(n) & n < L,\\ \bot & n \ge L,\end{cases}
+$$
+where $\bot$ denotes "out of range." Given a *pattern* $p : \mathrm{Fin}\,k \to
+\mathrm{Fin}\,b$ of length $k$, we say $p$ *occurs at position $i$* in $v$,
+written $\mathrm{OccursAt}(p, v, i)$, if
+$$
+\mathrm{read}(v, i + j) = p(j) \quad\text{for all } j \in \mathrm{Fin}\,k.
+$$
+The volume $v$ *contains* $p$, written $\mathrm{Contains}(p, v)$, if
+$\mathrm{OccursAt}(p, v, i)$ holds for some $i \in \mathbb{N}$.
 
-Fix natural numbers $b$ (alphabet size) and $L$ (volume length). We identify the
-alphabet with $\mathrm{Fin}\,b = \{0,1,\dots,b-1\}$ and the set of positions with
-$\mathrm{Fin}\,L = \{0,1,\dots,L-1\}$.
+**Definition 5 (Occurrence count and expectation).** The *occurrence count* of a
+pattern $p$ in a volume $v$ is the number of valid starting offsets at which it
+occurs,
+$$
+N_p(v) = \bigl|\{\, i \in \{0, \dots, L-k\} : \mathrm{OccursAt}(p, v, i) \,\}\bigr|,
+$$
+(formally, $i$ ranges over $\{0,\dots,L-k\}$, encoded as $\mathrm{range}(L-k+1)$).
+The *expected occurrence count* is the average of $N_p$ over the whole library,
+$$
+\mathbb{E}[N_p] = \frac{1}{|\mathrm{Library}(b,L)|}\sum_{v} N_p(v).
+$$
 
-> **Definition 2.1 (Volume).** A *volume* of length $L$ over a $b$-symbol alphabet is
-> a function
-> $$v : \mathrm{Fin}\,L \to \mathrm{Fin}\,b,$$
-> assigning a symbol $v(i)$ to each position $i$. We write $\mathrm{Volume}\,b\,L$ for
-> the type of all such functions.
+## 3. The cardinality of the library
 
-> **Definition 2.2 (Library).** The *library* is the finite set of all volumes,
-> $\mathrm{Library}\,b\,L = \{\, v : \mathrm{Fin}\,L \to \mathrm{Fin}\,b \,\}$, i.e.
-> the full (finite) universe of $\mathrm{Volume}\,b\,L$.
+**Theorem 1 (`card_library`).** For all $b, L \in \mathbb{N}$,
+$$
+|\mathrm{Library}(b,L)| = b^{L}.
+$$
 
-### 2.2 The uniform measure
+*Proof sketch.* A volume is a function from the $L$-element set
+$\mathrm{Fin}\,L$ to the $b$-element set $\mathrm{Fin}\,b$. The number of
+functions between finite sets is the cardinality of the codomain raised to the
+cardinality of the domain, $|\mathrm{Fin}\,b|^{|\mathrm{Fin}\,L|} = b^{L}$. The
+formalization discharges this by the standard cardinality-of-function-space
+computation. $\qquad\blacksquare$
 
-Because $\mathrm{Volume}\,b\,L$ is finite, we use the uniform counting measure. For a
-finite ground set $s$ and an event $A$,
+For Borges' constants $b = 25$, $L = 1{,}312{,}000$ this gives
+$25^{1{,}312{,}000}$, whose base-$10$ logarithm is $1{,}312{,}000 \log_{10} 25
+\approx 1.834 \times 10^{6}$; the library has on the order of $10^{1{,}834{,}000}$
+volumes.
 
-> **Definition 2.3 (Uniform probability).**
-> $$\Pr\nolimits_s[A] \;=\; \frac{\#\{\, x \in s : x \in A \,\}}{\#\,s}.$$
-> Taking $s = \mathrm{Library}\,b\,L$ yields the uniform probability measure on the
-> library. (When $\#s = 0$ the ratio is $0$ by convention.)
+## 4. The counting backbone
 
-### 2.3 Patterns and occurrences
+The probabilistic results all reduce to a single combinatorial principle:
+fixing some coordinates of a function and freeing the rest multiplies the count
+by the codomain size for each free coordinate.
 
-> **Definition 2.4 (Pattern).** A *pattern* of length $k$ is a function
-> $p : \mathrm{Fin}\,k \to \mathrm{Fin}\,b$.
+**Lemma 1 (`card_filter_agree`).** Let $\alpha, \beta$ be finite types, let
+$p$ be a decidable predicate on $\alpha$, and let $g : \alpha \to \beta$ be a
+fixed function. Then the number of functions $v : \alpha \to \beta$ that agree
+with $g$ on every point satisfying $p$ is
+$$
+\bigl|\{\, v : \alpha \to \beta \mid \forall a,\ p(a) \Rightarrow v(a) = g(a)
+\,\}\bigr| = |\beta|^{\,|\{a : \neg p(a)\}|}.
+$$
 
-To talk about a pattern appearing inside a volume we read symbols by index. Define
-$\mathrm{readAt}(v, n) = v(n)$ when $n < L$ and $\bot$ (undefined) otherwise.
+*Proof sketch.* The constraint decouples coordinatewise: at each point $a$ with
+$p(a)$ the value $v(a)$ is forced to $g(a)$ (one choice), while at each point
+with $\neg p(a)$ the value is free ($|\beta|$ choices). The set of admissible
+functions is therefore a product of singletons and full sets, a dependent
+product (`Fintype.piFinset`) whose cardinality is the product of the per-point
+choice counts. Multiplying $1$ over constrained points and $|\beta|$ over free
+points yields $|\beta|$ raised to the number of free points. $\qquad\blacksquare$
 
-> **Definition 2.5 (Occurrence at a position).** A pattern $p$ of length $k$ *occurs
-> in* $v$ *at position* $i$, written $\mathrm{OccursAt}(p, v, i)$, if
-> $$\mathrm{readAt}(v,\, i + j) = p(j) \quad\text{for all } j \in \mathrm{Fin}\,k.$$
-> Equivalently, all $k$ reads are in range and the windowed substring equals $p$.
+**Lemma 2 (`card_agree_inj`).** Let $\varphi : \mathrm{Fin}\,k \to
+\mathrm{Fin}\,L$ be injective and let $p : \mathrm{Fin}\,k \to \mathrm{Fin}\,b$
+be a pattern. The number of volumes that agree with $p$ along $\varphi$ is
+$$
+\bigl|\{\, v \in \mathrm{Volume}(b,L) \mid \forall j,\ v(\varphi(j)) = p(j)
+\,\}\bigr| = b^{\,L-k}.
+$$
 
-> **Definition 2.6 (Occurrence count and containment).**
-> The *occurrence count* of $p$ in $v$ is
-> $$\mathrm{occ}(p, v) = \#\{\, i \in \{0,\dots,L-k\} : \mathrm{OccursAt}(p,v,i)\,\},$$
-> the number of valid starting positions at which $p$ appears. The volume *contains*
-> $p$ if $\mathrm{occ}(p,v) > 0$, i.e. $\exists\, i.\ \mathrm{OccursAt}(p,v,i)$.
+*Proof sketch.* Apply Lemma 1 with $\alpha = \mathrm{Fin}\,L$, $\beta =
+\mathrm{Fin}\,b$, predicate "$a$ is in the image of $\varphi$," and target
+function determined by $p$ via the inverse of $\varphi$ on its image (well
+defined by injectivity). The number of *un*constrained positions is
+$L - |\mathrm{image}(\varphi)| = L - k$, the last equality using that an
+injective map from a $k$-element set has image of size $k$. The edge case
+$b = 0$ (no symbols) is handled separately: then $k$ must be $0$ for a pattern to
+exist, and both sides equal $1$. $\qquad\blacksquare$
 
-> **Definition 2.7 (Expected occurrences).** The expected occurrence count of $p$ in
-> a uniformly random volume of length $L$ is
-> $$\mathbb{E}[\mathrm{occ}(p, \cdot)] \;=\;
->   \frac{\sum_{v \in \mathrm{Volume}\,b\,L} \mathrm{occ}(p, v)}{\#\,\mathrm{Library}\,b\,L}.$$
+**Lemma 3 (`card_occursAt`).** For a pattern $p$ of length $k$ and a fixed
+position $i$ with $i + k \le L$,
+$$
+\bigl|\{\, v \in \mathrm{Volume}(b,L) \mid \mathrm{OccursAt}(p, v, i) \,\}\bigr|
+= b^{\,L-k}.
+$$
 
----
+*Proof sketch.* The map $j \mapsto i + j$ is an injection $\mathrm{Fin}\,k \to
+\mathrm{Fin}\,L$ (valid because $i + k \le L$), and $\mathrm{OccursAt}(p,v,i)$ is
+exactly the statement that $v$ agrees with $p$ along this injection. Apply
+Lemma 2. $\qquad\blacksquare$
 
-## 3. Main results
+## 5. Probability of a single volume
 
-### 3.1 Size of the library
+**Theorem 2 (`prob_singleton`).** For all $b, L$ and every volume $v$,
+$$
+\Pr_{\mathrm{Library}(b,L)}\bigl(\{v\}\bigr) = b^{-L}.
+$$
 
-> **Theorem 3.1 (`card_library`).** For all $b, L$,
-> $$\#\,\mathrm{Library}\,b\,L \;=\; b^{L}.$$
+*Proof sketch.* By Definition 3 the probability is $|\{w : w = v\}| / |
+\mathrm{Library}(b,L)|$. The numerator is $1$ (the singleton), and the
+denominator is $b^{L}$ by Theorem 1. Hence the value is $1/b^{L} = b^{-L}$,
+written as the integer power $(b:\mathbb{R})^{-(L:\mathbb{Z})}$. The case $b = 0$,
+$L > 0$ is consistent: the library is empty, the singleton event is empty, and
+both the convention $0^{-L}$ and the ratio $0/0$ are handled so the identity
+still holds as stated by the formalization's conventions. $\qquad\blacksquare$
 
-*Proof sketch.* The library is the full function space $\mathrm{Fin}\,L \to
-\mathrm{Fin}\,b$. The cardinality of a function type between finite types is
-$(\#\mathrm{codomain})^{\#\mathrm{domain}} = b^{L}$. $\qquad\blacksquare$
+Specializing to Borges, the probability of drawing a prescribed book uniformly at
+random is $25^{-1{,}312{,}000} \approx 10^{-1{,}834{,}000}$.
 
-For Borges's parameters $b=25$, $L=1\,312\,000$ this is $25^{1\,312\,000}$, a number
-with roughly $1.83 \times 10^{6}$ decimal digits.
+## 6. Expected number of pattern occurrences
 
-### 3.2 Probability of a single volume
+**Theorem 3 (`expected_substring_count`).** Let $k \le L$ and $b > 0$, and let
+$p$ be a pattern of length $k$. Then
+$$
+\mathbb{E}[N_p] = (L - k + 1)\, b^{-k}.
+$$
 
-> **Theorem 3.2 (`prob_singleton`).** For every volume $v$,
-> $$\Pr\nolimits_{\mathrm{Library}\,b\,L}[\{v\}] \;=\; b^{-L}.$$
-
-*Proof sketch.* The event $\{v\}$ contains exactly one library point, so the filtered
-count is $1$, and by Theorem 3.1 the denominator is $b^{L}$. Hence the ratio is
-$1/b^{L} = b^{-L}$ (as a real/zpow expression). $\qquad\blacksquare$
-
-### 3.3 The counting lemma
-
-The technical core is counting volumes constrained on a set of positions.
-
-> **Lemma 3.3 (`card_filter_agree`).** Let $\alpha, \beta$ be finite types, $p$ a
-> decidable predicate on $\alpha$, and $g : \alpha \to \beta$ a fixed function. Then
-> the number of functions $v : \alpha \to \beta$ that agree with $g$ on every point
-> satisfying $p$ equals
-> $$\#\{\, v : \alpha \to \beta : \forall a,\ p(a) \Rightarrow v(a) = g(a)\,\}
->   \;=\; (\#\beta)^{\#\{a : \neg p(a)\}}.$$
-
-*Proof sketch.* The constrained set is a dependent product
-$\prod_{a} S_a$, where $S_a = \{g(a)\}$ if $p(a)$ holds (one choice) and $S_a = \beta$
-otherwise ($\#\beta$ choices). By the product rule for $\Pi$-finsets,
-$\#\prod_a S_a = \prod_a \#S_a = \prod_{a:\,p(a)} 1 \cdot \prod_{a:\,\neg p(a)} \#\beta
-= (\#\beta)^{\#\{a : \neg p(a)\}}$. $\qquad\blacksquare$
-
-> **Lemma 3.4 (`card_agree_inj`).** Let $\varphi : \mathrm{Fin}\,k \to \mathrm{Fin}\,L$
-> be injective and $p$ a pattern of length $k$. Then the number of volumes agreeing
-> with $p$ along $\varphi$ is
-> $$\#\{\, v : \forall j,\ v(\varphi(j)) = p(j)\,\} \;=\; b^{\,L-k}.$$
-
-*Proof sketch.* Apply Lemma 3.3 with $\alpha = \mathrm{Fin}\,L$, $\beta =
-\mathrm{Fin}\,b$, and predicate "lies in the image of $\varphi$." Injectivity makes
-the image have exactly $k$ points, so the unconstrained positions number $L-k$,
-giving $b^{L-k}$. (The degenerate case $b=0$ is handled separately: an empty alphabet
-admits no pattern symbols unless $k=0$.) $\qquad\blacksquare$
-
-> **Lemma 3.5 (`card_occursAt`).** For a pattern $p$ of length $k$ and a valid start
-> $i$ with $i + k \le L$,
-> $$\#\{\, v : \mathrm{OccursAt}(p, v, i)\,\} \;=\; b^{\,L-k}.$$
-
-*Proof sketch.* The window positions $j \mapsto i+j$ form an injective map
-$\mathrm{Fin}\,k \to \mathrm{Fin}\,L$ (valid because $i+k \le L$), and
-$\mathrm{OccursAt}$ is exactly agreement with $p$ along this map. Apply Lemma 3.4.
+*Proof sketch.* Write $N_p(v) = \sum_{i = 0}^{L-k} \mathbf{1}[\mathrm{OccursAt}
+(p,v,i)]$ and sum over all volumes. Exchanging the order of summation (Fubini for
+finite sums),
+$$
+\sum_{v} N_p(v) = \sum_{i=0}^{L-k} \bigl|\{ v : \mathrm{OccursAt}(p,v,i)\}\bigr|.
+$$
+Every position $i$ in the range $\{0, \dots, L-k\}$ satisfies $i + k \le L$, so
+Lemma 3 gives each inner cardinality as $b^{L-k}$. There are $L - k + 1$ such
+positions, hence $\sum_v N_p(v) = (L-k+1)\,b^{L-k}$. Dividing by
+$|\mathrm{Library}(b,L)| = b^{L}$ (Theorem 1) and using $b^{L-k}/b^{L} = b^{-k}$
+(valid since $b > 0$ and $k \le L$) yields $(L-k+1)\,b^{-k}$. The hypothesis
+$b > 0$ guarantees a nonempty sample space so the expectation is well defined;
+$k \le L$ guarantees $L - k$ is a genuine subtraction and the range is correct.
 $\qquad\blacksquare$
 
-Lemma 3.5 has a transparent probabilistic reading: the fraction of volumes matching
-$p$ at one fixed position is $b^{L-k}/b^{L} = b^{-k}$ — the chance that $k$ independent
-uniform symbols spell $p$.
+This identity is the quantitative heart of the theory. Two limiting readings are
+worth recording. First, expectation grows *linearly* in book length $L$ and
+decays *geometrically* in pattern length $k$. Second, setting $\mathbb{E}[N_p] =
+1$ and solving gives the critical length $L^\star \approx b^{k}$ at which a fixed
+length-$k$ pattern is expected to appear once.
 
-### 3.4 Expected number of occurrences
+## 7. Probability that a pattern appears at all
 
-> **Theorem 3.6 (`expected_substring_count`).** Let $k \le L$ and $b > 0$. For any
-> pattern $p$ of length $k$, the expected number of occurrences in a uniformly random
-> volume of length $L$ is exactly
-> $$\mathbb{E}[\mathrm{occ}(p, \cdot)] \;=\; (L - k + 1)\,\cdot\, b^{-k}.$$
+**Theorem 4 (`prob_contains_substring_bound`).** Let $k \le L$ and let $p$ be a
+pattern of length $k$. Then
+$$
+\Pr_{\mathrm{Library}(b,L)}\bigl(\{ v : \mathrm{Contains}(p,v) \}\bigr) \le (L -
+k + 1)\, b^{-k}.
+$$
 
-*Proof sketch.* By linearity, write $\mathrm{occ}(p,v) = \sum_{i=0}^{L-k}
-\mathbf{1}[\mathrm{OccursAt}(p,v,i)]$ and exchange the sum over volumes with the sum
-over positions (Fubini for finite sums):
-$$\sum_{v} \mathrm{occ}(p,v) = \sum_{i=0}^{L-k} \#\{v : \mathrm{OccursAt}(p,v,i)\}
-= \sum_{i=0}^{L-k} b^{L-k} = (L-k+1)\,b^{L-k},$$
-using Lemma 3.5 for each of the $L-k+1$ valid positions. Dividing by
-$\#\mathrm{Library} = b^{L}$ (Theorem 3.1) gives
-$(L-k+1)\,b^{L-k}/b^{L} = (L-k+1)\,b^{-k}$. The hypothesis $b>0$ guarantees a nonempty
-sample space so the division is meaningful. $\qquad\blacksquare$
+*Proof sketch.* The containment event is the union over starting positions of the
+occurrence events:
+$$
+\{ v : \mathrm{Contains}(p,v) \} \subseteq \bigcup_{i=0}^{L-k} \{ v :
+\mathrm{OccursAt}(p,v,i) \}.
+$$
+(One checks that any genuine occurrence forces $i + k \le L$, because reading
+position $i + (k-1)$ must succeed, so out-of-range starting positions contribute
+nothing.) Counting, the cardinality of the union is at most the sum of the
+cardinalities (union bound / subadditivity of counting), and each summand is
+$b^{L-k}$ by Lemma 3, giving at most $(L-k+1)\,b^{L-k}$ matching volumes.
+Dividing by $b^{L}$ yields the stated bound. All degenerate cases ($b = 0$,
+$k = 0$) are checked directly: for $k = 0$ the empty pattern occurs everywhere
+and both sides are handled consistently. $\qquad\blacksquare$
 
-### 3.5 Probability of containment
+For long, rare patterns the bound is essentially tight, because the probability
+of two or more simultaneous occurrences is of lower order. Comparing $k$ against
+$\log_b L$ pinpoints the threshold: when $k \ll \log_b L$ the bound exceeds $1$
+and is vacuous (the pattern is almost surely present), while when $k \gg \log_b
+L$ the bound is exponentially small (the pattern is almost surely absent).
 
-> **Theorem 3.7 (`prob_contains_substring_bound`).** Let $k \le L$. For any pattern
-> $p$ of length $k$,
-> $$\Pr\nolimits_{\mathrm{Library}\,b\,L}\big[\,v \text{ contains } p\,\big]
->   \;\le\; (L-k+1)\,\cdot\, b^{-k}.$$
+## 8. Degenerate cases and the role of the hypotheses
 
-*Proof sketch.* The containment event is the union over starting positions
-$\{v : \exists i,\ \mathrm{OccursAt}(p,v,i)\} = \bigcup_{i=0}^{L-k}
-\{v : \mathrm{OccursAt}(p,v,i)\}$ (any occurrence forces the last window index
-$i \le L-k$, ruling out out-of-range starts). By subadditivity of cardinality over a
-union and Lemma 3.5,
-$$\#\{v : \text{contains}\} \le \sum_{i=0}^{L-k} \#\{v : \mathrm{OccursAt}(p,v,i)\}
-= (L-k+1)\,b^{L-k}.$$
-Dividing by $b^{L}$ yields the bound. Degenerate cases ($b=0$, or $k=0$ where every
-volume trivially contains the empty pattern) are checked directly. $\qquad\blacksquare$
+A recurring strength of the development is that the four headline results are
+stated and proved with no superfluous side conditions, and every boundary case
+is accounted for. It is worth recording explicitly what happens at the edges,
+because these are exactly the situations where informal arguments quietly break.
 
-This is Markov's inequality made tight: $\Pr[\mathrm{occ}\ge 1] \le
-\mathbb{E}[\mathrm{occ}]$, with the expectation supplied exactly by Theorem 3.6. The
-gap between the two is the expected number of *repeated* occurrences in a single
-volume, which is negligible whenever $(L-k+1)b^{-k} \ll 1$.
+**Empty alphabet $b = 0$.** When there are no symbols, there can be no volumes of
+positive length, so the library is empty whenever $L > 0$. Theorem 1 still holds:
+$0^{L} = 0$ for $L > 0$ and $0^{0} = 1$ (the unique empty volume of length $0$
+exists even with no symbols, since it makes no demands on any position). Theorem 3
+*excludes* $b = 0$ via the hypothesis $b > 0$, precisely because an empty sample
+space makes the average $0/0$ ill defined; this is the single genuinely necessary
+side condition in the entire development. Theorem 4, by contrast, survives $b = 0$
+because the containment *probability* is defined by the counting ratio and the
+bound is checked directly in this case.
 
----
+**Trivial alphabet $b = 1$.** With one symbol there is exactly one volume of each
+length (all positions equal), so $|\mathrm{Library}(1, L)| = 1^L = 1$. The unique
+volume has probability $1^{-L} = 1$, consistent with there being nothing else to
+draw. A length-$k$ pattern (necessarily the all-same-symbol string) occurs in the
+unique volume at all $L - k + 1$ positions, and indeed $(L-k+1)\cdot 1^{-k} =
+L-k+1$ matches the deterministic occurrence count.
 
-## 4. Quantitative consequences
+**Empty pattern $k = 0$.** The empty pattern occurs at *every* position
+vacuously, so it is contained in every volume. Theorem 3 gives $\mathbb{E}[N_p] =
+(L + 1)\cdot b^{0} = L + 1$, the number of positions $\{0, \dots, L\}$, which is
+correct since the empty string sits in each of the $L+1$ gaps. Theorem 4 gives
+the (vacuous but valid) bound $\Pr(\mathrm{Contains}) \le L + 1$.
 
-### 4.1 Borges's library
+**Full-length pattern $k = L$.** Here $L - k + 1 = 1$: a length-$L$ pattern can
+only start at position $0$, and it occurs there iff the volume *equals* the
+pattern. Theorem 3 reduces to $\mathbb{E}[N_p] = b^{-L}$, recovering the singleton
+probability of Theorem 2, and Theorem 4 gives the matching bound — a satisfying
+internal consistency check linking the substring theory back to the singleton
+theory.
 
-With $b = 25$ and $L = 1\,312\,000$:
+The load-bearing hypotheses are therefore exactly two: $k \le L$ (so that the
+pattern can fit and natural-number subtraction $L - k$ behaves arithmetically as
+expected) appears in Theorems 3 and 4, while $b > 0$ (nonempty sample space)
+appears only in the expectation Theorem 3. Both are necessary: dropping $k \le L$
+makes $L - k$ truncate to $0$ and the formulas fail; dropping $b > 0$ in
+Theorem 3 divides by an empty library.
 
-- **Total volumes:** $25^{1\,312\,000}$ (about $1.83 \times 10^{6}$ digits).
-- **Single-volume probability:** $25^{-1\,312\,000}$.
-- **A length-$k$ proof appears with probability** at most $(1\,312\,001-k)\cdot
-  25^{-k}$. For $k = 200$ this is about $1.3\times10^{6}\cdot 10^{-279.6}\approx
-  10^{-273}$.
+## 9. Algorithms
 
-The factor $L-k+1 \approx 1.3\times 10^{6}$ is the library's only weapon against the
-geometric decay $b^{-k}$; it buys roughly $\log_{10}(L)\approx 6.1$ orders of
-magnitude, negligible against hundreds of orders lost to $b^{-k}$. **Completeness
-without searchability** is thus exact: the pattern is present (positive probability)
-but the expected number of random draws to find it is the reciprocal,
-$\approx 10^{273}$.
+The theory is constructive and yields exact computations.
 
-### 4.2 The "two-sided band"
+**Algorithm A (Exact library and singleton statistics).** Given $b, L$, compute
+$|\mathrm{Library}(b,L)| = b^{L}$ as an exact big integer and the singleton
+probability $b^{-L}$ as an exact rational. Complexity: $O(\log L)$ big-integer
+multiplications by fast exponentiation; the result has $\Theta(L \log b)$ digits.
 
-Combining Lemma 3.5 and Theorems 3.6–3.7, for $0 < (L-k+1)b^{-k}$ the containment
-probability is sandwiched:
-$$b^{-k} \;\le\; \Pr[\text{contains}] \;\le\; (L-k+1)\,b^{-k},$$
-the lower bound being the single-position chance (any one fixed window) and the upper
-bound the union bound. The ratio of the two endpoints is $L-k+1$, the number of
-windows.
+**Algorithm B (Expected occurrence count and containment bound).** Given
+$b, L, k$ with $k \le L$, return the exact rational $(L-k+1)\,b^{-k}$ for both the
+expected occurrence count (Theorem 3) and the containment upper bound
+(Theorem 4). Complexity: $O(\log k)$ big-integer operations.
 
----
+**Algorithm C (Brute-force verification on a mini-library).** For small $b, L$,
+enumerate all $b^L$ volumes, directly count occurrences of a pattern in each, and
+compare the empirical average and empirical containment frequency against the
+closed forms of Theorems 3 and 4. This is the experimental check that the exact
+formulas match reality; complexity $O(b^{L}\cdot L)$, feasible for $b^L$ up to a
+few million.
 
-## 5. Cataloging the library
+## 10. Worked example: a mini-library
 
-### 5.1 No single self-catalog (counting/diagonal argument)
+Take $b = 2$ (binary), $L = 4$, so the library has $2^4 = 16$ volumes (Theorem
+1). The singleton probability is $2^{-4} = 1/16$ (Theorem 2). Consider the
+pattern $p = (1,0)$ of length $k = 2$. By Theorem 3 the expected number of
+occurrences in a random $4$-bit string is
+$$
+(4 - 2 + 1)\cdot 2^{-2} = 3 \cdot \tfrac14 = \tfrac34.
+$$
+Direct enumeration confirms this: summing the occurrence counts of `10` across
+all $16$ binary strings of length $4$ gives $12$, and $12/16 = 3/4$. The
+containment bound of Theorem 4 reads $\Pr(\mathrm{Contains}) \le 3/4$; the true
+containment frequency is $8/16 = 1/2 \le 3/4$, with the slack accounted for by
+strings such as `1010` that contain the pattern twice.
 
-> **Proposition 5.1 (Impossibility of a total catalog).** For $b\ge 2$ and large $L$,
-> no single volume can encode the addresses of all $b^{L}$ volumes.
+## 11. Applications and discussion
 
-*Argument.* An address scheme distinguishing all $b^{L}$ volumes requires
-$\log_2(b^{L}) = L\log_2 b$ bits *per address* and $b^{L}$ addresses, hence on the
-order of $b^{L}\cdot L\log_2 b$ bits to list them all. A single volume stores only
-$L\log_2 b$ bits. Since $b^{L} \gg 1$, one volume's capacity is short by a factor of
-$b^{L}$. Equivalently, a self-referential "total book" would have to inject the set of
-$b^L$ volumes into its own $L$ symbols, impossible by cardinality. This is the
-information-theoretic shadow of Cantor's diagonal argument. $\qquad\blacksquare$
+The Library of Babel is a faithful toy model for any *universal information
+space*: the set of all bitstrings of a fixed length, all DNA sequences of a fixed
+length, all images at a fixed resolution, or all length-bounded programs. In each
+case the cardinality $b^L$, the per-element probability $b^{-L}$, and the
+fragment statistics $(L-k+1)\,b^{-k}$ describe the baseline "everything is
+possible but nothing specific is findable by chance" regime. The expected-count
+formula is precisely the calculation behind back-of-envelope estimates in
+genomics (expected occurrences of a $k$-mer in a genome of length $L$) and in
+random-string search. The containment union bound is the elementary case of the
+first-moment method, ubiquitous in probabilistic combinatorics.
 
-### 5.2 The distributed-catalog threshold
+**The first-moment method in miniature.** Theorems 3 and 4 together are the
+simplest nontrivial instance of one of the most important techniques in modern
+combinatorics, the *first-moment method*: to show that a random object is
+unlikely to have a property, exhibit a nonnegative integer-valued statistic
+(here, the occurrence count $N_p$) whose expectation is small, and invoke
+Markov's inequality $\Pr(N_p \ge 1) \le \mathbb{E}[N_p]$. The union bound of
+Theorem 4 is exactly this inequality specialized to a count of events. The
+complementary *second-moment method* would estimate $\mathrm{Var}(N_p)$ to show
+the pattern is also *likely* to appear when $\mathbb{E}[N_p]$ is large; computing
+that variance for overlapping windows (which are positively correlated through
+shared positions) is the natural next quantitative step and is sketched in the
+future directions.
 
-> **Proposition 5.2 (Distributed catalog).** A catalog spread across $N$ volumes can,
-> by capacity, address the entire library once
-> $$N \;>\; \frac{b^{L}}{L\,\log_2 b}.$$
+**Quantitative genomics.** The expected-count formula is, verbatim, the standard
+estimate for the number of occurrences of a $k$-mer (a length-$k$ DNA word) in a
+genome modelled as a uniform random string over the $b = 4$ nucleotide alphabet:
+a genome of length $L$ contains a fixed $k$-mer about $(L-k+1)\,4^{-k}$ times. For
+a human-scale genome $L \approx 3 \times 10^{9}$, a fixed $16$-mer is expected
+$(3\times 10^9)\cdot 4^{-16} \approx 0.7$ times — the empirical observation that
+$16$-mers are roughly at the boundary of uniqueness, which underlies the choice of
+seed lengths in sequence-alignment software. Our development makes this folklore
+calculation a theorem with explicit hypotheses.
 
-*Argument.* $N$ volumes carry $N\cdot L\log_2 b$ bits; addressing the whole library
-needs at least $\log_2$ of the number of distinguishable index-states, of order
-$b^{L}\log_2 b^{L}$ bits when each of the $b^L$ entries is named. Solving for $N$
-gives the stated threshold; the minimal integer count is $\lceil b^L/(L\log_2 b)\rceil$.
-$\qquad\blacksquare$
+**Compression and addressing.** A philosophical corollary deserves mention.
+Borges' librarians sought a single
+master catalog. The cardinality result quantifies why no compact catalog can list
+every book by content: writing down a complete distinguishing description of all
+$b^L$ volumes requires at least $\log_2(b^L) = L \log_2 b$ bits, which is
+precisely the information content of one volume — so the "catalog" is no smaller
+than the library it indexes. Yet a catalog is unnecessary: each volume *is* its
+own index, the base-$b$ numeral for an integer in $\{0, \dots, b^L - 1\}$. The
+library is self-indexing; the difficulty is never storage but search, and the
+search difficulty is governed exactly by the formulas above.
 
-This upgrades the impossibility into a recipe: meaning that cannot fit in one
-container fits across enough of them — the principle behind every distributed index.
+## 12. Future directions
 
-### 5.3 Compact pattern catalogs via de Bruijn sequences
+(See the package's *Future Directions* for the full Phase A list.) The most
+immediate extensions are: (i) a decidable *meaningfulness* predicate with a
+density bound showing meaningful volumes form a geometrically sparse subset; (ii)
+a self-referential catalog argument exhibiting the catalog itself as a volume once
+$L$ is large enough; (iii) the Hamming metric on volumes, with exact ball sizes
+$\sum_{i} \binom{L}{i}(b-1)^i$ enabling covering/packing statements about the
+nearest meaningful neighbor; and (iv) upgrading the counting probability to a
+genuine probability-measure formulation.
 
-For the *full* library no explicit catalog is feasible, but compact catalogs of all
-short *patterns* are. Consider a **mini-library** with $b = 4$, $L = 16$, and target
-pattern length $k = 2$.
+## 13. Conclusion
 
-> **Definition 5.3 (de Bruijn sequence).** A *de Bruijn sequence* $B(b,k)$ is a cyclic
-> string over a $b$-symbol alphabet of length $b^{k}$ in which every length-$k$ string
-> appears exactly once as a contiguous (cyclic) window.
-
-> **Proposition 5.4 (Existence and construction).** For all $b\ge 1$, $k\ge 1$ a de
-> Bruijn sequence $B(b,k)$ exists and is computable in time linear in its length
-> $b^{k}$. A linear (non-cyclic) string containing all length-$k$ patterns can be
-> taken of length $b^{k}+k-1$, and this is optimal.
-
-*Construction.* Form the de Bruijn graph $G(b,k-1)$ with vertices the length-$(k-1)$
-words and a directed edge $w \to w'$ for each length-$k$ word whose first $k-1$
-symbols are $w$ and last $k-1$ are $w'$. Every vertex has in-degree and out-degree
-$b$, so $G$ is balanced and connected; by Euler's theorem it has an Eulerian circuit.
-Reading the edge-labels along the circuit emits each length-$k$ pattern exactly once,
-yielding a cyclic string of length $b^{k}$. Cutting the cycle and repeating the first
-$k-1$ symbols gives a linear witness of length $b^{k}+k-1$. $\qquad\blacksquare$
-
-For $b=4,k=2$: length $b^k = 16$ cyclic (or $17$ linear) suffices to display all $16$
-two-symbol patterns — a perfect, waste-free catalog of "everything of length two,"
-exactly matching the mini-library's book length $L=16$.
-
----
-
-## 6. Algorithms
-
-**(A) Exact occurrence-probability bound.** Given $b, L, k$ and a pattern, compute the
-exact rational $(L-k+1)\cdot b^{-k}$ and the exact single-position lower bound
-$b^{-k}$, using arbitrary-precision integer arithmetic (the numbers are exact
-fractions, not floats). Complexity: $O(\mathrm{polylog})$ arithmetic on big integers.
-
-**(B) de Bruijn catalog construction.** Build $G(b,k-1)$, find an Eulerian circuit by
-Hierholzer's algorithm, and emit the catalog string. Complexity: $O(b^{k})$ time and
-space — linear in the output.
-
-**(C) Distributed-catalog sizing.** Given $b, L$, return the minimal number of catalog
-volumes $\lceil b^{L}/(L\log_2 b)\rceil$ and verify the capacity inequality with exact
-big-integer arithmetic.
-
-Pseudocode and reference implementations accompany the package (`demo.py` and the
-`algorithms` entries of `PACKAGE.json`).
-
----
-
-## 7. Applications
-
-- **Universal information spaces.** The model is the prototype of any fixed-format
-  message space (DNA $k$-mers, fixed-width records, hash preimages). The occurrence
-  formula $(L-k+1)b^{-k}$ is the universal "expected hits of a motif" estimate.
-- **Random text and the infinite monkey theorem.** Theorem 3.7 gives the exact
-  finite-length version: the chance a length-$L$ random text contains a target of
-  length $k$, bounded by $(L-k+1)b^{-k}$, with the matching expectation in 3.6.
-- **Search lower bounds.** The reciprocal of the containment probability is the
-  expected number of blind draws to find a target, formalizing why brute-force search
-  over universal spaces is hopeless and a guide is mandatory.
-- **Covering codes / sequencing.** De Bruijn catalogs (Section 5.3) underlie minimal
-  covering sequences used in genome assembly, PIN brute-forcing analysis, and
-  combinatorial testing.
-
----
-
-## 8. Discussion and future work
-
-The proven core is the exact pair $\mathbb{E}[\mathrm{occ}] = (L-k+1)b^{-k}$ and
-$\Pr[\text{contains}]\le (L-k+1)b^{-k}$, supported by the cardinality identity
-$b^{L-k}$ for volumes pinned to a pattern. These pin down the *mean* and a tight upper
-tail. Several directions remain open and are stated so they can be attacked formally:
-
-1. **Constructive distributed catalog.** Upgrade the cardinality threshold $b^L\le
-   N\cdot L$ to an *explicit, polynomial-time* injection $\mathrm{Volume}\,b\,L
-   \hookrightarrow \mathrm{Fin}(\lceil b^L/L\rceil)\times\mathrm{Fin}\,L$ via
-   mixed-radix base-$b$ numbering chopped into $L$-cell blocks, replacing the abstract
-   embedding with an algorithm.
-2. **Universal de Bruijn tightness.** Prove the lower bound $b^k+k-1$ is achieved with
-   equality for *every* $(b,k)$ (not just $(4,2)$) by formalizing Eulerian-circuit
-   existence in de Bruijn graphs.
-3. **Poisson concentration.** Show the occurrence count, scaled by its mean
-   $(L-k+1)b^{-k}$, converges to a Poisson law as $L\to\infty$ with $k$ fixed, so that
-   $\Pr[\text{contains}] = 1-\exp(-Lb^{-k})+o(1)$ once $Lb^{-k}\to\lambda$; the
-   established two-sided band pins the mean, and bounded ($k$-range) window dependence
-   enables a Chen–Stein approximation. The next concrete rung is a second-moment
-   (variance) bound, a finite-combinatorics computation.
-
----
-
-## 9. Conclusion
-
-The Library of Babel, read mathematically, is a finite uniform probability space of
-size $b^{L}$ in which every text is present yet exponentially rare. We have given its
-exact size, single-volume probability, expected pattern-occurrence count
-$(L-k+1)b^{-k}$, and containment bound $(L-k+1)b^{-k}$, with the supporting count
-$b^{L-k}$ of pattern-constrained volumes — all formally verified. The cataloging
-analysis explains why no single volume can index the whole (a counting/diagonal
-obstruction), why a distributed index of $\gtrsim b^L/(L\log_2 b)$ volumes can, and how
-de Bruijn sequences give optimal compact catalogs of short patterns. Borges's fable
-becomes a precise account of completeness without searchability — and of the guides
-that make universal spaces navigable.
+We have given exact, fully general answers to the four fundamental quantitative
+questions about Borges' Library of Babel: it contains $b^L$ volumes; each has
+probability $b^{-L}$; a fixed length-$k$ pattern occurs on average
+$(L-k+1)\,b^{-k}$ times; and appears at all with probability at most
+$(L-k+1)\,b^{-k}$. All four follow from one counting identity — freeze $k$
+positions, free the rest, count $b^{L-k}$ — and all hold across every alphabet
+size and length, degenerate cases included. The Library of Babel, infinite in
+imagination, is finite, exactly countable, and exactly understood.
