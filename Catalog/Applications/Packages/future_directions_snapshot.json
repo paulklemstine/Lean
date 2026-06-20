@@ -4428,6 +4428,33 @@
     "title": "Universal n^{-7/2} asymptotic for unlabelled connected cubic planar graphs"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "pestov_book",
+      "irwin_solecki"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "This conjecture asserts that if a continuum admits a projective Fraisse category whose automorphism group has a certain density condition, then its homeomorphism group behaves in a way tied to the exceptional amenability of its closed subgroups, formalizable within Lean 4 via exact properties of group flows.",
+    "domain_bridges": [
+      "combinatorics",
+      "functional analysis",
+      "topology"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2159",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Constructive existence with density conditions via extremal combinatorics",
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-20T23:12:35.585104+00:00",
+    "title": "Universal minimal flows in projective Fraisse categories"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
