@@ -763,7 +763,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Quantum Information: No-Cloning and Teleportation"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "b4d505d3",
     "description": "Formalize the universal approximation theorem for ReLU networks. Prove depth-width tradeoffs: width-bounded networks of depth d can approximate functions that require exponential width at depth d-1. Construct explicit approximation rates for Sobolev functions.",
     "domains": [
       "MachineLearning",
@@ -773,7 +773,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.86,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T03:56:25.432777+00:00",
     "title": "Universal Approximation: Quantitative Bounds"
   },
@@ -2145,7 +2145,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Complete intersectionproperty of Fitting ideals for tree graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "0d8fceb6",
     "description": "For every positive integer q and natural number n, let P(n,q) denote the probability that the Random player wins the q-game. We conjecture that P(n,q) satisfies the recurrence relation: P(n,q) = 1/n + (1/n) * \u03a3_{k=q+1}^n P(n\u2212k, q), with base case P(0,q) = 0. This recurrence captures the probabilistic structure of the game coupled to random permutations' cycle decompositions.",
     "domains": [
       "Computation",
@@ -2155,7 +2155,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18956v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T10:14:34.984628+00:00",
     "title": "Recurrence for the Winning Probability in the Generalized Game"
   },
@@ -2173,6 +2173,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-19T15:37:10.822708+00:00",
     "title": "Asymptotic Growth Constant for Unlabelled Cubic Planar Graphs"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "To formalize the concept of graph linear notation as a complete graph invariant in Lean 4, we propose defining it as the maximum binary encoding of adjacency matrices across all vertex orderings. This encoding uniquely represents a graph up to isomorphism by capturing its structure through lexicographic maximization.",
+    "domains": [
+      "Algebra",
+      "Computation"
+    ],
+    "id": "fd_2113",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19393v1",
+    "status": "available",
+    "timestamp": "2026-06-19T16:09:08.325435+00:00",
+    "title": "Formalizing Graph Linear Notation in Lean 4"
   },
   {
     "consumed_by_exp_id": "",
@@ -2541,11 +2556,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For the q-game on n elements, where the deterministic player removes q elements per turn and the random player wins iff the first cycle of length at most q in canonical order is a fixed point, the probability that the random player wins approaches 1/q as n tends to infinity for any fixed positive integer q.",
+    "domains": [
+      "Computation"
+    ],
+    "id": "fd_2142",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18956v1",
+    "status": "available",
+    "timestamp": "2026-06-20T16:23:48.507943+00:00",
+    "title": "Asymptotic probability of random player victory in q-games"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let S_N(x)=sum_{i=1}^N x^i. For primes p<q with pq | m and n^2 >= (p-1)(q-1)+1, the conjecture says the cyclotomic transfer P=S_{m^2}/Phi_{pq}, Q=S_{n^2} Phi_{pq} is a nonstandard square-sided pair of sizes m^2 and n^2. Equivalently, the quotient and product have nonnegative integer coefficients, P(1)=m^2, Q(1)=n^2, and P Q=S_{m^2}S_{n^2}. A counterexample would be any admissible p,q,m,n for which one of these two explicit polynomials has a negative coefficient.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2142",
+    "id": "fd_2143",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -2559,7 +2588,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2143",
+    "id": "fd_2144",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
@@ -2574,7 +2603,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2144",
+    "id": "fd_2145",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20085v1",
@@ -2588,7 +2617,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2145",
+    "id": "fd_2146",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19863v1",
@@ -2603,7 +2632,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2146",
+    "id": "fd_2147",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19796v1",
@@ -2618,7 +2647,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2147",
+    "id": "fd_2148",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19573v1",
@@ -2633,7 +2662,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2148",
+    "id": "fd_2149",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19500v1",
@@ -2648,7 +2677,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2149",
+    "id": "fd_2150",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19008v1",
@@ -3594,36 +3623,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions: Tropical Linear Algebra vs. Discrete-Logarithm Security\n\nThese directions build on the verified results in\n[`Cryptography/TropicalDiscreteLog.lean`](Cryptography/TropicalDiscreteLog.lean) and the\ncompanion brief [`RESEARCH_PAPER.md`](RESEARCH_PAPER.md), which prove that tropical\nexponentiation is affine in the exponent and hence not one-way for the scalar, diagonal,\nand constant (rank-one) families.\n\nEach direction below is stated with a single **key insight** and a **Why now?**\njustification, and is framed so that the deliverable is a *certified algorithm or\ncomputational pipeline*, not merely a paper proof.\n\n---\n\n## Direction 1 \u2014 A certified inverter from the max-plus cyclicity theorem\n\n**Goal.** Formalize the cyclicity theorem `A^\u2299(n+\u03c3) = (\u03c3\u00b7\u03bb) \u2299 A^\u2299n` (for `n \u2265 t\u2080`,\nirreducible `A`, tropical eigenvalue `\u03bb`, cyclicity `\u03c3`) and extract a verified\npolynomial-time procedure that recovers the secret exponent from `A^\u2299n` for *arbitrary\nirreducible* tropical bases \u2014 generalizing the scalar/diagonal/constant breaks already\nproved.\n\n**The key insight is** that the secret exponent need never be searched for: after a short,\nexplicitly bounded transient, every entry of `A^\u2299n` grows with the *same* slope `\u03bb`, so two\nprobed powers pin down `\u03bb` and a single affine equation returns `n` (mod `\u03c3`).\n\n**Why now?** The base cases (scalar, diagonal, constant) are already machine-verified here,\ngiving the exact lemma shapes (`T_pow`, `Jconst_pow`, idempotent `const_sum`) that the\ninductive cyclicity proof reuses; and Mathlib's matrix-semiring and `WithTop` infrastructure\nnow make the transient/cyclicity bookkeeping tractable in a way it was not a few years ago.\n\n---\n\n## Direction 2 \u2014 Formalizing the Kotov\u2013Ushakov attack on tropical polynomial key exchange\n\n**Goal.** Move from pure powers to the actual Grigoriev\u2013Shpilrain protocol, whose public\nvalues are tropical *polynomials* of two commuting tropical matrices, and produce a\ncertified implementation of the Kotov\u2013Ushakov / Rudy\u2013Monico recovery attack with a verified\nsuccess condition.\n\n**The key insight is** that the attacker never needs the private polynomial itself \u2014 the\ncommuting-generators structure forces the shared key into a low-dimensional affine family of\ncandidate tropical expressions, which a verified search enumerates and checks.\n\n**Why now?** The verified tropical-semiring layer in this project (finite-scalar arithmetic\n`T_mul`, affine powering `T_pow`, idempotent collapse) supplies exactly the algebraic\nprimitives the attack manipulates, so the remaining work is the (now well-isolated)\ncombinatorial search rather than re-deriving tropical algebra from scratch.\n\n---\n\n## Direction 3 \u2014 A formal impossibility theorem: idempotency forbids DL-style one-wayness\n\n**Goal.** Prove (or sharply delimit) the conjecture that *no* monomial construction over an\nidempotent semiring can yield a one-way exponentiation map, turning the accumulating\ncase-by-case breaks into a single structural no-go theorem with a constructive inverter.\n\n**The key insight is** that idempotency (`x \u2295 x = x`) annihilates the multiplicity that\nclassical groups rely on to scramble orbits, leaving every power-orbit an affine ray whose\nslope is computable from a bounded number of probes.\n\n**Why now?** This project already isolates idempotency as the precise culprit (the lemmas\n`nsmul_idem` and `const_sum` are where the coupling collapses), so the impossibility\nstatement can be formulated against a clean, verified abstraction of \"idempotent\nsemiring + monomial forward map\" rather than against any one ad-hoc scheme.\n\n---\n\n## Direction 4 \u2014 An automated, certifying parameter-audit tool for tropical schemes\n\n**Goal.** Build a verified decision procedure that, given a candidate tropical base (and\noptional protocol metadata), returns either a *recovered exponent with a proof* or a\n*machine-checked certificate of structural weakness* (e.g. \"diagonalizable\", \"irreducible\nwith cyclicity \u03c3\", \"rank-one\"), usable as a drop-in audit gate before any tropical scheme is\ndeployed.\n\n**The key insight is** that the cryptanalysis can be made *self-certifying*: rather than\ntrusting an external attack script, the tool emits a Lean term whose type is exactly the\nstatement \"this instance is broken,\" so a positive audit is a proof and a negative audit is\nan explicit, checkable obstruction.\n\n**Why now?** The pipelines in this file (`recoverScalar`, `recoverDiag`, `recoverConst`) are\nalready *executable and proved correct*, demonstrated by `native_decide` runs; packaging\nthem behind a uniform interface that emits certificates is an engineering step on top of an\nexisting verified core.\n\n---\n\n## Direction 5 \u2014 Searching for a non-affine idempotent forward map (the survival question)\n\n**Goal.** Systematically explore idempotent and semiring-like structures (min-plus on\nnon-totally-ordered carriers, tropical with truncation/quantization, supertropical and\nsymmetrized semirings) for a forward map that is provably *non-affine* in the secret, using\nverified computation to refute or support candidate hardness, and to extract a counterexample\ninverter whenever affinity sneaks back in.\n\n**The key insight is** that the only escape from the attack is to break affinity *without*\nreintroducing a field's multiplicative scrambling \u2014 a narrow target that a verified\nexploratory search can map out far more reliably than hand analysis.\n\n**Why now?** The same `#eval`/`native_decide` machinery used here to *confirm* breaks can be\nrepurposed to *falsify* hardness candidates cheaply, so a structured computational sweep \u2014\neach candidate either broken by a certified inverter or flagged for deeper study \u2014 is\nimmediately actionable on top of the present infrastructure.\n",
-    "domains": [
-      "Algebra",
-      "Tropical"
-    ],
-    "id": "fd_2150",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "d9e56a6a",
-    "status": "available",
-    "timestamp": "2026-06-20T16:09:45.868645+00:00",
-    "title": "These directions build on the verified results in"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 generalized Tur\u00e1n growth `ex(n, K_{a,b}, K_{3,t})`\n\nDerived from this cycle's results: the parity-uniform cubic **upper** bound\n(`KabCopies_cubic_of_K3tFree`, holding already at the necessary threshold `t = b+1`) and the\nexact **threshold gap** `paperThreshold \u2212 necessaryThreshold = b mod 2` (`threshold_gap`).\n\n## Conjecture 1 (Grand challenge): the odd-`b` threshold collapses\nFor all integers `a, b, t` with `3 < a \u2264 b`, `b \u2265 7` odd, and `t = b + 1`, there is a\n`K_{3,t}`-free graph on `n` vertices with `\u03a9(n^3)` copies of `K_{a,b}`; hence\n`ex(n, K_{a,b}, K_{3,b+1}) = \u0398(n^3)` for odd `b` as well.\n- **The key insight is** that the proved threshold's extra `+1` in the odd case\n  (`paperThreshold_odd`) comes only from the *lower-bound* construction's reliance on an even\n  split `b = \u2308b/2\u2309 + \u230ab/2\u230b`; an asymmetric `(\u2308b/2\u2309, \u230ab/2\u230b)` incidence construction should still\n  avoid `K_{3,b+1}` while producing cubically many `K_{a,b}`.\n- **Why now?** The matching upper bound at `t = b+1` is now formalized and parity-uniform\n  (`KabCopies_cubic_of_K3tFree`), so the only missing half is a single construction; the gap is\n  provably exactly `1` (`necessary_lt_paper_iff_odd`), pinpointing the target.\n\n## Conjecture 2 (Sharp leading constant): `ex / n^3 \u2192 C(b, a-3)/6` at `t = b+1`\nFor `3 < a \u2264 b` and `t = b + 1`, `lim_{n\u2192\u221e} ex(n, K_{a,b}, K_{3,b+1}) / \\binom{n}{3}` exists and\nequals `C(b, a-3)`.\n- **The key insight is** that our upper bound's constant collapses to exactly `C(b, a-3)` at the\n  necessary threshold (`cubic_constant_at_threshold`), and equality should be forced by a\n  construction in which every triple's common neighborhood is *saturated* to size `b`.\n- **Why now?** The constant is already isolated symbolically; matching it only requires showing\n  the fiber injection of `fiber_bound` is asymptotically a bijection.\n\n## Conjecture 3 (Beyond `K_{3,t}`): an `s`-core cubic-to-`(s)` bound\nFor `s \u2264 a` and `t \u2265 b + 1`, a `K_{s,t}`-free graph has at most `C\u00b7n^s` copies of `K_{a,b}`,\ni.e. `ex(n, K_{a,b}, K_{s,t}) = O(n^s)`.\n- **The key insight is** that the \"anchor on an `s`-element core\" double count generalizes our\n  `s = 3` argument verbatim: pick `s` vertices from the `a`-side, cap their common neighborhood\n  via `K_{s,t}`-freeness, then pin the remaining `a+b-s` vertices into bounded neighborhoods.\n- **Why now?** `fiber_bound` and `KabCopies_card_le_sum` are stated so that only the literal `3`\n  needs replacing by `s`; the proof skeleton already isolates exactly the three places it occurs.\n\n## Conjecture 4 (Lower bound from finite fields): incidence graphs are extremal\nThe point\u2013line incidence graph of a projective/affine plane over `\ud835\udd3d_q`, suitably blown up,\nrealizes `\u0398(n^3)` copies of `K_{a,b}` while being `K_{3,b+1}`-free.\n- **The key insight is** that two points lie on a unique line, so every triple of points has\n  `O(1)` common neighbors \u2014 exactly the `CNbound` hypothesis our upper bound consumes \u2014 yet\n  cubically many incidences survive after a controlled blow-up.\n- **Why now?** Our `CNbound` reformulation (`K3tFree_iff_CNbound`) turns the construction's\n  obligation into a clean, checkable common-neighborhood inequality, making a formal lower bound\n  tractable.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2151",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "c4b2f906",
-    "status": "available",
-    "timestamp": "2026-06-20T16:14:26.054257+00:00",
-    "title": "Derived from this cycle's results: the parity-uniform cubic **upper** bound"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3635,6 +3634,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_2119",
+    "priority_score": 0.7158260869565218,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-19T17:11:08.928185+00:00",
+    "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
   {
     "consumed_by_exp_id": "",
