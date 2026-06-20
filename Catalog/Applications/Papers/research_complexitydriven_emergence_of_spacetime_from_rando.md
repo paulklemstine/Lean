@@ -1,338 +1,457 @@
-# Tropical Eigenline Collapse and Golden-Ratio Encoding Thresholds: Two Exact Models for Complexity-Driven Emergent Geometry
+# Holographic Coding Geometry: A Finite, Formally Verified Bridge Between Quantum Information and Emergent Spacetime
 
 **Author:** Aristotle
 **Date:** 2026-06-20
-**Domain:** Tropical (min-plus) algebra; emergent geometry from tensor networks
+**Domain:** Machine Learning / Quantum Information / Emergent Geometry
+
+---
 
 ## Abstract
 
-We present two self-contained, fully formalized models that isolate distinct
-facets of the conjecture that classical spacetime geometry emerges from quantum
-information complexity in random tensor networks. The first model concerns the
-*tropical discrete logarithm problem* (TDLP): the proposal to hide a secret
-iteration count $k$ inside repeated application of a min-plus linear map. We show
-that this construction is insecure along eigenlines. Concretely, for any
-scalar-equivariant tropical map $F$ and any tropical eigenvector $v$ with
-eigenvalue $\lambda$, the $k$-fold iterate collapses to a single scalar shift
-$F^{[k]}(v) = k\lambda + v$, so that for eigenvalue $\lambda = 1$ the exponent is
-recovered coordinatewise by subtraction. The $1\times1$ case is a complete,
-elementary instance. The second model studies the Fibonacci anyon chain as a
-prototype of a sub-qubit, geometrically encodable quantum system. We prove that
-its fusion-path Hilbert-space dimension equals $F_{n+2}$, satisfies a strict area
-law $\mathrm{fc}(n) < 2^n$ for $n \ge 2$, is closed under greatest common divisor
-(a commensurability law inherited from $\gcd(F_a,F_b)=F_{\gcd(a,b)}$), and is
-encodable in a random tensor network of golden-ratio bond dimension precisely
-when its length is below the sharp critical value $N_{\text{critical}} = 7$,
-where the linearly growing critical bond dimension $D_c(n) = 1 + n/10$ first
-exceeds $\varphi$. All statements are theorems verified in a proof assistant; the
-present paper gives full statements and proof sketches.
+We develop a finite, fully rigorous algebraic model of the "spacetime as a quantum
+error-correcting code" paradigm and of the emergence of geometry from random tensor
+networks. The model assigns to each region $X$ of a finite boundary an entropy
+$S(X)$, an effective area $\mathrm{area}(X)$, and a distance proxy, subject to
+normalization, nonnegativity, entropy submodularity (strong subadditivity), the
+Ryu–Takayanagi relation $S(X)=\mathrm{area}(X)/4$, and a Singleton-type bound
+$S(X)\le|X|$. Within this model we define the **syndrome defect**
+$\mathrm{defect}(X,Y)=S(X)+S(Y)-S(X\cap Y)-S(X\cup Y)$ as a discrete curvature
+functional and prove it is nonnegative. Our central result is a **cross-domain
+equivalence**: entropy submodularity holds universally if and only if area
+submodularity does, with the Ryu–Takayanagi relation as the explicit translation;
+quantitatively the syndrome defect equals one quarter of the area defect. We
+recast the Singleton bound as a lower bound on logical content, prove that bulk
+reconstruction is monotone under enlargement of the boundary region, and—in a
+companion tropical (min-plus) model—prove that entanglement-wedge membership is
+stable under metric perturbation and that boundary observations determine the bulk
+on the wedge. Finally we model the random-tensor-network encoding threshold via a
+strictly monotone critical bond dimension. All results are theorems verified in the
+Lean 4 proof assistant; here we present their statements with mathematical proof
+sketches. The work provides a self-contained, falsifiable, and computationally
+grounded skeleton connecting quantum information complexity to the emergence of
+classical geometry.
+
+---
 
 ## 1. Introduction
 
-The holographic program in quantum gravity posits that the geometry of a spatial
-region is an emergent, coarse-grained description of the entanglement structure
-of an underlying quantum state. Random tensor networks make this concrete: a
-network of randomly chosen tensors, glued along internal "bonds" of dimension
-$D$, defines a quantum error-correcting code whose entanglement pattern induces a
-bulk geometry. The governing conjecture in this cycle is that there is a sharp
-**critical bond dimension** $D_c(N)$ such that above $D_c$ the emergent geometry
-approximates a smooth Lorentzian manifold with bounded curvature, while below it
-the geometry is fractal and non-geometric.
+The holographic principle asserts that the physics of a region of spacetime (the
+*bulk*) is encoded on its lower-dimensional *boundary*. Its sharpest modern
+incarnations—the AdS/CFT correspondence, tensor-network models of holography, and
+the "spacetime is a quantum error-correcting code" program—suggest that smooth
+geometry is not fundamental but *emergent* from the entanglement structure of an
+underlying quantum system. Two pillars recur across all these formulations:
 
-Proving the full conjecture is far beyond current reach. Our contribution is to
-extract two *exact, gap-free* sub-models that each capture an essential
-qualitative feature — (i) the collapse of computational complexity along the
-"flat" directions of a tropical (min-plus) dynamical system, and (ii) the
-existence of a sharp encoding threshold for a concrete sub-qubit chain — and to
-prove them completely. Min-plus algebra is the natural arithmetic of the
-coarse-grained "skeleton" geometry of a contracted tensor network (shortest-path
-/ optimization structure), which is why both models live in the tropical world.
+1. The **Ryu–Takayanagi (RT) relation**, $S(X) = \mathrm{area}(\gamma_X)/4G$,
+   equating the entropy of a boundary region $X$ with the area of a minimal bulk
+   surface.
+2. **Strong subadditivity (SSA)** of entropy, the deepest inequality of quantum
+   information, which in geometric translation becomes statements about how bulk
+   areas combine.
 
-Throughout we work over the natural numbers $\mathbb{N}$ as the carrier of the
-min-plus semiring, deliberately omitting the $+\infty$ element. Tropical scalar
-multiplication by $c$ is ordinary addition $x \mapsto c + x$; tropical matrix
-iteration is path concatenation under the $(\min,+)$ rule.
+Our goal is to isolate the *finite combinatorial core* of these statements and
+prove them with complete rigor, so that the slogans "geometry is information" and
+"spacetime is a code" become honest theorems rather than physical intuitions. We
+work over a finite boundary type, replace continuous areas by abstract nonnegative
+functionals satisfying the RT relation, and study the resulting object purely
+algebraically. The payoff is a small but airtight dictionary in which a curvature
+functional, a coding bound, and a reconstruction theorem all follow from a handful
+of axioms.
 
-## 2. The tropical eigenline collapse
+We complement the entropy/area model with two further pieces. First, a **tropical
+(min-plus) model of entanglement-wedge reconstruction**, in which bulk points are
+assigned to boundary regions by nearest-distance and boundary "observations" are
+min-plus convolutions; here we prove stability under perturbation and a
+reconstruction theorem. Second, a minimal model of the **random-tensor-network
+encoding threshold**, capturing the conjectured sharp transition into smooth
+geometry as a strictly increasing critical bond dimension.
 
-### 2.1 The one-dimensional case
+All statements below are theorems formally verified in Lean 4 with Mathlib. We
+present the mathematics and proof sketches; the formal proofs are the ground truth.
 
-**Definition 1 (one-by-one tropical action).** For $\lambda \in \mathbb{N}$, the
-action of the $1\times1$ tropical matrix with entry $\lambda$ on a scalar
-$x \in \mathbb{N}$ is min-plus multiplication, i.e. ordinary addition:
+---
+
+## 2. The Holographic Code Profile
+
+### 2.1 Definition
+
+**Definition 2.1 (Holographic code profile).**
+Let $\alpha$ be a type with decidable equality, modeling the finite boundary sites.
+A *holographic code profile* on $\alpha$ consists of three functionals on finite
+regions $X \in \mathrm{Finset}(\alpha)$,
+$$ S,\ \mathrm{area},\ \mathrm{dist} : \mathrm{Finset}(\alpha) \to \mathbb{R}, $$
+subject to the axioms:
+
+- **Normalization:** $S(\varnothing) = 0$ and $\mathrm{area}(\varnothing) = 0$.
+- **Nonnegativity:** $S(X) \ge 0$, $\mathrm{area}(X) \ge 0$, $\mathrm{dist}(X) \ge 0$ for all $X$.
+- **Submodularity (strong subadditivity):** for all $X, Y$,
+  $$ S(X) + S(Y) \ \ge\ S(X \cap Y) + S(X \cup Y). $$
+- **Ryu–Takayanagi relation:** for all $X$, $\ S(X) = \mathrm{area}(X)/4$.
+- **Singleton-like bound:** for all $X$, $\ S(X) \le |X|$.
+
+This structure captures the finite combinatorial content of the holographic
+dictionary: the entropy functional is constrained exactly as a quantum entropy
+must be (SSA), and it is rigidly tied to a geometric area functional via RT.
+
+### 2.2 The syndrome defect as discrete curvature
+
+**Definition 2.2 (Syndrome defect).**
+For a profile $H$ and regions $X, Y$, define
+$$ \mathrm{defect}(X, Y) \ :=\ S(X) + S(Y) - S(X \cap Y) - S(X \cup Y). $$
+
+The defect measures the failure of exact additivity of entropy across the pair.
+Physically it is a discrete curvature: zero defect signals entropic flatness
+(modularity) and hence flat bulk geometry, while positive defect signals a
+curvature-like interaction between the regions.
+
+---
+
+## 3. Curvature is Nonnegative
+
+**Theorem 3.1 (`syndromeDefect_nonneg`).**
+For every holographic code profile $H$ and all regions $X, Y$,
+$$ 0 \ \le\ \mathrm{defect}(X, Y). $$
+
+*Proof sketch.* Unfold the definition; the claim $0 \le S(X) + S(Y) - S(X\cap Y) -
+S(X \cup Y)$ is exactly the submodularity axiom rearranged. $\qquad\blacksquare$
+
+This is the foundational rigidity statement: in this discrete model curvature
+cannot be negative, and it is forced by strong subadditivity alone.
+
+**Theorem 3.2 (`strict_submod_of_pos_syndrome`).**
+If $0 < \mathrm{defect}(X, Y)$ then
+$$ S(X \cap Y) + S(X \cup Y) \ <\ S(X) + S(Y). $$
+
+*Proof sketch.* Immediate rearrangement of the strict inequality. $\qquad\blacksquare$
+
+The defect also satisfies the structural identities one expects of a curvature
+pairing.
+
+**Proposition 3.3 (Structural properties).** For all $X, Y$:
+- `syndromeDefect_self`: $\mathrm{defect}(X, X) = 0$ (using $X \cap X = X \cup X = X$);
+- `syndromeDefect_symm`: $\mathrm{defect}(X, Y) = \mathrm{defect}(Y, X)$ (by commutativity of $\cap, \cup$);
+- `syndromeDefect_empty_left` / `syndromeDefect_empty_right`: $\mathrm{defect}(\varnothing, Y) = \mathrm{defect}(X, \varnothing) = 0$ (using $S(\varnothing) = 0$).
+
+**Proposition 3.4 (Special pairs).**
+- `syndromeDefect_disjoint`: if $X \cap Y = \varnothing$ then $\mathrm{defect}(X, Y) = S(X) + S(Y) - S(X \cup Y)$.
+- `syndromeDefect_subset`: if $X \subseteq Y$ then $\mathrm{defect}(X, Y) = 0$ (since then $X \cap Y = X$, $X \cup Y = Y$).
+
+**Proposition 3.5 (Cumulative nonnegativity).**
+For any list (`syndromeDefect_list_sum_nonneg`) or finite set
+(`syndromeDefect_finset_sum_nonneg`) of region pairs, the sum of their syndrome
+defects is nonnegative.
+
+*Proof sketch.* Induct on the list / apply `Finset.sum_nonneg`, using Theorem 3.1
+at each term. $\qquad\blacksquare$
+
+---
+
+## 4. The Information–Geometry Bridge
+
+We now translate entropy statements into area statements using RT, and prove the
+two are equivalent.
+
+**Definition 4.1 (Area defect).**
+$$ \mathrm{areaDefect}(X, Y) := \mathrm{area}(X) + \mathrm{area}(Y) - \mathrm{area}(X \cap Y) - \mathrm{area}(X \cup Y). $$
+
+**Theorem 4.2 (`area_submod_of_rt`).**
+For all $X, Y$,
+$$ \mathrm{area}(X) + \mathrm{area}(Y) \ \ge\ \mathrm{area}(X \cap Y) + \mathrm{area}(X \cup Y). $$
+
+*Proof sketch.* Apply submodularity of $S$, then substitute $S = \mathrm{area}/4$ via
+RT; the factor of $4$ cancels uniformly. $\qquad\blacksquare$
+
+**Theorem 4.3 (`syndromeDefect_eq_area_defect_div_four`).**
+$$ \mathrm{defect}(X, Y) \ =\ \frac{\mathrm{areaDefect}(X, Y)}{4}. $$
+
+*Proof sketch.* Expand both defects, substitute RT termwise, and simplify by ring
+arithmetic. Equivalently (`areaDefect_eq_four_syndromeDefect`),
+$\mathrm{areaDefect}(X,Y) = 4\,\mathrm{defect}(X,Y)$. $\qquad\blacksquare$
+
+**Corollary 4.4 (`areaDefect_nonneg`, `areaDefect_zero_iff_syndromeDefect_zero`).**
+The area defect is nonnegative, and vanishes if and only if the syndrome defect
+vanishes. Geometric curvature is nonnegative and coincides (up to the factor $4$)
+with information curvature.
+
+**Theorem 4.5 (Cross-domain equivalence, `rt_submodularity_iff_area_submodularity`).**
+For a profile $H$,
 $$
-\mathrm{oneByOneAction}(\lambda)(x) = \lambda + x.
-$$
-
-**Theorem 1 (iterated one-by-one action).** For all
-$\lambda, x, k \in \mathbb{N}$,
-$$
-(\,y \mapsto \lambda + y\,)^{[k]}(x) = k\lambda + x.
-$$
-
-*Proof sketch.* Induction on $k$. The base case $k=0$ is $x = 0 + x$. For the
-inductive step, $(\lambda+\cdot)^{[k+1]}(x) = \lambda + (\lambda+\cdot)^{[k]}(x)
-= \lambda + (k\lambda + x) = (k+1)\lambda + x$ using
-$\mathrm{Nat.succ\_mul}$ and commutativity. $\square$
-
-**Theorem 2 (one-by-one recovery).** For all $x, k \in \mathbb{N}$,
-$$
-(\,y \mapsto 1 + y\,)^{[k]}(x) - x = k.
-$$
-
-*Proof sketch.* Specialize Theorem 1 at $\lambda = 1$ to get
-$(1+\cdot)^{[k]}(x) = k\cdot 1 + x = k + x$, then subtract $x$. $\square$
-
-This already refutes the security of the TDLP in its simplest nontrivial form:
-the secret exponent $k$ is read off from a single input/output pair by one
-subtraction. The remainder of this section shows the phenomenon is structural,
-not an artifact of dimension one.
-
-### 2.2 The abstract eigenline attack
-
-**Definition 2 (tropical vectors and scalar addition).** For an index type
-$\iota$, a *tropical vector* is a function $v \colon \iota \to \mathbb{N}$,
-written $\mathrm{Vec}\,\iota$. Tropical scalar addition adds the scalar $c$ to
-every coordinate:
-$$
-(c +_{\mathrm{trop}} v)(i) = c + v(i).
-$$
-
-**Definition 3 (scalar-equivariance).** A map
-$F \colon \mathrm{Vec}\,\iota \to \mathrm{Vec}\,\iota$ is
-*scalar-equivariant* if it commutes with tropical scalar addition:
-$$
-F(c +_{\mathrm{trop}} v) = c +_{\mathrm{trop}} F(v)
-\qquad \text{for all } c \in \mathbb{N},\ v \in \mathrm{Vec}\,\iota.
-$$
-
-**Definition 4 (tropical eigenvector).** A vector $v$ is a *tropical
-eigenvector* of $F$ with *eigenvalue* $\lambda \in \mathbb{N}$ if
-$$
-F(v) = \lambda +_{\mathrm{trop}} v.
-$$
-
-**Lemma 1 (additivity of scalar addition).** For all $a, b \in \mathbb{N}$ and
-$v \in \mathrm{Vec}\,\iota$,
-$$
-a +_{\mathrm{trop}} (b +_{\mathrm{trop}} v) = (a+b) +_{\mathrm{trop}} v.
-$$
-
-*Proof sketch.* Pointwise, $a + (b + v(i)) = (a+b) + v(i)$ by associativity of
-addition. $\square$
-
-**Theorem 3 (eigenline attack).** Let
-$F \colon \mathrm{Vec}\,\iota \to \mathrm{Vec}\,\iota$ be scalar-equivariant and
-let $v$ be a tropical eigenvector with eigenvalue $\lambda$. Then for all
-$k \in \mathbb{N}$,
-$$
-F^{[k]}(v) = (k\lambda) +_{\mathrm{trop}} v.
-$$
-
-*Proof sketch.* Induction on $k$. Base case: $F^{[0]}(v) = v = 0 +_{\mathrm{trop}} v$.
-Inductive step: using $F^{[k+1]}(v) = F(F^{[k]}(v))$, the inductive hypothesis,
-scalar-equivariance (Definition 3), the eigenvector equation (Definition 4), and
-Lemma 1,
-$$
-F^{[k+1]}(v) = F((k\lambda) +_{\mathrm{trop}} v)
-= (k\lambda) +_{\mathrm{trop}} F(v)
-= (k\lambda) +_{\mathrm{trop}} (\lambda +_{\mathrm{trop}} v)
-= ((k+1)\lambda) +_{\mathrm{trop}} v,
-$$
-using $\mathrm{Nat.succ\_mul}$ and commutativity for the last step. Crucially,
-$F$ is never inspected beyond these two structural properties. $\square$
-
-**Theorem 4 (coordinate recovery on an eigenline).** If $F$ is
-scalar-equivariant and $v$ is a tropical eigenvector with eigenvalue $1$, then
-for every coordinate $i \in \iota$,
-$$
-F^{[k]}(v)(i) - v(i) = k.
-$$
-
-*Proof sketch.* By Theorem 3 with $\lambda = 1$,
-$F^{[k]}(v)(i) = (k\cdot 1) + v(i) = k + v(i)$; subtract $v(i)$. $\square$
-
-**Interpretation.** Theorems 3–4 show that any cryptographic hardness one might
-hope to extract from iterating a tropical-linear map evaporates along its
-eigenlines. In the emergent-geometry analogy, eigenlines are the *flat*
-directions of the tropical (min-plus) dynamics; the theorems say complexity does
-not accumulate there, so these directions are simultaneously the most
-"geometric" and the least secrecy-preserving. This is a precise, provable
-instance of the slogan that flat emergent geometry coincides with transparency
-of information.
-
-## 3. The Fibonacci anyon chain as a sub-qubit encodable system
-
-### 3.1 Fusion dimension
-
-**Definition 5 (fusion-path count).** The number of admissible fusion paths of a
-length-$n$ Fibonacci anyon chain — equivalently, the number of binary strings of
-length $n$ with no two consecutive $1$'s — is
-$$
-\mathrm{fc}(0) = 1,\qquad \mathrm{fc}(1) = 2,\qquad
-\mathrm{fc}(n+2) = \mathrm{fc}(n+1) + \mathrm{fc}(n).
-$$
-
-**Theorem 5 (Fibonacci identity).** For all $n \in \mathbb{N}$,
-$$
-\mathrm{fc}(n) = F_{n+2},
-$$
-where $F_m$ denotes the $m$-th Fibonacci number ($F_1 = F_2 = 1$).
-
-*Proof sketch.* Strong induction. The seeds match: $\mathrm{fc}(0) = 1 = F_2$,
-$\mathrm{fc}(1) = 2 = F_3$. For $n+2$, the defining recurrence and the inductive
-hypotheses give
-$\mathrm{fc}(n+2) = \mathrm{fc}(n+1) + \mathrm{fc}(n) = F_{n+3} + F_{n+2} =
-F_{n+4}$, matching the Fibonacci recurrence $\mathrm{Nat.fib\_add\_two}$.
-$\square$
-
-### 3.2 Sub-qubit area law
-
-**Theorem 6 (strict area law).** For all $n \in \mathbb{N}$,
-$$
-\mathrm{fc}(n) \le 2^n,
-$$
-and for $n \ge 2$ the inequality is strict:
-$$
-\mathrm{fc}(n) < 2^n.
+\Big(\forall X, Y:\ S(X) + S(Y) \ge S(X\cap Y) + S(X\cup Y)\Big)
+\iff
+\Big(\forall X, Y:\ \mathrm{area}(X) + \mathrm{area}(Y) \ge \mathrm{area}(X\cap Y) + \mathrm{area}(X\cup Y)\Big).
 $$
 
-*Proof sketch.* The non-strict bound is a two-step induction: with
-$2^{n+2} = 2\cdot 2^{n+1} = 2^{n+1} + 2^{n+1} \ge 2^{n+1} + 2^n$ and the
-recurrence $\mathrm{fc}(n+2) = \mathrm{fc}(n+1) + \mathrm{fc}(n)$, the bound
-propagates. For strictness with $n \ge 2$, induct from the base case $n=2$
-($\mathrm{fc}(2) = 3 < 4$); the inductive step combines the strict bound at level
-$n+2$ with the non-strict bound at level $n+1$ and the gap $2^{n+1} > 2^n$,
-yielding $\mathrm{fc}(n+3) = \mathrm{fc}(n+2) + \mathrm{fc}(n+1) < 2^{n+2} +
-2^{n+2} = 2^{n+3}$ after the appropriate splitting. $\square$
+*Proof sketch.* Both directions substitute the RT relation $S = \mathrm{area}/4$ into
+the hypothesis and clear the constant factor. The RT relation is precisely the
+isomorphism of ordered structures that makes the two inequalities interchangeable.
+$\qquad\blacksquare$
 
-The strict area law certifies the chain as a genuine *sub-qubit* system: it
-occupies strictly less Hilbert-space dimension than $n$ free qubits, leaving the
-information gap $2^n - F_{n+2}$. Area laws of this form are the hallmark of states
-admitting a clean geometric (tensor-network) description.
+This is the paper's centerpiece: the deepest inequality of quantum information
+(SSA) and a purely geometric inequality (area submodularity) are logically
+equivalent, with RT as the explicit dictionary. It formalizes the intuition that
+geometry is the visible face of information constraints.
 
-### 3.3 Commensurability
+**Consequences for scaling.**
+- `area_eq_four_S`: $\mathrm{area}(X) = 4\,S(X)$.
+- `area_le_four_card`: $\mathrm{area}(X) \le 4\,|X|$, a Bekenstein–Hawking-type bound — area is controlled by the microscopic site count.
+- `area_submodular`: $\mathrm{area}(X\cap Y) + \mathrm{area}(X\cup Y) \le \mathrm{area}(X) + \mathrm{area}(Y)$.
 
-**Theorem 7 (commensurability of Fibonacci chains).** For all
-$m, n \in \mathbb{N}$ with $\gcd(m+2, n+2) \ge 2$,
-$$
-\gcd\big(\mathrm{fc}(m),\, \mathrm{fc}(n)\big)
-= \mathrm{fc}\big(\gcd(m+2, n+2) - 2\big).
-$$
+*Proof sketches.* `area_eq_four_S` is RT cleared of denominators; `area_le_four_card`
+combines RT with the singleton bound $S(X)\le|X|$; `area_submodular` restates
+Theorem 4.2. $\qquad\blacksquare$
 
-*Proof sketch.* Rewrite both fusion counts via Theorem 5 to get
-$\gcd(F_{m+2}, F_{n+2})$. The Fibonacci gcd identity $\mathrm{Nat.fib\_gcd}$,
-$\gcd(F_a, F_b) = F_{\gcd(a,b)}$, turns this into $F_{\gcd(m+2,n+2)}$. Writing
-$g = \gcd(m+2,n+2)$ and using $g \ge 2$, we have $F_g = F_{(g-2)+2} =
-\mathrm{fc}(g-2)$ after $\mathrm{Nat.sub\_add\_cancel}$. $\square$
+---
 
-This expresses that the family of anyon-chain dimensions is closed under gcd: the
-common divisor structure of two chains is again realized by a (shorter) chain, a
-number-theoretic signature of self-similarity in the emergent geometry.
+## 5. Coding Bounds and Reconstruction
 
-### 3.4 The golden-ratio encoding threshold
+### 5.1 Regional code bounds
 
-**Definition 6 (critical bond dimension and encodability).** The critical bond
-dimension required to encode a length-$n$ chain in a random tensor network grows
-linearly with the length:
-$$
-D_c(n) = 1 + \frac{n}{10} \in \mathbb{R}.
-$$
-It satisfies $D_c(0) = 1$ and $D_c(n+1) = D_c(n) + \tfrac{1}{10}$. The bond
-dimension carried by a single Fibonacci anyon is the golden ratio
-$\varphi = \tfrac{1+\sqrt5}{2}$, and a chain is *encodable* when
-$$
-D_c(n) < \varphi.
-$$
+**Definition 5.1 (Regional code bound).**
+A *regional code bound* on $\alpha$ assigns to each region $X$ natural numbers
+$N(X)$ (physical qubits), $K(X)$ (logical qubits), $D(X)$ (code distance), subject
+to the **Singleton bound**
+$$ N(X) - K(X) \ \le\ 2\,(D(X) - 1). $$
 
-**Theorem 8 (sharp critical length).** The critical bond dimension $D_c$ is
-strictly monotone increasing, and a length-$n$ chain is encodable if and only if
-$n < N_{\text{critical}}$ with $N_{\text{critical}} = 7$.
+**Theorem 5.2 (`entropy_lower_bound_of_singleton`).**
+If $D(X) \ge 1$ then, in integer arithmetic,
+$$ K(X) \ \ge\ N(X) - 2\,(D(X) - 1). $$
 
-*Proof sketch.* Strict monotonicity ($\mathrm{critBond\_strictMono}$) follows
-since $a < b$ implies $1 + a/10 < 1 + b/10$. For the threshold, encodability
-$1 + n/10 < \varphi \approx 1.618$ is equivalent to $n < 10(\varphi - 1) =
-5\sqrt5 - 5 \approx 6.18$, i.e. $n \le 6$; the first failing length is $n = 7$,
-where $D_c(7) = 1.7 > \varphi$. Concretely $D_c(6) = 1.6 < \varphi < 1.7 =
-D_c(7)$. $\square$
+*Proof sketch.* The natural-number Singleton bound, lifted to $\mathbb{Z}$ to avoid
+truncated subtraction, is exactly this rearrangement (discharged by `omega`).
+$\qquad\blacksquare$
 
-This is the exact, finite shadow of the conjectured phase transition: a single
-sharp critical parameter $N_{\text{critical}}$ separating the encodable
-("geometric") regime $n \le 6$ from the non-encodable regime $n \ge 7$, with the
-linearly increasing order parameter $D_c(n)$ crossing the golden-ratio threshold
-exactly once.
+High code distance forces high logical content; in the holographic dictionary,
+where area tracks physical qubits and entropy tracks logical qubits, this links
+boundary area to protected bulk information.
 
-## 4. Algorithms
+### 5.2 Code–geometry correspondence
 
-We summarize the computational content of the results.
+**Definition 5.3 (Code–geometry correspondence).**
+A correspondence couples a holographic code profile $H$ to a regional code bound
+$C$ with $S(X) = K(X)$ and $\mathrm{area}(X) = 4\,K(X)$.
 
-**Algorithm A (eigenline key recovery).** Given black-box access to a
-scalar-equivariant tropical map $F$, a known eigenvector $v$ with eigenvalue $1$,
-and the output $w = F^{[k]}(v)$ for unknown $k$, return $k = w(i) - v(i)$ for any
-coordinate $i$. Correctness is Theorem 4; cost is one subtraction (constant
-time), independent of $k$ and of the dimension of $\iota$.
+**Theorem 5.4 (`correspondence_rt_consistent`).**
+In any such correspondence the RT relation $S(X) = \mathrm{area}(X)/4$ holds
+automatically. *Proof sketch.* It is an axiom of the profile $H$. $\qquad\blacksquare$
 
-**Algorithm B (fusion dimension and area gap).** Given $n$, compute
-$\mathrm{fc}(n)$ by the two-term recurrence in $O(n)$ additions and report the
-area-law gap $2^n - \mathrm{fc}(n) = 2^n - F_{n+2}$, certified non-negative by
-Theorem 6 (positive for $n \ge 2$).
+### 5.3 Reconstruction
 
-**Algorithm C (encodability threshold scan).** Given a maximum length $N$, return
-the largest encodable length by scanning $D_c(n) = 1 + n/10$ against $\varphi$;
-by Theorem 8 the answer is $\min(N, 6)$ and the global critical length is
-$N_{\text{critical}} = 7$.
+**Definition 5.5 (Reconstructable region).**
+Given a distance function $D$, a region $U$ is *reconstructable* from $X$ if
+$U \subseteq X$ and $|U| < D(U)$.
 
-## 5. Applications and discussion
+**Theorem 5.6 (Reconstruction monotonicity, `reconstructable_monotone`).**
+If $U$ is reconstructable from $X$ and $X \subseteq Y$, then $U$ is reconstructable
+from $Y$.
 
-The two models are deliberately complementary. The eigenline collapse is a
-*negative* result about complexity: it pinpoints directions in a tropical
-dynamical system where iteration carries no information-hiding power, which is
-exactly where the coarse geometry is flat. The anyon-chain results are
-*positive* and *structural*: an exact dimension formula, a strict area law, a gcd
-closure property, and a sharp encoding threshold — all the ingredients one wants
-in a clean prototype of a quantum system whose geometry can (or cannot) be
-realized by a random tensor network of a given bond dimension.
+*Proof sketch.* Transitivity of $\subseteq$ gives $U \subseteq Y$; the distance
+condition $|U| < D(U)$ is unchanged. $\qquad\blacksquare$
 
-For quantum-information practice, Algorithm A is a cautionary template: tropical
-analogues of discrete-log cryptosystems should avoid scalar-equivariant maps with
-known eigenvectors, since the secret iteration count leaks immediately. For
-holographic toy models, Theorems 5–8 give a concrete, falsifiable miniature of
-the bond-dimension phase transition, with the golden ratio entering not as a
-fitting constant but as the intrinsic quantum dimension of the Fibonacci anyon.
+Enlarging the boundary region never destroys recoverability — bulk knowledge
+accumulates monotonically. Two companion facts: reconstruction is preserved when
+the distance function increases (`reconstructable_of_le_dist`), and the empty
+region is always reconstructable when $D(\varnothing) > 0$ (`reconstructable_empty`).
 
-## 6. Future directions
+### 5.4 A falsifiable saturation conjecture
 
-The following directions were identified in this cycle and are stated so they can
-be attacked formally.
+**Definition 5.7 (Laminar family).** A family $L$ of regions is *laminar* if any two
+members are disjoint or nested.
 
-- **Finite-depth stabilization of the emergent metric.** For a weighted digraph
-  on $n$ sites with non-negative weights and zero self-loops, the tropical
-  contraction sequence $\mathrm{tropPow}$ is eventually constant, stabilizing by
-  step $n-1$ at the all-pairs shortest-path matrix. The antitone and bounded-below
-  facts already proved reduce this to a Bellman–Ford-style finite-step argument.
+**Conjecture 5.8 (Saturation modularity, `SaturationModularityConjecture`).**
+If $H$ saturates the singleton bound, $S(X) = |X|$, on every member of a laminar
+family $L$, then $\mathrm{defect}(X, Y) = 0$ for all $X, Y \in L$.
 
-- **The threshold as the unique zero of a strictly monotone order parameter.**
-  With $\Delta(D) = \mathrm{ricciProxy}(C,N,D) - \kappa$, show $\Delta$ is
-  strictly decreasing in $D > 0$ with a unique zero at $D = D_c(N)$, upgrading the
-  boundary equality to a genuine single-crossing transition.
+Two cases are proved unconditionally: nested pairs
+(`saturation_conjecture_nested`, from `syndromeDefect_subset`) and disjoint
+saturated pairs whose union is also saturated
+(`saturation_conjecture_disjoint_saturated`, by direct computation using
+$|X \cup Y| = |X| + |Y|$ for disjoint $X, Y$). The conjecture is computationally
+testable by enumerating small laminar families and random axiom-satisfying
+profiles.
 
-- **Curvature bound forces a contraction-diameter bound.** In the supercritical
-  phase the emergent contraction diameter is bounded by a universal $\kappa$-controlled
-  multiple of the raw weight diameter, with no uniform bound subcritically.
+---
 
-- **Two-sided scaling window for integer bond dimension.** For integer bond
-  dimension the smooth phase begins at $\lceil D_c(N)\rceil$ and the relative
-  width $(\lceil D_c\rceil - D_c)/D_c \to 0$ as $N \to \infty$, so discrete and
-  continuous thresholds coincide asymptotically.
+## 6. Tropical Entanglement-Wedge Reconstruction
 
-## 7. Conclusion
+We now turn to a complementary min-plus (tropical) model that captures the
+*geometric* side of bulk reconstruction directly.
 
-We have isolated and fully proved two exact tropical models bearing on the
-emergence of geometry from complexity: an eigenline collapse showing that
-iterated min-plus maps leak their iteration count along flat directions
-($F^{[k]}(v) = k\lambda + v$, with coordinatewise recovery when $\lambda = 1$),
-and a Fibonacci anyon chain exhibiting a Fibonacci fusion dimension
-($\mathrm{fc}(n) = F_{n+2}$), a strict sub-qubit area law, a gcd commensurability
-law, and a sharp golden-ratio encoding threshold at $N_{\text{critical}} = 7$.
-Each is a small but gap-free stone on the path toward deriving spacetime geometry
-from quantum-information complexity.
+### 6.1 Definitions
+
+Let $V$ be a vertex type with a distance $d : V \times V \to \mathbb{R}$.
+
+**Definition 6.1 (Distance to a region).** For a nonempty finite $s$,
+$$ \mathrm{distToFinset}(d, s, v) := \min_{b \in s} d(v, b). $$
+
+**Definition 6.2 (Entanglement wedge).** Given finite sets $\mathrm{bulk}$,
+$\mathrm{boundary}$ and a boundary subset $B$, the wedge of $B$ is
+$$ W(B) := \{ v \in \mathrm{bulk} : \mathrm{distToFinset}(d, B, v) < \mathrm{distToFinset}(d, \mathrm{boundary}\setminus B, v) \}, $$
+the bulk points strictly closer to $B$ than to its boundary complement.
+
+**Definition 6.3 (Boundary observation).** For a bulk state $\varphi : V \to \mathbb{R}$
+and boundary point $b$, the min-plus convolution
+$$ \mathrm{Obs}_B(\varphi)(b) := \min_{v \in \mathrm{bulk}} \big(\varphi(v) + d(v, b)\big). $$
+
+### 6.2 Membership and stability
+
+**Theorem 6.4 (`mem_entanglementWedge_iff`).** For $v \in \mathrm{bulk}$ with $B$ and
+$\mathrm{boundary}\setminus B$ nonempty, $v \in W(B)$ iff
+$\mathrm{distToFinset}(d, B, v) < \mathrm{distToFinset}(d, \mathrm{boundary}\setminus B, v)$.
+
+*Proof sketch.* Unfold the filter defining $W(B)$. $\qquad\blacksquare$
+
+**Lemma 6.5 (Perturbation bound, `distToFinset_perturb_bound`).** If
+$|d(v,b) - d'(v,b)| < \varepsilon$ for every $b \in s$, then
+$|\mathrm{distToFinset}(d, s, v) - \mathrm{distToFinset}(d', s, v)| < \varepsilon$.
+
+*Proof sketch.* The minimum is realized at some witness for each metric; compare
+each minimum against the other's witness using the uniform bound. $\qquad\blacksquare$
+
+**Theorem 6.6 (Wedge stability, `wedge_membership_stable_under_uniform_perturbation`).**
+Suppose $v \in W(B)$ under $d$ with margin
+$\delta = \mathrm{distToFinset}(d, \mathrm{boundary}\setminus B, v) - \mathrm{distToFinset}(d, B, v)$,
+and a perturbation $d'$ satisfies $|d(v,b)-d'(v,b)| < \varepsilon$ for all relevant
+$b$ with $2\varepsilon < \delta$. Then $v \in W(B)$ under $d'$.
+
+*Proof sketch.* By Lemma 6.5 both distances move by less than $\varepsilon$; the
+strict gap $\delta > 2\varepsilon$ survives, so the wedge inequality persists.
+$\qquad\blacksquare$
+
+Geometry emerging from min-plus distances is robust: membership cannot flip under
+metric perturbations smaller than half the winning margin.
+
+### 6.3 Reconstruction from boundary observations
+
+**Lemma 6.7 (`boundaryObs_eq_of_unique_argmin`).** If $v$ is the strict unique
+minimizer of $w \mapsto \varphi(w) + d(w, b)$ over the bulk, then
+$\mathrm{Obs}_B(\varphi)(b) = \varphi(v) + d(v, b)$.
+
+**Theorem 6.8 (Surgery detectability, `wedge_surgery_detectable`).** If there exist a
+bulk vertex $v$ and a boundary point $b \in B$ at which $v$ is the unique argmin for
+both $\varphi$ and a modified state $\varphi'$, with $\varphi'(v) \ne \varphi(v)$,
+then $\mathrm{Obs}_B(\varphi)$ and $\mathrm{Obs}_B(\varphi')$ differ at some $b \in B$.
+
+*Proof sketch.* By Lemma 6.7 the observation at $b$ reads off $\varphi(v) + d(v,b)$
+exactly; changing $\varphi(v)$ changes it. $\qquad\blacksquare$
+
+**Theorem 6.9 (Wedge reconstruction, `wedge_reconstruction_from_boundary_profiles`).**
+Assume that every wedge point has, for each of $\varphi, \varphi'$, a boundary
+witness $b \in B$ at which it is the unique argmin. If
+$\mathrm{Obs}_B(\varphi)(b) = \mathrm{Obs}_B(\varphi')(b)$ for all $b \in B$, then
+$\varphi(v) = \varphi'(v)$ for all $v \in W(B)$.
+
+*Proof sketch.* Fix $v \in W(B)$ with witnesses $b, b'$. Evaluate the two
+observations at $b$ and $b'$: uniqueness turns the minima into equalities, while the
+general $\le$ bound applies to the cross terms. Combining the four (in)equalities
+with the hypothesis of equal observations forces $\varphi(v) = \varphi'(v)$.
+$\qquad\blacksquare$
+
+This is a finite, fully rigorous version of entanglement-wedge reconstruction:
+boundary data on $B$ determines the bulk state throughout $W(B)$.
+
+**Monotonicity (`distToFinset_mono`).** Distance to a subset is at least distance to a
+superset, so wedges shrink as boundary regions shrink; and $W(\varnothing) =
+\mathrm{bulk}$ vacuously (`entanglementWedge_empty_eq_bulk`), with $W(B) \subseteq
+\mathrm{bulk}$ always (`entanglementWedge_subset_bulk`).
+
+---
+
+## 7. The Random-Tensor-Network Encoding Threshold
+
+The motivating conjecture predicts a sharp transition into smooth geometry as the
+bond dimension of a random tensor network crosses a critical value $D_c(N)$. We
+model the threshold for faithfully encoding a length-$n$ chain.
+
+**Definition 7.1 (Critical bond dimension, `critBond`).**
+$$ D_c(n) := 1 + \frac{n}{10}. $$
+A chain of length $n$ is encodable by a network of bond dimension $D$ exactly when
+$D_c(n) < D$.
+
+**Theorem 7.2 (`critBond_strictMono`).** $D_c$ is strictly increasing.
+
+*Proof sketch.* For $a < b$, $(a:\mathbb{R}) < b$, hence $1 + a/10 < 1 + b/10$.
+$\qquad\blacksquare$
+
+Auxiliary facts: $D_c(0) = 1$ (`critBond_zero`) and $D_c(n+1) = D_c(n) + 1/10$
+(`critBond_succ`). The strict monotonicity is the minimal honest fingerprint of the
+conjectured phase transition: longer / more complex chains require strictly larger
+bond dimension, with no plateaus.
+
+---
+
+## 8. Algorithms
+
+The model yields directly executable procedures (see the accompanying `demo.py`):
+
+1. **Syndrome-defect curvature computation.** Given a profile (entropy on each
+   region), compute $\mathrm{defect}(X, Y)$ for all pairs and verify nonnegativity
+   — a finite check of Theorem 3.1.
+2. **RT bridge verification.** Confirm $\mathrm{defect}(X,Y) = \mathrm{areaDefect}(X,Y)/4$
+   and the equivalence of the two submodularity statements (Theorems 4.3, 4.5).
+3. **Entanglement-wedge construction.** Compute $W(B)$ from a distance matrix and
+   verify perturbation stability (Theorems 6.4, 6.6).
+4. **Boundary reconstruction.** Compute min-plus observations $\mathrm{Obs}_B$ and
+   verify that equal boundary profiles imply equal bulk states on the wedge
+   (Theorem 6.9).
+5. **Threshold scan.** Tabulate $D_c(n)$ and confirm strict monotonicity
+   (Theorem 7.2).
+
+---
+
+## 9. Applications
+
+- **Quantum gravity model selection.** The proven equivalence of SSA and area
+  submodularity gives a sharp consistency criterion: any candidate entropy–area
+  dictionary that violates one violates the other.
+- **Complexity-optimal codes.** The Singleton-based lower bound on logical content
+  and the monotone reconstruction theorem suggest design targets for codes whose
+  reconstructable regions grow predictably with boundary size.
+- **Curvature diagnostics.** The syndrome defect is a cheap, additive curvature
+  proxy computable from an entropy table alone, suitable for screening large
+  simulated tensor networks for emergent flatness vs. curvature.
+
+---
+
+## 10. Discussion and Future Work
+
+The contribution is a finite, formally verified skeleton in which the central
+holographic slogans are theorems. The factor of $4$ in RT is carried symbolically
+throughout, making the entropy/area dictionary exact rather than asymptotic. The
+tropical model shows that the geometric content of reconstruction survives in a
+purely combinatorial min-plus setting.
+
+Open directions, derived from the verified results:
+
+- **C1 (Tropical location of phase transitions).** The non-differentiability locus
+  of the multi-surface entropy $\inf_i \mathrm{area}_i$ should coincide with the
+  tropical-variety corner locus, with the strict concave defect at each transversal
+  corner given exactly by $\log D \cdot (\Delta\text{slope}) \cdot t / 2 + o(t)$.
+- **C2 (Bond-dimension gap law).** The critical bond dimension should satisfy
+  $D_c(N) = \lceil \exp(\mathrm{budget}(N)/\mathrm{area}) \rceil$ up to an additive
+  constant, with a nonempty fractal window exactly when
+  $\mathrm{budget}(N) > \mathrm{area}\cdot\log 2$.
+- **C3 (Lipschitz robustness ⟹ bounded coarse curvature).** A $\log D$-Lipschitz
+  min-cut entropy should yield a coarse-grained curvature proxy bounded by a
+  universal multiple of $\log D$.
+- **C4 (Concavity survives surface proliferation).** Strong subadditivity (concavity
+  of the multi-surface entropy $x \mapsto \log D \cdot \inf_i \mathrm{area}_i(x)$
+  with affine $\mathrm{area}_i$) should persist under arbitrary surface families.
+
+These conjectures are each falsifiable and motivated by the proved two-surface
+results, bringing the program incrementally closer to the ultimate aim: deriving
+the gravitational field equations from the structure of quantum information
+complexity.
+
+---
+
+## 11. Conclusion
+
+From a small set of axioms—normalization, nonnegativity, strong subadditivity, the
+Ryu–Takayanagi relation, and a Singleton bound—we derived, with complete rigor: a
+nonnegative discrete curvature (the syndrome defect); an exact and *equivalent*
+translation between a quantum-information inequality and a geometric one; a
+coding-theoretic bound linking area to protected information; a monotone, stable,
+wedge-refined reconstruction of bulk from boundary; and a strictly increasing
+threshold for the emergence of geometry. The construction does not claim that our
+universe is a code—but it demonstrates that, in a clean finite setting, the
+holographic dictionary is not metaphor but mathematics.

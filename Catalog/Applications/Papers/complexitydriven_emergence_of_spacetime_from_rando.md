@@ -1,45 +1,57 @@
-# Theorem Trace (internal anti-hallucination ledger)
+# Computational Evidence — Complexity-Driven Emergence of Spacetime from Random Tensor Networks
 
-This file lists every definition, lemma, and theorem appearing in the Phase A
-Lean output, with its mathematical statement and where it is referenced in
-`ARTICLE.md` and `RESEARCH_PAPER.md`. No result outside this list is claimed in
-the prose.
+We model the holographic entanglement entropy of a random tensor network by the
+Ryu–Takayanagi (min-cut) prescription: for a boundary region the entanglement
+entropy equals `log D` times the minimal cut ("area") separating the region from
+its complement, where `D` is the bond dimension. We test two phenomena:
 
-## File: Catalog/Tropical/TropicalTDLPEigenAttack.lean
+1. **RT phase transition (surface exchange).** As a region-size parameter `x`
+   grows, two candidate minimal surfaces with areas `a₁(x) = c₁ + s₁ x` and
+   `a₂(x) = c₂ + s₂ x` compete; the dominant (minimal) one switches at a sharp
+   point `x_c`. The entropy `S(x) = logD · min(a₁ x, a₂ x)` develops a *kink*
+   (non-differentiable corner) there. This is precisely a tropical (min-plus)
+   linear form, so the transition locus is a tropical hypersurface.
 
-| Lean name | Statement | Article | Paper |
-|---|---|---|---|
-| `oneByOneAction` (def) | `oneByOneAction lam = fun x => lam + x` | §"Collapse" | Def. 1 |
-| `oneByOne_tropical_iterate` (thm) | `(fun y => lam + y)^[k] x = k*lam + x` | §"Collapse" | Thm. 1 |
-| `tdlp_recover_oneByOne` (thm) | `(fun y => 1 + y)^[k] x - x = k` | §"Collapse" | Thm. 2 |
-| `Vec` (abbrev) | `Vec ι = ι → Nat` | — | Def. 2 |
-| `tropScalarAdd` (def) | `tropScalarAdd c v = fun i => c + v i` | §"Eigenlines" | Def. 2 |
-| `ScalarEquivariant` (def) | `∀ c v, F (c +• v) = c +• F v` | §"Eigenlines" | Def. 3 |
-| `IsTropicalEigen` (def) | `F v = lam +• v` | §"Eigenlines" | Def. 4 |
-| `tropScalarAdd_add` (thm) | `a +• (b +• v) = (a+b) +• v` | — | Lem. 1 |
-| `iterate_eigenline_attack` (thm) | `F^[k] v = (k*lam) +• v` | §"Eigenlines" | Thm. 3 |
-| `tdlp_recover_eigenline` (thm) | `F^[k] v i - v i = k` (when `lam=1`) | §"Eigenlines" | Thm. 4 |
+2. **Critical bond dimension `D_c(N)`.** The accessible entanglement capacity of
+   a cut of `area` bonds is `area · log D`. A smooth (d+1)-geometry needs an
+   entropy budget `β(N)`. The geometry is "smooth" iff `area · log D ≥ β`, which
+   is upward-closed in `D`; hence a sharp threshold `D_c` exists with smoothness
+   ⟺ `D ≥ D_c`.
 
-## File: Catalog/Bridges/.../FibonacciAnyonChain.lean
+## Small-case calculations (RT kink)
 
-| Lean name | Statement | Article | Paper |
-|---|---|---|---|
-| `fusionCount` (def) | `fusionCount 0=1, 1=2, (n+2)=fc(n+1)+fc n` | §"Anyons" | Def. 5 |
-| `fusionCount_zero/one` | `=1`, `=2` | §"Anyons" | Def. 5 |
-| `fusionCount_add_two` | recurrence | §"Anyons" | Def. 5 |
-| `fusionCount_eq_fib` (thm) | `fusionCount n = fib (n+2)` | §"Anyons" | Thm. 5 |
-| `fusionCount_le_two_pow` (thm) | `fusionCount n ≤ 2^n` | §"Area law" | Thm. 6 |
-| `fusionCount_lt_two_pow` (thm) | `n≥2 → fusionCount n < 2^n` | §"Area law" | Thm. 6 |
-| `fib_chain_commensurability` (thm) | `gcd(fc m, fc n) = fc(gcd(m+2,n+2)-2)` | §"Commensurability" | Thm. 7 |
-| `fibBondDimension` (def) | `= goldenRatio` | §"Threshold" | Def. 6 |
-| `ChainEncodable` (def) | `critBond n < fibBondDimension` | §"Threshold" | Def. 6 |
-| `N_critical` (def) | `= 7` | §"Threshold" | Thm. 8 |
+Take `logD = log 2`, `a₁ x = 10 + 1·x` (slow surface), `a₂ x = 4 + 3·x` (fast).
+Crossing: `10 + x = 4 + 3x ⇒ x_c = 3`, common area `13`.
 
-## File: Catalog/Physics/RandomTensorNetwork/Threshold.lean
+| x  | a₁=10+x | a₂=4+3x | min | dominant |
+|----|---------|---------|-----|----------|
+| 0  | 10      | 4       | 4   | a₂       |
+| 2  | 12      | 10      | 10  | a₂       |
+| 3  | 13      | 13      | 13  | tie (x_c)|
+| 4  | 14      | 16      | 14  | a₁       |
+| 6  | 16      | 22      | 16  | a₁       |
 
-| Lean name | Statement | Article | Paper |
-|---|---|---|---|
-| `critBond` (def) | `critBond n = 1 + n/10` | §"Threshold" | Def. 6 |
-| `critBond_zero` | `critBond 0 = 1` | §"Threshold" | Def. 6 |
-| `critBond_succ` | `critBond (n+1) = critBond n + 1/10` | §"Threshold" | Def. 6 |
-| `critBond_strictMono` (thm) | `StrictMono critBond` | §"Threshold" | Thm. 8 |
+Symmetric kink check at `x_c=3`, `t=1`:
+`S(3) − (S(2)+S(4))/2 = logD·(13 − (10+14)/2) = logD·(13−12) = logD·1`.
+Predicted `logD·(s₂−s₁)·t/2 = logD·(3−1)·1/2 = logD·1`. ✓ Strictly positive ⇒ a
+genuine concave corner (sharp phase transition), not a smooth crossover.
+
+## Critical bond dimension
+
+Budget `β = 30`, `area = 10`. Need `10·ln D ≥ 30 ⇒ ln D ≥ 3 ⇒ D ≥ e³ ≈ 20.09`.
+So `D_c = 21` (integer). For `D = 20`: `10·ln20 ≈ 29.96 < 30` (fractal/fails).
+For `D = 21`: `10·ln21 ≈ 30.45 ≥ 30` (smooth). Threshold is sharp at `D_c = 21`.
+
+## Counterexample hunt
+
+- *Is the transition always sharp?* If `s₁ = s₂` the two surfaces never cross
+  transversally; `min` is then globally affine (no kink). Our kink theorem
+  therefore requires `s₁ ≠ s₂`; this is the precise boundary case (documented).
+- *Is the threshold always two-sided sharp?* If the budget is met already at the
+  minimal allowed bond dimension, there is no "fractal" phase below. The
+  below-threshold (fractal) statement is therefore guarded by `D_c` being above
+  the minimal dimension. Captured in the Lab Notes.
+
+These finite checks match the formal theorems proved in
+`RTPhaseTransition.lean`, `BondDimensionThreshold.lean`, and
+`MultiSurfaceStability.lean`.

@@ -1,269 +1,113 @@
-# When Geometry Forgets Its Secrets: Complexity, Tropical Algebra, and the Shape of Space
+# The Shape of Information: How Spacetime Emerges from a Code
 
-## A universe stitched from numbers
+## A geometry hiding inside a ledger
 
-Imagine that the fabric of space is not a smooth sheet handed to us at the
-beginning of time, but something *woven* — knot by knot, thread by thread —
-out of pure information. In this picture a region of the universe is a vast
-network of interconnected quantum components, and the distances, curvatures,
-and even the notion of "nearby" emerge from how strongly those components are
-entangled. This is the central dream of a research program that tries to derive
-Einstein's geometry from quantum information.
+Imagine you keep a meticulous ledger. For every region of a boundary — think of it as the outer skin of some space — you record a single number: how much *information* lives there. Not what the information says, just how much of it there is. You might expect such a ledger to be a flat, lifeless accounting document. Instead, something astonishing happens. If you look closely at how the numbers in the ledger fit together, a *geometry* appears — distances, areas, even curvature — as if a hidden landscape were folded inside the bookkeeping.
 
-It is a beautiful dream, and a notoriously slippery one. To make progress we
-need *toy universes* simple enough to reason about exactly, yet rich enough to
-exhibit the phenomenon we care about: a sharp moment where a tangle of
-information suddenly behaves like smooth space. This article tells the story of
-two such toy universes, both living in the strange and elegant world of
-**tropical algebra**, and both yielding clean, provable statements about how
-complexity, geometry, and secrecy interact.
+This is not a fairy tale. It is the central intuition behind one of the most provocative ideas in modern physics: that **spacetime is a kind of error-correcting code**. The fabric of the universe, in this picture, is not fundamental. It is *emergent* — a large-scale, smooth-looking shadow cast by an underlying web of quantum information. The branch of physics called holography makes this precise through the idea that what happens deep inside a region of space (the "bulk") is fully encoded on its boundary, the way a hologram stores a 3D scene on a 2D film.
 
-The two stories share a punchline that sounds almost paradoxical: *on the
-special directions where geometry is simplest, complexity collapses entirely.*
-What looks like an impenetrable, repeatedly scrambled computation turns out, on
-these directions, to leak its deepest secret in a single subtraction.
+In this article we make a small but completely rigorous corner of that grand vision concrete. We will build, from scratch, a finite mathematical object — a kind of toy universe — in which "information" and "geometry" are two names for the same thing. And we will prove, with no hand-waving, three facts that physicists usually state as deep principles:
 
-## The tropical world: where plus becomes min, and times becomes plus
+1. **Curvature is nonnegative** — a precise inequality forces our toy geometry to bend only one way.
+2. **A quantum-information law (strong subadditivity) is *equivalent* to a geometric law (area submodularity)** once you accept a single bridge formula.
+3. **The bulk can be reconstructed from the boundary**, and this reconstruction only gets *easier* as you look at more of the boundary.
 
-Everything below takes place in the **min-plus** or **tropical** semiring. The
-rules are disarmingly simple. You take ordinary numbers, but you redefine the
-two arithmetic operations:
+Everything below is a faithful retelling of mathematics that has been checked down to its logical bedrock. Where physicists rely on intuition, we will have theorems.
 
-- "Addition" becomes taking the **minimum**: $a \oplus b = \min(a, b)$.
-- "Multiplication" becomes ordinary **addition**: $a \otimes b = a + b$.
+## The dictionary: entropy, area, and the magic factor of four
 
-This sounds like a party trick, but it is the natural arithmetic of *shortest
-paths*, of *optimization*, and — crucially for us — of the coarse "skeleton"
-geometry that a tensor network leaves behind when you zoom out. In the tropical
-world, multiplying a vector by a scalar $\lambda$ means adding $\lambda$ to
-every coordinate, and iterating a linear map means concatenating paths and
-keeping the cheapest one.
+Let us set the stage. Our "universe" has a boundary made of finitely many pieces — call them sites. A **region** is just a subset $X$ of those sites. To each region we attach three numbers:
 
-We will deliberately work with plain natural numbers, sidestepping the usual
-tropical bookkeeping around "infinity." That keeps every statement concrete and
-every proof airtight.
+- an **entropy** $S(X)$ — how much information that region carries,
+- an **area** $\mathrm{area}(X)$ — the size of the surface needed to wall the region off,
+- a **distance** proxy $\mathrm{dist}(X)$ — a measure of how hard the region is to disturb.
 
-## Story one: the collapse of a tropical secret
+These are not arbitrary. They obey a handful of natural rules that any sensible information–geometry ledger must satisfy. The empty region has no entropy and no area: $S(\varnothing) = 0$ and $\mathrm{area}(\varnothing) = 0$. All three quantities are nonnegative. Entropy never exceeds the number of sites in a region: $S(X) \le |X|$. And — most importantly — two structural laws tie everything together.
 
-### A would-be cryptosystem
+The first is the famous **Ryu–Takayanagi relation**, the beating heart of holography. It says that entropy and area are literally proportional, with a universal constant:
+$$ S(X) = \frac{\mathrm{area}(X)}{4}. $$
+That factor of $4$ is not a typo or a convenience. In real physics it is $4G$, where $G$ is Newton's gravitational constant — the same constant that governs how apples fall and planets orbit. Here we have normalized it to $4$. The message is breathtaking: *the amount of information in a region equals the area of the surface bounding it.* Information is not stored in a volume, the way bits sit in a hard drive. It is stored on a surface, like ink on a page.
 
-Many cryptographic schemes hide a secret integer $k$ — your private key — inside
-a computation that is easy to run forward and (supposedly) hard to reverse. The
-classic example is the *discrete logarithm*: multiply a fixed base by itself $k$
-times, publish the result, and dare anyone to recover $k$.
+The second law is **strong subadditivity**, the deepest known inequality of quantum information. In our ledger it takes the form of **submodularity**: for any two regions $X$ and $Y$,
+$$ S(X) + S(Y) \ \ge\ S(X \cap Y) + S(X \cup Y). $$
+Read aloud: the information in two overlapping regions, counted separately, is at least the information in their shared core plus the information in their combined whole. Overlap "double counts" something, and submodularity is the precise statement that the double counting goes one way and not the other.
 
-It is tempting to build the same idea in the tropical world, where
-"multiplication" is iterated application of a min-plus matrix. Call it the
-**Tropical Discrete Logarithm Problem (TDLP)**: hide $k$ by applying a fixed
-tropical-linear map $F$ exactly $k$ times to a starting vector, then challenge
-the world to find $k$ from the input/output pair.
+That is the entire setup. From these axioms — and nothing else — geometry pours out.
 
-Does it work? Our first result says: *catastrophically not*, at least on the
-directions that matter most.
+## Curvature, defined as a failure to add up
 
-### The one-dimensional collapse
+Here is the conceptual leap. In ordinary life, when you measure two things and combine them, you expect the measurements to add cleanly. When they *don't* add cleanly, something is interacting. We turn that failure into a number. Define the **syndrome defect** of two regions:
+$$ \mathrm{defect}(X, Y) \ =\ S(X) + S(Y) - S(X \cap Y) - S(X \cup Y). $$
+The word "syndrome" is borrowed from coding theory, where a syndrome is the telltale signature of an error. Here the defect measures how far the entropy ledger is from adding up perfectly across the pair $(X, Y)$.
 
-Start with the smallest possible case. A $1\times 1$ tropical matrix with entry
-$\lambda$ acts on a single number $x$ by min-plus multiplication — that is, by
-ordinary addition:
-$$
-\text{(one step)}\colon\quad x \longmapsto \lambda + x.
-$$
-What happens if we apply this step $k$ times? Each step adds $\lambda$, so after
-$k$ steps we have simply added $\lambda$ exactly $k$ times. The exact statement,
-proven by a clean induction, is:
-$$
-\underbrace{(\lambda + \cdot)\circ\cdots\circ(\lambda + \cdot)}_{k \text{ times}}(x)
-\;=\; k\lambda + x.
-$$
-There is no scrambling, no mixing — just a linear ramp. Now suppose the system
-designer chose $\lambda = 1$ (the tropical analogue of a "generator"). Then the
-output is exactly $k + x$, and the secret falls out instantly:
-$$
-\text{output} - \text{input} \;=\; (k + x) - x \;=\; k.
-$$
-A single subtraction recovers the private key. The "hard problem" was never
-hard. This is the content of the theorem we informally call *one-by-one
-recovery*: for all natural numbers $x$ and $k$,
-$$
-(1 + \cdot)^{[k]}(x) - x = k.
-$$
+And now the punchline, our **first theorem**:
+$$ \mathrm{defect}(X, Y) \ \ge\ 0 \qquad \text{always.} $$
+This is immediate from strong subadditivity — but its *meaning* is profound. The defect is a discrete stand-in for **curvature**. Zero defect means the geometry is flat in that direction; the ledger adds up perfectly, regions don't interact. Positive defect means the geometry *bends*. And our theorem says it can only ever bend one way: curvature is nonnegative. In a slogan: **gravity is the shadow of information that refuses to subtract cleanly.**
 
-### Why this generalizes: eigenlines
+We can say even more. If the defect is *strictly* positive, then
+$$ S(X \cap Y) + S(X \cup Y) \ <\ S(X) + S(Y), $$
+a strict inequality — the regions genuinely interact, the geometry genuinely curves. And the defect behaves exactly the way curvature should: a region has no curvature with itself ($\mathrm{defect}(X,X) = 0$), curvature between two regions doesn't depend on which you name first ($\mathrm{defect}(X,Y) = \mathrm{defect}(Y,X)$), and an empty region contributes no curvature anywhere ($\mathrm{defect}(\varnothing, Y) = 0$).
 
-A skeptic might say: "Fine, your $1\times 1$ matrix is trivial. Surely a big,
-complicated tropical map $F$ on many coordinates is safe?" The surprising answer
-is that the collapse is not about size at all. It is about *direction*.
+## The bridge: when an information law *becomes* a geometry law
 
-The key concept is **scalar-equivariance**. A map $F$ is scalar-equivariant if
-it commutes with the tropical scaling operation — if adding a constant $c$ to
-every coordinate before applying $F$ gives the same result as applying $F$ and
-then adding $c$:
-$$
-F(c + v) = c + F(v) \quad\text{for every constant } c \text{ and vector } v.
-$$
-This is an utterly natural property; essentially every "honest" tropical-linear
-map has it, because min-plus matrix multiplication distributes over a global
-shift.
+So far we have phrased everything in the language of information (entropy). But the Ryu–Takayanagi relation lets us translate every statement into the language of geometry (area). What happens when we do?
 
-Next, a vector $v$ is a **tropical eigenvector** of $F$ with **eigenvalue**
-$\lambda$ if applying $F$ to $v$ just shifts it by the constant $\lambda$:
-$$
-F(v) = \lambda + v.
-$$
-The set of multiples of such a $v$ is an *eigenline* — a special direction in
-which $F$ acts as nothing more than a uniform shift.
+Define the **area defect** by the same recipe, with area in place of entropy:
+$$ \mathrm{areaDefect}(X, Y) = \mathrm{area}(X) + \mathrm{area}(Y) - \mathrm{area}(X \cap Y) - \mathrm{area}(X \cup Y). $$
+Because $S = \mathrm{area}/4$, a single line of algebra gives the **exact bridge formula**:
+$$ \mathrm{defect}(X, Y) \ =\ \frac{\mathrm{areaDefect}(X, Y)}{4}. $$
+Information curvature *is* geometric curvature, divided by four. The two notions are not analogies that happen to rhyme. They are the same quantity in two costumes.
 
-Here is the general theorem. If $F$ is scalar-equivariant and $v$ is one of its
-eigenvectors with eigenvalue $\lambda$, then *no matter how intricate $F$ is*,
-iterating it $k$ times on $v$ collapses to a single scalar shift:
-$$
-F^{[k]}(v) = k\lambda + v.
-$$
-The proof is a short induction that bounces between the eigenvector equation and
-scalar-equivariance, and never needs to know anything else about $F$. The map
-could be a billion-by-billion tangle; on its eigenline it is a metronome.
+This leads to the centerpiece of the whole construction — our **second theorem**, a genuine cross-domain equivalence:
 
-And once again, if the eigenvalue is $\lambda = 1$, the secret is laid bare in
-every coordinate at once. Picking any coordinate $i$,
-$$
-F^{[k]}(v)_i - v_i = k.
-$$
-This is the *eigenline attack*: the TDLP offers no security whenever the
-attacker can find an eigenvector, because complexity simply does not accumulate
-along eigenlines. The lesson for our spacetime story is sharp and a little
-poetic — **the directions where the emergent geometry is flattest are exactly
-the directions where information stops hiding.**
+> **Strong subadditivity of entropy holds for every pair of regions if and only if area submodularity holds for every pair of regions.**
 
-## Story two: anyon chains and the birth of a smooth dimension
+On the left is the most important inequality in quantum information. On the right is a purely geometric statement about how the areas of surfaces combine. The two are *logically equivalent*, and the dictionary that translates between them is the Ryu–Takayanagi relation. Physicists have long suspected that geometry is "the visible face of information constraints." Here that suspicion becomes a proven biconditional: every quantum-information inequality of this shape is a geometric inequality in disguise, and vice versa.
 
-The second toy universe is built from **anyons** — exotic quasiparticles that
-live in two-dimensional materials and that physicists hope to braid into
-fault-tolerant quantum computers. The most famous species is the **Fibonacci
-anyon**, and it earns its name in a way that turns out to be exactly the right
-bridge to tensor-network geometry.
+A pleasant corollary falls out for free. Combining $S(X) \le |X|$ with the RT relation gives
+$$ \mathrm{area}(X) \ \le\ 4\,|X|, $$
+a clean geometric bound: the area of any region's wall is at most four times the number of sites it contains. The microscopic count of "atoms of space" controls the macroscopic area — exactly the kind of statement that, in real gravity, becomes the celebrated *Bekenstein–Hawking* bound on black-hole entropy.
 
-### Counting the ways the world can fuse
+## Codes, distance, and why you can trust the hologram
 
-Line up $n$ Fibonacci anyons in a chain. Quantum mechanically, the chain does
-not have one state but a whole Hilbert space, and the dimension of that space —
-the number of independent quantum configurations — equals the number of
-*admissible fusion paths*. Concretely, this is the number of binary strings of
-length $n$ that contain **no two consecutive 1's** (a "1" marks where two
-neighbours fuse nontrivially, and physics forbids two such fusions in a row).
+The phrase "spacetime as an error-correcting code" deserves to be cashed out. An error-correcting code stores a few precious **logical** bits inside many redundant **physical** bits, so that even if some physical bits are erased, the logical information survives. Three numbers describe a code on a region $X$: the number of physical qubits $N(X)$, the number of logical qubits $K(X)$, and the **code distance** $D(X)$ — the minimum number of erasures needed to destroy the encoded information.
 
-Call this count $\mathrm{fc}(n)$. It obeys the most famous recurrence in
-mathematics. A length-$(n{+}2)$ admissible string either ends in a "0" (and the
-first $n{+}1$ symbols are any admissible string) or ends in "01" (and the first
-$n$ symbols are any admissible string). Hence
-$$
-\mathrm{fc}(n+2) = \mathrm{fc}(n+1) + \mathrm{fc}(n),
-\qquad \mathrm{fc}(0)=1,\ \mathrm{fc}(1)=2.
-$$
-That is the Fibonacci recurrence, and a clean strong induction confirms the
-exact identity
-$$
-\mathrm{fc}(n) = F_{n+2},
-$$
-where $F_m$ is the ordinary Fibonacci number ($F_1=F_2=1, F_3=2, F_4=3,\dots$).
-So a chain of $5$ anyons has $\mathrm{fc}(5) = F_7 = 13$ quantum states; a chain
-of $6$ has $F_8 = 21$.
+These obey the classical **Singleton bound**, the oldest inequality in coding theory:
+$$ N(X) - K(X) \ \le\ 2\,(D(X) - 1). $$
+Rearranged, it becomes a *lower* bound on logical content — our coding-theoretic theorem:
+$$ K(X) \ \ge\ N(X) - 2\,(D(X) - 1). $$
+High code distance forces high logical content. In the holographic dictionary, where area tracks physical qubits and entropy tracks logical ones, this is a constraint linking how much surface a region has to how much bulk information it can protect. Robust codes carry rich bulks.
 
-### A sub-qubit area law
+The reason the hologram is *trustworthy* is captured by **reconstruction**. We say a region $U$ can be reconstructed from a boundary region $X$ when $U \subseteq X$ and $U$ is small enough that erasures can't exceed its protective distance: $|U| < D(U)$. The bulk physics encoded in $U$ can then be recovered from $X$ even after damage. And here is the reassuring **third theorem**:
 
-Now compare this to the "naive" expectation. If each anyon were an ordinary
-qubit, a chain of $n$ of them would have $2^n$ states. The fusion rule forbids
-many of those configurations, so the true count is smaller. We can prove this
-exactly: for every length $n$,
-$$
-\mathrm{fc}(n) \le 2^n,
-$$
-and the inequality is **strict** as soon as $n \ge 2$:
-$$
-\mathrm{fc}(n) < 2^n \qquad (n \ge 2).
-$$
-Physicists call statements of this shape *area laws*: the amount of quantum
-information a region can hold grows slower than the naive "volume" count $2^n$.
-Area laws are the fingerprint of states that have a clean geometric description
-— precisely the states from which smooth space can emerge. Here we get a
-quantitative, provable version: the Fibonacci chain is a genuine *sub-qubit*
-system, leaving a definite information gap $2^n - F_{n+2}$ that grows with the
-chain.
+> **If $U$ is reconstructable from $X$, and $X$ sits inside a larger boundary region $Y$, then $U$ is reconstructable from $Y$.**
 
-### Hidden harmony: commensurability
+Looking at *more* of the boundary never costs you the ability to recover the bulk. Reconstruction is **monotone**: knowledge only accumulates. This is the precise sense in which a bigger window onto the hologram always shows you at least as much of the hidden scene.
 
-There is a deeper, almost musical structure hiding in these dimensions.
-Fibonacci numbers famously satisfy $\gcd(F_a, F_b) = F_{\gcd(a,b)}$ — the
-greatest common divisor of two Fibonacci numbers is itself a Fibonacci number.
-Translated to our fusion dimensions, this becomes a **commensurability law**:
-the greatest common divisor of two chains' Hilbert-space dimensions is again the
-dimension of some chain. Precisely, whenever $\gcd(m+2, n+2) \ge 2$,
-$$
-\gcd\big(\mathrm{fc}(m),\, \mathrm{fc}(n)\big)
-\;=\; \mathrm{fc}\big(\gcd(m+2,\,n+2) - 2\big).
-$$
-Two chains of length $4$ and $6$, for example, have dimensions $F_6 = 8$ and
-$F_8 = 21$; their gcd is $1 = F_2 = \mathrm{fc}(0)$, matching
-$\gcd(6,8) - 2 = 0$. This means the family of anyon chains is *harmonically
-closed*: their dimensions share common factors only in ways that point back to
-smaller members of the same family. It is the number-theoretic shadow of a
-self-similar geometry.
+## Wedges: drawing the boundary's reach into the bulk
 
-### The threshold: when can a network actually hold the chain?
+There is a beautiful geometric refinement of reconstruction. Given a piece $B$ of the boundary, which parts of the bulk does it "own"? The natural answer uses distance: a bulk point belongs to $B$'s **entanglement wedge** if it is strictly closer to $B$ than to the rest of the boundary. "Closer" here is measured in a tropical, or *min-plus*, geometry — the geometry of shortest paths, where to combine two legs of a journey you *add* their lengths and to choose between routes you take the *minimum*. The distance from a point to a region is just the smallest distance to any site in it.
 
-Finally, the bridge to emergent spacetime. To *encode* a quantum system in a
-random tensor network, the network's **bond dimension** $D$ — the size of the
-internal "wires" connecting its tensors — must be large enough. We model the
-demand realistically: longer chains need fatter wires. The **critical bond
-dimension** grows linearly with length,
-$$
-D_c(n) = 1 + \frac{n}{10},
-$$
-and one checks immediately that it is strictly increasing in $n$.
+With this definition, the wedge of $B$ is exactly the set of bulk points strictly nearer to $B$ than to its complement. We prove this region is **robust**: if you jiggle all the distances by less than half the "winning margin" — the gap by which a point preferred $B$ — then the point stays in the wedge. Small metric perturbations cannot tear the bulk's allegiance away from its boundary. Geometry emerging from information is *stable*, not a fragile coincidence.
 
-A single Fibonacci anyon carries a very particular bond dimension: the
-**golden ratio** itself,
-$$
-\varphi = \frac{1+\sqrt 5}{2} \approx 1.618.
-$$
-(This is no coincidence — the quantum dimension of a Fibonacci anyon literally
-*is* $\varphi$.) We say a chain is **encodable** when the golden-ratio bond
-dimension clears the threshold:
-$$
-D_c(n) < \varphi.
-$$
-Solving $1 + n/10 < 1.618$ gives $n < 6.18$, so the chain is encodable exactly
-when its length is at most $6$. There is a sharp critical length:
-$$
-N_{\text{critical}} = 7,
-$$
-the first length at which $D_c(n) = 1.7$ overshoots the golden ratio and the
-network can no longer hold the chain. Below the threshold, the golden-ratio
-wires are wide enough and the chain's geometry is faithfully realized; at and
-above it, the encoding breaks. This is, in miniature, exactly the phase
-transition the grand conjecture predicts: a sharp critical parameter separating
-a "smooth, geometric" regime from a "cannot-be-realized" regime.
+Finally, the wedge delivers a clean reconstruction guarantee in its own right. Each boundary site reports a **min-plus convolution** of the bulk state — the smallest value of "bulk value plus distance," a tropical echo of how a signal smears as it travels. We prove that if two bulk configurations produce identical boundary reports across all of $B$, and each wedge point has a unique nearest boundary witness, then the two configurations must agree throughout the wedge. The boundary readings on $B$ pin down the bulk on $B$'s wedge — a finite, fully rigorous version of the celebrated **entanglement wedge reconstruction** principle.
 
-## Two stories, one moral
+## A threshold for spacetime
 
-What unites the collapsing tropical secret and the golden-ratio anyon chain?
-Both are studies of **how complexity organizes itself into geometry**, and both
-identify a *threshold* or *special direction* where the behavior changes
-qualitatively and provably.
+Where does the original dream — a *phase transition* into smooth spacetime — fit? In the tensor-network picture, each link carries a "bond dimension" $D$, a measure of how much entanglement it can support. Below a critical value, the network is too sparse to weave a smooth geometry; above it, a manifold-like bulk crystallizes. Our toy model encodes the threshold cleanly: the **critical bond dimension** needed to faithfully represent a chain of length $n$ grows steadily with $n$,
+$$ D_c(n) = 1 + \frac{n}{10}, $$
+and we prove it is **strictly increasing** — longer chains demand richer links, with no exceptions and no plateaus. It is the simplest honest fingerprint of the sharp transition that the full conjecture predicts: more complexity, more bond dimension, more geometry.
 
-- In the eigenline story, complexity refuses to accumulate along the flat
-  directions of a tropical map; iterating $k$ times is indistinguishable from a
-  single shift $k\lambda$, and when $\lambda = 1$ the hidden exponent $k$ is
-  recovered by subtraction. Flatness equals transparency.
+## Why this matters
 
-- In the anyon story, the dimension of quantum reality grows like Fibonacci
-  numbers, stays strictly below the naive qubit count (an exact area law), is
-  harmonically closed under gcd, and can be faithfully encoded by a
-  golden-ratio tensor network exactly up to a sharp critical length $7$.
+Step back and look at what we have. Starting from a ledger of information — entropy assigned to regions — and two physical principles (Ryu–Takayanagi and strong subadditivity), we derived, with airtight logic:
 
-Neither toy universe is the real one. But each captures, in a form simple enough
-to prove without a single gap, one face of the deep idea that *space is what
-complexity looks like when you zoom out* — and that there are precise thresholds
-governing when that emergence succeeds. The dream of deriving geometry from
-information is still a dream. These results are two small, solid stones laid on
-the path toward it: not metaphors, but theorems.
+- a notion of curvature (the syndrome defect) that is provably nonnegative;
+- an exact equivalence between a quantum-information inequality and a geometric one;
+- a coding bound linking area to protected information;
+- a monotone, stable reconstruction of bulk from boundary, refined by entanglement wedges;
+- a strictly increasing threshold for the emergence of geometry.
+
+None of this proves that *our* universe is an error-correcting code. But it proves something quietly remarkable: that the slogans of holography — "geometry is information," "spacetime is a code," "the bulk lives on the boundary" — are not merely poetic. In a clean, finite setting they are *theorems*, each following inevitably from a small set of assumptions about how information is allowed to distribute itself.
+
+The deepest dream behind this program is to **derive Einstein's equations from the theory of computation** — to show that the curving of spacetime is, at bottom, a statement about the cost and structure of information. We are not there. But the bridge in this article — the proven equivalence between strong subadditivity and area submodularity — is exactly the kind of plank such a bridge is built from. It shows that when you write down what information is allowed to do, geometry is not added by hand. It is already there, waiting in the arithmetic, in the shape of a ledger that almost, but not quite, adds up.
