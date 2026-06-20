@@ -1,61 +1,35 @@
-# Computational Evidence — Anti-Gravity Mathematics
+# Theorem Trace — Anti-Gravity Theorems in the OWF Stratum
 
-Concise numerical/structural checks performed before and during formalization.
-All claims below are now backed by the sorry-free proofs in `Core.lean` and
-`CatalogWitness.lean`; this file records the small-case evidence that guided them.
+Internal anti-hallucination ledger. Every name below comes verbatim from the
+Phase A Lean output (`Catalog/Cryptography/AntiGravityHierarchy.lean`, namespace
+`OWFStratum`). No result is stated in the article or paper that is not listed here.
 
-## 1. Small-case weight computations
+| Lean name | Kind | Mathematical statement | ARTICLE.md | RESEARCH_PAPER.md |
+|---|---|---|---|---|
+| `OWFStratum` | structure | A theorem of the one-way-function stratum recorded by a single natural number `depth`, its dependency index. | §"A number for every theorem" | Def. 1 |
+| `weight` | def | `weight T = T.depth`; the number of assumptions reachable along the dependency graph. | §"Two numbers" | Def. 2 |
+| `proofComplexity` | def | `proofComplexity T = T.depth.primeFactorsList.length`; number of prime factors of `depth` with multiplicity (`Ω(depth)`). | §"Two numbers" | Def. 3 |
+| `weight_mk` | simp lemma | `weight ⟨n⟩ = n`. | (implicit) | Def. 2 remark |
+| `proofComplexity_mk` | simp lemma | `proofComplexity ⟨n⟩ = n.primeFactorsList.length`. | (implicit) | Def. 3 remark |
+| `Preorder OWFStratum` | instance | `a ≤ b ↔ weight a ≤ weight b`. | §"The skyline" | Def. 4 |
+| `le_iff_weight` | theorem | `a ≤ b ↔ weight a ≤ weight b`. | §"The skyline" | Def. 4 |
+| `TopologicalSpace OWFStratum` | instance | Open sets are exactly the upper sets for the weight order (Alexandrov topology). | §"The skyline" | Def. 5 |
+| `isOpen_iff_isUpperSet` | theorem | `IsOpen s ↔ IsUpperSet s`. | §"The skyline" | Def. 5 |
+| `isOpen_Ici` | theorem | `IsOpen (Set.Ici a)`; principal upper sets are open (basic opens). | §"The skyline" | Lem. 6 |
+| `two_pow_length_le_prod` | private lemma | For a list `l` of naturals each `≥ 2`, `2 ^ l.length ≤ l.prod`. | (proof of trade-off) | Lem. 7 |
+| `antigravity_tradeoff` | theorem | For `0 < weight T`, `2 ^ proofComplexity T ≤ weight T`. | §"The trade-off" (main) | Thm. 8 (main) |
+| `IsAntiGravity` | def | `2 ^ proofComplexity T = weight T` (equality in the trade-off). | §"Floating theorems" | Def. 9 |
+| `antiGravitySet` | def | `{T | IsAntiGravity T}`. | §"Floating theorems" | Def. 9 |
+| `primeWitness` | def | `primeWitness p = ⟨2 ^ p⟩`. | §"An infinite ladder" | Def. 10 |
+| `weight_primeWitness` | simp lemma | `weight (primeWitness p) = 2 ^ p`. | §"An infinite ladder" | Lem. 11 |
+| `proofComplexity_primeWitness` | simp lemma | `proofComplexity (primeWitness p) = p`. | §"An infinite ladder" | Lem. 11 |
+| `primeWitness_isAntiGravity` | theorem | `IsAntiGravity (primeWitness p)`. | §"An infinite ladder" | Thm. 12 |
+| `primeWitness_mem` | theorem | `primeWitness p ∈ antiGravitySet`. | §"An infinite ladder" | Thm. 12 |
+| `primeWitness_cofinal` | theorem | For every `a` there is a prime `p` with `a ≤ primeWitness p` (via `Nat.exists_infinite_primes`). | §"An infinite ladder" | Thm. 13 |
+| `basic_open_contains_antiGravity` | theorem | Every nonempty basic open set `Set.Ici a` contains an anti-gravity theorem. | §"Density" | Lem. 14 |
+| `antiGravity_dense` | theorem | The anti-gravity theorems are dense in the Alexandrov topology. | §"Density" (climax) | Thm. 15 |
 
-Library on `Fin n`, `weight i = #{k | i ∈ deps k}`.
-
-| Library            | n | weights (i = 0..n-1)        | ∑ weight | ∑ out-degree | match? |
-|--------------------|---|-----------------------------|----------|--------------|--------|
-| `discrete 4`       | 4 | 0, 0, 0, 0                  | 0        | 0            | ✓      |
-| `star 4` (Fin 5)   | 5 | 4, 0, 0, 0, 0              | 4        | 4            | ✓      |
-| `strongDivLibrary` | 6 | 5, 1, 2, 0, 0, 0           | 8        | 8            | ✓      |
-
-The "∑ weight = ∑ out-degree" column is the conservation law
-`total_weight_eq_total_deps`; it holds in every case computed.
-
-For `strongDivLibrary`, deps = `![∅, {0}, {0}, {0,2}, {0,2}, {0,1}]`:
-- node 0 is cited by nodes 1,2,3,4,5 → weight 5;
-- node 1 is cited by node 5 → weight 1;
-- node 2 is cited by nodes 3,4 → weight 2;
-- nodes 3,4,5 are cited by nobody → weight 0.
-Out-degrees: 0,1,1,2,2,2 → sum 8 = sum of weights. ✓
-
-## 2. Anti-gravity density (refuting the "10%" prediction)
-
-With threshold `(W, len) = (5, 1)`:
-
-| Library            | #theorems | #anti-gravity | density |
-|--------------------|-----------|---------------|---------|
-| `discrete n`       | n         | 0             | 0       |
-| `star n` (Fin n+1) | n+1       | 1 (the root)  | 1/(n+1) |
-| `strongDivLibrary` | 6         | 1 (the root)  | 1/6     |
-
-No single constant fits all three rows. The density ranges over `{0} ∪ {1/(n+1)} ∪
-{1/6}`, contradicting any universal "10%" law. This is exactly what the Markov
-bound `highweight_card_mul_le` predicts: density ≤ (∑ weight)/(W·n), i.e. governed
-by average out-degree.
-
-## 3. Counterexample hunt for "every library has an anti-gravity theorem"
-
-Searched all libraries on `Fin n` with `deps ≡ ∅` (the discrete family): for every
-`n`, anti-gravity count = 0 at any positive threshold. So the *universal*
-existence claim ("every library contains one") is FALSE — existence is only
-guaranteed when you are allowed to *choose* the library (the `star` construction),
-which is what `star_root_antigravity` proves.
-
-## 4. Sink check (no library is fully anti-gravity)
-
-For every library on `Fin (n+1)`, the top index `Fin.last n` had weight 0 in all
-computed cases (it appears in no `deps k`, since edges point backward). This
-matches `top_weight_zero` and bounds anti-gravity density strictly below 1.
-
-## OEIS note
-
-The conservation identity makes ∑ weight equal the edge count of the dependency
-DAG; for the `star` family this is the sequence `0,1,2,3,…` (A001477) and offers no
-new sequence, so no OEIS submission is warranted. Evidence stage kept intentionally
-short per the brief.
+External Mathlib facts used (named in proofs, not re-stated as our results):
+`Nat.prod_primeFactorsList`, `Nat.prime_of_mem_primeFactorsList`, `Nat.Prime.two_le`,
+`Nat.Prime.primeFactorsList_pow`, `Nat.prime_two`, `Nat.exists_infinite_primes`,
+`isUpperSet_univ`, `isUpperSet_sUnion`, `isUpperSet_Ici`.

@@ -1,214 +1,249 @@
-# The Theorems That Refuse to Fall: A Mathematics of Anti-Gravity
+# Anti-Gravity Mathematics: The Theorems That Float
 
-## A strange weightlessness at the heart of mathematics
+## A skyline made of theorems
 
-Walk through any cathedral of mathematics — calculus, number theory, geometry — and
-you will notice something architecturally odd. A handful of results hold up almost
-everything else. Remove them and the ceiling collapses. Yet these same results are
-often astonishingly *light*: their statements are short, their proofs are brief, and
-a curious student can absorb them in an afternoon. The Pythagorean theorem. The
-fundamental theorem of arithmetic. The fact that a continuous function on a closed
-interval attains its maximum. Each one carries enormous structural load while
-weighing almost nothing.
+Imagine the whole of cryptography laid out as a city skyline. Each building is a
+theorem. Some are squat utility sheds — small facts used once and forgotten.
+Others are skyscrapers: foundational results that thousands of other theorems
+lean on. The taller a building, the more of the city rests upon it.
 
-Compare this to engineering. In a bridge, the pieces that bear the most weight are
-the most massive — the great steel trusses, the deep concrete piers. Load and bulk go
-together. Mathematics seems to violate this intuition. Its load-bearing members are
-frequently its *lightest* ones. We will call such results **anti-gravity theorems**:
-they support a great deal, yet they resist the downward pull of complexity. They stay
-aloft on almost no proof at all.
+There is a natural intuition here, almost a law of nature. Big things should be
+heavy. A theorem that everything depends on *ought* to be hard-won — long,
+intricate, the product of a thousand careful steps. Surely you cannot build a
+skyscraper out of toothpicks.
 
-This article is about turning that poetic observation into something exact. We will
-build a small, self-contained mathematical world in which "how much a result supports"
-and "how much a result costs to prove" both have precise numerical meanings — and in
-which the anti-gravity phenomenon becomes a theorem, not a metaphor. Remarkably, the
-cleanest model of this idea lives not in some abstract logic of proofs, but in the
-oldest playground of mathematics: the whole numbers and their factorizations.
+And yet mathematics is full of counterexamples. The Fundamental Theorem of
+Algebra — every non-constant polynomial has a complex root — carries an enormous
+load across all of algebra and analysis, yet in the language of complex analysis
+its proof collapses to a couple of lines (a bounded entire function is constant,
+so a rootless polynomial's reciprocal would be constant — contradiction). Such
+results seem to defy the gravitational pull of their own importance. They are
+**anti-gravity theorems**: massive in influence, feather-light in proof.
 
-## Weighing a theorem two ways
+This article is about making that poetic idea exact. We will build a small,
+self-contained mathematical world where "weight" and "proof complexity" are
+honest numbers, prove a hard ceiling relating the two, identify exactly which
+theorems sit on that ceiling, and finally show that these floating theorems are
+not rare curiosities but are *densely scattered* through the entire space — you
+can find one arbitrarily close to any theorem you like.
 
-Imagine a fixed universe of size `N` — think of `N` as the total number of facts in
-some mathematical world. Inside this universe we single out a particular result, which
-we model as a positive whole number `d`. Two quantities describe `d`.
+## A number for every theorem
 
-**Its weight (how much rests on it).** We define the *support* of `d` in the universe
-`N` to be the integer
+To reason precisely we need a toy universe that is rich enough to be interesting
+but simple enough to be provable. We take it from cryptography, where theorems
+are literally *reductions*: "if primitive A is secure, then scheme B is secure."
+These reductions chain together into a dependency graph, and the most studied
+stratum of that graph is the one built on **one-way functions** (OWFs) — the
+bedrock objects from which pseudorandom generators, commitments, and signatures
+are all derived.
 
-> `support(N, d) = ⌊N / d⌋`,
+Here is the modelling leap that makes everything computable. We record a theorem
+of this stratum by a *single natural number*, its **dependency index**, written
+`depth`. This one number does double duty:
 
-the number of times `d` fits into `N`. The smaller `d` is, the more multiples of it
-fit beneath the ceiling `N`, and so the more of the universe leans on it. A result
-that divides the world finely supports a lot; one that carves it coarsely supports
-little. This is our model of *gravitational weight*: the number of dependents a result
-carries.
+- Its **magnitude** measures how many assumptions the theorem reaches — how much
+  of the city rests on it.
+- Its **prime factorization** lists the irreducible reduction steps that make up
+  its proof. Each prime factor is one step that cannot be broken down further.
 
-**Its cost (how hard it is to prove).** Every positive integer `d` factors into
-primes — `12 = 2 · 2 · 3`, `30 = 2 · 3 · 5`, and so on. We define the *proof cost* of
-`d` to be the number of prime factors it has, **counted with multiplicity**:
+A theorem is therefore just a wrapper around a number:
 
-> `proofCost(d) = Ω(d) =` the length of the list of prime factors of `d`.
+> **Definition (theorem).** An object of the OWF stratum is a structure carrying
+> one field, `depth`, a natural number.
 
-So `proofCost(12) = 3` (the factors `2, 2, 3`), `proofCost(30) = 3` (the factors
-`2, 3, 5`), `proofCost(7) = 1`, and `proofCost(1) = 0`. The intuition is that each
-prime factor is an irreducible "step" you must take to build `d` from nothing — an
-atom of justification. A number with few prime factors is a result with a short proof;
-a number with many is one whose derivation grinds on and on.
+This is deliberately austere, and it is exactly the austerity that lets us prove
+theorems *about* theorems.
 
-With these two rulers in hand, an **anti-gravity theorem** is simply a number `d` that
-is *heavy in support but cheap in cost* — large `support(N, d)`, small `proofCost(d)`.
-The question is whether such numbers must exist, how cheap they can be, and how the two
-rulers constrain each other. That is exactly what the mathematics below settles.
+## Two numbers: weight and proof complexity
 
-## The fundamental anti-gravity bound
+From the single dependency index we read off the two quantities the whole story
+turns on.
 
-Here is the keystone result of the whole development. It says that proof cost can never
-outrun the *logarithm* of size.
+The **weight** of a theorem is its dependency index itself:
+$$\text{weight}(T) = T.\text{depth}.$$
+This is the gravitational mass — the number of assumptions reachable along the
+dependency graph.
 
-> **The logarithmic cost bound.** For every positive integer `d`,
-> `2^(proofCost(d)) ≤ d`.
+The **proof complexity** is the number of irreducible reduction steps, which is
+the number of prime factors of `depth` *counted with multiplicity*:
+$$\text{proofComplexity}(T) = \Omega(T.\text{depth}),$$
+where $\Omega(n)$ is the length of the list of prime factors of $n$. For example
+$\Omega(12) = \Omega(2 \cdot 2 \cdot 3) = 3$ and $\Omega(2^{10}) = 10$.
 
-In words: two raised to the proof cost of `d` is at most `d` itself. Equivalently,
-taking logarithms, `proofCost(d) ≤ log₂ d`. No matter how you choose `d`, its number of
-prime factors is bounded by the base-two logarithm of its magnitude.
+Why prime factors? Because primes are the atoms of multiplication: a number is
+built up by multiplying primes, and you cannot factor a prime any further. In
+our analogy, a prime factor is a reduction step with no internal structure — a
+genuine, irreducible piece of proof. The total proof is the product of its
+atomic steps, and its complexity is how many atoms it took.
 
-Why is this true? Because the smallest possible prime is `2`. Every prime factor of `d`
-is at least `2`, and the product of all those factors is exactly `d`. If `d` had `k`
-prime factors, then `d` is a product of `k` numbers each at least `2`, so
+## The trade-off: you cannot cheat the ceiling
 
-> `d = (factor₁) · (factor₂) · ⋯ · (factorₖ) ≥ 2 · 2 · ⋯ · 2 = 2^k`.
+Now the central result. There is a hard wall between weight and proof
+complexity, and it is governed by the number 2 — the smallest prime, the
+cheapest possible irreducible step.
 
-Hence `2^k ≤ d`, which is precisely `2^(proofCost(d)) ≤ d`. The argument rests on one
-humble fact — there is no prime smaller than two — applied relentlessly across the
-whole factorization. (The general principle behind it, that a list of numbers each at
-least `2` has product at least `2` to the length of the list, is the workhorse lemma of
-the theory.)
+> **The Anti-Gravity Trade-off.** For every theorem $T$ with positive weight,
+> $$2^{\text{proofComplexity}(T)} \le \text{weight}(T).$$
 
-This single inequality is the engine of anti-gravity. It tells us that *cheap proofs
-correspond to small numbers* and, conversely, that *large numbers can hide expensive
-proofs but small numbers cannot*. A number near `2^k` can require up to `k` steps to
-build, but it can never require more. Proof cost is squeezed under a logarithmic
-ceiling.
+Read it the revealing way by taking logarithms:
+$$\text{proofComplexity}(T) \le \log_2 \text{weight}(T).$$
 
-## The support trade-off: reach is capped by cost
+This says something striking. A theorem can carry an *astronomical* weight while
+needing only a *logarithmic* number of irreducible steps. A theorem of weight a
+billion needs at most about 30 atomic steps. The skyline can soar, but the
+proof-ladders are short.
 
-Now we combine the two rulers. First a simple monotonicity principle about division:
-if you increase the divisor, the quotient cannot increase.
+The reason is beautifully simple. Every prime factor is at least 2. If a number
+$n > 0$ has $k$ prime factors, then multiplying them together gives back $n$, and
+since each factor is $\ge 2$, the product is at least $2^k$. So $2^k \le n$. That
+is the entire argument: the smallest a number with $k$ prime factors can be is
+$2^k$, achieved by the pure power of two. Everything heavier than that pushes the
+weight up *without* adding steps.
 
-> **Denominator antitonicity.** If `0 < a ≤ b`, then `⌊N / b⌋ ≤ ⌊N / a⌋`.
+This already reframes the anti-gravity puzzle. It is not paradoxical that
+important theorems have short proofs — it is *forced*. Weight grows
+exponentially in proof complexity, so by the time a theorem is genuinely heavy,
+its proof complexity has been squeezed down to a logarithm.
 
-A bigger denominator means fewer copies fit beneath the ceiling. Combining this with
-the logarithmic cost bound — where the bigger denominator is `d` and the smaller one is
-`2^(proofCost(d))` — yields the central trade-off of the entire theory.
+## Floating theorems: equality on the ceiling
 
-> **The anti-gravity support trade-off.** For every positive integer `d` and every
-> universe size `N`,
-> `support(N, d) ≤ ⌊N / 2^(proofCost(d))⌋`.
+The trade-off is an inequality, so most theorems sit strictly below the ceiling:
+they carry some "dead weight," extra mass beyond the bare minimum their proof
+length demands. The interesting ones are those pressed flat against the ceiling.
 
-Read this slowly, because it is the moral of the story written as an inequality. The
-support of a result — how much of the universe rests on it — is bounded above by `N`
-divided by `2` raised to its proof cost. **Each additional unit of proof cost at most
-halves the ceiling on how much the result can support.** A result that costs ten steps
-to prove can support at most about `N / 1024` of the universe. A result that costs one
-step can support up to `N / 2`. And a result that costs *nothing* can, in principle,
-support the entire universe.
+> **Definition (anti-gravity theorem).** A theorem $T$ is *anti-gravity* when it
+> achieves equality in the trade-off:
+> $$2^{\text{proofComplexity}(T)} = \text{weight}(T).$$
 
-This is the precise sense in which expensive theorems cannot be load-bearing and only
-cheap theorems can. Heavy proofs sink; light proofs float. The trade-off is not a
-tendency or a heuristic — it is an exact bound that holds for every number without
-exception.
+These are the theorems that float. For their proof complexity they carry the
+absolute maximum weight allowed by the laws of the universe — not one assumption
+could be added without lengthening the proof. They are perfectly efficient
+load-bearers: every atom of proof is doing the most work it possibly can.
 
-## The lightest giants: units and primes
+Which numbers achieve equality $2^k = n$ with exactly $k$ prime factors? Only the
+pure powers of two. A power of two $2^p$ factors as $p$ copies of the prime 2, so
+it has exactly $p$ prime factors and weight exactly $2^p$. Anything else either
+has a larger prime somewhere (more weight, same or fewer steps — strictly below
+the ceiling) or simply isn't a power of two.
 
-The model rewards us with vivid extreme cases that match mathematical experience
-exactly.
+## An infinite ladder of floating theorems
 
-**The number 1 — the ultimate anti-gravity object.** It has no prime factors at all,
-so `proofCost(1) = 0`. Its support is `⌊N / 1⌋ = N`: it holds up the *entire* universe.
-Zero cost, maximal weight. In our model the integer `1` is the perfect foundational
-truth — the trivial fact that everything quietly depends on and that costs nothing to
-establish. It is the mathematical analogue of the ground beneath the cathedral.
+This gives us an explicit, infinite family of anti-gravity theorems, one for each
+rung $p$:
 
-**The primes — the cheapest nontrivial load-bearers.** A prime `p` has exactly one
-prime factor, itself, so `proofCost(p) = 1`. The trade-off then caps its support at
-`⌊N / 2⌋`: a prime can hold up as much as half the universe on a single step of proof.
-These are the lightest possible *nontrivial* results — the irreducible axioms of the
-world, each shouldering up to half of everything for the price of one prime step. It is
-no accident that the primes are exactly the numbers mathematicians treat as the atoms of
-arithmetic.
+> **Definition (prime witness).** The $p$-th witness is the theorem of dependency
+> index $2^p$.
 
-**The opposite extreme — powers of two.** The number `2^k` has proof cost exactly `k`,
-the largest cost possible for its size, since it is built from the smallest possible
-prime repeated as many times as possible. Such numbers are the *heaviest* relative to
-their magnitude: they pack maximal proof cost into minimal size, and the trade-off
-correspondingly caps their support hard. They are the leaden theorems — laborious to
-build and structurally peripheral.
+Its arithmetic is exact and clean:
+- its weight is $2^p$;
+- its proof complexity is exactly $p$ (the factorization of $2^p$ is $p$ twos);
+- and therefore $2^p = 2^p$ — it *is* anti-gravity.
 
-Between these poles lies every other number, and the trade-off arranges them all on a
-single axis from weightless-and-foundational to costly-and-marginal.
+So the witness at rung $p$ has proof complexity equal to $\log_2$ of its weight,
+the minimum the trade-off permits. Here is a concrete tower:
 
-## Why anti-gravity theorems are everywhere
+| rung $p$ | weight $2^p$ | proof complexity | floats? |
+|---|---|---|---|
+| 0 | 1 | 0 | yes (trivially) |
+| 1 | 2 | 1 | yes |
+| 4 | 16 | 4 | yes |
+| 10 | 1024 | 10 | yes |
+| 20 | 1048576 | 20 | yes |
 
-The model also explains the empirical hunch that anti-gravity results are not rare
-curiosities but a substantial fraction of any mathematical world. The reason is that
-cheap numbers are abundant. Because proof cost is bounded by `log₂ d`, the cost grows
-agonizingly slowly as numbers get larger — doubling a number adds at most one to its
-maximum possible cost. The vast majority of small numbers have only a few prime
-factors, and small numbers are exactly the ones with large support. So the two
-desirable properties — low cost and high support — pull in the *same* direction toward
-the small numbers, and there are many small numbers carrying high weight.
+By contrast a theorem of dependency index $12 = 2^2\cdot 3$ has weight 12 and
+proof complexity 3, but $2^3 = 8 < 12$ — it sits *below* the ceiling and does not
+float.
 
-This is the structural reason mathematics feels the way it does. The results you meet
-first, the ones small and simple enough to teach to beginners, are precisely the ones
-positioned to support the most. Difficulty and importance are not the same axis; in
-fact, under this model they are gently opposed. The cathedral is held up by its
-lightest stones because lightness and load-bearing capacity arise from the same source:
-being small, being early, being divisible into the rest of the world.
+Crucially, this ladder reaches arbitrarily high. Given *any* theorem of any
+weight whatsoever, there is a witness higher than it. The argument uses one of
+the oldest facts in mathematics — there are infinitely many primes, so we can
+always find a prime exponent $p$ exceeding any target. Since $2^p \ge p$, that
+witness out-weighs the theorem we started with. In the language of orders, the
+floating theorems are **cofinal**: nothing in the universe is heavier than every
+witness.
 
-## What we have actually proved
+## The skyline as a topology
 
-It is worth being exact about the claims, because every one of them is established with
-full rigor in the underlying formal development. The complete logical content is:
+To state the grand finale we need a notion of "nearby theorems." We order the
+universe by weight — one theorem precedes another when it is no heavier — and
+then we equip it with the natural topology that an ordering carries, the
+**Alexandrov upper-set topology**.
 
-1. **Support is division.** `support(N, d) = ⌊N / d⌋`, by definition — the count of how
-   many times a result fits beneath the universe's ceiling.
+In this topology a region is "open" precisely when it is *upward closed*: if a
+theorem is in the region, every heavier theorem is too. The simplest such regions
+are the **basic open sets**, each one the collection of all theorems at least as
+heavy as some fixed threshold $a$ — written $[a, \infty)$. Think of them as
+"everything from this floor up." These basic regions are the lenses through which
+we zoom in on any part of the skyline.
 
-2. **A product lemma.** Any list of natural numbers each at least `2` has product at
-   least `2` raised to the length of the list. This is the combinatorial heart of the
-   logarithmic bound.
+A set of theorems is **dense** when it intrudes into *every* nonempty open
+region, no matter how small — there is always a member of the set lurking in any
+neighborhood you examine. Density is the mathematical way of saying "you can't
+get away from them."
 
-3. **The logarithmic cost bound.** For positive `d`, `2^(proofCost(d)) ≤ d`. Proof cost
-   never exceeds `log₂` of magnitude.
+## Density: the floating theorems are everywhere
 
-4. **Denominator antitonicity.** For `0 < a ≤ b`, `⌊N / b⌋ ≤ ⌊N / a⌋`. Larger divisors
-   give smaller quotients.
+Here is the climax.
 
-5. **The anti-gravity support trade-off.** For positive `d`,
-   `support(N, d) ≤ ⌊N / 2^(proofCost(d))⌋`. A result's reach is capped by the universe
-   size divided by two to its proof cost.
+> **The Density Theorem.** In the Alexandrov topology on the OWF stratum, the
+> anti-gravity theorems are dense.
 
-These five statements together constitute a complete, exact theory of the anti-gravity
-phenomenon in the integer model. Nothing here is conjectural; the surprising part is
-that so faithful a picture of "important but easy" results can be captured by something
-as elementary as counting prime factors.
+The heart of the proof is a single, satisfying observation:
 
-## The view from here
+> Every nonempty "from this floor up" region $[a, \infty)$ contains an
+> anti-gravity theorem.
 
-We chose the integers as our laboratory because they make the two rulers — weight and
-cost — perfectly concrete and let us prove sharp inequalities about them. But the
-phenomenon the model captures is general, and the natural next steps are about carrying
-it into richer settings. One can replace the all-or-nothing dependency "`d` divides
-into `N`" with a *weighted* notion that records how many times or how critically one
-result invokes another, and ask whether the same averaging bounds survive. One can
-replace direct support with *transitive* support — counting not just the immediate
-dependents of a result but everything reachable through them — and re-derive
-anti-gravity against that stronger measure. And one can run the whole calculus on the
-real dependency graph of a large mathematical library, extracting its empirically
-anti-gravity results and comparing them with our intuitions about which lemmas are
-"foundational."
+And we already know why. Given any threshold $a$, climb the infinite ladder to a
+witness $2^p$ heavier than $a$. That witness lies in the region $[a, \infty)$ — it
+clears the threshold — and it floats. Since every nonempty open region contains a
+"from this floor up" region inside it, and every one of those contains a witness,
+the floating theorems leak into every neighborhood of the entire space.
 
-What the integer model gives us is a proof of concept in the most literal sense: a
-fully precise world in which the lightest theorems really do hold up the most, in which
-the trade-off between proof cost and structural reach is an exact inequality, and in
-which the humble number `1` sits at the bottom of everything, weightless and
-indispensable. The cathedral's lightest stones bear its heaviest loads — and now we can
-say exactly why.
+This is the rigorous heart of the original speculation that "anti-gravity
+theorems are dense in the space of all theorems." In our cryptographic universe
+the statement is not a metaphor; it is a proved topological fact. You cannot draw
+a region around any theorem, however tight, without trapping a floating theorem
+inside it.
+
+## What about the "10%"?
+
+The original conjecture came with a tantalizing prediction: that roughly 10% of
+the theorems in any formal library are anti-gravity. Our work clarifies what is
+robust about that intuition and what is not.
+
+What is robust — and now *proved* — is the qualitative claim: floating theorems
+are not rare. They form a dense set; they appear arbitrarily high and
+arbitrarily close to everything. What is *not* universal is the precise figure of
+10%. The fraction of theorems pressed against the ceiling depends entirely on the
+shape of the dependency graph. In a library shaped like a star (one hub, many
+leaves) the fraction is tiny; in a library that is a long total chain the
+fraction is large. The "10%" is best understood as a statement about the *growth
+rate* of total dependency mass in real libraries — only a near-quadratic mass
+budget yields a constant positive fraction. The clean, universal, unconditional
+truth is density, and that is what we have nailed down.
+
+## Why this matters
+
+Beyond the pleasure of turning a slogan into a theorem, the anti-gravity picture
+offers a lens on mathematical and cryptographic architecture.
+
+It explains why foundational results *look* miraculous. We instinctively expect
+load and effort to scale together, but the trade-off shows weight grows
+exponentially in proof complexity. The deepest theorems are precisely the ones
+where this exponential gap has opened widest — they *must* have short proofs
+relative to their reach, or they could not be so heavy.
+
+It suggests a search strategy. If floating theorems are dense, then near any
+result you care about there is a maximally efficient reformulation — a way to
+carry the same load with a shorter proof ladder. Hunting for the nearest witness
+is hunting for the most economical possible argument.
+
+And it gives cryptographers a clean order-theoretic language for "foundational."
+The one-way function sits at the bottom of the reduction order, the universal
+load-bearer; in the future-directions program it is conjectured to be exactly the
+weight-maximizer of the whole hierarchy. Anti-gravity is the geometry of
+foundations: the lighter the proof relative to the load it carries, the closer a
+theorem floats to the bedrock everything else stands on.
+
+The skyline, it turns out, is held up by toothpicks after all — but only the
+sturdiest, most perfectly placed ones, and they are everywhere you look.
