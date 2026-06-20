@@ -463,6 +463,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Formalize the hydrogen atom Hamiltonian in Lean 4. Prove the spectrum is {-1/n\u00b2 : n \u2208 \u2115+} \u222a [0,\u221e). Construct the spherical harmonics as eigenfunctions of the angular momentum operator. Prove the selection rules for transitions.",
+    "domains": [
+      "Physics",
+      "Analysis"
+    ],
+    "id": "seed_362",
+    "priority_score": 0.88,
+    "research_mode": "prove",
+    "source_exp_id": "seed",
+    "status": "available",
+    "timestamp": "2026-06-18T03:56:25.432770+00:00",
+    "title": "Quantum Mechanics: Spectral Theory of Hydrogen"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Formalize the group law on elliptic curves over finite fields in Lean 4. Prove associativity via the chord-tangent construction. Implement and verify point multiplication. Prove Hasse's bound: |#E(F_p) - p - 1| \u2264 2\u221ap.",
     "domains": [
       "Cryptography",
@@ -2440,11 +2455,26 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let \\(\\mathcal S_1,\\dots,\\mathcal S_r\\) be pairwise non\u2011isomorphic Shimura curves attached to quaternion algebras over \\(\\mathbb Q\\) (or more generally to forms of \\(\\mathrm{PGL}_2\\)). For each \\(n\\) let \\(z_n=(z_{n,1},\\dots,z_{n,r})\\) be a CM point whose coordinates all have the same CM field \\(E_n\\). Assume the sequence \\((z_n)_n\\) is strict (its intersection with any proper special subvariety is finite). Then the Galois orbits \\(\\mathrm{Gal}(\\overline{\\mathbb Q}/\\mathbb Q)\\cdot z_n\\) become equidistributed in \\(\\mathcal S_1\\times\\dots\\times\\mathcal S_r\\) with respect to the product of the natural hyperbolic probability measures, **without any hypothesis that two fixed primes split in each \\(E_n\\)**. This conjecture extends Theorem\u202f1 of the cited paper by removing the Linnik\u2011type splitting condition, thereby providing an unconditional equidistribution statement for arbitrary sequences of CM points on such products.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2135",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19933v1",
+    "status": "available",
+    "timestamp": "2026-06-20T09:40:14.719737+00:00",
+    "title": "Equidistribution of Galois orbits of CM points on products of non\u2011isomorphic Shimura curves without auxiliary splitting conditions"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let S_N(x)=sum_{i=1}^N x^i. For primes p<q with pq | m and n^2 >= (p-1)(q-1)+1, the conjecture says the cyclotomic transfer P=S_{m^2}/Phi_{pq}, Q=S_{n^2} Phi_{pq} is a nonstandard square-sided pair of sizes m^2 and n^2. Equivalently, the quotient and product have nonnegative integer coefficients, P(1)=m^2, Q(1)=n^2, and P Q=S_{m^2}S_{n^2}. A counterexample would be any admissible p,q,m,n for which one of these two explicit polynomials has a negative coefficient.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2135",
+    "id": "fd_2136",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -2458,7 +2488,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2136",
+    "id": "fd_2137",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
@@ -2473,13 +2503,27 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2137",
+    "id": "fd_2138",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20085v1",
     "status": "available",
     "timestamp": "2026-06-20T07:49:31.344472+00:00",
     "title": "Uniqueness of extremal large cross\u2011intersecting families via diversity"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Proposes that n_k surpasses an exponential growth threshold, confirming asymptotic properties untested yet.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2139",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19863v1",
+    "status": "available",
+    "timestamp": "2026-06-20T09:40:46.679825+00:00",
+    "title": "n_k Exceeds Exponential Bound"
   },
   {
     "consumed_by_exp_id": "",
@@ -3118,7 +3162,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Research theme: **\"Non-Well-Founded Proofs: Proofs That Reference Themselves\"**,"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "f2ef70c3",
     "description": "# Future Directions \u2014 The Hodge Conjecture for Neural Networks\n\nDerived from the cycle in `NeuralHodgeConjecture.lean` and `NeuralHodgeCatalogLink.lean`,\nwhich proved:\n\n* `pl_hodge_decomposition` / `pl_hodge_span`: every PL chain on a ReLU decision surface is\n  a `\u2124`-combination of hyperplane sections (the \"trivial existence half\" of the Hodge\n  conjecture for these surfaces);\n* `regionBound_recurrence`, `regionBound_le_two_pow`, `regionBound_eq_two_pow`,\n  `regionBound_mono_width`: the Zaslavsky region/Betti budget `\u03a3_{i\u2264n} C(m,i)` for one\n  ReLU layer, with its Pascal recurrence and the `2^m` ceiling;\n* `reluHodge_totalBetti` (and its catalog avatar `reluHodgeDiamond_totalDim_eq`): the\n  extremal total Betti number of a ReLU decision surface is **exactly** `2^{w\u2081}\u00b72^{wL}\u00b7mid`.\n\n---\n\n## Conjecture 1 \u2014 Sharpness of the `2^{w\u2081+wL}` Betti ceiling\n\nThe total Betti number of a ReLU decision surface with first/last hidden widths `w\u2081, wL`\nand middle-width product `mid` is **at most** `2^{w\u2081}\u00b72^{wL}\u00b7mid`, and this is attained by\na generic-weight network in input dimension `n \u2265 w\u2081 + wL`.\n\n**The key insight is** that `reluHodge_totalBetti` computes the *saturated* diamond exactly\nas `2^{w\u2081}\u00b72^{wL}\u00b7mid`, while `regionBound_eq_two_pow` shows the per-layer count saturates\nto `2^m` precisely when the ambient dimension is large; combining the two layers should turn\nthe upper bound into an equality in high dimension.\n\n**Why now?** Both halves (exact saturated value, dimensional saturation of one layer) are\nnow formal lemmas in this file, so the remaining work is purely the genericity/transversality\nargument, which is decoupled from the combinatorics.\n\n## Conjecture 2 \u2014 A K\u00fcnneth product law for stacked ReLU blocks\n\nFor a composition of two ReLU sub-networks the total Betti number is *sub-multiplicative*:\n`B(f \u2218 g) \u2264 B(f) \u00b7 B(g)`, with equality when the blocks are in \"general position\".\n\n**The key insight is** that `reluHodge_totalBetti` already factors as a product\n`(\u03a3_p C(w\u2081,p))\u00b7(\u03a3_q C(wL,q))\u00b7mid` via `Finset.sum_mul_sum`; the same factorisation engine\nshould govern how Betti budgets multiply across composition boundaries.\n\n**Why now?** The factored form is exactly the proof structure used for\n`reluHodge_totalBetti`, so the product law is a structural generalisation of an\nalready-formalised identity rather than a new technique.\n\n## Conjecture 3 \u2014 The Zaslavsky recurrence is the unique solution to depth refinement\n\nAny width-monotone, dimension-graded region count satisfying\n`R(m+1,n+1) = R(m,n+1) + R(m,n)` with `R(0,n)=1` equals `regionBound`, hence the\nbinomial-sum formula is forced by adding one neuron at a time.\n\n**The key insight is** that `regionBound_recurrence` together with `regionBound_mono_width`\npins down a two-variable Pascal-type recurrence whose only solution is `\u03a3_{i\u2264n} C(m,i)`;\nuniqueness should follow by double induction.\n\n**Why now?** The recurrence and monotonicity are both proved here, so the conjecture reduces\nto a uniqueness-of-recurrence argument with no missing analytic input.\n\n## Conjecture 4 \u2014 Algebraic-cycle rank lower bound via the catalog Euler characteristic\n\nThrough `reluHodgeDiamond` the decision surface acquires a catalog `HodgeDiamond`, hence an\nEuler characteristic `eulerChar`; we conjecture `|eulerChar| \u2264 reluTotalBetti` with the gap\nmeasuring the number of *independent* algebraic cycles needed to represent all classes.\n\n**The key insight is** that `reluHodgeDiamond_totalDim_eq` already lands the surface inside\nthe catalog's `HodgeEPolynomial` machinery, where `eulerChar` and `totalDim` are defined on\nthe same diamond, so their comparison is a direct two-sum inequality.\n\n**Why now?** The bridge `NeuralHodgeCatalogLink.lean` makes both invariants available on one\nobject for the first time, so the inequality can be stated and attacked without rebuilding\nany Hodge-diamond infrastructure.\n",
     "domains": [
       "Algebra",
@@ -3128,7 +3172,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "6fb69121",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-17T06:17:33.490691+00:00",
     "title": "Derived from the cycle in `NeuralHodgeConjecture.lean` and `NeuralHodgeCatalogLi"
   },
