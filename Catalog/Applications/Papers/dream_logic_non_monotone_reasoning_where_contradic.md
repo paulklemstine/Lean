@@ -1,69 +1,51 @@
-# Computational Evidence — Dream Logic
+# Computational Evidence — Dream Logic Cycle v19c
 
-Concise numerical/sanity evidence gathered before formalization.
+All claims below were checked with `#eval` against the Lean definitions before
+formalisation, then turned into proved theorems.
 
-## 1. Belnap `FOUR` truth tables (small-case enumeration)
+## 1. Knowledge join `kjoin` (truth/false/both/neither = T/F/B/N)
 
-Values: `T = true`, `F = false`, `B = both` (glut), `N = neither` (gap).
-Designated `D = {T, B}`. Negation `¬`: `¬T=F, ¬F=T, ¬B=B, ¬N=N`.
+| ⊕ | N | T | F | B |
+|---|---|---|---|---|
+| **N** | N | T | F | B |
+| **T** | T | T | B | B |
+| **F** | F | B | F | B |
+| **B** | B | B | B | B |
 
-Conjunction `∧` (meet in truth order `F < B,N < T`):
+Unit `N` (neither), absorbing `B` (both); disagreement `T⊕F = B` (a glut).
+Commutative, associative, idempotent — verified on all 16 pairs (→ `kjoin_comm`,
+`kjoin_assoc`, `kjoin_idem`).
 
-```
-∧ | T  F  B  N
---+-------------
-T | T  F  B  N
-F | F  F  F  F
-B | B  F  B  F
-N | N  F  F  N
-```
+## 2. Evidence accumulation `accumulate` (foldr ⊕ from N)
 
-Contradiction column `x ∧ ¬x` and designation:
+| evidence `e` | `accumulate e` | `dEntails e` |
+|---|---|---|
+| `[]` | N | **true** (default accept) |
+| `[F]` | F | **false** (retracted!) |
+| `[T]` | T | true |
+| `[T, F]` | B (glut) | true (no explosion) |
+| `[F, F]` | F | false |
+| `[T, T, F]` | B | true |
 
-```
-x  | ¬x | x∧¬x | designated?
-T  | F  |  F   |  no
-F  | T  |  F   |  no
-B  | B  |  B   |  YES   <- glut: contradiction accepted, explosion blocked
-N  | N  |  N   |  no
-```
+The `[]` → `[F]` transition is the witnessed **non-monotonic retraction**
+(`dEntails_nonmonotone`). The `[T,F]` glut row is `contradiction_coexists_no_explosion`.
 
-Only `B` makes `x ∧ ¬x` designated → `glut_iff` (unique glut).
-Dually, only `N` makes `x ∨ ¬x` non-designated → `gap_iff` (unique gap).
-Explosion witness: `(x,y) = (B,F)` — `B∧¬B = B` designated, `F` not. Confirmed.
+## 3. Acceptance monotonicity (`designated` under ⊕)
 
-## 2. Topological model — frontier = contradiction set
+`designated`: N↦F, T↦T, F↦F, B↦T. Going *up* `kle` only ever crosses
+`F ↦ B` and `N ↦ T`, both *into* designation; never out. Checked on all
+`kle`-comparable pairs → `designated_kmono`. Hence the evidence layer is
+monotone and all non-monotonicity is the `N`-default firing.
 
-For closed `A`, `contradiction A := A ∩ closure Aᶜ = frontier A`.
+## 4. Complement vs. negation
 
-| space | closed `A`        | `frontier A`     | contradiction? |
-|-------|-------------------|------------------|----------------|
-| ℝ     | `[0,1]`           | `{0,1}`          | nonempty (glut)|
-| ℝ     | `[0,1] ∪ [2,3]`   | `{0,1,2,3}`      | nonempty       |
-| ℝ     | `∅`               | `∅`              | empty (clopen) |
-| ℝ     | `univ`            | `∅`              | empty (clopen) |
-| ℝ     | `{pt}`            | `{pt}`           | nonempty       |
-| 2-pt discrete | `{a}`     | `∅`              | empty (clopen) |
+For every `x` there is a lattice complement (`x ∧ c = F`, `x ∨ c = T`):
+N↔B, T↔F. But De Morgan `neg` fixes B and N, so `B ∧ neg B = B ∧ B = B ≠ F`:
+`neg` is **not** the complement (`neg_ne_complement`). This is the algebraic
+root of "contradictions coexist".
 
-Pattern: contradiction empty ⇔ `A` clopen (`lnc_holds_iff_clopen`). On the
-connected space ℝ the only clopen sets are `∅` and `univ`, so *every* proper
-nonempty closed set is dialetheic (`connected_forces_paraconsistency`).
+## OEIS / sequences
 
-## 3. Counterexample hunt on the briefing's literal claim
-
-Claim as literally worded: "open sets are not closed under arbitrary union."
-This is **false** by the axioms of a topology (arbitrary unions of opens are
-open). Tested mentally on ℝ, discrete, indiscrete — all closed under arbitrary
-union of opens. The salvageable dual statement, verified above, is "closed sets
-need not be clopen", which is what the formalization proves. Logged in Stage 3
-Lab Notes as a "needs a different definition" outcome.
-
-## 4. OEIS
-
-No integer sequence is central to this cycle (the objects are a fixed 4-element
-algebra and topological boundaries), so no OEIS lookup applies. The clopen-count
-function from Conjecture 1 (`X ↦ |clopen X|`) for finite spaces would be the
-natural sequence to register in a follow-up cycle.
-
-All checks above were reproduced as Lean theorems with 0 sorries; the markdown is
-only an informal pre-registration of the expected results.
+No integer sequence is central to this cycle (the structures are the fixed
+4-element bilattice and finite truth tables), so an OEIS search is not
+applicable. The evidence above is exhaustive over the finite domain.
