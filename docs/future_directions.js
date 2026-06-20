@@ -3493,6 +3493,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# FUTURE DIRECTIONS \u2014 Topological Generalization Bounds for Deep Learning\n\nDerived from the v19a research cycle that produced `Bounds.lean` and\n`CohomologyCapacity.lean`. Both deliverables serve the **cross-domain bridge**\ncategory (Algebra / Algebraic Topology \u2194 Machine Learning generalization theory).\n\nThis cycle established four facts about a McAllester-style bound whose complexity\nterm is the first Betti number `b\u2081` of weight space:\n- monotonicity in `b\u2081` (`topoGenBound_mono_betti`),\n- the exact gap formula (`topoGenBound_gap_eq`),\n- consistency `\u2192 empRisk` at rate `\u0398(\u221a((log n)/n))` (`topoGenBound_tendsto_empRisk`),\n- the bridge `H\u00b9 = 0 \u21d2` tightest bound (`cochain_bound_tight_on_total`,\n  `cohComplexity_cocycle_total`), routed through the catalog's\n  `cocycle_eq_coboundary_on_total`.\n\nThe conjectures below extend those findings.\n\n---\n\n## Conjecture 1 \u2014 Higher-Betti additivity of the topological penalty\n\nFor a complexity term aggregating *all* Betti numbers,\n`topoComplexity_full = log(1 + \u03a3_k w_k b_k)` with weights `w_k > 0`, the resulting\nbound is jointly monotone in every `b_k` and still consistent at the same\n`\u0398(\u221a((log n)/n))` rate.\n\n- **The key insight is...** that consistency in `Bounds.lean` depended only on the\n  complexity term being a *constant in n*; any finite topological summary inherits\n  the decay, so the entire Betti vector \u2014 not just `b\u2081` \u2014 can be charged into the\n  penalty without breaking the statistical rate.\n- **Why now?** The single-Betti case is fully formalized and the limit proof is\n  modular in the constant; generalizing the constant to a Betti-weighted sum is a\n  direct next formal step.\n\n## Conjecture 2 \u2014 Strict monotonicity and a separation gap\n\nThe topological bound is *strictly* increasing in `b\u2081`: for `b1 < b2` and `1 < n`,\n`topoGenBound empRisk b1 n \u03b4 < topoGenBound empRisk b2 n \u03b4`, with an explicit\npositive gap `\u221a(...) \u2212 \u221a(...) \u2265 c(n,\u03b4)\u00b7(log(1+b2) \u2212 log(1+b1))`.\n\n- **The key insight is...** that `log` is strictly monotone and `\u221a` is strictly\n  monotone on positives, so the non-strict chain in `topoGenBound_mono_betti` can\n  be upgraded to a quantitative separation by concavity (mean-value) bounds on \u221a.\n- **Why now?** We already proved the non-strict version and isolated the positive\n  denominator `2(n\u22121)`; the strict refinement reuses exactly that infrastructure.\n\n## Conjecture 3 \u2014 Acyclicity is the unique minimizer\n\nAmong all weight-space complexes on `m > 0` covers, the bound is minimized\n*exactly* by the cohomologically trivial ones (`H\u00b9 = 0`), and this minimum is\nattained on the total space.\n\n- **The key insight is...** that `cohComplexity` is `0` iff the cochain is a\n  coboundary, and `total_space_acyclic` shows the total space realizes this; so\n  \"flat/acyclic generalizes best\" becomes an iff, not just an inequality.\n- **Why now?** `cohComplexity_cocycle_total` proves one direction; the converse\n  (nonzero capacity \u21d2 strictly larger bound) follows from Conjecture 2's strict\n  monotonicity, which is itself within reach.\n\n## Conjecture 4 \u2014 Persistent-homology stability of the bound\n\nReplacing `b\u2081` by a persistence-stable surrogate (total persistence of the `H\u2081`\nbarcode under the bottleneck distance), the induced bound is `1`-Lipschitz in the\nweight perturbation: `|bound(W) \u2212 bound(W')| \u2264 C \u00b7 d_bottleneck(Dgm W, Dgm W')`.\n\n- **The key insight is...** that the catalog's bottleneck-stability machinery\n  (`BoltzmannBridge`) already controls barcode distance, so composing it with the\n  `\u221a`/`log` Lipschitz estimates used here yields a perturbation-robust bound.\n- **Why now?** The `\u221a`-penalty's local Lipschitz behavior is exactly the term we\n  controlled for consistency, and a stable topological summary is the natural\n  input to make the bound robust to SGD noise.\n\n## Conjecture 5 \u2014 Depth-indexed Betti growth governs the bound's tightness\n\nIf network depth `d` grows the first Betti number of the realized weight-space\nnerve at most polynomially, `b\u2081(d) \u2264 P(d)`, then for samples `n = \u03c9(P(d) log P(d))`\nthe topological bound stays consistent uniformly in `d`.\n\n- **The key insight is...** that the penalty depends on `b\u2081` only through\n  `log(1+b\u2081)`, so polynomial Betti growth costs only `O(log d)` in the numerator,\n  which the linear-in-`n` denominator absorbs.\n- **Why now?** The catalog already studies depth/width separations\n  (`DepthHierarchy`, `ReLUDepthWidth`); pairing their cycle-count growth estimates\n  with this cycle's consistency theorem makes the uniform-in-depth claim testable.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2142",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5eb69ea3",
+    "status": "available",
+    "timestamp": "2026-06-20T11:03:18.479469+00:00",
+    "title": "Derived from the v19a research cycle that produced `Bounds.lean` and"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -4022,21 +4037,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-03T22:10:07.214033+00:00",
     "title": "Quantum Key Distribution: BB84 Security Proof"
-  },
-  {
-    "consumed_by_exp_id": "ebc08ab7",
-    "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
-    "domains": [
-      "Tropical",
-      "Computation"
-    ],
-    "id": "fd_0547",
-    "priority_score": 0.5499999999999999,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T22:10:07.541008+00:00",
-    "title": "Tropical Differential Equations: Power Series Solutions"
   },
   {
     "consumed_by_exp_id": "",

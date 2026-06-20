@@ -10,7 +10,7 @@ window.PACKAGE_INDEX = [
     "filename": "topological_generalization_bounds_for_deep_learnin.json",
     "pkg_num": 208,
     "quality": "partial",
-    "quality_score": 0.3494082430939227,
+    "quality_score": 0.5579941436464089,
     "title": "Topological Generalization Bounds for Deep Learning"
   },
   {
@@ -6359,7 +6359,7 @@ window.PACKAGE_GRAPH = {
       "hue": 272,
       "id": "topological_generalization_bounds_for_deep_learnin",
       "primary_domain": "Algebra",
-      "priority_score": 0.3494082430939227,
+      "priority_score": 0.5579941436464089,
       "quality": "partial",
       "shape": "tetrahedron",
       "title": "Topological Generalization Bounds for Deep Learning"
