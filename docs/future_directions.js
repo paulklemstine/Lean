@@ -3105,7 +3105,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Derived from the cycle in `NeuralHodgeConjecture.lean` and `NeuralHodgeCatalogLi"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "8e353e57",
     "description": "# Future Directions \u2014 Paradoxes as Theorems (Liar, Berry, Russell, Made Consistent)\n\nDerived from the cycle whose verified results live in\n`Catalog/Logic/ParaconsistentParadox.lean` (foundations) and\n`Catalog/Computation/ParadoxesAsTheorems.lean` (construction + necessity), and\nbuilding on `Catalog/Logic/ParadoxSelfSoundness.lean`.\n\nThis cycle established, with zero sorries, a single finite four-valued\nparaconsistent theory `paradoxModel` in which the Liar, Russell, and Berry\nparadoxes are simultaneously *designated theorems*, the theory is non-trivial and\nnon-explosive, and it certifies its own soundness; and it proved that a *sound*\nprovable Liar forces a genuine glut `B` (gaps `N` are insufficient).\n\nThe following conjectures are bold, falsifiable refinements.\n\n---\n\n## C1. Glut Minimality / Inconsistency Lower Bound\n\n**Conjecture.** Any sound paraconsistent theory that proves the Liar, a Russell\nsentence, and a Berry sentence as *syntactically distinct* designated theorems\nhas inconsistency degree at least 3, and 3 is attainable.\n\n**The key insight is** that `provable_liar_is_glut` upgrades each of the three\nself-referential paradoxes from \"non-classical\" (`B` or `N`) to \"glut\" (`B`)\nonce soundness and provability are imposed, so three distinct paradoxes must\ncontribute three distinct dialetheias \u2014 strengthening\n`two_paradoxes_force_degree_two` from 2 to 3.\n\n**Why now?** We already have the degree-\u22652 bound via `Finset.one_lt_card` and the\nglut-forcing lemma; the missing step is a Berry sentence that is *intrinsically*\na third glut rather than reusing a Liar fixed point, which the\n`berry_definability_bound` collision can be made to witness.\n\n---\n\n## C2. No Sound Paracomplete (Gap-Only) Theory Proves the Liar\n\n**Conjecture.** In any three-valued logic whose only non-classical value is a gap\n`N` (paracomplete, no glut), the Liar can never be a sound provable theorem; i.e.\nremoving `B` from `BelnapVal` makes `paradoxes_as_theorems` unsatisfiable.\n\n**The key insight is** that `provable_liar_is_glut` already closes the gap escape\nfor the four-valued case; the conjecture says this is not an artifact of the\nextra value `B` being available but a hard impossibility once `B` is deleted \u2014\nsoundness designates only `T`, and a Liar cannot be `T`.\n\n**Why now?** The proof template is the contrapositive of `provable_liar_is_glut`\ncombined with `classical_no_liar`; the only new ingredient is formalizing a\ngap-only sublogic `Fin 3` and showing its designated set is `{T}`.\n\n---\n\n## C3. Explosion is the Unique Obstruction to Consistency\n\n**Conjecture.** For a finite four-valued theory with at least one glut, the\ntheory is non-trivial (some sentence unprovable) **iff** it rejects explosion.\nEquivalently, `HasExplosion` is logically equivalent to triviality in the\npresence of a dialetheia.\n\n**The key insight is** that `explosion_collapses_paradoxModel` shows explosion \u21d2\ntriviality, and `paradoxModel_rejects_explosion` shows the converse direction in\none model; the conjecture promotes this to a biconditional characterization,\nlocating *all* of consistency in the failure of ex falso.\n\n**Why now?** Both implications already exist as separate theorems for the witness\nmodel; generalizing to \"any theory with a glut\" needs only the observation that a\nglut plus explosion designates everything, which is exactly\n`explosion_with_liar_trivializes`.\n\n---\n\n## C4. Self-Soundness is Impossible Without Gluts\n\n**Conjecture.** No consistent *classical or paracomplete* theory containing its\nown truth predicate can prove its own soundness (G\u00f6del/Tarski barrier), but every\nsufficiently expressive *paraconsistent* theory with a designated soundness\nsentence can \u2014 and the dividing line is precisely the availability of the glut\n`B`.\n\n**The key insight is** that `paradoxSelfSound_proves_own_soundness` evades the\nsecond-incompleteness barrier not by weakness but by tolerating the controlled\ncontradiction that makes the soundness sentence designated; the obstruction in\nclassical logic is exactly the explosion that gluts disarm.\n\n**Why now?** `SelfSoundTheory` and the concrete `paradoxSelfSound` give a working\npositive instance; the negative half can be formalized by transporting\n`classical_no_liar` to a self-referential soundness sentence.\n\n---\n\n## C5. Functoriality of Paradox Endomorphisms\n\n**Conjecture.** The Belnap endomorphisms fixing the glut and gap values\n(`ParadoxEndomorphism` in `ParadoxSelfSoundness`) act on the set of designated\nself-referential theorems, and this action preserves both provability and\ninconsistency degree; hence \"paradoxicality\" is an invariant of the endomorphism\nmonoid.\n\n**The key insight is** that `paradox_endo_preserves_fixed_point` shows these maps\nsend negation fixed points to negation fixed points, so they map Liars to Liars\nand gluts to gluts \u2014 turning the ad hoc paradox catalogue into the orbit of a\ngroup action.\n\n**Why now?** The endomorphism monoid (`ParadoxEndomorphism.comp`, `negEndomorphism`)\nis already defined and its fixed-point preservation proved; the next step is to\nlet it act on `ParaconsistentTheory` truth assignments and check `isSound`/\n`inconsistencyDegree` are invariants \u2014 a direct, mechanizable extension.\n",
     "domains": [
       "Logic",
@@ -3115,7 +3115,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "11262eec",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-17T07:30:20.164987+00:00",
     "title": "Derived from the cycle whose verified results live in"
   },
@@ -3479,7 +3479,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Topological Gradient Flow in Deep Learning: Monotonic Persistence of Activation "
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "443cc80d",
     "description": "Conjecture: The large\u2011scale geometry of a (3+1)\u2011dimensional quantum gravity spacetime can be reconstructed uniquely (up to diffeomorphism) from the categorical entanglement renormalization flow of a suitably chosen random tensor network state on a discrete lattice, and the resulting emergent metric satisfies Einstein\u2019s equations with a computable effective stress tensor derived from the network\u2019s higher\u2011category symmetries. Test: Construct explicit random tensor network ensembles on 4\u2011regular hypercubic lattices, equip the tensors with a fusion 2\u2011category symmetry, and implement a categorical multi\u2011scale entanglement renormalization algorithm (cMERA). Compute the induced discrete metric via the quantum information metric (Bures distance) on coarse\u2011grained states. Verify numerically that the discrete Ricci curvature derived from this metric converges, in the continuum limit, to solutions of the Einstein field equations (e.g., Schwarzschild or cosmological FLRW metrics) within statistical error. Refutation occurs if, after exhaustive scaling analysis, the emergent metric fails to satisfy Einstein\u2019s equations for any choice of network parameters or categorical symmetry. Impact: Provides a concrete, testable bridge between quantum information, higher\u2011category theory, and general relativity, offering a computational laboratory for quantum gravity, a new derivation of spacetime dynamics from entanglement, and a framework for generating analytically tractable quantum gravity toy models.",
     "domains": [
       "Novelty",
@@ -3489,7 +3489,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7158260869565218,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-20T05:13:19.309309+00:00",
     "title": "Tensor Network Holography for Quantum Gravity with Categorical Entanglement Reno"
   },
@@ -3657,7 +3657,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "OEIS sequence: \"Orderly\" Friedman numbers (or \"good\" or \"nice\" Friedman numbers): Friedman numbers (A036057) where the construction digits are used in the proper order."
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "5eb69ea3",
     "description": "Conjecture: The generalization error of a neural network can be bounded by topological invariants of its weight space, such as persistent homology or cohomology groups, which vary with model complexity and data structure. This can be tested by training networks on synthetic datasets with known topological features and comparing their generalization performance against computed topological bounds.",
     "domains": [
       "Novelty"
@@ -3666,7 +3666,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-20T05:08:58.897447+00:00",
     "title": "Topological Generalization Bounds for Deep Learning"
   },
@@ -3714,7 +3714,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Close Proofs: Tropicalized binary weight enumerator profile from Smooth Poincar\u00e9 cod"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "df051b46",
     "description": "Cycle a0dd96a5 (Q=0.527) proved 50 theorems in Combinatorics but left 5 `sorry` placeholders. Fill them with complete proofs. Focus on the most important theorems first. Original: Refocus the task onto a minimal, standalone finite-dimensional linear-algebra file that avoids proving a new Sylvester inequality from scratch. Define `transEndo : (\u2115 \u2192 V \u2192\u2097[K] V) \u2192 \u2115 \u2192 \u2115 \u2192 V \u2192\u2097[K] V`",
     "domains": [
       "Combinatorics"
@@ -3723,7 +3723,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.5771458702064898,
     "research_mode": "team",
     "source_exp_id": "a0dd96a5",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-16T12:52:43.615426+00:00",
     "title": "Close Proofs: These conjectures continue the research cycle begun in"
   },
