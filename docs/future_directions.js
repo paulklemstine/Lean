@@ -331,6 +331,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Building on cycle 5e9b4daa (Q=0.794), which proved 103 theorems in Cryptography. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue i",
+    "domains": [
+      "Cryptography"
+    ],
+    "id": "push_5e9b4daa_a525eaf0",
+    "priority_score": 0.89384,
+    "research_mode": "team",
+    "source_exp_id": "5e9b4daa",
+    "status": "available",
+    "timestamp": "2026-06-20T05:05:54.263767+00:00",
+    "title": "Deepening: Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Building on cycle d6329d46 (Q=0.792), which proved 22 theorems in Shared. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Building on cycle e42393e4 (Q=0.792), which proved 42 theorems in Bridges. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: The key insight is that a binary linear code carries a genuinely new tropical v",
     "domains": [
       "Shared"
@@ -3378,6 +3392,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Tropical Cryptography (min-plus eigenvalue cryptanalysis)\n\nDerived from this cycle's findings in `Catalog/Tropical/TropicalDiscreteLog.lean`\n(eigenvalue additivity / TDLP break) and\n`Catalog/Bridges/TropicalStrongDivisibilityDLog.lean` (the eigenvalue sequence is a\n`StrongDivSeq`). Each conjecture is falsifiable.\n\n## C1. The eigenvalue-leak dichotomy is exhaustive\n**Conjecture.** For every finite tropical matrix `A` over `\u211d` with a tropical eigenpair\n`(\u03bb, v)`, the tropical Diffie\u2013Hellman / TDLP scheme built on `A` is broken in\npolynomial time iff `\u03bb \u2260 0`; when `\u03bb = 0` the residual side channel leaks nothing.\n**The key insight is** that the residual `(A^{\u2297(k+1)} \u2297 v)_i \u2212 v_i` equals `(k+1)\u03bb` at\n*every* coordinate, so it is informative exactly when `\u03bb \u2260 0` and identically zero when\n`\u03bb = 0` (`tdlp_recover` vs. `eigenzero_no_leak`).\n**Why now?** Both halves are already formalized as a clean `\u03bb \u2260 0` / `\u03bb = 0` split; what\nremains is to prove no *other* attack-free regime exists, i.e. that `\u03bb = 0` is the unique\nsecure eigenvalue.\n\n## C2. Strong divisibility forces full lattice exposure\n**Conjecture.** Any key-exchange whose public transcript is a strong divisibility\nsequence in the secret exponent leaks the entire divisibility lattice of that exponent,\nand is therefore not exponent-hiding.\n**The key insight is** that `tropEigSeq c` instantiates `StrongDivSeq`, so\n`(m+1) \u2223 (k+1) \u2194 eig(m+1) \u2223 eig(k+1)` (`tdlp_divisibility_leak`): the adversary recovers\ndivisibility relations directly, not just the value.\n**Why now?** The catalog already unifies Fibonacci, Mersenne and identity sequences under\n`StrongDivSeq`; placing tropical eigenvalues in the same frame makes \"is the transcript a\nstrong divisibility sequence?\" a reusable *security audit* for proposed schemes.\n\n## C3. Multiplicative shadow obstructs hardness amplification\n**Conjecture.** Iterating the tropical power (nesting `A^{\u2297a}` then `^{\u2297b}`) cannot\namplify TDLP hardness, because the shared-key eigenvalue factorizes as\n`c \u00b7 eig(shared) = eig(public_a) \u00b7 eig(public_b)` (`tdlp_dh_eigenvalue_product`).\n**The key insight is** that the additive eigenvalue law has a multiplicative shadow on\nthe genuine exponents `(a+1)(b+1)`, so nesting only multiplies a *public* invariant.\n**Why now?** With `tropMatPow_tropMatPow` and `dh_shared_residual` formalized, the\nshared-key eigenvalue is computable from public data alone \u2014 a concrete obstruction to\nany \"tropical hardness amplification\" proposal.\n\n## C4. Generic random tropical matrices have nonzero principal eigenvalue\n**Conjecture.** For a random integer tropical matrix of size `n \u2265 2` with i.i.d. entries\nin `{0,\u2026,M}` and zero self-loops, the maximal tropical eigenvalue (max cycle mean) is\n`0` only on a measure-zero / vanishing-probability set; hence C1 makes the scheme broken\nwith overwhelming probability.\n**The key insight is** that `\u03bb = 0` requires a zero-weight cycle, and with strictly\npositive off-diagonal weights the only zero cycles are self-loops, which the eigenvalue\nattack already neutralizes.\n**Why now?** `digraph_eigenvalue_nonpos`/`digraph_eigenzero_const` already pin the\nboundary at `\u03bb = 0` via constant eigenvectors; quantifying how rarely *non-constant*\neigenvectors hit `\u03bb = 0` turns the qualitative dichotomy into a probabilistic break.\n\n## C5. The eigenvalue gcd law detects key reuse across sessions\n**Conjecture.** Given two transcripts `A^{\u2297(k+1)}` and `A^{\u2297(m+1)}` sharing the\neigenvector `v`, the integer `gcd(eig(k+1), eig(m+1)) = c\u00b7gcd(k+1,m+1)`\n(`tropical_eigenvalue_gcd`) reveals `gcd` of the two secret exponents, a cross-session\ncorrelation no secure scheme should expose.\n**The key insight is** that the strong divisibility identity turns two independent public\nkeys into a single recoverable arithmetic relation between their secrets.\n**Why now?** The gcd identity is already proved for `tropEigSeq`; extending it to a\n*meet-in-the-middle* attack on multi-session tropical DH is the natural next experiment.\n",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2133",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "5e9b4daa",
+    "status": "available",
+    "timestamp": "2026-06-20T05:03:30.483816+00:00",
+    "title": "Derived from this cycle's findings in `Catalog/Tropical/TropicalDiscreteLog.lean"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3404,6 +3433,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "in_progress",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: For any deep ReLU network trained with standard stochastic gradient descent on a fixed dataset, the persistent homology of the gradient vector field (computed from activation patterns) is non\u2011increasing\u2014i.e., no new topological cycles appear\u2014in any later training epoch compared to earlier epochs. Test: Train a network, compute PH of its gradients at regular checkpoints (e.g., every 500 steps); if any checkpoint shows a strictly larger PH signature (more cycles or higher Betti numbers) than a previous checkpoint, the conjecture is falsified.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_2134",
+    "priority_score": 0.7158260869565218,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-20T05:03:56.298889+00:00",
+    "title": "Topological Gradient Flow in Deep Learning: Monotonic Persistence of Activation "
   },
   {
     "consumed_by_exp_id": "",
@@ -4522,21 +4566,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-01T12:30:30.700907+00:00",
     "title": "The Collatz Conjecture Is Undecidable: What If 3n+1 Can't Be Proved?"
-  },
-  {
-    "consumed_by_exp_id": "5e9b4daa",
-    "description": "Tropical arithmetic (min-plus algebra) replaces + with min and * with +. A tropical matrix A over Z union {infinity} acts on vectors by tropical matrix multiplication: (A tropimes v)_i = min_j (A_{ij} + v_j). Tropical matrices have eigenvalues in the max-plus sense: lambda is a tropical eigenvalue if A tropimes v = lambda + v for some v. Conjecture: tropical matrix multiplication is a one-way function suitable for cryptography. Specifically, the 'tropical discrete logarithm problem' (TDLP) is: given a tropical matrix A and B = A^{otimes k} (tropical matrix power), find k. The tropical matrix power A^{otimes k} is computed in O(n^3 * log(k)) time (by repeated squaring), but recovering k from (A, A^{otimes k}) is hard because the tropical eigenvalues satisfy lambda(A^{otimes k}) = k * lambda(A) (tropical eigenvalues are additive under power), so k = lambda(A^{otimes k}) / lambda(A). But this only works if lambda(A) != 0 (in the tropical sense, lambda(A) != infinity). Conjecture: the tropical Diffie-Hellman key exchange is secure: Alice sends A^{otimes a}, Bob sends A^{otimes b}, and the shared key is A^{otimes ab}. Breaking this requires solving the TDLP, which is believed to be hard for random tropical matrices of size n >= 10. Test: implement the tropical DH key exchange and measure the key generation time vs matrix size. Attempt to break it with known attacks (tropical eigenvalue computation, shortest path algorithms). Impact: tropical arithmetic provides a new foundation for post-quantum cryptography.",
-    "domains": [
-      "Novelty",
-      "Cryptography"
-    ],
-    "id": "fd_0088",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-01T12:30:30.782446+00:00",
-    "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
   },
   {
     "consumed_by_exp_id": "",

@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "5af43ad7",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Hodge–Laplacian Message Passing, Third Cycle\n\n## Synthesis\n\nThis cycle closed two of the standing conjectures of the *spectral depth threshold* /\n*full Hodge decomposition* progr",
-      "quality_score": 0.7068800000000001,
-      "sorry_count": 3,
-      "theorem_count": 0,
-      "timestamp": "2026-06-14T07:10:00",
-      "title": "This cycle pushed the *spectral depth threshold* program of"
-    },
-    {
       "cycle_id": "e955f9f8",
       "domain": "Novelty",
       "key_insight": "# Future Directions: Boundedness and Density in the Order Type of the p-Degrees\n\n## Synthesis\n\nThe order-theoretic core of the Cook–Reckhow program in this catalog has, over successive\ncycles, been as",
@@ -499,19 +489,19 @@
       "theorem_count": 89,
       "timestamp": "2026-06-20T04:59:56",
       "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+    },
+    {
+      "cycle_id": "5e9b4daa",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Tropical Cryptography (min-plus eigenvalue cryptanalysis)\n\nDerived from this cycle's findings in `Catalog/Tropical/TropicalDiscreteLog.lean`\n(eigenvalue additivity / TDLP break)",
+      "quality_score": 0.79384,
+      "sorry_count": 0,
+      "theorem_count": 103,
+      "timestamp": "2026-06-20T05:05:53",
+      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "13a80f4d",
-      "domain": "Geometry",
-      "key_insight": "# Future Directions — Boltzmann Bridge XI: Functorial Transport and the Contractible Path Space\n\n## Synthesis\n\nBridge XI (`InterleavingPathFunctor.lean`) discharged the two purely *constructive*\nFutur",
-      "quality_score": 0.6571556692913385,
-      "sorry_count": 1,
-      "theorem_count": 127,
-      "timestamp": "2026-06-14T23:22:15",
-      "title": "Bridge IX (`InterleavingGeodesic.lean`) gave the persistence-stability arc its f"
-    },
     {
       "cycle_id": "44a857c6",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 89,
       "timestamp": "2026-06-20T04:59:56",
       "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+    },
+    {
+      "cycle_id": "5e9b4daa",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Tropical Cryptography (min-plus eigenvalue cryptanalysis)\n\nDerived from this cycle's findings in `Catalog/Tropical/TropicalDiscreteLog.lean`\n(eigenvalue additivity / TDLP break)",
+      "quality_score": 0.79384,
+      "sorry_count": 0,
+      "theorem_count": 103,
+      "timestamp": "2026-06-20T05:05:53",
+      "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "2086db82",
-      "domain": "Applications",
-      "name": "leftPart_append",
-      "quality": 0.70696
-    },
-    {
-      "cycle_id": "2086db82",
-      "domain": "Applications",
-      "name": "rightPart_append",
-      "quality": 0.70696
-    },
-    {
-      "cycle_id": "2086db82",
-      "domain": "Applications",
-      "name": "append_leftPart_rightPart",
-      "quality": 0.70696
-    },
     {
       "cycle_id": "999c0f6b",
       "domain": "Algebra",
@@ -2803,9 +2785,27 @@
       "domain": "Cryptography",
       "name": "glue_eq_of_locally_eq",
       "quality": 0.74408
+    },
+    {
+      "cycle_id": "5e9b4daa",
+      "domain": "Cryptography",
+      "name": "tropEigSeq_apply",
+      "quality": 0.79384
+    },
+    {
+      "cycle_id": "5e9b4daa",
+      "domain": "Cryptography",
+      "name": "residual_eq_tropEigSeq",
+      "quality": 0.79384
+    },
+    {
+      "cycle_id": "5e9b4daa",
+      "domain": "Cryptography",
+      "name": "that",
+      "quality": 0.79384
     }
   ],
-  "last_updated": "2026-06-20T04:59:56",
+  "last_updated": "2026-06-20T05:05:53",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3319,12 +3319,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "d79ba9e2",
-        "quality": 0.66144,
-        "theorems": 11,
-        "title": "Isogeny-Based Cryptography: CSI-FiSh"
-      },
-      {
         "cycle_id": "d1b34dda",
         "quality": 0.46740400000000004,
         "theorems": 14,
@@ -3377,6 +3371,12 @@
         "quality": 0.74408,
         "theorems": 89,
         "title": "Sheaf-Theoretic Data Integration: When Databases Form a Sheaf"
+      },
+      {
+        "cycle_id": "5e9b4daa",
+        "quality": 0.79384,
+        "theorems": 103,
+        "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
       }
     ],
     "Geometry": [
