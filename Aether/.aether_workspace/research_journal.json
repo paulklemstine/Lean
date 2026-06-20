@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "fda530b6",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — Local-to-Global Structure of Fibonacci Apparition Ranks\n\n## Synthesis\n\nThis cycle read the Fibonacci **rank of apparition** (entry point) `z(p) = fibEntry p` through a\nsheaf-theo",
-      "quality_score": 0.39268079867656686,
-      "sorry_count": 2,
-      "theorem_count": 136,
-      "timestamp": "2026-06-14T23:23:00",
-      "title": "Close Proofs: This cycle attacked the conjecture of a *sharp proof-complexity phase "
-    },
-    {
       "cycle_id": "2d177d42",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Boltzmann Bridge XI: Convexity & Bicombing of Interleaving Geodesics\n\n## Synthesis\n\nThe persistence-stability arc of the catalog climbed a ladder of structure: a\nrelational preor",
@@ -2501,6 +2491,16 @@
       "theorem_count": 103,
       "timestamp": "2026-06-20T05:09:26",
       "title": "Ramsey Theory: Bounds and Constructions"
+    },
+    {
+      "cycle_id": "0c649dc0",
+      "domain": "Cryptography",
+      "key_insight": "# Future Directions — Anti-Gravity Mathematics in Cryptographic Dependency Graphs\n\nDerived from this cycle's findings (see the Lab Notes in\n`AntiGravityWeight.lean` and `AntiGravityDensity.lean`). Thi",
+      "quality_score": 0.5379381188118812,
+      "sorry_count": 0,
+      "theorem_count": 103,
+      "timestamp": "2026-06-20T05:13:48",
+      "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8524
     }
   ],
-  "last_updated": "2026-06-20T05:09:26",
+  "last_updated": "2026-06-20T05:13:48",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3319,12 +3319,6 @@
     ],
     "Cryptography": [
       {
-        "cycle_id": "d1b34dda",
-        "quality": 0.46740400000000004,
-        "theorems": 14,
-        "title": "Speculative: Ramanujan-Style Intuition as Formalizable Meta-Reasoning"
-      },
-      {
         "cycle_id": "c2929b61",
         "quality": 0.5083935828877005,
         "theorems": 0,
@@ -3377,6 +3371,12 @@
         "quality": 0.79384,
         "theorems": 103,
         "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+      },
+      {
+        "cycle_id": "0c649dc0",
+        "quality": 0.5379381188118812,
+        "theorems": 103,
+        "title": "Speculative: Anti-Gravity Mathematics — Theorems That Resist Proof"
       }
     ],
     "Geometry": [

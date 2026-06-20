@@ -3421,6 +3421,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 Anti-Gravity Mathematics in Cryptographic Dependency Graphs\n\nDerived from this cycle's findings (see the Lab Notes in\n`AntiGravityWeight.lean` and `AntiGravityDensity.lean`). This cycle established a\n*conservation law* for gravitational weight (`antiGravity_mass_bound`:\n`\u03b8 \u00b7 #antigravity \u2264 \u2211 w`) and showed the \"10% density\" folklore is\nregime-dependent \u2014 `\u2264 1/n` in a star library (`star_scarcity`) but `\u2265 1/2` in a\ntotal-order library (`totalOrder_density`), with the cryptographic hardness\nhierarchy as an exact witness (`owf_maximal_weight`).\n\n---\n\n## Conjecture 1 \u2014 The mass-density law: density is `\u0398(mass / (n \u00b7 \u03b8))`\nA formal library with `n` results, total dependency mass `M = \u2211 w`, and weight\nthreshold `\u03b8 = c\u00b7n` has anti-gravity fraction `\u0398(M / (c\u00b7n\u00b2))`, and this is tight\nin both directions (the Markov upper bound and a matching construction).\n\n- **The key insight is** that gravitational weight is a *conserved budget*:\n  the mass `M` is split among at most `M/\u03b8` heavy results, so density is forced\n  to track `M/(n\u00b7\u03b8)` rather than being a universal constant like 10%.\n- **Why now?** This cycle already proved the upper half (`antiGravity_mass_bound`)\n  and exhibited the extreme constructions; only the matching `\u03a9` bound for the\n  intermediate `M = \u0398(n^{1+\u03b1})` regime remains, which is a direct generalisation\n  of `totalOrder_count`.\n\n## Conjecture 2 \u2014 Real Mathlib's anti-gravity fraction is `\u2248 10%` because `M = \u0398(n\u00b2)`\nEmpirically measuring the Mathlib/`Catalog` import-and-use graph, the fraction of\ndeclarations with above-median dependent count and below-median proof length is\nwithin `[5%, 15%]`, and this is *explained* by the graph having near-quadratic\ntotal weight (a scale-free / preferential-attachment dependency structure).\n\n- **The key insight is** that the \"10%\" prediction is secretly a claim about the\n  *exponent* of the dependency-mass growth: only `M = \u0398(n\u00b2)` yields a constant\n  positive fraction, matching `totalOrder_density`.\n- **Why now?** Lean's `importGraph` tooling (already a dependency of this project)\n  exposes the full transitive-dependent relation, so the abstract `w : Fin n \u2192 \u2115`\n  of `AntiGravityWeight` can be populated with real data and checked against\n  `antiGravity_mass_bound`.\n\n## Conjecture 3 \u2014 Foundational hardness assumptions are exactly the weight-maximisers\nIn any cryptographic reduction DAG, a primitive is a *minimal computational\nassumption* (no strictly weaker primitive implies the same scheme set) if and\nonly if it is a local maximum of `levelWeight`. The one-way function is the\nglobal maximiser, as proved here for the 4-level chain.\n\n- **The key insight is** that `owf_maximal_weight` is not special to the 4-level\n  chain: weight-maximality is the order-theoretic shadow of being a bottom\n  element of the reduction preorder.\n- **Why now?** `Cryptography.HardnessHierarchy` already encodes the preorder via\n  `rank`; extending `levelWeight` to an arbitrary finite `CryptoReduction` DAG\n  (also in that file) makes the iff statement formalisable immediately.\n\n## Conjecture 4 \u2014 Anti-gravity is preserved under reduction composition with bounded loss\nIf `A` is anti-gravity (high weight, short proof) and `B` reduces to `A` with a\nconstant-length reduction, then `B` inherits weight `\u2265 weight(A) \u2212 O(1)` while\nkeeping a short proof; hence anti-gravity propagates \"downward\" along cheap\nreductions and clusters near foundational assumptions.\n\n- **The key insight is** that weight is monotone along the dependency order, so\n  cheap reductions transport the anti-gravity property with only additive loss \u2014\n  the discrete analogue of a potential decreasing slowly along short paths.\n- **Why now?** `Cryptography.HardnessHierarchy.reduction_compose_loss` already\n  quantifies multiplicative reduction loss; pairing it with `exists_heavy` gives\n  the weight-transport lemma needed to close this.\n\n## Conjecture 5 \u2014 A \"no free lunch\" lower bound: short proofs cap achievable weight\nThere is a library-independent function `f` such that any result provable in `\u2264 L`\nproof steps from a fixed axiom set has gravitational weight `\u2264 f(L)` *in that\nlibrary's own future*: you cannot be cheaply provable and unboundedly depended-on\nunless the library itself grows. Formally, weight is bounded by the number of\ndistinct statements expressible within the proof-length budget.\n\n- **The key insight is** that a short proof can only *reference* finitely many\n  prior results, dualising `antiGravity_mass_bound`: cheap proofs bound the\n  *out-degree*, while mass bounds the *in-degree* of the dependency graph.\n- **Why now?** The decidable proof-cost model `c : Fin n \u2192 \u2115` of\n  `AntiGravityWeight` is already in place; adding an explicit\n  \"references \u2264 c i prior nodes\" edge relation turns this into a finite counting\n  statement amenable to the same `Finset.card_nsmul_le_sum` machinery.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_2137",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "0c649dc0",
+    "status": "available",
+    "timestamp": "2026-06-20T05:12:27.687402+00:00",
+    "title": "Derived from this cycle's findings (see the Lab Notes in"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3462,6 +3477,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-20T05:03:56.298889+00:00",
     "title": "Topological Gradient Flow in Deep Learning: Monotonic Persistence of Activation "
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "Conjecture: The large\u2011scale geometry of a (3+1)\u2011dimensional quantum gravity spacetime can be reconstructed uniquely (up to diffeomorphism) from the categorical entanglement renormalization flow of a suitably chosen random tensor network state on a discrete lattice, and the resulting emergent metric satisfies Einstein\u2019s equations with a computable effective stress tensor derived from the network\u2019s higher\u2011category symmetries. Test: Construct explicit random tensor network ensembles on 4\u2011regular hypercubic lattices, equip the tensors with a fusion 2\u2011category symmetry, and implement a categorical multi\u2011scale entanglement renormalization algorithm (cMERA). Compute the induced discrete metric via the quantum information metric (Bures distance) on coarse\u2011grained states. Verify numerically that the discrete Ricci curvature derived from this metric converges, in the continuum limit, to solutions of the Einstein field equations (e.g., Schwarzschild or cosmological FLRW metrics) within statistical error. Refutation occurs if, after exhaustive scaling analysis, the emergent metric fails to satisfy Einstein\u2019s equations for any choice of network parameters or categorical symmetry. Impact: Provides a concrete, testable bridge between quantum information, higher\u2011category theory, and general relativity, offering a computational laboratory for quantum gravity, a new derivation of spacetime dynamics from entanglement, and a framework for generating analytically tractable quantum gravity toy models.",
+    "domains": [
+      "Novelty",
+      "Physics"
+    ],
+    "id": "fd_2138",
+    "priority_score": 0.7158260869565218,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "available",
+    "timestamp": "2026-06-20T05:13:19.309309+00:00",
+    "title": "Tensor Network Holography for Quantum Gravity with Categorical Entanglement Reno"
   },
   {
     "consumed_by_exp_id": "",
@@ -4684,20 +4714,5 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-03T23:40:36.486848+00:00",
     "title": "Speculative: The Universe Computes Its Own Existence (Physics = Computation)"
-  },
-  {
-    "consumed_by_exp_id": "0c649dc0",
-    "description": "Define the 'gravitational weight' of a theorem T as the number of other theorems that depend on T. Define 'anti-gravity' theorems as those with high weight but short proofs. Conjecture: anti-gravity theorems exist in every branch of mathematics (e.g., the fundamental theorem of algebra has weight O(n^2) but proof length O(1) in complex analysis). Prove: the set of anti-gravity theorems is dense in the space of all theorems (in a suitable topology). Predict: 10% of theorems in any formal library are anti-gravity.",
-    "domains": [
-      "Novelty",
-      "Logic"
-    ],
-    "id": "fd_0577",
-    "priority_score": 0.05,
-    "research_mode": "team",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-03T23:40:36.923091+00:00",
-    "title": "Speculative: Anti-Gravity Mathematics \u2014 Theorems That Resist Proof"
   }
 ];

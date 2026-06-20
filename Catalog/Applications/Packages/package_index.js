@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "0c649dc0",
     "filename": "speculative_anti_gravity_mathematics__theorems_tha.json",
     "pkg_num": 202,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5379381188118812,
     "title": "Anti-Gravity Theorems in the Cryptographic Hardness Hierarchy"
   },
   {
@@ -6177,8 +6177,8 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "speculative_anti_gravity_mathematics__theorems_tha",
       "primary_domain": "Cryptography",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5379381188118812,
+      "quality": "partial",
       "shape": "dodecahedron",
       "title": "Anti-Gravity Theorems in the Cryptographic Hardness Hierarchy"
     }
