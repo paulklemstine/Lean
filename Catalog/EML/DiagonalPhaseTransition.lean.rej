@@ -1,0 +1,488 @@
+--- FenchelYoungBridge.lean
++++ FenchelYoungBridge.lean
+@@ -1,353 +1,165 @@
+-/-
+-Copyright (c) 2025. All rights reserved.
+-Released under Apache 2.0 license as described in the file LICENSE.
++import Mathlib
+ 
+-# Diagonal Phase Transition Incompleteness for Closure Self-Models
++/-! # Fenchel-Young Duality Bridge for EML
+ 
+-This file formalizes the **diagonal phase transition incompleteness theorem**:
+-a critical point in the diagonal free energy of a closure self-model certifies
+-the existence of an infinite family of internally irreducible self-descriptions.
++This module formalizes the **Fenchel-Young duality bridge** between EML operations
++and convex optimization. The central insight: exp and log are convex conjugates,
++meaning they are "optimally paired" in a variational sense.
+ 
+-## Mathematical Overview
++## Main definitions
+ 
+-A **closure self-model** is a type `M` equipped with:
+-- A **free energy function** `freeEnergy : ℝ → M → ℝ` assigning thermodynamic
+-  cost at inverse temperature `β` to each element.
+-- A **complexity measure** `complexity : M → ℕ` capturing the internal description
+-  length of elements.
+-- A **thermodynamic bridge axiom** asserting that if every infinite family of
+-  `M`-elements has uniformly bounded complexity, then the diagonal free energy
+-  (the supremum of free energies over all elements) is everywhere differentiable.
++* `FenchelYoungGap` — The gap in the Fenchel-Young inequality.
++* `bregmanExp`, `bregmanNegLog` — Bregman divergences from EML components.
++* `negEntropy` — The neg-entropy mirror map ψ(x) = x·log(x) - x.
++* `klBregman` — KL divergence as a Bregman divergence.
+ 
+-The fundamental axiom encodes a deep principle: phase transitions (non-differentiable
+-points in the free energy) can only arise when there exist infinite families that
+-resist uniform compression. The main theorem extracts the contrapositive:
++## Main results
+ 
+-> **Diagonal Phase Transition Incompleteness:**
+-> If the diagonal free energy has a critical point (non-differentiable point),
+-> then there exists an infinite family of elements that cannot be uniformly
+-> compressed within the closure mechanism.
+-
+-This upgrades classical incompleteness from a static impossibility statement
+-to a quantitative capacity law: thermodynamic criticality certifies the
+-existence of infinitely many internally irreducible self-descriptions.
+-
+-## Main Results
+-
+-* `HasCriticalPoint` — definition of critical points for real functions
+-* `ClosureSelfModel` — the abstract closure self-model typeclass
+-* `diagFreeEnergy` — the diagonal free energy function
+-* `UniformlyCompressibleWithinClosure` — uniform compressibility predicate
+-* `DiagonalEntropyBarrier` — the entropy barrier property
+-* `critical_point_contrapositive_bridge` — the key bridge lemma
+-* `not_forall_imp_exists_and_neg` — classical logic extraction helper
+-* `diagonal_phase_transition_incompleteness` — **the main theorem**
+-* `diagonal_phase_transition_incompleteness_weak` — weaker existential form
+-* `diagonal_entropy_barrier_iff` — characterization of the entropy barrier
+-* `DiagSubcriticalAnalyticFailure` — sharper analytic failure predicate
+-* `diagonal_phase_transition_incompleteness_of_nonanalytic` — sharper variant
+-* `critical_point_yields_infinite_diagonal_irreducibles` — quantitative form
+-
+-## References
+-
+-* Gödel, K. — Über formal unentscheidbare Sätze (1931)
+-* Lawvere, F.W. — Diagonal arguments and cartesian closed categories (1969)
++* `fenchel_young_gap_nonneg` — The gap is always nonneg (convex duality).
++* `fenchel_young_gap_eq_zero_iff` — The gap vanishes iff s = exp(x).
++* `bregmanExp_nonneg` — Exp-Bregman divergence is nonneg.
++* `bregmanNegLog_nonneg` — NegLog-Bregman divergence is nonneg.
++* `klBregman_nonneg` — Gibbs' inequality.
++* `klBregman_eq_zero_iff` — KL divergence vanishes iff arguments are equal.
++* `negEntropy_deriv` — The gradient of neg-entropy is log.
++* `EMLExpr.depth_zero_is_affine` — Depth-0 EML expressions are affine.
+ -/
+ 
+-import Mathlib
++noncomputable section
++open Real Set
+ 
+-open Classical Set
++/-! ## §1. Fenchel-Young Gap and Convex Duality -/
+ 
+-universe u
++/-- The **Fenchel-Young gap** measures how far the Fenchel-Young inequality
++    is from being tight. FYGap(x, s) = exp(x) + s·log(s) - s - x·s for s > 0. -/
++def FenchelYoungGap (x s : ℝ) : ℝ :=
++  Real.exp x + s * Real.log s - s - x * s
+ 
+-/-! ## §1. Fundamental Definitions -/
++/-- The key factorization: FYGap(x,s) = s · (exp(x - log s) - (x - log s) - 1). -/
++theorem FenchelYoungGap_factor (x s : ℝ) (hs : 0 < s) :
++    FenchelYoungGap x s = s * (Real.exp (x - Real.log s) - (x - Real.log s) - 1) := by
++  unfold FenchelYoungGap
++  rw [Real.exp_sub, Real.exp_log hs]
++  field_simp
++  ring
+ 
+-/-- A **critical point** of a real-valued function `f`: a point where `f` fails
+-    to be differentiable. In the thermodynamic setting, this models a phase
+-    transition where the free energy develops a singularity (e.g., a cusp or
+-    discontinuity in a derivative). -/
+-def HasCriticalPoint (f : ℝ → ℝ) : Prop :=
+-  ∃ β₀ : ℝ, ¬DifferentiableAt ℝ f β₀
++/-- The Fenchel-Young gap is always nonneg. -/
++theorem fenchel_young_gap_nonneg (x s : ℝ) (hs : 0 < s) :
++    0 ≤ FenchelYoungGap x s := by
++  rw [FenchelYoungGap_factor x s hs]
++  apply mul_nonneg hs.le
++  linarith [add_one_le_exp (x - Real.log s)]
+ 
+-/-- A **closure self-model** is a type equipped with thermodynamic structure:
++/-
++The Fenchel-Young gap equals zero iff s = exp(x).
++-/
++theorem fenchel_young_gap_eq_zero_iff (x s : ℝ) (hs : 0 < s) :
++    FenchelYoungGap x s = 0 ↔ s = Real.exp x := by
++  constructor <;> intro h';
++  · -- By Fenchel-Young gap factorization, we have $s * (Real.exp (x - Real.log s) - (x - Real.log s) - 1) = 0$.
++    have h_factor : s * (Real.exp (x - Real.log s) - (x - Real.log s) - 1) = 0 := by
++      rw [ ← h', FenchelYoungGap_factor x s hs ];
++    simp_all +decide [ sub_eq_iff_eq_add ];
++    rw [ ← Real.exp_log hs, show x = Real.log s by exact eq_of_sub_eq_zero ( by { by_contra h; exact absurd ( h_factor.resolve_left hs.ne' ) ( by { have := Real.add_one_lt_exp ( show x - Real.log s ≠ 0 by aesop ) ; linarith } ) } ) ];
++  · unfold FenchelYoungGap; subst h'; norm_num;
++    ring
+ 
+-    - `freeEnergy β m`: the free energy at inverse temperature `β` for element `m`
+-    - `complexity m`: an integer complexity measure of element `m`
++/-! ## §2. Bregman Divergences from EML Components -/
+ 
+-    The fundamental axiom `ax_uniform_compression_implies_no_criticality` asserts
+-    that universal uniform compressibility of infinite families precludes critical
+-    points in the diagonal free energy. Concretely: if every infinite family of
+-    `M`-elements has uniformly bounded complexity, then the function
+-    `β ↦ sup_m freeEnergy(β, m)` is everywhere differentiable.
++/-- Bregman divergence generated by exp:
++    D_exp(p,q) = exp(p) - exp(q) - exp(q)·(p - q). -/
++def bregmanExp (p q : ℝ) : ℝ :=
++  Real.exp p - Real.exp q - Real.exp q * (p - q)
+ 
+-    This axiom encodes the principle that thermodynamic phase transitions in
+-    self-referential systems can only occur when there exist infinite families
+-    that resist uniform compression — the diagonal analogue of incompleteness
+-    phenomena. -/
+-class ClosureSelfModel (M : Type u) where
+-  /-- Free energy at inverse temperature `β` for element `m`. -/
+-  freeEnergy : ℝ → M → ℝ
+-  /-- Complexity measure (internal description length) of an element. -/
+-  complexity : M → ℕ
+-  /-- **Thermodynamic bridge axiom.** If every infinite family of `M`-elements
+-      has uniformly bounded complexity, then the diagonal free energy
+-      `β ↦ ⨆ m, freeEnergy β m` is everywhere differentiable.
++/-- Bregman divergence generated by -log:
++    D_{-log}(p,q) = -log(p) + log(q) + (1/q)·(p - q). -/
++def bregmanNegLog (p q : ℝ) : ℝ :=
++  -Real.log p + Real.log q + (1 / q) * (p - q)
+ 
+-      This is the core physical principle: universal compressibility forces
+-      the diagonal free energy into the subcritical (analytic) regime. -/
+-  ax_uniform_compression_implies_no_criticality :
+-    (∀ φ : ℕ → M, Set.Infinite (Set.range φ) →
+-      ∃ C : ℕ, ∀ n, complexity (φ n) ≤ C) →
+-    ∀ β₀ : ℝ, DifferentiableAt ℝ (fun β => ⨆ m : M, freeEnergy β m) β₀
++/-
++The exp-Bregman divergence is nonneg (consequence of strict convexity of exp).
++-/
++theorem bregmanExp_nonneg (p q : ℝ) : 0 ≤ bregmanExp p q := by
++  unfold bregmanExp;
++  rw [ show p = q + ( p - q ) by ring, Real.exp_add ];
++  nlinarith [ Real.exp_pos q, Real.exp_pos ( p - q ), Real.add_one_le_exp q, Real.add_one_le_exp ( p - q ) ]
+ 
+-/-! ## §2. Derived Thermodynamic Notions -/
++/-
++The neglog-Bregman divergence is nonneg for p, q > 0.
++-/
++theorem bregmanNegLog_nonneg (p q : ℝ) (hp : 0 < p) (hq : 0 < q) :
++    0 ≤ bregmanNegLog p q := by
++  unfold bregmanNegLog;
++  have := Real.log_le_sub_one_of_pos ( by positivity : 0 < p / q );
++  rw [ Real.log_div ] at this <;> ring_nf at * <;> nlinarith [ mul_inv_cancel₀ hq.ne' ]
+ 
+-/-- The **diagonal free energy** of a closure self-model `M`:
+-    the supremum over all elements of their free energy at inverse temperature `β`.
++/-- Combined EML-Bregman divergence. -/
++def emlBregman (p q : ℝ) : ℝ := bregmanExp p q + bregmanNegLog p q
+ 
+-    This function captures the worst-case thermodynamic cost of self-description
+-    across all elements of the model. Critical points of this function correspond
+-    to phase transitions in the model's diagonal self-evaluation capacity. -/
+-noncomputable def diagFreeEnergy (M : Type u) [ClosureSelfModel M] : ℝ → ℝ :=
+-  fun β => ⨆ m : M, ClosureSelfModel.freeEnergy β m
++/-- Combined EML-Bregman is nonneg for p, q > 0. -/
++theorem emlBregman_nonneg (p q : ℝ) (hp : 0 < p) (hq : 0 < q) :
++    0 ≤ emlBregman p q :=
++  add_nonneg (bregmanExp_nonneg p q) (bregmanNegLog_nonneg p q hp hq)
+ 
+-/-- **Uniform compressibility within closure**: a family `φ : ℕ → M` is
+-    uniformly compressible if there exists a uniform bound `C` on the
+-    complexity of all elements in the family.
++/-! ## §3. Mirror Descent and Neg-Entropy -/
+ 
+-    This captures the idea that the entire family can be "compressed" to
+-    descriptions of bounded length within the model's closure mechanism. -/
+-def UniformlyCompressibleWithinClosure (M : Type u) [ClosureSelfModel M]
+-    (φ : ℕ → M) : Prop :=
+-  ∃ C : ℕ, ∀ n, ClosureSelfModel.complexity (φ n) ≤ C
++/-- The neg-entropy function ψ(x) = x·log(x) - x, defined on (0,∞). -/
++def negEntropy (x : ℝ) : ℝ := x * Real.log x - x
+ 
+-/-- **Compressibility within a specific bound**: the family `φ` has all
+-    complexities bounded by `C`. This is the quantitative refinement of
+-    `UniformlyCompressibleWithinClosure`. -/
+-def CompressibleWithinClosureBound (M : Type u) [ClosureSelfModel M]
+-    (φ : ℕ → M) (C : ℕ) : Prop :=
+-  ∀ n, ClosureSelfModel.complexity (φ n) ≤ C
++/-
++The gradient of neg-entropy is log(x).
++-/
++theorem negEntropy_deriv (x : ℝ) (hx : 0 < x) :
++    HasDerivAt negEntropy (Real.log x) x := by
++  convert HasDerivAt.sub (HasDerivAt.mul (hasDerivAt_id x)
++    (Real.hasDerivAt_log hx.ne')) (hasDerivAt_id x) using 1
++  simp only [id]; rw [mul_inv_cancel₀ hx.ne']; ring
+ 
+-/-- The **diagonal entropy barrier**: the property that every infinite family
+-    of `M`-elements is incompressible (has unbounded complexity).
++/-- The convex conjugate of neg-entropy is exp:
++    ψ*(s) = sup_x {s·x - ψ(x)} = exp(s). -/
++theorem negEntropy_conjugate_is_exp (s : ℝ) :
++    Real.exp s = s * Real.exp s - negEntropy (Real.exp s) := by
++  unfold negEntropy
++  rw [Real.log_exp]
++  ring
+ 
+-    When this barrier holds, the model has sufficient "room" for all self-referential
+-    data. When it fails, some infinite family can be uniformly compressed,
+-    indicating a thermodynamic anomaly. -/
+-def DiagonalEntropyBarrier (M : Type u) [ClosureSelfModel M] : Prop :=
+-  ∀ φ : ℕ → M, Set.Infinite (Set.range φ) →
+-    ¬ UniformlyCompressibleWithinClosure M φ
++/-! ## §4. KL Divergence as Bregman of Neg-Entropy -/
+ 
+-/-- **Subcritical analytic failure**: the diagonal free energy has a critical
+-    point at some specific inverse temperature `βc`. This is the sharper
+-    form of `HasCriticalPoint` that identifies the specific transition point. -/
+-def DiagSubcriticalAnalyticFailure (M : Type u) [ClosureSelfModel M] : Prop :=
+-  ∃ βc : ℝ, ¬DifferentiableAt ℝ (diagFreeEnergy M) βc
++/-- The KL divergence as a Bregman divergence of neg-entropy:
++    D_ψ(p,q) = p·log(p/q) - (p - q). -/
++def klBregman (p q : ℝ) : ℝ := p * Real.log (p / q) - (p - q)
+ 
+-/-- Witness family type alias for diagonal constructions. -/
+-def DiagonalWitnessFamily (M : Type u) [ClosureSelfModel M] : Type u := ℕ → M
++/-
++KL-Bregman divergence is nonneg for p, q > 0 (Gibbs' inequality).
++-/
++theorem klBregman_nonneg (p q : ℝ) (hp : 0 < p) (hq : 0 < q) :
++    0 ≤ klBregman p q := by
++  have := Real.log_le_sub_one_of_pos ( div_pos hq hp );
++  unfold klBregman; rw [ Real.log_div ] at * <;> ring_nf at * <;> nlinarith [ mul_inv_cancel₀ hp.ne' ] ;
+ 
+-/-! ## §3. Equivalences and Reformulations -/
++/-
++KL-Bregman is zero iff p = q.
++-/
++theorem klBregman_eq_zero_iff (p q : ℝ) (hp : 0 < p) (hq : 0 < q) :
++    klBregman p q = 0 ↔ p = q := by
++  unfold klBregman;
++  by_cases h : p = q <;> simp_all +decide [ ne_of_gt, Real.log_div ];
++  -- If $p \neq q$, then $p/q \neq 1$, so by strict inequality $\log(q/p) < q/p - 1$ (Real.log_lt_sub_one_of_pos for $t \neq 1$).
++  have h_log_lt : Real.log (q / p) < q / p - 1 := by
++    exact Real.log_lt_sub_one_of_pos ( div_pos hq hp ) ( div_ne_one_of_ne <| Ne.symm h );
++  rw [ Real.log_div ] at h_log_lt <;> nlinarith [ mul_div_cancel₀ q hp.ne' ]
+ 
+-/-- `UniformlyCompressibleWithinClosure` is equivalent to the existence of a
+-    bound satisfying `CompressibleWithinClosureBound`. -/
+-theorem uniformlyCompressible_iff_exists_bound
+-    {M : Type u} [ClosureSelfModel M] {φ : ℕ → M} :
+-    UniformlyCompressibleWithinClosure M φ ↔
+-      ∃ C : ℕ, CompressibleWithinClosureBound M φ C := by
+-  rfl
++/-! ## §5. Falsifiable Conjecture: EML Approximation Rate -/
+ 
+-/-- Unbounded complexity implies non-uniform-compressibility. -/
+-theorem not_uniformlyCompressible_of_unbounded
+-    {M : Type u} [ClosureSelfModel M] {φ : ℕ → M} :
+-    (∀ C : ℕ, ¬ CompressibleWithinClosureBound M φ C) →
+-    ¬ UniformlyCompressibleWithinClosure M φ := by
+-  intro h ⟨C, hC⟩
+-  exact h C hC
++/-- **Conjecture (EML-KA Approximation Rate)**: For continuous f on compact K ⊂ (0,∞)²,
++    the best M-term EML-KA approximation error decays as O(1/M).
+ 
+-/-- `DiagSubcriticalAnalyticFailure` is equivalent to `HasCriticalPoint`
+-    applied to the diagonal free energy. -/
+-theorem diagSubcriticalAnalyticFailure_iff_hasCriticalPoint
+-    {M : Type u} [ClosureSelfModel M] :
+-    DiagSubcriticalAnalyticFailure M ↔ HasCriticalPoint (diagFreeEnergy M) := by
+-  rfl
++    **Computational test**: For f(x,y) = sin(x·y) on [1,2]², compute errors
++    for M = 1, 2, 4, 8, 16 terms and verify 1/M decay rate.
++    This is falsifiable: if error decays as 1/√M instead, the conjecture fails. -/
++def emlKAApproxRateConjecture : Prop :=
++  ∀ (f : ℝ → ℝ → ℝ),
++    ContinuousOn (fun p : ℝ × ℝ => f p.1 p.2) (Icc 1 2 ×ˢ Icc 1 2) →
++    ∃ C : ℝ, 0 < C ∧ ∀ M : ℕ, 0 < M → ∃ d : ℕ, d ≤ M
+ 
+-/-- The diagonal entropy barrier holds if and only if every infinite family
+-    is incompressible. (This is definitional but stated for API clarity.) -/
+-theorem diagonal_entropy_barrier_iff
+-    {M : Type u} [ClosureSelfModel M] :
+-    DiagonalEntropyBarrier M ↔
+-      ∀ φ : ℕ → M, Set.Infinite (Set.range φ) →
+-        ¬ UniformlyCompressibleWithinClosure M φ := by
+-  rfl
+-
+-/-! ## §4. Classical Logic Helpers -/
+-
+-/-- Classical extraction: the negation of a universal implication yields an
+-    existential conjunction with negation. This is the key logical maneuver
+-    for converting "not all infinite families are compressible" into
+-    "some infinite family is incompressible." -/
+-theorem not_forall_imp_exists_and_neg
+-    {α : Type*} {P Q : α → Prop} :
+-    (¬ ∀ x, P x → Q x) → ∃ x, P x ∧ ¬ Q x := by
+-  intro h
+-  by_contra h'
+-  push_neg at h'
+-  exact h h'
+-
+-/-- The negation of "all infinite families are compressible" is equivalent to
+-    "some infinite family is incompressible." -/
+-theorem not_forall_infinite_compressible_iff_exists_uncompressible
+-    {M : Type u} [ClosureSelfModel M] :
+-    (¬ ∀ φ : ℕ → M, Set.Infinite (Set.range φ) →
+-        UniformlyCompressibleWithinClosure M φ) ↔
+-    ∃ φ : ℕ → M, Set.Infinite (Set.range φ) ∧
+-      ¬ UniformlyCompressibleWithinClosure M φ := by
+-  constructor
+-  · exact not_forall_imp_exists_and_neg
+-  · rintro ⟨φ, hInf, hNC⟩ h
+-    exact hNC (h φ hInf)
+-
+-/-- Direct witness extraction from the negation of a universal statement. -/
+-theorem exists_uncompressible_family_of_not_all_compressible
+-    {M : Type u} [ClosureSelfModel M] :
+-    ¬ (∀ φ : ℕ → M, Set.Infinite (Set.range φ) →
+-        UniformlyCompressibleWithinClosure M φ) →
+-    ∃ φ : ℕ → M, Set.Infinite (Set.range φ) ∧
+-      ¬ UniformlyCompressibleWithinClosure M φ :=
+-  not_forall_infinite_compressible_iff_exists_uncompressible.mp
+-
+-/-! ## §5. The Thermodynamic Bridge -/
+-
+-/-- **Critical point contrapositive bridge.**
+-
+-    If every infinite family of `M`-elements is uniformly compressible,
+-    then the diagonal free energy has no critical point.
+-
+-    This is the direct consequence of the thermodynamic bridge axiom:
+-    universal compressibility forces all partition-function singularities
+-    to be resolvable, yielding everywhere-differentiable free energy. -/
+-theorem critical_point_contrapositive_bridge
+-    {M : Type u} [ClosureSelfModel M] [Encodable M] :
+-    (∀ φ : ℕ → M, Set.Infinite (Set.range φ) →
+-      UniformlyCompressibleWithinClosure M φ) →
+-    ¬ HasCriticalPoint (diagFreeEnergy M) := by
+-  intro h ⟨β₀, hβ₀⟩
+-  exact hβ₀ (ClosureSelfModel.ax_uniform_compression_implies_no_criticality h β₀)
+-
+-/-- **Weak form**: a critical point implies not all infinite families are
+-    compressible. This is the direct contrapositive of the bridge. -/
+-theorem diagonal_phase_transition_incompleteness_weak
+-    {M : Type u} [ClosureSelfModel M] [Encodable M] :
+-    HasCriticalPoint (diagFreeEnergy M) →
+-    ¬ (∀ φ : ℕ → M, Set.Infinite (Set.range φ) →
+-        UniformlyCompressibleWithinClosure M φ) := by
+-  intro hcrit hall
+-  exact critical_point_contrapositive_bridge hall hcrit
+-
+-/-! ## §6. The Main Theorem -/
+-
+-/-- **Diagonal Phase Transition Incompleteness Theorem.**
+-
+-    In any closure self-model `M`: if the diagonal free energy has a critical
+-    point (a phase transition), then there exists an infinite family of
+-    `M`-elements that cannot be uniformly compressed within the closure mechanism.
+-
+-    ### Proof sketch
+-
+-    By contrapositive reasoning:
+-    1. Assume the diagonal free energy has a critical point.
+-    2. Suppose for contradiction that every infinite family is uniformly
+-       compressible within the closure.
+-    3. By the thermodynamic bridge axiom, this implies the diagonal free energy
+-       is everywhere differentiable — contradicting the critical point.
+-    4. Therefore some infinite family must be incompressible.
+-    5. Classical logic extracts the witness family from the negated universal. -/
+-theorem diagonal_phase_transition_incompleteness
+-    {M : Type u} [ClosureSelfModel M] [Encodable M] :
+-    HasCriticalPoint (diagFreeEnergy M) →
+-    ∃ φ : ℕ → M, Set.Infinite (Set.range φ) ∧
+-      ¬ UniformlyCompressibleWithinClosure M φ := by
+-  intro hcrit
+-  exact exists_uncompressible_family_of_not_all_compressible
+-    (diagonal_phase_transition_incompleteness_weak hcrit)
+-
+-/-! ## §7. Sharper Variants -/
+-
+-/-- **Sharper variant via subcritical analytic failure.**
+-
+-    The same conclusion follows from the sharper hypothesis that the diagonal
+-    free energy specifically fails subcritical analyticity (has a critical point).
+-    Since `DiagSubcriticalAnalyticFailure M` is definitionally equal to
+-    `HasCriticalPoint (diagFreeEnergy M)`, this is a direct restatement. -/
+-theorem diagonal_phase_transition_incompleteness_of_nonanalytic
+-    {M : Type u} [ClosureSelfModel M] [Encodable M] :
+-    DiagSubcriticalAnalyticFailure M →
+-    ∃ φ : ℕ → M, Set.Infinite (Set.range φ) ∧
+-      ¬ UniformlyCompressibleWithinClosure M φ :=
+-  diagonal_phase_transition_incompleteness
+-
+-/-- **Quantitative form: unbounded complexity.**
+-
+-    Under a critical point, there exists an infinite family such that
+-    for every bound `C`, the family is not `C`-compressible. This is
+-    the strongest quantitative version. -/
+-theorem critical_point_yields_infinite_diagonal_irreducibles
+-    {M : Type u} [ClosureSelfModel M] [Encodable M] :
+-    HasCriticalPoint (diagFreeEnergy M) →
+-    ∃ φ : ℕ → M, Set.Infinite (Set.range φ) ∧
+-      (∀ C : ℕ, ¬ CompressibleWithinClosureBound M φ C) := by
+-  intro hcrit
+-  obtain ⟨φ, hInf, hNC⟩ := diagonal_phase_transition_incompleteness hcrit
+-  exact ⟨φ, hInf, fun C hC => hNC ⟨C, hC⟩⟩
+-
+-/-- The quantitative form implies the main theorem. -/
+-theorem diagonal_phase_transition_incompleteness_of_quantitative
+-    {M : Type u} [ClosureSelfModel M] [Encodable M] {φ : ℕ → M} :
+-    (∀ C : ℕ, ¬ CompressibleWithinClosureBound M φ C) →
+-    ¬ UniformlyCompressibleWithinClosure M φ :=
+-  not_uniformlyCompressible_of_unbounded
+-
+-/-! ## §8. Entropy Barrier Characterization -/
+-
+-/-- **Critical point breaks the entropy barrier's contrapositive.**
+-
+-    A critical point implies that the "all infinite families are compressible"
+-    property fails, which is the negation of the entropy barrier when stated
+-    in its contrapositive form.
+-
+-    Note: `DiagonalEntropyBarrier M` says "every infinite family is incompressible."
+-    A critical point implies `¬ AllInfiniteCompressible`, i.e., "some infinite
+-    family is incompressible" — which is *weaker* than `DiagonalEntropyBarrier`.
+-    The critical point gives at least one incompressible infinite family, but
+-    does not by itself guarantee that ALL infinite families are incompressible. -/
+-theorem critical_point_yields_partial_barrier
+-    {M : Type u} [ClosureSelfModel M] [Encodable M] :
+-    HasCriticalPoint (diagFreeEnergy M) →
+-    ∃ φ : ℕ → M, Set.Infinite (Set.range φ) ∧
+-      ¬ UniformlyCompressibleWithinClosure M φ :=
+-  diagonal_phase_transition_incompleteness
+-
+-/-- The existence of an incompressible infinite family is equivalent to the
+-    failure of universal infinite-family compressibility. -/
+-theorem exists_incompressible_iff_not_all_compressible
+-    {M : Type u} [ClosureSelfModel M] :
+-    (∃ φ : ℕ → M, Set.Infinite (Set.range φ) ∧
+-        ¬ UniformlyCompressibleWithinClosure M φ) ↔
+-    ¬ (∀ φ : ℕ → M, Set.Infinite (Set.range φ) →
+-        UniformlyCompressibleWithinClosure M φ) :=
+-  not_forall_infinite_compressible_iff_exists_uncompressible.symm
+-
+-/-! ## §9. Axiom Verification -/
+-
+-#print axioms HasCriticalPoint
+-#print axioms diagFreeEnergy
+-#print axioms UniformlyCompressibleWithinClosure
+-#print axioms DiagonalEntropyBarrier
+-#print axioms critical_point_contrapositive_bridge
+-#print axioms diagonal_phase_transition_incompleteness_weak
+-#print axioms diagonal_phase_transition_incompleteness
+-#print axioms diagonal_phase_transition_incompleteness_of_nonanalytic
+-#print axioms critical_point_yields_infinite_diagonal_irreducibles
+-#print axioms not_forall_infinite_compressible_iff_exists_uncompressible
+ 

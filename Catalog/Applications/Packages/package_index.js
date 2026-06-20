@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "443cc80d",
     "filename": "tensor_network_holography_for_quantum_gravity_with.json",
     "pkg_num": 205,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "substantial",
+    "quality_score": 0.7460199999999999,
     "title": "Tropical Matrix Powers and the Correctness of Tropical Diffie-Hellman Key Exchange"
   },
   {
@@ -6272,8 +6272,8 @@ window.PACKAGE_GRAPH = {
       "hue": 90,
       "id": "tensor_network_holography_for_quantum_gravity_with",
       "primary_domain": "Tropical",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.7460199999999999,
+      "quality": "substantial",
       "shape": "star",
       "title": "Tropical Matrix Powers and the Correctness of Tropical Diffie-Hellman Key Exchange"
     }

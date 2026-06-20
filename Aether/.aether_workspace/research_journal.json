@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "73abb816",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Fibonacci apparition adjunction and the road to Carmichael's tail\n\n## Synthesis\n\nThis cycle stopped treating the rank of apparition `fibRank` as an ad-hoc arithmetic\ngadget a",
-      "quality_score": 0.7671145762711864,
-      "sorry_count": 9,
-      "theorem_count": 177,
-      "timestamp": "2026-06-14T08:52:15",
-      "title": "This cycle treated the rank of apparition `fibRank` not as an ad-hoc arithmetic"
-    },
-    {
       "cycle_id": "de15e0b3",
       "domain": "Applications",
       "key_insight": "# Future Directions — The Fibonacci Law of Apparition as an Arithmetic-Height / Tropical Duality\n\n## Synthesis\n\nThis cycle closed a concrete gap between two halves of the catalog that had only been\nli",
@@ -499,19 +489,19 @@
       "theorem_count": 3,
       "timestamp": "2026-06-20T07:34:32",
       "title": "Close Proofs: These conjectures continue the research cycle begun in"
+    },
+    {
+      "cycle_id": "443cc80d",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Tensor-Network Holography & Categorical Entanglement\n\nDerived from this cycle's verified results in\n`Geometry/TensorNetwork/{FormanCurvature, LatticeCurvature, QuantumInfoMetric}",
+      "quality_score": 0.7460199999999999,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-20T09:34:34",
+      "title": "Tensor Network Holography for Quantum Gravity with Categorical Entanglement Reno"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "179e2428",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions — The Eckmann–Hilton Bridge (Objects, Morphisms, Products)\n\n## Synthesis\n\nThis cycle takes the catalog's single-carrier Eckmann–Hilton engine\n(`Geometry.HomotopyTypeTheory.Stratifi",
-      "quality_score": 0.5321499999999999,
-      "sorry_count": 0,
-      "theorem_count": 10,
-      "timestamp": "2026-06-15T00:03:07",
-      "title": "This cycle takes the catalog's single-carrier Eckmann–Hilton engine"
-    },
     {
       "cycle_id": "2c181743",
       "domain": "Novelty",
@@ -2501,27 +2491,19 @@
       "theorem_count": 10,
       "timestamp": "2026-06-20T08:42:42",
       "title": "Invariant Subspace Problem"
+    },
+    {
+      "cycle_id": "443cc80d",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Tensor-Network Holography & Categorical Entanglement\n\nDerived from this cycle's verified results in\n`Geometry/TensorNetwork/{FormanCurvature, LatticeCurvature, QuantumInfoMetric}",
+      "quality_score": 0.7460199999999999,
+      "sorry_count": 0,
+      "theorem_count": 6,
+      "timestamp": "2026-06-20T09:34:34",
+      "title": "Tensor Network Holography for Quantum Gravity with Categorical Entanglement Reno"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "3fd7a316",
-      "domain": "Probability",
-      "name": "cons_zero",
-      "quality": 0.8053600000000001
-    },
-    {
-      "cycle_id": "3fd7a316",
-      "domain": "Probability",
-      "name": "cons_succ",
-      "quality": 0.8053600000000001
-    },
-    {
-      "cycle_id": "3fd7a316",
-      "domain": "Probability",
-      "name": "firstDiff_spec",
-      "quality": 0.8053600000000001
-    },
     {
       "cycle_id": "6f9401e1",
       "domain": "NumberTheory",
@@ -2803,9 +2785,27 @@
       "domain": "Applications",
       "name": "arrows_one_red",
       "quality": 0.8524
+    },
+    {
+      "cycle_id": "443cc80d",
+      "domain": "Geometry",
+      "name": "tropMatPow_zero",
+      "quality": 0.7460199999999999
+    },
+    {
+      "cycle_id": "443cc80d",
+      "domain": "Geometry",
+      "name": "tropMatPow_succ",
+      "quality": 0.7460199999999999
+    },
+    {
+      "cycle_id": "443cc80d",
+      "domain": "Geometry",
+      "name": "tropMatVecMul_tropMatMul",
+      "quality": 0.7460199999999999
     }
   ],
-  "last_updated": "2026-06-20T08:42:42",
+  "last_updated": "2026-06-20T09:34:34",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3387,12 +3387,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "b9cc2fac",
-        "quality": 0.7242,
-        "theorems": 16,
-        "title": "(in `Catalog/Bridges/CategoricalTropicalRipsInterleaving."
-      },
-      {
         "cycle_id": "3f92e6d5",
         "quality": 0.54944,
         "theorems": 9,
@@ -3445,6 +3439,12 @@
         "quality": 0.4785,
         "theorems": 3,
         "title": "Close Proofs: These conjectures extend `Catalog/Bridges/CodeThresholdValuation.l"
+      },
+      {
+        "cycle_id": "443cc80d",
+        "quality": 0.7460199999999999,
+        "theorems": 6,
+        "title": "Tensor Network Holography for Quantum Gravity with Categorical Entanglement Reno"
       }
     ],
     "Logic": [
