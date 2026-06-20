@@ -20,7 +20,7 @@
       "termination_reason": "job_failed",
       "thread_context": "",
       "thread_id": "th_a269628b",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-17T22:32:26.666576+00:00",
@@ -42,7 +42,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_fa3ee704",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-17T22:32:31.274290+00:00",
@@ -64,7 +64,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_625fbdfb",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-17T22:32:35.196782+00:00",
@@ -86,7 +86,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_2d55d319",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-17T22:32:39.535528+00:00",
@@ -108,7 +108,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_e5c93412",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-17T23:49:07.632363+00:00",
@@ -130,7 +130,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_4494eeb6",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T00:40:13.576054+00:00",
@@ -152,7 +152,7 @@
       "termination_reason": "job_failed",
       "thread_context": "",
       "thread_id": "th_3b6ee7e2",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T00:40:17.838089+00:00",
@@ -174,7 +174,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_e80e9c95",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T02:12:45.979858+00:00",
@@ -196,7 +196,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_293d2374",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T08:03:51.112786+00:00",
@@ -218,7 +218,7 @@
       "termination_reason": "job_failed",
       "thread_context": "",
       "thread_id": "th_595e0cf6",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T08:03:56.636713+00:00",
@@ -240,7 +240,7 @@
       "termination_reason": "job_failed",
       "thread_context": "",
       "thread_id": "th_595785a7",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T08:04:01.149264+00:00",
@@ -262,7 +262,7 @@
       "termination_reason": "job_failed",
       "thread_context": "",
       "thread_id": "th_cfd2da7a",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T08:04:05.808795+00:00",
@@ -284,7 +284,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_31d713b0",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T11:04:06.108376+00:00",
@@ -306,7 +306,7 @@
       "termination_reason": "job_failed",
       "thread_context": "",
       "thread_id": "th_f3bbe83a",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T11:04:10.977130+00:00",
@@ -328,7 +328,7 @@
       "termination_reason": "job_failed",
       "thread_context": "",
       "thread_id": "th_94e0e431",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T11:04:16.536361+00:00",
@@ -350,7 +350,7 @@
       "termination_reason": "job_failed",
       "thread_context": "",
       "thread_id": "th_df096374",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T11:04:23.281237+00:00",
@@ -372,7 +372,7 @@
       "termination_reason": "quarantined",
       "thread_context": "",
       "thread_id": "th_490faff3",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T11:04:27.367749+00:00",
@@ -394,7 +394,7 @@
       "termination_reason": "job_failed",
       "thread_context": "",
       "thread_id": "th_6d47a78f",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T14:04:33.895483+00:00",
@@ -416,7 +416,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_fc11040f",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T14:04:38.577932+00:00",
@@ -438,7 +438,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_0bd3cb42",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T14:04:43.147964+00:00",
@@ -460,7 +460,7 @@
       "termination_reason": "job_failed",
       "thread_context": "",
       "thread_id": "th_a731fe42",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T14:04:48.006765+00:00",
@@ -482,7 +482,7 @@
       "termination_reason": "job_failed",
       "thread_context": "",
       "thread_id": "th_d81aaaa5",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T14:04:52.954790+00:00",
@@ -504,7 +504,7 @@
       "termination_reason": "quarantined",
       "thread_context": "",
       "thread_id": "th_3187d6cd",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T21:09:00.564002+00:00",
@@ -526,7 +526,7 @@
       "termination_reason": "quarantined",
       "thread_context": "",
       "thread_id": "th_a8143ddb",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T21:09:11.483234+00:00",
@@ -548,7 +548,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_e1fcb7d9",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T21:09:23.171345+00:00",
@@ -570,7 +570,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_50ca7f06",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T21:09:38.103969+00:00",
@@ -592,7 +592,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_f988c22c",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-18T23:03:48.508547+00:00",
@@ -614,7 +614,7 @@
       "termination_reason": "job_failed",
       "thread_context": "",
       "thread_id": "th_809495d6",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T04:18:42.563073+00:00",
@@ -636,7 +636,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_c5b38f20",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T04:18:46.306723+00:00",
@@ -658,7 +658,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_2c23f344",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T05:14:40.485097+00:00",
@@ -680,7 +680,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_f9efef5e",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T06:18:57.664150+00:00",
@@ -702,7 +702,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_1ce6ebba",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T06:19:01.909013+00:00",
@@ -724,7 +724,7 @@
       "termination_reason": "job_failed",
       "thread_context": "",
       "thread_id": "th_455ce969",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T06:52:48.290620+00:00",
@@ -746,7 +746,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_159af3d9",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T06:52:52.724998+00:00",
@@ -768,7 +768,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_c872a095",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T07:55:47.851469+00:00",
@@ -790,7 +790,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_9abe5ea9",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T08:25:11.491939+00:00",
@@ -812,7 +812,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_e9f986fa",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T08:25:15.341400+00:00",
@@ -834,7 +834,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_c2f532bd",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T09:43:57.368594+00:00",
@@ -856,7 +856,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_3d556295",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T09:44:01.796095+00:00",
@@ -878,7 +878,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_febce283",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T10:14:41.081661+00:00",
@@ -900,7 +900,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_8347bb7a",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T10:41:03.751473+00:00",
@@ -922,7 +922,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_d68ee3b1",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T10:41:07.410700+00:00",
@@ -944,7 +944,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_c6523eaa",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T11:12:48.526533+00:00",
@@ -966,7 +966,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_690d0931",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T11:49:17.046324+00:00",
@@ -988,7 +988,7 @@
       "termination_reason": "job_failed",
       "thread_context": "",
       "thread_id": "th_79255065",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T11:49:21.292939+00:00",
@@ -1010,7 +1010,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_bcbbbee0",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T12:18:56.320647+00:00",
@@ -1032,7 +1032,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_297a8de0",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T14:14:48.426684+00:00",
@@ -1054,7 +1054,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_4b3bd566",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T14:14:57.170505+00:00",
@@ -1076,7 +1076,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_8fbff448",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T14:51:37.122903+00:00",
@@ -1098,7 +1098,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_7c090204",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T14:51:40.960631+00:00",
@@ -1120,7 +1120,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_940bfeb0",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T15:37:20.877869+00:00",
@@ -1142,7 +1142,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_ec80df04",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T15:37:25.584408+00:00",
@@ -1164,7 +1164,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_93662d32",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T16:09:12.056368+00:00",
@@ -1186,7 +1186,7 @@
       "termination_reason": "job_failed",
       "thread_context": "",
       "thread_id": "th_beb412d8",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T16:09:16.376216+00:00",
@@ -1208,7 +1208,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_b6add4a0",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T18:13:08.890294+00:00",
@@ -1230,7 +1230,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_1e26e478",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T18:13:13.177324+00:00",
@@ -1252,7 +1252,7 @@
       "termination_reason": "quarantined",
       "thread_context": "",
       "thread_id": "th_dbd9e7cc",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T20:04:53.764547+00:00",
@@ -1274,7 +1274,7 @@
       "termination_reason": "quarantined",
       "thread_context": "",
       "thread_id": "th_20c636d5",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T20:04:58.380098+00:00",
@@ -1296,7 +1296,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_a2e966db",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T21:56:16.172608+00:00",
@@ -1318,7 +1318,7 @@
       "termination_reason": "job_failed",
       "thread_context": "",
       "thread_id": "th_f22d9225",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T21:56:20.639873+00:00",
@@ -1340,7 +1340,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_488a83a1",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-19T23:14:44.819753+00:00",
@@ -1362,7 +1362,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_13c55690",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T02:13:01.604832+00:00",
@@ -1384,7 +1384,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_ce2e7a7c",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T02:13:05.138408+00:00",
@@ -1406,7 +1406,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_e70ef933",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T02:28:29.974307+00:00",
@@ -1428,7 +1428,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_978a804f",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T02:28:36.946258+00:00",
@@ -1450,7 +1450,7 @@
       "termination_reason": "job_failed",
       "thread_context": "",
       "thread_id": "th_8dc2771b",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T02:28:41.152672+00:00",
@@ -1472,7 +1472,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_450cb8fe",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T05:16:12.354514+00:00",
@@ -1494,7 +1494,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_62f621ba",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T05:16:16.691324+00:00",
@@ -1516,7 +1516,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_2b183aef",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T05:16:20.686782+00:00",
@@ -1538,7 +1538,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_e3fa59a4",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T05:16:25.901830+00:00",
@@ -1560,7 +1560,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_87e042fb",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T06:09:13.159655+00:00",
@@ -1582,7 +1582,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_4fc6920b",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T06:56:17.554971+00:00",
@@ -1604,7 +1604,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_ec349a4a",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T06:56:22.415716+00:00",
@@ -1626,7 +1626,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_039ded37",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T07:49:37.554494+00:00",
@@ -1648,7 +1648,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_605fe30f",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T07:49:41.664308+00:00",
@@ -1670,7 +1670,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_de985aa6",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T08:46:54.536916+00:00",
@@ -1692,7 +1692,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_f0080792",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T09:40:53.717681+00:00",
@@ -1714,7 +1714,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_fde402a9",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T10:28:26.645697+00:00",
@@ -1736,7 +1736,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_5867aab2",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T10:28:31.152023+00:00",
@@ -1758,7 +1758,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_ede684a7",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T11:13:55.709200+00:00",
@@ -1780,7 +1780,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_ffa8ebbd",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T11:14:01.220475+00:00",
@@ -1802,7 +1802,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_3f4b464e",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T11:14:05.419740+00:00",
@@ -1824,7 +1824,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_f96cf456",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T12:03:20.466044+00:00",
@@ -1846,7 +1846,7 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_189cfcaa",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     },
     {
       "created_at": "2026-06-20T12:56:14.289135+00:00",
@@ -1868,7 +1868,29 @@
       "termination_reason": "",
       "thread_context": "",
       "thread_id": "th_ff1903e0",
-      "updated_at": "2026-06-20T12:56:14.289192+00:00"
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
+    },
+    {
+      "created_at": "2026-06-20T13:47:08.627351+00:00",
+      "cycle_concepts": [
+        "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
+      ],
+      "cycle_idents": [
+        []
+      ],
+      "cycle_quality_scores": [
+        0.0
+      ],
+      "cycles": [
+        "bab04850"
+      ],
+      "last_progress_cycle": 0,
+      "root_direction_id": "fd_2119",
+      "status": "active",
+      "termination_reason": "",
+      "thread_context": "",
+      "thread_id": "th_5e2a5220",
+      "updated_at": "2026-06-20T13:47:08.627413+00:00"
     }
   ]
 }

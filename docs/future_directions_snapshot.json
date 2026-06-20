@@ -2970,6 +2970,33 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "math.NT/0305267",
+      "math.NT/0707.0092",
+      "math.NT/1502.03068"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "The coefficients a_n in the q-expansion f(q) = Σ_{n≥0} a_n q^n satisfy the recurrence (n+3) a_{n+3} = (3n+4) a_{n+2} - (3n+1) a_{n+1} + n a_n for all n ≥ 0, with initial values a_0 = 1, a_1 = 0, a_2 = 1.",
+    "domain_bridges": [
+      "modular forms",
+      "q-series",
+      "holomorphic projection"
+    ],
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2102",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Use the vector-valued Rankin-Cohen bracket of the completed mock theta series f̂ and its shadow ψ_f, apply the holomorphic projection operator to obtain a modular form of weight 2. Expand both sides as q-series, compare coefficients, and deduce the recurrence. The vanishing of certain vector-valued cusp form spaces ensures the projected form is a linear combination of Eisenstein series, whose coefficients are explicit.",
+    "research_mode": "team",
+    "source_exp_id": "2606.18110v1",
+    "status": "available",
+    "timestamp": "2026-06-19T14:51:27.250427+00:00",
+    "title": "Linear recurrence for coefficients of Ramanujan's third order mock theta function f(q)"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "arXiv:2102.04521"
     ],
     "consumed_by_exp_id": "",
@@ -3883,6 +3910,31 @@
     "title": "Uniqueness of Minimal Median Decompositions for Graphs"
   },
   {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "arXiv:2304.01234",
+      "Zagier, D. (2008). \"Elliptic modular forms and their applications\". In: *The 1‑2‑3 of Modular Forms*."
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For every integer \\(N\\ge 2\\) and every weight \\(k\\) admissible in the CHL construction, the series defining \\(\\widetilde{F}_k(\\Omega)\\) in equation (\\ref{eq:tildeFCF123}) converges absolutely on the Siegel upper half‑space \\(\\IH_2\\). Equivalently, each of the four component series \\(\\mathcal{F}_1,\\mathcal{F}_2,\\mathcal{F}_3,\\mathcal{F}_4\\) converges absolutely for all \\(\\Omega\\in\\IH_2\\).",
+    "domain_bridges": [
+      "Modular forms ↔ Black hole physics",
+      "Siegel modular forms ↔ Convergence of Poincaré series"
+    ],
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2140",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Show that each \\(\\mathcal{F}_i\\) is a Poincaré‑type series over the congruence subgroup \\(\\Gamma_1(N)\\) with a rapidly decaying seed. Use standard estimates for Kloosterman‑type sums and the exponential decay of the Gaussian‑type factors (the \\(H\\) functions) in the imaginary directions of \\(\\Omega\\). Establish uniform bounds on the Fourier coefficients of the seed functions \\(f_{\\pm}, g_{\\pm}\\) (which are known to be of moderate growth) and apply the Rankin–Selberg method to bound the sum over \\((a,b,c,d)\\). For \\(\\mathcal{F}_4\\), exploit the extra factor \\(r\\) and the product over \\(n\\) to obtain exponential decay in \\(r\\). Combine these estimates to prove absolute convergence for all \\(\\Omega\\in\\IH_2\\).",
+    "research_mode": "team",
+    "source_exp_id": "2606.19479v1",
+    "status": "available",
+    "timestamp": "2026-06-20T13:46:56.776677+00:00",
+    "title": "Uniform Convergence of the Single‑Centered Black Hole Generating Function \\(\\widetilde{F}_k\\) for All \\(\\mathbb{Z}_N\\) CHL Models"
+  },
+  {
     "ambition_level": "extension",
     "catalog_references": [
       "math.CO",
@@ -3900,7 +3952,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2140",
+    "id": "fd_2141",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use S_N=x(x^N-1)/(x-1)=x prod_{d|N,d>1} Phi_d. Since pq | m, Phi_{pq} divides S_{m^2}; write S_{m^2}/Phi_{pq}=x(1+x^{pq}+...+x^{m^2-pq})(1+...+x^{p-1})(1+...+x^{q-1}), which is visibly nonnegative. For S_{n^2}Phi_{pq}, prove a prefix-sum bound for coefficients of Phi_{pq}: its partial sums up to degree (p-1)(q-1) are 0 or 1, so convolution with a length n^2 block of ones is nonnegative when n^2 >= (p-1)(q-1)+1. Then verify evaluations at 1 and the product identity.",
@@ -3927,7 +3979,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2141",
+    "id": "fd_2142",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the excluded minor structure theorem to bound the independence number within each bag of a tree decomposition, using the K_{1,d}-free condition to limit local density, and combine with planar minor restrictions to obtain a uniform constant C(d, H).",
@@ -3954,7 +4006,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2142",
+    "id": "fd_2143",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalise families of k‑sets as finsets of finsets in Lean. 2. Prove basic lemmas about degree, diversity and cross‑intersection. 3. Implement the S_{U,V}^Q‑shift operator and show it preserves cross‑intersection and does not decrease diversity. 4. Adapt the shifting argument of Frankl‑Kupavskii to obtain a canonical shifted extremal pair. 5. Use compression to show any extremal pair must be isomorphic to the canonical one, relying on counting lemmas for binomial coefficients. 6. Derive the product bound and the uniqueness statement via a combinatorial optimisation argument formalised with Lean's `linarith`/`norm_num` tactics.",
@@ -3975,7 +4027,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2143",
+    "id": "fd_2144",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "sieve-theoretic analysis",
@@ -4002,7 +4054,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2144",
+    "id": "fd_2145",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Develop a reconstruction algorithm for partitions from pre_k(λ) using the unique factorization property of S‑smooth numbers. Show that the elementary symmetric sums determine the multiset of parts uniquely by iteratively solving for the largest part via a polynomial equation whose roots are S‑smooth numbers, then induct on the number of parts. This requires establishing that the set of S‑smooth numbers is closed under multiplication and that the elementary symmetric function e_k is strictly monotone in each argument when restricted to this set.",
@@ -4029,7 +4081,7 @@
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2145",
+    "id": "fd_2146",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Attempt to prove the equality by showing a non‑contractive, r‑Lipschitz mapping between e‑embracing bases and their e‑positive fundamental circuits, or find a counterexample violating the equality.",
@@ -4059,7 +4111,7 @@
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2146",
+    "id": "fd_2147",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use the augmented cycle index Z_{S_M} and its expression in terms of power‑sum symmetric functions. Specialize the symmetric functions to extract the statistics tc and cp via appropriate scalar products. Show that the resulting generating functions coincide by applying Lemma lm:partition and the symmetry of the power‑sum basis, yielding an identity that implies equality of the total sums. A sign‑reversing involution on pairs (w, i) where i is either a terminal closer or a cyclic point can also be constructed to give a bijective proof.",
@@ -5324,26 +5376,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nDerived from this cycle's findings in `Catalog/Tropical/TensorNetworkContraction.lean`\nand `Catalog/Tropical/ComplexityThreshold.lean`. Each conjecture is bold, falsifiable,\nand stated so it can be attacked formally in Lean.\n\n## Conjecture 1 — Finite-depth stabilisation of the emergent metric\n\nFor a `WeightedDigraph` on `n` sites with non-negative weights and zero self-loops, the\ncontraction sequence `tropPow G.weights k` is *eventually constant*: there exists\n`k₀ ≤ n - 1` with `tropPow G.weights k = tropPow G.weights k₀` for all `k ≥ k₀`, and the\nlimit is the all-pairs shortest-path matrix.\n\n- **The key insight is** that we already proved the sequence is antitone and bounded below\n  (`tropPow_antitone`, `tropPow_nonneg`), so over the finitely many sites it cannot strictly\n  decrease forever — the missing step is that no shortest walk needs more than `n-1` bonds.\n- **Why now?** The semigroup law `tropPow_add` gives exactly the path-concatenation\n  algebra needed for the Bellman–Ford stabilisation argument; with monotonicity in hand,\n  the finite-step convergence is the natural next theorem.\n\n## Conjecture 2 — The threshold is the unique zero of a strictly monotone order parameter\n\nDefine the order parameter `Δ(D) = ricciProxy C N D − κ`. Then for `C, N, κ > 0`, `Δ` is\nstrictly decreasing on `D > 0`, has a unique zero at `D = D_c(N)`, and the \"smooth phase\"\nis exactly the super-level set `{D : Δ(D) ≤ 0}`.\n\n- **The key insight is** that `smooth_iff` already pins the phase boundary to a single\n  equality `D = D_c`; promoting it to strict monotonicity of `Δ` turns the boundary into a\n  genuine second-order-free (continuous, single-crossing) transition.\n- **Why now?** `subcritical_rough` (strict below) and `supercritical_smooth` (≤ above)\n  bracket the crossing from both sides, so the strict-monotonicity upgrade is immediate\n  from `div` monotonicity lemmas.\n\n## Conjecture 3 — Curvature bound forces a contraction-diameter bound\n\nIn the supercritical phase (`D ≥ D_c(N)`) the emergent contraction diameter\n`max_{i,j} tropPow G.weights (n-1) i j` is bounded by a universal multiple of the raw\nweight diameter, with the multiple controlled by `κ`; in the subcritical phase no such\nuniform bound exists.\n\n- **The key insight is** that `emergent_geometry_smooth` already couples the curvature\n  bound to the entrywise bound `tropPow ≤ weights`; quantifying the *diameter* turns this\n  qualitative coupling into a sharp geometric estimate.\n- **Why now?** With both the contraction bounds and the threshold characterisation proved\n  in this cycle, the only new ingredient is a `Finset.sup'` aggregation over site pairs.\n\n## Conjecture 4 — Two-sided scaling window for integer bond dimension\n\nFor integer bond dimension, the smooth phase begins at `⌈D_c(N)⌉₊` and the relative width\nof the transition window `(⌈D_c⌉₊ − D_c)/D_c → 0` as `N → ∞`; i.e. the discrete and\ncontinuous thresholds coincide asymptotically.\n\n- **The key insight is** that `smooth_iff_nat_ceil` localises the discrete jump to a single\n  integer, and `criticalD_scaling` shows `D_c ∝ N`, so the rounding gap is `O(1/N)` relative\n  to `D_c`.\n- **Why now?** Both ingredients (`Nat.ceil` localisation and the linear scaling law) are\n  theorems from this cycle; the asymptotic statement is a clean limit argument on top.\n\n## Conjecture 5 — Tropical Ryu–Takayanagi monotonicity\n\nThe min-cut value of a tropical tensor network (the tropical analogue of the entanglement\nentropy via the Ryu–Takayanagi formula) is monotone non-increasing under refining the\ncontraction depth and is sub-additive across region unions — a tropical entropy inequality.\n\n- **The key insight is** that the contraction triangle inequality `tropPow_triangle` is the\n  region-concatenation half of strong sub-additivity; the cut-value formulation lifts it\n  from point pairs to boundary regions.\n- **Why now?** The metric layer (`tropPow` with triangle + monotonicity) is now formal, so\n  the entropy/cut layer can be built directly on top of it without re-deriving the geometry.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2147",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "fdab34f3",
-    "status": "available",
-    "timestamp": "2026-06-20T13:41:43.245341+00:00",
-    "title": "Derived from this cycle's findings in `Catalog/Tropical/TensorNetworkContraction"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -5362,7 +5394,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bab04850",
     "description": "Conjecture: The entanglement‑complexity scaling law of a uniformly random rank‑k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network’s holographic geometry approximates a smooth (d+1)‑dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse‑graining. Test: Generate large‑scale random tensor networks on high‑performance clusters, compute their entanglement spectra and bulk geometry via the quantum error‑correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein’s equations from complexity theory, guide quantum gravity model selection, and inspire complexity‑optimal quantum error‑correcting codes.",
     "domain_bridges": [],
     "domains": [
@@ -5375,7 +5407,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
   },

@@ -2032,6 +2032,20 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "The coefficients a_n in the q-expansion f(q) = \u03a3_{n\u22650} a_n q^n satisfy the recurrence (n+3) a_{n+3} = (3n+4) a_{n+2} - (3n+1) a_{n+1} + n a_n for all n \u2265 0, with initial values a_0 = 1, a_1 = 0, a_2 = 1.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2102",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18110v1",
+    "status": "available",
+    "timestamp": "2026-06-19T14:51:27.250427+00:00",
+    "title": "Linear recurrence for coefficients of Ramanujan's third order mock theta function f(q)"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "The conjecture asserts that the ratio of determinant to cofactor simplifies to a combination of trace terms and Laplacian contributions, verified for arbitrary subsets S.",
     "domains": [
       "Pythagorean"
@@ -2514,11 +2528,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "For every integer \\(N\\ge 2\\) and every weight \\(k\\) admissible in the CHL construction, the series defining \\(\\widetilde{F}_k(\\Omega)\\) in equation (\\ref{eq:tildeFCF123}) converges absolutely on the Siegel upper half\u2011space \\(\\IH_2\\). Equivalently, each of the four component series \\(\\mathcal{F}_1,\\mathcal{F}_2,\\mathcal{F}_3,\\mathcal{F}_4\\) converges absolutely for all \\(\\Omega\\in\\IH_2\\).",
+    "domains": [
+      "Algebra"
+    ],
+    "id": "fd_2140",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19479v1",
+    "status": "available",
+    "timestamp": "2026-06-20T13:46:56.776677+00:00",
+    "title": "Uniform Convergence of the Single\u2011Centered Black Hole Generating Function \\(\\widetilde{F}_k\\) for All \\(\\mathbb{Z}_N\\) CHL Models"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let S_N(x)=sum_{i=1}^N x^i. For primes p<q with pq | m and n^2 >= (p-1)(q-1)+1, the conjecture says the cyclotomic transfer P=S_{m^2}/Phi_{pq}, Q=S_{n^2} Phi_{pq} is a nonstandard square-sided pair of sizes m^2 and n^2. Equivalently, the quotient and product have nonnegative integer coefficients, P(1)=m^2, Q(1)=n^2, and P Q=S_{m^2}S_{n^2}. A counterexample would be any admissible p,q,m,n for which one of these two explicit polynomials has a negative coefficient.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2140",
+    "id": "fd_2141",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -2532,7 +2560,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2141",
+    "id": "fd_2142",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
@@ -2547,7 +2575,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2142",
+    "id": "fd_2143",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20085v1",
@@ -2561,7 +2589,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2143",
+    "id": "fd_2144",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19863v1",
@@ -2576,7 +2604,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2144",
+    "id": "fd_2145",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19796v1",
@@ -2591,7 +2619,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2145",
+    "id": "fd_2146",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19573v1",
@@ -2606,7 +2634,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2146",
+    "id": "fd_2147",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19500v1",
@@ -3552,21 +3580,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nDerived from this cycle's findings in `Catalog/Tropical/TensorNetworkContraction.lean`\nand `Catalog/Tropical/ComplexityThreshold.lean`. Each conjecture is bold, falsifiable,\nand stated so it can be attacked formally in Lean.\n\n## Conjecture 1 \u2014 Finite-depth stabilisation of the emergent metric\n\nFor a `WeightedDigraph` on `n` sites with non-negative weights and zero self-loops, the\ncontraction sequence `tropPow G.weights k` is *eventually constant*: there exists\n`k\u2080 \u2264 n - 1` with `tropPow G.weights k = tropPow G.weights k\u2080` for all `k \u2265 k\u2080`, and the\nlimit is the all-pairs shortest-path matrix.\n\n- **The key insight is** that we already proved the sequence is antitone and bounded below\n  (`tropPow_antitone`, `tropPow_nonneg`), so over the finitely many sites it cannot strictly\n  decrease forever \u2014 the missing step is that no shortest walk needs more than `n-1` bonds.\n- **Why now?** The semigroup law `tropPow_add` gives exactly the path-concatenation\n  algebra needed for the Bellman\u2013Ford stabilisation argument; with monotonicity in hand,\n  the finite-step convergence is the natural next theorem.\n\n## Conjecture 2 \u2014 The threshold is the unique zero of a strictly monotone order parameter\n\nDefine the order parameter `\u0394(D) = ricciProxy C N D \u2212 \u03ba`. Then for `C, N, \u03ba > 0`, `\u0394` is\nstrictly decreasing on `D > 0`, has a unique zero at `D = D_c(N)`, and the \"smooth phase\"\nis exactly the super-level set `{D : \u0394(D) \u2264 0}`.\n\n- **The key insight is** that `smooth_iff` already pins the phase boundary to a single\n  equality `D = D_c`; promoting it to strict monotonicity of `\u0394` turns the boundary into a\n  genuine second-order-free (continuous, single-crossing) transition.\n- **Why now?** `subcritical_rough` (strict below) and `supercritical_smooth` (\u2264 above)\n  bracket the crossing from both sides, so the strict-monotonicity upgrade is immediate\n  from `div` monotonicity lemmas.\n\n## Conjecture 3 \u2014 Curvature bound forces a contraction-diameter bound\n\nIn the supercritical phase (`D \u2265 D_c(N)`) the emergent contraction diameter\n`max_{i,j} tropPow G.weights (n-1) i j` is bounded by a universal multiple of the raw\nweight diameter, with the multiple controlled by `\u03ba`; in the subcritical phase no such\nuniform bound exists.\n\n- **The key insight is** that `emergent_geometry_smooth` already couples the curvature\n  bound to the entrywise bound `tropPow \u2264 weights`; quantifying the *diameter* turns this\n  qualitative coupling into a sharp geometric estimate.\n- **Why now?** With both the contraction bounds and the threshold characterisation proved\n  in this cycle, the only new ingredient is a `Finset.sup'` aggregation over site pairs.\n\n## Conjecture 4 \u2014 Two-sided scaling window for integer bond dimension\n\nFor integer bond dimension, the smooth phase begins at `\u2308D_c(N)\u2309\u208a` and the relative width\nof the transition window `(\u2308D_c\u2309\u208a \u2212 D_c)/D_c \u2192 0` as `N \u2192 \u221e`; i.e. the discrete and\ncontinuous thresholds coincide asymptotically.\n\n- **The key insight is** that `smooth_iff_nat_ceil` localises the discrete jump to a single\n  integer, and `criticalD_scaling` shows `D_c \u221d N`, so the rounding gap is `O(1/N)` relative\n  to `D_c`.\n- **Why now?** Both ingredients (`Nat.ceil` localisation and the linear scaling law) are\n  theorems from this cycle; the asymptotic statement is a clean limit argument on top.\n\n## Conjecture 5 \u2014 Tropical Ryu\u2013Takayanagi monotonicity\n\nThe min-cut value of a tropical tensor network (the tropical analogue of the entanglement\nentropy via the Ryu\u2013Takayanagi formula) is monotone non-increasing under refining the\ncontraction depth and is sub-additive across region unions \u2014 a tropical entropy inequality.\n\n- **The key insight is** that the contraction triangle inequality `tropPow_triangle` is the\n  region-concatenation half of strong sub-additivity; the cut-value formulation lifts it\n  from point pairs to boundary regions.\n- **Why now?** The metric layer (`tropPow` with triangle + monotonicity) is now formal, so\n  the entropy/cut layer can be built directly on top of it without re-deriving the geometry.\n",
-    "domains": [
-      "Algebra",
-      "Geometry"
-    ],
-    "id": "fd_2147",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "fdab34f3",
-    "status": "available",
-    "timestamp": "2026-06-20T13:41:43.245341+00:00",
-    "title": "Derived from this cycle's findings in `Catalog/Tropical/TensorNetworkContraction"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3580,7 +3593,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "bab04850",
     "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
     "domains": [
       "Novelty",
@@ -3590,7 +3603,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7158260869565218,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
