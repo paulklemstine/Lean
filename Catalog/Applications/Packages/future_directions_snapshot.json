@@ -340,25 +340,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "Building on cycle acb790ee (Q=0.808), which proved 238 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Fibonacci anyon chain as a tensor network with complete, type-checking Lean 4 proofs. The core result: the fusion Hilbert space dimension of a length-n Fibonacci anyon chain equals Fib(n+2), yielding a sub-qubit area law (dim < 2^n). Two chains' dimensions are commensurable via the cat",
-    "domain_bridges": [],
-    "domains": [
-      "Physics"
-    ],
-    "id": "push_acb790ee_fe784365",
-    "lineage_refs": [],
-    "priority_score": 0.9075699999999999,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "acb790ee",
-    "status": "available",
-    "timestamp": "2026-06-20T10:20:45.394679+00:00",
-    "title": "Deepening: Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
     "domain_bridges": [],
     "domains": [
@@ -3819,6 +3800,35 @@
   {
     "ambition_level": "extension",
     "catalog_references": [
+      "OEIS:A000041",
+      "OEIS:A000712",
+      "Andrews GFP",
+      "Lin-Liu mex"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "For all n ≥ 0, the number of (4,0)-colored Frobenius partitions of weight n equals twice the sum of Lin-Liu minimal excludants over all 4-partitions of n, i.e., ψ_{4,0}(n) = 2σ_{mex,4}(n). This conjecture extends the proven identities ψ_{2,0}(n) = 2σ_{mex,2}(n) and ψ_{2,1}(n) = 2σ_{mex,2}(n) - E_2(n) to the four-colored case.",
+    "domain_bridges": [
+      "Frobenius partitions to multipartite partitions",
+      "minimal excludant statistics to difference equations",
+      "q-series identities to modular forms"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2136",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Establish a sign-reversing involution on (4,0)-colored Frobenius partitions that pairs each partition with a weight contribution of twice its minimal excludant value. The involution would cancel all but the mex-related contributions, generalizing the Andrews/Göllnitz-type bijections used in the two-colored case.",
+    "research_mode": "team",
+    "source_exp_id": "2606.19696v1",
+    "status": "available",
+    "timestamp": "2026-06-20T10:27:31.374184+00:00",
+    "title": "Generalized two-colored Frobenius identities to four-colored case"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [
       "math.CO",
       "05A15",
       "11C08",
@@ -3834,7 +3844,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2136",
+    "id": "fd_2137",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Use S_N=x(x^N-1)/(x-1)=x prod_{d|N,d>1} Phi_d. Since pq | m, Phi_{pq} divides S_{m^2}; write S_{m^2}/Phi_{pq}=x(1+x^{pq}+...+x^{m^2-pq})(1+...+x^{p-1})(1+...+x^{q-1}), which is visibly nonnegative. For S_{n^2}Phi_{pq}, prove a prefix-sum bound for coefficients of Phi_{pq}: its partial sums up to degree (p-1)(q-1) are 0 or 1, so convolution with a length n^2 block of ones is nonnegative when n^2 >= (p-1)(q-1)+1. Then verify evaluations at 1 and the product identity.",
@@ -3861,7 +3871,7 @@
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2137",
+    "id": "fd_2138",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "Apply the excluded minor structure theorem to bound the independence number within each bag of a tree decomposition, using the K_{1,d}-free condition to limit local density, and combine with planar minor restrictions to obtain a uniform constant C(d, H).",
@@ -3888,7 +3898,7 @@
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2138",
+    "id": "fd_2139",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "1. Formalise families of k‑sets as finsets of finsets in Lean. 2. Prove basic lemmas about degree, diversity and cross‑intersection. 3. Implement the S_{U,V}^Q‑shift operator and show it preserves cross‑intersection and does not decrease diversity. 4. Adapt the shifting argument of Frankl‑Kupavskii to obtain a canonical shifted extremal pair. 5. Use compression to show any extremal pair must be isomorphic to the canonical one, relying on counting lemmas for binomial coefficients. 6. Derive the product bound and the uniqueness statement via a combinatorial optimisation argument formalised with Lean's `linarith`/`norm_num` tactics.",
@@ -3909,7 +3919,7 @@
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2139",
+    "id": "fd_2140",
     "lineage_refs": [],
     "priority_score": 0.8,
     "proof_strategy": "sieve-theoretic analysis",
@@ -3918,6 +3928,33 @@
     "status": "available",
     "timestamp": "2026-06-20T09:40:46.679825+00:00",
     "title": "n_k Exceeds Exponential Bound"
+  },
+  {
+    "ambition_level": "grand_challenge",
+    "catalog_references": [
+      "Ballantine, Beck, and Merca (2023)",
+      "Hadelyn et al. (2024)",
+      "ArXiv:2405.xxxxx"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for any finite set S of primes with |S| ≥ k, the elementary symmetric partition function pre_k is injective on the set of integer partitions whose parts are S‑smooth (i.e., each part’s prime factors lie in S). This generalizes the proven result for m‑ary partitions (S = {m}) to arbitrary finite prime sets.",
+    "domain_bridges": [
+      "Smooth numbers in number theory",
+      "Representation theory via symmetric functions"
+    ],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2141",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "Develop a reconstruction algorithm for partitions from pre_k(λ) using the unique factorization property of S‑smooth numbers. Show that the elementary symmetric sums determine the multiset of parts uniquely by iteratively solving for the largest part via a polynomial equation whose roots are S‑smooth numbers, then induct on the number of parts. This requires establishing that the set of S‑smooth numbers is closed under multiplication and that the elementary symmetric function e_k is strictly monotone in each argument when restricted to this set.",
+    "research_mode": "team",
+    "source_exp_id": "2606.19796v1",
+    "status": "available",
+    "timestamp": "2026-06-20T10:28:24.249630+00:00",
+    "title": "Injectivity of pre_k on S‑smooth partitions"
   },
   {
     "ambition_level": "extension",
@@ -4774,6 +4811,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions — The Hodge Conjecture for Neural Networks\n\nDerived from the cycle in `NeuralHodgeConjecture.lean` and `NeuralHodgeCatalogLink.lean`,\nwhich proved:\n\n* `pl_hodge_decomposition` / `pl_hodge_span`: every PL chain on a ReLU decision surface is\n  a `ℤ`-combination of hyperplane sections (the \"trivial existence half\" of the Hodge\n  conjecture for these surfaces);\n* `regionBound_recurrence`, `regionBound_le_two_pow`, `regionBound_eq_two_pow`,\n  `regionBound_mono_width`: the Zaslavsky region/Betti budget `Σ_{i≤n} C(m,i)` for one\n  ReLU layer, with its Pascal recurrence and the `2^m` ceiling;\n* `reluHodge_totalBetti` (and its catalog avatar `reluHodgeDiamond_totalDim_eq`): the\n  extremal total Betti number of a ReLU decision surface is **exactly** `2^{w₁}·2^{wL}·mid`.\n\n---\n\n## Conjecture 1 — Sharpness of the `2^{w₁+wL}` Betti ceiling\n\nThe total Betti number of a ReLU decision surface with first/last hidden widths `w₁, wL`\nand middle-width product `mid` is **at most** `2^{w₁}·2^{wL}·mid`, and this is attained by\na generic-weight network in input dimension `n ≥ w₁ + wL`.\n\n**The key insight is** that `reluHodge_totalBetti` computes the *saturated* diamond exactly\nas `2^{w₁}·2^{wL}·mid`, while `regionBound_eq_two_pow` shows the per-layer count saturates\nto `2^m` precisely when the ambient dimension is large; combining the two layers should turn\nthe upper bound into an equality in high dimension.\n\n**Why now?** Both halves (exact saturated value, dimensional saturation of one layer) are\nnow formal lemmas in this file, so the remaining work is purely the genericity/transversality\nargument, which is decoupled from the combinatorics.\n\n## Conjecture 2 — A Künneth product law for stacked ReLU blocks\n\nFor a composition of two ReLU sub-networks the total Betti number is *sub-multiplicative*:\n`B(f ∘ g) ≤ B(f) · B(g)`, with equality when the blocks are in \"general position\".\n\n**The key insight is** that `reluHodge_totalBetti` already factors as a product\n`(Σ_p C(w₁,p))·(Σ_q C(wL,q))·mid` via `Finset.sum_mul_sum`; the same factorisation engine\nshould govern how Betti budgets multiply across composition boundaries.\n\n**Why now?** The factored form is exactly the proof structure used for\n`reluHodge_totalBetti`, so the product law is a structural generalisation of an\nalready-formalised identity rather than a new technique.\n\n## Conjecture 3 — The Zaslavsky recurrence is the unique solution to depth refinement\n\nAny width-monotone, dimension-graded region count satisfying\n`R(m+1,n+1) = R(m,n+1) + R(m,n)` with `R(0,n)=1` equals `regionBound`, hence the\nbinomial-sum formula is forced by adding one neuron at a time.\n\n**The key insight is** that `regionBound_recurrence` together with `regionBound_mono_width`\npins down a two-variable Pascal-type recurrence whose only solution is `Σ_{i≤n} C(m,i)`;\nuniqueness should follow by double induction.\n\n**Why now?** The recurrence and monotonicity are both proved here, so the conjecture reduces\nto a uniqueness-of-recurrence argument with no missing analytic input.\n\n## Conjecture 4 — Algebraic-cycle rank lower bound via the catalog Euler characteristic\n\nThrough `reluHodgeDiamond` the decision surface acquires a catalog `HodgeDiamond`, hence an\nEuler characteristic `eulerChar`; we conjecture `|eulerChar| ≤ reluTotalBetti` with the gap\nmeasuring the number of *independent* algebraic cycles needed to represent all classes.\n\n**The key insight is** that `reluHodgeDiamond_totalDim_eq` already lands the surface inside\nthe catalog's `HodgeEPolynomial` machinery, where `eulerChar` and `totalDim` are defined on\nthe same diamond, so their comparison is a direct two-sum inequality.\n\n**Why now?** The bridge `NeuralHodgeCatalogLink.lean` makes both invariants available on one\nobject for the first time, so the inequality can be stated and attacked without rebuilding\nany Hodge-diamond infrastructure.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2044",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "6fb69121",
+    "status": "available",
+    "timestamp": "2026-06-17T06:17:33.490691+00:00",
+    "title": "Derived from the cycle in `NeuralHodgeConjecture.lean` and `NeuralHodgeCatalogLi"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "# Future Directions — Paradoxes as Theorems (Liar, Berry, Russell, Made Consistent)\n\nDerived from the cycle whose verified results live in\n`Catalog/Logic/ParaconsistentParadox.lean` (foundations) and\n`Catalog/Computation/ParadoxesAsTheorems.lean` (construction + necessity), and\nbuilding on `Catalog/Logic/ParadoxSelfSoundness.lean`.\n\nThis cycle established, with zero sorries, a single finite four-valued\nparaconsistent theory `paradoxModel` in which the Liar, Russell, and Berry\nparadoxes are simultaneously *designated theorems*, the theory is non-trivial and\nnon-explosive, and it certifies its own soundness; and it proved that a *sound*\nprovable Liar forces a genuine glut `B` (gaps `N` are insufficient).\n\nThe following conjectures are bold, falsifiable refinements.\n\n---\n\n## C1. Glut Minimality / Inconsistency Lower Bound\n\n**Conjecture.** Any sound paraconsistent theory that proves the Liar, a Russell\nsentence, and a Berry sentence as *syntactically distinct* designated theorems\nhas inconsistency degree at least 3, and 3 is attainable.\n\n**The key insight is** that `provable_liar_is_glut` upgrades each of the three\nself-referential paradoxes from \"non-classical\" (`B` or `N`) to \"glut\" (`B`)\nonce soundness and provability are imposed, so three distinct paradoxes must\ncontribute three distinct dialetheias — strengthening\n`two_paradoxes_force_degree_two` from 2 to 3.\n\n**Why now?** We already have the degree-≥2 bound via `Finset.one_lt_card` and the\nglut-forcing lemma; the missing step is a Berry sentence that is *intrinsically*\na third glut rather than reusing a Liar fixed point, which the\n`berry_definability_bound` collision can be made to witness.\n\n---\n\n## C2. No Sound Paracomplete (Gap-Only) Theory Proves the Liar\n\n**Conjecture.** In any three-valued logic whose only non-classical value is a gap\n`N` (paracomplete, no glut), the Liar can never be a sound provable theorem; i.e.\nremoving `B` from `BelnapVal` makes `paradoxes_as_theorems` unsatisfiable.\n\n**The key insight is** that `provable_liar_is_glut` already closes the gap escape\nfor the four-valued case; the conjecture says this is not an artifact of the\nextra value `B` being available but a hard impossibility once `B` is deleted —\nsoundness designates only `T`, and a Liar cannot be `T`.\n\n**Why now?** The proof template is the contrapositive of `provable_liar_is_glut`\ncombined with `classical_no_liar`; the only new ingredient is formalizing a\ngap-only sublogic `Fin 3` and showing its designated set is `{T}`.\n\n---\n\n## C3. Explosion is the Unique Obstruction to Consistency\n\n**Conjecture.** For a finite four-valued theory with at least one glut, the\ntheory is non-trivial (some sentence unprovable) **iff** it rejects explosion.\nEquivalently, `HasExplosion` is logically equivalent to triviality in the\npresence of a dialetheia.\n\n**The key insight is** that `explosion_collapses_paradoxModel` shows explosion ⇒\ntriviality, and `paradoxModel_rejects_explosion` shows the converse direction in\none model; the conjecture promotes this to a biconditional characterization,\nlocating *all* of consistency in the failure of ex falso.\n\n**Why now?** Both implications already exist as separate theorems for the witness\nmodel; generalizing to \"any theory with a glut\" needs only the observation that a\nglut plus explosion designates everything, which is exactly\n`explosion_with_liar_trivializes`.\n\n---\n\n## C4. Self-Soundness is Impossible Without Gluts\n\n**Conjecture.** No consistent *classical or paracomplete* theory containing its\nown truth predicate can prove its own soundness (Gödel/Tarski barrier), but every\nsufficiently expressive *paraconsistent* theory with a designated soundness\nsentence can — and the dividing line is precisely the availability of the glut\n`B`.\n\n**The key insight is** that `paradoxSelfSound_proves_own_soundness` evades the\nsecond-incompleteness barrier not by weakness but by tolerating the controlled\ncontradiction that makes the soundness sentence designated; the obstruction in\nclassical logic is exactly the explosion that gluts disarm.\n\n**Why now?** `SelfSoundTheory` and the concrete `paradoxSelfSound` give a working\npositive instance; the negative half can be formalized by transporting\n`classical_no_liar` to a self-referential soundness sentence.\n\n---\n\n## C5. Functoriality of Paradox Endomorphisms\n\n**Conjecture.** The Belnap endomorphisms fixing the glut and gap values\n(`ParadoxEndomorphism` in `ParadoxSelfSoundness`) act on the set of designated\nself-referential theorems, and this action preserves both provability and\ninconsistency degree; hence \"paradoxicality\" is an invariant of the endomorphism\nmonoid.\n\n**The key insight is** that `paradox_endo_preserves_fixed_point` shows these maps\nsend negation fixed points to negation fixed points, so they map Liars to Liars\nand gluts to gluts — turning the ad hoc paradox catalogue into the orbit of a\ngroup action.\n\n**Why now?** The endomorphism monoid (`ParadoxEndomorphism.comp`, `negEndomorphism`)\nis already defined and its fixed-point preservation proved; the next step is to\nlet it act on `ParaconsistentTheory` truth assignments and check `isSound`/\n`inconsistencyDegree` are invariants — a direct, mechanizable extension.\n",
     "domain_bridges": [],
     "domains": [
@@ -5154,46 +5211,6 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
-    "description": "# Future directions\n\nThese follow-ups build directly on the verified base case in\n`NumberTheory/Phi6SquareDiceBaseCase.lean` (`p = 2, q = 3, m = 6, n = 2`). Each is a\nconcrete, attainable next step rather than a restatement of the full semiprime conjecture.\n\n## 1. Generalize the quotient identity from `36` to any multiple `6r`\n\nThe base case proves `Φ₆ · P36 = S₃₆` with `P36 = Σ_{j<6} blockNat(j)`. The same block\nformula should give `Φ₆ · (Σ_{j<r} blockNat(j)) = S_{6r}` for every `r`. The key insight is\nthat each block `blockNat(j) = X^{6j+1} + 2X^{6j+2} + 2X^{6j+3} + X^{6j+4}` is the shift by\n`6j` of a single fixed degree-`4` pattern, and `Φ₆` times that pattern telescopes to the\nsix consecutive monomials `X^{6j+1} + ⋯ + X^{6j+6}`, so summing over `j < r` tiles\n`X^1 + ⋯ + X^{6r}` exactly. **Why now?** The base case already isolates the one-block\ncomputation that the induction reuses, so the generalization is a clean `Finset.range`\ninduction with no new algebraic content — the hard expansion is done and verified.\n\n## 2. Prove the transfer is genuinely \"new\" (Sicherman-style inequivalence)\n\nThe product identity shows `P36 · Q4 = S₃₆ · S₄`, but it does not yet record that\n`(P36, Q4)` differs from the trivial factorization `(S₃₆, S₄)`. The key insight is that the\ntwo factorizations are distinguished by their cyclotomic-factor multiset: `P36` carries the\nfactor `Φ₆` that `S₃₆` keeps and `S₄` lacks, so a single coefficient comparison (for\ninstance `P36.coeff 5 = 0` while `S₃₆.coeff 5 = 1`) already certifies inequivalence.\n**Why now?** All the polynomials are concrete and their coefficients are computable in the\nexisting file, so the distinguishing lemma is a short `decide`/`coeff`-level fact that\nupgrades the artifact from \"a valid factorization\" to \"a nontrivial transfer\".\n\n## 3. Catalogue the admissible `(p, q)` substitutions beyond `(2, 3)`\n\nThe witness uses `Φ₆ = Φ_{2·3}`. The natural next instances replace `Φ₆` by other\n`Φ_{pq}` for small distinct primes `p, q` (e.g. `Φ_{10}, Φ_{15}, Φ_{21}`) and ask for the\nanalogous block decomposition. The key insight is that `Φ_{pq}` always divides\n`S_{pq·k}` for suitable `k` because `S_N` collects exactly the cyclotomic factors\n`Φ_d` with `d | (N+1)` and `d > 1`, so the block pattern is governed by the explicit\ncoefficient sequence of `Φ_{pq}` rather than by anything specific to `6`. **Why now?**\nThe present file gives a template — define `blockNat`, cast from `ℕ`, prove the quotient\nidentity by `ring`, derive nonnegativity from the cast — that ports almost verbatim to each\nnew `(p, q)`, turning a research question into a finite enumeration of mechanical cases.\n\n## 4. Replace the hand-built blocks by a reusable `S`-divisibility API\n\nThe proof currently expands sums and calls `ring`. The key insight is that the recurring\nfact is purely structural: `Φ_d` divides `S_{N}` whenever `d | (N+1)` and `d ≠ 1`, with an\nexplicit nonnegative quotient, and this divisibility — not the particular numerology of the\nbase case — is what every instance needs. Packaging it as a small lemma library\n(`phi_dvd_S`, `quotient_coeffNonneg`) would let later results cite a clean interface\ninstead of re-deriving expansions. **Why now?** The base case has already exercised every\ningredient of such an API once, so abstracting it is low-risk refactoring that immediately\npays off in directions 1 and 3.\n\n## 5. Connect the polynomial witness to a probabilistic dice statement\n\nThe polynomials encode dice, so the identity `P36 · Q4 = S₃₆ · S₄` should be lifted to a\nstatement about *probability distributions*: two independent rolls of the weighted dice\n`P36/36` and `Q4/4` give the same sum-distribution as a fair `36`-die and a fair `4`-die.\nThe key insight is that evaluating generating polynomials at `X = 1` (already proved:\n`eval 1 P36 = 36`, `eval 1 Q4 = 4`) supplies exactly the normalizing constants, so the\ncoefficient identity becomes an equality of convolutions of probability mass functions.\n**Why now?** The normalization lemmas and the product identity are both in place, so the\nremaining work is to phrase the convolution equivalence over `ℚ` (or `PMF`) and divide\nthrough — a definitional bridge rather than a new theorem about polynomials.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2140",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "7b66a66e",
-    "status": "available",
-    "timestamp": "2026-06-20T10:18:41.171524+00:00",
-    "title": "These follow-ups build directly on the verified base case in"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nThis cycle formalized three machine-checked pillars (all `sorry`-free):\n\n* `Physics/RandomTensorNetwork/Threshold.lean` — a **sharp bond-dimension phase\n  transition**: a holographic encoding `Fin (k^N) ↪ Fin (D^b)` exists iff\n  `D ≥ D_c(N)`, with strict failure (information loss) below `D_c`.\n* `Physics/RandomTensorNetwork/AreaLaw.lean` — the **entanglement area law**\n  `S ≤ b·log D` with maximal-entropy **saturation** at the uniform spectrum.\n* `Bridges/FibonacciAnyonChain.lean` — a **number-theoretic bridge**: the golden\n  (Fibonacci-anyon) chain has bulk dimension `fib(n+2) ≤ 2^n`, and two chains are\n  *commensurable* via the catalog identity `Nat.fib_gcd`.\n\nThe following conjectures are the natural next falsifiable steps.\n\n## Direction 1 — Quantitative finite-size width of the transition\n\n**Conjecture.** Define the \"transition window\" `W(N) = D_c(N) − D_c(N)·(1 − 1/b)`\nmeasured against the encodable indicator. The fraction of bond dimensions in\n`[1, D_c]` that fail to encode is exactly `1 − 1/D_c`, and the *relative* window\n`(D_c − D_{c-1})/D_c → 0` as `N → ∞` for fixed `b`, i.e. the transition becomes\nasymptotically sharp (a true first-order jump in the thermodynamic limit).\n\nThe key insight is that `D_c(N) = ⌈(k^N)^{1/b}⌉` grows geometrically while its\ninteger \"jump size\" grows only sub-geometrically, so the *relative* uncertainty\nin the threshold vanishes — a discrete order-theoretic analogue of a sharp\nthermodynamic phase boundary.\n\nWhy now? `Threshold.lean` already pins `D_c` exactly via `critBond_mem` and\n`critBond_sharp`; only elementary `Nat`-power asymptotics (monotonicity + ceiling\nestimates) stand between here and the limit statement, all within reach of the\ncurrent toolchain.\n\n## Direction 2 — Strict sub-maximal area law ⇒ a curvature-proxy gap\n\n**Conjecture.** For the Fibonacci chain, `fusionCount n < 2^n` strictly for all\n`n ≥ 2`, and more sharply `fusionCount n ≤ ⌈φ^{n+1}⌉` with `φ = (1+√5)/2`, so the\nentanglement density obeys `log(fusionCount n)/n → log φ < log 2`. The gap\n`log 2 − log φ` is a universal, model-independent \"curvature deficit\" of golden\nnetworks relative to qubit networks.\n\nThe key insight is that the area-law ceiling `b·log D` from `area_law` is *not*\nsaturated by anyonic networks whose bond Hilbert spaces carry fusion\nconstraints; the Fibonacci recursion forces a strictly sub-maximal growth rate\nequal to `log φ`, turning a representation-theoretic constraint into a geometric\n(spectral-dimension) bound.\n\nWhy now? `fusionCount_eq_fib` and `fusionCount_le_two_pow` are proved; the strict\n`< 2^n` (n ≥ 2) and the `φ`-rate refinement reduce to standard Fibonacci growth\nestimates (`Nat.fib` bounds already in Mathlib), making the density limit a\ntractable next target.\n\n## Direction 3 — Commensurability classifies reconstructible sub-chains\n\n**Conjecture.** A length-`m` Fibonacci sub-chain is holographically\nreconstructible inside a length-`n` chain *iff* `(m+2) ∣ (n+2)`, because\n`gcd(fusionCount m, fusionCount n) = fusionCount m ⇔ fib(m+2) ∣ fib(n+2) ⇔\n(m+2) ∣ (n+2)`. Thus divisibility of chain lengths governs nested holographic\nreconstruction.\n\nThe key insight is that `fib_chain_commensurability` converts a *geometric*\nnesting question (can the bulk of one region be recovered from another?) into the\npurely *arithmetic* divisibility lattice of Fibonacci indices `Nat.fib_dvd`.\n\nWhy now? The bridge theorem `fib_chain_commensurability` already routes through\n`Nat.fib_gcd`; combining it with Mathlib's `Nat.fib_dvd`/`Nat.fib_dvd_fib_iff`\nshould close the divisibility characterization with little new machinery.\n\n## Direction 4 — Threshold-conditioned area law (two-regime geometry)\n\n**Conjecture.** Define a network to be *geometric* at `(N, D, b)` when both\n(i) `D ≥ D_c(N)` (encodable) and (ii) the realized entanglement is near-maximal,\n`S ≥ (1−ε)·b·log D`. Then geometricity is monotone in `D` and exhibits the same\ncritical `D_c`: below `D_c` no encoding exists (so condition (i) fails outright),\nwhile above `D_c` saturation (`area_law_saturation`) makes (ii) generically\nattainable. Hence smooth-geometry emergence is a *single* threshold phenomenon.\n\nThe key insight is that the two independently proved results — the encoding\nthreshold and the saturable area law — share the same control parameter `D`, so\n\"smooth Lorentzian geometry above `D_c`, fractal below\" can be stated as a single\nmonotone predicate rather than two separate phenomena.\n\nWhy now? Both ingredients (`phase_transition`, `area_law`, `area_law_saturation`)\nare formalized in this cycle; assembling them into one `Geometric` predicate and\nproving its monotonicity is a direct composition exercise.\n\n## Direction 5 — Random ensemble: threshold concentration\n\n**Conjecture.** For a *uniformly random* rank-`k` tensor network, the minimal cut\n`b` across a fixed bipartition concentrates around its mean `b̄(N)`, so the\ndata-dependent critical bond dimension `D_c = ⌈(k^N)^{1/b}⌉` concentrates around\n`⌈(k^N)^{1/b̄}⌉` with fluctuations `o(D_c)`. The phase transition therefore\nsurvives averaging over the random ensemble (it is *self-averaging*).\n\nThe key insight is that the deterministic threshold of `Threshold.lean` depends on\nthe network only through the single integer `b` (min-cut), so probabilistic\ncontrol of `b` alone upgrades the deterministic transition to an ensemble-level\nsharp threshold — reducing a hard random-geometry question to a min-cut\nconcentration estimate.\n\nWhy now? The deterministic backbone is complete and isolates `b` as the only\nrandom input; Mathlib's developing probability/concentration library makes a\nmin-cut concentration lemma the well-scoped missing piece.\n",
-    "domain_bridges": [],
-    "domains": [
-      "Algebra",
-      "Computation"
-    ],
-    "id": "fd_2141",
-    "lineage_refs": [],
-    "priority_score": 0.75,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "acb790ee",
-    "status": "available",
-    "timestamp": "2026-06-20T10:20:25.664165+00:00",
-    "title": "This cycle formalized three machine-checked pillars (all `sorry`-free):"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -5212,7 +5229,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "fdab34f3",
     "description": "Conjecture: The entanglement‑complexity scaling law of a uniformly random rank‑k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network’s holographic geometry approximates a smooth (d+1)‑dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse‑graining. Test: Generate large‑scale random tensor networks on high‑performance clusters, compute their entanglement spectra and bulk geometry via the quantum error‑correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein’s equations from complexity theory, guide quantum gravity model selection, and inspire complexity‑optimal quantum error‑correcting codes.",
     "domain_bridges": [],
     "domains": [
@@ -5225,7 +5242,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
   },
@@ -5905,7 +5922,7 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ebc08ab7",
     "description": "Formalize tropical differential equations as constraints on the valuation of power series. Prove the tropical fundamental theorem of differential algebra: the tropicalization of a differential ideal equals the tropical differential ideal of the tropicalization. Show that tropical solutions provide lower bounds on the growth of classical solutions.",
     "domain_bridges": [],
     "domains": [
@@ -5918,7 +5935,7 @@
     "proof_strategy": "",
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:07.541008+00:00",
     "title": "Tropical Differential Equations: Power Series Solutions"
   },
