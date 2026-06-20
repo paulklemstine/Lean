@@ -3609,6 +3609,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "# Future Directions \u2014 generalized Tur\u00e1n growth `ex(n, K_{a,b}, K_{3,t})`\n\nDerived from this cycle's results: the parity-uniform cubic **upper** bound\n(`KabCopies_cubic_of_K3tFree`, holding already at the necessary threshold `t = b+1`) and the\nexact **threshold gap** `paperThreshold \u2212 necessaryThreshold = b mod 2` (`threshold_gap`).\n\n## Conjecture 1 (Grand challenge): the odd-`b` threshold collapses\nFor all integers `a, b, t` with `3 < a \u2264 b`, `b \u2265 7` odd, and `t = b + 1`, there is a\n`K_{3,t}`-free graph on `n` vertices with `\u03a9(n^3)` copies of `K_{a,b}`; hence\n`ex(n, K_{a,b}, K_{3,b+1}) = \u0398(n^3)` for odd `b` as well.\n- **The key insight is** that the proved threshold's extra `+1` in the odd case\n  (`paperThreshold_odd`) comes only from the *lower-bound* construction's reliance on an even\n  split `b = \u2308b/2\u2309 + \u230ab/2\u230b`; an asymmetric `(\u2308b/2\u2309, \u230ab/2\u230b)` incidence construction should still\n  avoid `K_{3,b+1}` while producing cubically many `K_{a,b}`.\n- **Why now?** The matching upper bound at `t = b+1` is now formalized and parity-uniform\n  (`KabCopies_cubic_of_K3tFree`), so the only missing half is a single construction; the gap is\n  provably exactly `1` (`necessary_lt_paper_iff_odd`), pinpointing the target.\n\n## Conjecture 2 (Sharp leading constant): `ex / n^3 \u2192 C(b, a-3)/6` at `t = b+1`\nFor `3 < a \u2264 b` and `t = b + 1`, `lim_{n\u2192\u221e} ex(n, K_{a,b}, K_{3,b+1}) / \\binom{n}{3}` exists and\nequals `C(b, a-3)`.\n- **The key insight is** that our upper bound's constant collapses to exactly `C(b, a-3)` at the\n  necessary threshold (`cubic_constant_at_threshold`), and equality should be forced by a\n  construction in which every triple's common neighborhood is *saturated* to size `b`.\n- **Why now?** The constant is already isolated symbolically; matching it only requires showing\n  the fiber injection of `fiber_bound` is asymptotically a bijection.\n\n## Conjecture 3 (Beyond `K_{3,t}`): an `s`-core cubic-to-`(s)` bound\nFor `s \u2264 a` and `t \u2265 b + 1`, a `K_{s,t}`-free graph has at most `C\u00b7n^s` copies of `K_{a,b}`,\ni.e. `ex(n, K_{a,b}, K_{s,t}) = O(n^s)`.\n- **The key insight is** that the \"anchor on an `s`-element core\" double count generalizes our\n  `s = 3` argument verbatim: pick `s` vertices from the `a`-side, cap their common neighborhood\n  via `K_{s,t}`-freeness, then pin the remaining `a+b-s` vertices into bounded neighborhoods.\n- **Why now?** `fiber_bound` and `KabCopies_card_le_sum` are stated so that only the literal `3`\n  needs replacing by `s`; the proof skeleton already isolates exactly the three places it occurs.\n\n## Conjecture 4 (Lower bound from finite fields): incidence graphs are extremal\nThe point\u2013line incidence graph of a projective/affine plane over `\ud835\udd3d_q`, suitably blown up,\nrealizes `\u0398(n^3)` copies of `K_{a,b}` while being `K_{3,b+1}`-free.\n- **The key insight is** that two points lie on a unique line, so every triple of points has\n  `O(1)` common neighbors \u2014 exactly the `CNbound` hypothesis our upper bound consumes \u2014 yet\n  cubically many incidences survive after a controlled blow-up.\n- **Why now?** Our `CNbound` reformulation (`K3tFree_iff_CNbound`) turns the construction's\n  obligation into a clean, checkable common-neighborhood inequality, making a formal lower bound\n  tractable.\n",
+    "domains": [
+      "Algebra",
+      "Geometry"
+    ],
+    "id": "fd_2151",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "c4b2f906",
+    "status": "available",
+    "timestamp": "2026-06-20T16:14:26.054257+00:00",
+    "title": "Derived from this cycle's results: the parity-uniform cubic **upper** bound"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3620,21 +3635,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
-  },
-  {
-    "consumed_by_exp_id": "808095a3",
-    "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_2119",
-    "priority_score": 0.7158260869565218,
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-19T17:11:08.928185+00:00",
-    "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
   {
     "consumed_by_exp_id": "",

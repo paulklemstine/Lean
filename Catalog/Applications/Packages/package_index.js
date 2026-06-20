@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "c4b2f906",
     "filename": "necessary_threshold_for_cubic_generalized_turn_gro.json",
     "pkg_num": 211,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.5545492752326414,
     "title": "The MDS\u2013Uncertainty Equivalence: a Sharp Additive Uncertainty Principle for Maximum Distance Separable Matrices"
   },
   {
@@ -6453,8 +6453,8 @@ window.PACKAGE_GRAPH = {
       "hue": 270,
       "id": "necessary_threshold_for_cubic_generalized_turn_gro",
       "primary_domain": "Algebra",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.5545492752326414,
+      "quality": "partial",
       "shape": "tetrahedron",
       "title": "The MDS\u2013Uncertainty Equivalence: a Sharp Additive Uncertainty Principle for Maximum Distance Separable Matrices"
     }

@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "fcdeb4ae",
-      "domain": "Bridges",
-      "key_insight": "# Future Directions — Berggren–Lorentz Certificates for Lattice Reduction\n\nThis cycle (see `LatticeReduction.lean`) lifted the single-generator facts of\n`Core.lean` to whole-word / whole-monoid statem",
-      "quality_score": 0.44584,
-      "sorry_count": 0,
-      "theorem_count": 8,
-      "timestamp": "2026-06-15T07:17:50",
-      "title": "Berggren–Lorentz certificates for lattice reduction in Pythagorean cryptography"
-    },
-    {
       "cycle_id": "d1ba4f5a",
       "domain": "MachineLearning",
       "key_insight": "# Future Directions — Valuation ↔ Vietoris–Rips bridge\n\nFoundational results established in `Catalog/Bridges/ValuationRipsBridge.lean`:\nin an ultrametric (non-Archimedean valuation) space the Vietoris",
@@ -2501,6 +2491,16 @@
       "theorem_count": 33,
       "timestamp": "2026-06-20T16:12:33",
       "title": "*normalization functor into the probability simplex*"
+    },
+    {
+      "cycle_id": "c4b2f906",
+      "domain": "Novelty",
+      "key_insight": "# Future Directions — generalized Turán growth `ex(n, K_{a,b}, K_{3,t})`\n\nDerived from this cycle's results: the parity-uniform cubic **upper** bound\n(`KabCopies_cubic_of_K3tFree`, holding already at",
+      "quality_score": 0.5545492752326414,
+      "sorry_count": 0,
+      "theorem_count": 33,
+      "timestamp": "2026-06-20T16:15:09",
+      "title": "Necessary threshold for cubic generalized Turán growth against K_{3,t}"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8075699999999999
     }
   ],
-  "last_updated": "2026-06-20T16:12:33",
+  "last_updated": "2026-06-20T16:15:09",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3573,12 +3573,6 @@
     ],
     "Novelty": [
       {
-        "cycle_id": "702894c4",
-        "quality": 0.4263405714285714,
-        "theorems": 4,
-        "title": "Speculative: Proof Complexity and Thermodynamic Cost"
-      },
-      {
         "cycle_id": "595ce011",
         "quality": 0.6122400000000001,
         "theorems": 10,
@@ -3631,6 +3625,12 @@
         "quality": 0.5112,
         "theorems": 176,
         "title": "Arithmetic Mirror Symmetry for Calabi-Yau"
+      },
+      {
+        "cycle_id": "c4b2f906",
+        "quality": 0.5545492752326414,
+        "theorems": 33,
+        "title": "Necessary threshold for cubic generalized Turán growth against K_{3,t}"
       }
     ],
     "NumberTheory": [
