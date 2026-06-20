@@ -1698,7 +1698,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Initial-condition universality of the clique-number exponent in preferential attachment with edge steps"
   },
   {
-    "consumed_by_exp_id": "977d0362",
+    "consumed_by_exp_id": "",
     "description": "Let P be any fixed finite partial Latin square pattern with k entries, encoded as a finite set of triples (row, column, symbol) of natural numbers satisfying the partial Latin condition: no two distinct entries agree in both row and column, row and symbol, or column and symbol. For each n large enough to contain all coordinates of P, view P as a partial Latin square of order n. Conjecture: if L is chosen uniformly from all Latin squares of order n, then Pr[L contains P] * n^k tends to 1 as n tends to infinity.",
     "domains": [
       "Pythagorean",
@@ -1708,7 +1708,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18174v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T14:02:50.731479+00:00",
     "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
   },
@@ -2175,7 +2175,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Asymptotic Growth Constant for Unlabelled Cubic Planar Graphs"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "47c79c52",
     "description": "To formalize the concept of graph linear notation as a complete graph invariant in Lean 4, we propose defining it as the maximum binary encoding of adjacency matrices across all vertex orderings. This encoding uniquely represents a graph up to isomorphism by capturing its structure through lexicographic maximization.",
     "domains": [
       "Algebra",
@@ -2185,7 +2185,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19393v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-19T16:09:08.325435+00:00",
     "title": "Formalizing Graph Linear Notation in Lean 4"
   },
@@ -2499,7 +2499,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on Idempotent Up to Scalar Property of Restricted Rota-Baxter Operators"
   },
   {
-    "consumed_by_exp_id": "c4b2f906",
+    "consumed_by_exp_id": "",
     "description": "For all integers a,b,t with 3 < a \u2264 b, b \u2265 6, and t \u2265 b+1, the generalized Tur\u00e1n number satisfies ex(n,K_{a,b},K_{3,t}) = \u0398(n^3). Equivalently, there exist positive constants c,C and N, depending only on a,b,t, such that for every n \u2265 N, c n^3 \u2264 ex(n,K_{a,b},K_{3,t}) \u2264 C n^3. The paper proves this for t \u2265 2 max{3, ceil(b/2)}+1, which equals b+1 for even b \u2265 6 but is b+2 for odd b \u2265 7; the conjecture asserts that the necessary threshold b+1 is also sufficient in the odd case.",
     "domains": [
       "Pythagorean"
@@ -2508,7 +2508,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19217v1",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-20T12:03:02.988518+00:00",
     "title": "Necessary threshold for cubic generalized Tur\u00e1n growth against K_{3,t}"
   },
@@ -2542,11 +2542,25 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Every minimal forbidden partial cube-minor for the class of daisy cubes is isomorphic to the graph obtained from P_3^\u25a1r \u25a1 Q_s by deleting exactly two vertices that are antipodal in the hypercube embedding, for some integers r \u2265 2 and s \u2265 1.",
+    "domains": [
+      "Bridges"
+    ],
+    "id": "fd_2141",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19032v1",
+    "status": "available",
+    "timestamp": "2026-06-20T15:32:32.061109+00:00",
+    "title": "Classification of Minimal Forbidden pc-Minors for Daisy Cubes"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Let S_N(x)=sum_{i=1}^N x^i. For primes p<q with pq | m and n^2 >= (p-1)(q-1)+1, the conjecture says the cyclotomic transfer P=S_{m^2}/Phi_{pq}, Q=S_{n^2} Phi_{pq} is a nonstandard square-sided pair of sizes m^2 and n^2. Equivalently, the quotient and product have nonnegative integer coefficients, P(1)=m^2, Q(1)=n^2, and P Q=S_{m^2}S_{n^2}. A counterexample would be any admissible p,q,m,n for which one of these two explicit polynomials has a negative coefficient.",
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2141",
+    "id": "fd_2142",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -2560,7 +2574,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Pythagorean"
     ],
-    "id": "fd_2142",
+    "id": "fd_2143",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20256v1",
@@ -2575,7 +2589,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2143",
+    "id": "fd_2144",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20085v1",
@@ -2589,7 +2603,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Bridges"
     ],
-    "id": "fd_2144",
+    "id": "fd_2145",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19863v1",
@@ -2604,7 +2618,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2145",
+    "id": "fd_2146",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19796v1",
@@ -2619,7 +2633,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2146",
+    "id": "fd_2147",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19573v1",
@@ -2634,13 +2648,28 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2147",
+    "id": "fd_2148",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19500v1",
     "status": "available",
     "timestamp": "2026-06-20T12:56:08.085469+00:00",
     "title": "Equidistribution of Terminal Closers and Cyclic Points in Multiset Permutations"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "The paper constructs explicit modular forms to establish Ramanujan-type congruences. We conjecture that for the partition function p(n), the explicit construction using the Rankin-Cohen bracket yields a modular form of weight 4 on SL(2,Z) whose Fourier expansion explicitly demonstrates that p(5n+4) \u2261 0 (mod 5) for all n \u2265 0. Specifically, let f(\u03c4) be the explicit modular form constructed via the bracket operator satisfying f(\u03c4) \u2261 (\u03b7(5\u03c4)/\u03b7(\u03c4))^5 (mod 5) in M_4(SL(2,Z)). Then the Fourier coefficients of f(\u03c4) should provide a direct proof that p(5n+4) \u2261 0 (mod 5).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2149",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.19008v1",
+    "status": "available",
+    "timestamp": "2026-06-20T15:33:31.323729+00:00",
+    "title": "Verification of Ramanujan's modulo 5 congruence via explicit modular form construction"
   },
   {
     "consumed_by_exp_id": "",
@@ -3549,7 +3578,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This cycle formalized, with zero `sorry`, a self-contained 2-color Ramsey theory"
   },
   {
-    "consumed_by_exp_id": "656b45a0",
+    "consumed_by_exp_id": "",
     "description": "# Future Directions \u2014 The Prime Number Crossword\n\nThis cycle established the two boundary facts of the prime crossword in\n`Cryptography/PrimeGaps/`:\n\n* `exists_consecutive_composites` / `gaps_unbounded` \u2014 gaps are arbitrarily wide;\n* `gaps_unbounded_cofinal` \u2014 arbitrarily wide gaps occur arbitrarily far out;\n* `nextPrime_sub_le` \u2014 every gap above a prime `p` is at most `p` (Bertrand).\n\nBelow are falsifiable conjectures for the next cycle. Each is stated so that it\ncan be formalized directly as a Lean theorem about `PrimeGaps.nextPrime`.\n\n## C1. A quantitative Bertrand gap bound, sharpened\n**Conjecture.** For every prime `p \u2265 5`, `nextPrime p - p \u2264 p / 2`, and more\nstrongly the relative gap `(nextPrime p - p) / p \u2192 0`.\n*Formalization target:* prove `\u2200 p, p.Prime \u2192 5 \u2264 p \u2192 nextPrime p - p \u2264 p / 2`\nusing Nagura-type explicit estimates (prime in `(n, 6n/5]` for `n \u2265 25`).\n*Falsifiable:* a single prime with gap exceeding `p/2` refutes it.\n\n## C2. Average gap matches the logarithm (Prime Number Theorem flavor)\n**Conjecture.** The mean gap up to `x`, `x / \u03c0(x)`, grows like `log x`. A first\nformal milestone: `\u2200 x \u2265 2, \u03c0(x) \u2264 x` paired with a lower bound\n`\u03c0(x) \u2265 c \u00b7 x / log x`. *Target:* connect `nextPrime` iterates to `Nat.primeCounting`\nin Mathlib and prove `nextPrime p - p` has Ces\u00e0ro average `\u0398(log p)`.\n\n## C3. Maximal gap function is well defined and unbounded but slowly growing\n**Conjecture.** `G(x) := max { nextPrime p - p : p prime, p \u2264 x }` satisfies\n`G(x) \u2264 x` (immediate from Bertrand) and `G(x) \u2192 \u221e` (immediate from\n`gaps_unbounded_cofinal`), while conjecturally `G(x) = O((log x)^2)` (Cram\u00e9r).\n*Target:* formalize `G` as a `Finset.sup`, prove the two unconditional bounds,\nand state Cram\u00e9r's `O((log x)^2)` bound as an open hypothesis.\n\n## C4. Twin-gap dichotomy / Polignac\n**Conjecture (Polignac, open).** Every even number `2k` is a gap between\nconsecutive primes infinitely often: `\u2200 k \u2265 1, {p : nextPrime p - p = 2k}` is\ninfinite. *Target:* state precisely with `Set.Infinite`; as a tractable\nsub-result prove the *finite* version \u2014 for each `k` there is at least one prime\ngap of size `\u2265 2k` (already implied by `gaps_unbounded`) and search for explicit\nsmall-`k` witnesses via `native_decide`.\n\n## C5. Cryptographic safe-prime spacing\n**Conjecture.** Safe primes (`p` with `(p-1)/2` also prime) exhibit the same\ngap-unboundedness: `\u2200 N, \u2203 p, p` safe-prime `\u2227 nextSafePrime p - p \u2265 N`.\n*Target:* define `SafePrime` and `nextSafePrime`, then transport the factorial /\nbracketing construction. This directly models the cost of safe-prime search in\nDiffie\u2013Hellman parameter generation.\n",
     "domains": [
       "Pythagorean",
@@ -3559,7 +3588,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "21cfd7dd",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-17T23:11:17.377449+00:00",
     "title": "Two boundary facts of the prime crossword in"
   },
@@ -3580,36 +3609,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Spectral Theory of Hydrogen\n\nDerived from the Stage 3/4 findings of this research cycle (files\n`Physics/HydrogenSpectrum.lean` and the extended `Physics/AngularMomentum.lean`).\n\n## What this cycle established (anchor results)\n- `bohrEnergy n = -1/n\u00b2` is strictly increasing, bounded below by `-1`, and\n  `\u2192 0`; hence the point spectrum accumulates only at `0`.\n- `hydrogenSpectrum = range bohrEnergy \u222a [0,\u221e)` is **closed** in \u211d, and the\n  bound/scattering parts are **disjoint**.\n- Degeneracy `\u2211_{l<n}(2l+1) = n\u00b2`.\n- `e^{im\u03c6}` is an exact `L_z = -i\u2202\u03c6` eigenfunction with eigenvalue `m`\n  (`Lz_azimuthal_eigen`), unit modulus.\n- Orbital selection rule as a sharp `iff` (`dipole_selection_l`) and magnetic\n  selection rule from azimuthal orthogonality (`magnetic_selection`).\n\n## Conjectures\n\n### 1. The discrete hydrogen spectrum is exactly the accumulation-point closure of a geometric-like sequence\nClaim: `closure (range bohrEnergy) = range bohrEnergy \u222a {0}`, and `0` is the\nunique accumulation point; moreover `range bohrEnergy` is order-isomorphic to\n\u2115\u207a with the reverse order.\nThe key insight is that `-1/n\u00b2` is strictly monotone with a single limit, so its\nrange is a discrete set whose only frontier point is the infimum of the\ncontinuum \u2014 the topological signature separating bound states from scattering.\nWhy now? `hydrogenSpectrum_isClosed` already isolates `0` as the lone limit via\n`Filter.Tendsto.isCompact_insert_range`; upgrading \"closed\" to an explicit\nclosure description is a short next step on the same machinery.\n\n### 2. n\u00b2-degeneracy is forced by SO(4), not SO(3)\nClaim: the multiplicity `n\u00b2 = \u2211_{l<n}(2l+1)` equals `dim` of an irreducible\nrepresentation of `SO(4)` (specifically `(n-1)/2 \u2297 (n-1)/2`), so the \"accidental\"\ndegeneracy is the dimension `((n-1)+1)\u00b2 = n\u00b2` of a `Spin(4)=SU(2)\u00d7SU(2)` rep.\nThe key insight is that `\u2211_{l<n}(2l+1)` telescopes to a perfect square exactly\nbecause two copies of spin-`(n-1)/2` (each of dimension `n`) tensor to `n\u00b2`.\nWhy now? The arithmetic identity is already formalized (`hydrogen_degeneracy`);\npairing it with the existing `l=1` `so(3)` matrix algebra in\n`AngularMomentum.lean` gives a concrete first `SU(2)\u00d7SU(2)` instance to verify.\n\n### 3. The selection rules are exactly the support of a rank-1 tensor product\nClaim: `dipoleAllowedL l l'` holds iff the trivial representation appears in\n`(spin l) \u2297 (spin 1) \u2297 (spin l')` AND the parities multiply to `-1`; equivalently\nthe nonzero dipole channels are the lattice points of the `(l,1,l')` triangle\nintersected with the odd-parity sublattice.\nThe key insight is that both mechanisms we proved separately \u2014 triangle\n(`|l-l'|\u22641`) and parity (`Odd (l+l')`) \u2014 are the two defining constraints of a\nClebsch\u2013Gordan/Wigner-3j nonvanishing condition for a rank-1 operator.\nWhy now? `dipole_selection_l` already proves the `iff` at the integer level;\nrecasting `|l-l'|\u22641` as a Clebsch\u2013Gordan triangle is the natural bridge to a\ngeneral Wigner-Eckart statement.\n\n### 4. Rydberg frequencies are dense modulo the continuum edge\nClaim: the set of emission frequencies `{1/m\u00b2 - 1/n\u00b2 : 1 \u2264 m < n}` has `0` and\nevery `1/m\u00b2` as accumulation points, and its closure is\n`{1/m\u00b2 : m \u2265 1} \u222a {0}` translated \u2014 a self-similar (fractal-like) frequency comb.\nThe key insight is that fixing the lower level `m` and letting `n\u2192\u221e` makes each\nspectral series (Lyman, Balmer, \u2026) converge to its series limit `1/m\u00b2`, and\nthese limits themselves accumulate at `0`.\nWhy now? `rydberg_emission_pos` and `bohrEnergy_tendsto_zero` already give\npositivity and the `n\u2192\u221e` limit; assembling the two-parameter accumulation\nstructure reuses exactly these lemmas.\n\n### 5. Unit-modulus azimuthal modes give an exact orthonormal L_z-eigenbasis\nClaim: `{ (2\u03c0)^{-1/2} e^{im\u03c6} : m \u2208 \u2124 }` is a Hilbert basis of `L\u00b2(S\u00b9)`\nconsisting of `L_z`-eigenfunctions, and the dipole matrix element\n`\u27e8m'|e^{iq\u03c6}|m\u27e9` is `2\u03c0\u00b7\u03b4_{m',m+q}` \u2014 i.e. the selection rule is literally a\nbasis-orthogonality statement.\nThe key insight is that `azimuthalExp_norm` (unit modulus) plus\n`azimuthal_orthogonality` already supply normalization and orthogonality, the\ntwo axioms of an orthonormal eigenbasis.\nWhy now? `azimuthal_dipole_integral` proves the `2\u03c0\u00b7\u03b4` matrix element verbatim;\npromoting the family to a `HilbertBasis`/`OrthonormalBasis` in Mathlib is the\nremaining functional-analytic step.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2148",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "831891b4",
-    "status": "available",
-    "timestamp": "2026-06-20T14:19:19.065354+00:00",
-    "title": "Derived from the Stage 3/4 findings of this research cycle (files"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Mock theta f(q), recurrences, and non-holonomy\n\nDerived from this cycle's findings: the claimed P-recurrence for the coefficients of\nRamanujan's third order mock theta function `f(q)` is false on two counts (wrong\ninitial data; no integer solution), and a computational search finds no polynomial\nrecurrence of order \u2264 5 / degree \u2264 5 \u2014 pointing at genuine non-holonomy.\n\n## Conjecture 1 \u2014 Formalize the integer q-expansion of f(q)\nBuild `f(q) \u2208 \u2124\u27e6q\u27e7` in Lean as `\u2211_{n} q^{n\u00b2} / \u220f_{k=1}^n (1+q^k)\u00b2` (via Mathlib\n`PowerSeries`), and prove `coeff f n \u2208 \u2124` together with `coeff 0,1,2 = 1,1,-2`.\n*The key insight is...* that integrality is structural: each summand is an integer power\nseries (geometric inverse of `(1+q^k)`), so the whole sum lands in `\u2124\u27e6q\u27e7`, which already\n*contradicts* the claimed `a_3 = 4/3`. *Why now?* Our `no_integer_sequence_satisfies_claim`\nreduces the entire refutation to one fact \u2014 integrality \u2014 making this the minimal\nmissing Lean ingredient to turn a disproof-of-premise into a disproof *about f itself*.\n\n## Conjecture 2 \u2014 f(q) is non-holonomic (no polynomial-coefficient recurrence)\nConjecture: for every order `r` and degree `d`, the only `p_0,\u2026,p_r \u2208 \u211a[n]` with\n`\u2211_i p_i(n) a_{n+i} = 0` for all `n` is the zero tuple.\n*The key insight is...* that holonomy of a power series is equivalent to a finite linear\nODE for its generating function, and `f(q)` is a *mock* modular form whose completion\nneeds a non-holomorphic Eichler integral, obstructing any such ODE. *Why now?* Our exact\nlinear-algebra search already certifies non-existence up to `r,d \u2264 5`; a Lean proof of a\n*finite* obstruction (rank of the coefficient matrix stays full as the window grows) is\nwithin reach and would be a first formal non-holonomy result.\n\n## Conjecture 3 \u2014 Correct recurrence after modular separation\nConjecture: the *even-* and *odd-indexed* subsequences, or `a_n` minus an explicit\ntheta/Eichler correction term `\u03b8_n`, satisfy an honest polynomial recurrence even though\n`a_n` itself does not.\n*The key insight is...* that a mock theta becomes holonomic after adding its shadow's\nperiod integral, so the obstruction is a single transcendental correction, not the bulk\nof the sequence. *Why now?* Having shown the naive recurrence fails, the natural repair \u2014\nsubtract the modular defect \u2014 is the standard Zwegers route, and our `recurrence_unique`\ngives the exact uniqueness scaffold to test any candidate corrected recurrence in Lean.\n\n## Conjecture 4 \u2014 Sign and growth pattern of a_n\nConjecture: `sign(a_n)` is eventually `(-1)^n` for `n \u2265 2`, and `|a_n|` is increasing\nalong each parity class with `|a_n| = exp(O(\u221an))`.\n*The key insight is...* mock theta coefficients inherit a Hardy\u2013Ramanujan-type\nexponential growth with a clean parity-locked sign from the leading singularity at\n`q = -1`. *Why now?* The first 25 computed terms already exhibit the alternating pattern\n`-,+,-,+,\u2026` from `n=2`; a Lean proof of the *sign* statement (a purely combinatorial\nparity argument on the defining sum) is a tractable next step independent of the hard\ngrowth estimate.\n\n## Conjecture 5 \u2014 Uniqueness scaffold reused for any 3-term recurrence over a field\nGeneralize `recurrence_unique` to: any order-`r` linear recurrence over a field whose\nleading coefficient never vanishes on `\u2115` has a unique solution for each choice of `r`\ninitial values, as a reusable `Catalog` lemma.\n*The key insight is...* the proof never uses the *specific* polynomials, only that the\nleading coefficient is a unit at every step, so strong induction + `mul_left_cancel\u2080`\ngeneralizes verbatim. *Why now?* Multiple catalog entries (partition/mock-theta/Fibonacci\nrecurrences) re-derive uniqueness ad hoc; one general lemma removes that duplication and\ndirectly supports Conjectures 2\u20133.\n",
-    "domains": [
-      "Algebra",
-      "Pythagorean"
-    ],
-    "id": "fd_2149",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "d94e79ee",
-    "status": "available",
-    "timestamp": "2026-06-20T14:31:27.621839+00:00",
-    "title": "Derived from this cycle's findings: the claimed P-recurrence for the coefficient"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3621,6 +3620,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
+  },
+  {
+    "consumed_by_exp_id": "808095a3",
+    "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
+    "domains": [
+      "Novelty",
+      "Computation"
+    ],
+    "id": "fd_2119",
+    "priority_score": 0.7158260869565218,
+    "research_mode": "team",
+    "source_exp_id": "pi_brainstorm",
+    "status": "in_progress",
+    "timestamp": "2026-06-19T17:11:08.928185+00:00",
+    "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
   {
     "consumed_by_exp_id": "",
