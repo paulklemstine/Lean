@@ -1,123 +1,148 @@
 import Mathlib
-import Physics.RandomTensorNetwork.Threshold
 
 /-!
-# Fibonacci anyon chains
+# Paraconsistent Paradox Theories — Belnap-Valued Foundations
 
-A length-`n` Fibonacci anyon chain admits a Hilbert space whose dimension equals the
-number of *admissible fusion paths*, i.e. the number of binary strings of length `n`
-with no two consecutive `1`s.  This count obeys a Fibonacci recurrence and equals
-`Nat.fib (n + 2)`.
+This file develops the small amount of paraconsistent-logic infrastructure used by
+`Logic.ParadoxSelfSoundness` and `Computation.ParadoxesAsTheorems`.
 
-We collect the basic facts about this dimension:
+The core object is `BelnapVal`, the four-valued truth set of Belnap–Dunn logic
+(First Degree Entailment):
 
-* `fusionCount_eq_fib`     – the dimension is a Fibonacci number;
-* `fusionCount_le_two_pow` – the *sub-qubit area law* `fusionCount n ≤ 2 ^ n`,
-  strict for `n ≥ 2`;
-* `fib_chain_commensurability` – the gcd of two fusion dimensions is again a fusion
-  dimension, via `Nat.fib_gcd`;
-* `fib_chain_encodable_iff` – the chain is encodable in a random tensor network of
-  bond dimension `φ` (the golden ratio) iff its length is below an explicit threshold.
+* `T` — true only,
+* `F` — false only,
+* `B` — *both* (a glut / dialetheia: asserted and denied),
+* `N` — *neither* (a gap).
+
+A value is **designated** (`isTrue = true`) exactly when it is `T` or `B`.  Negation
+swaps `T`/`F` and fixes the two "impossible" values `B` and `N`.  Conjunction and
+disjunction are meet and join in the truth order `F ≤ B,N ≤ T` (the diamond lattice).
+
+A `ParaconsistentTheory` over a sentence type `S` assigns each sentence a Belnap value
+together with a syntactic negation operation.  We record the basic notions of
+soundness, inconsistency degree, the Liar fixed point, classicality, and the FDE
+formula algebra.
 -/
 
-namespace Bridges.FibonacciAnyonChain
+/-- Belnap's four truth values (FDE / `FOUR`). -/
+inductive BelnapVal
+  | T
+  | F
+  | B
+  | N
+  deriving DecidableEq, Repr, Fintype
 
-open Physics.RandomTensorNetwork
+namespace BelnapVal
 
-/-- The number of admissible fusion paths of a length-`n` Fibonacci anyon chain,
-i.e. binary strings of length `n` with no two consecutive `1`s.  It satisfies the
-Fibonacci recurrence with seeds `1, 2`. -/
-def fusionCount : ℕ → ℕ
-  | 0 => 1
-  | 1 => 2
-  | (n + 2) => fusionCount (n + 1) + fusionCount n
+/-- Belnap negation: swaps `T`/`F`, fixes the impossible values `B` and `N`. -/
+def neg : BelnapVal → BelnapVal
+  | T => F
+  | F => T
+  | B => B
+  | N => N
 
-@[simp] lemma fusionCount_zero : fusionCount 0 = 1 := rfl
-@[simp] lemma fusionCount_one : fusionCount 1 = 2 := rfl
+/-- A value is *designated* (at-least-true / asserted) iff it is `T` or `B`. -/
+def isTrue : BelnapVal → Bool
+  | T => true
+  | F => false
+  | B => true
+  | N => false
 
-lemma fusionCount_add_two (n : ℕ) :
-    fusionCount (n + 2) = fusionCount (n + 1) + fusionCount n := rfl
+/-- Disjunction = join in the truth order `F ≤ B,N ≤ T`, with `B ⊔ N = T`. -/
+def disj : BelnapVal → BelnapVal → BelnapVal
+  | T, _ => T
+  | _, T => T
+  | F, x => x
+  | x, F => x
+  | B, B => B
+  | N, N => N
+  | B, N => T
+  | N, B => T
 
-/-- The fusion-path count is a Fibonacci number: `fusionCount n = fib (n + 2)`. -/
-theorem fusionCount_eq_fib (n : ℕ) : fusionCount n = Nat.fib (n + 2) := by
-  induction' n using Nat.strong_induction_on with n ih;
-  rcases n with ( _ | _ | n ) <;> simp_all +arith +decide [ Nat.fib_add_two ];
-  rw [ show fusionCount ( n + 2 ) = fusionCount ( n + 1 ) + fusionCount n by rfl, ih _ <| Nat.le_succ _, ih _ <| Nat.le_refl _ ] ; simp +arith +decide [ Nat.fib_add_two ]
+/-- Conjunction = meet in the truth order `F ≤ B,N ≤ T`, with `B ⊓ N = F`. -/
+def conj : BelnapVal → BelnapVal → BelnapVal
+  | F, _ => F
+  | _, F => F
+  | T, x => x
+  | x, T => x
+  | B, B => B
+  | N, N => N
+  | B, N => F
+  | N, B => F
 
-/-- **Sub-qubit area law.**  The fusion dimension never exceeds the full qubit
-Hilbert-space dimension `2 ^ n`. -/
-theorem fusionCount_le_two_pow (n : ℕ) : fusionCount n ≤ 2 ^ n := by
-  induction' n using Nat.twoStepInduction with n ih;
-  · decide +revert;
-  · decide +revert;
-  · rw [ pow_succ' ] at * ; rw [ pow_succ' ] at * ; rw [ fusionCount_add_two ] ; linarith
+@[simp] theorem neg_neg (v : BelnapVal) : v.neg.neg = v := by cases v <;> rfl
 
-/-- The sub-qubit area law is *strict* for chains of length at least `2`. -/
-theorem fusionCount_lt_two_pow (n : ℕ) (hn : 2 ≤ n) : fusionCount n < 2 ^ n := by
-  induction' hn with n hn ih;
-  · decide +revert;
-  · rcases n with ( _ | _ | n ) <;> simp_all +decide [ pow_succ' ];
-    rw [ show fusionCount ( n + 3 ) = fusionCount ( n + 2 ) + fusionCount ( n + 1 ) by rfl ] ; linarith [ fusionCount_le_two_pow ( n + 1 ), pow_succ' 2 n ]
+@[simp] theorem neg_both : B.neg = B := rfl
 
-/-- **Commensurability of Fibonacci chains.**  The greatest common divisor of two
-fusion dimensions is itself a fusion dimension, indexed by the gcd of the shifted
-lengths.  This is the chain-level shadow of the catalog identity `Nat.fib_gcd`. -/
-theorem fib_chain_commensurability (m n : ℕ)
-    (h : 2 ≤ Nat.gcd (m + 2) (n + 2)) :
-    Nat.gcd (fusionCount m) (fusionCount n)
-      = fusionCount (Nat.gcd (m + 2) (n + 2) - 2) := by
-  rw [ fusionCount_eq_fib, fusionCount_eq_fib ];
-  rw [ ← Nat.fib_gcd, fusionCount_eq_fib ];
-  rw [ Nat.sub_add_cancel h ]
+@[simp] theorem neg_neither : N.neg = N := rfl
 
-/-- The bond dimension carried by a single Fibonacci anyon: the golden ratio
-`φ = (1 + √5) / 2 ≈ 1.618`. -/
-noncomputable def fibBondDimension : ℝ := Real.goldenRatio
+end BelnapVal
 
-/-- A length-`n` Fibonacci chain is *encodable* in a random tensor network when its
-bond dimension `φ` exceeds the critical bond dimension for that length. -/
-def ChainEncodable (n : ℕ) : Prop := critBond n < fibBondDimension
+/-- A paraconsistent theory over a sentence type `S`: every sentence receives a
+Belnap truth value, and there is a syntactic negation on sentences. -/
+structure ParaconsistentTheory (S : Type*) where
+  /-- The Belnap truth value assigned to each sentence. -/
+  truth : S → BelnapVal
+  /-- Syntactic negation of a sentence. -/
+  sentNeg : S → S
 
-/-- The explicit critical chain length: chains of length `< 7` are encodable. -/
-def N_critical : ℕ := 7
+namespace ParaconsistentTheory
 
-/-- Concrete small-length verification: a length-`6` chain is encodable. -/
-lemma chainEncodable_six : ChainEncodable 6 := by
-  unfold ChainEncodable;
-  unfold fibBondDimension;
-  unfold critBond; ring_nf; nlinarith [ Real.sqrt_nonneg 5, Real.sq_sqrt ( show 0 ≤ 5 by norm_num ) ] ;
+variable {S : Type*}
 
-/-- Concrete small-length verification: a length-`7` chain is **not** encodable. -/
-lemma not_chainEncodable_seven : ¬ ChainEncodable 7 := by
-  unfold ChainEncodable;
-  unfold critBond fibBondDimension; norm_num;
-  ring_nf; nlinarith [ Real.sqrt_nonneg 5, Real.sq_sqrt ( show 0 ≤ 5 by norm_num ) ] ;
+/-- A set of provable sentences is *sound* when every provable sentence is
+at-least-true (designated). -/
+def isSound (T : ParaconsistentTheory S) (provable : Set S) : Prop :=
+  ∀ s ∈ provable, (T.truth s).isTrue = true
 
-/-- **Encodability threshold.**  A length-`n` Fibonacci chain (bond dimension `φ`) is
-encodable in a random tensor network iff its length lies below the explicit critical
-length `N_critical = 7`. -/
-theorem fib_chain_encodable_iff (n : ℕ) : ChainEncodable n ↔ n < N_critical := by
-  rw [ChainEncodable];
-  unfold fibBondDimension critBond;
-  constructor <;> intro hn <;> rw [ ← @Nat.cast_lt ℝ ] at * <;> ring_nf at * <;> norm_num at *;
-  · exact_mod_cast ( by nlinarith [ Real.sq_sqrt ( show 0 ≤ 5 by norm_num ) ] : ( n : ℝ ) < 7 );
-  · nlinarith [ Real.sqrt_nonneg 5, Real.sq_sqrt ( show 0 ≤ 5 by norm_num ), show ( n : ℝ ) ≤ 6 by norm_cast; exact Nat.le_of_lt_succ hn ]
+end ParaconsistentTheory
 
-/-- Concrete small-`n` verification of the Fibonacci recurrence values and the
-sub-qubit area law, checked numerically with `decide`/`norm_num`. -/
-example : True := by
-  have h0 : fusionCount 0 = 1 := by decide
-  have h1 : fusionCount 1 = 2 := by decide
-  have h2 : fusionCount 2 = 3 := by decide
-  have h3 : fusionCount 3 = 5 := by decide
-  have h4 : fusionCount 4 = 8 := by decide
-  have h5 : fusionCount 5 = 13 := by decide
-  -- strict sub-qubit area law for n = 5
-  have hlt : fusionCount 5 < 2 ^ 5 := by rw [h5]; norm_num
-  -- agreement with Fibonacci numbers for n = 5
-  have hfib : fusionCount 5 = Nat.fib 7 := by rw [h5]; norm_num [Nat.fib]
-  -- the critical length is 7
-  have hcrit : N_critical = 7 := by norm_num [N_critical]
-  trivial
+/-- The inconsistency degree of a finite theory: the number of glut (`B`) sentences. -/
+def inconsistencyDegree {S : Type*} [Fintype S] [DecidableEq S]
+    (T : ParaconsistentTheory S) : ℕ :=
+  (Finset.univ.filter (fun s => T.truth s = BelnapVal.B)).card
 
-end Bridges.FibonacciAnyonChain
+/-- A Liar sentence: a sentence whose truth value is a fixed point of negation
+(forced to be `B` or `N`). -/
+structure HasLiar {S : Type*} (T : ParaconsistentTheory S) where
+  /-- The Liar sentence. -/
+  liar : S
+  /-- The Liar is a negation fixed point: it has the same value as its own negation. -/
+  liar_fixed : T.truth liar = (T.truth liar).neg
+
+/-- A theory is *classical* (bivalent) when every sentence is exactly `T` or `F`. -/
+def IsClassical {S : Type*} (T : ParaconsistentTheory S) : Prop :=
+  ∀ s, T.truth s = BelnapVal.T ∨ T.truth s = BelnapVal.F
+
+/-- **No Liar in a classical theory**: bivalence is incompatible with a negation
+fixed point, since `neg` has no fixed point among `{T, F}`. -/
+theorem classical_no_liar {S : Type*} (T : ParaconsistentTheory S)
+    (h : ∀ s, T.truth s = BelnapVal.T ∨ T.truth s = BelnapVal.F)
+    (hL : HasLiar T) : False := by
+  have hf := hL.liar_fixed
+  rcases h hL.liar with hv | hv <;> rw [hv] at hf <;> simp [BelnapVal.neg] at hf
+
+/-- **Berry-style pigeonhole bound**: if there are more objects than descriptions and
+every object maps to a description, two distinct objects share a description. -/
+theorem berry_definability_bound {S : Type*} [DecidableEq S]
+    (descs objects : Finset S) (definability : S → S)
+    (defn_range : ∀ o ∈ objects, definability o ∈ descs)
+    (overflow : descs.card < objects.card) :
+    ∃ o₁ ∈ objects, ∃ o₂ ∈ objects, o₁ ≠ o₂ ∧ definability o₁ = definability o₂ :=
+  Finset.exists_ne_map_eq_of_card_lt_of_maps_to overflow defn_range
+
+/-! ## FDE formula algebra -/
+
+/-- Formulas of First Degree Entailment over countably many atoms. -/
+inductive FDEFormula
+  | atom (n : ℕ)
+  | neg (φ : FDEFormula)
+  | disj (φ ψ : FDEFormula)
+  | conj (φ ψ : FDEFormula)
+
+/-- Belnap-valued evaluation of an FDE formula under a valuation `v`. -/
+def FDEFormula.eval (v : ℕ → BelnapVal) : FDEFormula → BelnapVal
+  | .atom n => v n
+  | .neg φ => (φ.eval v).neg
+  | .disj φ ψ => (φ.eval v).disj (ψ.eval v)
+  | .conj φ ψ => (φ.eval v).conj (ψ.eval v)
