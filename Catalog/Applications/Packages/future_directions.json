@@ -32871,11 +32871,11 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [],
       "category": "",
       "cleanup_review_count": 1,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "656b45a0",
       "depth_estimate": 3,
       "description": "# Future Directions — The Prime Number Crossword\n\nThis cycle established the two boundary facts of the prime crossword in\n`Cryptography/PrimeGaps/`:\n\n* `exists_consecutive_composites` / `gaps_unbounded` — gaps are arbitrarily wide;\n* `gaps_unbounded_cofinal` — arbitrarily wide gaps occur arbitrarily far out;\n* `nextPrime_sub_le` — every gap above a prime `p` is at most `p` (Bertrand).\n\nBelow are falsifiable conjectures for the next cycle. Each is stated so that it\ncan be formalized directly as a Lean theorem about `PrimeGaps.nextPrime`.\n\n## C1. A quantitative Bertrand gap bound, sharpened\n**Conjecture.** For every prime `p ≥ 5`, `nextPrime p - p ≤ p / 2`, and more\nstrongly the relative gap `(nextPrime p - p) / p → 0`.\n*Formalization target:* prove `∀ p, p.Prime → 5 ≤ p → nextPrime p - p ≤ p / 2`\nusing Nagura-type explicit estimates (prime in `(n, 6n/5]` for `n ≥ 25`).\n*Falsifiable:* a single prime with gap exceeding `p/2` refutes it.\n\n## C2. Average gap matches the logarithm (Prime Number Theorem flavor)\n**Conjecture.** The mean gap up to `x`, `x / π(x)`, grows like `log x`. A first\nformal milestone: `∀ x ≥ 2, π(x) ≤ x` paired with a lower bound\n`π(x) ≥ c · x / log x`. *Target:* connect `nextPrime` iterates to `Nat.primeCounting`\nin Mathlib and prove `nextPrime p - p` has Cesàro average `Θ(log p)`.\n\n## C3. Maximal gap function is well defined and unbounded but slowly growing\n**Conjecture.** `G(x) := max { nextPrime p - p : p prime, p ≤ x }` satisfies\n`G(x) ≤ x` (immediate from Bertrand) and `G(x) → ∞` (immediate from\n`gaps_unbounded_cofinal`), while conjecturally `G(x) = O((log x)^2)` (Cramér).\n*Target:* formalize `G` as a `Finset.sup`, prove the two unconditional bounds,\nand state Cramér's `O((log x)^2)` bound as an open hypothesis.\n\n## C4. Twin-gap dichotomy / Polignac\n**Conjecture (Polignac, open).** Every even number `2k` is a gap between\nconsecutive primes infinitely often: `∀ k ≥ 1, {p : nextPrime p - p = 2k}` is\ninfinite. *Target:* state precisely with `Set.Infinite`; as a tractable\nsub-result prove the *finite* version — for each `k` there is at least one prime\ngap of size `≥ 2k` (already implied by `gaps_unbounded`) and search for explicit\nsmall-`k` witnesses via `native_decide`.\n\n## C5. Cryptographic safe-prime spacing\n**Conjecture.** Safe primes (`p` with `(p-1)/2` also prime) exhibit the same\ngap-unboundedness: `∀ N, ∃ p, p` safe-prime `∧ nextSafePrime p - p ≥ N`.\n*Target:* define `SafePrime` and `nextSafePrime`, then transport the factorial /\nbracketing construction. This directly models the cost of safe-prime search in\nDiffie–Hellman parameter generation.\n",
       "domain_bridges": [],
@@ -32885,7 +32885,7 @@
         "Algebra"
       ],
       "id": "fd_2068",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-20T14:39:45.000413+00:00",
       "last_reviewed_at": "2026-06-19T17:10:29.768093+00:00",
       "lean_theorem_stub": "",
       "lineage_refs": [],
@@ -32898,7 +32898,7 @@
       "research_mode": "team",
       "source_exp_id": "21cfd7dd",
       "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/21cfd7dd_retry3",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-17T23:11:17.377449+00:00",
       "title": "Two boundary facts of the prime crossword in"
@@ -33323,7 +33323,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Mathlib.Data.Fin.Basic",
         "Mathlib.Data.Fintype.Basic",
@@ -33334,7 +33334,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "977d0362",
       "depth_estimate": 3,
       "description": "Let P be any fixed finite partial Latin square pattern with k entries, encoded as a finite set of triples (row, column, symbol) of natural numbers satisfying the partial Latin condition: no two distinct entries agree in both row and column, row and symbol, or column and symbol. For each n large enough to contain all coordinates of P, view P as a partial Latin square of order n. Conjecture: if L is chosen uniformly from all Latin squares of order n, then Pr[L contains P] * n^k tends to 1 as n tends to infinity.",
       "domain_bridges": [
@@ -33348,7 +33348,7 @@
         "Computation"
       ],
       "id": "fd_2079",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-20T14:39:57.096158+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Data.Fin.Basic\nimport Mathlib.Data.Fintype.Basic\nimport Mathlib.Data.Finset.Basic\nimport Mathlib.Analysis.Asymptotics.Asymptotics\n\nopen Filter\nopen scoped Topology\n\nstructure LatinSquare (n : Nat) where\n  val : Fin n -> Fin n -> Fin n\n  row_bijective : forall r : Fin n, Function.Bijective (fun c : Fin n => val r c)\n  col_bijective : forall c : Fin n, Function.Bijective (fun r : Fin n => val r c)\n\nstructure PatternEntry where\n  row : Nat\n  col : Nat\n  sym : Nat\n  deriving DecidableEq\n\ndef IsPartialLatinPattern (P : Finset PatternEntry) : Prop :=\n  forall a b, a ∈ P -> b ∈ P -> a ≠ b ->\n    a.row ≠ b.row ∨ a.col ≠ b.col ∧\n    a.row ≠ b.row ∨ a.sym ≠ b.sym ∧\n    a.col ≠ b.col ∨ a.sym ≠ b.sym\n\ndef PatternFits (P : Finset PatternEntry) (n : Nat) : Prop :=\n  forall e, e ∈ P -> e.row < n ∧ e.col < n ∧ e.sym < n\n\ndef ContainsPattern {n : Nat} (L : LatinSquare n) (P : Finset PatternEntry) : Prop :=\n  forall e, e ∈ P ->\n    h : e.row < n ->\n    e.col < n ->\n    e.sym < n ->\n    L.",
       "lineage_refs": [],
@@ -33361,7 +33361,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.18174v1",
       "source_path": "http://arxiv.org/abs/2606.18174v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-18T14:02:50.731479+00:00",
       "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
@@ -35865,7 +35865,7 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
-      "attempt_count": 0,
+      "attempt_count": 1,
       "catalog_references": [
         "Alon-Shikhelman generalized Turán numbers",
         "Kővári-Sós-Turán theorem",
@@ -35874,7 +35874,7 @@
       ],
       "category": "cross_domain_bridge",
       "cleanup_review_count": 0,
-      "consumed_by_exp_id": "",
+      "consumed_by_exp_id": "c4b2f906",
       "depth_estimate": 3,
       "description": "For all integers a,b,t with 3 < a ≤ b, b ≥ 6, and t ≥ b+1, the generalized Turán number satisfies ex(n,K_{a,b},K_{3,t}) = Θ(n^3). Equivalently, there exist positive constants c,C and N, depending only on a,b,t, such that for every n ≥ N, c n^3 ≤ ex(n,K_{a,b},K_{3,t}) ≤ C n^3. The paper proves this for t ≥ 2 max{3, ceil(b/2)}+1, which equals b+1 for even b ≥ 6 but is b+2 for odd b ≥ 7; the conjecture asserts that the necessary threshold b+1 is also sufficient in the odd case.",
       "domain_bridges": [
@@ -35887,7 +35887,7 @@
         "Pythagorean"
       ],
       "id": "fd_2138",
-      "last_attempt_time": "",
+      "last_attempt_time": "2026-06-20T14:39:51.818216+00:00",
       "last_reviewed_at": "",
       "lean_theorem_stub": "import Mathlib.Combinatorics.SimpleGraph.Basic\nimport Mathlib.Data.Real.Basic\n\n/- `genTuranBip n a b s t` denotes ex(n, K_{a,b}, K_{s,t}),\n   the maximum number of unlabeled copies of K_{a,b} in an n-vertex\n   K_{s,t}-free simple graph. -/\nconstant genTuranBip : ℕ → ℕ → ℕ → ℕ → ℕ → ℕ\n\n/-- Conjectural sharp threshold: for `3 < a ≤ b`, `b ≥ 6`, and `t ≥ b+1`,\n    the generalized Turán number `ex(n,K_{a,b},K_{3,t})` has cubic growth. -/\ntheorem conjecture_K3t_threshold_b_plus_one\n    (a b t : ℕ)\n    (ha : 3 < a) (hab : a ≤ b) (hb : 6 ≤ b) (ht : b + 1 ≤ t) :\n    ∃ c C : ℝ, ∃ N : ℕ,\n      0 < c ∧ 0 < C ∧\n      ∀ n : ℕ, N ≤ n →\n        c * (n : ℝ)^3 ≤ (genTuranBip n a b 3 t : ℝ) ∧\n        (genTuranBip n a b 3 t : ℝ) ≤ C * (n : ℝ)^3 := by\n  sorry",
       "lineage_refs": [],
@@ -35900,7 +35900,7 @@
       "research_mode": "team",
       "source_exp_id": "2606.19217v1",
       "source_path": "http://arxiv.org/abs/2606.19217v1",
-      "status": "available",
+      "status": "in_progress",
       "thread_id": "",
       "timestamp": "2026-06-20T12:03:02.988518+00:00",
       "title": "Necessary threshold for cubic generalized Turán growth against K_{3,t}"
@@ -95877,6 +95877,8 @@
     "zombies": 3
   },
   "selection_log": [
+    "cross_domain_bridge",
+    "cross_domain_bridge",
     "cross_domain_bridge"
   ]
 }

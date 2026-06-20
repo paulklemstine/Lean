@@ -1698,7 +1698,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Initial-condition universality of the clique-number exponent in preferential attachment with edge steps"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "977d0362",
     "description": "Let P be any fixed finite partial Latin square pattern with k entries, encoded as a finite set of triples (row, column, symbol) of natural numbers satisfying the partial Latin condition: no two distinct entries agree in both row and column, row and symbol, or column and symbol. For each n large enough to contain all coordinates of P, view P as a partial Latin square of order n. Conjecture: if L is chosen uniformly from all Latin squares of order n, then Pr[L contains P] * n^k tends to 1 as n tends to infinity.",
     "domains": [
       "Pythagorean",
@@ -1708,7 +1708,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18174v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-18T14:02:50.731479+00:00",
     "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
   },
@@ -2499,7 +2499,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Conjecture on Idempotent Up to Scalar Property of Restricted Rota-Baxter Operators"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "c4b2f906",
     "description": "For all integers a,b,t with 3 < a \u2264 b, b \u2265 6, and t \u2265 b+1, the generalized Tur\u00e1n number satisfies ex(n,K_{a,b},K_{3,t}) = \u0398(n^3). Equivalently, there exist positive constants c,C and N, depending only on a,b,t, such that for every n \u2265 N, c n^3 \u2264 ex(n,K_{a,b},K_{3,t}) \u2264 C n^3. The paper proves this for t \u2265 2 max{3, ceil(b/2)}+1, which equals b+1 for even b \u2265 6 but is b+2 for odd b \u2265 7; the conjecture asserts that the necessary threshold b+1 is also sufficient in the odd case.",
     "domains": [
       "Pythagorean"
@@ -2508,7 +2508,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19217v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-20T12:03:02.988518+00:00",
     "title": "Necessary threshold for cubic generalized Tur\u00e1n growth against K_{3,t}"
   },
@@ -3549,7 +3549,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "This cycle formalized, with zero `sorry`, a self-contained 2-color Ramsey theory"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "656b45a0",
     "description": "# Future Directions \u2014 The Prime Number Crossword\n\nThis cycle established the two boundary facts of the prime crossword in\n`Cryptography/PrimeGaps/`:\n\n* `exists_consecutive_composites` / `gaps_unbounded` \u2014 gaps are arbitrarily wide;\n* `gaps_unbounded_cofinal` \u2014 arbitrarily wide gaps occur arbitrarily far out;\n* `nextPrime_sub_le` \u2014 every gap above a prime `p` is at most `p` (Bertrand).\n\nBelow are falsifiable conjectures for the next cycle. Each is stated so that it\ncan be formalized directly as a Lean theorem about `PrimeGaps.nextPrime`.\n\n## C1. A quantitative Bertrand gap bound, sharpened\n**Conjecture.** For every prime `p \u2265 5`, `nextPrime p - p \u2264 p / 2`, and more\nstrongly the relative gap `(nextPrime p - p) / p \u2192 0`.\n*Formalization target:* prove `\u2200 p, p.Prime \u2192 5 \u2264 p \u2192 nextPrime p - p \u2264 p / 2`\nusing Nagura-type explicit estimates (prime in `(n, 6n/5]` for `n \u2265 25`).\n*Falsifiable:* a single prime with gap exceeding `p/2` refutes it.\n\n## C2. Average gap matches the logarithm (Prime Number Theorem flavor)\n**Conjecture.** The mean gap up to `x`, `x / \u03c0(x)`, grows like `log x`. A first\nformal milestone: `\u2200 x \u2265 2, \u03c0(x) \u2264 x` paired with a lower bound\n`\u03c0(x) \u2265 c \u00b7 x / log x`. *Target:* connect `nextPrime` iterates to `Nat.primeCounting`\nin Mathlib and prove `nextPrime p - p` has Ces\u00e0ro average `\u0398(log p)`.\n\n## C3. Maximal gap function is well defined and unbounded but slowly growing\n**Conjecture.** `G(x) := max { nextPrime p - p : p prime, p \u2264 x }` satisfies\n`G(x) \u2264 x` (immediate from Bertrand) and `G(x) \u2192 \u221e` (immediate from\n`gaps_unbounded_cofinal`), while conjecturally `G(x) = O((log x)^2)` (Cram\u00e9r).\n*Target:* formalize `G` as a `Finset.sup`, prove the two unconditional bounds,\nand state Cram\u00e9r's `O((log x)^2)` bound as an open hypothesis.\n\n## C4. Twin-gap dichotomy / Polignac\n**Conjecture (Polignac, open).** Every even number `2k` is a gap between\nconsecutive primes infinitely often: `\u2200 k \u2265 1, {p : nextPrime p - p = 2k}` is\ninfinite. *Target:* state precisely with `Set.Infinite`; as a tractable\nsub-result prove the *finite* version \u2014 for each `k` there is at least one prime\ngap of size `\u2265 2k` (already implied by `gaps_unbounded`) and search for explicit\nsmall-`k` witnesses via `native_decide`.\n\n## C5. Cryptographic safe-prime spacing\n**Conjecture.** Safe primes (`p` with `(p-1)/2` also prime) exhibit the same\ngap-unboundedness: `\u2200 N, \u2203 p, p` safe-prime `\u2227 nextSafePrime p - p \u2265 N`.\n*Target:* define `SafePrime` and `nextSafePrime`, then transport the factorial /\nbracketing construction. This directly models the cost of safe-prime search in\nDiffie\u2013Hellman parameter generation.\n",
     "domains": [
       "Pythagorean",
@@ -3559,7 +3559,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.75,
     "research_mode": "team",
     "source_exp_id": "21cfd7dd",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-17T23:11:17.377449+00:00",
     "title": "Two boundary facts of the prime crossword in"
   },
