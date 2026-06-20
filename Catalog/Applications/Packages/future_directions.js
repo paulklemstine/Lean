@@ -2412,6 +2412,21 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Let $\\mathcal{F}$ be a projective Fraisse category and $\\mathbb{F}$ be its projective Fraisse limit. Let $G$ be a closed subgroup of $\\text{Homeo}(F)$ (where $F = \\mathbb{F}/R^{\\mathbb{F}}$) such that $\\text{Aut}(\\mathbb{F})$ is dense in $G$. We conjecture that $G$ is extremely amenable if and only if $\\mathcal{F}$ satisfies the approximate Ramsey property. This formalization requires encoding the approximate Ramsey property as a combinatorial property of the category and the extreme amenability as a fixed-point property for continuous actions on compact spaces.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2130",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-20T04:21:36.746301+00:00",
+    "title": "Characterization of Extreme Amenability for Homeomorphism Groups of Projective Fraisse Limits"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",

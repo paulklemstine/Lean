@@ -3682,6 +3682,33 @@
   },
   {
     "ambition_level": "extension",
+    "catalog_references": [
+      "Kechris-Pestov-Todorcevic (KPT) correspondence",
+      "Irwin-Solecki Projective Fraisse Theory"
+    ],
+    "consumed_by_exp_id": "",
+    "description": "Let $\\mathcal{F}$ be a projective Fraisse category and $\\mathbb{F}$ be its projective Fraisse limit. Let $G$ be a closed subgroup of $\\text{Homeo}(F)$ (where $F = \\mathbb{F}/R^{\\mathbb{F}}$) such that $\\text{Aut}(\\mathbb{F})$ is dense in $G$. We conjecture that $G$ is extremely amenable if and only if $\\mathcal{F}$ satisfies the approximate Ramsey property. This formalization requires encoding the approximate Ramsey property as a combinatorial property of the category and the extreme amenability as a fixed-point property for continuous actions on compact spaces.",
+    "domain_bridges": [
+      "Category Theory to Topological Groups",
+      "Combinatorial Ramsey Theory to Fixed Point Theory",
+      "Metric Geometry to Group Theory"
+    ],
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2130",
+    "lineage_refs": [],
+    "priority_score": 0.8,
+    "proof_strategy": "The proof involves establishing a bridge between the 'Approximate Ramsey Property' (a condition on the existence of monochromatic sub-objects in finite structures) and the 'Fixed Point on Compacta' property. The strategy is to lift the action of $G$ on a compact space $X$ to an action of $\\text{Aut}(\\mathbb{F})$, then use the Ramsey property to construct a sequence of approximate fixed points that converge to a global fixed point via the compactness of $X$.",
+    "research_mode": "team",
+    "source_exp_id": "2606.20407v1",
+    "status": "available",
+    "timestamp": "2026-06-20T04:21:36.746301+00:00",
+    "title": "Characterization of Extreme Amenability for Homeomorphism Groups of Projective Fraisse Limits"
+  },
+  {
+    "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
