@@ -2425,20 +2425,6 @@ window.FUTURE_DIRECTIONS = [
     "title": "Infinitely many prime bases with maximal four-digit Kaprekar cycles"
   },
   {
-    "consumed_by_exp_id": "7b66a66e",
-    "description": "Let S_N(x)=sum_{i=1}^N x^i. For primes p<q with pq | m and n^2 >= (p-1)(q-1)+1, the conjecture says the cyclotomic transfer P=S_{m^2}/Phi_{pq}, Q=S_{n^2} Phi_{pq} is a nonstandard square-sided pair of sizes m^2 and n^2. Equivalently, the quotient and product have nonnegative integer coefficients, P(1)=m^2, Q(1)=n^2, and P Q=S_{m^2}S_{n^2}. A counterexample would be any admissible p,q,m,n for which one of these two explicit polynomials has a negative coefficient.",
-    "domains": [
-      "Pythagorean"
-    ],
-    "id": "fd_2133",
-    "priority_score": 0.8,
-    "research_mode": "team",
-    "source_exp_id": "2606.20311v1",
-    "status": "in_progress",
-    "timestamp": "2026-06-20T06:09:07.372057+00:00",
-    "title": "Semiprime cyclotomic transfer for square-sided dice"
-  },
-  {
     "consumed_by_exp_id": "",
     "description": "Conjecture: For every integer d \u2265 1 and every planar graph H, there exists a constant C = C(d, H) such that any graph G that is K_{1,d}-free and does not contain H as an induced minor satisfies \u03b1\u2011tw(G) \u2264 C, i.e., the class of K_{1,d}-free graphs without H as an induced minor has bounded tree\u2011independence number.",
     "domains": [
@@ -3402,6 +3388,21 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-20T07:34:01.307245+00:00",
     "title": "`transEndo f i j` (the ordered composition of an endomorph"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions\n\nThe six-element witness model in `Catalog/Computation/ParadoxesAsTheorems.lean` is a\ntight, self-contained certificate. Below are concrete directions for extending it.\n\n## 1. A genuine diagonalization producing the gluts\n\nAt present the three paradox sentences are abstract witnesses: their paradoxical status\nis encoded only by being negation fixed points carrying the glut value `B`. A natural\nnext step is to derive them from an actual diagonal construction, reusing the\n`DiagonalSystem` abstraction already present in `Logic.ParadoxSelfSoundness`, so that the\nglut value is *forced* by `diag_prop` rather than assigned by hand. The key insight is\nthat any negation-fixed point in Belnap logic must be `B` or `N`, so a diagonal lemma\nplus a designation requirement pins the value to `B` with no further input. Why now? The\ndiagonal machinery and the \"value must be `B` or `N`\" lemma are already proved in the\nimported file, so the only missing piece is to instantiate them at a concrete finite\napplicative structure \u2014 a small, well-scoped formalization task.\n\n## 2. Parametric family `Fin n` and an exact inconsistency-degree formula\n\nThe present model fixes the carrier at `Fin 6` with exactly three gluts. A worthwhile\ngeneralization is a family of models on `Fin n` with `k` designated gluts, two classical\npoles (`T`, `F`), and a gap, proving the inconsistency degree equals `k` and that\nnon-explosion holds for every such member. The key insight is that non-explosion only\nneeds *one* non-designated, non-provable sentence, so a single `F`-valued slot suffices\nno matter how many gluts are added. Why now? The current proofs already run by `decide`\non a concrete `Fin 6`; lifting them to a uniform `Fin n` statement turns finite checks\ninto a single parametric induction, which both strengthens the result and stress-tests\nthe reusability of the `inconsistencyDegree` definition.\n\n## 3. Connecting the model to the abstract tolerance threshold\n\n`Logic.ParadoxSelfSoundness` proves `tolerance_threshold`: in a theory with a `T` and an\n`F` sentence, the glut count is at most `card - 2`. Our model has `card = 6` and three\ngluts, saturating nothing in particular \u2014 but a follow-up could prove that the model is\n*extremal* for a refined bound that also accounts for the gap value `N`. The key insight\nis that each of `T`, `F`, and `N` consumes a slot that cannot be a glut, so the sharp\nbound in a model with all three poles present is `card - 3`, met exactly here. Why now?\nThe threshold theorem is already available and our model already contains all three\nnon-glut poles, so proving extremality is a direct, low-risk application that closes the\nloop between the abstract bound and a concrete witness.\n\n## 4. An entailment relation and internal modus-ponens analysis\n\nThe imported file shows modus ponens fails for FDE entailment in general. A focused\ndirection is to define a consequence relation *internal to* `paradoxModel` (designated\nsentences entail designated sentences) and to characterize exactly which classical\ninference rules survive on this six-element algebra. The key insight is that on a fixed\nfinite model the entailment relation is decidable, so each rule's validity becomes a\nfinite check rather than a quantified semantic argument. Why now? With the model already\ncomputable end-to-end via `decide`, an internal entailment predicate inherits\ndecidability for free, making a complete rule-by-rule audit immediately feasible.\n\n## 5. Mechanized comparison with the classical collapse\n\nWe prove `classical_no_liar`: bivalence rules out a Liar. A complementary direction is to\nformalize, side by side, the classical theory on the *same* carrier `Fin 6` and exhibit\nthe exact point of divergence \u2014 that adding the glut `0` to a bivalent assignment is what\nconverts a consistent theory into our paraconsistent one. The key insight is that the\nonly structural difference between collapse and tolerance is the designation status of a\nsingle fixed-point value, so the comparison reduces to toggling one entry of the truth\nvector. Why now? Both the classical no-Liar theorem and the paraconsistent witness now\ncoexist in the project under a shared vocabulary, so the comparison can be stated as one\ntheorem relating two instances of the same `ParaconsistentTheory` structure.\n",
+    "domains": [
+      "Logic",
+      "Algebra"
+    ],
+    "id": "fd_2136",
+    "priority_score": 0.75,
+    "research_mode": "team",
+    "source_exp_id": "8e353e57",
+    "status": "available",
+    "timestamp": "2026-06-20T07:44:43.524895+00:00",
+    "title": "The six-element witness model in `Catalog/Computation/ParadoxesAsTheorems.lean` "
   },
   {
     "consumed_by_exp_id": "",

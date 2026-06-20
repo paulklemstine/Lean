@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "1ab7ab39",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Hodge Spectral Duality\n\n## Synthesis\n\nThe discrete-Hodge program already carried a *geometric/decomposition* layer (split\nDirichlet energy, the discrete Hodge theorem, image orth",
-      "quality_score": 0.51996,
-      "sorry_count": 1,
-      "theorem_count": 6,
-      "timestamp": "2026-06-14T23:57:20",
-      "title": "The discrete-Hodge program already carries a *geometric/decomposition* layer"
-    },
-    {
       "cycle_id": "cf4c28ef",
       "domain": "Novelty",
       "key_insight": "# Future Directions — Boltzmann Bridge XI: The Apparition Lattice\n\n## Synthesis\n\nThe Carmichael primitive-divisor arc had, until now, used the *rank of apparition*\n`α(p) = CarmHelper.entryPt p` (the l",
@@ -2501,6 +2491,16 @@
       "theorem_count": 3,
       "timestamp": "2026-06-20T07:34:32",
       "title": "Close Proofs: These conjectures continue the research cycle begun in"
+    },
+    {
+      "cycle_id": "8e353e57",
+      "domain": "Logic",
+      "key_insight": "# Future Directions\n\nThe six-element witness model in `Catalog/Computation/ParadoxesAsTheorems.lean` is a\ntight, self-contained certificate. Below are concrete directions for extending it.\n\n## 1. A ge",
+      "quality_score": 0.63384,
+      "sorry_count": 0,
+      "theorem_count": 3,
+      "timestamp": "2026-06-20T07:47:58",
+      "title": "Derived from the cycle whose verified results live in"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8524
     }
   ],
-  "last_updated": "2026-06-20T07:34:32",
+  "last_updated": "2026-06-20T07:47:58",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3449,12 +3449,6 @@
     ],
     "Logic": [
       {
-        "cycle_id": "dae6a9b2",
-        "quality": 0.5504199999999999,
-        "theorems": 17,
-        "title": "The previous cycle pinned down the *object-level* content of the Eckmann–Hilton"
-      },
-      {
         "cycle_id": "c11e0165",
         "quality": 0.63873,
         "theorems": 12,
@@ -3507,6 +3501,12 @@
         "quality": 0.614,
         "theorems": 157,
         "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+      },
+      {
+        "cycle_id": "8e353e57",
+        "quality": 0.63384,
+        "theorems": 3,
+        "title": "Derived from the cycle whose verified results live in"
       }
     ],
     "MachineLearning": [
