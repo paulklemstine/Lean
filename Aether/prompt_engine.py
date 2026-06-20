@@ -264,6 +264,7 @@ class PromptEngine:
             Fill in all the `sorry` placeholders in `{file_name}`.
             Provide complete formal proofs using standard mathlib4 tactics.
             Do NOT modify definitions or theorem statements.
+            CRITICAL: Do NOT use the theorem you are currently proving in its own proof (circular logic).
 
             Context:
             {theorem_context}

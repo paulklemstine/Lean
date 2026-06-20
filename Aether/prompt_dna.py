@@ -34,7 +34,8 @@ _ORIGINAL_INSTRUCTIONS = textwrap.dedent("""\
     - Use concrete types (Nat, Real, Matrix, Finset, etc.). Avoid `True := by trivial`.
     - Formalize genuine, substantive theorems in Lean 4 (mathlib4 v4.28.0).
     - Minimize sorry. If a step is beyond zero-shot, isolate it as a clearly marked auxiliary lemma.
-    - Build on existing catalog definitions. Do not re-invent.""")
+    - Build on existing catalog definitions. Do not re-invent.
+    - STRICT: Do NOT use circular logic. A theorem must NEVER use itself in its own proof.""")
 
 _DEFAULT_CREATIVITY_BOOSTERS = [
     "If the obvious approach fails, take the Galois dual.",
@@ -288,7 +289,7 @@ class PromptDNA:
             weakest_score = feedback[weakest_dim]
 
             mutation_hints = {
-                "proof_depth": "Improve proof depth: use multiple lemmas, non-trivial tactic chains, and clear proof structure.",
+                "proof_depth": "Improve proof depth: use multiple lemmas, non-trivial tactic chains, and clear proof structure. CRITICAL: Avoid circular proofs (never use a theorem to prove itself).",
                 "novelty": "Improve novelty: avoid rephrasing known results, pursue the direction's own novel claims.",
                 "cross_domain": "Improve cross-domain connections: follow the direction's domain tags for natural bridges.",
                 "importance": "Improve importance: prove results that advance the specific research direction.",

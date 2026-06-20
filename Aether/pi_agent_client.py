@@ -3668,6 +3668,15 @@ make it beautiful to read.
                 "analysis": "Heuristic: contains trivial proof patterns.",
             }
 
+        if self._has_circular_proof(result_lean):
+            return {
+                "quality": "partial",
+                "should_retry": True,
+                "retry_strategy": "The proof is circular (a theorem uses itself in its own proof). Fix the circular dependency.",
+                "confidence": 0.9,
+                "analysis": "Heuristic: detected circular proof.",
+            }
+
         user_prompt = textwrap.dedent(f"""\
             Evaluate this Lean 4 proof result.
 
@@ -3686,6 +3695,7 @@ make it beautiful to read.
             - Does it prove something mathematically interesting and non-obvious?
             - Is the proof complete or does it have many sorries?
             - Does it contribute new mathematics or just restate known facts?
+            - CRITICAL: Is the proof circular? (Does a theorem use itself to prove itself, e.g. `rw [← my_thm]`)
 
             Respond with JSON:
             {{
@@ -3834,6 +3844,27 @@ make it beautiful to read.
 
         return False
 
+    def _has_circular_proof(self, lean_source: str) -> bool:
+        """Heuristic check to detect if a theorem uses itself in its own proof."""
+        import re as _re
+        pattern = _re.compile(r'(?:theorem|lemma)\s+([a-zA-Z0-9_]+)')
+        for match in pattern.finditer(lean_source):
+            thm_name = match.group(1)
+            start_idx = match.end()
+            # Find the end of this theorem's block
+            next_decl = _re.search(r'\n(?:theorem|lemma|def|instance|structure|inductive|class|abbrev)\s+', lean_source[start_idx:])
+            end_idx = start_idx + next_decl.start() if next_decl else len(lean_source)
+            proof_block = lean_source[start_idx:end_idx]
+            
+            # Exclude the theorem signature (everything before ':=')
+            assignment_idx = proof_block.find(':=')
+            if assignment_idx != -1:
+                actual_proof = proof_block[assignment_idx:]
+                # Check if theorem name appears in the actual proof
+                if _re.search(r'\b' + _re.escape(thm_name) + r'\b', actual_proof):
+                    return True
+        return False
+
     # ------------------------------------------------------------------
     # Retry improvement
     # ------------------------------------------------------------------
@@ -3887,7 +3918,8 @@ make it beautiful to read.
             2. Change the research mode (e.g., from "prove" to "formalize" or "counterexample")
             3. Select different catalog references that are more relevant
             4. Completely change direction if the original concept was flawed
-            {"5. Fix the specific compilation errors listed above" if compile_errors else ""}
+            5. If the proof was circular, explicitly instruct to break the circular dependency without using the theorem itself.
+            {"6. Fix the specific compilation errors listed above" if compile_errors else ""}
 
             Respond with JSON:
             {{
