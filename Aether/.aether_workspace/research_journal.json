@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "de15e0b3",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — The Fibonacci Law of Apparition as an Arithmetic-Height / Tropical Duality\n\n## Synthesis\n\nThis cycle closed a concrete gap between two halves of the catalog that had only been\nli",
-      "quality_score": 0.7247030769230769,
-      "sorry_count": 1,
-      "theorem_count": 52,
-      "timestamp": "2026-06-14T09:26:05",
-      "title": "This cycle closed a concrete gap between two halves of the catalog that had only"
-    },
-    {
       "cycle_id": "06bed695",
       "domain": "Novelty",
       "key_insight": "# Future Directions: The Full Order Type of the p-Degrees\n\n## Synthesis\n\nThe order-theoretic core of the Cook–Reckhow program in this catalog has, over successive\ncycles, been assembled from the simul",
@@ -499,19 +489,19 @@
       "theorem_count": 6,
       "timestamp": "2026-06-20T09:34:34",
       "title": "Tensor Network Holography for Quantum Gravity with Categorical Entanglement Reno"
+    },
+    {
+      "cycle_id": "acb790ee",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nThis cycle formalized three machine-checked pillars (all `sorry`-free):\n\n* `Physics/RandomTensorNetwork/Thre",
+      "quality_score": 0.8075699999999999,
+      "sorry_count": 0,
+      "theorem_count": 238,
+      "timestamp": "2026-06-20T10:20:45",
+      "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "123e2af3",
-      "domain": "Applications",
-      "key_insight": "# Future Directions — Discrete Hodge Laplacian, Harmonic Space & Diffusion Message Passing\n\n## Synthesis\n\nThis cycle rebuilds the discrete Hodge program on a **self-contained Mathlib foundation**.\nThe",
-      "quality_score": 0.62783,
-      "sorry_count": 1,
-      "theorem_count": 6,
-      "timestamp": "2026-06-15T00:54:28",
-      "title": "This cycle rebuilt the discrete Hodge program on a **self-contained Mathlib foun"
-    },
     {
       "cycle_id": "32c81afa",
       "domain": "Shared",
@@ -2501,27 +2491,19 @@
       "theorem_count": 6,
       "timestamp": "2026-06-20T10:18:59",
       "title": "Semiprime cyclotomic transfer for square-sided dice"
+    },
+    {
+      "cycle_id": "acb790ee",
+      "domain": "Physics",
+      "key_insight": "# Future Directions — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nThis cycle formalized three machine-checked pillars (all `sorry`-free):\n\n* `Physics/RandomTensorNetwork/Thre",
+      "quality_score": 0.8075699999999999,
+      "sorry_count": 0,
+      "theorem_count": 238,
+      "timestamp": "2026-06-20T10:20:45",
+      "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "6f9401e1",
-      "domain": "NumberTheory",
-      "name": "is",
-      "quality": 0.72651
-    },
-    {
-      "cycle_id": "6f9401e1",
-      "domain": "NumberTheory",
-      "name": "numLeaves_le_two_pow_height",
-      "quality": 0.72651
-    },
-    {
-      "cycle_id": "29017e68",
-      "domain": "Physics",
-      "name": "IsRipsClique_mono",
-      "quality": 0.7856000000000001
-    },
     {
       "cycle_id": "29017e68",
       "domain": "Physics",
@@ -2803,9 +2785,27 @@
       "domain": "Geometry",
       "name": "tropMatVecMul_tropMatMul",
       "quality": 0.7460199999999999
+    },
+    {
+      "cycle_id": "acb790ee",
+      "domain": "Physics",
+      "name": "fusionCount_zero",
+      "quality": 0.8075699999999999
+    },
+    {
+      "cycle_id": "acb790ee",
+      "domain": "Physics",
+      "name": "fusionCount_one",
+      "quality": 0.8075699999999999
+    },
+    {
+      "cycle_id": "acb790ee",
+      "domain": "Physics",
+      "name": "fusionCount_add_two",
+      "quality": 0.8075699999999999
     }
   ],
-  "last_updated": "2026-06-20T10:18:59",
+  "last_updated": "2026-06-20T10:20:45",
   "open_questions": [
     {
       "context": "Result     : Confirmed and proved `sorry`-free.  `fib_primitive_divisor_prime`",
@@ -3697,12 +3697,6 @@
     ],
     "Physics": [
       {
-        "cycle_id": "227cafdb",
-        "quality": 0.4592650728862974,
-        "theorems": 343,
-        "title": "Close Proofs: The Boltzmann Bridge sub-catalog lifts 0-dimensional persistence i"
-      },
-      {
         "cycle_id": "ddd74ee0",
         "quality": 0.5933170967741935,
         "theorems": 372,
@@ -3755,6 +3749,12 @@
         "quality": 0.6543599999999999,
         "theorems": 7,
         "title": "Topological Quantum Compiling: Braid Groups as Universal Gates"
+      },
+      {
+        "cycle_id": "acb790ee",
+        "quality": 0.8075699999999999,
+        "theorems": 238,
+        "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
       }
     ],
     "Probability": [

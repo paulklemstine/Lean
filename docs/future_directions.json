@@ -10164,7 +10164,7 @@
       "depth_estimate": 3,
       "description": "Prove existence and smoothness of solutions to the 3D Navier-Stokes equations, or find a counterexample. Formalize known partial regularity results (Caffarelli-Kohn-Nirenberg) and explore connections to turbulence.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Physics"
@@ -10200,7 +10200,7 @@
       "depth_estimate": 3,
       "description": "Develop a rigorous axiomatic foundation for physics, particularly for probability and mechanics. Formalize Kolmogorov's axioms, explore constructive quantum mechanics, and connect to topos-theoretic physics.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.9,
+      "domain_quality_penalty": -0.8,
       "domains": [
         "Physics",
         "Logic"
@@ -10775,7 +10775,7 @@
       "depth_estimate": 3,
       "description": "Inspired by the AdS/CFT correspondence, formalize a mathematical holographic principle: a theorem about n-dimensional structures (the bulk) has a dual (shorter) proof in (n-1)-dimensional boundary terms. Conjecture: Every proof by induction on a well-founded order of rank n has an equivalent proof by coinduction on the n-1 boundary. Test: find a concrete theorem (e.g., finite Ramsey) and show its inductive proof in R^n maps to a coinductive proof on S^{n-1}. Impact: a new holographic proof theory connecting algebraic topology to proof complexity.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics",
         "Algebra"
@@ -10991,7 +10991,7 @@
       "depth_estimate": 3,
       "description": "Define quantum EML neurons where exp and log are replaced by unitary exponentials: U = exp(iH) for Hermitian H, and the log is the matrix logarithm. Conjecture: The quantum EML neuron U = exp(iH1) * log(I+iH2) can implement any single-qubit unitary. Test: parameterize H1, H2 and prove the map covers SU(2). Impact: opens quantum-classical neural network bridges.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "EML",
         "Physics"
@@ -11279,7 +11279,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that persistent homology — the backbone of topological data analysis — provides a natural framework for quantum error correction. Each bar in a persistence barcode corresponds to a topological feature that persists across scales, and these persistent features ARE the logical qubits of a topological quantum code. Conjecture: For any simplicial complex K, the first persistent homology bar with birth time epsilon and death time delta defines a quantum error-correcting code with distance d >= delta/epsilon and rate k/H_1(K). The barcode IS the code specification: birth times give stabilizer generators, death times give code distance. Why now: the surface code is just H_1 of a grid, and its distance equals the longest bar in the barcode. This generalizes immediately. Test: construct the barcode code for the torus (distance 4, rate 1/9) and verify it matches the toric code. Prove the distance bound for arbitrary complexes. Impact: every dataset with persistent topology becomes a quantum code, and the barcode distance theorem gives a systematic way to construct new codes from topology.",
       "domain_bridges": [],
-      "domain_quality_penalty": -1.0,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Physics",
         "Geometry"
@@ -11495,7 +11495,7 @@
       "depth_estimate": 3,
       "description": "The key insight is that protein folding minimizes a topological energy: the persistent homology barcode of the protein's contact map. The native fold of a protein is the configuration that minimizes the total persistence of the contact filtration. Conjecture: The native state of a protein P minimizes sum_i (d_i - b_i) over all possible 3D configurations, where {b_i, d_i} is the persistent homology barcode of the distance matrix of P's C-alpha atoms. Why now: AlphaFold2 showed that contact maps are sufficient for structure prediction, but it used deep learning without understanding WHY contact maps work. Persistent homology provides the mathematical reason: the barcode captures the topological constraints (no self-intersection, hydrophobic core, etc.) that determine the fold. Test: compute the barcode for 100 proteins from the PDB and verify that the native fold has lower total persistence than 1000 random decoy folds for each protein. Impact: protein folding becomes a topological optimization problem with a provably unique minimum, explaining why folding is fast and reliable despite Levinthal's paradox.",
       "domain_bridges": [],
-      "domain_quality_penalty": -1.0,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Physics",
         "Geometry"
@@ -12287,7 +12287,7 @@
       "depth_estimate": 3,
       "description": "Formalize the consistency of quantum field theory as a proof-theoretic question. Prove that if a physical theory T is consistent, then Con(T) is independent of PA. Show that physical consistency implies mathematical consistency but not vice versa.",
       "domain_bridges": [],
-      "domain_quality_penalty": -1.0,
+      "domain_quality_penalty": -0.9,
       "domains": [
         "Bridges",
         "Logic"
@@ -12683,7 +12683,7 @@
       "depth_estimate": 3,
       "description": "Prove that erasing one bit of information requires at least kT ln(2) of energy dissipation in the thermodynamic limit. Show that for finite-size systems, the bound is modified by a Jarzynski-like correction term. Formalize the connection between logical irreversibility and thermodynamic irreversibility.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.35,
       "domains": [
         "Physics",
         "Computation"
@@ -12719,7 +12719,7 @@
       "depth_estimate": 3,
       "description": "Prove that the maximal Lyapunov exponent of the gravitational three-body problem is strictly positive, establishing deterministic chaos. Compute explicit bounds for equal-mass systems and formalize the connection between Lyapunov exponents and Kolmogorov-Sinai entropy.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.6,
+      "domain_quality_penalty": -0.5,
       "domains": [
         "Physics",
         "Geometry"
@@ -12755,7 +12755,7 @@
       "depth_estimate": 3,
       "description": "Prove the Eastin-Knill theorem: no quantum code can transversally implement a universal gate set. Formalize the threshold theorem for fault-tolerant quantum computing and prove that the threshold is approximately 1% for the surface code with depolarizing noise.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.44999999999999996,
+      "domain_quality_penalty": -0.35,
       "domains": [
         "Physics",
         "Computation"
@@ -12791,7 +12791,7 @@
       "depth_estimate": 3,
       "description": "Formalize Wilson's epsilon expansion for the phi^4 critical exponents. Prove that eta = epsilon^2/54 + O(epsilon^3) in 4-epsilon dimensions. Verify the Feynman diagram computation and show that the renormalization group beta function has a non-trivial fixed point for d < 4.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics",
         "Algebra"
@@ -13978,7 +13978,7 @@
       "depth_estimate": 3,
       "description": "Formalize diffusion models as solutions to stochastic differential equations. Prove that the reverse-time SDE recovers the data distribution when the forward process is Ornstein-Uhlenbeck. Derive the Fokker-Planck equation for the marginal distributions and prove convergence to the stationary distribution.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.5,
+      "domain_quality_penalty": -0.4,
       "domains": [
         "MachineLearning",
         "Physics"
@@ -15166,7 +15166,7 @@
       "depth_estimate": 3,
       "description": "Formalize the BB84 protocol and prove its unconditional security against arbitrary quantum attacks. Show that the quantum bit error rate threshold for secure key distillation is approximately 11%. Prove that privacy amplification via universal hashing reduces Eve's information to exponentially small.",
       "domain_bridges": [],
-      "domain_quality_penalty": -0.6,
+      "domain_quality_penalty": -0.5,
       "domains": [
         "Cryptography",
         "Physics"
@@ -31497,7 +31497,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Spectral Graph Theory Meets Network Robustness\n\nThis cycle established, fully in Lean 4 (0 sorries), a faithful bridge between the\ngraph Laplacian and network robustness in\n`Catalog/MachineLearning/SpectralRobustness/Core.lean`:\n\n- `dirichletEnergy` = the Laplacian quadratic form `xᵀ L x`;\n- `dirichletEnergy_mono` — adding edges only increases each signal's energy;\n- `connected_iff_finrank_ker_eq_one` — Fiedler's criterion (connected ⇔ Laplacian\n  nullity 1);\n- `card_connectedComponent_antitone` / `finrank_ker_lapMatrix_antitone` — denser\n  networks have no more components / no larger Laplacian nullity;\n- `not_connected_iff_exists_nonconstant_zero_energy` — a spectral disconnection\n  certificate.\n\nBelow are bold, testable conjectures to formalize in follow-up cycles. Each is\nstated so that it can become a Lean theorem (or be refuted by a counterexample).\n\n## C1. Algebraic connectivity as an ordered eigenvalue, and its monotonicity\nDefine `algConnectivity G : ℝ` as the second–smallest eigenvalue of `lapMatrix ℝ G`\n(the Fiedler value), using a Courant–Fischer / min–max characterization over\nsignals orthogonal to the constants. **Conjecture:** `algConnectivity` is monotone\nunder edge addition, i.e. `H ≤ G → algConnectivity H ≤ algConnectivity G`, and\n`algConnectivity G > 0 ↔ G.Connected`. This upgrades the pointwise\n`dirichletEnergy_mono` and the nullity statement `connected_iff_finrank_ker_eq_one`\nto the genuine eigenvalue level. Requires building min–max for `lapMatrix`, which\nMathlib currently lacks.\n\n## C2. Fiedler's bound: algebraic connectivity ≤ vertex connectivity\n**Conjecture:** for a graph that is not complete, `algConnectivity G ≤ κ(G)`, the\nvertex connectivity (minimum number of vertices whose removal disconnects `G`).\nThis is the classical robustness inequality linking the spectral gap to the\ncombinatorial cut size. A formal first step is the edge version:\n`algConnectivity G ≤ minEdgeCut G`.\n\n## C3. Cheeger inequality for the normalized Laplacian\nDefine the conductance / isoperimetric number `h(G) = min_S |∂S| / min(vol S, vol Sᶜ)`\nand the normalized Laplacian spectral gap `λ₂`. **Conjecture (Cheeger):**\n`λ₂ / 2 ≤ h(G) ≤ sqrt(2 λ₂)`. The easy direction (`λ₂ / 2 ≤ h(G)`) is a realistic\nformalization target using the Dirichlet-energy machinery already in this file:\nplug the indicator-style test signals into `dirichletEnergy` and bound the\nRayleigh quotient.\n\n## C4. Quantitative robustness: spectral lower bound on edges to disconnect\n**Conjecture:** the minimum number of edges whose deletion disconnects a connected\ngraph on `n` vertices is at least `algConnectivity G` (and at least\n`⌈ algConnectivity G ⌉`). Equivalently, a single edge deletion drops the algebraic\nconnectivity by at most a controlled amount: `algConnectivity G - algConnectivity (G \\ e) ≤ 1`.\nThis is the eigenvalue-interlacing counterpart of `finrank_ker_lapMatrix_antitone`\nand would give a verified \"robustness margin\" for ML network design.\n\n## C5. Spectral robustness of graph products (scalability)\nFor the Cartesian product `G □ H`, the Laplacian spectrum is the sumset of the two\nspectra. **Conjecture:** `algConnectivity (G □ H) = min (algConnectivity G) (algConnectivity H)`,\nand consequently `dirichletEnergy_(G □ H)` decomposes additively over the factors.\nThis predicts how to build large robust networks (e.g. expander products) from\nsmall robust ones, and pairs with the existing catalog work on expander walks.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Physics"
@@ -31677,7 +31677,7 @@
       "depth_estimate": 3,
       "description": "Conjecture: For any sufficiently expressive finitely presented formal system S (e.g. arithmetic-strength theorem proving with a fixed proof encoding), the graph G_n of derivable statements and minimal proof transformations up to proof length n exhibits a nontrivial renormalization-group fixed point: after coarse-graining proofs by local rewrite equivalence classes and rescaling path lengths by a system-dependent factor, the sequence of normalized graph Laplacian spectra converges as n -> infinity to a universal limiting measure depending only on the logical complexity class of S, not on syntactic presentation. Test: Construct proof-search graphs for multiple inequivalent presentations of the same theory and for theories of different strength; define explicit coarse-graining via proof normalization/rewrite neighborhoods; numerically compare spectral measures across scales. The conjecture is supported if presentations within the same complexity class flow to the same limiting spectrum and refuted if no stable scale-invariant spectrum appears or if the limit depends sensitively on encoding details. Impact: This would found a statistical physics of mathematics, yielding universality classes for theorem proving, new complexity invariants of formal systems, and principled ways to predict proof hardness and design more efficient automated reasoning heuristics.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Logic",
         "Physics"
@@ -31749,7 +31749,7 @@
       "depth_estimate": 3,
       "description": "# Future Directions — Proof Complexity and Thermodynamic Cost\n\nDerived from the Stage 3 / Stage 4 findings of\n`ThermodynamicCost.lean` and `LandauerBridge.lean`.  Each conjecture is bold,\nfalsifiable, and tied to a concrete formalization target in this subtree.\n\n## Recap of this cycle's verified findings\n\n* `cost_mono` / `cost_strictMono`: thermodynamic cost is (strictly) monotone in\n  Kolmogorov complexity, **not** in raw proof length (the literal \"shorter ⇒\n  cheaper\" reading is false — a long proof can be highly compressible).\n* `exists_incompressible` + `cost_exceeds_any_bound`: a pigeonhole Chaitin bound\n  forces incompressible proofs whose cost beats any finite threshold.\n* `majority_high_complexity`: at least half of all length-`n` proofs are nearly\n  incompressible, so the **average** cost is `Θ(n)` — refuting the brief's\n  `Θ(2^n)`, which actually measures the **total** cost over all `2^n` proofs.\n* `freeEnergy_landauer_gap`: the finite-temperature free energy of a statistical\n  system sits exactly a Landauer term `cost(1/β) b = b·T·ln 2` (for `2^b`\n  configurations) below the tropical (zero-temperature) ground energy.\n\n---\n\n## Conjecture 1 — Total cost is `Θ(n · 2^n)`, average cost is `Θ(n)`\n\nOver a surjective decoder, `2^(n-1)·(n-1) ≤ Σ_{|x|=n} K D x ≤ (n + c)·2^n` for an\nabsolute constant `c` (the upper bound needs an *efficient* decoder, e.g. one that\ncopies its input verbatim with a one-bit flag).\n\n* **The key insight is** that the `Θ(2^n)` in the original brief conflates the\n  *count* of statements with their *average* description length; separating the\n  two yields a total of `Θ(n·2^n)` and an average of `Θ(n)`.\n* **Why now?** `majority_high_complexity` already gives the load-bearing lower\n  half; the matching upper bound only needs a concrete \"identity-with-flag\"\n  decoder, which is a finite, mechanical construction in the present framework.\n\n## Conjecture 2 — Cost is sharply concentrated (a thermodynamic Azuma bound)\n\nFor a surjective decoder the fraction of length-`n` proofs with\n`|K D x − n| > t` decays like `2^{-t}`; hence cost concentrates within an\n`O(T)`-width band around `n·T·ln 2`.\n\n* **The key insight is** that incompressibility is not just typical but\n  *exponentially* typical: only `2^{n-t}` proofs admit a program shorter than\n  `n − t`.\n* **Why now?** The counting machinery `Bshort_card`, `Bexact_card`, and the image\n  bound in `exists_incompressible` generalise verbatim from \"shorter than `n`\" to\n  \"shorter than `n − t`\", so the tail bound is one parametrised counting lemma\n  away.\n\n## Conjecture 3 — A genuine (computable-bound) Chaitin obstruction\n\nThere is no total computable `f : ℕ → ℕ` with `K D x ≤ f x.length` for every `x`\nunder a *universal* decoder `D`; consequently no computable function bounds\nthermodynamic cost as a function of statement length.\n\n* **The key insight is** that the bound-free `cost_exceeds_any_bound` becomes a\n  true Chaitin theorem once `D` is upgraded from \"surjective\" to \"universal\"\n  (simulates every other decoder up to an additive constant).\n* **Why now?** Mathlib's `Nat.Partrec` / `Computable` hierarchy supplies a usable\n  model of computation; the only new ingredient is an invariance theorem\n  `K_universal x ≤ K_D x + c_D`, which the surjective-decoder API here is designed\n  to slot into.\n\n## Conjecture 4 — Landauer sandwich is asymptotically tight\n\nFor fixed Hamiltonian and `#Ω = 2^b`, `classicalFreeEnergy H β` converges to the\ntropical ground energy as `β → ∞`, and the gap is `Θ(b·T)` whenever the ground\nstate is non-degenerate; degeneracy `g` shrinks the gap to `(b − log₂ g)·T·ln 2`.\n\n* **The key insight is** that the Landauer cost of a computation is the entropy of\n  its *forgotten* configurations, so ground-state degeneracy is a free,\n  reversible resource that lowers the thermodynamic floor.\n* **Why now?** `freeEnergy_le_ground` and `ground_sub_le_freeEnergy` already\n  bracket the gap; refining the upper sum bound from `#Ω` to the degeneracy count\n  reuses the catalog's `tropicalDegeneracyAbsorption` directly.\n\n## Conjecture 5 — Cost super-additivity across independent lemmas\n\nIf a proof `π` decomposes as independent sub-proofs `π₁, π₂` (disjoint program\nsupports), then `cost(π) ≥ cost(π₁) + cost(π₂) − O(T)`; complexity is\nsub-additive but the *erasure* cost of recombination is the `O(T)` defect.\n\n* **The key insight is** that the Landauer overhead of *merging* two proofs is the\n  mutual information they share — exactly the catalog's tropical\n  `tprof_add_le` ultrametric defect translated into thermodynamic units.\n* **Why now?** The generic `cost T : ℕ → ℝ` here is linear, so super-additivity\n  reduces to a complexity inequality `K(π) + O(1) ≥ K(π₁) + K(π₂)` over a\n  prefix-free decoder — a finite combinatorial statement provable with the\n  current `descLengths` API.\n",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Algebra",
         "Physics"
@@ -31821,7 +31821,7 @@
       "depth_estimate": 3,
       "description": "Conjecture: For broad families of formal proof systems and parameterized theorem ensembles (e.g. random k-SAT, bounded-depth arithmetic identities, and finite combinatorial statements), there exists a renormalization-group flow on proof instances such that proof complexity classes correspond to universality classes, with a measurable critical point where typical shortest-proof length changes from polynomial to exponential scaling under coarse-graining. Test: Define explicit coarse-graining operators on proof instances/formulas, compute induced flows numerically and analytically, and check whether distinct theorem ensembles collapse onto the same critical exponents for proof-length growth and solver runtime near the transition; the conjecture is refuted if no stable scale-invariant quantities or universality across ensembles appear. Impact: This would enable a statistical-physics theory of mathematical difficulty, predict when conjectures are likely to be tractable in given proof systems, and guide the design of automated theorem provers by targeting critical structure rather than worst-case syntax.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Logic",
         "Physics"
@@ -35979,6 +35979,42 @@
       "ambition_level": "extension",
       "arc_id": "",
       "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "# Future Directions — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nThis cycle formalized three machine-checked pillars (all `sorry`-free):\n\n* `Physics/RandomTensorNetwork/Threshold.lean` — a **sharp bond-dimension phase\n  transition**: a holographic encoding `Fin (k^N) ↪ Fin (D^b)` exists iff\n  `D ≥ D_c(N)`, with strict failure (information loss) below `D_c`.\n* `Physics/RandomTensorNetwork/AreaLaw.lean` — the **entanglement area law**\n  `S ≤ b·log D` with maximal-entropy **saturation** at the uniform spectrum.\n* `Bridges/FibonacciAnyonChain.lean` — a **number-theoretic bridge**: the golden\n  (Fibonacci-anyon) chain has bulk dimension `fib(n+2) ≤ 2^n`, and two chains are\n  *commensurable* via the catalog identity `Nat.fib_gcd`.\n\nThe following conjectures are the natural next falsifiable steps.\n\n## Direction 1 — Quantitative finite-size width of the transition\n\n**Conjecture.** Define the \"transition window\" `W(N) = D_c(N) − D_c(N)·(1 − 1/b)`\nmeasured against the encodable indicator. The fraction of bond dimensions in\n`[1, D_c]` that fail to encode is exactly `1 − 1/D_c`, and the *relative* window\n`(D_c − D_{c-1})/D_c → 0` as `N → ∞` for fixed `b`, i.e. the transition becomes\nasymptotically sharp (a true first-order jump in the thermodynamic limit).\n\nThe key insight is that `D_c(N) = ⌈(k^N)^{1/b}⌉` grows geometrically while its\ninteger \"jump size\" grows only sub-geometrically, so the *relative* uncertainty\nin the threshold vanishes — a discrete order-theoretic analogue of a sharp\nthermodynamic phase boundary.\n\nWhy now? `Threshold.lean` already pins `D_c` exactly via `critBond_mem` and\n`critBond_sharp`; only elementary `Nat`-power asymptotics (monotonicity + ceiling\nestimates) stand between here and the limit statement, all within reach of the\ncurrent toolchain.\n\n## Direction 2 — Strict sub-maximal area law ⇒ a curvature-proxy gap\n\n**Conjecture.** For the Fibonacci chain, `fusionCount n < 2^n` strictly for all\n`n ≥ 2`, and more sharply `fusionCount n ≤ ⌈φ^{n+1}⌉` with `φ = (1+√5)/2`, so the\nentanglement density obeys `log(fusionCount n)/n → log φ < log 2`. The gap\n`log 2 − log φ` is a universal, model-independent \"curvature deficit\" of golden\nnetworks relative to qubit networks.\n\nThe key insight is that the area-law ceiling `b·log D` from `area_law` is *not*\nsaturated by anyonic networks whose bond Hilbert spaces carry fusion\nconstraints; the Fibonacci recursion forces a strictly sub-maximal growth rate\nequal to `log φ`, turning a representation-theoretic constraint into a geometric\n(spectral-dimension) bound.\n\nWhy now? `fusionCount_eq_fib` and `fusionCount_le_two_pow` are proved; the strict\n`< 2^n` (n ≥ 2) and the `φ`-rate refinement reduce to standard Fibonacci growth\nestimates (`Nat.fib` bounds already in Mathlib), making the density limit a\ntractable next target.\n\n## Direction 3 — Commensurability classifies reconstructible sub-chains\n\n**Conjecture.** A length-`m` Fibonacci sub-chain is holographically\nreconstructible inside a length-`n` chain *iff* `(m+2) ∣ (n+2)`, because\n`gcd(fusionCount m, fusionCount n) = fusionCount m ⇔ fib(m+2) ∣ fib(n+2) ⇔\n(m+2) ∣ (n+2)`. Thus divisibility of chain lengths governs nested holographic\nreconstruction.\n\nThe key insight is that `fib_chain_commensurability` converts a *geometric*\nnesting question (can the bulk of one region be recovered from another?) into the\npurely *arithmetic* divisibility lattice of Fibonacci indices `Nat.fib_dvd`.\n\nWhy now? The bridge theorem `fib_chain_commensurability` already routes through\n`Nat.fib_gcd`; combining it with Mathlib's `Nat.fib_dvd`/`Nat.fib_dvd_fib_iff`\nshould close the divisibility characterization with little new machinery.\n\n## Direction 4 — Threshold-conditioned area law (two-regime geometry)\n\n**Conjecture.** Define a network to be *geometric* at `(N, D, b)` when both\n(i) `D ≥ D_c(N)` (encodable) and (ii) the realized entanglement is near-maximal,\n`S ≥ (1−ε)·b·log D`. Then geometricity is monotone in `D` and exhibits the same\ncritical `D_c`: below `D_c` no encoding exists (so condition (i) fails outright),\nwhile above `D_c` saturation (`area_law_saturation`) makes (ii) generically\nattainable. Hence smooth-geometry emergence is a *single* threshold phenomenon.\n\nThe key insight is that the two independently proved results — the encoding\nthreshold and the saturable area law — share the same control parameter `D`, so\n\"smooth Lorentzian geometry above `D_c`, fractal below\" can be stated as a single\nmonotone predicate rather than two separate phenomena.\n\nWhy now? Both ingredients (`phase_transition`, `area_law`, `area_law_saturation`)\nare formalized in this cycle; assembling them into one `Geometric` predicate and\nproving its monotonicity is a direct composition exercise.\n\n## Direction 5 — Random ensemble: threshold concentration\n\n**Conjecture.** For a *uniformly random* rank-`k` tensor network, the minimal cut\n`b` across a fixed bipartition concentrates around its mean `b̄(N)`, so the\ndata-dependent critical bond dimension `D_c = ⌈(k^N)^{1/b}⌉` concentrates around\n`⌈(k^N)^{1/b̄}⌉` with fluctuations `o(D_c)`. The phase transition therefore\nsurvives averaging over the random ensemble (it is *self-averaging*).\n\nThe key insight is that the deterministic threshold of `Threshold.lean` depends on\nthe network only through the single integer `b` (min-cut), so probabilistic\ncontrol of `b` alone upgrades the deterministic transition to an ensemble-level\nsharp threshold — reducing a hard random-geometry question to a min-cut\nconcentration estimate.\n\nWhy now? The deterministic backbone is complete and isolates `b` as the only\nrandom input; Mathlib's developing probability/concentration library makes a\nmin-cut concentration lemma the well-scoped missing piece.\n",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Algebra",
+        "Computation"
+      ],
+      "id": "fd_2141",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.75,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "acb790ee",
+      "source_path": "/home/raver1975/lean/Aether/.aether_workspace/projects/acb790ee_retry1",
+      "status": "available",
+      "thread_id": "th_039ded37",
+      "timestamp": "2026-06-20T10:20:25.664165+00:00",
+      "title": "This cycle formalized three machine-checked pillars (all `sorry`-free):"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
       "attempt_count": 1,
       "catalog_references": [],
       "category": "",
@@ -36814,6 +36850,41 @@
       "thread_id": "",
       "timestamp": "2026-06-11T13:37:11.466341+00:00",
       "title": "Deepening: Close Proofs: The current framework considers *static* observation systems where"
+    },
+    {
+      "ambition_level": "extension",
+      "arc_id": "",
+      "arc_position": 0,
+      "attempt_count": 0,
+      "catalog_references": [],
+      "category": "",
+      "cleanup_review_count": 0,
+      "consumed_by_exp_id": "",
+      "depth_estimate": 3,
+      "description": "Building on cycle acb790ee (Q=0.808), which proved 238 theorems in Physics. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Formalize the Fibonacci anyon chain as a tensor network with complete, type-checking Lean 4 proofs. The core result: the fusion Hilbert space dimension of a length-n Fibonacci anyon chain equals Fib(n+2), yielding a sub-qubit area law (dim < 2^n). Two chains' dimensions are commensurable via the cat",
+      "domain_bridges": [],
+      "domain_quality_penalty": 0.0,
+      "domains": [
+        "Physics"
+      ],
+      "id": "push_acb790ee_fe784365",
+      "last_attempt_time": "",
+      "last_reviewed_at": "",
+      "lean_theorem_stub": "",
+      "lineage_refs": [],
+      "outcome_quality": 0.0,
+      "priority_score": 0.9075699999999999,
+      "proof_strategy": "",
+      "prune_reason": "",
+      "pruned_at": "",
+      "quarantined_until": "",
+      "research_mode": "team",
+      "source_exp_id": "acb790ee",
+      "source_path": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks",
+      "status": "available",
+      "thread_id": "",
+      "timestamp": "2026-06-20T10:20:45.394679+00:00",
+      "title": "Deepening: Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
     },
     {
       "ambition_level": "extension",
@@ -40693,7 +40764,7 @@
       "depth_estimate": 3,
       "description": "Formalize global existence and uniqueness for 2D Navier-Stokes (Ladyzhenskaya's theorem). Prove the Caffarelli-Kohn-Nirenberg partial regularity theorem in 3D: the singular set has 1-dimensional Hausdorff measure zero. Formalize energy inequalities.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Analysis",
         "Physics"
@@ -40765,7 +40836,7 @@
       "depth_estimate": 3,
       "description": "Formalize the spectral theorem for bounded self-adjoint operators on Hilbert spaces. Prove the min-max theorem for eigenvalues. Construct the functional calculus and prove the spectral mapping theorem. Apply to quantum mechanical observables.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Analysis",
         "Physics",
@@ -41413,7 +41484,7 @@
       "depth_estimate": 3,
       "description": "Formalize the hydrogen atom Hamiltonian in Lean 4. Prove the spectrum is {-1/n² : n ∈ ℕ+} ∪ [0,∞). Construct the spherical harmonics as eigenfunctions of the angular momentum operator. Prove the selection rules for transitions.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics",
         "Analysis"
@@ -41449,7 +41520,7 @@
       "depth_estimate": 3,
       "description": "Formalize Noether's theorem in Lean 4: every continuous symmetry of the action yields a conserved quantity. Prove energy conservation from time-translation, momentum from space-translation, angular momentum from rotational symmetry. Apply to Kepler problem.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics",
         "Algebra",
@@ -41486,7 +41557,7 @@
       "depth_estimate": 3,
       "description": "Formalize the 2D Ising model. Prove Onsager's solution: the critical temperature is T_c = 2/ln(1+√2). Construct the transfer matrix method. Prove spontaneous magnetization below T_c via the Peierls argument.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics",
         "Probability",
@@ -41523,7 +41594,7 @@
       "depth_estimate": 3,
       "description": "Formalize the no-cloning theorem in Lean 4 using the framework of C*-algebras. Prove the quantum teleportation protocol is correct. Formalize quantum entanglement measures and prove monogamy of entanglement for qubits.",
       "domain_bridges": [],
-      "domain_quality_penalty": 0.0,
+      "domain_quality_penalty": 0.1,
       "domains": [
         "Physics",
         "Algebra",

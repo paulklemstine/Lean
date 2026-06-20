@@ -10,7 +10,7 @@ window.PACKAGE_INDEX = [
     "filename": "complexitydriven_emergence_of_spacetime_from_rando.json",
     "pkg_num": 207,
     "quality": "substantial",
-    "quality_score": 0.7984800000000001,
+    "quality_score": 0.8075699999999999,
     "title": "Complexity-Driven Emergence of Spacetime from Random Tensor Networks"
   },
   {
@@ -6330,7 +6330,7 @@ window.PACKAGE_GRAPH = {
       "hue": 271,
       "id": "complexitydriven_emergence_of_spacetime_from_rando",
       "primary_domain": "Physics",
-      "priority_score": 0.7984800000000001,
+      "priority_score": 0.8075699999999999,
       "quality": "substantial",
       "shape": "diamond",
       "title": "Complexity-Driven Emergence of Spacetime from Random Tensor Networks"
