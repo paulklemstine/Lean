@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "cb2c4d8f",
-      "domain": "Combinatorics",
-      "key_insight": "# Future Directions — Categorical Tropical Rips Interleaving (Rank & Shift cycle)\n\nThis cycle added two fully-verified files (0 sorries) extending\n`Bridges.CategoricalTropicalRipsInterleaving`:\n\n- `Br",
-      "quality_score": 0.7260899999999999,
-      "sorry_count": 0,
-      "theorem_count": 16,
-      "timestamp": "2026-06-15T10:38:36",
-      "title": "This cycle established, in `Catalog/Bridges/CategoricalTropicalRipsInterleaving."
-    },
-    {
       "cycle_id": "3f92e6d5",
       "domain": "Geometry",
       "key_insight": "# Future Directions\n\nFollow-up conjectures arising from the *Deepening* cycle on the functorial comparison\nbetween neural observation pseudometrics and proof-spectrum congruences.\n\nRelevant files:\n- `",
@@ -2501,6 +2491,16 @@
       "theorem_count": 205,
       "timestamp": "2026-06-20T22:38:11",
       "title": "Universal Approximation: Quantitative Bounds"
+    },
+    {
+      "cycle_id": "4a5dda39",
+      "domain": "MachineLearning",
+      "key_insight": "# Future Directions — Complexity-Driven Emergence of Spacetime from Random Tensor Networks\n\nDerived from this cycle's verified results in `RTPhaseTransition.lean`,\n`BondDimensionThreshold.lean`, and `",
+      "quality_score": 0.6604548751733703,
+      "sorry_count": 0,
+      "theorem_count": 393,
+      "timestamp": "2026-06-20T22:45:08",
+      "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.8075699999999999
     }
   ],
-  "last_updated": "2026-06-20T22:38:11",
+  "last_updated": "2026-06-20T22:45:08",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3511,12 +3511,6 @@
     ],
     "MachineLearning": [
       {
-        "cycle_id": "b221d007",
-        "quality": 0.4584708352941177,
-        "theorems": 10,
-        "title": "**functorial tropical certificate** for the Berggren–Lo"
-      },
-      {
         "cycle_id": "87ef3294",
         "quality": 0.48797999999999997,
         "theorems": 3,
@@ -3569,6 +3563,12 @@
         "quality": 0.829866,
         "theorems": 14,
         "title": "Tropical Cryptography: Min-Plus Encryption with Tropical Matrices"
+      },
+      {
+        "cycle_id": "4a5dda39",
+        "quality": 0.6604548751733703,
+        "theorems": 393,
+        "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
       }
     ],
     "Novelty": [
