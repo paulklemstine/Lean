@@ -1,16 +1,6 @@
 {
   "breakthroughs": [
     {
-      "cycle_id": "06bed695",
-      "domain": "Novelty",
-      "key_insight": "# Future Directions: The Full Order Type of the p-Degrees\n\n## Synthesis\n\nThe order-theoretic core of the Cook–Reckhow program in this catalog has, over successive\ncycles, been assembled from the simul",
-      "quality_score": 0.7543200000000001,
-      "sorry_count": 0,
-      "theorem_count": 17,
-      "timestamp": "2026-06-14T10:01:46",
-      "title": "Close Proofs: The order-theoretic core of the Cook–Reckhow program in this catalog h"
-    },
-    {
       "cycle_id": "9812538e",
       "domain": "Novelty",
       "key_insight": "# Future Directions — The Rank of Apparition as a Lattice Morphism\n\n## Synthesis\n\nThe catalog's rank-of-apparition thread (`RankOfApparition.lean`,\n`UnifiedRankOfApparition.lean`) had distilled the \"L",
@@ -499,19 +489,19 @@
       "theorem_count": 238,
       "timestamp": "2026-06-20T10:20:45",
       "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
+    },
+    {
+      "cycle_id": "0d8fceb6",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Winning Probability in the Generalized q-Game\n\nThis cycle formalized the conjectured recurrence for `P(n,q)` (probability the Random player wins\nthe q-game), proved its base data",
+      "quality_score": 0.7248279999999999,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-20T20:16:39",
+      "title": "Recurrence for the Winning Probability in the Generalized Game"
     }
   ],
   "cycle_log": [
-    {
-      "cycle_id": "842c56ce",
-      "domain": "Novelty",
-      "key_insight": "# FUTURE DIRECTIONS — Functorial Lipschitz comparison: valuation depth ↔ tropical shadow\n\nThis cycle salvaged and completed the depth ↔ tropical-shadow bridge as three\nself-contained, sorry-free Lean",
-      "quality_score": 0.40856000000000003,
-      "sorry_count": 0,
-      "theorem_count": 13,
-      "timestamp": "2026-06-15T09:20:07",
-      "title": "Close Proofs: Functorial Lipschitz comparison between valuation depth and tropical v"
-    },
     {
       "cycle_id": "b221d007",
       "domain": "MachineLearning",
@@ -2501,27 +2491,19 @@
       "theorem_count": 17,
       "timestamp": "2026-06-20T19:47:51",
       "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
+    },
+    {
+      "cycle_id": "0d8fceb6",
+      "domain": "Applications",
+      "key_insight": "# Future Directions — Winning Probability in the Generalized q-Game\n\nThis cycle formalized the conjectured recurrence for `P(n,q)` (probability the Random player wins\nthe q-game), proved its base data",
+      "quality_score": 0.7248279999999999,
+      "sorry_count": 0,
+      "theorem_count": 8,
+      "timestamp": "2026-06-20T20:16:39",
+      "title": "Recurrence for the Winning Probability in the Generalized Game"
     }
   ],
   "key_theorems": [
-    {
-      "cycle_id": "29017e68",
-      "domain": "Physics",
-      "name": "exists_finset_card_mem_mem",
-      "quality": 0.7856000000000001
-    },
-    {
-      "cycle_id": "29017e68",
-      "domain": "Physics",
-      "name": "pairwise_iff_tropBirthSum_le",
-      "quality": 0.7856000000000001
-    },
-    {
-      "cycle_id": "6ce4a7be",
-      "domain": "Bridges",
-      "name": "ripsGraphOf_mono",
-      "quality": 0.76292
-    },
     {
       "cycle_id": "6ce4a7be",
       "domain": "Bridges",
@@ -2803,9 +2785,27 @@
       "domain": "Physics",
       "name": "fusionCount_add_two",
       "quality": 0.8075699999999999
+    },
+    {
+      "cycle_id": "0d8fceb6",
+      "domain": "Applications",
+      "name": "mem_range_lt",
+      "quality": 0.7248279999999999
+    },
+    {
+      "cycle_id": "0d8fceb6",
+      "domain": "Applications",
+      "name": "P_nonneg",
+      "quality": 0.7248279999999999
+    },
+    {
+      "cycle_id": "0d8fceb6",
+      "domain": "Applications",
+      "name": "P_pos",
+      "quality": 0.7248279999999999
     }
   ],
-  "last_updated": "2026-06-20T19:47:51",
+  "last_updated": "2026-06-20T20:16:39",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3083,12 +3083,6 @@
     ],
     "Applications": [
       {
-        "cycle_id": "c2c261ee",
-        "quality": 0.42100000000000004,
-        "theorems": 4,
-        "title": "EML Special Functions: Gamma, Zeta, and Hypergeometric"
-      },
-      {
         "cycle_id": "fbd73212",
         "quality": 0.7150400000000001,
         "theorems": 35,
@@ -3141,6 +3135,12 @@
         "quality": 0.5126619770114944,
         "theorems": 17,
         "title": "Fixed partial Latin patterns occur with asymptotic probability n^{-k}"
+      },
+      {
+        "cycle_id": "0d8fceb6",
+        "quality": 0.7248279999999999,
+        "theorems": 8,
+        "title": "Recurrence for the Winning Probability in the Generalized Game"
       }
     ],
     "Bridges": [
