@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "4e6dc59b",
-      "domain": "Shared",
-      "key_insight": "# Future Directions — Korselt's Criterion & the Multiplicative-Order Bridge\n\nDerived from the v16b research cycle that produced\n`Catalog/Shared/KorseltCriterion.lean` and\n`Catalog/Cryptography/Korselt",
-      "quality_score": 0.67472,
-      "sorry_count": 0,
-      "theorem_count": 3,
-      "timestamp": "2026-06-15T13:41:59",
-      "title": "Korselt's Criterion Completion and Multiplicative Group Order Bridge to Cryptographic Pseudoprimalit"
-    },
-    {
       "cycle_id": "c11e0165",
       "domain": "Logic",
       "key_insight": "# FUTURE DIRECTIONS — Fibonacci Primitive Divisors / Carmichael's Theorem\n\nThis cycle delivered `Catalog/Logic/FibonacciPrimitiveDivisorBounded.lean`, a\nself-contained, `sorry`-free verification of Ca",
@@ -2501,6 +2491,16 @@
       "theorem_count": 43,
       "timestamp": "2026-06-21T03:58:10",
       "title": "Game of Life Universality"
+    },
+    {
+      "cycle_id": "ab651d5d",
+      "domain": "Shared",
+      "key_insight": "# Future Directions — Galois Connections Between Order Theory and Topology\n\nDerived from the Stage 3/4 findings of this research cycle (files:\n`AlexandrovContinuity.lean`, `FixedPointLattice.lean`, `Z",
+      "quality_score": 0.4484232,
+      "sorry_count": 0,
+      "theorem_count": 16,
+      "timestamp": "2026-06-21T04:40:47",
+      "title": "Bridge: Galois Connections Between Order Theory and Topology"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.71035
     }
   ],
-  "last_updated": "2026-06-21T03:58:10",
+  "last_updated": "2026-06-21T04:40:47",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3883,12 +3883,6 @@
     ],
     "Shared": [
       {
-        "cycle_id": "32c81afa",
-        "quality": 0.7607163636363636,
-        "theorems": 22,
-        "title": "The persistence-stability arc of the catalog climbed a ladder of structure: a"
-      },
-      {
         "cycle_id": "406af8f7",
         "quality": 0.5313228571428571,
         "theorems": 14,
@@ -3941,6 +3935,12 @@
         "quality": 0.4507929497716895,
         "theorems": 10,
         "title": "The Library of Babel: Combinatorics of the Universal Library"
+      },
+      {
+        "cycle_id": "ab651d5d",
+        "quality": 0.4484232,
+        "theorems": 16,
+        "title": "Bridge: Galois Connections Between Order Theory and Topology"
       }
     ],
     "Tropical": [
