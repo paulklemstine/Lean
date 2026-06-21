@@ -373,7 +373,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Resolution of Singularities in Positive Characteristic"
   },
   {
-    "consumed_by_exp_id": "51640204",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Learning With Errors (LWE) problem. Prove Regev's quantum reduction: LWE is as hard as worst-case lattice problems (GapSVP). Construct the Dual-Regev encryption scheme and prove CPA security. Formalize the ring-LWE variant.",
     "domains": [
       "Cryptography",
@@ -384,7 +384,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.89,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432791+00:00",
     "title": "Lattice Cryptography: LWE Hardness"
   },
@@ -536,7 +536,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Novikov Conjecture"
   },
   {
-    "consumed_by_exp_id": "971b371e",
+    "consumed_by_exp_id": "",
     "description": "Formalize the Euclid-Euler theorem: n is an even perfect number iff n = 2^(p-1)(2^p - 1) where 2^p - 1 is prime. Prove that odd perfect numbers, if they exist, must have at least 101 prime factors (Nielsen's bound). Formalize the abundancy index \u03c3(n)/n framework.",
     "domains": [
       "NumberTheory"
@@ -545,7 +545,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.87,
     "research_mode": "prove",
     "source_exp_id": "seed",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-18T03:56:25.432603+00:00",
     "title": "Perfect Numbers: Structure of Even Perfects"
   },
@@ -2850,6 +2850,36 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Conjecture that for any two reduced line arrangements of degree d \u2265 12 in \u2119\u00b2, if their intersection lattices are isomorphic and their Milnor algebras have identical Hilbert functions, then the minimal graded free resolutions of their Jacobian algebras are identical.",
+    "domains": [
+      "Algebra",
+      "Pythagorean"
+    ],
+    "id": "fd_2163",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20421v1",
+    "status": "available",
+    "timestamp": "2026-06-21T03:16:19.230433+00:00",
+    "title": "Equality of minimal free resolutions for Ziegler pairs of line arrangements of degree \u226512"
+  },
+  {
+    "consumed_by_exp_id": "",
+    "description": "We conjecture that for every pair of distinct positive integers a,b the generating function of two standard 6\u2011sided dice can be factored as a product of two polynomials with non\u2011negative integer coefficients, each evaluating to a^2 and b^2 at x=1 respectively. In other words, there exist a dice of size a^2 and a dice of size b^2 whose label multisets give the same sum\u2011frequency distribution as two ordinary dice.",
+    "domains": [
+      "Pythagorean",
+      "Computation"
+    ],
+    "id": "fd_2164",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.20311v1",
+    "status": "available",
+    "timestamp": "2026-06-21T03:16:50.834545+00:00",
+    "title": "Existence of square\u2011sided dice pairs preserving the sum distribution of two standard dice"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "Find an Euler brick whose space diagonal is also an integer, or prove none exists. Formalize the parametric families of near-misses and connect to Diophantine equations on algebraic surfaces.",
     "domains": [
       "Algebra",
@@ -3786,36 +3816,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Packing-Isolating Sets in Block Graphs\n\nDerived from this cycle's findings: the periodic construction for paths, the\ndomination shortcut for complete graphs, and the `C\u2085` necessity boundary.\n\n## Conjecture 1 \u2014 Full block-graph conjecture via block-cut induction\n**Statement.** Every finite block graph admits a packing-isolating set.\n**The key insight is** that a block graph is a tree of cliques: peeling a *leaf block*\n(a clique meeting the rest of the graph in a single cut vertex) reduces to a smaller\nblock graph, and the periodic/backward-witness phenomenon proven for paths is exactly\nthe bookkeeping needed to decide whether the cut vertex must be \"spent\" on the recursion.\n**Why now?** We have verified the two extremal block-graph families (paths and cliques)\nand a clean `nbhdSet` API with monotonicity lemmas; the only missing ingredient is a\nLean formalization of the block-cut tree, which the verified base cases make worthwhile.\n\n## Conjecture 2 \u2014 Sharp lower bound: packing-isolation number of `P_n`\n**Statement.** The minimum size of a packing-isolating set of `P_n` equals `\u2308n/3\u2309`\nfor all `n \u2265 2`, attained by the residue set `{i \u2261 1 mod 3}`.\n**The key insight is** that the 2-packing constraint forces gaps `\u2265 3`, giving the\n`\u2308n/3\u2309` lower bound, while the isolating constraint forbids gaps `> 3`, so the period-3\npattern is simultaneously extremal for both constraints.\n**Why now?** The exact period-3 set is already formalized; bounding its cardinality and\nproving optimality is a self-contained counting argument over `Fin n`.\n\n## Conjecture 3 \u2014 Diameter-2 obstruction is the only small obstruction\n**Statement.** A graph with no packing-isolating set must contain an induced odd hole\nor an induced subgraph of diameter `\u2264 2` with no dominating vertex; `C\u2085` is the unique\nminimal such graph.\n**The key insight is** that the `C\u2085` failure decomposes into \"diameter 2 kills large\n2-packings\" and \"no vertex dominates kills small isolating sets\"; any obstruction must\ncombine both pressures.\n**Why now?** The `decide`-verified `C\u2085` boundary plus the positive `C\u2084`/`C\u2086` checks give\nthe exact data to formulate and test this dichotomy on a `Fin n` graph census.\n\n## Conjecture 4 \u2014 Closure under clique-amalgamation\n**Statement.** If block graphs `G\u2081, G\u2082` each admit a packing-isolating set, then any\ngraph obtained by identifying a single vertex of `G\u2081` with a single vertex of `G\u2082`\n(a block-graph amalgam) also admits one.\n**The key insight is** that packing-isolating sets compose across a cut vertex: choosing\nthe cut vertex in at most one side preserves both disjointness and edge coverage.\n**Why now?** The monotonicity lemmas `IsTwoPacking.subset` and `IsIsolating.superset`\nalready isolate the two halves of the composition argument, so the amalgam step is the\nnatural next lemma and a direct stepping stone to Conjecture 1.\n\n## Conjecture 5 \u2014 Probabilistic threshold in random block graphs\n**Statement.** In a uniformly random block graph on `n` vertices, the minimum\npacking-isolating set has size concentrated around `c\u00b7n` for an explicit constant\n`c \u2208 (0, 1/3]`.\n**The key insight is** that the deterministic period-3 extremal density `1/3` for paths\nshould relax in random block graphs where larger cliques absorb many edges per chosen\nvertex, pushing the constant strictly below `1/3`.\n**Why now?** With the deterministic path optimum (`Conjecture 2`) as the `c = 1/3`\nanchor and the clique case as the `c \u2192 0` anchor, the random model interpolates between\ntwo endpoints we have already pinned down formally.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2163",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "3e812933",
-    "status": "available",
-    "timestamp": "2026-06-21T02:26:35.239351+00:00",
-    "title": "Derived from this cycle's findings: the periodic construction for paths, the"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions \u2014 Alien Mathematics: Non-Standard (Lunar/Chain) Arithmetic\n\nThis cycle established the foundation: the **min\u2013max chain semiring** `Chain \u03b1`\n(`ChainSemiring.lean`), **lunar arithmetic as polynomials over it** (`LunarArithmetic.lean`),\nand its **order/functorial structure** (`ChainStructure.lean`). Below are concrete, falsifiable\nconjectures for follow-up cycles.\n\n## C1. Lunar primes have a lattice-theoretic characterization\nA lunar number `p` (in `Lunar = Polynomial (Chain (Fin 10))`) is **lunar-prime** if its only\nfactorizations `p = a * b` are trivial (one factor a unit, i.e. an associate of `1 = C \u22a4`).\n**Conjecture.** `p` is lunar-prime iff its coefficient sequence is \"join-irreducible at the\ntop\": the leading digit is `9` and no nontrivial max\u2013min convolution reproduces it. Concretely,\ncharacterize the units of `Lunar` (conjecture: exactly `C \u22a4 = C 9`, since `Polynomial.X` is a\nnon-unit and `min`-multiplication cannot raise a digit). *Testable*: enumerate factorizations of\n2-digit lunar numbers and compare against OEIS **A087097** (lunar primes).\n\n## C2. Unique factorization fails, but a canonical \"join-normal form\" exists\n**Conjecture.** `Lunar` is **not** a UFD (multiplicative idempotency of digits creates many\nfactorizations), yet every lunar number has a canonical representative under the dominance-\nelimination / canonicalization operator already proved in\n`Tropical/IdempotentSemiring/Defs.lean` (`canon`). Formalize `canon` acting on lunar\ncoefficient lists and prove it computes a unique normal form invariant under lunar `+`.\n\n## C3. The base-change functor `Chain.map` has a left/right adjoint (Galois connection)\n`ChainStructure.lean` gives `Chain.map` for monotone `\u22a5/\u22a4`-fixing maps. **Conjecture.** For a\nmonotone map of chains `f : \u03b1 \u2192 \u03b2`, the induced `Chain.map f` participates in a Galois connection\nwith the \"rounding\" map induced by the residuated structure of the bounded distributive lattice\n(`a \u2293 x \u2264 b \u2194 x \u2264 a \u21e8 b`). This would make chain arithmetic a **quantale**. *Testable*: verify\nthe adjunction inequalities on `Fin n` exhaustively by `decide`.\n\n## C4. Freshman's dream for lunar polynomials is *exactly* additive\nIn an additively idempotent semiring, `(p + q)^2 = p^2 + p*q + q^2` but cross terms need not\nvanish. **Conjecture.** For lunar polynomials, `(p + q)^n = \u2211_{k} p^k * q^{n-k}` collapses: the\nbinomial expansion is *carry-free* and `(p+q)^n = p^n + q^n` holds **iff** `p` and `q` have\ndisjoint digit supports. Prove the iff; the forward direction is the lunar analogue of the\nFrobenius/\"freshman's dream\" and the converse is a genuine obstruction.\n\n## C5. De Morgan duality is the only nontrivial chain anti-automorphism\n`ChainStructure.lean` shows complement `d \u21a6 \u22a4 - d` is a `+`/`*` anti-isomorphism.\n**Conjecture.** Every semiring anti-automorphism of `Chain (Fin n)` equals this De Morgan\ncomplement, and every semiring automorphism is the identity. Equivalently, `Aut(Chain (Fin n))`\nis trivial and the full (anti-)automorphism group is `\u2124/2`. *Testable*: brute-force the monotone\nbijections of `Fin n` fixing/swapping `\u22a5,\u22a4` by `decide` for small `n`.\n",
-    "domains": [
-      "Pythagorean",
-      "Algebra"
-    ],
-    "id": "fd_2164",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "ddafecee",
-    "status": "available",
-    "timestamp": "2026-06-21T03:14:46.831285+00:00",
-    "title": "Foundation: the **min\u2013max chain semiring** `Chain \u03b1`"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domains": [
       "Algebra"
@@ -3829,7 +3829,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "196-Algorithm Non-Termination"
   },
   {
-    "consumed_by_exp_id": "43fe3cd5",
+    "consumed_by_exp_id": "",
     "description": "Conjecture: The entanglement\u2011complexity scaling law of a uniformly random rank\u2011k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network\u2019s holographic geometry approximates a smooth (d+1)\u2011dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse\u2011graining. Test: Generate large\u2011scale random tensor networks on high\u2011performance clusters, compute their entanglement spectra and bulk geometry via the quantum error\u2011correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein\u2019s equations from complexity theory, guide quantum gravity model selection, and inspire complexity\u2011optimal quantum error\u2011correcting codes.",
     "domains": [
       "Novelty",
@@ -3839,7 +3839,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.7158260869565218,
     "research_mode": "team",
     "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
+    "status": "available",
     "timestamp": "2026-06-19T17:11:08.928185+00:00",
     "title": "Complexity\u2011Driven Emergence of Spacetime from Random Tensor Networks"
   },
@@ -4527,7 +4527,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Pythagorean Fields: When Does a^2 + b^2 = c^2 Have Solutions?"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "ab651d5d",
     "description": "Prove that every Galois connection between posets induces a topology on each poset such that the Galois maps become continuous. Show that the fixed points of a Galois connection form a complete lattice (Knaster-Tarski). Bridge to algebraic geometry: Zariski topology on Spec(R) arises from the Galois connection between ideals and zero sets.",
     "domains": [
       "Bridges",
@@ -4537,7 +4537,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.3999999999999999,
     "research_mode": "team",
     "source_exp_id": "seed",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-03T22:10:05.964661+00:00",
     "title": "Bridge: Galois Connections Between Order Theory and Topology"
   },
