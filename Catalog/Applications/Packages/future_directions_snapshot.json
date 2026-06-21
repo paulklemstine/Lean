@@ -1256,25 +1256,6 @@
   {
     "ambition_level": "extension",
     "catalog_references": [],
-    "consumed_by_exp_id": "50d5b31e",
-    "description": "Formalize Ramsey's theorem and prove tight bounds: R(3,3)=6, R(3,4)=9, R(4,4)=18. Prove the Erdős-Szekeres bound R(s,t) ≤ C(s+t-2, s-1). Construct the best known lower bound via the probabilistic method. Formalize the Hales-Jewett theorem.",
-    "domain_bridges": [],
-    "domains": [
-      "Combinatorics"
-    ],
-    "id": "seed_352",
-    "lineage_refs": [],
-    "priority_score": 0.85,
-    "proof_strategy": "",
-    "research_mode": "prove",
-    "source_exp_id": "seed",
-    "status": "in_progress",
-    "timestamp": "2026-06-18T03:56:25.432688+00:00",
-    "title": "Ramsey Theory: Bounds and Constructions"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
     "consumed_by_exp_id": "",
     "description": "Formalize the resolution proof system. Prove exponential lower bounds for resolution proofs of the pigeonhole principle (Haken's theorem). Formalize cutting planes and prove the separation from resolution. Connect to SAT solver performance.",
     "domain_bridges": [],
@@ -6399,6 +6380,26 @@
     "status": "available",
     "timestamp": "2026-06-21T17:51:39.310834+00:00",
     "title": "These directions build on the counterexample in"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
+    "description": "# Future Directions — Twin-width of bounded-width posets\n\nThis cycle established the **static** linear neighbourhood-type bound\n(`nbhdTypeCount_le`: `≤ 2k+1` red neighbourhood types per element under a\n`k`-chain cover) and the pigeonhole link `antichain_card_le_chains` (a `k`-chain\ncover forces width `≤ k`). The threshold monotonicity `posType_mono` is the\nreusable engine. The conjectures below extend these findings.\n\n## C1. Dynamic twin-width bound via the chain-interval contraction\n**Conjecture.** For a finite poset covered by `k` chains there is a *contraction\nsequence* (merging two parts at a time, each intermediate partition consisting of\norder-intervals of the chains) along which the red degree of every part stays\n`≤ 2k+1`; hence twin-width `≤ 2k+1`.\n**The key insight is** that `posType_mono` makes every part's red interactions\nwith any other chain a *monotone* boundary phenomenon, so merging intervals\nbottom-up never lets more than two red boundaries per chain coexist at a part.\n**Why now?** The static `2k+1` bound (`nbhdTypeCount_le`) is already formalized;\nonly the bookkeeping of a concrete merge order on `List`-encoded chains remains,\nwhich is a finite-induction task well suited to the present infrastructure.\n\n## C2. Full Dilworth as the hypothesis-discharger\n**Conjecture.** Every finite poset of width `≤ k` admits a labelling\n`chainIdx : α → Fin k` with comparable label classes (the deep direction of\nDilworth), so the hypotheses of `nbhdTypeCount_le` follow from \"width ≤ k\" alone.\n**The key insight is** that `antichain_card_le_chains` is the trivial converse, so\nthe missing content is exactly Kőnig/augmenting-path matching on the\nincomparability bipartite graph.\n**Why now?** `IsAntichain`/`IsChain` are already wired in; a Hall/Kőnig lemma in\nMathlib could be lifted to close the gap and make the twin-width statement depend\nonly on the antichain-width hypothesis.\n\n## C3. Lower bound: posets of width `k` with twin-width `Ω(k)`\n**Conjecture.** There is a family of width-`k` posets whose strict-order digraph\nhas twin-width `≥ c·k` for an absolute `c > 0`, so the linear dependence on `k`\nis unavoidable.\n**The key insight is** that `k` \"interleaved\" chains force every contraction to\nkeep `Θ(k)` simultaneously-mixed boundaries, the dynamic shadow of the tight\n`changeCount = 2` example in `ComputationalEvidence.md`.\n**Why now?** The tightness witness for the per-chain `≤ 2` bound is already\nisolated; promoting it to a global lower bound is the natural adversarial sequel.\n\n## C4. From posets to comparability/incomparability graphs\n**Conjecture.** The undirected incomparability graph of a width-`k` poset has\nbounded twin-width (function of `k` only), matching the directed bound up to a\nconstant.\n**The key insight is** that `incomp_ord_convex` shows the incomparable region of\neach chain relative to any vertex is a single interval, so the same monotone\nboundary count controls the undirected red degree.\n**Why now?** `incomp_ord_convex` is proved; reusing it for the symmetric relation\nneeds only replacing `posType`'s three-valued code by a two-valued one.\n\n## C5. Stability of the bound under bounded-height products\n**Conjecture.** If `P` has width `k` and `Q` is a chain (width `1`), then `P × Q`\nhas width `≤ k` chains' worth of structure and neighbourhood-type count\n`≤ 2k+1`, i.e. the bound is preserved by multiplying with a chain.\n**The key insight is** that a product with a chain refines each chain of `P` into\nfinitely many chains while preserving per-element monotonicity of `posType`.\n**Why now?** The `List`-based `chains` model makes such a refinement an explicit\n`List.flatMap`, directly testable against `nbhdTypeCount_le`.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2188",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "dafb1f8b",
+    "status": "available",
+    "timestamp": "2026-06-21T18:36:04.344470+00:00",
+    "title": "**static** linear neighbourhood-type bound"
   },
   {
     "ambition_level": "extension",

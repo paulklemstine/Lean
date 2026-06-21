@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "dafb1f8b",
     "filename": "linear_twin_width_bound_for_finite_posets_of_bound.json",
     "pkg_num": 226,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.397447,
     "title": "Linear Twin-Width Bound for Finite Posets of Bounded Width"
   },
   {
@@ -6890,8 +6890,8 @@ window.PACKAGE_GRAPH = {
       "hue": 112,
       "id": "linear_twin_width_bound_for_finite_posets_of_bound",
       "primary_domain": "Geometry",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.397447,
+      "quality": "partial",
       "shape": "hexagonal_prism",
       "title": "Linear Twin-Width Bound for Finite Posets of Bounded Width"
     }

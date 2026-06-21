@@ -503,16 +503,6 @@
   ],
   "cycle_log": [
     {
-      "cycle_id": "743f44e8",
-      "domain": "Cryptography",
-      "key_insight": "# Future directions\n\nThese directions all build on the order valuation `ordEGF` introduced in\n`Catalog/Bridges/SpeciesTropicalValuation.lean` and the species ↔ EGF dictionary of\n`Catalog/Applications/",
-      "quality_score": 0.4888015145005371,
-      "sorry_count": 0,
-      "theorem_count": 73,
-      "timestamp": "2026-06-15T17:03:35",
-      "title": "Close Proofs: These directions extend the `ordEGF` bridge in"
-    },
-    {
       "cycle_id": "aba81cd6",
       "domain": "Cryptography",
       "key_insight": "# Future Directions — Cryptography Cycle\n\nThis cycle added two fully-verified files (0 sorries) extending the\n`Catalog/Cryptography` directory:\n\n* `RSACorrectness.lean` — general (non-coprime) RSA cor",
@@ -2501,6 +2491,16 @@
       "theorem_count": 129,
       "timestamp": "2026-06-21T17:52:08",
       "title": "Derived from the Phase A cycle that produced `Fitness.lean`,"
+    },
+    {
+      "cycle_id": "dafb1f8b",
+      "domain": "Geometry",
+      "key_insight": "# Future Directions — Twin-width of bounded-width posets\n\nThis cycle established the **static** linear neighbourhood-type bound\n(`nbhdTypeCount_le`: `≤ 2k+1` red neighbourhood types per element under",
+      "quality_score": 0.397447,
+      "sorry_count": 0,
+      "theorem_count": 120,
+      "timestamp": "2026-06-21T18:36:56",
+      "title": "Linear twin-width bound for finite posets of bounded width"
     }
   ],
   "key_theorems": [
@@ -2805,7 +2805,7 @@
       "quality": 0.85612
     }
   ],
-  "last_updated": "2026-06-21T17:52:08",
+  "last_updated": "2026-06-21T18:36:56",
   "open_questions": [
     {
       "context": "Result: Confirmed and fully formalized (zero `sorry`). The forward map is path; Result:  Formalised and proved sorry-free.  `hodgeLap_isSymmetric` (self-adjoint),",
@@ -3393,12 +3393,6 @@
     ],
     "Geometry": [
       {
-        "cycle_id": "4c324de9",
-        "quality": 0.5844,
-        "theorems": 16,
-        "title": "`TropicalWeightEnumerator.lean`, the **min-plus tropicaliz"
-      },
-      {
         "cycle_id": "ce2d79fb",
         "quality": 0.46699999999999997,
         "theorems": 4,
@@ -3451,6 +3445,12 @@
         "quality": 0.4537146432932148,
         "theorems": 351,
         "title": "Ramsey Theory: Bounds and Constructions"
+      },
+      {
+        "cycle_id": "dafb1f8b",
+        "quality": 0.397447,
+        "theorems": 120,
+        "title": "Linear twin-width bound for finite posets of bounded width"
       }
     ],
     "Logic": [
