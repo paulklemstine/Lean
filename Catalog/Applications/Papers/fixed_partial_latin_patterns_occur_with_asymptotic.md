@@ -1,29 +1,72 @@
-# Theorem Trace (internal anti-hallucination ledger)
+# Computational Evidence — Fixed partial Latin patterns occur with probability ≈ n⁻ᵏ
 
-Every claim in `ARTICLE.md` and `RESEARCH_PAPER.md` must trace to one of the
-Lean declarations below. No result is stated in the prose that does not appear here.
+This note records the small-case evidence that motivated the formal results in
+`LatinPatternProbability.lean`.
 
-| Lean name | Kind | Mathematical statement | In ARTICLE.md | In RESEARCH_PAPER.md |
-|---|---|---|---|---|
-| `LatinSquare n` | structure/def | An `n×n` array `val : Fin n → Fin n → Fin n` with every row injective (`row_inj`) and every column injective (`col_inj`). | "What a Latin square is" section | Definition 1 |
-| `LatinSquare.ext` | theorem | Two Latin squares are equal iff their underlying arrays agree. | (implicit, not named) | Remark after Definition 1 |
-| `DecidableEq (LatinSquare n)` | instance | Equality of Latin squares is decidable. | not stated | Remark (finiteness) |
-| `LatinSquare.equivSubtype` | def | `LatinSquare n` is in bijection with the subtype of arrays satisfying row/column injectivity. | not stated | Lemma (finiteness scaffold) |
-| `Fintype (LatinSquare n)` | instance | There are finitely many Latin squares of order `n`. | "finitely many" | Proposition 2 (finiteness) |
-| `LatinSquare.permAct` | def | `(permAct σ L).val r c = σ (L.val r c)`: relabel symbols by `σ ∈ Perm (Fin n)`; preserves row/column injectivity. | "relabelling symbols" | Definition 3 |
-| `LatinSquare.permAct_one` | theorem | `permAct 1 L = L`. | (implicit) | Lemma 4 (action axioms) |
-| `LatinSquare.permAct_mul` | theorem | `permAct (σ*τ) L = permAct σ (permAct τ L)`. | (implicit) | Lemma 4 (action axioms) |
-| `LatinSquare.fiberEquiv` | def | For symbols `s,t`, `Equiv.swap s t` gives a bijection `{L // L.val r c = s} ≃ {L // L.val r c = t}`. | "the swap trick" | Theorem 5 (fiber bijection) |
-| `LatinSquare.sigmaEquiv` | def | `LatinSquare n ≃ Σ t : Fin n, {L // L.val r c = t}`: partition by the symbol in cell `(r,c)`. | "sorting by one cell" | Lemma 6 (cell partition) |
-| `LatinSquare.card_eq_mul_card_fiber` | theorem | For any `r c s : Fin n`, `card (LatinSquare n) = n * card {L // L.val r c = s}`. | Main theorem | Theorem 7 (Exact one-cell uniformity) |
+## 1. Counts of Latin squares of small order
 
-## Scope honesty note
+Let `N(n)` be the number of Latin squares of order `n` (OEIS **A002860**):
 
-The Phase A Lean output proves the **exact** `k = 1` case (one prescribed cell)
-of the broader pattern conjecture, and it proves it as an exact identity, not
-merely asymptotically. The prose must:
-- present `card_eq_mul_card_fiber` as the proved main theorem (exact `1/n`);
-- present the general "fixed pattern with probability `n^{-k}`" statement as a
-  conjecture / motivation, clearly labelled as not (yet) proved, and explain
-  that `k = 1` is the verified base case.
-No grander claim than `card_eq_mul_card_fiber` is asserted as proved.
+| n | N(n)                  |
+|---|-----------------------|
+| 1 | 1                     |
+| 2 | 2                     |
+| 3 | 12                    |
+| 4 | 576                   |
+| 5 | 161280                |
+| 6 | 812851200             |
+| 7 | 61479419904000        |
+
+## 2. Single-cell marginal (k = 1)
+
+Claim: for every `n ≥ 1` and every cell `(r,c)` and symbol `s`,
+`#{L : L r c = s} = N(n)/n`, so `Pr[L r c = s] = 1/n` *exactly*.
+
+Check (n = 3, N = 12, expect each fiber = 4): fixing `L 0 0 = 0` leaves the
+reduced count `4` (there are 4 Latin squares of order 3 with a fixed top-left
+entry). `4 · 3 = 12 = N(3)`. ✓
+
+Check (n = 4, N = 576, expect 144): `576 / 4 = 144`. The number of Latin squares
+of order 4 with a fixed entry is indeed `144`. ✓
+
+Hence `Pr · n = 1` for all `n`; the conjectural sequence `Pr · n^1` is the
+*constant* `1`. This is **stronger** than the asymptotic conjecture and is what
+`prob_single_cell` / `prob_single_cell_mul` prove.
+
+## 3. Single-row pattern of size k
+
+Claim: a fixed single-row pattern with `k` distinct columns / `k` distinct
+symbols has probability exactly `1 / (n)_k`, where `(n)_k = n(n-1)…(n-k+1)`
+(`Nat.descFactorial n k`).
+
+Reason: by relabelling symbols (a permutation of the alphabet) all admissible
+`(n)_k` symbol patterns on the chosen columns are equinumerous and partition the
+Latin squares, giving `#fiber = N(n)/(n)_k`.
+
+Numeric check, two cells in one row (k = 2):
+
+| n | (n)_2 = n(n-1) | 1/(n)_2 | n²·Pr = n²/(n)_2 = n/(n-1) |
+|---|----------------|---------|----------------------------|
+| 3 | 6              | 1/6     | 3/2  = 1.5000              |
+| 4 | 12             | 1/12    | 4/3  ≈ 1.3333              |
+| 5 | 20             | 1/20    | 5/4  = 1.2500             |
+| 10| 90             | 1/90    | 10/9 ≈ 1.1111             |
+| 100|9900           | 1/9900  | 100/99 ≈ 1.0101           |
+
+The product `n^k · Pr = n^k/(n)_k → 1`, with the explicit correction
+`(n)_k / n^k = ∏_{i<k}(1 - i/n)`. This limit is `singleRow_pattern_density`,
+and the combination with `prob_rowfiber` is `rowpattern_prob_mul_tendsto`.
+
+## 4. Counterexample hunt for the *general* conjecture
+
+The general conjecture (arbitrary pattern, possibly across several rows and
+columns) is NOT proven here; it is a known research-level statement. We found no
+counterexample in the single-row family — there the exact `1/(n)_k` law makes the
+limit `1` provable. For genuinely 2-dimensional patterns (e.g. an intercalate
+`{(0,0,0),(0,1,1),(1,0,1),(1,1,0)}`) the alphabet-symmetry argument no longer
+pins the count, which is exactly the boundary recorded in the Lab Notes.
+
+## 5. OEIS pointers
+
+- `N(n)` = number of Latin squares of order n: **A002860**.
+- `(n)_k = Nat.descFactorial n k` falling factorial: rows of **A008279**.

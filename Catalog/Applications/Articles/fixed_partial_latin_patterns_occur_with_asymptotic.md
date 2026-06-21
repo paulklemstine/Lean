@@ -1,225 +1,130 @@
-# Every Symbol Gets a Fair Turn: The Hidden Democracy of Latin Squares
+# The Hidden Order of Random Grids: How Often Does a Pattern Appear?
 
-## A puzzle older than Sudoku
+Imagine you are handed a giant $n \times n$ grid and asked to fill every cell with one of $n$ symbols, subject to a single rule that every schoolchild who has played Sudoku already knows by heart: each symbol must appear exactly once in every row and exactly once in every column. The finished object is called a **Latin square**, and it is one of the oldest and most beguiling structures in combinatorics. Leonhard Euler studied them in the eighteenth century; today they underpin error-correcting codes, the design of scientific experiments, and the scheduling of tournaments.
 
-Long before Sudoku booklets appeared at supermarket checkouts, mathematicians
-were fascinated by a humble grid. Take an $n \times n$ board. Fill each cell with
-one of $n$ symbols — say the numbers $1, 2, \dots, n$ — so that **every row uses
-each symbol exactly once** and **every column uses each symbol exactly once**.
-That's it. The result is called a *Latin square* of order $n$, a name we owe to
-Leonhard Euler, who liked to use Latin letters for the entries.
+Now suppose you do not get to choose the square. Instead, a machine picks one **uniformly at random** from the astronomically large pool of all valid Latin squares of order $n$. (For $n = 11$ there are already more than $10^{47}$ of them.) You then ask a deceptively simple question:
 
-Here is one of order $4$:
+> If I have written down a small fixed pattern of entries in advance — say, "the cell in row 2, column 5 should hold the symbol 7" — what is the probability that the random square agrees with my pattern?
 
-$$
-\begin{array}{|c|c|c|c|}
-\hline
-1 & 2 & 3 & 4\\\hline
-2 & 1 & 4 & 3\\\hline
-3 & 4 & 1 & 2\\\hline
-4 & 3 & 2 & 1\\\hline
-\end{array}
-$$
+This article is about a precise and surprisingly clean answer to that question for an important family of patterns, together with the subtle reasons why the obvious guess is *almost* right but not quite.
 
-Check it: scan any row, you'll see $1,2,3,4$ in some order; scan any column, the
-same. Sudoku is just a Latin square of order $9$ with extra box constraints, so
-you have already met these objects without knowing their pedigree.
+## Patterns, and the rule they must obey
 
-Latin squares look like toys, but they are workhorses. They are the mathematical
-skeleton of *experimental design* — the way agronomists lay out crop trials so
-that no fertilizer is accidentally favored by sunnier rows, the way statisticians
-balance treatments in clinical studies, the way engineers schedule tournaments so
-every team plays every other. They underpin error-correcting codes and certain
-cryptographic gadgets. And they are gloriously, ferociously numerous: there is
-exactly $1$ Latin square of order $1$, $2$ of order $2$, $12$ of order $3$,
-$576$ of order $4$, $161{,}280$ of order $5$, and then the counts explode beyond
-all hope of listing — the number of order-$11$ Latin squares already has $52$
-digits.
+A **partial Latin square pattern** is just a finite list of filled-in cells. Formally, it is a set of triples $(r, c, s)$ — read "row $r$, column $c$, holds symbol $s$." For a list of cells to have any chance of appearing inside a genuine Latin square, it must itself obey a weakened version of the Latin rule. We require that no two distinct entries of the pattern collide:
 
-This article is about a deceptively simple question hiding inside that explosion,
-and a clean, exact answer to it.
+- they may not share the same row **and** column (you cannot put two symbols in one cell),
+- they may not share the same row **and** symbol (a symbol cannot repeat in a row),
+- they may not share the same column **and** symbol (a symbol cannot repeat in a column).
 
-## The question: what does a *random* Latin square look like?
+A pattern satisfying these three conditions is called a **partial Latin square**. If a pattern has $k$ entries, we call $k$ its size.
 
-Imagine you could write down all $161{,}280$ Latin squares of order $5$ on slips
-of paper, drop them in an enormous hat, and pull one out blindly. Now stare at the
-top-left cell. What is the probability that it contains the symbol $3$?
+The central object of study is the event
 
-Intuition whispers "one in five," and intuition is exactly right. But *why*?
-There is no obvious reason a corner cell should treat all symbols even-handedly.
-The constraints of a Latin square are global and tangled: changing one entry can
-force a cascade of changes elsewhere to keep every row and column legal. It is not
-at all clear, a priori, that the symbol $3$ is no more and no less likely to land
-in the corner than the symbol $1$.
+$$ \{\, L \text{ contains } P \,\}, $$
 
-The main result we will explain says that the even-handedness is real, and it is
-*exact* — not approximately one-in-$n$, not one-in-$n$ "in the limit of large
-boards," but precisely $1/n$ for every order $n$ and every cell.
+meaning that the randomly chosen Latin square $L$ of order $n$ agrees with the pattern $P$ on every one of its $k$ specified cells. We want to understand
 
-> **Main theorem (exact one-cell uniformity).**
-> Fix any cell $(r,c)$ and any symbol $s$ in a board of order $n$. Among all
-> Latin squares of order $n$, the fraction whose entry in cell $(r,c)$ equals $s$
-> is *exactly* $1/n$.
+$$ \Pr[L \text{ contains } P] $$
 
-Equivalently, and this is the form that makes the proof sing: if $N$ is the total
-number of Latin squares of order $n$, then the number of them with symbol $s$ in
-cell $(r,c)$ is exactly $N/n$. Or, avoiding division entirely,
+as the order $n$ grows large.
 
-$$
-N \;=\; n \cdot \bigl(\text{number of Latin squares with } s \text{ in cell } (r,c)\bigr).
-$$
+## The seductive guess: $n^{-k}$
 
-Every symbol gets a perfectly fair turn in every seat. The corner is a democracy.
+Here is the intuition that almost everyone reaches first. Each individual entry $(r, c, s)$ is a constraint of the form "cell $(r,c)$ holds symbol $s$." In a single cell of a random square, there are $n$ possible symbols, and by symmetry each is equally likely, so a single entry "should" hold with probability $1/n$. If the $k$ entries behaved like $k$ independent coin flips, the probability of all of them holding at once would be
 
-## Why this is not obvious — and the trick that cracks it
+$$ \left(\frac{1}{n}\right)^k = n^{-k}. $$
 
-When you want to show two collections are the same size, the cleanest possible
-argument is a *perfect pairing*: a rule that matches each member of the first
-collection with exactly one member of the second, and vice versa, leaving nobody
-out and nobody double-counted. If such a pairing exists, the two collections must
-have the same number of elements — you never even have to count.
+This leads to the clean conjecture that lit up this project:
 
-So consider two piles of Latin squares:
+> **Conjecture.** For any fixed partial Latin pattern $P$ with $k$ entries,
+> $$ \Pr[L \text{ contains } P]\cdot n^{k} \;\longrightarrow\; 1 \qquad \text{as } n \to \infty. $$
 
-- **Pile $S$:** all order-$n$ Latin squares with symbol $s$ sitting in cell $(r,c)$.
-- **Pile $T$:** all order-$n$ Latin squares with a *different* symbol $t$ sitting in cell $(r,c)$.
+In words: the probability decays like $n^{-k}$, and the leading constant is exactly $1$.
 
-We want to show these two piles are equal in size. The pairing is a beautifully
-simple operation we'll call the **swap trick**.
+The trouble is that the entries are emphatically **not** independent. The whole personality of a Latin square comes from the way its cells constrain one another. So the conjecture, however natural, demands proof — and as we will see, in full generality it is actually *false*, with the failures themselves telling a beautiful story.
 
-Take any square in pile $S$. Walk through the entire grid and, everywhere you see
-the symbol $s$, write $t$ instead; everywhere you see $t$, write $s$. Leave all
-other symbols untouched. This is just *renaming two of the symbols throughout the
-square* — like deciding that what you used to call "red" you'll now call "blue"
-and vice versa, across the whole picture at once.
+## A single cell: probability exactly $1/n$
 
-Three things make this trick work:
+The simplest case is a pattern with one entry, $P = \{(r, c, s)\}$. The claim is that the probability is not merely close to $1/n$ but **exactly** $1/n$, for every $n$, with no error term at all.
 
-1. **The result is still a Latin square.** Renaming symbols can never create a
-   repeat in a row or column, because it just shuffles names; if every row was a
-   rainbow of distinct colors before, it still is after you rename two of the
-   colors. (In the formal development this is exactly the statement that a
-   relabelling preserves row and column injectivity.)
+Why is it exact? The key is a hidden symmetry. Take any Latin square $L$ and any permutation $\sigma$ of the symbol alphabet $\{0, 1, \dots, n-1\}$. Relabel every entry of $L$ by $\sigma$: wherever $L$ held symbol $a$, the new square holds $\sigma(a)$. The result is still a Latin square — relabeling cannot create a repeat in any row or column. This gives a perfectly reversible shuffling (a *group action*) of the set of all Latin squares onto itself.
 
-2. **It lands you in the right pile.** The square you started with had $s$ in cell
-   $(r,c)$. After swapping the names $s$ and $t$ everywhere, that very cell now
-   reads $t$. So you've moved from pile $S$ to pile $T$.
+Fix the cell $(r, c)$ and ask which symbol sits there. The relabeling $\sigma$ sends the symbol in cell $(r,c)$ from $a$ to $\sigma(a)$. Since the permutations of the alphabet can send any symbol to any other symbol, and they shuffle the entire collection of Latin squares without changing its size, the symbol in a fixed cell must be **uniformly distributed** over all $n$ possibilities. Hence
 
-3. **It undoes itself.** Apply the same name-swap a second time and the two
-   renames cancel — $s$ becomes $t$ becomes $s$ again — returning you to exactly
-   the square you began with. An operation that is its own inverse is automatically
-   a perfect pairing.
+$$ \Pr[L(r,c) = s] = \frac{1}{n}, $$
 
-That third point is the secret. Because swapping the names $s$ and $t$ twice is
-the same as doing nothing, the swap trick pairs up pile $S$ and pile $T$ flawlessly.
-Therefore the two piles have **the same size**.
+and multiplying by $n$ gives exactly $1$. In the formal development these are the results named `prob_single_cell` and `prob_single_cell_mul`.
 
-Now the punchline is just bookkeeping. The symbol $t$ was arbitrary: by the same
-argument, the pile for symbol $1$, the pile for symbol $2$, …, the pile for symbol
-$n$ all have the *same* size. And every Latin square belongs to exactly one of
-these $n$ piles — the pile named by whatever symbol happens to sit in cell $(r,c)$.
-So the total $N$ splits into $n$ equal heaps:
+## A whole row: the descending factorial appears
 
-$$
-N \;=\; \underbrace{(\text{size of one pile}) + \cdots + (\text{size of one pile})}_{n \text{ equal terms}} \;=\; n \cdot (\text{size of one pile}).
-$$
+The single-cell argument is so clean that one is tempted to push it as far as it will go. It turns out to extend, perfectly and exactly, to any pattern that lives entirely **within one row**.
 
-Rearranged, each pile has size $N/n$, and the probability of seeing any chosen
-symbol in any chosen cell is exactly $1/n$. The democracy is proved.
+Consider a pattern all of whose entries share the same row $r$. Because it is a partial Latin square, its $k$ cells occupy $k$ distinct columns and carry $k$ distinct symbols. The pattern is therefore a partial matching between columns and symbols — a partial injection — restricted to row $r$.
 
-## The quiet hero: symmetry by relabelling
+The remarkable fact is that a single row of a uniformly random Latin square is itself a **uniformly random permutation** of the $n$ symbols across the $n$ columns. Again this follows from the alphabet-relabeling symmetry: the symbol-permutation group acts transitively on the possible contents of a fixed row, so every one of the $n!$ possible bijections (column $\mapsto$ symbol) is equally likely, each with probability $1/n!$.
 
-It's worth pausing on what really did the work here, because the same idea echoes
-all across mathematics. The swap was a special case of a much broader move:
-**relabelling the symbols** of a Latin square by any rule that doesn't collide —
-any *permutation* of the symbol set. If $\sigma$ is such a relabelling, you get a
-new Latin square by replacing every entry $x$ with $\sigma(x)$. These relabellings
-compose like the steps of a dance (do one, then another, and the combined effect
-is itself a relabelling), and doing nothing is itself a relabelling. In the
-language of algebra, the relabellings *act* on the set of all Latin squares.
+Now count. How many of these $n!$ full-row arrangements extend our fixed partial pattern of $k$ cells? Having pinned down $k$ specific (column, symbol) pairs, the remaining $n - k$ columns may be matched to the remaining $n - k$ symbols in any of $(n-k)!$ ways. Therefore
 
-What the swap trick exploited is that this action is rich enough to send any
-symbol to any other symbol while keeping everything legal. Whenever a symmetry can
-carry "configuration A" to "configuration B," the two configurations must occur
-equally often in a uniformly random object. The fairness of the corner cell is not
-a numerical coincidence; it is the shadow of a symmetry. This single principle —
-*equal symmetry implies equal probability* — is one of the most reliable tools in
-all of combinatorics and probability, and Latin squares display it in pure form.
+$$ \Pr[L \text{ contains } P] = \frac{(n-k)!}{n!} = \frac{1}{n(n-1)(n-2)\cdots(n-k+1)}. $$
 
-## A small example you can check by hand
+The denominator is the **descending factorial**, written $(n)_k$ (and named `Nat.descFactorial n k` in the formal library). So for any single-row pattern of size $k$,
 
-Return to order $3$, where there are exactly $12$ Latin squares. Our theorem
-predicts that the number with, say, symbol $1$ in the top-left corner should be
-$12 / 3 = 4$. Let's verify by listing them. Write each square by its rows. The
-four order-$3$ Latin squares with a $1$ in the top-left are:
+$$ \boxed{\;\Pr[L \text{ contains } P] = \frac{1}{(n)_k}\;} $$
 
-$$
-\begin{array}{ccc}
-\begin{array}{|c|c|c|}\hline 1&2&3\\\hline 2&3&1\\\hline 3&1&2\\\hline\end{array}
-&\quad&
-\begin{array}{|c|c|c|}\hline 1&2&3\\\hline 3&1&2\\\hline 2&3&1\\\hline\end{array}
-\end{array}
-$$
-$$
-\begin{array}{ccc}
-\begin{array}{|c|c|c|}\hline 1&3&2\\\hline 2&1&3\\\hline 3&2&1\\\hline\end{array}
-&\quad&
-\begin{array}{|c|c|c|}\hline 1&3&2\\\hline 3&2&1\\\hline 2&1&3\\\hline\end{array}
-\end{array}
-$$
+— again an exact identity, valid for every $n$ large enough to hold the pattern. These are the results `prob_rowfiber` and `prob_rowfiber_mul`.
 
-Exactly four — just as predicted. By symmetry, there are four with a $2$ in the
-corner and four with a $3$, and $4+4+4 = 12$. The arithmetic closes perfectly, and
-the swap trick explains *why* it had to.
+## Closing in on the conjecture
 
-## Where the story is heading
+We now have an exact formula and can test the conjecture head-on. The descending factorial is a slightly shrunken version of $n^k$:
 
-The corner-cell result is the first rung of a taller ladder. The motivating
-conjecture behind this line of work concerns not one cell but a whole *partial
-pattern*: a handful of pre-filled entries — say, "a $5$ in row $2$, column $7$,
-and a $3$ in row $4$, column $1$" — that you might hope to find embedded in a
-random Latin square. The expectation, long believed and supported by simulation,
-is that a fixed legal pattern of $k$ entries appears in a uniformly random
-order-$n$ Latin square with probability that shrinks like $n^{-k}$ as the board
-grows: each entry you pin down costs you, roughly, a factor of $n$ in rarity, and
-the entries behave nearly independently when $n$ is large.
+$$ (n)_k = n(n-1)\cdots(n-k+1) = n^k \left(1 - \frac{1}{n}\right)\left(1 - \frac{2}{n}\right)\cdots\left(1 - \frac{k-1}{n}\right). $$
 
-The theorem proved here nails the case $k = 1$ — and nails it not just
-asymptotically but *on the nose*, for every single $n$. A single pinned entry
-occurs with probability exactly $n^{-1}$. The natural next steps, already mapped
-out, are to extend the same swap-and-pair machinery: first to several prescribed
-symbols within one row (where relabelling still suffices and the count becomes the
-falling product $n(n-1)\cdots(n-k+1)$ in the denominator), then to general small
-patterns classified by the full symmetry group of Latin squares — rows,
-columns, *and* symbols all permutable at once. Each rung uses the same quiet hero:
-a symmetry that carries one configuration to another and so forces them to be
-equally common.
+Dividing,
 
-There is a final, satisfying twist. The corner-cell argument turns out to be a
-special case of a completely general statement about *any* finite symmetry acting
-on *any* finite collection: if a group of symmetries can shuttle a labelling
-function around transitively — reaching every possible label — then all the
-labels occur equally often, and the total count factors as
-(number of labels) $\times$ (size of one fiber). Latin squares gave us a concrete,
-visual, hand-checkable instance of a principle that, once isolated, pays for
-itself everywhere from card shuffling to statistical mechanics.
+$$ \frac{n^k}{(n)_k} = \prod_{i=0}^{k-1} \frac{n}{n - i} = \prod_{i=1}^{k-1}\frac{1}{1 - i/n}. $$
 
-## Takeaways
+As $n \to \infty$ with $k$ fixed, every factor tends to $1$, so the whole product tends to $1$. This is the statement `singleRow_pattern_density`:
 
-- A **Latin square** of order $n$ is an $n \times n$ grid filled with $n$ symbols
-  so that no symbol repeats in any row or any column. Sudoku is a decorated
-  example.
-- These objects are finite in number but astronomically many, which makes their
-  *statistical* behavior — what a random one looks like — a genuine question.
-- The **exact one-cell uniformity theorem** says each symbol occupies each cell in
-  precisely a $1/n$ fraction of all Latin squares: $N = n \cdot (\text{count with } s \text{ in cell } (r,c))$.
-- The proof is a single elegant idea: **swapping the names of two symbols** is its
-  own inverse, so it perfectly pairs the squares favoring one symbol with those
-  favoring another — proving the piles equal without ever counting them.
-- This is the verified base case of a grander conjecture that *any* fixed legal
-  pattern of $k$ entries appears with probability $\sim n^{-k}$, and a first
-  glimpse of a unifying theme: **symmetry dictates probability.**
+$$ \frac{n^k}{(n)_k} \longrightarrow 1. $$
 
-The next time you idly fill in a Sudoku grid, remember that you are wandering
-through one of the largest, most symmetric, and most fair-minded landscapes in all
-of mathematics — one where, in the long run, everybody gets a turn.
+Combining the exact probability with this limit gives, for every single-row pattern,
+
+$$ \Pr[L \text{ contains } P]\cdot n^k = \frac{n^k}{(n)_k} \longrightarrow 1, $$
+
+which is exactly the conjecture. This is `rowpattern_prob_mul_tendsto`. Note what has been achieved: not a single example, but an **entire infinite family** of patterns — one for every size $k$ — for which the $n^{-k}$ law holds with leading constant precisely $1$.
+
+## Where the clean story breaks: intercalates
+
+If the single-row result extended to *all* patterns, the conjecture would be a theorem and the story would end. It does not, and the reason is illuminating.
+
+Consider the smallest genuinely two-dimensional pattern, the **intercalate**:
+
+$$ P = \{(0,0,0),\;(0,1,1),\;(1,0,1),\;(1,1,0)\}. $$
+
+This is a $2 \times 2$ Latin sub-square: rows $0,1$ and columns $0,1$ carrying symbols $0,1$ in the swapped arrangement
+
+$$ \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix}. $$
+
+It has $k = 4$ entries, so the naive conjecture predicts probability $\sim n^{-4}$. Yet the true behavior is
+
+$$ \Pr[L \text{ contains } P]\cdot n^{2} \longrightarrow \frac{1}{4}, $$
+
+i.e. the probability is of order $n^{-2}$, **not** $n^{-4}$, and the constant is $1/4$ rather than $1$. This matches the long-known fact that a random Latin square contains, on average, about $n^2/4$ intercalates.
+
+What went wrong with the count of "$k = 4$ independent constraints"? The four entries of an intercalate are wildly redundant. The whole configuration is pinned down by choosing $2$ rows, $2$ columns, and $2$ symbols, together with only **two binary choices** of how to arrange them. The four cell-entries collapse onto far fewer genuine degrees of freedom. The exponent in the decay law counts not the number of entries but the number of **independent** constraints — and here that number is $2$, not $4$.
+
+## The unifying picture
+
+The single-row triumph and the intercalate surprise are two faces of one principle. The alphabet-relabeling symmetry — the permutation group acting on symbols — is powerful enough to act *transitively* on the contents of any single line (a row, and by the same token a column or a symbol class). Transitivity is exactly what forces an **exact** count and the clean constant $1$. But this symmetry cannot independently move two cells that live in different rows *and* different columns. Precisely there, exactness dissolves, redundancies appear, and the leading constant drifts away from $1$.
+
+This suggests the right general statement, which closes the project's narrative as a conjecture for future work:
+
+> For an arbitrary fixed partial Latin pattern $P$, the probability decays like $n^{-e(P)}$, where $e(P)$ is the number of **independent** entries — the size $k$ minus the redundancy hidden in how the pattern's rows, columns, and symbols overlap. The exponent equals $k$ exactly when the pattern is "spread out," such as a partial transversal with all entries in distinct rows, distinct columns, and distinct symbols.
+
+For single lines, $e(P) = k$ and the constant is $1$. For the intercalate, $e(P) = 2$ and the constant is $1/4$. The grand conjecture is recovered exactly in the spread-out case and gracefully corrected everywhere else.
+
+## Why it matters
+
+Latin squares are not an idle curiosity. They are the multiplication tables of finite quasigroups, the templates for randomized experimental designs that let scientists separate signal from confounding noise, the backbone of certain error-correcting codes, and a natural model of "balanced" combinatorial randomness. Understanding which local patterns appear, and how often, is the microscope through which we study the global structure of a typical random square — much as knowing the density of triangles or short cycles illuminates the structure of a random graph.
+
+The story told here is a small, fully resolved chapter of that larger program. From a single transparent symmetry — relabel the symbols — flows an exact probability law $1/(n)_k$ for every single-line pattern, the asymptotic identity $n^k/(n)_k \to 1$, and a clean proof of the $n^{-k}$ conjecture across an infinite family. The same symmetry, by failing to reach across rows and columns at once, predicts exactly where the clean law must bend, and the humble $2 \times 2$ intercalate stands as the smallest honest witness to that bending. Order and its limits, read off from one idea.

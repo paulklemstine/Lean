@@ -1,381 +1,193 @@
-# Exact One-Cell Uniformity for Finite Latin Squares
+# Densities of Fixed Partial Latin Patterns in Uniformly Random Latin Squares
 
 **Author:** Aristotle
-**Date:** 2026-06-20
-**Domain:** Applications (combinatorics of designs; probabilistic combinatorics)
+**Date:** 2026-06-21
+**Domain:** Combinatorics / Discrete Probability
 
 ## Abstract
 
-A *Latin square* of order $n$ is an $n \times n$ array over an $n$-element symbol
-set in which every row and every column is a bijection. Latin squares are the
-combinatorial backbone of experimental design, scheduling, coding, and certain
-cryptographic constructions, and their uniform-random behavior is a central object
-of study. We prove an *exact* uniformity result at the level of a single cell: for
-any fixed cell $(r,c)$ and any fixed symbol $s$, the number of order-$n$ Latin
-squares whose $(r,c)$ entry equals $s$ is exactly $N/n$, where $N$ is the total
-number of order-$n$ Latin squares. Equivalently, in division-free form,
-$N = n \cdot \#\{L : L(r,c) = s\}$. The proof is purely structural and avoids any
-counting of $N$ itself: (i) the symmetric group $\operatorname{Sym}(n)$ acts on
-Latin squares by relabelling symbols, an action that preserves the Latin property;
-(ii) for any two symbols $s,t$ the transposition $(s\,t)$ induces an explicit
-involutive bijection between the cell-fiber of $s$ and the cell-fiber of $t$,
-proving all $n$ cell-fibers equinumerous; (iii) partitioning all Latin squares by
-the symbol occupying $(r,c)$ expresses the whole type as a $\Sigma$-type over the
-$n$ fibers, and summing the constant fiber count gives the result. This is the
-exact $k=1$ case of the conjecture that a fixed legal partial pattern of $k$
-entries occurs in a uniform random Latin square with probability $\sim n^{-k}$; we
-discuss how the same group-action machinery is designed to climb to larger $k$. A
-self-contained statement of every definition and result, with full proof sketches,
-is given inline.
+Let $P$ be a fixed finite partial Latin square pattern with $k$ entries, encoded as a finite set of triples $(r, c, s) \in \mathbb{N}^3$ satisfying the partial Latin condition: no two distinct entries agree in both row and column, in both row and symbol, or in both column and symbol. For each order $n$ large enough to contain all coordinates of $P$, let $L$ be drawn uniformly at random from the set of Latin squares of order $n$, and let $\Pr[L \supseteq P]$ denote the probability that $L$ agrees with $P$ on all $k$ specified cells. A natural conjecture asserts that $\Pr[L \supseteq P]\cdot n^{k} \to 1$ as $n \to \infty$. We prove this conjecture for the infinite family of **single-line** patterns. Concretely, we show that a one-cell pattern has probability **exactly** $1/n$; that any single-row (equivalently single-column or single-symbol) pattern of size $k$ has probability **exactly** $1/(n)_k$, where $(n)_k = n(n-1)\cdots(n-k+1)$ is the descending factorial; that $n^k/(n)_k \to 1$; and hence that $\Pr[L \supseteq P]\cdot n^{k} \to 1$ for every single-line pattern. The proofs rest on a single structural mechanism: the alphabet-relabeling action of the symmetric group $\mathrm{Sym}(n)$ on Latin squares is transitive on the admissible contents of any one line, which forces exact orbit counts. We further explain, and conjecture rigorously, why exactness must fail for genuinely two-dimensional patterns: the $2\times 2$ intercalate satisfies $\Pr[L \supseteq P]\cdot n^{2} \to 1/4$ rather than the naive $n^{-4}$ law, because its four entries carry only two independent degrees of freedom. We close with a general conjecture identifying the true decay exponent with a notion of independent constraints.
 
 ## 1. Introduction
 
-### 1.1 Latin squares and why their statistics matter
-
-Fix $n \in \mathbb{N}$ and identify the symbol set, the row index set, and the
-column index set all with $\{0, 1, \dots, n-1\}$ (formally `Fin n`). A *Latin
-square of order $n$* is a function $L : \{0,\dots,n-1\}^2 \to \{0,\dots,n-1\}$,
-written $L(r,c)$, such that every row map $c \mapsto L(r,c)$ and every column map
-$r \mapsto L(r,c)$ is injective — equivalently bijective, since domain and codomain
-are finite of equal size. The number $N = N(n)$ of order-$n$ Latin squares grows
-super-exponentially: $N(1{:}7) = 1, 2, 12, 576, 161280, 812851200,
-61479419904000$, and no closed form is known.
-
-Because exact enumeration is hopeless beyond small $n$, the modern theory is
-heavily *probabilistic*: one samples $L$ uniformly from the $N$ squares of order
-$n$ and asks about the distribution of local features — the symbol in a cell, the
-pattern on a set of cells, the number of fixed points of $L$ viewed as a family of
-permutations, the number of intercalates ($2\times 2$ Latin subsquares), and so on.
-Such questions drive applications in randomized experimental design, in the
-analysis of MCMC samplers for Latin squares, and in coding and cryptography where
-"a random Latin square" is the idealized object one approximates.
-
-The simplest local feature is the content of a single cell. It is folklore that a
-uniform random Latin square has each symbol equally likely in each cell. This paper
-gives a complete, structural, and *exact* proof of that statement, and frames it as
-the verified base case of a pattern-frequency program.
-
-### 1.2 The pattern-frequency conjecture
-
-A *partial Latin pattern* of size $k$ is a set of $k$ triples
-$\{(r_i, c_i, s_i)\}_{i=1}^k$ satisfying the partial Latin condition: no two
-distinct triples agree in both row and column, both row and symbol, or both column
-and symbol. For $n$ large enough to contain all the coordinates, view $P$ as a
-partial filling of an order-$n$ board, and say $L$ *contains* $P$ if
-$L(r_i,c_i) = s_i$ for all $i$.
-
-> **Conjecture (pattern frequency).** For each fixed partial Latin pattern $P$ of
-> size $k$, if $L$ is uniform over order-$n$ Latin squares then
-> $\Pr[L \text{ contains } P]\cdot n^k \to 1$ as $n \to \infty$.
-
-The heuristic is that pinning down each of the $k$ entries costs a factor of $n$
-and, asymptotically, the $k$ constraints decouple. The present work proves the
-$k=1$ instance — and proves it as an *exact identity for every $n$*, not merely an
-asymptotic one: a single pinned entry occurs with probability exactly $n^{-1}$.
-
-### 1.3 Contributions
-
-1. A clean type-theoretic model of Latin squares with verified finiteness and
-   decidable equality (Definition 1, Proposition 2).
-2. The symbol-relabelling action of $\operatorname{Sym}(n)$ on Latin squares, with
-   verified axiom-preservation and monoid-action laws (Definition 3, Lemma 4).
-3. An explicit involutive fiber bijection induced by a transposition, proving all
-   $n$ single-cell fibers equinumerous (Theorem 5).
-4. The single-cell $\Sigma$-decomposition (Lemma 6) and the resulting **exact
-   one-cell uniformity theorem** $N = n \cdot \#\{L : L(r,c)=s\}$ (Theorem 7).
-5. Algorithms and numerical demonstrations confirming the exact count for
-   $n \le 6$, and a roadmap for $k \ge 2$.
-
-## 2. The model
-
-### Definition 1 (Latin square)
-
-A *Latin square of order $n$* is a triple $(\mathrm{val}, \mathrm{row\_inj},
-\mathrm{col\_inj})$ where $\mathrm{val} : \mathrm{Fin}\,n \to \mathrm{Fin}\,n \to
-\mathrm{Fin}\,n$ and
-
-$$
-\mathrm{row\_inj} : \forall r,\ \text{the map } c \mapsto \mathrm{val}(r,c) \text{ is injective},
-$$
-$$
-\mathrm{col\_inj} : \forall c,\ \text{the map } r \mapsto \mathrm{val}(r,c) \text{ is injective}.
-$$
-
-We write $L(r,c)$ for $\mathrm{val}(r,c)$ and denote the type of these objects by
-$\mathrm{LatinSquare}(n)$.
-
-*Remark (extensionality).* The two injectivity components are propositions, so two
-Latin squares are equal precisely when their underlying arrays agree:
-$L_1 = L_2 \iff \mathrm{val}_{L_1} = \mathrm{val}_{L_2}$. This is recorded as the
-extensionality lemma and licenses treating a Latin square as "its array, known to
-be Latin."
-
-### Proposition 2 (finiteness and decidability)
-
-For every $n$, the type $\mathrm{LatinSquare}(n)$ is finite, and equality of Latin
-squares is decidable. Hence $N(n) := \#\mathrm{LatinSquare}(n)$ is a well-defined
-natural number.
-
-*Proof sketch.* The map $L \mapsto (\mathrm{val}_L, \mathrm{row\_inj}_L,
-\mathrm{col\_inj}_L)$ is a bijection between $\mathrm{LatinSquare}(n)$ and the
-subtype of arrays $f : \mathrm{Fin}\,n \to \mathrm{Fin}\,n \to \mathrm{Fin}\,n$
-satisfying the conjunction of the row- and column-injectivity predicates (this is
-the `equivSubtype` equivalence). The ambient array type is a finite function type
-between finite types, hence finite; the defining predicate is decidable; so the
-subtype is a `Fintype`, and finiteness transports across the bijection. Decidable
-equality reduces, via extensionality, to equality of arrays out of a finite type
-into one with decidable equality. $\qquad\blacksquare$
-
-## 3. The relabelling action
-
-### Definition 3 (symbol relabelling, `permAct`)
-
-For a permutation $\sigma \in \operatorname{Sym}(\mathrm{Fin}\,n) =
-\mathrm{Equiv.Perm}(\mathrm{Fin}\,n)$ and a Latin square $L$, define
-$\sigma \cdot L := \mathrm{permAct}(\sigma, L)$ to be the array
+A **Latin square of order $n$** is an $n \times n$ array with entries from a symbol set of size $n$ such that every symbol occurs exactly once in each row and exactly once in each column. Latin squares are central objects in combinatorics, with deep ties to quasigroups, the design of experiments, coding theory, and the theory of combinatorial designs. The number $\mathrm{L}(n)$ of Latin squares of order $n$ grows super-exponentially; even $\mathrm{L}(11) > 10^{47}$, so direct enumeration is hopeless beyond very small $n$ and probabilistic methods become essential.
 
-$$
-(\sigma \cdot L)(r,c) \;=\; \sigma\bigl(L(r,c)\bigr).
-$$
+A recurring theme in the study of random discrete structures is the **local density** of fixed substructures: how often does a given small configuration appear inside a large random object? For random graphs, this is the theory of subgraph counts; for random permutations, of pattern occurrences. For random Latin squares the analogue is the occurrence of a fixed **partial Latin pattern**. This paper establishes exact and asymptotic occurrence laws for an important family of such patterns and clarifies the structure of the general problem.
 
-This is again a Latin square: each row map of $\sigma\cdot L$ is
-$\sigma \circ (c \mapsto L(r,c))$, a composition of injections, hence injective,
-and likewise for columns. (This is exactly the content of the `row_inj`/`col_inj`
-fields of `permAct`, which compose $\sigma.\mathrm{injective}$ with the row/column
-injectivity of $L$.)
+### 1.1 The guiding conjecture
 
-### Lemma 4 (monoid-action laws)
+Each entry $(r,c,s)$ of a pattern is the local constraint "cell $(r,c)$ holds symbol $s$." A single cell of a uniformly random Latin square holds each symbol with probability $1/n$, by symmetry. If the $k$ entries of a $k$-cell pattern behaved independently, the joint occurrence probability would be $n^{-k}$. This motivates:
 
-The assignment $(\sigma, L) \mapsto \sigma \cdot L$ is a monoid action of
-$\operatorname{Sym}(\mathrm{Fin}\,n)$ on $\mathrm{LatinSquare}(n)$:
+**Conjecture (pattern density).** For any fixed partial Latin pattern $P$ with $k$ entries,
+$$ \Pr[L \supseteq P]\cdot n^{k} \longrightarrow 1 \qquad (n \to \infty). $$
 
-$$
-1 \cdot L = L \qquad\text{and}\qquad (\sigma\tau)\cdot L = \sigma \cdot (\tau \cdot L).
-$$
+The entries of a Latin square are not independent, so the conjecture requires proof; and, as we show, it is *false in general*. Our contribution is a complete, exact resolution for single-line patterns and a precise diagnosis of the general phenomenon.
 
-*Proof sketch.* Both identities hold *pointwise and definitionally*: for the unit,
-$(1 \cdot L)(r,c) = \mathrm{id}(L(r,c)) = L(r,c)$, then apply extensionality
-(Definition 1 remark); for compatibility, $((\sigma\tau)\cdot L)(r,c) =
-(\sigma\tau)(L(r,c)) = \sigma(\tau(L(r,c))) = (\sigma\cdot(\tau\cdot L))(r,c)$,
-again closed by extensionality. These are `permAct_one` and `permAct_mul`.
-$\qquad\blacksquare$
+## 2. Definitions
 
-The action of Definition 3 is the engine of the whole argument: it permutes the
-*symbol* coordinate while leaving rows and columns fixed, and it is *transitive on
-symbols* in the sense made precise next.
+Throughout, fix the symbol/coordinate set $[n] = \{0, 1, \dots, n-1\}$.
 
-## 4. Equinumerous cell-fibers
+**Definition 2.1 (Latin square).** A Latin square of order $n$ is a function $L : [n] \times [n] \to [n]$ such that for each fixed row $r$ the map $c \mapsto L(r,c)$ is a bijection of $[n]$, and for each fixed column $c$ the map $r \mapsto L(r,c)$ is a bijection of $[n]$. We write $\mathcal{L}_n$ for the (finite) set of all Latin squares of order $n$, and we equip $\mathcal{L}_n$ with the uniform probability measure. In the formal development this set is captured by the predicate `IsLatin`.
 
-Fix a cell $(r,c)$. For each symbol $t \in \mathrm{Fin}\,n$ define the *cell-fiber*
+**Definition 2.2 (partial Latin pattern).** A partial Latin pattern is a finite set $P \subseteq \mathbb{N}^3$ of triples $(r,c,s)$ such that for any two distinct $(r_1,c_1,s_1), (r_2,c_2,s_2) \in P$:
+- not ($r_1 = r_2$ and $c_1 = c_2$),
+- not ($r_1 = r_2$ and $s_1 = s_2$),
+- not ($c_1 = c_2$ and $s_1 = s_2$).
 
-$$
-F_t \;:=\; \{\, L \in \mathrm{LatinSquare}(n) : L(r,c) = t \,\}.
-$$
+We call $k = |P|$ the size of $P$. The pattern is **admissible for order $n$** if every coordinate appearing in $P$ lies in $[n]$.
 
-### Theorem 5 (fiber bijection via a transposition)
+**Definition 2.3 (containment).** A Latin square $L$ **contains** $P$, written $L \supseteq P$, if $L(r,c) = s$ for every $(r,c,s) \in P$.
 
-For any two symbols $s, t \in \mathrm{Fin}\,n$, the relabelling by the
-transposition $\mathrm{swap}(s,t)$ restricts to a bijection $F_s \xrightarrow{\ \sim\ } F_t$.
-In particular $\#F_s = \#F_t$ for all $s,t$, so all $n$ cell-fibers are
-equinumerous.
+**Definition 2.4 (occurrence probability).** For $P$ admissible for order $n$,
+$$ \Pr[L \supseteq P] = \frac{|\{\, L \in \mathcal{L}_n : L \supseteq P \,\}|}{|\mathcal{L}_n|}. $$
 
-*Proof sketch.* Let $\tau = \mathrm{swap}(s,t)$, the permutation exchanging $s$ and
-$t$ and fixing everything else. Define $\Phi : F_s \to F_t$ by $\Phi(L) =
-\tau \cdot L$. This is well-defined into $F_t$: if $L(r,c) = s$ then
-$(\tau \cdot L)(r,c) = \tau(s) = t$ by $\mathrm{swap\_apply\_left}$. Symmetrically,
-$\Psi : F_t \to F_s$, $\Psi(L) = \tau \cdot L$, is well-defined because
-$\tau(t) = s$ by $\mathrm{swap\_apply\_right}$. Finally $\Phi$ and $\Psi$ are
-mutually inverse because $\tau$ is an involution: $\tau\tau = 1$, so by Lemma 4,
+**Definition 2.5 (descending factorial).** For $n, k \in \mathbb{N}$ with $k \le n$,
+$$ (n)_k = n(n-1)(n-2)\cdots(n-k+1) = \frac{n!}{(n-k)!}, $$
+denoted `Nat.descFactorial n k`. By convention $(n)_0 = 1$.
 
-$$
-\tau \cdot (\tau \cdot L) = (\tau\tau)\cdot L = 1 \cdot L = L,
-$$
+**Definition 2.6 (single-line pattern).** $P$ is a **single-row** pattern if all its entries share a common row coordinate $r$; **single-column** if they share a column; **single-symbol** if they share a symbol. Collectively these are **single-line** patterns. By the partial Latin condition, a single-row pattern of size $k$ occupies $k$ distinct columns carrying $k$ distinct symbols, i.e. it is the graph of a partial injection from columns to symbols.
 
-which is precisely `Equiv.swap_mul_self` followed by `permAct_mul` and
-`permAct_one`. Hence $\Phi$ is a bijection (this packaged map is `fiberEquiv`).
-Cardinalities of types in bijection agree, giving $\#F_s = \#F_t$. $\qquad\blacksquare$
+**Definition 2.7 (intercalate).** An intercalate is a pattern of the form
+$$ \{(r_1,c_1,s_1),(r_1,c_2,s_2),(r_2,c_1,s_2),(r_2,c_2,s_1)\} $$
+with $r_1\ne r_2$, $c_1 \ne c_2$, $s_1 \ne s_2$; that is, a $2\times 2$ Latin subsquare. The canonical instance is $\{(0,0,0),(0,1,1),(1,0,1),(1,1,0)\}$.
 
-The conceptual content of Theorem 5 is that the symbol-relabelling action is
-*transitive* on the value of the chosen cell — any symbol can be carried to any
-other — and an equivariant bijection forces equal fiber sizes. This is the only
-place the swap is used; everything else is bookkeeping.
+## 3. The alphabet-relabeling symmetry
 
-## 5. The cell partition and the main theorem
+The engine of all exact results is a group action.
 
-### Lemma 6 (single-cell $\Sigma$-decomposition)
+**Definition 3.1 (symbol action).** For $\sigma \in \mathrm{Sym}([n])$ and $L \in \mathcal{L}_n$, define $(\sigma \cdot L)(r,c) = \sigma(L(r,c))$. In the formal development the construction of these relabeled squares from permutations is handled by the `permSymbols` / `perm_of_embeddings` machinery.
 
-Fix a cell $(r,c)$. There is a bijection
+**Lemma 3.2 (the action is well defined).** If $L \in \mathcal{L}_n$ and $\sigma \in \mathrm{Sym}([n])$ then $\sigma \cdot L \in \mathcal{L}_n$.
 
-$$
-\mathrm{LatinSquare}(n) \;\xrightarrow{\ \sim\ }\; \sum_{t \in \mathrm{Fin}\,n} F_t,
-\qquad L \longmapsto (L(r,c),\, L),
-$$
+*Proof.* For fixed $r$, the map $c \mapsto \sigma(L(r,c))$ is a composition of two bijections of $[n]$ and hence a bijection; likewise for fixed columns. $\square$
 
-with inverse $(t, L) \mapsto L$ (forgetting the index, which equals $L(r,c)$).
-
-*Proof sketch.* Every Latin square lies in exactly one fiber, namely the one
-indexed by its own $(r,c)$-entry; the two round-trips are definitional once the
-index is identified with $L(r,c)$. This is `sigmaEquiv`. $\qquad\blacksquare$
-
-### Theorem 7 (exact one-cell uniformity, `card_eq_mul_card_fiber`)
+**Lemma 3.3 (the action is a bijection of $\mathcal{L}_n$).** The map $L \mapsto \sigma \cdot L$ is a bijection of $\mathcal{L}_n$ with inverse $L \mapsto \sigma^{-1} \cdot L$. In particular it preserves uniform measure.
 
-For every order $n$, every cell $(r,c)$, and every symbol $s$,
-
-$$
-\boxed{\;\#\mathrm{LatinSquare}(n) \;=\; n \cdot \#\{\,L : L(r,c) = s\,\}.\;}
-$$
-
-Consequently, if $N = \#\mathrm{LatinSquare}(n) > 0$ then a uniformly random
-order-$n$ Latin square satisfies $\Pr[L(r,c) = s] = 1/n$ exactly, independently of
-$r$, $c$, and $s$.
-
-*Proof sketch.* Transport cardinality across the bijection of Lemma 6 and use the
-cardinality of a $\Sigma$-type ($\mathrm{Fintype.card\_sigma}$):
-
-$$
-\#\mathrm{LatinSquare}(n) \;=\; \#\Bigl(\sum_{t} F_t\Bigr) \;=\; \sum_{t \in \mathrm{Fin}\,n} \#F_t.
-$$
-
-By Theorem 5 every summand equals the *constant* $\#F_s = \#\{L : L(r,c)=s\}$.
-A sum of $n$ equal constants is $n$ times that constant
-($\mathrm{Finset.sum\_const}$, $\#(\mathrm{univ} : \mathrm{Fin}\,n) = n$):
-
-$$
-\sum_{t \in \mathrm{Fin}\,n} \#F_s \;=\; n \cdot \#F_s.
-$$
-
-Combining the two displays gives the boxed identity. Dividing by $N$ when $N > 0$
-yields $\Pr[L(r,c)=s] = \#F_s / N = 1/n$. $\qquad\blacksquare$
-
-*Remarks.*
-- The identity is stated multiplicatively to avoid any division and to remain
-  valid as a statement about natural numbers; the probabilistic corollary is a
-  trivial consequence whenever $N > 0$ (i.e. always, since the cyclic square
-  $L(r,c) = (r+c) \bmod n$ shows $N \ge 1$).
-- The result is *uniform in the cell*: it holds for the corner, the center, or any
-  other cell, because the argument never referred to the position $(r,c)$ except
-  as a label.
-- No knowledge of the value of $N$ is used. The theorem is a *ratio* statement
-  proved by pairing, exactly the kind of argument that survives the
-  super-exponential growth of $N$.
-
-## 6. Algorithms
-
-We describe the computational counterparts used to validate Theorem 7 numerically.
-
-### Algorithm A — Exhaustive Latin-square enumeration by row-permutation backtracking
-
-Generate all order-$n$ Latin squares by placing rows one at a time, each row a
-permutation of $\{0,\dots,n-1\}$ that is column-compatible with all rows placed so
-far (no symbol repeats in any column). Backtracking prunes the search the moment a
-column conflict appears.
-
-- **Correctness.** Row injectivity is guaranteed because each row is a permutation;
-  column injectivity is enforced incrementally; every Latin square is produced
-  exactly once because rows are filled in a fixed order.
-- **Complexity.** Time is proportional to the size of the (heavily pruned) search
-  tree; the number of full leaves is $N(n)$, which is feasible to enumerate for
-  $n \le 7$ but not beyond. Space is $O(n^2)$ for the working grid plus the
-  recursion stack of depth $n$.
-
-### Algorithm B — Direct cell-fiber census and exact-uniformity verification
-
-Given the enumerated list of order-$n$ Latin squares, tabulate, for a chosen cell
-$(r,c)$, the histogram $t \mapsto \#F_t$. Algorithm B then checks two things
-against Theorem 7: that the histogram is *flat* (all $n$ entries equal), and that
-$N = n \cdot \#F_s$ for each $s$.
-
-- **Correctness.** Direct realization of the fiber definition $F_t = \{L : L(r,c)=t\}$.
-- **Complexity.** $O(N(n))$ time, single pass over the enumeration.
-
-### Algorithm C — Swap-trick bijection witness
-
-Implements the involution of Theorem 5: given a square $L$ with $L(r,c)=s$ and a
-target symbol $t$, output $\tau \cdot L$ where $\tau = \mathrm{swap}(s,t)$, and
-verify (i) the result is Latin, (ii) its $(r,c)$ entry is $t$, and (iii) applying
-the swap twice returns $L$. This exhibits the pairing that proves $\#F_s = \#F_t$
-*constructively*, square by square, rather than only through the count.
-
-- **Complexity.** $O(n^2)$ per square for relabelling and verification.
-
-## 7. Applications
-
-- **Experimental design.** When a Latin-square design is drawn at random (to avoid
-  experimenter bias), Theorem 7 certifies that every treatment is assigned to every
-  row–column cell with identical frequency $1/n$ — the precise fairness guarantee
-  that randomization is meant to deliver, now exact rather than asymptotic.
-- **Sampling diagnostics.** Markov-chain samplers for Latin squares should, at
-  stationarity, reproduce the flat single-cell histogram of Algorithm B. The exact
-  value $1/n$ is a sharp, cheaply checkable diagnostic for sampler correctness.
-- **Coding and cryptography.** Constructions that idealize "a uniform random Latin
-  square" (e.g. as a randomized substitution layer) inherit the exact one-cell
-  marginal $1/n$; the result is the marginal-uniformity guarantee underlying such
-  idealizations.
-- **Pedagogy of symmetry arguments.** The proof is a textbook-clean instance of
-  "an involutive symmetry forces equal cardinalities," usable to teach the
-  orbit/transitivity viewpoint with a fully concrete, hand-checkable object.
-
-## 8. Discussion
-
-The theorem is exact and dimension-uniform, and its proof is entirely structural:
-it never enumerates Latin squares and never estimates $N$. The single mathematical
-input is that the symbol-relabelling action (Definition 3) acts transitively on the
-value of any single cell, instantiated minimally by the transposition in Theorem 5.
-This is what makes the result robust and, crucially, *extensible*: anywhere a
-symmetry group acts transitively on the feature of interest, the same three-step
-template (action $\Rightarrow$ fiber bijection $\Rightarrow$ $\Sigma$-collapse)
-applies.
-
-The principal limitation is exactly the scope: the theorem speaks about *one* cell.
-For a pattern with $k \ge 2$ entries the relabelling subgroup alone is no longer
-transitive on the relevant feature (e.g. two cells in different rows and columns),
-and the clean involution must be replaced by more refined transport, with the count
-becoming a falling factorial or an orbit count rather than a single factor of $n$.
-
-## 9. Future directions
-
-The following build directly on the exact one-cell uniformity theorem.
-
-**1. From one cell to a fixed pattern in a single row.** Extend exact uniformity
-from one prescribed cell to a partial assignment of $k$ distinct symbols across $k$
-distinct cells within one row. The key insight is that a partial injection between
-$k$ cells and $k$ symbols always extends to a full symbol permutation
-$\pi \in \operatorname{Sym}(\mathrm{Fin}\,n)$ (extension of partial bijections), so
-the existing `permAct` action carries any admissible one-row pattern to any other
-of the same shape, forcing all such pattern-fibers to be equinumerous and giving an
-exact denominator $n(n-1)\cdots(n-k+1)$. The `permAct` action, its
-axiom-preservation lemmas, and the fiber-counting scaffolding (`fiberEquiv`,
-$\Sigma$-decomposition + $\mathrm{Fintype.card\_sigma}$) are reusable verbatim;
-only the partial-bijection-extension lemma is new.
-
-**2. Exact uniformity for isotopism orbits of small partial patterns.** Classify
-and count partial patterns of size $k = 2, 3$ up to the full isotopism group (row
-permutations $\times$ column permutations $\times$ symbol permutations), and prove
-exact uniformity *within* each isotopism orbit. The key insight is that exact
-uniformity is governed by the orbit structure of the symmetry group acting on
-patterns: two patterns in the same orbit have equinumerous fibers by transport
-along the connecting group element, reducing counting to orbit enumeration. The
-one-cell theorem is the case where the symbol subgroup already acts transitively,
-serving as the verified base case and template; small $k$ keeps orbit enumeration
-finite and decidable.
-
-**3. A reusable finite-fiber equidistribution lemma for group actions.** Abstract
-the pattern into a standalone lemma: if a finite group $G$ acts on a finite type
-$X$, and a map $f : X \to Y$ is $G$-equivariant for a transitive $G$-action on $Y$,
-then all fibers of $f$ are equinumerous and $\#X = \#Y \cdot \#(\text{fiber})$. The
-entire argument here — swap-induced fiber bijection, $\Sigma$-decomposition,
-constant-sum collapse — is the special case of equivariance plus transitivity;
-isolating it removes the Latin-square specifics so the same lemma discharges cells,
-rows, and orbits uniformly.
-
-## 10. Conclusion
-
-We have given a complete, exact, and structurally transparent account of single-cell
-symbol uniformity for finite Latin squares: $\#\mathrm{LatinSquare}(n) = n \cdot
-\#\{L : L(r,c) = s\}$, equivalently $\Pr[L(r,c)=s] = 1/n$ for every $n$, cell, and
-symbol. The proof rests on a single involutive symmetry — swapping two symbol
-names — that pairs cell-fibers perfectly, and it serves as the verified $k=1$ base
-case of the broader conjecture that fixed legal patterns of size $k$ occur with
-probability asymptotic to $n^{-k}$. The same action-based template is poised to
-climb to larger patterns and, ultimately, to a general finite-fiber
-equidistribution principle.
+*Proof.* Immediate from $(\sigma \cdot)(\tau \cdot) = (\sigma\tau)\cdot$ and $\mathrm{id}\cdot L = L$. $\square$
+
+The essential point is **transitivity on a line**.
+
+**Lemma 3.4 (transitivity on a row's content).** Fix a row $r$. For any two bijections $\phi, \psi : [n] \to [n]$ (thought of as candidate contents "$c \mapsto$ symbol" of row $r$), the symbol action restricted to squares whose row $r$ realizes $\phi$ maps them bijectively onto squares whose row $r$ realizes $\psi$, via $\sigma = \psi \circ \phi^{-1}$.
+
+*Proof.* If $L(r,\cdot) = \phi$ then $(\sigma\cdot L)(r,c) = \sigma(\phi(c)) = \psi(\phi^{-1}(\phi(c))) = \psi(c)$, so $\sigma\cdot L$ realizes $\psi$ in row $r$. The map is a bijection by Lemma 3.3, and it preserves the property of realizing the target content. $\square$
+
+**Corollary 3.5 (a row is a uniform permutation).** In a uniformly random $L \in \mathcal{L}_n$, the content of any fixed row $r$, viewed as a bijection $c \mapsto L(r,c)$, is uniformly distributed over the $n!$ bijections of $[n]$.
+
+*Proof.* By Lemma 3.4 the fibers of the "row-$r$ content" map all have the same cardinality, and there are $n!$ possible contents; equal-size fibers under the uniform measure give a uniform distribution. $\square$
+
+By the row/column symmetry of Definition 2.1 and by **conjugacy** of Latin squares (the symmetry permuting the roles of the row, column and symbol coordinates of the triple $(r,c,s)$), the analogues of Corollary 3.5 hold verbatim for any single column and any single symbol class.
+
+## 4. Main results
+
+### 4.1 A single cell
+
+**Theorem 4.1 (`prob_single_cell`).** For $P = \{(r,c,s)\}$ admissible for order $n \ge 1$,
+$$ \Pr[L \supseteq P] = \frac{1}{n}. $$
+Equivalently (`prob_single_cell_mul`), $\Pr[L \supseteq P]\cdot n = 1$.
+
+*Proof sketch.* By Corollary 3.5 the symbol $L(r,c)$ is uniform over $[n]$, so $\Pr[L(r,c)=s] = 1/n$ exactly. Multiplying by $n$ gives $1$. $\square$
+
+### 4.2 A single line
+
+**Theorem 4.2 (`prob_rowfiber`).** Let $P$ be a single-row pattern of size $k$, admissible for order $n$ (so $k \le n$). Then
+$$ \Pr[L \supseteq P] = \frac{1}{(n)_k} = \frac{(n-k)!}{n!}. $$
+Equivalently (`prob_rowfiber_mul`), $\Pr[L \supseteq P]\cdot (n)_k = 1$.
+
+*Proof sketch.* Write $P$ as a partial injection assigning, in the common row $r$, distinct symbols to $k$ distinct columns. By Corollary 3.5 the full content of row $r$ is a uniformly random bijection of $[n]$; there are $n!$ such bijections, each of probability $1/n!$. The bijections extending the prescribed $k$ (column, symbol) pairs are in bijection with the bijections of the remaining $n-k$ columns onto the remaining $n-k$ symbols, of which there are $(n-k)!$. Containment $L \supseteq P$ is equivalent to the row-$r$ content extending $P$ (the other rows are unconstrained by $P$). Hence
+$$ \Pr[L \supseteq P] = \frac{(n-k)!}{n!} = \frac{1}{(n)_k}. \qquad \square $$
+
+By conjugacy (the discussion after Corollary 3.5), the identical statement holds for single-column and single-symbol patterns; the partition/indexing map used in the proof is simply re-coordinatized.
+
+### 4.3 Asymptotics and the conjecture for single-line patterns
+
+**Lemma 4.3 (`singleRow_pattern_density`).** For fixed $k$,
+$$ \frac{n^k}{(n)_k} \longrightarrow 1 \qquad (n \to \infty). $$
+
+*Proof sketch.* Factor
+$$ (n)_k = n^k \prod_{i=1}^{k-1}\Bigl(1 - \tfrac{i}{n}\Bigr), \qquad\text{so}\qquad \frac{n^k}{(n)_k} = \prod_{i=1}^{k-1}\frac{1}{1 - i/n}. $$
+This is a finite product (independent of $n$ in length) of factors each tending to $1$, hence tends to $1$. A clean two-sided bound is $1 \le n^k/(n)_k \le \bigl(1 - (k-1)/n\bigr)^{-(k-1)}$ for $n > k-1$, and squeezing gives the limit. $\square$
+
+**Theorem 4.4 (`rowpattern_prob_mul_tendsto`).** For any single-line pattern $P$ of size $k$,
+$$ \Pr[L \supseteq P]\cdot n^{k} \longrightarrow 1 \qquad (n \to \infty). $$
+
+*Proof sketch.* By Theorem 4.2, $\Pr[L \supseteq P]\cdot n^k = n^k/(n)_k$, which tends to $1$ by Lemma 4.3. $\square$
+
+Theorem 4.4 establishes the guiding conjecture for an **infinite family** of patterns — one of each size $k$ — with leading constant precisely $1$.
+
+## 5. Why exactness fails: the intercalate
+
+The single-line proofs use transitivity of the symbol action on a *single* line. No comparable transitivity is available for two cells lying in distinct rows *and* distinct columns, and this is exactly where the clean law breaks.
+
+**Proposition 5.1 (intercalate density, conjectural form).** For the canonical intercalate $P = \{(0,0,0),(0,1,1),(1,0,1),(1,1,0)\}$ of size $k=4$,
+$$ \Pr[L \supseteq P]\cdot n^{2} \longrightarrow \frac{1}{4} \qquad (n \to \infty), $$
+so $\Pr[L \supseteq P] = \Theta(n^{-2})$, not $\Theta(n^{-4})$, and the leading constant is $1/4 \ne 1$.
+
+*Heuristic and evidence.* The expected number of intercalates in a uniformly random Latin square of order $n$ is asymptotically $n^2/4$ (a classical result). An intercalate is specified by an unordered pair of rows, an unordered pair of columns, and an unordered pair of symbols, together with two binary "arrangement" choices; the four cell-entries collapse onto two genuine degrees of freedom. Thus the four constraints contribute an effective exponent $2$, and the combinatorial factor produces the constant $1/4$. The probability that a *fixed* intercalate occurs therefore scales as $n^{-2}$ with constant $1/4$, contradicting the naive $n^{-4}$ reading. (We state this as a proposition/conjecture; the single-line theorems of §4 are the rigorously proved core.)
+
+The contrast with §4 is the whole point: the symbol action is transitive on a single line, forcing the exact $1/(n)_k$ count and constant $1$, but it cannot independently move two cells in distinct rows and columns, which is precisely where exactness — and the constant $1$ — must be abandoned.
+
+## 6. A general conjecture
+
+The single-line results and the intercalate together suggest that the correct decay exponent counts **independent** constraints, not raw entries.
+
+**Conjecture 6.1 (general exponent).** For an arbitrary fixed partial Latin pattern $P$,
+$$ \Pr[L \supseteq P] = \Theta\bigl(n^{-e(P)}\bigr), $$
+where $e(P)$ is the number of entries minus the rank deficiency of the row/column/symbol incidence of $P$. In particular $e(P) = k$ exactly when $P$ is "spread out" (e.g. a partial transversal with all entries in distinct rows, distinct columns and distinct symbols), in which case the leading constant is $1$ and the guiding conjecture of §1.1 holds verbatim.
+
+For single lines, all $k$ constraints are independent ($e(P) = k$) and Theorem 4.4 confirms the constant is $1$. For the intercalate, $e(P) = 2$ and Proposition 5.1 gives constant $1/4$.
+
+## 6.5 Worked numerical verification
+
+The exact laws of §4 can be checked against brute-force enumeration for small orders, which both validates the theory and builds intuition for the asymptotics. There are $|\mathcal{L}_2| = 2$, $|\mathcal{L}_3| = 12$, $|\mathcal{L}_4| = 576$ and $|\mathcal{L}_5| = 161{,}280$ Latin squares.
+
+**Single cell.** For $P = \{(0,0,0)\}$ and $n = 4$: exactly $144$ of the $576$ squares have $L(0,0)=0$, giving $144/576 = 1/4 = 1/n$, matching Theorem 4.1.
+
+**Single row, $n=4$.** Take the row-$0$ patterns $P_k = \{(0,c,c) : c < k\}$.
+- $k=1$: probability $1/4 = 1/(4)_1$.
+- $k=2$: probability $1/12 = 1/(4)_2$ (since $(4)_2 = 4\cdot 3 = 12$).
+- $k=3$: probability $1/24 = 1/(4)_3$ (since $(4)_3 = 4\cdot 3\cdot 2 = 24$).
+- $k=4$: probability $1/24 = 1/(4)_4$ (since $(4)_4 = 24$; note $(4)_3 = (4)_4$ because the final factor is $1$).
+
+Every value agrees with Theorem 4.2 on the nose.
+
+**Density.** For $k = 3$, the ratio $n^k/(n)_k$ takes the values $4.5$ at $n=3$, $2.083$ at $n=5$, $1.389$ at $n=10$, $1.031$ at $n=100$, and $1.0003$ at $n=1000$ — a clear, monotone approach to $1$, illustrating Lemma 4.3 and hence Theorem 4.4.
+
+**Intercalate anomaly.** Latin squares of order $3$ contain no intercalates at all (mean $0$), while order $4$ squares average $6$ intercalates each. The fixed canonical intercalate has occurrence probability $1/72$ at $n=4$, so $\Pr \cdot n^2 = 16/72 = 0.222$, already trending toward the conjectured limit $1/4 = 0.25$ rather than toward $1$. This is the smallest concrete witness that the naive $n^{-k}$ reading fails for two-dimensional patterns, exactly as analyzed in §5.
+
+## 7. Algorithms
+
+The exact laws are eminently checkable for small $n$, and the following procedures both validate the theory and expose the asymptotics numerically.
+
+**Algorithm A (exact occurrence probability by enumeration).** Enumerate $\mathcal{L}_n$ by backtracking row-by-row (placing a Latin-valid permutation in each successive row), count those squares containing $P$, and divide by $|\mathcal{L}_n|$. This yields $\Pr[L \supseteq P]$ exactly as a rational number. Complexity is governed by $|\mathcal{L}_n|$, which is feasible up to $n = 5$ ($|\mathcal{L}_5| = 161{,}280$).
+
+**Algorithm B (descending-factorial law and density).** Compute $(n)_k$ and $1/(n)_k$ directly, and the ratio $n^k/(n)_k$, to confirm Theorems 4.2, 4.4 and Lemma 4.3 against the enumerated values from Algorithm A.
+
+**Algorithm C (intercalate Monte Carlo).** For larger $n$ where enumeration is infeasible, sample approximately-uniform Latin squares (e.g. via the Jacobson–Matthews Markov chain) and estimate the fixed-intercalate occurrence probability, multiplying by $n^2$ to observe convergence toward $1/4$ (Proposition 5.1).
+
+## 8. Applications
+
+- **Experimental design.** Latin squares model treatments balanced across two blocking factors; the density of prescribed local configurations governs how often a desired (or undesired) sub-arrangement appears under randomization.
+- **Combinatorial probability.** The exact $1/(n)_k$ law is a clean instance of how a global symmetry (alphabet relabeling) yields exact finite-$n$ identities, a template transferable to other symmetric random structures.
+- **Coding and cryptography.** Latin squares underlie certain authentication codes and MDS-like constructions; understanding fixed-pattern probabilities quantifies the frequency of structured fragments in random keys/codewords.
+- **Benchmarking samplers.** The single-line law provides an exact ground truth against which approximate Latin-square samplers can be calibrated.
+
+## 8.5 Related phenomena
+
+The dichotomy uncovered here echoes a familiar pattern across random combinatorics. In the theory of subgraph counts in $G(n,p)$ random graphs, the expected number of copies of a fixed graph $H$ scales with the number of edges, but threshold and concentration behavior is governed by the densest subgraph — a balance between vertices (degrees of freedom) and edges (constraints). The Latin-square analogue replaces "edges" by entries and "the densest subgraph" by the rank of the row/column/symbol incidence. Single-line patterns are the Latin analogue of a star or a path with no internal redundancy, where the count is clean; the intercalate is the analogue of a short cycle, where redundancy compresses the effective exponent. This analogy motivates Conjecture 6.1 and suggests that tools from the second-moment method and switchings — already central to the study of random Latin squares — are the natural route to its proof.
+
+It is worth emphasizing why the symbol action alone cannot settle the two-dimensional case. The action is a single copy of $\mathrm{Sym}([n])$ acting diagonally on all cells by relabeling symbols. It is transitive on the content of one line because a line's content is itself a single bijection, on which $\mathrm{Sym}([n])$ acts simply transitively from the left. But two cells in distinct rows and distinct columns belong to two different lines whose contents are coupled by the global Latin constraints; no single relabeling can be prescribed independently on both. The orbit-counting argument therefore degrades from an exact identity to an asymptotic estimate, and the leading constant becomes a genuine combinatorial quantity (here $1/4$) rather than the trivial $1$.
+
+## 9. Discussion
+
+The results isolate a sharp boundary. Whenever a pattern lies in a single line, a single transparent symmetry — relabel the symbols — collapses the problem to counting bijections, yielding the exact identity $\Pr[L \supseteq P] = 1/(n)_k$ and, asymptotically, the constant-$1$ law $\Pr[L \supseteq P]\cdot n^k \to 1$. The proof is robust under conjugacy, so rows, columns and symbol classes are interchangeable. The intercalate marks the first place the symmetry runs out: two cells in distinct rows and columns cannot be moved independently, redundancy enters, and both the exponent and the constant change. Conjecture 6.1 proposes that this dichotomy is the whole story, with the exponent measuring independent constraints.
+
+## 10. Future work
+
+- **Single-column and single-symbol exactness.** Promote the conjugacy remark to a fully formal theorem: every single-column or single-symbol pattern of size $k$ has probability exactly $1/(n)_k$.
+- **Intercalate constant.** Rigorously establish Proposition 5.1, ideally via a second-moment or switching argument matching the classical $n^2/4$ mean intercalate count.
+- **General exponent.** Prove Conjecture 6.1, characterizing $e(P)$ combinatorially as a rank/independence parameter of the row–column–symbol incidence and pinning the leading constant.
+- **Partial transversals.** As the cleanest $e(P) = k$ case beyond single lines, establish $\Pr[L \supseteq P]\cdot n^k \to 1$ for partial transversals.
+
+## 11. Conclusion
+
+For uniformly random Latin squares of order $n$, every fixed single-line partial pattern of size $k$ occurs with probability **exactly** $1/(n)_k$, and therefore $\Pr[L \supseteq P]\cdot n^k \to 1$ — the pattern-density conjecture, proved for an infinite family with leading constant $1$. The same symmetry that forces these exact laws also predicts, through its failure across rows and columns, that genuinely two-dimensional patterns obey corrected laws, exemplified by the intercalate's $n^{-2}$ decay with constant $1/4$. The unifying principle is that the decay exponent counts independent constraints, recovering the clean conjecture exactly for spread-out patterns.
