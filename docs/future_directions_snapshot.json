@@ -6705,6 +6705,26 @@
     "ambition_level": "extension",
     "catalog_references": [],
     "consumed_by_exp_id": "",
+    "description": "# Future Directions: Complexity-Driven Emergence of Spacetime (Tropical Core)\n\nDerived from this cycle's findings in `TensorNetworkComplexity.lean`,\n`BondDimensionTransition.lean`, and `HolographicScaling.lean`.\n\nThis cycle established, with 0 sorries: (i) the tropical min-cut entanglement\nentropy is monotone, concave, and has a `≤ 0` discrete curvature proxy; (ii) it\nis eventually affine with slope = minimal cut size; (iii) for two competing cuts\nthere is a single sharp critical bond dimension `D_c = exp((a0-a1)/(c1-c0))` with\na first-order jump in the scaling exponent; (iv) uniform bond rescaling leaves the\nentanglement wedge invariant, so emergence requires heterogeneity.\n\n---\n\n## Conjecture 1 — Multi-cut cascade and total curvature accounting\n\nFor `n` cuts the entropy `S(t) = min_i (a_i + c_i t)` has at most `n − 1`\ntransition points, and the *total* negative curvature\n`∑_t curvatureProxy(t, h)` summed over breakpoints equals the total spread of\nslopes `c_max − c_min` (independent of the areas `a_i`).\n\n**The key insight is...** that concavity makes `S` a tropical polynomial whose\nbreakpoints carry all the curvature, and the curvature budget is a topological\ninvariant (difference of extreme cut sizes), not a metric one.\n\n**Why now?** We already proved the two-cut crossover and the one-sided curvature\nbound; the cascade is the natural `n`-fold generalization, and the eventual-affine\ntheorem pins down the `c_min` endpoint of the slope spectrum.\n\n---\n\n## Conjecture 2 — Heterogeneity threshold for wedge transitions\n\nA wedge (causal-structure) transition under varying bond dimension occurs **iff**\nthe bond-dimension assignment is non-uniform with variance exceeding an explicit\nthreshold determined by the second-smallest min-cut gap. Uniform assignments\nnever transition.\n\n**The key insight is...** that `wedge_invariant_under_uniform_scaling` rules out\nuniform scaling entirely, so the order parameter for emergence is the *variance*\nof `log D` across edges, not its mean.\n\n**Why now?** We have a proof that uniform scaling is geometrically inert; the next\nstep is to quantify exactly how much heterogeneity is needed, which the min-cut\ngap structure already exposes.\n\n---\n\n## Conjecture 3 — Smoothness ⇔ unique large-`D` minimal surface\n\nThe emergent geometry is \"smooth\" (single scaling exponent, zero curvature proxy\nfor all large `t`) **iff** the minimal-size cut is unique. A tie among\nminimal-size cuts produces a residual area-law degeneracy that obstructs a single\nlinear law on any half-line.\n\n**The key insight is...** that `mincutEntropy_eventually_affine` selects one\nminimal-area representative among minimal-size cuts; uniqueness of the minimizer\nis exactly what makes the large-`D` law unambiguous.\n\n**Why now?** The eventual-affinity theorem is proved; the uniqueness refinement\nturns its existential `i0` into an iff characterization of smoothness.\n\n---\n\n## Conjecture 4 — Lorentzian signature from sign of the curvature proxy\n\nAssigning a tropical \"time\" direction along the gradient of `S` and a \"space\"\ndirection along level sets, the nonpositive curvature proxy forces a fixed\ncausal signature: the emergent metric proxy is everywhere of Lorentzian type\naway from breakpoints, with signature change forbidden by concavity.\n\n**The key insight is...** that concavity (`curvatureProxy_nonpos`) is a one-sided\nbound, and a one-sided bound is precisely what distinguishes a fixed Lorentzian\nsignature from a fluctuating (fractal) one.\n\n**Why now?** We have the universal `≤ 0` curvature bound in hand; lifting it to a\nsignature statement only needs a tropical gradient/level-set construction over the\nsame `mincutEntropy`.\n\n---\n\n## Conjecture 5 — Critical bond dimension scaling `D_c(N)`\n\nFor random tensor networks on `N` vertices with i.i.d. random cut offsets, the\ntwo-cut critical bond dimension `D_c` concentrates as `N → ∞`, with\n`log D_c(N) = Θ(area-gap / size-gap)` and fluctuations of order `N^{-1/2}`.\n\n**The key insight is...** that `D_c = exp((a0-a1)/(c1-c0))` is an explicit smooth\nfunction of the (random) offsets and (integer) sizes, so its large-`N` law follows\nfrom concentration of the offset gap.\n\n**Why now?** The exact closed form for `D_c` is proved for two cuts; plugging in a\nprobability model is the immediate, testable next step bridging to the original\nrandom-tensor-network conjecture.\n",
+    "domain_bridges": [],
+    "domains": [
+      "Geometry",
+      "Computation"
+    ],
+    "id": "fd_2199",
+    "lineage_refs": [],
+    "priority_score": 0.75,
+    "proof_strategy": "",
+    "research_mode": "team",
+    "source_exp_id": "a747a0a8",
+    "status": "available",
+    "timestamp": "2026-06-21T23:33:09.584655+00:00",
+    "title": "Derived from this cycle's findings in `TensorNetworkComplexity.lean`,"
+  },
+  {
+    "ambition_level": "extension",
+    "catalog_references": [],
+    "consumed_by_exp_id": "",
     "description": "Prove that the reverse-and-add algorithm applied to 196 never produces a palindrome. Formalize the concept of Lychrel numbers and establish structural properties of the iteration on digit sequences.",
     "domain_bridges": [],
     "domains": [
@@ -6719,26 +6739,6 @@
     "status": "failed",
     "timestamp": "2026-06-08T19:24:57.290512+00:00",
     "title": "196-Algorithm Non-Termination"
-  },
-  {
-    "ambition_level": "extension",
-    "catalog_references": [],
-    "consumed_by_exp_id": "a747a0a8",
-    "description": "Conjecture: The entanglement‑complexity scaling law of a uniformly random rank‑k tensor network on N vertices undergoes a sharp phase transition at a critical bond dimension D_c(N) such that for D > D_c the network’s holographic geometry approximates a smooth (d+1)‑dimensional Lorentzian manifold with Ricci curvature bounded by a universal constant, while for D < D_c the geometry is fractal and fails to satisfy the Einstein equations in any coarse‑graining. Test: Generate large‑scale random tensor networks on high‑performance clusters, compute their entanglement spectra and bulk geometry via the quantum error‑correcting code correspondence, and measure curvature proxies (e.g., spectral dimension, Ricci flow convergence). Observation of a reproducible threshold D_c(N) with the predicted geometric properties confirms the conjecture; absence of such a transition or mismatch of curvature bounds refutes it. Impact: Provides a falsifiable, computationally grounded bridge between quantum information complexity and the emergence of classical spacetime, offering a new avenue to derive Einstein’s equations from complexity theory, guide quantum gravity model selection, and inspire complexity‑optimal quantum error‑correcting codes.",
-    "domain_bridges": [],
-    "domains": [
-      "Novelty",
-      "Computation"
-    ],
-    "id": "fd_2119",
-    "lineage_refs": [],
-    "priority_score": 0.7158260869565218,
-    "proof_strategy": "",
-    "research_mode": "team",
-    "source_exp_id": "pi_brainstorm",
-    "status": "in_progress",
-    "timestamp": "2026-06-19T17:11:08.928185+00:00",
-    "title": "Complexity‑Driven Emergence of Spacetime from Random Tensor Networks"
   },
   {
     "ambition_level": "extension",

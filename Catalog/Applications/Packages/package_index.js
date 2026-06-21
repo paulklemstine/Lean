@@ -9,8 +9,8 @@ window.PACKAGE_INDEX = [
     "exp_id": "a747a0a8",
     "filename": "complexitydriven_emergence_of_spacetime_from_rando.json",
     "pkg_num": 228,
-    "quality": "unrated",
-    "quality_score": null,
+    "quality": "partial",
+    "quality_score": 0.60792,
     "title": "Complexity-Driven Emergence of Spacetime from Tensor Networks: A Tropical Core"
   },
   {
@@ -6948,8 +6948,8 @@ window.PACKAGE_GRAPH = {
       "hue": 359,
       "id": "complexitydriven_emergence_of_spacetime_from_rando",
       "primary_domain": "Tropical",
-      "priority_score": null,
-      "quality": "unrated",
+      "priority_score": 0.60792,
+      "quality": "partial",
       "shape": "star",
       "title": "Complexity-Driven Emergence of Spacetime from Tensor Networks: A Tropical Core"
     }
