@@ -34,20 +34,6 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
-    "description": "Building on cycle b8df0deb (Q=0.890), which proved 90 theorems in Logic. Go DEEPER: prove the strongest remaining conjecture, close open sorries, or extend the core result to a more general setting. Original direction: Replace the circular attempt to construct a full `JordanHolderLattice` instance for subgroups by a non-circular, elementary formalization of the finite-index telescope theorem for subgroup chains. Prove that along a finite monotone chain of subgroups, the product of successive relative indices teles",
-    "domains": [
-      "Logic"
-    ],
-    "id": "push_b8df0deb_19f32b7f",
-    "priority_score": 0.95,
-    "research_mode": "team",
-    "source_exp_id": "b8df0deb",
-    "status": "available",
-    "timestamp": "2026-06-21T14:57:39.884167+00:00",
-    "title": "Deepening: Derived from the verified Lean results in"
-  },
-  {
-    "consumed_by_exp_id": "",
     "description": "Formalize Goldbach's conjecture in Lean 4. Prove the conjecture holds for all even n \u2264 10^6 computationally, formalize Vinogradov's theorem (every sufficiently large odd number is the sum of three primes), and construct the Hardy-Littlewood circle method framework for additive problems. Deliver a working Lean verification tactic.",
     "domains": [
       "NumberTheory",
@@ -2454,7 +2440,7 @@ window.FUTURE_DIRECTIONS = [
     "title": "Equidistribution of Galois orbits of CM points on products of non\u2011isomorphic Shimura curves without auxiliary splitting conditions"
   },
   {
-    "consumed_by_exp_id": "",
+    "consumed_by_exp_id": "53ef2527",
     "description": "For all n \u2265 0, the number of (4,0)-colored Frobenius partitions of weight n equals twice the sum of Lin-Liu minimal excludants over all 4-partitions of n, i.e., \u03c8_{4,0}(n) = 2\u03c3_{mex,4}(n). This conjecture extends the proven identities \u03c8_{2,0}(n) = 2\u03c3_{mex,2}(n) and \u03c8_{2,1}(n) = 2\u03c3_{mex,2}(n) - E_2(n) to the four-colored case.",
     "domains": [
       "Pythagorean",
@@ -2464,7 +2450,7 @@ window.FUTURE_DIRECTIONS = [
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19696v1",
-    "status": "available",
+    "status": "in_progress",
     "timestamp": "2026-06-20T10:27:31.374184+00:00",
     "title": "Generalized two-colored Frobenius identities to four-colored case"
   },
@@ -3048,12 +3034,27 @@ window.FUTURE_DIRECTIONS = [
   },
   {
     "consumed_by_exp_id": "",
+    "description": "Fix the column-alternating coloring in which every cell in column i has color (-1)^(i-1). Let B(n) be the number of Dyck paths of semilength n for which the number of black cells beneath the path equals the number of white cells beneath the path. The conjecture is: for every m >= 0, (2*m+1)*B(2*m) = binom(3*m,m), and (m+1)*B(2*m+1) = binom(3*m+1,m). Equivalently, B(2*m) is the ternary Fuss-Catalan number 1/(2*m+1)*binom(3*m,m), while B(2*m+1) is the Raney-type number 1/(m+1)*binom(3*m+1,m).",
+    "domains": [
+      "Pythagorean",
+      "Algebra"
+    ],
+    "id": "fd_2177",
+    "priority_score": 0.8,
+    "research_mode": "team",
+    "source_exp_id": "2606.18754v1",
+    "status": "available",
+    "timestamp": "2026-06-21T15:02:45.054390+00:00",
+    "title": "Column-alternating balanced Dyck paths are counted by ternary Fuss-Catalan and adjacent Raney numbers"
+  },
+  {
+    "consumed_by_exp_id": "",
     "description": "We conjecture that for every pair of distinct positive integers a,b the generating function of two standard 6\u2011sided dice can be factored as a product of two polynomials with non\u2011negative integer coefficients, each evaluating to a^2 and b^2 at x=1 respectively. In other words, there exist a dice of size a^2 and a dice of size b^2 whose label multisets give the same sum\u2011frequency distribution as two ordinary dice.",
     "domains": [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2177",
+    "id": "fd_2178",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20311v1",
@@ -3068,7 +3069,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2178",
+    "id": "fd_2179",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20439v1",
@@ -3083,7 +3084,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Pythagorean"
     ],
-    "id": "fd_2179",
+    "id": "fd_2180",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20046v1",
@@ -3098,7 +3099,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Computation"
     ],
-    "id": "fd_2180",
+    "id": "fd_2181",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19959v1",
@@ -3113,7 +3114,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Algebra"
     ],
-    "id": "fd_2181",
+    "id": "fd_2182",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.20297v1",
@@ -3128,7 +3129,7 @@ window.FUTURE_DIRECTIONS = [
       "Algebra",
       "Logic"
     ],
-    "id": "fd_2182",
+    "id": "fd_2183",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.19479v1",
@@ -3142,7 +3143,7 @@ window.FUTURE_DIRECTIONS = [
     "domains": [
       "Computation"
     ],
-    "id": "fd_2183",
+    "id": "fd_2184",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18956v1",
@@ -3157,7 +3158,7 @@ window.FUTURE_DIRECTIONS = [
       "Pythagorean",
       "Cryptography"
     ],
-    "id": "fd_2184",
+    "id": "fd_2185",
     "priority_score": 0.8,
     "research_mode": "team",
     "source_exp_id": "2606.18794v1",
@@ -4100,21 +4101,6 @@ window.FUTURE_DIRECTIONS = [
     "status": "available",
     "timestamp": "2026-06-19T17:15:33.749896+00:00",
     "title": "Derived from the Stage 3 (Analysis) and Stage 4 (Critique) findings of this"
-  },
-  {
-    "consumed_by_exp_id": "",
-    "description": "# Future Directions\n\nThese directions build on the non-circular index telescope in\n`IndexTelescope.lean` (the product of adjacent relative indices of a finite\nmonotone subgroup chain collapses to a single relative index, and hence to the\nglobal index `[G : H_0]`). Each is phrased so that it could be pursued\nindependently while reusing the telescope as a black box.\n\n## 1. Schreier refinement without the lattice instance\n\nA natural next step is to formalize the Schreier refinement theorem \u2014 that any\ntwo finite chains of subgroups admit equivalent refinements \u2014 but *without*\ninstalling a `JordanHolderLattice` instance, mirroring the deliberately\nelementary spirit of the telescope. The plan is to refine each chain by\nintersecting with the terms of the other and to track the relative indices of the\ninserted steps, then apply the telescope termwise. **The key insight is** that\nthe product of relative indices is invariant under refinement precisely because\neach inserted intermediate subgroup splits one factor `[H_{i+1}:H_i]` into a\nproduct of two factors whose product is unchanged \u2014 a fact that is *itself* the\ntelescope applied to a length-two subchain, so no new heavy machinery is needed.\n*Why now?* The telescope and Mathlib's `relIndex_mul_relIndex` already supply the\nexact arithmetic identities Schreier refinement consumes, so the only remaining\nwork is the combinatorial bookkeeping of interleaving two chains \u2014 a\nself-contained task that does not require waiting on any lattice formalization.\n\n## 2. A numerical Jordan\u2013H\u00f6lder skeleton\n\nBefore tackling the isomorphism-level Jordan\u2013H\u00f6lder theorem, one can prove its\nnumerical shadow: any two composition series of a finite group yield the same\nmultiset of relative indices. This would be the first concrete *consumer* of the\ntelescope, validating that the foundational layer was carved at the right joint.\n**The key insight is** that equality of the *products* of factor indices is\nimmediate from the telescope (both equal `Nat.card G`), so the entire difficulty\ncollapses onto promoting \"equal products\" to \"equal multisets\", which is a finite\ncombinatorial/number-theoretic statement detached from group structure. *Why now?*\nWith the telescope proved and axiom-checked, the multiplicative invariant is\nalready available as a lemma, making this a focused combinatorics problem rather\nthan an open-ended algebra project, and it provides a low-risk stepping stone\ntoward the full theorem.\n\n## 3. Module-length and abelian-category analogues\n\nThe very same telescope governs chains of submodules of a finite-length module,\nwhere relative index is replaced by the length of a subquotient. Recasting the\nproof so that \"index\" is an abstract additive (or multiplicative) invariant\nsatisfying tower additivity would unify the group and module cases. **The key\ninsight is** that the entire argument uses only one structural fact \u2014 additivity\nalong a tower (`relIndex_mul_relIndex`) plus the empty/endpoint normalizations \u2014\nso abstracting over a typeclass that packages exactly that fact reproduces the\ntelescope verbatim in every setting where such an invariant exists. *Why now?*\nMathlib already has both `Subgroup.relIndex` and module length with their\nrespective tower lemmas, so the abstraction can be tested immediately against two\nindependent instances, guarding against an over-fitted interface.\n\n## 4. Effective enumeration and certified computation\n\nA computational companion would, given an explicit finite group and an explicit\nmonotone chain, compute the list of relative indices and emit a machine-checked\ncertificate that their product equals `Nat.card G`. This turns the telescope from\na statement about existence of an identity into an executable, verifiable tool.\n**The key insight is** that the cardinality form `card_telescope` is already\nstated with `Nat.card`, which on a `Fintype` reduces to a decidable count, so a\n`decide`/`native_decide`-backed evaluator inherits correctness directly from the\nproved theorem with no additional trusted code. *Why now?* The proved\ncardinality form is the precise bridge between the abstract index identity and a\nfinite computation, so building the evaluator is mostly engineering on top of an\nalready-verified mathematical core, and it would immediately stress-test the\nstatements on concrete groups.\n\n## 5. Quantitative chain-length bounds\n\nFinally, one can derive structural corollaries: for a strictly increasing chain\nfrom `\u22a5` to `\u22a4`, the length is bounded by the number of prime factors of\n`Nat.card G` counted with multiplicity, with equality characterizing composition\nseries. **The key insight is** that each strict step contributes a relative index\n`> 1`, so the telescope's product representation of `Nat.card G` forces the number\nof steps to be at most the total prime multiplicity of `Nat.card G`. *Why now?*\nThe endpoint corollary `prod_relIndex_eq_card_of_bot_top` already expresses\n`Nat.card G` as the relevant product, so the bound follows from elementary\nfactorization counting applied to that product \u2014 a short, well-scoped addition\nthat needs nothing beyond what is already proved.\n",
-    "domains": [
-      "Algebra",
-      "Logic"
-    ],
-    "id": "fd_2185",
-    "priority_score": 0.75,
-    "research_mode": "team",
-    "source_exp_id": "b8df0deb",
-    "status": "available",
-    "timestamp": "2026-06-21T14:56:23.937072+00:00",
-    "title": "These directions build on the non-circular index telescope in"
   },
   {
     "consumed_by_exp_id": "",
